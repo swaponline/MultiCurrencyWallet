@@ -50,7 +50,7 @@ const langLabels = defineMessages({
   },
   optionCustom: {
     id: 'Exchange_CustomAddressOption',
-    defaultMessage: 'External wallet or exchange',
+    defaultMessage: 'External wallet',
   },
   placeholderAddress: {
     id: 'Exchange_PlaceholderEnterAddress',
@@ -231,9 +231,9 @@ export default class AddressSelect extends Component<any, any> {
             })
           }
         )
-      }) /*.catch((error) => {
-      console.log('Metamask rejected', error)
-    })*/
+      }).catch((error) => {
+        console.error('Metamask rejected', error)
+      })
   }
 
   toggleScan = () => {
@@ -446,18 +446,16 @@ export default class AddressSelect extends Component<any, any> {
           onSelect={(value) => this.handleOptionSelect(value)}
         />
         {selectedType === AddressType.Metamask && metamask.isEnabled() && !isMetamaskConnected && (
-          <div styleName="selectedInner selectedInner_connectBtn">
-            <div styleName="buttonContainer">
-              <Button
-                styleName="button"
-                blue
-                onClick={() => {
-                  this.handleConnectMetamask()
-                }}
-              >
-                <FormattedMessage {...langLabels.connectMetamask} />
-              </Button>
-            </div>
+          <div styleName="selectedInner connectWrapper">
+            <Button
+              styleName="button"
+              blue
+              onClick={() => {
+                this.handleConnectMetamask()
+              }}
+            >
+              <FormattedMessage {...langLabels.connectMetamask} />
+            </Button>
           </div>
         )}
         {selectedType === AddressType.Custom && !isCustomOptionInputHidden && (
@@ -472,11 +470,7 @@ export default class AddressSelect extends Component<any, any> {
                   required
                   pattern="0-9a-zA-Z"
                   onFocus={() => this.handleFocusAddress()}
-                  onBlur={(e) => {
-                    console.log('Address select event: ', e)
-                    console.log('Address select event target: ', e.target)
-                    this.handleBlurAddress(e.target.value)
-                  }}
+                  onBlur={(event) => this.handleBlurAddress(event.target.value)}
                   placeholder="Enter address"
                   valueLink={Link.all(this, '_')._} // required
                   openScan={this.toggleScan}
@@ -488,8 +482,7 @@ export default class AddressSelect extends Component<any, any> {
         )}
         {isScanActive && (
           <QrReader
-            //@ts-ignore
-            openScan={this.openScan}
+            openScan={this.toggleScan}
             handleError={this.handleScanError}
             handleScan={this.handleScan}
           />

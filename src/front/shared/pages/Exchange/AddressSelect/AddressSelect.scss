@@ -24,6 +24,10 @@
         }
       }
     }
+
+    .selectedInner {
+      background-color: #2b2b2b;
+    }
   }
 
   .label {
@@ -97,6 +101,17 @@
   height: 100%;
   width: 58%;
   z-index: 1;
+  background-color: $l-background-elements;
+
+
+  &.connectWrapper {
+    display: flex;
+    align-items: flex-end;
+    flex-direction: column;
+    padding: 5px;
+    background-color: transparent;
+    border: none;
+  }
 
   &_connectBtn {
     border: transparent !important;
@@ -160,13 +175,6 @@
       }
     }
   }
-}
-
-.buttonContainer {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  padding: 5px;
 }
 
 .button {

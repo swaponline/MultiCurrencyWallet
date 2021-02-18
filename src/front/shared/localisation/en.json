@@ -5620,7 +5620,7 @@
   },
   {
     "id": "Exchange_CustomAddressOption",
-    "message": "External wallet or exchange",
+    "message": "External wallet",
     "files": [
       "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
     ]
