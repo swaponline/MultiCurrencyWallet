@@ -55,5 +55,11 @@ const CurrencyIcon = ({ className, style, name, currency }) => {
   )
 }
 
+CurrencyIcon.defaultProps = {
+  className: '',
+  style: {},
+  currency: null
+}
+
 
 export default cssModules(CurrencyIcon, styles)
