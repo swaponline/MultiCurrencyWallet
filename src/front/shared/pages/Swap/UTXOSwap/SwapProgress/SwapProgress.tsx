@@ -297,14 +297,14 @@ export default class SwapProgress extends Component<any, any> {
   submitSecret = () => {
     const { secret } = this.state
 
-    this.swap.flow.submitSecret(secret)
+    // this.swap.flow.submitSecret(secret)
   }
 
   confirmScriptChecked = () => {
     const {
       verifyScriptFunc,
     } = this._fields
-    this.swap.flow[verifyScriptFunc]()
+    // this.swap.flow[verifyScriptFunc]()
   }
 
   render() {

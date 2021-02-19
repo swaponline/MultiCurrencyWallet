@@ -133,6 +133,7 @@ export default (tokenName) => {
 
         () => {
           debug('swap.core:flow')(`waiting verify btc script`)
+          this.verifyScript()
         },
 
         // 4. Check balance

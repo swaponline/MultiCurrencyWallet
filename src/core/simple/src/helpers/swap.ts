@@ -38,7 +38,7 @@ export const start = (swap) =>
         await onStep(swap, 2)
 
         const secret = generateSecret()
-        swap.flow.submitSecret(secret)
+        // swap.flow.submitSecret(secret)
 
         break;
       case "ETH2BTC":
@@ -46,7 +46,7 @@ export const start = (swap) =>
         swap.flow.sign()
 
         await onStep(swap, 3)
-        swap.flow.verifyBtcScript()
+        // swap.flow.verifyBtcScript()
         break;
     }
     resolve(true)

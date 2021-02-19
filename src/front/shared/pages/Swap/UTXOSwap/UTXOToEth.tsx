@@ -48,7 +48,7 @@ export default class UTXOToEth extends Component<any, any> {
     this.updateWindowDimensions()
     this.ParticipantTimer = setInterval(() => {
       if (this.state.flow.isParticipantSigned && this.state.destinationBuyAddress) {
-        this.submitSecret()
+        //this.submitSecret()
       }
       else {
         clearInterval(this.ParticipantTimer)

@@ -111,7 +111,7 @@ export default (tokenName) => {
         // 2. Create secret, secret hash and GHOST script
 
         () => {
-          // this.submitSecret()
+          this.submitSecret()
         },
 
         // 3. Check system wallet balance

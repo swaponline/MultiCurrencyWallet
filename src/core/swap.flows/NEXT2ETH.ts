@@ -110,7 +110,7 @@ class NEXT2ETH extends AtomicAB2UTXO {
       // 2. Create secret, secret hash and NEXT script
 
       () => {
-        // this.submitSecret()
+        this.submitSecret()
       },
 
       // 3. Check balance

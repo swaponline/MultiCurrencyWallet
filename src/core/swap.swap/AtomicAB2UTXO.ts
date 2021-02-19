@@ -394,13 +394,14 @@ class AtomicAB2UTXO extends Flow {
     return false
   }
 
-  submitSecret(secret) {
+  submitSecret() {
+    // if (this.state.flow.isParticipantSigned && this.state.destinationBuyAddress)
     if (this.state.secret) { return }
 
     if (!this.state.isParticipantSigned) {
       throw new Error(`Cannot proceed: participant not signed. step=${this.state.step}`)
     }
-
+    const secret = 'qwe'
     const secretHash = this.app.env.bitcoin.crypto.ripemd160(Buffer.from(secret, 'hex')).toString('hex')
 
     /* Secret hash generated - create BTC script - and only after this notify other part */

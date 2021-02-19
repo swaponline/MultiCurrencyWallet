@@ -142,6 +142,7 @@ class ETH2BTC extends AtomicAB2UTXO {
 
         () => {
           debug('swap.core:flow')(`waiting verify btc script`)
+          this.verifyScript()
         },
 
         // 4. Check balance

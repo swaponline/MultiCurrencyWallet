@@ -42,8 +42,6 @@ const runSwap = (swap) => {
       case "USDT2NOXON":
       case "USDT2SWAP":
 
-        if ( step == 2 ) swap.flow.submitSecret(genSecret())
-
         if ( step + 1 === swap.flow.steps.length ) {
           console.log(new Date().toISOString(), '[FINISHED] tx', swap.flow.state.ethSwapWithdrawTransactionHash)
 
@@ -59,8 +57,8 @@ const runSwap = (swap) => {
       case "NOXON2USDT":
       case "SWAP2USDT":
 
-        if ( step == 1 ) swap.flow.sign()
-        if ( step == 3 ) swap.flow.verifyScript()
+        // if ( step == 1 ) swap.flow.sign()
+        // if ( step == 3 ) swap.flow.verifyScript()
 
         if ( step + 1 === swap.flow.steps.length ) {
           console.log(new Date().toISOString(), '[FINISHED] tx', swap.flow.state.btcSwapWithdrawTransactionHash)

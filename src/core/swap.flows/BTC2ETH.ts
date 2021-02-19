@@ -105,7 +105,7 @@ class BTC2ETH extends AtomicAB2UTXO {
 
         // 2. Create secret, secret hash and BTC script
         () => {
-          // this.submitSecret()
+          this.submitSecret()
         },
 
         // 3. Check balance

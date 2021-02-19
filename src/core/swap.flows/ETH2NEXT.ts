@@ -144,7 +144,7 @@ class ETH2NEXT extends AtomicAB2UTXO {
 
       () => {
         debug('swap.core:flow')(`waiting verify next script`)
-        // this.verifyNextScript()
+        this.verifyScript()
       },
 
       // 4. Check balance

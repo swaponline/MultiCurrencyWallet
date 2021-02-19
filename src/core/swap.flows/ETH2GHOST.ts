@@ -142,7 +142,7 @@ class ETH2GHOST extends AtomicAB2UTXO {
 
       () => {
         debug('swap.core:flow')(`waiting verify ghost script`)
-        // this.verifyGhostScript()
+        this.verifyScript()
       },
 
       // 4. Check balance
