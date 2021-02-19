@@ -199,14 +199,42 @@ class ETH2BTC extends AtomicAB2UTXO {
         () => {}
       ]
     } else {
-      /*
-      Signs - создание секрета, хеша, отправка хеша
-      syncBalance
-      create AB contract
-      wait create UTXO
-      withdraw from UTXO
-      finish
-      */
+      return [
+        // 1 - `sign` - Signs - создание секрета, хеша, отправка хеша
+        async () => {
+          
+        },
+
+        // 2 - `sync-balance` - syncBalance
+        async () => {
+          
+        },
+
+        // 3 - `lock-eth` - create AB contract
+        async () => {
+          
+        },
+
+        // 4 - `wait-lock-utxo` - wait create UTXO
+        async () => {
+          
+        },
+
+        // 5 - `withdraw-utxo` - withdraw from UTXO
+        async () => {
+          
+        },
+
+        // 6 - `finish`
+        async () => {
+          
+        },
+
+        // 7 - `end`
+        async () => {
+          
+        },
+      ]
     }
   }
 

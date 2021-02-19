@@ -73,15 +73,24 @@ class AtomicAB2UTXO extends Flow {
         this.isTakerMakerModel && !this.isUTXOSide && this.isTaker()
       ): return {
           'sign': 1,
-          'finish': 8,
-          'end': 9,
+          'sync-balance': 2,
+          'lock-eth': 3,
+          'wait-lock-utxo': 4,
+          'withdraw-utxo': 5,
+          'finish': 6,
+          'end': 7,
         }
       case ( // Это модель taker-maker, сторона utxo, мы maker - ждем создание контракта ab
         this.isTakerMakerModel && this.isUTXOSide && this.isMaker()
       ): return {
           'sign': 1,
-          'finish': 8,
-          'end': 9,
+          'sync-balance': 2,
+          'wait-lock-eth': 3,
+          'lock-utxo': 4,
+          'wait-withdraw-utxo': 5,
+          'withdraw-eth': 6,
+          'finish': 7,
+          'end': 8,
         }
     }
   }
