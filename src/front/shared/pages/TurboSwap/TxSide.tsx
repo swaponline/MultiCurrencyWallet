@@ -13,7 +13,7 @@ import { AddressFormat } from 'domain/address'
 
 interface ITxSide {
   //peerId: string,
-  title: string,
+  title: React.ReactElement,
   isTitleHighlighted?: boolean
   address: string,
 }

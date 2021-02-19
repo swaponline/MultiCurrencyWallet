@@ -1537,13 +1537,18 @@ export default class Exchange extends Component<any, any> {
 
           <div styleName={`swapTypeSelector ${isTurboAllowed ? '' : 'disabled'}`}>
             <div styleName="toggle">
-              <div styleName="toggleText">Atomic swap</div>
+              <div styleName="toggleText">
+                <FormattedMessage id="AtomicSwap_Title" defaultMessage="Atomic swap" />
+              </div>
               {/*
               //@ts-ignore */}
               <Toggle checked={isTurbo} isDisabled={!isTurboAllowed} onChange={() => this.setState((state) => ({ isTurbo: !state.isTurbo }))} />
               <div styleName="toggleText">
                 <TurboIcon />
-                <span>Turbo swap <sub>α</sub></span>
+                <span>
+                  <FormattedMessage id="TurboSwap_Title" defaultMessage="Turbo swap" />
+                  <sub> α</sub>
+                </span>
               </div>
             </div>
           </div>

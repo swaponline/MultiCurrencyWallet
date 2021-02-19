@@ -267,21 +267,27 @@ export default class TurboSwap extends PureComponent<any, ITurboSwapState> {
 
     const swapStatus: SwapStatus = !flowState.isFinished ? SwapStatus.Pending : SwapStatus.Finished
 
+    const i18n_you = <FormattedMessage id="TurboSwap_You" defaultMessage="You" />
+    const i18n_maker = <FormattedMessage id="TurboSwap_Maker" defaultMessage="Maker" />
+    const i18n_taker = <FormattedMessage id="TurboSwap_Taker" defaultMessage="Taker" />
+
     return (
       <div styleName="turboSwap">
-        <h1 styleName="pageTitle">Turbo swap</h1>
+        <h1 styleName="pageTitle">
+          <FormattedMessage id="TurboSwap_Title" defaultMessage="Turbo swap" />
+        </h1>
         <div styleName="swapId">#{swapIdShortened}</div>
         <div styleName={`swapStatus ${swapStatus}`}>
           {swapStatus === SwapStatus.Pending &&
-            <span>Pending...</span>
+            <FormattedMessage id="TurboSwap_StatusPending" defaultMessage="Pending..." />
           }
           {swapStatus === SwapStatus.Finished &&
-            <span>Finished!</span>
+            <FormattedMessage id="TurboSwap_StatusFinished" defaultMessage="Finished..." />
           }
         </div>
         <div styleName="blockchain">
           <TxSide
-            title={swap.isMy ? 'Taker' : 'You'}
+            title={swap.isMy ? i18n_taker : i18n_you}
             isTitleHighlighted={!swap.isMy}
             address={swap.isMy ? participantAddressSend : myAddressSend}
           />
@@ -294,14 +300,14 @@ export default class TurboSwap extends PureComponent<any, ITurboSwapState> {
             status={takerTx.status}
           />
           <TxSide
-            title={swap.isMy ? 'You' : 'Maker'}
+            title={swap.isMy ? i18n_you : i18n_maker}
             isTitleHighlighted={swap.isMy}
             address={swap.isMy ? myAddressReceive : participantAddressReceive}
           />
         </div>
         <div styleName="blockchain">
           <TxSide
-            title={swap.isMy ? 'Taker' : 'You'}
+            title={swap.isMy ? i18n_taker : i18n_you}
             isTitleHighlighted={!swap.isMy}
             address={swap.isMy ? participantAddressReceive : myAddressReceive}
           />
@@ -314,7 +320,7 @@ export default class TurboSwap extends PureComponent<any, ITurboSwapState> {
             status={makerTx.status}
           />
           <TxSide
-            title={swap.isMy ? 'You' : 'Maker'}
+            title={swap.isMy ? i18n_you : i18n_maker}
             isTitleHighlighted={swap.isMy}
             address={swap.isMy ? myAddressSend : participantAddressSend}
           />
