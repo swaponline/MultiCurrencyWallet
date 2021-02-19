@@ -11,7 +11,13 @@ import config from 'app-config'
 export const iconNames = Object.keys(icons)
 
 
-const CurrencyIcon = ({ className, style, name, currency }) => {
+type CurrencyIconProps = {
+  className?: string
+  style?: IUniversalObj,
+  name: string
+}
+
+const CurrencyIcon = ({ className, style, name}: CurrencyIconProps) => {
   if (typeof name === 'undefined') {
     return <p><FormattedMessage id="currencyIcon15" defaultMessage="Error" /></p>
   }
@@ -53,12 +59,6 @@ const CurrencyIcon = ({ className, style, name, currency }) => {
       {name.charAt(0).toUpperCase()}
     </span>
   )
-}
-
-CurrencyIcon.defaultProps = {
-  className: '',
-  style: {},
-  currency: null
 }
 
 
