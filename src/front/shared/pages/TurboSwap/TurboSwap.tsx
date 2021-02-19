@@ -57,13 +57,12 @@ interface ITurboSwapState {
 @cssModules(styles, { allowMultiple: true })
 export default class TurboSwap extends PureComponent<any, ITurboSwapState> {
 
-/*  wallets: any
+/*
   checkingConfirmSuccessTimer: any
   checkingCycleTimer: any*/
 
-  constructor() {
-    //@ts-ignore
-    super()
+  constructor(props) {
+    super(props)
 
     this.state = {
       swap: null,
@@ -234,7 +233,7 @@ export default class TurboSwap extends PureComponent<any, ITurboSwapState> {
       amount: swap.isMy ? swap.buyAmount : swap.sellAmount,
       currency: swap.isMy ? swap.buyCurrency : swap.sellCurrency,
       hash: flowState.takerTxHash,
-      status: flowState.takerTxHash ?
+      status: !flowState.takerTxHash ?
         SwapTxStatus.Expected
         :
         !flowState.isTakerTxPended ?
@@ -249,7 +248,7 @@ export default class TurboSwap extends PureComponent<any, ITurboSwapState> {
       amount: swap.isMy ? swap.sellAmount : swap.buyAmount,
       currency: swap.isMy ? swap.sellCurrency : swap.buyCurrency,
       hash: flowState.makerTxHash,
-      status: flowState.makerTxHash ?
+      status: !flowState.makerTxHash ?
         SwapTxStatus.Expected
         :
         !flowState.isMakerTxPended ?
@@ -260,7 +259,8 @@ export default class TurboSwap extends PureComponent<any, ITurboSwapState> {
     }
     makerTx.url = makerTx.hash ? helpers.transactions.getLink(makerTx.currency.toLowerCase(), makerTx.hash) : null
 
-    const swapStatus: SwapStatus = flowState.isFinished ? SwapStatus.Pending : SwapStatus.Finished
+
+    const swapStatus: SwapStatus = !flowState.isFinished ? SwapStatus.Pending : SwapStatus.Finished
 
     return (
       <div styleName="turboSwap">
@@ -314,9 +314,12 @@ export default class TurboSwap extends PureComponent<any, ITurboSwapState> {
             address={swap.isMy ? myAddressSend : participantAddressSend}
           />
         </div>
-        <code>
-          {JSON.stringify(swap.flow.state, null, 2)}
-        </code>
+
+        {false && //debug
+          <code>
+            {JSON.stringify(flowState, null, 2)}
+          </code>
+        }
       </div>
     )
   }

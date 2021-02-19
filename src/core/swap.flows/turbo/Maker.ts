@@ -219,10 +219,10 @@ export default class TurboMaker extends Flow {
         room.sendMessage({
           event: 'request swap finished',
         })
-
+        */
         flow.finishStep({
           isFinished: true,
-        }, 'finish')*/
+        }, 'finish')
       },
 
 

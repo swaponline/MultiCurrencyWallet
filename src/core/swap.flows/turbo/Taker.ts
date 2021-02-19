@@ -240,10 +240,10 @@ export default class TurboTaker extends Flow {
             },
           })
         })
-
+        */
         flow.finishStep({
           isFinished: true,
-        }, { step: 'finish' })*/
+        }, { step: 'finish' })
       },
 
 
