@@ -2,6 +2,10 @@ import debug from 'debug'
 import SwapApp, { util } from 'swap.app'
 import Flow from './Flow'
 import { BigNumber } from 'bignumber.js'
+import * as cryptoLib from 'crypto'
+
+
+console.log('>>>>> cryptoLib', cryptoLib)
 
 
 class AtomicAB2UTXO extends Flow {
@@ -395,24 +399,34 @@ class AtomicAB2UTXO extends Flow {
   }
 
   submitSecret() {
-    // if (this.state.flow.isParticipantSigned && this.state.destinationBuyAddress)
+    const {
+      state: {
+        isParticipantSigned,
+      },
+      swap: {
+        destinationBuyAddress,
+      },
+    } = this
+
     if (this.state.secret) { return }
+    if (isParticipantSigned && destinationBuyAddress) {
+      const secret = cryptoLib.randomBytes(32).toString('hex')
+      const secretHash = this.app.env.bitcoin.crypto.ripemd160(Buffer.from(secret, 'hex')).toString('hex')
 
-    if (!this.state.isParticipantSigned) {
-      throw new Error(`Cannot proceed: participant not signed. step=${this.state.step}`)
+      /* Secret hash generated - create BTC script - and only after this notify other part */
+      this.createWorkUTXOScript(secretHash);
+
+      const _secret = `0x${secret.replace(/^0x/, '')}`
+
+      this.finishStep({
+        secret: _secret,
+        secretHash,
+      }, { step: 'submit-secret' })
+    } else {
+      if (!this.state.isParticipantSigned) {
+        throw new Error(`Cannot proceed: participant not signed. step=${this.state.step}`)
+      }
     }
-    const secret = 'qwe'
-    const secretHash = this.app.env.bitcoin.crypto.ripemd160(Buffer.from(secret, 'hex')).toString('hex')
-
-    /* Secret hash generated - create BTC script - and only after this notify other part */
-    this.createWorkUTXOScript(secretHash);
-
-    const _secret = `0x${secret.replace(/^0x/, '')}`
-
-    this.finishStep({
-      secret: _secret,
-      secretHash,
-    }, { step: 'submit-secret' })
   }
 
   createWorkUTXOScript(secretHash) {
