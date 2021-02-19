@@ -494,7 +494,7 @@ const sendTransaction = async ({ to, amount }) => {
 
   const { user: { ethData: { address } } } = getState()
 
-  if (true) { // fake tx - turboswaps debug
+  if (false) { // fake tx - turboswaps debug
     const txHash = '0x58facdbf5023a401f39998179995f0af1e54a64455145df6ed507abdecc1b0a4'
     return txHash
   }
