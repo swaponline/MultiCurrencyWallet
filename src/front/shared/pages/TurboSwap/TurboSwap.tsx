@@ -20,16 +20,17 @@ import { localisedUrl } from 'helpers/locale'
 import feedback from 'shared/helpers/feedback'
 
 import config from 'app-config'
+
+import { SwapSide, SwapStatus, SwapTxStatus } from 'common/domain/swap'
 import TxSide from './TxSide'
 import Tx from './Tx'
 
-
-import { SwapSide, SwapStatus, SwapTxStatus } from 'common/domain/swap'
-
+import { Button } from 'components/controls'
 
 
 interface ITurboSwapState {
-  swap: Swap
+  swap: Swap,
+  flowState: any,
 }
 
 @injectIntl
@@ -40,14 +41,11 @@ interface ITurboSwapState {
     ghostData,
     nextData,
     tokensData,
-    activeFiat
   },*/
   pubsubRoom: { peer },
   rememberedOrders,
 }) => ({
-  //activeFiat,
   //items: [ethData, btcData, ghostData, nextData],
-  //tokenItems: [...Object.keys(tokensData).map(k => (tokensData[k]))],
   //currenciesData: [ethData, btcData, ghostData, nextData],
   //tokensData: [...Object.keys(tokensData).map(k => (tokensData[k]))],
   //savedOrders: rememberedOrders.savedOrders,
@@ -61,18 +59,23 @@ export default class TurboSwap extends PureComponent<any, ITurboSwapState> {
   checkingConfirmSuccessTimer: any
   checkingCycleTimer: any*/
 
+  history = null
+
   constructor(props) {
     super(props)
 
+    const { history } = props
+    this.history = history
+
     this.state = {
       swap: null,
+      flowState: null,
     }
   }
 
   componentWillMount() {
     const {
       items,
-      //tokenItems,
       currenciesData,
       tokensData,
       intl: {
@@ -81,7 +84,7 @@ export default class TurboSwap extends PureComponent<any, ITurboSwapState> {
       //deletedOrders
     } = this.props
 
-    let { match: { params: { orderId } }, history, activeFiat } = this.props
+    let { match: { params: { orderId } }, history } = this.props
 
     if (!orderId) {
       history.push(localisedUrl(links.exchange))
@@ -92,20 +95,23 @@ export default class TurboSwap extends PureComponent<any, ITurboSwapState> {
       const swap = new Swap(orderId, SwapApp.shared())
       console.log(`Front uses flow ${swap.flow._flowName}`);
 
-      //const ethData = items.filter(item => item.currency === 'ETH')
-
       this.setState(() => ({
         swap,
-        //ethData,
-        //ethAddress: ethData[0].address,
+        flowState: swap.flow.state
       }))
+
+      setInterval(() => {
+        this.setState(() => ({
+          flowState: swap.flow.state
+        }))
+      }, 300)
 
     } catch (error) {
       console.error(error)
-      /*actions.notifications.show(constants.notifications.ErrorNotification, {
+      actions.notifications.show(constants.notifications.ErrorNotification, {
         error: 'Sorry, but this order do not exsit already'
       })
-      this.props.history.push(localisedUrl(links.exchange))*/
+      this.props.history.push(localisedUrl(links.exchange))
     }
 
     /*if (!this.props.savedOrders.includes(orderId)) {
@@ -174,26 +180,25 @@ export default class TurboSwap extends PureComponent<any, ITurboSwapState> {
     localStorage.setItem('swapId', JSON.stringify(swapsId))
   }
 */
-  isBalanceEnough = () => {
-    //...
-  }
 
+  /*isBalanceEnough = () => {
+    //...
+  }*/
+
+  goToWallet = () => {
+    this.history.push(links.wallet)
+  }
 
   render() {
     const {
       peer,
-      /*tokenItems,*/
       history,
       intl: { locale }
     } = this.props
 
     const {
       swap,
-      swap: {
-        flow: {
-          state: flowState,
-        },
-      },
+      flowState,
     } = this.state
 
     const sellCurrencyKey = swap.sellCurrency.toLowerCase()
@@ -314,6 +319,12 @@ export default class TurboSwap extends PureComponent<any, ITurboSwapState> {
             address={swap.isMy ? myAddressSend : participantAddressSend}
           />
         </div>
+
+        {swapStatus === SwapStatus.Finished &&
+          <div styleName="checkBalanceButtonWrapper">
+            <Button brand onClick={this.goToWallet}><FormattedMessage id="swapProgressGoToWallet" defaultMessage="Check balance" /></Button>
+          </div>
+        }
 
         {false && //debug
           <code>

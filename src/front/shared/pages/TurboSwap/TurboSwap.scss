@@ -20,7 +20,7 @@
 
 .swapStatus {
   text-align: center;
-  font-size: 16px;
+  font-size: 17px;
   font-weight: bold;
 
   &.Pending {
@@ -35,11 +35,15 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  //background: linear-gradient(#8880, #8882, #8880);
   padding: 2.5em 0em;
   overflow: hidden;
 }
 
 .blockchain + .blockchain {
   border-top: 2px dashed #8884;
+}
+
+.checkBalanceButtonWrapper {
+  display: flex;
+  justify-content: center;
 }

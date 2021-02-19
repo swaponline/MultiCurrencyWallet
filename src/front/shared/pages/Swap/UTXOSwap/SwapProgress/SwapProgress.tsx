@@ -36,6 +36,7 @@ import finishSvg from './images/finish.svg'
 
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
+
 @injectIntl
 @CSSModules(styles, { allowMultiple: true })
 export default class SwapProgress extends Component<any, any> {
@@ -100,8 +101,6 @@ export default class SwapProgress extends Component<any, any> {
   }
 
   onPushGoToWallet = () => {
-    const { buyCurrency } = this.state
-
     this.history.push(localisedUrl(this.locale, '/wallet'))
   }
 

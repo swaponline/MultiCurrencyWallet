@@ -3807,7 +3807,8 @@
     "id": "swapProgressGoToWallet",
     "message": "Check balance",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx",
+      "src/front/shared/pages/TurboSwap/TurboSwap.tsx"
     ]
   },
   {
