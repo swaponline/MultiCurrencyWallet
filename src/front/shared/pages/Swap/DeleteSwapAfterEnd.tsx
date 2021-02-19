@@ -18,9 +18,10 @@ class DeleteSwapAfterEnd extends Component<any, any> {
     }).isRequired,
   }
 
-  constructor({ swap }) {
-    //@ts-ignore
-    super()
+  constructor(props) {
+    super(props)
+
+    const { swap } = props
 
     swap.on('state update', this.autoDeleteOrder)
   }

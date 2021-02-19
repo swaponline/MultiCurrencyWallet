@@ -191,7 +191,6 @@ const bannedPeers = {} // rejected swap peers
       nextData,
       ...Object.values(tokensData).filter(({ address }) => address),
       ...Object.values(rest)
-        //@ts-ignore
         .filter((coinData) => coinData && coinData.address)
         .filter(({ address }) => address),
     ],
@@ -235,8 +234,7 @@ export default class Exchange extends Component<any, any> {
   }
 
   constructor(props) {
-    //@ts-ignore
-    super()
+    super(props)
 
     const {
       tokensData,
@@ -252,7 +250,6 @@ export default class Exchange extends Component<any, any> {
 
     const isRootPage = history.location.pathname === '/' || history.location.pathname === '/ru'
     const {
-      //@ts-ignore
       url,
       params: { buy, sell },
     } = match || { params: { buy: 'btc', sell: 'usdt' } }
