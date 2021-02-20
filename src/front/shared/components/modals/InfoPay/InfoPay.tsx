@@ -121,11 +121,6 @@ export default class InfoPay extends React.Component<any, any> {
       linkBlockChain = helpers.transactions.getLink(currency.toLowerCase(), txId)
     }
 
-    // @ToDo need to find out oldbalance
-    const rowBalances = <div styleName="balanceRow" className="pt-3">
-      <span styleName="textThrough"> {oldBalance} {currency} (~$993.62) </span> → {balance} {currency} (~$992,63)
-                        </div>
-
     return (
       <Modal name={name} title={intl.formatMessage(labels.Title)} onClose={this.handleClose} showCloseButton={true}>
         <div styleName="blockCenter">

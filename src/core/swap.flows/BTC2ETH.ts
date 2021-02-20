@@ -268,8 +268,6 @@ class BTC2ETH extends AtomicAB2UTXO {
     if (secretHash != _secretHash)
       console.warn(`Hash does not match! state: ${secretHash}, given: ${_secretHash}`)
 
-    const { participant } = this.swap
-
     const data = {
       ownerAddress: this.app.getParticipantEthAddress(this.swap),
       secret: _secret,
