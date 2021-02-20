@@ -155,39 +155,72 @@ class BTC2ETH extends AtomicAB2UTXO {
       ]
     } else {
       return [
-        // 1 - `sign` Signs - обмен хешем
+        // 1 - `sign` Signs
         async () => {
-          
+          this.swap.processMetamask()
+          this.sign()
         },
 
         // 2 - `sync-balance` - syncBalance
         async () => {
-          
+          this.syncBalance()
         },
 
-        // 3 - `wait-lock-eth` - wait taker create AB
+        // 3 - `wait-lock-eth` - wait taker create AB - обмен хешем
         async () => {
-          
+          this.swap.room.once('create eth contract', ({
+            ethSwapCreationTransactionHash,
+            secretHash,
+          }) => {
+            if (this.ethSwap.isContractFunded(this)) {
+              this.createWorkUTXOScript(secretHash)
+              this.finishStep({
+                ethSwapCreationTransactionHash,
+                isEthContractFunded: true,
+                secretHash,
+              }, 'wait-lock-eth`')
+            } else {
+              console.warn('Contract not funded', ethSwapCreationTransactionHash, secretHash)
+            }
+          })
         },
 
         // 4 - `lock-utxo` - create UTXO
         async () => {
-          
+          this.btcSwap.fundSwapScript({
+            flow,
+          })
         },
 
         // 5 - `wait-withdraw-utxo` - wait withdraw UTXO - fetch secret from TX - getSecretFromTxhash
         async () => {
-          
+          // check withdraw
+          const { scriptAddress } = this.state
+          const utxoWithdrawData = await this.btcSwap.checkWithdraw(scriptAddress)
+          if (utxoWithdrawData) {
+            // extract secret
+            const secret = this.btcSwap.fetchTxInputScript({
+              txId: utxoWithdrawData.txid,
+            })
+            if (secret) {
+              this.finishStep({
+                secret,
+              }, 'wait-withdraw-utxo')
+            }
+          }
         },
 
         // 6 - `withdraw-eth` - withdraw from AB
         async () => {
-          
+          await flow.ethSwap.withdrawFromABContract({ flow })
         },
 
         // 7 - `finish`
         async () => {
-          
+          // @to-do - txids room events
+          flow.finishStep({
+            isFinished: true,
+          }, 'finish')
         },
 
         // 8 - `end`

@@ -281,9 +281,11 @@ class AtomicAB2UTXO extends Flow {
         isSignFetching: true,
       })
 
-      this.swap.room.once('utxo refund completed', () => {
-        this.tryRefund()
-      })
+      if (!this.isTakerMakerModel) {
+        this.swap.room.once('utxo refund completed', () => {
+          this.tryRefund()
+        })
+      }
 
       this.swap.room.on('request sign', () => {
         this.swap.room.sendMessage({
@@ -398,26 +400,33 @@ class AtomicAB2UTXO extends Flow {
     return false
   }
 
+  generateSecret() {
+    const secret = cryptoLib.randomBytes(32).toString('hex')
+    const secretHash = this.app.env.bitcoin.crypto.ripemd160(Buffer.from(secret, 'hex')).toString('hex')
+    const _secret = `0x${secret.replace(/^0x/, '')}`
+
+    return {
+      secret,
+      secretHash,
+    }
+  }
+
   submitSecret() {
     const {
-      state: {
-        isParticipantSigned,
-      },
-    } = this
+      isParticipantSigned,
+    } = this.state
     // @to-do - check destinationBuyAddress
-console.log('>>>> create secret', this.state.secret, isParticipantSigned)
     if (this.state.secret) { return }
     if (isParticipantSigned) {
-      const secret = cryptoLib.randomBytes(32).toString('hex')
-      const secretHash = this.app.env.bitcoin.crypto.ripemd160(Buffer.from(secret, 'hex')).toString('hex')
+      const {
+        secret,
+        secretHash,
+      } = this.generateSecret()
 
       /* Secret hash generated - create BTC script - and only after this notify other part */
       this.createWorkUTXOScript(secretHash);
-
-      const _secret = `0x${secret.replace(/^0x/, '')}`
-
       this.finishStep({
-        secret: _secret,
+        secret,
         secretHash,
       }, { step: 'submit-secret' })
     } else {

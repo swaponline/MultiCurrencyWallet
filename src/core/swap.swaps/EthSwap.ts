@@ -610,7 +610,10 @@ class EthSwap extends SwapInterface {
     }
 
     const tryCreateSwap = async () => {
-      const { isEthContractFunded } = flow.state
+      const {
+        isEthContractFunded,
+        ethSwapCreationTransactionHash,
+      } = flow.state
 
       if (!isEthContractFunded) {
         try {
@@ -631,6 +634,7 @@ class EthSwap extends SwapInterface {
               event: 'create eth contract',
               data: {
                 ethSwapCreationTransactionHash: hash,
+                secretHash,
               },
             })
 
@@ -665,6 +669,14 @@ class EthSwap extends SwapInterface {
 
           return null
         }
+      } else {
+        flow.swap.room.sendMessage({
+          event: 'create eth contract',
+          data: {
+            ethSwapCreationTransactionHash,
+            secretHash,
+          },
+        })
       }
       return true
     }
@@ -817,6 +829,30 @@ class EthSwap extends SwapInterface {
         }, { step: 'wait-lock-eth' })
       }
     }
+  }
+
+  // @to-do - check secret hash
+  async isContractFunded(flow) {
+    const abClass = this
+
+    const isContractBalanceOk = await util.helpers.repeatAsyncUntilResult(async () => {
+      const balance = await flow.ethSwap.getBalance({
+        ownerAddress: abClass.app.getParticipantEthAddress(flow.swap),
+      })
+
+      _debug('swap.core:flow')('Checking contract balance:', balance)
+
+      if (balance > 0) {
+        return true
+      }
+
+      return false
+    })
+
+    if (isContractBalanceOk) {
+      return true
+    }
+    return false
   }
 
   async withdrawFromABContract({
