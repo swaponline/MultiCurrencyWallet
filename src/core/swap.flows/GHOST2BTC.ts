@@ -371,8 +371,6 @@ class GHOST2BTC extends Flow {
   }
 
   tryRefund() {
-    const { participant } = this.swap
-
     return this.ghostSwap.refund({
       scriptValues: this.state.ghostScriptValues,
       secret: this.state.secret,
