@@ -403,13 +403,11 @@ class AtomicAB2UTXO extends Flow {
       state: {
         isParticipantSigned,
       },
-      swap: {
-        destinationBuyAddress,
-      },
     } = this
-
+    // @to-do - check destinationBuyAddress
+console.log('>>>> create secret', this.state.secret, isParticipantSigned)
     if (this.state.secret) { return }
-    if (isParticipantSigned && destinationBuyAddress) {
+    if (isParticipantSigned) {
       const secret = cryptoLib.randomBytes(32).toString('hex')
       const secretHash = this.app.env.bitcoin.crypto.ripemd160(Buffer.from(secret, 'hex')).toString('hex')
 

@@ -145,7 +145,7 @@ export default class SwapComponent extends PureComponent<any, any> {
     }
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const { items, tokenItems, currenciesData, tokensData, intl: { locale }, deletedOrders } = this.props
     let { match: { params: { orderId } }, history, activeFiat } = this.props
 
@@ -167,7 +167,9 @@ export default class SwapComponent extends PureComponent<any, any> {
     })
 
     try {
+      console.log('>>>>>>>>>>>>>>> create swap')
       const swap = new Swap(orderId, SwapApp.shared())
+      console.log(swap)
       console.log('Swap flow:', swap.flow._flowName);
 
       const SwapComponent = swapComponents[swap.flow._flowName]
@@ -199,13 +201,14 @@ export default class SwapComponent extends PureComponent<any, any> {
           })
       })
 
-      this.setState(() => ({
+      console.log('set swap >>>> ', swap)
+      this.setState({
         swap,
         ethData,
         SwapComponent,
         currencyData,
         ethAddress: ethData[0].address,
-      }))
+      }, this.afterComponentDidMount)
 
       /* hide my orders */
       // disable for now TODO
@@ -224,7 +227,7 @@ export default class SwapComponent extends PureComponent<any, any> {
     }
   }
 
-  componentDidMount() {
+  afterComponentDidMount() {
     const { swap, deletedOrders } = this.state
     const { flow } = swap
     const { step } = flow.state
@@ -427,10 +430,9 @@ export default class SwapComponent extends PureComponent<any, any> {
   }
 
   checkOtherSideRefund = async () => {
+    console.log('>>>> checkOtherSideRefund', this.state)
     const {
-      swap: {
-        flow,
-      },
+      swap,
     } = this.state
     //@ts-ignore
     if (typeof swap.flow.checkOtherSideRefund === 'function') {
