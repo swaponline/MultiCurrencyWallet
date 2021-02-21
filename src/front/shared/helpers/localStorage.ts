@@ -57,6 +57,7 @@ const getItem = (key) => {
       return JSON.parse(value)
     }
     catch (err) {
+      console.log('localStorage.getItem: parse error')
       return value
     }
   }

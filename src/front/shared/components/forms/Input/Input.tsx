@@ -1,16 +1,16 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { Input as ValueLinkInput } from "local_modules/sw-valuelink";
+import React, { Component } from "react"
+import PropTypes from "prop-types"
+import { Input as ValueLinkInput } from "local_modules/sw-valuelink"
 import { constants } from 'helpers'
 import cx from "classnames";
-import { ignoreProps } from "helpers";
-import reducers from "redux/core/reducers";
-import { isMobile } from "react-device-detect";
+import { ignoreProps } from "helpers"
+import reducers from "redux/core/reducers"
+import { isMobile } from "react-device-detect"
 
-import cssModules from "react-css-modules";
-import styles from "./Input.scss";
+import cssModules from "react-css-modules"
+import styles from "./Input.scss"
 import "./style.css"
-import TextArea from "components/forms/TextArea/TextArea";
+import TextArea from "components/forms/TextArea/TextArea"
 
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
@@ -57,11 +57,11 @@ export default class Input extends Component<any, any> {
     reducers.inputActive.setInputActive(true);
   };
 
-  handleBlur = () => {
-    const { onBlur } = this.props;
+  handleBlur = (event) => {
+    const { onBlur } = this.props
 
     if (onBlur) {
-      onBlur();
+      onBlur(event)
     }
 
     if (isMobile) {
@@ -101,7 +101,8 @@ export default class Input extends Component<any, any> {
     const inputContainerStyleName = cx("inputContainer", {
       withError: error,
       withMargin: withMargin,
-      smallFontSize: smallFontSize
+      smallFontSize: smallFontSize,
+      withQr: qr,
     });
 
     const focusEvent = !isMobile
@@ -134,7 +135,7 @@ export default class Input extends Component<any, any> {
           })}
           {fiat > 0 && <p styleName="dollar">{`~${fiat}`}{activeFiat}</p>}
           {qr && (
-            <p styleName="rightEl qr">
+            <p styleName="qrWrapper">
               <i className="fas fa-qrcode" onClick={openScan} />
             </p>
           )}

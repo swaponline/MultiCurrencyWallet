@@ -5622,7 +5622,7 @@
   },
   {
     "id": "Exchange_CustomAddressOption",
-    "message": "Externe portemonnee of uitwisseling",
+    "message": "Externe portemonnee",
     "files": [
       "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
     ]

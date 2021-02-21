@@ -17,7 +17,6 @@ import { ModalConductorProvider } from 'components/modal'
 
 import styles from './styles.scss'
 
-
 const isWidgetBuild = config && config.isWidget
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
@@ -25,7 +24,7 @@ type NewDesignLayoutProps = {
   hiddenCoinsList: string[]
   activeFiat: string
   page: 'history' | 'invoices'
-  children?: ReactNode,
+  children?: ReactNode
   BalanceForm: ReactNode
 }
 
