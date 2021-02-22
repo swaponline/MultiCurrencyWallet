@@ -7,8 +7,6 @@ const proxyRequest = new Proxy(() => null, {
    * @param args array with request's arguments
    */
   apply(target, thisArg, args) {
-    console.log('Proxy args', args)
-    
     const web3Eth = window.web3.eth
     const internalAddressArr = [web3.eth.accounts.wallet[0].address]
     const method = args[0].method
@@ -28,10 +26,10 @@ const proxyRequest = new Proxy(() => null, {
           case 'eth_getCode':
             response(web3Eth.getCode(params[0]))
           default:
-            reject('unknown method')
+            reject('Ethereum proxy: unknown method')
         }
       } catch (error) {
-        this.reportError(error)
+        throw new Error(error)
       }
     })
   }

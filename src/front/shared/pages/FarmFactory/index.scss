@@ -1,12 +1,11 @@
 .farmFactory {
-  padding: 3rem 0;
+  padding: 2rem 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 
   &.dark {
-    // Fix external styles ?
     // #farmfactory-widget-root {}
 
     .farmDeployForm {
@@ -26,17 +25,11 @@
   color: $l-color;
 
   label {
-    margin-bottom: 1rem;
+    cursor: pointer;
+    position: relative;
+    margin-bottom: 2rem;
     display: flex;
     flex-direction: column;
-  }
-
-  input {
-    margin: 0.3rem 0;
-    padding: 0.4rem;
-    border: 1px solid #6665;
-    border-radius: 0.3em;
-    border-radius: 2px;
   }
 }
 

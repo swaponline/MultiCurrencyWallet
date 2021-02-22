@@ -2,18 +2,21 @@ import React from 'react'
 import cssModules from 'react-css-modules'
 import styles from './index.scss'
 import actions from 'redux/actions'
-import { connect } from 'redaction'
 import factoryStyles from './libs/farmfactory.css'
+import Link from 'local_modules/sw-valuelink'
 import { farmDeployer } from './libs/farmdeployer'
 import { farmFactory } from './libs/farmfactory'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { Button } from 'components/controls'
+import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
+import Input from 'components/forms/Input/Input'
 import { constants, feedback, metamask, web3 } from 'helpers'
 import { ethProxy } from './ethProxy'
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 type FarmFactoryState = {
+  internalAddress: string
   rewardsAddress: string
   stakingAddress: string
   btnEnable: boolean
@@ -22,28 +25,18 @@ type FarmFactoryState = {
   error: IError
 }
 @injectIntl
-@connect(
-  ({
-    user: {
-      ethData,
-    }
-  }) => ({
-    ethPrivateKey: ethData.privateKey,
-  })
-)
 @cssModules(styles, { allowMultiple: true })
-export default class FarmFactory extends React.Component<IUniversalObj, FarmFactoryState> {
+export default class FarmFactory extends React.Component<null, FarmFactoryState> {
   constructor(props) {
     super(props)
-
-    // const { ethPrivateKey } = props
-    // const loginResult = actions.eth.login(ethPrivateKey)
-    // console.log('loginResult: ', loginResult)
+    
+    const internalAddress = web3.eth.accounts.wallet[0].address
 
     this.state = {
+      internalAddress,
       btnEnable: true,
-      rewardsAddress: '0x101848D5C5bBca18E6b4431eEdF6B95E9ADF82FA',
-      stakingAddress: '0x101848D5C5bBca18E6b4431eEdF6B95E9ADF82FA',
+      rewardsAddress: internalAddress,
+      stakingAddress: internalAddress,
       duration: 2000003,
       decimal: 18,
       error: null,
@@ -51,7 +44,11 @@ export default class FarmFactory extends React.Component<IUniversalObj, FarmFact
   }
 
   componentDidMount() {
+    const { internalAddress } = this.state
     feedback.farmFactory.started()
+
+    // FIXME: replace modal
+    this.onDeploySuccess('0x101848D5C5bBca18E6b4431eEdF6B95E9ADF82FA')
 
     if (!metamask.isConnected()) {
       window.web3 = web3
@@ -60,7 +57,7 @@ export default class FarmFactory extends React.Component<IUniversalObj, FarmFact
 
     farmDeployer.init({
       rewardsAddress: '',
-      stakingAddress: '0x101848D5C5bBca18E6b4431eEdF6B95E9ADF82FA',
+      stakingAddress: internalAddress,
       duration: 2000003,
       decimal: 18,
       onStartLoading: () => this.setBtnEnable(false),
@@ -135,7 +132,8 @@ export default class FarmFactory extends React.Component<IUniversalObj, FarmFact
   }
 
   render() {
-    const { rewardsAddress, stakingAddress, duration, decimal, btnEnable } = this.state
+    const { btnEnable } = this.state
+    const linked = Link.all(this, 'rewardsAddress', 'stakingAddress', 'duration', 'decimal')
 
     return (
       <section styleName={`farmFactory ${isDark ? 'dark' : ''}`}>
@@ -144,37 +142,69 @@ export default class FarmFactory extends React.Component<IUniversalObj, FarmFact
 
         <div styleName="farmDeployForm">
           <label>
-            Rewards address:
-            <input
-              onChange={(event) => this.setState({ rewardsAddress: event.target.value })}
-              type="text"
-              defaultValue={rewardsAddress}
+            <FieldLabel>
+              <FormattedMessage
+                id="FarmFactoryRewardInputTitle"
+                defaultMessage="Rewards address"
+              />
+            </FieldLabel>
+            <Input
+              onKeyDown={(event) => this.setState({ rewardsAddress: event.target.value })}
+              valueLink={linked.rewardsAddress}
+              disabled={!btnEnable}
+              pattern="0-9a-zA-Z:"
+              type='text'
             />
           </label>
+
           <label>
-            Staking address:
-            <input
-              onChange={(event) => this.setState({ stakingAddress: event.target.value })}
-              type="text"
-              defaultValue={stakingAddress}
+            <FieldLabel>
+                <FormattedMessage
+                  id="FarmFactoryStakingInputTitle"
+                  defaultMessage="Staking address"
+                />
+            </FieldLabel>
+            <Input
+              onKeyDown={(event) => this.setState({ stakingAddress: event.target.value })}
+              valueLink={linked.stakingAddress}
+              disabled={!btnEnable}
+              pattern="0-9a-zA-Z:"
+              type='text'
             />
           </label>
+
           <label>
-            Duration:
-            <input
-              onChange={(event) => this.setState({ duration: +event.target.value })}
-              type="number"
-              defaultValue={duration}
+            <FieldLabel>
+              <FormattedMessage
+                id="FarmFactoryDurationInputTitle"
+                defaultMessage="Duration"
+              />
+            </FieldLabel>
+            <Input
+              onKeyDown={(event) => this.setState({ duration: +event.target.value })}
+              valueLink={linked.duration}
+              disabled={!btnEnable}
+              pattern="0-9\."
+              type='number'
             />
           </label>
+
           <label>
-            Decimal:
-            <input
-              onChange={(event) => this.setState({ decimal: +event.target.value })}
-              type="number"
-              defaultValue={decimal}
+            <FieldLabel>
+              <FormattedMessage
+                id="FarmFactoryDecimalInputTitle"
+                defaultMessage="Decimal"
+              />
+            </FieldLabel>
+            <Input
+              onKeyDown={(event) => this.setState({ decimal: +event.target.value })}
+              valueLink={linked.decimal}
+              disabled={!btnEnable}
+              pattern="0-9\."
+              type='number'
             />
           </label>
+
           <Button id="button" brand blue disabled={!btnEnable} onClick={this.handlerDeploy}>
             <FormattedMessage id="FarmFactoryDeployButton" defaultMessage="Deploy" />
           </Button>
