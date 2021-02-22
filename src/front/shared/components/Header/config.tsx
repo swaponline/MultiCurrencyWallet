@@ -30,6 +30,11 @@ export const messages = defineMessages({
     description: 'Menu item "History"',
     defaultMessage: 'Transactions',
   },
+  farmFactory: {
+    id: 'menu.farmFactory',
+    description: 'Menu item "Farm Factory"',
+    defaultMessage: 'Farm',
+  },
   invest: {
     id: 'menu.invest.info',
     description: 'Menu item "Transactions"',
@@ -44,9 +49,14 @@ export const messages = defineMessages({
 
 export const getMenuItems = (props, isWalletCreate) => {
   const { intl, reputation, isSigned } = props
-
-  const { exchange: linksExchange, createWallet: create, home } = links
   const { exchange, wallet, createWallet } = messages
+  const { 
+    exchange: linksExchange,
+    createWallet: create,
+    farmFactory,
+    history,
+    home,
+  } = links
 
   return (Number.isInteger(reputation) && reputation !== 0)
     || isSigned
@@ -64,7 +74,15 @@ export const getMenuItems = (props, isWalletCreate) => {
       },
       {
         title: intl.formatMessage(messages.history),
-        link: links.history,
+        link: history,
+        exact: true,
+        haveSubmenu: true,
+        icon: 'products',
+        currentPageFlag: true,
+      },
+      {
+        title: intl.formatMessage(messages.farmFactory),
+        link: farmFactory,
         exact: true,
         haveSubmenu: true,
         icon: 'products',
@@ -103,9 +121,14 @@ export const getMenuItems = (props, isWalletCreate) => {
 
 export const getMenuItemsMobile = (props, isWalletCreate, dinamicPath) => {
   const { intl, reputation, isSigned } = props
-
-  const { exchange: linksExchange, createWallet: create, home } = links
   const { exchange, wallet, createWallet } = messages
+  const { 
+    exchange: linksExchange,
+    createWallet: create,
+    farmFactory,
+    history,
+    home,
+  } = links
 
   return (Number.isInteger(reputation) && reputation !== 0) || isSigned
     || localStorage.getItem('isWalletCreate') === 'true'
@@ -120,10 +143,17 @@ export const getMenuItemsMobile = (props, isWalletCreate, dinamicPath) => {
       },
       {
         title: props.intl.formatMessage(messages.history),
-        link: links.history,
+        link: history,
         haveSubmenu: false,
         displayNone: !isWalletCreate,
         icon: <i className="fas fa-exchange-alt" aria-hidden="true" />,
+      },
+      {
+        title: props.intl.formatMessage(messages.farmFactory),
+        link: farmFactory,
+        haveSubmenu: false,
+        displayNone: !isWalletCreate,
+        icon: <i className="fas fa-coins" aria-hidden="true" />,
       },
       !externalConfig.opts.exchangeDisabled && {
         title: intl.formatMessage(exchange),
