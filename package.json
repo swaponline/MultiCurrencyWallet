@@ -28,7 +28,7 @@
     "prod-widget": "npm run dev:mainnet-widget",
     "predeploy:pages": "npm run build:pages && echo staging.swaponline.site > build-mainnet-pages/CNAME",
     "deploy:pages": "gh-pages -d build-mainnet-pages",
-    "deploy:mainnet": "sh deploy",
+    "deploy:mainnet": "sh ./scripts/deploy",
     "dev:testnet": "cross-env CONFIG=testnet.dev nodemon",
     "firebug:testnet": "cross-env CONFIG=testnet.firebug nodemon",
     "dev:testnet-widget": "cross-env CONFIG=testnet.widget.dev nodemon",
