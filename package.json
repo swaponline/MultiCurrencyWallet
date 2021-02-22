@@ -217,7 +217,7 @@
     "classnames": "^2.2.5",
     "command-line-args": "^5.0.2",
     "command-line-usage": "^6.1.0",
-    "connected-react-router": "^6.8.0",
+    "connected-react-router": "^6.9.0",
     "cross-env": "^7.0.3",
     "debug": "^4.1.0",
     "enc-utils": "^3.0.0",
