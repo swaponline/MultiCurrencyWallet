@@ -1326,21 +1326,21 @@
     "message": "ОБМЕН"
   },
   {
-    "id": "MyOrders20",
+    "id": "MyOrdersYouSend",
+    "message": "Вы отправите",
+    "files": [
+      "src/front/shared/pages/Exchange/Orders/MyOrders/MyOrders.tsx"
+    ]
+  },
+  {
+    "id": "MyOrdersYouGet",
     "message": "Вы получите",
     "files": [
       "src/front/shared/pages/Exchange/Orders/MyOrders/MyOrders.tsx"
     ]
   },
   {
-    "id": "MyOrders21",
-    "message": "Вы имеете",
-    "files": [
-      "src/front/shared/pages/Exchange/Orders/MyOrders/MyOrders.tsx"
-    ]
-  },
-  {
-    "id": "MyOrders22",
+    "id": "MyOrdersRate",
     "message": "Курс обмена",
     "files": [
       "src/front/shared/pages/Exchange/Orders/MyOrders/MyOrders.tsx"
@@ -1502,29 +1502,15 @@
     "message": "Выполняется"
   },
   {
-    "id": "RowMobileFirstTypeYouGet",
-    "message": "Вы получите ",
+    "id": "RowMobileYouSend",
+    "message": "Вы отправите",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
     ]
   },
   {
-    "id": "RowMobileFirstTypeYouHave",
-    "message": "Вы имеете",
-    "files": [
-      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
-    ]
-  },
-  {
-    "id": "RowMobileSecondTypeYouGet",
-    "message": "Вы получите ",
-    "files": [
-      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
-    ]
-  },
-  {
-    "id": "RowMobileSecondTypeYouHave",
-    "message": "Вы имеете ",
+    "id": "RowMobileYouGet",
+    "message": "Вы получите",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
     ]

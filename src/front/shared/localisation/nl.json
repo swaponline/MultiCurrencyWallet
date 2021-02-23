@@ -1277,21 +1277,21 @@
     "message": "EXCHANGE"
   },
   {
-    "id": "MyOrders20",
-    "message": "U ontvangt",
+    "id": "MyOrdersYouSend",
+    "message": "Jij stuurt",
     "files": [
       "src/front/shared/pages/Exchange/Orders/MyOrders/MyOrders.tsx"
     ]
   },
   {
-    "id": "MyOrders21",
-    "message": "You have",
+    "id": "MyOrdersYouGet",
+    "message": "Jij ontvangt",
     "files": [
       "src/front/shared/pages/Exchange/Orders/MyOrders/MyOrders.tsx"
     ]
   },
   {
-    "id": "MyOrders22",
+    "id": "MyOrdersRate",
     "message": "Exchange rate",
     "files": [
       "src/front/shared/pages/Exchange/Orders/MyOrders/MyOrders.tsx"
@@ -1446,29 +1446,15 @@
     ]
   },
   {
-    "id": "RowMobileFirstTypeYouGet",
-    "message": "U ontvangt",
+    "id": "RowMobileYouSend",
+    "message": "Jij stuurt",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
     ]
   },
   {
-    "id": "RowMobileFirstTypeYouHave",
-    "message": "You have",
-    "files": [
-      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
-    ]
-  },
-  {
-    "id": "RowMobileSecondTypeYouGet",
-    "message": "U ontvangt",
-    "files": [
-      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
-    ]
-  },
-  {
-    "id": "RowMobileSecondTypeYouHave",
-    "message": "You have",
+    "id": "RowMobileYouGet",
+    "message": "Jij ontvangt",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
     ]

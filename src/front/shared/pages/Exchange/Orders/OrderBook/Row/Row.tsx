@@ -437,8 +437,8 @@ export default class Row extends Component {
             <div styleName="tdContainer-1">
               <span styleName="firstType">
                 {type === PAIR_TYPES.BID
-                  ? (<FormattedMessage id="RowMobileFirstTypeYouHave" defaultMessage="You have" />)
-                  : (<FormattedMessage id="RowMobileFirstTypeYouGet" defaultMessage="You get" />)}
+                  ? (<FormattedMessage id="RowMobileYouSend" defaultMessage="You send" />)
+                  : (<FormattedMessage id="RowMobileYouGet" defaultMessage="You get" />)}
               </span>
               <span styleName='rowAmount withIcon'>
                 {isTurbo &&
@@ -453,8 +453,8 @@ export default class Row extends Component {
             <div styleName="tdContainer-2">
               <span styleName="secondType">
                 {type === PAIR_TYPES.BID
-                  ? (<FormattedMessage id="RowMobileSecondTypeYouGet" defaultMessage="You get" />)
-                  : (<FormattedMessage id="RowMobileSecondTypeYouHave" defaultMessage="You have" />)}
+                  ? (<FormattedMessage id="RowMobileYouGet" defaultMessage="You get" />)
+                  : (<FormattedMessage id="RowMobileYouSend" defaultMessage="You send" />)}
               </span>
               <span styleName='rowAmount'>{`${mobileFormatCrypto(total, base)} ${base}`}</span>
             </div>
