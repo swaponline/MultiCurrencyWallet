@@ -20,12 +20,13 @@ $expected_opacity: 0.3;
 }
 
 .tx-hash {
-  margin-top: 8px;
+  margin-top: 9px;
   text-align: center;
   font-size: 13px;
 
   .tx-link {
-    display: block;
+    display: inline-block;
+    border-bottom: 1px solid #{$color-brand}55;
 
     code {
       font-weight: normal;

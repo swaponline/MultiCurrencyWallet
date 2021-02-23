@@ -20,7 +20,7 @@
 
 .swapStatus {
   text-align: center;
-  font-size: 17px;
+  font-size: 19px;
   font-weight: bold;
 
   &.Pending {
@@ -44,6 +44,7 @@
 }
 
 .checkBalanceButtonWrapper {
+  margin-top: 14px;
   display: flex;
   justify-content: center;
 }
