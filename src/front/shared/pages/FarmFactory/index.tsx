@@ -8,9 +8,9 @@ import { farmDeployer } from './libs/farmdeployer'
 import { farmFactory } from './libs/farmfactory'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { Button } from 'components/controls'
+import { AddressFormat } from 'domain/address'
 import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
 import Address from 'components/ui/Address/Address'
-import { AddressFormat } from 'domain/address'
 import Input from 'components/forms/Input/Input'
 import Copy from 'components/ui/Copy/Copy'
 import { isMobile } from 'react-device-detect'
@@ -20,6 +20,7 @@ import { ethereumProxy } from 'helpers/web3'
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 type FarmFactoryState = {
+  deployedContracts: string[]
   internalAddress: string
   rewardsAddress: string
   stakingAddress: string
@@ -38,6 +39,7 @@ export default class FarmFactory extends React.Component<null, FarmFactoryState>
     const internalAddress = web3.eth.accounts.wallet[0].address
 
     this.state = {
+      deployedContracts: [],
       internalAddress,
       btnEnable: true,
       formIsOpen: false,
@@ -102,10 +104,12 @@ export default class FarmFactory extends React.Component<null, FarmFactoryState>
   }
 
   onDeploySuccess = (address) => {
-    this.setBtnEnable(true)
     feedback.farmFactory.deployed()
 
-    // save address ...
+    this.setBtnEnable(true)
+    this.setState((state) => ({
+      deployedContracts: [address, ...state.deployedContracts]
+    }))
   }
 
   toggleFormVisible = () => {
@@ -115,45 +119,32 @@ export default class FarmFactory extends React.Component<null, FarmFactoryState>
   }
 
   reportError = (error) => {
-    if (error.code === 4001) {
-      // denied transaction
-      this.setBtnEnable(true)
-    } else {
-      this.setBtnEnable(false)
-    }
     feedback.farmFactory.failed(`error name(${error.name}) : error message(${error.message})`)
     console.error(error)
-    this.setState({
-      error,
-    })
+
+    this.setBtnEnable(true)
+    this.setState({ error })
   }
 
   render() {
-    const { btnEnable, formIsOpen } = this.state
+    const { btnEnable, formIsOpen, deployedContracts } = this.state
     const linked = Link.all(this, 'rewardsAddress', 'stakingAddress', 'duration', 'decimal')
 
-    // FIXME: delete
-    const testAddresses = [
-      '0x93d83a81905a1baf4615bcb51db3f2f2bbf6ab9e',
-      '0x93d83a81905a1baf4615bcb51db3f2f2bbf6ab9e',
-      '0x93d83a81905a1baf4615bcb51db3f2f2bbf6ab9e'
-    ]
-
     return (
-      <section styleName={`farmFactory ${isDark ? 'dark' : ''}`}>
+      <section styleName={`farmFactory ${isDark ? "dark" : ""}`}>
         {/* own style for widget */}
         <div style={factoryStyles} id="farmfactory-widget-root"></div>
 
-        <div styleName='farmDeployForm'>
-          <div styleName='farmFormHeader'>
+        <div styleName="farmDeployForm">
+          <div styleName="farmFormHeader">
             <h3><FormattedMessage id="FarmFactoryDeployForm" defaultMessage="Deploy" /></h3>
             <button 
-              styleName={`farmFormToggle ${formIsOpen ? 'up' : ''}`} 
+              styleName={`farmFormToggle ${formIsOpen ? "up" : ""}`} 
               onClick={this.toggleFormVisible}
             ></button>
           </div>
           
-          <div styleName={`farmFormBody ${formIsOpen ? '' : 'hide'}`}>
+          <div styleName={`farmFormBody ${formIsOpen ? "" : "hide"}`}>
             <label>
               <FieldLabel>
                 <FormattedMessage
@@ -166,7 +157,7 @@ export default class FarmFactory extends React.Component<null, FarmFactoryState>
                 valueLink={linked.rewardsAddress}
                 disabled={!btnEnable}
                 pattern="0-9a-zA-Z:"
-                type='text'
+                type="text"
               />
             </label>
 
@@ -182,7 +173,7 @@ export default class FarmFactory extends React.Component<null, FarmFactoryState>
                 valueLink={linked.stakingAddress}
                 disabled={!btnEnable}
                 pattern="0-9a-zA-Z:"
-                type='text'
+                type="text"
               />
             </label>
 
@@ -198,7 +189,7 @@ export default class FarmFactory extends React.Component<null, FarmFactoryState>
                 valueLink={linked.duration}
                 disabled={!btnEnable}
                 pattern="0-9\."
-                type='number'
+                type="number"
               />
             </label>
 
@@ -226,24 +217,24 @@ export default class FarmFactory extends React.Component<null, FarmFactoryState>
 
         <div styleName='farmContracts'>
           <h3><FormattedMessage id="FarmFactoryContracts" defaultMessage="Contracts" /></h3>
-          {testAddresses.length ? (
+          {deployedContracts.length ? (
             <ul>
-              {testAddresses.map(address => {
-                  return (
-                    <li>
-                      <Copy text={address}>
-                        <Address
-                          address={address}
-                          format={isMobile ? AddressFormat.Short : AddressFormat.Full}
-                        />
-                      </Copy>
-                    </li>
-                  )
-                })
+              {deployedContracts.map((address, index) => (
+                <li key={index}>
+                  <Copy text={address}>
+                    <Address
+                      address={address}
+                      format={isMobile ? AddressFormat.Short : AddressFormat.Full}
+                    />
+                  </Copy>
+                </li>
+              ))
               }
             </ul>
           ) : (
-            <FormattedMessage id="FarmFactoryContractsEmpty" defaultMessage="No contracts deployed" />
+            <p styleName="farmContractsEmpty">
+              <FormattedMessage id="FarmFactoryContractsEmpty" defaultMessage="No contracts deployed" />
+            </p>
           )}
         </div>
       </section>
