@@ -1,7 +1,7 @@
 import React from 'react'
 import cssModules from 'react-css-modules'
 import styles from './index.scss'
-import actions from 'redux/actions'
+// import actions from 'redux/actions'
 import factoryStyles from './libs/farmfactory.css'
 import Link from 'local_modules/sw-valuelink'
 import { farmDeployer } from './libs/farmdeployer'
@@ -9,9 +9,13 @@ import { farmFactory } from './libs/farmfactory'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { Button } from 'components/controls'
 import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
+import Address from 'components/ui/Address/Address'
+import { AddressFormat } from 'domain/address'
 import Input from 'components/forms/Input/Input'
+import Copy from 'components/ui/Copy/Copy'
+import { isMobile } from 'react-device-detect'
 import { constants, feedback, metamask, web3 } from 'helpers'
-import { ethProxy } from './ethProxy'
+import { ethereumProxy } from 'helpers/web3'
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
@@ -19,6 +23,7 @@ type FarmFactoryState = {
   internalAddress: string
   rewardsAddress: string
   stakingAddress: string
+  formIsOpen: boolean
   btnEnable: boolean
   duration: number
   decimal: number
@@ -35,8 +40,9 @@ export default class FarmFactory extends React.Component<null, FarmFactoryState>
     this.state = {
       internalAddress,
       btnEnable: true,
-      rewardsAddress: internalAddress,
-      stakingAddress: internalAddress,
+      formIsOpen: false,
+      rewardsAddress: internalAddress, // default in input
+      stakingAddress: internalAddress, // default in input
       duration: 2000003,
       decimal: 18,
       error: null,
@@ -47,12 +53,9 @@ export default class FarmFactory extends React.Component<null, FarmFactoryState>
     const { internalAddress } = this.state
     feedback.farmFactory.started()
 
-    // FIXME: replace modal
-    this.onDeploySuccess('0x101848D5C5bBca18E6b4431eEdF6B95E9ADF82FA')
-
     if (!metamask.isConnected()) {
       window.web3 = web3
-      window.ethereum = ethProxy
+      window.ethereum = ethereumProxy
     }
 
     farmDeployer.init({
@@ -101,20 +104,14 @@ export default class FarmFactory extends React.Component<null, FarmFactoryState>
   onDeploySuccess = (address) => {
     this.setBtnEnable(true)
     feedback.farmFactory.deployed()
-    console.log('Contract address:', address)
 
-    actions.modals.open(constants.modals.AlertModal, {
-      message: (
-        <p>
-          <FormattedMessage 
-            id="FarmFactoryContractDeployed"
-            defaultMessage="Successful! Contract address:"
-          />
-          <br />
-          <span>{address}</span>
-        </p>
-      ),
-    })
+    // save address ...
+  }
+
+  toggleFormVisible = () => {
+    this.setState((state) => ({
+      formIsOpen: !state.formIsOpen,
+    }))
   }
 
   reportError = (error) => {
@@ -132,82 +129,122 @@ export default class FarmFactory extends React.Component<null, FarmFactoryState>
   }
 
   render() {
-    const { btnEnable } = this.state
+    const { btnEnable, formIsOpen } = this.state
     const linked = Link.all(this, 'rewardsAddress', 'stakingAddress', 'duration', 'decimal')
+
+    // FIXME: delete
+    const testAddresses = [
+      '0x93d83a81905a1baf4615bcb51db3f2f2bbf6ab9e',
+      '0x93d83a81905a1baf4615bcb51db3f2f2bbf6ab9e',
+      '0x93d83a81905a1baf4615bcb51db3f2f2bbf6ab9e'
+    ]
 
     return (
       <section styleName={`farmFactory ${isDark ? 'dark' : ''}`}>
         {/* own style for widget */}
         <div style={factoryStyles} id="farmfactory-widget-root"></div>
 
-        <div styleName="farmDeployForm">
-          <label>
-            <FieldLabel>
-              <FormattedMessage
-                id="FarmFactoryRewardInputTitle"
-                defaultMessage="Rewards address"
+        <div styleName='farmDeployForm'>
+          <div styleName='farmFormHeader'>
+            <h3><FormattedMessage id="FarmFactoryDeployForm" defaultMessage="Deploy" /></h3>
+            <button 
+              styleName={`farmFormToggle ${formIsOpen ? 'up' : ''}`} 
+              onClick={this.toggleFormVisible}
+            ></button>
+          </div>
+          
+          <div styleName={`farmFormBody ${formIsOpen ? '' : 'hide'}`}>
+            <label>
+              <FieldLabel>
+                <FormattedMessage
+                  id="FarmFactoryRewardInputTitle"
+                  defaultMessage="Rewards address"
+                />
+              </FieldLabel>
+              <Input
+                onKeyDown={(event) => this.setState({ rewardsAddress: event.target.value })}
+                valueLink={linked.rewardsAddress}
+                disabled={!btnEnable}
+                pattern="0-9a-zA-Z:"
+                type='text'
               />
-            </FieldLabel>
-            <Input
-              onKeyDown={(event) => this.setState({ rewardsAddress: event.target.value })}
-              valueLink={linked.rewardsAddress}
-              disabled={!btnEnable}
-              pattern="0-9a-zA-Z:"
-              type='text'
-            />
-          </label>
+            </label>
 
-          <label>
-            <FieldLabel>
+            <label>
+              <FieldLabel>
                 <FormattedMessage
                   id="FarmFactoryStakingInputTitle"
                   defaultMessage="Staking address"
                 />
-            </FieldLabel>
-            <Input
-              onKeyDown={(event) => this.setState({ stakingAddress: event.target.value })}
-              valueLink={linked.stakingAddress}
-              disabled={!btnEnable}
-              pattern="0-9a-zA-Z:"
-              type='text'
-            />
-          </label>
-
-          <label>
-            <FieldLabel>
-              <FormattedMessage
-                id="FarmFactoryDurationInputTitle"
-                defaultMessage="Duration"
+              </FieldLabel>
+              <Input
+                onKeyDown={(event) => this.setState({ stakingAddress: event.target.value })}
+                valueLink={linked.stakingAddress}
+                disabled={!btnEnable}
+                pattern="0-9a-zA-Z:"
+                type='text'
               />
-            </FieldLabel>
-            <Input
-              onKeyDown={(event) => this.setState({ duration: +event.target.value })}
-              valueLink={linked.duration}
-              disabled={!btnEnable}
-              pattern="0-9\."
-              type='number'
-            />
-          </label>
+            </label>
 
-          <label>
-            <FieldLabel>
-              <FormattedMessage
-                id="FarmFactoryDecimalInputTitle"
-                defaultMessage="Decimal"
+            <label>
+              <FieldLabel>
+                <FormattedMessage
+                  id="FarmFactoryDurationInputTitle"
+                  defaultMessage="Duration"
+                />
+              </FieldLabel>
+              <Input
+                onKeyDown={(event) => this.setState({ duration: +event.target.value })}
+                valueLink={linked.duration}
+                disabled={!btnEnable}
+                pattern="0-9\."
+                type='number'
               />
-            </FieldLabel>
-            <Input
-              onKeyDown={(event) => this.setState({ decimal: +event.target.value })}
-              valueLink={linked.decimal}
-              disabled={!btnEnable}
-              pattern="0-9\."
-              type='number'
-            />
-          </label>
+            </label>
 
-          <Button id="button" brand blue disabled={!btnEnable} onClick={this.handlerDeploy}>
-            <FormattedMessage id="FarmFactoryDeployButton" defaultMessage="Deploy" />
-          </Button>
+            <label>
+              <FieldLabel>
+                <FormattedMessage
+                  id="FarmFactoryDecimalInputTitle"
+                  defaultMessage="Decimal"
+                />
+              </FieldLabel>
+              <Input
+                onKeyDown={(event) => this.setState({ decimal: +event.target.value })}
+                valueLink={linked.decimal}
+                disabled={!btnEnable}
+                pattern="0-9\."
+                type='number'
+              />
+            </label>
+
+            <Button id="button" blue disabled={!btnEnable} onClick={this.handlerDeploy}>
+              <FormattedMessage id="FarmFactoryDeployButton" defaultMessage="Deploy" />
+            </Button>
+          </div>
+        </div>
+
+        <div styleName='farmContracts'>
+          <h3><FormattedMessage id="FarmFactoryContracts" defaultMessage="Contracts" /></h3>
+          {testAddresses.length ? (
+            <ul>
+              {testAddresses.map(address => {
+                  return (
+                    <li>
+                      <Copy text={address}>
+                        <Address
+                          address={address}
+                          format={isMobile ? AddressFormat.Short : AddressFormat.Full}
+                        />
+                      </Copy>
+                    </li>
+                  )
+                })
+              }
+            </ul>
+          ) : (
+            <FormattedMessage id="FarmFactoryContractsEmpty" defaultMessage="No contracts deployed" />
+          )}
         </div>
       </section>
     )

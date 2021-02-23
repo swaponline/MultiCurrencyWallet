@@ -1,21 +1,12 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { connect } from 'redaction'
 import cx from 'classnames'
-
 import actions from 'redux/actions'
-import { constants } from 'helpers'
-
-import Link from 'local_modules/sw-valuelink'
-
 import cssModules from 'react-css-modules'
 import styles from './AlertModal.scss'
-
-import { Modal } from 'components/modal'
 import { Button } from 'components/controls'
-import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
+import { injectIntl, defineMessages } from 'react-intl'
 import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
-
 
 const defaultLanguage = defineMessages({
   title: {
@@ -32,19 +23,28 @@ const defaultLanguage = defineMessages({
   },
 })
 
+type AlertModalProps = {
+  name: string
+  intl: IUniversalObj
+  dashboardModalsAllowed
+  onClose: () => void
+  data: {
+    dontClose: boolean
+    okButtonAutoWidth: boolean
+    onClose: () => void
+    callbackOk: () => boolean
+    title: JSX.Element
+    message: JSX.Element
+    labelOk: JSX.Element
+  }
+}
+
 @injectIntl
 @connect(({ ui: { dashboardModalsAllowed }}) => ({
   dashboardModalsAllowed
 }))
 @cssModules(styles)
-export default class AlertModal extends React.Component<any, any> {
-
-  props: any
-
-  static propTypes = {
-    onAccept: PropTypes.func,
-  }
-
+export default class AlertModal extends React.Component<AlertModalProps, null> {
   handleClose = () => {
     const {
       name,
@@ -88,12 +88,10 @@ export default class AlertModal extends React.Component<any, any> {
   render() {
     const {
       intl,
-      name,
       data: {
         title,
         message,
         labelOk,
-        dontClose,
         okButtonAutoWidth,
       },
       dashboardModalsAllowed,
@@ -111,7 +109,7 @@ export default class AlertModal extends React.Component<any, any> {
       <div className={cx({
         [styles['modal-overlay']]: true,
         [styles['modal-overlay_dashboardView']]: dashboardModalsAllowed
-      })} onClick={this.handleClose}>
+      })}>
         <div className={cx({
           [styles.modal]: true,
           [styles.modal_dashboardView]: dashboardModalsAllowed
