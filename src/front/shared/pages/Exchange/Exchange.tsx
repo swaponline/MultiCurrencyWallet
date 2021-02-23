@@ -1545,7 +1545,8 @@ export default class Exchange extends Component<any, any> {
                 <TurboIcon />
                 <span>
                   <FormattedMessage id="TurboSwap_Title" defaultMessage="Turbo swap" />
-                  <sub> α</sub>
+                  &nbsp;
+                  <a href="https://github.com/swaponline/MultiCurrencyWallet/blob/master/docs/TURBO_SWAPS.md" target="_blank">(?)</a>
                 </span>
               </div>
             </div>
