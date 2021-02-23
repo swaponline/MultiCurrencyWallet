@@ -5693,7 +5693,7 @@
   },
   {
     "id": "Exchange_CustomAddressOption",
-    "message": "Внешний кошелёк или биржа",
+    "message": "Внешний кошелёк",
     "files": [
       "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
     ]
