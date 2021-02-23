@@ -39,6 +39,7 @@ type AlertModalProps = {
   }
 }
 
+//@ts-ignore
 @injectIntl
 @connect(({ ui: { dashboardModalsAllowed }}) => ({
   dashboardModalsAllowed
