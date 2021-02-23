@@ -3,6 +3,10 @@
   padding: 2.2em;
   overflow: hidden;
   border-radius: 24px; // widget
+
+  @media all and (max-width: 567px) { // widget
+    min-width: 280px;
+  }
 }
 
 @mixin lightContainer {
