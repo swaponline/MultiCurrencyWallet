@@ -1,9 +1,5 @@
 #!/bin/bash
 
-# ?token=AOYPUHTNECOHBM5IWVSOKMDAGZPS2
-# ?token=AOYPUHTQTXAEN3MED7OB4ZTAGZPUG
-# ?token=AOYPUHQAKVEEKGIQ4UHHB5TAGZPVQ
-
 farmPagePath="../src/front/shared/pages/FarmFactory/lib/"
 
 curl -O "https://raw.githubusercontent.com/noxonsu/farmfactory/main/lib/farmdeployer.js"
