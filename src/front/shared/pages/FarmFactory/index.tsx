@@ -26,6 +26,7 @@ type FarmFactoryState = {
   stakingAddress: string
   formIsOpen: boolean
   btnEnable: boolean
+  loading: boolean
   duration: number
   decimal: number
   error: IError
@@ -37,15 +38,17 @@ export default class FarmFactory extends React.Component<null, FarmFactoryState>
     super(props)
     
     const internalAddress = web3.eth.accounts.wallet[0].address
+    const btnEnable = window.web3 && window.ethereum && true
 
     this.state = {
       deployedContracts: [],
       internalAddress,
-      btnEnable: true,
+      btnEnable,
+      loading: false,
       formIsOpen: false,
       rewardsAddress: internalAddress, // default in input
       stakingAddress: internalAddress, // default in input
-      duration: 2000003,
+      duration: 2000003, // ~ 9.25 hours
       decimal: 18,
       error: null,
     }
@@ -99,6 +102,10 @@ export default class FarmFactory extends React.Component<null, FarmFactoryState>
     const { rewardsAddress, stakingAddress, duration, decimal } = this.state
 
     this.setBtnEnable(false)
+    this.setState({ 
+      loading: true,
+      error: null, 
+    })
 
     farmDeployer.deploy({
       rewardsAddress: rewardsAddress,
@@ -115,7 +122,8 @@ export default class FarmFactory extends React.Component<null, FarmFactoryState>
 
     this.setBtnEnable(true)
     this.setState((state) => ({
-      deployedContracts: [address, ...state.deployedContracts]
+      deployedContracts: [address, ...state.deployedContracts],
+      loading: false,
     }))
   }
 
@@ -130,11 +138,20 @@ export default class FarmFactory extends React.Component<null, FarmFactoryState>
     console.error(error)
 
     this.setBtnEnable(true)
-    this.setState({ error })
+    this.setState({ 
+      loading: false,
+      error, 
+    })
   }
 
   render() {
-    const { btnEnable, formIsOpen, deployedContracts, error } = this.state
+    const {
+      btnEnable,
+      formIsOpen,
+      deployedContracts,
+      error,
+      loading,
+    } = this.state
     const linked = Link.all(this, 'rewardsAddress', 'stakingAddress', 'duration', 'decimal')
 
     return (
@@ -216,7 +233,7 @@ export default class FarmFactory extends React.Component<null, FarmFactoryState>
               />
             </label>
 
-            <Button id="button" blue disabled={!btnEnable} onClick={this.handlerDeploy}>
+            <Button id="button" pending={loading} blue disabled={!btnEnable} onClick={this.handlerDeploy}>
               <FormattedMessage id="FarmFactoryDeployButton" defaultMessage="Deploy" />
             </Button>
           </div>

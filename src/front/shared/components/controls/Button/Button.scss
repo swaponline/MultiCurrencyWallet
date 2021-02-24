@@ -12,6 +12,30 @@
   @include ff-bold;
   @include no-user-select;
   transition: background-color 0.23s ease, color 0.23s ease;
+
+  .pendingWrapper {
+    position: relative;
+  }
+  
+  .pendingWrapper::after {
+    display: inline-block;
+    animation: ellipsis 1.25s infinite;
+    content: '.';
+    width: 1em;
+    text-align: left;
+  }
+}
+
+@keyframes ellipsis {
+  0% {
+    content: '.';
+  }
+  33% {
+    content: '..';
+  }
+  66% {
+    content: '...';
+  }
 }
 
 .fullWidth {
@@ -106,7 +130,7 @@
 
 .disabled {
   filter: grayscale(1);
-  opacity: 0.15;
+  opacity: 0.25;
   cursor: not-allowed;
 }
 

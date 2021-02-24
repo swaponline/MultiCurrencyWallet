@@ -1,5 +1,5 @@
 @mixin containerCommon {
-  min-width: 410px; // widget
+  width: 410px; // widget
   padding: 2.2em;
   overflow: hidden;
   border-radius: 24px; // widget
@@ -127,7 +127,7 @@
 
   h3 {
     margin: 0;
-    margin-bottom: 2em;
+    margin-bottom: 2rem;
   }
 }
 

@@ -25,7 +25,7 @@ const getWeb3 = () => {
 
 const proxyRequest = new Proxy(() => null, {
   /**
-   * @param target original function: () => null
+   * @function target original function
    * @param thisArg window ethereum object
    * @param args array with target arguments
    */
