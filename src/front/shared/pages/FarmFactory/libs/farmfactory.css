@@ -1,3 +1,8 @@
+#WEB3_CONNECT_MODAL_ID {
+  position: relative;
+  z-index: 1000;
+}
+
 .install-metamask {
   text-align: center;
 }
@@ -187,12 +192,14 @@
 }
 
 
+.farmfactory-connect-visible .farmfactory-widget,
 .farmfactory-deposit-visible .farmfactory-widget,
 .farmfactory-withdraw-visible .farmfactory-widget {
   transform: translate3d(0, -110%, 0);
   opacity: 0;
 }
 
+.farmfactory-connect-visible .farmfactory-connect,
 .farmfactory-deposit-visible .farmfactory-deposit,
 .farmfactory-withdraw-visible .farmfactory-withdraw {
   top: 0;
