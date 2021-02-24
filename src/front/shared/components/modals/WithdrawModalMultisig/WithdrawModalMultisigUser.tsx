@@ -60,14 +60,13 @@ export default class WithdrawModalMultisigUser extends React.Component<any, any>
   broadcastCancelFunc: any
   fiatRates: any
 
-  constructor(data) {
-    //@ts-ignore
-    super()
+  constructor(props) {
+    super(props)
 
     const {
       data: { currency, amount, toAddress, address },
       items,
-    } = data
+    } = props
 
     //@ts-ignore
     const currentDecimals = constants.tokenDecimals.btcmultisig
@@ -632,8 +631,6 @@ export default class WithdrawModalMultisigUser extends React.Component<any, any>
             <div styleName="highLevel">
               <div styleName="groupField"></div>
               <div>
-                {/*
-                //@ts-ignore */}
                 <ShareLink link={txConfirmLink} />
               </div>
             </div>

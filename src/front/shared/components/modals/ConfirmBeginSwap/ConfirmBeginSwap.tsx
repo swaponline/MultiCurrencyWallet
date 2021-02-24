@@ -58,9 +58,10 @@ export default class ConfirmBeginSwap extends React.Component<any, any> {
 
   systemWallets: any
 
-  constructor({ tokensData, currenciesData }) {
-    //@ts-ignore
-    super()
+  constructor(props) {
+    super(props)
+
+    const { tokensData, currenciesData } = props
 
     this.systemWallets = {}
 

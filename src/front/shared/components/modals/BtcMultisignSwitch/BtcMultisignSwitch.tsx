@@ -31,10 +31,8 @@ export default class BtcMultisignSwitch extends React.Component<any, any> {
     data: PropTypes.object,
   }
 
-  constructor() {
-    //@ts-ignore
-    super()
-
+  constructor(props) {
+    super(props)
 
     this.state = {
       wallets: [],

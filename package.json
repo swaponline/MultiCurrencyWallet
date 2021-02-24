@@ -7,12 +7,6 @@
   "homepage": "https://swaponline.io",
   "license": "MIT",
   "main": "./src/front/bin/server",
-  "lint-staged": {
-    "**/*.+(js|json|ts|tsx)": [
-      "prettier --write",
-      "git add"
-    ]
-  },
   "scripts": {
     "common:test": "tsc ./src/common/tests/tests.ts",
     "common:example:send": "node ./src/common/examples/send.js",
@@ -61,8 +55,6 @@
     "build:mainnet-local": "npm run clean:mainnet-local && cross-env NODE_ENV=production DEBUG=app:* CONFIG=mainnet-local.prod node --max-old-space-size=2048 ./src/front/bin/compile",
     "build:chrome-extension-testnet": "npm run clean:chrome-extension && cross-env DEBUG=app:* CONFIG=chrome-extension-testnet.prod node --max-old-space-size=2048 ./src/front/bin/compile && npm run copy:chrome-extension && npm run rename-assets-manifest-file && npm run rename-assets-manifest-link && npm run zip:chrome-extension-testnet",
     "build:chrome-extension-mainnet": "npm run clean:chrome-extension && cross-env NODE_ENV=production DEBUG=app:* CONFIG=chrome-extension-mainnet.prod node --max-old-space-size=2048 ./src/front/bin/compile && npm run copy:chrome-extension && npm run rename-assets-manifest-file && npm run rename-assets-manifest-link && npm run zip:chrome-extension-mainnet",
-    "test:unit": "mocha --require babel-core/register --require ./test/helpers.js --require ./test/dom.js --require ignore-styles 'src/**/*.spec.js'",
-    "test:snapshot": "jest --config ./test/jest.config.json",
     "messages:extract": "babel-node src/front/tools/run messages",
     "rename-assets-manifest-file": "rename-files ./build-chrome-extension/application/assets/ 'manifest.json' 'android-manifest.json'",
     "rename-assets-manifest-link": "replace 'assets/manifest.json' 'assets/android-manifest.json' ./build-chrome-extension/application/index.html",
@@ -76,7 +68,6 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged",
       "post-commit": "npm run common:test && npm run core:test"
     }
   },
@@ -120,6 +111,7 @@
     "babel-plugin-module-resolver": "^4.1.0",
     "babel-plugin-react-intl": "^8.2.25",
     "basic-auth": "^2.0.1",
+    "bestzip": "^2.1.7",
     "body-parser": "^1.19.0",
     "cache-loader": "^4.1.0",
     "chai": "^4.2.0",
@@ -154,7 +146,6 @@
     "kraken-api": "^1.0.1",
     "libp2p-kad-dht": "^0.21.0",
     "libp2p-webrtc-star": "^0.21.0",
-    "lint-staged": "^10.5.3",
     "mini-css-extract-plugin": "^1.3.3",
     "node-localstorage": "^2.1.6",
     "node-sass": "^4.12.0",
@@ -180,7 +171,7 @@
     "superagent": "^6.1.0",
     "terser-webpack-plugin-legacy": "^1.2.5",
     "ts-loader": "8.0.17",
-    "typescript": "4.1.5",
+    "typescript": "4.2.2",
     "url-loader": "^4.1.1",
     "webpack": "^4.44.2",
     "webpack-bundle-analyzer": "^4.1.0",

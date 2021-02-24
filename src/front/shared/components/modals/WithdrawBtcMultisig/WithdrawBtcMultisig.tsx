@@ -54,9 +54,8 @@ export default class WithdrawBtcMultisig extends React.Component<any, any> {
 
   broadcastCancelFunc: any
 
-  constructor(data) {
-    //@ts-ignore
-    super()
+  constructor(props) {
+    super(props)
 
     this.broadcastCancelFunc = false
 

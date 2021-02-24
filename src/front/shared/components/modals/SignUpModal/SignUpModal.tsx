@@ -51,9 +51,8 @@ export default class SignUpModal extends React.Component<any, any> {
     name: PropTypes.string,
   }
 
-  constructor() {
-    //@ts-ignore
-    super()
+  constructor(props) {
+    super(props)
 
     this.state = {
       isSubmitedPush: false,

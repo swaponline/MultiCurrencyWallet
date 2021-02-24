@@ -215,7 +215,6 @@ export default (tokenName) => {
     }
 
     _checkSwapAlreadyExists() {
-      const { participant } = this.swap
       const flow = this
 
       const swapData = {
@@ -227,7 +226,6 @@ export default (tokenName) => {
     }
 
     async tryRefund() {
-      const { participant } = this.swap
       const { secretHash } = this.state
 
       const refundHandler = (hash = null) => {

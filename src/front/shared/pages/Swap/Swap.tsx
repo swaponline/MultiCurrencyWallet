@@ -1,3 +1,4 @@
+
 import React, { PureComponent, Fragment } from 'react'
 
 import Swap from 'swap.swap'
@@ -122,9 +123,8 @@ export default class SwapComponent extends PureComponent<any, any> {
   }
   /* ================================================================ */
 
-  constructor() {
-    //@ts-ignore
-    super()
+  constructor(props) {
+    super(props)
 
     this.state = {
       isAddressCopied: false,
@@ -190,7 +190,6 @@ export default class SwapComponent extends PureComponent<any, any> {
       currencies.forEach(item => {
         actions.user.getExchangeRate(item.currency, activeFiat.toLowerCase())
           .then(exRate => {
-            //@ts-ignore
             const amount = exRate * Number(item.amount)
 
             if (Number(amount) >= 50) {

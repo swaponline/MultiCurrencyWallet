@@ -20,29 +20,28 @@ const FAQ = (props) => {
   const [ethFee, setEthFee] = useState(null)
 
   useEffect(() => {
-    // remove memory leak
     let _mounted = true
-    /* 
-    * waiting for a response with fees and set them
-    */
+    /*
+     * waiting for a response with fees and set them
+     */
     let btcSatoshiPrice = null
     let ethGasPrice = null
 
     async function fetchFees() {
       try {
-        if (_mounted) {
-          const BYTE_IN_KB = 1024
+        const BYTE_IN_KB = 1024
 
-          btcSatoshiPrice = await btc.estimateFeeRate({ speed: 'fast' })
+        btcSatoshiPrice = await btc.estimateFeeRate({ speed: 'fast' })
+        ethGasPrice = await eth.estimateGasPrice({ speed: 'fast' })
+        // remove memory leak
+        if (_mounted) {
           // divided by 1 kb to convert it to satoshi / byte
           setBtcFee(Math.ceil(btcSatoshiPrice / BYTE_IN_KB))
-
-          ethGasPrice = await eth.estimateGasPrice({ speed: 'fast' })
           // return gas * 1e9 - divided by 1e9 to convert
           setEthFee(new BigNumber(ethGasPrice).dividedBy(1e9).toNumber())
         }
-      } catch(error) {
-        console.error('FAQ -> useEffect: ', error);
+      } catch (error) {
+        console.error('FAQ -> useEffect: ', error)
         feedback.faq.failed(`fetch fees error(${error.message})`)
       }
     }
@@ -51,7 +50,7 @@ const FAQ = (props) => {
     return () => {
       _mounted = false
     }
-  });
+  })
 
 
   const { intl: { formatMessage } } = props

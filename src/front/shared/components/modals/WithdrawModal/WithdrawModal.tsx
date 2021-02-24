@@ -68,8 +68,8 @@ type WithdrawModalState = {
   isEthToken: boolean
   fetchFee: boolean
   isInvoicePay?: boolean
+  openScanCam: boolean
   
-  openScanCam: string
   address: string
   comment?: string
   ownTx: string
@@ -133,30 +133,7 @@ type WithdrawModalState = {
   })
 )
 @cssModules(styles, { allowMultiple: true })
-export default class WithdrawModal extends React.Component<any, any> {
-  /**
-   * @method reportError
-   * @method addressIsCorrect
-   * @method openScan
-   * @method amountInputKeyDownCallback
-   * @method updateServiceAndTotalFee
-   * 
-   * @method setCurrenctActiveAsset
-   * @method setCommissions
-   * @method setBtcFeeRate
-   * @method setAlowedBalances
-   * @method setMaxBalance
-   * 
-   * @method handleBuyCurrencySelect
-   * @method handleAmount
-   * @method handleSubmit
-   * @method handleClose
-   * @method handleScan
-   */
-
-  props: WithdrawModalProps
-  state: WithdrawModalState
-
+export default class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalState> {
   mounted = true
   btcFeeTimer: ReturnType<typeof setTimeout> | null = null
 
@@ -194,7 +171,7 @@ export default class WithdrawModal extends React.Component<any, any> {
     this.state = {
       isShipped: false,
       usedAdminFee,
-      openScanCam: '',
+      openScanCam: false,
       address: toAddress ? toAddress : '',
       fiatAmount: '',
       amount: '',
@@ -445,7 +422,7 @@ export default class WithdrawModal extends React.Component<any, any> {
         currency,
         address: to,
       })
-      this.setState(() => ({ isShipped: false, error: false }))
+      this.setState(() => ({ isShipped: false }))
       actions.modals.close(name)
       if (onReady instanceof Function) {
         onReady()
@@ -479,10 +456,9 @@ export default class WithdrawModal extends React.Component<any, any> {
           await actions.invoices.markInvoice(invoice.id, 'ready', txRaw, address)
         }
 
-        this.setState(() => ({
-          isShipped: false,
-          error: false,
-        }))
+        this.setState({
+          isShipped: false
+        })
 
         if (onReady instanceof Function) {
           onReady()
@@ -591,8 +567,8 @@ export default class WithdrawModal extends React.Component<any, any> {
       this.openScan()
     }
   }
-
-  handleAmount = (value) => {
+  // (value: any) => void' is not assignable to parameter of type Transform<string>
+  handleAmount = (value): any => {
     const {
       currentActiveAsset,
       currentDecimals,
@@ -778,7 +754,7 @@ export default class WithdrawModal extends React.Component<any, any> {
     } = this.state
 
     const { name, intl, portalUI, activeFiat, dashboardView } = this.props
-    const linked = Link.all(this, 'address', 'amount', 'ownTx', 'fiatAmount', 'amountRUB', 'comment')
+    const linked = Link.all(this, 'address', 'amount', 'ownTx', 'fiatAmount', 'comment')
 
     const {
       currency,
@@ -919,7 +895,6 @@ export default class WithdrawModal extends React.Component<any, any> {
             pattern="0-9a-zA-Z:"
             placeholder={`Enter ${currency.toUpperCase()} address to transfer`}
             qr={isMobile}
-            withMargin
             openScan={this.openScan}
           />
           {/* show invalid value warning in address input */}

@@ -57,14 +57,13 @@ export default class WithdrawModalMultisig extends React.Component<any, any> {
 
   fiatRates: any
 
-  constructor(data) {
-    //@ts-ignore
-    super()
+  constructor(props) {
+    super(props)
 
     const {
       data: { amount, toAddress, currency },
       items,
-    } = data
+    } = props
 
     //@ts-ignore
     const currentDecimals = constants.tokenDecimals.btcmultisig

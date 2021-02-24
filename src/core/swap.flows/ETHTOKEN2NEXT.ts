@@ -215,8 +215,6 @@ export default (tokenName) => {
     }
 
     _checkSwapAlreadyExists() {
-      const { participant } = this.swap
-
       const swapData = {
         ownerAddress: this.app.getMyEthAddress(),
         participantAddress: this.app.getParticipantEthAddress(this.swap)
@@ -226,7 +224,6 @@ export default (tokenName) => {
     }
 
     async tryRefund() {
-      const { participant } = this.swap
       const { secretHash } = this.state
 
       const refundHandler = (hash = null) => {

@@ -10,7 +10,6 @@ class ScrollToTop extends Component<any, any> {
   }
 
   render() {
-    //@ts-ignore
     return this.props.children
   }
 }

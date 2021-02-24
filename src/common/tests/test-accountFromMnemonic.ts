@@ -76,7 +76,7 @@ tests.forEach(test => {
     return
   }
   console.log('Test: mnemonic ⮕ address,', test.coin, test.network)
-  //@ts-ignore
+
   const account = coins[test.coin][test.network].accountFromMnemonic(test.mnemonic)
   const received = account.address.toString()
   const expected = test.address

@@ -1,4 +1,3 @@
-//@ts-ignore
 import SwapApp, { util } from 'swap.app'
 import actions from 'redux/actions'
 import moment from 'moment/moment'

@@ -229,8 +229,6 @@ class ETH2NEXT extends AtomicAB2UTXO {
   }
 
   _checkSwapAlreadyExists() {
-    const { participant } = this.swap
-
     const swapData = {
       ownerAddress: this.app.getMyEthAddress(),
       participantAddress: this.app.getParticipantEthAddress(this.swap)
@@ -240,7 +238,6 @@ class ETH2NEXT extends AtomicAB2UTXO {
   }
 
   async tryRefund() {
-    const { participant } = this.swap
     const { secretHash } = this.state
 
     const refundHandler = (hash = null) => {

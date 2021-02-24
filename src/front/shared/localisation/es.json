@@ -3331,20 +3331,6 @@
     ]
   },
   {
-    "id": "DepositButton41",
-    "message": "Deposita esta cryptomoneda a tu billetera",
-    "files": [
-      "src/front/shared/components/controls/DepositButton/DepositButton.tsx"
-    ]
-  },
-  {
-    "id": "DepositButton42",
-    "message": "No puedes enviar este activo, porque tu saldo es igual a cero.",
-    "files": [
-      "src/front/shared/components/controls/DepositButton/DepositButton.tsx"
-    ]
-  },
-  {
     "id": "Submenu16",
     "message": "Rapido intercambio atomic swap a BTC, ETH, ERC20 online",
     "files": [
@@ -7241,7 +7227,7 @@
   },
   {
     "id": "Exchange_CustomAddressOption",
-    "message": "External wallet or exchange",
+    "message": "Cartera externa",
     "files": [
       "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
     ]
