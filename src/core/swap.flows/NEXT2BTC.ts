@@ -377,8 +377,6 @@ class NEXT2BTC extends Flow {
   }
 
   tryRefund() {
-    const { participant } = this.swap
-
     return this.nextSwap.refund({
       scriptValues: this.state.nextScriptValues,
       secret: this.state.secret,

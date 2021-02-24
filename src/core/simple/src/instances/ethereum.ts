@@ -7,7 +7,6 @@ import Web3 from 'web3'
 const TESTNET_PROVIDER = `https://ropsten.infura.io/v3/5ffc47f65c4042ce847ef66a3fa70d4c`
 
 const MAINNET_PROVIDER = process.env.WEB3_MAINNET_PROVIDER || `https://geth.swaponline.site`
-// const TESTNET_PROVIDER = process.env.WEB3_TESTNET_PROVIDER || `https://tgeth.swaponline.site`
 const LOCAL_PROVIDER = process.env.WEB3_LOCAL_PROVIDER || `http://localhost:7545`
 
 const WEB3_PROVIDERS = {
