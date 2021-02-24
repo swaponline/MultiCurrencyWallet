@@ -76,7 +76,7 @@ const {
   history: { getAllInProgress, removeInProgress, saveFinished },
   filter: { hash2id, secret2id },
 } = swap.helpers
-//@ts-ignore
+
 const { app, room, orders } = swap.setup()
 
 console.clear()

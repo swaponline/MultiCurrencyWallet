@@ -1690,7 +1690,6 @@ export default class Exchange extends Component<any, any> {
             </>
 
             {isIncompletedSwaps && (
-              //@ts-ignore
               <Button blue styleName="buttonContinueSwap" onClick={this.showIncompleteSwap}>
                 <FormattedMessage id="continueDeclined977" defaultMessage="Continue your swaps" />
               </Button>
@@ -1728,8 +1727,6 @@ export default class Exchange extends Component<any, any> {
           )}
           <Fragment>
             <div styleName="container">
-              {/*
-              //@ts-ignore */}
               <Promo
                 subTitle={subTitle(
                   sellTokenFullName,
