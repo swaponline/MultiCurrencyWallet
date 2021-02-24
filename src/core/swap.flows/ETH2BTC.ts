@@ -233,8 +233,10 @@ class ETH2BTC extends AtomicAB2UTXO {
 
         // 4 - `wait-lock-utxo` - wait create UTXO
         async () => {
+          console.log('>>>> wait lock -utxo')
           this.waitUTXOScriptFunded()
             .then((funded) => {
+              console.log('is funded', funded)
               if (funded) {
                 this.finishStep({}, 'wait-lock-utxo`')
               }
@@ -243,6 +245,7 @@ class ETH2BTC extends AtomicAB2UTXO {
 
         // 5 - `withdraw-utxo` - withdraw from UTXO
         async () => {
+          console.log('>>>> withdraw-utxo')
           await this.btcSwap.withdrawFromSwap({
             flow,
           })

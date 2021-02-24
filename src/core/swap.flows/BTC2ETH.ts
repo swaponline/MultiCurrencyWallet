@@ -194,6 +194,7 @@ class BTC2ETH extends AtomicAB2UTXO {
 
         // 5 - `wait-withdraw-utxo` - wait withdraw UTXO - fetch secret from TX - getSecretFromTxhash
         async () => {
+          console.log('>>>> 5 - wait-withdraw-utxo')
           // check withdraw
           const { scriptAddress } = this.state
           const utxoWithdrawData = await this.btcSwap.checkWithdraw(scriptAddress)
