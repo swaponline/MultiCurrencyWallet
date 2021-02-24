@@ -55,9 +55,16 @@ export default class FarmFactory extends React.Component<null, FarmFactoryState>
     const { internalAddress } = this.state
     feedback.farmFactory.started()
 
+    // hasn't plugin in the browser
     if (!metamask.isConnected()) {
-      window.web3 = web3
-      window.ethereum = ethereumProxy
+      if (!window.web3) {
+        window.web3 = web3
+      }
+      // if false it means that user has plugin,
+      // but metamask isn't connected to our wallet
+      if (!window.ethereum) {
+        window.ethereum = ethereumProxy
+      }
     }
 
     farmDeployer.init({
@@ -127,7 +134,7 @@ export default class FarmFactory extends React.Component<null, FarmFactoryState>
   }
 
   render() {
-    const { btnEnable, formIsOpen, deployedContracts } = this.state
+    const { btnEnable, formIsOpen, deployedContracts, error } = this.state
     const linked = Link.all(this, 'rewardsAddress', 'stakingAddress', 'duration', 'decimal')
 
     return (
@@ -213,6 +220,16 @@ export default class FarmFactory extends React.Component<null, FarmFactoryState>
               <FormattedMessage id="FarmFactoryDeployButton" defaultMessage="Deploy" />
             </Button>
           </div>
+
+          {error && (
+              <div styleName='farmFactoryErrorWrapper'>
+                <h3>Error</h3>
+                {error.code && <p>Code: {error.code}</p>}
+                {error.name && <p>Name: {error.name}</p>}
+                {error.message && <p>Message: {error.message}</p>}
+              </div>
+            )
+          }
         </div>
 
         <div styleName='farmContracts'>
