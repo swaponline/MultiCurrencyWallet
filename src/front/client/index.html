@@ -550,13 +550,13 @@
             </button>
           </div>
           <div class="starter-modal__btn-container">
-            <button class="starter-modal__btn starter-modal__btn_skip">
-              Skip
-            </button>
+            <button id="starter-modal__btn-restore-wallet" class="starter-modal__btn starter-modal__btn_skip starter-modal__btn-restore-wallet">
+              Restore from 12-word seed
+            </button> 
           </div>
           <div class="starter-modal__link-container">
-            <button id="starter-modal__link-restore-wallet" class="starter-modal__link starter-modal__link-restore-wallet">
-              Restore from 12-word seed
+            <button class="starter-modal__link starter-modal__link_skip">
+              Skip
             </button>
           </div>
         </div>
@@ -828,8 +828,8 @@
       <script>
         const btnCreateWallet = document.querySelector('.starter-modal__btn_create-wallet');
         const btnConnectWallet = document.querySelector('.starter-modal__btn_connect-wallet');
-        const btnSkip = document.querySelector('.starter-modal__btn_skip');
-        const btnRestoryWallet = document.getElementById('starter-modal__link-restore-wallet')
+        const btnSkip = document.querySelector('.starter-modal__link_skip');
+        const btnRestoryWallet = document.getElementById('starter-modal__btn-restore-wallet');
         
         // Create wallet
         btnCreateWallet.addEventListener('click', function () {
