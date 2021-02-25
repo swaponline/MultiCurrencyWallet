@@ -8016,5 +8016,12 @@
     "files": [
       "src/front/shared/pages/TurboSwap/TurboSwap.tsx"
     ]
+  },
+  {
+    "id": "TurboIcon_Tip",
+    "message": "Sposób, w jaki transakcje zamiany między taker'em a animatorem rynku następują bezpośrednio",
+    "files": [
+      "src/front/shared/components/ui/TurboIcon/TurboIcon.tsx"
+    ]
   }
 ]

@@ -8026,5 +8026,12 @@
     "files": [
       "src/front/shared/pages/TurboSwap/TurboSwap.tsx"
     ]
+  },
+  {
+    "id": "TurboIcon_Tip",
+    "message": "The way in which swaps between a taker and a market maker occur directly",
+    "files": [
+      "src/front/shared/components/ui/TurboIcon/TurboIcon.tsx"
+    ]
   }
 ]

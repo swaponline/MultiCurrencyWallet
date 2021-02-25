@@ -8046,5 +8046,12 @@
     "files": [
       "src/front/shared/pages/TurboSwap/TurboSwap.tsx"
     ]
+  },
+  {
+    "id": "TurboIcon_Tip",
+    "message": "De manier waarop swaps tussen een nemer en een market maker direct plaatsvinden",
+    "files": [
+      "src/front/shared/components/ui/TurboIcon/TurboIcon.tsx"
+    ]
   }
 ]

@@ -7,14 +7,21 @@ import styles from './Tooltip.scss'
 
 const Tooltip = ({ mark = true, children, id, dontHideMobile = null, place = null }) => (
   <Fragment>
-    {
-      mark && (
-        <span data-tip data-for={id} styleName={`tooltip${dontHideMobile ? ' tooltip_truesight' : ''}`}>
-          <FormattedMessage id="Tooltip11" defaultMessage="?" />
-        </span>
-      )
+    {mark ?
+      <span data-tip data-for={id} styleName={`tooltip isMark ${dontHideMobile ? 'tooltip_truesight' : ''}`}>
+        <FormattedMessage id="Tooltip11" defaultMessage="?" />
+      </span>
+      :
+      <div data-tip data-for={id} styleName="tooltip noMark"></div>
     }
-    <ThemeTooltip id={id} effect="solid" multiline {...{ place }} styleName="r-tooltip">
+
+    <ThemeTooltip
+      styleName="r-tooltip"
+      id={id}
+      effect="solid"
+      multiline
+      {...{ place }}
+    >
       {children}
     </ThemeTooltip>
   </Fragment>

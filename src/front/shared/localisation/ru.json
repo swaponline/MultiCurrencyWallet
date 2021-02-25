@@ -8102,5 +8102,12 @@
     "files": [
       "src/front/shared/pages/TurboSwap/TurboSwap.tsx"
     ]
+  },
+  {
+    "id": "TurboIcon_Tip",
+    "message": "Режим, при котором обмен между тейкером и маркетмейкером происходит напрямую",
+    "files": [
+      "src/front/shared/components/ui/TurboIcon/TurboIcon.tsx"
+    ]
   }
 ]
