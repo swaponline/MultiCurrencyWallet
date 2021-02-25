@@ -93,7 +93,6 @@ const events = {
   },
   farmFactory: {
     started: 'started',
-    deployed: 'deployed',
     failed: 'failed',
   },
   theme: {
