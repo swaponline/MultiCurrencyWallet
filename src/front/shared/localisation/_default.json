@@ -1564,6 +1564,13 @@
     ]
   },
   {
+    "id": "enterYouSend",
+    "message": "Enter \"You send\" amount",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
     "id": "partial255",
     "message": "You get",
     "files": [

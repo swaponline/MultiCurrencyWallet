@@ -1653,7 +1653,11 @@ export default class Exchange extends Component<any, any> {
               onClick={this.initSwap}
               disabled={!canStartSwap}
             >
-              <FormattedMessage id="partial541" defaultMessage="Exchange now" />
+              {linked.haveAmount.value > 0 ? (
+                <FormattedMessage id="partial541" defaultMessage="Exchange now" />
+              ) : (
+                <FormattedMessage id="enterYouSend" defaultMessage='Enter "You send" amount' />
+              )}
             </Button>
             {/* Button Create offer */}
             <>

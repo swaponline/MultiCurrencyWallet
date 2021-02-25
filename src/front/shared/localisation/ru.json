@@ -1675,6 +1675,13 @@
     ]
   },
   {
+    "id": "enterYouSend",
+    "message": "Заполните поле \"Отдаете\"",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
     "id": "partial255",
     "message": "Получаете",
     "files": [
