@@ -50,10 +50,7 @@ const routes = (
       <Route path={`${localisePrefix}${links.exchange}/:sell-to-:buy`} component={Exchange} />
       <Route path={`${localisePrefix}${links.exchange}`} component={Exchange} />
 
-      {/* display farm page only with input parameters */}
-      {true && (
-          <Route path={`${localisePrefix}${links.farmFactory}`} component={FarmFactory} />
-      )}
+      <Route path={`${localisePrefix}${links.farmFactory}`} component={FarmFactory} />
       <Route path={`${localisePrefix}${links.localStorage}`} component={LocalStorage} />
       <Route path={`${localisePrefix}${links.aboutUs}`} component={About} />
 

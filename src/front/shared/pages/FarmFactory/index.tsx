@@ -1,9 +1,9 @@
 import React from 'react'
 import cssModules from 'react-css-modules'
 import styles from './index.scss'
-// import actions from 'redux/actions'
+import config from 'app-config'
 import factoryStyles from './lib/farmfactory.css'
-import { farmDeployer } from './lib/farmdeployer'
+// import { farmDeployer } from './lib/farmdeployer'
 import { farmFactory } from './lib/farmfactory'
 import { constants, feedback, metamask, web3 } from 'helpers'
 import { ethereumProxy } from 'helpers/web3'
@@ -52,21 +52,27 @@ export default class FarmFactory extends React.Component<null, FarmFactoryState>
       }
     }
 
-    farmDeployer.init({
-      rewardsAddress: '',
-      stakingAddress: internalAddress,
-      duration: 2000003,
-      decimal: 18,
-      // onStartLoading: () => null,
-      // onFinishLoading: () => null,
-      onError: (error) => this.reportError(error),
-    })
+    const { 
+      farmAddress,
+      rewardsAddress,
+      stakingAddress,
+    } = window
+
+    // farmDeployer.init({
+    //   rewardsAddress: '',
+    //   stakingAddress: internalAddress,
+    //   duration: 2000003,
+    //   decimal: 18,
+    //   // onStartLoading: () => null,
+    //   // onFinishLoading: () => null,
+    //   onError: (error) => this.reportError(error),
+    // })
 
     farmFactory.init({
-      networkName: 'ropsten', // mainnet, ropsten, kovan
-      farmAddress: '0x38054641b795fb9604961b4c18b871f42bf8afb0',
-      rewardsAddress: '0x93d83a81905a1baf4615bcb51db3f2f2bbf6ab9e',
-      stakingAddress: '0xc3eC8ED5Ce2a19CA40210002116712645dBEceC4',
+      networkName: config.entry === 'testnet' ? 'ropsten' : 'mainnet',
+      farmAddress: farmAddress,
+      rewardsAddress: rewardsAddress,
+      stakingAddress: stakingAddress,
     })
   }
 

@@ -1,7 +1,6 @@
 import React, { Fragment } from "react";
 
 import { RouteComponentProps, withRouter, HashRouter } from "react-router-dom";
-import PropTypes from "prop-types";
 import actions from "redux/actions";
 import { connect } from "redaction";
 import moment from "moment-with-locales-es6";
@@ -77,10 +76,6 @@ class App extends React.Component<RouteComponentProps<any>, any> {
 
   prvMultiTab: any
   localStorageListener: any
-
-  /*static propTypes = {
-    children: PropTypes.element.isRequired
-  };*/
 
   constructor(props) {
     super(props);
