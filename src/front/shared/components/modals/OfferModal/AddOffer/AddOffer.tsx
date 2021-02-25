@@ -467,6 +467,9 @@ export default class AddOffer extends Component<any, any> {
       ? coinsWithDynamicFee.includes(buyCurrency) ? minimalestAmountForBuy : minAmountOffer[buyCurrency]
       : 0.001
 
+    // temporary: hide turboswaps on mainnet
+    const isShowSwapModeSwitch = !process.env.MAINNET
+
     const isTurboAllowed = turboSwap.isAssetSupported(buyCurrency) && turboSwap.isAssetSupported(sellCurrency)
 
     const isDisabled = !exchangeRate
@@ -559,6 +562,7 @@ export default class AddOffer extends Component<any, any> {
               </Tooltip>
             </div>
           </div>
+
           <div styleName="toggle">
             {/*
             //@ts-ignore */}
@@ -578,22 +582,25 @@ export default class AddOffer extends Component<any, any> {
               </Tooltip>
             </div>
           </div>
-          <div styleName="toggle">
-            <div styleName="toggleText">
-              <FormattedMessage id="AtomicSwap_Title" defaultMessage="Atomic swap" />
+
+          {isShowSwapModeSwitch &&
+            <div styleName="toggle">
+              <div styleName="toggleText">
+                <FormattedMessage id="AtomicSwap_Title" defaultMessage="Atomic swap" />
+              </div>
+              {/*
+              //@ts-ignore */}
+              <Toggle checked={isTurbo} isDisabled={!isTurboAllowed} onChange={() => this.setState((state) => ({ isTurbo: !state.isTurbo }))} />
+              <div styleName="toggleText">
+                <TurboIcon />
+                <span>
+                  <FormattedMessage id="TurboSwap_Title" defaultMessage="Turbo swap" />
+                  &nbsp;
+                  <a href="https://github.com/swaponline/MultiCurrencyWallet/blob/master/docs/TURBO_SWAPS.md" target="_blank">(?)</a>
+                </span>
+              </div>
             </div>
-            {/*
-            //@ts-ignore */}
-            <Toggle checked={isTurbo} isDisabled={!isTurboAllowed} onChange={() => this.setState((state) => ({ isTurbo: !state.isTurbo }))} />
-            <div styleName="toggleText">
-              <TurboIcon />
-              <span>
-                <FormattedMessage id="TurboSwap_Title" defaultMessage="Turbo swap" />
-                &nbsp;
-                <a href="https://github.com/swaponline/MultiCurrencyWallet/blob/master/docs/TURBO_SWAPS.md" target="_blank">(?)</a>
-              </span>
-            </div>
-          </div>
+          }
         </div>
         {needEthBalance && (
           <div styleName="Error">
