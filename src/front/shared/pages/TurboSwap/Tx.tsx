@@ -6,7 +6,7 @@ import styles from './Tx.scss'
 
 import { injectIntl, FormattedMessage } from 'react-intl'
 
-import { ITurboSwapConditions, TurboSwapStep, SwapTxStatus } from 'common/domain/swap'
+import { SwapTxStatus } from 'common/domain/swap'
 
 import Address from 'components/ui/Address/Address'
 import { AddressFormat } from 'domain/address'

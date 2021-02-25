@@ -31,7 +31,7 @@ import { animate } from 'helpers/domUtils'
 import Switching from 'components/controls/Switching/Switching'
 import AddressSelect from './AddressSelect/AddressSelect'
 import { AddressType, AddressRole } from 'domain/address'
-import { SwapType } from 'domain/swap'
+import { SwapMode } from 'domain/swap'
 import NetworkStatus from 'components/NetworkStatus/NetworkStatus'
 import Orders from './Orders/Orders'
 
@@ -101,10 +101,11 @@ type ExchangeState = {
   exHaveRate?: string
   exGetRate?: string
   orderId?: string
-  redirectToSwap: null | SwapType
+  redirectToSwap: null | SwapMode
 
   balances: any
   pairFees: any
+  directionOrders: IUniversalObj[]
   filteredOrders: IUniversalObj[]
   desclineOrders: [] // what in the array?
 
@@ -189,6 +190,7 @@ export default class Exchange extends Component<any, any> {
   state: ExchangeState
 
   private _mounted = false
+
   static defaultProps = {
     orders: [],
   }
@@ -206,15 +208,18 @@ export default class Exchange extends Component<any, any> {
       return
     }
 
-    const filteredOrders = orders.filter(
-      (order) =>
-        !order.isMy &&
-        order.sellCurrency === getCurrency.toUpperCase() &&
-        order.buyCurrency === haveCurrency.toUpperCase() &&
-        Boolean(order.isTurbo) === Boolean(isTurbo)
+    const directionOrders = orders.filter(order =>
+      !order.isMy &&
+      order.sellCurrency === getCurrency.toUpperCase() &&
+      order.buyCurrency === haveCurrency.toUpperCase()
+    )
+
+    const filteredOrders = directionOrders.filter(order =>
+      Boolean(order.isTurbo) === Boolean(isTurbo)
     )
 
     return {
+      directionOrders,
       filteredOrders,
     }
   }
@@ -287,6 +292,7 @@ export default class Exchange extends Component<any, any> {
       maxBuyAmount: new BigNumber(0),
       peer: '',
       goodRate: 0,
+      directionOrders: [],
       filteredOrders: [],
       isNonOffers: false,
       isDeclinedOffer: false,
@@ -806,7 +812,7 @@ export default class Exchange extends Component<any, any> {
       clearTimeout(requestTimeout)
       if (isAccepted) {
         this.setState(() => ({
-          redirectToSwap: newOrder.isTurbo ? SwapType.Turbo : SwapType.Atomic,
+          redirectToSwap: newOrder.isTurbo ? SwapMode.Turbo : SwapMode.Atomic,
           orderId: newOrder.id,
           isWaitForPeerAnswer: false,
         }))
@@ -1328,6 +1334,8 @@ export default class Exchange extends Component<any, any> {
       isFullLoadingComplite,
       redirectToSwap,
       isWaitForPeerAnswer,
+      directionOrders,
+      filteredOrders,
       desclineOrders,
       isDeclinedOffer,
       pairFees,
@@ -1342,8 +1350,8 @@ export default class Exchange extends Component<any, any> {
 
     if (redirectToSwap) {
       const swapUri = ({
-        [SwapType.Atomic]: `${links.atomicSwap}/${orderId}`,
-        [SwapType.Turbo]: `${links.turboSwap}/${orderId}`
+        [SwapMode.Atomic]: `${links.atomicSwap}/${orderId}`,
+        [SwapMode.Turbo]: `${links.turboSwap}/${orderId}`
       })[redirectToSwap]
 
       if (!swapUri) {
@@ -1420,6 +1428,9 @@ export default class Exchange extends Component<any, any> {
     const sellTokenFullName = this.getCoinFullName(sellCoin)
     const buyTokenFullName = this.getCoinFullName(buyCoin)
 
+    // temporary: show atomic/turbo switch if only there are turbo offers
+    const isShowSwapModeSwitch = directionOrders.filter(offer => offer.isTurbo).length > 0
+
     const isTurboAllowed = (
       turboSwap.isAssetSupported(buyCoin) &&
       turboSwap.isAssetSupported(sellCoin) &&
@@ -1466,6 +1477,7 @@ export default class Exchange extends Component<any, any> {
       !isWaitForPeerAnswer
 
     const isIncompletedSwaps = !!desclineOrders.length
+
 
     const Form = (
       <div styleName="section">
@@ -1533,24 +1545,26 @@ export default class Exchange extends Component<any, any> {
             </div>
           </div>
 
-          <div styleName={`swapTypeSelector ${isTurboAllowed ? '' : 'disabled'}`}>
-            <div styleName="toggle">
-              <div styleName="toggleText">
-                <FormattedMessage id="AtomicSwap_Title" defaultMessage="Atomic swap" />
-              </div>
-              {/*
-              //@ts-ignore */}
-              <Toggle checked={isTurbo} isDisabled={!isTurboAllowed} onChange={() => this.setState((state) => ({ isTurbo: !state.isTurbo }))} />
-              <div styleName="toggleText">
-                <TurboIcon />
-                <span>
-                  <FormattedMessage id="TurboSwap_Title" defaultMessage="Turbo swap" />
-                  &nbsp;
-                  <a href="https://github.com/swaponline/MultiCurrencyWallet/blob/master/docs/TURBO_SWAPS.md" target="_blank">(?)</a>
-                </span>
+          {isShowSwapModeSwitch &&
+            <div styleName={`swapModeSelector ${isTurboAllowed ? '' : 'disabled'}`}>
+              <div styleName="toggle">
+                <div styleName="toggleText">
+                  <FormattedMessage id="AtomicSwap_Title" defaultMessage="Atomic swap" />
+                </div>
+                {/*
+                //@ts-ignore */}
+                <Toggle checked={isTurbo} isDisabled={!isTurboAllowed} onChange={() => this.setState((state) => ({ isTurbo: !state.isTurbo }))} />
+                <div styleName="toggleText">
+                  <TurboIcon />
+                  <span>
+                    <FormattedMessage id="TurboSwap_Title" defaultMessage="Turbo swap" />
+                    &nbsp;
+                    <a href="https://github.com/swaponline/MultiCurrencyWallet/blob/master/docs/TURBO_SWAPS.md" target="_blank">(?)</a>
+                  </span>
+                </div>
               </div>
             </div>
-          </div>
+          }
 
           <div styleName="errors">
             {isErrorNoOrders && (

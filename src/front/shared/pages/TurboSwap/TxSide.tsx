@@ -6,7 +6,6 @@ import styles from './TxSide.scss'
 
 import { injectIntl, FormattedMessage } from 'react-intl'
 
-import { ITurboSwapConditions, TurboSwapStep } from 'common/domain/swap'
 import Address from 'components/ui/Address/Address'
 import { AddressFormat } from 'domain/address'
 
