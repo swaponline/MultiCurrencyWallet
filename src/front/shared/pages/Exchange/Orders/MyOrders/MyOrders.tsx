@@ -14,9 +14,9 @@ export default class MyOrders extends PureComponent<any, any> {
   render() {
     const titles = [
       ' ',
-      <FormattedMessage id="MyOrders21" defaultMessage="You have" />,
-      <FormattedMessage id="MyOrders20" defaultMessage="You get" />,
-      <FormattedMessage id="MyOrders22" defaultMessage="Exchnage rate" />,
+      <FormattedMessage id="MyOrdersYouSend" defaultMessage="You send" />,
+      <FormattedMessage id="MyOrdersYouGet" defaultMessage="You get" />,
+      <FormattedMessage id="MyOrdersRate" defaultMessage="Exchnage rate" />,
       ' ',
     ]
     const { myOrders, declineRequest, acceptRequest, removeOrder } = this.props

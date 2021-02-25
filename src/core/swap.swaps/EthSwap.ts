@@ -8,11 +8,12 @@ class EthSwap extends SwapInterface {
 
   address: string
   abi: any[]
-  _swapName: any
+  _swapName: string
   gasLimit: number
   gasPrice: number
-  fetchBalance: any
-  estimateGasPrice: any
+  fetchBalance: Function
+  estimateGasPrice: Function
+  sendTransaction: Function
 
   app: any
   decoder: any
@@ -52,6 +53,7 @@ class EthSwap extends SwapInterface {
     this.gasPrice       = options.gasPrice || 2e9
     this.fetchBalance   = options.fetchBalance
     this.estimateGasPrice = options.estimateGasPrice || (() => {})
+    this.sendTransaction = options.sendTransaction
   }
 
   _initSwap(app) {

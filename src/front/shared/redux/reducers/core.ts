@@ -27,6 +27,7 @@ export const markCoinAsHidden = (state, coin) => ({
     coin,
   ],
 })
+
 export const markCoinAsVisible = (state, coin) => ({
   ...state,
   hiddenCoinsList: state.hiddenCoinsList.filter(c => c !== coin),
