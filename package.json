@@ -44,7 +44,6 @@
     "clean:mainnet-widget": "rimraf ./build-mainnet-widget",
     "clean:chrome-extension": "rimraf ./build-chrome-extension",
     "copy:chrome-extension": "copy ./chrome-extension ./build-chrome-extension",
-    "update:farm-plugin": "bash ./scripts/updateFarmPlugin.sh",
     "zip:chrome-extension-testnet": "bestzip ./build-chrome-extension/chrome-extension-testnet.zip ./build-chrome-extension/*",
     "zip:chrome-extension-mainnet": "bestzip ./build-chrome-extension/chrome-extension-mainnet.zip ./build-chrome-extension/*",
     "build:pages": "npm run clean:pages && cross-env DEBUG=app:*,swap.core:* CONFIG=mainnet.pages.prod node ./src/front/bin/compile",
