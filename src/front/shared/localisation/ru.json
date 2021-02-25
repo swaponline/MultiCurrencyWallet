@@ -3469,20 +3469,6 @@
     ]
   },
   {
-    "id": "DepositButton41",
-    "message": "Deposit this cryptocurrency to your wallet",
-    "files": [
-      "src/front/shared/components/controls/DepositButton/DepositButton.tsx"
-    ]
-  },
-  {
-    "id": "DepositButton42",
-    "message": "You can not send this asset, because you have a zero balance.",
-    "files": [
-      "src/front/shared/components/controls/DepositButton/DepositButton.tsx"
-    ]
-  },
-  {
     "id": "Submenu16",
     "message": "Fast atomic swap exchanges BTC, ETH, ERC20 online",
     "files": [

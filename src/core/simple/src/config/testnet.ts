@@ -10,7 +10,6 @@ const id = parseInt(process.argv[2])
         || process.env.ACCOUNT
         || Math.random().toString().slice(2)
 
-const offset = process.env.OFFSET || process.argv[1]
 const ROOT_DIR = process.env.ROOT_DIR || '.'
 
 const config = {
@@ -33,12 +32,6 @@ const config = {
     name: 'SWAP',
     decimals: 18,
     tokenAddress: '0x348236484ce96a293e210260b90bbfb228d6d1fc',
-  }),
-  cashSwap: () => ({
-    url: 'http://net2pay.o.atwinta.ru',
-    fetchBalance: () => {},
-    getURL: url => open(url),
-    openURL: url => open(url),
   }),
 }
 

@@ -160,7 +160,6 @@ const getConfig = (config) => ({ account, mnemonic, contracts: { ETH, TOKEN }, .
         (config.swaps || [])
       ),
       ...(
-        //@ts-ignore
         tokens.map(_token => new EthTokenSwap(tokenSwap(_token)))
       )
     ]

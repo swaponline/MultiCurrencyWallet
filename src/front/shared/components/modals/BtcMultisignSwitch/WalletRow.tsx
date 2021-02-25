@@ -111,8 +111,6 @@ export default class WalletRow extends Component<any, any> {
           </div>
           {dropDownMenuItems.length > 0 && (
             <div onClick={this.handleOpenDropdown} styleName="assetsTableDots">
-              {/*
-              //@ts-ignore */}
               <DropdownMenu
                 size="regular"
                 className="walletControls"

@@ -63,7 +63,6 @@ export default class TxInfo extends Component<any, any> {
       adminFee,
       error,
       finalBalances,
-      //@ts-ignore
     } = this.props
 
     let linkBlockChain = '#'

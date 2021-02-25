@@ -13,7 +13,7 @@ const ModalConductorProvider = ({ children, history, modals, ...props }) => {
   const isAnyModalCalled = Object.keys(modals).length
 
   const hiestZ = Object.values(modals).reduce(
-    //@ts-ignore 
+    //@ts-ignore
     (acc, i) => (acc > i.zIndex ? acc : i.zIndex),
     -1
   )

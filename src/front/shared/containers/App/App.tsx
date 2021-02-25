@@ -41,7 +41,6 @@ import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import metamask from 'helpers/metamask'
 
 
-//@ts-ignore
 const userLanguage = (navigator.userLanguage || navigator.language || "en-gb").split("-")[0];
 moment.locale(userLanguage)
 
@@ -103,7 +102,7 @@ class App extends React.Component<RouteComponentProps<any>, any> {
 
   generadeId(callback) {
     const newId = Date.now().toString();
-    //@ts-ignore
+
     this.setState(
       {
         appID: newId
@@ -126,11 +125,9 @@ class App extends React.Component<RouteComponentProps<any>, any> {
 
         if (id && id !== appID) {
           this.setState({ multiTabs: true });
-          //@ts-ignore
+
           localStorage.unsubscribe(this.prvMultiTab.reject);
-          //@ts-ignore
           localStorage.unsubscribe(this.prvMultiTab.enter);
-          //@ts-ignore
           localStorage.unsubscribe(this.prvMultiTab.switch);
           localStorage.removeItem(constants.localStorage.reject);
         }
@@ -154,19 +151,15 @@ class App extends React.Component<RouteComponentProps<any>, any> {
           this.setState({
             multiTabs: true
           });
-          //@ts-ignore
+
           localStorage.unsubscribe(this.prvMultiTab.reject);
-          //@ts-ignore
           localStorage.unsubscribe(this.prvMultiTab.enter);
-          //@ts-ignore
           localStorage.unsubscribe(this.prvMultiTab.switch);
         }
       };
-      //@ts-ignore
+
       this.prvMultiTab.reject = localStorage.subscribe(constants.localStorage.reject, onRejectHandle);
-      //@ts-ignore
       this.prvMultiTab.enter = localStorage.subscribe(constants.localStorage.enter, onEnterHandle);
-      //@ts-ignore
       this.prvMultiTab.switch = localStorage.subscribe(constants.localStorage.switch, onSwitchHangle);
 
       localStorage.setItem(constants.localStorage.enter, newId);
@@ -372,7 +365,6 @@ class App extends React.Component<RouteComponentProps<any>, any> {
   }
 
   handleSwitchTab = () => {
-    //@ts-ignore
     this.setState({
       multiTabs: false
     });

@@ -14,8 +14,7 @@ import styles from './QR.scss'
 export default class QR extends Component<any, any> {
 
   constructor(props) {
-    //@ts-ignore
-    super()
+    super(props)
 
     this.state = {
       renderQr: false,

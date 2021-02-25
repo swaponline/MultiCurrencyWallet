@@ -75,7 +75,6 @@ export default class AddOffer extends Component<any, any> {
       }
     }
 
-    //@ts-ignore
     const { exchangeRate, buyAmount, sellAmount, buyCurrency, sellCurrency } = initialData || {}
 
     this.state = {
@@ -422,7 +421,6 @@ export default class AddOffer extends Component<any, any> {
       sellCurrency: buyCurrency,
       buyCurrency: sellCurrency,
     }, async () => {
-      //@ts-ignore
       await this.checkBalance(buyCurrency)
       await this.updateExchangeRate(buyCurrency, sellCurrency)
 

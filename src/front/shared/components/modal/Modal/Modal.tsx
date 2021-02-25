@@ -130,7 +130,6 @@ export default class Modal extends Component<any, any> {
     })
 
     return (
-      //@ts-ignore 
       <Overlay dashboardView={dashboardView} styleName={styleName}>
         <div styleName={cx({
           modal: true,
@@ -166,7 +165,6 @@ export default class Modal extends Component<any, any> {
                   </div>
                 )
                 : (
-                  //@ts-ignore 
                   <Center scrollable centerHorizontally={shouldCenterHorizontally} centerVertically={shouldCenterVertically}>
                     <div styleName="content">
                       {children}

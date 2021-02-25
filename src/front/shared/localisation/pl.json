@@ -3318,20 +3318,6 @@
     ]
   },
   {
-    "id": "DepositButton41",
-    "message": "Wykonaj depozyt do Twojego portfela",
-    "files": [
-      "src/front/shared/components/controls/DepositButton/DepositButton.tsx"
-    ]
-  },
-  {
-    "id": "DepositButton42",
-    "message": "Nie możesz tego wysłać ponieważ nie posiadasz tyle na koncie.",
-    "files": [
-      "src/front/shared/components/controls/DepositButton/DepositButton.tsx"
-    ]
-  },
-  {
     "id": "Submenu16",
     "message": "Ekspresowt SWAP BTC, ETH, ERC20 online",
     "files": [

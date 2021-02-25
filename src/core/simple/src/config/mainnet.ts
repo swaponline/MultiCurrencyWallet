@@ -10,7 +10,6 @@ const id = parseInt(process.argv[2])
         || process.env.ACCOUNT
         || Math.random().toString().slice(2)
 
-const offset = process.env.OFFSET || process.argv[1]
 const ROOT_DIR = process.env.ROOT_DIR || '.'
 
 const config = {
