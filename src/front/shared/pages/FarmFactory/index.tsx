@@ -12,8 +12,6 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 type FarmFactoryState = {
   internalAddress: string
-  rewardsAddress: string
-  stakingAddress: string
   duration: number
   decimal: number
   error: IError
@@ -23,13 +21,9 @@ type FarmFactoryState = {
 export default class FarmFactory extends React.Component<null, FarmFactoryState> {
   constructor(props) {
     super(props)
-    
-    const internalAddress = web3.eth.accounts.wallet[0].address
 
     this.state = {
-      internalAddress,
-      rewardsAddress: internalAddress, // default in input
-      stakingAddress: internalAddress, // default in input
+      internalAddress: '',
       duration: 2000003, // ~ 9.25 hours
       decimal: 18,
       error: null,
@@ -37,11 +31,10 @@ export default class FarmFactory extends React.Component<null, FarmFactoryState>
   }
 
   componentDidMount() {
-    const { internalAddress } = this.state
     feedback.farmFactory.started()
 
     // hasn't plugin in the browser
-    if (!metamask.isConnected()) {
+    if (!metamask.isConnected()) {      
       if (!window.web3) {
         window.web3 = web3
       }
@@ -52,11 +45,24 @@ export default class FarmFactory extends React.Component<null, FarmFactoryState>
       }
     }
 
+    // 'ff-account-unlocked' - this key must be in the localStorage
+    // if web3 account is available
+
+    // const isAccountUnlocked = window.localStorage.setItem('ff-account-unlocked', 'true)
+
+    // FIXME: for test
+    // window.farm = {
+    //   farmAddress: '0xdf7c806Bc128667f5394e3E9e9d5C1F56c8C9A44',
+    //   rewardsAddress: '0xdf7c806Bc128667f5394e3E9e9d5C1F56c8C9A44',
+    //   stakingAddress: '0xdf7c806Bc128667f5394e3E9e9d5C1F56c8C9A44',
+    // }
+    // FIXME:
+
     const { 
       farmAddress,
       rewardsAddress,
       stakingAddress,
-    } = window
+    } = window.farm
 
     // farmDeployer.init({
     //   rewardsAddress: '',

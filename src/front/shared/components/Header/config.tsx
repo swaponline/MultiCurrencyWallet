@@ -87,7 +87,7 @@ export const getMenuItems = (props, isWalletCreate) => {
 
   // Farm plugin ****************************
 
-  const { farmAddress, rewardsAddress, stakingAddress } = window
+  const { farmAddress, rewardsAddress, stakingAddress } = window.farm
   const hasFarmInitOprions = farmAddress && rewardsAddress && stakingAddress
 
   if (hasFarmInitOprions) {
@@ -166,7 +166,7 @@ export const getMenuItemsMobile = (props, isWalletCreate, dinamicPath) => {
 
   // Farm plugin ****************************
 
-  const { farmAddress, rewardsAddress, stakingAddress } = window
+  const { farmAddress, rewardsAddress, stakingAddress } = window.farm
   const hasFarmInitOprions = farmAddress && rewardsAddress && stakingAddress
 
   if (hasFarmInitOprions) {

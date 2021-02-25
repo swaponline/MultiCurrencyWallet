@@ -31,6 +31,11 @@ const proxyRequest = new Proxy(() => null, {
    */
   apply(target, thisArg, args) {
     const web3Eth = window.web3.eth
+    
+    if (!web3Eth) {
+      throw new Error('Ethereum Proxy: window.web3.eth is undefined')
+    }
+
     const internalAddressArr = [web3.eth.accounts.wallet[0].address]
     const method = args[0].method
     const params = args[0].params
