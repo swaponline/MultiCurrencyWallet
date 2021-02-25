@@ -8035,7 +8035,7 @@
   },
   {
     "id": "TurboIcon_Tip",
-    "message": "De manier waarop swaps tussen een nemer en een market maker direct plaatsvinden",
+    "message": "Sneller en goedkoper ruilen met vertrouwde marketmaker, aanbevolen voor kleine bedragen",
     "files": [
       "src/front/shared/components/ui/TurboIcon/TurboIcon.tsx"
     ]

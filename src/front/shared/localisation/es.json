@@ -8043,7 +8043,7 @@
   },
   {
     "id": "TurboIcon_Tip",
-    "message": "La forma en que los intercambios entre un tomador y un creador de mercado ocurren directamente",
+    "message": "Intercambio más rápido y económico con un creador de mercado de confianza, recomendado para pequeñas cantidades",
     "files": [
       "src/front/shared/components/ui/TurboIcon/TurboIcon.tsx"
     ]

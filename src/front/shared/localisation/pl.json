@@ -8005,7 +8005,7 @@
   },
   {
     "id": "TurboIcon_Tip",
-    "message": "Sposób, w jaki transakcje zamiany między taker'em a animatorem rynku następują bezpośrednio",
+    "message": "Szybsza i tańsza wymiana z zaufanym animatorem, polecana za niewielkie kwoty",
     "files": [
       "src/front/shared/components/ui/TurboIcon/TurboIcon.tsx"
     ]

@@ -13,7 +13,7 @@ const TurboIcon = () => {
       <img styleName='turboIconImage' src={turboSwapIcon} />
       <span styleName='turboIconText'>turbo</span>
       <Tooltip id="test" mark={false} place={'bottom'}>
-        <FormattedMessage id="TurboIcon_Tip" defaultMessage="Offer list" />
+        <FormattedMessage id="TurboIcon_Tip" defaultMessage="Faster and cheaper swap with trusted marketmaker, recommended for small amounts" />
       </Tooltip>
     </div>
   )

@@ -8015,7 +8015,7 @@
   },
   {
     "id": "TurboIcon_Tip",
-    "message": "The way in which swaps between a taker and a market maker occur directly",
+    "message": "Faster and cheaper swap with trusted marketmaker, recommended for small amounts",
     "files": [
       "src/front/shared/components/ui/TurboIcon/TurboIcon.tsx"
     ]
