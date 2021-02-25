@@ -830,6 +830,14 @@
         const btnConnectWallet = document.querySelector('.starter-modal__btn_connect-wallet');
         const btnSkip = document.querySelector('.starter-modal__link_skip');
         const btnRestoryWallet = document.getElementById('starter-modal__btn-restore-wallet');
+        // ...
+        // Restore wallet
+        btnRestoryWallet.addEventListener('click', () => {
+           redirectionTo('#/restoreWallet'); // добавить эту строку
+           setCookie('swapDisalbeStarter', 'true', {
+            expires: SEC_IN_YEAR * 5,
+          });
+        })
         
         // Create wallet
         btnCreateWallet.addEventListener('click', function () {
