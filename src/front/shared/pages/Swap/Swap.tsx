@@ -19,7 +19,6 @@ import Debug from './Debug/Debug'
 import { injectIntl, FormattedMessage } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
 import DeleteSwapAfterEnd from './DeleteSwapAfterEnd'
-import { Button } from 'components/controls'
 import CopyToClipboard from 'react-copy-to-clipboard'
 
 import feedback from 'shared/helpers/feedback'
@@ -44,7 +43,6 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
   errors: 'api.errors',
   checked: 'api.checked',
   savedOrders: rememberedOrders.savedOrders,
-  deletedOrders: rememberedOrders.deletedOrders,
   peer,
 }))
 
@@ -130,7 +128,6 @@ export default class SwapComponent extends PureComponent<any, any> {
       isAddressCopied: false,
       swap: null,
       isMy: false,
-      ethBalance: null,
       currencyData: null,
       isAmountMore: null,
       SwapComponent: null,
@@ -145,8 +142,10 @@ export default class SwapComponent extends PureComponent<any, any> {
     }
   }
 
+
   componentDidMount() {
-    const { items, tokenItems, currenciesData, tokensData, intl: { locale }, deletedOrders } = this.props
+    const { items, tokenItems, currenciesData, tokensData, intl: { locale } } = this.props
+
     let { match: { params: { orderId } }, history, activeFiat } = this.props
 
     if (!!window.performance && window.performance.navigation.type === 2) {
@@ -226,8 +225,8 @@ export default class SwapComponent extends PureComponent<any, any> {
     }
   }
 
+
   afterComponentDidMount() {
-    const { swap, deletedOrders } = this.state
     const { flow } = swap
     const { step } = flow.state
 
@@ -267,7 +266,9 @@ export default class SwapComponent extends PureComponent<any, any> {
       }, 5000)
 
       const checkingConfirmSuccess = setTimeout(() => {
-        if (!this.checkIsConfirmed()) window.location.reload()
+        if (!this.checkIsConfirmed()) {
+          window.location.reload()
+        }
       }, 30000)
 
       this.checkingConfirmSuccessTimer = checkingConfirmSuccess

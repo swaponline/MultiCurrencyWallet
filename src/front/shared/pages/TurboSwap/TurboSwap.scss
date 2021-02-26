@@ -1,0 +1,50 @@
+.turboSwap {
+  max-width: 500px;
+  margin: 0 auto;
+  font-size: 12px;
+}
+
+.pageTitle {
+  text-align: center;
+  margin: 0.1em 0;
+}
+
+.swapId {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  text-align: center;
+  font-style: italic;
+  font-size: 12px;
+  opacity: 0.5;
+}
+
+.swapStatus {
+  text-align: center;
+  font-size: 19px;
+  font-weight: bold;
+
+  &.Pending {
+    color: #f6b153;
+  }
+  &.Finished {
+    color: #54C147;
+  }
+}
+
+.blockchain {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2.5em 0em;
+  overflow: hidden;
+}
+
+.blockchain + .blockchain {
+  border-top: 2px dashed #8884;
+}
+
+.checkBalanceButtonWrapper {
+  margin-top: 14px;
+  display: flex;
+  justify-content: center;
+}

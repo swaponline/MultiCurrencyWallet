@@ -1,3 +1,5 @@
+(work in progress...)
+
 # Terms
 
 The list of terms is needed to synchronize developer concepts
@@ -93,6 +95,12 @@ The peer who accepted the offer (initiated the swap)
 ...
 
 - example: `allowPartialSwap = true`
+
+
+### Atomic swap / Turbo swap
+Two schemes for swap execution.
+
+See [atomic vs turbo swaps comparison](/docs/ATOMIC_VS_TURBO_SWAPS.md))
 
 
 ## Flow

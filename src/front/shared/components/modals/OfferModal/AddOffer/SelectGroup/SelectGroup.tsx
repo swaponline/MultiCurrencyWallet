@@ -35,11 +35,11 @@ const SelectGroup = ({ intl: IntlShape,  dynamicFee, isToken, extendedControls, 
           </div>
 
           <span styleName="balance">{balance && `Balance: ${new BigNumber(balance).dp(8, BigNumber.ROUND_CEIL)}`}</span>
-          <div styleName="smallTooltip">
+          {/*<div styleName="smallTooltip">
             <Tooltip id={id}>
               {tooltip}
             </Tooltip>
-          </div>
+          </div>*/}
         </div>
         <Input
           styleName="inputRoot"

@@ -17,6 +17,9 @@ import SwapAuth from 'swap.auth'
 import SwapRoom from 'swap.room'
 import SwapOrders from 'swap.orders'
 import {
+  TurboMaker,
+  TurboTaker,
+
   ETH2BTC,
   BTC2ETH,
   ETHTOKEN2BTC,
@@ -56,7 +59,7 @@ const onInit = (cb) => {
     if (_inited) {
       cb()
     } else {
-      setTimeout( _wait, 100)
+      setTimeout(_wait, 100)
     }
   }
   _wait()
@@ -127,6 +130,7 @@ const createSwapApp = async () => {
           fetchBalance: (address) => actions.eth.fetchBalance(address),
           //@ts-ignore
           estimateGasPrice: ({ speed } = {}) => helpers.eth.estimateGasPrice({ speed }),
+          sendTransaction: ({ to, amount }) => actions.eth.sendTransaction({ to, amount }),
         }),
         new BtcSwap({
           fetchBalance: (address) => bitcoinUtils.fetchBalance({
@@ -157,6 +161,7 @@ const createSwapApp = async () => {
             ...options,
             NETWORK,
           }),
+          sendTransaction: ({ to, amount }) => actions.btc.sendTransaction({ to, amount }),
         }),
         new GhostSwap({
           fetchBalance: (address) => actions.ghost.fetchBalance(address),
@@ -211,6 +216,9 @@ const createSwapApp = async () => {
           )),
       ],
       flows: [
+        TurboMaker,
+        TurboTaker,
+
         ETH2BTC,
         BTC2ETH,
 
