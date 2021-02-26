@@ -18,7 +18,13 @@ const setProvider = (provider) => {
   web3 = provider
 }
 const setDefaultProvider = () => {
-  web3 = new Web3(new Web3.providers.HttpProvider(config.web3.provider))
+  web3 = new Web3(
+    new Web3.providers.HttpProvider(
+      (config.binance)
+        ? config.web3.binance_provider
+        : config.web3.provider
+    )
+  )
   //@ts-ignore
   web3.isMetamask = false
 }
