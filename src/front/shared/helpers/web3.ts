@@ -1,3 +1,4 @@
+import { EventEmitter } from 'events';
 import Web3 from 'web3'
 import config from 'app-config'
 
@@ -21,7 +22,11 @@ const getWeb3 = () => {
   return web3
 }
 
-// Add custom request function in window.ethereum (equal web3.currentProvider)
+/**
+ * Below - proxy functions for window.ethereum.
+ * These are methods that aren't in the custom ethereum object.
+ * Imitation of metamask interface.
+ */
 
 const proxyRequest = new Proxy(() => null, {
   /**
@@ -33,7 +38,7 @@ const proxyRequest = new Proxy(() => null, {
     const web3Eth = window.web3.eth
     
     if (!web3Eth) {
-      throw new Error('Ethereum Proxy: window.web3.eth is undefined')
+      throw new Error('Ethereum proxy - in the method<request>: window.web3.eth is undefined')
     }
 
     const internalAddressArr = [web3.eth.accounts.wallet[0].address]
@@ -54,19 +59,73 @@ const proxyRequest = new Proxy(() => null, {
           case 'eth_getCode':
             response(web3Eth.getCode(params[0]))
           default:
-            reject('Ethereum proxy: unknown method')
+            reject('Ethereum proxy - in the method<request>: unknown method')
         }
       } catch (error) {
-        throw new Error(error)
+        reject(error)
       }
     })
   }
 })
 
+const proxyOn = new Proxy(() => null, {
+  apply(target, thisArg, args) {
+    console.log('Method<on> proxy - arguments: ', args)
+
+    const myEmitter = new EventEmitter()
+    const event = args && args[0]
+    const handler = args && args[1]
+
+    // TODO:
+    // if the event happend with ethereum object
+    // when to generate this event in the event emitter
+
+    // try {
+    //   myEmitter.on('networkChanged', () => handler())
+    //   myEmitter.on('data', () => handler())
+    //   myEmitter.on('connect', () => handler())
+    //   myEmitter.on('error', () => handler())
+    //   myEmitter.on('close', () => handler())
+    //   myEmitter.on('disconnect', () => handler())
+
+    //   switch (event) {
+    //     case 'networkChanged':
+    //       myEmitter.emit('networkChanged')
+    //       break
+    //     case 'data':
+    //       myEmitter.emit('data')
+    //       break
+    //     case 'connect':
+    //       myEmitter.emit('connect')
+    //       break
+    //     case 'error':
+    //       myEmitter.emit('error')
+    //       break
+    //     case 'close':
+    //       myEmitter.emit('close')
+    //       break
+    //     case 'disconnect':
+    //       myEmitter.emit('disconnect')
+    //       break
+    //   }
+    // } catch (error) {
+    //   throw new Error(error)
+    // }
+  }
+})
+
 const ethProxyHandler = {
   get(target, prop) {
-    if (prop === 'request') {
-      return proxyRequest
+    // mainnet - 1, ropsten - 3
+    const networkVersion = config.entry === 'testnet' ? 3 : 1
+
+    switch (prop) {
+      case 'networkVersion':
+        return networkVersion;
+      case 'request':
+        return proxyRequest
+      case 'on':
+        return proxyOn
     }
   }
 }

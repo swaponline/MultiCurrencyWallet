@@ -47,39 +47,32 @@ export default class FarmFactory extends React.Component<null, FarmFactoryState>
 
     // 'ff-account-unlocked' - this key must be in the localStorage
     // if web3 account is available
+    // const isAccountUnlocked = window.localStorage.setItem('ff-account-unlocked', true)
 
-    // const isAccountUnlocked = window.localStorage.setItem('ff-account-unlocked', 'true)
-
-    // FIXME: for test
-    // window.farm = {
-    //   farmAddress: '0xdf7c806Bc128667f5394e3E9e9d5C1F56c8C9A44',
-    //   rewardsAddress: '0xdf7c806Bc128667f5394e3E9e9d5C1F56c8C9A44',
-    //   stakingAddress: '0xdf7c806Bc128667f5394e3E9e9d5C1F56c8C9A44',
-    // }
-    // FIXME:
-
-    const { 
-      farmAddress,
-      rewardsAddress,
-      stakingAddress,
-    } = window.farm
-
-    // farmDeployer.init({
-    //   rewardsAddress: '',
-    //   stakingAddress: internalAddress,
-    //   duration: 2000003,
-    //   decimal: 18,
-    //   // onStartLoading: () => null,
-    //   // onFinishLoading: () => null,
-    //   onError: (error) => this.reportError(error),
-    // })
-
-    farmFactory.init({
-      networkName: config.entry === 'testnet' ? 'ropsten' : 'mainnet',
-      farmAddress: farmAddress,
-      rewardsAddress: rewardsAddress,
-      stakingAddress: stakingAddress,
-    })
+    if (window.farm) {
+      const { 
+        farmAddress,
+        rewardsAddress,
+        stakingAddress,
+      } = window.farm
+  
+      // farmDeployer.init({
+      //   rewardsAddress: '',
+      //   stakingAddress: '',
+      //   duration: 2000003,
+      //   decimal: 18,
+      //   // onStartLoading: () => null,
+      //   // onFinishLoading: () => null,
+      //   onError: (error) => this.reportError(error),
+      // })
+  
+      farmFactory.init({
+        networkName: config.entry === 'testnet' ? 'ropsten' : 'mainnet',
+        farmAddress: farmAddress,
+        rewardsAddress: rewardsAddress,
+        stakingAddress: stakingAddress,
+      })
+    }
   }
 
   componentDidCatch(error) {
