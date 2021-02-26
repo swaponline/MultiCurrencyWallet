@@ -227,8 +227,14 @@ export default class SwapComponent extends PureComponent<any, any> {
 
 
   afterComponentDidMount() {
-    const { flow } = swap
-    const { step } = flow.state
+    const {
+      swap,
+      swap: {
+        flow: {
+          step,
+        },
+      },
+    } = this.state
 
     const { match: { params: { orderId } }, savedOrders } = this.props
 
