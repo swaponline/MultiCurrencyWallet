@@ -1,5 +1,3 @@
-// import Error from './error'
-// import ReportState from './state'
 import BigNumber from 'bignumber.js'
 import { get, start } from '../../core/beginSwap'
 import history from '../../core/history'
