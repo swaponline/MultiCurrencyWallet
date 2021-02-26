@@ -1,13 +1,14 @@
 #!/usr/bin/env node
-
 console.clear()
+
 import readline from './helpers/readline'
 import { HELP, FULL_HELP } from './helpers/help'
 import { methods_list, decodeMethod, printHelp } from './helpers/methods'
+import RESTInterface from './interface'
+
 
 const HOST = process.env.HOST || `localhost`
 const url = process.argv[2] || `http://${HOST}:1337`
-import RESTInterface from './interface'
 const bot = new RESTInterface(url)
 
 console.log(`Using url = ${bot.url}`)
@@ -71,7 +72,7 @@ const runInput = async (input) => {
     await printPromise(reply)
 
   } catch (err) {
-    console.error( err )
+    console.error(err)
   }
 
   cycle()

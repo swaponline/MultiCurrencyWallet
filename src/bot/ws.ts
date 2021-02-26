@@ -38,7 +38,10 @@ const init = (app, SwapApp, router, port) => {
 
   const pipe = (from, to, type, handler = (a) => a) => {
     from.on(type, (payload) => {
-      safeSend(to, { event: type, payload: handler(payload) })
+      safeSend(to, {
+        event: type,
+        payload: handler(payload),
+      })
     })
   }
 
@@ -60,12 +63,25 @@ const init = (app, SwapApp, router, port) => {
     ws.on('pong', () => (ws.isAlive = true))
     ws.on('close', () => (ws.isAlive = false))
 
-    ws.send(json({ event: 'ready', payload: 'server' }))
-    ws.send(json({ event: 'ready', payload: { mainnet: SwapApp.isMainNet() } }))
+    ws.send(json({
+      event: 'ready',
+      payload: 'server',
+    }))
+
+    ws.send(json({
+      event: 'ready',
+      payload: {
+        mainnet: SwapApp.isMainNet()
+      }
+    }))
 
     pipe(swap.room, ws, 'ready', () => ({
       event: 'ready',
-      payload: { service: 'room', room: swap.room.roomName, peer: swap.room.peer },
+      payload: {
+        service: 'room',
+        room: swap.room.roomName,
+        peer: swap.room.peer,
+      },
     }))
 
     pipe(swap.room, ws, 'user online')

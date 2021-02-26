@@ -13,5 +13,6 @@ export const debugFeedBack = (message: string, toDev?: boolean): void => {
 }
 
 export const feedbackToOwner = (message: string): void => {
-  if (process.env.TELEGRAM_CHATID !== undefined) debugFeedBack(message)
+  if (process.env.TELEGRAM_CHATID !== undefined)
+    debugFeedBack(message)
 }

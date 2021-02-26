@@ -3,12 +3,13 @@ import asciichart from 'asciichart'
 import { convertOrder, TRADE_TICKERS, PAIR_ASK, PAIR_BID } from './trade'
 import { print } from './helpers/text'
 
+
 class DataWorker {
 
   provider: any
   orders: any
 
-  constructor (orderProvider) {
+  constructor(orderProvider) {
     this.provider = orderProvider
     this.orders = []
   }

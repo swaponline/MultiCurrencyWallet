@@ -16,8 +16,8 @@ import {
 } from 'common/utils/colorString'
 
 
-
 const { app, wallet } = SwapApp
+
 app.ready = new Promise( resolve => app.services.room.once('ready', resolve))
 app.sync = new Promise( resolve => app.ready.then(() => setTimeout(resolve, 20000)) )
 
@@ -51,7 +51,7 @@ const serverColor = {
 }
 
 console.log(colorString(`------------------------------------------------------------------------------`, serverColor))
-console.log(colorString(`                  [SERVER] listening on http://localhost:${port}                 `, serverColor))
+console.log(colorString(`                  [SERVER] listening on http://localhost:${port}              `, serverColor))
 console.log(colorString(`------------------------------------------------------------------------------`, serverColor))
 
 export { server, app, listener }

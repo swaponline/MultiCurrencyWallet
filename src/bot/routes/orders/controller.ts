@@ -2,6 +2,7 @@ import swapApp from '../../swapApp'
 
 import { findOrder, orderView } from '../../helpers'
 
+
 let orders
 const app = swapApp.app
 const Orders = swapApp.app.services.orders
@@ -176,6 +177,7 @@ const acceptRequest = (req, res) => {
     res.json(orderView(order))
   })
 }
+
 
 export {
   filterOrders,

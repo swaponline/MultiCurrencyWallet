@@ -7,8 +7,6 @@ import { FG_COLORS as COLORS, BG_COLORS , colorString } from 'common/utils/color
 import { feedbackToOwner } from './helpers/debugFeedBack'
 
 
-
-
 console.log(colorString(`Loading...`,COLORS.GREEN))
 
 const rewriteEnvKeys = [
@@ -82,7 +80,6 @@ if (process.env.USE_JSON_CONFIG === `true`) {
 
 
 
-
 const _loadDefaultEnv = () => {
   const defaultConfig = {
     SERVER_ID: '2234567890',
@@ -96,6 +93,7 @@ const _loadDefaultEnv = () => {
     WEB3_TESTNET_PROVIDER: 'https://ropsten.infura.io/v3/5ffc47f65c4042ce847ef66a3fa70d4c',
     WEB3_MAINNET_PROVIDER: 'https://mainnet.infura.io/v3/5ffc47f65c4042ce847ef66a3fa70d4c',
   }
+
   Object.keys(defaultConfig).forEach((key) => {
     if (process.env[key] === undefined) {
       process.env[key] = defaultConfig[key]

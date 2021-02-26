@@ -1,4 +1,5 @@
 import BigNumber from 'bignumber.js'
+
 import { get, start } from '../../core/beginSwap'
 import history from '../../core/history'
 import handleError from '../../../app/actions/errors/handleError'
@@ -18,9 +19,7 @@ import { UTXO2ETHFlow, ETH2UTXOFlow } from '../swap-flow'
 import { checkSwapsCountLimit } from '../../core/checkSwapsCountLimit'
 import { removeMyOrders } from '../../core/orders'
 
-import request from 'request-promise-cache'
 import { COIN_DATA, COIN_MODEL, COIN_TYPE } from 'swap.app/constants/COINS'
-
 
 
 export default (app, { id }, callback) => {

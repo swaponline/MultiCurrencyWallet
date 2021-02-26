@@ -169,14 +169,12 @@ class Statistics extends React.Component {
   }
 
   onTypeChanged(event) {
-
     this.setState({
       type:event.target.value
     });
   }
 
   render() {
-
     const { error, isLoaded, currencies, swaps } = this.state;
 
     if (error) {
@@ -185,42 +183,42 @@ class Statistics extends React.Component {
       return <div>Loading...</div>;
     } else if (!swaps.length) {
       return <div>Empty</div>;
-    } else {
-      return (
-        <div>
-          <h2>Statistics</h2>
-          <table>
-          <thead>
-            <tr>
-              <td>
-                Market
-              </td>
-
-              <td>
-                Market Price
-              </td>
-
-              <td>
-                Average
-              </td>
-
-              <td>
-                Last
-              </td>
-
-              <td>
-                Total
-              </td>
-            </tr>
-          </thead>
-          <tbody>
-            {currencies.map((item) => (
-              <CurrencyStats key={item.ticker} data={item}/>
-            ))}
-          </tbody>
-          </table>
-        </div>
-      );
     }
+
+    return (
+      <div>
+        <h2>Statistics</h2>
+        <table>
+        <thead>
+          <tr>
+            <td>
+              Market
+            </td>
+
+            <td>
+              Market Price
+            </td>
+
+            <td>
+              Average
+            </td>
+
+            <td>
+              Last
+            </td>
+
+            <td>
+              Total
+            </td>
+          </tr>
+        </thead>
+        <tbody>
+          {currencies.map((item) => (
+            <CurrencyStats key={item.ticker} data={item}/>
+          ))}
+        </tbody>
+        </table>
+      </div>
+    );
   }
 }

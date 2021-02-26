@@ -1,5 +1,6 @@
 import handleOrder from './handleOrder'
 
+
 const _GOOD_ORDER = {
   'buyCurrency': 'ETH', // that's a BID, he wants to buy on a market 1:!, while
   'sellCurrency': 'BTC', // the price currently 1:20
@@ -22,6 +23,7 @@ const _WHAT_S_THAT = {
 }
 
 let fakeOrders, createOrder, removeOrder
+
 describe('Handle Order', () => {
   beforeEach(() => {
     createOrder = jest.fn()

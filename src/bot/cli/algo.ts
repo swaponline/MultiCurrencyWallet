@@ -1,6 +1,15 @@
 import BigNumber from 'bignumber.js'
 import request from 'request-promise-native'
 
+import {
+  createOrder,
+  convertOrder,
+  PAIR_ASK,
+  PAIR_BID,
+  TRADE_TICKERS,
+} from './trade'
+
+
 const BTC_SYMBOL = 1 // BTC
 const ETH_SYMBOL = 1027 // ETH is 1027
 const JOT_SYMBOL = 2948 // Jury.Online
@@ -24,13 +33,6 @@ const getPrice = (symbol, base = 'BTC') =>
     .then(num => new BigNumber(num))
     .catch(error => { throw new Error(`Cannot get ${symbol} price: ${error}`) })
 
-import {
-  createOrder,
-  convertOrder,
-  PAIR_ASK,
-  PAIR_BID,
-  TRADE_TICKERS,
-} from './trade'
 
 class AlgoTrade {
 

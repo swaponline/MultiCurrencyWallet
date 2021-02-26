@@ -1,6 +1,7 @@
 import * as os from 'os'
 import * as ip from 'ip'
 
+
 const OS = os.platform()
 const IP = ip.address()
 const HOST = (OS == 'darwin' || OS == 'win32')
@@ -18,8 +19,6 @@ const status = (order) => !order ? null : {
 }
 
 const sendStatus = (req, res) => (order) => res.json(status(order))
-
-const swapToString = (swap) => ""
 
 const orderToString = (swap, full?) => {
   try {
@@ -75,7 +74,6 @@ const orderView = (order) => {
 
 export {
   orderToString,
-  swapToString,
   swapView,
   orderView,
 }

@@ -1,6 +1,4 @@
 import { Router } from 'express'
-//@ts-ignore
-const router = new Router()
 
 import {
   getSwap,
@@ -20,6 +18,10 @@ import {
   getFinished,
 } from './controller'
 
+
+//@ts-ignore
+const router = new Router()
+
 router.get('/finished', getFinished)
 router.get('/in-progress', getInProgress)
 
@@ -35,5 +37,6 @@ router.get('/:id/submit-secret', withSwap(submitSecret))
 router.get('/:id/verify-script', withSwap(verifyScript))
 router.get('/:id/sync-balance', withSwap(syncBalance))
 router.get('/:id/try-withdraw', withSwap(tryWithdraw))
+
 
 export default router

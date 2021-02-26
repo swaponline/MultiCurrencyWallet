@@ -1,4 +1,5 @@
 class Swap extends React.Component {
+
   componentWillMount() {
     this.calculateProfit()
   }
@@ -7,8 +8,6 @@ class Swap extends React.Component {
     const { flow } = swap
 
     const scriptValues = flow.utxoScriptValues
-
-
     if (!scriptValues) return
 
     return scriptValues.lockTime
@@ -113,6 +112,7 @@ class Swap extends React.Component {
   }
 }
 
+
 class History extends React.Component {
 
   state = {
@@ -175,7 +175,6 @@ class History extends React.Component {
   }
 
   render() {
-
     const { error, isLoaded, swaps, prices } = this.state;
 
     if (error) {
@@ -184,65 +183,65 @@ class History extends React.Component {
       return <div>Loading...</div>;
     } else if (!swaps.length) {
       return <div>Empty</div>;
-    } else {
-      return (
-        <div>
-          <h2>History</h2>
-          <table>
-          <thead>
-            <tr>
-              <td>
-                Market
-              </td>
-
-              <td>
-                Created
-              </td>
-
-              <td>
-                Step
-              </td>
-
-              <td>
-                Type
-              </td>
-
-              <td>
-                Amount
-              </td>
-
-              <td>
-              </td>
-
-              <td>
-                Price
-              </td>
-
-              <td>
-              </td>
-
-              <td>
-                Total
-              </td>
-
-              <td>
-                ~Profit
-              </td>
-
-              <td>
-                + / -
-              </td>
-
-            </tr>
-          </thead>
-          <tbody>
-            {swaps.map(({ id, pair, swap }) => (
-              <Swap key={id} id={id} pair={pair} swap={swap} prices={prices} />
-            ))}
-          </tbody>
-          </table>
-        </div>
-      );
     }
+
+    return (
+      <div>
+        <h2>History</h2>
+        <table>
+        <thead>
+          <tr>
+            <td>
+              Market
+            </td>
+
+            <td>
+              Created
+            </td>
+
+            <td>
+              Step
+            </td>
+
+            <td>
+              Type
+            </td>
+
+            <td>
+              Amount
+            </td>
+
+            <td>
+            </td>
+
+            <td>
+              Price
+            </td>
+
+            <td>
+            </td>
+
+            <td>
+              Total
+            </td>
+
+            <td>
+              ~Profit
+            </td>
+
+            <td>
+              + / -
+            </td>
+
+          </tr>
+        </thead>
+        <tbody>
+          {swaps.map(({ id, pair, swap }) => (
+            <Swap key={id} id={id} pair={pair} swap={swap} prices={prices} />
+          ))}
+        </tbody>
+        </table>
+      </div>
+    );
   }
 }

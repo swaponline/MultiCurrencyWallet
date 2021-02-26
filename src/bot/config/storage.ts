@@ -1,5 +1,6 @@
 import * as fs from 'fs'
 import BigNumber from 'bignumber.js'
+
 import { Networks } from 'common/domain/network'
 import { FG_COLORS as COLORS, colorString } from 'common/utils/colorString'
 
@@ -51,7 +52,9 @@ const getMnemonic = (): string | boolean => {
   return _mnemonic
 }
 
-const hasTradeConfig = (): boolean => { return _hasTradeConfig }
+const hasTradeConfig = (): boolean => {
+  return _hasTradeConfig
+}
 
 const getTradeTickers = (): Array<string> | boolean => {
   if (_hasTradeConfig
@@ -100,11 +103,12 @@ const getTradePairs = (): any => {
   return false
 }
 
-const loadJson = (network?: Networks = Networks.testnet) : boolean => {
+const loadJson = (network?: Networks = Networks.testnet): boolean => {
   _hasTradeConfig = false
   const filePath = `${__dirname}/../../../tradeconfig.${network}.json`
   if (fs.existsSync(filePath)) {
     const rawdata = fs.readFileSync(filePath)
+
     try {
       console.log(
         colorString(`>>> Loaded trade config `, COLORS.GREEN),

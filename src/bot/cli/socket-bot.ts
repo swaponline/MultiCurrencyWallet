@@ -2,6 +2,7 @@ import ws from 'ws'
 
 import { getOrderId } from './helpers/getOrderId'
 
+
 class SocketBot {
   isAutoAccepting: boolean
   isAutoSearching: boolean
@@ -47,7 +48,7 @@ class SocketBot {
     this.isAutoAccepting = true
 
     const cycle = async () => {
-      if ( !this.isAutoAccepting ) return
+      if (!this.isAutoAccepting) return
 
       const payload = await this.until('new order request')
 
@@ -72,9 +73,10 @@ class SocketBot {
 
 
     this.ws.on('new order', mess => {
-      if ( !this.isAutoSearching ) return
+      if (!this.isAutoSearching) return
+
       mess = JSON.parse(mess)
-      if ( mess.type !== 'new order' ) return
+      if (mess.type !== 'new order') return
 
       const order = mess.payload
 
@@ -104,10 +106,10 @@ class SocketBot {
 
     return this.worker.runMethod(`swaps/${id}/go`)
 
-    if ( flow.type == "BTC2ETH" || flow.type == "BTC2ETHTOKEN" ) {
+    if (flow.type == "BTC2ETH" || flow.type == "BTC2ETHTOKEN") {
       await this.worker.runMethod(`swaps/${id}/sign`)
       await this.worker.runMethod(`swaps/${id}/verify-btc-script`)
-    } else if ( flow.type == "ETH2BTC" || flow.type == "ETHTOKEN2BTC" ) {
+    } else if (flow.type == "ETH2BTC" || flow.type == "ETHTOKEN2BTC") {
       await this.worker.runMethod(`swaps/${id}/submit-secret`)
     }
 
