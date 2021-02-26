@@ -7,7 +7,7 @@ export default {
   env: 'production',
   entry: 'testnet',
   local: 'online',
-  dir: 'testnet',
+  dir: 'bsc-testnet',
   binance: true,
 
   base: './',

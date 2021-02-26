@@ -6,7 +6,7 @@ export default {
   env: 'production',
   entry: 'mainnet',
   local: 'online',
-  dir: 'mainnet',
+  dir: 'bsc-mainnet',
   binance: true,
 
   base: './',
