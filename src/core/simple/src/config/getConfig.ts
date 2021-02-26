@@ -15,6 +15,7 @@ import {
 } from 'swap.swaps'
 
 import {
+  TurboMaker, TurboTaker,
   ETH2BTC, BTC2ETH,
   ETHTOKEN2BTC, BTC2ETHTOKEN,
   ETH2NEXT, NEXT2ETH,
@@ -159,13 +160,14 @@ const getConfig = (config) => ({ account, mnemonic, contracts: { ETH, TOKEN }, .
         (config.swaps || [])
       ),
       ...(
-        //@ts-ignore
         tokens.map(_token => new EthTokenSwap(tokenSwap(_token)))
       )
     ]
       .filter(a => !!a),
 
     flows: [
+      TurboMaker, TurboTaker,
+
       ETH2BTC,
       BTC2ETH,
 

@@ -23,6 +23,8 @@ import Tooltip from 'components/ui/Tooltip/Tooltip'
 import { FormattedMessage } from 'react-intl'
 import minAmountOffer from 'helpers/constants/minAmountOffer'
 import coinsWithDynamicFee from 'helpers/constants/coinsWithDynamicFee'
+import TurboIcon from 'shared/components/ui/TurboIcon/TurboIcon'
+import turboSwap from 'common/helpers/turboSwap'
 
 
 const mathConstants = {
@@ -73,7 +75,6 @@ export default class AddOffer extends Component<any, any> {
       }
     }
 
-    //@ts-ignore
     const { exchangeRate, buyAmount, sellAmount, buyCurrency, sellCurrency } = initialData || {}
 
     this.state = {
@@ -81,6 +82,7 @@ export default class AddOffer extends Component<any, any> {
       isTokenSell: false,
       isTokenBuy: false,
       isPartial: true,
+      isTurbo: false,
       isSending: false,
       manualRate: true,
       buyAmount: buyAmount || '',
@@ -191,6 +193,10 @@ export default class AddOffer extends Component<any, any> {
   handleBuyCurrencySelect = async ({ value }) => {
     const { buyCurrency, sellCurrency, buyAmount, sellAmount } = this.state
 
+    this.setState({
+      isTurbo: false,
+    })
+
     if (sellCurrency === value) {
       this.switching()
     } else {
@@ -213,6 +219,11 @@ export default class AddOffer extends Component<any, any> {
 
   handleSellCurrencySelect = async ({ value }) => {
     const { buyCurrency, sellCurrency, sellAmount, buyAmount } = this.state
+
+    this.setState({
+      isTurbo: false,
+    })
+
     if (buyCurrency === value) {
       this.switching()
     } else {
@@ -410,7 +421,6 @@ export default class AddOffer extends Component<any, any> {
       sellCurrency: buyCurrency,
       buyCurrency: sellCurrency,
     }, async () => {
-      //@ts-ignore
       await this.checkBalance(buyCurrency)
       await this.updateExchangeRate(buyCurrency, sellCurrency)
 
@@ -435,13 +445,13 @@ export default class AddOffer extends Component<any, any> {
   render() {
     const { currencies, tokenItems, addSelectedItems } = this.props
     const { 
-      exchangeRate, buyAmount, 
-      sellAmount, buyCurrency, 
-      sellCurrency, minimalestAmountForSell, 
-      minimalestAmountForBuy, balance, 
-      ethBalance, manualRate, 
-      isPartial, isTokenSell, 
-      isTokenBuy, sellInputValueIsOk 
+      exchangeRate, buyAmount,
+      sellAmount, buyCurrency,
+      sellCurrency, minimalestAmountForSell,
+      minimalestAmountForBuy, balance,
+      ethBalance, manualRate,
+      isPartial, isTurbo, isTokenSell,
+      isTokenBuy, sellInputValueIsOk
     } = this.state
 
     // @to-do - fetch eth miner fee for swap
@@ -456,6 +466,11 @@ export default class AddOffer extends Component<any, any> {
     const minimalAmountBuy = !isTokenBuy
       ? coinsWithDynamicFee.includes(buyCurrency) ? minimalestAmountForBuy : minAmountOffer[buyCurrency]
       : 0.001
+
+    // temporary: hide turboswaps on mainnet
+    const isShowSwapModeSwitch = !process.env.MAINNET
+
+    const isTurboAllowed = turboSwap.isAssetSupported(buyCurrency) && turboSwap.isAssetSupported(sellCurrency)
 
     const isDisabled = !exchangeRate
       || !buyAmount && !sellAmount
@@ -535,11 +550,11 @@ export default class AddOffer extends Component<any, any> {
         </div>
 
         <div styleName="controlsToggles">
-          <div styleName="togles">
+          <div styleName="toggle">
             {/*
             //@ts-ignore */}
             <Toggle checked={manualRate} onChange={this.handleManualRate} />
-            <div styleName="togleText">
+            <div styleName="toggleText">
               <FormattedMessage id="AddOffer418" defaultMessage="Custom exchange rate" />
               {' '}
               <Tooltip id="add264">
@@ -547,11 +562,12 @@ export default class AddOffer extends Component<any, any> {
               </Tooltip>
             </div>
           </div>
-          <div styleName="togles">
+
+          <div styleName="toggle">
             {/*
             //@ts-ignore */}
             <Toggle checked={isPartial} onChange={() => this.setState((state) => ({ isPartial: !state.isPartial }))} />
-            <div styleName="togleText">
+            <div styleName="toggleText">
               <FormattedMessage id="AddOffer423" defaultMessage="Enable partial fills" />
               {' '}
               <Tooltip id="add547">
@@ -566,6 +582,25 @@ export default class AddOffer extends Component<any, any> {
               </Tooltip>
             </div>
           </div>
+
+          {isShowSwapModeSwitch &&
+            <div styleName="toggle">
+              <div styleName="toggleText">
+                <FormattedMessage id="AtomicSwap_Title" defaultMessage="Atomic swap" />
+              </div>
+              {/*
+              //@ts-ignore */}
+              <Toggle checked={isTurbo} isDisabled={!isTurboAllowed} onChange={() => this.setState((state) => ({ isTurbo: !state.isTurbo }))} />
+              <div styleName="toggleText">
+                <TurboIcon />
+                <span>
+                  <FormattedMessage id="TurboSwap_Title" defaultMessage="Turbo swap" />
+                  &nbsp;
+                  <a href="https://github.com/swaponline/MultiCurrencyWallet/blob/master/docs/TURBO_SWAPS.md" target="_blank">(?)</a>
+                </span>
+              </div>
+            </div>
+          }
         </div>
         {needEthBalance && (
           <div styleName="Error">

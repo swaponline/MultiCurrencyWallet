@@ -3,6 +3,15 @@
   font-family: 'Roboto Mono', monospace;
 }
 
+.withIcon {
+  display: flex;
+  align-items: center;
+
+  & > * + * {
+    margin-left: 0.5em;
+  }
+}
+
 .rowDark {
   .rowAmount {
     color: $d-color;
@@ -54,4 +63,8 @@
       font-size: 12px;
     }
   }
+}
+
+.linkedOrderHighlight {
+  outline: 2px dashed $primary;
 }

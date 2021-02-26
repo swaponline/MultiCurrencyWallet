@@ -21,6 +21,12 @@
 td {
   text-align: center;
 
+  &.with-icon {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+  }
+
   th {
     text-transform: lowercase;
   }

@@ -36,6 +36,7 @@ import finishSvg from './images/finish.svg'
 
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
+
 @injectIntl
 @CSSModules(styles, { allowMultiple: true })
 export default class SwapProgress extends Component<any, any> {
@@ -64,7 +65,6 @@ export default class SwapProgress extends Component<any, any> {
       step,
       swap,
       styles,
-      tokenItems,
       signed,
       wallets,
       history,
@@ -101,8 +101,6 @@ export default class SwapProgress extends Component<any, any> {
   }
 
   onPushGoToWallet = () => {
-    const { buyCurrency } = this.state
-
     this.history.push(localisedUrl(this.locale, '/wallet'))
   }
 
@@ -348,16 +346,20 @@ export default class SwapProgress extends Component<any, any> {
     const swapTexts = (
       <Fragment>
         {
-          this.props.name === 'BtcLikeToEth' && <BtcLikeToEth step={flow.step} flow={flow} swap={swap} coinName={currencyName} />
+          this.props.name === 'BtcLikeToEth' &&
+            <BtcLikeToEth step={flow.step} flow={flow} swap={swap} coinName={currencyName} />
         }
         {
-          this.props.name === 'EthToBtcLike' && <EthToBtcLike step={flow.step} flow={flow} swap={swap} coinName={currencyName} />
+          this.props.name === 'EthToBtcLike' &&
+            <EthToBtcLike step={flow.step} flow={flow} swap={swap} coinName={currencyName} />
         }
         {
-          this.props.name === 'BtcLikeToEthToken' && <BtcLikeToEthToken step={flow.step} flow={flow} swap={swap} coinName={currencyName} />
+          this.props.name === 'BtcLikeToEthToken' &&
+            <BtcLikeToEthToken step={flow.step} flow={flow} swap={swap} coinName={currencyName} />
         }
         {
-          this.props.name === 'EthTokenToBtcLike' && <EthTokenToBtcLike step={flow.step} flow={flow} swap={swap} coinName={currencyName} />
+          this.props.name === 'EthTokenToBtcLike' &&
+            <EthTokenToBtcLike step={flow.step} flow={flow} swap={swap} coinName={currencyName} />
         }
       </Fragment>
     )

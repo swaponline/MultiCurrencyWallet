@@ -1,3 +1,11 @@
+@mixin ff-thin {
+  font-family: 'Manrope-Thin';
+}
+
+@mixin ff-light {
+  font-family: 'Manrope-Light';
+}
+
 @mixin ff {
   font-family: 'Manrope-Regular';
 }

@@ -436,8 +436,9 @@ const addressIsCorrect = (address) => {
   return false
 }
 
-//@ts-ignore
-const send = ({ from, to, amount, feeValue, speed, stateCallback } = {}) => {
+
+const send = ({ from, to, amount, feeValue = null, speed }) => {
+  console.log('>>> send', from, to, amount, feeValue, speed)
   return new Promise(async (ready, reject) => {
     try {
       let privateKey = null
@@ -553,6 +554,26 @@ const send = ({ from, to, amount, feeValue, speed, stateCallback } = {}) => {
   })
 }
 
+const sendTransaction = async ({ to, amount }) => {
+  // from main btc wallet
+
+  const { user: { btcData: { address } } } = getState()
+
+  if (false) { // fake tx - turboswaps debug
+    const txHash = '1324154f6086b6b137be8763f43096cacd5450f9561da061161638ed68ce39c3'
+    return txHash
+  }
+
+  const txHash = await send({
+    from: address,
+    to,
+    amount,
+    speed: 'fast',
+  })
+
+  return txHash
+}
+
 const prepareUnspents = ({ amount, unspents }) => bitcoinUtils.prepareUnspents({
   amount,
   unspents,
@@ -593,6 +614,7 @@ export default {
   getBalance,
   getTransaction,
   send,
+  sendTransaction,
   fetchUnspents,
   broadcastTx,
   fetchTx,

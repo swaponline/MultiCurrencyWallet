@@ -19,7 +19,6 @@ import Debug from './Debug/Debug'
 import { injectIntl, FormattedMessage } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
 import DeleteSwapAfterEnd from './DeleteSwapAfterEnd'
-import { Button } from 'components/controls'
 import CopyToClipboard from 'react-copy-to-clipboard'
 
 import feedback from 'shared/helpers/feedback'
@@ -44,7 +43,6 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
   errors: 'api.errors',
   checked: 'api.checked',
   savedOrders: rememberedOrders.savedOrders,
-  deletedOrders: rememberedOrders.deletedOrders,
   peer,
 }))
 
@@ -123,15 +121,13 @@ export default class SwapComponent extends PureComponent<any, any> {
   }
   /* ================================================================ */
 
-  constructor() {
-    //@ts-ignore
-    super()
+  constructor(props) {
+    super(props)
 
     this.state = {
       isAddressCopied: false,
       swap: null,
       isMy: false,
-      ethBalance: null,
       currencyData: null,
       isAmountMore: null,
       SwapComponent: null,
@@ -147,7 +143,7 @@ export default class SwapComponent extends PureComponent<any, any> {
   }
 
   componentWillMount() {
-    const { items, tokenItems, currenciesData, tokensData, intl: { locale }, deletedOrders } = this.props
+    const { items, tokenItems, currenciesData, tokensData, intl: { locale } } = this.props
     let { match: { params: { orderId } }, history, activeFiat } = this.props
 
     if (!!window.performance && window.performance.navigation.type === 2) {
@@ -189,7 +185,6 @@ export default class SwapComponent extends PureComponent<any, any> {
       currencies.forEach(item => {
         actions.user.getExchangeRate(item.currency, activeFiat.toLowerCase())
           .then(exRate => {
-            //@ts-ignore
             const amount = exRate * Number(item.amount)
 
             if (Number(amount) >= 50) {
@@ -226,7 +221,7 @@ export default class SwapComponent extends PureComponent<any, any> {
   }
 
   componentDidMount() {
-    const { swap, deletedOrders } = this.state
+    const { swap } = this.state
     const { flow } = swap
     const { step } = flow.state
 
@@ -266,7 +261,9 @@ export default class SwapComponent extends PureComponent<any, any> {
       }, 5000)
 
       const checkingConfirmSuccess = setTimeout(() => {
-        if (!this.checkIsConfirmed()) window.location.reload()
+        if (!this.checkIsConfirmed()) {
+          window.location.reload()
+        }
       }, 30000)
 
       this.checkingConfirmSuccessTimer = checkingConfirmSuccess

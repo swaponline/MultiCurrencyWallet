@@ -363,7 +363,6 @@ export default class WithdrawModalMultisig extends React.Component<any, any> {
       portalUI,
     } = this.props
 
-    //@ts-ignore
     const linked = Link.all(this, 'code')
 
     const labels = defineMessages({

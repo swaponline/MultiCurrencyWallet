@@ -1,0 +1,33 @@
+.txSide {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  font-size: 13px;
+}
+
+.title {
+  margin-bottom: 4px;
+  font-size: 14px;
+  text-align: center;
+
+  &.highlighted {
+    font-weight: bold
+  }
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border: 2px solid #8884;
+  border-radius: 50%;
+  background-color: #8881;
+  font-size: 12px;
+}
+
+.address {
+  margin-top: 5px;
+
+  code {
+    font-weight: normal;
+  }
+}

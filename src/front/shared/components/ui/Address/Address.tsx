@@ -3,8 +3,16 @@ import cssModules from 'react-css-modules'
 import { AddressType, AddressFormat } from 'domain/address'
 import styles from './Address.scss'
 
+
+interface IAddress {
+  address: any,
+  format?: AddressFormat,
+  type?: AddressType,
+  style?: any,
+}
+
 @cssModules(styles, { allowMultiple: true })
-export default class Address extends Component<any, any> {
+export default class Address extends Component<IAddress, {}> {
 
   constructor(props) {
     super(props)
@@ -15,7 +23,7 @@ export default class Address extends Component<any, any> {
       address,
       format,
       type,
-      copyable, // todo
+      //copyable, // todo
       style,
     } = this.props
 

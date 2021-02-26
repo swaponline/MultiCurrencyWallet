@@ -233,15 +233,17 @@ class SwapApp {
   _addFlow(Flow) {
     const flowName = Flow.getName()
 
-    if (
-      !Object.values(constants.COINS).includes(Flow.getFromName()) ||
-      !Object.values(constants.COINS).includes(Flow.getToName())
-    ) {
-      throw new Error(
-        `SwapApp flow "_flowName" property should contain only: ${Object.values(
-          constants.COINS
-        )}. Got: "${flowName.toUpperCase()}"`
-      )
+    if (flowName !== 'TurboMaker' && flowName !== 'TurboTaker') {
+      if (
+        !Object.values(constants.COINS).includes(Flow.getFromName()) ||
+        !Object.values(constants.COINS).includes(Flow.getToName())
+      ) {
+        throw new Error(
+          `SwapApp flow "_flowName" property should contain only: ${Object.values(
+            constants.COINS
+          )}. Got: "${flowName.toUpperCase()}"`
+        )
+      }
     }
 
     this.flows[flowName] = Flow

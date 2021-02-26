@@ -1,0 +1,106 @@
+$arrow_color: #888a;
+$expected_opacity: 0.3;
+
+.tx {
+  width: 100%;
+  padding: 0 0.7em;
+  position: relative;
+}
+
+.amount {
+  margin-bottom: 8px;
+  text-align: center;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 13px;
+  font-weight: bold;
+
+  .Expected & {
+    opacity: $expected_opacity;
+  }
+}
+
+.tx-hash {
+  margin-top: 9px;
+  text-align: center;
+  font-size: 13px;
+
+  .tx-link {
+    display: inline-block;
+    border-bottom: 1px solid #{$color-brand}55;
+
+    code {
+      font-weight: normal;
+    }
+  }
+}
+
+
+
+.tx-status-icon {
+  position: absolute;
+  //top: 100%;
+  top: 35%;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 16px;
+  width: 16px;
+  height: 16px;
+
+  img {
+    max-width: 100%;
+    max-height: 100%;
+  }
+}
+
+.arrow {
+  height: 4px;
+  background-color: $arrow_color;
+  position: relative;
+
+  &::before {
+    display: block;
+    content: ' ';
+    position: absolute;
+    top: -6px;
+    width: 16px;
+    height: 16px;
+    border: 3px solid $arrow_color;
+    border-right-width: 0;
+    border-bottom-width: 0;
+  }
+
+  &.left::before {
+    left: -1px;
+    transform: rotate(-45deg);
+  }
+
+  &.right::before {
+    right: -1px;
+    transform: rotate(135deg);
+  }
+
+  .Expected & {
+    opacity: $expected_opacity;
+  }
+
+  .Pending & {
+    animation: 0.6s ease infinite pending;
+  }
+
+  .Done & {
+    font-size: 12px;
+  }
+}
+
+@keyframes pending {
+  0% {
+    opacity: $expected_opacity;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: $expected_opacity;
+  }
+}
+

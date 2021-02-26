@@ -5,6 +5,7 @@ import SwapRoom from 'swap.room'
 import aggregation from './aggregation'
 import events from './events'
 import Order from './Order'
+import visibleMakers from 'common/whitelists/visibleMakers'
 
 
 const checkIncomeOrderFormat = (order) => {
@@ -40,6 +41,7 @@ const checkIncomeOrderFormat = (order) => {
     isProcessing: '?Boolean',
     isRequested: '?Boolean',
     isPartial: '?Boolean',
+    isTurbo: '?Boolean',
     isHidden: '?Boolean',
     destination: util.typeforce.t.maybe({
       ownerAddress: '?String',
@@ -59,11 +61,17 @@ const checkIncomeOrderFormat = (order) => {
 const checkIncomeOrderOwner = ({ owner: { peer } }, fromPeer) =>
   peer === fromPeer
 
+
+const checkIncomeOrderWhitelisted = ({ owner: { peer } }) => {
+  return !visibleMakers.length || visibleMakers.includes(peer)
+}
+
 const checkIncomeOrder = (order, fromPeer) => {
   const isFormatValid = checkIncomeOrderFormat(order)
   const isOwnerValid = checkIncomeOrderOwner(order, fromPeer)
+  const isOwnerWhitelisted = checkIncomeOrderWhitelisted(order)
 
-  return isFormatValid && isOwnerValid
+  return isFormatValid && isOwnerValid && isOwnerWhitelisted
 }
 
 
@@ -144,18 +152,17 @@ class SwapOrders extends aggregation(ServiceInterface, Collection) {
         'isRequested',
         'isProcessing',
         'isPartial',
+        'isTurbo',
         'isHidden',
         'destination',
       ))
 
-      this.app.services.room.sendMessagePeer(peer,
-        {
-          event: 'new orders',
-          data: {
-            orders: myOrders,
-          },
-        }
-      )
+      this.app.services.room.sendMessagePeer(peer, {
+        event: 'new orders',
+        data: {
+          orders: myOrders,
+        },
+      })
     }
   }
   _handleUserOnline = (peer) => {
@@ -225,6 +232,7 @@ class SwapOrders extends aggregation(ServiceInterface, Collection) {
    * @param {boolean} data.isRequested
    */
   _create(data) {
+    console.log('>>> _create() data =', data)
     const { id, buyAmount, sellAmount, buyCurrency, sellCurrency, ...rest } = data
 
     const buy = buyCurrency.toUpperCase()
@@ -311,6 +319,7 @@ class SwapOrders extends aggregation(ServiceInterface, Collection) {
       'isRequested',
       'isProcessing',
       'isPartial',
+      'isTurbo',
       'isHidden',
       'destination',
     ))
@@ -335,10 +344,12 @@ class SwapOrders extends aggregation(ServiceInterface, Collection) {
    * @param {number} data.sellAmount
    */
   create(data) {
+    console.log('>>> create() data =', data)
     const order = this._create({
       ...data,
       owner: this.app.services.auth.getPublicData(),
     })
+    console.log('created order:', order)
     this._saveMyOrders()
 
     this.app.services.room.sendMessageRoom({
@@ -356,6 +367,7 @@ class SwapOrders extends aggregation(ServiceInterface, Collection) {
           'isRequested',
           'isProcessing',
           'isPartial',
+          'isTurbo',
           'isHidden',
           'destination',
         ),

@@ -1,5 +1,3 @@
-
-//@ts-ignore
 import React, { Component } from 'react'
 import { Modal } from 'components/modal'
 import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
@@ -65,7 +63,6 @@ export default class TxInfo extends Component<any, any> {
       adminFee,
       error,
       finalBalances,
-      //@ts-ignore
     } = this.props
 
     let linkBlockChain = '#'

@@ -358,7 +358,7 @@ class EthTokenSwap extends SwapInterface {
     }
 
     const expectedValueWei = new BigNumber(expectedValue).multipliedBy(this.decimals)
-    //@ts-ignore
+
     if (expectedValueWei.isGreaterThan(balance)) {
       return `Expected value: ${expectedValueWei.toString()}, got: ${balance}`
     }
@@ -486,7 +486,7 @@ class EthTokenSwap extends SwapInterface {
     const swap = await util.helpers.repeatAsyncUntilResult(() =>
       this.contract.methods.swaps(ownerAddress, participantAddress).call()
     )
-    //@ts-ignore
+
     const { token } = swap
     debug('swap.core:swaps')(`Token address at swap contract: ${token.toUpperCase()}`);
 

@@ -262,7 +262,6 @@ export default class WithdrawBtcPin extends React.Component<any, any> {
       helpers.transactions.pullTxBalances(txId, amount, beforeBalances, adminFee)
 
       actions.loader.hide()
-      //@ts-ignore
       actions.btcmultisig.getBalancePin()
       if (invoice) {
         await actions.invoices.markInvoice(invoice.id, 'ready', txId, wallet.address)
@@ -323,8 +322,6 @@ export default class WithdrawBtcPin extends React.Component<any, any> {
     const step = ''
 
     const { name, intl } = this.props
-
-    //@ts-ignore
     const linked = Link.all(this, 'pinCode')
 
     return (

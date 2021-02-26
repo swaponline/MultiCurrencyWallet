@@ -8,7 +8,7 @@
   "license": "MIT",
   "main": "./src/front/bin/server",
   "scripts": {
-    "common:test": "tsc ./src/common/tests/tests.ts",
+    "common:test": "tsc ./src/common/tests/tests.ts --noEmit",
     "common:example:send": "node ./src/common/examples/send.js",
     "common:example:unspents": "node ./src/common/examples/unspents.js",
     "core:test": "DEBUG=swap.core* jest src/core/tests/*.test.js",
@@ -247,7 +247,6 @@
     "node-fetch": "^2.6.1",
     "node-gyp": "^7.1.0",
     "postcss": "^8.2.4",
-    "puppeteer": "^7.0.1",
     "rc-progress": "^3.1.0",
     "react": "^17.0.1",
     "react-click-outside": "github:tj/react-click-outside",

@@ -46,15 +46,13 @@ export default class FeeControler extends Component<any, any> {
                   defaultMessage="Not enough ETH on your balance for miner fee.{br}{br}Deposit {gasAmountNeeded} ETH to your account"
                   values={{
                     br: <br />,
-                    gasAmountNeeded: <strong>{gasAmountNeeded * 5}</strong>, // 3 = 1 for approving, 4 for creating swap
+                    gasAmountNeeded: <strong>{gasAmountNeeded * 5}</strong>, // 1 for approving, 4 for creating swap
                   }}
                 />
               </h3>
               <p styleName="address">
                 {ethAddress}
               </p>
-              {/*
-              //@ts-ignore */}
               <Button brand styleName="button" onClick={this.handleCopy}>
                 {isAddressCopied
                   ? <FormattedMessage id="FeeControler48" defaultMessage="Copied" />

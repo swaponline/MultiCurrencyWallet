@@ -81,8 +81,6 @@ export default class ConfirmOffer extends Component<any, any> {
     const { feeValue, tokenFee } = this.state
     return (
       <Fragment>
-        {/*
-        //@ts-ignore */}
         <Coins styleName="coins" names={[ sellCurrency, buyCurrency ]} size={60} />
         <Amounts {...{ buyAmount, sellAmount, buyCurrency, sellCurrency }} />
         <ExchangeRate {...{ sellCurrency, buyCurrency, exchangeRate }} />

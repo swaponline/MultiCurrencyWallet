@@ -12,7 +12,6 @@ export default function ThemeTooltip({
   ...props
 }) {
   return (
-    
     <ReactTooltop
       //@ts-ignore
       type={type}
