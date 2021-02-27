@@ -6,7 +6,13 @@ import promiEvent from 'web3-core-promievent'
 import { utils as web3utils } from 'web3'
 
 console.log('reset web3')
-let web3 = new Web3(new Web3.providers.HttpProvider(config.web3.provider))
+let web3 = new Web3(
+  new Web3.providers.HttpProvider(
+    (config.binance)
+      ? config.web3.binance_provider
+      : config.web3.provider
+  )
+)
 
 const setMetamask = async (provider) => {
   web3 = provider
