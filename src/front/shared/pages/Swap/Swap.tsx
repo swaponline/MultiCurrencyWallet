@@ -430,10 +430,9 @@ export default class SwapComponent extends PureComponent<any, any> {
         flow,
       },
     } = this.state
-    //@ts-ignore
-    if (typeof swap.flow.checkOtherSideRefund === 'function') {
-      //@ts-ignore
-      const isOtherSideRefunded = await swap.flow.checkOtherSideRefund()
+
+    if (typeof flow.checkOtherSideRefund === 'function') {
+      const isOtherSideRefunded = await flow.checkOtherSideRefund()
       if (isOtherSideRefunded) {
         this.setState(() => ({
           otherSideRefunded: true,
