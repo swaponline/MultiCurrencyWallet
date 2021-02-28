@@ -1,4 +1,4 @@
-## Developer program
+## Developer Program
 
 To let and motivate anyone JS, React, Typescript developers and QA to contribute in our codebase we pay in SWAP tokens for commits and issues. If you are willing to receive experience in your area see below
 
@@ -6,25 +6,25 @@ SWAP token is NOT a money, no guarantee you will exchange this to visa, paypal, 
 
 | Time working on our codebase (Level)                         | SWAP per hour |
 |--------------------------------------------------------------|-----------------------------|
-| Volontueer (less than 3 pullrequests)                        | 1 SWAP per hour             |
+| Volunteer (less than 3 pull requests)                        | 1 SWAP per hour             |
 | Junior (can change interface, wallet)                        | 5 SWAP per hour             |
 | Middle (can add new blockchain to wallet)                    | 10 SWAP per hour            |
 | Senior (can add new blockchain to atomic swap)               | 15 SWAP per hour            |
 | Lead (can reduce codebase, make app more developer friendly) | 20 SWAP per hour            |
 
-Q: why you don't pay in USD or btc? <br>
+Q: why don't you pay in USD or btc? <br>
 A: we don't have a revenue in USD to pay new developers
 
-How to contibute:
+How to Contribute:
 1. find or create issue
 2. make pullrequest with following instructions:
 
-### Name of pullrequest
+### Name of Pull Request (PR)
 
 The name of the commit, branch and PR are some of the most important things.
 
 
-### Simple and to the point
+### Short and Simple
 
 The name of the PR is good to start with the module where there were changes. For instance,
 
@@ -35,13 +35,13 @@ The name of the PR is good to start with the module where there were changes. Fo
 
 The title should be in the space of the problem, not in the space of the solution. It is better to write not about what was done with the code - for this there is a tab `Files changed` - but about why.
 
-Anti-examples:
+Bad Examples:
 
 * fix new order button
 * sort orders by price
 * run updateBalance on mount
 
-It's better:
+Good Examples:
 
 * new order button creates one order instead of two
 * orders with lowest price show up on top of table
@@ -62,12 +62,12 @@ There is a bunch of code in the project that no one has ever run, and that just 
 I'm not even talking about autotests: run it manually at least once and check that this `if (value ===" false ")` really does what you intended.
 
 
-### Record video
+### Record Video
 
 If you run it anyway, record a video. For example, via [Screencastify](https://chrome.google.com/webstore/detail/screencastify-screen-vide/mmeijimgabbpbgpdklnllpncmdofkcpn?hl=en).
 
 
-### How to check?
+### How to Check?
 
 Write a test guide for the reviewer.
 
@@ -76,9 +76,9 @@ I open a pull request, what should I look at and where to check ?
 For example, `Check the creation and deletion of an order.`
 
 
-### Check a second time
+### Double Check
 
-If the Merge pull request button was already green, consider whether it can be clicked? What will the reviewer answer when it reads the code? Maybe you already know what needs to be fixed, but haven't thought about it? Think now.
+If the Merge pull request button was already green, consider: can it be clicked? What will the reviewer answer when it reads the code? Maybe you already know what needs to be fixed, but haven't thought about it? Think now.
 
 ### Working with tasks from clients
 
