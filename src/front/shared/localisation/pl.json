@@ -7980,5 +7980,12 @@
     "files": [
       "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
     ]
+  },
+  {
+    "id": "enterYouSend",
+    "message": "Wpisz \"Wysyłasz\" kwotę",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
   }
 ]

@@ -7992,5 +7992,12 @@
     "files": [
       "src/front/shared/pages/History/Row/Row.tsx"
     ]
+  },
+  {
+    "id": "enterYouSend",
+    "message": "Enter \"U verstuurd\" bedrag",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
   }
 ]

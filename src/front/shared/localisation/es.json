@@ -8000,5 +8000,12 @@
     "files": [
       "src/front/shared/pages/History/Row/Row.tsx"
     ]
+  },
+  {
+    "id": "enterYouSend",
+    "message": "Ingrese \"Tu envias\" monto",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
   }
 ]
