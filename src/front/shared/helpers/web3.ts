@@ -19,6 +19,7 @@ const setMetamask = async (provider) => {
 const setProvider = (provider) => {
   web3 = provider
 }
+
 const setDefaultProvider = () => {
   web3 = new Web3(
     new Web3.providers.HttpProvider(
@@ -27,7 +28,7 @@ const setDefaultProvider = () => {
         : config.web3.provider
     )
   )
-  //@ts-ignore
+
   web3.isMetamask = false
 }
 
@@ -51,44 +52,66 @@ const proxyRequest = new Proxy(() => null, {
   apply(target, thisArg, args) {
     console.log('Method<request> proxy - arguments: ', args)
 
-    const web3Eth = window.web3.eth
-    
-    if (!web3Eth) {
+    if (!window.web3.eth) {
       throw new Error('Ethereum proxy - in the method<request>: window.web3.eth is undefined')
     }
 
-    const internalAddressArr = [web3.eth.accounts.wallet[0].address]
-    const method = args[0].method
-    const params = args[0].params
-
     return new Promise((response, reject) => {
       try {
-        switch (method) {
-          case 'eth_accounts':
-            response(internalAddressArr)
-          case 'eth_gasPrice':
-            response(web3Eth.getGasPrice())
-          case 'eth_sendTransaction':
-            response(web3Eth.sendTransaction(params[0]))
-          case 'eth_getTransactionReceipt':
-            response(web3Eth.getTransactionReceipt(params[0].transactionHash))
-          case 'eth_getCode':
-            response(web3Eth.getCode(params[0]))
-          case 'eth_call':
-            // FIXME: main problem at the moment
-            // something wrong with data options in the parameters
-            // data - signature and params hash
-            // returned - value of executed contract
-            response(null) // web3Eth.call(params[0])
-          default:
-            reject(`Ethereum proxy - in the method<request>: unknown method: ${method}`)
-        }
+        response(proxyRequestResult(args))
       } catch (error) {
         reject(error)
       }
     })
   }
 })
+
+const proxyRequestResult = async (args) => {
+  const web3Eth = window.web3.eth
+  const internalAddressArr = [web3Eth.accounts.wallet[0].address]
+  const method = args[0].method
+  const params = args[0].params
+  let result = undefined
+  /**
+   * Unused methods:
+   * 
+   * @method eth_requestAccounts 
+   * Will useful if localStorage key 'ff-account-unlocked'
+   * like falsy value (will show a modal window for metamask connection).
+   */
+  const asyncResult = async (callback, args?) => await callback(args)
+
+  switch (method) {
+    case 'eth_accounts':
+      result = internalAddressArr
+      break
+    case 'eth_gasPrice':
+      result = asyncResult(web3Eth.getGasPrice)
+      break
+    case 'eth_sendTransaction':
+      result = asyncResult(web3Eth.sendTransaction, params[0])
+      break
+    case 'eth_getTransactionReceipt':
+      result = asyncResult(web3Eth.getTransactionReceipt, params[0].transactionHash)
+      break
+    case 'eth_getCode':
+      result = asyncResult(web3Eth.getCode, params[0])
+      break
+    case 'eth_call':
+      // FIXME: main problem at the moment
+      // something wrong with data options in the parameters
+      // data - signature and parameters hash
+      // returned - value of executed contract
+      result = null // asyncResult(web3Eth.call, params[0])
+      break
+    default:
+      throw new Error(`Ethereum proxy - in the method<request>: unknown method: ${method}`)
+  }
+
+  console.log(`${args[0].method}: result ->`, result)
+  return result
+}
+
 /**
  * function proxy is called from plugin
  * don't delete it

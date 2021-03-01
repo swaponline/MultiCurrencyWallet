@@ -43,9 +43,14 @@ export default class Farm extends React.Component<null, FarmState> {
       }
     }
 
-    // 'ff-account-unlocked' - this key must be in the localStorage
-    // if web3 account is available
-    // const isAccountUnlocked = window.localStorage.setItem('ff-account-unlocked', true)
+    /**
+     * Tip for init data:
+     * LocalStorage key 'ff-account-unlocked' has to true value
+     * without metamask and if web3 account is available
+     * 
+     * Options for factory:
+     * farmAddress, rewardsAddress, stakingAddress
+     */
 
     if (window.farm) {
       const { 
