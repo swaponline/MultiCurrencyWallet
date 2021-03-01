@@ -26,6 +26,7 @@ class ETH2BTC extends AtomicAB2UTXO {
     this._flowName = ETH2BTC.getName()
 
     this.isTakerMakerModel = true
+    this.setupTakerMakerEvents()
     this.stepNumbers = this.getStepNumbers()
 
     this.ethSwap = swap.participantSwap
@@ -217,6 +218,7 @@ class ETH2BTC extends AtomicAB2UTXO {
         // 3 - `lock-eth` - create AB contract - создание секрета, хеша, отправка хеша
         async () => {
           console.log('>>>>>>>> TAKER - ETH2BTC - lock eth')
+
           if (!this.state.secret) {
             console.log('>>>>>> CREATE SECRET')
             const {
@@ -225,11 +227,14 @@ class ETH2BTC extends AtomicAB2UTXO {
             } = this.generateSecret()
             console.log('>>>>>', secret, secretHash)
             this.createWorkUTXOScript(secretHash)
+
             this.setState({
               secret,
               secretHash,
             }, true)
           }
+
+          
           console.log('>>>>>> TAKER - ETH2BTC - fund contract eth')
 
           await flow.ethSwap.fundContract({

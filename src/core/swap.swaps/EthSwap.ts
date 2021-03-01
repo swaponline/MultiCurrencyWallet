@@ -636,7 +636,6 @@ class EthSwap extends SwapInterface {
               event: 'create eth contract',
               data: {
                 ethSwapCreationTransactionHash: hash,
-                secretHash,
               },
             })
 

@@ -42,6 +42,44 @@ class AtomicAB2UTXO extends Flow {
     }
   }
 
+  setupTakerMakerEvents() {
+    const flow = this
+    if (this.isTaker()) {
+      flow.swap.room.on('request utxo script', () => {
+        console.log('>>>>> TAKER - MAKER Request script values')
+        const {
+          utxoScriptValues,
+          secretHash,
+          secret,
+        } = flow.state
+        if (secret && secretHash) {
+          console.log('>>>>>> TAKER - SEND script values to MAKER', utxoScriptValues, secretHash)
+          flow.swap.room.sendMessage({
+            event: 'utxo script generated',
+            data: {
+              utxoScriptValues,
+              secretHash,
+            }
+          })
+        } else {
+          console.log('>>>>>> TAKER - Not generated secretd - dont send script values')
+        }
+      })
+    } else {
+      flow.swap.room.on('utxo script generated', (data) => {
+        const {
+          utxoScriptValues,
+          secretHash,
+        } = data
+        console.log('>>>>> MAKER BTC2ETH - Getted script values', utxoScriptValues, secretHash)
+        flow.setState({
+          utxoScriptValues,
+          secretHash,
+        }, true)
+      })
+    }
+  }
+
   getStepNumbers() {
     switch (true) {
       case ( // Это не модель taker-maker - сторона utxo, или это taker-maker, сторона utxo, и это taker (создает первый utxo скрипт)
@@ -258,7 +296,8 @@ class AtomicAB2UTXO extends Flow {
   _checkSwapAlreadyExists() {}
 
   async sign() {
-    const swapExists = await this._checkSwapAlreadyExists()
+    // @to-do - for debug - skip exists swap on contract
+    const swapExists = false //await this._checkSwapAlreadyExists()
 
     if (swapExists) {
       this.swap.room.sendMessage({
@@ -453,8 +492,9 @@ class AtomicAB2UTXO extends Flow {
       recipientPublicKey: participant[this.utxoCoin].publicKey,
       lockTime:           getLockTime(),
     }
+    console.log(scriptValues)
     const { scriptAddress } = this.utxoBlockchain.createScript(scriptValues)
-
+console.log(scriptAddress)
     this.setState({
       scriptAddress: scriptAddress,
       utxoScriptValues: scriptValues,

@@ -31,6 +31,7 @@ class BTC2ETH extends AtomicAB2UTXO {
 
     this.isUTXOSide = true
     this.isTakerMakerModel = true
+    this.setupTakerMakerEvents()
     this.stepNumbers = this.getStepNumbers()
 
     this.ethSwap = swap.ownerSwap
@@ -95,6 +96,7 @@ class BTC2ETH extends AtomicAB2UTXO {
   _getSteps() {
     const flow = this
 
+console.log('>>>> getSteps', this.isTaker())
     if (this.isTaker()) {
       return [
 
@@ -122,6 +124,7 @@ class BTC2ETH extends AtomicAB2UTXO {
 
         // 5. Wait participant creates ETH Contract
         async () => {
+          
           await flow.ethSwap.waitABContract({
             flow,
             utxoCoin: `btc`,
@@ -171,21 +174,20 @@ class BTC2ETH extends AtomicAB2UTXO {
         // 3 - `wait-lock-eth` - wait taker create AB - обмен хешем
         async () => {
           console.log('>>>>>> MAKER BTC2ETH - Wait-lock-eth')
+          
           this.swap.room.once('create eth contract', ({
             ethSwapCreationTransactionHash,
-            secretHash,
           }) => {
             console.log('>>>>> MAKER BTC2ETH - ETH LOCKED - check')
             if (this.ethSwap.isContractFunded(this)) {
               console.log('>>>>>> MAKER BTC2ETH - ETH IS LOCKED')
-              this.createWorkUTXOScript(secretHash)
+
               this.finishStep({
                 ethSwapCreationTransactionHash,
                 isEthContractFunded: true,
-                secretHash,
               }, 'wait-lock-eth`')
             } else {
-              console.warn('Contract not funded', ethSwapCreationTransactionHash, secretHash)
+              console.warn('Contract not funded', ethSwapCreationTransactionHash)
             }
           })
         },
@@ -193,9 +195,21 @@ class BTC2ETH extends AtomicAB2UTXO {
         // 4 - `lock-utxo` - create UTXO
         async () => {
           console.log('>>>>>>> MAKER BTC2ETH - LOCK-UTXO')
-          this.btcSwap.fundSwapScript({
-            flow,
-          })
+          const {
+            secretHash,
+            utxoScriptValues
+          } = flow.state
+          if (secretHash && utxoScriptValues) {
+            console.log('>>>>> MAKER BTC2ETH - FUND SCRIPT')
+            this.btcSwap.fundSwapScript({
+              flow,
+            })
+          } else {
+            console.log('>>>>> MAKER BTC2ETH - No script values - request its')
+            flow.swap.room.sendMessage({
+              event: 'request utxo script',
+            })
+          }
         },
 
         // 5 - `wait-withdraw-utxo` - wait withdraw UTXO - fetch secret from TX - getSecretFromTxhash
@@ -203,13 +217,13 @@ class BTC2ETH extends AtomicAB2UTXO {
           console.log('>>>> MAKER - BTC2ETH - 5 - wait-withdraw-utxo')
           // check withdraw
           const { scriptAddress } = this.state
+          console.log('>>>> scriptAddress', scriptAddress)
           const utxoWithdrawData = await this.btcSwap.checkWithdraw(scriptAddress)
           console.log('>>>>> MAKER - BTC2ETH - WITHDRAW UTXO DATA', utxoWithdrawData)
           if (utxoWithdrawData) {
-            // extract secret
-            const secret = this.btcSwap.fetchTxInputScript({
-              txId: utxoWithdrawData.txid,
-            })
+            const secret = await this.btcSwap.getSecretFromTxhash(utxoWithdrawData.txid)
+            
+            console.log('>>>>> secret', secret)
             if (secret) {
               this.finishStep({
                 secret,

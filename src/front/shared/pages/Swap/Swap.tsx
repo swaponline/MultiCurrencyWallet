@@ -168,6 +168,7 @@ export default class SwapComponent extends PureComponent<any, any> {
     try {
       console.log('>>>>>>>>>>>>>>> create swap')
       const swap = new Swap(orderId, SwapApp.shared())
+      window.active_swap = swap
       console.log(swap)
       console.log('Swap flow:', swap.flow._flowName);
 

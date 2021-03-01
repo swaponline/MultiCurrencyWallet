@@ -446,8 +446,9 @@ const checkWithdraw = (options) => {
     NETWORK,
   } = options
 
+console.log('>>>>> checkWithdraw')
   const url = `/address/${scriptAddress}/txs/`
-
+console.log(url)
   return apiLooper.get(apiBitpay || getBitpay(NETWORK), url, {
     checkStatus: (answer) => {
       try {
@@ -460,8 +461,9 @@ const checkWithdraw = (options) => {
       name: `bitpay`,
     },
   }).then(async (txs: any) => {
+    console.log('>>>>> checkWithdraw', txs)
     // has two or more txs on script
-    if ((txs.length > 1)
+    if ((txs.length >= 1)
       && txs[0].mintTxid
       && txs[0].spentTxid
     ) {
