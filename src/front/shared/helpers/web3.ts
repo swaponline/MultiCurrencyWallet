@@ -50,6 +50,7 @@ const proxyRequest = new Proxy(() => null, {
    * @param args array with target arguments
    */
   apply(target, thisArg, args) {
+    // FIXME: delete
     console.log('Method<request> proxy - arguments: ', args)
 
     if (!window.web3.eth) {
@@ -73,48 +74,66 @@ const proxyRequestResult = async (args) => {
   const params = args[0].params
   let result = undefined
   /**
-   * Unused methods:
+   * Unused:
    * 
    * @method eth_requestAccounts 
    * Will useful if localStorage key 'ff-account-unlocked'
    * like falsy value (will show a modal window for metamask connection).
    */
-  const asyncResult = async (callback, args?) => await callback(args)
-
   switch (method) {
     case 'eth_accounts':
       result = internalAddressArr
       break
     case 'eth_gasPrice':
-      result = asyncResult(web3Eth.getGasPrice)
+      result = await web3Eth.getGasPrice()
       break
+
+    // TODO: An error for transaction to contract
+    // not enough parameters for transaction
+    // need to create your owns
     case 'eth_sendTransaction':
-      result = asyncResult(web3Eth.sendTransaction, params[0])
+      const defaultGas = 90_000
+      const gasLimit = 90_000
+      params[0].gas = defaultGas
+      params[0].gasLimit = gasLimit
+      result = await web3Eth.sendTransaction(params[0])
       break
+
     case 'eth_getTransactionReceipt':
-      result = asyncResult(web3Eth.getTransactionReceipt, params[0].transactionHash)
+      result = await web3Eth.getTransactionReceipt(params[0].transactionHash)
       break
     case 'eth_getCode':
-      result = asyncResult(web3Eth.getCode, params[0])
+      result = await web3Eth.getCode(params[0])
       break
+
+    // method for a main initialization with farm and tokens addresses
+    // FIXME: problem
+    // after calling with token contracts we call this method
+    // for user farm address (user account) and get several of results
+    // are wrong (just '0x')
+    //
+    // data - method id
+    // to - contract address
+    // returned - value of executed contract
     case 'eth_call':
-      // FIXME: main problem at the moment
-      // something wrong with data options in the parameters
-      // data - signature and parameters hash
-      // returned - value of executed contract
-      result = null // asyncResult(web3Eth.call, params[0])
+      // params[0] - data
+      // params[1] - block number (there is 'latest')
+      // null or undefined in result can hide the error
+      result = await web3Eth.call(params[0], params[1])
       break
+
     default:
       throw new Error(`Ethereum proxy - in the method<request>: unknown method: ${method}`)
   }
 
+  // FIXME: delete
   console.log(`${args[0].method}: result ->`, result)
   return result
 }
 
 /**
- * function proxy is called from plugin
- * don't delete it
+ * function is called from plugin
+ * TODO: what exactly is called from plugin
  */
 const proxyOn = new Proxy(() => null, {
   apply(target, thisArg, args) {

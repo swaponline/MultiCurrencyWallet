@@ -21,6 +21,17 @@ export default class Farm extends React.Component<null, FarmState> {
   constructor(props) {
     super(props)
 
+
+    // FIXME: delete. Init data - just for test
+    window.localStorage.setItem('ff-account-unlocked', 'true')
+    // 0x7E0480Ca9fD50EB7A3855Cf53c347A1b4d6A2FF5 xeenus
+    // 0x101848D5C5bBca18E6b4431eEdF6B95E9ADF82FA weenus
+    window.farm = {
+      farmAddress: '0x57d49704F453CdD2b995280d9D7F557E42847d82',
+      stakingAddress: '0x101848D5C5bBca18E6b4431eEdF6B95E9ADF82FA',
+      rewardsAddress: '0x101848D5C5bBca18E6b4431eEdF6B95E9ADF82FA',
+    }
+
     this.state = {
       duration: 2000003, // ~ 9.25 hours
       decimal: 18,
@@ -49,7 +60,9 @@ export default class Farm extends React.Component<null, FarmState> {
      * without metamask and if web3 account is available
      * 
      * Options for factory:
-     * farmAddress, rewardsAddress, stakingAddress
+     * farmAddress
+     * rewardsAddress
+     * stakingAddress
      */
 
     if (window.farm) {
