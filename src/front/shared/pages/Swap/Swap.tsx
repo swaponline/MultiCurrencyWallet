@@ -438,7 +438,9 @@ export default class SwapComponent extends PureComponent<any, any> {
   checkOtherSideRefund = async () => {
     console.log('>>>> checkOtherSideRefund', this.state)
     const {
-      swap,
+      swap: {
+        flow,
+      },
     } = this.state
 
     if (typeof flow.checkOtherSideRefund === 'function') {
