@@ -12,10 +12,7 @@ export default {
   nextExplorer: 'https://explore.next.exchange/api',
   nextExplorerCustom: 'https://next.swaponline.io/mainnet',
   blockcypher: 'https://api.blockcypher.com/v1/btc/main',
-  etherscan: [
-    'https://api.etherscan.io/api',
-    'https://invoices.swaponline.site/proxyetherscan',
-  ],
+  etherscan: 'https://api.bscscan.com/api',
   etherscan_ApiKey: 'WI4QEJSV19U3TF2H1DPQ2HR6712HW4MYKJ',
   faucet: 'https://faucet.swaponline.site/mainnet/',
   btc2FAProtected: 'https://2fa.swaponline.site',
