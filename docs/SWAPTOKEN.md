@@ -15,7 +15,7 @@
 
 ## Сirculation supply
 
-50 000 SWAP tokens have been farmed by:
+50 000 SWAP tokens have been sent to:
 
 - Team: 25 000 tokens were distributed among the team based on 1 SWAP ~ 1 USD
 - Bounty: 25 000 tokens were distributed among the bounty participants, for the very simple actions (reposts, etc..)
