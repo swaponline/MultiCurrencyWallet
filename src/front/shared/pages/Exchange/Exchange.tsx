@@ -31,8 +31,14 @@ import { animate } from 'helpers/domUtils'
 import Switching from 'components/controls/Switching/Switching'
 import AddressSelect from './AddressSelect/AddressSelect'
 import { AddressType, AddressRole } from 'domain/address'
+import { SwapMode } from 'domain/swap'
 import NetworkStatus from 'components/NetworkStatus/NetworkStatus'
 import Orders from './Orders/Orders'
+
+import turboSwap from 'common/helpers/turboSwap'
+import Toggle from 'components/controls/Toggle/Toggle'
+import TurboIcon from 'shared/components/ui/TurboIcon/TurboIcon'
+
 import { COIN_DATA, COIN_MODEL, COIN_TYPE } from 'swap.app/constants/COINS'
 
 type ExchangeProps = {
@@ -61,7 +67,7 @@ type ExchangeProps = {
 
 type Address = {
   currency: string
-  type: string
+  type: AddressType
   value: string
 }
 
@@ -92,18 +98,21 @@ type ExchangeState = {
 
   isNoAnyOrders?: boolean
   isFullLoadingComplite?: boolean
-  redirectToSwap?: string
   exHaveRate?: string
   exGetRate?: string
   orderId?: string
+  redirectToSwap: null | SwapMode
 
   balances: any
   pairFees: any
+  directionOrders: IUniversalObj[]
   filteredOrders: IUniversalObj[]
   desclineOrders: [] // what in the array?
 
   fromAddress: Address
   toAddress: Address
+
+  isTurbo: boolean
 }
 
 const allowedCoins = [
@@ -132,22 +141,10 @@ const filterIsPartial = (orders) =>
     .filter((order) => order.sellAmount !== 0 && order.sellAmount.isGreaterThan(0)) // WTF sellAmount can be not BigNumber
     .filter((order) => order.buyAmount !== 0 && order.buyAmount.isGreaterThan(0)) // WTF buyAmount can be not BigNumber too - need fix this
 
-const text = [
-  <FormattedMessage id="partial223" defaultMessage="To change default wallet for buy currency. " />,
-  <FormattedMessage id="partial224" defaultMessage="Leave empty for use Swap.Online wallet " />,
-]
 
 const subTitle = (sell, sellTicker, buy, buyTicker) => (
   <div>
-    <FormattedMessage id="ExchangeTitleTag1" defaultMessage="Fastest cross-chain atomic swaps" />
-    <span styleName="tooltipHeader">
-      <Tooltip id="partialAtomicSwapWhatIsIt1" dontHideMobile place="bottom">
-        <FormattedMessage
-          id="partialAtomicSwapWhatIsIt"
-          defaultMessage="Atomic swap is a smart contract technology that enables exchange."
-        />
-      </Tooltip>
-    </span>
+    <FormattedMessage id="ExchangeTitleTag1" defaultMessage="Fastest cross-chain swaps" />
   </div>
 )
 
@@ -193,6 +190,7 @@ export default class Exchange extends Component<any, any> {
   state: ExchangeState
 
   private _mounted = false
+
   static defaultProps = {
     orders: [],
   }
@@ -205,19 +203,23 @@ export default class Exchange extends Component<any, any> {
   scrollTrigger: any // undefined | ?
   wallets: any // undefined | ?
 
-  static getDerivedStateFromProps({ orders }, { haveCurrency, getCurrency }) {
+  static getDerivedStateFromProps({ orders }, { haveCurrency, getCurrency, isTurbo }) {
     if (!Array.isArray(orders)) {
       return
     }
 
-    const filteredOrders = orders.filter(
-      (order) =>
-        !order.isMy &&
-        order.sellCurrency === getCurrency.toUpperCase() &&
-        order.buyCurrency === haveCurrency.toUpperCase()
+    const directionOrders = orders.filter(order =>
+      !order.isMy &&
+      order.sellCurrency === getCurrency.toUpperCase() &&
+      order.buyCurrency === haveCurrency.toUpperCase()
+    )
+
+    const filteredOrders = directionOrders.filter(order =>
+      Boolean(order.isTurbo) === Boolean(isTurbo)
     )
 
     return {
+      directionOrders,
       filteredOrders,
     }
   }
@@ -272,6 +274,7 @@ export default class Exchange extends Component<any, any> {
 
     const haveType = this.getDefaultWalletForCurrency(haveCurrency.toUpperCase())
     const getType = this.getDefaultWalletForCurrency(getCurrency.toUpperCase())
+
     this.state = {
       isToken: false,
       dynamicFee: 0,
@@ -289,6 +292,7 @@ export default class Exchange extends Component<any, any> {
       maxBuyAmount: new BigNumber(0),
       peer: '',
       goodRate: 0,
+      directionOrders: [],
       filteredOrders: [],
       isNonOffers: false,
       isDeclinedOffer: false,
@@ -300,6 +304,8 @@ export default class Exchange extends Component<any, any> {
       haveBalance: false,
       fromAddress: this.makeAddressObject(haveType, haveCurrency.toUpperCase()),
       toAddress: this.makeAddressObject(getType, getCurrency.toUpperCase()),
+      isTurbo: false,
+      redirectToSwap: null,
     }
 
     if (config.isWidget) {
@@ -802,10 +808,11 @@ export default class Exchange extends Component<any, any> {
     }, requestTimeoutSec * 1000)
 
     this.onRequestAnswer = (newOrder, isAccepted) => {
+      console.log('>>> onRequestAnswer newOrder=', newOrder)
       clearTimeout(requestTimeout)
       if (isAccepted) {
         this.setState(() => ({
-          redirectToSwap: true,
+          redirectToSwap: newOrder.isTurbo ? SwapMode.Turbo : SwapMode.Atomic,
           orderId: newOrder.id,
           isWaitForPeerAnswer: false,
         }))
@@ -1327,11 +1334,14 @@ export default class Exchange extends Component<any, any> {
       isFullLoadingComplite,
       redirectToSwap,
       isWaitForPeerAnswer,
+      directionOrders,
+      filteredOrders,
       desclineOrders,
       isDeclinedOffer,
       pairFees,
       balances,
       haveBalance,
+      isTurbo,
     } = this.state
 
     const sellCoin = haveCurrency.toUpperCase()
@@ -1339,8 +1349,16 @@ export default class Exchange extends Component<any, any> {
     const balance = this.getBalance(sellCoin)
 
     if (redirectToSwap) {
-      const uri = `${localisedUrl(locale, links.swap)}/${getCurrency}-${haveCurrency}/${orderId}`
-      return <Redirect to={uri} push />
+      const swapUri = ({
+        [SwapMode.Atomic]: `${links.atomicSwap}/${orderId}`,
+        [SwapMode.Turbo]: `${links.turboSwap}/${orderId}`
+      })[redirectToSwap]
+
+      if (!swapUri) {
+        throw new Error('Wrong swap redirect')
+      }
+      console.log(`Redirect to swap: ${swapUri}`)
+      return <Redirect to={swapUri} push />
     }
 
     let balanceTooltip = null
@@ -1410,6 +1428,19 @@ export default class Exchange extends Component<any, any> {
     const sellTokenFullName = this.getCoinFullName(sellCoin)
     const buyTokenFullName = this.getCoinFullName(buyCoin)
 
+    // temporary: show atomic/turbo switch if only there are turbo offers
+    const isShowSwapModeSwitch = directionOrders.filter(offer => offer.isTurbo).length > 0
+
+    const isTurboAllowed = (
+      turboSwap.isAssetSupported(buyCoin) &&
+      turboSwap.isAssetSupported(sellCoin) &&
+      // temporarily: no external addresses support at the turboswaps-alpha stage
+      // see https://github.com/swaponline/MultiCurrencyWallet/issues/3875
+      fromAddress.type === AddressType.Internal &&
+      toAddress.type === AddressType.Internal
+    )
+
+
     const isPrice = oneCryptoCost.isGreaterThan(0) && oneCryptoCost.isFinite() && !isNonOffers
 
     const isErrorNoOrders = isNoAnyOrders && linked.haveAmount.value > 0 && isFullLoadingComplite
@@ -1446,6 +1477,7 @@ export default class Exchange extends Component<any, any> {
       !isWaitForPeerAnswer
 
     const isIncompletedSwaps = !!desclineOrders.length
+
 
     const Form = (
       <div styleName="section">
@@ -1512,6 +1544,27 @@ export default class Exchange extends Component<any, any> {
               />
             </div>
           </div>
+
+          {isShowSwapModeSwitch &&
+            <div styleName={`swapModeSelector ${isTurboAllowed ? '' : 'disabled'}`}>
+              <div styleName="toggle">
+                <div styleName="toggleText">
+                  <FormattedMessage id="AtomicSwap_Title" defaultMessage="Atomic swap" />
+                </div>
+                {/*
+                //@ts-ignore */}
+                <Toggle checked={isTurbo} isDisabled={!isTurboAllowed} onChange={() => this.setState((state) => ({ isTurbo: !state.isTurbo }))} />
+                <div styleName="toggleText">
+                  <TurboIcon />
+                  <span>
+                    <FormattedMessage id="TurboSwap_Title" defaultMessage="Turbo swap" />
+                    &nbsp;
+                    <a href="https://github.com/swaponline/MultiCurrencyWallet/blob/master/docs/TURBO_SWAPS.md" target="_blank">(?)</a>
+                  </span>
+                </div>
+              </div>
+            </div>
+          }
 
           <div styleName="errors">
             {isErrorNoOrders && (

@@ -6,7 +6,6 @@ import crypto from 'crypto'
 import history from './history'
 import { on } from './on'
 
-export const read = Swap.read
 
 export const get = (app, id) => new Swap(id, app)
 

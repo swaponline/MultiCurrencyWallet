@@ -1,3 +1,6 @@
+import TurboMaker from './turbo/Maker'
+import TurboTaker from './turbo/Taker'
+
 
 import ETH2BTC from './ETH2BTC'
 import BTC2ETH from './BTC2ETH'
@@ -21,7 +24,11 @@ import ETH2NEXT from './ETH2NEXT'
 import NEXT2ETHTOKEN from './NEXT2ETHTOKEN'
 import ETHTOKEN2NEXT from './ETHTOKEN2NEXT'
 
+
 export {
+  TurboMaker,
+  TurboTaker,
+
   ETH2BTC,
   BTC2ETH,
 

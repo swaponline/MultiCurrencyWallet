@@ -1270,21 +1270,21 @@
     "message": "GIEŁDA"
   },
   {
-    "id": "MyOrders20",
-    "message": "Dostajesz : ",
+    "id": "MyOrdersYouSend",
+    "message": "Wysyłasz",
     "files": [
       "src/front/shared/pages/Exchange/Orders/MyOrders/MyOrders.tsx"
     ]
   },
   {
-    "id": "MyOrders21",
-    "message": "Masz :",
+    "id": "MyOrdersYouGet",
+    "message": "Dostajesz",
     "files": [
       "src/front/shared/pages/Exchange/Orders/MyOrders/MyOrders.tsx"
     ]
   },
   {
-    "id": "MyOrders22",
+    "id": "MyOrdersRate",
     "message": "Kurs wymiany",
     "files": [
       "src/front/shared/pages/Exchange/Orders/MyOrders/MyOrders.tsx"
@@ -1442,29 +1442,15 @@
     ]
   },
   {
-    "id": "RowMobileFirstTypeYouGet",
+    "id": "RowMobileYouSend",
+    "message": "Wysyłasz",
+    "files": [
+      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
+    ]
+  },
+  {
+    "id": "RowMobileYouGet",
     "message": "Dostajesz",
-    "files": [
-      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
-    ]
-  },
-  {
-    "id": "RowMobileFirstTypeYouHave",
-    "message": "Masz",
-    "files": [
-      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
-    ]
-  },
-  {
-    "id": "RowMobileSecondTypeYouGet",
-    "message": "Dostaniesz",
-    "files": [
-      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
-    ]
-  },
-  {
-    "id": "RowMobileSecondTypeYouHave",
-    "message": "Masz",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
     ]
@@ -3791,9 +3777,10 @@
   },
   {
     "id": "swapProgressGoToWallet",
-    "message": "Check balance",
+    "message": "Sprawdź saldo",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx",
+      "src/front/shared/pages/TurboSwap/TurboSwap.tsx"
     ]
   },
   {
@@ -7986,6 +7973,48 @@
     "message": "Wpisz \"Wysyłasz\" kwotę",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "TurboSwap_You",
+    "message": "Wy",
+    "files": [
+      "src/front/shared/pages/TurboSwap/TurboSwap.tsx"
+    ]
+  },
+  {
+    "id": "TurboSwap_Maker",
+    "message": "Producent",
+    "files": [
+      "src/front/shared/pages/TurboSwap/TurboSwap.tsx"
+    ]
+  },
+  {
+    "id": "TurboSwap_Taker",
+    "message": "Taker",
+    "files": [
+      "src/front/shared/pages/TurboSwap/TurboSwap.tsx"
+    ]
+  },
+  {
+    "id": "TurboSwap_StatusPending",
+    "message": "W oczekiwaniu...",
+    "files": [
+      "src/front/shared/pages/TurboSwap/TurboSwap.tsx"
+    ]
+  },
+  {
+    "id": "TurboSwap_StatusFinished",
+    "message": "Skończone!",
+    "files": [
+      "src/front/shared/pages/TurboSwap/TurboSwap.tsx"
+    ]
+  },
+  {
+    "id": "TurboIcon_Tip",
+    "message": "Szybsza i tańsza wymiana z zaufanym animatorem, polecana za niewielkie kwoty",
+    "files": [
+      "src/front/shared/components/ui/TurboIcon/TurboIcon.tsx"
     ]
   }
 ]

@@ -11,6 +11,7 @@ class Swap {
 
   id: string
   isMy: boolean
+  isTurbo: boolean
   owner: any
   participant: any
   buyCurrency: string // @ToDo CoinType
@@ -32,6 +33,7 @@ class Swap {
   constructor(id, app, order?) {
     this.id                     = null
     this.isMy                   = null
+    this.isTurbo                = null
     this.owner                  = null
     this.participant            = null
     this.buyCurrency            = null
@@ -72,13 +74,18 @@ class Swap {
     this.ownerSwap        = this.app.swaps[data.buyCurrency.toUpperCase()]
     this.participantSwap  = this.app.swaps[data.sellCurrency.toUpperCase()]
 
-    const Flow = this.app.flows[`${data.sellCurrency.toUpperCase()}2${data.buyCurrency.toUpperCase()}`]
+    const flowKey = this.isTurbo ?
+      (this.isMy ? 'TurboMaker' : 'TurboTaker')
+      :
+      `${data.sellCurrency.toUpperCase()}2${data.buyCurrency.toUpperCase()}`
 
-    if (!Flow) {
-      throw new Error(`Flow with name "${data.sellCurrency.toUpperCase()}2${data.buyCurrency.toUpperCase()}" not found in SwapApp.flows`)
+    if (!this.app.flows[flowKey]) {
+      throw new Error(`Flow with name "${flowKey}" not found in SwapApp.flows`)
     }
 
+    const Flow = this.app.flows[flowKey]
     this.flow = new Flow(this)
+    console.log(`Flow "${flowKey}" created!`)
 
     this.setupEvents()
     // Change destination address on run time
@@ -104,7 +111,7 @@ class Swap {
     })
   }
 
-  static read(app, { id }) {
+/* static read(app, { id }) {
     SwapApp.required(app)
 
     if (!id) {
@@ -119,17 +126,20 @@ class Swap {
       return {}
     }
 
-    const Flow = app.flows[`${data.sellCurrency.toUpperCase()}2${data.buyCurrency.toUpperCase()}`]
+    const flowKey = this.isTurbo ?
+      (this.isMy ? 'TurboMaker' : 'TurboTaker')
+      :
+      `${data.sellCurrency.toUpperCase()}2${data.buyCurrency.toUpperCase()}`
 
-    if (!Flow) {
-      throw new Error(`Flow with name "${data.sellCurrency.toUpperCase()}2${data.buyCurrency.toUpperCase()}" not found in SwapApp.flows`)
+    if (!app.flows[flowKey]) {
+      throw new Error(`Flow with name "${flowKey}" not found in SwapApp.flows`)
     }
 
+    const Flow = app.flows[flowKey]
     data.flow = Flow.read(app, data)
 
-    
     return data
-  }
+  }*/
 
   isFinished(): boolean {
     return this.flow.isFinished()
@@ -149,6 +159,7 @@ class Swap {
       order,
       'id',
       'isMy',
+      'isTurbo',
       'owner',
       'participant',
       'sellCurrency',
@@ -161,6 +172,8 @@ class Swap {
     const {
       //@ts-ignore
       isMy,
+      //@ts-ignore
+      isTurbo,
       //@ts-ignore
       sellCurrency,
       //@ts-ignore
@@ -179,6 +192,7 @@ class Swap {
     const swap = {
       ...rest,
       isMy,
+      isTurbo,
       sellCurrency: isMy ? sellCurrency : buyCurrency,
       sellAmount: isMy ? sellAmount : buyAmount,
       buyCurrency: isMy ? buyCurrency : sellCurrency,
@@ -200,6 +214,7 @@ class Swap {
       data,
       'id',
       'isMy',
+      'isTurbo',
       'owner',
       'participant',
       'sellCurrency',

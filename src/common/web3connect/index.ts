@@ -251,6 +251,7 @@ export default class Web3Connect extends EventEmitter {
     // @ToDo - test Metamask dAppBrowser
     return (
       `${this._web3ChainId}` === `${this._cachedChainId}`
+      || this._web3ChainId === Number.parseInt(this._cachedChainId)
       || `0x0${this._web3ChainId}` === `${this._cachedChainId}`
       || `0x${this._web3ChainId}` === `${this._cachedChainId}` // Opera Mobile
     )

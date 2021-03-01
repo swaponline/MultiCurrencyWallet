@@ -25,6 +25,7 @@ class UTXOBlockchain extends SwapInterface {
   skipRecipientPublickKey: boolean = false
 
   processUnspent: Function = undefined
+  sendTransaction: Function
 
   app: SwapApp = undefined
   /**
@@ -80,6 +81,7 @@ class UTXOBlockchain extends SwapInterface {
         return { txid, vout }
       }
     )
+    this.sendTransaction = options.sendTransaction
   }
 
   _initSwap(app) {

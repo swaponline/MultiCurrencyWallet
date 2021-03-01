@@ -15,6 +15,7 @@ import { RemoveButton } from 'components/controls'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
 import BigNumber from 'bignumber.js'
+import TurboIcon from 'shared/components/ui/TurboIcon/TurboIcon'
 
 
 @withRouter
@@ -26,26 +27,39 @@ export default class RowFeeds extends Component<any, any> {
     row: PropTypes.object,
   }
 
-  generateLink = () => {
-    const { intl: { locale }, row: { buyCurrency, sellCurrency, id } } = this.props
+  generateOfferUrl = () => {
+    const { row: { id } } = this.props
 
-    const market = `${buyCurrency}-to-${sellCurrency}`.toLowerCase()
-    const url = `${config.base}#${links.exchange}/${market}/${id}`
-    return url
+    const currentUrl = window.location.href
+
+    const offerUrl = currentUrl.includes(`/${id}`) ?
+      currentUrl // if already entered
+      :
+      `${currentUrl}/${id}`
+
+    return offerUrl
   }
 
   render() {
     const {
-      row: { requests, buyAmount, buyCurrency, sellAmount, sellCurrency, exchangeRate, id },
+      row: { requests, buyAmount, buyCurrency, sellAmount, sellCurrency, exchangeRate, id, isTurbo },
       declineRequest, acceptRequest, removeOrder, intl: { locale },
     } = this.props
 
     const rate = exchangeRate ? new BigNumber(exchangeRate) : new BigNumber(buyAmount).div(sellAmount)
 
+    const swapUri = isTurbo ?
+      `${links.turboSwap}/${id}`
+      :
+      `${links.atomicSwap}/${id}`
+
     return (
       <tr key={this.props.key}>
-        <td>
+        <td styleName="with-icon">
           <Coins names={[sellCurrency, buyCurrency]} size={25} />
+          {isTurbo &&
+            <TurboIcon />
+          }
         </td>
         <td>
           <span styleName="value">{sellAmount.toFixed(5)}</span>
@@ -65,7 +79,7 @@ export default class RowFeeds extends Component<any, any> {
         <td>
           <div styleName="buttons">
             <div>
-              <Copy text={this.generateLink()}>
+              <Copy text={this.generateOfferUrl()}>
                 <div styleName="circle">
                   <img src={ShareImg} styleName="img" alt="share" />
                 </div>
@@ -76,7 +90,7 @@ export default class RowFeeds extends Component<any, any> {
                 <div styleName="delete" onClick={() => declineRequest(id, requests[0].participant.peer)} >
                   <FormattedMessage id="RowFeeds77" defaultMessage="Decline" />
                 </div>
-                <Link to={`${localisedUrl(locale, links.swap)}/${sellCurrency.toLowerCase()}-${buyCurrency.toLowerCase()}/${id}`}>
+                <Link to={swapUri}>
                   <div styleName="accept" onClick={() => acceptRequest(id, requests[0].participant.peer)} >
                     <FormattedMessage id="RowFeeds81" defaultMessage="Accept" />
                   </div>

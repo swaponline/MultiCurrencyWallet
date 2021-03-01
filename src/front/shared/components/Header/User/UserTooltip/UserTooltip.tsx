@@ -33,12 +33,18 @@ export default class UserTooltip extends Component<any, any> {
   render() {
     const { feeds, peer: mePeer } = this.props
 
-    const autoAcceptTimeout = (config && config.isWidgetBuild) ? 5 : 5
+    const autoAcceptTimeout = 3
+
     return !!feeds.length && (
-      <div styleName="column" >
+      <div styleName="column">
         {feeds.length < 3 ? (
           feeds.map(row => {
-            const { request, content: { buyAmount, buyCurrency, sellAmount, sellCurrency }, id, peer: ownerPeer } = row
+            const { request, content: { buyAmount, buyCurrency, sellAmount, sellCurrency }, id, isTurbo, peer: ownerPeer } = row
+
+            const swapUri = isTurbo ?
+              `${links.turboSwap}/${id}`
+              :
+              `${links.atomicSwap}/${id}`
 
             return (
               mePeer === ownerPeer &&
@@ -59,11 +65,11 @@ export default class UserTooltip extends Component<any, any> {
                     </div>
                   </div>
                   <span styleName="decline" onClick={() => this.props.declineRequest(id, peer)} />
-                  <div styleName="checked" onClick={() => this.props.acceptRequest(id, peer, `${links.swap}/${sellCurrency}-${buyCurrency}/${id}`)} />
+                  <div styleName="checked" onClick={() => this.props.acceptRequest(id, peer, swapUri)} />
                   <TimerButton
                     timeLeft={autoAcceptTimeout}
                     isButton={false}
-                    onClick={() => this.props.acceptRequest(id, peer, `${links.swap}/${sellCurrency}-${buyCurrency}/${id}`)}
+                    onClick={() => this.props.acceptRequest(id, peer, swapUri)}
                   />
                 </div>
               ))

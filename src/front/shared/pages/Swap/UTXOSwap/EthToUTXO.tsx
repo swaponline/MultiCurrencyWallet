@@ -128,12 +128,6 @@ export default class EthToUTXO extends Component<any, any> {
     }))
   }
 
-  toggleScript = () => {
-    this.setState({
-      isShowingScript: !this.state.isShowingScript,
-    })
-  }
-
   render() {
     const {
       tokenItems,
@@ -148,7 +142,7 @@ export default class EthToUTXO extends Component<any, any> {
       wallets,
     } = this.props
 
-    const { currencyAddress, flow, isShowingScript, swap, currencyData, signed, buyCurrency, sellCurrency, windowWidth } = this.state
+    const { currencyAddress, flow, swap, currencyData, signed, buyCurrency, sellCurrency, windowWidth } = this.state
     const stepse = flow.step
 
     return (

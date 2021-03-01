@@ -1,17 +1,31 @@
 .tooltip {
-  position: relative;
   z-index: 1;
-  display: inline-block;
-  width: 1.2em;
-  height: 1.2em;
-  text-align: center;
-  line-height: 1.2em;
-  border-radius: 50%;
-  vertical-align: middle;
-  background-color: $pale-color;
-  color: $indicating-color;
-  transform: scale(0.8);
-  margin-top: -2px;
+
+  &.isMark {
+    position: relative;
+    display: inline-block;
+    margin-top: -2px;
+    width: 1.2em;
+    height: 1.2em;
+    background-color: $pale-color;
+    color: $indicating-color;
+    transform: scale(0.8);
+    border-radius: 50%;
+    text-align: center;
+    line-height: 1.2em;
+    vertical-align: middle;
+  }
+
+  &.noMark {
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    cursor: help;
+    pointer-events: none;
+  }
 }
 
 .r-tooltip {

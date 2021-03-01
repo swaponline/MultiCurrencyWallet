@@ -232,6 +232,28 @@
   margin-bottom: -10px;
 }
 
+.swapModeSelector {
+  margin-top: 1em;
+  margin-bottom: 1em;
+
+  &.disabled {
+    opacity: 0.3;
+    filter: grayscale(1);
+    cursor: not-allowed;
+  }
+
+  .toggle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 0.5em;
+  }
+
+  .toggleText {
+    display: flex;
+    align-items: center;
+  }
+}
 
 .errors {
   margin: 2em 0;

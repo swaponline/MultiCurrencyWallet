@@ -1277,21 +1277,21 @@
     "message": "EXCHANGE"
   },
   {
-    "id": "MyOrders20",
-    "message": "U ontvangt",
+    "id": "MyOrdersYouSend",
+    "message": "Jij stuurt",
     "files": [
       "src/front/shared/pages/Exchange/Orders/MyOrders/MyOrders.tsx"
     ]
   },
   {
-    "id": "MyOrders21",
-    "message": "You have",
+    "id": "MyOrdersYouGet",
+    "message": "Jij ontvangt",
     "files": [
       "src/front/shared/pages/Exchange/Orders/MyOrders/MyOrders.tsx"
     ]
   },
   {
-    "id": "MyOrders22",
+    "id": "MyOrdersRate",
     "message": "Exchange rate",
     "files": [
       "src/front/shared/pages/Exchange/Orders/MyOrders/MyOrders.tsx"
@@ -1446,29 +1446,15 @@
     ]
   },
   {
-    "id": "RowMobileFirstTypeYouGet",
-    "message": "U ontvangt",
+    "id": "RowMobileYouSend",
+    "message": "Jij stuurt",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
     ]
   },
   {
-    "id": "RowMobileFirstTypeYouHave",
-    "message": "You have",
-    "files": [
-      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
-    ]
-  },
-  {
-    "id": "RowMobileSecondTypeYouGet",
-    "message": "U ontvangt",
-    "files": [
-      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
-    ]
-  },
-  {
-    "id": "RowMobileSecondTypeYouHave",
-    "message": "You have",
+    "id": "RowMobileYouGet",
+    "message": "Jij ontvangt",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
     ]
@@ -2182,7 +2168,7 @@
   },
   {
     "id": "ExchangeTitleTag1",
-    "message": "Fastest cross-chain atomic swaps",
+    "message": "Fastest cross-chain swaps",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
@@ -3793,7 +3779,8 @@
     "id": "swapProgressGoToWallet",
     "message": "Check balance",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx",
+      "src/front/shared/pages/TurboSwap/TurboSwap.tsx"
     ]
   },
   {
@@ -7998,6 +7985,66 @@
     "message": "Enter \"U verstuurd\" bedrag",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "AtomicSwap_Title",
+    "message": "Atomic swap",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx",
+      "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx",
+      "src/front/shared/pages/TurboSwap/TurboSwap.tsx"
+    ]
+  },
+  {
+    "id": "TurboSwap_Title",
+    "message": "Turbo swap",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx",
+      "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx",
+      "src/front/shared/pages/TurboSwap/TurboSwap.tsx"
+    ]
+  },
+  {
+    "id": "TurboSwap_You",
+    "message": "You",
+    "files": [
+      "src/front/shared/pages/TurboSwap/TurboSwap.tsx"
+    ]
+  },
+  {
+    "id": "TurboSwap_Maker",
+    "message": "Maker",
+    "files": [
+      "src/front/shared/pages/TurboSwap/TurboSwap.tsx"
+    ]
+  },
+  {
+    "id": "TurboSwap_Taker",
+    "message": "Taker",
+    "files": [
+      "src/front/shared/pages/TurboSwap/TurboSwap.tsx"
+    ]
+  },
+  {
+    "id": "TurboSwap_StatusPending",
+    "message": "Pending...",
+    "files": [
+      "src/front/shared/pages/TurboSwap/TurboSwap.tsx"
+    ]
+  },
+  {
+    "id": "TurboSwap_StatusFinished",
+    "message": "Finished!",
+    "files": [
+      "src/front/shared/pages/TurboSwap/TurboSwap.tsx"
+    ]
+  },
+  {
+    "id": "TurboIcon_Tip",
+    "message": "Sneller en goedkoper ruilen met vertrouwde marketmaker, aanbevolen voor kleine bedragen",
+    "files": [
+      "src/front/shared/components/ui/TurboIcon/TurboIcon.tsx"
     ]
   }
 ]

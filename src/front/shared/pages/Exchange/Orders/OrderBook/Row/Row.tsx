@@ -21,6 +21,8 @@ import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
 import { BigNumber } from 'bignumber.js'
 import feedback from 'shared/helpers/feedback'
+import TurboIcon from 'shared/components/ui/TurboIcon/TurboIcon'
+
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
@@ -30,11 +32,12 @@ type RowProps = {
   pairFees: any
   decline: any[]
   orderId: string
-  linkedOrderId: number
+  linkedOrderId: string
   
   row: {
     id: string
     isMy: boolean
+    isTurbo: boolean
     buyCurrency: string
     sellCurrency: string
     buyAmount: BigNumber
@@ -210,7 +213,13 @@ export default class Row extends Component {
 
           if (isAccepted) {
             this.setState({ isFetching: false }, () => {
-              history.push(localisedUrl(intl.locale, `${links.swap}/${buyCurrency}-${sellCurrency}/${id}`))
+              const swapUri = row.isTurbo ?
+                `${links.turboSwap}/${id}`
+                :
+                `${links.atomicSwap}/${id}`
+              
+              console.log(`Redirect to swap: ${swapUri}`)
+              history.push(localisedUrl(intl.locale, swapUri))
             })
           } else {
             this.setState({ isFetching: false })
@@ -255,6 +264,7 @@ export default class Row extends Component {
       row: {
         id,
         isMy,
+        isTurbo,
         buyCurrency,
         buyAmount,
         sellCurrency,
@@ -270,7 +280,6 @@ export default class Row extends Component {
       intl: { locale },
       pairFees,
     } = this.props
-
 
     const pair = Pair.fromOrder(this.props.row)
     const { price, amount, total, main, base, type } = pair
@@ -310,6 +319,8 @@ export default class Row extends Component {
       priceOut = price
     }
 
+    const swapUri = `${links.atomicSwap}/${id}`
+
     const mobileFormatCrypto = (value, currency) => {
       if (currency === 'USDT' || currency == 'EUR') {
         return String(value.toFixed(2))
@@ -327,14 +338,22 @@ export default class Row extends Component {
     return showDesktopContent ? (
       <tr
         id={id}
-        styleName={`${isDark ? 'rowDark' : ''}`}
+        styleName={`
+          ${isDark ? 'rowDark' : ''}
+          ${id === linkedOrderId ? 'linkedOrderHighlight' : ''}
+        `}
         style={orderId === id ? { background: 'rgba(0, 236, 0, 0.1)' } : {}}
       >
         <td styleName='rowCell'>
-          <Avatar
-            value={ownerPeer}
-            size={30}
-          />
+          <div styleName='withIcon'>
+            <Avatar
+              value={ownerPeer}
+              size={30}
+            />
+            {isTurbo &&
+              <TurboIcon />
+            }
+          </div>
         </td>
         <td styleName='rowCell'>
           <span styleName='rowAmount'>
@@ -363,7 +382,7 @@ export default class Row extends Component {
                     <div style={{ color: 'red' }}>
                       <FormattedMessage id="Row148" defaultMessage="REQUESTING" />
                     </div>
-                    <Link to={`${localisedUrl(locale, links.swap)}/${buyCurrency}-${sellCurrency}/${id}`}>
+                    <Link to={swapUri}>
                       <FormattedMessage id="Row151" defaultMessage="Go to the swap" />
                     </Link>
                   </Fragment>
@@ -409,6 +428,7 @@ export default class Row extends Component {
         styleName={`
           ${peer === ownerPeer ? 'mobileRowRemove' : 'mobileRowStart'}
           ${isDark ? 'rowDark' : ''}
+          ${id === linkedOrderId ? 'linkedOrderHighlight' : ''}
         `}
         style={orderId === id ? { background: 'rgba(0, 236, 0, 0.1)' } : {}}
       >
@@ -417,10 +437,15 @@ export default class Row extends Component {
             <div styleName="tdContainer-1">
               <span styleName="firstType">
                 {type === PAIR_TYPES.BID
-                  ? (<FormattedMessage id="RowMobileFirstTypeYouHave" defaultMessage="You have" />)
-                  : (<FormattedMessage id="RowMobileFirstTypeYouGet" defaultMessage="You get" />)}
+                  ? (<FormattedMessage id="RowMobileYouSend" defaultMessage="You send" />)
+                  : (<FormattedMessage id="RowMobileYouGet" defaultMessage="You get" />)}
               </span>
-              <span styleName='rowAmount'>{`${mobileFormatCrypto(amount, main)} ${main}`}</span>
+              <span styleName='rowAmount withIcon'>
+                {isTurbo &&
+                  <TurboIcon />
+                }
+                {`${mobileFormatCrypto(amount, main)} ${main}`}
+              </span>
             </div>
             <div>
               <i style={{ margin: '0 0.8em' }} className="fas fa-exchange-alt" />
@@ -428,8 +453,8 @@ export default class Row extends Component {
             <div styleName="tdContainer-2">
               <span styleName="secondType">
                 {type === PAIR_TYPES.BID
-                  ? (<FormattedMessage id="RowMobileSecondTypeYouGet" defaultMessage="You get" />)
-                  : (<FormattedMessage id="RowMobileSecondTypeYouHave" defaultMessage="You have" />)}
+                  ? (<FormattedMessage id="RowMobileYouGet" defaultMessage="You get" />)
+                  : (<FormattedMessage id="RowMobileYouSend" defaultMessage="You send" />)}
               </span>
               <span styleName='rowAmount'>{`${mobileFormatCrypto(total, base)} ${base}`}</span>
             </div>
@@ -445,7 +470,7 @@ export default class Row extends Component {
                           <div style={{ color: 'red' }}>
                             <FormattedMessage id="RowM136" defaultMessage="REQUESTING" />
                           </div>
-                          <Link to={`${links.swap}/${buyCurrency}-${sellCurrency}/${id}`}>
+                          <Link to={swapUri}>
                             <FormattedMessage id="RowM139" defaultMessage="Go to the swap" />
                           </Link>
                         </Fragment>

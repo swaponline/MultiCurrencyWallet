@@ -202,7 +202,7 @@ export default class Home extends Component<any, any> {
 
                 <div styleName="videoFaqContainer">
                   <iframe
-                    title="What1 is atomic swap?"
+                    title="What is atomic swap?"
                     width="700"
                     height="480"
                     src="https://www.youtube.com/embed/Jhrb7xOT_7s"
@@ -210,7 +210,7 @@ export default class Home extends Component<any, any> {
                     allow="autoplay; encrypted-media"
                     allowFullScreen
                   />
-                  <div styleName="faqContainer" >
+                  <div styleName="faqContainer">
                     {
                       links.faq.map((question, idx) =>
                         <FaqExpandableItem key={idx} {...question} />

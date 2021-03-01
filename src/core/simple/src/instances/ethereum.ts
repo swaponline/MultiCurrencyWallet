@@ -86,13 +86,13 @@ class Ethereum {
       })
   }
 
-  async sendTransaction({to, value}) {
+  async sendTransaction({ to, amount }) {
     const from = this.core.eth.accounts.wallet[0]
     const gas = 1e5
 
-    value = this.core.utils.toWei(value.toString())
+    amount = this.core.utils.toWei(amount.toString())
 
-    return this.core.eth.sendTransaction({ from, to, value, gas })
+    return this.core.eth.sendTransaction({ from, to, amount, gas })
   }
 
   async estimateGasPrice(options) {

@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react'
 import { Modal } from 'components/modal'
 import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'

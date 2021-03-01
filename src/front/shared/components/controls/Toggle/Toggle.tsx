@@ -5,11 +5,11 @@ import CSSModules from 'react-css-modules'
 import styles from './Toggle.scss'
 
 
-const Toggle = ({ checked, onChange, dataTut }) => (
-  <label styleName="Switch" data-tut={dataTut} >
+const Toggle = ({ checked, onChange, dataTut, isDisabled = false }) => (
+  <label styleName={`Switch ${isDisabled ? 'disabled' : ''}`} data-tut={dataTut} >
     {/*
     //@ts-ignore */}
-    <input type="checkbox" onClick={({ target }) => onChange(target.checked)} defaultChecked={checked} />
+    <input type="checkbox" onClick={({ target }) => onChange(target.checked)} defaultChecked={checked} disabled={isDisabled} />
     <span /> {/* need for button */}
   </label>
 )
@@ -19,4 +19,4 @@ Toggle.propTypes = {
   onChange: PropTypes.func.isRequired,
 }
 
-export default CSSModules(Toggle, styles)
+export default CSSModules(Toggle, styles, { allowMultiple: true })

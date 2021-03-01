@@ -14,6 +14,8 @@ import CommentRow from 'components/Comment/Comment'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 import getCurrencyKey from 'helpers/getCurrencyKey'
 import Address from 'components/ui/Address/Address'
+import { AddressFormat } from 'domain/address'
+
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
@@ -355,7 +357,7 @@ export default class Row extends React.PureComponent<any, any> {
                     defaultMessage='Payment address:'
                   />{' '}
                   <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <Address address={paymentAddress} format='Short' />
+                    <Address address={paymentAddress} format={AddressFormat.Short} />
                     <span styleName='requests'>({invoiceData.totalCount})</span>
                   </div>
                 </div>
