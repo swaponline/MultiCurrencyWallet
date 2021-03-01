@@ -1,0 +1,27 @@
+export default {
+  horizon: 'https://horizon.stellar.org',
+  blocktrail: 'https://api.blocktrail.com/v1/BTC',
+  defipulse: 'https://data-api.defipulse.com/api/v1/egs/api/ethgasAPI.json?api-key=53be2a60f8bc0bb818ad161f034286d709a9c4ccb1362054b0543df78e27',
+  bitpay: [
+  'https://api.bitcore.io/api/BTC/mainnet',
+    //'https://insight.bitpay.com/api',
+    //'https://invoices.swaponline.site/proxybitpay',
+  ],
+  ghostscan: 'https://ghostscan.io/ghost-insight-api',
+  nextscan: 'https://explore.next.exchange/#',
+  nextExplorer: 'https://explore.next.exchange/api',
+  nextExplorerCustom: 'https://next.swaponline.io/mainnet',
+  blockcypher: 'https://api.blockcypher.com/v1/btc/main',
+  etherscan: [
+    'https://api.etherscan.io/api',
+    'https://invoices.swaponline.site/proxyetherscan',
+  ],
+  etherscan_ApiKey: 'WI4QEJSV19U3TF2H1DPQ2HR6712HW4MYKJ',
+  faucet: 'https://faucet.swaponline.site/mainnet/',
+  btc2FAProtected: 'https://2fa.swaponline.site',
+  btcPin: 'https://2fapin.swaponline.site',
+  invoiceApi: 'https://invoices.swaponline.site',
+  multisig: 'https://multisig.swaponline.site',
+  txinfo: 'https://txinfo.swaponline.site',
+  noxon: 'https://noxon.wpmix.net',
+}

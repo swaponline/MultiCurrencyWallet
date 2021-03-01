@@ -8,8 +8,12 @@ import SwapApp from 'swap.app'
 import Web3Connect from '../../../common/web3connect'
 
 const web3connect = new Web3Connect({
-  web3ChainId: (process.env.MAINNET) ? 1 : 3, // 1 = Mainnet, 3 = Ropsten
-  web3RPC: config.web3.provider,
+  web3ChainId: (config.binance)
+    ? (process.env.MAINNET) ? 56 : 97  // 56 = Mainnet, 97 = Testnet
+    : (process.env.MAINNET) ? 1 : 3, // 1 = Mainnet, 3 = Ropsten
+  web3RPC: (config.binance)
+    ? config.binance_provider
+    : config.web3.provider,
 })
 
 const _onWeb3Changed = (newWeb3) => {

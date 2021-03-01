@@ -1,8 +1,15 @@
-import { EventEmitter } from 'events';
+// import { EventEmitter } from 'events';
 import Web3 from 'web3'
 import config from 'app-config'
 
-let web3: IEtheriumProvider = new Web3(new Web3.providers.HttpProvider(config.web3.provider))
+console.log('reset web3')
+let web3: IEtheriumProvider = new Web3(
+  new Web3.providers.HttpProvider(
+    (config.binance)
+      ? config.web3.binance_provider
+      : config.web3.provider
+  )
+)
 
 const setMetamask = async (provider) => {
   web3 = provider
@@ -13,7 +20,14 @@ const setProvider = (provider) => {
   web3 = provider
 }
 const setDefaultProvider = () => {
-  web3 = new Web3(new Web3.providers.HttpProvider(config.web3.provider))
+  web3 = new Web3(
+    new Web3.providers.HttpProvider(
+      (config.binance)
+        ? config.web3.binance_provider
+        : config.web3.provider
+    )
+  )
+  //@ts-ignore
   web3.isMetamask = false
 }
 
