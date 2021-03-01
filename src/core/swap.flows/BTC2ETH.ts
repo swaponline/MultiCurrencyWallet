@@ -157,22 +157,27 @@ class BTC2ETH extends AtomicAB2UTXO {
       return [
         // 1 - `sign` Signs
         async () => {
+          console.log('>>>>>> MAKER BTC2ETH - Sign')
           this.swap.processMetamask()
           this.sign()
         },
 
         // 2 - `sync-balance` - syncBalance
         async () => {
+          console.log('>>>>>> MAKER BTC2ETH - Sync balance')
           this.syncBalance()
         },
 
         // 3 - `wait-lock-eth` - wait taker create AB - обмен хешем
         async () => {
+          console.log('>>>>>> MAKER BTC2ETH - Wait-lock-eth')
           this.swap.room.once('create eth contract', ({
             ethSwapCreationTransactionHash,
             secretHash,
           }) => {
+            console.log('>>>>> MAKER BTC2ETH - ETH LOCKED - check')
             if (this.ethSwap.isContractFunded(this)) {
+              console.log('>>>>>> MAKER BTC2ETH - ETH IS LOCKED')
               this.createWorkUTXOScript(secretHash)
               this.finishStep({
                 ethSwapCreationTransactionHash,
@@ -187,6 +192,7 @@ class BTC2ETH extends AtomicAB2UTXO {
 
         // 4 - `lock-utxo` - create UTXO
         async () => {
+          console.log('>>>>>>> MAKER BTC2ETH - LOCK-UTXO')
           this.btcSwap.fundSwapScript({
             flow,
           })
@@ -194,10 +200,11 @@ class BTC2ETH extends AtomicAB2UTXO {
 
         // 5 - `wait-withdraw-utxo` - wait withdraw UTXO - fetch secret from TX - getSecretFromTxhash
         async () => {
-          console.log('>>>> 5 - wait-withdraw-utxo')
+          console.log('>>>> MAKER - BTC2ETH - 5 - wait-withdraw-utxo')
           // check withdraw
           const { scriptAddress } = this.state
           const utxoWithdrawData = await this.btcSwap.checkWithdraw(scriptAddress)
+          console.log('>>>>> MAKER - BTC2ETH - WITHDRAW UTXO DATA', utxoWithdrawData)
           if (utxoWithdrawData) {
             // extract secret
             const secret = this.btcSwap.fetchTxInputScript({
@@ -213,6 +220,7 @@ class BTC2ETH extends AtomicAB2UTXO {
 
         // 6 - `withdraw-eth` - withdraw from AB
         async () => {
+          console.log('>>>>> MAKER - BTC2ETH - WITHDRAW FROM AB')
           await flow.ethSwap.withdrawFromABContract({ flow })
         },
 

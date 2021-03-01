@@ -203,28 +203,34 @@ class ETH2BTC extends AtomicAB2UTXO {
       return [
         // 1 - `sign` - Signs 
         async () => {
+          console.log('>>>>>> TAKER - ETH2BTC - sign')
           this.swap.processMetamask()
           this.sign()
         },
 
         // 2 - `sync-balance` - syncBalance
         async () => {
+          console.log('>>>>>>> TAKER - ETH2BTC - sync balance')
           this.syncBalance()
         },
 
         // 3 - `lock-eth` - create AB contract - создание секрета, хеша, отправка хеша
         async () => {
+          console.log('>>>>>>>> TAKER - ETH2BTC - lock eth')
           if (!this.state.secret) {
+            console.log('>>>>>> CREATE SECRET')
             const {
               secret,
               secretHash,
             } = this.generateSecret()
+            console.log('>>>>>', secret, secretHash)
             this.createWorkUTXOScript(secretHash)
             this.setState({
               secret,
               secretHash,
             }, true)
           }
+          console.log('>>>>>> TAKER - ETH2BTC - fund contract eth')
 
           await flow.ethSwap.fundContract({
             flow,
