@@ -35,6 +35,8 @@ const proxyRequest = new Proxy(() => null, {
    * @param args array with target arguments
    */
   apply(target, thisArg, args) {
+    console.log('Method<request> proxy - arguments: ', args)
+
     const web3Eth = window.web3.eth
     
     if (!web3Eth) {
@@ -49,7 +51,7 @@ const proxyRequest = new Proxy(() => null, {
       try {
         switch (method) {
           case 'eth_accounts':
-            response(internalAddressArr) // web3Eth.getAccounts()
+            response(internalAddressArr)
           case 'eth_gasPrice':
             response(web3Eth.getGasPrice())
           case 'eth_sendTransaction':
@@ -58,8 +60,14 @@ const proxyRequest = new Proxy(() => null, {
             response(web3Eth.getTransactionReceipt(params[0].transactionHash))
           case 'eth_getCode':
             response(web3Eth.getCode(params[0]))
+          case 'eth_call':
+            // FIXME: main problem at the moment
+            // something wrong with data options in the parameters
+            // data - signature and params hash
+            // returned - value of executed contract
+            response(null) // web3Eth.call(params[0])
           default:
-            reject('Ethereum proxy - in the method<request>: unknown method')
+            reject(`Ethereum proxy - in the method<request>: unknown method: ${method}`)
         }
       } catch (error) {
         reject(error)
@@ -67,18 +75,17 @@ const proxyRequest = new Proxy(() => null, {
     })
   }
 })
-
+/**
+ * function proxy is called from plugin
+ * don't delete it
+ */
 const proxyOn = new Proxy(() => null, {
   apply(target, thisArg, args) {
     console.log('Method<on> proxy - arguments: ', args)
 
-    const myEmitter = new EventEmitter()
-    const event = args && args[0]
-    const handler = args && args[1]
-
-    // TODO:
-    // if the event happend with ethereum object
-    // when to generate this event in the event emitter
+    // const myEmitter = new EventEmitter()
+    // const event = args[0]
+    // const handler = args[1]
 
     // try {
     //   myEmitter.on('networkChanged', () => handler())

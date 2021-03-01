@@ -91,7 +91,7 @@ const events = {
     stopped: 'stopped',
     finished: 'finished',
   },
-  farmFactory: {
+  farm: {
     started: 'started',
     failed: 'failed',
   },

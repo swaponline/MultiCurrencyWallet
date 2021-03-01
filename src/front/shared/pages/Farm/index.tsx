@@ -10,20 +10,18 @@ import { ethereumProxy } from 'helpers/web3'
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
-type FarmFactoryState = {
-  internalAddress: string
+type FarmState = {
   duration: number
   decimal: number
   error: IError
 }
 
 @cssModules(styles, { allowMultiple: true })
-export default class FarmFactory extends React.Component<null, FarmFactoryState> {
+export default class Farm extends React.Component<null, FarmState> {
   constructor(props) {
     super(props)
 
     this.state = {
-      internalAddress: '',
       duration: 2000003, // ~ 9.25 hours
       decimal: 18,
       error: null,
@@ -31,7 +29,7 @@ export default class FarmFactory extends React.Component<null, FarmFactoryState>
   }
 
   componentDidMount() {
-    feedback.farmFactory.started()
+    feedback.farm.started()
 
     // hasn't plugin in the browser
     if (!metamask.isConnected()) {      
@@ -80,7 +78,7 @@ export default class FarmFactory extends React.Component<null, FarmFactoryState>
   }
 
   reportError = (error) => {
-    feedback.farmFactory.failed(`error name(${error.name}) : error message(${error.message})`)
+    feedback.farm.failed(`error name(${error.name}) : error message(${error.message})`)
     this.setState({  error })
     console.error(error)
   }
@@ -89,12 +87,12 @@ export default class FarmFactory extends React.Component<null, FarmFactoryState>
     const { error } = this.state
 
     return (
-      <section styleName={`farmFactory ${isDark ? "dark" : ""}`}>
+      <section styleName={`farm ${isDark ? "dark" : ""}`}>
         {/* own style for widget */}
         <div style={factoryStyles} id="farmfactory-widget-root"></div>
 
         {error && (
-            <div styleName='farmFactoryErrorWrapper'>
+            <div styleName='farmErrorWrapper'>
               <h3>Error</h3>
               {error.code && <p>Code: {error.code}</p>}
               {error.name && <p>Name: {error.name}</p>}

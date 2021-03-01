@@ -30,9 +30,9 @@ export const messages = defineMessages({
     description: 'Menu item "History"',
     defaultMessage: 'Transactions',
   },
-  farmFactory: {
-    id: 'menu.farmFactory',
-    description: 'Menu item "Farm Factory"',
+  farm: {
+    id: 'menu.farm',
+    description: 'Menu item "Farm"',
     defaultMessage: 'Farm',
   },
   invest: {
@@ -53,7 +53,7 @@ export const getMenuItems = (props, isWalletCreate) => {
   const { 
     exchange: linksExchange,
     createWallet: create,
-    farmFactory,
+    farm,
     history,
     home,
   } = links
@@ -97,8 +97,8 @@ export const getMenuItems = (props, isWalletCreate) => {
 
   if (hasFarmInitOprions) {
     itemsWithWallet.push({
-      title: intl.formatMessage(messages.farmFactory),
-      link: farmFactory,
+      title: intl.formatMessage(messages.farm),
+      link: farm,
       exact: true,
       haveSubmenu: true,
       icon: 'products',
@@ -141,7 +141,7 @@ export const getMenuItemsMobile = (props, isWalletCreate, dinamicPath) => {
   const { exchange, wallet, createWallet } = messages
   const { 
     exchange: linksExchange,
-    farmFactory,
+    farm,
     history,
   } = links
 
@@ -181,8 +181,8 @@ export const getMenuItemsMobile = (props, isWalletCreate, dinamicPath) => {
 
   if (hasFarmInitOprions) {
     mobileItemsWithWallet.push({
-      title: props.intl.formatMessage(messages.farmFactory),
-      link: farmFactory,
+      title: props.intl.formatMessage(messages.farm),
+      link: farm,
       haveSubmenu: false,
       displayNone: !isWalletCreate,
       icon: <i className="fas fa-coins" aria-hidden="true" />,
