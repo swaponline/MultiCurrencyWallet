@@ -108,9 +108,13 @@ const proxyRequestResult = async (args) => {
 
     // method for a main initialization with farm and tokens addresses
     // FIXME: problem
-    // after calling with token contracts we call this method
-    // for user farm address (user account) and get several of results
-    // are wrong (just '0x')
+    // first two calls for staking token (xeenus for now)
+    // second two calls for rewards token (weenus for now)
+    // this calls return (in hex format) 1) token symbol 2) token decimals
+    // after that we get error and several wrong results (just '0x') 
+    // when again call method for user account 
+    // 
+    // TIP: problem with timer initialization
     //
     // data - method id
     // to - contract address
@@ -119,6 +123,7 @@ const proxyRequestResult = async (args) => {
       // params[0] - data
       // params[1] - block number (there is 'latest')
       // null or undefined in result can hide the error
+      // result = '0x0000000000000000000000000000000000000000000000000000000000000000'
       result = await web3Eth.call(params[0], params[1])
       break
 
@@ -128,6 +133,11 @@ const proxyRequestResult = async (args) => {
 
   // FIXME: delete
   console.log(`${args[0].method}: result ->`, result)
+  // resolve problem with timer (if period of finish is'n defined then will return 0x)
+  if (result === '0x') {
+    result = '0x0000000000000000000000000000000000000000000000000000000000000000'
+  }
+
   return result
 }
 

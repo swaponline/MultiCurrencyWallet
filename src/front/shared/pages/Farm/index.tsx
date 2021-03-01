@@ -28,7 +28,7 @@ export default class Farm extends React.Component<null, FarmState> {
     // 0x101848D5C5bBca18E6b4431eEdF6B95E9ADF82FA weenus
     window.farm = {
       farmAddress: '0x57d49704F453CdD2b995280d9D7F557E42847d82',
-      stakingAddress: '0x101848D5C5bBca18E6b4431eEdF6B95E9ADF82FA',
+      stakingAddress: '0x7E0480Ca9fD50EB7A3855Cf53c347A1b4d6A2FF5',
       rewardsAddress: '0x101848D5C5bBca18E6b4431eEdF6B95E9ADF82FA',
     }
 
