@@ -1,15 +1,17 @@
-# SWAP is ERC20 token of our project
+# `SWAP` is ERC20 token of our project
 
 ## Contract address
 
-[0x14a52cf6b4f68431bd5d9524e4fcd6f41ce4ade9](https://etherscan.io/token/0x14a52cf6b4f68431bd5d9524e4fcd6f41ce4ade9)
+Ethereum: [0x14a52cf6b4f68431bd5d9524e4fcd6f41ce4ade9](https://etherscan.io/token/0x14a52cf6b4f68431bd5d9524e4fcd6f41ce4ade9)
+
+Binance Smart Chain: [0x92648e4537cdfa1ee743a244465a31aa034b1ce8](https://bscscan.com/token/0x92648e4537cdfa1ee743a244465a31aa034b1ce8)
 
 ## Listed on exchanges
 
 - 🦄 [Uniswap](https://uniswap.info/pair/0x8dce5d9ed9fa147544be62bdf0e0f575528b4272)
 - [Swaponline](https://swaponline.io/#/exchange/btc-to-swap)
 
-## Total supply
+## Total limited supply
 
 21 000 000 SWAP
 
@@ -20,6 +22,9 @@
 - Team: 25 000 tokens were distributed among the team based on 1 SWAP ~ 1 USD
 - Bounty: 25 000 tokens were distributed among the bounty participants, for the very simple actions (reposts, etc..)
 - Developers program https://github.com/swaponline/MultiCurrencyWallet/blob/master/docs/CONTRIBUTING.md
+
+10 000 SWAP tokens have been moved to the Binance Smart Chain:
+- (ETH [tx 0x38...6943](https://etherscan.io/tx/0x388a66839a125e13468547ea9eb6ecc124b7af958d6d443e8ac0304c3ea86943) -> BSC [tx 0xce...4f86](https://bscscan.com/tx/0xceb4e38b0ffbdb7d2aac21b8b2e5494421ef9c2991a9e4c3cafbd6402beb4f86))
 
 ## Return of investments
 
@@ -75,7 +80,7 @@ Dec, 2018 – First B2B-implementation of the Swap.online toolkit: Saturn.black 
 
 Feb, 2019 – Swap.online starts Bitcoin integration for DEEX (BitShares gate)
 
-May, 2019 – BCH wallet launched in mainnet, ETH ⮀ BCH swaps in testnet
+May, 2019 – BCH wallet launched in mainnet, ETH ⮀ BCH swaps on testnet
 
 Jun, 2019 – Swap.online progress presented on Malta Blockchain Conference
 
@@ -86,6 +91,10 @@ Jan, 2020 – WordPress plugin release
 Sep, 2020 – 100 WordPress plugin sales, stable income
 
 Dec, 2020 – 150 WordPress plugin sales, stable income
+
+Feb, 2021 – [Turbo swaps](https://github.com/swaponline/MultiCurrencyWallet/blob/master/docs/TURBO_SWAPS.md) on testnet
+
+Mar, 2021 – Binance Smart Chain integration
 
 ## Our growth
 
