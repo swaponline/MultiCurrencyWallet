@@ -177,8 +177,8 @@ class UTXOBlockchain extends SwapInterface {
     }
 
     /* @ToDo - больше гибкости */
-    const fetchConfidence = async (unspent): number => {
-      
+    const fetchConfidence = async (unspent): Promise<number> => {
+
 
       if (this.skipFetchConfidence) return 1
 
@@ -308,6 +308,10 @@ class UTXOBlockchain extends SwapInterface {
 
     const script = this.app.env.bitcoin.script.compile([
 
+      this.app.env.bitcoin.opcodes.OP_SIZE,
+      Buffer.from('20' ,'hex'),
+      this.app.env.bitcoin.opcodes.OP_EQUALVERIFY,
+
       hashOpcode,
       Buffer.from(secretHash, 'hex'),
       this.app.env.bitcoin.opcodes.OP_EQUALVERIFY,
@@ -317,7 +321,6 @@ class UTXOBlockchain extends SwapInterface {
       this.app.env.bitcoin.opcodes.OP_IF,
 
       Buffer.from(recipientPublicKey, 'hex'),
-      this.app.env.bitcoin.opcodes.OP_CHECKSIG,
 
       this.app.env.bitcoin.opcodes.OP_ELSE,
 
@@ -325,9 +328,10 @@ class UTXOBlockchain extends SwapInterface {
       this.app.env.bitcoin.opcodes.OP_CHECKLOCKTIMEVERIFY,
       this.app.env.bitcoin.opcodes.OP_DROP,
       Buffer.from(ownerPublicKey, 'hex'),
-      this.app.env.bitcoin.opcodes.OP_CHECKSIG,
 
       this.app.env.bitcoin.opcodes.OP_ENDIF,
+
+      this.app.env.bitcoin.opcodes.OP_CHECKSIG,
     ])
 
     const scriptData = this.app.env.bitcoin.payments.p2sh({
@@ -526,7 +530,7 @@ class UTXOBlockchain extends SwapInterface {
    * @param {object|string} data - scriptValues or wallet address
    * @returns {Promise.<void>}
    */
-  async getBalance(data, hashName?: string): number {
+  async getBalance(data, hashName?: string): Promise<number> {
     let address
 
     if (typeof data === 'string') {
@@ -805,7 +809,7 @@ class UTXOBlockchain extends SwapInterface {
    * @param {string} hashName
    * @returns {Promise}
    */
-  withdraw(data, isRefund?: boolean = false, hashName?: string): Promise<string> {
+  withdraw(data, isRefund: boolean = false, hashName?: string): Promise<string> {
     return new Promise(async (resolve, reject) => {
       try {
         console.log('withdraw')
