@@ -35,6 +35,7 @@ export default class IntlProviderContainer extends React.Component<any, any> {
             render={props => {
               let currentLocale = defaultLocale()
 
+              // @ts-ignore
               if (props.match.params.locale !== undefined) {
                 currentLocale = props.match.params.locale
               } else {
