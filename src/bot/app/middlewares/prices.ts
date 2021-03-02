@@ -1,5 +1,6 @@
 import BigNumber from 'bignumber.js'
 import request from 'request-promise-cache'
+
 import * as configStorage from '../../config/storage'
 import getUnixTimeStamp from 'common/utils/getUnixTimeStamp'
 
@@ -39,14 +40,14 @@ export const getNoxonPrice = (symbol, base = 'BTC') => {
     .then((json: any) => {
       if (json && json.data) {
         let btcData: any = false
-        
-        if (base.toUpperCase() === `BTC`){
+
+        if (base.toUpperCase() === `BTC`) {
           btcData = json.data.filter(item => item && item.symbol && item.symbol.toUpperCase() === `BTC`)
           if (btcData.length) {
             btcData = btcData[0]
           }
         }
-        
+
         const btcPrice = (
           btcData
           && btcData.quote
@@ -54,9 +55,9 @@ export const getNoxonPrice = (symbol, base = 'BTC') => {
           && btcData.quote.USD.price
         ) ? btcData.quote.USD.price : null
 
-
         let symbolInfo = json.data.filter((item) => (item && item.symbol && item.symbol.toUpperCase() === symbol.toUpperCase()))
-        if (symbolInfo.length>0) {
+
+        if (symbolInfo.length > 0) {
           symbolInfo = symbolInfo[0]
           if (base.toUpperCase() === `USD`) return symbolInfo.quote.USD.price
           if (base.toUpperCase() === `BTC`) {
@@ -87,7 +88,7 @@ const getYobitPrice = (symbol) =>
       return null
     })
 
-export const getPrice = (symbol, base = 'BTC') =>
+const getPrice = (symbol, base = 'BTC') =>
   request({
     url: `${COIN_API}/ticker/${symbol}/?convert=${base}`,
     cacheTTL: 86400000
@@ -126,12 +127,10 @@ export const getPriceByPair = async (pair, type?) => {
       return btcPrice()
 
     case 'ETH-BTC':
-      
       return getNoxonPrice('ETH')
       return getPrice(ETH_SYMBOL)
 
     case 'SYC2':
-
       return null;
 
     case 'LTC-BTC':
@@ -143,7 +142,6 @@ export const getPriceByPair = async (pair, type?) => {
       return getPrice(JOT_SYMBOL)
 
     case 'USD-BTC':
-      
       return usdPrice()
 
     case 'SWAP-BTC':
@@ -190,7 +188,6 @@ export const getPriceByPair = async (pair, type?) => {
 export const syncPrices = async () => {
   console.log('app.middlewares.prices syncPrices')
 
-
   return {
     'ETH-BTC': await getPrice(ETH_SYMBOL),
     'JOT-BTC': await getPrice(JOT_SYMBOL),
@@ -219,7 +216,7 @@ export const getCoinPriceCache = (coin: string): BigNumber => {
   return null
 }
 
-export const getCoinPrice = (coin: string):Promise<BigNumber> => {
+export const getCoinPrice = (coin: string): Promise<BigNumber> => {
   return new Promise(async (resolve) => {
     const cachedPrice: BigNumber = getCoinPriceCache(coin)
     if (cachedPrice !== null) {
@@ -231,7 +228,7 @@ export const getCoinPrice = (coin: string):Promise<BigNumber> => {
         switch (priceConfig.source) {
           case `FIXED`: // Фиксированая цена
             coinPrice = new BigNumber(priceConfig.price)
-            break;
+            break
           case `API`: // API
             switch (priceConfig.api) {
               case `SWAPONLINE`:
@@ -244,7 +241,7 @@ export const getCoinPrice = (coin: string):Promise<BigNumber> => {
                 console.warn(`Unknown price API '${priceConfig.api}' for coin '${coin}'.`)
                 break
             }
-            break;
+            break
           case `COIN`:  // От цены другой монеты
             const baseCoinPrice = await getCoinPrice(priceConfig.coin)
             coinPrice = baseCoinPrice.multipliedBy(priceConfig.count)
@@ -275,7 +272,7 @@ export const getCoinPrice = (coin: string):Promise<BigNumber> => {
   })
 }
 
-export const calcPairPrice = async (pair) => {
+const calcPairPrice = async (pair) => {
   const [ head, base ] = pair.split(`-`)
   // Нужно расчитать соотношение одной цены к другой.
   // В боте валюты привязаны к BTC

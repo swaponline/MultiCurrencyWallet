@@ -1,5 +1,6 @@
 import ws from 'ws'
 
+import REST from '../cli/interface'
 import { getOrderId } from './helpers/getOrderId'
 
 
@@ -7,7 +8,7 @@ class SocketBot {
   isAutoAccepting: boolean
   isAutoSearching: boolean
   ws: ws
-  worker: any
+  worker: REST
 
   constructor(worker, url) {
     if (!worker) throw new Error (`Cant init without Worker`)
@@ -67,7 +68,7 @@ class SocketBot {
 
     this.worker.data.orders.map( order => {
       console.log('thinking of ' + order.string)
-      this.worker.algo.priceFits(order, minPrice)
+      this.worker.algo.priceFits(order)
       this.fastSwap(order)
     })
 
@@ -82,7 +83,7 @@ class SocketBot {
 
       console.log('thinking of ' + order.string)
       // also that he has enough balance
-      if (this.worker.algo.priceFits(order, minPrice))
+      if (this.worker.algo.priceFits(order))
         this.fastSwap(order)
     })
 

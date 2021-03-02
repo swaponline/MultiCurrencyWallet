@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-console.clear()
 
 import readline from './helpers/readline'
 import { HELP, FULL_HELP } from './helpers/help'
@@ -11,6 +10,7 @@ const HOST = process.env.HOST || `localhost`
 const url = process.argv[2] || `http://${HOST}:1337`
 const bot = new RESTInterface(url)
 
+console.clear()
 console.log(`Using url = ${bot.url}`)
 
 const totals_info = (json) => {

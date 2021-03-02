@@ -64,7 +64,7 @@ class DataWorker {
 
   async plotPrices(sorted) {
     if (sorted.length == 0) return ""
-    
+
     const lowest_price = sorted.slice(0,1).pop().price * 0.9
     const highest_price = sorted.slice(-1).pop().price * 1.1
 

@@ -26,11 +26,11 @@ const orderToString = (swap, full?) => {
     return [
       full ? link : '',
       swap.id.split('-').pop(),
-      ( swap.isMy ? 'my' : '- ' ),
+      swap.isMy ? 'my' : '- ',
       swap.buyAmount, swap.buyCurrency,
       '→',
       swap.sellAmount, swap.sellCurrency,
-      '[', swap.owner.peer.slice(0,5), '...', swap.owner.peer.slice(-10), ']'
+      '[', swap.owner.peer.slice(0, 5), '...', swap.owner.peer.slice(-10), ']'
     ].join(' ')
   } catch (e) {
     return ''

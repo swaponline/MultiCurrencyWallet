@@ -20,7 +20,6 @@ const _ = (async () => {
   await ready(room)
 
   console.clear()
-  const a:number = ''
   const swap_repl = repl.start()
 
   if (swapID) {

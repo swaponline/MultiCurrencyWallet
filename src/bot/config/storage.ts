@@ -32,7 +32,7 @@ const getCustomERC20 = (): Array<any> => {
   return _customERC
 }
 
-const setNetwork = (network:Networks): void => {
+const setNetwork = (network: Networks): void => {
   console.log(
     colorString(`>>> Switch network to`, COLORS.GREEN),
     colorString(network, COLORS.RED)

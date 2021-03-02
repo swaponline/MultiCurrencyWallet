@@ -17,7 +17,7 @@ const decodeFlow = (swap) => {
 }
 
 const findOrder = (app) => (req, res, next) => {
-  let id = req.params.id
+  const id = req.params.id
 
   console.log(new Date().toISOString(), 'id', id)
   let order = app.services.orders.getByKey(id)
@@ -29,7 +29,6 @@ const findOrder = (app) => (req, res, next) => {
 }
 
 const findSwap = (app) => async (req, res) => {
-
   const id = req.params.id
 
   console.log(new Date().toISOString(), 'id', id)

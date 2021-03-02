@@ -8,7 +8,6 @@ import Pair from '../../Pair'
 import { FG_COLORS as COLORS, BG_COLORS , colorString } from 'common/utils/colorString'
 import { checkSwapsCountLimit } from '../../core/checkSwapsCountLimit'
 
-
 import {
   TRADE_CONFIG as DEFAULT_TRADE_CONFIG,
   TRADE_ORDER_MINAMOUNTS as DEFAULT_TRADE_ORDER_MINAMOUNTS,
