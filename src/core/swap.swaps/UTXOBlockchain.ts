@@ -565,6 +565,7 @@ class UTXOBlockchain extends SwapInterface {
 
     const { script, scriptAddress } = this.createScript(scriptValues, hashName)
 
+console.log('>>>>>>>>>>>>>>> getWithdrawRawTransaction', script, scriptAddress, scriptValues)
     const tx            = new this.app.env.bitcoin.TransactionBuilder(this.network)
     const unspents      = await this.fetchUnspents(scriptAddress)
 
@@ -917,7 +918,7 @@ class UTXOBlockchain extends SwapInterface {
         return null
       }
 
-      return flow.btcSwap.withdraw({
+      return utxoClass.withdraw({
         scriptValues,
         secret,
         destinationAddress: flow.swap.destinationBuyAddress,

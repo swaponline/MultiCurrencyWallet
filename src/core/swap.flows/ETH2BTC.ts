@@ -226,7 +226,7 @@ class ETH2BTC extends AtomicAB2UTXO {
               secretHash,
             } = this.generateSecret()
             console.log('>>>>>', secret, secretHash)
-            this.createWorkUTXOScript(secretHash)
+            this.createWorkUTXOScript(secretHash, false)
 
             this.setState({
               secret,

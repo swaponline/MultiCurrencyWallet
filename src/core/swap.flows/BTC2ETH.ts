@@ -216,7 +216,10 @@ console.log('>>>> getSteps', this.isTaker())
         async () => {
           console.log('>>>> MAKER - BTC2ETH - 5 - wait-withdraw-utxo')
           // check withdraw
-          const { scriptAddress } = this.state
+          const {
+            utxoScriptValues,
+          } = this.state
+          const { scriptAddress } = this.utxoBlockchain.createScript(utxoScriptValues)
           console.log('>>>> scriptAddress', scriptAddress)
           const utxoWithdrawData = await this.btcSwap.checkWithdraw(scriptAddress)
           console.log('>>>>> MAKER - BTC2ETH - WITHDRAW UTXO DATA', utxoWithdrawData)

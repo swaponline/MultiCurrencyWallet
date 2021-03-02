@@ -475,7 +475,7 @@ class AtomicAB2UTXO extends Flow {
     }
   }
 
-  createWorkUTXOScript(secretHash) {
+  createWorkUTXOScript(secretHash, isOwner = true) {
     if (this.state.utxoScriptValues) {
       debug('swap.core:flow')('BTC Script already generated', this.state.utxoScriptValues)
       return
@@ -488,8 +488,8 @@ class AtomicAB2UTXO extends Flow {
 
     const scriptValues = {
       secretHash:         secretHash,
-      ownerPublicKey:     this.app.services.auth.accounts[this.utxoCoin].getPublicKey(),
-      recipientPublicKey: participant[this.utxoCoin].publicKey,
+      ownerPublicKey:     (isOwner) ? this.app.services.auth.accounts[this.utxoCoin].getPublicKey() : participant[this.utxoCoin].publicKey,
+      recipientPublicKey: (isOwner) ? participant[this.utxoCoin].publicKey : this.app.services.auth.accounts[this.utxoCoin].getPublicKey(),
       lockTime:           getLockTime(),
     }
     console.log(scriptValues)
