@@ -233,7 +233,7 @@ const SecondStep = (props) => {
         feedback.createWallet.securitySelected(`${currencyName}-normal`)
       },
     },
-    /*
+    
     {
       text: 'SMS',
       name: 'sms',
@@ -245,7 +245,7 @@ const SecondStep = (props) => {
         pl: 'Zweryfikuj swoje transakcje za pomocą kodu SMS',
       }[locale],
       // enabled: _protection.sms[currencyKey],
-      enabled: false, // sms temporarly disabled
+      enabled: true, // false, // sms temporarly disabled
       activated: _activated.sms[currencyKey],
       onClickHandler: () => {
         if (isSmsFeatureAsked) {
@@ -255,7 +255,7 @@ const SecondStep = (props) => {
         feedback.createWallet.securitySelected(`${currencyName}-sms`)
       },
     },
-    */
+    
     {
       text: 'PIN',
       name: 'pin',
