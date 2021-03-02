@@ -11,8 +11,6 @@ import { ethereumProxy } from 'helpers/web3'
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 type FarmState = {
-  duration: number
-  decimal: number
   error: IError
 }
 
@@ -22,19 +20,22 @@ export default class Farm extends React.Component<null, FarmState> {
     super(props)
 
 
+    
     // FIXME: delete. Init data - just for test
     window.localStorage.setItem('ff-account-unlocked', 'true')
+    // 0xCA701f5904A9659C3970D5e3Cf1c150D5bfbE1Af farm
     // 0x7E0480Ca9fD50EB7A3855Cf53c347A1b4d6A2FF5 xeenus
     // 0x101848D5C5bBca18E6b4431eEdF6B95E9ADF82FA weenus
+    // 0xF6fF95D53E08c9660dC7820fD5A775484f77183A yeenus
     window.farm = {
-      farmAddress: '0x57d49704F453CdD2b995280d9D7F557E42847d82',
-      stakingAddress: '0x7E0480Ca9fD50EB7A3855Cf53c347A1b4d6A2FF5',
-      rewardsAddress: '0x101848D5C5bBca18E6b4431eEdF6B95E9ADF82FA',
+      farmAddress: '0xCA701f5904A9659C3970D5e3Cf1c150D5bfbE1Af',
+      stakingAddress: '0x101848D5C5bBca18E6b4431eEdF6B95E9ADF82FA',
+      rewardsAddress: '0xF6fF95D53E08c9660dC7820fD5A775484f77183A',
     }
+    // *****************************************
+
 
     this.state = {
-      duration: 2000003, // ~ 9.25 hours
-      decimal: 18,
       error: null,
     }
   }
@@ -77,11 +78,20 @@ export default class Farm extends React.Component<null, FarmState> {
       //   stakingAddress: '',
       //   duration: 2000003,
       //   decimal: 18,
-      //   // onStartLoading: () => null,
-      //   // onFinishLoading: () => null,
+      //   onStartLoading: () => null,
+      //   onFinishLoading: () => {
+      //     // farmDeployer.deploy({
+      //     //   rewardsAddress: '0xF6fF95D53E08c9660dC7820fD5A775484f77183A',
+      //     //   stakingAddress: '0x101848D5C5bBca18E6b4431eEdF6B95E9ADF82FA',
+      //     //   duration: 2000003,
+      //     //   decimal: 18,
+      //     //   onSuccess: (address) => console.log('Farm address:', address),
+      //     //   onError: (err) => console.error(err),
+      //     // })
+      //   },
       //   onError: (error) => this.reportError(error),
       // })
-  
+
       farmFactory.init({
         networkName: config.entry === 'testnet' ? 'ropsten' : 'mainnet',
         farmAddress: farmAddress,

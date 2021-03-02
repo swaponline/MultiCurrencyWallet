@@ -50,9 +50,6 @@ const proxyRequest = new Proxy(() => null, {
    * @param args array with target arguments
    */
   apply(target, thisArg, args) {
-    // FIXME: delete
-    console.log('Method<request> proxy - arguments: ', args)
-
     if (!window.web3.eth) {
       throw new Error('Ethereum proxy - in the method<request>: window.web3.eth is undefined')
     }
@@ -68,6 +65,9 @@ const proxyRequest = new Proxy(() => null, {
 })
 
 const proxyRequestResult = async (args) => {
+  // FIXME: delete
+  console.log('Method<request> proxy - arguments: ', args)
+
   const web3Eth = window.web3.eth
   const internalAddressArr = [web3Eth.accounts.wallet[0].address]
   const method = args[0].method
@@ -88,14 +88,12 @@ const proxyRequestResult = async (args) => {
       result = await web3Eth.getGasPrice()
       break
 
-    // TODO: An error for transaction to contract
+    // TODO: An error for transaction into contract
     // not enough parameters for transaction
     // need to create your owns
     case 'eth_sendTransaction':
-      const defaultGas = 90_000
-      const gasLimit = 90_000
-      params[0].gas = defaultGas
-      params[0].gasLimit = gasLimit
+      params[0].gas = 1_000_000
+      // params[0].gasLimit = 3_000_000
       result = await web3Eth.sendTransaction(params[0])
       break
 
@@ -106,24 +104,14 @@ const proxyRequestResult = async (args) => {
       result = await web3Eth.getCode(params[0])
       break
 
-    // method for a main initialization with farm and tokens addresses
-    // FIXME: problem
-    // first two calls for staking token (xeenus for now)
-    // second two calls for rewards token (weenus for now)
-    // this calls return (in hex format) 1) token symbol 2) token decimals
-    // after that we get error and several wrong results (just '0x') 
-    // when again call method for user account 
-    // 
-    // TIP: problem with timer initialization
-    //
-    // data - method id
-    // to - contract address
-    // returned - value of executed contract
+    // Main method for an initialization with init options
+    // 1) two calls for staking token (xeenus for now)
+    // 2) two calls for rewards token (weenus for now)
+    // - returns a token symbol and decimals in hex format
+    // FIXME: 3) calls for timer initialization (returns - 0x)
     case 'eth_call':
       // params[0] - data
       // params[1] - block number (there is 'latest')
-      // null or undefined in result can hide the error
-      // result = '0x0000000000000000000000000000000000000000000000000000000000000000'
       result = await web3Eth.call(params[0], params[1])
       break
 
@@ -133,7 +121,7 @@ const proxyRequestResult = async (args) => {
 
   // FIXME: delete
   console.log(`${args[0].method}: result ->`, result)
-  // resolve problem with timer (if period of finish is'n defined then will return 0x)
+  // resolve the problem with timer
   if (result === '0x') {
     result = '0x0000000000000000000000000000000000000000000000000000000000000000'
   }
