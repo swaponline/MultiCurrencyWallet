@@ -57,8 +57,8 @@ export default class Farm extends React.Component<null, FarmState> {
 
     /**
      * Tip for init data:
-     * LocalStorage key 'ff-account-unlocked' has to true value
-     * without metamask and if web3 account is available
+     * LocalStorage key 'ff-account-unlocked' must be true value
+     * otherwise will open a modal window for metamask connection
      * 
      * Options for factory:
      * farmAddress
