@@ -37,9 +37,11 @@ export default class IntlProviderContainer extends React.Component<any, any> {
 
               // @ts-ignore
               if (props.match.params.locale !== undefined) {
+                // @ts-ignore
                 currentLocale = props.match.params.locale
               } else {
                 lang = getCookie('mylang') || 'en'
+                // @ts-ignore
                 currentLocale = lang.toLowerCase()
               }
 
