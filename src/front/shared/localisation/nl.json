@@ -7981,6 +7981,13 @@
     ]
   },
   {
+    "id": "enterYouSend",
+    "message": "Enter \"U verstuurd\" bedrag",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
     "id": "AtomicSwap_Title",
     "message": "Atomic swap",
     "files": [

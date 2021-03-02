@@ -7989,6 +7989,13 @@
     ]
   },
   {
+    "id": "enterYouSend",
+    "message": "Ingrese \"Tu envias\" monto",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
     "id": "AtomicSwap_Title",
     "message": "Atomic swap",
     "files": [
