@@ -7969,6 +7969,13 @@
     ]
   },
   {
+    "id": "enterYouSend",
+    "message": "Wpisz \"Wysyłasz\" kwotę",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
     "id": "TurboSwap_You",
     "message": "Wy",
     "files": [
