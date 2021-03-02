@@ -199,6 +199,10 @@ class GhostSwap extends SwapInterface {
     const { secretHash, ownerPublicKey, recipientPublicKey, lockTime } = data
     const script = this.app.env.bitcoin.script.compile([
 
+      this.app.env.bitcoin.opcodes.OP_SIZE,
+      Buffer.from('20' ,'hex'),
+      this.app.env.bitcoin.opcodes.OP_EQUALVERIFY,
+
       hashOpcode,
       Buffer.from(secretHash, 'hex'),
       this.app.env.bitcoin.opcodes.OP_EQUALVERIFY,
@@ -208,7 +212,6 @@ class GhostSwap extends SwapInterface {
       this.app.env.bitcoin.opcodes.OP_IF,
 
       Buffer.from(recipientPublicKey, 'hex'),
-      this.app.env.bitcoin.opcodes.OP_CHECKSIG,
 
       this.app.env.bitcoin.opcodes.OP_ELSE,
 
@@ -216,9 +219,10 @@ class GhostSwap extends SwapInterface {
       this.app.env.bitcoin.opcodes.OP_CHECKLOCKTIMEVERIFY,
       this.app.env.bitcoin.opcodes.OP_DROP,
       Buffer.from(ownerPublicKey, 'hex'),
-      this.app.env.bitcoin.opcodes.OP_CHECKSIG,
 
       this.app.env.bitcoin.opcodes.OP_ENDIF,
+
+      this.app.env.bitcoin.opcodes.OP_CHECKSIG,
     ])
 
     const scriptData = this.app.env.bitcoin.payments.p2sh({ redeem: { output: script, network: this.network }, network: this.network })
