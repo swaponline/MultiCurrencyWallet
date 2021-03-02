@@ -1,51 +1,19 @@
-@mixin containerCommon {
-  width: 410px; // widget
-  padding: 2.2em;
-  overflow: hidden;
-  border-radius: 24px; // widget
-
-  @media all and (max-width: 567px) { // widget
-    max-width: 280px;
-  }
-}
-
-@mixin lightErrorContainer {
-  @include containerCommon;
-  box-shadow: $l-box-shadow;
-  background-color: $l-background-elements;
-}
-
-@mixin darkErrorContainer {
-  @include containerCommon;
-  box-shadow: $d-box-shadow;
-  background-color: $d-background-elements;
-}
-
 .farm {
   padding: 2rem 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
-  &.dark {
-    .farmErrorWrapper {
-      @include darkErrorContainer;
-    }
-  }
 }
 
-.farmErrorWrapper {
-  @include lightErrorContainer;
-  margin-top: 2.8em;
-  border: 1px solid $color-f-error;
-  color: $color-f-error;
+.timer {
+  font-size: 2rem;
+  padding: 1rem 0;
+}
 
-  h3 {
-    margin-bottom: 1rem;
-  }
-
-  p {
-    margin: 0;
+@media all and (max-width: 567px) { // widget
+  .timer {
+    font-size: 1.5rem;
+    padding: 1rem 0;
   }
 }

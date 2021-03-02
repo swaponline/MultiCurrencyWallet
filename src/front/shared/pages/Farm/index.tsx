@@ -10,20 +10,14 @@ import { ethereumProxy } from 'helpers/web3'
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
-type FarmState = {
-  error: IError
-}
-
 @cssModules(styles, { allowMultiple: true })
-export default class Farm extends React.Component<null, FarmState> {
+export default class Farm extends React.Component<null, null> {
   constructor(props) {
     super(props)
 
-
-    
     // FIXME: delete. Init data - just for test
     window.localStorage.setItem('ff-account-unlocked', 'true')
-    // 0xCA701f5904A9659C3970D5e3Cf1c150D5bfbE1Af farm
+    // 0xCA701f5904A9659C3970D5e3Cf1c150D5bfbE1Af farm contract
     // 0x7E0480Ca9fD50EB7A3855Cf53c347A1b4d6A2FF5 xeenus
     // 0x101848D5C5bBca18E6b4431eEdF6B95E9ADF82FA weenus
     // 0xF6fF95D53E08c9660dC7820fD5A775484f77183A yeenus
@@ -31,12 +25,6 @@ export default class Farm extends React.Component<null, FarmState> {
       farmAddress: '0xCA701f5904A9659C3970D5e3Cf1c150D5bfbE1Af',
       stakingAddress: '0x101848D5C5bBca18E6b4431eEdF6B95E9ADF82FA',
       rewardsAddress: '0xF6fF95D53E08c9660dC7820fD5A775484f77183A',
-    }
-    // *****************************************
-
-
-    this.state = {
-      error: null,
     }
   }
 
@@ -48,8 +36,9 @@ export default class Farm extends React.Component<null, FarmState> {
       if (!window.web3) {
         window.web3 = web3
       }
-      // if false it means that user has plugin,
-      // but metamask isn't connected to our wallet
+      // if false it means that metamask isn't connected
+      // to our wallet but it's in browser and for plugin
+      // it's enougth
       if (!window.ethereum) {
         window.ethereum = ethereumProxy
       }
@@ -112,22 +101,11 @@ export default class Farm extends React.Component<null, FarmState> {
   }
 
   render() {
-    const { error } = this.state
-
     return (
-      <section styleName={`farm ${isDark ? "dark" : ""}`}>
-        {/* own style for widget */}
+      <section styleName="farm">
+        <div id="farmfactory-timer-root" styleName="timer"></div>
+        {/* own style for plugin */}
         <div style={factoryStyles} id="farmfactory-widget-root"></div>
-
-        {error && (
-            <div styleName='farmErrorWrapper'>
-              <h3>Error</h3>
-              {error.code && <p>Code: {error.code}</p>}
-              {error.name && <p>Name: {error.name}</p>}
-              {error.message && <p>Message: {error.message}</p>}
-            </div>
-          )
-        }
       </section>
     )
   }

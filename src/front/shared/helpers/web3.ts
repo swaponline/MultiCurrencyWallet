@@ -37,16 +37,16 @@ const getWeb3 = () => {
 }
 
 /**
- * Below - proxy functions for window.ethereum.
+ * Below - proxy functions for window.ethereum which are used by Farm plugin.
  * These are methods that aren't in the custom ethereum object.
  * Imitation of metamask interface.
  */
 
 const proxyRequest = new Proxy(() => null, {
   /**
-   * @function target original function
-   * @param thisArg window ethereum object
-   * @param args array with target arguments
+   * @function {target} original function
+   * @param {thisArg} window ethereum object
+   * @param {args} array with target arguments
    */
   apply(target, thisArg, args) {
     if (!window.web3.eth) {
@@ -88,11 +88,16 @@ const proxyRequestResult = async (args) => {
       result = await web3Eth.getCode(params[0])
       break
     case 'eth_call':
-      // Main method for an initialization with init options
-      // 1) two calls (symbol and decimals) for staking token
-      // 2) two calls (symbol and decimals) for rewards token
-      // 3) FIXME: calls for timer initialization (returns - 0x)
-      // params[0] - data, params[1] - block number (there is 'latest')
+      /**
+       * Main method for an initialization with init options
+       * 1) two calls for every tokens (staking, reward)
+       *    returned symbol and decimals for token in the hex format
+       * 2) calls for timer initialization
+       *    returned a finish period
+       * 
+       * params[0] - data
+       * params[1] - block number (there is 'latest')
+       */
       result = await web3Eth.call(params[0], params[1])
       break
 
@@ -100,14 +105,10 @@ const proxyRequestResult = async (args) => {
       throw new Error(`Ethereum proxy - in the method<request>: unknown method: ${method}`)
   }
 
-  // resolve the problem with timer
-  if (result === '0x') {
-    result = '0x0000000000000000000000000000000000000000000000000000000000000000'
-  }
-
   // FIXME: delete
   console.log('Method<request> proxy - arguments: ', args)
   console.log(`${args[0].method}: result ->`, result)
+
   return result
 }
 
