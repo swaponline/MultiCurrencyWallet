@@ -31,6 +31,7 @@ export default [
           postcssOptions: {
             plugins: () => [
               autoprefixer(AUTOPREFIXER),
+              require('postcss-import')
             ],
           }
         },
