@@ -1,4 +1,5 @@
 import KrakenClient from 'kraken-api'
+
 //const { wallet } = require('../services')
 const wallet = ''
 
@@ -18,19 +19,16 @@ class KrakenApi {
   }
 
   getBalance() {
-
     return this.core.api('Balance');
   }
 
   getPairs() {
-
     return this.core.api('AssetPairs');
   }
 
   deposit() {
     //@ts-ignore
     wallet.withdraw(amount,)
-
   }
 
   run(amount, type) {
@@ -41,7 +39,6 @@ class KrakenApi {
   /*
   * @ToDo check */
   createOrder(amount, type) {
-
     if (!this.key) {
       return
     }
@@ -60,7 +57,6 @@ class KrakenApi {
   }
 
   returnMoney(amount) {
-
     let result = this.core.api('Withdraw', {
       //@ts-ignore
       'key': type, //sell & buy
@@ -76,11 +72,11 @@ class KrakenApi {
   * */
   async getTrades() {
     let that = this;
+
     return new Promise(async function (resolve, reject) {
       that.core.api('Trades', {pair: that.pair}).then((r) => {
         resolve(r.result[that.pair])
       }).catch(reject)
-
     });
   }
 

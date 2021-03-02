@@ -1,13 +1,15 @@
 import * as fs from 'fs'
+import _debug from 'debug'
+
 import * as mnemonicUtils from 'common/utils/mnemonic'
 import * as configStorage from './config/storage'
 import { getNetworkType } from 'common/domain/network'
-import { FG_COLORS as COLORS, BG_COLORS , colorString } from 'common/utils/colorString'
+import { FG_COLORS as COLORS, BG_COLORS, colorString } from 'common/utils/colorString'
 
 import { feedbackToOwner } from './helpers/debugFeedBack'
 
 
-console.log(colorString(`Loading...`,COLORS.GREEN))
+console.log(colorString(`Loading...`, COLORS.GREEN))
 
 const rewriteEnvKeys = [
   `NETWORK`,
@@ -64,6 +66,7 @@ if (rewritedEnv.SECRET_PHRASE) {
     process.exit(0)
   }
 }
+
 // NETWORK
 if (rewritedEnv.NETWORK !== undefined) {
   configStorage.setNetwork(getNetworkType(rewritedEnv.NETWORK))
@@ -106,7 +109,7 @@ if (process.env.TEST_STARTUP === `true`) {
     colorString('>>>> TEST STARTUP', COLORS.GREEN)
   )
 
-  process.env.SECRET_PHRASE='gospel total hundred major refuse when equal pilot goat soft recall abandon'
+  process.env.SECRET_PHRASE = 'gospel total hundred major refuse when equal pilot goat soft recall abandon'
 
   setTimeout(() => {
     console.log('>>>> TEST READY - SHUTDOWN')
@@ -141,8 +144,6 @@ if (process.env.MAX_PARALLEL_SWAPS) {
 
 
 feedbackToOwner(`Marketmaker started Network(${process.env.NETWORK})`)
-
-import _debug from 'debug'
 
 _debug('.:app')
 

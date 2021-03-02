@@ -1,5 +1,6 @@
 import ws from 'ws'
 
+
 const checkOrderID = ({ id, orderId }) => {
 
   if (id) return { id }
@@ -13,7 +14,6 @@ class SocketBot {
   rest: any
   isAutoAccepting: boolean
   isAutoSearching: boolean
-
 
   constructor(rest, url, auto) {
     if (!rest) throw new Error (`Cant init without Worker`)
@@ -51,7 +51,7 @@ class SocketBot {
 
     this.on('new order', order => this.maybeSwap(order))
     this.on('new orders', orders =>
-              orders.map(order => this.maybeSwap(order)))
+      orders.map(order => this.maybeSwap(order)))
 
     this.on('new order request', request => this.maybeAccept(request))
 
@@ -60,7 +60,6 @@ class SocketBot {
       this.rest.deleteAll()
       this.rest.fillBook({ total: 0.01 })
     }, 60 * 1000)
-
   }
 
   async maybeSwap(order) {
@@ -153,10 +152,7 @@ class SocketBot {
             }, 60 * 1000)
           }
       }
-
-
     }, 5000)
-
 
     return swap
   }

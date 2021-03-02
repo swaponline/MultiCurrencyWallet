@@ -1,8 +1,8 @@
 echo "Enter name of instance (ex. mybot)"
 read CONTAINERNAME
 
-echo "Enter port to deploy (80)"	
-read PORT 
+echo "Enter port to deploy (80)"
+read PORT
 
 mkdir $CONTAINERNAME
 cd $CONTAINERNAME
@@ -75,7 +75,7 @@ services:
       - ${PWD}/config:/root/MultiCurrencyWallet/config
       - ${PWD}/.storage:/root/MultiCurrencyWallet/.storage
       - ${PWD}/config/tradeconfig.mainnet.json:/root/MultiCurrencyWallet/tradeconfig.mainnet.json
-      - ${PWD}/config/tradeconfig.testnet.json:/root/MultiCurrencyWallet/tradeconfig.testnet.json    
+      - ${PWD}/config/tradeconfig.testnet.json:/root/MultiCurrencyWallet/tradeconfig.testnet.json
     ports:
       - "${PORT}:${PORT}"
     env_file:
@@ -83,8 +83,7 @@ services:
 EOF
 
 docker pull swaponline/mcw
-docker-compose up -d 
+docker-compose up -d
 
 curl https://raw.githubusercontent.com/jesseduffield/lazydocker/master/scripts/install_update_linux.sh | bash
-lazydocker 
- 
+lazydocker

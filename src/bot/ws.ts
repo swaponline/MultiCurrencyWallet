@@ -1,6 +1,8 @@
 import WebSocket from 'ws'
 import http from 'http'
+
 import { util } from 'swap.app'
+
 
 const WS_PORT = 7333
 
@@ -29,7 +31,8 @@ const init = (app, SwapApp, router, port) => {
 
   const interval = setInterval(() => {
     wss.clients.forEach((ws) => {
-      if (ws.isAlive === false) return ws.terminate()
+      if (ws.isAlive === false)
+        return ws.terminate()
 
       ws.isAlive = false
       ws.ping(() => {})
