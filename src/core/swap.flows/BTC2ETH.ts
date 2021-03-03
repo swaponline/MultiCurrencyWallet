@@ -194,45 +194,55 @@ console.log('>>>> getSteps', this.isTaker())
 
         // 4 - `lock-utxo` - create UTXO
         async () => {
-          console.log('>>>>>>> MAKER BTC2ETH - LOCK-UTXO')
-          const {
-            secretHash,
-            utxoScriptValues
-          } = flow.state
-          if (secretHash && utxoScriptValues) {
-            console.log('>>>>> MAKER BTC2ETH - FUND SCRIPT')
-            this.btcSwap.fundSwapScript({
-              flow,
-            })
-          } else {
-            console.log('>>>>> MAKER BTC2ETH - No script values - request its')
-            flow.swap.room.sendMessage({
-              event: 'request utxo script',
-            })
-          }
+          // Repeat until 
+          await util.helpers.repeatAsyncUntilResult(async () => {
+            console.log('>>>>>>> MAKER BTC2ETH - LOCK-UTXO')
+            const {
+              secretHash,
+              utxoScriptValues
+            } = flow.state
+            if (secretHash && utxoScriptValues) {
+              console.log('>>>>> MAKER BTC2ETH - FUND SCRIPT')
+              await this.btcSwap.fundSwapScript({
+                flow,
+              })
+              return true
+            } else {
+              console.log('>>>>> MAKER BTC2ETH - No script values - request its')
+              flow.swap.room.sendMessage({
+                event: 'request utxo script',
+              })
+              return false
+            }
+          })
         },
 
         // 5 - `wait-withdraw-utxo` - wait withdraw UTXO - fetch secret from TX - getSecretFromTxhash
         async () => {
-          console.log('>>>> MAKER - BTC2ETH - 5 - wait-withdraw-utxo')
-          // check withdraw
-          const {
-            utxoScriptValues,
-          } = this.state
-          const { scriptAddress } = this.utxoBlockchain.createScript(utxoScriptValues)
-          console.log('>>>> scriptAddress', scriptAddress)
-          const utxoWithdrawData = await this.btcSwap.checkWithdraw(scriptAddress)
-          console.log('>>>>> MAKER - BTC2ETH - WITHDRAW UTXO DATA', utxoWithdrawData)
-          if (utxoWithdrawData) {
-            const secret = await this.btcSwap.getSecretFromTxhash(utxoWithdrawData.txid)
-            
-            console.log('>>>>> secret', secret)
-            if (secret) {
-              this.finishStep({
-                secret,
-              }, 'wait-withdraw-utxo')
+          await util.helpers.repeatAsyncUntilResult(async () => {
+            console.log('>>>> MAKER - BTC2ETH - 5 - wait-withdraw-utxo')
+            // check withdraw
+            const {
+              utxoScriptValues,
+            } = this.state
+            const { scriptAddress } = this.utxoBlockchain.createScript(utxoScriptValues)
+            console.log('>>>> scriptAddress', scriptAddress)
+            const utxoWithdrawData = await this.btcSwap.checkWithdraw(scriptAddress)
+            console.log('>>>>> MAKER - BTC2ETH - WITHDRAW UTXO DATA', utxoWithdrawData)
+            if (utxoWithdrawData) {
+              const secret = await this.btcSwap.getSecretFromTxhash(utxoWithdrawData.txid)
+              
+              console.log('>>>>> secret', secret)
+              if (secret) {
+                this.finishStep({
+                  secret,
+                }, 'wait-withdraw-utxo')
+              }
+              return true
+            } else {
+              return false
             }
-          }
+          })
         },
 
         // 6 - `withdraw-eth` - withdraw from AB
