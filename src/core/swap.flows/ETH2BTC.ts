@@ -68,7 +68,7 @@ class ETH2BTC extends AtomicAB2UTXO {
       isbtcWithdrawn: false,
 
       ethSwapWithdrawTransactionHash: null,
-      btcSwapWithdrawTransactionHash: null,
+      utxoSwapWithdrawTransactionHash: null,
 
       refundTransactionHash: null,
       isRefunded: false,
@@ -86,6 +86,15 @@ class ETH2BTC extends AtomicAB2UTXO {
     this._persistState()
 
     const flow = this
+
+    this.swap.room.on('utxo locked', (data) => {
+      const {
+        ethSwapCreationTransactionHash,
+      } = data
+      flow.setState({
+        ethSwapCreationTransactionHash,
+      }, true)
+    })
 
     flow.swap.room.once('request withdraw', () => {
       flow.setState({
@@ -181,12 +190,12 @@ class ETH2BTC extends AtomicAB2UTXO {
 
         () => {
           flow.swap.room.once('request swap finished', () => {
-            const { btcSwapWithdrawTransactionHash } = flow.state
+            const { utxoSwapWithdrawTransactionHash } = flow.state
 
             flow.swap.room.sendMessage({
               event: 'swap finished',
               data: {
-                btcSwapWithdrawTransactionHash,
+                utxoSwapWithdrawTransactionHash,
               },
             })
           })
@@ -377,10 +386,10 @@ class ETH2BTC extends AtomicAB2UTXO {
     }).then((hash) => {
       debug('swap.core:flow')(`TX hash=${hash}`)
       this.setState({
-        btcSwapWithdrawTransactionHash: hash,
+        utxoSwapWithdrawTransactionHash: hash,
       })
     
-      debug('swap.core:flow')(`TX withdraw sent: ${this.state.btcSwapWithdrawTransactionHash}`)
+      debug('swap.core:flow')(`TX withdraw sent: ${this.state.utxoSwapWithdrawTransactionHash}`)
 
       this.finishStep({
         isbtcWithdrawn: true,

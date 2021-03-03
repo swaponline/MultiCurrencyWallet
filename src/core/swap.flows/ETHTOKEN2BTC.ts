@@ -79,7 +79,7 @@ export default (tokenName) => {
         isbtcWithdrawn: false,
 
         ethSwapWithdrawTransactionHash: null,
-        btcSwapWithdrawTransactionHash: null,
+        utxoSwapWithdrawTransactionHash: null,
 
         refundTransactionHash: null,
         isRefunded: false,
@@ -171,12 +171,12 @@ export default (tokenName) => {
 
         () => {
           flow.swap.room.once('request swap finished', () => {
-            const { btcSwapWithdrawTransactionHash } = flow.state
+            const { utxoSwapWithdrawTransactionHash } = flow.state
 
             flow.swap.room.sendMessage({
               event: 'swap finished',
               data: {
-                btcSwapWithdrawTransactionHash,
+                utxoSwapWithdrawTransactionHash,
               },
             })
           })
@@ -293,10 +293,10 @@ export default (tokenName) => {
       }).then((hash) => {
         debug('swap.core:flow')(`TX hash=${hash}`)
         this.setState({
-          btcSwapWithdrawTransactionHash: hash,
+          utxoSwapWithdrawTransactionHash: hash,
         })
 
-        debug('swap.core:flow')(`TX withdraw sent: ${this.state.btcSwapWithdrawTransactionHash}`)
+        debug('swap.core:flow')(`TX withdraw sent: ${this.state.utxoSwapWithdrawTransactionHash}`)
 
         this.finishStep({
           isbtcWithdrawn: true,

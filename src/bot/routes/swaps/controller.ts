@@ -61,7 +61,7 @@ const runSwap = (swap) => {
         // if ( step == 3 ) swap.flow.verifyScript()
 
         if ( step + 1 === swap.flow.steps.length ) {
-          console.log(new Date().toISOString(), '[FINISHED] tx', swap.flow.state.btcSwapWithdrawTransactionHash)
+          console.log(new Date().toISOString(), '[FINISHED] tx', swap.flow.state.utxoSwapWithdrawTransactionHash)
 
           // Orders.remove(swap.id)
         }

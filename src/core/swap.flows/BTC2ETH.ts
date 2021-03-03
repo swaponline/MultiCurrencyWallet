@@ -66,7 +66,7 @@ class BTC2ETH extends AtomicAB2UTXO {
 
       isEthContractFunded: false,
 
-      btcSwapWithdrawTransactionHash: null,
+      utxoSwapWithdrawTransactionHash: null,
       ethSwapWithdrawTransactionHash: null,
 
       canCreateEthTransaction: true,
@@ -138,9 +138,9 @@ console.log('>>>> getSteps', this.isTaker())
 
         // 7. Finish
         () => {
-          flow.swap.room.once('swap finished', ({btcSwapWithdrawTransactionHash}) => {
+          flow.swap.room.once('swap finished', ({utxoSwapWithdrawTransactionHash}) => {
             flow.setState({
-              btcSwapWithdrawTransactionHash,
+              utxoSwapWithdrawTransactionHash,
             })
           })
 
@@ -230,12 +230,16 @@ console.log('>>>> getSteps', this.isTaker())
             const utxoWithdrawData = await this.btcSwap.checkWithdraw(scriptAddress)
             console.log('>>>>> MAKER - BTC2ETH - WITHDRAW UTXO DATA', utxoWithdrawData)
             if (utxoWithdrawData) {
-              const secret = await this.btcSwap.getSecretFromTxhash(utxoWithdrawData.txid)
+              const {
+                txid: utxoSwapWithdrawTransactionHash,
+              } = utxoWithdrawData
+              const secret = await this.btcSwap.getSecretFromTxhash(utxoSwapWithdrawTransactionHash)
               
               console.log('>>>>> secret', secret)
               if (secret) {
                 this.finishStep({
                   secret,
+                  utxoSwapWithdrawTransactionHash,
                 }, 'wait-withdraw-utxo')
               }
               return true

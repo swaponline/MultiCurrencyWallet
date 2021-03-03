@@ -71,7 +71,7 @@ class NEXT2ETH extends AtomicAB2UTXO {
 
       isEthContractFunded: false,
 
-      nextSwapWithdrawTransactionHash: null,
+      utxoSwapWithdrawTransactionHash: null,
       ethSwapWithdrawTransactionHash: null,
 
       canCreateEthTransaction: true,
@@ -224,9 +224,9 @@ class NEXT2ETH extends AtomicAB2UTXO {
       // 7. Finish
 
       () => {
-        flow.swap.room.once('swap finished', ({nextSwapWithdrawTransactionHash}) => {
+        flow.swap.room.once('swap finished', ({utxoSwapWithdrawTransactionHash}) => {
           flow.setState({
-            nextSwapWithdrawTransactionHash,
+            utxoSwapWithdrawTransactionHash,
           })
         })
 

@@ -906,7 +906,7 @@ console.log('>>>>>>>>>>>>>>> getWithdrawRawTransaction', script, scriptAddress, 
       const {
         secret,
         utxoScriptValues: scriptValues,
-        [`${coin}SwapWithdrawTransactionHash`]: swapWithdrawTransactionHash,
+        utxoSwapWithdrawTransactionHash: swapWithdrawTransactionHash,
       } = flow.state
 
       if (swapWithdrawTransactionHash) {
@@ -926,7 +926,7 @@ console.log('>>>>>>>>>>>>>>> getWithdrawRawTransaction', script, scriptAddress, 
         .then((hash) => {
           console.log('withdraw hash', hash)
           flow.setState({
-            [`${coin}SwapWithdrawTransactionHash`]: hash,
+            utxoSwapWithdrawTransactionHash: hash,
           }, true)
           return true
         })

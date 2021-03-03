@@ -72,7 +72,7 @@ export default (tokenName) => {
 
         isEthContractFunded: false,
 
-        btcSwapWithdrawTransactionHash: null,
+        utxoSwapWithdrawTransactionHash: null,
         ethSwapWithdrawTransactionHash: null,
 
         secret: null,
@@ -147,9 +147,9 @@ export default (tokenName) => {
         // 7. Finish
 
         () => {
-          flow.swap.room.once('swap finished', ({btcSwapWithdrawTransactionHash}) => {
+          flow.swap.room.once('swap finished', ({utxoSwapWithdrawTransactionHash}) => {
             flow.setState({
-              btcSwapWithdrawTransactionHash,
+              utxoSwapWithdrawTransactionHash,
             })
           })
 
