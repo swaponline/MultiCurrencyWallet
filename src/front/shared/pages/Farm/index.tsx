@@ -17,14 +17,13 @@ export default class Farm extends React.Component<null, null> {
 
     // FIXME: delete. Init data - just for test
     window.localStorage.setItem('ff-account-unlocked', 'true')
-    // 0xCA701f5904A9659C3970D5e3Cf1c150D5bfbE1Af farm contract
+    // - 0x71a335D51F111CC596be62A7FA2E8B167929A6F2 farm contract
     // 0x7E0480Ca9fD50EB7A3855Cf53c347A1b4d6A2FF5 xeenus
     // 0x101848D5C5bBca18E6b4431eEdF6B95E9ADF82FA weenus
-    // 0xF6fF95D53E08c9660dC7820fD5A775484f77183A yeenus
     window.farm = {
-      farmAddress: '0xCA701f5904A9659C3970D5e3Cf1c150D5bfbE1Af',
+      farmAddress: '0x71a335D51F111CC596be62A7FA2E8B167929A6F2',
       stakingAddress: '0x101848D5C5bBca18E6b4431eEdF6B95E9ADF82FA',
-      rewardsAddress: '0xF6fF95D53E08c9660dC7820fD5A775484f77183A',
+      rewardsAddress: '0x7E0480Ca9fD50EB7A3855Cf53c347A1b4d6A2FF5',
     }
   }
 
@@ -65,18 +64,18 @@ export default class Farm extends React.Component<null, null> {
       // farmDeployer.init({
       //   rewardsAddress: '',
       //   stakingAddress: '',
-      //   duration: 2000003,
-      //   decimal: 18,
+      //   duration: 0,
+      //   decimal: 0,
       //   onStartLoading: () => null,
       //   onFinishLoading: () => {
-      //     // farmDeployer.deploy({
-      //     //   rewardsAddress: '0xF6fF95D53E08c9660dC7820fD5A775484f77183A',
-      //     //   stakingAddress: '0x101848D5C5bBca18E6b4431eEdF6B95E9ADF82FA',
-      //     //   duration: 2000003,
-      //     //   decimal: 18,
-      //     //   onSuccess: (address) => console.log('Farm address:', address),
-      //     //   onError: (err) => console.error(err),
-      //     // })
+      //     farmDeployer.deploy({
+      //       rewardsAddress: '0x7E0480Ca9fD50EB7A3855Cf53c347A1b4d6A2FF5',
+      //       stakingAddress: '0x101848D5C5bBca18E6b4431eEdF6B95E9ADF82FA',
+      //       duration: 2000003,
+      //       decimal: 18,
+      //       onSuccess: (address) => console.log('Farm address:', address),
+      //       onError: (err) => console.error(err),
+      //     })
       //   },
       //   onError: (error) => this.reportError(error),
       // })
