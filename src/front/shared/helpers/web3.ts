@@ -1,5 +1,6 @@
 import Web3 from 'web3'
 import config from 'app-config'
+import helpers from 'helpers'
 
 console.log('reset web3')
 let web3: IEtheriumProvider = new Web3(
@@ -88,19 +89,10 @@ const proxyRequestResult = async (args) => {
       result = await web3Eth.getCode(params[0])
       break
     case 'eth_call':
-      /**
-       * Main method for an initialization with init options
-       * 1) two calls for every tokens (staking, reward)
-       *    returned symbol and decimals for token in the hex format
-       * 2) calls for timer initialization
-       *    returned a finish period
-       * 
-       * params[0] - data
-       * params[1] - block number (there is 'latest')
-       */
+      // params[0] - data
+      // params[1] - block number (there is 'latest')
       result = await web3Eth.call(params[0], params[1])
       break
-
     default:
       throw new Error(`Ethereum proxy - in the method<request>: unknown method: ${method}`)
   }
@@ -112,15 +104,23 @@ const proxyRequestResult = async (args) => {
   return result
 }
 
-// TODO: An error for transaction into contract
 // not enough parameters for transaction
-// need to create your owns
+// need to add your owns
 const returnCompletedSendTxParams = async (params) => {
+  const gasPrice = params.gasPrice || await helpers.eth.estimateGasPrice()
+  let gasLimit = params.gasLimit
+
+  if (!gasLimit) {
+    const lastBlock = await web3.eth.getBlock("latest")
+    gasLimit = lastBlock.gasLimit
+  }
+
   return {
     ...params,
-    gas: 1_000_000,
-    gasLimit: 1_000_000,
-  } 
+    gas: gasLimit,
+    gasPrice,
+    gasLimit,
+  }
 }
 
 const ethProxyHandler = {
