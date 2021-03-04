@@ -87,41 +87,44 @@ class ETH2BTC extends AtomicAB2UTXO {
 
     const flow = this
 
-    this.swap.room.on('utxo locked', (data) => {
-      const {
-        ethSwapCreationTransactionHash,
-      } = data
-      flow.setState({
-        ethSwapCreationTransactionHash,
-      }, true)
-    })
-
-    flow.swap.room.once('request withdraw', () => {
-      flow.setState({
-        withdrawRequestIncoming: true,
+    if (this.isTaker()) {
+      flow.swap.room.on('create utxo script', (data) => {
+        console.log('>>>>>> TAKER -> ON UTXO SCREATED', data)
+        const {
+          utxoSwapCreationTransactionHash,
+        } = data
+        flow.setState({
+          utxoSwapCreationTransactionHash,
+        }, true)
       })
-    })
-
-    flow.swap.room.on('wait btc confirm', () => {
-      flow.setState({
-        waitBtcConfirm: true,
-      })
-    })
-
-    flow.swap.room.on('request eth contract', () => {
-      console.log('Requesting eth contract')
-      const { ethSwapCreationTransactionHash } = flow.state
-
-      if (ethSwapCreationTransactionHash) {
-        console.log('Exists - send hash')
-        flow.swap.room.sendMessage({
-          event: 'create eth contract',
-          data: {
-            ethSwapCreationTransactionHash,
-          },
+    } else {
+      flow.swap.room.once('request withdraw', () => {
+        flow.setState({
+          withdrawRequestIncoming: true,
         })
-      }
-    })
+      })
+
+      flow.swap.room.on('wait btc confirm', () => {
+        flow.setState({
+          waitBtcConfirm: true,
+        })
+      })
+
+      flow.swap.room.on('request eth contract', () => {
+        console.log('Requesting eth contract')
+        const { ethSwapCreationTransactionHash } = flow.state
+
+        if (ethSwapCreationTransactionHash) {
+          console.log('Exists - send hash')
+          flow.swap.room.sendMessage({
+            event: 'create eth contract',
+            data: {
+              ethSwapCreationTransactionHash,
+            },
+          })
+        }
+      })
+    }
 
     super._persistSteps()
   }

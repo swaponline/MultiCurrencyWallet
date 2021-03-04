@@ -679,6 +679,7 @@ console.log('>>>>>>>>>>>>>>> getWithdrawRawTransaction', script, scriptAddress, 
         })
       })
 
+      console.log('>>>> MAKER - UTXO CREATED - SEND TX', txID)
       flow.swap.room.sendMessage({
         event: `create utxo script`,
         data: {
