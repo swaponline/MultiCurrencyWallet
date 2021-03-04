@@ -117,6 +117,48 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
   return (
     <section styleName='feeInfoBlock'>
       <div styleName='feeRow'>
+        <span styleName='feeRowTitle'>Fee rate:</span>
+          <div>
+            <div className="radio">
+              <label>
+                <input
+                  type="radio"
+                  value="Fast"
+                />
+                Fast
+              </label>
+            </div>
+            <div className="radio">
+              <label>
+                <input
+                  type="radio"
+                  value="Medium"
+                />
+                Medium
+              </label>
+            </div>
+            <div className="radio">
+              <label>
+                <input
+                  type="radio"
+                  value="Slow"
+                />
+                Slow
+              </label>
+            </div>
+            <div className="radio">
+              <label>
+                <input
+                  type="radio"
+                  value="Custosm"
+                />
+                Custosm
+              </label>
+            </div>
+          </div>
+      </div>
+
+      <div styleName='feeRow'>
         <span styleName='feeRowTitle'>
           <FormattedMessage id="FeeInfoBlockMinerFee" defaultMessage="Miner fee:" />
         </span>
