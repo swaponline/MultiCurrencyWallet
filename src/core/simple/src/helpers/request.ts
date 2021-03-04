@@ -1,3 +1,4 @@
+//@ts-nocheck
 import request from 'request-promise-native'
 
 const responseCacheStorage = {}
@@ -189,7 +190,7 @@ const sendRequest = (options) => {
   }
 
   const responseHandler = createResponseHandler(req, opts)
-  //@ts-ignore
+  //@ts-nocheck
   responseHandler.abort = req.abort.bind(req)
 
   return responseHandler

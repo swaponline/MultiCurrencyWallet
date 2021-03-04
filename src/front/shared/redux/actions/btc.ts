@@ -1,3 +1,4 @@
+//@ts-nocheck
 import BigInteger from 'bigi'
 
 import { BigNumber } from 'bignumber.js'
@@ -210,7 +211,7 @@ const login = (privateKey, mnemonic = null, mnemonicKeys = null) => {
         reducers.user.setAuthData({
           name: 'btcMnemonicData',
           data: {
-            //@ts-ignore
+            
             ...balanceData,
             isBalanceFetched: true,
           },
@@ -231,7 +232,7 @@ const getTxRouter = (txId) => `/btc/tx/${txId}`
 const getTx = (txRaw) => {
   if (txRaw
     && txRaw.getId
-    //@ts-ignore
+    //@ts-nocheck
     && txRaw.getId instanceof 'function'
   ) {
     return txRaw.getId()
@@ -529,7 +530,7 @@ const send = ({ from, to, amount, feeValue = null, speed }) => {
         psbt.addInput({
           hash: txid,
           index: vout,
-          //@ts-ignore
+          //@ts-nocheck
           nonWitnessUtxo: Buffer.from(rawTx, 'hex'),
         })
       }

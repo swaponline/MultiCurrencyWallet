@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React, { Component } from 'react'
 import InputMask from 'react-input-mask'
 import cx from 'classnames'
@@ -94,7 +95,7 @@ class NumberInput extends Component<any, any> {
    error: any
 
   constructor() {
-    //@ts-ignore
+    
     super(...arguments)
 
     this.onKeyPress = (event) => {
@@ -173,7 +174,7 @@ class NumberInput extends Component<any, any> {
     return (
       <input
         {...ignoreProps(props, 'positive', 'integer')}
-        //@ts-ignore
+        //@ts-nocheck
         className={validationClasses(props, this.value, error)}
         value={this.value}
         onKeyPress={this.onKeyPress}
@@ -192,7 +193,7 @@ class NumberInput extends Component<any, any> {
 const TextArea = ({ valueLink, ...props }) => (
   <textarea
     {...props}
-    //@ts-ignore
+    //@ts-nocheck
     className={validationClasses(props, valueLink.value, valueLink.error)}
     value={valueLink.value}
     onChange={valueLink.action(setValue)}

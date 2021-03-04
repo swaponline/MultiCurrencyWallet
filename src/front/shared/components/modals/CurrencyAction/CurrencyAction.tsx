@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React from 'react'
 import { connect } from 'redaction'
 import CopyToClipboard from 'react-copy-to-clipboard'
@@ -48,7 +49,7 @@ export default class CurrencyAction extends React.Component<any, any> {
     if (typeof data.onClose === 'function') {
       data.onClose()
     }
-    //@ts-ignore
+    //@ts-nocheck
     actions.modals.close(name)
   }
 
@@ -65,7 +66,7 @@ export default class CurrencyAction extends React.Component<any, any> {
 
     if (context === 'Deposit') {
       this.handleClose()
-      //@ts-ignore
+      //@ts-nocheck
       actions.modals.open(constants.modals.ReceiveModal, {
         currency,
         address
@@ -125,7 +126,7 @@ export default class CurrencyAction extends React.Component<any, any> {
           <div styleName="header">
             <p styleName="title">{context}</p>
             {/*
-            //@ts-ignore */}
+            //@ts-nocheck */}
             <CloseIcon styleName="closeButton" onClick={this.handleClose} data-testid="modalCloseIcon" />
           </div>
           <div styleName={cx({

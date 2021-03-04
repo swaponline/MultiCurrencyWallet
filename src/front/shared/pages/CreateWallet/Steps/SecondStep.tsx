@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React, { useState, useEffect, useRef } from 'react'
 
 import CSSModules from 'react-css-modules'
@@ -73,27 +74,27 @@ const SecondStep = (props) => {
   const hiddenCoins = JSON.parse(localStorage.getItem(hiddenCoinsList))
 
   if (currencies.BTC) {
-    //@ts-ignore
+    //@ts-nocheck
     _protection.sms.btc = true
-    //@ts-ignore
+    //@ts-nocheck
     _protection.pin.btc = true
-    //@ts-ignore
+    //@ts-nocheck
     _protection.g2fa.btc = false
-    //@ts-ignore
+    //@ts-nocheck
     _protection.multisign.btc = true
-    //@ts-ignore
+    //@ts-nocheck
     _protection.fingerprint.btc = true
-    //@ts-ignore
+    //@ts-nocheck
     _activated.nothing.btc = btcData.balance > 0 || (hiddenCoins.length ? !hiddenCoins.includes('BTC') && !hiddenCoins.includes(`BTC:${btcData.address}`) : false)
-    //@ts-ignore
+    //@ts-nocheck
     _activated.sms.btc = actions.btcmultisig.checkSMSActivated()
-    //@ts-ignore
+    //@ts-nocheck
     _activated.pin.btc = actions.btcmultisig.checkPINActivated()
-    //@ts-ignore
+    //@ts-nocheck
     _activated.g2fa.btc = actions.btcmultisig.checkG2FAActivated()
-    //@ts-ignore
+    //@ts-nocheck
     _activated.multisign.btc = actions.btcmultisig.checkUserActivated()
-    //@ts-ignore
+    //@ts-nocheck
     _activated.fingerprint.btc = false
   }
 
@@ -143,13 +144,13 @@ const SecondStep = (props) => {
 
   useEffect(() => {
     try {
-      //@ts-ignore
+      //@ts-nocheck
       if (typeof PublicKeyCredential !== 'undefined') {
         // eslint-disable-next-line no-undef
-        //@ts-ignore
+        //@ts-nocheck
         if (thisComponentInitHelper.current && PublicKeyCredential) {
           // eslint-disable-next-line no-undef
-          //@ts-ignore
+          //@ts-nocheck
           PublicKeyCredential
             .isUserVerifyingPlatformAuthenticatorAvailable()
             .then(result => {

@@ -1,3 +1,4 @@
+//@ts-nocheck
 /* eslint-disable max-len */
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
@@ -122,7 +123,7 @@ export default class Header extends Component<any, any> {
           haveSubmenu: false,
         },
       ],
-      //@ts-ignore
+      //@ts-nocheck
       menuItems: getMenuItems(props, lsWalletCreated, dinamicPath),
       menuItemsMobile: getMenuItemsMobile(props, lsWalletCreated, dinamicPath),
       createdWalletLoader: isWalletPage && !lsWalletCreated,
@@ -151,7 +152,7 @@ export default class Header extends Component<any, any> {
   tapCreateWalletButton = (customProps = {}) =>
     new Promise((resolve) => {
       const finishProps = { ...this.props, ...customProps }
-      //@ts-ignore
+      //@ts-nocheck
       const { location, intl } = finishProps
       const { pathname } = location
       const { wallet, home } = links
@@ -159,20 +160,20 @@ export default class Header extends Component<any, any> {
       let isWalletCreate = localStorage.getItem(constants.localStorage.isWalletCreate)
 
       if (config && config.isWidget) {
-        //@ts-ignore
+        //@ts-nocheck
         isWalletCreate = true
       }
 
       const isWalletPage = pathname === wallet || pathname === `/ru${wallet}`
 
       if (isWalletPage && !isWalletCreate) {
-        //@ts-ignore
+        //@ts-nocheck
         isWalletCreate = true
 
         this.setState(
           () => ({
             menuItems: getMenuItems(this.props, isWalletCreate),
-            //@ts-ignore
+            //@ts-nocheck
             menuItemsMobile: getMenuItemsMobile(this.props, isWalletCreate),
             createdWalletLoader: true,
           }),
@@ -194,27 +195,27 @@ export default class Header extends Component<any, any> {
     const finishProps = { ...this.props, ...customProps }
     const { wasOnExchange, wasOnWallet, isWalletCreate, wasOnWidgetWallet } = constants.localStorage
     const {
-      //@ts-ignore
+      //@ts-nocheck
       hiddenCoinsList,
-      //@ts-ignore
+      //@ts-nocheck
       location: { hash, pathname },
     } = finishProps
     const { wallet, exchange } = links
     const isGuestLink = !(!hash || hash.slice(1) !== 'guest')
 
     if (isGuestLink) {
-      //@ts-ignore
+      //@ts-nocheck
       localStorage.setItem(wasOnWallet, true)
-      //@ts-ignore
+      //@ts-nocheck
       localStorage.setItem(wasOnExchange, true)
-      //@ts-ignore
+      //@ts-nocheck
       localStorage.setItem(wasOnWidgetWallet, true)
       return
     }
 
     this.setState(() => ({
       menuItems: getMenuItems(this.props, true),
-      //@ts-ignore
+      //@ts-nocheck
       menuItemsMobile: getMenuItemsMobile(this.props, true),
     }))
 
@@ -323,7 +324,7 @@ export default class Header extends Component<any, any> {
     setTimeout(() => {
       this.setState(() => ({ isTourOpen: true }))
     }, 1000)
-    //@ts-ignore
+    //@ts-nocheck
     localStorage.setItem(wasOnWallet, true)
   }
 
@@ -333,7 +334,7 @@ export default class Header extends Component<any, any> {
     setTimeout(() => {
       this.setState(() => ({ isWidgetTourOpen: true }))
     }, 1000)
-    //@ts-ignore
+    //@ts-nocheck
     localStorage.setItem(wasOnWidgetWallet, true)
   }
 
@@ -343,7 +344,7 @@ export default class Header extends Component<any, any> {
       this.setState(() => ({ isPartialTourOpen: true }))
     }, 1000)
 
-    //@ts-ignore
+    //@ts-nocheck
     localStorage.setItem(wasOnExchange, true)
   }
 
@@ -355,7 +356,7 @@ export default class Header extends Component<any, any> {
     if (wasDark) {
       localStorage.removeItem(constants.localStorage.isDark)
     } else {
-      //@ts-ignore
+      //@ts-nocheck
       localStorage.setItem(constants.localStorage.isDark, true)
     }
     window.location.reload()

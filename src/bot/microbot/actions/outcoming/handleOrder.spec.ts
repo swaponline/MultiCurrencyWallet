@@ -1,3 +1,4 @@
+//@ts-nocheck
 import handleOrder from './handleOrder'
 
 const _GOOD_ORDER = {
@@ -38,7 +39,7 @@ describe('Handle Order', () => {
     const doRequest = jest.fn(function () { return Promise.resolve(false) })
 
     expect.assertions(1)
-    //@ts-ignore
+    //@ts-nocheck
     return handleOrder(fakeOrders)(_GOOD_ORDER, doRequest)
       .then(() => {
         // disabled
@@ -51,7 +52,7 @@ describe('Handle Order', () => {
     const doRequest = jest.fn(function () { return Promise.resolve(false) })
 
     expect.assertions(1)
-    //@ts-ignore
+    //@ts-nocheck
     return handleOrder(fakeOrders)(_BAD_ORDER, doRequest)
       .then(() => {
         expect(doRequest).not.toHaveBeenCalled()
@@ -60,7 +61,7 @@ describe('Handle Order', () => {
 
   it('should ignore', () => {
     const doRequest = jest.fn(function () { return Promise.resolve(false) })
-    //@ts-ignore
+    //@ts-nocheck
     return handleOrder(fakeOrders)(_WHAT_S_THAT, doRequest)
       .then(() => {
         expect(doRequest).not.toHaveBeenCalled()

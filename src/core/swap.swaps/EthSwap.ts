@@ -1,3 +1,4 @@
+//@ts-nocheck
 import _debug from 'debug'
 import SwapApp, { constants, SwapInterface, util } from 'swap.app'
 import BigNumber from 'bignumber.js'
@@ -73,7 +74,7 @@ class EthSwap extends SwapInterface {
    */
   updateGas() {
     console.warn(`EthSwap.updateGas() is deprecated and will be removed. Use .updateGasPrice()`)
-    //@ts-ignore
+    
     return updateGasPrice()
   }
 
@@ -252,7 +253,7 @@ class EthSwap extends SwapInterface {
     const swap = await util.helpers.repeatAsyncUntilResult(() =>
       this.contract.methods.swaps(ownerAddress, participantAddress).call()
     )
-    //@ts-ignore
+    //@ts-nocheck
     const { secretHash } = swap
     debug(`swap.secretHash`, secretHash)
 
@@ -265,7 +266,7 @@ class EthSwap extends SwapInterface {
     }
 
     const expectedValueWei = new BigNumber(expectedValue).multipliedBy(1e18)
-    //@ts-ignore
+    //@ts-nocheck
     if (expectedValueWei.isGreaterThan(balance)) {
       return `Expected value: ${expectedValueWei.toString()}, got: ${balance}`
     }

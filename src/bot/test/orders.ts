@@ -1,3 +1,4 @@
+//@ts-nocheck
 //During the test the env variable is set to test
 process.env.NODE_ENV = 'test'
 
@@ -8,9 +9,9 @@ import { app, server, listener } from '../app'
 let should = chai.should()
 
 chai.use(chaiHttp)
-//@ts-ignore
+//@ts-nocheck
 before(async () => { await app.ready })
-//@ts-ignore
+//@ts-nocheck
 after(async () => { await listener.close() })
 
 describe('Wallet', () => {
@@ -42,7 +43,7 @@ describe('Wallet', () => {
 describe('Orders', () => {
 
   beforeEach((done) => {
-    //@ts-ignore
+    //@ts-nocheck
     app.sync.then(done)
   })
 

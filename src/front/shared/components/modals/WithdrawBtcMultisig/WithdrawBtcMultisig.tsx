@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import helpers, { constants } from 'helpers'
@@ -91,7 +92,7 @@ export default class WithdrawBtcMultisig extends React.Component<any, any> {
       let txId = false
 
       if (result) {
-        //@ts-ignore
+        
         txId = await actions.multisigTx.broadcast({
           sender: address,
           destination: to,

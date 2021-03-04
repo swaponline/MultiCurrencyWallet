@@ -26,7 +26,7 @@ export default class BtcToGhost extends Component<any, any> {
   signTimer: any
 
   constructor({ swap, currencyData, depositWindow, enoughBalance }) {
-    //@ts-ignore
+    //@ts-nocheck
     super()
 
     this.swap = swap

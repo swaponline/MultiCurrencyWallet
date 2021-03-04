@@ -1,3 +1,4 @@
+//@ts-nocheck
 import coins from './../coins'
 
 
@@ -30,23 +31,23 @@ import coins from './../coins'
 
   // create account
   const mnemonic = '...'
-  //@ts-ignore
+  //@ts-nocheck
   const account = coins.NEXT.mainnet.accountFromMnemonic(mnemonic)
 
   // create TX
   const amount = 1 * (10 ** coins.NEXT.precision) // 1 Ghost coin
   const to = '...'
-  //@ts-ignore
+  //@ts-nocheck
   const rawTx = await coins.NEXT.mainnet.createTx({ account, amount, to })
   console.log('NEXT tx created:', rawTx)
 
   // publish TX
-  //@ts-ignore
+  //@ts-nocheck
   const txid = await coins.NEXT.mainnet.publishTx(rawTx)
   console.log('tx sended, txid =', txid)
 
   if (txid) { // show TX URL
-    //@ts-ignore
+    //@ts-nocheck
     const txUrl = coins.NEXT.mainnet.getTxUrl(txid)
     console.log('txUrl =', txUrl)
   }

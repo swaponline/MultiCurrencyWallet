@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React from 'react'
 import CSSModules from 'react-css-modules'
 
@@ -15,14 +16,14 @@ const Phone = (props) => {
 
   const onHandleChange = (phone) => {
     try {
-      //@ts-ignore
+      //@ts-nocheck
       const { value: country } = document.querySelector('.PhoneInputCountry SELECT')
       countryCode = `+${getCountryCallingCode(country)}`
     } catch (e) {
     }
 
     if (!phone || !phone.includes(countryCode.replace(/ /g, ""))) {
-      //@ts-ignore
+      //@ts-nocheck
       document.querySelector('.PhoneInputInput').value = countryCode.replace(/ /g, "")
     } else {
       onChange(phone)

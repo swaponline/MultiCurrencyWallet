@@ -1,4 +1,4 @@
-//@ts-nockeck
+//@ts-nocheck
 import BigNumber from 'bignumber.js'
 
 import TOKEN_DECIMALS from 'helpers/constants/TOKEN_DECIMALS'
@@ -136,7 +136,7 @@ export default class Pair {
 
     console.log(`create order ${this}`)
     const { MAIN, BASE } = parsePair(ticker)
-    //@ts-ignore
+    
     if (!MAIN || !BASE) throw new Error(`CreateOrderError: No currency: ${main}-${base}`)
 
     if (![PAIR_ASK, PAIR_BID].includes(type)) throw new Error(`CreateOrderError: Wrong order type: ${type}`)

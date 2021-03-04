@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { apiLooper, constants, api, redirectTo } from 'helpers'
 import config from 'app-config'
 import actions from 'redux/actions'
@@ -114,7 +115,7 @@ const fetch = (address) => {
 
         // @ToDo - (draft) use api request for fetch status of address list
         if (status === 'pending' && holderKey !== item.holder) {
-          //@ts-ignore
+          
           firstPending = firstPending || {
             address,
             item,

@@ -1,3 +1,4 @@
+//@ts-nocheck
 import * as bitcoin from 'bitcoinjs-lib'
 import { getState } from 'redux/core'
 import actions from 'redux/actions'
@@ -213,7 +214,7 @@ const estimateFeeValue = async (options: EstimateFeeValueOptions): Promise<any> 
   if (amount) {
     unspents = await actions.btc.prepareUnspents({ amount, unspents })
   }
-  //@ts-ignore
+  //@ts-nocheck
   txSize = txSize || await calculateTxSize({ address, speed, fixed, method, txOut, amount })
   feeRate = feeRate || await estimateFeeRate({ speed })
 

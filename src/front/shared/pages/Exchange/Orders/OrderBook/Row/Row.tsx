@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React, { Component, Fragment } from 'react'
 
 import { connect } from 'redaction'
@@ -489,7 +490,7 @@ export default class Row extends Component {
                               </span>
                             </Fragment>
                           ) : (
-                            //@ts-ignore
+                            //@ts-nocheck
                             <RequestButton
                               styleName="startButton"
                               disabled={!isSwapButtonEnabled}

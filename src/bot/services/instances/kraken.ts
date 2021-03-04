@@ -1,3 +1,4 @@
+//@ts-nocheck
 import KrakenClient from 'kraken-api'
 //const { wallet } = require('../services')
 const wallet = ''
@@ -28,13 +29,13 @@ class KrakenApi {
   }
 
   deposit() {
-    //@ts-ignore
+    //@ts-nocheck
     wallet.withdraw(amount,)
 
   }
 
   run(amount, type) {
-    //@ts-ignore
+    //@ts-nocheck
     this.deposit(type, '', amount);
   }
 
@@ -62,7 +63,7 @@ class KrakenApi {
   returnMoney(amount) {
 
     let result = this.core.api('Withdraw', {
-      //@ts-ignore
+      //@ts-nocheck
       'key': type, //sell & buy
       'amount': amount,
       'asset': 'ETH' //@ToDo переделать XBT

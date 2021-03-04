@@ -1,3 +1,4 @@
+//@ts-nocheck
 import debug from 'debug'
 import SwapApp, { SwapInterface, constants, util } from 'swap.app'
 import BigNumber from 'bignumber.js'
@@ -139,7 +140,7 @@ class GhostSwap extends SwapInterface {
 
     return unspents.filter((utxo, index) => {
       debug('swap.core:swaps')(`confidence[${index}]:`, confidences[index])
-      //@ts-ignore
+      //@ts-nocheck
       return new BigNumber(confidences[index]).isGreaterThanOrEqualTo(expectedConfidenceLevel)
     })
   }
@@ -292,7 +293,7 @@ class GhostSwap extends SwapInterface {
 
         const unspents = await this.fetchUnspents(ownerAddress)
         const fundValue = amount.multipliedBy(1e8).integerValue().toNumber()
-        //@ts-ignore
+        
         const feeValueBN = await this.getTxFee({
           inSatoshis: true,
           address: ownerAddress,
@@ -368,7 +369,7 @@ class GhostSwap extends SwapInterface {
 
     const { script, scriptAddress } = this.createScript(scriptValues, hashName)
     const unspents = await this.fetchUnspents(scriptAddress)
-    //@ts-ignore
+    //@ts-nocheck
     const feeValueBN = await this.getTxFee({
       inSatoshis: true,
       address: scriptAddress

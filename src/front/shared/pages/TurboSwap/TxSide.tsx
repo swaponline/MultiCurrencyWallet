@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React, { PureComponent, Fragment } from 'react'
 
 import cssModules from 'react-css-modules'
@@ -24,7 +25,7 @@ interface ITxSide {
 export default class TxSide extends PureComponent<ITxSide, {}> {
 
   constructor() {
-    //@ts-ignore
+    //@ts-nocheck
     super()
   }
 

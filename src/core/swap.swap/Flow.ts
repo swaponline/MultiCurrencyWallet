@@ -1,3 +1,4 @@
+//@ts-nocheck
 import debug from 'debug'
 import SwapApp, { util } from 'swap.app'
 import Room from './Room'
@@ -219,7 +220,7 @@ class Flow {
             const order = orders.getByKey(orderId)
 
             // TODO move this to Swap.js
-            //@ts-ignore
+            
             flow.swap.room = new Room({
               participantPeer: order.owner.peer,
             })

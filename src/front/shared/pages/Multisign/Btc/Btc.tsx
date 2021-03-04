@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React, { Fragment, PureComponent } from 'react'
 import PropTypes from 'prop-types'
 
@@ -267,12 +268,12 @@ export default class Btc extends PureComponent<any, any> {
   handleConfirm = async () => {
     const { txRaw, invoice } = this.state
     this.setState({ isConfirming: true })
-    //@ts-ignore
+    //@ts-nocheck
     const signedTX = await actions.btcmultisig.signMultiSign(txRaw)
     const txID = await actions.btcmultisig.broadcastTx(signedTX)
     if (invoice) {
       // @ToDo - payer address
-      //@ts-ignore
+      //@ts-nocheck
       await actions.invoices.markInvoice(invoice, 'ready', txID)
     }
     this.setState({

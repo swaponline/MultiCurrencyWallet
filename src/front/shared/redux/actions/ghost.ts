@@ -1,3 +1,4 @@
+ //@ts-nocheck
 import BigInteger from 'bigi'
 
 import { BigNumber } from 'bignumber.js'
@@ -122,7 +123,7 @@ const getPrivateKeyByAddress = (address) => {
   } = getState()
   */
   if (oldAddress === address) return privateKey
-    //@ts-ignore
+    //@ts-nocheck
   if (mnemonicAddress === address) return mnemonicKey
 }
 
@@ -208,7 +209,7 @@ const login = (privateKey, mnemonic = null, mnemonicKeys = null) => {
         reducers.user.setAuthData({
           name: 'ghostMnemonicData',
           data: {
-            //@ts-ignore
+            //@ts-nocheck
             ...balanceData,
             isBalanceFetched: true,
           },
@@ -227,7 +228,7 @@ const login = (privateKey, mnemonic = null, mnemonicKeys = null) => {
 const getTx = (txRaw) => {
   if (txRaw
     && txRaw.getId
-    //@ts-ignore
+   
     && txRaw.getId instanceof 'function'
   ) {
     return txRaw.getId()
@@ -516,7 +517,7 @@ const send = (data) => {
   return sendBitcore(data)
 }
 
-//@ts-ignore
+//@ts-nocheck
 const sendBitcore = ({ from, to, amount, feeValue, speed } = {}) => {
   return new Promise(async (ready) => {
     const privKey = getPrivateKeyByAddress(from)

@@ -1,3 +1,4 @@
+//@ts-nocheck
 import SwapApp, { util } from 'swap.app'
 import actions from 'redux/actions'
 import moment from 'moment/moment'
@@ -27,14 +28,14 @@ const getDeclinedExistedSwapIndex = ({ currency, decline }) => {
         if (values) {
           const { isFinished, isRefunded, isStoppedSwap } = itemState
 
-          //@ts-ignore
+          //@ts-nocheck
           const lockTime = moment.unix(values.lockTime || date)._i / 1000
           const timeSinceLock = date - lockTime
 
           if (isFinished || isRefunded || isStoppedSwap || timeSinceLock > 259200) { // 259200 3 дня в секундах
             actions.core.forgetOrders(decline[i])
           } else if (declineSwap.sellCurrency === currency.toUpperCase()
-            //@ts-ignore
+            //@ts-nocheck
             && !declineSwap.isSwapExist
             && !declineSwap.isMy) {
             return i

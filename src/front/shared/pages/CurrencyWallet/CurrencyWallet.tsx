@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React, { Component, Fragment } from 'react'
 
 import { connect } from 'redaction'
@@ -166,7 +167,7 @@ export default class CurrencyWallet extends Component<any, any> {
 
     // оставляю запасной вариант для старых ссылок
     if (fullName) {
-      //@ts-ignore
+      //@ts-nocheck
       ticker = fullName
     }
 
@@ -198,7 +199,7 @@ export default class CurrencyWallet extends Component<any, any> {
 
     if (itemCurrency.length) {
       itemCurrency = itemCurrency[0]
-      //@ts-ignore
+      //@ts-nocheck
       const { currency, address, contractAddress, decimals, balance, infoAboutCurrency } = itemCurrency
 
       const hasCachedData = lsDataCache.get(`TxHistory_${getCurrencyKey(currency, true).toLowerCase()}_${address}`)
@@ -430,7 +431,7 @@ export default class CurrencyWallet extends Component<any, any> {
 
       if (itemCurrency.length) {
         itemCurrency = itemCurrency[0]
-        //@ts-ignore
+        //@ts-nocheck
         const { currency, address, contractAddress, decimals, balance, infoAboutCurrency } = itemCurrency
 
         const { Withdraw, WithdrawMultisigSMS, WithdrawMultisigUser } = constants.modals
@@ -480,7 +481,7 @@ export default class CurrencyWallet extends Component<any, any> {
                 infoAboutCurrency,
                 hiddenCoinsList,
                 itemCurrency,
-                //@ts-ignore
+                //@ts-nocheck
                 currencyRate: itemCurrency.currencyRate,
               })
             }
@@ -525,9 +526,9 @@ export default class CurrencyWallet extends Component<any, any> {
   }
 
   setLocalStorageItems = () => {
-    //@ts-ignore
+    //@ts-nocheck
     const isClosedNotifyBlockBanner = localStorage.getItem(constants.localStorage.isClosedNotifyBlockBanner)
-    //@ts-ignore
+    //@ts-nocheck
     const isClosedNotifyBlockSignUp = localStorage.getItem(constants.localStorage.isClosedNotifyBlockSignUp)
     const isPrivateKeysSaved = localStorage.getItem(constants.localStorage.privateKeysSaved)
     const walletTitle = localStorage.getItem(constants.localStorage.walletTitle)
@@ -780,7 +781,7 @@ export default class CurrencyWallet extends Component<any, any> {
               :
               <Fragment>
                 {/*
-                //@ts-ignore */}
+                //@ts-nocheck */}
                 <ContentLoader leftSideContent />
               </Fragment>
           }
@@ -799,14 +800,14 @@ export default class CurrencyWallet extends Component<any, any> {
               ) : (
                   <div styleName="historyContent">
                     {/*
-                    //@ts-ignore */}
+                    //@ts-nocheck */}
                     <ContentLoader rideSideContent empty nonHeader inner />
                   </div>
                 ))}
             {(!txHistory || isLoading) && (
               <div styleName="historyContent">
                 {/*
-                //@ts-ignore */}
+                //@ts-nocheck */}
                 <ContentLoader rideSideContent nonHeader />
               </div>
             )}

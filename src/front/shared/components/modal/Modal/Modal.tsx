@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React, { Component } from 'react'
 import { connect } from 'redaction'
 
@@ -140,12 +141,12 @@ export default class Modal extends Component<any, any> {
             Boolean(title || showCloseButton) && (
               <div styleName="header">
                 {/*
-                //@ts-ignore */}
+                //@ts-nocheck */}
                 <WidthContainer styleName="headerContent">
                   <div styleName={titleStyleName} role="title">{title}</div>
                   {
                     showCloseButton && !disableClose && (
-                      //@ts-ignore 
+                      //@ts-nocheck 
                       <CloseIcon styleName={`closeButton${delayClose ? ' delayClose' : ''}`} onClick={this.close} data-testid="modalCloseIcon" />
                     )
                   }

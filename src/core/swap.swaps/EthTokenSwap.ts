@@ -1,3 +1,4 @@
+//@ts-nocheck
 import debug from 'debug'
 import SwapApp, { SwapInterface, constants, util } from 'swap.app'
 import BigNumber from 'bignumber.js'
@@ -100,7 +101,7 @@ class EthTokenSwap extends SwapInterface {
   }
 
   async updateGasPrice() {
-    //@ts-ignore
+    //@ts-nocheck
     debug('gas price before update', this.gasPrice)
 
     try {
@@ -108,7 +109,7 @@ class EthTokenSwap extends SwapInterface {
     } catch(err) {
       debug(`EthTokenSwap: Error with gas update: ${err.message}, using old value gasPrice=${this.gasPrice}`)
     }
-    //@ts-ignore
+    
     debug('gas price after update', this.gasPrice)
   }
 
@@ -126,7 +127,7 @@ class EthTokenSwap extends SwapInterface {
         gasPrice: this.gasPrice,
         ..._params,
       }
-      //@ts-ignore
+      //@ts-nocheck
       debug(`EthTokenSwap -> ${methodName} -> params`, params)
 
       let gasAmount = 0
@@ -138,7 +139,7 @@ class EthTokenSwap extends SwapInterface {
       }
 
       params.gas = gasAmount
-      //@ts-ignore
+      //@ts-nocheck
       debug(`EthTokenSwap -> ${methodName} -> gas`, gasAmount)
       const receipt = await this.contract.methods[methodName](...args).send(params)
         .on('transactionHash', (hash) => {
@@ -176,13 +177,13 @@ class EthTokenSwap extends SwapInterface {
           gas: this.gasLimit,
           gasPrice: this.gasPrice,
         }
-        //@ts-ignore
+        //@ts-nocheck
         debug(`EthTokenSwap -> approve -> params`, params)
 
         const gasAmount = await this.ERC20.methods.approve(this.address, newAmount).estimateGas(params)
 
         params.gas = gasAmount
-        //@ts-ignore
+        //@ts-nocheck
         debug(`EthTokenSwap -> approve -> gas`, gasAmount)
 
         const result = await this.ERC20.methods.approve(this.address, newAmount).send(params)
@@ -307,7 +308,7 @@ class EthTokenSwap extends SwapInterface {
    */
   async checkSwapExists(data) {
     const swap = await this.swaps(data)
-    //@ts-ignore
+    //@ts-nocheck
     debug('swapExists', swap)
 
     const balance = swap && swap.balance ? parseInt(swap.balance) : 0
@@ -345,7 +346,7 @@ class EthTokenSwap extends SwapInterface {
     const swap = await util.helpers.repeatAsyncUntilResult(() =>
       this.contract.methods.swaps(ownerAddress, participantAddress).call()
     )
-    //@ts-ignore
+    //@ts-nocheck
     const { secretHash } = swap
     debug('swap.core:swaps')(`swap.secretHash`, secretHash)
 

@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React, { Component } from 'react'
 
 import { withRouter } from 'react-router-dom'
@@ -91,11 +92,11 @@ export default class AlertWindow extends Component<any, any> {
         <div styleName="modal">
           <div styleName="header">
             {/*
-            //@ts-ignore */}
+            //@ts-nocheck */}
             <WidthContainer styleName="headerContent">
               <div styleName="title">{labels.title}</div>
               {/*
-              //@ts-ignore */}
+              //@ts-nocheck */}
               {canClose && (<CloseIcon styleName="closeButton" onClick={this.handleClosePopup} />)}
             </WidthContainer>
           </div>

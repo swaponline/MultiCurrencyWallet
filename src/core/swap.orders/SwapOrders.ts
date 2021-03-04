@@ -1,3 +1,4 @@
+//@ts-nocheck
 import debug from 'debug'
 import BigNumber from 'bignumber.js'
 import SwapApp, { Collection, ServiceInterface, util, constants } from 'swap.app'
@@ -81,7 +82,7 @@ class SwapOrders extends aggregation(ServiceInterface, Collection) {
   getUniqueId: any
   _dependsOn: any
 
-  //@ts-ignore
+  
   static get name() {
     return 'orders'
   }

@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import actions from 'redux/actions'
 import { constants } from 'helpers'
@@ -39,7 +40,7 @@ const handleShowMnemonic = () => {
 }
 
 const handleConfirm = () => {
-  //@ts-ignore
+  //@ts-nocheck
   actions.backupManager.serverBackup().then((backupReady, hasBackupPlugin) => {
     console.log('Backup ready', backupReady)
     if (hasBackupPlugin) {

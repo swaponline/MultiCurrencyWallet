@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 
@@ -214,7 +215,7 @@ export default class ConfirmBeginSwap extends React.Component<any, any> {
         <div styleName="modal">
           <div styleName="header">
             {/*
-            //@ts-ignore */}
+            //@ts-nocheck */}
             <WidthContainer styleName="headerContent">
               <div styleName="title">{labels.title}</div>
             </WidthContainer>
@@ -236,7 +237,7 @@ export default class ConfirmBeginSwap extends React.Component<any, any> {
                   <div styleName="walletToggle walletToggle_site">
                     <div styleName="walletOpenSide">
                       {/*
-                      //@ts-ignore */}
+                      //@ts-nocheck */}
                       <Toggle checked={customWalletUse} onChange={this.handleCustomWalletUse} />
                       <span styleName="specify">
                         <FormattedMessage id="UseAnotherWallet" defaultMessage="Specify the receiving wallet address" />

@@ -1,3 +1,4 @@
+//@ts-nocheck
 import reducers from 'redux/core/reducers'
 import { getState } from 'redux/core'
 import actions from 'redux/actions'
@@ -26,7 +27,7 @@ const _onWeb3Changed = (newWeb3) => {
 }
 
 web3connect.on('connected', async () => {
-  //@ts-ignore
+  //@ts-nocheck
   localStorage.setItem(constants.localStorage.isWalletCreate, true)
   actions.core.markCoinAsVisible(`ETH`)
   _onWeb3Changed(web3connect.getWeb3())

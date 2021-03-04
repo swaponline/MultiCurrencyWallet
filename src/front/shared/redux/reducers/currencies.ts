@@ -1,3 +1,4 @@
+//@ts-nocheck
 import config from 'app-config'
 
 
@@ -50,7 +51,7 @@ if (buildOpts.ownTokens && Object.keys(buildOpts.ownTokens).length) {
 
 const initialState = {
   items: [
-    //@ts-ignore
+    //@ts-nocheck
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.eth) ? [{
       name: 'ETH',
       title: 'ETH',
@@ -59,7 +60,7 @@ const initialState = {
       fullTitle: 'ethereum',
       addAssets: true,
     }] : [],
-    //@ts-ignore
+    //@ts-nocheck
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.ghost) ? [{
       name: 'GHOST',
       title: 'GHOST',
@@ -68,7 +69,7 @@ const initialState = {
       fullTitle: 'ghost',
       addAssets: true,
     }] : [],
-    //@ts-ignore
+    //@ts-nocheck
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.next) ? [{
       name: 'NEXT',
       title: 'NEXT',
@@ -77,7 +78,7 @@ const initialState = {
       fullTitle: 'next',
       addAssets: true,
     }] : [],
-    //@ts-ignore
+    //@ts-nocheck
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.btc) ? [{
       name: 'BTC',
       title: 'BTC',
@@ -124,7 +125,7 @@ const initialState = {
       }))),
   ],
   partialItems: [
-    //@ts-ignore
+    //@ts-nocheck
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.eth) ? [{
       name: 'ETH',
       title: 'ETH',
@@ -132,7 +133,7 @@ const initialState = {
       value: 'eth',
       fullTitle: 'ethereum',
     }] : [],
-    //@ts-ignore
+    //@ts-nocheck
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.ghost) ? [{
       name: 'GHOST',
       title: 'GHOST',
@@ -140,7 +141,7 @@ const initialState = {
       value: 'ghost',
       fullTitle: 'ghost',
     }] : [],
-    //@ts-ignore
+    //@ts-nocheck
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.next) ? [{
       name: 'NEXT',
       title: 'NEXT',
@@ -148,7 +149,7 @@ const initialState = {
       value: 'next',
       fullTitle: 'next',
     }] : [],
-    //@ts-ignore
+    //@ts-nocheck
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.btc) ? [{
       name: 'BTC',
       title: 'BTC',
@@ -171,9 +172,9 @@ const initialState = {
 
 
 if (config.isWidget) {
-  //@ts-ignore
+  //@ts-nocheck
   initialState.items = [
-    //@ts-ignore
+    //@ts-nocheck
     {
       name: 'BTC',
       title: 'BTC',
@@ -181,7 +182,7 @@ if (config.isWidget) {
       value: 'btc',
       fullTitle: 'bitcoin',
     },
-    //@ts-ignore
+    //@ts-nocheck
     {
       name: 'GHOST',
       title: 'GHOST',
@@ -189,7 +190,7 @@ if (config.isWidget) {
       value: 'ghost',
       fullTitle: 'ghost',
     },
-    //@ts-ignore
+    //@ts-nocheck
     {
       name: 'NEXT',
       title: 'NEXT',
@@ -238,7 +239,7 @@ if (config.isWidget) {
     config.erc20token = multiTokenNames[0]
     config.erc20[config.erc20token] = window.widgetERC20Tokens[config.erc20token]
     multiTokenNames.forEach((key) => {
-      //@ts-ignore
+      //@ts-nocheck
       initialState.items.push({
         name: key.toUpperCase(),
         title: key.toUpperCase(),
@@ -256,7 +257,7 @@ if (config.isWidget) {
     })
 
   } else {
-    //@ts-ignore
+    //@ts-nocheck
     initialState.items.push({
       name: config.erc20token.toUpperCase(),
       title: config.erc20token.toUpperCase(),
@@ -272,7 +273,7 @@ if (config.isWidget) {
       fullTitle: config.erc20[config.erc20token].fullName,
     })
   }
-  //@ts-ignore
+  //@ts-nocheck
   initialState.items.push({
     name: 'ETH',
     title: 'ETH',
@@ -280,7 +281,7 @@ if (config.isWidget) {
     value: 'eth',
     fullTitle: 'ethereum',
   })
-  //@ts-ignore
+  //@ts-nocheck
   initialState.items.push({
     name: 'GHOST',
     title: 'GHOST',
@@ -288,7 +289,7 @@ if (config.isWidget) {
     value: 'ghost',
     fullTitle: 'ghost',
   })
-  //@ts-ignore
+  //@ts-nocheck
   initialState.items.push({
     name: 'NEXT',
     title: 'NEXT',
@@ -311,7 +312,7 @@ if (config.isWidget) {
     const customERC = GetCustromERC20()
     Object.keys(customERC).forEach((tokenContract) => {
       const symbol = customERC[tokenContract].symbol
-      //@ts-ignore
+      //@ts-nocheck
       initialState.items.push({
         name: symbol.toUpperCase(),
         title: symbol.toUpperCase(),

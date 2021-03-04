@@ -1,3 +1,4 @@
+//@ts-nocheck
 import ERC20_ABI from 'human-standard-token-abi'
 import helpers, { apiLooper, constants, cacheStorageGet, cacheStorageSet } from 'helpers'
 import { getState } from 'redux/core'
@@ -69,7 +70,7 @@ const login = (privateKey, contractAddress, nameContract, decimals, fullName) =>
 
 
 const setupContract = (ethAddress, contractAddress, nameContract, decimals, fullName) => {
-  //@ts-ignore
+  //@ts-nocheck
   console.log('setup contract', web3, web3.isMetamask)
   if (!web3.eth.accounts.wallet[ethAddress]) {
     throw new Error('web3 does not have given address')
@@ -95,7 +96,7 @@ const setupContract = (ethAddress, contractAddress, nameContract, decimals, full
       ...data,
       address: metamask.getAddress(),
       isMetamask: true,
-      //@ts-ignore
+      //@ts-nocheck
       isConnected: true,
     }
   }
@@ -228,7 +229,7 @@ const withToken = (name) => {
   return { contractAddress, tokenContract, decimals, toWei, fromWei }
 }
 
-//@ts-ignore
+//@ts-nocheck
 const fetchFees = async ({ gasPrice, gasLimit, speed } = {}) => {
   gasPrice = gasPrice || await helpers.ethToken.estimateGasPrice({ speed })
   gasLimit = gasLimit || constants.defaultFeeRates.ethToken.limit.send
@@ -252,7 +253,7 @@ const getLinkToInfo = (tx) => {
 
   return `${config.link.etherscan}/tx/${tx}`
 }
-//@ts-ignore
+//@ts-nocheck
 const sendTransaction = ({ contract, method }, { args, params = {} } = {}, callback) =>
   new Promise(async (resolve, reject) => {
     const receipt = await contract.methods[method](...args).send(params)
@@ -268,7 +269,7 @@ const sendTransaction = ({ contract, method }, { args, params = {} } = {}, callb
   })
 
 const send = (data) => (hasAdminFee) ? sendWithAdminFee(data) : sendDefault(data)
-//@ts-ignore
+//@ts-nocheck
 const sendWithAdminFee = async ({ name, from, to, amount, ...feeConfig } = {}) => {
   const { tokenContract, toWei } = withToken(name)
   const {
@@ -287,7 +288,7 @@ const sendWithAdminFee = async ({ name, from, to, amount, ...feeConfig } = {}) =
   feeFromAmount = toWei(feeFromAmount.toNumber()) // Admin fee
 
   const params = {
-    //@ts-ignore
+    //@ts-nocheck
     ... await fetchFees({ ...feeConfig }),
     from,
   }
@@ -323,11 +324,11 @@ const sendWithAdminFee = async ({ name, from, to, amount, ...feeConfig } = {}) =
     })
   })
 }
-//@ts-ignore
+//@ts-nocheck
 const sendDefault = async ({ name, from, to, amount, ...feeConfig } = {}) => {
   const { tokenContract, toWei } = withToken(name)
   const params = {
-    //@ts-ignore
+    //@ts-nocheck
     ... await fetchFees({ ...feeConfig }),
     from,
   }
@@ -356,14 +357,14 @@ const sendDefault = async ({ name, from, to, amount, ...feeConfig } = {}) => {
     resolve(receipt)
   })
 }
-//@ts-ignore
+//@ts-nocheck
 const approve = async ({ name, to, amount, ...feeConfig } = {}) => {
   const { tokenContract, toWei } = withToken(name)
-  //@ts-ignore
+  //@ts-nocheck
   const params = await fetchFees({ ...feeConfig })
 
   const newAmount = toWei(amount)
-//@ts-ignore
+//@ts-nocheck
   return sendTransaction(
     { contract: tokenContract, method: 'approve' },
     { args: [to, newAmount], params })

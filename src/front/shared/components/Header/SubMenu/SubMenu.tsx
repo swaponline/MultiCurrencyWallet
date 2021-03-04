@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React from 'react'
 import PropTypes from 'prop-types'
 
@@ -57,7 +58,7 @@ class SubMenu extends React.PureComponent<any, any> {
               }
             >
               {/*
-              //@ts-ignore */}
+              //@ts-nocheck */}
               <img src={item.image} alt={item.title} />
               <div styleName="text-container-submenu">
                 <span>{item.title}</span>

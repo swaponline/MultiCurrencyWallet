@@ -1,3 +1,4 @@
+//@ts-nocheck
 import debug from 'debug'
 import SwapApp, { constants, Events, ServiceInterface } from 'swap.app'
 
@@ -16,7 +17,7 @@ class SwapRoom extends ServiceInterface {
 
   app: any
   CheckReceiptsT: any
-  //@ts-ignore
+  
   static get name() {
     return 'room'
   }

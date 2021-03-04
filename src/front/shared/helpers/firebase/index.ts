@@ -149,7 +149,7 @@
 
 //     if (userID === null) {
 //       user = await authorisation()
-//       //@ts-ignore
+//       //@ts-nocheck
 //       userID = user.uid
 //       localStorage.setItem(storageName, userID)
 //     }

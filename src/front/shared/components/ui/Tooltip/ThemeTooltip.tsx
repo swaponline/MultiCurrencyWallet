@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React from "react";
 import ReactTooltop from "react-tooltip";
 import { constants } from "helpers";
@@ -13,7 +14,7 @@ export default function ThemeTooltip({
 }) {
   return (
     <ReactTooltop
-      //@ts-ignore
+      
       type={type}
       {...props}
     >

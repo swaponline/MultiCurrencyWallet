@@ -1,5 +1,6 @@
+//@ts-nocheck
 import { Router } from 'express'
-//@ts-ignore
+//@ts-nocheck
 const router = new Router()
 
 import {

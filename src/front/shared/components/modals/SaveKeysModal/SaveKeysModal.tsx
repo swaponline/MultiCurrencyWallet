@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React from 'react'
 import PropTypes from 'prop-types'
 import cssModules from 'react-css-modules'
@@ -87,7 +88,7 @@ export default class SaveKeysModal extends React.Component<any, any> {
               <a
                 href="#"
                 onClick={() => {
-                  //@ts-ignore
+                  //@ts-nocheck
                   localStorage.setItem(constants.localStorage.testnetSkipPKCheck, true)
                   this.forceUpdate()
                 }}>

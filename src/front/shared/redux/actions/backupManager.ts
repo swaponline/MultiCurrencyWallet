@@ -1,3 +1,4 @@
+//@ts-nocheck
 import constants from 'helpers/constants'
 import getUnixTimeStamp from 'helpers/getUnixTimeStamp'
 import config from 'helpers/externalConfig'
@@ -54,14 +55,14 @@ const backup = (mark, label, overide) => {
 
   let backups = localStorage.getItem(constants.localStorage.backups)
   try { backups = JSON.parse(backups) } catch (e) { }
-  //@ts-ignore
+  //@ts-nocheck
   if (!(backups instanceof Array)) {
-    //@ts-ignore
+    //@ts-nocheck
     backups = []
   }
 
   if ((backups.indexOf(mark) !== -1) && !overide) return `exists`
-  //@ts-ignore
+  //@ts-nocheck
   backups.unshift(mark)
 
   localStorage.setItem(constants.localStorage.backups, JSON.stringify(backups))
@@ -97,23 +98,23 @@ const restory = (mark) => {
 const list = () => {
   let backups = localStorage.getItem(constants.localStorage.backups)
   try { backups = JSON.parse(backups) } catch (e) { }
-  //@ts-ignore
+  //@ts-nocheck
   if (!(backups instanceof Array)) {
-    //@ts-ignore
+    //@ts-nocheck
     backups = []
   }
-  //@ts-ignore
+  //@ts-nocheck
   backups = backups.map((mark) => {
     let backupData = localStorage.getItem(`${constants.localStorage.backups_prefix}:${mark}`)
     try { backupData = JSON.parse(backupData) } catch (e) { }
     if (backupData
-      //@ts-ignore
+      //@ts-nocheck
       && backupData.mark
-      //@ts-ignore
+      //@ts-nocheck
       && backupData.utx
-      //@ts-ignore
+      //@ts-nocheck
       && backupData.label
-      //@ts-ignore
+      //@ts-nocheck
       && backupData.data
     ) {
       return backupData
@@ -128,13 +129,13 @@ const exists = (mark) => {
   let backupData = localStorage.getItem(`${constants.localStorage.backups_prefix}:${mark}`)
   try { backupData = JSON.parse(backupData) } catch (e) { }
   if (backupData
-    //@ts-ignore
+    
     && backupData.mark
-    //@ts-ignore
+    //@ts-nocheck
     && backupData.utx
-    //@ts-ignore
+    //@ts-nocheck
     && backupData.label
-    //@ts-ignore
+    //@ts-nocheck
     && backupData.data
   ) {
     return backupData

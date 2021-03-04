@@ -1,3 +1,4 @@
+//@ts-nocheck
 import stringify from 'json-stringify-safe'
 
 
@@ -28,18 +29,18 @@ const selectiveSaver = store => next => async action => {
     let reduxStore = localStorage.getItem('redux-store')
 
     if (reduxStore === null) {
-      //@ts-ignore
+      //@ts-nocheck
       reduxStore = { [stateName]: data }
     } else {
-      //@ts-ignore
+      //@ts-nocheck
       reduxStore = cleanReduxStore(JSON.parse(reduxStore))
-      //@ts-ignore
+      //@ts-nocheck
       if (stateName in reduxStore) {
-        //@ts-ignore
+        //@ts-nocheck
         reduxStore[stateName] = data
       } else {
         reduxStore = {
-          //@ts-ignore
+          //@ts-nocheck
           ...reduxStore,
           [stateName]: data,
         }

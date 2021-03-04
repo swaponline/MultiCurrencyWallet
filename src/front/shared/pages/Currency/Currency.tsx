@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React, { Component, Fragment } from 'react'
 
 import { connect } from 'redaction'
@@ -36,7 +37,7 @@ export default class Currency extends Component<any, any> {
 
 
   constructor({ match: { params: { currency } }, items, tokens, history, intl: { locale } }) {
-    //@ts-ignore
+    //@ts-nocheck
     super()
 
     this.state = {
@@ -155,7 +156,7 @@ export default class Currency extends Component<any, any> {
           />
         </Helmet>
         {/*
-        //@ts-ignore */}
+        //@ts-nocheck */}
         <PageHeadline>
           <Fragment>
             <SubTitle>
@@ -202,7 +203,7 @@ export default class Currency extends Component<any, any> {
           )}
         />
         {/*
-        //@ts-ignore */}
+        //@ts-nocheck */}
         <CloseIcon styleName="closeButton" onClick={() => this.props.history.push(localisedUrl(locale, links.home))} data-testid="CloseIcon" />
       </section>
     )

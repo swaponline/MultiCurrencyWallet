@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'redaction'
@@ -118,7 +119,7 @@ export default class AlertModal extends React.Component<any, any> {
         })}>
           <div styleName="header">
             {/*
-            //@ts-ignore */}
+             */}
             <WidthContainer styleName="headerContent">
               <div styleName="title">{labels.title}</div>
             </WidthContainer>

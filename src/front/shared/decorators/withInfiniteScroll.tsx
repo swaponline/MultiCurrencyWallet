@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React from 'react'
 import PropTypes from 'prop-types'
 
@@ -31,7 +32,7 @@ export const withInfiniteScroll = () => Component => {
     }
   }
 
-  //@ts-ignore
+  //@ts-nocheck
   InfiniteScroll.propTypes = {
     getMore: PropTypes.func,
     bottomOffset: PropTypes.number,

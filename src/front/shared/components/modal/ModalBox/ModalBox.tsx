@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React, { Component } from 'react'
 
 import actions from 'redux/actions'
@@ -43,11 +44,11 @@ export default class ModalBox extends Component<any, any> {
       <div styleName={`modal-box ${isDark ? 'dark' : ''}`}>
         <div styleName="header">
           {/*
-          //@ts-ignore */}
+          //@ts-nocheck */}
           <WidthContainer styleName="headerContent">
             <div styleName="title">{title}</div>
             {/*
-            //@ts-ignore */}
+            //@ts-nocheck */}
             <CloseIcon styleName="closeButton" onClick={onClose} />
           </WidthContainer>
         </div>

@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React from 'react'
 import PropTypes from 'prop-types'
 
@@ -57,14 +58,14 @@ const Coin = ({ className, size, name }) => {
   if (isIconExist || isIconConfigExist) {
     iconProps = {
       ...iconProps,
-      //@ts-ignore
+      //@ts-nocheck
       styleName: 'icon',
     }
   }
   else {
     iconProps = {
       ...iconProps,
-      //@ts-ignore
+      //@ts-nocheck
       styleName: 'letter',
       style: {
         lineHeight: `${size}px`,

@@ -1,3 +1,4 @@
+//@ts-nocheck
 import debug from 'debug'
 import BigNumber from 'bignumber.js'
 import SwapApp, { Events, util } from 'swap.app'
@@ -170,19 +171,19 @@ class Swap {
     )
 
     const {
-      //@ts-ignore
+      //@ts-nocheck
       isMy,
-      //@ts-ignore
+      //@ts-nocheck
       isTurbo,
-      //@ts-ignore
+      //@ts-nocheck
       sellCurrency,
-      //@ts-ignore
+      //@ts-nocheck
       sellAmount,
-      //@ts-ignore
+      //@ts-nocheck
       buyCurrency,
-      //@ts-ignore
+      //@ts-nocheck
       buyAmount,
-      //@ts-ignore
+      //@ts-nocheck
       destination,
       ...rest
     } = data
@@ -200,9 +201,9 @@ class Swap {
       destinationBuyAddress: isMy ? ownerAddress : participantAddress,
       destinationSellAddress: isMy ? participantAddress : ownerAddress,
     }
-    //@ts-ignore
+    
     if (!swap.participant && !isMy) {
-      //@ts-ignore
+      //@ts-nocheck
       swap.participant = swap.owner
     }
 

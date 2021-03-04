@@ -1,3 +1,4 @@
+//@ts-nocheck
 import {
   COIN_DATA,
   COIN_MODEL,
@@ -93,9 +94,9 @@ export const getPairFees = (sellCoin, buyCoin) => {
     const buy = await fetchCoinFee(buyCoin.toUpperCase())
 
     const byCoins = {}
-    //@ts-ignore: Property 'coin' does not exist on type 'unknown'
+    //: Property 'coin' does not exist on type 'unknown'
     byCoins[buy.coin] = buy
-    //@ts-ignore: Property 'coin' does not exist on type 'unknown'
+    //: Property 'coin' does not exist on type 'unknown'
     byCoins[sell.coin] = sell
 
     feeResolved({

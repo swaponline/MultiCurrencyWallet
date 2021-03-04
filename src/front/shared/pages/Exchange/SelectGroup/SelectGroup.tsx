@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React, { Fragment } from 'react'
 import { FormattedMessage, injectIntl } from 'react-intl'
 
@@ -85,7 +86,7 @@ const SelectGroup = (props) => {
           </div>
         )}
         {/*
-        //@ts-ignore */}
+         */}
         <CurrencySelect
           //name="All"
           label={label}

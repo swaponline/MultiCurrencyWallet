@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import helpers, { constants } from 'helpers'
@@ -49,7 +50,7 @@ export default class BtcMultisignSwitch extends React.Component<any, any> {
   }
 
   refreshWallets() {
-    //@ts-ignore
+    //@ts-nocheck
     actions.btcmultisig.getBtcMultisigKeys().then((wallets) => {
       this.setState({
         wallets,

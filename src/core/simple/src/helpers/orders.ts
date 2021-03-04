@@ -1,3 +1,4 @@
+//@ts-nocheck
 import Swap from 'swap.swap'
 import debug from 'debug'
 
@@ -11,9 +12,9 @@ export const request = order =>
       }
     })
   ).then(order => {
-    //@ts-ignore
+    //@ts-nocheck
     debug('swap.core:simple:orders')('order accepted', order.id)
-    //@ts-ignore
+    //@ts-nocheck
     return new Swap(order.id)
   })
 

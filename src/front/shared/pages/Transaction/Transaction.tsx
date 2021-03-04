@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { withRouter } from 'react-router-dom'
 import React, { Component, Fragment } from 'react'
 import actions from 'redux/actions'
@@ -162,7 +163,7 @@ class Transaction extends Component<any, any> {
     } = this.state
 
     if (!txId) {
-      //@ts-ignore
+      
       history.push(links.notFound)
       return
     }

@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import helpers, { constants } from 'helpers'
@@ -361,7 +362,7 @@ export default class WithdrawBtcPin extends React.Component<any, any> {
                   )}
                 </Button>
                 {/*
-                //@ts-ignore */}
+                 */}
                 <Button blue disabled={isShipped} onClick={this.handleCancel}>
                   <FormattedMessage {...langs.cancelButton} />
                 </Button>
@@ -409,7 +410,7 @@ export default class WithdrawBtcPin extends React.Component<any, any> {
                   )}
                 </Button>
                 {/*
-                //@ts-ignore */}
+                //@ts-nocheck */}
                 <Button blue disabled={isShipped} onClick={this.handleCancel}>
                   <FormattedMessage {...langs.cancelButton} />
                 </Button>

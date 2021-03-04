@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React, { Fragment } from 'react'
 import { FormattedMessage, injectIntl, IntlShape } from 'react-intl'
 
@@ -60,7 +61,7 @@ const SelectGroup = ({ intl: IntlShape,  dynamicFee, isToken, extendedControls, 
           <p styleName="textUsd" >{`~${fiat}`} {activeFiat}</p>
         }
         {/*
-        //@ts-ignore */}
+         */}
         <CurrencySelect
           //name="All"
           label={label}

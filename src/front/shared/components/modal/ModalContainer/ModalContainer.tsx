@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import cx from 'classnames'
@@ -44,10 +45,10 @@ export default class ModalContainer extends Component<any, any> {
     })
 
     return (
-      //@ts-ignore 
+      //@ts-nocheck 
       <Overlay>
         {/*
-        //@ts-ignore */}
+        //@ts-nocheck */}
         <Center scrollable>
           <div
             styleName={modalContainerStyleName}

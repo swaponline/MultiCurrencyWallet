@@ -1,6 +1,7 @@
+//@ts-nocheck
 const getGtag = () =>  window.gtag || null
 
-//@ts-ignore
+//@ts-nocheck
 const dataEvent = ({ action, label } = {}) => {
   const gtag = getGtag()
 
@@ -13,7 +14,7 @@ const dataEvent = ({ action, label } = {}) => {
   })
 }
 
-//@ts-ignore
+//@ts-nocheck
 const balanceEvent = ({ action, currency, balance } = {}) => {
   const gtag = getGtag()
 
@@ -27,7 +28,7 @@ const balanceEvent = ({ action, currency, balance } = {}) => {
   })
 }
 
-//@ts-ignore
+//@ts-nocheck
 const signUpEvent = ({ action, type } = {}) => {
   const gtag = getGtag()
 

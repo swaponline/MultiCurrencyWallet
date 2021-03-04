@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React, { Component, Fragment } from 'react'
 import CSSModules from 'react-css-modules'
 
@@ -99,7 +100,7 @@ export default class History extends Component<any, any> {
         // @ToDo - этот роутер не работает - возможно артефакт после перевода ссылок на /(btc|eth)/walletAddress
 
         let { match: { params: { address = null } } } = this.props
-        //@ts-ignore
+        
         actions.history.setTransactions(address)
       } else {
         const user = this.props.user
@@ -221,7 +222,7 @@ export default class History extends Component<any, any> {
                     rowRender={this.rowRender}
                   />
                 ) : (
-                  //@ts-ignore
+                  //@ts-nocheck
                   <ContentLoader rideSideContent empty={!isLoading} nonHeader />
                 )
               }
@@ -230,7 +231,7 @@ export default class History extends Component<any, any> {
           ) : (
             <div styleName="historyLoader">
               {/*
-              //@ts-ignore */}
+              //@ts-nocheck */}
               <ContentLoader rideSideContent />
             </div>
           )

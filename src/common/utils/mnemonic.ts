@@ -1,3 +1,4 @@
+//@ts-nocheck
 import * as bitcoin from 'bitcoinjs-lib'
 import * as bip32 from 'bip32'
 import { hdkey } from 'ethereumjs-wallet'
@@ -29,7 +30,7 @@ const getBtcWallet = (network, mnemonic, walletNumber = 0, path) => {
   return {
     mnemonic,
     address: account.address,
-    //@ts-ignore
+    
     publicKey: node.publicKey.toString('Hex'),
     WIF: node.toWIF(),
     node,
@@ -45,11 +46,11 @@ const getEthWallet = (network, mnemonic, walletNumber = 0, path) => {
 
   return {
     mnemonic,
-    //@ts-ignore
+    
     address: `0x${wallet.getAddress().toString('Hex')}`,
-    //@ts-ignore
+    
     publicKey: `0x${wallet.pubKey.toString('Hex')}`,
-    //@ts-ignore
+    
     privateKey: `0x${wallet.privKey.toString('Hex')}`,
     wallet,
   }
@@ -68,7 +69,7 @@ const getGhostWallet = (network, mnemonic, walletNumber = 0, path) => {
   return {
     mnemonic,
     address: account.address,
-    //@ts-ignore
+    
     publicKey: node.publicKey.toString('Hex'),
     WIF: node.toWIF(),
     node,
@@ -89,7 +90,7 @@ const getNextWallet = (network, mnemonic, walletNumber = 0, path) => {
   return {
     mnemonic,
     address: account.address,
-    //@ts-ignore
+    
     publicKey: node.publicKey.toString('Hex'),
     WIF: node.toWIF(),
     node,

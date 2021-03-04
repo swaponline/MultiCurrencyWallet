@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React, { Fragment } from 'react'
 import styles from './Select.scss'
 import cssModules from 'react-css-modules'
@@ -19,7 +20,7 @@ const Select = ({ balance, changeBalance, switching, isDark }) => {
           <span styleName="cell" onClick={() => changeBalance(new BigNumber(balance).div(1))}><FormattedMessage id="Select40" defaultMessage="100%" /></span>
         </div>
         {/*
-        //@ts-ignore */}
+         */}
         <Switching onClick={switching} />
       </div>
     </Fragment>

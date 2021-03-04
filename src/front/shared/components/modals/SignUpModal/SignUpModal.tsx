@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React, { Fragment } from 'react'
 import { withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types'
@@ -73,7 +74,7 @@ export default class SignUpModal extends React.Component<any, any> {
     const currentUrl = history.location
     const isRefLink = (currentUrl.search
       && currentUrl.search.includes('?promo=')
-      //@ts-ignore
+      
       && !localStorage.getItem(constants.localStorage.firstStart))
     let refEthAddress = null
 
@@ -97,7 +98,7 @@ export default class SignUpModal extends React.Component<any, any> {
     if (whatToSubmit === 'isSubmitedPush' || !isSupportedPush) {
       // await firestore.addUser(data)
     }
-    //@ts-ignore
+    //@ts-nocheck
     actions.analytics.signUpEvent({ action: 'request' })
 
     // if (!isSupportedPush || isSubmitedPush) {

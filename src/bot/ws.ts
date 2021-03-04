@@ -1,3 +1,4 @@
+//@ts-nocheck
 import WebSocket from 'ws'
 import http from 'http'
 import { util } from 'swap.app'
@@ -49,7 +50,7 @@ const init = (app, SwapApp, router, port) => {
       if (!wss.clients.has(to) || /WebSocket is not open/g.test(message)) {
         return to.terminate()
       }
-      //@ts-ignore
+      //@ts-nocheck
       safeSend(ws, { error: { name, message } })
     }
   }

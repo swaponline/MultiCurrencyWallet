@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React from 'react'
 import { connect } from 'redaction'
 import { withRouter } from 'react-router-dom'
@@ -13,12 +14,12 @@ const ModalConductorProvider = ({ children, history, modals, ...props }) => {
   const isAnyModalCalled = Object.keys(modals).length
 
   const hiestZ = Object.values(modals).reduce(
-    //@ts-ignore
+    //@ts-nocheck
     (acc, i) => (acc > i.zIndex ? acc : i.zIndex),
     -1
   )
   const upperModal = Object.keys(modals)[
-    //@ts-ignore 
+    //@ts-nocheck 
     Object.values(modals).findIndex((i) => i.zIndex === hiestZ)
   ]
 
@@ -75,7 +76,7 @@ export default connect(({ modals, ui: { dashboardModalsAllowed } }) => ({
   dashboardView: dashboardModalsAllowed,
 }))(
   withRouter(
-    //@ts-ignore 
+    //@ts-nocheck 
     cssModules(ModalConductorProvider, styles, { allowMultiple: true })
   )
 )

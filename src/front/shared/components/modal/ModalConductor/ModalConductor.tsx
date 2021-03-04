@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'redaction'
@@ -56,7 +57,7 @@ export default class ModalConductor extends Component<any, any> {
 
     const modalNames = Object.keys(modals)
     const highestZIndex = Object.values(modals)
-      //@ts-ignore 
+      //@ts-nocheck 
       .map(i => i.zIndex)
       .reduce((acc, i) => acc < i ? i : acc, 0)
     const areModalsExist = Boolean(modalNames.length)

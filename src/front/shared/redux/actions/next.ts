@@ -1,3 +1,4 @@
+//@ts-nocheck
 import BigInteger from 'bigi'
 
 import { BigNumber } from 'bignumber.js'
@@ -88,14 +89,14 @@ const auth = (privateKey) => {
   if (!privateKey) {
     throw new Error('Missing privateKey')
   }
-  //@ts-ignore
+  
   const keyPair = bitcoin.ECPair.fromWIF(privateKey, next.network)
-  //@ts-ignore
+  //@ts-nocheck
   const account = bitcoin.ECPair.fromWIF(privateKey, next.network)
-  //@ts-ignore
+  //@ts-nocheck
   const { address } = bitcoin.payments.p2pkh({
     pubkey: account.publicKey,
-    //@ts-ignore
+    //@ts-nocheck
     network: next.network,
   })
 
@@ -121,7 +122,7 @@ const getPrivateKeyByAddress = (address) => {
   } = getState()
 
   if (oldAddress === address) return privateKey
-  //@ts-ignore
+  //@ts-nocheck
   if (mnemonicAddress === address) return mnemonicKey
 }
 
@@ -207,7 +208,7 @@ const login = (privateKey, mnemonic = null, mnemonicKeys = null) => {
         reducers.user.setAuthData({
           name: 'nextMnemonicData',
           data: {
-            //@ts-ignore
+            //@ts-nocheck
             ...balanceData,
             isBalanceFetched: true,
           },
@@ -226,7 +227,7 @@ const login = (privateKey, mnemonic = null, mnemonicKeys = null) => {
 const getTx = (txRaw) => {
   if (txRaw
     && txRaw.getId
-    //@ts-ignore
+    //@ts-nocheck
     && txRaw.getId instanceof 'function'
   ) {
     return txRaw.getId()
@@ -454,7 +455,7 @@ const getTransaction = (address: string = ``, ownType: string = ``) =>
       })
   })
 
-//@ts-ignore
+//@ts-nocheck
 const send = ({ from, to, amount, feeValue, speed } = {}) => {
 
   return new Promise(async (ready) => {
@@ -504,7 +505,7 @@ const broadcastTx = (txRaw) => nextUtils.broadcastTx({
 })
 
 const signMessage = (message, encodedPrivateKey) => {
-  //@ts-ignore
+  //@ts-nocheck
   const keyPair = bitcoin.ECPair.fromWIF(encodedPrivateKey, [next.networks.mainnet])
   const privateKeyBuff = Buffer.from(keyPair.privateKey)
 

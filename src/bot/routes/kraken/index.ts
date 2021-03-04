@@ -1,7 +1,8 @@
+//@ts-nocheck
 import kraken from '../../services/instances/kraken'
 
 import Router from 'express'
-//@ts-ignore
+//@ts-nocheck
 const router = new Router()
 
 

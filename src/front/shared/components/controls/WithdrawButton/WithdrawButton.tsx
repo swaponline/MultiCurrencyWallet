@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import config from 'app-config'
@@ -27,7 +28,7 @@ const WithdrawButton = (props) => {
     </button>
   )
   
-  //@ts-ignore
+  
   WithdrawButton.propTypes = {
     onClick: PropTypes.func.isRequired,
     className: PropTypes.string,
