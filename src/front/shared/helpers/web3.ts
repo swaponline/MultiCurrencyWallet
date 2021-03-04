@@ -98,10 +98,6 @@ const proxyRequestResult = async (args) => {
       throw new Error(`Ethereum proxy - in the method<request>: unknown method: ${method}`)
   }
 
-  // FIXME: delete
-  console.log('Method<request> proxy - arguments: ', args)
-  console.log(`${args[0].method}: result ->`, result)
-
   return result
 }
 

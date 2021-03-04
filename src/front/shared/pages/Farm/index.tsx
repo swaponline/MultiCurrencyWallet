@@ -20,13 +20,6 @@ export default class Farm extends React.Component<null, null> {
     } else {
       window.localStorage.setItem('ff-account-unlocked', 'false')
     }
-
-    // FIXME: delete test data
-    window.farm = {
-      farmAddress: '0x71a335D51F111CC596be62A7FA2E8B167929A6F2',
-      stakingAddress: '0x101848D5C5bBca18E6b4431eEdF6B95E9ADF82FA',
-      rewardsAddress: '0x7E0480Ca9fD50EB7A3855Cf53c347A1b4d6A2FF5',
-    }
   }
 
   componentDidMount() {
@@ -79,7 +72,7 @@ export default class Farm extends React.Component<null, null> {
             <h3>
               <FormattedMessage 
                 id="FarmDoesNotHaveContracts" 
-                defaultMessage="Doesn't have any contracts"
+                defaultMessage="Didn't find any options for the farm"
               />
             </h3>
           )

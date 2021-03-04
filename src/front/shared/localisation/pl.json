@@ -1573,17 +1573,11 @@
   },
   {
     "id": "partial223",
-    "message": "Aby zmienić domyślny portfel na kupno waluty. ",
-    "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
-    ]
+    "message": "Aby zmienić domyślny portfel na kupno waluty. "
   },
   {
     "id": "partial224",
-    "message": "Zostaw puste aby użyć domyślnego portfela",
-    "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
-    ]
+    "message": "Zostaw puste aby użyć domyślnego portfela"
   },
   {
     "id": "partial243",
@@ -1882,10 +1876,7 @@
   },
   {
     "id": "partialAtomicSwapWhatIsIt",
-    "message": "Swap to technologia inteligentnych kontraktów, która umożliwia wymianę jednej kryptowaluty na inną bez korzystania ze scentralizowanych pośredników, takich jak giełdy.",
-    "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
-    ]
+    "message": "Swap to technologia inteligentnych kontraktów, która umożliwia wymianę jednej kryptowaluty na inną bez korzystania ze scentralizowanych pośredników, takich jak giełdy."
   },
   {
     "id": "partialVideoAndFeaturesTitle",
@@ -8015,6 +8006,44 @@
     "message": "Szybsza i tańsza wymiana z zaufanym animatorem, polecana za niewielkie kwoty",
     "files": [
       "src/front/shared/components/ui/TurboIcon/TurboIcon.tsx"
+    ]
+  },
+  {
+    "id": "ButtonPendingState",
+    "message": "Pending",
+    "files": [
+      "src/front/shared/components/controls/Button/Button.tsx"
+    ]
+  },
+  {
+    "id": "menu.farm",
+    "message": "Gospodarstwo rolne",
+    "files": [
+      "src/front/shared/components/Header/config.tsx"
+    ]
+  },
+  {
+    "id": "AtomicSwap_Title",
+    "message": "Atomic swap",
+    "files": [
+      "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx",
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "TurboSwap_Title",
+    "message": "Turbo swap",
+    "files": [
+      "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx",
+      "src/front/shared/pages/Exchange/Exchange.tsx",
+      "src/front/shared/pages/TurboSwap/TurboSwap.tsx"
+    ]
+  },
+  {
+    "id": "FarmDoesNotHaveContracts",
+    "message": "Nie znaleziono żadnych opcji dla gospodarstwa",
+    "files": [
+      "src/front/shared/pages/Farm/index.tsx"
     ]
   }
 ]
