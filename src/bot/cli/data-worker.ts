@@ -32,7 +32,7 @@ class DataWorker {
 
     const filtered = orders
       .map( o => convertOrder(o) )
-      .filter( o => o.ticker == ticker)
+      .filter( o => o.ticker == ticker )
 
     const sorted = filtered
       .sort( (o1, o2) => o1.price - o2.price )

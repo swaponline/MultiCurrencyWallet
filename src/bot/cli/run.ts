@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 import readline from './helpers/readline'
 import { HELP, FULL_HELP } from './helpers/help'
 import { methods_list, decodeMethod, printHelp } from './helpers/methods'
@@ -44,7 +42,7 @@ const selectMethod = (input) => {
 
   if (payload == 'help') {
     return () => console.log(printHelp(action))
-  } else if ( methods_list.includes(action) || payload.length ) {
+  } else if (methods_list.includes(action) || payload.length) {
     const vars = decodeMethod(action, payload)
 
     return () => bot.callMethod(action, vars)
@@ -66,11 +64,9 @@ const selectMethod = (input) => {
 const runInput = async (input) => {
   try {
     const method = selectMethod(input)
-
     const reply = method()
 
     await printPromise(reply)
-
   } catch (err) {
     console.error(err)
   }

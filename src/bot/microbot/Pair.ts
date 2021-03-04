@@ -8,7 +8,9 @@ import {
 import * as configStorage from '../config/storage'
 
 
-const TRADE_TICKERS = (configStorage.hasTradeConfig()) ? configStorage.getTradeTickers() : DEFAULT_TRADE_TICKERS
+const TRADE_TICKERS = configStorage.hasTradeConfig()
+  ? configStorage.getTradeTickers()
+  : DEFAULT_TRADE_TICKERS
 
 const PAIR_BID = PAIR_TYPES.BID
 const PAIR_ASK = PAIR_TYPES.ASK
@@ -38,7 +40,11 @@ const parsePair = (str) => {
   const tokens = str.split('-')
   if (tokens.length !== 2) throw new Error(`ParseTickerError: Wrong tokens: ${str}`)
 
-  if (TRADE_TICKERS.includes(str)) { str = str } else { str = tokens.reverse().join('-') }
+  if (TRADE_TICKERS.includes(str)) {
+    str = str
+  } else {
+    str = tokens.reverse().join('-')
+  }
 
   if (!TRADE_TICKERS.includes(str)) throw new Error(`ParseTickerError: Ticker not found: ${str}`)
 
@@ -59,7 +65,7 @@ export default class Pair {
   base: string
   type: any
 
-  constructor ({ price, amount, ticker, type }) {
+  constructor({ price, amount, ticker, type }) {
     this.price = new BigNumber(price)
     this.amount = new BigNumber(amount)
 
@@ -97,7 +103,7 @@ export default class Pair {
   * sellAmount: 10 ETH = 10 ETH = amount
   *
   */
-  toOrder () {
+  toOrder() {
     const { ticker, type, price, amount } = this
 
     console.log(new Date().toISOString(), `create order ${this}`)
@@ -121,7 +127,7 @@ export default class Pair {
     }
   }
 
-  static fromOrder (order) {
+  static fromOrder(order) {
     const { buyCurrency: buy, sellCurrency: sell, buyAmount, sellAmount } = order
 
     const { ticker, type } = parseTicker(order)

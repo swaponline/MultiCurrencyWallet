@@ -242,7 +242,7 @@ export const getCoinPrice = (coin: string): Promise<BigNumber> => {
                 break
             }
             break
-          case `COIN`:  // От цены другой монеты
+          case `COIN`: // От цены другой монеты
             const baseCoinPrice = await getCoinPrice(priceConfig.coin)
             coinPrice = baseCoinPrice.multipliedBy(priceConfig.count)
         }

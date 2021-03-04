@@ -30,7 +30,6 @@ class CurrencyStats extends React.Component {
           {' = '}
           {total.usd_profit.toFixed(6)} USD
         </td>
-
       </tr>
     )
   }
@@ -214,7 +213,7 @@ class Statistics extends React.Component {
         </thead>
         <tbody>
           {currencies.map((item) => (
-            <CurrencyStats key={item.ticker} data={item}/>
+            <CurrencyStats key={item.ticker} data={item} />
           ))}
         </tbody>
         </table>

@@ -1,5 +1,6 @@
 const getOrderId = (orders, id) => {
-  if ( !isNaN(parseInt(id)) ) {
+  const isIdNumeric = !isNaN(parseInt(id))
+  if (isIdNumeric) {
     const index = parseInt(id)
 
     if (index <= 0)

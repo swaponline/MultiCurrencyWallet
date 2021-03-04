@@ -22,8 +22,8 @@ const getWalletDetailed = async (req, res) => {
 const balance = async (req, res) => {
   const { body } = req
 
-   let balances = await wallet.getData({ coins: body.coins })
-   res.json({ balances })
+  let balances = await wallet.getData({ coins: body.coins })
+  res.json({ balances })
 }
 
 const withdraw = async (req, res) => {

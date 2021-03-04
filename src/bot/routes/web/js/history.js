@@ -45,11 +45,12 @@ class Swap extends React.Component {
 
   render() {
     const { id, pair, swap, timestamp, prices } = this.props
-    const { price, amount, ticker, main, base, type } = pair
     const { btc_profit, usd_profit, isProfit } = this.state
+
+    const { price, amount, ticker, main, base, type } = pair
+
     const time = this.getLockTime(swap)
     const createdAt = moment.unix(time - 3 * 3600).format('HH:mm:ss DD/MM/YYYY')
-    // const refundAt  = moment.unix(time).format('HH:mm:ss DD/MM/YYYY')
 
     return (
       <tr>
@@ -106,7 +107,6 @@ class Swap extends React.Component {
           &nbsp;
           <a href={`/swaps/${id}/refund`}>Refund</a>
         </td>
-
       </tr>
     )
   }

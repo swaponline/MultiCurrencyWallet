@@ -5,7 +5,7 @@ import { getPriceByPair, syncPrices } from '../../app/middlewares/prices'
 
 const router = Router()
 
-router.get('/courses', async  ({ query: { ticker = 'ETH-BTC' } }, res) => {
+router.get('/courses', async ({ query: { ticker = 'ETH-BTC' } }, res) => {
   const price = await getPriceByPair(ticker)
 
   res.json(price)

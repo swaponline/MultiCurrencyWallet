@@ -2,7 +2,6 @@ import ws from 'ws'
 
 
 const checkOrderID = ({ id, orderId }) => {
-
   if (id) return { id }
   if (orderId) return { id: orderId }
 
@@ -68,7 +67,7 @@ class SocketBot {
 
     const { id } = checkOrderID(order)
 
-    if (!order.buyAmount) throw new Error(`Not enought order info ${JSON.stringify(order)}`, )
+    if (!order.buyAmount) throw new Error(`Not enought order info ${JSON.stringify(order)}`)
 
     if (order.isRequested) {
       return this.fire(order)
@@ -128,7 +127,7 @@ class SocketBot {
         case 3:
         case 4:
           const { isBalanceEnough, balance } = swap.flow
-          if ( isBalanceEnough === false && balance )
+          if (isBalanceEnough === false && balance)
             console.error(`Not enough balance: ${balance}`)
           return
 

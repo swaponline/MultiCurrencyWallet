@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 import SocketBot from './socket-bot'
 import REST from '../cli/interface'
 

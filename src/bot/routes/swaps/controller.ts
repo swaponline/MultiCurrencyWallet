@@ -87,7 +87,7 @@ const getState = (req, res) => {
 const goSwap = async (req, res) => {
   const swap = await findSwap(app)(req, res)
 
-  if ( swap.flow && swap.flow.state.step )
+  if (swap.flow && swap.flow.state.step)
     return res.json(swapView(swap))
 
   runSwap(swap)
@@ -109,7 +109,8 @@ const withSwap = (swapHandler) => async (req, res) => {
       type: swap.type, swap: swap.id,
       stack,
       state: swap.flow.state,
-      error }
+      error
+    }
     console.error(info)
     res.status(500).json(info)
   }
@@ -170,8 +171,7 @@ const tryRefund = async (swap) => {
 
 const refund = (req, res) => {
   findSwap(app)(req, res).then(async (swap) => {
-
-    if ( !swap.flow || !swap.flow.state || !swap.flow.state.step )
+    if (!swap.flow || !swap.flow.state || !swap.flow.state.step)
       return res.status(403).json({ error: 'not started' })
 
     try {
@@ -194,9 +194,7 @@ const refund = (req, res) => {
       })
       throw err
     }
-
   })
-
 }
 
 const tryWithdraw = async (swap, { secret }) => {
@@ -212,7 +210,9 @@ const getInProgress = ({ query: { parsed, withFees }}, res) => {
     .map((id) => {
       try {
         const swapData = new Swap(id, app)
-      } catch (e) { return false }
+      } catch (e) {
+        return false
+      }
     })
     .filter((swapData: Swap | boolean) => { return swapData !== false })
 
@@ -247,7 +247,9 @@ const getFinished = ({ query: { parsed, withFees }}, res) => {
     try {
       const pair = Pair.fromOrder(swap)
       return { id: swap.id, pair, swap: swapView(swap) }
-    } catch (e) { return false }
+    } catch (e) {
+      return false
+    }
   }).filter((pair: any) => { return pair !== false })
 
   return res.json(pairs)

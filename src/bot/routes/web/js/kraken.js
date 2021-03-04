@@ -33,7 +33,7 @@ class Kraken extends React.Component {
   }
 
   render() {
-    const {error, isLoaded, kraken_items} = this.state;
+    const { error, isLoaded, kraken_items } = this.state;
 
     if (error) {
       return <div>Error: {error.message}</div>;
@@ -52,10 +52,10 @@ class Kraken extends React.Component {
         <div className="row d-none">
           <div className="col-2">
             <div className="btn-group btn-group-toggle" data-toggle="buttons">
-              <label className={`btn btn-secondary  ${(this.state.type === 'sell' ? 'active' : '')}`}>
+              <label className={`btn btn-secondary ${(this.state.type === 'sell' ? 'active' : '')}`}>
                 <input type="radio" name="type" id="option1" onChange={this.onTypeChanged.bind(this)} autoComplete="off" value="sell" /> Sell
               </label>
-              <label className={`btn btn-secondary  ${(this.state.type === 'buy' ? 'active' : '')}`}>
+              <label className={`btn btn-secondary ${(this.state.type === 'buy' ? 'active' : '')}`}>
                 <input type="radio" value="buy" name="type" id="option2" onChange={this.onTypeChanged.bind(this)} autoComplete="off" /> Buy
               </label>
             </div>

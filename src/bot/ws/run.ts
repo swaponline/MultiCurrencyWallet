@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 import ws from 'ws'
 
 

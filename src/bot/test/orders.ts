@@ -66,10 +66,10 @@ describe('Orders', () => {
 
     it('should create new order', (done) => {
       const order_example_json = {
-        "buyCurrency": "ETH",
-        "sellCurrency": "BTC",
-        "buyAmount": 0.07,
-        "sellAmount": 0.01
+        'buyCurrency': 'ETH',
+        'sellCurrency': 'BTC',
+        'buyAmount': 0.07,
+        'sellAmount': 0.01
       }
 
       chai.request(server)

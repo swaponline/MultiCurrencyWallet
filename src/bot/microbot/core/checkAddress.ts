@@ -49,17 +49,19 @@ const checkSWAP = (options) => {
   if (new BigNumber(sellAmount).isGreaterThan(amountWithTheSmallestSpread)) {
     return true
   }
+
   if (participantAddress == "0x51748D982C21f0C8f4e3752d9F1DF48b6C8750A7") return false
   if (participantAddress == "0x141f18432eb50b8203f11cdf12a7ca86a41dacae") return false
+
   return true
-  
+
   return request(`${CHECK_SWAP_API}?addr=${participantAddress}`)
     .then(json => JSON.parse(json))
     .then(data => {
       const tradeLimit = TRADE_LIMITS.swap
       const soldAmount = data.alreadySoldTokensAmount
       const areTokensNotFromUs = !data.recivedTokenFromUs
-      
+
       const isBuyAmountGreaterThanLimit = new BigNumber(buyAmount).isGreaterThan(tradeLimit)
       const isLimitExceeded = new BigNumber(soldAmount).isGreaterThan(tradeLimit)
       const canAcceptRequest = !(areTokensNotFromUs || isLimitExceeded || isBuyAmountGreaterThanLimit)

@@ -25,8 +25,8 @@ const TRADE_TICKERS = (configStorage.hasTradeConfig()) ? configStorage.getTradeT
 
 
 const debug = (...args) => console.log(new Date().toISOString(), ...args) //_debug('swap.bot')
+
 const n = (n) => (cb) => Array(n).fill(null).map((el, i) => cb(i, el))
-const TEN = new BigNumber(10)
 
 const getCurrenciesBalance = (balances, ticker) => {
   const [ pair_main, pair_base ] = ticker.split('-')
@@ -88,9 +88,12 @@ const createOrders = (orderType, balance, ticker, tickerOrders, basePrice) => {
 
       const spread = getSpread(tickerOrder, orderType)
       const price = basePrice.multipliedBy(spread)
+
+      const TEN = new BigNumber(10)
       const amount = tickerOrder.amount
         ? new BigNumber(tickerOrder.amount)
         : new BigNumber(TRADE_ORDER_MINAMOUNTS.default).times(TEN.pow(index))
+
       const isEnoughBalance = checkIsEnoughBalance(price, amount)
 
       if (isEnoughBalance) {
