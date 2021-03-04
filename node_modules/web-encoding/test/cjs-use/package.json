@@ -1,0 +1,10 @@
+{
+  "name": "cjs-use",
+  "private": true,
+  "dependencies": {
+    "web-encoding": "file:../.."
+  },
+  "scripts": {
+    "test": "npm install && npx typescript --noEmit --allowJs --checkJs src/main.js"
+  }
+}

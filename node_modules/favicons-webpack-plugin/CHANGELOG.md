@@ -1,0 +1,183 @@
+# Changelog
+
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+## [4.2.0](https://github.com/jantimon/favicons-webpack-plugin/compare/v4.1.0...v4.2.0) (2020-07-27)
+
+
+### Features
+
+* turn favicon into a transitive dependency to allow using upstream bugfixes ([eb11a83](https://github.com/jantimon/favicons-webpack-plugin/commit/eb11a831cae05abb605d5d4a877f54b236f18b3c))
+
+## [4.1.0](https://github.com/jantimon/favicons-webpack-plugin/compare/v4.0.0...v4.1.0) (2020-07-27)
+
+
+### Features
+
+* show current html-webpack-plugin version ([6ef0ce4](https://github.com/jantimon/favicons-webpack-plugin/commit/6ef0ce4cec8366c72592822d84b53d2fe8886438))
+
+## [4.0.0](https://github.com/jantimon/favicons-webpack-plugin/compare/v3.0.1...v4.0.0) (2020-07-27)
+
+
+### ⚠ BREAKING CHANGES
+
+* drop support for node 8
+
+### Features
+
+* upgrade favicons ([8848bc2](https://github.com/jantimon/favicons-webpack-plugin/commit/8848bc288f2b55b47317f90b1d613a22fc39f593))
+
+
+### Bug Fixes
+
+* remove duplicate test-entry in .travis.yml ([8d59acf](https://github.com/jantimon/favicons-webpack-plugin/commit/8d59acf475c1010b4f28b58fe4197a763571ab41))
+
+### [3.0.1](https://github.com/jantimon/favicons-webpack-plugin/compare/v3.0.0...v3.0.1) (2020-01-29)
+
+
+### Bug Fixes
+
+* provide a error message if the plugin is incompatible to the html-webpack-plugin ([bb26179](https://github.com/jantimon/favicons-webpack-plugin/commit/bb26179d7b41da371b1968d01b3bb862e53a1a7f))
+
+## [3.0.0](https://github.com/jantimon/favicons-webpack-plugin/compare/v2.1.0...v3.0.0) (2020-01-02)
+
+
+### ⚠ BREAKING CHANGES
+
+* remove "force" inject option
+* drop support for Webpack v3 and html-webpack-plugin v3
+
+### Features
+
+* add support for html-webpack-plugin v4 ([395fc09](https://github.com/jantimon/favicons-webpack-plugin/commit/395fc09e9c12171e2c494fbc0b04c68a9c6462b7))
+
+
+### Bug Fixes
+
+* remove "force" inject option ([15bab27](https://github.com/jantimon/favicons-webpack-plugin/commit/15bab27a1ff7fdc1c4a651026ab171ec9e8561db))
+
+## [2.1.0](https://github.com/jantimon/favicons-webpack-plugin/compare/v2.0.0...v2.1.0) (2019-12-31)
+
+
+### Features
+
+* add typescript typings ([a083def](https://github.com/jantimon/favicons-webpack-plugin/commit/a083defbbdac004cd4f08b406b8b92d738a16c7e)), closes [#72](https://github.com/jantimon/favicons-webpack-plugin/issues/72)
+
+## [2.0.0](https://github.com/jantimon/favicons-webpack-plugin/compare/v1.0.2...v2.0.0) (2019-12-28)
+
+
+### ⚠ BREAKING CHANGES
+
+* an empty string public path will no longer fallback to a slash
+* drop support for node versions < 8 to be able to upgrade favicons
+
+### Features
+
+* allow setting public path to an empty string ([b3a5eb3](https://github.com/jantimon/favicons-webpack-plugin/commit/b3a5eb352635d93395d280364468845097e07fc1))
+
+
+### Bug Fixes
+
+* remove unused contentHash ([b48697f](https://github.com/jantimon/favicons-webpack-plugin/commit/b48697f96a62857e13e15b2ba6309e9f0f462f0d))
+
+
+* upgrade to new favicons version ([7c86a6c](https://github.com/jantimon/favicons-webpack-plugin/commit/7c86a6c84f443b81f3b5dce1f1e89cd7da6c8456))
+
+### [1.0.2](https://github.com/jantimon/favicons-webpack-plugin/compare/v1.0.1...v1.0.2) (2019-09-06)
+
+
+### Bug Fixes
+
+* fix output path of dev favicon ([b2b8fc7](https://github.com/jantimon/favicons-webpack-plugin/commit/b2b8fc7)), closes [#164](https://github.com/jantimon/favicons-webpack-plugin/issues/164)
+
+### [1.0.1](https://github.com/jantimon/favicons-webpack-plugin/compare/v1.0.0...v1.0.1) (2019-08-16)
+
+
+### Bug Fixes
+
+* fix hash generation for light-mode ([67a8850](https://github.com/jantimon/favicons-webpack-plugin/commit/67a8850)), closes [#159](https://github.com/jantimon/favicons-webpack-plugin/issues/159)
+
+## [1.0.0](https://github.com/jantimon/favicons-webpack-plugin/compare/v0.0.4...v1.0.0) (2019-08-14)
+
+
+### ⚠ BREAKING CHANGES
+
+* Require Node 6 is or newer
+* align with webpack 4 and drop support for node < 6 ([e41a990](https://github.com/jantimon/favicons-webpack-plugin/commit/e41a990))
+* prefixes are always treated as a directory path
+* remove -[hash] from default prefix
+* by default only a subset of icons is generated in development 
+
+### Bug Fixes
+
+* always treat prefix as a directory path ([17aabba](https://github.com/jantimon/favicons-webpack-plugin/commit/17aabba))
+* avoid failing if html-webpack-plugin isn't installed ([1c0ee82](https://github.com/jantimon/favicons-webpack-plugin/commit/1c0ee82))
+* broken links in content meta tags and browserconfig.xml ([51bd1f8](https://github.com/jantimon/favicons-webpack-plugin/commit/51bd1f8))
+* do not interpolate empty prefix ([9e197f1](https://github.com/jantimon/favicons-webpack-plugin/commit/9e197f1))
+* do not rely on html-webpack-plugin's internals ([9f166a7](https://github.com/jantimon/favicons-webpack-plugin/commit/9f166a7))
+* handle author as object in package.json ([06da1f8](https://github.com/jantimon/favicons-webpack-plugin/commit/06da1f8))
+* invalidate cache when changing publicPath ([29c9902](https://github.com/jantimon/favicons-webpack-plugin/commit/29c9902))
+* set SingleEntryPlugin name ([15c4a1a](https://github.com/jantimon/favicons-webpack-plugin/commit/15c4a1a))
+* workaround issues with libxml ([d23aea5](https://github.com/jantimon/favicons-webpack-plugin/commit/d23aea5))
+* update favicons to version 5.0.0 ([3737fa3](https://github.com/jantimon/favicons-webpack-plugin/commit/3737fa3))
+
+
+### Features
+
+* add inject force option to overrule the html-webpack-plugin favicon option ([73b51a1](https://github.com/jantimon/favicons-webpack-plugin/commit/73b51a1))
+* add light mode during development ([47986be](https://github.com/jantimon/favicons-webpack-plugin/commit/47986be))
+* add support for html-webpack-plugin 4.x ([94ead15](https://github.com/jantimon/favicons-webpack-plugin/commit/94ead15))
+* add support for Webpack 4 ([9db88ee](https://github.com/jantimon/favicons-webpack-plugin/commit/9db88ee))
+* add zero-config mode ([793a840](https://github.com/jantimon/favicons-webpack-plugin/commit/793a840))
+* added compatibility for new webpack 4 .hooks mode ([5ab0bb8](https://github.com/jantimon/favicons-webpack-plugin/commit/5ab0bb8))
+* allow skipping specific instances of html-webpack-plugin ([d554946](https://github.com/jantimon/favicons-webpack-plugin/commit/d554946))
+* allow to specify a custom output paths ([0755161](https://github.com/jantimon/favicons-webpack-plugin/commit/0755161))
+* cache assets using cache-loader ([f2758ca](https://github.com/jantimon/favicons-webpack-plugin/commit/f2758ca))
+* change the default output prefix to assets ([99a7310](https://github.com/jantimon/favicons-webpack-plugin/commit/99a7310))
+* expose all options of the favicons npm package ([ca4b6e9](https://github.com/jantimon/favicons-webpack-plugin/commit/ca4b6e9))
+* give the user more options to specifiy where to inject html ([c8a4767](https://github.com/jantimon/favicons-webpack-plugin/commit/c8a4767))
+* make cache directory configurable ([43a5aef](https://github.com/jantimon/favicons-webpack-plugin/commit/43a5aef))
+* remove -[hash] from default prefix ([fc0eb3e](https://github.com/jantimon/favicons-webpack-plugin/commit/fc0eb3e))
+* the generated [hash] now is based on the current favicon-webpack-plugin version ([ccfea37](https://github.com/jantimon/favicons-webpack-plugin/commit/ccfea37))
+
+# 0.0.9
+
++ Improve support for Webpack 4
+
+# 0.0.8
+
++ Add support for Webpack 4
+
+# 0.0.7
+
++ Inject generated HTML to end of head
+
+# 0.0.6
+
++ Add support for `devtool: 'eval'`
+
+# 0.0.5
+
++ Invalidate cache on plugin version change
+
+# 0.0.4
+
++ Add persistent caching to generate the favicons only once
+
+# 0.0.3
+
++ Rename filename option to statsFilename
++ Add emitStats option (set to false by default)
+
+## BREAKING CHANGE
+
++ the stats file isn't generated by default anymore
+
+# 0.0.2
+
++ Fix typos
+
+
+# 0.0.1
+
++ Initial release

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { Component, Fragment } from 'react'
 
 import { connect } from 'redaction'
@@ -84,7 +85,7 @@ const filterOrders = (orders, filter) => orders
   currencies,
   decline: rememberedOrders.savedOrders,
 }))
-//@ts-ignore
+//@
 @withRouter
 @injectIntl
 @cssModules(styles, { allowMultiple: true })
@@ -275,7 +276,7 @@ export default class OrderBook extends Component {
                     values={{ buyCurrency, sellCurrency }}
                   />
                   {/*
-                  //@ts-ignore */}
+                  //@ */}
                   <Toggle checked={isShowAllMyOrders} onChange={this.handleShowAllMyOrders} />
                   <FormattedMessage id="orders1382" defaultMessage="All" />
                 </div>

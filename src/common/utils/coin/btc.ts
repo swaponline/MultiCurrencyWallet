@@ -1,3 +1,4 @@
+// @ts-nocheck
 import apiLooper from '../apiLooper'
 import { BigNumber } from 'bignumber.js'
 import * as bitcoin from 'bitcoinjs-lib'
@@ -608,15 +609,15 @@ const getTransactionBitcore = (options) => {
   } = options
   
   return new Promise(async (resolve) => {
-    // @ts-ignore
+    // @
     const myAllWallets = getAllMyAddresses()
-    // @ts-ignore
+    // @
     let { user: { btcData: { address: userAddress } } } = getState()
-    // @ts-ignore
+    // @
     address = address || userAddress
 
     const type = (ownType) || 'btc'
-    // @ts-ignore
+    // @
     if (!typeforce.isCoinAddress.BTC(address)) {
       resolve([])
     }

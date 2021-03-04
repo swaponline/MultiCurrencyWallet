@@ -1,0 +1,7 @@
+{
+  "private": true,
+  "name": "country-flag-icons-unicode",
+  "version": "1.0.0",
+  "main": "index.commonjs.js",
+  "module": "index.js"
+}

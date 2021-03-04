@@ -1,0 +1,49 @@
+version: 2
+
+nodejs: &nodejs
+  docker:
+    - image: circleci/node:8.11
+  working_directory: /tmp/workspace
+
+jobs:
+  build:
+    <<: *nodejs
+    steps:
+      - checkout
+      - run:
+          name: npm install --production
+          command: npm install --production
+      - persist_to_workspace:
+          root: .
+          paths:
+            - node_modules
+            - index.js
+            - package.json
+            - package-lock.json
+            - lib
+            - README.md
+
+  test:
+    <<: *nodejs
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          name: npm install
+          command: npm install
+      - run:
+          name: npm test
+          command: npm test
+      - run:
+          name: npm coveralls
+          command: npm run coveralls
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build

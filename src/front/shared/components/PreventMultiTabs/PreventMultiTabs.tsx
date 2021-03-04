@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { Component } from 'react'
 
 import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
@@ -41,7 +42,7 @@ export default class PreventMultiTabs extends Component<any, any> {
   render() {
     return (
       /*
-      //@ts-ignore */
+      //@ */
       <WidthContainer>
         <h1>
           <FormattedMessage

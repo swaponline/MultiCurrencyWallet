@@ -1,3 +1,4 @@
+// @ts-nocheck
 import * as React from 'react'
 
 import { connect } from 'redaction'
@@ -57,7 +58,7 @@ export default class WallerSlider extends React.Component {
   }
 
   initBanners = () => {
-    //@ts-ignore
+    //@
     let starterSwiper = new Swiper('#swiper_banners', {
       spaceBetween: 10,
       slidesPerView: 4,
@@ -195,7 +196,7 @@ export default class WallerSlider extends React.Component {
           <FormattedMessage id="ForYou" defaultMessage="For you" />
         </h3>
         {!this.state.isFetching ? (
-          //@ts-ignore
+          //@
           <ContentLoader banners />
         ) : (
           <div

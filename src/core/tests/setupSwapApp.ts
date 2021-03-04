@@ -1,3 +1,4 @@
+// @ts-nocheck
 import SwapApp, { SwapInterface } from 'swap.app'
 
 import swap from './../'
@@ -31,7 +32,7 @@ SwapApp.setup({
   },
 
   services: [
-    //@ts-ignore
+    //@
     new SwapAuth({
       eth: null,
       btc: null,

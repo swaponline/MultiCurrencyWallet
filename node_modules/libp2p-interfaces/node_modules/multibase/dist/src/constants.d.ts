@@ -1,0 +1,10 @@
+export type CodecFactory = import("./types.js").CodecFactory;
+export type Codec = import("./types.js").Codec;
+export type BaseName = "identity" | "base2" | "base8" | "base10" | "base16" | "base16upper" | "base32hex" | "base32hexupper" | "base32hexpad" | "base32hexpadupper" | "base32" | "base32upper" | "base32pad" | "base32padupper" | "base32z" | "base36" | "base36upper" | "base58btc" | "base58flickr" | "base64" | "base64pad" | "base64url" | "base64urlpad";
+export type BaseCode = "\0" | "0" | "7" | "9" | "f" | "F" | "v" | "V" | "t" | "T" | "b" | "B" | "c" | "C" | "h" | "k" | "K" | "z" | "Z" | "m" | "M" | "u" | "U";
+/** @type {Record<BaseName,Base>} */
+export const names: Record<BaseName, Base>;
+/** @type {Record<BaseCode,Base>} */
+export const codes: Record<BaseCode, Base>;
+import Base = require("./base.js");
+//# sourceMappingURL=constants.d.ts.map

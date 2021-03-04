@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React from 'react'
 import PropTypes from 'prop-types'
 
@@ -106,7 +107,7 @@ export default class Confirm extends React.Component<any, any> {
         <div styleName="modal">
           <div styleName="header">
             {/*
-            //@ts-ignore */}
+            //@ */}
             <WidthContainer styleName="headerContent">
               <div styleName="title">{labels.title}</div>
             </WidthContainer>

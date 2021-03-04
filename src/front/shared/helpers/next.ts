@@ -1,3 +1,4 @@
+// @ts-nocheck
 import * as bitcoin from 'bitcoinjs-lib'
 import { getState } from 'redux/core'
 import actions from 'redux/actions'
@@ -120,7 +121,7 @@ const getByteCount = (inputs, outputs) => {
   return Math.ceil(totalWeight / 4)
 }
 
-//@ts-ignore
+//@
 const calculateTxSize = async ({ speed, unspents, address, txOut = 2, method = 'send', fixed } = {}) => {
   const defaultTxSize = constants.defaultFeeRates.next.size[method]
 
@@ -185,12 +186,12 @@ const estimateFeeValue = async (options: EstimateFeeValueOptions) => {
 
   if (!address) {
     address = nextData.address
-    //@ts-ignore
+    //@
     if (method === 'send_2fa') address = nextMultisigSMS
     if (method === 'send_multisig') address = nextMultisigUserData.address
   }
 
-  //@ts-ignore
+  //@
   txSize = txSize || await calculateTxSize({ address, speed, fixed, method, txOut })
   feeRate = feeRate || await estimateFeeRate({ speed })
 

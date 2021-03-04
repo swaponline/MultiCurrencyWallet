@@ -86,7 +86,7 @@ export default class ConfirmOffer extends Component<any, any> {
         <ExchangeRate {...{ sellCurrency, buyCurrency, exchangeRate }} />
         {/*<Fee amount={feeValue} currency={!tokenFee ? sellCurrency : 'ETH'} />*/}
         {/*
-        //@ts-ignore*/}
+        //@*/}
         <Row styleName="buttonsInRow">
           <Button styleName="button" gray onClick={onBack}>
             <FormattedMessage id="ConfirmOffer69" defaultMessage="Back" />

@@ -1,0 +1,7 @@
+{
+  "private": true,
+  "name": "country-flag-icons-react-3x2",
+  "version": "1.0.0",
+  "main": "index.commonjs.js",
+  "module": "index.js"
+}

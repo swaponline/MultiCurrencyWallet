@@ -1,0 +1,21 @@
+language: node_js
+node_js:
+  - 10
+  - 12
+  - 14
+
+script:
+  - npm run lint
+  - npm test
+  - npm run coverage
+
+after_success:
+  - npm run coverage-publish
+
+addons:
+  firefox: 'latest'
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-4.8

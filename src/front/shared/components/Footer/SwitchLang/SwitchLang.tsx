@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { Component } from 'react'
 
 import { constants } from 'helpers'
@@ -23,7 +24,7 @@ export default class SwitchLang extends Component<{intl: IntlShape}, PropsType> 
 
     feedback.i18n.switched(locale)
 
-    // @ts-ignore
+    // @
     const { history } = this.props
     setCookie('mylang', locale.toUpperCase(), new Date(new Date().getFullYear() + 1, 1))
     // history.push(`${relocalisedUrl(locale)}`)
@@ -34,7 +35,7 @@ export default class SwitchLang extends Component<{intl: IntlShape}, PropsType> 
 
   render() {
     const {
-      // @ts-ignore
+      // @
       intl: { locale },
     } = this.props
 

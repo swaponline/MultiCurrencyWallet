@@ -1,8 +1,9 @@
+// @ts-nocheck
 import Web3 from 'web3'
 import config from 'app-config'
 import metamask from 'helpers/metamask'
 import promiEvent from 'web3-core-promievent'
-//@ts-ignore
+//@
 import { utils as web3utils } from 'web3'
 
 console.log('reset web3')
@@ -16,7 +17,7 @@ let web3 = new Web3(
 
 const setMetamask = async (provider) => {
   web3 = provider
-  //@ts-ignore
+  //@
   web3.isMetamask = true
 }
 
@@ -31,12 +32,12 @@ const setDefaultProvider = () => {
         : config.web3.provider
     )
   )
-  //@ts-ignore
+  //@
   web3.isMetamask = false
 }
 
 const getWeb3 = () => {
-  //@ts-ignore
+  //@
   console.log('get web3 - is metamask', web3.isMetamask)
   return web3
 }

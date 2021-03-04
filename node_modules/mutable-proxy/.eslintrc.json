@@ -1,0 +1,27 @@
+{
+  "extends": "airbnb",
+  "env": {
+    "node": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 6
+  },
+  "rules": {
+    "no-console": 0,
+    "comma-dangle": 0,
+    "max-len": [
+      2,
+      {
+        "code": 100,
+        "tabWidth": 2,
+        "ignoreTrailingComments": true,
+        "ignoreUrls": true
+      }
+    ],
+    "no-multi-spaces": [2, {
+      "exceptions": {
+        "ImportDeclaration": true
+      }
+    }]
+  }
+}

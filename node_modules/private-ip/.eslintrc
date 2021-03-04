@@ -1,0 +1,11 @@
+{
+  "parser": "babel-eslint",
+  "env": {
+    "node": true,
+    "es6": true
+  },
+  "extends": "standard",
+  "rules": {
+    "arrow-parens": 0,
+  }
+}

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React from 'react'
 import PropTypes from 'prop-types'
 
@@ -8,7 +9,7 @@ import styles from './Toggle.scss'
 const Toggle = ({ checked, onChange, dataTut, isDisabled = false }) => (
   <label styleName={`Switch ${isDisabled ? 'disabled' : ''}`} data-tut={dataTut} >
     {/*
-    //@ts-ignore */}
+    //@ */}
     <input type="checkbox" onClick={({ target }) => onChange(target.checked)} defaultChecked={checked} disabled={isDisabled} />
     <span /> {/* need for button */}
   </label>

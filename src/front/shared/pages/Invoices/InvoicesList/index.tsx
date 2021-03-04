@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { PureComponent, Fragment } from 'react'
 
 import { connect } from 'redaction'
@@ -96,7 +97,7 @@ export default class InvoicesList extends PureComponent<any, any> {
       actions.invoices.getInvoices({
         currency: type,
         address,
-      //@ts-ignore
+      //@
       }).then((items) => {
         lsDataCache.push({
           key: `Invoices_${type.toLowerCase()}_${address.toLowerCase()}`,
@@ -211,7 +212,7 @@ export default class InvoicesList extends PureComponent<any, any> {
         {(items && items.length > 0) ? (
           <Table rows={items} styleName="currencyHistory" rowRender={this.rowRender} />
         ) : (
-          //@ts-ignore
+          //@
           <ContentLoader rideSideContent empty inner />
         )}
       </div>
@@ -245,7 +246,7 @@ export default class InvoicesList extends PureComponent<any, any> {
                   {/* Right form holder */}
                 </div>
               ) : (
-                //@ts-ignore
+                //@
                 <ContentLoader leftSideContent />
               )}
             </div>

@@ -1,0 +1,5 @@
+module.exports = require('./source')
+module.exports.source = require('./source')
+module.exports.sink = require('./sink')
+module.exports.transform = require('./transform')
+module.exports.duplex = require('./duplex')

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React from 'react'
 import PropTypes from 'prop-types'
 
@@ -9,7 +10,7 @@ const RequestLoader = ({ isVisible, data }) => {
   if (!isVisible) {
     return null
   }
-  //@ts-ignore
+  //@
   return <Loader data={data} />
 }
 

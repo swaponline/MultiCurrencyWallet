@@ -1,3 +1,4 @@
+// @ts-nocheck
 import config from 'app-config'
 import moment from 'moment/moment'
 import { constants, ethToken } from 'helpers'
@@ -35,7 +36,7 @@ const initReducerState = () => {
 const sign_btc_multisig = async (btcPrivateKey) => {
   let btcMultisigOwnerKey = localStorage.getItem(constants.privateKeyNames.btcMultisigOtherOwnerKey)
   try { btcMultisigOwnerKey = JSON.parse(btcMultisigOwnerKey) } catch (e) { }
-  //@ts-ignore
+  //@
   const _btcMultisigPrivateKey = actions.btcmultisig.login_USER(btcPrivateKey, btcMultisigOwnerKey)
   await actions.btcmultisig.signToUserMultisig()
 }
@@ -97,13 +98,13 @@ const sign = async () => {
     }
     console.log('actions user - sign', mnemonicKeys, mnemonic)
     if (mnemonic !== `-`) {
-      //@ts-ignore
+      //@
       if (!mnemonicKeys.btc) mnemonicKeys.btc = actions.btc.sweepToMnemonic(mnemonic)
-      //@ts-ignore
+      //@
       if (!mnemonicKeys.eth) mnemonicKeys.eth = actions.eth.sweepToMnemonic(mnemonic)
-      //@ts-ignore
+      //@
       if (!mnemonicKeys.ghost) mnemonicKeys.ghost = actions.ghost.sweepToMnemonic(mnemonic)
-        //@ts-ignore
+        //@
       if (!mnemonicKeys.next) mnemonicKeys.next = actions.next.sweepToMnemonic(mnemonic)
       if (!mnemonicKeys.btcSms) {
         mnemonicKeys.btcSms = actions.btcmultisig.getSmsKeyFromMnemonic(mnemonic)
@@ -327,7 +328,7 @@ const getDemoMoney = process.env.MAINNET ? () => { } : () => {
       localStorage.setItem(constants.privateKeyNames.eth, r[1])
       localStorage.setItem(constants.privateKeyNames.ghost, r[2])
       localStorage.setItem(constants.privateKeyNames.next, r[3])
-      //@ts-ignore
+      //@
       localStorage.setItem(constants.localStorage.demoMoneyReceived, true)
       window.location.reload()
     })
@@ -657,7 +658,7 @@ const downloadPrivateKeys = () => {
   actions.notifications.show(constants.notifications.Message, {
     message,
   })
-  //@ts-ignore
+  //@
   localStorage.setItem(constants.localStorage.privateKeysSaved, true)
 }
 

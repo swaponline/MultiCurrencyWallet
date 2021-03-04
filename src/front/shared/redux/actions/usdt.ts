@@ -1,3 +1,4 @@
+// @ts-nocheck
 import BigInteger from 'bigi'
 import { BigNumber } from 'bignumber.js'
 import config from 'app-config'
@@ -23,9 +24,9 @@ const login = (privateKey) => {
   }
 
   const account = bitcoin.ECPair.fromWIF(privateKey, btc.network) // eslint-disable-line
-  //@ts-ignore
+  //@
   const address = account.getAddress()
-  //@ts-ignore
+  //@
   const publicKey = account.getPublicKeyBuffer().toString('hex')
 
   const data = {
@@ -45,7 +46,7 @@ const getBalance = async () => {
   try {
     const result = await fetchBalance(address)
     console.log('result', result)
-    //@ts-ignore
+    //@
     const { balance, unconfirmed } = result
     reducers.user.setBalance({ name: 'usdtData', amount: balance, unconfirmedBalance: unconfirmed || 0 })
     return balance
@@ -122,7 +123,7 @@ const getTransaction = () => {
 const fetchUnspents = (address) =>
   apiLooper.get('bitpay', `/addr/${address}/utxo`)
 
-//@ts-ignore
+//@
 const send = ({ from, to, amount } = {}) => {
   const { user: { usdtData: { privateKey } } } = getState()
 
@@ -147,7 +148,7 @@ const send = ({ from, to, amount } = {}) => {
     tx.addOutput(to, 546)
     tx.addOutput(omniOutput, 0)
     tx.addOutput(from, skipValue)
-    //@ts-ignore
+    //@
     tx.inputs.forEach((input, index) => {
       tx.sign(index, keyPair)
     })

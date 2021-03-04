@@ -1,0 +1,1 @@
+{"version":3,"sources":["../source/getCountryCallingCode.js"],"names":[],"mappings":";;;;;;;;;;;;AACA","sourcesContent":["// Deprecated. Import from 'metadata.js' directly instead.\r\nexport { getCountryCallingCode as default } from './metadata'"],"file":"getCountryCallingCode.js"}

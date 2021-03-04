@@ -1,3 +1,4 @@
+// @ts-nocheck
 import Libp2p from 'libp2p'
 import wrtc from 'wrtc'
 import WebrtcStar from 'libp2p-webrtc-star'
@@ -70,7 +71,7 @@ const createP2PNode = (options) => {
         transport: [WebrtcStar],
         streamMuxer: [MPLEX],
         connEncryption: [SECIO],
-        // @ts-ignore
+        // @
         peerDiscovery: [Bootstrap],
         dht: KadDHT,
         pubsub: Gossipsub
@@ -83,7 +84,7 @@ const createP2PNode = (options) => {
         },
         peerDiscovery: {
           autoDial: true,
-          // @ts-ignore
+          // @
           webRTCStar: {
             enabled: true
           },
@@ -109,7 +110,7 @@ const createP2PNode = (options) => {
           maxEventLoopDelay: Infinity,
           movingAverageInterval: 1000
         },
-        // @ts-ignore
+        // @
         relay: {
           enabled: true,
           hop: {

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { useState, useEffect } from 'react'
 import config from 'app-config'
 
@@ -383,11 +384,11 @@ const CreateWallet: React.FC<any> = (props) => {
   return (
     <div styleName={`wrapper ${isDark ? '--dark' : ''}`}>
       {
-        //@ts-ignore
+        //@
         userWallets.length && !localStorage.getItem(constants.wasOnWallet) ? (
           <>
             {/*
-            //@ts-ignore */}
+            //@ */}
             <CloseIcon
               styleName="closeButton"
               onClick={() => goHome()}

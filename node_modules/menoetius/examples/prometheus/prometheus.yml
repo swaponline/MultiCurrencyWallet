@@ -1,0 +1,17 @@
+global:
+  scrape_interval:     5s
+  evaluation_interval: 5s
+
+scrape_configs:
+  - job_name: 'express'
+    static_configs:
+      - targets: ['express:8000']
+  - job_name: 'restify'
+    static_configs:
+      - targets: ['restify:8001']
+  - job_name: 'hapi'
+    static_configs:
+      - targets: ['hapi:8002']
+  - job_name: 'http'
+    static_configs:
+      - targets: ['http:8003']

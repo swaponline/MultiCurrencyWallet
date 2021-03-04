@@ -1,0 +1,118 @@
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.sortCountryOptions = sortCountryOptions;
+exports.getSupportedCountryOptions = getSupportedCountryOptions;
+exports.isCountrySupportedWithError = isCountrySupportedWithError;
+exports.getSupportedCountries = getSupportedCountries;
+Object.defineProperty(exports, "getCountries", {
+  enumerable: true,
+  get: function get() {
+    return _core.getCountries;
+  }
+});
+
+var _core = require("libphonenumber-js/core");
+
+function sortCountryOptions(options, order) {
+  if (!order) {
+    return options;
+  }
+
+  var optionsOnTop = [];
+  var optionsOnBottom = [];
+  var appendTo = optionsOnTop;
+
+  for (var _iterator = order, _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
+    var _ref;
+
+    if (_isArray) {
+      if (_i >= _iterator.length) break;
+      _ref = _iterator[_i++];
+    } else {
+      _i = _iterator.next();
+      if (_i.done) break;
+      _ref = _i.value;
+    }
+
+    var element = _ref;
+
+    if (element === '|') {
+      appendTo.push({
+        divider: true
+      });
+    } else if (element === '...' || element === '…') {
+      appendTo = optionsOnBottom;
+    } else {
+      (function () {
+        var countryCode = void 0;
+
+        if (element === '🌐') {
+          countryCode = undefined;
+        } else {
+          countryCode = element;
+        } // Find the position of the option.
+
+
+        var index = options.indexOf(options.filter(function (option) {
+          return option.value === countryCode;
+        })[0]); // Get the option.
+
+        var option = options[index]; // Remove the option from its default position.
+
+        options.splice(index, 1); // Add the option on top.
+
+        appendTo.push(option);
+      })();
+    }
+  }
+
+  return optionsOnTop.concat(options).concat(optionsOnBottom);
+}
+
+function getSupportedCountryOptions(countryOptions, metadata) {
+  if (countryOptions) {
+    countryOptions = countryOptions.filter(function (option) {
+      switch (option) {
+        case '🌐':
+        case '|':
+        case '...':
+        case '…':
+          return true;
+
+        default:
+          return isCountrySupportedWithError(option, metadata);
+      }
+    });
+
+    if (countryOptions.length > 0) {
+      return countryOptions;
+    }
+  }
+}
+
+function isCountrySupportedWithError(country, metadata) {
+  if ((0, _core.isSupportedCountry)(country, metadata)) {
+    return true;
+  } else {
+    console.error("Country not found: ".concat(country));
+    return false;
+  }
+}
+
+function getSupportedCountries(countries, metadata) {
+  if (countries) {
+    countries = countries.filter(function (country) {
+      return isCountrySupportedWithError(country, metadata);
+    });
+
+    if (countries.length === 0) {
+      countries = undefined;
+    }
+  }
+
+  return countries;
+}
+//# sourceMappingURL=countries.js.map

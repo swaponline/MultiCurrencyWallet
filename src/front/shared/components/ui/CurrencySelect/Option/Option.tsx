@@ -10,7 +10,7 @@ const Option = ({ icon, title }) => (
   <div styleName="optionrow">
     <span styleName="circle">
       {/*
-      //@ts-ignore */}
+      //@ */}
       <CurrencyIcon styleName="icon" name={icon} />
     </span>
     {title}

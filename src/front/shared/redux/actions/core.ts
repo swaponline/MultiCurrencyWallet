@@ -1,3 +1,4 @@
+// @ts-nocheck
 import reducers from 'redux/core/reducers'
 import actions from 'redux/actions'
 import { getState } from 'redux/core'
@@ -74,7 +75,7 @@ const addCurrencyFromOrders = (orders) => {
     reducers.currencies.updatePartialItems(partialCurrency)
   }
 }
-//@ts-ignore
+//@
 const getSwapById = (id) => new Swap(id, SwapApp.shared())
 
 const getUserData = (currency) => {
@@ -173,7 +174,7 @@ const deletedPartialCurrency = (orderId) => {
 const hasHiddenOrders = () => SwapApp.shared().services.orders.hasHiddenOrders()
 
 const sendRequest = (orderId, destination = {}, callback) => {
-  //@ts-ignore
+  //@
   const { address: destinationAddress } = destination
 
   const order = SwapApp.shared().services.orders.getByKey(orderId)
@@ -194,7 +195,7 @@ const sendRequest = (orderId, destination = {}, callback) => {
 }
 
 const sendRequestForPartial = (orderId, newValues, destination = {}, callback) => {
-  //@ts-ignore
+  //@
   const { address: destinationAddress } = destination
 
   const order = SwapApp.shared().services.orders.getByKey(orderId)

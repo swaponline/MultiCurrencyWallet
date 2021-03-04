@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { Component } from 'react'
 
 import { connect } from 'redaction'
@@ -162,7 +163,7 @@ export default class Wallet extends Component<any, any> {
       enabledCurrencies: getActivatedCurrencies(),
       multisigPendingCount,
     }
-    //@ts-ignore
+    //@
     this.syncTimer = null
   }
 
@@ -229,7 +230,7 @@ export default class Wallet extends Component<any, any> {
         multisigPendingCount,
       })
     }
-    //@ts-ignore
+    //@
     clearTimeout(this.syncTimer)
   }
 
@@ -426,7 +427,7 @@ export default class Wallet extends Component<any, any> {
       nextAddress: nextData.address,
     }
 
-    //@ts-ignore
+    //@
     this.syncTimer = setTimeout(async () => {
       if (isOneHourAfter || isFirstCheck) {
         localStorage.setItem(constants.localStorage.lastCheckBalance, now)
@@ -441,13 +442,13 @@ export default class Wallet extends Component<any, any> {
           }
 
           if (this.props.messagingToken) {
-            //@ts-ignore
+            //@
             registrationData.messaging_token = this.props.messagingToken
           }
           let widgetUrl
           if (appConfig.isWidget) {
             widgetUrl = getTopLocation().origin
-            //@ts-ignore
+            //@
             registrationData.widget_url = widgetUrl
           }
 
@@ -464,7 +465,7 @@ export default class Wallet extends Component<any, any> {
             // signatures_required: 1,
             // signatories: [],
           }))
-          //@ts-ignore
+          //@
           registrationData.wallets = wallets
 
           await stats.updateUser(ethData.address, getTopLocation().host, registrationData)

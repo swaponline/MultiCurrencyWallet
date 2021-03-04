@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import helpers, { constants } from 'helpers'
@@ -68,7 +69,7 @@ export default class WithdrawModalMultisigUser extends React.Component<any, any>
       items,
     } = props
 
-    //@ts-ignore
+    //@
     const currentDecimals = constants.tokenDecimals.btcmultisig
 
     const selectedItem = items.filter((item) => item.address === address)[0]
@@ -146,9 +147,9 @@ export default class WithdrawModalMultisigUser extends React.Component<any, any>
     } = this.props
 
     const {
-      //@ts-ignore
+      //@
       unconfirmedBalance,
-      //@ts-ignore
+      //@
       balance,
     } = await actions.btcmultisig.getAddrBalance(address)
 
@@ -212,17 +213,17 @@ export default class WithdrawModalMultisigUser extends React.Component<any, any>
 
     sendOptions = {
       ...sendOptions,
-      //@ts-ignore
+      //@
       from: address,
     }
 
-    //@ts-ignore
+    //@
     const result = await actions.btcmultisig.send(sendOptions)
 
     let txId = false
 
     if (result) {
-      //@ts-ignore
+      //@
       txId = await actions.multisigTx.broadcast({
         sender: address,
         destination: to,
@@ -390,7 +391,7 @@ export default class WithdrawModalMultisigUser extends React.Component<any, any>
         invoice.id
       }|${txId}`
     }
-    //@ts-ignore
+    //@
     const linked = Link.all(this, 'address', 'amount', 'code', 'ownTx')
 
     const dataCurrency = currency.toUpperCase()

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import debug from 'debug'
 import SwapApp, { util } from 'swap.app'
 import Room from './Room'

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import autosize from 'autosize'
@@ -32,12 +33,12 @@ export default class TextareaAutosize extends Component<any, any> {
     if (this.props.onResize) {
       this.textareaEl.removeEventListener(RESIZED, this.props.onResize)
     }
-    //@ts-ignore
+    //@
     this.dispatchEvent(DESTROY)
   }
 
   componentWillReceiveProps(nextProps) {
-    //@ts-ignore
+    //@
     if (this.getValue(nextProps) !== this.getValue(this.props)) {
       this.dispatchEvent(UPDATE, true)
     }

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { Component, Fragment } from 'react'
 
 import Link from 'local_modules/sw-valuelink'
@@ -1552,7 +1553,7 @@ export default class Exchange extends Component<any, any> {
                   <FormattedMessage id="AtomicSwap_Title" defaultMessage="Atomic swap" />
                 </div>
                 {/*
-                //@ts-ignore */}
+                //@ */}
                 <Toggle checked={isTurbo} isDisabled={!isTurboAllowed} onChange={() => this.setState((state) => ({ isTurbo: !state.isTurbo }))} />
                 <div styleName="toggleText">
                   <TurboIcon />
@@ -1807,7 +1808,7 @@ export default class Exchange extends Component<any, any> {
         {config && config.showHowItsWork && (
           <Fragment>
             {/*
-            //@ts-ignore */}
+            //@ */}
             <HowItWorks />
             <VideoAndFeatures />
             <Quote />

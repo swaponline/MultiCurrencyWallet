@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Auto generate OGraph meta tags use meta data to generate appropriate ograph tags 1`] = `
+Object {
+  "auto": Object {
+    "ograph": true,
+  },
+  "canonical": "http://domain.tld/path/to/page",
+  "description": "This meta value is describing the page we are looking at",
+  "link": Object {
+    "rel": Object {
+      "canonical": "http://domain.tld/path/to/page",
+      "stylesheet": Array [
+        "http://domain.tld/css/vendor.css",
+        "http://domain.tld/css/styles.css",
+      ],
+    },
+  },
+  "meta": Object {
+    "charset": "utf-8",
+    "name": Object {
+      "description": "This meta value is describing the page we are looking at",
+      "keywords": "react,document,meta,tags",
+    },
+    "property": Object {
+      "og:description": "This meta value is describing the page we are looking at",
+      "og:title": "This is a document title",
+      "og:url": "http://domain.tld/path/to/page",
+    },
+  },
+  "title": "This is a document title",
+}
+`;

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { Component } from 'react'
 
 import { connect } from 'redaction'
@@ -552,7 +553,7 @@ export default class AddOffer extends Component<any, any> {
         <div styleName="controlsToggles">
           <div styleName="toggle">
             {/*
-            //@ts-ignore */}
+            //@ */}
             <Toggle checked={manualRate} onChange={this.handleManualRate} />
             <div styleName="toggleText">
               <FormattedMessage id="AddOffer418" defaultMessage="Custom exchange rate" />
@@ -565,7 +566,7 @@ export default class AddOffer extends Component<any, any> {
 
           <div styleName="toggle">
             {/*
-            //@ts-ignore */}
+            //@ */}
             <Toggle checked={isPartial} onChange={() => this.setState((state) => ({ isPartial: !state.isPartial }))} />
             <div styleName="toggleText">
               <FormattedMessage id="AddOffer423" defaultMessage="Enable partial fills" />
@@ -589,7 +590,7 @@ export default class AddOffer extends Component<any, any> {
                 <FormattedMessage id="AtomicSwap_Title" defaultMessage="Atomic swap" />
               </div>
               {/*
-              //@ts-ignore */}
+              //@ */}
               <Toggle checked={isTurbo} isDisabled={!isTurboAllowed} onChange={() => this.setState((state) => ({ isTurbo: !state.isTurbo }))} />
               <div styleName="toggleText">
                 <TurboIcon />

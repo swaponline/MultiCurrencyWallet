@@ -1,0 +1,1 @@
+{"version":3,"file":"IsValidTimeZoneName.d.ts","sourceRoot":"","sources":["../../../../../../packages/ecma402-abstract/IsValidTimeZoneName.ts"],"names":[],"mappings":"AAAA;;;;GAIG;AACH,wBAAgB,mBAAmB,CACjC,EAAE,EAAE,MAAM,EACV,EACE,MAAM,EACN,cAAc,GACf,EAAE;IACD,MAAM,EAAE,MAAM,CAAC,MAAM,EAAE,OAAO,CAAC,CAAC;IAChC,cAAc,EAAE,MAAM,CAAC,MAAM,EAAE,OAAO,CAAC,CAAC;CACzC,GACA,OAAO,CAIT"}

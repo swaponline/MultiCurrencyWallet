@@ -1,0 +1,13 @@
+make before break!
+
+createOffer:
+    create new ice gatherer, icetransport, dtlstransport, store as new[...]
+    wait for new dtlstransport to be established
+    dispose old things
+
+setRemoteDescription:
+    detect ice restart as change of ufrag/pwd 
+    create new ice gatherer, icetransport, dtlstransport, store as new[...]
+    wait for new dtlstransport to be established
+    dispose old things
+    -- do this first as it is testable with chrome (requires interop test)

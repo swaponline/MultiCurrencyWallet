@@ -118,7 +118,7 @@ export default class TxInfo extends Component<any, any> {
                   ? (
                     <span>
                       {/*
-                      // @ts-ignore */}
+                      // @ */}
                       <Skeleton count={2} />
                     </span>
                   )
@@ -157,21 +157,21 @@ export default class TxInfo extends Component<any, any> {
                 <tr>
                   <td colSpan={2}>
                     {/*
-                      // @ts-ignore */}
+                      // @ */}
                     <Skeleton />
                   </td>
                 </tr>
                 <tr>
                   <td colSpan={2}>
                     {/*
-                      // @ts-ignore */}
+                      // @ */}
                     <Skeleton />
                   </td>
                 </tr>
                 <tr>
                   <td colSpan={2}>
                     {/*
-                      // @ts-ignore */}
+                      // @ */}
                     <Skeleton />
                   </td>
                 </tr>

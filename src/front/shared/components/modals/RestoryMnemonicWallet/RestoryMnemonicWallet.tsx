@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { Fragment } from 'react'
 import helpers, { constants } from 'helpers'
 import actions from 'redux/actions'
@@ -142,7 +143,7 @@ export default class RestoryMnemonicWallet extends React.Component {
       (acc, curr) => {
         const { name, infoAboutCurrency, balance } = curr
         if (
-          //@ts-ignore
+          //@
           (!isWidgetBuild || widgetCurrencies.includes(name)) &&
           infoAboutCurrency &&
           balance !== 0
@@ -228,7 +229,7 @@ export default class RestoryMnemonicWallet extends React.Component {
       const btcPrivKey = await actions.btc.login(false, mnemonic)
       const btcSmsKey = actions.btcmultisig.getSmsKeyFromMnemonic(mnemonic)
       localStorage.setItem(constants.privateKeyNames.btcSmsMnemonicKeyGenerated, btcSmsKey)
-      //@ts-ignore
+      //@
       localStorage.setItem(constants.localStorage.isWalletCreate, true)
 
       await actions.eth.login(false, mnemonic)

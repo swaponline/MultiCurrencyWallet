@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import cx from 'classnames'
@@ -158,7 +159,7 @@ export default class DropDown extends Component<any, any> {
           isToggleActive
             ? () => {
                 if (!disableSearch) {
-                  //@ts-ignore
+                  //@
                   this.refs.searchInput.handleBlur()
                   linkedValue.inputValue.set('')
                 }

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import SwapApp, { ServiceInterface, constants } from 'swap.app'
 
 
@@ -11,7 +12,7 @@ class SwapAuth extends ServiceInterface {
   accounts: any
   app: any
 
-  //@ts-ignore
+  //@
   static get name() {
     return 'auth'
   }

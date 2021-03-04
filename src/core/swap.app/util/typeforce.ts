@@ -1,3 +1,4 @@
+// @ts-nocheck
 import typeforce from 'typeforce'
 import constants from '../constants'
 import { ETH_TOKENS } from '../constants/COINS'
@@ -16,11 +17,11 @@ const isNumeric = (value) => !isNaN(parseFloat(value)) && isFinite(value)
 
 const isCoinName = (value) => {
   return Object.values(constants.COINS).filter(
-    //@ts-ignore
+    //@
     (v) => (v.ticker)
-      //@ts-ignore
+      //@
       ? v.ticker.toLowerCase() === value.toLowerCase()
-      //@ts-ignore
+      //@
       : v.toLowerCase() === value.toLowerCase()
   ).length > 0
 }

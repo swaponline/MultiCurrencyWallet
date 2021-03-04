@@ -1,8 +1,9 @@
+// @ts-nocheck
 import helpers, { apiLooper, constants, api, cacheStorageGet, cacheStorageSet } from 'helpers'
 import { getState } from 'redux/core'
 import actions from 'redux/actions'
 import { web3, getWeb3 } from 'helpers/web3'
-//@ts-ignore
+//@
 import { utils as web3utils } from 'web3'
 import reducers from 'redux/core/reducers'
 import config from 'helpers/externalConfig'
@@ -168,7 +169,7 @@ const login = (privateKey, mnemonic = null, mnemonicKeys = null) => {
 
     const mnemonicData = web3.eth.accounts.privateKeyToAccount(mnemonicKeys.eth)
     web3.eth.accounts.wallet.add(mnemonicKeys.eth)
-    //@ts-ignore
+    //@
     mnemonicData.isMnemonic = sweepToMnemonicReady
 
     console.info('Logged in with Ethereum Mnemonic', mnemonicData)
@@ -368,7 +369,7 @@ const sendWithAdminFee = async ({ from, to, amount, gasPrice, gasLimit, speed })
   let feeFromAmount = new BigNumber(adminFee).dividedBy(100).multipliedBy(amount)
   if (adminFeeMin.isGreaterThan(feeFromAmount)) feeFromAmount = adminFeeMin
 
-  //@ts-ignore
+  //@
   feeFromAmount = feeFromAmount.toNumber() // Admin fee
 
   gasPrice = gasPrice || await helpers.eth.estimateGasPrice({ speed })
@@ -395,7 +396,7 @@ const sendWithAdminFee = async ({ from, to, amount, gasPrice, gasLimit, speed })
       const signedTx = await web3js.eth.accounts.signTransaction(params, privateKey)
       rawTx = signedTx.rawTransaction
     }
-    //@ts-ignore
+    //@
     const receipt = web3js.eth[
       walletData.isMetamask
         ? 'sendTransaction'
@@ -425,13 +426,13 @@ const sendWithAdminFee = async ({ from, to, amount, gasPrice, gasLimit, speed })
 
           let resultAdminFee = false
           if (walletData.isMetamask) {
-            //@ts-ignore
+            //@
             resultAdminFee = await web3js.eth.accounts.signTransaction(adminFeeParams)
           } else {
-            //@ts-ignore
+            //@
             resultAdminFee = await web3js.eth.accounts.signTransaction(adminFeeParams, privateKey)
           }
-          //@ts-ignore
+          //@
           const receiptAdminFee = web3js.eth.sendSignedTransaction(resultAdminFee.rawTransaction)
             .on('transactionHash', (hash) => {
               console.log('Eth admin fee tx', hash)
@@ -505,7 +506,7 @@ const sendTransaction = async ({ to, amount }) => {
     amount,
   })
 
-  // @ts-ignore
+  // @
   // todo: IReceipt (?)
   const txHash = receipt.transactionHash
 

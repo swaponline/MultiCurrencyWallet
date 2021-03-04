@@ -1,3 +1,4 @@
+// @ts-nocheck
 import request from 'superagent'
 
 
@@ -38,7 +39,7 @@ const createResponseHandler = (req, opts) => {
 
   if (cachedAnswer) {
     return new Promise((fulfill, reject) => {
-      //@ts-ignore
+      //@
       fulfill(cachedAnswer.resData, cachedAnswer.res)
       opts.onComplete()
     })
@@ -87,7 +88,7 @@ const createResponseHandler = (req, opts) => {
     }
 
     // Resolve
-    //@ts-ignore
+    //@
     fulfill(resData, res)
     opts.onComplete()
   }))
@@ -140,7 +141,7 @@ const sendRequest = (options) => {
   }
 
   const responseHandler = createResponseHandler(req, opts)
-  //@ts-ignore
+  //@
   responseHandler.abort = req.abort.bind(req)
 
   return responseHandler

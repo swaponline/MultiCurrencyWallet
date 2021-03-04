@@ -1,7 +1,8 @@
+// @ts-nocheck
 import request from 'superagent'
 import ethereumInstance from './../simple/src/instances/ethereum'
 // @ToDo - use common/utils/coin/btc
-// @ts-ignore
+// @
 import bitcoinInstance from './../simple/src/instances/bitcoin'
 
 const repo = '.ipfs/' + Math.random().toString().slice(2)

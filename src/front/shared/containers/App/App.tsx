@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { Fragment } from "react";
 
 import { RouteComponentProps, withRouter, HashRouter } from "react-router-dom";
@@ -167,7 +168,7 @@ class App extends React.Component<RouteComponentProps<any>, any> {
   }
 
   popupIncorrectNetwork() {
-    //@ts-ignore
+    //@
     const { intl } = this.props
 
     actions.modals.open(constants.modals.AlertModal, {
@@ -267,7 +268,7 @@ class App extends React.Component<RouteComponentProps<any>, any> {
   }
 
   async componentDidMount() {
-    //@ts-ignore
+    //@
     const { currencies } = this.props
 
     this.preventMultiTabs(false)
@@ -354,10 +355,10 @@ class App extends React.Component<RouteComponentProps<any>, any> {
 
   checkIfDashboardModalsAllowed = () => {
     const dashboardModalProvider = document.querySelector('.__modalConductorProvided__')
-    //@ts-ignore
+    //@
     if (dashboardModalProvider && !this.props.dashboardModalsAllowed) {
       return actions.ui.allowDashboardModals()
-    //@ts-ignore
+    //@
     } else if (dashboardModalProvider && this.props.dashboardModalsAllowed) {
       return null
     }
@@ -372,7 +373,7 @@ class App extends React.Component<RouteComponentProps<any>, any> {
   };
 
   overflowHandler = () => {
-    //@ts-ignore
+    //@
     const { modals, dashboardModalsAllowed } = this.props;
     const isAnyModalCalled = Object.keys(modals).length > 0
 
@@ -400,7 +401,7 @@ class App extends React.Component<RouteComponentProps<any>, any> {
 
   render() {
     const { fetching, multiTabs, error } = this.state;
-    //@ts-ignore
+    //@
     const { children, ethAddress, btcAddress, ghostAddress, nextAddress, tokenAddress, history, dashboardModalsAllowed } = this.props;
 
     this.overflowHandler()
@@ -421,7 +422,7 @@ class App extends React.Component<RouteComponentProps<any>, any> {
     }
 
     if (isFetching) {
-      //@ts-ignore
+      //@
       return <Loader />
     }
 
@@ -434,7 +435,7 @@ class App extends React.Component<RouteComponentProps<any>, any> {
         }
         <Wrapper>
           {/*
-          //@ts-ignore */}
+          //@ */}
           <WidthContainer id="swapComponentWrapper" styleName="headerAndMain">
             <Header />
             <main>{children}</main>

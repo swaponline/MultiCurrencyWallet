@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { Component, Fragment } from 'react'
 import actions from 'redux/actions'
 import { connect } from 'redaction'
@@ -237,7 +238,7 @@ export default class Row extends Component {
         ...nextState,
       }) !==
       JSON.stringify({
-        //@ts-ignore
+        //@
         ...getComparableProps(this.props),
         ...this.state,
       })

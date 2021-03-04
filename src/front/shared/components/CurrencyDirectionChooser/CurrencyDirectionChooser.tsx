@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
@@ -25,7 +26,7 @@ import { FormattedMessage } from 'react-intl'
     currencies: currencies.items,
     addSelectedItems: currencies.addSelectedItems[0],
     items: [ethData, btcData, ghostData, nextData],
-    //@ts-ignore
+    //@
     tokenItems: [...Object.keys(tokensData).map(k => (tokensData[k]))],
   })
 )
@@ -88,7 +89,7 @@ export default class CurrencyDirectionChooser extends Component<any, any> {
                 <FormattedMessage id="CDC63" defaultMessage="You have" />
               </p>
               {/*
-              //@ts-ignore */}
+              //@ */}
               <CurrencySelect
                 styleName="currencySelect currencySelectLeft"
                 selectedValue={sellCurrency}
@@ -103,7 +104,7 @@ export default class CurrencyDirectionChooser extends Component<any, any> {
                 <FormattedMessage id="CDC75" defaultMessage="You get" />
               </p>
               {/*
-              //@ts-ignore */}
+              //@*/}
               <CurrencySelect
                 styleName="currencySelect currencySelectRight"
                 selectedValue={buyCurrency}

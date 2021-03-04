@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
@@ -35,7 +36,7 @@ const Footer = (props) => {
       data-version-url={version.link}
     >
       {!isFooterDisabled && (
-        //@ts-ignore
+        //@
         <WidthContainer styleName="container">
           <SwitchLang {...props} />
           {!config.isWidget && <SocialMenu />}

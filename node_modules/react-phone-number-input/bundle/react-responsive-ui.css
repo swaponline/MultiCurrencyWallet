@@ -1,0 +1,2411 @@
+
+
+/* Developers should define `:focus` styles for focusable controls. */
+/* Didn't add `:focus` specifier for lesser CSS rule priority. */
+.rrui__outline:not(.rrui__outline--default) {
+  outline: none; }
+
+/* Reset the default `<button/>` styles */
+.rrui__button-reset {
+  margin: 0;
+  padding: 0;
+  white-space: nowrap;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  border: none;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+  font-size: inherit;
+  font-family: inherit;
+  font-weight: inherit;
+  font-style: inherit;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  /* box-sizing  : border-box; */ }
+
+/* This CSS class can be used on its own in applications. */
+/* Because of that, `outline: none` is added here too. */
+/* Developers should define `:focus` styles for buttons. */
+/* Didn't add `:focus` specifier for lesser CSS rule priority. */
+.rrui__button-reset:not(.rrui__outline--default) {
+  outline: none; }
+
+/* Firefox is being stubborn with outlines. */
+/* https://stackoverflow.com/questions/71074/how-to-remove-firefoxs-dotted-outline-on-buttons-as-well-as-links */
+/* Actually having tab-only outlines is good UX. */
+/*
+.rrui__button-reset:not(.rrui__outline--default)::-moz-focus-inner {
+	border: 0;
+}
+*/
+.rrui__button-reset--link:hover {
+  text-decoration: none; }
+
+.rrui__activity-indicator {
+  position: relative;
+  width: calc(0.6rem * 3);
+  height: calc(0.6rem * 3); }
+
+.rrui__activity-indicator__arc {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  border: 0.15em solid currentColor;
+  border-radius: 50%;
+  -webkit-animation: rrui__activity-indicator 1.2s cubic-bezier(0.5, 0.15, 0.5, 0.85) infinite;
+          animation: rrui__activity-indicator 1.2s cubic-bezier(0.5, 0.15, 0.5, 0.85) infinite;
+  border-color: currentColor transparent transparent transparent; }
+
+.rrui__activity-indicator__arc:nth-child(1) {
+  -webkit-animation-delay: -0.45s;
+          animation-delay: -0.45s; }
+
+.rrui__activity-indicator__arc:nth-child(2) {
+  -webkit-animation-delay: -0.3s;
+          animation-delay: -0.3s; }
+
+.rrui__activity-indicator__arc:nth-child(3) {
+  -webkit-animation-delay: -0.15s;
+          animation-delay: -0.15s; }
+
+@-webkit-keyframes rrui__activity-indicator {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg); }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg); } }
+
+@keyframes rrui__activity-indicator {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg); }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg); } }
+
+.rrui__autocomplete__input {
+  height: 100%;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box; }
+
+/* Stretches the inputs to full column width by default. */
+/* Because everyone uses CSS grids today. */
+.rrui__autocomplete__input {
+  width: 100%; }
+
+.rrui__autocomplete .rrui__ellipsis {
+  position: absolute;
+  right: calc(0.6rem / 3);
+  top: calc(50% - 0.6rem / 6);
+  pointer-events: none; }
+
+.rrui__autocomplete__input {
+  padding-right: calc(0.6rem * 2.5); }
+
+.rrui__autocomplete .rrui__options-list {
+  /*
+	`<Select/>` options text should be at least fully visible.
+	At the same time `<Select/>` options should stretch themselves
+	horizontally to the width of the containing column (when using grid layout).
+	*/
+  width: calc(100% + ((0.6rem * 1.5) - 0rem) * 2);
+  /* Makes `border-bottom` visible on an iPhone */
+  margin-top: 1px; }
+
+.rrui__autocomplete--compact {
+  /* Reverts `width: 100%` set at the top of this file */
+  width: auto;
+  /* If it's `compact` then it's most likely inlined */
+  display: inline-block; }
+
+.rrui__autocomplete--compact .rrui__expandable-list {
+  width: auto; }
+
+.rrui__button {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  position: relative;
+  height: calc(0.6rem * 3);
+  padding-left: 0rem;
+  padding-right: 0rem;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  -webkit-transition: background-color 30ms ease-out, color 30ms ease-out, border-color 30ms ease-out;
+  -o-transition: background-color 30ms ease-out, color 30ms ease-out, border-color 30ms ease-out;
+  transition: background-color 30ms ease-out, color 30ms ease-out, border-color 30ms ease-out;
+  background-color: transparent;
+  color: #03b2cb;
+  border-radius: 0rem;
+  border: 0px solid #03b2cb; }
+
+.rrui__button:active {
+  background-color: transparent;
+  color: #2bd7f0; }
+
+.rrui__button--busy,
+.rrui__button--disabled {
+  /* "pointer-events" prevents "cursor: wait" from working */
+  pointer-events: none; }
+
+.rrui__button--stretch {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%; }
+
+.rrui__button--link:hover {
+  text-decoration: none; }
+
+.rrui__button__busy {
+  display: block;
+  position: absolute;
+  left: 0rem;
+  bottom: calc(50% - 0.7em);
+  width: calc(100% - 2 * 0rem);
+  height: 0.1em;
+  overflow: hidden;
+  opacity: 0;
+  -webkit-transition: opacity 300ms ease-out 0ms;
+  -o-transition: opacity 300ms ease-out 0ms;
+  transition: opacity 300ms ease-out 0ms; }
+
+.rrui__button__busy--after-show {
+  opacity: 1;
+  -webkit-transition: opacity 700ms ease-out 200ms;
+  -o-transition: opacity 700ms ease-out 200ms;
+  transition: opacity 700ms ease-out 200ms; }
+
+.rrui__button__busy:before {
+  display: block;
+  position: absolute;
+  content: "";
+  left: -40%;
+  width: 40%;
+  height: 100%;
+  background-color: currentColor;
+  -webkit-animation: rrui__button__busy 2s ease-in infinite;
+          animation: rrui__button__busy 2s ease-in infinite; }
+
+/* Based on "CSS indeterminate progress" example. */
+/* https://codepen.io/brunjo/pen/XJmbNz */
+@-webkit-keyframes rrui__button__busy {
+  from {
+    left: -40%;
+    width: 40%; }
+  50% {
+    width: 70%; }
+  70% {
+    width: 85%; }
+  80% {
+    left: 30%;
+    width: 100%; }
+  95% {
+    left: 60%; }
+  to {
+    left: 100%; } }
+@keyframes rrui__button__busy {
+  from {
+    left: -40%;
+    width: 40%; }
+  50% {
+    width: 70%; }
+  70% {
+    width: 85%; }
+  80% {
+    left: 30%;
+    width: 100%; }
+  95% {
+    left: 60%; }
+  to {
+    left: 100%; } }
+
+/* http://tympanus.net/codrops/2013/10/15/animated-checkboxes-and-radio-buttons-with-svg/ */
+.rrui__checkbox .rrui__input {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center; }
+
+.rrui__checkbox .rrui__input--multiline {
+  /* IE and Edge have a bug with `inline-flex`:
+	   the multiline content shrinks in width. */
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: start;
+  -webkit-align-items: flex-start;
+      -ms-flex-align: start;
+          align-items: flex-start; }
+
+.rrui__checkbox__label {
+  display: inline-block;
+  /* Using padding instead of margin here to make the gap clickable. */
+  padding-left: 0.6rem;
+  vertical-align: bottom;
+  color: inherit;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none; }
+
+.rrui__checkbox__label:not(.rrui__checkbox__label--multiline) {
+  white-space: nowrap; }
+
+.rrui__checkbox__label--multiline {
+  /* A fix for IE 11 to force it wrap `<label/>` text */
+  -webkit-box-flex: 1;
+  -webkit-flex: 1 0 0;
+      -ms-flex: 1 0 0px;
+          flex: 1 0 0; }
+
+.rrui__checkbox--multiline .rrui__checkbox__checkbox {
+  margin-top: 0.12em; }
+
+.rrui__checkbox__input,
+.rrui__checkbox__label {
+  cursor: pointer; }
+
+.rrui__checkbox--disabled {
+  pointer-events: none; }
+
+.rrui__checkbox__checkbox {
+  position: relative;
+  z-index: 0;
+  -webkit-flex-shrink: 0;
+      -ms-flex-negative: 0;
+          flex-shrink: 0;
+  width: 0.9em;
+  height: 0.9em;
+  color: #000000; }
+
+.rrui__checkbox__input {
+  position: absolute;
+  z-index: 3;
+  left: -40%;
+  top: -40%;
+  width: 180%;
+  height: 180%;
+  margin: 0;
+  opacity: 0; }
+
+.rrui__checkbox__box {
+  display: block;
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  pointer-events: none; }
+
+/* Checkbox color (:checked) */
+.rrui__checkbox__box--checked {
+  color: #03b2cb; }
+
+/* Checkbox color (:focus) */
+.rrui__checkbox__input:focus + .rrui__checkbox__box {
+  color: #03b2cb; }
+
+/* Checkbox color (:focus) (:checked) */
+.rrui__checkbox__input:focus + .rrui__checkbox__box--checked {
+  color: #03b2cb; }
+
+/* Checkbox color (:checked / :active) */
+.rrui__checkbox__input:active + .rrui__checkbox__box {
+  color: #2bd7f0; }
+
+.rrui__checkbox__box-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff;
+  border-radius: 10%;
+  -webkit-transform: scale(0.9);
+      -ms-transform: scale(0.9);
+          transform: scale(0.9); }
+
+.rrui__checkbox--invalid .rrui__checkbox__box-background {
+  background-color: #ffffff; }
+
+/* Checkbox color (:invalid) */
+.rrui__checkbox--invalid .rrui__checkbox__box {
+  color: #d30f00; }
+
+/* Focus ring. */
+.rrui__checkbox__focus-ring {
+  display: block;
+  position: absolute;
+  left: calc(-1 * (250% - 100%) / 2);
+  top: calc(-1 * (250% - 100%) / 2);
+  width: 250%;
+  height: 250%;
+  border-radius: 50%;
+  z-index: 0; }
+
+.rrui__checkbox__input:focus + .rrui__checkbox__box + .rrui__checkbox__box-background + .rrui__checkbox__focus-ring {
+  background-color: transparent; }
+
+.rrui__checkbox__input:active + .rrui__checkbox__box + .rrui__checkbox__box-background + .rrui__checkbox__focus-ring {
+  background-color: transparent; }
+
+/*
+.rrui__close--top-right
+{
+	position : fixed;
+	top      : calc(0.6rem * 2);
+	right    : calc(0.6rem * 2);
+	z-index  : 1;
+}
+*/
+.rrui__close--bottom-right {
+  position: fixed;
+  bottom: calc(0.6rem * 2);
+  right: calc(0.6rem * 2);
+  z-index: 1; }
+
+.rrui__close__icon {
+  width: calc(0.6rem * 2);
+  height: calc(0.6rem * 2);
+  -webkit-box-sizing: content-box;
+          box-sizing: content-box; }
+
+.rrui__close:active .rrui__close__icon-path,
+.rrui__button:active .rrui__close__icon-path {
+  color: #03b2cb; }
+
+.rrui__close__icon-path {
+  color: #000000;
+  stroke: currentColor; }
+
+.rrui__close {
+  padding: calc((0.6rem * 2) / 2);
+  margin: calc((0.6rem * 2) * -1 / 2); }
+
+/* DayPicker styles (version 7.1.10) */
+.DayPicker {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none; }
+
+.DayPicker-wrapper {
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  padding: calc(0.6rem * 2);
+  /* A colored line at the bottom of the calendar
+	   to indicate that it's focused (when focused). */
+  border-bottom: 0.1em solid transparent; }
+
+.DayPicker-wrapper:focus {
+  border-bottom-color: #03b2cb; }
+
+.DayPicker-NavButton {
+  position: absolute;
+  top: calc(0.6rem * 2 + 0.25em);
+  cursor: pointer;
+  width: 1.5em;
+  height: 1.5em; }
+
+.DayPicker-NavButton--prev {
+  left: calc(0.6rem * 2 + 0.25em);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' style='fill: currentColor; color: %2303b2cb;'%3E%3Cpath d='M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z'%3E%3C/path%3E%3C/svg%3E"); }
+
+.DayPicker-NavButton--next {
+  right: calc(0.6rem * 2 + 0.25em);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' style='fill: currentColor; color: %2303b2cb;'%3E%3Cpath d='M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z'%3E%3C/path%3E%3C/svg%3E"); }
+
+.DayPicker-NavButton--prev:focus,
+.DayPicker-NavButton--next:focus {
+  background-color: #f7f7f7;
+  border-radius: 50%; }
+
+.DayPicker-NavButton--interactionDisabled {
+  display: none; }
+
+.DayPicker-Caption {
+  /* iPhone moves <select/>s around the screen on focus when using `display: table-caption`. */
+  /* display: table-caption; */
+  text-align: center;
+  margin-bottom: 1em; }
+
+.DayPicker-Weekdays {
+  margin-top: 1em;
+  display: table-header-group; }
+
+.DayPicker-WeekdaysRow {
+  display: table-row; }
+
+.DayPicker-Weekday {
+  display: table-cell;
+  padding: 0.5em;
+  font-size: 0.875em;
+  text-align: center;
+  color: #888888; }
+
+.DayPicker-Weekday abbr[title] {
+  border-bottom: none;
+  text-decoration: none; }
+
+.DayPicker-Body {
+  display: table-row-group; }
+
+.DayPicker-Week {
+  display: table-row; }
+
+.DayPicker-Day {
+  display: table-cell;
+  padding: 0.5em;
+  text-align: center;
+  cursor: pointer;
+  vertical-align: middle;
+  border-radius: 50%; }
+
+.DayPicker-Day:focus {
+  background-color: #f7f7f7; }
+
+.DayPicker--interactionDisabled .DayPicker-Day {
+  cursor: default; }
+
+/* Default modifiers */
+.DayPicker-Day--today:not(.DayPicker-Day--selected):not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside) {
+  /*
+	color: #03b2cb;
+	font-weight: 700;
+	*/
+  /* border: 1px solid #F3F3F3; */
+  /*
+	border-radius: 50%;
+	box-shadow: 0 0 1px #000000;
+	*/
+  color: #d0021b;
+  font-weight: 700; }
+
+.DayPicker-Day--outside {
+  cursor: default;
+  color: #888888; }
+
+.DayPicker-Day--disabled {
+  color: #cacaca;
+  cursor: default; }
+
+.DayPicker-Day--selected:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside) {
+  color: #ffffff;
+  background-color: #03b2cb; }
+
+/* .DayPicker:not(.DayPicker--interactionDisabled) ... */
+.DayPicker-Day:not(.DayPicker-Day--disabled):not(.DayPicker-Day--selected):not(.DayPicker-Day--outside):hover {
+  background-color: #F3F3F3;
+  color: #000000; }
+
+.DayPicker-Day:not(.DayPicker-Day--disabled):not(.DayPicker-Day--selected):not(.DayPicker-Day--outside):active {
+  color: #ffffff;
+  background-color: #2bd7f0; }
+
+/* =============================== */
+/* Custom `react-daypicker` styles */
+/* =============================== */
+.DayPicker-Months {
+  margin-top: 0.5em; }
+
+.DayPicker-Month {
+  margin-top: 0; }
+
+.DayPicker-MonthSelect {
+  margin-right: 0.3em; }
+
+.DayPicker-MonthSelect,
+.DayPicker-YearSelect {
+  display: inline-block;
+  position: relative; }
+
+/* `:focus` styles are implemented using
+   `background-color` / `border-color`
+   instead of a standard `outline`. */
+/* Didn't add `:focus` specifier for lesser CSS rule priority. */
+/* ------------------------------------ */
+/* `.DayPicker-wrapper` is a `<div/>` wrapping the calendar.
+   It gets focused upon expanding which causes an outline.
+   That outline can be safely removed because it doesn't aid accesiblity. */
+.rrui__date-picker:not(.rrui__outline--default) .DayPicker-wrapper,
+.rrui__date-picker:not(.rrui__outline--default) .DayPicker-Day,
+.rrui__date-picker:not(.rrui__outline--default) .DayPicker-NavButton {
+  outline: none; }
+
+/* https://github.com/gpbl/react-day-picker/issues/708 */
+/*
+.DayPicker-NavButton:active
+{
+	color : #2bd7f0;
+}
+*/
+/* ----------------------------------------------------- */
+/* -                  `<DatePicker/>`                  - */
+/* ----------------------------------------------------- */
+.rrui__date-picker {
+  position: relative; }
+
+.rrui__date-picker .rrui__expandable {
+  min-width: 100%;
+  background-color: #ffffff;
+  color: #000000; }
+
+.rrui__date-picker .rrui__expandable__content {
+  /* For compatibility with older versions. */
+  /* Deprecated. Will be removed in versions > 0.14. */
+  padding: 0; }
+
+.rrui__date-picker__calendar abbr {
+  text-decoration: none; }
+
+.rrui__date-picker__input-overlay {
+  /*
+	Set `display` to `block` for fullscreen `.rrui__expandable` design.
+	This works around the mobile keyboard appearing from the bottom.
+	display  : block;
+	*/
+  display: none;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  /* `z-index` could potentially cause a bug
+	   when the overlay would be above other content on a page
+	   resulting in it capturing events like "mousedown" or "click". */
+  /* z-index  : 1; */
+  outline: none; }
+
+.rrui__date-picker__close {
+  /*
+	Set `display` to `block` for fullscreen `.rrui__expandable` design.
+	display      : block;
+	*/
+  display: none; }
+
+.rrui__date-picker:focus {
+  display: none; }
+
+.rrui__date-picker__icon {
+  position: absolute;
+  top: calc(((0.6rem * 3) - 0.6rem * 1.5) / 2);
+  right: calc(0.6rem / 2);
+  width: calc(0.6rem * 1.5);
+  height: calc(0.6rem * 1.5);
+  opacity: 0.5;
+  color: #000000;
+  /* `z-index` could potentially cause a bug
+	   when the button would be above other content on a page
+	   resulting in it capturing events like "mousedown" or "click". */
+  /* z-index  : 1; */ }
+
+.rrui__date-picker__icon--hidden {
+  display: none; }
+
+/*
+// Adding `:focus` style for date picker icon is not required
+// because it's not tabbable (`tabIndex={-1}`).
+.rrui__date-picker__icon:focus,
+*/
+.rrui__date-picker .rrui__expanded--expanded .rrui__date-picker__icon {
+  opacity: 1;
+  color: #03b2cb; }
+
+.rrui__date-picker__icon:focus {
+  opacity: 1;
+  color: #03b2cb; }
+
+.rrui__date-picker__icon:active {
+  opacity: 1;
+  color: #2bd7f0; }
+
+.DayPicker-YearSelect select:focus + button .rrui__select__arrow,
+.DayPicker-MonthSelect select:focus + button .rrui__select__arrow {
+  color: #03b2cb; }
+
+.rrui__divider {
+  line-height: 0;
+  font-size: 0; }
+
+.rrui__divider__line {
+  width: 100%;
+  height: 1px;
+  margin-bottom: -1px;
+  background-color: rgba(0, 0, 0, 0.16);
+  border: 0; }
+
+.rrui__ellipsis {
+  width: calc(0.6rem * 1.5);
+  opacity: 0.7; }
+
+.rrui__ellipsis__size {
+  position: relative;
+  width: 100%;
+  padding-bottom: 22%; }
+
+.rrui__ellipsis__dots {
+  position: absolute;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  height: 100%; }
+
+.rrui__ellipsis__dot {
+  width: 22%;
+  height: 100%;
+  margin-right: 16.5%;
+  border-radius: 50%;
+  background-color: currentColor;
+  opacity: 0.4; }
+
+.rrui__ellipsis__dot--1 {
+  -webkit-animation: 1.1s linear 0s infinite rrui__ellipsis;
+          animation: 1.1s linear 0s infinite rrui__ellipsis; }
+
+.rrui__ellipsis__dot--2 {
+  -webkit-animation: 1.1s linear 0.36666667s infinite rrui__ellipsis;
+          animation: 1.1s linear 0.36666667s infinite rrui__ellipsis; }
+
+.rrui__ellipsis__dot--3 {
+  margin-right: 0;
+  -webkit-animation: 1.1s linear 0.73333333s infinite rrui__ellipsis;
+          animation: 1.1s linear 0.73333333s infinite rrui__ellipsis; }
+
+@-webkit-keyframes rrui__ellipsis {
+  25% {
+    opacity: 1; }
+  50% {
+    opacity: 0.4; } }
+
+@keyframes rrui__ellipsis {
+  25% {
+    opacity: 1; }
+  50% {
+    opacity: 0.4; } }
+
+.rrui__expandable {
+  opacity: 0;
+  pointer-events: none;
+  -webkit-transform: scaleY(0.8);
+      -ms-transform: scaleY(0.8);
+          transform: scaleY(0.8);
+  -webkit-transform-origin: 50% top 0px;
+      -ms-transform-origin: 50% top 0px;
+          transform-origin: 50% top 0px;
+  -webkit-transition: all 150ms ease-out;
+  -o-transition: all 150ms ease-out;
+  transition: all 150ms ease-out;
+  /* prevent white background showing through the transparent border */
+  /* http://stackoverflow.com/questions/7473200/transparent-border-expands-background-color-image */
+  background-clip: padding-box;
+  -webkit-background-clip: padding-box; }
+
+.rrui__expandable--expanded {
+  opacity: 1;
+  pointer-events: auto;
+  -webkit-transform: scaleY(1);
+      -ms-transform: scaleY(1);
+          transform: scaleY(1);
+  -webkit-transition: all 150ms cubic-bezier(0.23, 1, 0.32, 1);
+  -o-transition: all 150ms cubic-bezier(0.23, 1, 0.32, 1);
+  transition: all 150ms cubic-bezier(0.23, 1, 0.32, 1); }
+
+/* A small "hack" for "fade up" animation of `<ExpandableMenu/>`. */
+.rrui__expandable--fade-up {
+  -webkit-transform: translateY(0.5em);
+      -ms-transform: translateY(0.5em);
+          transform: translateY(0.5em);
+  -webkit-transition: all 150ms cubic-bezier(0.23, 1, 0.32, 1);
+  -o-transition: all 150ms cubic-bezier(0.23, 1, 0.32, 1);
+  transition: all 150ms cubic-bezier(0.23, 1, 0.32, 1); }
+
+/* A small "hack" for "fade up" animation of `<ExpandableMenu/>`. */
+.rrui__expandable--expanded--fade-up {
+  -webkit-transform: translateY(0);
+      -ms-transform: translateY(0);
+          transform: translateY(0); }
+
+.rrui__expandable--overlay {
+  position: absolute;
+  z-index: 1; }
+
+.rrui__expandable__content {
+  /*
+	The inner block's `opacity` is animated too
+	(it fades in and out by itself too).
+	This is done to fade out the inner block when the dropdown is collapsed
+	therefore hiding an otherwise bizarre and unwanted visual clutter
+	*/
+  opacity: 0;
+  /* Mitigates inner content overlapping with itself creating a feeling of a mess */
+  -webkit-transition: opacity 100ms ease-out;
+  -o-transition: opacity 100ms ease-out;
+  transition: opacity 100ms ease-out; }
+
+/* A small "hack" for "fade up" animation of `<ExpandableMenu/>`. */
+.rrui__expandable__content--fade-up {
+  opacity: 1;
+  -webkit-transition: none;
+  -o-transition: none;
+  transition: none; }
+
+.rrui__expandable__content--expanded {
+  opacity: 1; }
+
+.rrui__expandable--left-aligned {
+  left: 0; }
+
+.rrui__expandable--right-aligned {
+  right: 0; }
+
+.rrui__expandable--downward {
+  /* When an html page is overflown by a long list
+	   then this bottom margin helps to see that
+	   there's no more options left out being clipped or something */
+  margin-bottom: 1em; }
+
+.rrui__expandable--upward {
+  bottom: 100%;
+  -webkit-transform-origin: 50% bottom 0px;
+      -ms-transform-origin: 50% bottom 0px;
+          transform-origin: 50% bottom 0px;
+  /* When an html page is overflown by a long list
+	   then this bottom margin helps to see that
+	   there's no more options left out being clipped or something */
+  margin-top: 1em; }
+
+.rrui__expandable__close {
+  /*
+	Set `display` to `block` for fullscreen `.rrui__expandable` design.
+	display : block;
+	*/
+  display: none; }
+
+.rrui__expandable-list--left-aligned {
+  left: 0; }
+
+.rrui__expandable-list--right-aligned {
+  right: 0; }
+
+.rrui__options-list--left-aligned {
+  left: calc(((0.6rem * 1.5) - 0rem) * -1); }
+
+.rrui__options-list--right-aligned {
+  right: calc(((0.6rem * 1.5) - 0rem) * -1); }
+
+/* Styles are from Material UI. */
+/* https://material-ui.com/demos/expansion-panels/ */
+.rrui__expansion-panel {
+  background-color: #ffffff; }
+
+.rrui__expansion-panel--expanded {
+  /* margin: 16px 0; */ }
+
+/*
+.rrui__expansion-panel:before
+{
+	top: -1px;
+	left: 0;
+	right: 0;
+	height: 1px;
+	content: "";
+	opacity: 1;
+	position: absolute;
+	transition: opacity 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+	background-color: ;
+}
+
+.rrui__expansion-panel--expanded:before
+{
+	opacity: 0;
+}
+*/
+.rrui__expansion-panel__header {
+  position: relative;
+  width: 100%;
+  height: calc(0.6rem * 4);
+  -webkit-transition: height 210ms cubic-bezier(0.4, 0, 0.2, 1);
+  -o-transition: height 210ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: height 210ms cubic-bezier(0.4, 0, 0.2, 1);
+  font-weight: normal;
+  text-align: left; }
+
+.rrui__expansion-panel__header--expanded {
+  height: calc(0.6rem * 5); }
+
+.rrui__expansion-panel__header--toggle-icon-end {
+  background-color: #F3F3F3; }
+
+.rrui__expansion-panel__header--toggle-icon-end:focus {
+  -webkit-box-shadow: inset 0 0 0 1px #cacaca;
+          box-shadow: inset 0 0 0 1px #cacaca; }
+
+/* CSS select specificity is to support <Collapsible/>s inside <Collapsible/>s. */
+.rrui__expansion-panel__header--toggle-icon-start:focus > .rrui__expansion-panel__heading {
+  padding-bottom: 0.15em;
+  border-bottom: 1px solid #03b2cb; }
+
+/* CSS select specificity is to support <Collapsible/>s inside <Collapsible/>s. */
+.rrui__expansion-panel__header--toggle-icon-start:active > .rrui__expansion-panel__heading {
+  border-bottom: 1px solid #2bd7f0; }
+
+.rrui__expansion-panel__header--toggle-icon-start.rrui__expansion-panel__header--expanded {
+  height: calc(0.6rem * 4); }
+
+.rrui__expansion-panel__content-wrapper {
+  overflow: hidden;
+  -webkit-transition: height 210ms cubic-bezier(0.4, 0, 0.2, 1);
+  -o-transition: height 210ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: height 210ms cubic-bezier(0.4, 0, 0.2, 1); }
+
+.rrui__expansion-panel__header,
+.rrui__expansion-panel__content {
+  padding-left: calc(0.6rem * 2);
+  padding-right: calc(0.6rem * 2); }
+
+.rrui__expansion-panel__content {
+  padding-top: calc(0.6rem * 2);
+  padding-bottom: calc(0.6rem * 2); }
+
+.rrui__expansion-panel__icon {
+  position: absolute;
+  top: 50%;
+  width: 0.6rem;
+  -webkit-transition: -webkit-transform 210ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: -webkit-transform 210ms cubic-bezier(0.4, 0, 0.2, 1);
+  -o-transition: transform 210ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 210ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 210ms cubic-bezier(0.4, 0, 0.2, 1), -webkit-transform 210ms cubic-bezier(0.4, 0, 0.2, 1); }
+
+.rrui__expansion-panel__icon--end {
+  right: calc(0.6rem * 2);
+  -webkit-transform: translateY(-50%) rotate(0deg);
+      -ms-transform: translateY(-50%) rotate(0deg);
+          transform: translateY(-50%) rotate(0deg); }
+
+.rrui__expansion-panel__icon--expanded.rrui__expansion-panel__icon--end {
+  -webkit-transform: translateY(-50%) rotate(180deg);
+      -ms-transform: translateY(-50%) rotate(180deg);
+          transform: translateY(-50%) rotate(180deg); }
+
+.rrui__expansion-panel__icon--start {
+  left: 0;
+  margin-right: 0.6rem;
+  -webkit-transform: translateY(-50%) rotate(-90deg);
+      -ms-transform: translateY(-50%) rotate(-90deg);
+          transform: translateY(-50%) rotate(-90deg); }
+
+.rrui__expansion-panel__icon--expanded.rrui__expansion-panel__icon--start {
+  -webkit-transform: translateY(-50%) rotate(0deg);
+      -ms-transform: translateY(-50%) rotate(0deg);
+          transform: translateY(-50%) rotate(0deg); }
+
+.rrui__file-upload__area {
+  cursor: pointer; }
+
+.rrui__file-upload__area--disabled {
+  pointer-events: none; }
+
+.rrui__form {
+  /* Chrome adds margin-bottom for all <form/>s for some weird reason */
+  margin-bottom: 0; }
+
+.rrui__form__actions {
+  margin-top: calc(0.6rem * 4);
+  /* Right alignment */
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+      -ms-flex-pack: end;
+          justify-content: flex-end; }
+
+.rrui__form__actions--left-right {
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between; }
+
+.rrui__form__actions .rrui__button {
+  margin-right: calc(4 * 0.6rem); }
+
+.rrui__form__actions .rrui__button:last-child {
+  margin-right: 0; }
+
+.rrui__form__field {
+  margin-bottom: calc(0.6rem * 2); }
+
+.rrui__form__error:empty {
+  display: none; }
+
+.rrui__input {
+  /* `position: relative` is for the floating label absolute positioning */
+  position: relative; }
+
+.rrui__input,
+.rrui__input-label {
+  height: calc(0.6rem * 3);
+  font-size: inherit; }
+
+/* `.rrui__input:not(.rrui__input--multiline)`
+   would result in issues with this CSS selector being
+   too specific and therefore taking higher priority */
+.rrui__input--multiline {
+  height: auto; }
+
+/*
+For some reason web browsers size `<input/>`s to be wider
+than 100% of the parent if the parent is small enough.
+*/
+.rrui__input-element {
+  max-width: 100%; }
+
+.rrui__input-error {
+  margin-top: 0.6rem;
+  color: #d30f00; }
+
+.rrui__input-field {
+  border-radius: 0;
+  /* Some web browsers add <input/> padding by default */
+  padding: 0;
+  -moz-appearance: none;
+       appearance: none;
+  -webkit-appearance: none;
+  font-size: inherit;
+  font-family: inherit;
+  font-weight: inherit;
+  font-style: inherit;
+  color: #000000; }
+
+/* Overrides Chrome autofill yellow background color. */
+.rrui__input-field:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px #ffffff inset;
+          box-shadow: 0 0 0 1000px #ffffff inset; }
+
+/* Overrides Chrome autofill yellow background color (when `<TextInput/>` is focused). */
+.rrui__input-field:focus:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px #ffffff inset;
+          box-shadow: 0 0 0 1000px #ffffff inset; }
+
+/* Overrides Chrome autofill yellow background color (when `<TextInput/>` is invalid). */
+.rrui__input-field--invalid:-webkit-autofill,
+.rrui__input-field--invalid:focus:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px #ffffff inset;
+          box-shadow: 0 0 0 1000px #ffffff inset; }
+
+/* For `<TextInput/>` and alike. */
+.rrui__input-field,
+.rrui__select__button {
+  /* Stretches the inputs to full column width by default. */
+  /* Because everyone uses CSS grids today. */
+  width: 100%;
+  padding-left: 0rem;
+  padding-right: 0rem;
+  background-color: #ffffff;
+  border-radius: 0rem; }
+
+/* For `<TextInput/>` and alike. */
+.rrui__input-field,
+.rrui__select__button,
+.rrui__select__native {
+  border: 0px solid #cacaca;
+  border-bottom-width: 1px;
+  -webkit-transition: border 0.1s;
+  -o-transition: border 0.1s;
+  transition: border 0.1s; }
+
+/* For `<TextInput/>` and alike. */
+.rrui__input-field:focus,
+.rrui__select__button:focus,
+.rrui__select__native:focus + .rrui__select__button,
+.rrui__select__native:focus {
+  border-color: #03b2cb;
+  background-color: #ffffff; }
+
+/* For `<TextInput/>` and alike. */
+.rrui__input-field--invalid,
+.rrui__input-field--invalid:focus,
+.rrui__select__button--invalid,
+.rrui__select__button--invalid:focus,
+.rrui__select__native--invalid:focus + .rrui__select__button,
+.rrui__select__native--invalid,
+.rrui__select__native--invalid:focus {
+  border-color: #d30f00;
+  background-color: #ffffff; }
+
+.rrui__input-field {
+  height: 100%;
+  font-size: inherit;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box; }
+
+/* Resets height back to 100% for multiline text input */
+.rrui__input-field--multiline {
+  height: auto;
+  resize: none; }
+
+/* For `<TextInput/>` and alike. */
+.rrui__input-field--disabled,
+.rrui__select__button--disabled {
+  /* "pointer-events" prevents "cursor: wait" from working. */
+  pointer-events: none;
+  /* cursor : default; */
+  background-color: #ffffff; }
+
+.rrui__select__native[disabled] {
+  /* "pointer-events" prevents "cursor: wait" from working. */
+  pointer-events: none;
+  /* cursor : default; */ }
+
+.rrui__input-field__icon {
+  position: absolute;
+  top: calc(((0.6rem * 3) - ((0.6rem * 3) - 1.5 * 0.6rem)) / 2);
+  left: 0px;
+  width: calc((0.6rem * 3) - 1.5 * 0.6rem);
+  height: calc((0.6rem * 3) - 1.5 * 0.6rem);
+  pointer-events: none;
+  color: #888888; }
+
+.rrui__input-field--with-icon {
+  padding-left: calc(0px + ((0.6rem * 3) - 1.5 * 0.6rem) + (0.75 * 0.6rem)); }
+
+/* `<input/>` placeholder color. */
+/* https://www.w3schools.com/howto/howto_css_placeholder.asp */
+/* Chrome, Firefox, Opera, Safari 10.1+ */
+/* Won't work for some reason if combined with the IE rules below. */
+.rrui__input-field::-webkit-input-placeholder {
+  color: #888888;
+  /* Firefox */
+  opacity: 1; }
+.rrui__input-field:-ms-input-placeholder {
+  color: #888888;
+  /* Firefox */
+  opacity: 1; }
+.rrui__input-field::-ms-input-placeholder {
+  color: #888888;
+  /* Firefox */
+  opacity: 1; }
+.rrui__input-field::placeholder {
+  color: #888888;
+  /* Firefox */
+  opacity: 1; }
+
+/* Internet Explorer 10-11 */
+.rrui__input-field:-ms-input-placeholder {
+  color: #888888; }
+
+/* Microsoft Edge */
+.rrui__input-field::-ms-input-placeholder {
+  color: #888888; }
+
+.rrui__input-label {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  white-space: nowrap;
+  font-size: inherit;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  pointer-events: none;
+  /*
+	When changing this label color
+	one could also change "input" and "textarea" placeholder color
+	if using `placeholder` property.
+	Changing `:placeholder` color is not widely supported though.
+	*/
+  color: #888888;
+  -webkit-transform: scale(0.8) translateY(-70%);
+      -ms-transform: scale(0.8) translateY(-70%);
+          transform: scale(0.8) translateY(-70%);
+  -webkit-transform-origin: left top;
+      -ms-transform-origin: left top;
+          transform-origin: left top;
+  -webkit-transition: color 0.1s ease-out, -webkit-transform 450ms cubic-bezier(0.23, 1, 0.32, 1);
+  transition: color 0.1s ease-out, -webkit-transform 450ms cubic-bezier(0.23, 1, 0.32, 1);
+  -o-transition: color 0.1s ease-out, transform 450ms cubic-bezier(0.23, 1, 0.32, 1);
+  transition: color 0.1s ease-out, transform 450ms cubic-bezier(0.23, 1, 0.32, 1);
+  transition: color 0.1s ease-out, transform 450ms cubic-bezier(0.23, 1, 0.32, 1), -webkit-transform 450ms cubic-bezier(0.23, 1, 0.32, 1); }
+
+/* Focused input label. */
+/* For `<Select native={false}/>` (default). */
+.rrui__select__native:focus + .rrui__select__button + .rrui__input-label,
+.rrui__select__native:focus + .rrui__input-label,
+.rrui__input-element:focus + .rrui__input-label {
+  color: #03b2cb; }
+
+.rrui__list {
+  margin: 0;
+  padding-left: 0;
+  padding-top: 0.6rem;
+  padding-bottom: 0.6rem;
+  overflow-y: auto;
+  background-color: #ffffff;
+  color: #000000;
+  list-style-type: none;
+  overflow-x: hidden;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box; }
+
+.rrui__list__item {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%;
+  /*
+	This side padding is also connected to
+	`.rrui__select__options--left-aligned`'s `left`,
+	`.rrui__select__options--right-aligned`'s `right`
+	and `.rrui__select__options`'s `min-width`.
+	*/
+  padding-left: calc(0.6rem * 1.5);
+  padding-right: calc(0.6rem * 1.5);
+  color: inherit;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  text-align: left; }
+
+.rrui__list__item:hover {
+  background-color: #F3F3F3;
+  color: #000000; }
+
+.rrui__list__item:active {
+  background-color: #03b2cb;
+  color: #ffffff; }
+
+.rrui__list__item--button {
+  height: calc(0.6rem * 4); }
+
+.rrui__list__item--divider {
+  padding-left: 0;
+  padding-right: 0;
+  padding-top: 0.6rem;
+  padding-bottom: 0.6rem;
+  pointer-events: none; }
+
+.rrui__list__item--focus {
+  background-color: #F3F3F3;
+  color: #000000; }
+
+.rrui__list__item--selected,
+.rrui__list__item--selected:hover {
+  background-color: #03b2cb;
+  color: #ffffff; }
+
+.rrui__list__item-icon {
+  margin-right: 0.6rem;
+  -webkit-flex-shrink: 0;
+      -ms-flex-negative: 0;
+          flex-shrink: 0; }
+
+.rrui__list__item--disabled {
+  /* "pointer-events" prevents "cursor: wait" from working */
+  pointer-events: none; }
+
+.rrui__list__items--scroll {
+  /* https://css-tricks.com/snippets/css/momentum-scrolling-on-ios-overflow-elements/ */
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch; }
+
+.rrui__menu {
+  /* Usually menu toggler is not 100% wide, so it makes sense. */
+  display: inline-block;
+  position: relative; }
+
+.rrui__menu .rrui__expandable-list {
+  width: auto; }
+
+.rrui__menu .rrui__list__item {
+  padding-left: calc(0.6rem * 2.5);
+  padding-right: calc(0.6rem * 2.5); }
+
+.rrui__menu .rrui__list__item--divider {
+  padding-left: 0;
+  padding-right: 0; }
+
+.rrui__menu-button {
+  position: relative;
+  display: inline-block;
+  width: calc((0.6rem * 3) + 0.6rem);
+  height: calc((0.6rem * 3) + 0.6rem);
+  padding: calc(0.6rem / 2);
+  margin: calc(-1 * 0.6rem / 2);
+  line-height: 0;
+  color: #000000;
+  /* This CSS rule can be removed if .rrui__button-reset gets it. */
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box; }
+
+/*
+.rrui__menu-button:active
+{
+	color : #03b2cb;
+}
+*/
+.rrui__menu-icon {
+  position: relative;
+  width: 100%;
+  height: 100%; }
+
+.rrui__menu-icon__bar {
+  width: 100%;
+  background-color: currentColor;
+  position: absolute;
+  height: 2px;
+  border-radius: 1px;
+  /* calc(2px / 2); */
+  -webkit-transform-origin: 50% 50%;
+      -ms-transform-origin: 50% 50%;
+          transform-origin: 50% 50%; }
+
+.rrui__menu-icon--expanded .rrui__menu-icon__bar {
+  width: 100%;
+  top: calc((100% - 2px) / 2);
+  -webkit-transition: width 125ms 0s, top 125ms 0s, -webkit-transform 125ms 125ms;
+  transition: width 125ms 0s, top 125ms 0s, -webkit-transform 125ms 125ms;
+  -o-transition: width 125ms 0s, top 125ms 0s, transform 125ms 125ms;
+  transition: width 125ms 0s, top 125ms 0s, transform 125ms 125ms;
+  transition: width 125ms 0s, top 125ms 0s, transform 125ms 125ms, -webkit-transform 125ms 125ms; }
+
+.rrui__menu-icon--expanded .rrui__menu-icon__bar:nth-child(1),
+.rrui__menu-icon--expanded .rrui__menu-icon__bar:nth-child(2) {
+  -webkit-transform: rotate(-45deg);
+      -ms-transform: rotate(-45deg);
+          transform: rotate(-45deg); }
+
+.rrui__menu-icon--expanded .rrui__menu-icon__bar:nth-child(3) {
+  -webkit-transform: rotate(45deg);
+      -ms-transform: rotate(45deg);
+          transform: rotate(45deg); }
+
+.rrui__menu-icon--collapsed .rrui__menu-icon__bar {
+  -webkit-transition: top 125ms 125ms, width 125ms 125ms, -webkit-transform 125ms 0s;
+  transition: top 125ms 125ms, width 125ms 125ms, -webkit-transform 125ms 0s;
+  -o-transition: transform 125ms 0s, top 125ms 125ms, width 125ms 125ms;
+  transition: transform 125ms 0s, top 125ms 125ms, width 125ms 125ms;
+  transition: transform 125ms 0s, top 125ms 125ms, width 125ms 125ms, -webkit-transform 125ms 0s;
+  -webkit-transform: rotate(0);
+      -ms-transform: rotate(0);
+          transform: rotate(0); }
+
+.rrui__menu-icon--collapsed .rrui__menu-icon__bar:nth-child(1) {
+  top: 17%; }
+
+.rrui__menu-icon--collapsed .rrui__menu-icon__bar:nth-child(2) {
+  top: calc((100% - 2px) / 2); }
+
+.rrui__menu-icon--collapsed .rrui__menu-icon__bar:nth-child(3) {
+  top: calc(83% - 2px); }
+
+/*===========================================================
+= `react-modal`                                             =
+===========================================================*/
+/*
+when changing css transition times here
+also change `default_close_timeout` in ./Modal.js accordingly
+*/
+/* Could have used `opacity` transition on `.ReactModal__Overlay`
+   but it introduced a bug in Chrome: the fixed Overlay shriked vertically
+   while having its opacity animated at the same time as the Content being scaled */
+.ReactModal__Overlay {
+  background-color: transparent;
+  /* "auto" introduces a vertical scrollbar when "bouncing" (animation) */
+  /* overflow: auto; */
+  overflow: hidden; }
+
+.ReactModal__Overlay--after-open {
+  background-color: rgba(0, 0, 0, 0.25); }
+
+/* This rule is required for closing animation */
+.ReactModal__Overlay--before-close {
+  background-color: transparent; }
+
+.ReactModal__Overlay--after-open {
+  -webkit-transition: background-color 300ms ease-out;
+  -o-transition: background-color 300ms ease-out;
+  transition: background-color 300ms ease-out; }
+
+.ReactModal__Overlay--before-close {
+  -webkit-transition: background-color 100ms ease-out;
+  -o-transition: background-color 100ms ease-out;
+  transition: background-color 100ms ease-out; }
+
+.rrui__modal__contents {
+  opacity: 0;
+  /*
+	Scaling `<Modal/>` down on appear looks cool
+	but it also can cause scrollbars to appear
+	due to overflow which is a weird `scale()` behaviour.
+	Those scrollbars alter window width resulting in
+	`<Modal/>` positioning glitches (while centering itself).
+	Therefore not using `scale()`s above `1`, only downscaling.
+	transform  : scale(1.07);
+	*/
+  -webkit-transform: scale(0.95);
+      -ms-transform: scale(0.95);
+          transform: scale(0.95);
+  -webkit-transition: opacity 100ms ease-out, -webkit-transform 100ms ease-out;
+  transition: opacity 100ms ease-out, -webkit-transform 100ms ease-out;
+  -o-transition: transform 100ms ease-out, opacity 100ms ease-out;
+  transition: transform 100ms ease-out, opacity 100ms ease-out;
+  transition: transform 100ms ease-out, opacity 100ms ease-out, -webkit-transform 100ms ease-out; }
+
+.ReactModal__Content--after-open .rrui__modal__contents {
+  opacity: 1;
+  -webkit-transform: none;
+      -ms-transform: none;
+          transform: none; }
+
+/* This rule is required for closing animation */
+.ReactModal__Content--before-close .rrui__modal__contents {
+  opacity: 0;
+  -webkit-transform: scale(0.95);
+      -ms-transform: scale(0.95);
+          transform: scale(0.95); }
+
+/*
+The extra opacity animation on `<Modal/>` contents
+is used to prevent clutter on background while the modal fades in/out.
+*/
+.rrui__modal__contents-body {
+  opacity: 0; }
+
+.ReactModal__Content--after-open .rrui__modal__contents-body {
+  opacity: 1;
+  -webkit-transition: opacity 100ms ease-out;
+  -o-transition: opacity 100ms ease-out;
+  transition: opacity 100ms ease-out; }
+
+.ReactModal__Content--before-close .rrui__modal__contents-body {
+  opacity: 0;
+  -webkit-transition: opacity 80ms ease-out;
+  -o-transition: opacity 80ms ease-out;
+  transition: opacity 80ms ease-out; }
+
+/* Hides `react-modal` scrollbar when closing the modal */
+.ReactModal__Overlay--before-close {
+  overflow: hidden; }
+
+/*
+While this would disable page scrolling when modal is presented,
+it would introduce page width jumps.
+.ReactModal__Body--open
+{
+	height: 100%;
+	overflow: hidden;
+}
+*/
+/*==========================================================
+= `<Modal/>`                                               =
+===========================================================*/
+/*
+Make sure to add `.rrui__fixed-full-width` CSS class
+to all full-width `position: fixed` elements.
+Such elements must not be `width: 100%`
+but rather `width: auto` or `left: 0; right: 0;`.
+*/
+.rrui__fixed-full-width {
+  position: fixed;
+  left: 0;
+  right: 0;
+  width: auto; }
+
+.rrui__modal__overlay {
+  /* Horizontal centering */
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center; }
+
+.rrui__modal__overlay--fullscreen {
+  /* `display: flex` results in a weird content clipping bug in fullscreen mode
+	   because of `justify-content: center` on the container */
+  display: block;
+  background-color: #ffffff; }
+
+.rrui__modal__overlay--hidden {
+  display: none; }
+
+.rrui__modal__overlay--busy {
+  cursor: wait; }
+
+.rrui__modal__container {
+  /* Centers everything vertically */
+  min-height: 100%;
+  /* Using `inline-flex` here so that it doesn't
+	   stretch to the whole overlay width */
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column; }
+
+.rrui__modal__container--fullscreen {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center; }
+
+.rrui__modal__close:focus {
+  background-color: #F3F3F3;
+  border-radius: 50%; }
+
+.rrui__modal__close--busy {
+  cursor: wait; }
+
+.rrui__modal__contents {
+  /* So that modal content won't neccessarily
+	   stretch horizontally to the full width of the screen */
+  display: inline-block;
+  /* Modal content shouldn't stretch vertically */
+  -webkit-box-flex: 0;
+  -webkit-flex-grow: 0;
+      -ms-flex-positive: 0;
+          flex-grow: 0;
+  /* Modal content will contract vertically */
+  -webkit-flex-shrink: 1;
+      -ms-flex-negative: 1;
+          flex-shrink: 1;
+  -webkit-flex-basis: auto;
+      -ms-flex-preferred-size: auto;
+          flex-basis: auto;
+  border-radius: 0.2rem;
+  background-color: #ffffff;
+  color: #000000; }
+
+.rrui__modal__contents--fullscreen {
+  /* Completely cover the screen */
+  border-radius: 0; }
+
+.rrui__modal__vertical-margin {
+  /* Perhaps "width : 100%" was needed for it to work properly */
+  width: 100%;
+  /* Vertical padding won't ever shrink below the minimum size */
+  -webkit-flex-shrink: 0;
+      -ms-flex-negative: 0;
+          flex-shrink: 0;
+  -webkit-flex-basis: 3%;
+      -ms-flex-preferred-size: 3%;
+          flex-basis: 3%; }
+
+.rrui__modal__vertical-margin--top {
+  -webkit-box-flex: 2;
+  -webkit-flex-grow: 2;
+      -ms-flex-positive: 2;
+          flex-grow: 2; }
+
+.rrui__modal__vertical-margin--bottom {
+  -webkit-box-flex: 5;
+  -webkit-flex-grow: 5;
+      -ms-flex-positive: 5;
+          flex-grow: 5; }
+
+.rrui__modal__vertical-margin--fullscreen {
+  display: none; }
+
+.rrui__modal--could-not-close-because-busy {
+  -webkit-animation: bounce_z 0.6s;
+          animation: bounce_z 0.6s;
+  -webkit-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0); }
+
+/* https://daneden.github.io/animate.css/ */
+/* https://github.com/daneden/animate.css/blob/master/source/bouncing_entrances/bounceIn.css */
+@-webkit-keyframes bounce_z {
+  from, 25%, 47%, 72%, to {
+    -webkit-animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+            animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1); }
+  0% {
+    -webkit-transform: scale3d(1, 1, 1);
+            transform: scale3d(1, 1, 1); }
+  25% {
+    -webkit-transform: scale3d(0.99, 0.99, 0.99);
+            transform: scale3d(0.99, 0.99, 0.99); }
+  47% {
+    -webkit-transform: scale3d(1.01, 1.01, 1.01);
+            transform: scale3d(1.01, 1.01, 1.01); }
+  72% {
+    -webkit-transform: scale3d(0.995, 0.995, 0.995);
+            transform: scale3d(0.995, 0.995, 0.995); }
+  to {
+    -webkit-transform: scale3d(1, 1, 1);
+            transform: scale3d(1, 1, 1); } }
+@keyframes bounce_z {
+  from, 25%, 47%, 72%, to {
+    -webkit-animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+            animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1); }
+  0% {
+    -webkit-transform: scale3d(1, 1, 1);
+            transform: scale3d(1, 1, 1); }
+  25% {
+    -webkit-transform: scale3d(0.99, 0.99, 0.99);
+            transform: scale3d(0.99, 0.99, 0.99); }
+  47% {
+    -webkit-transform: scale3d(1.01, 1.01, 1.01);
+            transform: scale3d(1.01, 1.01, 1.01); }
+  72% {
+    -webkit-transform: scale3d(0.995, 0.995, 0.995);
+            transform: scale3d(0.995, 0.995, 0.995); }
+  to {
+    -webkit-transform: scale3d(1, 1, 1);
+            transform: scale3d(1, 1, 1); } }
+
+.rrui__modal__content .rrui__form__error {
+  margin-bottom: 0; }
+
+/* Fullscreen `<Modal/>` animation tweaking */
+.rrui__modal__overlay--fullscreen:not(.ReactModal__Overlay--after-open),
+.rrui__modal__overlay--fullscreen.ReactModal__Overlay--before-close {
+  background-color: transparent; }
+
+.rrui__modal__overlay--fullscreen {
+  -webkit-transition: background-color 100ms ease-out;
+  -o-transition: background-color 100ms ease-out;
+  transition: background-color 100ms ease-out; }
+
+.rrui__modal__overlay--fullscreen .rrui__modal__contents {
+  background-color: transparent; }
+
+.rrui__modal__actions {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+      -ms-flex-pack: end;
+          justify-content: flex-end; }
+
+/* Using `margin` instead of `padding` for "padding"
+   to leverage the "margin collapse" CSS feature. */
+.rrui__modal__title,
+.rrui__modal__content,
+.rrui__modal__actions {
+  margin-left: calc(0.6rem * 3);
+  margin-right: calc(0.6rem * 3); }
+
+.rrui__modal__title {
+  margin-top: calc((0.6rem * 3) - 0.6rem * 0.5);
+  margin-bottom: 0; }
+
+.rrui__modal__content {
+  margin-top: calc((0.6rem * 3) - 0.6rem * 0.5);
+  margin-bottom: calc((0.6rem * 3) - 0.6rem * 0.5); }
+
+.rrui__modal__actions {
+  margin-bottom: calc((0.6rem * 3) - 0.6rem * 0.5); }
+
+.rrui__modal__title + .rrui__modal__content {
+  margin-top: calc(((0.6rem * 3) - 0.6rem * 0.5) - 0.6rem * 0.5); }
+
+.rrui__modal__close {
+  /* Prevents `<Modal.Title/>` overlapping with `<Close/>` padding. */
+  margin-left: 0;
+  /* Prevents the close button from being stretched vertically. */
+  line-height: 0; }
+
+.rrui__modal__content--close-button,
+.rrui__modal__title--close-button {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: start;
+  -webkit-align-items: flex-start;
+      -ms-flex-align: start;
+          align-items: flex-start; }
+
+.rrui__scrollable {
+  /* https://css-tricks.com/snippets/css/momentum-scrolling-on-ios-overflow-elements/ */
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch; }
+
+.rrui__select {
+  /* This is for `.rrui__select__options` to be positioned
+	   correctly relative to the `<Select/>` itself. */
+  position: relative;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none; }
+
+.rrui__select .rrui__options-list {
+  /*
+	`<Select/>` options text should be at least fully visible.
+	At the same time `<Select/>` options should stretch themselves
+	horizontally to the width of the containing column (when using grid layout).
+	*/
+  width: calc(100% + ((0.6rem * 1.5) - 0rem) * 2);
+  /*
+	`margin-top` is constituted by:
+	- `.rrui__select__options` `padding-top`.
+	- `.rrui__input` `height`.
+	- half of the difference between `.rrui__select__option`'s `height`/`line-height` and `.rrui__input` `height`.
+	*/
+  margin-top: calc(-1 * (0.6rem + (0.6rem * 3) + ((0.6rem * 4) - (0.6rem * 3)) / 2)); }
+
+.rrui__select__button {
+  height: 100%;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  color: inherit;
+  /* Because Chrome adds `text-align: center` for all buttons */
+  text-align: left;
+  /* Not introducing an animation on `.rrui__select__option`
+	   because it would introduce a little clutter due to
+	   focused option animation in autocomplete mode */
+  -webkit-transition: color 30ms ease-out;
+  -o-transition: color 30ms ease-out;
+  transition: color 30ms ease-out; }
+
+.rrui__select__button--expanded {
+  color: #03b2cb; }
+
+.rrui__select__button--empty .rrui__select__selected-label {
+  color: #888888; }
+
+/* For `<Select native={false}/>` (default). */
+.rrui__select__native:active + .rrui__select__button .rrui__select__selected-label,
+.rrui__select__native:active + .rrui__select__button .rrui__select__arrow,
+.rrui__select__native:active + .rrui__input-label {
+  color: #03b2cb; }
+
+.rrui__select__selected-content {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center; }
+
+.rrui__select__selected-label {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1 1 auto;
+      -ms-flex: 1 1 auto;
+          flex: 1 1 auto; }
+
+.rrui__select .rrui__ellipsis {
+  position: absolute;
+  right: calc(0.6rem / 3);
+  top: calc(50% - 0.6rem / 6);
+  pointer-events: none; }
+
+.rrui__select__arrow {
+  width: 0;
+  height: 0;
+  margin-left: calc(0.6rem * 2 / 3);
+  margin-right: calc(0.6rem * 2 / 3);
+  margin-top: 0.1em;
+  opacity: 0.6;
+  color: #888888;
+  /*transition : opacity 100ms ease-out;*/
+  /* border-width: arrow_height arrow_width/2 0 arrow_width/2 */
+  border-width: 0.35em 0.22em 0 0.22em;
+  border-style: solid;
+  border-left-color: transparent;
+  border-right-color: transparent; }
+
+.rrui__select--compact {
+  /* Reverts `width: 100%` set at the top of this file */
+  width: auto;
+  /* If it's `compact` then it's most likely inlined */
+  display: inline-block; }
+
+.rrui__select--compact .rrui__expandable-list {
+  width: auto; }
+
+/* Stretches the inputs to full column width by default. */
+/* Because everyone uses CSS grids today. */
+.rrui__select__button,
+.rrui__select__native {
+  width: 100%; }
+
+.rrui__select__native {
+  height: 100%;
+  cursor: pointer; }
+
+/* Something from stackoverflow. */
+.rrui__select__native-option--divider {
+  font-size: 1px;
+  background: currentColor; }
+
+/* ChromeVox has a bug where `opacity: 0` elements are ignored. */
+/* https://github.com/michalsnik/aos/issues/397 */
+/* opacity  : 0.001; */
+.rrui__select__native--overlay {
+  position: absolute;
+  /* `z-index` caused a bug when select `<button/>`
+	    would be above other content on a page.
+	    For example, when there were two `<Select/>`s
+	    one below another then mouse down events
+	    from the options list of the top select
+	    would "go through" to the bottom select
+	    expanding it. */
+  /* z-index  : 1; */
+  opacity: 0; }
+
+.rrui__select__toggler {
+  display: inline-block; }
+
+.rrui__shadow {
+  -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+          box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12); }
+
+.rrui__slideout-menu {
+  position: fixed;
+  z-index: 100;
+  padding-top: calc(0.6rem * 2.5);
+  padding-bottom: calc(0.6rem * 2.5);
+  /* `box-sizing` is for padding to not glitch when overflown vertically. */
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  overflow-y: auto;
+  opacity: 0.9;
+  background-color: #000000;
+  color: #ffffff;
+  -webkit-transform: translate3d(-100%, 0, 0);
+          transform: translate3d(-100%, 0, 0);
+  -webkit-transition: -webkit-transform 220ms ease-out, -webkit-box-shadow 220ms ease-out;
+  transition: -webkit-transform 220ms ease-out, -webkit-box-shadow 220ms ease-out;
+  -o-transition: transform 220ms ease-out, box-shadow 220ms ease-out;
+  transition: transform 220ms ease-out, box-shadow 220ms ease-out;
+  transition: transform 220ms ease-out, box-shadow 220ms ease-out, -webkit-transform 220ms ease-out, -webkit-box-shadow 220ms ease-out; }
+
+.rrui__slideout-menu--fullscreen {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center; }
+
+.rrui__slideout-menu--expanded {
+  -webkit-box-shadow: 0 0 0.2em rgba(0, 0, 0, 0.4);
+          box-shadow: 0 0 0.2em rgba(0, 0, 0, 0.4); }
+
+.rrui__slideout-menu--left {
+  left: 0;
+  top: 0;
+  bottom: 0;
+  -webkit-transform: translate3d(-100%, 0, 0);
+          transform: translate3d(-100%, 0, 0); }
+
+.rrui__slideout-menu--left.rrui__slideout-menu--fullscreen {
+  right: 0; }
+
+.rrui__slideout-menu--left.rrui__slideout-menu--expanded {
+  -webkit-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0); }
+
+.rrui__slideout-menu--right {
+  right: 0;
+  top: 0;
+  bottom: 0;
+  -webkit-transform: translate3d(100%, 0, 0);
+          transform: translate3d(100%, 0, 0); }
+
+.rrui__slideout-menu--right.rrui__slideout-menu--fullscreen {
+  left: 0; }
+
+.rrui__slideout-menu--right.rrui__slideout-menu--expanded {
+  -webkit-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0); }
+
+.rrui__slideout-menu--top {
+  left: 0;
+  right: 0;
+  top: 0;
+  -webkit-transform: translate3d(0, -100%, 0);
+          transform: translate3d(0, -100%, 0); }
+
+.rrui__slideout-menu--top.rrui__slideout-menu--fullscreen {
+  bottom: 0; }
+
+.rrui__slideout-menu--top.rrui__slideout-menu--expanded {
+  -webkit-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0); }
+
+.rrui__slideout-menu--bottom {
+  left: 0;
+  right: 0;
+  bottom: 0;
+  -webkit-transform: translate3d(0, 100%, 0);
+          transform: translate3d(0, 100%, 0); }
+
+.rrui__slideout-menu--bottom.rrui__slideout-menu--fullscreen {
+  top: 0; }
+
+.rrui__slideout-menu--bottom.rrui__slideout-menu--expanded {
+  -webkit-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0); }
+
+.rrui__slideout-menu__item {
+  display: block;
+  height: calc(0.6rem * 4);
+  line-height: calc(0.6rem * 4);
+  padding-left: calc((0.6rem * 2.5) * 1.5);
+  padding-right: calc((0.6rem * 2.5) * 1.5);
+  opacity: 0;
+  -webkit-transition: opacity calc(220ms / 2) ease-out;
+  -o-transition: opacity calc(220ms / 2) ease-out;
+  transition: opacity calc(220ms / 2) ease-out; }
+
+.rrui__slideout-menu--expanded .rrui__slideout-menu__item {
+  opacity: 1; }
+
+.rrui__slideout-menu__item:hover {
+  text-decoration: none; }
+
+.rrui__slideout-menu__item:active {
+  background-color: #03b2cb;
+  color: #ffffff; }
+
+.rrui__slideout-menu--fullscreen .rrui__slideout-menu__item {
+  text-align: center; }
+
+.rrui__snackbar__container {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 1;
+  margin: calc(0.6rem * 2);
+  -webkit-transition: all 225ms cubic-bezier(0, 0, 0.2, 1);
+  -o-transition: all 225ms cubic-bezier(0, 0, 0.2, 1);
+  transition: all 225ms cubic-bezier(0, 0, 0.2, 1);
+  -webkit-transform: translateY(0);
+      -ms-transform: translateY(0);
+          transform: translateY(0);
+  visibility: visible; }
+
+.rrui__snackbar__container--hidden {
+  -webkit-transition: all 195ms cubic-bezier(0.4, 0, 0.6, 1);
+  -o-transition: all 195ms cubic-bezier(0.4, 0, 0.6, 1);
+  transition: all 195ms cubic-bezier(0.4, 0, 0.6, 1);
+  visibility: hidden; }
+
+.rrui__snackbar {
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-flex: 0;
+  -webkit-flex-grow: 0;
+      -ms-flex-positive: 0;
+          flex-grow: 0;
+  pointer-events: auto;
+  background: #000000;
+  color: #ffffff;
+  border-radius: 0.1rem;
+  padding-left: calc(0.6rem * 1.5);
+  padding-right: calc(0.6rem * 1.5);
+  min-height: calc(0.6rem * 4); }
+
+.rrui__snackbar__text {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+      -ms-flex: 1;
+          flex: 1; }
+
+.rrui__snackbar__count {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  min-width: 1.4em;
+  height: 1.4em;
+  padding-left: 0.3em;
+  padding-right: 0.3em;
+  -webkit-transform: translateX(50%) translateY(50%);
+      -ms-transform: translateX(50%) translateY(50%);
+          transform: translateX(50%) translateY(50%);
+  border: 1px solid #ffffff;
+  border-radius: calc(1.4em / 2);
+  background-color: #000000;
+  color: #ffffff;
+  font-weight: lighter;
+  pointer-events: none; }
+
+.rrui__snackbar__actions {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center; }
+
+.rrui__snackbar__action {
+  font-size: 95%;
+  border-radius: 0.5em;
+  text-transform: uppercase;
+  color: #03b2cb; }
+
+.rrui__snackbar__action:active {
+  color: #2bd7f0; }
+
+.rrui__snackbar__action,
+.rrui__snackbar__close {
+  margin-left: 0.6rem;
+  margin-right: -0.5em;
+  padding: 0.5em; }
+
+.rrui__snackbar__close {
+  border-radius: 50%;
+  color: inherit; }
+
+.rrui__snackbar__close:hover {
+  color: #F3F3F3; }
+
+.rrui__snackbar__close:active {
+  color: #cacaca; }
+
+.rrui__snackbar__close-icon {
+  width: 0.75em;
+  height: 0.75em; }
+
+.rrui__switch {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  /* The label is `display: inline-flex`
+	   so it behaves like an "inline" element
+	   and so its width is not limited to `100%`
+	   when `overflow: hidden`. */
+  max-width: 100%;
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  tap-highlight-color: transparent; }
+
+.rrui__switch--disabled {
+  cursor: default; }
+
+.rrui__switch--label {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center; }
+
+.rrui__switch__switch {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  position: relative;
+  line-height: 0; }
+
+.rrui__switch__input {
+  left: calc((0.6rem / 2) * -1);
+  right: calc((0.6rem / 2) * -1);
+  width: calc(100% + (0.6rem / 2) * 2);
+  height: calc(100% + (0.6rem / 2) * 2);
+  cursor: pointer; }
+
+.rrui__switch__label--left {
+  margin-right: 0.6rem; }
+
+.rrui__switch__label--right {
+  margin-left: 0.6rem; }
+
+.rrui__switch__groove {
+  position: relative;
+  display: inline-block;
+  width: 1.65em;
+  height: 1em;
+  color: #03b2cb;
+  background-color: #ffffff;
+  /* Using `* 0.5` instead of `/ 2` because of an IE11 bug:
+	   https://stackblitz.com/edit/ie11-border-radius-calc-issue?file=style.css */
+  border-radius: calc(1em * 0.5);
+  border: 0.0625em solid rgba(0,0,0,0.16);
+  -webkit-transition: all 0.40s cubic-bezier(.17,.67,.43,.98);
+  -o-transition: all 0.40s cubic-bezier(.17,.67,.43,.98);
+  transition: all 0.40s cubic-bezier(.17,.67,.43,.98);
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box; }
+
+.rrui__switch__input:focus + .rrui__switch__groove {
+  -webkit-box-shadow: 0 0 0 0 transparent;
+          box-shadow: 0 0 0 0 transparent; }
+
+.rrui__switch__groove--on {
+  border-color: currentColor;
+  background-color: currentColor; }
+
+.rrui__switch__knob {
+  position: absolute;
+  width: 0.875em;
+  height: 0.875em;
+  /* Using `* 0.5` instead of `/ 2` because of an IE11 bug:
+   https://stackblitz.com/edit/ie11-border-radius-calc-issue?file=style.css */
+  border-radius: calc(0.875em * 0.5);
+  top: calc((1em - 0.875em) / 2);
+  left: calc((1em - 0.875em) / 2);
+  background-color: #ffffff;
+  -webkit-box-shadow: inset 0 0 0 0.03em rgba(0,0,0,0.3), 0 0 0.05em rgba(0,0,0,0.05), 0 0.1em 0.2em rgba(0,0,0,0.2);
+          box-shadow: inset 0 0 0 0.03em rgba(0,0,0,0.3), 0 0 0.05em rgba(0,0,0,0.05), 0 0.1em 0.2em rgba(0,0,0,0.2);
+  /* `transform` uses pre-calculated `translateX` because IE11
+	    doesn't know how to handle `calc()` inside `transofrm`. */
+  /* https://stackoverflow.com/questions/21469350/not-possible-to-use-css-calc-with-transformtranslatex-in-ie */
+  -webkit-transition: -webkit-transform 0.25s ease-out;
+  transition: -webkit-transform 0.25s ease-out;
+  -o-transition: transform 0.25s ease-out;
+  transition: transform 0.25s ease-out;
+  transition: transform 0.25s ease-out, -webkit-transform 0.25s ease-out; }
+
+.rrui__switch__input:focus + .rrui__switch__groove + .rrui__switch__knob {
+  -webkit-box-shadow: inset 0 0 0 0.03em rgba(0,0,0,0.3), 0 0 0.05em rgba(0,0,0,0.05), 0 0.1em 0.2em rgba(0,0,0,0.2), inset 0 0 0 0.03em #03b2cb;
+          box-shadow: inset 0 0 0 0.03em rgba(0,0,0,0.3), 0 0 0.05em rgba(0,0,0,0.05), 0 0.1em 0.2em rgba(0,0,0,0.2), inset 0 0 0 0.03em #03b2cb; }
+
+.rrui__switch__knob--on {
+  -webkit-transform: translateX(0.65em);
+      -ms-transform: translateX(0.65em);
+          transform: translateX(0.65em); }
+
+.rrui__switcher {
+  position: relative;
+  white-space: nowrap; }
+
+.rrui__switcher .rrui__input {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex; }
+
+.rrui__switcher__option {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  height: 100%;
+  padding-left: calc(0.6rem * 1.5);
+  padding-right: calc(0.6rem * 1.5);
+  background-color: transparent;
+  color: #03b2cb;
+  border: 1px solid #03b2cb;
+  border-radius: 0.2rem;
+  -webkit-transition: all 50ms ease-out;
+  -o-transition: all 50ms ease-out;
+  transition: all 50ms ease-out; }
+
+.rrui__switcher__option--first {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-right: none; }
+
+.rrui__switcher__option--last {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0; }
+
+.rrui__switcher__option--middle {
+  border-radius: 0;
+  border-right: none; }
+
+.rrui__switcher__option:focus:not(:active):not(.rrui__switcher__option--selected) {
+  color: #03b2cb; }
+
+.rrui__switcher__option:active {
+  color: #ffffff;
+  background-color: #2bd7f0;
+  /*border-color     : transparent;*/
+  -webkit-transition: none;
+  -o-transition: none;
+  transition: none; }
+
+.rrui__switcher__option--selected {
+  color: #ffffff;
+  background-color: #03b2cb;
+  /*border-color     : #03b2cb;*/ }
+
+.rrui__switcher__option {
+  cursor: pointer; }
+
+.rrui__switcher__option--disabled {
+  cursor: default; }
+
+.rrui__text-input__label--invalid {
+  color: #d30f00; }
+
+.rrui__input-field:not(:focus) + .rrui__text-input__label--placeholder {
+  -webkit-transform: translateX(0rem) translateY(0) scale(1);
+      -ms-transform: translateX(0rem) translateY(0) scale(1);
+          transform: translateX(0rem) translateY(0) scale(1);
+  /* Introducing a return animation delay */
+  /* because when a user clicks/taps on an option in */
+  /* a <Select/> it loses :focus for a moment */
+  /* causing the return animation to start playing */
+  /* and then revert back as the click finishes */
+  /* returning focus to the input, so there should be */
+  /* a slight delay to prevent visual jitter. */
+  -webkit-transition-delay: 100ms;
+       -o-transition-delay: 100ms;
+          transition-delay: 100ms; }
+
+/* Set the default height of multiline `<TextInput/>`s. */
+.rrui__input-field--multiline {
+  height: calc(0.6rem * 7);
+  padding-top: 0.6rem;
+  padding-bottom: 0.6rem;
+  padding-left: 0rem;
+  padding-right: 0rem;
+  /* Fixes the spacing bug between `<textarea/>` and its container. */
+  /* https://stackoverflow.com/questions/35906806/how-to-remove-space-between-textarea-and-parent-div */
+  vertical-align: top; }
+
+/* Multiline `<TextInput/>`'s label positioning. */
+/* Must be same as `padding-top`/`padding-bottom`. */
+.rrui__text-input__label--multiline {
+  top: 0.6rem; }
+
+.rrui__text-line {
+  white-space: nowrap;
+  overflow: hidden;
+  -o-text-overflow: ellipsis;
+     text-overflow: ellipsis; }
+
+.rrui__tooltip {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding-left: calc(0.6rem * 1.5);
+  padding-right: calc(0.6rem * 1.5);
+  height: calc(0.6rem * 4);
+  color: #ffffff;
+  background-color: #000000;
+  border-radius: 0.1rem;
+  cursor: default;
+  outline: none; }
+
+.rrui__tooltip {
+  opacity: 0; }
+
+.rrui__tooltip--after-show {
+  opacity: 1; }
+
+/* `--before-hide` must be placed after `--after-show`. */
+.rrui__tooltip--before-hide {
+  opacity: 0; }
+
+.rrui__tooltip--top {
+  -webkit-transform: translateY(calc(-1 * 0.5em));
+      -ms-transform: translateY(calc(-1 * 0.5em));
+          transform: translateY(calc(-1 * 0.5em)); }
+
+.rrui__tooltip--top.rrui__tooltip--after-show {
+  -webkit-transform: translateY(calc(-1 * 0.2em));
+      -ms-transform: translateY(calc(-1 * 0.2em));
+          transform: translateY(calc(-1 * 0.2em)); }
+
+/* `--before-hide` must be placed after `--after-show`. */
+.rrui__tooltip--top.rrui__tooltip--before-hide {
+  -webkit-transform: translateY(calc(-1 * 0.5em));
+      -ms-transform: translateY(calc(-1 * 0.5em));
+          transform: translateY(calc(-1 * 0.5em)); }
+
+.rrui__tooltip--left {
+  -webkit-transform: translateX(calc(-1 * 0.5em));
+      -ms-transform: translateX(calc(-1 * 0.5em));
+          transform: translateX(calc(-1 * 0.5em)); }
+
+.rrui__tooltip--left.rrui__tooltip--after-show {
+  -webkit-transform: translateX(calc(-1 * 0.2em));
+      -ms-transform: translateX(calc(-1 * 0.2em));
+          transform: translateX(calc(-1 * 0.2em)); }
+
+/* `--before-hide` must be placed after `--after-show`. */
+.rrui__tooltip--left.rrui__tooltip--before-hide {
+  -webkit-transform: translateX(calc(-1 * 0.5em));
+      -ms-transform: translateX(calc(-1 * 0.5em));
+          transform: translateX(calc(-1 * 0.5em)); }
+
+.rrui__tooltip--bottom {
+  -webkit-transform: translateY(0.5em);
+      -ms-transform: translateY(0.5em);
+          transform: translateY(0.5em); }
+
+.rrui__tooltip--bottom.rrui__tooltip--after-show {
+  -webkit-transform: translateY(0.2em);
+      -ms-transform: translateY(0.2em);
+          transform: translateY(0.2em); }
+
+/* `--before-hide` must be placed after `--after-show`. */
+.rrui__tooltip--bottom.rrui__tooltip--before-hide {
+  -webkit-transform: translateY(0.5em);
+      -ms-transform: translateY(0.5em);
+          transform: translateY(0.5em); }
+
+.rrui__tooltip--right {
+  -webkit-transform: translateX(0.5em);
+      -ms-transform: translateX(0.5em);
+          transform: translateX(0.5em); }
+
+.rrui__tooltip--right.rrui__tooltip--after-show {
+  -webkit-transform: translateX(0.2em);
+      -ms-transform: translateX(0.2em);
+          transform: translateX(0.2em); }
+
+/* `--before-hide` must be placed after `--after-show`. */
+.rrui__tooltip--right.rrui__tooltip--before-hide {
+  -webkit-transform: translateX(0.5em);
+      -ms-transform: translateX(0.5em);
+          transform: translateX(0.5em); }
+
+.rrui__tooltip--after-show,
+.rrui__tooltip--before-hide {
+  -webkit-transition: opacity 120ms, -webkit-transform 120ms;
+  transition: opacity 120ms, -webkit-transform 120ms;
+  -o-transition: opacity 120ms, transform 120ms;
+  transition: opacity 120ms, transform 120ms;
+  transition: opacity 120ms, transform 120ms, -webkit-transform 120ms; }
+
+.rrui__tooltip__target {
+  /* Prevents entering text selection mode
+	   on mobile devices when tapping down and holding */
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  /* Resets `cursor: pointer` set by `interactive={true}`'s `.rrui__button-reset`. */
+  cursor: inherit;
+  /* Resets `white-space : nowrap` set by `interactive={true}`'s `.rrui__button-reset`. */
+  white-space: initial; }

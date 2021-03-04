@@ -1,0 +1,1 @@
+This directory is for 1:1 flags that are actual 1:1 flags, not cropped versions of 3:2 flags.

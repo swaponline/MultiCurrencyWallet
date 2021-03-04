@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { Fragment }  from 'react'
 import { withRouter } from 'react-router-dom'
 import CopyToClipboard from 'react-copy-to-clipboard'
@@ -99,7 +100,7 @@ export default class ReceiveModal extends React.Component<any, any> {
   }
 
   handleBeginSaveMnemonic = async () => {
-    //@ts-ignore
+    //@
     actions.modals.open(constants.modals.SaveMnemonicModal, {
       onClose: () => {
         const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
@@ -120,7 +121,7 @@ export default class ReceiveModal extends React.Component<any, any> {
     if (pathname.includes('receive')) {
       goBack()
     }
-    //@ts-ignore
+    //@
     actions.modals.close(name)
   }
 

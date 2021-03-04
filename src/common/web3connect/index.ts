@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { EventEmitter } from 'events'
 import { ConnectorEvent } from '@web3-react/types'
 import Web3 from 'web3'
@@ -39,7 +40,7 @@ export default class Web3Connect extends EventEmitter {
     // Предыдущий провайдер (после перезагрузки восстанавливаем его)
     const cachedProviderName = localStorage.getItem(`WEB3CONNECT:PROVIDER`)
     if (cachedProviderName) {
-      //@ts-ignore
+      //@
       const lsProvider = getProviderByName(this, cachedProviderName)
       if (lsProvider) {
         lsProvider.isConnected().then(async (isConnected) => {
@@ -145,7 +146,7 @@ export default class Web3Connect extends EventEmitter {
   hasCachedProvider() {
     const cachedProviderName = localStorage.getItem(`WEB3CONNECT:PROVIDER`)
     if (cachedProviderName) {
-      //@ts-ignore
+      //@
       const lsProvider = getProviderByName(this, cachedProviderName)
       if (lsProvider) return true
     }

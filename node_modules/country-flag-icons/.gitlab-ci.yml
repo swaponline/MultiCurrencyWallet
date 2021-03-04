@@ -1,0 +1,18 @@
+image: node:9.11.1
+
+pages:
+  script:
+  - npm install
+  - npm run generate-countries
+  - npm run generate-1x1-flags
+  - npm run copy-1x1-flags
+  - npm run website:copy-flags
+  - npm run website:generate-flags-page
+  - mv ./website ./public
+
+  artifacts:
+    paths:
+    - public
+
+  only:
+  - master

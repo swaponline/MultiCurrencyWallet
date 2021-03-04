@@ -1,3 +1,4 @@
+// @ts-nocheck
 import getCurrencyKey from './getCurrencyKey'
 import ethToken from './ethToken'
 import actions from 'redux/actions'
@@ -9,7 +10,7 @@ const getWalletLink = (currency, checkAddress) => {
   const prefix = getCurrencyKey(currency, false)
 
   if (isEthToken) {
-    //@ts-ignore
+    //@
     ourWallets = actions.eth.getAllMyAddresses()
   } else {
     if (actions[prefix]
@@ -23,7 +24,7 @@ const getWalletLink = (currency, checkAddress) => {
 
   if (!ourWallets) return false
 
-  //@ts-ignore
+  //@
   const our = checkAddress.filter((address) => ourWallets.includes(address.toLowerCase()))
 
   if (our.length) {

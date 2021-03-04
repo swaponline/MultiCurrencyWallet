@@ -1,0 +1,40 @@
+{
+	// Enforcing Options
+	"bitwise": true,
+	"camelcase": true,
+	"curly": true,
+	"eqeqeq": true,
+	"es3": true,
+	"forin": true,
+	"freeze": true,
+	"immed": true,
+	"indent": true,
+	"latedef": "nofunc",
+	"newcap": true,
+	"noarg": true,
+	"noempty": true,
+	"nonbsp": true,
+	"nonew": true,
+	"plusplus": true,
+	"quotmark": "double",
+	"undef": true,
+	"unused": true,
+
+	// Complexity Options
+	"maxcomplexity": 5,
+	"maxdepth": 3,
+	"maxlen": 90,
+	"maxparams": 3,
+	"maxstatements": 10,
+
+	// Relaxing Options
+	"asi": true,
+
+	// Environment Definitions
+	"browser": true,
+	"node": true,
+
+	"globals": {
+		"define": false
+	}
+}

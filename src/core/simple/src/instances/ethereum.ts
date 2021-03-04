@@ -1,3 +1,4 @@
+// @ts-nocheck
 import request from '../helpers/request'
 import debug from 'debug'
 
@@ -36,9 +37,9 @@ class Ethereum {
 
   constructor(_network = 'testnet') {
     const _provider = WEB3_PROVIDERS[_network]
-    //@ts-ignore
+    //@
     if (typeof web3 !== 'undefined') {
-      //@ts-ignore
+      //@
       this.core = new Web3(web3.currentProvider)
     } else {
       this.core = new Web3(_provider)
@@ -130,7 +131,7 @@ class Ethereum {
         }
       })
     )
-    //@ts-ignore
+    //@
     return new BigNumber(gasPrice).multipliedBy(_multiplier)
   }
 

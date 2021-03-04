@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React from 'react'
 import PropTypes from 'prop-types'
 
@@ -50,7 +51,7 @@ export default class Offer extends React.Component<any, any> {
       return
     }
     actions.token
-      //@ts-ignore
+      //@
       .approve(name, amount)
       .then(() => {
         actions.loader.hide()

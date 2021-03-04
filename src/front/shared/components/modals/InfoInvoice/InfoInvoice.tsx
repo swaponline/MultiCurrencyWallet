@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { Fragment } from 'react'
 import { Modal } from 'components/modal'
 import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
@@ -130,7 +131,7 @@ export default class InfoInvoice extends React.Component<any, any> {
   }
 
   handleCloseButton = () => {
-    //@ts-ignore
+    //@
     this.handleClose()
   }
 

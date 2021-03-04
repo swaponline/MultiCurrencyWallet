@@ -1,0 +1,16 @@
+# Installation
+> `npm install --save @types/bl`
+
+# Summary
+This package contains type definitions for BufferList (https://github.com/rvagg/bl).
+
+# Details
+Files were exported from https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/bl
+
+Additional Details
+ * Last updated: Wed, 10 Oct 2018 04:53:23 GMT
+ * Dependencies: node
+ * Global values: none
+
+# Credits
+These definitions were written by Bart van der Schoor <https://github.com/Bartvds>, Francis Gulotta <https://github.com/reconbot>.

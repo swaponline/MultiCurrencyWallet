@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import helpers, { constants } from 'helpers'
@@ -65,7 +66,7 @@ export default class WithdrawModalMultisig extends React.Component<any, any> {
       items,
     } = props
 
-    //@ts-ignore
+    //@
     const currentDecimals = constants.tokenDecimals.btcmultisig
     const selectedItem = items.filter((item) => item.currency === currency)[0]
 
@@ -77,7 +78,7 @@ export default class WithdrawModalMultisig extends React.Component<any, any> {
       usedAdminFee = config.opts.fee.btc
       if (usedAdminFee) {
         // miner fee + minimal admin fee
-        //@ts-ignore
+        //@
         min = new BigNumber(min).plus(usedAdminFee.min).toNumber()
       }
     }
@@ -326,7 +327,7 @@ export default class WithdrawModalMultisig extends React.Component<any, any> {
     this.setState({
       sendSmsStatus: 'sending',
     })
-    //@ts-ignore
+    //@
     const result = await actions.btcmultisig.sendSMSProtected(sendOptions)
 
     console.log('sendSMSProtected result', result)

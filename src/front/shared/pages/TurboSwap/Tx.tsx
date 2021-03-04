@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { PureComponent, Fragment } from 'react'
 import BigNumber from 'bignumber.js'
 
@@ -30,7 +31,7 @@ interface ITx {
 export default class Tx extends PureComponent<ITx, {}> {
 
   constructor() {
-    //@ts-ignore
+    //@
     super()
   }
 

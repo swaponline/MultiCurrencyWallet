@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 
@@ -180,7 +181,7 @@ export default class Home extends Component<any, any> {
       <section styleName={isWidgetBuild ? `${sectionContainerStyleName} ${sectionContainerStyleName}_widget` : sectionContainerStyleName}>
         {
           history.location && history.location.pathname === exchange ? (
-            //@ts-ignore
+            //@
             <PageHeadline>
               <CurrencyDirectionChooser
                 handleSellCurrencySelect={this.handleSellCurrencySelect}
@@ -193,7 +194,7 @@ export default class Home extends Component<any, any> {
               />
               <div styleName="videoContainer">
                 {/*
-                //@ts-ignore */}
+                //@ */}
                 <Center relative centerVertically={false}>
                   <SubTitle>
                     <FormattedMessage id="Home153" defaultMessage="What is atomic swap?" />
@@ -221,9 +222,9 @@ export default class Home extends Component<any, any> {
               </div>
             </PageHeadline>
           ) : (
-            //@ts-ignore
+            //@
             <OrderBook
-              //@ts-ignore
+              //@
               handleSellCurrencySelect={this.handleSellCurrencySelect}
               handleBuyCurrencySelect={this.handleBuyCurrencySelect}
               buyCurrency={buyCurrency}

@@ -1,4 +1,5 @@
-//@ts-ignore
+// @ts-nocheck
+//@
 import plugins from 'plugins';
 import config from 'helpers/externalConfig'
 
