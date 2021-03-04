@@ -1,6 +1,7 @@
 import Web3 from 'web3'
 import config from 'app-config'
 import helpers from 'helpers'
+import BigNumber from 'bignumber.js'
 
 console.log('reset web3')
 let web3: IEtheriumProvider = new Web3(
