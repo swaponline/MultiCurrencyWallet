@@ -19,8 +19,7 @@ import {
 } from './controller'
 
 
-//@ts-ignore
-const router = new Router()
+const router = Router()
 
 router.get('/finished', getFinished)
 router.get('/in-progress', getInProgress)

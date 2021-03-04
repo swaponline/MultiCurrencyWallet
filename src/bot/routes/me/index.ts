@@ -4,8 +4,7 @@ import { balance, getMe, getWallet, getWalletDetailed, withdraw } from './contro
 import { listMyOrders } from '../orders/controller'
 
 
-//@ts-ignore
-const router = new Router()
+const router = Router()
 
 
 router.get('/', getMe)

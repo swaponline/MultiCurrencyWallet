@@ -21,8 +21,7 @@ import {
 } from './controller'
 
 
-//@ts-ignore
-const router = new Router()
+const router = Router()
 
 // order list
 router.get('/', listOrders)
