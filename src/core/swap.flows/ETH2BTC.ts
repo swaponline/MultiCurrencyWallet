@@ -216,28 +216,23 @@ class ETH2BTC extends AtomicAB2UTXO {
       return [
         // 1 - `sign` - Signs 
         async () => {
-          console.log('>>>>>> TAKER - ETH2BTC - sign')
           this.swap.processMetamask()
           this.sign()
         },
 
         // 2 - `sync-balance` - syncBalance
         async () => {
-          console.log('>>>>>>> TAKER - ETH2BTC - sync balance')
           this.syncBalance()
         },
 
         // 3 - `lock-eth` - create AB contract - создание секрета, хеша, отправка хеша
         async () => {
-          console.log('>>>>>>>> TAKER - ETH2BTC - lock eth')
-
           if (!this.state.secret) {
-            console.log('>>>>>> CREATE SECRET')
             const {
               secret,
               secretHash,
             } = this.generateSecret()
-            console.log('>>>>>', secret, secretHash)
+
             this.createWorkUTXOScript(secretHash, false)
 
             this.setState({
@@ -245,9 +240,6 @@ class ETH2BTC extends AtomicAB2UTXO {
               secretHash,
             }, true)
           }
-
-          
-          console.log('>>>>>> TAKER - ETH2BTC - fund contract eth')
 
           await flow.ethSwap.fundContract({
             flow,
@@ -261,10 +253,8 @@ class ETH2BTC extends AtomicAB2UTXO {
 
         // 4 - `wait-lock-utxo` - wait create UTXO
         async () => {
-          console.log('>>>> wait lock -utxo')
           this.waitUTXOScriptFunded()
             .then((funded) => {
-              console.log('is funded', funded)
               if (funded) {
                 this.finishStep({}, 'wait-lock-utxo`')
               }
@@ -273,7 +263,6 @@ class ETH2BTC extends AtomicAB2UTXO {
 
         // 5 - `withdraw-utxo` - withdraw from UTXO
         async () => {
-          console.log('>>>> withdraw-utxo')
           await this.btcSwap.withdrawFromSwap({
             flow,
           })

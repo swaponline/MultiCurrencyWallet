@@ -160,21 +160,17 @@ console.log('>>>> getSteps', this.isTaker())
       return [
         // 1 - `sign` Signs
         async () => {
-          console.log('>>>>>> MAKER BTC2ETH - Sign')
           this.swap.processMetamask()
           this.sign()
         },
 
         // 2 - `sync-balance` - syncBalance
         async () => {
-          console.log('>>>>>> MAKER BTC2ETH - Sync balance')
           this.syncBalance()
         },
 
         // 3 - `wait-lock-eth` - wait taker create AB - обмен хешем
         async () => {
-          console.log('>>>>>> MAKER BTC2ETH - Wait-lock-eth')
-          
           this.swap.room.once('create eth contract', async ({
             ethSwapCreationTransactionHash,
           }) => {
@@ -182,6 +178,7 @@ console.log('>>>> getSteps', this.isTaker())
             if (this.ethSwap.isContractFunded(this)) {
               console.log('>>>>> MAKER BTC2ETH - ETH LOCKED - CHECK DESTINATION Address')
               const destAddressIsOk = await this.ethSwap.checkTargetAddress({ flow })
+
               if (destAddressIsOk) {
                 console.log('>>>>>> MAKER BTC2ETH - ETH IS LOCKED')
 
@@ -202,19 +199,16 @@ console.log('>>>> getSteps', this.isTaker())
         async () => {
           // Repeat until 
           await util.helpers.repeatAsyncUntilResult(async () => {
-            console.log('>>>>>>> MAKER BTC2ETH - LOCK-UTXO')
             const {
               secretHash,
               utxoScriptValues
             } = flow.state
             if (secretHash && utxoScriptValues) {
-              console.log('>>>>> MAKER BTC2ETH - FUND SCRIPT')
               await this.btcSwap.fundSwapScript({
                 flow,
               })
               return true
             } else {
-              console.log('>>>>> MAKER BTC2ETH - No script values - request its')
               flow.swap.room.sendMessage({
                 event: 'request utxo script',
               })
@@ -226,22 +220,20 @@ console.log('>>>> getSteps', this.isTaker())
         // 5 - `wait-withdraw-utxo` - wait withdraw UTXO - fetch secret from TX - getSecretFromTxhash
         async () => {
           await util.helpers.repeatAsyncUntilResult(async () => {
-            console.log('>>>> MAKER - BTC2ETH - 5 - wait-withdraw-utxo')
             // check withdraw
             const {
               utxoScriptValues,
             } = this.state
             const { scriptAddress } = this.utxoBlockchain.createScript(utxoScriptValues)
-            console.log('>>>> scriptAddress', scriptAddress)
+
             const utxoWithdrawData = await this.btcSwap.checkWithdraw(scriptAddress)
-            console.log('>>>>> MAKER - BTC2ETH - WITHDRAW UTXO DATA', utxoWithdrawData)
+
             if (utxoWithdrawData) {
               const {
                 txid: utxoSwapWithdrawTransactionHash,
               } = utxoWithdrawData
+
               const secret = await this.btcSwap.getSecretFromTxhash(utxoSwapWithdrawTransactionHash)
-              
-              console.log('>>>>> secret', secret)
               if (secret) {
                 this.finishStep({
                   secret,
@@ -257,7 +249,6 @@ console.log('>>>> getSteps', this.isTaker())
 
         // 6 - `withdraw-eth` - withdraw from AB
         async () => {
-          console.log('>>>>> MAKER - BTC2ETH - WITHDRAW FROM AB')
           await flow.ethSwap.withdrawFromABContract({ flow })
         },
 
