@@ -815,19 +815,7 @@ class EthSwap extends SwapInterface {
       }, true)
     })
 
-    const isContractBalanceOk = await util.helpers.repeatAsyncUntilResult(async () => {
-      const balance = await flow.ethSwap.getBalance({
-        ownerAddress: abClass.app.getParticipantEthAddress(flow.swap),
-      })
-
-      _debug('swap.core:flow')('Checking contract balance:', balance)
-
-      if (balance > 0) {
-        return true
-      }
-
-      return false
-    })
+    const isContractBalanceOk = await this.isContractFunded(flow)
 
     if (isContractBalanceOk) {
       const { isEthContractFunded } = flow.state
@@ -849,12 +837,13 @@ class EthSwap extends SwapInterface {
     const abClass = this
 
     const isContractBalanceOk = await util.helpers.repeatAsyncUntilResult(async () => {
-      const balance = await flow.ethSwap.getBalance({
+      const balance = await abClass.getBalance({
         ownerAddress: abClass.app.getParticipantEthAddress(flow.swap),
       })
 
       _debug('swap.core:flow')('Checking contract balance:', balance)
 
+console.log('>>>>>> BALANCE ON ETH Contract', balance, flow.swap.buyAmount.toNumber())
       if (balance > 0) {
         return true
       }
