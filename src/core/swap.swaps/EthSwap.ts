@@ -100,7 +100,14 @@ class EthSwap extends SwapInterface {
    * @returns {Promise}
    */
   async create(data, handleTransactionHash) {
-    if (data.targetWallet && (data.targetWallet!==data.participantAddress) && this.hasTargetWallet()) {
+    if (
+      data.targetWallet
+      && (
+        (data.targetWallet!==data.participantAddress)
+        ||
+        data.useTargetWallet
+      )
+      && this.hasTargetWallet()) {
       return this.createSwapTarget(data, handleTransactionHash)
     } else {
       return this.createSwap(data, handleTransactionHash)
@@ -591,8 +598,10 @@ class EthSwap extends SwapInterface {
 
   async fundContract({
     flow,
+    useTargetWallet,
   }: {
     flow: any,
+    useTargetWallet?: boolean,
   }) {
     const abClass = this
     const {
@@ -608,7 +617,10 @@ class EthSwap extends SwapInterface {
       participantAddress: abClass.app.getParticipantEthAddress(flow.swap),
       secretHash: secretHash,
       amount: sellAmount,
-      targetWallet: flow.swap.destinationSellAddress
+      targetWallet: (flow.swap.destinationSellAddress)
+        ? flow.swap.destinationSellAddress
+        : abClass.app.getParticipantEthAddress(flow.swap),
+      useTargetWallet,
     }
 
     const tryCreateSwap = async () => {
@@ -852,6 +864,26 @@ class EthSwap extends SwapInterface {
 
     if (isContractBalanceOk) {
       return true
+    }
+    return false
+  }
+
+  async checkTargetAddress({
+    flow,
+  }: {
+    flow: any
+  }) {
+    if (this.hasTargetWallet()) {
+      const targetWallet = await this.getTargetWallet(
+        this.app.getParticipantEthAddress(flow.swap)
+      )
+      const needTargetWallet = (flow.swap.destinationBuyAddress)
+        ? flow.swap.destinationBuyAddress
+        : this.app.getMyEthAddress()
+
+      if (targetWallet.toLowerCase() === needTargetWallet.toLowerCase()) {
+        return true
+      }
     }
     return false
   }

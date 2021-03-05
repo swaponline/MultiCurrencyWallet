@@ -175,17 +175,23 @@ console.log('>>>> getSteps', this.isTaker())
         async () => {
           console.log('>>>>>> MAKER BTC2ETH - Wait-lock-eth')
           
-          this.swap.room.once('create eth contract', ({
+          this.swap.room.once('create eth contract', async ({
             ethSwapCreationTransactionHash,
           }) => {
             console.log('>>>>> MAKER BTC2ETH - ETH LOCKED - check')
             if (this.ethSwap.isContractFunded(this)) {
-              console.log('>>>>>> MAKER BTC2ETH - ETH IS LOCKED')
+              console.log('>>>>> MAKER BTC2ETH - ETH LOCKED - CHECK DESTINATION Address')
+              const destAddressIsOk = await this.ethSwap.checkTargetAddress({ flow })
+              if (destAddressIsOk) {
+                console.log('>>>>>> MAKER BTC2ETH - ETH IS LOCKED')
 
-              this.finishStep({
-                ethSwapCreationTransactionHash,
-                isEthContractFunded: true,
-              }, 'wait-lock-eth`')
+                this.finishStep({
+                  ethSwapCreationTransactionHash,
+                  isEthContractFunded: true,
+                }, 'wait-lock-eth`')
+              } else {
+                console.warn('Destination address not valid. Stop swap now!')
+              }
             } else {
               console.warn('Contract not funded', ethSwapCreationTransactionHash)
             }
