@@ -6,6 +6,7 @@ import { FormattedMessage } from 'react-intl'
 
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
+import FeeRadios  from "./FeeRadios";
 
 type FeeInfoBlockProps = {
   isLoading: boolean
@@ -118,44 +119,7 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
     <section styleName='feeInfoBlock'>
       <div styleName='feeRow'>
         <span styleName='feeRowTitle'>Fee rate:</span>
-          <div>
-            <div className="radio">
-              <label>
-                <input
-                  type="radio"
-                  value="Fast"
-                />
-                Fast
-              </label>
-            </div>
-            <div className="radio">
-              <label>
-                <input
-                  type="radio"
-                  value="Medium"
-                />
-                Medium
-              </label>
-            </div>
-            <div className="radio">
-              <label>
-                <input
-                  type="radio"
-                  value="Slow"
-                />
-                Slow
-              </label>
-            </div>
-            <div className="radio">
-              <label>
-                <input
-                  type="radio"
-                  value="Custosm"
-                />
-                Custosm
-              </label>
-            </div>
-          </div>
+        <FeeRadios />
       </div>
 
       <div styleName='feeRow'>
