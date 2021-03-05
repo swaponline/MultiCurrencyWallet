@@ -835,6 +835,7 @@ class EthSwap extends SwapInterface {
   // @to-do - check secret hash
   async isContractFunded(flow) {
     const abClass = this
+    const web3 = this.app.env.getWeb3()
 
     const isContractBalanceOk = await util.helpers.repeatAsyncUntilResult(async () => {
       const balance = await abClass.getBalance({
@@ -843,8 +844,9 @@ class EthSwap extends SwapInterface {
 
       _debug('swap.core:flow')('Checking contract balance:', balance)
 
-console.log('>>>>>> BALANCE ON ETH Contract', balance, flow.swap.buyAmount.toNumber())
-      if (balance > 0) {
+      const needContractBalance = new BigNumber(web3.utils.toWei(flow.swap.buyAmount))
+console.log('>>>>>> BALANCE ON ETH Contract', balance, needContractBalance.toNumber(), flow.swap.buyAmount.toNumber())
+      if (new BigNumber(balance).isGreaterThanOrEqualTo(needContractBalance)) {
         return true
       }
 
