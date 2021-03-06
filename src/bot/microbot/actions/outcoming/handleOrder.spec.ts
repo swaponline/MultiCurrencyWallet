@@ -38,8 +38,7 @@ describe('Handle Order', () => {
     const doRequest = jest.fn(function () { return Promise.resolve(false) })
 
     expect.assertions(1)
-    //@ts-ignore
-    return handleOrder(fakeOrders)(_GOOD_ORDER, doRequest)
+    return handleOrder(fakeOrders, _GOOD_ORDER)(doRequest)
       .then(() => {
         // disabled
         // expect(doRequest).toHaveBeenCalled()
