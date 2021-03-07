@@ -19,6 +19,8 @@
     z-index: 1;
     width: 25%;
     padding: 15px 10px 10px 40px;
+    border: 1px solid rgba(142, 154, 163, 0.16);
+    box-shadow: 0px 2px 12px rgba(142, 154, 163, 0.08);
     color: #c3c9dd;
     border-radius: 5px;
     background-color: #2b2b2b;
@@ -35,7 +37,7 @@
 
 .fee-radio__input:checked + .fee-radio__label,
 .fee-radio__label--active {
-    border: 2px solid #7371ff;
+    border: 1px solid #7371ff;
     color: #d4d4d4;
 }
 
