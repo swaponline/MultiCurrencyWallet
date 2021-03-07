@@ -44,7 +44,7 @@ class Kraken extends React.Component {
     return (
       <div >
         <h2>Krakens</h2>
-        {kraken_items.filter(item => ['XXBT','XETH'].includes(item[0])).map(item => (
+        {kraken_items.filter(item => ['XXBT', 'XETH'].includes(item[0])).map(item => (
           <div>
             {item[0]} : {item[1]}
           </div>

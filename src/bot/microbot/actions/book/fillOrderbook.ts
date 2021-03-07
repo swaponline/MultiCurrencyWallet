@@ -110,7 +110,7 @@ const createOrders = (orderType, balance, ticker, tickerOrders, basePrice) => {
 const createAllOrders = async (balances, ticker) => {
   const price = TRADE_CONFIG[ticker].sellPrice
     ? new BigNumber(TRADE_CONFIG[ticker].sellPrice)
-    : await fetchPrice(ticker,  TRADE_CONFIG[ticker].type)
+    : await fetchPrice(ticker, TRADE_CONFIG[ticker].type)
 
   if (!price) {
     throw new Error(`${ticker} price is empty`)

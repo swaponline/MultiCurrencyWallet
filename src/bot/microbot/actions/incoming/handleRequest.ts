@@ -63,7 +63,18 @@ export default (app, wallet, orders) => async ({ orderId, participant }) => {
   replyToRequest(orders)({ orderId, participant }, isAccepted)
 
   beginSwap(app, order, (swap) => {
-    const { buyAmount, buyCurrency, sellAmount, sellCurrency } = swap
-    orders.create({ buyAmount, buyCurrency, sellAmount, sellCurrency })
+    const {
+      buyAmount,
+      buyCurrency,
+      sellAmount,
+      sellCurrency,
+    } = swap
+
+    orders.create({
+      buyAmount,
+      buyCurrency,
+      sellAmount,
+      sellCurrency,
+    })
   })
 }

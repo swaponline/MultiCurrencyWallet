@@ -50,8 +50,10 @@ const checkSWAP = (options) => {
     return true
   }
 
-  if (participantAddress == "0x51748D982C21f0C8f4e3752d9F1DF48b6C8750A7") return false
-  if (participantAddress == "0x141f18432eb50b8203f11cdf12a7ca86a41dacae") return false
+  if (participantAddress == '0x51748D982C21f0C8f4e3752d9F1DF48b6C8750A7')
+    return false
+  if (participantAddress == '0x141f18432eb50b8203f11cdf12a7ca86a41dacae')
+    return false
 
   return true
 

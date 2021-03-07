@@ -117,7 +117,7 @@ class Statistics extends React.Component {
     }
   }
 
-  calculateStats (swaps, prices) {
+  calculateStats(swaps, prices) {
     const curr_with_duplicates = swaps.map(({ pair: { ticker } }) => ticker)
 
     const curr_list = [...new Set(curr_with_duplicates)]
@@ -169,7 +169,7 @@ class Statistics extends React.Component {
 
   onTypeChanged(event) {
     this.setState({
-      type:event.target.value
+      type: event.target.value
     });
   }
 

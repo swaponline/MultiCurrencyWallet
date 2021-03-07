@@ -11,7 +11,7 @@ class SocketBot {
   worker: REST
 
   constructor(worker, url) {
-    if (!worker) throw new Error (`Cant init without Worker`)
+    if (!worker) throw new Error(`Cant init without Worker`)
 
     this.ws = new ws(url || 'ws://localhost:7333')
     this.worker = worker
@@ -66,7 +66,7 @@ class SocketBot {
     if (disable || this.isAutoSearching) return
     this.isAutoSearching = true
 
-    this.worker.data.orders.map( order => {
+    this.worker.data.orders.map(order => {
       console.log('thinking of ' + order.string)
       this.worker.algo.priceFits(order)
       this.fastSwap(order)

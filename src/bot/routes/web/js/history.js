@@ -170,7 +170,7 @@ class History extends React.Component {
 
   onTypeChanged(event) {
     this.setState({
-      type:event.target.value
+      type: event.target.value
     });
   }
 

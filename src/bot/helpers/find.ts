@@ -9,8 +9,8 @@ let _swaps = {}
 const decodeFlow = (swap) => {
   const { isMy: isMyOrder, buyCurrency, sellCurrency } = swap
 
-  const firstPart     = isMyOrder ? sellCurrency : buyCurrency
-  const lastPart      = isMyOrder ? buyCurrency : sellCurrency
+  const firstPart = isMyOrder ? sellCurrency : buyCurrency
+  const lastPart  = isMyOrder ? buyCurrency : sellCurrency
   const flowName = `${firstPart.toUpperCase()}2${lastPart.toUpperCase()}`
 
   return flows[flowName]
