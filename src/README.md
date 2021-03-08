@@ -588,9 +588,6 @@
 │   │   │   ├── Footer
 │   │   │   │   ├── Footer.scss
 │   │   │   │   ├── Footer.tsx
-│   │   │   │   ├── Links
-│   │   │   │   │   ├── Links.scss
-│   │   │   │   │   └── Links.tsx
 │   │   │   │   ├── ProgressBar
 │   │   │   │   │   └── ProgressBar.tsx
 │   │   │   │   ├── Referral
@@ -1264,7 +1261,6 @@
 │   │   │   │   ├── NotFound.scss
 │   │   │   │   └── NotFound.tsx
 │   │   │   ├── Swap
-│   │   │   │   ├── _BtcToGhost.tsx_
 │   │   │   │   ├── Debug
 │   │   │   │   │   ├── BtcScript.tsx
 │   │   │   │   │   ├── Debug.scss
@@ -1277,7 +1273,6 @@
 │   │   │   │   ├── FeeControler
 │   │   │   │   │   ├── FeeControler.scss
 │   │   │   │   │   └── FeeControler.tsx
-│   │   │   │   ├── _GhostToBtc.tsx_
 │   │   │   │   ├── SwapController.tsx
 │   │   │   │   ├── swaps
 │   │   │   │   │   ├── build.ts
@@ -1436,4 +1431,4 @@
 │       └── run.js
 └── README.md
 
-367 directories, 1069 files
+366 directories, 1065 files
