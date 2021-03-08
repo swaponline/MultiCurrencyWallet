@@ -5,6 +5,14 @@
     border-radius: 5px;
     letter-spacing: 0.01em;
     width: 100%;
+
+    &.--dark {
+        .fee-radio__labe {
+          background-color: #2b2b2b;
+          color: white;
+
+        }
+      }
   }
 .fee-radio__input {
     position: absolute;
@@ -21,9 +29,7 @@
     padding: 15px 10px 10px 40px;
     border: 1px solid rgba(142, 154, 163, 0.16);
     box-shadow: 0px 2px 12px rgba(142, 154, 163, 0.08);
-    color: #c3c9dd;
     border-radius: 5px;
-    background-color: #2b2b2b;
     cursor: pointer;
     white-space: nowrap;
     transition: background-color 0.2s ease, color 0.2s ease;
@@ -37,8 +43,7 @@
 
 .fee-radio__input:checked + .fee-radio__label,
 .fee-radio__label--active {
-    border: 1px solid #7371ff;
-    color: #d4d4d4;
+    border: 1px solid var(--primary);
 }
 
 

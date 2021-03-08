@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import cssModules from 'react-css-modules'
 import styles from './index.scss'
+import { constants } from 'helpers'
 
 type FeeRadiosState = {
     selectedOption: string
@@ -46,6 +47,9 @@ const bitcoinFees = [
     },
 ]
 
+
+const isDark = localStorage.getItem(constants.localStorage.isDark)
+
 @cssModules(styles, { allowMultiple: true })
 export default class FeeRadios extends Component<{}, FeeRadiosState> {
     constructor(props) {
@@ -73,7 +77,7 @@ export default class FeeRadios extends Component<{}, FeeRadiosState> {
     render() {
         return (
             <>
-                <div styleName="fee-radio">
+                <div styleName={`fee-radio ${isDark ? '--dark' : ''}`}>
                     <input
                         type="radio"
                         value="Slow"
