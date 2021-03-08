@@ -78,50 +78,22 @@ export default class FeeRadios extends Component<{}, FeeRadiosState> {
         return (
             <>
                 <div styleName={`fee-radio ${isDark ? '--dark' : ''}`}>
-                    <input
-                        type="radio"
-                        value="Slow"
-                        id="Slow"
-                        styleName="fee-radio__input"
-                        checked={this.state.selectedOption === "Slow"}
-                        onChange={this.onFeeRateChange}
-                    />
-                    <label htmlFor="Slow" styleName="fee-radio__label">
-                        Slow
-                    </label>
-                    <input
-                        type="radio"
-                        value="Medium"
-                        id="Medium"
-                        styleName="fee-radio__input"
-                        checked={this.state.selectedOption === "Medium"}
-                        onChange={this.onFeeRateChange}
-                    />
-                    <label htmlFor="Medium" styleName="fee-radio__label">
-                        Medium
-                    </label>
-                    <input
-                        type="radio"
-                        value="Fast"
-                        id="Fast"
-                        styleName="fee-radio__input"
-                        checked={this.state.selectedOption === "Fast"}
-                        onChange={this.onFeeRateChange}
-                    />
-                    <label htmlFor="Fast" styleName="fee-radio__label">
-                        Fast
-                    </label>
-                    <input
-                        type="radio"
-                        value="Custom"
-                        id="Custom"
-                        styleName="fee-radio__input"
-                        checked={this.state.selectedOption === "Custom"}
-                        onChange={this.onFeeRateChange}
-                    />
-                    <label htmlFor="Custom" styleName="fee-radio__label">
-                        Custom
-                    </label>
+                    {bitcoinFees.map(fee => (
+                        <>
+                        <input
+                            key={`radio-${fee.id}`}
+                            type="radio"
+                            value={fee.speedType}
+                            id={fee.speedType}
+                            styleName="fee-radio__input"
+                            checked={this.state.selectedOption === fee.speedType}
+                            onChange={this.onFeeRateChange}
+                        />
+                        <label htmlFor={fee.speedType} styleName="fee-radio__label">
+                            <b>{fee.title}</b>
+                        </label>
+                    </>))
+                    }
                 </div>
                 {
                     this.state.selectedOption === "Custom" &&
