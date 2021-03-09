@@ -77,6 +77,13 @@ export default class Farm extends React.Component<null, null> {
             </h3>
           )
         }
+
+        <iframe
+          styleName="ifraimInfo"
+          src="https://farm.wpmix.net/elementor-161/" 
+          title="Demo-info for farm plugin"
+        >
+        </iframe>
       </section>
     )
   }

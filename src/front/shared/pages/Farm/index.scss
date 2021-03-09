@@ -6,12 +6,19 @@
   justify-content: center;
 }
 
+.ifraimInfo {
+  width: 90%;
+  height: 500px;
+  margin-top: 4rem;
+  border: none;
+}
+
 .timer {
   font-size: 2rem;
   padding: 1rem 0;
 }
 
-@media all and (max-width: 567px) { // widget
+@media all and (max-width: 567px) { // widget width
   .timer {
     font-size: 1.5rem;
     padding: 1rem 0;
