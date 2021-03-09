@@ -19,7 +19,6 @@ import Promo from './Promo/Promo'
 import Quote from './Quote'
 import HowItWorks from './HowItWorks/HowItWorks'
 import VideoAndFeatures from './VideoAndFeatures/VideoAndFeatures'
-import Tooltip from 'components/ui/Tooltip/Tooltip'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
@@ -1335,7 +1334,6 @@ export default class Exchange extends Component<any, any> {
       redirectToSwap,
       isWaitForPeerAnswer,
       directionOrders,
-      filteredOrders,
       desclineOrders,
       isDeclinedOffer,
       pairFees,
@@ -1403,17 +1401,11 @@ export default class Exchange extends Component<any, any> {
             .toNumber()
         : 0
 
-    const currentCurrency = this.getCoinData(sellCoin)
-
     const oneCryptoCost = maxBuyAmount.isLessThanOrEqualTo(0)
       ? new BigNumber(0)
       : new BigNumber(goodRate)
 
     const linked = Link.all(this, 'haveAmount', 'getAmount')
-
-    const isWidgetLink =
-      this.props.location.pathname.includes('/exchange') && this.props.location.hash === '#widget'
-    const isWidget = isWidgetBuild || isWidgetLink
 
     const availableAmount =
       pairFees &&
@@ -1806,8 +1798,6 @@ export default class Exchange extends Component<any, any> {
         </div>
         {config && config.showHowItsWork && (
           <Fragment>
-            {/*
-            //@ts-ignore */}
             <HowItWorks />
             <VideoAndFeatures />
             <Quote />
