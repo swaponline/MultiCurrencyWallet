@@ -19,6 +19,7 @@ import typeforce from 'swap.app/util/typeforce'
 
 import config from 'app-config'
 
+
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 const defaultLanguage = defineMessages({
@@ -40,7 +41,6 @@ const defaultLanguage = defineMessages({
   },
 })
 
-@injectIntl
 @connect(({
   user: { ethData, btcData, ghostData, nextData, tokensData },
 }) => ({
@@ -48,7 +48,7 @@ const defaultLanguage = defineMessages({
   tokensData: [...Object.keys(tokensData).map(k => (tokensData[k]))],
 }))
 @CSSModules(styles, { allowMultiple: true })
-export default class ConfirmBeginSwap extends React.Component<any, any> {
+class ConfirmBeginSwap extends React.Component<any, any> {
 
   props: any
 
@@ -270,3 +270,5 @@ export default class ConfirmBeginSwap extends React.Component<any, any> {
     )
   }
 }
+
+export default injectIntl(ConfirmBeginSwap)

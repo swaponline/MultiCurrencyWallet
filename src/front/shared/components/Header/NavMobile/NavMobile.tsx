@@ -14,10 +14,9 @@ import constants from 'helpers/constants'
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
-@injectIntl
 @withRouter
 @CSSModules(styles, { allowMultiple: true })
-export default class NavMobile extends Component<any, any> {
+class NavMobile extends Component<any, any> {
 
   static propTypes = {
     menu: PropTypes.array.isRequired,
@@ -73,3 +72,5 @@ export default class NavMobile extends Component<any, any> {
     )
   }
 }
+
+export default injectIntl(NavMobile)

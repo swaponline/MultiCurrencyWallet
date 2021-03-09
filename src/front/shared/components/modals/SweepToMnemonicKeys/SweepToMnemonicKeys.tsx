@@ -62,7 +62,6 @@ const langLabels = defineMessages({
   },
 })
 
-@injectIntl
 @connect(
   ({
     user: { btcMultisigUserData },
@@ -71,7 +70,7 @@ const langLabels = defineMessages({
   })
 )
 @cssModules({ ...defaultStyles, ...styles }, { allowMultiple: true })
-export default class SweepToMnemonicKeys extends React.Component<any, any> {
+class SweepToMnemonicKeys extends React.Component<any, any> {
 
   props: any
 
@@ -246,3 +245,5 @@ export default class SweepToMnemonicKeys extends React.Component<any, any> {
     )
   }
 }
+
+export default injectIntl(SweepToMnemonicKeys)

@@ -90,7 +90,6 @@ type RestoryMnemonicWalletState = {
   }
 }
 
-@injectIntl
 @connect(
   ({
     user: { btcData, btcMultisigSMSData, btcMultisigUserData, ethData, ghostData, nextData },
@@ -107,7 +106,7 @@ type RestoryMnemonicWalletState = {
   })
 )
 @cssModules({ ...defaultStyles, ...styles }, { allowMultiple: true })
-export default class RestoryMnemonicWallet extends React.Component {
+class RestoryMnemonicWallet extends React.Component {
 
   props: RestoryMnemonicWalletProps
   state: RestoryMnemonicWalletState
@@ -355,3 +354,5 @@ export default class RestoryMnemonicWallet extends React.Component {
     )
   }
 }
+
+export default injectIntl(RestoryMnemonicWallet)

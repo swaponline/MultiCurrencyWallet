@@ -29,8 +29,7 @@ type CreateInvoiceProps = {
     }
   }
 })
-@injectIntl
-export default class CreateInvoice extends PureComponent<CreateInvoiceProps> {
+class CreateInvoice extends PureComponent<CreateInvoiceProps> {
   constructor(props) {
     super(props)
   }
@@ -74,3 +73,5 @@ export default class CreateInvoice extends PureComponent<CreateInvoiceProps> {
     return null
   }
 }
+
+export default injectIntl(CreateInvoice)

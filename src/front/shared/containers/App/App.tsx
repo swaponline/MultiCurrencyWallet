@@ -58,7 +58,6 @@ const metamaskNetworks = defineMessages({
 
 
 
-@injectIntl
 @withRouter
 @connect(({ currencies: { items: currencies }, modals, ui: { dashboardModalsAllowed } }) => ({
   currencies,
@@ -452,4 +451,4 @@ class App extends React.Component<RouteComponentProps<any>, any> {
   }
 }
 
-export default withRouter(App)
+export default withRouter(injectIntl(App))

@@ -32,12 +32,11 @@ const defaultLanguage = defineMessages({
   },
 })
 
-@injectIntl
 @connect(({ ui: { dashboardModalsAllowed }}) => ({
   dashboardModalsAllowed
 }))
 @cssModules(styles)
-export default class AlertModal extends React.Component<any, any> {
+class AlertModal extends React.Component<any, any> {
 
   props: any
 
@@ -136,3 +135,5 @@ export default class AlertModal extends React.Component<any, any> {
     )
   }
 }
+
+export default injectIntl(AlertModal)

@@ -1,3 +1,5 @@
+
+
 declare module "*.scss" {
   const styles: { [className: string]: string };
   export default styles;
@@ -32,3 +34,5 @@ declare module "*.mp4" {
   const content: any;
   export default content;
 }
+
+

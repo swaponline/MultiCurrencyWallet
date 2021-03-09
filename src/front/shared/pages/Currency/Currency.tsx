@@ -23,7 +23,7 @@ import Row from './Row/Row'
 import CurrencyButton from 'components/controls/CurrencyButton/CurrencyButton'
 import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
 
-@injectIntl
+
 @withRouter
 @connect(({
   core: { hiddenCoinsList },
@@ -32,8 +32,7 @@ import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
     hiddenCoinsList,
   }))
 @CSSModules(styles, { allowMultiple: true })
-export default class Currency extends Component<any, any> {
-
+class Currency extends Component<any, any> {
 
   constructor({ match: { params: { currency } }, items, tokens, history, intl: { locale } }) {
     //@ts-ignore
@@ -208,3 +207,5 @@ export default class Currency extends Component<any, any> {
     )
   }
 }
+
+export default injectIntl(Currency)

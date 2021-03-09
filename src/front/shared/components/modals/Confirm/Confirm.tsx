@@ -36,9 +36,8 @@ const defaultLanguage = defineMessages({
 })
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
-@injectIntl
 @cssModules(styles, { allowMultiple: true })
-export default class Confirm extends React.Component<any, any> {
+class Confirm extends React.Component<any, any> {
 
   props: any
 
@@ -125,3 +124,5 @@ export default class Confirm extends React.Component<any, any> {
     )
   }
 }
+
+export default injectIntl(Confirm)

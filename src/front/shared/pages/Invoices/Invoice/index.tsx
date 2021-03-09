@@ -43,9 +43,8 @@ type InvoceState = {
     }
   }
 })
-@injectIntl
 @withRouter
-export default class Invoice extends PureComponent<InvoceProps, InvoceState> {
+class Invoice extends PureComponent<InvoceProps, InvoceState> {
   constructor(props) {
     super(props)
 
@@ -172,3 +171,5 @@ export default class Invoice extends PureComponent<InvoceProps, InvoceState> {
     return null
   }
 }
+
+export default injectIntl(Invoice)
