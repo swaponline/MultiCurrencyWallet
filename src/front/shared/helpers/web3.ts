@@ -1,9 +1,5 @@
 import Web3 from 'web3'
 import config from 'app-config'
-import metamask from 'helpers/metamask'
-import promiEvent from 'web3-core-promievent'
-//@ts-ignore
-import { utils as web3utils } from 'web3'
 
 console.log('reset web3')
 let web3 = new Web3(

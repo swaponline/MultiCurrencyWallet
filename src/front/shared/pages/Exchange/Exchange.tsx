@@ -256,7 +256,6 @@ export default class Exchange extends Component<any, any> {
     let getCurrency = buy || (!isWidgetBuild ? 'eth' : config.erc20token)
 
     const exchangeDataStr = localStorage.getItem(constants.localStorage.exchangeSettings)
-    console.log('EXCHANGE DATA STR FROM CONSTRUCTOR: ', exchangeDataStr)
     const exchangeSettings = exchangeDataStr && JSON.parse(exchangeDataStr)
     // to get data from last session
     if (exchangeSettings && exchangeSettings.currency) {
