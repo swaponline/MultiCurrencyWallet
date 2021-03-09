@@ -3070,148 +3070,8 @@
     "message": "Select the currency and enter the amount you want to buy"
   },
   {
-    "id": "FooterAboutAgreements",
-    "message": "Agreements",
-    "files": [
-      "src/front/shared/components/Footer/Links/Links.tsx"
-    ]
-  },
-  {
-    "id": "FooterAboutCompany",
-    "message": "About company",
-    "files": [
-      "src/front/shared/components/Footer/Links/Links.tsx"
-    ]
-  },
-  {
-    "id": "FooterAboutContacts",
-    "message": "Contacts",
-    "files": [
-      "src/front/shared/components/Footer/Links/Links.tsx"
-    ]
-  },
-  {
-    "id": "FooterAboutHeader",
-    "message": "About company",
-    "files": [
-      "src/front/shared/components/Footer/Links/Links.tsx"
-    ]
-  },
-  {
-    "id": "FooterAboutLegal",
-    "message": "Legal",
-    "files": [
-      "src/front/shared/components/Footer/Links/Links.tsx"
-    ]
-  },
-  {
-    "id": "FooterAboutPrivacyPolicy",
-    "message": "Privacy policy",
-    "files": [
-      "src/front/shared/components/Footer/Links/Links.tsx"
-    ]
-  },
-  {
-    "id": "FooterOurProductsChromeExtantion",
-    "message": "Chrome extension",
-    "files": [
-      "src/front/shared/components/Footer/Links/Links.tsx"
-    ]
-  },
-  {
-    "id": "FooterOurProductsExchange",
-    "message": "Exchange",
-    "files": [
-      "src/front/shared/components/Footer/Links/Links.tsx"
-    ]
-  },
-  {
-    "id": "FooterOurProductsHeader",
-    "message": "Our products",
-    "files": [
-      "src/front/shared/components/Footer/Links/Links.tsx"
-    ]
-  },
-  {
-    "id": "FooterOurProductsWallet",
-    "message": "Wallet",
-    "files": [
-      "src/front/shared/components/Footer/Links/Links.tsx"
-    ]
-  },
-  {
-    "id": "FooterOurProductsWidget",
-    "message": "Widget",
-    "files": [
-      "src/front/shared/components/Footer/Links/Links.tsx"
-    ]
-  },
-  {
-    "id": "FooterPartnershipForBlockchains",
-    "message": "For Blockchains",
-    "files": [
-      "src/front/shared/components/Footer/Links/Links.tsx"
-    ]
-  },
-  {
-    "id": "FooterPartnershipForDEXes",
-    "message": "For DEXes",
-    "files": [
-      "src/front/shared/components/Footer/Links/Links.tsx"
-    ]
-  },
-  {
     "id": "FooterPartnershipForERC20",
     "message": "For ERC20 tokens"
-  },
-  {
-    "id": "FooterPartnershipForNewsWebsites",
-    "message": "For news websites",
-    "files": [
-      "src/front/shared/components/Footer/Links/Links.tsx"
-    ]
-  },
-  {
-    "id": "FooterPartnershipForstablecoin",
-    "message": "For stablecoins",
-    "files": [
-      "src/front/shared/components/Footer/Links/Links.tsx"
-    ]
-  },
-  {
-    "id": "FooterPartnershipHeader",
-    "message": "Partnership",
-    "files": [
-      "src/front/shared/components/Footer/Links/Links.tsx"
-    ]
-  },
-  {
-    "id": "FooterTechnologyGithub",
-    "message": "GitHub",
-    "files": [
-      "src/front/shared/components/Footer/Links/Links.tsx"
-    ]
-  },
-  {
-    "id": "FooterTechnologyHeader",
-    "message": "Technology",
-    "files": [
-      "src/front/shared/components/Footer/Links/Links.tsx"
-    ]
-  },
-  {
-    "id": "FooterTechnologyWhitepaper",
-    "message": "Whitepaper",
-    "files": [
-      "src/front/shared/components/Footer/Links/Links.tsx"
-    ]
-  },
-  {
-    "id": "FooterTechnologyWiki",
-    "message": "Wiki",
-    "files": [
-      "src/front/shared/components/Footer/Links/Links.tsx"
-    ]
   },
   {
     "id": "SecondStep",
@@ -3230,27 +3090,6 @@
   {
     "id": "Partial955",
     "message": "Address not correct"
-  },
-  {
-    "id": "FooterOurProductsBankDashboard",
-    "message": "Bank dashboard",
-    "files": [
-      "src/front/shared/components/Footer/Links/Links.tsx"
-    ]
-  },
-  {
-    "id": "FooterTechnologyComparsion",
-    "message": "Comparsion",
-    "files": [
-      "src/front/shared/components/Footer/Links/Links.tsx"
-    ]
-  },
-  {
-    "id": "FooterTechnologyLNResearch",
-    "message": "LN",
-    "files": [
-      "src/front/shared/components/Footer/Links/Links.tsx"
-    ]
   },
   {
     "id": "Submenu16",
@@ -5507,6 +5346,7 @@
     "id": "MainFAQ3_header",
     "message": "How to save private keys?"
   },
+
   {
     "id": "MainFAQ3_content",
     "message": "For save you \"12-words seed\" click on \"Please backup your wallet\" banner. If you don't see this banner, don't despair just click on \"dots\" near your balance and select \"Copy private key\" option"
