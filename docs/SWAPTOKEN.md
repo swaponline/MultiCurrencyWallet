@@ -42,6 +42,8 @@ Current
 | oct 2020 | 1620 USD | \$162 | [+0.37 ETH](https://etherscan.io/tx/0xbe89c49296e56b7a1dacf755c1dd9a71766477b1188527ddc95f5e832651384b) |
 | nov 2020 | 1005 USD | \$105 | [+0.174 ETH](https://etherscan.io/tx/0x8eaf2eb6ae6fdfdda6fe40ed6ae3cdf84b118e0d77c0c6715ef9118f88c80ccb) |
 | dec 2020 | 1200 USD | \$120 | [+0.1 ETH](https://etherscan.io/tx/0xb8358a0d3103eef6c25d1c079b6ce531ead41c2ae9b30569350e3d1a0297d5e9) |
+| jan 2020 | 937 USD | \$93 | 👇 |
+| feb 2020 | 1143 USD | \$114 | https://etherscan.io/tx/0xb85e9f5063ceab6458a1e59c8d4d0dfb359a98ccbfde4086952d359d05fdce9f |
 
 ## How we get revenue
 
