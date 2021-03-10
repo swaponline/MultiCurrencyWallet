@@ -1,17 +1,17 @@
-import swap from 'simple.swap.core'
+import * as swap from 'simple.swap.core'
 // const swap = require('../src')
 
 const {
-  swap: { read, get },
+  swap: { get },
   history,
 } = swap.helpers
 
-const { app } = swap.setup()
+const { app } = swap.setup({})
 
 history.init(app)
 
 const swaps = history.getAllInProgress()
-  .map(id => read(app, { id }))
+  .map(id => get(app, { id }))
   .filter(({ flow: { isRefunded }}) => isRefunded !== true)
 
 console.log('swaps', swaps.length)

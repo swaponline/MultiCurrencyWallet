@@ -1,7 +1,7 @@
 import debug from 'debug'
 
 import history from './history'
-import swap from './swap'
+import * as swap from './swap'
 
 export const hash2id = (hash) =>
   new Promise(async resolve => {

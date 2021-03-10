@@ -1,10 +1,10 @@
-import swap from './../src'
+import * as swap from './../src'
 
 const {
   history: { getAllFinished, getAllInProgress },
 } = swap.helpers
 
-swap.setup()
+swap.setup({})
 
 console.log('in progress:', getAllInProgress())
 console.log('finished:', getAllFinished())

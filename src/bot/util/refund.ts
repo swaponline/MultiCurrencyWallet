@@ -1,4 +1,4 @@
-import swap from 'simple.swap.core'
+import * as swap from 'simple.swap.core'
 
 import commandLineArgs from 'command-line-args'
 import commandLineUsage from 'command-line-usage'
@@ -77,7 +77,7 @@ const {
   filter: { hash2id, secret2id },
 } = swap.helpers
 
-const { app, room, orders } = swap.setup()
+const { app, room, orders } = swap.setup({})
 
 console.clear()
 console.log('IPFS loading...')

@@ -1,14 +1,14 @@
-import swap from '../src'
+import * as swap from '../src'
 
 const {
-  swap: { read },
+  swap: { get },
   history: { getAllInProgress },
 } = swap.helpers
 
-swap.setup()
+const app = swap.setup({})
 
 getAllInProgress()
-  .map(id => read({ id }))
+  .map(id => get(app, id))
   .filter(({ flow: { isRefunded }}) => isRefunded !== true)
   .map(swap => console.log('swap:', swap))
 

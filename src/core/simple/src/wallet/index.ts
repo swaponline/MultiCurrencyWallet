@@ -53,7 +53,7 @@ class Wallet {
     return this.balances[symbol]
   }
 
-  async getData(options) {
+  async getData(options?) {
     const { coins } = options
 
     const currencies = coins || Object.values(this.constants.COINS)

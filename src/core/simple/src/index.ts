@@ -11,7 +11,7 @@ const { constants } = swapCore
 
 import setup from './setup'
 import helpers from './helpers'
-import config from './config'
+import * as config from './config'
 
 
 export { setup, helpers, config, constants }

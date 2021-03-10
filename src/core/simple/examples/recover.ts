@@ -1,4 +1,4 @@
-import swap from './../src'
+import * as swap from './../src'
 
 const {
   room: { ready },
@@ -6,7 +6,7 @@ const {
   swap: { onStep, start, get },
 } = swap.helpers
 
-const { room } = swap.setup()
+const { room } = swap.setup({})
 
 const swapID = process.argv[2]
 const method = process.argv[3]
