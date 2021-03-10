@@ -329,16 +329,6 @@ if (config.isWidget) {
     })
   }
 }
-// eslint-disable-next-line
-// process.env.MAINNET && initialState.items.unshift({
-//   name: 'USDT',
-//   title: 'USDT',
-//   icon: 'usdt',
-//   value: 'usdt',
-//   fullTitle: 'USD Tether',
-// })
-// eslint-disable-next-line
-
 
 const addSelectedItems = (state, payload) => ({
   ...state,

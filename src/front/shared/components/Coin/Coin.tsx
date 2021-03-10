@@ -65,23 +65,17 @@ const Coin = (props: CoinProps) => {
 
   let currencyIconProps = {
     name: name.toLowerCase(),
+    styleName: '',
+    style: {},
   }
 
   if (isIconExist || isIconConfigExist) {
-    currencyIconProps = {
-      ...currencyIconProps,
-      //@ts-ignore
-      styleName: 'icon',
-    }
+    currencyIconProps.styleName = 'icon'
   } else {
-    currencyIconProps = {
-      ...currencyIconProps,
-      //@ts-ignore
-      styleName: 'letter',
-      style: {
-        lineHeight: `${size}px`,
-        fontSize: `${size / 2}px`,
-      },
+    currencyIconProps.styleName = 'letter'
+    currencyIconProps.style = {
+      lineHeight: `${size}px`,
+      fontSize: `${size / 2}px`,
     }
   }
 

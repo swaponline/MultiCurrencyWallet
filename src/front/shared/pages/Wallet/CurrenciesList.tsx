@@ -24,7 +24,6 @@ const CurrenciesList = (props: CurrenciesListProps) => {
   const {
     isDark,
     tableRows,
-    hiddenCoinsList,
     goToСreateWallet,
     multisigPendingCount,
   } = props
