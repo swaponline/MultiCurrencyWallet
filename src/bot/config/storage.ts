@@ -100,7 +100,7 @@ const getTradePairs = (): any => {
   return false
 }
 
-const loadJson = (network?: Networks = Networks.testnet) : boolean => {
+const loadJson = (network: Networks = Networks.testnet) : boolean => {
   _hasTradeConfig = false
   const filePath = `${__dirname}/../../../tradeconfig.${network}.json`
   if (fs.existsSync(filePath)) {
