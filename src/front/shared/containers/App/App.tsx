@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 
 import { RouteComponentProps, withRouter, HashRouter } from "react-router-dom";
 import actions from "redux/actions";
@@ -9,7 +9,6 @@ import {
   localStorage,
   // firebase
 } from "helpers";
-import { isMobile } from "react-device-detect";
 
 import CSSModules from "react-css-modules";
 import styles from "./App.scss";
@@ -267,6 +266,15 @@ class App extends React.Component<RouteComponentProps<any>, any> {
 
     this.preventMultiTabs(false)
 
+    // Default Farm init options
+    if (config.entry === 'testnet') {
+      window.farm = {
+        farmAddress: '0x3A01D97B81842630fF16EB19181c0068B9554798',
+        stakingAddress: '0x101848D5C5bBca18E6b4431eEdF6B95E9ADF82FA', // weenus
+        rewardsAddress: '0x7E0480Ca9fD50EB7A3855Cf53c347A1b4d6A2FF5', // xeenus
+      }
+    }
+
     // @ToDo - may be can be deleted. Temp fix for our client, when he update token list
     if (window.origin === `https://wallet.b` + `itpli` + `cit` + `y.com`) {
       const tokenListUpdated = localStorage.getItem('widget_tokenupdated')
@@ -286,19 +294,11 @@ class App extends React.Component<RouteComponentProps<any>, any> {
     const isWalletCreate = localStorage.getItem(constants.localStorage.isWalletCreate)
 
     if (!isWalletCreate) {
-      if (config && config.isWidget && false) {
-        currencies.forEach(({ name }) => {
-          if (name !== "BTC" && !config.erc20[name.toLowerCase()]) {
-            actions.core.markCoinAsHidden(name)
-          }
-        })
-      } else {
-        currencies.forEach(({ name }) => {
-          if (name !== "BTC") {
-            actions.core.markCoinAsHidden(name)
-          }
-        })
-      }
+      currencies.forEach(({ name }) => {
+        if (name !== "BTC") {
+          actions.core.markCoinAsHidden(name)
+        }
+      })
     }
 
     // firebase.initialize();
@@ -309,17 +309,17 @@ class App extends React.Component<RouteComponentProps<any>, any> {
     this.checkIfDashboardModalsAllowed()
     window.actions = actions;
 
-    window.onerror = error => {
-      // actions.analytics.errorEvent(error)
+    window.onerror = (error) => {
+      console.error('App error: ', error)
     };
 
     try {
       const db = indexedDB.open("test");
       db.onerror = (e) => {
-        console.log('db error', e)
+        console.error('db error', e)
       };
     } catch (e) {
-      console.log('db error', e)
+      console.error('db error', e)
     }
 
     actions.user.sign();

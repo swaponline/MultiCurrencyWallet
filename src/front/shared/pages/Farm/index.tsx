@@ -13,20 +13,12 @@ export default class Farm extends React.Component<null, null> {
   constructor(props) {
     super(props)
 
+    // hasn't plugin in the browser
     if (!metamask.isConnected()) {
       // LocalStorage key 'ff-account-unlocked' must be true value
       // otherwise will open a modal window for metamask connection
       window.localStorage.setItem('ff-account-unlocked', 'true')
-    } else {
-      window.localStorage.setItem('ff-account-unlocked', 'false')
-    }
-  }
 
-  componentDidMount() {
-    feedback.farm.started()
-
-    // hasn't plugin in the browser
-    if (!metamask.isConnected()) {      
       if (!window.web3) {
         window.web3 = web3
       }
@@ -36,7 +28,13 @@ export default class Farm extends React.Component<null, null> {
       if (!window.ethereum) {
         window.ethereum = ethereumProxy
       }
+    } else {
+      window.localStorage.setItem('ff-account-unlocked', 'false')
     }
+  }
+
+  componentDidMount() {
+    feedback.farm.started()
 
     if (window.farm) {
       const { 
@@ -52,11 +50,6 @@ export default class Farm extends React.Component<null, null> {
         stakingAddress: stakingAddress,
       })
     }
-  }
-
-  reportError = (error) => {
-    feedback.farm.failed(`error name(${error.name}) : error message(${error.message})`)
-    console.error(error)
   }
 
   render() {
