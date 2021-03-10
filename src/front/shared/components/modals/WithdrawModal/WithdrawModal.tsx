@@ -69,18 +69,23 @@ type WithdrawModalState = {
   fetchFee: boolean
   isInvoicePay?: boolean
   openScanCam: boolean
-  
+
   address: string
   comment?: string
   ownTx: string
   selectedValue: string
   fiatAmount: string
   amount: string
-  
+
   currentDecimals: number
   btcFeeRate: number
   txSize: null | number
-  
+  bitcoinFees: null | {
+      hourFee: number
+      halfHourFee: number
+      fastestFee: number
+  }
+
   devError: IError | null
   ethWallet: IUniversalObj
   exCurrencyRate: BigNumber
@@ -142,9 +147,9 @@ export default class WithdrawModal extends React.Component<WithdrawModalProps, W
 
     const {
       items,
-      data: { 
-        amount, 
-        toAddress, 
+      data: {
+        amount,
+        toAddress,
         currency,
         address: withdrawWallet,
       },
@@ -162,7 +167,7 @@ export default class WithdrawModal extends React.Component<WithdrawModalProps, W
       : new BigNumber(0)
     // save ethereum wallet for token exchange's rate
     const arrWithEthWallet = items.filter(item => {
-      return item.currency.toLowerCase() === 'eth' 
+      return item.currency.toLowerCase() === 'eth'
         && item.infoAboutCurrency
         && item.infoAboutCurrency.price_fiat
     })
@@ -186,6 +191,7 @@ export default class WithdrawModal extends React.Component<WithdrawModalProps, W
       exCurrencyRate,
       allCurrencyies,
       devError: null,
+      bitcoinFees: null,
       fees: {
         miner: new BigNumber(0),
         service: new BigNumber(0),
@@ -215,12 +221,12 @@ export default class WithdrawModal extends React.Component<WithdrawModalProps, W
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { 
-      data: prevData, 
+    const {
+      data: prevData,
       items: prevItems,
     } = prevProps
-    const { 
-      data, 
+    const {
+      data,
       items,
     } = this.props
     const {
@@ -243,7 +249,7 @@ export default class WithdrawModal extends React.Component<WithdrawModalProps, W
   reportError = (error: IError, details: string = '-') => {
     feedback.withdraw.failed(`details(${details}) : error message(${error.message})`)
     console.error(`Withdraw. details(${details}) : error(${JSON.stringify(error)})`)
-    this.setState({ 
+    this.setState({
       devError: {
         name: error.name || 'Error',
         message: error.message || '-',
@@ -287,6 +293,8 @@ export default class WithdrawModal extends React.Component<WithdrawModalProps, W
         amount: numAmount,
         moreInfo: true,
       })
+
+      const bitcoinFeesRate = await helpers.btc.getFeesRateBitcoinfees;
       const feeSatByte = new BigNumber(feeRate).dividedBy(BYTE_IN_KB).dp(0, BigNumber.ROUND_CEIL).toNumber()
 
       if (!this.mounted) return
@@ -383,7 +391,10 @@ export default class WithdrawModal extends React.Component<WithdrawModalProps, W
       fees,
       selectedItem,
       isEthToken,
-      comment = ''
+      comment = '',
+      selectedItem: {
+        isBTC,
+      },
     } = this.state
 
     const {
@@ -402,6 +413,7 @@ export default class WithdrawModal extends React.Component<WithdrawModalProps, W
       amount,
       speed: 'fast',
       name: isEthToken ? currency.toLowerCase() : '',
+      feeValue: isBTC && fees.miner,
     }
 
     // ? is it need ?
@@ -599,7 +611,7 @@ export default class WithdrawModal extends React.Component<WithdrawModalProps, W
       this.setState({
         fiatAmount: value,
         amount: value && hasExCurrencyRate
-          ? new BigNumber(value).div(exCurrencyRate).dp(currentDecimals).toString() 
+          ? new BigNumber(value).div(exCurrencyRate).dp(currentDecimals).toString()
           : '',
       })
     }
@@ -676,11 +688,11 @@ export default class WithdrawModal extends React.Component<WithdrawModalProps, W
       ? new BigNumber(usedAdminFee.fee).dividedBy(ONE_HUNDRED_PERCENT).multipliedBy(amount)
       : new BigNumber(0)
 
-    newServiceFeeSize = new BigNumber(amount).isGreaterThan(0) 
+    newServiceFeeSize = new BigNumber(amount).isGreaterThan(0)
       && newServiceFeeSize.isGreaterThan(fees.adminFeeSize)
         ? newServiceFeeSize
         : fees.adminFeeSize
-    
+
     this.setState((state) => ({
       fees: {
         ...state.fees,
@@ -703,7 +715,7 @@ export default class WithdrawModal extends React.Component<WithdrawModalProps, W
     if (event.key === ',') {
       inputReplaceCommaWithDot(event)
     }
-    
+
     if (
       !(isNumber ||
         event.keyCode === BACKSPACE ||
@@ -908,7 +920,7 @@ export default class WithdrawModal extends React.Component<WithdrawModalProps, W
           )}
         </div>
         <div styleName={`lowLevel ${isDark ? 'dark' : ''}`} style={{ marginBottom: '30px' }}>
-          {/* why style ? see tip for max button */}  
+          {/* why style ? see tip for max button */}
           <div style={usedAdminFee ? { right: '20px' } : null} styleName="additionalСurrencies">
             {criptoCurrencyHaveInfoPrice && <>
                 <span
@@ -967,7 +979,7 @@ export default class WithdrawModal extends React.Component<WithdrawModalProps, W
                 : linked.fiatAmount.pipe(this.handleAmount)
               }
             />
-            {/* 
+            {/*
             with service commission we can't send all balance (there is a remainder)
             so we disable this button
             */}
@@ -995,7 +1007,7 @@ export default class WithdrawModal extends React.Component<WithdrawModalProps, W
           {/* hint for amount value */}
           {dashboardView && (
             <div styleName={`prompt ${fetchFee ? 'hide' : ''}`}>
-              {isEthToken && ethBalanceLessThanMiner 
+              {isEthToken && ethBalanceLessThanMiner
                 ? (
                     <FormattedMessage
                       id="WithdrowBalanceNotEnoughtEthereumBalancePrompt"
@@ -1016,7 +1028,7 @@ export default class WithdrawModal extends React.Component<WithdrawModalProps, W
                         allowedBalance: selectedValue === currentActiveAsset.currency
                           ? balances.allowedCurrency.toNumber()
                           : balances.allowedFiat.toNumber(),
-                        currency: selectedValue === currentActiveAsset.currency 
+                        currency: selectedValue === currentActiveAsset.currency
                           ? activeCriptoCurrency
                           : activeFiat,
                       }}

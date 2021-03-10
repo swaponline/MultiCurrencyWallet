@@ -229,7 +229,7 @@ const estimateFeeValue = async (options: EstimateFeeValueOptions): Promise<any> 
   calculatedFeeValue.plus(CUSTOM_SATOSHI) // just wanted to add
 
   const SATOSHI_TO_BITCOIN_RATIO = 1e-8; // 1 BTC -> 100 000 000 satoshi
-  
+
   const finalFeeValue = inSatoshis
     ? calculatedFeeValue.toNumber()
     : calculatedFeeValue.multipliedBy(SATOSHI_TO_BITCOIN_RATIO).toNumber()
@@ -271,6 +271,26 @@ const estimateFeeRateBitcoinfees = async ({ speed = 'fast' } = {}) => {
     ? apiRate.toString()
     : defaultRate[speed]
 }
+const getFeesRateBitcoinfees = async () => {
+  const defaultRate = constants.defaultFeeRates.btc.rate
+
+  let apiResult;
+
+  const defaultApiSpeeds = {
+    hourFee: defaultRate.slow / 1e3,
+    halfHourFee: defaultRate.normal / 1e3,
+    fastestFee: defaultRate.fast / 1e3,
+  }
+
+  try {
+    apiResult = await api.asyncFetchApi(`https://bitcoinfees.earn.com/api/v1/fees/recommended`)
+  } catch (err) {
+    console.error(`EstimateFeeRate: ${err.message}`)
+    return defaultApiSpeeds
+  }
+
+  return apiResult
+}
 
 const estimateFeeRateBlockcypher = async ({ speed = 'fast' } = {}) => {
   const link = config.feeRates.btc
@@ -299,7 +319,7 @@ const estimateFeeRateBlockcypher = async ({ speed = 'fast' } = {}) => {
   const apiSpeed = apiSpeeds[speed] || apiSpeeds.normal
   const apiRate = new BigNumber(apiResult[apiSpeed])
 
-  return apiRate.isGreaterThanOrEqualTo(DUST) 
+  return apiRate.isGreaterThanOrEqualTo(DUST)
     ? apiRate.toNumber()
     : defaultRate[speed]
 }
@@ -310,5 +330,6 @@ export default {
   calculateTxSize,
   estimateFeeValue,
   estimateFeeRate,
+  getFeesRateBitcoinfees,
   network,
 }

@@ -12,11 +12,11 @@ type FeeInfoBlockProps = {
   isLoading: boolean
   isEthToken: boolean
   hasTxSize: boolean
-  
+
   currency: string
   activeFiat: string
   dataCurrency: string
-  
+
   currentDecimals: number
   txSize?: number
   feeCurrentCurrency?: number
@@ -70,15 +70,15 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
     // else cut result to currency decimals
     let bigNumResult = currency.multipliedBy(exchangeRate)
     const strResult = bigNumResult.toString()
-    const haveTwoZeroAfterDot = 
-      strResult.match(/\./) 
+    const haveTwoZeroAfterDot =
+      strResult.match(/\./)
       && strResult.split('.')[1][0] === '0' // 12.34 -> ['12', '34'] -> ['3'] === '0'
       && strResult.split('.')[1][1] === '0' // 12.34 -> ['12', '34'] -> ['4'] === '0'
-      
-    bigNumResult = haveTwoZeroAfterDot 
+
+    bigNumResult = haveTwoZeroAfterDot
       ? bigNumResult.dp(currentDecimals, BigNumber.ROUND_CEIL)
       : bigNumResult.dp(2, BigNumber.ROUND_CEIL)
-    
+
     return bigNumResult.toNumber()
   }
 
@@ -117,10 +117,13 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
 
   return (
     <section styleName='feeInfoBlock'>
-      <div styleName='feeRow'>
-        <span styleName='feeRowTitle'>Fee rate:</span>
-        <FeeRadios />
-      </div>
+      {hasTxSize && (
+        <div styleName='feeRow'>
+          <span styleName='feeRowTitle'>Choose Fee Rate:</span>
+          <FeeRadios
+          />
+        </div>)
+      }
 
       <div styleName='feeRow'>
         <span styleName='feeRowTitle'>
@@ -147,7 +150,7 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
           </Tooltip>
         </div>
       </div>
-      
+
       {usedAdminFee && (
           <div styleName='feeRow'>
             <span styleName='feeRowTitle'>
