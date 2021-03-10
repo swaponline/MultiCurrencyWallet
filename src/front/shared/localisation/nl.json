@@ -7885,7 +7885,7 @@
   },
   {
     "id": "menu.farm",
-    "message": "Boerderij",
+    "message": "Uitzetten en landbouw",
     "files": [
       "src/front/shared/components/Header/config.tsx"
     ]

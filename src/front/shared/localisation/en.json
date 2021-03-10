@@ -7865,7 +7865,7 @@
   },
   {
     "id": "menu.farm",
-    "message": "Farm",
+    "message": "Staking & Farming",
     "files": [
       "src/front/shared/components/Header/config.tsx"
     ]

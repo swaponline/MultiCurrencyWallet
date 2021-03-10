@@ -7941,7 +7941,7 @@
   },
   {
     "id": "menu.farm",
-    "message": "Ферма",
+    "message": "Ставки и фарминг",
     "files": [
       "src/front/shared/components/Header/config.tsx"
     ]

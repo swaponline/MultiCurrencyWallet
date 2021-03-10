@@ -32,8 +32,8 @@ export const messages = defineMessages({
   },
   farm: {
     id: 'menu.farm',
-    description: 'Menu item "Farm"',
-    defaultMessage: 'Farm',
+    description: 'Menu item "Staking & Farming"',
+    defaultMessage: 'Staking & Farming',
   },
   invest: {
     id: 'menu.invest.info',

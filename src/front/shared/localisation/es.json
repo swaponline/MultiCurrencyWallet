@@ -7893,7 +7893,7 @@
   },
   {
     "id": "menu.farm",
-    "message": "Farm",
+    "message": "Estacas y agricultura",
     "files": [
       "src/front/shared/components/Header/config.tsx"
     ]

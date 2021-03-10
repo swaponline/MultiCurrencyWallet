@@ -269,9 +269,9 @@ class App extends React.Component<RouteComponentProps<any>, any> {
     // Default Farm init options
     if (config.entry === 'testnet') {
       window.farm = {
-        farmAddress: '0x3A01D97B81842630fF16EB19181c0068B9554798',
-        stakingAddress: '0x101848D5C5bBca18E6b4431eEdF6B95E9ADF82FA', // weenus
-        rewardsAddress: '0x7E0480Ca9fD50EB7A3855Cf53c347A1b4d6A2FF5', // xeenus
+        farmAddress: '0xa21FC7e1E31269b3AA0E17fF1F1a23C035cE207c',
+        stakingAddress: '0xF6fF95D53E08c9660dC7820fD5A775484f77183A', // Yeenus
+        rewardsAddress: '0x101848D5C5bBca18E6b4431eEdF6B95E9ADF82FA', // Weenus
       }
     }
 
