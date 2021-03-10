@@ -1,6 +1,7 @@
 import * as os from 'os'
 import * as ip from 'ip'
 
+
 const OS = os.platform()
 const IP = ip.address()
 const HOST = (OS == 'darwin' || OS == 'win32')
@@ -19,19 +20,17 @@ const status = (order) => !order ? null : {
 
 const sendStatus = (req, res) => (order) => res.json(status(order))
 
-const swapToString = (swap) => ""
-
 const orderToString = (swap, full?) => {
   try {
     let link = `<a href="/orders/${swap.id}/start">start</a>`
     return [
       full ? link : '',
       swap.id.split('-').pop(),
-      ( swap.isMy ? 'my' : '- ' ),
+      swap.isMy ? 'my' : '- ',
       swap.buyAmount, swap.buyCurrency,
       '→',
       swap.sellAmount, swap.sellCurrency,
-      '[', swap.owner.peer.slice(0,5), '...', swap.owner.peer.slice(-10), ']'
+      '[', swap.owner.peer.slice(0, 5), '...', swap.owner.peer.slice(-10), ']'
     ].join(' ')
   } catch (e) {
     return ''
@@ -75,7 +74,6 @@ const orderView = (order) => {
 
 export {
   orderToString,
-  swapToString,
   swapView,
   orderView,
 }

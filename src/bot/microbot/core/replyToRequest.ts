@@ -1,7 +1,7 @@
 import fetchOrder from './fetchOrder'
 
-// swap.app.services.orders
 
+// swap.app.services.orders
 export default (orders) => (request, accepted) => {
   console.log(new Date().toISOString(), `trying to accept`, request, accepted)
 

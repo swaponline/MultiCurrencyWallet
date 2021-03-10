@@ -1,6 +1,5 @@
-#!/usr/bin/env node
-
 import ws from 'ws'
+
 
 try {
   const server = new ws('ws://localhost:7333')

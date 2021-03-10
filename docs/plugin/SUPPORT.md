@@ -51,3 +51,15 @@ Clients need to respond as quickly as possible, while their questions are releva
 
 ### I need support
 > Talk to humans https://t.me/swaponlinebot
+
+### I want a refund
+> It's a pity that you ran into difficulties :( Really sorry for that. 
+>
+> If the plugin doesn't work on your site, here are the options for how this can be fixed:
+>
+> - What exactly isn't working? Please let us know.
+> - Please give access to the wp-admin panel. We will try to solve the problem.
+> - Please try disable all plugins except MCWallet (some plugins break the MCWallet plugin)
+>
+> If you are not considering fixing problems and want to initiate a refund:
+> https://help.market.envato.com/hc/en-us/articles/202821460-Can-I-Get-A-Refund-

@@ -1,6 +1,15 @@
 import BigNumber from 'bignumber.js'
 import request from 'request-promise-native'
 
+import {
+  createOrder,
+  convertOrder,
+  PAIR_ASK,
+  PAIR_BID,
+  TRADE_TICKERS,
+} from './trade'
+
+
 const BTC_SYMBOL = 1 // BTC
 const ETH_SYMBOL = 1027 // ETH is 1027
 const JOT_SYMBOL = 2948 // Jury.Online
@@ -24,13 +33,6 @@ const getPrice = (symbol, base = 'BTC') =>
     .then(num => new BigNumber(num))
     .catch(error => { throw new Error(`Cannot get ${symbol} price: ${error}`) })
 
-import {
-  createOrder,
-  convertOrder,
-  PAIR_ASK,
-  PAIR_BID,
-  TRADE_TICKERS,
-} from './trade'
 
 class AlgoTrade {
 
@@ -48,12 +50,12 @@ class AlgoTrade {
       'ETH-BTC':    await getPrice(ETH_SYMBOL),
       'JOT-BTC':    await getPrice(JOT_SYMBOL),
       'USD-BTC':    await usdPrice(),
-      'SWAP-BTC':   await usdPrice().then( price => price.multipliedBy('1.01') ),
+      'SWAP-BTC':   await usdPrice().then(price => price.multipliedBy('1.01')),
       'SWAP-USDT':  '1.01',
       'NOXON-BTC':  await getPrice(ETH_SYMBOL),
       'NOXON-USDT': '42.3256',
       'BTRM-BTC':   await getYobitPrice('BTRM'),
-      'XSAT-BTC': await usdPrice().then(price => price.multipliedBy('0.13')),
+      'XSAT-BTC':   await usdPrice().then(price => price.multipliedBy('0.13')),
     }
 
     console.log(`Fetched new prices:`, prices)
@@ -91,7 +93,7 @@ class AlgoTrade {
 
     console.log(`I will buy ${ticker} below ${max_ask_price} or sell above ${min_bid_price}`)
 
-    return ( type == PAIR_BID )
+    return (type == PAIR_BID)
       ? new BigNumber(price).isGreaterThan(min_bid_price)
       : new BigNumber(price).isLessThan(max_ask_price)
   }
@@ -100,7 +102,7 @@ class AlgoTrade {
     const numTickers = TRADE_TICKERS.length
     total = total // numTickers
 
-    return TRADE_TICKERS.reduce( (acc, ticker) => {
+    return TRADE_TICKERS.reduce((acc, ticker) => {
       const price = this.getCurrentPrice({ ticker })
       const orders = this.fillOrders({ ticker, price, total })
       return [ ...acc, ...orders ]
@@ -121,8 +123,8 @@ class AlgoTrade {
     if (total_amount.isZero())
       throw new Error(`FillOrdersError: Bad total amount: ${total}`)
 
-      // total_amount in BASE (BTC)
-      // amount in MAIN (ETH)
+    // total_amount in BASE (BTC)
+    // amount in MAIN (ETH)
 
     const amount = total_amount.div(_price)
 
@@ -153,9 +155,9 @@ class AlgoTrade {
     // BID = BUY ETH below given price
     // ASK = SELL ETH above given price
     const orders = [
-      ...Array(4).fill(null).map( (e, index) =>
+      ...Array(4).fill(null).map((e, index) =>
           createOrder(ticker, PAIR_BID, bid_price, amount.times(index + 1))),
-      ...Array(4).fill(null).map( (e, index) =>
+      ...Array(4).fill(null).map((e, index) =>
           createOrder(ticker, PAIR_ASK, ask_price, amount.times(index + 1))),
     ]
 

@@ -1,7 +1,7 @@
 import ws from 'ws'
 
-const checkOrderID = ({ id, orderId }) => {
 
+const checkOrderID = ({ id, orderId }) => {
   if (id) return { id }
   if (orderId) return { id: orderId }
 
@@ -13,7 +13,6 @@ class SocketBot {
   rest: any
   isAutoAccepting: boolean
   isAutoSearching: boolean
-
 
   constructor(rest, url, auto) {
     if (!rest) throw new Error (`Cant init without Worker`)
@@ -51,7 +50,7 @@ class SocketBot {
 
     this.on('new order', order => this.maybeSwap(order))
     this.on('new orders', orders =>
-              orders.map(order => this.maybeSwap(order)))
+      orders.map(order => this.maybeSwap(order)))
 
     this.on('new order request', request => this.maybeAccept(request))
 
@@ -60,7 +59,6 @@ class SocketBot {
       this.rest.deleteAll()
       this.rest.fillBook({ total: 0.01 })
     }, 60 * 1000)
-
   }
 
   async maybeSwap(order) {
@@ -69,7 +67,7 @@ class SocketBot {
 
     const { id } = checkOrderID(order)
 
-    if (!order.buyAmount) throw new Error(`Not enought order info ${JSON.stringify(order)}`, )
+    if (!order.buyAmount) throw new Error(`Not enought order info ${JSON.stringify(order)}`)
 
     if (order.isRequested) {
       return this.fire(order)
@@ -129,7 +127,7 @@ class SocketBot {
         case 3:
         case 4:
           const { isBalanceEnough, balance } = swap.flow
-          if ( isBalanceEnough === false && balance )
+          if (isBalanceEnough === false && balance)
             console.error(`Not enough balance: ${balance}`)
           return
 
@@ -153,10 +151,7 @@ class SocketBot {
             }, 60 * 1000)
           }
       }
-
-
     }, 5000)
-
 
     return swap
   }

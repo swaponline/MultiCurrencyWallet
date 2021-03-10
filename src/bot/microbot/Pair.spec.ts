@@ -1,6 +1,7 @@
 import Pair from './Pair'
 import { PAIR_TYPES } from '../config/constants'
 
+
 const _ORDER = {
   'buyCurrency': 'ETH',
   'sellCurrency': 'BTC',

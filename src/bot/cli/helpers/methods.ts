@@ -53,10 +53,10 @@ const methods = [
   },
 ]
 
-const methods_list = methods.map( m => m.name )
+const methods_list = methods.map(m => m.name)
 
 const decodeMethod = (action, payload) => {
-  const method = methods.filter( m => m.name == action )[0]
+  const method = methods.filter(m => m.name == action)[0]
 
   if (!method) throw new Error(`No method: ${action}`)
 
@@ -70,7 +70,7 @@ const decodeMethod = (action, payload) => {
 }
 
 const printHelp = (action) => {
-  const method = methods.filter( m => m.name == action )[0]
+  const method = methods.filter(m => m.name == action)[0]
 
   if (!method)
     return `no method: ${action}`
