@@ -1,4 +1,3 @@
-$textColor: #1F2D48;
 $exchangeBorder: #512ed0;
 
 .nav {
@@ -27,8 +26,6 @@ $exchangeBorder: #512ed0;
   justify-content: space-between;
   align-items: center;
   position: relative;
-  font-weight: 500;
-  font-size: 16px;
   text-decoration: none;
   cursor: pointer;
   transition: color 0.1s ease;
@@ -36,51 +33,45 @@ $exchangeBorder: #512ed0;
   font-size: 15px;
   @include ff-bold;
   line-height: 140%;
-  color: #8E9AA3;
+  color: $notice-color;
+  white-space: nowrap;
 
-  
   &:first-child {
     margin-left: 0px;
     z-index: 1;
   }
 
   &:hover {
-    color: rgba($textColor, 1);
-
-    img {
-      filter: none;
-      transform: rotate(180deg);
-    }
+    color: $l-color;
   }
 
   &.active {
-    color: rgba($textColor, 1);
+    color: $l-color;
 
     &_exchange {
       border-color: $exchangeBorder;
     }
+  }
 
-    &.dark {
-      color: white;
-    
+  &.dark {
+    &:hover,
+    &.active {
+      color: $d-color;
+
       &:hover {
-        color: white;
+        color: $d-color;
       }
     }
   }
 }
 
-.container {
-  cursor: pointer;
-}
-
-@media screen and (max-width: 860px){
+@media screen and (max-width: 860px) {
   .nav {
     padding: 0;
   }
 }
 
-@media screen and (max-width: 560px){
+@media screen and (max-width: 560px) {
   .link {
     display: none;
   }

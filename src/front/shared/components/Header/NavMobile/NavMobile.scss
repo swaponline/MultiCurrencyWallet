@@ -24,13 +24,14 @@
     flex: 1;
     padding: 14px 7px;
     text-align: center;
-    color: #fff;
+    color: $d-color;
     text-decoration: none;
     display: flex;
     flex-direction: column;
+    white-space: nowrap;
 
     &:not(:last-of-type) {
-      border-right: 1px solid #fff;
+      border-right: 1px solid $d-color;
     }
 
     &.active {
@@ -73,7 +74,7 @@
 @media all and (max-width: 570px) {
   .navbar {
     a {
-      font-size: 12px;
+      font-size: 10px;
       padding: 7px;
 
       i {
