@@ -1,0 +1,33 @@
+.farm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.ifraimInfo {
+  width: 90%;
+  height: 950px;
+  margin-top: 4rem;
+  border: none;
+}
+
+.timer {
+  font-size: 2rem;
+  padding: 1rem 0;
+}
+
+.ifraimInfo {
+  width: 90%;
+  height: 950px;
+  margin-top: 2rem;
+  border: none;
+  border-radius: 1.5rem;
+}
+
+@media all and (max-width: 567px) { // widget width
+  .timer {
+    font-size: 1.5rem;
+    padding: 1rem 0;
+  }
+}

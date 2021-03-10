@@ -1577,17 +1577,11 @@
   },
   {
     "id": "partial223",
-    "message": "To change default wallet for buy currency. ",
-    "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
-    ]
+    "message": "To change default wallet for buy currency. "
   },
   {
     "id": "partial224",
-    "message": "Leave empty for use Swap.Online wallet",
-    "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
-    ]
+    "message": "Leave empty for use Swap.Online wallet"
   },
   {
     "id": "partial243",
@@ -1883,10 +1877,7 @@
   },
   {
     "id": "partialAtomicSwapWhatIsIt",
-    "message": "Atomic swap is een smart contract technology die het verhandelen van een cryptovaluta voor een andere mogelijk maakt zonder gecentraliseerde tussenpersoon, zoals exchange.",
-    "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
-    ]
+    "message": "Atomic swap is een smart contract technology die het verhandelen van een cryptovaluta voor een andere mogelijk maakt zonder gecentraliseerde tussenpersoon, zoals exchange."
   },
   {
     "id": "partialVideoAndFeaturesTitle",
@@ -7830,17 +7821,16 @@
     "id": "AtomicSwap_Title",
     "message": "Atomic swap",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx",
       "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx",
-      "src/front/shared/pages/TurboSwap/TurboSwap.tsx"
+      "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
   },
   {
     "id": "TurboSwap_Title",
     "message": "Turbo swap",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx",
       "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx",
+      "src/front/shared/pages/Exchange/Exchange.tsx",
       "src/front/shared/pages/TurboSwap/TurboSwap.tsx"
     ]
   },
@@ -7884,6 +7874,27 @@
     "message": "Sneller en goedkoper ruilen met vertrouwde marketmaker, aanbevolen voor kleine bedragen",
     "files": [
       "src/front/shared/components/ui/TurboIcon/TurboIcon.tsx"
+    ]
+  },
+  {
+    "id": "ButtonPendingState",
+    "message": "Pending",
+    "files": [
+      "src/front/shared/components/controls/Button/Button.tsx"
+    ]
+  },
+  {
+    "id": "menu.farm",
+    "message": "Uitzetten en landbouw",
+    "files": [
+      "src/front/shared/components/Header/config.tsx"
+    ]
+  },
+  {
+    "id": "FarmDoesNotHaveContracts",
+    "message": "Geen opties voor de boerderij gevonden",
+    "files": [
+      "src/front/shared/pages/Farm/index.tsx"
     ]
   }
 ]
