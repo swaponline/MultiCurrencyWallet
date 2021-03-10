@@ -16,11 +16,6 @@ $exchangeBorder: #512ed0;
   position: relative;
 }
 
-.fixed-width {
-  width: 145px;
-  padding: 0 5px;
-}
-
 .link {
   display: inline-flex;
   justify-content: space-between;
@@ -35,11 +30,6 @@ $exchangeBorder: #512ed0;
   line-height: 140%;
   color: $notice-color;
   white-space: nowrap;
-
-  &:first-child {
-    margin-left: 0px;
-    z-index: 1;
-  }
 
   &:hover {
     color: $l-color;
@@ -71,6 +61,12 @@ $exchangeBorder: #512ed0;
   }
 }
 
+@media screen and (max-width: 660px) {
+  .link {
+    font-size: 13px;
+  }
+}
+
 @media screen and (max-width: 560px) {
   .link {
     display: none;
@@ -80,8 +76,4 @@ $exchangeBorder: #512ed0;
 .active {
   font-weight: 700;
   color: #512ed0;
-}
-
-.bold {
-  font-weight: bold;
 }
