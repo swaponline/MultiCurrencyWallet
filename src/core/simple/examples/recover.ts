@@ -6,7 +6,8 @@ const {
   swap: { onStep, start, get },
 } = swap.helpers
 
-const { room } = swap.setup({})
+const app = swap.setup({})
+const { room } = app
 
 const swapID = process.argv[2]
 const method = process.argv[3]
@@ -46,7 +47,7 @@ const _ = (async () => {
   console.log('Swap id =', swapID)
   console.log()
 
-  const swap = get(swapID)
+  const swap = get(app, swapID)
 
   if (!method) {
     process.exit(0)

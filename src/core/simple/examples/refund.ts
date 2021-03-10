@@ -76,7 +76,8 @@ const {
   filter: { hash2id, secret2id },
 } = swap.helpers
 
-const { room, orders } = swap.setup({})
+const app = swap.setup({})
+const { room, orders } = app
 
 console.clear()
 console.log('IPFS loading...')
@@ -101,7 +102,7 @@ const _ = (async () => {
       swapID = key
 
       if (swapHisory.includes(swapID)) {
-        refundResult = await refund(swapID)
+        refundResult = await refund(app, swapID)
 
         if (refundResult) {
           removeInProgress(swapID)
@@ -117,10 +118,10 @@ const _ = (async () => {
     case KEY_HASH[0]:
       console.log('Key type is HASH', '\n')
 
-      swapID = await hash2id(key)
+      swapID = await hash2id(app, key)
 
       if (swapID) {
-        refundResult = await refund(swapID)
+        refundResult = await refund(app, swapID)
 
         if (refundResult) {
           removeInProgress(swapID)
@@ -134,10 +135,10 @@ const _ = (async () => {
     case KEY_SECRET[0]:
       console.log('Key type is SECRET', '\n')
 
-      swapID = await secret2id(key)
+      swapID = await secret2id(app, key)
 
       if (swapID) {
-        refundResult = await refund(swapID)
+        refundResult = await refund(app, swapID)
 
         if (refundResult) {
           removeInProgress(swapID)
@@ -154,7 +155,7 @@ const _ = (async () => {
       for (let a = 0; a < swapHisory.length; a++) {
         swapID = swapHisory[a]
 
-        refundResult = await refund(swapID)
+        refundResult = await refund(app, swapID)
 
         if (refundResult) {
           removeInProgress(swapID)
