@@ -85,29 +85,6 @@ export const getMenuItems = (props, isWalletCreate) => {
     },
   ]
 
-  // Farm plugin ****************************
-
-  let hasFarmInitOprions = false
-
-  if (window.farm) {
-    const { farmAddress, rewardsAddress, stakingAddress } = window.farm
-
-    hasFarmInitOprions = farmAddress && rewardsAddress && stakingAddress && true
-  }
-
-  if (hasFarmInitOprions) {
-    itemsWithWallet.push({
-      title: intl.formatMessage(messages.farm),
-      link: farm,
-      exact: true,
-      haveSubmenu: true,
-      icon: 'products',
-      currentPageFlag: true,
-    })
-  }
-
-  // ***************************************
-
   const itemsWithoutWallet = [
     {
       title: intl.formatMessage(createWallet),
@@ -126,6 +103,32 @@ export const getMenuItems = (props, isWalletCreate) => {
       currentPageFlag: true,
     },
   ]
+
+  // Farm plugin ****************************
+
+  let hasFarmInitOprions = false
+
+  if (window.farm) {
+    const { farmAddress, rewardsAddress, stakingAddress } = window.farm
+
+    hasFarmInitOprions = farmAddress && rewardsAddress && stakingAddress && true
+  }
+
+  if (hasFarmInitOprions) {
+    const farmItem = {
+      title: intl.formatMessage(messages.farm),
+      link: farm,
+      exact: true,
+      haveSubmenu: true,
+      icon: 'products',
+      currentPageFlag: true,
+    }
+
+    itemsWithWallet.push(farmItem)
+    itemsWithoutWallet.push(farmItem)
+  }
+
+  // ***************************************
 
   return (Number.isInteger(reputation) && reputation !== 0)
     || isSigned
@@ -169,28 +172,6 @@ export const getMenuItemsMobile = (props, isWalletCreate, dinamicPath) => {
     },
   ]
 
-  // Farm plugin ****************************
-
-  let hasFarmInitOprions = false
-
-  if (window.farm) {
-    const { farmAddress, rewardsAddress, stakingAddress } = window.farm
-
-    hasFarmInitOprions = farmAddress && rewardsAddress && stakingAddress && true
-  }
-
-  if (hasFarmInitOprions) {
-    mobileItemsWithWallet.push({
-      title: props.intl.formatMessage(messages.farm),
-      link: farm,
-      haveSubmenu: false,
-      displayNone: !isWalletCreate,
-      icon: <i className="fas fa-coins" aria-hidden="true" />,
-    })
-  }
-
-  // *****************************************
-
   const mobileItemsWithoutWallet = [
     {
       title: intl.formatMessage(createWallet),
@@ -207,6 +188,31 @@ export const getMenuItemsMobile = (props, isWalletCreate, dinamicPath) => {
       icon: <i className="fas fa-sync-alt" aria-hidden="true" />,
     },
   ]
+
+  // Farm plugin ****************************
+
+  let hasFarmInitOprions = false
+
+  if (window.farm) {
+    const { farmAddress, rewardsAddress, stakingAddress } = window.farm
+
+    hasFarmInitOprions = farmAddress && rewardsAddress && stakingAddress && true
+  }
+
+  if (hasFarmInitOprions) {
+    const farmItem = {
+      title: props.intl.formatMessage(messages.farm),
+      link: farm,
+      exact: true,
+      haveSubmenu: true,
+      icon: <i className="fas fa-coins" aria-hidden="true" />,
+    }
+
+    mobileItemsWithWallet.push(farmItem)
+    mobileItemsWithoutWallet.push(farmItem)
+  }
+
+  // *****************************************
 
   return (Number.isInteger(reputation) && reputation !== 0) || isSigned
     || localStorage.getItem('isWalletCreate') === 'true'
