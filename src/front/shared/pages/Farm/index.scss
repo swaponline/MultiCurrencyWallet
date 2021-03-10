@@ -1,5 +1,4 @@
 .farm {
-  padding: 2rem 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -8,7 +7,7 @@
 
 .ifraimInfo {
   width: 90%;
-  height: 1000px;
+  height: 950px;
   margin-top: 4rem;
   border: none;
 }
@@ -16,6 +15,14 @@
 .timer {
   font-size: 2rem;
   padding: 1rem 0;
+}
+
+.ifraimInfo {
+  width: 90%;
+  height: 350px;
+  margin-top: 0.5rem;
+  border: none;
+  border-radius: 1.5rem;
 }
 
 @media all and (max-width: 567px) { // widget width
