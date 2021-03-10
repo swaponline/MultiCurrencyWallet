@@ -1,14 +1,13 @@
 .coin {
   @include square-block;
   background-color: #47454a;
-  //border: 1px solid #ddd;
   box-shadow: 0px 0px 5px -1px #888;
   position: relative;
   border-radius: 50%;
 }
 
 .dark {
-  border-color: #232629
+  border-color: #232629;
 }
 
 .icon {
@@ -25,16 +24,5 @@
   top: 0;
   left: 0;
   text-align: center;
-  color: #fff;
-}
-
-.light {
-  background: rgba(97, 68, 229, 0.1);
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: 15px;
+  color: $d-color;
 }

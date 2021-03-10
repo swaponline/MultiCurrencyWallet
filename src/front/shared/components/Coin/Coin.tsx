@@ -1,13 +1,10 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-
 import { constants } from 'helpers'
 import CSSModules from 'react-css-modules'
 import styles from './Coin.scss'
 
 import CurrencyIcon, { iconNames } from 'components/ui/CurrencyIcon/CurrencyIcon'
 import config from 'app-config'
-
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
@@ -21,16 +18,18 @@ const defaultCurrencyColors = {
   'next': 'white',
 }
 
-const Coin = ({ className, size, name }) => {
-  const style = {
-    width: size ? `${size}px` : null,
-    height: size ? `${size}px` : null,
-    backgroundColor: null,
-  }
+type CoinProps = {
+  className?: string
+  size?: number
+  name: string
+}
 
-  let iconProps = {
-    name: name.toLowerCase(),
-  }
+const Coin = (props: CoinProps) => {
+  const {
+    size = 40,
+    className, 
+    name,
+  } = props
 
   const isIconExist = iconNames.includes(name.toLowerCase())
   let isIconConfigExist = false
@@ -41,6 +40,14 @@ const Coin = ({ className, size, name }) => {
     && config.erc20[name.toLowerCase()].icon
   ) {
     isIconConfigExist = true
+  }
+
+  // Coin styles *************************
+
+  const style = {
+    width: size ? `${size}px` : null,
+    height: size ? `${size}px` : null,
+    backgroundColor: null,
   }
 
   if (defaultCurrencyColors[name.toLowerCase()]) {
@@ -54,16 +61,21 @@ const Coin = ({ className, size, name }) => {
     style.backgroundColor = config.erc20[name.toLowerCase()].iconBgColor
   }
 
+  // *************************************
+
+  let currencyIconProps = {
+    name: name.toLowerCase(),
+  }
+
   if (isIconExist || isIconConfigExist) {
-    iconProps = {
-      ...iconProps,
+    currencyIconProps = {
+      ...currencyIconProps,
       //@ts-ignore
       styleName: 'icon',
     }
-  }
-  else {
-    iconProps = {
-      ...iconProps,
+  } else {
+    currencyIconProps = {
+      ...currencyIconProps,
       //@ts-ignore
       styleName: 'letter',
       style: {
@@ -75,19 +87,9 @@ const Coin = ({ className, size, name }) => {
 
   return (
     <div styleName={`coin ${isDark ? 'dark' : ''}`} className={className} style={style}>
-      <CurrencyIcon {...iconProps} />
+      <CurrencyIcon {...currencyIconProps} />
     </div>
   )
-}
-
-Coin.defaultProps = {
-  size: 40,
-}
-
-Coin.propTypes = {
-  className: PropTypes.string,
-  size: PropTypes.number,
-  name: PropTypes.string.isRequired,
 }
 
 export default CSSModules(Coin, styles, { allowMultiple: true })

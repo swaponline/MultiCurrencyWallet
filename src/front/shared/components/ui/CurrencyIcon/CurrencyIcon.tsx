@@ -1,5 +1,4 @@
 import React from 'react'
-
 import cssModules from 'react-css-modules'
 import styles from './CurrencyIcon.scss'
 
@@ -12,12 +11,14 @@ export const iconNames = Object.keys(icons)
 
 
 type CurrencyIconProps = {
+  style?: { [key: string]: string }
   className?: string
-  style?: IUniversalObj,
   name: string
 }
 
-const CurrencyIcon = ({ className, style, name}: CurrencyIconProps) => {
+const CurrencyIcon = (props: CurrencyIconProps) => {
+  const { className, style, name } = props
+
   if (typeof name === 'undefined') {
     return <p><FormattedMessage id="currencyIcon15" defaultMessage="Error" /></p>
   }
@@ -30,7 +31,6 @@ const CurrencyIcon = ({ className, style, name}: CurrencyIconProps) => {
   ) {
     return (
       <img
-        className={className}
         src={config.erc20[name.toLowerCase()].icon}
         alt={`${name} icon`}
         role="image"
