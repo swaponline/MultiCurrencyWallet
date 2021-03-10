@@ -13,14 +13,15 @@ const fetchPrice = async (obj, type?) => {
   try {
    // if (!TRADE_TICKERS.includes(ticker)) return
 
-    if (_isOutdated || !(ticker in _prices) ) {
-
+    if (_isOutdated || !(ticker in _prices)) {
       _isOutdated = false
-      if(_firstRun) {
+
+      if (_firstRun) {
         _firstRun = false
         setTimeout(() => (_isOutdated = true), 5 * 1000)
       }
-        _prices[ticker] = await getPriceByPair(ticker, type)
+
+      _prices[ticker] = await getPriceByPair(ticker, type)
     }
 
     return _prices[ticker]

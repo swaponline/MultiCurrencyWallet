@@ -1,8 +1,8 @@
 import _debug from 'debug'
+
 import { setup, helpers, constants } from '../../core/simple/src'
 import { handleRequest, handleOrder, handleError, fillOrderbook, startSaved } from './actions'
 import { TOKENS, TOKEN_DECIMALS } from '../config/constants'
-import lineInput from './lineInput'
 import * as configStorage from '../config/storage'
 import { erc20 } from '../../core/swap.app/util'
 import { FG_COLORS as COLORS, colorString } from 'common/utils/colorString'
@@ -22,6 +22,7 @@ Object.keys(TOKENS).filter((name) => !Object.keys(constants.COINS).includes(name
   .map((name) => {
     erc20.register(name.toLowerCase(), TOKENS[name].decimals)
   })
+
 if (configStorage.hasTradeConfig()) {
   configStorage
     .getCustomERC20()
@@ -52,6 +53,8 @@ const ERC20TOKENS = Object.keys(TOKENS)
     name: name.toUpperCase(),
     tokenAddress: TOKENS[name].address,
   }))
+
+
 let SwapApp, app, auth, wallet, room, orders, services
 
 try {
@@ -60,6 +63,7 @@ try {
     ERC20TOKENS,
     mnemonic: configStorage.getMnemonic() || process.env.SECRET_PHRASE,
   })
+
   let { app, auth, wallet, room, orders, services } = SwapApp
 
   ready(room).then(() => {
@@ -88,7 +92,7 @@ try {
     orders.on('new order request', handleRequest(app, wallet, orders))
   })
 } catch (err) {
-  console.log('Fail create swapApp',err)
+  console.log('Fail create swapApp', err)
   handleError(err)
 }
 

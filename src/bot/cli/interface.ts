@@ -7,7 +7,9 @@ import DataWorker from './data-worker'
 import { getOrderId } from './helpers/getOrderId'
 import { parse } from './helpers/text'
 
+
 const BASE_URL = 'http://localhost:1337'
+
 
 class RESTInterface {
   algo: AlgoTrade

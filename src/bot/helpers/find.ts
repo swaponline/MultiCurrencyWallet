@@ -3,20 +3,21 @@ import * as flows from 'swap.flows'
 
 import { orderView } from './views'
 
+
 let _swaps = {}
 
 const decodeFlow = (swap) => {
   const { isMy: isMyOrder, buyCurrency, sellCurrency } = swap
 
-  const firstPart     = isMyOrder ? sellCurrency : buyCurrency
-  const lastPart      = isMyOrder ? buyCurrency : sellCurrency
+  const firstPart = isMyOrder ? sellCurrency : buyCurrency
+  const lastPart  = isMyOrder ? buyCurrency : sellCurrency
   const flowName = `${firstPart.toUpperCase()}2${lastPart.toUpperCase()}`
 
   return flows[flowName]
 }
 
 const findOrder = (app) => (req, res, next) => {
-  let id = req.params.id
+  const id = req.params.id
 
   console.log(new Date().toISOString(), 'id', id)
   let order = app.services.orders.getByKey(id)
@@ -28,7 +29,6 @@ const findOrder = (app) => (req, res, next) => {
 }
 
 const findSwap = (app) => async (req, res) => {
-
   const id = req.params.id
 
   console.log(new Date().toISOString(), 'id', id)

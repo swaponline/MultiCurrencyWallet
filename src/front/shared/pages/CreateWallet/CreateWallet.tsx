@@ -359,24 +359,6 @@ const CreateWallet: React.FC<any> = (props) => {
     goHome()
   }
 
-  useEffect(() => {
-    // Link from index.html (first screen)
-    const starterModalRestoreWallet = document.getElementById('starter-modal__link-restore-wallet')
-    if (starterModalRestoreWallet) {
-      starterModalRestoreWallet.addEventListener('click', redirectToRestoreWallet)
-
-      return () => {
-        starterModalRestoreWallet.removeEventListener('click', redirectToRestoreWallet)
-      }
-
-      function redirectToRestoreWallet() {
-        document.location.href = '#/restoreWallet'
-        handleRestoreMnemonic()
-        document.getElementById('starter-modal').classList.add('d-none')
-      }
-    }
-  }, [])
-
   const web3Type = metamask.web3connect.getInjectedType()
   const web3Icon = (web3Icons[web3Type] && web3Type !== `UNKNOWN` && web3Type !== `NONE`) ? web3Icons[web3Type] : false
 

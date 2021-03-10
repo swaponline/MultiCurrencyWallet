@@ -2,36 +2,38 @@ import swapApp from '../../swapApp'
 
 import { findOrder, orderView } from '../../helpers'
 
-let orders
+
 const app = swapApp.app
 const Orders = swapApp.app.services.orders
 
-const listMyOrders = (req, res) => {
+let orders
 
-  orders = Orders.getMyOrders().filter( order => !!order )
+
+const listMyOrders = (req, res) => {
+  orders = Orders.getMyOrders().filter(order => !!order)
   orders = orders.map(orderView)
 
   res.json(orders)
 }
 
 const listOthersOrders = (req, res) => {
-  orders = Orders.items.filter( order => !!order )
-  orders = orders.filter( order => !order.isMy )
+  orders = Orders.items.filter(order => !!order)
+  orders = orders.filter(order => !order.isMy)
   orders = orders.map(orderView)
 
   res.json(orders)
 }
 
 const listOrders = (req, res) => {
-  orders = Orders.items.filter( order => !!order )
-  orders = Orders.items.filter( order => !order.isProcessing )
+  orders = Orders.items.filter(order => !!order)
+  orders = Orders.items.filter(order => !order.isProcessing)
   orders = orders.map(orderView)
 
   res.json(orders)
 }
 
 const listAllOrders = (req, res) => {
-  orders = Orders.items.filter( order => !!order )
+  orders = Orders.items.filter(order => !!order)
   orders = orders.map(orderView)
 
   res.json(orders)
@@ -41,14 +43,14 @@ const filterOrders = (req, res) => {
   const peer = req.query.peer
   const isProcessing = req.query.isProcessing
 
-  orders = Orders.items.filter( order => !!order )
+  orders = Orders.items.filter(order => !!order)
 
   if (peer !== undefined)
-    orders = orders.filter( order => order.owner.peer == peer)
+    orders = orders.filter(order => order.owner.peer == peer)
 
   if (isProcessing === 'false' || isProcessing === 'true') {
-    const filterProcessing = isProcessing == 'true' ? true : false
-    orders = orders.filter( order => order.isProcessing === filterProcessing)
+    const filterProcessing = isProcessing == 'true'
+    orders = orders.filter(order => order.isProcessing === filterProcessing)
   }
 
   orders = orders.map(orderView)
@@ -57,9 +59,9 @@ const filterOrders = (req, res) => {
 }
 
 const requestedOrders = (req, res) => {
-  orders = Orders.items.filter( order => !!order )
+  orders = Orders.items.filter(order => !!order)
 
-  orders = orders.filter( ({ requests }) => requests.length )
+  orders = orders.filter(({ requests }) => requests.length)
   orders = orders.map(orderView)
 
   res.json(orders)
@@ -72,7 +74,7 @@ const getOrder = (req, res) => {
 const createOrder = (req, res) => {
   try {
     const { buyCurrency, sellCurrency, buyAmount, sellAmount, exchangeRate } = req.body
-    const data = { buyCurrency, sellCurrency,  buyAmount, sellAmount, exchangeRate }
+    const data = { buyCurrency, sellCurrency, buyAmount, sellAmount, exchangeRate }
 
     const order = Orders.create(data)
     console.log(new Date().toISOString(), 'new order', data)
@@ -99,8 +101,8 @@ const deleteOrder = (req, res) => {
 const deleteAllOrders = (req, res) => {
   try {
     Orders.getMyOrders()
-      .filter( order => !order.isProcessing )
-      .map( order => Orders.remove(order.id))
+      .filter(order => !order.isProcessing)
+      .map(order => Orders.remove(order.id))
 
     res.status(200).json({})
   } catch (err) {
@@ -112,7 +114,7 @@ const deleteAllOrders = (req, res) => {
 const forceDeleteAllOrders = (req, res) => {
   try {
     Orders.getMyOrders()
-      .map( order => Orders.remove(order.id))
+      .map(order => Orders.remove(order.id))
 
     res.status(200).json({})
   } catch (err) {
@@ -121,10 +123,9 @@ const forceDeleteAllOrders = (req, res) => {
   }
 }
 
-
 const requestOrder = (req, res) => {
   findOrder(app)(req, res, (order) => {
-    order.sendRequest( accepted => {
+    order.sendRequest(accepted => {
       order.isAccepted = accepted
       console.log(new Date().toISOString(), 'accepted', accepted)
       if (!accepted) return
@@ -176,6 +177,7 @@ const acceptRequest = (req, res) => {
     res.json(orderView(order))
   })
 }
+
 
 export {
   filterOrders,

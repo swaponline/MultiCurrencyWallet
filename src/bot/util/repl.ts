@@ -1,6 +1,7 @@
 import * as swap from 'simple.swap.core'
 import repl from 'repl'
 
+
 const {
   on: { onFinish },
   room: { ready },
@@ -20,7 +21,6 @@ const _ = (async () => {
   await ready(room)
 
   console.clear()
-  
   const swap_repl = repl.start()
 
   if (swapID) {

@@ -1,15 +1,28 @@
 import * as fs from 'fs'
+import _debug from 'debug'
+
 import * as mnemonicUtils from 'common/utils/mnemonic'
 import * as configStorage from './config/storage'
 import { getNetworkType } from 'common/domain/network'
-import { FG_COLORS as COLORS, BG_COLORS , colorString } from 'common/utils/colorString'
+import { FG_COLORS as COLORS, BG_COLORS, colorString } from 'common/utils/colorString'
 
 import { feedbackToOwner } from './helpers/debugFeedBack'
 
 
+const defaultConfig = {
+  SERVER_ID: '2234567890',
+  ACCOUNT: '2234567890',
+  NETWORK: 'testnet',
+  API_USER: 'user',
+  API_PASS: '',
+  PORT: '3000',
+  IP: '0.0.0.0',
+  MAX_PARALLEL_SWAPS: '3',
+  WEB3_TESTNET_PROVIDER: 'https://ropsten.infura.io/v3/5ffc47f65c4042ce847ef66a3fa70d4c',
+  WEB3_MAINNET_PROVIDER: 'https://mainnet.infura.io/v3/5ffc47f65c4042ce847ef66a3fa70d4c',
+}
 
-
-console.log(colorString(`Loading...`,COLORS.GREEN))
+console.log(colorString(`Loading...`, COLORS.GREEN))
 
 const rewriteEnvKeys = [
   `NETWORK`,
@@ -66,6 +79,7 @@ if (rewritedEnv.SECRET_PHRASE) {
     process.exit(0)
   }
 }
+
 // NETWORK
 if (rewritedEnv.NETWORK !== undefined) {
   configStorage.setNetwork(getNetworkType(rewritedEnv.NETWORK))
@@ -81,34 +95,12 @@ if (process.env.USE_JSON_CONFIG === `true`) {
 }
 
 
-
-
-const _loadDefaultEnv = () => {
-  const defaultConfig = {
-    SERVER_ID: '2234567890',
-    ACCOUNT: '2234567890',
-    NETWORK: 'testnet',
-    API_USER: 'user',
-    API_PASS: '',
-    PORT: '3000',
-    IP: '0.0.0.0',
-    MAX_PARALLEL_SWAPS: '3',
-    WEB3_TESTNET_PROVIDER: 'https://ropsten.infura.io/v3/5ffc47f65c4042ce847ef66a3fa70d4c',
-    WEB3_MAINNET_PROVIDER: 'https://mainnet.infura.io/v3/5ffc47f65c4042ce847ef66a3fa70d4c',
-  }
-  Object.keys(defaultConfig).forEach((key) => {
-    if (process.env[key] === undefined) {
-      process.env[key] = defaultConfig[key]
-    }
-  })
-}
-
 if (process.env.TEST_STARTUP === `true`) {
   console.log(
     colorString('>>>> TEST STARTUP', COLORS.GREEN)
   )
 
-  process.env.SECRET_PHRASE='gospel total hundred major refuse when equal pilot goat soft recall abandon'
+  process.env.SECRET_PHRASE = 'gospel total hundred major refuse when equal pilot goat soft recall abandon'
 
   setTimeout(() => {
     console.log('>>>> TEST READY - SHUTDOWN')
@@ -127,7 +119,14 @@ if (process.env.TEST_STARTUP === `true`) {
   }
 }
 
-_loadDefaultEnv()
+
+//load default env
+Object.keys(defaultConfig).forEach((key) => {
+  if (process.env[key] === undefined) {
+    process.env[key] = defaultConfig[key]
+  }
+})
+
 
 // Rewrite vars from .env with values from command line
 Object.keys(rewritedEnv).forEach((envKey) => {
@@ -143,8 +142,6 @@ if (process.env.MAX_PARALLEL_SWAPS) {
 
 
 feedbackToOwner(`Marketmaker started Network(${process.env.NETWORK})`)
-
-import _debug from 'debug'
 
 _debug('.:app')
 

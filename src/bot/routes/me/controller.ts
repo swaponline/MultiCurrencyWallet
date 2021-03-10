@@ -1,5 +1,6 @@
 import swapApp from '../../swapApp'
 
+
 const wallet = swapApp.wallet
 
 const getMe = async (req, res) => {
@@ -21,8 +22,8 @@ const getWalletDetailed = async (req, res) => {
 const balance = async (req, res) => {
   const { body } = req
 
-   let balances = await wallet.getData({ coins: body.coins })
-   res.json({ balances })
+  let balances = await wallet.getData({ coins: body.coins })
+  res.json({ balances })
 }
 
 const withdraw = async (req, res) => {
@@ -46,5 +47,6 @@ const withdraw = async (req, res) => {
     throw err
   }
 }
+
 
 export { balance, getMe, getWallet, getWalletDetailed, withdraw }

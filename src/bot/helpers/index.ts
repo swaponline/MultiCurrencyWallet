@@ -1,7 +1,6 @@
 //@ToDo need to move in app
 import {
   orderToString,
-  swapToString,
   swapView,
   orderView,
 } from './views'
@@ -15,6 +14,7 @@ import {
 import {
   removeSwap
 } from './swap'
+
 
 export {
   findOrder,
