@@ -3,12 +3,13 @@ import asciichart from 'asciichart'
 import { convertOrder, TRADE_TICKERS, PAIR_ASK, PAIR_BID } from './trade'
 import { print } from './helpers/text'
 
+
 class DataWorker {
 
   provider: any
   orders: any
 
-  constructor (orderProvider) {
+  constructor(orderProvider) {
     this.provider = orderProvider
     this.orders = []
   }
@@ -31,7 +32,7 @@ class DataWorker {
 
     const filtered = orders
       .map( o => convertOrder(o) )
-      .filter( o => o.ticker == ticker)
+      .filter( o => o.ticker == ticker )
 
     const sorted = filtered
       .sort( (o1, o2) => o1.price - o2.price )
@@ -63,7 +64,7 @@ class DataWorker {
 
   async plotPrices(sorted) {
     if (sorted.length == 0) return ""
-    
+
     const lowest_price = sorted.slice(0,1).pop().price * 0.9
     const highest_price = sorted.slice(-1).pop().price * 1.1
 

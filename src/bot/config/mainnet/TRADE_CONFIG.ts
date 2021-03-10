@@ -2,9 +2,9 @@
 
   Example how is used spread:
 
-            /  100 - spread(%) \
-  price *  |  –––––––––––––––  |
-           \       100         /
+           / 100 - spread[%] \
+  price * |  –––––––––––––––  |
+           \       100       /
 
   Example of orders config:
 

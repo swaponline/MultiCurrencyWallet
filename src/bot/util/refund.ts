@@ -3,11 +3,12 @@ import swap from 'simple.swap.core'
 import commandLineArgs from 'command-line-args'
 import commandLineUsage from 'command-line-usage'
 
-const KEY_ID = [ 'id', 'i' ]
-const KEY_HASH = [ 'hash', 'h' ]
-const KEY_SECRET = [ 'secret', 's' ]
-const KEY_ALL = [ 'all', 'a' ]
-const KEY_HELP = [ 'help' ]
+
+const KEY_ID = ['id', 'i']
+const KEY_HASH = ['hash', 'h']
+const KEY_SECRET = ['secret', 's']
+const KEY_ALL = ['all', 'a']
+const KEY_HELP = ['help']
 
 const sections = [
   {
@@ -93,6 +94,7 @@ const _ = (async () => {
   const swapHistory = getAllInProgress()
   const keyType = Object.keys(options)[0]
   const key = options[keyType]
+
   let swapID = null
   let refundResult = null
 

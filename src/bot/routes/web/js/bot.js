@@ -1,4 +1,5 @@
 class Bot extends React.Component {
+
   state = {
     items: [],
     kraken_items: [],
