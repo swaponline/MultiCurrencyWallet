@@ -5,15 +5,10 @@ import { links } from 'helpers'
 import { NavLink, withRouter } from 'react-router-dom'
 import { constants } from 'helpers'
 
-import SubMenu from '../SubMenu/SubMenu'
-
-import cx from 'classnames'
 import styles from './Nav.scss'
 import CSSModules from 'react-css-modules'
-import { FormattedMessage, injectIntl } from 'react-intl'
+import { injectIntl } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
-
-import ArrowDown from './images/ArrowDown.svg'
 
 
 @withRouter

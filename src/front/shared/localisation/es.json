@@ -1573,17 +1573,11 @@
   },
   {
     "id": "partial223",
-    "message": "Para modificar la billetera defecto para comprar monedas.",
-    "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
-    ]
+    "message": "Para modificar la billetera defecto para comprar monedas."
   },
   {
     "id": "partial224",
-    "message": "Dejar en blanco para uso de billetera GhostX",
-    "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
-    ]
+    "message": "Dejar en blanco para uso de billetera GhostX"
   },
   {
     "id": "partial243",
@@ -1882,10 +1876,7 @@
   },
   {
     "id": "partialAtomicSwapWhatIsIt",
-    "message": "Atomic swap es una tecnología de contrato inteligente que permite el intercambio de cryptomonedas sin utilizar intermediarios centralizados, como plataformas de intercambio.",
-    "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
-    ]
+    "message": "Atomic swap es una tecnología de contrato inteligente que permite el intercambio de cryptomonedas sin utilizar intermediarios centralizados, como plataformas de intercambio."
   },
   {
     "id": "partialVideoAndFeaturesTitle",
@@ -7838,17 +7829,16 @@
     "id": "AtomicSwap_Title",
     "message": "Atomic swap",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx",
       "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx",
-      "src/front/shared/pages/TurboSwap/TurboSwap.tsx"
+      "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
   },
   {
     "id": "TurboSwap_Title",
     "message": "Turbo swap",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx",
       "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx",
+      "src/front/shared/pages/Exchange/Exchange.tsx",
       "src/front/shared/pages/TurboSwap/TurboSwap.tsx"
     ]
   },
@@ -7892,6 +7882,27 @@
     "message": "Intercambio más rápido y económico con un creador de mercado de confianza, recomendado para pequeñas cantidades",
     "files": [
       "src/front/shared/components/ui/TurboIcon/TurboIcon.tsx"
+    ]
+  },
+  {
+    "id": "ButtonPendingState",
+    "message": "Pending",
+    "files": [
+      "src/front/shared/components/controls/Button/Button.tsx"
+    ]
+  },
+  {
+    "id": "menu.farm",
+    "message": "Estacas y agricultura",
+    "files": [
+      "src/front/shared/components/Header/config.tsx"
+    ]
+  },
+  {
+    "id": "FarmDoesNotHaveContracts",
+    "message": "Didn't trovas ajna ebloj por la bieno",
+    "files": [
+      "src/front/shared/pages/Farm/index.tsx"
     ]
   }
 ]

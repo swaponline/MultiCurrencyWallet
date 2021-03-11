@@ -91,6 +91,10 @@ const events = {
     stopped: 'stopped',
     finished: 'finished',
   },
+  farm: {
+    started: 'started',
+    failed: 'failed',
+  },
   theme: {
     switched: 'switched',
   },
