@@ -11,6 +11,7 @@ const linksManager = {
   connectWallet: '/connectWallet',
   invoices: '/invoices',
   invoice: '/invoice',
+  farm: '/farm',
   localStorage: '/localStorage',
 
   creditCardDeposit: '/creditCardDeposit',

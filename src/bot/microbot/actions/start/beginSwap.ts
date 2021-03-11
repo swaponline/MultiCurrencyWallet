@@ -1,6 +1,5 @@
-// import Error from './error'
-// import ReportState from './state'
 import BigNumber from 'bignumber.js'
+
 import { get, start } from '../../core/beginSwap'
 import history from '../../core/history'
 import handleError from '../../../app/actions/errors/handleError'
@@ -20,21 +19,19 @@ import { UTXO2ETHFlow, ETH2UTXOFlow } from '../swap-flow'
 import { checkSwapsCountLimit } from '../../core/checkSwapsCountLimit'
 import { removeMyOrders } from '../../core/orders'
 
-import request from 'request-promise-cache'
 import { COIN_DATA, COIN_MODEL, COIN_TYPE } from 'swap.app/constants/COINS'
-
 
 
 export default (app, { id }, callback) => {
   let swap
   console.log(new Date().toISOString(), `begin swap ${id}`)
+
   try {
     swap = get(app, id)
 
     history.saveInProgress(swap.id)
 
     callback(swap)
-
 
     const flowName = swap.flow._flowName
 
@@ -79,7 +76,6 @@ export default (app, { id }, callback) => {
       if (step >= 2) {
         const swapInfo = 'swap step '+step+' buy '+swap.buyCurrency+' '+swap.buyAmount.toString()+ ' sell '+swap.sellCurrency+' ' + swap.sellAmount.toString()
         feedbackToOwner(swapInfo)
-
       }
 
       const pair = Pair.fromOrder(swap)

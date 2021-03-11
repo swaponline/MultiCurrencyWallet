@@ -1577,17 +1577,11 @@
   },
   {
     "id": "partial223",
-    "message": "To change default wallet for buy currency. ",
-    "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
-    ]
+    "message": "To change default wallet for buy currency. "
   },
   {
     "id": "partial224",
-    "message": "Leave empty for use Swap.Online wallet",
-    "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
-    ]
+    "message": "Leave empty for use Swap.Online wallet"
   },
   {
     "id": "partial243",
@@ -1883,10 +1877,7 @@
   },
   {
     "id": "partialAtomicSwapWhatIsIt",
-    "message": "Atomic swap is een smart contract technology die het verhandelen van een cryptovaluta voor een andere mogelijk maakt zonder gecentraliseerde tussenpersoon, zoals exchange.",
-    "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
-    ]
+    "message": "Atomic swap is een smart contract technology die het verhandelen van een cryptovaluta voor een andere mogelijk maakt zonder gecentraliseerde tussenpersoon, zoals exchange."
   },
   {
     "id": "partialVideoAndFeaturesTitle",
@@ -3135,148 +3126,8 @@
     "message": "Select the currency and enter the amount you want to buy"
   },
   {
-    "id": "FooterAboutAgreements",
-    "message": "Agreements",
-    "files": [
-      "src/front/shared/components/Footer/Links/Links.tsx"
-    ]
-  },
-  {
-    "id": "FooterAboutCompany",
-    "message": "About company",
-    "files": [
-      "src/front/shared/components/Footer/Links/Links.tsx"
-    ]
-  },
-  {
-    "id": "FooterAboutContacts",
-    "message": "Contacts",
-    "files": [
-      "src/front/shared/components/Footer/Links/Links.tsx"
-    ]
-  },
-  {
-    "id": "FooterAboutHeader",
-    "message": "About company",
-    "files": [
-      "src/front/shared/components/Footer/Links/Links.tsx"
-    ]
-  },
-  {
-    "id": "FooterAboutLegal",
-    "message": "Legal",
-    "files": [
-      "src/front/shared/components/Footer/Links/Links.tsx"
-    ]
-  },
-  {
-    "id": "FooterAboutPrivacyPolicy",
-    "message": "Privacy policy",
-    "files": [
-      "src/front/shared/components/Footer/Links/Links.tsx"
-    ]
-  },
-  {
-    "id": "FooterOurProductsChromeExtantion",
-    "message": "Chrome extension",
-    "files": [
-      "src/front/shared/components/Footer/Links/Links.tsx"
-    ]
-  },
-  {
-    "id": "FooterOurProductsExchange",
-    "message": "Exchange",
-    "files": [
-      "src/front/shared/components/Footer/Links/Links.tsx"
-    ]
-  },
-  {
-    "id": "FooterOurProductsHeader",
-    "message": "Our products",
-    "files": [
-      "src/front/shared/components/Footer/Links/Links.tsx"
-    ]
-  },
-  {
-    "id": "FooterOurProductsWallet",
-    "message": "Portefeuille",
-    "files": [
-      "src/front/shared/components/Footer/Links/Links.tsx"
-    ]
-  },
-  {
-    "id": "FooterOurProductsWidget",
-    "message": "Widget",
-    "files": [
-      "src/front/shared/components/Footer/Links/Links.tsx"
-    ]
-  },
-  {
-    "id": "FooterPartnershipForBlockchains",
-    "message": "Voor Blockchains",
-    "files": [
-      "src/front/shared/components/Footer/Links/Links.tsx"
-    ]
-  },
-  {
-    "id": "FooterPartnershipForDEXes",
-    "message": "Voor DEXes",
-    "files": [
-      "src/front/shared/components/Footer/Links/Links.tsx"
-    ]
-  },
-  {
     "id": "FooterPartnershipForERC20",
     "message": "Voor ERC20 tokens"
-  },
-  {
-    "id": "FooterPartnershipForNewsWebsites",
-    "message": "Voor news websites",
-    "files": [
-      "src/front/shared/components/Footer/Links/Links.tsx"
-    ]
-  },
-  {
-    "id": "FooterPartnershipForstablecoin",
-    "message": "Voor stablecoins",
-    "files": [
-      "src/front/shared/components/Footer/Links/Links.tsx"
-    ]
-  },
-  {
-    "id": "FooterPartnershipHeader",
-    "message": "Partnership",
-    "files": [
-      "src/front/shared/components/Footer/Links/Links.tsx"
-    ]
-  },
-  {
-    "id": "FooterTechnologyGithub",
-    "message": "GitHub",
-    "files": [
-      "src/front/shared/components/Footer/Links/Links.tsx"
-    ]
-  },
-  {
-    "id": "FooterTechnologyHeader",
-    "message": "Technology",
-    "files": [
-      "src/front/shared/components/Footer/Links/Links.tsx"
-    ]
-  },
-  {
-    "id": "FooterTechnologyWhitepaper",
-    "message": "Whitepaper",
-    "files": [
-      "src/front/shared/components/Footer/Links/Links.tsx"
-    ]
-  },
-  {
-    "id": "FooterTechnologyWiki",
-    "message": "Wiki",
-    "files": [
-      "src/front/shared/components/Footer/Links/Links.tsx"
-    ]
   },
   {
     "id": "SecondStep",
@@ -3295,27 +3146,6 @@
   {
     "id": "Partial955",
     "message": "Address not correct"
-  },
-  {
-    "id": "FooterOurProductsBankDashboard",
-    "message": "Bank dashboard",
-    "files": [
-      "src/front/shared/components/Footer/Links/Links.tsx"
-    ]
-  },
-  {
-    "id": "FooterTechnologyComparsion",
-    "message": "Comparsion",
-    "files": [
-      "src/front/shared/components/Footer/Links/Links.tsx"
-    ]
-  },
-  {
-    "id": "FooterTechnologyLNResearch",
-    "message": "LN",
-    "files": [
-      "src/front/shared/components/Footer/Links/Links.tsx"
-    ]
   },
   {
     "id": "Submenu16",
@@ -7991,17 +7821,16 @@
     "id": "AtomicSwap_Title",
     "message": "Atomic swap",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx",
       "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx",
-      "src/front/shared/pages/TurboSwap/TurboSwap.tsx"
+      "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
   },
   {
     "id": "TurboSwap_Title",
     "message": "Turbo swap",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx",
       "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx",
+      "src/front/shared/pages/Exchange/Exchange.tsx",
       "src/front/shared/pages/TurboSwap/TurboSwap.tsx"
     ]
   },
@@ -8045,6 +7874,27 @@
     "message": "Sneller en goedkoper ruilen met vertrouwde marketmaker, aanbevolen voor kleine bedragen",
     "files": [
       "src/front/shared/components/ui/TurboIcon/TurboIcon.tsx"
+    ]
+  },
+  {
+    "id": "ButtonPendingState",
+    "message": "Pending",
+    "files": [
+      "src/front/shared/components/controls/Button/Button.tsx"
+    ]
+  },
+  {
+    "id": "menu.farm",
+    "message": "Uitzetten en landbouw",
+    "files": [
+      "src/front/shared/components/Header/config.tsx"
+    ]
+  },
+  {
+    "id": "FarmDoesNotHaveContracts",
+    "message": "Geen opties voor de boerderij gevonden",
+    "files": [
+      "src/front/shared/pages/Farm/index.tsx"
     ]
   }
 ]

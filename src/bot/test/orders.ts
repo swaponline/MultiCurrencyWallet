@@ -1,17 +1,19 @@
-//During the test the env variable is set to test
-process.env.NODE_ENV = 'test'
-
-//Require the dev-dependencies
 import chai from 'chai'
 import chaiHttp from 'chai-http'
 import { app, server, listener } from '../app'
-let should = chai.should()
 
+
+//During the test the env variable is set to test
+process.env.NODE_ENV = 'test'
+
+chai.should()
 chai.use(chaiHttp)
+
 //@ts-ignore
 before(async () => { await app.ready })
 //@ts-ignore
 after(async () => { await listener.close() })
+
 
 describe('Wallet', () => {
 
@@ -39,6 +41,7 @@ describe('Wallet', () => {
   })
 })
 
+
 describe('Orders', () => {
 
   beforeEach((done) => {
@@ -63,10 +66,10 @@ describe('Orders', () => {
 
     it('should create new order', (done) => {
       const order_example_json = {
-        "buyCurrency": "ETH",
-        "sellCurrency": "BTC",
-        "buyAmount": 0.07,
-        "sellAmount": 0.01
+        'buyCurrency': 'ETH',
+        'sellCurrency': 'BTC',
+        'buyAmount': 0.07,
+        'sellAmount': 0.01
       }
 
       chai.request(server)

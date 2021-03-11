@@ -7,6 +7,7 @@ import Pair from '../../Pair'
 
 import proceed from './doRequest'
 
+
 export default (app, orders) => async (order) => {
   console.log(new Date().toISOString(), `new order ${order.id}`)
   if (order.isMy) return

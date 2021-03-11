@@ -1641,17 +1641,11 @@
   },
   {
     "id": "partial223",
-    "message": "Для изменения кошелька по умолчанию для валюты покупки. ",
-    "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
-    ]
+    "message": "Для изменения кошелька по умолчанию для валюты покупки. "
   },
   {
     "id": "partial224",
-    "message": "Оставьте пустым для использования Swap.Online кошелька",
-    "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
-    ]
+    "message": "Оставьте пустым для использования Swap.Online кошелька"
   },
   {
     "id": "partial243",
@@ -1953,10 +1947,7 @@
   },
   {
     "id": "partialAtomicSwapWhatIsIt",
-    "message": "Атомарный своп - это технология, которая позволяет обменять одну криптовалюту на другую без использования централизованных посредников.",
-    "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
-    ]
+    "message": "Атомарный своп - это технология, которая позволяет обменять одну криптовалюту на другую без использования централизованных посредников."
   },
   {
     "id": "partialVideoAndFeaturesTitle",
@@ -3237,148 +3228,8 @@
     "message": "Пожалуйста, введите сумму, которую вы хотели бы купить, и выберите валюту для покупки."
   },
   {
-    "id": "FooterAboutAgreements",
-    "message": "Условия использования",
-    "files": [
-      "src/front/shared/components/Footer/Links/Links.tsx"
-    ]
-  },
-  {
-    "id": "FooterAboutCompany",
-    "message": "О компании",
-    "files": [
-      "src/front/shared/components/Footer/Links/Links.tsx"
-    ]
-  },
-  {
-    "id": "FooterAboutContacts",
-    "message": "Контакты",
-    "files": [
-      "src/front/shared/components/Footer/Links/Links.tsx"
-    ]
-  },
-  {
-    "id": "FooterAboutHeader",
-    "message": "О компании",
-    "files": [
-      "src/front/shared/components/Footer/Links/Links.tsx"
-    ]
-  },
-  {
-    "id": "FooterAboutLegal",
-    "message": "Юридическая правомерность",
-    "files": [
-      "src/front/shared/components/Footer/Links/Links.tsx"
-    ]
-  },
-  {
-    "id": "FooterAboutPrivacyPolicy",
-    "message": "Политика конфиденциальности",
-    "files": [
-      "src/front/shared/components/Footer/Links/Links.tsx"
-    ]
-  },
-  {
-    "id": "FooterOurProductsChromeExtantion",
-    "message": "Chrome extension",
-    "files": [
-      "src/front/shared/components/Footer/Links/Links.tsx"
-    ]
-  },
-  {
-    "id": "FooterOurProductsExchange",
-    "message": "Криптовалютный обменник",
-    "files": [
-      "src/front/shared/components/Footer/Links/Links.tsx"
-    ]
-  },
-  {
-    "id": "FooterOurProductsHeader",
-    "message": "Наши продукты",
-    "files": [
-      "src/front/shared/components/Footer/Links/Links.tsx"
-    ]
-  },
-  {
-    "id": "FooterOurProductsWallet",
-    "message": "Криптовалютый онлайн кошелек",
-    "files": [
-      "src/front/shared/components/Footer/Links/Links.tsx"
-    ]
-  },
-  {
-    "id": "FooterOurProductsWidget",
-    "message": "Виджет для сайтов",
-    "files": [
-      "src/front/shared/components/Footer/Links/Links.tsx"
-    ]
-  },
-  {
-    "id": "FooterPartnershipForBlockchains",
-    "message": "Блокчейнам",
-    "files": [
-      "src/front/shared/components/Footer/Links/Links.tsx"
-    ]
-  },
-  {
-    "id": "FooterPartnershipForDEXes",
-    "message": "Другим DEX",
-    "files": [
-      "src/front/shared/components/Footer/Links/Links.tsx"
-    ]
-  },
-  {
     "id": "FooterPartnershipForERC20",
     "message": "Токенам"
-  },
-  {
-    "id": "FooterPartnershipForNewsWebsites",
-    "message": "Виджет для криптосайтов",
-    "files": [
-      "src/front/shared/components/Footer/Links/Links.tsx"
-    ]
-  },
-  {
-    "id": "FooterPartnershipForstablecoin",
-    "message": "Для стейблкоинов",
-    "files": [
-      "src/front/shared/components/Footer/Links/Links.tsx"
-    ]
-  },
-  {
-    "id": "FooterPartnershipHeader",
-    "message": "Партнерам",
-    "files": [
-      "src/front/shared/components/Footer/Links/Links.tsx"
-    ]
-  },
-  {
-    "id": "FooterTechnologyGithub",
-    "message": "GitHub",
-    "files": [
-      "src/front/shared/components/Footer/Links/Links.tsx"
-    ]
-  },
-  {
-    "id": "FooterTechnologyHeader",
-    "message": "Технология",
-    "files": [
-      "src/front/shared/components/Footer/Links/Links.tsx"
-    ]
-  },
-  {
-    "id": "FooterTechnologyWhitepaper",
-    "message": "Whitepaper",
-    "files": [
-      "src/front/shared/components/Footer/Links/Links.tsx"
-    ]
-  },
-  {
-    "id": "FooterTechnologyWiki",
-    "message": "Wiki",
-    "files": [
-      "src/front/shared/components/Footer/Links/Links.tsx"
-    ]
   },
   {
     "id": "Keychain",
@@ -3453,27 +3304,6 @@
   {
     "id": "Partial955",
     "message": "Address not correct"
-  },
-  {
-    "id": "FooterOurProductsBankDashboard",
-    "message": "Bank dashboard",
-    "files": [
-      "src/front/shared/components/Footer/Links/Links.tsx"
-    ]
-  },
-  {
-    "id": "FooterTechnologyComparsion",
-    "message": "Сравнение",
-    "files": [
-      "src/front/shared/components/Footer/Links/Links.tsx"
-    ]
-  },
-  {
-    "id": "FooterTechnologyLNResearch",
-    "message": "LN",
-    "files": [
-      "src/front/shared/components/Footer/Links/Links.tsx"
-    ]
   },
   {
     "id": "Submenu16",
@@ -8047,17 +7877,16 @@
     "id": "AtomicSwap_Title",
     "message": "Атомарный своп",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx",
       "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx",
-      "src/front/shared/pages/TurboSwap/TurboSwap.tsx"
+      "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
   },
   {
     "id": "TurboSwap_Title",
     "message": "Турбо обмен",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx",
       "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx",
+      "src/front/shared/pages/Exchange/Exchange.tsx",
       "src/front/shared/pages/TurboSwap/TurboSwap.tsx"
     ]
   },
@@ -8101,6 +7930,27 @@
     "message": "Быстрый и дешёвый обмен с доверенным маркетмэйкером, рекомендуется для небольших сумм",
     "files": [
       "src/front/shared/components/ui/TurboIcon/TurboIcon.tsx"
+    ]
+  },
+  {
+    "id": "ButtonPendingState",
+    "message": "Ожидание",
+    "files": [
+      "src/front/shared/components/controls/Button/Button.tsx"
+    ]
+  },
+  {
+    "id": "menu.farm",
+    "message": "Ставки и фарминг",
+    "files": [
+      "src/front/shared/components/Header/config.tsx"
+    ]
+  },
+  {
+    "id": "FarmDoesNotHaveContracts",
+    "message": "Не найдено параметров для фермы",
+    "files": [
+      "src/front/shared/pages/Farm/index.tsx"
     ]
   }
 ]
