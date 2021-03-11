@@ -184,7 +184,7 @@ const bannedPeers = {} // rejected swap peers
   })
 )
 @CSSModules(styles, { allowMultiple: true })
-export default class Exchange extends Component<any, any> {
+export default class Exchange extends Component<ExchangeProps, ExchangeState> {
   props: ExchangeProps
   state: ExchangeState
 
@@ -1306,7 +1306,6 @@ export default class Exchange extends Component<any, any> {
       activeFiat,
       currencies,
       addSelectedItems,
-      intl: { locale },
       match: {
         params: { linkedOrderId },
       },
@@ -1391,6 +1390,18 @@ export default class Exchange extends Component<any, any> {
     const haveFiat = new BigNumber(exHaveRate).times(haveAmount).dp(2, BigNumber.ROUND_CEIL)
 
     const getFiat = new BigNumber(exGetRate).times(getAmount).dp(2, BigNumber.ROUND_CEIL)
+
+
+    // FIXME: redux state
+    // user
+    // currencyData or tokensData.currency
+    // *******************
+    // in this level we don't have any info about currency
+    // in the private mode - why ?
+    //
+    // infoAboutCurrency <- there isn't in the state
+    // *******************
+    // price_fiat <- we need it
 
     const fiatFeeCalculation =
       pairFees && pairFees.buy && pairFees.sell
