@@ -13,6 +13,7 @@ const tryAcceptWithdrawRequest = (swap) => {
   }
 }
 
+
 export default (swap) => {
   const { step } = swap.flow.state
 

@@ -6,5 +6,5 @@ export default {
   'SWAP':  0.0005,
   'XSAT':  0.0005,
   'HDP':  0.0005,
-  'default' : 0.0005 // BTC
+  'default': 0.0005 // BTC
 }

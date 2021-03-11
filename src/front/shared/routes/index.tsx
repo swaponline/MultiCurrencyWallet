@@ -5,7 +5,7 @@ import { Switch, Route } from 'react-router-dom'
 
 import { links } from 'helpers'
 import { localisePrefix } from 'helpers/locale'
-
+import Farm from 'pages/Farm'
 import LocalStorage from 'pages/LocalStorage/LocalStorage'
 import SwapComponent from 'pages/Swap/Swap'
 import TurboSwap from 'pages/TurboSwap/TurboSwap'
@@ -52,8 +52,8 @@ const routes = (
       <Route path={`${localisePrefix}${links.exchange}/:sell-to-:buy`} component={Exchange} />
       <Route path={`${localisePrefix}${links.exchange}`} component={Exchange} />
 
+      <Route path={`${localisePrefix}${links.farm}`} component={Farm} />
       <Route path={`${localisePrefix}${links.localStorage}`} component={LocalStorage} />
-
       <Route path={`${localisePrefix}${links.aboutUs}`} component={About} />
 
       <Route path={`${localisePrefix}${links.send}/:currency/:address/:amount`} component={Wallet} />

@@ -1,6 +1,4 @@
 import Router from 'express'
-//@ts-ignore
-const router = new Router()
 
 import {
   listOrders,
@@ -21,6 +19,9 @@ import {
   acceptRequest,
   requestPartialFulfilment,
 } from './controller'
+
+
+const router = Router()
 
 // order list
 router.get('/', listOrders)
@@ -52,5 +53,6 @@ router.get('/:id/request-partial', requestPartialFulfilment)
 router.get('/:id/accept', acceptRequest)
 router.get('/:id/accept/:peer', acceptRequest)
 router.get('/:id/decline/:peer', acceptRequest)
+
 
 export default router

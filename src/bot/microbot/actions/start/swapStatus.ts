@@ -81,7 +81,6 @@ export const needsRefund = (swap) => {
 
     return lockTimePassed(lockTime, defaultLockTime)
   }
-
 }
 
 export const canBeDeleted = async swap => {

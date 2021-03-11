@@ -1641,17 +1641,11 @@
   },
   {
     "id": "partial223",
-    "message": "Для изменения кошелька по умолчанию для валюты покупки. ",
-    "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
-    ]
+    "message": "Для изменения кошелька по умолчанию для валюты покупки. "
   },
   {
     "id": "partial224",
-    "message": "Оставьте пустым для использования Swap.Online кошелька",
-    "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
-    ]
+    "message": "Оставьте пустым для использования Swap.Online кошелька"
   },
   {
     "id": "partial243",
@@ -1953,10 +1947,7 @@
   },
   {
     "id": "partialAtomicSwapWhatIsIt",
-    "message": "Атомарный своп - это технология, которая позволяет обменять одну криптовалюту на другую без использования централизованных посредников.",
-    "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
-    ]
+    "message": "Атомарный своп - это технология, которая позволяет обменять одну криптовалюту на другую без использования централизованных посредников."
   },
   {
     "id": "partialVideoAndFeaturesTitle",
@@ -7886,17 +7877,16 @@
     "id": "AtomicSwap_Title",
     "message": "Атомарный своп",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx",
       "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx",
-      "src/front/shared/pages/TurboSwap/TurboSwap.tsx"
+      "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
   },
   {
     "id": "TurboSwap_Title",
     "message": "Турбо обмен",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx",
       "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx",
+      "src/front/shared/pages/Exchange/Exchange.tsx",
       "src/front/shared/pages/TurboSwap/TurboSwap.tsx"
     ]
   },
@@ -7940,6 +7930,27 @@
     "message": "Быстрый и дешёвый обмен с доверенным маркетмэйкером, рекомендуется для небольших сумм",
     "files": [
       "src/front/shared/components/ui/TurboIcon/TurboIcon.tsx"
+    ]
+  },
+  {
+    "id": "ButtonPendingState",
+    "message": "Ожидание",
+    "files": [
+      "src/front/shared/components/controls/Button/Button.tsx"
+    ]
+  },
+  {
+    "id": "menu.farm",
+    "message": "Ставки и фарминг",
+    "files": [
+      "src/front/shared/components/Header/config.tsx"
+    ]
+  },
+  {
+    "id": "FarmDoesNotHaveContracts",
+    "message": "Не найдено параметров для фермы",
+    "files": [
+      "src/front/shared/pages/Farm/index.tsx"
     ]
   }
 ]

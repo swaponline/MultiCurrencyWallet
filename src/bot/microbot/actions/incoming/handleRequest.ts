@@ -15,6 +15,7 @@ import { checkSwapsCountLimit } from '../../core/checkSwapsCountLimit'
 
 const debug = _debug('swap.bot')
 
+
 export default (app, wallet, orders) => async ({ orderId, participant }) => {
   debug(`[REQUEST] from ${participant.peer} at order ${orderId}`)
 
@@ -62,7 +63,18 @@ export default (app, wallet, orders) => async ({ orderId, participant }) => {
   replyToRequest(orders)({ orderId, participant }, isAccepted)
 
   beginSwap(app, order, (swap) => {
-    const { buyAmount, buyCurrency, sellAmount, sellCurrency } = swap
-    orders.create({ buyAmount, buyCurrency, sellAmount, sellCurrency })
+    const {
+      buyAmount,
+      buyCurrency,
+      sellAmount,
+      sellCurrency,
+    } = swap
+
+    orders.create({
+      buyAmount,
+      buyCurrency,
+      sellAmount,
+      sellCurrency,
+    })
   })
 }

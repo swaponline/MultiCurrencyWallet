@@ -1,7 +1,7 @@
 import React from "react";
 import { constants } from 'helpers'
 import cx from "classnames";
-
+import { FormattedMessage } from 'react-intl'
 import cssModules from 'react-css-modules'
 import styles from './Button.scss'
 
@@ -20,6 +20,7 @@ type ButtonProps = {
   empty?: boolean
   fill?: boolean
   disabled?: boolean
+  pending?: boolean
   className?: string
   id?: string
   onClick?: () => void
@@ -37,6 +38,7 @@ const Button = (props: ButtonProps) => {
     white,
     gray,
     disabled,
+    pending,
     big,
     small,
     empty,
@@ -75,7 +77,12 @@ const Button = (props: ButtonProps) => {
       data-tip
       data-for={id}
     >
-      {children}
+      {pending ? (
+          <span styleName="pendingWrapper">
+            <FormattedMessage id="ButtonPendingState" defaultMessage="Pending" />
+          </span>
+        ) : children
+      }
     </button>
   )
 }
