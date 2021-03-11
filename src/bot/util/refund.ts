@@ -1,4 +1,4 @@
-import swap from 'simple.swap.core'
+import * as swap from 'simple.swap.core'
 
 import commandLineArgs from 'command-line-args'
 import commandLineUsage from 'command-line-usage'
@@ -78,7 +78,7 @@ const {
   filter: { hash2id, secret2id },
 } = swap.helpers
 
-const { app, room, orders } = swap.setup()
+const { app, room, orders } = swap.setup({})
 
 console.clear()
 console.log('IPFS loading...')
@@ -122,7 +122,7 @@ const _ = (async () => {
     case KEY_HASH[0]:
       console.log('Key type is HASH', '\n')
 
-      swapID = await hash2id(key)
+      swapID = await hash2id(app, key)
 
       if (swapID) {
         refundResult = await refund(app, swapID)
@@ -139,7 +139,7 @@ const _ = (async () => {
     case KEY_SECRET[0]:
       console.log('Key type is SECRET', '\n')
 
-      swapID = await secret2id(key)
+      swapID = await secret2id(app, key)
 
       if (swapID) {
         refundResult = await refund(app, swapID)

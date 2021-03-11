@@ -41,9 +41,8 @@ const title = defineMessages({
     isSigned,
   })
 )
-@injectIntl
 @cssModules(styles)
-export default class SignUpModal extends React.Component<any, any> {
+class SignUpModal extends React.Component<any, any> {
 
   props: any
 
@@ -240,3 +239,5 @@ export default class SignUpModal extends React.Component<any, any> {
     )
   }
 }
+
+export default injectIntl(SignUpModal)

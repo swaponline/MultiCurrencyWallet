@@ -45,10 +45,9 @@ const langs = defineMessages({
 @connect(
   ({ user: { activeFiat }, user }) => ({ activeFiat, user })
 )
-@injectIntl
 @withRouter
 @cssModules({ ...styles, ...ownStyles }, { allowMultiple: true })
-export default class ReceiveModal extends React.Component<any, any> {
+class ReceiveModal extends React.Component<any, any> {
 
   props: any
 
@@ -238,3 +237,5 @@ export default class ReceiveModal extends React.Component<any, any> {
     )
   }
 }
+
+export default injectIntl(ReceiveModal)

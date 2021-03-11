@@ -32,7 +32,6 @@ import { getFullOrigin } from 'helpers/links'
 
 import SwapApp from 'swap.app'
 
-
 import CopyToClipboard from 'react-copy-to-clipboard'
 
 
@@ -71,7 +70,6 @@ const langLabels = defineMessages({
   },
 })
 
-@injectIntl
 @connect(
   ({
     user: {
@@ -82,7 +80,7 @@ const langLabels = defineMessages({
   })
 )
 @cssModules({ ...defaultStyles, ...styles }, { allowMultiple: true })
-export default class MultisignJoinLink extends React.Component<any, any> {
+class MultisignJoinLink extends React.Component<any, any> {
 
   props: any
 
@@ -223,3 +221,5 @@ export default class MultisignJoinLink extends React.Component<any, any> {
     )
   }
 }
+
+export default injectIntl(MultisignJoinLink)

@@ -27,6 +27,7 @@ import links from 'helpers/links'
 import redirectTo from 'helpers/redirectTo'
 import lsDataCache from 'helpers/lsDataCache'
 
+
 const langPrefix = `multiSignConfirmTxModal`
 const langLabels = defineMessages({
   title: {
@@ -63,12 +64,11 @@ const langLabels = defineMessages({
   },
 })
 
-@injectIntl
 @connect(({ user: { btcMultisigUserData } }) => ({
   btcData: btcMultisigUserData,
 }))
 @cssModules({ ...defaultStyles, ...styles }, { allowMultiple: true })
-export default class BtcMultisignConfirmTx extends React.Component<any, any> {
+class BtcMultisignConfirmTx extends React.Component<any, any> {
   props: any
 
   static propTypes = {
@@ -360,3 +360,5 @@ export default class BtcMultisignConfirmTx extends React.Component<any, any> {
     )
   }
 }
+
+export default injectIntl(BtcMultisignConfirmTx)

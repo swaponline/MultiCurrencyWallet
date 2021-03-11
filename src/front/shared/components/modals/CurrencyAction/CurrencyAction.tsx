@@ -27,14 +27,14 @@ const title = defineMessages({
 })
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
-@injectIntl
+
 @connect(({
   ui: { dashboardModalsAllowed },
 }) => ({
   dashboardView: dashboardModalsAllowed,
 }))
 @cssModules(styles, { allowMultiple: true })
-export default class CurrencyAction extends React.Component<any, any> {
+class CurrencyAction extends React.Component<any, any> {
 
   props: any
 
@@ -167,7 +167,7 @@ export default class CurrencyAction extends React.Component<any, any> {
                 }
 
                 if (!icons[iconName] || !styles[iconName]) {
-                  iconName = 'eth' // Нужно нарисовать картинку для не известной валюты чтобы все это дело не падало в чертям из-за какой-то картинки-стиля, которых нет
+                  iconName = 'eth' // prevent styles fail for unknown asset
                   if (config && config.isWidget) {
                     iconName = 'eth' // Нужно нарисовать картинку для erc20 токена
                   }
@@ -201,3 +201,5 @@ export default class CurrencyAction extends React.Component<any, any> {
     )
   }
 }
+
+export default injectIntl(CurrencyAction)

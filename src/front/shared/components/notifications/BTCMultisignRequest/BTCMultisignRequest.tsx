@@ -9,9 +9,8 @@ import actions from 'redux/actions'
 import { localisedUrl } from 'helpers/locale'
 
 
-@injectIntl
 @cssModules(styles)
-export default class BTCMultisignRequest extends Component<any, any> {
+class BTCMultisignRequest extends Component<any, any> {
 
   handleClick = () => {
     const { history, data: { txRaw, invoice } } = this.props
@@ -43,3 +42,5 @@ export default class BTCMultisignRequest extends Component<any, any> {
     )
   }
 }
+
+export default injectIntl(BTCMultisignRequest)

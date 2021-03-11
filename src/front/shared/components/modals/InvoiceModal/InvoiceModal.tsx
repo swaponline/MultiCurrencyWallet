@@ -78,9 +78,8 @@ type InvoiceModalState = {
   walletData: IUniversalObj
 }
 
-@injectIntl
 @cssModules({ ...styles, ...ownStyle }, { allowMultiple: true })
-export default class InvoiceModal extends React.Component<InvoiceModalProps, InvoiceModalState> {
+class InvoiceModal extends React.Component<InvoiceModalProps, InvoiceModalState> {
   constructor(props) {
     super(props)
 
@@ -475,3 +474,5 @@ export default class InvoiceModal extends React.Component<InvoiceModalProps, Inv
     )
   }
 }
+
+export default injectIntl(InvoiceModal)

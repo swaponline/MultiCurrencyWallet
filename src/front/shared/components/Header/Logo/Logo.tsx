@@ -29,9 +29,8 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
 const isMainnet = process.env.MAINNET
 
 @withRouter
-@injectIntl
 @CSSModules(styles, { allowMultiple: true })
-export default class Logo extends Component<any, {}> {
+class Logo extends Component<any, {}> {
 
   render() {
     const {
@@ -79,3 +78,5 @@ export default class Logo extends Component<any, {}> {
     );
   }
 }
+
+export default injectIntl(Logo)

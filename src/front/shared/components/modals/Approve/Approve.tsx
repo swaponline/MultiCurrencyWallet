@@ -14,6 +14,7 @@ import { Button } from 'components/controls'
 import { FieldLabel, Input } from 'components/forms'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 
+
 const title = defineMessages({
   approveTitle: {
     id: 'Approve66',
@@ -21,9 +22,8 @@ const title = defineMessages({
   },
 })
 
-@injectIntl
 @cssModules(styles)
-export default class Offer extends React.Component<any, any> {
+class Approve extends React.Component<any, any> {
   props: any
 
   static propTypes = {
@@ -101,3 +101,5 @@ export default class Offer extends React.Component<any, any> {
     )
   }
 }
+
+export default injectIntl(Approve)

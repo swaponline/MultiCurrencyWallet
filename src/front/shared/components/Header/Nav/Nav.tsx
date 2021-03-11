@@ -10,10 +10,10 @@ import CSSModules from 'react-css-modules'
 import { injectIntl } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
 
-@injectIntl
+
 @withRouter
 @CSSModules(styles, { allowMultiple: true })
-export default class Nav extends Component<any, any> {
+class Nav extends Component<any, any> {
   static propTypes = {
     menu: PropTypes.array.isRequired
   };
@@ -85,3 +85,5 @@ export default class Nav extends Component<any, any> {
     );
   }
 }
+
+export default injectIntl(Nav)
