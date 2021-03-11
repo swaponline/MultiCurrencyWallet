@@ -8,7 +8,7 @@ const ApiEndpoint = (props) => {
   let api = '.'
 
   if (isERC20 || lowerSymbol === 'eth') {
-    api = config.api.etherscan[0]
+    api = config.binance ? config.link.bscscan[0] : config.api.etherscan[0]
   } else if (isBTC) { // btc [pin, sms, multisig]
     api = config.api.bitpay
   } else if (lowerSymbol === 'ghost') {
@@ -33,7 +33,7 @@ const LinkEndpoint = (props) => {
   let link = '.'
 
   if (isERC20 || lowerSymbol === 'eth') {
-    link = config.link.etherscan
+    link = config.binance ? config.link.bscscan : config.link.etherscan
   } else if (isBTC) { // btc [pin, sms, multisig]
     link = config.link.bitpay
   } else if (lowerSymbol === 'ghost') {
