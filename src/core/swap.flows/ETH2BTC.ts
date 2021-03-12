@@ -89,7 +89,6 @@ class ETH2BTC extends AtomicAB2UTXO {
 
     if (this.isTaker()) {
       flow.swap.room.on('create utxo script', (data) => {
-        console.log('>>>>>> TAKER -> ON UTXO SCREATED', data)
         const {
           utxoScriptCreatingTransactionHash,
         } = data
@@ -119,7 +118,6 @@ class ETH2BTC extends AtomicAB2UTXO {
       })
 
       flow.swap.room.on('request eth contract', () => {
-        console.log('Requesting eth contract')
         const { ethSwapCreationTransactionHash } = flow.state
 
         if (ethSwapCreationTransactionHash) {

@@ -350,11 +350,9 @@ class UTXOBlockchain extends SwapInterface {
   }
 
   fetchUnspentsFullInfo(scriptAddress): Promise<any[]> {
-    console.log('fetchUnspentsFullInfo', scriptAddress)
     return new Promise(async (resolve) => {
       const unspents      = await this.fetchUnspents(scriptAddress)
       const fetchFullUnspentInfo = async (unspent) => {
-        console.log('unspent', unspent)
         try {
           const info = await this.fetchTxInfo(unspent.txid)
           return {
@@ -362,7 +360,6 @@ class UTXOBlockchain extends SwapInterface {
             ...info,
           }
         } catch (fetchTxInfoError) {
-          console.log('fetchTxInfo', fetchTxInfoError)
           return false
         }
       }
@@ -408,11 +405,9 @@ class UTXOBlockchain extends SwapInterface {
     }
 
     const expectedConfidence = (expected.confidence !== undefined) ? expected.confidence : 0.95
-    console.log('script', scriptAddress)
+
     const unspents: any[] = await this.fetchUnspentsFullInfo(scriptAddress)
 
-    console.log('script', scriptAddress)
-    console.log('unspents', unspents)
     if (!unspents.length) return `No unspents. Wait`
 
     
@@ -464,12 +459,10 @@ class UTXOBlockchain extends SwapInterface {
   fundScript(data, handleTransactionHash?: Function, hashName?: string) {
     const { scriptValues, amount } = data
 
-    console.log('fundScript', data)
     return new Promise(async (resolve, reject) => {
       try {
         const { scriptAddress } = this.createScript(scriptValues, hashName)
 
-        console.log('scriptAddress', scriptAddress)
         const scriptBalance = await this.fetchBalance(scriptAddress)
         if (new BigNumber(scriptBalance).isGreaterThan(0)) {
           // Script already funded - skip double payments
@@ -565,7 +558,6 @@ class UTXOBlockchain extends SwapInterface {
 
     const { script, scriptAddress } = this.createScript(scriptValues, hashName)
 
-console.log('>>>>>>>>>>>>>>> getWithdrawRawTransaction', script, scriptAddress, scriptValues)
     const tx            = new this.app.env.bitcoin.TransactionBuilder(this.network)
     const unspents      = await this.fetchUnspents(scriptAddress)
 
@@ -575,7 +567,6 @@ console.log('>>>>>>>>>>>>>>> getWithdrawRawTransaction', script, scriptAddress, 
 
     /* Check - may be withdrawed */
     if (typeof this.checkWithdraw === 'function') {
-      console.log('try check withdraw')
       const hasWithdraw = await this.checkWithdraw(scriptAddress)
       if (hasWithdraw
         && hasWithdraw.address.toLowerCase() == destAddress.toLowerCase()
@@ -679,7 +670,6 @@ console.log('>>>>>>>>>>>>>>> getWithdrawRawTransaction', script, scriptAddress, 
         })
       })
 
-      console.log('>>>> MAKER - UTXO CREATED - SEND TX', txID)
       flow.swap.room.sendMessage({
         event: `create utxo script`,
         data: {

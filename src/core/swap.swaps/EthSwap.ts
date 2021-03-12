@@ -846,7 +846,6 @@ class EthSwap extends SwapInterface {
 
       const needContractBalance = new BigNumber(web3.utils.toWei(flow.swap.buyAmount.toString()))
 
-console.log('>>>>>> BALANCE ON ETH Contract', balance, needContractBalance.toNumber(), flow.swap.buyAmount.toNumber())
       if (new BigNumber(balance).isGreaterThanOrEqualTo(needContractBalance)) {
         return true
       }

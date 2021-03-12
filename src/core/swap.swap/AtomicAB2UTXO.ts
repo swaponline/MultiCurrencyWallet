@@ -43,14 +43,12 @@ class AtomicAB2UTXO extends Flow {
     const flow = this
     if (this.isTaker()) {
       flow.swap.room.on('request utxo script', () => {
-        console.log('>>>>> TAKER - MAKER Request script values')
         const {
           utxoScriptValues,
           secretHash,
           secret,
         } = flow.state
         if (secret && secretHash) {
-          console.log('>>>>>> TAKER - SEND script values to MAKER', utxoScriptValues, secretHash)
           flow.swap.room.sendMessage({
             event: 'utxo script generated',
             data: {
@@ -58,8 +56,6 @@ class AtomicAB2UTXO extends Flow {
               secretHash,
             }
           })
-        } else {
-          console.log('>>>>>> TAKER - Not generated secretd - dont send script values')
         }
       })
     } else {
@@ -68,7 +64,7 @@ class AtomicAB2UTXO extends Flow {
           utxoScriptValues,
           secretHash,
         } = data
-        console.log('>>>>> MAKER BTC2ETH - Getted script values', utxoScriptValues, secretHash)
+
         flow.setState({
           utxoScriptValues,
           secretHash,
@@ -495,9 +491,9 @@ class AtomicAB2UTXO extends Flow {
       recipientPublicKey: (isOwner) ? participant[this.utxoCoin].publicKey : this.app.services.auth.accounts[this.utxoCoin].getPublicKey(),
       lockTime:           getLockTime(),
     }
-    console.log(scriptValues)
+
     const { scriptAddress } = this.utxoBlockchain.createScript(scriptValues)
-console.log(scriptAddress)
+
     this.setState({
       scriptAddress: scriptAddress,
       utxoScriptValues: scriptValues,
