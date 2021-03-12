@@ -91,11 +91,19 @@ class ETH2BTC extends AtomicAB2UTXO {
       flow.swap.room.on('create utxo script', (data) => {
         console.log('>>>>>> TAKER -> ON UTXO SCREATED', data)
         const {
-          utxoSwapCreationTransactionHash,
+          utxoScriptCreatingTransactionHash,
         } = data
         flow.setState({
-          utxoSwapCreationTransactionHash,
+          utxoScriptCreatingTransactionHash,
         }, true)
+      })
+      flow.swap.room.on('ethWithdrawTxHash', (data) => {
+        const {
+          ethSwapWithdrawTransactionHash,
+        } = data
+        flow.setState({
+          ethSwapWithdrawTransactionHash,
+        })
       })
     } else {
       flow.swap.room.once('request withdraw', () => {

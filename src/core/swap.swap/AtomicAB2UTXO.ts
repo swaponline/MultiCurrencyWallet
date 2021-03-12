@@ -5,9 +5,6 @@ import { BigNumber } from 'bignumber.js'
 import * as cryptoLib from 'crypto'
 
 
-console.log('>>>>> cryptoLib', cryptoLib)
-
-
 class AtomicAB2UTXO extends Flow {
 
   utxoCoin: string = null
