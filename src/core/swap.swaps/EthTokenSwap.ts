@@ -1211,6 +1211,119 @@ class EthTokenSwap extends SwapInterface {
     return true
   }
 
+  async fundContract({
+    flow,
+    useTargetWallet,
+  }: {
+    flow: any,
+    useTargetWallet?: boolean,
+  }) {
+    /*
+    const abClass = this
+    const {
+      participant,
+      buyAmount,
+      sellAmount,
+      waitConfirm,
+    } = flow.swap
+
+    const { secretHash } = flow.state
+
+    const swapData = {
+      participantAddress: abClass.app.getParticipantEthAddress(flow.swap),
+      secretHash: secretHash,
+      amount: sellAmount,
+      targetWallet: (flow.swap.destinationSellAddress)
+        ? flow.swap.destinationSellAddress
+        : abClass.app.getParticipantEthAddress(flow.swap),
+      useTargetWallet,
+    }
+
+    const tryCreateSwap = async () => {
+      const {
+        isEthContractFunded,
+        ethSwapCreationTransactionHash,
+      } = flow.state
+
+      if (!isEthContractFunded) {
+        try {
+          _debug('swap.core:flow')('check swap exists')
+          const swapExists = await flow._checkSwapAlreadyExists()
+          if (swapExists) {
+            console.warn('Swap exists!! May be stucked. Try refund')
+            await flow.ethSwap.refund({
+              participantAddress: abClass.app.getParticipantEthAddress(flow.swap),
+            }, (refundTx) => {
+              _debug('swap.core:flow')('Stucked swap refunded', refundTx)
+            })
+          }
+          _debug('swap.core:flow')('create swap', swapData)
+          await abClass.create(swapData, (hash) => {
+            _debug('swap.core:flow')('create swap tx hash', hash)
+            flow.swap.room.sendMessage({
+              event: 'create eth contract',
+              data: {
+                ethSwapCreationTransactionHash: hash,
+              },
+            })
+
+            flow.setState({
+              ethSwapCreationTransactionHash: hash,
+              canCreateEthTransaction: true,
+              isFailedTransaction: false,
+            }, true)
+          })
+        } catch (err) {
+          if (flow.state.ethSwapCreationTransactionHash) {
+            console.error('fail create swap, but tx already exists')
+            flow.setState({
+              canCreateEthTransaction: true,
+              isFailedTransaction: false,
+            }, true)
+            return true
+          }
+          if ( /known transaction/.test(err.message) ) {
+            console.error(`known tx: ${err.message}`)
+          } else if ( /out of gas/.test(err.message) ) {
+            console.error(`tx failed (wrong secret?): ${err.message}`)
+          } else {
+            console.error(err)
+          }
+
+          flow.setState({
+            canCreateEthTransaction: false,
+            isFailedTransaction: true,
+            isFailedTransactionError: err.message,
+          }, true)
+
+          return null
+        }
+      } else {
+        flow.swap.room.sendMessage({
+          event: 'create eth contract',
+          data: {
+            ethSwapCreationTransactionHash,
+            secretHash,
+          },
+        })
+      }
+      return true
+    }
+
+    const isEthContractFunded = await util.helpers.repeatAsyncUntilResult(() =>
+      tryCreateSwap(),
+    )
+
+    const { isStoppedSwap } = flow.state
+
+    if (isEthContractFunded && !isStoppedSwap) {
+      _debug('swap.core:flow')(`finish step`)
+      flow.finishStep({
+        isEthContractFunded,
+      }, {step: 'lock-eth'})
+    }*/
+  }
+
   async withdrawFromABContract({
     flow,
   }: {

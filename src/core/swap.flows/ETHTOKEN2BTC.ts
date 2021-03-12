@@ -146,81 +146,152 @@ export default (tokenName) => {
     _getSteps() {
       const flow = this
 
-      return [
+      if (this.isMaker()) {
+        return [
 
-        // 1. Sign swap to start
+          // 1. Sign swap to start
 
-        () => {
-          this.signABSide()
-        },
+          () => {
+            this.signABSide()
+          },
 
-        // 2. Wait participant create, fund BTC Script
+          // 2. Wait participant create, fund BTC Script
 
-        () => {
-          flow.waitUTXOScriptCreated()
-        },
+          () => {
+            flow.waitUTXOScriptCreated()
+          },
 
-        // 3. Verify BTC Script
+          // 3. Verify BTC Script
 
-        () => {
-          debug('swap.core:flow')(`waiting verify btc script`)
-          this.verifyScript()
-        },
+          () => {
+            debug('swap.core:flow')(`waiting verify btc script`)
+            this.verifyScript()
+          },
 
-        // 4. Check balance
+          // 4. Check balance
 
-        () => {
-          this.syncBalance()
-        },
+          () => {
+            this.syncBalance()
+          },
 
-        // 5. Create ETH Contract
+          // 5. Create ETH Contract
 
-        async () => {
-          const scriptFunded = await this.waitUTXOScriptFunded()
-          if (scriptFunded) {
-            await flow.ethTokenSwap.fundERC20Contract({
+          async () => {
+            const scriptFunded = await this.waitUTXOScriptFunded()
+            if (scriptFunded) {
+              await flow.ethTokenSwap.fundERC20Contract({
+                flow,
+              })
+            }
+          },
+
+          // 6. Wait participant withdraw
+
+          async () => {
+            await flow.ethTokenSwap.getSecretFromAB2UTXO({ flow })
+          },
+
+          // 7. Withdraw
+
+          async () => {
+            await this.btcSwap.withdrawFromSwap({
               flow,
             })
-          }
-        },
+          },
 
-        // 6. Wait participant withdraw
+          // 8. Finish
 
-        async () => {
-          await flow.ethTokenSwap.getSecretFromAB2UTXO({ flow })
-        },
+          () => {
+            flow.swap.room.once('request swap finished', () => {
+              const { utxoSwapWithdrawTransactionHash } = flow.state
 
-        // 7. Withdraw
-
-        async () => {
-          await this.btcSwap.withdrawFromSwap({
-            flow,
-          })
-        },
-
-        // 8. Finish
-
-        () => {
-          flow.swap.room.once('request swap finished', () => {
-            const { utxoSwapWithdrawTransactionHash } = flow.state
-
-            flow.swap.room.sendMessage({
-              event: 'swap finished',
-              data: {
-                utxoSwapWithdrawTransactionHash,
-              },
+              flow.swap.room.sendMessage({
+                event: 'swap finished',
+                data: {
+                  utxoSwapWithdrawTransactionHash,
+                },
+              })
             })
-          })
 
-          flow.finishStep({
-            isFinished: true,
-          }, { step: 'finish' })
-        },
+            flow.finishStep({
+              isFinished: true,
+            }, { step: 'finish' })
+          },
 
-        // 9. Finished!
+          // 9. Finished!
 
-        () => {},
-      ]
+          () => {},
+        ]
+      } else {
+        return [
+          // 1 - `sign` - Signs 
+          async () => {
+            this.swap.processMetamask()
+            this.sign()
+          },
+
+          // 2 - `sync-balance` - syncBalance
+          async () => {
+            this.syncBalance()
+          },
+
+          // 3 - `lock-eth` - create AB contract - создание секрета, хеша, отправка хеша
+          async () => {
+            if (!this.state.secret) {
+              const {
+                secret,
+                secretHash,
+              } = this.generateSecret()
+
+              this.createWorkUTXOScript(secretHash, false)
+
+              this.setState({
+                secret,
+                secretHash,
+              }, true)
+            }
+
+            await flow.ethTokenSwap.fundContract({
+              flow,
+              // Использует принудительно адрес назначения (куда отправить монеты)
+              // Это нужно, чтобы тейкер, дождавшись пополнения utxo не снял монеты с ab контракта использу
+              // Так-же на стороне UTXO перед пополнением скрипта делаем
+              // проверку адреса назначения на ab контракте используя getTargetWallet
+              useTargetWallet: true,
+            })
+          },
+
+          // 4 - `wait-lock-utxo` - wait create UTXO
+          async () => {
+            this.waitUTXOScriptFunded()
+              .then((funded) => {
+                if (funded) {
+                  this.finishStep({}, 'wait-lock-utxo`')
+                }
+              })
+          },
+
+          // 5 - `withdraw-utxo` - withdraw from UTXO
+          async () => {
+            await this.btcSwap.withdrawFromSwap({
+              flow,
+            })
+          },
+
+          // 6 - `finish`
+          async () => {
+            // @to-do - txids room events
+            flow.finishStep({
+              isFinished: true,
+            }, 'finish')
+          },
+
+          // 7 - `end`
+          async () => {
+            
+          },
+        ]
+      }
     }
 
     _checkSwapAlreadyExists() {
