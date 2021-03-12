@@ -29,7 +29,7 @@ export default (tokenName) => {
       this._flowName = BTC2ETHTOKEN.getName()
 
       this.isUTXOSide = true
-      // this.isTakerMakerModel = true
+      this.isTakerMakerModel = true
       this.setupTakerMakerEvents()
 
       this.stepNumbers = this.getStepNumbers()
@@ -179,6 +179,7 @@ export default (tokenName) => {
           this.swap.room.once('create eth contract', async ({
             ethSwapCreationTransactionHash,
           }) => {
+            // @to-do - check amount in isContractFunded
             if (this.ethTokenSwap.isContractFunded(this)) {
               const destAddressIsOk = await this.ethTokenSwap.checkTargetAddress({ flow })
 
