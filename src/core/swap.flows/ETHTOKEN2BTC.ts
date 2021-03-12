@@ -251,7 +251,7 @@ export default (tokenName) => {
               }, true)
             }
 
-            await flow.ethTokenSwap.fundContract({
+            await flow.ethTokenSwap.fundERC20Contract({
               flow,
               // Использует принудительно адрес назначения (куда отправить монеты)
               // Это нужно, чтобы тейкер, дождавшись пополнения utxo не снял монеты с ab контракта использу

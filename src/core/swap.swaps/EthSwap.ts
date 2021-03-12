@@ -107,7 +107,8 @@ class EthSwap extends SwapInterface {
         ||
         data.useTargetWallet
       )
-      && this.hasTargetWallet()) {
+      && this.hasTargetWallet()
+    ) {
       return this.createSwapTarget(data, handleTransactionHash)
     } else {
       return this.createSwap(data, handleTransactionHash)
