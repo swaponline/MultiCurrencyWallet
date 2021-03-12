@@ -31,9 +31,9 @@ import CopyToClipboard from 'react-copy-to-clipboard'
 import QrReader from 'components/QrReader'
 import { getFullOrigin } from 'helpers/links'
 
+
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
-@injectIntl
 @connect(
   ({
     user: {
@@ -49,7 +49,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
   })
 )
 @cssModules({ ...styles, ...ownStyle }, { allowMultiple: true })
-export default class WithdrawModalMultisigUser extends React.Component<any, any> {
+class WithdrawModalMultisigUser extends React.Component<any, any> {
   props: any
 
   static propTypes = {
@@ -655,3 +655,5 @@ export default class WithdrawModalMultisigUser extends React.Component<any, any>
     )
   }
 }
+
+export default injectIntl(WithdrawModalMultisigUser)

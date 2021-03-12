@@ -17,6 +17,7 @@ import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 
 import metamask from 'helpers/metamask'
 
+
 const defaultLanguage = defineMessages({
   title: {
     id: 'ConnectWalletModal_Title',
@@ -39,12 +40,11 @@ const providerTitles = defineMessages({
   },
 })
 
-@injectIntl
 @connect(({ ui: { dashboardModalsAllowed } }) => ({
   dashboardModalsAllowed,
 }))
 @cssModules(styles)
-export default class ConnectWalletModal extends React.Component<any, any> {
+class ConnectWalletModal extends React.Component<any, any> {
   goToPage(link) {
     const {
       name,
@@ -166,3 +166,5 @@ export default class ConnectWalletModal extends React.Component<any, any> {
     )
   }
 }
+
+export default injectIntl(ConnectWalletModal)

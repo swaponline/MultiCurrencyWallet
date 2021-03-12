@@ -17,6 +17,7 @@ import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import typeforce from 'swap.app/util/typeforce'
 import Web3 from 'web3'
 
+
 type AddCustomERC20Props = {
   name: string
   style: IUniversalObj
@@ -42,10 +43,9 @@ const nameSignature = '0x06fdde03'
 const decimalsSignature = '0x313ce567'
 const symbolSignature = '0x95d89b41'
 
-@injectIntl
 @cssModules({ ...styles, ...ownStyle }, { allowMultiple: true })
-export default class AddCustomERC20 extends React.Component<any, any> {
-  
+class AddCustomERC20 extends React.Component<any, any> {
+
   props: AddCustomERC20Props
   state: AddCustomERC20State
 
@@ -317,3 +317,5 @@ export default class AddCustomERC20 extends React.Component<any, any> {
     )
   }
 }
+
+export default injectIntl(AddCustomERC20)

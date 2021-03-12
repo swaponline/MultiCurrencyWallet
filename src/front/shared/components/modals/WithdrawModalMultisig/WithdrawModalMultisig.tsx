@@ -33,7 +33,6 @@ import lsDataCache from 'helpers/lsDataCache'
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
-@injectIntl
 @connect(
   ({
     currencies,
@@ -47,7 +46,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
   })
 )
 @cssModules({ ...styles, ...ownStyle }, { allowMultiple: true })
-export default class WithdrawModalMultisig extends React.Component<any, any> {
+class WithdrawModalMultisig extends React.Component<any, any> {
   props: any
 
   static propTypes = {
@@ -919,3 +918,5 @@ export default class WithdrawModalMultisig extends React.Component<any, any> {
     )
   }
 }
+
+export default injectIntl(WithdrawModalMultisig)

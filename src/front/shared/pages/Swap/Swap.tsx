@@ -29,7 +29,6 @@ import config from 'app-config'
 const isWidgetBuild = config && config.isWidget
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
-@injectIntl
 @connect(({
   user: { ethData, btcData, ghostData, nextData, tokensData, activeFiat },
   pubsubRoom: { peer },
@@ -47,7 +46,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
 }))
 
 @cssModules(styles, { allowMultiple: true })
-export default class SwapComponent extends PureComponent<any, any> {
+class SwapComponent extends PureComponent<any, any> {
 
   wallets: any
   checkingConfirmSuccessTimer: any
@@ -622,3 +621,5 @@ export default class SwapComponent extends PureComponent<any, any> {
     )
   }
 }
+
+export default injectIntl(SwapComponent)

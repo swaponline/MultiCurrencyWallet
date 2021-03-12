@@ -12,7 +12,6 @@ import { localisedUrl } from 'helpers/locale'
 import styles from './MobMenu.scss'
 
 
-@injectIntl
 @cssModules(styles)
 class MobMenu extends React.Component<any, any> {
 
@@ -101,4 +100,4 @@ class MobMenu extends React.Component<any, any> {
   }
 }
 
-export default withRouter(MobMenu)
+export default withRouter(injectIntl(MobMenu))

@@ -96,7 +96,6 @@ const langLabels = defineMessages({
   },
 })
 
-@injectIntl
 @connect(
   ({
     user: { btcMultisigUserData },
@@ -105,7 +104,7 @@ const langLabels = defineMessages({
   })
 )
 @cssModules({ ...defaultStyles, ...styles }, { allowMultiple: true })
-export default class SaveMnemonicModal extends React.Component<any, any> {
+class SaveMnemonicModal extends React.Component<any, any> {
 
   props: any
 
@@ -414,3 +413,5 @@ export default class SaveMnemonicModal extends React.Component<any, any> {
     )
   }
 }
+
+export default injectIntl(SaveMnemonicModal)

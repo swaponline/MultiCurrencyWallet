@@ -82,10 +82,9 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
     multisigPendingCount,
   })
 )
-@injectIntl
 @withRouter
 @CSSModules({ ...styles, ...stylesHere }, { allowMultiple: true })
-export default class CurrencyWallet extends Component<any, any> {
+class CurrencyWallet extends Component<any, any> {
   _mounted = false
 
   constructor(props) {
@@ -830,3 +829,5 @@ export default class CurrencyWallet extends Component<any, any> {
     )
   }
 }
+
+export default injectIntl(CurrencyWallet)

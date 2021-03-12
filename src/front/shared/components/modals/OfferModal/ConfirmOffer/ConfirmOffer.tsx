@@ -24,13 +24,12 @@ import BigNumber from 'bignumber.js'
 import feedback from 'shared/helpers/feedback'
 
 
-@injectIntl
 @connect(({ currencies: { items: currencies }, user: { ethData: { address } } }) => ({
   currencies,
   address,
 }))
 @cssModules(styles)
-export default class ConfirmOffer extends Component<any, any> {
+class ConfirmOffer extends Component<any, any> {
 
   state = {
     tokenFee: false,
@@ -99,3 +98,5 @@ export default class ConfirmOffer extends Component<any, any> {
     )
   }
 }
+
+export default injectIntl(ConfirmOffer)

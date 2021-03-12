@@ -5,7 +5,7 @@ import actions from 'redux/actions'
 import cssModules from 'react-css-modules'
 import styles from './AlertModal.scss'
 import { Button } from 'components/controls'
-import { injectIntl, defineMessages } from 'react-intl'
+import { injectIntl, IntlShape, defineMessages } from 'react-intl'
 import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 
 const defaultLanguage = defineMessages({
@@ -24,8 +24,8 @@ const defaultLanguage = defineMessages({
 })
 
 type AlertModalProps = {
+  intl: IntlShape
   name: string
-  intl: IUniversalObj
   dashboardModalsAllowed
   onClose: () => void
   data: {
@@ -39,13 +39,12 @@ type AlertModalProps = {
   }
 }
 
-//@ts-ignore
-@injectIntl
+
 @connect(({ ui: { dashboardModalsAllowed }}) => ({
   dashboardModalsAllowed
 }))
 @cssModules(styles)
-export default class AlertModal extends React.Component<AlertModalProps, null> {
+class AlertModal extends React.Component<AlertModalProps, null> {
   handleClose = () => {
     const {
       name,
@@ -135,3 +134,5 @@ export default class AlertModal extends React.Component<AlertModalProps, null> {
     )
   }
 }
+
+export default injectIntl(AlertModal)

@@ -1,4 +1,4 @@
-import swap from 'simple.swap.core'
+import * as swap from 'simple.swap.core'
 import repl from 'repl'
 
 
@@ -9,7 +9,7 @@ const {
   swap: { onStep, get, start },
 } = swap.helpers
 
-const { app, auth, room, wallet, orders } = swap.setup()
+const { app, auth, room, wallet, orders } = swap.setup({})
 
 const swapID = process.argv[2]
 

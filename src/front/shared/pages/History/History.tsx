@@ -44,7 +44,6 @@ const subTitle = defineMessages({
 })
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
-@injectIntl
 @connect(({
   user: { activeFiat },
   history: {
@@ -58,7 +57,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
   swapHistory,
 }))
 @CSSModules(stylesHere, { allowMultiple: true })
-export default class History extends Component<any, any> {
+class History extends Component<any, any> {
 
   constructor(props) {
     super(props)
@@ -247,3 +246,5 @@ export default class History extends Component<any, any> {
     )
   }
 }
+
+export default injectIntl(History)

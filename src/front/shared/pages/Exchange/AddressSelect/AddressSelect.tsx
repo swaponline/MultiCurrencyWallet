@@ -62,7 +62,6 @@ const langLabels = defineMessages({
   },
 })
 
-@injectIntl
 @withRouter
 @connect(
   ({ core: { hiddenCoinsList }, user: { btcData, ethData, ghostData, nextData, tokensData } }) => {
@@ -83,7 +82,7 @@ const langLabels = defineMessages({
   }
 )
 @cssModules(styles, { allowMultiple: true })
-export default class AddressSelect extends Component<any, any> {
+class AddressSelect extends Component<any, any> {
   constructor(props) {
     super(props)
 
@@ -491,3 +490,5 @@ export default class AddressSelect extends Component<any, any> {
     )
   }
 }
+
+export default injectIntl(AddressSelect)

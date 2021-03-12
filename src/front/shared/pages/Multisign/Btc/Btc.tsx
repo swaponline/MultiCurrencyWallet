@@ -24,9 +24,8 @@ import config from 'app-config'
     data: btcData,
   }
 })
-@injectIntl
 @CSSModules(styles, { allowMultiple: true })
-export default class Btc extends PureComponent<any, any> {
+class Btc extends PureComponent<any, any> {
   timerWaitOnlineJoin: any
 
   static propTypes = {
@@ -510,3 +509,5 @@ export default class Btc extends PureComponent<any, any> {
     )
   }
 }
+
+export default injectIntl(Btc)

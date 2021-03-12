@@ -6,9 +6,8 @@ import * as configFactory from './config'
 
 const network = process.env.NETWORK
 
-export default settings => {
+export default (settings) => {
   const useMnemonic = settings.mnemonic
-
 
   const getConfig = configFactory[network || 'testnet']
 

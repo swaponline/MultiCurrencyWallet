@@ -53,6 +53,7 @@ class Flow {
     utxoScriptValues?: any
     utxoScriptVerified?: boolean
     utxoScriptCreatingTransactionHash?: string
+    ethSwapCreationTransactionHash?: string
 
     secret?: string
     isParticipantSigned?: boolean
@@ -94,6 +95,7 @@ class Flow {
         utxoScriptValues: null,
         utxoScriptVerified: false,
         utxoScriptCreatingTransactionHash: null,
+        ethSwapCreationTransactionHash: null,
       },
       ...{
         /** UTXO-AB **/

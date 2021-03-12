@@ -21,7 +21,6 @@ const labels = defineMessages({
   },
 })
 
-@injectIntl
 @cssModules({
   ...styles,
 }, { allowMultiple: true })
@@ -235,4 +234,4 @@ class Transaction extends Component<any, any> {
   }
 }
 
-export default withRouter(Transaction)
+export default withRouter(injectIntl(Transaction))
