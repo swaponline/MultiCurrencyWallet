@@ -28,17 +28,9 @@ export default (tokenName) => {
       this.utxoCoin = `btc`
       this._flowName = ETHTOKEN2BTC.getName()
 
-      this.stepNumbers = {
-        'sign': 1,
-        'wait-lock-utxo': 2,
-        'verify-script': 3,
-        'sync-balance': 4,
-        'lock-eth': 5,
-        'wait-withdraw-eth': 6, // aka getSecret
-        'withdraw-utxo': 7,
-        'finish': 8,
-        'end': 9
-      }
+      this.isTakerMakerModel = true
+      this.setupTakerMakerEvents()
+      this.stepNumbers = this.getStepNumbers()
 
       this.ethTokenSwap = swap.participantSwap
       this.btcSwap = swap.ownerSwap
@@ -99,11 +91,50 @@ export default (tokenName) => {
 
       const flow = this
 
-      flow.swap.room.once('request withdraw', () => {
-        flow.setState({
-          withdrawRequestIncoming: true,
+      if (this.isTaker()) {
+        flow.swap.room.on('create utxo script', (data) => {
+          const {
+            utxoScriptCreatingTransactionHash,
+          } = data
+          flow.setState({
+            utxoScriptCreatingTransactionHash,
+          }, true)
         })
-      })
+        flow.swap.room.on('ethWithdrawTxHash', (data) => {
+          const {
+            ethSwapWithdrawTransactionHash,
+          } = data
+          flow.setState({
+            ethSwapWithdrawTransactionHash,
+          })
+        })
+      } else {
+        flow.swap.room.once('request withdraw', () => {
+          flow.setState({
+            withdrawRequestIncoming: true,
+          })
+        })
+
+        flow.swap.room.on('wait btc confirm', () => {
+          flow.setState({
+            waitBtcConfirm: true,
+          })
+        })
+
+        flow.swap.room.on('request eth contract', () => {
+          const { ethSwapCreationTransactionHash } = flow.state
+
+          if (ethSwapCreationTransactionHash) {
+            console.log('Exists - send hash')
+            flow.swap.room.sendMessage({
+              event: 'create eth contract',
+              data: {
+                ethSwapCreationTransactionHash,
+              },
+            })
+          }
+        })
+      }
 
       super._persistSteps()
     }

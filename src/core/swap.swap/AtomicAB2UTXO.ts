@@ -41,6 +41,7 @@ class AtomicAB2UTXO extends Flow {
 
   setupTakerMakerEvents() {
     const flow = this
+    if (!this.isTakerMakerModel) return
     if (this.isTaker()) {
       flow.swap.room.on('request utxo script', () => {
         const {
