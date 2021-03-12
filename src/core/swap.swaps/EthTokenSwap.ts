@@ -972,19 +972,7 @@ class EthTokenSwap extends SwapInterface {
       }, true)
     })
 
-    const isContractBalanceOk = await util.helpers.repeatAsyncUntilResult(async () => {
-      const balance = await abClass.getBalance({
-        ownerAddress: flow.app.getParticipantEthAddress(flow.swap),
-      })
-
-      debug('swap.core:flow')('Checking contract balance:', balance)
-
-      if (balance > 0) {
-        return true
-      }
-
-      return false
-    })
+    const isContractBalanceOk = await this.isContractFunded(flow)
 
     if (isContractBalanceOk) {
       const { isEthContractFunded } = flow.state
@@ -1173,20 +1161,18 @@ class EthTokenSwap extends SwapInterface {
   // ==========================================================
   // @to-do - check secret hash
   async isContractFunded(flow) {
-    /*
     const abClass = this
     const web3 = this.app.env.getWeb3()
 
     const isContractBalanceOk = await util.helpers.repeatAsyncUntilResult(async () => {
       const balance = await abClass.getBalance({
-        ownerAddress: abClass.app.getParticipantEthAddress(flow.swap),
+        ownerAddress: flow.app.getParticipantEthAddress(flow.swap),
       })
 
-      _debug('swap.core:flow')('Checking contract balance:', balance)
+      debug('swap.core:flow')('Checking contract balance:', balance)
 
-      const needContractBalance = new BigNumber(web3.utils.toWei(flow.swap.buyAmount.toString()))
-
-      if (new BigNumber(balance).isGreaterThanOrEqualTo(needContractBalance)) {
+      // @to-do - check needed amount like in eth
+      if (balance > 0) {
         return true
       }
 
@@ -1197,7 +1183,6 @@ class EthTokenSwap extends SwapInterface {
       return true
     }
     return false
-    */
   }
 
   async checkTargetAddress({
