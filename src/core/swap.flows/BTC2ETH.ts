@@ -96,7 +96,7 @@ class BTC2ETH extends AtomicAB2UTXO {
   _getSteps() {
     const flow = this
 
-console.log('>>>> getSteps', this.isTaker())
+
     if (this.isTaker()) {
       return [
 
