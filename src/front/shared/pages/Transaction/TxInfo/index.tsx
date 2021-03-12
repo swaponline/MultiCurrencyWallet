@@ -34,12 +34,11 @@ const labels = defineMessages({
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
-@injectIntl
 @cssModules({
   ...styles,
   ...animateFetching,
 }, { allowMultiple: true })
-export default class TxInfo extends Component<any, any> {
+class TxInfo extends Component<any, any> {
 
   updateComment = (value) => {
     this.setState({ state: this.state });
@@ -318,3 +317,5 @@ export default class TxInfo extends Component<any, any> {
     )
   }
 }
+
+export default injectIntl(TxInfo)

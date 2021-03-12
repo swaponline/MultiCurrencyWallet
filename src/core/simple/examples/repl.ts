@@ -1,4 +1,4 @@
-import swap from './../src/index'
+import * as swap from './../src/index'
 import repl from 'repl'
 
 const {
@@ -8,7 +8,8 @@ const {
   swap: { onStep, get, start },
 } = swap.helpers
 
-const { auth, room, wallet, orders } = swap.setup()
+const app = swap.setup({})
+const { auth, room, wallet, orders } = app
 
 const swapID = process.argv[2]
 
@@ -29,7 +30,7 @@ const _ = (async () => {
     console.log(`Peers do not match:`, peer, room.peer)
   }
 
-  const swap = get(swapID)
+  const swap = get(app, swapID)
 
   console.log(`swap.flow.state =`, swap.flow.state)
   console.log()

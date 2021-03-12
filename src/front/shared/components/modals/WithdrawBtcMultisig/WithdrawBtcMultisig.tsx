@@ -34,7 +34,6 @@ import { getFullOrigin } from 'helpers/links'
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
-@injectIntl
 @connect(
   ({
     ui: { dashboardModalsAllowed }
@@ -43,7 +42,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
   })
 )
 @cssModules({ ...styles, ...ownStyle }, { allowMultiple: true })
-export default class WithdrawBtcMultisig extends React.Component<any, any> {
+class WithdrawBtcMultisig extends React.Component<any, any> {
 
   props: any
 
@@ -221,3 +220,5 @@ export default class WithdrawBtcMultisig extends React.Component<any, any> {
     )
   }
 }
+
+export default injectIntl(WithdrawBtcMultisig)

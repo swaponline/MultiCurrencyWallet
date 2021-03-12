@@ -26,9 +26,9 @@ type WallerSliderState = {
 }
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
-@injectIntl
+
 @connect(({ user }) => ({ user }))
-export default class WallerSlider extends React.Component {
+class WallerSlider extends React.Component {
 
   props: WallerSliderProps
   state: WallerSliderState
@@ -251,3 +251,5 @@ export default class WallerSlider extends React.Component {
     )
   }
 }
+
+export default injectIntl(WallerSlider)

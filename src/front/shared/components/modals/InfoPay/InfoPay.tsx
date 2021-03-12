@@ -25,15 +25,13 @@ const labels = defineMessages({
     id: 'InfoPay_2',
     defaultMessage: 'successfully transferred to'
   },
-
 })
-@injectIntl
+
 @cssModules({
   ...styles,
   ...animateFetching,
 }, { allowMultiple: true })
-
-export default class InfoPay extends React.Component<any, any> {
+class InfoPay extends React.Component<any, any> {
 
   props: any
 
@@ -197,3 +195,5 @@ export default class InfoPay extends React.Component<any, any> {
     )
   }
 }
+
+export default injectIntl(InfoPay)

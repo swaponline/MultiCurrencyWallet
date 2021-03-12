@@ -60,7 +60,7 @@ type RowState = {
   isFetching: boolean
   windowWidth: number
 }
-@injectIntl
+
 @connect(({
   pubsubRoom: { peer },
   user,
@@ -70,7 +70,7 @@ type RowState = {
 }))
 
 @cssModules(styles, { allowMultiple: true })
-export default class Row extends Component {
+class Row extends Component {
   _mounted = false
 
   props: RowProps
@@ -514,3 +514,5 @@ export default class Row extends Component {
     )
   }
 }
+
+export default injectIntl(Row)

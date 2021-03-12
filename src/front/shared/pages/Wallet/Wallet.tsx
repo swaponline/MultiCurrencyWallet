@@ -132,13 +132,12 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
     }
   }
 )
-@injectIntl
 @withRouter
 @connect(({ signUp: { isSigned } }) => ({
   isSigned,
 }))
 @cssModules(styles, { allowMultiple: true })
-export default class Wallet extends Component<any, any> {
+class Wallet extends Component<any, any> {
   constructor(props) {
     super(props)
 
@@ -616,3 +615,5 @@ export default class Wallet extends Component<any, any> {
     )
   }
 }
+
+export default injectIntl(Wallet)

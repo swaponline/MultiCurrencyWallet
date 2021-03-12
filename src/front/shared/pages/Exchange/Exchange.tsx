@@ -150,7 +150,6 @@ const subTitle = (sell, sellTicker, buy, buyTicker) => (
 const isWidgetBuild = config && config.isWidget
 const bannedPeers = {} // rejected swap peers
 
-@injectIntl
 @connect(
   ({
     currencies,
@@ -184,7 +183,7 @@ const bannedPeers = {} // rejected swap peers
   })
 )
 @CSSModules(styles, { allowMultiple: true })
-export default class Exchange extends Component<ExchangeProps, ExchangeState> {
+class Exchange extends Component<any, any> {
   props: ExchangeProps
   state: ExchangeState
 
@@ -1818,3 +1817,5 @@ export default class Exchange extends Component<ExchangeProps, ExchangeState> {
     )
   }
 }
+
+export default injectIntl(Exchange)

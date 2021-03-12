@@ -37,9 +37,8 @@ import finishSvg from './images/finish.svg'
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
-@injectIntl
 @CSSModules(styles, { allowMultiple: true })
-export default class SwapProgress extends Component<any, any> {
+class SwapProgress extends Component<any, any> {
   swap = null
   _fields = null
   wallets = null
@@ -560,3 +559,5 @@ export default class SwapProgress extends Component<any, any> {
     )
   }
 }
+
+export default injectIntl(SwapProgress)

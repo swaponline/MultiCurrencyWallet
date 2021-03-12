@@ -26,10 +26,9 @@ const title = defineMessages({
   },
 })
 
-@injectIntl
 @withRouter
 @cssModules(styles)
-export default class DeclineOrdersModal extends Component<any, any> {
+class DeclineOrdersModal extends Component<any, any> {
 
   goToDecline = () => {
     const { data: { declineSwap: { sellCurrency, buyCurrency, id } }, history } = this.props /* eslint-disable-line */
@@ -59,3 +58,5 @@ export default class DeclineOrdersModal extends Component<any, any> {
     )
   }
 }
+
+export default injectIntl(DeclineOrdersModal)

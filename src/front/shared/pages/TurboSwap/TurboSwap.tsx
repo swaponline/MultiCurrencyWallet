@@ -33,7 +33,6 @@ interface ITurboSwapState {
   flowState: any,
 }
 
-@injectIntl
 @connect(({
 /*  user: {
     ethData,
@@ -53,7 +52,7 @@ interface ITurboSwapState {
   //peer,
 }))
 @cssModules(styles, { allowMultiple: true })
-export default class TurboSwap extends PureComponent<any, ITurboSwapState> {
+class TurboSwap extends PureComponent<any, ITurboSwapState> {
 
 /*
   checkingConfirmSuccessTimer: any
@@ -341,3 +340,5 @@ export default class TurboSwap extends PureComponent<any, ITurboSwapState> {
     )
   }
 }
+
+export default injectIntl(TurboSwap)

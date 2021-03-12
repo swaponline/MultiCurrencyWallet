@@ -22,7 +22,7 @@ import OrderBook from './OrderBook/OrderBook'
 
 import config from 'app-config'
 
-@injectIntl
+
 @connect(({
   core: { filter },
   currencies: { items: currencies },
@@ -31,7 +31,7 @@ import config from 'app-config'
   currencies,
 }))
 @cssModules(styles, { allowMultiple: true })
-export default class Home extends Component<any, any> {
+class Offers extends Component<any, any> {
 
   static propTypes = {
     faqList: PropTypes.arrayOf(PropTypes.shape({
@@ -242,3 +242,5 @@ export default class Home extends Component<any, any> {
     )
   }
 }
+
+export default injectIntl(Offers)

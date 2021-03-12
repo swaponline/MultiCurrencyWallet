@@ -10,6 +10,7 @@ import { isMobile } from 'react-device-detect'
 import * as bip39 from 'bip39'
 import ReactTags from 'react-tag-autocomplete'
 
+
 const langPrefix = `MnemonicInputComponent`
 const langLabels = defineMessages({
   placeholder: {
@@ -43,9 +44,8 @@ type MnemonicInputState = {
   busy?: boolean
 }
 
-@injectIntl
 @cssModules(styles, { allowMultiple: true })
-export default class MnemonicInput extends Component {
+class MnemonicInput extends Component {
   /* 
   * This phrase just for test
   * If config entry point equals testnet
@@ -191,3 +191,5 @@ export default class MnemonicInput extends Component {
     )
   }
 }
+
+export default injectIntl(MnemonicInput)

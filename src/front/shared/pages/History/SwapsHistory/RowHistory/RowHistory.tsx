@@ -16,9 +16,9 @@ import { FormattedMessage, injectIntl } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
 import BigNumber from 'bignumber.js'
 
-@injectIntl
+
 @CSSModules(styles, { allowMultiple: true })
-export default class RowHistory extends Component<any, any> {
+class RowHistory extends Component<any, any> {
   static propTypes = {
     row: PropTypes.object,
   }
@@ -181,3 +181,5 @@ export default class RowHistory extends Component<any, any> {
     )
   }
 }
+
+export default injectIntl(RowHistory)

@@ -48,10 +48,9 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
     activeFiat,
   }
 })
-@injectIntl
 @withRouter
 @CSSModules(styles, { allowMultiple: true })
-export default class InvoicesList extends PureComponent<any, any> {
+class InvoicesList extends PureComponent<any, any> {
   unmounted = false
 
   constructor(props) {
@@ -258,3 +257,5 @@ export default class InvoicesList extends PureComponent<any, any> {
     )
   }
 }
+
+export default injectIntl(InvoicesList)

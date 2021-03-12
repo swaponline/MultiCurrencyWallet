@@ -9,9 +9,8 @@ import styles from './Copy.scss'
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
-@injectIntl
 @CSSModules(styles, { allowMultiple: true })
-export default class Copy extends Component<any, any> {
+class Copy extends Component<any, any> {
   constructor(props) {
     super(props)
 
@@ -56,3 +55,5 @@ export default class Copy extends Component<any, any> {
     )
   }
 }
+
+export default injectIntl(Copy)

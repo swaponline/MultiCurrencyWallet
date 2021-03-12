@@ -15,9 +15,8 @@ const langLabels = defineMessages({
   },
 })
 
-@injectIntl
 @cssModules(styles, { allowMultiple: true })
-export default class HowToWithdrawModal extends React.Component<any, any> {
+class HowToWithdrawModal extends React.Component<any, any> {
 
   constructor(props) {
     super(props)
@@ -57,3 +56,5 @@ export default class HowToWithdrawModal extends React.Component<any, any> {
     )
   }
 }
+
+export default injectIntl(HowToWithdrawModal)

@@ -21,9 +21,8 @@ const title = defineMessages({
   },
 })
 
-@injectIntl
 @CSSModules(styles)
-export default class EthChecker extends Component<any, any> {
+class EthChecker extends Component<any, any> {
   render() {
 
     const { name, intl: { locale }, intl  } = this.props
@@ -44,3 +43,5 @@ export default class EthChecker extends Component<any, any> {
     )
   }
 }
+
+export default injectIntl(EthChecker)
