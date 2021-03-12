@@ -254,7 +254,6 @@ class Exchange extends Component<any, any> {
     let getCurrency = buy || (!isWidgetBuild ? 'eth' : config.erc20token)
 
     const exchangeDataStr = localStorage.getItem(constants.localStorage.exchangeSettings)
-    console.log('EXCHANGE DATA STR FROM CONSTRUCTOR: ', exchangeDataStr)
     const exchangeSettings = exchangeDataStr && JSON.parse(exchangeDataStr)
     // to get data from last session
     if (exchangeSettings && exchangeSettings.currency) {
@@ -423,9 +422,18 @@ class Exchange extends Component<any, any> {
           isFullLoadingComplite: true,
         })
       }
-    }, 60 * 1000)
+    }, 60 * 1000) // 1 minute
+
+    this.getInfoAboutCurrency()
     this.fetchPairFeesAndBalances()
     metamask.web3connect.on('updated', this.fetchPairFeesAndBalances.bind(this))
+  }
+
+  getInfoAboutCurrency = async () => {
+    const { currencies } = this.props
+    const currencyNames = currencies.map(({ name }) => name)
+
+    await actions.user.getInfoAboutCurrency(currencyNames)
   }
 
   getBalance(currency) {
