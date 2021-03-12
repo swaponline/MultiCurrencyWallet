@@ -38,6 +38,7 @@ export default {
         amount: 0.0005,
         spreadBuy: 2,
         spreadSell: 2,
+        isTurbo: true,
       },
       {
         amount: 0.005,

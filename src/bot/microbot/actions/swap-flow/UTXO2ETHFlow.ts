@@ -1,4 +1,3 @@
-import handleError from '../../../app/actions/errors/handleError'
 import getSecret from './genSecret'
 
 
