@@ -1,8 +1,5 @@
 import React, { PureComponent, Fragment } from 'react'
 import cssModules from 'react-css-modules'
-
-import actions from 'redux/actions'
-
 import styles from './MyOrders.scss'
 import RowFeeds from './RowFeeds/RowFeeds'
 
@@ -13,11 +10,11 @@ export default class MyOrders extends PureComponent<any, any> {
 
   render() {
     const titles = [
-      ' ',
+      ' ', // empty title in the table
       <FormattedMessage id="MyOrdersYouSend" defaultMessage="You send" />,
       <FormattedMessage id="MyOrdersYouGet" defaultMessage="You get" />,
       <FormattedMessage id="MyOrdersRate" defaultMessage="Exchnage rate" />,
-      ' ',
+      ' ', // empty title in the table
     ]
     const { myOrders, declineRequest, acceptRequest, removeOrder } = this.props
 
@@ -39,13 +36,15 @@ export default class MyOrders extends PureComponent<any, any> {
           </thead>
           <tbody>
             {myOrders.map((order, index) => {
-              return (<RowFeeds
-                key={index}
-                row={order}
-                declineRequest={declineRequest}
-                acceptRequest={acceptRequest}
-                removeOrder={removeOrder}
-              />)
+              return (
+                <RowFeeds
+                  key={index}
+                  row={order}
+                  declineRequest={declineRequest}
+                  acceptRequest={acceptRequest}
+                  removeOrder={removeOrder}
+                />
+              )
             })}
           </tbody>
         </table>
