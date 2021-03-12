@@ -136,7 +136,7 @@ export default (tokenName) => {
           // 6. Withdraw
 
           async () => {
-            await flow.ethTokenSwap.withdrawFromAB2UTXO({ flow })
+            await flow.ethTokenSwap.withdrawFromABContract({ flow })
           },
 
           // 7. Finish
