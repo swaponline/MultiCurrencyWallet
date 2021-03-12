@@ -44,3 +44,8 @@ Update container and restart service (don't worry the data isn't affected becaus
 ```
 docker-compose pull mcw_bot && docker-compose up -d
 ```
+
+## login and password
+admin 
+qwertyasd123
+
