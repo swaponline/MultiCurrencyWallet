@@ -1398,18 +1398,6 @@ class Exchange extends Component<any, any> {
 
     const getFiat = new BigNumber(exGetRate).times(getAmount).dp(2, BigNumber.ROUND_CEIL)
 
-
-    // FIXME: redux state
-    // user
-    // currencyData or tokensData.currency
-    // *******************
-    // in this level we don't have any info about currency
-    // in the private mode - why ?
-    //
-    // infoAboutCurrency <- there isn't in the state
-    // *******************
-    // price_fiat <- we need it
-
     const fiatFeeCalculation =
       pairFees && pairFees.buy && pairFees.sell
         ? new BigNumber(pairFees.buyExRate)
