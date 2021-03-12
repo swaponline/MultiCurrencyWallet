@@ -1206,7 +1206,6 @@ class EthTokenSwap extends SwapInterface {
   }: {
     flow: any
   }) {
-    /*
     if (this.hasTargetWallet()) {
       const targetWallet = await this.getTargetWallet(
         this.app.getParticipantEthAddress(flow.swap)
@@ -1220,8 +1219,6 @@ class EthTokenSwap extends SwapInterface {
       }
     }
     return false
-    */
-    return true
   }
 
   async withdrawFromABContract({
