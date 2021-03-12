@@ -4,6 +4,7 @@ export default {
   defipulse: 'https://data-api.defipulse.com/api/v1/egs/api/ethgasAPI.json?api-key=53be2a60f8bc0bb818ad161f034286d709a9c4ccb1362054b0543df78e27',
   bitpay: [
     'https://api.bitcore.io/api/BTC/testnet',
+    // 'https://test-insight.bitpay.com/api'
     // 'http://localhost:32250/btc/testnet',
     //'https://test-insight.swaponline.io/insight-api',
     //'https://invoices.swaponline.site/proxybitpay-testnet',
@@ -13,7 +14,6 @@ export default {
   nextExplorer: 'https://explore.next.exchange/api',
   nextExplorerCustom: 'https://next.swaponline.io/mainnet',
   blockcypher: 'https://api.blockcypher.com/v1/btc/test3',
-  // bitpay: 'https://test-insight.bitpay.com/api',
   etherscan: [
     'https://api-ropsten.etherscan.io/api',
     'https://invoices.swaponline.site/proxyetherscan-testnet',
