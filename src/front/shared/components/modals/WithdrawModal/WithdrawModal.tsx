@@ -78,13 +78,13 @@ type WithdrawModalState = {
   amount: string
 
   currentDecimals: number
-  btcFeeRate: number
+  btcFeeRate: number | any
   txSize: null | number
   bitcoinFeeSpeedType: string
   bitcoinFees: null | {
-      hourFee: number
-      halfHourFee: number
-      fastestFee: number
+      slow: number | any
+      normal: number | any
+      fast: number | any
   }
 
   devError: IError | null
@@ -295,13 +295,14 @@ export default class WithdrawModal extends React.Component<WithdrawModalProps, W
         moreInfo: true,
       })
 
-      const bitcoinFeesRate = await helpers.btc.getFeesRateBitcoinfees();
-      const fee = new BigNumber(bitcoinFeesRate.fastestFee).multipliedBy(txSize).multipliedBy(1e-8);
+      const bitcoinFeesRate = await helpers.btc.getFeesRateBlockcypher();
+      const feeInByte = new BigNumber(bitcoinFeesRate.fast).div(1024).dp(0, BigNumber.ROUND_HALF_EVEN);
+      const fee = feeInByte.multipliedBy(txSize).multipliedBy(1e-8);
       if (!this.mounted) return
       this.setState((state) => ({
-        bitcoinFeeSpeedType: 'fastestFee',
+        bitcoinFeeSpeedType: 'fast',
         bitcoinFees: bitcoinFeesRate,
-        btcFeeRate: bitcoinFeesRate.fastestFee,
+        btcFeeRate: feeInByte.toNumber(),
         txSize,
         fees: {
           ...state.fees,
@@ -315,12 +316,12 @@ export default class WithdrawModal extends React.Component<WithdrawModalProps, W
   }
 
   setBitcoinFeeRate = (speedType: string) => {
-    console.log('speedType', speedType)
     const { bitcoinFees, txSize, currentDecimals } = this.state;
-    const fee = new BigNumber(bitcoinFees[speedType]).multipliedBy(txSize).multipliedBy(1e-8);
+    const feeInByte = new BigNumber(bitcoinFees[speedType]).div(1024).dp(0, BigNumber.ROUND_HALF_EVEN);
+    const fee = feeInByte.multipliedBy(txSize).multipliedBy(1e-8);
     this.setState((state) => ({
       bitcoinFeeSpeedType: speedType,
-      btcFeeRate: bitcoinFees[speedType],
+      btcFeeRate: feeInByte.toNumber(),
       fees: {
         ...state.fees,
         miner: fee,

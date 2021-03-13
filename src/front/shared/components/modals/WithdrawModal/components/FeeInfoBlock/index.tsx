@@ -32,9 +32,9 @@ type FeeInfoBlockProps = {
     min: number
   }
   bitcoinFees?: {
-    hourFee: number
-    halfHourFee: number
-    fastestFee: number
+    slow: number | any
+    normal: number | any
+    fast: number | any
   }
 
   setBitcoinFee?: (speedType: string) => void

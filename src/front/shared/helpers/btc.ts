@@ -246,50 +246,37 @@ const estimateFeeValue = async (options: EstimateFeeValueOptions): Promise<any> 
   return finalFeeValue
 }
 
-const estimateFeeRateBitcoinfees = async ({ speed = 'fast' } = {}) => {
+const getFeesRateBlockcypher = async () => {
+  const link = config.feeRates.btc
   const defaultRate = constants.defaultFeeRates.btc.rate
+
+  const defaultApiSpeeds = {
+    slow: defaultRate.slow,
+    normal: defaultRate.normal,
+    fast: defaultRate.fast,
+  }
+
+  if (!link) {
+    return defaultApiSpeeds
+  }
 
   let apiResult
 
   try {
-    apiResult = await api.asyncFetchApi(`https://bitcoinfees.earn.com/api/v1/fees/recommended`)
-  } catch (err) {
-    console.error(`EstimateFeeRate: ${err.message}`)
-    return defaultRate[speed]
-  }
-
-  const apiSpeeds = {
-    slow: `hourFee`,
-    normal: `halfHourFee`,
-    fast: `fastestFee`,
-  }
-
-  const apiSpeed = apiSpeeds[speed] || apiSpeeds.normal
-  const apiRate = new BigNumber(apiResult[apiSpeed]).multipliedBy(1024)
-
-  return apiRate.isGreaterThanOrEqualTo(DUST)
-    ? apiRate.toString()
-    : defaultRate[speed]
-}
-const getFeesRateBitcoinfees = async () => {
-  const defaultRate = constants.defaultFeeRates.btc.rate
-
-  let apiResult;
-
-  const defaultApiSpeeds = {
-    hourFee: defaultRate.slow / 1e3,
-    halfHourFee: defaultRate.normal / 1e3,
-    fastestFee: defaultRate.fast / 1e3,
-  }
-
-  try {
-    apiResult = await api.asyncFetchApi(`https://bitcoinfees.earn.com/api/v1/fees/recommended`)
+    // api returns sotoshi in 1 kb
+    apiResult = await api.asyncFetchApi(link)
   } catch (err) {
     console.error(`EstimateFeeRate: ${err.message}`)
     return defaultApiSpeeds
   }
 
-  return apiResult
+  const apiRate = {
+    slow: apiResult.low_fee_per_kb,
+    normal: apiResult.medium_fee_per_kb,
+    fast: apiResult.high_fee_per_kb,
+  }
+
+  return apiRate;
 }
 
 const estimateFeeRateBlockcypher = async ({ speed = 'fast' } = {}) => {
@@ -330,6 +317,6 @@ export default {
   calculateTxSize,
   estimateFeeValue,
   estimateFeeRate,
-  getFeesRateBitcoinfees,
+  getFeesRateBlockcypher,
   network,
 }
