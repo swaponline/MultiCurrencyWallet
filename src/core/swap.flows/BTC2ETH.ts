@@ -204,7 +204,7 @@ class BTC2ETH extends AtomicAB2UTXO {
               utxoScriptValues
             } = flow.state
             if (secretHash && utxoScriptValues) {
-              const isSwapCreated = await flow.ethTokenSwap.isSwapCreated({
+              const isSwapCreated = await flow.ethSwap.isSwapCreated({
                 ownerAddress: flow.app.getParticipantEthAddress(flow.swap),
                 participantAddress: flow.app.getMyEthAddress(),
                 secretHash,
