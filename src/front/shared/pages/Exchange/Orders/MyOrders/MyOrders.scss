@@ -1,8 +1,5 @@
 .myOrdersTable {
-  margin-top: 15px;
-  margin-left: auto;
-  margin-right: auto;
-  font-size: 15px;
+  width: 100%;
 
   @media screen and (max-width: 720px) {
     font-size: 13px;
@@ -14,7 +11,8 @@
 
   th,
   td {
-    text-align: right;
+    text-align: left;
+
     padding: 0.2em 0.3em;
     line-height: 1.1em;
 
@@ -31,5 +29,4 @@
   th {
     padding-bottom: 0.5em;
   }
-
 }

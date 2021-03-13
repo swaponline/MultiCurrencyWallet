@@ -41,30 +41,11 @@
   will-change: max-height, opacity;
 }
 
-@media (min-width: 831px) {
-  .TitleHolder {
-    position: absolute;
-    width: 50%;
-    top: 87px;
-
-    h1,
-    span {
-      font-size: 45px;
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-    }
-  }
-
-}
-
 .promoContainer {
   position: relative;
 
   &.--dark {
-    background: #222427;
+    background: $d-background-color;
     color: $d-color;
 
     .formExchange {
@@ -72,50 +53,14 @@
       background: $d-background-elements;
     }
 
-    .maxAmount {
-      background: none;
-      color: #8e9aa3;
-    }
-
-    .buttonOrders,
     &:before {
       background: #694cff !important;
-      color: white;
-    }
-
-    .notifyThat {
-      background: #2e2941;
+      color: $l-background-elements;
     }
 
     .maxAmount {
-      color: white;
-      background: #242425;
-    }
-
-    .IsSearching {
-      color: white;
-    }
-}
-
-}
-
-.darkForm {
-  .maxAmount {
-    color: white;
-    background: #242425;
-  }
-
-  .IsSearching {
-    color: white;
-  }
-
-  .mobileDubleHeader {
-    display: none;
-  }
-
-  @media screen and (max-width: 480px) {
-    .maxAmount {
-      background: none;
+      color: $d-color;
+      background: $d-background-elements;
     }
   }
 }
@@ -173,13 +118,6 @@
   margin: 0 auto;
 }
 
-.IsSearching {
-  display: block;
-  position: relative;
-  margin-bottom: 10px;
-  @include errAppend();
-}
-
 .button {
   margin-top: 0;
   width: 50%;
@@ -191,7 +129,7 @@
 }
 
 .button.link-like {
-  color: #007bff;
+  color: $color-link;
   text-decoration: underline;
 }
 
@@ -319,7 +257,6 @@
 
 }
 
-
 .buttons {
   margin-top: 1em;
   display: flex;
@@ -330,29 +267,6 @@
     width: 50%;
     margin-left: auto;
     margin-right: auto;
-  }
-}
-
-.buttonOrders {
-  border: 1px solid #000;
-  background: #fff;
-  transition: background-color 0.2s ease, color 0.1s ease, border-color 0.2s ease;
-
-  &:hover {
-    background: black;
-    color: white;
-    border-color: white;
-  }
-}
-
-.darkButton {
-  background: #694cff;
-  color: white;
-
-  &:hover {
-    background: black;
-    color: white;
-    border-color: white;
   }
 }
 
@@ -411,37 +325,17 @@
   justify-content: space-between;
 }
 
-.widgetSection {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 20px;
-}
-
 .section {
-
   @media screen and (max-width: 480px) {
     display: flex;
     flex-direction: column;
     justify-content: center;
     padding: 0;
 
-    .formExchange_widgetBuild {
-      padding: 0;
-    }
-
     .maxAmount {
       top: -5px;
       right: 10px;
     }
-  }
-}
-
-.blockVideo {
-  flex-basis: 58%;
-
-  iframe {
-    width: 100%;
-    height: 355px;
   }
 }
 
@@ -490,25 +384,8 @@
   cursor: pointer;
 }
 
-.notifyThat {
-  display: flex;
-  align-items: center;
-  color: #fff;
-  padding: 0.3em 10px;
-  font-size: 13px;
-  background: #6244e5;
-  border-radius: 3px;
-  @include errAppend();
-
-  a {
-    color: inherit;
-    font-size: inherit;
-    text-decoration: underline;
-  }
-}
-
 .notCorrect {
-  color: red;
+  color: $color-f-error;
 }
 
 .row {
@@ -516,23 +393,10 @@
   align-items: center;
 }
 
-.flipButton {
-  position: static;
-  padding: 0;
-  margin: 0px 12px -20px auto;
-  transform: rotate(90deg);
-}
-
-.withLoader {
-  display: block;
-  position: relative;
-}
-
 .inform {
   color: #626262;
   margin-top: 40px;
 }
-
 
 .scan {
   display: flex;
@@ -552,12 +416,6 @@
   text-align: right;
   position: relative;
   font-size: 30px;
-}
-
-.qrCode {
-  position: absolute;
-  left: 97%;
-  top: 9px;
 }
 
 .extendedControls {
@@ -588,14 +446,6 @@
   z-index: 2;
 }
 
-.widgetLink {
-  position: absolute;
-  right: 0;
-  bottom: -1.7em;
-  text-decoration: underline;
-  font-size: 13px;
-}
-
 .networkStatusPlace {
   position: absolute;
   left: 0;
@@ -603,36 +453,7 @@
   font-size: 13px;
 }
 
-.mobileDubleHeader {
-  display: none;
-}
-
-.tooltipHeader {
-  font-size: 1em;
-  line-height: 1em;
-
-  *[class*="tooltip"] {
-    line-height: 1.2em;
-    font-size: 16px;
-  }
-}
-
-.referralText {
-  margin: 100px auto 40px;
-  max-width: 1200px;
-}
-
-@media (max-width: 1200px) {
-  .referralText {
-    padding: 0 2em;
-  }
-}
-
 @include media-tablet {
-  .blockVideo {
-    flex-basis: 50%;
-  }
-
   .block {
     flex-basis: 45%;
   }
@@ -644,16 +465,6 @@
   .maxAmount {
     font-size: 14px;
   }
-
-  .TitleHolder {
-    width: 45%;
-
-    h1,
-    span {
-      font-size: 35px;
-    }
-  }
-
 }
 
 @media all and (max-width: 830px) {
@@ -661,8 +472,7 @@
     bottom: 25px;
   }
 
-  .section,
-  .widgetSection {
+  .section {
     margin-top: 20px;
     justify-content: center;
     flex-direction: column-reverse;
@@ -677,25 +487,6 @@
   .block {
     margin-bottom: 80px;
     margin-top: 60px;
-  }
-
-  .widgetSection {
-    padding: 0 25px;
-    overflow: hidden;
-
-    .flipButton {
-      left: auto;
-      right: 40px;
-      transform: translateY(12px) rotate(90deg);
-    }
-
-    .selectedItem {
-      width: auto;
-    }
-  }
-
-  .TitleHolder {
-    width: 100%;
   }
 }
 
@@ -713,53 +504,13 @@
 }
 
 @include media-mobile {
-
-  .formExchange_widgetBuild {
-    padding: 50px 15px;
-    box-shadow: unset;
-    border-radius: unset;
-  }
-
   .scrollToTutorialSection {
     bottom: 40px;
     right: 40%;
   }
 
-  .referralText {
-    overflow: hidden;
-    width: 90%;
-    position: relative;
-    margin: 60px auto 0;
-  }
-
-  .mobileDubleHeader {
-    display: block;
-    background: white;
-
-    h3 {
-      display: block;
-      margin: auto;
-      margin-top: -100px;
-      margin-bottom: 100px;
-      padding: 0;
-      padding-bottom: 10px;
-      padding-top: 15px;
-
-      div {
-        display: block;
-        margin: auto;
-        width: 90%;
-        text-align: center;
-      }
-    }
-  }
-
   .inform {
     margin-top: 10px;
-  }
-
-  .IsSearching {
-    font-size: 12px;
   }
 
   .maxAmount {

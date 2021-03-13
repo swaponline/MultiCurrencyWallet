@@ -5,7 +5,7 @@ export default {
   BTC: {
     withdrawTransactionHash: `utxoSwapWithdrawTransactionHash`,
     scriptCreatingTransactionHash: `utxoScriptCreatingTransactionHash`,
-    explorerLink: api.blockcypher,
+    explorerLink: api.bitpay,
     verifyScriptFunc: `verifyScript`,
     scriptValues: `utxoScriptValues`, // @to-do - remove this - use in code utxoScriptValues
   },

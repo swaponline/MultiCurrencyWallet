@@ -246,33 +246,7 @@ const estimateFeeValue = async (options: EstimateFeeValueOptions): Promise<any> 
   return finalFeeValue
 }
 
-const estimateFeeRateBitcoinfees = async ({ speed = 'fast' } = {}) => {
-  const defaultRate = constants.defaultFeeRates.btc.rate
-
-  let apiResult
-
-  try {
-    apiResult = await api.asyncFetchApi(`https://bitcoinfees.earn.com/api/v1/fees/recommended`)
-  } catch (err) {
-    console.error(`EstimateFeeRate: ${err.message}`)
-    return defaultRate[speed]
-  }
-
-  const apiSpeeds = {
-    slow: `hourFee`,
-    normal: `halfHourFee`,
-    fast: `fastestFee`,
-  }
-
-  const apiSpeed = apiSpeeds[speed] || apiSpeeds.normal
-  const apiRate = new BigNumber(apiResult[apiSpeed]).multipliedBy(1024)
-
-  return apiRate.isGreaterThanOrEqualTo(DUST)
-    ? apiRate.toString()
-    : defaultRate[speed]
-}
-
-const estimateFeeRateBlockcypher = async ({ speed = 'fast' } = {}) => {
+const estimateFeeRate = async ({ speed = 'fast' } = {}) => {
   const link = config.feeRates.btc
   const defaultRate = constants.defaultFeeRates.btc.rate
 
@@ -303,8 +277,6 @@ const estimateFeeRateBlockcypher = async ({ speed = 'fast' } = {}) => {
     ? apiRate.toNumber()
     : defaultRate[speed]
 }
-
-const estimateFeeRate = estimateFeeRateBlockcypher
 
 export default {
   calculateTxSize,
