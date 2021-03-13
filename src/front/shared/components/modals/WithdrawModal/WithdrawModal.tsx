@@ -84,7 +84,8 @@ type WithdrawModalState = {
   bitcoinFees: null | {
       slow: number | any
       normal: number | any
-      fast: number | any
+      fast: number | any,
+      custom: number
   }
 
   devError: IError | null
@@ -315,10 +316,15 @@ export default class WithdrawModal extends React.Component<WithdrawModalProps, W
     }
   }
 
-  setBitcoinFeeRate = (speedType: string) => {
+  setBitcoinFeeRate = (speedType: string, customValue?: number) => {
     const { bitcoinFees, txSize, currentDecimals } = this.state;
-    const feeInByte = new BigNumber(bitcoinFees[speedType]).div(1024).dp(0, BigNumber.ROUND_HALF_EVEN);
-    const fee = feeInByte.multipliedBy(txSize).multipliedBy(1e-8);
+
+    let feeInByte = speedType === 'custom' ?
+      new BigNumber(customValue) :
+      new BigNumber(bitcoinFees[speedType]).div(1024).dp(0, BigNumber.ROUND_HALF_EVEN);
+
+    let fee = feeInByte.multipliedBy(txSize).multipliedBy(1e-8);
+
     this.setState((state) => ({
       bitcoinFeeSpeedType: speedType,
       btcFeeRate: feeInByte.toNumber(),

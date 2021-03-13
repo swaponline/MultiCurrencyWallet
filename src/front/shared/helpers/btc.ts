@@ -254,6 +254,7 @@ const getFeesRateBlockcypher = async () => {
     slow: defaultRate.slow,
     normal: defaultRate.normal,
     fast: defaultRate.fast,
+    custom: 50 * 1024,
   }
 
   if (!link) {
@@ -274,6 +275,7 @@ const getFeesRateBlockcypher = async () => {
     slow: apiResult.low_fee_per_kb,
     normal: apiResult.medium_fee_per_kb,
     fast: apiResult.high_fee_per_kb,
+    custom: 50 * 1024,
   }
 
   return apiRate;

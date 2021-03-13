@@ -34,10 +34,11 @@ type FeeInfoBlockProps = {
   bitcoinFees?: {
     slow: number | any
     normal: number | any
-    fast: number | any
+    fast: number | any,
+    custom: number
   }
 
-  setBitcoinFee?: (speedType: string) => void
+  setBitcoinFee?: (speedType: string, customValue?: number) => void
 }
 
 function FeeInfoBlock(props: FeeInfoBlockProps) {

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import cssModules from 'react-css-modules'
 import styles from './index.scss'
 import { constants } from 'helpers'
+import BigNumber from 'bignumber.js';
 
 type FeeRadiosProps = {
     isLoading: boolean
@@ -12,13 +13,14 @@ type FeeRadiosProps = {
         slow: number | any
         normal: number | any
         fast: number | any
+        custom: number
     }
-    setFee: (speedType: string) => void
+    setFee: (speedType: string, customValue?: number) => void
 }
 
 type FeeRadiosState = {
     selectedOption: string
-    feeValue: number
+    customFeeValue: number
 }
 
 const bitcoinFees = [
@@ -29,7 +31,7 @@ const bitcoinFees = [
         slug: 'slow',
         speedType: 'slow',
         value: 5 * 1e3,
-        description: 'The lowest fee (in satoshis per byte) that will confirm transactions within an hour (with 90% probability)'
+        description: 'A rolling average of the fee for transactions to be confirmed in 7 or more blocks.'
     },
     {
         id: 2,
@@ -38,7 +40,7 @@ const bitcoinFees = [
         slug: 'normal',
         speedType: 'medium',
         value: 15 * 1e3,
-        description: 'The lowest fee (in satoshis per byte) that will confirm transactions within half an hour (with 90% probability)'
+        description: 'A rolling average of the fee transactions to be confirmed within 3 to 6 blocks.'
     },
     {
         id: 3,
@@ -47,15 +49,15 @@ const bitcoinFees = [
         slug: 'fast',
         speedType: 'fast',
         value: 30 * 1e3,
-        description: 'The lowest fee (in satoshis per byte) that will currently result in the fastest transaction confirmations (usually 0 to 1 block delay)'
+        description: 'A rolling average of the fee for transactions to be confirmed within 1 to 2 blocks.'
     },
     {
         id: 4,
         time: '',
         title: 'Custom',
-        slug: 'customFee',
+        slug: 'custom',
         speedType: 'custom',
-        value: 1,
+        value: 50 * 1024,
         description: 'Set custom fee rate'
     },
 ]
@@ -69,30 +71,33 @@ export default class FeeRadios extends Component<FeeRadiosProps, FeeRadiosState>
         super(props);
         this.state = {
             selectedOption: '',
-            feeValue: 0
+            customFeeValue: 50
         }
         this.onFeeRateChange = this.onFeeRateChange.bind(this);
-        this.onValueChange = this.onValueChange.bind(this);
+        this.onCustomFeeValueChange = this.onCustomFeeValueChange.bind(this);
     }
 
     onFeeRateChange(event) {
         const { setFee } = this.props;
-        setFee(event.target.value)
+        setFee(event.target.value, this.state.customFeeValue)
     }
 
-    onValueChange(event) {
+    onCustomFeeValueChange(event) {
+        const { setFee } = this.props;
         this.setState({
-            feeValue: event.target.value
+            customFeeValue: event.target.value
         });
+        setFee('custom', event.target.value)
+
     }
 
     render() {
         const {
             isLoading,
             speedType,
-            fees,
-            setFee
+            fees
         } = this.props;
+
         return (
             <>
                 <div styleName={`fee-radio ${isDark ? '--dark' : ''}`}>
@@ -124,11 +129,11 @@ export default class FeeRadios extends Component<FeeRadiosProps, FeeRadiosState>
                             name="volume"
                             min="0"
                             max="150"
-                            value={this.state.feeValue}
-                            onChange={this.onValueChange}
+                            value={this.state.customFeeValue}
+                            onChange={this.onCustomFeeValueChange}
                         />
                         <label htmlFor="sat/byte">
-                            {`${this.state.feeValue} sat/byte`}
+                            {`${this.state.customFeeValue} sat/byte`}
                         </label>
                     </div>
 
