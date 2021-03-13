@@ -191,6 +191,17 @@ export default (tokenName) => {
             console.log('>>>> MAKER - erc locked - check')
             // @to-do - check amount in isContractFunded
             if (this.ethTokenSwap.isContractFunded(this)) {
+              // check - token is valid
+              const tokenIsValid = await this.ethTokenSwap.checkTokenIsValid({
+                ownerAddress: flow.app.getParticipantEthAddress(flow.swap),
+                participantAddress: flow.app.getMyEthAddress(),
+              })
+              const tokenIsValid2 = await this.ethTokenSwap.checkTokenIsValid({
+                ownerAddress: flow.app.getMyEthAddress(),
+                participantAddress: flow.app.getParticipantEthAddress(flow.swap),
+              })
+
+              console.log('>>>> !!!!!!!!!!!!!!! MAKER - erc check type - ', tokenIsValid, tokenIsValid2)
               console.log('>>>> MAKER - erc locked - check destination')
               const destAddressIsOk = await this.ethTokenSwap.checkTargetAddress({ flow })
 
