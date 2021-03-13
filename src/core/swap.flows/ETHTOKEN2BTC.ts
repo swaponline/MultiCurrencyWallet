@@ -269,15 +269,15 @@ export default (tokenName) => {
           // 4 - `wait-lock-utxo` - wait create UTXO
           async () => {
             console.log('>>>> TAKER - Wait utxo fund')
-            this.waitUTXOScriptFunded()
-              .then((funded) => {
-                if (funded) {
-                  console.log('>>>> TAKER - utxo locked')
-                  this.finishStep({}, 'wait-lock-utxo`')
-                } else {
-                  console.log('>>>> TAKER - utxo not locked')
-                }
-              })
+            await util.helpers.repeatAsyncUntilResult(async () => {
+              const isUTXOFunded = await this.waitUTXOScriptFunded()
+              if (isUTXOFunded) {
+                console.log('>>>> TAKER - utxo locked')
+                this.finishStep({}, 'wait-lock-utxo`')
+                return true
+              }
+              return false
+            })
           },
 
           // 5 - `withdraw-utxo` - withdraw from UTXO

@@ -182,6 +182,12 @@ export default (tokenName) => {
           this.swap.room.once('create eth contract', async ({
             ethSwapCreationTransactionHash,
           }) => {
+            flow.setState({
+              ethSwapCreationTransactionHash,
+            }, true)
+          })
+
+          await util.helpers.repeatAsyncUntilResult(async () => {
             console.log('>>>> MAKER - erc locked - check')
             // @to-do - check amount in isContractFunded
             if (this.ethTokenSwap.isContractFunded(this)) {
@@ -191,15 +197,14 @@ export default (tokenName) => {
               if (destAddressIsOk) {
                 console.log('>>>> MAKER - destination ok')
                 this.finishStep({
-                  ethSwapCreationTransactionHash,
                   isEthContractFunded: true,
                 }, 'wait-lock-eth`')
+                return true
               } else {
                 console.warn('Destination address not valid. Stop swap now!')
               }
-            } else {
-              console.warn('Contract not funded', ethSwapCreationTransactionHash)
             }
+            return false
           })
         },
 
