@@ -84,6 +84,18 @@ export default (tokenName) => {
         utxoFundError: null,
       }
 
+      const flow = this
+
+      if (this.isMaker()) {
+        this.swap.room.once('create eth contract', async ({
+          ethSwapCreationTransactionHash,
+        }) => {
+          flow.setState({
+            ethSwapCreationTransactionHash,
+          }, true)
+        })
+      }
+
       this._persistState()
       super._persistSteps()
     }
@@ -179,25 +191,16 @@ export default (tokenName) => {
         // 3 - `wait-lock-eth` - wait taker create AB - обмен хешем
         async () => {
           console.log('>>>> MAKER - wait lock erc')
-          this.swap.room.once('create eth contract', async ({
-            ethSwapCreationTransactionHash,
-          }) => {
-            flow.setState({
-              ethSwapCreationTransactionHash,
-            }, true)
-          })
 
           await util.helpers.repeatAsyncUntilResult(async () => {
             console.log('>>>> MAKER - erc locked - check')
+            const isContractFunded = await this.ethTokenSwap.isContractFunded(this)
 
-
-            // @to-do - check amount in isContractFunded
-            if (this.ethTokenSwap.isContractFunded(this)) {
+            if (isContractFunded) {
               this.finishStep({
                 isEthContractFunded: true,
               }, 'wait-lock-eth`')
               return true
-
             }
             return false
           })

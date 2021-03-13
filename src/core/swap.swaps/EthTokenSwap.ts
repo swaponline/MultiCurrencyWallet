@@ -1171,7 +1171,7 @@ class EthTokenSwap extends SwapInterface {
     const swap = await util.helpers.repeatAsyncUntilResult(() => {
       return this.contract.methods.swaps(ownerAddress, participantAddress).call()
     })
-    console.log('>>>> isSwapCreated', data, swap)
+
     return (swap && swap.secretHash && swap.secretHash === `0x${secretHash}`)
   }
 

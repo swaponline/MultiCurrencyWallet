@@ -85,6 +85,18 @@ class BTC2ETH extends AtomicAB2UTXO {
       utxoFundError: null,
     }
 
+    const flow = this
+
+    if (this.isMaker()) {
+      this.swap.room.once('create eth contract', async ({
+        ethSwapCreationTransactionHash,
+      }) => {
+        flow.setState({
+          ethSwapCreationTransactionHash,
+        }, true)
+      })
+    }
+
     this._persistState()
     super._persistSteps()
   }
@@ -171,23 +183,15 @@ class BTC2ETH extends AtomicAB2UTXO {
 
         // 3 - `wait-lock-eth` - wait taker create AB - обмен хешем
         async () => {
-          this.swap.room.once('create eth contract', async ({
-            ethSwapCreationTransactionHash,
-          }) => {
-            if (this.ethSwap.isContractFunded(this)) {
-              const destAddressIsOk = await this.ethSwap.checkTargetAddress({ flow })
-
-              if (destAddressIsOk) {
-                this.finishStep({
-                  ethSwapCreationTransactionHash,
-                  isEthContractFunded: true,
-                }, 'wait-lock-eth`')
-              } else {
-                console.warn('Destination address not valid. Stop swap now!')
-              }
-            } else {
-              console.warn('Contract not funded', ethSwapCreationTransactionHash)
+          await util.helpers.repeatAsyncUntilResult(async () => {
+            const isContractFunded = await this.ethSwap.isContractFunded(this)
+            if (isContractFunded) {
+              this.finishStep({
+                isEthContractFunded: true,
+              }, 'wait-lock-eth`')
+              return true
             }
+            return false
           })
         },
 
@@ -200,10 +204,23 @@ class BTC2ETH extends AtomicAB2UTXO {
               utxoScriptValues
             } = flow.state
             if (secretHash && utxoScriptValues) {
-              await this.btcSwap.fundSwapScript({
-                flow,
+              const isSwapCreated = await flow.ethTokenSwap.isSwapCreated({
+                ownerAddress: flow.app.getParticipantEthAddress(flow.swap),
+                participantAddress: flow.app.getMyEthAddress(),
+                secretHash,
               })
-              return true
+              if (isSwapCreated) {
+                const destAddressIsOk = await this.ethSwap.checkTargetAddress({ flow })
+
+                if (destAddressIsOk) {
+                  await this.btcSwap.fundSwapScript({
+                    flow,
+                  })
+                  return true
+                } else {
+                  console.warn('Destination address not valid. Stop swap now!')
+                }
+              }
             } else {
               flow.swap.room.sendMessage({
                 event: 'request utxo script',

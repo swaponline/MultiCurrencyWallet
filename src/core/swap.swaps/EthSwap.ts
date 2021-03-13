@@ -833,7 +833,21 @@ class EthSwap extends SwapInterface {
     }
   }
 
-  // @to-do - check secret hash
+
+  async isSwapCreated(data) {
+    const {
+      ownerAddress,
+      participantAddress,
+      secretHash,
+    } = data
+
+    const swap = await util.helpers.repeatAsyncUntilResult(() => {
+      return this.contract.methods.swaps(ownerAddress, participantAddress).call()
+    })
+
+    return (swap && swap.secretHash && swap.secretHash === `0x${secretHash}`)
+  }
+
   async isContractFunded(flow) {
     const abClass = this
     const web3 = this.app.env.getWeb3()
