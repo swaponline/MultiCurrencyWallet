@@ -189,31 +189,15 @@ export default (tokenName) => {
 
           await util.helpers.repeatAsyncUntilResult(async () => {
             console.log('>>>> MAKER - erc locked - check')
+
+
             // @to-do - check amount in isContractFunded
             if (this.ethTokenSwap.isContractFunded(this)) {
-              // check - token is valid
-              const tokenIsValid = await this.ethTokenSwap.checkTokenIsValid({
-                ownerAddress: flow.app.getParticipantEthAddress(flow.swap),
-                participantAddress: flow.app.getMyEthAddress(),
-              })
-              const tokenIsValid2 = await this.ethTokenSwap.checkTokenIsValid({
-                ownerAddress: flow.app.getMyEthAddress(),
-                participantAddress: flow.app.getParticipantEthAddress(flow.swap),
-              })
+              this.finishStep({
+                isEthContractFunded: true,
+              }, 'wait-lock-eth`')
+              return true
 
-              console.log('>>>> !!!!!!!!!!!!!!! MAKER - erc check type - ', tokenIsValid, tokenIsValid2)
-              console.log('>>>> MAKER - erc locked - check destination')
-              const destAddressIsOk = await this.ethTokenSwap.checkTargetAddress({ flow })
-
-              if (destAddressIsOk) {
-                console.log('>>>> MAKER - destination ok')
-                this.finishStep({
-                  isEthContractFunded: true,
-                }, 'wait-lock-eth`')
-                return true
-              } else {
-                console.warn('Destination address not valid. Stop swap now!')
-              }
             }
             return false
           })
@@ -229,11 +213,41 @@ export default (tokenName) => {
               utxoScriptValues
             } = flow.state
             if (secretHash && utxoScriptValues) {
-              console.log('>>>> MAKER - secret hash ok - locking utxo')
-              await this.btcSwap.fundSwapScript({
-                flow,
+              
+              const isSwapCreated = await flow.ethTokenSwap.isSwapCreated({
+                ownerAddress: flow.app.getParticipantEthAddress(flow.swap),
+                participantAddress: flow.app.getMyEthAddress(),
+                secretHash,
               })
-              return true
+              if (isSwapCreated) {
+                console.log('>>>>> SWAP IS CREATED')
+                // check - token is valid
+                const tokenIsValid = await this.ethTokenSwap.checkTokenIsValid({
+                  ownerAddress: flow.app.getParticipantEthAddress(flow.swap),
+                  participantAddress: flow.app.getMyEthAddress(),
+                })
+                const tokenIsValid2 = await this.ethTokenSwap.checkTokenIsValid({
+                  ownerAddress: flow.app.getMyEthAddress(),
+                  participantAddress: flow.app.getParticipantEthAddress(flow.swap),
+                })
+
+                console.log('>>>> !!!!!!!!!!!!!!! MAKER - erc check type - ', tokenIsValid, tokenIsValid2)
+                console.log('>>>> MAKER - erc locked - check destination')
+                const destAddressIsOk = await this.ethTokenSwap.checkTargetAddress({ flow })
+
+                if (destAddressIsOk) {
+                  console.log('>>>> MAKER - destination ok')
+                  console.log('>>>> MAKER - secret hash ok - locking utxo')
+                  await this.btcSwap.fundSwapScript({
+                    flow,
+                  })
+                  return true
+                } else {
+                  console.warn('Destination address not valid. Stop swap now!')
+                }
+              } else {
+                console.log('Swap not mined - wait')
+              }
             } else {
               console.log('>>>> MAKER - need script values')
               flow.swap.room.sendMessage({

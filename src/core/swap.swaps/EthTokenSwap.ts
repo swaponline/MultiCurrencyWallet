@@ -303,6 +303,9 @@ class EthTokenSwap extends SwapInterface {
   swaps(data) {
     const { ownerAddress, participantAddress } = data
 
+    console.log('>>>>>> CALL GET SWAPS', data, this.contract.defaultBlock)
+    
+
     return this.contract.methods.swaps(ownerAddress, participantAddress).call()
   }
 
@@ -490,12 +493,12 @@ class EthTokenSwap extends SwapInterface {
   async checkTokenIsValid(data) {
     const { ownerAddress, participantAddress } = data
 
-    debug('swap.core:swaps')(`Check token is valid. Needed token address: ${this.tokenAddress.toUpperCase()}`);
-    const swap = await util.helpers.repeatAsyncUntilResult(() =>
+    const swap = await util.helpers.repeatAsyncUntilResult(() => 
       this.contract.methods.swaps(ownerAddress, participantAddress).call()
     )
 
     const { token } = swap
+
     debug('swap.core:swaps')(`Token address at swap contract: ${token.toUpperCase()}`);
 
     return (this.tokenAddress.toUpperCase() == token.toUpperCase())
@@ -1156,6 +1159,20 @@ class EthTokenSwap extends SwapInterface {
     if (isEthWithdrawn) {
       onWithdrawReady()
     }
+  }
+
+  async isSwapCreated(data) {
+    const {
+      ownerAddress,
+      participantAddress,
+      secretHash,
+    } = data
+
+    const swap = await util.helpers.repeatAsyncUntilResult(() => {
+      return this.contract.methods.swaps(ownerAddress, participantAddress).call()
+    })
+    console.log('>>>> isSwapCreated', data, swap)
+    return (swap && swap.secretHash && swap.secretHash === `0x${secretHash}`)
   }
 
   // ==========================================================
