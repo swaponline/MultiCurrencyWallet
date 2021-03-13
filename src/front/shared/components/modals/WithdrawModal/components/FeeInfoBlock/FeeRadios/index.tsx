@@ -3,6 +3,19 @@ import cssModules from 'react-css-modules'
 import styles from './index.scss'
 import { constants } from 'helpers'
 
+type FeeRadiosProps = {
+    isLoading: boolean
+
+    speedType: string
+
+    fees: {
+        hourFee: number
+        halfHourFee: number
+        fastestFee: number
+    }
+    setFee: (speedType: string) => void
+}
+
 type FeeRadiosState = {
     selectedOption: string
     feeValue: number
@@ -51,7 +64,7 @@ const bitcoinFees = [
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 @cssModules(styles, { allowMultiple: true })
-export default class FeeRadios extends Component<{}, FeeRadiosState> {
+export default class FeeRadios extends Component<FeeRadiosProps, FeeRadiosState> {
     constructor(props) {
         super(props);
         this.state = {
@@ -63,9 +76,8 @@ export default class FeeRadios extends Component<{}, FeeRadiosState> {
     }
 
     onFeeRateChange(event) {
-        this.setState({
-          selectedOption: event.target.value
-        });
+        const { setFee } = this.props;
+        setFee(event.target.value)
     }
 
     onValueChange(event) {
@@ -75,27 +87,36 @@ export default class FeeRadios extends Component<{}, FeeRadiosState> {
     }
 
     render() {
+        const {
+            isLoading,
+            speedType,
+            fees,
+            setFee
+        } = this.props;
         return (
             <>
                 <div styleName={`fee-radio ${isDark ? '--dark' : ''}`}>
-                    {bitcoinFees.map(fee => (
-                        <React.Fragment key={fee.id}>
-                            <input
-                                type="radio"
-                                value={fee.speedType}
-                                id={fee.speedType}
-                                styleName="fee-radio__input"
-                                checked={this.state.selectedOption === fee.speedType}
-                                onChange={this.onFeeRateChange}
-                            />
-                            <label htmlFor={fee.speedType} styleName="fee-radio__label">
-                                <b>{fee.title}</b>
-                            </label>
-                        </React.Fragment>))
+                    {bitcoinFees.map(fee => {
+                        return (
+                            <React.Fragment key={fee.id}>
+                                <input
+                                    type="radio"
+                                    value={fee.slug}
+                                    id={fee.speedType}
+                                    styleName="fee-radio__input"
+                                    checked={isLoading ? 'fastestFee' === fee.slug : speedType === fee.slug }
+                                    onChange={this.onFeeRateChange}
+                                />
+                                <label htmlFor={fee.speedType} styleName="fee-radio__label">
+                                    <b>{fee.title}</b>
+                                </label>
+                            </React.Fragment>
+                            )
+                        })
                     }
                 </div>
                 {
-                    this.state.selectedOption === "custom" &&
+                    speedType === "custom" &&
                     <div>
                         <input
                             type="range"

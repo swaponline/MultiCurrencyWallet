@@ -16,6 +16,7 @@ type FeeInfoBlockProps = {
   currency: string
   activeFiat: string
   dataCurrency: string
+  bitcoinFeeSpeedType: string
 
   currentDecimals: number
   txSize?: number
@@ -30,6 +31,13 @@ type FeeInfoBlockProps = {
     fee: number // percent (%)
     min: number
   }
+  bitcoinFees?: {
+    hourFee: number
+    halfHourFee: number
+    fastestFee: number
+  }
+
+  setBitcoinFee?: (speedType: string) => void
 }
 
 function FeeInfoBlock(props: FeeInfoBlockProps) {
@@ -49,6 +57,9 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
     hasTxSize,
     txSize,
     feeCurrentCurrency,
+    bitcoinFeeSpeedType,
+    bitcoinFees,
+    setBitcoinFee,
   } = props
 
   const minerFeeTicker = dataCurrency
@@ -121,6 +132,10 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
         <div styleName='feeRow'>
           <span styleName='feeRowTitle'>Choose Fee Rate:</span>
           <FeeRadios
+            speedType={bitcoinFeeSpeedType}
+            fees={bitcoinFees}
+            setFee={setBitcoinFee}
+            isLoading={isLoading}
           />
         </div>)
       }

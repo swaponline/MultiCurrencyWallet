@@ -80,6 +80,7 @@ type WithdrawModalState = {
   currentDecimals: number
   btcFeeRate: number
   txSize: null | number
+  bitcoinFeeSpeedType: string
   bitcoinFees: null | {
       hourFee: number
       halfHourFee: number
@@ -192,6 +193,7 @@ export default class WithdrawModal extends React.Component<WithdrawModalProps, W
       allCurrencyies,
       devError: null,
       bitcoinFees: null,
+      bitcoinFeeSpeedType: '',
       fees: {
         miner: new BigNumber(0),
         service: new BigNumber(0),
@@ -282,11 +284,10 @@ export default class WithdrawModal extends React.Component<WithdrawModalProps, W
     if (isUserProtected) method = `send_multisig`
     if (isSmsProtected || isPinProtected) method = `send_2fa`
 
-    const BYTE_IN_KB = 1024
     const numAmount = Number(amount) || 0
 
     try {
-      const { feeRate, txSize, fee } = await helpers.btc.estimateFeeValue({
+      const { txSize } = await helpers.btc.estimateFeeValue({
         method,
         speed: 'fast',
         address,
@@ -294,22 +295,38 @@ export default class WithdrawModal extends React.Component<WithdrawModalProps, W
         moreInfo: true,
       })
 
-      const bitcoinFeesRate = await helpers.btc.getFeesRateBitcoinfees;
-      const feeSatByte = new BigNumber(feeRate).dividedBy(BYTE_IN_KB).dp(0, BigNumber.ROUND_CEIL).toNumber()
-
+      const bitcoinFeesRate = await helpers.btc.getFeesRateBitcoinfees();
+      const fee = new BigNumber(bitcoinFeesRate.fastestFee).multipliedBy(txSize).multipliedBy(1e-8);
       if (!this.mounted) return
       this.setState((state) => ({
-        btcFeeRate: feeSatByte,
+        bitcoinFeeSpeedType: 'fastestFee',
+        bitcoinFees: bitcoinFeesRate,
+        btcFeeRate: bitcoinFeesRate.fastestFee,
         txSize,
         fees: {
           ...state.fees,
-          miner: new BigNumber(fee),
+          miner: fee,
           total: state.fees.service.plus(fee).dp(currentDecimals, BigNumber.ROUND_CEIL),
         },
       }))
     } catch (error) {
       this.reportError(error)
     }
+  }
+
+  setBitcoinFeeRate = (speedType: string) => {
+    console.log('speedType', speedType)
+    const { bitcoinFees, txSize, currentDecimals } = this.state;
+    const fee = new BigNumber(bitcoinFees[speedType]).multipliedBy(txSize).multipliedBy(1e-8);
+    this.setState((state) => ({
+      bitcoinFeeSpeedType: speedType,
+      btcFeeRate: bitcoinFees[speedType],
+      fees: {
+        ...state.fees,
+        miner: fee,
+        total: state.fees.service.plus(fee).dp(currentDecimals, BigNumber.ROUND_CEIL),
+      }
+    }))
   }
 
   setCommissions = async () => {
@@ -759,6 +776,8 @@ export default class WithdrawModal extends React.Component<WithdrawModalProps, W
       fees,
       fetchFee,
       txSize,
+      bitcoinFeeSpeedType,
+      bitcoinFees,
       btcFeeRate,
       selectedItem: {
         isBTC: isBTCWallet,
@@ -1149,6 +1168,9 @@ export default class WithdrawModal extends React.Component<WithdrawModalProps, W
                 usedAdminFee={usedAdminFee}
                 hasTxSize={isBTCWallet}
                 txSize={txSize}
+                bitcoinFees={bitcoinFees}
+                bitcoinFeeSpeedType={bitcoinFeeSpeedType}
+                setBitcoinFee={this.setBitcoinFeeRate}
                 minerFee={fees.miner}
                 serviceFee={fees.service}
                 totalFee={fees.total}
