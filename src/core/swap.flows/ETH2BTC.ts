@@ -184,7 +184,22 @@ class ETH2BTC extends AtomicAB2UTXO {
         // 6. Wait participant withdraw
 
         async () => {
-          await flow.ethSwap.getSecretFromAB2UTXO({ flow })
+          const {
+            secretHash,
+          } = this.state
+
+          await util.helpers.repeatAsyncUntilResult(async () => {
+            const isSwapCreated = await flow.ethSwap.isSwapCreated({
+              ownerAddress: flow.app.getParticipantEthAddress(flow.swap),
+              participantAddress: flow.app.getMyEthAddress(),
+              secretHash,
+            })
+            if (isSwapCreated) {
+              await flow.ethSwap.getSecretFromContract({ flow })
+              return true
+            }
+            return false
+          })
         },
 
         // 7. Withdraw
