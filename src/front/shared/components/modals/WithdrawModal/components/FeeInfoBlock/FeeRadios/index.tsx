@@ -99,7 +99,7 @@ export default class FeeRadios extends Component<FeeRadiosProps, FeeRadiosState>
             <>
                 <div styleName={`fee-radio ${isDark ? '--dark' : ''}`}>
                     {bitcoinFees.map(fee => {
-                        const feeInByte = new BigNumber(fees[fee.slug]).div(1024).dp(0, BigNumber.ROUND_HALF_EVEN).toNumber();
+                        const feeInByte = fee.slug === "custom" ? this.state.customFeeValue : new BigNumber(fees[fee.slug]).div(1024).dp(0, BigNumber.ROUND_HALF_EVEN).toNumber();
                         return (
                             <React.Fragment key={fee.id}>
                                 <input
