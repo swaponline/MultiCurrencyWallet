@@ -1163,17 +1163,24 @@ class EthTokenSwap extends SwapInterface {
   async isContractFunded(flow) {
     const abClass = this
     const web3 = this.app.env.getWeb3()
+    const { buyAmount } = flow.swap
 
     const isContractBalanceOk = await util.helpers.repeatAsyncUntilResult(async () => {
       const balance = await abClass.getBalance({
         ownerAddress: flow.app.getParticipantEthAddress(flow.swap),
       })
 
+      const exp = new BigNumber(10).pow(abClass.decimals)
+      const needContractBalance = new BigNumber(buyAmount).times(exp)
+
       debug('swap.core:flow')('Checking contract balance:', balance)
 
-      // @to-do - check needed amount like in eth
-      if (balance > 0) {
+      if (new BigNumber(balance).isGreaterThanOrEqualTo(needContractBalance)) {
         return true
+      } else {
+        if (balance > 0) {
+          console.warn(`Balance on contract is less than needed. Swap stucked. Contract balance: ${balance} Needed: ${needContractBalance.toString()}`)
+        }
       }
 
       return false

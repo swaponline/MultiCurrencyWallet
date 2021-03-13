@@ -849,6 +849,10 @@ class EthSwap extends SwapInterface {
 
       if (new BigNumber(balance).isGreaterThanOrEqualTo(needContractBalance)) {
         return true
+      } else {
+        if (balance > 0) {
+          console.warn(`Balance on contract is less than needed. Swap stucked. Contract balance: ${balance} Needed: ${needContractBalance.toString()}`)
+        }
       }
 
       return false
