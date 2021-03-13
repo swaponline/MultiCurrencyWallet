@@ -2,6 +2,11 @@ import React, { Component } from 'react';
 import cssModules from 'react-css-modules'
 import styles from './index.scss'
 import { constants } from 'helpers'
+
+import { FormattedMessage } from 'react-intl'
+
+import Tooltip from 'components/ui/Tooltip/Tooltip'
+import InlineLoader from 'shared/components/loaders/InlineLoader/InlineLoader';
 import BigNumber from 'bignumber.js';
 
 type FeeRadiosProps = {
@@ -26,29 +31,23 @@ type FeeRadiosState = {
 const bitcoinFees = [
     {
         id: 1,
-        time: '~30-60 minutes',
+        time: '~60-more minutes',
         title: 'Slow',
         slug: 'slow',
-        speedType: 'slow',
-        value: 5 * 1e3,
         description: 'A rolling average of the fee for transactions to be confirmed in 7 or more blocks.'
     },
     {
         id: 2,
-        time: '~15-30 minutes',
+        time: '~25-60 minutes',
         title: 'Medium',
         slug: 'normal',
-        speedType: 'medium',
-        value: 15 * 1e3,
         description: 'A rolling average of the fee transactions to be confirmed within 3 to 6 blocks.'
     },
     {
         id: 3,
-        time: '~0-15 minutes',
+        time: '~5-20 minutes',
         title: 'Fast',
         slug: 'fast',
-        speedType: 'fast',
-        value: 30 * 1e3,
         description: 'A rolling average of the fee for transactions to be confirmed within 1 to 2 blocks.'
     },
     {
@@ -56,8 +55,6 @@ const bitcoinFees = [
         time: '',
         title: 'Custom',
         slug: 'custom',
-        speedType: 'custom',
-        value: 50 * 1024,
         description: 'Set custom fee rate'
     },
 ]
@@ -102,18 +99,41 @@ export default class FeeRadios extends Component<FeeRadiosProps, FeeRadiosState>
             <>
                 <div styleName={`fee-radio ${isDark ? '--dark' : ''}`}>
                     {bitcoinFees.map(fee => {
+                        const feeInByte = new BigNumber(fees[fee.slug]).div(1024).dp(0, BigNumber.ROUND_HALF_EVEN).toNumber();
                         return (
                             <React.Fragment key={fee.id}>
                                 <input
                                     type="radio"
                                     value={fee.slug}
-                                    id={fee.speedType}
+                                    id={fee.slug}
                                     styleName="fee-radio__input"
                                     checked={isLoading ? 'fast' === fee.slug : speedType === fee.slug }
                                     onChange={this.onFeeRateChange}
                                 />
-                                <label htmlFor={fee.speedType} styleName="fee-radio__label">
-                                    <b>{fee.title}</b>
+                                <label htmlFor={fee.slug} styleName="fee-radio__label">
+                                    <div>
+                                        <b>{fee.title}</b>
+                                        {' '}
+                                        <Tooltip id={`FeeRadiosSpeedType_${fee.slug}`}>
+                                            <div style={{ maxWidth: '24em', textAlign: 'center' }}>
+                                            <FormattedMessage
+                                                id={`FeeRadiosSpeedType_${fee.slug}`}
+                                                defaultMessage={fee.description}
+                                            />
+                                            </div>
+                                        </Tooltip>
+                                    </div>
+                                    {isLoading ?
+                                        <div styleName='paleLoader'><InlineLoader /></div> :
+                                        <div style={{ display: 'flex', flexWrap: 'wrap'}}>
+                                            <span style={{ fontSize: '12px' }}>
+                                                {feeInByte} sat/byte
+                                            </span>
+                                            <span style={{ fontSize: '12px' }}>
+                                                {fee.time}
+                                            </span>
+                                        </div>
+                                    }
                                 </label>
                             </React.Fragment>
                             )

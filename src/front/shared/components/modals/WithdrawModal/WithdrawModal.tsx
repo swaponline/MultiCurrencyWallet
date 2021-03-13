@@ -193,7 +193,12 @@ export default class WithdrawModal extends React.Component<WithdrawModalProps, W
       exCurrencyRate,
       allCurrencyies,
       devError: null,
-      bitcoinFees: null,
+      bitcoinFees: {
+        slow: 5 * 1024,
+        normal: 15 * 1024,
+        fast: 30 * 1024,
+        custom: 50 * 1024
+      },
       bitcoinFeeSpeedType: '',
       fees: {
         miner: new BigNumber(0),
