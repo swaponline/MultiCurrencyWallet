@@ -136,7 +136,6 @@ class BTC2ETH extends AtomicAB2UTXO {
 
         // 5. Wait participant creates ETH Contract
         async () => {
-          
           await flow.ethSwap.waitABContract({
             flow,
             utxoCoin: `btc`,

@@ -175,145 +175,125 @@ export default (tokenName) => {
         ]
       } else {
         return [
-        // 1 - `sign` Signs
-        async () => {
-          console.log('>>>> MAKER - sign')
-          this.swap.processMetamask()
-          this.sign()
-        },
+          // 1 - `sign` Signs
+          async () => {
+            this.swap.processMetamask()
+            this.sign()
+          },
 
-        // 2 - `sync-balance` - syncBalance
-        async () => {
-          console.log('>>>> MAKER - sync balance')
-          this.syncBalance()
-        },
+          // 2 - `sync-balance` - syncBalance
+          async () => {
+            this.syncBalance()
+          },
 
-        // 3 - `wait-lock-eth` - wait taker create AB - обмен хешем
-        async () => {
-          console.log('>>>> MAKER - wait lock erc')
+          // 3 - `wait-lock-eth` - wait taker create AB - обмен хешем
+          async () => {
+            await util.helpers.repeatAsyncUntilResult(async () => {
+              const isContractFunded = await this.ethTokenSwap.isContractFunded(this)
 
-          await util.helpers.repeatAsyncUntilResult(async () => {
-            console.log('>>>> MAKER - erc locked - check')
-            const isContractFunded = await this.ethTokenSwap.isContractFunded(this)
+              if (isContractFunded) {
+                this.finishStep({
+                  isEthContractFunded: true,
+                }, 'wait-lock-eth`')
+                return true
+              }
+              return false
+            })
+          },
 
-            if (isContractFunded) {
-              this.finishStep({
-                isEthContractFunded: true,
-              }, 'wait-lock-eth`')
-              return true
-            }
-            return false
-          })
-        },
-
-        // 4 - `lock-utxo` - create UTXO
-        async () => {
-          // Repeat until 
-          console.log('>>>> MAKER - lock utxo')
-          await util.helpers.repeatAsyncUntilResult(async () => {
-            const {
-              secretHash,
-              utxoScriptValues
-            } = flow.state
-            if (secretHash && utxoScriptValues) {
-              
-              const isSwapCreated = await flow.ethTokenSwap.isSwapCreated({
-                ownerAddress: flow.app.getParticipantEthAddress(flow.swap),
-                participantAddress: flow.app.getMyEthAddress(),
+          // 4 - `lock-utxo` - create UTXO
+          async () => {
+            // Repeat until 
+            await util.helpers.repeatAsyncUntilResult(async () => {
+              const {
                 secretHash,
-              })
-              if (isSwapCreated) {
-                console.log('>>>>> SWAP IS CREATED')
-                // check - token is valid
-                const tokenIsValid = await this.ethTokenSwap.checkTokenIsValid({
+                utxoScriptValues
+              } = flow.state
+              if (secretHash && utxoScriptValues) {
+                const isSwapCreated = await flow.ethTokenSwap.isSwapCreated({
                   ownerAddress: flow.app.getParticipantEthAddress(flow.swap),
                   participantAddress: flow.app.getMyEthAddress(),
+                  secretHash,
                 })
-                const tokenIsValid2 = await this.ethTokenSwap.checkTokenIsValid({
-                  ownerAddress: flow.app.getMyEthAddress(),
-                  participantAddress: flow.app.getParticipantEthAddress(flow.swap),
-                })
-
-                console.log('>>>> !!!!!!!!!!!!!!! MAKER - erc check type - ', tokenIsValid, tokenIsValid2)
-                console.log('>>>> MAKER - erc locked - check destination')
-                const destAddressIsOk = await this.ethTokenSwap.checkTargetAddress({ flow })
-
-                if (destAddressIsOk) {
-                  console.log('>>>> MAKER - destination ok')
-                  console.log('>>>> MAKER - secret hash ok - locking utxo')
-                  await this.btcSwap.fundSwapScript({
-                    flow,
+                if (isSwapCreated) {
+                  // check - token is valid
+                  const tokenIsValid = await this.ethTokenSwap.checkTokenIsValid({
+                    ownerAddress: flow.app.getParticipantEthAddress(flow.swap),
+                    participantAddress: flow.app.getMyEthAddress(),
                   })
-                  return true
+                  const tokenIsValid2 = await this.ethTokenSwap.checkTokenIsValid({
+                    ownerAddress: flow.app.getMyEthAddress(),
+                    participantAddress: flow.app.getParticipantEthAddress(flow.swap),
+                  })
+
+                  const destAddressIsOk = await this.ethTokenSwap.checkTargetAddress({ flow })
+
+                  if (destAddressIsOk) {
+                    await this.btcSwap.fundSwapScript({
+                      flow,
+                    })
+                    return true
+                  } else {
+                    console.warn('Destination address not valid. Stop swap now!')
+                  }
                 } else {
-                  console.warn('Destination address not valid. Stop swap now!')
+                  console.log('Swap not mined - wait')
                 }
               } else {
-                console.log('Swap not mined - wait')
+                flow.swap.room.sendMessage({
+                  event: 'request utxo script',
+                })
+                return false
               }
-            } else {
-              console.log('>>>> MAKER - need script values')
-              flow.swap.room.sendMessage({
-                event: 'request utxo script',
-              })
-              return false
-            }
-          })
-        },
+            })
+          },
 
-        // 5 - `wait-withdraw-utxo` - wait withdraw UTXO - fetch secret from TX - getSecretFromTxhash
-        async () => {
-          console.log('>>>> MAKER - wait withdraw utxo')
-          await util.helpers.repeatAsyncUntilResult(async () => {
-            // check withdraw
-            const {
-              utxoScriptValues,
-            } = this.state
-            const { scriptAddress } = this.utxoBlockchain.createScript(utxoScriptValues)
-
-            const utxoWithdrawData = await this.btcSwap.checkWithdraw(scriptAddress)
-
-            if (utxoWithdrawData) {
-              console.log('>>>> MAKER - utxo withdrawed - extract secret')
+          // 5 - `wait-withdraw-utxo` - wait withdraw UTXO - fetch secret from TX - getSecretFromTxhash
+          async () => {
+            await util.helpers.repeatAsyncUntilResult(async () => {
+              // check withdraw
               const {
-                txid: utxoSwapWithdrawTransactionHash,
-              } = utxoWithdrawData
+                utxoScriptValues,
+              } = this.state
+              const { scriptAddress } = this.utxoBlockchain.createScript(utxoScriptValues)
 
-              const secret = await this.btcSwap.getSecretFromTxhash(utxoSwapWithdrawTransactionHash)
-              if (secret) {
-                console.log('>>>> MAKER - secret getted')
-                this.finishStep({
-                  secret,
-                  utxoSwapWithdrawTransactionHash,
-                }, 'wait-withdraw-utxo')
+              const utxoWithdrawData = await this.btcSwap.checkWithdraw(scriptAddress)
+
+              if (utxoWithdrawData) {
+                const {
+                  txid: utxoSwapWithdrawTransactionHash,
+                } = utxoWithdrawData
+
+                const secret = await this.btcSwap.getSecretFromTxhash(utxoSwapWithdrawTransactionHash)
+                if (secret) {
+                  this.finishStep({
+                    secret,
+                    utxoSwapWithdrawTransactionHash,
+                  }, 'wait-withdraw-utxo')
+                }
+                return true
+              } else {
+                return false
               }
-              return true
-            } else {
-              return false
-            }
-          })
-        },
+            })
+          },
 
-        // 6 - `withdraw-eth` - withdraw from AB
-        async () => {
-          console.log('>>>> MAKER - withdraw erc')
-          await flow.ethTokenSwap.withdrawFromABContract({ flow })
-        },
+          // 6 - `withdraw-eth` - withdraw from AB
+          async () => {
+            await flow.ethTokenSwap.withdrawFromABContract({ flow })
+          },
 
-        // 7 - `finish`
-        async () => {
-          // @to-do - txids room events
-          console.log('>>>> MAKER - ready')
-          flow.finishStep({
-            isFinished: true,
-          }, 'finish')
-        },
+          // 7 - `finish`
+          async () => {
+            // @to-do - txids room events
+            flow.finishStep({
+              isFinished: true,
+            }, 'finish')
+          },
 
-        // 8 - `end`
-        async () => {
-          
-        },
-      ]
+          // 8 - `end`
+          async () => {},
+        ]
       }
     }
 

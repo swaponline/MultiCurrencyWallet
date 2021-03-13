@@ -226,22 +226,18 @@ export default (tokenName) => {
         return [
           // 1 - `sign` - Signs 
           async () => {
-            console.log('>>>> TAKER - Sign')
             this.swap.processMetamask()
             this.sign()
           },
 
           // 2 - `sync-balance` - syncBalance
           async () => {
-            console.log('>>>> TAKER  - Sync balance')
             this.syncBalance()
           },
 
           // 3 - `lock-eth` - create AB contract - создание секрета, хеша, отправка хеша
           async () => {
-            console.log('>>>> TAKER - lock erc')
             if (!this.state.secret) {
-              console.log('>>>> TAKER - generate secret')
               const {
                 secret,
                 secretHash,
@@ -255,7 +251,6 @@ export default (tokenName) => {
               }, true)
             }
 
-            console.log('>>>> TAKER - locking erc')
             await flow.ethTokenSwap.fundERC20Contract({
               flow,
               // Использует принудительно адрес назначения (куда отправить монеты)
@@ -268,11 +263,9 @@ export default (tokenName) => {
 
           // 4 - `wait-lock-utxo` - wait create UTXO
           async () => {
-            console.log('>>>> TAKER - Wait utxo fund')
             await util.helpers.repeatAsyncUntilResult(async () => {
               const isUTXOFunded = await this.waitUTXOScriptFunded()
               if (isUTXOFunded) {
-                console.log('>>>> TAKER - utxo locked')
                 this.finishStep({}, 'wait-lock-utxo`')
                 return true
               }
@@ -282,7 +275,6 @@ export default (tokenName) => {
 
           // 5 - `withdraw-utxo` - withdraw from UTXO
           async () => {
-            console.log('>>>> TAKER - withdraw from utxo')
             await this.btcSwap.withdrawFromSwap({
               flow,
             })
@@ -290,7 +282,6 @@ export default (tokenName) => {
 
           // 6 - `finish`
           async () => {
-            console.log('>>>> TAKER - ready')
             // @to-do - txids room events
             flow.finishStep({
               isFinished: true,
