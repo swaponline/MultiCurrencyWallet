@@ -868,7 +868,7 @@ class EthTokenSwap extends SwapInterface {
   }
 
 
-  async getSecretFromAB2UTXO({
+  async getSecretFromContract({
     flow,
   }: {
     flow: any,

@@ -188,7 +188,22 @@ export default (tokenName) => {
           // 6. Wait participant withdraw
 
           async () => {
-            await flow.ethTokenSwap.getSecretFromAB2UTXO({ flow })
+            const {
+              secretHash,
+            } = this.state
+
+            await util.helpers.repeatAsyncUntilResult(async () => {
+              const isSwapCreated = await flow.ethTokenSwap.isSwapCreated({
+                ownerAddress: flow.app.getParticipantEthAddress(flow.swap),
+                participantAddress: flow.app.getMyEthAddress(),
+                secretHash,
+              })
+              if (isSwapCreated) {
+                await flow.ethTokenSwap.getSecretFromContract({ flow })
+                return true
+              }
+              return false
+            })
           },
 
           // 7. Withdraw
