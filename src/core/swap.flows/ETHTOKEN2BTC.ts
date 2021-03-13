@@ -194,10 +194,11 @@ export default (tokenName) => {
 
             await util.helpers.repeatAsyncUntilResult(async () => {
               const isSwapCreated = await flow.ethTokenSwap.isSwapCreated({
-                ownerAddress: flow.app.getParticipantEthAddress(flow.swap),
-                participantAddress: flow.app.getMyEthAddress(),
+                ownerAddress: flow.app.getMyEthAddress(),
+                participantAddress: flow.app.getParticipantEthAddress(flow.swap),
                 secretHash,
               })
+
               if (isSwapCreated) {
                 await flow.ethTokenSwap.getSecretFromContract({ flow })
                 return true

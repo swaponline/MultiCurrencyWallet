@@ -190,10 +190,11 @@ class ETH2BTC extends AtomicAB2UTXO {
 
           await util.helpers.repeatAsyncUntilResult(async () => {
             const isSwapCreated = await flow.ethSwap.isSwapCreated({
-              ownerAddress: flow.app.getParticipantEthAddress(flow.swap),
-              participantAddress: flow.app.getMyEthAddress(),
+              ownerAddress: flow.app.getMyEthAddress(),
+              participantAddress: flow.app.getParticipantEthAddress(flow.swap),
               secretHash,
             })
+
             if (isSwapCreated) {
               await flow.ethSwap.getSecretFromContract({ flow })
               return true
