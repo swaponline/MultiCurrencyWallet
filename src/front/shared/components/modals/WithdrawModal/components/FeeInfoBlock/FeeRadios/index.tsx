@@ -96,69 +96,61 @@ export default class FeeRadios extends Component<FeeRadiosProps, FeeRadiosState>
         } = this.props;
 
         return (
-            <>
-                <div styleName={`fee-radio ${isDark ? '--dark' : ''}`}>
-                    {bitcoinFees.map(fee => {
-                        const feeInByte = fee.slug === "custom" ? this.state.customFeeValue : new BigNumber(fees[fee.slug]).div(1024).dp(0, BigNumber.ROUND_HALF_EVEN).toNumber();
-                        return (
-                            <React.Fragment key={fee.id}>
-                                <input
-                                    type="radio"
-                                    value={fee.slug}
-                                    id={fee.slug}
-                                    styleName="fee-radio__input"
-                                    checked={isLoading ? 'fast' === fee.slug : speedType === fee.slug }
-                                    onChange={this.onFeeRateChange}
-                                />
-                                <label htmlFor={fee.slug} styleName="fee-radio__label">
-                                    <div>
-                                        <b>{fee.title}</b>
-                                        {' '}
-                                        <Tooltip id={`FeeRadiosSpeedType_${fee.slug}`}>
-                                            <div style={{ maxWidth: '24em', textAlign: 'center' }}>
-                                            <FormattedMessage
-                                                id={`FeeRadiosSpeedType_${fee.slug}`}
-                                                defaultMessage={fee.description}
-                                            />
-                                            </div>
-                                        </Tooltip>
-                                    </div>
-                                    {isLoading ?
-                                        <div styleName='paleLoader'><InlineLoader /></div> :
-                                        <div style={{ display: 'flex', flexWrap: 'wrap'}}>
-                                            <span style={{ fontSize: '12px' }}>
-                                                {feeInByte} sat/byte
-                                            </span>
-                                            <span style={{ fontSize: '12px' }}>
-                                                {fee.time}
-                                            </span>
+            <div styleName={`fee-radio ${isDark ? '--dark' : ''}`}>
+                {bitcoinFees.map(fee => {
+                    const feeInByte = fee.slug === "custom" ? this.state.customFeeValue : new BigNumber(fees[fee.slug]).div(1024).dp(0, BigNumber.ROUND_HALF_EVEN).toNumber();
+                    return (
+                        <React.Fragment key={fee.id}>
+                            <input
+                                type="radio"
+                                value={fee.slug}
+                                id={fee.slug}
+                                styleName="fee-radio__input"
+                                checked={isLoading ? 'fast' === fee.slug : speedType === fee.slug }
+                                onChange={this.onFeeRateChange}
+                            />
+                            <label htmlFor={fee.slug} styleName="fee-radio__label">
+                                <div>
+                                    <b>{fee.title}</b>
+                                    {' '}
+                                    <Tooltip id={`FeeRadiosSpeedType_${fee.slug}`}>
+                                        <div style={{ maxWidth: '24em', textAlign: 'center' }}>
+                                        <FormattedMessage
+                                            id={`FeeRadiosSpeedType_${fee.slug}`}
+                                            defaultMessage={fee.description}
+                                        />
                                         </div>
-                                    }
-                                </label>
-                            </React.Fragment>
-                            )
-                        })
-                    }
-                </div>
-                {
-                    speedType === "custom" &&
-                    <div>
-                        <input
-                            type="range"
-                            id="sat/byte"
-                            name="volume"
-                            min="0"
-                            max="150"
-                            value={this.state.customFeeValue}
-                            onChange={this.onCustomFeeValueChange}
-                        />
-                        <label htmlFor="sat/byte">
-                            {`${this.state.customFeeValue} sat/byte`}
-                        </label>
-                    </div>
-
+                                    </Tooltip>
+                                </div>
+                                {isLoading ?
+                                    <div styleName='paleLoader'><InlineLoader /></div> :
+                                    <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                        <span style={{ fontSize: '12px' }}>
+                                            {feeInByte} sat/byte
+                                        </span>
+                                        <span style={{ fontSize: '12px' }}>
+                                            {fee.time}
+                                        </span>
+                                        {speedType === "custom" && speedType === fee.slug &&
+                                            <input
+                                                style={{ maxWidth: '80%' }}
+                                                type="range"
+                                                id="sat/byte"
+                                                name="volume"
+                                                min="1"
+                                                max="150"
+                                                value={this.state.customFeeValue}
+                                                onChange={this.onCustomFeeValueChange}
+                                            />
+                                        }
+                                    </div>
+                                }
+                            </label>
+                        </React.Fragment>
+                        )
+                    })
                 }
-            </>
+            </div>
         )
     }
 }
