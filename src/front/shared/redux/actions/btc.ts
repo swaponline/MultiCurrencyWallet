@@ -470,7 +470,9 @@ const send = ({ from, to, amount, feeValue = null, speed }) => {
       feeFromAmount = feeFromAmount.toNumber()
 
       try {
-        feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed, amount})
+        const SATOSHI_TO_BITCOIN_RATIO = 1e-8; // 1 BTC -> 100 000 000 satoshi
+        feeValue = feeValue.div(1024).dp(0, BigNumber.ROUND_HALF_EVEN).multipliedBy(SATOSHI_TO_BITCOIN_RATIO).toNumber()
+          || await btc.estimateFeeValue({ inSatoshis: true, speed, amount})
       } catch (eFee) {
         reject({ message: `Fail estimate fee ` + eFee.message })
         return
