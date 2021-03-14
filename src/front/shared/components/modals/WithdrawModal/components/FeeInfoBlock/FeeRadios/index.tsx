@@ -24,7 +24,6 @@ type FeeRadiosProps = {
 }
 
 type FeeRadiosState = {
-    selectedOption: string
     customFeeValue: number
 }
 
@@ -41,7 +40,7 @@ const bitcoinFees = [
         time: '~25-60 minutes',
         title: 'Medium',
         slug: 'normal',
-        description: 'A rolling average of the fee transactions to be confirmed within 3 to 6 blocks.'
+        description: 'A rolling average of the fee for transactions to be confirmed within 3 to 6 blocks.'
     },
     {
         id: 3,
@@ -55,7 +54,7 @@ const bitcoinFees = [
         time: '',
         title: 'Custom',
         slug: 'custom',
-        description: 'Set custom fee rate'
+        description: 'Set custom fee rate.'
     },
 ]
 
@@ -67,7 +66,6 @@ export default class FeeRadios extends Component<FeeRadiosProps, FeeRadiosState>
     constructor(props) {
         super(props);
         this.state = {
-            selectedOption: '',
             customFeeValue: 50
         }
         this.onFeeRateChange = this.onFeeRateChange.bind(this);
@@ -111,12 +109,12 @@ export default class FeeRadios extends Component<FeeRadiosProps, FeeRadiosState>
                             />
                             <label htmlFor={fee.slug} styleName="fee-radio__label">
                                 <div>
-                                    <b>{fee.title}</b>
+                                    <FormattedMessage id={`FeeRadiosSpeedType${fee.title}`} defaultMessage={fee.title} />
                                     {' '}
-                                    <Tooltip id={`FeeRadiosSpeedType_${fee.slug}`}>
+                                    <Tooltip id={`FeeRadiosSpeedTypeDescription${fee.title}`}>
                                         <div style={{ maxWidth: '24em', textAlign: 'center' }}>
                                         <FormattedMessage
-                                            id={`FeeRadiosSpeedType_${fee.slug}`}
+                                            id={`FeeRadiosSpeedTypeDescription${fee.title}`}
                                             defaultMessage={fee.description}
                                         />
                                         </div>
@@ -129,7 +127,7 @@ export default class FeeRadios extends Component<FeeRadiosProps, FeeRadiosState>
                                             {feeInByte} sat/byte
                                         </span>
                                         <span style={{ fontSize: '12px' }}>
-                                            {fee.time}
+                                            { fee.slug !== "custom" && <FormattedMessage id={`FeeRadiosSpeedTypeTime${fee.title}`} defaultMessage={fee.time} />}
                                         </span>
                                         {speedType === "custom" && speedType === fee.slug &&
                                             <input

@@ -131,7 +131,9 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
     <section styleName='feeInfoBlock'>
       {hasTxSize && (
         <div styleName='feeRow'>
-          <span styleName='feeRowTitle'>Choose Fee Rate:</span>
+          <span styleName='feeRowTitle'>
+            <FormattedMessage id="FeeInfoBlockChooseFeeRate" defaultMessage="Choose Fee Rate:" />
+          </span>
           <FeeRadios
             speedType={bitcoinFeeSpeedType}
             fees={bitcoinFees}
