@@ -1,7 +1,7 @@
 var Router = ReactRouterDOM.Router;
 var Route = ReactRouterDOM.Route;
 var Link = ReactRouterDOM.Link;
-var BrowserRouter  = ReactRouterDOM.BrowserRouter ;
+var BrowserRouter  = ReactRouterDOM.BrowserRouter;
 
 const links = [
   { name: 'Bot', link: '/'},
@@ -28,23 +28,21 @@ const Header = () => (
 
       </ul>
     </nav>
-
-
   </header>
 )
 
-class App extends  React.Component {
+class App extends React.Component {
   render() {
     return (
       <div>
         <Header />
         <div className="jumbotron" >
-          <Route key={1} path="/" exact  component={Bot}/>
-          <Route key={2} path="/exchange" exact  component={Kraken}/>
-          <Route key={3} path="/in-progress" exact  component={History}/>
-          <Route key={4} path="/history" exact  component={History}/>
-          <Route key={5} path="/history/:ticker" exact  component={History}/>
-          <Route key={6} path="/stats" exact  component={Statistics}/>
+          <Route key={1} path="/" exact component={Bot} />
+          <Route key={2} path="/exchange" exact component={Kraken} />
+          <Route key={3} path="/in-progress" exact component={History} />
+          <Route key={4} path="/history" exact component={History} />
+          <Route key={5} path="/history/:ticker" exact component={History} />
+          <Route key={6} path="/stats" exact component={Statistics} />
         </div>
       </div>
     );
@@ -52,7 +50,7 @@ class App extends  React.Component {
 }
 
 ReactDOM.render(
-  <BrowserRouter  >
+  <BrowserRouter>
     <App/>
   </BrowserRouter>,
   document.getElementById('main')

@@ -327,8 +327,7 @@ const getDemoMoney = process.env.MAINNET ? () => { } : () => {
       localStorage.setItem(constants.privateKeyNames.eth, r[1])
       localStorage.setItem(constants.privateKeyNames.ghost, r[2])
       localStorage.setItem(constants.privateKeyNames.next, r[3])
-      //@ts-ignore
-      localStorage.setItem(constants.localStorage.demoMoneyReceived, true)
+      localStorage.setItem(constants.localStorage.demoMoneyReceived, 'true')
       window.location.reload()
     })
 }
@@ -437,11 +436,6 @@ const mergeTransactions = (mergeTxs: any[]) => {
   reducers.history.setTransactions(data)
 }
 
-const pullTransactions = transactions => {
-  let data = [].concat([], ...transactions).sort((a, b) => b.date - a.date).filter((item) => item)
-  reducers.history.setTransactions(data)
-}
-
 const pullActiveCurrency = (currency) => {
   reducers.user.setActiveCurrency({ activeCurrency: currency })
 }
@@ -467,30 +461,15 @@ const fetchMultisigStatus = async () => {
   }
 }
 
-const setTransactions = async (objCurrency = null) => {
-  /* 
-    objCurrency = {
-      currency: {
-        isBalanceFetched: bool
-      }
-    }
-    
-    "GHOST",
-    "NEXT"
-    "ETH"
-    "BTC"
-    "BTC (SMS-Protected)"
-    "BTC (PIN-Protected)"
-    "BTC (Google 2FA)"
-    "BTC (Multisig)"
-    "USDT",
-    "ETH"
-  */
+type ObjCurrencyType = {
+  currency: {
+    isBalanceFetched: boolean
+  }
+}
 
+const setTransactions = async (objCurrency: ObjCurrencyType | {} = null) => {
   const isBtcSweeped = actions.btc.isSweeped()
   const isEthSweeped = actions.eth.isSweeped()
-  const isGhostSweeped = actions.ghost.isSweeped()
-  const isNextSweeped = actions.next.isSweeped()
 
   const {
     core: { hiddenCoinsList },
@@ -657,8 +636,8 @@ const downloadPrivateKeys = () => {
   actions.notifications.show(constants.notifications.Message, {
     message,
   })
-  //@ts-ignore
-  localStorage.setItem(constants.localStorage.privateKeysSaved, true)
+
+  localStorage.setItem(constants.localStorage.privateKeysSaved, 'true')
 }
 
 window.downloadPrivateKeys = downloadPrivateKeys

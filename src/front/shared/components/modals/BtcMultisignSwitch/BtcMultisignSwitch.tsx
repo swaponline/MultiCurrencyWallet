@@ -20,9 +20,8 @@ import Table from 'components/tables/Table/Table'
 import WalletRow from './WalletRow'
 
 
-@injectIntl
 @cssModules({ ...defaultStyles, ...styles }, { allowMultiple: true })
-export default class BtcMultisignSwitch extends React.Component<any, any> {
+class BtcMultisignSwitch extends React.Component<any, any> {
 
   props: any
 
@@ -111,3 +110,5 @@ export default class BtcMultisignSwitch extends React.Component<any, any> {
     )
   }
 }
+
+export default injectIntl(BtcMultisignSwitch)

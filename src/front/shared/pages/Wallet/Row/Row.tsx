@@ -57,7 +57,6 @@ const langLabels = defineMessages({
   },
 })
 
-@injectIntl
 @withRouter
 @connect(
   (
@@ -84,7 +83,7 @@ const langLabels = defineMessages({
   })
 )
 @cssModules(styles, { allowMultiple: true })
-export default class Row extends Component {
+class Row extends Component {
   /**
    * @method handleReloadBalance
    * @method handleSliceAddress
@@ -1014,3 +1013,5 @@ export default class Row extends Component {
     )
   }
 }
+
+export default injectIntl(Row)

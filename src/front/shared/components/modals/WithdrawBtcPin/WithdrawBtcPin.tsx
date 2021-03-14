@@ -109,13 +109,12 @@ const langs = defineMessages({
   },
 })
 
-@injectIntl
 @connect(({ user: { btcData, btcMultisigPinData } }) => ({
   btcData,
   btcMultisigPinData,
 }))
 @cssModules({ ...styles, ...ownStyle }, { allowMultiple: true })
-export default class WithdrawBtcPin extends React.Component<any, any> {
+class WithdrawBtcPin extends React.Component<any, any> {
   props: any
 
   static propTypes = {
@@ -429,3 +428,5 @@ export default class WithdrawBtcPin extends React.Component<any, any> {
     )
   }
 }
+
+export default injectIntl(WithdrawBtcPin)

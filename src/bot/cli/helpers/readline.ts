@@ -12,7 +12,7 @@ const setInvite = (newInvite) => {
 }
 
 const read = async (question?) => {
-  return new Promise( (resolve, reject) => {
+  return new Promise((resolve, reject) => {
     rl.question(question || invite, (answer) => {
       resolve(answer)
     })

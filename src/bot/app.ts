@@ -16,10 +16,10 @@ import {
 } from 'common/utils/colorString'
 
 
-
 const { app, wallet } = SwapApp
-app.ready = new Promise( resolve => app.services.room.once('ready', resolve))
-app.sync = new Promise( resolve => app.ready.then(() => setTimeout(resolve, 20000)) )
+
+app.ready = new Promise(resolve => app.services.room.once('ready', resolve))
+app.sync = new Promise(resolve => app.ready.then(() => setTimeout(resolve, 20000)))
 
 
 app.services.room.once('ready', () => {
@@ -43,6 +43,7 @@ server.use(bodyparser.json())
 server.use('/', router)
 
 process.env.ENABLE_WEBSOCKET && ws.init(server, app, router, ws_port)
+
 const listener = server.listen(port, listen_ip)
 
 const serverColor = {
@@ -53,5 +54,6 @@ const serverColor = {
 console.log(colorString(`------------------------------------------------------------------------------`, serverColor))
 console.log(colorString(`                  [SERVER] listening on http://localhost:${port}                 `, serverColor))
 console.log(colorString(`------------------------------------------------------------------------------`, serverColor))
+
 
 export { server, app, listener }

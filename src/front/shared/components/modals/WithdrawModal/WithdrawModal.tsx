@@ -114,7 +114,6 @@ type WithdrawModalState = {
   selectedItem: IUniversalObj
 }
 
-@injectIntl
 @connect(
   ({
     currencies,
@@ -140,7 +139,7 @@ type WithdrawModalState = {
   })
 )
 @cssModules(styles, { allowMultiple: true })
-export default class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalState> {
+class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalState> {
   mounted = true
   btcFeeTimer: ReturnType<typeof setTimeout> | null = null
 
@@ -1214,3 +1213,5 @@ export default class WithdrawModal extends React.Component<WithdrawModalProps, W
     )
   }
 }
+
+export default injectIntl(WithdrawModal)

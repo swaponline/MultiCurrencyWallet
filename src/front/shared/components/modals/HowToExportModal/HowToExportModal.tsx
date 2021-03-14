@@ -68,9 +68,8 @@ const langLabels = defineMessages({
     ethPrivateKey: privateKey,
   })
 )
-@injectIntl
 @cssModules(styles, { allowMultiple: true })
-export default class HowToExportModal extends React.Component<any, any> {
+class HowToExportModal extends React.Component<any, any> {
 
   props: any
 
@@ -163,3 +162,5 @@ export default class HowToExportModal extends React.Component<any, any> {
     )
   }
 }
+
+export default injectIntl(HowToExportModal)

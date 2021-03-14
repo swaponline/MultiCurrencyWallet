@@ -281,7 +281,7 @@ const getFeesRateBlockcypher = async () => {
   return apiRate;
 }
 
-const estimateFeeRateBlockcypher = async ({ speed = 'fast' } = {}) => {
+const estimateFeeRate = async ({ speed = 'fast' } = {}) => {
   const link = config.feeRates.btc
   const defaultRate = constants.defaultFeeRates.btc.rate
 
@@ -312,8 +312,6 @@ const estimateFeeRateBlockcypher = async ({ speed = 'fast' } = {}) => {
     ? apiRate.toNumber()
     : defaultRate[speed]
 }
-
-const estimateFeeRate = estimateFeeRateBlockcypher
 
 export default {
   calculateTxSize,

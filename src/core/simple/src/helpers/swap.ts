@@ -51,7 +51,7 @@ export const start = (swap) =>
     resolve(true)
   })
 
-export const refund = (app, swapID) =>
+export const refund = (app, swapID): Promise<boolean> =>
   new Promise(async resolve => {
     debug('swap.core:simple:swap')('Swap id =', swapID)
     const swap = get(app, swapID)

@@ -1,7 +1,6 @@
-import React, { Fragment } from "react";
+import React from "react";
 
 import { RouteComponentProps, withRouter, HashRouter } from "react-router-dom";
-import PropTypes from "prop-types";
 import actions from "redux/actions";
 import { connect } from "redaction";
 import moment from "moment-with-locales-es6";
@@ -10,7 +9,6 @@ import {
   localStorage,
   // firebase
 } from "helpers";
-import { isMobile } from "react-device-detect";
 
 import CSSModules from "react-css-modules";
 import styles from "./App.scss";
@@ -58,7 +56,6 @@ const metamaskNetworks = defineMessages({
 
 
 
-@injectIntl
 @withRouter
 @connect(({ currencies: { items: currencies }, modals, ui: { dashboardModalsAllowed } }) => ({
   currencies,
@@ -76,10 +73,6 @@ class App extends React.Component<RouteComponentProps<any>, any> {
 
   prvMultiTab: any
   localStorageListener: any
-
-  /*static propTypes = {
-    children: PropTypes.element.isRequired
-  };*/
 
   constructor(props) {
     super(props);
@@ -272,38 +265,23 @@ class App extends React.Component<RouteComponentProps<any>, any> {
 
     this.preventMultiTabs(false)
 
-    // @ToDo - may be can be deleted. Temp fix for our client, when he update token list
-    if (window.origin === `https://wallet.b` + `itpli` + `cit` + `y.com`) {
-      const tokenListUpdated = localStorage.getItem('widget_tokenupdated')
-      if (!tokenListUpdated) {
-        localStorage.setItem('widget_tokenupdated', true)
-        Object.keys(config.erc20).forEach((tokenCode) => {
-          if ((tokenCode !== `bitpl`)
-            && (tokenCode !== `usdt`)
-          ) {
-            console.log('Hide', tokenCode)
-            actions.core.markCoinAsHidden(tokenCode.toUpperCase())
-          }
-        })
+    // Default Farm init options
+    if (config.entry === 'testnet') {
+      window.farm = {
+        farmAddress: '0xa21FC7e1E31269b3AA0E17fF1F1a23C035cE207c',
+        stakingAddress: '0xF6fF95D53E08c9660dC7820fD5A775484f77183A', // Yeenus
+        rewardsAddress: '0x101848D5C5bBca18E6b4431eEdF6B95E9ADF82FA', // Weenus
       }
     }
 
     const isWalletCreate = localStorage.getItem(constants.localStorage.isWalletCreate)
 
     if (!isWalletCreate) {
-      if (config && config.isWidget && false) {
-        currencies.forEach(({ name }) => {
-          if (name !== "BTC" && !config.erc20[name.toLowerCase()]) {
-            actions.core.markCoinAsHidden(name)
-          }
-        })
-      } else {
-        currencies.forEach(({ name }) => {
-          if (name !== "BTC") {
-            actions.core.markCoinAsHidden(name)
-          }
-        })
-      }
+      currencies.forEach(({ name }) => {
+        if (name !== "BTC") {
+          actions.core.markCoinAsHidden(name)
+        }
+      })
     }
 
     // firebase.initialize();
@@ -314,17 +292,17 @@ class App extends React.Component<RouteComponentProps<any>, any> {
     this.checkIfDashboardModalsAllowed()
     window.actions = actions;
 
-    window.onerror = error => {
-      // actions.analytics.errorEvent(error)
+    window.onerror = (error) => {
+      console.error('App error: ', error)
     };
 
     try {
       const db = indexedDB.open("test");
       db.onerror = (e) => {
-        console.log('db error', e)
+        console.error('db error', e)
       };
     } catch (e) {
-      console.log('db error', e)
+      console.error('db error', e)
     }
 
     actions.user.sign();
@@ -452,4 +430,4 @@ class App extends React.Component<RouteComponentProps<any>, any> {
   }
 }
 
-export default withRouter(App)
+export default withRouter(injectIntl(App))

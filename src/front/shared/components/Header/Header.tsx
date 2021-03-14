@@ -41,7 +41,6 @@ import wpLogoutModal from 'helpers/wpLogoutModal'
 const isWidgetBuild = config && config.isWidget
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
-@injectIntl
 @withRouter
 @connect({
   feeds: 'feeds.items',
@@ -53,7 +52,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
   hiddenCoinsList: 'core.hiddenCoinsList',
 })
 @CSSModules(styles, { allowMultiple: true })
-export default class Header extends Component<any, any> {
+class Header extends Component<any, any> {
   static propTypes = {
     history: PropTypes.object.isRequired,
   }
@@ -518,3 +517,5 @@ export default class Header extends Component<any, any> {
     )
   }
 }
+
+export default injectIntl(Header)

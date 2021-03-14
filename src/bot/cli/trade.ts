@@ -1,5 +1,6 @@
 import BigNumber from 'bignumber.js'
 
+
 const PAIR_BID = true
 const PAIR_ASK = false
 
@@ -93,9 +94,11 @@ const parsePair = (str) => {
 const createOrder = (ticker, type, price, amount) => {
   // console.log('create order', ticker, type, price, amount)
   const { MAIN, BASE } = parsePair(ticker)
-  if (!MAIN || !BASE) throw new Error(`CreateOrderError: No currency: ${MAIN}-${BASE}`)
+  if (!MAIN || !BASE)
+    throw new Error(`CreateOrderError: No currency: ${MAIN}-${BASE}`)
 
-  if (![PAIR_ASK, PAIR_BID].includes(type)) throw new Error(`CreateOrderError: Wrong order type: ${type}`)
+  if (![PAIR_ASK, PAIR_BID].includes(type))
+    throw new Error(`CreateOrderError: Wrong order type: ${type}`)
 
   const base = { currency: BASE, amount: price * amount }
   const main = { currency: MAIN, amount: amount }

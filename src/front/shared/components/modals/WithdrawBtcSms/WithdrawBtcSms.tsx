@@ -34,12 +34,11 @@ import MnemonicInput from 'components/forms/MnemonicInput/MnemonicInput'
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
-@injectIntl
 @connect(({ ui: { dashboardModalsAllowed } }) => ({
   dashboardView: dashboardModalsAllowed,
 }))
 @cssModules({ ...styles, ...ownStyle }, { allowMultiple: true })
-export default class WithdrawModalMultisig extends React.Component<any, any> {
+class WithdrawModalMultisig extends React.Component<any, any> {
   props: any
 
   static propTypes = {
@@ -522,3 +521,5 @@ export default class WithdrawModalMultisig extends React.Component<any, any> {
     )
   }
 }
+
+export default injectIntl(WithdrawModalMultisig)

@@ -194,7 +194,13 @@ class AtomicAB2UTXO extends Flow {
 
   //tryRefund(): Promise<any> {}
 
-  _checkSwapAlreadyExists() {}
+  _checkSwapAlreadyExists() {
+    // mock
+    // todo: implement
+    return new Promise((resolve, reject) => {
+      resolve(false)
+    })
+  }
 
   async sign() {
     const swapExists = await this._checkSwapAlreadyExists()

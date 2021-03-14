@@ -1,0 +1,365 @@
+#WEB3_CONNECT_MODAL_ID {
+  position: relative;
+  z-index: 1000;
+}
+
+.install-metamask {
+  text-align: center;
+}
+
+.install-metamask img {
+  width: 90px;
+  margin-bottom: 20px;
+}
+
+.farmfactory-root {
+  position: relative;
+  display: inline-block;
+  background-color: #fff;
+  font-family: 'Roboto', sans-serif;
+  text-align: left;
+  overflow: hidden;
+  box-sizing: border-box;
+  box-shadow: rgba(0,0,0, 0.2) 0 4px 24px;
+}
+
+@media (max-width: 567px) {
+
+  .farmfactory-root {
+    width: 100%;
+    padding: 40px 46px 40px 40px;
+    border-radius: 20px;
+  }
+}
+
+@media (min-width: 567px) {
+
+  .farmfactory-root {
+    min-width: 410px;
+    padding: 48px 54px 48px 48px;
+    border-radius: 24px;
+  }
+}
+
+.farmfactory-widget {
+  transition: all 0.3s ease;
+}
+
+.farmfactory-widget-error {
+  font-size: 22px;
+}
+
+.farmfactory-line {
+  margin-top: 40px;
+}
+
+.farmfactory-line:first-child {
+  margin-top: 0;
+}
+
+.farmfactory-row {
+  display: flex;
+  align-items: center;
+}
+
+.farmfactory-widget .farmfactory-title {
+  line-height: 100%;
+  color: #828282;
+}
+
+@media (max-width: 567px) {
+
+  .farmfactory-widget .farmfactory-title {
+    font-size: 20px;
+  }
+}
+
+@media (min-width: 567px) {
+
+  .farmfactory-widget .farmfactory-title {
+    font-size: 24px;
+  }
+}
+
+.farmfactory-buttons {
+  display: flex;
+  align-items: center;
+  margin-left: 24px;
+}
+
+.farmfactory-button {
+  display: flex;
+  align-items: center;
+  height: 24px;
+  padding: 0 12px;
+  margin-left: 8px;
+  border: 0;
+  outline: none;
+  cursor: pointer;
+  background: none;
+  background-color: #1968de;
+  text-transform: uppercase;
+  line-height: 24px;
+  font-size: 12px;
+  color: #fff;
+  user-select: none;
+  border-radius: 12px;
+  transition: background-color 0.23s ease;
+}
+
+.farmfactory-button:hover {
+  background-color: #104ca7;
+}
+
+.farmfactory-button:first-child {
+  margin-left: 0;
+}
+
+.farmfactory-button.disabled {
+  cursor: not-allowed;
+  background-color: #cacaca !important;
+  color: #fff !important;
+}
+
+.farmfactory-value {
+  font-weight: 700;
+  line-height: 100%;
+  color: #151515;
+}
+
+@media (max-width: 567px) {
+
+  .farmfactory-value {
+    margin-top: 16px;
+    font-size: 40px;
+  }
+}
+
+@media (min-width: 567px) {
+
+  .farmfactory-value {
+    margin-top: 12px;
+    font-size: 48px;
+  }
+}
+
+
+.farmfactory-form {
+  position: absolute;
+  top: 110%;
+  left: 48px;
+  right: 48px;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  transition: all 0.3s ease;
+}
+
+.farmfactory-form .farmfactory-title {
+  margin-bottom: 16px;
+  line-height: 100%;
+  font-size: 18px;
+  color: #828282;
+}
+
+.farmfactory-form .farmfactory-input {
+  width: 100%;
+  height: 56px;
+  background: #fff;
+  border: 1px solid #000;
+  padding: 0 32px;
+  outline: none;
+  line-height: 100%;
+  font-size: 24px;
+  font-weight: 700;
+  box-sizing: border-box;
+  border-radius: 28px;
+}
+
+.farmfactory-form .farmfactory-row {
+  justify-content: flex-end;
+  margin-top: 32px;
+}
+
+.farmfactory-form .farmfactory-button {
+  height: 40px;
+  padding: 0 20px;
+  line-height: 40px;
+  font-size: 14px;
+  border-radius: 20px;
+}
+
+
+.farmfactory-connect-visible .farmfactory-widget,
+.farmfactory-deposit-visible .farmfactory-widget,
+.farmfactory-withdraw-visible .farmfactory-widget {
+  transform: translate3d(0, -110%, 0);
+  opacity: 0;
+}
+
+.farmfactory-connect-visible .farmfactory-connect,
+.farmfactory-deposit-visible .farmfactory-deposit,
+.farmfactory-withdraw-visible .farmfactory-withdraw {
+  top: 0;
+}
+
+
+/* Modal */
+
+.farmfactory-overlay {
+  background: rgba(0,0,0, 0.6);
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 999999999;
+}
+
+.farmfactory-modal {
+  padding: 50px 40px 40px;
+  min-width: 360px;
+  display: inline-block;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  border-radius: 8px;
+  z-index: 5;
+  background: #fff;
+  box-sizing: border-box;
+}
+
+.farmfactory-modal .farmfactory-closeButton {
+  cursor: pointer;
+  vertical-align: top;
+  overflow: hidden;
+  background: none;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 24px;
+  height: 24px;
+}
+
+.farmfactory-modal .farmfactory-closeButton svg {
+  width: 100%;
+  height: 100%;
+}
+
+.farmfactory-modal .farmfactory-title {
+  text-align: center;
+  font-size: 18px;
+  line-height: 155%;
+  padding-bottom: 24px;
+  color: #000;
+}
+
+.farmfactory-modal .farmfactory-inner {
+  text-align: center;
+}
+
+.farmfactory-modal .farmfactory-inner .farmfactory-svgLogo {
+  width: 240px;
+}
+
+.farmfactory-modal input {
+  height: 36px;
+  padding: 0 16px;
+  font-size: 14px;
+  line-height: 14px;
+  background: #FFFFFF;
+  border: 1px solid #C2C2C2;
+  box-sizing: border-box;
+  border-radius: 4px;
+}
+
+.farmfactory-modal .farmfactory-footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 40px;
+}
+
+.farmfactory-modal .farmfactory-footer .farmfactory-button {
+  height: 32px;
+  padding: 0 16px;
+  margin: 0 30px;
+  border-radius: 16px;
+}
+
+.farmfactory-modal .farmfactory-balanceTitle {
+  font-size: 14px;
+  line-height: 155%;
+  color: #858585;
+}
+
+.farmfactory-modal .farmfactory-balanceValue {
+  margin-left: 10px;
+  font-size: 14px;
+  line-height: 155%;
+  font-weight: 600;
+  color: #000;
+}
+
+.farmfactory-modal input {
+  margin-top: 32px;
+}
+
+
+/* Loader */
+
+.farmfactory-loader {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  width: 20px;
+  height: 16px;
+  margin-left: 10px;
+}
+
+.farmfactory-loader div {
+  position: absolute;
+  top: 0;
+  width: 4px;
+  height: 100%;
+  background: #fff;
+  animation: farmfactory-loader 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+}
+
+.farmfactory-loader.black div {
+  background: #000;
+}
+
+.farmfactory-loader div:nth-child(1) {
+  left: 0;
+  animation-delay: -0.24s;
+}
+
+.farmfactory-loader div:nth-child(2) {
+  left: 8px;
+  animation-delay: -0.12s;
+}
+
+.farmfactory-loader div:nth-child(3) {
+  left: 16px;
+  animation-delay: 0s;
+}
+
+@keyframes farmfactory-loader {
+  0% {
+    top: -6px;
+    height: 28px;
+  }
+  50%, 100% {
+    top: 0;
+    height: 16px;
+  }
+}

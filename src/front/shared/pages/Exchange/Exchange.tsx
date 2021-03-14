@@ -19,7 +19,6 @@ import Promo from './Promo/Promo'
 import Quote from './Quote'
 import HowItWorks from './HowItWorks/HowItWorks'
 import VideoAndFeatures from './VideoAndFeatures/VideoAndFeatures'
-import Tooltip from 'components/ui/Tooltip/Tooltip'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
@@ -151,7 +150,6 @@ const subTitle = (sell, sellTicker, buy, buyTicker) => (
 const isWidgetBuild = config && config.isWidget
 const bannedPeers = {} // rejected swap peers
 
-@injectIntl
 @connect(
   ({
     currencies,
@@ -185,7 +183,7 @@ const bannedPeers = {} // rejected swap peers
   })
 )
 @CSSModules(styles, { allowMultiple: true })
-export default class Exchange extends Component<any, any> {
+class Exchange extends Component<any, any> {
   props: ExchangeProps
   state: ExchangeState
 
@@ -256,7 +254,6 @@ export default class Exchange extends Component<any, any> {
     let getCurrency = buy || (!isWidgetBuild ? 'eth' : config.erc20token)
 
     const exchangeDataStr = localStorage.getItem(constants.localStorage.exchangeSettings)
-    console.log('EXCHANGE DATA STR FROM CONSTRUCTOR: ', exchangeDataStr)
     const exchangeSettings = exchangeDataStr && JSON.parse(exchangeDataStr)
     // to get data from last session
     if (exchangeSettings && exchangeSettings.currency) {
@@ -425,9 +422,18 @@ export default class Exchange extends Component<any, any> {
           isFullLoadingComplite: true,
         })
       }
-    }, 60 * 1000)
+    }, 60 * 1000) // 1 minute
+
+    this.getInfoAboutCurrency()
     this.fetchPairFeesAndBalances()
     metamask.web3connect.on('updated', this.fetchPairFeesAndBalances.bind(this))
+  }
+
+  getInfoAboutCurrency = async () => {
+    const { currencies } = this.props
+    const currencyNames = currencies.map(({ name }) => name)
+
+    await actions.user.getInfoAboutCurrency(currencyNames)
   }
 
   getBalance(currency) {
@@ -1307,7 +1313,6 @@ export default class Exchange extends Component<any, any> {
       activeFiat,
       currencies,
       addSelectedItems,
-      intl: { locale },
       match: {
         params: { linkedOrderId },
       },
@@ -1335,7 +1340,6 @@ export default class Exchange extends Component<any, any> {
       redirectToSwap,
       isWaitForPeerAnswer,
       directionOrders,
-      filteredOrders,
       desclineOrders,
       isDeclinedOffer,
       pairFees,
@@ -1403,17 +1407,11 @@ export default class Exchange extends Component<any, any> {
             .toNumber()
         : 0
 
-    const currentCurrency = this.getCoinData(sellCoin)
-
     const oneCryptoCost = maxBuyAmount.isLessThanOrEqualTo(0)
       ? new BigNumber(0)
       : new BigNumber(goodRate)
 
     const linked = Link.all(this, 'haveAmount', 'getAmount')
-
-    const isWidgetLink =
-      this.props.location.pathname.includes('/exchange') && this.props.location.hash === '#widget'
-    const isWidget = isWidgetBuild || isWidgetLink
 
     const availableAmount =
       pairFees &&
@@ -1806,8 +1804,6 @@ export default class Exchange extends Component<any, any> {
         </div>
         {config && config.showHowItsWork && (
           <Fragment>
-            {/*
-            //@ts-ignore */}
             <HowItWorks />
             <VideoAndFeatures />
             <Quote />
@@ -1817,3 +1813,5 @@ export default class Exchange extends Component<any, any> {
     )
   }
 }
+
+export default injectIntl(Exchange)

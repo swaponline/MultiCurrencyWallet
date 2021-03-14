@@ -84,11 +84,9 @@ const filterOrders = (orders, filter) => orders
   currencies,
   decline: rememberedOrders.savedOrders,
 }))
-//@ts-ignore
 @withRouter
-@injectIntl
 @cssModules(styles, { allowMultiple: true })
-export default class OrderBook extends Component {
+class OrderBook extends Component {
 
   props: OrderBookProps
   state: OrderBookState
@@ -393,3 +391,5 @@ export default class OrderBook extends Component {
     )
   }
 }
+
+export default injectIntl(OrderBook)

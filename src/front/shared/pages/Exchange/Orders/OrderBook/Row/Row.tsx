@@ -60,7 +60,7 @@ type RowState = {
   isFetching: boolean
   windowWidth: number
 }
-@injectIntl
+
 @connect(({
   pubsubRoom: { peer },
   user,
@@ -70,7 +70,7 @@ type RowState = {
 }))
 
 @cssModules(styles, { allowMultiple: true })
-export default class Row extends Component {
+class Row extends Component {
   _mounted = false
 
   props: RowProps
@@ -426,7 +426,7 @@ export default class Row extends Component {
       <tr
         id={id}
         styleName={`
-          ${peer === ownerPeer ? 'mobileRowRemove' : 'mobileRowStart'}
+          ${'mobileRow'}
           ${isDark ? 'rowDark' : ''}
           ${id === linkedOrderId ? 'linkedOrderHighlight' : ''}
         `}
@@ -448,7 +448,7 @@ export default class Row extends Component {
               </span>
             </div>
             <div>
-              <i style={{ margin: '0 0.8em' }} className="fas fa-exchange-alt" />
+              <i styleName='arrowsIcon' className="fas fa-exchange-alt" />
             </div>
             <div styleName="tdContainer-2">
               <span styleName="secondType">
@@ -514,3 +514,5 @@ export default class Row extends Component {
     )
   }
 }
+
+export default injectIntl(Row)

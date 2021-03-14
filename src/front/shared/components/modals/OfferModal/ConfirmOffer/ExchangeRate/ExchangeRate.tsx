@@ -16,9 +16,8 @@ const title = defineMessages({
   },
 })
 
-@injectIntl
 @CSSModules(styles)
-export default class ExchangeRate extends PureComponent<any, any> {
+class ExchangeRate extends PureComponent<any, any> {
   render() {
     const { sellCurrency, buyCurrency, exchangeRate, intl } = this.props
     return (
@@ -34,3 +33,5 @@ export default class ExchangeRate extends PureComponent<any, any> {
     )
   }
 }
+
+export default injectIntl(ExchangeRate)

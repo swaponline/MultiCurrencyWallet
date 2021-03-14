@@ -11,9 +11,18 @@
     margin-left: 0.5em;
   }
 }
+// mobile arrow between send and get currency
+.arrowsIcon {
+  margin: 0 0.8em;
+  color: $l-color;
+}
 
 .rowDark {
   .rowAmount {
+    color: $d-color;
+  }
+
+  .arrowsIcon {
     color: $d-color;
   }
 }
@@ -31,23 +40,25 @@
   width: 25%;
 }
 
-.mobileRowRemove,
-.mobileRowStart {
+.mobileRow {
   .firstType,
   .secondType {
     color: $indicating-color;
     display: block;
   }
+
   .tdContainer-1,
   .tdContainer-2,
   .tdContainer-3 {
     position: relative;
   }
+
   .startButton {
     width: auto;
     height: auto;
     margin-left: 0.6em;
   }
+
   .bigContainer {
     font-size: 14px;
     display: flex;
@@ -57,8 +68,7 @@
 }
 
 @media screen and (max-width: 400px) {
-  .mobileRowRemove,
-  .mobileRowStart {
+  .mobileRow {
     .bigContainer {
       font-size: 12px;
     }
