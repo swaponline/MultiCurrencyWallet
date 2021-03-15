@@ -6,10 +6,18 @@ import {
 import { BigNumber } from 'bignumber.js'
 import helpers from 'helpers'
 
+type CoinFee = {
+  coin: string
+  fee: number
+  isUTXO: boolean
+}
 
 const feeCache = {}
 
-const fetchCoinFee = (coin) => {
+const fetchCoinFee = (args): Promise<CoinFee> => {
+  const { coinName } = args
+  let coin = coinName
+
   return new Promise(async (feeResolved) => {
     if (feeCache[coin]) {
       feeResolved(feeCache[coin])
@@ -17,8 +25,6 @@ const fetchCoinFee = (coin) => {
     }
 
     const coinData = COIN_DATA[coin]
-
-    let coinFeeData = false
     let dontCache = false
 
     const doResolve = (coinFeeData) => {
@@ -82,21 +88,36 @@ const fetchCoinFee = (coin) => {
           break;
       }
     } else {
-      console.warn(`getPairFees->fetchCoinFee - Unknown coin ${coin.toUpperCase()}`)
+      console.warn(`Helpers > fetchCoinFee - Unknown coin ${coin.toUpperCase()}`)
     }
   })
 }
 
-export const getPairFees = (sellCoin, buyCoin) => {
-  return new Promise(async (feeResolved) => {
-    const sell = await fetchCoinFee(sellCoin.toUpperCase())
-    const buy = await fetchCoinFee(buyCoin.toUpperCase())
+type PairFees = {
+  sell: CoinFee
+  buy: CoinFee
+  have: CoinFee
+  get: CoinFee
+  byCoins: {
+    [key: string]: CoinFee
+  }
+}
 
-    const byCoins = {}
-    //@ts-ignore: Property 'coin' does not exist on type 'unknown'
-    byCoins[buy.coin] = buy
-    //@ts-ignore: Property 'coin' does not exist on type 'unknown'
-    byCoins[sell.coin] = sell
+export const getPairFees = (args): Promise<PairFees> => {
+  const { sellCoin, buyCoin } = args
+
+  return new Promise(async (feeResolved) => {
+    const sell = await fetchCoinFee({
+      sellCoin: sellCoin.toUpperCase(),
+    })
+    const buy = await fetchCoinFee({
+      buyCoin: buyCoin.toUpperCase(),
+    })
+    
+    const byCoins = {
+      [buy.coin]: buy,
+      [sell.coin]: sell
+    }
 
     feeResolved({
       sell,

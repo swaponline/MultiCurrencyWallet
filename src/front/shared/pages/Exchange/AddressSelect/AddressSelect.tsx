@@ -206,9 +206,9 @@ class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
   }
 
   handleBlurAddress() {
-    this.setState(() => ({
+    this.setState({
       walletAddressFocused: false,
-    }))
+    })
 
     this.applyAddress({
       type: AddressType.Custom,

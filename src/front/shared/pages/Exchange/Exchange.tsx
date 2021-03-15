@@ -448,7 +448,7 @@ class Exchange extends PureComponent<any, any> {
       () => {
         if (!this._mounted) return
 
-        getPairFees(sellCurrency, buyCurrency).then(async (pairFees: IUniversalObj) => {
+        getPairFees({ sellCurrency, buyCurrency }).then(async (pairFees: IUniversalObj) => {
           const buyExRate = await this.fetchFiatExRate(pairFees.buy.coin)
           const sellExRate = await this.fetchFiatExRate(pairFees.sell.coin)
 
