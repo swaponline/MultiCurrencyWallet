@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import React, { PureComponent, Fragment } from 'react'
 
 import Link from 'local_modules/sw-valuelink'
 
@@ -59,7 +59,6 @@ type ExchangeProps = {
     title: string
     value: string
   }[]
-  swapHistory: {} // what in the object?
   addSelectedItems: [] // what in the array?
   decline: [] // what in the array?
 }
@@ -74,7 +73,6 @@ type ExchangeState = {
   haveAmount: number
   goodRate: number
   maxAmount: number
-  dynamicFee: number
   haveFiat: number
   getFiat: number
   maxBuyAmount: BigNumber
@@ -88,7 +86,6 @@ type ExchangeState = {
 
   extendedControls: boolean
   isLowAmount: boolean
-  isToken: boolean
   isNonOffers: boolean
   isShowBalance: boolean
   isWaitForPeerAnswer: boolean
@@ -154,21 +151,16 @@ const bannedPeers = {} // rejected swap peers
   ({
     currencies,
     rememberedOrders,
-    history: { swapHistory },
-    core: { orders, hiddenCoinsList },
+    core: { orders },
     user: { ethData, btcData, ghostData, nextData, tokensData, activeFiat, ...rest },
   }) => ({
     currencies: isExchangeAllowed(currencies.partialItems),
     allCurrencyies: currencies.items,
     addSelectedItems: isExchangeAllowed(currencies.addPartialItems),
     orders: filterIsPartial(orders),
-    allOrders: orders,
     currenciesData: [ethData, btcData, ghostData, nextData],
     tokensData: [...Object.keys(tokensData).map((k) => tokensData[k])],
     decline: rememberedOrders.savedOrders,
-    hiddenCoinsList,
-    userEthAddress: ethData.address,
-    swapHistory,
     activeFiat,
     usersData: [
       ethData,
@@ -183,7 +175,7 @@ const bannedPeers = {} // rejected swap peers
   })
 )
 @CSSModules(styles, { allowMultiple: true })
-class Exchange extends Component<any, any> {
+class Exchange extends PureComponent<any, any> {  
   props: ExchangeProps
   state: ExchangeState
 
@@ -197,13 +189,14 @@ class Exchange extends Component<any, any> {
   promoContainer: Element
   fiatRates: { [key: string]: number }
   onRequestAnswer: (newOrder: IUniversalObj, isAccepted: boolean) => void
-  cacheDynamicFee: any
   scrollTrigger: any // undefined | ?
-  wallets: any // undefined | ?
 
-  static getDerivedStateFromProps({ orders }, { haveCurrency, getCurrency, isTurbo }) {
-    if (!Array.isArray(orders)) {
-      return
+  static getDerivedStateFromProps(props, state) {
+    const { orders } = props
+    const { haveCurrency, getCurrency, isTurbo } = state
+
+    if (!orders.length) {
+      return null
     }
 
     const directionOrders = orders.filter(order =>
@@ -273,8 +266,6 @@ class Exchange extends Component<any, any> {
     const getType = this.getDefaultWalletForCurrency(getCurrency.toUpperCase())
 
     this.state = {
-      isToken: false,
-      dynamicFee: 0,
       haveCurrency,
       haveType,
       getCurrency,
@@ -443,7 +434,10 @@ class Exchange extends Component<any, any> {
   }
 
   fetchPairFeesAndBalances() {
-    const { haveCurrency: sellCurrency, getCurrency: buyCurrency } = this.state
+    const { 
+      haveCurrency: sellCurrency, 
+      getCurrency: buyCurrency,
+    } = this.state
 
     if (!this._mounted) return
     this.setState(
@@ -454,7 +448,7 @@ class Exchange extends Component<any, any> {
       () => {
         if (!this._mounted) return
 
-        getPairFees(sellCurrency, buyCurrency).then(async (pairFees: { [key: string]: any }) => {
+        getPairFees(sellCurrency, buyCurrency).then(async (pairFees: IUniversalObj) => {
           const buyExRate = await this.fetchFiatExRate(pairFees.buy.coin)
           const sellExRate = await this.fetchFiatExRate(pairFees.sell.coin)
 
@@ -1506,6 +1500,7 @@ class Exchange extends Component<any, any> {
                 selectedType={haveType}
                 role={AddressRole.Send}
                 hasError={false}
+                placeholder="From address"
                 onChange={(addrData) => this.applyAddress(AddressRole.Send, addrData)}
               />
             </div>
@@ -1538,6 +1533,7 @@ class Exchange extends Component<any, any> {
                 currency={getCurrency}
                 selectedType={getType}
                 hasError={false}
+                placeholder="To address"
                 onChange={(addrData) => this.applyAddress(AddressRole.Receive, addrData)}
               />
             </div>
@@ -1607,7 +1603,7 @@ class Exchange extends Component<any, any> {
             )}
 
             {isDeclinedOffer && (
-              <p styleName="error link" onClick={() => this.goDeclimeFaq()}>
+              <p styleName="error link" onClick={this.goDeclimeFaq}>
                 {' '}
                 {/* eslint-disable-line */}
                 <FormattedMessage
@@ -1615,7 +1611,7 @@ class Exchange extends Component<any, any> {
                   defaultMessage="Request rejected, possibly you have not complete another swap {br}{link}"
                   values={{
                     link: (
-                      <a className="errorLink" role="button" onClick={() => this.goDeclimeFaq()}>
+                      <a className="errorLink" role="button" onClick={this.goDeclimeFaq}>
                         {' '}
                         {/* eslint-disable-line */}
                         <FormattedMessage

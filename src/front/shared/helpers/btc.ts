@@ -173,6 +173,14 @@ const calculateTxSize = async (options: IcalculateTxSizeOptions) => {
     */
   }
 
+  // FIXME:
+  console.log('BTC HELPERS > calculateTxSize ======================')
+  console.log('options: ', options)
+  console.log('defaultTxSize: ', defaultTxSize)
+  console.log('unspents: ', unspents)
+  console.log('txIn: ', txIn)
+  console.log('txSize: ', txSize)
+
   return txSize
 }
 

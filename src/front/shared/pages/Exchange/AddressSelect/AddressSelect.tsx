@@ -62,6 +62,32 @@ const langLabels = defineMessages({
   },
 })
 
+type AddressSelectProps = {
+  role: string
+  currency: string
+  selectedType?: string
+  placeholder?: string
+  hasError?: boolean
+  isDark: boolean
+  onChange: ({}) => void
+  history: IUniversalObj
+  intl: IUniversalObj
+  label: IUniversalObj 
+  hiddenCoinsList: string[]
+  allData: IUniversalObj[]
+}
+
+type AddressSelectState = {
+  address: string
+  currency: string
+  selectedType: string
+  metamaskAddress: string
+  walletAddressFocused: boolean
+  isMetamaskConnected: boolean
+  isScanActive: boolean
+  hasError: boolean
+}
+
 @withRouter
 @connect(
   ({ core: { hiddenCoinsList }, user: { btcData, ethData, ghostData, nextData, tokensData } }) => {
@@ -82,7 +108,7 @@ const langLabels = defineMessages({
   }
 )
 @cssModules(styles, { allowMultiple: true })
-class AddressSelect extends Component<any, any> {
+class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
   constructor(props) {
     super(props)
 
@@ -91,9 +117,9 @@ class AddressSelect extends Component<any, any> {
     this.state = {
       currency,
       hasError,
+      address: '',
       selectedType: selectedType || 'placeholder',
       walletAddressFocused: false,
-      customAddress: '',
       isMetamaskConnected: metamask.isConnected(),
       metamaskAddress: metamask.getAddress(),
       isScanActive: false,
@@ -108,13 +134,16 @@ class AddressSelect extends Component<any, any> {
     const { allData } = this.props
     const ticker = this.getTicker()
     let internalAddress
+    
     for (let i = 0; i < allData.length; i++) {
       const item = allData[i]
+      
       if (ticker === item.currency && item.address) {
         internalAddress = item.address
         break
       }
     }
+
     return internalAddress
   }
 
@@ -164,7 +193,6 @@ class AddressSelect extends Component<any, any> {
 
     const {
       currency: oldCurrency,
-      selectedType: oldSelectedType,
       hasError: oldHasError = false,
     } = this.state
 
@@ -173,25 +201,18 @@ class AddressSelect extends Component<any, any> {
         currency: newCurrency,
         hasError,
         selectedType,
-        customAddress: '',
       })
     }
   }
 
-  handleBlurAddress(value) {
-    this.setState({
+  handleBlurAddress() {
+    this.setState(() => ({
       walletAddressFocused: false,
-    })
-    // todo: validate value
-    /*
-    if (getCurrency === "btc") {
-      return util.typeforce.isCoinAddress.BTC(customWallet)
-    }
-    return util.typeforce.isCoinAddress.ETH(customWallet);
-    */
+    }))
+
     this.applyAddress({
       type: AddressType.Custom,
-      value,
+      value: this.state.address,
     })
   }
 
@@ -286,11 +307,6 @@ class AddressSelect extends Component<any, any> {
           value = metamask.getAddress()
         }
 
-        /*if (selectedType === AddressType.Custom) {
-        // apply address input blur / qrScan
-        return
-      }*/
-
         if (selectedType === AddressType.Metamask && !metamask.isConnected()) {
           this.handleConnectMetamask()
         } else {
@@ -303,9 +319,9 @@ class AddressSelect extends Component<any, any> {
     )
   }
 
-  applyAddress(address) {
+  applyAddress(addressObj) {
     const { onChange, currency } = this.props
-    const { type, value } = address
+    const { type, value } = addressObj
 
     if (typeof onChange !== 'function') {
       return
@@ -319,7 +335,13 @@ class AddressSelect extends Component<any, any> {
   }
 
   render() {
-    const { currency, isDark, label, hiddenCoinsList, allData, role } = this.props
+    const {
+      currency,
+      isDark,
+      label,
+      role,
+      placeholder = 'Enter address',
+    } = this.props
 
     const {
       selectedType,
@@ -426,6 +448,8 @@ class AddressSelect extends Component<any, any> {
         : []),
     ]
 
+    const valueLink = Link.all(this, 'address')
+
     return (
       <div
         styleName={`addressSelect ${hasError ? 'addressSelect_error' : ''} ${
@@ -447,11 +471,9 @@ class AddressSelect extends Component<any, any> {
         {selectedType === AddressType.Metamask && metamask.isEnabled() && !isMetamaskConnected && (
           <div styleName="selectedInner connectWrapper">
             <Button
-              styleName="button"
               blue
-              onClick={() => {
-                this.handleConnectMetamask()
-              }}
+              styleName="button"
+              onClick={this.handleConnectMetamask}
             >
               <FormattedMessage {...langLabels.connectMetamask} />
             </Button>
@@ -468,10 +490,10 @@ class AddressSelect extends Component<any, any> {
                   }}
                   required
                   pattern="0-9a-zA-Z"
-                  onFocus={() => this.handleFocusAddress()}
-                  onBlur={(event) => this.handleBlurAddress(event.target.value)}
-                  placeholder="Enter address"
-                  valueLink={Link.all(this, '_')._} // required
+                  onFocus={this.handleFocusAddress}
+                  onBlur={this.handleBlurAddress}
+                  placeholder={placeholder}
+                  valueLink={valueLink.address}
                   openScan={this.toggleScan}
                   qr={isMobile}
                 />
