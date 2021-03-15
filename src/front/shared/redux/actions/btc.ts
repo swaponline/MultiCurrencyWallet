@@ -439,6 +439,9 @@ const addressIsCorrect = (address) => {
 
 const send = ({ from, to, amount, feeValue = null, speed }) => {
   console.log('>>> send', from, to, amount, feeValue, speed)
+  if(feeValue) {
+    feeValue = feeValue.multipliedBy(1e8).toNumber()
+  }
   return new Promise(async (ready, reject) => {
     try {
       let privateKey = null
@@ -470,9 +473,7 @@ const send = ({ from, to, amount, feeValue = null, speed }) => {
       feeFromAmount = feeFromAmount.toNumber()
 
       try {
-        const SATOSHI_TO_BITCOIN_RATIO = 1e-8; // 1 BTC -> 100 000 000 satoshi
-        feeValue = feeValue.div(1024).dp(0, BigNumber.ROUND_HALF_EVEN).multipliedBy(SATOSHI_TO_BITCOIN_RATIO).toNumber()
-          || await btc.estimateFeeValue({ inSatoshis: true, speed, amount})
+        feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed, amount})
       } catch (eFee) {
         reject({ message: `Fail estimate fee ` + eFee.message })
         return
@@ -485,8 +486,10 @@ const send = ({ from, to, amount, feeValue = null, speed }) => {
         reject({ message: `Fail get unspents `+ eUnspents.message})
         return
       }
+      const toAmount = amount
+      amount = new BigNumber(amount).multipliedBy(1e8).plus(feeValue).plus(feeFromAmount).multipliedBy(1e-8).toNumber()
       unspents = await prepareUnspents({ unspents, amount })
-      const fundValue = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
+      const fundValue = new BigNumber(String(toAmount)).multipliedBy(1e8).integerValue().toNumber()
       const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
       const residue = totalUnspent - fundValue - feeValue - feeFromAmount
       const psbt = new bitcoin.Psbt({ network: btc.network })
