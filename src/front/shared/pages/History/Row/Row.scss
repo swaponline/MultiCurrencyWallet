@@ -244,7 +244,7 @@ tr.historyRow {
   min-height: 64px;
   position: relative;
   background: $l-background-elements;
-  border: 1px solid rgba(142, 154, 163, 0.16) !important;
+  border: 1px solid $inactive-border-color !important;
   box-shadow: 0px 2px 12px rgba(142, 154, 163, 0.08);
   border-radius: 4px;
   display: flex;
