@@ -32,10 +32,6 @@
     ]
   },
   {
-    "id": "createWalletLoaderTip",
-    "message": "Creando billetera... Por favor espere."
-  },
-  {
     "id": "avatar24",
     "message": "Este es tu gravatar (personal), es único para cada usuario. El numero corresponde a tu clasificación dentro del sistema (incrementa con el número de intercambios exitosos)",
     "files": [
@@ -85,22 +81,6 @@
     ]
   },
   {
-    "id": "ADDoffer22",
-    "message": "Comienza el Swap real"
-  },
-  {
-    "id": "ADDoffer2218",
-    "message": "Mainnet"
-  },
-  {
-    "id": "ADDoffer29",
-    "message": "Regístrate (obtiene un bonus de 10$)"
-  },
-  {
-    "id": "ADDoffer33",
-    "message": "Suscríbase a las noticias GhostX"
-  },
-  {
     "id": "question15",
     "message": "Saber mas sobre nosotros",
     "files": [
@@ -108,31 +88,11 @@
     ]
   },
   {
-    "id": "QUESTION15",
-    "message": "Ir a la página del feed"
-  },
-  {
     "id": "transactionLink28",
     "message": "Transacción: ",
     "files": [
       "src/front/shared/components/Href/TransactionLink.tsx"
     ]
-  },
-  {
-    "id": "KeyActionsPanel43",
-    "message": "Salir"
-  },
-  {
-    "id": "KeyActionsPanel46",
-    "message": "Mostrar mis claves"
-  },
-  {
-    "id": "KeyActionsPanel49",
-    "message": "Importar claves"
-  },
-  {
-    "id": "KeyActionsPanel53",
-    "message": "Motrar más monedas"
   },
   {
     "id": "Loader21",
@@ -184,42 +144,6 @@
     ]
   },
   {
-    "id": "ImportKeys107",
-    "message": "Este procedimiento reescribirá tu clave privada. Si no estas seguro, recomendamos presionar cancelar"
-  },
-  {
-    "id": "ImportKeys110",
-    "message": "Por favor ingrese su clave privada de ETH"
-  },
-  {
-    "id": "ImportKeys120",
-    "message": "Por favor ingrese su clave privada de BTC en formato WIF"
-  },
-  {
-    "id": "ImportKeys130",
-    "message": "Confirmar"
-  },
-  {
-    "id": "ImportKeys133",
-    "message": "Cancelar"
-  },
-  {
-    "id": "Group14",
-    "message": "Importar"
-  },
-  {
-    "id": "Select10",
-    "message": "Cantidad disponible para vender"
-  },
-  {
-    "id": "Select15",
-    "message": "Vender "
-  },
-  {
-    "id": "Select24",
-    "message": "TODO"
-  },
-  {
     "id": "ConfirmOffer69",
     "message": "Atrás",
     "files": [
@@ -239,10 +163,6 @@
     "files": [
       "src/front/shared/components/modals/OfferModal/ConfirmOffer/ExchangeRate/ExchangeRate.tsx"
     ]
-  },
-  {
-    "id": "Feld82",
-    "message": "CLAVE PRIVADA INVALIDA! Debes ingresar valor correcto! Intenta nuevamente! "
   },
   {
     "id": "SaveKeysModal",
@@ -278,10 +198,6 @@
     ]
   },
   {
-    "id": "Withdrow113",
-    "message": "Su saldo: "
-  },
-  {
     "id": "Withdrow559",
     "message": "Transferir desde",
     "files": [
@@ -297,14 +213,6 @@
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
     ]
-  },
-  {
-    "id": "Withdraw218",
-    "message": "Error al retirar"
-  },
-  {
-    "id": "Withdraw232",
-    "message": "No hay suficiente confirmación en la última transacción. Intente mas tarde"
   },
   {
     "id": "PreventMultiTabs",
@@ -335,78 +243,6 @@
     ]
   },
   {
-    "id": "SwapProgress105",
-    "message": "Comprobando saldo.. "
-  },
-  {
-    "id": "SwapProgress111",
-    "message": "Depositando BTC al contrato. \n Puede demorar unos minutos"
-  },
-  {
-    "id": "SwapProgress117",
-    "message": " Sus BTC se están depositando. Es posible se requiera confirmación de la red bitcoin. Esperando que otro participante deposite ETH.(Es posible se requiera confirmación de la red bitcoin)"
-  },
-  {
-    "id": "SwapProgress123",
-    "message": "Contrato de ETH ha sido creado y cargado. Retirando ETH. "
-  },
-  {
-    "id": "SwapProgress129",
-    "message": "ETH ha sido transferdo a su billetera. Revise su saldo. "
-  },
-  {
-    "id": "SwapProgress135",
-    "message": "Gracias por usar GhostX!"
-  },
-  {
-    "id": "SwapProgress157",
-    "message": "ProgresoSwap"
-  },
-  {
-    "id": "SwapProgress32",
-    "message": "Por favor espere. Confirmación procesando"
-  },
-  {
-    "id": "SwapProgress38",
-    "message": "Esperando creación de clave privada por parte del propietario de BTC, crear BTC Script y cargar"
-  },
-  {
-    "id": "SwapProgress44",
-    "message": "Bitcoin Script ha sido creado y cargado. Por favor revise la información debajo"
-  },
-  {
-    "id": "SwapProgress50",
-    "message": "Comprobando saldo.. "
-  },
-  {
-    "id": "SwapProgress56",
-    "message": "Creando contrato de Ethereum. \n Por favor espere, puede demorar unos minutos"
-  },
-  {
-    "id": "SwapProgress62",
-    "message": "Esperando que el propietario de BTC agregue la clave secreta al contacto de ETH"
-  },
-  {
-    "id": "SwapProgress68",
-    "message": "BTC fue transferida a su billetera. Revise el saldo. "
-  },
-  {
-    "id": "SwapProgress74",
-    "message": "Gracias por usar GhostX!"
-  },
-  {
-    "id": "SwapProgress80",
-    "message": "Gracias por usar GhostX!"
-  },
-  {
-    "id": "SwapProgress93",
-    "message": "El creador de pedido está desconectado. La solicitud es valida por 30 min "
-  },
-  {
-    "id": "SwapProgress99",
-    "message": "Creando clave secreta"
-  },
-  {
     "id": "Tooltip11",
     "message": "? ",
     "files": [
@@ -419,14 +255,6 @@
     "files": [
       "src/front/shared/pages/Currency/Currency.tsx"
     ]
-  },
-  {
-    "id": "CurrencyTitleSeo1",
-    "message": "{fullName} ({tickerName}) Precio, Descripción & Tasa de Intercambio. Guardar & Intercambiar {fullName} ({tickerName}) Anónimamente en GhostX."
-  },
-  {
-    "id": "CurrencyMetaDescrTag1",
-    "message": "Averigua el precio actual de {fullName}, Su nombre ticker es ({tickerName}). GhostX es la mejor manera de almacenar de forma segura su criptomoneda"
   },
   {
     "id": "CurrencyH1Seo1",
@@ -443,35 +271,11 @@
     ]
   },
   {
-    "id": "CurrencyWallet104",
-    "message": "Intercambiar"
-  },
-  {
-    "id": "CurrencyWallet423",
-    "message": "Comprar Token"
-  },
-  {
-    "id": "CurrencyWallet105",
-    "message": "Activar cuenta"
-  },
-  {
-    "id": "CurrencyWallet110",
-    "message": " Historial de transacciones"
-  },
-  {
     "id": "Row35",
     "message": "Intercambiar",
     "files": [
       "src/front/shared/pages/Currency/Row/Row.tsx"
     ]
-  },
-  {
-    "id": "history68",
-    "message": "Todas las transacciones"
-  },
-  {
-    "id": "history72",
-    "message": "Todas las transacciones enviadas y recibidas"
   },
   {
     "id": "RowHistory76",
@@ -486,14 +290,6 @@
     "files": [
       "src/front/shared/pages/History/SwapsHistory/RowHistory/RowHistory.tsx"
     ]
-  },
-  {
-    "id": "RowHistory164",
-    "message": "Eliminados"
-  },
-  {
-    "id": "RowHistory95",
-    "message": "Enlace al intercambio"
   },
   {
     "id": "SwapHisrory21",
@@ -517,10 +313,6 @@
     ]
   },
   {
-    "id": "RowFeeds68",
-    "message": "Compartir"
-  },
-  {
     "id": "RowFeeds77",
     "message": "Rechazar",
     "files": [
@@ -535,31 +327,11 @@
     ]
   },
   {
-    "id": "RowFeeds87",
-    "message": "Eliminar"
-  },
-  {
-    "id": "RowMFeed49",
-    "message": "Tu recibes"
-  },
-  {
-    "id": "RowMFeed56",
-    "message": "Tu tienes"
-  },
-  {
-    "id": "RowMFeed69",
-    "message": "Copiados"
-  },
-  {
     "id": "Home153",
     "message": " Que es un Atomic Swap? ",
     "files": [
       "src/front/shared/pages/Exchange/Orders/Orders.tsx"
     ]
-  },
-  {
-    "id": "orders150",
-    "message": " Vender "
   },
   {
     "id": "Row148",
@@ -632,62 +404,6 @@
     ]
   },
   {
-    "id": "BtcToEthToken108",
-    "message": "Confirmar"
-  },
-  {
-    "id": "BtcToEthToken156",
-    "message": "3. Comprobando saldo.. "
-  },
-  {
-    "id": "BtcToEthToken167",
-    "message": "3. Depositando BTC al contrato. \n Por favor espere, puede demorar unos minutos"
-  },
-  {
-    "id": "BtcToEthToken172",
-    "message": "Transacción: "
-  },
-  {
-    "id": "BtcToEthToken230",
-    "message": "3. Tus BTC se están depositando. Es posible se requiera confirmación de la red bitcoin. Esperando que otro participante deposite ETH.(Es posible se requiera confirmación de la red bitcoin)"
-  },
-  {
-    "id": "BtcToEthToken243",
-    "message": "Transacción: "
-  },
-  {
-    "id": "BtcToEthToken260",
-    "message": "Contrato de ETH ha sido creado y cargado. Retirando ETH. Por favor espere "
-  },
-  {
-    "id": "BtcToEthToken267",
-    "message": "Transacción: "
-  },
-  {
-    "id": "BtcToEthToken290",
-    "message": "6. ETH ha sido transferido a su billetera. Revise su saldo ETH. "
-  },
-  {
-    "id": "BtcToEthToken293",
-    "message": "Gracias por usar GhostX!"
-  },
-  {
-    "id": "BtcToEthToken303",
-    "message": "PROBAR REEMBOLSO"
-  },
-  {
-    "id": "BtcToEthToken316",
-    "message": "Transacción: "
-  },
-  {
-    "id": "BtcToEthToken77",
-    "message": "Esperando a creador de mercado. Si el creador de mercado no aparece dentro de 5 minutos, el intercambio de cancelará automaticamente. "
-  },
-  {
-    "id": "BtcToEthToken87",
-    "message": "1. Esperando confirmación de intercambio por parte del participante. "
-  },
-  {
     "id": "SwapController54",
     "message": "Otro participante está conectado.",
     "files": [
@@ -702,314 +418,6 @@
     ]
   },
   {
-    "id": "EmergencySave",
-    "message": "Información sobre el intercambio"
-  },
-  {
-    "id": "EthTokenBtc102",
-    "message": "Confirmar"
-  },
-  {
-    "id": "EthTokenBtc111",
-    "message": "Por favor espere. Procesando confirmación"
-  },
-  {
-    "id": "EthTokenBtc116",
-    "message": "Transacción: "
-  },
-  {
-    "id": "EthTokenBtc147",
-    "message": "2. Esperando creación de clave privada por parte del propietario de BTC, crear BTC Script y cargar"
-  },
-  {
-    "id": "EthTokenBtc159",
-    "message": "3. Bitcoin Script ha sido creado y cargado. Por favor revise la información debajo"
-  },
-  {
-    "id": "EthTokenBtc162",
-    "message": "Hash Secreto: "
-  },
-  {
-    "id": "EthTokenBtc165",
-    "message": "Dirección Script : "
-  },
-  {
-    "id": "EthTokenBtc184",
-    "message": "Mostrar bitcoin script"
-  },
-  {
-    "id": "EthTokenBtc228",
-    "message": "Todo está correcto. Continuar"
-  },
-  {
-    "id": "EthTokenBtc267",
-    "message": "Comprobando saldo.. "
-  },
-  {
-    "id": "EthTokenBtc276",
-    "message": "4. Creando contrato de Ethereum. \n Por favor espere, puede demorar unos minutos"
-  },
-  {
-    "id": "EthTokenBtc283",
-    "message": "Transacción: "
-  },
-  {
-    "id": "EthTokenBtc303",
-    "message": "Transacción: "
-  },
-  {
-    "id": "EthTokenBtc321",
-    "message": "5. Esperando que el propietario de BTC agregue la clave secreta al contacto de ETH"
-  },
-  {
-    "id": "EthTokenBtc335",
-    "message": "ETH fue transferido exitósamente. Retirando BTC. Por favor espere"
-  },
-  {
-    "id": "EthTokenBtc342",
-    "message": "Transacción: "
-  },
-  {
-    "id": "EthTokenBtc365",
-    "message": "Gracias por usar GhostX!"
-  },
-  {
-    "id": "EthTokenBtc375",
-    "message": "PROBAR REEMBOLSO"
-  },
-  {
-    "id": "EthTokenBtc77",
-    "message": "Esperando a que otro usuario se conecte al pedido ."
-  },
-  {
-    "id": "EthTokenBtc86",
-    "message": "1. Por favor confirme su participación para comenzar el acuerdo"
-  },
-  {
-    "id": "EthTokenBtc94",
-    "message": "Confirmación de la transacción es necesaria para acreditar la reputación. Si un usuario no llega al fin del acuerdo, recibirá credito negativo en su reputación. "
-  },
-  {
-    "id": "EthTokenToUsdt101",
-    "message": "Confirmación de la transacción es necesaria para acreditar la reputación. Si un usuario no llega al fin del acuerdo, recibirá credito negativo en su reputación. "
-  },
-  {
-    "id": "EthTokenToUsdt109",
-    "message": "Confirmar"
-  },
-  {
-    "id": "EthTokenToUsdt118",
-    "message": "Por favor espere. Procesando confirmación"
-  },
-  {
-    "id": "EthTokenToUsdt123",
-    "message": "transacción: "
-  },
-  {
-    "id": "EthTokenToUsdt154",
-    "message": "2. Esperando la creación de la clave secreta por parte del propietario de USDT, crear BTC Omni Script y cargar."
-  },
-  {
-    "id": "EthTokenToUsdt166",
-    "message": "3. Bitcoin Omni Script ha sido creado y cargado. Por favor revise la información debajo."
-  },
-  {
-    "id": "EthTokenToUsdt169",
-    "message": "Hash Secreto: "
-  },
-  {
-    "id": "EthTokenToUsdt172",
-    "message": "Dirección Script: "
-  },
-  {
-    "id": "EthTokenToUsdt192",
-    "message": "Mostrar bitcoin script"
-  },
-  {
-    "id": "EthTokenToUsdt236",
-    "message": "Todo está correcto. Continuar "
-  },
-  {
-    "id": "EthTokenToUsdt249",
-    "message": "No hay suficiente dinero para este intercambio. Cargue el saldo"
-  },
-  {
-    "id": "EthTokenToUsdt253",
-    "message": "Su saldo: "
-  },
-  {
-    "id": "EthTokenToUsdt257",
-    "message": "saldo requerido: "
-  },
-  {
-    "id": "EthTokenToUsdt260",
-    "message": "Su dirección: "
-  },
-  {
-    "id": "EthTokenToUsdt267",
-    "message": "Continuar "
-  },
-  {
-    "id": "EthTokenToUsdt276",
-    "message": "Comprobando saldo.. "
-  },
-  {
-    "id": "EthTokenToUsdt285",
-    "message": "4. Creando contrado de Ethereum . \n Por favor espere, puede demorar unos minutos"
-  },
-  {
-    "id": "EthTokenToUsdt292",
-    "message": "transacción: "
-  },
-  {
-    "id": "EthTokenToUsdt313",
-    "message": "transacción: "
-  },
-  {
-    "id": "EthTokenToUsdt331",
-    "message": "5. Esperando que el propietario de BTC agregue la clave secreta al contacto de ETH"
-  },
-  {
-    "id": "EthTokenToUsdt345",
-    "message": "6. El propietario de USDT tomó con éxito dinero del contrato ETH y dejó la clave secreta. Solicitando retiro de BTC Script. Por favor espera"
-  },
-  {
-    "id": "EthTokenToUsdt352",
-    "message": "Transacción de retiro de USDT: "
-  },
-  {
-    "id": "EthTokenToUsdt377",
-    "message": "7. USDT ha sido transferido a su billetera. Revisa el saldo. "
-  },
-  {
-    "id": "EthTokenToUsdt380",
-    "message": "Gracias por usar GhostX!"
-  },
-  {
-    "id": "EthTokenToUsdt390",
-    "message": "PROBAR REEMBOLSO"
-  },
-  {
-    "id": "EthTokenToUsdt84",
-    "message": "Esperando a que otro usuario se conecte al pedido ."
-  },
-  {
-    "id": "EthTokenToUsdt93",
-    "message": "1. Por favor confirme su participación para comenzar el trato"
-  },
-  {
-    "id": "Share",
-    "message": "Compartir Twitter"
-  },
-  {
-    "id": "UsdrToEthToken106",
-    "message": "Creando clave secreta"
-  },
-  {
-    "id": "UsdrToEthToken115",
-    "message": "Confirmar"
-  },
-  {
-    "id": "UsdrToEthToken121",
-    "message": "Guarda la clave secreta! De lo contrario corres el riesgo de perder tu dinero!"
-  },
-  {
-    "id": "UsdrToEthToken124",
-    "message": "Clave Secreta: "
-  },
-  {
-    "id": "UsdrToEthToken127",
-    "message": "Hash Secreto: "
-  },
-  {
-    "id": "UsdrToEthToken137",
-    "message": "No hay suficiente dinero para este intercambio. Cargue el saldo"
-  },
-  {
-    "id": "UsdrToEthToken141",
-    "message": "Tu saldo: "
-  },
-  {
-    "id": "UsdrToEthToken144",
-    "message": "saldo Requerido: "
-  },
-  {
-    "id": "UsdrToEthToken147",
-    "message": "Tu dirección: "
-  },
-  {
-    "id": "UsdrToEthToken154",
-    "message": "Continuar"
-  },
-  {
-    "id": "UsdrToEthToken163",
-    "message": "Comprobando saldo... "
-  },
-  {
-    "id": "UsdrToEthToken174",
-    "message": "3. Creando Bitcoin Omni Script. \n Por favor espere, puede demorar unos minutos"
-  },
-  {
-    "id": "UsdrToEthToken179",
-    "message": "transacción: "
-  },
-  {
-    "id": "UsdrToEthToken206",
-    "message": "Crear devolución hex"
-  },
-  {
-    "id": "UsdrToEthToken213",
-    "message": "Como reembolsar tu dinero? "
-  },
-  {
-    "id": "UsdrToEthToken233",
-    "message": "4. Propietario de ETH ha recibido Bitcoin Omni Script y Hash Secreto. Esperando la creación de contrato ETH."
-  },
-  {
-    "id": "UsdrToEthToken246",
-    "message": "transacción: "
-  },
-  {
-    "id": "UsdrToEthToken264",
-    "message": "5. Contrato ETH creado y cargado. Solicitando retiro de contrato ETH. Por favor espere. Suele demorar menos de 10 minutos."
-  },
-  {
-    "id": "UsdrToEthToken271",
-    "message": "transacción: "
-  },
-  {
-    "id": "UsdrToEthToken294",
-    "message": "6. ETH ha sido transferido a tu billetera. Revisa el saldo. "
-  },
-  {
-    "id": "UsdrToEthToken297",
-    "message": "Gracias por usar GhostX!"
-  },
-  {
-    "id": "UsdrToEthToken307",
-    "message": "PROBAR REEMBOLSO"
-  },
-  {
-    "id": "UsdrToEthToken320",
-    "message": "transacción: "
-  },
-  {
-    "id": "UsdrToEthToken83",
-    "message": "Esperando a creador de mercado. Si el creador de mercado no aparece dentro de 5 minutos, el intercambio de cancelará automaticamente. "
-  },
-  {
-    "id": "UsdrToEthToken93",
-    "message": "1. Esperando a que el participante confirme el intercambio."
-  },
-  {
-    "id": "Row263",
-    "message": "Use otro"
-  },
-  {
-    "id": "RowWallet197",
-    "message": "saldo no confirmado"
-  },
-  {
     "id": "RowWallet181",
     "message": "saldo no confirmado",
     "files": [
@@ -1022,86 +430,6 @@
     "files": [
       "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
     ]
-  },
-  {
-    "id": "PrivateKeysModal106",
-    "message": "No guardamos tus claves privadas y no podremos recuperarlas!"
-  },
-  {
-    "id": "PrivateKeysModal110",
-    "message": "1. Haga Click aqui para guardar tus claves privadas"
-  },
-  {
-    "id": "PrivateKeysModal113",
-    "message": "Mostrar Claves"
-  },
-  {
-    "id": "PrivateKeysModal118",
-    "message": "2. Luego haz clic aqui si has guardado tus claves privadas en un lugar seguro (o dos)"
-  },
-  {
-    "id": "PrivateKeysModal121",
-    "message": "He guardado mis claves!"
-  },
-  {
-    "id": "PrivateKeysModal130",
-    "message": "Por favor complete la información debajo. Queremos asegurarnos que has guardado tus claves privadas antes de continar a la página."
-  },
-  {
-    "id": "PrivateKeysModal131",
-    "message": "No te preocupes, esta información no será enviada a ningun lado fuera de esta página!"
-  },
-  {
-    "id": "PrivateKeysModal145",
-    "message": "IR A LA PÁGINA! "
-  },
-  {
-    "id": "PrivateKeysModal662",
-    "message": "Atención!"
-  },
-  {
-    "id": "PrivateKeysModal623",
-    "message": "{Saltar} e ir a la página."
-  },
-  {
-    "id": "PrivateKeysModal624",
-    "message": "Saltar"
-  },
-  {
-    "id": "PrivateKeysModal663",
-    "message": "No lo recomendamos, pero puedes{skipBtn}"
-  },
-  {
-    "id": "PrivateKeysModal664",
-    "message": "Por favor guarda tus claves privadas! Nosotros no las guardaremos y no podremos recuperar tus billeteras."
-  },
-  {
-    "id": "PrivateKeysModal665",
-    "message": " Entiendo y acepto los riesgos de no guardar mis claves privadas.{learnMore}"
-  },
-  {
-    "id": "PrivateKeysModal666",
-    "message": "Continuar"
-  },
-  {
-    "id": "PrivateKeysModal667",
-    "message": "Aprende más"
-  },
-  {
-    "id": "PrivateKeysModal99",
-    "message": "Es muy importante, porque de lo contrario"
-  },
-  {
-    "id": "PrivateKeysModal991",
-    "message": "Por favor guarda tus claves privadas"
-  },
-  {
-    "id": "BtcToEthTokenAddress1",
-    "message": "Confirmar dirección de destino (por defecto - billetera GhostX )"
-  },
-  {
-    "id": "BtcToEthTokenAddress2",
-    "message": "Confirmar dirección"
   },
   {
     "id": "WithdrawButton32",
@@ -1134,142 +462,6 @@
     ]
   },
   {
-    "id": "BtcToEthToken236",
-    "message": "Completar BTC Script"
-  },
-  {
-    "id": "Row277",
-    "message": "No activado"
-  },
-  {
-    "id": "partial221",
-    "message": "Cantidad maxima para intercambio: "
-  },
-  {
-    "id": "Company",
-    "message": "Empresa"
-  },
-  {
-    "id": "AboutUS14",
-    "message": "Quienes Somos"
-  },
-  {
-    "id": "Careers",
-    "message": "Carreras"
-  },
-  {
-    "id": "ChromeExtension",
-    "message": "Extensión Chrome"
-  },
-  {
-    "id": "Concept",
-    "message": "Concepto (PDF)"
-  },
-  {
-    "id": "Contacts",
-    "message": "Contactos"
-  },
-  {
-    "id": "DEXTrendResearch",
-    "message": "DEX Trend Research"
-  },
-  {
-    "id": "DEXdetails",
-    "message": "Detalles DEX"
-  },
-  {
-    "id": "Documentation",
-    "message": "Documentación"
-  },
-  {
-    "id": "Legal",
-    "message": "Legal"
-  },
-  {
-    "id": "LegalOpinion",
-    "message": "Opinion Legal"
-  },
-  {
-    "id": "Licence",
-    "message": "Licencia"
-  },
-  {
-    "id": "PrivacyPolicy",
-    "message": "Politica de privacidad"
-  },
-  {
-    "id": "Resources",
-    "message": "Recursos"
-  },
-  {
-    "id": "Terms",
-    "message": "Terminos de Uso"
-  },
-  {
-    "id": "Useswapbutton",
-    "message": "Botón Swap"
-  },
-  {
-    "id": "WhitePaperdraft",
-    "message": "White Paper (borrador)"
-  },
-  {
-    "id": "Wiki",
-    "message": "Wiki"
-  },
-  {
-    "id": "Amount61",
-    "message": "Cantidad"
-  },
-  {
-    "id": "Coin61",
-    "message": "Moneda"
-  },
-  {
-    "id": "Statement61",
-    "message": "Declaración"
-  },
-  {
-    "id": "Status61",
-    "message": "Estado"
-  },
-  {
-    "id": "SwapHisrory14",
-    "message": "Avatar"
-  },
-  {
-    "id": "SwapHisrory15",
-    "message": "Intercambio"
-  },
-  {
-    "id": "SwapHisrory16",
-    "message": "Tu compras"
-  },
-  {
-    "id": "SwapHisrory17",
-    "message": "Tu vendes"
-  },
-  {
-    "id": "SwapHisrory18",
-    "message": "Tasa de intercambio"
-  },
-  {
-    "id": "SwapHisrory20",
-    "message": "Estado de pedido "
-  },
-  {
-    "id": "SwapHisrory211",
-    "message": "Horario de cierre"
-  },
-  {
-    "id": "SwapHisrory22",
-    "message": "Enlace"
-  },
-  {
-    "id": "MyOrders19",
-    "message": "INTERCAMBIO"
-  },
-  {
     "id": "MyOrdersYouSend",
     "message": "Enviarás",
     "files": [
@@ -1291,26 +483,6 @@
     ]
   },
   {
-    "id": "MyOrders231",
-    "message": "COMPARTIR"
-  },
-  {
-    "id": "MyOrders24",
-    "message": "ACCIONES"
-  },
-  {
-    "id": "Orders141",
-    "message": "No existe ese ticker. Redireccionando a intercambio USDT-BTC ... "
-  },
-  {
-    "id": "Orders151",
-    "message": "Mis pedidos"
-  },
-  {
-    "id": "orders101",
-    "message": "PROPIETARIO"
-  },
-  {
     "id": "orders102",
     "message": "Cantidad",
     "files": [
@@ -1325,19 +497,11 @@
     ]
   },
   {
-    "id": "orders106",
-    "message": "COMENZAR INTERCAMBIO"
-  },
-  {
     "id": "orders128",
     "message": "Crear oferta",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
-  },
-  {
-    "id": "orders1499",
-    "message": "Ocultar"
   },
   {
     "id": "addoffer381",
@@ -1380,10 +544,6 @@
     "files": [
       "src/front/shared/pages/History/History.tsx"
     ]
-  },
-  {
-    "id": "Reqstbttn15",
-    "message": "VENDER"
   },
   {
     "id": "Reqstbttn16",
@@ -1512,14 +672,6 @@
     ]
   },
   {
-    "id": "transaction368",
-    "message": "Cantidad debe ser superior a "
-  },
-  {
-    "id": "transaction376",
-    "message": "Cantidad debe ser menor a tu saldo"
-  },
-  {
     "id": "Select210",
     "message": "MAX",
     "files": [
@@ -1539,23 +691,11 @@
     ]
   },
   {
-    "id": "Withdrow159",
-    "message": "Cantidad debe ser superior a "
-  },
-  {
     "id": "partial291",
     "message": "Esperando por otro participante (30 sec): ",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
-  },
-  {
-    "id": "Row358",
-    "message": "Activar"
-  },
-  {
-    "id": "Row377",
-    "message": "No activado"
   },
   {
     "id": "CDC52",
@@ -1570,14 +710,6 @@
     "files": [
       "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
     ]
-  },
-  {
-    "id": "partial223",
-    "message": "Para modificar la billetera defecto para comprar monedas."
-  },
-  {
-    "id": "partial224",
-    "message": "Dejar en blanco para uso de billetera GhostX"
   },
   {
     "id": "partial243",
@@ -1606,10 +738,6 @@
     "files": [
       "src/front/shared/components/modals/EthChecker/EthChecker.tsx"
     ]
-  },
-  {
-    "id": "Import",
-    "message": "Importar claves"
   },
   {
     "id": "Add52",
@@ -1703,10 +831,6 @@
     ]
   },
   {
-    "id": "RowHistory343",
-    "message": "Info"
-  },
-  {
     "id": "timer68",
     "message": "Devolución lista",
     "files": [
@@ -1714,55 +838,11 @@
     ]
   },
   {
-    "id": "BtcToEthToken275",
-    "message": "Transacción devolución hex:"
-  },
-  {
-    "id": "Header184",
-    "message": "Esta es su dirección personal de bitcoin. No almacenamos sus claves privadas. Todo se guarda en su navegador. Sin servidor, sin back-end, completamente descentralizado"
-  },
-  {
-    "id": "Header188",
-    "message": "Swap Online no guarda tus claves privadas, por favor descargalas y guardalas en un lugar seguro."
-  },
-  {
-    "id": "Header192",
-    "message": "Este es su saldo de bitcoins. Puede cerrar su navegador, reiniciar su ordenador. Sus fondos estarán seguros, pero no olvide guardar sus claves privadas"
-  },
-  {
-    "id": "Header194",
-    "message": "No olvides guardar tus claves"
-  },
-  {
-    "id": "Header196",
-    "message": "Puedes almacenar cripto de diferentes blockchains incluyendo Bitcoin, Ethereum, Bitcoin Cash, Litecoin y varios tokens."
-  },
-  {
-    "id": "Header200",
-    "message": "Nuestra característica principal es el intercambio peer-to-peer disponible en nuestra billetera con tecnología de atomic swap. Puede realizar intercambios con cualquier cripto que figure en nuestra billetera."
-  },
-  {
-    "id": "Header205",
-    "message": "Recibiras notificaciones acerca de actualizaciones de tu cuenta(pedidos, transacciones) y actualizaciones mensuales de nuestro proyecto"
-  },
-  {
-    "id": "Header207",
-    "message": "Mostrarme como guardar"
-  },
-  {
     "id": "question12",
     "message": "?",
     "files": [
       "src/front/shared/components/Header/User/Question/Question.tsx"
     ]
-  },
-  {
-    "id": "errorImportKeys",
-    "message": "Por favor guarda tus claves privadas"
-  },
-  {
-    "id": "PrivateKeysModal144",
-    "message": "Atrás"
   },
   {
     "id": "PartialPriceNoOrdersReduce",
@@ -1777,10 +857,6 @@
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
-  },
-  {
-    "id": "PartialPriceReduceMin",
-    "message": "Cantidad máxima disponible:"
   },
   {
     "id": "PartialOfferCantProceed1",
@@ -1804,43 +880,11 @@
     ]
   },
   {
-    "id": "LessThanIHavePartial",
-    "message": "No hay suficiente dinero en tu saldo"
-  },
-  {
-    "id": "PartialUseSwapOnlineWallet",
-    "message": "Utilizar billetera GhostX "
-  },
-  {
     "id": "UseAnotherWallet",
     "message": "Especificar la dirección de billetera receptora",
     "files": [
       "src/front/shared/components/modals/ConfirmBeginSwap/ConfirmBeginSwap.tsx"
     ]
-  },
-  {
-    "id": "CustomWalletIsNotAllowed",
-    "message": "La aceptación de una oferta del libro de ofertas es posible temporalmente solo para direcciones internas"
-  },
-  {
-    "id": "PartialYourWalletAddress",
-    "message": "Direccion de billetera receptora"
-  },
-  {
-    "id": "importkeys118",
-    "message": "Por favor ingrese la clave privada BTC"
-  },
-  {
-    "id": "importkeys119",
-    "message": "Por favor valide la clave privada BTC"
-  },
-  {
-    "id": "PartialPriceSearch483",
-    "message": "Precio: 1"
-  },
-  {
-    "id": "partial437",
-    "message": "Atomic Swap {full_name1} ({ticker_name1}) a {full_name2} ({ticker_name2}) Intercambio Instantaneo"
   },
   {
     "id": "partial462",
@@ -1864,27 +908,11 @@
     ]
   },
   {
-    "id": "partial544",
-    "message": "Libro de pedidos"
-  },
-  {
     "id": "partial767",
     "message": "Tu saldo: ",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
-  },
-  {
-    "id": "partialAtomicSwapWhatIsIt",
-    "message": "Atomic swap es una tecnología de contrato inteligente que permite el intercambio de cryptomonedas sin utilizar intermediarios centralizados, como plataformas de intercambio."
-  },
-  {
-    "id": "partialVideoAndFeaturesTitle",
-    "message": "El {purplefastest} intercambio cross-chain Atomic Swap"
-  },
-  {
-    "id": "partialVideoAndFeaturesTitlePur",
-    "message": "Más rápido"
   },
   {
     "id": "partialVideoAndFeatures0",
@@ -1957,22 +985,6 @@
     ]
   },
   {
-    "id": "Row206",
-    "message": "Comprar"
-  },
-  {
-    "id": "Row2061",
-    "message": "Vender"
-  },
-  {
-    "id": "Row210",
-    "message": "para"
-  },
-  {
-    "id": "downloadModal73",
-    "message": "Nombre de cuenta:"
-  },
-  {
     "id": "downloadModal75",
     "message": "Dirección:",
     "files": [
@@ -1992,10 +1004,6 @@
     "files": [
       "src/front/shared/components/PreventMultiTabs/PreventMultiTabs.tsx"
     ]
-  },
-  {
-    "id": "EthTokenToUsdt375",
-    "message": "Por favor, ten en cuenta que retiros de UDST pueden demorar en minar y propagar la red.\n                    Debido a propiedades de Omni Protocol, la transacción puede presentarse en el OmniExplorer en hasta 20 minutos."
   },
   {
     "id": "addOfferPartialTooltip",
@@ -2043,18 +1051,6 @@
     ]
   },
   {
-    "id": "CurrencyWallet141",
-    "message": "{fullName}({currency}) Billetera Web con Atomic Swap."
-  },
-  {
-    "id": "orders189",
-    "message": "Comprar"
-  },
-  {
-    "id": "orders186",
-    "message": "{currency} ofertas"
-  },
-  {
     "id": "CurrencyButton41",
     "message": "Deposita esta criptomoneda en tu billeterara",
     "files": [
@@ -2067,14 +1063,6 @@
     "files": [
       "src/front/shared/components/controls/CurrencyButton/CurrencyButton.tsx"
     ]
-  },
-  {
-    "id": "PrivateKeysModal122",
-    "message": "Continuando estás de acuerdo con nuestra "
-  },
-  {
-    "id": "PrivateKeysModal123",
-    "message": "Politica de privacidad"
   },
   {
     "id": "Areyousure",
@@ -2091,46 +1079,6 @@
     ]
   },
   {
-    "id": "Exchange",
-    "message": "La dirección de billeterara a donde serán las criptomonedas enviadas luego del intercambio"
-  },
-  {
-    "id": "CurrencyWallet168",
-    "message": "Tu dirección: {address}{br}Tu {fullName} saldo: {balance} {currency}"
-  },
-  {
-    "id": "currencyWallet27",
-    "message": "Moneda"
-  },
-  {
-    "id": "currencyWallet28",
-    "message": "Estado"
-  },
-  {
-    "id": "currencyWallet29",
-    "message": "Declaración"
-  },
-  {
-    "id": "currencyWallet30",
-    "message": "Cantidad"
-  },
-  {
-    "id": "Withdraw18333",
-    "message": "Retirar {data}"
-  },
-  {
-    "id": "importkeys172",
-    "message": "Por favor ingrese su clave privada de ETH"
-  },
-  {
-    "id": "importkeys173",
-    "message": "Por favor valide la clave privada ETH"
-  },
-  {
-    "id": "importkeys190",
-    "message": "Algo salió mal. Revise su clave privada, red de esta dirección, etc. "
-  },
-  {
     "id": "WithdrawIncorectAddress",
     "message": "Tu dirección no es correcta",
     "files": [
@@ -2138,10 +1086,6 @@
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
     ]
-  },
-  {
-    "id": "Withdrow168",
-    "message": "La cantidad debe ser menos que el saldo por el monto minimo de la transacción{min} {currency}"
   },
   {
     "id": "Withdrow170",
@@ -2153,19 +1097,11 @@
     ]
   },
   {
-    "id": "ExchangeTitleTag",
-    "message": "Atomic Swap {full_name1} ({ticker_name1}) a {full_name2} ({ticker_name2}) Intercambio instantaneo"
-  },
-  {
     "id": "ExchangeTitleTag1",
     "message": "Los mas rápidos cross-chain swaps",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
-  },
-  {
-    "id": "PartialClosureMetaDescrTag",
-    "message": "La mejor tasa de intercambio{full_name1} ({ticker_name1}) a {full_name2} ({ticker_name2}). Billetera GhostX  provee intercambio instantaneo utilizando Atomic Swap Protocol."
   },
   {
     "id": "orders104",
@@ -2213,10 +1149,6 @@
     ]
   },
   {
-    "id": "WithdrawModal263",
-    "message": "Necesitas {minAmount} ETH en tu saldo"
-  },
-  {
     "id": "WithdrawModalErrorSend",
     "message": "{errorName} {currency}:{br}{errorMessage}",
     "files": [
@@ -2237,10 +1169,6 @@
     "files": [
       "src/front/shared/pages/Swap/Timer/Timer.tsx"
     ]
-  },
-  {
-    "id": "CurrencyWallet148",
-    "message": "${fullName} (${currency}) Billetera Web con Atomic Swap."
   },
   {
     "id": "CurrencyWallet154",
@@ -2264,14 +1192,6 @@
     ]
   },
   {
-    "id": "orders182",
-    "message": "VENDER {buyCurrency} AQUI"
-  },
-  {
-    "id": "PartialClosure562",
-    "message": "Nuestro servicio es una billetera caliente decentralizada accionada por tecnología Atomic swap technology. Intercambia Bitcoin, USD Tether en segundos. Sin comision por intercambio (solo tasas de mineria). {br}{br}GhostX utiliza IPFS-network para todos los procesos operados, lo cual resulta en no necesitar un servidor centralizado.{br} El interfaz de intercambio es similar a un broker de crypto, no de un DEX o CEX. En tan solo unos clicks, el usuario puede hacer y tomar una oferta, personalizando el precio de la moneda enviada. {br}{br}Además, el usuario puede intercambiar el porcentaje asignado de su monto disponible(e.g. ½, ¼ etc.). {br}{br} Una ventaja más del servicio de intercambio GhostX es el uso de una clave para todos las monedas ERC-20 tokens. {br}A proposito, en caso de que no estes interesado en el intercambio de algunas monedas, puedes escondelas de la lista. {br}Por lo que, usaras GhostX para los intercambios de todas las cryptos que poseas!"
-  },
-  {
     "id": "RowWallet276",
     "message": "Nodo sin servicio",
     "files": [
@@ -2284,14 +1204,6 @@
     "files": [
       "src/front/shared/components/notifications/ErrorNotification/ErrorNotification.tsx"
     ]
-  },
-  {
-    "id": "BtcToEthToken222",
-    "message": "Depositando BTC al contrato. \n Por favor espere, puede demorar unos minutos"
-  },
-  {
-    "id": "deposit213",
-    "message": " y 0.002 ETH gas fee "
   },
   {
     "id": "deposit165",
@@ -2315,19 +1227,11 @@
     ]
   },
   {
-    "id": "deposit231",
-    "message": "Recibido {balance} / {need} {tooltip}"
-  },
-  {
     "id": "deposit239",
     "message": "El intercambio continuará luego de que el contrato{tokenName} reciba los fondos. {br} Usualmente no toma más de 10 minutos",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/DepositWindow/DepositWindow.tsx"
     ]
-  },
-  {
-    "id": "Deposit52",
-    "message": "Tienes {timer} minutos para realizar el pago"
   },
   {
     "id": "deposit198",
@@ -2344,10 +1248,6 @@
     ]
   },
   {
-    "id": "BtcToEthToken1245",
-    "message": "Fondos enviados"
-  },
-  {
     "id": "ReceiveModal50",
     "message": "Esta es tu dirección {currency}",
     "files": [
@@ -2355,67 +1255,11 @@
     ]
   },
   {
-    "id": "OrdersWidgetModeShowWallet",
-    "message": "Billetera"
-  },
-  {
-    "id": "swapFinishedGoHome",
-    "message": "Volver a página principal"
-  },
-  {
-    "id": "KeyActionsPanel73",
-    "message": "Esconder / Agregar monedas"
-  },
-  {
     "id": "userTooltip43",
     "message": "Usuario ({reputation}) quiere intercambiar",
     "files": [
       "src/front/shared/components/Header/User/UserTooltip/UserTooltip.tsx"
     ]
-  },
-  {
-    "id": "advantagesTitle",
-    "message": "Por que somos diferentes a otros exchanges?"
-  },
-  {
-    "id": "advantagesTitle1",
-    "message": "0% comisión"
-  },
-  {
-    "id": "advantagesTitle3",
-    "message": "No intermediarios"
-  },
-  {
-    "id": "advantagesTitle4",
-    "message": "Muy rapidos"
-  },
-  {
-    "id": "advantagesTxt1",
-    "message": "El intercambio sucede entre tu y otro poseedor de crypto (par a par). Sin porcentaje de la transacción."
-  },
-  {
-    "id": "advantagesTxt2",
-    "message": "No requerimos registro ni autenticación personal. (no recopilamos información de nuestros usuarios)"
-  },
-  {
-    "id": "advantagesTxt3",
-    "message": "Nadie puede interferir con el proceso de intercambio."
-  },
-  {
-    "id": "advantagesTxt4",
-    "message": "Puedes intercambiar ahora. La transacción es directa y dentro de 2 minutos."
-  },
-  {
-    "id": "advVidLink",
-    "message": "https://youtu.be/Jhrb7xOT_7s"
-  },
-  {
-    "id": "VidLinkFrame",
-    "message": "https://www.youtube.com/embed/euT8rScwfEk"
-  },
-  {
-    "id": "GitHub",
-    "message": "GitHub"
   },
   {
     "id": "SwitchLang20",
@@ -2474,43 +1318,11 @@
     ]
   },
   {
-    "id": "BtcToEthToken102",
-    "message": "Intercambiando"
-  },
-  {
-    "id": "BtcToEthToken111",
-    "message": "Retirando {name} de un contrato"
-  },
-  {
     "id": "BtcToEthToken123",
     "message": "El intercambio ha terminado!!",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/steps/FourthStep.tsx"
     ]
-  },
-  {
-    "id": "BtcToEthToken132",
-    "message": "Finalizado!"
-  },
-  {
-    "id": "BtcToEthToken34",
-    "message": "Procesando confirmación"
-  },
-  {
-    "id": "BtcToEthToken43",
-    "message": "Procesando confirmación"
-  },
-  {
-    "id": "BtcToEthToken58",
-    "message": "Depositando Bitcoin a un contrato inteligente"
-  },
-  {
-    "id": "BtcToEthToken80",
-    "message": "Depositando {name} a un contrato inteligente"
-  },
-  {
-    "id": "BtcToEthToken89",
-    "message": "{name} declaración"
   },
   {
     "id": "swapFinishedGoHome289",
@@ -2548,147 +1360,11 @@
     ]
   },
   {
-    "id": "swappropgress233",
-    "message": "transacción ETH:"
-  },
-  {
-    "id": "swappropgress258",
-    "message": "transacción BTC:"
-  },
-  {
-    "id": "swappropgress332",
-    "message": "Como reembolsar tu dinero?"
-  },
-  {
     "id": "swappropgress333",
     "message": "Devolución transacción hex:",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
     ]
-  },
-  {
-    "id": "ethToBtcText20",
-    "message": "Esperando la creación de clave secreta por parte del propietario de BTC, crear BTC Script y cargar"
-  },
-  {
-    "id": "ethToBtcText25",
-    "message": "El bitcoin Script ha sido creado y cargado. Revisa la información debajo."
-  },
-  {
-    "id": "ethToBtcText26",
-    "message": "Procesando confirmación"
-  },
-  {
-    "id": "ethToBtcText28",
-    "message": "Comprobando saldo.."
-  },
-  {
-    "id": "ethToBtcText32",
-    "message": "Creando contrato Ethereum.{br}Puede demorar unos minutos. (Puede requerir confirmación de la red bitcoin)"
-  },
-  {
-    "id": "ethToBtcText36",
-    "message": "Esperando que el propietario BTC agregue la clave secreta al contacto ETH."
-  },
-  {
-    "id": "ethToBtcText40",
-    "message": "ETH ha sido transferido con éxito. Retirando BTC."
-  },
-  {
-    "id": "ethToBtcText44",
-    "message": "Gracias por usar GhostX!"
-  },
-  {
-    "id": "ethToBtcText48",
-    "message": "Gracias por usar GhostX!"
-  },
-  {
-    "id": "WalletPromoLinkText",
-    "message": "Abrir encuesta"
-  },
-  {
-    "id": "WalletPromoText",
-    "message": "🎁 🎁 🎁 Gracias por usar GhostX!\n                Cuentanos sobre tu experiencia con nuestro servicio\n                y te recompensaremos con $10 en BTC 🎁 🎁 🎁"
-  },
-  {
-    "id": "orders224",
-    "message": "Comprar{currency} aqui"
-  },
-  {
-    "id": "swappropgress246",
-    "message": "Firmar transacción ETH:"
-  },
-  {
-    "id": "BitcoinBuyText17",
-    "message": "Procesando confirmación"
-  },
-  {
-    "id": "BtcToEthToken20",
-    "message": "Creando clave secreta"
-  },
-  {
-    "id": "BitcoinBuyText29",
-    "message": "Comprobando saldo.."
-  },
-  {
-    "id": "BitcoinBuyText33",
-    "message": "Depositando BTC al contrato. \n Puede demorar unos minutos"
-  },
-  {
-    "id": "BitcoinBuyText37",
-    "message": "Has enviado BTC al contrato (es posible requiera confirmación de la blockchain), {buyCurrency} Propietario recibió TXID y Hash Secreto.  Esperando mientras se congela {buyCurrency} en el contrato"
-  },
-  {
-    "id": "BitcoinBuyText41",
-    "message": "{buyCurrency}  contrato fue creado y cargado. Retirando {buyCurrency}."
-  },
-  {
-    "id": "BitcoinBuyText45",
-    "message": "{buyCurrency} monedas han sido transferidas a tu billeterara. Revisa el saldo."
-  },
-  {
-    "id": "BitcoinBuyText49",
-    "message": "Gracias por usar GhostX!"
-  },
-  {
-    "id": "BitcoinBuyText53",
-    "message": "Gracias por usar GhostX!"
-  },
-  {
-    "id": "EthTokensToBtc16",
-    "message": "Procesando confirmación."
-  },
-  {
-    "id": "EthTokensToBtc20",
-    "message": "Esperando la creación de clave secreta por parte del propietario de BTC, crear BTC Script y cargar"
-  },
-  {
-    "id": "EthTokensToBtc24",
-    "message": "El bitcoin Script ha sido creado y cargado. Revisa la información debajo"
-  },
-  {
-    "id": "EthTokensToBtc28",
-    "message": "Comprobando saldo.."
-  },
-  {
-    "id": "EthTokensToBtc32",
-    "message": "Creando contrato Ethereum. {br} Puede demorar unos minutos (Puede equerir confirmació de la red bitcoin )"
-  },
-  {
-    "id": "EthTokensToBtc36",
-    "message": "Esperando que el propietario BTC agregue la clave secreta al contacto ETH."
-  },
-  {
-    "id": "EthTokensToBtc40",
-    "message": "ETH han sido transferido correctamente. Retirando BTC"
-  },
-  {
-    "id": "EthTokensToBtc44",
-    "message": "Gracias por usar GhostX!"
-  },
-  {
-    "id": "EthTokensToBtc48",
-    "message": "Gracias por usar GhostX!"
   },
   {
     "id": "SwapStuck",
@@ -2740,14 +1416,6 @@
     ]
   },
   {
-    "id": "Row401",
-    "message": "Crear cuenta"
-  },
-  {
-    "id": "Row420",
-    "message": "Utilizar otro"
-  },
-  {
     "id": "withdrowTitle271",
     "message": "Enviar",
     "files": [
@@ -2780,19 +1448,11 @@
     ]
   },
   {
-    "id": "PartialUseInternalWallet",
-    "message": "Utilizar billetera interna"
-  },
-  {
     "id": "deposit256",
     "message": "La dirección de {tokenName} contrato inteligente",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/DepositWindow/DepositWindow.tsx"
     ]
-  },
-  {
-    "id": "FourthStep33",
-    "message": "(tx)"
   },
   {
     "id": "transaction444",
@@ -2816,18 +1476,6 @@
     ]
   },
   {
-    "id": "deposit307",
-    "message": "(incluye {mineerFee} {sellCurrency} comisión minero)"
-  },
-  {
-    "id": "Select26",
-    "message": "1/4"
-  },
-  {
-    "id": "Select27",
-    "message": "1/2"
-  },
-  {
     "id": "deposit320",
     "message": "(incluye {mineerFee} {sellCurrency} comisión minero)",
     "files": [
@@ -2835,43 +1483,11 @@
     ]
   },
   {
-    "id": "BtcToEthToken25",
-    "message": "Depositando Bitcoin {fromWhom} al contrato"
-  },
-  {
-    "id": "FourthStep28",
-    "message": "de ti"
-  },
-  {
-    "id": "FourthStep29",
-    "message": "del vendedor"
-  },
-  {
-    "id": "ThirdStep25",
-    "message": "Depositando  {name} {fromWhom} al contrato"
-  },
-  {
-    "id": "ThirdStep30",
-    "message": "del vendedor"
-  },
-  {
-    "id": "ThirdStep31",
-    "message": "de ti"
-  },
-  {
     "id": "BtcToEthToken24",
     "message": "Depositar",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/steps/SecondStep.tsx"
     ]
-  },
-  {
-    "id": "FourthStep36",
-    "message": "({btcTx} tx)"
-  },
-  {
-    "id": "FourthStep37",
-    "message": "({ghostTx} tx)"
   },
   {
     "id": "FourthStep52",
@@ -2969,10 +1585,6 @@
     ]
   },
   {
-    "id": "KeyActionsPane74",
-    "message": "intercambio incompleto ({length})"
-  },
-  {
     "id": "decline21",
     "message": "pedidos rechazados!",
     "files": [
@@ -3043,10 +1655,6 @@
     ]
   },
   {
-    "id": "completed21",
-    "message": "ha completado!"
-  },
-  {
     "id": "swappropgress192",
     "message": "Como reembolsar tu dinero ?",
     "files": [
@@ -3054,27 +1662,11 @@
     ]
   },
   {
-    "id": "FeeControler34",
-    "message": "No suficiente ETH en tu saldo para la comisión de minero.{br}Deposita 0.002 ETH a tu cuenta  {br}"
-  },
-  {
-    "id": "swapjs290",
-    "message": "Cancelar intercambio"
-  },
-  {
     "id": "IncompletedSwaps55",
     "message": "Datos procesados, pruebe volver a cargar la página",
     "files": [
       "src/front/shared/components/modals/IncompletedSwaps/IncompletedSwaps.tsx"
     ]
-  },
-  {
-    "id": "partial795",
-    "message": "El saldo disponible es su saldo menos la comisión de mineros que aparecerá"
-  },
-  {
-    "id": "ErrorNotAvailable",
-    "message": "El saldo disponible para intercambiar es {available}"
   },
   {
     "id": "select75",
@@ -3093,42 +1685,6 @@
     ]
   },
   {
-    "id": "Select28",
-    "message": "TODO"
-  },
-  {
-    "id": "tourPartial103",
-    "message": "En este lugar se puede ver el estado de la búsqueda de ofertas de intercambio, durante la carga habrá una opcion “Buscar pedidos” , cuando el pedido se encuentre, se escribirá el tipo de cambio"
-  },
-  {
-    "id": "tourPartial107",
-    "message": "Con este switch, puede elegir recibir fondos en su GhostX o billetera externa"
-  },
-  {
-    "id": "tourPartial116",
-    "message": "Haga clic en este botón una vez que se vuelva rosa y lo vinculará al intercambio"
-  },
-  {
-    "id": "tourPartial128",
-    "message": "Al hacer clic en este botón, irá a la página con ofertas de intercambio. Las ofertas se presentarán en función de las monedas seleccionadas. También en la página de ofertas, puede crear su propia oferta"
-  },
-  {
-    "id": "tourPartial62",
-    "message": "Esta página está diseñada para una búsqueda más fácil y rápida de ofertas de intercambio. Aquí puede elegir un monedero con recibo de moneda, iniciar un cambio con cierre parcial o ir a la página con todas las ofertas disponibles."
-  },
-  {
-    "id": "tourPartial94",
-    "message": "Seleccione la moneda e ingrese la cantidad que desea vender"
-  },
-  {
-    "id": "tourPartial99",
-    "message": "Seleccione la moneda e ingrese la cantidad que desea comprar"
-  },
-  {
-    "id": "FooterPartnershipForERC20",
-    "message": "Para ERC20 tokens"
-  },
-  {
     "id": "SecondStep",
     "message": "En este paso, la criptografía no va a su billetera {br} ni a la billetera de su contraparte, sino directamente al contrato de intercambio",
     "files": [
@@ -3141,10 +1697,6 @@
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/steps/ThirdStep.tsx"
     ]
-  },
-  {
-    "id": "Partial955",
-    "message": "Direccion incorrecta"
   },
   {
     "id": "Submenu16",
@@ -3169,10 +1721,6 @@
       "src/front/shared/components/Header/SubMenu/SubMenu.tsx",
       "src/front/shared/components/modals/MobMenu/MobMenu.tsx"
     ]
-  },
-  {
-    "id": "GhostXSubmenu",
-    "message": "Swap.Exhange"
   },
   {
     "id": "Swap.WalletSubMeny",
@@ -3210,10 +1758,6 @@
     "files": [
       "src/front/shared/components/modals/MultisignJoinLink/MultisignJoinLink.tsx"
     ]
-  },
-  {
-    "id": "multiSignJoinLinkReady",
-    "message": "Listo"
   },
   {
     "id": "Select23",
@@ -3279,14 +1823,6 @@
     ]
   },
   {
-    "id": "createWalletButton2",
-    "message": "Importar claves"
-  },
-  {
-    "id": "createWalletButton4",
-    "message": "Intercambio"
-  },
-  {
     "id": "createWalletCapture1",
     "message": "Elige entre Bitcoin, Ethereum, Swap",
     "files": [
@@ -3334,10 +1870,6 @@
     "files": [
       "src/front/shared/pages/CreateWallet/Steps/SecondStep.tsx"
     ]
-  },
-  {
-    "id": "history107",
-    "message": "Cargando"
   },
   {
     "id": "HowItWorks18",
@@ -3429,22 +1961,6 @@
     "files": [
       "src/front/shared/pages/Swap/Timer/Timer.tsx"
     ]
-  },
-  {
-    "id": "PrivateKeysModalToggleTree",
-    "message": "No utilizo el navegador TOR"
-  },
-  {
-    "id": "PrivateKeysModalToggleTwo",
-    "message": "No utilizo el modo de incógnito o invitado en mi navegador"
-  },
-  {
-    "id": "WithdrawMSLinkCopied",
-    "message": "Enlace copiado al portapapeles"
-  },
-  {
-    "id": "WithdrawMSLinkCopy",
-    "message": "Copiar al portapapeles"
   },
   {
     "id": "WithdrawMSUserFinish",
@@ -3620,24 +2136,12 @@
     ]
   },
   {
-    "id": "depositBtn",
-    "message": "Para depositar fondos, presione el botón de tres puntos junto a la moneda"
-  },
-  {
-    "id": "sendBtn",
-    "message": "Para enviar fondos, presione el botón de tres puntos junto a la moneda"
-  },
-  {
     "id": "WithdrawModal2225",
     "message": "Algo salió mal, ingrese su código actual por favor",
     "files": [
       "src/front/shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
     ]
-  },
-  {
-    "id": "Withdrow2222",
-    "message": "Enviar código SMS"
   },
   {
     "id": "Withdrow2223",
@@ -3831,10 +2335,6 @@
     ]
   },
   {
-    "id": "InfoPay_5",
-    "message": "volver a la app"
-  },
-  {
     "id": "createWalletCaptureOthers",
     "message": "u otras monedas",
     "files": [
@@ -3861,14 +2361,6 @@
     "files": [
       "src/front/shared/components/modals/InvoiceModal/InvoiceModal.tsx"
     ]
-  },
-  {
-    "id": "invoiceModal_Amount_Dollar",
-    "message": "Cantidad en USD"
-  },
-  {
-    "id": "invoiceModal_Amount_Rub",
-    "message": "Cantidad en RUB"
   },
   {
     "id": "invoiceModal_Error",
@@ -4242,27 +2734,11 @@
     ]
   },
   {
-    "id": "PartialPriceSellMax",
-    "message": "Cantidad máxima disponible para vender:"
-  },
-  {
     "id": "continueDeclined977",
     "message": "Continúe sus intercambios",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
-  },
-  {
-    "id": "partial1021",
-    "message": "Ingresa sitio web"
-  },
-  {
-    "id": "ImportKeysBtn",
-    "message": "Importar"
-  },
-  {
-    "id": "ExchangeBtn",
-    "message": "Intercambio"
   },
   {
     "id": "Yourtotalbalance",
@@ -4321,82 +2797,6 @@
     ]
   },
   {
-    "id": "TransactionswalletNav",
-    "message": "Transacciones"
-  },
-  {
-    "id": "walletHistoryActivity",
-    "message": "Historial"
-  },
-  {
-    "id": "descr279",
-    "message": "¡Guarde sus claves privadas!"
-  },
-  {
-    "id": "descr280",
-    "message": "No almacenamos sus claves privadas y no podremos restaurarlas"
-  },
-  {
-    "id": "descr282",
-    "message": "Muestra mis claves"
-  },
-  {
-    "id": "descr284",
-    "message": "Guardé mis claves"
-  },
-  {
-    "id": "descr291",
-    "message": "¡Regístrese y obtenga su criptomoneda gratis para probar!"
-  },
-  {
-    "id": "descr292",
-    "message": "También podrá recibir notificaciones sobre actualizaciones de su cuenta."
-  },
-  {
-    "id": "descr293",
-    "message": "Regístrate"
-  },
-  {
-    "id": "descr294",
-    "message": "Haré esto más tarde"
-  },
-  {
-    "id": "descr295",
-    "message": "El intercambio BTC / USDT más rápido"
-  },
-  {
-    "id": "descr296",
-    "message": "Transacciones seguras con verificación por SMS. Intercambie criptomonedas sin amenaza de retención(Atomic Swap). [Start exchanging]"
-  },
-  {
-    "id": "descr297",
-    "message": "¿Tienes un inversor?"
-  },
-  {
-    "id": "descr298",
-    "message": "Utilice la función de billetera conjunta para que usted y su pareja puedan administrar su presupuesto. Descubra cómo GhostX utiliza una billetera conjunta para administrar sus fondos. [Read the case] [Create a joint-account]"
-  },
-  {
-    "id": "descr299",
-    "message": "¿Trabajando con un equipo?"
-  },
-  {
-    "id": "descr300",
-    "message": "El sistema de facturación permite gestionar pagos y contabilidad sin crear un lío. Vea el video de cómo GhostX usa este sistema con su equipo internacional. [watch the video]"
-  },
-  {
-    "id": "descr304",
-    "message": "¿Tiene un presupuesto ajustado?"
-  },
-  {
-    "id": "descr305",
-    "message": "Emita acciones de cifrado de su proyecto y utilícelas para pagar a sus empleados. Lea sobre cómo la tokenización nos ahorró $ 20 000. [Read the case]"
-  },
-  {
-    "id": "historyActivity",
-    "message": "Historial"
-  },
-  {
     "id": "Submenu",
     "message": "Swap.Exhange",
     "files": [
@@ -4433,31 +2833,11 @@
     ]
   },
   {
-    "id": "CreateInvoiceGoHome",
-    "message": "Ir a la principal"
-  },
-  {
-    "id": "CreateInvoiceReady",
-    "message": "Factura Enviada"
-  },
-  {
     "id": "createWallet_customERC20",
     "message": "Token personalizado",
     "files": [
       "src/front/shared/pages/CreateWallet/Steps/StepsWrapper.tsx"
     ]
-  },
-  {
-    "id": "descr301",
-    "message": "Actualizaciones"
-  },
-  {
-    "id": "descr302",
-    "message": "Permítanos notificarle que el nombre de dominio principal para el servicio de intercambio GhostX cambiará de GhostX a swaponline.io."
-  },
-  {
-    "id": "descr303",
-    "message": "Cerrar"
   },
   {
     "id": "customERC20_Address",
@@ -4565,18 +2945,6 @@
     ]
   },
   {
-    "id": "WalletPage_ExportKeys",
-    "message": "Mostrar claves privadas"
-  },
-  {
-    "id": "WalletPage_Heading",
-    "message": "billetera"
-  },
-  {
-    "id": "WalletPage_ImportKeys",
-    "message": "Importar claves"
-  },
-  {
     "id": "btcmsSwitchFetchWalletsData",
     "message": "Fetching...",
     "files": [
@@ -4619,10 +2987,6 @@
     ]
   },
   {
-    "id": "currencyWalletActivity",
-    "message": "Historial {currency}"
-  },
-  {
     "id": "withdrawSMSCodePlaceholder",
     "message": "Ingrese el código SMS",
     "files": [
@@ -4636,10 +3000,6 @@
     "files": [
       "src/front/shared/pages/Wallet/Row/Row.tsx"
     ]
-  },
-  {
-    "id": "YourtotalbalanceExchange",
-    "message": "Intercambiar"
   },
   {
     "id": "RequestPayment",
@@ -4661,18 +3021,6 @@
     "files": [
       "src/front/shared/components/controls/ShareLink/ShareLink.tsx"
     ]
-  },
-  {
-    "id": "BTCMS_Amount",
-    "message": "Cantidad de transacción: {amount} BTC"
-  },
-  {
-    "id": "BTCMS_FromAddress",
-    "message": "Pago con billetera: {address}"
-  },
-  {
-    "id": "BTCMS_ToAddress",
-    "message": "Receptor: {address}"
   },
   {
     "id": "multiSignConfirmTxModal_ConfirmTx",
@@ -4773,10 +3121,6 @@
     "files": [
       "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
     ]
-  },
-  {
-    "id": "registerSMSModalFinishInfoTitle",
-    "message": "Guarde esta información"
   },
   {
     "id": "registerSMSModalPhonePlaceholder",
@@ -4969,10 +3313,6 @@
     ]
   },
   {
-    "id": "ShowMyMnemonic",
-    "message": "Haga una copia de seguridad de su billetera"
-  },
-  {
     "id": "BtcMultisignConfirmTx_FromAddress",
     "message": "Pago con billetera",
     "files": [
@@ -5034,10 +3374,6 @@
     "files": [
       "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx"
     ]
-  },
-  {
-    "id": "MnemoniceDeleted_hrefText",
-    "message": "Intente exportar la clave privada"
   },
   {
     "id": "SaveMnemonicModal_Ready",
@@ -5378,14 +3714,6 @@
     ]
   },
   {
-    "id": "MainFAQ3_header",
-    "message": "¿Cómo guardar claves privadas?"
-  },
-  {
-    "id": "MainFAQ3_content",
-    "message": "Por tu seguridad \"12-words seed\" haga clic en el cartel \"Haga una copia de seguridad de su billetera\". Si no ve este cartel, no se preocupe, simplemente haga clic en  \"dots\" cerca de su saldo y seleccione la opción \"Copiar clave privada\" "
-  },
-  {
     "id": "SweepBannerDescription",
     "message": "Por favor, mueva sus fondos a \"new\" direcciones (USDT y otros ERC20 se envían a la nueva dirección de Ethereum ). Haz clic en este botón: \"DONE\". Se ocultarán las direcciones antiguas.",
     "files": [
@@ -5400,39 +3728,11 @@
     ]
   },
   {
-    "id": "Transaction_Pags_Fetching",
-    "message": "Fetching..."
-  },
-  {
     "id": "WalletRow_Menu_HowToWithdraw",
     "message": "Cómo retirar",
     "files": [
       "src/front/shared/pages/Wallet/Row/Row.tsx"
     ]
-  },
-  {
-    "id": "Partial_DestinationAddress_ConnectMetamask",
-    "message": "Conectar Metamask"
-  },
-  {
-    "id": "Partial_DestinationAddress_CustomAddressOption",
-    "message": " Dirección personalizada"
-  },
-  {
-    "id": "Partial_DestinationAddress_InternalAddressOption",
-    "message": "Mi Billetera"
-  },
-  {
-    "id": "Partial_DestinationAddress_MetamaskAddressOption",
-    "message": "Dirección de Metamask"
-  },
-  {
-    "id": "Partial_DestinationAddress_PlaceholderEnterAddress",
-    "message": "Ingrese la dirección de la billetera receptora"
-  },
-  {
-    "id": "Partial_DestinationAddress_SpecifyAddress",
-    "message": "Especifique la dirección de la billetera receptora"
   },
   {
     "id": "registerSMS_ButtonCancel",
@@ -5484,51 +3784,11 @@
     ]
   },
   {
-    "id": "History_Nav_ActivityTab",
-    "message": "Historial"
-  },
-  {
-    "id": "History_Nav_InvoicesTab",
-    "message": "Pedidos"
-  },
-  {
-    "id": "InvoicesView_MetaDescription",
-    "message": "Billetera de Atomic Swap le permite administrar e intercambiar de forma segura. Basado en tecnología Multifirma y Atomic Swap."
-  },
-  {
-    "id": "InvoicesView_MetaTitle",
-    "message": "Factura #{number} - Billetera Web con Atomic Swap."
-  },
-  {
-    "id": "InvoicesView_WidgetMetaTitle",
-    "message": "Factura #{number} - Billetera Web con Atomic Swap."
-  },
-  {
-    "id": "InvoicesList_MetaDescription",
-    "message": "Billetera de Atomic Swap le permite administrar e intercambiar de forma segura. Basado en tecnología Multifirma y Atomic Swap.."
-  },
-  {
-    "id": "InvoicesList_MetaTitle",
-    "message": "Facturas - Billetera Web con Atomic Swap."
-  },
-  {
-    "id": "InvoicesList_NavTitle_Address",
-    "message": "Factura {type}{br}{address}"
-  },
-  {
-    "id": "InvoicesList_NavTitle_All",
-    "message": "Solicitudes"
-  },
-  {
     "id": "InvoicesList_Title",
     "message": "Facturas",
     "files": [
       "src/front/shared/pages/Invoices/InvoicesList/index.tsx"
     ]
-  },
-  {
-    "id": "InvoicesList_WidgetMetaTitle",
-    "message": "Facturas - Billetera Web con Atomic Swap."
   },
   {
     "id": "InvoiceInfoModal_ButtonShareReady",
@@ -5643,18 +3903,6 @@
     ]
   },
   {
-    "id": "InvoicesNav",
-    "message": "Solicitudes"
-  },
-  {
-    "id": "WalletPage_Widget_RestoreMnemonic",
-    "message": "Ingrese 12 palabras secretas"
-  },
-  {
-    "id": "WalletPage_Widget_ShowMnemonic",
-    "message": "Mostrar 12 palabras secretas"
-  },
-  {
     "id": "multiSignConfirmTxModal_ButtonClose",
     "message": "Cerrar",
     "files": [
@@ -5723,10 +3971,6 @@
     "files": [
       "src/front/shared/components/AdminFeeInfoBlock/AdminFeeInfoBlock.tsx"
     ]
-  },
-  {
-    "id": "AdminFee_MessageWithAmount",
-    "message": "Comisión {calcedAmount} {currency}"
   },
   {
     "id": "InfoPay_2_Ready",
@@ -6325,14 +4569,6 @@
     ]
   },
   {
-    "id": "WalletRow_Menu_HowExportPin",
-    "message": "Cómo exportar billetera"
-  },
-  {
-    "id": "WalletRow_Menu_HowExportSms",
-    "message": "Cómo exportar billetera"
-  },
-  {
     "id": "Withdraw_BalanceDesktop",
     "message": "{amount} {currency} será enviado",
     "files": [
@@ -6359,10 +4595,6 @@
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
     ]
-  },
-  {
-    "id": "WalletRow_Menu_HowExportWallet",
-    "message": "Cómo exportar billetera"
   },
   {
     "id": "WalletRow_ShowAddress",
@@ -6596,351 +4828,11 @@
     ]
   },
   {
-    "id": "Exchange_BalanceTooltipInfo",
-    "message": "Tu saldo {balance} {currency} menos comisión minera {minerFee} {currency}"
-  },
-  {
-    "id": "walletDidntCreateMessage",
-    "message": "Crear billetera{curr}antes de iniciar el intercambio. "
-  },
-  {
-    "id": "walletDidntCreateTitle",
-    "message": "Billetera no existe"
-  },
-  {
     "id": "InfoPay_2_copy",
     "message": "han sido transferidos con éxito",
     "files": [
       "src/front/shared/components/modals/InfoPay/InfoPay.tsx"
     ]
-  },
-  {
-    "id": "ethToBtcText20_eth_to_ghost",
-    "message": "Esperando que propietario GHOST cree la clave secreta, crea GHOST Script y cargar"
-  },
-  {
-    "id": "ethToBtcText25_eth_to_ghost",
-    "message": "El GHOST Script se creó y cargó. Verifique la información a continuación"
-  },
-  {
-    "id": "ethToBtcText26_eth_to_ghost",
-    "message": "Procesando confirmación"
-  },
-  {
-    "id": "ethToBtcText28_eth_to_ghost",
-    "message": "Comprobando saldo.."
-  },
-  {
-    "id": "ethToBtcText32_eth_to_ghost",
-    "message": "Creando contrato Ethereum.{br}Puede tardar unos minutos "
-  },
-  {
-    "id": "ethToBtcText36_eth_to_ghost",
-    "message": "Esperando que propietario GHOST agregue una clave secreta al contacto ETH "
-  },
-  {
-    "id": "ethToBtcText40_eth_to_ghost",
-    "message": "Los fondos del contrato ETH se transfirieron con éxito al propietario de GHOST.\n              El propietario de GHOST dejó una clave secreta. Solicitando retiro del script GHOST. "
-  },
-  {
-    "id": "ethToBtcText44_eth_to_ghost",
-    "message": "Gracias por usar GhostX"
-  },
-  {
-    "id": "ethToBtcText48_eth_to_ghost",
-    "message": "Gracias por usar GhostX!"
-  },
-  {
-    "id": "EthTokensToBtc16_ethtoken_to_Ghost",
-    "message": "Procesando confirmación"
-  },
-  {
-    "id": "EthTokensToBtc20_ethtoken_to_Ghost",
-    "message": "Esperando que propietario GHOST cree la clave secreta, crea GHOST Script y cargar"
-  },
-  {
-    "id": "EthTokensToBtc24_ethtoken_to_Ghost",
-    "message": "El GHOST Script se creó y cargó. Verifique la información a continuación"
-  },
-  {
-    "id": "EthTokensToBtc28_ethtoken_to_Ghost",
-    "message": "Comprobando saldo.."
-  },
-  {
-    "id": "EthTokensToBtc32_ethtoken_to_Ghost",
-    "message": "Creando contrato Ethereum. {br} Puede demorar unos minutos"
-  },
-  {
-    "id": "EthTokensToBtc36_ethtoken_to_Ghost",
-    "message": "Esperando que propietario GHOST agregue una clave secreta al contacto ETH "
-  },
-  {
-    "id": "EthTokensToBtc40_ethtoken_to_Ghost",
-    "message": "Los fondos del contrato ETH se transfirieron con éxito al propietario de GHOST."
-  },
-  {
-    "id": "EthTokensToBtc44_ethtoken_to_Ghost",
-    "message": "Gracias por usar using GhostX"
-  },
-  {
-    "id": "EthTokensToBtc48_ethtoken_to_Ghost",
-    "message": "Gracias por usar GhostX!"
-  },
-  {
-    "id": "SwapProgress105_ghost_to_eth",
-    "message": "Comprobando saldo.."
-  },
-  {
-    "id": "SwapProgress111_ghost_to_eth",
-    "message": "Creando GHOST Script.{br} Puede demorar unos minutos"
-  },
-  {
-    "id": "SwapProgress117_ghost_to_eth",
-    "message": "Tus GHOST se estan depositando. Puede requerir una confirmación de GHOST Network. Esperando a que otro participante deposite ETH. "
-  },
-  {
-    "id": "SwapProgress123_ghost_to_eth",
-    "message": "Contrato ETH creado y cargado. Solicitud de retiro del contrato ETH"
-  },
-  {
-    "id": "SwapProgress129_ghost_to_eth",
-    "message": "ETH se transfirió a su billetera. Verifique el saldo"
-  },
-  {
-    "id": "SwapProgress135_ghost_to_eth",
-    "message": "Gracias por usar GhostX!"
-  },
-  {
-    "id": "SwapProgress93_ghost_to_eth",
-    "message": "El creador del pedido no tiene conexión. Esperandolo..."
-  },
-  {
-    "id": "SwapProgress99_ghost_to_eth",
-    "message": "Crea una clave secreta"
-  },
-  {
-    "id": "BitcoinBuyText17_ghost_to_tokens",
-    "message": "Procesando confirmación"
-  },
-  {
-    "id": "BitcoinBuyText29_ghost_to_tokens",
-    "message": "Comprobando saldo.."
-  },
-  {
-    "id": "BitcoinBuyText33_ghost_to_tokens",
-    "message": "Creando GHOST Script.{br} Puede demorar unos minutos"
-  },
-  {
-    "id": "BitcoinBuyText37_ghost_to_tokens",
-    "message": "{buyCurrency} El propietario recibió GHOST Script y Secret Hash. Esperando cuando crea {buyCurrency} Contrato"
-  },
-  {
-    "id": "BitcoinBuyText41_ghost_to_tokens",
-    "message": "{buyCurrency}Contrato creado y cargado. Solicitando retiro de {buyCurrency} Contrato."
-  },
-  {
-    "id": "BitcoinBuyText45_ghost_to_tokens",
-    "message": "{buyCurrency} tokens se transfirieron a su billetera. Consulta el saldo."
-  },
-  {
-    "id": "BitcoinBuyText49_ghost_to_tokens",
-    "message": "Gracias por usar using GhostX"
-  },
-  {
-    "id": "BitcoinBuyText53_ghost_to_tokens",
-    "message": "Gracias por usar GhostX!"
-  },
-  {
-    "id": "BtcToEthToken20_ghost_to_tokens",
-    "message": "Crea una clave secreta"
-  },
-  {
-    "id": "BtcToEthToken123_copy",
-    "message": "¡Se acabó el intercambio!"
-  },
-  {
-    "id": "SwapProgress111_BTC_ETH",
-    "message": "Creando Bitcoin Script. {br} Puede tardar unos minutos"
-  },
-  {
-    "id": "SwapProgress117_BTC_ETH",
-    "message": "Tu BTC ahora se está depositando. Puede requerir una confirmación de Bitcoin Network. Esperando que otro participante deposite ETH."
-  },
-  {
-    "id": "SwapProgress123_BTC_ETH",
-    "message": "ETH Contrato creado y cargado. Solicitud de retiro del contrato ETH."
-  },
-  {
-    "id": "SwapProgress129_BTC_ETH",
-    "message": "ETH se transfirió a su billetera. Consulta el saldo."
-  },
-  {
-    "id": "SwapProgress135_BTC_ETH",
-    "message": "¡Gracias por usar Swap.Onlinde!"
-  },
-  {
-    "id": "BitcoinBuyText17_btc_to_ethtoken",
-    "message": "Procesando confirmación"
-  },
-  {
-    "id": "BitcoinBuyText29_btc_to_ethtoken",
-    "message": "Comprobando saldo.."
-  },
-  {
-    "id": "BitcoinBuyText33_btc_to_ethtoken",
-    "message": "Creando Bitcoin Script. {br} Puede tardar unos minutos"
-  },
-  {
-    "id": "BitcoinBuyText37_btc_to_ethtoken",
-    "message": "{buyCurrency} El propietario recibió Bitcoin Script y Secret Hash. Esperando cuando crea {buyCurrency} Contrato"
-  },
-  {
-    "id": "BitcoinBuyText41_btc_to_ethtoken",
-    "message": "{buyCurrency} Contrato creado y cargado. Solicitando retiro de{buyCurrency} Contrato."
-  },
-  {
-    "id": "BitcoinBuyText45_btc_to_ethtoken",
-    "message": "{buyCurrency} tokens se transfirieron a su billetera. Consulta el saldo."
-  },
-  {
-    "id": "BitcoinBuyText49_btc_to_ethtoken",
-    "message": "Gracias por usar GhostX"
-  },
-  {
-    "id": "BitcoinBuyText53_btc_to_ethtoken",
-    "message": "Gracias por usar GhostX!"
-  },
-  {
-    "id": "BtcToEthToken20_btc_to_ethtoken",
-    "message": "Crea una clave secreta"
-  },
-  {
-    "id": "SwapProgress111_BTC_GHOST",
-    "message": "Creando Bitcoin Script. {br} Puede tardar unos minutos"
-  },
-  {
-    "id": "SwapProgress117_BTC_GHOST",
-    "message": "Tu BTC ahora se está depositando. Puede requerir una confirmación de Bitcoin Network. Esperando que otro participante deposite GHOST."
-  },
-  {
-    "id": "SwapProgress123_BTC_GHOST",
-    "message": "GHOST Contrato creado y cargado. Solicitar el retiro del contrato GHOST."
-  },
-  {
-    "id": "SwapProgress129_BTC_GHOST",
-    "message": "GHOST fue transferido a tu billetera. Consulta el saldo."
-  },
-  {
-    "id": "SwapProgress135_BTC_GHOST",
-    "message": "¡Gracias por usar Swap.Onlinde!"
-  },
-  {
-    "id": "ethToBtcText20_eth_to_btc",
-    "message": "Esperando que el propietario de BTC cree la clave secreta, cree el script de BTC y cárguelo"
-  },
-  {
-    "id": "ethToBtcText25_eth_to_btc",
-    "message": "El script de bitcoin fue creado y cargado. Verifique la información a continuación"
-  },
-  {
-    "id": "ethToBtcText26_eth_to_btc",
-    "message": "Procesando confirmación"
-  },
-  {
-    "id": "ethToBtcText28_eth_to_btc",
-    "message": "Comprobando saldo.."
-  },
-  {
-    "id": "ethToBtcText32_eth_to_btc",
-    "message": "Creación de contrato Ethereum. {br} Puede llevar unos minutos"
-  },
-  {
-    "id": "ethToBtcText36_eth_to_btc",
-    "message": "Esperando que el propietario de BTC agregue una clave secreta al contacto de ETH"
-  },
-  {
-    "id": "ethToBtcText40_eth_to_btc",
-    "message": "Los fondos del contrato ETH se transfirieron con éxito a BTC propietario.\n              El propietario de BTC dejó una clave secreta. Solicitando retiro del script BTC."
-  },
-  {
-    "id": "ethToBtcText44_eth_to_btc",
-    "message": "Gracias por usar GhostX"
-  },
-  {
-    "id": "ethToBtcText48_eth_to_btc",
-    "message": "Gracias por usar GhostX!"
-  },
-  {
-    "id": "ethToBtcText20_ghost_to_btc",
-    "message": "Esperando que GHOST Owner cree la clave secreta, cree GHOST Script y cárguela"
-  },
-  {
-    "id": "ethToBtcText25_ghost_to_btc",
-    "message": "La ghost Script ha sido creada y cobrada. Revise la información debajo"
-  },
-  {
-    "id": "ethToBtcText26_ghost_to_btc",
-    "message": "Procesando confirmación"
-  },
-  {
-    "id": "ethToBtcText28_ghost_to_btc",
-    "message": "Comprobando saldo.."
-  },
-  {
-    "id": "ethToBtcText32_ghost_to_btc",
-    "message": "Creando contrato Ethereum.{br} Puede demorar unos minutos"
-  },
-  {
-    "id": "ethToBtcText36_ghost_to_btc",
-    "message": "Esperando que el propietario de BTC agregue una clave secreta al contacto ETH."
-  },
-  {
-    "id": "ethToBtcText40_ghost_to_btc",
-    "message": "Los fondos del contrato ETH han sido exitosamente transferidos al propietario de BTC. \n  El propietario BTC ha dejado una clave secreta. Solicitando retirada de BTC Script."
-  },
-  {
-    "id": "ethToBtcText44_ghost_to_btc",
-    "message": "Gracias por usar GhostX"
-  },
-  {
-    "id": "ethToBtcText48_ghost_to_btc",
-    "message": "Gracias por usar GhostX!"
-  },
-  {
-    "id": "EthTokensToBtc16_ethToken_to_btc",
-    "message": "Procesando confirmación"
-  },
-  {
-    "id": "EthTokensToBtc20_ethToken_to_btc",
-    "message": "Esperando la creación de clave secreta por parte del propietario de BTC, crear BTC Script y cargar"
-  },
-  {
-    "id": "EthTokensToBtc24_ethToken_to_btc",
-    "message": "El bitcoin Script ha sido creado y cargado. Revise la información debajo."
-  },
-  {
-    "id": "EthTokensToBtc28_ethToken_to_btc",
-    "message": "Comprobando saldo.."
-  },
-  {
-    "id": "EthTokensToBtc32_ethToken_to_btc",
-    "message": "Creando contrato de Ethereum. {br} Puede demorar unos minutos"
-  },
-  {
-    "id": "EthTokensToBtc36_ethToken_to_btc",
-    "message": "Esperando que el propietario de BTC agregue tu clave secreta al contacto ETH"
-  },
-  {
-    "id": "EthTokensToBtc40_ethToken_to_btc",
-    "message": "Los fondos del contrato ETH han sido exitosamente transferidos al propietario de BTC"
-  },
-  {
-    "id": "EthTokensToBtc44_ethToken_to_btc",
-    "message": "Gracias por usar GhostX"
-  },
-  {
-    "id": "EthTokensToBtc48_ethToken_to_btc",
-    "message": "Gracias por usar GhostX!"
   },
   {
     "id": "Banner_YouAreHaveNotSignegTx",
@@ -6990,14 +4882,6 @@
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
-  },
-  {
-    "id": "Banner_ConnectMetamask",
-    "message": "Conectar Billetera"
-  },
-  {
-    "id": "Banner_ConnectMetamaskDesc",
-    "message": "Pulsa para conectar a una billetera externa"
   },
   {
     "id": "WalletRow_MetamaskConnect",
@@ -7071,14 +4955,6 @@
     ]
   },
   {
-    "id": "Exchange_MetamaskAddressOption",
-    "message": "Metamask"
-  },
-  {
-    "id": "Exchange_MetamaskNotInstalledOption",
-    "message": "Metamask (not installed)"
-  },
-  {
     "id": "Exchange_PlaceholderEnterAddress",
     "message": "Enter the receiving wallet address",
     "files": [
@@ -7133,10 +5009,6 @@
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
-  },
-  {
-    "id": "BitcoinBuyText35_btc_to_ethtoken",
-    "message": "{buyCurrency} Owner received Bitcoin Script and Secret Hash. Waiting confirm TX and when he creates {buyCurrency} Contract"
   },
   {
     "id": "MainFAQ2_content3",
@@ -7195,10 +5067,6 @@
     ]
   },
   {
-    "id": "ConnectWalletModal_InjectedMobile",
-    "message": "Para conectar"
-  },
-  {
     "id": "ConnectWalletModal_Title",
     "message": "Conectar una billetera externa",
     "files": [
@@ -7211,10 +5079,6 @@
     "files": [
       "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.tsx"
     ]
-  },
-  {
-    "id": "MainFAQ2_content4",
-    "message": "Cargando"
   },
   {
     "id": "FilterTextAll",
@@ -7294,10 +5158,6 @@
     ]
   },
   {
-    "id": "Withdrow171",
-    "message": "La cantidad máxima que puede enviar es {allowedUsdBalance} USD"
-  },
-  {
     "id": "WTH276",
     "message": "El monto no debe exceder su{br} saldo actual menos la tarifa de minería",
     "files": [
@@ -7347,10 +5207,6 @@
     ]
   },
   {
-    "id": "Withdrow214",
-    "message": "Gastos de gestión {currency}: {adminFee}"
-  },
-  {
     "id": "FeeInfoBlockTotalFee",
     "message": "Tarifa total que paga:",
     "files": [
@@ -7393,23 +5249,11 @@
     ]
   },
   {
-    "id": "localStorageBtnExchange",
-    "message": "Back"
-  },
-  {
-    "id": "localStorageBtnSend",
-    "message": "Enviar a los desarrolladores"
-  },
-  {
     "id": "localStorageUserNotification",
     "message": "✔️ Estos datos no contienen sus claves privadas",
     "files": [
       "src/front/shared/pages/LocalStorage/LocalStorage.tsx"
     ]
-  },
-  {
-    "id": "SwapLocalStorage",
-    "message": "open your settings"
   },
   {
     "id": "FourthStep37BtcLike",
@@ -7699,10 +5543,6 @@
     ]
   },
   {
-    "id": "OrderBookOffersNote",
-    "message": "La búsqueda de pares y ofertas puede tardar un par de minutos. Si no se encuentran ofertas en un par de minutos, significa que no hay ofertas coincidentes o que un usuario que realizó la oferta no está conectado."
-  },
-  {
     "id": "DebugStoredDataLink",
     "message": "Show stored data",
     "files": [
@@ -7729,10 +5569,6 @@
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
     ]
-  },
-  {
-    "id": "FeeInfoBlockTxSize",
-    "message": "Tamaño de la transacción:"
   },
   {
     "id": "Swap_MetamaskAttention",

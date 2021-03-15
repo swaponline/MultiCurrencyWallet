@@ -426,7 +426,7 @@ class Row extends Component {
       <tr
         id={id}
         styleName={`
-          ${peer === ownerPeer ? 'mobileRowRemove' : 'mobileRowStart'}
+          ${'mobileRow'}
           ${isDark ? 'rowDark' : ''}
           ${id === linkedOrderId ? 'linkedOrderHighlight' : ''}
         `}
@@ -448,7 +448,7 @@ class Row extends Component {
               </span>
             </div>
             <div>
-              <i style={{ margin: '0 0.8em' }} className="fas fa-exchange-alt" />
+              <i styleName='arrowsIcon' className="fas fa-exchange-alt" />
             </div>
             <div styleName="tdContainer-2">
               <span styleName="secondType">
