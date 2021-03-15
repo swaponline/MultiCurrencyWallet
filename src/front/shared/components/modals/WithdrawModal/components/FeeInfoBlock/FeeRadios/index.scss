@@ -1,84 +1,84 @@
 .fee-radio {
-    position: relative;
-    display: flex;
-    margin-top: 12px;
-    border-radius: 5px;
-    letter-spacing: 0.01em;
-    width: 100%;
+  position: relative;
+  display: flex;
+  margin-top: 12px;
+  border-radius: 5px;
+  letter-spacing: 0.01em;
+  width: 100%;
 
-    &.--dark {
-        .fee-radio__labe {
-          background-color: #2b2b2b;
-          color: white;
+  &.--dark {
+    .fee-radio__labe {
+      background-color: #2b2b2b;
+      color: white;
 
-        }
-      }
+    }
+    }
   }
 .fee-radio__input {
-    position: absolute;
-    overflow: hidden;
-    width: 0;
-    height: 0;
-    clip: rect(0 0 0 0);
+  position: absolute;
+  overflow: hidden;
+  width: 0;
+  height: 0;
+  clip: rect(0 0 0 0);
 }
 
 .fee-radio__label {
-    position: relative;
-    z-index: 1;
-    width: 25%;
-    padding: 10px 5px 5px 20px;
-    border: 1px solid rgba(142, 154, 163, 0.16);
-    box-shadow: 0px 2px 12px rgba(142, 154, 163, 0.08);
-    border-radius: 5px;
-    cursor: pointer;
-    white-space: nowrap;
-    transition: background-color 0.2s ease, color 0.2s ease;
+  position: relative;
+  z-index: 1;
+  width: 25%;
+  padding: 10px 5px 5px 20px;
+  border: 1px solid rgba(142, 154, 163, 0.16);
+  box-shadow: 0px 2px 12px rgba(142, 154, 163, 0.08);
+  border-radius: 5px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .fee-radio__label:not(:last-child) {
-    margin-right: 12px;
+  margin-right: 12px;
 }
 
 /* Checked */
 
 .fee-radio__input:checked + .fee-radio__label,
 .fee-radio__label--active {
-    border: 1px solid var(--primary);
+  border: 1px solid var(--primary);
 }
 
 
 @media (max-width: 767px) {
-    .fee-radio {
-        flex-wrap: wrap;
-        justify-content: center;
-    }
+  .fee-radio {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
 
-    .fee-radio__label {
-        width: 47%;
-        justify-self: center;
-    }
+  .fee-radio__label {
+    width: 47%;
+    justify-self: center;
+  }
 
-    .fee-radio__label:not(:last-child) {
-        margin-right: 0;
-    }
+  .fee-radio__label:not(:last-child) {
+    margin-right: 0;
+  }
 
-    .fee-radio__label:nth-child(2),
-    .fee-radio__label:nth-child(6) {
-        margin-right: 10px;
-    }
+  .fee-radio__label:nth-child(2),
+  .fee-radio__label:nth-child(6) {
+    margin-right: 10px;
+  }
 }
 
 @media (max-width: 500px) {
-    .fee-radio__label {
-        width: 100%;
-    }
-    .fee-radio__label:nth-child(2),
-    .fee-radio__label:nth-child(6) {
-        margin-right: 0;
-    }
+  .fee-radio__label {
+    width: 100%;
+  }
+  .fee-radio__label:nth-child(2),
+  .fee-radio__label:nth-child(6) {
+    margin-right: 0;
+  }
 }
 
 .paleLoader {
-    display: inline-block;
-    opacity: 0.7;
+  display: inline-block;
+  opacity: 0.7;
   }
