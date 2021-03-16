@@ -12,6 +12,16 @@ type CoinFee = {
   isUTXO: boolean
 }
 
+type PairFees = {
+  sell: CoinFee
+  buy: CoinFee
+  have: CoinFee
+  get: CoinFee
+  byCoins: {
+    [key: string]: CoinFee
+  }
+}
+
 const feeCache = {}
 
 const fetchCoinFee = (args): Promise<CoinFee> => {
@@ -84,34 +94,24 @@ const fetchCoinFee = (args): Promise<CoinFee> => {
           })
           break;
         default:
-          console.warn(`Unknown coin type ${coinData.type} for coin ${coinData.ticker}`)
+          console.warn(`Unknown coin type (${coinData.type}) for coin (${coinData.ticker})`)
           break;
       }
     } else {
-      console.warn(`Helpers > fetchCoinFee - Unknown coin ${coin.toUpperCase()}`)
+      console.warn(`Helpers > fetchCoinFee - Unknown coin (${coin})`)
     }
   })
 }
 
-type PairFees = {
-  sell: CoinFee
-  buy: CoinFee
-  have: CoinFee
-  get: CoinFee
-  byCoins: {
-    [key: string]: CoinFee
-  }
-}
-
 export const getPairFees = (args): Promise<PairFees> => {
-  const { sellCoin, buyCoin } = args
+  const { sellCurrency, buyCurrency } = args
 
   return new Promise(async (feeResolved) => {
     const sell = await fetchCoinFee({
-      sellCoin: sellCoin.toUpperCase(),
+      coinName: sellCurrency.toUpperCase(),
     })
     const buy = await fetchCoinFee({
-      buyCoin: buyCoin.toUpperCase(),
+      coinName: buyCurrency.toUpperCase(),
     })
     
     const byCoins = {

@@ -126,11 +126,11 @@ class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
     }
   }
 
-  getTicker() {
+  getTicker = () => {
     return this.props.currency.toUpperCase()
   }
 
-  getInternalAddress() {
+  getInternalAddress = () => {
     const { allData } = this.props
     const ticker = this.getTicker()
     let internalAddress
@@ -147,7 +147,7 @@ class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
     return internalAddress
   }
 
-  isCurrencyInInternalWallet() {
+  isCurrencyInInternalWallet = () => {
     const { hiddenCoinsList } = this.props
     const ticker = this.getTicker()
     const internalAddress = this.getInternalAddress()
@@ -167,13 +167,13 @@ class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
     return result
   }
 
-  handleFocusAddress() {
+  handleFocusAddress = () => {
     this.setState({
       walletAddressFocused: true,
     })
   }
 
-  onWeb3Updated() {
+  onWeb3Updated = () => {
     this.setState({
       isMetamaskConnected: metamask.isConnected(),
       metamaskAddress: metamask.getAddress(),
@@ -181,7 +181,7 @@ class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
   }
 
   componentDidMount() {
-    metamask.web3connect.on('updated', this.onWeb3Updated.bind(this))
+    metamask.web3connect.on('updated', this.onWeb3Updated)
   }
 
   componentWillUnmount() {
@@ -205,7 +205,7 @@ class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
     }
   }
 
-  handleBlurAddress() {
+  handleBlurAddress = () => {
     this.setState({
       walletAddressFocused: false,
     })
@@ -216,7 +216,7 @@ class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
     })
   }
 
-  goСreateWallet() {
+  goСreateWallet = () => {
     const {
       history,
       intl: { locale },
@@ -229,7 +229,7 @@ class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
     history.push(url)
   }
 
-  handleConnectMetamask() {
+  handleConnectMetamask = () => {
     metamask
       .connect({
         dontRedirect: true,
@@ -263,11 +263,11 @@ class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
     }))
   }
 
-  handleScanError(err) {
+  handleScanError = (err) => {
     console.error('Scan error', err)
   }
 
-  handleScan(data) {
+  handleScan = (data) => {
     if (data) {
       const address = data.includes(':') ? data.split(':')[1] : data
       this.toggleScan()
@@ -278,7 +278,9 @@ class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
     }
   }
 
-  handleOptionSelect(option) {
+  handleOptionSelect = (option) => {
+    console.log('ADDRESS SELECT > HANDLE OPTION: ', option)
+
     const { selectedType: oldSelectedType } = this.state
 
     const { value: selectedType, dontSelect } = option
@@ -319,7 +321,7 @@ class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
     )
   }
 
-  applyAddress(addressObj) {
+  applyAddress = (addressObj) => {
     const { onChange, currency } = this.props
     const { type, value } = addressObj
 
@@ -449,12 +451,17 @@ class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
     ]
 
     const valueLink = Link.all(this, 'address')
+    const customInputStyles = {
+      fontSize: '15px',
+      textOverflow: 'ellipsis',
+    }
 
     return (
       <div
-        styleName={`addressSelect ${hasError ? 'addressSelect_error' : ''} ${
-          isDark ? '--dark' : ''
-        }`}
+        styleName={
+          `addressSelect ${hasError ? 'addressSelect_error' : ''} 
+          ${isDark ? '--dark' : ''}`
+        }
       >
         <div styleName="label">{label}</div>
         <DropDown
@@ -466,7 +473,7 @@ class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
           dontScroll={true}
           arrowSide="left"
           itemRender={(item) => <Option {...item} />}
-          onSelect={(value) => this.handleOptionSelect(value)}
+          onSelect={this.handleOptionSelect}
         />
         {selectedType === AddressType.Metamask && metamask.isEnabled() && !isMetamaskConnected && (
           <div styleName="selectedInner connectWrapper">
@@ -484,11 +491,7 @@ class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
             <div styleName={`customWallet ${walletAddressFocused ? 'customWallet_focus' : ''}`}>
               <div styleName="customAddressInput">
                 <Input
-                  inputCustomStyle={{
-                    fontSize: '15px',
-                    textOverflow: 'ellipsis',
-                  }}
-                  required
+                  inputCustomStyle={customInputStyles}
                   pattern="0-9a-zA-Z"
                   onFocus={this.handleFocusAddress}
                   onBlur={this.handleBlurAddress}
@@ -496,6 +499,7 @@ class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
                   valueLink={valueLink.address}
                   openScan={this.toggleScan}
                   qr={isMobile}
+                  required
                 />
               </div>
             </div>
