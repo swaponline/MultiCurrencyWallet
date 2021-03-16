@@ -1153,6 +1153,7 @@ class Exchange extends PureComponent<any, any> {
           action: 'exchange-click-selector',
           label: `${haveCurrency}-to-${getCurrency}`,
         })
+        this.fetchPairFeesAndBalances()
         this.checkPair()
       }
     )
@@ -1181,8 +1182,8 @@ class Exchange extends PureComponent<any, any> {
     const checkingValue = this.props.allCurrencyies
       .map((item) => item.name)
       .includes(haveCurrency.toUpperCase())
-      ? haveCurrency
-      : noPairToken
+        ? haveCurrency
+        : noPairToken
 
     const selected = actions.pairs.selectPairPartial(checkingValue)
     const check = selected.map((item) => item.value).includes(getCurrency)
