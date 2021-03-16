@@ -1,7 +1,7 @@
 # How to configure
 
 - `/config`
-- `/externalConfigs` - for domains
+- `/externalConfigs` - for domains..
 
 
 ## Configuration files priority
