@@ -22,15 +22,18 @@ const feeCache = {
 }
 
 const fetchCoinFee = (args): Promise<CoinFee> => {
-  const { coinName, action, fixed } = args
+  const { coinName, action, fixed, updateCacheValue } = args
 
   return new Promise(async (feeResolved) => {
-    const hasFeeInCache = feeCache[action] && feeCache[action][coinName]
+    const hasFeeInCache = 
+      (!updateCacheValue && feeCache[action] && feeCache[action][coinName])
     const coinData = COIN_DATA[coinName]
     let obtainedResult = undefined
 
     if (hasFeeInCache) {
-      console.log('VALUE FROM CACHE')
+      // FIXME:
+      console.log('VALUE FROM CACHE > ', feeCache)
+      
       feeResolved(feeCache[action][coinName])
       return
     }
@@ -126,8 +129,14 @@ const fetchFeeForEthToken = (params) => {
   })
 }
 
-export const getPairFees = (params): Promise<PairFees> => {
-  const { sellCurrency, buyCurrency } = params
+type PairFeesParams = {
+  sellCurrency: string
+  buyCurrency: string
+  updateCacheValue?: boolean
+}
+
+export const getPairFees = (params: PairFeesParams): Promise<PairFees> => {
+  const { sellCurrency, buyCurrency, updateCacheValue = false } = params
   const sellCurrencyUpp = sellCurrency.toUpperCase()
   const buyCurrencyUpp = buyCurrency.toUpperCase()
   // for currency with UTXO model that we buy
@@ -138,11 +147,13 @@ export const getPairFees = (params): Promise<PairFees> => {
     const sell = await fetchCoinFee({
       coinName: sellCurrencyUpp,
       action: 'sell',
+      updateCacheValue,
     })
     const buy = await fetchCoinFee({
       coinName: buyCurrencyUpp,
       action: 'buy',
       fixed: coinIsBought,
+      updateCacheValue,
     })
 
     const byCoins = {

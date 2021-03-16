@@ -50,7 +50,7 @@ const langLabels = defineMessages({
   },
   optionCustom: {
     id: 'Exchange_CustomAddressOption',
-    defaultMessage: 'External wallet',
+    defaultMessage: 'Specify',
   },
   placeholderAddress: {
     id: 'Exchange_PlaceholderEnterAddress',

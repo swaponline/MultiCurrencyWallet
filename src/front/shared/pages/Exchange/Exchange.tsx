@@ -433,7 +433,8 @@ class Exchange extends PureComponent<any, any> {
     return balances && balances[currency.toUpperCase()] ? balances[currency.toUpperCase()] : 0
   }
 
-  fetchPairFeesAndBalances() {
+  fetchPairFeesAndBalances(params?) {
+    const { updateCacheValue } = params
     const { 
       haveCurrency: sellCurrency, 
       getCurrency: buyCurrency,
@@ -448,48 +449,49 @@ class Exchange extends PureComponent<any, any> {
       () => {
         if (!this._mounted) return
 
-        getPairFees({ sellCurrency, buyCurrency }).then(async (pairFees: IUniversalObj) => {
-          const buyExRate = await this.fetchFiatExRate(pairFees.buy.coin)
-          const sellExRate = await this.fetchFiatExRate(pairFees.sell.coin)
+        getPairFees({ sellCurrency, buyCurrency, updateCacheValue })
+          .then(async (pairFees: IUniversalObj) => {
+            const buyExRate = await this.fetchFiatExRate(pairFees.buy.coin)
+            const sellExRate = await this.fetchFiatExRate(pairFees.sell.coin)
 
-          if (!this._mounted) return
-          this.setState(
-            {
-              pairFees: {
-                ...pairFees,
-                buyExRate,
-                sellExRate,
+            if (!this._mounted) return
+            this.setState(
+              {
+                pairFees: {
+                  ...pairFees,
+                  buyExRate,
+                  sellExRate,
+                },
               },
-            },
-            async () => {
-              if (!this._mounted) return
-              // After fetching fee - actualize balances
-              const buyWallet = actions.core.getWallet({ currency: buyCurrency })
-              const sellWallet = actions.core.getWallet({ currency: sellCurrency })
-              const feeBuyWallet = actions.core.getWallet({ currency: pairFees.buy.coin })
-              const feeSellWallet = actions.core.getWallet({ currency: pairFees.sell.coin })
+              async () => {
+                if (!this._mounted) return
+                // After fetching fee - actualize balances
+                const buyWallet = actions.core.getWallet({ currency: buyCurrency })
+                const sellWallet = actions.core.getWallet({ currency: sellCurrency })
+                const feeBuyWallet = actions.core.getWallet({ currency: pairFees.buy.coin })
+                const feeSellWallet = actions.core.getWallet({ currency: pairFees.sell.coin })
 
-              const balances = {}
-              balances[`${buyWallet.currency}`] = await actions.core.fetchWalletBalance(buyWallet)
-              balances[`${sellWallet.currency}`] = await actions.core.fetchWalletBalance(sellWallet)
-              if (balances[`${feeBuyWallet.currency}`] === undefined) {
-                balances[`${feeBuyWallet.currency}`] = await actions.core.fetchWalletBalance(
-                  feeBuyWallet
-                )
+                const balances = {}
+                balances[`${buyWallet.currency}`] = await actions.core.fetchWalletBalance(buyWallet)
+                balances[`${sellWallet.currency}`] = await actions.core.fetchWalletBalance(sellWallet)
+                if (balances[`${feeBuyWallet.currency}`] === undefined) {
+                  balances[`${feeBuyWallet.currency}`] = await actions.core.fetchWalletBalance(
+                    feeBuyWallet
+                  )
+                }
+                if (balances[`${feeSellWallet.currency}`] === undefined) {
+                  balances[`${feeSellWallet.currency}`] = await actions.core.fetchWalletBalance(
+                    feeSellWallet
+                  )
+                }
+
+                this.setState({
+                  balances,
+                })
+
+                this.checkBalanceOnAllCurrency()
               }
-              if (balances[`${feeSellWallet.currency}`] === undefined) {
-                balances[`${feeSellWallet.currency}`] = await actions.core.fetchWalletBalance(
-                  feeSellWallet
-                )
-              }
-
-              this.setState({
-                balances,
-              })
-
-              this.checkBalanceOnAllCurrency()
-            }
-          )
+            )
         })
       }
     )

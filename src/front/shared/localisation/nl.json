@@ -3824,7 +3824,7 @@
   },
   {
     "id": "Exchange_CustomAddressOption",
-    "message": "Externe portemonnee",
+    "message": "Geven",
     "files": [
       "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
     ]

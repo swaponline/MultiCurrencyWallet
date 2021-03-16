@@ -1,14 +1,18 @@
-.Switching {
+.switching {
   display: flex;
-  background: url('./images/swapIcon.svg') 50% 50% no-repeat;
   width: 40px;
   height: 46px;
   cursor: pointer;
   z-index: 1;
   border-radius: 3px;
   border: 1px solid rgba(0, 0, 0, 0.2);
+  color: $l-color;
 }
 
 .noneBorder {
   border: none;
+}
+
+.dark {
+  color: $d-color;
 }

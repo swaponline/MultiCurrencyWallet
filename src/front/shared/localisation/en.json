@@ -3849,7 +3849,7 @@
   },
   {
     "id": "Exchange_CustomAddressOption",
-    "message": "External wallet",
+    "message": "Specify",
     "files": [
       "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
     ]
