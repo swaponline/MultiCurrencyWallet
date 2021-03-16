@@ -62,6 +62,10 @@
       color: $d-color;
       background: $d-background-elements;
     }
+    
+    .minerFeeUpdateBtn {
+      color: $d-color;
+    }
   }
 }
 
@@ -217,10 +221,13 @@
 
   .fees {
     opacity: 0.7;
-
     font-size: 0.7em;
     font-weight: bold;
-    font-family: 'Roboto Mono', monospace;
+
+    .serviceFee,
+    .minerFee {
+      font-family: 'Roboto Mono', monospace;
+    }
 
     .serviceFee {
       margin-bottom: 0.15em;
@@ -229,11 +236,13 @@
     .minerFee {
       a {
         font-size: 1em;
-        font-family: 'Roboto Mono', monospace;
       }
     }
   }
+}
 
+.minerFeeUpdateBtn {
+  color: $l-color;
 }
 
 .buttons {

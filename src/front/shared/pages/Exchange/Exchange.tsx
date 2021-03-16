@@ -433,8 +433,13 @@ class Exchange extends PureComponent<any, any> {
     return balances && balances[currency.toUpperCase()] ? balances[currency.toUpperCase()] : 0
   }
 
-  fetchPairFeesAndBalances(params?) {
-    const { updateCacheValue } = params
+  updateFees = () => {
+    const updateCacheValue = true
+
+    this.fetchPairFeesAndBalances(updateCacheValue)
+  }
+
+  fetchPairFeesAndBalances(updateCacheValue = false) {
     const { 
       haveCurrency: sellCurrency, 
       getCurrency: buyCurrency,
@@ -1670,6 +1675,12 @@ class Exchange extends PureComponent<any, any> {
                     {pairFees.buy.fee} {pairFees.buy.coin} + {pairFees.sell.fee}{' '}
                     {pairFees.sell.coin}
                     {fiatFeeCalculation > 0 && <span> &asymp; ${fiatFeeCalculation} </span>}
+                    
+                    <button 
+                      className="fas fa-sync-alt"
+                      styleName="minerFeeUpdateBtn"
+                      onClick={this.updateFees}
+                    />
                     <a
                       href="https://wiki.swaponline.io/faq/why-i-pay-ming-fees-of-btc-and-eth-both-why-not-seller/"
                       target="_blank"
