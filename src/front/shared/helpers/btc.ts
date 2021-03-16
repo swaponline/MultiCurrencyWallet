@@ -109,7 +109,7 @@ const getByteCount = (inputs, outputs) => {
   return Math.ceil(totalWeight / 4)
 }
 
-interface IcalculateTxSizeOptions {
+type CalculateTxSizeOptions = {
   amount?: number
   unspents?: any
   address: string
@@ -117,7 +117,8 @@ interface IcalculateTxSizeOptions {
   method?: string
   fixed?: boolean
 }
-const calculateTxSize = async (options: IcalculateTxSizeOptions) => {
+
+const calculateTxSize = async (options: CalculateTxSizeOptions) => {
   let {
     amount,
     unspents,
@@ -137,6 +138,7 @@ const calculateTxSize = async (options: IcalculateTxSizeOptions) => {
   }
 
   unspents = unspents || await actions.btc.fetchUnspents(address)
+
   if (amount) {
     unspents = await actions.btc.prepareUnspents({ amount, unspents })
   }
@@ -172,14 +174,6 @@ const calculateTxSize = async (options: IcalculateTxSizeOptions) => {
     return mstxSize
     */
   }
-
-  // FIXME:
-  console.log('BTC HELPERS > calculateTxSize ======================')
-  console.log('options: ', options)
-  console.log('defaultTxSize: ', defaultTxSize)
-  console.log('unspents: ', unspents)
-  console.log('txIn: ', txIn)
-  console.log('txSize: ', txSize)
 
   return txSize
 }
