@@ -8,6 +8,7 @@
   "license": "MIT",
   "main": "./src/front/bin/server",
   "scripts": {
+    "audit": "NPM_AUDIT_IGNORE_DEV=1 NPM_AUDIT_IGNORE_LEVEL=low npm-audit-whitelister .npm-audit-whitelister.json",
     "common:test": "tsc ./src/common/tests/tests.ts --noEmit",
     "common:example:send": "node ./src/common/examples/send.js",
     "common:example:unspents": "node ./src/common/examples/unspents.js",
