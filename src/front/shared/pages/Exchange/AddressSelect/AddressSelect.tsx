@@ -66,6 +66,7 @@ type AddressSelectProps = {
   role: string
   currency: string
   selectedType?: string
+  customIsEnabled?: boolean
   placeholder?: string
   hasError?: boolean
   isDark: boolean
@@ -279,8 +280,6 @@ class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
   }
 
   handleOptionSelect = (option) => {
-    console.log('ADDRESS SELECT > HANDLE OPTION: ', option)
-
     const { selectedType: oldSelectedType } = this.state
 
     const { value: selectedType, dontSelect } = option
@@ -338,6 +337,7 @@ class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
 
   render() {
     const {
+      customIsEnabled = false,
       currency,
       isDark,
       label,
@@ -365,90 +365,114 @@ class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
       role === AddressRole.Send && (!internalBalance || internalBalance === 0)
 
     const isMetamaskOption = ethToken.isEthOrEthToken({ name: currency })
-    const isMetamaskInstalled = metamask.isEnabled()
 
     // Forbid `Custom address` option when using ethereum/tokens
     // because you need to make a request to the contract
-    const isCustomAddressOption = !ethToken.isEthOrEthToken({ name: currency })
+    const isCustomAddressOption = customIsEnabled && !ethToken.isEthOrEthToken({ name: currency })
     const isCustomOptionInputHidden =
-      role === AddressRole.Send && COIN_DATA[ticker] && COIN_DATA[ticker].model === COIN_MODEL.UTXO
+      !customIsEnabled &&
+      role === AddressRole.Send &&
+      COIN_DATA[ticker] &&
+      COIN_DATA[ticker].model === COIN_MODEL.UTXO
 
     const web3Icon = metamask.isConnected()
       ? web3Icons[metamask.web3connect.getProviderType()] || false
       : web3Icons[metamask.web3connect.getInjectedType()] || false
 
-    const options = [
+    // =======================================================
+    // Drop Down Options =====================================
+
+    type DropDownOptions = {
+      value: string
+      disabled?: boolean
+      reduceSelectedItemText?: boolean
+      dontSelect?: boolean
+      hidden?: boolean
+      title: JSX.Element
+      icon?: SVGElement
+    }
+
+    const dropDownOptions: DropDownOptions[] = [
       {
         value: 'placeholder',
         title: <FormattedMessage {...langLabels.labelSpecifyAddress} />,
         disabled: true,
         hidden: true,
       },
-      ...(this.isCurrencyInInternalWallet()
-        ? [
-            {
-              value: AddressType.Internal,
-              icon: iconInternal,
-              title: !isInternalOptionDisabled ? (
-                <Fragment>
-                  <FormattedMessage {...langLabels.optionInternal} />
-                  <Address
-                    address={this.getInternalAddress()}
-                    format={AddressFormat.Short}
-                    type={AddressType.Internal}
-                  />
-                </Fragment>
-              ) : (
-                <FormattedMessage {...langLabels.optionInternalDisabled} />
-              ),
-              disabled: isInternalOptionDisabled,
-            },
-          ]
-        : [
-            {
-              value: 'InternalAddressCreate',
-              icon: iconInternal,
-              title: <FormattedMessage {...langLabels.optionInternalCreate} />,
-            },
-          ]),
-      ...(isMetamaskOption
-        ? isMetamaskConnected
-          ? [
-              {
-                value: AddressType.Metamask,
-                icon: web3Icon,
-                title: (
-                  <Fragment>
-                    {metamask.web3connect.getProviderTitle()}
-                    <Address
-                      address={metamaskAddress}
-                      format={AddressFormat.Short}
-                      type={AddressType.Metamask}
-                    />
-                  </Fragment>
-                ),
-              },
-            ]
-          : [
-              {
-                value: AddressType.Metamask,
-                icon: web3Icon,
-                title: <FormattedMessage {...langLabels.optionConnect} />,
-                dontSelect: true,
-              },
-            ]
-        : []),
-      ...(isCustomAddressOption
-        ? [
-            {
-              value: AddressType.Custom,
-              icon: iconCustom,
-              title: <FormattedMessage {...langLabels.optionCustom} />,
-              reduceSelectedItemText: !isCustomOptionInputHidden,
-            },
-          ]
-        : []),
     ]
+
+    if (this.isCurrencyInInternalWallet()) {
+      dropDownOptions.push(
+        {
+          value: AddressType.Internal,
+          icon: iconInternal,
+          title: !isInternalOptionDisabled ? (
+            <Fragment>
+              <FormattedMessage {...langLabels.optionInternal} />
+              <Address
+                address={this.getInternalAddress()}
+                format={AddressFormat.Short}
+                type={AddressType.Internal}
+              />
+            </Fragment>
+          ) : (
+            <FormattedMessage {...langLabels.optionInternalDisabled} />
+          ),
+          disabled: isInternalOptionDisabled,
+        },
+      )
+    } else {
+      dropDownOptions.push(
+        {
+          value: 'InternalAddressCreate',
+          icon: iconInternal,
+          title: <FormattedMessage {...langLabels.optionInternalCreate} />,
+        },
+      )
+    }
+
+    if (isMetamaskOption) {
+      if (isMetamaskConnected) {
+        dropDownOptions.push(
+          {
+            value: AddressType.Metamask,
+            icon: web3Icon,
+            title: (
+              <Fragment>
+                {metamask.web3connect.getProviderTitle()}
+                <Address
+                  address={metamaskAddress}
+                  format={AddressFormat.Short}
+                  type={AddressType.Metamask}
+                />
+              </Fragment>
+            ),
+          },
+        )
+      } else {
+        dropDownOptions.push(
+          {
+            value: AddressType.Metamask,
+            icon: web3Icon,
+            title: <FormattedMessage {...langLabels.optionConnect} />,
+            dontSelect: true,
+          },
+        )
+      }
+    }
+
+    if (isCustomAddressOption) {
+      dropDownOptions.push(
+        {
+          value: AddressType.Custom,
+          icon: iconCustom,
+          title: <FormattedMessage {...langLabels.optionCustom} />,
+          reduceSelectedItemText: !isCustomOptionInputHidden,
+        },
+      )
+    }
+
+    // =======================================================
 
     const valueLink = Link.all(this, 'address')
     const customInputStyles = {
@@ -466,7 +490,7 @@ class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
         <div styleName="label">{label}</div>
         <DropDown
           styleName="dropDown"
-          items={options}
+          items={dropDownOptions}
           initialValue="placeholder"
           selectedValue={selectedType}
           disableSearch={true}

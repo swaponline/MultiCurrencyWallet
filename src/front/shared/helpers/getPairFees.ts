@@ -1,6 +1,19 @@
 import { COIN_DATA, COIN_MODEL, COIN_TYPE } from 'swap.app/constants/COINS'
 import helpers from 'helpers'
 
+const reportAboutProblem = (params) => {
+  const { isError = false, info } = params
+
+  console.group(
+    'HELPERS > %c getPairFees.ts',
+    `color: ${isError ? 'red' : 'yellow'}; font-family: monospace;`
+  )
+  isError 
+    ? console.error(info)
+    : console.warn(info)
+  console.groupEnd()
+}
+
 type CoinFee = {
   coin: string
   fee: number
@@ -25,15 +38,11 @@ const fetchCoinFee = (args): Promise<CoinFee> => {
   const { coinName, action, fixed, updateCacheValue } = args
 
   return new Promise(async (feeResolved) => {
-    const hasFeeInCache = 
-      (!updateCacheValue && feeCache[action] && feeCache[action][coinName])
+    const hasFeeInCache = !updateCacheValue && feeCache[action] && feeCache[action][coinName]
     const coinData = COIN_DATA[coinName]
     let obtainedResult = undefined
 
     if (hasFeeInCache) {
-      // FIXME:
-      console.log('VALUE FROM CACHE > ', feeCache)
-      
       feeResolved(feeCache[action][coinName])
       return
     }
@@ -52,7 +61,7 @@ const fetchCoinFee = (args): Promise<CoinFee> => {
 
       feeResolved(result)
     }
-    
+
     if (coinData) {
       switch (coinData.type) {
         case COIN_TYPE.NATIVE:
@@ -64,13 +73,14 @@ const fetchCoinFee = (args): Promise<CoinFee> => {
           doResolve(obtainedResult)
           break
         default:
-          console.warn(
-            `Helpers > fetchCoinFee Unknown coin type (${coinData.type}) for coin (${coinData.ticker})`
-          )
-          break
+          reportAboutProblem({
+            info: `Unknown coin type (${coinData.type}) for coin (${coinData.ticker})`,
+          })
       }
     } else {
-      console.warn(`Helpers > fetchCoinFee - Unknown coin (${coinName})`)
+      reportAboutProblem({
+        info: `Unknown coin (${coinName})`,
+      })
     }
   })
 }
@@ -86,13 +96,18 @@ const fetchFeeForNativeCoin = (params) => {
     ) {
       helpers[coinData.ticker.toLowerCase()]
         .estimateFeeValue({ method: 'swap', fixed })
-        .then((coinFee) => resolve({
-          coin: coinData.ticker,
-          fee: coinFee,
-          isUTXO: coinData.model === COIN_MODEL.UTXO,
-        }))
+        .then((coinFee) =>
+          resolve({
+            coin: coinData.ticker,
+            fee: coinFee,
+            isUTXO: coinData.model === COIN_MODEL.UTXO,
+          })
+        )
         .catch((err) => {
-          console.error(`Fail fetch fee for coin ${coinData.ticker}`, err)
+          reportAboutProblem({
+            info: `Fail fetch fee for coin ${coinData.ticker}. ${err}`,
+            isError: true,
+          })
           feeCache.isEnabled = false
           resolve({
             coin: coinData.ticker,
@@ -101,7 +116,9 @@ const fetchFeeForNativeCoin = (params) => {
           })
         })
     } else {
-      console.warn(`No helper 'estimateFeeValue' for coin ${coinData.ticker}`)
+      reportAboutProblem({
+        info: `No helper 'estimateFeeValue' for coin ${coinData.ticker}`,
+      })
     }
   })
 }
@@ -111,21 +128,26 @@ const fetchFeeForEthToken = (params) => {
 
   return new Promise((resolve) => {
     helpers.eth
-    .estimateFeeValue({ method: 'swap', speed: 'fast' })
-    .then((ethFee) => resolve({
-      coin: `ETH`,
-      fee: ethFee,
-      isUTXO: false,
-    }))
-    .catch((err) => {
-      console.error(`Fail fetch fee for coin ${coinData.ticker} (ETH)`, err)
-      feeCache.isEnabled = false
-      resolve({
-        coin: `ETH`,
-        fee: 0,
-        isUTXO: false,
+      .estimateFeeValue({ method: 'swap', speed: 'fast' })
+      .then((ethFee) =>
+        resolve({
+          coin: `ETH`,
+          fee: ethFee,
+          isUTXO: false,
+        })
+      )
+      .catch((err) => {
+        reportAboutProblem({
+          info: `Fail fetch fee for token ${coinData.ticker} (ETH). ${err}`,
+          isError: true,
+        })
+        feeCache.isEnabled = false
+        resolve({
+          coin: `ETH`,
+          fee: 0,
+          isUTXO: false,
+        })
       })
-    })
   })
 }
 

@@ -57,7 +57,9 @@ class RowHistory extends Component<any, any> {
       }
 
       if (isFinished || isRefunded || (step === isPayed && isEmptyBalance)) {
+        console.group('HISTORY ROW > %c Refund of swap', 'color: red;')
         console.error(`Refund of swap ${id} is not available`)
+        console.groupEnd()
         return
       }
 

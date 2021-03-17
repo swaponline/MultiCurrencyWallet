@@ -1092,7 +1092,6 @@ class Exchange extends PureComponent<any, any> {
     // address value or missing either already validated
     const { type, value, currency } = addressData
 
-    console.log('Exchange: applyAddress', addressRole, addressData)
     this.setUserDefaultWallet(currency.toUpperCase(), type)
     feedback.exchangeForm.selectedAddress(`${addressRole} ${currency.toUpperCase()} ${type}`)
 
@@ -1471,9 +1470,11 @@ class Exchange extends PureComponent<any, any> {
       toAddress.value &&
       new BigNumber(getAmount).isGreaterThan(0) &&
       !this.doesComissionPreventThisOrder() &&
-      (new BigNumber(haveAmount).isGreaterThan(balance) ||
+      (
+        new BigNumber(haveAmount).isGreaterThan(balance) ||
         new BigNumber(balance).isGreaterThanOrEqualTo(availableAmount) ||
-        fromAddress.type === AddressType.Custom) &&
+        fromAddress.type === AddressType.Custom
+      ) &&
       !isWaitForPeerAnswer
 
     const isIncompletedSwaps = !!desclineOrders.length
@@ -1483,23 +1484,21 @@ class Exchange extends PureComponent<any, any> {
       <div styleName="section">
         <div styleName="formExchange">
           <div styleName="userSendAndGet">
-            <div className="userSend">
-              <div className="data-tut-have_tourDisabled">
-                <SelectGroup
-                  activeFiat={activeFiat}
-                  inputValueLink={linked.haveAmount.pipe(this.setAmount)}
-                  selectedValue={haveCurrency}
-                  onSelect={this.handleSetHaveValue}
-                  label={<FormattedMessage id="partial243" defaultMessage="You sell" />} // sell or send ?
-                  id="Exchange456"
-                  placeholder="0.00000000"
-                  fiat={maxAmount > 0 && isNonOffers ? 0 : haveFiat}
-                  currencies={currencies}
-                  onFocus={() => this.extendedControlsSet(true)}
-                  onBlur={() => setTimeout(() => this.extendedControlsSet(false), 200)}
-                  inputToolTip={() => (isShowBalance ? balanceTooltip : <span />)}
-                />
-              </div>
+            <div>
+              <SelectGroup
+                activeFiat={activeFiat}
+                inputValueLink={linked.haveAmount.pipe(this.setAmount)}
+                selectedValue={haveCurrency}
+                onSelect={this.handleSetHaveValue}
+                label={<FormattedMessage id="partial243" defaultMessage="You sell" />}
+                id="Exchange456"
+                placeholder="0.00000000"
+                fiat={maxAmount > 0 && isNonOffers ? 0 : haveFiat}
+                currencies={currencies}
+                onFocus={() => this.extendedControlsSet(true)}
+                onBlur={() => setTimeout(() => this.extendedControlsSet(false), 200)}
+                inputToolTip={() => (isShowBalance ? balanceTooltip : <span />)}
+              />
 
               <AddressSelect
                 label={<FormattedMessage id="Exchange_FromAddress" defaultMessage="From address" />}
@@ -1517,22 +1516,20 @@ class Exchange extends PureComponent<any, any> {
               <Switching noneBorder onClick={this.flipCurrency} />
             </div>
 
-            <div className="userGet">
-              <div className="data-tut-get_tourDisabled">
-                <SelectGroup
-                  activeFiat={activeFiat}
-                  dataTut="get"
-                  inputValueLink={linked.getAmount}
-                  selectedValue={getCurrency}
-                  onSelect={this.handleSetGetValue}
-                  disabled={true} // value calculated from market price
-                  label={<FormattedMessage id="partial255" defaultMessage="You get" />}
-                  id="Exchange472"
-                  currencies={addSelectedItems}
-                  fiat={getFiat}
-                  error={isLowAmount}
-                />
-              </div>
+            <div>
+              <SelectGroup
+                activeFiat={activeFiat}
+                dataTut="get"
+                inputValueLink={linked.getAmount}
+                selectedValue={getCurrency}
+                onSelect={this.handleSetGetValue}
+                disabled={true} // value calculated from market price
+                label={<FormattedMessage id="partial255" defaultMessage="You get" />}
+                id="Exchange472"
+                currencies={addSelectedItems}
+                fiat={getFiat}
+                error={isLowAmount}
+              />
 
               <AddressSelect
                 label={<FormattedMessage id="Exchange_ToAddress" defaultMessage="To address" />}
@@ -1542,6 +1539,7 @@ class Exchange extends PureComponent<any, any> {
                 selectedType={getType}
                 hasError={false}
                 placeholder="To address"
+                customIsEnabled={true}
                 onChange={(addrData) => this.applyAddress(AddressRole.Receive, addrData)}
               />
             </div>
@@ -1670,7 +1668,7 @@ class Exchange extends PureComponent<any, any> {
                   <span>
                     <InlineLoader />
                   </span>
-                ) : (
+                 ) : (
                   <span>
                     {pairFees.buy.fee} {pairFees.buy.coin} + {pairFees.sell.fee}{' '}
                     {pairFees.sell.coin}
