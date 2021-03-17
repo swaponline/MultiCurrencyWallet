@@ -338,6 +338,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
         total: state.fees.service.plus(fee).dp(currentDecimals, BigNumber.ROUND_CEIL),
       }
     }))
+    this.setAlowedBalances()
   }
 
   setCommissions = async () => {
