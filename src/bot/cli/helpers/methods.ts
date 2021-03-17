@@ -5,7 +5,7 @@ const methods = [
   },
   {
     name: 'create',
-    tokens: ['buy', 'sell', 'buyAmount', 'sellAmount']
+    tokens: ['buy', 'sell', 'buyAmount', 'sellAmount', 'isTurbo']
   },
   {
     name: 'request',

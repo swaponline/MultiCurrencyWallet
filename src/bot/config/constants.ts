@@ -8,6 +8,7 @@ const TOKENS = require(`./${network}/TOKENS`)
 const TOKEN_DECIMALS = require(`./${network}/TOKEN_DECIMALS`)
 const PAIR_TYPES = require(`./${network}/PAIR_TYPES`)
 
+console.log(1, 'TRADE_CONFIG', TRADE_CONFIG)
 
 export {
   TRADE_TICKERS,

@@ -25,6 +25,7 @@ const init = (app, SwapApp, router, port) => {
       'sellCurrency',
       'buyAmount',
       'sellAmount',
+      'isTurbo',
       'isRequested',
       'isProcessing'
     )
