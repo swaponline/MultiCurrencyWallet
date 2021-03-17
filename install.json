@@ -1,5 +1,6 @@
 {
 	"$schema": "http://json.schemastore.org/install",
+	"_comment": "https://www.cloudflare.com/apps/developers",
 	"resources": {
 		"body": [{
 			"type": "style",
