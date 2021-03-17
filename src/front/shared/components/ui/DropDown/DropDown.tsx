@@ -1,36 +1,47 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import cx from 'classnames'
 import ClickOutside from 'react-click-outside'
+import cssModules from 'react-css-modules'
+import styles from './DropDown.scss'
 import Link from 'local_modules/sw-valuelink'
 import { constants } from 'helpers'
-
-import cssModules from 'react-css-modules'
 
 import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 import Input from 'components/forms/Input/Input'
-
-import styles from './DropDown.scss'
-
 import closeBtn from './images/close.svg'
 
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
+type DropDownProps = {
+  initialValue?: string | number
+  selectedValue: string
+  items: IUniversalObj[]
+  selectedItemRender?: (item) => void
+  itemRender?: (item) => JSX.Element
+  onSelect?: (item) => void
+  notIteractable?: boolean
+  className?: string
+  name?: string
+  placeholder?: string
+  label?: string
+  tooltip?: string
+  arrowSide?: string
+  id?: string
+  disableSearch?: boolean
+  dontScroll?: boolean
+}
+
+type DropDownState = {
+  error: boolean
+  isToggleActive: boolean
+  inputValue: string
+  selectedValue: number
+}
 
 @cssModules(styles, { allowMultiple: true })
-export default class DropDown extends Component<any, any> {
-  static propTypes = {
-    initialValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    selectedValue: PropTypes.string.isRequired,
-    items: PropTypes.arrayOf(PropTypes.any).isRequired,
-    selectedItemRender: PropTypes.func,
-    itemRender: PropTypes.func,
-    onSelect: PropTypes.func,
-    notIteractable: PropTypes.bool,
-  }
-
+export default class DropDown extends Component<DropDownProps, DropDownState> {
   constructor(props) {
     super(props)
 
@@ -40,7 +51,6 @@ export default class DropDown extends Component<any, any> {
       isToggleActive: false,
       selectedValue: initialValue || selectedValue || 0,
       inputValue: '',
-      infoAboutCurrency: '',
       error: false,
     }
   }
@@ -110,7 +120,6 @@ export default class DropDown extends Component<any, any> {
             styleName={`selectedItemInner ${selectedItem.disabled ? 'disabled' : ''} ${
               selectedItem.reduceSelectedItemText ? 'reducedLength' : ''
             }`}
-            //title={selectedItem.reduceSelectedItemText ? textToShow : ''}
           >
             {textToShow}
           </div>
@@ -137,7 +146,7 @@ export default class DropDown extends Component<any, any> {
       arrowSide,
     } = this.props
 
-    const { inputValue, infoAboutCurrency, isToggleActive } = this.state
+    const { inputValue, isToggleActive } = this.state
 
     const dropDownStyleName = cx('dropDown', { active: isToggleActive })
     const linkedValue = Link.all(this, 'inputValue')
@@ -189,41 +198,50 @@ export default class DropDown extends Component<any, any> {
               this.renderSelectedItem()
             )}
           </div>
+
           {isToggleActive && (
             <div styleName={dropDownListStyles.join(` `)}>
               {name ? <span styleName="listName">{name}</span> : ''}
-              {itemsFiltered.map((item) => {
-                let inneedData = null
-                if (infoAboutCurrency) {
-                  inneedData = infoAboutCurrency.find((el) => el.name === item.name)
-                }
-                if (item.hidden) {
-                  return
-                }
-                return (
+
+              {/* Do not show drop-down for once element */}
+              {itemsFiltered.length > 1 ? (
+                  itemsFiltered.map((item, index) => {
+                    if (!item.hidden) {
+                      return (
+                        <div
+                          key={index}
+                          styleName="dropDownItem"
+                          onClick={() => {
+                            linkedValue.inputValue.set('')
+                            this.handleOptionClick(item)
+                          }}
+                        >
+                          {this.renderItem(item)}
+                        </div>
+                      )
+                    }
+
+                    return null
+                  })
+                ) : (
                   <div
-                    key={item.value}
-                    styleName="option"
+                    styleName="dropDownItem"
                     onClick={() => {
                       linkedValue.inputValue.set('')
-                      this.handleOptionClick(item)
+                      this.handleOptionClick(itemsFiltered[0])
                     }}
                   >
-                    <span styleName="shortTitle">{this.renderItem(item)}</span>
-                    <span styleName="fullTitle">{item.fullTitle}</span>
-                    {inneedData && (
-                      <span styleName={`range ${+inneedData.change > 0 ? 'rangeUp' : 'rangeDown'}`}>
-                        {inneedData.change} %
-                      </span>
-                    )}
+                    {this.renderItem(itemsFiltered[0])}
                   </div>
                 )
-              })}
+              }
             </div>
           )}
+
           <button styleName="closeBtn" onClick={this.toggle}>
             <img src={closeBtn} alt="" />
           </button>
+
           <div styleName="dropDownLabel">
             <FieldLabel inRow inDropDown>
               <strong>{label}</strong>

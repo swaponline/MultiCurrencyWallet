@@ -1470,11 +1470,9 @@ class Exchange extends PureComponent<any, any> {
       toAddress.value &&
       new BigNumber(getAmount).isGreaterThan(0) &&
       !this.doesComissionPreventThisOrder() &&
-      (
-        new BigNumber(haveAmount).isGreaterThan(balance) ||
+      (new BigNumber(haveAmount).isGreaterThan(balance) ||
         new BigNumber(balance).isGreaterThanOrEqualTo(availableAmount) ||
-        fromAddress.type === AddressType.Custom
-      ) &&
+        fromAddress.type === AddressType.Custom) &&
       !isWaitForPeerAnswer
 
     const isIncompletedSwaps = !!desclineOrders.length
@@ -1490,7 +1488,7 @@ class Exchange extends PureComponent<any, any> {
                 inputValueLink={linked.haveAmount.pipe(this.setAmount)}
                 selectedValue={haveCurrency}
                 onSelect={this.handleSetHaveValue}
-                label={<FormattedMessage id="partial243" defaultMessage="You sell" />}
+                label={<FormattedMessage id="partial243" defaultMessage="You send" />}
                 id="Exchange456"
                 placeholder="0.00000000"
                 fiat={maxAmount > 0 && isNonOffers ? 0 : haveFiat}

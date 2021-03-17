@@ -674,7 +674,7 @@
   },
   {
     "id": "partial243",
-    "message": "You have",
+    "message": "You send",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
