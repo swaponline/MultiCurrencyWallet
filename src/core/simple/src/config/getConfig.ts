@@ -122,6 +122,10 @@ const getConfig = (config) => ({ account, mnemonic, contracts: { ETH, TOKEN }, .
           scriptAddress,
           NETWORK,
         }),
+        fetchTxInputScript: (options) => btcUtils.fetchTxInputScript({
+          ...options,
+          NETWORK,
+        }),
       }),
       new NextSwap({
         fetchBalance: (address) => nextUtils.fetchBalance({
