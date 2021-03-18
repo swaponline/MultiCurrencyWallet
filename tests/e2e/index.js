@@ -37,7 +37,7 @@ async function run() {
 		  // 🏌
 		  //await metamask.confirmTransaction()
 		  
-		  await page.goto('https://rinkeby.swaponline.io/');
+		  await page.goto('https://ropsten.swaponline.io/');
 
 		  //1
 		

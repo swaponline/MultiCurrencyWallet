@@ -27,3 +27,7 @@ If "admin fee" enabled on your wallet - it adds +1 OUTPUT bitcoin address (admin
 
 # user uses multisig or pin-protected wallet (+30% higher than normal, up to 10x if many small inputs to be signed)
 2fa wallets (pin-protected) requires 1 extra signature for every input (from our authorization server) 
+
+
+# What to do? 
+Send transaction with 10 sat/byte (may takes 24h+ for confirmation)
