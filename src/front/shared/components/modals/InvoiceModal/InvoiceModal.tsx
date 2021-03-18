@@ -5,7 +5,7 @@ import Link from 'local_modules/sw-valuelink'
 import BigNumber from 'bignumber.js'
 import cssModules from 'react-css-modules'
 import styles from '../Styles/default.scss'
-import dropDownStyles from 'components/ui/DropDown/DropDown.scss'
+import dropDownStyles from 'components/ui/DropDown/index.scss'
 import ownStyle from './InvoiceModal.scss'
 
 import Modal from 'components/modal/Modal/Modal'

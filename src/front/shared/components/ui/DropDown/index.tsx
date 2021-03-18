@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import cx from 'classnames'
 import cssModules from 'react-css-modules'
-import styles from './DropDown.scss'
+import styles from './index.scss'
 import Link from 'local_modules/sw-valuelink'
 import { constants } from 'helpers'
-
+import { FormattedMessage } from 'react-intl'
 import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 import Input from 'components/forms/Input/Input'
@@ -20,7 +20,6 @@ type DropDownProps = {
   selectedItemRender?: (item) => void
   itemRender?: (item) => JSX.Element
   onSelect?: (item) => void
-  notIteractable?: boolean
   className?: string
   name?: string
   placeholder?: string
@@ -34,7 +33,7 @@ type DropDownProps = {
 
 type DropDownState = {
   error: boolean
-  isToggleActive: boolean
+  optionToggleIsOpen: boolean
   inputValue: string
   selectedValue: number
 }
@@ -44,10 +43,10 @@ export default class DropDown extends Component<DropDownProps, DropDownState> {
   constructor(props) {
     super(props)
 
-    const { initialValue, selectedValue } = props
+    const { initialValue, selectedValue, items } = props
 
     this.state = {
-      isToggleActive: false,
+      optionToggleIsOpen: false,
       selectedValue: initialValue || selectedValue || 0,
       inputValue: '',
       error: false,
@@ -55,29 +54,21 @@ export default class DropDown extends Component<DropDownProps, DropDownState> {
   }
 
   toggleClose = () => {
-    this.setState({
-      isToggleActive: false,
-    })
+    this.setState(() => ({
+      optionToggleIsOpen: false,
+    }))
   }
 
   toggleOpen = () => {
-    const { isToggleActive } = this.state
-
-    if (isToggleActive) {
-      return
-    }
-
-    this.setState({
-      isToggleActive: true,
-    })
+    this.setState(() => ({
+      optionToggleIsOpen: true,
+    }))
   }
 
   toggle = () => {
-    if (this.state.isToggleActive) {
-      this.toggleClose()
-    } else {
-      this.toggleOpen()
-    }
+    this.setState((state) => ({
+      optionToggleIsOpen: !state.optionToggleIsOpen,
+    }))
   }
 
   handleOptionClick = (item) => {
@@ -131,78 +122,84 @@ export default class DropDown extends Component<DropDownProps, DropDownState> {
 
   handleClickOutside = () => {
     const { disableSearch } = this.props
-    const { isToggleActive } = this.state
+    const { optionToggleIsOpen } = this.state
     const linkedValue = Link.all(this, 'inputValue')
     
-    if (isToggleActive) {
+    if (optionToggleIsOpen) {
       // cleanup the search field
       if (!disableSearch) {
         linkedValue.inputValue.set('')
       }
 
-      this.toggle()
+      this.toggleClose()
     }
   }
 
   render() {
     const {
       className,
-      items,
-      selectedValue,
       name,
       placeholder,
       label,
       tooltip,
       id,
-      notIteractable,
+      items,
+      selectedValue,
       disableSearch,
       dontScroll, // Show all items, for small lists
       arrowSide,
     } = this.props
 
-    const { inputValue, isToggleActive } = this.state
+    const { optionToggleIsOpen, inputValue } = this.state
+    const dropDownStyleName = cx('dropDown', { active: optionToggleIsOpen })
+    const {
+      inputValue: linkedInputValue,
+    } = Link.all(this, 'inputValue')
 
-    const dropDownStyleName = cx('dropDown', { active: isToggleActive })
-    const linkedValue = Link.all(this, 'inputValue')
 
     let itemsFiltered = items
-    if (inputValue) {
+    // Filtering values for search input
+    if (!disableSearch && inputValue) {
       itemsFiltered = items
         .filter((item) => item.name.includes(inputValue.toUpperCase()))
         .filter((item) => item.value !== selectedValue)
     }
 
+    const noOptions = itemsFiltered.length === 0
+    const moreThenOneOption = itemsFiltered.length > 1
+
     return (
       <OutsideClick outsideAction={this.handleClickOutside}>
         <div styleName={`${dropDownStyleName} ${isDark ? 'dark' : ''}`} className={className}>
           <div
-            styleName={`
-              selectedItem
-              ${notIteractable ? ' selectedItem_disableIteract' : ''}
-              ${arrowSide === 'left' ? 'left' : ''}
-            `}
-            onClick={notIteractable ? () => null : this.toggle}
+            styleName={`selectedItem ${arrowSide === 'left' ? 'left' : ''}`}
+            onClick={moreThenOneOption ? this.toggleOpen : () => null}
           >
-            {!notIteractable && <div styleName={`arrow ${arrowSide === 'left' ? 'left' : ''}`} />}
-            {isToggleActive && !disableSearch ? (
+            {/* Drop Down arrow */}
+            {moreThenOneOption && <div styleName={`arrow ${arrowSide === 'left' ? 'left' : ''}`} />}
+            
+            {/* Search input */}
+            {optionToggleIsOpen && !disableSearch ? (
               <Input
                 styleName="searchInput"
                 placeholder={placeholder}
-                focusOnInit
-                valueLink={linkedValue.inputValue}
+                valueLink={linkedInputValue}
                 ref="searchInput"
+                focusOnInit
               />
             ) : (
               this.renderSelectedItem()
             )}
           </div>
 
-          {isToggleActive && (
-            <div styleName={`select ${dontScroll ? 'dontscroll' : ''}`}>
+          {/* Drop Down list */}
+          {optionToggleIsOpen && (
+            <div styleName={`select ${dontScroll || itemsFiltered.length < 2 ? 'dontscroll' : ''}`}>
               {name ? <span styleName="listName">{name}</span> : ''}
 
-              {/* Do not show drop-down for once element */}
-              {itemsFiltered.length > 1 ? (
+              {noOptions ? (
+                  <FormattedMessage id="DropDownNoOptionsInTheList" defaultMessage="No options" />
+                ) : moreThenOneOption ? (
                   itemsFiltered.map((item, index) => {
                     if (!item.hidden) {
                       return (
@@ -210,7 +207,7 @@ export default class DropDown extends Component<DropDownProps, DropDownState> {
                           key={index}
                           styleName="dropDownItem"
                           onClick={() => {
-                            linkedValue.inputValue.set('')
+                            linkedInputValue.set('')
                             this.handleOptionClick(item)
                           }}
                         >
@@ -225,7 +222,7 @@ export default class DropDown extends Component<DropDownProps, DropDownState> {
                   <div
                     styleName="dropDownItem"
                     onClick={() => {
-                      linkedValue.inputValue.set('')
+                      linkedInputValue.set('')
                       this.handleOptionClick(itemsFiltered[0])
                     }}
                   >

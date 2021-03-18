@@ -24,7 +24,6 @@ export default class OutsideClick extends Component<OutsideClickProps, null> {
     const { outsideAction } = this.props
 
     if (this.wrapperRef && !this.wrapperRef.contains(event.target)) {
-      console.log('%c Click outside', 'color: pink;')
       outsideAction()
     }
   }
