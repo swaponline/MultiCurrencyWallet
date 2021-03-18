@@ -355,7 +355,6 @@ class SwapProgress extends Component<any, any> {
       _refundTx = flow.refundTransactionHash.transactionHash || flow.refundTransactionHash
     }
 
-    console.log('>>>> isTaker render side', (isTakerMakerModel && isTaker))
     const BtcLikeToEth = (isTakerMakerModel && isTaker) ? TakerBtcLikeToEth : MakerBtcLikeToEth
     const EthToBtcLike = (isTakerMakerModel && isTaker) ? TakerEthToBtcLike : MakerEthToBtcLike
     const BtcLikeToEthToken = (isTakerMakerModel && isTaker) ? TakerBtcLikeToEthToken : MakerBtcLikeToEthToken
