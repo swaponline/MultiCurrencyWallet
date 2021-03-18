@@ -1505,6 +1505,7 @@ class Exchange extends PureComponent<any, any> {
                 selectedType={haveType}
                 role={AddressRole.Send}
                 hasError={false}
+                customIsEnabled={true}
                 placeholder="From address"
                 onChange={(addrData) => this.applyAddress(AddressRole.Send, addrData)}
               />
