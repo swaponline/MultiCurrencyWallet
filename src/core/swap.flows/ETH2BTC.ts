@@ -238,8 +238,7 @@ class ETH2BTC extends AtomicAB2UTXO {
       return [
         // 1 - `sign` - Signs 
         async () => {
-          this.swap.processMetamask()
-          this.sign()
+          this.signABSide()
         },
 
         // 2 - `sync-balance` - syncBalance

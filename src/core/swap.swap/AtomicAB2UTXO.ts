@@ -131,11 +131,34 @@ class AtomicAB2UTXO extends Flow {
     }
   }
 
-  signABSide() {
-    this.swap.processMetamask()
+  async signABSide() {
+    this.swap.room.once('request sign', () => {
+      this.swap.room.sendMessage({
+        event: 'swap sign',
+      })
+      this.setState({
+        isParticipantSigned: true,
+      }, true)
+    })
+
+    const isSignOk = await util.helpers.repeatAsyncUntilResult(() => {
+      const {
+        isParticipantSigned,
+      } = this.state
+
+      this.swap.processMetamask()
+      this.swap.room.sendMessage({
+        event: 'swap sign',
+      })
+
+      return isParticipantSigned
+    })
+    if (isSignOk) {
+      this.finishStep({}, { step: 'sign' })
+    }
   }
 
-  signUTXOSide() {
+  async signUTXOSide() {
     this.swap.processMetamask()
     this.swap.room.once('swap sign', () => {
       const { step } = this.state
@@ -148,9 +171,10 @@ class AtomicAB2UTXO extends Flow {
         this.tryRefund()
       })
 
-      this.finishStep({
+      this.setState({
         isParticipantSigned: true,
-      }, { step: 'sign', silentError: true })
+      }, true)
+
     })
 
     this.swap.room.once('swap exists', () => {
@@ -161,9 +185,22 @@ class AtomicAB2UTXO extends Flow {
       this.stopSwapProcess()
     })
 
-    this.swap.room.sendMessage({
-      event: 'request sign',
+    const isSignOk = await util.helpers.repeatAsyncUntilResult(() => {
+      const {
+        isParticipantSigned,
+      } = this.state
+
+      this.swap.processMetamask()
+      this.swap.room.sendMessage({
+        event: 'request sign',
+      })
+
+      return isParticipantSigned
     })
+
+    if (isSignOk) {
+      this.finishStep({}, { step: 'sign' })
+    }
   }
 
   waitUTXOScriptCreated() {

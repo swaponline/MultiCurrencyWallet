@@ -177,8 +177,7 @@ export default (tokenName) => {
         return [
           // 1 - `sign` Signs
           async () => {
-            this.swap.processMetamask()
-            this.sign()
+            this.signUTXOSide()
           },
 
           // 2 - `sync-balance` - syncBalance
