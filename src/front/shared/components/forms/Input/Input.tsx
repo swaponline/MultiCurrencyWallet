@@ -48,6 +48,7 @@ export default class Input extends Component<any, any> {
       onFocus();
     }
 
+    // Hide the Header if Input is blured
     if (isMobile) {
       const header = document.getElementById('header-mobile')
       if (header) {
@@ -64,6 +65,7 @@ export default class Input extends Component<any, any> {
       onBlur(event)
     }
 
+    // Show the Header if Input is blured
     if (isMobile) {
       const header = document.getElementById('header-mobile')
       if (header) {

@@ -255,7 +255,6 @@
     "postcss": "^8.2.4",
     "rc-progress": "^3.1.0",
     "react": "^17.0.1",
-    "react-click-outside": "github:tj/react-click-outside",
     "react-copy-to-clipboard": "^5.0.2",
     "react-css-modules": "^4.7.11",
     "react-device-detect": "^1.15.0",

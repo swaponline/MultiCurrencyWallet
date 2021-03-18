@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import cx from 'classnames'
-import ClickOutside from 'react-click-outside'
 import cssModules from 'react-css-modules'
 import styles from './DropDown.scss'
 import Link from 'local_modules/sw-valuelink'
@@ -9,8 +8,8 @@ import { constants } from 'helpers'
 import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 import Input from 'components/forms/Input/Input'
+import OutsideClick from './OutsideClick'
 import closeBtn from './images/close.svg'
-
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
@@ -130,6 +129,21 @@ export default class DropDown extends Component<DropDownProps, DropDownState> {
     }
   }
 
+  handleClickOutside = () => {
+    const { disableSearch } = this.props
+    const { isToggleActive } = this.state
+    const linkedValue = Link.all(this, 'inputValue')
+    
+    if (isToggleActive) {
+      // cleanup the search field
+      if (!disableSearch) {
+        linkedValue.inputValue.set('')
+      }
+
+      this.toggle()
+    }
+  }
+
   render() {
     const {
       className,
@@ -158,24 +172,8 @@ export default class DropDown extends Component<DropDownProps, DropDownState> {
         .filter((item) => item.value !== selectedValue)
     }
 
-    const dropDownListStyles = ['select']
-    if (dontScroll) dropDownListStyles.push('dontscroll')
-
     return (
-      <ClickOutside
-        onClickOutside={
-          isToggleActive
-            ? () => {
-                if (!disableSearch) {
-                  //@ts-ignore
-                  this.refs.searchInput.handleBlur()
-                  linkedValue.inputValue.set('')
-                }
-                this.toggle()
-              }
-            : () => {}
-        }
-      >
+      <OutsideClick outsideAction={this.handleClickOutside}>
         <div styleName={`${dropDownStyleName} ${isDark ? 'dark' : ''}`} className={className}>
           <div
             styleName={`
@@ -200,7 +198,7 @@ export default class DropDown extends Component<DropDownProps, DropDownState> {
           </div>
 
           {isToggleActive && (
-            <div styleName={dropDownListStyles.join(` `)}>
+            <div styleName={`select ${dontScroll ? 'dontscroll' : ''}`}>
               {name ? <span styleName="listName">{name}</span> : ''}
 
               {/* Do not show drop-down for once element */}
@@ -252,7 +250,7 @@ export default class DropDown extends Component<DropDownProps, DropDownState> {
             </FieldLabel>
           </div>
         </div>
-      </ClickOutside>
+      </OutsideClick>
     )
   }
 }
