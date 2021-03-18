@@ -7,15 +7,15 @@ import CSSModules from 'react-css-modules'
 import styles from './SwapList.scss'
 
 
-import FirstStepDefault from './steps/FirstStep'
-import SecondStepDefault from './steps/SecondStep'
-import ThirdStepDefault from './steps/ThirdStep'
-import FourthStepDefault from './steps/FourthStep'
+import MakerFirstStep from './MakerSteps/FirstStep'
+import MakerSecondStep from './MakerSteps/SecondStep'
+import MakerThirdStep from './MakerSteps/ThirdStep'
+import MakerFourthStep from './MakerSteps/FourthStep'
 
-import FirstStepTakerMaker from './TakerMakerSteps/FirstStep'
-import SecondStepTakerMaker from './TakerMakerSteps/SecondStep'
-import ThirdStepTakerMaker from './TakerMakerSteps/ThirdStep'
-import FourthStepTakerMaker from './TakerMakerSteps/FourthStep'
+import TakerFirstStep from './TakerSteps/FirstStep'
+import TakerSecondStep from './TakerSteps/SecondStep'
+import TakerThirdStep from './TakerSteps/ThirdStep'
+import TakerFourthStep from './TakerSteps/FourthStep'
 
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
@@ -80,10 +80,10 @@ export default class SwapList extends Component<any, any> {
     const { first, second, fourth, fifth, sixth, seventh, eighth } = this.state
 
     const isTaker = flowClass.isTaker()
-    const FirstStep = (isTakerMakerModel && isTaker) ? FirstStepTakerMaker : FirstStepDefault
-    const SecondStep = (isTakerMakerModel && isTaker) ? SecondStepTakerMaker : SecondStepDefault
-    const ThirdStep = (isTakerMakerModel && isTaker) ? ThirdStepTakerMaker : ThirdStepDefault
-    const FourthStep = (isTakerMakerModel && isTaker) ? FourthStepTakerMaker : FourthStepDefault
+    const FirstStep = (isTakerMakerModel && isTaker) ? TakerFirstStep : MakerFirstStep
+    const SecondStep = (isTakerMakerModel && isTaker) ? TakerSecondStep : MakerSecondStep
+    const ThirdStep = (isTakerMakerModel && isTaker) ? TakerThirdStep : MakerThirdStep
+    const FourthStep = (isTakerMakerModel && isTaker) ? TakerFourthStep : MakerFourthStep
 
     return (
       <div styleName={`${isMobile ? 'stepList isMobile' : 'stepList'} ${isDark ? 'dark' : ''}`}>
