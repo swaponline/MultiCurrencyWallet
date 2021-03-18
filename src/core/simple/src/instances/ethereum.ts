@@ -45,7 +45,7 @@ class Ethereum {
     }
 
     this.etherscan = _network === 'testnet'
-      ? `https://ropsten.etherscan.io`
+      ? `https://api-ropsten.etherscan.io`
       : `https://api.etherscan.io`
   }
 
