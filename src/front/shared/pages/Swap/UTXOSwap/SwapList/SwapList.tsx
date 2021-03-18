@@ -70,15 +70,16 @@ export default class SwapList extends Component<any, any> {
         flow: {
           isTakerMakerModel,
         },
-        flow,
+        flow: flowClass,
       },
+      flow,
       swap,
       enoughBalance,
       windowWidth,
     } = this.props
     const { first, second, fourth, fifth, sixth, seventh, eighth } = this.state
 
-    const isTaker = flow.isTaker()
+    const isTaker = flowClass.isTaker()
     const FirstStep = (isTakerMakerModel && isTaker) ? FirstStepTakerMaker : FirstStepDefault
     const SecondStep = (isTakerMakerModel && isTaker) ? SecondStepTakerMaker : SecondStepDefault
     const ThirdStep = (isTakerMakerModel && isTaker) ? ThirdStepTakerMaker : ThirdStepDefault
