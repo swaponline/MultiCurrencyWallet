@@ -251,27 +251,33 @@ export default (tokenName) => {
           async () => {
             await util.helpers.repeatAsyncUntilResult(async () => {
               // check withdraw
-              const {
-                utxoScriptValues,
-              } = this.state
-              const { scriptAddress } = this.utxoBlockchain.createScript(utxoScriptValues)
-
-              const utxoWithdrawData = await this.btcSwap.checkWithdraw(scriptAddress)
-
-              if (utxoWithdrawData) {
+              try {
                 const {
-                  txid: utxoSwapWithdrawTransactionHash,
-                } = utxoWithdrawData
+                  utxoScriptValues,
+                } = this.state
+                const { scriptAddress } = this.utxoBlockchain.createScript(utxoScriptValues)
 
-                const secret = await this.btcSwap.getSecretFromTxhash(utxoSwapWithdrawTransactionHash)
-                if (secret) {
-                  this.finishStep({
-                    secret,
-                    utxoSwapWithdrawTransactionHash,
-                  }, 'wait-withdraw-utxo')
+                const utxoWithdrawData = await this.btcSwap.checkWithdraw(scriptAddress)
+
+                if (utxoWithdrawData) {
+                  const {
+                    txid: utxoSwapWithdrawTransactionHash,
+                  } = utxoWithdrawData
+
+                  const secret = await this.btcSwap.getSecretFromTxhash(utxoSwapWithdrawTransactionHash)
+                  if (secret) {
+                    this.finishStep({
+                      secret,
+                      utxoSwapWithdrawTransactionHash,
+                    }, 'wait-withdraw-utxo')
+                  }
+                  return true
+                } else {
+                  return false
                 }
-                return true
-              } else {
+              } catch (e) {
+                console.log('>>>> BTC2ETHTOKEN - Step 5 error')
+                console.error(e)
                 return false
               }
             })
