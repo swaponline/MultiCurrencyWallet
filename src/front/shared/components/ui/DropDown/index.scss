@@ -188,9 +188,8 @@
     text-align: left;
   }
 
-  &_disableIteract {
+  &.single {
     cursor: default;
-    padding-right: 22px;
   }
 
   img {

@@ -1502,10 +1502,9 @@ class Exchange extends PureComponent<any, any> {
                 label={<FormattedMessage id="Exchange_FromAddress" defaultMessage="From address" />}
                 isDark={isDark}
                 currency={haveCurrency}
-                selectedType={haveType}
+                selectedType={AddressType.Internal}
                 role={AddressRole.Send}
                 hasError={false}
-                customIsEnabled={true}
                 placeholder="From address"
                 onChange={(addrData) => this.applyAddress(AddressRole.Send, addrData)}
               />

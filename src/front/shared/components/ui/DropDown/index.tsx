@@ -5,11 +5,8 @@ import styles from './index.scss'
 import Link from 'local_modules/sw-valuelink'
 import { constants } from 'helpers'
 import { FormattedMessage } from 'react-intl'
-import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
-import Tooltip from 'components/ui/Tooltip/Tooltip'
 import Input from 'components/forms/Input/Input'
 import OutsideClick from './OutsideClick'
-import closeBtn from './images/close.svg'
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
@@ -43,7 +40,7 @@ export default class DropDown extends Component<DropDownProps, DropDownState> {
   constructor(props) {
     super(props)
 
-    const { initialValue, selectedValue, items } = props
+    const { initialValue, selectedValue } = props
 
     this.state = {
       optionToggleIsOpen: false,
@@ -172,7 +169,11 @@ export default class DropDown extends Component<DropDownProps, DropDownState> {
       <OutsideClick outsideAction={this.handleClickOutside}>
         <div styleName={`${dropDownStyleName} ${isDark ? 'dark' : ''}`} className={className}>
           <div
-            styleName={`selectedItem ${arrowSide === 'left' ? 'left' : ''}`}
+            styleName={`
+              selectedItem
+              ${arrowSide === 'left' ? 'left' : ''}
+              ${!moreThenOneOption ? 'single' : ''}
+            `}
             onClick={moreThenOneOption ? this.toggleOpen : () => null}
           >
             {/* Drop Down arrow */}
@@ -194,7 +195,7 @@ export default class DropDown extends Component<DropDownProps, DropDownState> {
 
           {/* Drop Down list */}
           {optionToggleIsOpen && (
-            <div styleName={`select ${dontScroll || itemsFiltered.length < 2 ? 'dontscroll' : ''}`}>
+            <div styleName={`select ${dontScroll || !moreThenOneOption ? 'dontscroll' : ''}`}>
               {name ? <span styleName="listName">{name}</span> : ''}
 
               {noOptions ? (
@@ -232,20 +233,6 @@ export default class DropDown extends Component<DropDownProps, DropDownState> {
               }
             </div>
           )}
-
-          <button styleName="closeBtn" onClick={this.toggle}>
-            <img src={closeBtn} alt="" />
-          </button>
-
-          <div styleName="dropDownLabel">
-            <FieldLabel inRow inDropDown>
-              <strong>{label}</strong>
-              &nbsp;
-              <div styleName="smallTooltip">
-                <Tooltip id={id}>{tooltip}</Tooltip>
-              </div>
-            </FieldLabel>
-          </div>
         </div>
       </OutsideClick>
     )

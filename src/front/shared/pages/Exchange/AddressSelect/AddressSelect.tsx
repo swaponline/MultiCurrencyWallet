@@ -392,14 +392,7 @@ class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
       icon?: SVGElement
     }
 
-    const dropDownOptions: DropDownOptions[] = [
-      {
-        value: 'placeholder',
-        title: <FormattedMessage {...langLabels.labelSpecifyAddress} />,
-        disabled: true,
-        hidden: true,
-      },
-    ]
+    const dropDownOptions: DropDownOptions[] = []
 
     if (this.isCurrencyInInternalWallet()) {
       dropDownOptions.push(
@@ -510,7 +503,7 @@ class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
             </Button>
           </div>
         )}
-        {selectedType === AddressType.Custom && !isCustomOptionInputHidden && (
+        {isCustomAddressOption && selectedType === AddressType.Custom && (
           <div styleName="selectedInner">
             <div styleName={`customWallet ${walletAddressFocused ? 'customWallet_focus' : ''}`}>
               <div styleName="customAddressInput">
