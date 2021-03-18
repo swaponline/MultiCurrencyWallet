@@ -174,9 +174,8 @@ class RowHistory extends Component<any, any> {
           </p>
         </td>
         <td>
-          <span>Link</span>
           <Link to={swapUri} onClick={this.closeIncompleted}>
-            <FormattedMessage id="RowHistory91" defaultMessage="Link" />
+            <FormattedMessage id="RowHistory91" defaultMessage="Link to the swap" />
           </Link>
         </td>
       </tr>

@@ -38,11 +38,6 @@
   }
 }
 
-.commentTextarea {
-  overflow: hidden !important;
-  resize: none;
-}
-
 .arrowWrap {
   width: 36px;
   height: 36px;
@@ -103,7 +98,7 @@
 
 
 .unconfirmed {
-  color: #8E9AA3;
+  color: $notice-color;
   background: rgba(142, 154, 163, 0.1);
 }
 
@@ -129,7 +124,7 @@
 .amount {
   font-weight: 800;
   font-size: 15px;
-  line-height: 18px;
+  line-height: 23px;
   text-align: right;
   right: 15px;
   top: 15px;
@@ -139,8 +134,8 @@
 .amountUsd {
   font-weight: 600;
   font-size: 12px;
-  color: #8E9AA3;
-  line-height: 15px;
+  color: $notice-color;
+  line-height: 6px;
   position: absolute;
   right: 15px;
   top: 45px;
@@ -229,12 +224,6 @@
     line-height: 15px;
     color: $primary;
   }
-}
-
-.icon {
-  border-style: none;
-  width: 14px;
-  margin-left: 10px;
 }
 
 tr.historyRow {
