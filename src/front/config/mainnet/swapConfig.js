@@ -1,11 +1,12 @@
 import api from './api'
+import link from './link'
 
 
 export default {
   BTC: {
     withdrawTransactionHash: `utxoSwapWithdrawTransactionHash`,
     scriptCreatingTransactionHash: `utxoScriptCreatingTransactionHash`, // @to-do - remove this - use directly
-    explorerLink: api.bitpay,
+    explorerLink: link.bitpay,
     verifyScriptFunc: `verifyScript`, // @to-do - remove this - use directly
     scriptValues: `utxoScriptValues`, // @to-do - remove this - use directly utxoScriptValues
   },

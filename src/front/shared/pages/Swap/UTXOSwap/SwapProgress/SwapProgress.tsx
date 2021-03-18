@@ -21,12 +21,19 @@ import Timer from '../../Timer/Timer'
 import { Button, TimerButton } from 'components/controls'
 
 import SwapController from '../../SwapController'
-import PleaseDontLeaveWrapper from './SwapProgressText/PleaseDontLeaveWrapper'
+import PleaseDontLeaveWrapper from './PleaseDontLeaveWrapper'
 
-import BtcLikeToEth from './SwapProgressText/BtcLikeToEth'
-import BtcLikeToEthToken from './SwapProgressText/BtcLikeToEthToken'
-import EthToBtcLike from './SwapProgressText/EthToBtcLike'
-import EthTokenToBtcLike from './SwapProgressText/EthTokenToBtcLike'
+import MakerBtcLikeToEth from './MakerSwapProgressText/BtcLikeToEth'
+import MakerBtcLikeToEthToken from './MakerSwapProgressText/BtcLikeToEthToken'
+import MakerEthToBtcLike from './MakerSwapProgressText/EthToBtcLike'
+import MakerEthTokenToBtcLike from './MakerSwapProgressText/EthTokenToBtcLike'
+
+import TakerBtcLikeToEth from './TakerSwapProgressText/BtcLikeToEth'
+import TakerBtcLikeToEthToken from './TakerSwapProgressText/BtcLikeToEthToken'
+import TakerEthToBtcLike from './TakerSwapProgressText/EthToBtcLike'
+import TakerEthTokenToBtcLike from './TakerSwapProgressText/EthTokenToBtcLike'
+
+
 import metamask from 'helpers/metamask'
 
 
@@ -310,6 +317,11 @@ class SwapProgress extends Component<any, any> {
       steps,
       flow,
       swap,
+      swap: {
+        flow: {
+          isTakerMakerModel,
+        },
+      },
       signed,
       buyAmount,
       sellAmount,
@@ -320,6 +332,8 @@ class SwapProgress extends Component<any, any> {
       stepValue,
       isSecretCopied,
     } = this.state
+
+    const isTaker = swap.flow.isTaker()
 
     const {
       currencyName,
@@ -341,6 +355,11 @@ class SwapProgress extends Component<any, any> {
       _refundTx = flow.refundTransactionHash.transactionHash || flow.refundTransactionHash
     }
 
+    console.log('>>>> isTaker render side', (isTakerMakerModel && isTaker))
+    const BtcLikeToEth = (isTakerMakerModel && isTaker) ? TakerBtcLikeToEth : MakerBtcLikeToEth
+    const EthToBtcLike = (isTakerMakerModel && isTaker) ? TakerEthToBtcLike : MakerEthToBtcLike
+    const BtcLikeToEthToken = (isTakerMakerModel && isTaker) ? TakerBtcLikeToEthToken : MakerBtcLikeToEthToken
+    const EthTokenToBtcLike = (isTakerMakerModel && isTaker) ? TakerEthTokenToBtcLike : MakerEthTokenToBtcLike
     /** todo **/
     const swapTexts = (
       <Fragment>

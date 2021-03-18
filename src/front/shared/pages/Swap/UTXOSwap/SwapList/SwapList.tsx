@@ -85,7 +85,6 @@ export default class SwapList extends Component<any, any> {
     const ThirdStep = (isTakerMakerModel && isTaker) ? ThirdStepTakerMaker : ThirdStepDefault
     const FourthStep = (isTakerMakerModel && isTaker) ? FourthStepTakerMaker : FourthStepDefault
 
-    console.log('>>>> isTaker render side', (isTakerMakerModel && isTaker))
     return (
       <div styleName={`${isMobile ? 'stepList isMobile' : 'stepList'} ${isDark ? 'dark' : ''}`}>
         {!isMobile && <FirstStep step={flow.step} first={first} second={second} fields={this._fields} />}
