@@ -7,10 +7,15 @@ import CSSModules from 'react-css-modules'
 import styles from './SwapList.scss'
 
 
-import FirstStep from './steps/FirstStep'
-import SecondStep from './steps/SecondStep'
-import ThirdStep from './steps/ThirdStep'
-import FourthStep from './steps/FourthStep'
+import FirstStepDefault from './steps/FirstStep'
+import SecondStepDefault from './steps/SecondStep'
+import ThirdStepDefault from './steps/ThirdStep'
+import FourthStepDefault from './steps/FourthStep'
+
+import FirstStepTakerMaker from './TakerMakerSteps/FirstStep'
+import SecondStepTakerMaker from './TakerMakerSteps/SecondStep'
+import ThirdStepTakerMaker from './TakerMakerSteps/ThirdStep'
+import FourthStepTakerMaker from './TakerMakerSteps/FourthStep'
 
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
@@ -26,10 +31,14 @@ export default class SwapList extends Component<any, any> {
         sellCurrency,
         flow: {
           stepNumbers,
+          isTakerMakerModel,
         },
+        flow,
       },
       fields,
     } = props
+
+    const isTaker = flow.isTaker()
 
     this._fields = fields
 
@@ -56,9 +65,26 @@ export default class SwapList extends Component<any, any> {
   }
 
   render() {
-    const { swap, flow, enoughBalance, windowWidth } = this.props
+    const {
+      swap: {
+        flow: {
+          isTakerMakerModel,
+        },
+        flow,
+      },
+      swap,
+      enoughBalance,
+      windowWidth,
+    } = this.props
     const { first, second, fourth, fifth, sixth, seventh, eighth } = this.state
 
+    const isTaker = flow.isTaker()
+    const FirstStep = (isTakerMakerModel && isTaker) ? FirstStepTakerMaker : FirstStepDefault
+    const SecondStep = (isTakerMakerModel && isTaker) ? SecondStepTakerMaker : SecondStepDefault
+    const ThirdStep = (isTakerMakerModel && isTaker) ? ThirdStepTakerMaker : ThirdStepDefault
+    const FourthStep = (isTakerMakerModel && isTaker) ? FourthStepTakerMaker : FourthStepDefault
+
+    console.log('>>>> isTaker render side', (isTakerMakerModel && isTaker))
     return (
       <div styleName={`${isMobile ? 'stepList isMobile' : 'stepList'} ${isDark ? 'dark' : ''}`}>
         {!isMobile && <FirstStep step={flow.step} first={first} second={second} fields={this._fields} />}
