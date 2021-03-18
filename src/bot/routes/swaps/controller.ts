@@ -34,38 +34,9 @@ const runSwap = (swap) => {
 
   swap.on('enter step', (step) => {
     console.log('enter step', step)
-    switch (swap.flow._flowName) {
-      case "BTC2ETH":
-      case "BTC2NOXON":
-      case "BTC2SWAP":
-      case "BTC2XSAT":
-      case "BTC2HDP":
-      case "USDT2NOXON":
-      case "USDT2SWAP":
 
-        if ( step + 1 === swap.flow.steps.length ) {
-          console.log(new Date().toISOString(), '[FINISHED] tx', swap.flow.state.ethSwapWithdrawTransactionHash)
-
-          // Orders.remove(swap.id)
-        }
-        return
-
-      case "ETH2BTC":
-      case "NOXON2BTC":
-      case "SWAP2BTC":
-      case "XSAT2BTC":
-      case "HDP2BTC":
-      case "NOXON2USDT":
-      case "SWAP2USDT":
-
-        // if ( step == 1 ) swap.flow.sign()
-        // if ( step == 3 ) swap.flow.verifyScript()
-
-        if ( step + 1 === swap.flow.steps.length ) {
-          console.log(new Date().toISOString(), '[FINISHED] tx', swap.flow.state.utxoSwapWithdrawTransactionHash)
-
-          // Orders.remove(swap.id)
-        }
+    if ( step + 1 === swap.flow.steps.length ) {
+      console.log(new Date().toISOString(), '[FINISHED] tx', swap.flow.state.ethSwapWithdrawTransactionHash)
     }
   })
 }

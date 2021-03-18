@@ -333,8 +333,7 @@ class AtomicAB2UTXO extends Flow {
   }
 
   async sign() {
-    // @to-do - for debug - skip exists swap on contract
-    const swapExists = false //await this._checkSwapAlreadyExists()
+    const swapExists = await this._checkSwapAlreadyExists()
 
     if (swapExists) {
       this.swap.room.sendMessage({

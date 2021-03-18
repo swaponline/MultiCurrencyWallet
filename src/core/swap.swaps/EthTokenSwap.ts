@@ -303,9 +303,6 @@ class EthTokenSwap extends SwapInterface {
   swaps(data) {
     const { ownerAddress, participantAddress } = data
 
-    console.log('>>>>>> CALL GET SWAPS', data, this.contract.defaultBlock)
-    
-
     return this.contract.methods.swaps(ownerAddress, participantAddress).call()
   }
 
@@ -1175,8 +1172,6 @@ class EthTokenSwap extends SwapInterface {
     return (swap && swap.secretHash && swap.secretHash === `0x${secretHash}`)
   }
 
-  // ==========================================================
-  // @to-do - check secret hash
   async isContractFunded(flow) {
     const abClass = this
     const web3 = this.app.env.getWeb3()
