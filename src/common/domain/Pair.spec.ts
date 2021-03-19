@@ -1,6 +1,5 @@
-import Pair from './Pair'
+import Pair, { PAIR_TYPES } from './Pair'
 
-import PAIR_TYPES from 'helpers/constants/PAIR_TYPES'
 
 const _ORDER = {
   'buyCurrency': 'ETH',
@@ -23,6 +22,7 @@ const _PAIR = {
 describe('Trade Pair', () => {
   it('should create itself from order', () => {
     const pair = Pair.fromOrder(_ORDER)
+
     expect(JSON.parse(JSON.stringify(pair))).toEqual(_PAIR)
   })
 

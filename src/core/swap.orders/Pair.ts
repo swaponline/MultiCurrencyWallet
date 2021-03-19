@@ -76,11 +76,11 @@ export const parsePair = (str) => {
 export default class Pair {
   price: BigNumber
   amount: BigNumber
-  ticker: any
-  main: any
-  base: any
-  type: any
-  total: any
+  ticker: string
+  main: string
+  base: string
+  type: PAIR_TYPES
+  total: BigNumber
 
   constructor({ price, amount, ticker, type }) {
     this.price = new BigNumber(price)
@@ -130,8 +130,8 @@ export default class Pair {
 
     if (![PAIR_ASK, PAIR_BID].includes(type)) throw new Error(`CreateOrderError: Wrong order type: ${type}`)
 
-    const base = { currency: BASE, amount: amount.times(price) }
-    const main = { currency: MAIN, amount }
+    const base = { currency: BASE, amount: amount }
+    const main = { currency: MAIN, amount: amount.div(price) }
 
     const buy = (type === PAIR_ASK) ? base : main
     const sell = (type === PAIR_ASK) ? main : base
@@ -146,7 +146,7 @@ export default class Pair {
   }
 
   static fromOrder(order) {
-    const { buyCurrency, sellCurrency, buyAmount, sellAmount } = order
+    const { buyAmount, sellAmount } = order
     const { ticker, type } = parseTicker(order)
 
     if (ticker === 'none') {

@@ -1,16 +1,9 @@
-//@ts-nockeck
 import BigNumber from 'bignumber.js'
 
 import TOKEN_DECIMALS from 'helpers/constants/TOKEN_DECIMALS'
 import TRADE_TICKERS from 'helpers/constants/TRADE_TICKERS'
 import PAIR_TYPES from 'helpers/constants/PAIR_TYPES'
-import config from 'app-config'
 
-
-const isWidgetBuild = config && config.isWidget
-
-console.log('TOKEN_DECIMALS', TOKEN_DECIMALS)
-console.log('TRADE_TICKERS', TRADE_TICKERS)
 
 const PAIR_BID = PAIR_TYPES.BID
 const PAIR_ASK = PAIR_TYPES.ASK
@@ -28,7 +21,6 @@ export const parseTicker = (order) => {
   const SB = `${sell}-${buy}`.toUpperCase() // sells ETH = ASK
 
   if (TRADE_TICKERS.includes(BS)) {
-
     return {
       ticker: BS,
       type: PAIR_BID,
@@ -36,17 +28,13 @@ export const parseTicker = (order) => {
   }
 
   if (TRADE_TICKERS.includes(SB)) {
-
     return {
       ticker: SB,
       type: PAIR_ASK,
     }
   }
 
-  if (!isWidgetBuild) {
-    console.warn(`ParseTickerError: No such tickers: ${BS},${SB}`)
-  }
-
+  console.warn(`ParseTickerError: No such tickers: ${BS},${SB}`)
   return { ticker: 'none', type: PAIR_BID }
 }
 
@@ -84,13 +72,13 @@ export const parsePair = (str) => {
 }
 
 export default class Pair {
-  price: any
-  amount: any
-  ticker: any
-  main: any
-  base: any
-  type: any
-  total: any
+  price: BigNumber
+  amount: BigNumber
+  ticker: string
+  main: string
+  base: string
+  type: PAIR_TYPES
+  total: BigNumber
 
   constructor({ price, amount, ticker, type }) {
     this.price = new BigNumber(price)
@@ -136,13 +124,12 @@ export default class Pair {
 
     console.log(`create order ${this}`)
     const { MAIN, BASE } = parsePair(ticker)
-    //@ts-ignore
-    if (!MAIN || !BASE) throw new Error(`CreateOrderError: No currency: ${main}-${base}`)
+    if (!MAIN || !BASE) throw new Error(`CreateOrderError: No currency: ${MAIN}-${BASE}`)
 
     if (![PAIR_ASK, PAIR_BID].includes(type)) throw new Error(`CreateOrderError: Wrong order type: ${type}`)
 
-    const base = { currency: BASE, amount: amount.times(price) }
-    const main = { currency: MAIN, amount }
+    const base = { currency: BASE, amount: amount }
+    const main = { currency: MAIN, amount: amount.div(price) }
 
     const buy = (type === PAIR_ASK) ? base : main
     const sell = (type === PAIR_ASK) ? main : base
@@ -157,7 +144,7 @@ export default class Pair {
   }
 
   static fromOrder(order) {
-    const { buyCurrency, sellCurrency, buyAmount, sellAmount } = order
+    const { buyAmount, sellAmount } = order
     const { ticker, type } = parseTicker(order)
 
     if (ticker === 'none') {

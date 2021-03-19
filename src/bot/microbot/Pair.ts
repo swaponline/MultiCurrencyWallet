@@ -5,6 +5,7 @@ import {
   TRADE_TICKERS as DEFAULT_TRADE_TICKERS,
   PAIR_TYPES
 } from '../config/constants'
+
 import * as configStorage from '../config/storage'
 
 
@@ -32,21 +33,31 @@ const parseTicker = (order) => {
 
   throw new Error(`ParseTickerError: No such tickers: ${BS},${SB}`)
 }
-//@ToDo move to outside
-const parsePair = (str) => {
-  if (!str) throw new Error(`Empty string: ${str}`)
-  if (typeof str !== 'string') throw new Error(`ParseTickerError: Not a string: ${str}`)
+
+
+export const parsePair = (str) => {
+
+  if (!str) {
+    throw new Error(`Empty string: ${str}`)
+  }
+
+  if (typeof str !== 'string') {
+    throw new Error(`ParseTickerError: Not a string: ${str}`)
+  }
 
   const tokens = str.split('-')
-  if (tokens.length !== 2) throw new Error(`ParseTickerError: Wrong tokens: ${str}`)
 
-  if (TRADE_TICKERS.includes(str)) {
-    str = str
-  } else {
+  if (tokens.length !== 2) {
+    throw new Error(`ParseTickerError: Wrong tokens: ${str}`)
+  }
+
+  if (!TRADE_TICKERS.includes(str)) {
     str = tokens.reverse().join('-')
   }
 
-  if (!TRADE_TICKERS.includes(str)) throw new Error(`ParseTickerError: Ticker not found: ${str}`)
+  if (!TRADE_TICKERS.includes(str)) {
+    throw new Error(`ParseTickerError: Ticker not found: ${str}`)
+  }
 
   const MAIN = tokens[0].toUpperCase()
   const BASE = tokens[1].toUpperCase()
@@ -63,7 +74,8 @@ export default class Pair {
   ticker: string
   main: string
   base: string
-  type: any
+  type: PAIR_TYPES
+  total: BigNumber
 
   constructor({ price, amount, ticker, type }) {
     this.price = new BigNumber(price)
@@ -76,6 +88,7 @@ export default class Pair {
     this.main = MAIN
     this.base = BASE
     this.type = type === PAIR_TYPES.BID ? PAIR_TYPES.BID : PAIR_TYPES.ASK
+    this.total = this.price.times(this.amount)
   }
 
   /*
@@ -106,7 +119,7 @@ export default class Pair {
   toOrder() {
     const { ticker, type, price, amount } = this
 
-    console.log(new Date().toISOString(), `create order ${this}`)
+    console.log(`create order ${this}`)
     const { MAIN, BASE } = parsePair(ticker)
     if (!MAIN || !BASE) throw new Error(`CreateOrderError: No currency: ${MAIN}-${BASE}`)
 
@@ -115,8 +128,8 @@ export default class Pair {
     const base = { currency: BASE, amount: amount }
     const main = { currency: MAIN, amount: amount.div(price) }
 
-    const buy = (type == PAIR_ASK) ? base : main
-    const sell = (type == PAIR_ASK) ? main : base
+    const buy = (type === PAIR_ASK) ? base : main
+    const sell = (type === PAIR_ASK) ? main : base
 
     return {
       buyCurrency: buy.currency,
@@ -128,25 +141,46 @@ export default class Pair {
   }
 
   static fromOrder(order) {
-    const { buyCurrency: buy, sellCurrency: sell, buyAmount, sellAmount } = order
-
+    const { buyAmount, sellAmount } = order
     const { ticker, type } = parseTicker(order)
 
+    if (ticker === 'none') {
+      return
+    }
+
     // ASK means sellCurrency is ETH, then sell is main
-    const main_amount = new BigNumber(type == PAIR_ASK ? sellAmount : buyAmount)
-    const base_amount = new BigNumber(type == PAIR_ASK ? buyAmount : sellAmount)
+    const mainAmount = new BigNumber(type === PAIR_ASK ? sellAmount : buyAmount)
+    const baseAmount = new BigNumber(type === PAIR_ASK ? buyAmount : sellAmount)
 
     return new Pair({
       ticker,
       type,
-      price: base_amount.div(main_amount),
-      amount: base_amount,
+      price: baseAmount.div(mainAmount),
+      amount: baseAmount,
     })
   }
 
   toString() {
     const type = this.type === PAIR_TYPES.BID ? 'bid' : 'ask'
     return `${type} \t${this.ticker} \t${this.price.dp(8)} \t${this.amount}`
+  }
+
+  static check(order, ticker) {
+    try {
+      const pair = Pair.fromOrder(order)
+      const { MAIN, BASE } = parsePair(ticker.toUpperCase())
+
+      return pair.ticker === `${MAIN}-${BASE}`
+    } catch (err) {
+      return false
+    }
+  }
+
+  static compareOrders(order1, order2) {
+    const pair1 = Pair.fromOrder(order1)
+    const pair2 = Pair.fromOrder(order2)
+
+    return pair1.price.comparedTo(pair2.price)
   }
 
   isBid() {

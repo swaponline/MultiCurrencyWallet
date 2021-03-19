@@ -6,7 +6,6 @@ const TRADE_LIMITS = require(`./${network}/TRADE_LIMITS`)
 const TRADE_CONFIG = require(`./${network}/TRADE_CONFIG`)
 const TOKENS = require(`./${network}/TOKENS`)
 const TOKEN_DECIMALS = require(`./${network}/TOKEN_DECIMALS`)
-const PAIR_TYPES = require(`./${network}/PAIR_TYPES`)
 
 
 export {
@@ -16,5 +15,4 @@ export {
   TRADE_CONFIG,
   TOKENS,
   TOKEN_DECIMALS,
-  PAIR_TYPES,
 }
