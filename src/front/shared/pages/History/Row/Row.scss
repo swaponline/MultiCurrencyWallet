@@ -127,7 +127,7 @@
   line-height: 23px;
   text-align: right;
   right: 15px;
-  top: 15px;
+  top: 16px;
   position: absolute;
 }
 
@@ -245,11 +245,6 @@ tr.dark {
   background: $d-background-elements;
   box-shadow: $d-box-shadow;
 
-  @media screen and (max-width: 480px) {
-    box-shadow: none;
-    background: #222528;
-  }
-
   .historyInfo {
     a {
       color: $d-color;
@@ -290,24 +285,6 @@ tr.dark {
     width: 65%;
   }
 
-  .amountUsd {
-    right: 15px;
-    top: 39px;
-
-    @media all and (max-width: 480px) {
-      font-size: 0.6em;
-    }
-  }
-
-  .amount {
-    right: 15px;
-    top: 17px;
-
-    @media all and (max-width: 480px) {
-      font-size: 0.8em;
-    }
-  }
-
   .historyInfo {
     margin-left: 0px;
     margin-top: 0px;
@@ -316,6 +293,21 @@ tr.dark {
 
   .circleIcon {
     display: none;
+  }
+}
+
+@media all and (max-width: 480px) {
+  tr.dark {
+    box-shadow: none;
+    background: #222528;
+  }
+  
+  .amount {
+    font-size: 0.9em;
+  }
+
+  .amountUsd {
+    font-size: 0.7em;
   }
 }
 

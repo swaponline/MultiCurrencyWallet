@@ -12,9 +12,6 @@ const CurrencySelect = (props) => {
     currencies,
     name = '',
     placeholder = '',
-    label,
-    tooltip = '',
-    id,
     selectedItemRender,
   } = props
 
@@ -30,9 +27,6 @@ const CurrencySelect = (props) => {
       selectedItemRender={usedSelectedItemRender}
       itemRender={item => <Option {...item} />}
       onSelect={onSelect}
-      label={label}
-      tooltip={tooltip}
-      id={id}
       name={name}
     />
   )

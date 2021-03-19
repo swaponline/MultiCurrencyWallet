@@ -61,8 +61,7 @@ type ExchangeProps = {
   tokensData: IUniversalObj[]
   currencies: { [key: string]: string }[]
   allCurrencyies: CurrencyObj[]
-  haveSelectedItems: CurrencyObj[]
-  getSelectedItems: CurrencyObj[]
+  addSelectedItems: CurrencyObj[]
   decline: string[]
 }
 
@@ -123,15 +122,6 @@ const allowedCoins = [
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
-// Filter currencies which user has
-const onlyAvailableUserCurrencies = (allCurrencies, hiddenCurrencies) => {
-  const resultArray = allCurrencies.filter(currency => {
-    return hiddenCurrencies.indexOf(currency.name) === -1
-  })
-
-  return resultArray
-}
-
 const isExchangeAllowed = (currencies) =>
   currencies.filter((c) => {
     const isErc = Object.keys(config.erc20)
@@ -169,8 +159,7 @@ const bannedPeers = {} // rejected swap peers
     currencies: isExchangeAllowed(currencies.partialItems),
     allCurrencyies: currencies.items,
     hiddenCoinsList,
-    haveSelectedItems: onlyAvailableUserCurrencies(currencies.items, hiddenCoinsList),
-    getSelectedItems: isExchangeAllowed(currencies.addPartialItems),
+    addSelectedItems: isExchangeAllowed(currencies.addPartialItems),
     orders: filterIsPartial(orders),
     currenciesData: [ethData, btcData, ghostData, nextData],
     tokensData: [...Object.keys(tokensData).map((k) => tokensData[k])],
@@ -1326,8 +1315,8 @@ class Exchange extends PureComponent<any, any> {
   render() {
     const {
       activeFiat,
-      haveSelectedItems,
-      getSelectedItems,
+      currencies,
+      addSelectedItems,
       match: {
         params: { linkedOrderId },
       },
@@ -1506,7 +1495,7 @@ class Exchange extends PureComponent<any, any> {
                 id="Exchange456"
                 placeholder="0.00000000"
                 fiat={maxAmount > 0 && isNonOffers ? 0 : haveFiat}
-                currencies={haveSelectedItems}
+                currencies={currencies}
                 onFocus={() => this.extendedControlsSet(true)}
                 onBlur={() => setTimeout(() => this.extendedControlsSet(false), 200)}
                 inputToolTip={() => (isShowBalance ? balanceTooltip : <span />)}
@@ -1538,7 +1527,7 @@ class Exchange extends PureComponent<any, any> {
                 disabled={true} // value calculated from market price
                 label={<FormattedMessage id="partial255" defaultMessage="You get" />}
                 id="Exchange472"
-                currencies={getSelectedItems}
+                currencies={addSelectedItems}
                 fiat={getFiat}
                 error={isLowAmount}
               />

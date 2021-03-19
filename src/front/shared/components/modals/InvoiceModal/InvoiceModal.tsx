@@ -404,9 +404,6 @@ class InvoiceModal extends React.Component<InvoiceModalProps, InvoiceModalState>
               }
             />
             <CurrencySelect
-              label="Cyrrency"
-              tooltip="Cyrrency"
-              id="InvoiceModalCurrencySelect"
               className={dropDownStyles.simpleDropdown}
               selectedValue={selectedValue}
               onSelect={this.handleBuyCurrencySelect}
