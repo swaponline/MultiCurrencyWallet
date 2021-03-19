@@ -8,6 +8,7 @@
   "license": "MIT",
   "main": "./src/front/bin/server",
   "scripts": {
+    "audit": "cross-env NPM_AUDIT_IGNORE_DEV=1 NPM_AUDIT_IGNORE_LEVEL=low npm-audit-whitelister .npm-audit-whitelister.json",
     "common:test": "tsc ./src/common/tests/tests.ts --noEmit",
     "common:example:send": "node ./src/common/examples/send.js",
     "common:example:unspents": "node ./src/common/examples/unspents.js",
@@ -74,7 +75,7 @@
   },
   "husky": {
     "hooks": {
-      "post-commit": "npm run common:test && npm run core:test"
+      "post-commit": ""
     }
   },
   "devDependencies": {
@@ -158,6 +159,7 @@
     "node-sass": "^4.12.0",
     "node-sessionstorage": "^1.0.0",
     "nodemon": "^2.0.7",
+    "npm-audit-whitelister": "^1.0.2",
     "peer-id": "^0.14.2",
     "pg": "^8.5.1",
     "postcss-loader": "^4.1.0",
