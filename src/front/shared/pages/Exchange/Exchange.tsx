@@ -89,7 +89,6 @@ type ExchangeState = {
   extendedControls: boolean
   isLowAmount: boolean
   isNonOffers: boolean
-  isShowBalance: boolean
   isWaitForPeerAnswer: boolean
   isDeclinedOffer: boolean
   haveBalance: boolean
@@ -277,7 +276,6 @@ class Exchange extends PureComponent<any, any> {
       getAmount: '',
       haveFiat: 0,
       getFiat: 0,
-      isShowBalance: true,
       isLowAmount: false,
       maxAmount: 0,
       maxBuyAmount: new BigNumber(0),
@@ -439,7 +437,6 @@ class Exchange extends PureComponent<any, any> {
 
   fetchPairFeesAndBalances = () => {
     this.fetchPairFees()
-    this.fetchBalances()
   }
 
   updateFees = () => {
@@ -471,7 +468,7 @@ class Exchange extends PureComponent<any, any> {
           buyExRate,
           sellExRate,
         }
-      }))
+      }), this.fetchBalances)
     })
   }
 
@@ -484,7 +481,7 @@ class Exchange extends PureComponent<any, any> {
 
     if (!pairFees || !this._mounted) return
 
-    async () => {
+    ;(async () => {
       const buyWallet = actions.core.getWallet({ currency: buyCurrency })
       const sellWallet = actions.core.getWallet({ currency: sellCurrency })
       const feeBuyWallet = actions.core.getWallet({ currency: pairFees.buy.coin })
@@ -511,7 +508,7 @@ class Exchange extends PureComponent<any, any> {
       })
 
       this.checkBalanceOnAllCurrency()
-    }
+    })()
   }
 
   checkBalanceOnAllCurrency() {
@@ -1346,7 +1343,6 @@ class Exchange extends PureComponent<any, any> {
       maxBuyAmount,
       getAmount,
       goodRate,
-      isShowBalance,
       haveAmount,
       isNoAnyOrders,
       isFullLoadingComplite,
@@ -1382,6 +1378,7 @@ class Exchange extends PureComponent<any, any> {
 
     if (pairFees && pairFees.byCoins) {
       const sellCoinFee = pairFees.byCoins[sellCoin] || false
+      
       balanceTooltip = (
         <p styleName="maxAmount">
           {new BigNumber(balance).toNumber() === 0 ||
@@ -1507,7 +1504,7 @@ class Exchange extends PureComponent<any, any> {
                 currencies={currencies}
                 onFocus={() => this.extendedControlsSet(true)}
                 onBlur={() => setTimeout(() => this.extendedControlsSet(false), 200)}
-                inputToolTip={() => (isShowBalance ? balanceTooltip : <span />)}
+                inputToolTip={balanceTooltip}
               />
 
               <AddressSelect
@@ -1681,9 +1678,9 @@ class Exchange extends PureComponent<any, any> {
                  ) : (
                   <span>
                     {pairFees.sell.fee} {pairFees.sell.coin} + {pairFees.buy.fee} {pairFees.buy.coin}
-                    {' = '}
-                    {fiatFeeCalculation > 0 ? fiatFeeCalculation : 0}
-
+                    {' ≈ '}
+                    {fiatFeeCalculation > 0 ? <>${fiatFeeCalculation}</> : 0}
+                    {' '}
                     <button 
                       className="fas fa-sync-alt"
                       styleName="minerFeeUpdateBtn"

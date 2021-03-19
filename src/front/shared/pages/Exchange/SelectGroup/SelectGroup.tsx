@@ -78,7 +78,7 @@ const SelectGroup = (props) => {
               {`~${fiat}`} {activeFiat}
             </p>
           )}
-        {inputToolTip && inputToolTip()}
+        {inputToolTip && inputToolTip}
         {balanceTooltip && (
           <div styleName="smallTooltip balanceTooltip">
             <Tooltip id="SelectGroupTooltipBalance">{balanceTooltip()}</Tooltip>
