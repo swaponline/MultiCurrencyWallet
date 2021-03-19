@@ -119,7 +119,7 @@ class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
       currency,
       hasError,
       address: '',
-      selectedType: selectedType || 'placeholder',
+      selectedType: selectedType || 'Internal',
       walletAddressFocused: false,
       isMetamaskConnected: metamask.isConnected(),
       metamaskAddress: metamask.getAddress(),
@@ -153,19 +153,17 @@ class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
     const ticker = this.getTicker()
     const internalAddress = this.getInternalAddress()
 
-    let result = true
-
     for (let i = 0; i < hiddenCoinsList.length; i++) {
       const hiddenCoin = hiddenCoinsList[i]
       if (
         hiddenCoin === ticker ||
         (internalAddress && hiddenCoin.includes(`${ticker}:${internalAddress}`))
       ) {
-        result = false
-        break
+        return false
       }
     }
-    return result
+
+    return true
   }
 
   handleFocusAddress = () => {
@@ -484,7 +482,6 @@ class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
         <DropDown
           styleName="dropDown"
           items={dropDownOptions}
-          initialValue="placeholder"
           selectedValue={selectedType}
           disableSearch={true}
           dontScroll={true}

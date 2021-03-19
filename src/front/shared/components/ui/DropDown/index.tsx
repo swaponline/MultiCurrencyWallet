@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, ReactNode } from 'react'
 import cx from 'classnames'
 import cssModules from 'react-css-modules'
 import styles from './index.scss'
@@ -11,19 +11,15 @@ import OutsideClick from './OutsideClick'
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 type DropDownProps = {
-  initialValue?: string | number
   selectedValue: string
   items: IUniversalObj[]
   selectedItemRender?: (item) => void
-  itemRender?: (item) => JSX.Element
+  itemRender: (item) => ReactNode
   onSelect?: (item) => void
   className?: string
   name?: string
   placeholder?: string
-  label?: string
-  tooltip?: string
   arrowSide?: string
-  id?: string
   disableSearch?: boolean
   dontScroll?: boolean
 }
@@ -40,11 +36,11 @@ export default class DropDown extends Component<DropDownProps, DropDownState> {
   constructor(props) {
     super(props)
 
-    const { initialValue, selectedValue } = props
+    const { selectedValue } = props
 
     this.state = {
       optionToggleIsOpen: false,
-      selectedValue: initialValue || selectedValue || 0,
+      selectedValue: selectedValue,
       inputValue: '',
       error: false,
     }
@@ -69,28 +65,19 @@ export default class DropDown extends Component<DropDownProps, DropDownState> {
   }
 
   handleOptionClick = (item) => {
-    const { selectedValue, onSelect } = this.props
-
-    // if there is no passed `selectedValue` then change it
-    if (typeof selectedValue === 'undefined') {
-      this.setState({ selectedValue: item.value })
-    }
-
+    const { onSelect } = this.props
+    
     // for example we'd like to change `selectedValue` manually
     if (typeof onSelect === 'function' && !item.disabled) {
       onSelect(item)
       this.setState({ selectedValue: item.value })
     }
+
     this.toggleClose()
   }
 
   renderItem = (item) => {
-    const { itemRender } = this.props
-
-    if (typeof itemRender === 'function') {
-      return itemRender(item)
-    }
-    return <span>item.title</span>
+    return this.props.itemRender(item)
   }
 
   renderSelectedItem = () => {
