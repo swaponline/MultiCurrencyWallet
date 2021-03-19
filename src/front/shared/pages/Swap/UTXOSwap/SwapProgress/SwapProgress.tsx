@@ -23,15 +23,15 @@ import { Button, TimerButton } from 'components/controls'
 import SwapController from '../../SwapController'
 import PleaseDontLeaveWrapper from './PleaseDontLeaveWrapper'
 
-import MakerBtcLikeToEth from './MakerSwapProgressText/BtcLikeToEth'
-import MakerBtcLikeToEthToken from './MakerSwapProgressText/BtcLikeToEthToken'
-import MakerEthToBtcLike from './MakerSwapProgressText/EthToBtcLike'
-import MakerEthTokenToBtcLike from './MakerSwapProgressText/EthTokenToBtcLike'
+import UTXOBtcLikeToEth from './UTXOSwapProgressText/BtcLikeToEth'
+import UTXOBtcLikeToEthToken from './UTXOSwapProgressText/BtcLikeToEthToken'
+import UTXOEthToBtcLike from './UTXOSwapProgressText/EthToBtcLike'
+import UTXOEthTokenToBtcLike from './UTXOSwapProgressText/EthTokenToBtcLike'
 
-import TakerBtcLikeToEth from './TakerSwapProgressText/BtcLikeToEth'
-import TakerBtcLikeToEthToken from './TakerSwapProgressText/BtcLikeToEthToken'
-import TakerEthToBtcLike from './TakerSwapProgressText/EthToBtcLike'
-import TakerEthTokenToBtcLike from './TakerSwapProgressText/EthTokenToBtcLike'
+import ABBtcLikeToEth from './ABSwapProgressText/BtcLikeToEth'
+import ABBtcLikeToEthToken from './ABSwapProgressText/BtcLikeToEthToken'
+import ABEthToBtcLike from './ABSwapProgressText/EthToBtcLike'
+import ABEthTokenToBtcLike from './ABSwapProgressText/EthTokenToBtcLike'
 
 
 import metamask from 'helpers/metamask'
@@ -333,7 +333,7 @@ class SwapProgress extends Component<any, any> {
       isSecretCopied,
     } = this.state
 
-    const isTaker = swap.flow.isTaker()
+    const isUTXOSide = swap.flow.isUTXOSide
 
     const {
       currencyName,
@@ -355,10 +355,10 @@ class SwapProgress extends Component<any, any> {
       _refundTx = flow.refundTransactionHash.transactionHash || flow.refundTransactionHash
     }
 
-    const BtcLikeToEth = (isTakerMakerModel && isTaker) ? TakerBtcLikeToEth : MakerBtcLikeToEth
-    const EthToBtcLike = (isTakerMakerModel && isTaker) ? TakerEthToBtcLike : MakerEthToBtcLike
-    const BtcLikeToEthToken = (isTakerMakerModel && isTaker) ? TakerBtcLikeToEthToken : MakerBtcLikeToEthToken
-    const EthTokenToBtcLike = (isTakerMakerModel && isTaker) ? TakerEthTokenToBtcLike : MakerEthTokenToBtcLike
+    const BtcLikeToEth = (isUTXOSide) ? UTXOBtcLikeToEth : ABBtcLikeToEth
+    const EthToBtcLike = (isUTXOSide) ? UTXOEthToBtcLike : ABEthToBtcLike
+    const BtcLikeToEthToken = (isUTXOSide) ? UTXOBtcLikeToEthToken : ABBtcLikeToEthToken
+    const EthTokenToBtcLike = (isUTXOSide) ? UTXOEthTokenToBtcLike : ABEthTokenToBtcLike
     /** todo **/
     const swapTexts = (
       <Fragment>

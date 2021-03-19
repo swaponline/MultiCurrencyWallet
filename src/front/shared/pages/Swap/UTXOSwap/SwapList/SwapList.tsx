@@ -7,15 +7,15 @@ import CSSModules from 'react-css-modules'
 import styles from './SwapList.scss'
 
 
-import MakerFirstStep from './MakerSteps/FirstStep'
-import MakerSecondStep from './MakerSteps/SecondStep'
-import MakerThirdStep from './MakerSteps/ThirdStep'
-import MakerFourthStep from './MakerSteps/FourthStep'
+import UTXOFirstStep from './UTXOSteps/FirstStep'
+import UTXOSecondStep from './UTXOSteps/SecondStep'
+import UTXOThirdStep from './UTXOSteps/ThirdStep'
+import UTXOFourthStep from './UTXOSteps/FourthStep'
 
-import TakerFirstStep from './TakerSteps/FirstStep'
-import TakerSecondStep from './TakerSteps/SecondStep'
-import TakerThirdStep from './TakerSteps/ThirdStep'
-import TakerFourthStep from './TakerSteps/FourthStep'
+import ABFirstStep from './ABSteps/FirstStep'
+import ABSecondStep from './ABSteps/SecondStep'
+import ABThirdStep from './ABSteps/ThirdStep'
+import ABFourthStep from './ABSteps/FourthStep'
 
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
@@ -79,11 +79,11 @@ export default class SwapList extends Component<any, any> {
     } = this.props
     const { first, second, fourth, fifth, sixth, seventh, eighth } = this.state
 
-    const isTaker = flowClass.isTaker()
-    const FirstStep = (isTakerMakerModel && isTaker) ? TakerFirstStep : MakerFirstStep
-    const SecondStep = (isTakerMakerModel && isTaker) ? TakerSecondStep : MakerSecondStep
-    const ThirdStep = (isTakerMakerModel && isTaker) ? TakerThirdStep : MakerThirdStep
-    const FourthStep = (isTakerMakerModel && isTaker) ? TakerFourthStep : MakerFourthStep
+    const isUTXOSide = flowClass.isUTXOSide
+    const FirstStep = (isUTXOSide) ? UTXOFirstStep : ABFirstStep
+    const SecondStep = (isUTXOSide) ? UTXOSecondStep : ABSecondStep
+    const ThirdStep = (isUTXOSide) ? UTXOThirdStep : ABThirdStep
+    const FourthStep = (isUTXOSide) ? UTXOFourthStep : ABFourthStep
 
     return (
       <div styleName={`${isMobile ? 'stepList isMobile' : 'stepList'} ${isDark ? 'dark' : ''}`}>
