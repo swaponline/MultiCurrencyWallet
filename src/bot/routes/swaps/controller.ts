@@ -41,6 +41,12 @@ const runSwap = (swap) => {
   })
 }
 
+const getSwapFormated = (req, res) => {
+  findSwap(app)(req, res).then((swap) => {
+    res.send(`<pre>${JSON.stringify(swapView(swap), null, '    ')}</pre>`)
+  })
+}
+
 const getSwap = (req, res) => {
   findSwap(app)(req, res).then((swap) => {
     res.json(swapView(swap))
@@ -227,6 +233,8 @@ const getFinished = ({ query: { parsed, withFees }}, res) => {
 
 export {
   getSwap,
+  getSwapFormated,
+
   getState,
   goSwap,
   refund,
