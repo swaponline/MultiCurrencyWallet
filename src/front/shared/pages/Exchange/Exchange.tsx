@@ -40,6 +40,15 @@ import TurboIcon from 'shared/components/ui/TurboIcon/TurboIcon'
 
 import { COIN_DATA, COIN_MODEL, COIN_TYPE } from 'swap.app/constants/COINS'
 
+type CurrencyObj = {
+  addAssets: boolean
+  fullTitle: string
+  icon: string
+  name: string
+  title: string
+  value: string
+}
+
 type ExchangeProps = {
   isOnlyForm: boolean
   activeFiat: string
@@ -51,16 +60,10 @@ type ExchangeProps = {
   currenciesData: IUniversalObj[]
   tokensData: IUniversalObj[]
   currencies: { [key: string]: string }[]
-  allCurrencyies: {
-    addAssets: boolean
-    fullTitle: string
-    icon: string
-    name: string
-    title: string
-    value: string
-  }[]
-  addSelectedItems: [] // what in the array?
-  decline: [] // what in the array?
+  allCurrencyies: CurrencyObj[]
+  haveSelectedItems: CurrencyObj[]
+  getSelectedItems: CurrencyObj[]
+  decline: string[]
 }
 
 type Address = {
@@ -103,7 +106,7 @@ type ExchangeState = {
   pairFees: any
   directionOrders: IUniversalObj[]
   filteredOrders: IUniversalObj[]
-  desclineOrders: [] // what in the array?
+  desclineOrders: string[]
 
   fromAddress: Address
   toAddress: Address
@@ -119,6 +122,15 @@ const allowedCoins = [
 ]
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
+
+// Filter currencies which user has
+const onlyAvailableUserCurrencies = (allCurrencies, hiddenCurrencies) => {
+  const resultArray = allCurrencies.filter(currency => {
+    return hiddenCurrencies.indexOf(currency.name) === -1
+  })
+
+  return resultArray
+}
 
 const isExchangeAllowed = (currencies) =>
   currencies.filter((c) => {
@@ -151,12 +163,14 @@ const bannedPeers = {} // rejected swap peers
   ({
     currencies,
     rememberedOrders,
-    core: { orders },
+    core: { orders, hiddenCoinsList },
     user: { ethData, btcData, ghostData, nextData, tokensData, activeFiat, ...rest },
   }) => ({
     currencies: isExchangeAllowed(currencies.partialItems),
     allCurrencyies: currencies.items,
-    addSelectedItems: isExchangeAllowed(currencies.addPartialItems),
+    hiddenCoinsList,
+    haveSelectedItems: onlyAvailableUserCurrencies(currencies.items, hiddenCoinsList),
+    getSelectedItems: isExchangeAllowed(currencies.addPartialItems),
     orders: filterIsPartial(orders),
     currenciesData: [ethData, btcData, ghostData, nextData],
     tokensData: [...Object.keys(tokensData).map((k) => tokensData[k])],
@@ -1312,8 +1326,8 @@ class Exchange extends PureComponent<any, any> {
   render() {
     const {
       activeFiat,
-      currencies,
-      addSelectedItems,
+      haveSelectedItems,
+      getSelectedItems,
       match: {
         params: { linkedOrderId },
       },
@@ -1492,7 +1506,7 @@ class Exchange extends PureComponent<any, any> {
                 id="Exchange456"
                 placeholder="0.00000000"
                 fiat={maxAmount > 0 && isNonOffers ? 0 : haveFiat}
-                currencies={currencies}
+                currencies={haveSelectedItems}
                 onFocus={() => this.extendedControlsSet(true)}
                 onBlur={() => setTimeout(() => this.extendedControlsSet(false), 200)}
                 inputToolTip={() => (isShowBalance ? balanceTooltip : <span />)}
@@ -1524,7 +1538,7 @@ class Exchange extends PureComponent<any, any> {
                 disabled={true} // value calculated from market price
                 label={<FormattedMessage id="partial255" defaultMessage="You get" />}
                 id="Exchange472"
-                currencies={addSelectedItems}
+                currencies={getSelectedItems}
                 fiat={getFiat}
                 error={isLowAmount}
               />
