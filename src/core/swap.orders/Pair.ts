@@ -2,8 +2,12 @@ import BigNumber from 'bignumber.js'
 
 import COIN_DATA from 'swap.app/constants'
 import TRADE_TICKERS from 'swap.app/constants/TRADE_TICKERS'
-import PAIR_TYPES from 'swap.app/constants/PAIR_TYPES'
 
+
+export const PAIR_TYPES = Object.freeze({
+  BID: 'bid',
+  ASK: 'ask',
+})
 
 const PAIR_BID = PAIR_TYPES.BID
 const PAIR_ASK = PAIR_TYPES.ASK

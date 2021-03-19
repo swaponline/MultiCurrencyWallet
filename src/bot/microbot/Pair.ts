@@ -3,15 +3,19 @@ import BigNumber from 'bignumber.js'
 import {
   TOKEN_DECIMALS,
   TRADE_TICKERS as DEFAULT_TRADE_TICKERS,
-  PAIR_TYPES
 } from '../config/constants'
-
-import * as configStorage from '../config/storage'
-
 
 const TRADE_TICKERS = configStorage.hasTradeConfig()
   ? configStorage.getTradeTickers()
   : DEFAULT_TRADE_TICKERS
+
+import * as configStorage from '../config/storage'
+
+
+export const PAIR_TYPES = Object.freeze({
+  BID: 'bid',
+  ASK: 'ask',
+})
 
 const PAIR_BID = PAIR_TYPES.BID
 const PAIR_ASK = PAIR_TYPES.ASK

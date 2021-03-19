@@ -2,8 +2,12 @@ import BigNumber from 'bignumber.js'
 
 import TOKEN_DECIMALS from 'helpers/constants/TOKEN_DECIMALS'
 import TRADE_TICKERS from 'helpers/constants/TRADE_TICKERS'
-import PAIR_TYPES from 'helpers/constants/PAIR_TYPES'
 
+
+export const PAIR_TYPES = Object.freeze({
+  BID: 'bid',
+  ASK: 'ask',
+})
 
 const PAIR_BID = PAIR_TYPES.BID
 const PAIR_ASK = PAIR_TYPES.ASK
