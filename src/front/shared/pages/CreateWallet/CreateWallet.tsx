@@ -176,8 +176,8 @@ const CreateWallet: React.FC<any> = (props) => {
   const [error, setError] = useState('Choose something')
   const [isExist, setExist] = useState(false)
 
-  const goHome = () => {
-    history.push(localisedUrl(locale, links.home))
+  const goBack = () => {
+    window.history.back()
   }
 
   const handleConnectWallet = () => {
@@ -191,7 +191,7 @@ const CreateWallet: React.FC<any> = (props) => {
       return setStep(step + 1)
     }
     localStorage.setItem(constants.localStorage.isWalletCreate, true)
-    goHome()
+    goBack()
   }
 
   const handleRestoreMnemonic = () => {
@@ -215,7 +215,7 @@ const CreateWallet: React.FC<any> = (props) => {
         }
       })
       localStorage.setItem(constants.localStorage.isWalletCreate, true)
-      goHome()
+      goBack()
       return
     }
 
@@ -225,7 +225,7 @@ const CreateWallet: React.FC<any> = (props) => {
     }
 
     if (currencies['Custom ERC20']) {
-      goHome()
+      goBack()
       actions.modals.open(constants.modals.AddCustomERC20)
       return
     }
@@ -356,7 +356,7 @@ const CreateWallet: React.FC<any> = (props) => {
   }
 
   if (isExist) {
-    goHome()
+    goBack()
   }
 
   const web3Type = metamask.web3connect.getInjectedType()
@@ -372,7 +372,7 @@ const CreateWallet: React.FC<any> = (props) => {
             //@ts-ignore */}
             <CloseIcon
               styleName="closeButton"
-              onClick={() => goHome()}
+              onClick={() => goBack()}
               data-testid="modalCloseIcon"
             />
           </>

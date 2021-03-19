@@ -1671,10 +1671,10 @@ class Exchange extends PureComponent<any, any> {
                   </span>
                  ) : (
                   <span>
-                    {pairFees.buy.fee} {pairFees.buy.coin} + {pairFees.sell.fee}{' '}
-                    {pairFees.sell.coin}
-                    {fiatFeeCalculation > 0 && <span> &asymp; ${fiatFeeCalculation} </span>}
-                    
+                    {pairFees.sell.fee} {pairFees.sell.coin} + {pairFees.buy.fee} {pairFees.buy.coin}
+                    {' = '}
+                    {fiatFeeCalculation > 0 ? fiatFeeCalculation : 0}
+
                     <button 
                       className="fas fa-sync-alt"
                       styleName="minerFeeUpdateBtn"
