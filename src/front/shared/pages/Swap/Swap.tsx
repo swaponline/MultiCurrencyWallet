@@ -54,6 +54,7 @@ class SwapComponent extends PureComponent<any, any> {
   sendDebugInfoTimer: any
 
 
+
   /*
     ================================================================
     This is debug information without any secret and private data.
