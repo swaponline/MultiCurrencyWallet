@@ -48,7 +48,7 @@ export default class UTXOToEth extends Component<any, any> {
     this.updateWindowDimensions()
     this.ParticipantTimer = setInterval(() => {
       if (this.state.flow.isParticipantSigned && this.state.destinationBuyAddress) {
-        this.submitSecret()
+        //this.submitSecret()
       }
       else {
         clearInterval(this.ParticipantTimer)
@@ -73,20 +73,6 @@ export default class UTXOToEth extends Component<any, any> {
   }
 
   handleFlowStateUpdate = (values) => {
-    /** todo - not used - remove **/
-    const stepNumbers = {
-      1: 'sign',
-      2: 'submit-secret',
-      3: 'sync-balance',
-      4: 'lock-utxo',
-      5: 'wait-lock-eth',
-      6: 'withdraw-eth',
-      7: 'finish',
-      8: 'end',
-    }
-
-    // actions.analytics.swapEvent(stepNumbers[values.step], 'GHOST2ETH')
-
     this.setState({
       flow: values,
     })

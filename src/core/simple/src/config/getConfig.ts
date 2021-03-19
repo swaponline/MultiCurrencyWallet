@@ -110,8 +110,8 @@ const getConfig = (config) => ({ account, mnemonic, contracts: { ETH, TOKEN }, .
           txRaw,
           NETWORK,
         }),
-        fetchTxInfo: (txid) => btcUtils.fetchTxInfo({
-          txid,
+        fetchTxInfo: (hash) => btcUtils.fetchTxInfo({
+          hash,
           NETWORK,
         }),
         estimateFeeValue: (options) => btcUtils.estimateFeeValue({
@@ -120,6 +120,10 @@ const getConfig = (config) => ({ account, mnemonic, contracts: { ETH, TOKEN }, .
         }),
         checkWithdraw: (scriptAddress) => btcUtils.checkWithdraw({
           scriptAddress,
+          NETWORK,
+        }),
+        fetchTxInputScript: (options) => btcUtils.fetchTxInputScript({
+          ...options,
           NETWORK,
         }),
       }),

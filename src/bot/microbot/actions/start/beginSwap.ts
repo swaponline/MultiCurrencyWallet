@@ -14,7 +14,9 @@ import {
 import { canBeDeleted, needsRefund } from './swapStatus'
 import { getNoxonPrice } from '../../../app/middlewares/prices'
 
-import { UTXO2ETHFlow, ETH2UTXOFlow, TurboMakerFlow } from '../swap-flow'
+
+import { DefaultFlowActions } from '../swap-flow'
+
 
 import { checkSwapsCountLimit } from '../../core/checkSwapsCountLimit'
 import { removeMyOrders } from '../../core/orders'
@@ -56,9 +58,9 @@ export default (app, { id }, callback) => {
       && COIN_DATA[base].model === COIN_MODEL.UTXO
     )
 
-    const goFlow = swap.isTurbo
-      ? TurboMakerFlow
-      : (mainIsUTXO) ? UTXO2ETHFlow : ETH2UTXOFlow
+
+    const goFlow = DefaultFlowActions
+
 
     if (baseIsUTXO && process.env.MIN_AMOUNT_FORCONFIRM) {
       getNoxonPrice(main, 'USD').then((usdPrice) => {

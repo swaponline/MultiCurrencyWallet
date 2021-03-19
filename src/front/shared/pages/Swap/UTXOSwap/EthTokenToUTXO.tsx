@@ -72,6 +72,7 @@ export default class EthTokenToUTXO extends Component<any, any> {
       }
     }, 3000)
 
+  /*
     this.confirmTimer = setInterval(() => {
       if (this.state.flow.step === 3) {
         this.confirmScriptChecked()
@@ -79,6 +80,7 @@ export default class EthTokenToUTXO extends Component<any, any> {
         clearInterval(this.confirmTimer)
       }
     }, 3000)
+    */
 
     this.requestMaxAllowance()
   }

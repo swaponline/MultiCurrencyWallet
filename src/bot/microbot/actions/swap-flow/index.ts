@@ -1,14 +1,6 @@
-import BTC2ETHFlow from './BTC2ETHFlow'
-import ETH2BTCFlow from './ETH2BTCFlow'
-import UTXO2ETHFlow from './UTXO2ETHFlow'
-import ETH2UTXOFlow from './ETH2UTXOFlow'
-import TurboMakerFlow from './TurboMakerFlow'
+import DefaultFlowActions from './DefaultFlowActions'
 
 
 export {
-  BTC2ETHFlow,
-  ETH2BTCFlow,
-  UTXO2ETHFlow,
-  ETH2UTXOFlow,
-  TurboMakerFlow,
+  DefaultFlowActions,
 }
