@@ -7,6 +7,7 @@ import typeforce from 'swap.app/util/typeforce'
 import { default as TESTNET } from '../../../front/config/testnet/api'
 import { default as MAINNET } from '../../../front/config/mainnet/api'
 
+
 const DUST = 546
 
 const getBitpay = (network) => {
@@ -446,7 +447,6 @@ const checkWithdraw = (options) => {
   } = options
 
   const url = `/address/${scriptAddress}/txs/`
-
   return apiLooper.get(apiBitpay || getBitpay(NETWORK), url, {
     checkStatus: (answer) => {
       try {
@@ -460,7 +460,7 @@ const checkWithdraw = (options) => {
     },
   }).then(async (txs: any) => {
     // has two or more txs on script
-    if ((txs.length > 1)
+    if ((txs.length >= 1)
       && txs[0].mintTxid
       && txs[0].spentTxid
     ) {
@@ -477,6 +477,41 @@ const checkWithdraw = (options) => {
       } catch (e) {
         console.error('Fail check Withdraw for ', scriptAddress, e)
       }
+    }
+    return false
+  })
+}
+
+const fetchTxInputScript = (options) => {
+  const {
+    txId,
+    cacheResponse,
+    apiBlocyper,
+    NETWORK,
+  } = options
+
+  return apiLooper.get(apiBlocyper || getBlockcypher(NETWORK), `/txs/${txId}?includeHex=true`, {
+    cacheResponse,
+    checkStatus: (answer) => {
+      try {
+        if (answer && answer.hex !== undefined) return true
+      } catch (e) {}
+      return false
+    },
+    inQuery: {
+      delay: 500,
+      name: `blocyper`,
+    },
+  }).then((inInfo: any) => {
+    if (inInfo
+      && inInfo.inputs
+      && inInfo.inputs.length === 1
+    ) {
+      return bitcoin.script.toASM(
+        bitcoin.script.decompile(
+          Buffer.from(inInfo.inputs[0].script, 'hex')
+        )
+      )
     }
     return false
   })
@@ -816,4 +851,6 @@ export default {
   getCore,
 
   prepareUnspents,
+
+  fetchTxInputScript,
 }

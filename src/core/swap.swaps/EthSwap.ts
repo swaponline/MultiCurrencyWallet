@@ -100,7 +100,15 @@ class EthSwap extends SwapInterface {
    * @returns {Promise}
    */
   async create(data, handleTransactionHash) {
-    if (data.targetWallet && (data.targetWallet!==data.participantAddress) && this.hasTargetWallet()) {
+    if (
+      data.targetWallet
+      && (
+        (data.targetWallet!==data.participantAddress)
+        ||
+        data.useTargetWallet
+      )
+      && this.hasTargetWallet()
+    ) {
       return this.createSwapTarget(data, handleTransactionHash)
     } else {
       return this.createSwap(data, handleTransactionHash)
@@ -591,8 +599,10 @@ class EthSwap extends SwapInterface {
 
   async fundContract({
     flow,
+    useTargetWallet,
   }: {
     flow: any,
+    useTargetWallet?: boolean,
   }) {
     const abClass = this
     const {
@@ -608,11 +618,17 @@ class EthSwap extends SwapInterface {
       participantAddress: abClass.app.getParticipantEthAddress(flow.swap),
       secretHash: secretHash,
       amount: sellAmount,
-      targetWallet: flow.swap.destinationSellAddress
+      targetWallet: (flow.swap.destinationSellAddress)
+        ? flow.swap.destinationSellAddress
+        : abClass.app.getParticipantEthAddress(flow.swap),
+      useTargetWallet,
     }
 
     const tryCreateSwap = async () => {
-      const { isEthContractFunded } = flow.state
+      const {
+        isEthContractFunded,
+        ethSwapCreationTransactionHash,
+      } = flow.state
 
       if (!isEthContractFunded) {
         try {
@@ -667,6 +683,14 @@ class EthSwap extends SwapInterface {
 
           return null
         }
+      } else {
+        flow.swap.room.sendMessage({
+          event: 'create eth contract',
+          data: {
+            ethSwapCreationTransactionHash,
+            secretHash,
+          },
+        })
       }
       return true
     }
@@ -686,7 +710,7 @@ class EthSwap extends SwapInterface {
   }
 
 
-  async getSecretFromAB2UTXO({
+  async getSecretFromContract({
     flow,
   }: {
     flow: any,
@@ -792,19 +816,7 @@ class EthSwap extends SwapInterface {
       }, true)
     })
 
-    const isContractBalanceOk = await util.helpers.repeatAsyncUntilResult(async () => {
-      const balance = await flow.ethSwap.getBalance({
-        ownerAddress: abClass.app.getParticipantEthAddress(flow.swap),
-      })
-
-      _debug('swap.core:flow')('Checking contract balance:', balance)
-
-      if (balance > 0) {
-        return true
-      }
-
-      return false
-    })
+    const isContractBalanceOk = await this.isContractFunded(flow)
 
     if (isContractBalanceOk) {
       const { isEthContractFunded } = flow.state
@@ -819,6 +831,71 @@ class EthSwap extends SwapInterface {
         }, { step: 'wait-lock-eth' })
       }
     }
+  }
+
+
+  async isSwapCreated(data) {
+    const {
+      ownerAddress,
+      participantAddress,
+      secretHash,
+    } = data
+
+    const swap = await util.helpers.repeatAsyncUntilResult(() => {
+      return this.contract.methods.swaps(ownerAddress, participantAddress).call()
+    })
+
+    return (swap && swap.secretHash && swap.secretHash === `0x${secretHash}`)
+  }
+
+  async isContractFunded(flow) {
+    const abClass = this
+    const web3 = this.app.env.getWeb3()
+
+    const isContractBalanceOk = await util.helpers.repeatAsyncUntilResult(async () => {
+      const balance = await abClass.getBalance({
+        ownerAddress: abClass.app.getParticipantEthAddress(flow.swap),
+      })
+
+      _debug('swap.core:flow')('Checking contract balance:', balance)
+
+      const needContractBalance = new BigNumber(web3.utils.toWei(flow.swap.buyAmount.toString()))
+
+      if (new BigNumber(balance).isGreaterThanOrEqualTo(needContractBalance)) {
+        return true
+      } else {
+        if (balance > 0) {
+          console.warn(`Balance on contract is less than needed. Swap stucked. Contract balance: ${balance} Needed: ${needContractBalance.toString()}`)
+        }
+      }
+
+      return false
+    })
+
+    if (isContractBalanceOk) {
+      return true
+    }
+    return false
+  }
+
+  async checkTargetAddress({
+    flow,
+  }: {
+    flow: any
+  }) {
+    if (this.hasTargetWallet()) {
+      const targetWallet = await this.getTargetWallet(
+        this.app.getParticipantEthAddress(flow.swap)
+      )
+      const needTargetWallet = (flow.swap.destinationBuyAddress)
+        ? flow.swap.destinationBuyAddress
+        : this.app.getMyEthAddress()
+
+      if (targetWallet.toLowerCase() === needTargetWallet.toLowerCase()) {
+        return true
+      }
+    }
+    return false
   }
 
   async withdrawFromABContract({

@@ -71,7 +71,7 @@ class GHOST2ETH extends AtomicAB2UTXO {
 
       isEthContractFunded: false,
 
-      ghostSwapWithdrawTransactionHash: null,
+      utxoSwapWithdrawTransactionHash: null,
       ethSwapWithdrawTransactionHash: null,
 
       canCreateEthTransaction: true,
@@ -110,7 +110,7 @@ class GHOST2ETH extends AtomicAB2UTXO {
       // 2. Create secret, secret hash and BTC script
 
       () => {
-        // this.submitSecret()
+        this.submitSecret()
       },
 
       // 3. Check balance
@@ -224,9 +224,9 @@ class GHOST2ETH extends AtomicAB2UTXO {
       // 7. Finish
 
       () => {
-        flow.swap.room.once('swap finished', ({btcSwapWithdrawTransactionHash}) => {
+        flow.swap.room.once('swap finished', ({utxoSwapWithdrawTransactionHash}) => {
           flow.setState({
-            btcSwapWithdrawTransactionHash,
+            utxoSwapWithdrawTransactionHash,
           })
         })
 

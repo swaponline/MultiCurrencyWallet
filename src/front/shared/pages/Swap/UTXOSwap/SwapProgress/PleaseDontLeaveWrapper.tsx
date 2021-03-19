@@ -3,7 +3,7 @@ import { FormattedMessage } from 'react-intl'
 import CSSModules from 'react-css-modules'
 
 import Tooltip from 'components/ui/Tooltip/Tooltip'
-import styles from '../SwapProgress.scss'
+import styles from './SwapProgress.scss'
 import { constants } from 'helpers'
 
 

@@ -72,7 +72,7 @@ export default (tokenName) => {
 
         isEthContractFunded: false,
 
-        ghostSwapWithdrawTransactionHash: null,
+        utxoSwapWithdrawTransactionHash: null,
         ethSwapWithdrawTransactionHash: null,
 
         secret: null,
@@ -111,7 +111,7 @@ export default (tokenName) => {
         // 2. Create secret, secret hash and GHOST script
 
         () => {
-          // this.submitSecret()
+          this.submitSecret()
         },
 
         // 3. Check system wallet balance
@@ -225,9 +225,9 @@ export default (tokenName) => {
         // 7. Finish
 
         () => {
-          flow.swap.room.once('swap finished', ({ghostSwapWithdrawTransactionHash}) => {
+          flow.swap.room.once('swap finished', ({utxoSwapWithdrawTransactionHash}) => {
             flow.setState({
-              ghostSwapWithdrawTransactionHash,
+              utxoSwapWithdrawTransactionHash,
             })
           })
 
