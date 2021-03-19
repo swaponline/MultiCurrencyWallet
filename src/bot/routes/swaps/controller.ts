@@ -210,6 +210,7 @@ const getInProgress = ({ query: { parsed, withFees }}, res) => {
     .map((id) => {
       try {
         const swapData = new Swap(id, app)
+        return swapData
       } catch (e) {
         return false
       }
