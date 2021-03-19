@@ -101,7 +101,7 @@ class Swap extends React.Component {
         </td>
 
         <td>
-          <a href={`/swaps/${id}`}>Go to swap</a>
+          <a href={`/swaps/${id}/formated`}>Go to swap</a>
           &nbsp;
           &middot;
           &nbsp;
