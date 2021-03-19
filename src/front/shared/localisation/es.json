@@ -2273,47 +2273,80 @@
   },
   {
     "id": "FeeRadiosSpeedTypeSlow",
-    "message": "Lenta"
+    "message": "Lenta",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
+    ]
   },
   {
     "id": "FeeRadiosSpeedTypeMedium",
-    "message": "Medio"
+    "message": "Medio",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
+    ]
   },
   {
     "id": "FeeRadiosSpeedTypeFast",
-    "message": "Rápida"
+    "message": "Rápida",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
+    ]
   },
   {
     "id": "FeeRadiosSpeedTypeCustom",
-    "message": "Personalizada"
+    "message": "Personalizada",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
+    ]
   },
   {
     "id": "FeeRadiosSpeedTypeTimeSlow",
-    "message": "~60-más minutos"
+    "message": "~60-más minutos",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
+    ]
   },
   {
     "id": "FeeRadiosSpeedTypeTimeMedium",
-    "message": "~25-60 minutos"
+    "message": "~25-60 minutos",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
+    ]
   },
   {
     "id": "FeeRadiosSpeedTypeTimeFast",
-    "message": "~5-20 minutos"
+    "message": "~5-20 minutos",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
+    ]
   },
   {
     "id": "FeeRadiosSpeedTypeDescriptionSlow",
-    "message": "Un promedio móvil de la tarifa por transacciones a confirmar en 7 o más bloques."
+    "message": "Un promedio móvil de la tarifa por transacciones a confirmar en 7 o más bloques.",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
+    ]
   },
   {
     "id": "FeeRadiosSpeedTypeDescriptionMedium",
-    "message": "Un promedio móvil de la tarifa por transacciones que se confirmarán dentro de 3 a 6 bloques."
+    "message": "Un promedio móvil de la tarifa por transacciones que se confirmarán dentro de 3 a 6 bloques.",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
+    ]
   },
   {
     "id": "FeeRadiosSpeedTypeDescriptionFast",
-    "message": "Un promedio móvil de la tarifa por transacciones que se confirmarán dentro de 1 a 2 bloques."
+    "message": "Un promedio móvil de la tarifa por transacciones que se confirmarán dentro de 1 a 2 bloques.",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
+    ]
   },
   {
     "id": "FeeRadiosSpeedTypeDescriptionCustom",
-    "message": "Establecer una tarifa personalizada."
+    "message": "Establecer una tarifa personalizada.",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
+    ]
   },
   {
     "id": "InvoiceLinkCopied",

@@ -2266,47 +2266,80 @@
   },
   {
     "id": "FeeRadiosSpeedTypeSlow",
-    "message": "Powolny"
+    "message": "Powolny",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
+    ]
   },
   {
     "id": "FeeRadiosSpeedTypeMedium",
-    "message": "Średni"
+    "message": "Średni",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
+    ]
   },
   {
     "id": "FeeRadiosSpeedTypeFast",
-    "message": "Szybki"
+    "message": "Szybki",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
+    ]
   },
   {
     "id": "FeeRadiosSpeedTypeCustom",
-    "message": "Zwyczaj"
+    "message": "Zwyczaj",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
+    ]
   },
   {
     "id": "FeeRadiosSpeedTypeTimeSlow",
-    "message": "~60-więcej minut"
+    "message": "~60-więcej minut",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
+    ]
   },
   {
     "id": "FeeRadiosSpeedTypeTimeMedium",
-    "message": "~25-60 minut"
+    "message": "~25-60 minut",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
+    ]
   },
   {
     "id": "FeeRadiosSpeedTypeTimeFast",
-    "message": "~5-20 minut"
+    "message": "~5-20 minut",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
+    ]
   },
   {
     "id": "FeeRadiosSpeedTypeDescriptionSlow",
-    "message": "Średnia krocząca opłaty za transakcje, które mają być potwierdzone w 7 lub więcej blokach."
+    "message": "Średnia krocząca opłaty za transakcje, które mają być potwierdzone w 7 lub więcej blokach.",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
+    ]
   },
   {
     "id": "FeeRadiosSpeedTypeDescriptionMedium",
-    "message": "Średnia krocząca opłaty za transakcje, które mają zostać potwierdzone w ciągu 3 do 6 bloków."
+    "message": "Średnia krocząca opłaty za transakcje, które mają zostać potwierdzone w ciągu 3 do 6 bloków.",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
+    ]
   },
   {
     "id": "FeeRadiosSpeedTypeDescriptionFast",
-    "message": "Średnia krocząca opłaty za transakcje, które mają zostać potwierdzone w ciągu 1 do 2 bloków."
+    "message": "Średnia krocząca opłaty za transakcje, które mają zostać potwierdzone w ciągu 1 do 2 bloków.",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
+    ]
   },
   {
     "id": "FeeRadiosSpeedTypeDescriptionCustom",
-    "message": "Ustaw niestandardową stawkę opłaty."
+    "message": "Ustaw niestandardową stawkę opłaty.",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
+    ]
   },
   {
     "id": "InvoiceLinkCopied",
