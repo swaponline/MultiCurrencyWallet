@@ -2262,87 +2262,47 @@
   },
   {
     "id": "FeeRadiosSpeedTypeSlow",
-    "message": "Langzaam",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
-    ]
+    "message": "Langzaam"
   },
   {
     "id": "FeeRadiosSpeedTypeMedium",
-    "message": "Medium",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
-    ]
+    "message": "Medium"
   },
   {
     "id": "FeeRadiosSpeedTypeFast",
-    "message": "Snel",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
-    ]
+    "message": "Snel"
   },
   {
     "id": "FeeRadiosSpeedTypeCustom",
-    "message": "Op maat",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
-    ]
+    "message": "Op maat"
   },
   {
     "id": "FeeRadiosSpeedTypeTimeSlow",
-    "message": "~60-meer minuten",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
-    ]
+    "message": "~60-meer minuten"
   },
   {
     "id": "FeeRadiosSpeedTypeTimeMedium",
-    "message": "~25-60 minuten",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
-    ]
+    "message": "~25-60 minuten"
   },
   {
     "id": "FeeRadiosSpeedTypeTimeFast",
-    "message": "~5-20 minuten",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
-    ]
-  },
-  {
-    "id": "FeeRadiosSpeedTypeTimeCustom",
-    "message": "",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
-    ]
+    "message": "~5-20 minuten"
   },
   {
     "id": "FeeRadiosSpeedTypeDescriptionSlow",
-    "message": "Een voortschrijdend gemiddelde van de vergoeding voor transacties die in 7 of meer blokken moeten worden bevestigd.",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
-    ]
+    "message": "Een voortschrijdend gemiddelde van de vergoeding voor transacties die in 7 of meer blokken moeten worden bevestigd."
   },
   {
     "id": "FeeRadiosSpeedTypeDescriptionMedium",
-    "message": "Een voortschrijdend gemiddelde van de vergoeding voor transacties die binnen 3 tot 6 blokken moeten worden bevestigd.",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
-    ]
+    "message": "Een voortschrijdend gemiddelde van de vergoeding voor transacties die binnen 3 tot 6 blokken moeten worden bevestigd."
   },
   {
     "id": "FeeRadiosSpeedTypeDescriptionFast",
-    "message": "Een voortschrijdend gemiddelde van de vergoeding voor transacties die binnen 1 tot 2 blokken moeten worden bevestigd.",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
-    ]
+    "message": "Een voortschrijdend gemiddelde van de vergoeding voor transacties die binnen 1 tot 2 blokken moeten worden bevestigd."
   },
   {
     "id": "FeeRadiosSpeedTypeDescriptionCustom",
-    "message": "Stel een aangepast tarief in.",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
-    ]
+    "message": "Stel een aangepast tarief in."
   },
   {
     "id": "InvoiceLinkCopied",
@@ -5826,6 +5786,13 @@
     "message": "Geen opties voor de boerderij gevonden",
     "files": [
       "src/front/shared/pages/Farm/index.tsx"
+    ]
+  },
+  {
+    "id": "DropDownNoOptionsInTheList",
+    "message": "Geen opties",
+    "files": [
+      "src/front/shared/components/ui/DropDown/index.tsx"
     ]
   }
 ]

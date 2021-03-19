@@ -2280,87 +2280,47 @@
   },
   {
     "id": "FeeRadiosSpeedTypeSlow",
-    "message": "Slow",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
-    ]
+    "message": "Slow"
   },
   {
     "id": "FeeRadiosSpeedTypeMedium",
-    "message": "Medium",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
-    ]
+    "message": "Medium"
   },
   {
     "id": "FeeRadiosSpeedTypeFast",
-    "message": "Fast",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
-    ]
+    "message": "Fast"
   },
   {
     "id": "FeeRadiosSpeedTypeCustom",
-    "message": "Custom",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
-    ]
+    "message": "Custom"
   },
   {
     "id": "FeeRadiosSpeedTypeTimeSlow",
-    "message": "~60-more minutes",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
-    ]
+    "message": "~60-more minutes"
   },
   {
     "id": "FeeRadiosSpeedTypeTimeMedium",
-    "message": "~25-60 minutes",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
-    ]
+    "message": "~25-60 minutes"
   },
   {
     "id": "FeeRadiosSpeedTypeTimeFast",
-    "message": "~5-20 minutes",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
-    ]
-  },
-  {
-    "id": "FeeRadiosSpeedTypeTimeCustom",
-    "message": "",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
-    ]
+    "message": "~5-20 minutes"
   },
   {
     "id": "FeeRadiosSpeedTypeDescriptionSlow",
-    "message": "A rolling average of the fee for transactions to be confirmed in 7 or more blocks.",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
-    ]
+    "message": "A rolling average of the fee for transactions to be confirmed in 7 or more blocks."
   },
   {
     "id": "FeeRadiosSpeedTypeDescriptionMedium",
-    "message": "A rolling average of the fee for transactions to be confirmed within 3 to 6 blocks.",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
-    ]
+    "message": "A rolling average of the fee for transactions to be confirmed within 3 to 6 blocks."
   },
   {
     "id": "FeeRadiosSpeedTypeDescriptionFast",
-    "message": "A rolling average of the fee for transactions to be confirmed within 1 to 2 blocks.",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
-    ]
+    "message": "A rolling average of the fee for transactions to be confirmed within 1 to 2 blocks."
   },
   {
     "id": "FeeRadiosSpeedTypeDescriptionCustom",
-    "message": "Set custom fee rate.",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
-    ]
+    "message": "Set custom fee rate."
   },
   {
     "id": "InvoiceLinkCopied",
@@ -5830,6 +5790,13 @@
     "message": "Didn't find any options for the farm",
     "files": [
       "src/front/shared/pages/Farm/index.tsx"
+    ]
+  },
+  {
+    "id": "DropDownNoOptionsInTheList",
+    "message": "No options",
+    "files": [
+      "src/front/shared/components/ui/DropDown/index.tsx"
     ]
   }
 ]

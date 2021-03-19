@@ -2297,87 +2297,47 @@
   },
   {
     "id": "FeeRadiosSpeedTypeSlow",
-    "message": "Медленная",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
-    ]
+    "message": "Медленная"
   },
   {
     "id": "FeeRadiosSpeedTypeMedium",
-    "message": "Средняя",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
-    ]
+    "message": "Средняя"
   },
   {
     "id": "FeeRadiosSpeedTypeFast",
-    "message": "Быстрая",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
-    ]
+    "message": "Быстрая"
   },
   {
     "id": "FeeRadiosSpeedTypeCustom",
-    "message": "Ручная",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
-    ]
+    "message": "Ручная"
   },
   {
     "id": "FeeRadiosSpeedTypeTimeSlow",
-    "message": "~60-более мин.",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
-    ]
+    "message": "~60-более мин."
   },
   {
     "id": "FeeRadiosSpeedTypeTimeMedium",
-    "message": "~25-60 минут",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
-    ]
+    "message": "~25-60 минут"
   },
   {
     "id": "FeeRadiosSpeedTypeTimeFast",
-    "message": "~5-20 минут",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
-    ]
-  },
-  {
-    "id": "FeeRadiosSpeedTypeTimeCustom",
-    "message": "",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
-    ]
+    "message": "~5-20 минут"
   },
   {
     "id": "FeeRadiosSpeedTypeDescriptionSlow",
-    "message": "Среднее значение комиссии за транзакции, которые должны быть подтверждены в 7 или более блоках.",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
-    ]
+    "message": "Среднее значение комиссии за транзакции, которые должны быть подтверждены в 7 или более блоках."
   },
   {
     "id": "FeeRadiosSpeedTypeDescriptionMedium",
-    "message": "Среднее значение комиссии транзакции, которые должны быть подтверждены в пределах от 3 до 6 блоков.",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
-    ]
+    "message": "Среднее значение комиссии транзакции, которые должны быть подтверждены в пределах от 3 до 6 блоков."
   },
   {
     "id": "FeeRadiosSpeedTypeDescriptionFast",
-    "message": "Среднее значение комиссии транзакции, которые должны быть подтверждены в пределах от 1 до 2 блоков.",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
-    ]
+    "message": "Среднее значение комиссии транзакции, которые должны быть подтверждены в пределах от 1 до 2 блоков."
   },
   {
     "id": "FeeRadiosSpeedTypeDescriptionCustom",
-    "message": "Установите значение комиссии вручную.",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
-    ]
+    "message": "Установите значение комиссии вручную."
   },
   {
     "id": "InvoiceLinkCopied",
@@ -5830,6 +5790,13 @@
     "message": "Не найдено параметров для фермы",
     "files": [
       "src/front/shared/pages/Farm/index.tsx"
+    ]
+  },
+  {
+    "id": "DropDownNoOptionsInTheList",
+    "message": "Нет вариантов",
+    "files": [
+      "src/front/shared/components/ui/DropDown/index.tsx"
     ]
   }
 ]
