@@ -246,9 +246,7 @@ class Swap {
       buyCurrency: buyCoin,
     } = this
 
-    if (this.flow.isTakerMakerModel) {
-      
-    } else {
+    if (!this.flow.isTakerMakerModel) {
       if (COIN_DATA[sellCoin]
         && COIN_DATA[sellCoin].model
         && COIN_DATA[buyCoin]
