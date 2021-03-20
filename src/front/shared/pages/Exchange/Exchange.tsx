@@ -92,6 +92,8 @@ type ExchangeState = {
   isWaitForPeerAnswer: boolean
   isDeclinedOffer: boolean
   haveBalance: boolean
+  isTurbo: boolean
+  isPending: boolean
 
   isNoAnyOrders?: boolean
   isFullLoadingComplite?: boolean
@@ -108,8 +110,6 @@ type ExchangeState = {
 
   fromAddress: Address
   toAddress: Address
-
-  isTurbo: boolean
 }
 
 const allowedCoins = [
@@ -152,12 +152,11 @@ const bannedPeers = {} // rejected swap peers
   ({
     currencies,
     rememberedOrders,
-    core: { orders, hiddenCoinsList },
+    core: { orders },
     user: { ethData, btcData, ghostData, nextData, tokensData, activeFiat, ...rest },
   }) => ({
     currencies: isExchangeAllowed(currencies.partialItems),
     allCurrencyies: currencies.items,
-    hiddenCoinsList,
     addSelectedItems: isExchangeAllowed(currencies.addPartialItems),
     orders: filterIsPartial(orders),
     currenciesData: [ethData, btcData, ghostData, nextData],
@@ -295,6 +294,7 @@ class Exchange extends PureComponent<any, any> {
       toAddress: this.makeAddressObject(getType, getCurrency.toUpperCase()),
       isTurbo: false,
       redirectToSwap: null,
+      isPending: true,
     }
 
     if (config.isWidget) {
@@ -434,9 +434,9 @@ class Exchange extends PureComponent<any, any> {
     return balances && balances[currency.toUpperCase()] ? balances[currency.toUpperCase()] : 0
   }
 
-
-  fetchPairFeesAndBalances = () => {
-    this.fetchPairFees()
+  fetchPairFeesAndBalances = async () => {
+    await this.fetchPairFees()
+    this.fetchBalances()
   }
 
   updateFees = () => {
@@ -445,31 +445,30 @@ class Exchange extends PureComponent<any, any> {
     this.fetchPairFees(updateCacheValue)
   }
 
-  fetchPairFees = (updateCacheValue = false) => {
+  fetchPairFees = async (updateCacheValue = false) => {
     const { haveCurrency: sell, getCurrency: buy } = this.state
 
-    this.setState(() => ({
-      pairFees: false,
-    }), async () => {
-      const pairFees = await getPairFees({
-        sellCurrency: sell,
-        buyCurrency: buy,
-        updateCacheValue,
-      })
+    this.setState(() => ({ isPending: true }))
 
-      const buyExRate = await this.fetchFiatExRate(pairFees.buy.coin)
-      const sellExRate = await this.fetchFiatExRate(pairFees.sell.coin)
-
-      if (!this._mounted) return
-
-      this.setState(() => ({
-        pairFees: {
-          ...pairFees,
-          buyExRate,
-          sellExRate,
-        }
-      }), this.fetchBalances)
+    const pairFees = await getPairFees({
+      sellCurrency: sell,
+      buyCurrency: buy,
+      updateCacheValue,
     })
+
+    const buyExRate = await this.fetchFiatExRate(pairFees.buy.coin)
+    const sellExRate = await this.fetchFiatExRate(pairFees.sell.coin)
+
+    if (!this._mounted) return
+
+    this.setState(() => ({
+      isPending: false,
+      pairFees: {
+        ...pairFees,
+        buyExRate,
+        sellExRate,
+      }
+    }))
   }
 
   fetchBalances = async () => {
@@ -481,34 +480,35 @@ class Exchange extends PureComponent<any, any> {
 
     if (!pairFees || !this._mounted) return
 
-    ;(async () => {
-      const buyWallet = actions.core.getWallet({ currency: buyCurrency })
-      const sellWallet = actions.core.getWallet({ currency: sellCurrency })
-      const feeBuyWallet = actions.core.getWallet({ currency: pairFees.buy.coin })
-      const feeSellWallet = actions.core.getWallet({ currency: pairFees.sell.coin })
+    this.setState(() => ({ isPending: true }))
 
-      const balances = {}
-      balances[`${buyWallet.currency}`] = await actions.core.fetchWalletBalance(buyWallet)
-      balances[`${sellWallet.currency}`] = await actions.core.fetchWalletBalance(sellWallet)
-      
-      if (balances[`${feeBuyWallet.currency}`] === undefined) {
-        balances[`${feeBuyWallet.currency}`] = await actions.core.fetchWalletBalance(
-          feeBuyWallet
-        )
-      }
-      
-      if (balances[`${feeSellWallet.currency}`] === undefined) {
-        balances[`${feeSellWallet.currency}`] = await actions.core.fetchWalletBalance(
-          feeSellWallet
-        )
-      }
+    const buyWallet = actions.core.getWallet({ currency: buyCurrency })
+    const sellWallet = actions.core.getWallet({ currency: sellCurrency })
+    const feeBuyWallet = actions.core.getWallet({ currency: pairFees.buy.coin })
+    const feeSellWallet = actions.core.getWallet({ currency: pairFees.sell.coin })
 
-      this.setState({
-        balances,
-      })
+    const balances = {}
+    balances[`${buyWallet.currency}`] = await actions.core.fetchWalletBalance(buyWallet)
+    balances[`${sellWallet.currency}`] = await actions.core.fetchWalletBalance(sellWallet)
+    
+    if (balances[`${feeBuyWallet.currency}`] === undefined) {
+      balances[`${feeBuyWallet.currency}`] = await actions.core.fetchWalletBalance(
+        feeBuyWallet
+      )
+    }
+    
+    if (balances[`${feeSellWallet.currency}`] === undefined) {
+      balances[`${feeSellWallet.currency}`] = await actions.core.fetchWalletBalance(
+        feeSellWallet
+      )
+    }
 
-      this.checkBalanceOnAllCurrency()
-    })()
+    this.setState(() => ({
+      isPending: false,
+      balances,
+    }))
+
+    this.checkBalanceOnAllCurrency()
   }
 
   checkBalanceOnAllCurrency() {
@@ -1244,9 +1244,9 @@ class Exchange extends PureComponent<any, any> {
   }
 
   doesComissionPreventThisOrder = () => {
-    const { pairFees, haveAmount, getAmount } = this.state
+    const { pairFees, haveAmount, getAmount, isPending } = this.state
 
-    if (pairFees) {
+    if (!isPending && pairFees) {
       // @ToDo
       // Возможно нужно брать за расчет коммисию умноженную на два
       // Если минимум будет размер коммисии, то по факту
@@ -1355,6 +1355,7 @@ class Exchange extends PureComponent<any, any> {
       balances,
       haveBalance,
       isTurbo,
+      isPending,
     } = this.state
 
     const sellCoin = haveCurrency.toUpperCase()
@@ -1671,7 +1672,8 @@ class Exchange extends PureComponent<any, any> {
                   <FormattedMessage id="Exchange_MinerFees" defaultMessage="Miner fee" />:
                 </span>
                 &nbsp;
-                {!pairFees ? (
+
+                {isPending || !pairFees ? (
                   <span>
                     <InlineLoader />
                   </span>
