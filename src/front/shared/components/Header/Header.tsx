@@ -73,6 +73,7 @@ class Header extends Component<any, any> {
   constructor(props) {
     super(props)
 
+    console.log('>>>>>>>>>>> HEADER', props)
     const {
       match: {
         params: { page = null },
@@ -370,6 +371,9 @@ class Header extends Component<any, any> {
       toggle,
       history,
       intl: { locale },
+      location: {
+        pathname,
+      },
     } = this.props
 
     actions.core.acceptRequest(orderId, participantPeer)
@@ -381,8 +385,12 @@ class Header extends Component<any, any> {
 
     console.log('-Accepting request', link)
     console.log(`Redirect to swap: ${link}`)
-    await history.replace(localisedUrl(locale, link))
-    await history.push(localisedUrl(locale, link))
+    if ((pathname === links.marketmaker) || (pathname === links.marketmaker_short)) {
+      console.log('>>>> Dont redirect')
+    } else {
+      await history.replace(localisedUrl(locale, link))
+      await history.push(localisedUrl(locale, link))
+    }
   }
 
   handleLogout = () => {
