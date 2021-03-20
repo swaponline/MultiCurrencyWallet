@@ -170,6 +170,7 @@ export default class DepositWindow extends Component<any, any> {
       const timeLeft = Math.ceil((flowState[scriptValues].lockTime - utcNow) / 60)
 
       if (timeLeft <= 0) {
+        console.log('>>>>>>>>>>>>> STOP SWAP PROCESS in DepositWindow')
         flow.stopSwapProcess()
 
         return true

@@ -35,6 +35,10 @@ import UserTooltip from 'components/Header/User/UserTooltip/UserTooltip'
 import feedback from 'shared/helpers/feedback'
 import wpLogoutModal from 'helpers/wpLogoutModal'
 
+
+import Swap from 'swap.swap'
+import SwapApp from 'swap.app'
+
 /* uncomment to debug */
 //window.isUserRegisteredAndLoggedIn = true
 
@@ -387,6 +391,10 @@ class Header extends Component<any, any> {
     console.log(`Redirect to swap: ${link}`)
     if ((pathname === links.marketmaker) || (pathname === links.marketmaker_short)) {
       console.log('>>>> Dont redirect')
+      const swap = new Swap(orderId, SwapApp.shared())
+      window.active_swap = swap
+      console.log(swap)
+      console.log('Swap flow:', swap.flow._flowName);
     } else {
       await history.replace(localisedUrl(locale, link))
       await history.push(localisedUrl(locale, link))
