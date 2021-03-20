@@ -394,8 +394,11 @@ class Header extends Component<any, any> {
       const swap = new Swap(orderId, SwapApp.shared())
       actions.core.rememberSwap(swap)
       window.active_swap = swap
+      SwapApp.shared().emit('new swap', {
+        swap,
+      })
       console.log(swap)
-      console.log('Swap flow:', swap.flow._flowName);
+      console.log('Swap flow:', swap.flow._flowName)
     } else {
       await history.replace(localisedUrl(locale, link))
       await history.push(localisedUrl(locale, link))

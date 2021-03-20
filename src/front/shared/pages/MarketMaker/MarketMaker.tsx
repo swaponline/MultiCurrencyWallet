@@ -5,6 +5,9 @@ import { connect } from 'redaction'
 import actions from 'redux/actions'
 import { constants } from 'helpers'
 
+import SwapApp from 'swap.app'
+
+
 import config from 'helpers/externalConfig'
 
 import styles from 'components/tables/Table/Table.scss'
@@ -29,6 +32,7 @@ class MarketMaker extends Component<any, any> {
   constructor(props) {
     super(props)
 
+
     const {
       items,
       match: {
@@ -46,6 +50,14 @@ class MarketMaker extends Component<any, any> {
 
   componentDidMount() {
     actions.core.getSwapHistory()
+    SwapApp.shared().on('new swap', (data) => {
+      console.log('>>>> NEW EVENT', data)
+      actions.core.getSwapHistory()
+    })
+    SwapApp.shared().on('swap enter step', (data) => {
+      console.log('>>>> SWAP ENTER STEP', data)
+      actions.core.getSwapHistory()
+    })
   }
 
   componentWillUnmount() {
@@ -54,6 +66,8 @@ class MarketMaker extends Component<any, any> {
 
   render() {
     const { swapHistory } = this.props
+
+console.log('>>>>> swapHistory', swapHistory)
 
     const titles = []
     const activeTab = 0

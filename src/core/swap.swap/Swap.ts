@@ -109,6 +109,12 @@ class Swap {
         participantMetamaskAddress: data.address,
       })
     })
+
+    this.on('enter step', () => {
+      this.app.emit('swap enter step', {
+        swap: this,
+      })
+    })
   }
 
 /* static read(app, { id }) {
