@@ -3,6 +3,8 @@ import React, { PureComponent } from 'react'
 import Table from 'components/tables/Table/Table'
 import styles from 'components/tables/Table/Table.scss'
 import RowHistory from './RowHistory/RowHistory'
+import SwapRow from './RowHistory/SwapRow'
+
 import { FormattedMessage } from 'react-intl'
 import { constants } from 'helpers'
 
@@ -18,6 +20,10 @@ export default class SwapsHistory extends PureComponent<any, any> {
   render() {
     let { orders } = this.props
 
+    const {
+      swapRowRender = false,
+    } = this.props
+
     if (orders === null || orders.length === 0) {
       return null
     }
@@ -32,10 +38,16 @@ export default class SwapsHistory extends PureComponent<any, any> {
           className={styles.historySwap}
           rows={orders.reverse()}
           rowRender={(row, index) => (
-            <RowHistory
-              key={index}
-              row={row}
-            />
+            (swapRowRender) ?
+              <SwapRow
+                key={index}
+                row={row}
+              />
+              :
+              <RowHistory
+                key={index}
+                row={row}
+              />
           )}
         />
       </div>

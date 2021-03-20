@@ -67,15 +67,25 @@ class MarketMaker extends Component<any, any> {
   render() {
     const { swapHistory } = this.props
 
-console.log('>>>>> swapHistory', swapHistory)
+    const attachedSwaps = SwapApp.shared().attachedSwaps
+
+console.log('>>>> swapHistory', swapHistory)
+    const swaps = (swapHistory.filter) ? swapHistory.filter((item) => {
+      if (item.step >= 1) return true
+      if (!item.isFinished) return true
+
+      return false
+    }) : []
+
+    console.log('>>>>> swapHistory', swapHistory, swaps)
 
     const titles = []
     const activeTab = 0
 
     return (
       <Fragment>
-        { swapHistory.length > 0 &&
-          <SwapsHistory orders={swapHistory.filter((item) => item.step >= 1)} />
+        { swaps.length > 0 &&
+          <SwapsHistory orders={swaps} swapRowRender={true} />
         }
       </Fragment>
     )
