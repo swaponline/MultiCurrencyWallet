@@ -30,7 +30,7 @@ export default class SwapsHistory extends PureComponent<any, any> {
         <Table
           id="table-history"
           className={styles.historySwap}
-          rows={orders}
+          rows={orders.reverse()}
           rowRender={(row, index) => (
             <RowHistory
               key={index}

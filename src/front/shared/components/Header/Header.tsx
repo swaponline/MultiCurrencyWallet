@@ -392,6 +392,7 @@ class Header extends Component<any, any> {
     if ((pathname === links.marketmaker) || (pathname === links.marketmaker_short)) {
       console.log('>>>> Dont redirect')
       const swap = new Swap(orderId, SwapApp.shared())
+      actions.core.rememberSwap(swap)
       window.active_swap = swap
       console.log(swap)
       console.log('Swap flow:', swap.flow._flowName);
