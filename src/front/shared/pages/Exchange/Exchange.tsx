@@ -472,35 +472,17 @@ class Exchange extends PureComponent<any, any> {
   }
 
   fetchBalances = async () => {
-    const {
-      haveCurrency: sellCurrency,
-      getCurrency: buyCurrency,
-      pairFees,
-    } = this.state
+    const { pairFees } = this.state
 
     if (!pairFees || !this._mounted) return
 
     this.setState(() => ({ isPending: true }))
 
-    const buyWallet = actions.core.getWallet({ currency: buyCurrency })
-    const sellWallet = actions.core.getWallet({ currency: sellCurrency })
     const feeBuyWallet = actions.core.getWallet({ currency: pairFees.buy.coin })
     const feeSellWallet = actions.core.getWallet({ currency: pairFees.sell.coin })
-
-    const balances = {}
-    balances[`${buyWallet.currency}`] = await actions.core.fetchWalletBalance(buyWallet)
-    balances[`${sellWallet.currency}`] = await actions.core.fetchWalletBalance(sellWallet)
-    
-    if (balances[`${feeBuyWallet.currency}`] === undefined) {
-      balances[`${feeBuyWallet.currency}`] = await actions.core.fetchWalletBalance(
-        feeBuyWallet
-      )
-    }
-    
-    if (balances[`${feeSellWallet.currency}`] === undefined) {
-      balances[`${feeSellWallet.currency}`] = await actions.core.fetchWalletBalance(
-        feeSellWallet
-      )
+    const balances = {
+      [feeBuyWallet.currency]: await actions.core.fetchWalletBalance(feeBuyWallet),
+      [feeSellWallet.currency]: await actions.core.fetchWalletBalance(feeSellWallet)
     }
 
     this.setState(() => ({
@@ -1672,30 +1654,34 @@ class Exchange extends PureComponent<any, any> {
                   <FormattedMessage id="Exchange_MinerFees" defaultMessage="Miner fee" />:
                 </span>
                 &nbsp;
-
-                {isPending || !pairFees ? (
-                  <span>
-                    <InlineLoader />
-                  </span>
-                 ) : (
-                  <span>
-                    {pairFees.sell.fee} {pairFees.sell.coin} + {pairFees.buy.fee} {pairFees.buy.coin}
-                    {' ≈ '}
-                    {fiatFeeCalculation > 0 ? <>${fiatFeeCalculation}</> : 0}
-                    {' '}
-                    <button 
-                      className="fas fa-sync-alt"
-                      styleName="minerFeeUpdateBtn"
-                      onClick={this.updateFees}
-                    />
-                    <a
-                      href="https://wiki.swaponline.io/faq/why-i-pay-ming-fees-of-btc-and-eth-both-why-not-seller/"
-                      target="_blank"
-                    >
-                      (?)
-                    </a>
-                  </span>
-                )}
+                
+                {/* Fees info */}
+                <>
+                  {isPending || !pairFees ? (
+                    <span>
+                      <InlineLoader />
+                    </span>
+                  ) : (
+                    <span>
+                      {pairFees.sell.fee} {pairFees.sell.coin} + {pairFees.buy.fee} {pairFees.buy.coin}
+                      {' ≈ '}
+                      {fiatFeeCalculation > 0 ? <>${fiatFeeCalculation}</> : 0}
+                      {' '}
+                    </span>
+                  )}       
+                  <button 
+                    className="fas fa-sync-alt"
+                    styleName="minerFeeUpdateBtn"
+                    onClick={this.updateFees}
+                    disabled={isPending}
+                  />
+                  <a
+                    href="https://wiki.swaponline.io/faq/why-i-pay-ming-fees-of-btc-and-eth-both-why-not-seller/"
+                    target="_blank"
+                  >
+                    (?)
+                  </a>        
+                </>
               </div>
             </div>
           </div>
