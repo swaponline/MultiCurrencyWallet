@@ -26,6 +26,7 @@ import config from 'helpers/externalConfig'
 import SwapApp from 'swap.app'
 
 import helpers, { localStorage, getPairFees, constants, metamask, feedback, links } from 'helpers'
+import { getActivatedCurrencies } from 'helpers/user'
 import { animate } from 'helpers/domUtils'
 import Switching from 'components/controls/Switching/Switching'
 import AddressSelect from './AddressSelect/AddressSelect'
@@ -41,7 +42,7 @@ import TurboIcon from 'shared/components/ui/TurboIcon/TurboIcon'
 import { COIN_DATA, COIN_MODEL, COIN_TYPE } from 'swap.app/constants/COINS'
 
 type CurrencyObj = {
-  addAssets: boolean
+  addAssets?: boolean
   fullTitle: string
   icon: string
   name: string
@@ -62,6 +63,7 @@ type ExchangeProps = {
   currencies: { [key: string]: string }[]
   allCurrencyies: CurrencyObj[]
   addSelectedItems: CurrencyObj[]
+  hiddenCoinsList: string[]
   decline: string[]
 }
 
@@ -106,6 +108,7 @@ type ExchangeState = {
   pairFees: any
   directionOrders: IUniversalObj[]
   filteredOrders: IUniversalObj[]
+  haveCurrencies: CurrencyObj[]
   desclineOrders: string[]
 
   fromAddress: Address
@@ -267,6 +270,7 @@ class Exchange extends PureComponent<any, any> {
     const getType = this.getDefaultWalletForCurrency(getCurrency.toUpperCase())
 
     this.state = {
+      haveCurrencies: [],
       haveCurrency,
       haveType,
       getCurrency,
@@ -300,6 +304,23 @@ class Exchange extends PureComponent<any, any> {
     if (config.isWidget) {
       this.state.getCurrency = config.erc20token
     }
+  }
+
+  filterUserCurrencies = () => {
+    const { usersData, currencies } = this.props
+    const enabledCurrencies = getActivatedCurrencies()
+
+    const filteredNames = usersData
+      .filter(({ balance }) => balance > 0)
+      .filter(({ currency }) => enabledCurrencies.includes(currency))
+      .map(({ currency }) => currency)
+
+    const haveCurrencies = currencies
+      .filter(({ name }) => filteredNames.includes(name))
+
+    this.setState(() => ({
+      haveCurrencies,
+    }))
   }
 
   makeAddressObject(type, currency) {
@@ -369,13 +390,17 @@ class Exchange extends PureComponent<any, any> {
 
   getDefaultWalletForCurrency(currency) {
     const savedType = this.getUserDefaultWallet(currency)
+
     if (savedType) return savedType
+
     if (COIN_DATA[currency]) {
       if (COIN_DATA[currency].model === COIN_MODEL.UTXO) return AddressType.Custom
       if (COIN_DATA[currency].type === COIN_TYPE.ETH_TOKEN) return AddressType.Metamask
       if (COIN_DATA[currency].model === COIN_MODEL.AB) return AddressType.Metamask
     } else {
-      console.warn(`Exchange -> getDefaultWalletForCurrency -> Unknown coin ${currency}`)
+      console.group('Exchange > %c getDefaultWalletForCurrency', 'color: yellow;')
+      console.warn(`Unknown coin ${currency}`)
+      console.groupEnd()
     }
 
     return `placeholder`
@@ -389,7 +414,6 @@ class Exchange extends PureComponent<any, any> {
     actions.core.updateCore()
     this.returnNeedCurrency(haveCurrency, getCurrency)
     this.checkPair()
-
     this.getFiatBalance()
 
     this.timer = true
@@ -415,10 +439,11 @@ class Exchange extends PureComponent<any, any> {
         })
       }
     }, 60 * 1000) // 1 minute
-
+    
+    this.filterUserCurrencies()
     this.getInfoAboutCurrency()
     this.fetchPairFeesAndBalances()
-    metamask.web3connect.on('updated', this.fetchPairFeesAndBalances.bind(this))
+    metamask.web3connect.on('updated', this.fetchPairFeesAndBalances)
   }
 
   getInfoAboutCurrency = async () => {
@@ -1303,7 +1328,6 @@ class Exchange extends PureComponent<any, any> {
   render() {
     const {
       activeFiat,
-      currencies,
       addSelectedItems,
       match: {
         params: { linkedOrderId },
@@ -1311,6 +1335,7 @@ class Exchange extends PureComponent<any, any> {
     } = this.props
 
     const {
+      haveCurrencies,
       haveCurrency,
       haveType,
       getCurrency,
@@ -1469,7 +1494,6 @@ class Exchange extends PureComponent<any, any> {
 
     const isIncompletedSwaps = !!desclineOrders.length
 
-
     const Form = (
       <div styleName="section">
         <div styleName="formExchange">
@@ -1484,7 +1508,7 @@ class Exchange extends PureComponent<any, any> {
                 id="Exchange456"
                 placeholder="0.00000000"
                 fiat={maxAmount > 0 && isNonOffers ? 0 : haveFiat}
-                currencies={currencies}
+                currencies={haveCurrencies}
                 onFocus={() => this.extendedControlsSet(true)}
                 onBlur={() => setTimeout(() => this.extendedControlsSet(false), 200)}
                 inputToolTip={balanceTooltip}
@@ -1494,7 +1518,7 @@ class Exchange extends PureComponent<any, any> {
                 label={<FormattedMessage id="Exchange_FromAddress" defaultMessage="From address" />}
                 isDark={isDark}
                 currency={haveCurrency}
-                selectedType={AddressType.Internal}
+                selectedType={haveType}
                 role={AddressRole.Send}
                 hasError={false}
                 placeholder="From address"
