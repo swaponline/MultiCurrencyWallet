@@ -266,8 +266,8 @@ class Exchange extends PureComponent<any, any> {
       }
     }
 
-    const haveType = this.getDefaultWalletForCurrency(haveCurrency.toUpperCase())
-    const getType = this.getDefaultWalletForCurrency(getCurrency.toUpperCase())
+    const haveType = this.getDefaultCurrencyType(haveCurrency.toUpperCase())
+    const getType = this.getDefaultCurrencyType(getCurrency.toUpperCase())
 
     this.state = {
       haveCurrencies: [],
@@ -355,34 +355,34 @@ class Exchange extends PureComponent<any, any> {
     return null
   }
 
-  getExchangeDataFromLocalStorage() {
-    const exchangeDataStr = localStorage.getItem(constants.localStorage.exchangeSettings)
+  getExchangeSettingsFromLocalStorage() {
+    const exchangeSettingsStr = localStorage.getItem(constants.localStorage.exchangeSettings)
 
-    if (exchangeDataStr) {
-      return JSON.parse(exchangeDataStr)
+    if (exchangeSettingsStr) {
+      return JSON.parse(exchangeSettingsStr)
     }
     return {}
   }
 
-  getUserDefaultWallet(currency) {
-    const exchangeSettings = this.getExchangeDataFromLocalStorage()
-    const userWallets = exchangeSettings.userWallets
+  getUserDefaultCurrencyType(currency) {
+    const exchangeSettings = this.getExchangeSettingsFromLocalStorage()
+    const { userCurrencyTypes } = exchangeSettings
 
-    if (userWallets && userWallets[currency]) {
-      return userWallets[currency]
+    if (userCurrencyTypes && userCurrencyTypes[currency]) {
+      return userCurrencyTypes[currency]
     }
     return false
   }
 
-  setUserDefaultWallet(currency, type) {
-    const exchangeSettings = this.getExchangeDataFromLocalStorage()
-    const userWallets = exchangeSettings.userWallets || {}
+  setUserDefaultCurrencyType(currency, type) {
+    const exchangeSettings = this.getExchangeSettingsFromLocalStorage()
+    const userCurrencyTypes = exchangeSettings.userCurrencyTypes || {}
 
-    userWallets[currency] = type
+    userCurrencyTypes[currency] = type
 
     const newExchangeData = {
       currency: exchangeSettings.currency,
-      userWallets,
+      userCurrencyTypes,
     }
 
     localStorage.setItem(
@@ -391,8 +391,8 @@ class Exchange extends PureComponent<any, any> {
     )
   }
 
-  getDefaultWalletForCurrency(currency) {
-    const savedType = this.getUserDefaultWallet(currency)
+  getDefaultCurrencyType(currency) {
+    const savedType = this.getUserDefaultCurrencyType(currency)
 
     if (savedType) return savedType
 
@@ -401,7 +401,7 @@ class Exchange extends PureComponent<any, any> {
       if (COIN_DATA[currency].type === COIN_TYPE.ETH_TOKEN) return AddressType.Metamask
       if (COIN_DATA[currency].model === COIN_MODEL.AB) return AddressType.Metamask
     } else {
-      console.group('Exchange > %c getDefaultWalletForCurrency', 'color: yellow;')
+      console.group('Exchange > %c getDefaultCurrencyType', 'color: yellow;')
       console.warn(`Unknown coin ${currency}`)
       console.groupEnd()
     }
@@ -552,17 +552,24 @@ class Exchange extends PureComponent<any, any> {
   }
 
   updateExchangeSettings = () => {
-    const exchangeSettings = this.getExchangeDataFromLocalStorage()
+    const exchangeSettings = this.getExchangeSettingsFromLocalStorage()
     const { haveCurrency, getCurrency, haveType, getType } = this.state
 
-    exchangeSettings.currency.sell = haveCurrency
-    exchangeSettings.currency.buy = getCurrency
-    exchangeSettings.userWallets[haveCurrency.toUpperCase()] = haveType
-    exchangeSettings.userWallets[getCurrency.toUpperCase()] = getType
+    const newExchangeSettings = {
+      ...exchangeSettings,
+      userCurrencyTypes: {
+        [haveCurrency.toUpperCase()]: haveType,
+        [getCurrency.toUpperCase()]: getType,
+      },
+      currency: {
+        sell: haveCurrency,
+        buy: getCurrency,
+      },
+    }
 
     localStorage.setItem(
       constants.localStorage.exchangeSettings,
-      JSON.stringify(exchangeSettings)
+      JSON.stringify(newExchangeSettings)
     )
   }
 
@@ -1067,9 +1074,9 @@ class Exchange extends PureComponent<any, any> {
       this.setState(
         {
           getCurrency: value,
-          getType: this.getDefaultWalletForCurrency(value.toUpperCase()),
+          getType: this.getDefaultCurrencyType(value.toUpperCase()),
           haveCurrency,
-          haveType: this.getDefaultWalletForCurrency(haveCurrency.toUpperCase()),
+          haveType: this.getDefaultCurrencyType(haveCurrency.toUpperCase()),
           pairFees: false,
         },
         () => {
@@ -1093,9 +1100,9 @@ class Exchange extends PureComponent<any, any> {
       this.setState(
         {
           haveCurrency: value,
-          haveType: this.getDefaultWalletForCurrency(value.toUpperCase()),
+          haveType: this.getDefaultCurrencyType(value.toUpperCase()),
           getCurrency,
-          getType: this.getDefaultWalletForCurrency(getCurrency.toUpperCase()),
+          getType: this.getDefaultCurrencyType(getCurrency.toUpperCase()),
           pairFees: false,
         },
         () => {
@@ -1116,7 +1123,7 @@ class Exchange extends PureComponent<any, any> {
     // address value or missing either already validated
     const { type, value, currency } = addressData
 
-    this.setUserDefaultWallet(currency.toUpperCase(), type)
+    this.setUserDefaultCurrencyType(currency.toUpperCase(), type)
     feedback.exchangeForm.selectedAddress(`${addressRole} ${currency.toUpperCase()} ${type}`)
 
     if (addressRole === AddressRole.Send) {
