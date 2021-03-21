@@ -385,7 +385,10 @@ class Exchange extends PureComponent<any, any> {
       userWallets,
     }
 
-    localStorage.setItem(constants.localStorage.exchangeSettings, JSON.stringify(newExchangeData))
+    localStorage.setItem(
+      constants.localStorage.exchangeSettings,
+      JSON.stringify(newExchangeData)
+    )
   }
 
   getDefaultWalletForCurrency(currency) {
@@ -541,21 +544,26 @@ class Exchange extends PureComponent<any, any> {
   }
 
   componentWillUnmount() {
-    const exchangeSettings = this.getExchangeDataFromLocalStorage()
-    const { haveCurrency, getCurrency } = this.state
-    const newExchangeData = {
-      ...exchangeSettings,
-      currency: {
-        sell: haveCurrency,
-        buy: getCurrency,
-      },
-    }
-
-    localStorage.setItem(constants.localStorage.exchangeSettings, JSON.stringify(newExchangeData))
-
+    this.updateExchangeSettings()
     this._mounted = false
     this.timer = false
+
     metamask.web3connect.off('updated', this.fetchPairFeesAndBalances)
+  }
+
+  updateExchangeSettings = () => {
+    const exchangeSettings = this.getExchangeDataFromLocalStorage()
+    const { haveCurrency, getCurrency, haveType, getType } = this.state
+
+    exchangeSettings.currency.sell = haveCurrency
+    exchangeSettings.currency.buy = getCurrency
+    exchangeSettings.userWallets[haveCurrency.toUpperCase()] = haveType
+    exchangeSettings.userWallets[getCurrency.toUpperCase()] = getType
+
+    localStorage.setItem(
+      constants.localStorage.exchangeSettings,
+      JSON.stringify(exchangeSettings)
+    )
   }
 
   checkUrl = () => {
@@ -803,9 +811,10 @@ class Exchange extends PureComponent<any, any> {
       maxBuyAmount,
     } = this.state
 
-    console.log('>>> Exchange: sendRequestForPartial', haveAmount, getAmount)
+    console.group('Exchange > sendRequestForPartial')
     console.log(`${haveAmount} FROM ${fromAddress.value}`)
     console.log(`${getAmount} TO ${toAddress.value}`)
+    console.groupEnd()
 
     if (!String(getAmount) || !peer || !orderId || !String(haveAmount)) {
       return
@@ -831,7 +840,6 @@ class Exchange extends PureComponent<any, any> {
     }, requestTimeoutSec * 1000)
 
     this.onRequestAnswer = (newOrder, isAccepted) => {
-      console.log('>>> onRequestAnswer newOrder=', newOrder)
       clearTimeout(requestTimeout)
       if (isAccepted) {
         this.setState(() => ({

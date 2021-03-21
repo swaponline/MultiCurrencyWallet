@@ -6,11 +6,9 @@ const reportAboutProblem = (params) => {
 
   console.group(
     'HELPERS > %c getPairFees.ts',
-    `color: ${isError ? 'red' : 'yellow'}; font-family: monospace;`
+    `color: ${isError ? 'red' : 'yellow'};`
   )
-  isError 
-    ? console.error(info)
-    : console.warn(info)
+  isError ? console.error(info) : console.warn(info)
   console.groupEnd()
 }
 
