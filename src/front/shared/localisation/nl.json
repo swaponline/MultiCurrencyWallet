@@ -3817,7 +3817,7 @@
   },
   {
     "id": "Exchange_CustomAddressOption",
-    "message": "Geven",
+    "message": "Externe portefeuille",
     "files": [
       "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
     ]

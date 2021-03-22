@@ -5012,7 +5012,7 @@
   },
   {
     "id": "Exchange_CustomAddressOption",
-    "message": "Specifi",
+    "message": "Cartera externa",
     "files": [
       "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
     ]

@@ -3842,7 +3842,7 @@
   },
   {
     "id": "Exchange_CustomAddressOption",
-    "message": "Указать",
+    "message": "Внешний кошелек",
     "files": [
       "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
     ]

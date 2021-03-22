@@ -3828,7 +3828,7 @@
   },
   {
     "id": "Exchange_CustomAddressOption",
-    "message": "Określić",
+    "message": "Portfel zewnętrzny",
     "files": [
       "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
     ]

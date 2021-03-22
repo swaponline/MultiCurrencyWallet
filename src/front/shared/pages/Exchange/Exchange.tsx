@@ -1166,10 +1166,6 @@ class Exchange extends PureComponent<any, any> {
     feedback.exchangeForm.flipped(
       `${haveCurrency}->${getCurrency} => ${getCurrency}->${haveCurrency}`
     )
-    // for sender side user obviously couldn't use Custom address
-    const senderSideWalletType = getType === AddressType.Custom
-      ? AddressType.Internal
-      : getType
 
     this.resetState()
     this.changeUrl(getCurrency, haveCurrency)
@@ -1177,7 +1173,7 @@ class Exchange extends PureComponent<any, any> {
       {
         haveCurrency: getCurrency,
         getCurrency: haveCurrency,
-        haveType: senderSideWalletType,
+        haveType: getType,
         getType: haveType,
         exHaveRate: exGetRate,
         exGetRate: exHaveRate,
@@ -1582,7 +1578,6 @@ class Exchange extends PureComponent<any, any> {
                 selectedType={getType}
                 hasError={false}
                 placeholder="To address"
-                customIsEnabled={true}
                 onChange={(addrData) => this.applyAddress(AddressRole.Receive, addrData)}
               />
             </div>

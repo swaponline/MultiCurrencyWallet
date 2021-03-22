@@ -50,7 +50,7 @@ const langLabels = defineMessages({
   },
   optionCustom: {
     id: 'Exchange_CustomAddressOption',
-    defaultMessage: 'Specify',
+    defaultMessage: 'External wallet',
   },
   placeholderAddress: {
     id: 'Exchange_PlaceholderEnterAddress',
@@ -66,7 +66,6 @@ type AddressSelectProps = {
   role: string
   currency: string
   selectedType?: string
-  customIsEnabled?: boolean
   placeholder?: string
   hasError?: boolean
   isDark: boolean
@@ -335,7 +334,6 @@ class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
 
   render() {
     const {
-      customIsEnabled = false,
       currency,
       isDark,
       label,
@@ -366,9 +364,8 @@ class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
 
     // Forbid `Custom address` option when using ethereum/tokens
     // because you need to make a request to the contract
-    const isCustomAddressOption = customIsEnabled && !ethToken.isEthOrEthToken({ name: currency })
+    const isCustomAddressOption = !ethToken.isEthOrEthToken({ name: currency })
     const isCustomOptionInputHidden =
-      !customIsEnabled &&
       role === AddressRole.Send &&
       COIN_DATA[ticker] &&
       COIN_DATA[ticker].model === COIN_MODEL.UTXO
@@ -500,7 +497,7 @@ class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
             </Button>
           </div>
         )}
-        {isCustomAddressOption && selectedType === AddressType.Custom && (
+        {!isCustomOptionInputHidden && selectedType === AddressType.Custom && (
           <div styleName="selectedInner">
             <div styleName={`customWallet ${walletAddressFocused ? 'customWallet_focus' : ''}`}>
               <div styleName="customAddressInput">
