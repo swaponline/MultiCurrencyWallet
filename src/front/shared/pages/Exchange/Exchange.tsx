@@ -266,8 +266,8 @@ class Exchange extends PureComponent<any, any> {
       }
     }
 
-    const haveType = this.getDefaultWalletType(haveCurrency.toUpperCase(), true)
-    const getType = this.getDefaultWalletType(getCurrency.toUpperCase(), false)
+    const haveType = this.getDefaultWalletType(haveCurrency.toUpperCase())
+    const getType = this.getDefaultWalletType(getCurrency.toUpperCase())
 
     this.state = {
       haveCurrencies: [],
@@ -392,7 +392,7 @@ class Exchange extends PureComponent<any, any> {
     return false
   }
 
-  getDefaultWalletType(currency, isSenderSide) {
+  getDefaultWalletType(currency) {
     const storageType = this.getLocalStorageWalletType(currency)
 
     if (storageType) {
@@ -403,12 +403,7 @@ class Exchange extends PureComponent<any, any> {
 
     if (COIN_DATA[currency]) {
       if (COIN_DATA[currency].model === COIN_MODEL.UTXO) {
-        // for sender side user obviously couldn't use Custom address
-        if (isSenderSide) {
-          resultType = AddressType.Internal
-        } else {
-          resultType = AddressType.Custom
-        }
+        resultType = AddressType.Custom
       } else if (
         COIN_DATA[currency].type === COIN_TYPE.ETH_TOKEN ||
         COIN_DATA[currency].model === COIN_MODEL.AB
@@ -1089,9 +1084,9 @@ class Exchange extends PureComponent<any, any> {
       this.setState(
         {
           getCurrency: value,
-          getType: this.getDefaultWalletType(value.toUpperCase(), false),
+          getType: this.getDefaultWalletType(value.toUpperCase()),
           haveCurrency,
-          haveType: this.getDefaultWalletType(haveCurrency.toUpperCase(), true),
+          haveType: this.getDefaultWalletType(haveCurrency.toUpperCase()),
           pairFees: false,
         },
         () => {
@@ -1115,9 +1110,9 @@ class Exchange extends PureComponent<any, any> {
       this.setState(
         {
           haveCurrency: value,
-          haveType: this.getDefaultWalletType(value.toUpperCase(), true),
+          haveType: this.getDefaultWalletType(value.toUpperCase()),
           getCurrency,
-          getType: this.getDefaultWalletType(getCurrency.toUpperCase(), false),
+          getType: this.getDefaultWalletType(getCurrency.toUpperCase()),
           pairFees: false,
         },
         () => {
@@ -1171,6 +1166,10 @@ class Exchange extends PureComponent<any, any> {
     feedback.exchangeForm.flipped(
       `${haveCurrency}->${getCurrency} => ${getCurrency}->${haveCurrency}`
     )
+    // for sender side user obviously couldn't use Custom address
+    const senderSideWalletType = getType === AddressType.Custom
+      ? AddressType.Internal
+      : getType
 
     this.resetState()
     this.changeUrl(getCurrency, haveCurrency)
@@ -1178,7 +1177,7 @@ class Exchange extends PureComponent<any, any> {
       {
         haveCurrency: getCurrency,
         getCurrency: haveCurrency,
-        haveType: getType,
+        haveType: senderSideWalletType,
         getType: haveType,
         exHaveRate: exGetRate,
         exGetRate: exHaveRate,
