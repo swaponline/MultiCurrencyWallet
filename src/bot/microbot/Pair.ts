@@ -23,21 +23,33 @@ const PAIR_ASK = PAIR_TYPES.ASK
 const isAsk = (type) => (type === PAIR_TYPES.ASK)
 const isBid = (type) => (type === PAIR_TYPES.BID)
 
-const filteredDecimals = ({ amount, currency }) =>
-  new BigNumber(amount).decimalPlaces(TOKEN_DECIMALS[currency] || TOKEN_DECIMALS.default).toString()
+const filteredDecimals = ({ amount, currency }) => {
+  const precision = TOKEN_DECIMALS[currency] || TOKEN_DECIMALS.default || 18
+  return new BigNumber(amount).decimalPlaces(precision).toString()
+}
 
-const parseTicker = (order) => {
+export const parseTicker = (order) => {
   const { buyCurrency: buy, sellCurrency: sell } = order
 
   const BS = `${buy}-${sell}`.toUpperCase() // buys ETH, sells BTC, BID
   const SB = `${sell}-${buy}`.toUpperCase() // sells ETH = ASK
 
-  if (TRADE_TICKERS.includes(BS)) return { ticker: BS, type: PAIR_BID }
-  if (TRADE_TICKERS.includes(SB)) return { ticker: SB, type: PAIR_ASK }
+  if (TRADE_TICKERS.includes(BS)) {
+    return {
+      ticker: BS,
+      type: PAIR_BID,
+    }
+  }
+
+  if (TRADE_TICKERS.includes(SB)) {
+    return {
+      ticker: SB,
+      type: PAIR_ASK,
+    }
+  }
 
   throw new Error(`ParseTickerError: No such tickers: ${BS},${SB}`)
 }
-
 
 export const parsePair = (str) => {
 

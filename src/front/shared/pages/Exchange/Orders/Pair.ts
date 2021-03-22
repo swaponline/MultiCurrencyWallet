@@ -4,6 +4,14 @@ import TOKEN_DECIMALS from 'helpers/constants/TOKEN_DECIMALS'
 import TRADE_TICKERS from 'helpers/constants/TRADE_TICKERS'
 
 
+
+
+
+
+
+
+
+
 export const PAIR_TYPES = Object.freeze({
   BID: 'bid',
   ASK: 'ask',
@@ -15,8 +23,10 @@ const PAIR_ASK = PAIR_TYPES.ASK
 const isAsk = (type) => (type === PAIR_TYPES.ASK)
 const isBid = (type) => (type === PAIR_TYPES.BID)
 
-const filteredDecimals = ({ amount, currency }) =>
-  new BigNumber(amount).decimalPlaces(TOKEN_DECIMALS[currency] || 0).toString()
+const filteredDecimals = ({ amount, currency }) => {
+  const precision = TOKEN_DECIMALS[currency] || TOKEN_DECIMALS.default || 18
+  return new BigNumber(amount).decimalPlaces(precision).toString()
+}
 
 export const parseTicker = (order) => {
   const { buyCurrency: buy, sellCurrency: sell } = order
@@ -38,8 +48,7 @@ export const parseTicker = (order) => {
     }
   }
 
-  console.warn(`ParseTickerError: No such tickers: ${BS},${SB}`)
-  return { ticker: 'none', type: PAIR_BID }
+  throw new Error(`ParseTickerError: No such tickers: ${BS},${SB}`)
 }
 
 export const parsePair = (str) => {

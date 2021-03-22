@@ -4,6 +4,14 @@ import COIN_DATA from 'swap.app/constants'
 import TRADE_TICKERS from 'swap.app/constants/TRADE_TICKERS'
 
 
+
+
+
+
+
+
+
+
 export const PAIR_TYPES = Object.freeze({
   BID: 'bid',
   ASK: 'ask',
@@ -40,8 +48,7 @@ export const parseTicker = (order) => {
     }
   }
 
-  console.error(new Error(`ParseTickerError: No such tickers: ${BS},${SB}`))
-  return { ticker: 'none', type: PAIR_BID }
+  throw new Error(`ParseTickerError: No such tickers: ${BS},${SB}`)
 }
 
 export const parsePair = (str) => {
