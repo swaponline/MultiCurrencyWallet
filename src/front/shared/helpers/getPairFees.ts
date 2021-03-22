@@ -85,14 +85,11 @@ const fetchCoinFee = (args): Promise<CoinFee> => {
 
 const fetchFeeForNativeCoin = (params) => {
   const { coinData, fixed } = params
-
+  const coinTicker = coinData.ticker.toLowerCase()
+  
   return new Promise((resolve) => {
-    if (
-      helpers[coinData.ticker.toLowerCase()] &&
-      helpers[coinData.ticker.toLowerCase()].estimateFeeValue &&
-      typeof helpers[coinData.ticker.toLowerCase()].estimateFeeValue === `function`
-    ) {
-      helpers[coinData.ticker.toLowerCase()]
+    if (helpers[coinTicker]) {
+      helpers[coinTicker]
         .estimateFeeValue({ method: 'swap', fixed })
         .then((coinFee) =>
           resolve({

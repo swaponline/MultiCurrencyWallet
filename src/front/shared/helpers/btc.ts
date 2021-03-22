@@ -113,7 +113,7 @@ type CalculateTxSizeOptions = {
   amount?: number
   unspents?: any
   address: string
-  txOut?: number
+  txOutputs: number
   method?: string
   fixed?: boolean
 }
@@ -123,12 +123,11 @@ const calculateTxSize = async (options: CalculateTxSizeOptions) => {
     amount,
     unspents,
     address,
-    txOut,
+    txOutputs,
     method,
     fixed,
   } = options
 
-  txOut = txOut || 2
   method = method || 'send'
 
   const defaultTxSize = constants.defaultFeeRates.btc.size[method]
@@ -148,7 +147,7 @@ const calculateTxSize = async (options: CalculateTxSizeOptions) => {
   */
   const txIn = unspents.length
   const txSize = txIn > 0
-    ? txIn * BYTE_INPUT_ADDRESS + txOut * BYTE_OUTPUT_ADDRESS + (BYTE_TRANSACTION + txIn - txOut)
+    ? txIn * BYTE_INPUT_ADDRESS + txOutputs * BYTE_OUTPUT_ADDRESS + (BYTE_TRANSACTION + txIn - txOutputs)
     : defaultTxSize
 
   if (method === 'send_multisig') {
@@ -156,7 +155,7 @@ const calculateTxSize = async (options: CalculateTxSizeOptions) => {
       { 'MULTISIG-P2SH-P2WSH:2-2': 1 },
       { 'P2PKH': (hasAdminFee) ? 3 : 2 }
     )
-    const msutxSize = txIn * msuSize + txOut * BYTE_OUTPUT_ADDRESS + (BYTE_TRANSACTION + txIn - txOut)
+    const msutxSize = txIn * msuSize + txOutputs * BYTE_OUTPUT_ADDRESS + (BYTE_TRANSACTION + txIn - txOutputs)
 
     return msutxSize
   }
@@ -185,14 +184,23 @@ type EstimateFeeValueOptions = {
   inSatoshis?: boolean
   address?: string
   txSize?: number
-  fixed?: string
+  fixed?: boolean
   amount?: number
   moreInfo?: boolean
 }
-
+// Returned fee value in the satoshi
 const estimateFeeValue = async (options: EstimateFeeValueOptions): Promise<any> => {
-  const { moreInfo } = options
-  let { feeRate, inSatoshis, speed, address, txSize, fixed, method, amount } = options
+  let { 
+    feeRate,
+    inSatoshis,
+    speed,
+    address,
+    txSize,
+    fixed,
+    method,
+    amount,
+    moreInfo,
+  } = options
   const {
     user: {
       btcData,
@@ -201,9 +209,7 @@ const estimateFeeValue = async (options: EstimateFeeValueOptions): Promise<any> 
     },
   } = getState()
 
-  let txOut = 2
-
-  if (hasAdminFee) txOut = 3
+  const txOutputs = hasAdminFee ? 3 : 2
 
   if (!address) {
     address = btcData.address
@@ -211,13 +217,20 @@ const estimateFeeValue = async (options: EstimateFeeValueOptions): Promise<any> 
     if (method === 'send_multisig') address = btcMultisigUserData.address
   }
 
-  let unspents = await actions.btc.fetchUnspents(address)
+  let unspents: IBtcUnspent[] = await actions.btc.fetchUnspents(address)
+  // if user have some amount then try to find "better" UTXO for this
   if (amount) {
     unspents = await actions.btc.prepareUnspents({ amount, unspents })
   }
-  //@ts-ignore
-  txSize = txSize || await calculateTxSize({ address, speed, fixed, method, txOut, amount })
+
   feeRate = feeRate || await estimateFeeRate({ speed })
+  txSize = txSize || await calculateTxSize({
+    address,
+    fixed,
+    method,
+    txOutputs,
+    amount,
+  })
 
   const calculatedFeeValue = BigNumber.maximum(
     DUST,
@@ -227,10 +240,7 @@ const estimateFeeValue = async (options: EstimateFeeValueOptions): Promise<any> 
       .dp(0, BigNumber.ROUND_HALF_EVEN),
   )
 
-  const CUSTOM_SATOSHI = 20
-  calculatedFeeValue.plus(CUSTOM_SATOSHI) // just wanted to add
-
-  const SATOSHI_TO_BITCOIN_RATIO = 1e-8; // 1 BTC -> 100 000 000 satoshi
+  const SATOSHI_TO_BITCOIN_RATIO = 0.000_000_01
 
   const finalFeeValue = inSatoshis
     ? calculatedFeeValue.toNumber()
