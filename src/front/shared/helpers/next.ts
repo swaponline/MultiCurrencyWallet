@@ -122,7 +122,7 @@ const getByteCount = (inputs, outputs) => {
 
 //@ts-ignore
 const calculateTxSize = async ({ speed, unspents, address, txOut = 2, method = 'send', fixed } = {}) => {
-  const defaultTxSize = constants.defaultFeeRates.next.size[method]
+  const defaultTxSize = constants.defaultCurrencyParameters.next.size[method]
 
   if (fixed) {
     return defaultTxSize
@@ -215,7 +215,7 @@ const estimateFeeValue = async (options: EstimateFeeValueOptions) => {
 
 const estimateFeeRate = async ({ speed = 'fast' } = {}) => {
   const link = config.feeRates.next
-  const defaultRate = constants.defaultFeeRates.next.rate
+  const defaultRate = constants.defaultCurrencyParameters.next.rate
 
   if (!link) {
     return defaultRate[speed]

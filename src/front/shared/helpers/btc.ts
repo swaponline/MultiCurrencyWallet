@@ -130,7 +130,7 @@ const calculateTxSize = async (options: CalculateTxSizeOptions) => {
 
   method = method || 'send'
 
-  const defaultTxSize = constants.defaultFeeRates.btc.size[method]
+  const defaultTxSize = constants.defaultCurrencyParameters.btc.size[method]
 
   if (fixed) {
     return defaultTxSize
@@ -260,7 +260,7 @@ const estimateFeeValue = async (options: EstimateFeeValueOptions): Promise<any> 
 
 const getFeesRateBlockcypher = async () => {
   const link = config.feeRates.btc
-  const defaultRate = constants.defaultFeeRates.btc.rate
+  const defaultRate = constants.defaultCurrencyParameters.btc.rate
 
   const defaultApiSpeeds = {
     slow: defaultRate.slow,
@@ -295,7 +295,7 @@ const getFeesRateBlockcypher = async () => {
 
 const estimateFeeRate = async ({ speed = 'fast' } = {}) => {
   const link = config.feeRates.btc
-  const defaultRate = constants.defaultFeeRates.btc.rate
+  const defaultRate = constants.defaultCurrencyParameters.btc.rate
 
   if (!link) {
     return defaultRate[speed]

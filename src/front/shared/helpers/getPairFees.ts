@@ -154,22 +154,16 @@ type PairFeesParams = {
 
 export const getPairFees = (params: PairFeesParams): Promise<PairFees> => {
   const { sellCurrency, buyCurrency, updateCacheValue = false } = params
-  const sellCurrencyUpp = sellCurrency.toUpperCase()
-  const buyCurrencyUpp = buyCurrency.toUpperCase()
-  // for currency with UTXO model that we buy
-  // we use default tx size (one input)
-  const coinIsBought = COIN_DATA[buyCurrencyUpp].model === COIN_MODEL.UTXO
 
   return new Promise(async (feeResolved) => {
     const sell = await fetchCoinFee({
-      coinName: sellCurrencyUpp,
+      coinName: sellCurrency.toUpperCase(),
       action: 'sell',
       updateCacheValue,
     })
     const buy = await fetchCoinFee({
-      coinName: buyCurrencyUpp,
+      coinName: buyCurrency.toUpperCase(),
       action: 'buy',
-      fixed: coinIsBought,
       updateCacheValue,
     })
 
