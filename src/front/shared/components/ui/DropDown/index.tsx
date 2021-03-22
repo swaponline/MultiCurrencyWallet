@@ -179,7 +179,7 @@ export default class DropDown extends Component<DropDownProps, DropDownState> {
 
           {/* Drop Down list */}
           {optionToggleIsOpen && (
-            <div styleName={`select ${dontScroll || !moreThenOneOption ? 'dontscroll' : ''}`}>
+            <div styleName={`select ${dontScroll ? 'dontscroll' : ''}`}>
               {name ? <span styleName="listName">{name}</span> : ''}
 
               {noOptions ? (

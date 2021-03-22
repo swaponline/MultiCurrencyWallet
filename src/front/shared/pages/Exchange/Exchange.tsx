@@ -26,7 +26,6 @@ import config from 'helpers/externalConfig'
 import SwapApp from 'swap.app'
 
 import helpers, { localStorage, getPairFees, constants, metamask, feedback, links } from 'helpers'
-import { getActivatedCurrencies } from 'helpers/user'
 import { animate } from 'helpers/domUtils'
 import Switching from 'components/controls/Switching/Switching'
 import AddressSelect from './AddressSelect/AddressSelect'
@@ -108,7 +107,6 @@ type ExchangeState = {
   pairFees: any
   directionOrders: IUniversalObj[]
   filteredOrders: IUniversalObj[]
-  haveCurrencies: CurrencyObj[]
   desclineOrders: string[]
 
   fromAddress: Address
@@ -270,7 +268,6 @@ class Exchange extends PureComponent<any, any> {
     const getType = this.getDefaultWalletType(getCurrency.toUpperCase())
 
     this.state = {
-      haveCurrencies: [],
       haveCurrency,
       haveType,
       getCurrency,
@@ -304,23 +301,6 @@ class Exchange extends PureComponent<any, any> {
     if (config.isWidget) {
       this.state.getCurrency = config.erc20token
     }
-  }
-
-  filterUserCurrencies = () => {
-    const { usersData, currencies } = this.props
-    const enabledCurrencies = getActivatedCurrencies()
-
-    const filteredNames = usersData
-      .filter(({ balance }) => balance > 0)
-      .filter(({ currency }) => enabledCurrencies.includes(currency))
-      .map(({ currency }) => currency)
-
-    const haveCurrencies = currencies
-      .filter(({ name }) => filteredNames.includes(name))
-
-    this.setState(() => ({
-      haveCurrencies,
-    }))
   }
 
   makeAddressObject(type, currency) {
@@ -453,7 +433,6 @@ class Exchange extends PureComponent<any, any> {
       }
     }, 60 * 1000) // 1 minute
     
-    this.filterUserCurrencies()
     this.getInfoAboutCurrency()
     this.fetchPairFeesAndBalances()
     metamask.web3connect.on('updated', this.fetchPairFeesAndBalances)
@@ -1352,6 +1331,7 @@ class Exchange extends PureComponent<any, any> {
 
   render() {
     const {
+      currencies,
       activeFiat,
       addSelectedItems,
       match: {
@@ -1360,7 +1340,6 @@ class Exchange extends PureComponent<any, any> {
     } = this.props
 
     const {
-      haveCurrencies,
       haveCurrency,
       haveType,
       getCurrency,
@@ -1533,7 +1512,7 @@ class Exchange extends PureComponent<any, any> {
                 id="Exchange456"
                 placeholder="0.00000000"
                 fiat={maxAmount > 0 && isNonOffers ? 0 : haveFiat}
-                currencies={haveCurrencies}
+                currencies={currencies}
                 onFocus={() => this.extendedControlsSet(true)}
                 onBlur={() => setTimeout(() => this.extendedControlsSet(false), 200)}
                 inputToolTip={balanceTooltip}
