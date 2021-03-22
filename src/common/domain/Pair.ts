@@ -3,38 +3,46 @@ import BigNumber from 'bignumber.js'
 // bot imports
 
 import {
-  TOKEN_DECIMALS as BOT_TOKEN_DECIMALS,
-  TRADE_TICKERS as BOT_DEFAULT_TRADE_TICKERS,
+  TOKEN_DECIMALS as BOT_TOKEN_DECIMALS_module,
+  TRADE_TICKERS as BOT_TRADE_TICKERS_module,
 } from 'bot/config/constants'
 
+const BOT_TOKEN_DECIMALS = BOT_TOKEN_DECIMALS_module.default
 
 import * as configStorage from 'bot/config/storage'
 
 const BOT_TRADE_TICKERS = configStorage.hasTradeConfig()
   ? configStorage.getTradeTickers()
-  : BOT_DEFAULT_TRADE_TICKERS
+  : BOT_TRADE_TICKERS_module.default
 
 
 // core imports
 
 import CORE_TRADE_TICKERS from 'swap.app/constants/TRADE_TICKERS'
-import CORE_COIN_DATA from 'swap.app/constants'
+import { COIN_DATA as CORE_COIN_DATA } from 'swap.app/constants/COINS'
 
 console.log('CORE_COIN_DATA = ', CORE_COIN_DATA)
 
-/*const CORE_DECIMALS = Object.entries(CORE_COIN_DATA)
-                        .filter(([ticker, record]) => {
-                          return typeof record === "object" && typeof record.precision == "number"
-                        })
-                        .map*/
+const CORE_TOKEN_DECIMALS = Object.entries(CORE_COIN_DATA).filter(([ticker, coinData]) => {
+  return typeof coinData.precision === 'number'
+}).map(([ticker, coinData]) => ({ [coinData.ticker]: coinData.precision})).reduce((acc, record) => {
+  return { ...acc, ...record }
+}, {})
 
-//COIN_DATA[currency] &&  ? COIN_DATA[currency].precision
 
 
 // front imports
 
 import FRONT_TOKEN_DECIMALS from 'helpers/constants/TOKEN_DECIMALS'
 import FRONT_TRADE_TICKERS from 'helpers/constants/TRADE_TICKERS'
+
+console.log('BOT_TRADE_TICKERS =', BOT_TRADE_TICKERS)
+console.log('CORE_TRADE_TICKERS = ', CORE_TRADE_TICKERS)
+console.log('FRONT_TRADE_TICKERS =', FRONT_TRADE_TICKERS)
+
+console.log('BOT_TOKEN_DECIMALS =', BOT_TOKEN_DECIMALS)
+console.log('CORE_TOKEN_DECIMALS = ', CORE_TOKEN_DECIMALS)
+console.log('FRONT_TOKEN_DECIMALS =', FRONT_TOKEN_DECIMALS)
 
 
 const TRADE_TICKERS = [
@@ -45,6 +53,7 @@ const TRADE_TICKERS = [
 
 const TOKEN_DECIMALS = {
   ...BOT_TOKEN_DECIMALS,
+  ...CORE_TOKEN_DECIMALS,
   ...FRONT_TOKEN_DECIMALS,
 }
 

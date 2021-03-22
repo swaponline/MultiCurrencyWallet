@@ -1,4 +1,9 @@
-const network = process.env.NETWORK.toLowerCase()
+const network = process.env.NETWORK && process.env.NETWORK.toLowerCase() ||
+  // todo: remove later
+  (process.env.NODE_ENV === 'production' && 'mainnet') ||
+  (process.env.NODE_ENV === 'development' && 'testnet') ||
+  (() => { throw new Error('Unknown network') })()
+
 
 const TRADE_TICKERS = require(`./${network}/TRADE_TICKERS`)
 const TRADE_ORDER_MINAMOUNTS = require(`./${network}/TRADE_ORDER_MINAMOUNTS`)
