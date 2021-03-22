@@ -232,7 +232,6 @@ class SwapOrders extends aggregation(ServiceInterface, Collection) {
    * @param {boolean} data.isRequested
    */
   _create(data) {
-    console.log('>>> _create() data =', data)
     const { id, buyAmount, sellAmount, buyCurrency, sellCurrency, ...rest } = data
 
     const buy = buyCurrency.toUpperCase()
@@ -344,12 +343,11 @@ class SwapOrders extends aggregation(ServiceInterface, Collection) {
    * @param {number} data.sellAmount
    */
   create(data) {
-    console.log('>>> create() data =', data)
     const order = this._create({
       ...data,
       owner: this.app.services.auth.getPublicData(),
     })
-    console.log('created order:', order)
+
     this._saveMyOrders()
 
     this.app.services.room.sendMessageRoom({

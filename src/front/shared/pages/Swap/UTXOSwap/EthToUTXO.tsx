@@ -67,6 +67,8 @@ export default class EthToUTXO extends Component<any, any> {
       }
     }, 3000)
 
+    /*
+    // verify script auto in core flow
     this.confirmTimer = setInterval(() => {
       if (this.state.flow.step === 3) {
         this.confirmScriptChecked()
@@ -74,6 +76,7 @@ export default class EthToUTXO extends Component<any, any> {
         clearInterval(this.confirmTimer)
       }
     }, 3000)
+    */
   }
 
   componentWillUnmount() {

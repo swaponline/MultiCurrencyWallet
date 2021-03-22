@@ -70,7 +70,7 @@ export default class UTXOToEthToken extends Component<any, any> {
 
   submitSecret = () => {
     const { secret } = this.state
-    this.swap.flow.submitSecret(secret)
+    // this.swap.flow.submitSecret(secret)
   }
 
 

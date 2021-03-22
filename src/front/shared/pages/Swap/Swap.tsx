@@ -141,8 +141,10 @@ class SwapComponent extends PureComponent<any, any> {
     }
   }
 
-  componentWillMount() {
+
+  componentDidMount() {
     const { items, tokenItems, currenciesData, tokensData, intl: { locale } } = this.props
+
     let { match: { params: { orderId } }, history, activeFiat } = this.props
 
     if (!!window.performance && window.performance.navigation.type === 2) {
@@ -163,7 +165,10 @@ class SwapComponent extends PureComponent<any, any> {
     })
 
     try {
+      console.log('>>>>>>>>>>>>>>> create swap')
       const swap = new Swap(orderId, SwapApp.shared())
+      window.active_swap = swap
+      console.log(swap)
       console.log('Swap flow:', swap.flow._flowName);
 
       const SwapComponent = swapComponents[swap.flow._flowName]
@@ -194,13 +199,14 @@ class SwapComponent extends PureComponent<any, any> {
           })
       })
 
-      this.setState(() => ({
+      console.log('set swap >>>> ', swap)
+      this.setState({
         swap,
         ethData,
         SwapComponent,
         currencyData,
         ethAddress: ethData[0].address,
-      }))
+      }, this.afterComponentDidMount)
 
       /* hide my orders */
       // disable for now TODO
@@ -219,10 +225,16 @@ class SwapComponent extends PureComponent<any, any> {
     }
   }
 
-  componentDidMount() {
-    const { swap } = this.state
-    const { flow } = swap
-    const { step } = flow.state
+
+  afterComponentDidMount() {
+    const {
+      swap,
+      swap: {
+        flow: {
+          step,
+        },
+      },
+    } = this.state
 
     const { match: { params: { orderId } }, savedOrders } = this.props
 

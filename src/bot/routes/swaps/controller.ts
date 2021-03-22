@@ -34,41 +34,16 @@ const runSwap = (swap) => {
 
   swap.on('enter step', (step) => {
     console.log('enter step', step)
-    switch (swap.flow._flowName) {
-      case "BTC2ETH":
-      case "BTC2NOXON":
-      case "BTC2SWAP":
-      case "BTC2XSAT":
-      case "BTC2HDP":
-      case "USDT2NOXON":
-      case "USDT2SWAP":
 
-        if ( step == 2 ) swap.flow.submitSecret(genSecret())
-
-        if ( step + 1 === swap.flow.steps.length ) {
-          console.log(new Date().toISOString(), '[FINISHED] tx', swap.flow.state.ethSwapWithdrawTransactionHash)
-
-          // Orders.remove(swap.id)
-        }
-        return
-
-      case "ETH2BTC":
-      case "NOXON2BTC":
-      case "SWAP2BTC":
-      case "XSAT2BTC":
-      case "HDP2BTC":
-      case "NOXON2USDT":
-      case "SWAP2USDT":
-
-        if ( step == 1 ) swap.flow.sign()
-        if ( step == 3 ) swap.flow.verifyScript()
-
-        if ( step + 1 === swap.flow.steps.length ) {
-          console.log(new Date().toISOString(), '[FINISHED] tx', swap.flow.state.btcSwapWithdrawTransactionHash)
-
-          // Orders.remove(swap.id)
-        }
+    if ( step + 1 === swap.flow.steps.length ) {
+      console.log(new Date().toISOString(), '[FINISHED] tx', swap.flow.state.ethSwapWithdrawTransactionHash)
     }
+  })
+}
+
+const getSwapFormated = (req, res) => {
+  findSwap(app)(req, res).then((swap) => {
+    res.send(`<pre>${JSON.stringify(swapView(swap), null, '    ')}</pre>`)
   })
 }
 
@@ -210,6 +185,7 @@ const getInProgress = ({ query: { parsed, withFees }}, res) => {
     .map((id) => {
       try {
         const swapData = new Swap(id, app)
+        return swapData
       } catch (e) {
         return false
       }
@@ -257,6 +233,8 @@ const getFinished = ({ query: { parsed, withFees }}, res) => {
 
 export {
   getSwap,
+  getSwapFormated,
+
   getState,
   goSwap,
   refund,
