@@ -30,7 +30,9 @@ module.exports = {
           "swap.swaps/*": "./src/core/swap.swaps/*",
           "simple.swap.core": "./src/core/simple/src/",
           "common": "./src/common/",
-          "common/*": "./src/common/*"
+          "common/*": "./src/common/*",
+          "bot": "./src/bot/",
+          "bot/*": "./src/bot/*"
         },
       },
     ],

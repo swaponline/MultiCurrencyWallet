@@ -61,7 +61,10 @@
       "domain/*": ["src/common/domain/*"],
 
       "common": ["src/common/"],
-      "common/*": ["src/common/*"]
+      "common/*": ["src/common/*"],
+
+      "bot": ["src/bot/"],
+      "bot/*": ["src/bot/*"]
     },
   },
   "include": [

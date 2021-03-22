@@ -90,7 +90,7 @@ export default class Pair {
   ticker: string
   main: string
   base: string
-  type: PAIR_TYPES
+  type: string
   total: BigNumber
 
   constructor({ price, amount, ticker, type }) {

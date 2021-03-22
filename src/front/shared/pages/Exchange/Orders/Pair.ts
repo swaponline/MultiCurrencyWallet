@@ -24,7 +24,7 @@ const isAsk = (type) => (type === PAIR_TYPES.ASK)
 const isBid = (type) => (type === PAIR_TYPES.BID)
 
 const filteredDecimals = ({ amount, currency }) => {
-  const precision = TOKEN_DECIMALS[currency] || TOKEN_DECIMALS.default || 18
+  const precision = TOKEN_DECIMALS[currency] || /*TOKEN_DECIMALS.default ||*/ 18
   return new BigNumber(amount).decimalPlaces(precision).toString()
 }
 
@@ -90,7 +90,7 @@ export default class Pair {
   ticker: string
   main: string
   base: string
-  type: PAIR_TYPES
+  type: string
   total: BigNumber
 
   constructor({ price, amount, ticker, type }) {

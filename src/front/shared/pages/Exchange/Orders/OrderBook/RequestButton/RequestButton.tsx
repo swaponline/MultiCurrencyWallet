@@ -4,7 +4,7 @@ import cssModules from 'react-css-modules'
 import styles from './RequestButton.scss'
 import { isMobile } from 'react-device-detect'
 
-import PAIR_TYPES from 'helpers/constants/PAIR_TYPES'
+import { PAIR_TYPES } from 'common/domain/Pair'
 
 import { FormattedMessage } from 'react-intl'
 

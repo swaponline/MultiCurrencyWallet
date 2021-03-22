@@ -62,6 +62,7 @@ const webpackConfig = {
       'swap.swaps': config.paths.core('swap.swaps'),
       'simple.swap.core': config.paths.core('simple/src'),
       'common': config.paths.common(),
+      'bot': config.paths.bot(),
     },
     modules: [
       config.paths.front('client'),
