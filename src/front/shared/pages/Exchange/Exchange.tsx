@@ -25,7 +25,15 @@ import { localisedUrl } from 'helpers/locale'
 import config from 'helpers/externalConfig'
 import SwapApp from 'swap.app'
 
-import helpers, { localStorage, getPairFees, constants, metamask, feedback, links } from 'helpers'
+import helpers, {
+  localStorage,
+  getPairFees,
+  constants,
+  metamask,
+  feedback,
+  ethToken,
+  links,
+} from 'helpers'
 import { animate } from 'helpers/domUtils'
 import Switching from 'components/controls/Switching/Switching'
 import AddressSelect from './AddressSelect/AddressSelect'
@@ -88,12 +96,13 @@ type ExchangeState = {
 
   extendedControls: boolean
   isLowAmount: boolean
-  isToken: boolean
   isNonOffers: boolean
   isShowBalance: boolean
   isWaitForPeerAnswer: boolean
   isDeclinedOffer: boolean
   haveBalance: boolean
+  isEthToken: boolean
+  isPendingApprove: boolean
 
   isNoAnyOrders?: boolean
   isFullLoadingComplite?: boolean
@@ -273,7 +282,7 @@ class Exchange extends Component<any, any> {
     const getType = this.getDefaultWalletForCurrency(getCurrency.toUpperCase())
 
     this.state = {
-      isToken: false,
+      isEthToken: ethToken.isEthToken({ name: haveCurrency }),
       dynamicFee: 0,
       haveCurrency,
       haveType,
@@ -303,6 +312,7 @@ class Exchange extends Component<any, any> {
       toAddress: this.makeAddressObject(getType, getCurrency.toUpperCase()),
       isTurbo: false,
       redirectToSwap: null,
+      isPendingApprove: false,
     }
 
     if (config.isWidget) {
@@ -427,6 +437,17 @@ class Exchange extends Component<any, any> {
     this.getInfoAboutCurrency()
     this.fetchPairFeesAndBalances()
     metamask.web3connect.on('updated', this.fetchPairFeesAndBalances.bind(this))
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const { haveCurrency: prevHaveCurrency } = prevState
+    const { haveCurrency } = this.state
+
+    if (prevHaveCurrency !== haveCurrency) {
+      this.setState(() => ({
+        isEthToken: ethToken.isEthToken({ name: haveCurrency }),
+      }))
+    }
   }
 
   getInfoAboutCurrency = async () => {
@@ -724,6 +745,18 @@ class Exchange extends Component<any, any> {
       return false
     }
     return true
+  }
+
+  approveTheToken = () => {
+    this.setState(() => ({
+      isPendingApprove: true,
+    }))
+
+    // ...
+
+    this.setState(() => ({
+      isPendingApprove: false,
+    }))
   }
 
   // @ToDo - need refactiong without BTC
@@ -1319,6 +1352,7 @@ class Exchange extends Component<any, any> {
     } = this.props
 
     const {
+      isEthToken,
       haveCurrency,
       haveType,
       getCurrency,
@@ -1346,6 +1380,7 @@ class Exchange extends Component<any, any> {
       balances,
       haveBalance,
       isTurbo,
+      isPendingApprove,
     } = this.state
 
     const sellCoin = haveCurrency.toUpperCase()
@@ -1696,21 +1731,33 @@ class Exchange extends Component<any, any> {
           )}
 
           <div styleName="buttons">
-            {/* Exchange */}
-            <Button
-              className="data-tut-Exchange_tourDisabled"
-              styleName="button"
-              blue
-              onClick={this.initSwap}
-              disabled={!canStartSwap}
-            >
-              {linked.haveAmount.value > 0 ? (
-                <FormattedMessage id="partial541" defaultMessage="Exchange now" />
-              ) : (
-                <FormattedMessage id="enterYouSend" defaultMessage='Enter "You send" amount' />
-              )}
-            </Button>
-            {/* Button Create offer */}
+            {isEthToken ? (
+              <Button styleName="button"
+                onClick={this.approveTheToken}
+                disabled={!canStartSwap}
+                pending={isPendingApprove}
+                blue={true}
+              >
+                {linked.haveAmount.value > 0 
+                  ? false // TODO: approved
+                    ? <FormattedMessage id="partial541" defaultMessage="Exchange now" />
+                    : <FormattedMessage id="FormattedMessageIdApprove" defaultMessage="Approve" />
+                  : <FormattedMessage id="enterYouSend" defaultMessage='Enter "You send" amount' />
+                }
+              </Button>
+            ) : (
+              <Button
+                styleName="button"
+                onClick={this.initSwap}
+                disabled={!canStartSwap}
+                blue={true}
+              >
+                {linked.haveAmount.value > 0 
+                  ? <FormattedMessage id="partial541" defaultMessage="Exchange now" />
+                  : <FormattedMessage id="enterYouSend" defaultMessage='Enter "You send" amount' />}
+              </Button>
+            )}
+
             <>
               <Button
                 id="createOrderReactTooltipMessageForUser"
@@ -1719,6 +1766,7 @@ class Exchange extends Component<any, any> {
               >
                 <FormattedMessage id="orders128" defaultMessage="Create offer" />
               </Button>
+
               {haveBalance ? (
                 <ThemeTooltip
                   id="createOrderReactTooltipMessageForUser"

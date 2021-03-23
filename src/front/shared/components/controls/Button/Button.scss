@@ -13,11 +13,11 @@
   @include no-user-select;
   transition: background-color 0.23s ease, color 0.23s ease;
 
-  .pendingWrapper {
+  .pending {
     position: relative;
   }
   
-  .pendingWrapper::after {
+  .pending::after {
     display: inline-block;
     animation: ellipsis 1.25s infinite;
     content: '.';
