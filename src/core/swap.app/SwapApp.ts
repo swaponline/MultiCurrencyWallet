@@ -129,10 +129,11 @@ class SwapApp extends EventEmitter {
   attachSwap(swap: Swap) {
     if (!this.attachedSwaps.isExistByKey(swap.id)) {
       this.attachedSwaps.append(swap, swap.id)
+
+      this.emit('swap attached', {
+        swap,
+      })
     }
-    this.emit('swap attached', {
-      swap,
-    })
   }
 
   getActiveSwaps(): Swap[] {

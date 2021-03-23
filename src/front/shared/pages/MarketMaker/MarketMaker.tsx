@@ -6,7 +6,7 @@ import actions from 'redux/actions'
 import { constants } from 'helpers'
 
 import SwapApp from 'swap.app'
-
+import Swap from 'swap.swap'
 
 import config from 'helpers/externalConfig'
 
@@ -17,15 +17,8 @@ import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 
 import links from 'helpers/links'
 
-import SwapsHistory from 'pages/History/SwapsHistory/SwapsHistory'
+import SwapsHistory from './SwapsHistory/SwapsHistory'
 
-@connect(({
-  history: {
-    swapHistory,
-  },
-}) => ({
-  swapHistory,
-}))
 @CSSModules(stylesHere, { allowMultiple: true })
 class MarketMaker extends Component<any, any> {
 
@@ -42,22 +35,73 @@ class MarketMaker extends Component<any, any> {
       }
     } = props
 
+    
+
     this.state = {
       page,
+      swaps: [],
+      swapsIds: {},
     }
   }
 
+  extractSwapStatus(swap) {
+    const {
+      id,
+      isMy,
+      buyCurrency,
+      sellCurrency,
+      buyAmount,
+      sellAmount,
+      flow: {
+        state,
+      },
+    } = swap
+    return {
+      id,
+      isMy,
+      buyCurrency,
+      sellCurrency,
+      buyAmount,
+      sellAmount,
+      ...state,
+    }
+  }
 
   componentDidMount() {
-    actions.core.getSwapHistory()
-    SwapApp.shared().on('new swap', (data) => {
-      console.log('>>>> NEW EVENT', data)
-      actions.core.getSwapHistory()
+    //
+    const swaps = []
+    const swapsIds = {}
+
+
+    const lsSwapId = JSON.parse(localStorage.getItem('swapId'))
+
+    if (lsSwapId === null || lsSwapId.length === 0) {
+      return
+    }
+
+    const swapsCore = lsSwapId.map((id) => new Swap(id, SwapApp.shared()))
+    console.log('>>>>>',SwapApp.shared().attachedSwaps.items)
+    SwapApp.shared().attachedSwaps.items.forEach((swap) => {
+      const swapState = this.extractSwapStatus(swap)
+      swaps.push(swapState.id)
+      swapsIds[swapState.id] = swapState
+    })
+
+    this.setState({
+      swaps,
+      swapsIds,
+    })
+    //
+    SwapApp.shared().on('swap attached', (data) => {
+      console.log('>>>> SWAP ATTACHED EVENT', data)
+
+
     })
     SwapApp.shared().on('swap enter step', (data) => {
       console.log('>>>> SWAP ENTER STEP', data)
-      actions.core.getSwapHistory()
+
     })
+
   }
 
   componentWillUnmount() {
@@ -65,11 +109,14 @@ class MarketMaker extends Component<any, any> {
   }
 
   render() {
-    const { swapHistory } = this.props
-
+    const {
+      swaps,
+      swapsIds,
+    } = this.state
     const attachedSwaps = SwapApp.shared().attachedSwaps.items
 
-console.log('>>>> swapHistory', swapHistory)
+console.log('>>>> swapHistory', swaps)
+/*
     const swaps = (swapHistory.filter) ? swapHistory.filter((item) => {
       if (item.step >= 1) return true
       if (!item.isFinished) return true
@@ -78,14 +125,12 @@ console.log('>>>> swapHistory', swapHistory)
     }) : []
 
     console.log('>>>>> swapHistory', attachedSwaps)
-
-    const titles = []
-    const activeTab = 0
+    */
 
     return (
       <Fragment>
-        { swaps.length > 0 &&
-          <SwapsHistory orders={swaps} swapRowRender={true} />
+        { swapsIds.length > 0 &&
+          <SwapsHistory swapsIds={swaps} swapsByIds={swapsIds} />
         }
       </Fragment>
     )
