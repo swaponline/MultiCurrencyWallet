@@ -110,6 +110,17 @@ class MarketMaker extends Component<any, any> {
     console.log('>>>> SWAP ENTER STEP', data)
     if (!this._mounted) return
 
+    const { swap } = data
+    const swapState = this.extractSwapStatus(swap)
+    const {
+      swapsByIds,
+    } = this.state
+    this.setState({
+      swapsByIds: {
+        ...swapsByIds,
+        [swapState.id]: swapState
+      }
+    })
   }
 
   onSwapAttachedHandle(data) {
@@ -125,6 +136,7 @@ class MarketMaker extends Component<any, any> {
     } = this.state
 
     if (!swapsByIds[swap.id]) {
+      console.log('>>>>>> NEW SWAP ATTACHED')
       const swapState = this.extractSwapStatus(swap)
       swapsIds.push(swapState.id)
       swapsByIds[swapState.id] = swapState

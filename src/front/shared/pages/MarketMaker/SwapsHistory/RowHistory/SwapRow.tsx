@@ -16,12 +16,52 @@ import { FormattedMessage, injectIntl } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
 import BigNumber from 'bignumber.js'
 
+import SwapApp from 'swap.app'
+
 
 @CSSModules(styles, { allowMultiple: true })
 class SwapRow extends Component<any, any> {
   static propTypes = {
     row: PropTypes.object,
     swapState: PropTypes.object,
+  }
+
+  _mounted = true
+
+  constructor(props) {
+    super(props)
+
+    const {
+      swapState,
+    } = props
+    
+    this.state = {
+      swapState,
+    }
+  }
+
+  extractSwapStatus(swap) {
+    const {
+      id,
+      isMy,
+      isTurbo,
+      buyCurrency,
+      sellCurrency,
+      buyAmount,
+      sellAmount,
+      flow: {
+        state,
+      },
+    } = swap
+    return {
+      id,
+      isMy,
+      buyCurrency,
+      sellCurrency,
+      buyAmount,
+      sellAmount,
+      ...state,
+    }
   }
 
   tryRefund = (timeLeft) => {
@@ -76,6 +116,28 @@ class SwapRow extends Component<any, any> {
     actions.modals.close('IncompletedSwaps')
   }
 
+  onSwapEnterStep(data) {
+    if (!this._mounted) return
+
+    const {
+      swap,
+      swap: {
+        id: swapId,
+      }
+    } = data
+    const {
+      swapState: {
+        id: mySwapId,
+      }
+    } = this.state
+    if (mySwapId === swapId) {
+      console.log('>>> ON ENTER MY SWAP STEP')
+      this.setState({
+        swapState: this.extractSwapStatus(swap),
+      })
+    }
+  }
+
   componentDidMount() {
     /*
     const {
@@ -90,15 +152,23 @@ class SwapRow extends Component<any, any> {
 
     this.tryRefund(timeLeft)
     */
+    SwapApp.shared().on('swap enter step', this.onSwapEnterStep.bind(this))
   }
 
+  componentWillUnmount() {
+    console.log('History unmounted')
+    this._mounted = false
+    SwapApp.shared().off('swap enter step', this.onSwapEnterStep)
+  }
   render() {
     const {
       row: swapId,
-      swapState,
       intl: { locale },
     } = this.props
 
+    const {
+      swapState,
+    } = this.state
 /*
     if (row === 'undefined') {
       return null
@@ -118,6 +188,7 @@ class SwapRow extends Component<any, any> {
       id,
       scriptValues,
       isStoppedSwap,
+      step,
     } = swapState
 
     const canBeRefunded = values && scriptBalance > 0
@@ -146,6 +217,12 @@ class SwapRow extends Component<any, any> {
           {isMy
             ? `${sellAmount.toFixed(5)} ${sellCurrency.toUpperCase()}`
             : `${buyAmount.toFixed(5)} ${buyCurrency.toUpperCase()}`}
+        </td>
+        <td>
+          <span>Step</span>
+          <p>
+            {step}
+          </p>
         </td>
         <td>
           <span>You sell</span>
