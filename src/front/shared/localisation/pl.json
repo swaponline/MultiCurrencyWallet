@@ -109,27 +109,6 @@
     ]
   },
   {
-    "id": "Approve70",
-    "message": "Ustaw limit kwoty, który inteligentna umowa swap może odjąć z Twojego konta. Nie zalecamy ustawiania żadnych ograniczeń. ",
-    "files": [
-      "src/front/shared/components/modals/Approve/Approve.tsx"
-    ]
-  },
-  {
-    "id": "Approve73",
-    "message": "Kwota",
-    "files": [
-      "src/front/shared/components/modals/Approve/Approve.tsx"
-    ]
-  },
-  {
-    "id": "Approve80",
-    "message": "Zatwierdź",
-    "files": [
-      "src/front/shared/components/modals/Approve/Approve.tsx"
-    ]
-  },
-  {
     "id": "EthChecker19",
     "message": "Ten token działa w sieci Ethereum. Aby wymienić token musisz posiadać minimum 0.02 ETH w Twoim portfelu",
     "files": [
@@ -723,13 +702,6 @@
     "message": "Dostajesz",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
-    ]
-  },
-  {
-    "id": "Approve66",
-    "message": "Zatwierdź token",
-    "files": [
-      "src/front/shared/components/modals/Approve/Approve.tsx"
     ]
   },
   {

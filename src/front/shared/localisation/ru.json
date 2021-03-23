@@ -109,27 +109,6 @@
     ]
   },
   {
-    "id": "Approve70",
-    "message": "Укажите лимит суммы для Смарт контрактов. Мы не рекомендуем устанавливать какие-либо ограничения. ",
-    "files": [
-      "src/front/shared/components/modals/Approve/Approve.tsx"
-    ]
-  },
-  {
-    "id": "Approve73",
-    "message": "Сумма",
-    "files": [
-      "src/front/shared/components/modals/Approve/Approve.tsx"
-    ]
-  },
-  {
-    "id": "Approve80",
-    "message": "Подтвердить",
-    "files": [
-      "src/front/shared/components/modals/Approve/Approve.tsx"
-    ]
-  },
-  {
     "id": "EthChecker19",
     "message": "Этот Токен работает на сети Ethereum blockchain. Для осуществления операций у Вас должно быть не менее 0.02 ETH на балансе",
     "files": [
@@ -782,13 +761,6 @@
     "message": "Получаете",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
-    ]
-  },
-  {
-    "id": "Approve66",
-    "message": "Подтвердить токен",
-    "files": [
-      "src/front/shared/components/modals/Approve/Approve.tsx"
     ]
   },
   {

@@ -755,10 +755,20 @@ class Exchange extends Component<any, any> {
       isPendingApprove: true,
     }))
 
-    actions.modals.open(constants.modals.Approve, {
-      name: haveCurrency,
-      amount: haveAmount,
-    })
+    actions.token
+      .approve({
+        to: '', // TODO: swap contract address
+        name: haveCurrency,
+        amount: new BigNumber(haveAmount),
+      })
+      .then((response) => {
+        actions.loader.hide()
+        actions.notifications.show(constants.notifications.Message, { message: '' })
+      })
+      .catch((error) => {
+        actions.loader.hide()
+        actions.notifications.show(constants.notifications.Message, { error })
+      })
 
     const receipt = false
 

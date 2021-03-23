@@ -105,27 +105,6 @@
     ]
   },
   {
-    "id": "Approve70",
-    "message": "Please set the amount limit that the swap smart contract can deduct from your account. We do not recommend setting any limits. ",
-    "files": [
-      "src/front/shared/components/modals/Approve/Approve.tsx"
-    ]
-  },
-  {
-    "id": "Approve73",
-    "message": "Amount",
-    "files": [
-      "src/front/shared/components/modals/Approve/Approve.tsx"
-    ]
-  },
-  {
-    "id": "Approve80",
-    "message": "Approve",
-    "files": [
-      "src/front/shared/components/modals/Approve/Approve.tsx"
-    ]
-  },
-  {
     "id": "EthChecker19",
     "message": "This token works on Ethereum blockchain. To swap this token you must have at least 0.02 ETH on your balance",
     "files": [
@@ -691,13 +670,6 @@
     "message": "You get",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
-    ]
-  },
-  {
-    "id": "Approve66",
-    "message": "Approve token",
-    "files": [
-      "src/front/shared/components/modals/Approve/Approve.tsx"
     ]
   },
   {

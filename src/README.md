@@ -735,9 +735,6 @@
 │   │   │   │   ├── AlertWindow
 │   │   │   │   │   ├── index.tsx
 │   │   │   │   │   └── styles.scss
-│   │   │   │   ├── Approve
-│   │   │   │   │   ├── Approve.scss
-│   │   │   │   │   └── Approve.tsx
 │   │   │   │   ├── BtcMultisignConfirmTx
 │   │   │   │   │   ├── BtcMultisignConfirmTx.scss
 │   │   │   │   │   └── BtcMultisignConfirmTx.tsx

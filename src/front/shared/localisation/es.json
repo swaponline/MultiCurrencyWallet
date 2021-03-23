@@ -109,27 +109,6 @@
     ]
   },
   {
-    "id": "Approve70",
-    "message": "Establezca el límite de cantidad que el contrato inteligente de intercambio puede deducir de su cuenta. No recomendamos establecer ningún límite",
-    "files": [
-      "src/front/shared/components/modals/Approve/Approve.tsx"
-    ]
-  },
-  {
-    "id": "Approve73",
-    "message": "Cantidad",
-    "files": [
-      "src/front/shared/components/modals/Approve/Approve.tsx"
-    ]
-  },
-  {
-    "id": "Approve80",
-    "message": "Aprobar",
-    "files": [
-      "src/front/shared/components/modals/Approve/Approve.tsx"
-    ]
-  },
-  {
     "id": "EthChecker19",
     "message": "Este Token funciona sobre la blockchain de Ethereum. Para intercambiar esta moneda debes tener al menos 0.02 ETH en tu cuenta.",
     "files": [
@@ -723,13 +702,6 @@
     "message": "Tu obtienes",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
-    ]
-  },
-  {
-    "id": "Approve66",
-    "message": "Aprobar Token",
-    "files": [
-      "src/front/shared/components/modals/Approve/Approve.tsx"
     ]
   },
   {
