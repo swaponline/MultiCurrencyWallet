@@ -126,13 +126,16 @@ class SwapApp extends EventEmitter {
     return SwapApp._swapAppInstance
   }
 
-  attachSwap(swap: Swap) {
+  attachSwap(swap: Swap): Swap {
     if (!this.attachedSwaps.isExistByKey(swap.id)) {
       this.attachedSwaps.append(swap, swap.id)
 
       this.emit('swap attached', {
         swap,
       })
+      return null
+    } else {
+      return this.attachedSwaps.getByKey(swap.id)
     }
   }
 

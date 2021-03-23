@@ -63,7 +63,12 @@ class Swap {
 
     this.update(data)
 
-    this._attachSwapApp(app)
+    const swapExists = this._attachSwapApp(app)
+    if (swapExists !== null) {
+      // Swap object already created and attached to SwapApp.
+      // Prevent two Swap object - return exists
+      return swapExists
+    }
 
     this.events = new Events()
 
@@ -152,8 +157,8 @@ class Swap {
     return this.flow.isFinished()
   }
 
-  _attachSwapApp(app) {
-    this.app.attachSwap(this)
+  _attachSwapApp(app): Swap {
+    return this.app.attachSwap(this)
   }
 
   _getDataFromOrder(order) {
