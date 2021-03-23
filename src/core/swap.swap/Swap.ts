@@ -31,6 +31,7 @@ class Swap {
   flow: FlowType
 
   constructor(id, app, order?) {
+    SwapApp.required(app)
     this.id                     = null
     this.isMy                   = null
     this.isTurbo                = null
@@ -44,15 +45,13 @@ class Swap {
     this.participantSwap        = null
     this.destinationBuyAddress  = null
     this.destinationSellAddress = null
-    this.app                    = null
+    this.app                    = app
     this.createUnixTimeStamp    = Math.floor(new Date().getTime() / 1000)
 
     this.participantMetamaskAddress = null
 
     // Wait confirm > 1
     this.waitConfirm            = false
-
-    this._attachSwapApp(app)
 
     let data = this.app.env.storage.getItem(`swap.${id}`)
 
@@ -63,6 +62,8 @@ class Swap {
     }
 
     this.update(data)
+
+    this._attachSwapApp(app)
 
     this.events = new Events()
 
@@ -152,9 +153,6 @@ class Swap {
   }
 
   _attachSwapApp(app) {
-    SwapApp.required(app)
-
-    this.app = app
     this.app.attachSwap(this)
   }
 
