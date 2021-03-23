@@ -103,6 +103,7 @@ type ExchangeState = {
   haveBalance: boolean
   isEthToken: boolean
   isPendingApprove: boolean
+  tokenApproved: boolean
 
   isNoAnyOrders?: boolean
   isFullLoadingComplite?: boolean
@@ -283,6 +284,7 @@ class Exchange extends Component<any, any> {
 
     this.state = {
       isEthToken: ethToken.isEthToken({ name: haveCurrency }),
+      tokenApproved: false,
       dynamicFee: 0,
       haveCurrency,
       haveType,
@@ -643,7 +645,6 @@ class Exchange extends Component<any, any> {
       sellCurrency: haveCurrency,
       buyCurrency: getCurrency,
     })
-    // actions.analytics.dataEvent('orderbook-click-createoffer-button')
   }
 
   /* Refactoring
@@ -747,14 +748,22 @@ class Exchange extends Component<any, any> {
     return true
   }
 
-  approveTheToken = () => {
+  approveTheToken = async () => {
+    const { haveCurrency, haveAmount } = this.state
+
     this.setState(() => ({
       isPendingApprove: true,
     }))
 
-    // ...
+    actions.modals.open(constants.modals.Approve, {
+      name: haveCurrency,
+      amount: haveAmount,
+    })
+
+    const receipt = false
 
     this.setState(() => ({
+      tokenApproved: !!receipt,
       isPendingApprove: false,
     }))
   }
@@ -1353,6 +1362,7 @@ class Exchange extends Component<any, any> {
 
     const {
       isEthToken,
+      tokenApproved,
       haveCurrency,
       haveType,
       getCurrency,
@@ -1738,8 +1748,8 @@ class Exchange extends Component<any, any> {
                 pending={isPendingApprove}
                 blue={true}
               >
-                {linked.haveAmount.value > 0 
-                  ? false // TODO: approved
+                {linked.haveAmount.value > 0
+                  ? tokenApproved
                     ? <FormattedMessage id="partial541" defaultMessage="Exchange now" />
                     : <FormattedMessage id="FormattedMessageIdApprove" defaultMessage="Approve" />
                   : <FormattedMessage id="enterYouSend" defaultMessage='Enter "You send" amount' />

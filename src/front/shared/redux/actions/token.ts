@@ -228,14 +228,21 @@ const withToken = (name) => {
   return { contractAddress, tokenContract, decimals, toWei, fromWei }
 }
 
-//@ts-ignore
-const fetchFees = async ({ gasPrice, gasLimit, speed } = {}) => {
-  gasPrice = gasPrice || await helpers.ethToken.estimateGasPrice({ speed })
-  gasLimit = gasLimit || constants.defaultFeeRates.ethToken.limit.send
+
+type FetchFeesParams = {
+  gasPrice: number
+  gasLimit: number
+  speed: string
+}
+
+const fetchFees = async (params: FetchFeesParams) => {
+  const { gasPrice, gasLimit, speed } = params
+  const newGasPrice = gasPrice || await helpers.ethToken.estimateGasPrice({ speed })
+  const newGasLimit = gasLimit || constants.defaultFeeRates.ethToken.limit.send
 
   return {
-    gas: gasLimit,
-    gasPrice,
+    gas: newGasLimit,
+    gasPrice: newGasPrice,
   }
 }
 
@@ -252,13 +259,28 @@ const getLinkToInfo = (tx) => {
 
   return `${config.link.etherscan}/tx/${tx}`
 }
-//@ts-ignore
-const sendTransaction = ({ contract, method }, { args, params = {} } = {}, callback) =>
-  new Promise(async (resolve, reject) => {
-    const receipt = await contract.methods[method](...args).send(params)
+
+type SendTransactionParams = {
+  contract: any // FIXME:
+  method: string
+  to: string
+  amount: number
+  feeResult: any // FIXME:
+}
+
+const sendTransaction = (params: SendTransactionParams): Promise<string> => {
+  const { contract, method, to, amount, feeResult } = params
+
+  console.group('%c Actions > token sendTransaction', 'color: yellow;')
+  console.log('params: ', params)
+  console.groupEnd()
+
+  return new Promise(async (resolve, reject) => {
+    const receipt = await contract.methods[method](...[to, amount]).send(feeResult)
       .on('transactionHash', (hash) => {
-        // eslint-disable-next-line
-        callback && callback(hash)
+        console.group('Actions > %c token - sendTransaction', 'color: green;')
+        console.log('hash: ', hash)
+        console.groupEnd()
       })
       .catch((error) => {
         reject(error)
@@ -266,6 +288,8 @@ const sendTransaction = ({ contract, method }, { args, params = {} } = {}, callb
 
     resolve(receipt)
   })
+}
+  
 
 const send = (data) => (hasAdminFee) ? sendWithAdminFee(data) : sendDefault(data)
 //@ts-ignore
@@ -335,14 +359,6 @@ const sendDefault = async ({ name, from, to, amount, ...feeConfig } = {}) => {
   const newAmount = toWei(amount)
   const callMethod = { contract: tokenContract, method: 'transfer' }
 
-  // return sendTransaction(
-  //   { contract: tokenContract, method: 'transfer' },
-  //   { args: [ to, newAmount ], params },
-  //   (hash) => {
-  //     const txId = `${config.link.etherscan}/tx/${hash}`
-  //     actions.loader.show(true, { txId })
-  //   })
-
   return new Promise(async (resolve, reject) => {
     const receipt = await tokenContract.methods.transfer(to, newAmount).send(params)
       .on('transactionHash', (hash) => {
@@ -356,17 +372,31 @@ const sendDefault = async ({ name, from, to, amount, ...feeConfig } = {}) => {
     resolve(receipt)
   })
 }
-//@ts-ignore
-const approve = async ({ name, to, amount, ...feeConfig } = {}) => {
-  const { tokenContract, toWei } = withToken(name)
-  //@ts-ignore
-  const params = await fetchFees({ ...feeConfig })
 
-  const newAmount = toWei(amount)
-//@ts-ignore
-  return sendTransaction(
-    { contract: tokenContract, method: 'approve' },
-    { args: [to, newAmount], params })
+type ApproveParams = {
+  name: string
+  to: string
+  amount: BigNumber
+}
+
+const approve = async (params: ApproveParams): Promise<any> => {
+  console.group('%c Actions > token approve', 'color: yellow;')
+  console.log('params: ', params)
+  console.groupEnd()
+
+  const { name, to, amount, ...args } = params
+  const { tokenContract, toWei } = withToken(name)
+  //@ts-ignore FIXME:
+  const feeResult = await fetchFees({ ...args })
+  const weiAmount = toWei(amount)
+
+  return sendTransaction({
+    contract: tokenContract,
+    method: 'approve',
+    to,
+    amount: weiAmount,
+    feeResult,
+  })
 }
 
 const setAllowanceForToken = async ({ name, to, targetAllowance, ...config }) => {
