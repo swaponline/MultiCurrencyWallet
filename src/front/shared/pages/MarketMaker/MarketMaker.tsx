@@ -108,7 +108,6 @@ class MarketMaker extends Component<any, any> {
     this.setState({
       swapsIds,
       swapsByIds,
-      swapsCount: swapsIds.length,
     })
 
     //
@@ -179,7 +178,8 @@ class MarketMaker extends Component<any, any> {
       swapsByIds,
     } = this.state
 
-
+console.log('>>>>>> swapsByIds', swapsByIds)
+console.log('>>>>>> swapsIds', swapsIds)
 /*
     const swaps = (swapHistory.filter) ? swapHistory.filter((item) => {
       if (item.step >= 1) return true
@@ -204,7 +204,7 @@ class MarketMaker extends Component<any, any> {
           reverseRender={true}
           rowRender={(swapId, index) => (
             <SwapRow
-              key={index}
+              key={swapId}
               row={swapId}
               swapState={swapsByIds[swapId]}
             />
