@@ -84,7 +84,7 @@ const fetch = (address) => {
   const { user: { btcData } } = getState()
   const holderKey = btcData.publicKey.toString('hex')
 
-  let firstPending = false
+  let firstPending: {address: any, item: any} | boolean = false
   let pengingCount = 0
 
   return apiLooper.post('multisig', `/txs/`, {
