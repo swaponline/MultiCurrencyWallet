@@ -19,6 +19,17 @@ import links from 'helpers/links'
 
 import SwapsHistory from './SwapsHistory/SwapsHistory'
 
+
+
+// -----------
+import Table from 'components/tables/Table/Table'
+//import styles from 'components/tables/Table/Table.scss'
+import SwapRow from './SwapsHistory/RowHistory/SwapRow'
+// -----------
+
+
+
+
 @CSSModules(stylesHere, { allowMultiple: true })
 class MarketMaker extends Component<any, any> {
   _mounted = true
@@ -42,7 +53,6 @@ class MarketMaker extends Component<any, any> {
       page,
       swapsIds: [],
       swapsByIds: {},
-      swapsCount: 0,
     }
   }
 
@@ -138,13 +148,18 @@ class MarketMaker extends Component<any, any> {
     if (!swapsByIds[swap.id]) {
       console.log('>>>>>> NEW SWAP ATTACHED')
       const swapState = this.extractSwapStatus(swap)
-      swapsIds.push(swapState.id)
-      swapsByIds[swapState.id] = swapState
+      //swapsIds.push(swapState.id)
+      //swapsByIds[swapState.id] = swapState
 
       this.setState({
-        swapsIds,
-        swapsByIds,
-        swapsCount: swapsIds.length,
+        swapsIds: [
+          ...swapsIds,
+          ...[swapState.id],
+        ],
+        swapsByIds: {
+          ...swapsByIds,
+          [swapState.id]: swapState,
+        },
       })
     } else {
       console.log('swap attached')
@@ -162,11 +177,9 @@ class MarketMaker extends Component<any, any> {
     const {
       swapsIds,
       swapsByIds,
-      swapsCount,
     } = this.state
 
-    const renderSwapIds = swapsIds.reverse()
-console.log('>>>> swapHistory', swapsCount)
+
 /*
     const swaps = (swapHistory.filter) ? swapHistory.filter((item) => {
       if (item.step >= 1) return true
@@ -180,9 +193,23 @@ console.log('>>>> swapHistory', swapsCount)
 
     return (
       <Fragment>
-        { renderSwapIds.length > 0 &&
-          <SwapsHistory swapsCount={swapsCount} swapsIds={renderSwapIds} swapsByIds={swapsByIds} />
+      {/*
+        { swapsIds.length > 0 &&
+          <SwapsHistory swapsIds={swapsIds.reverse()} swapsByIds={swapsByIds} />
         }
+      */}
+        <Table
+          id="table-history"
+          rows={swapsIds}
+          reverseRender={true}
+          rowRender={(swapId, index) => (
+            <SwapRow
+              key={index}
+              row={swapId}
+              swapState={swapsByIds[swapId]}
+            />
+          )}
+        />
       </Fragment>
     )
   }

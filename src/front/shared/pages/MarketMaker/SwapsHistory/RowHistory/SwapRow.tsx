@@ -160,6 +160,7 @@ class SwapRow extends Component<any, any> {
     this._mounted = false
     SwapApp.shared().off('swap enter step', this.onSwapEnterStep)
   }
+
   render() {
     const {
       row: swapId,
@@ -196,11 +197,10 @@ class SwapRow extends Component<any, any> {
 
     const date = Date.now() / 1000
 
-    if (!values) {
-      return
+    let lockDateAndTime = null
+    if (values) {
+      lockDateAndTime = moment.unix(values.lockTime || date).format('HH:mm:ss DD/MM/YYYY')
     }
-
-    const lockDateAndTime = moment.unix(values.lockTime || date).format('HH:mm:ss DD/MM/YYYY')
 
     const swapUri = isTurbo ?
       `${links.turboSwap}/${id}`
@@ -232,9 +232,13 @@ class SwapRow extends Component<any, any> {
         </td>
         <td>
           <span>Lock time</span>
-          {lockDateAndTime.split(' ').map((item, key) => (
-            <Fragment key={key}> {item}</Fragment>
-          ))}
+          {(lockDateAndTime !== null) && (
+            <Fragment>
+              {lockDateAndTime.split(' ').map((item, key) => (
+                <Fragment key={key}> {item}</Fragment>
+              ))}
+            </Fragment>
+          )}
         </td>
         <td>
           <span>Status</span>

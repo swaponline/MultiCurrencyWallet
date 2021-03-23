@@ -19,27 +19,15 @@ export default class SwapsHistory extends PureComponent<any, any> {
   constructor(props) {
     super(props)
 
-    const {
-      swapsCount,
-    } = props
-
-    this.state = {
-      swapsCount,
-    }
   }
 
-  componentDidUpdate(prevProps) {
-    const {
-      swapsCount: prevSwapsCount,
-    } = prevProps
-    const {
-      swapsCount,
-    } = this.props
-    if (prevSwapsCount !== swapsCount) {
-      console.log('>>>> List updated')
-      this.setState({
-        swapsCount,
-      })
+
+  shouldComponentUpdate(nextProps, nextState) {
+    const { swapsIds, swapsByIds, swapsCount } = this.props
+
+    if (swapsIds !== nextProps.swapsIds || swapsByIds !== nextProps.swapsByIds || swapsCount !== nextProps.swapsCount) {
+      console.log('>>>> RE-RENDER SwapsHistory BY CHANGE PROPS')
+      return true
     }
   }
 
@@ -48,11 +36,7 @@ export default class SwapsHistory extends PureComponent<any, any> {
       swapsIds,
       swapsByIds,
     } = this.props
-    const {
-      swapsCount,
-    } = this.state
 
-    console.log('>>> Render SwapsHistory', swapsCount)
     if (swapsIds === null || swapsIds.length === 0) {
       return null
     }
@@ -66,7 +50,6 @@ export default class SwapsHistory extends PureComponent<any, any> {
           id="table-history"
           className={styles.historySwap}
           rows={swapsIds}
-          count={swapsCount}
           rowRender={(swapId, index) => (
             <SwapRow
               key={index}
