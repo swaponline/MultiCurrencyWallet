@@ -17,10 +17,13 @@ type TableProps = {
   textIfEmpty?: JSX.Element
   loadingText?: JSX.Element
   titles?: (string | JSX.Element)[]
+
+  count?: number
 }
 
 type TableState = {
   selectId: number
+  count?: number
 }
 
 @CSSModules(styles, { allowMultiple: true })
@@ -38,8 +41,13 @@ export default class Table extends React.Component<TableProps, TableState> {
   constructor(props) {
     super(props)
 
+    const {
+      count = 0,
+    } = props
+
     this.state = {
       selectId: 0,
+      count,
     }
   }
 
@@ -72,7 +80,9 @@ export default class Table extends React.Component<TableProps, TableState> {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    const { rows, isLoading } = this.props
+    const { rows, isLoading, count } = this.props
+
+    if (count !== nextProps.count) return true
     return isLoading !== nextProps.isLoading || rows !== nextProps.rows || this.state.selectId !== nextState.selectId
   }
 

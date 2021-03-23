@@ -21,9 +21,11 @@ import BigNumber from 'bignumber.js'
 class SwapRow extends Component<any, any> {
   static propTypes = {
     row: PropTypes.object,
+    swapState: PropTypes.object,
   }
 
   tryRefund = (timeLeft) => {
+    /*
     const {
       row: { id },
     } = this.props
@@ -67,12 +69,15 @@ class SwapRow extends Component<any, any> {
     } catch (err) {
       console.error(`RefundError`, err)
     }
+    */
   }
 
   closeIncompleted = () => {
     actions.modals.close('IncompletedSwaps')
   }
+
   componentDidMount() {
+    /*
     const {
       utxoScriptValues: values,
     } = this.props.row
@@ -84,17 +89,20 @@ class SwapRow extends Component<any, any> {
     const timeLeft = lockTime - Date.now()
 
     this.tryRefund(timeLeft)
+    */
   }
 
   render() {
     const {
-      row,
+      row: swapId,
+      swapState,
       intl: { locale },
     } = this.props
 
+/*
     if (row === 'undefined') {
       return null
-    }
+    }*/
 
     let {
       buyAmount,
@@ -110,7 +118,7 @@ class SwapRow extends Component<any, any> {
       id,
       scriptValues,
       isStoppedSwap,
-    } = row
+    } = swapState
 
     const canBeRefunded = values && scriptBalance > 0
     const isDeletedSwap = isFinished || isRefunded || isStoppedSwap
@@ -134,7 +142,7 @@ class SwapRow extends Component<any, any> {
     return (
       <tr key={id}>
         <td>
-          <span>(this) You buy</span>
+          <span>You buy</span>
           {isMy
             ? `${sellAmount.toFixed(5)} ${sellCurrency.toUpperCase()}`
             : `${buyAmount.toFixed(5)} ${buyCurrency.toUpperCase()}`}
@@ -157,12 +165,12 @@ class SwapRow extends Component<any, any> {
             className={cx({
               [styles.statusFinished]: isFinished,
               [styles.statusRefunded]: isRefunded,
-              [styles.statusStopped]: isStoppedSwap,
+              [styles.statusStopped]: !isFinished && isStoppedSwap,
             })}
           >
             {isFinished && <FormattedMessage id="RowHistory94" defaultMessage="Finished" />}
             {isRefunded && <FormattedMessage id="RowHistory77" defaultMessage="Refunded" />}
-            {isStoppedSwap && <FormattedMessage id="RowHistory139" defaultMessage="Stopped" />}
+            {!isFinished && isStoppedSwap && <FormattedMessage id="RowHistory139" defaultMessage="Stopped" />}
             {!isDeletedSwap &&
               (canBeRefunded ? (
                 <Timer lockTime={values.lockTime * 1000} enabledButton={this.tryRefund} />
@@ -172,7 +180,6 @@ class SwapRow extends Component<any, any> {
           </p>
         </td>
         <td>
-          <span>Link</span>
           <Link to={swapUri} onClick={this.closeIncompleted}>
             <FormattedMessage id="RowHistory91" defaultMessage="Link" />
           </Link>

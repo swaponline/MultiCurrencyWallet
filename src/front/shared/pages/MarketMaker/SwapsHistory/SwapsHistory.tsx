@@ -16,15 +16,44 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 @CSSModules({ ...styles, ...stylesSwaps }, { allowMultiple: true })
 export default class SwapsHistory extends PureComponent<any, any> {
-
-  render() {
-    let { orders } = this.props
+  constructor(props) {
+    super(props)
 
     const {
-      swapRowRender = false,
-    } = this.props
+      swapsCount,
+    } = props
 
-    if (orders === null || orders.length === 0) {
+    this.state = {
+      swapsCount,
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    const {
+      swapsCount: prevSwapsCount,
+    } = prevProps
+    const {
+      swapsCount,
+    } = this.props
+    if (prevSwapsCount !== swapsCount) {
+      console.log('>>>> List updated')
+      this.setState({
+        swapsCount,
+      })
+    }
+  }
+
+  render() {
+    let {
+      swapsIds,
+      swapsByIds,
+    } = this.props
+    const {
+      swapsCount,
+    } = this.state
+
+    console.log('>>> Render SwapsHistory', swapsCount)
+    if (swapsIds === null || swapsIds.length === 0) {
       return null
     }
 
@@ -36,18 +65,14 @@ export default class SwapsHistory extends PureComponent<any, any> {
         <Table
           id="table-history"
           className={styles.historySwap}
-          rows={orders.reverse()}
-          rowRender={(row, index) => (
-            (swapRowRender) ?
-              <SwapRow
-                key={index}
-                row={row}
-              />
-              :
-              <RowHistory
-                key={index}
-                row={row}
-              />
+          rows={swapsIds}
+          count={swapsCount}
+          rowRender={(swapId, index) => (
+            <SwapRow
+              key={index}
+              row={swapId}
+              swapState={swapsByIds[swapId]}
+            />
           )}
         />
       </div>

@@ -21,6 +21,7 @@ import SwapsHistory from './SwapsHistory/SwapsHistory'
 
 @CSSModules(stylesHere, { allowMultiple: true })
 class MarketMaker extends Component<any, any> {
+  _mounted = true
 
   constructor(props) {
     super(props)
@@ -39,8 +40,9 @@ class MarketMaker extends Component<any, any> {
 
     this.state = {
       page,
-      swaps: [],
-      swapsIds: {},
+      swapsIds: [],
+      swapsByIds: {},
+      swapsCount: 0,
     }
   }
 
@@ -48,6 +50,7 @@ class MarketMaker extends Component<any, any> {
     const {
       id,
       isMy,
+      isTurbo,
       buyCurrency,
       sellCurrency,
       buyAmount,
@@ -69,8 +72,8 @@ class MarketMaker extends Component<any, any> {
 
   componentDidMount() {
     //
-    const swaps = []
-    const swapsIds = {}
+    const swapsIds = []
+    const swapsByIds = {}
 
 
     const lsSwapId = JSON.parse(localStorage.getItem('swapId'))
@@ -80,42 +83,78 @@ class MarketMaker extends Component<any, any> {
     }
 
     const swapsCore = lsSwapId.map((id) => new Swap(id, SwapApp.shared()))
+
     console.log('>>>>>',SwapApp.shared().attachedSwaps.items)
+
     SwapApp.shared().attachedSwaps.items.forEach((swap) => {
       const swapState = this.extractSwapStatus(swap)
-      swaps.push(swapState.id)
-      swapsIds[swapState.id] = swapState
+      swapsIds.push(swapState.id)
+      swapsByIds[swapState.id] = swapState
     })
+
+    SwapApp.shared().on('swap attached', this.onSwapAttachedHandle.bind(this))
+    SwapApp.shared().on('swap enter step', this.onSwapEnterStep.bind(this))
 
     this.setState({
-      swaps,
       swapsIds,
+      swapsByIds,
+      swapsCount: swapsIds.length,
     })
+
     //
-    SwapApp.shared().on('swap attached', (data) => {
-      console.log('>>>> SWAP ATTACHED EVENT', data)
+    
 
+  }
 
-    })
-    SwapApp.shared().on('swap enter step', (data) => {
-      console.log('>>>> SWAP ENTER STEP', data)
+  onSwapEnterStep(data) {
+    console.log('>>>> SWAP ENTER STEP', data)
+    if (!this._mounted) return
 
-    })
+  }
 
+  onSwapAttachedHandle(data) {
+    console.log('>>>> SWAP ATTACHED EVENT', data)
+    if (!this._mounted) return
+    const {
+      swap,
+    } = data
+
+    const {
+      swapsIds,
+      swapsByIds,
+    } = this.state
+
+    if (!swapsByIds[swap.id]) {
+      const swapState = this.extractSwapStatus(swap)
+      swapsIds.push(swapState.id)
+      swapsByIds[swapState.id] = swapState
+
+      this.setState({
+        swapsIds,
+        swapsByIds,
+        swapsCount: swapsIds.length,
+      })
+    } else {
+      console.log('swap attached')
+    }
   }
 
   componentWillUnmount() {
     console.log('History unmounted')
+    this._mounted = false
+    SwapApp.shared().off('swap attached', this.onSwapAttachedHandle)
+    SwapApp.shared().off('swap enter step', this.onSwapEnterStep)
   }
 
   render() {
     const {
-      swaps,
       swapsIds,
+      swapsByIds,
+      swapsCount,
     } = this.state
-    const attachedSwaps = SwapApp.shared().attachedSwaps.items
 
-console.log('>>>> swapHistory', swaps)
+    const renderSwapIds = swapsIds.reverse()
+console.log('>>>> swapHistory', swapsCount)
 /*
     const swaps = (swapHistory.filter) ? swapHistory.filter((item) => {
       if (item.step >= 1) return true
@@ -129,8 +168,8 @@ console.log('>>>> swapHistory', swaps)
 
     return (
       <Fragment>
-        { swapsIds.length > 0 &&
-          <SwapsHistory swapsIds={swaps} swapsByIds={swapsIds} />
+        { renderSwapIds.length > 0 &&
+          <SwapsHistory swapsCount={swapsCount} swapsIds={renderSwapIds} swapsByIds={swapsByIds} />
         }
       </Fragment>
     )

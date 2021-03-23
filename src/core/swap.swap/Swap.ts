@@ -121,6 +121,10 @@ class Swap {
         swap: this,
       })
     })
+
+    this.app.emit('swap attached', {
+      swap: this,
+    })
   }
 
 /* static read(app, { id }) {
