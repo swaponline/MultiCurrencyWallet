@@ -209,7 +209,11 @@ const estimateFeeValue = async (options: EstimateFeeValueOptions): Promise<any> 
     },
   } = getState()
 
-  const txOutputs = hasAdminFee ? 3 : 2
+  const txOutputs = hasAdminFee
+    ? method === 'send'
+      ? 3
+      : 2
+    : 2
 
   if (!address) {
     address = btcData.address
