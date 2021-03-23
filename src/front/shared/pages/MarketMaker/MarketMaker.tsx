@@ -67,7 +67,7 @@ class MarketMaker extends Component<any, any> {
   render() {
     const { swapHistory } = this.props
 
-    const attachedSwaps = SwapApp.shared().attachedSwaps
+    const attachedSwaps = SwapApp.shared().attachedSwaps.items
 
 console.log('>>>> swapHistory', swapHistory)
     const swaps = (swapHistory.filter) ? swapHistory.filter((item) => {
@@ -77,7 +77,7 @@ console.log('>>>> swapHistory', swapHistory)
       return false
     }) : []
 
-    console.log('>>>>> swapHistory', swapHistory, swaps)
+    console.log('>>>>> swapHistory', attachedSwaps)
 
     const titles = []
     const activeTab = 0
