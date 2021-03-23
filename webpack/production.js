@@ -59,12 +59,14 @@ export default (webpackConfig) => {
   webpackConfig.devtool = false
 
   webpackConfig.plugins.push(
+  /*
     new webpack.SourceMapDevToolPlugin({
       publicPath: config.publicPath,
       filename: '[name].js.map',
       fileContext: 'public',
       exclude: ['vendor.js'],
     }),
+    */
     new WebpackRequireFrom({
       variableName: 'publicUrl',
       suppressErrors: true, 
