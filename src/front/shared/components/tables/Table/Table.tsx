@@ -18,12 +18,11 @@ type TableProps = {
   loadingText?: JSX.Element
   titles?: (string | JSX.Element)[]
 
-  count?: number
+  reverseRender?: boolean
 }
 
 type TableState = {
   selectId: number
-  count?: number
 }
 
 @CSSModules(styles, { allowMultiple: true })
@@ -41,13 +40,8 @@ export default class Table extends React.Component<TableProps, TableState> {
   constructor(props) {
     super(props)
 
-    const {
-      count = 0,
-    } = props
-
     this.state = {
       selectId: 0,
-      count,
     }
   }
 
@@ -80,15 +74,24 @@ export default class Table extends React.Component<TableProps, TableState> {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    const { rows, isLoading, count } = this.props
+    const { rows, isLoading} = this.props
 
-    if (count !== nextProps.count) return true
     return isLoading !== nextProps.isLoading || rows !== nextProps.rows || this.state.selectId !== nextState.selectId
   }
 
   render() {
-    const { titles, rows, rowRender, textIfEmpty, isLoading, loadingText, className } = this.props
+    const {
+      titles,
+      rows,
+      rowRender,
+      textIfEmpty,
+      isLoading,
+      loadingText,
+      className,
+      reverseRender,
+    } = this.props
 
+    const renderRows = (reverseRender) ? rows.reverse() : rows
     return (
       <table styleName={`table ${isDark ? 'dark' : ''}`} className={`table ${className}`} ref={(table) => this.linkOnTable = table}>
         <thead ref={(thead) => this.linkOnTableHead = thead}>
