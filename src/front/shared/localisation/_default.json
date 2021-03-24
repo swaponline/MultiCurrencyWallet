@@ -379,13 +379,6 @@
     ]
   },
   {
-    "id": "RowM166",
-    "message": "Start",
-    "files": [
-      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
-    ]
-  },
-  {
     "id": "NotFound8",
     "message": "Page not found! ",
     "files": [

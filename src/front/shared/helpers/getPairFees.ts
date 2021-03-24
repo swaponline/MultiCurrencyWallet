@@ -18,7 +18,7 @@ type CoinFee = {
   isUTXO: boolean
 }
 
-type PairFees = {
+export interface IPairFees {
   sell: CoinFee
   buy: CoinFee
   have: CoinFee
@@ -152,7 +152,7 @@ type PairFeesParams = {
   updateCacheValue?: boolean
 }
 
-export const getPairFees = (params: PairFeesParams): Promise<PairFees> => {
+export const getPairFees = (params: PairFeesParams): Promise<IPairFees> => {
   const { sellCurrency, buyCurrency, updateCacheValue = false } = params
 
   return new Promise(async (feeResolved) => {

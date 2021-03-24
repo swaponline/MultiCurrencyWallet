@@ -1,35 +1,34 @@
 import React, { Component, Fragment } from 'react'
-
+import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
+import cssModules from 'react-css-modules'
+import { Link } from 'react-router-dom'
 import { connect } from 'redaction'
 import actions from 'redux/actions'
-
-import cssModules from 'react-css-modules'
 import styles from './Row.scss'
 
-import helpers, { links, constants } from 'helpers'
-import { Link } from 'react-router-dom'
-import SwapApp from 'swap.app'
+import helpers, { links, constants, ethToken } from 'helpers'
+import { IPairFees } from 'helpers/getPairFees'
+import PAIR_TYPES from 'helpers/constants/PAIR_TYPES'
+import { localisedUrl } from 'helpers/locale'
+import feedback from 'helpers/feedback'
+import { BigNumber } from 'bignumber.js'
 
 import Avatar from 'components/Avatar/Avatar'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import { RemoveButton } from 'components/controls'
+import TurboIcon from 'components/ui/TurboIcon/TurboIcon'
 
 import Pair from './../../Pair'
-import PAIR_TYPES from 'helpers/constants/PAIR_TYPES'
 import RequestButton from '../RequestButton/RequestButton'
-import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
-import { localisedUrl } from 'helpers/locale'
-import { BigNumber } from 'bignumber.js'
-import feedback from 'shared/helpers/feedback'
-import TurboIcon from 'shared/components/ui/TurboIcon/TurboIcon'
+import SwapApp from 'swap.app'
 
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 type RowProps = {
-  history: { [key: string]: any }
+  history: IUniversalObj
   balances: { [key: string]: number } | boolean
-  pairFees: any
+  pairFees: IPairFees
   decline: any[]
   orderId: string
   linkedOrderId: string
@@ -44,14 +43,14 @@ type RowProps = {
     sellAmount: BigNumber
     isRequested: boolean
     isProcessing: boolean
-    owner: { [key: string]: any }
+    owner: IUniversalObj
   }
 
   removeOrder: (number) => void
   checkSwapAllow: ({}) => boolean
 
-  currenciesData?: { [key: string]: any }
-  intl?: { [key: string]: any }
+  currenciesData?: IUniversalObj
+  intl?: IUniversalObj
   peer?: string
 }
 
@@ -70,11 +69,8 @@ type RowState = {
 }))
 
 @cssModules(styles, { allowMultiple: true })
-class Row extends Component {
+class Row extends Component<RowProps, RowState> {
   _mounted = false
-
-  props: RowProps
-  state: RowState
 
   constructor(props) {
     super(props)
@@ -96,7 +92,13 @@ class Row extends Component {
       balances,
     } = this.props
 
-    const balanceCheckCur = (isMy) ? sellCurrency : buyCurrency
+    // TODO: the tracker has the wrong currency order
+
+    let balanceCheckCur = isMy ? sellCurrency : buyCurrency
+    // for tokens the same balance of the ether
+    if (ethToken.isEthToken({ name: balanceCheckCur })) {
+      balanceCheckCur = 'ETH'
+    }
 
     return (balances && balances[balanceCheckCur]) ? balances[balanceCheckCur] : 0
   }
@@ -277,7 +279,6 @@ class Row extends Component {
       orderId,
       removeOrder,
       linkedOrderId,
-      intl: { locale },
       pairFees,
     } = this.props
 
@@ -295,7 +296,6 @@ class Row extends Component {
     const costs = (buyCurrencyFee) ? new BigNumber(buyAmount).plus(buyCurrencyFee) : buyAmount
 
     let isSwapButtonEnabled = new BigNumber(balance).isGreaterThanOrEqualTo(costs)
-    // @ToDo - Tokens - need eth balance for fee
 
     let sellCurrencyOut,
       sellAmountOut,
@@ -382,6 +382,7 @@ class Row extends Component {
                     <div style={{ color: 'red' }}>
                       <FormattedMessage id="Row148" defaultMessage="REQUESTING" />
                     </div>
+                    {' '}
                     <Link to={swapUri}>
                       <FormattedMessage id="Row151" defaultMessage="Go to the swap" />
                     </Link>
@@ -409,9 +410,7 @@ class Row extends Component {
                           () => {}
                         }
                         data={{ type, amount, main, total, base }}
-                      >
-                        <FormattedMessage id="RowM166" defaultMessage="Start" />
-                      </RequestButton>
+                      />
                     )
                   )
                 )
@@ -470,6 +469,7 @@ class Row extends Component {
                           <div style={{ color: 'red' }}>
                             <FormattedMessage id="RowM136" defaultMessage="REQUESTING" />
                           </div>
+                          {' '}
                           <Link to={swapUri}>
                             <FormattedMessage id="RowM139" defaultMessage="Go to the swap" />
                           </Link>
@@ -489,7 +489,6 @@ class Row extends Component {
                               </span>
                             </Fragment>
                           ) : (
-                            //@ts-ignore
                             <RequestButton
                               styleName="startButton"
                               disabled={!isSwapButtonEnabled}

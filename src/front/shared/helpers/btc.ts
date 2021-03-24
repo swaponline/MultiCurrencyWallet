@@ -176,7 +176,6 @@ const calculateTxSize = async (params: CalculateTxSizeParams) => {
   }
 
   console.group('Helpers >%c btc > calculateTxSize', 'color: green;')
-  console.log('unspents: ', unspents)
   console.log('txIn: ', txIn)
   console.log('txOut: ', txOutputs)
   console.log('txSize: ', txSize)
