@@ -48,7 +48,7 @@ const checkCanCreateCurrentOrder = (tickerOrder, orderType) =>
     : tickerOrder[orderType]
 
 const checkHaveSpread = (tickerOrder, orderType) =>
-  tickerOrder[`spread${orderType === 'buy' ? 'Buy' : 'Sell'}`] > 0
+  tickerOrder[`spread${orderType === 'buy' ? 'Buy' : 'Sell'}`] >= 0
     ? true
     : false
 
