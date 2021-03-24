@@ -2,6 +2,7 @@ import localStorage from './localStorage'
 import privateKeyNames from './privateKeyNames'
 import notifications from './notifications'
 import modals from './modals'
+import transaction from './TRANSACTION'
 import tradeTicker from './TRADE_TICKERS'
 import tokenDecimals from './TOKEN_DECIMALS'
 import pairTypes from './PAIR_TYPES'
@@ -14,6 +15,7 @@ import customEcxchangeRate from './customEcxchangeRate'
 
 export default {
   localStorage,
+  transaction,
   tradeTicker,
   privateKeyNames,
   tokenDecimals,

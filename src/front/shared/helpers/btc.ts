@@ -7,7 +7,6 @@ import api from './api'
 import BigNumber from 'bignumber.js'
 import { IBtcUnspent } from 'common/utils/coin/btc'
 
-
 const hasAdminFee = (
   config
     && config.opts
@@ -19,21 +18,6 @@ const hasAdminFee = (
 const network = process.env.MAINNET
   ? bitcoin.networks.bitcoin
   : bitcoin.networks.testnet
-
-/* 
-* Bitcoin dust - small amount of bitcoin that remains in a particular wallet 
-* because the monetary value is so tiny that it is below the amount of the
-* fee required to spend the bitcoin. It makes the transaction impossible 
-* to process
-*
-* Default value:
-* - dustRelayFee (3000 satochi / kb)
-* - output P2PKH
-*/
-const DUST = 546 // satoshi
-const BYTE_INPUT_ADDRESS = 146 // ~ 146 byte
-const BYTE_OUTPUT_ADDRESS = 33 // ~ 33 byte
-const BYTE_TRANSACTION = 15 // ~ 15 byte
 
 // getByteCount({'MULTISIG-P2SH:2-4':45},{'P2PKH':1}) Means "45 inputs of P2SH Multisig and 1 output of P2PKH"
 // getByteCount({'P2PKH':1,'MULTISIG-P2SH:2-3':2},{'P2PKH':2}) means "1 P2PKH input and 2 Multisig P2SH (2 of 3) inputs along with 2 P2PKH outputs"
@@ -130,6 +114,7 @@ const calculateTxSize = async (options: CalculateTxSizeOptions) => {
 
   method = method || 'send'
 
+  const { transaction } = constants
   const defaultTxSize = constants.defaultCurrencyParameters.btc.size[method]
 
   if (fixed) {
@@ -141,21 +126,27 @@ const calculateTxSize = async (options: CalculateTxSizeOptions) => {
   if (amount) {
     unspents = await actions.btc.prepareUnspents({ amount, unspents })
   }
-  /*
-  * Formula with 2 input and 2 output addresses 
-  * (BYTE_INPUT_ADDRESS × 2 ) + (BYTE_OUTPUT_ADDRESS × 2) + BYTE_TRANSACTION
-  */
+ 
   const txIn = unspents.length
-  const txSize = txIn > 0
-    ? txIn * BYTE_INPUT_ADDRESS + txOutputs * BYTE_OUTPUT_ADDRESS + (BYTE_TRANSACTION + txIn - txOutputs)
-    : defaultTxSize
+  let txSize = defaultTxSize
+  // general formula
+  // (<one input size> × <number of inputs>) + (<one output size> × <number of outputs>) + <tx size>
+  if (txIn > 0) {
+    txSize =
+      txIn * transaction.INPUT_ADDRESS_BYTE +
+      txOutputs * transaction.OUTPUT_ADDRESS_BYTE +
+      (transaction.TRANSACTION_BYTE + txIn - txOutputs)
+  }
 
   if (method === 'send_multisig') {
     const msuSize = getByteCount(
       { 'MULTISIG-P2SH-P2WSH:2-2': 1 },
       { 'P2PKH': (hasAdminFee) ? 3 : 2 }
     )
-    const msutxSize = txIn * msuSize + txOutputs * BYTE_OUTPUT_ADDRESS + (BYTE_TRANSACTION + txIn - txOutputs)
+    const msutxSize = 
+      txIn * msuSize +
+      txOutputs * transaction.OUTPUT_ADDRESS_BYTE +
+      (transaction.TRANSACTION_BYTE + txIn - txOutputs)
 
     return msutxSize
   }
@@ -165,7 +156,7 @@ const calculateTxSize = async (options: CalculateTxSizeOptions) => {
       { 'MULTISIG-P2SH-P2WSH:2-3': txIn },
       { 'P2PKH': (hasAdminFee) ? 3 : 2 }
     )
-    console.log('Tx size', msSize)
+
     return msSize
     /*
     const mstxSize = txIn * msSize + txOut * BYTE_OUTPUT_ADDRESS + (BYTE_TRANSACTION + txIn - txOut)
@@ -237,7 +228,7 @@ const estimateFeeValue = async (options: EstimateFeeValueOptions): Promise<any> 
   })
 
   const calculatedFeeValue = BigNumber.maximum(
-    DUST,
+    constants.transaction.DUST_SAT,
     new BigNumber(feeRate)
       .multipliedBy(txSize)
       .div(1024) // divide by one kilobyte
@@ -324,7 +315,7 @@ const estimateFeeRate = async ({ speed = 'fast' } = {}) => {
   const apiSpeed = apiSpeeds[speed] || apiSpeeds.normal
   const apiRate = new BigNumber(apiResult[apiSpeed])
 
-  return apiRate.isGreaterThanOrEqualTo(DUST)
+  return apiRate.isGreaterThanOrEqualTo(constants.transaction.DUST_SAT)
     ? apiRate.toNumber()
     : defaultRate[speed]
 }

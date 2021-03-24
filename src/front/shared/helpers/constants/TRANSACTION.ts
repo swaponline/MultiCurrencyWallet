@@ -1,0 +1,6 @@
+export default Object.freeze({
+  DUST_SAT: 546,
+  INPUT_ADDRESS_BYTE: 146,
+  OUTPUT_ADDRESS_BYTE: 33,
+  TRANSACTION_BYTE: 15,
+})
