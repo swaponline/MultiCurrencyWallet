@@ -103,14 +103,10 @@ const fetch = (address) => {
              )
 
       // @ToDo - (draft) use api request for fetch status of address list
-      let firstPendingTransaction
-        = pendingTransactions.find(
-          ({status}) => status === ITransactionStatus.pending
-        )
-      firstPendingTransaction = firstPendingTransaction ? ({
+      let firstPendingTransaction = pendingTransactions[0] ? ({
         address,
-        item: firstPendingTransaction
-      }) : false;
+        item: pendingTransactions[0]
+      }) : false
 
       const transactions = res.items.map((item) => {
         let { status } = item
