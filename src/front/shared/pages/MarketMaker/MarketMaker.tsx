@@ -144,24 +144,21 @@ class MarketMaker extends Component<any, any> {
       swapsByIds,
     } = this.state
 
+    console.log('swap id', swap.id)
     if (!swapsByIds[swap.id]) {
       console.log('>>>>>> NEW SWAP ATTACHED')
       const swapState = this.extractSwapStatus(swap)
-      //swapsIds.push(swapState.id)
-      //swapsByIds[swapState.id] = swapState
+      swapsIds.push(swapState.id)
 
       this.setState({
-        swapsIds: [
-          ...swapsIds,
-          ...[swapState.id],
-        ],
+        swapsIds,
         swapsByIds: {
           ...swapsByIds,
           [swapState.id]: swapState,
         },
       })
     } else {
-      console.log('swap attached')
+      console.log('>>>>> swap already attached')
     }
   }
 
@@ -200,8 +197,7 @@ console.log('>>>>>> swapsIds', swapsIds)
       */}
         <Table
           id="table-history"
-          rows={swapsIds}
-          reverseRender={true}
+          rows={swapsIds.reverse()}
           rowRender={(swapId, index) => (
             <SwapRow
               key={swapId}

@@ -17,8 +17,6 @@ type TableProps = {
   textIfEmpty?: JSX.Element
   loadingText?: JSX.Element
   titles?: (string | JSX.Element)[]
-
-  reverseRender?: boolean
 }
 
 type TableState = {
@@ -88,10 +86,8 @@ export default class Table extends React.Component<TableProps, TableState> {
       isLoading,
       loadingText,
       className,
-      reverseRender,
     } = this.props
 
-    const renderRows = (reverseRender) ? rows.reverse() : rows
     return (
       <table styleName={`table ${isDark ? 'dark' : ''}`} className={`table ${className}`} ref={(table) => this.linkOnTable = table}>
         <thead ref={(thead) => this.linkOnTableHead = thead}>
