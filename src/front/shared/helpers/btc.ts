@@ -41,18 +41,18 @@ const getByteCount = (inputs, outputs) => {
   // assumes compressed pubkeys in all cases.
   const types = {
     'inputs': {
-      'MULTISIG-P2SH': 49 * 4,
-      'MULTISIG-P2WSH': 6 + (41 * 4),
-      'MULTISIG-P2SH-P2WSH': 6 + (76 * 4),
+      'MULTISIG-P2SH': transaction.MULTISIG_P2SH_IN_SIZE * 4,
+      'MULTISIG-P2WSH': transaction.MULTISIG_P2WSH_IN_SIZE + (41 * 4),
+      'MULTISIG-P2SH-P2WSH': transaction.MULTISIG_P2SH_P2WSH_IN_SIZE + (76 * 4),
       'P2PKH': transaction.P2PKH_IN_SIZE * 4,
       'P2WPKH': transaction.P2WPKH_IN_SIZE + (41 * 4),
-      'P2SH-P2WPKH': 108 + (64 * 4),
+      'P2SH-P2WPKH': transaction.P2SH_P2WPKH_IN_SIZE + (64 * 4),
     },
     'outputs': {
-      'P2SH': 32 * 4,
+      'P2SH': transaction.P2SH_OUT_SIZE * 4,
       'P2PKH': transaction.P2PKH_OUT_SIZE * 4,
       'P2WPKH': transaction.P2WPKH_OUT_SIZE * 4,
-      'P2WSH': 43 * 4,
+      'P2WSH': transaction.P2WSH_OUT_SIZE * 4,
     },
   }
 
