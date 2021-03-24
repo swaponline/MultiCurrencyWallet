@@ -92,8 +92,6 @@ class Row extends Component<RowProps, RowState> {
       balances,
     } = this.props
 
-    // TODO: the tracker has the wrong currency order
-
     let balanceCheckCur = isMy ? sellCurrency : buyCurrency
     // for tokens the same balance of the ether
     if (ethToken.isEthToken({ name: balanceCheckCur })) {
