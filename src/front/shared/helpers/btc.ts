@@ -19,6 +19,17 @@ const network = process.env.MAINNET
   ? bitcoin.networks.bitcoin
   : bitcoin.networks.testnet
 
+const reportAboutProblem = (params) => {
+  const { isError = false, info } = params
+
+  console.group(
+    'HELPERS >%c btc.ts',
+    `color: ${isError ? 'red' : 'yellow'};`
+  )
+  isError ? console.error(info) : console.warn(info)
+  console.groupEnd()
+}
+
 // getByteCount({'MULTISIG-P2SH:2-4':45},{'P2PKH':1}) Means "45 inputs of P2SH Multisig and 1 output of P2PKH"
 // getByteCount({'P2PKH':1,'MULTISIG-P2SH:2-3':2},{'P2PKH':2}) means "1 P2PKH input and 2 Multisig P2SH (2 of 3) inputs along with 2 P2PKH outputs"
 const getByteCount = (inputs, outputs) => {
@@ -143,27 +154,29 @@ const calculateTxSize = async (params: CalculateTxSizeParams) => {
       { 'MULTISIG-P2SH-P2WSH:2-2': 1 },
       { 'P2PKH': (hasAdminFee) ? 3 : 2 }
     )
-    const msutxSize =
+    txSize =
       txIn * msuSize +
       txOutputs * transaction.OUTPUT_ADDRESS_BYTE +
       (transaction.TRANSACTION_BYTE + txIn - txOutputs)
-
-    return msutxSize
   }
 
   if (method === 'send_2fa') {
-    const msSize = getByteCount(
+    txSize = getByteCount(
       { 'MULTISIG-P2SH-P2WSH:2-3': txIn },
       { 'P2PKH': (hasAdminFee) ? 3 : 2 }
     )
 
-    return msSize
     /*
-    const mstxSize = txIn * msSize + txOut * BYTE_OUTPUT_ADDRESS + (BYTE_TRANSACTION + txIn - txOut)
-
-    return mstxSize
+    txSize =
+      txIn * msSize +
+      txOutputs * transaction.OUTPUT_ADDRESS_BYTE +
+      (transaction.TRANSACTION_BYTE + txIn - txOutputs)
     */
   }
+
+  console.group('Helpers >%c btc > calculateTxSize', 'color: green;')
+  console.log('txSize: ', txSize)
+  console.groupEnd()
 
   return txSize
 }
@@ -250,6 +263,11 @@ const estimateFeeValue = async (params: EstimateFeeValueParams): Promise<any> =>
       unspents,
     }
   }
+
+  console.group('Helpers >%c btc > estimateFeeValue', 'color: green;')
+  console.log('fee value: ', finalFeeValue)
+  console.groupEnd()
+
   return finalFeeValue
 }
 
@@ -274,7 +292,7 @@ const getFeesRateBlockcypher = async () => {
     // api returns sotoshi in 1 kb
     apiResult = await api.asyncFetchApi(link)
   } catch (err) {
-    console.error(`EstimateFeeRate: ${err.message}`)
+    reportAboutProblem({ info: err })
     return defaultApiSpeeds
   }
 
@@ -302,7 +320,7 @@ const estimateFeeRate = async ({ speed = 'fast' } = {}) => {
     // api returns sotoshi in 1 kb
     apiResult = await api.asyncFetchApi(link)
   } catch (err) {
-    console.error(`EstimateFeeRate: ${err.message}`)
+    reportAboutProblem({ info: err })
     return defaultRate[speed]
   }
 

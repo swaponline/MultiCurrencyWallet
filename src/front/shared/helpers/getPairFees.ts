@@ -172,12 +172,18 @@ export const getPairFees = (params: PairFeesParams): Promise<PairFees> => {
       [sell.coin]: sell,
     }
 
-    feeResolved({
+    const result = {
       sell,
       have: sell,
       buy,
       get: buy,
       byCoins,
-    })
+    }
+
+    console.group('Helpers >%c getPairFees', 'color: green;')
+    console.log('result: ', result)
+    console.groupEnd()
+
+    feeResolved(result)
   })
 }
