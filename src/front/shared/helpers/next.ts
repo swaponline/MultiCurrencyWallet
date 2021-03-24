@@ -6,7 +6,6 @@ import constants from './constants'
 import request from 'common/utils/request'
 import BigNumber from 'bignumber.js'
 
-
 const networks = {
   mainnet: {
     messagePrefix: 'Nextcoin Signed Message:\n',
@@ -122,6 +121,7 @@ const getByteCount = (inputs, outputs) => {
 
 //@ts-ignore
 const calculateTxSize = async ({ speed, unspents, address, txOut = 2, method = 'send', fixed } = {}) => {
+  const { transaction } = constants
   const defaultTxSize = constants.defaultCurrencyParameters.next.size[method]
 
   if (fixed) {
@@ -130,18 +130,25 @@ const calculateTxSize = async ({ speed, unspents, address, txOut = 2, method = '
 
   unspents = unspents || await actions.next.fetchUnspents(address)
 
-
   const txIn = unspents.length
-  const txSize = txIn > 0
-    ? txIn * 146 + txOut * 33 + (15 + txIn - txOut)
-    : defaultTxSize
+  let txSize = defaultTxSize
+
+  if (txIn > 0) {
+    txSize =
+      txIn * transaction.INPUT_ADDRESS_BYTE +
+      txOut * transaction.OUTPUT_ADDRESS_BYTE +
+      (transaction.TRANSACTION_BYTE + txIn - txOut)
+  }
 
   if (method === 'send_multisig') {
     const msuSize = getByteCount(
       { 'MULTISIG-P2SH-P2WSH:2-2': 1 },
       { 'P2PKH': (hasAdminFee) ? 3 : 2 }
     )
-    const msutxSize = txIn * msuSize + txOut * 33 + (15 + txIn - txOut)
+    const msutxSize =
+      txIn * msuSize +
+      txOut * transaction.OUTPUT_ADDRESS_BYTE +
+      (transaction.TRANSACTION_BYTE + txIn - txOut)
 
     return msutxSize
   }
@@ -151,7 +158,10 @@ const calculateTxSize = async ({ speed, unspents, address, txOut = 2, method = '
       { 'MULTISIG-P2SH-P2WSH:2-3': 1 },
       { 'P2PKH': (hasAdminFee) ? 3 : 2 }
     )
-    const mstxSize = txIn * msSize + txOut * 33 + (15 + txIn - txOut)
+    const mstxSize =
+      txIn * msSize +
+      txOut * transaction.OUTPUT_ADDRESS_BYTE +
+      (transaction.TRANSACTION_BYTE + txIn - txOut)
 
     return mstxSize
   }
@@ -179,9 +189,11 @@ const estimateFeeValue = async (options: EstimateFeeValueOptions) => {
     },
   } = getState()
 
-  let txOut = 2
-
-  if (hasAdminFee) txOut = 3
+  const txOut = hasAdminFee
+    ? method === 'send'
+      ? 3
+      : 2
+    : 2
 
   if (!address) {
     address = nextData.address
@@ -201,9 +213,6 @@ const estimateFeeValue = async (options: EstimateFeeValueOptions) => {
       .div(1024) // divide by one kilobyte
       .dp(0, BigNumber.ROUND_HALF_EVEN),
   )
-
-  const CUSTOM_SATOSHI = 20
-  calculatedFeeValue.plus(CUSTOM_SATOSHI) // just wanted to add
 
   const finalFeeValue = inSatoshis
     ? calculatedFeeValue.toString()

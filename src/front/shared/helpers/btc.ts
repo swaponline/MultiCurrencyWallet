@@ -93,7 +93,7 @@ const getByteCount = (inputs, outputs) => {
   return Math.ceil(totalWeight / 4)
 }
 
-type CalculateTxSizeOptions = {
+type CalculateTxSizeParams = {
   amount?: number
   unspents?: any
   address: string
@@ -102,7 +102,7 @@ type CalculateTxSizeOptions = {
   fixed?: boolean
 }
 
-const calculateTxSize = async (options: CalculateTxSizeOptions) => {
+const calculateTxSize = async (params: CalculateTxSizeParams) => {
   let {
     amount,
     unspents,
@@ -110,7 +110,7 @@ const calculateTxSize = async (options: CalculateTxSizeOptions) => {
     txOutputs,
     method,
     fixed,
-  } = options
+  } = params
 
   method = method || 'send'
 
@@ -126,7 +126,7 @@ const calculateTxSize = async (options: CalculateTxSizeOptions) => {
   if (amount) {
     unspents = await actions.btc.prepareUnspents({ amount, unspents })
   }
- 
+
   const txIn = unspents.length
   let txSize = defaultTxSize
   // general formula
@@ -143,7 +143,7 @@ const calculateTxSize = async (options: CalculateTxSizeOptions) => {
       { 'MULTISIG-P2SH-P2WSH:2-2': 1 },
       { 'P2PKH': (hasAdminFee) ? 3 : 2 }
     )
-    const msutxSize = 
+    const msutxSize =
       txIn * msuSize +
       txOutputs * transaction.OUTPUT_ADDRESS_BYTE +
       (transaction.TRANSACTION_BYTE + txIn - txOutputs)
@@ -168,7 +168,7 @@ const calculateTxSize = async (options: CalculateTxSizeOptions) => {
   return txSize
 }
 
-type EstimateFeeValueOptions = {
+type EstimateFeeValueParams = {
   method?: string
   speed: 'fast' | 'normal' | 'slow'
   feeRate?: number
@@ -180,7 +180,7 @@ type EstimateFeeValueOptions = {
   moreInfo?: boolean
 }
 // Returned fee value in the satoshi
-const estimateFeeValue = async (options: EstimateFeeValueOptions): Promise<any> => {
+const estimateFeeValue = async (params: EstimateFeeValueParams): Promise<any> => {
   let { 
     feeRate,
     inSatoshis,
@@ -191,7 +191,7 @@ const estimateFeeValue = async (options: EstimateFeeValueOptions): Promise<any> 
     method,
     amount,
     moreInfo,
-  } = options
+  } = params
   const {
     user: {
       btcData,
