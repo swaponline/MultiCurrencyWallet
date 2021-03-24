@@ -32,7 +32,7 @@ class SwapRow extends Component<any, any> {
     super(props)
 
     const {
-      swapState,
+      row: swapState,
     } = props
     
     this.state = {

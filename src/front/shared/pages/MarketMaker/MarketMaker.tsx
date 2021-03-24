@@ -205,8 +205,7 @@ console.log('>>>>>> swapsIds', swapsIds)
           rowRender={(swapId, index) => (
             <SwapRow
               key={swapId}
-              row={swapId}
-              swapState={swapsByIds[swapId]}
+              row={swapsByIds[swapId]}
             />
           )}
         />
