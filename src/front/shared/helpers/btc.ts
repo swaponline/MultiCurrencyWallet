@@ -33,6 +33,7 @@ const reportAboutProblem = (params) => {
 // getByteCount({'MULTISIG-P2SH:2-4':45},{'P2PKH':1}) Means "45 inputs of P2SH Multisig and 1 output of P2PKH"
 // getByteCount({'P2PKH':1,'MULTISIG-P2SH:2-3':2},{'P2PKH':2}) means "1 P2PKH input and 2 Multisig P2SH (2 of 3) inputs along with 2 P2PKH outputs"
 const getByteCount = (inputs, outputs) => {
+  const { transaction } = constants
   let totalWeight = 0
   let hasWitness = false
   let inputCount = 0
@@ -43,14 +44,14 @@ const getByteCount = (inputs, outputs) => {
       'MULTISIG-P2SH': 49 * 4,
       'MULTISIG-P2WSH': 6 + (41 * 4),
       'MULTISIG-P2SH-P2WSH': 6 + (76 * 4),
-      'P2PKH': 148 * 4,
-      'P2WPKH': 108 + (41 * 4),
+      'P2PKH': transaction.P2PKH_IN_SIZE * 4,
+      'P2WPKH': transaction.P2WPKH_IN_SIZE + (41 * 4),
       'P2SH-P2WPKH': 108 + (64 * 4),
     },
     'outputs': {
       'P2SH': 32 * 4,
-      'P2PKH': 34 * 4,
-      'P2WPKH': 31 * 4,
+      'P2PKH': transaction.P2PKH_OUT_SIZE * 4,
+      'P2WPKH': transaction.P2WPKH_OUT_SIZE * 4,
       'P2WSH': 43 * 4,
     },
   }
@@ -144,9 +145,9 @@ const calculateTxSize = async (params: CalculateTxSizeParams) => {
   // (<one input size> × <number of inputs>) + (<one output size> × <number of outputs>) + <tx size>
   if (txIn > 0) {
     txSize =
-      txIn * transaction.INPUT_ADDRESS_BYTE +
-      txOutputs * transaction.OUTPUT_ADDRESS_BYTE +
-      (transaction.TRANSACTION_BYTE + txIn - txOutputs)
+      txIn * transaction.P2PKH_IN_SIZE +
+      txOutputs * transaction.P2PKH_OUT_SIZE +
+      (transaction.TX_SIZE + txIn - txOutputs)
   }
 
   if (method === 'send_multisig') {
@@ -156,8 +157,8 @@ const calculateTxSize = async (params: CalculateTxSizeParams) => {
     )
     txSize =
       txIn * msuSize +
-      txOutputs * transaction.OUTPUT_ADDRESS_BYTE +
-      (transaction.TRANSACTION_BYTE + txIn - txOutputs)
+      txOutputs * transaction.P2PKH_OUT_SIZE +
+      (transaction.TX_SIZE + txIn - txOutputs)
   }
 
   if (method === 'send_2fa') {
@@ -169,12 +170,15 @@ const calculateTxSize = async (params: CalculateTxSizeParams) => {
     /*
     txSize =
       txIn * msSize +
-      txOutputs * transaction.OUTPUT_ADDRESS_BYTE +
-      (transaction.TRANSACTION_BYTE + txIn - txOutputs)
+      txOutputs * transaction.P2PKH_OUT_SIZE +
+      (transaction.TX_SIZE + txIn - txOutputs)
     */
   }
 
   console.group('Helpers >%c btc > calculateTxSize', 'color: green;')
+  console.log('unspents: ', unspents)
+  console.log('txIn: ', txIn)
+  console.log('txOut: ', txOutputs)
   console.log('txSize: ', txSize)
   console.groupEnd()
 

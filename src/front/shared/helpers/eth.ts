@@ -8,6 +8,17 @@ type EstimateFeeOptions = {
   speed: 'fastest' | 'fast' | 'slow'
 }
 
+const reportAboutProblem = (params) => {
+  const { isError = false, info } = params
+
+  console.group(
+    'HELPERS >%c eth.ts',
+    `color: ${isError ? 'red' : 'yellow'};`
+  )
+  isError ? console.error(info) : console.warn(info)
+  console.groupEnd()
+}
+
 const estimateFeeValue = async (options: EstimateFeeOptions) => {
   const { method, speed } = options
   const gasPrice = await estimateGasPrice({ speed })
@@ -32,7 +43,7 @@ const estimateGasPrice = async ({ speed = 'fast' } = {}) => {
   try {
     apiResult = await api.asyncFetchApi(link)
   } catch (err) {
-    console.error(`EstimateGasPrice: ${err.message}`)
+    reportAboutProblem({ info: err.message })
     return defaultPrice[speed]
   }
 

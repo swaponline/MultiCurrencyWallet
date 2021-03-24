@@ -137,9 +137,9 @@ const calculateTxSize = async ({ speed, unspents, address, txOut = 2, method = '
   
   if (txIn > 0) {
     txSize =
-      txIn * transaction.INPUT_ADDRESS_BYTE +
-      txOut * transaction.OUTPUT_ADDRESS_BYTE +
-      (transaction.TRANSACTION_BYTE + txIn - txOut)
+      txIn * transaction.P2PKH_IN_SIZE +
+      txOut * transaction.P2PKH_OUT_SIZE +
+      (transaction.TX_SIZE + txIn - txOut)
   }
 
   if (method === 'send_multisig') {
@@ -149,8 +149,8 @@ const calculateTxSize = async ({ speed, unspents, address, txOut = 2, method = '
     )
     const msutxSize =
       txIn * msuSize +
-      txOut * transaction.OUTPUT_ADDRESS_BYTE +
-      (transaction.TRANSACTION_BYTE + txIn - txOut)
+      txOut * transaction.P2PKH_OUT_SIZE +
+      (transaction.TX_SIZE + txIn - txOut)
 
     return msutxSize
   }
@@ -162,8 +162,8 @@ const calculateTxSize = async ({ speed, unspents, address, txOut = 2, method = '
     )
     const mstxSize =
       txIn * msSize +
-      txOut * transaction.OUTPUT_ADDRESS_BYTE +
-      (transaction.TRANSACTION_BYTE + txIn - txOut)
+      txOut * transaction.P2PKH_OUT_SIZE +
+      (transaction.TX_SIZE + txIn - txOut)
 
     return mstxSize
   }
