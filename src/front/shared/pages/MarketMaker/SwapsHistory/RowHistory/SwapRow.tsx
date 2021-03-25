@@ -49,6 +49,7 @@ class SwapRow extends Component<any, any> {
       sellCurrency,
       buyAmount,
       sellAmount,
+      createUnixTimeStamp,
       flow: {
         state,
       },
@@ -60,6 +61,7 @@ class SwapRow extends Component<any, any> {
       sellCurrency,
       buyAmount,
       sellAmount,
+      createUnixTimeStamp,
       ...state,
     }
   }
@@ -213,25 +215,21 @@ class SwapRow extends Component<any, any> {
     return (
       <tr key={id}>
         <td>
-          <span>You buy</span>
           {isMy
             ? `${sellAmount.toFixed(5)} ${sellCurrency.toUpperCase()}`
             : `${buyAmount.toFixed(5)} ${buyCurrency.toUpperCase()}`}
         </td>
         <td>
-          <span>Step</span>
           <p>
             {step}
           </p>
         </td>
         <td>
-          <span>You sell</span>
           {isMy
             ? `${buyAmount.toFixed(5)} ${buyCurrency.toUpperCase()}`
             : `${sellAmount.toFixed(5)} ${sellCurrency.toUpperCase()}`}
         </td>
         <td>
-          <span>Lock time</span>
           {(lockDateAndTime !== null) && (
             <Fragment>
               {lockDateAndTime.split(' ').map((item, key) => (
@@ -241,7 +239,6 @@ class SwapRow extends Component<any, any> {
           )}
         </td>
         <td>
-          <span>Status</span>
           <p
             className={cx({
               [styles.statusFinished]: isFinished,

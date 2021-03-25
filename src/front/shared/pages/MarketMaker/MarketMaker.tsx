@@ -33,7 +33,8 @@ import SwapRow from './SwapsHistory/RowHistory/SwapRow'
 @CSSModules(stylesHere, { allowMultiple: true })
 class MarketMaker extends Component<any, any> {
   _mounted = true
-
+  _handleSwapAttachedHandle = null
+  _handleSwapEnterStep = null
   constructor(props) {
     super(props)
 
@@ -47,7 +48,8 @@ class MarketMaker extends Component<any, any> {
       }
     } = props
 
-    
+    this._handleSwapAttachedHandle = this.onSwapAttachedHandle.bind(this)
+    this._handleSwapEnterStep = this.onSwapEnterStep.bind(this)
 
     this.state = {
       page,
@@ -65,6 +67,7 @@ class MarketMaker extends Component<any, any> {
       sellCurrency,
       buyAmount,
       sellAmount,
+      createUnixTimeStamp,
       flow: {
         state,
       },
@@ -76,6 +79,7 @@ class MarketMaker extends Component<any, any> {
       sellCurrency,
       buyAmount,
       sellAmount,
+      createUnixTimeStamp,
       ...state,
     }
   }
@@ -102,8 +106,8 @@ class MarketMaker extends Component<any, any> {
       swapsByIds[swapState.id] = swapState
     })
 
-    SwapApp.shared().on('swap attached', this.onSwapAttachedHandle.bind(this))
-    SwapApp.shared().on('swap enter step', this.onSwapEnterStep.bind(this))
+    SwapApp.shared().on('swap attached', this._handleSwapAttachedHandle)
+    SwapApp.shared().on('swap enter step', this._handleSwapEnterStep)
 
     this.setState({
       swapsIds,
@@ -124,11 +128,9 @@ class MarketMaker extends Component<any, any> {
     const {
       swapsByIds,
     } = this.state
+    swapsByIds[swapState.id] = swapState
     this.setState({
-      swapsByIds: {
-        ...swapsByIds,
-        [swapState.id]: swapState
-      }
+      swapsByIds,
     })
   }
 
@@ -149,13 +151,10 @@ class MarketMaker extends Component<any, any> {
       console.log('>>>>>> NEW SWAP ATTACHED')
       const swapState = this.extractSwapStatus(swap)
       swapsIds.push(swapState.id)
-
+      swapsByIds[swapState.id] = swapState
       this.setState({
         swapsIds,
-        swapsByIds: {
-          ...swapsByIds,
-          [swapState.id]: swapState,
-        },
+        swapsByIds,
       })
     } else {
       console.log('>>>>> swap already attached')
@@ -165,8 +164,8 @@ class MarketMaker extends Component<any, any> {
   componentWillUnmount() {
     console.log('History unmounted')
     this._mounted = false
-    SwapApp.shared().off('swap attached', this.onSwapAttachedHandle)
-    SwapApp.shared().off('swap enter step', this.onSwapEnterStep)
+    SwapApp.shared().off('swap attached', this._handleSwapAttachedHandle)
+    SwapApp.shared().off('swap enter step', this._handleSwapEnterStep)
   }
 
   render() {
@@ -188,6 +187,9 @@ console.log('>>>>>> swapsIds', swapsIds)
     console.log('>>>>> swapHistory', attachedSwaps)
     */
 
+    const sortedSwaps = swapsIds.sort((aId, bId) => {
+      return swapsByIds[bId].createUnixTimeStamp - swapsByIds[aId].createUnixTimeStamp
+    })
     return (
       <Fragment>
       {/*
@@ -195,16 +197,49 @@ console.log('>>>>>> swapsIds', swapsIds)
           <SwapsHistory swapsIds={swapsIds.reverse()} swapsByIds={swapsByIds} />
         }
       */}
+      <table>
+        <thead>
+          <tr>
+            <td>
+              <span>You buy</span>
+            </td>
+            <td>
+              <span>Step</span>
+            </td>
+            <td>
+              <span>You sell</span>
+            </td>
+            <td>
+              <span>Lock time</span>
+            </td>
+            <td>
+              <span>Status</span>
+            </td>
+            <td></td>
+          </tr>
+        </thead>
+        <tbody>
+          {!!sortedSwaps.length && sortedSwaps.map((swapId, rowIndex) => {
+            return (
+              <SwapRow
+                key={swapId}
+                row={swapsByIds[swapId]}
+              />
+            )
+          })}
+          {/*
         <Table
           id="table-history"
-          rows={swapsIds.reverse()}
+          rows={swapsIds}
           rowRender={(swapId, index) => (
             <SwapRow
               key={swapId}
               row={swapsByIds[swapId]}
             />
           )}
-        />
+          />*/}
+          </tbody>
+        </table>
       </Fragment>
     )
   }
