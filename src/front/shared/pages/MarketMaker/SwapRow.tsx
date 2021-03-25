@@ -184,54 +184,65 @@ class SwapRow extends Component<any, any> {
 
     return (
       <tr key={id}>
-        <td>
-          {isMy
-            ? `${sellAmount.toFixed(5)} ${sellCurrency.toUpperCase()}`
-            : `${buyAmount.toFixed(5)} ${buyCurrency.toUpperCase()}`}
-        </td>
-        <td>
-          <p>
-            {step}
-          </p>
-        </td>
-        <td>
-          {isMy
-            ? `${buyAmount.toFixed(5)} ${buyCurrency.toUpperCase()}`
-            : `${sellAmount.toFixed(5)} ${sellCurrency.toUpperCase()}`}
-        </td>
-        <td>
-          {(lockDateAndTime !== null) && (
-            <Fragment>
-              {lockDateAndTime.split(' ').map((item, key) => (
-                <Fragment key={key}> {item}</Fragment>
-              ))}
-            </Fragment>
-          )}
-        </td>
-        <td>
-          <p
-            className={cx({
-              [styles.statusFinished]: isFinished,
-              [styles.statusRefunded]: isRefunded,
-              [styles.statusStopped]: !isFinished && isStoppedSwap,
-            })}
-          >
-            {isFinished && <FormattedMessage id="RowHistory94" defaultMessage="Finished" />}
-            {isRefunded && <FormattedMessage id="RowHistory77" defaultMessage="Refunded" />}
-            {!isFinished && isStoppedSwap && <FormattedMessage id="RowHistory139" defaultMessage="Stopped" />}
-            {!isDeletedSwap &&
-              (canBeRefunded ? (
-                <Timer lockTime={values.lockTime * 1000} enabledButton={this.tryRefund} />
-              ) : (
-                <FormattedMessage id="RowHistory76" defaultMessage="Refund not available" />
-              ))}
-          </p>
-        </td>
-        <td>
-          <Link to={swapUri}>
-            <FormattedMessage id="RowHistory91" defaultMessage="Link" />
-          </Link>
-        </td>
+        {step === 0 && (
+          <Fragment>
+            <td colSpan={6}>
+              prepare swap
+            </td>
+          </Fragment>
+        )}
+        {step > 0 && (
+          <Fragment>
+            <td>
+              {isMy
+                ? `${sellAmount.toFixed(5)} ${sellCurrency.toUpperCase()}`
+                : `${buyAmount.toFixed(5)} ${buyCurrency.toUpperCase()}`}
+            </td>
+            <td>
+              <p>
+                {step}
+              </p>
+            </td>
+            <td>
+              {isMy
+                ? `${buyAmount.toFixed(5)} ${buyCurrency.toUpperCase()}`
+                : `${sellAmount.toFixed(5)} ${sellCurrency.toUpperCase()}`}
+            </td>
+            <td>
+              {(lockDateAndTime !== null) && (
+                <Fragment>
+                  {lockDateAndTime.split(' ').map((item, key) => (
+                    <Fragment key={key}> {item}</Fragment>
+                  ))}
+                </Fragment>
+              )}
+            </td>
+            <td>
+              <p
+                className={cx({
+                  [styles.statusFinished]: isFinished,
+                  [styles.statusRefunded]: isRefunded,
+                  [styles.statusStopped]: !isFinished && isStoppedSwap,
+                })}
+              >
+                {isFinished && <FormattedMessage id="RowHistory94" defaultMessage="Finished" />}
+                {isRefunded && <FormattedMessage id="RowHistory77" defaultMessage="Refunded" />}
+                {!isFinished && isStoppedSwap && <FormattedMessage id="RowHistory139" defaultMessage="Stopped" />}
+                {!isDeletedSwap &&
+                  (canBeRefunded ? (
+                    <Timer lockTime={values.lockTime * 1000} enabledButton={this.tryRefund} />
+                  ) : (
+                    <FormattedMessage id="RowHistory76" defaultMessage="Refund not available" />
+                  ))}
+              </p>
+            </td>
+            <td>
+              <Link to={swapUri}>
+                <FormattedMessage id="RowHistory91" defaultMessage="Link" />
+              </Link>
+            </td>
+          </Fragment>
+        )}
       </tr>
     )
   }

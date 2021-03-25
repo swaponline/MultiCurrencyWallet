@@ -77,7 +77,6 @@ class Header extends Component<any, any> {
   constructor(props) {
     super(props)
 
-    console.log('>>>>>>>>>>> HEADER', props)
     const {
       match: {
         params: { page = null },
@@ -387,18 +386,13 @@ class Header extends Component<any, any> {
       toggle()
     }
 
-    console.log('-Accepting request', link)
-    console.log(`Redirect to swap: ${link}`)
     if ((pathname === links.marketmaker) || (pathname === links.marketmaker_short)) {
-      console.log('>>>> Dont redirect')
       const swap = new Swap(orderId, SwapApp.shared())
       actions.core.rememberSwap(swap)
       window.active_swap = swap
       SwapApp.shared().emit('new swap', {
         swap,
       })
-      console.log(swap)
-      console.log('Swap flow:', swap.flow._flowName)
     } else {
       await history.replace(localisedUrl(locale, link))
       await history.push(localisedUrl(locale, link))
