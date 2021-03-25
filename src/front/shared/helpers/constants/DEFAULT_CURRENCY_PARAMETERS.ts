@@ -2,7 +2,10 @@ export default {
   eth: {
     limit: {
       send: 21 * 1e3,
-      swap: 120 * 1e3,
+      // really used for the swap at the moment:
+      // for deposit: ~49,532
+      // for withdraw: ~54,708
+      swap: 70 * 1e3,
     },
     price: {
       slow: 0.1 * 1e9,
