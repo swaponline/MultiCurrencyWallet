@@ -4,7 +4,7 @@ import { helpers } from 'simple.swap.core'
 
 import { app } from '../../swapApp'
 import { findSwap, swapView, decodeFlow, removeSwap } from '../../helpers'
-import Pair from '../../microbot/Pair'
+import Pair from 'common/Pair'
 
 import * as flows from 'swap.flows'
 import { default as Swap } from 'swap.swap'

@@ -21,7 +21,7 @@ import PageSeo from 'components/Seo/PageSeo'
 import { getSeoPage } from 'helpers/seo'
 
 import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
-import Pair from './../Pair'
+import Pair from 'common/Pair'
 import Row from './Row/Row'
 import MyOrders from './../MyOrders/MyOrders'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'

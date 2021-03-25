@@ -14,7 +14,7 @@ import Avatar from 'components/Avatar/Avatar'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import { RemoveButton } from 'components/controls'
 
-import Pair, { PAIR_TYPES } from 'common/domain/Pair'
+import Pair, { PAIR_TYPES } from 'common/Pair'
 import RequestButton from '../RequestButton/RequestButton'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'

@@ -6,7 +6,7 @@ import handleError from '../../../app/actions/errors/handleError'
 import handleSwapError from '../../../app/actions/errors/handleSwapError'
 import fillOrderbook from '../book/fillOrderbook'
 import kraken from '../../../services/instances/kraken'
-import Pair from '../../Pair'
+import Pair from 'common/Pair'
 import {
   debugFeedBack,
   feedbackToOwner

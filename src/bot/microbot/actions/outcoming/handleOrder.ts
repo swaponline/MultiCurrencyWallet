@@ -3,7 +3,7 @@ import BigNumber from 'bignumber.js'
 import fetchPrice from '../../../app/actions/fetchPrice'
 import handleError from '../../../app/actions/errors/handleError'
 
-import Pair from '../../Pair'
+import Pair from 'common/Pair'
 
 import proceed from './doRequest'
 

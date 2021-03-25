@@ -4,7 +4,7 @@ import _debug from 'debug'
 import handleError from '../../../app/actions/errors/handleError'
 import fetchPrice from '../../../app/actions/fetchPrice'
 import * as configStorage from '../../../config/storage'
-import Pair from '../../Pair'
+import Pair from 'common/Pair'
 import { FG_COLORS as COLORS, BG_COLORS, colorString } from 'common/utils/colorString'
 import { checkSwapsCountLimit } from '../../core/checkSwapsCountLimit'
 
@@ -13,7 +13,7 @@ import {
   TRADE_ORDER_MINAMOUNTS as DEFAULT_TRADE_ORDER_MINAMOUNTS,
   TRADE_TICKERS as DEFAULT_TRADE_TICKERS,
 } from '../../../config/constants'
-import { PAIR_TYPES } from 'common/domain/Pair'
+import { PAIR_TYPES } from 'common/Pair'
 
 import { createOrder, removeMyOrders } from '../../core/orders'
 import Order from 'swap.orders/Order'
