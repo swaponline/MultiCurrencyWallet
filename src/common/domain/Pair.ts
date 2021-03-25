@@ -21,11 +21,12 @@ const BOT_TRADE_TICKERS = configStorage.hasTradeConfig()
 import CORE_TRADE_TICKERS from 'swap.app/constants/TRADE_TICKERS'
 import { COIN_DATA as CORE_COIN_DATA } from 'swap.app/constants/COINS'
 
-const CORE_DECIMALS = Object.entries(CORE_COIN_DATA).filter(([ticker, coinData]) => {
-  return typeof coinData.precision === 'number'
-}).map(([ticker, coinData]) => ({ [coinData.ticker]: coinData.precision})).reduce((acc, record) => {
-  return { ...acc, ...record }
-}, {})
+const CORE_DECIMALS = Object.entries(CORE_COIN_DATA)
+  .filter(([ticker, coinData]) => {
+    return typeof coinData.precision === 'number'
+  }).map(([ticker, coinData]) => ({ [coinData.ticker]: coinData.precision})).reduce((acc, record) => {
+    return { ...acc, ...record }
+  }, {})
 
 
 // front imports
@@ -34,14 +35,12 @@ import FRONT_DECIMALS_RAW from 'helpers/constants/TOKEN_DECIMALS'
 import FRONT_TRADE_TICKERS from 'helpers/constants/TRADE_TICKERS'
 
 const FRONT_DECIMALS = Object.entries(FRONT_DECIMALS_RAW)
-                        .reduce((acc, [ticker, decimals]) => {
-                          console.log('reduce', ticker, decimals)
-                          console.log('')
-                          return {
-                            ...acc,
-                            [ticker.toUpperCase()]: decimals,
-                          }
-                        }, {})
+  .reduce((acc, [ticker, decimals]) => {
+    return {
+      ...acc,
+      [ticker.toUpperCase()]: decimals,
+    }
+  }, {})
 
 
 
