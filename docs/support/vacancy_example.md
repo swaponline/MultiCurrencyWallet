@@ -22,7 +22,7 @@ Payment: (enter your median for middle-senior developer in your region)
 Test Task 1. Test for basic knowledge of git, npm and the ability to solve the simplest problems.
 1. fork https://github.com/swaponline/MultiCurrencyWallet <br>
 2. install (see docs / installation.md) <br>
-3. find // ts-ignore in the code and delete it <br>
+3. find any //@ts-ignore in the code and delete it <br>
 4. build the typescript project will start to swear at an error in this line <br>
 5. Remove the error and make a pull request to our repository <br>
 6. wait until the github shows a green checkmark "All checks have passed" <br>
