@@ -17,15 +17,8 @@ import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 
 import links from 'helpers/links'
 
-import SwapsHistory from './SwapsHistory/SwapsHistory'
+import SwapRow from './SwapRow'
 
-
-
-// -----------
-import Table from 'components/tables/Table/Table'
-//import styles from 'components/tables/Table/Table.scss'
-import SwapRow from './SwapsHistory/RowHistory/SwapRow'
-// -----------
 
 
 
@@ -174,70 +167,46 @@ class MarketMaker extends Component<any, any> {
       swapsByIds,
     } = this.state
 
-console.log('>>>>>> swapsByIds', swapsByIds)
-console.log('>>>>>> swapsIds', swapsIds)
-/*
-    const swaps = (swapHistory.filter) ? swapHistory.filter((item) => {
-      if (item.step >= 1) return true
-      if (!item.isFinished) return true
-
-      return false
-    }) : []
-
-    console.log('>>>>> swapHistory', attachedSwaps)
-    */
-
     const sortedSwaps = swapsIds.sort((aId, bId) => {
       return swapsByIds[bId].createUnixTimeStamp - swapsByIds[aId].createUnixTimeStamp
     })
     return (
       <Fragment>
-      {/*
-        { swapsIds.length > 0 &&
-          <SwapsHistory swapsIds={swapsIds.reverse()} swapsByIds={swapsByIds} />
-        }
-      */}
-      <table>
-        <thead>
-          <tr>
-            <td>
-              <span>You buy</span>
-            </td>
-            <td>
-              <span>Step</span>
-            </td>
-            <td>
-              <span>You sell</span>
-            </td>
-            <td>
-              <span>Lock time</span>
-            </td>
-            <td>
-              <span>Status</span>
-            </td>
-            <td></td>
-          </tr>
-        </thead>
-        <tbody>
-          {!!sortedSwaps.length && sortedSwaps.map((swapId, rowIndex) => {
-            return (
-              <SwapRow
-                key={swapId}
-                row={swapsByIds[swapId]}
-              />
-            )
-          })}
-          {/*
-        <Table
-          id="table-history"
-          rows={swapsIds}
-          rowRender={(swapId, index) => (
-            <SwapRow
-              key={swapId}
-              row={swapsByIds[swapId]}
-            />
-          )}
-          />*/}
+        <table>
+          <thead>
+            <tr>
+              <td>
+                <span>You buy</span>
+              </td>
+              <td>
+                <span>Step</span>
+              </td>
+              <td>
+                <span>You sell</span>
+              </td>
+              <td>
+                <span>Lock time</span>
+              </td>
+              <td>
+                <span>Status</span>
+              </td>
+              <td></td>
+            </tr>
+          </thead>
+          <tbody>
+            {!!sortedSwaps.length && sortedSwaps.map((swapId, rowIndex) => {
+              return (
+                <SwapRow
+                  key={swapId}
+                  row={swapsByIds[swapId]}
+                />
+              )
+            })}
+            {!sortedSwaps.length && (
+              <tr>
+                <td colSpan={6}>empty</td>
+              </tr>
+            )}
           </tbody>
         </table>
       </Fragment>

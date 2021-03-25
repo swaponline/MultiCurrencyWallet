@@ -8,7 +8,7 @@ import actions from 'redux/actions'
 import { Link } from 'react-router-dom'
 
 import CSSModules from 'react-css-modules'
-import styles from './RowHistory.scss'
+import styles from './SwapRow.scss'
 
 import Timer from 'pages/Swap/Timer/Timer'
 import Avatar from 'components/Avatar/Avatar'
