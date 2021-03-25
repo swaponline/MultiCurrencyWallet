@@ -3,11 +3,11 @@ import BigNumber from 'bignumber.js'
 // bot imports
 
 import {
-  TOKEN_DECIMALS as BOT_TOKEN_DECIMALS_module,
+  TOKEN_DECIMALS as BOT_DECIMALS_module,
   TRADE_TICKERS as BOT_TRADE_TICKERS_module,
 } from 'bot/config/constants'
 
-const BOT_TOKEN_DECIMALS = BOT_TOKEN_DECIMALS_module.default
+const BOT_DECIMALS = BOT_DECIMALS_module.default
 
 import * as configStorage from 'bot/config/storage'
 
@@ -21,28 +21,28 @@ const BOT_TRADE_TICKERS = configStorage.hasTradeConfig()
 import CORE_TRADE_TICKERS from 'swap.app/constants/TRADE_TICKERS'
 import { COIN_DATA as CORE_COIN_DATA } from 'swap.app/constants/COINS'
 
-console.log('CORE_COIN_DATA = ', CORE_COIN_DATA)
-
-const CORE_TOKEN_DECIMALS = Object.entries(CORE_COIN_DATA).filter(([ticker, coinData]) => {
+const CORE_DECIMALS = Object.entries(CORE_COIN_DATA).filter(([ticker, coinData]) => {
   return typeof coinData.precision === 'number'
 }).map(([ticker, coinData]) => ({ [coinData.ticker]: coinData.precision})).reduce((acc, record) => {
   return { ...acc, ...record }
 }, {})
 
 
-
 // front imports
 
-import FRONT_TOKEN_DECIMALS from 'helpers/constants/TOKEN_DECIMALS'
+import FRONT_DECIMALS_RAW from 'helpers/constants/TOKEN_DECIMALS'
 import FRONT_TRADE_TICKERS from 'helpers/constants/TRADE_TICKERS'
 
-console.log('BOT_TRADE_TICKERS =', BOT_TRADE_TICKERS)
-console.log('CORE_TRADE_TICKERS = ', CORE_TRADE_TICKERS)
-console.log('FRONT_TRADE_TICKERS =', FRONT_TRADE_TICKERS)
+const FRONT_DECIMALS = Object.entries(FRONT_DECIMALS_RAW)
+                        .reduce((acc, [ticker, decimals]) => {
+                          console.log('reduce', ticker, decimals)
+                          console.log('')
+                          return {
+                            ...acc,
+                            [ticker.toUpperCase()]: decimals,
+                          }
+                        }, {})
 
-console.log('BOT_TOKEN_DECIMALS =', BOT_TOKEN_DECIMALS)
-console.log('CORE_TOKEN_DECIMALS = ', CORE_TOKEN_DECIMALS)
-console.log('FRONT_TOKEN_DECIMALS =', FRONT_TOKEN_DECIMALS)
 
 
 const TRADE_TICKERS = [
@@ -51,10 +51,10 @@ const TRADE_TICKERS = [
   ...FRONT_TRADE_TICKERS,
 ]
 
-const TOKEN_DECIMALS = {
-  ...BOT_TOKEN_DECIMALS,
-  ...CORE_TOKEN_DECIMALS,
-  ...FRONT_TOKEN_DECIMALS,
+const DECIMALS = {
+  ...BOT_DECIMALS,
+  ...CORE_DECIMALS,
+  ...FRONT_DECIMALS,
 }
 
 
@@ -70,7 +70,7 @@ const isAsk = (type) => (type === PAIR_TYPES.ASK)
 const isBid = (type) => (type === PAIR_TYPES.BID)
 
 const filteredDecimals = ({ amount, currency }) => {
-  const precision = TOKEN_DECIMALS[currency] || TOKEN_DECIMALS.default || 18
+  const precision = DECIMALS[currency.toUpperCase()] || DECIMALS.default || 18
   return new BigNumber(amount).decimalPlaces(precision).toString()
 }
 

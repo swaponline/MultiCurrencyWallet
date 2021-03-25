@@ -28,7 +28,7 @@ export const COIN_DATA = {
     name: 'Tether',
     type: COIN_TYPE.ETH_TOKEN,
     model: COIN_MODEL.AB,
-    precision: 18,
+    precision: 6,
   },
   'EURS': {
     ticker: 'EURS',
