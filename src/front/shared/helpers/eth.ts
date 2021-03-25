@@ -1,12 +1,7 @@
 import config from 'app-config'
-import constants from './constants'
+import DEFAULT_CURRENCY_PARAMETERS from './constants/DEFAULT_CURRENCY_PARAMETERS'
 import api from './api'
 import BigNumber from 'bignumber.js'
-
-type EstimateFeeOptions = {
-  method: string
-  speed: 'fastest' | 'fast' | 'slow'
-}
 
 const reportAboutProblem = (params) => {
   const { isError = false, info } = params
@@ -19,10 +14,16 @@ const reportAboutProblem = (params) => {
   console.groupEnd()
 }
 
-const estimateFeeValue = async (options: EstimateFeeOptions) => {
-  const { method, speed } = options
+type EstimateFeeParams = {
+  method: string
+  speed: 'fastest' | 'fast' | 'slow'
+}
+
+const estimateFeeValue = async (params: EstimateFeeParams) => {
+  const { method, speed } = params
   const gasPrice = await estimateGasPrice({ speed })
-  const feeValue = new BigNumber(constants.defaultCurrencyParameters.eth.limit[method])
+  const defaultGasLimit = DEFAULT_CURRENCY_PARAMETERS.eth.limit[method]
+  const feeValue = new BigNumber(defaultGasLimit)
     .multipliedBy(gasPrice)
     .multipliedBy(1e-18)
     .toNumber()
@@ -32,7 +33,7 @@ const estimateFeeValue = async (options: EstimateFeeOptions) => {
 
 const estimateGasPrice = async ({ speed = 'fast' } = {}) => {
   const link = config.feeRates.eth
-  const defaultPrice = constants.defaultCurrencyParameters.eth.price
+  const defaultPrice = DEFAULT_CURRENCY_PARAMETERS.eth.price
 
   if (!link) {
     return defaultPrice[speed]

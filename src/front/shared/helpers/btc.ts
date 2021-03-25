@@ -183,7 +183,7 @@ type EstimateFeeValueParams = {
   txSize?: number
   fixed?: boolean
   amount?: number
-  swapMethod?: string
+  swapUTXOMethod?: 'withdraw' | 'deposit'
   moreInfo?: boolean
 }
 // Returned fee value in the satoshi
@@ -197,7 +197,7 @@ const estimateFeeValue = async (params: EstimateFeeValueParams): Promise<any> =>
     fixed,
     method,
     amount,
-    swapMethod,
+    swapUTXOMethod,
     moreInfo,
   } = params
   const {
@@ -221,7 +221,7 @@ const estimateFeeValue = async (params: EstimateFeeValueParams): Promise<any> =>
   }
 
   // one input for output from the script when swapping
-  const txIn = swapMethod === 'swap_withdraw' ? 1 : unspents.length
+  const txIn = swapUTXOMethod === 'withdraw' ? 1 : unspents.length
   // 2 = recipient input + sender input (for a residue)
   // 3 = the same inputs like higher + input for admin fee
   const txOut = hasAdminFee

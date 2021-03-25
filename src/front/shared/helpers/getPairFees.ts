@@ -39,6 +39,7 @@ const fetchCoinFee = (params): Promise<CoinFee> => {
     const hasFeeInCache = !updateCacheValue && feeCache[action] && feeCache[action][coinName]
     const coinData = COIN_DATA[coinName]
     let isBuyingUTXO = action === 'buy' && coinData.model === COIN_MODEL.UTXO
+    let isBuyingAB = action === 'buy' && coinData.model === COIN_MODEL.AB
 
     let obtainedResult = undefined
 
@@ -67,12 +68,16 @@ const fetchCoinFee = (params): Promise<CoinFee> => {
         case COIN_TYPE.NATIVE:
           obtainedResult = await fetchFeeForNativeCoin({
             coinData,
-            swapMethod: isBuyingUTXO ? 'swap_withdraw' : 'swap_deposit',
+            swapUTXOMethod: isBuyingUTXO ? 'withdraw' : 'deposit',
+            swapABMethod: isBuyingAB ? 'withdraw' : 'deposit',
           })
           doResolve(obtainedResult)
           break
         case COIN_TYPE.ETH_TOKEN:
-          obtainedResult = await fetchFeeForEthToken({ coinData })
+          obtainedResult = await fetchFeeForEthToken({
+            coinData,
+            swapABMethod: isBuyingAB ? 'withdraw' : 'deposit',
+          })
           doResolve(obtainedResult)
           break
         default:
@@ -89,13 +94,17 @@ const fetchCoinFee = (params): Promise<CoinFee> => {
 }
 
 const fetchFeeForNativeCoin = (params) => {
-  const { coinData, swapMethod } = params
+  const { coinData, swapUTXOMethod, swapABMethod } = params
   const coinTicker = coinData.ticker.toLowerCase()
   
   return new Promise((resolve) => {
     if (helpers[coinTicker]) {
       helpers[coinTicker]
-        .estimateFeeValue({ method: 'swap', swapMethod })
+        .estimateFeeValue({
+          method: 'swap',
+          swapUTXOMethod,
+          swapABMethod,
+        })
         .then((coinFee) =>
           resolve({
             coin: coinData.ticker,
@@ -124,11 +133,15 @@ const fetchFeeForNativeCoin = (params) => {
 }
 
 const fetchFeeForEthToken = (params) => {
-  const { coinData } = params
+  const { coinData, swapABMethod } = params
 
   return new Promise((resolve) => {
-    helpers.eth
-      .estimateFeeValue({ method: 'swap', speed: 'fast' })
+    helpers.ethToken
+      .estimateFeeValue({
+        method: 'swap',
+        speed: 'fast',
+        swapABMethod,
+      })
       .then((ethFee) =>
         resolve({
           coin: `ETH`,
