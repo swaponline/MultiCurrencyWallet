@@ -107,9 +107,7 @@ const getByteCount = (inputs, outputs) => {
 }
 
 type CalculateTxSizeParams = {
-  amount?: number
-  unspents?: any
-  address: string
+  unspents: IBtcUnspent[]
   txOutputs: number
   method?: string
   fixed?: boolean
@@ -117,9 +115,7 @@ type CalculateTxSizeParams = {
 
 const calculateTxSize = async (params: CalculateTxSizeParams) => {
   let {
-    amount,
     unspents,
-    address,
     txOutputs,
     method,
     fixed,
@@ -132,12 +128,6 @@ const calculateTxSize = async (params: CalculateTxSizeParams) => {
 
   if (fixed) {
     return defaultTxSize
-  }
-
-  unspents = unspents || await actions.btc.fetchUnspents(address)
-
-  if (amount) {
-    unspents = await actions.btc.prepareUnspents({ amount, unspents })
   }
 
   const txIn = unspents.length
@@ -237,11 +227,10 @@ const estimateFeeValue = async (params: EstimateFeeValueParams): Promise<any> =>
 
   feeRate = feeRate || await estimateFeeRate({ speed })
   txSize = txSize || await calculateTxSize({
-    address,
     fixed,
     method,
     txOutputs,
-    amount,
+    unspents,
   })
 
   const calculatedFeeValue = BigNumber.maximum(
