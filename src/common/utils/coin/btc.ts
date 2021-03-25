@@ -2,6 +2,7 @@ import apiLooper from '../apiLooper'
 import { BigNumber } from 'bignumber.js'
 import * as bitcoin from 'bitcoinjs-lib'
 import typeforce from 'swap.app/util/typeforce'
+import constants from 'common/helpers/constants'
 
 // Use front API config
 import { default as TESTNET } from '../../../front/config/testnet/api'
@@ -761,25 +762,29 @@ const estimateFeeRate = async (options) => {
   }
 }
 
-const calculateTxSize = async (options) => {
-  const {
-    speed,
-    unspents: _unspents,
-    address,
-    txOut = 2,
-    NETWORK,
-  } = options
+const calculateTxSize = async (params) => {
+  const { TRANSACTION } = constants
+  const { address, NETWORK } = params
 
-  const unspents = _unspents || await fetchUnspents({
+  const unspents = await fetchUnspents({
     address,
     NETWORK,
   })
-
+  const txOut = 2
   const txIn = unspents.length
+  let txSize = 226 // default tx size for 1 txIn and 2 txOut
 
-  const txSize = txIn > 0
-    ? txIn * 146 + txOut * 33 + (15 + txIn - txOut)
-    : 226 // default tx size for 1 txIn and 2 txOut
+  if (txIn > 0) {
+    txSize =
+      txIn * TRANSACTION.P2PKH_IN_SIZE +
+      txOut * TRANSACTION.P2PKH_OUT_SIZE +
+      (TRANSACTION.TX_SIZE + txIn - txOut)
+  }
+
+  console.group('Common > coin >%c btc > calculateTxSize', 'color: green;')
+  console.log('params: ', params)
+  console.log('tx size: ', txSize)
+  console.groupEnd()
 
   return txSize
 }
@@ -797,13 +802,13 @@ const estimateFeeValue = async (options) => {
   let calculatedFeeValue
 
   if (!_txSize && !address) {
-    calculatedFeeValue = new BigNumber(DUST).multipliedBy(1e-8)
+    calculatedFeeValue = new BigNumber(constants.TRANSACTION.DUST_SAT).multipliedBy(1e-8)
   } else {
-    const txSize = _txSize || await calculateTxSize({ address, speed })
+    const txSize = _txSize || await calculateTxSize({ address, NETWORK })
     const feeRate = _feeRate || await estimateFeeRate({ speed, NETWORK })
 
     calculatedFeeValue = BigNumber.maximum(
-      DUST,
+      constants.TRANSACTION.DUST_SAT,
       new BigNumber(feeRate)
         .multipliedBy(txSize)
         .div(1024)
@@ -814,6 +819,10 @@ const estimateFeeValue = async (options) => {
   const finalFeeValue = inSatoshis
     ? calculatedFeeValue.toString()
     : calculatedFeeValue.multipliedBy(1e-8).toString()
+
+  console.group('Common > coin >%c btc > estimateFeeValue', 'color: green;')
+  console.log('fee value: ', finalFeeValue)
+  console.groupEnd()
 
   return finalFeeValue
 }

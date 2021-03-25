@@ -2,7 +2,7 @@ export default {
   eth: {
     limit: {
       send: 21 * 1e3,
-      swap: 150 * 1e3,
+      swap: 120 * 1e3,
     },
     price: {
       slow: 0.1 * 1e9,
