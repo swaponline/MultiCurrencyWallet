@@ -1,5 +1,5 @@
 const network = process.env.NETWORK && process.env.NETWORK.toLowerCase() ||
-  // todo: remove later
+  // todo: remove after moving network settings to `/common`
   (process.env.NODE_ENV === 'production' && 'mainnet') ||
   (process.env.NODE_ENV === 'development' && 'testnet') ||
   (() => { throw new Error('Unknown network') })()
