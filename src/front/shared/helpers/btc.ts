@@ -2,7 +2,8 @@ import * as bitcoin from 'bitcoinjs-lib'
 import { getState } from 'redux/core'
 import actions from 'redux/actions'
 import config from './externalConfig'
-import constants from './constants'
+import DEFAULT_CURRENCY_PARAMETERS from './constants/DEFAULT_CURRENCY_PARAMETERS'
+import constants from 'common/helpers/constants'
 import api from './api'
 import BigNumber from 'bignumber.js'
 import { IBtcUnspent } from 'common/utils/coin/btc'
@@ -33,7 +34,7 @@ const reportAboutProblem = (params) => {
 // getByteCount({'MULTISIG-P2SH:2-4':45},{'P2PKH':1}) Means "45 inputs of P2SH Multisig and 1 output of P2PKH"
 // getByteCount({'P2PKH':1,'MULTISIG-P2SH:2-3':2},{'P2PKH':2}) means "1 P2PKH input and 2 Multisig P2SH (2 of 3) inputs along with 2 P2PKH outputs"
 const getByteCount = (inputs, outputs) => {
-  const { transaction } = constants
+  const { TRANSACTION } = constants
   let totalWeight = 0
   let hasWitness = false
   let inputCount = 0
@@ -41,18 +42,18 @@ const getByteCount = (inputs, outputs) => {
   // assumes compressed pubkeys in all cases.
   const types = {
     'inputs': {
-      'MULTISIG-P2SH': transaction.MULTISIG_P2SH_IN_SIZE * 4,
-      'MULTISIG-P2WSH': transaction.MULTISIG_P2WSH_IN_SIZE + (41 * 4),
-      'MULTISIG-P2SH-P2WSH': transaction.MULTISIG_P2SH_P2WSH_IN_SIZE + (76 * 4),
-      'P2PKH': transaction.P2PKH_IN_SIZE * 4,
-      'P2WPKH': transaction.P2WPKH_IN_SIZE + (41 * 4),
-      'P2SH-P2WPKH': transaction.P2SH_P2WPKH_IN_SIZE + (64 * 4),
+      'MULTISIG-P2SH': TRANSACTION.MULTISIG_P2SH_IN_SIZE * 4,
+      'MULTISIG-P2WSH': TRANSACTION.MULTISIG_P2WSH_IN_SIZE + (41 * 4),
+      'MULTISIG-P2SH-P2WSH': TRANSACTION.MULTISIG_P2SH_P2WSH_IN_SIZE + (76 * 4),
+      'P2PKH': TRANSACTION.P2PKH_IN_SIZE * 4,
+      'P2WPKH': TRANSACTION.P2WPKH_IN_SIZE + (41 * 4),
+      'P2SH-P2WPKH': TRANSACTION.P2SH_P2WPKH_IN_SIZE + (64 * 4),
     },
     'outputs': {
-      'P2SH': transaction.P2SH_OUT_SIZE * 4,
-      'P2PKH': transaction.P2PKH_OUT_SIZE * 4,
-      'P2WPKH': transaction.P2WPKH_OUT_SIZE * 4,
-      'P2WSH': transaction.P2WSH_OUT_SIZE * 4,
+      'P2SH': TRANSACTION.P2SH_OUT_SIZE * 4,
+      'P2PKH': TRANSACTION.P2PKH_OUT_SIZE * 4,
+      'P2WPKH': TRANSACTION.P2WPKH_OUT_SIZE * 4,
+      'P2WSH': TRANSACTION.P2WSH_OUT_SIZE * 4,
     },
   }
 
@@ -126,8 +127,8 @@ const calculateTxSize = async (params: CalculateTxSizeParams) => {
 
   method = method || 'send'
 
-  const { transaction } = constants
-  const defaultTxSize = constants.defaultCurrencyParameters.btc.size[method]
+  const { TRANSACTION } = constants
+  const defaultTxSize = DEFAULT_CURRENCY_PARAMETERS.btc.size[method]
 
   if (fixed) {
     return defaultTxSize
@@ -145,9 +146,9 @@ const calculateTxSize = async (params: CalculateTxSizeParams) => {
   // (<one input size> × <number of inputs>) + (<one output size> × <number of outputs>) + <tx size>
   if (txIn > 0) {
     txSize =
-      txIn * transaction.P2PKH_IN_SIZE +
-      txOutputs * transaction.P2PKH_OUT_SIZE +
-      (transaction.TX_SIZE + txIn - txOutputs)
+      txIn * TRANSACTION.P2PKH_IN_SIZE +
+      txOutputs * TRANSACTION.P2PKH_OUT_SIZE +
+      (TRANSACTION.TX_SIZE + txIn - txOutputs)
   }
 
   if (method === 'send_multisig') {
@@ -157,8 +158,8 @@ const calculateTxSize = async (params: CalculateTxSizeParams) => {
     )
     txSize =
       txIn * msuSize +
-      txOutputs * transaction.P2PKH_OUT_SIZE +
-      (transaction.TX_SIZE + txIn - txOutputs)
+      txOutputs * TRANSACTION.P2PKH_OUT_SIZE +
+      (TRANSACTION.TX_SIZE + txIn - txOutputs)
   }
 
   if (method === 'send_2fa') {
@@ -244,7 +245,7 @@ const estimateFeeValue = async (params: EstimateFeeValueParams): Promise<any> =>
   })
 
   const calculatedFeeValue = BigNumber.maximum(
-    constants.transaction.DUST_SAT,
+    constants.TRANSACTION.DUST_SAT,
     new BigNumber(feeRate)
       .multipliedBy(txSize)
       .div(1024) // divide by one kilobyte
@@ -276,7 +277,7 @@ const estimateFeeValue = async (params: EstimateFeeValueParams): Promise<any> =>
 
 const getFeesRateBlockcypher = async () => {
   const link = config.feeRates.btc
-  const defaultRate = constants.defaultCurrencyParameters.btc.rate
+  const defaultRate = DEFAULT_CURRENCY_PARAMETERS.btc.rate
 
   const defaultApiSpeeds = {
     slow: defaultRate.slow,
@@ -311,7 +312,7 @@ const getFeesRateBlockcypher = async () => {
 
 const estimateFeeRate = async ({ speed = 'fast' } = {}) => {
   const link = config.feeRates.btc
-  const defaultRate = constants.defaultCurrencyParameters.btc.rate
+  const defaultRate = DEFAULT_CURRENCY_PARAMETERS.btc.rate
 
   if (!link) {
     return defaultRate[speed]
@@ -336,7 +337,7 @@ const estimateFeeRate = async ({ speed = 'fast' } = {}) => {
   const apiSpeed = apiSpeeds[speed] || apiSpeeds.normal
   const apiRate = new BigNumber(apiResult[apiSpeed])
 
-  return apiRate.isGreaterThanOrEqualTo(constants.transaction.DUST_SAT)
+  return apiRate.isGreaterThanOrEqualTo(constants.TRANSACTION.DUST_SAT)
     ? apiRate.toNumber()
     : defaultRate[speed]
 }

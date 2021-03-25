@@ -1,8 +1,8 @@
-import * as bitcoin from 'bitcoinjs-lib'
 import { getState } from 'redux/core'
 import actions from 'redux/actions'
 import config from './externalConfig'
-import constants from './constants'
+import DEFAULT_CURRENCY_PARAMETERS from './constants/DEFAULT_CURRENCY_PARAMETERS'
+import constants from 'common/helpers/constants'
 import request from 'common/utils/request'
 import BigNumber from 'bignumber.js'
 
@@ -48,7 +48,7 @@ const DUST = 546 // description in ./btc.ts
 // getByteCount({'MULTISIG-P2SH:2-4':45},{'P2PKH':1}) Means "45 inputs of P2SH Multisig and 1 output of P2PKH"
 // getByteCount({'P2PKH':1,'MULTISIG-P2SH:2-3':2},{'P2PKH':2}) means "1 P2PKH input and 2 Multisig P2SH (2 of 3) inputs along with 2 P2PKH outputs"
 const getByteCount = (inputs, outputs) => {
-  const { transaction } = constants
+  const { TRANSACTION } = constants
   let totalWeight = 0
   let hasWitness = false
   let inputCount = 0
@@ -56,18 +56,18 @@ const getByteCount = (inputs, outputs) => {
   // assumes compressed pubkeys in all cases.
   const types = {
     'inputs': {
-      'MULTISIG-P2SH': transaction.MULTISIG_P2SH_IN_SIZE * 4,
-      'MULTISIG-P2WSH': transaction.MULTISIG_P2WSH_IN_SIZE + (41 * 4),
-      'MULTISIG-P2SH-P2WSH': transaction.MULTISIG_P2SH_P2WSH_IN_SIZE + (76 * 4),
-      'P2PKH': transaction.P2PKH_IN_SIZE * 4,
-      'P2WPKH': transaction.P2WPKH_IN_SIZE + (41 * 4),
-      'P2SH-P2WPKH': transaction.P2SH_P2WPKH_IN_SIZE + (64 * 4),
+      'MULTISIG-P2SH': TRANSACTION.MULTISIG_P2SH_IN_SIZE * 4,
+      'MULTISIG-P2WSH': TRANSACTION.MULTISIG_P2WSH_IN_SIZE + (41 * 4),
+      'MULTISIG-P2SH-P2WSH': TRANSACTION.MULTISIG_P2SH_P2WSH_IN_SIZE + (76 * 4),
+      'P2PKH': TRANSACTION.P2PKH_IN_SIZE * 4,
+      'P2WPKH': TRANSACTION.P2WPKH_IN_SIZE + (41 * 4),
+      'P2SH-P2WPKH': TRANSACTION.P2SH_P2WPKH_IN_SIZE + (64 * 4),
     },
     'outputs': {
-      'P2SH': transaction.P2SH_OUT_SIZE * 4,
-      'P2PKH': transaction.P2PKH_OUT_SIZE * 4,
-      'P2WPKH': transaction.P2WPKH_OUT_SIZE * 4,
-      'P2WSH': transaction.P2WSH_OUT_SIZE * 4,
+      'P2SH': TRANSACTION.P2SH_OUT_SIZE * 4,
+      'P2PKH': TRANSACTION.P2PKH_OUT_SIZE * 4,
+      'P2WPKH': TRANSACTION.P2WPKH_OUT_SIZE * 4,
+      'P2WSH': TRANSACTION.P2WSH_OUT_SIZE * 4,
     },
   }
 
@@ -122,8 +122,8 @@ const getByteCount = (inputs, outputs) => {
 
 //@ts-ignore
 const calculateTxSize = async ({ speed, unspents, address, txOut = 2, method = 'send', fixed } = {}) => {
-  const { transaction } = constants
-  const defaultTxSize = constants.defaultCurrencyParameters.next.size[method]
+  const { TRANSACTION } = constants
+  const defaultTxSize = DEFAULT_CURRENCY_PARAMETERS.next.size[method]
 
   if (fixed) {
     return defaultTxSize
@@ -136,9 +136,9 @@ const calculateTxSize = async ({ speed, unspents, address, txOut = 2, method = '
 
   if (txIn > 0) {
     txSize =
-      txIn * transaction.P2PKH_IN_SIZE +
-      txOut * transaction.P2PKH_OUT_SIZE +
-      (transaction.TX_SIZE + txIn - txOut)
+      txIn * TRANSACTION.P2PKH_IN_SIZE +
+      txOut * TRANSACTION.P2PKH_OUT_SIZE +
+      (TRANSACTION.TX_SIZE + txIn - txOut)
   }
 
   if (method === 'send_multisig') {
@@ -148,8 +148,8 @@ const calculateTxSize = async ({ speed, unspents, address, txOut = 2, method = '
     )
     const msutxSize =
       txIn * msuSize +
-      txOut * transaction.P2PKH_OUT_SIZE +
-      (transaction.TX_SIZE + txIn - txOut)
+      txOut * TRANSACTION.P2PKH_OUT_SIZE +
+      (TRANSACTION.TX_SIZE + txIn - txOut)
 
     return msutxSize
   }
@@ -161,8 +161,8 @@ const calculateTxSize = async ({ speed, unspents, address, txOut = 2, method = '
     )
     const mstxSize =
       txIn * msSize +
-      txOut * transaction.P2PKH_OUT_SIZE +
-      (transaction.TX_SIZE + txIn - txOut)
+      txOut * TRANSACTION.P2PKH_OUT_SIZE +
+      (TRANSACTION.TX_SIZE + txIn - txOut)
 
     return mstxSize
   }
@@ -225,7 +225,7 @@ const estimateFeeValue = async (options: EstimateFeeValueOptions) => {
 
 const estimateFeeRate = async ({ speed = 'fast' } = {}) => {
   const link = config.feeRates.next
-  const defaultRate = constants.defaultCurrencyParameters.next.rate
+  const defaultRate = DEFAULT_CURRENCY_PARAMETERS.next.rate
 
   if (!link) {
     return defaultRate[speed]
