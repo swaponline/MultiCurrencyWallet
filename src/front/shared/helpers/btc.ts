@@ -107,16 +107,16 @@ const getByteCount = (inputs, outputs) => {
 }
 
 type CalculateTxSizeParams = {
-  unspents: IBtcUnspent[]
-  txOutputs: number
+  txIn: number
+  txOut: number
   method?: string
   fixed?: boolean
 }
 
 const calculateTxSize = async (params: CalculateTxSizeParams) => {
   let {
-    unspents,
-    txOutputs,
+    txIn,
+    txOut,
     method,
     fixed,
   } = params
@@ -130,15 +130,14 @@ const calculateTxSize = async (params: CalculateTxSizeParams) => {
     return defaultTxSize
   }
 
-  const txIn = unspents.length
   let txSize = defaultTxSize
   // general formula
   // (<one input size> × <number of inputs>) + (<one output size> × <number of outputs>) + <tx size>
   if (txIn > 0) {
     txSize =
       txIn * TRANSACTION.P2PKH_IN_SIZE +
-      txOutputs * TRANSACTION.P2PKH_OUT_SIZE +
-      (TRANSACTION.TX_SIZE + txIn - txOutputs)
+      txOut * TRANSACTION.P2PKH_OUT_SIZE +
+      (TRANSACTION.TX_SIZE + txIn - txOut)
   }
 
   if (method === 'send_multisig') {
@@ -148,8 +147,8 @@ const calculateTxSize = async (params: CalculateTxSizeParams) => {
     )
     txSize =
       txIn * msuSize +
-      txOutputs * TRANSACTION.P2PKH_OUT_SIZE +
-      (TRANSACTION.TX_SIZE + txIn - txOutputs)
+      txOut * TRANSACTION.P2PKH_OUT_SIZE +
+      (TRANSACTION.TX_SIZE + txIn - txOut)
   }
 
   if (method === 'send_2fa') {
@@ -161,14 +160,14 @@ const calculateTxSize = async (params: CalculateTxSizeParams) => {
     /*
     txSize =
       txIn * msSize +
-      txOutputs * transaction.P2PKH_OUT_SIZE +
-      (transaction.TX_SIZE + txIn - txOutputs)
+      txOut * transaction.P2PKH_OUT_SIZE +
+      (transaction.TX_SIZE + txIn - txOut)
     */
   }
 
   console.group('Helpers >%c btc > calculateTxSize', 'color: green;')
   console.log('txIn: ', txIn)
-  console.log('txOut: ', txOutputs)
+  console.log('txOut: ', txOut)
   console.log('txSize: ', txSize)
   console.groupEnd()
 
@@ -184,6 +183,7 @@ type EstimateFeeValueParams = {
   txSize?: number
   fixed?: boolean
   amount?: number
+  swapMethod?: string
   moreInfo?: boolean
 }
 // Returned fee value in the satoshi
@@ -197,6 +197,7 @@ const estimateFeeValue = async (params: EstimateFeeValueParams): Promise<any> =>
     fixed,
     method,
     amount,
+    swapMethod,
     moreInfo,
   } = params
   const {
@@ -206,12 +207,6 @@ const estimateFeeValue = async (params: EstimateFeeValueParams): Promise<any> =>
       btcMultisigUserData,
     },
   } = getState()
-
-  const txOutputs = hasAdminFee
-    ? method === 'send'
-      ? 3
-      : 2
-    : 2
 
   if (!address) {
     address = btcData.address
@@ -225,12 +220,22 @@ const estimateFeeValue = async (params: EstimateFeeValueParams): Promise<any> =>
     unspents = await actions.btc.prepareUnspents({ amount, unspents })
   }
 
+  // one input for output from the script when swapping
+  const txIn = swapMethod === 'swap_withdraw' ? 1 : unspents.length
+  // 2 = recipient input + sender input (for a residue)
+  // 3 = the same inputs like higher + input for admin fee
+  const txOut = hasAdminFee
+    ? method === 'send'
+      ? 3
+      : 2
+    : 2
+
   feeRate = feeRate || await estimateFeeRate({ speed })
   txSize = txSize || await calculateTxSize({
     fixed,
     method,
-    txOutputs,
-    unspents,
+    txIn,
+    txOut,
   })
 
   const calculatedFeeValue = BigNumber.maximum(
@@ -256,10 +261,6 @@ const estimateFeeValue = async (params: EstimateFeeValueParams): Promise<any> =>
       unspents,
     }
   }
-
-  console.group('Helpers >%c btc > estimateFeeValue', 'color: green;')
-  console.log('fee value: ', finalFeeValue)
-  console.groupEnd()
 
   return finalFeeValue
 }

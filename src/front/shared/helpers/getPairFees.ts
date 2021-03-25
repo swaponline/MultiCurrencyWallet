@@ -32,12 +32,14 @@ const feeCache = {
   isEnabled: true,
 }
 
-const fetchCoinFee = (args): Promise<CoinFee> => {
-  const { coinName, action, fixed, updateCacheValue } = args
+const fetchCoinFee = (params): Promise<CoinFee> => {
+  const { coinName, action, updateCacheValue } = params
 
   return new Promise(async (feeResolved) => {
     const hasFeeInCache = !updateCacheValue && feeCache[action] && feeCache[action][coinName]
     const coinData = COIN_DATA[coinName]
+    let isBuyingUTXO = action === 'buy' && coinData.model === COIN_MODEL.UTXO
+
     let obtainedResult = undefined
 
     if (hasFeeInCache) {
@@ -63,7 +65,10 @@ const fetchCoinFee = (args): Promise<CoinFee> => {
     if (coinData) {
       switch (coinData.type) {
         case COIN_TYPE.NATIVE:
-          obtainedResult = await fetchFeeForNativeCoin({ coinData, fixed })
+          obtainedResult = await fetchFeeForNativeCoin({
+            coinData,
+            swapMethod: isBuyingUTXO ? 'swap_withdraw' : 'swap_deposit',
+          })
           doResolve(obtainedResult)
           break
         case COIN_TYPE.ETH_TOKEN:
@@ -84,13 +89,13 @@ const fetchCoinFee = (args): Promise<CoinFee> => {
 }
 
 const fetchFeeForNativeCoin = (params) => {
-  const { coinData, fixed } = params
+  const { coinData, swapMethod } = params
   const coinTicker = coinData.ticker.toLowerCase()
   
   return new Promise((resolve) => {
     if (helpers[coinTicker]) {
       helpers[coinTicker]
-        .estimateFeeValue({ method: 'swap', fixed })
+        .estimateFeeValue({ method: 'swap', swapMethod })
         .then((coinFee) =>
           resolve({
             coin: coinData.ticker,
@@ -179,10 +184,6 @@ export const getPairFees = (params: PairFeesParams): Promise<IPairFees> => {
       get: buy,
       byCoins,
     }
-
-    console.group('Helpers >%c getPairFees', 'color: green;')
-    console.log('result: ', result)
-    console.groupEnd()
 
     feeResolved(result)
   })
