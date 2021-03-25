@@ -199,6 +199,7 @@ class MarketMaker extends Component<any, any> {
                 <SwapRow
                   key={swapId}
                   row={swapsByIds[swapId]}
+                  extractSwapStatus={this.extractSwapStatus}
                 />
               )
             })}

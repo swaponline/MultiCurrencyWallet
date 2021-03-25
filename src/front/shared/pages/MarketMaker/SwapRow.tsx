@@ -19,50 +19,28 @@ import BigNumber from 'bignumber.js'
 import SwapApp from 'swap.app'
 
 
+interface SwapRowProps {
+  row: any
+  swapState: any
+  extractSwapStatus: Function
+  intl: any
+}
+
 @CSSModules(styles, { allowMultiple: true })
 class SwapRow extends Component<any, any> {
-  static propTypes = {
-    row: PropTypes.object,
-    swapState: PropTypes.object,
-  }
-
   _mounted = true
+  _handleSwapEnterStep = null
 
-  constructor(props) {
+  constructor(props: SwapRowProps) {
     super(props)
 
     const {
       row: swapState,
     } = props
-    
+
+    this._handleSwapEnterStep = this.onSwapEnterStep.bind(this)
     this.state = {
       swapState,
-    }
-  }
-
-  extractSwapStatus(swap) {
-    const {
-      id,
-      isMy,
-      isTurbo,
-      buyCurrency,
-      sellCurrency,
-      buyAmount,
-      sellAmount,
-      createUnixTimeStamp,
-      flow: {
-        state,
-      },
-    } = swap
-    return {
-      id,
-      isMy,
-      buyCurrency,
-      sellCurrency,
-      buyAmount,
-      sellAmount,
-      createUnixTimeStamp,
-      ...state,
     }
   }
 
@@ -114,10 +92,6 @@ class SwapRow extends Component<any, any> {
     */
   }
 
-  closeIncompleted = () => {
-    actions.modals.close('IncompletedSwaps')
-  }
-
   onSwapEnterStep(data) {
     if (!this._mounted) return
 
@@ -135,7 +109,7 @@ class SwapRow extends Component<any, any> {
     if (mySwapId === swapId) {
       console.log('>>> ON ENTER MY SWAP STEP')
       this.setState({
-        swapState: this.extractSwapStatus(swap),
+        swapState: this.props.extractSwapStatus(swap),
       })
     }
   }
@@ -154,13 +128,13 @@ class SwapRow extends Component<any, any> {
 
     this.tryRefund(timeLeft)
     */
-    SwapApp.shared().on('swap enter step', this.onSwapEnterStep.bind(this))
+    SwapApp.shared().on('swap enter step', this._handleSwapEnterStep)
   }
 
   componentWillUnmount() {
     console.log('History unmounted')
     this._mounted = false
-    SwapApp.shared().off('swap enter step', this.onSwapEnterStep)
+    SwapApp.shared().off('swap enter step', this._handleSwapEnterStep)
   }
 
   render() {
@@ -172,10 +146,6 @@ class SwapRow extends Component<any, any> {
     const {
       swapState,
     } = this.state
-/*
-    if (row === 'undefined') {
-      return null
-    }*/
 
     let {
       buyAmount,
@@ -258,7 +228,7 @@ class SwapRow extends Component<any, any> {
           </p>
         </td>
         <td>
-          <Link to={swapUri} onClick={this.closeIncompleted}>
+          <Link to={swapUri}>
             <FormattedMessage id="RowHistory91" defaultMessage="Link" />
           </Link>
         </td>
