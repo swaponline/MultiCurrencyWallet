@@ -763,16 +763,18 @@ class Exchange extends Component<any, any> {
         amount: new BigNumber(haveAmount),
       })
       .then((response) => {
-        actions.loader.hide()
         this.setState(() => ({ tokenApproved: true }))
+        
         actions.notifications.show(
           constants.notifications.Message,
-          { message: 'Token is approved' },
+          { message: 'Token is approved' }
         )
       })
       .catch((error) => {
-        actions.loader.hide()
-        actions.notifications.show(constants.notifications.Message, { error })
+        actions.notifications.show(
+          constants.notifications.ErrorNotification,
+          { error: error.message }
+        )
       })
       .finally(() => {
         this.setState(() => ({
