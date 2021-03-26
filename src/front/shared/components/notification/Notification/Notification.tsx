@@ -54,6 +54,7 @@ const Notification = (props) => {
   const containerStyleName = cx('container', {
     'mounted': isMounted,
     'removed': isRemoved,
+    'dark': isDark,
   })
 
   const notificationStyleName = cx('notification', {

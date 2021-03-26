@@ -14,19 +14,32 @@
     transition: margin-top 0.1s linear 0s, margin-bottom 0.1s linear 0s;
     margin-top: 0;
   }
+
+  &.dark {
+    .notification {
+      box-shadow: $d-box-shadow;
+      background-color: $d-background-elements;
+      color: $d-color;
+    }
+
+    .ErrorNotification {
+      background-color: $d-background-elements;
+      color: $color-f-error;
+    }
+  }
 }
 
 .notification {
   min-width: 300px;
   max-width: 600px;
-  background-color: #fff;
   position: relative;
   margin-top: -100%;
   opacity: 0;
   font-size: 14px;
-  color: #000;
   border-radius: 6px;
-  box-shadow: rgba(#000, 0.4) 0 2px 10px;
+  color: $l-color;
+  background-color: $l-background-elements;
+  box-shadow: $l-box-shadow;
 
   &.mounted {
     margin-top: 0 !important;
@@ -41,21 +54,24 @@
 }
 
 .ErrorNotification {
-  background-color:var(--light);
-  color: var(--danger);
+  background-color: $l-background-elements;
+  color: $color-f-error;
   position: fixed;
   bottom: 100;
   right: 0;
   padding: 20px 15px 10px 15px;
   z-index: 5;
   border-radius: 4px;
-   & .error-notification-heading {
+  
+  &.error-notification-heading {
     font-size: 16px;
   }
-   & .error-notification-text {
+  
+  &.error-notification-text {
     font-size: 14px;
   }
-   p {
+  
+  p {
     margin-bottom: 20px;
   }
 }
