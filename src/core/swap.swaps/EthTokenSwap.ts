@@ -176,14 +176,10 @@ class EthTokenSwap extends SwapInterface {
           gas: this.gasLimit,
           gasPrice: this.gasPrice,
         }
-        //@ts-ignore
-        debug(`EthTokenSwap -> approve -> params`, params)
 
         const gasAmount = await this.ERC20.methods.approve(this.address, newAmount).estimateGas(params)
 
         params.gas = gasAmount
-        //@ts-ignore
-        debug(`EthTokenSwap -> approve -> gas`, gasAmount)
 
         const result = await this.ERC20.methods.approve(this.address, newAmount).send(params)
           .on('transactionHash', (hash) => {
@@ -194,6 +190,13 @@ class EthTokenSwap extends SwapInterface {
           .catch((error) => {
             reject({ message: error.message, gasAmount: new BigNumber(gasAmount).dividedBy(1e8).toString() })
           })
+
+        console.group('Swaps >%c EthTokenSwap', 'color: DodgerBlue')
+        console.log('amount: ', newAmount)
+        console.log('params: ', params)
+        console.log('gas: ', gasAmount)
+        console.log('result: ', result)
+        console.groupEnd()
 
         resolve(result)
       }
