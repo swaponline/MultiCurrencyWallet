@@ -773,7 +773,7 @@ class Exchange extends PureComponent<any, any> {
     const { haveCurrency, haveAmount } = this.state
 
     this.setState(() => ({
-      isPendingApprove: true,
+      isPending: true,
       tokenApproved: false,
     }))
 
@@ -799,7 +799,7 @@ class Exchange extends PureComponent<any, any> {
       })
       .finally(() => {
         this.setState(() => ({
-          isPendingApprove: false,
+          isPending: false,
         }))
       })
   }
@@ -1553,7 +1553,7 @@ class Exchange extends PureComponent<any, any> {
       (new BigNumber(haveAmount).isGreaterThan(balance) ||
         new BigNumber(balance).isGreaterThanOrEqualTo(availableAmount) ||
         fromAddress.type === AddressType.Custom) &&
-      !isWaitForPeerAnswer
+      !isWaitForPeerAnswer 
 
     const isIncompletedSwaps = !!desclineOrders.length
 

@@ -240,7 +240,7 @@ type FetchFeesResponse = {
   gasPrice: number
 }
 
-const fetchFees = async (params: FetchFeesParams): Promise<FetchFeesResponse> => {
+const fetchFees = async (params?: FetchFeesParams): Promise<FetchFeesResponse> => {
   const { gasPrice, gasLimit, speed } = params
   const newGasPrice = gasPrice || await helpers.ethToken.estimateGasPrice({ speed })
   const newGasLimit = gasLimit || constants.defaultCurrencyParameters.ethToken.limit.send
@@ -400,8 +400,7 @@ type ApproveParams = {
 const approve = async (params: ApproveParams): Promise<any> => {
   const { name, to, amount, ...args } = params
   const { tokenContract, toWei } = withToken(name)
-  //@ts-ignore FIXME:
-  const feeResult = await fetchFees({ ...args })
+  const feeResult = await fetchFees()
   const weiAmount = toWei(amount)
 
   return sendTxForTokenApprove({
