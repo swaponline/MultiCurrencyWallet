@@ -10,8 +10,9 @@ import Swap from 'swap.swap'
 
 import config from 'helpers/externalConfig'
 
-import styles from 'components/tables/Table/Table.scss'
-import stylesHere from '../History/History.scss'
+import styles from './MarketMaker.scss'
+import marketmakerStyles from './M.scss'
+
 
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 
@@ -23,7 +24,7 @@ import SwapRow from './SwapRow'
 
 
 
-@CSSModules(stylesHere, { allowMultiple: true })
+@CSSModules(styles, { allowMultiple: true })
 class MarketMaker extends Component<any, any> {
   _mounted = true
   _handleSwapAttachedHandle = null
@@ -78,7 +79,6 @@ class MarketMaker extends Component<any, any> {
   }
 
   componentDidMount() {
-    //
     const swapsIds = []
     const swapsByIds = {}
 
@@ -90,8 +90,6 @@ class MarketMaker extends Component<any, any> {
     }
 
     const swapsCore = lsSwapId.map((id) => new Swap(id, SwapApp.shared()))
-
-    console.log('>>>>>',SwapApp.shared().attachedSwaps.items)
 
     SwapApp.shared().attachedSwaps.items.forEach((swap) => {
       const swapState = this.extractSwapStatus(swap)
@@ -106,14 +104,9 @@ class MarketMaker extends Component<any, any> {
       swapsIds,
       swapsByIds,
     })
-
-    //
-    
-
   }
 
   onSwapEnterStep(data) {
-    console.log('>>>> SWAP ENTER STEP', data)
     if (!this._mounted) return
 
     const { swap } = data
@@ -128,7 +121,6 @@ class MarketMaker extends Component<any, any> {
   }
 
   onSwapAttachedHandle(data) {
-    console.log('>>>> SWAP ATTACHED EVENT', data)
     if (!this._mounted) return
     const {
       swap,
@@ -139,9 +131,7 @@ class MarketMaker extends Component<any, any> {
       swapsByIds,
     } = this.state
 
-    console.log('swap id', swap.id)
     if (!swapsByIds[swap.id]) {
-      console.log('>>>>>> NEW SWAP ATTACHED')
       const swapState = this.extractSwapStatus(swap)
       swapsIds.push(swapState.id)
       swapsByIds[swapState.id] = swapState
@@ -149,13 +139,10 @@ class MarketMaker extends Component<any, any> {
         swapsIds,
         swapsByIds,
       })
-    } else {
-      console.log('>>>>> swap already attached')
     }
   }
 
   componentWillUnmount() {
-    console.log('History unmounted')
     this._mounted = false
     SwapApp.shared().off('swap attached', this._handleSwapAttachedHandle)
     SwapApp.shared().off('swap enter step', this._handleSwapEnterStep)
