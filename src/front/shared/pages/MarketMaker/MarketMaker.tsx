@@ -159,7 +159,7 @@ class MarketMaker extends Component<any, any> {
     })
     return (
       <Fragment>
-        <table>
+        <table styleName="swapHistory">
           <thead>
             <tr>
               <td>
