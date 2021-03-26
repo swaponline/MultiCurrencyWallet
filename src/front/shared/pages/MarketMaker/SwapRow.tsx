@@ -181,7 +181,7 @@ class SwapRow extends Component<any, any> {
 
     buyAmount = new BigNumber(buyAmount)
     sellAmount = new BigNumber(sellAmount)
-console.log('>>>>>>>> render row step', step)
+
     return (
       <tr key={id}>
         {step <= 1 && (
