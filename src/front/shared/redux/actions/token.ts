@@ -235,7 +235,12 @@ type FetchFeesParams = {
   speed: string
 }
 
-const fetchFees = async (params: FetchFeesParams) => {
+type FetchFeesResponse = {
+  gas: number
+  gasPrice: number
+}
+
+const fetchFees = async (params: FetchFeesParams): Promise<FetchFeesResponse> => {
   const { gasPrice, gasLimit, speed } = params
   const newGasPrice = gasPrice || await helpers.ethToken.estimateGasPrice({ speed })
   const newGasLimit = gasLimit || constants.defaultFeeRates.ethToken.limit.send
@@ -260,26 +265,39 @@ const getLinkToInfo = (tx) => {
   return `${config.link.etherscan}/tx/${tx}`
 }
 
-type SendTransactionParams = {
-  contract: any // FIXME:
-  method: string
+type SendTxForTokenApproveParams = {
   to: string
   amount: number
-  feeResult: any // FIXME:
+  contract: IUniversalObj
+  feeResult: FetchFeesResponse
 }
 
-const sendTransaction = (params: SendTransactionParams): Promise<string> => {
-  const { contract, method, to, amount, feeResult } = params
+type SendTxForTokenApproveResponse = {
+  blockHash: string
+  blockNumber: number
+  contractAddress: string | null
+  cumulativeGasUsed: number
+  gasUsed: number
+  events: IUniversalObj
+  from: string
+  to: string
+  logsBloom: string
+  status: boolean
+  transactionHash: string
+  transactionIndex: number
+  type: string
+}
 
-  console.group('%c Actions > token sendTransaction', 'color: yellow;')
-  console.log('params: ', params)
-  console.groupEnd()
+const sendTxForTokenApprove = (
+  params: SendTxForTokenApproveParams
+): Promise<SendTxForTokenApproveResponse> => {
+  const { contract, to, amount, feeResult } = params
 
   return new Promise(async (resolve, reject) => {
-    const receipt = await contract.methods[method](...[to, amount]).send(feeResult)
+    const receipt = await contract.methods.approve(to, amount).send(feeResult)
       .on('transactionHash', (hash) => {
-        console.group('Actions > %c token - sendTransaction', 'color: green;')
-        console.log('hash: ', hash)
+        console.group('Actions > token >%c sendTxForTokenApprove', 'color: green')
+        console.log('tx hash: ', hash)
         console.groupEnd()
       })
       .catch((error) => {
@@ -380,19 +398,14 @@ type ApproveParams = {
 }
 
 const approve = async (params: ApproveParams): Promise<any> => {
-  console.group('%c Actions > token approve', 'color: yellow;')
-  console.log('params: ', params)
-  console.groupEnd()
-
   const { name, to, amount, ...args } = params
   const { tokenContract, toWei } = withToken(name)
   //@ts-ignore FIXME:
   const feeResult = await fetchFees({ ...args })
   const weiAmount = toWei(amount)
 
-  return sendTransaction({
+  return sendTxForTokenApprove({
     contract: tokenContract,
-    method: 'approve',
     to,
     amount: weiAmount,
     feeResult,

@@ -748,34 +748,37 @@ class Exchange extends Component<any, any> {
     return true
   }
 
-  approveTheToken = async () => {
+  approveTheToken = () => {
     const { haveCurrency, haveAmount } = this.state
 
     this.setState(() => ({
       isPendingApprove: true,
+      tokenApproved: false,
     }))
 
     actions.token
       .approve({
-        to: '', // TODO: swap contract address
+        to: '0x0000000000000000000000000000000000000000', // TODO: swap contract address
         name: haveCurrency,
         amount: new BigNumber(haveAmount),
       })
       .then((response) => {
         actions.loader.hide()
-        actions.notifications.show(constants.notifications.Message, { message: '' })
+        this.setState(() => ({ tokenApproved: true }))
+        actions.notifications.show(
+          constants.notifications.Message,
+          { message: 'Token is approved' },
+        )
       })
       .catch((error) => {
         actions.loader.hide()
         actions.notifications.show(constants.notifications.Message, { error })
       })
-
-    const receipt = false
-
-    this.setState(() => ({
-      tokenApproved: !!receipt,
-      isPendingApprove: false,
-    }))
+      .finally(() => {
+        this.setState(() => ({
+          isPendingApprove: false,
+        }))
+      })
   }
 
   // @ToDo - need refactiong without BTC
