@@ -372,13 +372,6 @@
     ]
   },
   {
-    "id": "RowM166",
-    "message": "Start",
-    "files": [
-      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
-    ]
-  },
-  {
     "id": "NotFound8",
     "message": "Page not found! ",
     "files": [
@@ -2282,13 +2275,6 @@
     ]
   },
   {
-    "id": "FeeRadiosSpeedTypeTimeCustom",
-    "message": "",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
-    ]
-  },
-  {
     "id": "FeeRadiosSpeedTypeDescriptionSlow",
     "message": "Een voortschrijdend gemiddelde van de vergoeding voor transacties die in 7 of meer blokken moeten worden bevestigd.",
     "files": [
@@ -3796,7 +3782,7 @@
   },
   {
     "id": "Exchange_CustomAddressOption",
-    "message": "Externe portemonnee",
+    "message": "Externe portefeuille",
     "files": [
       "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
     ]
@@ -5798,6 +5784,13 @@
     "message": "Geen opties voor de boerderij gevonden",
     "files": [
       "src/front/shared/pages/Farm/index.tsx"
+    ]
+  },
+  {
+    "id": "DropDownNoOptionsInTheList",
+    "message": "Geen opties",
+    "files": [
+      "src/front/shared/components/ui/DropDown/index.tsx"
     ]
   }
 ]

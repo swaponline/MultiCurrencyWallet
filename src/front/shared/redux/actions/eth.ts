@@ -372,7 +372,7 @@ const sendWithAdminFee = async ({ from, to, amount, gasPrice, gasLimit, speed })
   feeFromAmount = feeFromAmount.toNumber() // Admin fee
 
   gasPrice = gasPrice || await helpers.eth.estimateGasPrice({ speed })
-  gasLimit = gasLimit || constants.defaultFeeRates.eth.limit.send
+  gasLimit = gasLimit || constants.defaultCurrencyParameters.eth.limit.send
 
   const walletData = actions.core.getWallet({
     address: from,
@@ -447,7 +447,7 @@ const sendDefault = ({ from, to, amount, gasPrice = null, gasLimit = null, speed
     const web3js = getWeb3()
 
     gasPrice = gasPrice || await helpers.eth.estimateGasPrice({ speed })
-    gasLimit = gasLimit || constants.defaultFeeRates.eth.limit.send
+    gasLimit = gasLimit || constants.defaultCurrencyParameters.eth.limit.send
 
     const params = {
       from,

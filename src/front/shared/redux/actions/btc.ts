@@ -582,7 +582,6 @@ const sendTransaction = async ({ to, amount }) => {
 const prepareUnspents = ({ amount, unspents }) => bitcoinUtils.prepareUnspents({
   amount,
   unspents,
-  NETWORK,
 })
 
 window.prepareUnspents = prepareUnspents

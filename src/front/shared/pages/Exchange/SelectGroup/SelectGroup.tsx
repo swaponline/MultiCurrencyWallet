@@ -78,19 +78,13 @@ const SelectGroup = (props) => {
               {`~${fiat}`} {activeFiat}
             </p>
           )}
-        {inputToolTip && inputToolTip()}
+        {inputToolTip && inputToolTip}
         {balanceTooltip && (
           <div styleName="smallTooltip balanceTooltip">
             <Tooltip id="SelectGroupTooltipBalance">{balanceTooltip()}</Tooltip>
           </div>
         )}
-        {/*
-        //@ts-ignore */}
         <CurrencySelect
-          //name="All"
-          label={label}
-          tooltip={tooltip}
-          id={id}
           selectedItemRender={(item) => item.fullTitle}
           styleName="currencySelect"
           placeholder="Enter the name of coin"

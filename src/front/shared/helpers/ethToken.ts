@@ -1,6 +1,6 @@
 import config from './externalConfig'
 import eth from './eth'
-import constants from './constants'
+import DEFAULT_CURRENCY_PARAMETERS from './constants/DEFAULT_CURRENCY_PARAMETERS'
 import BigNumber from 'bignumber.js'
 
 const isEthToken = ({ name }) => Object.keys(config.erc20).includes(name.toLowerCase())
@@ -8,13 +8,20 @@ const isEthOrEthToken = ({ name }) => Object.keys(config.erc20).concat('eth').in
 
 type EstimateFeeOptions = {
   method: string
+  swapABMethod?: 'withdraw' | 'deposit'
   speed: 'fast' | 'normal' | 'slow'
 }
 
 const estimateFeeValue = async (options: EstimateFeeOptions) => {
-  const { method, speed } = options
+  const { method, speed, swapABMethod } = options
   const gasPrice = await estimateGasPrice({ speed })
-  const feeValue = new BigNumber(constants.defaultFeeRates.ethToken.limit[method])
+  const methodForLimit = swapABMethod === 'deposit'
+    ? 'swapDeposit'
+    : swapABMethod === 'withdraw'
+      ? 'swapWithdraw'
+      : method
+  const defaultGasLimit = DEFAULT_CURRENCY_PARAMETERS.ethToken.limit[methodForLimit]
+  const feeValue = new BigNumber(defaultGasLimit)
     .multipliedBy(gasPrice)
     .multipliedBy(1e-18)
     .toNumber()

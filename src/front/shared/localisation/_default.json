@@ -358,13 +358,6 @@
     ]
   },
   {
-    "id": "RowM166",
-    "message": "Start",
-    "files": [
-      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
-    ]
-  },
-  {
     "id": "NotFound8",
     "message": "Page not found! ",
     "files": [
@@ -653,7 +646,7 @@
   },
   {
     "id": "partial243",
-    "message": "You have",
+    "message": "You send",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
@@ -2233,13 +2226,6 @@
     ]
   },
   {
-    "id": "FeeRadiosSpeedTypeTimeCustom",
-    "message": "",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
-    ]
-  },
-  {
     "id": "FeeRadiosSpeedTypeDescriptionSlow",
     "message": "A rolling average of the fee for transactions to be confirmed in 7 or more blocks.",
     "files": [
@@ -3744,7 +3730,6 @@
       "src/front/shared/components/FAQ/FAQ.tsx"
     ]
   },
-
   {
     "id": "SweepBannerDescription",
     "message": "Пожалуйста, переместите все средства на кошельки помеченные \"new\" \n                      (USDT и остальные токены переведите на Ethereum (new) адрес). \n                      Затем нажмите кнопку \"DONE\". Старые адреса будут скрыты.",
@@ -5799,6 +5784,13 @@
     "message": "Didn't find any options for the farm",
     "files": [
       "src/front/shared/pages/Farm/index.tsx"
+    ]
+  },
+  {
+    "id": "DropDownNoOptionsInTheList",
+    "message": "No options",
+    "files": [
+      "src/front/shared/components/ui/DropDown/index.tsx"
     ]
   }
 ]

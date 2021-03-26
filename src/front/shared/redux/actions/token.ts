@@ -243,7 +243,7 @@ type FetchFeesResponse = {
 const fetchFees = async (params: FetchFeesParams): Promise<FetchFeesResponse> => {
   const { gasPrice, gasLimit, speed } = params
   const newGasPrice = gasPrice || await helpers.ethToken.estimateGasPrice({ speed })
-  const newGasLimit = gasLimit || constants.defaultFeeRates.ethToken.limit.send
+  const newGasLimit = gasLimit || constants.defaultCurrencyParameters.ethToken.limit.send
 
   return {
     gas: newGasLimit,
