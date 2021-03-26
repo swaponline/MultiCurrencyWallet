@@ -62,6 +62,10 @@
       color: $d-color;
       background: $d-background-elements;
     }
+    
+    .minerFeeUpdateBtn {
+      color: $d-color;
+    }
   }
 }
 
@@ -85,11 +89,12 @@
   display: flex;
   position: relative;
   justify-content: center;
-  @media screen and (min-width: 1025px) {
-    margin-top: 50px;
-    > * {
-      transform: rotate(-90deg);
-    }
+  margin-top: 50px;
+  font-size: 1.2rem;
+
+  @media screen and (max-width: 1025px) {
+    margin-top: 0;
+    transform: rotate(-90deg);
   }
 }
 
@@ -146,28 +151,6 @@
 .buttonContinueSwap {
   margin-top: 1em;
   width: 100%;
-}
-
-.walletInput input {
-  border: none;
-  margin: 0;
-  height: 30px;
-  padding: 0;
-  margin-bottom: 20px;
-  font-size: 16px;
-
-  &:focus {
-    border: none;
-  }
-}
-
-.walletOpenSide {
-  display: flex;
-  flex-direction: row-reverse;
-  align-items: center;
-  justify-content: space-between;
-  height: 73px;
-  margin-bottom: -10px;
 }
 
 .swapModeSelector {
@@ -238,10 +221,13 @@
 
   .fees {
     opacity: 0.7;
-
     font-size: 0.7em;
     font-weight: bold;
-    font-family: 'Roboto Mono', monospace;
+
+    .serviceFee,
+    .minerFee {
+      font-family: 'Roboto Mono', monospace;
+    }
 
     .serviceFee {
       margin-bottom: 0.15em;
@@ -250,11 +236,13 @@
     .minerFee {
       a {
         font-size: 1em;
-        font-family: 'Roboto Mono', monospace;
       }
     }
   }
+}
 
+.minerFeeUpdateBtn {
+  color: $l-color;
 }
 
 .buttons {
@@ -284,26 +272,6 @@
 
 }
 
-.specify {
-  width: 200px;
-  font-weight: 500;
-  line-height: 21px;
-  font-size: 16px;
-}
-
-.walletToggle {
-  margin-bottom: 15px;
-  border: 1px solid rgba(0, 0, 0, 0.3);
-  border-radius: 3px;
-  min-height: 73px;
-  margin-bottom: 30px;
-  padding: 0 20px;
-
-  &_site {
-    position: relative;
-  }
-}
-
 .anotherRecepient {
   position: relative;
   z-index: -1;
@@ -317,12 +285,6 @@
     max-height: 100vh;
     transition: opacity 0.3s 0.2s, max-height 0.7s ease;
   }
-}
-
-.walletInput {
-  margin-top: 10px;
-  display: flex;
-  justify-content: space-between;
 }
 
 .section {
@@ -384,10 +346,6 @@
   cursor: pointer;
 }
 
-.notCorrect {
-  color: $color-f-error;
-}
-
 .row {
   display: flex;
   align-items: center;
@@ -396,20 +354,6 @@
 .inform {
   color: #626262;
   margin-top: 40px;
-}
-
-.scan {
-  display: flex;
-  flex-direction: column;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: #fff;
-  width: 100%;
-  height: 100%;
-  z-index: 999999999999999999;
 }
 
 .close {
@@ -528,12 +472,5 @@
   .section {
     margin: 0;
     padding: 0;
-  }
-
-  .specify {
-    width: 170px;
-    font-weight: 500;
-    line-height: 19px;
-    font-size: 13px;
   }
 }

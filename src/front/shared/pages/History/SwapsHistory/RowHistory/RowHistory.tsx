@@ -57,7 +57,9 @@ class RowHistory extends Component<any, any> {
       }
 
       if (isFinished || isRefunded || (step === isPayed && isEmptyBalance)) {
+        console.group('HISTORY ROW > %c Refund of swap', 'color: red;')
         console.error(`Refund of swap ${id} is not available`)
+        console.groupEnd()
         return
       }
 
@@ -172,9 +174,8 @@ class RowHistory extends Component<any, any> {
           </p>
         </td>
         <td>
-          <span>Link</span>
           <Link to={swapUri} onClick={this.closeIncompleted}>
-            <FormattedMessage id="RowHistory91" defaultMessage="Link" />
+            <FormattedMessage id="RowHistory91" defaultMessage="Link to the swap" />
           </Link>
         </td>
       </tr>

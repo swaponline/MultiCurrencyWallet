@@ -43,7 +43,7 @@ export default class NetworkStatus extends React.Component<any, any> {
           <span styleName="status">Offline</span>
         }
         {
-          isOnline && (onlineUsers === 0
+          isOnline && (onlineUsers <= 0
             ? <span styleName="status">Connecting...</span>
             : <span styleName="status">{`${onlineUsers} peers online`}</span>)
         }

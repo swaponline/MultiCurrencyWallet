@@ -231,7 +231,7 @@ const withToken = (name) => {
 //@ts-ignore
 const fetchFees = async ({ gasPrice, gasLimit, speed } = {}) => {
   gasPrice = gasPrice || await helpers.ethToken.estimateGasPrice({ speed })
-  gasLimit = gasLimit || constants.defaultFeeRates.ethToken.limit.send
+  gasLimit = gasLimit || constants.defaultCurrencyParameters.ethToken.limit.send
 
   return {
     gas: gasLimit,
