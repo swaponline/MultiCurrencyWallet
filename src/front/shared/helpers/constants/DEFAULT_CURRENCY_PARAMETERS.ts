@@ -2,7 +2,7 @@ export default {
   eth: {
     limit: {
       send: 21 * 1e3,
-      swap: 150 * 1e3,
+      swap: 70 * 1e3,
     },
     price: {
       slow: 0.1 * 1e9,
@@ -14,6 +14,8 @@ export default {
     limit: {
       send: 100 * 1e3,
       swap: 300 * 1e3,
+      swapDeposit: 170 * 1e3,
+      swapWithdraw: 100 * 1e3,
     },
     price: {
       slow: 0.1 * 1e9,

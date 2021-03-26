@@ -372,7 +372,7 @@ const CreateWallet: React.FC<any> = (props) => {
             //@ts-ignore */}
             <CloseIcon
               styleName="closeButton"
-              onClick={() => goHome()}
+              onClick={goHome}
               data-testid="modalCloseIcon"
             />
           </>

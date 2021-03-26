@@ -7,7 +7,6 @@ import { connectRouter, routerMiddleware } from 'connected-react-router'
 
 
 const history = createBrowserHistory()
-
 const middleware = routerMiddleware(history)
 const initialState = (localStorage['redux-store']) ? JSON.parse(localStorage['redux-store']) : {}
 const devTools = window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : (v) => v

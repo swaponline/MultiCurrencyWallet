@@ -170,7 +170,11 @@ export default class DepositWindow extends Component<any, any> {
       const timeLeft = Math.ceil((flowState[scriptValues].lockTime - utcNow) / 60)
 
       if (timeLeft <= 0) {
-        console.log('>>>>>>>>>>>>> STOP SWAP PROCESS in DepositWindow')
+        console.group('%c UTXO swap deposit modal', 'color: yellow;')
+        console.log('Stop swap process in DepositWindow')
+        console.log('timeLeft: ', timeLeft)
+        console.groupEnd()
+
         flow.stopSwapProcess()
 
         return true

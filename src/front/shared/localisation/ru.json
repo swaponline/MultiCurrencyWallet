@@ -400,13 +400,6 @@
     ]
   },
   {
-    "id": "RowM166",
-    "message": "Старт",
-    "files": [
-      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
-    ]
-  },
-  {
     "id": "NotFound8",
     "message": "Странице не найдена! ",
     "files": [
@@ -2345,13 +2338,6 @@
     ]
   },
   {
-    "id": "FeeRadiosSpeedTypeTimeCustom",
-    "message": "",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
-    ]
-  },
-  {
     "id": "FeeRadiosSpeedTypeDescriptionSlow",
     "message": "Среднее значение комиссии за транзакции, которые должны быть подтверждены в 7 или более блоках.",
     "files": [
@@ -3849,7 +3835,7 @@
   },
   {
     "id": "Exchange_CustomAddressOption",
-    "message": "Внешний кошелёк",
+    "message": "Внешний кошелек",
     "files": [
       "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
     ]
@@ -5830,6 +5816,13 @@
     "message": "Не найдено параметров для фермы",
     "files": [
       "src/front/shared/pages/Farm/index.tsx"
+    ]
+  },
+  {
+    "id": "DropDownNoOptionsInTheList",
+    "message": "Нет вариантов",
+    "files": [
+      "src/front/shared/components/ui/DropDown/index.tsx"
     ]
   }
 ]
