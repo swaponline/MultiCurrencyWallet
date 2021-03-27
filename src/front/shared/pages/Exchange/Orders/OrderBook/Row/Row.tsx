@@ -323,15 +323,6 @@ class Row extends Component<RowProps, RowState> {
       && new BigNumber(balances[pairFees.sell.coin]).isGreaterThanOrEqualTo(new BigNumber(sellAmount).plus(pairFees.byCoins[pairFees.sell.coin].fee))
     )
     // Если это не токены (isTokenBuy == false и isTokenSell == false) - проверяем балансы с фии
-
-    const sellBalance = this.getBalance()
-    const buyCurrencyFee = (
-      pairFees
-      && pairFees.byCoins
-      && pairFees.byCoins[buyCurrency.toUpperCase()]
-    ) ? pairFees.byCoins[buyCurrency.toUpperCase()].fee
-      : false
-
     let isSwapButtonEnabled = false
     if (
       (
