@@ -78,8 +78,8 @@ const routes = (
       <Route exact path={`${localisePrefix}/`} component={Wallet} />
       <Route exact path={`${localisePrefix}${links.connectWallet}`} component={Wallet} />
 
-      <Route exact path={`${localisePrefix}${links.marketmaker}`} component={MarketMaker} />
-      <Route exact path={`${localisePrefix}${links.marketmaker_short}`} component={MarketMaker} />
+      <Route exact path={`${localisePrefix}${links.marketmaker}/:token?`} component={MarketMaker} />
+      <Route exact path={`${localisePrefix}${links.marketmaker_short}/:token?`} component={MarketMaker} />
 
       {/* In desktop mode - the history is shown in the wallet design */}
       {!isMobile && (

@@ -20,6 +20,8 @@ import links from 'helpers/links'
 
 import SwapRow from './SwapRow'
 
+import Toggle from 'components/controls/Toggle/Toggle'
+import Input from 'components/forms/Input/Input'
 
 
 
@@ -32,12 +34,11 @@ class MarketMaker extends Component<any, any> {
   constructor(props) {
     super(props)
 
-
     const {
       items,
       match: {
         params: {
-          page = null,
+          token: marketToken = "usdt",
         }
       }
     } = props
@@ -45,10 +46,11 @@ class MarketMaker extends Component<any, any> {
     this._handleSwapAttachedHandle = this.onSwapAttachedHandle.bind(this)
     this._handleSwapEnterStep = this.onSwapEnterStep.bind(this)
 
+console.log('>>>> Market token', marketToken)
     this.state = {
-      page,
       swapsIds: [],
       swapsByIds: {},
+      marketToken,
     }
   }
 
@@ -75,6 +77,29 @@ class MarketMaker extends Component<any, any> {
       sellAmount,
       createUnixTimeStamp,
       ...state,
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    const {
+      match: {
+        params: {
+          token: prevMarketToken = "usdt",
+        },
+      },
+    } = prevProps
+
+    const {
+      match: {
+        params: {
+          token: marketToken = "usdt",
+        }
+      }
+    } = this.props
+    if (prevMarketToken.toLowerCase() !== marketToken.toLowerCase()) {
+      this.setState({
+        marketToken,
+      })
     }
   }
 
@@ -159,44 +184,62 @@ class MarketMaker extends Component<any, any> {
     })
     return (
       <Fragment>
-        <table styleName="swapHistory">
-          <thead>
-            <tr>
-              <td>
-                <span>You buy</span>
-              </td>
-              <td>
-                <span>Step</span>
-              </td>
-              <td>
-                <span>You sell</span>
-              </td>
-              <td>
-                <span>Lock time</span>
-              </td>
-              <td>
-                <span>Status</span>
-              </td>
-              <td></td>
-            </tr>
-          </thead>
-          <tbody>
-            {!!sortedSwaps.length && sortedSwaps.map((swapId, rowIndex) => {
-              return (
-                <SwapRow
-                  key={swapId}
-                  row={swapsByIds[swapId]}
-                  extractSwapStatus={this.extractSwapStatus}
-                />
-              )
-            })}
-            {!sortedSwaps.length && (
+        {/* Create offer form */}
+        <Fragment>
+          <h1>Страница маркетмаейкера </h1>
+
+          <p>МаркетмейкингBTC/WBTC : вкл/выкл</p>
+          <p>Спред: 0.5% (по умолчанию стоит 0.5%)</p>
+          <p>Баланс BTC: 2 BTC для попленения перведите на `адрес битка`</p>
+          <p>Баланс WBTC: 2 WBTC</p>
+
+          <p>
+            Это безопасно?
+          - Система работает в бета версии, у нас есть один оаудит от dsec. Рекомендуем инвестировать только средства которые не жалко потерять. Уведомления о рисках 
+          </p>
+        </Fragment>
+        {/* Swaps history + Active swaps */}
+        <Fragment>
+          <h1>Swap history</h1>
+          <table styleName="swapHistory">
+            <thead>
               <tr>
-                <td colSpan={6}>empty</td>
+                <td>
+                  <span>You buy</span>
+                </td>
+                <td>
+                  <span>Step</span>
+                </td>
+                <td>
+                  <span>You sell</span>
+                </td>
+                <td>
+                  <span>Lock time</span>
+                </td>
+                <td>
+                  <span>Status</span>
+                </td>
+                <td></td>
               </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {!!sortedSwaps.length && sortedSwaps.map((swapId, rowIndex) => {
+                return (
+                  <SwapRow
+                    key={swapId}
+                    row={swapsByIds[swapId]}
+                    extractSwapStatus={this.extractSwapStatus}
+                  />
+                )
+              })}
+              {!sortedSwaps.length && (
+                <tr>
+                  <td colSpan={6}>empty</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </Fragment>
       </Fragment>
     )
   }
