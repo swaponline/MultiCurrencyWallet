@@ -512,17 +512,35 @@ class Exchange extends PureComponent<any, any> {
   }
 
   fetchBalances = async () => {
-    const { pairFees } = this.state
+    const {
+      haveCurrency: sellCurrency,
+      getCurrency: buyCurrency,
+      pairFees,
+    } = this.state
 
     if (!pairFees || !this._mounted) return
 
     this.setState(() => ({ isPending: true }))
 
+    const buyWallet = actions.core.getWallet({ currency: buyCurrency })
+    const sellWallet = actions.core.getWallet({ currency: sellCurrency })
     const feeBuyWallet = actions.core.getWallet({ currency: pairFees.buy.coin })
     const feeSellWallet = actions.core.getWallet({ currency: pairFees.sell.coin })
-    const balances = {
-      [feeBuyWallet.currency]: await actions.core.fetchWalletBalance(feeBuyWallet),
-      [feeSellWallet.currency]: await actions.core.fetchWalletBalance(feeSellWallet)
+
+    const balances = {}
+    balances[`${buyWallet.currency}`] = await actions.core.fetchWalletBalance(buyWallet)
+    balances[`${sellWallet.currency}`] = await actions.core.fetchWalletBalance(sellWallet)
+
+    if (balances[`${feeBuyWallet.currency}`] === undefined) {
+      balances[`${feeBuyWallet.currency}`] = await actions.core.fetchWalletBalance(
+        feeBuyWallet
+      )
+    }
+
+    if (balances[`${feeSellWallet.currency}`] === undefined) {
+      balances[`${feeSellWallet.currency}`] = await actions.core.fetchWalletBalance(
+        feeSellWallet
+      )
     }
 
     this.setState(() => ({
