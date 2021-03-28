@@ -1,8 +1,10 @@
 .title {
-  font-size: 28px;
-  font-weight: bold;
+  max-width: 32em;
   width: 80%;
   margin: 2em auto;
+  font-size: 28px;
+  font-weight: bold;
+  text-align: center;
 }
 
 .row {
@@ -10,28 +12,20 @@
   display: flex;
   margin-bottom: 20px;
   align-items: center;
-  flex-direction: column-reverse;
+  flex-direction: column;
 }
 
 .cell {
-  margin-left: 15px;
-  margin-top: 10px;
+  margin: 1.2rem 0;
 }
 
 .linked {
-  color: #2181F7 !important;
+  color: $color-link !important;
   cursor: pointer;
   text-align: center;
 }
 
 @media screen and (max-width: 860px) {
-  .row {
-    flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
-    justify-content: flex-start;
-  }
-
   .title {
     font-size: 22px;
   }
