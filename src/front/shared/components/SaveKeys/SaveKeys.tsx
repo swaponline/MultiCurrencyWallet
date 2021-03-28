@@ -22,9 +22,6 @@ type SaveKeysProps = {
 @CSSModules(styles)
 export default class SaveKeys extends Component<SaveKeysProps, null> {
   render() {
-    console.log('%c SaveKeys', 'color: yellow')
-    console.log('props: ', this.props)
-
     const {
       ethData,
       btcData,
