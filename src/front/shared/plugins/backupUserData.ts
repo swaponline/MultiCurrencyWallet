@@ -201,16 +201,11 @@ const backupUserData = {
 
             // set other params to true (user has on tour and other pages)
             localStorage.setItem(constants.localStorage.hiddenCoinsList, data.hiddenCoinsList)
-            //@ts-ignore
-            localStorage.setItem(constants.localStorage.isWalletCreate, true)
-            //@ts-ignore
-            localStorage.setItem(constants.localStorage.wasOnExchange, true)
-            //@ts-ignore
-            localStorage.setItem(constants.localStorage.wasOnWidgetWallet, true)
-            //@ts-ignore
-            localStorage.setItem(constants.localStorage.wasCautionPassed, true)
-            //@ts-ignore
-            localStorage.setItem(constants.localStorage.wasOnWallet, true)
+            localStorage.setItem(constants.localStorage.isWalletCreate, 'true')
+            localStorage.setItem(constants.localStorage.wasOnExchange, 'true')
+            localStorage.setItem(constants.localStorage.wasOnWidgetWallet, 'true')
+            localStorage.setItem(constants.localStorage.wasCautionPassed, 'true')
+            localStorage.setItem(constants.localStorage.wasOnWallet, 'true')
             localStorage.setItem(constants.localStorage.didProtectedBtcCreated, data.didProtectedBtcCreated)
             localStorage.setItem(constants.localStorage.didPinBtcCreated, data.didPinBtcCreated)
             localStorage.setItem(lsCurrentUser, window.WPuserUid)

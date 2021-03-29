@@ -20,7 +20,7 @@ import CurrencyWallet from 'pages/CurrencyWallet/CurrencyWallet'
 import Transaction from 'pages/Transaction/Transaction'
 import BtcMultisignProcessor from 'pages/Multisign/Btc/Btc'
 
-import MarketMaker from 'pages/MarketMaker/MarketMaker'
+import Marketmaker from 'pages/Marketmaker/Marketmaker'
 
 import CreateInvoice from 'pages/Invoices/CreateInvoice'
 import InvoicesList from 'pages/Invoices/InvoicesList'
@@ -78,8 +78,8 @@ const routes = (
       <Route exact path={`${localisePrefix}/`} component={Wallet} />
       <Route exact path={`${localisePrefix}${links.connectWallet}`} component={Wallet} />
 
-      <Route exact path={`${localisePrefix}${links.marketmaker}/:token?`} component={MarketMaker} />
-      <Route exact path={`${localisePrefix}${links.marketmaker_short}/:token?`} component={MarketMaker} />
+      <Route exact path={`${localisePrefix}${links.marketmaker}/:token?`} component={Marketmaker} />
+      <Route exact path={`${localisePrefix}${links.marketmaker_short}/:token?`} component={Marketmaker} />
 
       {/* In desktop mode - the history is shown in the wallet design */}
       {!isMobile && (

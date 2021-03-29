@@ -5802,7 +5802,7 @@
   },
   {
     "id": "menu.farm",
-    "message": "Uitzetten en landbouw",
+    "message": "Landbouw",
     "files": [
       "src/front/shared/components/Header/config.tsx"
     ]
