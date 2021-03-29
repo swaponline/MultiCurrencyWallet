@@ -181,6 +181,9 @@ class EthTokenSwap extends SwapInterface {
 
         params.gas = gasAmount
 
+        //@ts-ignore
+        debug(`EthTokenSwap -> approve -> params`, params)
+
         const result = await this.ERC20.methods.approve(this.address, newAmount).send(params)
           .on('transactionHash', (hash) => {
             if (typeof handleTransactionHash === 'function') {

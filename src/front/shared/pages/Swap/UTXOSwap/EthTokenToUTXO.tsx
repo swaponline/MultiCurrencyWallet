@@ -23,6 +23,7 @@ export default class EthTokenToUTXO extends Component<any, any> {
 
   constructor(props) {
     super(props)
+
     const {
       swap,
       currencyData,
@@ -111,7 +112,6 @@ export default class EthTokenToUTXO extends Component<any, any> {
   }
 
   signSwap = () => {
-    console.log('sign swap')
     this.swap.flow.sign()
     this.setState(() => ({
       signed: true,

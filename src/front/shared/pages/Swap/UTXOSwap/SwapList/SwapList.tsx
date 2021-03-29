@@ -26,6 +26,7 @@ export default class SwapList extends Component<any, any> {
 
   constructor(props) {
     super(props)
+
     const {
       swap: {
         sellCurrency,
@@ -42,7 +43,6 @@ export default class SwapList extends Component<any, any> {
 
     this._fields = fields
 
-    console.log('swaplist fields', fields, this._fields)
     const { currencyName } = fields
 
     const first = stepNumbers.sign
@@ -62,6 +62,10 @@ export default class SwapList extends Component<any, any> {
       seventh,
       eighth,
     }
+
+    console.group('SwapList >%c constructor', 'color: green;')
+    console.log('fields: ', this._fields)
+    console.groupEnd()
   }
 
   render() {
