@@ -24,12 +24,13 @@ import CreateInvoice from 'pages/Invoices/CreateInvoice'
 import InvoicesList from 'pages/Invoices/InvoicesList'
 import Invoice from 'pages/Invoices/Invoice'
 
-import ScrollToTop from '../components/layout/ScrollToTop/ScrollToTop'
-import SaveMnemonicModal from "components/modals/SaveMnemonicModal/SaveMnemonicModal"
-import SaveKeysModal from "components/modals/SaveKeysModal/SaveKeysModal"
+import ScrollToTop from 'components/layout/ScrollToTop/ScrollToTop'
+import SaveMnemonicModal from 'components/modals/SaveMnemonicModal/SaveMnemonicModal'
+import SaveKeysModal from 'components/modals/SaveKeysModal/SaveKeysModal'
 
+import RestoryMnemonicWallet from 'components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet'
 
-import RestoryMnemonicWallet from "components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet"
+import Marketmaker from 'pages/Marketmaker/Marketmaker'
 
 
 const routes = (
@@ -51,6 +52,8 @@ const routes = (
       <Route path={`${localisePrefix}${links.exchange}/:sell-to-:buy/:linkedOrderId`} component={Exchange} />
       <Route path={`${localisePrefix}${links.exchange}/:sell-to-:buy`} component={Exchange} />
       <Route path={`${localisePrefix}${links.exchange}`} component={Exchange} />
+
+      <Route path={`${localisePrefix}${links.marketmaker}`} component={Marketmaker} />
 
       <Route path={`${localisePrefix}${links.farm}`} component={Farm} />
       <Route path={`${localisePrefix}${links.localStorage}`} component={LocalStorage} />
