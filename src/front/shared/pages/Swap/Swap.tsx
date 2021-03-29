@@ -202,7 +202,8 @@ class SwapComponent extends PureComponent<any, any> {
           })
       })
 
-      console.log('setting swap into state: ', swap)
+      console.log('setting swap into state (swap): ', swap)
+
       this.setState({
         swap,
         ethData,
@@ -248,7 +249,6 @@ class SwapComponent extends PureComponent<any, any> {
     }
 
     if (swap !== null) {
-      console.log('checkingCycle')
       this.sendDebugInfoTimer = setInterval(() => {
         this.sendSwapDebugInformation(orderId)
       }, 1000)
@@ -516,18 +516,6 @@ class SwapComponent extends PureComponent<any, any> {
     this.props.history.push(localisedUrl(locale, '/'))
   }
 
-  handleCopyAddress = (e) => {
-    this.setState({
-      isAddressCopied: true,
-    }, () => {
-      setTimeout(() => {
-        this.setState({
-          isAddressCopied: false,
-        })
-      }, 500)
-    })
-  }
-
   render() {
     const { peer, tokenItems, history, intl: { locale } } = this.props
     const {
@@ -594,7 +582,6 @@ class SwapComponent extends PureComponent<any, any> {
                     defaultMessage="reload the page"
                   />
                 </span>
-
               </p>
 
               {isShowDebug &&
