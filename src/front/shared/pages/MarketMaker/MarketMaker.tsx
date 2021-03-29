@@ -10,7 +10,7 @@ import Swap from 'swap.swap'
 
 import config from 'helpers/externalConfig'
 
-import styles from './MarketMaker.scss'
+import styles from './Marketmaker.scss'
 import marketmakerStyles from './M.scss'
 
 
@@ -25,7 +25,7 @@ import SwapRow from './SwapRow'
 
 
 @CSSModules(styles, { allowMultiple: true })
-class MarketMaker extends Component<any, any> {
+class Marketmaker extends Component<any, any> {
   _mounted = true
   _handleSwapAttachedHandle = null
   _handleSwapEnterStep = null
@@ -202,4 +202,4 @@ class MarketMaker extends Component<any, any> {
   }
 }
 
-export default injectIntl(MarketMaker)
+export default injectIntl(Marketmaker)
