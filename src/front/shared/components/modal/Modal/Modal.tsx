@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { connect } from 'redaction'
 
 import actions from 'redux/actions'
-import PropTypes from 'prop-types'
 import cx from 'classnames'
 import { constants } from 'helpers'
 import cssModules from 'react-css-modules'
@@ -13,31 +12,37 @@ import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
 import Overlay from 'components/layout/Overlay/Overlay'
 import Center from 'components/layout/Center/Center'
 
-
 const isDark = localStorage.getItem(constants.localStorage.isDark)
+
+type ModalProps = {
+  title?: any // JSX.Element, string
+  closeOnLocationChange?: any  // function or boolean
+  onClose?: (isLocationChange) => any // void or boolean
+  
+  children: JSX.Element | JSX.Element[]
+  data?: IUniversalObj
+  onLocationChange?: (hash: string) => boolean
+  name: string
+  className?: string
+  styleName?: string
+  showLogo?: boolean
+  whiteLogo?: boolean
+  delayClose?: boolean
+  disableClose?: boolean
+  dashboardView?: boolean
+  titleUppercase?: boolean
+  showCloseButton?: boolean
+  shouldCenterVertically?: boolean
+  shouldCenterHorizontally?: boolean
+}
+
 @connect(({
   ui: { dashboardModalsAllowed },
 }) => ({
   dashboardView: dashboardModalsAllowed,
 }))
 @cssModules(styles, { allowMultiple: true })
-export default class Modal extends Component<any, any> {
-
-  static propTypes = {
-    children: PropTypes.node,
-    name: PropTypes.string,
-    title: PropTypes.any,
-    showCloseButton: PropTypes.bool,
-    data: PropTypes.object,
-    disableClose: PropTypes.bool,
-    titleUppercase: PropTypes.bool,
-    onClose: PropTypes.func,
-    shouldCenterVertically: PropTypes.bool,
-    shouldCenterHorizontally: PropTypes.bool,
-    whiteLogo: PropTypes.bool,
-    showLogo: PropTypes.bool,
-  }
-
+export default class Modal extends Component<ModalProps, null> {
   static defaultProps = {
     data: {},
     whiteLogo: false,
@@ -131,11 +136,14 @@ export default class Modal extends Component<any, any> {
 
     return (
       <Overlay dashboardView={dashboardView} styleName={styleName}>
-        <div styleName={cx({
-          modal: true,
-          modal_dashboardView: dashboardView,
-          dark: isDark
-        })} className={className}>
+        <div 
+          styleName={cx({
+            modal: true,
+            modal_dashboardView: dashboardView,
+            dark: isDark
+          })} 
+          className={className}
+        >
           {
             Boolean(title || showCloseButton) && (
               <div styleName="header">

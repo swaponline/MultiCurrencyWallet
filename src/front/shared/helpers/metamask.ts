@@ -25,8 +25,7 @@ const _onWeb3Changed = (newWeb3) => {
 }
 
 web3connect.on('connected', async () => {
-  //@ts-ignore
-  localStorage.setItem(constants.localStorage.isWalletCreate, true)
+  localStorage.setItem(constants.localStorage.isWalletCreate, 'true')
   actions.core.markCoinAsVisible(`ETH`)
   _onWeb3Changed(web3connect.getWeb3())
 })
