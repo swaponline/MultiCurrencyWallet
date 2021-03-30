@@ -186,21 +186,7 @@ export default (tokenName) => {
             }
           },
 
-
-          // 6. Approve the token
-
-          async () => {
-            const approveData = {
-              amount: 1,
-            }
-
-            await flow.ethTokenSwap.approve(approveData, (hash) => {
-              console.log('%c token approved', 'color: blue')
-              console.log('tx hash: ', hash)
-            })
-          },
-
-          // 7. Wait participant withdraw
+          // 6. Wait participant withdraw
 
           async () => {
             const {
@@ -222,7 +208,7 @@ export default (tokenName) => {
             })
           },
 
-          // 8. Withdraw
+          // 7. Withdraw
 
           async () => {
             await this.btcSwap.withdrawFromSwap({
@@ -230,7 +216,7 @@ export default (tokenName) => {
             })
           },
 
-          // 9. Finish
+          // 8. Finish
 
           () => {
             flow.swap.room.once('request swap finished', () => {
@@ -249,7 +235,7 @@ export default (tokenName) => {
             }, { step: 'finish' })
           },
 
-          // 10. Finished!
+          // 9. Finished!
 
           () => {},
         ]
