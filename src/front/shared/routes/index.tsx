@@ -20,6 +20,9 @@ import CurrencyWallet from 'pages/CurrencyWallet/CurrencyWallet'
 import Transaction from 'pages/Transaction/Transaction'
 import BtcMultisignProcessor from 'pages/Multisign/Btc/Btc'
 
+import Marketmaker from 'pages/Marketmaker/Marketmaker'
+import BecomeMarketmaker from 'pages/Marketmaker/BecomeMarketmaker'
+
 import CreateInvoice from 'pages/Invoices/CreateInvoice'
 import InvoicesList from 'pages/Invoices/InvoicesList'
 import Invoice from 'pages/Invoices/Invoice'
@@ -29,8 +32,6 @@ import SaveMnemonicModal from 'components/modals/SaveMnemonicModal/SaveMnemonicM
 import SaveKeysModal from 'components/modals/SaveKeysModal/SaveKeysModal'
 
 import RestoryMnemonicWallet from 'components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet'
-
-import Marketmaker from 'pages/Marketmaker/Marketmaker'
 
 
 const routes = (
@@ -53,7 +54,12 @@ const routes = (
       <Route path={`${localisePrefix}${links.exchange}/:sell-to-:buy`} component={Exchange} />
       <Route path={`${localisePrefix}${links.exchange}`} component={Exchange} />
 
-      <Route path={`${localisePrefix}${links.marketmaker}`} component={Marketmaker} />
+      {[links.marketmaker, links.marketmaker_short].map(marketmaker => (
+        <>
+          <Route path={`${localisePrefix}${marketmaker}/:token`} component={Marketmaker} />
+          <Route exact path={`${localisePrefix}${marketmaker}`} component={BecomeMarketmaker} />
+        </>
+      ))}
 
       <Route path={`${localisePrefix}${links.farm}`} component={Farm} />
       <Route path={`${localisePrefix}${links.localStorage}`} component={LocalStorage} />
@@ -79,6 +85,7 @@ const routes = (
       <Route exact path={`${localisePrefix}${links.notFound}`} component={NotFound} />
       <Route exact path={`${localisePrefix}/`} component={Wallet} />
       <Route exact path={`${localisePrefix}${links.connectWallet}`} component={Wallet} />
+
       {/* In desktop mode - the history is shown in the wallet design */}
       {!isMobile && (
         <>

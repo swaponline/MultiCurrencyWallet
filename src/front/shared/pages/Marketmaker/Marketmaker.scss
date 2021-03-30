@@ -1,71 +1,80 @@
-section {
-  max-width: 700px;
-  margin: 0 auto;
-  padding: 2em 0;
+.history {
+  display: block;
+  box-shadow: $l-box-shadow;
+  background: $l-background-elements;
+  border-radius: 4px;
+  padding: 25px;
+  margin-top: 20px;
+  width: 100%;
 }
 
-section + section {
-  border-top: 1px solid #{$color-brand}55;
+.historyHeading {
+  color: #1F2D48;
+  font-size: 24px;
+  line-height: 33px;
+  font-weight: bold;
+  margin-bottom: 10px;
 }
 
-p {
-  margin-bottom: 0.5em;
+.walletNav {
+  padding: 0;
+  margin-bottom: 0px;
+  margin-top: 15px;
 }
 
-.section-title {
-  margin: 0 auto 1em;
-  max-width: 572px;
-  font-style: normal;
-  line-height: 1em;
-  font-size: 30px;
-  text-align: center;
-  @include ff-regular;
+.walletNavItem {
+  display: inline-block;
+  margin-right: 20px;
+  font-weight: bold;
 }
 
-.how-to-earn {
-  padding-top: 0;
+.walletNavItem.active {
+  a {
+    border-bottom: 3px solid $primary;
+    color: #1f2d48;
+  }
 }
 
-.select-mode {
+.walletNavItemLink {
+  cursor: pointer;
+  font-size: 15px;
+  line-height: 140%;
+  padding-bottom: 10px;
+  color: #8e9aa3 !important;
+}
 
-  .modes {
-    display: flex;
+.dark {
+  box-shadow: $d-box-shadow;
+  background: $d-background-elements;
 
-    .mode + .mode {
-      margin-left: 2em;
-    }
+  .historyHeading {
+    color: $d-color;
+  }
 
-    @media (max-width: 820px) {
-      display: block;
+  a {
+    color: $d-color !important;
+  }
+}
 
-      .mode + .mode {
-        margin-left: 0;
+.historyLoader {
+  overflow: hidden;
+}
+
+.swapHistory {
+  width: 100%;
+  THEAD {
+    TR {
+      TD {
+        color: var(--primary-hover);
       }
-    }
-  }
-
-  .mode {
-    margin-bottom: 1.8em;
-    //border: 1px solid $color-brand;
-    box-shadow: rgba(0,0,0, 0.2) 0 4px 24px;
-    border-radius: 10px;
-    padding: 1.5em 1em;
-
-    .mode-title {
-      color: #{$color-brand};
-      font-weight: 500;
-    }
-    .number {
-      font-weight: bold;
-    }
-    .mode-button {
-      margin: 1em auto 0;
-      min-width: 100px;
-      display: block;
+      border-bottom: 1px solid rgb(33, 37, 41);
     }
   }
 }
 
-.marketmaker-settings {
-  opacity: 1;
+@media all and (max-width: 767px) {
+  .history {
+    padding: 15px;
+    margin-top: 0;
+  }
 }
