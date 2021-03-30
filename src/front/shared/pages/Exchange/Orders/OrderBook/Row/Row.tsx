@@ -52,6 +52,9 @@ type RowProps = {
   currenciesData?: IUniversalObj
   intl?: IUniversalObj
   peer?: string
+
+  buy?: string
+  sell?: string
 }
 
 type RowState = {
@@ -95,14 +98,6 @@ class Row extends Component<RowProps, RowState> {
     let balanceCheckCur = isMy ? sellCurrency : buyCurrency
 
     return (balances && balances[balanceCheckCur]) ? balances[balanceCheckCur] : 0
-  }
-
-  getEthBalance() {
-    const {
-      balances,
-    } = this.props
-
-    return (balances && balances[`ETH`]) ? balances[`ETH`] : 0
   }
 
   componentDidMount() {
@@ -156,9 +151,10 @@ class Row extends Component<RowProps, RowState> {
       row: {
         id,
         buyAmount: sellAmount,
-        buyCurrency: sellCurrency, // taker-maker - (maker buy - we sell)
-        sellCurrency: buyCurrency, // taker-maker - (maker sell - we buy)
+        //sellAmount,
       },
+      buy: buyCurrency,
+      sell: sellCurrency,
       row,
       intl,
       history,
@@ -271,12 +267,15 @@ class Row extends Component<RowProps, RowState> {
         isTurbo,
         buyCurrency,
         buyAmount,
-        sellCurrency,
         sellAmount,
+        sellCurrency,
         isRequested,
         isProcessing,
         owner: { peer: ownerPeer },
       },
+      buy,
+      sell,
+      row: order,
       peer,
       orderId,
       removeOrder,
@@ -289,64 +288,12 @@ class Row extends Component<RowProps, RowState> {
     const pair = Pair.fromOrder(this.props.row)
     const { price, amount, total, main, base, type } = pair
 
-    // todo: improve calculation much more
-    // !!! Если ПРОДАЕМ токены, у нас должны быть И ТОКЕНЫ И ЭФИР !!!
-    // !!! Если мы ПОКУПАЕМ ТОКЕНЫ, у нас должен быть ТОЛЬКО ЭФИР И ТОЛЬКО БИТОК (UTXO) !!!
-    const isTokenBuy = ethToken.isEthToken({ name: buyCurrency })
-    const isTokenSell = ethToken.isEthToken({ name: sellCurrency })
-    const ethBalance = this.getEthBalance()
-    // Достаточно ли у нас эфира для совершения транзакции
-    const isEthEnoghtForFee = (
-      pairFees
-      && ethBalance
-      && pairFees.byCoins
-      && pairFees.byCoins.ETH
-      && pairFees.byCoins.ETH.fee
-      && new BigNumber(ethBalance).isGreaterThanOrEqualTo(pairFees.byCoins.ETH.fee)
-    )
-    // Если мы продаем токены - достаточно ли у нас их
-    const isTokenBalanceEnought = (
-      isTokenSell
-      && balances
-      && balances[sellCurrency]
-      && new BigNumber(balances[sellCurrency]).isGreaterThanOrEqualTo(sellAmount)
-    )
-    // Достаточно ли у нас продаваемой валюты для оплаты вместе с фи 
-    // Если это не токены - то это будет или эфир или биток (utxo)
-    // Если мы покумаем токены - то это будет биток (utxo)
-    const isSellEnoughtWithFee = (
-      pairFees
-      && balances
-      && pairFees.sell
-      && pairFees.sell.fee
-      && balances[pairFees.sell.coin]
-      && new BigNumber(balances[pairFees.sell.coin]).isGreaterThanOrEqualTo(new BigNumber(sellAmount).plus(pairFees.byCoins[pairFees.sell.coin].fee))
-    )
-    // Если это не токены (isTokenBuy == false и isTokenSell == false) - проверяем балансы с фии
-    let isSwapButtonEnabled = false
-    if (
-      (
-        /* Продаем токены, должно хватать на фи эфира, баланса токенов должно хватать */
-        isTokenSell
-        && isEthEnoghtForFee
-        && new BigNumber(balances[sellCurrency]).isGreaterThanOrEqualTo(sellAmount)
-      ) || (
-        /* Покупаем токены, должно хватать на фи эфира, должно хватать UTXO (sell) на фи и на сумму ордера */
-        isTokenBuy
-        && isEthEnoghtForFee
-        && isSellEnoughtWithFee
-      ) || (
-        /* Это не токены, должно хватать на фи эфира. Должно хватать UTXO (sell) на фи и сумму ордера */
-        /* Получается если мы продаем эфир, isEthEnoghtForFee = isSellEnoughtWithFee = true, тоесть у нас есть эфира на размер ордера и на фии */
-        /* Если мы покупаем эфир - isEthEnoghtForFee = true, isSellEnoughtWithFee = true, есть эфир для контракта, есть utxo на сумму ордера и фи */
-        !isTokenBuy
-        && !isTokenSell
-        && isEthEnoghtForFee
-        && isSellEnoughtWithFee
-      )
-    ) {
-      isSwapButtonEnabled = true
-    }
+    const isSwapButtonEnabled = checkSwapAllow({
+      sellCurrency: sell,
+      buyCurrency: buy,
+      amount: buyAmount,
+      isSilentError: true,
+    })
 
     let sellCurrencyOut,
       sellAmountOut,
