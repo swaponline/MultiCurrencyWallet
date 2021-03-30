@@ -202,12 +202,9 @@ class Header extends Component<any, any> {
     const isGuestLink = !(!hash || hash.slice(1) !== 'guest')
 
     if (isGuestLink) {
-      //@ts-ignore
-      localStorage.setItem(wasOnWallet, true)
-      //@ts-ignore
-      localStorage.setItem(wasOnExchange, true)
-      //@ts-ignore
-      localStorage.setItem(wasOnWidgetWallet, true)
+      localStorage.setItem(wasOnWallet, 'true')
+      localStorage.setItem(wasOnExchange, 'true')
+      localStorage.setItem(wasOnWidgetWallet, 'true')
       return
     }
 
@@ -322,8 +319,8 @@ class Header extends Component<any, any> {
     setTimeout(() => {
       this.setState(() => ({ isTourOpen: true }))
     }, 1000)
-    //@ts-ignore
-    localStorage.setItem(wasOnWallet, true)
+
+    localStorage.setItem(wasOnWallet, 'true')
   }
 
   openWidgetWalletTour = () => {
@@ -332,8 +329,8 @@ class Header extends Component<any, any> {
     setTimeout(() => {
       this.setState(() => ({ isWidgetTourOpen: true }))
     }, 1000)
-    //@ts-ignore
-    localStorage.setItem(wasOnWidgetWallet, true)
+
+    localStorage.setItem(wasOnWidgetWallet, 'true')
   }
 
   openExchangeTour = () => {
@@ -342,8 +339,7 @@ class Header extends Component<any, any> {
       this.setState(() => ({ isPartialTourOpen: true }))
     }, 1000)
 
-    //@ts-ignore
-    localStorage.setItem(wasOnExchange, true)
+    localStorage.setItem(wasOnExchange, 'true')
   }
 
   handleSetDark = () => {
@@ -354,8 +350,7 @@ class Header extends Component<any, any> {
     if (wasDark) {
       localStorage.removeItem(constants.localStorage.isDark)
     } else {
-      //@ts-ignore
-      localStorage.setItem(constants.localStorage.isDark, true)
+      localStorage.setItem(constants.localStorage.isDark, 'true')
     }
     window.location.reload()
   }
