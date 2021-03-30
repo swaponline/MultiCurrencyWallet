@@ -225,9 +225,10 @@ class Exchange extends PureComponent<any, any> {
 
     const {
       allCurrencyies,
-      match,
       intl: { locale },
+      location,
       history,
+      match,
     } = props
 
     this.fiatRates = {}

@@ -24,7 +24,6 @@ import PreventMultiTabs from "components/PreventMultiTabs/PreventMultiTabs";
 import RequestLoader from "components/loaders/RequestLoader/RequestLoader";
 import ModalConductor from "components/modal/ModalConductor/ModalConductor";
 import WidthContainer from "components/layout/WidthContainer/WidthContainer";
-import Wrapper from "components/layout/Wrapper/Wrapper";
 import NotificationConductor from "components/notification/NotificationConductor/NotificationConductor";
 import Seo from "components/Seo/Seo";
 
@@ -410,14 +409,12 @@ class App extends React.Component<RouteComponentProps<any>, any> {
         {!isSeoDisabled &&
           <Seo location={history.location} />
         }
-        <Wrapper>
-          {/*
-          //@ts-ignore */}
-          <WidthContainer id="swapComponentWrapper" styleName="headerAndMain">
-            <Header />
-            <main>{children}</main>
-          </WidthContainer>
-        </Wrapper>
+        {/*
+        //@ts-ignore */}
+        <WidthContainer id="swapComponentWrapper" styleName="headerAndMain">
+          <Header />
+          <main>{children}</main>
+        </WidthContainer>
         <Core />
         <Footer />
         <RequestLoader />
