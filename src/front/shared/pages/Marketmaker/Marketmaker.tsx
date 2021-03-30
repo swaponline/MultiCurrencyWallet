@@ -3,27 +3,23 @@ import CSSModules from 'react-css-modules'
 
 import { connect } from 'redaction'
 import actions from 'redux/actions'
-import { constants } from 'helpers'
 
 import SwapApp from 'swap.app'
 import Swap from 'swap.swap'
 
+import { constants, links } from 'helpers'
 import config from 'helpers/externalConfig'
 
-import styles from './Marketmaker.scss'
-import marketmakerStyles from './M.scss'
 
+import styles from './Marketmaker.scss'
 
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 
-import links from 'helpers/links'
-
 import SwapRow from './SwapRow'
+import FAQ from './FAQ'
 
 import Toggle from 'components/controls/Toggle/Toggle'
 import Input from 'components/forms/Input/Input'
-
-
 
 
 @CSSModules(styles, { allowMultiple: true })
@@ -183,24 +179,19 @@ console.log('>>>> Market token', marketToken)
       return swapsByIds[bId].createUnixTimeStamp - swapsByIds[aId].createUnixTimeStamp
     })
     return (
-      <Fragment>
-        {/* Create offer form */}
-        <Fragment>
-          <h1>Страница маркетмаейкера </h1>
+      <>
+        
+        <section styleName="mm-settings">
+          <h2 styleName="section-title">Настройки маркетмейкинга</h2>
 
-          <p>МаркетмейкингBTC/WBTC : вкл/выкл</p>
+          <p>Маркетмейкинг BTC/WBTC : вкл/выкл</p>
           <p>Спред: 0.5% (по умолчанию стоит 0.5%)</p>
           <p>Баланс BTC: 2 BTC для попленения перведите на `адрес битка`</p>
           <p>Баланс WBTC: 2 WBTC</p>
-
-          <p>
-            Это безопасно?
-          - Система работает в бета версии, у нас есть один оаудит от dsec. Рекомендуем инвестировать только средства которые не жалко потерять. Уведомления о рисках 
-          </p>
-        </Fragment>
+        </section>
         {/* Swaps history + Active swaps */}
-        <Fragment>
-          <h1>Swap history</h1>
+        <section>
+          <h2 styleName="section-title">Swap history</h2>
           <table styleName="swapHistory">
             <thead>
               <tr>
@@ -239,8 +230,10 @@ console.log('>>>> Market token', marketToken)
               )}
             </tbody>
           </table>
-        </Fragment>
-      </Fragment>
+        </section>
+
+        <FAQ />
+      </>
     )
   }
 }

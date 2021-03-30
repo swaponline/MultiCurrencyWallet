@@ -8,10 +8,6 @@ section + section {
   border-top: 1px solid #{$color-brand}55;
 }
 
-p {
-  margin-bottom: 0.5em;
-}
-
 .section-title {
   margin: 0 auto 1em;
   max-width: 572px;
@@ -20,6 +16,10 @@ p {
   font-size: 30px;
   text-align: center;
   @include ff-regular;
+}
+
+p {
+  margin-bottom: 0.5em;
 }
 
 .how-to-earn {
@@ -64,8 +64,4 @@ p {
       display: block;
     }
   }
-}
-
-.marketmaker-settings {
-  opacity: 1;
 }

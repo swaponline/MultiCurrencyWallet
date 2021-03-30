@@ -3,10 +3,11 @@ import cssModules from 'react-css-modules'
 import { FormattedMessage } from 'react-intl'
 
 import styles from './BecomeMarketmaker.scss'
-import { feedback } from 'helpers'
+import { feedback, links } from 'helpers'
 import Button from 'components/controls/Button/Button'
 import Expandable from 'components/ui/Expandable/Expandable'
 import FAQ from './FAQ'
+import redirectTo from 'helpers/redirectTo'
 
 
 @cssModules(styles, { allowMultiple: true })
@@ -20,7 +21,9 @@ export default class BecomeMarketmaker extends React.Component<{}, {}> {
   }
 
   onSelectBrowser() {
+    console.log('onSelectBrowser')
     //feedback.marketmakerPromo.selected('browser')
+    redirectTo(`${links.marketmaker}/BTC-WBTC`)
   }
 
   onSelectServer() {
@@ -60,16 +63,6 @@ export default class BecomeMarketmaker extends React.Component<{}, {}> {
 
         <FAQ />
 
-        <section styleName="marketmaker-settings">
-          <h2 styleName="section-title">Настройки маркетмейкинга</h2>
-  {/*        Маркетмейкинг BTC/WBTC : вкл/выкл
-  Спред: 0.5% (по умолчанию стоит 0.5%)
-  Баланс BTC: 2 BTC для пополнения переведите на `адрес битка`
-  Баланс WBTC: 2 WBTC
-
-
-  Маркетмейкеров онлайн: 10. Всего ордеров: 10 btc, 5 wbtc.*/}
-        </section>
       </>
     )
   }
