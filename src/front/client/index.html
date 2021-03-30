@@ -855,48 +855,6 @@
           });
         }
 
-        // Open modal
-        function swapOpenModal(id) {
-          var thisModalEl = document.getElementById(id);
-          if (thisModalEl) {
-            document.getElementById(id).classList.remove('d-none');
-            document.body.classList.add('overflow-hidden');
-            bannerSwiper.update();
-          }
-        }
-
-        // Close modal
-        function swapCloseModal(id) {
-          if (id) {
-            document.getElementById(id).classList.add('d-none');
-            document.body.classList.remove('overflow-hidden');
-          }
-        }
-
-        // Close modal on click
-        document.querySelectorAll('.swap-close-modal').forEach((item) => {
-          item.addEventListener('click', function (e) {
-            e.preventDefault();
-            var thisParentId = this.parentNode.id;
-            swapCloseModal(thisParentId);
-          });
-        });
-
-        // Open modal on click
-        document.querySelectorAll('[data-open-modal]').forEach((item) => {
-          item.addEventListener('click', function (e) {
-            e.preventDefault();
-            var thisModalId = this.dataset.openModal;
-            swapOpenModal(thisModalId);
-          });
-        });
-
-        // Open modal by hash
-        var currentHash = window.location.hash;
-        var currentHashArr = currentHash.split('#');
-        var lastHash = currentHashArr.pop();
-        swapOpenModal(lastHash);
-
         window.logoUrl = '#';
         window.darkLogoUrl = '';
 
