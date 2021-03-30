@@ -11,7 +11,7 @@ import { constants, links } from 'helpers'
 import config from 'helpers/externalConfig'
 
 
-import styles from './Marketmaker.scss'
+import styles from './MarketmakerSettings.scss'
 
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 
@@ -23,7 +23,7 @@ import Input from 'components/forms/Input/Input'
 
 
 @CSSModules(styles, { allowMultiple: true })
-class Marketmaker extends Component<any, any> {
+class MarketmakerSettings extends Component<any, any> {
   _mounted = true
   _handleSwapAttachedHandle = null
   _handleSwapEnterStep = null
@@ -238,4 +238,4 @@ console.log('>>>> Market token', marketToken)
   }
 }
 
-export default injectIntl(Marketmaker)
+export default injectIntl(MarketmakerSettings)

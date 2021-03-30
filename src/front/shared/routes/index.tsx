@@ -20,8 +20,8 @@ import CurrencyWallet from 'pages/CurrencyWallet/CurrencyWallet'
 import Transaction from 'pages/Transaction/Transaction'
 import BtcMultisignProcessor from 'pages/Multisign/Btc/Btc'
 
-import Marketmaker from 'pages/Marketmaker/Marketmaker'
-import BecomeMarketmaker from 'pages/Marketmaker/BecomeMarketmaker'
+import MarketmakerPromo from 'pages/Marketmaker/MarketmakerPromo'
+import MarketmakerSettings from 'pages/Marketmaker/MarketmakerSettings'
 
 import CreateInvoice from 'pages/Invoices/CreateInvoice'
 import InvoicesList from 'pages/Invoices/InvoicesList'
@@ -56,8 +56,8 @@ const routes = (
 
       {[links.marketmaker, links.marketmaker_short].map(marketmaker => (
         <>
-          <Route path={`${localisePrefix}${marketmaker}/:token`} component={Marketmaker} />
-          <Route exact path={`${localisePrefix}${marketmaker}`} component={BecomeMarketmaker} />
+          <Route path={`${localisePrefix}${marketmaker}/:token`} component={MarketmakerSettings} />
+          <Route exact path={`${localisePrefix}${marketmaker}`} component={MarketmakerPromo} />
         </>
       ))}
 
