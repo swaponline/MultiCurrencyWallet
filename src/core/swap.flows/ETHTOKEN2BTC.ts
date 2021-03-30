@@ -178,6 +178,7 @@ export default (tokenName) => {
 
           async () => {
             const scriptFunded = await this.waitUTXOScriptFunded()
+
             if (scriptFunded) {
               await flow.ethTokenSwap.fundERC20Contract({
                 flow,
@@ -185,7 +186,21 @@ export default (tokenName) => {
             }
           },
 
-          // 6. Wait participant withdraw
+
+          // 6. Approve the token
+
+          async () => {
+            const approveData = {
+              amount: 1,
+            }
+
+            await flow.ethTokenSwap.approve(approveData, (hash) => {
+              console.log('%c token approved', 'color: blue')
+              console.log('tx hash: ', hash)
+            })
+          },
+
+          // 7. Wait participant withdraw
 
           async () => {
             const {
@@ -207,7 +222,7 @@ export default (tokenName) => {
             })
           },
 
-          // 7. Withdraw
+          // 8. Withdraw
 
           async () => {
             await this.btcSwap.withdrawFromSwap({
@@ -215,7 +230,7 @@ export default (tokenName) => {
             })
           },
 
-          // 8. Finish
+          // 9. Finish
 
           () => {
             flow.swap.room.once('request swap finished', () => {
@@ -234,7 +249,7 @@ export default (tokenName) => {
             }, { step: 'finish' })
           },
 
-          // 9. Finished!
+          // 10. Finished!
 
           () => {},
         ]
