@@ -17,17 +17,17 @@ export default class MarketmakerPromo extends React.Component<{}, {}> {
   }
 
   componentDidMount() {
-    //feedback.marketmakerPromo.entered()
+    feedback.marketmaking.entered()
   }
 
   onSelectBrowser() {
     console.log('onSelectBrowser')
-    //feedback.marketmakerPromo.selected('browser')
+    feedback.marketmaking.selected('browser')
     redirectTo(`${links.marketmaker}/BTC-WBTC`)
   }
 
   onSelectServer() {
-    //feedback.marketmaker.selected('server')
+    feedback.marketmaking.selected('server')
     window.open('https://github.com/swaponline/MultiCurrencyWallet/blob/master/docs/MARKETMAKER.md')
   }
 
