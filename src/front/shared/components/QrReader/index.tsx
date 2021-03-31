@@ -17,7 +17,6 @@ const QR = ({ openScan, handleScan, handleError }) => (
     </span>
     <QrReader
       delay={10}
-      facingMode={isMobile ? `back` : `rear`}
       onError={handleError}
       onScan={handleScan}
       style={{ width: '100%' }}
