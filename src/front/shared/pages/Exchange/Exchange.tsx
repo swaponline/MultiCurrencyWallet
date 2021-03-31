@@ -843,11 +843,14 @@ class Exchange extends PureComponent<any, any> {
 
     actions.token
       .approve({
-        to: '0x0000000000000000000000000000000000000000', // TODO: swap contract address
+        to: config.swapContract.erc20,
         name: haveCurrency,
         amount: new BigNumber(haveAmount),
       })
       .then((response) => {
+        console.log('%c Token was approved', 'color: green')
+        console.log('transaction hash: ', response.transactionHash)
+
         this.setState(() => ({ tokenApproved: true }))
         
         actions.notifications.show(
