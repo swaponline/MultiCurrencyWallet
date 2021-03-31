@@ -15,8 +15,8 @@ import styles from "./App.scss";
 import "scss/app.scss";
 
 import { createSwapApp } from "instances/newSwap";
+import SplashScreen from 'pages/SplashScreen'
 import Core from "containers/Core/Core";
-
 import Header from "components/Header/Header";
 import Footer from "components/Footer/Footer";
 import Loader from "components/loaders/Loader/Loader";
@@ -75,9 +75,9 @@ class App extends React.Component<RouteComponentProps<any>, any> {
   localStorageListener: any
 
   constructor(props) {
-    super(props);
+    super(props)
 
-    this.localStorageListener = null;
+    this.localStorageListener = null
 
     this.prvMultiTab = {
       reject: null,
@@ -86,15 +86,65 @@ class App extends React.Component<RouteComponentProps<any>, any> {
     };
 
     this.state = {
+      splashSreenIsOpen: true,
       fetching: false,
       multiTabs: false,
       error: "",
     }
   }
 
+  checkSplashScreenDisplay = () => {
+    const swapDisalbeStarter = this.getCookie('swapDisalbeStarter')
+    const isHomePage = this.checkHomePage()
+    const isWalletCreate = localStorage.getItem('isWalletCreate')
+    const localStorageIsOk = window.localStorage
+
+    if (
+      // TODO: from webpack
+      // !isWidgetBuild &&
+      swapDisalbeStarter !== 'true' &&
+      isHomePage &&
+      isWalletCreate === null &&
+      localStorageIsOk
+    ) {
+      this.setState(() => ({
+        splashSreenIsOpen: false,
+      }))
+    }
+  }
+
+  getCookie = (cookieName) => {
+    const name = cookieName + '='
+    const parametersArr = document.cookie.split(';')
+
+    for (let i = 0; i < parametersArr.length; i++) {
+      let parameter = parametersArr[i]
+
+      while (parameter.charAt(0) == ' ') {
+        parameter = parameter.substring(1)
+      }
+
+      if (parameter.indexOf(name) == 0) {
+        return parameter.substring(name.length, parameter.length)
+      }
+    }
+
+    return ''
+  }
+
+  checkHomePage = () => {
+    const swapLocationHash = window.location.hash
+
+    if (swapLocationHash == '' || swapLocationHash == '#/') {
+      return true
+    }
+
+    return false
+  }
+
 
   generadeId(callback) {
-    const newId = Date.now().toString();
+    const newId = Date.now().toString()
 
     this.setState(
       {
@@ -103,60 +153,60 @@ class App extends React.Component<RouteComponentProps<any>, any> {
       () => {
         callback(newId);
       }
-    );
+    )
   }
 
   preventMultiTabs(isSwitch) {
     this.generadeId(newId => {
       if (isSwitch) {
-        localStorage.setItem(constants.localStorage.switch, newId);
+        localStorage.setItem(constants.localStorage.switch, newId)
       }
 
       const onRejectHandle = () => {
         const { appID } = this.state;
-        const id = localStorage.getItem(constants.localStorage.reject);
+        const id = localStorage.getItem(constants.localStorage.reject)
 
         if (id && id !== appID) {
           this.setState({ multiTabs: true });
 
-          localStorage.unsubscribe(this.prvMultiTab.reject);
-          localStorage.unsubscribe(this.prvMultiTab.enter);
-          localStorage.unsubscribe(this.prvMultiTab.switch);
-          localStorage.removeItem(constants.localStorage.reject);
+          localStorage.unsubscribe(this.prvMultiTab.reject)
+          localStorage.unsubscribe(this.prvMultiTab.enter)
+          localStorage.unsubscribe(this.prvMultiTab.switch)
+          localStorage.removeItem(constants.localStorage.reject)
         }
-      };
+      }
 
       const onEnterHandle = () => {
-        const { appID } = this.state;
-        const id = localStorage.getItem(constants.localStorage.enter);
-        const switchId = localStorage.getItem(constants.localStorage.switch);
+        const { appID } = this.state
+        const id = localStorage.getItem(constants.localStorage.enter)
+        const switchId = localStorage.getItem(constants.localStorage.switch)
 
-        if (switchId && switchId === id) return;
+        if (switchId && switchId === id) return
 
-        localStorage.setItem(constants.localStorage.reject, appID);
-      };
+        localStorage.setItem(constants.localStorage.reject, appID)
+      }
 
       const onSwitchHangle = () => {
-        const switchId = localStorage.getItem(constants.localStorage.switch);
-        const { appID } = this.state;
+        const switchId = localStorage.getItem(constants.localStorage.switch)
+        const { appID } = this.state
 
         if (appID !== switchId) {
           this.setState({
             multiTabs: true
-          });
+          })
 
-          localStorage.unsubscribe(this.prvMultiTab.reject);
-          localStorage.unsubscribe(this.prvMultiTab.enter);
-          localStorage.unsubscribe(this.prvMultiTab.switch);
+          localStorage.unsubscribe(this.prvMultiTab.reject)
+          localStorage.unsubscribe(this.prvMultiTab.enter)
+          localStorage.unsubscribe(this.prvMultiTab.switch)
         }
-      };
+      }
 
-      this.prvMultiTab.reject = localStorage.subscribe(constants.localStorage.reject, onRejectHandle);
-      this.prvMultiTab.enter = localStorage.subscribe(constants.localStorage.enter, onEnterHandle);
-      this.prvMultiTab.switch = localStorage.subscribe(constants.localStorage.switch, onSwitchHangle);
+      this.prvMultiTab.reject = localStorage.subscribe(constants.localStorage.reject, onRejectHandle)
+      this.prvMultiTab.enter = localStorage.subscribe(constants.localStorage.enter, onEnterHandle)
+      this.prvMultiTab.switch = localStorage.subscribe(constants.localStorage.switch, onSwitchHangle)
 
-      localStorage.setItem(constants.localStorage.enter, newId);
-    });
+      localStorage.setItem(constants.localStorage.enter, newId)
+    })
   }
 
   popupIncorrectNetwork() {
@@ -264,6 +314,7 @@ class App extends React.Component<RouteComponentProps<any>, any> {
     const { currencies } = this.props
 
     this.preventMultiTabs(false)
+    this.checkSplashScreenDisplay()
 
     // Default Farm init options
     if (config.entry === 'testnet') {
@@ -290,25 +341,25 @@ class App extends React.Component<RouteComponentProps<any>, any> {
     this.processMetamask()
 
     this.checkIfDashboardModalsAllowed()
-    window.actions = actions;
+    window.actions = actions
 
     window.onerror = (error) => {
       console.error('App error: ', error)
-    };
+    }
 
     try {
-      const db = indexedDB.open("test");
+      const db = indexedDB.open("test")
       db.onerror = (e) => {
         console.error('db error', e)
-      };
+      }
     } catch (e) {
       console.error('db error', e)
     }
 
-    actions.user.sign();
-    await createSwapApp();
+    actions.user.sign()
+    await createSwapApp()
 
-    this.setState(() => ({ fetching: true }));
+    this.setState(() => ({ fetching: true }))
     window.prerenderReady = true;
 
     const appInstalled = (e) => {
@@ -319,8 +370,8 @@ class App extends React.Component<RouteComponentProps<any>, any> {
       )
       window.removeEventListener('appinstalled', appInstalled)
     }
-    window.addEventListener('appinstalled', appInstalled)
 
+    window.addEventListener('appinstalled', appInstalled)
   }
 
   componentDidUpdate() {
@@ -346,12 +397,12 @@ class App extends React.Component<RouteComponentProps<any>, any> {
     this.setState({
       multiTabs: false
     });
-    this.preventMultiTabs(true);
-  };
+    this.preventMultiTabs(true)
+  }
 
   overflowHandler = () => {
     //@ts-ignore
-    const { modals, dashboardModalsAllowed } = this.props;
+    const { modals, dashboardModalsAllowed } = this.props
     const isAnyModalCalled = Object.keys(modals).length > 0
 
     const isDark = localStorage.getItem(constants.localStorage.isDark)
@@ -377,21 +428,21 @@ class App extends React.Component<RouteComponentProps<any>, any> {
   }
 
   render() {
-    const { fetching, multiTabs, error } = this.state;
+    const { fetching, multiTabs, splashSreenIsOpen } = this.state
     //@ts-ignore
-    const { children, ethAddress, btcAddress, ghostAddress, nextAddress, tokenAddress, history, dashboardModalsAllowed } = this.props;
+    const { children, ethAddress, btcAddress, ghostAddress, nextAddress, tokenAddress, history, dashboardModalsAllowed } = this.props
 
     this.overflowHandler()
 
-    const isFetching = !ethAddress || !btcAddress || !ghostAddress || !nextAddress || (!tokenAddress && config && !config.isWidget) || !fetching;
+    const isFetching = !ethAddress || !btcAddress || !ghostAddress || !nextAddress || (!tokenAddress && config && !config.isWidget) || !fetching
 
-    const isWidget = history.location.pathname.includes("/exchange") && history.location.hash === "#widget";
-    const isCalledFromIframe = window.location !== window.parent.location;
-    const isWidgetBuild = config && config.isWidget;
+    const isWidget = history.location.pathname.includes("/exchange") && history.location.hash === "#widget"
+    const isCalledFromIframe = window.location !== window.parent.location
+    const isWidgetBuild = config && config.isWidget
 
     if (isWidgetBuild && localStorage.getItem(constants.localStorage.didWidgetsDataSend) !== "true") {
       // firebase.submitUserDataWidget("usersData");
-      localStorage.setItem(constants.localStorage.didWidgetsDataSend, true);
+      localStorage.setItem(constants.localStorage.didWidgetsDataSend, true)
     }
 
     if (multiTabs) {
@@ -410,17 +461,26 @@ class App extends React.Component<RouteComponentProps<any>, any> {
         {!isSeoDisabled &&
           <Seo location={history.location} />
         }
-        <Wrapper>
-          {/*
-          //@ts-ignore */}
-          <WidthContainer id="swapComponentWrapper" styleName="headerAndMain">
-            <Header />
-            <main>{children}</main>
-          </WidthContainer>
-        </Wrapper>
-        <Core />
-        <Footer />
-        <RequestLoader />
+
+        {!splashSreenIsOpen ? (
+            <>
+              <Wrapper>
+                {/*
+                //@ts-ignore */}
+                <WidthContainer id="swapComponentWrapper" styleName="headerAndMain">
+                  <Header />
+                  <main>{children}</main>
+                </WidthContainer>
+              </Wrapper>
+              <Core />
+              <Footer />
+              <RequestLoader />
+            </>
+          ) : (
+            <SplashScreen history={history} />
+          )
+        }
+
         {!dashboardModalsAllowed &&
           <ModalConductor history={history}
         />}

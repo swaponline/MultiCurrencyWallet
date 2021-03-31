@@ -1,3 +1,15 @@
+// TODO: delete css variables and replace with scss
+
+:root {
+  --primary:#6144e5; // it's used by MnemonicInput.css
+  --primary-hover: #7371ff;
+  --primary-background: rgba(97, 68, 229, 0.1);
+  --alternate: #e91db4;
+  --alternate-hover:  #ff1fc5;
+}
+
+// ------------------------------------------
+
 $primary: var(--primary);
 $primary-hover: var(--primary-hover);
 $alternate: var(--alternate);

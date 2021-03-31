@@ -1,0 +1,56 @@
+@mixin flexSetup {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.splashScreen {
+  width: 100vw;
+  height: 100vh;
+  padding: 4vh 0;
+  @include flexSetup;
+  flex-direction: column;
+  background-color: $l-background-color;
+  color: $color-brand;
+
+  .infoWrapper {
+    @include flexSetup;
+  }
+
+  .infoBlock {
+    @include flexSetup;
+    flex-direction: column;
+
+    img {
+      width: 20em;
+      height: 20em;
+    }
+
+    p {
+      max-width: 20em;
+      margin: 0.6em 0;
+      padding: 0;
+      text-align: center;
+      font-size: 1.2em;
+    }
+  }
+
+  .buttonsWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .topButtons {
+    @include flexSetup;
+  }
+
+  .connectBtnIcon {
+    width: 1.4em;
+    height: 1.4em;
+  }
+}
+
+.splashScreen.dark {
+  background-color: $d-background-color;
+}
