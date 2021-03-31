@@ -1,5 +1,5 @@
 import React, { PureComponent, Fragment } from 'react'
-
+import ERC20_ABI from 'human-standard-token-abi'
 import Link from 'local_modules/sw-valuelink'
 
 import ThemeTooltip from '../../components/ui/Tooltip/ThemeTooltip'
@@ -33,6 +33,7 @@ import helpers, {
   feedback,
   ethToken,
   links,
+  web3,
 } from 'helpers'
 import { animate } from 'helpers/domUtils'
 import Switching from 'components/controls/Switching/Switching'
@@ -846,24 +847,23 @@ class Exchange extends PureComponent<any, any> {
     return true
   }
 
-  hasTokenAllowance = () => {
-    // TODO: before approve need to check allowance
-    // ...DidMount
-
+  hasTokenAllowance = async () => {
     const { tokensData } = this.props
     const { haveCurrency, haveAmount } = this.state
-    const haveTokenObj = tokensData.find(tokenObj => tokenObj.name === haveCurrency)
-    // const tokenContract = new web3.eth.Contract(tokenAbi, haveTokenObj.address)
-    // const result = await tokenContract.methods.allowance(
-    //    config.swapContract.erc20,
-    //    eth user address
-    //  )
+    const haveTokenObj = tokensData.find(tokenObj => {
+      return tokenObj.name === haveCurrency.toLowerCase()
+    })
+    const tokenContract = new web3.eth.Contract(ERC20_ABI, haveTokenObj.contractAddress)
+    const result = await tokenContract.methods.allowance(
+      config.swapContract.erc20,
+      haveTokenObj.address
+    )
 
-    // if (result > haveAmount) {
-    //   this.setState(() => ({
-    //     hasTokenAllowance: true,
-    //   }))
-    // }
+    if (new BigNumber(haveAmount).isLessThan(result)) {
+      this.setState(() => ({
+        hasTokenAllowance: true,
+      }))
+    }
   }
 
   approveTheToken = () => {

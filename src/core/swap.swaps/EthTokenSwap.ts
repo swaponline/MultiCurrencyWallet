@@ -194,13 +194,6 @@ class EthTokenSwap extends SwapInterface {
             reject({ message: error.message, gasAmount: new BigNumber(gasAmount).dividedBy(1e8).toString() })
           })
 
-        console.group('Swaps >%c EthTokenSwap', 'color: DodgerBlue')
-        console.log('amount: ', newAmount)
-        console.log('params: ', params)
-        console.log('gas: ', gasAmount)
-        console.log('result: ', result)
-        console.groupEnd()
-
         resolve(result)
       }
       catch (err) {
