@@ -54,12 +54,10 @@ const routes = (
       <Route path={`${localisePrefix}${links.exchange}/:sell-to-:buy`} component={Exchange} />
       <Route path={`${localisePrefix}${links.exchange}`} component={Exchange} />
 
-      {[links.marketmaker, links.marketmaker_short].map(marketmaker => (
-        <>
-          <Route path={`${localisePrefix}${marketmaker}/:token`} component={MarketmakerSettings} />
-          <Route exact path={`${localisePrefix}${marketmaker}`} component={MarketmakerPromo} />
-        </>
-      ))}
+      <Route exact path={`${localisePrefix}${links.marketmaker}`} component={MarketmakerPromo} />
+      <Route exact path={`${localisePrefix}${links.marketmaker_short}`} component={MarketmakerPromo} />
+      <Route path={`${localisePrefix}${links.marketmaker}/:token`} component={MarketmakerSettings} />
+      <Route path={`${localisePrefix}${links.marketmaker_short}/:token`} component={MarketmakerSettings} />
 
       <Route path={`${localisePrefix}${links.farm}`} component={Farm} />
       <Route path={`${localisePrefix}${links.localStorage}`} component={LocalStorage} />
