@@ -94,8 +94,9 @@ export default class MarketmakerPromo extends React.Component<{}, {}> {
               <h3 styleName="mode-title">
                 <span styleName="number">④</span>
                 &nbsp;&nbsp;
-                <span>Получайте дополнительную награду в SWAP токенах, заморозив LP токены</span>
+                <span>Фарминг</span>
               </h3>
+              <p>Получайте дополнительную награду в SWAP токенах, заморозив LP токены</p>
               <Button styleName="mode-button" blue onClick={this.onSelectFarm}>
                 Начать фарминг
               </Button>
