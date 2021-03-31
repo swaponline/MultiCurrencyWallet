@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import CSSModules from 'react-css-modules'
 import styles from './index.scss'
 import links from 'helpers/links'
@@ -10,27 +11,8 @@ import Button from 'components/controls/Button/Button'
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
-const SplashScreen = (props) => {
-  const { history } = props
-
-  console.log('%c SplashScreen', 'color: yellow')
-  console.log('props: ', props)
-
-  const handlerCreateBtn = () => {
-    history.push(links.createWallet)
-  }
-  
-  const handlerConnectBtn = () => {
-    history.push(links.connectWallet)
-  }
-
-  const handlerRestoreBtn = () => {
-    history.push(links.restoreWallet)
-  }
-
+const SplashScreen = () => {
   const handlerSkipBtn = () => {
-    history.push(links.exchange)
-
     const date = new Date()
     const daysInThisMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate()
     // 60 second * 60 minutes * 24 hours * daysInThisMonth * 12 months
@@ -112,32 +94,32 @@ const SplashScreen = (props) => {
 
       <div styleName="buttonsWrapper">
         <div styleName="topButtons">
-          <Button brand onClick={handlerCreateBtn}>
+          <Link to={links.createWallet}>
             <FormattedMessage
               id="AlertModalcreateWallet"
               defaultMessage="Create Wallet"
             />
-          </Button>
+          </Link>
 
-          <Button brand onClick={handlerConnectBtn}>
+          <Link to={links.connectWallet}>
             <img styleName="connectBtnIcon" src={web3Icons.METAMASK} />{' '}
             <FormattedMessage
               id="ImportKeys_ConnectWallet"
               defaultMessage="Connect Wallet"
             />
-          </Button>
+          </Link>
         </div>
 
-        <Button empty onClick={handlerRestoreBtn}>
+        <Link to={links.restoreWallet}>
           <FormattedMessage
             id="ImportKeys_RestoreMnemonic"
             defaultMessage="Restore from 12-word seed"
           />
-        </Button>
+        </Link>
 
-        <Button onClick={handlerSkipBtn}>
+        <Link to={links.exchange} onClick={handlerSkipBtn}>
           <FormattedMessage id="skip" defaultMessage="Skip" />
-        </Button>
+        </Link>
       </div>
     </section>
   )

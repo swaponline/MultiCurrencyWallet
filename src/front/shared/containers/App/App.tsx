@@ -86,7 +86,7 @@ class App extends React.Component<RouteComponentProps<any>, any> {
     };
 
     this.state = {
-      splashSreenIsOpen: true,
+      splashSreenIsOpen: false,
       fetching: false,
       multiTabs: false,
       error: "",
@@ -95,20 +95,15 @@ class App extends React.Component<RouteComponentProps<any>, any> {
 
   checkSplashScreenDisplay = () => {
     const swapDisalbeStarter = this.getCookie('swapDisalbeStarter')
-    const isHomePage = this.checkHomePage()
     const isWalletCreate = localStorage.getItem('isWalletCreate')
-    const localStorageIsOk = window.localStorage
 
     if (
       // TODO: from webpack
       // !isWidgetBuild &&
-      swapDisalbeStarter !== 'true' &&
-      isHomePage &&
-      isWalletCreate === null &&
-      localStorageIsOk
+      swapDisalbeStarter !== 'true' && isWalletCreate === null
     ) {
       this.setState(() => ({
-        splashSreenIsOpen: false,
+        splashSreenIsOpen: true,
       }))
     }
   }
@@ -131,17 +126,6 @@ class App extends React.Component<RouteComponentProps<any>, any> {
 
     return ''
   }
-
-  checkHomePage = () => {
-    const swapLocationHash = window.location.hash
-
-    if (swapLocationHash == '' || swapLocationHash == '#/') {
-      return true
-    }
-
-    return false
-  }
-
 
   generadeId(callback) {
     const newId = Date.now().toString()
@@ -314,7 +298,6 @@ class App extends React.Component<RouteComponentProps<any>, any> {
     const { currencies } = this.props
 
     this.preventMultiTabs(false)
-    this.checkSplashScreenDisplay()
 
     // Default Farm init options
     if (config.entry === 'testnet') {
@@ -372,10 +355,19 @@ class App extends React.Component<RouteComponentProps<any>, any> {
     }
 
     window.addEventListener('appinstalled', appInstalled)
+
+    this.checkSplashScreenDisplay()
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps, prevState) {
+    const { splashSreenIsOpen } = this.state
+
+    if (prevState.splashSreenIsOpen !== splashSreenIsOpen) {
+      this.checkSplashScreenDisplay()
+    }
+
     this.checkIfDashboardModalsAllowed()
+
     if (process.env.MAINNET) {
       // firebase.setUserLastOnline();
     }
@@ -477,7 +469,7 @@ class App extends React.Component<RouteComponentProps<any>, any> {
               <RequestLoader />
             </>
           ) : (
-            <SplashScreen history={history} />
+            <SplashScreen />
           )
         }
 
