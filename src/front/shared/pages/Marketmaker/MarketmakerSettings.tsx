@@ -179,9 +179,8 @@ console.log('>>>> Market token', marketToken)
       return swapsByIds[bId].createUnixTimeStamp - swapsByIds[aId].createUnixTimeStamp
     })
     return (
-      <>
-        
-        <section styleName="mm-settings">
+      <div styleName="mm-settings-page">
+        <section styleName="mm-controls">
           <h2 styleName="section-title">Настройки маркетмейкинга</h2>
 
           <p>Маркетмейкинг BTC/WBTC : вкл/выкл</p>
@@ -189,6 +188,7 @@ console.log('>>>> Market token', marketToken)
           <p>Баланс BTC: 2 BTC для попленения перведите на `адрес битка`</p>
           <p>Баланс WBTC: 2 WBTC</p>
         </section>
+
         {/* Swaps history + Active swaps */}
         <section>
           <h2 styleName="section-title">Swap history</h2>
@@ -233,7 +233,7 @@ console.log('>>>> Market token', marketToken)
         </section>
 
         <FAQ />
-      </>
+      </div>
     )
   }
 }

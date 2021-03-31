@@ -1,19 +1,23 @@
-section {
-  max-width: 700px;
-  margin: 0 auto;
-  padding: 2em 0;
-}
+.mm-faq-page {
 
-section + section {
-  border-top: 1px solid #{$color-brand}55;
-}
+  section {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 2em 0;
+  }
 
-.section-title {
-  margin: 0 auto 1em;
-  max-width: 572px;
-  font-style: normal;
-  line-height: 1em;
-  font-size: 30px;
-  text-align: center;
-  @include ff-regular;
+  section + section {
+    border-top: 1px solid #{$color-brand}55;
+  }
+
+  .section-title {
+    margin: 0 auto 1em;
+    max-width: 572px;
+    font-style: normal;
+    line-height: 1em;
+    font-size: 30px;
+    text-align: center;
+    @include ff-regular;
+  }
+
 }

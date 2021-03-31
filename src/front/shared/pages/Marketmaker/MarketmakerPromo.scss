@@ -1,67 +1,71 @@
-section {
-  max-width: 700px;
-  margin: 0 auto;
-  padding: 2em 0;
-}
+.mm-promo-page {
 
-section + section {
-  border-top: 1px solid #{$color-brand}55;
-}
+  section {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 2em 0;
+  }
 
-.section-title {
-  margin: 0 auto 1em;
-  max-width: 572px;
-  font-style: normal;
-  line-height: 1em;
-  font-size: 30px;
-  text-align: center;
-  @include ff-regular;
-}
+  section + section {
+    border-top: 1px solid #{$color-brand}55;
+  }
 
-p {
-  margin-bottom: 0.5em;
-}
+  .section-title {
+    margin: 0 auto 1em;
+    max-width: 572px;
+    font-style: normal;
+    line-height: 1em;
+    font-size: 30px;
+    text-align: center;
+    @include ff-regular;
+  }
 
-.how-to-earn {
-  padding-top: 0;
-}
+  p {
+    margin-bottom: 0.5em;
+  }
 
-.select-mode {
+  .how-to-earn {
+    padding-top: 0;
+  }
 
-  .modes {
-    display: flex;
+  .select-mode {
 
-    .mode + .mode {
-      margin-left: 2em;
-    }
-
-    @media (max-width: 820px) {
-      display: block;
+    .modes {
+      display: flex;
 
       .mode + .mode {
-        margin-left: 0;
+        margin-left: 2em;
+      }
+
+      @media (max-width: 820px) {
+        display: block;
+
+        .mode + .mode {
+          margin-left: 0;
+        }
+      }
+    }
+
+    .mode {
+      margin-bottom: 1.8em;
+      //border: 1px solid $color-brand;
+      box-shadow: rgba(0,0,0, 0.2) 0 4px 24px;
+      border-radius: 10px;
+      padding: 1.5em 1em;
+
+      .mode-title {
+        color: #{$color-brand};
+        font-weight: 500;
+      }
+      .number {
+        font-weight: bold;
+      }
+      .mode-button {
+        margin: 1em auto 0;
+        min-width: 100px;
+        display: block;
       }
     }
   }
 
-  .mode {
-    margin-bottom: 1.8em;
-    //border: 1px solid $color-brand;
-    box-shadow: rgba(0,0,0, 0.2) 0 4px 24px;
-    border-radius: 10px;
-    padding: 1.5em 1em;
-
-    .mode-title {
-      color: #{$color-brand};
-      font-weight: 500;
-    }
-    .number {
-      font-weight: bold;
-    }
-    .mode-button {
-      margin: 1em auto 0;
-      min-width: 100px;
-      display: block;
-    }
-  }
 }

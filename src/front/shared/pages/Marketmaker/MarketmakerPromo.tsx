@@ -33,7 +33,7 @@ export default class MarketmakerPromo extends React.Component<{}, {}> {
 
   render() {
     return (
-      <>
+      <div styleName="mm-promo-page">
         <section styleName="how-to-earn">
           <h2 styleName="section-title">Как заработать на атомарных свопах?</h2>
           <p>Станьте маркетмейкером, предоставив свой капитал для обеспечения атомарных свопов.</p>
@@ -80,7 +80,7 @@ export default class MarketmakerPromo extends React.Component<{}, {}> {
 
         <FAQ />
 
-      </>
+      </div>
     )
   }
 
