@@ -27,7 +27,7 @@ const QR = ({ openScan, handleScan, handleError }) => (
     </span>
     <QrReader
       delay={10}
-      facingMode="front"
+      facingMode="rear"
       onError={handleError}
       onScan={handleScan}
       chooseDeviceId={defaultDeviceIdChooser}
