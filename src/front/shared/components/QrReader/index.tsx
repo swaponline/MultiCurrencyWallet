@@ -6,6 +6,9 @@ import styles from './styles.scss'
 import { FormattedMessage } from 'react-intl'
 import QrReader from 'react-qr-scanner'
 
+import { isMobile } from 'react-device-detect'
+
+
 /* eslint-disable */
 const QR = ({ openScan, handleScan, handleError }) => (
   <div styleName="scan">
@@ -14,7 +17,7 @@ const QR = ({ openScan, handleScan, handleError }) => (
     </span>
     <QrReader
       delay={10}
-      facingMode="rear"
+      facingMode={isMobile ? `back` : `rear`}
       onError={handleError}
       onScan={handleScan}
       style={{ width: '100%' }}
