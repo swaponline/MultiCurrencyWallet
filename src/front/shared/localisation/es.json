@@ -5778,7 +5778,7 @@
   },
   {
     "id": "menu.farm",
-    "message": "Estacas y agricultura",
+    "message": "Agricultura",
     "files": [
       "src/front/shared/components/Header/config.tsx"
     ]

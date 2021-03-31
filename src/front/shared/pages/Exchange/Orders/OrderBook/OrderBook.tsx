@@ -327,6 +327,8 @@ class OrderBook extends Component {
                         pairFees={pairFees}
                         balances={balances}
                         checkSwapAllow={checkSwapAllow}
+                        buy={buyCurrency}
+                        sell={sellCurrency}
                       />
                     )}
                   />
@@ -377,6 +379,8 @@ class OrderBook extends Component {
                         pairFees={pairFees}
                         balances={balances}
                         checkSwapAllow={checkSwapAllow}
+                        buy={sellCurrency}
+                        sell={buyCurrency}
                       />
                     )}
                   />

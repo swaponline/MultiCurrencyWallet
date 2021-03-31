@@ -54,6 +54,7 @@ class SwapComponent extends PureComponent<any, any> {
   sendDebugInfoTimer: any
 
 
+
   /*
     ================================================================
     This is debug information without any secret and private data.
@@ -169,6 +170,7 @@ class SwapComponent extends PureComponent<any, any> {
       console.log('creating swap')
 
       const swap = new Swap(orderId, SwapApp.shared())
+      actions.core.rememberSwap(swap)
       window.active_swap = swap
 
       console.log('swap: ', swap)
@@ -222,10 +224,6 @@ class SwapComponent extends PureComponent<any, any> {
         error: 'Sorry, but this order do not exsit already'
       })
       this.props.history.push(localisedUrl(links.exchange))
-    }
-
-    if (!this.props.savedOrders.includes(orderId)) {
-      this.setSaveSwapId(orderId)
     }
 
     console.groupEnd()
@@ -332,18 +330,6 @@ class SwapComponent extends PureComponent<any, any> {
   deleteThisSwap = (orderId) => {
     actions.core.saveDeletedOrder(orderId)
     actions.core.forgetOrders(orderId)
-  }
-
-  setSaveSwapId = (orderId) => {
-    let swapsId = JSON.parse(localStorage.getItem('swapId'))
-
-    if (swapsId === null || swapsId.length === 0) {
-      swapsId = []
-    }
-    if (!swapsId.includes(orderId)) {
-      swapsId.push(orderId)
-    }
-    localStorage.setItem('swapId', JSON.stringify(swapsId))
   }
 
   isBalanceEnough = () => {

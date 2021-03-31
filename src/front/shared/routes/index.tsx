@@ -20,6 +20,8 @@ import CurrencyWallet from 'pages/CurrencyWallet/CurrencyWallet'
 import Transaction from 'pages/Transaction/Transaction'
 import BtcMultisignProcessor from 'pages/Multisign/Btc/Btc'
 
+import Marketmaker from 'pages/Marketmaker/Marketmaker'
+
 import CreateInvoice from 'pages/Invoices/CreateInvoice'
 import InvoicesList from 'pages/Invoices/InvoicesList'
 import Invoice from 'pages/Invoices/Invoice'
@@ -27,7 +29,6 @@ import Invoice from 'pages/Invoices/Invoice'
 import ScrollToTop from '../components/layout/ScrollToTop/ScrollToTop'
 import SaveMnemonicModal from "components/modals/SaveMnemonicModal/SaveMnemonicModal"
 import SaveKeysModal from "components/modals/SaveKeysModal/SaveKeysModal"
-
 
 import RestoryMnemonicWallet from "components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet"
 
@@ -76,6 +77,10 @@ const routes = (
       <Route exact path={`${localisePrefix}${links.notFound}`} component={NotFound} />
       <Route exact path={`${localisePrefix}/`} component={Wallet} />
       <Route exact path={`${localisePrefix}${links.connectWallet}`} component={Wallet} />
+
+      <Route exact path={`${localisePrefix}${links.marketmaker}`} component={Marketmaker} />
+      <Route exact path={`${localisePrefix}${links.marketmaker_short}`} component={Marketmaker} />
+
       {/* In desktop mode - the history is shown in the wallet design */}
       {!isMobile && (
         <>

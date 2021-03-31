@@ -5761,7 +5761,7 @@
   },
   {
     "id": "menu.farm",
-    "message": "Staking i rolnictwo",
+    "message": "Rolnictwo",
     "files": [
       "src/front/shared/components/Header/config.tsx"
     ]

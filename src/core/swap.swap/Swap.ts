@@ -31,6 +31,7 @@ class Swap {
   flow: FlowType
 
   constructor(id, app, order?) {
+    SwapApp.required(app)
     this.id                     = null
     this.isMy                   = null
     this.isTurbo                = null
@@ -44,15 +45,13 @@ class Swap {
     this.participantSwap        = null
     this.destinationBuyAddress  = null
     this.destinationSellAddress = null
-    this.app                    = null
+    this.app                    = app
     this.createUnixTimeStamp    = Math.floor(new Date().getTime() / 1000)
 
     this.participantMetamaskAddress = null
 
     // Wait confirm > 1
     this.waitConfirm            = false
-
-    this._attachSwapApp(app)
 
     let data = this.app.env.storage.getItem(`swap.${id}`)
 
@@ -63,6 +62,13 @@ class Swap {
     }
 
     this.update(data)
+
+    const swapExists = this._attachSwapApp(app)
+    if (swapExists !== null) {
+      // Swap object already created and attached to SwapApp.
+      // Prevent two Swap object - return exists
+      return swapExists
+    }
 
     this.events = new Events()
 
@@ -109,6 +115,16 @@ class Swap {
         participantMetamaskAddress: data.address,
       })
     })
+
+    this.on('enter step', () => {
+      this.app.emit('swap enter step', {
+        swap: this,
+      })
+    })
+
+    this.app.emit('swap attached', {
+      swap: this,
+    })
   }
 
 /* static read(app, { id }) {
@@ -145,11 +161,8 @@ class Swap {
     return this.flow.isFinished()
   }
 
-  _attachSwapApp(app) {
-    SwapApp.required(app)
-
-    this.app = app
-    this.app.attachSwap(this)
+  _attachSwapApp(app): Swap {
+    return this.app.attachSwap(this)
   }
 
   _getDataFromOrder(order) {
