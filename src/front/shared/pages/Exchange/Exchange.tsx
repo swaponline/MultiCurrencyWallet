@@ -103,7 +103,8 @@ type ExchangeState = {
   haveBalance: boolean
   isTurbo: boolean
   isPending: boolean
-  isEthToken: boolean
+  isTokenSell: boolean
+  hasTokenAllowance: boolean
   tokenApproved: boolean
 
   isNoAnyOrders?: boolean
@@ -278,7 +279,8 @@ class Exchange extends PureComponent<any, any> {
     const getType = this.getDefaultWalletType(getCurrency.toUpperCase())
 
     this.state = {
-      isEthToken: ethToken.isEthToken({ name: haveCurrency }),
+      isTokenSell: ethToken.isEthToken({ name: haveCurrency }),
+      hasTokenAllowance: false,
       tokenApproved: false,
       haveCurrency,
       haveType,
@@ -414,7 +416,7 @@ class Exchange extends PureComponent<any, any> {
   componentDidMount() {
     this._mounted = true
 
-    const { haveCurrency, getCurrency } = this.state
+    const { isTokenSell, haveCurrency, getCurrency } = this.state
 
     actions.core.updateCore()
     this.returnNeedCurrency(haveCurrency, getCurrency)
@@ -447,7 +449,18 @@ class Exchange extends PureComponent<any, any> {
     
     this.getInfoAboutCurrency()
     this.fetchPairFeesAndBalances()
+    
+    if (isTokenSell) {
+      this.hasTokenAllowance()
+    }
+
     metamask.web3connect.on('updated', this.fetchPairFeesAndBalances)
+
+    // ! delete ------------------------------
+    console.group('%c Exchange', 'color: yellow')
+    console.log('props: ', this.props)
+    console.log('state: ', this.state)
+    console.groupEnd()
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -833,6 +846,26 @@ class Exchange extends PureComponent<any, any> {
     return true
   }
 
+  hasTokenAllowance = () => {
+    // TODO: before approve need to check allowance
+    // ...DidMount
+
+    const { tokensData } = this.props
+    const { haveCurrency, haveAmount } = this.state
+    const haveTokenObj = tokensData.find(tokenObj => tokenObj.name === haveCurrency)
+    // const tokenContract = new web3.eth.Contract(tokenAbi, haveTokenObj.address)
+    // const result = await tokenContract.methods.allowance(
+    //    config.swapContract.erc20,
+    //    eth user address
+    //  )
+
+    // if (result > haveAmount) {
+    //   this.setState(() => ({
+    //     hasTokenAllowance: true,
+    //   }))
+    // }
+  }
+
   approveTheToken = () => {
     const { haveCurrency, haveAmount } = this.state
 
@@ -859,6 +892,7 @@ class Exchange extends PureComponent<any, any> {
         )
       })
       .catch((error) => {
+        feedback.exchangeForm.failed(`approve a token(${haveCurrency}) : error message(${error.message})`)
         actions.notifications.show(
           constants.notifications.ErrorNotification,
           { error: error.message }
@@ -1464,7 +1498,8 @@ class Exchange extends PureComponent<any, any> {
     } = this.props
 
     const {
-      isEthToken,
+      isTokenSell,
+      hasTokenAllowance,
       tokenApproved,
       haveCurrency,
       haveType,
@@ -1852,9 +1887,10 @@ class Exchange extends PureComponent<any, any> {
           )}
 
           <div styleName="buttons">
-            {isEthToken ? (
-              <Button styleName="button"
-                onClick={this.approveTheToken}
+            {isTokenSell && !hasTokenAllowance ? (
+              <Button
+                styleName="button"
+                onClick={tokenApproved ? this.initSwap : this.approveTheToken}
                 disabled={!canStartSwap}
                 pending={isPending}
                 blue={true}
