@@ -21,7 +21,6 @@ export default class MarketmakerPromo extends React.Component<{}, {}> {
   }
 
   onSelectBrowser() {
-    console.log('onSelectBrowser')
     feedback.marketmaking.selected('browser')
     redirectTo(`${links.marketmaker}/BTC-WBTC`)
   }
@@ -31,19 +30,34 @@ export default class MarketmakerPromo extends React.Component<{}, {}> {
     window.open('https://github.com/swaponline/MultiCurrencyWallet/blob/master/docs/MARKETMAKER.md')
   }
 
+  onSelectPool() {
+    feedback.marketmaking.selected('pool')
+    window.open('https://app.uniswap.org/#/add/0x14a52cf6b4f68431bd5d9524e4fcd6f41ce4ade9/ETH')
+  }
+
+  onSelectFarm() {
+    feedback.marketmaking.selected('farm')
+    redirectTo(`${links.farm}`)
+  }
+
   render() {
     return (
       <div styleName="mm-promo-page">
         <section styleName="how-to-earn">
           <h2 styleName="section-title">Как заработать на атомарных свопах?</h2>
           <p>Станьте маркетмейкером, предоставив свой капитал для обеспечения атомарных свопов.</p>
-          <p>Когда пользователи будут совершать обмены, вы будете зарабатывать %. Помимо этого среди всех маркетмейкеров распределяются SWAP токены, которые можно продать или использовать для фарминга еще большей награды заморозив в пуле SWAP/ETH на uniswap.org </p>
+          <p>Когда пользователи будут совершать обмены, вы будете зарабатывать %.</p>
+          <p>Помимо этого, среди всех маркетмейкеров распределяются SWAP токены, которые можно продать или использовать для фарминга еще большей награды, заморозив в uniswap-пуле SWAP/ETH</p>
         </section>
         <section styleName="select-mode">
           <h2 styleName="section-title">Выберите способ</h2>
           <div styleName="modes">
             <div styleName="mode">
-              <h3 styleName="mode-title"><span styleName="number">①</span> Маркетмейкер в браузере</h3>
+              <h3 styleName="mode-title">
+                <span styleName="number">①</span>
+                &nbsp;&nbsp;
+                <span>Маркетмейкер в браузере</span>
+              </h3>
               <p>Подходит для того, что бы попробовать.</p>
               <p>Если вы закроете браузер, вы перестанете зарабатывать.</p>
               <Button styleName="mode-button" blue onClick={this.onSelectBrowser}>
@@ -51,28 +65,40 @@ export default class MarketmakerPromo extends React.Component<{}, {}> {
               </Button>
             </div>
             <div styleName="mode">
-              <h3 styleName="mode-title"><span styleName="number">②</span> Маркетмейкер-сервер</h3>
+              <h3 styleName="mode-title">
+                <span styleName="number">②</span>
+                &nbsp;&nbsp;
+                <span>Маркетмейкер-сервер</span>
+              </h3>
               <p>Подходит для продвинутых пользователей.</p>
               <p>Требуется сервер для разворачивания образа Docker.</p>
               <Button styleName="mode-button" blue onClick={this.onSelectServer}>
-                Открыть документацию
+                Читать инструкцию
               </Button>
             </div>
             
             <div styleName="mode">
-              <h3 styleName="mode-title"><span styleName="number">3</span> Создайте pool SWAP/ETH токены в uniswap</h3>
+              <h3 styleName="mode-title">
+                <span styleName="number">③</span>
+                &nbsp;&nbsp;
+                <span>Создайте uniswap-пул SWAP/ETH</span>
+              </h3>
               <p>Подходит для продвинутых пользователей.</p>
-              <p>Зарабатывайте когда другие продают или покупают SWAP токены</p>
-              <p>Получайте дополнительную награду в SWAP токенах заморозив LP токены (см. п4)</p>
-             
-              Создать пул https://app.uniswap.org/#/add/0x14a52cf6b4f68431bd5d9524e4fcd6f41ce4ade9/ETH
-              
+              <p>Зарабатывайте когда другие продают или покупают SWAP токены.</p>
+              <Button styleName="mode-button" blue onClick={this.onSelectPool}>
+                Создать пул
+              </Button>
             </div>
             
             <div styleName="mode">
-              <h3 styleName="mode-title"><span styleName="number">4</span>Получайте дополнительную награду в SWAP токенах заморозив LP токены</h3>
-              <p>Тут должна быть форма фарминга</p>
-              
+              <h3 styleName="mode-title">
+                <span styleName="number">④</span>
+                &nbsp;&nbsp;
+                <span>Получайте дополнительную награду в SWAP токенах, заморозив LP токены</span>
+              </h3>
+              <Button styleName="mode-button" blue onClick={this.onSelectFarm}>
+                Начать фарминг
+              </Button>
             </div>
             
           </div>
