@@ -220,9 +220,6 @@ class Exchange extends PureComponent<any, any> {
   constructor(props) {
     super(props)
 
-    console.log('%c Exchange', 'color: orange')
-    console.log('props: ', props)
-
     const {
       allCurrencyies,
       intl: { locale },
