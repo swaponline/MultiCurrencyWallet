@@ -55,9 +55,26 @@ export default class MarketmakerPromo extends React.Component<{}, {}> {
               <p>Подходит для продвинутых пользователей.</p>
               <p>Требуется сервер для разворачивания образа Docker.</p>
               <Button styleName="mode-button" blue onClick={this.onSelectServer}>
-                Настроить сервер
+                Открыть документацию
               </Button>
             </div>
+            
+            <div styleName="mode">
+              <h3 styleName="mode-title"><span styleName="number">3</span> Создайте pool SWAP/ETH токены в uniswap</h3>
+              <p>Подходит для продвинутых пользователей.</p>
+              <p>Зарабатывайте когда другие продают или покупают SWAP токены</p>
+              <p>Получайте дополнительную награду в SWAP токенах заморозив LP токены (см. п4)</p>
+             
+              Создать пул https://app.uniswap.org/#/add/0x14a52cf6b4f68431bd5d9524e4fcd6f41ce4ade9/ETH
+              
+            </div>
+            
+            <div styleName="mode">
+              <h3 styleName="mode-title"><span styleName="number">4</span>Получайте дополнительную награду в SWAP токенах заморозив LP токены</h3>
+              <p>Тут должна быть форма фарминга</p>
+              
+            </div>
+            
           </div>
         </section>
 
