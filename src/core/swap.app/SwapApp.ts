@@ -7,6 +7,7 @@ import SwapInterface from './SwapInterface'
 import ServiceInterface from './ServiceInterface'
 import SwapRoom from 'swap.room'
 import SwapOrders from 'swap.orders'
+import EventEmitter from 'events'
 
 
 interface SwapAppServices {
@@ -24,7 +25,7 @@ interface SwapAppOptions {
   whitelistBtc?: Array<string>,
 }
 
-class SwapApp {
+class SwapApp extends EventEmitter {
   // White list BTC. Dont wait confirm
   private whitelistBtc: Array<string> = [
     'mzgKwRsfYLgApStDLwcN9Y6ce9qYPnTJNx', // @eneeseene testnet
@@ -54,6 +55,7 @@ class SwapApp {
    * @param {array}   options.flows
    */
   constructor(options: SwapAppOptions) {
+    super()
     this.options = options
     this.network = options.network || constants.NETWORKS.TESTNET
     this.env = {}
@@ -124,9 +126,12 @@ class SwapApp {
     return SwapApp._swapAppInstance
   }
 
-  attachSwap(swap: Swap) {
+  attachSwap(swap: Swap): Swap {
     if (!this.attachedSwaps.isExistByKey(swap.id)) {
       this.attachedSwaps.append(swap, swap.id)
+      return null
+    } else {
+      return this.attachedSwaps.getByKey(swap.id)
     }
   }
 

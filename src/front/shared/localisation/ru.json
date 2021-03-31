@@ -5806,7 +5806,7 @@
   },
   {
     "id": "menu.farm",
-    "message": "Ставки и фарминг",
+    "message": "Фарминг",
     "files": [
       "src/front/shared/components/Header/config.tsx"
     ]

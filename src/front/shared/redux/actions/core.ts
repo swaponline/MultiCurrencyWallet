@@ -509,6 +509,20 @@ const fetchWalletBalance = async (walletData): Promise<number> => {
   return 0
 }
 
+const rememberSwap = (swap) => {
+  console.log('>>>>>> rememberSwap', swap)
+  let swapsIds = JSON.parse(localStorage.getItem('swapId'))
+
+  if (swapsIds === null || swapsIds.length === 0) {
+      swapsIds = []
+  }
+  if (!swapsIds.includes(swap.id)) {
+    swapsIds.push(swap.id)
+  }
+  localStorage.setItem('swapId', JSON.stringify(swapsIds))
+}
+
+
 export default {
   rememberOrder,
   forgetOrders,
@@ -539,4 +553,5 @@ export default {
   getWallet,
   getHiddenCoins,
   fetchWalletBalance,
+  rememberSwap,
 }
