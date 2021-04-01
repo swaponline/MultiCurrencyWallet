@@ -160,7 +160,7 @@
     "prettier": "^2.2.1",
     "progress-bar-webpack-plugin": "^2.1.0",
     "prop-types": "^15.7.2",
-    "react-qr-scanner": "^0.0.11",
+    "react-qr-scanner": "git+https://github.com/kybarg/react-qr-scanner.git",
     "replace": "^1.2.0",
     "request-promise-cache": "^2.0.1",
     "request-promise-native": "^1.0.9",
