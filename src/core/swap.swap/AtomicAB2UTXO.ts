@@ -182,6 +182,7 @@ class AtomicAB2UTXO extends Flow {
         isSwapExist: true,
       })
 
+      console.log('>>>>>>>>>>> STOP SWAP PROCESS - SWAP EXISTS EVENT')
       this.stopSwapProcess()
     })
 
@@ -260,6 +261,7 @@ class AtomicAB2UTXO extends Flow {
       if (scriptCheckError) {
         if (/Expected script lockTime/.test(scriptCheckError)) {
           console.error(`${this.utxoCoin} script check error: ${this.utxoCoin} was refunded`, scriptCheckError)
+          console.log('>>>>> STOP SWAP PROCESS - FAIL CHECK SCRIPT LOCK TIME')
           flow.stopSwapProcess()
           stopRepeat()
         } else if (/Expected script value/.test(scriptCheckError)) {
@@ -344,6 +346,7 @@ class AtomicAB2UTXO extends Flow {
         isSwapExist: true,
       })
 
+      console.log('>>>>> STOP SWAP PROCESS - SWAP EXIST ON SIGN')
       this.stopSwapProcess()
     } else {
       const { isSignFetching, isMeSigned } = this.state

@@ -141,6 +141,11 @@ const ethProxyHandler = {
   }
 }
 
+const getCurrentWeb3 = () => {
+  return web3
+}
+window.getCurrentWeb3 = getCurrentWeb3
+
 const ethereumProxy = new Proxy(web3.currentProvider, ethProxyHandler)
 
 export {

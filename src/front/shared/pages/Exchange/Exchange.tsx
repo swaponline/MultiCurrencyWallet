@@ -665,48 +665,94 @@ class Exchange extends PureComponent<any, any> {
     // actions.analytics.dataEvent('orderbook-click-createoffer-button')
   }
 
+  getEthBalance() {
+    const {
+      balances,
+    } = this.state
+
+    return (balances && balances[`ETH`]) ? balances[`ETH`] : 0
+  }
   /* Refactoring
    * Проверка возможности начать свап по указанной паре
    * Проверяет балан, фи, если свап не возможен - показывает сообщение
    */
   checkSwapAllow = (checkParams) => {
-    const { sellCurrency, buyCurrency, amount, balance, fromType } = checkParams
+    const { sellCurrency, buyCurrency, amount, balance, fromType, isSilentError } = checkParams
 
     const { pairFees, balances } = this.state
 
-    const isSellToken = helpers.ethToken.isEthToken({ name: sellCurrency })
-    const isBuyToken = helpers.ethToken.isEthToken({ name: buyCurrency })
+    // todo: improve calculation much more
+    // !!! Если ПРОДАЕМ токены, у нас должны быть И ТОКЕНЫ И ЭФИР !!!
+    // !!! Если мы ПОКУПАЕМ ТОКЕНЫ, у нас должен быть ТОЛЬКО ЭФИР И ТОЛЬКО БИТОК (UTXO) !!!
+    const isTokenBuy = helpers.ethToken.isEthToken({ name: buyCurrency })
+    const isTokenSell = helpers.ethToken.isEthToken({ name: sellCurrency })
+    const ethBalance = this.getEthBalance()
+    // Достаточно ли у нас эфира для совершения транзакции
+    const isEthEnoghtForFee = (
+      pairFees
+      && ethBalance
+      && pairFees.byCoins
+      && pairFees.byCoins.ETH
+      && pairFees.byCoins.ETH.fee
+      && new BigNumber(ethBalance).isGreaterThanOrEqualTo(pairFees.byCoins.ETH.fee)
+    )
+    // Если мы продаем токены - достаточно ли у нас их
+    const isTokenBalanceEnought = (
+      isTokenSell
+      && balances
+      && balances[sellCurrency]
+      && new BigNumber(balances[sellCurrency]).isGreaterThanOrEqualTo(amount)
+    )
+    // Достаточно ли у нас продаваемой валюты для оплаты вместе с фи 
+    // Если это не токены - то это будет или эфир или биток (utxo)
+    // Если мы покумаем токены - то это будет биток (utxo)
+    const isSellEnoughtWithFee = (
+      (
+        pairFees
+        && balances
+        && pairFees.byCoins
+        && pairFees.byCoins[sellCurrency]
+        && pairFees.byCoins[sellCurrency].fee
+        && balances[sellCurrency]
+        && new BigNumber(balances[sellCurrency]).isGreaterThanOrEqualTo(new BigNumber(amount).plus(pairFees.byCoins[sellCurrency].fee))
+      ) || (fromType === AddressType.Custom)
+    )
 
-    let balanceIsOk = true
+    // Если это не токены (isTokenBuy == false и isTokenSell == false) - проверяем балансы с фии
+    let balanceIsOk = false
+    if (
+      (
+        /* Продаем токены, должно хватать на фи эфира, баланса токенов должно хватать */
+        isTokenSell
+        && isEthEnoghtForFee
+        && new BigNumber(balances[sellCurrency]).isGreaterThanOrEqualTo(amount)
+      ) || (
+        /* Покупаем токены, должно хватать на фи эфира, должно хватать UTXO (sell) на фи и на сумму ордера */
+        isTokenBuy
+        && isEthEnoghtForFee
+        && isSellEnoughtWithFee
+      ) || (
+        /* Это не токены, должно хватать на фи эфира. Должно хватать UTXO (sell) на фи и сумму ордера */
+        /* Получается если мы продаем эфир, isEthEnoghtForFee = isSellEnoughtWithFee = true, тоесть у нас есть эфира на размер ордера и на фии */
+        /* Если мы покупаем эфир - isEthEnoghtForFee = true, isSellEnoughtWithFee = true, есть эфир для контракта, есть utxo на сумму ордера и фи */
+        !isTokenBuy
+        && !isTokenSell
+        && isEthEnoghtForFee
+        && isSellEnoughtWithFee
+      )
+    ) {
+      balanceIsOk = true
+    }
     let needEthFee = false
     if (
-      isSellToken &&
-      (new BigNumber(balance).isLessThan(amount) ||
-        new BigNumber(balances.ETH).isLessThan(pairFees.byCoins.ETH.fee))
-    ) {
-      balanceIsOk = false
-    }
-    if (isBuyToken && new BigNumber(balances.ETH).isLessThan(pairFees.byCoins.ETH.fee)) {
-      balanceIsOk = false
-      needEthFee = true
-    }
-    // UTXO
-    if (
-      pairFees.byCoins[sellCurrency.toUpperCase()] &&
-      pairFees.byCoins[sellCurrency.toUpperCase()].isUTXO
-    ) {
-      if (fromType !== AddressType.Custom) {
-        if (
-          new BigNumber(balance).isLessThan(
-            new BigNumber(amount).plus(pairFees.byCoins[sellCurrency.toUpperCase()].fee)
-          )
-        )
-          balanceIsOk = false
-      }
-    } else {
-      if (!isSellToken && new BigNumber(balance).isLessThan(amount)) balanceIsOk = false
-    }
+      isTokenBuy
+      && pairFees
+      && pairFees.byCoins
+      && pairFees.byCoins.ETH
+      && new BigNumber(this.getEthBalance()).isLessThan(pairFees.byCoins.ETH.fee)
+    ) needEthFee = true
 
+    if (isSilentError) return balanceIsOk
     if (!balanceIsOk) {
       const { address } = actions.core.getWallet({ currency: sellCurrency })
       const {
@@ -721,7 +767,7 @@ class Exchange extends PureComponent<any, any> {
             defaultMessage="Please top up your balance before you start the swap."
           />
           <br />
-          {(isSellToken || (isBuyToken && needEthFee)) && (
+          {(isTokenSell || (isTokenBuy && needEthFee)) && (
             <FormattedMessage
               id="Swap_NeedEthFee"
               defaultMessage="На вашем балансе должно быть не менее {buyFee} {buyCoin} для оплаты коммисии майнера"
@@ -731,7 +777,7 @@ class Exchange extends PureComponent<any, any> {
               }}
             />
           )}
-          {!isSellToken && !needEthFee && (
+          {!isTokenSell && !needEthFee && (
             <FormattedMessage
               id="Swap_NeedMoreAmount"
               defaultMessage="На вашем балансе должно быть не менее {amount} {currency}. {br}Коммисия майнера {sellFee} {sellCoin} и {buyFee} {buyCoin}"
