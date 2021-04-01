@@ -479,16 +479,18 @@ class Exchange extends PureComponent<any, any> {
 
   componentDidUpdate(prevProps, prevState) {
     const { haveCurrency: prevHaveCurrency } = prevState
-    const { haveCurrency, isTokenSell } = this.state
+    const { haveCurrency } = this.state
 
     if (prevHaveCurrency !== haveCurrency) {
-      this.setState(() => ({
-        isTokenSell: ethToken.isEthToken({ name: haveCurrency }),
-      }))
-    }
+      const isTokenSell = ethToken.isEthToken({ name: haveCurrency })
 
-    if (isTokenSell) {
-      this.hasTokenAllowance()
+      this.setState(() => ({
+        isTokenSell,
+      }), () => {
+        if (isTokenSell) {
+          this.hasTokenAllowance()
+        }
+      })
     }
   }
 
