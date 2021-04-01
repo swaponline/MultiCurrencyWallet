@@ -318,6 +318,19 @@ class Exchange extends PureComponent<any, any> {
     }
   }
 
+  reportError = (error: IError, details: string = '-') => {
+    feedback.exchangeForm.failed(`details(${details}) : error message(${error.message})`)
+
+    console.group('%c Exchange', 'color: red;')
+    console.error(`details(${details}) : error(${JSON.stringify(error)})`)
+    console.groupEnd()
+
+    actions.notifications.show(
+      constants.notifications.ErrorNotification,
+      { error: error.message }
+    )
+  }
+
   makeAddressObject(type, currency) {
     const wallet =
       type !== AddressType.Custom
@@ -466,12 +479,16 @@ class Exchange extends PureComponent<any, any> {
 
   componentDidUpdate(prevProps, prevState) {
     const { haveCurrency: prevHaveCurrency } = prevState
-    const { haveCurrency } = this.state
+    const { haveCurrency, isTokenSell } = this.state
 
     if (prevHaveCurrency !== haveCurrency) {
       this.setState(() => ({
-        isEthToken: ethToken.isEthToken({ name: haveCurrency }),
+        isTokenSell: ethToken.isEthToken({ name: haveCurrency }),
       }))
+    }
+
+    if (isTokenSell) {
+      this.hasTokenAllowance()
     }
   }
 
@@ -672,8 +689,8 @@ class Exchange extends PureComponent<any, any> {
         this.fiatRates[coin] = exRate
         return exRate
       }
-    } catch (err) {
-      console.error(`Cryptonator offline: Fail fetch ${coin} exRate for fiat ${activeFiat}`, err)
+    } catch (error) {
+      this.reportError(error, `Cryptonator offline: Fail fetch ${coin} exRate for fiat ${activeFiat}`)
       return 0
     }
   }
@@ -712,80 +729,75 @@ class Exchange extends PureComponent<any, any> {
    * Проверяет балан, фи, если свап не возможен - показывает сообщение
    */
   checkSwapAllow = (checkParams) => {
-    const { sellCurrency, buyCurrency, amount, balance, fromType, isSilentError } = checkParams
-
+    const { sellCurrency, buyCurrency, amount, fromType, isSilentError } = checkParams
     const { pairFees, balances } = this.state
-
-    // todo: improve calculation much more
-    // !!! Если ПРОДАЕМ токены, у нас должны быть И ТОКЕНЫ И ЭФИР !!!
-    // !!! Если мы ПОКУПАЕМ ТОКЕНЫ, у нас должен быть ТОЛЬКО ЭФИР И ТОЛЬКО БИТОК (UTXO) !!!
     const isTokenBuy = helpers.ethToken.isEthToken({ name: buyCurrency })
     const isTokenSell = helpers.ethToken.isEthToken({ name: sellCurrency })
     const ethBalance = this.getEthBalance()
-    // Достаточно ли у нас эфира для совершения транзакции
-    const isEthEnoghtForFee = (
-      pairFees
-      && ethBalance
-      && pairFees.byCoins
-      && pairFees.byCoins.ETH
-      && pairFees.byCoins.ETH.fee
-      && new BigNumber(ethBalance).isGreaterThanOrEqualTo(pairFees.byCoins.ETH.fee)
-    )
-    // Если мы продаем токены - достаточно ли у нас их
-    const isTokenBalanceEnought = (
-      isTokenSell
-      && balances
-      && balances[sellCurrency]
-      && new BigNumber(balances[sellCurrency]).isGreaterThanOrEqualTo(amount)
-    )
-    // Достаточно ли у нас продаваемой валюты для оплаты вместе с фи 
-    // Если это не токены - то это будет или эфир или биток (utxo)
-    // Если мы покумаем токены - то это будет биток (utxo)
-    const isSellEnoughtWithFee = (
-      (
-        pairFees
-        && balances
-        && pairFees.byCoins
-        && pairFees.byCoins[sellCurrency]
-        && pairFees.byCoins[sellCurrency].fee
-        && balances[sellCurrency]
-        && new BigNumber(balances[sellCurrency]).isGreaterThanOrEqualTo(new BigNumber(amount).plus(pairFees.byCoins[sellCurrency].fee))
-      ) || (fromType === AddressType.Custom)
-    )
-
-    // Если это не токены (isTokenBuy == false и isTokenSell == false) - проверяем балансы с фии
     let balanceIsOk = false
-    if (
-      (
-        /* Продаем токены, должно хватать на фи эфира, баланса токенов должно хватать */
-        isTokenSell
-        && isEthEnoghtForFee
-        && new BigNumber(balances[sellCurrency]).isGreaterThanOrEqualTo(amount)
-      ) || (
-        /* Покупаем токены, должно хватать на фи эфира, должно хватать UTXO (sell) на фи и на сумму ордера */
-        isTokenBuy
-        && isEthEnoghtForFee
-        && isSellEnoughtWithFee
-      ) || (
-        /* Это не токены, должно хватать на фи эфира. Должно хватать UTXO (sell) на фи и сумму ордера */
-        /* Получается если мы продаем эфир, isEthEnoghtForFee = isSellEnoughtWithFee = true, тоесть у нас есть эфира на размер ордера и на фии */
-        /* Если мы покупаем эфир - isEthEnoghtForFee = true, isSellEnoughtWithFee = true, есть эфир для контракта, есть utxo на сумму ордера и фи */
-        !isTokenBuy
-        && !isTokenSell
-        && isEthEnoghtForFee
-        && isSellEnoughtWithFee
-      )
-    ) {
-      balanceIsOk = true
-    }
     let needEthFee = false
-    if (
-      isTokenBuy
-      && pairFees
-      && pairFees.byCoins
-      && pairFees.byCoins.ETH
-      && new BigNumber(this.getEthBalance()).isLessThan(pairFees.byCoins.ETH.fee)
-    ) needEthFee = true
+
+    try {
+      // todo: improve calculation much more
+      // !!! Если ПРОДАЕМ токены, у нас должны быть И ТОКЕНЫ И ЭФИР !!!
+      // !!! Если мы ПОКУПАЕМ ТОКЕНЫ, у нас должен быть ТОЛЬКО ЭФИР И ТОЛЬКО БИТОК (UTXO) !!!
+      // Достаточно ли у нас эфира для совершения транзакции
+      const isEthEnoughForFee = (
+        ethBalance
+        && pairFees.byCoins?.ETH?.fee
+        && new BigNumber(ethBalance).isGreaterThanOrEqualTo(pairFees.byCoins.ETH.fee)
+      )
+      // Достаточно ли у нас продаваемой валюты для оплаты вместе с фи 
+      // Если это не токены - то это будет или эфир или биток (utxo)
+      // Если мы покумаем токены - то это будет биток (utxo)
+      const sellFee = pairFees && pairFees.byCoins[sellCurrency]?.fee
+      const fullPayment = sellFee && new BigNumber(amount).plus(sellFee)
+      const isSellEnoughtWithFee = (
+        (
+          balances
+          && balances[sellCurrency]
+          && fullPayment
+          && new BigNumber(balances[sellCurrency]).isGreaterThanOrEqualTo(fullPayment)
+        ) || (fromType === AddressType.Custom)
+      )
+
+      // Если это не токены (isTokenBuy == false и isTokenSell == false) - проверяем балансы с фии
+      if (
+        (
+          /* Продаем токены, должно хватать на фи эфира, баланса токенов должно хватать */
+          isTokenSell
+          && isEthEnoughForFee
+          && new BigNumber(balances[sellCurrency]).isGreaterThanOrEqualTo(amount)
+        ) || (
+          /* Покупаем токены, должно хватать на фи эфира, должно хватать UTXO (sell) на фи и на сумму ордера */
+          isTokenBuy
+          && isEthEnoughForFee
+          && isSellEnoughtWithFee
+        ) || (
+          /* Это не токены, должно хватать на фи эфира. Должно хватать UTXO (sell) на фи и сумму ордера */
+          /* Получается если мы продаем эфир, isEthEnoughForFee = isSellEnoughtWithFee = true, тоесть у нас есть эфира на размер ордера и на фии */
+          /* Если мы покупаем эфир - isEthEnoughForFee = true, isSellEnoughtWithFee = true, есть эфир для контракта, есть utxo на сумму ордера и фи */
+          !isTokenBuy
+          && !isTokenSell
+          && isEthEnoughForFee
+          && isSellEnoughtWithFee
+        )
+      ) {
+        balanceIsOk = true
+      }
+
+      if (
+        isTokenBuy
+        && pairFees
+        && pairFees.byCoins?.ETH
+        && new BigNumber(this.getEthBalance()).isLessThan(pairFees.byCoins.ETH.fee)
+      ) {
+        needEthFee = true
+      }
+    } catch (error) {
+      this.reportError(error, `in the checkSwapAllow()`)
+      return false
+    }
 
     if (isSilentError) return balanceIsOk
     if (!balanceIsOk) {
@@ -854,10 +866,9 @@ class Exchange extends PureComponent<any, any> {
       return tokenObj.name === haveCurrency.toLowerCase()
     })
     const tokenContract = new web3.eth.Contract(ERC20_ABI, haveTokenObj.contractAddress)
-    const result = await tokenContract.methods.allowance(
-      config.swapContract.erc20,
-      haveTokenObj.address
-    )
+    const result = await tokenContract.methods
+      .allowance(config.swapContract.erc20, haveTokenObj.address)
+      .call({ from: haveTokenObj.address })
 
     if (new BigNumber(haveAmount).isLessThan(result)) {
       this.setState(() => ({
@@ -867,7 +878,19 @@ class Exchange extends PureComponent<any, any> {
   }
 
   approveTheToken = () => {
-    const { haveCurrency, haveAmount } = this.state
+    const { haveCurrency, haveAmount, haveType, getCurrency } = this.state
+
+    if (
+      !this.checkSwapAllow({
+        sellCurrency: haveCurrency,
+        buyCurrency: getCurrency,
+        amount: haveAmount,
+        balance: this.getBalance(haveCurrency),
+        fromType: haveType,
+      })
+    ) {
+      return false
+    }
 
     this.setState(() => ({
       isPending: true,
@@ -892,11 +915,7 @@ class Exchange extends PureComponent<any, any> {
         )
       })
       .catch((error) => {
-        feedback.exchangeForm.failed(`approve a token(${haveCurrency}) : error message(${error.message})`)
-        actions.notifications.show(
-          constants.notifications.ErrorNotification,
-          { error: error.message }
-        )
+        this.reportError(error, `approve a token(${haveCurrency})`)
       })
       .finally(() => {
         this.setState(() => ({
