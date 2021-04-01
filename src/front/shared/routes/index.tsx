@@ -19,7 +19,8 @@ import CurrencyWallet from 'pages/CurrencyWallet/CurrencyWallet'
 import Transaction from 'pages/Transaction/Transaction'
 import BtcMultisignProcessor from 'pages/Multisign/Btc/Btc'
 
-import Marketmaker from 'pages/Marketmaker/Marketmaker'
+import MarketmakerPromo from 'pages/Marketmaker/MarketmakerPromo'
+import MarketmakerSettings from 'pages/Marketmaker/MarketmakerSettings'
 
 import CreateInvoice from 'pages/Invoices/CreateInvoice'
 import InvoicesList from 'pages/Invoices/InvoicesList'
