@@ -13,8 +13,6 @@ import actions from 'redux/actions'
 import typeforce from 'swap.app/util/typeforce'
 import config from 'app-config'
 
-import { localisePrefix } from 'helpers/locale'
-
 import * as mnemonicUtils from '../../../../common/utils/mnemonic'
 
 import { default as bitcoinUtils } from '../../../../common/utils/coin/btc'
