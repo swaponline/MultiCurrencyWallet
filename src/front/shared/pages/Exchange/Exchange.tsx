@@ -817,7 +817,7 @@ class Exchange extends PureComponent<any, any> {
           {(isTokenSell || (isTokenBuy && needEthFee)) && (
             <FormattedMessage
               id="Swap_NeedEthFee"
-              defaultMessage="На вашем балансе должно быть не менее {buyFee} {buyCoin} для оплаты коммисии майнера"
+              defaultMessage="You must have at least {buyFee} {buyCoin} on your balance to pay the miner commission"
               values={{
                 buyFee,
                 buyCoin,
@@ -827,7 +827,7 @@ class Exchange extends PureComponent<any, any> {
           {!isTokenSell && !needEthFee && (
             <FormattedMessage
               id="Swap_NeedMoreAmount"
-              defaultMessage="На вашем балансе должно быть не менее {amount} {currency}. {br}Коммисия майнера {sellFee} {sellCoin} и {buyFee} {buyCoin}"
+              defaultMessage="You must have at least {amount} {currency} on your balance. {br} Miner commission {sellFee} {sellCoin} and {buyFee} {buyCoin}"
               values={{
                 amount: amount.toNumber(),
                 currency: sellCurrency.toUpperCase(),
