@@ -5771,7 +5771,7 @@
   },
   {
     "id": "FormattedMessageIdApprove",
-    "message": "Approve",
+    "message": "Одобрить",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
@@ -5786,77 +5786,77 @@
   },
   {
     "id": "FeeRadiosSpeedTypeCustom",
-    "message": "Custom.",
+    "message": "Свое значение",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
     ]
   },
   {
     "id": "FeeRadiosSpeedTypeDescriptionCustom",
-    "message": "Set custom fee rate.",
+    "message": "Установить свой размер комиссии.",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
     ]
   },
   {
     "id": "FeeRadiosSpeedTypeDescriptionFast",
-    "message": "A rolling average of the fee for transactions to be confirmed within 1 to 2 blocks.",
+    "message": "Скользящее среднее значение комиссии за транзакции, которые должны быть подтверждены в течение 1-2 блоков.",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
     ]
   },
   {
     "id": "FeeRadiosSpeedTypeDescriptionMedium",
-    "message": "A rolling average of the fee for transactions to be confirmed within 3 to 6 blocks.",
+    "message": "Скользящее среднее значение комиссии за транзакции, которые должны быть подтверждены в пределах от 3 до 6 блоков.",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
     ]
   },
   {
     "id": "FeeRadiosSpeedTypeDescriptionSlow",
-    "message": "A rolling average of the fee for transactions to be confirmed in 7 or more blocks.",
+    "message": "Скользящее среднее значение комиссии за транзакции, которые должны быть подтверждены в 7 или более блоках.",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
     ]
   },
   {
     "id": "FeeRadiosSpeedTypeFast",
-    "message": "Fast",
+    "message": "Быстро",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
     ]
   },
   {
     "id": "FeeRadiosSpeedTypeMedium",
-    "message": "Medium",
+    "message": "Средне",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
     ]
   },
   {
     "id": "FeeRadiosSpeedTypeSlow",
-    "message": "Slow",
+    "message": "Медленно",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
     ]
   },
   {
     "id": "FeeRadiosSpeedTypeTimeFast",
-    "message": "~5-20 minutes",
+    "message": "~5-20 минут",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
     ]
   },
   {
     "id": "FeeRadiosSpeedTypeTimeMedium",
-    "message": "~25-60 minutes",
+    "message": "~25-60 минут",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
     ]
   },
   {
     "id": "FeeRadiosSpeedTypeTimeSlow",
-    "message": "~60-more minutes",
+    "message": "60 минут или больше",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
     ]

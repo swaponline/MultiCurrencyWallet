@@ -31,7 +31,7 @@ const bitcoinFees = [
   {
     slug: 'slow',
     labelMessage: <FormattedMessage id="FeeRadiosSpeedTypeSlow" defaultMessage="Slow" />,
-    timeMessage: <FormattedMessage id="FeeRadiosSpeedTypeTimeSlow" defaultMessage="~60-more minutes" />,
+    timeMessage: <FormattedMessage id="FeeRadiosSpeedTypeTimeSlow" defaultMessage="~60 more minutes" />,
     tooltip: (
       <Tooltip id="FeeRadiosSpeedTypeDescriptionSlow">
         <div styleName="tooltipMessage">
@@ -75,7 +75,7 @@ const bitcoinFees = [
   },
   {
     slug: 'custom',
-    labelMessage: <FormattedMessage id="FeeRadiosSpeedTypeCustom" defaultMessage="Custom." />,
+    labelMessage: <FormattedMessage id="FeeRadiosSpeedTypeCustom" defaultMessage="Custom" />,
     timeMessage: null,
     tooltip: (
       <Tooltip id="FeeRadiosSpeedTypeDescriptionCustom">
@@ -143,7 +143,7 @@ export default class FeeRadios extends Component<FeeRadiosProps, FeeRadiosState>
 
               <label htmlFor={fee.slug} styleName="fee-radio__label">
                 <div>
-                  {fee.labelMessage}
+                  <span styleName="labelTitle">{fee.labelMessage}</span>
                   {' '}
                   {fee.tooltip}
                 </div>

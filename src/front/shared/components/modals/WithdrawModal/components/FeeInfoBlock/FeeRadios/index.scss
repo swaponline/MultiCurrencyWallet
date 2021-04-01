@@ -26,7 +26,7 @@
   position: relative;
   z-index: 1;
   width: 25%;
-  padding: 10px 5px 5px 20px;
+  padding: 6px 6px 7px 14px;
   border: 1px solid $inactive-border-color;
   box-shadow: $l-box-shadow;
   border-radius: 5px;
@@ -39,6 +39,10 @@
   margin-right: 12px;
 }
 
+.labelTitle {
+  font-size: 0.9rem;
+}
+
 .tooltipMessage {
   max-width: 24em;
   text-align: center;
@@ -47,6 +51,7 @@
 .feeRadioDescription {
   display: flex;
   flex-direction: column;
+  margin-top: 0.3rem;
 }
 
 .constantTextSize {

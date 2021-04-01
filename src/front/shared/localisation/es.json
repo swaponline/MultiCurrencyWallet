@@ -5771,7 +5771,7 @@
   },
   {
     "id": "FormattedMessageIdApprove",
-    "message": "Approve",
+    "message": "Aprobar",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
@@ -5786,77 +5786,77 @@
   },
   {
     "id": "FeeRadiosSpeedTypeCustom",
-    "message": "Custom.",
+    "message": "Personalizar",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
     ]
   },
   {
     "id": "FeeRadiosSpeedTypeDescriptionCustom",
-    "message": "Set custom fee rate.",
+    "message": "Establecer tarifa de tarifa personalizada.",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
     ]
   },
   {
     "id": "FeeRadiosSpeedTypeDescriptionFast",
-    "message": "A rolling average of the fee for transactions to be confirmed within 1 to 2 blocks.",
+    "message": "Una media móvil de la comisión por las transacciones que deben confirmarse dentro de 1 a 2 bloques.",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
     ]
   },
   {
     "id": "FeeRadiosSpeedTypeDescriptionMedium",
-    "message": "A rolling average of the fee for transactions to be confirmed within 3 to 6 blocks.",
+    "message": "Una media móvil de la comisión por las transacciones que deben confirmarse dentro de 3 a 6 bloques.",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
     ]
   },
   {
     "id": "FeeRadiosSpeedTypeDescriptionSlow",
-    "message": "A rolling average of the fee for transactions to be confirmed in 7 or more blocks.",
+    "message": "Una media móvil de la comisión por transacciones que deben confirmarse en 7 o más bloques.",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
     ]
   },
   {
     "id": "FeeRadiosSpeedTypeFast",
-    "message": "Fast",
+    "message": "Rápida",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
     ]
   },
   {
     "id": "FeeRadiosSpeedTypeMedium",
-    "message": "Medium",
+    "message": "Medio",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
     ]
   },
   {
     "id": "FeeRadiosSpeedTypeSlow",
-    "message": "Slow",
+    "message": "Lento",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
     ]
   },
   {
     "id": "FeeRadiosSpeedTypeTimeFast",
-    "message": "~5-20 minutes",
+    "message": "~5-20 minuto",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
     ]
   },
   {
     "id": "FeeRadiosSpeedTypeTimeMedium",
-    "message": "~25-60 minutes",
+    "message": "~25-60 minuto",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
     ]
   },
   {
     "id": "FeeRadiosSpeedTypeTimeSlow",
-    "message": "~60-more minutes",
+    "message": "~60 minutos más",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
     ]
