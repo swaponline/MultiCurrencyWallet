@@ -69,6 +69,14 @@ const getAllMyAddresses = () => {
     && ethMnemonicData.address.toLowerCase() !== ethData.address.toLowerCase()
   ) retData.push(ethMnemonicData.address.toLowerCase())
 
+  if (metamask
+    && metamask.isEnabled()
+    && metamask.isConnected()
+    && retData.indexOf(metamask.getAddress().toLowerCase()) === -1
+  ) {
+    retData.push(metamask.getAddress().toLowerCase())
+  }
+
   return retData
 }
 
