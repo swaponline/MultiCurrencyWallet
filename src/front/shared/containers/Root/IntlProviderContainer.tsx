@@ -11,7 +11,7 @@ import myEs from 'localisation/es.json'
 import myPl from 'localisation/pl.json'
 
 
-import { reduceMessages, defaultLocale, localisePrefix } from 'helpers/locale'
+import { reduceMessages, defaultLocale } from 'helpers/locale'
 
 
 const translations = {
@@ -31,17 +31,13 @@ export default class IntlProviderContainer extends React.Component<any, any> {
       <HashRouter>
         <Switch>
           <Route
-            path={localisePrefix}
             render={props => {
               let currentLocale = defaultLocale()
 
-              // @ts-ignore
               if (props.match.params.locale !== undefined) {
-                // @ts-ignore
                 currentLocale = props.match.params.locale
               } else {
                 lang = getCookie('mylang') || 'en'
-                // @ts-ignore
                 currentLocale = lang.toLowerCase()
               }
 
