@@ -13,7 +13,6 @@ import actions from 'redux/actions'
 import typeforce from 'swap.app/util/typeforce'
 import config from 'app-config'
 const bitcore = require('ghost-bitcore-lib');
-import { localisePrefix } from 'helpers/locale'
 
 import * as mnemonicUtils from '../../../../common/utils/mnemonic'
 
