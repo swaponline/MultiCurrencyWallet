@@ -302,7 +302,7 @@ class InfoInvoice extends React.Component<any, any> {
 
     return (
       <Modal 
-        name={name} title={modalTitle} 
+        name="InfoInvoice" title={modalTitle} 
         onClose={this.handleClose} 
         showCloseButton={true} 
         closeOnLocationChange={true} 

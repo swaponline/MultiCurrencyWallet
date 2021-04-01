@@ -2,6 +2,7 @@ import apiLooper from '../apiLooper'
 import { BigNumber } from 'bignumber.js'
 import * as bitcoin from 'bitcoinjs-lib'
 import typeforce from 'swap.app/util/typeforce'
+import constants from 'common/helpers/constants'
 
 // Use front API config
 import { default as TESTNET } from '../../../front/config/testnet/api'
@@ -272,76 +273,57 @@ const fetchUnspents = (options): Promise<IBtcUnspent[]> => {
   })
 }
 
-/**
- * Подберает подходящие unspents для указанной суммы в сатоши
- **/
-interface IprepareUnspentsOptions {
-  NETWORK: any,
-  address?: string,
+interface IPrepareUnspentsOptions {
   amount: number,
-  apiBitpay?: any,
-  cacheResponse?: any,
-  unspents?: IBtcUnspent[],
+  unspents: IBtcUnspent[],
 }
-
-const prepareUnspents = (options: IprepareUnspentsOptions): Promise<IBtcUnspent[]> => {
+/**
+ * Processes the UTXO for the specified amount (in satoshi)
+ **/
+const prepareUnspents = (options: IPrepareUnspentsOptions): Promise<IBtcUnspent[]> => {
   const {
-    NETWORK,
-    apiBitpay,
-    cacheResponse,
-    address,
     amount,
+    unspents,
   } = options
+
   return new Promise((resolve, reject) => {
-    const processUnspents = (unspents: IBtcUnspent[]) => {
-      const needAmount = new BigNumber(amount).multipliedBy(1e8).plus(DUST)
-      // Сначала отсортируем unspents по возрастанию не потраченной сдачи
-      const sortedUnspents: IBtcUnspent[] = unspents.sort((a: IBtcUnspent, b: IBtcUnspent) => {
-        return (new BigNumber(a.satoshis).isEqualTo(b.satoshis))
-          ? 0
-          : (new BigNumber(a.satoshis).isGreaterThan(b.satoshis))
-            ? 1
-            : -1
-      })
-      // Попробуем найти один выход сдачи, который покроет транзакцию
-      let oneUnspent: IBtcUnspent = null
-      sortedUnspents.forEach((unspent: IBtcUnspent) => {
-        if (oneUnspent === null
-          && new BigNumber(unspent.satoshis).isGreaterThanOrEqualTo(needAmount)
-        ) {
-          oneUnspent = unspent
+    const needAmount = new BigNumber(amount).multipliedBy(1e8).plus(DUST)
+    
+    // Sorting all unspent inputs from minimum amount to maximum
+    const sortedUnspents: IBtcUnspent[] = unspents.sort((a: IBtcUnspent, b: IBtcUnspent) => {
+      return (new BigNumber(a.satoshis).isEqualTo(b.satoshis))
+        ? 0
+        : (new BigNumber(a.satoshis).isGreaterThan(b.satoshis))
+          ? 1
+          : -1
+    })
+    
+    // let's try to find one unspent input which will enough for all commission
+    let oneUnspent: IBtcUnspent = null
+    sortedUnspents.forEach((unspent: IBtcUnspent) => {
+      if (oneUnspent === null
+        && new BigNumber(unspent.satoshis).isGreaterThanOrEqualTo(needAmount)
+      ) {
+        oneUnspent = unspent
+        return false
+      }
+    })
+
+    // if we didn't find one unspent then we're looking for
+    // all unspent inputs which will enough (from min to max)
+    if (oneUnspent === null) {
+      let calcedAmount = new BigNumber(0)
+      const usedUnspents: IBtcUnspent[] = sortedUnspents.filter((unspent: IBtcUnspent) => {
+        if (calcedAmount.isGreaterThanOrEqualTo(needAmount)) {
           return false
+        } else {
+          calcedAmount = calcedAmount.plus(unspent.satoshis)
+          return true
         }
       })
-      if (oneUnspent === null) {
-        // Если один выход не нашли - используем подсчитанные usedUnspents
-        // Подберем здачу, суммы которой хватает для транзакции (от меньшего к большему)
-        let calcedAmount = new BigNumber(0)
-        const usedUnspents: IBtcUnspent[] = sortedUnspents.filter((unspent: IBtcUnspent) => {
-          if (calcedAmount.isGreaterThanOrEqualTo(needAmount)) {
-            return false
-          } else {
-            calcedAmount = calcedAmount.plus(unspent.satoshis)
-            return true
-          }
-        })
-        resolve(usedUnspents)
-      } else {
-        resolve([oneUnspent])
-      }
-    }
-
-    if (options.unspents) {
-      processUnspents(options.unspents)
+      resolve(usedUnspents)
     } else {
-      fetchUnspents({
-        NETWORK,
-        address,
-        apiBitpay,
-        cacheResponse,
-      }).then(processUnspents).catch((error) => {
-        reject(error)
-      })
+      resolve([oneUnspent])
     }
   })
 }
@@ -780,25 +762,29 @@ const estimateFeeRate = async (options) => {
   }
 }
 
-const calculateTxSize = async (options) => {
-  const {
-    speed,
-    unspents: _unspents,
-    address,
-    txOut = 2,
-    NETWORK,
-  } = options
+const calculateTxSize = async (params) => {
+  const { TRANSACTION } = constants
+  const { address, NETWORK } = params
 
-  const unspents = _unspents || await fetchUnspents({
+  const unspents = await fetchUnspents({
     address,
     NETWORK,
   })
-
+  const txOut = 2
   const txIn = unspents.length
+  let txSize = 226 // default tx size for 1 txIn and 2 txOut
 
-  const txSize = txIn > 0
-    ? txIn * 146 + txOut * 33 + (15 + txIn - txOut)
-    : 226 // default tx size for 1 txIn and 2 txOut
+  if (txIn > 0) {
+    txSize =
+      txIn * TRANSACTION.P2PKH_IN_SIZE +
+      txOut * TRANSACTION.P2PKH_OUT_SIZE +
+      (TRANSACTION.TX_SIZE + txIn - txOut)
+  }
+
+  console.group('Common > coin >%c btc > calculateTxSize', 'color: green;')
+  console.log('params: ', params)
+  console.log('tx size: ', txSize)
+  console.groupEnd()
 
   return txSize
 }
@@ -816,13 +802,13 @@ const estimateFeeValue = async (options) => {
   let calculatedFeeValue
 
   if (!_txSize && !address) {
-    calculatedFeeValue = new BigNumber(DUST).multipliedBy(1e-8)
+    calculatedFeeValue = new BigNumber(constants.TRANSACTION.DUST_SAT).multipliedBy(1e-8)
   } else {
-    const txSize = _txSize || await calculateTxSize({ address, speed })
+    const txSize = _txSize || await calculateTxSize({ address, NETWORK })
     const feeRate = _feeRate || await estimateFeeRate({ speed, NETWORK })
 
     calculatedFeeValue = BigNumber.maximum(
-      DUST,
+      constants.TRANSACTION.DUST_SAT,
       new BigNumber(feeRate)
         .multipliedBy(txSize)
         .div(1024)
@@ -833,6 +819,10 @@ const estimateFeeValue = async (options) => {
   const finalFeeValue = inSatoshis
     ? calculatedFeeValue.toString()
     : calculatedFeeValue.multipliedBy(1e-8).toString()
+
+  console.group('Common > coin >%c btc > estimateFeeValue', 'color: green;')
+  console.log('fee value: ', finalFeeValue)
+  console.groupEnd()
 
   return finalFeeValue
 }

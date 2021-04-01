@@ -7,7 +7,7 @@ import styles from './AddressSelect.scss'
 import cssModules from 'react-css-modules'
 import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
 import Input from 'components/forms/Input/Input'
-import DropDown from 'components/ui/DropDown/DropDown'
+import DropDown from 'components/ui/DropDown'
 import Address from 'components/ui/Address/Address'
 import { AddressFormat } from 'domain/address'
 import metamask from 'helpers/metamask'
@@ -62,6 +62,32 @@ const langLabels = defineMessages({
   },
 })
 
+type AddressSelectProps = {
+  role: string
+  currency: string
+  selectedType?: string
+  placeholder?: string
+  hasError?: boolean
+  isDark: boolean
+  onChange: ({}) => void
+  history: IUniversalObj
+  intl: IUniversalObj
+  label: IUniversalObj 
+  hiddenCoinsList: string[]
+  allData: IUniversalObj[]
+}
+
+type AddressSelectState = {
+  address: string
+  currency: string
+  selectedType: string
+  metamaskAddress: string
+  walletAddressFocused: boolean
+  isMetamaskConnected: boolean
+  isScanActive: boolean
+  hasError: boolean
+}
+
 @withRouter
 @connect(
   ({ core: { hiddenCoinsList }, user: { btcData, ethData, ghostData, nextData, tokensData } }) => {
@@ -82,7 +108,7 @@ const langLabels = defineMessages({
   }
 )
 @cssModules(styles, { allowMultiple: true })
-class AddressSelect extends Component<any, any> {
+class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
   constructor(props) {
     super(props)
 
@@ -91,39 +117,40 @@ class AddressSelect extends Component<any, any> {
     this.state = {
       currency,
       hasError,
-      selectedType: selectedType || 'placeholder',
+      address: '',
+      selectedType: selectedType || 'Internal',
       walletAddressFocused: false,
-      customAddress: '',
       isMetamaskConnected: metamask.isConnected(),
       metamaskAddress: metamask.getAddress(),
       isScanActive: false,
     }
   }
 
-  getTicker() {
+  getTicker = () => {
     return this.props.currency.toUpperCase()
   }
 
-  getInternalAddress() {
+  getInternalAddress = () => {
     const { allData } = this.props
     const ticker = this.getTicker()
     let internalAddress
+    
     for (let i = 0; i < allData.length; i++) {
       const item = allData[i]
+      
       if (ticker === item.currency && item.address) {
         internalAddress = item.address
         break
       }
     }
+
     return internalAddress
   }
 
-  isCurrencyInInternalWallet() {
+  isCurrencyInInternalWallet = () => {
     const { hiddenCoinsList } = this.props
     const ticker = this.getTicker()
     const internalAddress = this.getInternalAddress()
-
-    let result = true
 
     for (let i = 0; i < hiddenCoinsList.length; i++) {
       const hiddenCoin = hiddenCoinsList[i]
@@ -131,20 +158,20 @@ class AddressSelect extends Component<any, any> {
         hiddenCoin === ticker ||
         (internalAddress && hiddenCoin.includes(`${ticker}:${internalAddress}`))
       ) {
-        result = false
-        break
+        return false
       }
     }
-    return result
+
+    return true
   }
 
-  handleFocusAddress() {
+  handleFocusAddress = () => {
     this.setState({
       walletAddressFocused: true,
     })
   }
 
-  onWeb3Updated() {
+  onWeb3Updated = () => {
     this.setState({
       isMetamaskConnected: metamask.isConnected(),
       metamaskAddress: metamask.getAddress(),
@@ -152,7 +179,7 @@ class AddressSelect extends Component<any, any> {
   }
 
   componentDidMount() {
-    metamask.web3connect.on('updated', this.onWeb3Updated.bind(this))
+    metamask.web3connect.on('updated', this.onWeb3Updated)
   }
 
   componentWillUnmount() {
@@ -164,7 +191,6 @@ class AddressSelect extends Component<any, any> {
 
     const {
       currency: oldCurrency,
-      selectedType: oldSelectedType,
       hasError: oldHasError = false,
     } = this.state
 
@@ -173,29 +199,22 @@ class AddressSelect extends Component<any, any> {
         currency: newCurrency,
         hasError,
         selectedType,
-        customAddress: '',
       })
     }
   }
 
-  handleBlurAddress(value) {
+  handleBlurAddress = () => {
     this.setState({
       walletAddressFocused: false,
     })
-    // todo: validate value
-    /*
-    if (getCurrency === "btc") {
-      return util.typeforce.isCoinAddress.BTC(customWallet)
-    }
-    return util.typeforce.isCoinAddress.ETH(customWallet);
-    */
+
     this.applyAddress({
       type: AddressType.Custom,
-      value,
+      value: this.state.address,
     })
   }
 
-  goСreateWallet() {
+  goСreateWallet = () => {
     const {
       history,
       intl: { locale },
@@ -208,7 +227,7 @@ class AddressSelect extends Component<any, any> {
     history.push(url)
   }
 
-  handleConnectMetamask() {
+  handleConnectMetamask = () => {
     metamask
       .connect({
         dontRedirect: true,
@@ -242,11 +261,11 @@ class AddressSelect extends Component<any, any> {
     }))
   }
 
-  handleScanError(err) {
+  handleScanError = (err) => {
     console.error('Scan error', err)
   }
 
-  handleScan(data) {
+  handleScan = (data) => {
     if (data) {
       const address = data.includes(':') ? data.split(':')[1] : data
       this.toggleScan()
@@ -257,7 +276,7 @@ class AddressSelect extends Component<any, any> {
     }
   }
 
-  handleOptionSelect(option) {
+  handleOptionSelect = (option) => {
     const { selectedType: oldSelectedType } = this.state
 
     const { value: selectedType, dontSelect } = option
@@ -286,11 +305,6 @@ class AddressSelect extends Component<any, any> {
           value = metamask.getAddress()
         }
 
-        /*if (selectedType === AddressType.Custom) {
-        // apply address input blur / qrScan
-        return
-      }*/
-
         if (selectedType === AddressType.Metamask && !metamask.isConnected()) {
           this.handleConnectMetamask()
         } else {
@@ -303,9 +317,9 @@ class AddressSelect extends Component<any, any> {
     )
   }
 
-  applyAddress(address) {
+  applyAddress = (addressObj) => {
     const { onChange, currency } = this.props
-    const { type, value } = address
+    const { type, value } = addressObj
 
     if (typeof onChange !== 'function') {
       return
@@ -319,7 +333,13 @@ class AddressSelect extends Component<any, any> {
   }
 
   render() {
-    const { currency, isDark, label, hiddenCoinsList, allData, role } = this.props
+    const {
+      currency,
+      isDark,
+      label,
+      role,
+      placeholder = 'Enter address',
+    } = this.props
 
     const {
       selectedType,
@@ -341,139 +361,156 @@ class AddressSelect extends Component<any, any> {
       role === AddressRole.Send && (!internalBalance || internalBalance === 0)
 
     const isMetamaskOption = ethToken.isEthOrEthToken({ name: currency })
-    const isMetamaskInstalled = metamask.isEnabled()
 
     // Forbid `Custom address` option when using ethereum/tokens
     // because you need to make a request to the contract
     const isCustomAddressOption = !ethToken.isEthOrEthToken({ name: currency })
     const isCustomOptionInputHidden =
-      role === AddressRole.Send && COIN_DATA[ticker] && COIN_DATA[ticker].model === COIN_MODEL.UTXO
+      role === AddressRole.Send &&
+      COIN_DATA[ticker] &&
+      COIN_DATA[ticker].model === COIN_MODEL.UTXO
 
     const web3Icon = metamask.isConnected()
       ? web3Icons[metamask.web3connect.getProviderType()] || false
       : web3Icons[metamask.web3connect.getInjectedType()] || false
 
-    const options = [
-      {
-        value: 'placeholder',
-        title: <FormattedMessage {...langLabels.labelSpecifyAddress} />,
-        disabled: true,
-        hidden: true,
-      },
-      ...(this.isCurrencyInInternalWallet()
-        ? [
-            {
-              value: AddressType.Internal,
-              icon: iconInternal,
-              title: !isInternalOptionDisabled ? (
-                <Fragment>
-                  <FormattedMessage {...langLabels.optionInternal} />
-                  <Address
-                    address={this.getInternalAddress()}
-                    format={AddressFormat.Short}
-                    type={AddressType.Internal}
-                  />
-                </Fragment>
-              ) : (
-                <FormattedMessage {...langLabels.optionInternalDisabled} />
-              ),
-              disabled: isInternalOptionDisabled,
-            },
-          ]
-        : [
-            {
-              value: 'InternalAddressCreate',
-              icon: iconInternal,
-              title: <FormattedMessage {...langLabels.optionInternalCreate} />,
-            },
-          ]),
-      ...(isMetamaskOption
-        ? isMetamaskConnected
-          ? [
-              {
-                value: AddressType.Metamask,
-                icon: web3Icon,
-                title: (
-                  <Fragment>
-                    {metamask.web3connect.getProviderTitle()}
-                    <Address
-                      address={metamaskAddress}
-                      format={AddressFormat.Short}
-                      type={AddressType.Metamask}
-                    />
-                  </Fragment>
-                ),
-              },
-            ]
-          : [
-              {
-                value: AddressType.Metamask,
-                icon: web3Icon,
-                title: <FormattedMessage {...langLabels.optionConnect} />,
-                dontSelect: true,
-              },
-            ]
-        : []),
-      ...(isCustomAddressOption
-        ? [
-            {
-              value: AddressType.Custom,
-              icon: iconCustom,
-              title: <FormattedMessage {...langLabels.optionCustom} />,
-              reduceSelectedItemText: !isCustomOptionInputHidden,
-            },
-          ]
-        : []),
-    ]
+    // =======================================================
+    // Drop Down Options =====================================
+
+    type DropDownOptions = {
+      value: string
+      disabled?: boolean
+      reduceSelectedItemText?: boolean
+      dontSelect?: boolean
+      hidden?: boolean
+      title: JSX.Element
+      icon?: SVGElement
+    }
+
+    const dropDownOptions: DropDownOptions[] = []
+
+    if (this.isCurrencyInInternalWallet()) {
+      dropDownOptions.push(
+        {
+          value: AddressType.Internal,
+          icon: iconInternal,
+          title: !isInternalOptionDisabled ? (
+            <Fragment>
+              <FormattedMessage {...langLabels.optionInternal} />
+              <Address
+                address={this.getInternalAddress()}
+                format={AddressFormat.Short}
+                type={AddressType.Internal}
+              />
+            </Fragment>
+          ) : (
+            <FormattedMessage {...langLabels.optionInternalDisabled} />
+          ),
+          disabled: isInternalOptionDisabled,
+        },
+      )
+    } else {
+      dropDownOptions.push(
+        {
+          value: 'InternalAddressCreate',
+          icon: iconInternal,
+          title: <FormattedMessage {...langLabels.optionInternalCreate} />,
+        },
+      )
+    }
+
+    if (isMetamaskOption) {
+      if (isMetamaskConnected) {
+        dropDownOptions.push(
+          {
+            value: AddressType.Metamask,
+            icon: web3Icon,
+            title: (
+              <Fragment>
+                {metamask.web3connect.getProviderTitle()}
+                <Address
+                  address={metamaskAddress}
+                  format={AddressFormat.Short}
+                  type={AddressType.Metamask}
+                />
+              </Fragment>
+            ),
+          },
+        )
+      } else {
+        dropDownOptions.push(
+          {
+            value: AddressType.Metamask,
+            icon: web3Icon,
+            title: <FormattedMessage {...langLabels.optionConnect} />,
+            dontSelect: true,
+          },
+        )
+      }
+    }
+
+    if (isCustomAddressOption) {
+      dropDownOptions.push(
+        {
+          value: AddressType.Custom,
+          icon: iconCustom,
+          title: <FormattedMessage {...langLabels.optionCustom} />,
+          reduceSelectedItemText: !isCustomOptionInputHidden,
+        },
+      )
+    }
+
+    // =======================================================
+
+    const valueLink = Link.all(this, 'address')
+    const customInputStyles = {
+      fontSize: '15px',
+      textOverflow: 'ellipsis',
+    }
 
     return (
       <div
-        styleName={`addressSelect ${hasError ? 'addressSelect_error' : ''} ${
-          isDark ? '--dark' : ''
-        }`}
+        styleName={
+          `addressSelect ${hasError ? 'addressSelect_error' : ''} 
+          ${isDark ? '--dark' : ''}`
+        }
       >
         <div styleName="label">{label}</div>
         <DropDown
           styleName="dropDown"
-          items={options}
-          initialValue="placeholder"
+          items={dropDownOptions}
           selectedValue={selectedType}
           disableSearch={true}
           dontScroll={true}
           arrowSide="left"
           itemRender={(item) => <Option {...item} />}
-          onSelect={(value) => this.handleOptionSelect(value)}
+          onSelect={this.handleOptionSelect}
         />
         {selectedType === AddressType.Metamask && metamask.isEnabled() && !isMetamaskConnected && (
           <div styleName="selectedInner connectWrapper">
             <Button
-              styleName="button"
               blue
-              onClick={() => {
-                this.handleConnectMetamask()
-              }}
+              styleName="button"
+              onClick={this.handleConnectMetamask}
             >
               <FormattedMessage {...langLabels.connectMetamask} />
             </Button>
           </div>
         )}
-        {selectedType === AddressType.Custom && !isCustomOptionInputHidden && (
+        {!isCustomOptionInputHidden && selectedType === AddressType.Custom && (
           <div styleName="selectedInner">
             <div styleName={`customWallet ${walletAddressFocused ? 'customWallet_focus' : ''}`}>
               <div styleName="customAddressInput">
                 <Input
-                  inputCustomStyle={{
-                    fontSize: '15px',
-                    textOverflow: 'ellipsis',
-                  }}
-                  required
+                  inputCustomStyle={customInputStyles}
                   pattern="0-9a-zA-Z"
-                  onFocus={() => this.handleFocusAddress()}
-                  onBlur={(event) => this.handleBlurAddress(event.target.value)}
-                  placeholder="Enter address"
-                  valueLink={Link.all(this, '_')._} // required
+                  onFocus={this.handleFocusAddress}
+                  onBlur={this.handleBlurAddress}
+                  placeholder={placeholder}
+                  valueLink={valueLink.address}
                   openScan={this.toggleScan}
                   qr={isMobile}
+                  required
                 />
               </div>
             </div>

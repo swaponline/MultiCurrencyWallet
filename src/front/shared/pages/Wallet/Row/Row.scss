@@ -162,7 +162,7 @@ tr button[disabled]:hover {
 .assetsTableValue {
   position: absolute;
   right: 48px;
-  bottom: 0px;
+  bottom: -4px;
   font-size: 12px;
   font-weight: 500;
   color: $notice-color;
@@ -309,13 +309,9 @@ tr button[disabled]:hover {
 }
 
 @media all and (max-width: 767px) {
-  .notifyBlock {
-    flex-direction: column;
-  }
-
   .assetsTableValue {
     right: 35px;
-    top: 20px;
+    bottom: -3px;
   }
 
   .assetsTableRow {

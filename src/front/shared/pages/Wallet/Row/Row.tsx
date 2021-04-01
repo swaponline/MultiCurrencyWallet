@@ -83,36 +83,7 @@ const langLabels = defineMessages({
   })
 )
 @cssModules(styles, { allowMultiple: true })
-class Row extends Component {
-  /**
-   * @method handleReloadBalance
-   * @method handleSliceAddress
-   * @method handleDisconnectWallet
-   * @method handleConnectMetamask
-   * @method handleWithdrawPopup
-   * @method handleWithdraw
-   * @method handleReceive
-   * @method handleActivateProtected
-   * @method handleActivatePinProtected
-   * @method handleGenerateMultisignLink
-   * @method handleHowToWithdraw
-   * @method handleOpenDropdown
-   * @method handleCreateInvoiceLink
-   * @method handleSwitchMultisign
-   * @method handleCreateInvoice
-   *
-   * @method goToExchange
-   * @method goToCurrencyHistory
-   * @method hideCurrency
-   *
-   * @method copy
-   * @method copyPrivateKey
-   * @method handleShowMnemonic
-   */
-
-  props: RowProps
-  state: RowState
-
+class Row extends Component<RowProps, RowState> {
   constructor(props) {
     super(props)
 
@@ -701,6 +672,9 @@ class Row extends Component {
     let showBalance = true
     let statusInfo = ''
 
+    // Prevent render SMS wallet
+    if (itemData.isSmsProtected) return null
+
     if (
       itemData.isPinProtected &&
       !itemData.isRegistered
@@ -825,6 +799,8 @@ class Row extends Component {
           <div styleName="assetsTableCurrency">
             {/* Currency icon */}
             <Coin className={styles.assetsTableIcon} name={currency} />
+            
+            {/* Title-Link */}
             <div styleName="assetsTableInfo">
               <div styleName="nameRow">
                 <a onClick={metamaskDisconnected
@@ -847,6 +823,8 @@ class Row extends Component {
               </div>
               {title ? <strong>{title}</strong> : ''}
             </div>
+            
+            {/* Tip - if something wrong with endpoint */}
             {balanceError && nodeDownErrorShow && (
               <div className={styles.errorMessage}>
                 <ApiEndpoint
@@ -872,6 +850,8 @@ class Row extends Component {
                 </Tooltip>
               </div>
             )}
+
+            {/* Currency amount */}
             <span styleName="assetsTableCurrencyWrapper">
               {showBalance && (
                 <Fragment>
@@ -932,7 +912,8 @@ class Row extends Component {
                 </Fragment>
               )}
             </span>
-
+            
+            {/* Address */}
             <Fragment>
               {statusInfo ?
                 <p styleName="statusStyle">{statusInfo}</p>
@@ -974,7 +955,8 @@ class Row extends Component {
                     </div>
               }
             </Fragment>
-
+            
+            {/* Fiat amount */}
             {(currencyFiatBalance && showBalance && !balanceError) || msConfirmCount ? (
               <div styleName="assetsTableValue">
                 {msConfirmCount && !isMobile && (
@@ -999,7 +981,8 @@ class Row extends Component {
               )}
           </div>
 
-          { !metamaskDisconnected &&
+          {/* Additional option. Ethereum row with external wallet */}
+          {!metamaskDisconnected &&
             <div onClick={this.handleOpenDropdown} styleName="assetsTableDots">
               <DropdownMenu
                 size="regular"

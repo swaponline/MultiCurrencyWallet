@@ -1,14 +1,16 @@
 import * as React from 'react'
 import { Provider } from 'react-redux'
+import store, { history } from 'redux/store'
+import routes from 'shared/routes'
 import { ConnectedRouter } from 'connected-react-router'
 
 import App from 'containers/App/App'
 import IntlProviderContainer from './IntlProviderContainer'
 
 type RootProps = {
-  history: any
-  store: IUniversalObj
-  routes: IUniversalObj
+  history: typeof history
+  store: typeof store
+  routes: typeof routes
 }
 
 export default class Root extends React.Component<RootProps, null> {

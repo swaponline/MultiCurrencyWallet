@@ -56,15 +56,17 @@ export default (webpackConfig) => {
   * disable dafault source map
   * enable webpack plugin for maps (in plugins array)
   */
-  webpackConfig.devtool = false
+  webpackConfig.devtool = 'source-map'
 
   webpackConfig.plugins.push(
+  /*
     new webpack.SourceMapDevToolPlugin({
       publicPath: config.publicPath,
-      filename: '[name].js.map',
+      filename: '[name].[hash:6].js.map',
       fileContext: 'public',
       exclude: ['vendor.js'],
     }),
+    */
     new WebpackRequireFrom({
       variableName: 'publicUrl',
       suppressErrors: true, 

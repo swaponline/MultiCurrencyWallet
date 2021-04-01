@@ -72,12 +72,21 @@ export default class Table extends React.Component<TableProps, TableState> {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    const { rows, isLoading } = this.props
+    const { rows, isLoading} = this.props
+
     return isLoading !== nextProps.isLoading || rows !== nextProps.rows || this.state.selectId !== nextState.selectId
   }
 
   render() {
-    const { titles, rows, rowRender, textIfEmpty, isLoading, loadingText, className } = this.props
+    const {
+      titles,
+      rows,
+      rowRender,
+      textIfEmpty,
+      isLoading,
+      loadingText,
+      className,
+    } = this.props
 
     return (
       <table styleName={`table ${isDark ? 'dark' : ''}`} className={`table ${className}`} ref={(table) => this.linkOnTable = table}>

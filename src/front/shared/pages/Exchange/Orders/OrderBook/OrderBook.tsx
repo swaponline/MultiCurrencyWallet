@@ -28,7 +28,7 @@ import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 
 import config from 'app-config'
 import feedback from 'shared/helpers/feedback'
-import { links, getPairFees } from 'helpers'
+import { links } from 'helpers'
 
 
 type OrderBookProps = {
@@ -327,6 +327,8 @@ class OrderBook extends Component {
                         pairFees={pairFees}
                         balances={balances}
                         checkSwapAllow={checkSwapAllow}
+                        buy={buyCurrency}
+                        sell={sellCurrency}
                       />
                     )}
                   />
@@ -377,6 +379,8 @@ class OrderBook extends Component {
                         pairFees={pairFees}
                         balances={balances}
                         checkSwapAllow={checkSwapAllow}
+                        buy={sellCurrency}
+                        sell={buyCurrency}
                       />
                     )}
                   />
