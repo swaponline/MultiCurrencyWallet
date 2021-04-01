@@ -108,7 +108,7 @@ const createOrders = (orderType, balance, ticker, tickerOrders, basePrice) => {
   return orders
 }
 
-const createTickerOrders = async (balances, ticker) => {
+const createTickerOrders = async (balances, ticker): Promise<Pair[]> => {
   const price = TRADE_CONFIG[ticker].sellPrice
     ? new BigNumber(TRADE_CONFIG[ticker].sellPrice)
     : await fetchPrice(ticker, TRADE_CONFIG[ticker].type)
@@ -139,9 +139,9 @@ const fillOrders = async (balances, ticker, create) => {
   try {
     debug('fillOrders for', ticker)
 
-    const orders = await createTickerOrders(balances, ticker)
+    const orders: Pair[] = await createTickerOrders(balances, ticker)
 
-    debug(`${ticker} new orders`, orders.length)
+    debug(`${ticker} new orders`, orders.length, orders)
 
     orders
       .map(pair => ({ ...pair.toOrder(), isPartial: true }))
@@ -173,7 +173,10 @@ const fillOrders = async (balances, ticker, create) => {
 
           debug('newOrder', newOrder, newOrder.buyAmount.toString(), newOrder.sellAmount.toString())
 
-          return Pair.fromOrder({ ...oldOrder, ...newOrder }).toOrder()
+          return {
+            ...Pair.fromOrder({ ...oldOrder, ...newOrder }).toOrder(),
+            isTurbo: oldOrder.isTurbo,
+          }
         }))
       .map((order: Order) => order.setRequestHandlerForPartial('sellAmount',
         ({ sellAmount }, oldOrder) => {
@@ -198,7 +201,10 @@ const fillOrders = async (balances, ticker, create) => {
 
           debug('newOrder', newOrder, newOrder.buyAmount.toString(), newOrder.sellAmount.toString())
 
-          return Pair.fromOrder({ ...oldOrder, ...newOrder }).toOrder()
+          return {
+            ...Pair.fromOrder({ ...oldOrder, ...newOrder }).toOrder(),
+            isTurbo: oldOrder.isTurbo,
+          }
         }))
   } catch (err) {
     handleError(err)
@@ -235,7 +241,7 @@ export default async (wallet, orders): Promise<Promise<void>[]> => {
       [elem.symbol]: elem.value,
     }), {})
 
-  debug('balances', balanceForSymbol)
+  debug('Balances', balanceForSymbol)
 
 console.log('FILLED ORDERS = ', Object.keys(TRADE_CONFIG).filter((item) => TRADE_CONFIG[item].active))
 
