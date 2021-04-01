@@ -3,6 +3,7 @@ import React, { PureComponent } from 'react'
 import Table from 'components/tables/Table/Table'
 import styles from 'components/tables/Table/Table.scss'
 import RowHistory from './RowHistory/RowHistory'
+
 import { FormattedMessage } from 'react-intl'
 import { constants } from 'helpers'
 
@@ -30,7 +31,7 @@ export default class SwapsHistory extends PureComponent<any, any> {
         <Table
           id="table-history"
           className={styles.historySwap}
-          rows={orders}
+          rows={orders.reverse()}
           rowRender={(row, index) => (
             <RowHistory
               key={index}

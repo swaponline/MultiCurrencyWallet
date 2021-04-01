@@ -31,6 +31,7 @@ class Swap {
   flow: FlowType
 
   constructor(id, app, order?) {
+    SwapApp.required(app)
     this.id                     = null
     this.isMy                   = null
     this.isTurbo                = null
@@ -44,15 +45,13 @@ class Swap {
     this.participantSwap        = null
     this.destinationBuyAddress  = null
     this.destinationSellAddress = null
-    this.app                    = null
+    this.app                    = app
     this.createUnixTimeStamp    = Math.floor(new Date().getTime() / 1000)
 
     this.participantMetamaskAddress = null
 
     // Wait confirm > 1
     this.waitConfirm            = false
-
-    this._attachSwapApp(app)
 
     let data = this.app.env.storage.getItem(`swap.${id}`)
 
@@ -63,6 +62,13 @@ class Swap {
     }
 
     this.update(data)
+
+    const swapExists = this._attachSwapApp(app)
+    if (swapExists !== null) {
+      // Swap object already created and attached to SwapApp.
+      // Prevent two Swap object - return exists
+      return swapExists
+    }
 
     this.events = new Events()
 
@@ -109,6 +115,16 @@ class Swap {
         participantMetamaskAddress: data.address,
       })
     })
+
+    this.on('enter step', () => {
+      this.app.emit('swap enter step', {
+        swap: this,
+      })
+    })
+
+    this.app.emit('swap attached', {
+      swap: this,
+    })
   }
 
 /* static read(app, { id }) {
@@ -145,11 +161,8 @@ class Swap {
     return this.flow.isFinished()
   }
 
-  _attachSwapApp(app) {
-    SwapApp.required(app)
-
-    this.app = app
-    this.app.attachSwap(this)
+  _attachSwapApp(app): Swap {
+    return this.app.attachSwap(this)
   }
 
   _getDataFromOrder(order) {
@@ -246,91 +259,93 @@ class Swap {
       buyCurrency: buyCoin,
     } = this
 
-    if (COIN_DATA[sellCoin]
-      && COIN_DATA[sellCoin].model
-      && COIN_DATA[buyCoin]
-      && COIN_DATA[buyCoin].model
-    ) {
-      const _Sell = sellCoin.toLowerCase()
-      const _Buy = buyCoin.toLowerCase()
+    if (!this.flow.isTakerMakerModel) {
+      if (COIN_DATA[sellCoin]
+        && COIN_DATA[sellCoin].model
+        && COIN_DATA[buyCoin]
+        && COIN_DATA[buyCoin].model
+      ) {
+        const _Sell = sellCoin.toLowerCase()
+        const _Buy = buyCoin.toLowerCase()
 
-      const sellModel = COIN_DATA[sellCoin].model
-      const buyModel = COIN_DATA[buyCoin].model
+        const sellModel = COIN_DATA[sellCoin].model
+        const buyModel = COIN_DATA[buyCoin].model
 
-      // sell UTXO buy AB 
-      if (sellModel === COIN_MODEL.UTXO && buyModel === COIN_MODEL.AB) {
-        // @ToDo after refactoring use 'request script'
-        this.room.on(`request utxo script`, () => {
-          if (this.flow) {
-            const {
-              utxoScriptValues: scriptValues,
-              utxoScriptCreatingTransactionHash: scriptCreatingTransactionHash,
-            } = this.flow.state
-            
-            if (scriptValues && scriptCreatingTransactionHash) {
-              this.room.sendMessage({
-                event:  `create utxo script`,
-                data: {
-                  scriptValues,
-                  utxoScriptCreatingTransactionHash: scriptCreatingTransactionHash,
-                }
-              })
+        // sell UTXO buy AB 
+        if (sellModel === COIN_MODEL.UTXO && buyModel === COIN_MODEL.AB) {
+          // @ToDo after refactoring use 'request script'
+          this.room.on(`request utxo script`, () => {
+            if (this.flow) {
+              const {
+                utxoScriptValues: scriptValues,
+                utxoScriptCreatingTransactionHash: scriptCreatingTransactionHash,
+              } = this.flow.state
+              
+              if (scriptValues && scriptCreatingTransactionHash) {
+                this.room.sendMessage({
+                  event:  `create utxo script`,
+                  data: {
+                    scriptValues,
+                    utxoScriptCreatingTransactionHash: scriptCreatingTransactionHash,
+                  }
+                })
+              }
             }
-          }
-        })
-      }
-      // sell AB buy UTXO
-      if (sellModel === COIN_MODEL.AB && buyModel === COIN_MODEL.UTXO) {
-        this.room.on(`create utxo script`, (eventData) => {
-          if (this.flow) {
-            const {
-              scriptValues,
-              utxoScriptCreatingTransactionHash: scriptCreatingTransactionHash, 
-            } = eventData
-
-            const { step } = this.flow.state
-
-            if (step >= 3) {
-              return
-            }
-
-            this.flow.finishStep({
-              secretHash: scriptValues.secretHash,
-              utxoScriptValues: scriptValues,
-              utxoScriptCreatingTransactionHash: scriptCreatingTransactionHash,
-            }, { step: `wait-lock-utxo`, silentError: true })
-          }
-        })
-        // Seller has unconfirmed tx in mem pool
-        this.room.on('wait utxo unlock', () => {
-          this.flow.setState({
-            participantHasLockedUTXO: true,
-          }, true)
-        })
-
-        const requestScriptFunc = () => {
-          if (this.flow && !this.flow._isFinished()) {
-            const { step } = this.flow.state
-
-            if (step >= 3) {
-              return
-            }
-
-            this.flow.swap.room.sendMessage({
-              event: `request ${_Buy} script`,
-            })
-
-            setTimeout( requestScriptFunc, 5000 )
-          }
+          })
         }
-        requestScriptFunc()
+        // sell AB buy UTXO
+        if (sellModel === COIN_MODEL.AB && buyModel === COIN_MODEL.UTXO) {
+          this.room.on(`create utxo script`, (eventData) => {
+            if (this.flow) {
+              const {
+                scriptValues,
+                utxoScriptCreatingTransactionHash: scriptCreatingTransactionHash, 
+              } = eventData
+
+              const { step } = this.flow.state
+
+              if (step >= 3) {
+                return
+              }
+
+              this.flow.finishStep({
+                secretHash: scriptValues.secretHash,
+                utxoScriptValues: scriptValues,
+                utxoScriptCreatingTransactionHash: scriptCreatingTransactionHash,
+              }, { step: `wait-lock-utxo`, silentError: true })
+            }
+          })
+          // Seller has unconfirmed tx in mem pool
+          this.room.on('wait utxo unlock', () => {
+            this.flow.setState({
+              participantHasLockedUTXO: true,
+            }, true)
+          })
+
+          const requestScriptFunc = () => {
+            if (this.flow && !this.flow._isFinished()) {
+              const { step } = this.flow.state
+
+              if (step >= 3) {
+                return
+              }
+
+              this.flow.swap.room.sendMessage({
+                event: `request ${_Buy} script`,
+              })
+
+              setTimeout( requestScriptFunc, 5000 )
+            }
+          }
+          requestScriptFunc()
+        }
+        // sell UTXO buy UTXO
+        if (sellModel === COIN_MODEL.UTXO && buyModel === COIN_MODEL.UTXO) { /* ---- */ }
+        // sell AB buy AB
+        if (sellModel === COIN_MODEL.AB && buyModel === COIN_MODEL.AB) { /* ----- */ }
+      } else {
+        console.warn(`Core->Swap->setupEvents - Unknown coins models Sell(${sellCoin}) Buy(${buyCoin})`)
       }
-      // sell UTXO buy UTXO
-      if (sellModel === COIN_MODEL.UTXO && buyModel === COIN_MODEL.UTXO) { /* ---- */ }
-      // sell AB buy AB
-      if (sellModel === COIN_MODEL.AB && buyModel === COIN_MODEL.AB) { /* ----- */ }
-    } else {
-      console.warn(`Core->Swap->setupEvents - Unknown coins models Sell(${sellCoin}) Buy(${buyCoin})`)
     }
   }
 

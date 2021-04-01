@@ -15,6 +15,11 @@ class UTXOBlockchain extends SwapInterface {
   fetchTxInfo: Function = undefined
   estimateFeeValue: Function = undefined
 
+  // Парсит транзакцию, извлекает скрипт для получения секрета
+  // Нужна, если taker создает AB контракт первый, чтобы maker мог получить
+  // секрет из транзакции к UTXO скрипту
+  fetchTxInputScript: Function = undefined
+
   account: string = undefined
   networks: any = undefined
   network: any = undefined
@@ -66,6 +71,9 @@ class UTXOBlockchain extends SwapInterface {
     this.feeValue       = options.feeValue || 546
     this.fetchTxInfo    = options.fetchTxInfo || (() => {})
     this.estimateFeeValue = options.estimateFeeValue || (() => 0)
+
+    // UTXO side is taker
+    this.fetchTxInputScript = options.fetchTxInputScript || undefined
 
     this.account        = options.account || `btc`
     this.networks       = options.networks
@@ -342,11 +350,9 @@ class UTXOBlockchain extends SwapInterface {
   }
 
   fetchUnspentsFullInfo(scriptAddress): Promise<any[]> {
-    console.log('fetchUnspentsFullInfo', scriptAddress)
     return new Promise(async (resolve) => {
       const unspents      = await this.fetchUnspents(scriptAddress)
       const fetchFullUnspentInfo = async (unspent) => {
-        console.log('unspent', unspent)
         try {
           const info = await this.fetchTxInfo(unspent.txid)
           return {
@@ -354,7 +360,6 @@ class UTXOBlockchain extends SwapInterface {
             ...info,
           }
         } catch (fetchTxInfoError) {
-          console.log('fetchTxInfo', fetchTxInfoError)
           return false
         }
       }
@@ -400,11 +405,9 @@ class UTXOBlockchain extends SwapInterface {
     }
 
     const expectedConfidence = (expected.confidence !== undefined) ? expected.confidence : 0.95
-    console.log('script', scriptAddress)
+
     const unspents: any[] = await this.fetchUnspentsFullInfo(scriptAddress)
 
-    console.log('script', scriptAddress)
-    console.log('unspents', unspents)
     if (!unspents.length) return `No unspents. Wait`
 
     
@@ -456,12 +459,10 @@ class UTXOBlockchain extends SwapInterface {
   fundScript(data, handleTransactionHash?: Function, hashName?: string) {
     const { scriptValues, amount } = data
 
-    console.log('fundScript', data)
     return new Promise(async (resolve, reject) => {
       try {
         const { scriptAddress } = this.createScript(scriptValues, hashName)
 
-        console.log('scriptAddress', scriptAddress)
         const scriptBalance = await this.fetchBalance(scriptAddress)
         if (new BigNumber(scriptBalance).isGreaterThan(0)) {
           // Script already funded - skip double payments
@@ -566,7 +567,6 @@ class UTXOBlockchain extends SwapInterface {
 
     /* Check - may be withdrawed */
     if (typeof this.checkWithdraw === 'function') {
-      console.log('try check withdraw')
       const hasWithdraw = await this.checkWithdraw(scriptAddress)
       if (hasWithdraw
         && hasWithdraw.address.toLowerCase() == destAddress.toLowerCase()
@@ -897,7 +897,7 @@ class UTXOBlockchain extends SwapInterface {
       const {
         secret,
         utxoScriptValues: scriptValues,
-        [`${coin}SwapWithdrawTransactionHash`]: swapWithdrawTransactionHash,
+        utxoSwapWithdrawTransactionHash: swapWithdrawTransactionHash,
       } = flow.state
 
       if (swapWithdrawTransactionHash) {
@@ -909,7 +909,7 @@ class UTXOBlockchain extends SwapInterface {
         return null
       }
 
-      return flow.btcSwap.withdraw({
+      return utxoClass.withdraw({
         scriptValues,
         secret,
         destinationAddress: flow.swap.destinationBuyAddress,
@@ -917,7 +917,7 @@ class UTXOBlockchain extends SwapInterface {
         .then((hash) => {
           console.log('withdraw hash', hash)
           flow.setState({
-            [`${coin}SwapWithdrawTransactionHash`]: hash,
+            utxoSwapWithdrawTransactionHash: hash,
           }, true)
           return true
         })
@@ -926,7 +926,29 @@ class UTXOBlockchain extends SwapInterface {
 
     flow.finishStep({
       [`is${coin}Withdrawn`]: true,
+      isUTXOWithdrawn: true,
     }, { step: `withdraw-utxo` })
+  }
+
+  getSecretFromTxhash(transactionHash) {
+    return new Promise((resolve) => {
+      if (this.fetchTxInputScript !== undefined) {
+        this.fetchTxInputScript({
+          txId: transactionHash,
+        }).then((txResult) => {
+          if (txResult) {
+            const scriptOpts = txResult.split(' ')
+            if (scriptOpts.length>3) {
+              resolve(scriptOpts[2])
+              return
+            }
+          }
+          resolve(false)
+        })
+      } else {
+        resolve(false)
+      }
+    })
   }
 }
 

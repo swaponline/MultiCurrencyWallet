@@ -21,12 +21,19 @@ import Timer from '../../Timer/Timer'
 import { Button, TimerButton } from 'components/controls'
 
 import SwapController from '../../SwapController'
-import PleaseDontLeaveWrapper from './SwapProgressText/PleaseDontLeaveWrapper'
+import PleaseDontLeaveWrapper from './PleaseDontLeaveWrapper'
 
-import BtcLikeToEth from './SwapProgressText/BtcLikeToEth'
-import BtcLikeToEthToken from './SwapProgressText/BtcLikeToEthToken'
-import EthToBtcLike from './SwapProgressText/EthToBtcLike'
-import EthTokenToBtcLike from './SwapProgressText/EthTokenToBtcLike'
+import UTXOBtcLikeToEth from './UTXOSwapProgressText/BtcLikeToEth'
+import UTXOBtcLikeToEthToken from './UTXOSwapProgressText/BtcLikeToEthToken'
+import UTXOEthToBtcLike from './UTXOSwapProgressText/EthToBtcLike'
+import UTXOEthTokenToBtcLike from './UTXOSwapProgressText/EthTokenToBtcLike'
+
+import ABBtcLikeToEth from './ABSwapProgressText/BtcLikeToEth'
+import ABBtcLikeToEthToken from './ABSwapProgressText/BtcLikeToEthToken'
+import ABEthToBtcLike from './ABSwapProgressText/EthToBtcLike'
+import ABEthTokenToBtcLike from './ABSwapProgressText/EthTokenToBtcLike'
+
+
 import metamask from 'helpers/metamask'
 
 
@@ -294,14 +301,14 @@ class SwapProgress extends Component<any, any> {
   submitSecret = () => {
     const { secret } = this.state
 
-    this.swap.flow.submitSecret(secret)
+    // this.swap.flow.submitSecret(secret)
   }
 
   confirmScriptChecked = () => {
     const {
       verifyScriptFunc,
     } = this._fields
-    this.swap.flow[verifyScriptFunc]()
+    // this.swap.flow[verifyScriptFunc]()
   }
 
   render() {
@@ -310,6 +317,11 @@ class SwapProgress extends Component<any, any> {
       steps,
       flow,
       swap,
+      swap: {
+        flow: {
+          isTakerMakerModel,
+        },
+      },
       signed,
       buyAmount,
       sellAmount,
@@ -320,6 +332,8 @@ class SwapProgress extends Component<any, any> {
       stepValue,
       isSecretCopied,
     } = this.state
+
+    const isUTXOSide = swap.flow.isUTXOSide
 
     const {
       currencyName,
@@ -341,6 +355,10 @@ class SwapProgress extends Component<any, any> {
       _refundTx = flow.refundTransactionHash.transactionHash || flow.refundTransactionHash
     }
 
+    const BtcLikeToEth = (isUTXOSide) ? UTXOBtcLikeToEth : ABBtcLikeToEth
+    const EthToBtcLike = (isUTXOSide) ? UTXOEthToBtcLike : ABEthToBtcLike
+    const BtcLikeToEthToken = (isUTXOSide) ? UTXOBtcLikeToEthToken : ABBtcLikeToEthToken
+    const EthTokenToBtcLike = (isUTXOSide) ? UTXOEthTokenToBtcLike : ABEthTokenToBtcLike
     /** todo **/
     const swapTexts = (
       <Fragment>

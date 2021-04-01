@@ -11,6 +11,18 @@
       },
       "minAmount": 0.005
     },
+    "WEENUS": {
+      "ERC20": {
+        "address": "0x101848d5c5bbca18e6b4431eedf6b95e9adf82fa",
+        "decimals": "18"
+      },
+      "price": {
+        "source": "COIN",
+        "coin": "BTC",
+          "count": 1
+        },
+      "minAmount": 0.005
+    },
     "BTC": {
       "price": {
         "source": "API",
@@ -79,31 +91,31 @@
         }
       ]
     },
-    "PAY-BTC": {
+    "WEENUS-BTC": {
       "active": true,
       "buy": true,
       "sell": true,
       "type":  "coin",
       "orders": [
         {
-          "amount": 0.0005,
-          "spreadBuy": 2,
-          "spreadSell": 2
+          "amount": 0.001,
+          "spreadBuy": 0,
+          "spreadSell": 0
         },
         {
           "amount": 0.005,
-          "spreadBuy": 4,
-          "spreadSell": 4
+          "spreadBuy": 0,
+          "spreadSell": 0
         },
         {
           "amount": 0.05,
-          "spreadBuy": 8,
-          "spreadSell": 8
+          "spreadBuy": 0,
+          "spreadSell": 0
         },
         {
           "amount": 0.5,
-          "spreadBuy": 16,
-          "spreadSell": 16
+          "spreadBuy": 0,
+          "spreadSell": 0
         }
       ]
     },

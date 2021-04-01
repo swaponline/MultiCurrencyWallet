@@ -7,10 +7,15 @@ import CSSModules from 'react-css-modules'
 import styles from './SwapList.scss'
 
 
-import FirstStep from './steps/FirstStep'
-import SecondStep from './steps/SecondStep'
-import ThirdStep from './steps/ThirdStep'
-import FourthStep from './steps/FourthStep'
+import UTXOFirstStep from './UTXOSteps/FirstStep'
+import UTXOSecondStep from './UTXOSteps/SecondStep'
+import UTXOThirdStep from './UTXOSteps/ThirdStep'
+import UTXOFourthStep from './UTXOSteps/FourthStep'
+
+import ABFirstStep from './ABSteps/FirstStep'
+import ABSecondStep from './ABSteps/SecondStep'
+import ABThirdStep from './ABSteps/ThirdStep'
+import ABFourthStep from './ABSteps/FourthStep'
 
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
@@ -26,10 +31,14 @@ export default class SwapList extends Component<any, any> {
         sellCurrency,
         flow: {
           stepNumbers,
+          isTakerMakerModel,
         },
+        flow,
       },
       fields,
     } = props
+
+    const isTaker = flow.isTaker()
 
     this._fields = fields
 
@@ -56,8 +65,25 @@ export default class SwapList extends Component<any, any> {
   }
 
   render() {
-    const { swap, flow, enoughBalance, windowWidth } = this.props
+    const {
+      swap: {
+        flow: {
+          isTakerMakerModel,
+        },
+        flow: flowClass,
+      },
+      flow,
+      swap,
+      enoughBalance,
+      windowWidth,
+    } = this.props
     const { first, second, fourth, fifth, sixth, seventh, eighth } = this.state
+
+    const isUTXOSide = flowClass.isUTXOSide
+    const FirstStep = (isUTXOSide) ? UTXOFirstStep : ABFirstStep
+    const SecondStep = (isUTXOSide) ? UTXOSecondStep : ABSecondStep
+    const ThirdStep = (isUTXOSide) ? UTXOThirdStep : ABThirdStep
+    const FourthStep = (isUTXOSide) ? UTXOFourthStep : ABFourthStep
 
     return (
       <div styleName={`${isMobile ? 'stepList isMobile' : 'stepList'} ${isDark ? 'dark' : ''}`}>

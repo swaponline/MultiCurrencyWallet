@@ -8,6 +8,7 @@
   "license": "MIT",
   "main": "./src/front/bin/server",
   "scripts": {
+    "audit": "cross-env NPM_AUDIT_IGNORE_DEV=1 NPM_AUDIT_IGNORE_LEVEL=low npm-audit-whitelister .npm-audit-whitelister.json",
     "common:test": "tsc ./src/common/tests/tests.ts --noEmit",
     "common:example:send": "node ./src/common/examples/send.js",
     "common:example:unspents": "node ./src/common/examples/unspents.js",
@@ -71,11 +72,6 @@
     "marketmaker:testnet": "cross-env USE_JSON_CONFIG=true NETWORK=testnet babel-node --extensions .ts,.js --config-file=./babel.bot.config.js --max-old-space-size=2048 ./src/bot",
     "marketmaker:test": "cross-env TEST_STARTUP=true USE_JSON_CONFIG=true NETWORK=testnet babel-node --extensions .ts,.js --config-file=./babel.bot.config.js --max-old-space-size=2048 ./src/bot",
     "bot:debug": "cross-env DEBUG=swap.core* babel-node --extensions .ts,.js --config-file=./babel.bot.config.js --max-old-space-size=2048 ./src/bot"
-  },
-  "husky": {
-    "hooks": {
-      "post-commit": "npm run common:test && npm run core:test"
-    }
   },
   "devDependencies": {
     "@babel/cli": "^7.12.10",
@@ -143,11 +139,10 @@
     "express": "^4.17.1",
     "favicons-webpack-plugin": "^4.2.0",
     "file-loader": "^6.2.0",
-    "fork-ts-checker-webpack-plugin": "6.1.1",
+    "fork-ts-checker-webpack-plugin": "6.2.0",
     "fs": "^0.0.1-security",
     "gh-pages": "^3.1.0",
     "html-webpack-plugin": "^4.5.0",
-    "husky": "^4.3.7",
     "hyperdiff": "^2.0.8",
     "jest": "^26.6.3",
     "kraken-api": "^1.0.1",
@@ -158,6 +153,7 @@
     "node-sass": "^4.12.0",
     "node-sessionstorage": "^1.0.0",
     "nodemon": "^2.0.7",
+    "npm-audit-whitelister": "^1.0.2",
     "peer-id": "^0.14.2",
     "pg": "^8.5.1",
     "postcss-loader": "^4.1.0",
@@ -177,7 +173,7 @@
     "style-loader": "^2.0.0",
     "superagent": "^6.1.0",
     "terser-webpack-plugin-legacy": "^1.2.5",
-    "ts-loader": "8.0.18",
+    "ts-loader": "8.1.0",
     "typescript": "4.2.3",
     "url-loader": "^4.1.1",
     "webpack": "^4.44.2",
@@ -230,7 +226,7 @@
     "enc-utils": "^3.0.0",
     "ethereum-input-data-decoder": "^0.3.1",
     "ethereumjs-abi": "^0.6.8",
-    "fork-ts-checker-webpack-plugin": "6.1.1",
+    "fork-ts-checker-webpack-plugin": "6.2.0",
     "ghost-bitcore-lib": "git+https://github.com/swaponline/ghost-bitcore-lib.git",
     "graphql": "^15.3.0",
     "graphql-request": "^3.4.0",
@@ -256,7 +252,6 @@
     "postcss": "^8.2.4",
     "rc-progress": "^3.1.0",
     "react": "^17.0.1",
-    "react-click-outside": "github:tj/react-click-outside",
     "react-copy-to-clipboard": "^5.0.2",
     "react-css-modules": "^4.7.11",
     "react-device-detect": "^1.15.0",

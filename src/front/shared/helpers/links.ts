@@ -14,6 +14,10 @@ const linksManager = {
   farm: '/farm',
   localStorage: '/localStorage',
 
+  // Market maker page - for run parallel swaps in background
+  marketmaker: '/marketmaker',
+  marketmaker_short: '/mm',
+
   creditCardDeposit: '/creditCardDeposit',
   wallets: '/wallets',
   send: '/withdraw',

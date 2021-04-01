@@ -78,7 +78,7 @@ export default (tokenName) => {
         isNextWithdrawn: false,
 
         ethSwapWithdrawTransactionHash: null,
-        nextSwapWithdrawTransactionHash: null,
+        utxoSwapWithdrawTransactionHash: null,
 
         refundTransactionHash: null,
         isRefunded: false,
@@ -131,7 +131,7 @@ export default (tokenName) => {
 
         () => {
           debug('swap.core:flow')(`waiting verify next script`)
-          // this.verifyNextScript()
+          this.verifyScript()
         },
 
         // 4. Check balance
@@ -159,9 +159,9 @@ export default (tokenName) => {
 
         async () => {
           await util.helpers.repeatAsyncUntilResult((stopRepeat) => {
-            const { secret, utxoScriptValues, nextSwapWithdrawTransactionHash } = flow.state
+            const { secret, utxoScriptValues, utxoSwapWithdrawTransactionHash } = flow.state
 
-            if (nextSwapWithdrawTransactionHash) {
+            if (utxoSwapWithdrawTransactionHash) {
               return true
             }
 
@@ -177,7 +177,7 @@ export default (tokenName) => {
             })
               .then((hash) => {
                 flow.setState({
-                  nextSwapWithdrawTransactionHash: hash,
+                  utxoSwapWithdrawTransactionHash: hash,
                 }, true)
                 return true
               })
@@ -193,12 +193,12 @@ export default (tokenName) => {
 
         () => {
           flow.swap.room.once('request swap finished', () => {
-            const { nextSwapWithdrawTransactionHash } = flow.state
+            const { utxoSwapWithdrawTransactionHash } = flow.state
 
             flow.swap.room.sendMessage({
               event: 'swap finished',
               data: {
-                nextSwapWithdrawTransactionHash,
+                utxoSwapWithdrawTransactionHash,
               },
             })
           })
@@ -313,10 +313,10 @@ export default (tokenName) => {
       }, (hash) => {
         debug('swap.core:flow')(`TX hash=${hash}`)
         this.setState({
-          nextSwapWithdrawTransactionHash: hash,
+          utxoSwapWithdrawTransactionHash: hash,
         })
       })
-      debug('swap.core:flow')(`TX withdraw sent: ${this.state.nextSwapWithdrawTransactionHash}`)
+      debug('swap.core:flow')(`TX withdraw sent: ${this.state.utxoSwapWithdrawTransactionHash}`)
 
       this.finishStep({
         isNextWithdrawn: true,

@@ -140,11 +140,11 @@ class SocketBot {
           }
 
           if (isEthWithdrawn || isbtcWithdrawn) {
-            const { btcSwapWithdrawTransactionHash, ethSwapWithdrawTransactionHash } = swap.flow
+            const { utxoSwapWithdrawTransactionHash, ethSwapWithdrawTransactionHash } = swap.flow
 
             setTimeout(() => {
               console.error(`Swap stalled, remove. ID=${swap.id}`)
-              console.error(`BTC withdraw: ${btcSwapWithdrawTransactionHash}`)
+              console.error(`BTC withdraw: ${utxoSwapWithdrawTransactionHash}`)
               console.error(`ETH withdraw: ${ethSwapWithdrawTransactionHash}`)
 
               clearInterval(update)

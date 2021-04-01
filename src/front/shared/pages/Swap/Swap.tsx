@@ -54,6 +54,7 @@ class SwapComponent extends PureComponent<any, any> {
   sendDebugInfoTimer: any
 
 
+
   /*
     ================================================================
     This is debug information without any secret and private data.
@@ -141,8 +142,10 @@ class SwapComponent extends PureComponent<any, any> {
     }
   }
 
-  componentWillMount() {
+
+  componentDidMount() {
     const { items, tokenItems, currenciesData, tokensData, intl: { locale } } = this.props
+
     let { match: { params: { orderId } }, history, activeFiat } = this.props
 
     if (!!window.performance && window.performance.navigation.type === 2) {
@@ -163,7 +166,11 @@ class SwapComponent extends PureComponent<any, any> {
     })
 
     try {
+      console.log('>>>>>>>>>>>>>>> create swap')
       const swap = new Swap(orderId, SwapApp.shared())
+      actions.core.rememberSwap(swap)
+      window.active_swap = swap
+      console.log(swap)
       console.log('Swap flow:', swap.flow._flowName);
 
       const SwapComponent = swapComponents[swap.flow._flowName]
@@ -194,13 +201,14 @@ class SwapComponent extends PureComponent<any, any> {
           })
       })
 
-      this.setState(() => ({
+      console.log('set swap >>>> ', swap)
+      this.setState({
         swap,
         ethData,
         SwapComponent,
         currencyData,
         ethAddress: ethData[0].address,
-      }))
+      }, this.afterComponentDidMount)
 
       /* hide my orders */
       // disable for now TODO
@@ -214,15 +222,18 @@ class SwapComponent extends PureComponent<any, any> {
       this.props.history.push(localisedUrl(links.exchange))
     }
 
-    if (!this.props.savedOrders.includes(orderId)) {
-      this.setSaveSwapId(orderId)
-    }
   }
 
-  componentDidMount() {
-    const { swap } = this.state
-    const { flow } = swap
-    const { step } = flow.state
+
+  afterComponentDidMount() {
+    const {
+      swap,
+      swap: {
+        flow: {
+          step,
+        },
+      },
+    } = this.state
 
     const { match: { params: { orderId } }, savedOrders } = this.props
 
@@ -315,18 +326,6 @@ class SwapComponent extends PureComponent<any, any> {
   deleteThisSwap = (orderId) => {
     actions.core.saveDeletedOrder(orderId)
     actions.core.forgetOrders(orderId)
-  }
-
-  setSaveSwapId = (orderId) => {
-    let swapsId = JSON.parse(localStorage.getItem('swapId'))
-
-    if (swapsId === null || swapsId.length === 0) {
-      swapsId = []
-    }
-    if (!swapsId.includes(orderId)) {
-      swapsId.push(orderId)
-    }
-    localStorage.setItem('swapId', JSON.stringify(swapsId))
   }
 
   isBalanceEnough = () => {
