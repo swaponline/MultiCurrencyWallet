@@ -3,10 +3,18 @@
 git pull
 
 #####WIDGETS
-
+### ETH
 npm run build:mainnet-widget
 
 npm run build:testnet-widget
+
+### BSC (Binance)
+
+npm run build:bsc-mainnet-widget
+
+npm run build:bsc-testnet-widget
+
+
 
 # update repo or clone
 #rm -rf WalletWpPlugin
