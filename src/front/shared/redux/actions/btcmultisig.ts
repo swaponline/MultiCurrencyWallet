@@ -1108,6 +1108,7 @@ const sendSMSProtected = async ({ from, to, amount, feeValue, speed } = {}) => {
     speed,
     method: 'send_2fa',
     address: smsAddress,
+    toAddress: to,
     amount,
   })
 
@@ -1238,6 +1239,7 @@ const sendPinProtected = async ({ from, to, amount, feeValue, speed, password, m
     speed,
     method: 'send_2fa',
     address: pinAddress,
+    toAddress: to,
     amount: new BigNumber(totalAmount).dividedBy(1e8).toNumber(),
   })
 
@@ -1416,6 +1418,7 @@ const send = async ({ from, to, amount, feeValue, speed } = {}) => {
     speed,
     method: 'send_multisig',
     address,
+    toAddress: to,
   })
 
   let feeFromAmount: number | BigNumber = new BigNumber(0)

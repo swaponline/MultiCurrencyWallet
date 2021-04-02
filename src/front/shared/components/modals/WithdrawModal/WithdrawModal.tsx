@@ -275,6 +275,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
 
   setBtcFeeRate = async () => {
     const {
+      address: toAddress,
       selectedItem: {
         address,
         isUserProtected,
@@ -296,6 +297,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
         method,
         speed: 'fast',
         address,
+        toAddress,
         amount: numAmount,
         moreInfo: true,
       })

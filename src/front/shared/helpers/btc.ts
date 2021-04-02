@@ -31,6 +31,58 @@ const reportAboutProblem = (params) => {
   console.groupEnd()
 }
 
+enum Network {
+  mainnet = "mainnet",
+  testnet = "testnet",
+}
+
+enum AddressType {
+  p2pkh = "P2PKH",
+  p2sh = "P2SH",
+  p2wpkh = "P2WPKH",
+  p2wsh = "P2WSH",
+}
+
+const addressTypes: { [key: number]: { type: AddressType, network: Network } } = {
+  0x00: {
+    type: AddressType.p2pkh,
+    network: Network.mainnet,
+  },
+
+  0x6f: {
+    type: AddressType.p2pkh,
+    network: Network.testnet,
+  },
+
+  0x05: {
+    type: AddressType.p2sh,
+    network: Network.mainnet,
+  },
+
+  0xc4: {
+    type: AddressType.p2sh,
+    network: Network.testnet,
+  },
+};
+
+const getAddressType = (address: string) => {
+  const prefix = hasAdminFee.address.substr(0, 2);
+  let version;
+  let data;
+  let addressType;
+
+  if (prefix === 'bc' || prefix === 'tb') {
+    const { data: benchVersion } = bitcoin.address.fromBech32(address)
+    data = benchVersion;
+    return addressType = data.length === 20 ? AddressType.p2wpkh : AddressType.p2wsh;
+
+  } else {
+    const { version: baseVersion } = bitcoin.address.fromBase58Check(address)
+    version = baseVersion
+    const { type } = addressTypes[version]
+    return addressType = type
+  }
+}
 // getByteCount({'MULTISIG-P2SH:2-4':45},{'P2PKH':1}) Means "45 inputs of P2SH Multisig and 1 output of P2PKH"
 // getByteCount({'P2PKH':1,'MULTISIG-P2SH:2-3':2},{'P2PKH':2}) means "1 P2PKH input and 2 Multisig P2SH (2 of 3) inputs along with 2 P2PKH outputs"
 const getByteCount = (inputs, outputs) => {
@@ -111,6 +163,7 @@ type CalculateTxSizeParams = {
   txOut: number
   method?: string
   fixed?: boolean
+  toAddress?: string
 }
 
 const calculateTxSize = async (params: CalculateTxSizeParams) => {
@@ -119,6 +172,7 @@ const calculateTxSize = async (params: CalculateTxSizeParams) => {
     txOut,
     method,
     fixed,
+    toAddress
   } = params
 
   method = method || 'send'
@@ -141,20 +195,38 @@ const calculateTxSize = async (params: CalculateTxSizeParams) => {
   }
 
   if (method === 'send_multisig') {
-    const msuSize = getByteCount(
-      { 'MULTISIG-P2SH-P2WSH:2-2': 1 },
-      { 'P2PKH': (hasAdminFee) ? 3 : 2 }
+    let outputs = {
+      'P2SH': 1,
+    }
+    const toAddressType = toAddress ? getAddressType(toAddress) : "P2PKH";
+    outputs[toAddressType] = ++outputs[toAddressType] || 1;
+
+    if (hasAdminFee) {
+      const adminAddressType = getAddressType(hasAdminFee.address);
+      outputs[adminAddressType] = ++outputs[adminAddressType] || 1;
+      ++txOut
+    }
+    txSize = getByteCount(
+      { 'MULTISIG-P2SH:2-2': 1 },
+      outputs
     )
-    txSize =
-      txIn * msuSize +
-      txOut * TRANSACTION.P2PKH_OUT_SIZE +
-      (TRANSACTION.TX_SIZE + txIn - txOut)
   }
 
   if (method === 'send_2fa') {
+    let outputs = {
+      'P2SH': 1,
+    }
+    const toAddressType = toAddress ? getAddressType(toAddress) : "P2PKH";
+    outputs[toAddressType] = ++outputs[toAddressType] || 1;
+
+    if (hasAdminFee) {
+      const adminAddressType = getAddressType(hasAdminFee.address);
+      outputs[adminAddressType] = ++outputs[adminAddressType] || 1;
+      ++txOut
+    }
     txSize = getByteCount(
-      { 'MULTISIG-P2SH-P2WSH:2-3': txIn },
-      { 'P2PKH': (hasAdminFee) ? 3 : 2 }
+      { 'MULTISIG-P2SH:2-3': txIn },
+      outputs
     )
 
     /*
@@ -183,12 +255,13 @@ type EstimateFeeValueParams = {
   txSize?: number
   fixed?: boolean
   amount?: number
+  toAddress?: string
   swapUTXOMethod?: 'withdraw' | 'deposit'
   moreInfo?: boolean
 }
 // Returned fee value in the satoshi
 const estimateFeeValue = async (params: EstimateFeeValueParams): Promise<any> => {
-  let { 
+  let {
     feeRate,
     inSatoshis,
     speed,
@@ -197,6 +270,7 @@ const estimateFeeValue = async (params: EstimateFeeValueParams): Promise<any> =>
     fixed,
     method,
     amount,
+    toAddress,
     swapUTXOMethod,
     moreInfo,
   } = params
@@ -236,6 +310,7 @@ const estimateFeeValue = async (params: EstimateFeeValueParams): Promise<any> =>
     method,
     txIn,
     txOut,
+    toAddress
   })
 
   const calculatedFeeValue = BigNumber.maximum(
