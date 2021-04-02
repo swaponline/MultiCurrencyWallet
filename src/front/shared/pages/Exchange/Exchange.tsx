@@ -454,11 +454,7 @@ class Exchange extends PureComponent<any, any> {
     }, 60 * 1000) // 1 minute
     
     this.getInfoAboutCurrency()
-    this.fetchPairFeesAndBalances().then(() => {
-      if (isTokenSell) {
-        this.checkTokenAllowance()
-      }
-    })
+    this.fetchPairFeesAndBalances()
 
     metamask.web3connect.on('updated', this.fetchPairFeesAndBalances)
   }
@@ -712,61 +708,57 @@ class Exchange extends PureComponent<any, any> {
 
     return (balances && balances[`ETH`]) ? balances[`ETH`] : 0
   }
-  /* Refactoring
-   * Проверка возможности начать свап по указанной паре
-   * Проверяет балан, фи, если свап не возможен - показывает сообщение
-   */
-  checkSwapAllow = (checkParams) => {
+
+  checkBalanceForSwapPossibility = (checkParams) => {
     const { sellCurrency, buyCurrency, amount, fromType, isSilentError } = checkParams
+
+    // TODO: need to wait pairFees' loading
     const { pairFees, balances } = this.state
+
     const isTokenSell = ethToken.isEthToken({ name: sellCurrency })
-    const sellBalance = new BigNumber(balances[sellCurrency])
+    const isTokenBuy = ethToken.isEthToken({ name: buyCurrency })
+    const sellBalance = new BigNumber(balances[sellCurrency.toUpperCase()] || 0)
     const ethBalance = new BigNumber(this.getEthBalance())
-    let balanceIsOk = false
-    let hasEnoughBalanceForFullPayment = false
     let hasEnoughBalanceForAmount = false
+    let hasEnoughBalanceForSellFee = false
+    let hasEnoughBalanceForBuyFee = false
+    let hasEnoughBalanceForFullPayment = false
+    let balanceIsOk = false
 
     try {
-      const sellFee = pairFees && isTokenSell
-        ? pairFees.byCoins?.ETH?.fee
-        : pairFees.byCoins[sellCurrency]?.fee
+      const sellFee = pairFees && pairFees.sell?.fee
+      const buyFee = pairFees && pairFees.buy?.fee
 
       hasEnoughBalanceForAmount = sellBalance.isGreaterThanOrEqualTo(amount)
 
-      // const hasEnoughBalanceForFee = isTokenSell
-      //   ? ethBalance.isGreaterThanOrEqualTo(sellFee)
-      //   : sellBalance.isGreaterThanOrEqualTo(sellFee)
+      hasEnoughBalanceForSellFee = isTokenSell
+        ? ethBalance.isGreaterThanOrEqualTo(sellFee)
+        : sellBalance.isGreaterThanOrEqualTo(sellFee)
 
-      hasEnoughBalanceForFullPayment = 
+      hasEnoughBalanceForBuyFee = isTokenBuy
+        ? ethBalance.isGreaterThanOrEqualTo(buyFee)
+        : sellBalance.isGreaterThanOrEqualTo(buyFee)
+
+      hasEnoughBalanceForFullPayment =
         fromType === AddressType.Custom ||
         isTokenSell
           ? hasEnoughBalanceForAmount && ethBalance.isGreaterThanOrEqualTo(sellFee)
-          : sellBalance.isGreaterThanOrEqualTo(new BigNumber(amount).plus(sellFee))
+          : isTokenBuy
+            ? hasEnoughBalanceForAmount && ethBalance.isGreaterThanOrEqualTo(buyFee)
+            : sellBalance.isGreaterThanOrEqualTo(new BigNumber(amount).plus(sellFee))
 
       if (hasEnoughBalanceForFullPayment) {
         balanceIsOk = true
       }
-
-      console.log('%c sdfsafsdfasdfasdfsf', 'color: orange')
-      console.log('balanceIsOk: ', balanceIsOk)
-
-      console.log('isTokenSell: ', isTokenSell)
-      console.log('sellBalance: ', +sellBalance)
-      console.log('ethBalance: ', +ethBalance)
-      console.log('sellFee: ', sellFee)
-
-      // console.log('needEthFee: ', needEthFee)
-      console.log('hasEnoughBalanceForAmount: ', hasEnoughBalanceForAmount)
-      console.log('hasEnoughBalanceForFullPayment: ', hasEnoughBalanceForFullPayment)
-      console.groupEnd()
-
-
     } catch (error) {
-      this.reportError(error, `in the checkSwapAllow()`)
+      this.reportError(error, `from checkBalanceForSwapPossibility()`)
       return false
     }
 
-    if (isSilentError) return balanceIsOk
+    if (isSilentError) {
+      return balanceIsOk
+    }
+
     if (!balanceIsOk) {
       const { address } = actions.core.getWallet({ currency: sellCurrency })
       const {
@@ -781,17 +773,7 @@ class Exchange extends PureComponent<any, any> {
             defaultMessage="Please top up your balance before you start the swap."
           />
           <br />
-          {/* {(isTokenSell || isTokenBuy && needEthFee) && (
-            <FormattedMessage
-              id="Swap_NeedEthFee"
-              defaultMessage="You must have at least {buyFee} {buyCoin} on your balance to pay the miner commission"
-              values={{
-                buyFee,
-                buyCoin,
-              }}
-            />
-          )}
-          {!isTokenSell && !needEthFee && (
+          {hasEnoughBalanceForFullPayment && (
             <FormattedMessage
               id="Swap_NeedMoreAmount"
               defaultMessage="You must have at least {amount} {currency} on your balance. {br} Miner commission {sellFee} {sellCoin} and {buyFee} {buyCoin}"
@@ -805,7 +787,7 @@ class Exchange extends PureComponent<any, any> {
                 br: <br />,
               }}
             />
-          )} */}
+          )}
         </Fragment>
       )
       actions.modals.open(constants.modals.AlertWindow, {
@@ -848,7 +830,7 @@ class Exchange extends PureComponent<any, any> {
     const { haveCurrency, haveAmount, haveType, getCurrency } = this.state
 
     if (
-      !this.checkSwapAllow({
+      !this.checkBalanceForSwapPossibility({
         sellCurrency: haveCurrency,
         buyCurrency: getCurrency,
         amount: haveAmount,
@@ -902,7 +884,7 @@ class Exchange extends PureComponent<any, any> {
     feedback.exchangeForm.requestedSwap(`${haveTicker}->${getTicker}`)
 
     if (
-      !this.checkSwapAllow({
+      !this.checkBalanceForSwapPossibility({
         sellCurrency: haveCurrency,
         buyCurrency: getCurrency,
         amount: haveAmount,
@@ -1979,7 +1961,7 @@ class Exchange extends PureComponent<any, any> {
                 linkedOrderId={linkedOrderId}
                 pairFees={pairFees}
                 balances={balances}
-                checkSwapAllow={this.checkSwapAllow}
+                checkSwapAllow={this.checkBalanceForSwapPossibility}
               />
             </div>
           </Fragment>

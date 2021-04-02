@@ -4908,13 +4908,6 @@
     ]
   },
   {
-    "id": "Swap_NeedEthFee",
-    "message": "U moet ten minste {buyFee} {buyCoin} op uw saldo hebben om de mijnwerkerscommissie te betalen",
-    "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
-    ]
-  },
-  {
     "id": "Swap_NeedMoreAmount",
     "message": "Je saldo moet minimaal {amount} {currency} hebben. {br} Mijnwerkerscommissie {sellFee} {sellCoin} en {buyFee} {buyCoin}",
     "files": [

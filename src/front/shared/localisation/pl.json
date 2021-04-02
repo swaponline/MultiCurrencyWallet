@@ -4897,13 +4897,6 @@
     ]
   },
   {
-    "id": "Swap_NeedEthFee",
-    "message": "You must have at least {buyFee} {buyCoin} on your balance to pay the miner commission",
-    "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
-    ]
-  },
-  {
     "id": "Swap_NeedMoreAmount",
     "message": "You must have at least {amount} {currency} on your balance. {br} Miner commission {sellFee} {sellCoin} and {buyFee} {buyCoin}",
     "files": [

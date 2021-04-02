@@ -4919,13 +4919,6 @@
     ]
   },
   {
-    "id": "Swap_NeedEthFee",
-    "message": "На вашем балансе должно быть не менее {buyFee} {buyCoin} для оплаты коммисии майнера",
-    "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
-    ]
-  },
-  {
     "id": "Swap_NeedMoreAmount",
     "message": "На вашем балансе должно быть не менее {amount} {currency}. {br}Коммисия майнера {sellFee} {sellCoin} и {buyFee} {buyCoin}",
     "files": [
