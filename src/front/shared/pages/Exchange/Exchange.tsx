@@ -470,12 +470,6 @@ class Exchange extends PureComponent<any, any> {
     }
 
     metamask.web3connect.on('updated', this.fetchPairFeesAndBalances)
-
-    // ! delete ------------------------------
-    console.group('%c Exchange', 'color: yellow')
-    console.log('props: ', this.props)
-    console.log('state: ', this.state)
-    console.groupEnd()
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -740,7 +734,20 @@ class Exchange extends PureComponent<any, any> {
     let balanceIsOk = false
     let needEthFee = false
 
+    console.group('%c Exchange > checkSwapAllow()', 'color: yellow')
+    console.log('props: ', this.props)
+    console.log('state: ', this.state)
+
     try {
+      /**
+       * * general cases:
+       * - token <-> utxo
+       * - eth/bnb <-> utxo
+       * 
+       * - utxo <-> token
+       * - utxo <-> eth/bnb
+       */
+
       // todo: improve calculation much more
       // !!! Если ПРОДАЕМ токены, у нас должны быть И ТОКЕНЫ И ЭФИР !!!
       // !!! Если мы ПОКУПАЕМ ТОКЕНЫ, у нас должен быть ТОЛЬКО ЭФИР И ТОЛЬКО БИТОК (UTXO) !!!
@@ -753,8 +760,12 @@ class Exchange extends PureComponent<any, any> {
       // Достаточно ли у нас продаваемой валюты для оплаты вместе с фи 
       // Если это не токены - то это будет или эфир или биток (utxo)
       // Если мы покумаем токены - то это будет биток (utxo)
-      const sellFee = pairFees && pairFees.byCoins[sellCurrency]?.fee
+      const sellFee = pairFees && isTokenSell
+        ? pairFees.byCoins.ETH?.fee
+        : pairFees.byCoins[sellCurrency]?.fee
       const fullPayment = sellFee && new BigNumber(amount).plus(sellFee)
+
+      // ! wrong - TOKEN amount + ETH fee
       const isSellEnoughtWithFee = (
         (
           balances
@@ -790,13 +801,22 @@ class Exchange extends PureComponent<any, any> {
       }
 
       if (
-        isTokenBuy
+        isTokenSell
         && pairFees
-        && pairFees.byCoins?.ETH
-        && new BigNumber(this.getEthBalance()).isLessThan(pairFees.byCoins.ETH.fee)
+        && new BigNumber(this.getEthBalance()).isLessThan(pairFees.byCoins?.ETH?.fee)
       ) {
         needEthFee = true
       }
+
+
+      console.log('balanceIsOk: ', balanceIsOk)
+      console.log('needEthFee: ', needEthFee)
+      console.log('sellFee: ', sellFee)
+      console.log('fullPayment: ', fullPayment)
+      console.log('isSellEnoughtWithFee: ', isSellEnoughtWithFee)
+      console.groupEnd()
+
+
     } catch (error) {
       this.reportError(error, `in the checkSwapAllow()`)
       return false
@@ -817,7 +837,7 @@ class Exchange extends PureComponent<any, any> {
             defaultMessage="Please top up your balance before you start the swap."
           />
           <br />
-          {(isTokenSell || (isTokenBuy && needEthFee)) && (
+          {(isTokenSell || isTokenBuy && needEthFee) && (
             <FormattedMessage
               id="Swap_NeedEthFee"
               defaultMessage="You must have at least {buyFee} {buyCoin} on your balance to pay the miner commission"
