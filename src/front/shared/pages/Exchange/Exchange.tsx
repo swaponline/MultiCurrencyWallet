@@ -853,14 +853,20 @@ class Exchange extends PureComponent<any, any> {
         amount: new BigNumber(haveAmount),
       })
       .then((response) => {
-        console.log('%c Token was approved', 'color: green')
-        console.log('transaction hash: ', response.transactionHash)
-
         this.setState(() => ({ tokenApproved: true }))
         
         actions.notifications.show(
           constants.notifications.Message,
-          { message: 'Token is approved' }
+          {message: (
+            <FormattedMessage
+              id="ExchangeTokenWasApproved"
+              defaultMessage="Token was approved.{br}Explorer link: {txLink}"
+              values={{
+                txLink: <a href={`${config.link.etherscan}/tx/${response.transactionHash}`} target="_blank">Transaction</a>,
+                br: <br />,
+              }}
+            />
+          )}
         )
       })
       .catch((error) => {
@@ -1520,7 +1526,7 @@ class Exchange extends PureComponent<any, any> {
               {sellCoinFee ? (
                 <FormattedMessage id="Exchange_AvialableBalance" defaultMessage="Available: " />
               ) : (
-                <FormattedMessage id="partial767" defaultMessage="Your balance: " />
+                <FormattedMessage id="partial767" defaultMessage="Balance: " />
               )}
               {sellCoinFee && sellCoinFee.fee
                 ? new BigNumber(balance)
@@ -1828,6 +1834,7 @@ class Exchange extends PureComponent<any, any> {
               <div styleName="swapStartStatusLoader">
                 <InlineLoader />
               </div>
+              {' '}
               <FormattedMessage
                 id="partial291"
                 defaultMessage="Waiting for another participant (30 sec)"

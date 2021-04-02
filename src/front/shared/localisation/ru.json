@@ -937,7 +937,7 @@
   },
   {
     "id": "partial767",
-    "message": "Ваш баланс: ",
+    "message": "Баланс: ",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]

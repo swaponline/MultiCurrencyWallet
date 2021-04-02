@@ -867,7 +867,7 @@
   },
   {
     "id": "partial767",
-    "message": "Uw balans: ",
+    "message": "Balance: ",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]

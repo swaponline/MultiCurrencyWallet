@@ -878,7 +878,7 @@
   },
   {
     "id": "partial767",
-    "message": "Twoje saldo: ",
+    "message": "Równowaga: ",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]

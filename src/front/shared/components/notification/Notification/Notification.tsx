@@ -63,6 +63,8 @@ const Notification = (props) => {
     'ErrorNotification': type === 'ErrorNotification',
   })
 
+  // TODO: delete outside event for modal closing and add the a close button
+
   return (
     <div styleName={containerStyleName}>
       <div styleName={notificationStyleName} onClick={handleClick}>

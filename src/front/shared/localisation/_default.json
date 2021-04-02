@@ -839,7 +839,7 @@
   },
   {
     "id": "partial767",
-    "message": "Your balance: ",
+    "message": "Balance: ",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
