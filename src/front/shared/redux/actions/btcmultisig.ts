@@ -1103,23 +1103,23 @@ const sendSMSProtected = async ({ from, to, amount, feeValue, speed } = {}) => {
   }
   feeFromAmount = feeFromAmount.toNumber()
 
-  const feeData =  await btc.estimateFeeValue({
+  feeValue = feeValue ? new BigNumber(feeValue).multipliedBy(1e8).toNumber() : await btc.estimateFeeValue({
     inSatoshis: true,
     speed,
     method: 'send_2fa',
     address: smsAddress,
     amount,
-    moreInfo: true,
   })
 
-  const {
-    satoshis,
-    unspents,
-    unspents: originalUnspents,
-  } = feeData
-  feeValue = satoshis
+  let unspents = []
+  unspents = await fetchUnspents(from)
 
-  const fundValue = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
+  const toAmount = amount
+  amount = new BigNumber(amount).multipliedBy(1e8).plus(feeValue).plus(feeFromAmount).multipliedBy(1e-8).toNumber()
+
+  unspents = await bitcoinUtils.prepareUnspents({ unspents, amount })
+
+  const fundValue = new BigNumber(String(toAmount)).multipliedBy(1e8).integerValue().toNumber()
   const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
   const skipValue = totalUnspent - fundValue - feeValue - feeFromAmount
 
@@ -1238,7 +1238,6 @@ const sendPinProtected = async ({ from, to, amount, feeValue, speed, password, m
     speed,
     method: 'send_2fa',
     address: pinAddress,
-    moreInfo: true,
     amount: new BigNumber(totalAmount).dividedBy(1e8).toNumber(),
   })
 
