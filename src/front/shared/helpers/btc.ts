@@ -66,7 +66,7 @@ const addressTypes: { [key: number]: { type: AddressType, network: Network } } =
 };
 
 const getAddressType = (address: string) => {
-  const prefix = hasAdminFee.address.substr(0, 2);
+  const prefix = address.substr(0, 2);
   let version;
   let data;
   let addressType;
