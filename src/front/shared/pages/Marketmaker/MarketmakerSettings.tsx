@@ -169,6 +169,8 @@ console.log('>>>> Market token', marketToken)
     SwapApp.shared().off('swap enter step', this._handleSwapEnterStep)
   }
 
+  handleToggleMarketmaker() {}
+
   render() {
     const {
       swapsIds,
@@ -183,7 +185,9 @@ console.log('>>>> Market token', marketToken)
         <section styleName="mm-controls">
           <h2 styleName="section-title">Настройки маркетмейкинга</h2>
 
-          <p>Маркетмейкинг BTC/WBTC : вкл/выкл</p>
+          <p>Маркетмейкинг BTC/WBTC : <span>
+            <Toggle checked={true} onChange={this.handleToggleMarketmaker} />
+          </span></p>
           <p>Спред: 0.5% (по умолчанию стоит 0.5%)</p>
           <p>Баланс BTC: 2 BTC для попленения перведите на `адрес битка`</p>
           <p>Баланс WBTC: 2 WBTC</p>

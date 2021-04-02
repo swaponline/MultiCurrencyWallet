@@ -22,7 +22,7 @@ export default class MarketmakerPromo extends React.Component<{}, {}> {
 
   onSelectBrowser() {
     feedback.marketmaking.selected('browser')
-    redirectTo(`${links.marketmaker}/BTC-WBTC`)
+    redirectTo(`${links.marketmaker}/WBTC`)
   }
 
   onSelectServer() {

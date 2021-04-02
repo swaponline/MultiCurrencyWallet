@@ -5,7 +5,7 @@ import CSSModules from 'react-css-modules'
 import styles from './Toggle.scss'
 
 
-const Toggle = ({ checked, onChange, dataTut, isDisabled = false }) => (
+const Toggle = ({ checked, onChange, dataTut = null, isDisabled = false }) => (
   <label styleName={`Switch ${isDisabled ? 'disabled' : ''}`} data-tut={dataTut} >
     {/*
     //@ts-ignore */}
