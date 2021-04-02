@@ -520,9 +520,14 @@ const sendTransaction = async ({ to, amount }) => {
   return txHash
 }
 
+const _addressIsContractCache = {} // Remember prev checks - for speed up
 const addressIsContract = async (checkAddress: string): Promise<boolean> => {
+  if (_addressIsContractCache[checkAddress.toLowerCase()] !== undefined) return _addressIsContractCache[checkAddress.toLowerCase()]
   const codeAtAddress = await web3.eth.getCode(checkAddress)
   const codeIsEmpty = !codeAtAddress || codeAtAddress === '0x' || codeAtAddress === '0x0'
+
+  _addressIsContractCache[checkAddress.toLowerCase()] = !codeIsEmpty
+
   return !codeIsEmpty
 }
 
