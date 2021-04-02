@@ -3791,6 +3791,48 @@
     ]
   },
   {
+    "id": "MainFAQ3_header",
+    "message": "¿Por qué la tarifa minera es demasiado alta?",
+    "files": [
+      "src/front/shared/components/FAQ/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MainFAQ3_content",
+    "message": "Las tarifas de blockchain dependen de varios factores, incluida la congestión de la red y el tamaño de la transacción (afectados al convertir criptografía de múltiples entradas, como ganancias de faucet u otras micro transacciones).",
+    "files": [
+      "src/front/shared/components/FAQ/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MainFAQ3_content1",
+    "message": "En otras palabras, es posible que deba pagar tarifas de blockchain más altas si:",
+    "files": [
+      "src/front/shared/components/FAQ/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MainFAQ3_content2",
+    "message": "1) La red blockchain está ocupada o cargada en este momento. Por lo general, la tarifa aumenta durante las fluctuaciones repentinas de la tasa de blockchain y los principales eventos mundiales;",
+    "files": [
+      "src/front/shared/components/FAQ/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MainFAQ3_content3",
+    "message": "2) Su cuenta criptográfica tiene un historial de microdepósitos. Si su cuenta tiene grandes cantidades de depósitos pequeños, el tamaño de su transacción será mayor ya que constará de muchas entradas. Cuanto mayor sea el tamaño de la transacción, mayor será la tarifa de blockchain.",
+    "files": [
+      "src/front/shared/components/FAQ/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MainFAQ3_content4",
+    "message": "Puede haber otras causas de tarifas más altas de blockchain, pero hemos enumerado las más comunes.",
+    "files": [
+      "src/front/shared/components/FAQ/FAQ.tsx"
+    ]
+  },
+  {
     "id": "SweepBannerDescription",
     "message": "Por favor, mueva sus fondos a \"new\" direcciones (USDT y otros ERC20 se envían a la nueva dirección de Ethereum ). Haz clic en este botón: \"DONE\". Se ocultarán las direcciones antiguas.",
     "files": [
