@@ -42,8 +42,9 @@ Current
 | oct 2020 | 1620 USD | \$162 | [+0.37 ETH](https://etherscan.io/tx/0xbe89c49296e56b7a1dacf755c1dd9a71766477b1188527ddc95f5e832651384b) |
 | nov 2020 | 1005 USD | \$105 | [+0.174 ETH](https://etherscan.io/tx/0x8eaf2eb6ae6fdfdda6fe40ed6ae3cdf84b118e0d77c0c6715ef9118f88c80ccb) |
 | dec 2020 | 1200 USD | \$120 | [+0.1 ETH](https://etherscan.io/tx/0xb8358a0d3103eef6c25d1c079b6ce531ead41c2ae9b30569350e3d1a0297d5e9) |
-| jan 2020 | 937 USD | \$93 | 👇 |
-| feb 2020 | 1143 USD | \$114 | https://etherscan.io/tx/0xb85e9f5063ceab6458a1e59c8d4d0dfb359a98ccbfde4086952d359d05fdce9f |
+| jan 2021 | 937 USD | \$93 | 👇 |
+| feb 2021 | 1143 USD | \$114 | https://etherscan.io/tx/0xb85e9f5063ceab6458a1e59c8d4d0dfb359a98ccbfde4086952d359d05fdce9f |
+| mar 2021 | 2558 USD | \$255 | ⌛ (wait for lower gas fee) |
 
 ## How we get revenue
 
@@ -53,14 +54,15 @@ Current
 
 ## Initial selling strategy
 - swaponline team can sell SWAP tokens not less than 1 USD per 1 SWAP (please don't buy tokens above 1 usd anywhere to prevent getting rekt)
-- By default, funds are used to support liquidity (not a price increase!) but can be managed by CEO 
+- By default, funds are used to support liquidity (not the price increase!) but can be managed by CEO 
 
-## Strategy and roadmap
+## Tokenomics (in Roadmap)
 
-- ✔️ BTC-ETH atomic swap – done
-- ✔️ BTC-ERC20 atomic swap – done
-- 👷 UTXO to UTXO atomic swap – soon
-- 👷 DeFi on bitcoin (A [Hashed Time-Locked Collateral Contract](https://github.com/bitcoin/bips/blob/master/bip-0197.mediawiki) (HTLCC) consists of two scripts that permit a designated party (the "borrower") to lock funds on the Bitcoin chain for a specified amount of time as collateral in a debt agreement where the loan principal is denominated in a currency on another blockchain)
+At this time SWAP token is just a "securities" that guarantees you part of revenue and access to governance. In the future SWAP, tokens will also use as collateral as a guarantee of the correct behavior of counterparties. For example there are situations when the user will not be able to change funds due to the harmful behavior of the market maker, this guaranteed contribution helps prevent multiple cases:
+
+- MM declines too many requests
+- MM accepts request but not deposits crypto
+- MM doesn't send crypto in [Turbo swaps](https://github.com/swaponline/MultiCurrencyWallet/blob/master/docs/TURBO_SWAPS.md) exchange 
 
 ## Timeline 
 

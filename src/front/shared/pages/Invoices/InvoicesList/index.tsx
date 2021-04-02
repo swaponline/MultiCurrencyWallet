@@ -119,7 +119,8 @@ class InvoicesList extends PureComponent<any, any> {
           type,
           address,
         }
-      })
+      }).filter((wallet) => wallet.address !== `Not connected`)
+
       actions.invoices.getManyInvoices(invoicesData).then((items) => {
         lsDataCache.push({
           key: `Invoices_All`,
