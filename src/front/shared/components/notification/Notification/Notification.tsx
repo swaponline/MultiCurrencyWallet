@@ -4,13 +4,13 @@ import actions from 'redux/actions'
 import cssModules from 'react-css-modules'
 import styles from './Notification.scss'
 import { constants } from 'helpers'
+import web3Icons from 'images'
 import Sound from 'helpers/Sound/alert.mp4'
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 const Notification = (props) => {
   const {
-    onClick: propsOnClick,
     soundPlay = true,
     className,
     children,
@@ -37,14 +37,6 @@ const Notification = (props) => {
     setTimeout(() => actions.notifications.hide(name), 300)
   }
 
-  const handleClick = () => {
-    if (propsOnClick) {
-      propsOnClick()
-    }
-
-    closeNotification()
-  }
-
   const soundClick = () => {
     const audio = new Audio()
     audio.src = Sound
@@ -60,17 +52,19 @@ const Notification = (props) => {
   const notificationStyleName = cx('notification', {
     'mounted': isMounted,
     'removed': isRemoved,
-    'ErrorNotification': type === 'ErrorNotification',
+    'errorNotification': type === 'ErrorNotification',
   })
-
-  // TODO: delete outside event for modal closing and add the a close button
 
   return (
     <div styleName={containerStyleName}>
-      <div styleName={notificationStyleName} onClick={handleClick}>
+      <div styleName={notificationStyleName}>
         <div styleName="content" className={className}>
           {children}
         </div>
+
+        <button styleName="closeButton" onClick={closeNotification}>
+          <img src={web3Icons.close} alt="close button"/>
+        </button>
       </div>
     </div>
   )

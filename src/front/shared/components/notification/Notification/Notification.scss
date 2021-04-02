@@ -22,9 +22,13 @@
       color: $d-color;
     }
 
-    .ErrorNotification {
+    .errorNotification {
       background-color: $d-background-elements;
       color: $color-f-error;
+    }
+
+    .closeButton {
+      color: $d-color;
     }
   }
 }
@@ -33,13 +37,17 @@
   min-width: 300px;
   max-width: 600px;
   position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
   margin-top: -100%;
+  padding: 1.1rem;
   opacity: 0;
   font-size: 14px;
   border-radius: 6px;
-  color: $l-color;
-  background-color: $l-background-elements;
   box-shadow: $l-box-shadow;
+  background-color: $l-background-elements;
+  color: $l-color;
 
   &.mounted {
     margin-top: 0 !important;
@@ -53,7 +61,7 @@
   }
 }
 
-.ErrorNotification {
+.errorNotification {
   background-color: $l-background-elements;
   color: $color-f-error;
   position: fixed;
@@ -76,8 +84,14 @@
   }
 }
 
+.closeButton {
+  padding: 0.2rem 0.8rem;
+  color: $l-color;
+  // ! delete
+  background: chartreuse;
+}
+
 .content {
-  padding: 15px 25px;
   font-size: 18px;
 }
 
