@@ -911,7 +911,6 @@ class Exchange extends PureComponent<any, any> {
   }
 
   openModalDeclineOrders = (indexOfDecline) => {
-    const orders = SwapApp.shared().services.orders.items
     const declineSwap = actions.core.getSwapById(this.props.decline[indexOfDecline])
 
     if (declineSwap !== undefined) {
@@ -1059,7 +1058,7 @@ class Exchange extends PureComponent<any, any> {
     this.setState(() => ({ haveAmount: value, maxAmount: 0 }))
   }
 
-  setOrders = async () => {
+  setOrders = () => {
     const { filteredOrders, haveAmount, exHaveRate, exGetRate } = this.state
 
     if (!filteredOrders.length) {
@@ -1092,7 +1091,7 @@ class Exchange extends PureComponent<any, any> {
         }
       })
 
-    const didFound = await this.setOrderOnState(sortedOrders)
+    const didFound = this.setOrderOnState(sortedOrders)
 
     if (didFound) {
       this.setState(() => ({
@@ -1145,7 +1144,9 @@ class Exchange extends PureComponent<any, any> {
     }
 
     if (isFound) {
-      this.setState(() => newState)
+      this.setState(() => ({
+        ...newState,
+      }))
     } else {
       this.setState(() => ({
         isNonOffers: true,
@@ -1339,9 +1340,7 @@ class Exchange extends PureComponent<any, any> {
     const check = selected.map((item) => item.value).includes(getCurrency)
     this.getFiatBalance()
 
-    if (!check) {
-      this.chooseCurrencyToRender(selected)
-    } else if (getCurrency === checkingValue) {
+    if (!check || getCurrency === checkingValue) {
       this.chooseCurrencyToRender(selected)
     }
   }
@@ -1358,11 +1357,13 @@ class Exchange extends PureComponent<any, any> {
   }
 
   checkoutLowAmount() {
+    const { haveAmount, getAmount } = this.state
+
     return (
       this.doesComissionPreventThisOrder() &&
-      new BigNumber(this.state.getAmount).isGreaterThan(0) &&
-      this.state.haveAmount &&
-      this.state.getAmount
+      new BigNumber(getAmount).isGreaterThan(0) &&
+      haveAmount &&
+      getAmount
     )
   }
 
@@ -1388,16 +1389,20 @@ class Exchange extends PureComponent<any, any> {
       // При выводе из скрипта покупатель получит ноль монет
       // (При списании со скрипта берется коммисия)
       const feeMultipler = 1
+
       if (
-        pairFees.have.isUTXO &&
-        new BigNumber(pairFees.have.fee).times(feeMultipler).isGreaterThanOrEqualTo(haveAmount)
-      )
+        pairFees.sell.isUTXO &&
+        new BigNumber(pairFees.sell.fee).times(feeMultipler).isGreaterThanOrEqualTo(haveAmount)
+      ) {
         return true
+      }
+
       if (
-        pairFees.get.isUTXO &&
-        new BigNumber(pairFees.get.fee).times(feeMultipler).isGreaterThanOrEqualTo(getAmount)
-      )
+        pairFees.buy.isUTXO &&
+        new BigNumber(pairFees.buy.fee).times(feeMultipler).isGreaterThanOrEqualTo(getAmount)
+      ) {
         return true
+      }
     } else {
       /* No information for fee... wait - disable swap */
       return true
@@ -1432,18 +1437,6 @@ class Exchange extends PureComponent<any, any> {
     this.setState({
       desclineOrders,
     })
-  }
-
-  getCoinData = (coin) => {
-    const { currenciesData, tokensData } = this.props
-    const currencyData = currenciesData.find((item) => item.currency === coin)
-    const tokenData = tokensData.find((item) => item.currency === coin)
-    return currencyData || tokenData
-  }
-
-  getCoinFullName = (coin) => {
-    const coinData = this.getCoinData(coin)
-    return coinData ? coinData.fullName : coin
   }
 
   showIncompleteSwap = () => {
@@ -1572,9 +1565,6 @@ class Exchange extends PureComponent<any, any> {
 
     const isLowAmount = this.checkoutLowAmount()
 
-    const sellTokenFullName = this.getCoinFullName(sellCoin)
-    const buyTokenFullName = this.getCoinFullName(buyCoin)
-
     // temporary: show atomic/turbo switch if only there are turbo offers
     const isShowSwapModeSwitch = directionOrders.filter(offer => offer.isTurbo).length > 0
 
@@ -1587,19 +1577,12 @@ class Exchange extends PureComponent<any, any> {
       toAddress.type === AddressType.Internal
     )
 
-
     const isPrice = oneCryptoCost.isGreaterThan(0) && oneCryptoCost.isFinite() && !isNonOffers
 
     const isErrorNoOrders = isNoAnyOrders && linked.haveAmount.value > 0 && isFullLoadingComplete
 
     const isErrorLowLiquidity =
       !isNoAnyOrders && maxAmount > 0 && isNonOffers && linked.haveAmount.value > 0
-
-    const isErrorLowAmount =
-      this.doesComissionPreventThisOrder() &&
-      new BigNumber(getAmount).isGreaterThan(0) &&
-      haveAmount &&
-      getAmount
 
     // temporarly disable some combinations (need test)
     const isErrorExternalDisabled =
@@ -1737,7 +1720,7 @@ class Exchange extends PureComponent<any, any> {
               </Fragment>
             )}
 
-            {isErrorLowAmount && (
+            {isLowAmount && (
               <p styleName="error">
                 <FormattedMessage
                   id="ErrorBtcLowAmount"
