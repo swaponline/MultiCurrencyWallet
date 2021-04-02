@@ -109,7 +109,7 @@ type ExchangeState = {
   tokenApproved: boolean
 
   isNoAnyOrders?: boolean
-  isFullLoadingComplite?: boolean
+  isFullLoadingComplete?: boolean
   exHaveRate?: string
   exGetRate?: string
   orderId?: string
@@ -150,13 +150,6 @@ const filterIsPartial = (orders) =>
     .filter((order) => order.isPartial && !order.isProcessing && !order.isHidden)
     .filter((order) => order.sellAmount !== 0 && order.sellAmount.isGreaterThan(0)) // WTF sellAmount can be not BigNumber
     .filter((order) => order.buyAmount !== 0 && order.buyAmount.isGreaterThan(0)) // WTF buyAmount can be not BigNumber too - need fix this
-
-
-const subTitle = (sell, sellTicker, buy, buyTicker) => (
-  <div>
-    <FormattedMessage id="ExchangeTitleTag1" defaultMessage="Fastest cross-chain swaps" />
-  </div>
-)
 
 const isWidgetBuild = config && config.isWidget
 const bannedPeers = {} // rejected swap peers
@@ -268,8 +261,6 @@ class Exchange extends PureComponent<any, any> {
       haveCurrency = exchangeSettings.currency.sell || haveCurrency
       getCurrency = exchangeSettings.currency.buy || getCurrency
     }
-
-    this.returnNeedCurrency(haveCurrency, getCurrency)
 
     if (!(buy && sell) && !props.location.hash.includes('#widget') && !isRootPage) {
       if (url !== '/wallet') {
@@ -457,17 +448,17 @@ class Exchange extends PureComponent<any, any> {
     setTimeout(() => {
       if (this._mounted) {
         this.setState({
-          isFullLoadingComplite: true,
+          isFullLoadingComplete: true,
         })
       }
     }, 60 * 1000) // 1 minute
     
     this.getInfoAboutCurrency()
-    this.fetchPairFeesAndBalances()
-    
-    if (isTokenSell) {
-      this.hasTokenAllowance()
-    }
+    this.fetchPairFeesAndBalances().then(() => {
+      if (isTokenSell) {
+        this.checkTokenAllowance()
+      }
+    })
 
     metamask.web3connect.on('updated', this.fetchPairFeesAndBalances)
   }
@@ -483,13 +474,13 @@ class Exchange extends PureComponent<any, any> {
         isTokenSell,
       }), () => {
         if (isTokenSell) {
-          this.hasTokenAllowance()
+          this.checkTokenAllowance()
         }
       })
     }
   }
 
-  getInfoAboutCurrency = async () => {
+  getInfoAboutCurrency = async (): Promise<void> => {
     const { currencies } = this.props
     const currencyNames = currencies.map(({ name }) => name)
 
@@ -504,7 +495,7 @@ class Exchange extends PureComponent<any, any> {
 
   fetchPairFeesAndBalances = async () => {
     await this.fetchPairFees()
-    this.fetchBalances()
+    await this.fetchBalances()
   }
 
   updateFees = () => {
@@ -513,7 +504,7 @@ class Exchange extends PureComponent<any, any> {
     this.fetchPairFees(updateCacheValue)
   }
 
-  fetchPairFees = async (updateCacheValue = false) => {
+  fetchPairFees = async (updateCacheValue = false): Promise<void> => {
     const { haveCurrency: sell, getCurrency: buy } = this.state
 
     this.setState(() => ({ isPending: true }))
@@ -539,7 +530,7 @@ class Exchange extends PureComponent<any, any> {
     }))
   }
 
-  fetchBalances = async () => {
+  fetchBalances = async (): Promise<void> => {
     const {
       haveCurrency: sellCurrency,
       getCurrency: buyCurrency,
@@ -692,7 +683,7 @@ class Exchange extends PureComponent<any, any> {
     }
   }
 
-  getFiatBalance = async () => {
+  getFiatBalance = async (): Promise<void> => {
     const { haveCurrency, getCurrency } = this.state
 
     const exHaveRate = await this.fetchFiatExRate(haveCurrency)
@@ -728,92 +719,45 @@ class Exchange extends PureComponent<any, any> {
   checkSwapAllow = (checkParams) => {
     const { sellCurrency, buyCurrency, amount, fromType, isSilentError } = checkParams
     const { pairFees, balances } = this.state
-    const isTokenBuy = helpers.ethToken.isEthToken({ name: buyCurrency })
-    const isTokenSell = helpers.ethToken.isEthToken({ name: sellCurrency })
-    const ethBalance = this.getEthBalance()
+    const isTokenSell = ethToken.isEthToken({ name: sellCurrency })
+    const sellBalance = new BigNumber(balances[sellCurrency])
+    const ethBalance = new BigNumber(this.getEthBalance())
     let balanceIsOk = false
-    let needEthFee = false
-
-    console.group('%c Exchange > checkSwapAllow()', 'color: yellow')
-    console.log('props: ', this.props)
-    console.log('state: ', this.state)
+    let hasEnoughBalanceForFullPayment = false
+    let hasEnoughBalanceForAmount = false
 
     try {
-      /**
-       * * general cases:
-       * - token <-> utxo
-       * - eth/bnb <-> utxo
-       * 
-       * - utxo <-> token
-       * - utxo <-> eth/bnb
-       */
-
-      // todo: improve calculation much more
-      // !!! Если ПРОДАЕМ токены, у нас должны быть И ТОКЕНЫ И ЭФИР !!!
-      // !!! Если мы ПОКУПАЕМ ТОКЕНЫ, у нас должен быть ТОЛЬКО ЭФИР И ТОЛЬКО БИТОК (UTXO) !!!
-      // Достаточно ли у нас эфира для совершения транзакции
-      const isEthEnoughForFee = (
-        ethBalance
-        && pairFees.byCoins?.ETH?.fee
-        && new BigNumber(ethBalance).isGreaterThanOrEqualTo(pairFees.byCoins.ETH.fee)
-      )
-      // Достаточно ли у нас продаваемой валюты для оплаты вместе с фи 
-      // Если это не токены - то это будет или эфир или биток (utxo)
-      // Если мы покумаем токены - то это будет биток (utxo)
       const sellFee = pairFees && isTokenSell
-        ? pairFees.byCoins.ETH?.fee
+        ? pairFees.byCoins?.ETH?.fee
         : pairFees.byCoins[sellCurrency]?.fee
-      const fullPayment = sellFee && new BigNumber(amount).plus(sellFee)
 
-      // ! wrong - TOKEN amount + ETH fee
-      const isSellEnoughtWithFee = (
-        (
-          balances
-          && balances[sellCurrency]
-          && fullPayment
-          && new BigNumber(balances[sellCurrency]).isGreaterThanOrEqualTo(fullPayment)
-        ) || (fromType === AddressType.Custom)
-      )
+      hasEnoughBalanceForAmount = sellBalance.isGreaterThanOrEqualTo(amount)
 
-      // Если это не токены (isTokenBuy == false и isTokenSell == false) - проверяем балансы с фии
-      if (
-        (
-          /* Продаем токены, должно хватать на фи эфира, баланса токенов должно хватать */
-          isTokenSell
-          && isEthEnoughForFee
-          && new BigNumber(balances[sellCurrency]).isGreaterThanOrEqualTo(amount)
-        ) || (
-          /* Покупаем токены, должно хватать на фи эфира, должно хватать UTXO (sell) на фи и на сумму ордера */
-          isTokenBuy
-          && isEthEnoughForFee
-          && isSellEnoughtWithFee
-        ) || (
-          /* Это не токены, должно хватать на фи эфира. Должно хватать UTXO (sell) на фи и сумму ордера */
-          /* Получается если мы продаем эфир, isEthEnoughForFee = isSellEnoughtWithFee = true, тоесть у нас есть эфира на размер ордера и на фии */
-          /* Если мы покупаем эфир - isEthEnoughForFee = true, isSellEnoughtWithFee = true, есть эфир для контракта, есть utxo на сумму ордера и фи */
-          !isTokenBuy
-          && !isTokenSell
-          && isEthEnoughForFee
-          && isSellEnoughtWithFee
-        )
-      ) {
+      // const hasEnoughBalanceForFee = isTokenSell
+      //   ? ethBalance.isGreaterThanOrEqualTo(sellFee)
+      //   : sellBalance.isGreaterThanOrEqualTo(sellFee)
+
+      hasEnoughBalanceForFullPayment = 
+        fromType === AddressType.Custom ||
+        isTokenSell
+          ? hasEnoughBalanceForAmount && ethBalance.isGreaterThanOrEqualTo(sellFee)
+          : sellBalance.isGreaterThanOrEqualTo(new BigNumber(amount).plus(sellFee))
+
+      if (hasEnoughBalanceForFullPayment) {
         balanceIsOk = true
       }
 
-      if (
-        isTokenSell
-        && pairFees
-        && new BigNumber(this.getEthBalance()).isLessThan(pairFees.byCoins?.ETH?.fee)
-      ) {
-        needEthFee = true
-      }
-
-
+      console.log('%c sdfsafsdfasdfasdfsf', 'color: orange')
       console.log('balanceIsOk: ', balanceIsOk)
-      console.log('needEthFee: ', needEthFee)
+
+      console.log('isTokenSell: ', isTokenSell)
+      console.log('sellBalance: ', +sellBalance)
+      console.log('ethBalance: ', +ethBalance)
       console.log('sellFee: ', sellFee)
-      console.log('fullPayment: ', fullPayment)
-      console.log('isSellEnoughtWithFee: ', isSellEnoughtWithFee)
+
+      // console.log('needEthFee: ', needEthFee)
+      console.log('hasEnoughBalanceForAmount: ', hasEnoughBalanceForAmount)
+      console.log('hasEnoughBalanceForFullPayment: ', hasEnoughBalanceForFullPayment)
       console.groupEnd()
 
 
@@ -837,7 +781,7 @@ class Exchange extends PureComponent<any, any> {
             defaultMessage="Please top up your balance before you start the swap."
           />
           <br />
-          {(isTokenSell || isTokenBuy && needEthFee) && (
+          {/* {(isTokenSell || isTokenBuy && needEthFee) && (
             <FormattedMessage
               id="Swap_NeedEthFee"
               defaultMessage="You must have at least {buyFee} {buyCoin} on your balance to pay the miner commission"
@@ -861,7 +805,7 @@ class Exchange extends PureComponent<any, any> {
                 br: <br />,
               }}
             />
-          )}
+          )} */}
         </Fragment>
       )
       actions.modals.open(constants.modals.AlertWindow, {
@@ -882,7 +826,7 @@ class Exchange extends PureComponent<any, any> {
     return true
   }
 
-  hasTokenAllowance = async () => {
+  checkTokenAllowance = async () => {
     const { tokensData } = this.props
     const { haveCurrency, haveAmount } = this.state
     const haveTokenObj = tokensData.find(tokenObj => {
@@ -1069,17 +1013,15 @@ class Exchange extends PureComponent<any, any> {
     }))
   }
 
-  returnNeedCurrency = (haveCurrency, getCurrency) => {
-    const partialItems = Object.assign(getState().currencies.partialItems) // eslint-disable-line
-
+  returnNeedCurrency = (haveCurrency, getCurrency): void => {
+    const partialItems = Object.assign(getState().currencies.partialItems)
     const partialCurrency = getState().currencies.partialItems.map((item) => item.name)
-    const allCurrencyies = getState().currencies.items.map((item) => item.name)
-    let partialItemsArray = [...partialItems]
-    let currenciesOfUrl = []
-    currenciesOfUrl.push(haveCurrency, getCurrency)
+    const allCurrencies = getState().currencies.items.map((item) => item.name)
+    const formCurrencies = [haveCurrency, getCurrency]
+    const partialItemsArray = [...partialItems]
 
-    currenciesOfUrl.forEach((item) => {
-      if (allCurrencyies.includes(item.toUpperCase())) {
+    formCurrencies.forEach((item) => {
+      if (allCurrencies.includes(item.toUpperCase())) {
         if (!partialCurrency.includes(item.toUpperCase())) {
           partialItemsArray.push({
             name: item.toUpperCase(),
@@ -1559,7 +1501,7 @@ class Exchange extends PureComponent<any, any> {
       goodRate,
       haveAmount,
       isNoAnyOrders,
-      isFullLoadingComplite,
+      isFullLoadingComplete,
       redirectToSwap,
       isWaitForPeerAnswer,
       directionOrders,
@@ -1666,7 +1608,7 @@ class Exchange extends PureComponent<any, any> {
 
     const isPrice = oneCryptoCost.isGreaterThan(0) && oneCryptoCost.isFinite() && !isNonOffers
 
-    const isErrorNoOrders = isNoAnyOrders && linked.haveAmount.value > 0 && isFullLoadingComplite
+    const isErrorNoOrders = isNoAnyOrders && linked.haveAmount.value > 0 && isFullLoadingComplete
 
     const isErrorLowLiquidity =
       !isNoAnyOrders && maxAmount > 0 && isNonOffers && linked.haveAmount.value > 0
@@ -2029,14 +1971,7 @@ class Exchange extends PureComponent<any, any> {
           )}
           <Fragment>
             <div styleName="container">
-              <Promo
-                subTitle={subTitle(
-                  sellTokenFullName,
-                  haveCurrency.toUpperCase(),
-                  buyTokenFullName,
-                  getCurrency.toUpperCase()
-                )}
-              />
+              <Promo />
               {Form}
               <Orders
                 sell={haveCurrency}

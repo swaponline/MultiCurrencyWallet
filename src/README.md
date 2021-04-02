@@ -1197,9 +1197,6 @@
 │   │   │   │   ├── Promo
 │   │   │   │   │   ├── Promo.scss
 │   │   │   │   │   └── Promo.tsx
-│   │   │   │   ├── PromoText
-│   │   │   │   │   ├── PromoText.scss
-│   │   │   │   │   └── PromoText.tsx
 │   │   │   │   ├── Quote
 │   │   │   │   │   ├── index.tsx
 │   │   │   │   │   └── styles.scss

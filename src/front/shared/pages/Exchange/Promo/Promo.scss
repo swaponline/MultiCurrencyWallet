@@ -1,4 +1,5 @@
 .promo {
+  // 
 }
 
 .promoWrap {
@@ -9,5 +10,27 @@
   .promo {
     max-width: 370px;
     padding: 0 20px;
+  }
+}
+
+.promoText {
+  margin: 0 auto;
+  font-style: normal;
+  line-height: 1em;
+  font-size: 30px;
+  text-align: center;
+  margin-bottom: 1em;
+  @include ff-regular;
+}
+
+@media screen and (max-width: 650px){
+  .promoText {
+    font-size: 24px;
+  }
+}
+
+@include media-mobile {
+  .promoText {
+    display: none;
   }
 }
