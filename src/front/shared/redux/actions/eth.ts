@@ -520,6 +520,12 @@ const sendTransaction = async ({ to, amount }) => {
   return txHash
 }
 
+const addressIsContract = async (checkAddress: string): Promise<boolean> => {
+  const codeAtAddress = await web3.eth.getCode(checkAddress)
+  const codeIsEmpty = !codeAtAddress || codeAtAddress === '0x' || codeAtAddress === '0x0'
+  return !codeIsEmpty
+}
+
 const fetchTxInfo = (hash, cacheResponse) => new Promise((resolve) => {
   const url = `?module=proxy&action=eth_getTransactionByHash&txhash=${hash}&apikey=${config.api.etherscan_ApiKey}`
 
@@ -595,4 +601,5 @@ export default {
   fetchTxInfo,
   sendTransaction,
   getTxRouter,
+  addressIsContract,
 }
