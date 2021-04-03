@@ -1339,10 +1339,6 @@
 │   │   │       │   │   └── index.tsx
 │   │   │       │   ├── NotityBlock
 │   │   │       │   │   ├── images
-│   │   │       │   │   │   ├── btcUsdt.svg
-│   │   │       │   │   │   ├── info-solid.svg
-│   │   │       │   │   │   ├── mail.svg
-│   │   │       │   │   │   ├── manageImg.jpg
 │   │   │       │   │   │   └── security.svg
 │   │   │       │   │   ├── NotifyBlock.scss
 │   │   │       │   │   └── NotifyBlock.tsx

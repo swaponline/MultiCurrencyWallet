@@ -92,20 +92,9 @@
   display: flex;
 }
 
-.link-import {
-  display: block;
-}
-
 .notMain {
   min-height: 40px;
   margin: 40px 0;
-}
-
-.secureChooserWrapper {
-  display: flex;
-  justify-content: space-between;
-  width: 90%;
-  margin: 20px auto;
 }
 
 .stepNumber {
@@ -173,7 +162,6 @@
 }
 
 .assetsTableIcon {
-  // background: rgba(97, 68, 229, 0.1);
   min-width: 35px;
   height: 35px;
   border-radius: 50%;
@@ -344,14 +332,6 @@
   }
 }
 
-.secondStepInput {
-  height: 50px;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  width: 335px;
-  padding: 10px;
-  margin: 20px 30px;
-}
-
 .secureSize {
   height: 160px;
   width: 140px;
@@ -416,15 +396,6 @@
     bottom: 0;
     height: 65px;
     z-index: 1111111;
-  }
-
-  .secondStepInput {
-    height: 50px;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    width: 100%;
-    padding: 10px;
-    margin: 0;
-    margin-bottom: 20px;
   }
 
   .wrapper {
@@ -509,10 +480,6 @@
     }
   }
 
-  .link-import {
-    margin-left: 20px;
-  }
-
   .listGroup {
     margin-left: 10px;
     flex-basis: 83%;
@@ -575,11 +542,6 @@
 
   .formBody {
     margin: 100px 16px;
-  }
-
-  .secureChooserWrapper {
-    display: block;
-    width: 100%;
   }
 }
 
