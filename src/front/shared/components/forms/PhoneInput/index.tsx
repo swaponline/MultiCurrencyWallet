@@ -23,7 +23,10 @@ const Phone = (props) => {
 
     if (!phone || !phone.includes(countryCode.replace(/ /g, ""))) {
       const phoneInput = document.querySelector<HTMLInputElement>('.PhoneInputInput')
-      phoneInput.value = countryCode.replace(/ /g, "")
+
+      if (phoneInput) {
+        phoneInput.value = countryCode.replace(/ /g, "")
+      }
     } else {
       onChange(phone)
     }
