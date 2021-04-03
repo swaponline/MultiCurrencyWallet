@@ -570,24 +570,25 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
       })
   }
 
-  addressIsCorrect() {
+  addressIsCorrect(customAddress: string = null) {
     const {
       data: { currency },
     } = this.props
     const { address, isEthToken } = this.state
+    const checkAddress = customAddress || address
 
     if (getCurrencyKey(currency, false).toLowerCase() === `btc`) {
-      if (!typeforce.isCoinAddress.BTC(address)) {
-        return actions.btc.addressIsCorrect(address)
+      if (!typeforce.isCoinAddress.BTC(checkAddress)) {
+        return actions.btc.addressIsCorrect(checkAddress)
       }
       return true
     }
 
     if (isEthToken) {
-      return typeforce.isCoinAddress.ETH(address)
+      return typeforce.isCoinAddress.ETH(checkAddress)
     }
 
-    return typeforce.isCoinAddress[getCurrencyKey(currency, false).toUpperCase()](address)
+    return typeforce.isCoinAddress[getCurrencyKey(currency, false).toUpperCase()](checkAddress)
   }
 
   openScan = () => {
@@ -600,11 +601,22 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
 
   handleScan = (data) => {
     if (data) {
-      const address = data.split(':')[1].split('?')[0]
-      const amount = data.split('=')[1]
-
-      this.setState(() => ({ address, amount }))
-      this.openScan()
+      const dataChunks = data.split(':')
+      if (
+        (data.split(':').length > 1)
+        && (data.split('=').length > 1)
+      ) {
+        const address = data.split(':')[1].split('?')[0]
+        
+        const amount = data.split('=')[1]
+        this.setState(() => ({ address, amount }))
+        this.openScan()
+      } else {
+        if (this.addressIsCorrect(data)) {
+          this.setState(() => ({ address: data }))
+          this.openScan()
+        }
+      }
     }
   }
   // (value: any) => void' is not assignable to parameter of type Transform<string>
