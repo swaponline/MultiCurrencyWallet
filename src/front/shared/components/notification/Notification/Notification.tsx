@@ -4,8 +4,8 @@ import actions from 'redux/actions'
 import cssModules from 'react-css-modules'
 import styles from './Notification.scss'
 import { constants } from 'helpers'
-import web3Icons from 'images'
 import Sound from 'helpers/Sound/alert.mp4'
+import { RemoveButton } from 'components/controls'
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
@@ -62,9 +62,7 @@ const Notification = (props) => {
           {children}
         </div>
 
-        <button styleName="closeButton" onClick={closeNotification}>
-          <img src={web3Icons.close} alt="close button"/>
-        </button>
+        <RemoveButton onClick={closeNotification} />
       </div>
     </div>
   )

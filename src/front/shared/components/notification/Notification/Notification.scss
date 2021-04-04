@@ -26,10 +26,6 @@
       background-color: $d-background-elements;
       color: $color-f-error;
     }
-
-    .closeButton {
-      color: $d-color;
-    }
   }
 }
 
@@ -82,13 +78,6 @@
   p {
     margin-bottom: 20px;
   }
-}
-
-.closeButton {
-  padding: 0.2rem 0.8rem;
-  color: $l-color;
-  // ! delete
-  background: chartreuse;
 }
 
 .content {

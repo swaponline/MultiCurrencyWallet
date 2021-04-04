@@ -543,8 +543,8 @@
 │   │   │   │   │       └── flip.svg
 │   │   │   │   ├── index.ts
 │   │   │   │   ├── RemoveButton
-│   │   │   │   │   ├── RemoveButton.scss
-│   │   │   │   │   └── RemoveButton.tsx
+│   │   │   │   │   ├── index.scss
+│   │   │   │   │   └── index.tsx
 │   │   │   │   ├── ShareButton
 │   │   │   │   │   ├── images
 │   │   │   │   │   │   └── icon.svg

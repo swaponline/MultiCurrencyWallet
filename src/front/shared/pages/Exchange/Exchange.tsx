@@ -1843,7 +1843,7 @@ class Exchange extends PureComponent<any, any> {
           )}
 
           <div styleName="buttons">
-            {isTokenSell && !hasTokenAllowance ? (
+            {isTokenSell && !tokenApproved && !hasTokenAllowance ? (
               <Button
                 styleName="button"
                 onClick={tokenApproved ? this.initSwap : this.approveTheToken}

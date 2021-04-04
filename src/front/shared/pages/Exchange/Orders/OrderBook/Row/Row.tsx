@@ -370,8 +370,7 @@ class Row extends Component<RowProps, RowState> {
         </td>
         <td styleName='rowCell'>
           {peer === ownerPeer
-            ?
-            <RemoveButton className="removeButton" onClick={() => removeOrder(id)} />
+            ? <RemoveButton onClick={() => removeOrder(id)} brand={true} />
             :
             <Fragment>
               {
@@ -458,7 +457,7 @@ class Row extends Component<RowProps, RowState> {
             <div styleName="tdContainer-3">
               {
                 peer === ownerPeer ? (
-                  <RemoveButton className="removeButton" onClick={() => removeOrder(id)} />
+                  <RemoveButton onClick={() => removeOrder(id)} brand={true} />
                 ) : (
                   <Fragment>
                     {

@@ -398,7 +398,7 @@ type ApproveParams = {
 }
 
 const approve = async (params: ApproveParams): Promise<any> => {
-  const { name, to, amount, ...args } = params
+  const { name, to, amount } = params
   const { tokenContract, toWei } = withToken(name)
   const feeResult = await fetchFees()
   const weiAmount = toWei(amount)
