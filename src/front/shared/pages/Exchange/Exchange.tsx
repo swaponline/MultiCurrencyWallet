@@ -456,6 +456,10 @@ class Exchange extends PureComponent<any, any> {
     this.getInfoAboutCurrency()
     this.fetchPairFeesAndBalances()
 
+    if (isTokenSell) {
+      this.checkTokenAllowance()
+    }
+
     metamask.web3connect.on('updated', this.fetchPairFeesAndBalances)
   }
 
@@ -474,6 +478,26 @@ class Exchange extends PureComponent<any, any> {
         }
       })
     }
+  }
+
+  checkTokenAllowance = () => {
+    const { tokensData } = this.props
+    const { haveCurrency, haveAmount } = this.state
+    const haveTokenObj = tokensData.find(tokenObj => {
+      return tokenObj.name === haveCurrency.toLowerCase()
+    })
+
+    ethToken.checkAllowance({
+      tokenAddress: haveTokenObj.address,
+      tokenContractAddress: haveTokenObj.contractAddress,
+    })
+      .then(allowance => {
+        if (new BigNumber(allowance).isGreaterThanOrEqualTo(haveAmount)) {
+          this.setState(() => ({
+            hasTokenAllowance: true,
+          }))
+        }
+      })
   }
 
   getInfoAboutCurrency = async (): Promise<void> => {
@@ -806,24 +830,6 @@ class Exchange extends PureComponent<any, any> {
       return false
     }
     return true
-  }
-
-  checkTokenAllowance = async () => {
-    const { tokensData } = this.props
-    const { haveCurrency, haveAmount } = this.state
-    const haveTokenObj = tokensData.find(tokenObj => {
-      return tokenObj.name === haveCurrency.toLowerCase()
-    })
-    const tokenContract = new web3.eth.Contract(ERC20_ABI, haveTokenObj.contractAddress)
-    const result = await tokenContract.methods
-      .allowance(config.swapContract.erc20, haveTokenObj.address)
-      .call({ from: haveTokenObj.address })
-
-    if (new BigNumber(haveAmount).isLessThan(result)) {
-      this.setState(() => ({
-        hasTokenAllowance: true,
-      }))
-    }
   }
 
   approveTheToken = () => {

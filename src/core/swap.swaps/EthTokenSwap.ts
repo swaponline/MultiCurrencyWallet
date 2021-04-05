@@ -209,11 +209,11 @@ class EthTokenSwap extends SwapInterface {
    * @returns {Promise}
    */
   checkAllowance(data): Promise<number> {
-    const { spender } = data
+    const { owner } = data
 
     return new Promise(async (resolve, reject) => {
       try {
-        const result = await this.ERC20.methods.allowance(spender, this.address).call({
+        const result = await this.ERC20.methods.allowance(owner, this.address).call({
           from: this.app.getMyEthAddress(),
         })
 
@@ -754,7 +754,7 @@ class EthTokenSwap extends SwapInterface {
           debug('swap.core:flow')('fetching allowance')
 
           const allowance = await abClass.checkAllowance({
-            spender: abClass.app.getMyEthAddress(),
+            owner: abClass.app.getMyEthAddress(),
           })
 
           debug('swap.core:flow')('allowance', allowance)
