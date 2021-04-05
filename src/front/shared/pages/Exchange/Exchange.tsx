@@ -1,5 +1,4 @@
 import React, { PureComponent, Fragment } from 'react'
-import ERC20_ABI from 'human-standard-token-abi'
 import Link from 'local_modules/sw-valuelink'
 
 import ThemeTooltip from '../../components/ui/Tooltip/ThemeTooltip'
@@ -33,7 +32,6 @@ import helpers, {
   feedback,
   ethToken,
   links,
-  web3,
 } from 'helpers'
 import { animate } from 'helpers/domUtils'
 import Switching from 'components/controls/Switching/Switching'
@@ -42,7 +40,7 @@ import { AddressType, AddressRole } from 'domain/address'
 import { SwapMode } from 'domain/swap'
 import NetworkStatus from 'components/NetworkStatus/NetworkStatus'
 import Orders from './Orders/Orders'
-
+import erc20tokens from 'common/erc20tokens'
 import turboSwap from 'common/helpers/turboSwap'
 import Toggle from 'components/controls/Toggle/Toggle'
 import TurboIcon from 'shared/components/ui/TurboIcon/TurboIcon'
@@ -487,7 +485,7 @@ class Exchange extends PureComponent<any, any> {
       return tokenObj.name === haveCurrency.toLowerCase()
     })
 
-    ethToken.checkAllowance({
+    erc20tokens.checkAllowance({
       tokenAddress: haveTokenObj.address,
       tokenContractAddress: haveTokenObj.contractAddress,
     })
@@ -1156,7 +1154,8 @@ class Exchange extends PureComponent<any, any> {
     }
 
     if (isFound) {
-      this.setState(() => ({
+      this.setState((state) => ({
+        ...state,
         ...newState,
       }))
     } else {

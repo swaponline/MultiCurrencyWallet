@@ -13,5 +13,10 @@ export default {
     address: '0x101848D5C5bBca18E6b4431eEdF6B95E9ADF82FA',
     decimals: 18,
     fullName: 'Weenus',
-  }
+  },
+  // yeenus: {
+  //   address: '0xF6fF95D53E08c9660dC7820fD5A775484f77183A',
+  //   decimals: 8,
+  //   fullName: 'Yeenus',
+  // }
 }
