@@ -79,7 +79,11 @@ const getAddressType = (address: string) => {
   } else {
     const { version: baseVersion } = bitcoin.address.fromBase58Check(address)
     version = baseVersion
-    const { type } = addressTypes[version]
+    let { type } = addressTypes[version]
+    if (!type) {
+      type = AddressType.p2pkh;
+      console.warn(`Unknown version '${version}' for address '${address}'.`)
+    }
     return addressType = type
   }
 }
