@@ -641,11 +641,6 @@ const getAuthData = (name) => {
   return user[`${name}Data`]
 }
 
-// const addMessagingToken = (token) => {
-//   console.log("Added firebase token to redux store: ", token)
-//   reducers.user.addMessagingToken({ token })
-// }
-
 export default {
   sign,
   sign_btc_2fa,

@@ -193,7 +193,6 @@ Add swap instances:
 - `src/front/shared/components/modals/SignUpModal/SignUpModal.js`
 - `src/front/shared/components/SaveKeys/SaveKeys.js`
 - `src/front/shared/containers/App/App.js`
-- `src/front/shared/helpers/firebase/index.js`
 - `src/front/shared/pages/CurrencyWallet/CurrencyWallet.js`
 - `src/front/shared/pages/Exchange/Exchange.js`
 - `src/front/shared/pages/Exchange/SelectGroup/SelectGroup.js`

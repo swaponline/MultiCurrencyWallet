@@ -7,12 +7,10 @@ import cssModules from 'react-css-modules'
 import styles from './Wallet.scss'
 import { isMobile } from 'react-device-detect'
 import moment from 'moment'
-// import firestore from 'helpers/firebase/firestore'
 
 import History from 'pages/History/History'
 
 import helpers, {
-  // firebase,
   links,
   constants,
   stats
@@ -469,8 +467,6 @@ class Wallet extends Component<any, any> {
           registrationData.wallets = wallets
 
           await stats.updateUser(ethData.address, getTopLocation().host, registrationData)
-
-          // firestore.updateUserData(balancesData)
         } catch (error) {
           console.error(`Sync error in wallet: ${error}`)
         }
