@@ -471,7 +471,7 @@ const send = ({ from, to, amount, feeValue = null, speed }) => {
       feeFromAmount = feeFromAmount.toNumber()
 
       try {
-        feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed, amount})
+        feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed, address: from, amount, toAddress: to})
       } catch (eFee) {
         reject({ message: `Fail estimate fee ` + eFee.message })
         return
