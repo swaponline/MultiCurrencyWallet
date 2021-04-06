@@ -158,8 +158,6 @@ class Row extends Component<RowProps, RowState> {
       row,
       intl,
       history,
-      pairFees,
-      balances,
       checkSwapAllow,
     } = this.props
 
@@ -258,8 +256,6 @@ class Row extends Component<RowProps, RowState> {
       windowWidth,
     } = this.state
 
-    const balance = this.getBalance()
-
     const {
       row: {
         id,
@@ -267,7 +263,6 @@ class Row extends Component<RowProps, RowState> {
         isTurbo,
         buyCurrency,
         buyAmount,
-        sellAmount,
         sellCurrency,
         isRequested,
         isProcessing,
@@ -280,8 +275,6 @@ class Row extends Component<RowProps, RowState> {
       orderId,
       removeOrder,
       linkedOrderId,
-      pairFees,
-      balances,
       checkSwapAllow,
     } = this.props
 
@@ -406,7 +399,7 @@ class Row extends Component<RowProps, RowState> {
                           :
                           () => {}
                         }
-                        data={{ type, amount, main, total, base }}
+                        data={{ type, main, base }}
                       />
                     )
                   )
@@ -494,7 +487,7 @@ class Row extends Component<RowProps, RowState> {
                                 :
                                 () => {}
                               }
-                              data={{ type, amount, main, total, base }}
+                              data={{ type, main, base }}
                             />
                           )
                         )

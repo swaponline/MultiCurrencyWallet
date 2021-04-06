@@ -104,6 +104,7 @@ type ExchangeState = {
   isTurbo: boolean
   isPending: boolean
   isTokenSell: boolean
+  isPendingTokenApprove: boolean
 
   isNoAnyOrders?: boolean
   isFullLoadingComplete?: boolean
@@ -269,6 +270,7 @@ class Exchange extends PureComponent<any, any> {
 
     this.state = {
       isTokenSell: ethToken.isEthToken({ name: haveCurrency }),
+      isPendingTokenApprove: false,
       hasTokenAllowance: false,
       haveCurrency,
       haveType,
@@ -484,13 +486,13 @@ class Exchange extends PureComponent<any, any> {
     const { tokensData } = this.props
     const { haveCurrency, haveAmount } = this.state
 
-    const haveTokenObj = tokensData.find(tokenObj => {
+    const tokenObj = tokensData.find(tokenObj => {
       return tokenObj.name === haveCurrency.toLowerCase()
     })
 
     const allowance = await erc20tokens.checkAllowance({
-      tokenOwnerAddress: haveTokenObj.address,
-      tokenContractAddress: haveTokenObj.contractAddress,
+      tokenOwnerAddress: tokenObj.address,
+      tokenContractAddress: tokenObj.contractAddress,
     })
 
     this.setState(() => ({
@@ -733,8 +735,6 @@ class Exchange extends PureComponent<any, any> {
 
   checkBalanceForSwapPossibility = (checkParams) => {
     const { sellCurrency, buyCurrency, amount, fromType, isSilentError } = checkParams
-
-    // TODO: need to wait pairFees' loading
     const { pairFees, balances } = this.state
 
     const isTokenSell = ethToken.isEthToken({ name: sellCurrency })
@@ -846,14 +846,14 @@ class Exchange extends PureComponent<any, any> {
     }
 
     this.setState(() => ({
-      isPending: true,
+      isPendingTokenApprove: true,
     }))
 
     actions.token
       .approve({
         to: config.swapContract.erc20,
         name: haveCurrency,
-        amount: new BigNumber(haveAmount),
+        amount: new BigNumber(haveAmount).dp(0, BigNumber.ROUND_UP),
       })
       .then((response) => {
         this.updateTokenAllowance()
@@ -877,7 +877,7 @@ class Exchange extends PureComponent<any, any> {
       })
       .finally(() => {
         this.setState(() => ({
-          isPending: false,
+          isPendingTokenApprove: false,
         }))
       })
   }
@@ -1475,6 +1475,7 @@ class Exchange extends PureComponent<any, any> {
 
     const {
       isTokenSell,
+      isPendingTokenApprove,
       hasTokenAllowance,
       haveCurrency,
       haveType,
@@ -1617,10 +1618,12 @@ class Exchange extends PureComponent<any, any> {
       toAddress.value &&
       new BigNumber(getAmount).isGreaterThan(0) &&
       !this.doesComissionPreventThisOrder() &&
-      (new BigNumber(haveAmount).isGreaterThan(balance) ||
+      !isWaitForPeerAnswer &&
+      (
+        new BigNumber(haveAmount).isGreaterThan(balance) ||
         new BigNumber(balance).isGreaterThanOrEqualTo(availableAmount) ||
-        fromAddress.type === AddressType.Custom) &&
-      !isWaitForPeerAnswer 
+        fromAddress.type === AddressType.Custom
+      )
 
     const isIncompletedSwaps = !!desclineOrders.length
 
@@ -1857,8 +1860,8 @@ class Exchange extends PureComponent<any, any> {
               <Button
                 styleName="button"
                 onClick={hasTokenAllowance ? this.initSwap : this.approveTheToken}
-                disabled={!canStartSwap}
-                pending={isPending}
+                disabled={!canStartSwap && isPendingTokenApprove}
+                pending={isPendingTokenApprove}
                 blue={true}
               >
                 {linked.haveAmount.value > 0

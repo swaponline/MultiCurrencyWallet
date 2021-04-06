@@ -1,6 +1,7 @@
 import config from 'app-config'
 import web3 from 'helpers/web3'
 import ERC20_ABI from 'human-standard-token-abi'
+import { BigNumber } from 'bignumber.js'
 
 const reportAboutProblem = (params) => {
   const { isError = false, info } = params
@@ -29,11 +30,18 @@ const checkAllowance = async (params: CheckAllowanceParams): Promise<number> => 
     allowanceAmount = await tokenContract.methods
       .allowance(tokenOwnerAddress, config.swapContract.erc20)
       .call({ from: tokenOwnerAddress })
+
+    allowanceAmount = new BigNumber(allowanceAmount).dp(0, BigNumber.ROUND_UP).toNumber()
   } catch (error) {
     reportAboutProblem({
       info: error,
     })
   }
+
+  console.group('%c Common > token checkAllowance', 'color: black; background: orange')
+  console.log('token: ', tokenContractAddress)
+  console.log('allowance: ', allowanceAmount)
+  console.groupEnd()
 
   return allowanceAmount
 }
