@@ -15,34 +15,34 @@ const reportAboutProblem = (params) => {
 
 
 type CheckAllowanceParams = {
-  tokenAddress: string
+  tokenOwnerAddress: string
   tokenContractAddress: string
 }
 
 const checkAllowance = async (params: CheckAllowanceParams): Promise<number> => {
-  const { tokenAddress, tokenContractAddress } = params
+  const { tokenOwnerAddress, tokenContractAddress } = params
   const tokenContract = new web3.eth.Contract(ERC20_ABI, tokenContractAddress)
 
-  let result = 0
+  let allowanceAmount = 0
 
   try {
-    result = await tokenContract.methods
-      .allowance(tokenAddress, config.swapContract.erc20)
-      .call({ from: tokenAddress })
+    allowanceAmount = await tokenContract.methods
+      .allowance(tokenOwnerAddress, config.swapContract.erc20)
+      .call({ from: tokenOwnerAddress })
   } catch (error) {
     reportAboutProblem({
       info: error,
     })
   }
 
-  console.group('%c common CheckAllowance', `color: yellow;`)
-  console.log('tokenAddress: ', tokenAddress)
-  console.log('tokenContractAddress: ', tokenContractAddress)
-  console.log('config.swapContract.erc20: ', config.swapContract.erc20)
-  console.log('result: ', result)
+  console.group('%c common > erc20tokens > checkAllowance()', `color: yellow; background: black;`)
+  console.log('token owner address: ', tokenOwnerAddress)
+  console.log('contract address: ', tokenContractAddress)
+  console.log('swapContract address: ', config.swapContract.erc20)
+  console.log('allowance: ', allowanceAmount)
   console.groupEnd()
 
-  return result
+  return allowanceAmount
 }
 
 export default {

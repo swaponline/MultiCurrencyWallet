@@ -108,11 +108,10 @@ export default class EthTokenToUTXO extends Component<any, any> {
     const { sellCurrency, sellAmount } = this.swap
     const { ethTokenSwap } = this.swap.flow
 
-    actions.token.setAllowanceForToken({
+    actions.token.setAllowance({
       name: sellCurrency,
       to: ethTokenSwap.address, // swap contract address
       targetAllowance: sellAmount,
-      speed: 'fast',
     })
   }
 
