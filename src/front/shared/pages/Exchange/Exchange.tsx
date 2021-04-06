@@ -1867,7 +1867,13 @@ class Exchange extends PureComponent<any, any> {
                 {linked.haveAmount.value > 0
                   ? hasTokenAllowance
                     ? <FormattedMessage id="partial541" defaultMessage="Exchange now" />
-                    : <FormattedMessage id="FormattedMessageIdApprove" defaultMessage="Approve" />
+                    : (
+                      <FormattedMessage
+                        id="FormattedMessageIdApprove"
+                        defaultMessage="Approve {token}"
+                        values={{ token: haveCurrency.toUpperCase() }}
+                      />
+                    )
                   : <FormattedMessage id="enterYouSend" defaultMessage='Enter "You send" amount' />
                 }
               </Button>

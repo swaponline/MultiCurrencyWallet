@@ -5802,7 +5802,7 @@
   },
   {
     "id": "FormattedMessageIdApprove",
-    "message": "Approve",
+    "message": "Approve {token}",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]

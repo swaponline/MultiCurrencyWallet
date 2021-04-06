@@ -5806,7 +5806,7 @@
   },
   {
     "id": "FormattedMessageIdApprove",
-    "message": "Zatwierdź",
+    "message": "Zatwierdź {token}",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]

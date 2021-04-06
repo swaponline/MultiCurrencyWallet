@@ -5806,7 +5806,7 @@
   },
   {
     "id": "FormattedMessageIdApprove",
-    "message": "Одобрить",
+    "message": "Одобрить {token}",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
