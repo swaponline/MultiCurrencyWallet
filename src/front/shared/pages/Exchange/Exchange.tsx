@@ -86,7 +86,7 @@ type ExchangeState = {
   haveFiat: number
   getFiat: number
   maxBuyAmount: BigNumber
-  tokenAllowance: BigNumber
+  hasTokenAllowance: boolean
 
   getAmount: string
   haveCurrency: string
@@ -269,7 +269,7 @@ class Exchange extends PureComponent<any, any> {
 
     this.state = {
       isTokenSell: ethToken.isEthToken({ name: haveCurrency }),
-      tokenAllowance: new BigNumber(0),
+      hasTokenAllowance: false,
       haveCurrency,
       haveType,
       getCurrency,
@@ -417,7 +417,12 @@ class Exchange extends PureComponent<any, any> {
   componentDidMount() {
     this._mounted = true
 
-    const { isTokenSell, haveCurrency, getCurrency } = this.state
+    const {
+      isTokenSell,
+      haveCurrency,
+      getCurrency,
+      haveAmount,
+    } = this.state
 
     actions.core.updateCore()
     this.returnNeedCurrency(haveCurrency, getCurrency)
@@ -451,7 +456,7 @@ class Exchange extends PureComponent<any, any> {
     this.getInfoAboutCurrency()
     this.fetchPairFeesAndBalances()
 
-    if (isTokenSell) {
+    if (isTokenSell && haveAmount) {
       this.updateTokenAllowance()
     }
 
@@ -460,7 +465,7 @@ class Exchange extends PureComponent<any, any> {
 
   componentDidUpdate(prevProps, prevState) {
     const { haveCurrency: prevHaveCurrency } = prevState
-    const { haveCurrency } = this.state
+    const { haveCurrency, haveAmount } = this.state
 
     if (prevHaveCurrency !== haveCurrency) {
       const isTokenSell = ethToken.isEthToken({ name: haveCurrency })
@@ -469,7 +474,7 @@ class Exchange extends PureComponent<any, any> {
         isTokenSell,
       }))
 
-      if (isTokenSell) {
+      if (isTokenSell && haveAmount) {
         this.updateTokenAllowance()
       }
     }
@@ -477,7 +482,7 @@ class Exchange extends PureComponent<any, any> {
 
   updateTokenAllowance = async () => {
     const { tokensData } = this.props
-    const { haveCurrency } = this.state
+    const { haveCurrency, haveAmount } = this.state
 
     const haveTokenObj = tokensData.find(tokenObj => {
       return tokenObj.name === haveCurrency.toLowerCase()
@@ -489,7 +494,7 @@ class Exchange extends PureComponent<any, any> {
     })
 
     this.setState(() => ({
-      tokenAllowance: new BigNumber(allowance),
+      hasTokenAllowance: new BigNumber(allowance).isGreaterThanOrEqualTo(haveAmount),
     }))
   }
 
@@ -1060,6 +1065,7 @@ class Exchange extends PureComponent<any, any> {
 
   setAmount = (value) => {
     this.setState(() => ({ haveAmount: value, maxAmount: 0 }))
+    this.updateTokenAllowance()
   }
 
   setOrders = () => {
@@ -1463,7 +1469,7 @@ class Exchange extends PureComponent<any, any> {
 
     const {
       isTokenSell,
-      tokenAllowance,
+      hasTokenAllowance,
       haveCurrency,
       haveType,
       getCurrency,
@@ -1841,16 +1847,16 @@ class Exchange extends PureComponent<any, any> {
           )}
 
           <div styleName="buttons">
-            {isTokenSell && tokenAllowance.isEqualTo(0) ? (
+            {isTokenSell && linked.haveAmount.value > 0 && !hasTokenAllowance ? (
               <Button
                 styleName="button"
-                onClick={tokenAllowance.isEqualTo(0) ? this.initSwap : this.approveTheToken}
+                onClick={hasTokenAllowance ? this.initSwap : this.approveTheToken}
                 disabled={!canStartSwap}
                 pending={isPending}
                 blue={true}
               >
                 {linked.haveAmount.value > 0
-                  ? tokenAllowance.isEqualTo(0)
+                  ? hasTokenAllowance
                     ? <FormattedMessage id="partial541" defaultMessage="Exchange now" />
                     : <FormattedMessage id="FormattedMessageIdApprove" defaultMessage="Approve" />
                   : <FormattedMessage id="enterYouSend" defaultMessage='Enter "You send" amount' />
