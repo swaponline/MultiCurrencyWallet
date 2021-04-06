@@ -371,11 +371,12 @@ interface I_getWallet_FindCondition {
   currency?: string
   address?: string
   addressType?: string
+  connected?: boolean
 }
 const getWallet = (findCondition: I_getWallet_FindCondition) => {
   // specify addressType,
   // otherwise it finds the first wallet from all origins, including metamask
-  const { currency, address, addressType } = findCondition
+  const { currency, address, addressType, connected } = findCondition
 
   const wallets = getWallets({ withInternal: true })
   const founded = wallets.filter((wallet) => {
@@ -391,7 +392,17 @@ const getWallet = (findCondition: I_getWallet_FindCondition) => {
     if (addressType) {
       if (
         (addressType === AddressType.Internal && !wallet.isMetamask) ||
-        (addressType === AddressType.Metamask && wallet.isMetamask)
+        (
+          addressType === AddressType.Metamask
+          && wallet.isMetamask
+          && (
+            connected === undefined
+            || (
+              connected
+              && wallet.isConnected
+            )
+          )
+        )
       ) {
         return conditionOk
       }

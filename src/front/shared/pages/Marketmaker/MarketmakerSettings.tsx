@@ -21,6 +21,8 @@ import FAQ from './FAQ'
 import Toggle from 'components/controls/Toggle/Toggle'
 import Input from 'components/forms/Input/Input'
 
+import { AddressType } from 'domain/address'
+
 
 @CSSModules(styles, { allowMultiple: true })
 class MarketmakerSettings extends Component<any, any> {
@@ -47,6 +49,12 @@ console.log('>>>> Market token', marketToken)
       swapsIds: [],
       swapsByIds: {},
       marketToken,
+      btcWallet: null,
+      btcBalance: 0,
+      tokenWallet: null,
+      tokenBalance: 0,
+      ethBalance: 0,
+      isBalanceFetchin: false,
     }
   }
 
@@ -76,6 +84,65 @@ console.log('>>>> Market token', marketToken)
     }
   }
 
+  fetchWalletsWithBalances() {
+    const {
+      marketToken,
+      isBalanceFetchin,
+    } = this.state
+
+    if (!this._mounted) return
+
+    if (isBalanceFetchin) {
+      // Если в данный момент идет запрос баланса. ничего не делаем
+      // вызываем функуцию повторно через несколько секунд
+      // такое может произойти, если пользователь меняет быстро код токена в адресной строке
+      // может быть запушен процес запроса баланса для предыдущего токена из адресной строки
+      return setTimeout(() => {
+        this.fetchWalletsWithBalances()
+      }, 2000)
+    }
+    this.setState({
+      isBalanceFetchin: true,
+    }, () => {
+      const btcWallet = actions.core.getWallet({ currency: `btc` })
+      console.log('>>>> btc', btcWallet)
+      const ethWallet = actions.core.getWallet({
+        currency: `eth`,
+        connected: true,
+        addressType: AddressType.Metamask
+      })
+      console.log('>>> eth', ethWallet)
+      const tokenWallet = actions.core.getWallet({
+        currency: marketToken,
+        connected: true,
+        addressType: AddressType.Metamask
+      })
+      console.log('>>> token', tokenWallet)
+      this.setState({
+        btcWallet,
+        ethWallet,
+        tokenWallet,
+      }, async () => {
+        const btcBalance = await actions.core.fetchWalletBalance(btcWallet)
+        const ethBalance = await actions.core.fetchWalletBalance(ethWallet)
+        const tokenBalance = await actions.core.fetchWalletBalance(tokenWallet)
+        console.log('>>> btc balance', btcBalance)
+        console.log('>>> eth balance', ethBalance)
+        console.log('>>> token balance', tokenBalance)
+        // Запрос баланса асинхронный. За это время пользователь мог уже перейти на другую страницу
+        // Обновляем стейт только если мы находимся в этом компоненте
+        if (this._mounted) {
+          this.setState({
+            btcBalance,
+            ethBalance,
+            tokenBalance,
+            isBalanceFetchin: false
+          })
+        }
+      })
+    })
+  }
+
   componentDidUpdate(prevProps) {
     const {
       match: {
@@ -95,6 +162,8 @@ console.log('>>>> Market token', marketToken)
     if (prevMarketToken.toLowerCase() !== marketToken.toLowerCase()) {
       this.setState({
         marketToken,
+      }, () => {
+        this.fetchWalletsWithBalances()
       })
     }
   }
@@ -103,7 +172,7 @@ console.log('>>>> Market token', marketToken)
     const swapsIds = []
     const swapsByIds = {}
 
-
+    this.fetchWalletsWithBalances()
     const lsSwapId = JSON.parse(localStorage.getItem('swapId'))
 
     if (lsSwapId === null || lsSwapId.length === 0) {
@@ -175,6 +244,11 @@ console.log('>>>> Market token', marketToken)
     const {
       swapsIds,
       swapsByIds,
+      btcWallet,
+      btcBalance,
+      tokenWallet,
+      tokenBalance,
+      ethBalance,
     } = this.state
 
     const sortedSwaps = swapsIds.sort((aId, bId) => {
