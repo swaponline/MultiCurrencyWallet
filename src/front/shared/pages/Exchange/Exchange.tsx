@@ -1064,8 +1064,14 @@ class Exchange extends PureComponent<any, any> {
   }
 
   setAmount = (value) => {
-    this.setState(() => ({ haveAmount: value, maxAmount: 0 }))
-    this.updateTokenAllowance()
+    this.setState(() => {
+      return {
+        haveAmount: value,
+        maxAmount: 0,
+      }
+    }, () => {
+      this.updateTokenAllowance()
+    })
   }
 
   setOrders = () => {
