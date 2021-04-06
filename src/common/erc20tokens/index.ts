@@ -35,13 +35,6 @@ const checkAllowance = async (params: CheckAllowanceParams): Promise<number> => 
     })
   }
 
-  console.group('%c common > erc20tokens > checkAllowance()', `color: yellow; background: black;`)
-  console.log('token owner address: ', tokenOwnerAddress)
-  console.log('contract address: ', tokenContractAddress)
-  console.log('swapContract address: ', config.swapContract.erc20)
-  console.log('allowance: ', allowanceAmount)
-  console.groupEnd()
-
   return allowanceAmount
 }
 
