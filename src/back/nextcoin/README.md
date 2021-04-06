@@ -13,10 +13,12 @@ nextcoin_blockchain <-> | nextd <-> nextp | (public API) <-> front
                         -------------------
 ```
 ## API endpoints
-https://next.swaponline.io/mainnet - network status
-https://next.swaponline.io/mainnet/addr/XQmHsxbzoxVd2Jux373iWMsPV26YVTMocz - balance
-https://next.swaponline.io/mainnet/txs/XQmHsxbzoxVd2Jux373iWMsPV26YVTMocz - transactions
-https://next.swaponline.io/mainnet/addr/XQmHsxbzoxVd2Jux373iWMsPV26YVTMocz/utxo - utxos
+|  | API url |
+|---|---|
+| network status | https://next.swaponline.io/mainnet |
+| balance | https://next.swaponline.io/mainnet/addr/XQmHsxbzoxVd2Jux373iWMsPV26YVTMocz |
+| transactions | https://next.swaponline.io/mainnet/txs/XQmHsxbzoxVd2Jux373iWMsPV26YVTMocz |
+| UTXOs | https://next.swaponline.io/mainnet/addr/XQmHsxbzoxVd2Jux373iWMsPV26YVTMocz/utxo |
 
 
 ## Dependencies
