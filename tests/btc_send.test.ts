@@ -39,3 +39,42 @@ test('send regular transaction with 1000 satoshis', async () => {
   } = await btcActions.fetchTxInfo(txHash, 10000);
   expect(amount).toBe(options.amount);
 })
+
+test('send regular transaction with 1000 satoshis with adminFee', async () => {
+  const serviceFee = {
+    fee: '5',
+    address: '2MuXz9BErMbWmoTshGgkjd7aMHeaxV8Bdkk',
+    min: '0.00001',
+  }
+
+  const options = {
+    from: 'mwcbYjxbizC5ejSrfjUhjuiT56vQCTqLmY',
+    to: 'mjCrCbTP5UqzDCSN86uGqBfJCgYBcbCmuy',
+    amount: 1e-5,
+    feeValue: new BigNumber(1e-5),
+    speed: "fast",
+    serviceFee
+  };
+
+  const adminFeeMin = new BigNumber(serviceFee.min);
+  let feeFromAmount = new BigNumber(serviceFee.fee).dividedBy(100).multipliedBy(options.amount);
+  if (adminFeeMin.isGreaterThan(feeFromAmount)) feeFromAmount = adminFeeMin;
+
+  await btcActions.login("cR2QGm1SLqmvgYBUtroVmVaBRKSSsbAAeqQ54YTA4xXELCcyoWtL");
+
+  const txHash = await btcActions.send(options);
+  const {
+    amount,
+    senderAddress,
+    receiverAddress,
+
+    minerFee,
+    adminFee,
+    minerFeeCurrency,
+
+    size
+  } = await btcActions.fetchTxInfo(txHash, 10000, serviceFee);
+
+  expect(amount).toBe(options.amount);
+  expect(adminFee).toBe(feeFromAmount.toNumber());
+})
