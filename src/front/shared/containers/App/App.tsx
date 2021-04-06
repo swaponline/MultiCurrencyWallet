@@ -7,7 +7,6 @@ import moment from "moment-with-locales-es6";
 import {
   constants,
   localStorage,
-  // firebase
 } from "helpers";
 
 import CSSModules from "react-css-modules";
@@ -283,8 +282,6 @@ class App extends React.Component<RouteComponentProps<any>, any> {
       })
     }
 
-    // firebase.initialize();
-
     this.processUserBackup()
     this.processMetamask()
 
@@ -324,9 +321,6 @@ class App extends React.Component<RouteComponentProps<any>, any> {
 
   componentDidUpdate() {
     this.checkIfDashboardModalsAllowed()
-    if (process.env.MAINNET) {
-      // firebase.setUserLastOnline();
-    }
   }
 
   checkIfDashboardModalsAllowed = () => {
@@ -389,7 +383,6 @@ class App extends React.Component<RouteComponentProps<any>, any> {
     const isWidgetBuild = config && config.isWidget;
 
     if (isWidgetBuild && localStorage.getItem(constants.localStorage.didWidgetsDataSend) !== "true") {
-      // firebase.submitUserDataWidget("usersData");
       localStorage.setItem(constants.localStorage.didWidgetsDataSend, true);
     }
 
