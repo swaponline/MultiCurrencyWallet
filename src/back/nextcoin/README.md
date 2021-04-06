@@ -1,18 +1,30 @@
-# NEXT.coin node - HOWTO
-
+# NEXT.coin node
 
 ## Terms
 
 - `nextd` - NEXT.coin node daemon (3rd side)
 - `nextp` - http RPC proxy
 
+## Connection scheme
+
+```
+                        -----[server]------  
+nextcoin_blockchain <-> | nextd <-> nextp | (public API) <-> front
+                        -------------------
+```
+## API endpoints
+https://next.swaponline.io/mainnet - network status
+https://next.swaponline.io/mainnet/addr/XQmHsxbzoxVd2Jux373iWMsPV26YVTMocz - balance
+https://next.swaponline.io/mainnet/txs/XQmHsxbzoxVd2Jux373iWMsPV26YVTMocz - transactions
+https://next.swaponline.io/mainnet/addr/XQmHsxbzoxVd2Jux373iWMsPV26YVTMocz/utxo - utxos
+
 
 ## Dependencies
 
+- `node`
 - `pm2`
 
-
-## Install
+## Installation 
 
 ### Install `nextd`
 
