@@ -1,3 +1,4 @@
+```
 .
 ├── back
 │   └── nextcoin
@@ -369,7 +370,6 @@
 │   │   └── manifest.json
 │   ├── client
 │   │   ├── favicon.png
-│   │   ├── firebase-messaging-sw.js
 │   │   ├── fonts
 │   │   │   └── Manrope
 │   │   │       ├── index.css
@@ -1059,12 +1059,6 @@
 │   │   │   ├── event.ts
 │   │   │   ├── externalConfig.ts
 │   │   │   ├── feedback.ts
-│   │   │   ├── firebase
-│   │   │   │   ├── config
-│   │   │   │   │   ├── firebase-client-config.ts
-│   │   │   │   │   └── firebase.ts
-│   │   │   │   ├── firestore.ts
-│   │   │   │   └── index.ts
 │   │   │   ├── getCurrencyKey.ts
 │   │   │   ├── getItezUrl.ts
 │   │   │   ├── getPageOffset.ts
@@ -1340,10 +1334,6 @@
 │   │   │       │   │   └── index.tsx
 │   │   │       │   ├── NotityBlock
 │   │   │       │   │   ├── images
-│   │   │       │   │   │   ├── btcUsdt.svg
-│   │   │       │   │   │   ├── info-solid.svg
-│   │   │       │   │   │   ├── mail.svg
-│   │   │       │   │   │   ├── manageImg.jpg
 │   │   │       │   │   │   └── security.svg
 │   │   │       │   │   ├── NotifyBlock.scss
 │   │   │       │   │   └── NotifyBlock.tsx
@@ -1377,7 +1367,6 @@
 │   │   │   │   ├── eth.ts
 │   │   │   │   ├── feed.ts
 │   │   │   │   ├── filter.ts
-│   │   │   │   ├── firebase.ts
 │   │   │   │   ├── ghost.ts
 │   │   │   │   ├── history.ts
 │   │   │   │   ├── index.ts
@@ -1434,3 +1423,4 @@
 └── README.md
 
 368 directories, 1071 files
+```

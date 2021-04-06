@@ -10,10 +10,6 @@
   @include ff-bold;
 }
 
-.currencyWalletActivityWrapper {
-  width: 66%;
-}
-
 .currencyWalletBalance {
   width: 31%;
   margin-top: 40px;
@@ -144,13 +140,6 @@
   }
 }
 
-.inRowru {
-  margin-top: 20px;
-  display: flex;
-  width: 250px;
-  justify-content: space-between;
-}
-
 .button {
   margin-right: 10px;
 }
@@ -238,10 +227,6 @@
   .currencyWalletWrapper {
     flex-direction: column;
   }
-
-  .currencyWalletActivityWrapper {
-    width: 100%;
-  }
 }
 
 @media all and (max-width: 767px) {
@@ -261,9 +246,5 @@
     >div {
       display: block;
     }
-  }
-
-  .currencyWalletActivityWrapper {
-    width: 100%;
   }
 }
