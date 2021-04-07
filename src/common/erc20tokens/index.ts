@@ -43,11 +43,6 @@ const checkAllowance = async (params: CheckAllowanceParams): Promise<number> => 
     })
   }
 
-  console.group('%c Common > token checkAllowance', 'color: black; background: orange')
-  console.log('token: ', tokenContractAddress)
-  console.log('allowance: ', allowanceAmount)
-  console.groupEnd()
-
   return allowanceAmount
 }
 
