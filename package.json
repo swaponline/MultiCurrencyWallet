@@ -22,7 +22,6 @@
     "test": "",
     "eslint": "eslint --fix --cache ./shared --ext js",
     "prettier": "prettier --ignore-path .gitignore \"**/*.+(js|json|ts|tsx)\" --write",
-    "start": "cross-env USE_JSON_CONFIG=true babel-node --extensions .ts,.js --config-file=./babel.bot.config.js --max-old-space-size=2048 ./src/bot",
     "dev": "npm run dev:testnet",
     "dev-widget": "npm run dev:testnet-widget",
     "prod": "npm run dev:mainnet",
@@ -72,12 +71,15 @@
     "rename-assets-manifest-file": "rename-files ./build-chrome-extension/application/assets/ 'manifest.json' 'android-manifest.json'",
     "rename-assets-manifest-link": "replace 'assets/manifest.json' 'assets/android-manifest.json' ./build-chrome-extension/application/index.html",
     "release": "git commit -am v%npm_package_version% && git tag v%npm_package_version% && git push && git push --tags",
+
+
+    "start": "cross-env USE_JSON_CONFIG=true babel-node --extensions .ts,.js --config-file=./babel.bot.config.js --max-old-space-size=2048 ./src/bot",
     "bot": "babel-node --extensions .ts,.js --config-file=./babel.bot.config.js --max-old-space-size=2048 ./src/bot",
     "bot:test": "cross-env TEST_STARTUP=true babel-node --extensions .ts,.js --config-file=./babel.bot.config.js --max-old-space-size=2048 ./src/bot",
+    "bot:debug": "cross-env DEBUG=swap.core* babel-node --extensions .ts,.js --config-file=./babel.bot.config.js --max-old-space-size=2048 ./src/bot",
     "marketmaker": "cross-env USE_JSON_CONFIG=true NETWORK=mainnet babel-node --extensions .ts,.js --config-file=./babel.bot.config.js --max-old-space-size=2048 ./src/bot",
     "marketmaker:testnet": "cross-env USE_JSON_CONFIG=true NETWORK=testnet babel-node --extensions .ts,.js --config-file=./babel.bot.config.js --max-old-space-size=2048 ./src/bot",
-    "marketmaker:test": "cross-env TEST_STARTUP=true USE_JSON_CONFIG=true NETWORK=testnet babel-node --extensions .ts,.js --config-file=./babel.bot.config.js --max-old-space-size=2048 ./src/bot",
-    "bot:debug": "cross-env DEBUG=swap.core* babel-node --extensions .ts,.js --config-file=./babel.bot.config.js --max-old-space-size=2048 ./src/bot"
+    "marketmaker:test": "cross-env TEST_STARTUP=true USE_JSON_CONFIG=true NETWORK=testnet babel-node --extensions .ts,.js --config-file=./babel.bot.config.js --max-old-space-size=2048 ./src/bot"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.10",
