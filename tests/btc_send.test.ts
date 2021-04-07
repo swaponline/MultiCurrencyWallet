@@ -138,4 +138,50 @@ describe('BTC Send Tests', () => {
     expect(amount).toBe(options.amount);
     expect(minerFee).toBe(options.feeValue.toNumber());
   }, 20000)
+
+  it('send and check transaction via pin-protected wallet with 1000 satoshis with adminFee', async () => {
+    const serviceFee = {
+      fee: '5',
+      address: '2MuXz9BErMbWmoTshGgkjd7aMHeaxV8Bdkk',
+      min: '0.00001',
+    }
+    const options = {
+      from: '2NFQKANcjECN6oQeMiY7qGN5zVN7G1aumXd',
+      to: 'muvWWSHgZoT8ehmL6oj8AvbgVvzkkAxhCM',
+      amount: 1e-5,
+      feeValue: new BigNumber(1e-5),
+      speed: "fast",
+      password: '4321',
+      mnemonic: 'uphold wing axis omit hedgehog pull law nature runway sort pattern unhappy',
+      serviceFee
+    };
+
+    const adminFeeMin = new BigNumber(serviceFee.min);
+    let feeFromAmount = new BigNumber(serviceFee.fee).dividedBy(100).multipliedBy(options.amount);
+    if (adminFeeMin.isGreaterThan(feeFromAmount)) feeFromAmount = adminFeeMin;
+
+    await actions.btcmultisig.login_PIN(
+      "cRQL8PDx7WRJzdi6g3fAagLA3bEc4XMfjDDkDkuheFcX5TRHqEMX",
+      [
+        '02094916ddab5abf215a49422a71be54ceb92c3d8114909048fc45ee90acdb5b32',
+        '02a4e22494fccc9deb4ed62a05f1cf0503ce4a4d8b2858c257f1c6de78fd3b9afe'
+      ]);
+
+    const txHash = await actions.btcmultisig.sendPinProtected(options);
+    await timeOut(5 * 1000)
+    const {
+      amount,
+      senderAddress,
+      receiverAddress,
+
+      minerFee,
+      adminFee,
+      minerFeeCurrency,
+
+      size
+    } = await actions.btcmultisig.fetchTxInfo(txHash.txId, 8000, serviceFee);
+    expect(amount).toBe(options.amount);
+    expect(minerFee).toBe(options.feeValue.toNumber());
+    expect(adminFee).toBe(feeFromAmount.toNumber());
+  }, 20000)
 })
