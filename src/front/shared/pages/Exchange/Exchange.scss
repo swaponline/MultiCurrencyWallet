@@ -264,26 +264,10 @@
   font-family: 'Roboto Mono', monospace;
   font-size: 13px;
   font-weight: bold;
-  color: rgba(0, 0, 0, 0.3);
+  color: $notice-color;
 
   .swapStartStatusLoader {
     display: inline-block;
-  }
-
-}
-
-.anotherRecepient {
-  position: relative;
-  z-index: -1;
-  max-height: 0;
-  opacity: 0;
-  transition: max-height 0.3s ease;
-
-  &_active {
-    z-index: 0;
-    opacity: 1;
-    max-height: 100vh;
-    transition: opacity 0.3s 0.2s, max-height 0.7s ease;
   }
 }
 
@@ -331,7 +315,7 @@
   color: #fff;
   padding: 0.4em 1em;
   font-size: 13px;
-  background: #c58282;
+  background: $color-bad;
   border-radius: 3px;
   @include errAppend();
 

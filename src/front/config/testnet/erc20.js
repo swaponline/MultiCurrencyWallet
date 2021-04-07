@@ -13,5 +13,5 @@ export default {
     address: '0x101848D5C5bBca18E6b4431eEdF6B95E9ADF82FA',
     decimals: 18,
     fullName: 'Weenus',
-  }
+  },
 }

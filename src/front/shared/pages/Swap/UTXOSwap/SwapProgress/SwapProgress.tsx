@@ -79,12 +79,7 @@ class SwapProgress extends Component<any, any> {
     } = props
 
     this._fields = fields
-
-
-    console.log('SwapProgress fields', this._fields)
-
     this.swap = swap
-
     this.wallets = wallets
     this.history = history
     this.locale = locale
@@ -104,6 +99,10 @@ class SwapProgress extends Component<any, any> {
       secret: crypto.randomBytes(32).toString('hex'),
       stepValue: 0,
     }
+
+    console.group('SwapProgress >%c constructor', 'color: green;')
+    console.log('fields: ', this._fields)
+    console.groupEnd()
   }
 
   onPushGoToWallet = () => {

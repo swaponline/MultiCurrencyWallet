@@ -40,6 +40,8 @@
       "app-config": ["src/front/local_modules/app-config"],
       "plugins/*": ["src/front/shared/plugins/*"],
       "local_modules/*": ["src/front/local_modules/*"],
+      "images": ["src/front/shared/images"],
+      "images/*": ["src/front/shared/images/*"],
 
       "swap.app": ["src/core/swap.app"],
       "swap.app/*": ["src/core/swap.app/*"],

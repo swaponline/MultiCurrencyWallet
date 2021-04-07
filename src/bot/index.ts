@@ -24,6 +24,19 @@ const defaultConfig = {
 
 console.log(colorString(`Loading...`, COLORS.GREEN))
 
+if (process.env.TEST_STARTUP !== `true`) {
+  if (!fs.existsSync(__dirname + '/.env')) {
+    if (process.env.USE_JSON_CONFIG !== `true`) {
+      console.log('Please, create ./src/bot/.env file unsing "./src/bot/.env.sample"')
+      process.exit(0)
+    }
+  } else {
+    require('dotenv').config({
+      path: __dirname + '/.env',
+    })
+  }
+}
+
 const rewriteEnvKeys = [
   `NETWORK`,
   `PORT`,
@@ -106,17 +119,6 @@ if (process.env.TEST_STARTUP === `true`) {
     console.log('>>>> TEST READY - SHUTDOWN')
     process.exit(0)
   }, 30*1000)
-} else {
-  if (!fs.existsSync(__dirname + '/.env')) {
-    if (!configStorage.hasTradeConfig()) {
-      console.log('Please, create ./src/bot/.env file unsing "./src/bot/.env.sample"')
-      process.exit(0)
-    }
-  } else {
-    require('dotenv').config({
-      path: __dirname + '/.env',
-    })
-  }
 }
 
 

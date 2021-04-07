@@ -144,8 +144,9 @@ class SwapComponent extends PureComponent<any, any> {
 
 
   componentDidMount() {
-    const { items, tokenItems, currenciesData, tokensData, intl: { locale } } = this.props
+    console.group('Swap page >%c didMount', 'color: green')
 
+    const { items, tokenItems, currenciesData, tokensData } = this.props
     let { match: { params: { orderId } }, history, activeFiat } = this.props
 
     if (!!window.performance && window.performance.navigation.type === 2) {
@@ -166,12 +167,14 @@ class SwapComponent extends PureComponent<any, any> {
     })
 
     try {
-      console.log('>>>>>>>>>>>>>>> create swap')
+      console.log('creating swap')
+
       const swap = new Swap(orderId, SwapApp.shared())
       actions.core.rememberSwap(swap)
       window.active_swap = swap
-      console.log(swap)
-      console.log('Swap flow:', swap.flow._flowName);
+
+      console.log('swap: ', swap)
+      console.log('swap flow name:', swap.flow._flowName);
 
       const SwapComponent = swapComponents[swap.flow._flowName]
       const ethData = items.filter(item => item.currency === 'ETH')
@@ -201,7 +204,8 @@ class SwapComponent extends PureComponent<any, any> {
           })
       })
 
-      console.log('set swap >>>> ', swap)
+      console.log('setting swap into state (swap): ', swap)
+
       this.setState({
         swap,
         ethData,
@@ -222,6 +226,7 @@ class SwapComponent extends PureComponent<any, any> {
       this.props.history.push(localisedUrl(links.exchange))
     }
 
+    console.groupEnd()
   }
 
 
@@ -242,7 +247,6 @@ class SwapComponent extends PureComponent<any, any> {
     }
 
     if (swap !== null) {
-      console.log('checkingCycle')
       this.sendDebugInfoTimer = setInterval(() => {
         this.sendSwapDebugInformation(orderId)
       }, 1000)
@@ -498,18 +502,6 @@ class SwapComponent extends PureComponent<any, any> {
     this.props.history.push(localisedUrl(locale, '/'))
   }
 
-  handleCopyAddress = (e) => {
-    this.setState({
-      isAddressCopied: true,
-    }, () => {
-      setTimeout(() => {
-        this.setState({
-          isAddressCopied: false,
-        })
-      }, 500)
-    })
-  }
-
   render() {
     const { peer, tokenItems, history, intl: { locale } } = this.props
     const {
@@ -576,7 +568,6 @@ class SwapComponent extends PureComponent<any, any> {
                     defaultMessage="reload the page"
                   />
                 </span>
-
               </p>
 
               {isShowDebug &&

@@ -78,7 +78,7 @@ const Button = (props: ButtonProps) => {
       data-for={id}
     >
       {pending ? (
-          <span styleName="pendingWrapper">
+          <span styleName="pending">
             <FormattedMessage id="ButtonPendingState" defaultMessage="Pending" />
           </span>
         ) : children
