@@ -180,6 +180,25 @@ if (web3connect.hasCachedProvider()) {
   _initReduxState()
 }
 
+
+const handleDisconnectWallet = () => {
+  if (isEnabled()) {
+    disconnect().then(async () => {
+      await actions.user.sign()
+      await actions.user.getBalances()
+    })
+  }
+}
+
+const handleConnectMetamask = () => {
+  connect({}).then(async (connected) => {
+    if (connected) {
+      await actions.user.sign()
+      await actions.user.getBalances()
+    }
+  })
+}
+
 const metamaskApi = {
   connect,
   isEnabled,
@@ -191,6 +210,8 @@ const metamaskApi = {
   getWeb3,
   disconnect,
   isCorrectNetwork,
+  handleDisconnectWallet,
+  handleConnectMetamask,
 }
 
 window.metamaskApi = metamaskApi

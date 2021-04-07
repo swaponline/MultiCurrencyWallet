@@ -23,6 +23,9 @@ import Input from 'components/forms/Input/Input'
 
 import { AddressType } from 'domain/address'
 
+import metamask from 'helpers/metamask'
+
+
 
 @CSSModules(styles, { allowMultiple: true })
 class MarketmakerSettings extends Component<any, any> {
