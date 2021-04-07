@@ -18,10 +18,11 @@ const reportAboutProblem = (params) => {
 type CheckAllowanceParams = {
   tokenOwnerAddress: string
   tokenContractAddress: string
+  decimals: number
 }
 
 const checkAllowance = async (params: CheckAllowanceParams): Promise<number> => {
-  const { tokenOwnerAddress, tokenContractAddress } = params
+  const { tokenOwnerAddress, tokenContractAddress, decimals } = params
   const tokenContract = new web3.eth.Contract(ERC20_ABI, tokenContractAddress)
 
   let allowanceAmount = 0
@@ -30,8 +31,12 @@ const checkAllowance = async (params: CheckAllowanceParams): Promise<number> => 
     allowanceAmount = await tokenContract.methods
       .allowance(tokenOwnerAddress, config.swapContract.erc20)
       .call({ from: tokenOwnerAddress })
-
-    allowanceAmount = new BigNumber(allowanceAmount).dp(0, BigNumber.ROUND_UP).toNumber()
+    
+    // formating without token decimals
+    allowanceAmount = new BigNumber(allowanceAmount)
+      .dp(0, BigNumber.ROUND_UP)
+      .div(new BigNumber(10).pow(decimals))
+      .toNumber()
   } catch (error) {
     reportAboutProblem({
       info: error,

@@ -493,6 +493,7 @@ class Exchange extends PureComponent<any, any> {
     const allowance = await erc20tokens.checkAllowance({
       tokenOwnerAddress: tokenObj.address,
       tokenContractAddress: tokenObj.contractAddress,
+      decimals: tokenObj.decimals,
     })
 
     this.setState(() => ({
@@ -1860,7 +1861,7 @@ class Exchange extends PureComponent<any, any> {
               <Button
                 styleName="button"
                 onClick={hasTokenAllowance ? this.initSwap : this.approveTheToken}
-                disabled={!canStartSwap && isPendingTokenApprove}
+                disabled={!canStartSwap || isPendingTokenApprove}
                 pending={isPendingTokenApprove}
                 blue={true}
               >

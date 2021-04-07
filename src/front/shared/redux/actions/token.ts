@@ -227,10 +227,16 @@ const withToken = (name) => {
   } = config.erc20
 
   const tokenContract = new web3.eth.Contract(ERC20_ABI, contractAddress, { from: ownerAddress })
-  const toWei: any = amount => new BigNumber(amount).times(new BigNumber(10).pow(decimals)).toString(10)
-  const fromWei: any = wei => new BigNumber(wei).div(new BigNumber(10).pow(decimals))
+  const formatWithDecimals: any = amount => new BigNumber(amount).times(new BigNumber(10).pow(decimals)).toString(10)
+  const formatWithoutDecimal: any = wei => new BigNumber(wei).div(new BigNumber(10).pow(decimals))
 
-  return { contractAddress, tokenContract, decimals, toWei, fromWei }
+  return {
+    contractAddress,
+    tokenContract,
+    decimals,
+    formatWithDecimals,
+    formatWithoutDecimal,
+  }
 }
 
 
@@ -273,7 +279,7 @@ const getLinkToInfo = (tx) => {
 const send = (data) => (hasAdminFee) ? sendWithAdminFee(data) : sendDefault(data)
 //@ts-ignore
 const sendWithAdminFee = async ({ name, from, to, amount, ...feeConfig } = {}) => {
-  const { tokenContract, toWei } = withToken(name)
+  const { tokenContract, formatWithDecimals } = withToken(name)
   const {
     fee: adminFee,
     address: adminFeeAddress,
@@ -287,7 +293,7 @@ const sendWithAdminFee = async ({ name, from, to, amount, ...feeConfig } = {}) =
   let feeFromAmount: any = new BigNumber(adminFee).dividedBy(100).multipliedBy(amount)
   if (adminFeeMin.isGreaterThan(feeFromAmount)) feeFromAmount = adminFeeMin
 
-  feeFromAmount = toWei(feeFromAmount.toNumber()) // Admin fee
+  feeFromAmount = formatWithDecimals(feeFromAmount.toNumber()) // Admin fee
 
   const params = {
     ... await fetchFees({ ...feeConfig }),
@@ -299,7 +305,7 @@ const sendWithAdminFee = async ({ name, from, to, amount, ...feeConfig } = {}) =
     currency: name,
   })
 
-  const newAmount = toWei(amount)
+  const newAmount = formatWithDecimals(amount)
 
   return new Promise((resolve, reject) => {
     const receipt = tokenContract.methods.transfer(to, newAmount).send(params)
@@ -326,13 +332,13 @@ const sendWithAdminFee = async ({ name, from, to, amount, ...feeConfig } = {}) =
 }
 //@ts-ignore
 const sendDefault = async ({ name, from, to, amount, ...feeConfig } = {}) => {
-  const { tokenContract, toWei } = withToken(name)
+  const { tokenContract, formatWithDecimals } = withToken(name)
   const params = {
     ... await fetchFees({ ...feeConfig }),
     from,
   }
 
-  const newAmount = toWei(amount)
+  const newAmount = formatWithDecimals(amount)
 
   return new Promise(async (resolve, reject) => {
     const receipt = await tokenContract.methods.transfer(to, newAmount).send(params)
@@ -372,9 +378,9 @@ type ApproveResponse = {
 
 const approve = async (params: ApproveParams): Promise<ApproveResponse> => {
   const { name, to, amount } = params
-  const { tokenContract, toWei } = withToken(name)
+  const { tokenContract, formatWithDecimals } = withToken(name)
   const feeResult = await fetchFees()
-  const weiAmount = toWei(amount)
+  const weiAmount = formatWithDecimals(amount)
 
   return new Promise(async (resolve, reject) => {
     const receipt = await tokenContract.methods.approve(to, weiAmount).send(feeResult)
@@ -393,7 +399,7 @@ const approve = async (params: ApproveParams): Promise<ApproveResponse> => {
 
 const setAllowance = async (params) => {
   let { name, to, targetAllowance } = params
-  const { tokenContract, toWei } = withToken(name)
+  const { tokenContract, formatWithDecimals } = withToken(name)
 
   name = name.toLowerCase()
 
@@ -401,7 +407,7 @@ const setAllowance = async (params) => {
   const allowance = await tokenContract.methods.allowance(ownerAddress, to).call()
 
   // if there is already enough allowance, skip
-  if (new BigNumber(toWei(targetAllowance)).isLessThanOrEqualTo(allowance)) {
+  if (new BigNumber(formatWithDecimals(targetAllowance)).isLessThanOrEqualTo(allowance)) {
     return Promise.resolve()
   }
   // but if not, set allowance to 1 billion (or requested target allowance, if it's bigger than 1 billion)
