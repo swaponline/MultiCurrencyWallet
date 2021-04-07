@@ -69,8 +69,8 @@ const login = (privateKey, contractAddress, nameContract, decimals, fullName) =>
 
 
 const setupContract = (ethAddress, contractAddress, nameContract, decimals, fullName) => {
-  //@ts-ignore
   console.log('setup contract', web3, web3.isMetamask)
+
   if (!web3.eth.accounts.wallet[ethAddress]) {
     throw new Error('web3 does not have given address')
   }
@@ -217,25 +217,48 @@ const withToken = (name) => {
 
   name = name.toLowerCase()
 
-  const { user: { tokensData: { [name]: { address } } } } = getState()
-  const { [name]: { address: contractAddress, decimals } } = config.erc20
+  const ownerAddress = getState().user.tokensData[name].address
 
-  const tokenContract = new web3.eth.Contract(ERC20_ABI, contractAddress, { from: address })
+  const {
+    [name]: {
+      address: contractAddress,
+      decimals,
+    },
+  } = config.erc20
 
-  const toWei: any = amount => new BigNumber(amount).times(new BigNumber(10).pow(decimals)).toString(10)
-  const fromWei: any = wei => new BigNumber(wei).div(new BigNumber(10).pow(decimals))
-
-  return { contractAddress, tokenContract, decimals, toWei, fromWei }
-}
-
-//@ts-ignore
-const fetchFees = async ({ gasPrice, gasLimit, speed } = {}) => {
-  gasPrice = gasPrice || await helpers.ethToken.estimateGasPrice({ speed })
-  gasLimit = gasLimit || constants.defaultCurrencyParameters.ethToken.limit.send
+  const tokenContract = new web3.eth.Contract(ERC20_ABI, contractAddress, { from: ownerAddress })
+  const formatWithDecimals: any = amount => new BigNumber(amount).times(new BigNumber(10).pow(decimals)).toString(10)
+  const formatWithoutDecimal: any = wei => new BigNumber(wei).div(new BigNumber(10).pow(decimals))
 
   return {
-    gas: gasLimit,
-    gasPrice,
+    contractAddress,
+    tokenContract,
+    decimals,
+    formatWithDecimals,
+    formatWithoutDecimal,
+  }
+}
+
+
+type FetchFeesParams = {
+  gasPrice?: number
+  gasLimit?: number
+  speed?: string
+}
+
+type FetchFeesResponse = {
+  gas: number
+  gasPrice: number
+}
+
+const fetchFees = async (params: FetchFeesParams = {}): Promise<FetchFeesResponse> => {
+  const { gasPrice, gasLimit, speed } = params
+  const newGasPrice = gasPrice || await helpers.ethToken.estimateGasPrice({ speed })
+  const newGasLimit = gasLimit || constants.defaultCurrencyParameters.ethToken.limit.send
+
+  return {
+    gas: newGasLimit,
+    gasPrice: newGasPrice,
   }
 }
 
@@ -252,25 +275,11 @@ const getLinkToInfo = (tx) => {
 
   return `${config.link.etherscan}/tx/${tx}`
 }
-//@ts-ignore
-const sendTransaction = ({ contract, method }, { args, params = {} } = {}, callback) =>
-  new Promise(async (resolve, reject) => {
-    const receipt = await contract.methods[method](...args).send(params)
-      .on('transactionHash', (hash) => {
-        // eslint-disable-next-line
-        callback && callback(hash)
-      })
-      .catch((error) => {
-        reject(error)
-      })
-
-    resolve(receipt)
-  })
 
 const send = (data) => (hasAdminFee) ? sendWithAdminFee(data) : sendDefault(data)
 //@ts-ignore
 const sendWithAdminFee = async ({ name, from, to, amount, ...feeConfig } = {}) => {
-  const { tokenContract, toWei } = withToken(name)
+  const { tokenContract, formatWithDecimals } = withToken(name)
   const {
     fee: adminFee,
     address: adminFeeAddress,
@@ -284,10 +293,9 @@ const sendWithAdminFee = async ({ name, from, to, amount, ...feeConfig } = {}) =
   let feeFromAmount: any = new BigNumber(adminFee).dividedBy(100).multipliedBy(amount)
   if (adminFeeMin.isGreaterThan(feeFromAmount)) feeFromAmount = adminFeeMin
 
-  feeFromAmount = toWei(feeFromAmount.toNumber()) // Admin fee
+  feeFromAmount = formatWithDecimals(feeFromAmount.toNumber()) // Admin fee
 
   const params = {
-    //@ts-ignore
     ... await fetchFees({ ...feeConfig }),
     from,
   }
@@ -297,8 +305,7 @@ const sendWithAdminFee = async ({ name, from, to, amount, ...feeConfig } = {}) =
     currency: name,
   })
 
-  const newAmount = toWei(amount)
-  const callMethod = { contract: tokenContract, method: 'transfer' }
+  const newAmount = formatWithDecimals(amount)
 
   return new Promise((resolve, reject) => {
     const receipt = tokenContract.methods.transfer(to, newAmount).send(params)
@@ -325,23 +332,13 @@ const sendWithAdminFee = async ({ name, from, to, amount, ...feeConfig } = {}) =
 }
 //@ts-ignore
 const sendDefault = async ({ name, from, to, amount, ...feeConfig } = {}) => {
-  const { tokenContract, toWei } = withToken(name)
+  const { tokenContract, formatWithDecimals } = withToken(name)
   const params = {
-    //@ts-ignore
     ... await fetchFees({ ...feeConfig }),
     from,
   }
 
-  const newAmount = toWei(amount)
-  const callMethod = { contract: tokenContract, method: 'transfer' }
-
-  // return sendTransaction(
-  //   { contract: tokenContract, method: 'transfer' },
-  //   { args: [ to, newAmount ], params },
-  //   (hash) => {
-  //     const txId = `${config.link.etherscan}/tx/${hash}`
-  //     actions.loader.show(true, { txId })
-  //   })
+  const newAmount = formatWithDecimals(amount)
 
   return new Promise(async (resolve, reject) => {
     const receipt = await tokenContract.methods.transfer(to, newAmount).send(params)
@@ -356,37 +353,68 @@ const sendDefault = async ({ name, from, to, amount, ...feeConfig } = {}) => {
     resolve(receipt)
   })
 }
-//@ts-ignore
-const approve = async ({ name, to, amount, ...feeConfig } = {}) => {
-  const { tokenContract, toWei } = withToken(name)
-  //@ts-ignore
-  const params = await fetchFees({ ...feeConfig })
 
-  const newAmount = toWei(amount)
-//@ts-ignore
-  return sendTransaction(
-    { contract: tokenContract, method: 'approve' },
-    { args: [to, newAmount], params })
+type ApproveParams = {
+  name: string
+  to: string
+  amount: BigNumber
 }
 
-const setAllowanceForToken = async ({ name, to, targetAllowance, ...config }) => {
-  const { tokenContract, toWei } = withToken(name)
+type ApproveResponse = {
+  blockHash: string
+  blockNumber: number
+  contractAddress: string | null
+  cumulativeGasUsed: number
+  gasUsed: number
+  events: IUniversalObj
+  from: string
+  to: string
+  logsBloom: string
+  status: boolean
+  transactionHash: string
+  transactionIndex: number
+  type: string
+}
+
+const approve = async (params: ApproveParams): Promise<ApproveResponse> => {
+  const { name, to, amount } = params
+  const { tokenContract, formatWithDecimals } = withToken(name)
+  const feeResult = await fetchFees()
+  const weiAmount = formatWithDecimals(amount)
+
+  return new Promise(async (resolve, reject) => {
+    const receipt = await tokenContract.methods.approve(to, weiAmount).send(feeResult)
+      .on('transactionHash', (hash) => {
+        console.group('Actions > token >%c approve', 'color: green')
+        console.log('tx hash: ', hash)
+        console.groupEnd()
+      })
+      .catch((error) => {
+        reject(error)
+      })
+
+    resolve(receipt)
+  })
+}
+
+const setAllowance = async (params) => {
+  let { name, to, targetAllowance } = params
+  const { tokenContract, formatWithDecimals } = withToken(name)
 
   name = name.toLowerCase()
 
-  const { user: { tokensData: { [name]: { address } } } } = getState()
-
-  const allowance = await tokenContract.methods.allowance(address, to).call()
+  const ownerAddress = getState().user.tokensData[name].address
+  const allowance = await tokenContract.methods.allowance(ownerAddress, to).call()
 
   // if there is already enough allowance, skip
-  if (new BigNumber(toWei(targetAllowance)).isLessThanOrEqualTo(allowance)) {
+  if (new BigNumber(formatWithDecimals(targetAllowance)).isLessThanOrEqualTo(allowance)) {
     return Promise.resolve()
   }
   // but if not, set allowance to 1 billion (or requested target allowance, if it's bigger than 1 billion)
 
   const newTargetAllowance = BigNumber.max(1e9, targetAllowance)
 
-  return approve({ name, to, amount: newTargetAllowance, ...config })
+  return approve({ name, to, amount: newTargetAllowance })
 }
 
 const fetchTokenTxInfo = (ticker, hash, cacheResponse) => {
@@ -511,7 +539,7 @@ export default {
   getTx,
   getLinkToInfo,
   approve,
-  setAllowanceForToken,
+  setAllowance,
   fetchBalance,
   AddCustomERC20,
   GetCustromERC20,

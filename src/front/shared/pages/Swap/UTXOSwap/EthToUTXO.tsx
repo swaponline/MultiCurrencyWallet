@@ -105,18 +105,6 @@ export default class EthToUTXO extends Component<any, any> {
     } = this.state
 
     const { currencyName } = this._fields
-    /** todo - not used - remove **/
-    const stepNumbers = {
-      1: 'sign',
-      2: 'wait-lock-utxo',
-      3: 'verify-script',
-      4: 'sync-balance',
-      5: 'lock-eth',
-      6: 'wait-withdraw-eth',
-      7: 'withdraw-utxo',
-      8: 'finish',
-      9: 'end',
-    }
 
     this.setState({
       flow: values,

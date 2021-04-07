@@ -3,7 +3,6 @@ import eth from './eth'
 import DEFAULT_CURRENCY_PARAMETERS from './constants/DEFAULT_CURRENCY_PARAMETERS'
 import BigNumber from 'bignumber.js'
 
-
 const isEthToken = ({ name }) => Object.keys(config.erc20).includes(name.toLowerCase())
 const isEthOrEthToken = ({ name }) => Object.keys(config.erc20).concat('eth').includes(name.toLowerCase())
 
@@ -29,7 +28,6 @@ const estimateFeeValue = async (options: EstimateFeeOptions) => {
 
   return feeValue
 }
-
 
 const estimateGasPrice = ({ speed }) => eth.estimateGasPrice({ speed })
 

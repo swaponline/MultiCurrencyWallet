@@ -4,6 +4,11 @@ import iconWalletConnect from './walletconnect.svg'
 import iconLiquality from './liquality.png'
 import iconMetamask from './metamask.svg'
 import iconTrustWallet from './trust.svg'
+import iconClose from './close.svg'
+
+export const regularIcons = {
+  CLOSE: iconClose,
+}
 
 const web3Icons = {
   METAMASK: iconMetamask,

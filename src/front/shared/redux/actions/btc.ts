@@ -13,8 +13,6 @@ import actions from 'redux/actions'
 import typeforce from 'swap.app/util/typeforce'
 import config from 'app-config'
 
-import { localisePrefix } from 'helpers/locale'
-
 import * as mnemonicUtils from '../../../../common/utils/mnemonic'
 
 import { default as bitcoinUtils } from '../../../../common/utils/coin/btc'
@@ -473,7 +471,7 @@ const send = ({ from, to, amount, feeValue = null, speed }) => {
       feeFromAmount = feeFromAmount.toNumber()
 
       try {
-        feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed, amount})
+        feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed, address: from, amount, toAddress: to})
       } catch (eFee) {
         reject({ message: `Fail estimate fee ` + eFee.message })
         return

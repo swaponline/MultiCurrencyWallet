@@ -8,7 +8,6 @@ import Link from 'local_modules/sw-valuelink'
 import {
   constants
 } from 'helpers'
-import request from 'common/utils/request'
 
 import cssModules from 'react-css-modules'
 import styles from './SignUpModal.scss'
@@ -56,7 +55,6 @@ class SignUpModal extends React.Component<any, any> {
     this.state = {
       isSubmitedPush: false,
       isSubmitedEmail: false,
-      // isSupportedPush: firebase.isSupported(),
       isPushError: false,
       isEmailError: false,
       email: '',
@@ -79,12 +77,9 @@ class SignUpModal extends React.Component<any, any> {
     if (isRefLink) {
       // eslint-disable-next-line prefer-destructuring
       refEthAddress = currentUrl.search.split('?promo=')[1].split('&')[0]
-      // await firebase.submitUserData('usersBalance', { Referrer: refEthAddress })
     }
 
-    // const ipInfo = await firebase.getIPInfo()
     const data = {
-      // ...ipInfo,
       ethAddress,
       btcAddress,
       ghostAddress,
@@ -93,48 +88,9 @@ class SignUpModal extends React.Component<any, any> {
       registrationDomain: getTopLocation().host,
       userAgentRegistration: navigator.userAgent,
     }
-    if (whatToSubmit === 'isSubmitedPush' || !isSupportedPush) {
-      // await firestore.addUser(data)
-    }
+
     //@ts-ignore
     actions.analytics.signUpEvent({ action: 'request' })
-
-    // if (!isSupportedPush || isSubmitedPush) {
-    //   const result = await firebase.signUpWithEmail({
-    //     ...data,
-    //     email,
-    //   })
-    //   const resultFirestore = firestore.signUpWithEmail({
-    //     email,
-    //   })
-
-    //   if (!result) {
-    //     this.setState(() => ({
-    //       isEmailError: true,
-    //       [whatToSubmit]: Boolean(result && resultFirestore),
-    //     }))
-    //     return
-    //   }
-
-    //   this.setState(() => ({ [whatToSubmit]: Boolean(result && resultFirestore) }))
-    //   return
-    // }
-
-    // const result = await firebase.signUpWithPush(data)
-    // const resultFirestore = await firestore.signUpWithPush()
-
-    // this.setState(() => ({ [whatToSubmit]: true }))
-
-    // if (!result && !resultFirestore) {
-    //   this.setState(() => ({
-    //     isPushError: !result,
-    //     isSupportedPush: result,
-    //     [whatToSubmit]: false,
-    //   }))
-    //   return
-    // }
-
-    // this.setState(() => ({ [whatToSubmit]: Boolean(result && resultFirestore) }))
   }
 
   close = () => {
