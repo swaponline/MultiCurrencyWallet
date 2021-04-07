@@ -449,7 +449,7 @@ class App extends React.Component<RouteComponentProps<any>, any> {
             <>
               {/*
               //@ts-ignore */}
-              <WidthContainer id="swapComponentWrapper" styleName="headerAndMain">
+              <WidthContainer styleName="headerAndMain">
                 <Header />
                 <main>{children}</main>
               </WidthContainer>

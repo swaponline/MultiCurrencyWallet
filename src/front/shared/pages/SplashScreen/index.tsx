@@ -7,7 +7,6 @@ import { constants } from 'helpers'
 import { FormattedMessage } from 'react-intl'
 import web3Icons from 'images/'
 import screenIcons from './images'
-import Button from 'components/controls/Button/Button'
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
