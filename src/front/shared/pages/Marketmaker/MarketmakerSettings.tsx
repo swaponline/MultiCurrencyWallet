@@ -57,7 +57,7 @@ console.log('>>>> Market token', marketToken)
       tokenWallet: null,
       tokenBalance: 0,
       ethBalance: 0,
-      isBalanceFetchin: false,
+      isBalanceFetching: false,
     }
   }
 
@@ -90,12 +90,12 @@ console.log('>>>> Market token', marketToken)
   fetchWalletsWithBalances() {
     const {
       marketToken,
-      isBalanceFetchin,
+      isBalanceFetching,
     } = this.state
 
     if (!this._mounted) return
 
-    if (isBalanceFetchin) {
+    if (isBalanceFetching) {
       // Если в данный момент идет запрос баланса. ничего не делаем
       // вызываем функуцию повторно через несколько секунд
       // такое может произойти, если пользователь меняет быстро код токена в адресной строке
@@ -105,7 +105,7 @@ console.log('>>>> Market token', marketToken)
       }, 2000)
     }
     this.setState({
-      isBalanceFetchin: true,
+      isBalanceFetching: true,
     }, () => {
       const btcWallet = actions.core.getWallet({ currency: `btc` })
       const ethWallet = actions.core.getWallet({
@@ -135,7 +135,7 @@ console.log('>>>> Market token', marketToken)
             btcBalance,
             ethBalance,
             tokenBalance,
-            isBalanceFetchin: false
+            isBalanceFetching: false
           })
         }
       })
@@ -251,6 +251,7 @@ console.log('>>>> Market token', marketToken)
       tokenBalance,
       ethBalance,
       marketToken,
+      isBalanceFetching,
     } = this.state
 
     const sortedSwaps = swapsIds.sort((aId, bId) => {
@@ -259,18 +260,27 @@ console.log('>>>> Market token', marketToken)
     return (
       <div styleName="mm-settings-page">
         <section styleName="mm-controls">
-          <h2 styleName="section-title">Настройки маркетмейкинга</h2>
+        {!isBalanceFetching ? (
+          <>
+            <h2 styleName="section-title">Настройки маркетмейкинга</h2>
 
-          <p>Маркетмейкинг BTC/WBTC : <span>
-            <Toggle checked={true} onChange={this.handleToggleMarketmaker} />
-          </span></p>
-          <p>Спред: 0.5% (по умолчанию стоит 0.5%)</p>
-          {btcWallet ? (
-            <p>Баланс BTC: {btcBalance} BTC для попленения перведите на `{btcWallet.address}`</p>
-          ) : (
-            <p>Баланс BTC: {btcBalance} BTC</p>
-          )}
-          <p>Баланс {marketToken.toUpperCase()}: {tokenBalance} {marketToken.toUpperCase()}</p>
+            <p>Маркетмейкинг BTC/WBTC : <span>
+              <Toggle checked={true} onChange={this.handleToggleMarketmaker} />
+            </span></p>
+            <p>Спред: 0.5% (по умолчанию стоит 0.5%)</p>
+            {btcWallet ? (
+              <p>Баланс BTC: {btcBalance} BTC для попленения перведите на `{btcWallet.address}`</p>
+            ) : (
+              <p>Баланс BTC: {btcBalance} BTC</p>
+            )}
+            <p>Баланс ETH: {ethBalance}</p>
+            <p>Баланс {marketToken.toUpperCase()}: {tokenBalance} {marketToken.toUpperCase()}</p>
+          </>
+        ) : (
+          <>
+            <p>Loading...</p>
+          </>
+        )}
         </section>
 
         {/* Swaps history + Active swaps */}
