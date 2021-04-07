@@ -171,9 +171,9 @@ export default class DepositWindow extends Component<any, any> {
 
       if (timeLeft <= 0) {
         console.group('%c UTXO swap deposit modal', 'color: yellow;')
+        console.log('Stop swap process in DepositWindow')
         console.log('timeLeft: ', timeLeft)
         console.groupEnd()
-      
 
         flow.stopSwapProcess()
 

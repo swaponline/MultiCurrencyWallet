@@ -2,6 +2,7 @@ export default {
   eth: {
     limit: {
       send: 21 * 1e3,
+      contractInteract: 100 * 1e3,
       swap: 70 * 1e3,
     },
     price: {

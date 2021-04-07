@@ -589,19 +589,13 @@ export const isOwner = (addr, currency) => {
       },
     } = getState()
 
-    return addr === address
+    return addr.toLowerCase() === address.toLowerCase()
   }
 
   if (actions.btc.getAllMyAddresses().indexOf(addr.toLowerCase()) !== -1) return true
   if (actions.ghost.getAllMyAddresses().indexOf(addr.toLowerCase()) !== -1) return true
   if (actions.next.getAllMyAddresses().indexOf(addr.toLowerCase()) !== -1) return true
   if (actions.eth.getAllMyAddresses().indexOf(addr.toLowerCase()) !== -1) return true
-
-  if (metamask
-    && metamask.isEnabled()
-    && metamask.isConnected()
-    && metamask.getAddress().toLowerCase() == addr.toLowerCase()
-  ) return true
 
   const name = `${currency.toLowerCase()}Data`
   const { user } = getState()
@@ -616,7 +610,7 @@ export const isOwner = (addr, currency) => {
     return false
   }
 
-  return addr === address
+  return addr.toLowerCase() === address.toLowerCase()
 }
 
 
@@ -646,11 +640,6 @@ const getAuthData = (name) => {
   const { user } = getState()
   return user[`${name}Data`]
 }
-
-// const addMessagingToken = (token) => {
-//   console.log("Added firebase token to redux store: ", token)
-//   reducers.user.addMessagingToken({ token })
-// }
 
 export default {
   sign,

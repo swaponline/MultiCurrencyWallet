@@ -672,6 +672,9 @@ class Row extends Component<RowProps, RowState> {
     let showBalance = true
     let statusInfo = ''
 
+    // Prevent render SMS wallet
+    if (itemData.isSmsProtected) return null
+
     if (
       itemData.isPinProtected &&
       !itemData.isRegistered

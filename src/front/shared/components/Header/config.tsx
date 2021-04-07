@@ -30,10 +30,15 @@ export const messages = defineMessages({
     description: 'Menu item "History"',
     defaultMessage: 'Transactions',
   },
+  marketmaker: {
+    id: 'menu.marketmaker',
+    description: 'Menu item "Marketmaker"',
+    defaultMessage: 'Marketmaker',
+  },
   farm: {
     id: 'menu.farm',
     description: 'Menu item "Staking & Farming"',
-    defaultMessage: 'Staking & Farming',
+    defaultMessage: 'Farming',
   },
   invest: {
     id: 'menu.invest.info',
@@ -104,17 +109,31 @@ export const getMenuItems = (props, isWalletCreate) => {
     },
   ]
 
+  // Marketmaker testnet ********
+  if (externalConfig.entry === `testnet`) {
+    const marketmakerItem = {
+      title: intl.formatMessage(messages.marketmaker),
+      link: links.marketmaker,
+      exact: true,
+      haveSubmenu: true,
+      icon: 'products',
+      currentPageFlag: true,
+    }
+
+    itemsWithWallet.push(marketmakerItem)
+    itemsWithoutWallet.push(marketmakerItem)
+  }
   // Farm plugin ****************************
 
-  let hasFarmInitOprions = false
+  let hasFarmInitOptions = false
 
   if (window.farm) {
     const { farmAddress, rewardsAddress, stakingAddress } = window.farm
 
-    hasFarmInitOprions = farmAddress && rewardsAddress && stakingAddress && true
+    hasFarmInitOptions = farmAddress && rewardsAddress && stakingAddress && true
   }
 
-  if (hasFarmInitOprions) {
+  if (hasFarmInitOptions) {
     const farmItem = {
       title: intl.formatMessage(messages.farm),
       link: farm,
@@ -191,15 +210,15 @@ export const getMenuItemsMobile = (props, isWalletCreate, dinamicPath) => {
 
   // Farm plugin ****************************
 
-  let hasFarmInitOprions = false
+  let hasFarmInitOptions = false
 
   if (window.farm) {
     const { farmAddress, rewardsAddress, stakingAddress } = window.farm
 
-    hasFarmInitOprions = farmAddress && rewardsAddress && stakingAddress && true
+    hasFarmInitOptions = farmAddress && rewardsAddress && stakingAddress && true
   }
 
-  if (hasFarmInitOprions) {
+  if (hasFarmInitOptions) {
     const farmItem = {
       title: props.intl.formatMessage(messages.farm),
       link: farm,

@@ -7,7 +7,6 @@ import moment from "moment-with-locales-es6";
 import {
   constants,
   localStorage,
-  // firebase
 } from "helpers";
 
 import CSSModules from "react-css-modules";
@@ -24,7 +23,6 @@ import PreventMultiTabs from "components/PreventMultiTabs/PreventMultiTabs";
 import RequestLoader from "components/loaders/RequestLoader/RequestLoader";
 import ModalConductor from "components/modal/ModalConductor/ModalConductor";
 import WidthContainer from "components/layout/WidthContainer/WidthContainer";
-import Wrapper from "components/layout/Wrapper/Wrapper";
 import NotificationConductor from "components/notification/NotificationConductor/NotificationConductor";
 import Seo from "components/Seo/Seo";
 
@@ -318,8 +316,6 @@ class App extends React.Component<RouteComponentProps<any>, any> {
       })
     }
 
-    // firebase.initialize();
-
     this.processUserBackup()
     this.processMetamask()
 
@@ -367,10 +363,6 @@ class App extends React.Component<RouteComponentProps<any>, any> {
     }
 
     this.checkIfDashboardModalsAllowed()
-
-    if (process.env.MAINNET) {
-      // firebase.setUserLastOnline();
-    }
   }
 
   checkIfDashboardModalsAllowed = () => {
@@ -433,8 +425,7 @@ class App extends React.Component<RouteComponentProps<any>, any> {
     const isWidgetBuild = config && config.isWidget
 
     if (isWidgetBuild && localStorage.getItem(constants.localStorage.didWidgetsDataSend) !== "true") {
-      // firebase.submitUserDataWidget("usersData");
-      localStorage.setItem(constants.localStorage.didWidgetsDataSend, true)
+      localStorage.setItem(constants.localStorage.didWidgetsDataSend, true);
     }
 
     if (multiTabs) {
@@ -456,14 +447,12 @@ class App extends React.Component<RouteComponentProps<any>, any> {
 
         {!splashSreenIsOpen ? (
             <>
-              <Wrapper>
-                {/*
-                //@ts-ignore */}
-                <WidthContainer id="swapComponentWrapper" styleName="headerAndMain">
-                  <Header />
-                  <main>{children}</main>
-                </WidthContainer>
-              </Wrapper>
+              {/*
+              //@ts-ignore */}
+              <WidthContainer id="swapComponentWrapper" styleName="headerAndMain">
+                <Header />
+                <main>{children}</main>
+              </WidthContainer>
               <Core />
               <Footer />
               <RequestLoader />

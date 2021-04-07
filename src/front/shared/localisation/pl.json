@@ -3777,6 +3777,48 @@
     ]
   },
   {
+    "id": "MainFAQ3_header",
+    "message": "Dlaczego opłata za wydobycie jest zbyt wysoka?",
+    "files": [
+      "src/front/shared/components/FAQ/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MainFAQ3_content",
+    "message": "Opłaty za blockchain zależą od kilku czynników, w tym przeciążenia sieci i wielkości transakcji (dotyczy to konwersji krypto z wielu danych wejściowych, takich jak zarobki z kranu lub inne mikrotransakcje).",
+    "files": [
+      "src/front/shared/components/FAQ/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MainFAQ3_content1",
+    "message": "Innymi słowy, być może będziesz musiał zapłacić wyższe opłaty za blockchain, jeśli:",
+    "files": [
+      "src/front/shared/components/FAQ/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MainFAQ3_content2",
+    "message": "1) Sieć blockchain jest w tej chwili zajęta lub załadowana. Zwykle opłata wzrasta podczas nagłych wahań kursu blockchain i ważnych wydarzeń na świecie;",
+    "files": [
+      "src/front/shared/components/FAQ/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MainFAQ3_content3",
+    "message": "2) Twoje konto kryptograficzne ma historię mikrodepozytów. Jeśli na Twoim koncie znajdują się duże kwoty małych depozytów, wielkość transakcji będzie większa, ponieważ będzie się składać z wielu danych wejściowych. Im większy rozmiar transakcji, tym wyższa opłata za blockchain.",
+    "files": [
+      "src/front/shared/components/FAQ/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MainFAQ3_content4",
+    "message": "Mogą istnieć inne przyczyny wyższych opłat za blockchain, ale wymieniliśmy najczęstsze z nich.",
+    "files": [
+      "src/front/shared/components/FAQ/FAQ.tsx"
+    ]
+  },
+  {
     "id": "SweepBannerDescription",
     "message": "Please, move your funds to \"new\" addresses (USDT and other ERC20 send to New Ethereum (new) address). And click this button: \"DONE\". Old addresses will be hidden.",
     "files": [
@@ -5789,7 +5831,7 @@
   },
   {
     "id": "menu.farm",
-    "message": "Staking i rolnictwo",
+    "message": "Rolnictwo",
     "files": [
       "src/front/shared/components/Header/config.tsx"
     ]

@@ -180,6 +180,34 @@ const FAQ = (props) => {
             </p>
           </div>
         </article>
+        <article className={styles.tab}>
+          <h6 className={styles.tab__header} onClick={() => handleTabClick('THIRD_TAB')}>
+            <div className={cx({
+              [styles.chrest]: true,
+              [styles.chrest_active]: openedTabs.THIRD_TAB,
+            })} />
+            <FormattedMessage id="MainFAQ3_header" defaultMessage="Why mining fee is too high?" />
+          </h6>
+          <div className={cx({
+            [styles.tab__content]: true,
+            [styles.tab__content_active]: openedTabs.THIRD_TAB,
+          })}>
+            <p>
+              <FormattedMessage id="MainFAQ3_content" defaultMessage="Blockchain fees depend on several factors including network congestion and transaction size (affected when converting crypto from multiple inputs such as faucet earnings or other micro-transactions)." />
+            </p>
+            <p>
+              <FormattedMessage id="MainFAQ3_content1" defaultMessage="In other words, you may need to pay higher blockchain fees if:" />
+            </p>
+            <p>
+              <FormattedMessage id="MainFAQ3_content2" defaultMessage="1) The blockchain network is busy or loaded at the moment. Usually, the fee increases during sudden blockchain rate fluctuations and major world events;" />
+              <br/>
+              <FormattedMessage id="MainFAQ3_content3" defaultMessage="2) Your crypto account has a history of microdeposits. If your account has large amounts of small deposits, the size of your transaction will be bigger as it will consist of many inputs. The bigger the transaction size, the higher the blockchain fee." />
+            </p>
+            <p>
+              <FormattedMessage id="MainFAQ3_content4" defaultMessage="There might be other causes of higher blockchain fees, but we've listed the most common ones." />
+            </p>
+          </div>
+        </article>
       </div>
     </div>
   )

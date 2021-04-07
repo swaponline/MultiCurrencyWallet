@@ -1,21 +1,3 @@
-.coins {
-  justify-content: left;
-}
-
-.reloadButton {
-  margin-right: 10px;
-}
-
-.copied {
-  font-size: 14px;
-  position: absolute;
-  padding: 5px 15px;
-  background: #f8f3fe;
-  top: -16px;
-  left: calc(10%);
-  border-radius: 20px;
-}
-
 .button {
   @include inline-block;
   height: 40px;
@@ -47,19 +29,9 @@
   }
 }
 
-.exchangePrice {
-  color: #666;
-  position: absolute;
-  bottom: -38px;
-  display: none;
-  left: -43px;
-}
-
-
 .exchangeTr {
   position: relative
 }
-
 
 @include media-mobile { 
   .exchangeRow {
@@ -68,13 +40,7 @@
       transform: scale(0.6);
     }
   }
-  .exchangePrice {
-    color: #666;
-    position: absolute;
-    bottom: -38px;
-    display: none;
-    left: -43px;
-  }
+
   .exchangeTr {
     position: relative;
     height: 88px;
@@ -82,6 +48,7 @@
       padding: 15px 2px;
     }
   }
+
   .button {
     width: auto;
     font-size: 13px;
@@ -93,6 +60,7 @@
     margin-left: -10px;
     margin-top: 0px;
   }
+
   .coin {
     width: 35px !important;
     margin-right: 5px;

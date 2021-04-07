@@ -3766,6 +3766,48 @@
     ]
   },
   {
+    "id": "MainFAQ3_header",
+    "message": "Waarom is mijnvergoeding te hoog?",
+    "files": [
+      "src/front/shared/components/FAQ/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MainFAQ3_content",
+    "message": "Blockchain-vergoedingen zijn afhankelijk van verschillende factoren, waaronder netwerkcongestie en transactiegrootte (beïnvloed bij het converteren van cryptovaluta van meerdere inputs zoals kraanopbrengsten of andere microtransacties).",
+    "files": [
+      "src/front/shared/components/FAQ/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MainFAQ3_content1",
+    "message": "Met andere woorden, u moet mogelijk hogere blockchain-vergoedingen betalen als:",
+    "files": [
+      "src/front/shared/components/FAQ/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MainFAQ3_content2",
+    "message": "1) Het blockchain-netwerk is momenteel bezet of geladen. Gewoonlijk stijgt de vergoeding tijdens plotselinge schommelingen in de blockchain-rente en grote wereldgebeurtenissen;",
+    "files": [
+      "src/front/shared/components/FAQ/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MainFAQ3_content3",
+    "message": "2) Uw crypto-account heeft een geschiedenis van microstortingen. Als uw account grote hoeveelheden kleine stortingen heeft, zal de omvang van uw transactie groter zijn omdat deze uit veel invoer bestaat. Hoe groter de transactiegrootte, hoe hoger de blockchain-vergoeding.",
+    "files": [
+      "src/front/shared/components/FAQ/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MainFAQ3_content4",
+    "message": "Er kunnen andere oorzaken zijn van hogere blockchain-vergoedingen, maar we hebben de meest voorkomende opgesomd.",
+    "files": [
+      "src/front/shared/components/FAQ/FAQ.tsx"
+    ]
+  },
+  {
     "id": "SweepBannerDescription",
     "message": "Please, move your funds to \"new\" addresses (USDT and other ERC20 send to New Ethereum (new) address). And click this button: \"DONE\". Old addresses will be hidden.",
     "files": [
@@ -5802,7 +5844,7 @@
   },
   {
     "id": "menu.farm",
-    "message": "Uitzetten en landbouw",
+    "message": "Landbouw",
     "files": [
       "src/front/shared/components/Header/config.tsx"
     ]
