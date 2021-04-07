@@ -178,6 +178,7 @@ export default (tokenName) => {
 
           async () => {
             const scriptFunded = await this.waitUTXOScriptFunded()
+
             if (scriptFunded) {
               await flow.ethTokenSwap.fundERC20Contract({
                 flow,

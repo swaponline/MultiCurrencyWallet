@@ -95,8 +95,7 @@ class RowFeeds extends Component<any, any> {
                   </div>
                 </Link>
               </div>
-              :
-              <RemoveButton className="removeButton" onClick={() => removeOrder(id)} />
+              : <RemoveButton onClick={() => removeOrder(id)} brand={true} />
             }
           </div>
         </td>

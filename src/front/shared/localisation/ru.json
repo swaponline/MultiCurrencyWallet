@@ -109,27 +109,6 @@
     ]
   },
   {
-    "id": "Approve70",
-    "message": "Укажите лимит суммы для Смарт контрактов. Мы не рекомендуем устанавливать какие-либо ограничения. ",
-    "files": [
-      "src/front/shared/components/modals/Approve/Approve.tsx"
-    ]
-  },
-  {
-    "id": "Approve73",
-    "message": "Сумма",
-    "files": [
-      "src/front/shared/components/modals/Approve/Approve.tsx"
-    ]
-  },
-  {
-    "id": "Approve80",
-    "message": "Подтвердить",
-    "files": [
-      "src/front/shared/components/modals/Approve/Approve.tsx"
-    ]
-  },
-  {
     "id": "EthChecker19",
     "message": "Этот Токен работает на сети Ethereum blockchain. Для осуществления операций у Вас должно быть не менее 0.02 ETH на балансе",
     "files": [
@@ -291,14 +270,16 @@
     "id": "RowHistory76",
     "message": "Возврат невозможен",
     "files": [
-      "src/front/shared/pages/History/SwapsHistory/RowHistory/RowHistory.tsx"
+      "src/front/shared/pages/History/SwapsHistory/RowHistory/RowHistory.tsx",
+      "src/front/shared/pages/Marketmaker/SwapRow.tsx"
     ]
   },
   {
     "id": "RowHistory91",
     "message": "Ссылка на обмен",
     "files": [
-      "src/front/shared/pages/History/SwapsHistory/RowHistory/RowHistory.tsx"
+      "src/front/shared/pages/History/SwapsHistory/RowHistory/RowHistory.tsx",
+      "src/front/shared/pages/Marketmaker/SwapRow.tsx"
     ]
   },
   {
@@ -636,14 +617,16 @@
     "id": "RowHistory94",
     "message": "Выполнено",
     "files": [
-      "src/front/shared/pages/History/SwapsHistory/RowHistory/RowHistory.tsx"
+      "src/front/shared/pages/History/SwapsHistory/RowHistory/RowHistory.tsx",
+      "src/front/shared/pages/Marketmaker/SwapRow.tsx"
     ]
   },
   {
     "id": "RowHistory139",
     "message": "Остановлено",
     "files": [
-      "src/front/shared/pages/History/SwapsHistory/RowHistory/RowHistory.tsx"
+      "src/front/shared/pages/History/SwapsHistory/RowHistory/RowHistory.tsx",
+      "src/front/shared/pages/Marketmaker/SwapRow.tsx"
     ]
   },
   {
@@ -775,13 +758,6 @@
     "message": "Получаете",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
-    ]
-  },
-  {
-    "id": "Approve66",
-    "message": "Подтвердить токен",
-    "files": [
-      "src/front/shared/components/modals/Approve/Approve.tsx"
     ]
   },
   {
@@ -961,7 +937,7 @@
   },
   {
     "id": "partial767",
-    "message": "Ваш баланс: ",
+    "message": "Баланс: ",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
@@ -1205,7 +1181,8 @@
     "id": "RowHistory77",
     "message": "Refunded",
     "files": [
-      "src/front/shared/pages/History/SwapsHistory/RowHistory/RowHistory.tsx"
+      "src/front/shared/pages/History/SwapsHistory/RowHistory/RowHistory.tsx",
+      "src/front/shared/pages/Marketmaker/SwapRow.tsx"
     ]
   },
   {
@@ -1387,7 +1364,8 @@
     "id": "BtcToEthToken123",
     "message": "Свап завершен!",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/steps/FourthStep.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSteps/FourthStep.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSteps/FourthStep.tsx"
     ]
   },
   {
@@ -1566,28 +1544,32 @@
     "id": "BtcToEthToken24",
     "message": "Зачисление",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/steps/SecondStep.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSteps/SecondStep.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSteps/SecondStep.tsx"
     ]
   },
   {
     "id": "FourthStep52",
     "message": "({otherCurrency} tx)",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/steps/SecondStep.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSteps/SecondStep.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSteps/SecondStep.tsx"
     ]
   },
   {
     "id": "FourthStep34",
     "message": "({sell} tx)",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/steps/ThirdStep.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSteps/ThirdStep.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSteps/ThirdStep.tsx"
     ]
   },
   {
     "id": "thirdStep24",
     "message": "Вывод из контракта",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/steps/ThirdStep.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSteps/ThirdStep.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSteps/ThirdStep.tsx"
     ]
   },
   {
@@ -1717,21 +1699,22 @@
     "id": "swapprogressDONTLEAVE",
     "message": "Пожалуйста, не уходите с этой страницы ",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/PleaseDontLeaveWrapper.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/PleaseDontLeaveWrapper.tsx"
     ]
   },
   {
     "id": "swapjsdontleave",
     "message": "В каждом шаге при обмене требуется подпись приватными ключами, которые знает только ваш браузер.",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/PleaseDontLeaveWrapper.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/PleaseDontLeaveWrapper.tsx"
     ]
   },
   {
     "id": "Confirmation14",
     "message": "Подтверждение",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/steps/FirstStep.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSteps/FirstStep.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSteps/FirstStep.tsx"
     ]
   },
   {
@@ -1768,14 +1751,16 @@
     "id": "SecondStep",
     "message": "On this step, the crypto goes not to your wallet {br}or to the wallet of your counterparty but directly to the swap contract",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/steps/SecondStep.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSteps/SecondStep.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSteps/SecondStep.tsx"
     ]
   },
   {
     "id": "thirdStep",
     "message": "Оn this step crypto is transferred from {br}the contract to your wallet and to the wallet {br} of your counterparty {br}",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/steps/ThirdStep.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSteps/ThirdStep.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSteps/ThirdStep.tsx"
     ]
   },
   {
@@ -1955,14 +1940,14 @@
     "id": "swapjsdontleavesavesecret",
     "message": "If you want to leave this page please save the secret.",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/PleaseDontLeaveWrapper.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/PleaseDontLeaveWrapper.tsx"
     ]
   },
   {
     "id": "swapprogressDONTLEAVEBTC",
     "message": "Or save this information before you leave:",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/PleaseDontLeaveWrapper.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/PleaseDontLeaveWrapper.tsx"
     ]
   },
   {
@@ -2286,83 +2271,6 @@
     "message": "Выбор типа комиссии:",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/index.tsx"
-    ]
-  },
-  {
-    "id": "FeeRadiosSpeedTypeSlow",
-    "message": "Медленная",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
-    ]
-  },
-  {
-    "id": "FeeRadiosSpeedTypeMedium",
-    "message": "Средняя",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
-    ]
-  },
-  {
-    "id": "FeeRadiosSpeedTypeFast",
-    "message": "Быстрая",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
-    ]
-  },
-  {
-    "id": "FeeRadiosSpeedTypeCustom",
-    "message": "Ручная",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
-    ]
-  },
-  {
-    "id": "FeeRadiosSpeedTypeTimeSlow",
-    "message": "~60-более мин.",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
-    ]
-  },
-  {
-    "id": "FeeRadiosSpeedTypeTimeMedium",
-    "message": "~25-60 минут",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
-    ]
-  },
-  {
-    "id": "FeeRadiosSpeedTypeTimeFast",
-    "message": "~5-20 минут",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
-    ]
-  },
-  {
-    "id": "FeeRadiosSpeedTypeDescriptionSlow",
-    "message": "Среднее значение комиссии за транзакции, которые должны быть подтверждены в 7 или более блоках.",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
-    ]
-  },
-  {
-    "id": "FeeRadiosSpeedTypeDescriptionMedium",
-    "message": "Среднее значение комиссии транзакции, которые должны быть подтверждены в пределах от 3 до 6 блоков.",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
-    ]
-  },
-  {
-    "id": "FeeRadiosSpeedTypeDescriptionFast",
-    "message": "Среднее значение комиссии транзакции, которые должны быть подтверждены в пределах от 1 до 2 блоков.",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
-    ]
-  },
-  {
-    "id": "FeeRadiosSpeedTypeDescriptionCustom",
-    "message": "Установите значение комиссии вручную.",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
     ]
   },
   {
@@ -5053,13 +4961,6 @@
     ]
   },
   {
-    "id": "Swap_NeedEthFee",
-    "message": "На вашем балансе должно быть не менее {buyFee} {buyCoin} для оплаты коммисии майнера",
-    "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
-    ]
-  },
-  {
     "id": "Swap_NeedMoreAmount",
     "message": "На вашем балансе должно быть не менее {amount} {currency}. {br}Коммисия майнера {sellFee} {sellCoin} и {buyFee} {buyCoin}",
     "files": [
@@ -5385,259 +5286,288 @@
     "id": "FourthStep37BtcLike",
     "message": "({currencyName} tx)",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/steps/SecondStep.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSteps/SecondStep.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSteps/SecondStep.tsx"
     ]
   },
   {
     "id": "FourthStep37_BtcLike",
     "message": "({currencyName} tx)",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/steps/ThirdStep.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSteps/ThirdStep.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSteps/ThirdStep.tsx"
     ]
   },
   {
     "id": "SwapProgress105_btclike_to_eth",
     "message": "Checking balance..",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEth.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/BtcLikeToEth.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/BtcLikeToEth.tsx"
     ]
   },
   {
     "id": "SwapProgress111_btclike_to_eth",
     "message": "Creating {coinName} Script.{br}It can take a few minutes",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEth.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/BtcLikeToEth.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/BtcLikeToEth.tsx"
     ]
   },
   {
     "id": "SwapProgress117_btclike_to_eth",
     "message": "Your {coinName} are now depositing. It may require one confirmation from {coinName} Network. Waiting for other participant to deposit ETH.",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEth.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/BtcLikeToEth.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/BtcLikeToEth.tsx"
     ]
   },
   {
     "id": "SwapProgress123_btclike_to_eth",
     "message": "ETH Contract created and charged. Requesting withdrawal from ETH Contract.",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEth.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/BtcLikeToEth.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/BtcLikeToEth.tsx"
     ]
   },
   {
     "id": "SwapProgress129_btclike_to_eth",
     "message": "ETH was transferred to your wallet. Check the balance.",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEth.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/BtcLikeToEth.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/BtcLikeToEth.tsx"
     ]
   },
   {
     "id": "SwapProgress135_btclike_to_eth",
     "message": "Thank you for using Swap.Online!",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEth.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/BtcLikeToEth.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/BtcLikeToEth.tsx"
     ]
   },
   {
     "id": "SwapProgress93_btclike_to_eth",
     "message": "The order creator is offline. Waiting for him..",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEth.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/BtcLikeToEth.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/BtcLikeToEth.tsx"
     ]
   },
   {
     "id": "SwapProgress99_btclike_to_eth",
     "message": "Create a secret key",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEth.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/BtcLikeToEth.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/BtcLikeToEth.tsx"
     ]
   },
   {
     "id": "ethToBtcText20_eth_to_btclike",
     "message": "Waiting for {coinName} Owner to create Secret Key, create {coinName} Script and charge it",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/EthToBtcLike.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/EthToBtcLike.tsx"
     ]
   },
   {
     "id": "ethToBtcText25_eth_to_btclike",
     "message": "The {coinName} Script was created and charged. Check the information below",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/EthToBtcLike.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/EthToBtcLike.tsx"
     ]
   },
   {
     "id": "ethToBtcText26_eth_to_btclike",
     "message": "Confirmation processing",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/EthToBtcLike.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/EthToBtcLike.tsx"
     ]
   },
   {
     "id": "ethToBtcText28_eth_to_btclike",
     "message": "Checking balance..",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/EthToBtcLike.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/EthToBtcLike.tsx"
     ]
   },
   {
     "id": "ethToBtcText32_eth_to_btclike",
     "message": "Creating Ethereum Contract.{br}It can take a few minutes",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/EthToBtcLike.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/EthToBtcLike.tsx"
     ]
   },
   {
     "id": "ethToBtcText36_eth_to_btclike",
     "message": "Waiting for {coinName} Owner to add a Secret Key to ETH Contact",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/EthToBtcLike.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/EthToBtcLike.tsx"
     ]
   },
   {
     "id": "ethToBtcText40_eth_to_btclike",
     "message": "The funds from ETH contract was successfully transferred to {coinName} owner. {coinName} owner left a secret key. Requesting withdrawal from {coinName} script.",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/EthToBtcLike.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/EthToBtcLike.tsx"
     ]
   },
   {
     "id": "ethToBtcText44_eth_to_btclike",
     "message": "Thank you for using Swap.Online",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/EthToBtcLike.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/EthToBtcLike.tsx"
     ]
   },
   {
     "id": "ethToBtcText48_eth_to_btclike",
     "message": "Thank you for using Swap.Online!",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/EthToBtcLike.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/EthToBtcLike.tsx"
     ]
   },
   {
     "id": "BitcoinBuyText17_BtcLike_to_tokens",
     "message": "Confirmation processing",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEthToken.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/BtcLikeToEthToken.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/BtcLikeToEthToken.tsx"
     ]
   },
   {
     "id": "BitcoinBuyText29_BtcLike_to_tokens",
     "message": "Checking balance..",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEthToken.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/BtcLikeToEthToken.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/BtcLikeToEthToken.tsx"
     ]
   },
   {
     "id": "BitcoinBuyText33_BtcLike_to_tokens",
     "message": "Creating {coinName} Script.{br}It can take a few minutes",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEthToken.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/BtcLikeToEthToken.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/BtcLikeToEthToken.tsx"
     ]
   },
   {
     "id": "BitcoinBuyText37_BtcLike_to_tokens",
     "message": "{buyCurrency} Owner received {coinName} Script and Secret Hash. Waiting when he creates {buyCurrency} Contract",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEthToken.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/BtcLikeToEthToken.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/BtcLikeToEthToken.tsx"
     ]
   },
   {
     "id": "BitcoinBuyText41_BtcLike_to_tokens",
     "message": "{buyCurrency} Contract created and charged. Requesting withdrawal from {buyCurrency} Contract.",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEthToken.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/BtcLikeToEthToken.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/BtcLikeToEthToken.tsx"
     ]
   },
   {
     "id": "BitcoinBuyText45_BtcLike_to_tokens",
     "message": "{buyCurrency} tokens was transferred to your wallet. Check the balance.",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEthToken.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/BtcLikeToEthToken.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/BtcLikeToEthToken.tsx"
     ]
   },
   {
     "id": "BitcoinBuyText49_BtcLike_to_tokens",
     "message": "Thank you for using Swap.Online",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEthToken.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/BtcLikeToEthToken.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/BtcLikeToEthToken.tsx"
     ]
   },
   {
     "id": "BitcoinBuyText53_BtcLike_to_tokens",
     "message": "Thank you for using Swap.Online!",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEthToken.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/BtcLikeToEthToken.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/BtcLikeToEthToken.tsx"
     ]
   },
   {
     "id": "BtcToEthToken20_BtcLike_to_tokens",
     "message": "Create a secret key",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEthToken.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/BtcLikeToEthToken.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/BtcLikeToEthToken.tsx"
     ]
   },
   {
     "id": "EthTokensToBtc16_ethtoken_to_BtcLike",
     "message": "Confirmation processing",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/EthTokenToBtcLike.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/EthToBtcLike.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/EthTokenToBtcLike.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/EthTokenToBtcLike.tsx"
     ]
   },
   {
     "id": "EthTokensToBtc20_ethtoken_to_BtcLike",
     "message": "Waiting for {coinName} Owner to create Secret Key, create {coinName} Script and charge it",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/EthTokenToBtcLike.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/EthTokenToBtcLike.tsx"
     ]
   },
   {
     "id": "EthTokensToBtc24_ethtoken_to_BtcLike",
     "message": "The {coinName} Script was created and charged. Check the information below",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/EthTokenToBtcLike.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/EthToBtcLike.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/EthTokenToBtcLike.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/EthTokenToBtcLike.tsx"
     ]
   },
   {
     "id": "EthTokensToBtc28_ethtoken_to_BtcLike",
     "message": "Checking balance..",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/EthTokenToBtcLike.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/EthToBtcLike.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/EthTokenToBtcLike.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/EthTokenToBtcLike.tsx"
     ]
   },
   {
     "id": "EthTokensToBtc32_ethtoken_to_BtcLike",
     "message": "Creating Ethereum Contract. {br} It can take a few minutes",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/EthTokenToBtcLike.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/EthToBtcLike.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/EthTokenToBtcLike.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/EthTokenToBtcLike.tsx"
     ]
   },
   {
     "id": "EthTokensToBtc36_ethtoken_to_BtcLike",
     "message": "Waiting for {coinName} Owner to add a Secret Key to ETH Contact",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/EthTokenToBtcLike.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/EthTokenToBtcLike.tsx"
     ]
   },
   {
     "id": "EthTokensToBtc40_ethtoken_to_BtcLike",
     "message": "The funds from ETH contract was successfully transferred to {coinName} owner",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/EthTokenToBtcLike.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/EthTokenToBtcLike.tsx"
     ]
   },
   {
     "id": "EthTokensToBtc44_ethtoken_to_BtcLike",
     "message": "Thank you for using Swap.Online",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/EthTokenToBtcLike.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/EthToBtcLike.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/EthTokenToBtcLike.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/EthTokenToBtcLike.tsx"
     ]
   },
   {
     "id": "EthTokensToBtc48_ethtoken_to_BtcLike",
     "message": "Thank you for using Swap.Online!",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/EthTokenToBtcLike.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/EthTokenToBtcLike.tsx"
     ]
   },
   {
@@ -5865,6 +5795,105 @@
     "message": "Нет вариантов",
     "files": [
       "src/front/shared/components/ui/DropDown/index.tsx"
+    ]
+  },
+  {
+    "id": "menu.marketmaker",
+    "message": "Marketmaker",
+    "files": [
+      "src/front/shared/components/Header/config.tsx"
+    ]
+  },
+  {
+    "id": "FormattedMessageIdApprove",
+    "message": "Одобрить {token}",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "EthTokensToBtc20_ethtoken_to_BtcLikeTaker",
+    "message": "Waiting for {coinName} Owner to create {coinName} Script and charge it",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/EthToBtcLike.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/EthTokenToBtcLike.tsx"
+    ]
+  },
+  {
+    "id": "FeeRadiosSpeedTypeCustom",
+    "message": "Свое значение",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
+    ]
+  },
+  {
+    "id": "FeeRadiosSpeedTypeDescriptionCustom",
+    "message": "Установить свой размер комиссии.",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
+    ]
+  },
+  {
+    "id": "FeeRadiosSpeedTypeDescriptionFast",
+    "message": "Скользящее среднее значение комиссии за транзакции, которые должны быть подтверждены в течение 1-2 блоков.",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
+    ]
+  },
+  {
+    "id": "FeeRadiosSpeedTypeDescriptionMedium",
+    "message": "Скользящее среднее значение комиссии за транзакции, которые должны быть подтверждены в пределах от 3 до 6 блоков.",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
+    ]
+  },
+  {
+    "id": "FeeRadiosSpeedTypeDescriptionSlow",
+    "message": "Скользящее среднее значение комиссии за транзакции, которые должны быть подтверждены в 7 или более блоках.",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
+    ]
+  },
+  {
+    "id": "FeeRadiosSpeedTypeFast",
+    "message": "Быстро",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
+    ]
+  },
+  {
+    "id": "FeeRadiosSpeedTypeMedium",
+    "message": "Средне",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
+    ]
+  },
+  {
+    "id": "FeeRadiosSpeedTypeSlow",
+    "message": "Медленно",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
+    ]
+  },
+  {
+    "id": "FeeRadiosSpeedTypeTimeFast",
+    "message": "~5-20 минут",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
+    ]
+  },
+  {
+    "id": "FeeRadiosSpeedTypeTimeMedium",
+    "message": "~25-60 минут",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
+    ]
+  },
+  {
+    "id": "FeeRadiosSpeedTypeTimeSlow",
+    "message": "60 минут или больше",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
     ]
   }
 ]

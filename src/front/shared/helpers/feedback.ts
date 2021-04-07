@@ -75,6 +75,7 @@ const events = {
     selectedAddress: 'selectedAddress',
     redirectedCreateWallet: 'redirectedCreateWallet',
     requestedSwap: 'requestedSwap',
+    failed: 'failed',
   },
   createOffer: {
     started: 'started',
