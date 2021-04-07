@@ -249,6 +249,7 @@ console.log('>>>> Market token', marketToken)
       tokenWallet,
       tokenBalance,
       ethBalance,
+      marketToken,
     } = this.state
 
     const sortedSwaps = swapsIds.sort((aId, bId) => {
@@ -263,8 +264,12 @@ console.log('>>>> Market token', marketToken)
             <Toggle checked={true} onChange={this.handleToggleMarketmaker} />
           </span></p>
           <p>Спред: 0.5% (по умолчанию стоит 0.5%)</p>
-          <p>Баланс BTC: 2 BTC для попленения перведите на `адрес битка`</p>
-          <p>Баланс WBTC: 2 WBTC</p>
+          {btcWallet ? (
+            <p>Баланс BTC: {btcBalance} BTC для попленения перведите на `{btcWallet.address}`</p>
+          ) : (
+            <p>Баланс BTC: {btcBalance} BTC</p>
+          )}
+          <p>Баланс {marketToken.toUpperCase()}: {tokenBalance} {marketToken.toUpperCase()}</p>
         </section>
 
         {/* Swaps history + Active swaps */}
