@@ -48,7 +48,7 @@ describe('BTC Send Tests', () => {
     };
 
     const txHash = await actions.btc.send(options);
-    await timeOut(5 * 1000)
+    await timeOut(10 * 1000)
     const {
       amount,
       senderAddress,
@@ -62,7 +62,7 @@ describe('BTC Send Tests', () => {
     } = await actions.btc.fetchTxInfo(txHash, 8000);
     expect(amount).toBe(options.amount);
     expect(minerFee).toBe(options.feeValue.toNumber());
-  }, 20000)
+  }, 25000)
 
   it('send and check transaction via regular wallet with 1000 satoshis with adminFee', async () => {
     const serviceFee = {
@@ -87,7 +87,7 @@ describe('BTC Send Tests', () => {
     await actions.btc.login("cR2QGm1SLqmvgYBUtroVmVaBRKSSsbAAeqQ54YTA4xXELCcyoWtL");
 
     const txHash = await actions.btc.send(options);
-    await timeOut(5 * 1000)
+    await timeOut(10 * 1000)
     const {
       amount,
       senderAddress,
@@ -103,7 +103,7 @@ describe('BTC Send Tests', () => {
     expect(amount).toBe(options.amount);
     expect(minerFee).toBe(options.feeValue.toNumber());
     expect(adminFee).toBe(feeFromAmount.toNumber());
-  }, 20000)
+  }, 25000)
 
   it('send and check transaction via pin-protected wallet with 1000 satoshis', async () => {
     await actions.btcmultisig.login_PIN(
@@ -123,7 +123,7 @@ describe('BTC Send Tests', () => {
     };
 
     const txHash = await actions.btcmultisig.sendPinProtected(options);
-    await timeOut(5 * 1000)
+    await timeOut(10 * 1000)
     const {
       amount,
       senderAddress,
@@ -137,7 +137,7 @@ describe('BTC Send Tests', () => {
     } = await actions.btcmultisig.fetchTxInfo(txHash.txId, 8000);
     expect(amount).toBe(options.amount);
     expect(minerFee).toBe(options.feeValue.toNumber());
-  }, 20000)
+  }, 25000)
 
   it('send and check transaction via pin-protected wallet with 1000 satoshis with adminFee', async () => {
     const serviceFee = {
@@ -168,7 +168,7 @@ describe('BTC Send Tests', () => {
       ]);
 
     const txHash = await actions.btcmultisig.sendPinProtected(options);
-    await timeOut(5 * 1000)
+    await timeOut(10 * 1000)
     const {
       amount,
       senderAddress,
@@ -183,5 +183,5 @@ describe('BTC Send Tests', () => {
     expect(amount).toBe(options.amount);
     expect(minerFee).toBe(options.feeValue.toNumber());
     expect(adminFee).toBe(feeFromAmount.toNumber());
-  }, 20000)
+  }, 25000)
 })
