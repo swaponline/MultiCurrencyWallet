@@ -32,3 +32,5 @@ src/bot/.env
 .storage
 .env
 swaponline.github.io
+tradeconfig.mainnet.json
+tradeconfig.testnet.json

@@ -125,9 +125,10 @@ const loadJson = (network: Networks = Networks.testnet): boolean => {
       return false
     }
   } else {
-    console.warn(`Trade config 'tradeconfig.${network}.json' not found. Use defaults`)
-    _hasTradeConfig = false
-    return false
+    console.log(
+      colorString(`Trade config 'tradeconfig.${network}.json' not found. Use defaults`, COLORS.RED)
+    )
+    process.exit(0)
   }
 }
 
