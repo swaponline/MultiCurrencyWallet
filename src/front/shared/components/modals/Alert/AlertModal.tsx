@@ -115,9 +115,7 @@ class AlertModal extends React.Component<AlertModalProps, null> {
           [styles.modal_dashboardView]: dashboardModalsAllowed
         })}>
           <div styleName="header">
-            {/*
-            //@ts-ignore */}
-            <WidthContainer styleName="headerContent">
+            <WidthContainer>
               <div styleName="title">{labels.title}</div>
             </WidthContainer>
           </div>

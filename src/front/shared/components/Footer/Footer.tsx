@@ -35,7 +35,6 @@ const Footer = (props) => {
       data-version-url={version.link}
     >
       {!isFooterDisabled && (
-        //@ts-ignore
         <WidthContainer styleName="container">
           <SwitchLang {...props} />
           {!config.isWidget && <SocialMenu />}

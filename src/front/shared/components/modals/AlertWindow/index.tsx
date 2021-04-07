@@ -89,9 +89,7 @@ class AlertWindow extends Component<any, any> {
       <div styleName={`modal-overlay ${isDark ? '--dark' : ''}`}>
         <div styleName="modal">
           <div styleName="header">
-            {/*
-            //@ts-ignore */}
-            <WidthContainer styleName="headerContent">
+            <WidthContainer>
               <div styleName="title">{labels.title}</div>
               {/*
               //@ts-ignore */}

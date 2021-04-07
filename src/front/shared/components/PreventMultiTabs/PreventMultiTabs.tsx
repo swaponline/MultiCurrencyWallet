@@ -40,8 +40,6 @@ export default class PreventMultiTabs extends Component<any, any> {
 
   render() {
     return (
-      /*
-      //@ts-ignore */
       <WidthContainer>
         <h1>
           <FormattedMessage

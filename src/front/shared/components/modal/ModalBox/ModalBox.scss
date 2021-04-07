@@ -19,9 +19,6 @@
     border-bottom: 1px solid #ddb8da;
     background: #242425;
   }
-  .headerContent {
-    color: #fff;
-  }
 } 
 
 .header {
@@ -33,18 +30,6 @@
   right: 0px;
   background: #fff;
   z-index: 1002;
-}
-
-.headerContent {
-  height: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: relative;
-  @include ff-bold;
-  color: #1f2d48;
-  font-size: 24px;
-  line-height: 33px;
 }
 
 .title {

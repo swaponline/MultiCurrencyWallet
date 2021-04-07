@@ -439,17 +439,14 @@ class App extends React.Component<RouteComponentProps<any>, any> {
 
     const isSeoDisabled = isWidget || isWidgetBuild || isCalledFromIframe
 
-    return <HashRouter>
-      <div styleName="compressor">
-        {!isSeoDisabled &&
-          <Seo location={history.location} />
-        }
+    return (
+      <HashRouter>
+        <div styleName="compressor">
+          {!isSeoDisabled && <Seo location={history.location} />}
 
-        {!splashSreenIsOpen ? (
+          {!splashSreenIsOpen ? (
             <>
-              {/*
-              //@ts-ignore */}
-              <WidthContainer styleName="headerAndMain">
+              <WidthContainer>
                 <Header />
                 <main>{children}</main>
               </WidthContainer>
@@ -459,15 +456,13 @@ class App extends React.Component<RouteComponentProps<any>, any> {
             </>
           ) : (
             <SplashScreen />
-          )
-        }
+          )}
 
-        {!dashboardModalsAllowed &&
-          <ModalConductor history={history}
-        />}
-        <NotificationConductor history={history} />
-      </div>
-    </HashRouter>;
+          {!dashboardModalsAllowed && <ModalConductor history={history}/>}
+          <NotificationConductor history={history} />
+        </div>
+      </HashRouter>
+    )
   }
 }
 

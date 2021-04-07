@@ -132,9 +132,7 @@ class ConnectWalletModal extends React.Component<any, any> {
           })}
         >
           <div styleName="header">
-            {/*
-            //@ts-ignore */}
-            <WidthContainer styleName="headerContent">
+            <WidthContainer>
               <div styleName="title">{labels.title}</div>
             </WidthContainer>
           </div>

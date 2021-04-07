@@ -147,8 +147,6 @@ export default class Modal extends Component<ModalProps, null> {
           {
             Boolean(title || showCloseButton) && (
               <div styleName="header">
-                {/*
-                //@ts-ignore */}
                 <WidthContainer styleName="headerContent">
                   <div styleName={titleStyleName} role="title">{title}</div>
                   {

@@ -2,14 +2,6 @@
   padding: 16px 0;
 }
 
-.headerContent {
-  height: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: relative;
-}
-
 .title {
   width: 100%;
   padding: 0 64px;
@@ -151,8 +143,7 @@
     z-index: 0;
     opacity: 1;
     max-height: 100vh;
-    transition: opacity 0.3s 0.2s,
-                max-height 0.7s ease;
+    transition: opacity 0.3s 0.2s, max-height 0.7s ease;
   }
 }
 

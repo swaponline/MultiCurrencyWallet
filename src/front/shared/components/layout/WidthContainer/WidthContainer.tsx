@@ -4,11 +4,11 @@ import styles from './WidthContainer.scss'
 
 type WidthContainerProps = {
   children: JSX.Element[] | JSX.Element
-  className: string
+  className?: string
 }
 
 const WidthContainer = (props: WidthContainerProps) => {
-  const { children, className } = props
+  const { children, className = '' } = props
 
   return (
     <div styleName="widthContainer" className={className}>
