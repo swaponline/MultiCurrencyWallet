@@ -1,0 +1,212 @@
+{
+  "COINS": {
+    "PAY": {
+      "ERC20": {
+        "address": "0xeb51b16eb987c4c1eb06ae57dbe11bd18a048929",
+        "decimals": "18"
+      },
+      "price": {
+        "source": "FIXED",
+        "price": 10
+      },
+      "minAmount": 0.005
+    },
+    "WEENUS": {
+      "ERC20": {
+        "address": "0x101848d5c5bbca18e6b4431eedf6b95e9adf82fa",
+        "decimals": "18"
+      },
+      "price": {
+        "source": "COIN",
+        "coin": "BTC",
+          "count": 1
+        },
+      "minAmount": 0.005
+    },
+    "BTC": {
+      "price": {
+        "source": "API",
+        "api": "SWAPONLINE",
+        "minSafePrice": 16000
+      },
+      "minAmount": 0.0005
+    },
+    "USDT": {
+      "price": {
+        "source": "API",
+        "api": "SWAPONLINE"
+      },
+      "minAmount": 0.0005
+    },
+    "ETH": {
+      "price": {
+        "source": "FIXED",
+        "price": 600
+      },
+      "minAmount": 0.0005
+    },
+    "ETH_": {
+      "price": {
+        "source": "API",
+        "api": "SWAPONLINE",
+        "minSafePrice": 500
+      },
+      "minAmount": 0.0005
+    },
+    "NEXT": {
+      "price": {
+        "source": "COIN",
+        "coin": "ETH",
+        "count": 0.25
+      },
+      "minAmount": 0.0005
+    }
+  },
+  "PAIRS": {
+    "ETH-BTC": {
+      "active": true,
+      "buy": true,
+      "sell": true,
+      "type":  "coin",
+      "orders": [
+        {
+          "amount": 0.0005,
+          "spreadBuy": 2,
+          "spreadSell": 2
+        },
+        {
+          "amount": 0.005,
+          "spreadBuy": 4,
+          "spreadSell": 4
+        },
+        {
+          "amount": 0.05,
+          "spreadBuy": 8,
+          "spreadSell": 8
+        },
+        {
+          "amount": 0.5,
+          "spreadBuy": 16,
+          "spreadSell": 16
+        }
+      ]
+    },
+    "WEENUS-BTC": {
+      "active": true,
+      "buy": true,
+      "sell": true,
+      "type":  "coin",
+      "orders": [
+        {
+          "amount": 0.001,
+          "spreadBuy": 0,
+          "spreadSell": 0
+        },
+        {
+          "amount": 0.005,
+          "spreadBuy": 0,
+          "spreadSell": 0
+        },
+        {
+          "amount": 0.05,
+          "spreadBuy": 0,
+          "spreadSell": 0
+        },
+        {
+          "amount": 0.5,
+          "spreadBuy": 0,
+          "spreadSell": 0
+        }
+      ]
+    },
+    "ETH-NEXT": {
+      "active": true,
+      "buy": true,
+      "sell": true,
+      "type": "coin",
+      "orders": [
+        {
+          "amount": 0.0005,
+          "spreadBuy": 2,
+          "spreadSell": 2
+        },
+        {
+          "amount": 0.005,
+          "spreadBuy": 4,
+          "spreadSell": 4
+        },
+        {
+          "amount": 0.05,
+          "spreadBuy": 8,
+          "spreadSell": 8
+        },
+        {
+          "amount": 0.5,
+          "spreadBuy": 16,
+          "spreadSell": 16
+        }
+      ]
+    },
+    "USDT-NEXT": {
+      "active": true,
+      "buy": true,
+      "sell": true,
+      "type": "coin",
+      "orders": [
+        {
+          "amount": 0.0005,
+          "spreadBuy": 2,
+          "spreadSell": 2
+        },
+        {
+          "amount": 0.005,
+          "spreadBuy": 4,
+          "spreadSell": 4
+        },
+        {
+          "amount": 0.05,
+          "spreadBuy": 8,
+          "spreadSell": 8
+        },
+        {
+          "amount": 0.5,
+          "spreadBuy": 16,
+          "spreadSell": 16
+        }
+      ]
+    },
+    "USDT-BTC": {
+      "active": true,
+      "buy": true,
+      "sell": true,
+      "type": "coin",
+      "orders": [
+        {
+          "amount": 0.001,
+          "spreadBuy": 4,
+          "spreadSell": 4
+        },
+        {
+          "amount": 0.005,
+          "spreadBuy": 4,
+          "spreadSell": 4
+        },
+        {
+          "amount": 0.01,
+          "spreadBuy": 5,
+          "spreadSell": 5
+        },
+        {
+          "amount": 0.05,
+          "spreadBuy": 5,
+          "spreadSell": 5
+        },
+        {
+          "amount": 0.25,
+          "spreadBuy": 2,
+          "spreadSell": 2
+        }
+      ]
+    }
+  }
+}
