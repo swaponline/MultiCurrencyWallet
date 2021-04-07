@@ -4,17 +4,27 @@
   justify-content: space-between;
 }
 
+@mixin buttonSetup {
+  padding: 0.8em 2.6em;
+  font-size: 1.1em;
+  text-align: center;
+  border-radius: 0.4em;
+  border: 1px solid $color-brand;
+  transition: 0.2s;
+}
+
 .splashScreen {
   width: 100vw;
   height: 100vh;
-  padding: 4vh 0;
+  padding: 5vh 0;
   @include flexSetup;
   flex-direction: column;
   background-color: $l-background-color;
   color: $color-brand;
 
   .infoWrapper {
-    @include flexSetup;
+    display: flex;
+    align-items: flex-start;
   }
 
   .infoBlock {
@@ -22,32 +32,71 @@
     flex-direction: column;
 
     img {
-      width: 20em;
-      height: 20em;
+      height: 17em;
     }
 
     p {
       max-width: 20em;
-      margin: 0.6em 0;
+      margin: 0.9em 0;
       padding: 0;
       text-align: center;
-      font-size: 1.2em;
+      font-size: 1.3em;
     }
   }
 
   .buttonsWrapper {
-    display: flex;
+    @include flexSetup;
     flex-direction: column;
-    justify-content: space-between;
   }
 
   .topButtons {
     @include flexSetup;
+    margin-bottom: 0.5em;
+
+    .connectIcon {
+      width: 1.4em;
+      height: 1.4em;
+    }
+
+    .button {
+      @include buttonSetup;
+      background-color: $color-brand;
+      color: $d-color;
+
+      &:hover {
+        border-color: $color-brand-hover;
+        background-color: $color-brand-hover;
+      }
+    }
+
+    .button + .button {
+      margin-left: 0.4em;
+    }
   }
 
-  .connectBtnIcon {
-    width: 1.4em;
-    height: 1.4em;
+  .restoreButton {
+    @include buttonSetup;
+    width: 100%;
+    margin-bottom: 0.5em;
+    background-color: transparent;
+    color: $color-brand;
+
+    &:hover {
+      border-color: $color-brand-hover;
+      background-color: $color-brand-hover;
+      color: $d-color;
+    }
+  }
+
+  .skipButton {
+    font-size: 1.1em;
+    text-decoration: underline;
+    color: $color-brand;
+    transition: 0.2s;
+
+    &:hover {
+      color: $color-brand-hover;
+    }
   }
 }
 

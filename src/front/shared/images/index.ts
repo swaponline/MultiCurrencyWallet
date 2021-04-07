@@ -5,9 +5,13 @@ import iconLiquality from './liquality.png'
 import iconMetamask from './metamask.svg'
 import iconTrustWallet from './trust.svg'
 import iconClose from './close.svg'
+import iconWalletPreview from './walletPreview.svg'
+import iconExchangePreview from './exchangePreview.svg'
 
 export const regularIcons = {
   CLOSE: iconClose,
+  WALLET_PREVIEW: iconWalletPreview,
+  EXCHANGE_PREVIEW: iconExchangePreview,
 }
 
 const web3Icons = {

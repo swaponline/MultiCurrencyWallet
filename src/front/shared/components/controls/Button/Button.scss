@@ -68,7 +68,7 @@
 }
 
 .blue {
-  background-color: $primary;
+  background-color: $color-brand;
   color: #fff;
   font-size: 15px;
 }
@@ -125,7 +125,7 @@
 .transparent.blue {
   background: rgba(97, 68, 229, 0.1);
   font-weight: bold;
-  color: $primary;
+  color: $color-brand;
 }
 
 .disabled {

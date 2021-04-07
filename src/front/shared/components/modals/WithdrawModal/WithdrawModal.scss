@@ -126,7 +126,7 @@
     border: none;
   }
   &:focus-within {
-    border: 2px solid $primary;
+    border: 2px solid $color-brand;
   }
 }
 
@@ -219,9 +219,9 @@
     margin-left: 10px;
     a {
       font-size: 13px;
-      color: $primary;
+      color: $color-brand;
       &:hover {
-        color: $primary;
+        color: $color-brand;
       }
     }
     .address {

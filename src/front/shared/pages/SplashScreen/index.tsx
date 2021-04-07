@@ -5,8 +5,7 @@ import styles from './index.scss'
 import { links} from 'helpers'
 import { constants } from 'helpers'
 import { FormattedMessage } from 'react-intl'
-import web3Icons from 'images/'
-import screenIcons from './images'
+import web3Icons, { regularIcons } from 'images'
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
@@ -77,7 +76,7 @@ const SplashScreen = (props) => {
 
       <div styleName="infoWrapper">
         <div styleName="infoBlock">
-          <img src={screenIcons.WALLET} />
+          <img src={regularIcons.WALLET_PREVIEW} />
           <p>
             <FormattedMessage
               id="SplashScreenWalletText"
@@ -87,7 +86,7 @@ const SplashScreen = (props) => {
         </div>
 
         <div styleName="infoBlock">
-          <img src={screenIcons.EXCHANGE} />
+          <img src={regularIcons.EXCHANGE_PREVIEW} />
           <p>
             <FormattedMessage
               id="SplashScreenExchangeText"
@@ -99,15 +98,15 @@ const SplashScreen = (props) => {
 
       <div styleName="buttonsWrapper">
         <div styleName="topButtons">
-          <Link to={links.createWallet} onClick={linkHandler}>
+          <Link styleName="button" to={links.createWallet} onClick={linkHandler}>
             <FormattedMessage
               id="AlertModalcreateWallet"
               defaultMessage="Create Wallet"
             />
           </Link>
 
-          <Link to={links.connectWallet} onClick={linkHandler}>
-            <img styleName="connectBtnIcon" src={web3Icons.METAMASK} />
+          <Link styleName="button" to={links.connectWallet} onClick={linkHandler}>
+            <img styleName="connectIcon" src={web3Icons.METAMASK} />
             {' '}
             <FormattedMessage
               id="ImportKeys_ConnectWallet"
@@ -116,14 +115,14 @@ const SplashScreen = (props) => {
           </Link>
         </div>
 
-        <Link to={links.restoreWallet} onClick={linkHandler}>
+        <Link styleName="restoreButton" to={links.restoreWallet} onClick={linkHandler}>
           <FormattedMessage
             id="ImportKeys_RestoreMnemonic"
             defaultMessage="Restore from 12-word seed"
           />
         </Link>
 
-        <Link to={links.exchange} onClick={linkHandler}>
+        <Link styleName="skipButton" to={links.exchange} onClick={linkHandler}>
           <FormattedMessage id="skip" defaultMessage="Skip" />
         </Link>
       </div>

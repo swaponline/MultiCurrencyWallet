@@ -8,10 +8,6 @@
   --alternate-hover:  #ff1fc5;
 }
 
-// ------------------------------------------
-
-$primary: var(--primary);
-$primary-hover: var(--primary-hover);
 $alternate: var(--alternate);
 $alternate-hover: var(--alternate-hover);
 
@@ -20,9 +16,6 @@ $alternate-hover: var(--alternate-hover);
 
 $l-background-color: #f7f7f7;
 $l-color: #000;
-
-$l-brand-color: var(--primary);
-$l-brand-color-hover: var(--primary-hover);
 
 $l-background-elements: #fff;
 $l-box-shadow: 0px 4px 16px rgba(0,0,0,0.08), 0px 1px 4px rgba(0,0,0,0.08);
@@ -48,6 +41,7 @@ $pale-color: #8882;
 $indicating-color: #808080;
 $notice-color: #8e9aa3;
 $color-brand: #6144e5;
+$color-brand-hover: #7371ff;
 $color-f-brightest: #fff;
 $color-f-error: #e32950;
 $color-good: #4dd3ab;

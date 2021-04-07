@@ -77,9 +77,9 @@
 
     a {
       font-size: 13px;
-      color: $primary;
+      color: $color-brand;
       &:hover {
-        color: $primary;
+        color: $color-brand;
       }
 
       @media screen and (max-width: 480px) {

@@ -1,19 +1,19 @@
 .txWaitConfirm {
   padding-right: 10px;
-  color: $primary;
+  color: $color-brand;
   cursor: pointer;
 }
 
 .nameRow {
   display: flex;
   font-size: 13px;
-  color: $primary;
+  color: $color-brand;
 
   a.linkToHistory {
     cursor: pointer;
     position: relative;
     font-size: 13px;
-    color: $primary;
+    color: $color-brand;
 
     &::before {
       content: "";
@@ -21,7 +21,7 @@
       left: 0;
       bottom: -.1em;
       height: .1em;
-      background-color: $primary;
+      background-color: $color-brand;
       transition: .2s;
     }
 
@@ -186,7 +186,7 @@ tr button[disabled]:hover {
     line-height: 13px;
     text-align: right;
     font-weight: bold;
-    color: $primary;
+    color: $color-brand;
     margin-top: 2px;
   }
 
@@ -223,7 +223,7 @@ tr button[disabled]:hover {
   }
 
   p {
-    color: $primary;
+    color: $color-brand;
     font-size: 13px;
     margin-bottom: 1px;
   }
