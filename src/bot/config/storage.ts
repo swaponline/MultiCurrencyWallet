@@ -125,10 +125,12 @@ const loadJson = (network: Networks = Networks.testnet): boolean => {
       return false
     }
   } else {
-    console.log(
-      colorString(`Trade config 'tradeconfig.${network}.json' not found. Use defaults`, COLORS.RED)
-    )
-    process.exit(0)
+    if (process.env.TEST_STARTUP !== `true`) {
+      console.log(
+        colorString(`Trade config 'tradeconfig.${network}.json' not found. Use defaults`, COLORS.RED)
+      )
+      process.exit(0)
+    }
   }
 }
 
