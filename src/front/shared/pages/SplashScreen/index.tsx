@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import CSSModules from 'react-css-modules'
 import styles from './index.scss'
-import links from 'helpers/links'
+import { links} from 'helpers'
 import { constants } from 'helpers'
 import { FormattedMessage } from 'react-intl'
 import web3Icons from 'images/'
@@ -10,20 +10,26 @@ import screenIcons from './images'
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
-const SplashScreen = () => {
-  const handlerSkipBtn = () => {
+const SplashScreen = (props) => {
+  const { closeScreen } = props
+
+  const getYearSeconds = () => {
     const date = new Date()
     const daysInThisMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate()
     // 60 second * 60 minutes * 24 hours * daysInThisMonth * 12 months
-    const SEC_IN_YEAR = 60 * 60 * 24 * daysInThisMonth * 12
+    return 60 * 60 * 24 * daysInThisMonth * 12
+  }
 
+  const linkHandler = () => {
     setCookie({
       name: 'swapDisalbeStarter',
       value: 'true',
       options: {
-        expires: SEC_IN_YEAR * 5,
+        expires: getYearSeconds() * 5,
       },
     })
+
+    closeScreen()
   }
 
   const setCookie = (params) => {
@@ -93,15 +99,16 @@ const SplashScreen = () => {
 
       <div styleName="buttonsWrapper">
         <div styleName="topButtons">
-          <Link to={links.createWallet}>
+          <Link to={links.createWallet} onClick={linkHandler}>
             <FormattedMessage
               id="AlertModalcreateWallet"
               defaultMessage="Create Wallet"
             />
           </Link>
 
-          <Link to={links.connectWallet}>
-            <img styleName="connectBtnIcon" src={web3Icons.METAMASK} />{' '}
+          <Link to={links.connectWallet} onClick={linkHandler}>
+            <img styleName="connectBtnIcon" src={web3Icons.METAMASK} />
+            {' '}
             <FormattedMessage
               id="ImportKeys_ConnectWallet"
               defaultMessage="Connect Wallet"
@@ -109,14 +116,14 @@ const SplashScreen = () => {
           </Link>
         </div>
 
-        <Link to={links.restoreWallet}>
+        <Link to={links.restoreWallet} onClick={linkHandler}>
           <FormattedMessage
             id="ImportKeys_RestoreMnemonic"
             defaultMessage="Restore from 12-word seed"
           />
         </Link>
 
-        <Link to={links.exchange} onClick={handlerSkipBtn}>
+        <Link to={links.exchange} onClick={linkHandler}>
           <FormattedMessage id="skip" defaultMessage="Skip" />
         </Link>
       </div>

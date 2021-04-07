@@ -103,7 +103,15 @@ class App extends React.Component<RouteComponentProps<any>, any> {
       this.setState(() => ({
         splashSreenIsOpen: true,
       }))
+    } else {
+      this.closeSplashScreen()
     }
+  }
+
+  closeSplashScreen = () => {
+    this.setState(() => ({
+      splashSreenIsOpen: false,
+    }))
   }
 
   getCookie = (cookieName) => {
@@ -455,7 +463,7 @@ class App extends React.Component<RouteComponentProps<any>, any> {
               <RequestLoader />
             </>
           ) : (
-            <SplashScreen />
+            <SplashScreen closeScreen={this.closeSplashScreen} />
           )}
 
           {!dashboardModalsAllowed && <ModalConductor history={history}/>}
