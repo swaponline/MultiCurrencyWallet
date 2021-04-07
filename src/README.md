@@ -543,8 +543,8 @@
 │   │   │   │   │       └── flip.svg
 │   │   │   │   ├── index.ts
 │   │   │   │   ├── RemoveButton
-│   │   │   │   │   ├── RemoveButton.scss
-│   │   │   │   │   └── RemoveButton.tsx
+│   │   │   │   │   ├── index.scss
+│   │   │   │   │   └── index.tsx
 │   │   │   │   ├── ShareButton
 │   │   │   │   │   ├── images
 │   │   │   │   │   │   └── icon.svg
@@ -725,9 +725,6 @@
 │   │   │   │   ├── AlertWindow
 │   │   │   │   │   ├── index.tsx
 │   │   │   │   │   └── styles.scss
-│   │   │   │   ├── Approve
-│   │   │   │   │   ├── Approve.scss
-│   │   │   │   │   └── Approve.tsx
 │   │   │   │   ├── BtcMultisignConfirmTx
 │   │   │   │   │   ├── BtcMultisignConfirmTx.scss
 │   │   │   │   │   └── BtcMultisignConfirmTx.tsx
@@ -1194,9 +1191,6 @@
 │   │   │   │   ├── Promo
 │   │   │   │   │   ├── Promo.scss
 │   │   │   │   │   └── Promo.tsx
-│   │   │   │   ├── PromoText
-│   │   │   │   │   ├── PromoText.scss
-│   │   │   │   │   └── PromoText.tsx
 │   │   │   │   ├── Quote
 │   │   │   │   │   ├── index.tsx
 │   │   │   │   │   └── styles.scss

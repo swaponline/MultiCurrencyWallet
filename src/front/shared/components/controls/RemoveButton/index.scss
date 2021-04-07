@@ -2,10 +2,10 @@
   position: relative;
   width: 25px;
   height: 25px;
-  background: $alternate;
+  background: transparent;
   cursor: pointer;
   @include inline-block;
-  opacity: 0.5;
+  opacity: 0.6;
   border-radius: 50%;
   border: none;
   text-align: center;
@@ -24,7 +24,7 @@
     width: .1rem;
     height: 65%;
     border-radius: 4px;
-    background-color: $color-f-brightest;
+    background-color: $l-color;
   }
 
   &::before {
@@ -34,8 +34,20 @@
   &::after {
     transform: translate(-50%, -50%) rotate(45deg);
   }
-}
 
-.icon {
-  height: 16px;
+  &.dark {
+    &::before,
+    &::after {
+      background-color: $d-color;
+    }
+  }
+
+  &.brand {
+    background: $color-brand;
+
+    &::before,
+    &::after {
+      background-color: $color-f-brightest;
+    }
+  }
 }

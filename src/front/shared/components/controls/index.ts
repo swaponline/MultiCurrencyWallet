@@ -7,7 +7,7 @@ import ShareLink from './ShareLink/ShareLink'
 /* Just button */
 import Switching from './Switching/Switching'
 import Flip from './Flip/Flip'
-import RemoveButton from './RemoveButton/RemoveButton'
+import RemoveButton from './RemoveButton'
 
 import WithdrawButton from './WithdrawButton/WithdrawButton'
 
