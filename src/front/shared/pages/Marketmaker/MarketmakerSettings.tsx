@@ -105,19 +105,17 @@ console.log('>>>> Market token', marketToken)
       isBalanceFetchin: true,
     }, () => {
       const btcWallet = actions.core.getWallet({ currency: `btc` })
-      console.log('>>>> btc', btcWallet)
       const ethWallet = actions.core.getWallet({
         currency: `eth`,
         connected: true,
         addressType: AddressType.Metamask
       })
-      console.log('>>> eth', ethWallet)
       const tokenWallet = actions.core.getWallet({
         currency: marketToken,
         connected: true,
         addressType: AddressType.Metamask
       })
-      console.log('>>> token', tokenWallet)
+
       this.setState({
         btcWallet,
         ethWallet,
@@ -126,9 +124,7 @@ console.log('>>>> Market token', marketToken)
         const btcBalance = await actions.core.fetchWalletBalance(btcWallet)
         const ethBalance = await actions.core.fetchWalletBalance(ethWallet)
         const tokenBalance = await actions.core.fetchWalletBalance(tokenWallet)
-        console.log('>>> btc balance', btcBalance)
-        console.log('>>> eth balance', ethBalance)
-        console.log('>>> token balance', tokenBalance)
+
         // Запрос баланса асинхронный. За это время пользователь мог уже перейти на другую страницу
         // Обновляем стейт только если мы находимся в этом компоненте
         if (this._mounted) {
@@ -162,6 +158,8 @@ console.log('>>>> Market token', marketToken)
     if (prevMarketToken.toLowerCase() !== marketToken.toLowerCase()) {
       this.setState({
         marketToken,
+        tokenBalance: 0,
+        tokenWallet: null,
       }, () => {
         this.fetchWalletsWithBalances()
       })
