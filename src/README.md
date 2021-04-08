@@ -412,7 +412,6 @@
 │   │       │   │   ├── _colors.scss
 │   │       │   │   ├── index.scss
 │   │       │   │   ├── _media.scss
-│   │       │   │   └── _sizes.scss
 │   │       │   └── widget.scss
 │   │       └── fonts
 │   │           ├── index.scss

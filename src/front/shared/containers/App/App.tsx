@@ -452,7 +452,7 @@ class App extends React.Component<RouteComponentProps<any>, any> {
         <div styleName="compressor">
           {!isSeoDisabled && <Seo location={history.location} />}
 
-          {!splashSreenIsOpen ? (
+          {false ? ( // !splashSreenIsOpen
             <>
               <WidthContainer>
                 <Header />

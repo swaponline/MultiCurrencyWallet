@@ -24,7 +24,7 @@ const SplashScreen = (props) => {
       name: 'swapDisalbeStarter',
       value: 'true',
       options: {
-        expires: getYearSeconds() * 5,
+        expires: getYearSeconds(),
       },
     })
 
@@ -32,32 +32,28 @@ const SplashScreen = (props) => {
   }
 
   const setCookie = (params) => {
-    let { name, value, options = {} } = params
-
+    const { name, value, options = {} } = params
+    const encodeValue = encodeURIComponent(value)
     let expires = options.expires
 
-    if (typeof expires == 'number' && expires) {
+    if (typeof expires === 'number' && expires) {
       let date = new Date()
 
       date.setTime(date.getTime() + expires * 1000)
-      expires = options.expires = date;
+      expires = options.expires = date
     }
 
     if (expires && expires.toUTCString) {
       options.expires = expires.toUTCString()
     }
 
-    value = encodeURIComponent(value)
-
-    let updatedCookie = name + '=' + value
+    let updatedCookie = name + '=' + encodeValue
 
     for (let propName in options) {
       updatedCookie += '; ' + propName
 
-      const propValue = options[propName]
-
-      if (propValue !== true) {
-        updatedCookie += '=' + propValue
+      if (options[propName] !== true) {
+        updatedCookie += '=' + options[propName]
       }
     }
 
