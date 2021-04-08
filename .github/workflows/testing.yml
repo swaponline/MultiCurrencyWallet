@@ -1,4 +1,4 @@
-name: Deploy to swaponline.github.io
+name: Tests
 
 on:
   # Trigger the workflow on push or pull request,
@@ -25,10 +25,7 @@ jobs:
     - name: npm install, build and deploy 
       run: |
         npm i
-        git config --global user.email "bot@swaponline.io"
-        git config --global user.name "buildbot"
-        sh scripts/deploy $super_secret
+        npm run test
       env:
         CI: true
         super_secret: ${{ secrets.buildbot }}
-
