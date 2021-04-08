@@ -12,6 +12,8 @@ import redirectTo from 'helpers/redirectTo'
 
 @cssModules(styles, { allowMultiple: true })
 export default class MarketmakerPromo extends React.Component<{}, {}> {
+  step3and4enabled: boolean = false
+
   constructor(props) {
     super(props)
   }
@@ -76,31 +78,34 @@ export default class MarketmakerPromo extends React.Component<{}, {}> {
                 Читать инструкцию
               </Button>
             </div>
-            
-            <div styleName="mode">
-              <h3 styleName="mode-title">
-                <span styleName="number">③</span>
-                &nbsp;&nbsp;
-                <span>Создайте uniswap-пул SWAP/ETH</span>
-              </h3>
-              <p>Подходит для продвинутых пользователей.</p>
-              <p>Зарабатывайте когда другие продают или покупают SWAP токены.</p>
-              <Button styleName="mode-button" blue onClick={this.onSelectPool}>
-                Создать пул
-              </Button>
-            </div>
-            
-            <div styleName="mode">
-              <h3 styleName="mode-title">
-                <span styleName="number">④</span>
-                &nbsp;&nbsp;
-                <span>Фарминг</span>
-              </h3>
-              <p>Получайте дополнительную награду в SWAP токенах, заморозив LP токены</p>
-              <Button styleName="mode-button" blue onClick={this.onSelectFarm}>
-                Начать фарминг
-              </Button>
-            </div>
+            {this.step3and4enabled && (
+              <>
+                <div styleName="mode">
+                  <h3 styleName="mode-title">
+                    <span styleName="number">③</span>
+                    &nbsp;&nbsp;
+                    <span>Создайте uniswap-пул SWAP/ETH</span>
+                  </h3>
+                  <p>Подходит для продвинутых пользователей.</p>
+                  <p>Зарабатывайте когда другие продают или покупают SWAP токены.</p>
+                  <Button styleName="mode-button" blue onClick={this.onSelectPool}>
+                    Создать пул
+                  </Button>
+                </div>
+                
+                <div styleName="mode">
+                  <h3 styleName="mode-title">
+                    <span styleName="number">④</span>
+                    &nbsp;&nbsp;
+                    <span>Фарминг</span>
+                  </h3>
+                  <p>Получайте дополнительную награду в SWAP токенах, заморозив LP токены</p>
+                  <Button styleName="mode-button" blue onClick={this.onSelectFarm}>
+                    Начать фарминг
+                  </Button>
+                </div>
+              </>
+            )}
             
           </div>
         </section>

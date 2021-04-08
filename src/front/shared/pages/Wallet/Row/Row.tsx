@@ -439,6 +439,10 @@ class Row extends Component<RowProps, RowState> {
     actions.modals.open(constants.modals.SaveMnemonicModal)
   }
 
+  connectMetamask = () => {
+    metamask.handleConnectMetamask({})
+  }
+
   render() {
     const {
       isBalanceFetching,
@@ -786,7 +790,7 @@ class Row extends Component<RowProps, RowState> {
             <div styleName="assetsTableInfo">
               <div styleName="nameRow">
                 <a onClick={metamaskDisconnected
-                    ? metamask.handleConnectMetamask
+                    ? this.connectMetamask.bind(this)
                     : mnemonicSaved || metamaskIsConnected
                       ? this.goToCurrencyHistory
                       : () => null

@@ -24,6 +24,7 @@ import Input from 'components/forms/Input/Input'
 import { AddressType } from 'domain/address'
 
 import metamask from 'helpers/metamask'
+import { Button } from 'components/controls'
 
 
 
@@ -58,6 +59,7 @@ console.log('>>>> Market token', marketToken)
       tokenBalance: 0,
       ethBalance: 0,
       isBalanceFetching: false,
+      isMarketEnabled: false,
     }
   }
 
@@ -239,7 +241,30 @@ console.log('>>>> Market token', marketToken)
     SwapApp.shared().off('swap enter step', this._handleSwapEnterStep)
   }
 
-  handleToggleMarketmaker() {}
+  handleToggleMarketmaker() {
+    const { isMarketEnabled } = this.state
+
+    this.setState({
+      isMarketEnabled: !isMarketEnabled,
+    })
+  }
+
+  processDisconnectWallet() {
+    metamask.handleDisconnectWallet(() => {
+      this.fetchWalletsWithBalances()
+    })
+  }
+
+  processConnectWallet() {
+    metamask.handleConnectMetamask({
+      dontRedirect: true,
+      cbFunction: (isConnected) => {
+        if (isConnected) {
+          this.fetchWalletsWithBalances()
+        }
+      },
+    })
+  }
 
   render() {
     const {
@@ -252,6 +277,7 @@ console.log('>>>> Market token', marketToken)
       ethBalance,
       marketToken,
       isBalanceFetching,
+      isMarketEnabled,
     } = this.state
 
     const sortedSwaps = swapsIds.sort((aId, bId) => {
@@ -265,7 +291,7 @@ console.log('>>>> Market token', marketToken)
             <h2 styleName="section-title">Настройки маркетмейкинга</h2>
 
             <p>Маркетмейкинг BTC/WBTC : <span>
-              <Toggle checked={true} onChange={this.handleToggleMarketmaker} />
+              <Toggle checked={isMarketEnabled} onChange={this.handleToggleMarketmaker.bind(this)} />
             </span></p>
             <p>Спред: 0.5% (по умолчанию стоит 0.5%)</p>
             {btcWallet ? (
@@ -275,6 +301,13 @@ console.log('>>>> Market token', marketToken)
             )}
             <p>Баланс ETH: {ethBalance}</p>
             <p>Баланс {marketToken.toUpperCase()}: {tokenBalance} {marketToken.toUpperCase()}</p>
+            <div>
+            {metamask.isConnected() ? (
+              <Button blue onClick={this.processDisconnectWallet.bind(this)}>Отключить Metamask</Button>
+            ) : (
+              <Button blue onClick={this.processConnectWallet.bind(this)}>Подключить Metamask</Button>
+            )}
+            </div>
           </>
         ) : (
           <>
