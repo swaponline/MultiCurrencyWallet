@@ -13,7 +13,7 @@
   transition: 0.2s;
 }
 
-.splashScreen {
+.startPage {
   width: 100vw;
   height: 100vh;
   padding: 5vh 0;
@@ -104,7 +104,7 @@
   }
 }
 
-.splashScreen.dark {
+.startPage.dark {
   background-color: $d-background-color;
 }
 
@@ -121,11 +121,11 @@
 }
 
 @media only screen and (max-width: $media-tablet-portrait-end) {
-  .splashScreen {
+  .startPage {
     padding: 4vh 0;
   }
 
-  .splashScreen {
+  .startPage {
     font-size: 0.9em;
   }
 
@@ -139,25 +139,25 @@
 }
 
 @media screen and (max-width: 540px) {
-  .splashScreen {
+  .startPage {
     font-size: 0.65em;
   }
 }
 
 @media screen and (max-width: 414px) {
-  .splashScreen {
+  .startPage {
     font-size: 0.63em;
   }
 }
 
 @media screen and (max-width: 375px) {
-  .splashScreen {
+  .startPage {
     font-size: 0.6em;
   }
 }
 
 @media screen and (max-width: 320px) {
-  .splashScreen {
+  .startPage {
     font-size: 0.52em;
   }
 }

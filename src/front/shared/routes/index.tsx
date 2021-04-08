@@ -4,7 +4,7 @@ import { isMobile } from 'react-device-detect'
 import { Switch, Route } from 'react-router-dom'
 
 import { links } from 'helpers'
-import SplashScreen from 'pages/SplashScreen'
+import StartPage from 'pages/StartPage'
 import Farm from 'pages/Farm'
 import LocalStorage from 'pages/LocalStorage/LocalStorage'
 import SwapComponent from 'pages/Swap/Swap'
@@ -60,7 +60,7 @@ const routes = (
       <Route path={`${links.send}/:currency/:address/:amount`} component={Wallet} />
       <Route path={`${links.wallet}`} component={Wallet} />
 
-      <Route path={`${links.splashScreen}`} component={SplashScreen} />
+      <Route path={`${links.startPage}`} component={StartPage} />
       <Route path={`${links.farm}`} component={Farm} />
       <Route path={`${links.localStorage}`} component={LocalStorage} />
       <Route path={`${links.aboutUs}`} component={About} />

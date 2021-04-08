@@ -9,8 +9,8 @@ import web3Icons, { regularIcons } from 'images'
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
-const SplashScreen = (props) => {
-  const { closeSplashScreen } = props
+const StartPage = (props) => {
+  const { closeStartPage } = props
 
   const getYearSeconds = () => {
     const date = new Date()
@@ -28,7 +28,7 @@ const SplashScreen = (props) => {
       },
     })
 
-    closeSplashScreen()
+    closeStartPage()
   }
 
   const setCookie = (params) => {
@@ -62,7 +62,7 @@ const SplashScreen = (props) => {
 
 
   return (
-    <section styleName={`splashScreen ${isDark ? 'dark' : ''}`}>
+    <section styleName={`startPage ${isDark ? 'dark' : ''}`}>
       <h2 styleName="title">
         <FormattedMessage
           id="SplashScreenTitle"
@@ -126,4 +126,4 @@ const SplashScreen = (props) => {
   )
 }
 
-export default CSSModules(SplashScreen, styles, { allowMultiple: true })
+export default CSSModules(StartPage, styles, { allowMultiple: true })

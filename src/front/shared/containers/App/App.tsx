@@ -13,7 +13,7 @@ import styles from "./App.scss";
 import "scss/app.scss";
 
 import { createSwapApp } from "instances/newSwap";
-import SplashScreen from 'pages/SplashScreen'
+import StartPage from 'shared/pages/StartPage'
 import Core from "containers/Core/Core";
 import Header from "components/Header/Header";
 import Footer from "components/Footer/Footer";
@@ -82,7 +82,7 @@ class App extends React.Component<RouteComponentProps<any>, any> {
     };
 
     this.state = {
-      splashSreenIsOpen: false,
+      startPageIsOpen: false,
       initialFetching: true,
       multiTabs: false,
       error: "",
@@ -90,10 +90,10 @@ class App extends React.Component<RouteComponentProps<any>, any> {
   }
 
   componentDidUpdate() {
-    const { initialFetching, splashSreenIsOpen } = this.state
+    const { initialFetching, startPageIsOpen } = this.state
 
-    if (initialFetching && !splashSreenIsOpen) {
-      // without setTimeout splash screen freezes when creating wallets
+    if (initialFetching && !startPageIsOpen) {
+      // without setTimeout start page freezes when creating wallets
       setTimeout(() => {
         this.completeAppCreation().then(() => {
           this.setState(() => ({
@@ -104,24 +104,24 @@ class App extends React.Component<RouteComponentProps<any>, any> {
     }
   }
 
-  checkSplashScreenDisplay = () => {
+  checkStartPageDisplay = () => {
     const swapDisalbeStarter = this.getCookie('swapDisalbeStarter')
     const isWalletCreate = localStorage.getItem('isWalletCreate')
     const isWidgetBuild = config && config.isWidget
 
     if (swapDisalbeStarter !== 'true' && isWalletCreate === null && !isWidgetBuild) {
       this.setState(() => ({
-        splashSreenIsOpen: true,
+        startPageIsOpen: true,
         initialFetching: false,
       }))
     } else {
-      this.closeSplashScreen()
+      this.closeStartPage()
     }
   }
 
-  closeSplashScreen = () => {
+  closeStartPage = () => {
     this.setState(() => ({
-      splashSreenIsOpen: false,
+      startPageIsOpen: false,
       initialFetching: true,
     }))
   }
@@ -377,7 +377,7 @@ class App extends React.Component<RouteComponentProps<any>, any> {
 
     window.addEventListener('appinstalled', appInstalled)
 
-    this.checkSplashScreenDisplay()
+    this.checkStartPageDisplay()
   }
 
   checkIfDashboardModalsAllowed = () => {
@@ -427,7 +427,7 @@ class App extends React.Component<RouteComponentProps<any>, any> {
   }
 
   render() {
-    const { initialFetching, multiTabs, splashSreenIsOpen } = this.state
+    const { initialFetching, multiTabs, startPageIsOpen } = this.state
     //@ts-ignore
     const { children, ethAddress, btcAddress, ghostAddress, nextAddress, tokenAddress, history, dashboardModalsAllowed } = this.props
 
@@ -457,8 +457,8 @@ class App extends React.Component<RouteComponentProps<any>, any> {
       )
     }
 
-    if (splashSreenIsOpen) {
-      return <SplashScreen closeSplashScreen={this.closeSplashScreen} />
+    if (startPageIsOpen) {
+      return <StartPage closeStartPage={this.closeStartPage} />
     }
 
     const isSeoDisabled = isWidget || isWidgetBuild || isCalledFromIframe
