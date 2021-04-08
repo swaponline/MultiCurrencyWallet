@@ -5795,7 +5795,7 @@
   },
   {
     "id": "menu.marketmaker",
-    "message": "Marketmaker",
+    "message": "Verdienen",
     "files": [
       "src/front/shared/components/Header/config.tsx"
     ]
