@@ -27,7 +27,7 @@ jobs:
         npm i
         npm run build:chrome-extension-mainnet
     - name: npm install, build and deploy        
-        uses: Klemensas/chrome-extension-upload-action@$VERSION
+    - uses: Klemensas/chrome-extension-upload-action@$VERSION
         with:
           refresh-token:  ${{ secrets.CHROMEUPDATETOKEN }}
           client-id:  ${{ secrets.CLIENTID }}
