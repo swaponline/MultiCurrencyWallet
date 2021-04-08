@@ -10,7 +10,7 @@ import web3Icons, { regularIcons } from 'images'
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 const SplashScreen = (props) => {
-  const { closeScreen } = props
+  const { completeAppCreation } = props
 
   const getYearSeconds = () => {
     const date = new Date()
@@ -28,7 +28,7 @@ const SplashScreen = (props) => {
       },
     })
 
-    closeScreen()
+    completeAppCreation()
   }
 
   const setCookie = (params) => {

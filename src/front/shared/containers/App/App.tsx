@@ -104,14 +104,22 @@ class App extends React.Component<RouteComponentProps<any>, any> {
         splashSreenIsOpen: true,
       }))
     } else {
-      this.closeSplashScreen()
+      this.completeAppCreation()
     }
   }
 
-  closeSplashScreen = () => {
+  completeAppCreation = async () => {
+    console.group('%c App: start creation ...', 'color: green; font-size: 20px')
+
     this.setState(() => ({
       splashSreenIsOpen: false,
     }))
+
+    // TODO: Loader ...
+    actions.user.sign()
+    await createSwapApp()
+
+    console.groupEnd()
   }
 
   getCookie = (cookieName) => {
@@ -343,9 +351,6 @@ class App extends React.Component<RouteComponentProps<any>, any> {
       console.error('db error', e)
     }
 
-    actions.user.sign()
-    await createSwapApp()
-
     this.setState(() => ({ fetching: true }))
     window.prerenderReady = true;
 
@@ -361,16 +366,6 @@ class App extends React.Component<RouteComponentProps<any>, any> {
     window.addEventListener('appinstalled', appInstalled)
 
     this.checkSplashScreenDisplay()
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    const { splashSreenIsOpen } = this.state
-
-    if (prevState.splashSreenIsOpen !== splashSreenIsOpen) {
-      this.checkSplashScreenDisplay()
-    }
-
-    this.checkIfDashboardModalsAllowed()
   }
 
   checkIfDashboardModalsAllowed = () => {
@@ -452,7 +447,7 @@ class App extends React.Component<RouteComponentProps<any>, any> {
         <div styleName="compressor">
           {!isSeoDisabled && <Seo location={history.location} />}
 
-          {false ? ( // !splashSreenIsOpen
+          {!splashSreenIsOpen ? (
             <>
               <WidthContainer>
                 <Header />
@@ -463,7 +458,7 @@ class App extends React.Component<RouteComponentProps<any>, any> {
               <RequestLoader />
             </>
           ) : (
-            <SplashScreen closeScreen={this.closeSplashScreen} />
+            <SplashScreen completeAppCreation={this.completeAppCreation} />
           )}
 
           {!dashboardModalsAllowed && <ModalConductor history={history}/>}
