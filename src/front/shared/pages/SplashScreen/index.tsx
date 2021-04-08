@@ -63,7 +63,7 @@ const SplashScreen = (props) => {
 
   return (
     <section styleName={`splashScreen ${isDark ? 'dark' : ''}`}>
-      <h2>
+      <h2 styleName="title">
         <FormattedMessage
           id="SplashScreenTitle"
           defaultMessage="Simple interface to access blockchains"

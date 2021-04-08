@@ -76,8 +76,8 @@
 }
 
 .loader {
-  width: 100px;
-  height: 100px;
+  width: 5.4em;
+  height: 5.4em;
   perspective: 60px;
   perspective-origin: 7% 57%;
   margin: auto;
@@ -92,6 +92,7 @@
 
 .loader1, .loader2, .loader3 {
   position: absolute;
+  border-radius: .5em 0 0 .5em;
   opacity: 0;
   will-change: transform, opacity;
 }
@@ -103,7 +104,7 @@
 .loader1 {
   width: 28%;
   height: 80%;
-  background: linear-gradient(#6829df, #5124d5);
+  background: $color-brand;
   left: 0;
   top: 50%;
   transform: translate3d(25%, -50%, 0) rotateY(-77deg);
@@ -113,7 +114,7 @@
 .loader2 {
   width: 20%;
   height: 63%;
-  background: linear-gradient(#702be1, #623ad9);
+  background: $color-brand;
   left: 48%;
   top: 50%;
   transform: translate3d(20%, -50%, 0) rotateY(-107deg);
@@ -136,7 +137,7 @@
     display: block;
     width: 100%;
     height: 140%;
-    background: linear-gradient(155deg, #802cf6, #5023d5);
+    background: $color-brand;
     position: absolute;
     top: 0;
     left: 0;

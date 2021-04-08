@@ -21,85 +21,145 @@
   flex-direction: column;
   background-color: $l-background-color;
   color: $color-brand;
+}
 
-  .infoWrapper {
-    display: flex;
-    align-items: flex-start;
+.title {
+  // used in media styles
+}
+
+.infoWrapper {
+  display: flex;
+  align-items: flex-start;
+}
+
+.infoBlock {
+  @include flexSetup;
+  flex-direction: column;
+
+  img {
+    height: 17em;
   }
 
-  .infoBlock {
-    @include flexSetup;
-    flex-direction: column;
+  p {
+    max-width: 20em;
+    margin: 0.9em 0;
+    padding: 0;
+    text-align: center;
+    font-size: 1.3em;
+  }
+}
 
-    img {
-      height: 17em;
-    }
+.buttonsWrapper {
+  @include flexSetup;
+  flex-direction: column;
+}
 
-    p {
-      max-width: 20em;
-      margin: 0.9em 0;
-      padding: 0;
-      text-align: center;
-      font-size: 1.3em;
-    }
+.topButtons {
+  @include flexSetup;
+  margin-bottom: 0.5em;
+
+  .connectIcon {
+    width: 1.4em;
+    height: 1.4em;
   }
 
-  .buttonsWrapper {
-    @include flexSetup;
-    flex-direction: column;
-  }
-
-  .topButtons {
-    @include flexSetup;
-    margin-bottom: 0.5em;
-
-    .connectIcon {
-      width: 1.4em;
-      height: 1.4em;
-    }
-
-    .button {
-      @include buttonSetup;
-      background-color: $color-brand;
-      color: $d-color;
-
-      &:hover {
-        border-color: $color-brand-hover;
-        background-color: $color-brand-hover;
-      }
-    }
-
-    .button + .button {
-      margin-left: 0.4em;
-    }
-  }
-
-  .restoreButton {
+  .button {
     @include buttonSetup;
-    width: 100%;
-    margin-bottom: 0.5em;
-    background-color: transparent;
-    color: $color-brand;
+    background-color: $color-brand;
+    color: $d-color;
 
     &:hover {
       border-color: $color-brand-hover;
       background-color: $color-brand-hover;
-      color: $d-color;
     }
   }
 
-  .skipButton {
-    font-size: 1.1em;
-    text-decoration: underline;
-    color: $color-brand;
-    transition: 0.2s;
+  .button + .button {
+    margin-left: 0.4em;
+  }
+}
 
-    &:hover {
-      color: $color-brand-hover;
-    }
+.restoreButton {
+  @include buttonSetup;
+  width: 100%;
+  margin-bottom: 0.5em;
+  background-color: transparent;
+  color: $color-brand;
+
+  &:hover {
+    border-color: $color-brand-hover;
+    background-color: $color-brand-hover;
+    color: $d-color;
+  }
+}
+
+.skipButton {
+  font-size: 1.1em;
+  text-decoration: underline;
+  color: $color-brand;
+  transition: 0.2s;
+
+  &:hover {
+    color: $color-brand-hover;
   }
 }
 
 .splashScreen.dark {
   background-color: $d-background-color;
+}
+
+@media only screen and (max-width: $media-tablet-landscape-end) {
+  .title {
+    font-size: 2.3em;
+  }
+
+  .infoBlock {
+    img {
+      height: 18em;
+    }
+  }
+}
+
+@media only screen and (max-width: $media-tablet-portrait-end) {
+  .splashScreen {
+    padding: 4vh 0;
+  }
+
+  .splashScreen {
+    font-size: 0.9em;
+  }
+
+  .title {
+    font-size: 1.9em;
+  }
+
+  .infoWrapper {
+    flex-direction: column;
+  }
+}
+
+
+@media screen and (max-width: 540px) {
+  .splashScreen {
+    font-size: 0.65em;
+  }
+}
+
+@media screen and (max-width: 414px) {
+  .splashScreen {
+    font-size: 0.63em;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .splashScreen {
+    font-size: 0.6em;
+  }
+}
+
+
+@media screen and (max-width: 320px) {
+  .splashScreen {
+    font-size: 0.52em;
+  }
 }
