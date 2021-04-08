@@ -1,5 +1,4 @@
 import React from "react";
-
 import { RouteComponentProps, withRouter, HashRouter } from "react-router-dom";
 import actions from "redux/actions";
 import { connect } from "redaction";
@@ -94,12 +93,9 @@ class App extends React.Component<RouteComponentProps<any>, any> {
   checkSplashScreenDisplay = () => {
     const swapDisalbeStarter = this.getCookie('swapDisalbeStarter')
     const isWalletCreate = localStorage.getItem('isWalletCreate')
+    const isWidgetBuild = config && config.isWidget
 
-    if (
-      // TODO: from webpack
-      // !isWidgetBuild &&
-      swapDisalbeStarter !== 'true' && isWalletCreate === null
-    ) {
+    if (swapDisalbeStarter !== 'true' && isWalletCreate === null && !isWidgetBuild) {
       this.setState(() => ({
         splashSreenIsOpen: true,
       }))
@@ -108,17 +104,22 @@ class App extends React.Component<RouteComponentProps<any>, any> {
     }
   }
 
-  completeAppCreation = async () => {
-    console.group('%c App: start creation ...', 'color: green; font-size: 20px')
-
+  completeAppCreation = () => {
     this.setState(() => ({
       splashSreenIsOpen: false,
-    }))
+    }), async () => {
+      console.group('App >%c creating...', 'color: green;')
 
-    // TODO: Loader ...
-    actions.user.sign()
-    await createSwapApp()
+      actions.user.sign()
+      await createSwapApp()
 
+      console.groupEnd()
+    })
+  }
+
+  componentDidUpdate() {
+    console.group('%c App update', 'color: green; font-size: 15px')
+    console.log('state: ', this.state)
     console.groupEnd()
   }
 
@@ -421,7 +422,7 @@ class App extends React.Component<RouteComponentProps<any>, any> {
 
     this.overflowHandler()
 
-    const isFetching = !ethAddress || !btcAddress || !ghostAddress || !nextAddress || (!tokenAddress && config && !config.isWidget) || !fetching
+    const isFetching = !ethAddress || !btcAddress || !ghostAddress || !nextAddress || (!tokenAddress && config && !config.isWidget) || fetching
 
     const isWidget = history.location.pathname.includes("/exchange") && history.location.hash === "#widget"
     const isCalledFromIframe = window.location !== window.parent.location
@@ -436,8 +437,13 @@ class App extends React.Component<RouteComponentProps<any>, any> {
     }
 
     if (isFetching) {
-      //@ts-ignore
-      return <Loader />
+      return (
+        <Loader
+          showMyOwnTip={
+            <FormattedMessage id="LoaderPleaseWait" defaultMessage="Please wait ..." />
+          }
+        />
+      )
     }
 
     const isSeoDisabled = isWidget || isWidgetBuild || isCalledFromIframe
