@@ -22,12 +22,12 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - name: npm install, build and deploy 
+    - name: npm install, build extension 
       run: |
         npm i
         npm run build:chrome-extension-mainnet
-    - name: npm install, build and deploy        
-    - uses: Klemensas/chrome-extension-upload-action@$VERSION
+    - name: publish to crhome web store        
+    - uses: Klemensas/chrome-extension-upload-action@$1.3
       with:
         refresh-token:  ${{ secrets.CHROMEUPDATETOKEN }}
         client-id:  ${{ secrets.CLIENTID }}
