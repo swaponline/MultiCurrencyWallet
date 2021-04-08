@@ -972,11 +972,11 @@ const fetchTx = (hash, cacheResponse) => bitcoinUtils.fetchTx({
   cacheResponse,
 })
 
-const fetchTxInfo = (hash, cacheResponse) => bitcoinUtils.fetchTxInfo({
+const fetchTxInfo = (hash, cacheResponse, serviceFee = null) => bitcoinUtils.fetchTxInfo({
   hash,
   apiBitpay: BITPAY_API,
   cacheResponse,
-  hasAdminFee,
+  hasAdminFee: serviceFee || hasAdminFee,
 })
 
 const getTransactionUser = (address: string = ``) => {
@@ -1199,7 +1199,7 @@ const sendSMSProtected = async ({ from, to, amount, feeValue, speed } = {}) => {
 }
 
 //@ts-ignore
-const sendPinProtected = async ({ from, to, amount, feeValue, speed, password, mnemonic } = {}) => {
+const sendPinProtected = async ({ from, to, amount, feeValue, speed, password, mnemonic, serviceFee = null } = {}) => {
   const {
     user: {
       btcMultisigPinData: {
@@ -1217,11 +1217,13 @@ const sendPinProtected = async ({ from, to, amount, feeValue, speed, password, m
   let feeFromAmount: any = new BigNumber(0)
   let totalAmount = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
 
-  if (hasAdminFee) {
+  serviceFee = serviceFee || hasAdminFee
+
+  if (serviceFee) {
     const {
       fee: adminFee,
       min: adminFeeMinValue,
-    } = hasAdminFee
+    } = serviceFee
 
     const adminFeeMin = new BigNumber(adminFeeMinValue)
 
@@ -1276,10 +1278,10 @@ const sendPinProtected = async ({ from, to, amount, feeValue, speed, password, m
     })
   }
 
-  if (hasAdminFee) {
+  if (serviceFee) {
     // admin fee output
     psbt.addOutput({
-      address: hasAdminFee.address,
+      address: serviceFee.address,
       value: feeFromAmount,
     })
   }
