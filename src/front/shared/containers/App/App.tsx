@@ -56,7 +56,6 @@ const metamaskNetworks = defineMessages({
 @withRouter
 @connect(({ currencies: { items: currencies }, modals, ui: { dashboardModalsAllowed } }) => ({
   currencies,
-  isVisible: "loader.isVisible",
   ethAddress: "user.ethData.address",
   btcAddress: "user.btcData.address",
   ghostAddress: "user.ghostData.address",
@@ -84,9 +83,24 @@ class App extends React.Component<RouteComponentProps<any>, any> {
 
     this.state = {
       splashSreenIsOpen: false,
-      fetching: false,
+      initialFetching: true,
       multiTabs: false,
       error: "",
+    }
+  }
+
+  componentDidUpdate() {
+    const { initialFetching, splashSreenIsOpen } = this.state
+
+    if (initialFetching && !splashSreenIsOpen) {
+      // without setTimeout splash screen freezes when creating wallets
+      setTimeout(() => {
+        this.completeAppCreation().then(() => {
+          this.setState(() => ({
+            initialFetching: false,
+          }))
+        })
+      })
     }
   }
 
@@ -98,28 +112,26 @@ class App extends React.Component<RouteComponentProps<any>, any> {
     if (swapDisalbeStarter !== 'true' && isWalletCreate === null && !isWidgetBuild) {
       this.setState(() => ({
         splashSreenIsOpen: true,
+        initialFetching: false,
       }))
     } else {
-      this.completeAppCreation()
+      this.closeSplashScreen()
     }
   }
 
-  completeAppCreation = () => {
+  closeSplashScreen = () => {
     this.setState(() => ({
       splashSreenIsOpen: false,
-    }), async () => {
-      console.group('App >%c creating...', 'color: green;')
-
-      actions.user.sign()
-      await createSwapApp()
-
-      console.groupEnd()
-    })
+      initialFetching: true,
+    }))
   }
 
-  componentDidUpdate() {
-    console.group('%c App update', 'color: green; font-size: 15px')
-    console.log('state: ', this.state)
+  completeAppCreation = async () => {
+    console.group('App >%c loading...', 'color: green;')
+
+    actions.user.sign()
+    await createSwapApp()
+
     console.groupEnd()
   }
 
@@ -352,8 +364,7 @@ class App extends React.Component<RouteComponentProps<any>, any> {
       console.error('db error', e)
     }
 
-    this.setState(() => ({ fetching: true }))
-    window.prerenderReady = true;
+    window.prerenderReady = true
 
     const appInstalled = (e) => {
       alert(
@@ -416,13 +427,13 @@ class App extends React.Component<RouteComponentProps<any>, any> {
   }
 
   render() {
-    const { fetching, multiTabs, splashSreenIsOpen } = this.state
+    const { initialFetching, multiTabs, splashSreenIsOpen } = this.state
     //@ts-ignore
     const { children, ethAddress, btcAddress, ghostAddress, nextAddress, tokenAddress, history, dashboardModalsAllowed } = this.props
 
     this.overflowHandler()
 
-    const isFetching = !ethAddress || !btcAddress || !ghostAddress || !nextAddress || (!tokenAddress && config && !config.isWidget) || fetching
+    const isFetching = !ethAddress || !btcAddress || !ghostAddress || !nextAddress || (!tokenAddress && config && !config.isWidget) || initialFetching
 
     const isWidget = history.location.pathname.includes("/exchange") && history.location.hash === "#widget"
     const isCalledFromIframe = window.location !== window.parent.location
@@ -440,10 +451,14 @@ class App extends React.Component<RouteComponentProps<any>, any> {
       return (
         <Loader
           showMyOwnTip={
-            <FormattedMessage id="LoaderPleaseWait" defaultMessage="Please wait ..." />
+            <FormattedMessage id="Table96" defaultMessage="Loading..." />
           }
         />
       )
+    }
+
+    if (splashSreenIsOpen) {
+      return <SplashScreen closeSplashScreen={this.closeSplashScreen} />
     }
 
     const isSeoDisabled = isWidget || isWidgetBuild || isCalledFromIframe
@@ -453,19 +468,15 @@ class App extends React.Component<RouteComponentProps<any>, any> {
         <div styleName="compressor">
           {!isSeoDisabled && <Seo location={history.location} />}
 
-          {!splashSreenIsOpen ? (
-            <>
-              <WidthContainer>
-                <Header />
-                <main>{children}</main>
-              </WidthContainer>
-              <Core />
-              <Footer />
-              <RequestLoader />
-            </>
-          ) : (
-            <SplashScreen completeAppCreation={this.completeAppCreation} />
-          )}
+          <>
+            <WidthContainer>
+              <Header />
+              <main>{children}</main>
+            </WidthContainer>
+            <Core />
+            <Footer />
+            <RequestLoader />
+          </>
 
           {!dashboardModalsAllowed && <ModalConductor history={history}/>}
           <NotificationConductor history={history} />
