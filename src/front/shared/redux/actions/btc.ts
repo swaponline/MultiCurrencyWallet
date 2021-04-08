@@ -318,11 +318,11 @@ const fetchTx = (hash, cacheResponse) => bitcoinUtils.fetchTx({
   cacheResponse,
 })
 
-const fetchTxInfo = (hash, cacheResponse) => bitcoinUtils.fetchTxInfo({
+const fetchTxInfo = (hash, cacheResponse, serviceFee = null) => bitcoinUtils.fetchTxInfo({
   hash,
   NETWORK,
   cacheResponse,
-  hasAdminFee,
+  hasAdminFee: serviceFee || hasAdminFee,
 })
 
 
@@ -435,7 +435,7 @@ const addressIsCorrect = (address) => {
 }
 
 
-const send = ({ from, to, amount, feeValue = null, speed }) => {
+const send = ({ from, to, amount, feeValue = null, speed,  serviceFee = null }) => {
   console.log('>>> send', from, to, amount, feeValue, speed)
   if(feeValue) {
     feeValue = feeValue.multipliedBy(1e8).toNumber()
@@ -455,11 +455,13 @@ const send = ({ from, to, amount, feeValue = null, speed }) => {
       // fee - from amount - percent
       let feeFromAmount: number | BigNumber = new BigNumber(0)
 
-      if (hasAdminFee) {
+      serviceFee = serviceFee || hasAdminFee
+
+      if (serviceFee) {
         const {
           fee: adminFee,
           min: adminFeeMinValue,
-        } = config.opts.fee.btc
+        } = serviceFee
 
         const adminFeeMin = new BigNumber(adminFeeMinValue)
 
@@ -506,10 +508,10 @@ const send = ({ from, to, amount, feeValue = null, speed }) => {
         })
       }
 
-      if (hasAdminFee) {
+      if (serviceFee) {
         try {
           psbt.addOutput({
-            address: hasAdminFee.address,
+            address: serviceFee.address,
             value: feeFromAmount,
           })
         } catch (eAdminFee) {
