@@ -27,7 +27,7 @@ jobs:
         npm i
         npm run build:chrome-extension-mainnet
     - name: publish extention to crhome web store        
-    - uses: Klemensas/chrome-extension-upload-action@v1.3
+      uses: Klemensas/chrome-extension-upload-action@v1.3
       with:
         refresh-token:  ${{ secrets.CHROMEUPDATETOKEN }}
         client-id:  ${{ secrets.CLIENTID }}
