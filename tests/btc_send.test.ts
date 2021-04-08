@@ -4,6 +4,14 @@ import BigNumber from 'bignumber.js';
 
 const timeOut = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
+declare global {
+  namespace jest {
+    interface Matchers<R> {
+      toBeWithinRange(a: number, b: number): R;
+    }
+  }
+}
+
 expect.extend({
   toBeWithinRange(received, floor, ceiling) {
     const pass = received >= floor && received <= ceiling;
@@ -22,6 +30,10 @@ expect.extend({
     }
   },
 });
+
+const toFloorValue = (value: BigNumber): number => value.multipliedBy(0.95).toNumber()
+const toCeilingValue = (value: BigNumber): number => value.multipliedBy(1.05).toNumber()
+
 
 describe('BTC Send Tests', () => {
   it('calculate txSize of 1 txIn, 2 txOut and method send for P2PKH address', async () => {
@@ -47,21 +59,31 @@ describe('BTC Send Tests', () => {
       speed: "fast"
     };
 
+    let unspents = await actions.btc.fetchUnspents(options.from)
+    unspents = await actions.btc.prepareUnspents({ amount: options.feeValue.plus(options.amount).dp(8).toNumber(), unspents })
+    const txIn = unspents.length
+    const txOut = 2
+
+    const txSize = await helpers.btc.calculateTxSize({
+      fixed: false,
+      method: 'send',
+      txIn,
+      txOut,
+      toAddress: options.to,
+    })
+    const satoshiPerByte = 2
+    options.feeValue = new BigNumber(txSize).multipliedBy(satoshiPerByte).multipliedBy(1e-8)
+
     const txHash = await actions.btc.send(options);
     await timeOut(10 * 1000)
     const {
       amount,
-      senderAddress,
-      receiverAddress,
-
       minerFee,
-      adminFee,
-      minerFeeCurrency,
-
       size
     } = await actions.btc.fetchTxInfo(txHash, 8000);
     expect(amount).toBe(options.amount);
-    expect(minerFee).toBe(options.feeValue.toNumber());
+    expect(minerFee).toBeWithinRange(toFloorValue(options.feeValue), toCeilingValue(options.feeValue));
+    expect(size).toBeWithinRange(toFloorValue(new BigNumber(txSize)), toCeilingValue(new BigNumber(txSize)));
   }, 25000)
 
   it('send and check transaction via regular wallet with 1000 satoshis with adminFee', async () => {
@@ -84,25 +106,37 @@ describe('BTC Send Tests', () => {
     let feeFromAmount = new BigNumber(serviceFee.fee).dividedBy(100).multipliedBy(options.amount);
     if (adminFeeMin.isGreaterThan(feeFromAmount)) feeFromAmount = adminFeeMin;
 
+    let unspents = await actions.btc.fetchUnspents(options.from)
+    unspents = await actions.btc.prepareUnspents({ amount: feeFromAmount.plus(options.amount).plus(options.feeValue).dp(8).toNumber(), unspents })
+    const txIn = unspents.length
+    const txOut = 3
+
+    const txSize = await helpers.btc.calculateTxSize({
+      fixed: false,
+      method: 'send',
+      txIn,
+      txOut,
+      toAddress: options.to,
+      serviceFee
+    })
+    const satoshiPerByte = 2
+    options.feeValue = new BigNumber(txSize).multipliedBy(satoshiPerByte).multipliedBy(1e-8)
+
     await actions.btc.login("cR2QGm1SLqmvgYBUtroVmVaBRKSSsbAAeqQ54YTA4xXELCcyoWtL");
 
     const txHash = await actions.btc.send(options);
     await timeOut(10 * 1000)
     const {
       amount,
-      senderAddress,
-      receiverAddress,
-
       minerFee,
       adminFee,
-      minerFeeCurrency,
-
       size
     } = await actions.btc.fetchTxInfo(txHash, 8000, serviceFee);
 
     expect(amount).toBe(options.amount);
-    expect(minerFee).toBe(options.feeValue.toNumber());
     expect(adminFee).toBe(feeFromAmount.toNumber());
+    expect(minerFee).toBeWithinRange(toFloorValue(options.feeValue), toCeilingValue(options.feeValue));
+    expect(size).toBeWithinRange(toFloorValue(new BigNumber(txSize)), toCeilingValue(new BigNumber(txSize)));
   }, 25000)
 
   it('send and check transaction via pin-protected wallet sign with mnemonic with 1000 satoshis', async () => {
@@ -122,21 +156,31 @@ describe('BTC Send Tests', () => {
       mnemonic: 'execute tunnel height sponsor raccoon random federal infant reform foil fall physical'
     };
 
+    let unspents = await actions.btc.fetchUnspents(options.from)
+    unspents = await actions.btc.prepareUnspents({ amount: options.feeValue.plus(options.amount).dp(8).toNumber(), unspents })
+    const txIn = unspents.length
+    const txOut = 2
+
+    const txSize = await helpers.btc.calculateTxSize({
+      fixed: false,
+      method: 'send_2fa',
+      txIn,
+      txOut,
+      toAddress: options.to,
+    })
+    const satoshiPerByte = 2
+    options.feeValue = new BigNumber(txSize).multipliedBy(satoshiPerByte).multipliedBy(1e-8)
+
     const txHash = await actions.btcmultisig.sendPinProtected(options);
     await timeOut(10 * 1000)
     const {
       amount,
-      senderAddress,
-      receiverAddress,
-
       minerFee,
-      adminFee,
-      minerFeeCurrency,
-
       size
     } = await actions.btcmultisig.fetchTxInfo(txHash.txId, 8000);
     expect(amount).toBe(options.amount);
-    expect(minerFee).toBe(options.feeValue.toNumber());
+    expect(minerFee).toBeWithinRange(toFloorValue(options.feeValue), toCeilingValue(options.feeValue));
+    expect(size).toBeWithinRange(toFloorValue(new BigNumber(txSize)), toCeilingValue(new BigNumber(txSize)));
   }, 25000)
 
   it('send and check transaction via pin-protected wallet sign with password with 1000 satoshis with adminFee', async () => {
@@ -160,6 +204,22 @@ describe('BTC Send Tests', () => {
     let feeFromAmount = new BigNumber(serviceFee.fee).dividedBy(100).multipliedBy(options.amount);
     if (adminFeeMin.isGreaterThan(feeFromAmount)) feeFromAmount = adminFeeMin;
 
+    let unspents = await actions.btc.fetchUnspents(options.from)
+    unspents = await actions.btc.prepareUnspents({ amount: feeFromAmount.plus(options.amount).plus(options.feeValue).dp(8).toNumber(), unspents })
+    const txIn = unspents.length
+    const txOut = 3
+
+    const txSize = await helpers.btc.calculateTxSize({
+      fixed: false,
+      method: 'send_2fa',
+      txIn,
+      txOut,
+      toAddress: options.to,
+      serviceFee
+    })
+    const satoshiPerByte = 2
+    options.feeValue = new BigNumber(txSize).multipliedBy(satoshiPerByte).multipliedBy(1e-8)
+
     await actions.btc.login("cRQL8PDx7WRJzdi6g3fAagLA3bEc4XMfjDDkDkuheFcX5TRHqEMX");
 
     await actions.btcmultisig.login_PIN(
@@ -173,17 +233,13 @@ describe('BTC Send Tests', () => {
     await timeOut(10 * 1000)
     const {
       amount,
-      senderAddress,
-      receiverAddress,
-
       minerFee,
       adminFee,
-      minerFeeCurrency,
-
       size
     } = await actions.btcmultisig.fetchTxInfo(txHash.txId, 8000, serviceFee);
     expect(amount).toBe(options.amount);
-    expect(minerFee).toBe(options.feeValue.toNumber());
     expect(adminFee).toBe(feeFromAmount.toNumber());
+    expect(minerFee).toBeWithinRange(toFloorValue(options.feeValue), toCeilingValue(options.feeValue));
+    expect(size).toBeWithinRange(toFloorValue(new BigNumber(txSize)), toCeilingValue(new BigNumber(txSize)));
   }, 25000)
 })
