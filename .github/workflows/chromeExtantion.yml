@@ -28,10 +28,10 @@ jobs:
         npm run build:chrome-extension-mainnet
     - name: npm install, build and deploy        
     - uses: Klemensas/chrome-extension-upload-action@$VERSION
-        with:
-          refresh-token:  ${{ secrets.CHROMEUPDATETOKEN }}
-          client-id:  ${{ secrets.CLIENTID }}
-          client-secret:  ${{ secrets.CLIENTSECRET }}
-          file-name: './chrome-extension-mainnet.zip'
-          app-id: 'oldojieloelkkfeacfinhcngmbkepnlm'
-          publish: true
+      with:
+        refresh-token:  ${{ secrets.CHROMEUPDATETOKEN }}
+        client-id:  ${{ secrets.CLIENTID }}
+        client-secret:  ${{ secrets.CLIENTSECRET }}
+        file-name: './chrome-extension-mainnet.zip'
+        app-id: 'oldojieloelkkfeacfinhcngmbkepnlm'
+        publish: true
