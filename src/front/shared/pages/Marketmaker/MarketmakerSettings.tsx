@@ -246,8 +246,20 @@ console.log('>>>> Market token', marketToken)
 
     this.setState({
       isMarketEnabled: !isMarketEnabled,
+    }, () => {
+      if (!isMarketEnabled) {
+        // New state - On
+        this.createMakerMakerOrder()
+      } else {
+        // New state - Off
+        this.cleanupMarketMakerOrder()
+      }
     })
   }
+
+  cleanupMarketMakerOrder() {}
+
+  createMakerMakerOrder() {}
 
   processDisconnectWallet() {
     metamask.handleDisconnectWallet(() => {
