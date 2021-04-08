@@ -512,7 +512,8 @@
     "id": "Table96",
     "message": "Lading... ",
     "files": [
-      "src/front/shared/components/tables/Table/Table.tsx"
+      "src/front/shared/components/tables/Table/Table.tsx",
+      "src/front/shared/containers/App/App.tsx"
     ]
   },
   {
@@ -1058,7 +1059,7 @@
     "id": "ExchangeTitleTag1",
     "message": "Fastest cross-chain swaps",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/Promo/Promo.tsx"
     ]
   },
   {
@@ -2690,7 +2691,8 @@
     "id": "skip",
     "message": "Overslaan",
     "files": [
-      "src/front/shared/components/TourWindow/index.tsx"
+      "src/front/shared/components/TourWindow/index.tsx",
+      "src/front/shared/pages/SplashScreen/index.tsx"
     ]
   },
   {
@@ -3479,7 +3481,8 @@
     "id": "ImportKeys_RestoreMnemonic",
     "message": "Herstel van seed van 12 woorden",
     "files": [
-      "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
+      "src/front/shared/pages/CreateWallet/CreateWallet.tsx",
+      "src/front/shared/pages/SplashScreen/index.tsx"
     ]
   },
   {
@@ -3502,7 +3505,8 @@
     "id": "ImportKeys_ConnectWallet",
     "message": "Sluit Portemonnee aan",
     "files": [
-      "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
+      "src/front/shared/pages/CreateWallet/CreateWallet.tsx",
+      "src/front/shared/pages/SplashScreen/index.tsx"
     ]
   },
   {
@@ -4764,7 +4768,8 @@
     "id": "AlertModalcreateWallet",
     "message": "Creëer wallet",
     "files": [
-      "src/front/shared/components/modals/AlertWindow/index.tsx"
+      "src/front/shared/components/modals/AlertWindow/index.tsx",
+      "src/front/shared/pages/SplashScreen/index.tsx"
     ]
   },
   {
@@ -5890,6 +5895,34 @@
     "message": "~60 flere minutter",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
+    ]
+  },
+  {
+    "id": "ExchangeTokenWasApproved",
+    "message": "Token werd goedgekeurd.{br}Verkenner-koppeling: {txLink}",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "SplashScreenExchangeText",
+    "message": "Handel op de gedecentraliseerde P2P uitwisseling met behulp van atomic swap technologie",
+    "files": [
+      "src/front/shared/pages/SplashScreen/index.tsx"
+    ]
+  },
+  {
+    "id": "SplashScreenTitle",
+    "message": "Eenvoudige interface om toegang te krijgen tot blockchain",
+    "files": [
+      "src/front/shared/pages/SplashScreen/index.tsx"
+    ]
+  },
+  {
+    "id": "SplashScreenWalletText",
+    "message": "Opslaan, verzenden, ontvangen cryptocurrencies (Bitcoin, Ethereum, tokens...) zonder installatie en registratie",
+    "files": [
+      "src/front/shared/pages/SplashScreen/index.tsx"
     ]
   }
 ]

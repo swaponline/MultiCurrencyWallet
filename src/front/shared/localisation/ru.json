@@ -561,7 +561,8 @@
     "id": "Table96",
     "message": "Загрузка... ",
     "files": [
-      "src/front/shared/components/tables/Table/Table.tsx"
+      "src/front/shared/components/tables/Table/Table.tsx",
+      "src/front/shared/containers/App/App.tsx"
     ]
   },
   {
@@ -1121,7 +1122,7 @@
     "id": "ExchangeTitleTag1",
     "message": "Самые быстрые кроссчейновые обмены",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/Promo/Promo.tsx"
     ]
   },
   {
@@ -2676,7 +2677,8 @@
     "id": "skip",
     "message": "Пропустить",
     "files": [
-      "src/front/shared/components/TourWindow/index.tsx"
+      "src/front/shared/components/TourWindow/index.tsx",
+      "src/front/shared/pages/SplashScreen/index.tsx"
     ]
   },
   {
@@ -3490,7 +3492,8 @@
     "id": "ImportKeys_RestoreMnemonic",
     "message": "Восстановить из 12 слов",
     "files": [
-      "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
+      "src/front/shared/pages/CreateWallet/CreateWallet.tsx",
+      "src/front/shared/pages/SplashScreen/index.tsx"
     ]
   },
   {
@@ -3513,7 +3516,8 @@
     "id": "ImportKeys_ConnectWallet",
     "message": "Подключить кошелек",
     "files": [
-      "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
+      "src/front/shared/pages/CreateWallet/CreateWallet.tsx",
+      "src/front/shared/pages/SplashScreen/index.tsx"
     ]
   },
   {
@@ -4796,7 +4800,8 @@
     "id": "AlertModalcreateWallet",
     "message": "Create Wallet",
     "files": [
-      "src/front/shared/components/modals/AlertWindow/index.tsx"
+      "src/front/shared/components/modals/AlertWindow/index.tsx",
+      "src/front/shared/pages/SplashScreen/index.tsx"
     ]
   },
   {
@@ -5894,6 +5899,34 @@
     "message": "60 минут или больше",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
+    ]
+  },
+  {
+    "id": "ExchangeTokenWasApproved",
+    "message": "Токен одобрен.{br}Ссылка на транзакцию: {txLink}",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "SplashScreenExchangeText",
+    "message": "Торговля на децентрализованной P2P бирже с использованием технологии atomic swap",
+    "files": [
+      "src/front/shared/pages/SplashScreen/index.tsx"
+    ]
+  },
+  {
+    "id": "SplashScreenTitle",
+    "message": "Простой интерфейс для доступа к блокчейну",
+    "files": [
+      "src/front/shared/pages/SplashScreen/index.tsx"
+    ]
+  },
+  {
+    "id": "SplashScreenWalletText",
+    "message": "Храните, отправляйте, получайте криптовалюты (Биткоин, Эфириум, токены...) без установки и регистрации",
+    "files": [
+      "src/front/shared/pages/SplashScreen/index.tsx"
     ]
   }
 ]

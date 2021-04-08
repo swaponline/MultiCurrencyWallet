@@ -509,7 +509,8 @@
     "id": "Table96",
     "message": "Ładowanie... ",
     "files": [
-      "src/front/shared/components/tables/Table/Table.tsx"
+      "src/front/shared/components/tables/Table/Table.tsx",
+      "src/front/shared/containers/App/App.tsx"
     ]
   },
   {
@@ -1069,7 +1070,7 @@
     "id": "ExchangeTitleTag1",
     "message": "Najszybszy swap cross-chain",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/Promo/Promo.tsx"
     ]
   },
   {
@@ -2700,7 +2701,8 @@
     "id": "skip",
     "message": "Pominń",
     "files": [
-      "src/front/shared/components/TourWindow/index.tsx"
+      "src/front/shared/components/TourWindow/index.tsx",
+      "src/front/shared/pages/SplashScreen/index.tsx"
     ]
   },
   {
@@ -3496,7 +3498,8 @@
     "id": "ImportKeys_RestoreMnemonic",
     "message": "Przywróć z 12słów seed",
     "files": [
-      "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
+      "src/front/shared/pages/CreateWallet/CreateWallet.tsx",
+      "src/front/shared/pages/SplashScreen/index.tsx"
     ]
   },
   {
@@ -4774,7 +4777,8 @@
     "id": "AlertModalcreateWallet",
     "message": "Create Wallet",
     "files": [
-      "src/front/shared/components/modals/AlertWindow/index.tsx"
+      "src/front/shared/components/modals/AlertWindow/index.tsx",
+      "src/front/shared/pages/SplashScreen/index.tsx"
     ]
   },
   {
@@ -5208,7 +5212,8 @@
     "id": "ImportKeys_ConnectWallet",
     "message": "Connect Wallet",
     "files": [
-      "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
+      "src/front/shared/pages/CreateWallet/CreateWallet.tsx",
+      "src/front/shared/pages/SplashScreen/index.tsx"
     ]
   },
   {
@@ -5894,6 +5899,34 @@
     "message": "~60 minut więcej",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
+    ]
+  },
+  {
+    "id": "ExchangeTokenWasApproved",
+    "message": "Token został zatwierdzony.{br}Explorer link: {txLink}",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "SplashScreenExchangeText",
+    "message": "Handel na zdecentralizowanej giełdzie P2P przy użyciu technologii atomic swap",
+    "files": [
+      "src/front/shared/pages/SplashScreen/index.tsx"
+    ]
+  },
+  {
+    "id": "SplashScreenTitle",
+    "message": "Prosty interfejs dostępu do blockchain",
+    "files": [
+      "src/front/shared/pages/SplashScreen/index.tsx"
+    ]
+  },
+  {
+    "id": "SplashScreenWalletText",
+    "message": "Przechowuj, wysyłaj, odbieraj kryptowaluty (Bitcoin, Ethereum, tokeny...) bez instalacji i rejestracji",
+    "files": [
+      "src/front/shared/pages/SplashScreen/index.tsx"
     ]
   }
 ]
