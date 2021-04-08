@@ -168,6 +168,11 @@ type CalculateTxSizeParams = {
   method?: string
   fixed?: boolean
   toAddress?: string
+  serviceFee?: {
+    address: any,
+    min: any,
+    fee: any
+  }
 }
 
 const calculateTxSize = async (params: CalculateTxSizeParams) => {
@@ -176,7 +181,8 @@ const calculateTxSize = async (params: CalculateTxSizeParams) => {
     txOut,
     method,
     fixed,
-    toAddress
+    toAddress,
+    serviceFee = hasAdminFee
   } = params
 
   method = method || 'send'
@@ -205,8 +211,8 @@ const calculateTxSize = async (params: CalculateTxSizeParams) => {
     const toAddressType = toAddress ? getAddressType(toAddress) : "P2PKH";
     outputs[toAddressType] = ++outputs[toAddressType] || 1;
 
-    if (hasAdminFee) {
-      const adminAddressType = getAddressType(hasAdminFee.address);
+    if (serviceFee) {
+      const adminAddressType = getAddressType(serviceFee.address);
       outputs[adminAddressType] = ++outputs[adminAddressType] || 1;
       ++txOut
     }
@@ -223,8 +229,8 @@ const calculateTxSize = async (params: CalculateTxSizeParams) => {
     const toAddressType = toAddress ? getAddressType(toAddress) : "P2PKH";
     outputs[toAddressType] = ++outputs[toAddressType] || 1;
 
-    if (hasAdminFee) {
-      const adminAddressType = getAddressType(hasAdminFee.address);
+    if (serviceFee) {
+      const adminAddressType = getAddressType(serviceFee.address);
       outputs[adminAddressType] = ++outputs[adminAddressType] || 1;
       ++txOut
     }
