@@ -105,7 +105,7 @@ describe('BTC Send Tests', () => {
     expect(adminFee).toBe(feeFromAmount.toNumber());
   }, 25000)
 
-  it('send and check transaction via pin-protected wallet with 1000 satoshis', async () => {
+  it('send and check transaction via pin-protected wallet sign with mnemonic with 1000 satoshis', async () => {
     await actions.btcmultisig.login_PIN(
       "cNS7asAySqoMuxZZ37kdgpcEAbgyyEHzuLPHSi9ZLSpFvjcrMJ2T",
       [
@@ -139,7 +139,7 @@ describe('BTC Send Tests', () => {
     expect(minerFee).toBe(options.feeValue.toNumber());
   }, 25000)
 
-  it('send and check transaction via pin-protected wallet with 1000 satoshis with adminFee', async () => {
+  it('send and check transaction via pin-protected wallet sign with password with 1000 satoshis with adminFee', async () => {
     const serviceFee = {
       fee: '5',
       address: '2MuXz9BErMbWmoTshGgkjd7aMHeaxV8Bdkk',
@@ -152,13 +152,15 @@ describe('BTC Send Tests', () => {
       feeValue: new BigNumber(1e-5),
       speed: "fast",
       password: '4321',
-      mnemonic: 'uphold wing axis omit hedgehog pull law nature runway sort pattern unhappy',
+      mnemonic: '',
       serviceFee
     };
 
     const adminFeeMin = new BigNumber(serviceFee.min);
     let feeFromAmount = new BigNumber(serviceFee.fee).dividedBy(100).multipliedBy(options.amount);
     if (adminFeeMin.isGreaterThan(feeFromAmount)) feeFromAmount = adminFeeMin;
+
+    await actions.btc.login("cRQL8PDx7WRJzdi6g3fAagLA3bEc4XMfjDDkDkuheFcX5TRHqEMX");
 
     await actions.btcmultisig.login_PIN(
       "cRQL8PDx7WRJzdi6g3fAagLA3bEc4XMfjDDkDkuheFcX5TRHqEMX",
