@@ -6,6 +6,7 @@ import moment from "moment-with-locales-es6";
 import {
   constants,
   localStorage,
+  utils,
 } from "helpers";
 
 import CSSModules from "react-css-modules";
@@ -36,9 +37,8 @@ import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import metamask from 'helpers/metamask'
 
 
-const userLanguage = (navigator.userLanguage || navigator.language || "en-gb").split("-")[0];
-moment.locale(userLanguage)
-
+const userLanguage = utils.getCookie('mylang') || utils.getNavigatorLanguage()
+moment.locale(userLanguage.toLowerCase())
 
 const metamaskNetworks = defineMessages({
   mainnet: {

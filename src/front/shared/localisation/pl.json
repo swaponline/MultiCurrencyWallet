@@ -4775,7 +4775,7 @@
   },
   {
     "id": "AlertModalcreateWallet",
-    "message": "Create Wallet",
+    "message": "Utwórz Portfel",
     "files": [
       "src/front/shared/components/modals/AlertWindow/index.tsx",
       "src/front/shared/pages/SplashScreen/index.tsx"

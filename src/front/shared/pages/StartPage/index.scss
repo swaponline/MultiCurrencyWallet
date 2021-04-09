@@ -14,7 +14,6 @@
 }
 
 .startPage {
-  width: 100vw;
   height: 100vh;
   padding: 5vh 0;
   @include flexSetup;
@@ -100,6 +99,7 @@
   transition: 0.2s;
 
   &:hover {
+    text-decoration: underline;
     color: $color-brand-hover;
   }
 }

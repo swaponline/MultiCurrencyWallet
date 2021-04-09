@@ -4798,7 +4798,7 @@
   },
   {
     "id": "AlertModalcreateWallet",
-    "message": "Create Wallet",
+    "message": "Создать кошелек",
     "files": [
       "src/front/shared/components/modals/AlertWindow/index.tsx",
       "src/front/shared/pages/SplashScreen/index.tsx"

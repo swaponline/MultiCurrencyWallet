@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import CSSModules from 'react-css-modules'
 import styles from './index.scss'
 import { links} from 'helpers'
-import { constants } from 'helpers'
+import { constants, utils } from 'helpers'
 import { FormattedMessage } from 'react-intl'
 import web3Icons, { regularIcons } from 'images'
 
@@ -20,46 +20,12 @@ const StartPage = (props) => {
   }
 
   const linkHandler = () => {
-    setCookie({
-      name: 'swapDisalbeStarter',
-      value: 'true',
-      options: {
-        expires: getYearSeconds(),
-      },
+    utils.setCookie('swapDisalbeStarter', 'true', {
+      expires: getYearSeconds(),
     })
 
     closeStartPage()
   }
-
-  const setCookie = (params) => {
-    const { name, value, options = {} } = params
-    const encodeValue = encodeURIComponent(value)
-    let expires = options.expires
-
-    if (typeof expires === 'number' && expires) {
-      let date = new Date()
-
-      date.setTime(date.getTime() + expires * 1000)
-      expires = options.expires = date
-    }
-
-    if (expires && expires.toUTCString) {
-      options.expires = expires.toUTCString()
-    }
-
-    let updatedCookie = name + '=' + encodeValue
-
-    for (let propName in options) {
-      updatedCookie += '; ' + propName
-
-      if (options[propName] !== true) {
-        updatedCookie += '=' + options[propName]
-      }
-    }
-
-    document.cookie = updatedCookie
-  }
-
 
   return (
     <section styleName={`startPage ${isDark ? 'dark' : ''}`}>

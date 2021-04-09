@@ -74,6 +74,19 @@ export const createRepo = (dirpath = `./data/`) => {
   return path.resolve(dirpath)
 }
 
+export const getNavigatorLanguage = () => {
+  if (navigator.languages && navigator.languages.length) {
+    return navigator.languages[0]
+  } else {
+    return (
+      navigator.userLanguage ||
+      navigator.language ||
+      navigator.browserLanguage ||
+      'en'
+    )
+  }
+}
+
 export function getCookie(cname) {
   var name = cname + "=";
   var ca = document.cookie.split(';');
