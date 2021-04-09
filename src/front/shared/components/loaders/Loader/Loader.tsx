@@ -9,7 +9,6 @@ const isWidget = config && config.isWidget
 type LoaderProps = {
   overlayClassName?: string
   showMyOwnTip?: JSX.Element
-  className?: string
   data?: {
     txId: string
   }
@@ -18,19 +17,17 @@ type LoaderProps = {
 const Loader = (props: LoaderProps) => {
   const {
     overlayClassName = '',
-    className = '',
     showMyOwnTip,
     data = null,
   } = props
-  
+
   return (
-    <div styleName="Firefox overlay" className={overlayClassName}>
+    <div styleName="overlay" className={overlayClassName}>
       <div>
-        <div styleName="loader" className={className}>
-          <div styleName="loader1" />
-          <div styleName="loader2" />
-          <div styleName="loader3" />
-        </div>
+        {window.loaderUserImage && (
+          <img styleName="loaderImg" src={window.loaderUserImage} alt="Loader logo"/>
+        )}
+
         {data && data.txId && (
           <p styleName="text">
             <FormattedMessage

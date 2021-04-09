@@ -87,6 +87,16 @@ class App extends React.Component<RouteComponentProps<any>, any> {
       multiTabs: false,
       error: "",
     }
+
+    // Farm init options ===============================
+
+    if (config.entry === 'testnet') {
+      window.farm = {
+        farmAddress: '0xa21FC7e1E31269b3AA0E17fF1F1a23C035cE207c',
+        stakingAddress: '0xF6fF95D53E08c9660dC7820fD5A775484f77183A', // Yeenus
+        rewardsAddress: '0x101848D5C5bBca18E6b4431eEdF6B95E9ADF82FA', // Weenus
+      }
+    }
   }
 
   componentDidUpdate() {
@@ -105,7 +115,7 @@ class App extends React.Component<RouteComponentProps<any>, any> {
   }
 
   checkStartPageDisplay = () => {
-    const swapDisalbeStarter = this.getCookie('swapDisalbeStarter')
+    const swapDisalbeStarter = utils.getCookie('swapDisalbeStarter')
     const isWalletCreate = localStorage.getItem('isWalletCreate')
     const isWidgetBuild = config && config.isWidget
 
@@ -133,25 +143,6 @@ class App extends React.Component<RouteComponentProps<any>, any> {
     await createSwapApp()
 
     console.groupEnd()
-  }
-
-  getCookie = (cookieName) => {
-    const name = cookieName + '='
-    const parametersArr = document.cookie.split(';')
-
-    for (let i = 0; i < parametersArr.length; i++) {
-      let parameter = parametersArr[i]
-
-      while (parameter.charAt(0) == ' ') {
-        parameter = parameter.substring(1)
-      }
-
-      if (parameter.indexOf(name) == 0) {
-        return parameter.substring(name.length, parameter.length)
-      }
-    }
-
-    return ''
   }
 
   generadeId(callback) {
@@ -325,15 +316,6 @@ class App extends React.Component<RouteComponentProps<any>, any> {
     const { currencies } = this.props
 
     this.preventMultiTabs(false)
-
-    // Default Farm init options
-    if (config.entry === 'testnet') {
-      window.farm = {
-        farmAddress: '0xa21FC7e1E31269b3AA0E17fF1F1a23C035cE207c',
-        stakingAddress: '0xF6fF95D53E08c9660dC7820fD5A775484f77183A', // Yeenus
-        rewardsAddress: '0x101848D5C5bBca18E6b4431eEdF6B95E9ADF82FA', // Weenus
-      }
-    }
 
     const isWalletCreate = localStorage.getItem(constants.localStorage.isWalletCreate)
 

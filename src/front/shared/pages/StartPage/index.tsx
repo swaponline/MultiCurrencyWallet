@@ -2,8 +2,8 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import CSSModules from 'react-css-modules'
 import styles from './index.scss'
-import { links} from 'helpers'
-import { constants, utils } from 'helpers'
+import { constants, utils, links } from 'helpers'
+import config from "helpers/externalConfig"
 import { FormattedMessage } from 'react-intl'
 import web3Icons, { regularIcons } from 'images'
 
@@ -11,6 +11,13 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 const StartPage = (props) => {
   const { closeStartPage } = props
+
+  // if (config.entry === 'testnet') {
+  //   window.preloaderVisitorImage1 = regularIcons.WALLET_PREVIEW
+  //   window.preloaderVisitorTitle1 = 'Store, send, receive cryptocurrencies (Bitcoin, Ethereum, tokens...) without installation and registration'
+  //   window.preloaderVisitorImage2 = regularIcons.EXCHANGE_PREVIEW
+  //   window.preloaderVisitorTitle2 = 'Trade on the decentralized P2P exchange using atomic swap technology'
+  // }
 
   const getYearSeconds = () => {
     const date = new Date()
@@ -38,22 +45,24 @@ const StartPage = (props) => {
 
       <div styleName="infoWrapper">
         <div styleName="infoBlock">
-          <img src={regularIcons.WALLET_PREVIEW} />
+          <img src={window.preloaderVisitorImage1} alt="Wallet preview" />
           <p>
-            <FormattedMessage
+            {window.preloaderVisitorTitle1}
+            {/* <FormattedMessage
               id="SplashScreenWalletText"
               defaultMessage="Store, send, receive cryptocurrencies (Bitcoin, Ethereum, tokens...) without installation and registration"
-            />
+            /> */}
           </p>
         </div>
 
         <div styleName="infoBlock">
-          <img src={regularIcons.EXCHANGE_PREVIEW} />
+          <img src={window.preloaderVisitorImage2} alt="Exchange preview" />
           <p>
-            <FormattedMessage
+            {window.preloaderVisitorTitle2}
+            {/* <FormattedMessage
               id="SplashScreenExchangeText"
               defaultMessage="Trade on the decentralized P2P exchange using atomic swap technology"
-            />
+            /> */}
           </p>
         </div>
       </div>

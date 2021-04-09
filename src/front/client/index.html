@@ -36,6 +36,10 @@
     </script>
 
     <style>
+      .d-none {
+        display: none;
+      }
+
       .overlay {
         display: flex;
         justify-content: center;
@@ -112,9 +116,27 @@
           </div>
           <div id="beforeJSTip" class="tips">Loading...</div>
         </div>
+
+        <!-- Shown for new users -->
+        <div id="preloader" class="d-none">
+          <h2>Simple interface to access blockchains</h2>
+
+          <div>
+            <div>
+              <img id="preloaderImage1">
+              <p id="preloaderTitle1"></p>
+            </div>
+
+            <div>
+              <img id="preloaderImage2">
+              <p id="preloaderTitle2"></p>
+            </div>
+          </div>
+        </div>
+
         <div class="mb-4 show-on-fail-ls d-none" id="onFailLocalStorageMessage">
-          <span
-            >Not every function works In this window, please open new tab. If
+          <span>
+            Not every function works In this window, please open new tab. If
             the error will repeat please contact admin
             <br />
             <a href="https://t.me/sashanoxon"> https://t.me/sashanoxon </a>
@@ -301,18 +323,23 @@
         window.DEFAULT_FIAT = 'USD';
         window.DefaultCountryCode = '+1';
         window.widgetName = 'own widget name';
-
         window.buyViaCreditCardLink = 'https://buy.itez.com/swaponline';
-      </script>
-      <!-- /Loader before any JS -->
 
-      <!-- It's used by 'WalletSlider' component -->
-      <script defer src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/js/swiper.min.js"
-      integrity="sha256-4sETKhh3aSyi6NRiA+qunPaTawqSMDQca/xLWu27Hg4=" crossorigin="anonymous"></script>
-
-      <script>
         window.logoUrl = '#';
         window.darkLogoUrl = '';
+        window.preloaderVisitorImage1 = '';
+        window.preloaderVisitorTitle1 = '';
+        window.preloaderVisitorImage2 = '';
+        window.preloaderVisitorTitle2 = '';
+        window.preloaderUserText = ''; // TODO: message about private phrase
+
+        if (!getCookie('swapDisalbeStarter')) {
+          document.getElementById("preloader").classList.remove('d-none');
+          document.getElementById("preloaderImage1").src = window.preloaderVisitorImage1;
+          document.getElementById("preloaderTitle1").innerText = window.preloaderVisitorTitle1;
+          document.getElementById("preloaderImage2").src = window.preloaderVisitorImage2;
+          document.getElementById("preloaderTitle2").src = window.preloaderVisitorTitle2;
+        }
 
         if (window.localStorage.getItem('isDark')) {
           window.logoUrl = window.darkLogoUrl || window.logoUrl;
@@ -323,16 +350,24 @@
           window.location.hostname === "swaponline.github.io" ||
           window.location.hostname === "swaponline.io"
         ) {
-          document.getElementById("loaderImg").src = "https://wiki.swaponline.io/assets/swaponline_io.svg";
+          // used by Loader component
+          window.loaderUserImage = 'https://wiki.swaponline.io/assets/swaponline_io.svg';
+          document.getElementById("loaderImg").src = window.loaderUserImage;
         } else {
-          if (window.logoUrl != '#') {
-            document.getElementById("loaderImg").src = window.localStorage.getItem("isDark") ? window.darkLogoUrl : window.logoUrl;
+          if (window.logoUrl !== '#') {
+            document.getElementById("loaderImg").src = window.localStorage.getItem("isDark")
+              ? window.darkLogoUrl
+              : window.logoUrl;
           } else {
             document.getElementById("loaderImg").style.display = 'none'
           }
         }
       </script>
-      <!-- End Modal Scripts -->
+      <!-- /Loader before any JS -->
+
+      <!-- It's used by 'WalletSlider' component -->
+      <script defer src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/js/swiper.min.js"
+      integrity="sha256-4sETKhh3aSyi6NRiA+qunPaTawqSMDQca/xLWu27Hg4=" crossorigin="anonymous"></script>
     </div>
     <link
       rel="stylesheet"

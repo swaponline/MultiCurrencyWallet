@@ -87,19 +87,23 @@ export const getNavigatorLanguage = () => {
   }
 }
 
-export function getCookie(cname) {
-  var name = cname + "=";
-  var ca = document.cookie.split(';');
-  for(var i = 0; i < ca.length; i++) {
-    var c = ca[i];
-    while (c.charAt(0) == ' ') {
-      c = c.substring(1);
+export function getCookie(cookieName) {
+  const name = cookieName + "="
+  const parametersArr = document.cookie.split(';')
+
+  for(var i = 0; i < parametersArr.length; i++) {
+    let parameter = parametersArr[i]
+
+    while (parameter.charAt(0) === ' ') {
+      parameter = parameter.substring(1)
     }
-    if (c.indexOf(name) == 0) {
-      return c.substring(name.length, c.length);
+
+    if (parameter.indexOf(name) === 0) {
+      return parameter.substring(name.length, parameter.length)
     }
   }
-  return "";
+
+  return ""
 }
 
 export function setCookie(name, value, options) {
