@@ -10,14 +10,12 @@ import config from "app-config";
 
 const isWidget = config && config.isWidget
 
-const Loader = ({ overlayClassName, className, data, showMyOwnTip }) => (
-  <div styleName="Firefox overlay" className={overlayClassName}>
+const Loader = ({ overlayClassName, data, showMyOwnTip }) => (
+  <div styleName="overlay" className={overlayClassName}>
     <div>
-      <div styleName="loader" className={className}>
-        <div styleName="loader1" />
-        <div styleName="loader2" />
-        <div styleName="loader3" />
-      </div>
+      {window.loaderLogoUrl && (
+        <img styleName="loaderImg" src={window.loaderLogoUrl} alt="Loader logo"/>
+      )}
       {data && data.txId && (
         <p styleName="text">
           <FormattedMessage

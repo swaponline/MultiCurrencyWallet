@@ -857,6 +857,7 @@
 
         window.logoUrl = '#';
         window.darkLogoUrl = '';
+        window.loaderLogoUrl = '';
 
         if (window.localStorage.getItem('isDark')) {
           window.logoUrl = window.darkLogoUrl || window.logoUrl;
@@ -867,7 +868,8 @@
           window.location.hostname === "swaponline.github.io" ||
           window.location.hostname === "swaponline.io"
         ) {
-          document.getElementById("loaderImg").src = "https://wiki.swaponline.io/assets/swaponline_io.svg";
+          window.loaderLogoUrl = "https://wiki.swaponline.io/assets/swaponline_io.svg";
+          document.getElementById("loaderImg").src = window.loaderLogoUrl;
         } else {
           if (window.logoUrl != '#') {
             document.getElementById("loaderImg").src = window.localStorage.getItem("isDark") ? window.darkLogoUrl : window.logoUrl;
