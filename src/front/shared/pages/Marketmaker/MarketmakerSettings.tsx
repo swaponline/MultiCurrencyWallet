@@ -257,9 +257,33 @@ console.log('>>>> Market token', marketToken)
     })
   }
 
-  cleanupMarketMakerOrder() {}
+  cleanupMarketMakerOrder() {
+    SwapApp.shared().services.orders.getMyOrders().forEach((order) => {
+      SwapApp.shared().services.orders.remove(order.id)
+    })
+  }
 
-  createMakerMakerOrder() {}
+  createMakerMakerOrder() {
+    // clear old orders
+    this.cleanupMarketMakerOrder()
+    /*
+      balance: "9899908898990000"
+      buyAmount: "0.05"
+      buyCurrency: "btc"
+      ethBalance: "3.9929848021431"
+      exchangeRate: "2000"
+      isPartial: true
+      isSending: true
+      isTokenBuy: false
+      isTokenSell: true
+      isTurbo: false
+      manualRate: true
+      minimalestAmountForBuy: 0.00038906
+      minimalestAmountForSell: 0.00038906
+      sellAmount: "100"
+      sellCurrency: "usdt"
+    */
+  }
 
   processDisconnectWallet() {
     metamask.handleDisconnectWallet(() => {
