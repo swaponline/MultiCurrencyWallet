@@ -435,11 +435,8 @@ const addressIsCorrect = (address) => {
 }
 
 
-const send = ({ from, to, amount, feeValue = null, speed,  serviceFee = null }) => {
+const send = ({ from, to, amount, feeValue = null, speed,  serviceFee = hasAdminFee }) => {
   console.log('>>> send', from, to, amount, feeValue, speed)
-  if(feeValue) {
-    feeValue = feeValue.multipliedBy(1e8).toNumber()
-  }
   return new Promise(async (ready, reject) => {
     try {
       let privateKey = null
@@ -450,99 +447,42 @@ const send = ({ from, to, amount, feeValue = null, speed,  serviceFee = null }) 
         return
       }
 
-      const keyPair = bitcoin.ECPair.fromWIF(privateKey, btc.network)
-
-      // fee - from amount - percent
-      let feeFromAmount: number | BigNumber = new BigNumber(0)
-
-      serviceFee = serviceFee || hasAdminFee
-
-      if (serviceFee) {
-        const {
-          fee: adminFee,
-          min: adminFeeMinValue,
-        } = serviceFee
-
-        const adminFeeMin = new BigNumber(adminFeeMinValue)
-
-        feeFromAmount = new BigNumber(adminFee).dividedBy(100).multipliedBy(amount)
-        if (adminFeeMin.isGreaterThan(feeFromAmount)) feeFromAmount = adminFeeMin
-
-        feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue() // Admin fee in satoshi
-      }
-      feeFromAmount = feeFromAmount.toNumber()
-
+      let preparedFees
       try {
-        feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed, address: from, amount, toAddress: to})
-      } catch (eFee) {
-        reject({ message: `Fail estimate fee ` + eFee.message })
-        return
+        preparedFees = await bitcoinUtils.prepareFees({
+          amount,
+          serviceFee,
+          feeValue,
+          speed,
+          from,
+          to
+        })
+      } catch (prepareFeesError) {
+        reject({ message: `Fail prepare fees: ${prepareFeesError}` })
       }
+      const {
+        fundValue,
+        skipValue,
+        feeFromAmount,
+        unspents,
+      } = preparedFees
 
-      let unspents = []
+      let rawTx
       try {
-        unspents = await fetchUnspents(from)
-      } catch (eUnspents) {
-        reject({ message: `Fail get unspents `+ eUnspents.message})
-        return
-      }
-      const toAmount = amount
-      amount = new BigNumber(amount).multipliedBy(1e8).plus(feeValue).plus(feeFromAmount).multipliedBy(1e-8).toNumber()
-      unspents = await prepareUnspents({ unspents, amount })
-      const fundValue = new BigNumber(String(toAmount)).multipliedBy(1e8).integerValue().toNumber()
-      const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
-      const residue = totalUnspent - fundValue - feeValue - feeFromAmount
-      const psbt = new bitcoin.Psbt({ network: btc.network })
-
-      // add main output for recipient
-      psbt.addOutput({
-        address: to,
-        value: fundValue,
-      })
-      // if we have residue wich more then DUST value
-      // then return this value to the sender wallet
-      if (residue > 546) {
-        psbt.addOutput({
-          address: from,
-          value: residue
+        rawTx = await bitcoinUtils.prepareRawTx({
+          from,
+          to,
+          fundValue,
+          skipValue,
+          serviceFee,
+          feeFromAmount,
+          unspents,
+          privateKey,
+          network: btc.network
         })
+      } catch (prepareRawTxError) {
+        return reject({ message: `Fail prepare raw tx: ${prepareRawTxError}` })
       }
-
-      if (serviceFee) {
-        try {
-          psbt.addOutput({
-            address: serviceFee.address,
-            value: feeFromAmount,
-          })
-        } catch (eAdminFee) {
-          reject({ message: `Fail add service fee` + eAdminFee.message })
-          return
-        }
-      }
-
-      for (let i = 0; i < unspents.length; i++) {
-        const { txid, vout } = unspents[i]
-        let rawTx = false
-
-        try {
-          rawTx = await fetchTxRaw(txid, false)
-        } catch (eFetchTxRaw) {
-          reject({ message: `Fail fetch tx raw `+ txid + `(`+eFetchTxRaw.message+`)` })
-          return
-        }
-
-        psbt.addInput({
-          hash: txid,
-          index: vout,
-          //@ts-ignore
-          nonWitnessUtxo: Buffer.from(rawTx, 'hex'),
-        })
-      }
-
-      psbt.signAllInputs(keyPair)
-      psbt.finalizeAllInputs()
-
-      const rawTx = psbt.extractTransaction().toHex();
 
       try {
         const broadcastAnswer = await broadcastTx(rawTx)

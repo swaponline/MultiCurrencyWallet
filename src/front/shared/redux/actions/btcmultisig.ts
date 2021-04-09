@@ -810,9 +810,9 @@ const addPinWallet = async (mnemonicOrKey) => {
   }
 
   let btcPinMnemonicKey: MnemonicKey = localStorage.getItem(constants.privateKeyNames.btcPinMnemonicKey)
-  
-  try { 
-    btcPinMnemonicKey = JSON.parse(btcPinMnemonicKey) 
+
+  try {
+    btcPinMnemonicKey = JSON.parse(btcPinMnemonicKey)
   } catch (e) {
     console.error(e)
   }
@@ -858,9 +858,9 @@ const addSMSWallet = async (mnemonicOrKey) => {
   }
 
   let btcSmsMnemonicKey: MnemonicKey = localStorage.getItem(constants.privateKeyNames.btcSmsMnemonicKey)
-  
-  try { 
-    btcSmsMnemonicKey = JSON.parse(btcSmsMnemonicKey) 
+
+  try {
+    btcSmsMnemonicKey = JSON.parse(btcSmsMnemonicKey)
   } catch (e) {
     console.error(e)
   }
@@ -1071,14 +1071,12 @@ const getTransaction = (ownAddress, ownType) => {
   })
 }
 //@ts-ignore
-const sendSMSProtected = async ({ from, to, amount, feeValue, speed } = {}) => {
+const sendSMSProtected = async ({ from, to, amount, feeValue, speed, serviceFee = hasAdminFee } = {}) => {
   const {
     user: {
       btcMultisigSMSData: {
         privateKey,
-        address: smsAddress,
         publicKeys,
-        publicKey,
       },
       btcData: {
         address,
@@ -1086,88 +1084,52 @@ const sendSMSProtected = async ({ from, to, amount, feeValue, speed } = {}) => {
     },
   } = getState()
 
-  let feeFromAmount: number | BigNumber = new BigNumber(0)
+  const method = 'send_2fa'
 
-  if (hasAdminFee) {
-    const {
-      fee: adminFee,
-      min: adminFeeMinValue,
-    } = hasAdminFee
-
-    const adminFeeMin = new BigNumber(adminFeeMinValue)
-
-    feeFromAmount = new BigNumber(adminFee).dividedBy(100).multipliedBy(amount)
-    if (adminFeeMin.isGreaterThan(feeFromAmount)) feeFromAmount = adminFeeMin
-
-    feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue() // Admin fee in satoshi
-  }
-  feeFromAmount = feeFromAmount.toNumber()
-
-  feeValue = feeValue ? new BigNumber(feeValue).multipliedBy(1e8).toNumber() : await btc.estimateFeeValue({
-    inSatoshis: true,
-    speed,
-    method: 'send_2fa',
-    address: smsAddress,
-    toAddress: to,
-    amount,
-  })
-
-  let unspents = []
-  unspents = await fetchUnspents(from)
-
-  const toAmount = amount
-  amount = new BigNumber(amount).multipliedBy(1e8).plus(feeValue).plus(feeFromAmount).multipliedBy(1e-8).toNumber()
-
-  unspents = await bitcoinUtils.prepareUnspents({ unspents, amount })
-
-  const fundValue = new BigNumber(String(toAmount)).multipliedBy(1e8).integerValue().toNumber()
-  const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
-  const skipValue = totalUnspent - fundValue - feeValue - feeFromAmount
-
-  const p2ms = bitcoin.payments.p2ms({
-    m: 2,
-    n: publicKeys.length,
-    pubkeys: publicKeys,
-    network: btc.network,
-  })
-
-  const psbt = new bitcoin.Psbt({network: btc.network})
-
-  psbt.addOutput({
-    address: to,
-    value: fundValue,
-  })
-
-  if (skipValue > 546) {
-    psbt.addOutput({
-      address: from,
-      value: skipValue
+  let preparedFees
+  try {
+    preparedFees = await bitcoinUtils.prepareFees({
+      amount,
+      serviceFee,
+      feeValue,
+      speed,
+      method,
+      from,
+      to
     })
+  } catch (prepareFeesError) {
+    return {
+      error: prepareFeesError.message,
+    }
   }
+  const {
+    fundValue,
+    skipValue,
+    feeFromAmount,
+    unspents,
+  } = preparedFees
 
-  if (hasAdminFee) {
-    // admin fee output
-    psbt.addOutput({
-      address: hasAdminFee.address,
-      value: feeFromAmount,
+
+  let rawTx
+  try {
+    rawTx = await bitcoinUtils.prepareRawTx({
+      from,
+      to,
+      fundValue,
+      skipValue,
+      serviceFee,
+      feeFromAmount,
+      method,
+      unspents,
+      privateKey,
+      publicKeys,
+      network: btc.network
     })
+  } catch (prepareRawTxError) {
+    return {
+      error: prepareRawTxError.message,
+    }
   }
-
-  for (let i = 0; i < unspents.length; i++) {
-    const { txid, vout } = unspents[i]
-    const rawTx = await actions.btc.fetchTxRaw(txid, { cacheResponse: 5000 })
-    psbt.addInput({
-      hash: txid,
-      index: vout,
-      redeemScript: p2ms.output,
-      nonWitnessUtxo: Buffer.from(rawTx, 'hex'),
-    })
-  }
-
-  psbt.signAllInputs(bitcoin.ECPair.fromWIF(privateKey, btc.network))
-
-  const rawTX = psbt.toHex()
-
   let authKeys = publicKeys.slice(1)
   authKeys = JSON.stringify(authKeys.map((key) => key.toString('Hex')))
 
@@ -1177,7 +1139,7 @@ const sendSMSProtected = async ({ from, to, amount, feeValue, speed } = {}) => {
         address,
         publicKey: authKeys,
         checkSign: _getSign,
-        rawTX,
+        rawTX: rawTx,
         mainnet: process.env.MAINNET ? true : false,
         source: window.location.hostname,
       },
@@ -1188,25 +1150,23 @@ const sendSMSProtected = async ({ from, to, amount, feeValue, speed } = {}) => {
     })
     return {
       ...result,
-      rawTx: rawTX,
+      rawTx,
     }
   } catch (apiError) {
     return {
       error: apiError.message,
-      rawTx: rawTX,
+      rawTx,
     }
   }
 }
 
 //@ts-ignore
-const sendPinProtected = async ({ from, to, amount, feeValue, speed, password, mnemonic, serviceFee = null } = {}) => {
+const sendPinProtected = async ({ from, to, amount, feeValue, speed, password, mnemonic, serviceFee = hasAdminFee } = {}) => {
   const {
     user: {
       btcMultisigPinData: {
         privateKey,
         publicKeys,
-        publicKey,
-        address: pinAddress,
       },
       btcData: {
         address,
@@ -1214,95 +1174,55 @@ const sendPinProtected = async ({ from, to, amount, feeValue, speed, password, m
     },
   } = getState()
 
-  let feeFromAmount: any = new BigNumber(0)
-  let totalAmount = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
+  const method = 'send_2fa'
 
-  serviceFee = serviceFee || hasAdminFee
-
-  if (serviceFee) {
-    const {
-      fee: adminFee,
-      min: adminFeeMinValue,
-    } = serviceFee
-
-    const adminFeeMin = new BigNumber(adminFeeMinValue)
-
-    feeFromAmount = new BigNumber(adminFee).dividedBy(100).multipliedBy(amount)
-    if (adminFeeMin.isGreaterThan(feeFromAmount)) feeFromAmount = adminFeeMin
-
-
-    feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue() // Admin fee in satoshi
-    totalAmount = new BigNumber(totalAmount).plus(feeFromAmount).integerValue().toNumber()
-
-  }
-  feeFromAmount = feeFromAmount.toNumber()
-  feeValue = feeValue ? new BigNumber(feeValue).multipliedBy(1e8).toNumber() : await btc.estimateFeeValue({
-    inSatoshis: true,
-    speed,
-    method: 'send_2fa',
-    address: pinAddress,
-    toAddress: to,
-    amount: new BigNumber(totalAmount).dividedBy(1e8).toNumber(),
-  })
-
-  let unspents = []
-  unspents = await fetchUnspents(from)
-
-  const toAmount = amount
-  amount = new BigNumber(amount).multipliedBy(1e8).plus(feeValue).plus(feeFromAmount).multipliedBy(1e-8).toNumber()
-
-  unspents = await bitcoinUtils.prepareUnspents({ unspents, amount })
-  const fundValue = new BigNumber(String(toAmount)).multipliedBy(1e8).integerValue().toNumber()
-
-  const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
-  let skipValue = totalUnspent - fundValue - feeValue - feeFromAmount
-
-  const p2ms = bitcoin.payments.p2ms({
-    m: 2,
-    n: publicKeys.length,
-    pubkeys: publicKeys,
-    network: btc.network,
-  })
-
-  const psbt = new bitcoin.Psbt({network: btc.network})
-
-  psbt.addOutput({
-    address: to,
-    value: fundValue,
-  })
-
-  if (skipValue > 546) {
-    psbt.addOutput({
-      address: from,
-      value: skipValue
+  let preparedFees
+  try {
+    preparedFees = await bitcoinUtils.prepareFees({
+      amount,
+      serviceFee,
+      feeValue,
+      speed,
+      method,
+      from,
+      to
     })
+  } catch (prepareFeesError) {
+    return {
+      error: prepareFeesError.message,
+    }
   }
+  const {
+    fundValue,
+    skipValue,
+    feeFromAmount,
+    unspents,
+  } = preparedFees
 
-  if (serviceFee) {
-    // admin fee output
-    psbt.addOutput({
-      address: serviceFee.address,
-      value: feeFromAmount,
+
+  let rawTx
+  try {
+    rawTx = await bitcoinUtils.prepareRawTx({
+      from,
+      to,
+      fundValue,
+      skipValue,
+      serviceFee,
+      feeFromAmount,
+      method,
+      unspents,
+      privateKey,
+      publicKeys,
+      network: btc.network
     })
+  } catch (prepareRawTxError) {
+    return {
+      error: prepareRawTxError.message,
+    }
   }
-
-  for (let i = 0; i < unspents.length; i++) {
-    const { txid, vout } = unspents[i]
-    const rawTxo = await actions.btc.fetchTxRaw(txid, { cacheResponse: 5000 })
-    psbt.addInput({
-      hash: txid,
-      index: vout,
-      redeemScript: p2ms.output,
-      nonWitnessUtxo: Buffer.from(rawTxo, 'hex'),
-    })
-  }
-
-  psbt.signAllInputs(bitcoin.ECPair.fromWIF(privateKey, btc.network))
-
-  const rawTX = psbt.toHex()
 
   if (mnemonic) {
-    const mnemonicTx = await signPinMnemonic(rawTX, mnemonic)
+    const mnemonicTx = await signPinMnemonic(rawTx, mnemonic)
     const broadcastResult = await actions.btc.broadcastTx(mnemonicTx)
     if (broadcastResult
       && broadcastResult.txid
@@ -1327,7 +1247,7 @@ const sendPinProtected = async ({ from, to, amount, feeValue, speed, password, m
         address,
         publicKey: authKeys,
         checkSign: _getSign,
-        rawTX: rawTX,
+        rawTX: rawTx,
         mainnet: process.env.MAINNET ? true : false,
         source: window.location.hostname,
         password,
@@ -1365,7 +1285,7 @@ const sendPinProtected = async ({ from, to, amount, feeValue, speed, password, m
   } catch (apiError) {
     return {
       error: apiError.message,
-      rawTX,
+      rawTx,
     }
   }
 }
@@ -1401,7 +1321,7 @@ const confirmSMSProtected = async (smsCode) => {
   return result
 }
 //@ts-ignore
-const send = async ({ from, to, amount, feeValue, speed } = {}) => {
+const send = async ({ from, to, amount, feeValue, speed, serviceFee = hasAdminFee } = {}) => {
   const {
     user: {
       btcMultisigUserData: {
@@ -1411,93 +1331,55 @@ const send = async ({ from, to, amount, feeValue, speed } = {}) => {
   } = getState()
 
   const senderWallet = addressToWallet(from)
-  console.log('senderWallet', from)
 
-  const { address, publicKeys } = senderWallet
+  const { publicKeys } = senderWallet
 
-  feeValue = feeValue ? new BigNumber(feeValue).multipliedBy(1e8).toNumber() : await btc.estimateFeeValue({
-    inSatoshis: true,
-    speed,
-    method: 'send_multisig',
-    address,
-    toAddress: to,
-  })
+  const method = 'send_multisig'
 
-  let feeFromAmount: number | BigNumber = new BigNumber(0)
-
-  if (hasAdminFee) {
-    const {
-      fee: adminFee,
-      min: adminFeeMinValue,
-    } = hasAdminFee
-
-    const adminFeeMin = new BigNumber(adminFeeMinValue)
-
-    feeFromAmount = new BigNumber(adminFee).dividedBy(100).multipliedBy(amount)
-    if (adminFeeMin.isGreaterThan(feeFromAmount)) feeFromAmount = adminFeeMin
-
-
-    feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue()
-  }
-  feeFromAmount = feeFromAmount.toNumber()
-  let unspents = []
-  unspents = await fetchUnspents(from)
-
-  const toAmount = amount
-  amount = new BigNumber(amount).multipliedBy(1e8).plus(feeValue).plus(feeFromAmount).multipliedBy(1e-8).toNumber()
-
-  unspents = await bitcoinUtils.prepareUnspents({ unspents, amount })
-  const fundValue = new BigNumber(String(toAmount)).multipliedBy(1e8).integerValue().toNumber()
-
-  const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
-  const skipValue = totalUnspent - fundValue - feeValue - feeFromAmount
-
-  const p2ms = bitcoin.payments.p2ms({
-    m: 2,
-    n: publicKeys.length,
-    pubkeys: publicKeys,
-    network: btc.network,
-  })
-
-  const p2sh = bitcoin.payments.p2sh({ redeem: p2ms, network: btc.network })
-
-  const psbt = new bitcoin.Psbt({network: btc.network})
-
-  psbt.addOutput({
-    address: to,
-    value: fundValue,
-  })
-
-  if (skipValue > 546) {
-    psbt.addOutput({
-      address: from,
-      value: skipValue
+  let preparedFees
+  try {
+    preparedFees = await bitcoinUtils.prepareFees({
+      amount,
+      serviceFee,
+      feeValue,
+      speed,
+      method,
+      from,
+      to
     })
+  } catch (prepareFeesError) {
+    return {
+      error: prepareFeesError.message,
+    }
   }
+  const {
+    fundValue,
+    skipValue,
+    feeFromAmount,
+    unspents,
+  } = preparedFees
 
-  if (hasAdminFee) {
-    // admin fee output
-    psbt.addOutput({
-      address: hasAdminFee.address,
-      value: feeFromAmount,
+
+  let rawTx
+  try {
+    rawTx = await bitcoinUtils.prepareRawTx({
+      from,
+      to,
+      fundValue,
+      skipValue,
+      serviceFee,
+      feeFromAmount,
+      method,
+      unspents,
+      privateKey,
+      publicKeys,
+      network: btc.network
     })
+  } catch (prepareRawTxError) {
+    return {
+      error: prepareRawTxError.message,
+    }
   }
-
-  for (let i = 0; i < unspents.length; i++) {
-    const { txid, vout } = unspents[i]
-    //@ts-ignore
-    const rawTx = await actions.btc.fetchTxRaw(txid)
-    psbt.addInput({
-      hash: txid,
-      index: vout,
-      redeemScript: p2ms.output,
-      nonWitnessUtxo: Buffer.from(rawTx, 'hex'),
-    })
-  }
-
-  psbt.signAllInputs(bitcoin.ECPair.fromWIF(privateKey, btc.network))
-
-  const rawTx = psbt.toHex();
 
   return rawTx
 }
@@ -1715,7 +1597,7 @@ const signSmsMnemonicAndBuild = (txHash, mnemonic) => {
 const checkPinCanRestory = (mnemonic) => {
   const mnemonicWallet = actions.btc.getWalletByWords(mnemonic, 1)
   let btcSmsMnemonicKey: MnemonicKey = localStorage.getItem(constants.privateKeyNames.btcSmsMnemonicKey)
-  
+
   try {
     btcSmsMnemonicKey = JSON.parse(btcSmsMnemonicKey)
   } catch (e) {

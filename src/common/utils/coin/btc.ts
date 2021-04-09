@@ -3,11 +3,13 @@ import { BigNumber } from 'bignumber.js'
 import * as bitcoin from 'bitcoinjs-lib'
 import typeforce from 'swap.app/util/typeforce'
 import constants from 'common/helpers/constants'
+import btcHelper from '../../../front/shared/helpers/btc'
 
 // Use front API config
 import { default as TESTNET } from '../../../front/config/testnet/api'
 import { default as MAINNET } from '../../../front/config/mainnet/api'
 
+const NETWORK = (process.env.MAINNET) ? `MAINNET` : `TESTNET`
 
 const DUST = 546
 
@@ -186,7 +188,7 @@ const fetchTxInfo = (options) : any => {
       adminFee = new BigNumber(adminOutput[0].value).dividedBy(1e8).toNumber()
     }
 
-    
+
     if (txCoins && txCoins.outputs && txCoins.outputs[0]) {
       receiverAddress = txCoins.outputs[0].address
     }
@@ -200,7 +202,7 @@ const fetchTxInfo = (options) : any => {
       confirmed: !!(baseTxInfo.confirmations),
       confirmations: baseTxInfo.confirmations,
       receiverAddress,
-      
+
       minerFee: baseTxInfo.fees,
       adminFee,
       minerFeeCurrency: 'BTC',
@@ -288,7 +290,7 @@ const prepareUnspents = (options: IPrepareUnspentsOptions): Promise<IBtcUnspent[
 
   return new Promise((resolve, reject) => {
     const needAmount = new BigNumber(amount).multipliedBy(1e8).plus(DUST)
-    
+
     // Sorting all unspent inputs from minimum amount to maximum
     const sortedUnspents: IBtcUnspent[] = unspents.sort((a: IBtcUnspent, b: IBtcUnspent) => {
       return (new BigNumber(a.satoshis).isEqualTo(b.satoshis))
@@ -297,7 +299,7 @@ const prepareUnspents = (options: IPrepareUnspentsOptions): Promise<IBtcUnspent[
           ? 1
           : -1
     })
-    
+
     // let's try to find one unspent input which will enough for all commission
     let oneUnspent: IBtcUnspent = null
     sortedUnspents.forEach((unspent: IBtcUnspent) => {
@@ -570,7 +572,7 @@ const getTransactionBlocyper = (options) => {
           let value = isSelf
             ? item.fees
             : item.outputs.filter((output) => {
-              
+
               const currentAddress = output.addresses[0]
 
               return direction === 'in'
@@ -605,7 +607,7 @@ const getTransactionBlocyper = (options) => {
   })
 }
 
-/** 
+/**
   Draft - взято из фронта, там не используется
   Но нужно реализовать
   игноры - явные ошибки - есть зависимости от фронта shared/actions/btc
@@ -623,7 +625,7 @@ const getTransactionBitcore = (options) => {
     apiBitpay,
     NETWORK,
   } = options
-  
+
   return new Promise(async (resolve) => {
     // @ts-ignore
     const myAllWallets = getAllMyAddresses()
@@ -827,6 +829,170 @@ const estimateFeeValue = async (options) => {
   return finalFeeValue
 }
 
+const prepareFees = async ({
+  amount,
+  serviceFee,
+  feeValue,
+  speed,
+  method = 'send',
+  from,
+  to
+}) => {
+  let feeFromAmount: number | BigNumber = new BigNumber(0)
+
+  if (serviceFee) {
+    const {
+      fee: adminFee,
+      min: adminFeeMinValue,
+    } = serviceFee
+
+    const adminFeeMin = new BigNumber(adminFeeMinValue)
+
+    feeFromAmount = new BigNumber(adminFee).dividedBy(100).multipliedBy(amount)
+    if (adminFeeMin.isGreaterThan(feeFromAmount)) feeFromAmount = adminFeeMin
+
+
+    feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue() // Admin fee in satoshi
+
+  }
+  feeFromAmount = feeFromAmount.toNumber()
+  try {
+    feeValue = feeValue ?
+      new BigNumber(feeValue).multipliedBy(1e8).toNumber() :
+      await btcHelper.estimateFeeValue({ // after refactoring helpers need use here method
+        inSatoshis: true,
+        speed,
+        method,
+        address: from,
+        toAddress: to,
+        amount,
+      })
+  } catch (eFee) {
+    return { message: `Fail estimate fee ` + eFee.message }
+  }
+
+  let unspents = []
+  try {
+    unspents = await fetchUnspents({address: from, NETWORK})
+  } catch (eUnspents) {
+    return { message: `Fail fetch unspents `+ eUnspents.message}
+  }
+
+  const toAmount = amount
+  amount = new BigNumber(amount).multipliedBy(1e8).plus(feeValue).plus(feeFromAmount).multipliedBy(1e-8).toNumber()
+
+  try {
+    unspents = await prepareUnspents({ unspents, amount })
+  } catch (eUnspents) {
+    return { message: `Fail prepare unspents `+ eUnspents.message}
+  }
+
+  const fundValue = new BigNumber(toAmount).multipliedBy(1e8).integerValue().toNumber()
+
+  const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
+  const skipValue = totalUnspent - fundValue - feeValue - feeFromAmount
+
+  return {
+    fundValue,
+    skipValue,
+    feeFromAmount,
+    unspents,
+  }
+}
+
+const prepareRawTx = async ({
+  from,
+  to,
+  fundValue,
+  skipValue,
+  serviceFee,
+  feeFromAmount,
+  method = 'send',
+  unspents,
+  privateKey,
+  publicKeys = [Buffer.from('')],
+  network
+}) => {
+  const psbt = new bitcoin.Psbt({network})
+
+  psbt.addOutput({
+    address: to,
+    value: fundValue,
+  })
+
+  if (skipValue > 546) {
+    psbt.addOutput({
+      address: from,
+      value: skipValue
+    })
+  }
+
+  if (serviceFee) {
+    psbt.addOutput({
+      address: serviceFee.address,
+      value: feeFromAmount,
+    })
+  }
+
+  const keyPair = bitcoin.ECPair.fromWIF(privateKey, network)
+
+  const hasOneSignature = !['send_2fa', 'send_multisig'].includes(method)
+
+  if (hasOneSignature) {
+    for (let i = 0; i < unspents.length; i++) {
+      const { txid, vout } = unspents[i]
+      let rawTx = ''
+
+      try {
+        rawTx = await fetchTxRaw({ txId: txid, cacheResponse: 5000, NETWORK })
+      } catch (eFetchTxRaw) {
+        return { message: `Fail fetch tx raw `+ txid + `(`+eFetchTxRaw.message+`)` }
+      }
+
+      psbt.addInput({
+        hash: txid,
+        index: vout,
+        nonWitnessUtxo: Buffer.from(rawTx, 'hex'),
+      })
+    }
+    const keyPair = bitcoin.ECPair.fromWIF(privateKey, network)
+
+    psbt.signAllInputs(keyPair)
+    psbt.finalizeAllInputs()
+
+    return psbt.extractTransaction().toHex();
+  }
+
+  const p2ms = bitcoin.payments.p2ms({
+    m: 2,
+    n: publicKeys.length,
+    pubkeys: publicKeys,
+    network,
+  })
+
+  for (let i = 0; i < unspents.length; i++) {
+    const { txid, vout } = unspents[i]
+    let rawTx = ''
+
+    try {
+      rawTx = await fetchTxRaw({ txId: txid, cacheResponse: 5000, NETWORK })
+    } catch (eFetchTxRaw) {
+      return { message: `Fail fetch tx raw `+ txid + `(`+eFetchTxRaw.message+`)` }
+    }
+
+    psbt.addInput({
+      hash: txid,
+      index: vout,
+      redeemScript: p2ms.output,
+      nonWitnessUtxo: Buffer.from(rawTx, 'hex'),
+    })
+  }
+
+  psbt.signAllInputs(keyPair)
+  return psbt.toHex()
+}
+
+
 export default {
   fetchBalance,
   fetchTx,
@@ -841,6 +1007,8 @@ export default {
   getCore,
 
   prepareUnspents,
+  prepareFees,
+  prepareRawTx,
 
   fetchTxInputScript,
 }
