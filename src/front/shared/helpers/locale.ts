@@ -16,5 +16,3 @@ export const onChangelocalisedUrl = (locale, link = '') => `/${prepareUrl(locale
 export const localisedUrl = (locale, link = '') => `/${prepareUrl(locale, link)}`
 
 export const unlocalisedUrl = (locale, link = '') => locale === 'en' ? link : link.split(`/${locale}`)[1] // ??
-
-export const relocalisedUrl = (locale, link = '') => onChangelocalisedUrl(locale.toLowerCase(), link)
