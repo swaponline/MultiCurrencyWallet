@@ -33,6 +33,7 @@ rm -rf bsc-mainnet
 rm -rf bsc-testnet
 rm -rf *.css
 rm -rf *.js
+rm -rf *.map # remove source maps
 
 # update files in repo
 # make mainnet
