@@ -1,18 +1,20 @@
-import React, { Component } from 'react'
+import React from 'react'
 
 import { constants } from 'helpers'
 
 import styles from './SwitchLang.scss'
 import CSSModules from 'react-css-modules'
 
-import { relocalisedUrl } from 'helpers/locale'
 import { setCookie } from 'helpers/utils'
-import { FormattedMessage, injectIntl, IntlShape } from 'react-intl'
+import { FormattedMessage, injectIntl } from 'react-intl'
 import feedback from 'helpers/feedback'
 
-@CSSModules(styles, { allowMultiple: true })
-class SwitchLang extends Component<{intl: IntlShape}, null> {
-  switchLang = (event, locale) => {
+const isDark = localStorage.getItem(constants.localStorage.isDark)
+
+const SwitchLang = (props) => {
+  const { intl: { locale: intlLocale } } = props
+
+  const switchLang = (event, locale) => {
     event.preventDefault()
 
     feedback.i18n.switched(locale)
@@ -24,72 +26,72 @@ class SwitchLang extends Component<{intl: IntlShape}, null> {
     }, 10)
   }
 
-  render() {
-    const {
-      intl: { locale },
-    } = this.props
-
-    const isDark = localStorage.getItem(constants.localStorage.isDark)
-
-    return (
-      <div styleName="langSwitcher">
-        <a
-          href={locale.toUpperCase() !== 'EN' ? `#${relocalisedUrl(locale)}` : undefined}
-          styleName={`language ${isDark ? '--dark' : ''}`}
-          onClick={(e) => {
-            this.switchLang(e, 'EN')
-            return false
-          }}
-        >
-          <FormattedMessage id="SwitchLang20" defaultMessage="EN" />
-        </a>
-        |
-        <a
-          href={locale.toUpperCase() !== 'RU' ? `#${relocalisedUrl(locale)}` : undefined}
-          styleName={`language ${isDark ? '--dark' : ''}`}
-          onClick={(e) => {
-            this.switchLang(e, 'RU')
-            return false
-          }}
-        >
-          <FormattedMessage id="SwitchLang24" defaultMessage="RU" />
-        </a>
-        |
-        <a
-          href={locale.toUpperCase() !== 'NL' ? `#${relocalisedUrl(locale)}` : undefined}
-          styleName={`language ${isDark ? '--dark' : ''}`}
-          onClick={(e) => {
-            this.switchLang(e, 'NL')
-            return false
-          }}
-        >
-          <FormattedMessage id="SwitchLangNL" defaultMessage="NL" />
-        </a>
-        |
-        <a
-          href={locale.toUpperCase() !== 'ES' ? `#${relocalisedUrl(locale)}` : undefined}
-          styleName={`language ${isDark ? '--dark' : ''}`}
-          onClick={(e) => {
-            this.switchLang(e, 'ES')
-            return false
-          }}
-        >
-          <FormattedMessage id="SwitchLangES" defaultMessage="ES" />
-        </a>
-        |
-        <a
-          href={locale.toUpperCase() !== 'PL' ? `#${relocalisedUrl(locale)}` : undefined}
-          styleName={`language ${isDark ? '--dark' : ''}`}
-          onClick={(e) => {
-            this.switchLang(e, 'PL')
-            return false
-          }}
-        >
-          <FormattedMessage id="SwitchLangPL" defaultMessage="PL" />
-        </a>
-      </div>
-    )
+  const localeIsNotMatched = (locale) => {
+    return intlLocale.toUpperCase() !== locale
+      ? true
+      : undefined // if url is undefined then we don't define styles
   }
+
+  return (
+    <div styleName="langSwitcher">
+      <a
+        href={localeIsNotMatched('EN') && '#/'}
+        styleName={`language ${isDark ? '--dark' : ''}`}
+        onClick={(e) => {
+          switchLang(e, 'EN')
+          return false
+        }}
+      >
+        <FormattedMessage id="SwitchLang20" defaultMessage="EN" />
+      </a>
+      |
+      <a
+        href={localeIsNotMatched('RU') && '#/'}
+        styleName={`language ${isDark ? '--dark' : ''}`}
+        onClick={(e) => {
+          switchLang(e, 'RU')
+          return false
+        }}
+      >
+        <FormattedMessage id="SwitchLang24" defaultMessage="RU" />
+      </a>
+      |
+      <a
+        href={localeIsNotMatched('NL') && '#/'}
+        styleName={`language ${isDark ? '--dark' : ''}`}
+        onClick={(e) => {
+          switchLang(e, 'NL')
+          return false
+        }}
+      >
+        <FormattedMessage id="SwitchLangNL" defaultMessage="NL" />
+      </a>
+      |
+      <a
+        href={localeIsNotMatched('ES') && '#/'}
+        styleName={`language ${isDark ? '--dark' : ''}`}
+        onClick={(e) => {
+          switchLang(e, 'ES')
+          return false
+        }}
+      >
+        <FormattedMessage id="SwitchLangES" defaultMessage="ES" />
+      </a>
+      |
+      <a
+        href={localeIsNotMatched('PL') && '#/'}
+        styleName={`language ${isDark ? '--dark' : ''}`}
+        onClick={(e) => {
+          switchLang(e, 'PL')
+          return false
+        }}
+      >
+        <FormattedMessage id="SwitchLangPL" defaultMessage="PL" />
+      </a>
+    </div>
+  )
 }
 
-export default injectIntl(SwitchLang)
+export default injectIntl(
+  CSSModules(SwitchLang, styles, { allowMultiple: true })
+)
