@@ -483,10 +483,10 @@
 
         <div class="starter-modal__buttons">
           <div class="starter-modal__btn-container">
-            <button id="starter-modal-create-btn" class="starter-modal__btn starter-modal__btn_create-wallet">
+            <button id="preloaderCreateBtn" class="starter-modal__btn">
               Create Wallet
             </button>
-            <button class="starter-modal__btn starter-modal__btn_connect-wallet">
+            <button id="preloaderConnectBtn" class="starter-modal__btn">
               <?xml version="1.0" encoding="utf-8"?>
               <svg version="1.1"
                 xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 318.6 318.6">
@@ -549,13 +549,13 @@
               Connect Wallet
             </button>
           </div>
-          <div id="starter-modal-restore-btn" class="starter-modal__btn-container">
-            <button id="starter-modal__btn-restore-wallet" class="starter-modal__btn starter-modal__btn_skip starter-modal__btn-restore-wallet">
+          <div class="starter-modal__btn-container">
+            <button id="preloaderRestoreBtn" class="starter-modal__btn starter-modal__btn_skip">
               Restore from 12-word seed
             </button> 
           </div>
-          <div id="starter-modal-skip-btn" class="starter-modal__link-container">
-            <button class="starter-modal__link starter-modal__link_skip">
+          <div class="starter-modal__link-container">
+            <button id="preloaderSkipBtn" class="starter-modal__link">
               Skip
             </button>
           </div>
@@ -784,15 +784,6 @@
           return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate()
         }
 
-        // Open first screen
-        function swapOpenStarterModal() {
-          document.getElementById('starter-modal').classList.remove('d-none');
-        }
-        // Close first screen
-        function swapCloseStarterModal() {
-          document.getElementById('starter-modal').classList.add('d-none');
-        }
-        
         function swapIsHome() {
           const swapLocationHash = window.location.hash;
           if (swapLocationHash == '' || swapLocationHash == '#/') {
@@ -806,10 +797,6 @@
           return swapLocalStorageWallet !== null
         }
 
-        function hasMetamask() {
-          return !(!window.ethereum || false);
-        }
-
         // Swap Modal
         const swapDisalbeStarter = getCookie('swapDisalbeStarter');
 
@@ -821,15 +808,15 @@
           !swapIsWalletCreate() &&
           localStorageIsOk
         ) {
-          swapOpenStarterModal();
+          document.getElementById('starter-modal').classList.remove('d-none');
         }
       </script>
 
       <script>
-        const btnCreateWallet = document.querySelector('.starter-modal__btn_create-wallet');
-        const btnConnectWallet = document.querySelector('.starter-modal__btn_connect-wallet');
-        const btnSkip = document.querySelector('.starter-modal__link_skip');
-        const btnRestoryWallet = document.getElementById('starter-modal__btn-restore-wallet');
+        const btnCreateWallet = document.getElementById('preloaderCreateBtn');
+        const btnConnectWallet = document.getElementById('preloaderConnectBtn');
+        const btnSkip = document.getElementById('preloaderSkipBtn');
+        const btnRestoryWallet = document.getElementById('preloaderRestoreBtn');
 
         btnCreateWallet.addEventListener('click', function () {
           redirectionTo('#/createWallet')
@@ -849,7 +836,8 @@
 
         function redirectionTo(urlPath) {
           document.location.href = urlPath;
-          swapCloseStarterModal();
+          document.getElementById('starter-modal').classList.add('d-none');
+
           setCookie('swapDisalbeStarter', 'true', {
             expires: SEC_IN_YEAR * 5,
           });
@@ -868,6 +856,7 @@
           window.location.hostname === "swaponline.github.io" ||
           window.location.hostname === "swaponline.io"
         ) {
+          // used by Loader component
           window.loaderLogoUrl = "https://wiki.swaponline.io/assets/swaponline_io.svg";
           document.getElementById("loaderImg").src = window.loaderLogoUrl;
         } else {

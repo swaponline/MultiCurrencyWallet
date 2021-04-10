@@ -352,18 +352,30 @@ class App extends React.Component<RouteComponentProps<any>, any> {
         completeCreation: true,
       }))
     } else {
-      // TODO: improve code below
-      const setComplete = () => {
-        this.setState(() => ({
-          completeCreation: true,
-        }))
-      }
-
-      document.getElementById('starter-modal-create-btn').addEventListener('click', setComplete)
-      document.getElementById('starter-modal-connect-btn').addEventListener('click', setComplete)
-      document.getElementById('starter-modal-restore-btn').addEventListener('click', setComplete)
-      document.getElementById('starter-modal-skip-btn').addEventListener('click', setComplete)
+      this.addStartPageListeners()
     }
+  }
+
+  setCompleteCreation = () => {
+    this.removeStartPageListeners()
+    this.setState(() => ({
+      completeCreation: true,
+    }))
+  }
+
+  addStartPageListeners = () => {
+    // id from index.html start page
+    document.getElementById('preloaderCreateBtn').addEventListener('click', this.setCompleteCreation)
+    document.getElementById('preloaderConnectBtn').addEventListener('click', this.setCompleteCreation)
+    document.getElementById('preloaderRestoreBtn').addEventListener('click', this.setCompleteCreation)
+    document.getElementById('preloaderSkipBtn').addEventListener('click', this.setCompleteCreation)
+  }
+
+  removeStartPageListeners = () => {
+    document.getElementById('preloaderCreateBtn').removeEventListener('click', this.setCompleteCreation)
+    document.getElementById('preloaderConnectBtn').removeEventListener('click', this.setCompleteCreation)
+    document.getElementById('preloaderRestoreBtn').removeEventListener('click', this.setCompleteCreation)
+    document.getElementById('preloaderSkipBtn').removeEventListener('click', this.setCompleteCreation)
   }
 
   checkIfDashboardModalsAllowed = () => {
@@ -413,7 +425,7 @@ class App extends React.Component<RouteComponentProps<any>, any> {
   }
 
   render() {
-    const { initialFetching, multiTabs, error } = this.state;
+    const { initialFetching, multiTabs } = this.state;
     //@ts-ignore
     const { children, ethAddress, btcAddress, ghostAddress, nextAddress, tokenAddress, history, dashboardModalsAllowed } = this.props;
 
@@ -433,9 +445,14 @@ class App extends React.Component<RouteComponentProps<any>, any> {
       return <PreventMultiTabs onSwitchTab={this.handleSwitchTab} />
     }
 
-    if (isFetching) {
-      //@ts-ignore
-      return <Loader />
+    if (isFetching && localStorage.getItem('isWalletCreate') === null) {
+      return (
+        <Loader 
+          showMyOwnTip={
+            <FormattedMessage id="Table96" defaultMessage="Loading..." />
+          }
+        />
+      )
     }
 
     const isSeoDisabled = isWidget || isWidgetBuild || isCalledFromIframe
