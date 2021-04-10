@@ -107,7 +107,7 @@ const updUserMut = gql`
 
 let serverBaseUrl = 'http://localhost:5050/graphql'
 if (process.env.NODE_ENV === 'production') {
-  serverBaseUrl = 'https://stat.swaponline.io/graphql'
+  serverBaseUrl = 'https://analysis.swaponline.io/graphql'
 }
 
 const addUser = async (createdBy, domain, data) => {
