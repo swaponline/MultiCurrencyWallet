@@ -583,11 +583,6 @@
 │   │   │   ├── Footer
 │   │   │   │   ├── Footer.scss
 │   │   │   │   ├── Footer.tsx
-│   │   │   │   ├── ProgressBar
-│   │   │   │   │   └── ProgressBar.tsx
-│   │   │   │   ├── Referral
-│   │   │   │   │   ├── Referral.scss
-│   │   │   │   │   └── Referral.tsx
 │   │   │   │   ├── SocialMenu
 │   │   │   │   │   ├── SocialMenu.scss
 │   │   │   │   │   └── SocialMenu.tsx
