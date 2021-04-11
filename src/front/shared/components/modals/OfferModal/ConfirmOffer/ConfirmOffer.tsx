@@ -15,7 +15,7 @@ import ExchangeRate from './ExchangeRate/ExchangeRate'
 import { connect } from 'redaction'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import MIN_AMOUNT_OFFER from 'common/helpers/constants/MIN_AMOUNT'
-import coinsWithDynamicFee from 'helpers/constants/coinsWithDynamicFee'
+import COINS_WITH_DYNAMIC_FEE from 'common/helpers/constants/COINS_WITH_DYNAMIC_FEE'
 import feedback from 'shared/helpers/feedback'
 
 
@@ -47,7 +47,7 @@ class ConfirmOffer extends Component<any, any> {
       }))
     } else {
       const feeValueDynamic = await helpers[sellCurrency].estimateFeeValue({ method: 'swap', speed: 'fast' })
-      const feeValue = coinsWithDynamicFee.includes(sellCurrency)
+      const feeValue = COINS_WITH_DYNAMIC_FEE.includes(sellCurrency)
         ? feeValueDynamic
         : MIN_AMOUNT_OFFER[sellCurrency]
       this.setState(() => ({

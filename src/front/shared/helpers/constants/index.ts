@@ -5,8 +5,6 @@ import modals from './modals'
 import tradeTicker from './TRADE_TICKERS'
 import tokenDecimals from './TOKEN_DECIMALS'
 import pairTypes from './PAIR_TYPES'
-import coinsWithDynamicFee from './coinsWithDynamicFee'
-
 
 export default {
   localStorage,
@@ -16,5 +14,4 @@ export default {
   notifications,
   pairTypes,
   modals,
-  coinsWithDynamicFee,
 }

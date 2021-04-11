@@ -20,7 +20,7 @@ import Button from 'components/controls/Button/Button'
 import Toggle from 'components/controls/Toggle/Toggle'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 import { FormattedMessage } from 'react-intl'
-import coinsWithDynamicFee from 'helpers/constants/coinsWithDynamicFee'
+import COINS_WITH_DYNAMIC_FEE from 'common/helpers/constants/COINS_WITH_DYNAMIC_FEE'
 import TurboIcon from 'shared/components/ui/TurboIcon/TurboIcon'
 import MIN_AMOUNT_OFFER from 'common/helpers/constants/MIN_AMOUNT'
 import turboSwap from 'common/helpers/turboSwap'
@@ -159,7 +159,7 @@ export default class AddOffer extends Component<any, any> {
   }
 
   correctMinAmountSell = async (sellCurrency) => {
-    if (coinsWithDynamicFee.includes(sellCurrency) && !helpers.ethToken.isEthToken({ name: sellCurrency })) {
+    if (COINS_WITH_DYNAMIC_FEE.includes(sellCurrency) && !helpers.ethToken.isEthToken({ name: sellCurrency })) {
       const minimalestAmountForSell = await helpers[sellCurrency].estimateFeeValue({ method: 'swap', speed: 'fast' })
       this.setState({
         minimalestAmountForSell,
@@ -168,7 +168,7 @@ export default class AddOffer extends Component<any, any> {
   }
 
   correctMinAmountBuy = async (buyCurrency) => {
-    if (coinsWithDynamicFee.includes(buyCurrency)) {
+    if (COINS_WITH_DYNAMIC_FEE.includes(buyCurrency)) {
       const minimalestAmountForBuy = await helpers[buyCurrency].estimateFeeValue({ method: 'swap', speed: 'fast' })
       this.setState({
         minimalestAmountForBuy,
@@ -459,11 +459,11 @@ export default class AddOffer extends Component<any, any> {
     const linked = Link.all(this, 'exchangeRate', 'buyAmount', 'sellAmount')
 
     const minimalAmountSell = !isTokenSell
-      ? coinsWithDynamicFee.includes(sellCurrency) ? minimalestAmountForSell : MIN_AMOUNT_OFFER[buyCurrency]
+      ? COINS_WITH_DYNAMIC_FEE.includes(sellCurrency) ? minimalestAmountForSell : MIN_AMOUNT_OFFER[buyCurrency]
       : 0.001
 
     const minimalAmountBuy = !isTokenBuy
-      ? coinsWithDynamicFee.includes(buyCurrency) ? minimalestAmountForBuy : MIN_AMOUNT_OFFER[buyCurrency]
+      ? COINS_WITH_DYNAMIC_FEE.includes(buyCurrency) ? minimalestAmountForBuy : MIN_AMOUNT_OFFER[buyCurrency]
       : 0.001
 
     // temporary: hide turboswaps on mainnet

@@ -14,6 +14,7 @@ import { isMobile } from 'react-device-detect'
 import { inputReplaceCommaWithDot } from 'helpers/domUtils'
 import { localisedUrl } from 'helpers/locale'
 import MIN_AMOUNT from 'common/helpers/constants/MIN_AMOUNT'
+import COINS_WITH_DYNAMIC_FEE from 'common/helpers/constants/COINS_WITH_DYNAMIC_FEE'
 import redirectTo from 'helpers/redirectTo'
 import getCurrencyKey from 'helpers/getCurrencyKey'
 import lsDataCache from 'helpers/lsDataCache'
@@ -376,7 +377,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
           method: 'send',
           speed: 'fast',
         }))
-      } else if (constants.coinsWithDynamicFee.includes(currentCoin)) {
+      } else if (COINS_WITH_DYNAMIC_FEE.includes(currentCoin)) {
         let method = 'send'
         if (selectedItem.isUserProtected) method = 'send_multisig'
         if (selectedItem.isPinProtected || selectedItem.isSmsProtected) method = 'send_2fa'
