@@ -5,10 +5,8 @@ import modals from './modals'
 import tradeTicker from './TRADE_TICKERS'
 import tokenDecimals from './TOKEN_DECIMALS'
 import pairTypes from './PAIR_TYPES'
-import minAmount from './minAmount'
 import minAmountOffer from './minAmountOffer'
 import coinsWithDynamicFee from './coinsWithDynamicFee'
-import customEcxchangeRate from './customEcxchangeRate'
 
 
 export default {
@@ -19,8 +17,6 @@ export default {
   notifications,
   pairTypes,
   modals,
-  minAmount,
   minAmountOffer,
   coinsWithDynamicFee,
-  customEcxchangeRate,
 }
