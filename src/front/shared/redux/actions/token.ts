@@ -1,8 +1,9 @@
 import ERC20_ABI from 'human-standard-token-abi'
 import helpers, { apiLooper, constants, cacheStorageGet, cacheStorageSet } from 'helpers'
+import DEFAULT_CURRENCY_PARAMETERS from 'common/helpers/constants/DEFAULT_CURRENCY_PARAMETERS'
 import { getState } from 'redux/core'
 import actions from 'redux/actions'
-import { web3, getWeb3 } from 'helpers/web3'
+import { web3 } from 'helpers/web3'
 import reducers from 'redux/core/reducers'
 import config from 'helpers/externalConfig'
 import { BigNumber } from 'bignumber.js'
@@ -254,7 +255,7 @@ type FetchFeesResponse = {
 const fetchFees = async (params: FetchFeesParams = {}): Promise<FetchFeesResponse> => {
   const { gasPrice, gasLimit, speed } = params
   const newGasPrice = gasPrice || await helpers.ethToken.estimateGasPrice({ speed })
-  const newGasLimit = gasLimit || constants.defaultCurrencyParameters.ethToken.limit.send
+  const newGasLimit = gasLimit || DEFAULT_CURRENCY_PARAMETERS.ethToken.limit.send
 
   return {
     gas: newGasLimit,

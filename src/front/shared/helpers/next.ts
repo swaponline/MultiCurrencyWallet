@@ -1,7 +1,7 @@
 import { getState } from 'redux/core'
 import actions from 'redux/actions'
 import config from './externalConfig'
-import DEFAULT_CURRENCY_PARAMETERS from './constants/DEFAULT_CURRENCY_PARAMETERS'
+import DEFAULT_CURRENCY_PARAMETERS from 'common/helpers/constants/DEFAULT_CURRENCY_PARAMETERS'
 import constants from 'common/helpers/constants'
 import request from 'common/utils/request'
 import BigNumber from 'bignumber.js'
