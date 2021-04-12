@@ -208,11 +208,6 @@ const login = (privateKey, mnemonic = null, mnemonicKeys = null) => {
   return data.privateKey
 }
 
-const isETHAddress = (address) => {
-  const { user: { ethData } } = getState()
-  if (ethData && ethData.address && ethData.address.toLowerCase() === address.toLowerCase()) return ethData
-}
-
 const getBalance = () => {
   const {
     user: {
@@ -608,7 +603,6 @@ export default {
   getInvoices,
   getTx,
   getLinkToInfo,
-  isETHAddress,
   getWalletByWords,
   getRandomMnemonicWords,
   validateMnemonicWords,
