@@ -1,20 +1,15 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import helpers, { constants, links } from 'helpers'
+import { links } from 'helpers'
 import { Link } from 'react-router-dom'
-import actions from 'redux/actions'
 
 import styles from './UserTooltip.scss'
 import CSSModules from 'react-css-modules'
 import ArrowRightSvg from './images/arrow-right.svg'
-import { BigNumber } from 'bignumber.js'
 
 import { TimerButton } from 'components/controls'
 import { FormattedMessage } from 'react-intl'
-
-import config from 'app-config'
-
 
 @CSSModules(styles)
 export default class UserTooltip extends Component<any, any> {
