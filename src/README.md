@@ -1,4 +1,3 @@
-```
 .
 ├── back
 │   └── nextcoin
@@ -165,6 +164,8 @@
 │   │   ├── coin.ts
 │   │   ├── network.ts
 │   │   └── swap.ts
+│   ├── erc20tokens
+│   │   └── index.ts
 │   ├── examples
 │   │   ├── send.ts
 │   │   └── unspents.ts
@@ -432,6 +433,7 @@
 │   │   │   └── web3.js
 │   │   ├── bsc-mainnet.dev.js
 │   │   ├── bsc-mainnet.prod.js
+│   │   ├── bsc-mainnet.widget.prod.js
 │   │   ├── bsc-testnet
 │   │   │   ├── api.js
 │   │   │   ├── erc20.js
@@ -446,6 +448,7 @@
 │   │   │   └── web3.js
 │   │   ├── bsc-testnet.dev.js
 │   │   ├── bsc-testnet.prod.js
+│   │   ├── bsc-testnet.widget.prod.js
 │   │   ├── chrome-extension-mainnet.prod.js
 │   │   ├── chrome-extension-testnet.prod.js
 │   │   ├── default.js
@@ -583,11 +586,6 @@
 │   │   │   ├── Footer
 │   │   │   │   ├── Footer.scss
 │   │   │   │   ├── Footer.tsx
-│   │   │   │   ├── ProgressBar
-│   │   │   │   │   └── ProgressBar.tsx
-│   │   │   │   ├── Referral
-│   │   │   │   │   ├── Referral.scss
-│   │   │   │   │   └── Referral.tsx
 │   │   │   │   ├── SocialMenu
 │   │   │   │   │   ├── SocialMenu.scss
 │   │   │   │   │   └── SocialMenu.tsx
@@ -1094,6 +1092,7 @@
 │   │   │   ├── web3.ts
 │   │   │   └── wpLogoutModal.ts
 │   │   ├── images
+│   │   │   ├── close.svg
 │   │   │   ├── custom.svg
 │   │   │   ├── index.ts
 │   │   │   ├── liquality.png
@@ -1222,9 +1221,6 @@
 │   │   │   │   │   └── Row.tsx
 │   │   │   │   └── SwapsHistory
 │   │   │   │       ├── RowHistory
-│   │   │   │       │   ├── images
-│   │   │   │       │   │   ├── accept.svg
-│   │   │   │       │   │   └── arrow-right.svg
 │   │   │   │       │   ├── RowHistory.scss
 │   │   │   │       │   └── RowHistory.tsx
 │   │   │   │       ├── SwapsHistory.scss
@@ -1239,6 +1235,11 @@
 │   │   │   ├── LocalStorage
 │   │   │   │   ├── LocalStorage.scss
 │   │   │   │   └── LocalStorage.tsx
+│   │   │   ├── Marketmaker
+│   │   │   │   ├── Marketmaker.scss
+│   │   │   │   ├── Marketmaker.tsx
+│   │   │   │   ├── SwapRow.scss
+│   │   │   │   └── SwapRow.tsx
 │   │   │   ├── Multisign
 │   │   │   │   └── Btc
 │   │   │   │       ├── Btc.scss
@@ -1422,5 +1423,4 @@
 │       └── run.js
 └── README.md
 
-368 directories, 1071 files
-```
+363 directories, 1060 files

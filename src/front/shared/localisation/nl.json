@@ -1235,20 +1235,6 @@
     ]
   },
   {
-    "id": "ReferralLinks1",
-    "message": "Share the link above!  Each user who visits swap through the above referral link will get up to 10 SWAP tokens.  What’s in it for you?  Each time one of those users makes a successful swap (including operations with bonus tokens), you’ll earn SWAP tokens too!",
-    "files": [
-      "src/front/shared/components/Footer/Referral/Referral.tsx"
-    ]
-  },
-  {
-    "id": "ReferralLinks2",
-    "message": "Limits and conditions",
-    "files": [
-      "src/front/shared/components/Footer/Referral/Referral.tsx"
-    ]
-  },
-  {
     "id": "FeeControler48",
     "message": "Gekopieerd",
     "files": [

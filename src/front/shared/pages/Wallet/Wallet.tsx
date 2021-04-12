@@ -458,6 +458,7 @@ class Wallet extends Component<any, any> {
             address: item && item.address ? item.address : '',
             balance: item && item.balance ? new BigNumber(item.balance).toNumber() : 0,
             public_key: item && item.publicKey ? item.publicKey.toString('Hex') : '',
+            entry: config ? config.entry : 'testnet:undefined',
             // TODO: let this work
             // nounce: 1,
             // signatures_required: 1,
