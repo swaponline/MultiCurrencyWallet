@@ -67,7 +67,13 @@ const getSpread = (tickerOrder, orderType) => {
       .dividedBy(100)
 }
 
-const createOrders = (orderType, balance, ticker, tickerOrders, basePrice) => {
+// rather ugly structure, created to prevent uglier Pair { ...isTurbo...}
+interface OrderAsPair {
+  pair: Pair;
+  isTurbo: boolean;
+}
+
+const createOrders = (orderType, balance, ticker, tickerOrders, basePrice): OrderAsPair[] => {
   const orders = []
   const type = orderType === 'buy' ? PAIR_TYPES.BID : PAIR_TYPES.ASK
   const canCreateOrders = TRADE_CONFIG[ticker][orderType] && balance > 0
@@ -76,7 +82,7 @@ const createOrders = (orderType, balance, ticker, tickerOrders, basePrice) => {
     ? new BigNumber(balance).isLessThan(amount)
     : new BigNumber(balance).isLessThan(new BigNumber(amount).dividedBy(price))
 
-  debug(`Can create ${ticker} '${orderType}' orders`, canCreateOrders)
+  debug(`(Balance check) ${ticker} '${orderType}' orders`, canCreateOrders ? colorString(`can be created`, COLORS.GREEN) : colorString(`CANNOT BE CREATED`, COLORS.RED))
 
   if (canCreateOrders) {
     tickerOrders.forEach((tickerOrder, index) => {
@@ -101,14 +107,19 @@ const createOrders = (orderType, balance, ticker, tickerOrders, basePrice) => {
         return
       }
 
-      orders.push(new Pair({ ticker, price, type, amount }))
+      const newOrderAsPair = {
+        pair: new Pair({ ticker, price, type, amount }),
+        isTurbo: Boolean(tickerOrder.isTurbo),
+      }
+
+      orders.push(newOrderAsPair)
     })
   }
 
   return orders
 }
 
-const createTickerOrders = async (balances, ticker): Promise<Pair[]> => {
+const createTickerOrders = async (balances, ticker): Promise<OrderAsPair[]> => {
   const price = TRADE_CONFIG[ticker].sellPrice
     ? new BigNumber(TRADE_CONFIG[ticker].sellPrice)
     : await fetchPrice(ticker, TRADE_CONFIG[ticker].type)
@@ -137,14 +148,20 @@ const createTickerOrders = async (balances, ticker): Promise<Pair[]> => {
 
 const fillOrders = async (balances, ticker, create) => {
   try {
-    debug('fillOrders for', ticker)
+    debug('fillOrders for', ticker, 'balances =', balances)
 
-    const orders: Pair[] = await createTickerOrders(balances, ticker)
+    const orders: OrderAsPair[] = await createTickerOrders(balances, ticker)
 
-    debug(`${ticker} new orders`, orders.length, orders)
+    debug(`${ticker} new orders (${orders.length}):`, orders)
 
     orders
-      .map(pair => ({ ...pair.toOrder(), isPartial: true }))
+      .map(orderAsPair => {
+        return {
+          ...orderAsPair.pair.toOrder(),
+          isPartial: true,
+          isTurbo: orderAsPair.isTurbo,
+        }
+      })
       .map(create)
       .map((order: Order) => order.setRequestHandlerForPartial('buyAmount',
         ({ buyAmount }, oldOrder) => {
@@ -213,7 +230,7 @@ const fillOrders = async (balances, ticker, create) => {
 
 export default async (wallet, orders): Promise<Promise<void>[]> => {
   console.log(
-    colorString(`Prepare order book...`, COLORS.GREEN)
+    colorString(`Prepare order book...`, COLORS.CYAN)
   )
 
   removeMyOrders(orders)
@@ -222,7 +239,7 @@ export default async (wallet, orders): Promise<Promise<void>[]> => {
   if (!checkSwapsCountLimit()) {
     console.log(
       colorString(`Prepare order book:`, COLORS.GREEN),
-      colorString(`Break - Paraller swap limit`, COLORS.RED)
+      colorString(`Break - Parallel swap limit`, COLORS.RED)
     )
     return []
   }
@@ -232,6 +249,8 @@ export default async (wallet, orders): Promise<Promise<void>[]> => {
     .map(ticker => ticker.split('-'))
     .reduce((sum, arr) => sum.concat(arr), [])
     .sort((a, b) => a > b ? 1 : a == b ? 0 : -1)
+
+  console.log(colorString(`Fetch balances...`, COLORS.CYAN))
 
   const balances = await wallet.getBalance(symbols)
 
@@ -243,15 +262,19 @@ export default async (wallet, orders): Promise<Promise<void>[]> => {
 
   debug('Balances', balanceForSymbol)
 
-console.log('FILLED ORDERS = ', Object.keys(TRADE_CONFIG).filter((item) => TRADE_CONFIG[item].active))
+  console.log(colorString(`Create orders...`, COLORS.CYAN))
 
   const filledOrders = Object.keys(TRADE_CONFIG)
     .filter((item) => TRADE_CONFIG[item].active)
+    .map(activeMarket => {
+      debug('⚙️ [settings] Active market:', activeMarket)
+      return activeMarket
+    })
     .map(async ticker => await fillOrders(balanceForSymbol, ticker, createOrder(orders)))
 
   console.log(
-    colorString(`Prepare order book:`, COLORS.GREEN),
-    colorString(`Ready. Start fill...`, COLORS.RED)
+    colorString(`Prepare order book:`, COLORS.CYAN),
+    colorString(`Ready. Start fill...`, COLORS.GREEN)
   )
 
   return filledOrders

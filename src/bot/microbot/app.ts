@@ -39,8 +39,8 @@ if (configStorage.hasTradeConfig()) {
       erc20.register(name.toLowerCase(), decimals)
       TOKENS[name.toLowerCase()] = ercData
       console.log(
-        colorString('>>> Add ERC token', COLORS.GREEN),
-        colorString(name, COLORS.RED),
+        colorString('Add ERC20 token...', COLORS.CYAN),
+        colorString(name, COLORS.MAGENTA),
         colorString('[OK]', COLORS.GREEN)
       )
     })

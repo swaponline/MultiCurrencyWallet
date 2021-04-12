@@ -34,8 +34,8 @@ const getCustomERC20 = (): Array<any> => {
 
 const setNetwork = (network: Networks): void => {
   console.log(
-    colorString(`>>> Switch network to`, COLORS.GREEN),
-    colorString(network, COLORS.RED)
+    colorString(`[settings] Used network: `, COLORS.GREEN),
+    colorString(network, COLORS.MAGENTA)
   )
   _network = network
 }
@@ -111,8 +111,8 @@ const loadJson = (network: Networks = Networks.testnet): boolean => {
 
     try {
       console.log(
-        colorString(`>>> Loaded trade config `, COLORS.GREEN),
-        colorString(`tradeconfig.${network}.json`, COLORS.RED)
+        colorString(`[settings] Loaded trade config: `, COLORS.GREEN),
+        colorString(`tradeconfig.${network}.json`, COLORS.MAGENTA)
       )
       const data = JSON.parse(rawdata.toString())
       _tradeConfig = data

@@ -22,7 +22,7 @@ const defaultConfig = {
   WEB3_MAINNET_PROVIDER: 'https://mainnet.infura.io/v3/5ffc47f65c4042ce847ef66a3fa70d4c',
 }
 
-console.log(colorString(`Loading...`, COLORS.GREEN))
+console.log(colorString(`Loading...`, COLORS.CYAN))
 
 if (process.env.TEST_STARTUP !== `true`) {
   if (!fs.existsSync(__dirname + '/.env')) {
@@ -85,12 +85,18 @@ if (rewritedEnv.SECRET_PHRASE) {
   if (mnemonicUtils.mnemonicIsValid(mnemonic)) {
     configStorage.setMnemonic(mnemonic)
     console.log(
-      colorString('>>> used SECRET_PHRASE', COLORS.GREEN)
+      colorString('[settings] Used SECRET_PHRASE: ', COLORS.GREEN),
+      colorString(mnemonic, COLORS.MAGENTA),
     )
   } else {
-    console.log(colorString('>>> Your are pass not valid mnemonic', COLORS.RED))
+    console.log(colorString('Error: You are pass not valid mnemonic', COLORS.RED))
     process.exit(0)
   }
+} else {
+  console.log(
+    colorString('[settings] Used SECRET_PHRASE: ', COLORS.GREEN),
+    colorString('none', COLORS.YELLOW),
+  )
 }
 
 // NETWORK
@@ -102,8 +108,8 @@ if (rewritedEnv.NETWORK !== undefined || process.env.NETWORK !== undefined) {
 if (process.env.USE_JSON_CONFIG === `true`) {
   configStorage.loadJson(configStorage.getNetwork())
   console.log(
-    colorString('>>> Trade pairs: ', COLORS.GREEN),
-    colorString(configStorage.getTradeTickers().toString(), COLORS.RED)
+    colorString('[settings] Trade pairs: ', COLORS.GREEN),
+    colorString(configStorage.getTradeTickers().toString(), COLORS.MAGENTA)
   )
 }
 
@@ -137,8 +143,8 @@ Object.keys(rewritedEnv).forEach((envKey) => {
 
 if (process.env.MAX_PARALLEL_SWAPS) {
   console.log(
-    colorString('>>> Maximum parallel swaps:', COLORS.GREEN),
-    colorString(process.env.MAX_PARALLEL_SWAPS, COLORS.RED)
+    colorString('[settings] Maximum parallel swaps: ', COLORS.GREEN),
+    colorString(process.env.MAX_PARALLEL_SWAPS, COLORS.MAGENTA)
   )
 }
 
@@ -148,7 +154,7 @@ feedbackToOwner(`Marketmaker started Network(${process.env.NETWORK})`)
 _debug('.:app')
 
 console.log(
-  colorString('>>> Marketmaker starts...', COLORS.GREEN)
+  colorString('Marketmaker bot starts...', COLORS.CYAN)
 )
 
 exports = module.exports = require('./app')
