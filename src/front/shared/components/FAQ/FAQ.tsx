@@ -5,6 +5,7 @@ import BigNumber from 'bignumber.js'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { constants, feedback, adminFee, btc, eth, externalConfig } from 'helpers'
+import { default as bitcoinUtils } from '../../../../common/utils/coin/btc'
 import cssModules from 'react-css-modules'
 import cx from 'classnames'
 import styles from './styles.scss'
@@ -31,7 +32,7 @@ const FAQ = (props) => {
       try {
         const BYTE_IN_KB = 1024
 
-        btcSatoshiPrice = await btc.estimateFeeRate({ speed: 'fast' })
+        btcSatoshiPrice = await bitcoinUtils.estimateFeeRate({ speed: 'fast' })
         ethGasPrice = await eth.estimateGasPrice({ speed: 'fast' })
         // remove memory leak
         if (_mounted) {
