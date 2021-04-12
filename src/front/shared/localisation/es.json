@@ -1246,20 +1246,6 @@
     ]
   },
   {
-    "id": "ReferralLinks1",
-    "message": "Comparte el enlace arriba!  Cada usuario que visita swap a traves del enlace de arriba recibira hasta 10 monedas SWAP.  Que consigues tu?  Cada vez que uno de los usuarios haga un intercambio exitoso(incluyendo operaciones con bonus tokens), ganarás monedas SWAP tambien!",
-    "files": [
-      "src/front/shared/components/Footer/Referral/Referral.tsx"
-    ]
-  },
-  {
-    "id": "ReferralLinks2",
-    "message": "Limites y condiciones",
-    "files": [
-      "src/front/shared/components/Footer/Referral/Referral.tsx"
-    ]
-  },
-  {
     "id": "FeeControler48",
     "message": "Copiado",
     "files": [
