@@ -14,4 +14,9 @@ export default {
     decimals: 18,
     fullName: 'Weenus',
   },
+  wbtc: {
+    address: '0xb7eac960108837128264e4e11f1307e4912a799d',
+    decimals: 8,
+    fullName: 'WBTC',
+  },
 }
