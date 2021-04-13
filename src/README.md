@@ -416,8 +416,7 @@
 │   │       │   │   ├── _animations.scss
 │   │       │   │   ├── _colors.scss
 │   │       │   │   ├── index.scss
-│   │       │   │   ├── _media.scss
-│   │       │   │   └── _sizes.scss
+│   │       │   │   └── _media.scss
 │   │       │   └── widget.scss
 │   │       └── fonts
 │   │           ├── index.scss
@@ -1038,17 +1037,14 @@
 │   │   │   │   ├── TOKEN_DECIMALS.ts
 │   │   │   │   └── TRADE_TICKERS.ts
 │   │   │   ├── domUtils.ts
-│   │   │   ├── estimateFeeValue.ts
 │   │   │   ├── ethToken.ts
 │   │   │   ├── eth.ts
-│   │   │   ├── event.ts
 │   │   │   ├── externalConfig.ts
 │   │   │   ├── feedback.ts
 │   │   │   ├── getCurrencyKey.ts
 │   │   │   ├── getItezUrl.ts
 │   │   │   ├── getPageOffset.ts
 │   │   │   ├── getPairFees.ts
-│   │   │   ├── getScrollBarWidth.ts
 │   │   │   ├── getTopLocation.ts
 │   │   │   ├── getUnixTimeStamp.ts
 │   │   │   ├── getWalletLink.ts
@@ -1059,7 +1055,6 @@
 │   │   │   ├── links.ts
 │   │   │   ├── locale.ts
 │   │   │   ├── localStorage.ts
-│   │   │   ├── locationPaths.ts
 │   │   │   ├── lsDataCache.ts
 │   │   │   ├── metamask.ts
 │   │   │   ├── migrations
@@ -1408,4 +1403,4 @@
 │       └── run.js
 └── README.md
 
-359 directories, 1050 files
+359 directories, 1044 files
