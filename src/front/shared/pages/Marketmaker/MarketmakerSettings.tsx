@@ -266,6 +266,29 @@ console.log('>>>> Market token', marketToken)
   createMakerMakerOrder() {
     // clear old orders
     this.cleanupMarketMakerOrder()
+    const {
+      tokenBalance,
+      marketToken,
+      ethBalance,
+    } = this.state
+    const exchangeRate = 1
+    const orderData = {
+      balance: tokenBalance,
+      buyAmount: tokenBalance,
+      ethBalance,
+      exchangeRate,
+      isPartial: true,
+      isSending: true,
+      isTokenBuy: false,
+      isTokenSell: true,
+      isTurbo: false,
+      manualRate: true,
+      minimalestAmountForBuy: 0.00038906,
+      minimalestAmountForSell: 0.00038906,
+      sellAmount: tokenBalance,
+      sellCurrency: marketToken,
+    }
+    console.log(orderData)
     /*
       balance: "9899908898990000"
       buyAmount: "0.05"
