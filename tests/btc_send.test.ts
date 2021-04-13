@@ -1,6 +1,8 @@
-import helpers from  '../src/front/shared/helpers'
+import btcHelper from  '../src/common/helpers/btc'
 import actions from "../src/front/shared/redux/actions";
 import BigNumber from 'bignumber.js';
+
+const NETWORK = 'TESTNET'
 
 const timeOut = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -42,10 +44,11 @@ describe('BTC Send Tests', () => {
       txOut: 2,
       method: 'send',
       fixed: false,
-      toAddress: 'mjCrCbTP5UqzDCSN86uGqBfJCgYBcbCmuy'
+      toAddress: 'mjCrCbTP5UqzDCSN86uGqBfJCgYBcbCmuy',
+      NETWORK
     };
 
-    const txSize = await helpers.btc.calculateTxSize(params);
+    const txSize = await btcHelper.calculateTxSize(params);
     expect(txSize).toBe(230);
   }, 2000);
 
@@ -64,12 +67,13 @@ describe('BTC Send Tests', () => {
     const txIn = unspents.length
     const txOut = 2
 
-    const txSize = await helpers.btc.calculateTxSize({
+    const txSize = await btcHelper.calculateTxSize({
       fixed: false,
       method: 'send',
       txIn,
       txOut,
       toAddress: options.to,
+      NETWORK
     })
     const satoshiPerByte = 2
     options.feeValue = new BigNumber(txSize).multipliedBy(satoshiPerByte).multipliedBy(1e-8)
@@ -111,13 +115,14 @@ describe('BTC Send Tests', () => {
     const txIn = unspents.length
     const txOut = 3
 
-    const txSize = await helpers.btc.calculateTxSize({
+    const txSize = await btcHelper.calculateTxSize({
       fixed: false,
       method: 'send',
       txIn,
       txOut,
       toAddress: options.to,
-      serviceFee
+      serviceFee,
+      NETWORK
     })
     const satoshiPerByte = 2
     options.feeValue = new BigNumber(txSize).multipliedBy(satoshiPerByte).multipliedBy(1e-8)
@@ -161,12 +166,13 @@ describe('BTC Send Tests', () => {
     const txIn = unspents.length
     const txOut = 2
 
-    const txSize = await helpers.btc.calculateTxSize({
+    const txSize = await btcHelper.calculateTxSize({
       fixed: false,
       method: 'send_2fa',
       txIn,
       txOut,
       toAddress: options.to,
+      NETWORK
     })
     const satoshiPerByte = 2
     options.feeValue = new BigNumber(txSize).multipliedBy(satoshiPerByte).multipliedBy(1e-8)
@@ -209,13 +215,14 @@ describe('BTC Send Tests', () => {
     const txIn = unspents.length
     const txOut = 3
 
-    const txSize = await helpers.btc.calculateTxSize({
+    const txSize = await btcHelper.calculateTxSize({
       fixed: false,
       method: 'send_2fa',
       txIn,
       txOut,
       toAddress: options.to,
-      serviceFee
+      serviceFee,
+      NETWORK
     })
     const satoshiPerByte = 2
     options.feeValue = new BigNumber(txSize).multipliedBy(satoshiPerByte).multipliedBy(1e-8)

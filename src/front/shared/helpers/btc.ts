@@ -21,6 +21,11 @@ const network = process.env.MAINNET
   ? bitcoin.networks.bitcoin
   : bitcoin.networks.testnet
 
+
+const NETWORK = process.env.MAINNET
+  ? 'MAINNET'
+  : 'TESTNET'
+
 const reportAboutProblem = (params) => {
   const { isError = false, info } = params
 
@@ -30,100 +35,6 @@ const reportAboutProblem = (params) => {
   )
   isError ? console.error(info) : console.warn(info)
   console.groupEnd()
-}
-
-type CalculateTxSizeParams = {
-  txIn: number
-  txOut: number
-  method?: string
-  fixed?: boolean
-  toAddress?: string
-  serviceFee?: {
-    address: any,
-    min: any,
-    fee: any
-  }
-}
-
-const calculateTxSize = async (params: CalculateTxSizeParams) => {
-  let {
-    txIn,
-    txOut,
-    method,
-    fixed,
-    toAddress,
-    serviceFee = hasAdminFee
-  } = params
-
-  method = method || 'send'
-
-  const { TRANSACTION } = constants
-  const defaultTxSize = DEFAULT_CURRENCY_PARAMETERS.btc.size[method]
-
-  if (fixed) {
-    return defaultTxSize
-  }
-
-  let txSize = defaultTxSize
-  // general formula
-  // (<one input size> × <number of inputs>) + (<one output size> × <number of outputs>) + <tx size>
-  if (txIn > 0) {
-    txSize =
-      txIn * TRANSACTION.P2PKH_IN_SIZE +
-      txOut * TRANSACTION.P2PKH_OUT_SIZE +
-      (TRANSACTION.TX_SIZE + txIn - txOut)
-  }
-
-  if (method === 'send_multisig') {
-    let outputs = {
-      'P2SH': 1,
-    }
-    const toAddressType = toAddress ? btcHelper.getAddressType(toAddress) : "P2PKH";
-    outputs[toAddressType] = ++outputs[toAddressType] || 1;
-
-    if (serviceFee) {
-      const adminAddressType = btcHelper.getAddressType(serviceFee.address);
-      outputs[adminAddressType] = ++outputs[adminAddressType] || 1;
-      ++txOut
-    }
-    txSize = btcHelper.getByteCount(
-      { 'MULTISIG-P2SH:2-2': 1 },
-      outputs
-    )
-  }
-
-  if (method === 'send_2fa') {
-    let outputs = {
-      'P2SH': 1,
-    }
-    const toAddressType = toAddress ? btcHelper.getAddressType(toAddress) : "P2PKH";
-    outputs[toAddressType] = ++outputs[toAddressType] || 1;
-
-    if (serviceFee) {
-      const adminAddressType = btcHelper.getAddressType(serviceFee.address);
-      outputs[adminAddressType] = ++outputs[adminAddressType] || 1;
-      ++txOut
-    }
-    txSize = btcHelper.getByteCount(
-      { 'MULTISIG-P2SH:2-3': txIn },
-      outputs
-    )
-
-    /*
-    txSize =
-      txIn * msSize +
-      txOut * transaction.P2PKH_OUT_SIZE +
-      (transaction.TX_SIZE + txIn - txOut)
-    */
-  }
-
-  console.group('Helpers >%c btc > calculateTxSize', 'color: green;')
-  console.log('txIn: ', txIn)
-  console.log('txOut: ', txOut)
-  console.log('txSize: ', txSize)
-  console.groupEnd()
-
-  return txSize
 }
 
 type EstimateFeeValueParams = {
@@ -185,12 +96,13 @@ const estimateFeeValue = async (params: EstimateFeeValueParams): Promise<any> =>
     : 2
 
   feeRate = feeRate || await estimateFeeRate({ speed })
-  txSize = txSize || await calculateTxSize({
+  txSize = txSize || await btcHelper.calculateTxSize({
     fixed,
     method,
     txIn,
     txOut,
-    toAddress
+    toAddress,
+    NETWORK
   })
 
   const calculatedFeeValue = BigNumber.maximum(
@@ -288,7 +200,6 @@ const estimateFeeRate = async ({ speed = 'fast' } = {}) => {
 }
 
 export default {
-  calculateTxSize,
   estimateFeeValue,
   estimateFeeRate,
   getFeesRateBlockcypher,

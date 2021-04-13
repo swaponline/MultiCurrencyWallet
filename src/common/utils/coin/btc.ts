@@ -3,6 +3,7 @@ import { BigNumber } from 'bignumber.js'
 import * as bitcoin from 'bitcoinjs-lib'
 import typeforce from 'swap.app/util/typeforce'
 import constants from 'common/helpers/constants'
+import btcHelper from 'common/helpers/btc'
 
 // Use front API config
 import { default as TESTNET } from '../../../front/config/testnet/api'
@@ -762,39 +763,13 @@ const estimateFeeRate = async (options) => {
   }
 }
 
-const calculateTxSize = async (params) => {
-  const { TRANSACTION } = constants
-  const { address, NETWORK } = params
-
-  const unspents = await fetchUnspents({
-    address,
-    NETWORK,
-  })
-  const txOut = 2
-  const txIn = unspents.length
-  let txSize = 226 // default tx size for 1 txIn and 2 txOut
-
-  if (txIn > 0) {
-    txSize =
-      txIn * TRANSACTION.P2PKH_IN_SIZE +
-      txOut * TRANSACTION.P2PKH_OUT_SIZE +
-      (TRANSACTION.TX_SIZE + txIn - txOut)
-  }
-
-  console.group('Common > coin >%c btc > calculateTxSize', 'color: green;')
-  console.log('params: ', params)
-  console.log('tx size: ', txSize)
-  console.groupEnd()
-
-  return txSize
-}
-
 const estimateFeeValue = async (options) => {
   const {
     feeRate: _feeRate,
     inSatoshis,
     speed,
     address,
+    method,
     txSize: _txSize,
     NETWORK,
   } = options
@@ -804,7 +779,7 @@ const estimateFeeValue = async (options) => {
   if (!_txSize && !address) {
     calculatedFeeValue = new BigNumber(constants.TRANSACTION.DUST_SAT).multipliedBy(1e-8)
   } else {
-    const txSize = _txSize || await calculateTxSize({ address, NETWORK })
+    const txSize = _txSize || await btcHelper.calculateTxSize({ address, method, NETWORK })
     const feeRate = _feeRate || await estimateFeeRate({ speed, NETWORK })
 
     calculatedFeeValue = BigNumber.maximum(
