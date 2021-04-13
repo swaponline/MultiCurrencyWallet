@@ -1,6 +1,6 @@
 import * as bitcoin from 'bitcoinjs-lib'
 import constants from 'common/helpers/constants'
-import DEFAULT_CURRENCY_PARAMETERS from 'helpers/constants/DEFAULT_CURRENCY_PARAMETERS'
+import DEFAULT_CURRENCY_PARAMETERS from 'common/helpers/constants/DEFAULT_CURRENCY_PARAMETERS'
 
 
 enum Network {

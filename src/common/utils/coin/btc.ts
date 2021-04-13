@@ -4,7 +4,7 @@ import * as bitcoin from 'bitcoinjs-lib'
 import typeforce from 'swap.app/util/typeforce'
 import constants from 'common/helpers/constants'
 import btcHelper from 'common/helpers/btc'
-import DEFAULT_CURRENCY_PARAMETERS from 'helpers/constants/DEFAULT_CURRENCY_PARAMETERS'
+import DEFAULT_CURRENCY_PARAMETERS from 'common/helpers/constants/DEFAULT_CURRENCY_PARAMETERS'
 
 // Use front API config
 import { default as TESTNET } from '../../../front/config/testnet/api'
