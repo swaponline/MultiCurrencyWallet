@@ -413,7 +413,6 @@ const sendWithAdminFee = async ({ from, to, amount, gasPrice, gasLimit, speed })
       .on('transactionHash', (hash) => {
         const txId = `${config.link.etherscan}/tx/${hash}`
         console.log('tx', txId)
-        actions.loader.show(true, { txId })
       })
       .on('error', (err) => {
         reject(err)
@@ -494,7 +493,6 @@ const sendDefault = ({ from, to, amount, gasPrice = null, gasLimit = null, speed
       .on('transactionHash', (hash) => {
         const txId = `${config.link.etherscan}/tx/${hash}`
         console.log('tx', txId)
-        actions.loader.show(true, { txId })
       })
       .on('error', (error) => {
         reject(error)
