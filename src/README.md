@@ -180,7 +180,11 @@
 │   ├── helpers
 │   │   ├── bip44.ts
 │   │   ├── constants
+│   │   │   ├── COINS_WITH_DYNAMIC_FEE.ts
+│   │   │   ├── DEFAULT_CURRENCY_PARAMETERS.ts
 │   │   │   ├── index.ts
+│   │   │   ├── MIN_AMOUNT_OFFER.ts
+│   │   │   ├── MIN_AMOUNT.ts
 │   │   │   └── TRANSACTION.ts
 │   │   └── turboSwap.ts
 │   ├── messaging
@@ -1037,13 +1041,8 @@
 │   │   │   ├── btc.ts
 │   │   │   ├── cache.ts
 │   │   │   ├── constants
-│   │   │   │   ├── coinsWithDynamicFee.ts
-│   │   │   │   ├── customEcxchangeRate.ts
-│   │   │   │   ├── DEFAULT_CURRENCY_PARAMETERS.ts
 │   │   │   │   ├── index.ts
 │   │   │   │   ├── localStorage.ts
-│   │   │   │   ├── minAmountOffer.ts
-│   │   │   │   ├── minAmount.ts
 │   │   │   │   ├── modals.ts
 │   │   │   │   ├── notifications.ts
 │   │   │   │   ├── PAIR_TYPES.ts
@@ -1423,4 +1422,4 @@
 │       └── run.js
 └── README.md
 
-363 directories, 1060 files
+363 directories, 1059 files
