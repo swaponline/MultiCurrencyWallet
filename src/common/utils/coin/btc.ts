@@ -989,7 +989,6 @@ const prepareRawTx = async ({
         nonWitnessUtxo: Buffer.from(rawTx, 'hex'),
       })
     }
-    const keyPair = bitcoin.ECPair.fromWIF(privateKey, network)
 
     psbt.signAllInputs(keyPair)
     psbt.finalizeAllInputs()

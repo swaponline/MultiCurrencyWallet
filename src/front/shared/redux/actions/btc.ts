@@ -437,9 +437,6 @@ const addressIsCorrect = (address) => {
 
 const send = ({ from, to, amount, feeValue = null, speed,  serviceFee = hasAdminFee }) => {
   console.log('>>> send', from, to, amount, feeValue, speed)
-  if(feeValue) {
-    feeValue = feeValue.multipliedBy(1e8).toNumber()
-  }
   return new Promise(async (ready, reject) => {
     try {
       let privateKey = null

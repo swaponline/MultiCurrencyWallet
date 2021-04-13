@@ -73,7 +73,6 @@ describe('BTC Send Tests', () => {
       txIn,
       txOut,
       toAddress: options.to,
-      NETWORK
     })
     const satoshiPerByte = 2
     options.feeValue = new BigNumber(txSize).multipliedBy(satoshiPerByte).multipliedBy(1e-8)
@@ -122,7 +121,6 @@ describe('BTC Send Tests', () => {
       txOut,
       toAddress: options.to,
       serviceFee,
-      NETWORK
     })
     const satoshiPerByte = 2
     options.feeValue = new BigNumber(txSize).multipliedBy(satoshiPerByte).multipliedBy(1e-8)
@@ -172,7 +170,6 @@ describe('BTC Send Tests', () => {
       txIn,
       txOut,
       toAddress: options.to,
-      NETWORK
     })
     const satoshiPerByte = 2
     options.feeValue = new BigNumber(txSize).multipliedBy(satoshiPerByte).multipliedBy(1e-8)
@@ -222,7 +219,6 @@ describe('BTC Send Tests', () => {
       txOut,
       toAddress: options.to,
       serviceFee,
-      NETWORK
     })
     const satoshiPerByte = 2
     options.feeValue = new BigNumber(txSize).multipliedBy(satoshiPerByte).multipliedBy(1e-8)
