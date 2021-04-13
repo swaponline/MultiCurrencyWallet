@@ -860,6 +860,172 @@ const estimateFeeValue = async (options) => {
   return finalFeeValue
 }
 
+const prepareFees = async ({
+  amount,
+  serviceFee,
+  feeValue,
+  speed,
+  method = 'send',
+  from,
+  to,
+  NETWORK,
+}) => {
+  let feeFromAmount: number | BigNumber = new BigNumber(0)
+
+  if (serviceFee) {
+    const {
+      fee: adminFee,
+      min: adminFeeMinValue,
+    } = serviceFee
+
+    const adminFeeMin = new BigNumber(adminFeeMinValue)
+
+    feeFromAmount = new BigNumber(adminFee).dividedBy(100).multipliedBy(amount)
+    if (adminFeeMin.isGreaterThan(feeFromAmount)) feeFromAmount = adminFeeMin
+
+
+    feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue() // Admin fee in satoshi
+
+  }
+  feeFromAmount = feeFromAmount.toNumber()
+  try {
+    feeValue = feeValue ?
+      new BigNumber(feeValue).multipliedBy(1e8).toNumber() :
+      await estimateFeeValue({
+        inSatoshis: true,
+        speed,
+        method,
+        address: from,
+        toAddress: to,
+        amount,
+        serviceFee,
+      })
+  } catch (eFee) {
+    return { message: `Fail estimate fee ` + eFee.message }
+  }
+
+  let unspents = []
+  try {
+    unspents = await fetchUnspents({address: from, NETWORK})
+  } catch (eUnspents) {
+    return { message: `Fail fetch unspents `+ eUnspents.message}
+  }
+
+  const toAmount = amount
+  amount = new BigNumber(amount).multipliedBy(1e8).plus(feeValue).plus(feeFromAmount).multipliedBy(1e-8).toNumber()
+
+  try {
+    unspents = await prepareUnspents({ unspents, amount })
+  } catch (eUnspents) {
+    return { message: `Fail prepare unspents `+ eUnspents.message}
+  }
+
+  const fundValue = new BigNumber(toAmount).multipliedBy(1e8).integerValue().toNumber()
+
+  const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
+  const skipValue = totalUnspent - fundValue - feeValue - feeFromAmount
+
+  return {
+    fundValue,
+    skipValue,
+    feeFromAmount,
+    unspents,
+  }
+}
+
+const prepareRawTx = async ({
+  from,
+  to,
+  fundValue,
+  skipValue,
+  serviceFee,
+  feeFromAmount,
+  method = 'send',
+  unspents,
+  privateKey,
+  publicKeys = [Buffer.from('')],
+  network,
+  NETWORK
+}) => {
+  const psbt = new bitcoin.Psbt({network})
+
+  psbt.addOutput({
+    address: to,
+    value: fundValue,
+  })
+
+  if (skipValue > 546) {
+    psbt.addOutput({
+      address: from,
+      value: skipValue
+    })
+  }
+
+  if (serviceFee) {
+    psbt.addOutput({
+      address: serviceFee.address,
+      value: feeFromAmount,
+    })
+  }
+
+  const keyPair = bitcoin.ECPair.fromWIF(privateKey, network)
+
+  const hasOneSignature = !['send_2fa', 'send_multisig'].includes(method)
+
+  if (hasOneSignature) {
+    for (let i = 0; i < unspents.length; i++) {
+      const { txid, vout } = unspents[i]
+      let rawTx = ''
+
+      try {
+        rawTx = await fetchTxRaw({ txId: txid, cacheResponse: 5000, NETWORK })
+      } catch (eFetchTxRaw) {
+        return { message: `Fail fetch tx raw `+ txid + `(`+eFetchTxRaw.message+`)` }
+      }
+
+      psbt.addInput({
+        hash: txid,
+        index: vout,
+        nonWitnessUtxo: Buffer.from(rawTx, 'hex'),
+      })
+    }
+    const keyPair = bitcoin.ECPair.fromWIF(privateKey, network)
+
+    psbt.signAllInputs(keyPair)
+    psbt.finalizeAllInputs()
+
+    return psbt.extractTransaction().toHex();
+  }
+
+  const p2ms = bitcoin.payments.p2ms({
+    m: 2,
+    n: publicKeys.length,
+    pubkeys: publicKeys,
+    network,
+  })
+
+  for (let i = 0; i < unspents.length; i++) {
+    const { txid, vout } = unspents[i]
+    let rawTx = ''
+
+    try {
+      rawTx = await fetchTxRaw({ txId: txid, cacheResponse: 5000, NETWORK })
+    } catch (eFetchTxRaw) {
+      return { message: `Fail fetch tx raw `+ txid + `(`+eFetchTxRaw.message+`)` }
+    }
+
+    psbt.addInput({
+      hash: txid,
+      index: vout,
+      redeemScript: p2ms.output,
+      nonWitnessUtxo: Buffer.from(rawTx, 'hex'),
+    })
+  }
+
+  psbt.signAllInputs(keyPair)
+  return psbt.toHex()
+}
+
 export default {
   fetchBalance,
   fetchTx,
@@ -874,6 +1040,9 @@ export default {
   estimateFeeValue,
   estimateFeeRate,
   getCore,
+
+  prepareFees,
+  prepareRawTx,
 
   prepareUnspents,
 
