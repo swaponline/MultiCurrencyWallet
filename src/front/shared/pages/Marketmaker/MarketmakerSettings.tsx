@@ -173,6 +173,8 @@ console.log('>>>> Market token', marketToken)
 
   componentDidMount() {
     SwapApp.onInit(() => {
+      this.cleanupMarketMakerOrder()
+
       const swapsIds = []
       const swapsByIds = {}
 
