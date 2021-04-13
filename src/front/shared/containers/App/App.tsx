@@ -27,11 +27,8 @@ import NotificationConductor from "components/notification/NotificationConductor
 import Seo from "components/Seo/Seo";
 
 import config from "helpers/externalConfig"
-
+import { redirectTo, links, utils } from 'helpers'
 import backupUserData from 'plugins/backupUserData'
-import redirectTo from 'helpers/redirectTo'
-import links from 'helpers/links'
-
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 
 import metamask from 'helpers/metamask'
@@ -84,7 +81,8 @@ class App extends React.Component<RouteComponentProps<any>, any> {
     };
 
     this.state = {
-      fetching: false,
+      initialFetching: true,
+      completeCreation: false,
       multiTabs: false,
       error: "",
     }
@@ -301,10 +299,6 @@ class App extends React.Component<RouteComponentProps<any>, any> {
       console.error('db error', e)
     }
 
-    actions.user.sign();
-    await createSwapApp();
-
-    this.setState(() => ({ fetching: true }));
     window.prerenderReady = true;
 
     const appInstalled = (e) => {
@@ -317,10 +311,71 @@ class App extends React.Component<RouteComponentProps<any>, any> {
     }
     window.addEventListener('appinstalled', appInstalled)
 
+    this.checkCompletionOfAppCeation()
   }
 
   componentDidUpdate() {
+    const { initialFetching, completeCreation } = this.state
+
     this.checkIfDashboardModalsAllowed()
+
+    if (initialFetching && completeCreation) {
+      // without setTimeout splash screen freezes when creating wallets
+      setTimeout(() => {
+        this.completeAppCreation().then(() => {
+          this.setState(() => ({
+            initialFetching: false,
+          }))
+        })
+      })
+    }
+  }
+
+  completeAppCreation = async () => {
+    console.group('App >%c loading...', 'color: green;')
+
+    actions.user.sign()
+    await createSwapApp()
+
+    this.setState(() => ({
+      initialFetching: false,
+      completeCreation: false,
+    }))
+
+    console.groupEnd()
+  }
+
+  checkCompletionOfAppCeation = () => {
+    if (utils.getCookie('swapDisalbeStarter')) {
+      this.setState(() => ({
+        initialFetching: true,
+        completeCreation: true,
+      }))
+    } else {
+      this.addStartPageListeners()
+    }
+  }
+
+  setCompleteCreation = () => {
+    this.removeStartPageListeners()
+    this.setState(() => ({
+      completeCreation: true,
+    }))
+  }
+
+  addStartPageListeners = () => {
+    // id from index.html start page
+    document.getElementById('preloaderCreateBtn').addEventListener('click', this.setCompleteCreation)
+    document.getElementById('preloaderConnectBtn').addEventListener('click', this.setCompleteCreation)
+    document.getElementById('preloaderRestoreBtn').addEventListener('click', this.setCompleteCreation)
+    document.getElementById('preloaderSkipBtn').addEventListener('click', this.setCompleteCreation)
+  }
+
+  removeStartPageListeners = () => {
+    document.getElementById('preloaderCreateBtn').removeEventListener('click', this.setCompleteCreation)
+    document.getElementById('preloaderConnectBtn').removeEventListener('click', this.setCompleteCreation)
+    document.getElementById('preloaderRestoreBtn').removeEventListener('click', this.setCompleteCreation)
+    document.getElementById('preloaderSkipBtn').removeEventListener('click', this.setCompleteCreation)
   }
 
   checkIfDashboardModalsAllowed = () => {
@@ -370,13 +425,13 @@ class App extends React.Component<RouteComponentProps<any>, any> {
   }
 
   render() {
-    const { fetching, multiTabs, error } = this.state;
+    const { initialFetching, multiTabs } = this.state;
     //@ts-ignore
     const { children, ethAddress, btcAddress, ghostAddress, nextAddress, tokenAddress, history, dashboardModalsAllowed } = this.props;
 
     this.overflowHandler()
 
-    const isFetching = !ethAddress || !btcAddress || !ghostAddress || !nextAddress || (!tokenAddress && config && !config.isWidget) || !fetching;
+    const isFetching = !ethAddress || !btcAddress || !ghostAddress || !nextAddress || (!tokenAddress && config && !config.isWidget) || initialFetching;
 
     const isWidget = history.location.pathname.includes("/exchange") && history.location.hash === "#widget";
     const isCalledFromIframe = window.location !== window.parent.location;
@@ -390,9 +445,14 @@ class App extends React.Component<RouteComponentProps<any>, any> {
       return <PreventMultiTabs onSwitchTab={this.handleSwitchTab} />
     }
 
-    if (isFetching) {
-      //@ts-ignore
-      return <Loader />
+    if (isFetching && localStorage.getItem('isWalletCreate') === null) {
+      return (
+        <Loader 
+          showMyOwnTip={
+            <FormattedMessage id="Table96" defaultMessage="Loading..." />
+          }
+        />
+      )
     }
 
     const isSeoDisabled = isWidget || isWidgetBuild || isCalledFromIframe
