@@ -782,23 +782,51 @@ const estimateFeeValue = async (options) => {
     inSatoshis,
     speed,
     address,
+    amount,
+    toAddress,
     method,
     txSize: _txSize,
+    swapUTXOMethod,
+    serviceFee,
+    fixed,
+    moreInfo,
     NETWORK,
   } = options
 
   let calculatedFeeValue
 
+  const SATOSHI_TO_BITCOIN_RATIO = 0.000_000_01
+
   if (!_txSize && !address) {
     calculatedFeeValue = new BigNumber(constants.TRANSACTION.DUST_SAT).multipliedBy(1e-8)
   } else {
-    const unspents = await fetchUnspents({
+    let unspents = await fetchUnspents({
       address,
       NETWORK,
     })
-    const txOut = 2
-    const txIn = unspents.length
-    const txSize = _txSize || await btcHelper.calculateTxSize({ address, method, txIn, txOut})
+    // if user have some amount then try to find "better" UTXO for this
+    if (amount) {
+      unspents = await prepareUnspents({ amount, unspents })
+    }
+    // one input for output from the script when swapping
+    const txIn = swapUTXOMethod === 'withdraw' ? 1 : unspents.length
+    // 2 = recipient input + sender input (for a residue)
+    // 3 = the same inputs like higher + input for admin fee
+    const txOut = serviceFee
+    ? method === 'send'
+      ? 3
+      : 2
+    : 2
+
+    const txSize = _txSize || await btcHelper.calculateTxSize({
+      fixed,
+      address,
+      toAddress,
+      method,
+      txIn,
+      txOut,
+      serviceFee
+    })
     const feeRate = _feeRate || await estimateFeeRate({ speed, NETWORK })
 
     calculatedFeeValue = BigNumber.maximum(
@@ -808,11 +836,22 @@ const estimateFeeValue = async (options) => {
         .div(1024)
         .dp(0, BigNumber.ROUND_HALF_EVEN),
     )
+
+    if (moreInfo) {
+      const moreInfoResponse = {
+        fee: calculatedFeeValue.multipliedBy(SATOSHI_TO_BITCOIN_RATIO).toNumber(),
+        satoshis: calculatedFeeValue.toNumber(),
+        txSize,
+        feeRate,
+        unspents,
+      }
+      return moreInfoResponse
+    }
   }
 
   const finalFeeValue = inSatoshis
     ? calculatedFeeValue.toString()
-    : calculatedFeeValue.multipliedBy(1e-8).toString()
+    : calculatedFeeValue.multipliedBy(SATOSHI_TO_BITCOIN_RATIO).toString()
 
   console.group('Common > coin >%c btc > estimateFeeValue', 'color: green;')
   console.log('fee value: ', finalFeeValue)

@@ -144,7 +144,7 @@ type CalculateTxSizeParams = {
     address: any
     min: any
     fee: any
-  }
+  } | any
   address?: string
 }
 
