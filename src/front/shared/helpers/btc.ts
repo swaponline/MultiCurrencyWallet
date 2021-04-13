@@ -5,6 +5,7 @@ import config from './externalConfig'
 import DEFAULT_CURRENCY_PARAMETERS from './constants/DEFAULT_CURRENCY_PARAMETERS'
 import constants from 'common/helpers/constants'
 import btcHelper from 'common/helpers/btc'
+import btcUtils from 'common/utils/coin/btc'
 import api from './api'
 import BigNumber from 'bignumber.js'
 import { IBtcUnspent } from 'common/utils/coin/btc'
@@ -26,16 +27,6 @@ const NETWORK = process.env.MAINNET
   ? 'MAINNET'
   : 'TESTNET'
 
-const reportAboutProblem = (params) => {
-  const { isError = false, info } = params
-
-  console.group(
-    'HELPERS >%c btc.ts',
-    `color: ${isError ? 'red' : 'yellow'};`
-  )
-  isError ? console.error(info) : console.warn(info)
-  console.groupEnd()
-}
 
 type EstimateFeeValueParams = {
   method?: string
@@ -95,7 +86,7 @@ const estimateFeeValue = async (params: EstimateFeeValueParams): Promise<any> =>
       : 2
     : 2
 
-  feeRate = feeRate || await estimateFeeRate({ speed })
+  feeRate = feeRate || await btcUtils.estimateFeeRate({ speed, NETWORK })
   txSize = txSize || await btcHelper.calculateTxSize({
     fixed,
     method,
@@ -132,76 +123,9 @@ const estimateFeeValue = async (params: EstimateFeeValueParams): Promise<any> =>
   return finalFeeValue
 }
 
-const getFeesRateBlockcypher = async () => {
-  const link = config.feeRates.btc
-  const defaultRate = DEFAULT_CURRENCY_PARAMETERS.btc.rate
 
-  const defaultApiSpeeds = {
-    slow: defaultRate.slow,
-    normal: defaultRate.normal,
-    fast: defaultRate.fast,
-    custom: 50 * 1024,
-  }
-
-  if (!link) {
-    return defaultApiSpeeds
-  }
-
-  let apiResult
-
-  try {
-    // api returns sotoshi in 1 kb
-    apiResult = await api.asyncFetchApi(link)
-  } catch (err) {
-    reportAboutProblem({ info: err })
-    return defaultApiSpeeds
-  }
-
-  const apiRate = {
-    slow: apiResult.low_fee_per_kb,
-    normal: apiResult.medium_fee_per_kb,
-    fast: apiResult.high_fee_per_kb,
-    custom: 50 * 1024,
-  }
-
-  return apiRate;
-}
-
-const estimateFeeRate = async ({ speed = 'fast' } = {}) => {
-  const link = config.feeRates.btc
-  const defaultRate = DEFAULT_CURRENCY_PARAMETERS.btc.rate
-
-  if (!link) {
-    return defaultRate[speed]
-  }
-
-  let apiResult
-
-  try {
-    // api returns sotoshi in 1 kb
-    apiResult = await api.asyncFetchApi(link)
-  } catch (err) {
-    reportAboutProblem({ info: err })
-    return defaultRate[speed]
-  }
-
-  const apiSpeeds = {
-    slow: 'low_fee_per_kb',
-    normal: 'medium_fee_per_kb',
-    fast: 'high_fee_per_kb',
-  }
-
-  const apiSpeed = apiSpeeds[speed] || apiSpeeds.normal
-  const apiRate = new BigNumber(apiResult[apiSpeed])
-
-  return apiRate.isGreaterThanOrEqualTo(constants.TRANSACTION.DUST_SAT)
-    ? apiRate.toNumber()
-    : defaultRate[speed]
-}
 
 export default {
   estimateFeeValue,
-  estimateFeeRate,
-  getFeesRateBlockcypher,
   network,
 }

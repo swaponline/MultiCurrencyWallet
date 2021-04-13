@@ -4,6 +4,7 @@ import * as bitcoin from 'bitcoinjs-lib'
 import typeforce from 'swap.app/util/typeforce'
 import constants from 'common/helpers/constants'
 import btcHelper from 'common/helpers/btc'
+import DEFAULT_CURRENCY_PARAMETERS from 'helpers/constants/DEFAULT_CURRENCY_PARAMETERS'
 
 // Use front API config
 import { default as TESTNET } from '../../../front/config/testnet/api'
@@ -696,6 +697,44 @@ const getTransactionBitcore = (options) => {
   })
 }
 
+const getFeesRateBlockcypher = async ({ NETWORK }) => {
+  const defaultRate = DEFAULT_CURRENCY_PARAMETERS.btc.rate
+
+  const defaultApiSpeeds = {
+    slow: defaultRate.slow,
+    normal: defaultRate.normal,
+    fast: defaultRate.fast,
+    custom: 50 * 1024,
+  }
+
+  let apiResult
+
+  try {
+    // api returns sotoshi in 1 kb
+    apiResult = await apiLooper
+    .get(getBlockcypher(NETWORK), ``, {
+      cacheResponse: 10*60*1000,
+      cacheOnFail: true,
+      inQuery: {
+        delay: 500,
+        name: `blocyper`,
+      },
+    } )
+  } catch (err) {
+    console.error({ info: err })
+    return defaultApiSpeeds
+  }
+
+  const apiRate = {
+    slow: apiResult.low_fee_per_kb,
+    normal: apiResult.medium_fee_per_kb,
+    fast: apiResult.high_fee_per_kb,
+    custom: 50 * 1024,
+  }
+
+  return apiRate;
+}
+
 const estimateFeeRateBLOCKCYPHER = (options) => {
   const {
     speed = 'fast',
@@ -725,41 +764,15 @@ const estimateFeeRateBLOCKCYPHER = (options) => {
     .then(info => Number(info[_speed]))
 }
 
-const estimateFeeRateEARNCOM = (options) => {
-  const { speed = 'fast'} = options
-  const _speed = (() => {
-    switch (speed) {
-      case 'fast':    return 'fastestFee'
-      case 'normal':  return 'halfHourFee'
-      case 'slow':    return 'hourFee'
-      default:      return 'halfHourFee'
-    }
-  })()
-
-  // 10 minuts cache
-  // query request
-  // use cache if fail
-  return apiLooper
-    .get({
-      name: 'EARN_COM',
-      servers: `https://bitcoinfees.earn.com/api/v1/fees/recommended`,
-    }, ``, {
-      cacheResponse: 10*60*1000,
-      cacheOnFail: true,
-      inQuery: {
-        delay: 500,
-        name: `blocyper`,
-      },
-    } )
-    .then(fees => Number(fees[_speed]) * 1024)
-}
 
 const estimateFeeRate = async (options) => {
+  const { speed } = options;
+  const defaultRate = DEFAULT_CURRENCY_PARAMETERS.btc.rate
   try {
     return await estimateFeeRateBLOCKCYPHER(options)
   } catch (err) {
-    console.error(`EstimateFeeError: BLOCKCYPHER_API ${err.message}, trying EARN.COM...`)
-    return await estimateFeeRateEARNCOM(options)
+    console.error(`EstimateFeeError: BLOCKCYPHER_API ${err.message}, get default rate...`)
+    return defaultRate[speed]
   }
 }
 
@@ -817,8 +830,10 @@ export default {
   checkWithdraw,
   fetchTxRaw,
   getTransactionBlocyper,
+  getFeesRateBlockcypher,
 
   estimateFeeValue,
+  estimateFeeRate,
   getCore,
 
   prepareUnspents,
