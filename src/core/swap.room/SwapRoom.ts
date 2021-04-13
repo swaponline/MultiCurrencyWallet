@@ -296,6 +296,13 @@ class SwapRoom extends ServiceInterface {
   }
 
   sendMessageRoom(message) {
+    if (!this.connection) {
+      setTimeout(() => {
+        this.sendMessageRoom(message)
+      }, 1000)
+      return
+    }
+
     const { data, event } = message
     const sign = this._signMessage(data)
 
