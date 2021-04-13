@@ -22,13 +22,11 @@ import { isMobile } from 'react-device-detect'
 import InvoiceInfoBlock from 'components/InvoiceInfoBlock/InvoiceInfoBlock'
 
 import typeforce from 'swap.app/util/typeforce'
-// import { isCoinAddress } from 'swap.app/util/typeforce'
-import minAmount from 'helpers/constants/minAmount'
+import MIN_AMOUNT from 'common/helpers/constants/MIN_AMOUNT'
 import { inputReplaceCommaWithDot } from 'helpers/domUtils'
 import QrReader from 'components/QrReader'
 
 import redirectTo from 'helpers/redirectTo'
-import AdminFeeInfoBlock from 'components/AdminFeeInfoBlock/AdminFeeInfoBlock'
 import lsDataCache from 'helpers/lsDataCache'
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
@@ -70,7 +68,7 @@ class WithdrawModalMultisig extends React.Component<any, any> {
 
     let usedAdminFee = false
 
-    let min = minAmount['btc_multisig_2fa']
+    let min = MIN_AMOUNT['btc_multisig_2fa']
 
     if (config && config.opts && config.opts.fee && config.opts.fee.btc) {
       usedAdminFee = config.opts.fee.btc
@@ -149,7 +147,7 @@ class WithdrawModalMultisig extends React.Component<any, any> {
     const { usedAdminFee } = this.state
 
     let min: any = await helpers['btc'].estimateFeeValue({ method: 'send_2fa', speed: 'fast' })
-    minAmount['btc_multisig_2fa'] = min
+    MIN_AMOUNT['btc_multisig_2fa'] = min
 
     if (usedAdminFee) {
       min = new BigNumber(min).plus(usedAdminFee.min).toNumber()

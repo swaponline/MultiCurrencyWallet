@@ -1,8 +1,4 @@
-interface MinAmount {
-  [propName: string]: number;
-}
-
-const minAmount: MinAmount = {
+export default {
   eth: 0.001,
   btc: 0.00015,
   ghost: 0.00015,
@@ -15,5 +11,3 @@ const minAmount: MinAmount = {
   usdt: 0,
   erc: 1,
 }
-
-export default minAmount

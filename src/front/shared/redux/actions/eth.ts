@@ -1,18 +1,17 @@
-import helpers, { apiLooper, constants, api, cacheStorageGet, cacheStorageSet } from 'helpers'
 import { getState } from 'redux/core'
 import actions from 'redux/actions'
+import reducers from 'redux/core/reducers'
+import helpers, { apiLooper, constants, cacheStorageGet, cacheStorageSet } from 'helpers'
 import { web3, getWeb3 } from 'helpers/web3'
+import config from 'helpers/externalConfig'
 //@ts-ignore
 import { utils as web3utils } from 'web3'
-import reducers from 'redux/core/reducers'
-import config from 'helpers/externalConfig'
 import referral from './referral'
-import { pubToAddress } from 'ethereumjs-util'
-import { hdkey } from 'ethereumjs-wallet'
 import * as bip39 from 'bip39'
 import typeforce from 'swap.app/util/typeforce'
 import { BigNumber } from 'bignumber.js'
-import * as mnemonicUtils from '../../../../common/utils/mnemonic'
+import DEFAULT_CURRENCY_PARAMETERS from 'common/helpers/constants/DEFAULT_CURRENCY_PARAMETERS'
+import * as mnemonicUtils from 'common/utils/mnemonic'
 
 import metamask from 'helpers/metamask'
 
@@ -384,10 +383,10 @@ const sendWithAdminFee = async ({ from, to, amount, gasPrice, gasLimit, speed })
 
   const mainGasLimit = gasLimit || (
     isSendToContract
-      ? constants.defaultCurrencyParameters.eth.limit.contractInteract
-      : constants.defaultCurrencyParameters.eth.limit.send
+      ? DEFAULT_CURRENCY_PARAMETERS.eth.limit.contractInteract
+      : DEFAULT_CURRENCY_PARAMETERS.eth.limit.send
   )
-  const serviceFeeGasLimit = gasLimit || constants.defaultCurrencyParameters.eth.limit.send
+  const serviceFeeGasLimit = gasLimit || DEFAULT_CURRENCY_PARAMETERS.eth.limit.send
 
   const walletData = actions.core.getWallet({
     address: from,
@@ -466,8 +465,8 @@ const sendDefault = ({ from, to, amount, gasPrice = null, gasLimit = null, speed
     gasPrice = gasPrice || await helpers.eth.estimateGasPrice({ speed })
     gasLimit = gasLimit || (
       isSendToContract
-        ? constants.defaultCurrencyParameters.eth.limit.contractInteract
-        : constants.defaultCurrencyParameters.eth.limit.send
+        ? DEFAULT_CURRENCY_PARAMETERS.eth.limit.contractInteract
+        : DEFAULT_CURRENCY_PARAMETERS.eth.limit.send
     )
 
     const params = {
