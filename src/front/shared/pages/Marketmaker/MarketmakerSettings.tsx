@@ -286,9 +286,11 @@ console.log('>>>> Market token', marketToken)
       minimalestAmountForBuy: 0.00038906,
       minimalestAmountForSell: 0.00038906,
       sellAmount: tokenBalance,
+      buyCurrency: `BTC`,
       sellCurrency: marketToken,
     }
     console.log(orderData)
+    SwapApp.shared().services.orders.create(orderData)
     /*
       balance: "9899908898990000"
       buyAmount: "0.05"
