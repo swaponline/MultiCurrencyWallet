@@ -44,7 +44,7 @@ Current
 | dec 2020 | 1200 USD | \$120 | [+0.1 ETH](https://etherscan.io/tx/0xb8358a0d3103eef6c25d1c079b6ce531ead41c2ae9b30569350e3d1a0297d5e9) |
 | jan 2021 | 937 USD | \$93 | 👇 |
 | feb 2021 | 1143 USD | \$114 | https://etherscan.io/tx/0xb85e9f5063ceab6458a1e59c8d4d0dfb359a98ccbfde4086952d359d05fdce9f |
-| mar 2021 | 2558 USD | \$255 | ⌛ (wait for lower gas fee) |
+| mar 2021 | 2558 USD | \$255 | https://bscscan.com/tx/0x828e27fd4ca6532440da0544b163ca6d00fb0acee1aacd2e7354ac63d1f4a114 |
 
 ## How we get revenue
 
