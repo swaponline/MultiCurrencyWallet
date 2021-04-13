@@ -102,7 +102,7 @@ const estimateFeeValue = async (params: EstimateFeeValueParams): Promise<any> =>
     txIn,
     txOut,
     toAddress,
-    NETWORK
+    address,
   })
 
   const calculatedFeeValue = BigNumber.maximum(

@@ -1,5 +1,4 @@
 import * as bitcoin from 'bitcoinjs-lib'
-import btcUtils from 'common/utils/coin/btc'
 import constants from 'common/helpers/constants'
 import DEFAULT_CURRENCY_PARAMETERS from 'helpers/constants/DEFAULT_CURRENCY_PARAMETERS'
 
@@ -57,7 +56,7 @@ const getAddressType = (address: string) => {
   type = AddressType.p2pkh;
   console.warn(`Unknown version '${version}' for address '${address}'.`)
   }
-  return addressType = type
+  return addressType = type || AddressType.p2pkh
   }
 }
 // getByteCount({'MULTISIG-P2SH:2-4':45},{'P2PKH':1}) Means "45 inputs of P2SH Multisig and 1 output of P2PKH"
@@ -147,7 +146,6 @@ type CalculateTxSizeParams = {
     fee: any
   }
   address?: string
-  NETWORK: string
 }
 
 const calculateTxSize = async (params: CalculateTxSizeParams) => {
@@ -159,7 +157,6 @@ const calculateTxSize = async (params: CalculateTxSizeParams) => {
     toAddress,
     serviceFee,
     address,
-    NETWORK,
   } = params
 
   const { TRANSACTION } = constants
@@ -170,37 +167,19 @@ const calculateTxSize = async (params: CalculateTxSizeParams) => {
   if (fixed) {
     return txSize
   }
-
-  if (method === 'swap') {
-    const unspents = await btcUtils.fetchUnspents({
-      address,
-      NETWORK,
-    })
-    const txOut = 2
-    const txIn = unspents.length
-
-    if (txIn > 0) {
-      txSize =
-        txIn * TRANSACTION.P2PKH_IN_SIZE +
-        txOut * TRANSACTION.P2PKH_OUT_SIZE +
-        (TRANSACTION.TX_SIZE + txIn - txOut)
-    }
-
-    console.group('Common > helpers >%c btc > calculateTxSize', 'color: green;')
-    console.log('params: ', params)
-    console.log('txSize: ', txSize)
-    console.groupEnd()
-
-    return txSize
-  }
+  const fromAddressType = address ? getAddressType(address) : "P2PKH";
 
   // general formula
   // (<one input size> × <number of inputs>) + (<one output size> × <number of outputs>) + <tx size>
   if (txIn > 0) {
     txSize =
-    txIn * TRANSACTION.P2PKH_IN_SIZE +
+    txIn * TRANSACTION[`${fromAddressType}_IN_SIZE`] +
     txOut * TRANSACTION.P2PKH_OUT_SIZE +
     (TRANSACTION.TX_SIZE + txIn - txOut)
+
+    if (method === 'swap' && txSize < 300){
+      txSize = defaultTxSize
+    }
   }
 
   if (method === 'send_multisig') {

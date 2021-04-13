@@ -779,7 +779,13 @@ const estimateFeeValue = async (options) => {
   if (!_txSize && !address) {
     calculatedFeeValue = new BigNumber(constants.TRANSACTION.DUST_SAT).multipliedBy(1e-8)
   } else {
-    const txSize = _txSize || await btcHelper.calculateTxSize({ address, method, NETWORK })
+    const unspents = await fetchUnspents({
+      address,
+      NETWORK,
+    })
+    const txOut = 2
+    const txIn = unspents.length
+    const txSize = _txSize || await btcHelper.calculateTxSize({ address, method, txIn, txOut})
     const feeRate = _feeRate || await estimateFeeRate({ speed, NETWORK })
 
     calculatedFeeValue = BigNumber.maximum(
