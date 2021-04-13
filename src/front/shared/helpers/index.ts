@@ -18,8 +18,6 @@ import handleGoTrade from './handleGoTrade'
 import externalConfig from './externalConfig'
 import feedback from './feedback'
 import getPageOffset from './getPageOffset'
-import getScrollBarWidth from './getScrollBarWidth'
-import estimateFeeValue from './estimateFeeValue'
 import transactions from './transactions'
 
 import { migrate } from './migrations/'
@@ -53,7 +51,6 @@ export default {
   getCurrencyKey,
   handleGoTrade,
   transactions,
-  estimateFeeValue,
 }
 
 export {
@@ -76,7 +73,6 @@ export {
 
   // Getters
   getPageOffset,
-  getScrollBarWidth,
   externalConfig,
 
   feedback,
