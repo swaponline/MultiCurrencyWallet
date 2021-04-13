@@ -92,14 +92,13 @@ const langLabels = defineMessages({
   },
 })
 
-@injectIntl
 @cssModules({
   ...defaultStyles,
   ...styles,
   ...animateFetching,
 }, { allowMultiple: true })
 
-export default class InfoInvoice extends React.Component<any, any> {
+class InfoInvoice extends React.Component<any, any> {
   constructor(props) {
     super(props)
 
@@ -303,7 +302,7 @@ export default class InfoInvoice extends React.Component<any, any> {
 
     return (
       <Modal 
-        name={name} title={modalTitle} 
+        name="InfoInvoice" title={modalTitle} 
         onClose={this.handleClose} 
         showCloseButton={true} 
         closeOnLocationChange={true} 
@@ -467,3 +466,5 @@ export default class InfoInvoice extends React.Component<any, any> {
     )
   }
 }
+
+export default injectIntl(InfoInvoice)

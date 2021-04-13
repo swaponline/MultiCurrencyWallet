@@ -3,6 +3,7 @@ import config from 'app-config'
 import actions from 'redux/actions'
 import { getState } from 'redux/core'
 import reducers from 'redux/core/reducers'
+import { ITransactionStatus } from './types'
 
 
 const broadcast = ({ sender, destination, amount, fee, rawTx, invoice }) => {
@@ -84,9 +85,6 @@ const fetch = (address) => {
   const { user: { btcData } } = getState()
   const holderKey = btcData.publicKey.toString('hex')
 
-  let firstPending = false
-  let pengingCount = 0
-
   return apiLooper.post('multisig', `/txs/`, {
     body: {
       address,
@@ -98,28 +96,30 @@ const fetch = (address) => {
     ) {
       const senderWallet = actions.btcmultisig.addressToWallet(address)
 
+      const pendingTransactions: any[]
+        = res.items
+             .filter(
+                ({status}) => status === ITransactionStatus.pending
+             )
+
+      // @ToDo - (draft) use api request for fetch status of address list
+      let firstPendingTransaction = pendingTransactions[0] ? ({
+        address,
+        item: pendingTransactions[0]
+      }) : false
+
       const transactions = res.items.map((item) => {
         let { status } = item
 
         switch (status) {
-          case 1: status = 'pending'
+          case ITransactionStatus.pending: status = 'pending'
             break
-          case 2: status = 'ready'
+          case ITransactionStatus.ready:   status = 'ready'
             break
-          case 3: status = 'reject'
+          case ITransactionStatus.reject:  status = 'reject'
             break
-          case 4: status = 'cancel'
+          case ITransactionStatus.cancel:  status = 'cancel'
             break
-        }
-
-        // @ToDo - (draft) use api request for fetch status of address list
-        if (status === 'pending' && holderKey !== item.holder) {
-          //@ts-ignore
-          firstPending = firstPending || {
-            address,
-            item,
-          }
-          pengingCount++
         }
 
         return ({
@@ -142,9 +142,10 @@ const fetch = (address) => {
       // @ToDo - (draft) use api request for fetch status of address list
       reducers.user.updateMultisigStatus({
         address,
-        last: firstPending,
-        total: pengingCount,
+        last: firstPendingTransaction,
+        total: pendingTransactions.length,
       })
+
       return transactions
     } return []
   }).catch((e) => [])

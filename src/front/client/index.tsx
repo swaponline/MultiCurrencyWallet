@@ -4,7 +4,6 @@ import routes from 'shared/routes'
 import store, { history } from 'redux/store'
 
 import Root from 'shared/containers/Root/Root'
-import Loader from 'shared/components/loaders/Loader/Loader'
 import { migrate } from 'helpers'
 import ErrorPageNoSSL from 'shared/components/ErrorPageNoSSL/ErrorPageNoSSL'
 import config from 'app-config'

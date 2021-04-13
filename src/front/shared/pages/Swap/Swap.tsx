@@ -29,7 +29,6 @@ import config from 'app-config'
 const isWidgetBuild = config && config.isWidget
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
-@injectIntl
 @connect(({
   user: { ethData, btcData, ghostData, nextData, tokensData, activeFiat },
   pubsubRoom: { peer },
@@ -47,12 +46,13 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
 }))
 
 @cssModules(styles, { allowMultiple: true })
-export default class SwapComponent extends PureComponent<any, any> {
+class SwapComponent extends PureComponent<any, any> {
 
   wallets: any
   checkingConfirmSuccessTimer: any
   checkingCycleTimer: any
   sendDebugInfoTimer: any
+
 
 
   /*
@@ -142,8 +142,11 @@ export default class SwapComponent extends PureComponent<any, any> {
     }
   }
 
-  componentWillMount() {
-    const { items, tokenItems, currenciesData, tokensData, intl: { locale } } = this.props
+
+  componentDidMount() {
+    console.group('Swap page >%c didMount', 'color: green')
+
+    const { items, tokenItems, currenciesData, tokensData } = this.props
     let { match: { params: { orderId } }, history, activeFiat } = this.props
 
     if (!!window.performance && window.performance.navigation.type === 2) {
@@ -164,8 +167,14 @@ export default class SwapComponent extends PureComponent<any, any> {
     })
 
     try {
+      console.log('creating swap')
+
       const swap = new Swap(orderId, SwapApp.shared())
-      console.log('Swap flow:', swap.flow._flowName);
+      actions.core.rememberSwap(swap)
+      window.active_swap = swap
+
+      console.log('swap: ', swap)
+      console.log('swap flow name:', swap.flow._flowName);
 
       const SwapComponent = swapComponents[swap.flow._flowName]
       const ethData = items.filter(item => item.currency === 'ETH')
@@ -195,13 +204,15 @@ export default class SwapComponent extends PureComponent<any, any> {
           })
       })
 
-      this.setState(() => ({
+      console.log('setting swap into state (swap): ', swap)
+
+      this.setState({
         swap,
         ethData,
         SwapComponent,
         currencyData,
         ethAddress: ethData[0].address,
-      }))
+      }, this.afterComponentDidMount)
 
       /* hide my orders */
       // disable for now TODO
@@ -215,15 +226,19 @@ export default class SwapComponent extends PureComponent<any, any> {
       this.props.history.push(localisedUrl(links.exchange))
     }
 
-    if (!this.props.savedOrders.includes(orderId)) {
-      this.setSaveSwapId(orderId)
-    }
+    console.groupEnd()
   }
 
-  componentDidMount() {
-    const { swap } = this.state
-    const { flow } = swap
-    const { step } = flow.state
+
+  afterComponentDidMount() {
+    const {
+      swap,
+      swap: {
+        flow: {
+          step,
+        },
+      },
+    } = this.state
 
     const { match: { params: { orderId } }, savedOrders } = this.props
 
@@ -232,7 +247,6 @@ export default class SwapComponent extends PureComponent<any, any> {
     }
 
     if (swap !== null) {
-      console.log('checkingCycle')
       this.sendDebugInfoTimer = setInterval(() => {
         this.sendSwapDebugInformation(orderId)
       }, 1000)
@@ -316,18 +330,6 @@ export default class SwapComponent extends PureComponent<any, any> {
   deleteThisSwap = (orderId) => {
     actions.core.saveDeletedOrder(orderId)
     actions.core.forgetOrders(orderId)
-  }
-
-  setSaveSwapId = (orderId) => {
-    let swapsId = JSON.parse(localStorage.getItem('swapId'))
-
-    if (swapsId === null || swapsId.length === 0) {
-      swapsId = []
-    }
-    if (!swapsId.includes(orderId)) {
-      swapsId.push(orderId)
-    }
-    localStorage.setItem('swapId', JSON.stringify(swapsId))
   }
 
   isBalanceEnough = () => {
@@ -500,18 +502,6 @@ export default class SwapComponent extends PureComponent<any, any> {
     this.props.history.push(localisedUrl(locale, '/'))
   }
 
-  handleCopyAddress = (e) => {
-    this.setState({
-      isAddressCopied: true,
-    }, () => {
-      setTimeout(() => {
-        this.setState({
-          isAddressCopied: false,
-        })
-      }, 500)
-    })
-  }
-
   render() {
     const { peer, tokenItems, history, intl: { locale } } = this.props
     const {
@@ -578,7 +568,6 @@ export default class SwapComponent extends PureComponent<any, any> {
                     defaultMessage="reload the page"
                   />
                 </span>
-
               </p>
 
               {isShowDebug &&
@@ -609,3 +598,5 @@ export default class SwapComponent extends PureComponent<any, any> {
     )
   }
 }
+
+export default injectIntl(SwapComponent)

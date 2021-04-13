@@ -24,13 +24,13 @@ import CopyToClipboard from 'react-copy-to-clipboard'
 import moment from 'moment/moment'
 import okSvg from 'shared/images/ok.svg'
 
-@injectIntl
+
 @connect(({ user: { btcData, btcMultisigSMSData } }) => ({
   btcData,
   btcMultisigSMSData,
 }))
 @cssModules({ ...styles, ...ownStyle }, { allowMultiple: true })
-export default class RegisterSMSProtected extends React.Component<any, any> {
+class RegisterSMSProtected extends React.Component<any, any> {
   props: any
 
   static propTypes = {
@@ -856,3 +856,5 @@ export default class RegisterSMSProtected extends React.Component<any, any> {
     )
   }
 }
+
+export default injectIntl(RegisterSMSProtected)

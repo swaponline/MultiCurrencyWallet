@@ -32,26 +32,10 @@ export const generateSecret = () => crypto.randomBytes(32).toString('hex')
 
 export const start = (swap) =>
   new Promise(async resolve => {
-    switch (swap.flow._flowName) {
-      case "BTC2ETH":
-        await onStep(swap, 2)
-
-        const secret = generateSecret()
-        swap.flow.submitSecret(secret)
-
-        break;
-      case "ETH2BTC":
-        await onStep(swap, 1)
-        swap.flow.sign()
-
-        await onStep(swap, 3)
-        swap.flow.verifyBtcScript()
-        break;
-    }
     resolve(true)
   })
 
-export const refund = (app, swapID) =>
+export const refund = (app, swapID): Promise<boolean> =>
   new Promise(async resolve => {
     debug('swap.core:simple:swap')('Swap id =', swapID)
     const swap = get(app, swapID)

@@ -483,10 +483,10 @@
 
         <div class="starter-modal__buttons">
           <div class="starter-modal__btn-container">
-            <button class="starter-modal__btn starter-modal__btn_create-wallet">
+            <button id="preloaderCreateBtn" class="starter-modal__btn">
               Create Wallet
             </button>
-            <button class="starter-modal__btn starter-modal__btn_connect-wallet">
+            <button id="preloaderConnectBtn" class="starter-modal__btn">
               <?xml version="1.0" encoding="utf-8"?>
               <svg version="1.1"
                 xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 318.6 318.6">
@@ -550,12 +550,12 @@
             </button>
           </div>
           <div class="starter-modal__btn-container">
-            <button id="starter-modal__btn-restore-wallet" class="starter-modal__btn starter-modal__btn_skip starter-modal__btn-restore-wallet">
+            <button id="preloaderRestoreBtn" class="starter-modal__btn starter-modal__btn_skip">
               Restore from 12-word seed
             </button> 
           </div>
           <div class="starter-modal__link-container">
-            <button class="starter-modal__link starter-modal__link_skip">
+            <button id="preloaderSkipBtn" class="starter-modal__link">
               Skip
             </button>
           </div>
@@ -761,7 +761,7 @@
         window.DefaultCountryCode = '+1';
         window.widgetName = 'own widget name';
 
-        window.buyViaCreditCardLink = 'https://itez.swaponline.io/?DEFAULT_FIAT={DEFAULT_FIAT}&locale={locale}&btcaddress={btcaddress}';
+        window.buyViaCreditCardLink = 'https://buy.itez.com/swaponline';
       </script>
       <!-- /Loader before any JS -->
 
@@ -784,15 +784,6 @@
           return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate()
         }
 
-        // Open first screen
-        function swapOpenStarterModal() {
-          document.getElementById('starter-modal').classList.remove('d-none');
-        }
-        // Close first screen
-        function swapCloseStarterModal() {
-          document.getElementById('starter-modal').classList.add('d-none');
-        }
-        
         function swapIsHome() {
           const swapLocationHash = window.location.hash;
           if (swapLocationHash == '' || swapLocationHash == '#/') {
@@ -806,10 +797,6 @@
           return swapLocalStorageWallet !== null
         }
 
-        function hasMetamask() {
-          return !(!window.ethereum || false);
-        }
-
         // Swap Modal
         const swapDisalbeStarter = getCookie('swapDisalbeStarter');
 
@@ -821,92 +808,44 @@
           !swapIsWalletCreate() &&
           localStorageIsOk
         ) {
-          swapOpenStarterModal();
+          document.getElementById('starter-modal').classList.remove('d-none');
         }
       </script>
 
       <script>
-        const btnCreateWallet = document.querySelector('.starter-modal__btn_create-wallet');
-        const btnConnectWallet = document.querySelector('.starter-modal__btn_connect-wallet');
-        const btnSkip = document.querySelector('.starter-modal__link_skip');
-        const btnRestoryWallet = document.getElementById('starter-modal__btn-restore-wallet');
+        const btnCreateWallet = document.getElementById('preloaderCreateBtn');
+        const btnConnectWallet = document.getElementById('preloaderConnectBtn');
+        const btnSkip = document.getElementById('preloaderSkipBtn');
+        const btnRestoryWallet = document.getElementById('preloaderRestoreBtn');
 
-        // Create wallet
         btnCreateWallet.addEventListener('click', function () {
-          redirectionTo('#/createWallet');
+          redirectionTo('#/createWallet')
         });
 
-        // Connect wallet
         btnConnectWallet.addEventListener('click', function () {
-          redirectionTo('#/connectWallet');
+          redirectionTo('#/connectWallet')
         });
 
-        // Restore wallet
-        btnRestoryWallet.addEventListener('click', () => {
-          setCookie('swapDisalbeStarter', 'true', {
-            expires: SEC_IN_YEAR * 5,
-          });
-          redirectionTo('#/restoreWallet');
+        btnRestoryWallet.addEventListener('click', function () {
+          redirectionTo('#/restoreWallet')
         })
+
+        btnSkip.addEventListener('click', function () {
+          redirectionTo('#/exchange')
+        });
 
         function redirectionTo(urlPath) {
           document.location.href = urlPath;
-          swapCloseStarterModal();
+          document.getElementById('starter-modal').classList.add('d-none');
+
           setCookie('swapDisalbeStarter', 'true', {
             expires: SEC_IN_YEAR * 5,
           });
         }
 
-        // Skip (go to exchange)
-        btnSkip.addEventListener('click', function () {
-          document.location.href = '#/exchange/btc-to-eth';
-          swapCloseStarterModal();
-        });
-
-        // Open modal
-        function swapOpenModal(id) {
-          var thisModalEl = document.getElementById(id);
-          if (thisModalEl) {
-            document.getElementById(id).classList.remove('d-none');
-            document.body.classList.add('overflow-hidden');
-            bannerSwiper.update();
-          }
-        }
-
-        // Close modal
-        function swapCloseModal(id) {
-          if (id) {
-            document.getElementById(id).classList.add('d-none');
-            document.body.classList.remove('overflow-hidden');
-          }
-        }
-
-        // Close modal on click
-        document.querySelectorAll('.swap-close-modal').forEach((item) => {
-          item.addEventListener('click', function (e) {
-            e.preventDefault();
-            var thisParentId = this.parentNode.id;
-            swapCloseModal(thisParentId);
-          });
-        });
-
-        // Open modal on click
-        document.querySelectorAll('[data-open-modal]').forEach((item) => {
-          item.addEventListener('click', function (e) {
-            e.preventDefault();
-            var thisModalId = this.dataset.openModal;
-            swapOpenModal(thisModalId);
-          });
-        });
-
-        // Open modal by hash
-        var currentHash = window.location.hash;
-        var currentHashArr = currentHash.split('#');
-        var lastHash = currentHashArr.pop();
-        swapOpenModal(lastHash);
-
         window.logoUrl = '#';
         window.darkLogoUrl = '';
+        window.loaderLogoUrl = '';
 
         if (window.localStorage.getItem('isDark')) {
           window.logoUrl = window.darkLogoUrl || window.logoUrl;
@@ -917,7 +856,9 @@
           window.location.hostname === "swaponline.github.io" ||
           window.location.hostname === "swaponline.io"
         ) {
-          document.getElementById("loaderImg").src = "https://wiki.swaponline.io/assets/swaponline_io.svg";
+          // used by Loader component
+          window.loaderLogoUrl = "https://wiki.swaponline.io/assets/swaponline_io.svg";
+          document.getElementById("loaderImg").src = window.loaderLogoUrl;
         } else {
           if (window.logoUrl != '#') {
             document.getElementById("loaderImg").src = window.localStorage.getItem("isDark") ? window.darkLogoUrl : window.logoUrl;

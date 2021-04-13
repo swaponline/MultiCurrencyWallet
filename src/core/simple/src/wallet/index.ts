@@ -1,6 +1,9 @@
-import * as bitcoin from './../instances'
-import * as ethereum from './../instances'
 import debugCreate from 'debug'
+
+import * as bitcoin from './../instances/ethereum' // todo: obviously this is wrong
+import * as ethereum from './../instances/ethereum'
+
+
 const debug = debugCreate('swap.core:simple:wallet')
 
 const BLOCKCHAININFO = isMain => isMain ? `https://blockchain.info` : `https://testnet.blockchain.info`
@@ -50,7 +53,7 @@ class Wallet {
     return this.balances[symbol]
   }
 
-  async getData(options) {
+  async getData(options?) {
     const { coins } = options
 
     const currencies = coins || Object.values(this.constants.COINS)

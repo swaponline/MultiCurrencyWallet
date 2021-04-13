@@ -6,16 +6,18 @@ import { FormattedMessage } from 'react-intl'
 
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
+import FeeRadios  from "./FeeRadios";
 
 type FeeInfoBlockProps = {
   isLoading: boolean
   isEthToken: boolean
   hasTxSize: boolean
-  
+
   currency: string
   activeFiat: string
   dataCurrency: string
-  
+  bitcoinFeeSpeedType: string
+
   currentDecimals: number
   txSize?: number
   feeCurrentCurrency?: number
@@ -29,6 +31,14 @@ type FeeInfoBlockProps = {
     fee: number // percent (%)
     min: number
   }
+  bitcoinFees?: {
+    slow: number | any
+    normal: number | any
+    fast: number | any,
+    custom: number
+  }
+
+  setBitcoinFee?: (speedType: string, customValue?: number) => void
 }
 
 function FeeInfoBlock(props: FeeInfoBlockProps) {
@@ -48,6 +58,9 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
     hasTxSize,
     txSize,
     feeCurrentCurrency,
+    bitcoinFeeSpeedType,
+    bitcoinFees,
+    setBitcoinFee,
   } = props
 
   const minerFeeTicker = dataCurrency
@@ -69,15 +82,15 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
     // else cut result to currency decimals
     let bigNumResult = currency.multipliedBy(exchangeRate)
     const strResult = bigNumResult.toString()
-    const haveTwoZeroAfterDot = 
-      strResult.match(/\./) 
-      && strResult.split('.')[1][0] === '0' // 12.34 -> ['12', '34'] -> ['3'] === '0'
-      && strResult.split('.')[1][1] === '0' // 12.34 -> ['12', '34'] -> ['4'] === '0'
-      
-    bigNumResult = haveTwoZeroAfterDot 
+    const haveTwoZeroAfterDot =
+      strResult.match(/\./)
+      && strResult.split('.')[1][0] === '0' // 12.34 -> ['12', '34'] -> '3' === '0'
+      && strResult.split('.')[1][1] === '0' // 12.34 -> ['12', '34'] -> '4' === '0'
+
+    bigNumResult = haveTwoZeroAfterDot
       ? bigNumResult.dp(currentDecimals, BigNumber.ROUND_CEIL)
       : bigNumResult.dp(2, BigNumber.ROUND_CEIL)
-    
+
     return bigNumResult.toNumber()
   }
 
@@ -116,6 +129,20 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
 
   return (
     <section styleName='feeInfoBlock'>
+      {hasTxSize && (
+        <div styleName='feeRow'>
+          <span styleName='feeRowTitle'>
+            <FormattedMessage id="FeeInfoBlockChooseFeeRate" defaultMessage="Choose Fee Rate:" />
+          </span>
+          <FeeRadios
+            speedType={bitcoinFeeSpeedType}
+            fees={bitcoinFees}
+            setFee={setBitcoinFee}
+            isLoading={isLoading}
+          />
+        </div>)
+      }
+
       <div styleName='feeRow'>
         <span styleName='feeRowTitle'>
           <FormattedMessage id="FeeInfoBlockMinerFee" defaultMessage="Miner fee:" />
@@ -141,7 +168,7 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
           </Tooltip>
         </div>
       </div>
-      
+
       {usedAdminFee && (
           <div styleName='feeRow'>
             <span styleName='feeRowTitle'>

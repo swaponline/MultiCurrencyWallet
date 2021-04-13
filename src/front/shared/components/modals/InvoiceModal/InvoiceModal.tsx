@@ -5,7 +5,7 @@ import Link from 'local_modules/sw-valuelink'
 import BigNumber from 'bignumber.js'
 import cssModules from 'react-css-modules'
 import styles from '../Styles/default.scss'
-import dropDownStyles from 'components/ui/DropDown/DropDown.scss'
+import dropDownStyles from 'components/ui/DropDown/index.scss'
 import ownStyle from './InvoiceModal.scss'
 
 import Modal from 'components/modal/Modal/Modal'
@@ -78,9 +78,8 @@ type InvoiceModalState = {
   walletData: IUniversalObj
 }
 
-@injectIntl
 @cssModules({ ...styles, ...ownStyle }, { allowMultiple: true })
-export default class InvoiceModal extends React.Component<InvoiceModalProps, InvoiceModalState> {
+class InvoiceModal extends React.Component<InvoiceModalProps, InvoiceModalState> {
   constructor(props) {
     super(props)
 
@@ -405,9 +404,6 @@ export default class InvoiceModal extends React.Component<InvoiceModalProps, Inv
               }
             />
             <CurrencySelect
-              label="Cyrrency"
-              tooltip="Cyrrency"
-              id="InvoiceModalCurrencySelect"
               className={dropDownStyles.simpleDropdown}
               selectedValue={selectedValue}
               onSelect={this.handleBuyCurrencySelect}
@@ -475,3 +471,5 @@ export default class InvoiceModal extends React.Component<InvoiceModalProps, Inv
     )
   }
 }
+
+export default injectIntl(InvoiceModal)

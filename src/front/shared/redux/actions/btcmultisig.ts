@@ -972,11 +972,11 @@ const fetchTx = (hash, cacheResponse) => bitcoinUtils.fetchTx({
   cacheResponse,
 })
 
-const fetchTxInfo = (hash, cacheResponse) => bitcoinUtils.fetchTxInfo({
+const fetchTxInfo = (hash, cacheResponse, serviceFee = null) => bitcoinUtils.fetchTxInfo({
   hash,
   apiBitpay: BITPAY_API,
   cacheResponse,
-  hasAdminFee,
+  hasAdminFee: serviceFee || hasAdminFee,
 })
 
 const getTransactionUser = (address: string = ``) => {
@@ -1103,23 +1103,24 @@ const sendSMSProtected = async ({ from, to, amount, feeValue, speed } = {}) => {
   }
   feeFromAmount = feeFromAmount.toNumber()
 
-  const feeData =  await btc.estimateFeeValue({
+  feeValue = feeValue ? new BigNumber(feeValue).multipliedBy(1e8).toNumber() : await btc.estimateFeeValue({
     inSatoshis: true,
     speed,
     method: 'send_2fa',
     address: smsAddress,
+    toAddress: to,
     amount,
-    moreInfo: true,
   })
 
-  const {
-    satoshis,
-    unspents,
-    unspents: originalUnspents,
-  } = feeData
-  feeValue = satoshis
+  let unspents = []
+  unspents = await fetchUnspents(from)
 
-  const fundValue = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
+  const toAmount = amount
+  amount = new BigNumber(amount).multipliedBy(1e8).plus(feeValue).plus(feeFromAmount).multipliedBy(1e-8).toNumber()
+
+  unspents = await bitcoinUtils.prepareUnspents({ unspents, amount })
+
+  const fundValue = new BigNumber(String(toAmount)).multipliedBy(1e8).integerValue().toNumber()
   const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
   const skipValue = totalUnspent - fundValue - feeValue - feeFromAmount
 
@@ -1198,7 +1199,7 @@ const sendSMSProtected = async ({ from, to, amount, feeValue, speed } = {}) => {
 }
 
 //@ts-ignore
-const sendPinProtected = async ({ from, to, amount, feeValue, speed, password, mnemonic } = {}) => {
+const sendPinProtected = async ({ from, to, amount, feeValue, speed, password, mnemonic, serviceFee = null } = {}) => {
   const {
     user: {
       btcMultisigPinData: {
@@ -1216,11 +1217,13 @@ const sendPinProtected = async ({ from, to, amount, feeValue, speed, password, m
   let feeFromAmount: any = new BigNumber(0)
   let totalAmount = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
 
-  if (hasAdminFee) {
+  serviceFee = serviceFee || hasAdminFee
+
+  if (serviceFee) {
     const {
       fee: adminFee,
       min: adminFeeMinValue,
-    } = hasAdminFee
+    } = serviceFee
 
     const adminFeeMin = new BigNumber(adminFeeMinValue)
 
@@ -1233,31 +1236,26 @@ const sendPinProtected = async ({ from, to, amount, feeValue, speed, password, m
 
   }
   feeFromAmount = feeFromAmount.toNumber()
-  const feeData = await btc.estimateFeeValue({
+  feeValue = feeValue ? new BigNumber(feeValue).multipliedBy(1e8).toNumber() : await btc.estimateFeeValue({
     inSatoshis: true,
     speed,
     method: 'send_2fa',
     address: pinAddress,
-    moreInfo: true,
+    toAddress: to,
     amount: new BigNumber(totalAmount).dividedBy(1e8).toNumber(),
   })
 
-  const {
-    satoshis,
-    unspents,
-    unspents: originalUnspents,
-  } = feeData
-  feeValue = satoshis
+  let unspents = []
+  unspents = await fetchUnspents(from)
 
-  let fundValue = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
+  const toAmount = amount
+  amount = new BigNumber(amount).multipliedBy(1e8).plus(feeValue).plus(feeFromAmount).multipliedBy(1e-8).toNumber()
+
+  unspents = await bitcoinUtils.prepareUnspents({ unspents, amount })
+  const fundValue = new BigNumber(String(toAmount)).multipliedBy(1e8).integerValue().toNumber()
+
   const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
   let skipValue = totalUnspent - fundValue - feeValue - feeFromAmount
-
-  if (new BigNumber(skipValue).isLessThan(0)) {
-    console.log('>>>>> skip is less than zero', skipValue, fundValue, totalUnspent)
-    fundValue = new BigNumber(fundValue).plus(skipValue).integerValue().toNumber()
-    skipValue = 0
-  }
 
   const p2ms = bitcoin.payments.p2ms({
     m: 2,
@@ -1280,10 +1278,10 @@ const sendPinProtected = async ({ from, to, amount, feeValue, speed, password, m
     })
   }
 
-  if (hasAdminFee) {
+  if (serviceFee) {
     // admin fee output
     psbt.addOutput({
-      address: hasAdminFee.address,
+      address: serviceFee.address,
       value: feeFromAmount,
     })
   }
@@ -1417,11 +1415,12 @@ const send = async ({ from, to, amount, feeValue, speed } = {}) => {
 
   const { address, publicKeys } = senderWallet
 
-  feeValue = feeValue || await btc.estimateFeeValue({
+  feeValue = feeValue ? new BigNumber(feeValue).multipliedBy(1e8).toNumber() : await btc.estimateFeeValue({
     inSatoshis: true,
     speed,
     method: 'send_multisig',
     address,
+    toAddress: to,
   })
 
   let feeFromAmount: number | BigNumber = new BigNumber(0)
@@ -1441,9 +1440,15 @@ const send = async ({ from, to, amount, feeValue, speed } = {}) => {
     feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue()
   }
   feeFromAmount = feeFromAmount.toNumber()
-  const unspents = await fetchUnspents(from)
+  let unspents = []
+  unspents = await fetchUnspents(from)
 
-  const fundValue = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
+  const toAmount = amount
+  amount = new BigNumber(amount).multipliedBy(1e8).plus(feeValue).plus(feeFromAmount).multipliedBy(1e-8).toNumber()
+
+  unspents = await bitcoinUtils.prepareUnspents({ unspents, amount })
+  const fundValue = new BigNumber(String(toAmount)).multipliedBy(1e8).integerValue().toNumber()
+
   const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
   const skipValue = totalUnspent - fundValue - feeValue - feeFromAmount
 

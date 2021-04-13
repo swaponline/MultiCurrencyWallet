@@ -62,7 +62,6 @@ const langLabels = defineMessages({
   },
 })
 
-@injectIntl
 @connect(
   ({
     user: { btcMultisigUserData },
@@ -71,7 +70,7 @@ const langLabels = defineMessages({
   })
 )
 @cssModules({ ...defaultStyles, ...styles }, { allowMultiple: true })
-export default class SweepToMnemonicKeys extends React.Component<any, any> {
+class SweepToMnemonicKeys extends React.Component<any, any> {
 
   props: any
 
@@ -140,8 +139,7 @@ export default class SweepToMnemonicKeys extends React.Component<any, any> {
     if (newBtcSMS) localStorage.setItem(constants.privateKeyNames.btcSmsMnemonicKey, newBtcSMS)
     if (newBtcMS) localStorage.setItem(constants.privateKeyNames.btcMultisigOtherOwnerKey, newBtcMS)
 
-    //@ts-ignore
-    localStorage.setItem(constants.localStorage.isSweepReady, true)
+    localStorage.setItem(constants.localStorage.isSweepReady, 'true')
     console.log('Old', oldBtc, oldEth, oldBtcSMS, oldBtcMS)
     console.log('New', newBtc, newEth, newBtcSMS, newBtcMS)
 
@@ -246,3 +244,5 @@ export default class SweepToMnemonicKeys extends React.Component<any, any> {
     )
   }
 }
+
+export default injectIntl(SweepToMnemonicKeys)

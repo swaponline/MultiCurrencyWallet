@@ -1,0 +1,37 @@
+  
+name: Deploy Chrome Extantion
+on:
+  # Trigger the workflow on push or pull request,
+  # but only for the master branch
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [14.x]
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: npm install, build extension 
+      run: |
+        npm i
+        npm run build:chrome-extension-mainnet
+    - name: publish extention to crhome web store        
+      uses: Klemensas/chrome-extension-upload-action@v1.3
+      with:
+        refresh-token:  ${{ secrets.CHROMEUPDATETOKEN }}
+        client-id:  ${{ secrets.CLIENTID }}
+        client-secret:  ${{ secrets.CLIENTSECRET }}
+        file-name: './chrome-extension-mainnet.zip'
+        app-id: 'oldojieloelkkfeacfinhcngmbkepnlm'
+        publish: true

@@ -23,7 +23,6 @@ const title = defineMessages({
   },
 })
 
-@injectIntl
 @withRouter
 @connect(
   ({
@@ -33,7 +32,7 @@ const title = defineMessages({
   })
 )
 @cssModules(styles)
-export default class DownloadModal extends React.Component<any, any> {
+class DownloadModal extends React.Component<any, any> {
 
   props: any
 
@@ -134,3 +133,5 @@ export default class DownloadModal extends React.Component<any, any> {
     )
   }
 }
+
+export default injectIntl(DownloadModal)

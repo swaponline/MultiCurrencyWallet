@@ -48,10 +48,9 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
     activeFiat,
   }
 })
-@injectIntl
 @withRouter
 @CSSModules(styles, { allowMultiple: true })
-export default class InvoicesList extends PureComponent<any, any> {
+class InvoicesList extends PureComponent<any, any> {
   unmounted = false
 
   constructor(props) {
@@ -120,7 +119,8 @@ export default class InvoicesList extends PureComponent<any, any> {
           type,
           address,
         }
-      })
+      }).filter((wallet) => wallet.address !== `Not connected`)
+
       actions.invoices.getManyInvoices(invoicesData).then((items) => {
         lsDataCache.push({
           key: `Invoices_All`,
@@ -258,3 +258,5 @@ export default class InvoicesList extends PureComponent<any, any> {
     )
   }
 }
+
+export default injectIntl(InvoicesList)

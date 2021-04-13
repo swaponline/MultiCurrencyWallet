@@ -21,12 +21,19 @@ import Timer from '../../Timer/Timer'
 import { Button, TimerButton } from 'components/controls'
 
 import SwapController from '../../SwapController'
-import PleaseDontLeaveWrapper from './SwapProgressText/PleaseDontLeaveWrapper'
+import PleaseDontLeaveWrapper from './PleaseDontLeaveWrapper'
 
-import BtcLikeToEth from './SwapProgressText/BtcLikeToEth'
-import BtcLikeToEthToken from './SwapProgressText/BtcLikeToEthToken'
-import EthToBtcLike from './SwapProgressText/EthToBtcLike'
-import EthTokenToBtcLike from './SwapProgressText/EthTokenToBtcLike'
+import UTXOBtcLikeToEth from './UTXOSwapProgressText/BtcLikeToEth'
+import UTXOBtcLikeToEthToken from './UTXOSwapProgressText/BtcLikeToEthToken'
+import UTXOEthToBtcLike from './UTXOSwapProgressText/EthToBtcLike'
+import UTXOEthTokenToBtcLike from './UTXOSwapProgressText/EthTokenToBtcLike'
+
+import ABBtcLikeToEth from './ABSwapProgressText/BtcLikeToEth'
+import ABBtcLikeToEthToken from './ABSwapProgressText/BtcLikeToEthToken'
+import ABEthToBtcLike from './ABSwapProgressText/EthToBtcLike'
+import ABEthTokenToBtcLike from './ABSwapProgressText/EthTokenToBtcLike'
+
+
 import metamask from 'helpers/metamask'
 
 
@@ -37,9 +44,8 @@ import finishSvg from './images/finish.svg'
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
-@injectIntl
 @CSSModules(styles, { allowMultiple: true })
-export default class SwapProgress extends Component<any, any> {
+class SwapProgress extends Component<any, any> {
   swap = null
   _fields = null
   wallets = null
@@ -73,12 +79,7 @@ export default class SwapProgress extends Component<any, any> {
     } = props
 
     this._fields = fields
-
-
-    console.log('SwapProgress fields', this._fields)
-
     this.swap = swap
-
     this.wallets = wallets
     this.history = history
     this.locale = locale
@@ -98,6 +99,10 @@ export default class SwapProgress extends Component<any, any> {
       secret: crypto.randomBytes(32).toString('hex'),
       stepValue: 0,
     }
+
+    console.group('SwapProgress >%c constructor', 'color: green;')
+    console.log('fields: ', this._fields)
+    console.groupEnd()
   }
 
   onPushGoToWallet = () => {
@@ -295,14 +300,14 @@ export default class SwapProgress extends Component<any, any> {
   submitSecret = () => {
     const { secret } = this.state
 
-    this.swap.flow.submitSecret(secret)
+    // this.swap.flow.submitSecret(secret)
   }
 
   confirmScriptChecked = () => {
     const {
       verifyScriptFunc,
     } = this._fields
-    this.swap.flow[verifyScriptFunc]()
+    // this.swap.flow[verifyScriptFunc]()
   }
 
   render() {
@@ -311,6 +316,11 @@ export default class SwapProgress extends Component<any, any> {
       steps,
       flow,
       swap,
+      swap: {
+        flow: {
+          isTakerMakerModel,
+        },
+      },
       signed,
       buyAmount,
       sellAmount,
@@ -321,6 +331,8 @@ export default class SwapProgress extends Component<any, any> {
       stepValue,
       isSecretCopied,
     } = this.state
+
+    const isUTXOSide = swap.flow.isUTXOSide
 
     const {
       currencyName,
@@ -342,6 +354,10 @@ export default class SwapProgress extends Component<any, any> {
       _refundTx = flow.refundTransactionHash.transactionHash || flow.refundTransactionHash
     }
 
+    const BtcLikeToEth = (isUTXOSide) ? UTXOBtcLikeToEth : ABBtcLikeToEth
+    const EthToBtcLike = (isUTXOSide) ? UTXOEthToBtcLike : ABEthToBtcLike
+    const BtcLikeToEthToken = (isUTXOSide) ? UTXOBtcLikeToEthToken : ABBtcLikeToEthToken
+    const EthTokenToBtcLike = (isUTXOSide) ? UTXOEthTokenToBtcLike : ABEthTokenToBtcLike
     /** todo **/
     const swapTexts = (
       <Fragment>
@@ -560,3 +576,5 @@ export default class SwapProgress extends Component<any, any> {
     )
   }
 }
+
+export default injectIntl(SwapProgress)

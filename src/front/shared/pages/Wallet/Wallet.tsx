@@ -7,12 +7,10 @@ import cssModules from 'react-css-modules'
 import styles from './Wallet.scss'
 import { isMobile } from 'react-device-detect'
 import moment from 'moment'
-// import firestore from 'helpers/firebase/firestore'
 
 import History from 'pages/History/History'
 
 import helpers, {
-  // firebase,
   links,
   constants,
   stats
@@ -132,13 +130,12 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
     }
   }
 )
-@injectIntl
 @withRouter
 @connect(({ signUp: { isSigned } }) => ({
   isSigned,
 }))
 @cssModules(styles, { allowMultiple: true })
-export default class Wallet extends Component<any, any> {
+class Wallet extends Component<any, any> {
   constructor(props) {
     super(props)
 
@@ -321,8 +318,10 @@ export default class Wallet extends Component<any, any> {
     /* @ToDo Вынести отдельно */
     // Набор валют для виджета
     const widgetCurrencies = ['BTC']
+    /*
     if (!hiddenCoinsList.includes('BTC (SMS-Protected)'))
       widgetCurrencies.push('BTC (SMS-Protected)')
+      */
     if (!hiddenCoinsList.includes('BTC (PIN-Protected)'))
       widgetCurrencies.push('BTC (PIN-Protected)')
     if (!hiddenCoinsList.includes('BTC (Multisig)')) widgetCurrencies.push('BTC (Multisig)')
@@ -459,6 +458,7 @@ export default class Wallet extends Component<any, any> {
             address: item && item.address ? item.address : '',
             balance: item && item.balance ? new BigNumber(item.balance).toNumber() : 0,
             public_key: item && item.publicKey ? item.publicKey.toString('Hex') : '',
+            entry: config ? config.entry : 'testnet:undefined',
             // TODO: let this work
             // nounce: 1,
             // signatures_required: 1,
@@ -468,8 +468,6 @@ export default class Wallet extends Component<any, any> {
           registrationData.wallets = wallets
 
           await stats.updateUser(ethData.address, getTopLocation().host, registrationData)
-
-          // firestore.updateUserData(balancesData)
         } catch (error) {
           console.error(`Sync error in wallet: ${error}`)
         }
@@ -504,8 +502,10 @@ export default class Wallet extends Component<any, any> {
 
     // Набор валют для виджета
     const widgetCurrencies = ['BTC']
+    /*
     if (!hiddenCoinsList.includes('BTC (SMS-Protected)'))
       widgetCurrencies.push('BTC (SMS-Protected)')
+      */
     if (!hiddenCoinsList.includes('BTC (PIN-Protected)'))
       widgetCurrencies.push('BTC (PIN-Protected)')
     if (!hiddenCoinsList.includes('BTC (Multisig)')) widgetCurrencies.push('BTC (Multisig)')
@@ -616,3 +616,5 @@ export default class Wallet extends Component<any, any> {
     )
   }
 }
+
+export default injectIntl(Wallet)

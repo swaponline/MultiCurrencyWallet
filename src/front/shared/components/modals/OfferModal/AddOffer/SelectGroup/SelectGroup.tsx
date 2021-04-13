@@ -59,13 +59,7 @@ const SelectGroup = ({ intl: IntlShape,  dynamicFee, isToken, extendedControls, 
           (selectedValue === 'eth' || selectedValue === 'btc') && fiat > 0 &&
           <p styleName="textUsd" >{`~${fiat}`} {activeFiat}</p>
         }
-        {/*
-        //@ts-ignore */}
         <CurrencySelect
-          //name="All"
-          label={label}
-          tooltip={tooltip}
-          id={id}
           styleName="currencySelect"
           selectedItemRender={(item) => item.fullTitle}
           placeholder="Enter the name of coin"

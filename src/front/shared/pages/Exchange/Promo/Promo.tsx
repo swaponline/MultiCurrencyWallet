@@ -1,17 +1,18 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-
-import PromoText from '../PromoText/PromoText'
-
 import CSSModules from 'react-css-modules'
 import styles from './Promo.scss'
+import { FormattedMessage } from 'react-intl'
 
-const Promo = ({ subTitle }) => (
-  <div styleName="promo">
-    <div styleName="promoWrap">
-      <PromoText subTitle={subTitle} />
+const Promo = () => {
+  return (
+    <div styleName="promo">
+      <div styleName="promoWrap">
+        <h3 styleName="promoText">
+          <FormattedMessage id="ExchangeTitleTag1" defaultMessage="Fastest cross-chain swaps" />
+        </h3>
+      </div>
     </div>
-  </div>
-)
+  )
+}
 
 export default CSSModules(Promo, styles)

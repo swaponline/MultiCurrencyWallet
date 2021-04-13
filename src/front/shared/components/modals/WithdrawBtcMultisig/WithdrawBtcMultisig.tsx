@@ -2,39 +2,21 @@ import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import helpers, { constants } from 'helpers'
 import actions from 'redux/actions'
-import Link from 'local_modules/sw-valuelink'
 import { connect } from 'redaction'
-import config from 'app-config'
 
 import cssModules from 'react-css-modules'
 import styles from '../WithdrawModal/WithdrawModal.scss'
 import ownStyle from './WithdrawBtcMultisig.scss'
 
-import { BigNumber } from 'bignumber.js'
 import Modal from 'components/modal/Modal/Modal'
-import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
-import Input from 'components/forms/Input/Input'
 import Button from 'components/controls/Button/Button'
 import { ShareLink } from 'components/controls'
-import Tooltip from 'components/ui/Tooltip/Tooltip'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
-import ReactTooltip from 'react-tooltip'
-import { isMobile } from 'react-device-detect'
 import InvoiceInfoBlock from 'components/InvoiceInfoBlock/InvoiceInfoBlock'
 
-import typeforce from 'swap.app/util/typeforce'
-// import { isCoinAddress } from 'swap.app/util/typeforce'
-import minAmount from 'helpers/constants/minAmount'
-import { inputReplaceCommaWithDot } from 'helpers/domUtils'
 import links from 'helpers/links'
-import CopyToClipboard from 'react-copy-to-clipboard'
-import QrReader from "components/QrReader"
 import { getFullOrigin } from 'helpers/links'
 
-
-const isDark = localStorage.getItem(constants.localStorage.isDark)
-
-@injectIntl
 @connect(
   ({
     ui: { dashboardModalsAllowed }
@@ -43,7 +25,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
   })
 )
 @cssModules({ ...styles, ...ownStyle }, { allowMultiple: true })
-export default class WithdrawBtcMultisig extends React.Component<any, any> {
+class WithdrawBtcMultisig extends React.Component<any, any> {
 
   props: any
 
@@ -221,3 +203,5 @@ export default class WithdrawBtcMultisig extends React.Component<any, any> {
     )
   }
 }
+
+export default injectIntl(WithdrawBtcMultisig)

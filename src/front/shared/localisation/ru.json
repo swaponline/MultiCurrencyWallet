@@ -32,10 +32,6 @@
     ]
   },
   {
-    "id": "createWalletLoaderTip",
-    "message": "Создаем кошелёк... Пожалуйста подождите."
-  },
-  {
     "id": "avatar24",
     "message": "Автоматически созданный граватар, уникальный для каждого пользователя. Число равно рейтингу в системе (увеличивается с каждым успешным свопом)",
     "files": [
@@ -85,22 +81,6 @@
     ]
   },
   {
-    "id": "ADDoffer22",
-    "message": "Перейти в Mainnet"
-  },
-  {
-    "id": "ADDoffer2218",
-    "message": "Mainnet"
-  },
-  {
-    "id": "ADDoffer29",
-    "message": "Регистрация (получите до 10$ в подарок)"
-  },
-  {
-    "id": "ADDoffer33",
-    "message": "Подписаться на обновление новостей Swap.Online"
-  },
-  {
     "id": "question15",
     "message": "Узнать о Нас больше",
     "files": [
@@ -108,31 +88,11 @@
     ]
   },
   {
-    "id": "QUESTION15",
-    "message": "Служба поддержки"
-  },
-  {
     "id": "transactionLink28",
     "message": "Транзакция: ",
     "files": [
       "src/front/shared/components/Href/TransactionLink.tsx"
     ]
-  },
-  {
-    "id": "KeyActionsPanel43",
-    "message": "Выйти"
-  },
-  {
-    "id": "KeyActionsPanel46",
-    "message": "Показать ключи"
-  },
-  {
-    "id": "KeyActionsPanel49",
-    "message": "Импортировать"
-  },
-  {
-    "id": "KeyActionsPanel53",
-    "message": "Показать больше валют"
   },
   {
     "id": "Loader21",
@@ -149,27 +109,6 @@
     ]
   },
   {
-    "id": "Approve70",
-    "message": "Укажите лимит суммы для Смарт контрактов. Мы не рекомендуем устанавливать какие-либо ограничения. ",
-    "files": [
-      "src/front/shared/components/modals/Approve/Approve.tsx"
-    ]
-  },
-  {
-    "id": "Approve73",
-    "message": "Сумма",
-    "files": [
-      "src/front/shared/components/modals/Approve/Approve.tsx"
-    ]
-  },
-  {
-    "id": "Approve80",
-    "message": "Подтвердить",
-    "files": [
-      "src/front/shared/components/modals/Approve/Approve.tsx"
-    ]
-  },
-  {
     "id": "EthChecker19",
     "message": "Этот Токен работает на сети Ethereum blockchain. Для осуществления операций у Вас должно быть не менее 0.02 ETH на балансе",
     "files": [
@@ -182,42 +121,6 @@
     "files": [
       "src/front/shared/components/modals/EthChecker/EthChecker.tsx"
     ]
-  },
-  {
-    "id": "ImportKeys107",
-    "message": "Эта процедура перепишет Ваш общедоступный ключ. Если Вы не уверены, Мы рекомендуем Вам отказаться"
-  },
-  {
-    "id": "ImportKeys110",
-    "message": "Введите Ваш ETH приватный ключ"
-  },
-  {
-    "id": "ImportKeys120",
-    "message": "Введите Ваш BTC приватный ключ в WIF формате"
-  },
-  {
-    "id": "ImportKeys130",
-    "message": "Подтвердить"
-  },
-  {
-    "id": "ImportKeys133",
-    "message": "Отменить"
-  },
-  {
-    "id": "Group14",
-    "message": "Загрузить"
-  },
-  {
-    "id": "Select10",
-    "message": "Доступная сумма для продажи "
-  },
-  {
-    "id": "Select15",
-    "message": "  "
-  },
-  {
-    "id": "Select24",
-    "message": "ВСЕ! "
   },
   {
     "id": "ConfirmOffer69",
@@ -239,10 +142,6 @@
     "files": [
       "src/front/shared/components/modals/OfferModal/ConfirmOffer/ExchangeRate/ExchangeRate.tsx"
     ]
-  },
-  {
-    "id": "Feld82",
-    "message": "НЕВЕРНЫЙ ПРИВАТНЫЙ ключ! Попробуйте снова! "
   },
   {
     "id": "SaveKeysModal",
@@ -288,14 +187,6 @@
     ]
   },
   {
-    "id": "Withdrow108",
-    "message": "Сумма должна быть меньше вашего баланса на комиссию манеров "
-  },
-  {
-    "id": "Withdrow113",
-    "message": "Ваш баланс: "
-  },
-  {
     "id": "Withdrow559",
     "message": "Отправить с кошелька",
     "files": [
@@ -311,14 +202,6 @@
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
     ]
-  },
-  {
-    "id": "Withdraw218",
-    "message": "Ошибка перевода"
-  },
-  {
-    "id": "Withdraw232",
-    "message": "Недостаточно подтверждений сети последней транзакции. Попробуйте позже."
   },
   {
     "id": "PreventMultiTabs",
@@ -349,74 +232,6 @@
     ]
   },
   {
-    "id": "SwapProgress105",
-    "message": "Проверяется баланс.. "
-  },
-  {
-    "id": "SwapProgress111",
-    "message": "Создается Bitcoin Script. Это займет некоторое время"
-  },
-  {
-    "id": "SwapProgress117",
-    "message": "ETH Владелец получил Bitcoin Script и Хэш. Создания ETH контракта... Может потребоваться 1 подтверждение от сети Bitcoin"
-  },
-  {
-    "id": "SwapProgress123",
-    "message": "Выводим ETH из готового контракта. Пожалуйста, подождите"
-  },
-  {
-    "id": "SwapProgress129",
-    "message": "Средства перечислены на Ваш кошелек. Проверте баланс. "
-  },
-  {
-    "id": "SwapProgress135",
-    "message": "Спасибо за использование Swap.Online! "
-  },
-  {
-    "id": "SwapProgress32",
-    "message": "Пожалуйста, подождите. Обработка подтверждения"
-  },
-  {
-    "id": "SwapProgress38",
-    "message": "Ожидание, Владелец BTC создает секретный ключ, создает BTC Script и пополняет его"
-  },
-  {
-    "id": "SwapProgress44",
-    "message": "Bitcoin Script создан и загружен. Пожалуйста, проверьте информацию ниже"
-  },
-  {
-    "id": "SwapProgress50",
-    "message": "Проверка баланса.. "
-  },
-  {
-    "id": "SwapProgress56",
-    "message": "Создается Ethereum Контракт. Пожалуйста подожди, это займет некоторое время"
-  },
-  {
-    "id": "SwapProgress62",
-    "message": "Ожидание, пока Владелец BTC добавит Секретный ключ в ETH Контракт"
-  },
-  {
-    "id": "SwapProgress68",
-    "message": "Средства перечислены на Ваш кошелек. Проверте баланс. "
-  },
-  {
-    "id": "SwapProgress74",
-    "message": "Благодарим за использование Swap.Online! "
-  },
-  {
-    "id": "SwapProgress80",
-    "message": "Благодарим за использование Swap.Online!! "
-  },
-  {
-    "id": "SwapProgress93",
-    "message": "Создавший ордер, не в сети. Ожидание.. "
-  },
-  {
-    "id": "SwapProgress99",
-    "message": "Создается Секретный ключ"
-  },
-  {
     "id": "Tooltip11",
     "message": "? ",
     "files": [
@@ -429,14 +244,6 @@
     "files": [
       "src/front/shared/pages/Currency/Currency.tsx"
     ]
-  },
-  {
-    "id": "CurrencyTitleSeo1",
-    "message": "Цена {fullName} ({tickerName}) и Актуальный Курс Обмена."
-  },
-  {
-    "id": "CurrencyMetaDescrTag1",
-    "message": "Узнать цену {fullName} ({tickerName}) на сегодня. Храните и Обменивайте Криптовалюту {fullName} ({tickerName}) Анонимно на Swap.Online."
   },
   {
     "id": "CurrencyH1Seo1",
@@ -453,22 +260,6 @@
     ]
   },
   {
-    "id": "CurrencyWallet104",
-    "message": "Обмен"
-  },
-  {
-    "id": "CurrencyWallet423",
-    "message": "Купить токен"
-  },
-  {
-    "id": "CurrencyWallet105",
-    "message": "Активировать аккаунт"
-  },
-  {
-    "id": "CurrencyWallet110",
-    "message": "История Ваших транзакций"
-  },
-  {
     "id": "Row35",
     "message": "Обмен",
     "files": [
@@ -476,34 +267,20 @@
     ]
   },
   {
-    "id": "history68",
-    "message": "Все транзакции"
-  },
-  {
-    "id": "history72",
-    "message": "Все отправленные и полученные транзакции"
-  },
-  {
     "id": "RowHistory76",
     "message": "Возврат невозможен",
     "files": [
-      "src/front/shared/pages/History/SwapsHistory/RowHistory/RowHistory.tsx"
+      "src/front/shared/pages/History/SwapsHistory/RowHistory/RowHistory.tsx",
+      "src/front/shared/pages/Marketmaker/SwapRow.tsx"
     ]
   },
   {
     "id": "RowHistory91",
     "message": "Ссылка на обмен",
     "files": [
-      "src/front/shared/pages/History/SwapsHistory/RowHistory/RowHistory.tsx"
+      "src/front/shared/pages/History/SwapsHistory/RowHistory/RowHistory.tsx",
+      "src/front/shared/pages/Marketmaker/SwapRow.tsx"
     ]
-  },
-  {
-    "id": "RowHistory164",
-    "message": "Удалено"
-  },
-  {
-    "id": "RowHistory95",
-    "message": "Ссылка на обмен"
   },
   {
     "id": "SwapHisrory21",
@@ -527,10 +304,6 @@
     ]
   },
   {
-    "id": "RowFeeds68",
-    "message": "Поделиться"
-  },
-  {
     "id": "RowFeeds77",
     "message": "Снизить",
     "files": [
@@ -545,35 +318,11 @@
     ]
   },
   {
-    "id": "RowFeeds87",
-    "message": "Удалить"
-  },
-  {
-    "id": "RowMFeed49",
-    "message": "Вы получите"
-  },
-  {
-    "id": "RowMFeed56",
-    "message": "Вы имеете"
-  },
-  {
-    "id": "RowMFeed69",
-    "message": "Скопировано"
-  },
-  {
     "id": "Home153",
     "message": "Что такое атомарные свопы? ",
     "files": [
       "src/front/shared/pages/Exchange/Orders/Orders.tsx"
     ]
-  },
-  {
-    "id": "orders150",
-    "message": "ПРОДАЖУ "
-  },
-  {
-    "id": "orders174",
-    "message": "ПРОДАТЬ "
   },
   {
     "id": "Row148",
@@ -632,374 +381,11 @@
     ]
   },
   {
-    "id": "RowM166",
-    "message": "Старт",
-    "files": [
-      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
-    ]
-  },
-  {
     "id": "NotFound8",
     "message": "Странице не найдена! ",
     "files": [
       "src/front/shared/pages/NotFound/NotFound.tsx"
     ]
-  },
-  {
-    "id": "BtcToEthToken108",
-    "message": "Подтвердить"
-  },
-  {
-    "id": "BtcToEthToken156",
-    "message": "Проверка баланса.. "
-  },
-  {
-    "id": "BtcToEthToken167",
-    "message": "Создается Bitcoin Script. Пожалуйста подождите, это займет какое то время"
-  },
-  {
-    "id": "BtcToEthToken172",
-    "message": "Транзакция: "
-  },
-  {
-    "id": "BtcToEthToken230",
-    "message": "Владелец ETH получил Bitcoin Script и Хэш. Создание им ETH Контракта..."
-  },
-  {
-    "id": "BtcToEthToken243",
-    "message": "Транзакция: "
-  },
-  {
-    "id": "BtcToEthToken260",
-    "message": "Пробуем вывести ETH из контракта. Пожалуйста, подождите"
-  },
-  {
-    "id": "BtcToEthToken267",
-    "message": "Транзакция: "
-  },
-  {
-    "id": "BtcToEthToken290",
-    "message": "ETH были переведены на Ваш кошелек. Проверьте баланс. "
-  },
-  {
-    "id": "BtcToEthToken293",
-    "message": "Благодарим за использование Swap.Online!! "
-  },
-  {
-    "id": "BtcToEthToken303",
-    "message": "ПОПРОБУЙТЕ ВОЗВРАТ"
-  },
-  {
-    "id": "BtcToEthToken316",
-    "message": "Транзакция: "
-  },
-  {
-    "id": "BtcToEthToken77",
-    "message": "Мы оживаем создавшего ордер на обмен. Если он не появится в течение 5 минут, обмен будет отменен автоматически. "
-  },
-  {
-    "id": "BtcToEthToken87",
-    "message": "1. Ожидание подтверждения"
-  },
-  {
-    "id": "EmergencySave",
-    "message": "Информация об обмене"
-  },
-  {
-    "id": "EthTokenBtc102",
-    "message": "Подтвердить"
-  },
-  {
-    "id": "EthTokenBtc111",
-    "message": "Пожалуйста, подождите. Обработка подтверждения"
-  },
-  {
-    "id": "EthTokenBtc116",
-    "message": "Транзакция: "
-  },
-  {
-    "id": "EthTokenBtc147",
-    "message": "Ожидание, Владелец BTC создает Cекретный ключ, BTC Script и пополняет его. "
-  },
-  {
-    "id": "EthTokenBtc159",
-    "message": "Bitcoin Script создан и загружен. Пожалуйста, проверте информацию ниже"
-  },
-  {
-    "id": "EthTokenBtc162",
-    "message": "Хэш: "
-  },
-  {
-    "id": "EthTokenBtc165",
-    "message": "Script адрес: "
-  },
-  {
-    "id": "EthTokenBtc184",
-    "message": "Показать Вitcoin script"
-  },
-  {
-    "id": "EthTokenBtc228",
-    "message": "Все отлично. Продолжить"
-  },
-  {
-    "id": "EthTokenBtc267",
-    "message": "Проверка баланса.. "
-  },
-  {
-    "id": "EthTokenBtc276",
-    "message": "Создание контракта Ethereum. Подождите, это займет некоторое время"
-  },
-  {
-    "id": "EthTokenBtc283",
-    "message": "Транзакция: "
-  },
-  {
-    "id": "EthTokenBtc303",
-    "message": "Транзакция: "
-  },
-  {
-    "id": "EthTokenBtc321",
-    "message": "Ожидание, Владелец BTC добавляет Секретный ключ в ETH Контракт"
-  },
-  {
-    "id": "EthTokenBtc335",
-    "message": "Владелец BTC успешно получил средства из ETH Контракта и отправил Секретный ключ. Запрос о снятии с BTC Script. Пожалуйста, подождите"
-  },
-  {
-    "id": "EthTokenBtc342",
-    "message": "Транзакция: "
-  },
-  {
-    "id": "EthTokenBtc365",
-    "message": "Благодарим за использование Swap.Online! "
-  },
-  {
-    "id": "EthTokenBtc375",
-    "message": "ПОПРОБУЙТЕ ВОЗВРАТ"
-  },
-  {
-    "id": "EthTokenBtc77",
-    "message": "Ожидание другого пользователя"
-  },
-  {
-    "id": "EthTokenBtc86",
-    "message": "Подтвердите свое участие, для начала сделки"
-  },
-  {
-    "id": "EthTokenBtc94",
-    "message": "Подтверждение сделки необходимо для формирования репутации. Если пользователь не доводит дело до конца, он получает отрицательную репутацию"
-  },
-  {
-    "id": "EthTokenToUsdt101",
-    "message": "Подтверждение сделки необходимо для формирования репутации. Если пользователь не доводит дело до конца, он получает отрицательную репутацию. "
-  },
-  {
-    "id": "EthTokenToUsdt109",
-    "message": "Подтвердить"
-  },
-  {
-    "id": "EthTokenToUsdt118",
-    "message": "Пожалуйста, подождите. Обработка подтверждения"
-  },
-  {
-    "id": "EthTokenToUsdt123",
-    "message": "Транзакция: "
-  },
-  {
-    "id": "EthTokenToUsdt154",
-    "message": "Ожидание, Владелец USDT создает Секретный ключ, создает BTC Omni Script и пополняет его"
-  },
-  {
-    "id": "EthTokenToUsdt166",
-    "message": "Bitcoin Omni Script создан и загружен. Пожалуйста, проверте информацию ниже"
-  },
-  {
-    "id": "EthTokenToUsdt169",
-    "message": "Хэш: "
-  },
-  {
-    "id": "EthTokenToUsdt172",
-    "message": "Script адрес: "
-  },
-  {
-    "id": "EthTokenToUsdt192",
-    "message": "Показать BTC script"
-  },
-  {
-    "id": "EthTokenToUsdt236",
-    "message": "Все отлично. Продолжить"
-  },
-  {
-    "id": "EthTokenToUsdt249",
-    "message": "Недостаточно средств для данной операции. Пожалуйста пополните баланс"
-  },
-  {
-    "id": "EthTokenToUsdt253",
-    "message": "Ваш баланс: "
-  },
-  {
-    "id": "EthTokenToUsdt257",
-    "message": "Необходимый баланс: "
-  },
-  {
-    "id": "EthTokenToUsdt260",
-    "message": "Ваш адрес: "
-  },
-  {
-    "id": "EthTokenToUsdt267",
-    "message": "Продолжить"
-  },
-  {
-    "id": "EthTokenToUsdt276",
-    "message": "Проверка баланса.. "
-  },
-  {
-    "id": "EthTokenToUsdt285",
-    "message": "Создание контракта Ethereum. Подождите, это займет некоторое время"
-  },
-  {
-    "id": "EthTokenToUsdt292",
-    "message": "Транзакция: "
-  },
-  {
-    "id": "EthTokenToUsdt313",
-    "message": "Транзакция: "
-  },
-  {
-    "id": "EthTokenToUsdt331",
-    "message": "Ожидание, Владелец BTC жобавляет Секретный ключь в ETH Контракт"
-  },
-  {
-    "id": "EthTokenToUsdt345",
-    "message": "Владелец USDT успешно получил средства из ETH Контракта и отправил Секретный ключ. Запрос о снятии с BTC Script. Пожалуйста, подождите"
-  },
-  {
-    "id": "EthTokenToUsdt352",
-    "message": "USDT транзакция вывода: "
-  },
-  {
-    "id": "EthTokenToUsdt377",
-    "message": "USDT были переведены на Ваш кошелек. Проверьте баланс. "
-  },
-  {
-    "id": "EthTokenToUsdt380",
-    "message": "Благодарим за использование Swap.Online!! "
-  },
-  {
-    "id": "EthTokenToUsdt390",
-    "message": "ПОПРОБУЙТЕ ВОЗВРАТ"
-  },
-  {
-    "id": "EthTokenToUsdt84",
-    "message": "Ожидание другого пользователя"
-  },
-  {
-    "id": "EthTokenToUsdt93",
-    "message": "Пожалуйста, подтвердите свое участие, для начала сделки"
-  },
-  {
-    "id": "UsdrToEthToken106",
-    "message": "2. Создается Секретный ключ"
-  },
-  {
-    "id": "UsdrToEthToken115",
-    "message": "Подтвердить"
-  },
-  {
-    "id": "UsdrToEthToken121",
-    "message": "Сохраните секретный ключ! В противном случае у вас будет шанс, что Вы потеряете свои деньги! "
-  },
-  {
-    "id": "UsdrToEthToken124",
-    "message": "Секретный ключ: "
-  },
-  {
-    "id": "UsdrToEthToken127",
-    "message": "Хэш: "
-  },
-  {
-    "id": "UsdrToEthToken137",
-    "message": "Недостаточно средств для этого обмена. Пожалуйста, пополните баланс"
-  },
-  {
-    "id": "UsdrToEthToken141",
-    "message": "Ваш баланс: "
-  },
-  {
-    "id": "UsdrToEthToken144",
-    "message": "Требуемый баланс: "
-  },
-  {
-    "id": "UsdrToEthToken147",
-    "message": "Ваш адрес: "
-  },
-  {
-    "id": "UsdrToEthToken154",
-    "message": "Продолжить"
-  },
-  {
-    "id": "UsdrToEthToken163",
-    "message": "Проверка баланса... "
-  },
-  {
-    "id": "UsdrToEthToken174",
-    "message": "3. Создание BTC Omni Script. Подождите, это займет некоторое время"
-  },
-  {
-    "id": "UsdrToEthToken179",
-    "message": "Транзакция: "
-  },
-  {
-    "id": "UsdrToEthToken206",
-    "message": "Создание транзакции на возврат средств"
-  },
-  {
-    "id": "UsdrToEthToken213",
-    "message": "Как вернуть деньги? "
-  },
-  {
-    "id": "UsdrToEthToken233",
-    "message": "4. Владелец ETH получил Btc Omni Script и Хэш. Ожидается, создание Контракта ETH"
-  },
-  {
-    "id": "UsdrToEthToken246",
-    "message": "Транзакция: "
-  },
-  {
-    "id": "UsdrToEthToken264",
-    "message": "5. Пробуем вывести ETH из контракта. Пожалуйста, подождите"
-  },
-  {
-    "id": "UsdrToEthToken271",
-    "message": "Транзакция: "
-  },
-  {
-    "id": "UsdrToEthToken294",
-    "message": "6. ETH были переведены на ваш кошелек. Проверьте баланс. "
-  },
-  {
-    "id": "UsdrToEthToken297",
-    "message": "Благодарим за использование Swap.Online!! "
-  },
-  {
-    "id": "UsdrToEthToken307",
-    "message": "ПОПРОБУЙТЕ ВОЗВРАТ"
-  },
-  {
-    "id": "UsdrToEthToken320",
-    "message": "Транзакция: "
-  },
-  {
-    "id": "UsdrToEthToken83",
-    "message": "Мы оживаем создавшего ордер на обмен. Если он не появится в течение 5 минут, обмен будет отменен автоматически. "
-  },
-  {
-    "id": "UsdrToEthToken93",
-    "message": "1. Ожидание подтверждения"
-  },
-  {
-    "id": "Row263",
-    "message": "Войти"
   },
   {
     "id": "RowWallet181",
@@ -1009,95 +395,11 @@
     ]
   },
   {
-    "id": "RowWallet197",
-    "message": "Не подтвержденный баланс "
-  },
-  {
     "id": "AddOffer396",
     "message": "Далее",
     "files": [
       "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
     ]
-  },
-  {
-    "id": "PrivateKeysModal106",
-    "message": "Мы не храним Ваши личные ключи и не сможете их восстановить! "
-  },
-  {
-    "id": "PrivateKeysModal110",
-    "message": "1. Нажмите сюда чтобы сохранить ваши приватные ключи"
-  },
-  {
-    "id": "PrivateKeysModal113",
-    "message": "Показать ключи"
-  },
-  {
-    "id": "PrivateKeysModal118",
-    "message": "2. Затем нажмите сюда, когда будете уверены, что сохранили свои приватные ключи в надежное место"
-  },
-  {
-    "id": "PrivateKeysModal121",
-    "message": "Я сохранил ключи!"
-  },
-  {
-    "id": "PrivateKeysModal130",
-    "message": "Пожалуйста, заполните приведенную ниже информацию. Мы хотели бы быть уверены, что Вы сохранили приватные ключи, прежде чем сможете продолжить работу с сайтом. "
-  },
-  {
-    "id": "PrivateKeysModal131",
-    "message": "Не беспокойтесь, эти данные никуда не отправляются!"
-  },
-  {
-    "id": "PrivateKeysModal145",
-    "message": "Перейти на сайт! "
-  },
-  {
-    "id": "PrivateKeysModal662",
-    "message": "Важно!"
-  },
-  {
-    "id": "PrivateKeysModal623",
-    "message": "{skipIt} и продолжить пользоваться сайтом."
-  },
-  {
-    "id": "PrivateKeysModal624",
-    "message": "пропустить это"
-  },
-  {
-    "id": "PrivateKeysModal663",
-    "message": "Вы так же можете {skipBtn}"
-  },
-  {
-    "id": "PrivateKeysModal664",
-    "message": "Мы не сможем восстановить ваши ключи, они могут потеряться если вы очистите хранилище браузера, а так же есть вероятность произвольного очищения. "
-  },
-  {
-    "id": "PrivateKeysModal665",
-    "message": "Я понимаю и принимаю риски. {learnMore}"
-  },
-  {
-    "id": "PrivateKeysModal666",
-    "message": "Продолжить"
-  },
-  {
-    "id": "PrivateKeysModal667",
-    "message": "Узнать больше"
-  },
-  {
-    "id": "PrivateKeysModal99",
-    "message": "Это очень важно, потому что, если Вы не "
-  },
-  {
-    "id": "PrivateKeysModal991",
-    "message": "Прежде чем продолжить, обязательно сохраните приватные ключи! Существует большая вероятность того, что Вы потеряете свои деньги. "
-  },
-  {
-    "id": "BtcToEthTokenAddress1",
-    "message": "Подтвердите адрес получателя (по умолчанию - swap.online wallet)"
-  },
-  {
-    "id": "BtcToEthTokenAddress2",
-    "message": "Подтвердите адрес"
   },
   {
     "id": "WithdrawButton32",
@@ -1121,14 +423,6 @@
     "files": [
       "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
     ]
-  },
-  {
-    "id": "Row277",
-    "message": "не активирован "
-  },
-  {
-    "id": "partial221",
-    "message": "Максимальная сумма для обмена: "
   },
   {
     "id": "HowItWorks10",
@@ -1194,138 +488,6 @@
     ]
   },
   {
-    "id": "PromoText14",
-    "message": "Быстрый обмен"
-  },
-  {
-    "id": "PromoText16",
-    "message": "ERC-20 токенов"
-  },
-  {
-    "id": "Company",
-    "message": "О Kомпании"
-  },
-  {
-    "id": "AboutUS14",
-    "message": "О нас"
-  },
-  {
-    "id": "Careers",
-    "message": "Карьера в Swap.Online"
-  },
-  {
-    "id": "ChromeExtension",
-    "message": "Наше расширение для Chrome"
-  },
-  {
-    "id": "Concept",
-    "message": "Концепция (PDF)"
-  },
-  {
-    "id": "Contacts",
-    "message": "Контакты"
-  },
-  {
-    "id": "DEXTrendResearch",
-    "message": "Исследования тенденций DEX"
-  },
-  {
-    "id": "DEXdetails",
-    "message": "Больше о нашем DEX"
-  },
-  {
-    "id": "Documentation",
-    "message": "Документация"
-  },
-  {
-    "id": "Legal",
-    "message": "Юридическая информация"
-  },
-  {
-    "id": "LegalOpinion",
-    "message": "Юридическая правомерность"
-  },
-  {
-    "id": "Licence",
-    "message": "Лицензия"
-  },
-  {
-    "id": "PrivacyPolicy",
-    "message": "Политика конфиденциальности"
-  },
-  {
-    "id": "Resources",
-    "message": "Ресурсы"
-  },
-  {
-    "id": "Terms",
-    "message": "Условия использования"
-  },
-  {
-    "id": "Useswapbutton",
-    "message": "Использование swap.button"
-  },
-  {
-    "id": "WhitePaperdraft",
-    "message": "Техническая документация"
-  },
-  {
-    "id": "Wiki",
-    "message": "Wiki"
-  },
-  {
-    "id": "Amount61",
-    "message": "Сумма"
-  },
-  {
-    "id": "Coin61",
-    "message": "Валюта"
-  },
-  {
-    "id": "Statement61",
-    "message": "Отчет"
-  },
-  {
-    "id": "Status61",
-    "message": "Статус"
-  },
-  {
-    "id": "SwapHisrory14",
-    "message": "Аватар"
-  },
-  {
-    "id": "SwapHisrory15",
-    "message": "Обмен"
-  },
-  {
-    "id": "SwapHisrory16",
-    "message": "Покупка"
-  },
-  {
-    "id": "SwapHisrory17",
-    "message": " Продажа "
-  },
-  {
-    "id": "SwapHisrory18",
-    "message": "Курс обмена"
-  },
-  {
-    "id": "SwapHisrory20",
-    "message": "Статус операции"
-  },
-  {
-    "id": "SwapHisrory211",
-    "message": "Время завершения"
-  },
-  {
-    "id": "SwapHisrory22",
-    "message": "Ссылка"
-  },
-  {
-    "id": "MyOrders19",
-    "message": "ОБМЕН"
-  },
-  {
     "id": "MyOrdersYouSend",
     "message": "Вы отправите",
     "files": [
@@ -1347,26 +509,6 @@
     ]
   },
   {
-    "id": "MyOrders231",
-    "message": "ПОДЕЛИТЬСЯ"
-  },
-  {
-    "id": "MyOrders24",
-    "message": "ДЕЙСТВИЕ"
-  },
-  {
-    "id": "Orders141",
-    "message": "Данная валютная пара не существует перенаправляем на USDT-BTC... "
-  },
-  {
-    "id": "Orders151",
-    "message": " Мои ордера"
-  },
-  {
-    "id": "orders101",
-    "message": "АВАТАР"
-  },
-  {
     "id": "orders102",
     "message": "Количество",
     "files": [
@@ -1381,19 +523,11 @@
     ]
   },
   {
-    "id": "orders106",
-    "message": "Начать обмен"
-  },
-  {
     "id": "orders128",
     "message": "Создать предложение",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
-  },
-  {
-    "id": "orders1499",
-    "message": "Скрыть"
   },
   {
     "id": "addoffer381",
@@ -1436,10 +570,6 @@
     "files": [
       "src/front/shared/pages/History/History.tsx"
     ]
-  },
-  {
-    "id": "Reqstbttn15",
-    "message": "ПРОДАТЬ"
   },
   {
     "id": "Reqstbttn16",
@@ -1487,19 +617,17 @@
     "id": "RowHistory94",
     "message": "Выполнено",
     "files": [
-      "src/front/shared/pages/History/SwapsHistory/RowHistory/RowHistory.tsx"
+      "src/front/shared/pages/History/SwapsHistory/RowHistory/RowHistory.tsx",
+      "src/front/shared/pages/Marketmaker/SwapRow.tsx"
     ]
   },
   {
     "id": "RowHistory139",
     "message": "Остановлено",
     "files": [
-      "src/front/shared/pages/History/SwapsHistory/RowHistory/RowHistory.tsx"
+      "src/front/shared/pages/History/SwapsHistory/RowHistory/RowHistory.tsx",
+      "src/front/shared/pages/Marketmaker/SwapRow.tsx"
     ]
-  },
-  {
-    "id": "RowHistory96",
-    "message": "Выполняется"
   },
   {
     "id": "RowMobileYouSend",
@@ -1514,10 +642,6 @@
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
     ]
-  },
-  {
-    "id": "SignUpModal111",
-    "message": "Что-то пошло не так{br}Попробуйте позже"
   },
   {
     "id": "SignUpModal133",
@@ -1576,18 +700,6 @@
     ]
   },
   {
-    "id": "transaction368",
-    "message": "Сумма должна быть больше "
-  },
-  {
-    "id": "transaction376",
-    "message": "Сумма должна быть меньше вашего баланса"
-  },
-  {
-    "id": "transaction398",
-    "message": "ETH на вашем балансе"
-  },
-  {
     "id": "Select210",
     "message": "ВСЕ",
     "files": [
@@ -1607,23 +719,11 @@
     ]
   },
   {
-    "id": "Withdrow159",
-    "message": "Сумма должна быть больше "
-  },
-  {
     "id": "partial291",
     "message": "Ожидание второго участника (30 сек)",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
-  },
-  {
-    "id": "Row358",
-    "message": "Активировать"
-  },
-  {
-    "id": "Row377",
-    "message": "Не активированно"
   },
   {
     "id": "CDC52",
@@ -1638,14 +738,6 @@
     "files": [
       "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
     ]
-  },
-  {
-    "id": "partial223",
-    "message": "Для изменения кошелька по умолчанию для валюты покупки. "
-  },
-  {
-    "id": "partial224",
-    "message": "Оставьте пустым для использования Swap.Online кошелька"
   },
   {
     "id": "partial243",
@@ -1669,22 +761,11 @@
     ]
   },
   {
-    "id": "Approve66",
-    "message": "Подтвердить токен",
-    "files": [
-      "src/front/shared/components/modals/Approve/Approve.tsx"
-    ]
-  },
-  {
     "id": "Approve",
     "message": "Подтвердить токен",
     "files": [
       "src/front/shared/components/modals/EthChecker/EthChecker.tsx"
     ]
-  },
-  {
-    "id": "Import",
-    "message": "Импортировать"
   },
   {
     "id": "Add52",
@@ -1778,10 +859,6 @@
     ]
   },
   {
-    "id": "RowHistory343",
-    "message": "Инфо"
-  },
-  {
     "id": "timer68",
     "message": "Возможен возврат",
     "files": [
@@ -1789,55 +866,11 @@
     ]
   },
   {
-    "id": "BtcToEthToken275",
-    "message": "Операция возврата транзакции: "
-  },
-  {
-    "id": "Header184",
-    "message": "Это Ваш персональный Bitcoin адрес. Мы не храним приватные ключи. Все данные хранятся в Вашем браузере. Без сервера и Бэк-енда, полная Децентрализация."
-  },
-  {
-    "id": "Header188",
-    "message": "Swap Online НЕ ХРАНИТ Ваши приватные ключи, пожалуйста, скачайте их и храните в безопасном месте."
-  },
-  {
-    "id": "Header192",
-    "message": "Это Ваш Bitcoin баланс. Вы можете закрыть браузер, перезагрузить компьютер. Ваши средства будут в безопасности. Только, не забудте сохранить Ваши приватные ключи. "
-  },
-  {
-    "id": "Header194",
-    "message": "Не забудте сохранить Ваши приватные ключи"
-  },
-  {
-    "id": "Header196",
-    "message": "Вы можете хранить криптовалюты разных блокчейн сетей, таких как Bitcoin, Ethereum, Bitcoin Cash, Litecoin и различные токены"
-  },
-  {
-    "id": "Header200",
-    "message": "Наша особенность - одноранговый обмен, доступный в нашем кошельке, в основе которого лежит технология Atomic Swap. Вы можете выполнять обмен с любой криптовалютой, указанной в нашем кошельке."
-  },
-  {
-    "id": "Header205",
-    "message": "Вы будете получать уведомления об обновлениях с вашей учетной записью (ордера, транзакции) и ежемесячные обновления о нашем проекте"
-  },
-  {
-    "id": "Header207",
-    "message": "Показать, как сохранить"
-  },
-  {
     "id": "question12",
     "message": "?",
     "files": [
       "src/front/shared/components/Header/User/Question/Question.tsx"
     ]
-  },
-  {
-    "id": "errorImportKeys",
-    "message": "Пожалуйста сохраните приватные ключи"
-  },
-  {
-    "id": "PrivateKeysModal144",
-    "message": "Назад"
   },
   {
     "id": "PartialPriceNoOrdersReduce",
@@ -1852,10 +885,6 @@
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
-  },
-  {
-    "id": "PartialPriceReduceMin",
-    "message": "Максимальная сумма для обмена: "
   },
   {
     "id": "PartialOfferCantProceed1",
@@ -1879,39 +908,11 @@
     ]
   },
   {
-    "id": "LessThanIHavePartial",
-    "message": "У вас недостаточно средств"
-  },
-  {
-    "id": "PartialUseSwapOnlineWallet",
-    "message": "Используйте Swap.Online кошелек"
-  },
-  {
     "id": "UseAnotherWallet",
     "message": "Указать адрес кошелька для получения",
     "files": [
       "src/front/shared/components/modals/ConfirmBeginSwap/ConfirmBeginSwap.tsx"
     ]
-  },
-  {
-    "id": "CustomWalletIsNotAllowed",
-    "message": "Принятие предложения из списка временно доступно только для внутренних адресов"
-  },
-  {
-    "id": "PartialYourWalletAddress",
-    "message": "Адрес кошелька получателя "
-  },
-  {
-    "id": "importkeys118",
-    "message": "Пожалуйста введите BTC секретный ключ "
-  },
-  {
-    "id": "importkeys119",
-    "message": "Недействительный BTC секретный ключ"
-  },
-  {
-    "id": "partial437",
-    "message": "Atomic Swap {full_name1} ({ticker_name1}) to {full_name2} ({ticker_name2}) Instant Exchange"
   },
   {
     "id": "partial462",
@@ -1935,27 +936,11 @@
     ]
   },
   {
-    "id": "partial544",
-    "message": "Предложения"
-  },
-  {
     "id": "partial767",
-    "message": "Ваш баланс: ",
+    "message": "Баланс: ",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
-  },
-  {
-    "id": "partialAtomicSwapWhatIsIt",
-    "message": "Атомарный своп - это технология, которая позволяет обменять одну криптовалюту на другую без использования централизованных посредников."
-  },
-  {
-    "id": "partialVideoAndFeaturesTitle",
-    "message": "{purplefastest} сервис атомарного обмена"
-  },
-  {
-    "id": "partialVideoAndFeaturesTitlePur",
-    "message": "Самый быстрый"
   },
   {
     "id": "partialVideoAndFeatures0",
@@ -1977,10 +962,6 @@
     "files": [
       "src/front/shared/pages/Exchange/VideoAndFeatures/VideoAndFeatures.tsx"
     ]
-  },
-  {
-    "id": "PartialFeeValueWarnInfo",
-    "message": "[Подробнее о комиссиях]"
   },
   {
     "id": "down57",
@@ -2025,22 +1006,6 @@
     ]
   },
   {
-    "id": "Row206",
-    "message": "Купить"
-  },
-  {
-    "id": "Row2061",
-    "message": "Продать"
-  },
-  {
-    "id": "Row210",
-    "message": "за"
-  },
-  {
-    "id": "downloadModal73",
-    "message": "Имя аккаунта:"
-  },
-  {
     "id": "downloadModal75",
     "message": "Адрес:",
     "files": [
@@ -2060,10 +1025,6 @@
     "files": [
       "src/front/shared/components/PreventMultiTabs/PreventMultiTabs.tsx"
     ]
-  },
-  {
-    "id": "EthTokenToUsdt375",
-    "message": "Обратите внимание, что снятие USDT может занять некоторое время для майнинга и распространения сети.\n                    Due to Omni Protocol properties, the transaction may show up at the OmniExplorer in up to 20 minutes."
   },
   {
     "id": "addOfferPartialTooltip",
@@ -2111,22 +1072,6 @@
     ]
   },
   {
-    "id": "CurrencyWallet141",
-    "message": "{fullName}({currency}) онлайн кошелек, работащюий на технологии Atomic Swap."
-  },
-  {
-    "id": "CurrencyWallet167",
-    "message": "Ваш адрес: {address}{br}Ваш {fullName} баланс: {currency}"
-  },
-  {
-    "id": "orders189",
-    "message": "ПОКУПКУ"
-  },
-  {
-    "id": "orders186",
-    "message": "Предложения {сurrency} "
-  },
-  {
     "id": "CurrencyButton41",
     "message": "Пополнение баланса данной криптовалюты",
     "files": [
@@ -2141,14 +1086,6 @@
     ]
   },
   {
-    "id": "PrivateKeysModal122",
-    "message": "Продолжив Вы соглашаетесь с нашей "
-  },
-  {
-    "id": "PrivateKeysModal123",
-    "message": "политикой конфиденциальности"
-  },
-  {
     "id": "Areyousure",
     "message": "Вы уверены ?",
     "files": [
@@ -2161,46 +1098,6 @@
     "files": [
       "src/front/shared/components/modals/SaveKeysModal/SaveKeysModal.tsx"
     ]
-  },
-  {
-    "id": "Exchange",
-    "message": "Адрес кошелька, на который будет отправлена ​​криптовалюта после обмена"
-  },
-  {
-    "id": "CurrencyWallet168",
-    "message": "Ваш адрес: {address}{br}Ваш {fullName} баланс: {balance} {currency}"
-  },
-  {
-    "id": "currencyWallet27",
-    "message": "Валюта"
-  },
-  {
-    "id": "currencyWallet28",
-    "message": "Статус"
-  },
-  {
-    "id": "currencyWallet29",
-    "message": "Статус"
-  },
-  {
-    "id": "currencyWallet30",
-    "message": "Сумма"
-  },
-  {
-    "id": "Withdraw18333",
-    "message": "ПЕРЕВОД {data}"
-  },
-  {
-    "id": "importkeys172",
-    "message": "Пожалуйста введите ETH приватный ключ"
-  },
-  {
-    "id": "importkeys173",
-    "message": "Пожалуйста введите корректный ETH приватный ключ"
-  },
-  {
-    "id": "importkeys190",
-    "message": "Что то пошло не так. Проверьте ваш приватный ключ, сеть этого адреса и тд."
   },
   {
     "id": "WithdrawIncorectAddress",
@@ -2221,19 +1118,11 @@
     ]
   },
   {
-    "id": "ExchangeTitleTag",
-    "message": "Обмен {full_name1} ({ticker_name1}) на {full_name2} ({ticker_name2}) Атомарный Обмен за 60 секунд"
-  },
-  {
     "id": "ExchangeTitleTag1",
     "message": "Самые быстрые кроссчейновые обмены",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
-  },
-  {
-    "id": "PartialClosureMetaDescrTag",
-    "message": "Децентрализированный обменник Swap.Online предлагает вам лучший курс обмена {full_name1} ({ticker_name1}) на {full_name2} ({ticker_name2}). Онлайн кошелек без регистрации."
   },
   {
     "id": "orders104",
@@ -2281,10 +1170,6 @@
     ]
   },
   {
-    "id": "WithdrawModal263",
-    "message": "Вам нужно иметь {minAmount} ETH на вашем балансе"
-  },
-  {
     "id": "WithdrawModalErrorSend",
     "message": "{errorName} {currency}:{br}{errorMessage}",
     "files": [
@@ -2296,7 +1181,8 @@
     "id": "RowHistory77",
     "message": "Refunded",
     "files": [
-      "src/front/shared/pages/History/SwapsHistory/RowHistory/RowHistory.tsx"
+      "src/front/shared/pages/History/SwapsHistory/RowHistory/RowHistory.tsx",
+      "src/front/shared/pages/Marketmaker/SwapRow.tsx"
     ]
   },
   {
@@ -2305,10 +1191,6 @@
     "files": [
       "src/front/shared/pages/Swap/Timer/Timer.tsx"
     ]
-  },
-  {
-    "id": "CurrencyWallet148",
-    "message": "Онлайн кошелек {fullName} ({currency}) с функцией Атомарного Свопа (Atomic Swap)"
   },
   {
     "id": "CurrencyWallet154",
@@ -2332,14 +1214,6 @@
     ]
   },
   {
-    "id": "orders182",
-    "message": "SELL {buyCurrency} HERE"
-  },
-  {
-    "id": "PartialClosure562",
-    "message": "Наш сервис - это децентрализованный криптовалютный кошелек, работающий по технологии Atomic swap. Обмен Bitcoin, USD Tether в течение нескольких секунд. Без комиссии (только комиссия майнеров).{br}Обмен крипто-токенами в Swap.Online проводится по-настоящему децентрализованно, так как мы используем технологию атомных свопов однорангового взаимодействия между цепями. {br}{br}Swap.Online использует P2P-сеть для всех рабочих процессов, а значит централизованного сервера просто нет. {br}Интерфейс обмена выглядит как крипто-брокер, а не как обычный DEX или CEX. За пару кликов пользователь может разместить и принять предложение, настроив цену отправляемого токена. {br}{br}Кроме того, пользователь может обменять заданный процент от своего количества доступных токенов (например, ½, ¼ и т. д.). {br}{br}Еще одним преимуществом службы обмена Swap.Online является использование одного ключа для всего диапазона токенов ERC-20. {br}Кстати, если вы не заинтересованы в обмене некоторыми токенами, вы можете скрыть их из списка. {br}Используйте Swap.Online в качестве основного обмена для каждого криптовалюты, которую вы держите и экономьте ваше время уже сегодня!"
-  },
-  {
     "id": "RowWallet276",
     "message": "Нода не доступна",
     "files": [
@@ -2352,14 +1226,6 @@
     "files": [
       "src/front/shared/components/notifications/ErrorNotification/ErrorNotification.tsx"
     ]
-  },
-  {
-    "id": "BtcToEthToken222",
-    "message": "Создается Bitcoin Script. Пожалуйста подождите, это займет некоторое время"
-  },
-  {
-    "id": "deposit213",
-    "message": " и 0.002 ETH на gas fee "
   },
   {
     "id": "deposit165",
@@ -2383,19 +1249,11 @@
     ]
   },
   {
-    "id": "deposit231",
-    "message": "Получено {balance} / {need} {tooltip}"
-  },
-  {
     "id": "deposit239",
     "message": "Если вы пополните контракт на сумму больше указанной - остаток будет списан в качестве комиссии майнеров.",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/DepositWindow/DepositWindow.tsx"
     ]
-  },
-  {
-    "id": "Deposit52",
-    "message": "Осталось {timer} минут для проведения платежа."
   },
   {
     "id": "deposit198",
@@ -2412,10 +1270,6 @@
     ]
   },
   {
-    "id": "BtcToEthToken1245",
-    "message": "Средства отправлены"
-  },
-  {
     "id": "ReceiveModal50",
     "message": "Ваш {currency} адрес",
     "files": [
@@ -2430,63 +1284,11 @@
     ]
   },
   {
-    "id": "OrdersWidgetModeShowWallet",
-    "message": "Кошелек"
-  },
-  {
-    "id": "swapFinishedGoHome",
-    "message": "Домой"
-  },
-  {
-    "id": "KeyActionsPanel73",
-    "message": "Скрыть / Добавить валюты"
-  },
-  {
     "id": "userTooltip43",
     "message": "Пользователь ({reputation}) предлагает обмен",
     "files": [
       "src/front/shared/components/Header/User/UserTooltip/UserTooltip.tsx"
     ]
-  },
-  {
-    "id": "advantagesTitle1",
-    "message": "0% КОМИССИЯ"
-  },
-  {
-    "id": "advantagesTitle3",
-    "message": "БЕЗ 3-Й СТОРОНЫ"
-  },
-  {
-    "id": "advantagesTitle4",
-    "message": "МОМЕНТАЛЬНЫЙ ОБМЕН"
-  },
-  {
-    "id": "advantagesTxt1",
-    "message": "Обмен происходит между Вами и другими холдерами (peer-2-peer). Процент с транзакции не взимается."
-  },
-  {
-    "id": "advantagesTxt3",
-    "message": "В процесс обмена никто не может вмешаться."
-  },
-  {
-    "id": "advantagesTxt4",
-    "message": "Вы можете совершить обмен прямо сейчас. Операция происходит в течении 2-х минут."
-  },
-  {
-    "id": "advantagesTxt6",
-    "message": "Никаких данных заполнять не нужно, никакого трейсинга. Всё работает на предельной анонимности."
-  },
-  {
-    "id": "advVidLink",
-    "message": "https://youtu.be/1G-U5Sh7pQk"
-  },
-  {
-    "id": "VidLinkFrame",
-    "message": "https://www.youtube.com/embed/euT8rScwfEk"
-  },
-  {
-    "id": "GitHub",
-    "message": "GitHub"
   },
   {
     "id": "menu.products",
@@ -2514,20 +1316,6 @@
     "message": "RU",
     "files": [
       "src/front/shared/components/Footer/SwitchLang/SwitchLang.tsx"
-    ]
-  },
-  {
-    "id": "ReferralLinks1",
-    "message": "Отправьте или расшарьте ссылку на эту страницу, каждый пользователь который придет по вашей ссылке получит для теста от 0 до 10 SWAP токенов. А вы будете получать бонус в SWAP токенах за его каждый успешный свап (в т.ч. за продажу бонусных токенов)",
-    "files": [
-      "src/front/shared/components/Footer/Referral/Referral.tsx"
-    ]
-  },
-  {
-    "id": "ReferralLinks2",
-    "message": "Условия и правила",
-    "files": [
-      "src/front/shared/components/Footer/Referral/Referral.tsx"
     ]
   },
   {
@@ -2559,47 +1347,12 @@
     ]
   },
   {
-    "id": "BtcToEthToken102",
-    "message": "Вывод из контракта"
-  },
-  {
-    "id": "BtcToEthToken111",
-    "message": "Вывод из контракта"
-  },
-  {
     "id": "BtcToEthToken123",
     "message": "Свап завершен!",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/steps/FourthStep.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSteps/FourthStep.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSteps/FourthStep.tsx"
     ]
-  },
-  {
-    "id": "BtcToEthToken132",
-    "message": "Свап завершен!"
-  },
-  {
-    "id": "BtcToEthToken34",
-    "message": "Процесс подтверждения"
-  },
-  {
-    "id": "BtcToEthToken43",
-    "message": "Процесс подтверждения"
-  },
-  {
-    "id": "BtcToEthToken58",
-    "message": "Bitcoin зачисление"
-  },
-  {
-    "id": "BtcToEthToken67",
-    "message": "Bitcoin зачисление"
-  },
-  {
-    "id": "BtcToEthToken80",
-    "message": "{name} зачисление"
-  },
-  {
-    "id": "BtcToEthToken89",
-    "message": "{name} зачисление"
   },
   {
     "id": "swapFinishedGoHome289",
@@ -2637,147 +1390,11 @@
     ]
   },
   {
-    "id": "swappropgress233",
-    "message": "ETH транзакция:"
-  },
-  {
-    "id": "swappropgress258",
-    "message": "BTC транзакция:"
-  },
-  {
-    "id": "swappropgress332",
-    "message": "Как вернуть ваши средства ?"
-  },
-  {
     "id": "swappropgress333",
     "message": "Транзакция возврата:",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
     ]
-  },
-  {
-    "id": "ethToBtcText20",
-    "message": "Ожидание... Владелец BTC создает Секретный ключ, BTC Script и отправляет его"
-  },
-  {
-    "id": "ethToBtcText25",
-    "message": "Вitcoin Script был создан и отправлен. Проверьте информацию ниже"
-  },
-  {
-    "id": "ethToBtcText26",
-    "message": "Инициируем процесс подтверждения..."
-  },
-  {
-    "id": "ethToBtcText28",
-    "message": "Проверка баланса.."
-  },
-  {
-    "id": "ethToBtcText32",
-    "message": "Создается Ethereum Контракт.{br}Потребуется несколько минут"
-  },
-  {
-    "id": "ethToBtcText36",
-    "message": "Ожидание... Владелец BTC отправляет Секретный ключ в ETH Контракт"
-  },
-  {
-    "id": "ethToBtcText40",
-    "message": "Средства из контракта ETH были успешно переведены владельцу BTC."
-  },
-  {
-    "id": "ethToBtcText44",
-    "message": "Спасибо за использование Swap.Online"
-  },
-  {
-    "id": "ethToBtcText48",
-    "message": "Спасибо за использование Swap.Online!"
-  },
-  {
-    "id": "WalletPromoLinkText",
-    "message": "Открытый опрос"
-  },
-  {
-    "id": "WalletPromoText",
-    "message": "🎁 🎁 🎁 Спасибо за использование Swap.Online!\n                Расскажите нам о своем опыте работы с нашим сервисом\n                и мы подарим вам 10 долларов в BTC 🎁 🎁 🎁"
-  },
-  {
-    "id": "orders224",
-    "message": "Купите {сurrency} здесь"
-  },
-  {
-    "id": "swappropgress246",
-    "message": "Sign ETH transaction:"
-  },
-  {
-    "id": "BitcoinBuyText17",
-    "message": "Обработка подтверждения"
-  },
-  {
-    "id": "BitcoinBuyText20",
-    "message": "Создается Секретный ключ"
-  },
-  {
-    "id": "BitcoinBuyText29",
-    "message": "Проверка баланса.."
-  },
-  {
-    "id": "BitcoinBuyText33",
-    "message": "Создается Bitcoin Script. Это займет какое то время"
-  },
-  {
-    "id": "BitcoinBuyText37",
-    "message": "Владелец {buyCurrency} получил Bitcoin Script и Хэш. Ожидается, создание им {buyCurrency} Контракта"
-  },
-  {
-    "id": "BitcoinBuyText41",
-    "message": "Пробуем вывести {buyCurrency} из контракта."
-  },
-  {
-    "id": "BitcoinBuyText45",
-    "message": "{buyCurrency} токены перечислены на Ваш кошелек. Проверте баланс."
-  },
-  {
-    "id": "BitcoinBuyText49",
-    "message": "Спасибо за использование Swap.Online!"
-  },
-  {
-    "id": "BitcoinBuyText53",
-    "message": "Спасибо за использование Swap.Online!"
-  },
-  {
-    "id": "EthTokensToBtc16",
-    "message": "Процесс подтверждения."
-  },
-  {
-    "id": "EthTokensToBtc20",
-    "message": "Ожидание, Владелец BTC создает Cекретный ключ, BTC Script и пополняет его"
-  },
-  {
-    "id": "EthTokensToBtc24",
-    "message": "Bitcoin Script создан и загружен. Проверте информацию ниже"
-  },
-  {
-    "id": "EthTokensToBtc28",
-    "message": "Проверка баланса.."
-  },
-  {
-    "id": "EthTokensToBtc32",
-    "message": "Создается Ethereum Контракт. Потребуется несколько минут"
-  },
-  {
-    "id": "EthTokensToBtc36",
-    "message": "Ожидание... Владелец BTC отправляет Секретный ключ в ETH Контракт"
-  },
-  {
-    "id": "EthTokensToBtc40",
-    "message": "Средства из контракта ETH были успешно переведены владельцу BTC."
-  },
-  {
-    "id": "EthTokensToBtc44",
-    "message": "Спасибо за использование Swap.Online! "
-  },
-  {
-    "id": "EthTokensToBtc48",
-    "message": "Спасибо за использование Swap.Online! "
   },
   {
     "id": "SwapStuck",
@@ -2829,14 +1446,6 @@
     ]
   },
   {
-    "id": "Row401",
-    "message": "Создать аккаунт"
-  },
-  {
-    "id": "Row420",
-    "message": "Использовать другой"
-  },
-  {
     "id": "SwapController54",
     "message": "Другой участник онлайн",
     "files": [
@@ -2883,23 +1492,11 @@
     ]
   },
   {
-    "id": "PartialUseInternalWallet",
-    "message": "Используйте внутренний кошелек"
-  },
-  {
     "id": "deposit256",
     "message": "Адрес {tokenName} смарт контракта",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/DepositWindow/DepositWindow.tsx"
     ]
-  },
-  {
-    "id": "FourthStep33",
-    "message": "(tx)"
-  },
-  {
-    "id": "BtcToEthToken20",
-    "message": "Создвется секретный ключ"
   },
   {
     "id": "transaction444",
@@ -2923,14 +1520,6 @@
     ]
   },
   {
-    "id": "Select26",
-    "message": "1/4"
-  },
-  {
-    "id": "Select27",
-    "message": "1/2"
-  },
-  {
     "id": "deposit320",
     "message": "(Включено {mineerFee} {sellCurrency} комиссии майнеров)",
     "files": [
@@ -2938,63 +1527,35 @@
     ]
   },
   {
-    "id": "BtcToEthToken25",
-    "message": "Зачисление Bitcoin {fromWhom} в контракт"
-  },
-  {
-    "id": "FourthStep28",
-    "message": "вами"
-  },
-  {
-    "id": "FourthStep29",
-    "message": "продавцом"
-  },
-  {
-    "id": "ThirdStep25",
-    "message": "Зачисление {name} {fromWhom} в контракт"
-  },
-  {
-    "id": "ThirdStep30",
-    "message": "продавцом"
-  },
-  {
-    "id": "ThirdStep31",
-    "message": "вами"
-  },
-  {
     "id": "BtcToEthToken24",
     "message": "Зачисление",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/steps/SecondStep.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSteps/SecondStep.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSteps/SecondStep.tsx"
     ]
-  },
-  {
-    "id": "FourthStep36",
-    "message": "({btcTx} tx)"
-  },
-  {
-    "id": "FourthStep37",
-    "message": "({ghostTx} tx)"
   },
   {
     "id": "FourthStep52",
     "message": "({otherCurrency} tx)",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/steps/SecondStep.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSteps/SecondStep.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSteps/SecondStep.tsx"
     ]
   },
   {
     "id": "FourthStep34",
     "message": "({sell} tx)",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/steps/ThirdStep.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSteps/ThirdStep.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSteps/ThirdStep.tsx"
     ]
   },
   {
     "id": "thirdStep24",
     "message": "Вывод из контракта",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/steps/ThirdStep.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSteps/ThirdStep.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSteps/ThirdStep.tsx"
     ]
   },
   {
@@ -3072,10 +1633,6 @@
     ]
   },
   {
-    "id": "KeyActionsPane74",
-    "message": "Незавершенные обмены ({length})"
-  },
-  {
     "id": "decline21",
     "message": "Отклоненные ордера!",
     "files": [
@@ -3128,26 +1685,23 @@
     "id": "swapprogressDONTLEAVE",
     "message": "Пожалуйста, не уходите с этой страницы ",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/PleaseDontLeaveWrapper.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/PleaseDontLeaveWrapper.tsx"
     ]
   },
   {
     "id": "swapjsdontleave",
     "message": "В каждом шаге при обмене требуется подпись приватными ключами, которые знает только ваш браузер.",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/PleaseDontLeaveWrapper.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/PleaseDontLeaveWrapper.tsx"
     ]
   },
   {
     "id": "Confirmation14",
     "message": "Подтверждение",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/steps/FirstStep.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSteps/FirstStep.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSteps/FirstStep.tsx"
     ]
-  },
-  {
-    "id": "completed21",
-    "message": "Готово!"
   },
   {
     "id": "swappropgress192",
@@ -3157,27 +1711,11 @@
     ]
   },
   {
-    "id": "swapjs290",
-    "message": "Прервать своп"
-  },
-  {
-    "id": "FeeControler34",
-    "message": "Недостаточный баланс ETH кошелька, для оплаты комиссии майнеров.{br}Внесите 0.002 ETH на Ваш кошелек для продолжения обмена {br}"
-  },
-  {
     "id": "IncompletedSwaps55",
     "message": "Данные загружаются, попробуйте перезагрузить страницу",
     "files": [
       "src/front/shared/components/modals/IncompletedSwaps/IncompletedSwaps.tsx"
     ]
-  },
-  {
-    "id": "partial795",
-    "message": "Доступный баланс - ваш баланс за вычетом комиссии майнеров."
-  },
-  {
-    "id": "ErrorNotAvailable",
-    "message": "Доступный баланс для обмена {available}"
   },
   {
     "id": "select75",
@@ -3196,114 +1734,20 @@
     ]
   },
   {
-    "id": "Select28",
-    "message": "ВСЁ"
-  },
-  {
-    "id": "tourPartial103",
-    "message": "Здесь вы можете увидеть статус поиска предложений по обмену. При загрузке будет отображаться «Поиск предложений ...». Когда ордер найден, отобразится курс обмена"
-  },
-  {
-    "id": "tourPartial107",
-    "message": "Переключите этот ползунок, чтобы выбрать получить средства после обмена на внутренний кошелек Swap.online или на другой кошелек"
-  },
-  {
-    "id": "tourPartial116",
-    "message": "Нажмите эту кнопку, чтобы увидеть прямой URL операции обмена. Это возможно, когда кнопка розовая."
-  },
-  {
-    "id": "tourPartial128",
-    "message": "Нажмите на эту кнопку, чтобы увидеть страницу с предложениями для обмена. Предложения будут представлены для выбранных валют. Также вы можете создать собственное предложение на странице предложений."
-  },
-  {
-    "id": "tourPartial62",
-    "message": "Эта страница предназначена для более простого и быстрого поиска предложений на обмен. Здесь вы можете выбрать кошелек для получения валюты, начать обмен с частичным закрытием или перейти на страницу со всеми доступными предложениями."
-  },
-  {
-    "id": "tourPartial94",
-    "message": "Пожалуйста, введите сумму, которую вы хотите продать, и выберите валюту для продажи. Вы также можете продать валюту с внешнего кошелька."
-  },
-  {
-    "id": "tourPartial99",
-    "message": "Пожалуйста, введите сумму, которую вы хотели бы купить, и выберите валюту для покупки."
-  },
-  {
-    "id": "FooterPartnershipForERC20",
-    "message": "Токенам"
-  },
-  {
-    "id": "Keychain",
-    "message": "KeyChain Activation"
-  },
-  {
-    "id": "Keychain114",
-    "message": "KeyChain is loading. Please wait."
-  },
-  {
-    "id": "Keychain116",
-    "message": "Back"
-  },
-  {
-    "id": "Keychain1165",
-    "message": "KeyChain is activated. If you wish to deactivate KeyChain, note that your key will be replaced with a new one."
-  },
-  {
-    "id": "Keychain130",
-    "message": "You need to install KeyChain to proceed"
-  },
-  {
-    "id": "Keychain133",
-    "message": "Download"
-  },
-  {
-    "id": "Keychain141",
-    "message": "Positive balance error"
-  },
-  {
-    "id": "Keychain144",
-    "message": "Would you like to protect your keys with KeyChain? Note that your address will be changed"
-  },
-  {
-    "id": "Keychain157",
-    "message": "Confirm"
-  },
-  {
-    "id": "Keychain167",
-    "message": "Deactivate"
-  },
-  {
-    "id": "Keychain173",
-    "message": "KeyChain is not installed but activated"
-  },
-  {
-    "id": "Keychain175",
-    "message": "Deactivate"
-  },
-  {
-    "id": "Keychain179",
-    "message": "Download"
-  },
-  {
-    "id": "Keychain185",
-    "message": "Back"
-  },
-  {
     "id": "SecondStep",
     "message": "On this step, the crypto goes not to your wallet {br}or to the wallet of your counterparty but directly to the swap contract",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/steps/SecondStep.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSteps/SecondStep.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSteps/SecondStep.tsx"
     ]
   },
   {
     "id": "thirdStep",
     "message": "Оn this step crypto is transferred from {br}the contract to your wallet and to the wallet {br} of your counterparty {br}",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/steps/ThirdStep.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSteps/ThirdStep.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSteps/ThirdStep.tsx"
     ]
-  },
-  {
-    "id": "Partial955",
-    "message": "Address not correct"
   },
   {
     "id": "Submenu16",
@@ -3328,10 +1772,6 @@
       "src/front/shared/components/Header/SubMenu/SubMenu.tsx",
       "src/front/shared/components/modals/MobMenu/MobMenu.tsx"
     ]
-  },
-  {
-    "id": "Swap.OnlineSubmenu",
-    "message": "Swap.Exhange"
   },
   {
     "id": "Swap.WalletSubMeny",
@@ -3369,10 +1809,6 @@
     "files": [
       "src/front/shared/components/modals/MultisignJoinLink/MultisignJoinLink.tsx"
     ]
-  },
-  {
-    "id": "multiSignJoinLinkReady",
-    "message": "Готово"
   },
   {
     "id": "Select23",
@@ -3480,10 +1916,6 @@
     ]
   },
   {
-    "id": "history107",
-    "message": "Загрузка"
-  },
-  {
     "id": "Quote",
     "message": "The swap.online project realizes swaps among Bitcoin-like, Ethereum-like, and made a product for users to execute swaps",
     "files": [
@@ -3494,14 +1926,14 @@
     "id": "swapjsdontleavesavesecret",
     "message": "If you want to leave this page please save the secret.",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/PleaseDontLeaveWrapper.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/PleaseDontLeaveWrapper.tsx"
     ]
   },
   {
     "id": "swapprogressDONTLEAVEBTC",
     "message": "Or save this information before you leave:",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/PleaseDontLeaveWrapper.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/PleaseDontLeaveWrapper.tsx"
     ]
   },
   {
@@ -3517,22 +1949,6 @@
     "files": [
       "src/front/shared/pages/Swap/Timer/Timer.tsx"
     ]
-  },
-  {
-    "id": "PrivateKeysModalToggleTree",
-    "message": "I do not use TOR browser"
-  },
-  {
-    "id": "PrivateKeysModalToggleTwo",
-    "message": "I do not use incognito or guest mode in my browser"
-  },
-  {
-    "id": "WithdrawMSLinkCopied",
-    "message": "Link copied to clipboard"
-  },
-  {
-    "id": "WithdrawMSLinkCopy",
-    "message": "Copy to clipboard"
   },
   {
     "id": "WithdrawMSUserFinish",
@@ -3708,24 +2124,12 @@
     ]
   },
   {
-    "id": "depositBtn",
-    "message": "Для пополнения валюты нажмите три точки напротив нужного актива"
-  },
-  {
-    "id": "sendBtn",
-    "message": "Для отправки валюты нажмите три точки напротив нужного актива"
-  },
-  {
     "id": "WithdrawModal2225",
     "message": "Something went wrong, enter your current code please",
     "files": [
       "src/front/shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
     ]
-  },
-  {
-    "id": "Withdrow2222",
-    "message": "Отправить SMS code"
   },
   {
     "id": "Withdrow2223",
@@ -3849,6 +2253,13 @@
     ]
   },
   {
+    "id": "FeeInfoBlockChooseFeeRate",
+    "message": "Выбор типа комиссии:",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/index.tsx"
+    ]
+  },
+  {
     "id": "InvoiceLinkCopied",
     "message": "Ссылка скопирована",
     "files": [
@@ -3903,14 +2314,6 @@
     "files": [
       "src/front/shared/components/modals/InvoiceModal/InvoiceModal.tsx"
     ]
-  },
-  {
-    "id": "invoiceModal_Amount_Dollar",
-    "message": "Сумма в USD"
-  },
-  {
-    "id": "invoiceModal_Amount_Rub",
-    "message": "Сумма в RUB"
   },
   {
     "id": "invoiceModal_Error",
@@ -4270,31 +2673,11 @@
     ]
   },
   {
-    "id": "PartialPriceSellMax",
-    "message": "Максимально доступная сумма для продажи:"
-  },
-  {
     "id": "continueDeclined977",
     "message": "Продолжить обмен",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
-  },
-  {
-    "id": "partial1021",
-    "message": "Вставить на сайт"
-  },
-  {
-    "id": "ImportKeysBtn",
-    "message": "Импортировать"
-  },
-  {
-    "id": "ImportFromSwapOnlineBtn",
-    "message": "Импортировать из swap.online"
-  },
-  {
-    "id": "ExchangeBtn",
-    "message": "Обмен"
   },
   {
     "id": "Yourtotalbalance",
@@ -4346,82 +2729,6 @@
     ]
   },
   {
-    "id": "TransactionswalletNav",
-    "message": "История"
-  },
-  {
-    "id": "walletHistoryActivity",
-    "message": "История"
-  },
-  {
-    "id": "descr279",
-    "message": "Сохраните свои ключи!"
-  },
-  {
-    "id": "descr280",
-    "message": "Мы не храним ваши ключи и не сможем их восстановить"
-  },
-  {
-    "id": "descr282",
-    "message": "Показать мои ключи"
-  },
-  {
-    "id": "descr284",
-    "message": "Я сохранил свои ключи"
-  },
-  {
-    "id": "descr291",
-    "message": "Зарегистрируйтесь и получите бесплатную криптовалюту для тестирования!"
-  },
-  {
-    "id": "descr292",
-    "message": "Вы также сможете получать уведомления об обновлениях с вашей учетной записью"
-  },
-  {
-    "id": "descr293",
-    "message": "Зарегистрироваться"
-  },
-  {
-    "id": "descr294",
-    "message": "Я сделаю это позже"
-  },
-  {
-    "id": "descr295",
-    "message": "Храните биткоин и другие криптовалюты без установки кошелька."
-  },
-  {
-    "id": "descr296",
-    "message": "Безопасные транзакции с подтверждением по СМС. Обменивайтесь криптовалютой с другими пользователями без угрозы холда (Atomic Swap). [Начать обмен]"
-  },
-  {
-    "id": "descr297",
-    "message": "Есть инвестор?"
-  },
-  {
-    "id": "descr298",
-    "message": "Функция совместного кошелька поможет вам с партнером управлять бюджетом. Прочитайте как мы сами используем совместный кошелек для управления запасами. [Читать кейс] (в новом окне) или [Создать совместный счет]"
-  },
-  {
-    "id": "descr299",
-    "message": "Есть команда?"
-  },
-  {
-    "id": "descr300",
-    "message": "Система инвойсов позволит не запутаться в платежах и бухгалтерии. Смотреть видео как мы сами используем это в нашей интернациональной команде. [Смотреть видео]"
-  },
-  {
-    "id": "descr304",
-    "message": "Нет бюджета?"
-  },
-  {
-    "id": "descr305",
-    "message": "Выпустите акции проекта и предложите их в качестве оплаты вашим сотрудникам. Читайте наш собственный кейс как токенизация позволила нам сэкономить $20 000 и другие кейсы. [Изучить кейсы]"
-  },
-  {
-    "id": "historyActivity",
-    "message": "История"
-  },
-  {
     "id": "Submenu",
     "message": "Swap.Exhange",
     "files": [
@@ -4458,31 +2765,11 @@
     ]
   },
   {
-    "id": "CreateInvoiceGoHome",
-    "message": "Перейти на главную"
-  },
-  {
-    "id": "CreateInvoiceReady",
-    "message": "Спасибо, инвойс выставлен"
-  },
-  {
     "id": "createWallet_customERC20",
     "message": "Подключить токен",
     "files": [
       "src/front/shared/pages/CreateWallet/Steps/StepsWrapper.tsx"
     ]
-  },
-  {
-    "id": "descr301",
-    "message": "Updates"
-  },
-  {
-    "id": "descr302",
-    "message": "Let us notify you that the main domain name for Swap.online exchange service will be changed from swap.online to swaponline.io."
-  },
-  {
-    "id": "descr303",
-    "message": "Close"
   },
   {
     "id": "customERC20_Address",
@@ -4597,14 +2884,6 @@
     ]
   },
   {
-    "id": "WalletPage_ExportKeys",
-    "message": "Показать ключи"
-  },
-  {
-    "id": "WalletPage_ImportKeys",
-    "message": "Импортировать ключи"
-  },
-  {
     "id": "btcmsSwitchFetchWalletsData",
     "message": "Загрузка BTC-Multisign кошельков",
     "files": [
@@ -4672,14 +2951,6 @@
     ]
   },
   {
-    "id": "InfoPay_5",
-    "message": "Вернуться"
-  },
-  {
-    "id": "currencyWalletActivity",
-    "message": "История {currency}"
-  },
-  {
     "id": "withdrawSMSCodePlaceholder",
     "message": "Enter SMS-code",
     "files": [
@@ -4695,14 +2966,6 @@
     ]
   },
   {
-    "id": "YourtotalbalanceExchange",
-    "message": "Обменять"
-  },
-  {
-    "id": "WalletPage_Heading",
-    "message": "Кошелек"
-  },
-  {
     "id": "ControlShareLink_CopyLink",
     "message": "Copy link",
     "files": [
@@ -4715,18 +2978,6 @@
     "files": [
       "src/front/shared/components/controls/ShareLink/ShareLink.tsx"
     ]
-  },
-  {
-    "id": "BTCMS_Amount",
-    "message": "Сумма транзакции: {amount} BTC"
-  },
-  {
-    "id": "BTCMS_FromAddress",
-    "message": "Оплата с кошелка: {address}"
-  },
-  {
-    "id": "BTCMS_ToAddress",
-    "message": "Получатель: {address}"
   },
   {
     "id": "multiSignConfirmTxModal_ConfirmTx",
@@ -4827,10 +3078,6 @@
     "files": [
       "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
     ]
-  },
-  {
-    "id": "registerSMSModalFinishInfoTitle",
-    "message": "Сохраните эту информацию"
   },
   {
     "id": "registerSMSModalPhonePlaceholder",
@@ -5023,10 +3270,6 @@
     ]
   },
   {
-    "id": "ShowMyMnemonic",
-    "message": "Сделайте резервную копию кошелька"
-  },
-  {
     "id": "BtcMultisignConfirmTx_FromAddress",
     "message": "Оплата с кошелька",
     "files": [
@@ -5088,10 +3331,6 @@
     "files": [
       "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx"
     ]
-  },
-  {
-    "id": "MnemoniceDeleted_hrefText",
-    "message": "Экспортируйте приватные ключи"
   },
   {
     "id": "SaveMnemonicModal_Ready",
@@ -5447,11 +3686,45 @@
   },
   {
     "id": "MainFAQ3_header",
-    "message": "How to save private keys?"
+    "message": "Почему комиссия за майнинг слишком высокая?",
+    "files": [
+      "src/front/shared/components/FAQ/FAQ.tsx"
+    ]
   },
   {
     "id": "MainFAQ3_content",
-    "message": "For save you \"12-words seed\" click on \"Please backup your wallet\" banner. If you don't see this banner, don't despair just click on \"dots\" near your balance and select \"Copy private key\" option"
+    "message": "Плата комиссии в блокчейне зависит от нескольких факторов: нагрузка на сеть и размер транзакции (влияет на конвертацию криптовалюты с несколькими входами, такие как доход с кранов или другие микротранзакции).",
+    "files": [
+      "src/front/shared/components/FAQ/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MainFAQ3_content1",
+    "message": "Другими словами, вам может потребоваться заплатить более высокую комиссию за майнинг, если:",
+    "files": [
+      "src/front/shared/components/FAQ/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MainFAQ3_content2",
+    "message": "1) Сеть блокчейн в данный момент загружена. Обычно комиссия увеличивается во время резких колебаний курса криптовалюты и крупных мировых событий;",
+    "files": [
+      "src/front/shared/components/FAQ/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MainFAQ3_content3",
+    "message": "2) Ваш криптовалютный адрес имеет историю микродепозитов. Если на вашем адресе есть много мелких депозитов, размер вашей транзакции будет больше, поскольку она будет состоять из множества входов. Чем больше размер транзакции, тем выше комиссия за майнинг.",
+    "files": [
+      "src/front/shared/components/FAQ/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MainFAQ3_content4",
+    "message": "Могут быть и другие причины более высоких комиссий за блокчейн, но мы перечислили наиболее распространенные.",
+    "files": [
+      "src/front/shared/components/FAQ/FAQ.tsx"
+    ]
   },
   {
     "id": "SweepBannerDescription",
@@ -5466,10 +3739,6 @@
     "files": [
       "src/front/shared/components/modals/HowToWithdrawModal/HowToWithdrawModal.tsx"
     ]
-  },
-  {
-    "id": "Transaction_Pags_Fetching",
-    "message": "Fetching..."
   },
   {
     "id": "WalletRow_Menu_HowToWithdraw",
@@ -5502,7 +3771,7 @@
   },
   {
     "id": "Exchange_CustomAddressOption",
-    "message": "Внешний кошелёк",
+    "message": "Внешний кошелек",
     "files": [
       "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
     ]
@@ -5527,14 +3796,6 @@
     "files": [
       "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
     ]
-  },
-  {
-    "id": "Exchange_MetamaskAddressOption",
-    "message": "Metamask"
-  },
-  {
-    "id": "Exchange_MetamaskNotInstalledOption",
-    "message": "Metamask (не установлен)"
   },
   {
     "id": "Exchange_PlaceholderEnterAddress",
@@ -5607,42 +3868,6 @@
     ]
   },
   {
-    "id": "History_Nav_ActivityTab",
-    "message": "История"
-  },
-  {
-    "id": "History_Nav_InvoicesTab",
-    "message": "Invoices"
-  },
-  {
-    "id": "InvoicesView_MetaDescription",
-    "message": "Atomic Swap Wallet allows you to manage and securely exchange. Based on Multi-Sig and Atomic Swap technologies."
-  },
-  {
-    "id": "InvoicesView_MetaTitle",
-    "message": "Swap.Online - Invoice #{number} - Web Wallet with Atomic Swap."
-  },
-  {
-    "id": "InvoicesView_WidgetMetaTitle",
-    "message": "Invoice #{number} - Web Wallet with Atomic Swap."
-  },
-  {
-    "id": "InvoicesList_MetaDescription",
-    "message": "Atomic Swap Wallet allows you to manage and securely exchange. Based on Multi-Sig and Atomic Swap technologies."
-  },
-  {
-    "id": "InvoicesList_MetaTitle",
-    "message": "Swap.Online - Invoices - Web Wallet with Atomic Swap."
-  },
-  {
-    "id": "InvoicesList_NavTitle_Address",
-    "message": "Invoices {type}{br}{address}"
-  },
-  {
-    "id": "InvoicesList_NavTitle_All",
-    "message": "Invoices"
-  },
-  {
     "id": "InvoicesList_Title",
     "message": "Запросы",
     "files": [
@@ -5650,19 +3875,11 @@
     ]
   },
   {
-    "id": "InvoicesList_WidgetMetaTitle",
-    "message": "Invoices - Web Wallet with Atomic Swap."
-  },
-  {
     "id": "partialVideoAndFeatures2",
     "message": "Supports BTC, ETH, USDT, ERC-20 tokens",
     "files": [
       "src/front/shared/pages/Exchange/VideoAndFeatures/VideoAndFeatures.tsx"
     ]
-  },
-  {
-    "id": "Share",
-    "message": "Share Twitter"
   },
   {
     "id": "InvoiceInfoModal_ButtonShareReady",
@@ -5777,18 +3994,6 @@
     ]
   },
   {
-    "id": "InvoicesNav",
-    "message": "Запросы"
-  },
-  {
-    "id": "WalletPage_Widget_RestoreMnemonic",
-    "message": "Ввести свои 12 слов"
-  },
-  {
-    "id": "WalletPage_Widget_ShowMnemonic",
-    "message": "Показать 12 слов"
-  },
-  {
     "id": "multiSignConfirmTxModal_ButtonClose",
     "message": "Закрыть",
     "files": [
@@ -5857,10 +4062,6 @@
     "files": [
       "src/front/shared/components/AdminFeeInfoBlock/AdminFeeInfoBlock.tsx"
     ]
-  },
-  {
-    "id": "AdminFee_MessageWithAmount",
-    "message": "Комиссия {calcedAmount} {currency}"
   },
   {
     "id": "InfoPay_2_Ready",
@@ -6459,14 +4660,6 @@
     ]
   },
   {
-    "id": "WalletRow_Menu_HowExportPin",
-    "message": "How to export wallet"
-  },
-  {
-    "id": "WalletRow_Menu_HowExportSms",
-    "message": "How to export wallet"
-  },
-  {
     "id": "Withdraw_BalanceDesktop",
     "message": "{amount} {currency} будет отправленно",
     "files": [
@@ -6493,10 +4686,6 @@
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
     ]
-  },
-  {
-    "id": "WalletRow_Menu_HowExportWallet",
-    "message": "How to export wallet"
   },
   {
     "id": "WalletRow_ShowAddress",
@@ -6730,351 +4919,11 @@
     ]
   },
   {
-    "id": "Exchange_BalanceTooltipInfo",
-    "message": "Ваш баланс {balance} {currency} минус коммисия майнера {minerFee} {currency}"
-  },
-  {
-    "id": "walletDidntCreateMessage",
-    "message": "Create {curr} wallet before you start the swap."
-  },
-  {
-    "id": "walletDidntCreateTitle",
-    "message": "Wallet does not exist."
-  },
-  {
     "id": "InfoPay_2_copy",
     "message": "были успешно переданы",
     "files": [
       "src/front/shared/components/modals/InfoPay/InfoPay.tsx"
     ]
-  },
-  {
-    "id": "ethToBtcText20_eth_to_ghost",
-    "message": "Waiting for GHOST Owner to create Secret Key, create GHOST Script and charge it"
-  },
-  {
-    "id": "ethToBtcText25_eth_to_ghost",
-    "message": "The GHOST Script was created and charged. Check the information below"
-  },
-  {
-    "id": "ethToBtcText26_eth_to_ghost",
-    "message": "Confirmation processing"
-  },
-  {
-    "id": "ethToBtcText28_eth_to_ghost",
-    "message": "Checking balance.."
-  },
-  {
-    "id": "ethToBtcText32_eth_to_ghost",
-    "message": "Creating Ethereum Contract.{br}It can take a few minutes"
-  },
-  {
-    "id": "ethToBtcText36_eth_to_ghost",
-    "message": "Waiting for GHOST Owner to add a Secret Key to ETH Contact"
-  },
-  {
-    "id": "ethToBtcText40_eth_to_ghost",
-    "message": "The funds from ETH contract was successfully transferred to GHOST owner.\n              GHOST owner left a secret key. Requesting withdrawal from GHOST script."
-  },
-  {
-    "id": "ethToBtcText44_eth_to_ghost",
-    "message": "Thank you for using Swap.Online"
-  },
-  {
-    "id": "ethToBtcText48_eth_to_ghost",
-    "message": "Thank you for using Swap.Online!"
-  },
-  {
-    "id": "EthTokensToBtc16_ethtoken_to_Ghost",
-    "message": "Confirmation processing"
-  },
-  {
-    "id": "EthTokensToBtc20_ethtoken_to_Ghost",
-    "message": "Waiting for GHOST Owner to create Secret Key, create GHOST Script and charge it"
-  },
-  {
-    "id": "EthTokensToBtc24_ethtoken_to_Ghost",
-    "message": "The GHOST Script was created and charged. Check the information below"
-  },
-  {
-    "id": "EthTokensToBtc28_ethtoken_to_Ghost",
-    "message": "Checking balance.."
-  },
-  {
-    "id": "EthTokensToBtc32_ethtoken_to_Ghost",
-    "message": "Creating Ethereum Contract. {br} It can take a few minutes"
-  },
-  {
-    "id": "EthTokensToBtc36_ethtoken_to_Ghost",
-    "message": "Waiting for GHOST Owner to add a Secret Key to ETH Contact"
-  },
-  {
-    "id": "EthTokensToBtc40_ethtoken_to_Ghost",
-    "message": "The funds from ETH contract was successfully transferred to GHOST owner"
-  },
-  {
-    "id": "EthTokensToBtc44_ethtoken_to_Ghost",
-    "message": "Thank you for using Swap.Online"
-  },
-  {
-    "id": "EthTokensToBtc48_ethtoken_to_Ghost",
-    "message": "Thank you for using Swap.Online!"
-  },
-  {
-    "id": "SwapProgress105_ghost_to_eth",
-    "message": "Checking balance.."
-  },
-  {
-    "id": "SwapProgress111_ghost_to_eth",
-    "message": "Creating GHOST Script.{br}It can take a few minutes"
-  },
-  {
-    "id": "SwapProgress117_ghost_to_eth",
-    "message": "Your GHOST are now depositing. It may require one confirmation from GHOST Network. Waiting for other participant to deposit ETH."
-  },
-  {
-    "id": "SwapProgress123_ghost_to_eth",
-    "message": "ETH Contract created and charged. Requesting withdrawal from ETH Contract."
-  },
-  {
-    "id": "SwapProgress129_ghost_to_eth",
-    "message": "ETH was transferred to your wallet. Check the balance."
-  },
-  {
-    "id": "SwapProgress135_ghost_to_eth",
-    "message": "Thank you for using Swap.Online!"
-  },
-  {
-    "id": "SwapProgress93_ghost_to_eth",
-    "message": "The order creator is offline. Waiting for him.."
-  },
-  {
-    "id": "SwapProgress99_ghost_to_eth",
-    "message": "Create a secret key"
-  },
-  {
-    "id": "BitcoinBuyText17_ghost_to_tokens",
-    "message": "Confirmation processing"
-  },
-  {
-    "id": "BitcoinBuyText29_ghost_to_tokens",
-    "message": "Checking balance.."
-  },
-  {
-    "id": "BitcoinBuyText33_ghost_to_tokens",
-    "message": "Creating GHOST Script.{br}It can take a few minutes"
-  },
-  {
-    "id": "BitcoinBuyText37_ghost_to_tokens",
-    "message": "{buyCurrency} Owner received GHOST Script and Secret Hash. Waiting when he creates {buyCurrency} Contract"
-  },
-  {
-    "id": "BitcoinBuyText41_ghost_to_tokens",
-    "message": "{buyCurrency} Contract created and charged. Requesting withdrawal from {buyCurrency} Contract."
-  },
-  {
-    "id": "BitcoinBuyText45_ghost_to_tokens",
-    "message": "{buyCurrency} tokens was transferred to your wallet. Check the balance."
-  },
-  {
-    "id": "BitcoinBuyText49_ghost_to_tokens",
-    "message": "Thank you for using Swap.Online"
-  },
-  {
-    "id": "BitcoinBuyText53_ghost_to_tokens",
-    "message": "Thank you for using Swap.Online!"
-  },
-  {
-    "id": "BtcToEthToken20_ghost_to_tokens",
-    "message": "Create a secret key"
-  },
-  {
-    "id": "BtcToEthToken123_copy",
-    "message": "The swap is finished!"
-  },
-  {
-    "id": "SwapProgress111_BTC_ETH",
-    "message": "Creating Bitcoin Script.{br}It can take a few minutes"
-  },
-  {
-    "id": "SwapProgress117_BTC_ETH",
-    "message": "Your BTC are now depositing. It may require one confirmation from Bitcoin Network. Waiting for other participant to deposit ETH."
-  },
-  {
-    "id": "SwapProgress123_BTC_ETH",
-    "message": "ETH Contract created and charged. Requesting withdrawal from ETH Contract."
-  },
-  {
-    "id": "SwapProgress129_BTC_ETH",
-    "message": "ETH was transferred to your wallet. Check the balance."
-  },
-  {
-    "id": "SwapProgress135_BTC_ETH",
-    "message": "Thank you for using Swap.Onlinde!"
-  },
-  {
-    "id": "BitcoinBuyText17_btc_to_ethtoken",
-    "message": "Confirmation processing"
-  },
-  {
-    "id": "BitcoinBuyText29_btc_to_ethtoken",
-    "message": "Checking balance.."
-  },
-  {
-    "id": "BitcoinBuyText33_btc_to_ethtoken",
-    "message": "Creating Bitcoin Script.{br}It can take a few minutes"
-  },
-  {
-    "id": "BitcoinBuyText37_btc_to_ethtoken",
-    "message": "{buyCurrency} Owner received Bitcoin Script and Secret Hash. Waiting when he creates {buyCurrency} Contract"
-  },
-  {
-    "id": "BitcoinBuyText41_btc_to_ethtoken",
-    "message": "{buyCurrency} Contract created and charged. Requesting withdrawal from {buyCurrency} Contract."
-  },
-  {
-    "id": "BitcoinBuyText45_btc_to_ethtoken",
-    "message": "{buyCurrency} tokens was transferred to your wallet. Check the balance."
-  },
-  {
-    "id": "BitcoinBuyText49_btc_to_ethtoken",
-    "message": "Thank you for using Swap.Online"
-  },
-  {
-    "id": "BitcoinBuyText53_btc_to_ethtoken",
-    "message": "Thank you for using Swap.Online!"
-  },
-  {
-    "id": "BtcToEthToken20_btc_to_ethtoken",
-    "message": "Create a secret key"
-  },
-  {
-    "id": "SwapProgress111_BTC_GHOST",
-    "message": "Creating Bitcoin Script.{br}It can take a few minutes"
-  },
-  {
-    "id": "SwapProgress117_BTC_GHOST",
-    "message": "Your BTC are now depositing. It may require one confirmation from Bitcoin Network. Waiting for other participant to deposit GHOST."
-  },
-  {
-    "id": "SwapProgress123_BTC_GHOST",
-    "message": "GHOST Contract created and charged. Requesting withdrawal from GHOST Contract."
-  },
-  {
-    "id": "SwapProgress129_BTC_GHOST",
-    "message": "GHOST was transferred to your wallet. Check the balance."
-  },
-  {
-    "id": "SwapProgress135_BTC_GHOST",
-    "message": "Thank you for using Swap.Onlinde!"
-  },
-  {
-    "id": "ethToBtcText20_eth_to_btc",
-    "message": "Waiting for BTC Owner to create Secret Key, create BTC Script and charge it"
-  },
-  {
-    "id": "ethToBtcText25_eth_to_btc",
-    "message": "The bitcoin Script was created and charged. Check the information below"
-  },
-  {
-    "id": "ethToBtcText26_eth_to_btc",
-    "message": "Confirmation processing"
-  },
-  {
-    "id": "ethToBtcText28_eth_to_btc",
-    "message": "Checking balance.."
-  },
-  {
-    "id": "ethToBtcText32_eth_to_btc",
-    "message": "Creating Ethereum Contract.{br}It can take a few minutes"
-  },
-  {
-    "id": "ethToBtcText36_eth_to_btc",
-    "message": "Waiting for BTC Owner to add a Secret Key to ETH Contact"
-  },
-  {
-    "id": "ethToBtcText40_eth_to_btc",
-    "message": "The funds from ETH contract was successfully transferred to BTC owner.\n              BTC owner left a secret key. Requesting withdrawal from BTC script."
-  },
-  {
-    "id": "ethToBtcText44_eth_to_btc",
-    "message": "Thank you for using Swap.Online"
-  },
-  {
-    "id": "ethToBtcText48_eth_to_btc",
-    "message": "Thank you for using Swap.Online!"
-  },
-  {
-    "id": "ethToBtcText20_ghost_to_btc",
-    "message": "Waiting for GHOST Owner to create Secret Key, create GHOST Script and charge it"
-  },
-  {
-    "id": "ethToBtcText25_ghost_to_btc",
-    "message": "The ghost Script was created and charged. Check the information below"
-  },
-  {
-    "id": "ethToBtcText26_ghost_to_btc",
-    "message": "Confirmation processing"
-  },
-  {
-    "id": "ethToBtcText28_ghost_to_btc",
-    "message": "Checking balance.."
-  },
-  {
-    "id": "ethToBtcText32_ghost_to_btc",
-    "message": "Creating Ethereum Contract.{br}It can take a few minutes"
-  },
-  {
-    "id": "ethToBtcText36_ghost_to_btc",
-    "message": "Waiting for BTC Owner to add a Secret Key to ETH Contact"
-  },
-  {
-    "id": "ethToBtcText40_ghost_to_btc",
-    "message": "The funds from ETH contract was successfully transferred to BTC owner.\n              BTC owner left a secret key. Requesting withdrawal from BTC script."
-  },
-  {
-    "id": "ethToBtcText44_ghost_to_btc",
-    "message": "Thank you for using Swap.Online"
-  },
-  {
-    "id": "ethToBtcText48_ghost_to_btc",
-    "message": "Thank you for using Swap.Online!"
-  },
-  {
-    "id": "EthTokensToBtc16_ethToken_to_btc",
-    "message": "Confirmation processing"
-  },
-  {
-    "id": "EthTokensToBtc20_ethToken_to_btc",
-    "message": "Waiting for BTC Owner to create Secret Key, create BTC Script and charge it"
-  },
-  {
-    "id": "EthTokensToBtc24_ethToken_to_btc",
-    "message": "The bitcoin Script was created and charged. Check the information below"
-  },
-  {
-    "id": "EthTokensToBtc28_ethToken_to_btc",
-    "message": "Checking balance.."
-  },
-  {
-    "id": "EthTokensToBtc32_ethToken_to_btc",
-    "message": "Creating Ethereum Contract. {br} It can take a few minutes"
-  },
-  {
-    "id": "EthTokensToBtc36_ethToken_to_btc",
-    "message": "Waiting for BTC Owner to add a Secret Key to ETH Contact"
-  },
-  {
-    "id": "EthTokensToBtc40_ethToken_to_btc",
-    "message": "The funds from ETH contract was successfully transferred to BTC owner"
-  },
-  {
-    "id": "EthTokensToBtc44_ethToken_to_btc",
-    "message": "Thank you for using Swap.Online"
-  },
-  {
-    "id": "EthTokensToBtc48_ethToken_to_btc",
-    "message": "Thank you for using Swap.Online!"
   },
   {
     "id": "Banner_YouAreHaveNotSignegTx",
@@ -7098,13 +4947,6 @@
     ]
   },
   {
-    "id": "Swap_NeedEthFee",
-    "message": "На вашем балансе должно быть не менее {buyFee} {buyCoin} для оплаты коммисии майнера",
-    "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
-    ]
-  },
-  {
     "id": "Swap_NeedMoreAmount",
     "message": "На вашем балансе должно быть не менее {amount} {currency}. {br}Коммисия майнера {sellFee} {sellCoin} и {buyFee} {buyCoin}",
     "files": [
@@ -7124,14 +4966,6 @@
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
-  },
-  {
-    "id": "Banner_ConnectMetamask",
-    "message": "Подключить кошелек"
-  },
-  {
-    "id": "Banner_ConnectMetamaskDesc",
-    "message": "Нажмите чтобы подключить внешний кошелек"
   },
   {
     "id": "WalletRow_MetamaskConnect",
@@ -7190,10 +5024,6 @@
     ]
   },
   {
-    "id": "BitcoinBuyText35_btc_to_ethtoken",
-    "message": "{buyCurrency} Owner received Bitcoin Script and Secret Hash. Waiting confirm TX and when he creates {buyCurrency} Contract"
-  },
-  {
     "id": "MainFAQ2_content3",
     "message": "Текущие комиссии майнеров:",
     "files": [
@@ -7250,10 +5080,6 @@
     ]
   },
   {
-    "id": "ConnectWalletModal_InjectedMobile",
-    "message": "Подключить"
-  },
-  {
     "id": "ConnectWalletModal_Title",
     "message": "Подключение внешего кошелька",
     "files": [
@@ -7266,10 +5092,6 @@
     "files": [
       "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.tsx"
     ]
-  },
-  {
-    "id": "MainFAQ2_content4",
-    "message": "Загрузка"
   },
   {
     "id": "FilterTextAll",
@@ -7349,10 +5171,6 @@
     ]
   },
   {
-    "id": "Withdrow171",
-    "message": "Максимальная сумма, которую вы можете отправить, составляет {allowedUsdBalance} USD"
-  },
-  {
     "id": "WTH276",
     "message": "Сумма не должна превышать{br} текущий баланс за вычетом комиссии за майнинг",
     "files": [
@@ -7402,10 +5220,6 @@
     ]
   },
   {
-    "id": "Withdrow214",
-    "message": "Коммисия сервиса {currency}: {adminFee}"
-  },
-  {
     "id": "FeeInfoBlockTotalFee",
     "message": "Общая сумма, которую вы платите:",
     "files": [
@@ -7448,14 +5262,6 @@
     ]
   },
   {
-    "id": "localStorageBtnExchange",
-    "message": "Back"
-  },
-  {
-    "id": "localStorageBtnSend",
-    "message": "Отправить разработчикам"
-  },
-  {
     "id": "localStorageUserNotification",
     "message": "✔️ Эти данные не содержат ваших закрытых ключей",
     "files": [
@@ -7463,266 +5269,291 @@
     ]
   },
   {
-    "id": "SwapLocalStorage",
-    "message": "open your settings"
-  },
-  {
     "id": "FourthStep37BtcLike",
     "message": "({currencyName} tx)",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/steps/SecondStep.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSteps/SecondStep.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSteps/SecondStep.tsx"
     ]
   },
   {
     "id": "FourthStep37_BtcLike",
     "message": "({currencyName} tx)",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/steps/ThirdStep.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSteps/ThirdStep.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSteps/ThirdStep.tsx"
     ]
   },
   {
     "id": "SwapProgress105_btclike_to_eth",
     "message": "Checking balance..",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEth.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/BtcLikeToEth.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/BtcLikeToEth.tsx"
     ]
   },
   {
     "id": "SwapProgress111_btclike_to_eth",
     "message": "Creating {coinName} Script.{br}It can take a few minutes",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEth.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/BtcLikeToEth.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/BtcLikeToEth.tsx"
     ]
   },
   {
     "id": "SwapProgress117_btclike_to_eth",
     "message": "Your {coinName} are now depositing. It may require one confirmation from {coinName} Network. Waiting for other participant to deposit ETH.",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEth.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/BtcLikeToEth.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/BtcLikeToEth.tsx"
     ]
   },
   {
     "id": "SwapProgress123_btclike_to_eth",
     "message": "ETH Contract created and charged. Requesting withdrawal from ETH Contract.",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEth.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/BtcLikeToEth.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/BtcLikeToEth.tsx"
     ]
   },
   {
     "id": "SwapProgress129_btclike_to_eth",
     "message": "ETH was transferred to your wallet. Check the balance.",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEth.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/BtcLikeToEth.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/BtcLikeToEth.tsx"
     ]
   },
   {
     "id": "SwapProgress135_btclike_to_eth",
     "message": "Thank you for using Swap.Online!",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEth.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/BtcLikeToEth.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/BtcLikeToEth.tsx"
     ]
   },
   {
     "id": "SwapProgress93_btclike_to_eth",
     "message": "The order creator is offline. Waiting for him..",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEth.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/BtcLikeToEth.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/BtcLikeToEth.tsx"
     ]
   },
   {
     "id": "SwapProgress99_btclike_to_eth",
     "message": "Create a secret key",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEth.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/BtcLikeToEth.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/BtcLikeToEth.tsx"
     ]
   },
   {
     "id": "ethToBtcText20_eth_to_btclike",
     "message": "Waiting for {coinName} Owner to create Secret Key, create {coinName} Script and charge it",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/EthToBtcLike.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/EthToBtcLike.tsx"
     ]
   },
   {
     "id": "ethToBtcText25_eth_to_btclike",
     "message": "The {coinName} Script was created and charged. Check the information below",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/EthToBtcLike.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/EthToBtcLike.tsx"
     ]
   },
   {
     "id": "ethToBtcText26_eth_to_btclike",
     "message": "Confirmation processing",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/EthToBtcLike.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/EthToBtcLike.tsx"
     ]
   },
   {
     "id": "ethToBtcText28_eth_to_btclike",
     "message": "Checking balance..",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/EthToBtcLike.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/EthToBtcLike.tsx"
     ]
   },
   {
     "id": "ethToBtcText32_eth_to_btclike",
     "message": "Creating Ethereum Contract.{br}It can take a few minutes",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/EthToBtcLike.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/EthToBtcLike.tsx"
     ]
   },
   {
     "id": "ethToBtcText36_eth_to_btclike",
     "message": "Waiting for {coinName} Owner to add a Secret Key to ETH Contact",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/EthToBtcLike.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/EthToBtcLike.tsx"
     ]
   },
   {
     "id": "ethToBtcText40_eth_to_btclike",
     "message": "The funds from ETH contract was successfully transferred to {coinName} owner. {coinName} owner left a secret key. Requesting withdrawal from {coinName} script.",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/EthToBtcLike.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/EthToBtcLike.tsx"
     ]
   },
   {
     "id": "ethToBtcText44_eth_to_btclike",
     "message": "Thank you for using Swap.Online",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/EthToBtcLike.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/EthToBtcLike.tsx"
     ]
   },
   {
     "id": "ethToBtcText48_eth_to_btclike",
     "message": "Thank you for using Swap.Online!",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/EthToBtcLike.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/EthToBtcLike.tsx"
     ]
   },
   {
     "id": "BitcoinBuyText17_BtcLike_to_tokens",
     "message": "Confirmation processing",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEthToken.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/BtcLikeToEthToken.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/BtcLikeToEthToken.tsx"
     ]
   },
   {
     "id": "BitcoinBuyText29_BtcLike_to_tokens",
     "message": "Checking balance..",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEthToken.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/BtcLikeToEthToken.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/BtcLikeToEthToken.tsx"
     ]
   },
   {
     "id": "BitcoinBuyText33_BtcLike_to_tokens",
     "message": "Creating {coinName} Script.{br}It can take a few minutes",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEthToken.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/BtcLikeToEthToken.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/BtcLikeToEthToken.tsx"
     ]
   },
   {
     "id": "BitcoinBuyText37_BtcLike_to_tokens",
     "message": "{buyCurrency} Owner received {coinName} Script and Secret Hash. Waiting when he creates {buyCurrency} Contract",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEthToken.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/BtcLikeToEthToken.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/BtcLikeToEthToken.tsx"
     ]
   },
   {
     "id": "BitcoinBuyText41_BtcLike_to_tokens",
     "message": "{buyCurrency} Contract created and charged. Requesting withdrawal from {buyCurrency} Contract.",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEthToken.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/BtcLikeToEthToken.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/BtcLikeToEthToken.tsx"
     ]
   },
   {
     "id": "BitcoinBuyText45_BtcLike_to_tokens",
     "message": "{buyCurrency} tokens was transferred to your wallet. Check the balance.",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEthToken.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/BtcLikeToEthToken.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/BtcLikeToEthToken.tsx"
     ]
   },
   {
     "id": "BitcoinBuyText49_BtcLike_to_tokens",
     "message": "Thank you for using Swap.Online",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEthToken.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/BtcLikeToEthToken.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/BtcLikeToEthToken.tsx"
     ]
   },
   {
     "id": "BitcoinBuyText53_BtcLike_to_tokens",
     "message": "Thank you for using Swap.Online!",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEthToken.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/BtcLikeToEthToken.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/BtcLikeToEthToken.tsx"
     ]
   },
   {
     "id": "BtcToEthToken20_BtcLike_to_tokens",
     "message": "Create a secret key",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEthToken.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/BtcLikeToEthToken.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/BtcLikeToEthToken.tsx"
     ]
   },
   {
     "id": "EthTokensToBtc16_ethtoken_to_BtcLike",
     "message": "Confirmation processing",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/EthTokenToBtcLike.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/EthToBtcLike.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/EthTokenToBtcLike.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/EthTokenToBtcLike.tsx"
     ]
   },
   {
     "id": "EthTokensToBtc20_ethtoken_to_BtcLike",
     "message": "Waiting for {coinName} Owner to create Secret Key, create {coinName} Script and charge it",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/EthTokenToBtcLike.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/EthTokenToBtcLike.tsx"
     ]
   },
   {
     "id": "EthTokensToBtc24_ethtoken_to_BtcLike",
     "message": "The {coinName} Script was created and charged. Check the information below",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/EthTokenToBtcLike.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/EthToBtcLike.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/EthTokenToBtcLike.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/EthTokenToBtcLike.tsx"
     ]
   },
   {
     "id": "EthTokensToBtc28_ethtoken_to_BtcLike",
     "message": "Checking balance..",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/EthTokenToBtcLike.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/EthToBtcLike.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/EthTokenToBtcLike.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/EthTokenToBtcLike.tsx"
     ]
   },
   {
     "id": "EthTokensToBtc32_ethtoken_to_BtcLike",
     "message": "Creating Ethereum Contract. {br} It can take a few minutes",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/EthTokenToBtcLike.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/EthToBtcLike.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/EthTokenToBtcLike.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/EthTokenToBtcLike.tsx"
     ]
   },
   {
     "id": "EthTokensToBtc36_ethtoken_to_BtcLike",
     "message": "Waiting for {coinName} Owner to add a Secret Key to ETH Contact",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/EthTokenToBtcLike.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/EthTokenToBtcLike.tsx"
     ]
   },
   {
     "id": "EthTokensToBtc40_ethtoken_to_BtcLike",
     "message": "The funds from ETH contract was successfully transferred to {coinName} owner",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/EthTokenToBtcLike.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/EthTokenToBtcLike.tsx"
     ]
   },
   {
     "id": "EthTokensToBtc44_ethtoken_to_BtcLike",
     "message": "Thank you for using Swap.Online",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/EthTokenToBtcLike.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/EthToBtcLike.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/EthTokenToBtcLike.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/EthTokenToBtcLike.tsx"
     ]
   },
   {
     "id": "EthTokensToBtc48_ethtoken_to_BtcLike",
     "message": "Thank you for using Swap.Online!",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/EthTokenToBtcLike.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/EthTokenToBtcLike.tsx"
     ]
   },
   {
@@ -7754,10 +5585,6 @@
     ]
   },
   {
-    "id": "OrderBookOffersNote",
-    "message": "Поиск пиров и предложений может занять пару минут. Если в течение нескольких минут предложений не найдено, это означает, что подходящих предложений нет или пользователь, разместивший предложение, находится в автономном режиме."
-  },
-  {
     "id": "DebugStoredDataLink",
     "message": "Show stored data",
     "files": [
@@ -7784,10 +5611,6 @@
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
     ]
-  },
-  {
-    "id": "FeeInfoBlockTxSize",
-    "message": "Размер транзакции:"
   },
   {
     "id": "Swap_MetamaskAttention",
@@ -7941,7 +5764,7 @@
   },
   {
     "id": "menu.farm",
-    "message": "Ставки и фарминг",
+    "message": "Фарминг",
     "files": [
       "src/front/shared/components/Header/config.tsx"
     ]
@@ -7951,6 +5774,112 @@
     "message": "Не найдено параметров для фермы",
     "files": [
       "src/front/shared/pages/Farm/index.tsx"
+    ]
+  },
+  {
+    "id": "DropDownNoOptionsInTheList",
+    "message": "Нет вариантов",
+    "files": [
+      "src/front/shared/components/ui/DropDown/index.tsx"
+    ]
+  },
+  {
+    "id": "menu.marketmaker",
+    "message": "Marketmaker",
+    "files": [
+      "src/front/shared/components/Header/config.tsx"
+    ]
+  },
+  {
+    "id": "FormattedMessageIdApprove",
+    "message": "Одобрить {token}",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "EthTokensToBtc20_ethtoken_to_BtcLikeTaker",
+    "message": "Waiting for {coinName} Owner to create {coinName} Script and charge it",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/EthToBtcLike.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/EthTokenToBtcLike.tsx"
+    ]
+  },
+  {
+    "id": "FeeRadiosSpeedTypeCustom",
+    "message": "Свое значение",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
+    ]
+  },
+  {
+    "id": "FeeRadiosSpeedTypeDescriptionCustom",
+    "message": "Установить свой размер комиссии.",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
+    ]
+  },
+  {
+    "id": "FeeRadiosSpeedTypeDescriptionFast",
+    "message": "Скользящее среднее значение комиссии за транзакции, которые должны быть подтверждены в течение 1-2 блоков.",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
+    ]
+  },
+  {
+    "id": "FeeRadiosSpeedTypeDescriptionMedium",
+    "message": "Скользящее среднее значение комиссии за транзакции, которые должны быть подтверждены в пределах от 3 до 6 блоков.",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
+    ]
+  },
+  {
+    "id": "FeeRadiosSpeedTypeDescriptionSlow",
+    "message": "Скользящее среднее значение комиссии за транзакции, которые должны быть подтверждены в 7 или более блоках.",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
+    ]
+  },
+  {
+    "id": "FeeRadiosSpeedTypeFast",
+    "message": "Быстро",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
+    ]
+  },
+  {
+    "id": "FeeRadiosSpeedTypeMedium",
+    "message": "Средне",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
+    ]
+  },
+  {
+    "id": "FeeRadiosSpeedTypeSlow",
+    "message": "Медленно",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
+    ]
+  },
+  {
+    "id": "FeeRadiosSpeedTypeTimeFast",
+    "message": "~5-20 минут",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
+    ]
+  },
+  {
+    "id": "FeeRadiosSpeedTypeTimeMedium",
+    "message": "~25-60 минут",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
+    ]
+  },
+  {
+    "id": "FeeRadiosSpeedTypeTimeSlow",
+    "message": "60 минут или больше",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
     ]
   }
 ]

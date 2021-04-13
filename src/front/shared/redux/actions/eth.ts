@@ -69,6 +69,14 @@ const getAllMyAddresses = () => {
     && ethMnemonicData.address.toLowerCase() !== ethData.address.toLowerCase()
   ) retData.push(ethMnemonicData.address.toLowerCase())
 
+  if (metamask
+    && metamask.isEnabled()
+    && metamask.isConnected()
+    && retData.indexOf(metamask.getAddress().toLowerCase()) === -1
+  ) {
+    retData.push(metamask.getAddress().toLowerCase())
+  }
+
   return retData
 }
 
@@ -364,6 +372,7 @@ const sendWithAdminFee = async ({ from, to, amount, gasPrice, gasLimit, speed })
 
   const adminFeeMin = new BigNumber(adminFeeMinValue)
 
+  const isSendToContract = await addressIsContract(to)
   // fee - from amount - percent
   let feeFromAmount = new BigNumber(adminFee).dividedBy(100).multipliedBy(amount)
   if (adminFeeMin.isGreaterThan(feeFromAmount)) feeFromAmount = adminFeeMin
@@ -372,7 +381,13 @@ const sendWithAdminFee = async ({ from, to, amount, gasPrice, gasLimit, speed })
   feeFromAmount = feeFromAmount.toNumber() // Admin fee
 
   gasPrice = gasPrice || await helpers.eth.estimateGasPrice({ speed })
-  gasLimit = gasLimit || constants.defaultFeeRates.eth.limit.send
+
+  const mainGasLimit = gasLimit || (
+    isSendToContract
+      ? constants.defaultCurrencyParameters.eth.limit.contractInteract
+      : constants.defaultCurrencyParameters.eth.limit.send
+  )
+  const serviceFeeGasLimit = gasLimit || constants.defaultCurrencyParameters.eth.limit.send
 
   const walletData = actions.core.getWallet({
     address: from,
@@ -386,7 +401,7 @@ const sendWithAdminFee = async ({ from, to, amount, gasPrice, gasLimit, speed })
       from,
       to: String(to).trim(),
       gasPrice,
-      gas: gasLimit,
+      gas: mainGasLimit,
       value: web3utils.toWei(String(amount)),
     }
 
@@ -419,7 +434,7 @@ const sendWithAdminFee = async ({ from, to, amount, gasPrice, gasLimit, speed })
           const adminFeeParams = {
             to: String(adminFeeAddress).trim(),
             gasPrice,
-            gas: gasLimit,
+            gas: serviceFeeGasLimit,
             value: web3utils.toWei(String(feeFromAmount)),
           }
 
@@ -446,8 +461,14 @@ const sendDefault = ({ from, to, amount, gasPrice = null, gasLimit = null, speed
   return new Promise(async (resolve, reject) => {
     const web3js = getWeb3()
 
+    const isSendToContract = await addressIsContract(to)
+
     gasPrice = gasPrice || await helpers.eth.estimateGasPrice({ speed })
-    gasLimit = gasLimit || constants.defaultFeeRates.eth.limit.send
+    gasLimit = gasLimit || (
+      isSendToContract
+        ? constants.defaultCurrencyParameters.eth.limit.contractInteract
+        : constants.defaultCurrencyParameters.eth.limit.send
+    )
 
     const params = {
       from,
@@ -510,6 +531,17 @@ const sendTransaction = async ({ to, amount }) => {
   const txHash = receipt.transactionHash
 
   return txHash
+}
+
+const _addressIsContractCache = {} // Remember prev checks - for speed up
+const addressIsContract = async (checkAddress: string): Promise<boolean> => {
+  if (_addressIsContractCache[checkAddress.toLowerCase()] !== undefined) return _addressIsContractCache[checkAddress.toLowerCase()]
+  const codeAtAddress = await web3.eth.getCode(checkAddress)
+  const codeIsEmpty = !codeAtAddress || codeAtAddress === '0x' || codeAtAddress === '0x0'
+
+  _addressIsContractCache[checkAddress.toLowerCase()] = !codeIsEmpty
+
+  return !codeIsEmpty
 }
 
 const fetchTxInfo = (hash, cacheResponse) => new Promise((resolve) => {
@@ -587,4 +619,5 @@ export default {
   fetchTxInfo,
   sendTransaction,
   getTxRouter,
+  addressIsContract,
 }

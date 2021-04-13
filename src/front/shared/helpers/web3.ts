@@ -2,7 +2,6 @@ import Web3 from 'web3'
 import config from 'app-config'
 import helpers from 'helpers'
 
-console.log('reset web3')
 let web3: IEtheriumProvider = new Web3(
   new Web3.providers.HttpProvider(
     (config.binance)
@@ -140,6 +139,11 @@ const ethProxyHandler = {
     }
   }
 }
+
+const getCurrentWeb3 = () => {
+  return web3
+}
+window.getCurrentWeb3 = getCurrentWeb3
 
 const ethereumProxy = new Proxy(web3.currentProvider, ethProxyHandler)
 

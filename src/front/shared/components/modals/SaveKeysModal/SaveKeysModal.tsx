@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import cssModules from 'react-css-modules'
 
 import actions from 'redux/actions'
@@ -32,26 +31,31 @@ const title = defineMessages({
 const langLabels = defineMessages({
   title: {
     id: `SaveKeysModal_Title`,
-    defaultMessage: `Экспорт приватных ключей`,
+    defaultMessage: `Private keys export`,
   }
 })
 
-@injectIntl
+type SaveKeysModalProps = {
+  intl: IUniversalObj
+  view: string
+}
+
+type SaveKeysModalState = {
+  view: string
+}
+
 @cssModules(styles, { allowMultiple: true })
-export default class SaveKeysModal extends React.Component<any, any> {
+class SaveKeysModal extends React.Component<SaveKeysModalProps, SaveKeysModalState> {
+  constructor(props) {
+    super(props)
 
-  props: any
-
-  static propTypes = {
-    view: PropTypes.string,
+    this.state = {
+      view: props.view,
+    }
   }
 
   static defaultProps = {
     view: views.saveKeys,
-  }
-
-  state = {
-    view: this.props.view,
   }
 
   componentWillMount = () => {
@@ -62,7 +66,11 @@ export default class SaveKeysModal extends React.Component<any, any> {
     fixBodyOverflow(false)
   }
 
-  changeView = (view) => this.setState({ view })
+  changeView = (view) => {
+    this.setState(() => ({
+      view,
+    }))
+  }
 
   handleConfirm = () => {
     this.changeView(views.approve)
@@ -79,6 +87,7 @@ export default class SaveKeysModal extends React.Component<any, any> {
   render() {
     const { view } = this.state
     const { intl } = this.props
+
     return (
       <Modal name="SaveKeysModal" title={`${intl.formatMessage(langLabels.title)}`} onClose={this.handleClose} showCloseButton>
         {
@@ -87,8 +96,7 @@ export default class SaveKeysModal extends React.Component<any, any> {
               <a
                 href="#"
                 onClick={() => {
-                  //@ts-ignore
-                  localStorage.setItem(constants.localStorage.testnetSkipPKCheck, true)
+                  localStorage.setItem(constants.localStorage.testnetSkipPKCheck, 'true')
                   this.forceUpdate()
                 }}>
                 <FormattedMessage id="SaveKeysModal" defaultMessage="Testnet: Don`t ask again" />
@@ -99,8 +107,8 @@ export default class SaveKeysModal extends React.Component<any, any> {
         {
           view === views.saveKeys &&
           <SaveKeys
-            isDownload={this.handleDownload}
-            isChange={() => {
+            onDownload={this.handleDownload}
+            onChange={() => {
               this.changeView(views.confirm)
               this.handleClose()
             }}
@@ -127,3 +135,5 @@ export default class SaveKeysModal extends React.Component<any, any> {
     )
   }
 }
+
+export default injectIntl(SaveKeysModal)

@@ -1,35 +1,34 @@
 import React, { Component, Fragment } from 'react'
-
+import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
+import cssModules from 'react-css-modules'
+import { Link } from 'react-router-dom'
 import { connect } from 'redaction'
 import actions from 'redux/actions'
-
-import cssModules from 'react-css-modules'
 import styles from './Row.scss'
 
-import helpers, { links, constants } from 'helpers'
-import { Link } from 'react-router-dom'
-import SwapApp from 'swap.app'
+import helpers, { links, constants, ethToken } from 'helpers'
+import { IPairFees } from 'helpers/getPairFees'
+import PAIR_TYPES from 'helpers/constants/PAIR_TYPES'
+import { localisedUrl } from 'helpers/locale'
+import feedback from 'helpers/feedback'
+import { BigNumber } from 'bignumber.js'
 
 import Avatar from 'components/Avatar/Avatar'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import { RemoveButton } from 'components/controls'
+import TurboIcon from 'components/ui/TurboIcon/TurboIcon'
 
 import Pair from './../../Pair'
-import PAIR_TYPES from 'helpers/constants/PAIR_TYPES'
 import RequestButton from '../RequestButton/RequestButton'
-import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
-import { localisedUrl } from 'helpers/locale'
-import { BigNumber } from 'bignumber.js'
-import feedback from 'shared/helpers/feedback'
-import TurboIcon from 'shared/components/ui/TurboIcon/TurboIcon'
+import SwapApp from 'swap.app'
 
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 type RowProps = {
-  history: { [key: string]: any }
+  history: IUniversalObj
   balances: { [key: string]: number } | boolean
-  pairFees: any
+  pairFees: IPairFees
   decline: any[]
   orderId: string
   linkedOrderId: string
@@ -44,15 +43,18 @@ type RowProps = {
     sellAmount: BigNumber
     isRequested: boolean
     isProcessing: boolean
-    owner: { [key: string]: any }
+    owner: IUniversalObj
   }
 
   removeOrder: (number) => void
   checkSwapAllow: ({}) => boolean
 
-  currenciesData?: { [key: string]: any }
-  intl?: { [key: string]: any }
+  currenciesData?: IUniversalObj
+  intl?: IUniversalObj
   peer?: string
+
+  buy?: string
+  sell?: string
 }
 
 type RowState = {
@@ -60,7 +62,7 @@ type RowState = {
   isFetching: boolean
   windowWidth: number
 }
-@injectIntl
+
 @connect(({
   pubsubRoom: { peer },
   user,
@@ -70,11 +72,8 @@ type RowState = {
 }))
 
 @cssModules(styles, { allowMultiple: true })
-export default class Row extends Component {
+class Row extends Component<RowProps, RowState> {
   _mounted = false
-
-  props: RowProps
-  state: RowState
 
   constructor(props) {
     super(props)
@@ -96,7 +95,7 @@ export default class Row extends Component {
       balances,
     } = this.props
 
-    const balanceCheckCur = (isMy) ? sellCurrency : buyCurrency
+    let balanceCheckCur = isMy ? sellCurrency : buyCurrency
 
     return (balances && balances[balanceCheckCur]) ? balances[balanceCheckCur] : 0
   }
@@ -152,14 +151,13 @@ export default class Row extends Component {
       row: {
         id,
         buyAmount: sellAmount,
-        buyCurrency: sellCurrency, // taker-maker - (maker buy - we sell)
-        sellCurrency: buyCurrency, // taker-maker - (maker sell - we buy)
+        //sellAmount,
       },
+      buy: buyCurrency,
+      sell: sellCurrency,
       row,
       intl,
       history,
-      pairFees,
-      balances,
       checkSwapAllow,
     } = this.props
 
@@ -258,8 +256,6 @@ export default class Row extends Component {
       windowWidth,
     } = this.state
 
-    const balance = this.getBalance()
-
     const {
       row: {
         id,
@@ -268,34 +264,29 @@ export default class Row extends Component {
         buyCurrency,
         buyAmount,
         sellCurrency,
-        sellAmount,
         isRequested,
         isProcessing,
         owner: { peer: ownerPeer },
       },
+      buy,
+      sell,
+      row: order,
       peer,
       orderId,
       removeOrder,
       linkedOrderId,
-      intl: { locale },
-      pairFees,
+      checkSwapAllow,
     } = this.props
 
     const pair = Pair.fromOrder(this.props.row)
     const { price, amount, total, main, base, type } = pair
 
-    // todo: improve calculation much more
-    const buyCurrencyFee = (
-      pairFees
-      && pairFees.byCoins
-      && pairFees.byCoins[buyCurrency.toUpperCase()]
-    ) ? pairFees.byCoins[buyCurrency.toUpperCase()].fee
-      : false
-
-    const costs = (buyCurrencyFee) ? new BigNumber(buyAmount).plus(buyCurrencyFee) : buyAmount
-
-    let isSwapButtonEnabled = new BigNumber(balance).isGreaterThanOrEqualTo(costs)
-    // @ToDo - Tokens - need eth balance for fee
+    const isSwapButtonEnabled = checkSwapAllow({
+      sellCurrency: sell,
+      buyCurrency: buy,
+      amount: buyAmount,
+      isSilentError: true,
+    })
 
     let sellCurrencyOut,
       sellAmountOut,
@@ -372,8 +363,7 @@ export default class Row extends Component {
         </td>
         <td styleName='rowCell'>
           {peer === ownerPeer
-            ?
-            <RemoveButton className="removeButton" onClick={() => removeOrder(id)} />
+            ? <RemoveButton onClick={() => removeOrder(id)} brand={true} />
             :
             <Fragment>
               {
@@ -382,6 +372,7 @@ export default class Row extends Component {
                     <div style={{ color: 'red' }}>
                       <FormattedMessage id="Row148" defaultMessage="REQUESTING" />
                     </div>
+                    {' '}
                     <Link to={swapUri}>
                       <FormattedMessage id="Row151" defaultMessage="Go to the swap" />
                     </Link>
@@ -408,10 +399,8 @@ export default class Row extends Component {
                           :
                           () => {}
                         }
-                        data={{ type, amount, main, total, base }}
-                      >
-                        <FormattedMessage id="RowM166" defaultMessage="Start" />
-                      </RequestButton>
+                        data={{ type, main, base }}
+                      />
                     )
                   )
                 )
@@ -426,7 +415,7 @@ export default class Row extends Component {
       <tr
         id={id}
         styleName={`
-          ${peer === ownerPeer ? 'mobileRowRemove' : 'mobileRowStart'}
+          ${'mobileRow'}
           ${isDark ? 'rowDark' : ''}
           ${id === linkedOrderId ? 'linkedOrderHighlight' : ''}
         `}
@@ -448,7 +437,7 @@ export default class Row extends Component {
               </span>
             </div>
             <div>
-              <i style={{ margin: '0 0.8em' }} className="fas fa-exchange-alt" />
+              <i styleName='arrowsIcon' className="fas fa-exchange-alt" />
             </div>
             <div styleName="tdContainer-2">
               <span styleName="secondType">
@@ -461,7 +450,7 @@ export default class Row extends Component {
             <div styleName="tdContainer-3">
               {
                 peer === ownerPeer ? (
-                  <RemoveButton className="removeButton" onClick={() => removeOrder(id)} />
+                  <RemoveButton onClick={() => removeOrder(id)} brand={true} />
                 ) : (
                   <Fragment>
                     {
@@ -470,6 +459,7 @@ export default class Row extends Component {
                           <div style={{ color: 'red' }}>
                             <FormattedMessage id="RowM136" defaultMessage="REQUESTING" />
                           </div>
+                          {' '}
                           <Link to={swapUri}>
                             <FormattedMessage id="RowM139" defaultMessage="Go to the swap" />
                           </Link>
@@ -489,7 +479,6 @@ export default class Row extends Component {
                               </span>
                             </Fragment>
                           ) : (
-                            //@ts-ignore
                             <RequestButton
                               styleName="startButton"
                               disabled={!isSwapButtonEnabled}
@@ -498,7 +487,7 @@ export default class Row extends Component {
                                 :
                                 () => {}
                               }
-                              data={{ type, amount, main, total, base }}
+                              data={{ type, main, base }}
                             />
                           )
                         )
@@ -514,3 +503,5 @@ export default class Row extends Component {
     )
   }
 }
+
+export default injectIntl(Row)

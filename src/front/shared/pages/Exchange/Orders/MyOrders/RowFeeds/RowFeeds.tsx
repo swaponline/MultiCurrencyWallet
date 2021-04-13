@@ -19,9 +19,8 @@ import TurboIcon from 'shared/components/ui/TurboIcon/TurboIcon'
 
 
 @withRouter
-@injectIntl
 @CSSModules(styles, { allowMultiple: true })
-export default class RowFeeds extends Component<any, any> {
+class RowFeeds extends Component<any, any> {
 
   static propTypes = {
     row: PropTypes.object,
@@ -96,8 +95,7 @@ export default class RowFeeds extends Component<any, any> {
                   </div>
                 </Link>
               </div>
-              :
-              <RemoveButton className="removeButton" onClick={() => removeOrder(id)} />
+              : <RemoveButton onClick={() => removeOrder(id)} brand={true} />
             }
           </div>
         </td>
@@ -105,3 +103,5 @@ export default class RowFeeds extends Component<any, any> {
     )
   }
 }
+
+export default injectIntl(RowFeeds)

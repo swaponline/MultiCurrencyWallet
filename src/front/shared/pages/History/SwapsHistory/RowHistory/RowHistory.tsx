@@ -16,9 +16,9 @@ import { FormattedMessage, injectIntl } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
 import BigNumber from 'bignumber.js'
 
-@injectIntl
+
 @CSSModules(styles, { allowMultiple: true })
-export default class RowHistory extends Component<any, any> {
+class RowHistory extends Component<any, any> {
   static propTypes = {
     row: PropTypes.object,
   }
@@ -57,7 +57,9 @@ export default class RowHistory extends Component<any, any> {
       }
 
       if (isFinished || isRefunded || (step === isPayed && isEmptyBalance)) {
+        console.group('HISTORY ROW > %c Refund of swap', 'color: red;')
         console.error(`Refund of swap ${id} is not available`)
+        console.groupEnd()
         return
       }
 
@@ -172,12 +174,13 @@ export default class RowHistory extends Component<any, any> {
           </p>
         </td>
         <td>
-          <span>Link</span>
           <Link to={swapUri} onClick={this.closeIncompleted}>
-            <FormattedMessage id="RowHistory91" defaultMessage="Link" />
+            <FormattedMessage id="RowHistory91" defaultMessage="Link to the swap" />
           </Link>
         </td>
       </tr>
     )
   }
 }
+
+export default injectIntl(RowHistory)

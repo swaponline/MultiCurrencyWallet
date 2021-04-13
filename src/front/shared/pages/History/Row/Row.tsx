@@ -304,6 +304,8 @@ export default class Row extends React.PureComponent<any, any> {
                           </>
                         )}
                     </Link>
+
+                    {/* Transaction status */}
                     {(txType === 'CONFIRM') ? (
                       <>
                         {confirmTx.status === 'pending' && (
@@ -334,12 +336,16 @@ export default class Row extends React.PureComponent<any, any> {
                   </>
                 }
               </div>
+
+              {/* Date */}
               <CommentRow
                 label={invoiceData && invoiceData.label}
                 date={date}
                 showComment={true}
                 commentKey={hash}
               />
+
+              {/* Contacts */}
               {invoiceData && invoiceData.contact &&
                 <div styleName='invoiceContactWrapper'>
                   <FormattedMessage
@@ -350,6 +356,7 @@ export default class Row extends React.PureComponent<any, any> {
                 </div>
               }
 
+              {/* Payment address */}
               {txType === 'INVOICE' && direction === 'in' &&
                 <div styleName='addressWrapper'>
                   <FormattedMessage
@@ -363,6 +370,8 @@ export default class Row extends React.PureComponent<any, any> {
                 </div>
               }
             </div>
+
+            {/* Invoice buttons */}
             {hasInvoiceButtons &&
               <div styleName="btnWrapper">
                 <button onClick={this.handlePayInvoice}>
@@ -373,6 +382,7 @@ export default class Row extends React.PureComponent<any, any> {
                 </button>
               </div>
             }
+
             {txType === 'CONFIRM' && confirmTx.status === 'pending' && (
               <div styleName="confirmWrapper">
                 {(confirmTx.isHolder) ? (
@@ -407,6 +417,8 @@ export default class Row extends React.PureComponent<any, any> {
                   )}
               </div>
             )}
+
+            {/* Currency amount */}
             <div styleName={statusStyleAmount}>
               {invoiceData ? this.parseFloat(direction, value, 'out', type) : this.parseFloat(direction, value, 'in', type)}
               {
@@ -415,7 +427,6 @@ export default class Row extends React.PureComponent<any, any> {
                   : null
               }
             </div>
-            {/* <LinkTransaction type={type} styleName='address' hash={hash} >{hash}</LinkTransaction> */}
           </td>
         </tr>
       </>

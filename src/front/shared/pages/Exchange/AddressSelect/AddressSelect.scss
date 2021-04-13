@@ -2,7 +2,7 @@
   position: relative;
 
   &.--dark {
-    color: white;
+    color: $d-color;
 
     .dropDown {
       width: 100%;
@@ -39,7 +39,7 @@
     position: absolute;
     top: -18px;
     left: 10px;
-    background: #fff;
+    background: $d-color;
     white-space: nowrap;
     @include media-mobile {
       top: -14px;
@@ -49,10 +49,6 @@
 
   &.--dark .label {
     background: none;
-  }
-
-  &_error .walletToggle {
-    border: 2px solid #a90101;
   }
 
   .dropDown {
@@ -89,7 +85,7 @@
 
   &_error {
     .dropDown > div > span {
-      color: #a90101;
+      color: $color-f-error;
     }
   }
 }
@@ -126,22 +122,6 @@
   }
 }
 
-.readonlyValue {
-  height: 100%;
-
-  input {
-    display: block;
-    width: 100%;
-    height: 100%;
-    padding: 0.7em;
-    border: none;
-    font-size: 1em;
-    text-overflow: ellipsis;
-    background: $pale-color;;
-    color: #777;
-  }
-}
-
 .customWallet {
   position: relative;
   height: 100%;
@@ -151,7 +131,7 @@
   }
 
   &_focus {
-    border: 2px solid $primary !important;
+    border: 1px solid $primary !important;
   }
 
   .customAddressInput {
@@ -193,14 +173,6 @@
 }
 
 @include media-mobile {
-  .--dark {
-    .readonlyValue {
-      input {
-        color: white;
-      }
-    }
-  }
-
   .addressSelect {
     .dropDown {
       & > div {

@@ -176,14 +176,13 @@ class EthTokenSwap extends SwapInterface {
           gas: this.gasLimit,
           gasPrice: this.gasPrice,
         }
-        //@ts-ignore
-        debug(`EthTokenSwap -> approve -> params`, params)
 
         const gasAmount = await this.ERC20.methods.approve(this.address, newAmount).estimateGas(params)
 
         params.gas = gasAmount
+
         //@ts-ignore
-        debug(`EthTokenSwap -> approve -> gas`, gasAmount)
+        debug(`EthTokenSwap -> approve -> params`, params)
 
         const result = await this.ERC20.methods.approve(this.address, newAmount).send(params)
           .on('transactionHash', (hash) => {
@@ -210,11 +209,11 @@ class EthTokenSwap extends SwapInterface {
    * @returns {Promise}
    */
   checkAllowance(data): Promise<number> {
-    const { spender } = data
+    const { owner } = data
 
     return new Promise(async (resolve, reject) => {
       try {
-        const result = await this.ERC20.methods.allowance(spender, this.address).call({
+        const result = await this.ERC20.methods.allowance(owner, this.address).call({
           from: this.app.getMyEthAddress(),
         })
 
@@ -236,7 +235,15 @@ class EthTokenSwap extends SwapInterface {
    * @returns {Promise}
    */
   async create(data, handleTransactionHash) {
-    if (data.targetWallet && (data.targetWallet!==data.participantAddress)) {
+    if (
+      data.targetWallet
+      && (
+        (data.targetWallet!==data.participantAddress)
+        ||
+        data.useTargetWallet
+      )
+      && this.hasTargetWallet()
+    ) {
       return this.createSwapTarget(data, handleTransactionHash)
     } else {
       return this.createSwap(data, handleTransactionHash)
@@ -482,12 +489,12 @@ class EthTokenSwap extends SwapInterface {
   async checkTokenIsValid(data) {
     const { ownerAddress, participantAddress } = data
 
-    debug('swap.core:swaps')(`Check token is valid. Needed token address: ${this.tokenAddress.toUpperCase()}`);
-    const swap = await util.helpers.repeatAsyncUntilResult(() =>
+    const swap = await util.helpers.repeatAsyncUntilResult(() => 
       this.contract.methods.swaps(ownerAddress, participantAddress).call()
     )
 
     const { token } = swap
+
     debug('swap.core:swaps')(`Token address at swap contract: ${token.toUpperCase()}`);
 
     return (this.tokenAddress.toUpperCase() == token.toUpperCase())
@@ -702,8 +709,10 @@ class EthTokenSwap extends SwapInterface {
 
   async fundERC20Contract({
     flow,
+    useTargetWallet,
   }: {
     flow: any,
+    useTargetWallet?: boolean,
   }) {
     const abClass = this
     const {
@@ -719,7 +728,10 @@ class EthTokenSwap extends SwapInterface {
       participantAddress: abClass.app.getParticipantEthAddress(flow.swap),
       secretHash,
       amount: sellAmount,
-      targetWallet: flow.swap.destinationSellAddress,
+      targetWallet: (flow.swap.destinationSellAddress)
+        ? flow.swap.destinationSellAddress
+        : abClass.app.getParticipantEthAddress(flow.swap),
+      useTargetWallet,
       calcFee: true,
     }
 
@@ -742,7 +754,7 @@ class EthTokenSwap extends SwapInterface {
           debug('swap.core:flow')('fetching allowance')
 
           const allowance = await abClass.checkAllowance({
-            spender: abClass.app.getMyEthAddress(),
+            owner: abClass.app.getMyEthAddress(),
           })
 
           debug('swap.core:flow')('allowance', allowance)
@@ -852,7 +864,7 @@ class EthTokenSwap extends SwapInterface {
   }
 
 
-  async getSecretFromAB2UTXO({
+  async getSecretFromContract({
     flow,
   }: {
     flow: any,
@@ -959,19 +971,7 @@ class EthTokenSwap extends SwapInterface {
       }, true)
     })
 
-    const isContractBalanceOk = await util.helpers.repeatAsyncUntilResult(async () => {
-      const balance = await abClass.getBalance({
-        ownerAddress: flow.app.getParticipantEthAddress(flow.swap),
-      })
-
-      debug('swap.core:flow')('Checking contract balance:', balance)
-
-      if (balance > 0) {
-        return true
-      }
-
-      return false
-    })
+    const isContractBalanceOk = await this.isContractFunded(flow)
 
     if (isContractBalanceOk) {
       const { isEthContractFunded } = flow.state
@@ -984,8 +984,7 @@ class EthTokenSwap extends SwapInterface {
     }
   }
 
-
-  async withdrawFromAB2UTXO({
+  async withdrawFromABContract({
     flow,
   }: {
     flow: any,
@@ -1157,6 +1156,74 @@ class EthTokenSwap extends SwapInterface {
       onWithdrawReady()
     }
   }
+
+  async isSwapCreated(data) {
+    const {
+      ownerAddress,
+      participantAddress,
+      secretHash,
+    } = data
+
+    const swap = await util.helpers.repeatAsyncUntilResult(() => {
+      return this.contract.methods.swaps(ownerAddress, participantAddress).call()
+    })
+
+    return (swap && swap.secretHash && swap.secretHash === `0x${secretHash}`)
+  }
+
+  async isContractFunded(flow) {
+    const abClass = this
+    const web3 = this.app.env.getWeb3()
+    const { buyAmount } = flow.swap
+
+    const isContractBalanceOk = await util.helpers.repeatAsyncUntilResult(async () => {
+      const balance = await abClass.getBalance({
+        ownerAddress: flow.app.getParticipantEthAddress(flow.swap),
+      })
+
+      const exp = new BigNumber(10).pow(abClass.decimals)
+      const needContractBalance = new BigNumber(buyAmount).times(exp)
+
+      debug('swap.core:flow')('Checking contract balance:', balance)
+
+      if (new BigNumber(balance).isGreaterThanOrEqualTo(needContractBalance)) {
+        return true
+      } else {
+        if (balance > 0) {
+          console.warn(`Balance on contract is less than needed. Swap stucked. Contract balance: ${balance} Needed: ${needContractBalance.toString()}`)
+        }
+      }
+
+      return false
+    })
+
+    if (isContractBalanceOk) {
+      return true
+    }
+    return false
+  }
+
+  async checkTargetAddress({
+    flow,
+  }: {
+    flow: any
+  }) {
+    if (this.hasTargetWallet()) {
+      const targetWallet = await this.getTargetWallet(
+        this.app.getParticipantEthAddress(flow.swap)
+      )
+      const needTargetWallet = (flow.swap.destinationBuyAddress)
+        ? flow.swap.destinationBuyAddress
+        : this.app.getMyEthAddress()
+
+      if (targetWallet.toLowerCase() === needTargetWallet.toLowerCase()) {
+        return true
+      }
+    }
+    return false
+  }
+
+
 }
 
 

@@ -38,11 +38,6 @@
   }
 }
 
-.commentTextarea {
-  overflow: hidden !important;
-  resize: none;
-}
-
 .arrowWrap {
   width: 36px;
   height: 36px;
@@ -103,7 +98,7 @@
 
 
 .unconfirmed {
-  color: #8E9AA3;
+  color: $notice-color;
   background: rgba(142, 154, 163, 0.1);
 }
 
@@ -129,18 +124,18 @@
 .amount {
   font-weight: 800;
   font-size: 15px;
-  line-height: 18px;
+  line-height: 23px;
   text-align: right;
   right: 15px;
-  top: 15px;
+  top: 16px;
   position: absolute;
 }
 
 .amountUsd {
   font-weight: 600;
   font-size: 12px;
-  color: #8E9AA3;
-  line-height: 15px;
+  color: $notice-color;
+  line-height: 6px;
   position: absolute;
   right: 15px;
   top: 45px;
@@ -231,12 +226,6 @@
   }
 }
 
-.icon {
-  border-style: none;
-  width: 14px;
-  margin-left: 10px;
-}
-
 tr.historyRow {
   display: block;
   margin-bottom: 10px;
@@ -244,7 +233,7 @@ tr.historyRow {
   min-height: 64px;
   position: relative;
   background: $l-background-elements;
-  border: 1px solid rgba(142, 154, 163, 0.16) !important;
+  border: 1px solid $inactive-border-color !important;
   box-shadow: 0px 2px 12px rgba(142, 154, 163, 0.08);
   border-radius: 4px;
   display: flex;
@@ -255,11 +244,6 @@ tr.historyRow {
 tr.dark {
   background: $d-background-elements;
   box-shadow: $d-box-shadow;
-
-  @media screen and (max-width: 480px) {
-    box-shadow: none;
-    background: #222528;
-  }
 
   .historyInfo {
     a {
@@ -301,24 +285,6 @@ tr.dark {
     width: 65%;
   }
 
-  .amountUsd {
-    right: 15px;
-    top: 39px;
-
-    @media all and (max-width: 480px) {
-      font-size: 0.6em;
-    }
-  }
-
-  .amount {
-    right: 15px;
-    top: 17px;
-
-    @media all and (max-width: 480px) {
-      font-size: 0.8em;
-    }
-  }
-
   .historyInfo {
     margin-left: 0px;
     margin-top: 0px;
@@ -327,6 +293,21 @@ tr.dark {
 
   .circleIcon {
     display: none;
+  }
+}
+
+@media all and (max-width: 480px) {
+  tr.dark {
+    box-shadow: none;
+    background: #222528;
+  }
+  
+  .amount {
+    font-size: 0.9em;
+  }
+
+  .amountUsd {
+    font-size: 0.7em;
   }
 }
 

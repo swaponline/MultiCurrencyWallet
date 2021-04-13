@@ -1,11 +1,10 @@
-import * as bitcoin from 'bitcoinjs-lib'
 import { getState } from 'redux/core'
 import actions from 'redux/actions'
 import config from './externalConfig'
-import constants from './constants'
+import DEFAULT_CURRENCY_PARAMETERS from './constants/DEFAULT_CURRENCY_PARAMETERS'
+import constants from 'common/helpers/constants'
 import request from 'common/utils/request'
 import BigNumber from 'bignumber.js'
-
 
 const networks = {
   mainnet: {
@@ -49,6 +48,7 @@ const DUST = 546 // description in ./btc.ts
 // getByteCount({'MULTISIG-P2SH:2-4':45},{'P2PKH':1}) Means "45 inputs of P2SH Multisig and 1 output of P2PKH"
 // getByteCount({'P2PKH':1,'MULTISIG-P2SH:2-3':2},{'P2PKH':2}) means "1 P2PKH input and 2 Multisig P2SH (2 of 3) inputs along with 2 P2PKH outputs"
 const getByteCount = (inputs, outputs) => {
+  const { TRANSACTION } = constants
   let totalWeight = 0
   let hasWitness = false
   let inputCount = 0
@@ -56,18 +56,18 @@ const getByteCount = (inputs, outputs) => {
   // assumes compressed pubkeys in all cases.
   const types = {
     'inputs': {
-      'MULTISIG-P2SH': 49 * 4,
-      'MULTISIG-P2WSH': 6 + (41 * 4),
-      'MULTISIG-P2SH-P2WSH': 6 + (76 * 4),
-      'P2PKH': 148 * 4,
-      'P2WPKH': 108 + (41 * 4),
-      'P2SH-P2WPKH': 108 + (64 * 4),
+      'MULTISIG-P2SH': TRANSACTION.MULTISIG_P2SH_IN_SIZE * 4,
+      'MULTISIG-P2WSH': TRANSACTION.MULTISIG_P2WSH_IN_SIZE + (41 * 4),
+      'MULTISIG-P2SH-P2WSH': TRANSACTION.MULTISIG_P2SH_P2WSH_IN_SIZE + (76 * 4),
+      'P2PKH': TRANSACTION.P2PKH_IN_SIZE * 4,
+      'P2WPKH': TRANSACTION.P2WPKH_IN_SIZE + (41 * 4),
+      'P2SH-P2WPKH': TRANSACTION.P2SH_P2WPKH_IN_SIZE + (64 * 4),
     },
     'outputs': {
-      'P2SH': 32 * 4,
-      'P2PKH': 34 * 4,
-      'P2WPKH': 31 * 4,
-      'P2WSH': 43 * 4,
+      'P2SH': TRANSACTION.P2SH_OUT_SIZE * 4,
+      'P2PKH': TRANSACTION.P2PKH_OUT_SIZE * 4,
+      'P2WPKH': TRANSACTION.P2WPKH_OUT_SIZE * 4,
+      'P2WSH': TRANSACTION.P2WSH_OUT_SIZE * 4,
     },
   }
 
@@ -122,7 +122,8 @@ const getByteCount = (inputs, outputs) => {
 
 //@ts-ignore
 const calculateTxSize = async ({ speed, unspents, address, txOut = 2, method = 'send', fixed } = {}) => {
-  const defaultTxSize = constants.defaultFeeRates.next.size[method]
+  const { TRANSACTION } = constants
+  const defaultTxSize = DEFAULT_CURRENCY_PARAMETERS.next.size[method]
 
   if (fixed) {
     return defaultTxSize
@@ -130,18 +131,25 @@ const calculateTxSize = async ({ speed, unspents, address, txOut = 2, method = '
 
   unspents = unspents || await actions.next.fetchUnspents(address)
 
-
   const txIn = unspents.length
-  const txSize = txIn > 0
-    ? txIn * 146 + txOut * 33 + (15 + txIn - txOut)
-    : defaultTxSize
+  let txSize = defaultTxSize
+
+  if (txIn > 0) {
+    txSize =
+      txIn * TRANSACTION.P2PKH_IN_SIZE +
+      txOut * TRANSACTION.P2PKH_OUT_SIZE +
+      (TRANSACTION.TX_SIZE + txIn - txOut)
+  }
 
   if (method === 'send_multisig') {
     const msuSize = getByteCount(
       { 'MULTISIG-P2SH-P2WSH:2-2': 1 },
       { 'P2PKH': (hasAdminFee) ? 3 : 2 }
     )
-    const msutxSize = txIn * msuSize + txOut * 33 + (15 + txIn - txOut)
+    const msutxSize =
+      txIn * msuSize +
+      txOut * TRANSACTION.P2PKH_OUT_SIZE +
+      (TRANSACTION.TX_SIZE + txIn - txOut)
 
     return msutxSize
   }
@@ -151,7 +159,10 @@ const calculateTxSize = async ({ speed, unspents, address, txOut = 2, method = '
       { 'MULTISIG-P2SH-P2WSH:2-3': 1 },
       { 'P2PKH': (hasAdminFee) ? 3 : 2 }
     )
-    const mstxSize = txIn * msSize + txOut * 33 + (15 + txIn - txOut)
+    const mstxSize =
+      txIn * msSize +
+      txOut * TRANSACTION.P2PKH_OUT_SIZE +
+      (TRANSACTION.TX_SIZE + txIn - txOut)
 
     return mstxSize
   }
@@ -179,9 +190,11 @@ const estimateFeeValue = async (options: EstimateFeeValueOptions) => {
     },
   } = getState()
 
-  let txOut = 2
-
-  if (hasAdminFee) txOut = 3
+  const txOut = hasAdminFee
+    ? method === 'send'
+      ? 3
+      : 2
+    : 2
 
   if (!address) {
     address = nextData.address
@@ -202,9 +215,6 @@ const estimateFeeValue = async (options: EstimateFeeValueOptions) => {
       .dp(0, BigNumber.ROUND_HALF_EVEN),
   )
 
-  const CUSTOM_SATOSHI = 20
-  calculatedFeeValue.plus(CUSTOM_SATOSHI) // just wanted to add
-
   const finalFeeValue = inSatoshis
     ? calculatedFeeValue.toString()
     : calculatedFeeValue.multipliedBy(1e-8).toString()
@@ -215,7 +225,7 @@ const estimateFeeValue = async (options: EstimateFeeValueOptions) => {
 
 const estimateFeeRate = async ({ speed = 'fast' } = {}) => {
   const link = config.feeRates.next
-  const defaultRate = constants.defaultFeeRates.next.rate
+  const defaultRate = DEFAULT_CURRENCY_PARAMETERS.next.rate
 
   if (!link) {
     return defaultRate[speed]

@@ -90,7 +90,6 @@ type RestoryMnemonicWalletState = {
   }
 }
 
-@injectIntl
 @connect(
   ({
     user: { btcData, btcMultisigSMSData, btcMultisigUserData, ethData, ghostData, nextData },
@@ -107,7 +106,7 @@ type RestoryMnemonicWalletState = {
   })
 )
 @cssModules({ ...defaultStyles, ...styles }, { allowMultiple: true })
-export default class RestoryMnemonicWallet extends React.Component {
+class RestoryMnemonicWallet extends React.Component {
 
   props: RestoryMnemonicWalletProps
   state: RestoryMnemonicWalletState
@@ -227,9 +226,9 @@ export default class RestoryMnemonicWallet extends React.Component {
 
       const btcPrivKey = await actions.btc.login(false, mnemonic)
       const btcSmsKey = actions.btcmultisig.getSmsKeyFromMnemonic(mnemonic)
+
       localStorage.setItem(constants.privateKeyNames.btcSmsMnemonicKeyGenerated, btcSmsKey)
-      //@ts-ignore
-      localStorage.setItem(constants.localStorage.isWalletCreate, true)
+      localStorage.setItem(constants.localStorage.isWalletCreate, 'true')
 
       await actions.eth.login(false, mnemonic)
       await actions.ghost.login(false, mnemonic)
@@ -355,3 +354,5 @@ export default class RestoryMnemonicWallet extends React.Component {
     )
   }
 }
+
+export default injectIntl(RestoryMnemonicWallet)

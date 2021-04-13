@@ -103,7 +103,7 @@ const getTradePairs = (): any => {
   return false
 }
 
-const loadJson = (network?: Networks = Networks.testnet): boolean => {
+const loadJson = (network: Networks = Networks.testnet): boolean => {
   _hasTradeConfig = false
   const filePath = `${__dirname}/../../../tradeconfig.${network}.json`
   if (fs.existsSync(filePath)) {
@@ -125,9 +125,12 @@ const loadJson = (network?: Networks = Networks.testnet): boolean => {
       return false
     }
   } else {
-    console.warn(`Trade config 'tradeconfig.${network}.json' not found. Use defaults`)
-    _hasTradeConfig = false
-    return false
+    if (process.env.TEST_STARTUP !== `true`) {
+      console.log(
+        colorString(`Trade config 'tradeconfig.${network}.json' not found. Use defaults`, COLORS.RED)
+      )
+      process.exit(0)
+    }
   }
 }
 

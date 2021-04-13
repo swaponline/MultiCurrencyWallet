@@ -13,8 +13,6 @@ import actions from 'redux/actions'
 import typeforce from 'swap.app/util/typeforce'
 import config from 'app-config'
 
-import { localisePrefix } from 'helpers/locale'
-
 import * as mnemonicUtils from '../../../../common/utils/mnemonic'
 
 import { default as bitcoinUtils } from '../../../../common/utils/coin/btc'
@@ -320,11 +318,11 @@ const fetchTx = (hash, cacheResponse) => bitcoinUtils.fetchTx({
   cacheResponse,
 })
 
-const fetchTxInfo = (hash, cacheResponse) => bitcoinUtils.fetchTxInfo({
+const fetchTxInfo = (hash, cacheResponse, serviceFee = null) => bitcoinUtils.fetchTxInfo({
   hash,
   NETWORK,
   cacheResponse,
-  hasAdminFee,
+  hasAdminFee: serviceFee || hasAdminFee,
 })
 
 
@@ -437,8 +435,11 @@ const addressIsCorrect = (address) => {
 }
 
 
-const send = ({ from, to, amount, feeValue = null, speed }) => {
+const send = ({ from, to, amount, feeValue = null, speed,  serviceFee = null }) => {
   console.log('>>> send', from, to, amount, feeValue, speed)
+  if(feeValue) {
+    feeValue = feeValue.multipliedBy(1e8).toNumber()
+  }
   return new Promise(async (ready, reject) => {
     try {
       let privateKey = null
@@ -454,11 +455,13 @@ const send = ({ from, to, amount, feeValue = null, speed }) => {
       // fee - from amount - percent
       let feeFromAmount: number | BigNumber = new BigNumber(0)
 
-      if (hasAdminFee) {
+      serviceFee = serviceFee || hasAdminFee
+
+      if (serviceFee) {
         const {
           fee: adminFee,
           min: adminFeeMinValue,
-        } = config.opts.fee.btc
+        } = serviceFee
 
         const adminFeeMin = new BigNumber(adminFeeMinValue)
 
@@ -470,7 +473,7 @@ const send = ({ from, to, amount, feeValue = null, speed }) => {
       feeFromAmount = feeFromAmount.toNumber()
 
       try {
-        feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed, amount})
+        feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed, address: from, amount, toAddress: to})
       } catch (eFee) {
         reject({ message: `Fail estimate fee ` + eFee.message })
         return
@@ -483,8 +486,10 @@ const send = ({ from, to, amount, feeValue = null, speed }) => {
         reject({ message: `Fail get unspents `+ eUnspents.message})
         return
       }
+      const toAmount = amount
+      amount = new BigNumber(amount).multipliedBy(1e8).plus(feeValue).plus(feeFromAmount).multipliedBy(1e-8).toNumber()
       unspents = await prepareUnspents({ unspents, amount })
-      const fundValue = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
+      const fundValue = new BigNumber(String(toAmount)).multipliedBy(1e8).integerValue().toNumber()
       const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
       const residue = totalUnspent - fundValue - feeValue - feeFromAmount
       const psbt = new bitcoin.Psbt({ network: btc.network })
@@ -503,10 +508,10 @@ const send = ({ from, to, amount, feeValue = null, speed }) => {
         })
       }
 
-      if (hasAdminFee) {
+      if (serviceFee) {
         try {
           psbt.addOutput({
-            address: hasAdminFee.address,
+            address: serviceFee.address,
             value: feeFromAmount,
           })
         } catch (eAdminFee) {
@@ -577,7 +582,6 @@ const sendTransaction = async ({ to, amount }) => {
 const prepareUnspents = ({ amount, unspents }) => bitcoinUtils.prepareUnspents({
   amount,
   unspents,
-  NETWORK,
 })
 
 window.prepareUnspents = prepareUnspents

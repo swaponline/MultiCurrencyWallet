@@ -70,25 +70,11 @@ export default class UTXOToEthToken extends Component<any, any> {
 
   submitSecret = () => {
     const { secret } = this.state
-    this.swap.flow.submitSecret(secret)
+    // this.swap.flow.submitSecret(secret)
   }
 
 
   handleFlowStateUpdate = (values) => {
-
-    const stepNumbers = {
-      'sign': 1,
-      'submit-secret': 2,
-      'sync-balance': 3,
-      'lock-utxo': 4,
-      'wait-lock-eth': 5,
-      'withdraw-eth': 6,
-      'finish': 7,
-      'end': 8,
-    }
-
-    // actions.analytics.swapEvent(stepNumbers[values.step], 'BTC2ETHTOKEN')
-
     this.setState({
       flow: values,
     })

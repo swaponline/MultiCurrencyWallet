@@ -1,4 +1,4 @@
-import swap from './../src'
+import * as swap from './../src'
 
 const {
   on: { onFinish },
@@ -8,7 +8,7 @@ const {
   history: { saveInProgress, removeInProgress, saveFinished },
 } = swap.helpers
 
-const { wallet, auth, room, orders } = swap.setup()
+const { wallet, auth, room, orders } = swap.setup({})
 
 const doSwap = async order => {
   console.log('new order', order.id)

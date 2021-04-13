@@ -28,7 +28,7 @@ import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 
 import config from 'app-config'
 import feedback from 'shared/helpers/feedback'
-import { links, getPairFees } from 'helpers'
+import { links } from 'helpers'
 
 
 type OrderBookProps = {
@@ -84,11 +84,9 @@ const filterOrders = (orders, filter) => orders
   currencies,
   decline: rememberedOrders.savedOrders,
 }))
-//@ts-ignore
 @withRouter
-@injectIntl
 @cssModules(styles, { allowMultiple: true })
-export default class OrderBook extends Component {
+class OrderBook extends Component {
 
   props: OrderBookProps
   state: OrderBookState
@@ -329,6 +327,8 @@ export default class OrderBook extends Component {
                         pairFees={pairFees}
                         balances={balances}
                         checkSwapAllow={checkSwapAllow}
+                        buy={buyCurrency}
+                        sell={sellCurrency}
                       />
                     )}
                   />
@@ -379,6 +379,8 @@ export default class OrderBook extends Component {
                         pairFees={pairFees}
                         balances={balances}
                         checkSwapAllow={checkSwapAllow}
+                        buy={sellCurrency}
+                        sell={buyCurrency}
                       />
                     )}
                   />
@@ -393,3 +395,5 @@ export default class OrderBook extends Component {
     )
   }
 }
+
+export default injectIntl(OrderBook)

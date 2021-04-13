@@ -1,0 +1,107 @@
+.fee-radio {
+  position: relative;
+  display: flex;
+  margin-top: 12px;
+  border-radius: 5px;
+  letter-spacing: 0.01em;
+  width: 100%;
+
+  &.--dark {
+    .fee-radio__label {
+        background-color: $d-box-shadow;
+        color: $d-color;
+    }
+  }
+}
+
+.fee-radio__input {
+  position: absolute;
+  overflow: hidden;
+  width: 0;
+  height: 0;
+  clip: rect(0 0 0 0);
+}
+
+.fee-radio__label {
+  position: relative;
+  z-index: 1;
+  width: 25%;
+  padding: 6px 6px 7px 14px;
+  border: 1px solid $inactive-border-color;
+  box-shadow: $l-box-shadow;
+  border-radius: 5px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.fee-radio__label:not(:last-child) {
+  margin-right: 12px;
+}
+
+.labelTitle {
+  font-size: 0.9rem;
+}
+
+.tooltipMessage {
+  max-width: 24em;
+  text-align: center;
+}
+
+.feeRadioDescription {
+  display: flex;
+  flex-direction: column;
+  margin-top: 0.3rem;
+}
+
+.constantTextSize {
+  font-size: 12px;
+}
+
+.customRangeInput {
+  max-width: 80%;
+}
+
+/* Checked */
+
+.fee-radio__input:checked + .fee-radio__label,
+.fee-radio__label--active {
+  border: 1px solid $color-brand;
+}
+
+
+@media (max-width: 767px) {
+  .fee-radio {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .fee-radio__label {
+    width: 47%;
+    justify-self: center;
+  }
+
+  .fee-radio__label:not(:last-child) {
+    margin-right: 0;
+  }
+
+  .fee-radio__label:nth-child(2),
+  .fee-radio__label:nth-child(6) {
+    margin-right: 10px;
+  }
+}
+
+@media (max-width: 500px) {
+  .fee-radio__label {
+    width: 100%;
+  }
+  .fee-radio__label:nth-child(2),
+  .fee-radio__label:nth-child(6) {
+    margin-right: 0;
+  }
+}
+
+.paleLoader {
+  display: inline-block;
+  opacity: 0.7;
+}

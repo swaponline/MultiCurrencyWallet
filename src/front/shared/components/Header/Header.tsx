@@ -35,13 +35,16 @@ import UserTooltip from 'components/Header/User/UserTooltip/UserTooltip'
 import feedback from 'shared/helpers/feedback'
 import wpLogoutModal from 'helpers/wpLogoutModal'
 
+
+import Swap from 'swap.swap'
+import SwapApp from 'swap.app'
+
 /* uncomment to debug */
 //window.isUserRegisteredAndLoggedIn = true
 
 const isWidgetBuild = config && config.isWidget
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
-@injectIntl
 @withRouter
 @connect({
   feeds: 'feeds.items',
@@ -53,7 +56,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
   hiddenCoinsList: 'core.hiddenCoinsList',
 })
 @CSSModules(styles, { allowMultiple: true })
-export default class Header extends Component<any, any> {
+class Header extends Component<any, any> {
   static propTypes = {
     history: PropTypes.object.isRequired,
   }
@@ -203,12 +206,9 @@ export default class Header extends Component<any, any> {
     const isGuestLink = !(!hash || hash.slice(1) !== 'guest')
 
     if (isGuestLink) {
-      //@ts-ignore
-      localStorage.setItem(wasOnWallet, true)
-      //@ts-ignore
-      localStorage.setItem(wasOnExchange, true)
-      //@ts-ignore
-      localStorage.setItem(wasOnWidgetWallet, true)
+      localStorage.setItem(wasOnWallet, 'true')
+      localStorage.setItem(wasOnExchange, 'true')
+      localStorage.setItem(wasOnWidgetWallet, 'true')
       return
     }
 
@@ -323,8 +323,8 @@ export default class Header extends Component<any, any> {
     setTimeout(() => {
       this.setState(() => ({ isTourOpen: true }))
     }, 1000)
-    //@ts-ignore
-    localStorage.setItem(wasOnWallet, true)
+
+    localStorage.setItem(wasOnWallet, 'true')
   }
 
   openWidgetWalletTour = () => {
@@ -333,8 +333,8 @@ export default class Header extends Component<any, any> {
     setTimeout(() => {
       this.setState(() => ({ isWidgetTourOpen: true }))
     }, 1000)
-    //@ts-ignore
-    localStorage.setItem(wasOnWidgetWallet, true)
+
+    localStorage.setItem(wasOnWidgetWallet, 'true')
   }
 
   openExchangeTour = () => {
@@ -343,8 +343,7 @@ export default class Header extends Component<any, any> {
       this.setState(() => ({ isPartialTourOpen: true }))
     }, 1000)
 
-    //@ts-ignore
-    localStorage.setItem(wasOnExchange, true)
+    localStorage.setItem(wasOnExchange, 'true')
   }
 
   handleSetDark = () => {
@@ -355,8 +354,7 @@ export default class Header extends Component<any, any> {
     if (wasDark) {
       localStorage.removeItem(constants.localStorage.isDark)
     } else {
-      //@ts-ignore
-      localStorage.setItem(constants.localStorage.isDark, true)
+      localStorage.setItem(constants.localStorage.isDark, 'true')
     }
     window.location.reload()
   }
@@ -371,6 +369,9 @@ export default class Header extends Component<any, any> {
       toggle,
       history,
       intl: { locale },
+      location: {
+        pathname,
+      },
     } = this.props
 
     actions.core.acceptRequest(orderId, participantPeer)
@@ -380,10 +381,14 @@ export default class Header extends Component<any, any> {
       toggle()
     }
 
-    console.log('-Accepting request', link)
-    console.log(`Redirect to swap: ${link}`)
-    await history.replace(localisedUrl(locale, link))
-    await history.push(localisedUrl(locale, link))
+    if ((pathname === links.marketmaker) || (pathname === links.marketmaker_short)) {
+      const swap = new Swap(orderId, SwapApp.shared())
+      actions.core.rememberSwap(swap)
+      window.active_swap = swap
+    } else {
+      await history.replace(localisedUrl(locale, link))
+      await history.push(localisedUrl(locale, link))
+    }
   }
 
   handleLogout = () => {
@@ -518,3 +523,5 @@ export default class Header extends Component<any, any> {
     )
   }
 }
+
+export default injectIntl(Header)

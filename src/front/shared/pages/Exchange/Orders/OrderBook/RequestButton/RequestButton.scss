@@ -23,6 +23,10 @@
       opacity: 0.2;
     }
   }
+
+  &.dark {
+    box-shadow: 1px 1px 6px #181818;
+  }
 }
 
 .rows {
