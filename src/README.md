@@ -628,25 +628,13 @@
 │   │   │   │   ├── ThemeSwitcher.tsx
 │   │   │   │   ├── TourPartial
 │   │   │   │   │   └── TourPartial.tsx
-│   │   │   │   ├── User
-│   │   │   │   │   ├── Question
-│   │   │   │   │   │   ├── Question.scss
-│   │   │   │   │   │   └── Question.tsx
-│   │   │   │   │   ├── UserAvatar
-│   │   │   │   │   │   ├── images
-│   │   │   │   │   │   │   ├── avatar.jpg
-│   │   │   │   │   │   │   └── avatar.svg
-│   │   │   │   │   │   ├── UserAvatar.scss
-│   │   │   │   │   │   └── UserAvatar.tsx
-│   │   │   │   │   ├── User.scss
-│   │   │   │   │   ├── UserTooltip
-│   │   │   │   │   │   ├── images
-│   │   │   │   │   │   │   ├── accept.svg
-│   │   │   │   │   │   │   ├── arrow-right.svg
-│   │   │   │   │   │   │   └── close.svg
-│   │   │   │   │   │   ├── UserTooltip.scss
-│   │   │   │   │   │   └── UserTooltip.tsx
-│   │   │   │   │   └── User.tsx
+│   │   │   │   ├── UserTooltip
+│   │   │   │   │   ├── images
+│   │   │   │   │   │   ├── accept.svg
+│   │   │   │   │   │   ├── arrow-right.svg
+│   │   │   │   │   │   └── close.svg
+│   │   │   │   │   ├── UserTooltip.scss
+│   │   │   │   │   └── UserTooltip.tsx
 │   │   │   │   ├── WalletTour
 │   │   │   │   │   └── WalletTour.tsx
 │   │   │   │   └── WidgetTours
@@ -1373,7 +1361,6 @@
 │   │   │   │   ├── index.ts
 │   │   │   │   ├── invoices.ts
 │   │   │   │   ├── loader.ts
-│   │   │   │   ├── menu.ts
 │   │   │   │   ├── modals.ts
 │   │   │   │   ├── multisigTx.ts
 │   │   │   │   ├── next.ts
@@ -1404,7 +1391,6 @@
 │   │   │   │   ├── index.ts
 │   │   │   │   ├── inputActive.ts
 │   │   │   │   ├── loader.ts
-│   │   │   │   ├── menu.ts
 │   │   │   │   ├── modals.ts
 │   │   │   │   ├── notifications.ts
 │   │   │   │   ├── pubsubRoom.ts
@@ -1423,4 +1409,4 @@
 │       └── run.js
 └── README.md
 
-363 directories, 1060 files
+359 directories, 1050 files
