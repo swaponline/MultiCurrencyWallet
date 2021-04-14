@@ -1038,11 +1038,15 @@ const estimateFeeValue = async (options) => {
     const txIn = unspents.length
     // 2 = recipient input + sender input (for a residue)
     // 3 = the same inputs like higher + input for admin fee
-    const txOut = serviceFee
+    let txOut = serviceFee
     ? method === 'send'
       ? 3
       : 2
     : 2
+
+    if (method === 'swap' && swapUTXOMethod === 'withdraw') {
+      txOut = 1
+    }
 
     const txSize = _txSize || await calculateTxSize({
       fixed,

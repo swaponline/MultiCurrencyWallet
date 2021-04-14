@@ -444,7 +444,6 @@ const send = ({ from, to, amount, feeValue = null, speed,  serviceFee = hasAdmin
         privateKey = getPrivateKeyByAddress(from)
       } catch (ePrivateKey) {
         reject({ message: `Fail get data for send address` + ePrivateKey.message })
-        return
       }
 
       let preparedFees
@@ -461,7 +460,6 @@ const send = ({ from, to, amount, feeValue = null, speed,  serviceFee = hasAdmin
         })
       } catch (prepareFeesError) {
         reject({ message: `Fail prepare fees: ${prepareFeesError.message}` })
-        return
       }
       const {
         fundValue,
@@ -486,7 +484,6 @@ const send = ({ from, to, amount, feeValue = null, speed,  serviceFee = hasAdmin
         })
       } catch (prepareRawTxError) {
         reject({ message: `Fail prepare raw tx: ${prepareRawTxError.message}` })
-        return
       }
 
       try {
