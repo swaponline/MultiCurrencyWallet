@@ -3,7 +3,6 @@ import { getState } from 'redux/core'
 import actions from 'redux/actions'
 import config from './externalConfig'
 import constants from 'common/helpers/constants'
-import btcHelper from 'common/helpers/btc'
 import btcUtils from 'common/utils/coin/btc'
 import BigNumber from 'bignumber.js'
 import { IBtcUnspent } from 'common/utils/coin/btc'
@@ -85,7 +84,7 @@ const estimateFeeValue = async (params: EstimateFeeValueParams): Promise<any> =>
     : 2
 
   feeRate = feeRate || await btcUtils.estimateFeeRate({ speed, NETWORK })
-  txSize = txSize || await btcHelper.calculateTxSize({
+  txSize = txSize || await btcUtils.calculateTxSize({
     fixed,
     method,
     txIn,

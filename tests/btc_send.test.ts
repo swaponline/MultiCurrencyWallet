@@ -1,4 +1,4 @@
-import btcHelper from  '../src/common/helpers/btc'
+import btcUtils from  '../src/common/utils/coin/btc'
 import actions from "../src/front/shared/redux/actions";
 import BigNumber from 'bignumber.js';
 
@@ -48,7 +48,7 @@ describe('BTC Send Tests', () => {
       NETWORK
     };
 
-    const txSize = await btcHelper.calculateTxSize(params);
+    const txSize = await btcUtils.calculateTxSize(params);
     expect(txSize).toBe(230);
   }, 2000);
 
@@ -67,7 +67,7 @@ describe('BTC Send Tests', () => {
     const txIn = unspents.length
     const txOut = 2
 
-    const txSize = await btcHelper.calculateTxSize({
+    const txSize = await btcUtils.calculateTxSize({
       fixed: false,
       method: 'send',
       txIn,
@@ -114,7 +114,7 @@ describe('BTC Send Tests', () => {
     const txIn = unspents.length
     const txOut = 3
 
-    const txSize = await btcHelper.calculateTxSize({
+    const txSize = await btcUtils.calculateTxSize({
       fixed: false,
       method: 'send',
       txIn,
@@ -164,7 +164,7 @@ describe('BTC Send Tests', () => {
     const txIn = unspents.length
     const txOut = 2
 
-    const txSize = await btcHelper.calculateTxSize({
+    const txSize = await btcUtils.calculateTxSize({
       fixed: false,
       method: 'send_2fa',
       txIn,
@@ -212,7 +212,7 @@ describe('BTC Send Tests', () => {
     const txIn = unspents.length
     const txOut = 3
 
-    const txSize = await btcHelper.calculateTxSize({
+    const txSize = await btcUtils.calculateTxSize({
       fixed: false,
       method: 'send_2fa',
       txIn,
