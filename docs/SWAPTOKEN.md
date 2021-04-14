@@ -1,15 +1,16 @@
 # `SWAP` is ERC20 token of our project
 
+## Available on exchanges
+
+- 🦄 [Uniswap](https://uniswap.info/pair/0x8dce5d9ed9fa147544be62bdf0e0f575528b4272)
+- 🥞 [PancakeSwap](https://exchange.pancakeswap.finance/#/swap?inputCurrency=0x92648e4537cdfa1ee743a244465a31aa034b1ce8)
+- ⚛️ [Swaponline](https://swaponline.io/#/exchange/btc-to-swap)
+
 ## Contract address
 
 Ethereum: [0x14a52cf6b4f68431bd5d9524e4fcd6f41ce4ade9](https://etherscan.io/token/0x14a52cf6b4f68431bd5d9524e4fcd6f41ce4ade9)
 
 Binance Smart Chain: [0x92648e4537cdfa1ee743a244465a31aa034b1ce8](https://bscscan.com/token/0x92648e4537cdfa1ee743a244465a31aa034b1ce8)
-
-## Listed on exchanges
-
-- 🦄 [Uniswap](https://uniswap.info/pair/0x8dce5d9ed9fa147544be62bdf0e0f575528b4272)
-- [Swaponline](https://swaponline.io/#/exchange/btc-to-swap)
 
 ## Total limited supply
 
@@ -102,4 +103,6 @@ Mar, 2021 – Binance Smart Chain integration
 
 ## Our growth
 
-![](https://screenshots.wpmix.net/Telegram_BgGLGK1HWgMnk7BDad8VwuUWjjwDqQjy.png)
+![image](https://user-images.githubusercontent.com/35522011/114773773-e51e1880-9d88-11eb-95b5-07de16d903f0.png)
+
+
