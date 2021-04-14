@@ -1,6 +1,8 @@
 import React, { Component, Fragment } from 'react'
 import CSSModules from 'react-css-modules'
 
+import { BigNumber } from 'bignumber.js'
+
 import { connect } from 'redaction'
 import actions from 'redux/actions'
 
@@ -247,8 +249,29 @@ console.log('>>>> Market token', marketToken)
     SwapApp.shared().off('swap enter step', this._handleSwapEnterStep)
   }
 
-  handleToggleMarketmaker() {
+  handleToggleMarketmaker(checked) {
     const { isMarketEnabled } = this.state
+
+console.log('on click', checked)
+    const {
+      ethBalance,
+      tokenBalance,
+    } = this.state
+
+    if (new BigNumber(tokenBalance).isLessThanOrEqualTo(0)) {
+      console.log('>>>> no tokens')
+      this.setState({
+        isMarketEnabled: false,
+      })
+      return false
+    }
+    if (new BigNumber(ethBalance).isLessThan(0.02)) {
+      console.log('>>>> no eth')
+      this.setState({
+        isMarketEnabled: false,
+      })
+      return false
+    }
 
     this.setState({
       isMarketEnabled: !isMarketEnabled,
