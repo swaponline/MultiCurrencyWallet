@@ -33,6 +33,8 @@ class MarketmakerSettings extends Component<any, any> {
   _mounted = true
   _handleSwapAttachedHandle = null
   _handleSwapEnterStep = null
+  _metamaskEnabled = false
+
   constructor(props) {
     super(props)
 
@@ -366,13 +368,15 @@ console.log('>>>> Market token', marketToken)
             )}
             <p>Баланс ETH: {ethBalance}</p>
             <p>Баланс {marketToken.toUpperCase()}: {tokenBalance} {marketToken.toUpperCase()}</p>
-            <div>
-            {metamask.isConnected() ? (
-              <Button blue onClick={this.processDisconnectWallet.bind(this)}>Отключить Metamask</Button>
-            ) : (
-              <Button blue onClick={this.processConnectWallet.bind(this)}>Подключить Metamask</Button>
+            {this._metamaskEnabled && (
+              <div>
+              {metamask.isConnected() ? (
+                <Button blue onClick={this.processDisconnectWallet.bind(this)}>Отключить Metamask</Button>
+              ) : (
+                <Button blue onClick={this.processConnectWallet.bind(this)}>Подключить Metamask</Button>
+              )}
+              </div>
             )}
-            </div>
           </>
         ) : (
           <>
