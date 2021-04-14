@@ -32,13 +32,6 @@
     ]
   },
   {
-    "id": "avatar24",
-    "message": "To jest Twój (indywidualny) identyfikator użytkownika, jest unikatowy dla każdego użytkownika. To ocena użytkownika na podstawie ilości swapów",
-    "files": [
-      "src/front/shared/components/Header/User/User.tsx"
-    ]
-  },
-  {
     "id": "ConConfirm25firm20",
     "message": "Nie",
     "files": [
@@ -78,13 +71,6 @@
     "message": "POKAŻ ZLECENIA",
     "files": [
       "src/front/shared/components/CurrencyDirectionChooser/CurrencyDirectionChooser.tsx"
-    ]
-  },
-  {
-    "id": "question15",
-    "message": "Dowiedz się więcej o nas",
-    "files": [
-      "src/front/shared/components/Header/User/Question/Question.tsx"
     ]
   },
   {

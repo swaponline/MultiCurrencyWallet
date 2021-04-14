@@ -1,9 +1,7 @@
 import React, { Component, Fragment } from 'react'
-
 import actions from 'redux/actions'
 
-import { Link } from 'react-router-dom'
-import helpers, { links } from 'helpers'
+import helpers from 'helpers'
 
 import cssModules from 'react-css-modules'
 import styles from './ConfirmOffer.scss'
@@ -14,13 +12,10 @@ import Coins from 'components/Coins/Coins'
 
 import Amounts from './Amounts/Amounts'
 import ExchangeRate from './ExchangeRate/ExchangeRate'
-import Fee from './Fee/Fee'
 import { connect } from 'redaction'
 import { FormattedMessage, injectIntl } from 'react-intl'
-import { localisedUrl } from 'helpers/locale'
-import minAmountOffer from 'helpers/constants/minAmountOffer'
-import coinsWithDynamicFee from 'helpers/constants/coinsWithDynamicFee'
-import BigNumber from 'bignumber.js'
+import MIN_AMOUNT_OFFER from 'common/helpers/constants/MIN_AMOUNT'
+import COINS_WITH_DYNAMIC_FEE from 'common/helpers/constants/COINS_WITH_DYNAMIC_FEE'
 import feedback from 'shared/helpers/feedback'
 
 
@@ -52,7 +47,9 @@ class ConfirmOffer extends Component<any, any> {
       }))
     } else {
       const feeValueDynamic = await helpers[sellCurrency].estimateFeeValue({ method: 'swap', speed: 'fast' })
-      const feeValue = coinsWithDynamicFee.includes(sellCurrency) ? feeValueDynamic : minAmountOffer[sellCurrency]
+      const feeValue = COINS_WITH_DYNAMIC_FEE.includes(sellCurrency)
+        ? feeValueDynamic
+        : MIN_AMOUNT_OFFER[sellCurrency]
       this.setState(() => ({
         feeValue,
       }))
@@ -84,8 +81,7 @@ class ConfirmOffer extends Component<any, any> {
         <Amounts {...{ buyAmount, sellAmount, buyCurrency, sellCurrency }} />
         <ExchangeRate {...{ sellCurrency, buyCurrency, exchangeRate }} />
         {/*<Fee amount={feeValue} currency={!tokenFee ? sellCurrency : 'ETH'} />*/}
-        {/*
-        //@ts-ignore*/}
+
         <Row styleName="buttonsInRow">
           <Button styleName="button" gray onClick={onBack}>
             <FormattedMessage id="ConfirmOffer69" defaultMessage="Back" />

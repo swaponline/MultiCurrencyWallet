@@ -32,13 +32,6 @@
     ]
   },
   {
-    "id": "avatar24",
-    "message": "Este es tu gravatar (personal), es único para cada usuario. El numero corresponde a tu clasificación dentro del sistema (incrementa con el número de intercambios exitosos)",
-    "files": [
-      "src/front/shared/components/Header/User/User.tsx"
-    ]
-  },
-  {
     "id": "ConConfirm25firm20",
     "message": "No",
     "files": [
@@ -78,13 +71,6 @@
     "message": "MOSTRAR PEDIDOS",
     "files": [
       "src/front/shared/components/CurrencyDirectionChooser/CurrencyDirectionChooser.tsx"
-    ]
-  },
-  {
-    "id": "question15",
-    "message": "Saber mas sobre nosotros",
-    "files": [
-      "src/front/shared/components/Header/User/Question/Question.tsx"
     ]
   },
   {

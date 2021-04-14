@@ -32,13 +32,6 @@
     ]
   },
   {
-    "id": "avatar24",
-    "message": "Автоматически созданный граватар, уникальный для каждого пользователя. Число равно рейтингу в системе (увеличивается с каждым успешным свопом)",
-    "files": [
-      "src/front/shared/components/Header/User/User.tsx"
-    ]
-  },
-  {
     "id": "ConConfirm25firm20",
     "message": "Нет",
     "files": [
@@ -78,13 +71,6 @@
     "message": "ПОКАЗАТЬ ОРДЕРА",
     "files": [
       "src/front/shared/components/CurrencyDirectionChooser/CurrencyDirectionChooser.tsx"
-    ]
-  },
-  {
-    "id": "question15",
-    "message": "Узнать о Нас больше",
-    "files": [
-      "src/front/shared/components/Header/User/Question/Question.tsx"
     ]
   },
   {
