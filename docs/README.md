@@ -29,12 +29,7 @@ Add many assets to your wallet:
 
 ### 3. Secondary market (trading between users)
 
-1. <a href="https://swaponline.github.io/#/usdt-btc">Demo (orderbook)</a>
-2. Real client: <a href="https://sonm.com/swap-online/">https://sonm.com/swap-online/</a>
-
-### 4. Other demos
-
-<a href="https://swaponline.github.io/#/usdt-wallet">USDT stablecoin wallet (payment system)</a>
+<a href="https://swaponline.github.io/#/exchange/usdt-to-btc">Demo (orderbook)</a>
 
 
 ## Easy to use in your project
