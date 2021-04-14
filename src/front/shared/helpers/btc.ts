@@ -74,7 +74,7 @@ const estimateFeeValue = async (params: EstimateFeeValueParams): Promise<any> =>
   }
 
   // one input for output from the script when swapping
-  const txIn = swapUTXOMethod === 'withdraw' ? 1 : unspents.length
+  const txIn = unspents.length
   // 2 = recipient input + sender input (for a residue)
   // 3 = the same inputs like higher + input for admin fee
   const txOut = hasAdminFee

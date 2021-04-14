@@ -460,7 +460,8 @@ const send = ({ from, to, amount, feeValue = null, speed,  serviceFee = hasAdmin
           NETWORK
         })
       } catch (prepareFeesError) {
-        reject({ message: `Fail prepare fees: ${prepareFeesError}` })
+        reject({ message: `Fail prepare fees: ${prepareFeesError.message}` })
+        return
       }
       const {
         fundValue,
@@ -484,7 +485,8 @@ const send = ({ from, to, amount, feeValue = null, speed,  serviceFee = hasAdmin
           NETWORK
         })
       } catch (prepareRawTxError) {
-          return reject({ message: `Fail prepare raw tx: ${prepareRawTxError}` })
+        reject({ message: `Fail prepare raw tx: ${prepareRawTxError.message}` })
+        return
       }
 
       try {

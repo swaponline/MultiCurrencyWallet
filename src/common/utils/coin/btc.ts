@@ -769,25 +769,28 @@ const addressTypes: { [key: number]: { type: AddressType, network: Network } } =
 };
 
 const getAddressType = (address: string) => {
-  const prefix = address.substr(0, 2);
-  let version;
-  let data;
-  let addressType;
+  const prefix = address.substr(0, 2)
+
+  let data
+  let addressType
 
   if (prefix === 'bc' || prefix === 'tb') {
-  const { data: benchVersion } = bitcoin.address.fromBech32(address)
-  data = benchVersion;
-  return addressType = data.length === 20 ? AddressType.p2wpkh : AddressType.p2wsh;
+    const { data: benchVersion } = bitcoin.address.fromBech32(address)
+    data = benchVersion
+
+    addressType = data.length === 20 ? AddressType.p2wpkh : AddressType.p2wsh
+    return addressType
 
   } else {
-  const { version: baseVersion } = bitcoin.address.fromBase58Check(address)
-  version = baseVersion
-  let { type } = addressTypes[version]
-  if (!type) {
-  type = AddressType.p2pkh;
-  console.warn(`Unknown version '${version}' for address '${address}'.`)
-  }
-  return addressType = type || AddressType.p2pkh
+    const { version } = bitcoin.address.fromBase58Check(address)
+    let { type } = addressTypes[version]
+
+    if (!type) {
+      type = AddressType.p2pkh
+      console.warn(`Unknown version '${version}' for address '${address}'.`)
+    }
+
+    return addressType = type || AddressType.p2pkh
   }
 }
 // getByteCount({'MULTISIG-P2SH:2-4':45},{'P2PKH':1}) Means "45 inputs of P2SH Multisig and 1 output of P2PKH"
@@ -1032,7 +1035,7 @@ const estimateFeeValue = async (options) => {
       unspents = await prepareUnspents({ amount, unspents })
     }
     // one input for output from the script when swapping
-    const txIn = swapUTXOMethod === 'withdraw' ? 1 : unspents.length
+    const txIn = unspents.length
     // 2 = recipient input + sender input (for a residue)
     // 3 = the same inputs like higher + input for admin fee
     const txOut = serviceFee
