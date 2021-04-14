@@ -7,7 +7,7 @@ import styles from './Toggle.scss'
 
 const Toggle = ({ checked, onChange, dataTut = null, isDisabled = false }) => (
   <label styleName={`Switch ${isDisabled ? 'disabled' : ''}`} data-tut={dataTut} >
-    <input type="checkbox" onChange={({ target }) => onChange(target.checked)} checked={checked} defaultChecked={checked} disabled={isDisabled} />
+    <input type="checkbox" onChange={({ target }) => onChange(target.checked)} checked={checked} disabled={isDisabled} />
     <span /> {/* need for button */}
   </label>
 )
