@@ -5,7 +5,7 @@ import { cacheStorageGet, cacheStorageSet, constants } from 'helpers'
 import config from 'app-config'
 import { setMetamask, setProvider, setDefaultProvider, getWeb3 as getDefaultWeb3 } from 'helpers/web3'
 import SwapApp from 'swap.app'
-import Web3Connect from '../../../common/web3connect'
+import Web3Connect from 'common/web3connect'
 
 const web3connect = new Web3Connect({
   web3ChainId: (config.binance)

@@ -384,7 +384,7 @@ class Wallet extends Component<any, any> {
         {message: (
           <FormattedMessage 
             id="WalletEmptyBalance"
-            defaultMessage="balance is empty"
+            defaultMessage="Balance is empty"
           />
         )}
       )

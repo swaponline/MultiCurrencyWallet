@@ -6,7 +6,10 @@ import cssModules from 'react-css-modules'
 import styles from './AlertModal.scss'
 import { Button } from 'components/controls'
 import { injectIntl, IntlShape, defineMessages } from 'react-intl'
+import { constants } from 'helpers'
 import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
+
+const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 const defaultLanguage = defineMessages({
   title: {
@@ -112,6 +115,7 @@ class AlertModal extends React.Component<AlertModalProps, null> {
       })}>
         <div className={cx({
           [styles.modal]: true,
+          [styles.dark]: isDark,
           [styles.modal_dashboardView]: dashboardModalsAllowed
         })}>
           <div styleName="header">
