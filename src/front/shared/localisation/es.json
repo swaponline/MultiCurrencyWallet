@@ -5756,13 +5756,6 @@
     ]
   },
   {
-    "id": "FarmDoesNotHaveContracts",
-    "message": "Didn't trovas ajna ebloj por la bieno",
-    "files": [
-      "src/front/shared/pages/Farm/index.tsx"
-    ]
-  },
-  {
     "id": "DropDownNoOptionsInTheList",
     "message": "No hay opciones",
     "files": [
