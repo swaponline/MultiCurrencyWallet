@@ -27,20 +27,9 @@ Add many assets to your wallet:
 
 <a href="https://mytoken.wpmix.net/">Wallet demo (custom asset "SWAP")</a>
 
-### 3. Buy/Sell assets (exchange widget)
+### 3. Secondary market (trading between users)
 
-<a href="https://generator.swaponline.site/livedemo/0x4E12EB8e506Ccd1427F6b8F7faa3e88fB698EB28/319aa913-4e84-483f-a0d1-8664a13f56b7/#/buy/btc-to-jack">Exchange widget live demo</a>
-<img src="https://generator.swaponline.site/generator/assets/img/example_exchange.png">
-<br>
-
-### 4. Secondary market (trading between users)
-
-1. <a href="https://swaponline.github.io/#/usdt-btc">Demo (orderbook)</a>
-2. Real client: <a href="https://sonm.com/swap-online/">https://sonm.com/swap-online/</a>
-
-### 5. Other demos
-
-<a href="https://swaponline.github.io/#/usdt-wallet">USDT stablecoin wallet (payment system)</a>
+<a href="https://swaponline.github.io/#/exchange/usdt-to-btc">Demo (orderbook)</a>
 
 
 ## Easy to use in your project

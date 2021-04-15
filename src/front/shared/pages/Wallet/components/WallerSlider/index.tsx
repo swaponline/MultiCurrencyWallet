@@ -87,11 +87,16 @@ class WallerSlider extends React.Component {
 
     if (!locale) locale = `en`
 
+    const oldItezUrl = 'https://itez.swaponline.io/'
+    const newItezUrl = 'https://buy.itez.com/swaponline/'
+
     const banners = inBanners
       .map((el) => {
-        if (el[4].includes('https://itez.swaponline.io/')) {
+        let bannerUrl = el[4]
+        if (bannerUrl.includes(oldItezUrl)) {
+          bannerUrl = bannerUrl.replace(oldItezUrl, newItezUrl)
           const bannerArr = [...el]
-          bannerArr.splice(4, 1, getItezUrl({ user, locale, url: el[4] }))
+          bannerArr.splice(4, 1, getItezUrl({ user, locale, url: bannerUrl }))
 
           return bannerArr
         }

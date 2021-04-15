@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import cx from 'classnames'
@@ -31,7 +30,7 @@ import { getActivatedCurrencies } from 'helpers/user'
 import { ThemeSwitcher } from './ThemeSwitcher'
 
 // Incoming swap requests and tooltips (revert)
-import UserTooltip from 'components/Header/User/UserTooltip/UserTooltip'
+import UserTooltip from 'components/Header/UserTooltip/UserTooltip'
 import feedback from 'shared/helpers/feedback'
 import wpLogoutModal from 'helpers/wpLogoutModal'
 

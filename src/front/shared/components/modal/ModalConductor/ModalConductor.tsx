@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'redaction'
-import { getScrollBarWidth, getPageOffset } from 'helpers'
+import { getPageOffset } from 'helpers'
 import { constants } from 'helpers'
 
 import Modals from 'components/modals'

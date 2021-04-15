@@ -207,11 +207,6 @@ const login = (privateKey, mnemonic = null, mnemonicKeys = null) => {
   return data.privateKey
 }
 
-const isETHAddress = (address) => {
-  const { user: { ethData } } = getState()
-  if (ethData && ethData.address && ethData.address.toLowerCase() === address.toLowerCase()) return ethData
-}
-
 const getBalance = () => {
   const {
     user: {
@@ -418,7 +413,6 @@ const sendWithAdminFee = async ({ from, to, amount, gasPrice, gasLimit, speed })
       .on('transactionHash', (hash) => {
         const txId = `${config.link.etherscan}/tx/${hash}`
         console.log('tx', txId)
-        actions.loader.show(true, { txId })
       })
       .on('error', (err) => {
         reject(err)
@@ -499,7 +493,6 @@ const sendDefault = ({ from, to, amount, gasPrice = null, gasLimit = null, speed
       .on('transactionHash', (hash) => {
         const txId = `${config.link.etherscan}/tx/${hash}`
         console.log('tx', txId)
-        actions.loader.show(true, { txId })
       })
       .on('error', (error) => {
         reject(error)
@@ -607,7 +600,6 @@ export default {
   getInvoices,
   getTx,
   getLinkToInfo,
-  isETHAddress,
   getWalletByWords,
   getRandomMnemonicWords,
   validateMnemonicWords,

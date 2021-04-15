@@ -116,11 +116,6 @@ export const addWallet = (state, { name, data }) => ({
   },
 })
 
-// export const addMessagingToken = (state, { token }) => ({
-//   ...state,
-//   messagingToken: token,
-// })
-
 export const setAuthData = (state, { name, data }) => ({
   ...state,
   [name]: {
@@ -231,17 +226,6 @@ export const setTokenBalance = (state, { name, amount }) => ({
   },
 })
 
-export const setTokenApprove = (state, { name, approve }) => ({
-  ...state,
-  tokensData: {
-    ...state.tokensData,
-    [name]: {
-      ...state.tokensData[name],
-      approve,
-    },
-  },
-})
-
 export const setIsBalanceFetching = (state, { isBalanceFetching }) => ({
   ...state,
   isBalanceFetching,
@@ -257,15 +241,3 @@ export const setFiats = (state, { fiats }) => ({ ...state, fiats })
 export const setActiveCurrency = (state, { activeCurrency }) => ({ ...state, activeCurrency })
 
 export const setActiveFiat = (state, { activeFiat }) => ({ ...state, activeFiat })
-
-export const setReputation = (state, { name, reputation, reputationOracleSignature }) => ({
-  ...state,
-  tokensData: {
-    ...state.tokensData,
-  },
-  [name]: {
-    ...state[name],
-    reputation: Number(reputation),
-    reputationProof: reputationOracleSignature,
-  },
-})
