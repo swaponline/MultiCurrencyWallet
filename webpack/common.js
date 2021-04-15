@@ -69,6 +69,7 @@ const webpackConfig = {
     extensions: [ '.js', '.jsx', '.tsx', '.ts', '.scss' ],
     plugins: [],
     fallback: {
+      fs: false,
       os: false,
       url: false,
       http: require.resolve('http-browserify'),
