@@ -1375,7 +1375,7 @@ class Exchange extends PureComponent<any, any> {
   }
 
   checkoutLowAmount() {
-    const { haveAmount, getAmount } = this.state
+    const { haveAmount, getAmount, isTurbo } = this.state
 
     return (
       this.doesComissionPreventThisOrder() &&
@@ -1398,7 +1398,14 @@ class Exchange extends PureComponent<any, any> {
   }
 
   doesComissionPreventThisOrder = () => {
-    const { pairFees, haveAmount, getAmount, isPending } = this.state
+    const { pairFees, haveAmount, getAmount, isPending, isTurbo } = this.state
+
+    if (isTurbo) {
+      // temporarily disable checking for turboswaps
+      // it requires fees recalc
+      // see https://github.com/swaponline/MultiCurrencyWallet/issues/4238
+      return false
+    }
 
     if (!isPending && pairFees) {
       // @ToDo

@@ -72,8 +72,7 @@
         {
           "amount": 0.0005,
           "spreadBuy": 2,
-          "spreadSell": 2,
-          "isTurbo": true,
+          "spreadSell": 2
         },
         {
           "amount": 0.005,
@@ -88,7 +87,8 @@
         {
           "amount": 0.5,
           "spreadBuy": 16,
-          "spreadSell": 16
+          "spreadSell": 16,
+          "isTurbo": true
         }
       ]
     },
