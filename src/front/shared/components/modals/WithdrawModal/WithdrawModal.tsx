@@ -13,7 +13,8 @@ import { isMobile } from 'react-device-detect'
 
 import { inputReplaceCommaWithDot } from 'helpers/domUtils'
 import { localisedUrl } from 'helpers/locale'
-import minAmount from 'helpers/constants/minAmount'
+import MIN_AMOUNT from 'common/helpers/constants/MIN_AMOUNT'
+import COINS_WITH_DYNAMIC_FEE from 'common/helpers/constants/COINS_WITH_DYNAMIC_FEE'
 import redirectTo from 'helpers/redirectTo'
 import getCurrencyKey from 'helpers/getCurrencyKey'
 import lsDataCache from 'helpers/lsDataCache'
@@ -23,6 +24,7 @@ import helpers, {
   adminFee,
   feedback,
 } from 'helpers'
+import btcUtils from 'common/utils/coin/btc'
 
 import Modal from 'components/modal/Modal/Modal'
 import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
@@ -34,6 +36,10 @@ import InvoiceInfoBlock from 'components/InvoiceInfoBlock/InvoiceInfoBlock'
 import AdminFeeInfoBlock from 'components/AdminFeeInfoBlock/AdminFeeInfoBlock'
 import CurrencyList from './components/CurrencyList'
 import FeeInfoBlock from './components/FeeInfoBlock'
+
+const NETWORK = process.env.MAINNET
+  ? 'MAINNET'
+  : 'TESTNET'
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
@@ -302,7 +308,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
         moreInfo: true,
       })
 
-      const bitcoinFeesRate = await helpers.btc.getFeesRateBlockcypher();
+      const bitcoinFeesRate = await btcUtils.getFeesRateBlockcypher({NETWORK});
       const feeInByte = new BigNumber(bitcoinFeesRate.fast).div(1024).dp(0, BigNumber.ROUND_HALF_EVEN);
       const fee = feeInByte.multipliedBy(txSize).multipliedBy(1e-8);
       if (!this.mounted) return
@@ -366,8 +372,8 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
       if (isEthToken) {
         // if decimals < 7 then equal 0.0...1
         // if decimals >= 7 then equal 1e-<decimals>
-        minAmount[currentCoin] = 10 ** -currentDecimals
-        minAmount.eth = await helpers.eth.estimateFeeValue({
+        MIN_AMOUNT[currentCoin] = 10 ** -currentDecimals
+        MIN_AMOUNT.eth = await helpers.eth.estimateFeeValue({
           method: 'send',
           speed: 'fast',
         })
@@ -376,7 +382,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
           method: 'send',
           speed: 'fast',
         }))
-      } else if (constants.coinsWithDynamicFee.includes(currentCoin)) {
+      } else if (COINS_WITH_DYNAMIC_FEE.includes(currentCoin)) {
         let method = 'send'
         if (selectedItem.isUserProtected) method = 'send_multisig'
         if (selectedItem.isPinProtected || selectedItem.isSmsProtected) method = 'send_2fa'
@@ -388,7 +394,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
           amount,
         }))
 
-        minAmount[currentCoin] = newMinerFee.toNumber()
+        MIN_AMOUNT[currentCoin] = newMinerFee.toNumber()
 
         if (selectedItem.isBTC) {
           this.setBtcFeeRate()
@@ -893,7 +899,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
               id="Withdrow213"
               defaultMessage="Please note: Fee is {minAmount} {data}.{br}Your balance must exceed this sum to perform transaction"
               values={{
-                minAmount: <span>{isEthToken ? minAmount.eth : fees.total.toNumber()}</span>,
+                minAmount: <span>{isEthToken ? MIN_AMOUNT.eth : fees.total.toNumber()}</span>,
                 br: <br />,
                 data: `${dataCurrency}`,
               }}

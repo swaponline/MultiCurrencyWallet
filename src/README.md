@@ -180,7 +180,11 @@
 │   ├── helpers
 │   │   ├── bip44.ts
 │   │   ├── constants
+│   │   │   ├── COINS_WITH_DYNAMIC_FEE.ts
+│   │   │   ├── DEFAULT_CURRENCY_PARAMETERS.ts
 │   │   │   ├── index.ts
+│   │   │   ├── MIN_AMOUNT_OFFER.ts
+│   │   │   ├── MIN_AMOUNT.ts
 │   │   │   └── TRANSACTION.ts
 │   │   └── turboSwap.ts
 │   ├── messaging
@@ -412,8 +416,7 @@
 │   │       │   │   ├── _animations.scss
 │   │       │   │   ├── _colors.scss
 │   │       │   │   ├── index.scss
-│   │       │   │   ├── _media.scss
-│   │       │   │   └── _sizes.scss
+│   │       │   │   └── _media.scss
 │   │       │   └── widget.scss
 │   │       └── fonts
 │   │           ├── index.scss
@@ -628,25 +631,13 @@
 │   │   │   │   ├── ThemeSwitcher.tsx
 │   │   │   │   ├── TourPartial
 │   │   │   │   │   └── TourPartial.tsx
-│   │   │   │   ├── User
-│   │   │   │   │   ├── Question
-│   │   │   │   │   │   ├── Question.scss
-│   │   │   │   │   │   └── Question.tsx
-│   │   │   │   │   ├── UserAvatar
-│   │   │   │   │   │   ├── images
-│   │   │   │   │   │   │   ├── avatar.jpg
-│   │   │   │   │   │   │   └── avatar.svg
-│   │   │   │   │   │   ├── UserAvatar.scss
-│   │   │   │   │   │   └── UserAvatar.tsx
-│   │   │   │   │   ├── User.scss
-│   │   │   │   │   ├── UserTooltip
-│   │   │   │   │   │   ├── images
-│   │   │   │   │   │   │   ├── accept.svg
-│   │   │   │   │   │   │   ├── arrow-right.svg
-│   │   │   │   │   │   │   └── close.svg
-│   │   │   │   │   │   ├── UserTooltip.scss
-│   │   │   │   │   │   └── UserTooltip.tsx
-│   │   │   │   │   └── User.tsx
+│   │   │   │   ├── UserTooltip
+│   │   │   │   │   ├── images
+│   │   │   │   │   │   ├── accept.svg
+│   │   │   │   │   │   ├── arrow-right.svg
+│   │   │   │   │   │   └── close.svg
+│   │   │   │   │   ├── UserTooltip.scss
+│   │   │   │   │   └── UserTooltip.tsx
 │   │   │   │   ├── WalletTour
 │   │   │   │   │   └── WalletTour.tsx
 │   │   │   │   └── WidgetTours
@@ -1037,13 +1028,8 @@
 │   │   │   ├── btc.ts
 │   │   │   ├── cache.ts
 │   │   │   ├── constants
-│   │   │   │   ├── coinsWithDynamicFee.ts
-│   │   │   │   ├── customEcxchangeRate.ts
-│   │   │   │   ├── DEFAULT_CURRENCY_PARAMETERS.ts
 │   │   │   │   ├── index.ts
 │   │   │   │   ├── localStorage.ts
-│   │   │   │   ├── minAmountOffer.ts
-│   │   │   │   ├── minAmount.ts
 │   │   │   │   ├── modals.ts
 │   │   │   │   ├── notifications.ts
 │   │   │   │   ├── PAIR_TYPES.ts
@@ -1051,17 +1037,14 @@
 │   │   │   │   ├── TOKEN_DECIMALS.ts
 │   │   │   │   └── TRADE_TICKERS.ts
 │   │   │   ├── domUtils.ts
-│   │   │   ├── estimateFeeValue.ts
 │   │   │   ├── ethToken.ts
 │   │   │   ├── eth.ts
-│   │   │   ├── event.ts
 │   │   │   ├── externalConfig.ts
 │   │   │   ├── feedback.ts
 │   │   │   ├── getCurrencyKey.ts
 │   │   │   ├── getItezUrl.ts
 │   │   │   ├── getPageOffset.ts
 │   │   │   ├── getPairFees.ts
-│   │   │   ├── getScrollBarWidth.ts
 │   │   │   ├── getTopLocation.ts
 │   │   │   ├── getUnixTimeStamp.ts
 │   │   │   ├── getWalletLink.ts
@@ -1072,7 +1055,6 @@
 │   │   │   ├── links.ts
 │   │   │   ├── locale.ts
 │   │   │   ├── localStorage.ts
-│   │   │   ├── locationPaths.ts
 │   │   │   ├── lsDataCache.ts
 │   │   │   ├── metamask.ts
 │   │   │   ├── migrations
@@ -1373,7 +1355,6 @@
 │   │   │   │   ├── index.ts
 │   │   │   │   ├── invoices.ts
 │   │   │   │   ├── loader.ts
-│   │   │   │   ├── menu.ts
 │   │   │   │   ├── modals.ts
 │   │   │   │   ├── multisigTx.ts
 │   │   │   │   ├── next.ts
@@ -1404,7 +1385,6 @@
 │   │   │   │   ├── index.ts
 │   │   │   │   ├── inputActive.ts
 │   │   │   │   ├── loader.ts
-│   │   │   │   ├── menu.ts
 │   │   │   │   ├── modals.ts
 │   │   │   │   ├── notifications.ts
 │   │   │   │   ├── pubsubRoom.ts
@@ -1423,4 +1403,4 @@
 │       └── run.js
 └── README.md
 
-363 directories, 1060 files
+359 directories, 1044 files
