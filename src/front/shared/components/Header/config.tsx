@@ -52,7 +52,7 @@ export const messages = defineMessages({
   },
 })
 
-export const getMenuItems = (props, isWalletCreate) => {
+export const getMenuItems = (props) => {
   const { intl, isSigned } = props
   const { exchange, wallet, createWallet } = messages
   const { 
@@ -68,24 +68,18 @@ export const getMenuItems = (props, isWalletCreate) => {
       title: intl.formatMessage(wallet),
       link: home,
       exact: true,
-      haveSubmenu: true,
-      icon: 'products',
       currentPageFlag: true,
     },
     {
       title: intl.formatMessage(messages.history),
       link: history,
       exact: true,
-      haveSubmenu: true,
-      icon: 'products',
       currentPageFlag: true,
     },
     !externalConfig.opts.exchangeDisabled && {
       title: intl.formatMessage(exchange),
       link: linksExchange,
       exact: false,
-      haveSubmenu: true,
-      icon: 'products',
       currentPageFlag: true,
     },
   ]
@@ -95,16 +89,12 @@ export const getMenuItems = (props, isWalletCreate) => {
       title: intl.formatMessage(createWallet),
       link: create,
       exact: true,
-      haveSubmenu: true,
-      icon: 'products',
       currentPageFlag: true,
     },
     !externalConfig.opts.exchangeDisabled && {
       title: intl.formatMessage(exchange),
       link: linksExchange,
       exact: false,
-      haveSubmenu: true,
-      icon: 'products',
       currentPageFlag: true,
     },
   ]
@@ -115,8 +105,6 @@ export const getMenuItems = (props, isWalletCreate) => {
       title: intl.formatMessage(messages.marketmaker),
       link: links.marketmaker,
       exact: true,
-      haveSubmenu: true,
-      icon: 'products',
       currentPageFlag: true,
     }
 
@@ -131,8 +119,6 @@ export const getMenuItems = (props, isWalletCreate) => {
       link: farm,
       isExternal: true,
       exact: true,
-      haveSubmenu: true,
-      icon: 'products',
       currentPageFlag: true,
     }
 
@@ -140,9 +126,11 @@ export const getMenuItems = (props, isWalletCreate) => {
     itemsWithoutWallet.push(farmItem)
   }
 
-  return isSigned || isWalletCreate || externalConfig && externalConfig.isWidget
-    ? itemsWithWallet
-    : itemsWithoutWallet
+  return isSigned
+    || localStorage.getItem('isWalletCreate') === 'true'
+    || externalConfig && externalConfig.isWidget
+      ? itemsWithWallet
+      : itemsWithoutWallet
 }
 
 
@@ -160,13 +148,11 @@ export const getMenuItemsMobile = (props, isWalletCreate, dinamicPath) => {
       title: intl.formatMessage(isWalletCreate ? wallet : createWallet),
       link: dinamicPath,
       exact: true,
-      haveSubmenu: true,
       icon: <i className="fa fa-home" aria-hidden="true" />,
     },
     {
       title: props.intl.formatMessage(messages.history),
       link: history,
-      haveSubmenu: false,
       displayNone: !isWalletCreate,
       icon: <i className="fas fa-exchange-alt" aria-hidden="true" />,
     },
@@ -174,7 +160,6 @@ export const getMenuItemsMobile = (props, isWalletCreate, dinamicPath) => {
       title: intl.formatMessage(exchange),
       link: linksExchange,
       exact: false,
-      haveSubmenu: true,
       icon: <i className="fas fa-sync-alt" aria-hidden="true" />,
     },
   ]
@@ -184,14 +169,12 @@ export const getMenuItemsMobile = (props, isWalletCreate, dinamicPath) => {
       title: intl.formatMessage(createWallet),
       link: dinamicPath,
       exact: true,
-      haveSubmenu: true,
       icon: <i className="fa fa-home" aria-hidden="true" />,
     },
     !externalConfig.opts.exchangeDisabled && {
       title: intl.formatMessage(exchange),
       link: linksExchange,
       exact: false,
-      haveSubmenu: true,
       icon: <i className="fas fa-sync-alt" aria-hidden="true" />,
     },
   ]
@@ -203,7 +186,6 @@ export const getMenuItemsMobile = (props, isWalletCreate, dinamicPath) => {
       link: farm,
       isExternal: true,
       exact: true,
-      haveSubmenu: false,
       icon: <i className="fas fa-coins" aria-hidden="true" />,
     }
 
@@ -211,8 +193,9 @@ export const getMenuItemsMobile = (props, isWalletCreate, dinamicPath) => {
     mobileItemsWithoutWallet.push(farmItem)
   }
 
-  return isSigned || isWalletCreate
-    ? mobileItemsWithWallet
-    : mobileItemsWithoutWallet
+  return isSigned
+    || localStorage.getItem('isWalletCreate') === 'true'
+      ? mobileItemsWithWallet
+      : mobileItemsWithoutWallet
 }
 
