@@ -282,6 +282,7 @@ class Header extends Component<any, any> {
         tourEvent = this.openWidgetWalletTour
         break
       case !userCurrencies.length && isWalletPage && !config.opts.plugins.backupPlugin:
+      console.log('>>>> Header - redirect to create wallet')
         this.openCreateWallet({ onClose: tourEvent })
         break
       default:

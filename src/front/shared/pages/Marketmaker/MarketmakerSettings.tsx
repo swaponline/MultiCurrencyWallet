@@ -52,7 +52,6 @@ class MarketmakerSettings extends Component<any, any> {
     this._handleSwapAttachedHandle = this.onSwapAttachedHandle.bind(this)
     this._handleSwapEnterStep = this.onSwapEnterStep.bind(this)
 
-console.log('>>>> Market token', marketToken)
     this.state = {
       swapsIds: [],
       swapsByIds: {},
@@ -252,38 +251,43 @@ console.log('>>>> Market token', marketToken)
   handleToggleMarketmaker(checked) {
     const { isMarketEnabled } = this.state
 
-console.log('on click', checked)
     const {
       ethBalance,
+      btcBalance,
       tokenBalance,
     } = this.state
 
-    if (new BigNumber(tokenBalance).isLessThanOrEqualTo(0)) {
-      console.log('>>>> no tokens')
-      this.setState({
-        isMarketEnabled: false,
-      })
-      return false
-    }
-    if (new BigNumber(ethBalance).isLessThan(0.02)) {
-      console.log('>>>> no eth')
-      this.setState({
-        isMarketEnabled: false,
-      })
-      return false
-    }
+    const isEthBalanceOk = new BigNumber(ethBalance).isGreaterThanOrEqualTo(0.02)
+    const isTokenBalanceOk = new BigNumber(tokenBalance).isGreaterThan(0)
+    const isBtcBalanceOk = new BigNumber(btcBalance).isGreaterThan(0)
 
-    this.setState({
-      isMarketEnabled: !isMarketEnabled,
-    }, () => {
-      if (!isMarketEnabled) {
-        // New state - On
-        this.createMakerMakerOrder()
-      } else {
-        // New state - Off
-        this.cleanupMarketMakerOrder()
-      }
-    })
+    let hasError = false
+
+    if (!isEthBalanceOk) {
+      console.log('>>>>> need eth')
+      hasError = true
+    }
+    if (!isTokenBalanceOk && !isBtcBalanceOk) {
+      console.log('>>>>> No token and no btc')
+      hasError = true
+    }
+    if (!hasError) {
+      this.setState({
+        isMarketEnabled: !isMarketEnabled,
+      }, () => {
+        if (!isMarketEnabled) {
+          // New state - On
+          this.createMakerMakerOrder()
+        } else {
+          // New state - Off
+          this.cleanupMarketMakerOrder()
+        }
+      })
+    } else {
+      this.setState({
+        isMarketEnabled: false,
+      })
+    }
   }
 
   cleanupMarketMakerOrder() {
