@@ -910,12 +910,6 @@ const calculateTxSize = async (params: CalculateTxSizeParams) => {
     txIn * TRANSACTION[`${fromAddressType}_IN_SIZE`] +
     txOut * TRANSACTION.P2PKH_OUT_SIZE +
     (TRANSACTION.TX_SIZE + txIn - txOut)
-    console.log('method', method)
-    console.log('txSize', txSize)
-
-    if (method === 'swap' && txSize < 200){
-      txSize = defaultTxSize
-    }
   }
 
   if (method === 'send_multisig') {

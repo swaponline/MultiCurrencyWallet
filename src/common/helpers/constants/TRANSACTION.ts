@@ -12,7 +12,7 @@ export default Object.freeze({
   // P2SH: "Pay to script hash"
   // P2SH_IN_SIZE: has a variable size (depends on the script)
   P2SH_OUT_SIZE: 32,
-  P2SH_IN_SIZE: 108, // TODO: calculate txIn from P2SH_SWAP and add here
+  P2SH_IN_SIZE: 320, // medium value of swap script input
 
   // P2WSH: "Pay to Witness Script Hash"
   P2WSH_IN_SIZE: 41,

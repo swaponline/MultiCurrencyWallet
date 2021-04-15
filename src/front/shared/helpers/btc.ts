@@ -77,11 +77,15 @@ const estimateFeeValue = async (params: EstimateFeeValueParams): Promise<any> =>
   const txIn = unspents.length
   // 2 = recipient input + sender input (for a residue)
   // 3 = the same inputs like higher + input for admin fee
-  const txOut = hasAdminFee
+  let txOut = hasAdminFee
     ? method === 'send'
       ? 3
       : 2
     : 2
+
+  if (method === 'swap' && swapUTXOMethod === 'withdraw') {
+    txOut = 1
+  }
 
   feeRate = feeRate || await btcUtils.estimateFeeRate({ speed, NETWORK })
   txSize = txSize || await btcUtils.calculateTxSize({
