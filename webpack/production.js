@@ -67,10 +67,11 @@ export default (webpackConfig) => {
       exclude: ['vendor.js'],
     }),
     */
-    new WebpackRequireFrom({
+      // Seems like WebpackRequireFrom variable 'publicUrl' unused, but plugin crashes build:mainnet
+    /* new WebpackRequireFrom({
       variableName: 'publicUrl',
       suppressErrors: true, 
-    }),
+    }),*/
     new MiniCssExtractPlugin({
       filename: '[name].[hash:6].css',
     }),
