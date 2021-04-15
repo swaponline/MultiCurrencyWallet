@@ -459,7 +459,7 @@ class Header extends Component<any, any> {
 
     if (isMobile) {
       return (
-        <header id="header-mobile" styleName="header-mobile" className="data-tut-widget-tourFinish">
+        <header id="header-mobile" styleName="header-mobile">
           {logoRenderer}
           {createdWalletLoader && (
             <div styleName="loaderCreateWallet">

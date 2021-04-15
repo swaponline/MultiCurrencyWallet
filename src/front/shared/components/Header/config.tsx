@@ -53,7 +53,7 @@ export const messages = defineMessages({
 })
 
 export const getMenuItems = (props, isWalletCreate) => {
-  const { intl, reputation, isSigned } = props
+  const { intl, isSigned } = props
   const { exchange, wallet, createWallet } = messages
   const { 
     exchange: linksExchange,
@@ -83,7 +83,7 @@ export const getMenuItems = (props, isWalletCreate) => {
     !externalConfig.opts.exchangeDisabled && {
       title: intl.formatMessage(exchange),
       link: linksExchange,
-      exact: true,
+      exact: false,
       haveSubmenu: true,
       icon: 'products',
       currentPageFlag: true,
@@ -102,7 +102,7 @@ export const getMenuItems = (props, isWalletCreate) => {
     !externalConfig.opts.exchangeDisabled && {
       title: intl.formatMessage(exchange),
       link: linksExchange,
-      exact: true,
+      exact: false,
       haveSubmenu: true,
       icon: 'products',
       currentPageFlag: true,
@@ -123,20 +123,13 @@ export const getMenuItems = (props, isWalletCreate) => {
     itemsWithWallet.push(marketmakerItem)
     itemsWithoutWallet.push(marketmakerItem)
   }
-  // Farm plugin ****************************
 
-  let hasFarmInitOptions = false
-
-  if (window.farm) {
-    const { farmAddress, rewardsAddress, stakingAddress } = window.farm
-
-    hasFarmInitOptions = farmAddress && rewardsAddress && stakingAddress && true
-  }
-
-  if (hasFarmInitOptions) {
+  // Farm ************************
+  if (externalConfig.entry === 'testnet') {
     const farmItem = {
       title: intl.formatMessage(messages.farm),
       link: farm,
+      isExternal: true,
       exact: true,
       haveSubmenu: true,
       icon: 'products',
@@ -147,17 +140,14 @@ export const getMenuItems = (props, isWalletCreate) => {
     itemsWithoutWallet.push(farmItem)
   }
 
-  return (Number.isInteger(reputation) && reputation !== 0)
-    || isSigned
-    || localStorage.getItem('isWalletCreate') === 'true'
-    || (externalConfig && externalConfig.isWidget)
-      ? itemsWithWallet
-      : itemsWithoutWallet
+  return isSigned || isWalletCreate || externalConfig && externalConfig.isWidget
+    ? itemsWithWallet
+    : itemsWithoutWallet
 }
 
 
 export const getMenuItemsMobile = (props, isWalletCreate, dinamicPath) => {
-  const { intl, reputation, isSigned } = props
+  const { intl, isSigned } = props
   const { exchange, wallet, createWallet } = messages
   const { 
     exchange: linksExchange,
@@ -183,7 +173,7 @@ export const getMenuItemsMobile = (props, isWalletCreate, dinamicPath) => {
     !externalConfig.opts.exchangeDisabled && {
       title: intl.formatMessage(exchange),
       link: linksExchange,
-      exact: true,
+      exact: false,
       haveSubmenu: true,
       icon: <i className="fas fa-sync-alt" aria-hidden="true" />,
     },
@@ -200,18 +190,20 @@ export const getMenuItemsMobile = (props, isWalletCreate, dinamicPath) => {
     !externalConfig.opts.exchangeDisabled && {
       title: intl.formatMessage(exchange),
       link: linksExchange,
-      exact: true,
+      exact: false,
       haveSubmenu: true,
       icon: <i className="fas fa-sync-alt" aria-hidden="true" />,
     },
   ]
 
+  // Farm ************************
   if (externalConfig.entry === 'testnet') {
     const farmItem = {
       title: props.intl.formatMessage(messages.farm),
-      link: '',
+      link: farm,
+      isExternal: true,
       exact: true,
-      haveSubmenu: true,
+      haveSubmenu: false,
       icon: <i className="fas fa-coins" aria-hidden="true" />,
     }
 
@@ -219,9 +211,8 @@ export const getMenuItemsMobile = (props, isWalletCreate, dinamicPath) => {
     mobileItemsWithoutWallet.push(farmItem)
   }
 
-  return (Number.isInteger(reputation) && reputation !== 0) || isSigned
-    || localStorage.getItem('isWalletCreate') === 'true'
-      ? mobileItemsWithWallet
-      : mobileItemsWithoutWallet
+  return isSigned || isWalletCreate
+    ? mobileItemsWithWallet
+    : mobileItemsWithoutWallet
 }
 
