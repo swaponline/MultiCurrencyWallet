@@ -126,6 +126,7 @@ class UTXOBlockchain extends SwapInterface {
    * @param {Number} options.size
    * @param {String} options.speed
    * @param {String} options.address
+   * @param {String} options.swapUTXOMethod
    * @returns {BigNumber}
    * @public
    */
@@ -134,11 +135,13 @@ class UTXOBlockchain extends SwapInterface {
     size,
     speed = 'fast',
     address,
+    swapUTXOMethod,
   }: {
     inSatoshis: boolean,
     size?: number,
     speed?: 'slow' | 'medium' | 'fast'
     address: string,
+    swapUTXOMethod?: 'withdraw' | 'deposit'
   }) {
 
 
@@ -148,6 +151,7 @@ class UTXOBlockchain extends SwapInterface {
       speed,
       method: 'swap',
       txSize: size,
+      swapUTXOMethod,
     })
 
     const estimatedFee = new BigNumber(estimatedFeeRaw)
@@ -561,7 +565,7 @@ class UTXOBlockchain extends SwapInterface {
     const tx            = new this.app.env.bitcoin.TransactionBuilder(this.network)
     const unspents      = await this.fetchUnspents(scriptAddress)
 
-    const feeValueBN    = await this.getTxFee({ inSatoshis: true, address: scriptAddress })
+    const feeValueBN    = await this.getTxFee({ inSatoshis: true, address: scriptAddress, swapUTXOMethod: 'withdraw' })
     const feeValue      = feeValueBN.integerValue().toNumber()
     const totalUnspent  = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
 
