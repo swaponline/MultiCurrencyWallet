@@ -3,11 +3,16 @@
 import React, { useState, useEffect } from 'react'
 import BigNumber from 'bignumber.js'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
+import btcUtils from 'common/utils/coin/btc'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { constants, feedback, adminFee, btc, eth, externalConfig } from 'helpers'
 import cssModules from 'react-css-modules'
 import cx from 'classnames'
 import styles from './styles.scss'
+
+const NETWORK = process.env.MAINNET
+  ? 'MAINNET'
+  : 'TESTNET'
 
 const tabsIdsDictionary = {
   FIRST_TAB: 'MainFAQ1_header',
@@ -31,7 +36,7 @@ const FAQ = (props) => {
       try {
         const BYTE_IN_KB = 1024
 
-        btcSatoshiPrice = await btc.estimateFeeRate({ speed: 'fast' })
+        btcSatoshiPrice = await btcUtils.estimateFeeRate({ speed: 'fast', NETWORK })
         ethGasPrice = await eth.estimateGasPrice({ speed: 'fast' })
         // remove memory leak
         if (_mounted) {

@@ -1,38 +1,24 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
-import helpers, { constants } from 'helpers'
+import helpers from 'helpers'
 import actions from 'redux/actions'
 import Link from 'local_modules/sw-valuelink'
 import { connect } from 'redaction'
-import config from 'app-config'
 
 import cssModules from 'react-css-modules'
 import styles from '../WithdrawModal/WithdrawModal.scss'
 import ownStyle from './WithdrawBtcSms.scss'
 
-import { BigNumber } from 'bignumber.js'
 import Modal from 'components/modal/Modal/Modal'
 import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
 import Input from 'components/forms/Input/Input'
 import Button from 'components/controls/Button/Button'
-import Tooltip from 'components/ui/Tooltip/Tooltip'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
-import ReactTooltip from 'react-tooltip'
-import { isMobile } from 'react-device-detect'
 import InvoiceInfoBlock from 'components/InvoiceInfoBlock/InvoiceInfoBlock'
 
-import typeforce from 'swap.app/util/typeforce'
-// import { isCoinAddress } from 'swap.app/util/typeforce'
-import minAmount from 'helpers/constants/minAmount'
-import { inputReplaceCommaWithDot } from 'helpers/domUtils'
-import QrReader from 'components/QrReader'
-
 import redirectTo from 'helpers/redirectTo'
-import AdminFeeInfoBlock from 'components/AdminFeeInfoBlock/AdminFeeInfoBlock'
 import lsDataCache from 'helpers/lsDataCache'
 import MnemonicInput from 'components/forms/MnemonicInput/MnemonicInput'
-
-const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 @connect(({ ui: { dashboardModalsAllowed } }) => ({
   dashboardView: dashboardModalsAllowed,

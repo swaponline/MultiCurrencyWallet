@@ -4,7 +4,6 @@ import { isMobile } from 'react-device-detect'
 import { Switch, Route } from 'react-router-dom'
 
 import { links } from 'helpers'
-import Farm from 'pages/Farm'
 import LocalStorage from 'pages/LocalStorage/LocalStorage'
 import SwapComponent from 'pages/Swap/Swap'
 import TurboSwap from 'pages/TurboSwap/TurboSwap'
@@ -52,7 +51,6 @@ const routes = (
       <Route path={`${links.exchange}/:sell-to-:buy`} component={Exchange} />
       <Route path={`${links.exchange}`} component={Exchange} />
 
-      <Route path={`${links.farm}`} component={Farm} />
       <Route path={`${links.localStorage}`} component={LocalStorage} />
       <Route path={`${links.aboutUs}`} component={About} />
 

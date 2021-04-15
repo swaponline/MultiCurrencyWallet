@@ -660,5 +660,4 @@ export default {
   getWithdrawWallet,
   fetchMultisigStatus,
   pullActiveCurrency,
-  // addMessagingToken,
 }

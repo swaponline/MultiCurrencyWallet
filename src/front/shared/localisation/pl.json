@@ -32,13 +32,6 @@
     ]
   },
   {
-    "id": "avatar24",
-    "message": "To jest Twój (indywidualny) identyfikator użytkownika, jest unikatowy dla każdego użytkownika. To ocena użytkownika na podstawie ilości swapów",
-    "files": [
-      "src/front/shared/components/Header/User/User.tsx"
-    ]
-  },
-  {
     "id": "ConConfirm25firm20",
     "message": "Nie",
     "files": [
@@ -78,13 +71,6 @@
     "message": "POKAŻ ZLECENIA",
     "files": [
       "src/front/shared/components/CurrencyDirectionChooser/CurrencyDirectionChooser.tsx"
-    ]
-  },
-  {
-    "id": "question15",
-    "message": "Dowiedz się więcej o nas",
-    "files": [
-      "src/front/shared/components/Header/User/Question/Question.tsx"
     ]
   },
   {
@@ -1243,20 +1229,6 @@
     "message": "RU",
     "files": [
       "src/front/shared/components/Footer/SwitchLang/SwitchLang.tsx"
-    ]
-  },
-  {
-    "id": "ReferralLinks1",
-    "message": "Share the link above!  Each user who visits swap through the above referral link will get up to 10 SWAP tokens.  What’s in it for you?  Each time one of those users makes a successful swap (including operations with bonus tokens), you’ll earn SWAP tokens too!",
-    "files": [
-      "src/front/shared/components/Footer/Referral/Referral.tsx"
-    ]
-  },
-  {
-    "id": "ReferralLinks2",
-    "message": "Limits and conditions",
-    "files": [
-      "src/front/shared/components/Footer/Referral/Referral.tsx"
     ]
   },
   {
@@ -5781,13 +5753,6 @@
       "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx",
       "src/front/shared/pages/Exchange/Exchange.tsx",
       "src/front/shared/pages/TurboSwap/TurboSwap.tsx"
-    ]
-  },
-  {
-    "id": "FarmDoesNotHaveContracts",
-    "message": "Nie znaleziono żadnych opcji dla gospodarstwa",
-    "files": [
-      "src/front/shared/pages/Farm/index.tsx"
     ]
   },
   {

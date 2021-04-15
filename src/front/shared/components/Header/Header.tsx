@@ -1,9 +1,8 @@
-/* eslint-disable max-len */
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import cx from 'classnames'
 
-import { withRouter, Link } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import { isMobile } from 'react-device-detect'
 import { connect } from 'redaction'
 
@@ -31,7 +30,7 @@ import { getActivatedCurrencies } from 'helpers/user'
 import { ThemeSwitcher } from './ThemeSwitcher'
 
 // Incoming swap requests and tooltips (revert)
-import UserTooltip from 'components/Header/User/UserTooltip/UserTooltip'
+import UserTooltip from 'components/Header/UserTooltip/UserTooltip'
 import feedback from 'shared/helpers/feedback'
 import wpLogoutModal from 'helpers/wpLogoutModal'
 
@@ -78,9 +77,6 @@ class Header extends Component<any, any> {
     super(props)
 
     const {
-      match: {
-        params: { page = null },
-      },
       location: { pathname },
       intl,
     } = props
@@ -103,30 +99,7 @@ class Header extends Component<any, any> {
       path: false,
       isTourOpen: false,
       isWallet: false,
-      menuItemsFill: [
-        {
-          title: intl.formatMessage(products),
-          link: 'openMySesamPlease',
-          exact: true,
-          haveSubmenu: true,
-          icon: 'products',
-          currentPageFlag: true,
-        },
-        !config.opts.exchangeDisabled && {
-          title: intl.formatMessage(invest),
-          link: 'exchange/btc-to-eth',
-          icon: 'invest',
-          haveSubmenu: false,
-        },
-        {
-          title: intl.formatMessage(history),
-          link: historyLink,
-          icon: 'history',
-          haveSubmenu: false,
-        },
-      ],
-      //@ts-ignore
-      menuItems: getMenuItems(props, lsWalletCreated, dinamicPath),
+      menuItems: getMenuItems(props),
       menuItemsMobile: getMenuItemsMobile(props, lsWalletCreated, dinamicPath),
       createdWalletLoader: isWalletPage && !lsWalletCreated,
     }
@@ -174,7 +147,7 @@ class Header extends Component<any, any> {
 
         this.setState(
           () => ({
-            menuItems: getMenuItems(this.props, isWalletCreate),
+            menuItems: getMenuItems(this.props),
             //@ts-ignore
             menuItemsMobile: getMenuItemsMobile(this.props, isWalletCreate),
             createdWalletLoader: true,
@@ -213,7 +186,7 @@ class Header extends Component<any, any> {
     }
 
     this.setState(() => ({
-      menuItems: getMenuItems(this.props, true),
+      menuItems: getMenuItems(this.props),
       //@ts-ignore
       menuItemsMobile: getMenuItemsMobile(this.props, true),
     }))
@@ -399,7 +372,6 @@ class Header extends Component<any, any> {
   render() {
     const {
       isTourOpen,
-      path,
       isPartialTourOpen,
       menuItems,
       menuItemsMobile,
@@ -408,13 +380,12 @@ class Header extends Component<any, any> {
       themeSwapAnimation,
     } = this.state
     const {
-      intl: { formatMessage, locale },
+      intl: { formatMessage },
       history: {
         location: { pathname },
       },
       feeds,
       peer,
-      isSigned,
       isInputActive,
     } = this.props
 
@@ -460,7 +431,7 @@ class Header extends Component<any, any> {
 
     if (isMobile) {
       return (
-        <header id="header-mobile" styleName="header-mobile" className="data-tut-widget-tourFinish">
+        <header id="header-mobile" styleName="header-mobile">
           {logoRenderer}
           {createdWalletLoader && (
             <div styleName="loaderCreateWallet">

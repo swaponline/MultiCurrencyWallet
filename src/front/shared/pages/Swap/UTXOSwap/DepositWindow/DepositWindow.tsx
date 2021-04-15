@@ -1,10 +1,8 @@
 import React, { Fragment, Component } from 'react'
 
 import config from 'app-config'
-import { connect } from 'redaction'
 import actions from 'redux/actions'
-import helpers, { constants } from 'helpers'
-import reducers from 'redux/core/reducers'
+import helpers from 'helpers'
 
 import CSSModules from 'react-css-modules'
 import styles from '../../Swap.scss'
@@ -13,15 +11,13 @@ import { BigNumber } from 'bignumber.js'
 
 import { FormattedMessage } from 'react-intl'
 import CopyToClipboard from 'react-copy-to-clipboard'
-import PropTypes from 'prop-types'
-import ReactTooltip from 'react-tooltip'
 
 import Button from 'components/controls/Button/Button'
 import QR from 'components/QR/QR'
 import Timer from '../../Timer/Timer'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
-import coinsWithDynamicFee from 'helpers/constants/coinsWithDynamicFee'
+import COINS_WITH_DYNAMIC_FEE from 'common/helpers/constants/COINS_WITH_DYNAMIC_FEE'
 
 
 @CSSModules(styles)
@@ -114,7 +110,7 @@ export default class DepositWindow extends Component<any, any> {
 
     let dynamicFee = 0
 
-    if (coinsWithDynamicFee.includes(this.currency)) {
+    if (COINS_WITH_DYNAMIC_FEE.includes(this.currency)) {
       dynamicFee = await helpers[this.currency].estimateFeeValue({ method: 'swap', fixed: true })
 
       this.setState(() => ({

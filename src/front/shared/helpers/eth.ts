@@ -1,5 +1,5 @@
 import config from 'app-config'
-import DEFAULT_CURRENCY_PARAMETERS from './constants/DEFAULT_CURRENCY_PARAMETERS'
+import DEFAULT_CURRENCY_PARAMETERS from 'common/helpers/constants/DEFAULT_CURRENCY_PARAMETERS'
 import api from './api'
 import BigNumber from 'bignumber.js'
 

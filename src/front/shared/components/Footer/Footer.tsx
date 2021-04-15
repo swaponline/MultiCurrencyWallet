@@ -1,12 +1,9 @@
-import React, { Fragment } from 'react'
-import PropTypes from 'prop-types'
-import { withRouter } from 'react-router-dom'
+import React from 'react'
 import cx from 'classnames'
 import { isMobile } from 'react-device-detect'
 import { constants } from 'helpers'
 
 import config from 'helpers/externalConfig'
-import { connect } from 'redaction'
 
 import styles from './Footer.scss'
 import CSSModules from 'react-css-modules'
@@ -18,10 +15,8 @@ import SwitchLang from './SwitchLang/SwitchLang'
 import version from 'helpers/version'
 
 
-const Footer = (props) => {
-
+const Footer = () => {
   const isDark = localStorage.getItem(constants.localStorage.isDark)
-
   const isFooterDisabled = config.opts.ui.footerDisabled
 
   return (
@@ -37,8 +32,10 @@ const Footer = (props) => {
       {!isFooterDisabled && (
         //@ts-ignore
         <WidthContainer styleName="container">
-          <SwitchLang {...props} />
+          <SwitchLang />
+
           {!config.isWidget && <SocialMenu />}
+
           <div styleName="version">
             {version.link && version.name ?
               <a href={version.link} target="_blank">
@@ -54,16 +51,4 @@ const Footer = (props) => {
   )
 }
 
-Footer.propTypes = {
-  props: PropTypes.shape({
-    serverAddress: PropTypes.string.isRequired,
-    userEthAddress: PropTypes.string.isRequired,
-  }),
-}
-
-export default withRouter(connect({
-  'serverAddress': 'pubsubRoom.server',
-  'userEthAddress': 'user.ethData.address',
-  'dashboardView': 'ui.dashboardModalsAllowed',
-  'modals': 'modals',
-})(CSSModules(Footer, styles, { allowMultiple: true })))
+export default CSSModules(Footer, styles, { allowMultiple: true })
