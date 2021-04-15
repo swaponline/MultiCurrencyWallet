@@ -18,7 +18,7 @@ import helpers, {
 import { localisedUrl } from 'helpers/locale'
 import { getActivatedCurrencies } from 'helpers/user'
 import getTopLocation from 'helpers/getTopLocation'
-import { injectIntl } from 'react-intl'
+import { FormattedMessage, injectIntl } from 'react-intl'
 
 import appConfig from 'app-config'
 import config from 'helpers/externalConfig'
@@ -379,7 +379,16 @@ class Wallet extends Component<any, any> {
     })
 
     if (tableRows.length === 0) {
-      // @ToDo AlertModal - balance is empty
+      actions.notifications.show(
+        constants.notifications.Message,
+        {message: (
+          <FormattedMessage 
+            id="WalletEmptyBalance"
+            defaultMessage="balance is empty"
+          />
+        )}
+      )
+
       return
     }
 
