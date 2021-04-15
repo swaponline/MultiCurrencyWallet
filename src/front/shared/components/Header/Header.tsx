@@ -201,7 +201,7 @@ class Header extends Component<any, any> {
       //@ts-ignore
       location: { hash, pathname },
     } = finishProps
-    const { wallet, exchange } = links
+    const { wallet, exchange, marketmaker, marketmaker_short } = links
     const isGuestLink = !(!hash || hash.slice(1) !== 'guest')
 
     if (isGuestLink) {
@@ -221,6 +221,8 @@ class Header extends Component<any, any> {
     const isWalletPage = path.includes(wallet) || path === `/` || path === '/ru'
     const isPartialPage = path.includes(exchange) || path === `/ru${exchange}`
 
+    const isMarketPage = path.includes(marketmaker) || path.includes(marketmaker_short)
+    console.log('>>>>> isMarketPage', isMarketPage)
     const didOpenWalletCreate = localStorage.getItem(isWalletCreate)
 
     const wasOnWalletLs = localStorage.getItem(wasOnWallet)
