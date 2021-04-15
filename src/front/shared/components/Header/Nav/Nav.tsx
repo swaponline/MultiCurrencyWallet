@@ -1,23 +1,21 @@
 import React, { Component, Fragment } from 'react'
-import PropTypes from 'prop-types'
-
-import { links } from 'helpers'
 import { NavLink, withRouter } from 'react-router-dom'
-import { constants } from 'helpers'
-
-import styles from './Nav.scss'
 import CSSModules from 'react-css-modules'
 import { injectIntl } from 'react-intl'
+import styles from './Nav.scss'
+
+import { links, constants } from 'helpers'
 import { localisedUrl } from 'helpers/locale'
 
+type NavProps = {
+  menu: IUniversalObj[]
+  location?: IUniversalObj
+  intl: any
+}
 
 @withRouter
 @CSSModules(styles, { allowMultiple: true })
-class Nav extends Component<any, any> {
-  static propTypes = {
-    menu: PropTypes.array.isRequired
-  };
-
+class Nav extends Component<NavProps, null> {
   handleScrollToTopClick = link => {
     this.setState({ activeRoute: link })
   };
@@ -26,8 +24,8 @@ class Nav extends Component<any, any> {
     const {
       menu,
       intl: { locale },
-      location
-    } = this.props;
+      location,
+    } = this.props
 
     const isExchange = location.pathname.includes(links.exchange)
 
@@ -48,10 +46,7 @@ class Nav extends Component<any, any> {
                 title,
                 link,
                 exact,
-                tour,
-                haveSubmenu,
                 index,
-                ...rest
               } = el
 
               return (
