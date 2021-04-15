@@ -43,16 +43,11 @@ const webpackConfig = {
     rules,
   },
 
-  node: {
-    fs: 'empty',
-  },
-
   resolve: {
     alias: {
       'shared': config.paths.front('shared'),
       'local_modules': config.paths.front('local_modules'),
       'domain': config.paths.common('domain'),
-      'common': config.paths.common(),
       'swap.auth': config.paths.core('swap.auth'),
       'swap.orders': config.paths.core('swap.orders'),
       'swap.room': config.paths.core('swap.room'),
@@ -73,6 +68,16 @@ const webpackConfig = {
     ],
     extensions: [ '.js', '.jsx', '.tsx', '.ts', '.scss' ],
     plugins: [],
+    fallback: {
+      os: false,
+      url: false,
+      http: require.resolve('http-browserify'),
+      https: require.resolve('https-browserify'),
+      stream: require.resolve('stream-browserify'),
+      assert: require.resolve("assert/"),
+      path: require.resolve('path-browserify'),
+      crypto: false,
+    }
   },
 
   plugins: [
@@ -86,6 +91,9 @@ const webpackConfig = {
       'swap.flows': 'swap.flows',
       'swap.swap': 'swap.swap',
       'swap.swaps': 'swap.swaps',
+      'Buffer': ['buffer', 'Buffer'],
+      'process': 'process/browser',
+
     }),
     new ProgressBarPlugin({ clear: false }),
     new FaviconsWebpackPlugin({
