@@ -490,6 +490,8 @@ const getWallets = (options) => {
 }
 
 const fetchWalletBalance = async (walletData): Promise<number> => {
+  console.log('>>>>> fetchWalletBalance')
+  console.trace()
   const name = helpers.getCurrencyKey(walletData.currency.toLowerCase(), true)
   if (helpers.ethToken.isEthToken({ name })) {
     try {

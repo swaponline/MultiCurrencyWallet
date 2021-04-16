@@ -124,6 +124,19 @@ class MarketmakerSettings extends Component<any, any> {
         addressType: AddressType.Metamask
       })
 
+console.log('>>> wallets', btcWallet, ethWallet, tokenWallet)
+      if (!tokenWallet) {
+        console.log('>>>> fail feth token wallet - retry')
+        this.setState({
+          isBalanceFetching: false,
+        }, () => {
+          return setTimeout(() => {
+            this.fetchWalletsWithBalances()
+          }, 2000)
+        })
+        return
+      }
+
       this.setState({
         btcWallet,
         ethWallet,

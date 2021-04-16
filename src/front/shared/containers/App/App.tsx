@@ -243,7 +243,8 @@ class App extends React.Component<RouteComponentProps<any>, any> {
           console.log('Do backup user')
           backupUserData.backupUser().then(() => {
             if (!localStorage.getItem(constants.localStorage.isWalletCreate)) {
-              redirectTo(links.createWallet)
+              console.log('>>>>>>>>>>>>>>>>> redirect on backup')
+              //redirectTo(links.createWallet)
             }
             if (wpLoader) wpLoader.style.display = 'none'
           })
@@ -339,6 +340,7 @@ class App extends React.Component<RouteComponentProps<any>, any> {
   checkCompletionOfAppCeation = () => {
     const { location } = this.props
 
+console.log('>>>>> location', location, location.pathname)
     if (utils.getCookie('swapDisalbeStarter') || location.pathname !== '/') {
       this.setState(() => ({
         initialFetching: true,
