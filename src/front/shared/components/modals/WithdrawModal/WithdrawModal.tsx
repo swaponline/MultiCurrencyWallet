@@ -24,6 +24,7 @@ import helpers, {
   adminFee,
   feedback,
 } from 'helpers'
+import btcUtils from 'common/utils/coin/btc'
 
 import Modal from 'components/modal/Modal/Modal'
 import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
@@ -35,6 +36,10 @@ import InvoiceInfoBlock from 'components/InvoiceInfoBlock/InvoiceInfoBlock'
 import AdminFeeInfoBlock from 'components/AdminFeeInfoBlock/AdminFeeInfoBlock'
 import CurrencyList from './components/CurrencyList'
 import FeeInfoBlock from './components/FeeInfoBlock'
+
+const NETWORK = process.env.MAINNET
+  ? 'MAINNET'
+  : 'TESTNET'
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
@@ -303,7 +308,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
         moreInfo: true,
       })
 
-      const bitcoinFeesRate = await helpers.btc.getFeesRateBlockcypher();
+      const bitcoinFeesRate = await btcUtils.getFeesRateBlockcypher({NETWORK});
       const feeInByte = new BigNumber(bitcoinFeesRate.fast).div(1024).dp(0, BigNumber.ROUND_HALF_EVEN);
       const fee = feeInByte.multipliedBy(txSize).multipliedBy(1e-8);
       if (!this.mounted) return

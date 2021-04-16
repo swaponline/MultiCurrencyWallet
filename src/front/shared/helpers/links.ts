@@ -17,7 +17,7 @@ const linksManager = {
   connectWallet: '/connectWallet',
   invoices: '/invoices',
   invoice: '/invoice',
-  farm: '/farm',
+  farm: 'https://farm.wpmix.net/',
   localStorage: '/localStorage',
 
   creditCardDeposit: '/creditCardDeposit',
