@@ -367,12 +367,13 @@ const markCoinAsVisible = (coin, doBackup = false) => {
   }
 }
 
-interface I_getWallet_FindCondition {
+type GetWalletFindCondition = {
   currency?: string
   address?: string
   addressType?: string
 }
-const getWallet = (findCondition: I_getWallet_FindCondition) => {
+
+const getWallet = (findCondition: GetWalletFindCondition) => {
   // specify addressType,
   // otherwise it finds the first wallet from all origins, including metamask
   const { currency, address, addressType } = findCondition

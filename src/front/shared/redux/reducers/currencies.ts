@@ -47,18 +47,40 @@ if (buildOpts.ownTokens && Object.keys(buildOpts.ownTokens).length) {
   config.erc20 = cleanERC20
 }
 
+const ethLikeItem = config.binance === true ? {
+    name: 'BNB',
+    title: 'BNB',
+    icon: 'bnb',
+    value: 'bnb',
+    fullTitle: 'binance',
+    addAssets: true,
+  } : {
+    name: 'ETH',
+    title: 'ETH',
+    icon: 'eth',
+    value: 'eth',
+    fullTitle: 'ethereum',
+    addAssets: true,
+  }
+
+const ethLikePartialItem = config.binance === true ? {
+  name: 'BNB',
+  title: 'BNB',
+  icon: 'bnb',
+  value: 'bnb',
+  fullTitle: 'binance',
+} : {
+  name: 'ETH',
+  title: 'ETH',
+  icon: 'eth',
+  value: 'eth',
+  fullTitle: 'ethereum',
+}
 
 const initialState = {
   items: [
     //@ts-ignore
-    ...(!buildOpts.curEnabled || buildOpts.curEnabled.eth) ? [{
-      name: 'ETH',
-      title: 'ETH',
-      icon: 'eth',
-      value: 'eth',
-      fullTitle: 'ethereum',
-      addAssets: true,
-    }] : [],
+    ...(!buildOpts.curEnabled || buildOpts.curEnabled.eth) ? [ethLikeItem] : [],
     //@ts-ignore
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.ghost) ? [{
       name: 'GHOST',
@@ -125,13 +147,7 @@ const initialState = {
   ],
   partialItems: [
     //@ts-ignore
-    ...(!buildOpts.curEnabled || buildOpts.curEnabled.eth) ? [{
-      name: 'ETH',
-      title: 'ETH',
-      icon: 'eth',
-      value: 'eth',
-      fullTitle: 'ethereum',
-    }] : [],
+    ...(!buildOpts.curEnabled || buildOpts.curEnabled.eth) ? [ethLikePartialItem] : [],
     //@ts-ignore
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.ghost) ? [{
       name: 'GHOST',
@@ -171,8 +187,26 @@ const initialState = {
 
 
 if (config.isWidget) {
+  const bnbItem = {
+    name: 'BNB',
+    title: 'BNB',
+    icon: 'bnb',
+    value: 'bnb',
+    fullTitle: 'binance',
+  }
+
+  const ethItem = {
+    name: 'ETH',
+    title: 'ETH',
+    icon: 'eth',
+    value: 'eth',
+    fullTitle: 'ethereum',
+  }
+
   //@ts-ignore
   initialState.items = [
+    //@ts-ignore
+    config.binance === true ? bnbItem : ethItem,
     //@ts-ignore
     {
       name: 'BTC',
@@ -200,13 +234,7 @@ if (config.isWidget) {
   ]
 
   initialState.partialItems = [
-    {
-      name: 'ETH',
-      title: 'ETH',
-      icon: 'eth',
-      value: 'eth',
-      fullTitle: 'ethereum',
-    },
+    config.binance === true ? bnbItem : ethItem,
     {
       name: 'BTC',
       title: 'BTC',
@@ -272,30 +300,6 @@ if (config.isWidget) {
       fullTitle: config.erc20[config.erc20token].fullName,
     })
   }
-  //@ts-ignore
-  initialState.items.push({
-    name: 'ETH',
-    title: 'ETH',
-    icon: 'eth',
-    value: 'eth',
-    fullTitle: 'ethereum',
-  })
-  //@ts-ignore
-  initialState.items.push({
-    name: 'GHOST',
-    title: 'GHOST',
-    icon: 'ghost',
-    value: 'ghost',
-    fullTitle: 'ghost',
-  })
-  //@ts-ignore
-  initialState.items.push({
-    name: 'NEXT',
-    title: 'NEXT',
-    icon: 'next',
-    value: 'next',
-    fullTitle: 'next',
-  })
 
   initialState.addSelectedItems = [
     {

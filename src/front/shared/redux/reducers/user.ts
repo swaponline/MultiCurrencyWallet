@@ -1,3 +1,5 @@
+import config from 'app-config'
+
 export const initialState = {
   ghostData: {
     balance: 0,
@@ -18,8 +20,8 @@ export const initialState = {
   ethData: {
     balance: 0,
     isBalanceFetched: false,
-    currency: 'ETH',
-    fullName: 'Ethereum',
+    currency: config.binance === true ? 'BNB' : 'ETH',
+    fullName: config.binance === true ? 'Binance Coin' : 'Ethereum',
     balanceError: null,
     infoAboutCurrency: null,
   },
@@ -64,8 +66,8 @@ export const initialState = {
     infoAboutCurrency: null,
   },
   usdtData: {
-    address: '0x0',
-    publicKey: '0x0',
+    address: '0x0', // ? for what
+    publicKey: '0x0', // ?
     balance: 0,
     isBalanceFetched: false,
     currency: 'USDT',

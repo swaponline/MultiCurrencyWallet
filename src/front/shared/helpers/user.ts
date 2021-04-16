@@ -2,13 +2,21 @@ import config from 'app-config'
 
 export const getActivatedCurrencies = () => {
   const currencies = []
+
   if (!config.opts.curEnabled || config.opts.curEnabled.btc) {
     currencies.push('BTC')
     currencies.push('BTC (SMS-Protected)')
     currencies.push('BTC (PIN-Protected)')
     currencies.push('BTC (Multisig)')
   }
-  if (!config.opts.curEnabled || config.opts.curEnabled.eth) currencies.push('ETH')
+
+  if (!config.opts.curEnabled || config.opts.curEnabled.eth) {
+    if (config.binance === true) {
+      currencies.push('BNB')
+    } else {
+      currencies.push('ETH')
+    }
+  }
 
   if (!config.opts.curEnabled || config.opts.curEnabled.ghost) currencies.push('GHOST')
 

@@ -421,18 +421,7 @@ class Wallet extends Component<any, any> {
       lastCheckMoment.add(1, 'hours')
     )
 
-    const { ethData, btcData, ghostData, nextData } = this.props.tokensData
-
-    const balancesData = {
-      ethBalance: ethData.balance,
-      btcBalance: btcData.balance,
-      ghostBalance: ghostData.balance,
-      nextBalance: nextData.balance,
-      ethAddress: ethData.address,
-      btcAddress: btcData.address,
-      ghostAddress: ghostData.address,
-      nextAddress: nextData.address,
-    }
+    const { ethData } = this.props.tokensData
 
     //@ts-ignore
     this.syncTimer = setTimeout(async () => {
@@ -544,13 +533,6 @@ class Wallet extends Component<any, any> {
     })
 
     if (isWidgetBuild) {
-      //tableRows = allData.filter(({ currency }) => widgetCurrencies.includes(currency))
-      tableRows = allData.filter(
-        ({ currency, address, balance }) =>
-          (!hiddenCoinsList.includes(currency) &&
-            !hiddenCoinsList.includes(`${currency}:${address}`)) ||
-          balance > 0
-      )
       // Отфильтруем валюты, исключив те, которые не используются в этом билде
       tableRows = tableRows.filter(({ currency }) => widgetCurrencies.includes(currency))
     }

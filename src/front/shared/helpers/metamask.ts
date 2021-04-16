@@ -137,40 +137,63 @@ const _initReduxState = () => {
     },
   } = getState()
 
+  const connectedEthWallet = {
+    name: 'metamaskData',
+    data: {
+      address: getAddress(),
+      balance: 0,
+      balanceError: false,
+      isConnected: true,
+      isMetamask: true,
+      currency: "ETH",
+      fullName: `Ethereum (${web3connect.getProviderTitle()})`,
+      infoAboutCurrency: ethData.infoAboutCurrency,
+      isBalanceFetched: true,
+      isMnemonic: true,
+      unconfirmedBalance: 0,
+    },
+  }
+
+  const disconnectedEthWallet = {
+    ...connectedEthWallet,
+    data: {
+      ...connectedEthWallet.data,
+      address: 'Not connected',
+      isConnected: false,
+      fullName: `Ethereum (external wallet)`,
+    }
+  }
+
+  const connectedBscWallet = {
+    ...connectedEthWallet,
+    data: {
+      ...connectedEthWallet.data,
+      currency: "BNB",
+      fullName: `Binance (${web3connect.getProviderTitle()})`,
+    }
+  }
+
+  const disconnectedBnbWallet = {
+    ...disconnectedEthWallet,
+    data: {
+      ...disconnectedEthWallet.data,
+      currency: "BNB",
+      fullName: `Binance (external wallet)`,
+    }
+  }
+
   if (isConnected()) {
-    reducers.user.addWallet({
-      name: 'metamaskData',
-      data: {
-        address: getAddress(),
-        balance: 0,
-        balanceError: false,
-        isConnected: true,
-        isMetamask: true,
-        currency: "ETH",
-        fullName: `Ethereum (${web3connect.getProviderTitle()})`,
-        infoAboutCurrency: ethData.infoAboutCurrency,
-        isBalanceFetched: true,
-        isMnemonic: true,
-        unconfirmedBalance: 0,
-      },
-    })
+    if (config.binance === true) {
+      reducers.user.addWallet(connectedBscWallet)
+    } else {
+      reducers.user.addWallet(connectedEthWallet)
+    }
   } else {
-    reducers.user.addWallet({
-      name: 'metamaskData',
-      data: {
-        address: 'Not connected',
-        balance: 0,
-        balanceError: false,
-        isConnected: false,
-        isMetamask: true,
-        currency: "ETH",
-        fullName: `Ethereum (external wallet)`,
-        infoAboutCurrency: ethData.infoAboutCurrency,
-        isBalanceFetched: true,
-        isMnemonic: true,
-        unconfirmedBalance: 0,
-      }
-    })
+    if (config.binance === true) {
+      reducers.user.addWallet(disconnectedBnbWallet)
+    } else {
+      reducers.user.addWallet(disconnectedEthWallet)
+    }
   }
 }
 

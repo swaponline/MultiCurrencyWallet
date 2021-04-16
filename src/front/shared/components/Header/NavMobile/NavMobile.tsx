@@ -64,6 +64,10 @@ class NavMobile extends Component<NavProps, null> {
                   key={index}
                   exact={exact}
                   to={localisedUrl(locale, link)}
+                  className={`
+                    ${link && link.includes("history") ? 'data-tut-recent' : ''}
+                    ${link && link.includes("exchange") ? 'reactour-exchange data-tut-widget-exchange' : ''}
+                  `}
                   activeClassName={styles.active}
                 >
                   {icon}

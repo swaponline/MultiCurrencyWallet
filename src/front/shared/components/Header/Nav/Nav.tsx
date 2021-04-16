@@ -32,7 +32,7 @@ class Nav extends Component<NavProps, null> {
               const { title, link, exact, index, isExternal } = item
 
               return (
-                <div styleName='mainMenu' key={`${title} ${link}`}>
+                <div styleName='mainMenu' key={`${title} ${link}`} className="data-tut-widget-tourFinish">
                   {isExternal ? (
                     <a
                       href={link}
@@ -45,7 +45,10 @@ class Nav extends Component<NavProps, null> {
                     <NavLink
                       key={index}
                       exact={exact}
-                      className={`${styles.link} ${isDark ? styles.dark : ''}`}
+                      className={`
+                        ${styles.link} ${isDark ? styles.dark : ''}
+                        ${link && link.includes('exchange') ? 'reactour-exchange data-tut-widget-exchange' : ''}
+                      `}
                       to={localisedUrl(locale, link)}
                       activeClassName={styles.active}
                     >

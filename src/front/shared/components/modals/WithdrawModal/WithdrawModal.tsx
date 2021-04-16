@@ -2,7 +2,7 @@ import React, { Fragment } from 'react'
 import cx from 'classnames'
 import cssModules from 'react-css-modules'
 import styles from './WithdrawModal.scss'
-
+import config from 'app-config'
 import actions from 'redux/actions'
 import Link from 'local_modules/sw-valuelink'
 import { connect } from 'redaction'
@@ -155,7 +155,6 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
     const {
       items,
       data: {
-        amount,
         toAddress,
         currency,
         address: withdrawWallet,
@@ -172,13 +171,15 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
     const exCurrencyRate = infoAboutCurrency && infoAboutCurrency.price_fiat
       ? new BigNumber(currentActiveAsset.infoAboutCurrency.price_fiat)
       : new BigNumber(0)
-    // save ethereum wallet for token exchange's rate
-    const arrWithEthWallet = items.filter(item => {
-      return item.currency.toLowerCase() === 'eth'
-        && item.infoAboutCurrency
-        && item.infoAboutCurrency.price_fiat
+
+    // save wallet for token exchange's rate
+    const walletForTokenFee = items.find(wallet => {
+      const walletCurrency = wallet.currency.toLowerCase()
+
+      return config.binance === true && wallet.infoAboutCurrency?.price_fiat
+        ? walletCurrency === 'bnb'
+        : walletCurrency === 'eth'
     })
-    const ethWallet = arrWithEthWallet[0] || {}
 
     this.state = {
       isShipped: false,
@@ -194,7 +195,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
       ownTx: '',
       hiddenCoinsList: actions.core.getHiddenCoins(),
       currentActiveAsset,
-      ethWallet,
+      ethWallet: walletForTokenFee || {},
       exCurrencyRate,
       allCurrencyies,
       devError: null,
