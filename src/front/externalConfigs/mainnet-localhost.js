@@ -5,6 +5,7 @@ window.widgetERC20Tokens = {
     address: '0xdac17f958d2ee523a2206206994597c13d831ec7',
     decimals: 6,
     fullName: 'Tether',
+    canSwap: true,
     //howToDeposit: '<div style="boo-style"><strong>How to deposit to {userAddress}</strong></div>',
     //howToWithdraw: '<div style="boo-style"><strong>How to withdraw</strong></div>',
   },
@@ -12,6 +13,7 @@ window.widgetERC20Tokens = {
     address: '0x1fe72034da777ef22533eaa6dd7cbe1d80be50fa',
     decimals: 18,
     fullName: 'PayAccept',
+    canSwap: true,
   },
   // Symbol of ERC20 token in lowerCase
   proxima: {
@@ -21,6 +23,7 @@ window.widgetERC20Tokens = {
     decimals: 18,
     // Display name in wallet (By default - its symbol of ERC20, but can be other userfriendy text)
     fullName: 'Proxima',
+    canSwap: true,
     // Icon of currency (image)
     icon: 'https://growup.wpmix.net/wp-content/uploads/2016/10/favicon.png',
     // Background color of icon
