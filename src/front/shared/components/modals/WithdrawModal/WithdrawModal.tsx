@@ -94,7 +94,6 @@ type WithdrawModalState = {
       custom: number
   }
 
-  devError: IError | null
   ethWallet: IUniversalObj
   exCurrencyRate: BigNumber
   fees: {
@@ -198,7 +197,6 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
       ethWallet: walletForTokenFee || {},
       exCurrencyRate,
       allCurrencyies,
-      devError: null,
       bitcoinFees: {
         slow: 5 * 1024,
         normal: 15 * 1024,
@@ -263,12 +261,22 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
   reportError = (error: IError, details: string = '-') => {
     feedback.withdraw.failed(`details(${details}) : error message(${error.message})`)
     console.error(`Withdraw. details(${details}) : error(${JSON.stringify(error)})`)
-    this.setState({
-      devError: {
-        name: error.name || 'Error',
-        message: error.message || '-',
-      },
-    })
+
+    actions.notifications.show(
+      constants.notifications.Message,
+      {message: (
+        <FormattedMessage
+          id="ErrorNotification151123"
+          defaultMessage="Error: name({name}); details({details}); {br} message({message})"
+          values={{
+            name: error.name || 'no name',
+            message: error.message || '-',
+            details: details,
+            br: <br />,
+          }}
+        />
+      )}
+    )
   }
 
   setCurrenctActiveAsset = () => {
@@ -330,13 +338,13 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
   }
 
   setBitcoinFeeRate = (speedType: string, customValue?: number) => {
-    const { bitcoinFees, txSize, currentDecimals } = this.state;
+    const { bitcoinFees, txSize, currentDecimals } = this.state
 
-    let feeInByte = speedType === 'custom' ?
+    const feeInByte = speedType === 'custom' ?
       new BigNumber(customValue) :
       new BigNumber(bitcoinFees[speedType]).div(1024).dp(0, BigNumber.ROUND_HALF_EVEN);
 
-    let fee = feeInByte.multipliedBy(txSize).multipliedBy(1e-8);
+    const fee = feeInByte.multipliedBy(txSize).multipliedBy(1e-8)
 
     this.setState((state) => ({
       bitcoinFeeSpeedType: speedType,
@@ -442,7 +450,6 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
 
     this.setState(() => ({
       isShipped: true,
-      devError: null,
     }))
 
     let sendOptions = {
@@ -453,16 +460,6 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
       name: isEthToken ? currency.toLowerCase() : '',
       feeValue: isBTC && fees.miner,
     }
-
-    // ? is it need ?
-    // Опрашиваем балансы отправителя и получателя на момент выполнения транзакции
-    // Нужно для расчета final balance получателя и отправителя
-    let beforeBalances = false
-    // try {
-    //   // beforeBalances = await helpers.transactions.getTxBalances(currency, address, to)
-    // } catch (error) {
-    //   this.reportError(error, 'Fail fetch balances - may be destination is segwit')
-    // }
 
     if (invoice && ownTx) {
       await actions.invoices.markInvoice(invoice.id, 'ready', ownTx, address)
@@ -490,7 +487,6 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
         wallet: selectedItem,
         invoice,
         sendOptions,
-        beforeBalances,
         onReady,
         adminFee: fees.adminFeeSize,
       })
@@ -521,7 +517,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
         // Не используем await. Сбрасываем статистику по транзакции (final balance)
         // Без блокировки клиента
         // Результат и успешность запроса критического значения не имеют
-        helpers.transactions.pullTxBalances(txId, amount, beforeBalances, adminFee)
+        helpers.transactions.pullTxBalances(txId, amount, false, adminFee)
 
         // Сохраняем транзакцию в кеш
         const txInfoCache = {
@@ -793,7 +789,6 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
       currentActiveAsset,
       selectedValue,
       usedAdminFee,
-      devError,
       fees,
       fetchFee,
       txSize,
@@ -1197,15 +1192,6 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
                 totalFee={fees.total}
               />
             </div>
-            {devError && (
-                <div styleName="errorBlock">
-                  <p>
-                    Error name: {devError.name}<br />
-                    Message: {devError.message}
-                  </p>
-                </div>
-              )
-            }
           </>
         )}
       </Fragment>

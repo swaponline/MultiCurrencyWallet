@@ -47,41 +47,6 @@ const pullTxBalances = (txId, amount, balances, adminFee) => apiLooper.post('txi
   },
 }).then(({ answer }) => answer).catch((e) => false)
 
-/**
- * Вспомогательная функция, опрашивает балансы перед выполнением транзакции
- * Для расчета финальных балансов на адресе отправления и адресе получателя
- * На момент выполнения транзакции
- */
-const getTxBalances = (currency, from, to) => {
-  const prefix = helpers.getCurrencyKey(currency, false)
-  const curName = helpers.getCurrencyKey(currency, true)
-
-  if (actions[prefix]) {
-    return new Promise(async (resolve) => {
-      let fromBalance = 0
-      let toBalance = 0
-      if (helpers.ethToken.isEthToken({ name: curName })) {
-        const tokenData = actions[prefix].withToken(curName)
-        fromBalance = await actions[prefix].fetchBalance(from, tokenData.contractAddress, tokenData.decimals)
-        toBalance = await actions[prefix].fetchBalance(to, tokenData.contractAddress, tokenData.decimals)
-      } else {
-        fromBalance = await actions[prefix].fetchBalance(from)
-        toBalance = await actions[prefix].fetchBalance(to)
-      }
-
-      resolve({
-        curName,
-        from,
-        to,
-        fromBalance,
-        toBalance,
-      })
-    })
-  }
-  return new Promise((resolve) => { resolve(false) })
-
-}
-
 const getTxRouter = (currency, txId) => {
   const prefix = helpers.getCurrencyKey(currency, false)
 
@@ -131,7 +96,6 @@ export default {
   getInfo,
   getLink,
   getTxRouter,
-  getTxBalances,
   pullTxBalances,
   fetchTxBalances,
 }

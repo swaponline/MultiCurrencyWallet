@@ -1,5 +1,6 @@
 export default {
   eth: 0.001,
+  bnb: 0.001,
   btc: 0.00015,
   ghost: 0.00015,
   next: 0.00015,
