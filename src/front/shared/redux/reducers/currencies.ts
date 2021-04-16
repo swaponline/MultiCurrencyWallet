@@ -125,7 +125,7 @@ const initialState = {
   ],
   partialItems: [
     //@ts-ignore
-    ...(!buildOpts.curEnabled || buildOpts.curEnabled.eth) ? [{
+    ...(!process.env.MAINNET) && (!buildOpts.curEnabled || buildOpts.curEnabled.eth) ? [{
       name: 'ETH',
       title: 'ETH',
       icon: 'eth',
@@ -133,7 +133,7 @@ const initialState = {
       fullTitle: 'ethereum',
     }] : [],
     //@ts-ignore
-    ...(!buildOpts.curEnabled || buildOpts.curEnabled.ghost) ? [{
+    ...(!process.env.MAINNET) && (!buildOpts.curEnabled || buildOpts.curEnabled.ghost) ? [{
       name: 'GHOST',
       title: 'GHOST',
       icon: 'ghost',
@@ -141,7 +141,7 @@ const initialState = {
       fullTitle: 'ghost',
     }] : [],
     //@ts-ignore
-    ...(!buildOpts.curEnabled || buildOpts.curEnabled.next) ? [{
+    ...(!process.env.MAINNET) && (!buildOpts.curEnabled || buildOpts.curEnabled.next) ? [{
       name: 'NEXT',
       title: 'NEXT',
       icon: 'next',
@@ -157,13 +157,15 @@ const initialState = {
       fullTitle: 'bitcoin',
     }] : [],
     ...(Object.keys(config.erc20)
+      .filter(key => config.erc20[key].canSwap)
       .map(key => ({
-        name: key.toUpperCase(),
-        title: key.toUpperCase(),
-        icon: key,
-        value: key,
-        fullTitle: key,
-      }))),
+            name: key.toUpperCase(),
+            title: key.toUpperCase(),
+            icon: key,
+            value: key,
+            fullTitle: config.erc20[key].fullName,
+          }
+      ))),
   ],
   addSelectedItems: [],
   addPartialItems: [],
