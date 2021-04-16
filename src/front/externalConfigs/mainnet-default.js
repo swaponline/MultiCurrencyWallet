@@ -28,6 +28,9 @@ window.buildOptions = {
     btc: true,
     eth: true,
   },
+  blockchainSwapEnabled = { // Or 'false' if enabled all
+    btc: true,
+    eth: true,
   invoiceEnabled: false, // Allow create invoices
 }
 */
