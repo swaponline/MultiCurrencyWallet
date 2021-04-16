@@ -113,7 +113,7 @@ class Header extends Component<any, any> {
         },
         !config.opts.exchangeDisabled && {
           title: intl.formatMessage(invest),
-          link: 'exchange/btc-to-eth',
+          link: process.env.MAINNET ? 'exchange/btc-to-wbtc': 'exchange/btc-to-eth',
           icon: 'invest',
           haveSubmenu: false,
         },
