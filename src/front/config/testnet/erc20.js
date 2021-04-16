@@ -17,6 +17,6 @@ export default {
   wbtc: {
     address: '0x2bc4900b3a595137a22010e7b5e3caad57c4c1e4',
     decimals: 8,
-    fullName: 'Wrapped BTC',
+    fullName: 'Wrapped Bitcoin',
   },
 }
