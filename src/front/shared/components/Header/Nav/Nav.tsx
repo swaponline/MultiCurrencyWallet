@@ -1,40 +1,25 @@
 import React, { Component, Fragment } from 'react'
-import PropTypes from 'prop-types'
-
-import { links } from 'helpers'
 import { NavLink, withRouter } from 'react-router-dom'
-import { constants } from 'helpers'
-
-import styles from './Nav.scss'
 import CSSModules from 'react-css-modules'
 import { injectIntl } from 'react-intl'
+import styles from './Nav.scss'
+
+import { constants } from 'helpers'
 import { localisedUrl } from 'helpers/locale'
 
+type NavProps = {
+  menu: IUniversalObj[]
+  intl: any
+}
 
 @withRouter
 @CSSModules(styles, { allowMultiple: true })
-class Nav extends Component<any, any> {
-  static propTypes = {
-    menu: PropTypes.array.isRequired
-  };
-
-  handleScrollToTopClick = link => {
-    this.setState({ activeRoute: link })
-  };
-
+class Nav extends Component<NavProps, null> {
   render() {
     const {
       menu,
       intl: { locale },
-      location
-    } = this.props;
-
-    const isExchange = location.pathname.includes(links.exchange)
-
-    const isWallet =
-      location.pathname.includes(links.wallet) ||
-      location.pathname === '/' ||
-      location.pathname === '/ru'
+    } = this.props
 
     const isDark = localStorage.getItem(constants.localStorage.isDark)
 
@@ -43,40 +28,30 @@ class Nav extends Component<any, any> {
         <Fragment>
           {menu
             .filter(i => i.isDesktop !== false)
-            .map(el => {
-              const {
-                title,
-                link,
-                exact,
-                tour,
-                haveSubmenu,
-                index,
-                ...rest
-              } = el
+            .map(item => {
+              const { title, link, exact, index, isExternal } = item
 
               return (
-                <div styleName='mainMenu' key={`${title} ${link}`} className="data-tut-widget-tourFinish">
-                  <NavLink
-                    onClick={this.handleScrollToTopClick}
-                    key={index}
-                    exact={exact}
-                    /* eslint-disable indent */
-                    className={`
-                      ${styles.link}
-                      ${title === 'Wallet' && isWallet ? ` ${styles.active}` : ''}
-                      ${link && link.includes("exchange") ? 'reactour-exchange data-tut-widget-exchange' : ''}
-                      ${link && link.includes("exchange") && isExchange ? ` ${styles.active}` : ''}
-                      ${isDark ? styles.dark : ''}
-                  `}
-                    /* eslint-enable indent */
-                    to={localisedUrl(locale, link)}
-                    activeClassName={styles.active} // it does not work in all cases, so it duplicates in className for some cases
-                  // im hurry, so fix it, if you are here
-                  >
-                    <div>
+                <div styleName='mainMenu' key={`${title} ${link}`}>
+                  {isExternal ? (
+                    <a
+                      href={link}
+                      target="_blank"
+                      styleName={`link ${isDark ? "dark" : ''}`}
+                    >
                       {title}
-                    </div>
-                  </NavLink>
+                    </a>
+                  ) : (
+                    <NavLink
+                      key={index}
+                      exact={exact}
+                      className={`${styles.link} ${isDark ? styles.dark : ''}`}
+                      to={localisedUrl(locale, link)}
+                      activeClassName={styles.active}
+                    >
+                      {title}
+                    </NavLink>
+                  )}
                 </div>
               );
             })}

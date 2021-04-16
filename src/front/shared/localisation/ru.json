@@ -5756,13 +5756,6 @@
     ]
   },
   {
-    "id": "FarmDoesNotHaveContracts",
-    "message": "Не найдено параметров для фермы",
-    "files": [
-      "src/front/shared/pages/Farm/index.tsx"
-    ]
-  },
-  {
     "id": "DropDownNoOptionsInTheList",
     "message": "Нет вариантов",
     "files": [

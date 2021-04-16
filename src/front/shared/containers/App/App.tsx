@@ -261,15 +261,6 @@ class App extends React.Component<RouteComponentProps<any>, any> {
 
     this.preventMultiTabs(false)
 
-    // Default Farm init options
-    if (config.entry === 'testnet') {
-      window.farm = {
-        farmAddress: '0xa21FC7e1E31269b3AA0E17fF1F1a23C035cE207c',
-        stakingAddress: '0xF6fF95D53E08c9660dC7820fD5A775484f77183A', // Yeenus
-        rewardsAddress: '0x101848D5C5bBca18E6b4431eEdF6B95E9ADF82FA', // Weenus
-      }
-    }
-
     const isWalletCreate = localStorage.getItem(constants.localStorage.isWalletCreate)
 
     if (!isWalletCreate) {
