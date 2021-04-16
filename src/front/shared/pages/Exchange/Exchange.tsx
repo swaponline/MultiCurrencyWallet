@@ -249,7 +249,7 @@ class Exchange extends PureComponent<any, any> {
     }
 
     let haveCurrency = sell || 'btc'
-    let getCurrency = buy || (!isWidgetBuild ? 'eth' : config.erc20token)
+    let getCurrency = buy || (!isWidgetBuild ? process.env.MAINNET ? 'wbtc' : 'eth' : config.erc20token)
 
     const exchangeDataStr = localStorage.getItem(constants.localStorage.exchangeSettings)
     const exchangeSettings = exchangeDataStr && JSON.parse(exchangeDataStr)
