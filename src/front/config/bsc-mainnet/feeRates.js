@@ -7,7 +7,7 @@ if (typeof window !== 'undefined') {
 }
 
 export default {
-  // eth: 'https://www.etherchain.org/api/gasPriceOracle',
-  eth: ethGasApiLink, // info from last block in mempool
+  // TODO: need to find an API for Bsc
+  bnb: ethGasApiLink,
   btc: 'https://wiki.swaponline.io/blockcyper.php',
 }

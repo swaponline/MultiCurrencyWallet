@@ -129,6 +129,10 @@ const externalConfig = () => {
     config.opts.curEnabled.eth = false
   }
 
+  if (window && window.CUR_BNB_DISABLED === true) {
+    config.opts.curEnabled.bnb = false
+  }
+
 
   // Plugins
   if (window

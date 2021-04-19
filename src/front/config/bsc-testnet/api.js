@@ -16,7 +16,7 @@ export default {
   // bitpay: 'https://test-insight.bitpay.com/api',
   bscscan: [
     'https://testnet.bscscan.com/api',
-    // FIXME: replace proxy link
+    // TODO: replace proxy link
     'https://invoices.swaponline.site/proxyetherscan-testnet',
   ],
 

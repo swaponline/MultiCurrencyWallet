@@ -40,6 +40,7 @@ window.buildOptions = {
   curEnabled: {
     btc: true,
     eth: true,
+    bnb: true,
     ghost: true,
     next: true,
   },

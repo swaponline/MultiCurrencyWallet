@@ -79,6 +79,7 @@ window.buildOptions = {
     btc: true,
     // inited from window.CUR_ETH_DISABLED
     eth: true,
+    bnb: true,
     ghost: true,
     next: true,
   },

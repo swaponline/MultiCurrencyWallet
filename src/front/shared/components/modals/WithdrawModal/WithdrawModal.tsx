@@ -263,19 +263,8 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
     console.error(`Withdraw. details(${details}) : error(${JSON.stringify(error)})`)
 
     actions.notifications.show(
-      constants.notifications.Message,
-      {message: (
-        <FormattedMessage
-          id="ErrorNotification151123"
-          defaultMessage="Error: name({name}); details({details}); {br} message({message})"
-          values={{
-            name: error.name || 'no name',
-            message: error.message || '-',
-            details: details,
-            br: <br />,
-          }}
-        />
-      )}
+      constants.notifications.ErrorNotification,
+      { error: `name (${error.name}); message(${error.message}); details(${details})` }
     )
   }
 

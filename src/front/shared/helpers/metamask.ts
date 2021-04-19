@@ -12,7 +12,7 @@ const web3connect = new Web3Connect({
     ? (process.env.MAINNET) ? 56 : 97  // 56 = Mainnet, 97 = Testnet
     : (process.env.MAINNET) ? 1 : 3, // 1 = Mainnet, 3 = Ropsten
   web3RPC: (config.binance)
-    ? config.binance_provider
+    ? config.web3.binance_provider
     : config.web3.provider,
 })
 
@@ -129,13 +129,9 @@ const connect = (options) => new Promise(async (resolved, reject) => {
 /* metamask wallet layer */
 const isCorrectNetwork = () => web3connect.isCorrectNetwork()
 
-
+// TODO: Need to move this code into Redux
 const _initReduxState = () => {
-  const {
-    user: {
-      ethData,
-    },
-  } = getState()
+  const { user } = getState()
 
   const connectedEthWallet = {
     name: 'metamaskData',
@@ -147,7 +143,7 @@ const _initReduxState = () => {
       isMetamask: true,
       currency: "ETH",
       fullName: `Ethereum (${web3connect.getProviderTitle()})`,
-      infoAboutCurrency: ethData.infoAboutCurrency,
+      infoAboutCurrency: user.ethData.infoAboutCurrency,
       isBalanceFetched: true,
       isMnemonic: true,
       unconfirmedBalance: 0,
@@ -170,6 +166,7 @@ const _initReduxState = () => {
       ...connectedEthWallet.data,
       currency: "BNB",
       fullName: `Binance (${web3connect.getProviderTitle()})`,
+      infoAboutCurrency: user.bnbData.infoAboutCurrency,
     }
   }
 
@@ -183,17 +180,15 @@ const _initReduxState = () => {
   }
 
   if (isConnected()) {
-    if (config.binance === true) {
-      reducers.user.addWallet(connectedBscWallet)
-    } else {
-      reducers.user.addWallet(connectedEthWallet)
-    }
+    reducers.user.addWallet(config.binance
+      ? connectedBscWallet
+      : connectedEthWallet
+    )
   } else {
-    if (config.binance === true) {
-      reducers.user.addWallet(disconnectedBnbWallet)
-    } else {
-      reducers.user.addWallet(disconnectedEthWallet)
-    }
+    reducers.user.addWallet(config.binance
+      ? disconnectedBnbWallet
+      : disconnectedEthWallet
+    )
   }
 }
 
