@@ -299,7 +299,7 @@ class App extends React.Component<RouteComponentProps<any>, any> {
     }
     window.addEventListener('appinstalled', appInstalled)
 
-    this.checkCompletionOfAppCeation()
+    this.checkCompletionOfAppCreation()
   }
 
   componentDidUpdate() {
@@ -333,7 +333,7 @@ class App extends React.Component<RouteComponentProps<any>, any> {
     console.groupEnd()
   }
 
-  checkCompletionOfAppCeation = () => {
+  checkCompletionOfAppCreation = () => {
     const { location } = this.props
     const startPage = document.getElementById('starter-modal')
 
