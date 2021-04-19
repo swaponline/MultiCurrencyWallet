@@ -18,9 +18,9 @@ const Select = ({ balance, changeBalance, switching, isDark }) => {
           <span styleName="cell" onClick={() => changeBalance(new BigNumber(balance).div(4).multipliedBy(3))}><FormattedMessage id="Select30" defaultMessage="75%" /></span>
           <span styleName="cell" onClick={() => changeBalance(new BigNumber(balance).div(1))}><FormattedMessage id="Select40" defaultMessage="100%" /></span>
         </div>
-        {/*
-        //@ts-ignore */}
-        <Switching onClick={switching} />
+        <div styleName="switchButton">
+          <Switching onClick={switching} />
+        </div>
       </div>
     </Fragment>
   )

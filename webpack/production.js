@@ -69,7 +69,7 @@ export default (webpackConfig) => {
     */
     new WebpackRequireFrom({
       variableName: 'publicUrl',
-      suppressErrors: true, 
+      suppressErrors: true
     }),
     new MiniCssExtractPlugin({
       filename: '[name].[hash:6].css',

@@ -23,11 +23,10 @@ export default (webpackConfig) => {
     publicPath: config.publicPath,
   }
 
-  webpackConfig.node = {
-    fs: 'empty',
-    net: 'empty',
-    tls: 'empty',
-  }
+  webpackConfig.resolve.fallback.fs = false
+  webpackConfig.resolve.fallback.net = false
+  webpackConfig.resolve.fallback.tls = false
+
   /* 
   * build speed: slow
   * rebuild: faster
