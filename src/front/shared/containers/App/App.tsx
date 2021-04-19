@@ -335,8 +335,9 @@ class App extends React.Component<RouteComponentProps<any>, any> {
 
   checkCompletionOfAppCeation = () => {
     const { location } = this.props
+    const startPage = document.getElementById('starter-modal')
 
-    if (utils.getCookie('swapDisalbeStarter') || location.pathname !== '/') {
+    if (!startPage || utils.getCookie('swapDisalbeStarter') || location.pathname !== '/') {
       this.setState(() => ({
         initialFetching: true,
         completeCreation: true,
