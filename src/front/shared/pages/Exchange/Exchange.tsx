@@ -1019,6 +1019,7 @@ class Exchange extends PureComponent<any, any> {
             title: item.toUpperCase(),
             icon: item.toLowerCase(),
             value: item.toLowerCase(),
+            fullTitle: item.toLowerCase(),
           })
           reducers.currencies.updatePartialItems(partialItemsArray)
         }
