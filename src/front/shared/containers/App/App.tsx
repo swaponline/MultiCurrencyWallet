@@ -299,7 +299,7 @@ class App extends React.Component<RouteComponentProps<any>, any> {
     }
     window.addEventListener('appinstalled', appInstalled)
 
-    this.checkCompletionOfAppCeation()
+    this.checkCompletionOfAppCreation()
   }
 
   componentDidUpdate() {
@@ -333,10 +333,11 @@ class App extends React.Component<RouteComponentProps<any>, any> {
     console.groupEnd()
   }
 
-  checkCompletionOfAppCeation = () => {
+  checkCompletionOfAppCreation = () => {
     const { location } = this.props
+    const startPage = document.getElementById('starter-modal')
 
-    if (utils.getCookie('swapDisalbeStarter') || location.pathname !== '/') {
+    if (!startPage || utils.getCookie('swapDisalbeStarter') || location.pathname !== '/') {
       this.setState(() => ({
         initialFetching: true,
         completeCreation: true,
@@ -355,10 +356,15 @@ class App extends React.Component<RouteComponentProps<any>, any> {
 
   addStartPageListeners = () => {
     // id from index.html start page
-    document.getElementById('preloaderCreateBtn').addEventListener('click', this.setCompleteCreation)
-    document.getElementById('preloaderConnectBtn').addEventListener('click', this.setCompleteCreation)
-    document.getElementById('preloaderRestoreBtn').addEventListener('click', this.setCompleteCreation)
-    document.getElementById('preloaderSkipBtn').addEventListener('click', this.setCompleteCreation)
+    const createBtn = document.getElementById('preloaderCreateBtn')
+    const connectBtn = document.getElementById('preloaderConnectBtn')
+    const restoreBtn = document.getElementById('preloaderRestoreBtn')
+    const skipBtn = document.getElementById('preloaderSkipBtn')
+  
+    if (createBtn) createBtn.addEventListener('click', this.setCompleteCreation)
+    if (connectBtn) connectBtn.addEventListener('click', this.setCompleteCreation)
+    if (restoreBtn) restoreBtn.addEventListener('click', this.setCompleteCreation)
+    if (skipBtn) skipBtn.addEventListener('click', this.setCompleteCreation)
   }
 
   removeStartPageListeners = () => {
