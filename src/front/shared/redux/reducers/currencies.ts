@@ -11,6 +11,7 @@ const GetCustromERC20 = () => {
 
 let buildOpts = {
   curEnabled: false,
+  blockchainSwapEnabled: false,
   ownTokens: false,
   addCustomERC20: true,
   invoiceEnabled: true,
@@ -133,7 +134,7 @@ const initialState = {
   ],
   partialItems: [
     //@ts-ignore
-    ...(!buildOpts.curEnabled || buildOpts.curEnabled.eth) ? [{
+    ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.eth) ? [{
       name: 'ETH',
       title: 'ETH',
       icon: 'eth',
@@ -141,15 +142,15 @@ const initialState = {
       fullTitle: 'ethereum',
     }] : [],
     //@ts-ignore
-    ...(!buildOpts.curEnabled || buildOpts.curEnabled.bnb) ? [{
+    ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.bnb) ? [{
       name: 'BNB',
       title: 'BNB',
       icon: 'bnb',
       value: 'bnb',
-      fullTitle: 'binance',
+      fullTitle: 'binance coin',
     }] : [],
     //@ts-ignore
-    ...(!buildOpts.curEnabled || buildOpts.curEnabled.ghost) ? [{
+    ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.ghost) ? [{
       name: 'GHOST',
       title: 'GHOST',
       icon: 'ghost',
@@ -157,7 +158,7 @@ const initialState = {
       fullTitle: 'ghost',
     }] : [],
     //@ts-ignore
-    ...(!buildOpts.curEnabled || buildOpts.curEnabled.next) ? [{
+    ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.next) ? [{
       name: 'NEXT',
       title: 'NEXT',
       icon: 'next',
@@ -165,7 +166,7 @@ const initialState = {
       fullTitle: 'next',
     }] : [],
     //@ts-ignore
-    ...(!buildOpts.curEnabled || buildOpts.curEnabled.btc) ? [{
+    ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.btc) ? [{
       name: 'BTC',
       title: 'BTC',
       icon: 'btc',
@@ -173,13 +174,15 @@ const initialState = {
       fullTitle: 'bitcoin',
     }] : [],
     ...(Object.keys(config.erc20)
+      .filter(key => config.erc20[key].canSwap)
       .map(key => ({
-        name: key.toUpperCase(),
-        title: key.toUpperCase(),
-        icon: key,
-        value: key,
-        fullTitle: key,
-      }))),
+            name: key.toUpperCase(),
+            title: key.toUpperCase(),
+            icon: key,
+            value: key,
+            fullTitle: config.erc20[key].fullName || key,
+          }
+      ))),
   ],
   addSelectedItems: [],
   addPartialItems: [],

@@ -40,6 +40,16 @@ const externalConfig = () => {
       ghost: true,
       next: true,
     },
+    blockchainSwapEnabled: {
+      btc: true,
+      eth: true,
+      ghost: true,
+      next: true,
+    },
+    defaultExchangePair: {
+      buy: 'eth',
+      sell: 'btc',
+    },
     ownTokens: false,
     addCustomERC20: true,
     invoiceEnabled: (config.isWidget) ? false : true,
@@ -115,22 +125,27 @@ const externalConfig = () => {
 
   if (window && window.CUR_BTC_DISABLED === true) {
     config.opts.curEnabled.btc = false
+    config.opts.blockchainSwapEnabled.btc = false
   }
 
   if (window && window.CUR_GHOST_DISABLED === true) {
     config.opts.curEnabled.ghost = false
+    config.opts.blockchainSwapEnabled.ghost = false
   }
 
   if (window && window.CUR_NEXT_DISABLED === true) {
     config.opts.curEnabled.next = false
+    config.opts.blockchainSwapEnabled.next = false
   }
 
   if (window && window.CUR_ETH_DISABLED === true) {
     config.opts.curEnabled.eth = false
+    config.opts.blockchainSwapEnabled.next = false
   }
 
   if (window && window.CUR_BNB_DISABLED === true) {
     config.opts.curEnabled.bnb = false
+    config.opts.blockchainSwapEnabled.bnb = false
   }
 
 

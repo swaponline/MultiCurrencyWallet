@@ -44,4 +44,15 @@ window.buildOptions = {
     ghost: true,
     next: true,
   },
+  blockchainSwapEnabled: {
+    btc: true,
+    eth: false,
+    bnb: false,
+    ghost: false,
+    next: false,
+  },
+  defaultExchangePair: {
+    buy: 'wbtc',
+    sell: 'btc',
+  }
 }

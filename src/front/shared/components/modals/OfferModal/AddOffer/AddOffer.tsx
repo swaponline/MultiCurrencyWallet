@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import { connect } from 'redaction'
 import actions from 'redux/actions'
 import helpers, { constants } from 'helpers'
+import swapsHelper from 'helpers/swaps'
 
 import Link from 'local_modules/sw-valuelink'
 import config from 'app-config'
@@ -46,11 +47,10 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
 @connect(
   ({
     currencies,
-    addSelectedItems,
     user: { ethData, btcData, ghostData, nextData, tokensData },
   }) => ({
-    currencies: currencies.items,
-    addSelectedItems: currencies.addSelectedItems,
+    currencies: swapsHelper.isExchangeAllowed(currencies.partialItems),
+    addSelectedItems: swapsHelper.isExchangeAllowed(currencies.addPartialItems),
     items: [ethData, btcData, ghostData, nextData],
     tokenItems: [...Object.keys(tokensData).map(k => (tokensData[k]))],
   })
@@ -98,7 +98,7 @@ export default class AddOffer extends Component<any, any> {
   componentDidMount() {
     const { sellCurrency, buyCurrency, value } = this.state
 
-    actions.pairs.selectPair(sellCurrency)
+    actions.pairs.selectPairPartial(sellCurrency)
     this.checkBalance(sellCurrency)
     this.updateExchangeRate(sellCurrency, buyCurrency)
     this.isEthToken(sellCurrency, buyCurrency)
@@ -423,7 +423,7 @@ export default class AddOffer extends Component<any, any> {
       await this.checkBalance(buyCurrency)
       await this.updateExchangeRate(buyCurrency, sellCurrency)
 
-      actions.pairs.selectPair(buyCurrency)
+      actions.pairs.selectPairPartial(buyCurrency)
 
       this.isEthToken(this.state.sellCurrency, this.state.buyCurrency)
       this.getFee()
@@ -431,7 +431,7 @@ export default class AddOffer extends Component<any, any> {
   }
 
   checkPair = (value) => {
-    const selected = actions.pairs.selectPair(value)
+    const selected = actions.pairs.selectPairPartial(value)
     const check = selected.map(item => item.value).includes(this.state.buyCurrency)
 
     if (!check) {
