@@ -16,12 +16,12 @@ const login = (_privateKey, app) => {
 
   if (privateKey) {
     account = app.env.web3.eth.accounts.privateKeyToAccount(privateKey)
-  }
-  else {
+  } else {
     account = app.env.web3.eth.accounts.create()
   }
 
   app.env.web3.eth.accounts.wallet.add(account.privateKey)
+  console.log('!WALLET ADDED! app.env.web3.eth.accounts.wallet = ', app.env.web3.eth.accounts.wallet)
 
   if (!_privateKey) {
     app.env.storage.setItem(storageKey, account.privateKey)

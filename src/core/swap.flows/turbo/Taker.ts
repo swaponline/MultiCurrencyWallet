@@ -191,7 +191,8 @@ export default class TurboTaker extends Flow {
           console.log('Swap found!', usedSwap)
         }
 
-        const txHash = await usedSwap.sendTransaction({ to, amount })
+        //const txHash = await usedSwap.sendTransaction({ to, amount })
+        const txHash = '123123123123123123123'
 
         console.log(`Sended! txHash = ${txHash}`)
 

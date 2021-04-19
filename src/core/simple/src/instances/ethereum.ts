@@ -3,6 +3,7 @@ import BigNumber from 'bignumber.js'
 import debug from 'debug'
 
 import request from '../helpers/request'
+import SwapApp from 'swap.app'
 
 
 // const MAINNET_PROVIDER = `https://mainnet.infura.io/JCnK5ifEPH9qcQkX0Ahl`
@@ -89,6 +90,10 @@ class Ethereum {
 
   async sendTransaction({ to, amount }) {
     const from = this.core.eth.accounts.wallet[0]
+    console.log('>>> sendTransaction!')
+    console.log('this.core.eth.accounts.wallet[0] = ', this.core.eth.accounts.wallet[0])
+    console.log('this.core =', this.core)
+    console.log('this.app...=', this.app.env.web3.eth.accounts.wallet)
     const gas = 1e5
 
     amount = this.core.utils.toWei(amount.toString())

@@ -191,6 +191,7 @@ export default class TurboMaker extends Flow {
         }
 
         const txHash = await usedSwap.sendTransaction({ to, amount })
+        //const txHash = '987987987987987987987987'
 
         console.log(`Sended! txHash = ${txHash}`)
 
