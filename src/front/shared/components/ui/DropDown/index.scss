@@ -40,7 +40,7 @@
 
     .selectedItem {
       padding: 0 20px;
-      height: 335px;
+      height: 250px;
     }
   }
 }
@@ -232,7 +232,7 @@
 
 .select {
   min-width: 100%;
-  max-height: 245px;
+  max-height: 160px;
   background-color: #fff;
   position: absolute;
   right: -1;
@@ -272,12 +272,6 @@
 }
 
 @include media-mobile {
-  .selectedItem {
-    display: flex;
-    width: 100%;
-    align-items: center;
-    justify-content: space-between;
-  }
 
   .fullTitle {
     font-size: 14px;

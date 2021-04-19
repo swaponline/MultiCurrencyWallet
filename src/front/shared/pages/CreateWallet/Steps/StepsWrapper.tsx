@@ -20,6 +20,7 @@ export default class StepsWrapper extends Component<any, any> {
     ...(!config.opts.curEnabled || config.opts.curEnabled.ghost) ? [{ name: "GHOST", capture: "Ghost" }] : [],
     ...(!config.opts.curEnabled || config.opts.curEnabled.next) ? [{ name: "NEXT", capture: "NEXT.coin" }] : [],
     ...(process.env.MAINNET) ? [{ name: "SWAP", capture: "Swap" }] : [{ name: "WEENUS", capture: "Weenus" }],
+    { name: "WBTC", capture: "Wrapped Bitcoin" },
     { name: "USDT", capture: "Tether" },
     { name: "EURS", capture: "Eurs" },
   ]
