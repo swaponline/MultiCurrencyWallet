@@ -14,12 +14,14 @@ if (process.argv.length>5) {
     address: process.argv[2],
     decimals: Number.parseInt(process.argv[4], 10),
     fullName: process.argv[5].split('_').join(' '),
+    canSwap: true,
   }
 } else {
   newERC20['{#WIDGETTOKENCODE#}'] = {
     address: '{#WIDGETTOKENCONTRACT#}',
     decimals: 12071998,
     fullName: '{#WIDGETTOKENTITLE#}',
+    canSwap: true,
   }
 }
 

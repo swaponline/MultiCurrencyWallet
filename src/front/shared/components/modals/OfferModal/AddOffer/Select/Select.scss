@@ -50,6 +50,15 @@
   // }
 }
 
+.switchButton {
+  font-size: 1.2rem;
+  transform: rotate(-90deg);
+
+  button {
+    width: 100%;
+  }
+}
+
 @include media-mobile {
   .groupField {
     margin-bottom: 25px;

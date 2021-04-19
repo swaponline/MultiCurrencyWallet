@@ -5,21 +5,18 @@ function AppConfigPlugin() {}
 module.exports = AppConfigPlugin
 
 AppConfigPlugin.prototype.apply = (compiler) => {
-
-  compiler.plugin('normal-module-factory', nmf => {
-    nmf.plugin('before-resolve', (result, callback) => {
-      if (!result) {
-        return callback()
-      }
+  compiler.hooks.normalModuleFactory.tap('AppConfigPlugin', nmf => {
+    nmf.hooks.beforeResolve.tap('AppConfigPlugin', (result) => {
 
       if (/app-config$/.test(result.request)) {
-        compiler.apply(new webpack.DefinePlugin({
+        const definePlugin = new webpack.DefinePlugin({
           __CONFIG__: JSON.stringify(require(result.request)), // eslint-disable-line
-        }))
+        })
+        definePlugin.apply(compiler)
 
         result.request += '/client'
       }
-      return callback(null, result)
+      return true
     })
   })
 }

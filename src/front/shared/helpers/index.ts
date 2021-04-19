@@ -37,6 +37,8 @@ import redirectTo from './redirectTo'
 
 import adminFee from './adminFee'
 
+import swaps from './swaps'
+
 import stats from './stats.swaponline'
 
 import { getPairFees } from './getPairFees'
@@ -89,6 +91,8 @@ export {
   redirectTo,
 
   adminFee,
+
+  swaps,
 
   stats,
 
