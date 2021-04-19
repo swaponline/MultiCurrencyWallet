@@ -28,9 +28,14 @@ window.buildOptions = {
     btc: true,
     eth: true,
   },
-  blockchainSwapEnabled = { // Or 'false' if enabled all
+  blockchainSwapEnabled: { // Or 'false' if enabled all
     btc: true,
     eth: true,
+  },
+  defaultExchangePair: {
+    buy: 'eth',
+    sell: 'btc',
+  }
   invoiceEnabled: false, // Allow create invoices
 }
 */

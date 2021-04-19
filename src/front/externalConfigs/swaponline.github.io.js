@@ -49,4 +49,8 @@ window.buildOptions = {
     ghost: false,
     next: false,
   },
+  defaultExchangePair: {
+    buy: 'wbtc',
+    sell: 'btc',
+  }
 }

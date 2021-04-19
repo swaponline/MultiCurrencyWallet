@@ -124,10 +124,10 @@ type ExchangeState = {
 }
 
 const allowedCoins = [
-  ...(!config.opts.curEnabled || config.opts.curEnabled.btc ? ['BTC'] : []),
-  ...(!config.opts.curEnabled || config.opts.curEnabled.eth ? ['ETH'] : []),
-  ...(!config.opts.curEnabled || config.opts.curEnabled.ghost ? ['GHOST'] : []),
-  ...(!config.opts.curEnabled || config.opts.curEnabled.next ? ['NEXT'] : []),
+  ...(!config.opts.blockchainSwapEnabled || config.opts.blockchainSwapEnabled.btc ? ['BTC'] : []),
+  ...(!config.opts.blockchainSwapEnabled || config.opts.blockchainSwapEnabled.eth ? ['ETH'] : []),
+  ...(!config.opts.blockchainSwapEnabled || config.opts.blockchainSwapEnabled.ghost ? ['GHOST'] : []),
+  ...(!config.opts.blockchainSwapEnabled || config.opts.blockchainSwapEnabled.next ? ['NEXT'] : []),
 ]
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
@@ -248,8 +248,8 @@ class Exchange extends PureComponent<any, any> {
       }
     }
 
-    let haveCurrency = sell || 'btc'
-    let getCurrency = buy || (!isWidgetBuild ? process.env.MAINNET ? 'wbtc' : 'eth' : config.erc20token)
+    let haveCurrency = sell || config.opts.defaultExchangePair.sell
+    let getCurrency = buy || (!isWidgetBuild ? config.opts.defaultExchangePair.buy : config.erc20token)
 
     const exchangeDataStr = localStorage.getItem(constants.localStorage.exchangeSettings)
     const exchangeSettings = exchangeDataStr && JSON.parse(exchangeDataStr)

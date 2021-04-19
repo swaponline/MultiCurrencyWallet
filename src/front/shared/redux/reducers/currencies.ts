@@ -164,7 +164,7 @@ const initialState = {
             title: key.toUpperCase(),
             icon: key,
             value: key,
-            fullTitle: config.erc20[key].fullName,
+            fullTitle: config.erc20[key].fullName || key,
           }
       ))),
   ],

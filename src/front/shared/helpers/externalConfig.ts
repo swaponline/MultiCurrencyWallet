@@ -46,6 +46,10 @@ const externalConfig = () => {
       ghost: true,
       next: true,
     },
+    defaultExchangePair: {
+      buy: 'eth',
+      sell: 'btc',
+    },
     ownTokens: false,
     addCustomERC20: true,
     invoiceEnabled: (config.isWidget) ? false : true,
