@@ -22,6 +22,7 @@ import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
 import config from 'helpers/externalConfig'
+import swapsHelper from 'helpers/swaps'
 import SwapApp from 'swap.app'
 
 import helpers, {
@@ -123,31 +124,7 @@ type ExchangeState = {
   toAddress: Address
 }
 
-const allowedCoins = [
-  ...(!config.opts.blockchainSwapEnabled || config.opts.blockchainSwapEnabled.btc ? ['BTC'] : []),
-  ...(!config.opts.blockchainSwapEnabled || config.opts.blockchainSwapEnabled.eth ? ['ETH'] : []),
-  ...(!config.opts.blockchainSwapEnabled || config.opts.blockchainSwapEnabled.ghost ? ['GHOST'] : []),
-  ...(!config.opts.blockchainSwapEnabled || config.opts.blockchainSwapEnabled.next ? ['NEXT'] : []),
-]
-
 const isDark = localStorage.getItem(constants.localStorage.isDark)
-
-const isExchangeAllowed = (currencies) =>
-  currencies.filter((c) => {
-    const isErc = Object.keys(config.erc20)
-      .map((i) => i.toLowerCase())
-      .includes(c.value.toLowerCase())
-
-    const isAllowedCoin = allowedCoins.map((i) => i.toLowerCase()).includes(c.value.toLowerCase())
-
-    return isAllowedCoin || isErc
-  })
-
-const filterIsPartial = (orders) =>
-  orders
-    .filter((order) => order.isPartial && !order.isProcessing && !order.isHidden)
-    .filter((order) => order.sellAmount !== 0 && order.sellAmount.isGreaterThan(0)) // WTF sellAmount can be not BigNumber
-    .filter((order) => order.buyAmount !== 0 && order.buyAmount.isGreaterThan(0)) // WTF buyAmount can be not BigNumber too - need fix this
 
 const isWidgetBuild = config && config.isWidget
 const bannedPeers = {} // rejected swap peers
@@ -159,10 +136,10 @@ const bannedPeers = {} // rejected swap peers
     core: { orders },
     user: { ethData, btcData, ghostData, nextData, tokensData, activeFiat, ...rest },
   }) => ({
-    currencies: isExchangeAllowed(currencies.partialItems),
+    currencies: swapsHelper.isExchangeAllowed(currencies.partialItems),
     allCurrencyies: currencies.items,
-    addSelectedItems: isExchangeAllowed(currencies.addPartialItems),
-    orders: filterIsPartial(orders),
+    addSelectedItems: swapsHelper.isExchangeAllowed(currencies.addPartialItems),
+    orders: swapsHelper.filterIsPartial(orders),
     currenciesData: [ethData, btcData, ghostData, nextData],
     tokensData: [...Object.keys(tokensData).map((k) => tokensData[k])],
     decline: rememberedOrders.savedOrders,
@@ -1474,7 +1451,6 @@ class Exchange extends PureComponent<any, any> {
         params: { linkedOrderId },
       },
     } = this.props
-
     const {
       isTokenSell,
       isPendingTokenApprove,
