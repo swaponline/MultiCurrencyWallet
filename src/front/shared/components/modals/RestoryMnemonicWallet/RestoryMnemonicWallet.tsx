@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react'
 import helpers, { constants } from 'helpers'
 import actions from 'redux/actions'
-import Link from 'local_modules/sw-valuelink'
 import { connect } from 'redaction'
 import config from 'app-config'
 
@@ -10,15 +9,12 @@ import cssModules from 'react-css-modules'
 import defaultStyles from '../Styles/default.scss'
 import styles from './RestoryMnemonicWallet.scss'
 import okSvg from 'shared/images/ok.svg'
-
-import { BigNumber } from 'bignumber.js'
+import * as mnemonicUtils from 'common/utils/mnemonic'
 import Modal from 'components/modal/Modal/Modal'
 import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
-import Input from 'components/forms/Input/Input'
 import Button from 'components/controls/Button/Button'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
-import { isMobile } from 'react-device-detect'
 
 import links from 'helpers/links'
 
@@ -186,7 +182,7 @@ class RestoryMnemonicWallet extends React.Component {
   handleRestoryWallet = () => {
     const { mnemonic } = this.state
 
-    if (!mnemonic || !actions.btc.validateMnemonicWords(mnemonic)) {
+    if (!mnemonic || !mnemonicUtils.validateMnemonicWords(mnemonic)) {
       this.setState({
         mnemonicIsInvalid: true,
         isFetching: false,

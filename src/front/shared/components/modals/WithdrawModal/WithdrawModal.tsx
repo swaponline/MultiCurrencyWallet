@@ -94,7 +94,7 @@ type WithdrawModalState = {
       custom: number
   }
 
-  ethWallet: IUniversalObj
+  walletForTokenFee: IUniversalObj
   exCurrencyRate: BigNumber
   fees: {
     miner: BigNumber
@@ -171,14 +171,20 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
       ? new BigNumber(currentActiveAsset.infoAboutCurrency.price_fiat)
       : new BigNumber(0)
 
+    console.group('%c send form ', 'color: orange; font-size: 30px')
+
     // save wallet for token exchange's rate
     const walletForTokenFee = items.find(wallet => {
+      console.log('wallet: ', wallet)
       const walletCurrency = wallet.currency.toLowerCase()
 
-      return config.binance === true && wallet.infoAboutCurrency?.price_fiat
+      return config.binance === true
         ? walletCurrency === 'bnb'
         : walletCurrency === 'eth'
     })
+
+    console.log('wallet for token fee : ', walletForTokenFee)
+    console.groupEnd()
 
     this.state = {
       isShipped: false,
@@ -194,7 +200,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
       ownTx: '',
       hiddenCoinsList: actions.core.getHiddenCoins(),
       currentActiveAsset,
-      ethWallet: walletForTokenFee || {},
+      walletForTokenFee: walletForTokenFee || {},
       exCurrencyRate,
       allCurrencyies,
       bitcoinFees: {
@@ -767,7 +773,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
       amount,
       address,
       balances,
-      ethWallet,
+      walletForTokenFee,
       isShipped,
       fiatAmount,
       isEthToken,
@@ -813,8 +819,8 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
     const activeCriptoCurrency = getCurrencyKey(currentActiveAsset.currency, true).toUpperCase()
     const selectedValueView = getCurrencyKey(selectedValue, true).toUpperCase()
     const criptoCurrencyHaveInfoPrice = returnHaveInfoPrice();
-    const ethBalanceLessThanMiner = new BigNumber(ethWallet.balance).isLessThan(fees.miner)
-    const exEthereumRate = new BigNumber(ethWallet.infoAboutCurrency.price_fiat || 0)
+    const ethBalanceLessThanMiner = new BigNumber(walletForTokenFee.balance).isLessThan(fees.miner)
+    const exEthereumRate = new BigNumber(walletForTokenFee.infoAboutCurrency.price_fiat || 0)
 
     function returnHaveInfoPrice(): boolean {
       let result = true

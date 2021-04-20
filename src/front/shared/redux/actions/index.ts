@@ -18,6 +18,7 @@ import ghost from './ghost'
 import next from './next'
 import btcmultisig from './btcmultisig'
 import eth from './eth'
+import bnb from './bnb'
 import token from './token'
 
 import api from './api'
@@ -57,6 +58,7 @@ export default {
   btc,
   btcmultisig,
   eth,
+  bnb,
   ghost,
   next,
 

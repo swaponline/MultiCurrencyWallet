@@ -18,33 +18,30 @@ import metamask from 'helpers/metamask'
 
 const hasAdminFee = (
   config
-    && config.opts
-    && config.opts.fee
-    && config.opts.fee.eth
-    && config.opts.fee.eth.fee
-    && config.opts.fee.eth.address
-    && config.opts.fee.eth.min
-) ? config.opts.fee.eth : false
+  && config.opts?.fee?.bnb?.fee
+  && config.opts?.fee?.bnb?.address
+  && config.opts?.fee?.bnb?.min
+) ? config.opts.fee.bnb : false
 
 const sweepToMnemonic = (mnemonic, path) => {
   const wallet = getWalletByWords(mnemonic, path)
-  localStorage.setItem(constants.privateKeyNames.ethMnemonic, wallet.privateKey)
+  localStorage.setItem(constants.privateKeyNames.bnbMnemonic, wallet.privateKey)
   return wallet.privateKey
 }
 
 const isSweeped = () => {
   const {
     user: {
-      ethData,
-      ethMnemonicData,
+      bnbData,
+      bnbMnemonicData,
     },
   } = getState()
 
-  if (ethMnemonicData
-    && ethMnemonicData.address
-    && ethData
-    && ethData.address
-    && ethData.address.toLowerCase() !== ethMnemonicData.address.toLowerCase()
+  if (bnbMnemonicData
+    && bnbMnemonicData.address
+    && bnbData
+    && bnbData.address
+    && bnbData.address.toLowerCase() !== bnbMnemonicData.address.toLowerCase()
   ) return false
 
   return true
@@ -53,17 +50,17 @@ const isSweeped = () => {
 const getAllMyAddresses = () => {
   const {
     user: {
-      ethData,
-      ethMnemonicData,
+      bnbData,
+      bnbMnemonicData,
     },
   } = getState()
 
-  const retData = [ethData.address.toLowerCase()]
+  const retData = [bnbData.address.toLowerCase()]
 
-  if (ethMnemonicData
-    && ethMnemonicData.address
-    && ethMnemonicData.address.toLowerCase() !== ethData.address.toLowerCase()
-  ) retData.push(ethMnemonicData.address.toLowerCase())
+  if (bnbMnemonicData
+    && bnbMnemonicData.address
+    && bnbMnemonicData.address.toLowerCase() !== bnbData.address.toLowerCase()
+  ) retData.push(bnbMnemonicData.address.toLowerCase())
 
   if (metamask
     && metamask.isEnabled()
@@ -79,22 +76,22 @@ const getAllMyAddresses = () => {
 const getSweepAddress = () => {
   const {
     user: {
-      ethMnemonicData,
+      bnbMnemonicData,
     },
   } = getState()
 
-  if (ethMnemonicData && ethMnemonicData.address) return ethMnemonicData.address
+  if (bnbMnemonicData && bnbMnemonicData.address) return bnbMnemonicData.address
   return false
 }
 
 const getPrivateKeyByAddress = (address) => {
   const {
     user: {
-      ethData: {
+      bnbData: {
         address: oldAddress,
         privateKey,
       },
-      ethMnemonicData: {
+      bnbMnemonicData: {
         address: mnemonicAddress,
         privateKey: mnemonicKey,
       },
@@ -106,8 +103,7 @@ const getPrivateKeyByAddress = (address) => {
 }
 
 const getWalletByWords = (mnemonic: string, walletNumber: number = 0, path: string = '') => {
-  // in eth address are equals in all networds
-  return mnemonicUtils.getEthWallet('nothing', mnemonic, walletNumber, path)
+  return mnemonicUtils.getBnbWallet('nothing', mnemonic, walletNumber, path)
 }
 
 
@@ -117,7 +113,7 @@ const login = (privateKey, mnemonic = null, mnemonicKeys = null) => {
   if (privateKey
     && mnemonic
     && mnemonicKeys
-    && mnemonicKeys.eth === privateKey
+    && mnemonicKeys.bnb === privateKey
   ) {
     sweepToMnemonicReady = true
   }
@@ -131,27 +127,23 @@ const login = (privateKey, mnemonic = null, mnemonicKeys = null) => {
   if (privateKey) {
     data = web3.eth.accounts.privateKeyToAccount(privateKey)
   } else {
-    console.info('Created account Ethereum ...')
-    // data = web3.eth.accounts.create()
     if (!mnemonic) {
-      mnemonic = bip39.generateMnemonic()
+      mnemonic = mnemonicUtils.getRandomMnemonicWords()
     }
 
     const accData = getWalletByWords(mnemonic)
-    console.log('Eth. Generated wallet from random 12 words')
-    console.log(accData)
     privateKey = accData.privateKey
     data = web3.eth.accounts.privateKeyToAccount(privateKey)
-    localStorage.setItem(constants.privateKeyNames.ethMnemonic, privateKey)
+    localStorage.setItem(constants.privateKeyNames.bnbMnemonic, privateKey)
   }
 
-  localStorage.setItem(constants.privateKeyNames.eth, data.privateKey)
+  localStorage.setItem(constants.privateKeyNames.bnb, data.privateKey)
 
   web3.eth.accounts.wallet.add(data.privateKey)
   data.isMnemonic = sweepToMnemonicReady
 
-  reducers.user.setAuthData({ name: 'ethData', data })
-  window.getEthAddress = () => data.address
+  reducers.user.setAuthData({ name: 'bnbData', data })
+  window.getBnbAddress = () => data.address
   referral.newReferral(data.address)
 
   console.info('Logged in with Ethereum', data)
@@ -175,12 +167,12 @@ const login = (privateKey, mnemonic = null, mnemonicKeys = null) => {
     //@ts-ignore
     mnemonicData.isMnemonic = sweepToMnemonicReady
 
-    console.info('Logged in with Ethereum Mnemonic', mnemonicData)
+    console.info('Logged in with Binance Mnemonic', mnemonicData)
     reducers.user.addWallet({
-      name: 'ethMnemonicData',
+      name: 'bnbMnemonicData',
       data: {
-        currency: 'ETH',
-        fullName: 'Ethereum (New)',
+        currency: 'BNB',
+        fullName: 'Binance Coin (New)',
         balance: 0,
         isBalanceFetched: false,
         balanceError: null,
@@ -191,7 +183,7 @@ const login = (privateKey, mnemonic = null, mnemonicKeys = null) => {
     new Promise(async (resolve) => {
       const balance = await fetchBalance(mnemonicData.address)
       reducers.user.setAuthData({
-        name: 'ethMnemonicData',
+        name: 'bnbMnemonicData',
         data: {
           balance,
           isBalanceFetched: true,
@@ -205,23 +197,28 @@ const login = (privateKey, mnemonic = null, mnemonicKeys = null) => {
 }
 
 const getBalance = () => {
+  console.group('%c BNB get balance', 'color: orange; font-size: 20px')
+
   const {
     user: {
-      ethData: {
-        address: ethAddress,
+      bnbData: {
+        address: bnbAddress,
       },
     },
   } = getState()
 
-  const address = (metamask.isEnabled() && metamask.isConnected())
+  const address = metamask.isEnabled() && metamask.isConnected()
     ? metamask.getAddress()
-    : ethAddress
+    : bnbAddress
 
-  const balanceInCache = cacheStorageGet('currencyBalances', `eth_${address}`)
+  const balanceInCache = cacheStorageGet('currencyBalances', `bnb_${address}`)
+
+  console.log('address: ', address)
+  console.log('balanceInCache: ', balanceInCache)
 
   if (balanceInCache !== false) {
     reducers.user.setBalance({
-      name: 'ethData',
+      name: 'bnbData',
       amount: balanceInCache,
     })
     return balanceInCache
@@ -229,18 +226,18 @@ const getBalance = () => {
 
   return web3.eth.getBalance(address)
     .then(result => {
+      console.log('result: ', result)
       const amount = web3.utils.fromWei(result)
 
       cacheStorageSet('currencyBalances', `eth_${address}`, amount, 30)
-      reducers.user.setBalance({ name: 'ethData', amount })
+      reducers.user.setBalance({ name: 'bnbData', amount })
       return amount
     })
     .catch((e) => {
-      reducers.user.setBalanceError({ name: 'ethData' })
+      console.log('error for BNB balance')
+      reducers.user.setBalanceError({ name: 'bnbData' })
     })
 }
-
-const getReputation = () => Promise.resolve(0)
 
 const fetchBalance = (address) => 
   web3.eth.getBalance(address)
@@ -250,43 +247,43 @@ const fetchBalance = (address) =>
     })
 
 const getInvoices = (address) => {
-  const { user: { ethData: { userAddress } } } = getState()
+  const { user: { bnbData: { userAddress } } } = getState()
 
   address = address || userAddress
 
   return actions.invoices.getInvoices({
-    currency: 'ETH',
+    currency: 'BNB',
     address,
   })
 }
 
 const getTx = (txRaw) => txRaw.transactionHash
 
-const getTxRouter = (txId) => `/eth/tx/${txId}`
+const getTxRouter = (txId) => `/bnb/tx/${txId}`
 
 const getLinkToInfo = (tx) => {
   if (!tx) {
     return
   }
 
-  return `${config.link.etherscan}/tx/${tx}`
+  return `${config.link.bscscan}/tx/${tx}`
 }
 
 const getTransaction = (address: string = ``, ownType: string = ``) =>
   new Promise((resolve) => {
-    const { user: { ethData: { address: userAddress } } } = getState()
+    const { user: { bnbData: { address: userAddress } } } = getState()
     address = address || userAddress
 
-    if (!typeforce.isCoinAddress.ETH(address)) {
+    if (!typeforce.isCoinAddress.BNB(address)) {
       resolve([])
     }
 
-    const type = (ownType) || 'eth'
+    const type = (ownType) || 'bnb'
     // First - get internal txs
-    const internalUrl = `?module=account&action=txlistinternal&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=${config.api.etherscan_ApiKey}`
-    const url = `?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=${config.api.etherscan_ApiKey}`
+    const internalUrl = `?module=account&action=txlistinternal&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=${config.api.bscscan_ApiKey}`
+    const url = `?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=${config.api.bscscan_ApiKey}`
 
-    apiLooper.get('etherscan', internalUrl)
+    apiLooper.get('bscscan', internalUrl)
       .then((res:any) => {
         const internals : Array<any> = []
         res.result
@@ -297,7 +294,7 @@ const getTransaction = (address: string = ``, ownType: string = ``) =>
               to,
             }
           })
-        apiLooper.get('etherscan', url)
+        apiLooper.get('bscscan', url)
           .then((res:any) => {
             const transactions = res.result
               .filter((item) => {
@@ -337,12 +334,12 @@ const getTransaction = (address: string = ``, ownType: string = ``) =>
             resolve(transactions)
           })
           .catch((e) => {
-            console.warn(`Fail get txs for ETH ${address}`, e)
+            console.warn(`Fail get txs for BNB ${address}`, e)
             resolve([])
           })
       })
       .catch((e) => {
-        console.warn(`Fail get txs for ETH ${address}`, e)
+        console.warn(`Fail get txs for BNB ${address}`, e)
         resolve([])
       })
   })
@@ -362,7 +359,7 @@ const sendWithAdminFee = async ({ from, to, amount, gasPrice, gasLimit, speed })
     fee: adminFee,
     address: adminFeeAddress,
     min: adminFeeMinValue,
-  } = config.opts.fee.eth
+  } = config.opts.fee.bnb
 
   const adminFeeMin = new BigNumber(adminFeeMinValue)
 
@@ -374,7 +371,8 @@ const sendWithAdminFee = async ({ from, to, amount, gasPrice, gasLimit, speed })
   //@ts-ignore
   feeFromAmount = feeFromAmount.toNumber() // Admin fee
 
-  gasPrice = gasPrice || await helpers.eth.estimateGasPrice({ speed })
+  //@ts-ignore
+  gasPrice = gasPrice || await helpers.bnb.estimateGasPrice({ speed })
 
   const mainGasLimit = gasLimit || (
     isSendToContract
@@ -385,7 +383,7 @@ const sendWithAdminFee = async ({ from, to, amount, gasPrice, gasLimit, speed })
 
   const walletData = actions.core.getWallet({
     address: from,
-    currency: 'ETH',
+    currency: 'BNB',
   })
 
   const privateKey = (!walletData.isMetamask) ? getPrivateKeyByAddress(from) : false
@@ -411,7 +409,7 @@ const sendWithAdminFee = async ({ from, to, amount, gasPrice, gasLimit, speed })
         : 'sendSignedTransaction'
     ](walletData.isMetamask ? params : rawTx)
       .on('transactionHash', (hash) => {
-        const txId = `${config.link.etherscan}/tx/${hash}`
+        const txId = `${config.link.bscscan}/tx/${hash}`
         console.log('tx', txId)
       })
       .on('error', (err) => {
@@ -431,11 +429,10 @@ const sendWithAdminFee = async ({ from, to, amount, gasPrice, gasLimit, speed })
             value: web3utils.toWei(String(feeFromAmount)),
           }
 
-          let resultAdminFee = false
           if (walletData.isMetamask) {
-            resultAdminFee = await web3js.eth.accounts.signTransaction(adminFeeParams)
+            await web3js.eth.accounts.signTransaction(adminFeeParams)
           } else {
-            resultAdminFee = await web3js.eth.accounts.signTransaction(adminFeeParams, privateKey)
+            await web3js.eth.accounts.signTransaction(adminFeeParams, privateKey)
           }
           //@ts-ignore
           web3js.eth.sendSignedTransaction(resultAdminFee.rawTransaction)
@@ -453,8 +450,8 @@ const sendDefault = ({ from, to, amount, gasPrice = null, gasLimit = null, speed
     const web3js = getWeb3()
 
     const isSendToContract = await addressIsContract(to)
-
-    gasPrice = gasPrice || await helpers.eth.estimateGasPrice({ speed })
+    //@ts-ignore
+    gasPrice = gasPrice || await helpers.bnb.estimateGasPrice({ speed })
     gasLimit = gasLimit || (
       isSendToContract
         ? DEFAULT_CURRENCY_PARAMETERS.eth.limit.contractInteract
@@ -471,7 +468,7 @@ const sendDefault = ({ from, to, amount, gasPrice = null, gasLimit = null, speed
 
     const walletData = actions.core.getWallet({
       address: from,
-      currency: 'ETH',
+      currency: 'BNB',
     })
 
     const privateKey = (!walletData.isMetamask) ? getPrivateKeyByAddress(from) : false
@@ -482,14 +479,14 @@ const sendDefault = ({ from, to, amount, gasPrice = null, gasLimit = null, speed
       rawTx = signedTx.rawTransaction
     }
 
-    const ethDispatchMethod = web3js.eth[
+    const bnbDispatchMethod = web3js.eth[
       walletData.isMetamask
         ? 'sendTransaction'
         : 'sendSignedTransaction'
     ]
-    const receipt = ethDispatchMethod(walletData.isMetamask ? params : rawTx)
+    const receipt = bnbDispatchMethod(walletData.isMetamask ? params : rawTx)
       .on('transactionHash', (hash) => {
-        const txId = `${config.link.etherscan}/tx/${hash}`
+        const txId = `${config.link.bscscan}/tx/${hash}`
         console.log('tx', txId)
       })
       .on('error', (error) => {
@@ -499,11 +496,11 @@ const sendDefault = ({ from, to, amount, gasPrice = null, gasLimit = null, speed
     resolve(receipt)
   })
 }
-
+// TODO: turbo swap
 const sendTransaction = async ({ to, amount }) => {
   // from main eth wallet
 
-  const { user: { ethData: { address } } } = getState()
+  const { user: { bnbData: { address } } } = getState()
 
   if (false) { // fake tx - turboswaps debug
     const txHash = '0x58facdbf5023a401f39998179995f0af1e54a64455145df6ed507abdecc1b0a4'
@@ -524,8 +521,12 @@ const sendTransaction = async ({ to, amount }) => {
 }
 
 const _addressIsContractCache = {} // Remember prev checks - for speed up
+
 const addressIsContract = async (checkAddress: string): Promise<boolean> => {
-  if (_addressIsContractCache[checkAddress.toLowerCase()] !== undefined) return _addressIsContractCache[checkAddress.toLowerCase()]
+  if (_addressIsContractCache[checkAddress.toLowerCase()] !== undefined) {
+    return _addressIsContractCache[checkAddress.toLowerCase()]
+  }
+
   const codeAtAddress = await web3.eth.getCode(checkAddress)
   const codeIsEmpty = !codeAtAddress || codeAtAddress === '0x' || codeAtAddress === '0x0'
 
@@ -535,9 +536,9 @@ const addressIsContract = async (checkAddress: string): Promise<boolean> => {
 }
 
 const fetchTxInfo = (hash, cacheResponse) => new Promise((resolve) => {
-  const url = `?module=proxy&action=eth_getTransactionByHash&txhash=${hash}&apikey=${config.api.etherscan_ApiKey}`
+  const url = `?module=proxy&action=eth_getTransactionByHash&txhash=${hash}&apikey=${config.api.bscscan_ApiKey}`
 
-  return apiLooper.get('etherscan', url, {
+  return apiLooper.get('bscscan', url, {
     cacheResponse,
   })
     .then((res: any) => {
@@ -552,18 +553,19 @@ const fetchTxInfo = (hash, cacheResponse) => new Promise((resolve) => {
         } = res.result
 
         const amount =  web3.utils.fromWei(value)
-
-        // Calc miner fee, used for this tx
         const minerFee = new BigNumber(web3.utils.toBN(gas).toNumber())
           .multipliedBy(web3.utils.toBN(gasPrice).toNumber())
-          .dividedBy(1e18).toNumber()
+          .dividedBy(8)
+          .toNumber()
 
         let adminFee: any = false
 
         if (hasAdminFee && to != hasAdminFee.address) {
           adminFee = new BigNumber(hasAdminFee.fee).dividedBy(100).multipliedBy(amount)
 
-          if (new BigNumber(hasAdminFee.min).isGreaterThan(adminFee)) adminFee = new BigNumber(hasAdminFee.min)
+          if (new BigNumber(hasAdminFee.min).isGreaterThan(adminFee)) {
+            adminFee = new BigNumber(hasAdminFee.min)
+          }
 
           adminFee = adminFee.toNumber()
         }
@@ -574,7 +576,7 @@ const fetchTxInfo = (hash, cacheResponse) => new Promise((resolve) => {
           receiverAddress: to,
           senderAddress: from,
           minerFee,
-          minerFeeCurrency: 'ETH',
+          minerFeeCurrency: 'BNB',
           adminFee,
           confirmed: (blockHash != null),
         })
@@ -594,7 +596,6 @@ export default {
   getBalance,
   fetchBalance,
   getTransaction,
-  getReputation,
   getInvoices,
   getTx,
   getLinkToInfo,

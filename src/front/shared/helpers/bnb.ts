@@ -31,6 +31,8 @@ const estimateFeeValue = async (params: EstimateFeeParams) => {
   return feeValue
 }
 
+// TODO: new gas API
+
 const estimateGasPrice = async ({ speed = 'fast' } = {}) => {
   const link = config.feeRates.bnb
   const defaultPrice = DEFAULT_CURRENCY_PARAMETERS.eth.price

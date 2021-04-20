@@ -57,13 +57,13 @@ const login = (privateKey, contractAddress, nameContract, decimals, fullName) =>
   if (privateKey) {
     data = web3.eth.accounts.privateKeyToAccount(privateKey)
   } else {
-    console.info('Created account ETH Token ...')
+    console.info('Created account Token ...')
     data = web3.eth.accounts.create()
     web3.eth.accounts.wallet.add(data)
   }
 
   web3.eth.accounts.wallet.add(data.privateKey)
-  console.info('Logged in with ETH Token', data)
+  console.info('Logged in with Token', data)
 
   setupContract(data.address, contractAddress, nameContract, decimals, fullName)
 }

@@ -3,7 +3,13 @@ import * as bip32 from 'bip32'
 import { hdkey } from 'ethereumjs-wallet'
 import * as bip39 from 'bip39'
 
+const getRandomMnemonicWords = () => {
+  return bip39.generateMnemonic()
+}
 
+const validateMnemonicWords = (mnemonic) => {
+  return bip39.validateMnemonic(convertMnemonicToValid(mnemonic))
+}
 
 const convertMnemonicToValid = (mnemonic) => {
   return mnemonic
@@ -38,6 +44,24 @@ const getBtcWallet = (network, mnemonic, walletNumber = 0, path) => {
 }
 
 const getEthWallet = (network, mnemonic, walletNumber = 0, path) => {
+  mnemonic = convertMnemonicToValid(mnemonic)
+  const seed = bip39.mnemonicToSeedSync(mnemonic)
+  const hdwallet = hdkey.fromMasterSeed(seed)
+  const wallet = hdwallet.derivePath((path) || `m/44'/60'/0'/0/${walletNumber}`).getWallet()
+
+  return {
+    mnemonic,
+    //@ts-ignore
+    address: `0x${wallet.getAddress().toString('Hex')}`,
+    //@ts-ignore
+    publicKey: `0x${wallet.pubKey.toString('Hex')}`,
+    //@ts-ignore
+    privateKey: `0x${wallet.privKey.toString('Hex')}`,
+    wallet,
+  }
+}
+
+const getBnbWallet = (network, mnemonic, walletNumber = 0, path) => {
   mnemonic = convertMnemonicToValid(mnemonic)
   const seed = bip39.mnemonicToSeedSync(mnemonic)
   const hdwallet = hdkey.fromMasterSeed(seed)
@@ -101,17 +125,21 @@ const mnemonicIsValid = (mnemonic:string):boolean => bip39.validateMnemonic(conv
 
 
 const forCoin = {
-  BTC:    getBtcWallet,
-  ETH:    getEthWallet,
-  GHOST:  getGhostWallet,
-  NEXT:   getNextWallet,
+  BTC: getBtcWallet,
+  ETH: getEthWallet,
+  BNB: getBnbWallet,
+  GHOST: getGhostWallet,
+  NEXT: getNextWallet,
 }
 
 export {
+  getRandomMnemonicWords,
+  validateMnemonicWords,
   mnemonicIsValid,
   convertMnemonicToValid,
   getBtcWallet,
   getEthWallet,
+  getBnbWallet,
   getGhostWallet,
   getNextWallet,
   forCoin,

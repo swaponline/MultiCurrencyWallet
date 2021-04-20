@@ -92,15 +92,19 @@ const sign = async () => {
       btc: localStorage.getItem(constants.privateKeyNames.btcMnemonic),
       btcSms: localStorage.getItem(constants.privateKeyNames.btcSmsMnemonicKeyGenerated),
       eth: localStorage.getItem(constants.privateKeyNames.ethMnemonic),
+      bnb: localStorage.getItem(constants.privateKeyNames.bnbMnemonic),
       ghost: localStorage.getItem(constants.privateKeyNames.ghostMnemonic),
       next: localStorage.getItem(constants.privateKeyNames.nextMnemonic),
     }
     console.log('actions user - sign', mnemonicKeys, mnemonic)
+
     if (mnemonic !== `-`) {
       //@ts-ignore
       if (!mnemonicKeys.btc) mnemonicKeys.btc = actions.btc.sweepToMnemonic(mnemonic)
       //@ts-ignore
       if (!mnemonicKeys.eth) mnemonicKeys.eth = actions.eth.sweepToMnemonic(mnemonic)
+      //@ts-ignore
+      if (!mnemonicKeys.bnb) mnemonicKeys.eth = actions.bnb.sweepToMnemonic(mnemonic)
       //@ts-ignore
       if (!mnemonicKeys.ghost) mnemonicKeys.ghost = actions.ghost.sweepToMnemonic(mnemonic)
         //@ts-ignore
@@ -138,11 +142,13 @@ const sign = async () => {
     const btcPrivateKey = localStorage.getItem(constants.privateKeyNames.btc)
     const btcMultisigPrivateKey = localStorage.getItem(constants.privateKeyNames.btcMultisig)
     const ethPrivateKey = localStorage.getItem(constants.privateKeyNames.eth)
+    const bnbPrivateKey = localStorage.getItem(constants.privateKeyNames.bnb)
     const ghostPrivateKey = localStorage.getItem(constants.privateKeyNames.ghost)
     const nextPrivateKey = localStorage.getItem(constants.privateKeyNames.next)
 
 
     const _ethPrivateKey = actions.eth.login(ethPrivateKey, mnemonic, mnemonicKeys)
+    const _bnbPrivateKey = actions.bnb.login(bnbPrivateKey, mnemonic, mnemonicKeys)
     const _btcPrivateKey = actions.btc.login(btcPrivateKey, mnemonic, mnemonicKeys)
     const _ghostPrivateKey = actions.ghost.login(ghostPrivateKey, mnemonic, mnemonicKeys)
     const _nextPrivateKey = actions.next.login(nextPrivateKey, mnemonic, mnemonicKeys)
@@ -156,17 +162,13 @@ const sign = async () => {
     // btc multisig with pin protect (2of3)
     await sign_btc_pin(_btcPrivateKey)
 
-    // if inside actions.token.login to call web3.eth.accounts.privateKeyToAccount passing public key instead of private key
-    // there will not be an error, but the address returned will be wrong
-    // if (!isEthKeychainActivated) {
+    // TODO: for binance ber20
     Object.keys(config.erc20)
       .forEach(name => {
         actions.token.login(_ethPrivateKey, config.erc20[name].address, name, config.erc20[name].decimals, config.erc20[name].fullName)
       })
-    // }
-    reducers.user.setTokenSigned(true)
 
-    // const getReputation = actions.user.getReputation()
+    reducers.user.setTokenSigned(true)
 
     await getReputation()
   })
@@ -223,6 +225,7 @@ const getBalances = () => {
         ? [ { func: metamask.getBalance, name: 'metamask' } ]
         : [],
       { func: actions.eth.getBalance, name: 'eth' },
+      { func: actions.bnb.getBalance, name: 'bnb' },
       { func: actions.btc.getBalance, name: 'btc' },
       { func: actions.ghost.getBalance, name: 'ghost' },
       { func: actions.next.getBalance, name: 'next' },
@@ -248,7 +251,6 @@ const getBalances = () => {
           .forEach(async (name) => {
             try {
               await actions.token.getBalance(name)
-              
             } catch (e) {
               console.error('Fail fetch balance for token', name, e)
             }
@@ -295,7 +297,6 @@ const getExchangeRate = (sellCurrency, buyCurrency): Promise<number> => {
       case 'btc (pin-protected)':
         dataKey = 'btc'
         break
-      default:
     }
 
     if ((user[`${dataKey}Data`]
@@ -317,21 +318,6 @@ const getExchangeRate = (sellCurrency, buyCurrency): Promise<number> => {
     }
   })
 }
-
-const getDemoMoney = process.env.MAINNET ? () => { } : () => {
-  // googe bitcoin (or ropsten) faucet
-  request.get('https://swap.wpmix.net/demokeys.php', {})
-    .then((r) => {
-      window.localStorage.clear()
-      localStorage.setItem(constants.privateKeyNames.btc, r[0])
-      localStorage.setItem(constants.privateKeyNames.eth, r[1])
-      localStorage.setItem(constants.privateKeyNames.ghost, r[2])
-      localStorage.setItem(constants.privateKeyNames.next, r[3])
-      localStorage.setItem(constants.localStorage.demoMoneyReceived, 'true')
-      window.location.reload()
-    })
-}
-
 
 const getInfoAboutCurrency = (currencyNames) =>
   new Promise((resolve, reject) => {
@@ -649,7 +635,6 @@ export default {
   sign_btc_multisig,
   sign_to_tokens,
   getBalances,
-  getDemoMoney,
   setTransactions,
   downloadPrivateKeys,
   getText,

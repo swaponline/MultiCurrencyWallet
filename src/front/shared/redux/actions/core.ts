@@ -416,36 +416,44 @@ const getWallets = (options) => {
       btcMultisigUserData,
       btcMultisigPinData,
       ethData,
+      bnbData,
       tokensData,
-      isTokenSigned,
-
       metamaskData,
     },
   } = getState()
 
   // Sweep
   const {
-    user: { btcMnemonicData, ethMnemonicData, ghostMnemonicData, nextMnemonicData },
+    user: { btcMnemonicData, ethMnemonicData, bnbMnemonicData },
   } = getState()
 
   const metamaskConnected = metamask.isEnabled() && metamask.isConnected()
 
   const allData = [
-    ...(!config.opts.curEnabled || config.opts.curEnabled.eth
+    ...(!config.opts.curEnabled || config.opts.curEnabled.eth || config.opts.curEnabled.bnb
       ? metamaskData
         ? [metamaskData]
         : []
       : []),
+    // Sweep ===============================
     ...(!config.opts.curEnabled || config.opts.curEnabled.btc
       ? btcMnemonicData && !btcData.isMnemonic
         ? [btcMnemonicData]
         : []
-      : []), // Sweep
+      : []), 
+    // Sweep ===============================
     ...(!config.opts.curEnabled || config.opts.curEnabled.eth
       ? ethMnemonicData && !ethData.isMnemonic
         ? [ethMnemonicData]
         : []
-      : []), // Sweep
+      : []),
+    // Sweep ===============================
+    ...(!config.opts.curEnabled || config.opts.curEnabled.bnb
+      ? bnbMnemonicData && !bnbData.isMnemonic
+        ? [bnbMnemonicData]
+        : []
+      : []),
+    // Sweep ===============================
     ...(!config.opts.curEnabled || config.opts.curEnabled.btc ? [btcData] : []),
     ...(!config.opts.curEnabled || config.opts.curEnabled.btc ? [btcMultisigSMSData] : []),
     ...(!config.opts.curEnabled || config.opts.curEnabled.btc
@@ -453,12 +461,14 @@ const getWallets = (options) => {
         ? [btcMultisigPinData]
         : []
       : []),
+    // Sweep ===============================
     ...(!config.opts.curEnabled || config.opts.curEnabled.btc ? [btcMultisigUserData] : []),
     ...(!config.opts.curEnabled || config.opts.curEnabled.btc
       ? btcMultisigUserData && btcMultisigUserData.wallets
         ? btcMultisigUserData.wallets
         : []
       : []),
+    // =====================================
     ...(!config.opts.curEnabled || config.opts.curEnabled.eth
       ? metamaskConnected
         ? withInternal
@@ -466,6 +476,15 @@ const getWallets = (options) => {
           : []
         : [ethData]
       : []),
+    // =====================================
+    ...(!config.opts.curEnabled || config.opts.curEnabled.bnb
+      ? metamaskConnected
+        ? withInternal
+          ? [bnbData]
+          : []
+        : [bnbData]
+      : []),
+    // =====================================
     ...(!config.opts.curEnabled || config.opts.curEnabled.ghost ? [ghostData] : []),
     ...(!config.opts.curEnabled || config.opts.curEnabled.next ? [nextData] : []),
     ...Object.keys(tokensData)
