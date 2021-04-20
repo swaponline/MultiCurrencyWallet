@@ -76,7 +76,7 @@ const webpackConfig = {
       stream: require.resolve('stream-browserify'),
       assert: require.resolve('assert/'),
       path: require.resolve('path-browserify'),
-      crypto: false,
+      crypto: require.resolve('crypto-browserify'),
       buffer: require.resolve('buffer/')
     }
   },
