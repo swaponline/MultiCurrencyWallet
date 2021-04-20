@@ -277,7 +277,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
     })
   }
 
-  setBtcFeeRate = async () => {
+  fetchBtcFee = async () => {
     const {
       address: toAddress,
       selectedItem: {
@@ -326,7 +326,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
     }
   }
 
-  setBitcoinFeeRate = (speedType: string, customValue?: number) => {
+  setBtcUserFee = (speedType: string, customValue?: number) => {
     const { bitcoinFees, txSize, currentDecimals } = this.state
 
     const feeInByte = speedType === 'custom' ?
@@ -395,7 +395,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
         MIN_AMOUNT[currentCoin] = newMinerFee.toNumber()
 
         if (selectedItem.isBTC) {
-          this.setBtcFeeRate()
+          this.fetchBtcFee()
         }
       }
 
@@ -617,7 +617,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
     if (isBTC) {
       clearTimeout(this.btcFeeTimer)
       this.btcFeeTimer = setTimeout(() => {
-        this.setBtcFeeRate()
+        this.fetchBtcFee()
       }, 2000)
     }
 
@@ -1175,7 +1175,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
                 txSize={txSize}
                 bitcoinFees={bitcoinFees}
                 bitcoinFeeSpeedType={bitcoinFeeSpeedType}
-                setBitcoinFee={this.setBitcoinFeeRate}
+                setBitcoinFee={this.setBtcUserFee}
                 minerFee={fees.miner}
                 serviceFee={fees.service}
                 totalFee={fees.total}

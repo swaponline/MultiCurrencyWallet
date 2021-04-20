@@ -36,6 +36,7 @@ const externalConfig = () => {
     inited: true,
     curEnabled: {
       eth: true,
+      bnb: true,
       btc: true,
       ghost: true,
       next: true,
@@ -43,6 +44,7 @@ const externalConfig = () => {
     blockchainSwapEnabled: {
       btc: true,
       eth: true,
+      bnb: true,
       ghost: true,
       next: true,
     },

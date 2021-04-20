@@ -1,11 +1,9 @@
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-/* eslint-disable max-len */
 import React, { useState, useEffect } from 'react'
 import BigNumber from 'bignumber.js'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import btcUtils from 'common/utils/coin/btc'
 import { FormattedMessage, injectIntl } from 'react-intl'
-import { constants, feedback, adminFee, btc, eth, externalConfig } from 'helpers'
+import { constants, feedback, adminFee, eth, externalConfig } from 'helpers'
 import cssModules from 'react-css-modules'
 import cx from 'classnames'
 import styles from './styles.scss'

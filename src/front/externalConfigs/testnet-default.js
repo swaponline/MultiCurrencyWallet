@@ -21,6 +21,11 @@ window.widgetERC20Comisions = {
     address: '0x276747801B0dbb7ba04685BA27102F1B27Ca0815',
     min: '0,01',
   },
+  bnb: {
+    fee: '7',
+    address: '0x276747801B0dbb7ba04685BA27102F1B27Ca0815',
+    min: '0,001',
+  },
   erc20: {
     address: '0x276747801B0dbb7ba04685BA27102F1B27Ca0815',
   },

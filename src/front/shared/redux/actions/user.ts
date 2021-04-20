@@ -334,9 +334,7 @@ const getDemoMoney = process.env.MAINNET ? () => { } : () => {
 
 
 const getInfoAboutCurrency = (currencyNames) =>
-
   new Promise((resolve, reject) => {
-
     const hasCustomRate = (cur) => {
       const dataobj = Object.keys(config.erc20).find(el => el.toLowerCase() === cur.toLowerCase())
       return dataobj ? (config.erc20[dataobj] || { customEcxchangeRate: false }).customEcxchangeRate : false
@@ -379,7 +377,7 @@ const getInfoAboutCurrency = (currencyNames) =>
             }
 
             switch (currencyInfoItem.symbol) {
-              case 'BTC': {
+              case 'BTC':
                 reducers.user.setInfoAboutCurrency({ name: 'btcData', infoAboutCurrency: currencyInfo })
                 reducers.user.setInfoAboutCurrency({ name: 'btcMnemonicData', infoAboutCurrency: currencyInfo }) // Sweep (for future)
                 reducers.user.setInfoAboutCurrency({ name: 'btcMultisigSMSData', infoAboutCurrency: currencyInfo })
@@ -387,30 +385,33 @@ const getInfoAboutCurrency = (currencyNames) =>
                 reducers.user.setInfoAboutCurrency({ name: 'btcMultisigG2FAData', infoAboutCurrency: currencyInfo })
                 reducers.user.setInfoAboutCurrency({ name: 'btcMultisigPinData', infoAboutCurrency: currencyInfo })
                 break
-              }
-              case 'ETH': {
+
+              case 'ETH':
                 reducers.user.setInfoAboutCurrency({ name: 'ethData', infoAboutCurrency: currencyInfo })
                 reducers.user.setInfoAboutCurrency({ name: 'ethMnemonicData', infoAboutCurrency: currencyInfo }) // Sweep (for future)
                 break
-              }
-              case 'GHOST': {
+              
+              case 'BNB':
+                reducers.user.setInfoAboutCurrency({ name: 'bnbData', infoAboutCurrency: currencyInfo })
+                reducers.user.setInfoAboutCurrency({ name: 'bnbMnemonicData', infoAboutCurrency: currencyInfo }) // Sweep (for future)
+                break
+
+              case 'GHOST':
                 reducers.user.setInfoAboutCurrency({ name: 'ghostData', infoAboutCurrency: currencyInfo })
                 reducers.user.setInfoAboutCurrency({ name: 'ghostMnemonicData', infoAboutCurrency: currencyInfo }) // Sweep (for future)
                 break
-              }
-              case 'NEXT': {
+
+              case 'NEXT':
                 reducers.user.setInfoAboutCurrency({ name: 'nextData', infoAboutCurrency: currencyInfo })
                 reducers.user.setInfoAboutCurrency({ name: 'nextMnemonicData', infoAboutCurrency: currencyInfo }) // Sweep (for future)
                 break
-              }
-              default: {
+
+              default:
                 if (ethToken.isEthToken({ name: currencyInfoItem.symbol })) {
                   reducers.user.setInfoAboutToken({ name: currencyInfoItem.symbol.toLowerCase(), infoAboutCurrency: currencyInfo })
                 } else {
                   reducers.user.setInfoAboutCurrency({ name: `${currencyInfoItem.symbol.toLowerCase()}Data`, infoAboutCurrency: currencyInfo })
                 }
-                break
-              }
             }
           }
         }
