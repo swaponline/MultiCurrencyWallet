@@ -63,6 +63,9 @@ class MarketmakerSettings extends Component<any, any> {
       ethBalance: 0,
       isBalanceFetching: false,
       isMarketEnabled: false,
+      isEthBalanceOk: false,
+      isBtcBalanceOk: false,
+      isTokenBalanceOk: false,
     }
   }
 
@@ -268,6 +271,7 @@ console.log('>>> wallets', btcWallet, ethWallet, tokenWallet)
       ethBalance,
       btcBalance,
       tokenBalance,
+      marketToken,
     } = this.state
 
     const isEthBalanceOk = new BigNumber(ethBalance).isGreaterThanOrEqualTo(0.02)
@@ -276,17 +280,34 @@ console.log('>>> wallets', btcWallet, ethWallet, tokenWallet)
 
     let hasError = false
 
-    if (!isEthBalanceOk) {
+    if (!isEthBalanceOk && false) {
       console.log('>>>>> need eth')
       hasError = true
+      actions.modals.open(constants.modals.AlertModal, {
+        message: <FormattedMessage id="MM_NotEnoughtEth" defaultMessage="Не достаточно ETH для оплаты коммисии майнеров" />,
+      })
     }
     if (!isTokenBalanceOk && !isBtcBalanceOk) {
       console.log('>>>>> No token and no btc')
       hasError = true
+      actions.modals.open(constants.modals.AlertModal, {
+        message: (
+          <FormattedMessage
+            id="MM_NotEnoughtCoins"
+            defaultMessage="Не достаточно средств. Вам нужно пополнить BTC или {token}"
+            values={{
+              token: marketToken.toUpperCase(),
+            }}
+          />
+        ),
+      })
     }
     if (!hasError) {
       this.setState({
         isMarketEnabled: !isMarketEnabled,
+        isBtcBalanceOk,
+        isEthBalanceOk,
+        isTokenBalanceOk,
       }, () => {
         if (!isMarketEnabled) {
           // New state - On
@@ -315,28 +336,55 @@ console.log('>>> wallets', btcWallet, ethWallet, tokenWallet)
     const {
       tokenBalance,
       marketToken,
+      btcBalance,
       ethBalance,
+      isBtcBalanceOk,
+      isTokenBalanceOk,
     } = this.state
-    const exchangeRate = 1
-    const orderData = {
-      balance: tokenBalance,
-      buyAmount: tokenBalance,
-      ethBalance,
-      exchangeRate,
-      isPartial: true,
-      isSending: true,
-      isTokenBuy: false,
-      isTokenSell: true,
-      isTurbo: false,
-      manualRate: true,
-      minimalestAmountForBuy: 0.00038906,
-      minimalestAmountForSell: 0.00038906,
-      sellAmount: tokenBalance,
-      buyCurrency: `BTC`,
-      sellCurrency: marketToken,
+    if (isTokenBalanceOk) {
+      const sellTokenExchangeRate = 1
+      const sellTokenOrderData = {
+        balance: tokenBalance,
+        buyAmount: tokenBalance,
+        ethBalance,
+        exchangeRate: sellTokenExchangeRate,
+        isPartial: true,
+        isSending: true,
+        isTokenBuy: false,
+        isTokenSell: true,
+        isTurbo: false,
+        manualRate: true,
+        minimalestAmountForBuy: 0.00038906,
+        minimalestAmountForSell: 0.00038906,
+        sellAmount: tokenBalance,
+        buyCurrency: `BTC`,
+        sellCurrency: marketToken,
+      }
+      console.log(sellTokenOrderData)
+      SwapApp.shared().services.orders.create(sellTokenOrderData)
     }
-    console.log(orderData)
-    SwapApp.shared().services.orders.create(orderData)
+    if (isBtcBalanceOk) {
+      const buyTokenExchangeRate = 1
+      const buyTokenOrderData = {
+        balance: btcBalance,
+        sellAmount: btcBalance,
+        ethBalance,
+        exchangeRate: buyTokenExchangeRate,
+        isPartial: true,
+        isSending: true,
+        isTokenBuy: true,
+        isTokenSell: false,
+        isTurbo: false,
+        manualRate: true,
+        minimalestAmountForBuy: 0.00038906,
+        minimalestAmountForSell: 0.00038906,
+        buyAmount: btcBalance,
+        sellCurrency: `BTC`,
+        buyCurrency: marketToken,
+      }
+      console.log(buyTokenOrderData)
+      SwapApp.shared().services.orders.create(buyTokenOrderData)
+    }
     /*
       balance: "9899908898990000"
       buyAmount: "0.05"
