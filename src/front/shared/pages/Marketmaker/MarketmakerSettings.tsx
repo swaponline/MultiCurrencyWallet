@@ -127,9 +127,7 @@ class MarketmakerSettings extends Component<any, any> {
         addressType: AddressType.Metamask
       })
 
-console.log('>>> wallets', btcWallet, ethWallet, tokenWallet)
       if (!tokenWallet) {
-        console.log('>>>> fail feth token wallet - retry')
         this.setState({
           isBalanceFetching: false,
         }, () => {
@@ -280,15 +278,13 @@ console.log('>>> wallets', btcWallet, ethWallet, tokenWallet)
 
     let hasError = false
 
-    if (!isEthBalanceOk && false) {
-      console.log('>>>>> need eth')
+    if (!isEthBalanceOk) {
       hasError = true
       actions.modals.open(constants.modals.AlertModal, {
         message: <FormattedMessage id="MM_NotEnoughtEth" defaultMessage="Не достаточно ETH для оплаты коммисии майнеров" />,
       })
     }
     if (!isTokenBalanceOk && !isBtcBalanceOk) {
-      console.log('>>>>> No token and no btc')
       hasError = true
       actions.modals.open(constants.modals.AlertModal, {
         message: (
