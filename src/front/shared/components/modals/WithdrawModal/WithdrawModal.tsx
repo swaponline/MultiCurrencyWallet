@@ -88,10 +88,10 @@ type WithdrawModalState = {
   txSize: null | number
   bitcoinFeeSpeedType: string
   bitcoinFees: null | {
-      slow: number | any
-      normal: number | any
-      fast: number | any,
-      custom: number
+    slow: number | any
+    normal: number | any
+    fast: number | any,
+    custom: number
   }
 
   walletForTokenFee: IUniversalObj
@@ -124,6 +124,7 @@ type WithdrawModalState = {
     currencies,
     user: {
       ethData,
+      bnbData,
       btcData,
       ghostData,
       nextData,
@@ -137,7 +138,7 @@ type WithdrawModalState = {
     activeFiat,
     activeCurrency,
     currencies: currencies.items,
-    items: [ethData, btcData, ghostData, nextData],
+    items: [ethData, bnbData, btcData, ghostData, nextData],
     tokenItems: [...Object.keys(tokensData).map((k) => tokensData[k])],
     dashboardView: dashboardModalsAllowed,
     isBalanceFetching,
@@ -171,20 +172,14 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
       ? new BigNumber(currentActiveAsset.infoAboutCurrency.price_fiat)
       : new BigNumber(0)
 
-    console.group('%c send form ', 'color: orange; font-size: 30px')
-
     // save wallet for token exchange's rate
     const walletForTokenFee = items.find(wallet => {
-      console.log('wallet: ', wallet)
       const walletCurrency = wallet.currency.toLowerCase()
 
       return config.binance === true
         ? walletCurrency === 'bnb'
         : walletCurrency === 'eth'
     })
-
-    console.log('wallet for token fee : ', walletForTokenFee)
-    console.groupEnd()
 
     this.state = {
       isShipped: false,

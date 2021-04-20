@@ -11,16 +11,20 @@ export const getActivatedCurrencies = () => {
   }
 
   if (!config.opts.curEnabled || config.opts.curEnabled.eth) {
-    if (config.binance === true) {
-      currencies.push('BNB')
-    } else {
-      currencies.push('ETH')
-    }
+    currencies.push('ETH')
   }
 
-  if (!config.opts.curEnabled || config.opts.curEnabled.ghost) currencies.push('GHOST')
+  if (!config.opts.curEnabled || config.opts.curEnabled.bnb) {
+    currencies.push('BNB')
+  }
 
-  if (!config.opts.curEnabled || config.opts.curEnabled.next) currencies.push('NEXT')
+  if (!config.opts.curEnabled || config.opts.curEnabled.ghost) {
+    currencies.push('GHOST')
+  }
+
+  if (!config.opts.curEnabled || config.opts.curEnabled.next) {
+    currencies.push('NEXT')
+  }
 
   Object.keys(config.erc20).forEach((token) => {
     currencies.push(token.toUpperCase())

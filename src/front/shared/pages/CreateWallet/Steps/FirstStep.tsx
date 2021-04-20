@@ -22,7 +22,7 @@ const isWidgetBuild = config && config.isWidget
 
 function FirstStep(props) {
   const { onClick, error, curState, startPack, handleClick, etcClick } = props
-  const coloredIcons = ['btc', 'eth', 'ghost', 'next', 'swap', 'usdt', 'eurs']
+  const coloredIcons = ['btc', 'eth', 'bnb', 'ghost', 'next', 'swap', 'usdt', 'eurs']
 
   return (
     <div>

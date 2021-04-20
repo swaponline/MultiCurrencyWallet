@@ -146,7 +146,7 @@ const login = (privateKey, mnemonic = null, mnemonicKeys = null) => {
   window.getBnbAddress = () => data.address
   referral.newReferral(data.address)
 
-  console.info('Logged in with Ethereum', data)
+  console.info('Logged in with Binance', data)
 
   if (!sweepToMnemonicReady) {
     // Auth with our mnemonic account
@@ -197,8 +197,6 @@ const login = (privateKey, mnemonic = null, mnemonicKeys = null) => {
 }
 
 const getBalance = () => {
-  console.group('%c BNB get balance', 'color: orange; font-size: 20px')
-
   const {
     user: {
       bnbData: {
@@ -213,9 +211,6 @@ const getBalance = () => {
 
   const balanceInCache = cacheStorageGet('currencyBalances', `bnb_${address}`)
 
-  console.log('address: ', address)
-  console.log('balanceInCache: ', balanceInCache)
-
   if (balanceInCache !== false) {
     reducers.user.setBalance({
       name: 'bnbData',
@@ -226,7 +221,6 @@ const getBalance = () => {
 
   return web3.eth.getBalance(address)
     .then(result => {
-      console.log('result: ', result)
       const amount = web3.utils.fromWei(result)
 
       cacheStorageSet('currencyBalances', `eth_${address}`, amount, 30)
@@ -234,7 +228,6 @@ const getBalance = () => {
       return amount
     })
     .catch((e) => {
-      console.log('error for BNB balance')
       reducers.user.setBalanceError({ name: 'bnbData' })
     })
 }
@@ -536,6 +529,7 @@ const addressIsContract = async (checkAddress: string): Promise<boolean> => {
 }
 
 const fetchTxInfo = (hash, cacheResponse) => new Promise((resolve) => {
+  // TODO: revise this url
   const url = `?module=proxy&action=eth_getTransactionByHash&txhash=${hash}&apikey=${config.api.bscscan_ApiKey}`
 
   return apiLooper.get('bscscan', url, {

@@ -162,11 +162,18 @@ const sign = async () => {
     // btc multisig with pin protect (2of3)
     await sign_btc_pin(_btcPrivateKey)
 
-    // TODO: for binance ber20
-    Object.keys(config.erc20)
-      .forEach(name => {
-        actions.token.login(_ethPrivateKey, config.erc20[name].address, name, config.erc20[name].decimals, config.erc20[name].fullName)
-      })
+    // TODO: replace the name in the config with bep20 for binance
+    if (config.binance === true) {
+      Object.keys(config.erc20)
+        .forEach(name => {
+          actions.token.login(_bnbPrivateKey, config.erc20[name].address, name, config.erc20[name].decimals, config.erc20[name].fullName)
+        })
+    } else {
+      Object.keys(config.erc20)
+        .forEach(name => {
+          actions.token.login(_ethPrivateKey, config.erc20[name].address, name, config.erc20[name].decimals, config.erc20[name].fullName)
+        })
+    }
 
     reducers.user.setTokenSigned(true)
 
