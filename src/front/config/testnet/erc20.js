@@ -18,14 +18,9 @@ export default {
     canSwap: true
   },
   wbtc: {
-    address: '0x2bc4900b3a595137a22010e7b5e3caad57c4c1e4',
+    address: '0xb92ead9c545fe04030fd3412a59e42fdb57431f5',
     decimals: 8,
     fullName: 'Wrapped Bitcoin',
     canSwap: false,
-  },
-  wbtc: {
-    address: '0xb7eac960108837128264e4e11f1307e4912a799d',
-    decimals: 8,
-    fullName: 'WBTC',
   },
 }
