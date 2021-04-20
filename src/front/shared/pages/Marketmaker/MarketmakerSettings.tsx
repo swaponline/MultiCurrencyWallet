@@ -49,6 +49,9 @@ class MarketmakerSettings extends Component<any, any> {
       }
     } = props
 
+    const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
+    const mnemonicSaved = (mnemonic === `-`)
+
     this._handleSwapAttachedHandle = this.onSwapAttachedHandle.bind(this)
     this._handleSwapEnterStep = this.onSwapEnterStep.bind(this)
 
@@ -66,6 +69,7 @@ class MarketmakerSettings extends Component<any, any> {
       isEthBalanceOk: false,
       isBtcBalanceOk: false,
       isTokenBalanceOk: false,
+      mnemonicSaved,
     }
   }
 
@@ -262,6 +266,19 @@ class MarketmakerSettings extends Component<any, any> {
     SwapApp.shared().off('swap enter step', this._handleSwapEnterStep)
   }
 
+  handleSaveMnemonic() {
+    actions.modals.open(constants.modals.SaveMnemonicModal, {
+      onClose: () => {
+        const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
+        const mnemonicSaved = (mnemonic === `-`)
+
+        this.setState({
+          mnemonicSaved,
+        })
+      }
+    })
+  }
+
   handleToggleMarketmaker(checked) {
     const { isMarketEnabled } = this.state
 
@@ -414,6 +431,7 @@ class MarketmakerSettings extends Component<any, any> {
       marketToken,
       isBalanceFetching,
       isMarketEnabled,
+      mnemonicSaved,
     } = this.state
 
     const totalBalance = new BigNumber(btcBalance).plus(tokenBalance).toNumber()
@@ -424,7 +442,23 @@ class MarketmakerSettings extends Component<any, any> {
     return (
       <div styleName="mm-settings-page">
         <section styleName="mm-controls">
-        {!isBalanceFetching ? (
+        {!mnemonicSaved && (
+          <>
+            <p>
+              <FormattedMessage
+                id="MM_NeedSaveMnemonic"
+                defaultMessage="We will create BTC,ETH,WBTC hot wallets. You need to write 12 words if you have not done so earlier"
+              />
+            </p>
+            <Button blue onClick={this.handleSaveMnemonic.bind(this)}>
+              <FormattedMessage
+                id="MM_MakeSaveMnemonic"
+                defaultMessage="Сохранить секретную фразу"
+              />
+            </Button>
+          </>
+        )}
+        {!isBalanceFetching && mnemonicSaved ? (
           <>
             <h2 styleName="section-title">Настройки маркетмейкинга</h2>
 
@@ -463,7 +497,9 @@ class MarketmakerSettings extends Component<any, any> {
           </>
         ) : (
           <>
-            <p>Loading...</p>
+            {mnemonicSaved && (
+              <p>Loading...</p>
+            )}
           </>
         )}
         </section>
