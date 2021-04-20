@@ -1,9 +1,7 @@
 import config from 'app-config'
 import { util } from 'swap.app'
-import actions from 'redux/actions'
 import { constants } from 'swap.app'
 import BigNumber from 'bignumber.js'
-import { getState } from 'redux/core'
 import reducers from 'redux/core/reducers'
 
 
@@ -21,7 +19,6 @@ const initExternalConfig = () => {
     if (!constants.COIN_DATA[tokenCode]) {
       console.info('Add token to swap.core', tokenCode, config.erc20[tokenCode].address, config.erc20[tokenCode].decimals, config.erc20[tokenCode].fullName)
       util.erc20.register(tokenCode, config.erc20[tokenCode].decimals)
-      actions[tokenCode] = actions.token
     }
   })
 }
