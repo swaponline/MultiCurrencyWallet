@@ -18,7 +18,7 @@ export default {
     canSwap: true
   },
   wbtc: {
-    address: '0xb92ead9c545fe04030fd3412a59e42fdb57431f5',
+    address: '0xb92eaD9C545Fe04030FD3412a59e42FdB57431f5',
     decimals: 8,
     fullName: 'Wrapped Bitcoin',
     canSwap: false,
