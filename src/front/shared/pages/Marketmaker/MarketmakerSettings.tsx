@@ -337,6 +337,7 @@ class MarketmakerSettings extends Component<any, any> {
       isBtcBalanceOk,
       isTokenBalanceOk,
     } = this.state
+
     if (isTokenBalanceOk) {
       const sellTokenExchangeRate = 1
       const sellTokenOrderData = {
@@ -381,23 +382,6 @@ class MarketmakerSettings extends Component<any, any> {
       console.log(buyTokenOrderData)
       SwapApp.shared().services.orders.create(buyTokenOrderData)
     }
-    /*
-      balance: "9899908898990000"
-      buyAmount: "0.05"
-      buyCurrency: "btc"
-      ethBalance: "3.9929848021431"
-      exchangeRate: "2000"
-      isPartial: true
-      isSending: true
-      isTokenBuy: false
-      isTokenSell: true
-      isTurbo: false
-      manualRate: true
-      minimalestAmountForBuy: 0.00038906
-      minimalestAmountForSell: 0.00038906
-      sellAmount: "100"
-      sellCurrency: "usdt"
-    */
   }
 
   processDisconnectWallet() {
@@ -431,6 +415,8 @@ class MarketmakerSettings extends Component<any, any> {
       isBalanceFetching,
       isMarketEnabled,
     } = this.state
+
+    const totalBalance = new BigNumber(btcBalance).plus(tokenBalance).toNumber()
 
     const sortedSwaps = swapsIds.sort((aId, bId) => {
       return swapsByIds[bId].createUnixTimeStamp - swapsByIds[aId].createUnixTimeStamp
@@ -466,6 +452,14 @@ class MarketmakerSettings extends Component<any, any> {
               )}
               </div>
             )}
+            <FormattedMessage
+              id="MM_TotalBalance"
+              defaultMessage="Total balance {totalBalance} {token}, BTC"
+              values={{
+                totalBalance,
+                token: marketToken.toUpperCase(),
+              }}
+            />
           </>
         ) : (
           <>
