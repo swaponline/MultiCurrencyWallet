@@ -740,11 +740,10 @@ class Exchange extends PureComponent<any, any> {
         : sellBalance.isGreaterThanOrEqualTo(buyFee)
 
       hasEnoughBalanceForFullPayment =
-        fromType === AddressType.Custom ||
         isTokenSell
           ? hasEnoughBalanceForAmount && ethBalance.isGreaterThanOrEqualTo(sellFee)
-          : isTokenBuy
-            ? hasEnoughBalanceForAmount && ethBalance.isGreaterThanOrEqualTo(buyFee)
+          : fromType === AddressType.Custom || isTokenBuy
+            ? hasEnoughBalanceForBuyFee && ethBalance.isGreaterThanOrEqualTo(buyFee)
             : sellBalance.isGreaterThanOrEqualTo(new BigNumber(amount).plus(sellFee))
 
       if (hasEnoughBalanceForFullPayment) {
