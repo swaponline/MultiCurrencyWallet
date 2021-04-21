@@ -719,7 +719,7 @@ class Exchange extends PureComponent<any, any> {
     const isUserBuyToken = ethToken.isEthToken({ name: buyCurrency })
     const sellBalance = new BigNumber(balances[sellCurrency.toUpperCase()] || 0)
     const ethBalance = new BigNumber(this.getEthBalance())
-    let hasEnoughBalanceForAmount = false
+    let hasEnoughBalanceSellAmount = false
     let hasEnoughBalanceForSellFee = false
     let hasEnoughBalanceForBuyFee = false
     let hasEnoughBalanceForFullPayment = false
@@ -730,7 +730,7 @@ class Exchange extends PureComponent<any, any> {
       const buyFee = pairFees && pairFees.buy?.fee
       const isUTXOSell = pairFees && pairFees.sell?.isUTXO
 
-      hasEnoughBalanceForAmount = sellBalance.isGreaterThanOrEqualTo(amount)
+      hasEnoughBalanceSellAmount = sellBalance.isGreaterThanOrEqualTo(amount)
 
       hasEnoughBalanceForSellFee = isUserSellToken
         ? ethBalance.isGreaterThanOrEqualTo(sellFee)
@@ -740,15 +740,15 @@ class Exchange extends PureComponent<any, any> {
         ? ethBalance.isGreaterThanOrEqualTo(buyFee)
         : sellBalance.isGreaterThanOrEqualTo(buyFee)
 
-      if (isUserSellToken && hasEnoughBalanceForAmount && ethBalance.isGreaterThanOrEqualTo(sellFee)) {
+      if (isUserSellToken && hasEnoughBalanceSellAmount && ethBalance.isGreaterThanOrEqualTo(sellFee)) {
         hasEnoughBalanceForFullPayment = true
-      } else if (isUserBuyToken && (fromType === AddressType.Custom || hasEnoughBalanceForAmount) && ethBalance.isGreaterThanOrEqualTo(buyFee)) {
+      } else if (isUserBuyToken && (fromType === AddressType.Custom || hasEnoughBalanceSellAmount) && ethBalance.isGreaterThanOrEqualTo(buyFee)) {
         hasEnoughBalanceForFullPayment = true
       } else if (isUTXOSell && sellBalance.isGreaterThanOrEqualTo(new BigNumber(amount).plus(sellFee)) && ethBalance.isGreaterThanOrEqualTo(buyFee)) {
         hasEnoughBalanceForFullPayment = true
       } else if (fromType === AddressType.Custom && ethBalance.isGreaterThanOrEqualTo(buyFee)) {
         hasEnoughBalanceForFullPayment = true
-      }else if (sellBalance.isGreaterThanOrEqualTo(new BigNumber(amount).plus(sellFee))) {
+      } else if (sellBalance.isGreaterThanOrEqualTo(new BigNumber(amount).plus(sellFee))) {
         hasEnoughBalanceForFullPayment = true
       }
 
