@@ -336,8 +336,9 @@ class App extends React.Component<RouteComponentProps<any>, any> {
   checkCompletionOfAppCreation = () => {
     const { location } = this.props
     const startPage = document.getElementById('starter-modal')
+    const isWalletCreated = localStorage.getItem('isWalletCreate')
 
-    if (!startPage || utils.getCookie('swapDisalbeStarter') || location.pathname !== '/') {
+    if (!startPage || utils.getCookie('startedSplashScreenIsDisabled') || isWalletCreated) {
       this.setState(() => ({
         initialFetching: true,
         completeCreation: true,
