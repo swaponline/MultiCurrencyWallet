@@ -23,12 +23,12 @@ const estimateFeeValue = async (params: EstimateFeeParams) => {
   const { method, speed } = params
   const gasPrice = await estimateGasPrice({ speed })
   const defaultGasLimit = DEFAULT_CURRENCY_PARAMETERS.eth.limit[method]
-  const feeValue = new BigNumber(defaultGasLimit)
-    .multipliedBy(gasPrice)
-    .multipliedBy(1e-18)
-    .toNumber()
+  const theSmallestPart = 1e-18
 
-  return feeValue
+  return new BigNumber(defaultGasLimit)
+    .multipliedBy(gasPrice)
+    .multipliedBy(theSmallestPart)
+    .toNumber()
 }
 
 const estimateGasPrice = async ({ speed = 'fast' } = {}) => {

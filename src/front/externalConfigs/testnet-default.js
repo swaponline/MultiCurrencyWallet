@@ -79,10 +79,10 @@ window.buildOptions = {
   // inited from window.EXCHANGE_DISABLED
   exchangeDisabled: false,
   curEnabled: { // Or 'false' if enabled all
-    // inited from window.CUR_BTC_DISABLED
+    // inited from window.CUR_<NAME>_DISABLED
+    // ? How to disable it right here
     btc: true,
-    // inited from window.CUR_ETH_DISABLED
-    eth: true,
+    eth: false,
     bnb: true,
     ghost: true,
     next: true,

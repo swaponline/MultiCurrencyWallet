@@ -3,17 +3,6 @@ import DEFAULT_CURRENCY_PARAMETERS from 'common/helpers/constants/DEFAULT_CURREN
 import api from './api'
 import BigNumber from 'bignumber.js'
 
-const reportAboutProblem = (params) => {
-  const { isError = false, info } = params
-
-  console.group(
-    'HELPERS >%c bnb.ts',
-    `color: ${isError ? 'red' : 'yellow'};`
-  )
-  isError ? console.error(info) : console.warn(info)
-  console.groupEnd()
-}
-
 type EstimateFeeParams = {
   method: string
   speed: 'fastest' | 'fast' | 'slow'
@@ -23,12 +12,12 @@ const estimateFeeValue = async (params: EstimateFeeParams) => {
   const { method, speed } = params
   const gasPrice = await estimateGasPrice({ speed })
   const defaultGasLimit = DEFAULT_CURRENCY_PARAMETERS.eth.limit[method]
-  const feeValue = new BigNumber(defaultGasLimit)
-    .multipliedBy(gasPrice)
-    .multipliedBy(1e-8)
-    .toNumber()
+  const theSmallestPart = 1e-18 // TODO: replace 18 with 8
 
-  return feeValue
+  return new BigNumber(defaultGasLimit)
+    .multipliedBy(gasPrice)
+    .multipliedBy(theSmallestPart)
+    .toNumber()
 }
 
 // TODO: new gas API
@@ -46,7 +35,6 @@ const estimateGasPrice = async ({ speed = 'fast' } = {}) => {
   try {
     apiResult = await api.asyncFetchApi(link)
   } catch (err) {
-    reportAboutProblem({ info: err.message })
     return defaultPrice[speed]
   }
 
@@ -61,11 +49,12 @@ const estimateGasPrice = async ({ speed = 'fast' } = {}) => {
   * api returns gas price in x10 Gwei
   * divided by 10 to convert it to gwei
   */
-  const apiPrice = new BigNumber(apiResult[apiSpeed]).dividedBy(10).multipliedBy(1e9)
+  const apiPrice = new BigNumber(apiResult[apiSpeed])
+    .dividedBy(10)
+    .multipliedBy(1e9)
+    .toNumber()
 
-  return apiPrice >= defaultPrice[speed] 
-    ? apiPrice.toString()
-    : defaultPrice[speed]
+  return apiPrice >= defaultPrice[speed] ? apiPrice : defaultPrice[speed]
 }
 
 export default {

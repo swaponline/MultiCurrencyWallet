@@ -60,7 +60,7 @@ const getEthWallet = (network, mnemonic, walletNumber = 0, path) => {
     wallet,
   }
 }
-
+// TODO: Is it really need ? Can we join this function for all Eth-like blockchains
 const getBnbWallet = (network, mnemonic, walletNumber = 0, path) => {
   mnemonic = convertMnemonicToValid(mnemonic)
   const seed = bip39.mnemonicToSeedSync(mnemonic)

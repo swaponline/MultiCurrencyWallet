@@ -163,7 +163,7 @@ const sign = async () => {
         ? constants.privateKeyNames.bnb
         : constants.privateKeyNames.eth
     )
-    // ? seems we can create general functional for AB blockchain types
+    // ? seems we can create common functional (helpers, actions, ...) for AB blockchain types
     const _ABTypePrivateKey = actions.eth.login(ABTypePrivateKey, mnemonic, mnemonicKeys)
 
     Object.keys(config.erc20)

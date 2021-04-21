@@ -11,15 +11,16 @@ import FirstStep from './FirstStep'
 import SecondStep from './SecondStep'
 
 const isWidgetBuild = config && config.isWidget
+const curEnabled = config.opts.curEnabled
 
 @connect(({ currencies: { items: currencies } }) => ({ currencies }))
 export default class StepsWrapper extends Component<any, any> {
   defaultStartPack = [
-    ...(!config.opts.curEnabled || config.opts.curEnabled.btc) ? [{ name: "BTC", capture: "Bitcoin" }] : [],
-    ...(!config.opts.curEnabled || config.opts.curEnabled.eth) ? [{ name: "ETH", capture: "Ethereum" }] : [],
-    ...(!config.opts.curEnabled || config.opts.curEnabled.bnb) ? [{ name: "BNB", capture: "Binance Coin" }] : [],
-    ...(!config.opts.curEnabled || config.opts.curEnabled.ghost) ? [{ name: "GHOST", capture: "Ghost" }] : [],
-    ...(!config.opts.curEnabled || config.opts.curEnabled.next) ? [{ name: "NEXT", capture: "NEXT.coin" }] : [],
+    ...(!curEnabled || curEnabled.btc) ? [{ name: "BTC", capture: "Bitcoin" }] : [],
+    ...(!curEnabled || curEnabled.eth) ? [{ name: "ETH", capture: "Ethereum" }] : [],
+    ...(!curEnabled || curEnabled.bnb) ? [{ name: "BNB", capture: "Binance Coin" }] : [],
+    ...(!curEnabled || curEnabled.ghost) ? [{ name: "GHOST", capture: "Ghost" }] : [],
+    ...(!curEnabled || curEnabled.next) ? [{ name: "NEXT", capture: "NEXT.coin" }] : [],
     ...(process.env.MAINNET) ? [{ name: "SWAP", capture: "Swap" }] : [{ name: "WEENUS", capture: "Weenus" }],
     { name: "WBTC", capture: "Wrapped Bitcoin" },
     { name: "USDT", capture: "Tether" },
@@ -27,11 +28,11 @@ export default class StepsWrapper extends Component<any, any> {
   ]
 
   widgetStartPack = [
-    ...(!config.opts.curEnabled || config.opts.curEnabled.btc) ? [{ name: "BTC", capture: "Bitcoin" }] : [],
-    ...(!config.opts.curEnabled || config.opts.curEnabled.eth) ? [{ name: "ETH", capture: "Ethereum" }] : [],
-    ...(!config.opts.curEnabled || config.opts.curEnabled.bnb) ? [{ name: "BNB", capture: "Binance Coin" }] : [],
-    ...(!config.opts.curEnabled || config.opts.curEnabled.ghost) ? [{ name: "GHOST", capture: "Ghost" }] : [],
-    ...(!config.opts.curEnabled || config.opts.curEnabled.next) ? [{ name: "NEXT", capture: "NEXT.coin" }] : [],
+    ...(!curEnabled || curEnabled.btc) ? [{ name: "BTC", capture: "Bitcoin" }] : [],
+    ...(!curEnabled || curEnabled.eth) ? [{ name: "ETH", capture: "Ethereum" }] : [],
+    ...(!curEnabled || curEnabled.bnb) ? [{ name: "BNB", capture: "Binance Coin" }] : [],
+    ...(!curEnabled || curEnabled.ghost) ? [{ name: "GHOST", capture: "Ghost" }] : [],
+    ...(!curEnabled || curEnabled.next) ? [{ name: "NEXT", capture: "NEXT.coin" }] : [],
   ]
 
   constructor(props) {
