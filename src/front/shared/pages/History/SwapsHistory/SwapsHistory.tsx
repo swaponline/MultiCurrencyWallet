@@ -10,7 +10,6 @@ import { constants } from 'helpers'
 import CSSModules from 'react-css-modules'
 import stylesSwaps from './SwapsHistory.scss'
 
-
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 @CSSModules({ ...styles, ...stylesSwaps }, { allowMultiple: true })

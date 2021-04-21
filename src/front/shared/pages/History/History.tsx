@@ -22,6 +22,7 @@ import FilterForm from 'components/FilterForm/FilterForm'
 import InvoicesList from 'pages/Invoices/InvoicesList'
 import SwapsHistory from 'pages/History/SwapsHistory/SwapsHistory'
 
+import { onInit as onSwapCoreInited } from 'instances/newSwap'
 
 
 const filterHistory = (items, filter) => {
@@ -117,7 +118,9 @@ class History extends Component<any, any> {
         }
 
         actions.user.setTransactions(objCurrency)
-        actions.core.getSwapHistory()
+        onSwapCoreInited(() => {
+          actions.core.getSwapHistory()
+        })
       }
     }
   }

@@ -20,7 +20,7 @@ import links from 'helpers/links'
 
 import SwapRow from './SwapRow'
 
-
+import { onInit as onSwapCoreInited } from 'instances/newSwap'
 
 
 
@@ -83,26 +83,28 @@ class Marketmaker extends Component<any, any> {
     const swapsByIds = {}
 
 
-    const lsSwapId = JSON.parse(localStorage.getItem('swapId'))
+    onSwapCoreInited(() => {
+      if (!this._mounted) return
+      const lsSwapId = JSON.parse(localStorage.getItem('swapId'))
 
-    if (lsSwapId === null || lsSwapId.length === 0) {
-      return
-    }
+      if (lsSwapId === null || lsSwapId.length === 0) {
+        return
+      }
 
-    const swapsCore = lsSwapId.map((id) => new Swap(id, SwapApp.shared()))
+      const swapsCore = lsSwapId.map((id) => new Swap(id, SwapApp.shared()))
+      SwapApp.shared().attachedSwaps.items.forEach((swap) => {
+        const swapState = this.extractSwapStatus(swap)
+        swapsIds.push(swapState.id)
+        swapsByIds[swapState.id] = swapState
+      })
 
-    SwapApp.shared().attachedSwaps.items.forEach((swap) => {
-      const swapState = this.extractSwapStatus(swap)
-      swapsIds.push(swapState.id)
-      swapsByIds[swapState.id] = swapState
-    })
+      SwapApp.shared().on('swap attached', this._handleSwapAttachedHandle)
+      SwapApp.shared().on('swap enter step', this._handleSwapEnterStep)
 
-    SwapApp.shared().on('swap attached', this._handleSwapAttachedHandle)
-    SwapApp.shared().on('swap enter step', this._handleSwapEnterStep)
-
-    this.setState({
-      swapsIds,
-      swapsByIds,
+      this.setState({
+        swapsIds,
+        swapsByIds,
+      })
     })
   }
 
@@ -144,8 +146,12 @@ class Marketmaker extends Component<any, any> {
 
   componentWillUnmount() {
     this._mounted = false
-    SwapApp.shared().off('swap attached', this._handleSwapAttachedHandle)
-    SwapApp.shared().off('swap enter step', this._handleSwapEnterStep)
+    try {
+      SwapApp.shared().off('swap attached', this._handleSwapAttachedHandle)
+      SwapApp.shared().off('swap enter step', this._handleSwapEnterStep)
+    } catch (e) {
+      console.warn('Core not inited. skip')
+    }
   }
 
   render() {
