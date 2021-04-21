@@ -33,6 +33,11 @@
     <%= htmlWebpackPlugin.options.firebugScript %>
     <script>
       var isWidgetBuild = '<%= htmlWebpackPlugin.options.isWidget %>';
+      try {
+        JSON.parse("<!-- BACK_SO -->");
+      } catch (e) {
+        console.log("warning: caching backend is down")
+      }
     </script>
 
     <style>
