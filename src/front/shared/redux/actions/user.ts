@@ -2,7 +2,7 @@ import config from 'app-config'
 import moment from 'moment/moment'
 import { constants, ethToken } from 'helpers'
 import request from 'common/utils/request'
-
+import * as mnemonicUtils from 'common/utils/mnemonic'
 import actions from 'redux/actions'
 import { getState } from 'redux/core'
 
@@ -84,7 +84,7 @@ const sign = async () => {
     let mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
 
     if (!mnemonic) {
-      mnemonic = bip39.generateMnemonic()
+      mnemonic = mnemonicUtils.getRandomMnemonicWords()
       localStorage.setItem(constants.privateKeyNames.twentywords, mnemonic)
     }
 
@@ -141,14 +141,9 @@ const sign = async () => {
 
     const btcPrivateKey = localStorage.getItem(constants.privateKeyNames.btc)
     const btcMultisigPrivateKey = localStorage.getItem(constants.privateKeyNames.btcMultisig)
-    const ethPrivateKey = localStorage.getItem(constants.privateKeyNames.eth)
-    const bnbPrivateKey = localStorage.getItem(constants.privateKeyNames.bnb)
     const ghostPrivateKey = localStorage.getItem(constants.privateKeyNames.ghost)
     const nextPrivateKey = localStorage.getItem(constants.privateKeyNames.next)
 
-
-    const _ethPrivateKey = actions.eth.login(ethPrivateKey, mnemonic, mnemonicKeys)
-    const _bnbPrivateKey = actions.bnb.login(bnbPrivateKey, mnemonic, mnemonicKeys)
     const _btcPrivateKey = actions.btc.login(btcPrivateKey, mnemonic, mnemonicKeys)
     const _ghostPrivateKey = actions.ghost.login(ghostPrivateKey, mnemonic, mnemonicKeys)
     const _nextPrivateKey = actions.next.login(nextPrivateKey, mnemonic, mnemonicKeys)
@@ -162,21 +157,27 @@ const sign = async () => {
     // btc multisig with pin protect (2of3)
     await sign_btc_pin(_btcPrivateKey)
 
-    // TODO: replace the name in the config with bep20 for binance
-    if (config.binance === true) {
-      Object.keys(config.erc20)
-        .forEach(name => {
-          actions.token.login(_bnbPrivateKey, config.erc20[name].address, name, config.erc20[name].decimals, config.erc20[name].fullName)
-        })
-    } else {
-      Object.keys(config.erc20)
-        .forEach(name => {
-          actions.token.login(_ethPrivateKey, config.erc20[name].address, name, config.erc20[name].decimals, config.erc20[name].fullName)
-        })
-    }
+    // TODO: using ETH wallet for BNB. They're compatible (temporarily)
+    let ABTypePrivateKey = localStorage.getItem(
+      config.binance === true
+        ? constants.privateKeyNames.bnb
+        : constants.privateKeyNames.eth
+    )
+    // ? seems we can create general functional for AB blockchain types
+    const _ABTypePrivateKey = actions.eth.login(ABTypePrivateKey, mnemonic, mnemonicKeys)
+
+    Object.keys(config.erc20)
+      .forEach(name => {
+        actions.token.login(
+          _ABTypePrivateKey,
+          config.erc20[name].address,
+          name,
+          config.erc20[name].decimals,
+          config.erc20[name].fullName
+        )
+      })
 
     reducers.user.setTokenSigned(true)
-
     await getReputation()
   })
 }

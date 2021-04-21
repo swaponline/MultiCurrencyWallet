@@ -154,8 +154,6 @@ const login = (privateKey, mnemonic = null, mnemonicKeys = null) => {
   window.getEthAddress = () => data.address
   referral.newReferral(data.address)
 
-  console.info('Logged in with Ethereum', data)
-
   if (!sweepToMnemonicReady) {
     // Auth with our mnemonic account
     if (mnemonic === `-`) {

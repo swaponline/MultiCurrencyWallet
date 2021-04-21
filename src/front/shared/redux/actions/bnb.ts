@@ -146,8 +146,6 @@ const login = (privateKey, mnemonic = null, mnemonicKeys = null) => {
   window.getBnbAddress = () => data.address
   referral.newReferral(data.address)
 
-  console.info('Logged in with Binance', data)
-
   if (!sweepToMnemonicReady) {
     // Auth with our mnemonic account
     if (mnemonic === `-`) {
