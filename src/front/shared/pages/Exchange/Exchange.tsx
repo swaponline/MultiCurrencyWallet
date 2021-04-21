@@ -715,11 +715,11 @@ class Exchange extends PureComponent<any, any> {
     const { sellCurrency, buyCurrency, amount, fromType, isSilentError } = checkParams
     const { pairFees, balances } = this.state
 
-    const isTokenSell = ethToken.isEthToken({ name: sellCurrency })
-    const isTokenBuy = ethToken.isEthToken({ name: buyCurrency })
+    const isUserSellToken = ethToken.isEthToken({ name: sellCurrency })
+    const isUserBuyToken = ethToken.isEthToken({ name: buyCurrency })
     const sellBalance = new BigNumber(balances[sellCurrency.toUpperCase()] || 0)
     const ethBalance = new BigNumber(this.getEthBalance())
-    let hasEnoughBalanceForAmount = false
+    let hasEnoughBalanceSellAmount = false
     let hasEnoughBalanceForSellFee = false
     let hasEnoughBalanceForBuyFee = false
     let hasEnoughBalanceForFullPayment = false
@@ -728,24 +728,29 @@ class Exchange extends PureComponent<any, any> {
     try {
       const sellFee = pairFees && pairFees.sell?.fee
       const buyFee = pairFees && pairFees.buy?.fee
+      const isUTXOSell = pairFees && pairFees.sell?.isUTXO
 
-      hasEnoughBalanceForAmount = sellBalance.isGreaterThanOrEqualTo(amount)
+      hasEnoughBalanceSellAmount = sellBalance.isGreaterThanOrEqualTo(amount)
 
-      hasEnoughBalanceForSellFee = isTokenSell
+      hasEnoughBalanceForSellFee = isUserSellToken
         ? ethBalance.isGreaterThanOrEqualTo(sellFee)
         : sellBalance.isGreaterThanOrEqualTo(sellFee)
 
-      hasEnoughBalanceForBuyFee = isTokenBuy
+      hasEnoughBalanceForBuyFee = isUserBuyToken
         ? ethBalance.isGreaterThanOrEqualTo(buyFee)
         : sellBalance.isGreaterThanOrEqualTo(buyFee)
 
-      hasEnoughBalanceForFullPayment =
-        fromType === AddressType.Custom ||
-        isTokenSell
-          ? hasEnoughBalanceForAmount && ethBalance.isGreaterThanOrEqualTo(sellFee)
-          : isTokenBuy
-            ? hasEnoughBalanceForAmount && ethBalance.isGreaterThanOrEqualTo(buyFee)
-            : sellBalance.isGreaterThanOrEqualTo(new BigNumber(amount).plus(sellFee))
+      if (isUserSellToken && hasEnoughBalanceSellAmount && ethBalance.isGreaterThanOrEqualTo(sellFee)) {
+        hasEnoughBalanceForFullPayment = true
+      } else if (isUserBuyToken && (fromType === AddressType.Custom || hasEnoughBalanceSellAmount) && ethBalance.isGreaterThanOrEqualTo(buyFee)) {
+        hasEnoughBalanceForFullPayment = true
+      } else if (isUTXOSell && sellBalance.isGreaterThanOrEqualTo(new BigNumber(amount).plus(sellFee)) && ethBalance.isGreaterThanOrEqualTo(buyFee)) {
+        hasEnoughBalanceForFullPayment = true
+      } else if (fromType === AddressType.Custom && ethBalance.isGreaterThanOrEqualTo(buyFee)) {
+        hasEnoughBalanceForFullPayment = true
+      } else if (sellBalance.isGreaterThanOrEqualTo(new BigNumber(amount).plus(sellFee))) {
+        hasEnoughBalanceForFullPayment = true
+      }
 
       if (hasEnoughBalanceForFullPayment) {
         balanceIsOk = true
