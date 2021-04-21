@@ -138,7 +138,7 @@ export default class StepsWrapper extends Component<any, any> {
       if (config.opts.addCustomERC20) {
         newStartPack = [{
           name: 'Custom ERC20',
-          capture: <FormattedMessage id="createWallet_customERC20" defaultMessage="Подключить токен" />,
+          capture: <FormattedMessage id="createWallet_customERC20" defaultMessage="Custom token" />,
         }, ...startPack, ...coins]
       } else {
         newStartPack = [...startPack, ...coins]

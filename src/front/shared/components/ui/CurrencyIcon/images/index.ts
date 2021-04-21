@@ -1,5 +1,6 @@
 import btc from './btc.svg'
 import eth from './eth.svg'
+import bnb from './bnb.svg'
 import wbtc from './wbtc.svg'
 import icx from './icx.svg'
 import waves from './waves.svg'
@@ -35,6 +36,7 @@ export default {
   arn,
   omg,
   eth,
+  bnb,
   syc2,
   icx,
   usdt,
