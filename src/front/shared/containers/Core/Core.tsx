@@ -4,18 +4,19 @@ import SwapApp from 'swap.app'
 import actions from 'redux/actions'
 import { connect } from 'redaction'
 import metamask from 'helpers/metamask'
-import { onInit } from 'instances/newSwap'
+import { onInit as onSwapCoreInited } from 'instances/newSwap'
 
 
 @connect(({ pubsubRoom }) => ({ pubsubRoom }))
 export default class Core extends Component<any, any> {
-
+  _mounted = true
   state = {
     orders: [],
   }
 
   componentDidMount() {
-    onInit(() => {
+    onSwapCoreInited(() => {
+      if (!this._mounted) return
       actions.core.getSwapHistory()
       SwapApp.shared().services.orders
         .on('new orders', this.updateOrders)
@@ -28,18 +29,23 @@ export default class Core extends Component<any, any> {
   }
 
   componentWillUnmount() {
-    SwapApp.shared().services.orders
-      .off('new orders', this.updateOrders)
-      .off('new order', this.updateOrders)
-      .off('order update', this.updateOrders)
-      .off('remove order', this.updateOrders)
-      .off('new order request', this.updateOrders)
-    if (SwapApp.shared().services.room.connection) {
-      console.log('leave room')
-      SwapApp.shared().services.room.connection
-        .removeListener('peer joined', actions.pubsubRoom.userJoined)
-        .removeListener('peer left', actions.pubsubRoom.userLeft)
-      SwapApp.shared().services.room.connection.leave()
+    this._mounted = false
+    try {
+      SwapApp.shared().services.orders
+        .off('new orders', this.updateOrders)
+        .off('new order', this.updateOrders)
+        .off('order update', this.updateOrders)
+        .off('remove order', this.updateOrders)
+        .off('new order request', this.updateOrders)
+      if (SwapApp.shared().services.room.connection) {
+        console.log('leave room')
+        SwapApp.shared().services.room.connection
+          .removeListener('peer joined', actions.pubsubRoom.userJoined)
+          .removeListener('peer left', actions.pubsubRoom.userLeft)
+        SwapApp.shared().services.room.connection.leave()
+      }
+    } catch (e) {
+      console.warn('Core unmount - not inited. skip')
     }
   }
 
