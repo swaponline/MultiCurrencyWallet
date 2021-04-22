@@ -22,7 +22,5 @@ jobs:
         ls
     - name: E2E TEST
       run: |
-        cd /home/runner/work/MultiCurrencyWallet/MultiCurrencyWallet/tests/e2e/
-        ls
-        docker build /home/runner/work/MultiCurrencyWallet/MultiCurrencyWallet/tests/e2e/Docerfile -t pp1
-        docker run --shm-size 1G --rm -v /root/MultiCurrencyWallet/e2e:/app pp1
+        docker pull swaponline/dapptestnv
+        docker run --shm-size 1G --rm -v ./e2e:/app swaponline/dapptestnv
