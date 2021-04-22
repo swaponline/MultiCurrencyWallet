@@ -427,7 +427,7 @@ class Wallet extends Component<any, any> {
 
     //@ts-ignore
     this.syncTimer = setTimeout(async () => {
-      if (config?.entry !== 'mainnet') {
+      if (config?.entry !== 'mainnet' || !metamask.isCorrectNetwork()) {
         return;
       }
       if (isOneHourAfter || isFirstCheck) {
