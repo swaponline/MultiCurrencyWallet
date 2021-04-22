@@ -19,7 +19,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - name: npm install, build and deploy 
       run: |
-        npm -v 
+        ls
     - name: E2E TEST
       run: |
         docker build tests/e2e/Docerfile -t pp1
