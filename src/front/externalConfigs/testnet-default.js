@@ -1,5 +1,3 @@
-// mainnet-localhost
-
 window.widgetERC20Comisions = {
   btc: {
     fee: '5',
@@ -20,11 +18,6 @@ window.widgetERC20Comisions = {
     fee: '7',
     address: '0x276747801B0dbb7ba04685BA27102F1B27Ca0815',
     min: '0,01',
-  },
-  bnb: {
-    fee: '7',
-    address: '0x276747801B0dbb7ba04685BA27102F1B27Ca0815',
-    min: '0,001',
   },
   erc20: {
     address: '0x276747801B0dbb7ba04685BA27102F1B27Ca0815',
@@ -80,17 +73,14 @@ window.buildOptions = {
   exchangeDisabled: false,
   curEnabled: { // Or 'false' if enabled all
     // inited from window.CUR_<NAME>_DISABLED
-    // ? How to disable it right here
     btc: true,
-    eth: false,
-    bnb: true,
+    eth: true,
     ghost: true,
     next: true,
   },
   blockchainSwapEnabled: {
     btc: true,
     eth: false,
-    bnb: false,
     ghost: false,
     next: false,
   },
