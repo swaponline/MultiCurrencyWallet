@@ -157,7 +157,7 @@ const sign = async () => {
     // btc multisig with pin protect (2of3)
     await sign_btc_pin(_btcPrivateKey)
 
-    // TODO: using ETH wallet for BNB. They're compatible (temporarily)
+    // TODO: using ETH wallet for BNB. They're compatible (temporarily. Use BNB with ETH)
     let ABTypePrivateKey = localStorage.getItem(
       config.binance ? constants.privateKeyNames.bnb : constants.privateKeyNames.eth
     )

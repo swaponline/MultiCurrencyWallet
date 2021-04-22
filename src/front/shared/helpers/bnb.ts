@@ -12,7 +12,7 @@ const estimateFeeValue = async (params: EstimateFeeParams) => {
   const { method, speed } = params
   const gasPrice = await estimateGasPrice({ speed })
   const defaultGasLimit = DEFAULT_CURRENCY_PARAMETERS.eth.limit[method]
-  const theSmallestPart = 1e-18 // TODO: replace 18 with 8
+  const theSmallestPart = 1e-18 // TODO: replace 18 with 8 (seams after gas API replacement)
 
   return new BigNumber(defaultGasLimit)
     .multipliedBy(gasPrice)
