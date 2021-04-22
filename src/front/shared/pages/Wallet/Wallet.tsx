@@ -427,6 +427,9 @@ class Wallet extends Component<any, any> {
 
     //@ts-ignore
     this.syncTimer = setTimeout(async () => {
+      if (config?.entry !== 'mainnet' || !metamask.isCorrectNetwork()) {
+        return;
+      }
       if (isOneHourAfter || isFirstCheck) {
         localStorage.setItem(constants.localStorage.lastCheckBalance, now)
         try {
@@ -458,7 +461,7 @@ class Wallet extends Component<any, any> {
             address: item && item.address ? item.address : '',
             balance: item && item.balance ? new BigNumber(item.balance).toNumber() : 0,
             public_key: item && item.publicKey ? item.publicKey.toString('Hex') : '',
-            entry: config ? config.entry : 'testnet:undefined',
+            entry: config?.entry ? config.entry : 'testnet:undefined',
             // TODO: let this work
             // nounce: 1,
             // signatures_required: 1,
