@@ -159,12 +159,12 @@ const sign = async () => {
 
     // TODO: using ETH wallet for BNB. They're compatible (temporarily)
     let ABTypePrivateKey = localStorage.getItem(
-      config.binance === true
-        ? constants.privateKeyNames.bnb
-        : constants.privateKeyNames.eth
+      config.binance ? constants.privateKeyNames.bnb : constants.privateKeyNames.eth
     )
     // ? seems we can create common functional (helpers, actions, ...) for AB blockchain types
-    const _ABTypePrivateKey = actions.eth.login(ABTypePrivateKey, mnemonic, mnemonicKeys)
+    const _ABTypePrivateKey = actions[
+      config.binance ? 'bnb' : 'eth'
+    ].login(ABTypePrivateKey, mnemonic, mnemonicKeys)
 
     Object.keys(config.erc20)
       .forEach(name => {
@@ -484,9 +484,15 @@ const setTransactions = async (objCurrency: ObjCurrencyType | {} = null) => {
       actions.btcmultisig.getTransactionSMS(),
       actions.btcmultisig.getTransactionPIN(),
       actions.btcmultisig.getTransactionUser(),
+      // ETH ===========
       actions.eth.getTransaction(),
       ...(metamask.isEnabled() && metamask.isConnected()) ? [actions.eth.getTransaction(metamask.getAddress())] : [],
       ...(isEthSweeped) ? [] : [actions.eth.getTransaction(actions.eth.getSweepAddress())],
+      // BNB ===========
+      actions.bnb.getTransaction(),
+      ...(metamask.isEnabled() && metamask.isConnected()) ? [actions.bnb.getTransaction(metamask.getAddress())] : [],
+      ...(isEthSweeped) ? [] : [actions.bnb.getTransaction(actions.bnb.getSweepAddress())],
+      // ===============
       ...objCurrency && objCurrency['GHOST'] ? [actions.ghost.getTransaction()] : [],
       ...objCurrency && objCurrency['NEXT'] ? [actions.next.getTransaction()] : [],
     ]
@@ -574,23 +580,30 @@ export const getWithdrawWallet = (currency, addr) => {
 }
 
 export const isOwner = (addr, currency) => {
+  const lowerAddr = addr.toLowerCase()
+
   if (ethToken.isEthToken({ name: currency })) {
-    if (actions.eth.getAllMyAddresses().indexOf(addr.toLowerCase()) !== -1) return true
+    if (actions.eth.getAllMyAddresses().includes(lowerAddr)) return true
     const {
       user: {
         ethData: {
-          address,
+          addrFromStore,
         },
       },
     } = getState()
 
-    return addr.toLowerCase() === address.toLowerCase()
+    return lowerAddr === addrFromStore.toLowerCase()
   }
 
-  if (actions.btc.getAllMyAddresses().indexOf(addr.toLowerCase()) !== -1) return true
-  if (actions.ghost.getAllMyAddresses().indexOf(addr.toLowerCase()) !== -1) return true
-  if (actions.next.getAllMyAddresses().indexOf(addr.toLowerCase()) !== -1) return true
-  if (actions.eth.getAllMyAddresses().indexOf(addr.toLowerCase()) !== -1) return true
+  if (
+    actions.btc.getAllMyAddresses().includes(lowerAddr) ||
+    actions.ghost.getAllMyAddresses().includes(lowerAddr) ||
+    actions.next.getAllMyAddresses().includes(lowerAddr) ||
+    actions.eth.getAllMyAddresses().includes(lowerAddr) ||
+    actions.bnb.getAllMyAddresses().includes(lowerAddr)
+  ) {
+    return true
+  }
 
   const name = `${currency.toLowerCase()}Data`
   const { user } = getState()
@@ -599,13 +612,13 @@ export const isOwner = (addr, currency) => {
     return false
   }
 
-  const { address } = user[name]
+  const { addrFromStore } = user[name]
 
-  if (!address) {
+  if (!addrFromStore) {
     return false
   }
 
-  return addr.toLowerCase() === address.toLowerCase()
+  return lowerAddr === addrFromStore.toLowerCase()
 }
 
 

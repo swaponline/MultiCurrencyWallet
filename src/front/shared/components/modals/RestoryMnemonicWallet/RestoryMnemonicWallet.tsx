@@ -199,7 +199,7 @@ class RestoryMnemonicWallet extends React.Component {
   }
 
   restoreWallet = (mnemonic) => {
-    // callback in timeout is't block ui
+    // callback in timeout doesn't block ui
     setTimeout(async () => {
       // Backup critical localStorage
       const backupMark = actions.btc.getMainPublicKey()

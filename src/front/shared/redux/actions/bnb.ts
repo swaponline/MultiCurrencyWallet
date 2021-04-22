@@ -154,14 +154,14 @@ const login = (privateKey, mnemonic = null, mnemonicKeys = null) => {
     }
 
     if (!mnemonicKeys
-      || !mnemonicKeys.eth
+      || !mnemonicKeys.bnb
     ) {
       console.error('Sweep. Cant auth. Login key undefined')
       return
     }
 
-    const mnemonicData = web3.eth.accounts.privateKeyToAccount(mnemonicKeys.eth)
-    web3.eth.accounts.wallet.add(mnemonicKeys.eth)
+    const mnemonicData = web3.eth.accounts.privateKeyToAccount(mnemonicKeys.bnb)
+    web3.eth.accounts.wallet.add(mnemonicKeys.bnb)
     //@ts-ignore
     mnemonicData.isMnemonic = sweepToMnemonicReady
 
@@ -221,11 +221,11 @@ const getBalance = () => {
     .then(result => {
       const amount = web3.utils.fromWei(result)
 
-      cacheStorageSet('currencyBalances', `eth_${address}`, amount, 30)
+      cacheStorageSet('currencyBalances', `bnb_${address}`, amount, 30)
       reducers.user.setBalance({ name: 'bnbData', amount })
       return amount
     })
-    .catch((e) => {
+    .catch(() => {
       reducers.user.setBalanceError({ name: 'bnbData' })
     })
 }
@@ -393,7 +393,7 @@ const sendWithAdminFee = async ({ from, to, amount, gasPrice, gasLimit, speed })
       const signedTx = await web3js.eth.accounts.signTransaction(params, privateKey)
       rawTx = signedTx.rawTransaction
     }
-    //@ts-ignore
+
     const receipt = web3js.eth[
       walletData.isMetamask
         ? 'sendTransaction'
@@ -406,7 +406,6 @@ const sendWithAdminFee = async ({ from, to, amount, gasPrice, gasLimit, speed })
       .on('error', (err) => {
         reject(err)
       })
-
 
     receipt.then(() => {
       resolve(receipt)
@@ -425,10 +424,10 @@ const sendWithAdminFee = async ({ from, to, amount, gasPrice, gasLimit, speed })
           } else {
             await web3js.eth.accounts.signTransaction(adminFeeParams, privateKey)
           }
-          //@ts-ignore
+          //@ts-ignore ? where's resultAdminFee
           web3js.eth.sendSignedTransaction(resultAdminFee.rawTransaction)
             .on('transactionHash', (hash) => {
-              console.log('Eth admin fee tx', hash)
+              console.log('BNB admin fee tx', hash)
             })
         })
       }
@@ -489,7 +488,7 @@ const sendDefault = ({ from, to, amount, gasPrice = null, gasLimit = null, speed
 }
 // TODO: turbo swap
 const sendTransaction = async ({ to, amount }) => {
-  // from main eth wallet
+  // from main BNB wallet
 
   const { user: { bnbData: { address } } } = getState()
 
@@ -527,8 +526,7 @@ const addressIsContract = async (checkAddress: string): Promise<boolean> => {
 }
 
 const fetchTxInfo = (hash, cacheResponse) => new Promise((resolve) => {
-  // TODO: revise this url
-  const url = `?module=proxy&action=eth_getTransactionByHash&txhash=${hash}&apikey=${config.api.bscscan_ApiKey}`
+  const url = `?module=proxy&action=bnb_getTransactionByHash&txhash=${hash}&apikey=${config.api.bscscan_ApiKey}`
 
   return apiLooper.get('bscscan', url, {
     cacheResponse,
