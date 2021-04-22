@@ -338,7 +338,7 @@ class App extends React.Component<RouteComponentProps<any>, any> {
     const isWalletCreated = localStorage.getItem('isWalletCreate')
 
     if (
-      !startPage||
+      !startPage ||
       utils.getCookie('startedSplashScreenIsDisabled') ||
       isWalletCreated ||
       window.location.hash !== '#/'
