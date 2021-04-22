@@ -338,7 +338,7 @@ class App extends React.Component<RouteComponentProps<any>, any> {
     const startPage = document.getElementById('starter-modal')
     const isWalletCreated = localStorage.getItem('isWalletCreate')
 
-    if (!startPage || utils.getCookie('startedSplashScreenIsDisabled') || isWalletCreated) {
+    if (!startPage || utils.getCookie('startedSplashScreenIsDisabled') || isWalletCreated || location.hash !== '/') {
       this.setState(() => ({
         initialFetching: true,
         completeCreation: true,
