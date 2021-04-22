@@ -34,6 +34,13 @@
     <script>
       var isWidgetBuild = '<%= htmlWebpackPlugin.options.isWidget %>';
     </script>
+    <script>
+      try {
+        JSON.parse("<!-- BACK_SO -->");
+      } catch (e) {
+        console.log("warning: caching backend is down")
+      }
+    </script>
 
     <style>
       :root {
@@ -798,11 +805,11 @@
         }
 
         // Swap Modal
-        const swapDisalbeStarter = getCookie('swapDisalbeStarter');
+        const startedSplashScreenIsDisabled = getCookie('startedSplashScreenIsDisabled');
 
         // Open modal if cookie false
         if (
-          swapDisalbeStarter != 'true' &&
+          startedSplashScreenIsDisabled != 'true' &&
           swapIsHome() &&
           !isWidgetBuild &&
           !swapIsWalletCreate() &&
