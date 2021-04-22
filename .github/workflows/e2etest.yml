@@ -22,5 +22,5 @@ jobs:
         ls
     - name: E2E TEST
       run: |
-        docker build tests/e2e/Docerfile -t pp1
+        docker build /home/runner/work/MultiCurrencyWallet/MultiCurrencyWallet/tests/e2e/Docerfile -t pp1
         docker run --shm-size 1G --rm -v /root/MultiCurrencyWallet/e2e:/app pp1
