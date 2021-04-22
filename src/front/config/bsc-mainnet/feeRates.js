@@ -1,13 +1,6 @@
-let ethGasApiLink = 'https://noxon.wpmix.net/ethGas.php'
-
-if (typeof window !== 'undefined') {
-  if (window.defipulse_api_key) {
-    ethGasApiLink = `https://data-api.defipulse.com/api/v1/egs/api/ethgasAPI.json?api-key=${window.defipulse_api_key}`
-  }
-}
+import api from './api'
 
 export default {
-  // TODO: need to find an API for Bsc
-  bnb: ethGasApiLink,
+  bsc: `https://api.bscscan.com/api?module=proxy&action=eth_gasPrice&apikey=${api.bscscan_ApiKey}`,
   btc: 'https://wiki.swaponline.io/blockcyper.php',
 }

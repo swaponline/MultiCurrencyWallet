@@ -2,8 +2,8 @@ import SwapApp from 'swap.app'
 import * as mnemonicUtils from '../../common/utils/mnemonic'
 
 
-const loginMnemonic = (mnemonic, walletNumber=0, path, app) => {
-  const wallet = mnemonicUtils.getEthWallet('nothing', mnemonic, walletNumber, path)
+const loginMnemonic = (mnemonic, walletNumber = 0, path, app) => {
+  const wallet = mnemonicUtils.getEthLikeWallet({ mnemonic, walletNumber, path })
   return login(wallet.privateKey, app)
 }
 

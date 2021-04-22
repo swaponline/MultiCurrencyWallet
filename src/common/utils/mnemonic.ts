@@ -43,32 +43,15 @@ const getBtcWallet = (network, mnemonic, walletNumber = 0, path) => {
   }
 }
 
-const getEthWallet = (network, mnemonic, walletNumber = 0, path) => {
-  mnemonic = convertMnemonicToValid(mnemonic)
-  const seed = bip39.mnemonicToSeedSync(mnemonic)
+const getEthLikeWallet = (params) => {
+  const { mnemonic, walletNumber = 0, path } = params
+  const validMnemonic = convertMnemonicToValid(mnemonic)
+  const seed = bip39.mnemonicToSeedSync(validMnemonic)
   const hdwallet = hdkey.fromMasterSeed(seed)
   const wallet = hdwallet.derivePath((path) || `m/44'/60'/0'/0/${walletNumber}`).getWallet()
 
   return {
-    mnemonic,
-    //@ts-ignore
-    address: `0x${wallet.getAddress().toString('Hex')}`,
-    //@ts-ignore
-    publicKey: `0x${wallet.pubKey.toString('Hex')}`,
-    //@ts-ignore
-    privateKey: `0x${wallet.privKey.toString('Hex')}`,
-    wallet,
-  }
-}
-// TODO: Is it really need ? Can we join this function for all Eth-like blockchains
-const getBnbWallet = (network, mnemonic, walletNumber = 0, path) => {
-  mnemonic = convertMnemonicToValid(mnemonic)
-  const seed = bip39.mnemonicToSeedSync(mnemonic)
-  const hdwallet = hdkey.fromMasterSeed(seed)
-  const wallet = hdwallet.derivePath((path) || `m/44'/60'/0'/0/${walletNumber}`).getWallet()
-
-  return {
-    mnemonic,
+    mnemonic: validMnemonic,
     //@ts-ignore
     address: `0x${wallet.getAddress().toString('Hex')}`,
     //@ts-ignore
@@ -123,24 +106,13 @@ const getNextWallet = (network, mnemonic, walletNumber = 0, path) => {
 
 const mnemonicIsValid = (mnemonic:string):boolean => bip39.validateMnemonic(convertMnemonicToValid(mnemonic))
 
-
-const forCoin = {
-  BTC: getBtcWallet,
-  ETH: getEthWallet,
-  BNB: getBnbWallet,
-  GHOST: getGhostWallet,
-  NEXT: getNextWallet,
-}
-
 export {
   getRandomMnemonicWords,
   validateMnemonicWords,
   mnemonicIsValid,
   convertMnemonicToValid,
   getBtcWallet,
-  getEthWallet,
-  getBnbWallet,
+  getEthLikeWallet,
   getGhostWallet,
   getNextWallet,
-  forCoin,
 }

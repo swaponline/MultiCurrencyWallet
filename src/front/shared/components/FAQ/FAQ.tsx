@@ -36,16 +36,17 @@ const FAQ = (props) => {
         btcSatoshiPrice = await btcUtils.estimateFeeRate({ speed: 'fast', NETWORK })
 
         externalConfig.binance
-          ? bnbGasPrice = await bnb.estimateGasPrice({ speed: 'fast' })
+          ? bnbGasPrice = await bnb.estimateGasPrice()
           : ethGasPrice = await eth.estimateGasPrice({ speed: 'fast' })
 
         // remove memory leak
         if (_mounted) {
           // divided by 1 kb to convert it to satoshi / byte
           setBtcFee(Math.ceil(btcSatoshiPrice / BYTE_IN_KB))
-          // return gas * 1e9 - divided by 1e9 to convert
+
           externalConfig.binance
-            ? setBnbFee(new BigNumber(bnbGasPrice).dividedBy(1e9).toNumber())
+            ? setBnbFee(bnbGasPrice)
+            // return gas * 1e9 - divided by 1e9 to convert
             : setEthFee(new BigNumber(ethGasPrice).dividedBy(1e9).toNumber())
         }
       } catch (error) {

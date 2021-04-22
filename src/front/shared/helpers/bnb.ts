@@ -9,10 +9,10 @@ type EstimateFeeParams = {
 }
 
 const estimateFeeValue = async (params: EstimateFeeParams) => {
-  const { method, speed } = params
-  const gasPrice = await estimateGasPrice({ speed })
+  const { method } = params
+  const gasPrice = await estimateGasPrice()
   const defaultGasLimit = DEFAULT_CURRENCY_PARAMETERS.eth.limit[method]
-  const theSmallestPart = 1e-18 // TODO: replace 18 with 8 (seams after gas API replacement)
+  const theSmallestPart = 1e-18
 
   return new BigNumber(defaultGasLimit)
     .multipliedBy(gasPrice)
@@ -20,41 +20,26 @@ const estimateFeeValue = async (params: EstimateFeeParams) => {
     .toNumber()
 }
 
-// TODO: new gas API
-
-const estimateGasPrice = async ({ speed = 'fast' } = {}) => {
-  const link = config.feeRates.bnb
+// function has to return GWEI value
+const estimateGasPrice = async () => {
   const defaultPrice = DEFAULT_CURRENCY_PARAMETERS.eth.price
-
-  if (!link) {
-    return defaultPrice[speed]
-  }
-
-  let apiResult
+  let apiResponse
 
   try {
-    apiResult = await api.asyncFetchApi(link)
+    // returned in wei value
+    apiResponse = await api.asyncFetchApi(config.feeRates.bsc)
   } catch (err) {
-    return defaultPrice[speed]
+    return defaultPrice.fast
   }
-
-  const apiSpeeds = {
-    slow: 'safeLow',
-    fast: 'fast',
-    fastest: 'fastest',
-  }
-
-  const apiSpeed = apiSpeeds[speed] || apiSpeeds.fast
-  /* 
-  * api returns gas price in x10 Gwei
-  * divided by 10 to convert it to gwei
-  */
-  const apiPrice = new BigNumber(apiResult[apiSpeed])
-    .dividedBy(10)
-    .multipliedBy(1e9)
+  // convert to decimal value
+  const weiGasPrice = parseInt(apiResponse.result).toString(10)
+  const gweiGasPrice = new BigNumber(weiGasPrice)
+    .dividedBy(1e9)
     .toNumber()
 
-  return apiPrice >= defaultPrice[speed] ? apiPrice : defaultPrice[speed]
+  return gweiGasPrice > defaultPrice.fast
+    ? gweiGasPrice
+    : defaultPrice.fast
 }
 
 export default {

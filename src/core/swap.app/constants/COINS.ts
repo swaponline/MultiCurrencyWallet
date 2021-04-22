@@ -28,7 +28,7 @@ export const COIN_DATA = {
     name: 'Binance Coin',
     type: COIN_TYPE.NATIVE,
     model: COIN_MODEL.AB,
-    precision: 8,
+    precision: 18,
   },
   'USDT': {
     ticker: 'USDT',

@@ -7,7 +7,6 @@ import config from 'helpers/externalConfig'
 //@ts-ignore
 import { utils as web3utils } from 'web3'
 import referral from './referral'
-import * as bip39 from 'bip39'
 import typeforce from 'swap.app/util/typeforce'
 import { BigNumber } from 'bignumber.js'
 import DEFAULT_CURRENCY_PARAMETERS from 'common/helpers/constants/DEFAULT_CURRENCY_PARAMETERS'
@@ -103,7 +102,7 @@ const getPrivateKeyByAddress = (address) => {
 }
 
 const getWalletByWords = (mnemonic: string, walletNumber: number = 0, path: string = '') => {
-  return mnemonicUtils.getBnbWallet('nothing', mnemonic, walletNumber, path)
+  return mnemonicUtils.getEthLikeWallet({ mnemonic, walletNumber, path })
 }
 
 
@@ -526,7 +525,7 @@ const addressIsContract = async (checkAddress: string): Promise<boolean> => {
 }
 
 const fetchTxInfo = (hash, cacheResponse) => new Promise((resolve) => {
-  const url = `?module=proxy&action=bnb_getTransactionByHash&txhash=${hash}&apikey=${config.api.bscscan_ApiKey}`
+  const url = `?module=proxy&action=eth_getTransactionByHash&txhash=${hash}&apikey=${config.api.bscscan_ApiKey}`
 
   return apiLooper.get('bscscan', url, {
     cacheResponse,
@@ -545,7 +544,7 @@ const fetchTxInfo = (hash, cacheResponse) => new Promise((resolve) => {
         const amount =  web3.utils.fromWei(value)
         const minerFee = new BigNumber(web3.utils.toBN(gas).toNumber())
           .multipliedBy(web3.utils.toBN(gasPrice).toNumber())
-          .dividedBy(8)
+          .dividedBy(1e18)
           .toNumber()
 
         let adminFee: any = false

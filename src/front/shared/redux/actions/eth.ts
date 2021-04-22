@@ -107,7 +107,7 @@ const getPrivateKeyByAddress = (address) => {
 
 const getWalletByWords = (mnemonic: string, walletNumber: number = 0, path: string = '') => {
   // in eth address are equals in all networds
-  return mnemonicUtils.getEthWallet('nothing', mnemonic, walletNumber, path)
+  return mnemonicUtils.getEthLikeWallet({ mnemonic, walletNumber, path })
 }
 
 
