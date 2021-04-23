@@ -15,7 +15,7 @@ export default {
   blockcypher: 'https://api.blockcypher.com/v1/btc/test3',
   // bitpay: 'https://test-insight.bitpay.com/api',
   bscscan: [
-    'https://testnet.bscscan.com/api',
+    'https://api-testnet.bscscan.com/api',
     // TODO: replace proxy link
     'https://invoices.swaponline.site/proxyetherscan-testnet',
   ],

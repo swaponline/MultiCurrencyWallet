@@ -355,13 +355,13 @@ const sendWithAdminFee = async ({ from, to, amount, gasPrice, gasLimit }) => {
 
   const isSendToContract = await addressIsContract(to)
   // fee - from amount - percent
-  let percentFeeFromAmount = new BigNumber(adminFeePercent)
+  let feeFromAmount = new BigNumber(adminFeePercent)
     .dividedBy(100)
     .multipliedBy(amount)
     .toNumber()
   
-  if (adminMinFee.isGreaterThan(percentFeeFromAmount)) {
-    percentFeeFromAmount = adminMinFee.toNumber()
+  if (adminMinFee.isGreaterThan(feeFromAmount)) {
+    feeFromAmount = adminMinFee.toNumber()
   }
 
   gasPrice = gasPrice || await helpers.bnb.estimateGasPrice()

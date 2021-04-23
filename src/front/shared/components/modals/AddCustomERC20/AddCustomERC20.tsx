@@ -35,9 +35,28 @@ type AddCustomERC20State = {
   isShipped: boolean
 }
 
-const etherscanApi = (config.api.etherscan instanceof Array) ? config.api.etherscan[0] : config.api.etherscan
-const serviceURL = `${etherscanApi}?apikey=${config.api.etherscan_ApiKey}&module=proxy&action=eth_call`
+// TODO: api url doesn't work
+const getExplorerApiUrl = (params) => {
+  const { address, signature } = params
+  let api = config.api.etherscan instanceof Array
+    ? config.api.etherscan[0]
+    : config.api.etherscan
+  let apiKey = config.api.etherscan_ApiKey
 
+  if (config.binance) {
+    api = config.api.etherscan instanceof Array
+      ? config.api.etherscan[0]
+      : config.api.etherscan
+    apiKey = config.api.bscscan_ApiKey
+  }
+
+  return (
+    `${api}?module=proxy&action=eth_call` +
+    `&to=${address}` +
+    `&data=${signature}&tag=latest` +
+    `&apikey=${apiKey}`
+  )
+}
 
 const nameSignature = '0x06fdde03'
 const decimalsSignature = '0x313ce567'
@@ -64,7 +83,10 @@ class AddCustomERC20 extends React.Component<any, any> {
   }
 
   async getName(address) {
-    const response: any = await request.get(`${serviceURL}&to=${address}&data=${nameSignature}`)
+    const response: any = await request.get(getExplorerApiUrl({
+      signature: nameSignature,
+      address,
+    }))
     const hexSymbol = response.result
     const symbol = Web3.utils.toUtf8(hexSymbol)
 
@@ -72,7 +94,10 @@ class AddCustomERC20 extends React.Component<any, any> {
   }
 
   async getSymbol(address) {
-    const response: any = await request.get(`${serviceURL}&to=${address}&data=${symbolSignature}`)
+    const response: any = await request.get(getExplorerApiUrl({
+      signature: symbolSignature,
+      address,
+    }))
     const hexSymbol = response.result
     const symbol = Web3.utils.toUtf8(hexSymbol)
 
@@ -80,7 +105,10 @@ class AddCustomERC20 extends React.Component<any, any> {
   }
 
   async getDecimals(address) {
-    const response: any = await request.get(`${serviceURL}&to=${address}&data=${decimalsSignature}`)
+    const response: any = await request.get(getExplorerApiUrl({
+      signature: decimalsSignature,
+      address,
+    }))
     const hexDecimals = response.result
     const decimals = Web3.utils.hexToNumber(hexDecimals)
 
