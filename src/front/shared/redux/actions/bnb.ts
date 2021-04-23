@@ -342,27 +342,29 @@ const send = (data) => {
     : sendDefault(data)
 }
 
-const sendWithAdminFee = async ({ from, to, amount, gasPrice, gasLimit, speed }) => {
+const sendWithAdminFee = async ({ from, to, amount, gasPrice, gasLimit }) => {
   const web3js = await getWeb3()
 
   const {
-    fee: adminFee,
+    fee: adminFeePercent,
     address: adminFeeAddress,
-    min: adminFeeMinValue,
+    min: minFee,
   } = config.opts.fee.bnb
 
-  const adminFeeMin = new BigNumber(adminFeeMinValue)
+  const adminMinFee = new BigNumber(minFee)
 
   const isSendToContract = await addressIsContract(to)
   // fee - from amount - percent
-  let feeFromAmount = new BigNumber(adminFee).dividedBy(100).multipliedBy(amount)
-  if (adminFeeMin.isGreaterThan(feeFromAmount)) feeFromAmount = adminFeeMin
+  let percentFeeFromAmount = new BigNumber(adminFeePercent)
+    .dividedBy(100)
+    .multipliedBy(amount)
+    .toNumber()
+  
+  if (adminMinFee.isGreaterThan(percentFeeFromAmount)) {
+    percentFeeFromAmount = adminMinFee.toNumber()
+  }
 
-  //@ts-ignore
-  feeFromAmount = feeFromAmount.toNumber() // Admin fee
-
-  //@ts-ignore
-  gasPrice = gasPrice || await helpers.bnb.estimateGasPrice({ speed })
+  gasPrice = gasPrice || await helpers.bnb.estimateGasPrice()
 
   const mainGasLimit = gasLimit || (
     isSendToContract
@@ -415,7 +417,7 @@ const sendWithAdminFee = async ({ from, to, amount, gasPrice, gasLimit, speed })
             to: String(adminFeeAddress).trim(),
             gasPrice,
             gas: serviceFeeGasLimit,
-            value: web3utils.toWei(String(feeFromAmount)),
+            value: web3utils.toWei(String(adminMinFee)),
           }
 
           if (walletData.isMetamask) {
@@ -434,11 +436,11 @@ const sendWithAdminFee = async ({ from, to, amount, gasPrice, gasLimit, speed })
   })
 }
 
-const sendDefault = ({ from, to, amount, gasPrice = null, gasLimit = null, speed = null }) => {
-  return new Promise(async (resolve, reject) => {
-    const web3js = getWeb3()
+const sendDefault = async ({ from, to, amount, gasPrice = null, gasLimit = null, speed = null }) => {
+  const web3js = getWeb3()
+  const isSendToContract = await addressIsContract(to)
 
-    const isSendToContract = await addressIsContract(to)
+  return new Promise(async (resolve, reject) => {
     //@ts-ignore
     gasPrice = gasPrice || await helpers.bnb.estimateGasPrice({ speed })
     gasLimit = gasLimit || (
