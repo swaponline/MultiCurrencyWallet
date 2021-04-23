@@ -1,10 +1,12 @@
 import puppeteer from 'puppeteer'
 
+const link = process.env.ACTIONS ? 'file:///home/runner/work/MultiCurrencyWallet/MultiCurrencyWallet/build-testnet/index.html' : 'http://localhost:9001/'
+
 export const setup = async () => {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
   await page.setViewport({ width: 1920, height: 1080 });
-  await page.goto('file:///home/runner/work/MultiCurrencyWallet/MultiCurrencyWallet/build-testnet/index.html')
+  await page.goto(link)
 
   return { browser, page }
 }
