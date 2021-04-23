@@ -14,11 +14,6 @@ describe('Restpore wallet', () => {
 
     const recoveredBtcAddress = await page.$eval('#btcAddress', el => el.textContent)
 
-    await page.screenshot({
-        path: `tests//e2e/screenshots/restore_${new Date().getTime()}.jpg`,
-        type: 'jpeg'
-    });
-
     await browser.close();
 
     expect(btcAddress).toBe(recoveredBtcAddress)

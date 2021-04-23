@@ -29,11 +29,6 @@ describe('Send BTC', () => {
     const txAmount = await page.$eval('#txAmout', el => el.textContent)
     const txToAddress = await page.$eval('#txToAddress', el => el.textContent)
 
-    await page.screenshot({
-        path: `tests//e2e/screenshots/send_regular_${new Date().getTime()}.jpg`,
-        type: 'jpeg'
-    });
-
     await browser.close();
     expect(txAmount).toMatch(new RegExp(amount.toString()))
     expect(txToAddress).toBe(toAddress)
