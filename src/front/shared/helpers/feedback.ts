@@ -12,7 +12,7 @@ const sendMessage = ({ appPart, eventName, details }) => {
 
   const host = getTopLocation().host || window.location.hostname || document.location.host
 
-  const prefixMark = eventName === 'failed' ? '🛑 ' : ''
+  const prefixMark = eventName === 'failed' ? '🛑' : ''
   const textToSend = `${prefixMark} [${host}] ${appPart} - ${eventName}${details ? ` {${details}}` : ``} |`
 
   if (host && host.includes('localhost')) {
@@ -92,16 +92,15 @@ const events = {
     stopped: 'stopped',
     finished: 'finished',
   },
-  farm: {
-    started: 'started',
-    failed: 'failed',
-  },
   theme: {
     switched: 'switched',
   },
   i18n: {
     switched: 'switched',
   },
+  actions: {
+    failed: 'failed'
+  }
 }
 
 interface IFeedback {

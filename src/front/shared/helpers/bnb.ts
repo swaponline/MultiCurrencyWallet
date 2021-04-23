@@ -20,7 +20,7 @@ const estimateFeeValue = async (params: EstimateFeeParams) => {
     .toNumber()
 }
 
-const estimateGasPrice = async () => {
+const estimateGasPrice = async (): Promise<number> => {
   const defaultGasPrice = DEFAULT_CURRENCY_PARAMETERS.eth.price
   let apiResponse
 
@@ -34,8 +34,7 @@ const estimateGasPrice = async () => {
   const weiGasPrice = new BigNumber(parseInt(apiResponse.result).toString(10))
 
   return weiGasPrice.isGreaterThan(defaultGasPrice.fast)
-    // converting to gwei value
-    ? weiGasPrice.dividedBy(1e9).toNumber()
+    ? weiGasPrice.toNumber()
     : defaultGasPrice.fast
 }
 

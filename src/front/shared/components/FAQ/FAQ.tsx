@@ -44,9 +44,9 @@ const FAQ = (props) => {
           // divided by 1 kb to convert it to satoshi / byte
           setBtcFee(Math.ceil(btcSatoshiPrice / BYTE_IN_KB))
 
+          // return gas * 1e9 - divided by 1e9 to convert
           externalConfig.binance
-            ? setBnbFee(bnbGasPrice)
-            // return gas * 1e9 - divided by 1e9 to convert
+            ? setBnbFee(new BigNumber(bnbGasPrice).dividedBy(1e9).toNumber())
             : setEthFee(new BigNumber(ethGasPrice).dividedBy(1e9).toNumber())
         }
       } catch (error) {

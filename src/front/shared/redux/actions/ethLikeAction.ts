@@ -1,11 +1,10 @@
-//@ts-ignore
-import { utils as web3utils } from 'web3'
 import { BigNumber } from 'bignumber.js'
 import { getState } from 'redux/core'
 import actions from 'redux/actions'
 import DEFAULT_CURRENCY_PARAMETERS from 'common/helpers/constants/DEFAULT_CURRENCY_PARAMETERS'
-import helpers, { web3, getWeb3 } from 'helpers/web3'
+import { web3, getWeb3 } from 'helpers/web3'
 import externalConfig from 'helpers/externalConfig'
+import helpers, { feedback } from 'helpers'
 
 class EthLikeAction {
   private ticker: string // upper case
@@ -36,6 +35,13 @@ class EthLikeAction {
     this.adminFeeObj = adminFeeObj
   }
 
+  reportError = (error) => {
+    feedback.actions.failed(`details(ticker: ${this.ticker}); message(${error.message})`)
+    console.group(`Actions >%c ${this.ticker}`, 'color: red;')
+    console.error('error: ', error)
+    console.groupEnd()
+  }
+
   getPrivateKeyByAddress = (address) => {
     const {
       user: {
@@ -54,13 +60,38 @@ class EthLikeAction {
     if (mnemonicAddress === address) return mnemonicKey
   }
 
-  // sendWithAdminFee, sendDefault
+  getInvoices = () => {
+    return actions.invoices.getInvoices({
+      currency: this.ticker,
+      address: this.ownerAddress,
+    })
+  }
+  
+  getTx = (txRaw) => {
+    return txRaw.transactionHash
+  }
+
+  getTxRouter = (txId) => {
+    return `/${this.tickerKey}/tx/${txId}`
+  }
+
+  getLinkToInfo = (tx) => {
+    if (!tx) return
+    return `${this.explorerLink}/tx/${tx}`
+  }
+
+  fetchBalance = async (): Promise<string> => {
+    return web3.eth.getBalance(this.ownerAddress)
+      .then(result => Number(web3.utils.fromWei(result)))
+      .catch(error => this.reportError(error))
+  }
+
   send = async (params): Promise<string> => {
-    let { from, to, amount, gasPrice, gasLimit, speed } = params
+    let { to, amount, gasPrice, gasLimit, speed } = params
     const web3js = await getWeb3()
     const recipientIsContract = await addressIsContract(to)
-  
-    gasPrice = gasPrice || await helpers[this.ticker.toLowerCase()].estimateGasPrice({ speed })
+
+    gasPrice = 0 || await helpers[this.tickerKey].estimateGasPrice({ speed })
     gasLimit = gasLimit || (
       recipientIsContract
         // ? will use eth data for all ABBlockchains ?
@@ -70,17 +101,17 @@ class EthLikeAction {
       
     let sendMethod = web3js.eth.sendTransaction
     let txObject = {
-      from,
+      from: this.ownerAddress,
       to: to.trim(),
       gasPrice,
       gas: gasLimit,
       value: web3.utils.toWei(String(amount)),
     }
     const walletData = actions.core.getWallet({
-      address: from,
+      address: this.ownerAddress,
       currency: this.ticker,
     })
-    const privateKey = this.getPrivateKeyByAddress(from)
+    const privateKey = this.getPrivateKeyByAddress(this.ownerAddress)
 
     if (!walletData.isMetamask) {
       const signedTx = await web3js.eth.accounts.signTransaction(txObject, privateKey)
@@ -90,6 +121,7 @@ class EthLikeAction {
 
     return new Promise((res, rej) => {
       const receipt = sendMethod(txObject)
+        // TODO: in this response the hash equals undefined
         .on('transactionHash', (hash) => res(`${this.explorerLink}/tx/${hash}`))
         .on('error', (error) => rej(error))
       // Admin fee transaction
@@ -105,7 +137,7 @@ class EthLikeAction {
       }
     })
   }
-
+  // TODO: check this method
   sendAdminFee = async (params) => {
     const web3js = await getWeb3()
     const { amount, gasPrice, gasLimit, privateKey } = params
@@ -124,10 +156,10 @@ class EthLikeAction {
       to: this.adminFeeObj.address.trim(),
       gasPrice,
       gas: gasLimit,
-      value: web3utils.toWei(String(sendedFeeAmount)),
+      value: web3js.utils.toWei(String(sendedFeeAmount)),
     }
 
-    return new Promise(async (res, rej) => {
+    return new Promise(async () => {
       const signedTxObj = await web3js.eth.accounts.signTransaction(adminFeeParams, privateKey)
     
       web3js.eth.sendSignedTransaction(signedTxObj.rawTransaction)
@@ -140,23 +172,17 @@ class EthLikeAction {
   }
 
   /* 
-    send +
-    login
-    getBalance
-    fetchBalance
-    getTransaction
-    getInvoices
-    getTx
-    getLinkToInfo
-    getWalletByWords
-    sweepToMnemonic
-    isSweeped
-    getSweepAddress
-    getAllMyAddresses
-    fetchTxInfo
-    sendTransaction
-    getTxRouter
-    addressIsContract
+  login
+  getBalance
+  getTransaction
+  getWalletByWords
+  sweepToMnemonic
+  isSweeped
+  getSweepAddress
+  getAllMyAddresses
+  fetchTxInfo
+  sendTransaction
+  addressIsContract
   */
 }
 
@@ -177,19 +203,26 @@ const addressIsContract = async (address: string): Promise<boolean> => {
   return !codeIsEmpty
 }
 
+const {
+  user: {
+    ethData: { address: ethOwnerAddress },
+    bnbData: { address: bnbOwnerAddress },
+  }
+} = getState()
+
 export default {
   ETH: new EthLikeAction({
     ticker: 'ETH',
     precision: 18,
-    ownerAddress: '',
-    explorerLink: externalConfig.link.etherscan,
+    ownerAddress: ethOwnerAddress,
+    explorerLink: externalConfig.link?.etherscan,
     adminFeeObj: externalConfig.opts?.fee?.eth,
   }),
   BNB: new EthLikeAction({
     ticker: 'BNB',
     precision: 18,
-    ownerAddress: '',
-    explorerLink: externalConfig.link.bscscan,
+    ownerAddress: bnbOwnerAddress,
+    explorerLink: externalConfig.link?.bscscan,
     adminFeeObj: externalConfig.opts?.fee?.bnb,
   }),
 }

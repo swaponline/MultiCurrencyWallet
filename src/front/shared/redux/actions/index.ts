@@ -17,8 +17,11 @@ import btc from './btc'
 import ghost from './ghost'
 import next from './next'
 import btcmultisig from './btcmultisig'
+// ===================
+import EthLikeAction from './ethLikeAction'
 import eth from './eth'
 import bnb from './bnb'
+// ===================
 import token from './token'
 
 import api from './api'
