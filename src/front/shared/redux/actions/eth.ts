@@ -604,5 +604,4 @@ export default {
   fetchTxInfo,
   sendTransaction,
   getTxRouter,
-  addressIsContract,
 }

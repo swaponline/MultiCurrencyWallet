@@ -1,14 +1,22 @@
 import { BigNumber } from 'bignumber.js'
 import { getState } from 'redux/core'
 import actions from 'redux/actions'
+import reducers from 'redux/core/reducers'
 import DEFAULT_CURRENCY_PARAMETERS from 'common/helpers/constants/DEFAULT_CURRENCY_PARAMETERS'
+import * as mnemonicUtils from 'common/utils/mnemonic'
 import { web3, getWeb3 } from 'helpers/web3'
 import externalConfig from 'helpers/externalConfig'
-import helpers, { feedback } from 'helpers'
+import metamask from 'helpers/metamask'
+import helpers, {
+  feedback,
+  constants,
+  cacheStorageGet,
+  cacheStorageSet,
+} from 'helpers'
 
 class EthLikeAction {
-  private ticker: string // upper case
-  private tickerKey: string // lower case
+  private ticker: string // upper case (ex. ETH)
+  private tickerKey: string // lower case (ex. eth)
   private ownerAddress: string
   private precision: number // number of digits after the dot
   private explorerLink: string
@@ -80,10 +88,77 @@ class EthLikeAction {
     return `${this.explorerLink}/tx/${tx}`
   }
 
-  fetchBalance = async (): Promise<string> => {
-    return web3.eth.getBalance(this.ownerAddress)
+  fetchBalance = async (address): Promise<number> => {
+    return web3.eth.getBalance(address)
       .then(result => Number(web3.utils.fromWei(result)))
       .catch(error => this.reportError(error))
+  }
+
+  getBalance = () => {
+    const address = metamask.isEnabled() && metamask.isConnected()
+      ? metamask.getAddress()
+      : this.ownerAddress
+
+    const balanceInCache = cacheStorageGet('currencyBalances', `${this.tickerKey}_${address}`)
+  
+    if (balanceInCache !== false) {
+      reducers.user.setBalance({
+        name: `${this.tickerKey}Data`,
+        amount: balanceInCache,
+      })
+      return balanceInCache
+    }
+
+    return this.fetchBalance(address)
+      .then(balance => {
+        cacheStorageSet('currencyBalances', `${this.tickerKey}_${address}`, balance, 30)
+        reducers.user.setBalance({ name: `${this.tickerKey}Data`, balance })
+        return balance
+      })
+      .catch(() => {
+        reducers.user.setBalanceError({ name: `${this.tickerKey}Data` })
+      })
+  }
+
+  getAllMyAddresses = () => {
+    const { user } = getState()
+    const arrOfAddresses = []
+
+    if (user[`${this.tickerKey}Data`]?.address) {
+      arrOfAddresses.push(user[`${this.tickerKey}Data`].address.toLowerCase())
+    }
+
+    if (
+      user[`${this.tickerKey}MnemonicData`]?.address?.toLowerCase() !==
+      user[`${this.tickerKey}Data`]?.address?.toLowerCase()
+    ) {
+      arrOfAddresses.push(user[`${this.tickerKey}MnemonicData`]?.address?.toLowerCase())
+    }
+  
+    if (
+      metamask &&
+      metamask.isEnabled() &&
+      metamask.isConnected() &&
+      !arrOfAddresses.includes(metamask.getAddress().toLowerCase())
+    ) {
+      arrOfAddresses.push(metamask.getAddress().toLowerCase())
+    }
+
+    return arrOfAddresses
+  }
+
+  getWalletByWords = (mnemonic: string, walletNumber: number = 0, path: string = '') => {
+    return mnemonicUtils.getEthLikeWallet({ mnemonic, walletNumber, path })
+  }
+
+  getSweepAddress = () => {
+    const { user } = getState()
+
+    if (user[`${this.tickerKey}MnemonicData`]?.address) {
+      return user[`${this.tickerKey}MnemonicData`].address
+    }
+
+    return false
   }
 
   send = async (params): Promise<string> => {
@@ -137,6 +212,7 @@ class EthLikeAction {
       }
     })
   }
+
   // TODO: check this method
   sendAdminFee = async (params) => {
     const web3js = await getWeb3()
@@ -171,18 +247,52 @@ class EthLikeAction {
     })
   }
 
+  // TODO: Seems we use this method in the TurboSwaps
+  // TODO: need to replace it with this.send() method
+  sendTransaction = async (params) => {
+    const { to, amount } = params
+
+    if (false) { // fake tx - turboswaps debug
+      const txHash = '0x58facdbf5023a401f39998179995f0af1e54a64455145df6ed507abdecc1b0a4'
+      return txHash
+    }
+
+    return await this.send({
+      from: this.ownerAddress,
+      to,
+      amount,
+    })
+  }
+
+  sweepToMnemonic = (mnemonic, path) => {
+    // ? what's that, how does it work ? Wrong arguments order. See above method
+    const wallet = this.getWalletByWords(mnemonic, path)
+
+    window.localStorage.setItem(
+      constants.privateKeyNames[`${this.tickerKey}Mnemonic`],
+      wallet.privateKey,
+    )
+
+    return wallet.privateKey
+  }
+
+  isSweeped = () => {
+    const { user } = getState()
+
+    if (
+      user[`${this.tickerKey}Data`]?.address?.toLowerCase() !==
+      user[`${this.tickerKey}MnemonicData`]?.address?.toLowerCase()
+    ) {
+      return false
+    }
+
+    return true
+  }
+
   /* 
   login
-  getBalance
   getTransaction
-  getWalletByWords
-  sweepToMnemonic
-  isSweeped
-  getSweepAddress
-  getAllMyAddresses
   fetchTxInfo
-  sendTransaction
-  addressIsContract
   */
 }
 
@@ -210,6 +320,7 @@ const {
   }
 } = getState()
 
+// ? it will be easier if we'll export to lowecase (no changes to the other files)
 export default {
   ETH: new EthLikeAction({
     ticker: 'ETH',
