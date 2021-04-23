@@ -69,6 +69,7 @@ class MarketmakerSettings extends Component<any, any> {
       isEthBalanceOk: false,
       isBtcBalanceOk: false,
       isTokenBalanceOk: false,
+      marketSpread: 0.1, // 10% spread
       mnemonicSaved,
     }
   }
@@ -353,10 +354,30 @@ class MarketmakerSettings extends Component<any, any> {
       ethBalance,
       isBtcBalanceOk,
       isTokenBalanceOk,
+      marketSpread,
     } = this.state
 
+    /*
+           / 100 - spread[%] \
+  price * |  –––––––––––––––  |
+           \       100       /
+           
+           price = 1
+           sell = 10
+           buy = ? 10 + spread
+           
+           buy = 10
+           sell = ? 10 - spread
+    */
     if (isTokenBalanceOk) {
-      const sellTokenExchangeRate = 1
+      const sellTokenExchangeRate =
+        new BigNumber(100).minus(
+          new BigNumber(100).times(marketSpread)
+        ).dividedBy(100).toNumber()
+      console.log('>>>> sellTokenExchangeRate', sellTokenExchangeRate)
+      const sellAmount = new BigNumber(tokenBalance).times(sellTokenExchangeRate)
+      console. log('sellAmount', sellAmount.toNumber())
+      
       const sellTokenOrderData = {
         balance: tokenBalance,
         buyAmount: tokenBalance,
@@ -370,7 +391,7 @@ class MarketmakerSettings extends Component<any, any> {
         manualRate: true,
         minimalestAmountForBuy: 0.00038906,
         minimalestAmountForSell: 0.00038906,
-        sellAmount: tokenBalance,
+        sellAmount,
         buyCurrency: `BTC`,
         sellCurrency: marketToken,
       }
