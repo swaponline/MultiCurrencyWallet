@@ -22,6 +22,12 @@ jobs:
       uses: bahmutov/npm-install@v1
       with:
        useLockFile: false
+    - name: run dev for tests
+      run: |
+        npm run dev
+    - name: e2e tests
+      run: |
+        npm run tests:e2e
     - name: build mainnet
       run: |
         npm run build:mainnet
