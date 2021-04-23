@@ -24,7 +24,8 @@ jobs:
        useLockFile: false
     - name: run dev and run e2e tests
       run: |
-        pwd
+        npm run build:mainnet
+        npm run tests:e2e
     - name: build mainnet
       run: |
         npm run build:mainnet
