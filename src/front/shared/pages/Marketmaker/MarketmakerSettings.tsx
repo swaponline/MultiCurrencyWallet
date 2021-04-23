@@ -369,18 +369,21 @@ class MarketmakerSettings extends Component<any, any> {
            buy = 10
            sell = ? 10 - spread
     */
+    const tokenBalance2 = 1
+    const btcBalance2 = 1
     if (isTokenBalanceOk) {
+      
       const sellTokenExchangeRate =
         new BigNumber(100).minus(
           new BigNumber(100).times(marketSpread)
         ).dividedBy(100).toNumber()
       console.log('>>>> sellTokenExchangeRate', sellTokenExchangeRate)
-      const sellAmount = new BigNumber(tokenBalance).times(sellTokenExchangeRate)
+      const sellAmount = new BigNumber(tokenBalance2).times(sellTokenExchangeRate)
       console. log('sellAmount', sellAmount.toNumber())
       
       const sellTokenOrderData = {
-        balance: tokenBalance,
-        buyAmount: tokenBalance,
+        balance: tokenBalance2,
+        buyAmount: tokenBalance2,
         ethBalance,
         exchangeRate: sellTokenExchangeRate,
         isPartial: true,
@@ -399,10 +402,18 @@ class MarketmakerSettings extends Component<any, any> {
       SwapApp.shared().services.orders.create(sellTokenOrderData)
     }
     if (isBtcBalanceOk) {
-      const buyTokenExchangeRate = 1
+      
+      const buyTokenExchangeRate =
+        new BigNumber(100).plus(
+          new BigNumber(100).times(marketSpread)
+        ).dividedBy(100).toNumber()
+      console.log('>>>> buyTokenExchangeRate', buyTokenExchangeRate)
+      const buyAmount = new BigNumber(btcBalance2).times(buyTokenExchangeRate).toNumber()
+      console.log('>>>>>', buyAmount)
+      //const buyTokenExchangeRate = 1
       const buyTokenOrderData = {
-        balance: btcBalance,
-        sellAmount: btcBalance,
+        balance: btcBalance2,
+        sellAmount: btcBalance2,
         ethBalance,
         exchangeRate: buyTokenExchangeRate,
         isPartial: true,
@@ -413,7 +424,7 @@ class MarketmakerSettings extends Component<any, any> {
         manualRate: true,
         minimalestAmountForBuy: 0.00038906,
         minimalestAmountForSell: 0.00038906,
-        buyAmount: btcBalance,
+        buyAmount,
         sellCurrency: `BTC`,
         buyCurrency: marketToken,
       }
