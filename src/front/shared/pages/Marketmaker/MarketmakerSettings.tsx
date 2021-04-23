@@ -361,29 +361,18 @@ class MarketmakerSettings extends Component<any, any> {
            / 100 - spread[%] \
   price * |  –––––––––––––––  |
            \       100       /
-           
-           price = 1
-           sell = 10
-           buy = ? 10 + spread
-           
-           buy = 10
-           sell = ? 10 - spread
     */
-    const tokenBalance2 = 1
-    const btcBalance2 = 1
     if (isTokenBalanceOk) {
-      
       const sellTokenExchangeRate =
         new BigNumber(100).minus(
           new BigNumber(100).times(marketSpread)
         ).dividedBy(100).toNumber()
-      console.log('>>>> sellTokenExchangeRate', sellTokenExchangeRate)
-      const sellAmount = new BigNumber(tokenBalance2).times(sellTokenExchangeRate)
-      console. log('sellAmount', sellAmount.toNumber())
-      
+
+      const sellAmount = new BigNumber(tokenBalance).times(sellTokenExchangeRate).toNumber()
+
       const sellTokenOrderData = {
-        balance: tokenBalance2,
-        buyAmount: tokenBalance2,
+        balance: tokenBalance,
+        buyAmount: tokenBalance,
         ethBalance,
         exchangeRate: sellTokenExchangeRate,
         isPartial: true,
@@ -402,18 +391,16 @@ class MarketmakerSettings extends Component<any, any> {
       SwapApp.shared().services.orders.create(sellTokenOrderData)
     }
     if (isBtcBalanceOk) {
-      
       const buyTokenExchangeRate =
         new BigNumber(100).plus(
           new BigNumber(100).times(marketSpread)
         ).dividedBy(100).toNumber()
-      console.log('>>>> buyTokenExchangeRate', buyTokenExchangeRate)
-      const buyAmount = new BigNumber(btcBalance2).times(buyTokenExchangeRate).toNumber()
-      console.log('>>>>>', buyAmount)
-      //const buyTokenExchangeRate = 1
+
+      const buyAmount = new BigNumber(btcBalance).times(buyTokenExchangeRate).toNumber()
+
       const buyTokenOrderData = {
-        balance: btcBalance2,
-        sellAmount: btcBalance2,
+        balance: btcBalance,
+        sellAmount: btcBalance,
         ethBalance,
         exchangeRate: buyTokenExchangeRate,
         isPartial: true,
