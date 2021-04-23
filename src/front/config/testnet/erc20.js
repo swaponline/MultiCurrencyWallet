@@ -21,6 +21,6 @@ export default {
     address: '0xb92eaD9C545Fe04030FD3412a59e42FdB57431f5',
     decimals: 8,
     fullName: 'Wrapped Bitcoin',
-    canSwap: false,
+    canSwap: true,
   },
 }
