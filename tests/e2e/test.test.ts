@@ -1,20 +1,22 @@
 import puppeteer from 'puppeteer'
 
 const timeOut = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
 const SEED = ['express', 'pretty', 'dinner', 'first', 'someone', 'reform', 'occur', 'food', 'dice', 'very', 'thumb', 'unfold']
+const btcAddress = 'n1AqFLX43FFK5dyzXkxjt6AXKLZ1TCniWw'
 
 jest.setTimeout(50 * 1000)
 
 describe('Restpore wallet', () => {
-  it('from 12 words', async () => {
+  it('from 12 words and check recovery BTC address', async () => {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
     await page.setViewport({ width: 1920, height: 1080 });
-    await page.goto('http://localhost:9001/');
-
+    await page.goto('http://localhost:9001/')
 
     await page.click('#preloaderRestoreBtn')
-    await page.waitForSelector('.react-tags__search-input', {timeout: 20 * 1000})
+
+    await page.waitForSelector('.react-tags__search-input')
 
     const wordInput = await page.$(`.react-tags__search-input`)
 
@@ -33,7 +35,9 @@ describe('Restpore wallet', () => {
 
     await page.click('#finishWalletRecoveryButton')
 
-    await timeOut(5 * 1000)
+    await page.waitForSelector('#btcAddress')
+
+    const recoveredBtcAddress = await page.$eval('#btcAddress', el => el.textContent)
 
     await page.screenshot({
         path: `tests//e2e/screenshots/restore_${new Date().getTime().toString()}.jpg`,
@@ -42,8 +46,6 @@ describe('Restpore wallet', () => {
 
     await browser.close();
 
-    const title = 'welcome'
-
-    expect(title).toBe('welcome')
+    expect(btcAddress).toBe(recoveredBtcAddress)
   })
 })
