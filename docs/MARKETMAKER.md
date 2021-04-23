@@ -42,7 +42,7 @@ cd mainnet_bot  //your working folder (created at installation)
 ```
 Update container and restart service (don't worry the data isn't affected because it's stored in the folder as "volume" not in the container).
 ```
-docker-compose pull mcw_bot && docker-compose up -d
+docker-compose pull mcw_bot && docker-compose stop && docker-compose up -d
 ```
 
 ## login and password
