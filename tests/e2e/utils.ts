@@ -32,10 +32,17 @@ export const importWallet = async (page: puppeteer.Page, SEED: string[]) => {
   await page.click('#finishWalletRecoveryButton')
 }
 
+export const selectSendCurrency = async (page: puppeteer.Page, currency: string = 'btc') => {
+  await page.click('#sendBtn')
+  await page.click('#currencyList')
+  await page.click(`#${currency}Send`)
+}
+
 export const timeOut = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 export default {
     setup,
     importWallet,
+    selectSendCurrency,
     timeOut
 }
