@@ -7,8 +7,8 @@ read PORT
 mkdir $CONTAINERNAME
 cd $CONTAINERNAME
 
-curl https://raw.githubusercontent.com/swaponline/MultiCurrencyWallet/master/tradeconfig.mainnet.json --create-dirs -o config/tradeconfig.mainnet.json
-curl https://raw.githubusercontent.com/swaponline/MultiCurrencyWallet/master/tradeconfig.testnet.json --create-dirs -o config/tradeconfig.testnet.json
+curl https://raw.githubusercontent.com/swaponline/MultiCurrencyWallet/master/tradeconfig.mainnet.json.example --create-dirs -o config/tradeconfig.mainnet.json
+curl https://raw.githubusercontent.com/swaponline/MultiCurrencyWallet/master/tradeconfig.testnet.json.example --create-dirs -o config/tradeconfig.testnet.json
 
 tee .env <<EOF
 KRAKEN_API_KEY=
