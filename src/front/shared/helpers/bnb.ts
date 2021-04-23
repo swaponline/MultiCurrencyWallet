@@ -20,26 +20,23 @@ const estimateFeeValue = async (params: EstimateFeeParams) => {
     .toNumber()
 }
 
-// function has to return GWEI value
 const estimateGasPrice = async () => {
-  const defaultPrice = DEFAULT_CURRENCY_PARAMETERS.eth.price
+  const defaultGasPrice = DEFAULT_CURRENCY_PARAMETERS.eth.price
   let apiResponse
 
   try {
-    // returned in wei value
+    // returned in hex wei value
     apiResponse = await api.asyncFetchApi(config.feeRates.bsc)
   } catch (err) {
-    return defaultPrice.fast
+    return defaultGasPrice.fast
   }
   // convert to decimal value
-  const weiGasPrice = parseInt(apiResponse.result).toString(10)
-  const gweiGasPrice = new BigNumber(weiGasPrice)
-    .dividedBy(1e9)
-    .toNumber()
+  const weiGasPrice = new BigNumber(parseInt(apiResponse.result).toString(10))
 
-  return gweiGasPrice > defaultPrice.fast
-    ? gweiGasPrice
-    : defaultPrice.fast
+  return weiGasPrice.isGreaterThan(defaultGasPrice.fast)
+    // converting to gwei value
+    ? weiGasPrice.dividedBy(1e9).toNumber()
+    : defaultGasPrice.fast
 }
 
 export default {

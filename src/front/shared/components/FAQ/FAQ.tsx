@@ -50,8 +50,7 @@ const FAQ = (props) => {
             : setEthFee(new BigNumber(ethGasPrice).dividedBy(1e9).toNumber())
         }
       } catch (error) {
-        console.error('FAQ -> useEffect: ', error)
-        feedback.faq.failed(`fetch fees error(${error.message})`)
+        feedback.faq.failed(`FAQ. Fetch fees error(${error.message})`)
       }
     }
 
@@ -154,8 +153,7 @@ const FAQ = (props) => {
                       <span>
                         <b>{bnbFee}</b> gwei
                         {' '}
-                        {/* TODO: replace api source gas link BNB */}
-                        <a className={styles.link} href={externalConfig.api.defipulse} target="_blank">
+                        <a className={styles.link} href={externalConfig.feeRates.bsc} target="_blank">
                           <FormattedMessage id="FAQFeeApiLink" defaultMessage="(source)" />
                         </a>
                       </span>
