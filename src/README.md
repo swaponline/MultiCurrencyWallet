@@ -836,9 +836,6 @@
 │   │   │   │   ├── Share
 │   │   │   │   │   ├── Share.scss
 │   │   │   │   │   └── Share.tsx
-│   │   │   │   ├── SignUpModal
-│   │   │   │   │   ├── SignUpModal.scss
-│   │   │   │   │   └── SignUpModal.tsx
 │   │   │   │   ├── Styles
 │   │   │   │   │   └── default.scss
 │   │   │   │   ├── SweepToMnemonicKeys
@@ -1389,7 +1386,6 @@
 │   │   │   │   ├── notifications.ts
 │   │   │   │   ├── pubsubRoom.ts
 │   │   │   │   ├── rememberedOrders.ts
-│   │   │   │   ├── signUp.ts
 │   │   │   │   ├── ui.ts
 │   │   │   │   └── user.ts
 │   │   │   └── store

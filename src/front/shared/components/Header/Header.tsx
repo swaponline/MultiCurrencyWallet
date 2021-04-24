@@ -48,7 +48,6 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
 @connect({
   feeds: 'feeds.items',
   peer: 'pubsubRoom.peer',
-  isSigned: 'signUp.isSigned',
   isInputActive: 'inputActive.isInputActive',
   reputation: 'pubsubRoom.reputation',
   modals: 'modals',

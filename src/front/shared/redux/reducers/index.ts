@@ -8,7 +8,6 @@ import * as core from './core'
 import * as pubsubRoom from './pubsubRoom'
 import * as api from './api'
 import * as currencies from './currencies'
-import * as signUp from './signUp'
 import * as inputActive from './inputActive'
 import * as rememberedOrders from './rememberedOrders'
 import * as createWallet from './createWallet'
@@ -25,7 +24,6 @@ export default {
   pubsubRoom,
   api,
   currencies,
-  signUp,
   inputActive,
   rememberedOrders,
   createWallet,

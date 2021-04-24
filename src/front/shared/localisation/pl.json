@@ -564,62 +564,6 @@
     ]
   },
   {
-    "id": "SignUpModal133",
-    "message": "Coś poszło nie tak..{br}Spróbuj później",
-    "files": [
-      "src/front/shared/components/modals/SignUpModal/SignUpModal.tsx"
-    ]
-  },
-  {
-    "id": "SignUpModal000",
-    "message": "Dzięki !{br}Otrzymasz powiadomienie",
-    "files": [
-      "src/front/shared/components/modals/SignUpModal/SignUpModal.tsx"
-    ]
-  },
-  {
-    "id": "SignUpModal001",
-    "message": "Idź do mojego portfela",
-    "files": [
-      "src/front/shared/components/modals/SignUpModal/SignUpModal.tsx"
-    ]
-  },
-  {
-    "id": "SignUpModal002",
-    "message": "Zarejestruj się",
-    "files": [
-      "src/front/shared/components/modals/SignUpModal/SignUpModal.tsx"
-    ]
-  },
-  {
-    "id": "SignUpModal002-1",
-    "message": "Jeden krok więcej",
-    "files": [
-      "src/front/shared/components/modals/SignUpModal/SignUpModal.tsx"
-    ]
-  },
-  {
-    "id": "SignUpModal003",
-    "message": "Zezwól na powiadomienia",
-    "files": [
-      "src/front/shared/components/modals/SignUpModal/SignUpModal.tsx"
-    ]
-  },
-  {
-    "id": "SignUpModal004",
-    "message": "You will receive notifications regarding updates with your account (orders, transactions){br}and monthly updates about our project{br}{br}Sign up and get your free cryptocurrency for test. Exchange it on real Bitcoin from very begining!",
-    "files": [
-      "src/front/shared/components/modals/SignUpModal/SignUpModal.tsx"
-    ]
-  },
-  {
-    "id": "SignUpModal005",
-    "message": "It seems like push notification is not working{br}Please, leave your email for notifications,{br}or try later",
-    "files": [
-      "src/front/shared/components/modals/SignUpModal/SignUpModal.tsx"
-    ]
-  },
-  {
     "id": "Select210",
     "message": "MAX",
     "files": [
@@ -699,13 +643,6 @@
     "message": "Otrzymywanie",
     "files": [
       "src/front/shared/components/modals/ReceiveModal/ReceiveModal.tsx"
-    ]
-  },
-  {
-    "id": "SignUpModal55",
-    "message": "Zarejestruj się",
-    "files": [
-      "src/front/shared/components/modals/SignUpModal/SignUpModal.tsx"
     ]
   },
   {

@@ -190,7 +190,6 @@ Add swap instances:
 - `src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.js`
 - `src/front/shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.js`
 - `src/front/shared/components/modals/ShowMoreCoins/ShowMoreCoins.js`
-- `src/front/shared/components/modals/SignUpModal/SignUpModal.js`
 - `src/front/shared/components/SaveKeys/SaveKeys.js`
 - `src/front/shared/containers/App/App.js`
 - `src/front/shared/pages/CurrencyWallet/CurrencyWallet.js`

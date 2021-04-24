@@ -131,9 +131,6 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
   }
 )
 @withRouter
-@connect(({ signUp: { isSigned } }) => ({
-  isSigned,
-}))
 @cssModules(styles, { allowMultiple: true })
 class Wallet extends Component<any, any> {
   constructor(props) {
