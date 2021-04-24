@@ -98,20 +98,6 @@
     ]
   },
   {
-    "id": "EthChecker19",
-    "message": "This token works on Ethereum blockchain. To swap this token you must have at least 0.02 ETH on your balance",
-    "files": [
-      "src/front/shared/components/modals/EthChecker/EthChecker.tsx"
-    ]
-  },
-  {
-    "id": "EthChecker23",
-    "message": "Go wallet",
-    "files": [
-      "src/front/shared/components/modals/EthChecker/EthChecker.tsx"
-    ]
-  },
-  {
     "id": "ConfirmOffer69",
     "message": "Terug",
     "files": [
@@ -681,13 +667,6 @@
     "message": "U ontvangt",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
-    ]
-  },
-  {
-    "id": "Approve",
-    "message": "Approve token",
-    "files": [
-      "src/front/shared/components/modals/EthChecker/EthChecker.tsx"
     ]
   },
   {

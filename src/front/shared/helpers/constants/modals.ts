@@ -4,7 +4,6 @@ export default {
   WithdrawMultisig: 'WithdrawModalMultisig',
   Offer: 'OfferModal',
   PrivateKeys: 'PrivateKeysModal',
-  EthChecker: 'EthChecker',
   ReceiveModal: 'ReceiveModal',
   DownloadModal: 'DownloadModal',
   Confirm: 'Confirm',

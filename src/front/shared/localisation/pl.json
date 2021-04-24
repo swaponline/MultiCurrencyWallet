@@ -95,20 +95,6 @@
     ]
   },
   {
-    "id": "EthChecker19",
-    "message": "Ten token działa w sieci Ethereum. Aby wymienić token musisz posiadać minimum 0.02 ETH w Twoim portfelu",
-    "files": [
-      "src/front/shared/components/modals/EthChecker/EthChecker.tsx"
-    ]
-  },
-  {
-    "id": "EthChecker23",
-    "message": "Portfel",
-    "files": [
-      "src/front/shared/components/modals/EthChecker/EthChecker.tsx"
-    ]
-  },
-  {
     "id": "ConfirmOffer69",
     "message": "Cofnij",
     "files": [
@@ -685,13 +671,6 @@
     "message": "Dostajesz",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
-    ]
-  },
-  {
-    "id": "Approve",
-    "message": "Zatwierdź token",
-    "files": [
-      "src/front/shared/components/modals/EthChecker/EthChecker.tsx"
     ]
   },
   {

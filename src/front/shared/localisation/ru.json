@@ -95,20 +95,6 @@
     ]
   },
   {
-    "id": "EthChecker19",
-    "message": "Этот Токен работает на сети Ethereum blockchain. Для осуществления операций у Вас должно быть не менее 0.02 ETH на балансе",
-    "files": [
-      "src/front/shared/components/modals/EthChecker/EthChecker.tsx"
-    ]
-  },
-  {
-    "id": "EthChecker23",
-    "message": "Кошелек",
-    "files": [
-      "src/front/shared/components/modals/EthChecker/EthChecker.tsx"
-    ]
-  },
-  {
     "id": "ConfirmOffer69",
     "message": "Назад",
     "files": [
@@ -744,13 +730,6 @@
     "message": "Получаете",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
-    ]
-  },
-  {
-    "id": "Approve",
-    "message": "Подтвердить токен",
-    "files": [
-      "src/front/shared/components/modals/EthChecker/EthChecker.tsx"
     ]
   },
   {

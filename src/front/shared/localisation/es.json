@@ -95,20 +95,6 @@
     ]
   },
   {
-    "id": "EthChecker19",
-    "message": "Este Token funciona sobre la blockchain de Ethereum. Para intercambiar esta moneda debes tener al menos 0.02 ETH en tu cuenta.",
-    "files": [
-      "src/front/shared/components/modals/EthChecker/EthChecker.tsx"
-    ]
-  },
-  {
-    "id": "EthChecker23",
-    "message": "Ir a billetera",
-    "files": [
-      "src/front/shared/components/modals/EthChecker/EthChecker.tsx"
-    ]
-  },
-  {
     "id": "ConfirmOffer69",
     "message": "Atrás",
     "files": [
@@ -685,13 +671,6 @@
     "message": "Tu obtienes",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
-    ]
-  },
-  {
-    "id": "Approve",
-    "message": "Aprobar Token",
-    "files": [
-      "src/front/shared/components/modals/EthChecker/EthChecker.tsx"
     ]
   },
   {

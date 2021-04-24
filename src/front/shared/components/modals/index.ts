@@ -4,7 +4,6 @@ import WithdrawModal from './WithdrawModal/WithdrawModal'
 import WithdrawModalMultisig from './WithdrawModalMultisig/WithdrawModalMultisig'
 import WithdrawModalMultisigUser from './WithdrawModalMultisig/WithdrawModalMultisigUser'
 import PrivateKeysModal from './PrivateKeysModal/PrivateKeysModal'
-import EthChecker from './EthChecker/EthChecker'
 import ReceiveModal from './ReceiveModal/ReceiveModal'
 import DownloadModal from './DownloadModal/DownloadModal'
 import DeclineOrdersModal from './DeclineOrdersModal/DeclineOrdersModal'
@@ -53,7 +52,6 @@ export default {
   WithdrawModal,
   WithdrawModalMultisigUser, // Deprecated
   PrivateKeysModal,
-  EthChecker,
   ReceiveModal,
   DownloadModal,
   IncompletedSwaps,
