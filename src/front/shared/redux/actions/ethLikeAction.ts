@@ -4,6 +4,7 @@ import actions from 'redux/actions'
 import reducers from 'redux/core/reducers'
 import DEFAULT_CURRENCY_PARAMETERS from 'common/helpers/constants/DEFAULT_CURRENCY_PARAMETERS'
 import * as mnemonicUtils from 'common/utils/mnemonic'
+import typeforce from 'swap.app/util/typeforce'
 import { web3, getWeb3 } from 'helpers/web3'
 import externalConfig from 'helpers/externalConfig'
 import metamask from 'helpers/metamask'
@@ -12,34 +13,45 @@ import helpers, {
   constants,
   cacheStorageGet,
   cacheStorageSet,
+  apiLooper,
 } from 'helpers'
+import referral from './referral'
 
 class EthLikeAction {
+  private coinName: string
   private ticker: string // upper case (ex. ETH)
   private tickerKey: string // lower case (ex. eth)
   private ownerAddress: string
   private precision: number // number of digits after the dot
+  private explorerName: string
   private explorerLink: string
+  private explorerApiKey: string
   private adminFeeObj: {
-    feePercent: string // percent of amount
+    fee: string // percent of amount
     address: string // where to send
-    minAmount: string // min amount
+    min: string // min amount
   }
 
   constructor(options) {
     const {
+      coinName,
       ticker,
       precision,
       ownerAddress,
+      explorerName,
       explorerLink,
+      explorerApiKey,
       adminFeeObj,
     } = options
 
+    this.coinName = coinName
     this.ticker = ticker
     this.tickerKey = ticker.toLowerCase()
     this.precision = precision
     this.ownerAddress = ownerAddress
+    this.explorerName = explorerName
     this.explorerLink = explorerLink
+    this.explorerApiKey = explorerApiKey
     this.adminFeeObj = adminFeeObj
   }
 
@@ -94,6 +106,148 @@ class EthLikeAction {
       .catch(error => this.reportError(error))
   }
 
+  // TODO: improve method
+  fetchTxInfo = (hash, cacheResponse) => {
+    const url = `?module=proxy&action=eth_getTransactionByHash&txhash=${hash}&apikey=${this.explorerApiKey}`
+
+    return new Promise((res, rej) => {
+      return apiLooper.get(this.explorerName, url, {
+        cacheResponse,
+      }).then((res: any) => {
+          if (res && res.result) {
+            const {
+              from,
+              to,
+              value,
+              gas,
+              gasPrice,
+              blockHash,
+            } = res.result
+    
+            const amount = web3.utils.fromWei(value)
+            const minerFee = new BigNumber(web3.utils.toBN(gas).toNumber())
+              .multipliedBy(web3.utils.toBN(gasPrice).toNumber())
+              .dividedBy(1e18)
+              .toNumber()
+
+            let adminFee: any = false
+
+            if (this.adminFeeObj && to !== this.adminFeeObj.address) {
+              adminFee = new BigNumber(this.adminFeeObj.fee).dividedBy(100).multipliedBy(amount)
+    
+              if (new BigNumber(this.adminFeeObj.min).isGreaterThan(adminFee)) {
+                adminFee = new BigNumber(this.adminFeeObj.min)
+              }
+    
+              adminFee = adminFee.toNumber()
+            }
+
+            res({
+              amount,
+              afterBalance: null,
+              receiverAddress: to,
+              senderAddress: from,
+              minerFee,
+              minerFeeCurrency: this.ticker,
+              adminFee,
+              confirmed: (blockHash !== null),
+            })
+          } else {
+            res(false)
+          }
+        })
+        .catch((error) => {
+          rej(error)
+        })
+    })
+  }
+
+  login = (privateKey, mnemonic = null, mnemonicKeys = null) => {
+    let sweepToMnemonicReady = false
+
+    if (
+      privateKey
+      && mnemonic
+      && mnemonicKeys
+      && mnemonicKeys[this.tickerKey] === privateKey
+    ) {
+      sweepToMnemonicReady = true
+    }
+
+    if (!privateKey && mnemonic) {
+      sweepToMnemonicReady = true
+    }
+
+    let data
+
+    if (privateKey) {
+      data = web3.eth.accounts.privateKeyToAccount(privateKey)
+    } else {
+      if (!mnemonic) {
+        mnemonic = mnemonicUtils.getRandomMnemonicWords()
+      }
+
+      const accData = this.getWalletByWords(mnemonic)
+      privateKey = accData.privateKey
+      data = web3.eth.accounts.privateKeyToAccount(privateKey)
+      localStorage.setItem(constants.privateKeyNames[`${this.tickerKey}Mnemonic`], privateKey)
+    }
+
+    localStorage.setItem(constants.privateKeyNames[this.tickerKey], data.privateKey)
+
+    web3.eth.accounts.wallet.add(data.privateKey)
+    data.isMnemonic = sweepToMnemonicReady
+
+    reducers.user.setAuthData({ name: `${this.tickerKey}Data`, data })
+    // ? is referral need ?
+    referral.newReferral(data.address)
+  
+    if (!sweepToMnemonicReady) {
+      if (mnemonic === `-`) {
+        console.error('Sweep. Cant auth. Need new mnemonic or enter own for re-login')
+        return
+      }
+
+      if (!mnemonicKeys || !mnemonicKeys[this.tickerKey]) {
+        console.error('Sweep. Cant auth. Login key undefined')
+        return
+      }
+
+      const mnemonicData = web3.eth.accounts.privateKeyToAccount(mnemonicKeys[this.tickerKey])
+
+      web3.eth.accounts.wallet.add(mnemonicKeys[this.tickerKey])
+      mnemonicData.isMnemonic = sweepToMnemonicReady
+
+      reducers.user.addWallet({
+        name: `${this.tickerKey}MnemonicData`,
+        data: {
+          currency: this.ticker,
+          fullName: `${this.coinName} (New)`,
+          balance: 0,
+          isBalanceFetched: false,
+          balanceError: null,
+          infoAboutCurrency: null,
+          ...mnemonicData,
+        },
+      })
+
+      new Promise(async (resolve) => {
+        const balance = await this.fetchBalance(mnemonicData.address)
+
+        reducers.user.setAuthData({
+          name: `${this.tickerKey}MnemonicData`,
+          data: {
+            balance,
+            isBalanceFetched: true,
+          },
+        })
+        resolve(true)
+      })
+    }
+
+    return data.privateKey
+  }
+
   getBalance = () => {
     const address = metamask.isEnabled() && metamask.isConnected()
       ? metamask.getAddress()
@@ -145,6 +299,85 @@ class EthLikeAction {
     }
 
     return arrOfAddresses
+  }
+
+  getTransaction = (address: string = ``, ownType: string = ``) => {
+    new Promise((resolve) => {
+      address = address || this.ownerAddress
+  
+      if (!typeforce.isCoinAddress.BNB(address)) {
+        resolve([])
+      }
+
+      const type = ownType || this.tickerKey
+      const internalUrl = `?module=account&action=txlistinternal&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=${this.explorerApiKey}`
+      const url = `?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=${this.explorerApiKey}`
+
+      apiLooper.get(this.explorerName, internalUrl)
+        .then((response: any) => {
+          const internals = []
+
+          response.result.forEach((item) => {
+            const { value, to, hash } = item
+            internals[hash] = {
+              value,
+              to,
+            }
+          })
+
+          apiLooper.get(this.explorerName, url)
+            .then((response: any) => {
+              const transactions = response.result
+                .filter((item) => {
+                  return (
+                    item.value > 0 ||
+                    internals[item.hash] !== undefined &&
+                    internals[item.hash].value > 0
+                  )
+                })
+                .map((item) => ({
+                  type,
+                  confirmations: item.confirmations,
+                  hash: item.hash,
+                  status: item.blockHash !== null ? 1 : 0,
+                  value: web3.utils.fromWei(
+                    (internals[item.hash] !== undefined && internals[item.hash].value > 0)
+                      ? internals[item.hash].value
+                      : item.value
+                  ),
+                  address: item.to,
+                  canEdit: address === this.ownerAddress,
+                  date: item.timeStamp * 1000,
+                  direction: (
+                    internals[item.hash] !== undefined
+                    && internals[item.hash].to.toLowerCase() == address.toLowerCase()
+                      ? 'in'
+                      : address.toLowerCase() === item.to.toLowerCase()
+                        ? 'in'
+                        : 'out'
+                  ),
+                }))
+                .filter((item) => {
+                  if (item.direction === 'in') return true
+                  if (!this.adminFeeObj) return true
+                  if (address.toLowerCase() === this.adminFeeObj.address.toLowerCase()) return true
+                  if (item.address.toLowerCase() === this.adminFeeObj.address.toLowerCase()) return false
+
+                  return true
+                })
+
+              resolve(transactions)
+            })
+            .catch((error) => {
+              console.error(`Fail get txs for ${this.ticker} ${address}`, error)
+              resolve([])
+            })
+        })
+        .catch((error) => {
+          console.error(`Fail get txs for ${this.ticker} ${address}`, error)
+          resolve([])
+        })
+    })
   }
 
   getWalletByWords = (mnemonic: string, walletNumber: number = 0, path: string = '') => {
@@ -218,8 +451,8 @@ class EthLikeAction {
     const web3js = await getWeb3()
     const { amount, gasPrice, gasLimit, privateKey } = params
 
-    const minAmount = new BigNumber(this.adminFeeObj.minAmount)
-    let sendedFeeAmount = new BigNumber(this.adminFeeObj.feePercent)
+    const minAmount = new BigNumber(this.adminFeeObj.min)
+    let sendedFeeAmount = new BigNumber(this.adminFeeObj.fee)
       .dividedBy(100) // 100 %
       .multipliedBy(amount)
       .toNumber()
@@ -265,7 +498,7 @@ class EthLikeAction {
   }
 
   sweepToMnemonic = (mnemonic, path) => {
-    // ? what's that, how does it work ? Wrong arguments order. See above method
+    // ? what's that, how does it work ? Wrong arguments order. Check this.getWalletByWords method
     const wallet = this.getWalletByWords(mnemonic, path)
 
     window.localStorage.setItem(
@@ -288,12 +521,6 @@ class EthLikeAction {
 
     return true
   }
-
-  /* 
-  login
-  getTransaction
-  fetchTxInfo
-  */
 }
 
 // ? move it into common (used only eth, bnb actions)
@@ -323,17 +550,23 @@ const {
 // ? it will be easier if we'll export to lowecase (no changes to the other files)
 export default {
   ETH: new EthLikeAction({
+    coinName: 'Ethereum',
     ticker: 'ETH',
     precision: 18,
     ownerAddress: ethOwnerAddress,
-    explorerLink: externalConfig.link?.etherscan,
+    explorerName: 'etherscan',
+    explorerLink: externalConfig.link.etherscan,
+    explorerApiKey: externalConfig.api.etherscan_ApiKey,
     adminFeeObj: externalConfig.opts?.fee?.eth,
   }),
   BNB: new EthLikeAction({
+    coinName: 'Binance Coin',
     ticker: 'BNB',
     precision: 18,
     ownerAddress: bnbOwnerAddress,
-    explorerLink: externalConfig.link?.bscscan,
+    explorerName: 'bscscan',
+    explorerLink: externalConfig.link.bscscan,
+    explorerApiKey: externalConfig.api.bscscan_ApiKey,
     adminFeeObj: externalConfig.opts?.fee?.bnb,
   }),
 }
