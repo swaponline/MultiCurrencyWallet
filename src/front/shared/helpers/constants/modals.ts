@@ -32,7 +32,6 @@ export default {
   RegisterPINProtected: 'RegisterPINProtected',
   WithdrawBtcPin: 'WithdrawBtcPin',
   WalletAddressModal: 'WalletAddressModal',
-  HowToExportModal: 'HowToExportModal',
   AlertWindow: 'AlertWindow',
   WithdrawBtcSms: 'WithdrawBtcSms',
   WithdrawBtcMultisig: 'WithdrawBtcMultisig',

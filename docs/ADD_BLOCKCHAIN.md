@@ -98,7 +98,6 @@ Important note: Our core team focused on BTC-ETH swaps. If another blockchain ad
 
 - `src/front/config/testnet/hiddenCoins.js`
 - `src/front/shared/components/Coin/Coin.js`
-- `src/front/shared/components/modals/HowToExportModal/HowToExportModal.js`
 - `src/front/shared/components/modals/WithdrawModal/WithdrawModal.js`
 - `src/front/shared/helpers/getCurrencyKey.js`
 - `src/front/shared/helpers/user.js`

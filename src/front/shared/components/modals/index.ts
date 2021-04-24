@@ -35,7 +35,6 @@ import WithdrawBtcMultisig from './WithdrawBtcMultisig/WithdrawBtcMultisig'
 
 import WalletAddressModal from './WalletAddressModal/WalletAddressModal'
 
-import HowToExportModal from './HowToExportModal/HowToExportModal'
 import AlertWindow from "./AlertWindow"
 
 import ConnectWalletModal from './ConnectWalletModal/ConnectWalletModal'
@@ -81,7 +80,6 @@ export default {
   WithdrawModalMultisig,  // Deprecated
   WithdrawBtcMultisig, 
 
-  HowToExportModal,
   AlertWindow,
 
   ConnectWalletModal,
