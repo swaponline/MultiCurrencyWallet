@@ -742,12 +742,6 @@
 │   │   │   │   ├── DownloadModal
 │   │   │   │   │   ├── DownloadModal.scss
 │   │   │   │   │   └── DownloadModal.tsx
-│   │   │   │   ├── EthChecker
-│   │   │   │   │   ├── EthChecker.scss
-│   │   │   │   │   └── EthChecker.tsx
-│   │   │   │   ├── HowToExportModal
-│   │   │   │   │   ├── HowToExportModal.scss
-│   │   │   │   │   └── HowToExportModal.tsx
 │   │   │   │   ├── HowToWithdrawModal
 │   │   │   │   │   ├── HowToWithdrawModal.scss
 │   │   │   │   │   └── HowToWithdrawModal.tsx
@@ -973,6 +967,7 @@
 │   │   │       │       ├── syc2.svg
 │   │   │       │       ├── usdt.svg
 │   │   │       │       ├── waves.svg
+│   │   │       │       ├── wbtc.svg
 │   │   │       │       ├── xlm.svg
 │   │   │       │       ├── xrp.svg
 │   │   │       │       └── yup.svg
@@ -1064,6 +1059,7 @@
 │   │   │   │   └── alert.mp4
 │   │   │   ├── stats.swaponline.ts
 │   │   │   ├── swapsExplorer.ts
+│   │   │   ├── swaps.ts
 │   │   │   ├── transactions.ts
 │   │   │   ├── user.ts
 │   │   │   ├── utils.ts
@@ -1178,12 +1174,6 @@
 │   │   │   │   └── VideoAndFeatures
 │   │   │   │       ├── VideoAndFeatures.scss
 │   │   │   │       └── VideoAndFeatures.tsx
-│   │   │   ├── Farm
-│   │   │   │   ├── index.scss
-│   │   │   │   ├── index.tsx
-│   │   │   │   └── lib
-│   │   │   │       ├── farmfactory.css
-│   │   │   │       └── farmfactory.js
 │   │   │   ├── History
 │   │   │   │   ├── Filter
 │   │   │   │   │   ├── FilterLink
@@ -1399,4 +1389,4 @@
 │       └── run.js
 └── README.md
 
-359 directories, 1044 files
+354 directories, 1035 files
