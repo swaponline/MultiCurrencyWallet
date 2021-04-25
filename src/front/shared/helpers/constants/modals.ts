@@ -9,7 +9,6 @@ export default {
   Confirm: 'Confirm',
   DeclineOrdersModal: 'DeclineOrdersModal',
   IncompletedSwaps: 'IncompletedSwaps',
-  MobMenu: 'MobMenu',
   ConfirmBeginSwap: 'ConfirmBeginSwap',
   RegisterSMSProtected: 'RegisterSMSProtected',
   MultisignJoinLink: 'MultisignJoinLink',
