@@ -1,4 +1,3 @@
-import SignUpModal from './SignUpModal/SignUpModal'
 import OfferModal from './OfferModal/OfferModal'
 import WithdrawModal from './WithdrawModal/WithdrawModal'
 import WithdrawModalMultisig from './WithdrawModalMultisig/WithdrawModalMultisig'
@@ -47,7 +46,6 @@ import ConnectWalletModal from './ConnectWalletModal/ConnectWalletModal'
 export default {
   DeclineOrdersModal,
   InfoPay,
-  SignUpModal,
   ShareModal,
   OfferModal,
   WithdrawModal,

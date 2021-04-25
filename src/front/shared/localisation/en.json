@@ -578,62 +578,6 @@
     ]
   },
   {
-    "id": "SignUpModal133",
-    "message": "Something went wrong.{br}Try it later",
-    "files": [
-      "src/front/shared/components/modals/SignUpModal/SignUpModal.tsx"
-    ]
-  },
-  {
-    "id": "SignUpModal000",
-    "message": "Thanks!{br}You will receive a notification",
-    "files": [
-      "src/front/shared/components/modals/SignUpModal/SignUpModal.tsx"
-    ]
-  },
-  {
-    "id": "SignUpModal001",
-    "message": "Go to my wallet",
-    "files": [
-      "src/front/shared/components/modals/SignUpModal/SignUpModal.tsx"
-    ]
-  },
-  {
-    "id": "SignUpModal002",
-    "message": "Sign up",
-    "files": [
-      "src/front/shared/components/modals/SignUpModal/SignUpModal.tsx"
-    ]
-  },
-  {
-    "id": "SignUpModal002-1",
-    "message": "One more step",
-    "files": [
-      "src/front/shared/components/modals/SignUpModal/SignUpModal.tsx"
-    ]
-  },
-  {
-    "id": "SignUpModal003",
-    "message": "Allow notifications",
-    "files": [
-      "src/front/shared/components/modals/SignUpModal/SignUpModal.tsx"
-    ]
-  },
-  {
-    "id": "SignUpModal004",
-    "message": "You will receive notifications regarding updates with your account (orders, transactions){br}and monthly updates about our project{br}{br}Sign up and get your free cryptocurrency for test. Exchange it on real Bitcoin from very begining!",
-    "files": [
-      "src/front/shared/components/modals/SignUpModal/SignUpModal.tsx"
-    ]
-  },
-  {
-    "id": "SignUpModal005",
-    "message": "It seems like push notification is not working{br}Please, leave your email for notifications,{br}or try later",
-    "files": [
-      "src/front/shared/components/modals/SignUpModal/SignUpModal.tsx"
-    ]
-  },
-  {
     "id": "Select210",
     "message": "MAX",
     "files": [
@@ -727,13 +671,6 @@
     "message": "Receive",
     "files": [
       "src/front/shared/components/modals/ReceiveModal/ReceiveModal.tsx"
-    ]
-  },
-  {
-    "id": "SignUpModal55",
-    "message": "Sign up",
-    "files": [
-      "src/front/shared/components/modals/SignUpModal/SignUpModal.tsx"
     ]
   },
   {

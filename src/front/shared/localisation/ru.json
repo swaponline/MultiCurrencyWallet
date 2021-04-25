@@ -630,62 +630,6 @@
     ]
   },
   {
-    "id": "SignUpModal133",
-    "message": "Что-то пошло не так{br}Попробуйте позже",
-    "files": [
-      "src/front/shared/components/modals/SignUpModal/SignUpModal.tsx"
-    ]
-  },
-  {
-    "id": "SignUpModal000",
-    "message": "Спасибо!{br}Вы будете получать уведомления",
-    "files": [
-      "src/front/shared/components/modals/SignUpModal/SignUpModal.tsx"
-    ]
-  },
-  {
-    "id": "SignUpModal001",
-    "message": "Перейти в кошелек",
-    "files": [
-      "src/front/shared/components/modals/SignUpModal/SignUpModal.tsx"
-    ]
-  },
-  {
-    "id": "SignUpModal002",
-    "message": "Зарегистрироваться",
-    "files": [
-      "src/front/shared/components/modals/SignUpModal/SignUpModal.tsx"
-    ]
-  },
-  {
-    "id": "SignUpModal002-1",
-    "message": "Осталось немного",
-    "files": [
-      "src/front/shared/components/modals/SignUpModal/SignUpModal.tsx"
-    ]
-  },
-  {
-    "id": "SignUpModal003",
-    "message": "Разрешить уведомления",
-    "files": [
-      "src/front/shared/components/modals/SignUpModal/SignUpModal.tsx"
-    ]
-  },
-  {
-    "id": "SignUpModal004",
-    "message": "Вы будете получать уведомления об обновлениях с вашей учетной записью (ордера, транзакции){br}и ежемесячные обновления о нашем проекте{br}{br}Подписка активирует подарок для теста (вы получите криптовалюту которую сразу можно поменять на биткоин)",
-    "files": [
-      "src/front/shared/components/modals/SignUpModal/SignUpModal.tsx"
-    ]
-  },
-  {
-    "id": "SignUpModal005",
-    "message": "Похоже, что пуш уведомления не работают.{br}Пожалуйста, оставьте свой email для уведомлений",
-    "files": [
-      "src/front/shared/components/modals/SignUpModal/SignUpModal.tsx"
-    ]
-  },
-  {
     "id": "Select210",
     "message": "ВСЕ",
     "files": [
@@ -779,13 +723,6 @@
     "message": "Пополнение баланса",
     "files": [
       "src/front/shared/components/modals/ReceiveModal/ReceiveModal.tsx"
-    ]
-  },
-  {
-    "id": "SignUpModal55",
-    "message": "Регистрация",
-    "files": [
-      "src/front/shared/components/modals/SignUpModal/SignUpModal.tsx"
     ]
   },
   {
