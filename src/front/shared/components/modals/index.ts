@@ -1,4 +1,3 @@
-import SignUpModal from './SignUpModal/SignUpModal'
 import OfferModal from './OfferModal/OfferModal'
 import WithdrawModal from './WithdrawModal/WithdrawModal'
 import WithdrawModalMultisig from './WithdrawModalMultisig/WithdrawModalMultisig'
@@ -9,7 +8,6 @@ import ReceiveModal from './ReceiveModal/ReceiveModal'
 import DownloadModal from './DownloadModal/DownloadModal'
 import DeclineOrdersModal from './DeclineOrdersModal/DeclineOrdersModal'
 import IncompletedSwaps from './IncompletedSwaps/IncompletedSwaps'
-import MobMenu from './MobMenu/MobMenu'
 import CurrencyAction from './CurrencyAction/CurrencyAction'
 import Confirm from './Confirm/Confirm'
 import ConfirmBeginSwap from './ConfirmBeginSwap/ConfirmBeginSwap'
@@ -47,7 +45,6 @@ import ConnectWalletModal from './ConnectWalletModal/ConnectWalletModal'
 export default {
   DeclineOrdersModal,
   InfoPay,
-  SignUpModal,
   ShareModal,
   OfferModal,
   WithdrawModal,
@@ -58,7 +55,6 @@ export default {
   DownloadModal,
   IncompletedSwaps,
   Confirm,
-  MobMenu,
   ConfirmBeginSwap,
 
   MultisignJoinLink,
