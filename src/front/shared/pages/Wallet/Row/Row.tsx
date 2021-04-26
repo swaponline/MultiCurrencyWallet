@@ -181,10 +181,7 @@ class Row extends Component<RowProps, RowState> {
             if (isMetamask && !isERC20) {
               await metamask.getBalance()
             } else {
-              await actions[currency.toLowerCase()].getBalance(
-                currency.toLowerCase(),
-                address
-              )
+              await actions[currency.toLowerCase()].getBalance()
             }
         }
 

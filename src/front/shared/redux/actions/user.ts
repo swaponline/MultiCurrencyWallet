@@ -463,6 +463,7 @@ type ObjCurrencyType = {
 }
 
 const setTransactions = async (objCurrency: ObjCurrencyType | {} = null) => {
+  // TODO: need a refactoring. Useless requests for currency which can be disabled
   const isBtcSweeped = actions.btc.isSweeped()
   const isEthSweeped = actions.eth.isSweeped()
   const isBnbSweeped = actions.bnb.isSweeped()

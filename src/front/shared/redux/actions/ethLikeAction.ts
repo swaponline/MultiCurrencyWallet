@@ -274,7 +274,10 @@ class EthLikeAction {
     return this.fetchBalance(address)
       .then(balance => {
         cacheStorageSet('currencyBalances', `${this.tickerKey}_${address}`, balance, 30)
-        reducers.user.setBalance({ name: `${this.tickerKey}Data`, balance })
+        reducers.user.setBalance({
+          name: `${this.tickerKey}Data`,
+          amount: balance,
+        })
         return balance
       })
       .catch(() => {
