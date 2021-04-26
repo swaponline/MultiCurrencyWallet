@@ -174,10 +174,6 @@ class WallerSlider extends React.Component {
     actions.multisigTx.goToLastWallet()
   }
 
-  handleSignUp = () => {
-    actions.modals.open(constants.modals.SignUp)
-  }
-
   render() {
     const { mnemonicDeleted, banners } = this.state
     const { multisigPendingCount } = this.props

@@ -1,5 +1,4 @@
 export default {
-  SignUp: 'SignUpModal',
   Withdraw: 'WithdrawModal',
   WithdrawMultisig: 'WithdrawModalMultisig',
   Offer: 'OfferModal',
@@ -10,7 +9,6 @@ export default {
   Confirm: 'Confirm',
   DeclineOrdersModal: 'DeclineOrdersModal',
   IncompletedSwaps: 'IncompletedSwaps',
-  MobMenu: 'MobMenu',
   ConfirmBeginSwap: 'ConfirmBeginSwap',
   RegisterSMSProtected: 'RegisterSMSProtected',
   MultisignJoinLink: 'MultisignJoinLink',

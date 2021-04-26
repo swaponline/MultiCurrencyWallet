@@ -68,6 +68,7 @@ export default class CurrencyList extends Component<any, any> {
     return (
       <>
         <div
+          id='currencyList'
           styleName={`customSelectValue ${isDark ? 'dark' : ''}`}
           onClick={() => this.setState(({ isAssetsOpen }) => ({ isAssetsOpen: !isAssetsOpen }))}
         >
@@ -97,7 +98,7 @@ export default class CurrencyList extends Component<any, any> {
         {isAssetsOpen && (
           <div styleName={`customSelectList ${isDark ? 'darkList' : ''}`}>
             {tableRows.map((item, index) => (
-              <div key={index}
+              <div id={`${item.currency.toLowerCase()}Send`} key={index}
                 styleName={cx('customSelectListItem customSelectValue', {
                   disabled: item.balance === 0,
                 })}

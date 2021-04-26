@@ -941,6 +941,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
             </Tooltip>
           </FieldLabel>
           <Input
+            id='toAddressInput'
             valueLink={linked.address}
             focusOnInit
             pattern="0-9a-zA-Z:"
@@ -1011,6 +1012,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
           </FieldLabel>
           <div styleName="group">
             <Input
+              id='amountInput'
               pattern="0-9\."
               onKeyDown={this.amountInputKeyDownCallback}
               valueLink={selectedValue === currentActiveAsset.currency
@@ -1113,7 +1115,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
             </Button>
           </div>
           <div styleName="actionBtn">
-            <Button blue big fill disabled={isDisabled} onClick={this.handleSubmit}>
+            <Button id='sendButton' blue big fill disabled={isDisabled} onClick={this.handleSubmit}>
               {isShipped ? (
                 <Fragment>
                   <FormattedMessage id="WithdrawModal11212" defaultMessage="Processing ..." />

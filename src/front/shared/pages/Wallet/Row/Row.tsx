@@ -935,7 +935,7 @@ class Row extends Component<RowProps, RowState> {
                                 bottom: '13px',
                               }} 
                             />
-                          ) : <p>{itemData.address}</p>
+                          ) : <p id={`${currency.toLowerCase()}Address`}>{itemData.address}</p>
                         }
                       </Copy>
                     </div>
