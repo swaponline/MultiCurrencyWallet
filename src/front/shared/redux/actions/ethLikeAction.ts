@@ -312,7 +312,7 @@ class EthLikeAction {
   getTransaction = (address: string = ``, ownType: string = ``) => {
     new Promise((resolve) => {
       address = address || this.ownerAddress
-  
+
       if (!typeforce.isCoinAddress[this.ticker](address)) {
         resolve([])
       }
@@ -358,7 +358,7 @@ class EthLikeAction {
                   date: item.timeStamp * 1000,
                   direction: (
                     internals[item.hash] !== undefined
-                    && internals[item.hash].to.toLowerCase() == address.toLowerCase()
+                    && internals[item.hash].to.toLowerCase() === address.toLowerCase()
                       ? 'in'
                       : address.toLowerCase() === item.to.toLowerCase()
                         ? 'in'

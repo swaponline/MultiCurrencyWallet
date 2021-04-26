@@ -161,7 +161,7 @@ const sign = async () => {
     let ABTypePrivateKey = localStorage.getItem(
       config.binance ? constants.privateKeyNames.bnb : constants.privateKeyNames.eth
     )
-    // ? seems we can create common functional (helpers, actions, ...) for AB blockchain types
+
     const _ABTypePrivateKey = actions[
       config.binance ? 'bnb' : 'eth'
     ].login(ABTypePrivateKey, mnemonic, mnemonicKeys)
