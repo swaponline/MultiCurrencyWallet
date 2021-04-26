@@ -27,19 +27,6 @@ const balanceEvent = ({ action, currency, balance } = {}) => {
   })
 }
 
-//@ts-ignore
-const signUpEvent = ({ action, type } = {}) => {
-  const gtag = getGtag()
-
-  if (!action || !gtag) {
-    return
-  }
-
-  gtag('event', `signUp-${action}`, {
-    'type': type,
-  })
-}
-
 const errorEvent = (eventAction) => {
   const gtag = getGtag()
 
@@ -90,5 +77,4 @@ export default {
   errorEvent,
   swapEvent,
   balanceEvent,
-  signUpEvent,
 }

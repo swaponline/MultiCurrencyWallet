@@ -3,7 +3,6 @@ import WithdrawModal from './WithdrawModal/WithdrawModal'
 import WithdrawModalMultisig from './WithdrawModalMultisig/WithdrawModalMultisig'
 import WithdrawModalMultisigUser from './WithdrawModalMultisig/WithdrawModalMultisigUser'
 import PrivateKeysModal from './PrivateKeysModal/PrivateKeysModal'
-import EthChecker from './EthChecker/EthChecker'
 import ReceiveModal from './ReceiveModal/ReceiveModal'
 import DownloadModal from './DownloadModal/DownloadModal'
 import DeclineOrdersModal from './DeclineOrdersModal/DeclineOrdersModal'
@@ -35,7 +34,6 @@ import WithdrawBtcMultisig from './WithdrawBtcMultisig/WithdrawBtcMultisig'
 
 import WalletAddressModal from './WalletAddressModal/WalletAddressModal'
 
-import HowToExportModal from './HowToExportModal/HowToExportModal'
 import AlertWindow from "./AlertWindow"
 
 import ConnectWalletModal from './ConnectWalletModal/ConnectWalletModal'
@@ -50,7 +48,6 @@ export default {
   WithdrawModal,
   WithdrawModalMultisigUser, // Deprecated
   PrivateKeysModal,
-  EthChecker,
   ReceiveModal,
   DownloadModal,
   IncompletedSwaps,
@@ -81,7 +78,6 @@ export default {
   WithdrawModalMultisig,  // Deprecated
   WithdrawBtcMultisig, 
 
-  HowToExportModal,
   AlertWindow,
 
   ConnectWalletModal,

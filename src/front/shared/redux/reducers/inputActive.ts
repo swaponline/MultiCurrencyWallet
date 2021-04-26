@@ -1,5 +1,5 @@
 export const initialState = {
-  isSigned: false,
+  isInputActive: false,
 }
 
 export const setInputActive = (state, value) => ({

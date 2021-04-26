@@ -11,7 +11,6 @@ type InvoceProps = {
   history: IUniversalObj
   intl: IUniversalObj
   match: IUniversalObj
-  isSigned: boolean
 }
 
 type InvoceState = {
@@ -21,10 +20,6 @@ type InvoceState = {
   invoice: IUniversalObj | null
   infoModal?: React.ClassicComponent
 }
-
-@connect(({ signUp: { isSigned } }) => ({
-  isSigned,
-}))
 
 @connect(({
   user: {
