@@ -453,7 +453,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
 
     if (invoice && ownTx) {
       await actions.invoices.markInvoice(invoice.id, 'ready', ownTx, address)
-      actions.loader.hide()
+
       actions.notifications.show(constants.notifications.SuccessWithdraw, {
         amount,
         currency,
@@ -486,7 +486,6 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
     await actions[currency.toLowerCase()]
       .send(sendOptions)
       .then(async (txRaw) => {
-        actions.loader.hide()
         actions[currency.toLowerCase()].getBalance(currency)
         if (invoice) {
           await actions.invoices.markInvoice(invoice.id, 'ready', txRaw, address)

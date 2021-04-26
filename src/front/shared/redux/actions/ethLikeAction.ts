@@ -117,8 +117,8 @@ class EthLikeAction {
     return new Promise((res, rej) => {
       return apiLooper.get(this.explorerName, url, {
         cacheResponse,
-      }).then((res: any) => {
-          if (res && res.result) {
+      }).then((response: any) => {
+          if (response && response.result) {
             const {
               from,
               to,
@@ -126,7 +126,7 @@ class EthLikeAction {
               gas,
               gasPrice,
               blockHash,
-            } = res.result
+            } = response.result
     
             const amount = web3.utils.fromWei(value)
             const minerFee = new BigNumber(web3.utils.toBN(gas).toNumber())
@@ -402,7 +402,7 @@ class EthLikeAction {
     return false
   }
 
-  send = async (params): Promise<string> => {
+  send = async (params): Promise<object> => {
     let { to, amount, gasPrice, gasLimit, speed } = params
     const web3js = await getWeb3()
     const recipientIsContract = await this.isContract(to)
@@ -431,15 +431,15 @@ class EthLikeAction {
 
     if (!walletData.isMetamask) {
       const signedTx = await web3js.eth.accounts.signTransaction(txObject, privateKey)
-      sendMethod = web3js.eth.sendSignedTransaction
       txObject = signedTx.rawTransaction
+      sendMethod = web3js.eth.sendSignedTransaction
     }
 
     return new Promise((res, rej) => {
       const receipt = sendMethod(txObject)
-        // TODO: in this response the hash equals undefined
-        .on('transactionHash', (hash) => res(`${this.explorerLink}/tx/${hash}`))
+        .on('transactionHash', (hash) => res({ transactionHash: hash }))
         .on('error', (error) => rej(error))
+
       // Admin fee transaction
       if (this.adminFeeObj && !walletData.isMetamask) {
         receipt.then(() => {
@@ -454,7 +454,6 @@ class EthLikeAction {
     })
   }
 
-  // TODO: check this method
   sendAdminFee = async (params) => {
     const web3js = await getWeb3()
     const { amount, gasPrice, gasLimit, privateKey } = params
