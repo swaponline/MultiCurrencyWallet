@@ -1565,46 +1565,6 @@
     ]
   },
   {
-    "id": "Submenu16",
-    "message": "Rapido intercambio atomic swap a BTC, ETH, ERC20 online",
-    "files": [
-      "src/front/shared/components/Header/SubMenu/SubMenu.tsx",
-      "src/front/shared/components/modals/MobMenu/MobMenu.tsx"
-    ]
-  },
-  {
-    "id": "Submenu22",
-    "message": "Almacenamiento de cryptomoneda sin cargar billetera",
-    "files": [
-      "src/front/shared/components/Header/SubMenu/SubMenu.tsx",
-      "src/front/shared/components/modals/MobMenu/MobMenu.tsx"
-    ]
-  },
-  {
-    "id": "Submenu28",
-    "message": "Convierte tu página en un portal de cryptomoneda (billetera, intercambio de stock, etc.)",
-    "files": [
-      "src/front/shared/components/Header/SubMenu/SubMenu.tsx",
-      "src/front/shared/components/modals/MobMenu/MobMenu.tsx"
-    ]
-  },
-  {
-    "id": "Swap.WalletSubMeny",
-    "message": "Swap.Wallet",
-    "files": [
-      "src/front/shared/components/Header/SubMenu/SubMenu.tsx",
-      "src/front/shared/components/modals/MobMenu/MobMenu.tsx"
-    ]
-  },
-  {
-    "id": "Swap.WidgetSubMenu",
-    "message": "Swap.Widget",
-    "files": [
-      "src/front/shared/components/Header/SubMenu/SubMenu.tsx",
-      "src/front/shared/components/modals/MobMenu/MobMenu.tsx"
-    ]
-  },
-  {
     "id": "CustomWalletIsNotCorrect",
     "message": "Dirección de billetera incorrecta",
     "files": [
@@ -2667,14 +2627,6 @@
     "message": "Mi billetera",
     "files": [
       "src/front/shared/pages/Invoices/InvoicesList/index.tsx"
-    ]
-  },
-  {
-    "id": "Submenu",
-    "message": "Swap.Exhange",
-    "files": [
-      "src/front/shared/components/Header/SubMenu/SubMenu.tsx",
-      "src/front/shared/components/modals/MobMenu/MobMenu.tsx"
     ]
   },
   {

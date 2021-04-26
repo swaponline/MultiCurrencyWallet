@@ -1554,46 +1554,6 @@
     ]
   },
   {
-    "id": "Submenu16",
-    "message": "Fast atomic swap exchanges BTC, ETH, ERC20 online",
-    "files": [
-      "src/front/shared/components/Header/SubMenu/SubMenu.tsx",
-      "src/front/shared/components/modals/MobMenu/MobMenu.tsx"
-    ]
-  },
-  {
-    "id": "Submenu22",
-    "message": "Cryptocurrency storage without loading wallets",
-    "files": [
-      "src/front/shared/components/Header/SubMenu/SubMenu.tsx",
-      "src/front/shared/components/modals/MobMenu/MobMenu.tsx"
-    ]
-  },
-  {
-    "id": "Submenu28",
-    "message": "Turn your website into a cryptocurrency portal (wallet, stock exchange, etc.)",
-    "files": [
-      "src/front/shared/components/Header/SubMenu/SubMenu.tsx",
-      "src/front/shared/components/modals/MobMenu/MobMenu.tsx"
-    ]
-  },
-  {
-    "id": "Swap.WalletSubMeny",
-    "message": "Swap.Wallet",
-    "files": [
-      "src/front/shared/components/Header/SubMenu/SubMenu.tsx",
-      "src/front/shared/components/modals/MobMenu/MobMenu.tsx"
-    ]
-  },
-  {
-    "id": "Swap.WidgetSubMenu",
-    "message": "Swap.Widget",
-    "files": [
-      "src/front/shared/components/Header/SubMenu/SubMenu.tsx",
-      "src/front/shared/components/modals/MobMenu/MobMenu.tsx"
-    ]
-  },
-  {
     "id": "CustomWalletIsNotCorrect",
     "message": "Wallet address is incorrect",
     "files": [
@@ -2649,14 +2609,6 @@
     "message": "Mijn wallet",
     "files": [
       "src/front/shared/pages/Invoices/InvoicesList/index.tsx"
-    ]
-  },
-  {
-    "id": "Submenu",
-    "message": "Swap.Exhange",
-    "files": [
-      "src/front/shared/components/Header/SubMenu/SubMenu.tsx",
-      "src/front/shared/components/modals/MobMenu/MobMenu.tsx"
     ]
   },
   {
