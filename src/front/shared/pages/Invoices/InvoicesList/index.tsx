@@ -23,10 +23,6 @@ const isWidgetBuild = config && config.isWidget
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 
-@connect(({ signUp: { isSigned } }) => ({
-  isSigned,
-}))
-
 @connect(({
   user: {
     btcData,

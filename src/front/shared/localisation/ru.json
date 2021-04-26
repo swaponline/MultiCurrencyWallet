@@ -95,20 +95,6 @@
     ]
   },
   {
-    "id": "EthChecker19",
-    "message": "Этот Токен работает на сети Ethereum blockchain. Для осуществления операций у Вас должно быть не менее 0.02 ETH на балансе",
-    "files": [
-      "src/front/shared/components/modals/EthChecker/EthChecker.tsx"
-    ]
-  },
-  {
-    "id": "EthChecker23",
-    "message": "Кошелек",
-    "files": [
-      "src/front/shared/components/modals/EthChecker/EthChecker.tsx"
-    ]
-  },
-  {
     "id": "ConfirmOffer69",
     "message": "Назад",
     "files": [
@@ -688,13 +674,6 @@
     "message": "Получаете",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
-    ]
-  },
-  {
-    "id": "Approve",
-    "message": "Подтвердить токен",
-    "files": [
-      "src/front/shared/components/modals/EthChecker/EthChecker.tsx"
     ]
   },
   {
@@ -4574,76 +4553,6 @@
     "message": "Не подключен",
     "files": [
       "src/front/shared/pages/Wallet/Row/Row.tsx"
-    ]
-  },
-  {
-    "id": "HowToExportModal_ExportERC20Step1",
-    "message": "Для экспорта кошелька {currency} вам нужно сначала импортировать ваш приватный ключ от ETH кошелька (в примеру в кошелек Metamask)",
-    "files": [
-      "src/front/shared/components/modals/HowToExportModal/HowToExportModal.tsx"
-    ]
-  },
-  {
-    "id": "HowToExportModal_ExportERC20Step2",
-    "message": "После экспорта ETH кошелька, вам нужно добавить ERC20 токен с параметрами, указанными ниже",
-    "files": [
-      "src/front/shared/components/modals/HowToExportModal/HowToExportModal.tsx"
-    ]
-  },
-  {
-    "id": "HowToExportModal_ExportERC20_Contract",
-    "message": "Адресс контракта: {contractAddress}",
-    "files": [
-      "src/front/shared/components/modals/HowToExportModal/HowToExportModal.tsx"
-    ]
-  },
-  {
-    "id": "HowToExportModal_ExportERC20_Decimals",
-    "message": "Количество символов после запятой: {decimals}",
-    "files": [
-      "src/front/shared/components/modals/HowToExportModal/HowToExportModal.tsx"
-    ]
-  },
-  {
-    "id": "HowToExportModal_ExportERC20_Name",
-    "message": "Название токена: {name}",
-    "files": [
-      "src/front/shared/components/modals/HowToExportModal/HowToExportModal.tsx"
-    ]
-  },
-  {
-    "id": "HowToExportModal_ExportERC20_Symbol",
-    "message": "Символ токена: {symbol}",
-    "files": [
-      "src/front/shared/components/modals/HowToExportModal/HowToExportModal.tsx"
-    ]
-  },
-  {
-    "id": "HowToExportModal_ExportEthPrivateKey",
-    "message": "Ваш приватный ключ от ETH кошелька",
-    "files": [
-      "src/front/shared/components/modals/HowToExportModal/HowToExportModal.tsx"
-    ]
-  },
-  {
-    "id": "HowToExportModal_ExportSimple",
-    "message": "Для экспорта кошелька {currency} используйте ваш приватный ключ",
-    "files": [
-      "src/front/shared/components/modals/HowToExportModal/HowToExportModal.tsx"
-    ]
-  },
-  {
-    "id": "HowToExportModal_ExportUserPrivateKey",
-    "message": "Ваш приватный ключ",
-    "files": [
-      "src/front/shared/components/modals/HowToExportModal/HowToExportModal.tsx"
-    ]
-  },
-  {
-    "id": "HowToExportModal_Title",
-    "message": "Как экспортировать кошелек {currency}",
-    "files": [
-      "src/front/shared/components/modals/HowToExportModal/HowToExportModal.tsx"
     ]
   },
   {
