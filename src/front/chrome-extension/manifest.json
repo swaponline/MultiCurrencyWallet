@@ -5,25 +5,11 @@
   "manifest_version": 2,
   "description": "Wallet",
   "homepage_url": "https://swaponline.io/",
-  "theme_color": "#fff",
-  "background_color": "#fff",
-  "icons": [
-    {
-      "src": "extension/images/icons/icon-16.png",
-      "type": "image/png",
-      "sizes": "16x16"
-    },
-    {
-      "src": "extension/images/icons/icon-32.png",
-      "type": "image/png",
-      "sizes": "32x32"
-    },
-    {
-      "src": "extension/images/icons/icon-196.png",
-      "type": "image/png",
-      "sizes": "192x192"
-    }
-  ],
+  "icons": {
+    "16": "./extension/images/icons/icon-16.png",
+    "32": "./extension/images/icons/icon-32.png",
+    "192": "./extension/images/icons/icon-196.png"
+  },
   "options_page": "application/index.html",
   "browser_action": {
     "default_icon": "extension/images/icons/icon-32.png",
@@ -36,6 +22,5 @@
     "scripts": ["./extension/js/background.js"],
     "persistent": false
   },
-  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
-  "start_url": "/"
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
 }
