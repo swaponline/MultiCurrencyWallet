@@ -17,10 +17,7 @@ import btc from './btc'
 import ghost from './ghost'
 import next from './next'
 import btcmultisig from './btcmultisig'
-// ===================
 import EthLikeAction from './ethLikeAction'
-import eth from './eth'
-// ===================
 import token from './token'
 
 import api from './api'
@@ -59,7 +56,7 @@ export default {
 
   btc,
   btcmultisig,
-  eth, // TODO: replace with EthLikeAction.ETH and delete eth.ts
+  eth: EthLikeAction.ETH,
   bnb: EthLikeAction.BNB,
   ghost,
   next,

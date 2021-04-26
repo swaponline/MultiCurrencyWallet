@@ -1093,24 +1093,26 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
         </div>
         <div styleName="sendBtnsWrapper">
           <div styleName="actionBtn">
-            <Button big fill gray onClick={this.handleClose}>
+            <Button big fill brand onClick={this.handleClose}>
               <Fragment>
                 <FormattedMessage id="WithdrawModalCancelBtn" defaultMessage="Cancel" />
               </Fragment>
             </Button>
           </div>
           <div styleName="actionBtn">
-            <Button id='sendButton' blue big fill disabled={isDisabled} onClick={this.handleSubmit}>
-              {isShipped ? (
-                <Fragment>
-                  <FormattedMessage id="WithdrawModal11212" defaultMessage="Processing ..." />
-                </Fragment>
-              ) : (
-                <Fragment>
-                  <FormattedMessage id="WithdrawModal111" defaultMessage="Send" />{' '}
-                  {`${currency.toUpperCase()}`}
-                </Fragment>
-              )}
+            <Button
+              id='sendButton'
+              brand
+              big
+              fill
+              pending={isShipped}
+              disabled={isDisabled}
+              onClick={this.handleSubmit}
+            >
+              <Fragment>
+                <FormattedMessage id="WithdrawModal111" defaultMessage="Send" />{' '}
+                {`${currency.toUpperCase()}`}
+              </Fragment>
             </Button>
           </div>
         </div>

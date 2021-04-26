@@ -328,7 +328,7 @@ class EthLikeAction {
         .then((response: any) => {
           const internals = []
 
-          response.result.forEach((item) => {
+          response.result.map((item) => {
             const { value, to, hash } = item
             internals[hash] = {
               value,
@@ -545,6 +545,9 @@ class EthLikeAction {
     this.cache.get('addressIsContract')[lowerAddress] = !codeIsEmpty
     return !codeIsEmpty
   }
+
+  // ! Delete from project. Temporary
+  getReputation = () => Promise.resolve(0)
 }
 
 const {

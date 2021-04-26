@@ -311,8 +311,8 @@ const sendWithAdminFee = async ({ name, from, to, amount, ...feeConfig } = {}) =
   return new Promise((resolve, reject) => {
     const receipt = tokenContract.methods.transfer(to, newAmount).send(params)
       .on('transactionHash', (hash) => {
+        // TODO: resolve hash. Don't wait full approve
         const txId = `${config.link.etherscan}/tx/${hash}`
-        actions.loader.show(true, { txId })
       })
       .on('error', (err) => {
         reject(err)
@@ -344,8 +344,8 @@ const sendDefault = async ({ name, from, to, amount, ...feeConfig } = {}) => {
   return new Promise(async (resolve, reject) => {
     const receipt = await tokenContract.methods.transfer(to, newAmount).send(params)
       .on('transactionHash', (hash) => {
+        // TODO: resolve hash. Don't wait full approve
         const txId = `${config.link.etherscan}/tx/${hash}`
-        actions.loader.show(true, { txId })
       })
       .on('error', (err) => {
         reject(err)

@@ -1,5 +1,6 @@
 import config from './externalConfig'
 import eth from './eth'
+import bnb from './bnb'
 import DEFAULT_CURRENCY_PARAMETERS from 'common/helpers/constants/DEFAULT_CURRENCY_PARAMETERS'
 import BigNumber from 'bignumber.js'
 
@@ -29,7 +30,11 @@ const estimateFeeValue = async (options: EstimateFeeOptions) => {
   return feeValue
 }
 
-const estimateGasPrice = ({ speed }) => eth.estimateGasPrice({ speed })
+const estimateGasPrice = ({ speed }) => {
+  return config.binance
+    ? bnb.estimateGasPrice()
+    : eth.estimateGasPrice({ speed })
+}
 
 export default {
   estimateFeeValue,
