@@ -22,7 +22,6 @@ class EthLikeAction {
   private ticker: string // upper case (ex. ETH)
   private tickerKey: string // lower case (ex. eth)
   private ownerAddress: string
-  private precision: number // number of digits after the dot
   private explorerName: string
   private explorerLink: string
   private explorerApiKey: string
@@ -32,11 +31,14 @@ class EthLikeAction {
     min: string // min amount
   }
 
+  private cache = new Map([
+    ['addressIsContract', {}],
+  ])
+
   constructor(options) {
     const {
       coinName,
       ticker,
-      precision,
       ownerAddress,
       explorerName,
       explorerLink,
@@ -47,7 +49,6 @@ class EthLikeAction {
     this.coinName = coinName
     this.ticker = ticker
     this.tickerKey = ticker.toLowerCase()
-    this.precision = precision
     this.ownerAddress = ownerAddress
     this.explorerName = explorerName
     this.explorerLink = explorerLink
@@ -56,7 +57,11 @@ class EthLikeAction {
   }
 
   reportError = (error) => {
-    feedback.actions.failed(`details(ticker: ${this.ticker}); message(${error.message})`)
+    feedback.actions.failed(''.concat(
+      `details - ticker: ${this.ticker}, `,
+      // `address: ${this.ownerAddress}, `,
+      `error message - ${error.message} `,
+    ))
     console.group(`Actions >%c ${this.ticker}`, 'color: red;')
     console.error('error: ', error)
     console.groupEnd()
@@ -106,7 +111,6 @@ class EthLikeAction {
       .catch(error => this.reportError(error))
   }
 
-  // TODO: improve method
   fetchTxInfo = (hash, cacheResponse) => {
     const url = `?module=proxy&action=eth_getTransactionByHash&txhash=${hash}&apikey=${this.explorerApiKey}`
 
@@ -130,16 +134,16 @@ class EthLikeAction {
               .dividedBy(1e18)
               .toNumber()
 
-            let adminFee: any = false
+            let adminFee: number | false = false
 
             if (this.adminFeeObj && to !== this.adminFeeObj.address) {
-              adminFee = new BigNumber(this.adminFeeObj.fee).dividedBy(100).multipliedBy(amount)
+              const feeFromUsersAmount = new BigNumber(this.adminFeeObj.fee)
+                .dividedBy(100)
+                .multipliedBy(amount)
     
-              if (new BigNumber(this.adminFeeObj.min).isGreaterThan(adminFee)) {
-                adminFee = new BigNumber(this.adminFeeObj.min)
+              if (new BigNumber(this.adminFeeObj.min).isGreaterThan(feeFromUsersAmount)) {
+                adminFee = new BigNumber(this.adminFeeObj.min).toNumber()
               }
-    
-              adminFee = adminFee.toNumber()
             }
 
             res({
@@ -204,12 +208,16 @@ class EthLikeAction {
   
     if (!sweepToMnemonicReady) {
       if (mnemonic === `-`) {
-        console.error('Sweep. Cant auth. Need new mnemonic or enter own for re-login')
+        this.reportError({
+          message: 'Sweep. Can not auth. Need new mnemonic or enter own for re-login',
+        })
         return
       }
 
       if (!mnemonicKeys || !mnemonicKeys[this.tickerKey]) {
-        console.error('Sweep. Cant auth. Login key undefined')
+        this.reportError({
+          message: 'Sweep. Can not auth. Login key is undefined',
+        })
         return
       }
 
@@ -305,7 +313,7 @@ class EthLikeAction {
     new Promise((resolve) => {
       address = address || this.ownerAddress
   
-      if (!typeforce.isCoinAddress.BNB(address)) {
+      if (!typeforce.isCoinAddress[this.ticker](address)) {
         resolve([])
       }
 
@@ -369,12 +377,12 @@ class EthLikeAction {
               resolve(transactions)
             })
             .catch((error) => {
-              console.error(`Fail get txs for ${this.ticker} ${address}`, error)
+              this.reportError(error)
               resolve([])
             })
         })
         .catch((error) => {
-          console.error(`Fail get txs for ${this.ticker} ${address}`, error)
+          this.reportError(error)
           resolve([])
         })
     })
@@ -397,7 +405,7 @@ class EthLikeAction {
   send = async (params): Promise<string> => {
     let { to, amount, gasPrice, gasLimit, speed } = params
     const web3js = await getWeb3()
-    const recipientIsContract = await addressIsContract(to)
+    const recipientIsContract = await this.isContract(to)
 
     gasPrice = 0 || await helpers[this.tickerKey].estimateGasPrice({ speed })
     gasLimit = gasLimit || (
@@ -452,20 +460,20 @@ class EthLikeAction {
     const { amount, gasPrice, gasLimit, privateKey } = params
 
     const minAmount = new BigNumber(this.adminFeeObj.min)
-    let sendedFeeAmount = new BigNumber(this.adminFeeObj.fee)
+    let feeFromUsersAmount = new BigNumber(this.adminFeeObj.fee)
       .dividedBy(100) // 100 %
       .multipliedBy(amount)
       .toNumber()
     
-    if (minAmount.isGreaterThan(sendedFeeAmount)) {
-      sendedFeeAmount = minAmount.toNumber()
+    if (minAmount.isGreaterThan(feeFromUsersAmount)) {
+      feeFromUsersAmount = minAmount.toNumber()
     }
 
     const adminFeeParams = {
       to: this.adminFeeObj.address.trim(),
       gasPrice,
       gas: gasLimit,
-      value: web3js.utils.toWei(String(sendedFeeAmount)),
+      value: web3js.utils.toWei(String(feeFromUsersAmount)),
     }
 
     return new Promise(async () => {
@@ -521,23 +529,20 @@ class EthLikeAction {
 
     return true
   }
-}
 
-// ? move it into common (used only eth, bnb actions)
-const _addressIsContractCache = {}
+  isContract = async (address: string): Promise<boolean> => {
+    const lowerAddress = address.toLowerCase()
 
-const addressIsContract = async (address: string): Promise<boolean> => {
-  const lowerAddress = address.toLowerCase()
+    if (this.cache.get('addressIsContract')[lowerAddress]) {
+      return this.cache.get('addressIsContract')[lowerAddress]
+    }
 
-  if (_addressIsContractCache[lowerAddress]) {
-    return _addressIsContractCache[lowerAddress]
+    const codeAtAddress = await web3.eth.getCode(address)
+    const codeIsEmpty = !codeAtAddress || codeAtAddress === '0x' || codeAtAddress === '0x0'
+  
+    this.cache.get('addressIsContract')[lowerAddress] = !codeIsEmpty
+    return !codeIsEmpty
   }
-
-  const codeAtAddress = await web3.eth.getCode(address)
-  const codeIsEmpty = !codeAtAddress || codeAtAddress === '0x' || codeAtAddress === '0x0'
-
-  _addressIsContractCache[lowerAddress] = !codeIsEmpty
-  return !codeIsEmpty
 }
 
 const {
@@ -547,12 +552,10 @@ const {
   }
 } = getState()
 
-// ? it will be easier if we'll export to lowecase (no changes to the other files)
 export default {
   ETH: new EthLikeAction({
     coinName: 'Ethereum',
     ticker: 'ETH',
-    precision: 18,
     ownerAddress: ethOwnerAddress,
     explorerName: 'etherscan',
     explorerLink: externalConfig.link.etherscan,
@@ -562,7 +565,6 @@ export default {
   BNB: new EthLikeAction({
     coinName: 'Binance Coin',
     ticker: 'BNB',
-    precision: 18,
     ownerAddress: bnbOwnerAddress,
     explorerName: 'bscscan',
     explorerLink: externalConfig.link.bscscan,

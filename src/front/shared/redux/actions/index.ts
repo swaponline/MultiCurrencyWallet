@@ -20,7 +20,6 @@ import btcmultisig from './btcmultisig'
 // ===================
 import EthLikeAction from './ethLikeAction'
 import eth from './eth'
-import bnb from './bnb'
 // ===================
 import token from './token'
 
@@ -61,7 +60,7 @@ export default {
   btc,
   btcmultisig,
   eth,
-  bnb,
+  bnb: EthLikeAction.BNB,
   ghost,
   next,
 
