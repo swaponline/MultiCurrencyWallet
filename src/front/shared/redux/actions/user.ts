@@ -465,6 +465,7 @@ type ObjCurrencyType = {
 const setTransactions = async (objCurrency: ObjCurrencyType | {} = null) => {
   const isBtcSweeped = actions.btc.isSweeped()
   const isEthSweeped = actions.eth.isSweeped()
+  const isBnbSweeped = actions.bnb.isSweeped()
 
   const {
     core: { hiddenCoinsList },
@@ -491,7 +492,7 @@ const setTransactions = async (objCurrency: ObjCurrencyType | {} = null) => {
       // BNB ===========
       actions.bnb.getTransaction(),
       ...(metamask.isEnabled() && metamask.isConnected()) ? [actions.bnb.getTransaction(metamask.getAddress())] : [],
-      ...(isEthSweeped) ? [] : [actions.bnb.getTransaction(actions.bnb.getSweepAddress())],
+      ...(isBnbSweeped) ? [] : [actions.bnb.getTransaction(actions.bnb.getSweepAddress())],
       // ===============
       ...objCurrency && objCurrency['GHOST'] ? [actions.ghost.getTransaction()] : [],
       ...objCurrency && objCurrency['NEXT'] ? [actions.next.getTransaction()] : [],

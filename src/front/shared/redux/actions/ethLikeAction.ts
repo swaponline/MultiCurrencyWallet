@@ -310,7 +310,7 @@ class EthLikeAction {
   }
 
   getTransaction = (address: string = ``, ownType: string = ``) => {
-    new Promise((resolve) => {
+    return new Promise((resolve) => {
       address = address || this.ownerAddress
 
       if (!typeforce.isCoinAddress[this.ticker](address)) {
