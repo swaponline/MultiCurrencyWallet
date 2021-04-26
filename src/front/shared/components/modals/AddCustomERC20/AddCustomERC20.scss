@@ -1,5 +1,6 @@
-.erc20ModalHolder {
+.stepsWrapper {
   min-width: 600px;
+
   .fakeInput {
     height: 68px;
     padding: 0 16px;
@@ -10,22 +11,30 @@
     font-size: 20px;
     font-family: 'Roboto Mono', monospace;
     padding-left: 20px;
-    color: #000;
+    color: $l-color;
     -webkit-appearance: textfield;
     -moz-appearance: textfield;
     appearance: textfield;
-    border: 1px solid rgba(0,0,0,0.2);
+    border: 1px solid $indicating-color;
     outline: none;
     line-height: 68px;
   }
+
   .readyTitle {
     text-align: center;
+  }
+
+  &.dark {
+    .fakeInput {
+      color: $d-color;
+    }
   }
 }
 
 @include media-mobile {
   .erc20ModalHolder {
     min-width: auto;
+
     .fakeInput {
       overflow: auto;
     }

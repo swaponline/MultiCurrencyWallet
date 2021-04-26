@@ -2700,13 +2700,6 @@
     ]
   },
   {
-    "id": "customERC20_Processing",
-    "message": "Procesando ...",
-    "files": [
-      "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
-    ]
-  },
-  {
     "id": "customERC20_Ready",
     "message": "Listo",
     "files": [

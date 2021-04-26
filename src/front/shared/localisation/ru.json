@@ -2661,13 +2661,6 @@
     ]
   },
   {
-    "id": "customERC20_Processing",
-    "message": "Обработка ...",
-    "files": [
-      "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
-    ]
-  },
-  {
     "id": "customERC20_Ready",
     "message": "Готово",
     "files": [

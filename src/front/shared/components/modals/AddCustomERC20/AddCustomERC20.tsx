@@ -13,19 +13,20 @@ import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
 import Input from 'components/forms/Input/Input'
 import Button from 'components/controls/Button/Button'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
-
+import { constants } from 'helpers'
 import typeforce from 'swap.app/util/typeforce'
 import Web3 from 'web3'
 
+const isDark = localStorage.getItem(constants.localStorage.isDark)
 
-type AddCustomERC20Props = {
+type CustomTokenProps = {
   name: string
   style: IUniversalObj
   history: IUniversalObj
   intl: IUniversalObj
 }
 
-type AddCustomERC20State = {
+type CustomTokenState = {
   step: string
   tokenAddress: string
   tokenTitle: string
@@ -35,7 +36,6 @@ type AddCustomERC20State = {
   isShipped: boolean
 }
 
-// TODO: api url doesn't work
 const getExplorerApiUrl = (params) => {
   const { address, signature } = params
   let api = config.api.etherscan instanceof Array
@@ -44,9 +44,9 @@ const getExplorerApiUrl = (params) => {
   let apiKey = config.api.etherscan_ApiKey
 
   if (config.binance) {
-    api = config.api.etherscan instanceof Array
-      ? config.api.etherscan[0]
-      : config.api.etherscan
+    api = config.api.bscscan instanceof Array
+      ? config.api.bscscan[0]
+      : config.api.bscscan
     apiKey = config.api.bscscan_ApiKey
   }
 
@@ -63,11 +63,7 @@ const decimalsSignature = '0x313ce567'
 const symbolSignature = '0x95d89b41'
 
 @cssModules({ ...styles, ...ownStyle }, { allowMultiple: true })
-class AddCustomERC20 extends React.Component<any, any> {
-
-  props: AddCustomERC20Props
-  state: AddCustomERC20State
-
+class AddCustomERC20 extends React.Component<CustomTokenProps, CustomTokenState> {
   constructor(props) {
     super(props)
 
@@ -206,7 +202,7 @@ class AddCustomERC20 extends React.Component<any, any> {
         name={name}
         title={`${intl.formatMessage(localeLabel.title)}`}
       >
-        <div styleName="erc20ModalHolder">
+        <div styleName={`stepsWrapper ${isDark ? 'dark' : ''}`}>
           {step === 'enterAddress' && (
             <Fragment>
               <div styleName="highLevel">
@@ -250,16 +246,12 @@ class AddCustomERC20 extends React.Component<any, any> {
                 fullWidth
                 disabled={isDisabled}
                 onClick={this.handleSubmit}
+                pending={isShipped}
               >
-                {isShipped ? (
-                  <Fragment>
-                    <FormattedMessage id="customERC20_Processing" defaultMessage="Processing ..." />
-                  </Fragment>
-                ) : (
-                  <Fragment>
-                    <FormattedMessage id="customERC20_NextStep" defaultMessage="Nеxt" />
-                  </Fragment>
-                )}
+                <FormattedMessage
+                  id="customERC20_NextStep"
+                  defaultMessage="Nеxt"
+                />
               </Button>
             </Fragment>
           )}
@@ -268,7 +260,13 @@ class AddCustomERC20 extends React.Component<any, any> {
               <div styleName="lowLevel">
                 <FieldLabel inRow>
                   <span styleName="title">
-                    <FormattedMessage id="customERC20_Address" defaultMessage="erc20 address" />
+                    <FormattedMessage
+                      id="customERC20_Address"
+                      defaultMessage="{type} address"
+                      values={{
+                        type: config.binance ? 'bep20 ' : 'erc20'
+                      }}
+                    />
                   </span>
                 </FieldLabel>
                 <div styleName="fakeInput">{tokenAddress}</div>
@@ -309,19 +307,12 @@ class AddCustomERC20 extends React.Component<any, any> {
                 fullWidth
                 disabled={isDisabled}
                 onClick={this.handleConfirm}
+                pending={isShipped}
               >
-                {isShipped ? (
-                  <Fragment>
-                    <FormattedMessage id="customERC20_Processing" defaultMessage="Processing ..." />
-                  </Fragment>
-                ) : (
-                  <Fragment>
-                    <FormattedMessage
-                      id="customERC20_ConfirmStep"
-                      defaultMessage="Add this token"
-                    />
-                  </Fragment>
-                )}
+                <FormattedMessage
+                  id="customERC20_ConfirmStep"
+                  defaultMessage="Add this token"
+                />
               </Button>
             </Fragment>
           )}

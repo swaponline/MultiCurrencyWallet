@@ -2680,7 +2680,7 @@
   },
   {
     "id": "customERC20_ConfirmStep",
-    "message": "Add token",
+    "message": "Add this token",
     "files": [
       "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
     ]
@@ -2702,13 +2702,6 @@
   {
     "id": "customERC20_NotFound",
     "message": "This is not ERC20 address",
-    "files": [
-      "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
-    ]
-  },
-  {
-    "id": "customERC20_Processing",
-    "message": "Processing ...",
     "files": [
       "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
     ]
