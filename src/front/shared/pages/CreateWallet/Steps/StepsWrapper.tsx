@@ -6,7 +6,6 @@ import feedback from 'shared/helpers/feedback'
 import { getActivatedCurrencies } from 'helpers/user'
 import config from 'helpers/externalConfig'
 
-import { FormattedMessage } from 'react-intl'
 import FirstStep from './FirstStep'
 import SecondStep from './SecondStep'
 
@@ -16,7 +15,7 @@ const curEnabled = config.opts.curEnabled
 @connect(({ currencies: { items: currencies } }) => ({ currencies }))
 export default class StepsWrapper extends Component<any, any> {
   defaultStartPack = [
-    ...config.erc20 ? [{ name: `${config.binance ? 'ERC20' : 'ERC20'}`, capture: 'Token' }] : [],
+    ...config.erc20 ? [{ name: `${config.binance ? 'BEP20' : 'ERC20'}`, capture: 'Token' }] : [],
     ...(!curEnabled || curEnabled.btc) ? [{ name: "BTC", capture: "Bitcoin" }] : [],
     ...(!curEnabled || curEnabled.eth) ? [{ name: "ETH", capture: "Ethereum" }] : [],
     ...(!curEnabled || curEnabled.bnb) ? [{ name: "BNB", capture: "Binance Coin" }] : [],
@@ -29,7 +28,7 @@ export default class StepsWrapper extends Component<any, any> {
   ]
 
   widgetStartPack = [
-    ...config.erc20 ? [{ name: `${config.binance ? 'ERC20' : 'ERC20'}`, capture: 'Token' }] : [],
+    ...config.erc20 ? [{ name: `${config.binance ? 'BEP20' : 'ERC20'}`, capture: 'Token' }] : [],
     ...(!curEnabled || curEnabled.btc) ? [{ name: "BTC", capture: "Bitcoin" }] : [],
     ...(!curEnabled || curEnabled.eth) ? [{ name: "ETH", capture: "Ethereum" }] : [],
     ...(!curEnabled || curEnabled.bnb) ? [{ name: "BNB", capture: "Binance Coin" }] : [],

@@ -206,9 +206,9 @@ const CreateWallet: React.FC<any> = (props) => {
       return
     }
 
-    const isIgnoreSecondStep = !Object.keys(currencies).includes('BTC') // ['ETH', 'SWAP', 'EURS', 'Custom ERC20'].find(el => Object.keys(currencies).includes(el))
+    const isIgnoreSecondStep = !Object.keys(currencies).includes('BTC')
 
-    if (isIgnoreSecondStep && !currencies['Custom ERC20']) {
+    if (isIgnoreSecondStep && !currencies['ERC20'] && !currencies['BEP20']) {
       Object.keys(currencies).forEach((currency) => {
         if (currencies[currency]) {
           actions.core.markCoinAsVisible(currency.toUpperCase(), true)
@@ -224,7 +224,7 @@ const CreateWallet: React.FC<any> = (props) => {
       return
     }
 
-    if (currencies['Custom ERC20']) {
+    if (currencies['ERC20'] || currencies['BEP20']) {
       goHome()
       actions.modals.open(constants.modals.AddCustomERC20)
       return

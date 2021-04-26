@@ -17,6 +17,7 @@ export default {
   InvoiceModal: 'InvoiceModal',
   InvoiceLinkModal: 'InvoiceLinkModal',
   AlertModal: 'AlertModal',
+  // TODO: rename across the project with <AddCustomToken>
   AddCustomERC20: 'AddCustomERC20',
   BtcMultisignSwitch: 'BtcMultisignSwitch',
   Share: 'ShareModal',
