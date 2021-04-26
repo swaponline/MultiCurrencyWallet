@@ -61,12 +61,12 @@ class RowFeeds extends Component<any, any> {
           }
         </td>
         <td>
-          <span styleName="value">{sellAmount.toFixed(5)}</span>
+          <span className='ordersSellAmount' styleName="value">{sellAmount.toFixed(5)}</span>
           {' '}
           <span styleName="currency">{sellCurrency}</span>
         </td>
         <td>
-          <span styleName="value">{buyAmount.toFixed(5)}</span>
+          <span className='ordersBuyAmount' styleName="value">{buyAmount.toFixed(5)}</span>
           {' '}
           <span styleName="currency">{buyCurrency}</span>
         </td>

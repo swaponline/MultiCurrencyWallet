@@ -486,16 +486,16 @@ class MarketmakerSettings extends Component<any, any> {
             </span></p>
             <p>Спред: 0.5% (по умолчанию стоит 0.5%)</p>
             {btcWallet ? (
-              <p>Баланс BTC: {btcBalance} BTC для попленения переведите на `{btcWallet.address}`</p>
+              <p>Баланс BTC: <span id='btcBalance'>{btcBalance}</span> BTC для попленения переведите на `{btcWallet.address}`</p>
             ) : (
-              <p>Баланс BTC: {btcBalance} BTC</p>
+              <p>Баланс BTC: <span id='btcBalance'>{btcBalance}</span> BTC</p>
             )}
             {ethWallet ? (
               <p>Баланс ETH: {ethBalance} для пополнения переведите на `{ethWallet.address}`</p>
             ) : (
               <p>Баланс ETH: {ethBalance}</p>
             )}
-            <p>Баланс {marketToken.toUpperCase()}: {tokenBalance} {marketToken.toUpperCase()}</p>
+            <p>Баланс {marketToken.toUpperCase()}: <span id='tokenBalance'>{tokenBalance}</span> {marketToken.toUpperCase()}</p>
             {this._metamaskEnabled && (
               <div>
               {metamask.isConnected() ? (
