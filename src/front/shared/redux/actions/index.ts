@@ -59,7 +59,7 @@ export default {
 
   btc,
   btcmultisig,
-  eth,
+  eth, // TODO: replace with EthLikeAction.ETH and delete eth.ts
   bnb: EthLikeAction.BNB,
   ghost,
   next,
