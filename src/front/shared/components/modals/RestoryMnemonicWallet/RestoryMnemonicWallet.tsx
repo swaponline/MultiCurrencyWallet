@@ -315,6 +315,7 @@ class RestoryMnemonicWallet extends React.Component {
                   <FormattedMessage {...langLabels.cancelRestory} />
                 </Button>
                 <Button
+                  id='walletRecoveryButton'
                   blue
                   disabled={!mnemonic || mnemonic.split(' ').length !== 12 || isFetching}
                   onClick={this.handleRestoryWallet}
@@ -336,6 +337,7 @@ class RestoryMnemonicWallet extends React.Component {
               </p>
               <div styleName="lowLevel">
                 <Button
+                  id='finishWalletRecoveryButton'
                   styleName="buttonCenter buttonHalfFullWidth"
                   blue
                   onClick={this.handleFinish}

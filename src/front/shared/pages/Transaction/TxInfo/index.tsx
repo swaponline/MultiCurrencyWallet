@@ -129,10 +129,10 @@ class TxInfo extends Component<any, any> {
                   )
                   : (
                     <span>
-                        <span><strong> {finalAmount}  {currency.toUpperCase()} </strong></span>
+                        <span><strong id='txAmout'> {finalAmount}  {currency.toUpperCase()} </strong></span>
                         <FormattedMessage id="InfoPay_2_Ready" defaultMessage="были успешно переданы" />
                         <br />
-                        <strong>{toAddress}</strong>
+                        <strong id='txToAddress'>{toAddress}</strong>
                       </span>
                   )
               }

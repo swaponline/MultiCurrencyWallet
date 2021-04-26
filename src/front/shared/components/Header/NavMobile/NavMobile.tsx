@@ -53,7 +53,7 @@ class NavMobile extends Component<NavProps, null> {
             return !displayNone && currentPageFlag ? (
                 <a
                   key={index}
-                  onClick={() => actions.modals.open(constants.modals.MobMenu, {})}
+                  href={link}
                   tabIndex={-1}
                 >
                   {icon}
