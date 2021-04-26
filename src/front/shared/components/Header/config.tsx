@@ -53,7 +53,7 @@ export const messages = defineMessages({
 })
 
 export const getMenuItems = (props) => {
-  const { intl, isSigned } = props
+  const { intl } = props
   const { exchange, wallet, createWallet } = messages
   const { 
     exchange: linksExchange,
@@ -126,8 +126,7 @@ export const getMenuItems = (props) => {
     itemsWithoutWallet.push(farmItem)
   }
 
-  return isSigned
-    || localStorage.getItem('isWalletCreate') === 'true'
+  return localStorage.getItem('isWalletCreate') === 'true'
     || externalConfig && externalConfig.isWidget
       ? itemsWithWallet
       : itemsWithoutWallet
@@ -135,7 +134,7 @@ export const getMenuItems = (props) => {
 
 
 export const getMenuItemsMobile = (props, isWalletCreate, dinamicPath) => {
-  const { intl, isSigned } = props
+  const { intl } = props
   const { exchange, wallet, createWallet } = messages
   const { 
     exchange: linksExchange,
@@ -193,8 +192,7 @@ export const getMenuItemsMobile = (props, isWalletCreate, dinamicPath) => {
     mobileItemsWithoutWallet.push(farmItem)
   }
 
-  return isSigned
-    || localStorage.getItem('isWalletCreate') === 'true'
+  return localStorage.getItem('isWalletCreate') === 'true'
       ? mobileItemsWithWallet
       : mobileItemsWithoutWallet
 }

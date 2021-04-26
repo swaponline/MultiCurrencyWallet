@@ -34,9 +34,6 @@ import lsDataCache from 'helpers/lsDataCache'
 const isWidgetBuild = config && config.isWidget
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
-@connect(({ signUp: { isSigned } }) => ({
-  isSigned,
-}))
 @connect(
   ({
     core,
@@ -268,8 +265,6 @@ class CurrencyWallet extends Component<any, any> {
       actions[getCurrencyKey(currency.toLowerCase(), false)]
         .fetchBalance(address)
         .then((balance) => this.setState({ balance }))
-
-    this.setLocalStorageItems()
 
     // if address is null, take transactions from current user
     address
@@ -523,22 +518,6 @@ class CurrencyWallet extends Component<any, any> {
     })
   }
 
-  setLocalStorageItems = () => {
-    //@ts-ignore
-    const isClosedNotifyBlockBanner = localStorage.getItem(constants.localStorage.isClosedNotifyBlockBanner)
-    //@ts-ignore
-    const isClosedNotifyBlockSignUp = localStorage.getItem(constants.localStorage.isClosedNotifyBlockSignUp)
-    const isPrivateKeysSaved = localStorage.getItem(constants.localStorage.privateKeysSaved)
-    const walletTitle = localStorage.getItem(constants.localStorage.walletTitle)
-
-    this.setState({
-      isClosedNotifyBlockBanner,
-      isClosedNotifyBlockSignUp,
-      walletTitle,
-      isPrivateKeysSaved,
-    })
-  }
-
   handleReceive = () => {
     const { currency, address } = this.state
 
@@ -648,7 +627,6 @@ class CurrencyWallet extends Component<any, any> {
       },
       intl,
       hiddenCoinsList,
-      isSigned,
       isBalanceFetching,
       activeFiat,
       multisigStatus,

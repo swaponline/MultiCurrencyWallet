@@ -98,7 +98,6 @@ Important note: Our core team focused on BTC-ETH swaps. If another blockchain ad
 
 - `src/front/config/testnet/hiddenCoins.js`
 - `src/front/shared/components/Coin/Coin.js`
-- `src/front/shared/components/modals/HowToExportModal/HowToExportModal.js`
 - `src/front/shared/components/modals/WithdrawModal/WithdrawModal.js`
 - `src/front/shared/helpers/getCurrencyKey.js`
 - `src/front/shared/helpers/user.js`
@@ -190,7 +189,6 @@ Add swap instances:
 - `src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.js`
 - `src/front/shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.js`
 - `src/front/shared/components/modals/ShowMoreCoins/ShowMoreCoins.js`
-- `src/front/shared/components/modals/SignUpModal/SignUpModal.js`
 - `src/front/shared/components/SaveKeys/SaveKeys.js`
 - `src/front/shared/containers/App/App.js`
 - `src/front/shared/pages/CurrencyWallet/CurrencyWallet.js`
