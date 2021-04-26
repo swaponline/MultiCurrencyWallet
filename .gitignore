@@ -34,3 +34,6 @@ src/bot/.env
 swaponline.github.io
 tradeconfig.mainnet.json
 tradeconfig.testnet.json
+
+// tests files
+tests/e2e/screenshots

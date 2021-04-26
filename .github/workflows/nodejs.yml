@@ -13,7 +13,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-      
+
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
@@ -22,9 +22,12 @@ jobs:
       uses: bahmutov/npm-install@v1
       with:
        useLockFile: false
-    - name: build mainnet
+    - name: build testnet
       run: |
-        npm run build:mainnet
+        npm run build:testnet
+    - name: run e2e tests
+      run: |
+        npm run test:e2e:actions
     - name: bot test
       run: |
         npm run bot:test
