@@ -37,8 +37,6 @@ const SecondStep = (props) => {
     setError, 
     forcedCurrencyData, 
     btcData,
-    etcClick,
-    ethData 
   } = props
 
   const _protection = {
@@ -321,7 +319,7 @@ const SecondStep = (props) => {
       {!isMobile && !forcedCurrencyData &&
         <div>
           <Explanation subHeaderText={subHeaderText1()} step={1} notMain>
-            <Cupture click={etcClick} step={2} />
+            <Cupture />
           </Explanation>
         </div>
       }

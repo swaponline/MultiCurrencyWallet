@@ -1583,7 +1583,7 @@
   },
   {
     "id": "createWalletCapture1",
-    "message": "На выбор Bitcoin, Ethereum, Swap",
+    "message": "На выбор Bitcoin, Ethereum, Swap, Tokens",
     "files": [
       "src/front/shared/pages/CreateWallet/Steps/texts.tsx"
     ]
@@ -2581,7 +2581,7 @@
   },
   {
     "id": "customERC20_Address",
-    "message": "erc20 address",
+    "message": "{type} address",
     "files": [
       "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
     ]
@@ -2637,7 +2637,7 @@
   },
   {
     "id": "customERC20_Title",
-    "message": "Add new ERC20",
+    "message": "Add a new token",
     "files": [
       "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
     ]

@@ -16,6 +16,7 @@ const curEnabled = config.opts.curEnabled
 @connect(({ currencies: { items: currencies } }) => ({ currencies }))
 export default class StepsWrapper extends Component<any, any> {
   defaultStartPack = [
+    ...config.erc20 ? [{ name: `${config.binance ? 'ERC20' : 'ERC20'}`, capture: 'Token' }] : [],
     ...(!curEnabled || curEnabled.btc) ? [{ name: "BTC", capture: "Bitcoin" }] : [],
     ...(!curEnabled || curEnabled.eth) ? [{ name: "ETH", capture: "Ethereum" }] : [],
     ...(!curEnabled || curEnabled.bnb) ? [{ name: "BNB", capture: "Binance Coin" }] : [],
@@ -28,6 +29,7 @@ export default class StepsWrapper extends Component<any, any> {
   ]
 
   widgetStartPack = [
+    ...config.erc20 ? [{ name: `${config.binance ? 'ERC20' : 'ERC20'}`, capture: 'Token' }] : [],
     ...(!curEnabled || curEnabled.btc) ? [{ name: "BTC", capture: "Bitcoin" }] : [],
     ...(!curEnabled || curEnabled.eth) ? [{ name: "ETH", capture: "Ethereum" }] : [],
     ...(!curEnabled || curEnabled.bnb) ? [{ name: "BNB", capture: "Binance Coin" }] : [],
@@ -121,7 +123,7 @@ export default class StepsWrapper extends Component<any, any> {
   }
 
 
-  handleClick = name => {
+  handleClick = (name) => {
     feedback.createWallet.currencySelected(name)
     const { setError } = this.props
     const { curState } = this.state
@@ -130,22 +132,6 @@ export default class StepsWrapper extends Component<any, any> {
     this.setState(() => ({ curState: dataToReturn }))
     reducers.createWallet.newWalletData({ type: 'currencies', data: dataToReturn })
     setError(null)
-  }
-
-  etcClick = () => {
-    const { coins, startPack, all } = this.state
-    let newStartPack = this.defaultStartPack
-    if (!all) {
-      if (config.opts.addCustomERC20) {
-        newStartPack = [{
-          name: 'Custom ERC20',
-          capture: <FormattedMessage id="createWallet_customERC20" defaultMessage="Custom token" />,
-        }, ...startPack, ...coins]
-      } else {
-        newStartPack = [...startPack, ...coins]
-      }
-    }
-    this.setState(() => ({ startPack: newStartPack, all: !all }))
   }
 
   render() {
@@ -170,7 +156,6 @@ export default class StepsWrapper extends Component<any, any> {
               onClick={onClick}
               currencies={currenciesForSecondStep}
               setError={setError}
-              etcClick={this.etcClick}
               handleClick={this.handleClick}
               forcedCurrencyData
             />
@@ -182,7 +167,6 @@ export default class StepsWrapper extends Component<any, any> {
                   error={error} 
                   onClick={onClick}
                   setError={setError}
-                  etcClick={this.etcClick}
                   handleClick={this.handleClick}
                   curState={curState}
                   startPack={startPack}
@@ -196,7 +180,6 @@ export default class StepsWrapper extends Component<any, any> {
                   onClick={onClick} 
                   currencies={currenciesForSecondStep}
                   setError={setError}
-                  etcClick={this.etcClick}
                   handleClick={this.handleClick}
                   ethData={ethData}
                 />

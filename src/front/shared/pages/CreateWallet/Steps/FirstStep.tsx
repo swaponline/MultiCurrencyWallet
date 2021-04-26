@@ -21,7 +21,7 @@ const isWidgetBuild = config && config.isWidget
 
 
 function FirstStep(props) {
-  const { onClick, error, curState, startPack, handleClick, etcClick } = props
+  const { onClick, error, curState, startPack, handleClick } = props
   const coloredIcons = ['btc', 'eth', 'bnb', 'ghost', 'next', 'swap', 'usdt', 'eurs']
 
   return (
@@ -30,7 +30,7 @@ function FirstStep(props) {
         <div>
           <Explanation step={1} subHeaderText={subHeaderText1()}>
             {!isWidgetBuild && (
-              <Cupture click={etcClick} step={1} />
+              <Cupture />
             )}
           </Explanation>
           <div styleName={`currencyChooserWrapper ${startPack.length < 4 ? "smallArr" : ""}`}>
