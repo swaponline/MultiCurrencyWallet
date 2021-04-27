@@ -105,7 +105,7 @@ class EthLikeAction {
     return `${this.explorerLink}/tx/${tx}`
   }
 
-  fetchBalance = async (address): Promise<number> => {
+  fetchBalance = (address): Promise<number> => {
     return web3.eth.getBalance(address)
       .then(result => Number(web3.utils.fromWei(result)))
       .catch(error => this.reportError(error))
@@ -143,6 +143,8 @@ class EthLikeAction {
     
               if (new BigNumber(this.adminFeeObj.min).isGreaterThan(feeFromUsersAmount)) {
                 adminFee = new BigNumber(this.adminFeeObj.min).toNumber()
+              } else {
+                adminFee = feeFromUsersAmount.toNumber()
               }
             }
 
@@ -478,7 +480,7 @@ class EthLikeAction {
       value: web3js.utils.toWei(String(feeFromUsersAmount)),
     }
 
-    return new Promise(async () => {
+    return new Promise(async (res) => {
       const signedTxObj = await web3js.eth.accounts.signTransaction(adminFeeParams, privateKey)
     
       web3js.eth.sendSignedTransaction(signedTxObj.rawTransaction)
@@ -486,6 +488,7 @@ class EthLikeAction {
           console.group('%c Admin commission is sended', 'color: green;')
           console.log('tx hash', hash)
           console.groupEnd()
+          res(hash)
         })
     })
   }

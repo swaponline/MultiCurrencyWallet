@@ -22,6 +22,7 @@ export default {
   didPinBtcCreated: `${process.env.ENTRY}:pinBtcCreated`,
   didProtectedBtcG2FACreated: 'protectedBtcG2FA',
   walletTitle: 'walletTitle',
+  // TODO: Add a name 'customToken' and safe object {bep20: {}, erc20: {}, ...}
   customERC: 'customERC',
   balanceActiveCurrency: 'balanceActiveCurrency',
   isSweepReady: 'isSweepReady',
