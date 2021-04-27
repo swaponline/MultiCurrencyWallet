@@ -299,7 +299,7 @@ class MarketmakerSettings extends Component<any, any> {
     if (!isEthBalanceOk) {
       hasError = true
       actions.modals.open(constants.modals.AlertModal, {
-        message: <FormattedMessage id="MM_NotEnoughtEth" defaultMessage="Не достаточно ETH для оплаты коммисии майнеров" />,
+        message: <FormattedMessage id="MM_NotEnoughtEth" defaultMessage="Недостаточно ETH для оплаты коммисии майнеров" />,
       })
     }
     if (!isTokenBalanceOk && !isBtcBalanceOk) {
