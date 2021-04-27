@@ -204,6 +204,8 @@
     "@ethersproject/providers": "^5.0.14",
     "@ethersproject/signing-key": "^5.0.8",
     "@pedrouid/iso-crypto": "^1.0.0",
+    "@sentry/react": "^6.2.2",
+    "@sentry/tracing": "^6.2.2",
     "@types/react": "^17.0.0",
     "@types/react-css-modules": "^4.6.2",
     "@types/react-dom": "^17.0.0",
