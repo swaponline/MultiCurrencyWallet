@@ -60,7 +60,7 @@ const CurrenciesList = (props: CurrenciesListProps) => {
         )}
       />
       <div styleName='addCurrencyBtnWrapper'>
-        <Button onClick={goToСreateWallet} blue transparent fullWidth>
+        <Button id="addAssetBtn" onClick={goToСreateWallet} blue transparent fullWidth>
           <FormattedMessage id="addAsset" defaultMessage="Add currency" />
         </Button>
       </div>

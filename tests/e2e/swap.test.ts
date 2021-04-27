@@ -1,4 +1,4 @@
-import { setup, importWallet, turnOnMM, takeScreenshot, timeOut } from './utils'
+import { setup, importWallet, addAssetToWallet, turnOnMM, takeScreenshot, timeOut } from './utils'
 
 const MAKER_SEED = ['vast', 'bronze', 'oyster', 'trade', 'love', 'once', 'fog', 'match', 'rail', 'lock', 'cake', 'science']
 const makerBtcAddress = 'mosm1NmQZETUQvH68C9kbS8F3nuVKD7RDk'
@@ -18,17 +18,21 @@ describe('Try swap', () => {
 
     await MakerPage.waitForSelector('#btcAddress') // waits for Maker wallet to load
     await TakerPage.waitForSelector('#btcAddress') // waits for Taker wallet to load
+
+    await addAssetToWallet(MakerPage, 'wbtc')
+    await addAssetToWallet(TakerPage, 'wbtc')
+
     await turnOnMM(MakerPage)
 
     await timeOut(2 * 1000)
 
+    // move to exchange page
+    const takerExchangePageLink = await TakerPage.$('a[href="#/exchange"]')
+    await takerExchangePageLink.click()
+
+    await timeOut(2 * 1000)
+
     try {
-      // move to exchange page
-      const takerExchangePageLink = await TakerPage.$('a[href="#/exchange"]')
-      await takerExchangePageLink.click()
-
-      await timeOut(2 * 1000)
-
       const [sellCurrencySelectorList, sellWalletSelectorList, buyCurrencySelectorList, buyWalletSelectorList] = await TakerPage.$$('.itemsSelector')
 
       await buyCurrencySelectorList.click();

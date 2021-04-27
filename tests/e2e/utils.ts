@@ -41,6 +41,12 @@ export const selectSendCurrency = async (page: puppeteer.Page, currency: string 
   await page.click(`#${currency}Send`)
 }
 
+export const addAssetToWallet = async (page: puppeteer.Page, currency: string = 'wbtc') => {
+  await page.click('#addAssetBtn')
+  await page.click(`#${currency}Wallet`)
+  await page.click('#continueBtn')
+}
+
 export const turnOnMM = async (page: puppeteer.Page) => {
   // move to earn page
   const earnPage = await page.$('a[href="#/marketmaker"]')
@@ -83,6 +89,7 @@ export default {
     setup,
     importWallet,
     selectSendCurrency,
+    addAssetToWallet,
     turnOnMM,
     takeScreenshot,
     timeOut
