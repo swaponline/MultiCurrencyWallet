@@ -356,7 +356,10 @@ class Header extends Component<any, any> {
       toggle()
     }
 
-    if ((pathname === links.marketmaker) || (pathname === links.marketmaker_short)) {
+
+    if ((pathname.substr(0, links.marketmaker.length) === links.marketmaker)
+      || (pathname.substr(0, links.marketmaker_short) === links.marketmaker_short)
+    ) {
       const swap = new Swap(orderId, SwapApp.shared())
       actions.core.rememberSwap(swap)
       window.active_swap = swap
