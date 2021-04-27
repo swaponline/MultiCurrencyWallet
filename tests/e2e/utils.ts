@@ -70,6 +70,13 @@ export const turnOnMM = async (page: puppeteer.Page) => {
   }
 }
 
+export const takeScreenshot = async (page: puppeteer.Page, fileName: string) => {
+  await page.screenshot({
+    path: `tests//e2e/screenshots/${fileName}_${new Date().getTime().toString()}.jpg`,
+    type: 'jpeg'
+  });
+}
+
 export const timeOut = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 export default {
@@ -77,5 +84,6 @@ export default {
     importWallet,
     selectSendCurrency,
     turnOnMM,
+    takeScreenshot,
     timeOut
 }

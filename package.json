@@ -20,7 +20,7 @@
     "core:build:umd": "NODE_ENV=production webpack --config webpack.config.babel.js",
     "core:build:umd:win": "webpack --config webpack.config.babel.js",
     "test": "cross-env CONFIG=testnet.dev jest tests/*.test.ts",
-    "test:e2e": "jest tests/e2e/*.test.ts",
+    "test:e2e": "jest tests/e2e/swap.test.ts",
     "test:e2e:actions": "ACTIONS=true jest tests/e2e/*.test.ts",
     "eslint": "eslint --fix --cache ./shared --ext js",
     "prettier": "prettier --ignore-path .gitignore \"**/*.+(js|json|ts|tsx)\" --write",
