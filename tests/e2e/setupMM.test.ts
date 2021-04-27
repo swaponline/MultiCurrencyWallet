@@ -1,5 +1,4 @@
-import { setup, importWallet, timeOut } from './utils'
-import BigNumber from 'bignumber.js';
+import { setup, importWallet, turnOnMM, timeOut } from './utils'
 
 const SEED = ['vast', 'bronze', 'oyster', 'trade', 'love', 'once', 'fog', 'match', 'rail', 'lock', 'cake', 'science']
 const btcAddress = 'mosm1NmQZETUQvH68C9kbS8F3nuVKD7RDk'
@@ -14,27 +13,7 @@ describe('Try MM', () => {
 
     await page.waitForSelector('#btcAddress') // waits for wallet to load
 
-    // move to earn page
-    const earnPage = await page.$('a[href="#/marketmaker"]')
-    await earnPage.click()
-
-    // choose try MM in browser
-    const [tryMMInBrowserBtn] = await page.$x("//button[contains(., 'Начать в браузере')]");
-    if (tryMMInBrowserBtn) {
-        await tryMMInBrowserBtn.click();
-    }
-
-    await page.waitForSelector('#btcBalance') // waits for settings of mm to load
-
-    // prepare balances for checking
-    let btcBalance = await page.$eval('#btcBalance', el => el.textContent)
-    let tokenBalance = await page.$eval('#tokenBalance', el => el.textContent)
-    btcBalance = new BigNumber(btcBalance).toFixed(5)
-    tokenBalance = new BigNumber(tokenBalance).toFixed(5)
-
-    // turn on MM
-    const toggleSelector = 'input[type="checkbox"]'
-    await page.evaluate((selector) => document.querySelector(selector).click(), toggleSelector);
+    const { btcBalance, tokenBalance } = await turnOnMM(page)
 
     // move to exchange page
     const exchangePage = await page.$('a[href="#/exchange"]')
