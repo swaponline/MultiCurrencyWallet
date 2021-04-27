@@ -388,7 +388,9 @@ class MarketmakerSettings extends Component<any, any> {
         sellCurrency: marketToken,
       }
       console.log(sellTokenOrderData)
-      SwapApp.shared().services.orders.create(sellTokenOrderData)
+      const sellOrder = SwapApp.shared().services.orders.create(sellTokenOrderData)
+      console.log('sellOrder', sellOrder)
+      actions.core.setupPartialOrder(sellOrder)
     }
     if (isBtcBalanceOk) {
       const buyTokenExchangeRate =
@@ -416,7 +418,9 @@ class MarketmakerSettings extends Component<any, any> {
         buyCurrency: marketToken,
       }
       console.log(buyTokenOrderData)
-      SwapApp.shared().services.orders.create(buyTokenOrderData)
+      const buyOrder = SwapApp.shared().services.orders.create(buyTokenOrderData)
+      console.log('buyOrder', buyOrder)
+      actions.core.setupPartialOrder(buyOrder)
     }
   }
 
