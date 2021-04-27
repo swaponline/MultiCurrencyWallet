@@ -2,6 +2,9 @@ import * as React from 'react'
 
 import { connect } from 'redaction'
 
+import Swiper from 'swiper'
+import 'swiper/swiper-bundle.css'
+
 import { constants, getItezUrl } from 'helpers'
 import actions from 'redux/actions'
 import axios from 'axios'
@@ -11,6 +14,7 @@ import NotifyBlock from '../NotityBlock/NotifyBlock'
 import ContentLoader from '../../../../components/loaders/ContentLoader/ContentLoader'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import linksManager from '../../../../helpers/links'
+
 
 type WallerSliderProps = {
   intl?: { [key: string]: any }
@@ -57,7 +61,6 @@ class WallerSlider extends React.Component {
   }
 
   initBanners = () => {
-    //@ts-ignore
     let starterSwiper = new Swiper('#swiper_banners', {
       spaceBetween: 10,
       slidesPerView: 4,
@@ -201,7 +204,7 @@ class WallerSlider extends React.Component {
         ) : (
           <div
             id="swiper_banners"
-            className="swiper-container"
+            className={`swiper-container ${styles.swiperContainer}`}
             style={{ marginTop: '20px', marginBottom: '30px' }}
           >
             <div className="swiper-wrapper">

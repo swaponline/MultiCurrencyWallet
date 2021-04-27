@@ -283,6 +283,7 @@
     "redux": "^4.0.5",
     "reverse": "^4.0.1",
     "superagent": "^6.1.0",
+    "swiper": "^6.5.8",
     "typeforce": "^1.18.0",
     "url-parse": "^1.4.7",
     "valuelink": "^1.6.2",
