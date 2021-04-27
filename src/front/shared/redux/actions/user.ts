@@ -583,16 +583,16 @@ export const isOwner = (addr, currency) => {
   const lowerAddr = addr.toLowerCase()
 
   if (ethToken.isEthToken({ name: currency })) {
-    if (actions.eth.getAllMyAddresses().includes(lowerAddr)) return true
-    const {
-      user: {
-        ethData: {
-          addrFromStore,
-        },
-      },
-    } = getState()
+    const allAddresses = actions[config.binance ? 'bnb' : 'eth'].getAllMyAddresses()
 
-    return lowerAddr === addrFromStore.toLowerCase()
+    if (allAddresses.includes(lowerAddr)) return true
+
+    const { user } = getState()
+    const storeOwnerAddress = user[
+      config.binance ? 'bnbData' : 'ethData'
+    ].address.toLowerCase()
+
+    return lowerAddr === storeOwnerAddress
   }
 
   if (

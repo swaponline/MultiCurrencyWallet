@@ -126,12 +126,9 @@ class Erc20LikeAction {
       return balanceInCache
     }
   
-    const ERC20 = new web3.eth.Contract(TokenAbi, contractAddress)
-  
     try {
-      const result = await ERC20.methods.balanceOf(address).call()
-      let amount = new BigNumber(String(result)).dividedBy(new BigNumber(String(10)).pow(decimals)).toString()
-      
+      const amount = await this.fetchBalance(address, contractAddress, decimals)
+
       reducers.user.setTokenBalance({ name, amount })
       cacheStorageSet('currencyBalances', `token_${tokenName}_${address}`, amount, 60)
 
