@@ -1,26 +1,26 @@
 {
-  "name": "Wallet",
-  "short_name": "Wallet",
-  "version": "1.3.3",
   "manifest_version": 2,
-  "description": "Wallet",
+  "version": "1.3.3",
+  "name": "MultiCurrencyWallet",
+  "short_name": "MultiCurrencyWallet",
+  "description": "Hot wallet with p2p exchange",
   "homepage_url": "https://swaponline.io/",
   "icons": {
-    "16": "./extension/images/icons/icon-16.png",
-    "32": "./extension/images/icons/icon-32.png",
-    "192": "./extension/images/icons/icon-196.png"
+    "16": "./icons/icon-16.png",
+    "32": "./icons/icon-32.png",
+    "192": "./icons/icon-196.png"
   },
   "options_page": "application/index.html",
   "browser_action": {
-    "default_icon": "extension/images/icons/icon-32.png",
-    "default_title": "Wallet"
+    "default_icon": "./icons/icon-32.png",
+    "default_title": "MultiCurrencyWallet"
   },
   "permissions": [
     "activeTab"
   ],
   "background": {
-    "scripts": ["./extension/js/background.js"],
-    "persistent": false
+    "scripts": ["./background.js"],
+    "persistent": true
   },
   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
 }
