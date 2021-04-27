@@ -308,7 +308,7 @@ class MarketmakerSettings extends Component<any, any> {
         message: (
           <FormattedMessage
             id="MM_NotEnoughtCoins"
-            defaultMessage="Не достаточно средств. Вам нужно пополнить BTC или {token}"
+            defaultMessage="Недостаточно средств. Вам нужно пополнить BTC или {token}"
             values={{
               token: marketToken.toUpperCase(),
             }}
