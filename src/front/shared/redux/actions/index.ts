@@ -18,7 +18,7 @@ import ghost from './ghost'
 import next from './next'
 import btcmultisig from './btcmultisig'
 import EthLikeAction from './ethLikeAction'
-import token from './token'
+import Erc20LikeAction from './erc20LikeAction'
 
 import api from './api'
 import pairs from './pairs'
@@ -39,7 +39,7 @@ const tokens = {}
 
 Object.keys(config.erc20)
   .forEach(key => {
-    tokens[key] = token
+    tokens[key] = Erc20LikeAction.token
   })
 
 export default {
@@ -58,10 +58,10 @@ export default {
   btcmultisig,
   eth: EthLikeAction.ETH,
   bnb: EthLikeAction.BNB,
+  token: Erc20LikeAction.token,
   ghost,
   next,
 
-  token,
   feed,
   analytics,
   referral,

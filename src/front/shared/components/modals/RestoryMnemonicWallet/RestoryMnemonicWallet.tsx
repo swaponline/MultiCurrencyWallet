@@ -205,14 +205,10 @@ class RestoryMnemonicWallet extends React.Component {
       const backupMark = actions.btc.getMainPublicKey()
 
       actions.backupManager.backup(backupMark, false, true)
-      const btcWallet = await actions.btc.getWalletByWords(mnemonic)
-      const ethWallet = await actions.eth.getWalletByWords(mnemonic)
-      const ghostWallet = await actions.ghost.getWalletByWords(mnemonic)
-      const nextWallet = await actions.next.getWalletByWords(mnemonic)
-
       // clean mnemonic, if exists
       localStorage.setItem(constants.privateKeyNames.twentywords, '-')
 
+      const btcWallet = await actions.btc.getWalletByWords(mnemonic)
       // Check - if exists backup for this mnemonic
       const restoryMark = btcWallet.publicKey
 
@@ -226,15 +222,21 @@ class RestoryMnemonicWallet extends React.Component {
       localStorage.setItem(constants.privateKeyNames.btcSmsMnemonicKeyGenerated, btcSmsKey)
       localStorage.setItem(constants.localStorage.isWalletCreate, 'true')
 
-      await actions.eth.login(false, mnemonic)
-      await actions.ghost.login(false, mnemonic)
-      await actions.next.login(false, mnemonic)
-
-      await actions.user.sign_btc_2fa(btcPrivKey)
-      await actions.user.sign_btc_multisig(btcPrivKey)
+      // Temporarily
+      if (config.binance) {
+        await actions.bnb.login(false, mnemonic)
+        actions.core.markCoinAsVisible('BNB', true)
+      } else {
+        await actions.eth.login(false, mnemonic)
+        actions.core.markCoinAsVisible('ETH', true)
+      }
 
       actions.core.markCoinAsVisible('BTC', true)
-      actions.core.markCoinAsVisible('ETH', true)
+
+      await actions.ghost.login(false, mnemonic)
+      await actions.next.login(false, mnemonic)
+      await actions.user.sign_btc_2fa(btcPrivKey)
+      await actions.user.sign_btc_multisig(btcPrivKey)
 
       this.setState({
         isFetching: false,

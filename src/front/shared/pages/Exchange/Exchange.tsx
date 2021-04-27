@@ -838,7 +838,7 @@ class Exchange extends PureComponent<any, any> {
         name: haveCurrency,
         amount: new BigNumber(haveAmount).dp(0, BigNumber.ROUND_UP),
       })
-      .then((response) => {
+      .then((txHash) => {
         this.updateTokenAllowance()
 
         actions.notifications.show(
@@ -848,7 +848,7 @@ class Exchange extends PureComponent<any, any> {
               id="ExchangeTokenWasApproved"
               defaultMessage="Token was approved.{br}Explorer link: {txLink}"
               values={{
-                txLink: <a href={`${config.link.etherscan}/tx/${response.transactionHash}`} target="_blank">Transaction</a>,
+                txLink: <a href={`${config.link.etherscan}/tx/${txHash}`} target="_blank">Transaction</a>,
                 br: <br />,
               }}
             />

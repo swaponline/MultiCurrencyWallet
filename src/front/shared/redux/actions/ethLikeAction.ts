@@ -5,7 +5,7 @@ import reducers from 'redux/core/reducers'
 import DEFAULT_CURRENCY_PARAMETERS from 'common/helpers/constants/DEFAULT_CURRENCY_PARAMETERS'
 import * as mnemonicUtils from 'common/utils/mnemonic'
 import typeforce from 'swap.app/util/typeforce'
-import { web3, getWeb3 } from 'helpers/web3'
+import { web3 } from 'helpers/web3'
 import externalConfig from 'helpers/externalConfig'
 import metamask from 'helpers/metamask'
 import helpers, {
@@ -108,7 +108,7 @@ class EthLikeAction {
   fetchBalance = (address): Promise<number> => {
     return web3.eth.getBalance(address)
       .then(result => Number(web3.utils.fromWei(result)))
-      .catch(error => this.reportError(error))
+      .catch(error => console.error(error))
   }
 
   fetchTxInfo = (hash, cacheResponse) => {
@@ -189,11 +189,14 @@ class EthLikeAction {
     if (privateKey) {
       data = web3.eth.accounts.privateKeyToAccount(privateKey)
     } else {
+      console.info(`Created account ${this.ticker} ...`)
       if (!mnemonic) {
         mnemonic = mnemonicUtils.getRandomMnemonicWords()
       }
 
       const accData = this.getWalletByWords(mnemonic)
+      console.log(`${this.ticker}. Generated wallet from random 12 words`)
+      console.log(accData)
       privateKey = accData.privateKey
       data = web3.eth.accounts.privateKeyToAccount(privateKey)
       localStorage.setItem(constants.privateKeyNames[`${this.tickerKey}Mnemonic`], privateKey)
@@ -205,6 +208,7 @@ class EthLikeAction {
     data.isMnemonic = sweepToMnemonicReady
 
     reducers.user.setAuthData({ name: `${this.tickerKey}Data`, data })
+    window.getEthAddress = () => data.address
     // ? is referral need ?
     referral.newReferral(data.address)
   
@@ -228,6 +232,7 @@ class EthLikeAction {
       web3.eth.accounts.wallet.add(mnemonicKeys[this.tickerKey])
       mnemonicData.isMnemonic = sweepToMnemonicReady
 
+      console.info(`Logged in with ${this.ticker}`, data)
       reducers.user.addWallet({
         name: `${this.tickerKey}MnemonicData`,
         data: {
@@ -409,7 +414,6 @@ class EthLikeAction {
 
   send = async (params): Promise<object> => {
     let { to, amount, gasPrice, gasLimit, speed } = params
-    const web3js = await getWeb3()
     const recipientIsContract = await this.isContract(to)
 
     gasPrice = 0 || await helpers[this.tickerKey].estimateGasPrice({ speed })
@@ -420,7 +424,7 @@ class EthLikeAction {
         : DEFAULT_CURRENCY_PARAMETERS.eth.limit.send
     )
       
-    let sendMethod = web3js.eth.sendTransaction
+    let sendMethod = web3.eth.sendTransaction
     let txObject = {
       from: this.ownerAddress,
       to: to.trim(),
@@ -435,9 +439,9 @@ class EthLikeAction {
     const privateKey = this.getPrivateKeyByAddress(this.ownerAddress)
 
     if (!walletData.isMetamask) {
-      const signedTx = await web3js.eth.accounts.signTransaction(txObject, privateKey)
+      const signedTx = await web3.eth.accounts.signTransaction(txObject, privateKey)
       txObject = signedTx.rawTransaction
-      sendMethod = web3js.eth.sendSignedTransaction
+      sendMethod = web3.eth.sendSignedTransaction
     }
 
     return new Promise((res, rej) => {
@@ -460,7 +464,6 @@ class EthLikeAction {
   }
 
   sendAdminFee = async (params) => {
-    const web3js = await getWeb3()
     const { amount, gasPrice, gasLimit, privateKey } = params
 
     const minAmount = new BigNumber(this.adminFeeObj.min)
@@ -477,13 +480,13 @@ class EthLikeAction {
       to: this.adminFeeObj.address.trim(),
       gasPrice,
       gas: gasLimit,
-      value: web3js.utils.toWei(String(feeFromUsersAmount)),
+      value: web3.utils.toWei(String(feeFromUsersAmount)),
     }
 
     return new Promise(async (res) => {
-      const signedTxObj = await web3js.eth.accounts.signTransaction(adminFeeParams, privateKey)
+      const signedTxObj = await web3.eth.accounts.signTransaction(adminFeeParams, privateKey)
     
-      web3js.eth.sendSignedTransaction(signedTxObj.rawTransaction)
+      web3.eth.sendSignedTransaction(signedTxObj.rawTransaction)
         .on('transactionHash', (hash) => {
           console.group('%c Admin commission is sended', 'color: green;')
           console.log('tx hash', hash)
@@ -510,7 +513,7 @@ class EthLikeAction {
     })
   }
 
-  sweepToMnemonic = (mnemonic, path) => {
+  sweepToMnemonic = (mnemonic, path?) => {
     // ? what's that, how does it work ? Wrong arguments order. Check this.getWalletByWords method
     const wallet = this.getWalletByWords(mnemonic, path)
 

@@ -23,8 +23,7 @@ const Decoder = new InputDataDecoder(TokenAbi)
 class Erc20LikeAction {
   private currency: string
   private currencyKey: string
-  private type: string // upper case (ex. ERC20)
-  private typeKey: string // lower case (ex. erc20)
+  private type: string // (ex. ERC20)
   private explorerName: string
   private explorerLink: string
   private explorerApiKey: string
@@ -38,7 +37,6 @@ class Erc20LikeAction {
     const {
       currency,
       type,
-      typeKey,
       explorerName,
       explorerLink,
       explorerApiKey,
@@ -48,7 +46,6 @@ class Erc20LikeAction {
     this.currency = currency
     this.currencyKey = currency.toLowerCase()
     this.type = type
-    this.typeKey = type.toLowerCase()
     this.explorerName = explorerName
     this.explorerLink = explorerLink
     this.explorerApiKey = explorerApiKey
@@ -198,7 +195,7 @@ class Erc20LikeAction {
   
     return new BigNumber(String(result))
       .dividedBy(new BigNumber(String(10)).pow(decimals))
-      .toString() // ? return number ?
+      .toNumber()
   }
 
   fetchTokenTxInfo = (ticker, hash, cacheResponse) => {
@@ -467,7 +464,7 @@ class Erc20LikeAction {
           rej(error)
         })
   
-      res(receipt)
+      res(receipt.transactionHash)
     })
   }
 
@@ -527,13 +524,29 @@ class Erc20LikeAction {
   }
 }
 
+// Temporarily
+const TokenInstance = externalConfig.binance
+  ? (
+    new Erc20LikeAction({
+      currency: 'BNB',
+      type: 'BEP20',
+      explorerName: 'bscscan',
+      explorerLink: externalConfig.link.bscscan,
+      explorerApiKey: externalConfig.api.bscscan_ApiKey,
+      adminFeeObj: externalConfig.opts?.fee?.erc20,
+    })
+  ) : (
+    new Erc20LikeAction({
+      currency: 'ETH',
+      type: 'ERC20',
+      explorerName: 'etherscan',
+      explorerLink: externalConfig.link.etherscan,
+      explorerApiKey: externalConfig.api.etherscan_ApiKey,
+      adminFeeObj: externalConfig.opts?.fee?.erc20,
+    })
+  )
+
 export default {
-  token: new Erc20LikeAction({
-    currency: 'ETH',
-    type: 'ERC20',
-    explorerName: 'etherscan',
-    explorerLink: externalConfig.link.etherscan,
-    explorerApiKey: externalConfig.api.etherscan_ApiKey,
-    adminFeeObj: externalConfig.opts?.fee?.erc20,
-  }),
+  // TODO: integrate with BNB and replace with keys: bep20, erc20
+  token: TokenInstance,
 }

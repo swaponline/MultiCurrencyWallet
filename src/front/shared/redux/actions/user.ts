@@ -101,10 +101,8 @@ const sign = async () => {
     if (mnemonic !== `-`) {
       //@ts-ignore
       if (!mnemonicKeys.btc) mnemonicKeys.btc = actions.btc.sweepToMnemonic(mnemonic)
-      //@ts-ignore
       if (!mnemonicKeys.eth) mnemonicKeys.eth = actions.eth.sweepToMnemonic(mnemonic)
-      //@ts-ignore
-      if (!mnemonicKeys.bnb) mnemonicKeys.eth = actions.bnb.sweepToMnemonic(mnemonic)
+      if (!mnemonicKeys.bnb) mnemonicKeys.bnb = actions.bnb.sweepToMnemonic(mnemonic)
       //@ts-ignore
       if (!mnemonicKeys.ghost) mnemonicKeys.ghost = actions.ghost.sweepToMnemonic(mnemonic)
         //@ts-ignore
