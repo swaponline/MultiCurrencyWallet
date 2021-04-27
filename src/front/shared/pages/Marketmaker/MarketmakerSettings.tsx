@@ -195,7 +195,7 @@ class MarketmakerSettings extends Component<any, any> {
 
   componentDidMount() {
     SwapApp.onInit(() => {
-      this.cleanupMarketMakerOrder()
+      const isMarketEnabled = (SwapApp.shared().services.orders.getMyOrders().length > 0)
 
       const swapsIds = []
       const swapsByIds = {}
@@ -221,6 +221,7 @@ class MarketmakerSettings extends Component<any, any> {
       this.setState({
         swapsIds,
         swapsByIds,
+        isMarketEnabled,
       })
     })
   }
