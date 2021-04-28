@@ -31,6 +31,6 @@ jobs:
         refresh-token:  ${{ secrets.CHROMEUPDATETOKEN }}
         client-id:  ${{ secrets.CLIENTID }}
         client-secret:  ${{ secrets.CLIENTSECRET }}
-        file-name: './build-chrome-extension/chrome-extension-mainnet.zip'
+        file-name: '/home/runner/work/MultiCurrencyWallet/MultiCurrencyWallet/build-chrome-extension/chrome-extension-mainnet.zip'
         app-id: 'oldojieloelkkfeacfinhcngmbkepnlm'
         publish: true
