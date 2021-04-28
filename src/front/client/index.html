@@ -21,8 +21,8 @@
     />
     <link
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/css/swiper.min.css"
-      integrity="sha256-DBYdrj7BxKM3slMeqBVWX2otx7x4eqoHRJCsSDJ0Nxw="
+      href="https://use.fontawesome.com/releases/v5.1.0/css/all.css"
+      integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt"
       crossorigin="anonymous"
     />
 
@@ -31,16 +31,6 @@
     <!-- ERC20 Tokens hot plug for widget-build (Dont remove this) -->
     <script src="erc20tokens.js"></script>
     <%= htmlWebpackPlugin.options.firebugScript %>
-    <script>
-      var isWidgetBuild = '<%= htmlWebpackPlugin.options.isWidget %>';
-    </script>
-    <script>
-      try {
-        JSON.parse("<!-- BACK_SO -->");
-      } catch (e) {
-        console.log("warning: caching backend is down")
-      }
-    </script>
 
     <style>
       :root {
@@ -392,12 +382,6 @@
       .starter-modal:not(.d-none) ~ #root {
         display: none;
       }
-
-      @media (max-width: 767px) {
-        #swiper_banners {
-          margin: 0 25px;
-        }
-      }
     </style>
   </head>
 
@@ -598,297 +582,295 @@
         </div>
         <div id="usersInform" class="usersInform"></div>
       </div>
-      <script>
-        let localStorageIsOk = true;
-        try {
-          const testLocalStorage = window.localStorage;
-        } catch (e) {
-          localStorageIsOk = false;
-          document.getElementById('onFailLocalStorageLink').href = window.location.href;
-          document.getElementById('onFailLocalStorageMessage').classList.remove('d-none');
-
-          const sendErrorFeedback = function () {
-            let msg = 'localStorage error: agent(' + navigator.userAgent + ')';
-            msg += ', location(' + window.location.href + ')';
-
-            let url = 'https://noxon.wpmix.net/counter.php?msg=' + encodeURI(msg);
-
-            window.jQuery.ajax({
-              type: 'POST',
-              url: url,
-            });
-          };
-
-          if (!window.jQuery) {
-            // inject jQuery for send request to counter for feedback
-            let jsScriptTag = document.createElement('SCRIPT');
-            jsScriptTag.src = 'https://code.jquery.com/jquery-3.5.1.min.js';
-            console.log('jsScriptTag', jsScriptTag);
-            document.getElementsByTagName('BODY')[0].appendChild(jsScriptTag);
-            let waitJQLoad = function (onLoaded) {
-              if (window.jQuery) {
-                onLoaded();
-              } else {
-                window.setTimeout(function () {
-                  waitJQLoad(onLoaded);
-                }, 100);
-              }
-            };
-            waitJQLoad(sendErrorFeedback);
-          } else {
-            sendErrorFeedback();
-          }
-        }
-
-        function setCookie(name, value, options = {}) {
-          let expires = options.expires;
-
-          if (typeof expires == 'number' && expires) {
-            let date = new Date();
-            date.setTime(date.getTime() + expires * 1000);
-            expires = options.expires = date;
-          }
-          if (expires && expires.toUTCString) {
-            options.expires = expires.toUTCString();
-          }
-
-          value = encodeURIComponent(value);
-          let updatedCookie = name + '=' + value;
-
-          for (let propName in options) {
-            updatedCookie += '; ' + propName;
-            const propValue = options[propName];
-
-            if (propValue !== true) {
-              updatedCookie += '=' + propValue;
-            }
-          }
-          document.cookie = updatedCookie;
-        }
-
-        function getCookie(cookieName) {
-          const name = cookieName + '=';
-          const parametersArr = document.cookie.split(';');
-
-          for (let i = 0; i < parametersArr.length; i++) {
-            let parameter = parametersArr[i];
-            while (parameter.charAt(0) == ' ') {
-              parameter = parameter.substring(1);
-            }
-            if (parameter.indexOf(name) == 0) {
-              return parameter.substring(name.length, parameter.length);
-            }
-          }
-          return '';
-        }
-
-        const wrapper = document.getElementById('wrapper_element');
-
-        if (window.localStorage.getItem('isDark')) {
-          wrapper.classList.add('darkTheme');
-        } else {
-          wrapper.classList.remove('darkTheme');
-        }
-
-        // detect browser's lang
-        const getNavigatorLanguage = () => {
-          if (navigator.languages && navigator.languages.length) {
-            return navigator.languages[0];
-          } else {
-            return (
-              navigator.userLanguage ||
-              navigator.language ||
-              navigator.browserLanguage ||
-              'en'
-            );
-          }
-        };
-
-        let lang = getCookie('mylang');
-
-        if (!lang) {
-          const browserLang = getNavigatorLanguage();
-          lang = browserLang.includes('ru') ? 'ru' : 'en'
-          setCookie('mylang', lang);
-        }
-
-        const locale = lang.toLowerCase();
-        const locationName = lang.toUpperCase();
-
-        (function () {
-          // set tip
-          const tips = {
-            beforeBackup: [
-              {
-                en: 'Loading...',
-                ru: 'Загрузка...',
-              },
-            ],
-            afterBackup: [
-              {
-                en: 'Keep your recovery phrase in&nbsp;a&nbsp;safe place',
-                ru: 'Держите вашу фразу восстановления в&nbsp;безопасном месте',
-              },
-              {
-                en: "Don't forget where your recovery phrase is&nbsp;saved",
-                ru: 'Не забудьте, где&nbsp;хранится ваша фраза восстановления',
-              },
-            ],
-          };
-          // Determine if the passphrase is saved
-          if (locale === 'en' || locale === 'ru') {
-            const mnemonic = window.localStorage.getItem('testnet:twentywords') || window.localStorage.getItem('mainnet:twentywords');
-            const isBackup = mnemonic === `-`;
-            const relevantTips = tips[!isBackup ? 'beforeBackup' : 'afterBackup'];
-            const currentTip = relevantTips[Math.floor(Math.random() * relevantTips.length)][locale];
-            const tipNode = document.getElementById('beforeJSTip');
-            tipNode.innerHTML = currentTip;
-          } else {
-            console.error('Unknown locale', locale);
-          }
-        })();
-
-        const information = document.getElementById('usersInform');
-
-        if ((locationName === 'ru' || (locale === 'ru' && locationName !== 'en')) && localStorage.length === 0) {
-          information.innerText = 'Генерация приватных ключей для вашего мультивалютного кошелька прямо сейчас, \n это может занять одну минуту'
-        }
-
-        if (localStorage.length === 0) {
-          information.innerText =
-            locationName !== 'ru' || locale !== 'ru'
-              ? 'Please wait while the application is loading,\n it may take one minute...'
-              : 'Пожалуйста подождите пока приложение запускается,\n это не займет больше минуты...';
-        }
-      </script>
-      <script>
-        window.prerenderReady = false;
-        window.isUserRegisteredAndLoggedIn = false;
-        window.DEFAULT_FIAT = 'USD';
-        window.DefaultCountryCode = '+1';
-        window.widgetName = 'own widget name';
-
-        window.buyViaCreditCardLink = 'https://buy.itez.com/swaponline';
-      </script>
-      <!-- /Loader before any JS -->
-
-      <!-- This library using in React componet (WallerSlider) -->
-      <script defer src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/js/swiper.min.js"
-      integrity="sha256-4sETKhh3aSyi6NRiA+qunPaTawqSMDQca/xLWu27Hg4=" crossorigin="anonymous"></script>
-
-      <!-- Start Modal Scripts -->
-      <script>
-        /**
-         * For setCookie() function
-         */
-        const SEC_IN_HOUR = 60 * 60
-        const SEC_IN_DAY = SEC_IN_HOUR * 24
-        const SEC_IN_MONTH = SEC_IN_DAY * daysInThisMonth()
-        const SEC_IN_YEAR = SEC_IN_MONTH * 12
-
-        function daysInThisMonth() {
-          const date = new Date()
-          return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate()
-        }
-
-        function swapIsHome() {
-          const swapLocationHash = window.location.hash;
-          if (swapLocationHash == '' || swapLocationHash == '#/') {
-            return true;
-          }
-          return false;
-        }
-       
-        function swapIsWalletCreate() {
-          const swapLocalStorageWallet = localStorage.getItem('isWalletCreate');
-          return swapLocalStorageWallet !== null
-        }
-
-        // Swap Modal
-        const startedSplashScreenIsDisabled = getCookie('startedSplashScreenIsDisabled');
-
-        // Open modal if cookie false
-        if (
-          startedSplashScreenIsDisabled != 'true' &&
-          swapIsHome() &&
-          !isWidgetBuild &&
-          !swapIsWalletCreate() &&
-          localStorageIsOk
-        ) {
-          document.getElementById('starter-modal').classList.remove('d-none');
-        }
-      </script>
-
-      <script>
-        const btnCreateWallet = document.getElementById('preloaderCreateBtn');
-        const btnConnectWallet = document.getElementById('preloaderConnectBtn');
-        const btnSkip = document.getElementById('preloaderSkipBtn');
-        const btnRestoryWallet = document.getElementById('preloaderRestoreBtn');
-
-        btnCreateWallet.addEventListener('click', function () {
-          redirectionTo('#/createWallet')
-        });
-
-        btnConnectWallet.addEventListener('click', function () {
-          redirectionTo('#/connectWallet')
-        });
-
-        btnRestoryWallet.addEventListener('click', function () {
-          redirectionTo('#/restoreWallet')
-        })
-
-        btnSkip.addEventListener('click', function () {
-          redirectionTo('#/exchange')
-        });
-
-        function redirectionTo(urlPath) {
-          document.location.href = urlPath;
-          document.getElementById('starter-modal').classList.add('d-none');
-
-          setCookie('swapDisalbeStarter', 'true', {
-            expires: SEC_IN_YEAR * 5,
-          });
-        }
-
-        window.logoUrl = '#';
-        window.darkLogoUrl = '';
-        window.loaderLogoUrl = '';
-
-        if (window.localStorage.getItem('isDark')) {
-          window.logoUrl = window.darkLogoUrl || window.logoUrl;
-        }
-
-        if (
-          window.location.hostname === "localhost" ||
-          window.location.hostname === "swaponline.github.io" ||
-          window.location.hostname === "swaponline.io"
-        ) {
-          // used by Loader component
-          window.loaderLogoUrl = "https://wiki.swaponline.io/assets/swaponline_io.svg";
-          document.getElementById("loaderImg").src = window.loaderLogoUrl;
-        } else {
-          if (window.logoUrl != '#') {
-            document.getElementById("loaderImg").src = window.localStorage.getItem("isDark") ? window.darkLogoUrl : window.logoUrl;
-          } else {
-            document.getElementById("loaderImg").style.display = 'none'
-          }
-        }
-      </script>
-      <!-- End Modal Scripts -->
     </div>
-    <link
-      rel="stylesheet"
-      href="https://use.fontawesome.com/releases/v5.1.0/css/all.css"
-      integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt"
-      crossorigin="anonymous"
-    />
-    <script type="text/javascript" src="https://unpkg.com/react@16.10.2/umd/react.production.min.js"></script>
-    <script type="text/javascript" src="https://unpkg.com/react-dom@16.10.2/umd/react-dom.production.min.js"></script>
-    
+
     <div id="portal"></div>
 
-    <!-- Google Analytics -->
+    <script type="text/javascript" src="/lib/react/react.production.min.js"></script>
+    <script type="text/javascript" src="/lib/react/react-dom.production.min.js"></script>
+
     <script>
+      try {
+        JSON.parse("<!-- BACK_SO -->");
+      } catch (e) {
+        console.log("warning: caching backend is down")
+      }
+
+      let localStorageIsOk = true;
+      try {
+        const testLocalStorage = window.localStorage;
+      } catch (e) {
+        localStorageIsOk = false;
+        document.getElementById('onFailLocalStorageLink').href = window.location.href;
+        document.getElementById('onFailLocalStorageMessage').classList.remove('d-none');
+
+        const sendErrorFeedback = function () {
+          let msg = 'localStorage error: agent(' + navigator.userAgent + ')';
+          msg += ', location(' + window.location.href + ')';
+
+          let url = 'https://noxon.wpmix.net/counter.php?msg=' + encodeURI(msg);
+
+          window.jQuery.ajax({
+            type: 'POST',
+            url: url,
+          });
+        };
+
+        if (!window.jQuery) {
+          // inject jQuery for send request to counter for feedback
+          let jsScriptTag = document.createElement('SCRIPT');
+          jsScriptTag.src = 'https://code.jquery.com/jquery-3.5.1.min.js';
+          console.log('jsScriptTag', jsScriptTag);
+          document.getElementsByTagName('BODY')[0].appendChild(jsScriptTag);
+          let waitJQLoad = function (onLoaded) {
+            if (window.jQuery) {
+              onLoaded();
+            } else {
+              window.setTimeout(function () {
+                waitJQLoad(onLoaded);
+              }, 100);
+            }
+          };
+          waitJQLoad(sendErrorFeedback);
+        } else {
+          sendErrorFeedback();
+        }
+      }
+
+      function setCookie(name, value, options = {}) {
+        let expires = options.expires;
+
+        if (typeof expires == 'number' && expires) {
+          let date = new Date();
+          date.setTime(date.getTime() + expires * 1000);
+          expires = options.expires = date;
+        }
+        if (expires && expires.toUTCString) {
+          options.expires = expires.toUTCString();
+        }
+
+        value = encodeURIComponent(value);
+        let updatedCookie = name + '=' + value;
+
+        for (let propName in options) {
+          updatedCookie += '; ' + propName;
+          const propValue = options[propName];
+
+          if (propValue !== true) {
+            updatedCookie += '=' + propValue;
+          }
+        }
+        document.cookie = updatedCookie;
+      }
+
+      function getCookie(cookieName) {
+        const name = cookieName + '=';
+        const parametersArr = document.cookie.split(';');
+
+        for (let i = 0; i < parametersArr.length; i++) {
+          let parameter = parametersArr[i];
+          while (parameter.charAt(0) == ' ') {
+            parameter = parameter.substring(1);
+          }
+          if (parameter.indexOf(name) == 0) {
+            return parameter.substring(name.length, parameter.length);
+          }
+        }
+        return '';
+      }
+
+      const wrapper = document.getElementById('wrapper_element');
+
+      if (window.localStorage.getItem('isDark')) {
+        wrapper.classList.add('darkTheme');
+      } else {
+        wrapper.classList.remove('darkTheme');
+      }
+
+      // detect browser's lang
+      const getNavigatorLanguage = () => {
+        if (navigator.languages && navigator.languages.length) {
+          return navigator.languages[0];
+        } else {
+          return (
+            navigator.userLanguage ||
+            navigator.language ||
+            navigator.browserLanguage ||
+            'en'
+          );
+        }
+      };
+
+      let lang = getCookie('mylang');
+
+      if (!lang) {
+        const browserLang = getNavigatorLanguage();
+        lang = browserLang.includes('ru') ? 'ru' : 'en'
+        setCookie('mylang', lang);
+      }
+
+      const locale = lang.toLowerCase();
+      const locationName = lang.toUpperCase();
+
+      (function () {
+        // set tip
+        const tips = {
+          beforeBackup: [
+            {
+              en: 'Loading...',
+              ru: 'Загрузка...',
+            },
+          ],
+          afterBackup: [
+            {
+              en: 'Keep your recovery phrase in&nbsp;a&nbsp;safe place',
+              ru: 'Держите вашу фразу восстановления в&nbsp;безопасном месте',
+            },
+            {
+              en: "Don't forget where your recovery phrase is&nbsp;saved",
+              ru: 'Не забудьте, где&nbsp;хранится ваша фраза восстановления',
+            },
+          ],
+        };
+        // Determine if the passphrase is saved
+        if (locale === 'en' || locale === 'ru') {
+          const mnemonic = window.localStorage.getItem('testnet:twentywords') || window.localStorage.getItem('mainnet:twentywords');
+          const isBackup = mnemonic === `-`;
+          const relevantTips = tips[!isBackup ? 'beforeBackup' : 'afterBackup'];
+          const currentTip = relevantTips[Math.floor(Math.random() * relevantTips.length)][locale];
+          const tipNode = document.getElementById('beforeJSTip');
+          tipNode.innerHTML = currentTip;
+        } else {
+          console.error('Unknown locale', locale);
+        }
+      })();
+
+      const information = document.getElementById('usersInform');
+
+      if ((locationName === 'ru' || (locale === 'ru' && locationName !== 'en')) && localStorage.length === 0) {
+        information.innerText = 'Генерация приватных ключей для вашего мультивалютного кошелька прямо сейчас, \n это может занять одну минуту'
+      }
+
+      if (localStorage.length === 0) {
+        information.innerText =
+          locationName !== 'ru' || locale !== 'ru'
+            ? 'Please wait while the application is loading,\n it may take one minute...'
+            : 'Пожалуйста подождите пока приложение запускается,\n это не займет больше минуты...';
+      }
+
+
+      window.prerenderReady = false;
+      window.isUserRegisteredAndLoggedIn = false;
+      window.DEFAULT_FIAT = 'USD';
+      window.DefaultCountryCode = '+1';
+      window.widgetName = 'own widget name';
+
+      window.buyViaCreditCardLink = 'https://buy.itez.com/swaponline';
+
+      /* /Loader before any JS */
+
+      /* Start Modal Scripts */
+
+      /**
+       * For setCookie() function
+       */
+      const SEC_IN_HOUR = 60 * 60
+      const SEC_IN_DAY = SEC_IN_HOUR * 24
+      const SEC_IN_MONTH = SEC_IN_DAY * daysInThisMonth()
+      const SEC_IN_YEAR = SEC_IN_MONTH * 12
+
+      function daysInThisMonth() {
+        const date = new Date()
+        return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate()
+      }
+
+      function swapIsHome() {
+        const swapLocationHash = window.location.hash;
+        if (swapLocationHash == '' || swapLocationHash == '#/') {
+          return true;
+        }
+        return false;
+      }
+     
+      function swapIsWalletCreate() {
+        const swapLocalStorageWallet = localStorage.getItem('isWalletCreate');
+        return swapLocalStorageWallet !== null
+      }
+
+      // Swap Modal
+      const startedSplashScreenIsDisabled = getCookie('startedSplashScreenIsDisabled');
+
+      const isWidgetBuild = '<%= htmlWebpackPlugin.options.isWidget %>';
+
+      // Open modal if cookie false
+      if (
+        startedSplashScreenIsDisabled != 'true' &&
+        swapIsHome() &&
+        !isWidgetBuild &&
+        !swapIsWalletCreate() &&
+        localStorageIsOk
+      ) {
+        document.getElementById('starter-modal').classList.remove('d-none');
+      }
+
+
+      const btnCreateWallet = document.getElementById('preloaderCreateBtn');
+      const btnConnectWallet = document.getElementById('preloaderConnectBtn');
+      const btnSkip = document.getElementById('preloaderSkipBtn');
+      const btnRestoryWallet = document.getElementById('preloaderRestoreBtn');
+
+      btnCreateWallet.addEventListener('click', function () {
+        redirectionTo('#/createWallet')
+      });
+
+      btnConnectWallet.addEventListener('click', function () {
+        redirectionTo('#/connectWallet')
+      });
+
+      btnRestoryWallet.addEventListener('click', function () {
+        redirectionTo('#/restoreWallet')
+      })
+
+      btnSkip.addEventListener('click', function () {
+        redirectionTo('#/exchange')
+      });
+
+      function redirectionTo(urlPath) {
+        document.location.href = urlPath;
+        document.getElementById('starter-modal').classList.add('d-none');
+
+        setCookie('swapDisalbeStarter', 'true', {
+          expires: SEC_IN_YEAR * 5,
+        });
+      }
+
+      window.logoUrl = '#';
+      window.darkLogoUrl = '';
+      window.loaderLogoUrl = '';
+
+      if (window.localStorage.getItem('isDark')) {
+        window.logoUrl = window.darkLogoUrl || window.logoUrl;
+      }
+
+      if (
+        window.location.hostname === "localhost" ||
+        window.location.hostname === "swaponline.github.io" ||
+        window.location.hostname === "swaponline.io"
+      ) {
+        // used by Loader component
+        window.loaderLogoUrl = "https://wiki.swaponline.io/assets/swaponline_io.svg";
+        document.getElementById("loaderImg").src = window.loaderLogoUrl;
+      } else {
+        if (window.logoUrl != '#') {
+          document.getElementById("loaderImg").src = window.localStorage.getItem("isDark") ? window.darkLogoUrl : window.logoUrl;
+        } else {
+          document.getElementById("loaderImg").style.display = 'none'
+        }
+      }
+      /* End Modal Scripts */
+
+
+      /* Google Analytics */
       const isMainDomain = window.location.hostname === 'swaponline.io';
       const isExtension =
         window.location.hostname === 'jbhhiineefefhcaoocmnkbmgfjbhninc';
@@ -920,7 +902,7 @@
         gtag('js', new Date());
         gtag('config', gtagId);
       }
+      /* End Google Analytics */
     </script>
-    <!-- /Google Analytics -->
   </body>
 </html>
