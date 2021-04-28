@@ -192,8 +192,8 @@ class Erc20LikeAction {
   }
 
   fetchBalance = async (address, contractAddress, decimals) => {
-    const ERC20 = new web3.eth.Contract(TokenAbi, contractAddress)
-    const result = await ERC20.methods.balanceOf(address).call()
+    const contract = new web3.eth.Contract(TokenAbi, contractAddress)
+    const result = await contract.methods.balanceOf(address).call()
   
     return new BigNumber(String(result))
       .dividedBy(new BigNumber(String(10)).pow(decimals))
