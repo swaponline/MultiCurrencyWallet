@@ -181,10 +181,18 @@ const sign = async () => {
 }
 
 const sign_to_tokens = () => {
-  const ethPrivateKey = localStorage.getItem(constants.privateKeyNames.eth)
+  const privateKey = localStorage.getItem(constants.privateKeyNames[
+    config.binance ? 'bnb' : 'eth'
+  ])
   Object.keys(config.erc20)
     .forEach(name => {
-      actions.token.login(ethPrivateKey, config.erc20[name].address, name, config.erc20[name].decimals, config.erc20[name].fullName)
+      actions.token.login(
+        privateKey,
+        config.erc20[name].address,
+        name,
+        config.erc20[name].decimals,
+        config.erc20[name].fullName
+      )
     })
 }
 

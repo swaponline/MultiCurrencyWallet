@@ -26,7 +26,13 @@ const _onWeb3Changed = (newWeb3) => {
 
 web3connect.on('connected', async () => {
   localStorage.setItem(constants.localStorage.isWalletCreate, 'true')
-  actions.core.markCoinAsVisible(`ETH`)
+
+  if (config.binance) {
+    actions.core.markCoinAsVisible(`BNB`)
+  } else {
+    actions.core.markCoinAsVisible(`ETH`)
+  }
+
   _onWeb3Changed(web3connect.getWeb3())
 })
 
@@ -82,8 +88,9 @@ const getBalance = () => {
   const { user: { metamaskData } } = getState()
   if (metamaskData) {
     const { address } = metamaskData
+    const currency = config.binance ? 'bnb' : 'eth'
+    const balanceInCache = cacheStorageGet('currencyBalances', `${currency}_${address}`)
 
-    const balanceInCache = cacheStorageGet('currencyBalances', `eth_${address}`)
     if (balanceInCache !== false) {
       reducers.user.setBalance({
         name: 'metamaskData',
@@ -96,13 +103,13 @@ const getBalance = () => {
       .then(result => {
         const amount = web3connect.getWeb3().utils.fromWei(result)
 
-        cacheStorageSet('currencyBalances', `eth_${address}`, amount, 30)
+        cacheStorageSet('currencyBalances', `${currency}_${address}`, amount, 30)
         reducers.user.setBalance({ name: 'metamaskData', amount })
         return amount
       })
-      .catch((e) => {
-        console.log('fail get balance')
-        console.log('error', e)
+      .catch((error) => {
+        console.error('fail get balance')
+        console.error('error', error)
         reducers.user.setBalanceError({ name: 'metamaskData' })
       })
   }
@@ -112,7 +119,6 @@ const disconnect = () => new Promise(async (resolved, reject) => {
   if (isConnected()) {
     await web3connect.Disconnect()
     resolved(true)
-    // window.location.reload()
   } else {
     resolved(true)
   }
@@ -136,7 +142,7 @@ const _initReduxState = () => {
   let currencyName = 'ETH'
   let fullWalletName = `Ethereum (${web3connect.getProviderTitle()})`
   let fullDisconnectedWalletName = `Ethereum (external wallet)`
-  let currencyInfo = user[`${config.binance ? 'bnb' : 'eth'}Data`].infoAboutCurrency
+  const currencyInfo = user[`${config.binance ? 'bnb' : 'eth'}Data`].infoAboutCurrency
 
   if (config.binance) {
     currencyName = 'BNB'

@@ -11,6 +11,8 @@ export default (currency, returnToken) => {
       return 'btc'
     case 'eth':
       return 'eth'
+    case 'bnb':
+      return 'bnb'
     case 'ghost':
       return 'ghost'
     case 'next':
