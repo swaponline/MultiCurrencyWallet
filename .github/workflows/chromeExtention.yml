@@ -32,7 +32,7 @@ jobs:
         name: zipped-chrome-extension-mainnet.zip
         path: ./zipped-chrome-extension-mainnet.zip
     - name: publish extention to crhome web store
-      uses: Passiverecords/chrome-extension-upload-action@1.4.1
+      uses: Klemensas/chrome-extension-upload-action@1.3
       with:
         refresh-token:  ${{ secrets.CHROMEUPDATETOKEN }}
         client-id:  ${{ secrets.CLIENTID }}
