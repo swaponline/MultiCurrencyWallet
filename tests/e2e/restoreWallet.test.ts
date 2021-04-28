@@ -5,7 +5,7 @@ const btcAddress = 'n1AqFLX43FFK5dyzXkxjt6AXKLZ1TCniWw'
 
 jest.setTimeout(50 * 1000)
 
-describe('Restpore wallet', () => {
+describe('Restore wallet', () => {
   it('from 12 words and check recovered BTC address', async () => {
     const { browser, page } = await setup()
     await importWallet(page, SEED)
