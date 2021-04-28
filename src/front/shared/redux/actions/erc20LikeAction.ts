@@ -107,15 +107,20 @@ class Erc20LikeAction {
   getBalance = async (tokenName) => {
     if (tokenName === undefined) return
   
-    const { user: { tokensData } } = getState()
     const {
-      address: internalAddress,
-      contractAddress,
-      decimals,
-      name,
-    } = tokensData[tokenName.toLowerCase()]
+      user: {
+        tokensData: {
+          [tokenName.toLowerCase()]: {
+            address: ownerAddress,
+            contractAddress,
+            decimals,
+            name,
+          }
+        }
+      }
+    } = getState()
   
-    const address = (metamask.isConnected()) ? metamask.getAddress() : false || internalAddress
+    const address = metamask.isConnected() ? metamask.getAddress() : ownerAddress
     const balanceInCache = cacheStorageGet('currencyBalances', `token_${tokenName}_${address}`)
   
     if (balanceInCache !== false) {
@@ -134,7 +139,7 @@ class Erc20LikeAction {
 
       return amount
     } catch (error) {
-      this.reportError(error)
+      console.error(error)
       reducers.user.setTokenBalanceError({ name })
     }
   }

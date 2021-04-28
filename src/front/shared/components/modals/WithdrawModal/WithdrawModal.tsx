@@ -372,11 +372,19 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
         // if decimals < 7 then equal 0.0...1
         // if decimals >= 7 then equal 1e-<decimals>
         MIN_AMOUNT[currentCoin] = 10 ** -currentDecimals
-        MIN_AMOUNT.eth = await helpers.eth.estimateFeeValue({
-          method: 'send',
-          speed: 'fast',
-        })
 
+        if (config.binance) {
+          MIN_AMOUNT.bnb = await helpers.bnb.estimateFeeValue({
+            method: 'send',
+            speed: 'fast',
+          })
+        } else {
+          MIN_AMOUNT.bnb = await helpers.eth.estimateFeeValue({
+            method: 'send',
+            speed: 'fast',
+          })
+        }
+        
         newMinerFee = new BigNumber(await helpers.ethToken.estimateFeeValue({
           method: 'send',
           speed: 'fast',

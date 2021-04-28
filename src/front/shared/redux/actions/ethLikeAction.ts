@@ -189,14 +189,12 @@ class EthLikeAction {
     if (privateKey) {
       data = web3.eth.accounts.privateKeyToAccount(privateKey)
     } else {
-      console.info(`Created account ${this.ticker} ...`)
       if (!mnemonic) {
         mnemonic = mnemonicUtils.getRandomMnemonicWords()
       }
 
       const accData = this.getWalletByWords(mnemonic)
-      console.log(`${this.ticker}. Generated wallet from random 12 words`)
-      console.log(accData)
+
       privateKey = accData.privateKey
       data = web3.eth.accounts.privateKeyToAccount(privateKey)
       localStorage.setItem(constants.privateKeyNames[`${this.tickerKey}Mnemonic`], privateKey)
@@ -208,7 +206,6 @@ class EthLikeAction {
     data.isMnemonic = sweepToMnemonicReady
 
     reducers.user.setAuthData({ name: `${this.tickerKey}Data`, data })
-    window.getEthAddress = () => data.address
     // ? is referral need ?
     referral.newReferral(data.address)
   
@@ -232,7 +229,6 @@ class EthLikeAction {
       web3.eth.accounts.wallet.add(mnemonicKeys[this.tickerKey])
       mnemonicData.isMnemonic = sweepToMnemonicReady
 
-      console.info(`Logged in with ${this.ticker}`, data)
       reducers.user.addWallet({
         name: `${this.tickerKey}MnemonicData`,
         data: {
@@ -263,7 +259,7 @@ class EthLikeAction {
     return data.privateKey
   }
 
-  getBalance = () => {
+  getBalance = (): Promise<number> => {
     const address = metamask.isEnabled() && metamask.isConnected()
       ? metamask.getAddress()
       : this.ownerAddress
@@ -287,8 +283,10 @@ class EthLikeAction {
         })
         return balance
       })
-      .catch(() => {
+      .catch((error) => {
+        console.error(error)
         reducers.user.setBalanceError({ name: `${this.tickerKey}Data` })
+        return 0
       })
   }
 

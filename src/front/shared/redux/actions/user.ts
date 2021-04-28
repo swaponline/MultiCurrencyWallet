@@ -230,8 +230,6 @@ const getBalances = () => {
       ...(metamask.isEnabled() && metamask.isConnected())
         ? [ { func: metamask.getBalance, name: 'metamask' } ]
         : [],
-      { func: actions.eth.getBalance, name: 'eth' },
-      { func: actions.bnb.getBalance, name: 'bnb' },
       { func: actions.btc.getBalance, name: 'btc' },
       { func: actions.ghost.getBalance, name: 'ghost' },
       { func: actions.next.getBalance, name: 'next' },
@@ -240,6 +238,18 @@ const getBalances = () => {
       { func: actions.btcmultisig.getBalancePin, name: 'btc-pin' },
       { func: actions.btcmultisig.fetchMultisigBalances, name: 'btc-ms' }
     ]
+
+    if (config.binance) {
+      balances.push({
+        func: actions.bnb.getBalance,
+        name: 'bnb',
+      })
+    } else {
+      balances.push({
+        func: actions.eth.getBalance,
+        name: 'eth',
+      })
+    }
 
     balances.forEach(async (obj) => {
       try {
@@ -252,13 +262,12 @@ const getBalances = () => {
     if (isTokenSigned) {
       // wait until all token data is loaded and will be in the store
       setTimeout(() => {
-        // local storage data
         Object.keys(config.erc20)
           .forEach(async (name) => {
             try {
               await actions.token.getBalance(name)
-            } catch (e) {
-              console.error('Fail fetch balance for token', name, e)
+            } catch (error) {
+              console.error(`Fail fetch balance for ${name} token`, error)
             }
           })
       })
