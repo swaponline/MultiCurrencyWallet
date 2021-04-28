@@ -3,12 +3,13 @@ import cssModules from 'react-css-modules'
 import { FormattedMessage } from 'react-intl'
 
 import styles from './MarketmakerPromo.scss'
-import { feedback, links } from 'helpers'
+import { feedback, links, constants } from 'helpers'
 import Button from 'components/controls/Button/Button'
 import Expandable from 'components/ui/Expandable/Expandable'
 import FAQ from './FAQ'
 import redirectTo from 'helpers/redirectTo'
 
+const isDark = !!localStorage.getItem(constants.localStorage.isDark)
 
 @cssModules(styles, { allowMultiple: true })
 export default class MarketmakerPromo extends React.Component<{}, {}> {
@@ -108,7 +109,9 @@ export default class MarketmakerPromo extends React.Component<{}, {}> {
           </div>
         </section>
 
-        <FAQ />
+        <FAQ
+          isDark={isDark}
+         />
 
       </div>
     )

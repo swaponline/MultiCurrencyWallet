@@ -8,15 +8,17 @@ import Expandable from 'components/ui/Expandable/Expandable'
 
 
 @cssModules(styles, { allowMultiple: true })
-export default class FAQ extends React.Component<{}, {}> {
+class FAQ extends React.Component<{isDark: boolean}, {}> {
   constructor(props) {
     super(props)
   }
 
   render() {
+    const { isDark } = this.props
+
     return (
-      <div styleName="mm-faq-page">
-        <section>
+      <div styleName='mm-faq-page'>
+        <section styleName={`${isDark ? 'dark' : '' }`}>
           <h2 styleName="section-title">FAQ</h2>
           <Expandable
             title="Почему это работает?"
@@ -62,3 +64,5 @@ export default class FAQ extends React.Component<{}, {}> {
   }
 
 }
+
+export default FAQ

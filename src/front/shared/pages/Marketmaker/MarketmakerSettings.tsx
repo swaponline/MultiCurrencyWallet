@@ -28,6 +28,7 @@ import { AddressType } from 'domain/address'
 import metamask from 'helpers/metamask'
 import { Button } from 'components/controls'
 
+const isDark = !!localStorage.getItem(constants.localStorage.isDark)
 
 
 @CSSModules(styles, { allowMultiple: true })
@@ -464,8 +465,8 @@ class MarketmakerSettings extends Component<any, any> {
       return swapsByIds[bId].createUnixTimeStamp - swapsByIds[aId].createUnixTimeStamp
     })
     return (
-      <div styleName="mm-settings-page">
-        <section styleName="mm-controls">
+      <div styleName='mm-settings-page'>
+        <section styleName={`mm-controls ${isDark ? 'dark' : '' }`}>
         {!mnemonicSaved && (
           <>
             <p>
@@ -529,7 +530,7 @@ class MarketmakerSettings extends Component<any, any> {
         </section>
 
         {/* Swaps history + Active swaps */}
-        <section>
+        <section styleName={`${isDark ? 'dark' : '' }`}>
           <h2 styleName="section-title">Swap history</h2>
           <table styleName="swapHistory">
             <thead>
@@ -571,7 +572,9 @@ class MarketmakerSettings extends Component<any, any> {
           </table>
         </section>
 
-        <FAQ />
+        <FAQ
+          isDark={isDark}
+        />
       </div>
     )
   }
