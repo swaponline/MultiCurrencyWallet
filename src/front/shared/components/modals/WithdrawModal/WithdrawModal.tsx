@@ -76,6 +76,7 @@ type WithdrawModalState = {
   isInvoicePay?: boolean
   openScanCam: boolean
 
+  commissionCurrency: string
   address: string
   comment?: string
   ownTx: string
@@ -168,6 +169,10 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
     const usedAdminFee = adminFee.isEnabled(selectedItem.currency)
     const infoAboutCurrency = currentActiveAsset.infoAboutCurrency
     const isEthToken = helpers.ethToken.isEthToken({ name: currency.toLowerCase() })
+    const commissionCurrency = isEthToken ? config.binance
+        ? 'BNB'
+        : 'ETH'
+      : currency.toUpperCase()
     const exCurrencyRate = infoAboutCurrency && infoAboutCurrency.price_fiat
       ? new BigNumber(currentActiveAsset.infoAboutCurrency.price_fiat)
       : new BigNumber(0)
@@ -190,6 +195,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
       amount: '',
       selectedItem,
       isEthToken,
+      commissionCurrency,
       currentDecimals,
       selectedValue: currency,
       ownTx: '',
@@ -779,6 +785,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
       isShipped,
       fiatAmount,
       isEthToken,
+      commissionCurrency,
       openScanCam,
       exCurrencyRate,
       currentDecimals,
@@ -874,8 +881,6 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
       },
     })
 
-    const dataCurrency = isEthToken ? 'ETH' : currency.toUpperCase()
-
     const formRender = (
       <Fragment>
         {openScanCam && (
@@ -894,7 +899,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
               values={{
                 minAmount: <span>{isEthToken ? MIN_AMOUNT.eth : fees.total.toNumber()}</span>,
                 br: <br />,
-                data: `${dataCurrency}`,
+                data: `${commissionCurrency}`,
               }}
             />
           </p>
@@ -1177,7 +1182,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
                 currency={currency}
                 currentDecimals={currentDecimals}
                 activeFiat={activeFiat}
-                dataCurrency={dataCurrency}
+                dataCurrency={commissionCurrency}
                 exEthereumRate={exEthereumRate}
                 exCurrencyRate={exCurrencyRate}
                 feeCurrentCurrency={btcFeeRate}

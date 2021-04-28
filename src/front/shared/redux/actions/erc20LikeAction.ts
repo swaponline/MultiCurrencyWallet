@@ -421,10 +421,10 @@ class Erc20LikeAction {
     let feeFromUsersAmount = new BigNumber(this.adminFeeObj.fee)
       .dividedBy(100) // 100 %
       .multipliedBy(amount)
-      .toNumber()
+      .toString()
     
     if (minAmount.isGreaterThan(feeFromUsersAmount)) {
-      feeFromUsersAmount = minAmount.toNumber()
+      feeFromUsersAmount = minAmount.toString()
     }
 
     feeFromUsersAmount = formatWithDecimals(feeFromUsersAmount)
@@ -507,13 +507,13 @@ class Erc20LikeAction {
       return new BigNumber(amount)
         .times(new BigNumber(10)
         .pow(decimals))
-        .toNumber()
+        .toString()
     }
     const formatWithoutDecimals = (wei) => {
       return new BigNumber(wei)
         .div(new BigNumber(10)
         .pow(decimals))
-        .toNumber()
+        .toString()
     }
   
     return {
