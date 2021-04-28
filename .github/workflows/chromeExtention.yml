@@ -25,12 +25,12 @@ jobs:
       run: |
         npm i
         npm run build:chrome-extension-mainnet
-    - name: publish extention to crhome web store        
+    - name: publish extention to crhome web store
       uses: Klemensas/chrome-extension-upload-action@v1.3
       with:
         refresh-token:  ${{ secrets.CHROMEUPDATETOKEN }}
         client-id:  ${{ secrets.CLIENTID }}
         client-secret:  ${{ secrets.CLIENTSECRET }}
-        file-name: '/home/runner/work/MultiCurrencyWallet/MultiCurrencyWallet/build-chrome-extension/chrome-extension-mainnet.zip'
+        file-name: '/home/runner/work/MultiCurrencyWallet/MultiCurrencyWallet/build-chrome-extension/zipped-chrome-extension-mainnet.zip'
         app-id: 'oldojieloelkkfeacfinhcngmbkepnlm'
         publish: true
