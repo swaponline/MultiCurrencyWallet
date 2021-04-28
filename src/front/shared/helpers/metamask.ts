@@ -133,7 +133,18 @@ const isCorrectNetwork = () => web3connect.isCorrectNetwork()
 const _initReduxState = () => {
   const { user } = getState()
 
-  const connectedEthWallet = {
+  let currencyName = 'ETH'
+  let fullWalletName = `Ethereum (${web3connect.getProviderTitle()})`
+  let fullDisconnectedWalletName = `Ethereum (external wallet)`
+  let currencyInfo = user[`${config.binance ? 'bnb' : 'eth'}Data`].infoAboutCurrency
+
+  if (config.binance) {
+    currencyName = 'BNB'
+    fullWalletName = `Binance (${web3connect.getProviderTitle()})`
+    fullDisconnectedWalletName = `Binance (external wallet)`
+  }
+
+  const connectedWallet = {
     name: 'metamaskData',
     data: {
       address: getAddress(),
@@ -141,54 +152,29 @@ const _initReduxState = () => {
       balanceError: false,
       isConnected: true,
       isMetamask: true,
-      currency: "ETH",
-      fullName: `Ethereum (${web3connect.getProviderTitle()})`,
-      infoAboutCurrency: user.ethData.infoAboutCurrency,
+      currency: currencyName,
+      fullName: fullWalletName,
+      infoAboutCurrency: currencyInfo,
       isBalanceFetched: true,
       isMnemonic: true,
       unconfirmedBalance: 0,
     },
   }
 
-  const disconnectedEthWallet = {
-    ...connectedEthWallet,
+  const disconnectedWallet = {
+    ...connectedWallet,
     data: {
-      ...connectedEthWallet.data,
+      ...connectedWallet.data,
       address: 'Not connected',
       isConnected: false,
-      fullName: `Ethereum (external wallet)`,
-    }
-  }
-
-  const connectedBscWallet = {
-    ...connectedEthWallet,
-    data: {
-      ...connectedEthWallet.data,
-      currency: "BNB",
-      fullName: `Binance (${web3connect.getProviderTitle()})`,
-      infoAboutCurrency: user.bnbData.infoAboutCurrency,
-    }
-  }
-
-  const disconnectedBnbWallet = {
-    ...disconnectedEthWallet,
-    data: {
-      ...disconnectedEthWallet.data,
-      currency: "BNB",
-      fullName: `Binance (external wallet)`,
+      fullName: fullDisconnectedWalletName,
     }
   }
 
   if (isConnected()) {
-    reducers.user.addWallet(config.binance
-      ? connectedBscWallet
-      : connectedEthWallet
-    )
+    reducers.user.addWallet(connectedWallet)
   } else {
-    reducers.user.addWallet(config.binance
-      ? disconnectedBnbWallet
-      : disconnectedEthWallet
-    )
+    reducers.user.addWallet(disconnectedWallet)
   }
 }
 
