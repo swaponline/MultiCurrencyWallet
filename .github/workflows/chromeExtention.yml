@@ -25,6 +25,7 @@ jobs:
       run: |
         npm i
         npm run build:chrome-extension-mainnet
+        cp ./build-chrome-extension/zipped-chrome-extension-mainnet.zip ./zipped-chrome-extension-mainnet.zip
     - name: publish extention to crhome web store
       uses: Passiverecords/chrome-extension-upload-action@1.4.1
       with:
