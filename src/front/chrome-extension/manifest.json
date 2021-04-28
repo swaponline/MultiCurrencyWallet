@@ -22,5 +22,5 @@
     "scripts": ["./background.js"],
     "persistent": true
   },
-  "content_security_policy": "script-src 'self' 'unsafe-eval' 'sha256-TR7MLOIXkVyhGy1opDnK9AYBn91yweeiK+ZugIb3/8o='; object-src 'self'"
+  "content_security_policy": "script-src 'self' 'unsafe-eval' https://unpkg.com/ 'sha256-TR7MLOIXkVyhGy1opDnK9AYBn91yweeiK+ZugIb3/8o='; object-src 'self'"
 }
