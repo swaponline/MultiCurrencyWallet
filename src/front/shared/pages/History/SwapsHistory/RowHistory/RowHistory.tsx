@@ -162,7 +162,6 @@ class RowHistory extends Component<any, any> {
               [styles.statusStopped]: isStoppedSwap && (isFinished || isRefunded) ? false : true,
             })}
           >
-            {isRefunded && <FormattedMessage id="RowHistory77" defaultMessage="Refunded" />}
             {isStoppedSwap
               && isFinished ? <FormattedMessage id="RowHistory94" defaultMessage="Finished" />
               : isRefunded ? <FormattedMessage id="RowHistory77" defaultMessage="Refunded" />
