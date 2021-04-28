@@ -92,6 +92,11 @@ const events = {
     stopped: 'stopped',
     finished: 'finished',
   },
+  marketmaking: {
+    entered: 'entered',
+    selected: 'selected',
+    faqOpened: 'faqOpened',
+  },
   theme: {
     switched: 'switched',
   },
@@ -117,7 +122,7 @@ Object.keys(events).forEach(appPart => {
   }
   const appPartEvents = events[appPart]
   Object.keys(appPartEvents).forEach(eventName => {
-    feedback[appPart][eventName] = function (details) {
+    feedback[appPart][eventName] = function(details) {
       sendMessage({ appPart, eventName, details })
     }
   })

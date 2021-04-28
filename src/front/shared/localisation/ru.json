@@ -5555,7 +5555,7 @@
   },
   {
     "id": "menu.marketmaker",
-    "message": "Marketmaker",
+    "message": "Зарабатывать",
     "files": [
       "src/front/shared/components/Header/config.tsx"
     ]

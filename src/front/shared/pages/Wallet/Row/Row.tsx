@@ -224,24 +224,6 @@ class Row extends Component<RowProps, RowState> {
       : address
   }
 
-  handleDisconnectWallet() {
-    if (metamask.isEnabled()) {
-      metamask.disconnect().then(async () => {
-        await actions.user.sign()
-        await actions.user.getBalances()
-      })
-    }
-  }
-
-  handleConnectMetamask = () => {
-    metamask.connect({}).then(async (connected) => {
-      if (connected) {
-        await actions.user.sign()
-        await actions.user.getBalances()
-      }
-    })
-  }
-
   handleWithdrawPopup = () => {
     const {
       itemData: { currency },
@@ -454,6 +436,10 @@ class Row extends Component<RowProps, RowState> {
     actions.modals.open(constants.modals.SaveMnemonicModal)
   }
 
+  connectMetamask = () => {
+    metamask.handleConnectMetamask({})
+  }
+
   render() {
     const {
       isBalanceFetching,
@@ -642,7 +628,7 @@ class Row extends Component<RowProps, RowState> {
             defaultMessage="Подключить"
           />
         ),
-        action: this.handleConnectMetamask,
+        action: metamask.handleConnectMetamask,
         disabled: false,
       }]
     }
@@ -659,7 +645,7 @@ class Row extends Component<RowProps, RowState> {
               defaultMessage="Отключить кошелек"
             />
           ),
-          action: this.handleDisconnectWallet,
+          action: metamask.handleDisconnectWallet,
           disabled: false
         },
         ...dropDownMenuItems
@@ -801,7 +787,7 @@ class Row extends Component<RowProps, RowState> {
             <div styleName="assetsTableInfo">
               <div styleName="nameRow">
                 <a onClick={metamaskDisconnected
-                    ? this.handleConnectMetamask
+                    ? this.connectMetamask.bind(this)
                     : mnemonicSaved || metamaskIsConnected
                       ? this.goToCurrencyHistory
                       : () => null
@@ -858,7 +844,7 @@ class Row extends Component<RowProps, RowState> {
                   else showing fetch-button and currency balance
                   */}
                   {metamaskDisconnected ? (
-                      <Button small empty onClick={this.handleConnectMetamask}>
+                      <Button small empty onClick={metamask.handleConnectMetamask}>
                         {web3Icon && <img styleName="web3ProviderIcon" src={web3Icon} />}
                         <FormattedMessage id="CommonTextConnect" defaultMessage="Connect" />
                       </Button>

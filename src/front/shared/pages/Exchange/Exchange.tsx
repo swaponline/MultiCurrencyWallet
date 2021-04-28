@@ -1054,7 +1054,11 @@ class Exchange extends PureComponent<any, any> {
         maxAmount: 0,
       }
     }, () => {
-      this.updateTokenAllowance()
+      const { isTokenSell, haveAmount } = this.state
+
+      if (isTokenSell && haveAmount) {
+        this.updateTokenAllowance()
+      }
     })
   }
 

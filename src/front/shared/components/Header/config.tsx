@@ -4,6 +4,9 @@ import links from 'helpers/links'
 import externalConfig from 'helpers/externalConfig'
 
 
+const isWidgetBuild = externalConfig && externalConfig.isWidget
+
+
 export const messages = defineMessages({
   products: {
     id: 'menu.products',
@@ -33,7 +36,7 @@ export const messages = defineMessages({
   marketmaker: {
     id: 'menu.marketmaker',
     description: 'Menu item "Marketmaker"',
-    defaultMessage: 'Marketmaker',
+    defaultMessage: 'Earn',
   },
   farm: {
     id: 'menu.farm',
@@ -100,7 +103,7 @@ export const getMenuItems = (props) => {
   ]
 
   // Marketmaker testnet ********
-  if (externalConfig.entry === `testnet`) {
+  if (externalConfig.entry === `testnet` && !isWidgetBuild) {
     const marketmakerItem = {
       title: intl.formatMessage(messages.marketmaker),
       link: links.marketmaker,
@@ -113,7 +116,7 @@ export const getMenuItems = (props) => {
   }
 
   // Farm ************************
-  if (externalConfig.entry === 'testnet') {
+  if (externalConfig.entry === 'testnet' && !isWidgetBuild) {
     const farmItem = {
       title: intl.formatMessage(messages.farm),
       link: farm,
@@ -179,7 +182,7 @@ export const getMenuItemsMobile = (props, isWalletCreate, dinamicPath) => {
   ]
 
   // Farm ************************
-  if (externalConfig.entry === 'testnet') {
+  if (externalConfig.entry === 'testnet' && !isWidgetBuild) {
     const farmItem = {
       title: props.intl.formatMessage(messages.farm),
       link: farm,

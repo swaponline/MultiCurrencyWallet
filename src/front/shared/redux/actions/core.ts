@@ -235,6 +235,7 @@ const sendRequestForPartial = (orderId, newValues, destination = {}, callback) =
 }
 
 const createOrder = (data, isPartial = false) => {
+  console.log('>>>>> createOrder', data)
   const order = SwapApp.shared().services.orders.create(data)
   if (!isPartial) {
     return order
@@ -371,12 +372,13 @@ type GetWalletFindCondition = {
   currency?: string
   address?: string
   addressType?: string
+  connected?: boolean
 }
 
 const getWallet = (findCondition: GetWalletFindCondition) => {
   // specify addressType,
   // otherwise it finds the first wallet from all origins, including metamask
-  const { currency, address, addressType } = findCondition
+  const { currency, address, addressType, connected } = findCondition
 
   const wallets = getWallets({ withInternal: true })
   const founded = wallets.filter((wallet) => {
@@ -392,7 +394,17 @@ const getWallet = (findCondition: GetWalletFindCondition) => {
     if (addressType) {
       if (
         (addressType === AddressType.Internal && !wallet.isMetamask) ||
-        (addressType === AddressType.Metamask && wallet.isMetamask)
+        (
+          addressType === AddressType.Metamask
+          && wallet.isMetamask
+          && (
+            connected === undefined
+            || (
+              connected
+              && wallet.isConnected
+            )
+          )
+        )
       ) {
         return conditionOk
       }
@@ -498,6 +510,8 @@ const getWallets = (options) => {
 }
 
 const fetchWalletBalance = async (walletData): Promise<number> => {
+  console.log('>>>>> fetchWalletBalance')
+  console.trace()
   const name = helpers.getCurrencyKey(walletData.currency.toLowerCase(), true)
   if (helpers.ethToken.isEthToken({ name })) {
     try {

@@ -76,7 +76,7 @@ class SwapRoom extends ServiceInterface {
 
     const defaultRoomName = this.app.isMainNet()
       ? 'swap.online'
-      : 'testnet.swap.online'
+      : 'testnet2.swap.online'
 
     this.roomName = this._config.roomName || defaultRoomName
 
@@ -296,6 +296,13 @@ class SwapRoom extends ServiceInterface {
   }
 
   sendMessageRoom(message) {
+    if (!this.connection) {
+      setTimeout(() => {
+        this.sendMessageRoom(message)
+      }, 1000)
+      return
+    }
+
     const { data, event } = message
     const sign = this._signMessage(data)
 
