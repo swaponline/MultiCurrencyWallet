@@ -33,10 +33,20 @@ describe('Try swap', () => {
     await timeOut(2 * 1000)
 
     try {
-      const [sellCurrencySelectorList, sellWalletSelectorList, buyCurrencySelectorList, buyWalletSelectorList] = await TakerPage.$$('.itemsSelector')
+      const [sellCurrencySelectorList, fromWalletSelectorList, buyCurrencySelectorList, toWalletSelectorList] = await TakerPage.$$('.itemsSelector')
 
       await buyCurrencySelectorList.click();
       await TakerPage.click(`#wbtc`)
+
+      await fromWalletSelectorList.click()
+      await takeScreenshot(TakerPage, 'Taker_Page_fromWalletSelectorList')
+      await TakerPage.click('#Internal')
+
+      await timeOut(2 * 1000)
+
+      await toWalletSelectorList.click({clickCount: 2})
+      await takeScreenshot(TakerPage, 'Taker_Page_toWalletSelectorList')
+      await TakerPage.click('#Internal')
 
       await timeOut(10 * 1000)
 

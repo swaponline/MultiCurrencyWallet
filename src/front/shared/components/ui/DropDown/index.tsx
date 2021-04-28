@@ -151,8 +151,9 @@ export default class DropDown extends Component<DropDownProps, DropDownState> {
 
     return (
       <OutsideClick outsideAction={this.handleClickOutside}>
-        <div styleName={`${dropDownStyleName} ${isDark ? 'dark' : ''}`} className={`${className} itemsSelector`}>
+        <div styleName={`${dropDownStyleName} ${isDark ? 'dark' : ''}`} className={className}>
           <div
+            className='itemsSelector'
             styleName={`
               selectedItem
               ${arrowSide === 'left' ? 'left' : ''}
