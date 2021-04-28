@@ -30,7 +30,7 @@ jobs:
         
     - uses: actions/upload-artifact@v2
       with:
-        name: zipped-chrome-extension-mainnet
+        name: mainnet-extention
         path: ./zipped-chrome-extension-mainnet.zip
     - name: publish extention to crhome web store
       uses: Klemensas/chrome-extension-upload-action@v1.3
