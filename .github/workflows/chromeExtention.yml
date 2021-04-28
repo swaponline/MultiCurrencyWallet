@@ -25,8 +25,8 @@ jobs:
       run: |
         npm i
         npm run build:chrome-extension-mainnet
-        npm run build:chrome-extension-testnet
         cp ./build-chrome-extension/zipped-chrome-extension-mainnet.zip ./zipped-chrome-extension-mainnet.zip
+        npm run build:chrome-extension-testnet
         cp ./build-chrome-extension/zipped-chrome-extension-testnet.zip ./zipped-chrome-extension-testnet.zip
         ls
         
