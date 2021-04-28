@@ -21,7 +21,6 @@ class EthLikeAction {
   private coinName: string
   private ticker: string // upper case (ex. ETH)
   private tickerKey: string // lower case (ex. eth)
-  private ownerAddress: string
   private explorerName: string
   private explorerLink: string
   private explorerApiKey: string
@@ -39,7 +38,6 @@ class EthLikeAction {
     const {
       coinName,
       ticker,
-      ownerAddress,
       explorerName,
       explorerLink,
       explorerApiKey,
@@ -49,7 +47,6 @@ class EthLikeAction {
     this.coinName = coinName
     this.ticker = ticker
     this.tickerKey = ticker.toLowerCase()
-    this.ownerAddress = ownerAddress
     this.explorerName = explorerName
     this.explorerLink = explorerLink
     this.explorerApiKey = explorerApiKey
@@ -59,7 +56,6 @@ class EthLikeAction {
   reportError = (error) => {
     feedback.actions.failed(''.concat(
       `details - ticker: ${this.ticker}, `,
-      // `address: ${this.ownerAddress}, `,
       `error message - ${error.message} `,
     ))
     console.group(`Actions >%c ${this.ticker}`, 'color: red;')
@@ -86,9 +82,11 @@ class EthLikeAction {
   }
 
   getInvoices = () => {
+    const address = getState().user[`${this.tickerKey}Data`].address
+
     return actions.invoices.getInvoices({
       currency: this.ticker,
-      address: this.ownerAddress,
+      address,
     })
   }
   
@@ -262,7 +260,7 @@ class EthLikeAction {
   getBalance = (): Promise<number> => {
     const address = metamask.isEnabled() && metamask.isConnected()
       ? metamask.getAddress()
-      : this.ownerAddress
+      : getState().user[`${this.tickerKey}Data`].address
 
     const balanceInCache = cacheStorageGet('currencyBalances', `${this.tickerKey}_${address}`)
   
@@ -318,9 +316,10 @@ class EthLikeAction {
   }
 
   getTransaction = (address: string = ``, ownType: string = ``) => {
-    return new Promise((resolve) => {
-      address = address || this.ownerAddress
+    const ownerAddress = getState().user[`${this.tickerKey}Data`].address
+    address = address || ownerAddress
 
+    return new Promise((resolve) => {
       if (!typeforce.isCoinAddress[this.ticker](address)) {
         resolve([])
       }
@@ -362,7 +361,7 @@ class EthLikeAction {
                       : item.value
                   ),
                   address: item.to,
-                  canEdit: address === this.ownerAddress,
+                  canEdit: address === ownerAddress,
                   date: item.timeStamp * 1000,
                   direction: (
                     internals[item.hash] !== undefined
@@ -412,6 +411,7 @@ class EthLikeAction {
 
   send = async (params): Promise<object> => {
     let { to, amount, gasPrice, gasLimit, speed } = params
+    const ownerAddress = getState().user[`${this.tickerKey}Data`].address
     const recipientIsContract = await this.isContract(to)
 
     gasPrice = 0 || await helpers[this.tickerKey].estimateGasPrice({ speed })
@@ -424,17 +424,17 @@ class EthLikeAction {
       
     let sendMethod = web3.eth.sendTransaction
     let txObject = {
-      from: this.ownerAddress,
+      from: ownerAddress,
       to: to.trim(),
       gasPrice,
       gas: gasLimit,
       value: web3.utils.toWei(String(amount)),
     }
     const walletData = actions.core.getWallet({
-      address: this.ownerAddress,
+      address: ownerAddress,
       currency: this.ticker,
     })
-    const privateKey = this.getPrivateKeyByAddress(this.ownerAddress)
+    const privateKey = this.getPrivateKeyByAddress(ownerAddress)
 
     if (!walletData.isMetamask) {
       const signedTx = await web3.eth.accounts.signTransaction(txObject, privateKey)
@@ -498,6 +498,7 @@ class EthLikeAction {
   // TODO: need to replace it with this.send() method
   sendTransaction = async (params) => {
     const { to, amount } = params
+    const ownerAddress = getState().user[`${this.tickerKey}Data`].address
 
     if (false) { // fake tx - turboswaps debug
       const txHash = '0x58facdbf5023a401f39998179995f0af1e54a64455145df6ed507abdecc1b0a4'
@@ -505,7 +506,7 @@ class EthLikeAction {
     }
 
     return await this.send({
-      from: this.ownerAddress,
+      from: ownerAddress,
       to,
       amount,
     })
@@ -554,18 +555,10 @@ class EthLikeAction {
   getReputation = () => Promise.resolve(0)
 }
 
-const {
-  user: {
-    ethData: { address: ethOwnerAddress },
-    bnbData: { address: bnbOwnerAddress },
-  }
-} = getState()
-
 export default {
   ETH: new EthLikeAction({
     coinName: 'Ethereum',
     ticker: 'ETH',
-    ownerAddress: ethOwnerAddress,
     explorerName: 'etherscan',
     explorerLink: externalConfig.link.etherscan,
     explorerApiKey: externalConfig.api.etherscan_ApiKey,
@@ -574,7 +567,6 @@ export default {
   BNB: new EthLikeAction({
     coinName: 'Binance Coin',
     ticker: 'BNB',
-    ownerAddress: bnbOwnerAddress,
     explorerName: 'bscscan',
     explorerLink: externalConfig.link.bscscan,
     explorerApiKey: externalConfig.api.bscscan_ApiKey,
