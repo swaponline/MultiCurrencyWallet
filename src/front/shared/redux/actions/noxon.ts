@@ -1,6 +1,6 @@
-import token from './token'
+import Erc20LikeAction from './erc20LikeAction'
 
 
 export default {
-  ...token,
+  ...Erc20LikeAction.token,
 }
