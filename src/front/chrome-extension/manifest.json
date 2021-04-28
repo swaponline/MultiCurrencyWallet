@@ -15,9 +15,6 @@
     "default_icon": "./icons/icon-32.png",
     "default_title": "MultiCurrencyWallet"
   },
-  "permissions": [
-    "activeTab"
-  ],
   "background": {
     "page": "application/index.html",
     "persistent": true
