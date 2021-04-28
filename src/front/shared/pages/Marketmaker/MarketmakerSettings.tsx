@@ -195,7 +195,7 @@ class MarketmakerSettings extends Component<any, any> {
 
   componentDidMount() {
     SwapApp.onInit(() => {
-      this.cleanupMarketMakerOrder()
+      const isMarketEnabled = (SwapApp.shared().services.orders.getMyOrders().length > 0)
 
       const swapsIds = []
       const swapsByIds = {}
@@ -221,6 +221,7 @@ class MarketmakerSettings extends Component<any, any> {
       this.setState({
         swapsIds,
         swapsByIds,
+        isMarketEnabled,
       })
     })
   }
@@ -299,7 +300,7 @@ class MarketmakerSettings extends Component<any, any> {
     if (!isEthBalanceOk) {
       hasError = true
       actions.modals.open(constants.modals.AlertModal, {
-        message: <FormattedMessage id="MM_NotEnoughtEth" defaultMessage="Не достаточно ETH для оплаты коммисии майнеров" />,
+        message: <FormattedMessage id="MM_NotEnoughtEth" defaultMessage="Недостаточно ETH для оплаты коммисии майнеров" />,
       })
     }
     if (!isTokenBalanceOk && !isBtcBalanceOk) {
@@ -308,7 +309,7 @@ class MarketmakerSettings extends Component<any, any> {
         message: (
           <FormattedMessage
             id="MM_NotEnoughtCoins"
-            defaultMessage="Не достаточно средств. Вам нужно пополнить BTC или {token}"
+            defaultMessage="Недостаточно средств. Вам нужно пополнить BTC или {token}"
             values={{
               token: marketToken.toUpperCase(),
             }}
