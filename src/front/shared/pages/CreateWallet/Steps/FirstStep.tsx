@@ -38,7 +38,7 @@ function FirstStep(props) {
               const { name, capture } = el
 
               return (
-                <div key={name} styleName={`card ${curState[name] ? 'purpleBorder' : ''}`} onClick={() => handleClick(name)}>
+                <div id={`${name.toLowerCase()}Wallet`} key={name} styleName={`card ${curState[name] ? 'purpleBorder' : ''}`} onClick={() => handleClick(name)}>
                   <div styleName="logo">
                     <Coin styleName={`assetsTableIcon ${coloredIcons.includes(name.toLowerCase()) ? name.toLowerCase() : "coinColor"}`} name={name} />
                   </div>
@@ -51,7 +51,7 @@ function FirstStep(props) {
             })}
           </div>
         </div>
-        <button styleName="continue" onClick={onClick} disabled={error}>
+        <button id='continueBtn' styleName="continue" onClick={onClick} disabled={error}>
           <FormattedMessage id="createWalletButton1" defaultMessage="Продолжить" />
         </button>
       </div>

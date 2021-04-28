@@ -174,7 +174,7 @@ class Header extends Component<any, any> {
       //@ts-ignore
       location: { hash, pathname },
     } = finishProps
-    const { wallet, exchange } = links
+    const { wallet, exchange, marketmaker, marketmaker_short } = links
     const isGuestLink = !(!hash || hash.slice(1) !== 'guest')
 
     if (isGuestLink) {
@@ -194,6 +194,8 @@ class Header extends Component<any, any> {
     const isWalletPage = path.includes(wallet) || path === `/` || path === '/ru'
     const isPartialPage = path.includes(exchange) || path === `/ru${exchange}`
 
+    const isMarketPage = path.includes(marketmaker) || path.includes(marketmaker_short)
+    console.log('>>>>> isMarketPage', isMarketPage)
     const didOpenWalletCreate = localStorage.getItem(isWalletCreate)
 
     const wasOnWalletLs = localStorage.getItem(wasOnWallet)
@@ -255,6 +257,7 @@ class Header extends Component<any, any> {
         tourEvent = this.openWidgetWalletTour
         break
       case !userCurrencies.length && isWalletPage && !config.opts.plugins.backupPlugin:
+      console.log('>>>> Header - redirect to create wallet')
         this.openCreateWallet({ onClose: tourEvent })
         break
       default:
@@ -353,7 +356,10 @@ class Header extends Component<any, any> {
       toggle()
     }
 
-    if ((pathname === links.marketmaker) || (pathname === links.marketmaker_short)) {
+
+    if ((pathname.substr(0, links.marketmaker.length) === links.marketmaker)
+      || (pathname.substr(0, links.marketmaker_short) === links.marketmaker_short)
+    ) {
       const swap = new Swap(orderId, SwapApp.shared())
       actions.core.rememberSwap(swap)
       window.active_swap = swap

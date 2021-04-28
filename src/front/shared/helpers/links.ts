@@ -4,7 +4,13 @@ import actions from '../redux/actions'
 const linksManager = {
   home: '/',
   hashHome: '#/',
+
   exchange: '/exchange',
+
+  // Market maker page - for run parallel swaps in background
+  marketmaker: '/marketmaker',
+  marketmaker_short: '/mm',
+
   history: '/history',
   createWallet: '/createWallet',
   restoreWallet: '/restoreWallet',
@@ -13,10 +19,6 @@ const linksManager = {
   invoice: '/invoice',
   farm: 'https://farm.wpmix.net/',
   localStorage: '/localStorage',
-
-  // Market maker page - for run parallel swaps in background
-  marketmaker: '/marketmaker',
-  marketmaker_short: '/mm',
 
   creditCardDeposit: '/creditCardDeposit',
   wallets: '/wallets',

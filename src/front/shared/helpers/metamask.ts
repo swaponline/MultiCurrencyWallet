@@ -180,6 +180,37 @@ if (web3connect.hasCachedProvider()) {
   _initReduxState()
 }
 
+
+const handleDisconnectWallet = (cbDisconnected?) => {
+  if (isEnabled()) {
+    disconnect().then(async () => {
+      await actions.user.sign()
+      await actions.user.getBalances()
+      if (cbDisconnected) cbDisconnected()
+    })
+  }
+}
+
+const handleConnectMetamask = (options?: {
+  dontRedirect?: boolean
+  cbFunction?: Function
+}) => {
+  const {
+    dontRedirect,
+    cbFunction,
+  } = options
+
+  connect({ dontRedirect }).then(async (connected) => {
+    if (connected) {
+      await actions.user.sign()
+      await actions.user.getBalances()
+      if (cbFunction) cbFunction(true)
+    } else {
+      if (cbFunction) cbFunction(false)
+    }
+  })
+}
+
 const metamaskApi = {
   connect,
   isEnabled,
@@ -191,6 +222,8 @@ const metamaskApi = {
   getWeb3,
   disconnect,
   isCorrectNetwork,
+  handleDisconnectWallet,
+  handleConnectMetamask,
 }
 
 window.metamaskApi = metamaskApi
