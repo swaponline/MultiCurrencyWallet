@@ -505,14 +505,12 @@ class Erc20LikeAction {
     const tokenContract = new web3.eth.Contract(TokenAbi, contractAddress, { from: ownerAddress })
     const formatWithDecimals = (amount) => {
       return new BigNumber(amount)
-        .times(new BigNumber(10)
-        .pow(decimals))
+        .times(new BigNumber(10).pow(decimals))
         .toString()
     }
     const formatWithoutDecimals = (wei) => {
       return new BigNumber(wei)
-        .div(new BigNumber(10)
-        .pow(decimals))
+        .div(new BigNumber(10).pow(decimals))
         .toString()
     }
   

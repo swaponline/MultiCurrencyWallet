@@ -275,7 +275,7 @@ const getBalances = () => {
             try {
               await actions.token.getBalance(name)
             } catch (error) {
-              console.error(`Fail fetch balance for ${name} token`, error)
+              console.error(`Fail fetch balance for ${name.toUpperCase()} token`, error)
             }
           })
       })
@@ -478,10 +478,9 @@ type ObjCurrencyType = {
 }
 
 const setTransactions = async (objCurrency: ObjCurrencyType | {} = null) => {
-  // TODO: need a refactoring. Useless requests for currency which can be disabled
+  const activeCurrency = config.binance ? 'bnb' : 'eth'
   const isBtcSweeped = actions.btc.isSweeped()
-  const isEthSweeped = actions.eth.isSweeped()
-  const isBnbSweeped = actions.bnb.isSweeped()
+  const isEthOrBnbSweeped = actions[activeCurrency].isSweeped()
 
   const {
     core: { hiddenCoinsList },
@@ -501,15 +500,11 @@ const setTransactions = async (objCurrency: ObjCurrencyType | {} = null) => {
       actions.btcmultisig.getTransactionSMS(),
       actions.btcmultisig.getTransactionPIN(),
       actions.btcmultisig.getTransactionUser(),
-      // ETH ===========
-      actions.eth.getTransaction(),
-      ...(metamask.isEnabled() && metamask.isConnected()) ? [actions.eth.getTransaction(metamask.getAddress())] : [],
-      ...(isEthSweeped) ? [] : [actions.eth.getTransaction(actions.eth.getSweepAddress())],
-      // BNB ===========
-      actions.bnb.getTransaction(),
-      ...(metamask.isEnabled() && metamask.isConnected()) ? [actions.bnb.getTransaction(metamask.getAddress())] : [],
-      ...(isBnbSweeped) ? [] : [actions.bnb.getTransaction(actions.bnb.getSweepAddress())],
-      // ===============
+      // ETH or BNB ===========
+      actions[activeCurrency].getTransaction(),
+      ...(metamask.isEnabled() && metamask.isConnected()) ? [actions[activeCurrency].getTransaction(metamask.getAddress())] : [],
+      ...(isEthOrBnbSweeped) ? [] : [actions[activeCurrency].getTransaction(actions[activeCurrency].getSweepAddress())],
+      // ======================
       ...objCurrency && objCurrency['GHOST'] ? [actions.ghost.getTransaction()] : [],
       ...objCurrency && objCurrency['NEXT'] ? [actions.next.getTransaction()] : [],
     ]
