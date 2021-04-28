@@ -27,6 +27,10 @@ jobs:
         npm run build:chrome-extension-mainnet
         cp ./build-chrome-extension/zipped-chrome-extension-mainnet.zip ./zipped-chrome-extension-mainnet.zip
         ls
+    - uses: actions/upload-artifact@v2
+      with:
+        name: zipped-chrome-extension-mainnet.zip
+        path: ./zipped-chrome-extension-mainnet.zip
     - name: publish extention to crhome web store
       uses: Passiverecords/chrome-extension-upload-action@1.4.1
       with:
@@ -35,4 +39,4 @@ jobs:
         client-secret:  ${{ secrets.CLIENTSECRET }}
         file-name: 'zipped-chrome-extension-mainnet.zip'
         app-id: 'oldojieloelkkfeacfinhcngmbkepnlm'
-        publish: true
+        publish: false
