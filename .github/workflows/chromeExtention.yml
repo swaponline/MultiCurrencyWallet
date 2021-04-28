@@ -4,7 +4,7 @@ on:
   # but only for the master branch
   push:
     branches:
-      - master
+      - extpage
 
 jobs:
   build:
@@ -25,12 +25,19 @@ jobs:
       run: |
         npm i
         npm run build:chrome-extension-mainnet
+        cp ./build-chrome-extension/zipped-chrome-extension-mainnet.zip ./zipped-chrome-extension-mainnet.zip
+        ls
+        
+    - uses: actions/upload-artifact@v2
+      with:
+        name: zipped-chrome-extension-mainnet
+        path: ./zipped-chrome-extension-mainnet.zip
     - name: publish extention to crhome web store
       uses: Klemensas/chrome-extension-upload-action@v1.3
       with:
         refresh-token:  ${{ secrets.CHROMEUPDATETOKEN }}
         client-id:  ${{ secrets.CLIENTID }}
         client-secret:  ${{ secrets.CLIENTSECRET }}
-        file-name: '/home/runner/work/MultiCurrencyWallet/MultiCurrencyWallet/build-chrome-extension/zipped-chrome-extension-mainnet.zip'
+        file-name: 'zipped-chrome-extension-mainnet.zip'
         app-id: 'oldojieloelkkfeacfinhcngmbkepnlm'
-        publish: true
+        publish: false
