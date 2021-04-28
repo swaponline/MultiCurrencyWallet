@@ -159,12 +159,15 @@ class RowHistory extends Component<any, any> {
             className={cx({
               [styles.statusFinished]: isFinished,
               [styles.statusRefunded]: isRefunded,
-              [styles.statusStopped]: isStoppedSwap,
+              [styles.statusStopped]: isStoppedSwap && (isFinished || isRefunded) ? false : true,
             })}
           >
-            {isFinished && <FormattedMessage id="RowHistory94" defaultMessage="Finished" />}
             {isRefunded && <FormattedMessage id="RowHistory77" defaultMessage="Refunded" />}
-            {isStoppedSwap && <FormattedMessage id="RowHistory139" defaultMessage="Stopped" />}
+            {isStoppedSwap
+              && isFinished ? <FormattedMessage id="RowHistory94" defaultMessage="Finished" />
+              : isRefunded ? <FormattedMessage id="RowHistory77" defaultMessage="Refunded" />
+              : <FormattedMessage id="RowHistory139" defaultMessage="Stopped" />
+            }
             {!isDeletedSwap &&
               (canBeRefunded ? (
                 <Timer lockTime={values.lockTime * 1000} enabledButton={this.tryRefund} />
