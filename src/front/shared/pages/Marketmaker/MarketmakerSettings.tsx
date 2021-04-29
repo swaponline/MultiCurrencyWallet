@@ -536,19 +536,19 @@ class MarketmakerSettings extends Component<any, any> {
             <thead>
               <tr>
                 <td>
-                  <span>You buy</span>
+                  <p>You buy</p>
                 </td>
                 <td>
-                  <span>Step</span>
+                  <p>Step</p>
                 </td>
                 <td>
-                  <span>You sell</span>
+                  <p>You sell</p>
                 </td>
                 <td>
-                  <span>Lock time</span>
+                  <p>Lock time</p>
                 </td>
                 <td>
-                  <span>Status</span>
+                  <p>Status</p>
                 </td>
                 <td></td>
               </tr>
