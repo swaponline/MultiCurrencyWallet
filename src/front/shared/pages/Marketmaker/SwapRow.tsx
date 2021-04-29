@@ -194,9 +194,11 @@ class SwapRow extends Component<any, any> {
         {step > 1 && (
           <Fragment>
             <td>
-              {isMy
-                ? `${sellAmount.toFixed(5)} ${sellCurrency.toUpperCase()}`
-                : `${buyAmount.toFixed(5)} ${buyCurrency.toUpperCase()}`}
+              <p>
+                {isMy
+                  ? `${sellAmount.toFixed(5)} ${sellCurrency.toUpperCase()}`
+                  : `${buyAmount.toFixed(5)} ${buyCurrency.toUpperCase()}`}
+              </p>
             </td>
             <td>
               <p>
@@ -204,30 +206,36 @@ class SwapRow extends Component<any, any> {
               </p>
             </td>
             <td>
-              {isMy
-                ? `${buyAmount.toFixed(5)} ${buyCurrency.toUpperCase()}`
-                : `${sellAmount.toFixed(5)} ${sellCurrency.toUpperCase()}`}
+              <p>
+                {isMy
+                  ? `${buyAmount.toFixed(5)} ${buyCurrency.toUpperCase()}`
+                  : `${sellAmount.toFixed(5)} ${sellCurrency.toUpperCase()}`}
+              </p>
             </td>
             <td>
-              {(lockDateAndTime !== null) && (
-                <Fragment>
-                  {lockDateAndTime.split(' ').map((item, key) => (
-                    <Fragment key={key}> {item}</Fragment>
-                  ))}
-                </Fragment>
-              )}
+              <p>
+                {(lockDateAndTime !== null) && (
+                  <Fragment>
+                    {lockDateAndTime.split(' ').map((item, key) => (
+                      <Fragment key={key}> {item}</Fragment>
+                    ))}
+                  </Fragment>
+                )}
+              </p>
             </td>
             <td>
               <p
                 className={cx({
                   [styles.statusFinished]: isFinished,
                   [styles.statusRefunded]: isRefunded,
-                  [styles.statusStopped]: !isFinished && isStoppedSwap,
+                  [styles.statusStopped]: !isFinished && !isRefunded && isStoppedSwap,
                 })}
               >
-                {isFinished && <FormattedMessage id="RowHistory94" defaultMessage="Finished" />}
-                {isRefunded && <FormattedMessage id="RowHistory77" defaultMessage="Refunded" />}
-                {!isFinished && isStoppedSwap && <FormattedMessage id="RowHistory139" defaultMessage="Stopped" />}
+                {isStoppedSwap
+                  && isFinished ? <FormattedMessage id="RowHistory94" defaultMessage="Finished" />
+                  : isRefunded ? <FormattedMessage id="RowHistory77" defaultMessage="Refunded" />
+                  : <FormattedMessage id="RowHistory139" defaultMessage="Stopped" />
+                }
                 {!isDeletedSwap &&
                   (canBeRefunded ? (
                     <Timer lockTime={values.lockTime * 1000} enabledButton={this.tryRefund} />
@@ -237,9 +245,11 @@ class SwapRow extends Component<any, any> {
               </p>
             </td>
             <td>
-              <Link to={swapUri}>
-                <FormattedMessage id="RowHistory91" defaultMessage="Link" />
-              </Link>
+              <p>
+                <Link to={swapUri}>
+                  <FormattedMessage id="RowHistory91" defaultMessage="Link" />
+                </Link>
+              </p>
             </td>
           </Fragment>
         )}
