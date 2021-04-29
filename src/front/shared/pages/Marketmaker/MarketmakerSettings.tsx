@@ -21,6 +21,7 @@ import SwapRow from './SwapRow'
 import FAQ from './FAQ'
 
 import Toggle from 'components/controls/Toggle/Toggle'
+import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import Input from 'components/forms/Input/Input'
 
 import { AddressType } from 'domain/address'
@@ -466,7 +467,8 @@ class MarketmakerSettings extends Component<any, any> {
     })
     return (
       <div styleName='mm-settings-page'>
-        <section styleName={`mm-controls ${isDark ? 'dark' : '' }`}>
+        <h2 styleName="section-title">Настройки маркетмейкинга</h2>
+        <section styleName={`${isDark ? 'dark' : '' }`}>
         {!mnemonicSaved && (
           <>
             <p>
@@ -475,17 +477,18 @@ class MarketmakerSettings extends Component<any, any> {
                 defaultMessage="We will create BTC,ETH,WBTC hot wallets. You need to write 12 words if you have not done so earlier"
               />
             </p>
-            <Button blue onClick={this.handleSaveMnemonic.bind(this)}>
-              <FormattedMessage
-                id="MM_MakeSaveMnemonic"
-                defaultMessage="Сохранить секретную фразу"
-              />
-            </Button>
+            <div styleName='restoreBtn'>
+              <Button blue onClick={this.handleSaveMnemonic.bind(this)}>
+                <FormattedMessage
+                  id="MM_MakeSaveMnemonic"
+                  defaultMessage="Сохранить секретную фразу"
+                />
+              </Button>
+            </div>
           </>
         )}
         {!isBalanceFetching && mnemonicSaved ? (
           <>
-            <h2 styleName="section-title">Настройки маркетмейкинга</h2>
 
             <p>Маркетмейкинг BTC/WBTC : <span>
               <Toggle checked={isMarketEnabled} onChange={this.handleToggleMarketmaker.bind(this)} />
@@ -523,7 +526,9 @@ class MarketmakerSettings extends Component<any, any> {
         ) : (
           <>
             {mnemonicSaved && (
-              <p>Loading...</p>
+              <div styleName='controlsLoader'>
+                <InlineLoader />
+              </div>
             )}
           </>
         )}

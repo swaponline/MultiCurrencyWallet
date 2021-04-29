@@ -8,6 +8,11 @@
     background: $l-background-elements;
     border-radius: 4px;
     padding: 25px;
+
+    .restoreBtn, .controlsLoader {
+      display: flex;
+      justify-content: center;
+    }
   }
 
   section.dark {
@@ -23,10 +28,6 @@
     font-size: 30px;
     text-align: center;
     @include ff-regular;
-  }
-
-  .mm-controls {
-    padding-top: 0;
   }
 
   .history {
