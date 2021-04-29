@@ -21,6 +21,7 @@ import SwapRow from './SwapRow'
 import FAQ from './FAQ'
 
 import Toggle from 'components/controls/Toggle/Toggle'
+import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import Input from 'components/forms/Input/Input'
 
 import { AddressType } from 'domain/address'
@@ -28,6 +29,7 @@ import { AddressType } from 'domain/address'
 import metamask from 'helpers/metamask'
 import { Button } from 'components/controls'
 
+const isDark = !!localStorage.getItem(constants.localStorage.isDark)
 
 
 @CSSModules(styles, { allowMultiple: true })
@@ -464,8 +466,9 @@ class MarketmakerSettings extends Component<any, any> {
       return swapsByIds[bId].createUnixTimeStamp - swapsByIds[aId].createUnixTimeStamp
     })
     return (
-      <div styleName="mm-settings-page">
-        <section styleName="mm-controls">
+      <div styleName='mm-settings-page'>
+        <h2 styleName="section-title">Настройки маркетмейкинга</h2>
+        <section styleName={`${isDark ? 'dark' : '' }`}>
         {!mnemonicSaved && (
           <>
             <p>
@@ -474,80 +477,225 @@ class MarketmakerSettings extends Component<any, any> {
                 defaultMessage="We will create BTC,ETH,WBTC hot wallets. You need to write 12 words if you have not done so earlier"
               />
             </p>
-            <Button blue onClick={this.handleSaveMnemonic.bind(this)}>
-              <FormattedMessage
-                id="MM_MakeSaveMnemonic"
-                defaultMessage="Сохранить секретную фразу"
-              />
-            </Button>
+            <div styleName='restoreBtn'>
+              <Button blue onClick={this.handleSaveMnemonic.bind(this)}>
+                <FormattedMessage
+                  id="MM_MakeSaveMnemonic"
+                  defaultMessage="Сохранить секретную фразу"
+                />
+              </Button>
+            </div>
           </>
         )}
         {!isBalanceFetching && mnemonicSaved ? (
-          <>
-            <h2 styleName="section-title">Настройки маркетмейкинга</h2>
-
-            <p>Маркетмейкинг BTC/WBTC : <span>
-              <Toggle checked={isMarketEnabled} onChange={this.handleToggleMarketmaker.bind(this)} />
-            </span></p>
-            <p>Спред: 0.5% (по умолчанию стоит 0.5%)</p>
-            {btcWallet ? (
-              <p>Баланс BTC: <span id='btcBalance'>{btcBalance}</span> BTC для попленения переведите на `{btcWallet.address}`</p>
-            ) : (
-              <p>Баланс BTC: <span id='btcBalance'>{btcBalance}</span> BTC</p>
-            )}
-            {ethWallet ? (
-              <p>Баланс ETH: {ethBalance} для пополнения переведите на `{ethWallet.address}`</p>
-            ) : (
-              <p>Баланс ETH: {ethBalance}</p>
-            )}
-            <p>Баланс {marketToken.toUpperCase()}: <span id='tokenBalance'>{tokenBalance}</span> {marketToken.toUpperCase()}</p>
-            {this._metamaskEnabled && (
-              <div>
-              {metamask.isConnected() ? (
-                <Button blue onClick={this.processDisconnectWallet.bind(this)}>Отключить Metamask</Button>
-              ) : (
-                <Button blue onClick={this.processConnectWallet.bind(this)}>Подключить Metamask</Button>
-              )}
+          <div styleName={`section-items ${isDark ? '--dark' : '' }`}>
+            <div styleName='section-items__item'>
+              <div styleName={`mm-toggle ${isDark ? '--dark' : '' }`}>
+                <p styleName='mm-toggle__text'>
+                  <FormattedMessage
+                    id="MM_ToggleText"
+                    defaultMessage="Маркетмейкинг BTC/WBTC"
+                  />
+                </p>
+                <span styleName='mm-toggle__switch'>
+                  <Toggle checked={isMarketEnabled} onChange={this.handleToggleMarketmaker.bind(this)} />
+                </span>
               </div>
-            )}
-            <FormattedMessage
-              id="MM_TotalBalance"
-              defaultMessage="Total balance {totalBalance} {token}, BTC"
-              values={{
-                totalBalance,
-                token: marketToken.toUpperCase(),
-              }}
-            />
-          </>
+              <p styleName='item-text__secondary'>Спред: 0.5% (по умолчанию стоит 0.5%)</p>
+            </div>
+            <div styleName='section-items__item'>
+              <p styleName='item-text__secondary-title'>
+                <FormattedMessage
+                  id="MM_TotalBalance"
+                  defaultMessage="Total balance:"
+                />
+              </p>
+              <p>
+                <span styleName='item__balance'>{totalBalance}</span>
+                {' '}
+                <span styleName='item-text__secondary'>
+                  <FormattedMessage
+                    id="MM_TotalBalance"
+                    defaultMessage="{token}, BTC"
+                    values={{
+                      token: marketToken.toUpperCase(),
+                    }}
+                  />
+                </span>
+              </p>
+            </div>
+            <div styleName='section-items__item'>
+              {btcWallet ? (
+                  <>
+                    <p styleName='item-text__secondary-title'>
+                      <FormattedMessage
+                        id="MM_BTCBalance"
+                        defaultMessage="Баланс BTC:"
+                      />
+                    </p>
+                    <p>
+                      <span id='btcBalance' styleName='item__balance'>{btcBalance}</span>
+                      {' '}
+                      <span styleName='item-text__secondary'>BTC</span>
+                    </p>
+                    <p styleName='item-text__secondary'>
+                      <FormattedMessage
+                        id="MM_DepositeWallet"
+                        defaultMessage="для попленения переведите на {address}"
+                        values={{
+                          address: btcWallet.address,
+                        }}
+                      />
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <p styleName='item-text__secondary-title'>
+                      <FormattedMessage
+                        id="MM_BTCBalance"
+                        defaultMessage="Баланс BTC:"
+                      />
+                    </p>
+                    <p>
+                      <span id='btcBalance' styleName='item__balance'>{btcBalance}</span>
+                      {' '}
+                      <span styleName='item-text__secondary'>BTC</span>
+                    </p>
+                  </>
+                )
+              }
+            </div>
+            <div styleName='section-items__item'>
+              <p styleName='item-text__secondary-title'>
+                <FormattedMessage
+                  id="MM_TokenBalance"
+                  defaultMessage="Баланс {token}:"
+                  values={{
+                    token: marketToken.toUpperCase(),
+                  }}
+                />
+              </p>
+              <p>
+                <span id='tokenBalance' styleName='item__balance'>{tokenBalance}</span>
+                {' '}
+                <span styleName='item-text__secondary'>{marketToken.toUpperCase()}</span>
+              </p>
+              {this._metamaskEnabled && (
+                <div style={{ marginBottom: '15px' }}>
+                {metamask.isConnected() ? (
+                    <Button blue onClick={this.processDisconnectWallet.bind(this)}>
+                      <FormattedMessage
+                        id="MM_DisconnectMetamask"
+                        defaultMessage="Отключить Metamask"
+                      />
+                    </Button>
+                  ) : (
+                    <Button blue onClick={this.processConnectWallet.bind(this)}>
+                      <FormattedMessage
+                        id="MM_ConnectMetamask"
+                        defaultMessage="Подключить Metamask"
+                      />
+                    </Button>
+                  )
+                }
+                </div>
+              )}
+              {ethWallet ? (
+                  <>
+                    <span styleName='item-text__secondary'>
+                      <FormattedMessage
+                        id="MM_ETHBalance"
+                        defaultMessage="Баланс ETH: {balance}"
+                        values={{
+                          balance: ethBalance
+                        }}
+                      />
+                    </span>
+                    <p styleName='item-text__secondary'>
+                      <FormattedMessage
+                        id="MM_DepositeWallet"
+                        defaultMessage="для попленения переведите на {address}"
+                        values={{
+                          address: ethWallet.address,
+                        }}
+                      />
+                    </p>
+                  </>
+                ) : (
+                  <p styleName='item-text__secondary'>
+                    <FormattedMessage
+                      id="MM_ETHBalance"
+                      defaultMessage="Баланс ETH: {balance}"
+                      values={{
+                        balance: ethBalance
+                      }}
+                    />
+                  </p>
+                )
+              }
+            </div>
+          </div>
         ) : (
           <>
             {mnemonicSaved && (
-              <p>Loading...</p>
+              <div styleName='controlsLoader'>
+                <InlineLoader />
+              </div>
             )}
           </>
         )}
         </section>
 
         {/* Swaps history + Active swaps */}
-        <section>
-          <h2 styleName="section-title">Swap history</h2>
+        <section styleName={`${isDark ? 'dark' : '' }`}>
+          <h2 styleName="section-title">
+            <FormattedMessage
+              id="MM_SwapHistory_Title"
+              defaultMessage="Swap history"
+            />
+          </h2>
           <table styleName="swapHistory">
             <thead>
               <tr>
                 <td>
-                  <span>You buy</span>
+                  <p>
+                    <FormattedMessage
+                      id="MM_SwapHistory_YouBuy"
+                      defaultMessage="You buy"
+                    />
+                  </p>
                 </td>
                 <td>
-                  <span>Step</span>
+                  <p>
+                   <FormattedMessage
+                      id="MM_SwapHistory_Step"
+                      defaultMessage="Step"
+                    />
+                  </p>
                 </td>
                 <td>
-                  <span>You sell</span>
+                  <p>
+                    <FormattedMessage
+                      id="MM_SwapHistory_YouSell"
+                      defaultMessage="You sell"
+                    />
+                  </p>
                 </td>
                 <td>
-                  <span>Lock time</span>
+                  <p>
+                   <FormattedMessage
+                      id="MM_SwapHistory_LockTime"
+                      defaultMessage="Lock time"
+                    />
+                  </p>
                 </td>
                 <td>
-                  <span>Status</span>
+                  <p>
+                   <FormattedMessage
+                      id="MM_SwapHistory_Status"
+                      defaultMessage="Status"
+                    />
+                  </p>
                 </td>
                 <td></td>
               </tr>
@@ -564,14 +712,21 @@ class MarketmakerSettings extends Component<any, any> {
               })}
               {!sortedSwaps.length && (
                 <tr>
-                  <td colSpan={6}>empty</td>
+                  <td colSpan={6}>
+                    <FormattedMessage
+                      id="MM_SwapHistory_Empty"
+                      defaultMessage="You have not any swaps, turn on MM and wait when someone accept your orders"
+                    />
+                  </td>
                 </tr>
               )}
             </tbody>
           </table>
         </section>
 
-        <FAQ />
+        <FAQ
+          isDark={isDark}
+        />
       </div>
     )
   }
