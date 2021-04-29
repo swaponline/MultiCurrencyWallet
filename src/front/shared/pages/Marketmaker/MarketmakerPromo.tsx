@@ -47,34 +47,85 @@ export default class MarketmakerPromo extends React.Component<{}, {}> {
     return (
       <div styleName="mm-promo-page">
         <section styleName="how-to-earn">
-          <h2 styleName="section-title">Как заработать на атомарных свопах?</h2>
-          <p>Станьте маркетмейкером, предоставив свой капитал для обеспечения атомарных свопов. Когда пользователи будут совершать обмены, вы будете зарабатывать 0.5%. </p>
+          <h2 styleName="section-title">
+            <FormattedMessage
+              id="MM_Promo_Title"
+              defaultMessage="Как заработать на атомарных свопах?"
+            />
+          </h2>
+          <p>
+            <FormattedMessage
+              id="MM_Promo_TitleBody"
+              defaultMessage="Станьте маркетмейкером, предоставив свой капитал для обеспечения атомарных свопов. Когда пользователи будут совершать обмены, вы будете зарабатывать 0.5%."
+            />
+          </p>
         </section>
         <section styleName="select-mode">
-          <h2 styleName="section-title">Выберите способ</h2>
+          <h2 styleName="section-title">
+            <FormattedMessage
+              id="MM_Choose_Title"
+              defaultMessage="Выберите способ"
+            />
+          </h2>
           <div styleName="modes">
             <div styleName="mode">
               <h3 styleName="mode-title">
                 <span styleName="number">①</span>
                 &nbsp;&nbsp;
-                <span>Маркетмейкер в браузере</span>
+                <span>
+                  <FormattedMessage
+                    id="MM_Choose_InBrowser_Title"
+                    defaultMessage="Маркетмейкер в браузере"
+                  />
+                </span>
               </h3>
-              <p>Подходит для того, что бы попробовать.</p>
-              <p>Если вы закроете браузер, вы перестанете зарабатывать.</p>
+              <p>
+                <FormattedMessage
+                  id="MM_Choose_InBrowser_Body1"
+                  defaultMessage="Подходит для того, что бы попробовать."
+                />
+              </p>
+              <p>
+                <FormattedMessage
+                  id="MM_Choose_InBrowser_Body2"
+                  defaultMessage="Если вы закроете браузер, вы перестанете зарабатывать."
+                />
+              </p>
               <Button styleName="mode-button" blue onClick={this.onSelectBrowser}>
-                Начать в браузере
+                <FormattedMessage
+                  id="MM_Choose_InBrowser_Button"
+                  defaultMessage="Начать в браузере"
+                />
               </Button>
             </div>
             <div styleName="mode">
               <h3 styleName="mode-title">
                 <span styleName="number">②</span>
                 &nbsp;&nbsp;
-                <span>Маркетмейкер-сервер</span>
+                <span>
+                  <FormattedMessage
+                    id="MM_Choose_Server_Title"
+                    defaultMessage="Маркетмейкер-сервер"
+                  />
+                </span>
               </h3>
-              <p>Подходит для продвинутых пользователей.</p>
-              <p>Требуется сервер для разворачивания образа Docker.</p>
+              <p>
+                <FormattedMessage
+                  id="MM_Choose_Server_Body1"
+                  defaultMessage="Подходит для продвинутых пользователей."
+                />
+              </p>
+              <p>
+                <FormattedMessage
+                  id="MM_Choose_Server_Body2"
+                  defaultMessage="Требуется сервер для разворачивания образа Docker."
+                />
+              </p>
               <Button styleName="mode-button" blue onClick={this.onSelectServer}>
-                Читать инструкцию
+               <FormattedMessage
+                  id="MM_Choose_Server_Button"
+                  defaultMessage="Читать инструкцию"
+                />
               </Button>
             </div>
             {this.step3and4enabled && (
@@ -83,29 +134,60 @@ export default class MarketmakerPromo extends React.Component<{}, {}> {
                   <h3 styleName="mode-title">
                     <span styleName="number">③</span>
                     &nbsp;&nbsp;
-                    <span>Создайте uniswap-пул SWAP/ETH</span>
+                    <span>
+                      <FormattedMessage
+                        id="MM_Choose_Uniswap_Title"
+                        defaultMessage="Создайте uniswap-пул SWAP/ETH"
+                      />
+                    </span>
                   </h3>
-                  <p>Подходит для продвинутых пользователей.</p>
-                  <p>Зарабатывайте когда другие продают или покупают SWAP токены.</p>
+                  <p>
+                    <FormattedMessage
+                      id="MM_Choose_Uniswap_Body1"
+                      defaultMessage="Подходит для продвинутых пользователей."
+                    />
+                  </p>
+                  <p>
+                    <FormattedMessage
+                      id="MM_Choose_Uniswap_Body2"
+                      defaultMessage="Зарабатывайте когда другие продают или покупают SWAP токены."
+                    />
+                  </p>
                   <Button styleName="mode-button" blue onClick={this.onSelectPool}>
-                    Создать пул
+                    <FormattedMessage
+                      id="MM_Choose_Uniswap_Button"
+                      defaultMessage="Создать пул"
+                    />
                   </Button>
                 </div>
-                
+
                 <div styleName="mode">
                   <h3 styleName="mode-title">
                     <span styleName="number">④</span>
                     &nbsp;&nbsp;
-                    <span>Фарминг</span>
+                    <span>
+                      <FormattedMessage
+                        id="MM_Choose_Farming_Title"
+                        defaultMessage="Фарминг"
+                      />
+                    </span>
                   </h3>
-                  <p>Получайте дополнительную награду в SWAP токенах, заморозив LP токены</p>
+                  <p>
+                    <FormattedMessage
+                      id="MM_Choose_Farming_Body1"
+                      defaultMessage="Получайте дополнительную награду в SWAP токенах, заморозив LP токены."
+                    />
+                  </p>
                   <Button styleName="mode-button" blue onClick={this.onSelectFarm}>
-                    Начать фарминг
+                    <FormattedMessage
+                      id="MM_Choose_Farming_Button"
+                      defaultMessage="Начать фарминг"
+                    />
                   </Button>
                 </div>
               </>
             )}
-            
+
           </div>
         </section>
 

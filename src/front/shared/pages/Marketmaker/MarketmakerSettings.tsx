@@ -492,7 +492,10 @@ class MarketmakerSettings extends Component<any, any> {
             <div styleName='section-items__item'>
               <div styleName={`mm-toggle ${isDark ? '--dark' : '' }`}>
                 <p styleName='mm-toggle__text'>
-                  Маркетмейкинг BTC/WBTC
+                  <FormattedMessage
+                    id="MM_ToggleText"
+                    defaultMessage="Маркетмейкинг BTC/WBTC"
+                  />
                 </p>
                 <span styleName='mm-toggle__switch'>
                   <Toggle checked={isMarketEnabled} onChange={this.handleToggleMarketmaker.bind(this)} />
@@ -510,26 +513,48 @@ class MarketmakerSettings extends Component<any, any> {
               <p>
                 <span styleName='item__balance'>{totalBalance}</span>
                 {' '}
-                <span styleName='item-text__secondary'>{marketToken.toUpperCase()}, BTC</span>
+                <span styleName='item-text__secondary'>
+                  <FormattedMessage
+                    id="MM_TotalBalance"
+                    defaultMessage="{token}, BTC"
+                    values={{
+                      token: marketToken.toUpperCase(),
+                    }}
+                  />
+                </span>
               </p>
             </div>
             <div styleName='section-items__item'>
               {btcWallet ? (
                   <>
                     <p styleName='item-text__secondary-title'>
-                      Баланс BTC:
+                      <FormattedMessage
+                        id="MM_BTCBalance"
+                        defaultMessage="Баланс BTC:"
+                      />
                     </p>
                     <p>
                       <span id='btcBalance' styleName='item__balance'>{btcBalance}</span>
                       {' '}
                       <span styleName='item-text__secondary'>BTC</span>
                     </p>
-                    <p styleName='item-text__secondary'>для попленения переведите на {btcWallet.address}</p>
+                    <p styleName='item-text__secondary'>
+                      <FormattedMessage
+                        id="MM_DepositeWallet"
+                        defaultMessage="для попленения переведите на {address}"
+                        values={{
+                          address: btcWallet.address,
+                        }}
+                      />
+                    </p>
                   </>
                 ) : (
                   <>
                     <p styleName='item-text__secondary-title'>
-                      Баланс BTC:
+                      <FormattedMessage
+                        id="MM_BTCBalance"
+                        defaultMessage="Баланс BTC:"
+                      />
                     </p>
                     <p>
                       <span id='btcBalance' styleName='item__balance'>{btcBalance}</span>
@@ -542,7 +567,13 @@ class MarketmakerSettings extends Component<any, any> {
             </div>
             <div styleName='section-items__item'>
               <p styleName='item-text__secondary-title'>
-                Баланс {marketToken.toUpperCase()}:
+                <FormattedMessage
+                  id="MM_TokenBalance"
+                  defaultMessage="Баланс {token}:"
+                  values={{
+                    token: marketToken.toUpperCase(),
+                  }}
+                />
               </p>
               <p>
                 <span id='tokenBalance' styleName='item__balance'>{tokenBalance}</span>
@@ -552,20 +583,54 @@ class MarketmakerSettings extends Component<any, any> {
               {this._metamaskEnabled && (
                 <div style={{ marginBottom: '15px' }}>
                 {metamask.isConnected() ? (
-                    <Button blue onClick={this.processDisconnectWallet.bind(this)}>Отключить Metamask</Button>
+                    <Button blue onClick={this.processDisconnectWallet.bind(this)}>
+                      <FormattedMessage
+                        id="MM_DisconnectMetamask"
+                        defaultMessage="Отключить Metamask"
+                      />
+                    </Button>
                   ) : (
-                    <Button blue onClick={this.processConnectWallet.bind(this)}>Подключить Metamask</Button>
+                    <Button blue onClick={this.processConnectWallet.bind(this)}>
+                      <FormattedMessage
+                        id="MM_ConnectMetamask"
+                        defaultMessage="Подключить Metamask"
+                      />
+                    </Button>
                   )
                 }
                 </div>
               )}
               {ethWallet ? (
                   <>
-                    <span styleName='item-text__secondary'>Баланс ETH: {ethBalance}</span>
-                    <p styleName='item-text__secondary'>для пополнения переведите на {ethWallet.address}</p>
+                    <span styleName='item-text__secondary'>
+                      <FormattedMessage
+                        id="MM_ETHBalance"
+                        defaultMessage="Баланс ETH: {balance}"
+                        values={{
+                          balance: ethBalance
+                        }}
+                      />
+                    </span>
+                    <p styleName='item-text__secondary'>
+                      <FormattedMessage
+                        id="MM_DepositeWallet"
+                        defaultMessage="для попленения переведите на {address}"
+                        values={{
+                          address: ethWallet.address,
+                        }}
+                      />
+                    </p>
                   </>
                 ) : (
-                  <p styleName='item-text__secondary'>Баланс ETH: {ethBalance}</p>
+                  <p styleName='item-text__secondary'>
+                    <FormattedMessage
+                      id="MM_ETHBalance"
+                      defaultMessage="Баланс ETH: {balance}"
+                      values={{
+                        balance: ethBalance
+                      }}
+                    />
+                  </p>
                 )
               }
             </div>
@@ -583,24 +648,54 @@ class MarketmakerSettings extends Component<any, any> {
 
         {/* Swaps history + Active swaps */}
         <section styleName={`${isDark ? 'dark' : '' }`}>
-          <h2 styleName="section-title">Swap history</h2>
+          <h2 styleName="section-title">
+            <FormattedMessage
+              id="MM_SwapHistory_Title"
+              defaultMessage="Swap history"
+            />
+          </h2>
           <table styleName="swapHistory">
             <thead>
               <tr>
                 <td>
-                  <p>You buy</p>
+                  <p>
+                    <FormattedMessage
+                      id="MM_SwapHistory_YouBuy"
+                      defaultMessage="You buy"
+                    />
+                  </p>
                 </td>
                 <td>
-                  <p>Step</p>
+                  <p>
+                   <FormattedMessage
+                      id="MM_SwapHistory_Step"
+                      defaultMessage="Step"
+                    />
+                  </p>
                 </td>
                 <td>
-                  <p>You sell</p>
+                  <p>
+                    <FormattedMessage
+                      id="MM_SwapHistory_YouSell"
+                      defaultMessage="You sell"
+                    />
+                  </p>
                 </td>
                 <td>
-                  <p>Lock time</p>
+                  <p>
+                   <FormattedMessage
+                      id="MM_SwapHistory_LockTime"
+                      defaultMessage="Lock time"
+                    />
+                  </p>
                 </td>
                 <td>
-                  <p>Status</p>
+                  <p>
+                   <FormattedMessage
+                      id="MM_SwapHistory_Status"
+                      defaultMessage="Status"
+                    />
+                  </p>
                 </td>
                 <td></td>
               </tr>
@@ -617,7 +712,12 @@ class MarketmakerSettings extends Component<any, any> {
               })}
               {!sortedSwaps.length && (
                 <tr>
-                  <td colSpan={6}>empty</td>
+                  <td colSpan={6}>
+                    <FormattedMessage
+                      id="MM_SwapHistory_Empty"
+                      defaultMessage="You have not any swaps, turn on MM and wait when someone accept your orders"
+                    />
+                  </td>
                 </tr>
               )}
             </tbody>
