@@ -27,6 +27,10 @@
       &.--dark {
         .section-items__item {
           box-shadow: $d-box-shadow;
+
+          .item__balance {
+            color: #fbfbfb;
+          }
         }
       }
 
@@ -100,6 +104,12 @@
     display: flex;
     flex-wrap: nowrap;
     width: auto;
+
+    &.--dark {
+      .mm-toggle__text {
+        color: #fbfbfb;
+      }
+    }
 
     .mm-toggle__text {
       width: 70%;

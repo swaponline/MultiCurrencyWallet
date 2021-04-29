@@ -490,7 +490,7 @@ class MarketmakerSettings extends Component<any, any> {
         {!isBalanceFetching && mnemonicSaved ? (
           <div styleName={`section-items ${isDark ? '--dark' : '' }`}>
             <div styleName='section-items__item'>
-              <div styleName='mm-toggle'>
+              <div styleName={`mm-toggle ${isDark ? '--dark' : '' }`}>
                 <p styleName='mm-toggle__text'>
                   Маркетмейкинг BTC/WBTC
                 </p>
