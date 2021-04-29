@@ -1,0 +1,30 @@
+<html>
+<body>
+<iframe src="application/index.html" width="800" height="600" align="left">
+...
+</iframe>
+<script>
+console.error('chrome =', chrome)
+console.error('chrome.browserAction =', chrome.browserAction)
+
+if (false) {
+	// background test
+	setInterval(() => {
+		console.error(`signal ${Math.random()}`)
+	}, 1000)
+}
+
+try {
+	chrome.browserAction.onClicked.addListener(function(tab) {
+	    chrome.tabs.create({
+	        'url': chrome.extension.getURL('/application/index.html')
+	    }, (tab) =>{
+	      // fallback
+	    });
+	});
+} catch (e) {
+	console.error('Can`t add chrome extension click')
+}
+</script>
+</body>
+</html>
