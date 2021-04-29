@@ -197,14 +197,14 @@ class EthLikeAction {
       data = web3.eth.accounts.privateKeyToAccount(privateKey)
       localStorage.setItem(constants.privateKeyNames[`${this.tickerKey}Mnemonic`], privateKey)
       
-      // TODO: for compatible. Delete after binance as separate coin
+      // TODO: for compatible. Delete after BNB as separate coin
       if (this.ticker === 'BNB' || this.ticker === 'ETH') {
         localStorage.setItem(constants.privateKeyNames.ethMnemonic, privateKey)
         localStorage.setItem(constants.privateKeyNames.bnbMnemonic, privateKey)
       }
     }
     
-    // TODO: for compatible. Delete after binance as separate coin
+    // TODO: for compatible. Delete after BNB as separate coin
     if (this.ticker === 'BNB' || this.ticker === 'ETH') {
       localStorage.setItem(constants.privateKeyNames.bnb, data.privateKey)
       localStorage.setItem(constants.privateKeyNames.eth, data.privateKey)
