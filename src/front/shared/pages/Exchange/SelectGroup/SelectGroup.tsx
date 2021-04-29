@@ -70,6 +70,7 @@ const SelectGroup = (props) => {
           onKeyDown={inputReplaceCommaWithDot}
         />
         {(selectedValue === 'eth' ||
+          selectedValue === 'bnb' ||
           selectedValue === 'btc' ||
           selectedValue === 'ghost' ||
           selectedValue === 'next') &&
