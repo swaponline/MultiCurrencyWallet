@@ -44,6 +44,7 @@ class Currency extends Component<any, any> {
       balance: 0,
     }
 
+console.log('>>>> !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! curency page')
     const item = items.map(item => item.currency.toLowerCase())
     if (!item.includes(currency)) {
       history.push(localisedUrl(locale, `/NotFound`))

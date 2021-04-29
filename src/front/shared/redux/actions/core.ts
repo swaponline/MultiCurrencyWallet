@@ -497,6 +497,7 @@ const fetchWalletBalance = async (walletData): Promise<number> => {
   console.log('>>>>> fetchWalletBalance')
   console.trace()
   const name = helpers.getCurrencyKey(walletData.currency.toLowerCase(), true)
+  console.log('>>>> action name', name)
   if (helpers.ethToken.isEthToken({ name })) {
     try {
       const balance = await actions.token.fetchBalance(
@@ -515,6 +516,7 @@ const fetchWalletBalance = async (walletData): Promise<number> => {
       typeof actions[name].fetchBalance === `function`
     ) {
       try {
+        console.log('>>>>> fetch balance', walletData, walletData.address, name)
         const balance = await actions[name].fetchBalance(walletData.address)
         return new BigNumber(balance).toNumber()
       } catch (err) {

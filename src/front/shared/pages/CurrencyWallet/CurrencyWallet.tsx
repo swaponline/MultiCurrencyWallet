@@ -87,6 +87,7 @@ class CurrencyWallet extends Component<any, any> {
   constructor(props) {
     super(props)
 
+console.log('>>>>> !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  history')
     const {
       match: {
         params: { fullName = null, ticker = null, address = null, action = null },
@@ -97,8 +98,9 @@ class CurrencyWallet extends Component<any, any> {
       hiddenCoinsList,
     } = props
 
+console.log('>>>>> history', address, ticker)
     const items = actions.core.getWallets({})
-
+console.log('>>>>> wallets', items)
     if (!address && !ticker) {
       if (fullName) {
         // Если это токен - перенаправляем на адрес /token/name/address
@@ -169,6 +171,7 @@ class CurrencyWallet extends Component<any, any> {
     // MultiWallet - after Sweep - названию валюты доверять нельзя - нужно проверяться также адрес - и выбирать по адресу
     let itemCurrency = items.filter((item) => {
       if (ethToken.isEthToken({ name: ticker })) {
+        console.log('>>>>>> is token')
         if (
           item.currency.toLowerCase() === ticker.toLowerCase() &&
           item.address.toLowerCase() === walletAddress.toLowerCase()
