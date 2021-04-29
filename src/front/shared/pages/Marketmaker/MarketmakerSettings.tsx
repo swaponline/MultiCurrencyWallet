@@ -488,41 +488,88 @@ class MarketmakerSettings extends Component<any, any> {
           </>
         )}
         {!isBalanceFetching && mnemonicSaved ? (
-          <>
-
-            <p>Маркетмейкинг BTC/WBTC : <span>
-              <Toggle checked={isMarketEnabled} onChange={this.handleToggleMarketmaker.bind(this)} />
-            </span></p>
-            <p>Спред: 0.5% (по умолчанию стоит 0.5%)</p>
-            {btcWallet ? (
-              <p>Баланс BTC: <span id='btcBalance'>{btcBalance}</span> BTC для попленения переведите на `{btcWallet.address}`</p>
-            ) : (
-              <p>Баланс BTC: <span id='btcBalance'>{btcBalance}</span> BTC</p>
-            )}
-            {ethWallet ? (
-              <p>Баланс ETH: {ethBalance} для пополнения переведите на `{ethWallet.address}`</p>
-            ) : (
-              <p>Баланс ETH: {ethBalance}</p>
-            )}
-            <p>Баланс {marketToken.toUpperCase()}: <span id='tokenBalance'>{tokenBalance}</span> {marketToken.toUpperCase()}</p>
-            {this._metamaskEnabled && (
-              <div>
-              {metamask.isConnected() ? (
-                <Button blue onClick={this.processDisconnectWallet.bind(this)}>Отключить Metamask</Button>
-              ) : (
-                <Button blue onClick={this.processConnectWallet.bind(this)}>Подключить Metamask</Button>
-              )}
+          <div styleName={`section-items ${isDark ? '--dark' : '' }`}>
+            <div styleName='section-items__item'>
+              <div styleName='mm-toggle'>
+                <p styleName='mm-toggle__text'>
+                  Маркетмейкинг BTC/WBTC
+                </p>
+                <span styleName='mm-toggle__switch'>
+                  <Toggle checked={isMarketEnabled} onChange={this.handleToggleMarketmaker.bind(this)} />
+                </span>
               </div>
-            )}
-            <FormattedMessage
-              id="MM_TotalBalance"
-              defaultMessage="Total balance {totalBalance} {token}, BTC"
-              values={{
-                totalBalance,
-                token: marketToken.toUpperCase(),
-              }}
-            />
-          </>
+              <p styleName='item-text__secondary'>Спред: 0.5% (по умолчанию стоит 0.5%)</p>
+            </div>
+            <div styleName='section-items__item'>
+              <p styleName='item-text__secondary-title'>
+                <FormattedMessage
+                  id="MM_TotalBalance"
+                  defaultMessage="Total balance:"
+                />
+              </p>
+              <p>
+                <span styleName='item__balance'>{totalBalance}</span>
+                {' '}
+                <span styleName='item-text__secondary'>{marketToken.toUpperCase()}, BTC</span>
+              </p>
+            </div>
+            <div styleName='section-items__item'>
+              {btcWallet ? (
+                  <>
+                    <p styleName='item-text__secondary-title'>
+                      Баланс BTC:
+                    </p>
+                    <p>
+                      <span id='btcBalance' styleName='item__balance'>{tokenBalance}</span>
+                      {' '}
+                      <span styleName='item-text__secondary'>BTC</span>
+                    </p>
+                    <p styleName='item-text__secondary'>для попленения переведите на {btcWallet.address}</p>
+                  </>
+                ) : (
+                  <>
+                    <p styleName='item-text__secondary-title'>
+                      Баланс BTC:
+                    </p>
+                    <p>
+                      <span id='btcBalance' styleName='item__balance'>{tokenBalance}</span>
+                      {' '}
+                      <span styleName='item-text__secondary'>BTC</span>
+                    </p>
+                  </>
+                )
+              }
+            </div>
+            <div styleName='section-items__item'>
+              <p styleName='item-text__secondary-title'>
+                Баланс {marketToken.toUpperCase()}:
+              </p>
+              <p>
+                <span id='tokenBalance' styleName='item__balance'>{tokenBalance}</span>
+                {' '}
+                <span styleName='item-text__secondary'>{marketToken.toUpperCase()}</span>
+              </p>
+              {this._metamaskEnabled && (
+                <div style={{ marginBottom: '15px' }}>
+                {metamask.isConnected() ? (
+                    <Button blue onClick={this.processDisconnectWallet.bind(this)}>Отключить Metamask</Button>
+                  ) : (
+                    <Button blue onClick={this.processConnectWallet.bind(this)}>Подключить Metamask</Button>
+                  )
+                }
+                </div>
+              )}
+              {ethWallet ? (
+                  <>
+                    <span styleName='item-text__secondary'>Баланс ETH: {ethBalance}</span>
+                    <p styleName='item-text__secondary'>для пополнения переведите на {ethWallet.address}</p>
+                  </>
+                ) : (
+                  <p styleName='item-text__secondary'>Баланс ETH: {ethBalance}</p>
+                )
+              }
+            </div>
+          </div>
         ) : (
           <>
             {mnemonicSaved && (
