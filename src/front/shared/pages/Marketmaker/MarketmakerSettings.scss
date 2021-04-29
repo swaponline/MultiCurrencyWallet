@@ -26,8 +26,6 @@
 
       &.--dark {
         .section-items__item {
-          box-shadow: $d-box-shadow;
-
           .item__balance {
             color: #fbfbfb;
           }
@@ -40,7 +38,6 @@
         width: 47%;
         padding: 15px 15px 0px 25px;
         border: 1px solid $inactive-border-color;
-        box-shadow: $l-box-shadow;
         border-radius: 5px;
 
         .item-text__secondary-title {
