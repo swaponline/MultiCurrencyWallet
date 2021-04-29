@@ -466,8 +466,22 @@ class MarketmakerSettings extends Component<any, any> {
       return swapsByIds[bId].createUnixTimeStamp - swapsByIds[aId].createUnixTimeStamp
     })
     return (
-      <div styleName='mm-settings-page'>
-        <h2 styleName="section-title">Настройки маркетмейкинга</h2>
+      <div styleName="mm-settings-page">
+        <div styleName="promoText">
+          <h2 styleName="section-title">
+            <FormattedMessage
+              id="MM_Promo_Title"
+              defaultMessage="How to make money on atomic swaps?"
+            />
+          </h2>
+          <p>
+            <FormattedMessage
+              id="MM_Promo_TitleBody"
+              defaultMessage="Become a marketmaker by providing your capital to atomic swaps. When users make orders, you will earn 0.5%."
+            />
+          </p>
+        </div>
+
         <section styleName={`${isDark ? 'dark' : '' }`}>
         {!mnemonicSaved && (
           <>
@@ -494,7 +508,7 @@ class MarketmakerSettings extends Component<any, any> {
                 <p styleName='mm-toggle__text'>
                   <FormattedMessage
                     id="MM_ToggleText"
-                    defaultMessage="Маркетмейкинг BTC/WBTC"
+                    defaultMessage="Marketmaking BTC/WBTC"
                   />
                 </p>
                 <span styleName='mm-toggle__switch'>
@@ -506,8 +520,8 @@ class MarketmakerSettings extends Component<any, any> {
             <div styleName='section-items__item'>
               <p styleName='item-text__secondary-title'>
                 <FormattedMessage
-                  id="MM_TotalBalance"
-                  defaultMessage="Total balance:"
+                  id="TotalEarned"
+                  defaultMessage="Total earned:"
                 />
               </p>
               <p>
