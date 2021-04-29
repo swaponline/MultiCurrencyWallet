@@ -302,7 +302,12 @@ class MarketmakerSettings extends Component<any, any> {
     if (!isEthBalanceOk) {
       hasError = true
       actions.modals.open(constants.modals.AlertModal, {
-        message: <FormattedMessage id="MM_NotEnoughtEth" defaultMessage="Недостаточно ETH для оплаты коммисии майнеров" />,
+        message: (
+          <FormattedMessage
+            id="MM_NotEnoughtEth"
+            defaultMessage="Not enough ETH to pay the miners commission. You need to have at least 0.02 ETH"
+          />
+        ),
       })
     }
     if (!isTokenBalanceOk && !isBtcBalanceOk) {
@@ -310,8 +315,8 @@ class MarketmakerSettings extends Component<any, any> {
       actions.modals.open(constants.modals.AlertModal, {
         message: (
           <FormattedMessage
-            id="MM_NotEnoughtCoins"
-            defaultMessage="Недостаточно средств. Вам нужно пополнить BTC или {token}"
+            id="MM_NotEnoughCoins"
+            defaultMessage="Insufficient funds. You need to top up your BTC or {token}"
             values={{
               token: marketToken.toUpperCase(),
             }}
@@ -468,7 +473,7 @@ class MarketmakerSettings extends Component<any, any> {
     return (
       <div styleName="mm-settings-page">
         <div styleName="promoText">
-          <h2 styleName="section-title">
+          <h2>
             <FormattedMessage
               id="MM_Promo_Title"
               defaultMessage="How to make money on atomic swaps?"
@@ -495,7 +500,7 @@ class MarketmakerSettings extends Component<any, any> {
               <Button blue onClick={this.handleSaveMnemonic.bind(this)}>
                 <FormattedMessage
                   id="MM_MakeSaveMnemonic"
-                  defaultMessage="Сохранить секретную фразу"
+                  defaultMessage="Save a secret phrase"
                 />
               </Button>
             </div>
@@ -515,7 +520,12 @@ class MarketmakerSettings extends Component<any, any> {
                   <Toggle checked={isMarketEnabled} onChange={this.handleToggleMarketmaker.bind(this)} />
                 </span>
               </div>
-              <p styleName='item-text__secondary'>Спред: 0.5% (по умолчанию стоит 0.5%)</p>
+              <p styleName='item-text__secondary'>
+                <FormattedMessage
+                  id="MMPercentEarn"
+                  defaultMessage="You will earn 0.5% from each swap"
+                />
+              </p>
             </div>
             <div styleName='section-items__item'>
               <p styleName='item-text__secondary-title'>
@@ -544,7 +554,7 @@ class MarketmakerSettings extends Component<any, any> {
                     <p styleName='item-text__secondary-title'>
                       <FormattedMessage
                         id="MM_BTCBalance"
-                        defaultMessage="Баланс BTC:"
+                        defaultMessage="Balance BTC:"
                       />
                     </p>
                     <p>
@@ -555,7 +565,7 @@ class MarketmakerSettings extends Component<any, any> {
                     <p styleName='item-text__secondary'>
                       <FormattedMessage
                         id="MM_DepositeWallet"
-                        defaultMessage="для попленения переведите на {address}"
+                        defaultMessage="to top up, transfer to {address}"
                         values={{
                           address: btcWallet.address,
                         }}
@@ -567,7 +577,7 @@ class MarketmakerSettings extends Component<any, any> {
                     <p styleName='item-text__secondary-title'>
                       <FormattedMessage
                         id="MM_BTCBalance"
-                        defaultMessage="Баланс BTC:"
+                        defaultMessage="Balance BTC:"
                       />
                     </p>
                     <p>
@@ -583,7 +593,7 @@ class MarketmakerSettings extends Component<any, any> {
               <p styleName='item-text__secondary-title'>
                 <FormattedMessage
                   id="MM_TokenBalance"
-                  defaultMessage="Баланс {token}:"
+                  defaultMessage="Balance {token}:"
                   values={{
                     token: marketToken.toUpperCase(),
                   }}
@@ -600,14 +610,14 @@ class MarketmakerSettings extends Component<any, any> {
                     <Button blue onClick={this.processDisconnectWallet.bind(this)}>
                       <FormattedMessage
                         id="MM_DisconnectMetamask"
-                        defaultMessage="Отключить Metamask"
+                        defaultMessage="Disconnect Metamask"
                       />
                     </Button>
                   ) : (
                     <Button blue onClick={this.processConnectWallet.bind(this)}>
                       <FormattedMessage
                         id="MM_ConnectMetamask"
-                        defaultMessage="Подключить Metamask"
+                        defaultMessage="Connect Metamask"
                       />
                     </Button>
                   )
@@ -619,16 +629,16 @@ class MarketmakerSettings extends Component<any, any> {
                     <span styleName='item-text__secondary'>
                       <FormattedMessage
                         id="MM_ETHBalance"
-                        defaultMessage="Баланс ETH: {balance}"
+                        defaultMessage="Balance ETH: {balance} (for miners fee)"
                         values={{
-                          balance: ethBalance
+                          balance: new BigNumber(ethBalance).dp(5).toNumber()
                         }}
                       />
                     </span>
                     <p styleName='item-text__secondary'>
                       <FormattedMessage
                         id="MM_DepositeWallet"
-                        defaultMessage="для попленения переведите на {address}"
+                        defaultMessage="to top up, transfer to {address}"
                         values={{
                           address: ethWallet.address,
                         }}
@@ -639,9 +649,9 @@ class MarketmakerSettings extends Component<any, any> {
                   <p styleName='item-text__secondary'>
                     <FormattedMessage
                       id="MM_ETHBalance"
-                      defaultMessage="Баланс ETH: {balance}"
+                      defaultMessage="Balance ETH: {balance} (for miners fee)"
                       values={{
-                        balance: ethBalance
+                        balance: new BigNumber(ethBalance).dp(5).toNumber()
                       }}
                     />
                   </p>

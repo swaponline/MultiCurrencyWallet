@@ -2,7 +2,8 @@
 
   .promoText {
     text-align: center;
-    margin: 2em 0 3em;
+    margin: 1.6em 0 2.2em;
+    padding: 0.3em;
 
     p {
       max-width: 30em;
@@ -209,6 +210,14 @@
   }
 
   @media all and (max-width: 767px) {
+    .promoText {
+      font-size: 0.9em;
+
+      h2 {
+        font-size: 1.8em;
+      }
+    }
+    
     .history {
       padding: 15px;
       margin-top: 0;
