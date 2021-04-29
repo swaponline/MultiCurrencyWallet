@@ -75,7 +75,7 @@ const CreateWallet: React.FC<any> = (props) => {
     'BTC (SMS-Protected)',
     'BTC (PIN-Protected)',
     'BTC (Multisig)',
-    'ETH',
+    ...[(config.binance) ? 'BNB' : 'ETH'],
     'GHOST',
     'NEXT',
   ]
@@ -140,7 +140,7 @@ const CreateWallet: React.FC<any> = (props) => {
       'BTC (SMS-Protected)',
       'BTC (PIN-Protected)',
       'BTC (Multisig)',
-      'ETH',
+      ...[(config.binance) ? 'BNB' : 'ETH'],
       'GHOST',
       'NEXT',
     ]

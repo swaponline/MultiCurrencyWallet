@@ -16,6 +16,12 @@ import * as mnemonicUtils from 'common/utils/mnemonic'
 import metamask from 'helpers/metamask'
 
 
+console.log('>>>>> actions eth', config)
+
+
+const ethLabel = (config.binance) ? 'Binance Chair' : 'Ethereum'
+const ethLabelShort = (config.binance) ? 'BNB' : 'ETH'
+
 const hasAdminFee = (
   config
     && config.opts
@@ -153,6 +159,12 @@ const login = (privateKey, mnemonic = null, mnemonicKeys = null) => {
   web3.eth.accounts.wallet.add(data.privateKey)
   data.isMnemonic = sweepToMnemonicReady
 
+  data = {
+    ...data,
+    fullName: ethLabel,
+    currency: ethLabelShort,
+  }
+
   reducers.user.setAuthData({ name: 'ethData', data })
   window.getEthAddress = () => data.address
   referral.newReferral(data.address)
@@ -182,8 +194,8 @@ const login = (privateKey, mnemonic = null, mnemonicKeys = null) => {
     reducers.user.addWallet({
       name: 'ethMnemonicData',
       data: {
-        currency: 'ETH',
-        fullName: 'Ethereum (New)',
+        currency: ethLabelShort,
+        fullName: `${ethLabel} (New)`,
         balance: 0,
         isBalanceFetched: false,
         balanceError: null,
