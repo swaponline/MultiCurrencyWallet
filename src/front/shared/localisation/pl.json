@@ -5955,7 +5955,7 @@
   },
   {
     "id": "MM_ETHBalance",
-    "message": "Równowaga ETH: {balance} (for miners fee)",
+    "message": "Równowaga ETH: {balance} (dla górników opłata)",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]

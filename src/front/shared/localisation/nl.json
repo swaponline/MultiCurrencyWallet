@@ -5662,7 +5662,7 @@
   },
   {
     "id": "Orderbook",
-    "message": "Orderbook",
+    "message": "Orderboek",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
@@ -5951,7 +5951,7 @@
   },
   {
     "id": "MM_ETHBalance",
-    "message": "Balans ETH: {balance} (for miners fee)",
+    "message": "Balans ETH: {balance} (voor mijnwerkers vergoeding)",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]

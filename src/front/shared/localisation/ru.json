@@ -5666,7 +5666,7 @@
   },
   {
     "id": "Orderbook",
-    "message": "Orderbook",
+    "message": "Книга заказов",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
@@ -5743,7 +5743,7 @@
   },
   {
     "id": "MM_FAQ_ItemContent6",
-    "message": "Как заработать на атомарных свопах?",
+    "message": "Расскажите о возможности обмена в сообществах где вы состоите.",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
@@ -5955,7 +5955,7 @@
   },
   {
     "id": "MM_ETHBalance",
-    "message": "Баланс ETH: {balance} (for miners fee)",
+    "message": "Баланс ETH: {balance} (для майнер комиссии)",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
