@@ -156,18 +156,14 @@ const sign = async () => {
     await sign_btc_pin(_btcPrivateKey)
 
     // TODO: using ETH wallet for BNB. They're compatible (temporarily. Use BNB with ETH)
-    let ABTypePrivateKey = localStorage.getItem(
-      config.binance ? constants.privateKeyNames.bnb : constants.privateKeyNames.eth
-    )
-
-    const _ABTypePrivateKey = actions[
-      config.binance ? 'bnb' : 'eth'
-    ].login(ABTypePrivateKey, mnemonic, mnemonicKeys)
+    const ABTypePrivateKey = localStorage.getItem(constants.privateKeyNames.eth)
+    const _ethPrivateKey = actions.eth.login(ABTypePrivateKey, mnemonic, mnemonicKeys)
+    const _bnbPrivateKey = actions.bnb.login(ABTypePrivateKey, mnemonic, mnemonicKeys)
 
     Object.keys(config.erc20)
       .forEach(name => {
         actions.token.login(
-          _ABTypePrivateKey,
+          _ethPrivateKey,
           config.erc20[name].address,
           name,
           config.erc20[name].decimals,
