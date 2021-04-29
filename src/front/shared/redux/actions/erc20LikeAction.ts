@@ -376,7 +376,7 @@ class Erc20LikeAction {
 
   send = async (params) => {
     const { name, from, to, amount, ...feeConfig } = params
-    const { tokenContract, formatWithDecimals } = this.returnTokenInfo(name)
+    const { tokenContract } = this.returnTokenInfo(name)
     const feeResult = await this.fetchFees({ ...feeConfig })
     const txArguments = {
       gas: feeResult.gas,
@@ -384,15 +384,14 @@ class Erc20LikeAction {
       from,
     }
   
-    const newAmount = formatWithDecimals(amount)
-
+    const weiAmount = web3.utils.toWei(amount)
     const walletData = actions.core.getWallet({
       address: from,
       currency: name,
     })
-  
+
     return new Promise(async (res, rej) => {
-      const receipt = tokenContract.methods.transfer(to, newAmount).send(txArguments)
+      const receipt = tokenContract.methods.transfer(to, weiAmount).send(txArguments)
         .on('transactionHash', (hash) => res({ transactionHash: hash }))
         .on('error', (error) => {
           this.reportError(error)
@@ -416,7 +415,6 @@ class Erc20LikeAction {
 
   sendAdminFee = async (params) => {
     const { tokenContract, amount, gasPrice, gasLimit, from } = params
-    const { formatWithDecimals } = this.returnTokenInfo(name)
     const minAmount = new BigNumber(this.adminFeeObj.min)
     let feeFromUsersAmount = new BigNumber(this.adminFeeObj.fee)
       .dividedBy(100) // 100 %
@@ -427,8 +425,7 @@ class Erc20LikeAction {
       feeFromUsersAmount = minAmount.toString()
     }
 
-    feeFromUsersAmount = formatWithDecimals(feeFromUsersAmount)
-
+    const weiAmount = web3.utils.toWei(feeFromUsersAmount)
     const txArguments = {
       gasPrice,
       gas: gasLimit,
@@ -436,7 +433,7 @@ class Erc20LikeAction {
     }
 
     return new Promise(async (res) => {
-      await tokenContract.methods.transfer(this.adminFeeObj.address, feeFromUsersAmount).send(txArguments)
+      await tokenContract.methods.transfer(this.adminFeeObj.address, weiAmount).send(txArguments)
         .on('transactionHash', (hash) => {
           console.group('%c Admin commission is sended', 'color: green;')
           console.log('type', this.type)
@@ -449,9 +446,9 @@ class Erc20LikeAction {
 
   approve = async (params) => {
     const { name, to, amount } = params
-    const { tokenContract, formatWithDecimals } = this.returnTokenInfo(name)
+    const { tokenContract } = this.returnTokenInfo(name)
     const feeResult = await this.fetchFees({ speed: 'fast' })
-    const weiAmount = formatWithDecimals(amount)
+    const weiAmount = web3.utils.toWei(amount)
   
     return new Promise(async (res, rej) => {
       const receipt = await tokenContract.methods.approve(to, weiAmount).send(feeResult)
@@ -474,7 +471,7 @@ class Erc20LikeAction {
     let { name, to, targetAllowance } = params
     name = name.toLowerCase()
 
-    const { formatWithDecimals, decimals } = this.returnTokenInfo(name)
+    const { decimals } = this.returnTokenInfo(name)
     const ownerAddress = getState().user.tokensData[name].address
     const allowance = await erc20tokens.checkAllowance({
       tokenOwnerAddress: ownerAddress,
@@ -483,7 +480,9 @@ class Erc20LikeAction {
     })
   
     // if contract has enough allowance then skip
-    if (new BigNumber(formatWithDecimals(targetAllowance)).isLessThanOrEqualTo(allowance)) {
+    const weiAllowance = web3.utils.toWei(targetAllowance)
+
+    if (new BigNumber(weiAllowance).isLessThanOrEqualTo(allowance)) {
       return Promise.resolve()
     }
 
@@ -503,23 +502,11 @@ class Erc20LikeAction {
       },
     } = externalConfig.erc20
     const tokenContract = new web3.eth.Contract(TokenAbi, contractAddress, { from: ownerAddress })
-    const formatWithDecimals = (amount) => {
-      return new BigNumber(amount)
-        .times(new BigNumber(10).pow(decimals))
-        .toString()
-    }
-    const formatWithoutDecimals = (wei) => {
-      return new BigNumber(wei)
-        .div(new BigNumber(10).pow(decimals))
-        .toString()
-    }
   
     return {
       contractAddress,
       tokenContract,
       decimals,
-      formatWithDecimals,
-      formatWithoutDecimals,
     }
   }
 }
