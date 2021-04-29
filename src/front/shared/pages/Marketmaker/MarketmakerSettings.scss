@@ -69,6 +69,20 @@
       .section-items__item:nth-child(4) {
         margin-left: 15px;
       }
+
+      @media (max-width: 767px) {
+        .section-items__item {
+          width: 100%;
+        }
+
+        .section-items__item {
+          margin-bottom: 15px;
+        }
+        .section-items__item:nth-child(2),
+        .section-items__item:nth-child(4) {
+          margin-left: 0;
+        }
+      }
     }
   }
 

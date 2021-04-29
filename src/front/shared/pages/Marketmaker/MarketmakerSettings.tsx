@@ -520,7 +520,7 @@ class MarketmakerSettings extends Component<any, any> {
                       Баланс BTC:
                     </p>
                     <p>
-                      <span id='btcBalance' styleName='item__balance'>{tokenBalance}</span>
+                      <span id='btcBalance' styleName='item__balance'>{btcBalance}</span>
                       {' '}
                       <span styleName='item-text__secondary'>BTC</span>
                     </p>
@@ -532,7 +532,7 @@ class MarketmakerSettings extends Component<any, any> {
                       Баланс BTC:
                     </p>
                     <p>
-                      <span id='btcBalance' styleName='item__balance'>{tokenBalance}</span>
+                      <span id='btcBalance' styleName='item__balance'>{btcBalance}</span>
                       {' '}
                       <span styleName='item-text__secondary'>BTC</span>
                     </p>
