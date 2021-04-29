@@ -195,7 +195,6 @@ class Header extends Component<any, any> {
     const isPartialPage = path.includes(exchange) || path === `/ru${exchange}`
 
     const isMarketPage = path.includes(marketmaker) || path.includes(marketmaker_short)
-    console.log('>>>>> isMarketPage', isMarketPage)
     const didOpenWalletCreate = localStorage.getItem(isWalletCreate)
 
     const wasOnWalletLs = localStorage.getItem(wasOnWallet)
