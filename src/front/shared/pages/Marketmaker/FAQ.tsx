@@ -20,7 +20,7 @@ class FAQ extends React.Component<{isDark: boolean}, {}> {
         <section styleName={`${isDark ? 'dark' : '' }`}>
           <h2 styleName="section-title">
             <FormattedMessage
-              id="MM_FAQ_Title"
+              id="MainFAQHeader"
               defaultMessage="FAQ"
             />
           </h2>
@@ -96,7 +96,7 @@ class FAQ extends React.Component<{isDark: boolean}, {}> {
               <div>
                 <FormattedMessage
                   id="MM_FAQ_ItemContent3-1"
-                  defaultMessage="It depends on the number of exchanges and the spread. But if there are no exchanges, you will get SWAP tokens at the rate of 10% APY. To get it, write to "
+                  defaultMessage="It depends on the number of swaps and the spread. But if there are no swaps, you will get SWAP tokens at the rate of 10% APY. To get it, write to "
                 />
                 <a href="https://t.me/swaponlinebot" target="_blank">
                   <FormattedMessage
