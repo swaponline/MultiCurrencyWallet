@@ -1,5 +1,5 @@
 import reducers from 'redux/core/reducers'
-import { getState } from 'redux/core'
+import getState from './getReduxState'
 import actions from 'redux/actions'
 import { cacheStorageGet, cacheStorageSet, constants } from 'helpers'
 import config from 'app-config'
