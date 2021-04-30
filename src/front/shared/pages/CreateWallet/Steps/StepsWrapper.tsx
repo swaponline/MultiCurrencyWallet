@@ -12,11 +12,12 @@ import SecondStep from './SecondStep'
 
 const isWidgetBuild = config && config.isWidget
 
+
 @connect(({ currencies: { items: currencies } }) => ({ currencies }))
 export default class StepsWrapper extends Component<any, any> {
   defaultStartPack = [
     ...(!config.opts.curEnabled || config.opts.curEnabled.btc) ? [{ name: "BTC", capture: "Bitcoin" }] : [],
-    ...(!config.opts.curEnabled || config.opts.curEnabled.eth) ? [{ name: "ETH", capture: "Ethereum" }] : [],
+    ...(!config.opts.curEnabled || config.opts.curEnabled.eth) ? [(config.binance) ? { name: "BNB", capture: "Binance" } : { name: "ETH", capture: "Ethereum" }] : [],
     ...(!config.opts.curEnabled || config.opts.curEnabled.ghost) ? [{ name: "GHOST", capture: "Ghost" }] : [],
     ...(!config.opts.curEnabled || config.opts.curEnabled.next) ? [{ name: "NEXT", capture: "NEXT.coin" }] : [],
     ...(process.env.MAINNET) ? [{ name: "SWAP", capture: "Swap" }] : [{ name: "WEENUS", capture: "Weenus" }],
@@ -27,7 +28,7 @@ export default class StepsWrapper extends Component<any, any> {
 
   widgetStartPack = [
     ...(!config.opts.curEnabled || config.opts.curEnabled.btc) ? [{ name: "BTC", capture: "Bitcoin" }] : [],
-    ...(!config.opts.curEnabled || config.opts.curEnabled.eth) ? [{ name: "ETH", capture: "Ethereum" }] : [],
+    ...(!config.opts.curEnabled || config.opts.curEnabled.eth) ? [(config.binance) ? { name: "BNB", capture: "Binance" } : { name: "ETH", capture: "Ethereum" }] : [],
     ...(!config.opts.curEnabled || config.opts.curEnabled.ghost) ? [{ name: "GHOST", capture: "Ghost" }] : [],
     ...(!config.opts.curEnabled || config.opts.curEnabled.next) ? [{ name: "NEXT", capture: "NEXT.coin" }] : [],
   ]
@@ -47,7 +48,7 @@ export default class StepsWrapper extends Component<any, any> {
         this.defaultStartPack.push({ name: "BTC", capture: "Bitcoin" })
       }
       if (!config.opts.curEnabled || config.opts.curEnabled.eth) {
-        this.defaultStartPack.push({ name: "ETH", capture: "Ethereum" })
+        this.defaultStartPack.push((config.binance) ? { name: "BNB", capture: "Binance" } : { name: "ETH", capture: "Ethereum" })
       }
       if (!config.opts.curEnabled || config.opts.curEnabled.ghost) {
         this.defaultStartPack.push({ name: "GHOST", capture: "Ghost" })
