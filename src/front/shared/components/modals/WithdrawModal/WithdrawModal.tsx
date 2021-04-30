@@ -886,7 +886,11 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
       },
     })
 
-    const dataCurrency = isEthToken ? 'ETH' : currency.toUpperCase()
+    const dataCurrency = isEthToken
+      ? config.binance
+        ? 'BNB'
+        : 'ETH'
+      : currency.toUpperCase()
 
     const formRender = (
       <Fragment>
