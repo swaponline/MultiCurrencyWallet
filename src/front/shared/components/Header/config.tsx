@@ -106,7 +106,7 @@ export const getMenuItems = (props) => {
   if (externalConfig.entry === `testnet` && !isWidgetBuild) {
     const marketmakerItem = {
       title: intl.formatMessage(messages.marketmaker),
-      link: links.marketmaker,
+      link: `${links.marketmaker}/WBTC`,
       exact: true,
       currentPageFlag: true,
     }

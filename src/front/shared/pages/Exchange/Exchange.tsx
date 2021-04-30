@@ -87,7 +87,6 @@ type ExchangeState = {
   haveFiat: number
   getFiat: number
   maxBuyAmount: BigNumber
-  hasTokenAllowance: boolean
 
   getAmount: string
   haveCurrency: string
@@ -96,6 +95,8 @@ type ExchangeState = {
   getType: string
   peer: string
 
+  ordersIsOpen: boolean
+  hasTokenAllowance: boolean
   extendedControls: boolean
   isLowAmount: boolean
   isNonOffers: boolean
@@ -106,9 +107,9 @@ type ExchangeState = {
   isPending: boolean
   isTokenSell: boolean
   isPendingTokenApprove: boolean
-
   isNoAnyOrders?: boolean
   isFullLoadingComplete?: boolean
+
   exHaveRate?: string
   exGetRate?: string
   orderId?: string
@@ -277,6 +278,7 @@ class Exchange extends PureComponent<any, any> {
       isTurbo: false,
       redirectToSwap: null,
       isPending: true,
+      ordersIsOpen: false,
     }
 
     if (config.isWidget) {
@@ -1453,6 +1455,12 @@ console.log('>>>>>',isUTXOSell, hasEnoughBalanceSellAmount, hasEnoughBalanceForS
     })
   }
 
+  toggleOrdersVisibility = () => {
+    this.setState((state) => ({
+      ordersIsOpen: !state.ordersIsOpen
+    }))
+  }
+
   showIncompleteSwap = () => {
     const { desclineOrders } = this.state
     actions.modals.open(constants.modals.IncompletedSwaps, {
@@ -1500,6 +1508,7 @@ console.log('>>>>>',isUTXOSell, hasEnoughBalanceSellAmount, hasEnoughBalanceForS
       haveBalance,
       isTurbo,
       isPending,
+      ordersIsOpen,
     } = this.state
 
     const sellCoin = haveCurrency.toUpperCase()
@@ -1956,18 +1965,30 @@ console.log('>>>>>',isUTXOSell, hasEnoughBalanceSellAmount, hasEnoughBalanceForS
               <span styleName="scrollTrigger" />
             </div>
           )}
+
           <Fragment>
             <div styleName="container">
               <Promo />
               {Form}
-              <Orders
-                sell={haveCurrency}
-                buy={getCurrency}
-                linkedOrderId={linkedOrderId}
-                pairFees={pairFees}
-                balances={balances}
-                checkSwapAllow={this.checkBalanceForSwapPossibility}
-              />
+
+              <Button
+                onClick={this.toggleOrdersVisibility}
+                styleName="button orderbook"
+                brand
+              >
+                <FormattedMessage id="Orderbook" defaultMessage='Orderbook' />
+              </Button>
+
+              {ordersIsOpen ? (
+                <Orders
+                  sell={haveCurrency}
+                  buy={getCurrency}
+                  linkedOrderId={linkedOrderId}
+                  pairFees={pairFees}
+                  balances={balances}
+                  checkSwapAllow={this.checkBalanceForSwapPossibility}
+                />
+              ) : null}
             </div>
           </Fragment>
         </div>

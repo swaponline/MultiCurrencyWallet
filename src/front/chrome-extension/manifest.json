@@ -15,12 +15,9 @@
     "default_icon": "./icons/icon-32.png",
     "default_title": "MultiCurrencyWallet"
   },
-  "permissions": [
-    "activeTab"
-  ],
   "background": {
-    "scripts": ["./background.js"],
+    "page": "background.html",
     "persistent": true
   },
-  "content_security_policy": "script-src 'self' 'unsafe-eval' https://unpkg.com/ 'sha256-TR7MLOIXkVyhGy1opDnK9AYBn91yweeiK+ZugIb3/8o='; object-src 'self'"
+  "content_security_policy": "script-src 'self' 'unsafe-eval' https://unpkg.com/ 'sha256-TR7MLOIXkVyhGy1opDnK9AYBn91yweeiK+ZugIb3/8o=' 'sha256-7gskNXIO+9RC6txKtUVnYXfCPELUCaUoogTijiMBHLk='; object-src 'self'"
 }
