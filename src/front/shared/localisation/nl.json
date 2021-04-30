@@ -3499,7 +3499,7 @@
   },
   {
     "id": "MainFAQ2_content1",
-    "message": "Voor ERC20 tokens is het nodig dat u tenminste 0.001 ETH in uw wallet heeft. Onthoud! Bij het zenden van ERC20 tokens, is het nodig om ETH the hebben voor de miner fee^ Dit is geldt ook voor alle atomic swaps voor ETH & ERC20. Opmerkiing: U kunt de benodigde 'miner fee' voor elke valuto vinden via google.",
+    "message": "Voor {tokenType} tokens is het nodig dat u tenminste 0.001 {currency} in uw wallet heeft. Onthoud! Bij het zenden van {tokenType} tokens, is het nodig om {currency} the hebben voor de miner fee^ Dit is geldt ook voor alle atomic swaps voor {currency} & {tokenType}. Opmerkiing: U kunt de benodigde 'miner fee' voor elke valuto vinden via google.",
     "files": [
       "src/front/shared/components/FAQ/FAQ.tsx"
     ]

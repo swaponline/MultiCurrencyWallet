@@ -3524,7 +3524,7 @@
   },
   {
     "id": "MainFAQ2_content1",
-    "message": "Para los tokens ERC20, se requiere que tenga al menos 0.001 ETH en sus billeteras.¡Recuerda! al enviar tokens ERC20, debe mantener algunos ETH como tarifas de mineros para las transacciones. Este también es el caso de todos los intercambios atómicos por tokens ETH y ERC20. ",
+    "message": "Para los tokens {tokenType}, se requiere que tenga al menos 0.001 {currency} en sus billeteras.¡Recuerda! al enviar tokens {tokenType}, debe mantener algunos {currency} como tarifas de mineros para las transacciones. Este también es el caso de todos los intercambios atómicos por tokens {currency} y {tokenType}. ",
     "files": [
       "src/front/shared/components/FAQ/FAQ.tsx"
     ]

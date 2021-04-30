@@ -3524,7 +3524,7 @@
   },
   {
     "id": "MainFAQ2_content1",
-    "message": "For ERC20 tokens, it is required that you have at least 0.001 ETH on your wallets. Remember! when sending ERC20 tokens, you are required to hold some ETH as miners fees for transactions. This is also the case for all atomic swaps for ETH & ERC20 tokens.",
+    "message": "For {tokenType} tokens, it is required that you have at least 0.001 {currency} on your wallets. Remember! when sending {tokenType} tokens, you are required to hold some {currency} as miners fees for transactions. This is also the case for all atomic swaps for {currency} & {tokenType} tokens.",
     "files": [
       "src/front/shared/components/FAQ/FAQ.tsx"
     ]
