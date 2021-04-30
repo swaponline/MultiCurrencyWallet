@@ -495,7 +495,6 @@ const getWallets = (options) => {
 
 const fetchWalletBalance = async (walletData): Promise<number> => {
   const name = helpers.getCurrencyKey(walletData.currency.toLowerCase(), true)
-  console.log('>>>> action name', name)
   if (helpers.ethToken.isEthToken({ name })) {
     try {
       const balance = await actions.token.fetchBalance(
@@ -514,7 +513,6 @@ const fetchWalletBalance = async (walletData): Promise<number> => {
       typeof actions[name].fetchBalance === `function`
     ) {
       try {
-        console.log('>>>>> fetch balance', walletData, walletData.address, name)
         const balance = await actions[name].fetchBalance(walletData.address)
         return new BigNumber(balance).toNumber()
       } catch (err) {
@@ -528,7 +526,6 @@ const fetchWalletBalance = async (walletData): Promise<number> => {
 }
 
 const rememberSwap = (swap) => {
-  console.log('>>>>>> rememberSwap', swap)
   let swapsIds = JSON.parse(localStorage.getItem('swapId'))
 
   if (swapsIds === null || swapsIds.length === 0) {

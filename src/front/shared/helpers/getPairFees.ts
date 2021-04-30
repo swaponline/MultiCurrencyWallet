@@ -216,7 +216,6 @@ export const getPairFees = (params: PairFeesParams): Promise<IPairFees> => {
       byCoins,
     }
 
-console.log('>>> getPairFees', result)
     feeResolved(result)
   })
 }

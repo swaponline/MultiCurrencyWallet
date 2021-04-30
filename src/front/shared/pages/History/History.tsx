@@ -72,7 +72,6 @@ class History extends Component<any, any> {
       }
     } = props
 
-console.log('>>>>!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! is History page')
     const commentsList = actions.comments.getComments()
     this.state = {
       page,

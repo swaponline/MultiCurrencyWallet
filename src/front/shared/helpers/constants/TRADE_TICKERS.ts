@@ -61,7 +61,7 @@ if (config && config.isWidget) {
     }
   })
 }
-console.log('>>> !!!!!!!!!!!!!!!!!!!!! pairs', swap)
+
 export default [
   ...swap,
 ]

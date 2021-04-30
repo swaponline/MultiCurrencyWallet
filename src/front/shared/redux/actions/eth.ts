@@ -16,9 +16,6 @@ import * as mnemonicUtils from 'common/utils/mnemonic'
 import metamask from 'helpers/metamask'
 
 
-console.log('>>>>> actions eth', config)
-
-
 const ethLabel = (config.binance) ? 'Binance Chair' : 'Ethereum'
 const ethLabelShort = (config.binance) ? 'BNB' : 'ETH'
 

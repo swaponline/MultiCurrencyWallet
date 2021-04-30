@@ -714,9 +714,7 @@ class Exchange extends PureComponent<any, any> {
       balances,
     } = this.state
 
-console.log('>>> get eth for feee',balances)
     const ethBalance = (balances && balances[(config.binance) ? `BNB` : `ETH`]) ? balances[(config.binance) ? `BNB` : `ETH`] : 0
-    console.log('>>>>>>>', ethBalance)
     return ethBalance
   }
 
@@ -733,7 +731,7 @@ console.log('>>> get eth for feee',balances)
     let hasEnoughBalanceForBuyFee = false
     let hasEnoughBalanceForFullPayment = false
     let balanceIsOk = false
-console.log('>>> check pair allow', balances)
+
     try {
       const sellFee = pairFees && pairFees.sell?.fee
       const buyFee = pairFees && pairFees.buy?.fee
@@ -749,7 +747,6 @@ console.log('>>> check pair allow', balances)
         ? ethBalance.isGreaterThanOrEqualTo(buyFee)
         : sellBalance.isGreaterThanOrEqualTo(buyFee)
 
-console.log('>>>>>',isUTXOSell, hasEnoughBalanceSellAmount, hasEnoughBalanceForSellFee, hasEnoughBalanceForBuyFee, pairFees)
       if (isUserSellToken && hasEnoughBalanceSellAmount && ethBalance.isGreaterThanOrEqualTo(sellFee)) {
         hasEnoughBalanceForFullPayment = true
       } else if (isUserBuyToken && (fromType === AddressType.Custom || hasEnoughBalanceSellAmount) && ethBalance.isGreaterThanOrEqualTo(buyFee)) {
