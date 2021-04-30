@@ -6059,8 +6059,50 @@
     ]
   },
   {
-    "id": "TotalEarned",
+    "id": "MM_ToggleTextEnabled",
+    "message": "Musisz być cały czas online, w przeciwnym razie nie zarobisz",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_ToggleTextDisabled",
+    "message": "Włącz przełącznik, aby zacząć zarabiać",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_TotalEarned",
     "message": "Ogółem zarobione:",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_MarketmakingSimbols",
+    "message": "{token} + BTC",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_MarketmakingBalanceTitle",
+    "message": "Saldo tworzenia rynku:",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_whatIsWBTCTooltip1",
+    "message": "Wrapped Bitcoin (WBTC) to token ERC-20, który reprezentuje Bitcoin (BTC) w łańcuchu blokowym Ethereum.",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_whatIsWBTCTooltip2",
+    "message": "WBTC zostało stworzone, aby umożliwić posiadaczom Bitcoinów udział w zdecentralizowanych aplikacjach finansowych („DeFi”), które są popularne w Ethereum.",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]

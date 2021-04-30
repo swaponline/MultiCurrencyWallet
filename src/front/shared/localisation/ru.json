@@ -6059,8 +6059,50 @@
     ]
   },
   {
-    "id": "TotalEarned",
+    "id": "MM_ToggleTextEnabled",
+    "message": "Вы должны быть в сети все время, иначе вы не будете зарабатывать",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_ToggleTextDisabled",
+    "message": "Включите переключатель, чтобы начать зарабатывать",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_TotalEarned",
     "message": "Всего заработано:",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_MarketmakingSimbols",
+    "message": "{token} + BTC",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_MarketmakingBalanceTitle",
+    "message": "Баланс маркетмейкинга:",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_whatIsWBTCTooltip1",
+    "message": "Wrapped Bitcoin (WBTC) - это токен ERC-20, который представляет Биткойн (BTC) в блокчейне Ethereum.",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_whatIsWBTCTooltip2",
+    "message": "WBTC был создан, чтобы позволить держателям биткойнов участвовать в приложениях децентрализованных финансов («DeFi»), которые популярны на Ethereum.",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
