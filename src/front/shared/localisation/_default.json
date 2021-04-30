@@ -5711,7 +5711,7 @@
   },
   {
     "id": "MM_FAQ_ItemContent3-1",
-    "message": "It depends on the number of swaps and the spread. But if there are no swaps, you will get SWAP tokens at the rate of 10% APY. To get it, write to ",
+    "message": "It depends on the number of swaps and the spread. Ask any questions ",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
