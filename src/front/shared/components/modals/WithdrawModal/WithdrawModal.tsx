@@ -597,6 +597,9 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
     if (isEthToken) {
       return typeforce.isCoinAddress.ETH(address)
     }
+    if (config.binance && getCurrencyKey(currency, false).toUpperCase() === `BNB`) {
+      return typeforce.isCoinAddress.ETH(address)
+    }
 
     return typeforce.isCoinAddress[getCurrencyKey(currency, false).toUpperCase()](address)
   }

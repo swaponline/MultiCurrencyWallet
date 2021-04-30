@@ -6,7 +6,7 @@ import config from 'app-config'
 export default (currency, returnToken) => {
   let key = currency.toLowerCase()
 
-  if (config.binance && key === `bnb`) return `eth`
+  if (config.binance && key === `bnb`) return `bnb`
 
   switch (key) {
     case 'eth':
