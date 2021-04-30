@@ -50,13 +50,13 @@ export default class MarketmakerPromo extends React.Component<{}, {}> {
           <h2 styleName="section-title">
             <FormattedMessage
               id="MM_Promo_Title"
-              defaultMessage="Как заработать на атомарных свопах?"
+              defaultMessage="How to make money on atomic swaps?"
             />
           </h2>
           <p>
             <FormattedMessage
               id="MM_Promo_TitleBody"
-              defaultMessage="Станьте маркетмейкером, предоставив свой капитал для обеспечения атомарных свопов. Когда пользователи будут совершать обмены, вы будете зарабатывать 0.5%."
+              defaultMessage="Become a marketmaker by providing your capital to atomic swaps. When users make orders, you will earn 0.5%."
             />
           </p>
         </section>

@@ -241,7 +241,7 @@
   },
   {
     "id": "RowHistory91",
-    "message": "Link naar de ruil",
+    "message": "Link",
     "files": [
       "src/front/shared/pages/History/SwapsHistory/RowHistory/RowHistory.tsx",
       "src/front/shared/pages/Marketmaker/SwapRow.tsx"
@@ -484,7 +484,8 @@
     "id": "Table96",
     "message": "Lading... ",
     "files": [
-      "src/front/shared/components/tables/Table/Table.tsx"
+      "src/front/shared/components/tables/Table/Table.tsx",
+      "src/front/shared/containers/App/App.tsx"
     ]
   },
   {
@@ -699,10 +700,7 @@
   },
   {
     "id": "question12",
-    "message": "?",
-    "files": [
-      "src/front/shared/components/Header/User/Question/Question.tsx"
-    ]
+    "message": "?"
   },
   {
     "id": "PartialPriceNoOrdersReduce",
@@ -960,7 +958,7 @@
     "id": "ExchangeTitleTag1",
     "message": "Fastest cross-chain swaps",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/Promo/Promo.tsx"
     ]
   },
   {
@@ -1119,7 +1117,7 @@
     "id": "userTooltip43",
     "message": "User ({reputation}) wants to swap",
     "files": [
-      "src/front/shared/components/Header/User/UserTooltip/UserTooltip.tsx"
+      "src/front/shared/components/Header/UserTooltip/UserTooltip.tsx"
     ]
   },
   {
@@ -1433,7 +1431,7 @@
     "id": "userTooltip71",
     "message": "Go to the feed page",
     "files": [
-      "src/front/shared/components/Header/User/UserTooltip/UserTooltip.tsx"
+      "src/front/shared/components/Header/UserTooltip/UserTooltip.tsx"
     ]
   },
   {
@@ -5653,6 +5651,414 @@
     "message": "~60 flere minutter",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
+    ]
+  },
+  {
+    "id": "ExchangeTokenWasApproved",
+    "message": "Token was approved.{br}Explorer link: {txLink}",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "Orderbook",
+    "message": "Orderboek",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_ItemBody2-1",
+    "message": "- Het systeem is in beta",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_ItemBody2-2",
+    "message": "- Er is een audit van dsec",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_ItemBody2-3",
+    "message": "- Wij raden u aan om alleen die fondsen te beleggen die u niet erg vindt om te verliezen",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_ItemBody2-4",
+    "message": "- De sleutels van uw geld zijn alleen bij u, we hebben geen toegang tot uw geld",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_ItemBody2-5",
+    "message": "Risico-Kennisgeving",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_ItemContent1",
+    "message": "De market maker verdient op het verschil in wisselkoersen bij het onderhoud van de aankoop en verkoop (spread)",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_ItemContent3-1",
+    "message": "Het hangt af van het aantal swaps en de spread. Maar als er geen swaps zijn, krijg je SWAP tokens tegen het tarief van 10% APY. Om het te krijgen, schrijf naar",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_ItemContent3-2",
+    "message": "ondersteuning.",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_ItemContent4",
+    "message": "(in ontwikkeling)",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_ItemContent5",
+    "message": "Er is geen minimumtermijn, u kunt geld opnemen op elk gewenst moment.",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_ItemContent6",
+    "message": "Vertel over de mogelijkheid van swap in de gemeenschappen waar je lid bent.",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_ItemTitle1",
+    "message": "Waarom het werkt?",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_ItemTitle2",
+    "message": "Is het veilig?",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_ItemTitle3",
+    "message": "Hoeveel ga ik verdienen?",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_ItemTitle4",
+    "message": "Wat is de minimale balans die nodig is om aan de slag te gaan?",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_ItemTitle5",
+    "message": "Wat is de minimale periode van market making?",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_ItemTitle6",
+    "message": "Hoe de winst te verhogen?",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_Choose_Farming_Body1",
+    "message": "Получайте дополнительную награду в SWAP токенах, заморозив LP токены.",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
+    ]
+  },
+  {
+    "id": "MM_Choose_Farming_Button",
+    "message": "Начать фарминг",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
+    ]
+  },
+  {
+    "id": "MM_Choose_Farming_Title",
+    "message": "Фарминг",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
+    ]
+  },
+  {
+    "id": "MM_Choose_InBrowser_Body1",
+    "message": "Подходит для того, что бы попробовать.",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
+    ]
+  },
+  {
+    "id": "MM_Choose_InBrowser_Body2",
+    "message": "Если вы закроете браузер, вы перестанете зарабатывать.",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
+    ]
+  },
+  {
+    "id": "MM_Choose_InBrowser_Button",
+    "message": "Начать в браузере",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
+    ]
+  },
+  {
+    "id": "MM_Choose_InBrowser_Title",
+    "message": "Маркетмейкер в браузере",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
+    ]
+  },
+  {
+    "id": "MM_Choose_Server_Body1",
+    "message": "Подходит для продвинутых пользователей.",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
+    ]
+  },
+  {
+    "id": "MM_Choose_Server_Body2",
+    "message": "Требуется сервер для разворачивания образа Docker.",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
+    ]
+  },
+  {
+    "id": "MM_Choose_Server_Button",
+    "message": "Читать инструкцию",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
+    ]
+  },
+  {
+    "id": "MM_Choose_Server_Title",
+    "message": "Маркетмейкер-сервер",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
+    ]
+  },
+  {
+    "id": "MM_Choose_Title",
+    "message": "Выберите способ",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
+    ]
+  },
+  {
+    "id": "MM_Choose_Uniswap_Body1",
+    "message": "Подходит для продвинутых пользователей.",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
+    ]
+  },
+  {
+    "id": "MM_Choose_Uniswap_Body2",
+    "message": "Зарабатывайте когда другие продают или покупают SWAP токены.",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
+    ]
+  },
+  {
+    "id": "MM_Choose_Uniswap_Button",
+    "message": "Создать пул",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
+    ]
+  },
+  {
+    "id": "MM_Choose_Uniswap_Title",
+    "message": "Создайте uniswap-пул SWAP/ETH",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
+    ]
+  },
+  {
+    "id": "MM_Promo_Title",
+    "message": "Hoe om geld te verdienen op atomic swaps?",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx",
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_Promo_TitleBody",
+    "message": "Word een market maker door het verstrekken van uw kapitaal aan atomic swaps. Wanneer gebruikers bestellingen maken, verdien je 0,5%.",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx",
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MMPercentEarn",
+    "message": "U verdient 0,5% van elke swap",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_BTCBalance",
+    "message": "Balans BTC:",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_ConnectMetamask",
+    "message": "Verbinding Metamask",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_DepositeWallet",
+    "message": "om op te laden, overzetten naar {address}",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_DisconnectMetamask",
+    "message": "Koppelen Metamask",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_ETHBalance",
+    "message": "Balans ETH: {balance} (voor mijnwerkers vergoeding)",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_MakeSaveMnemonic",
+    "message": "Bewaar een geheime zin",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_NeedSaveMnemonic",
+    "message": "We maken BTC, ETH, WBTC hot portefeuilles. Je moet 12 woorden schrijven als je dat nog niet eerder hebt gedaan",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_NotEnoughCoins",
+    "message": "Onvoldoende middelen. U moet uw BTC bijvullen of {token}",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_NotEnoughtEth",
+    "message": "Niet genoeg om de mijnwerkerscommissie te betalen. Je moet minstens 0,02 ETH hebben",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_SwapHistory_Empty",
+    "message": "U hebt geen swaps, zet MM aan en wacht wanneer iemand uw bestellingen accepteert",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_SwapHistory_LockTime",
+    "message": "Tijd vergrendelen",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_SwapHistory_Status",
+    "message": "Status",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_SwapHistory_Step",
+    "message": "Stap",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_SwapHistory_Title",
+    "message": "Geschiedenis wisselen",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_SwapHistory_YouBuy",
+    "message": "U koopt",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_SwapHistory_YouSell",
+    "message": "U verkoopt",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_ToggleText",
+    "message": "Marketmaking BTC/WBTC",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_TokenBalance",
+    "message": "Balans {token}:",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_TotalBalance",
+    "message": "{token}, BTC",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "TotalEarned",
+    "message": "Totaal verdiend:",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
   }
 ]
