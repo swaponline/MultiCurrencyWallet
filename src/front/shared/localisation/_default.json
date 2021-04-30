@@ -6048,15 +6048,36 @@
     ]
   },
   {
-    "id": "MM_TotalBalance",
-    "message": "{token}, BTC",
+    "id": "MM_ToggleTextEnabled",
+    "message": "You must be online all the time, otherwise your will not earn",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
   },
   {
-    "id": "TotalEarned",
+    "id": "MM_ToggleTextDisabled",
+    "message": "Turn On toggle to start earn",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_TotalEarned",
     "message": "Total earned:",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_MarketmakingSimbols",
+    "message": "{token} + BTC",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_MarketmakingBalanceTitle",
+    "message": "Marketmaking Balance:",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
