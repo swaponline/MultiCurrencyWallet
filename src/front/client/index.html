@@ -595,7 +595,7 @@
         chrome.browserAction.onClicked.addListener(function(tab) {
           console.log('Extension: add click listener')
           chrome.tabs.create({
-            'url': chrome.extension.getURL('/application/index.html')
+            'url': chrome.extension.getURL('/application/index.html#/marketmaker/WBTC')
           }, (tab) =>{
            // fallback
           });
