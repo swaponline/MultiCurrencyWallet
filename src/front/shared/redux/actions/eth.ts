@@ -293,7 +293,7 @@ const getTransaction = (address: string = ``, ownType: string = ``) =>
       resolve([])
     }
 
-    const type = (ownType) || 'eth'
+    const type = (ownType) || (config.binance) ? 'bnb' : 'eth'
     // First - get internal txs
     const internalUrl = `?module=account&action=txlistinternal&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=${config.api.etherscan_ApiKey}`
     const url = `?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=${config.api.etherscan_ApiKey}`

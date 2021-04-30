@@ -87,7 +87,6 @@ class CurrencyWallet extends Component<any, any> {
   constructor(props) {
     super(props)
 
-console.log('>>>>> !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  history')
     const {
       match: {
         params: { fullName = null, ticker = null, address = null, action = null },
@@ -98,9 +97,8 @@ console.log('>>>>> !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  history')
       hiddenCoinsList,
     } = props
 
-console.log('>>>>> history', address, ticker)
     const items = actions.core.getWallets({})
-console.log('>>>>> wallets', items)
+
     if (!address && !ticker) {
       if (fullName) {
         // Если это токен - перенаправляем на адрес /token/name/address
@@ -171,7 +169,6 @@ console.log('>>>>> wallets', items)
     // MultiWallet - after Sweep - названию валюты доверять нельзя - нужно проверяться также адрес - и выбирать по адресу
     let itemCurrency = items.filter((item) => {
       if (ethToken.isEthToken({ name: ticker })) {
-        console.log('>>>>>> is token')
         if (
           item.currency.toLowerCase() === ticker.toLowerCase() &&
           item.address.toLowerCase() === walletAddress.toLowerCase()
@@ -184,6 +181,7 @@ console.log('>>>>> wallets', items)
         }
       }
     })
+
     if (!itemCurrency.length) {
       itemCurrency = items.filter((item) => {
         if (item.balance > 0 && item.currency.toLowerCase() === ticker.toLowerCase()) return true
@@ -649,7 +647,8 @@ console.log('>>>>> wallets', items)
       isLoading,
     } = this.state
 
-    const currencyKey = getCurrencyKey(currency, true)
+    let currencyKey = getCurrencyKey(currency, true)
+    if (config.binance && currencyKey === `eth`) currencyKey = `bnb`
 
     if (isRedirecting) return null
 
