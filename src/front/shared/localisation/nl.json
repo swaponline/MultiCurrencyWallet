@@ -5711,7 +5711,7 @@
   },
   {
     "id": "MM_FAQ_ItemContent3-1",
-    "message": "Het hangt af van het aantal swaps en de spread. Maar als er geen swaps zijn, krijg je SWAP tokens tegen het tarief van 10% APY. Om het te krijgen, schrijf naar",
+    "message": "Het hangt af van het aantal swaps en de spread. Maar als er geen swaps zijn, krijg je SWAP tokens tegen het tarief van 10% APY. Om het te krijgen, schrijf naar ",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
@@ -5740,6 +5740,48 @@
   {
     "id": "MM_FAQ_ItemContent6",
     "message": "Vertel over de mogelijkheid van swap in de gemeenschappen waar je lid bent.",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_ItemTitle7",
+    "message": "Waarom heb ik WBTC nodig? Ik ben alleen geïnteresseerd in het verdienen van BTC.",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_ItemContent7-1",
+    "message": "U kunt alleen aanvullen met Bitcoin, maar het is onvermijdelijk dat in sommige periodes uw BTC-saldo kan afnemen en WBTC kan toenemen, en vice versa.",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_ItemContent7-2",
+    "message": "De som van deze saldi zal op elk moment groter zijn dan voorheen.",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_ItemContent7-3",
+    "message": "Als u BTC wilt opnemen, maar sommige zijn in WBTC, dan moet u WBTC zelf wijzigen, bijvoorbeeld via de Binance-uitwisseling.",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_ItemTitle8",
+    "message": "Waarom wisselen gebruikers zichzelf niet uit via de Binance-uitwisseling?",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_ItemContent8",
+    "message": "Onze klanten houden van en ondersteunen decentralisatie, onze wisselaar werkt via slimme contracten en we zullen het geld van de klant niet langer dan 3 uur kunnen bevriezen.",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
@@ -5900,7 +5942,7 @@
   },
   {
     "id": "MM_Promo_Title",
-    "message": "Hoe om geld te verdienen op atomic swaps?",
+    "message": "Hoe kan ik geld verdienen met mijn BTC-storting?",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx",
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
@@ -5908,7 +5950,7 @@
   },
   {
     "id": "MM_Promo_TitleBody",
-    "message": "Word een market maker door het verstrekken van uw kapitaal aan atomic swaps. Wanneer gebruikers bestellingen maken, verdien je 0,5%.",
+    "message": "Gebruikers in onze swap.io wisselaar wisselen BTC uit voor WBTC (een token dat net als BTC kost, maar werkt op Ethereum) en vice versa. U krijgt een commissie van 0,5% als de uitwisseling met u plaatsvindt.",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx",
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"

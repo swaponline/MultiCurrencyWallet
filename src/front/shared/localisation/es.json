@@ -5715,7 +5715,7 @@
   },
   {
     "id": "MM_FAQ_ItemContent3-1",
-    "message": "Depende del número de swaps y del spread. Pero si no hay swaps, obtendrá tokens de SWAP a una tasa del 10% APY. Para conseguirlo, escriba a",
+    "message": "Depende del número de swaps y del spread. Pero si no hay swaps, obtendrá tokens de SWAP a una tasa del 10% APY. Para conseguirlo, escriba a ",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
@@ -5744,6 +5744,48 @@
   {
     "id": "MM_FAQ_ItemContent6",
     "message": "Cuéntanos sobre la posibilidad de swap en las comunidades en las que eres miembro.",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_ItemTitle7",
+    "message": "¿Por qué necesito WBTC? Solo estoy interesado en ganar BTC.",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_ItemContent7-1",
+    "message": "Puede reponer solo con Bitcoin, pero inevitablemente, en algunos períodos, su saldo de BTC puede disminuir y WBTC puede aumentar, y viceversa.",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_ItemContent7-2",
+    "message": "En un momento dado, la suma de estos saldos será mayor que antes.",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_ItemContent7-3",
+    "message": "Si desea retirar BTC, pero algunos de ellos están en WBTC, tendrá que cambiar WBTC usted mismo, por ejemplo, a través del intercambio de Binance.",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_ItemTitle8",
+    "message": "¿Por qué los usuarios no se intercambian a sí mismos a través del intercambio de Binance?",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_ItemContent8",
+    "message": "Nuestros clientes aman y apoyan la descentralización, nuestro intercambiador funciona a través de contratos inteligentes y no podremos congelar los fondos del cliente por más de 3 horas.",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
@@ -5904,7 +5946,7 @@
   },
   {
     "id": "MM_Promo_Title",
-    "message": "Cómo hacer dinero en atomic swaps?",
+    "message": "¿Cómo ganar con mi depósito de BTC?",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx",
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
@@ -5912,7 +5954,7 @@
   },
   {
     "id": "MM_Promo_TitleBody",
-    "message": "Conviértase en un creador de mercado al proporcionar su capital a atomic swaps. Cuando los usuarios hacen pedidos, usted ganará 0.5%.",
+    "message": "Los usuarios de nuestro intercambiador swap.io intercambian BTC por WBTC (un token que cuesta como BTC, pero funciona en Ethereum) y viceversa. Obtienes una comisión del 0,5% si el intercambio se realiza contigo.",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx",
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
