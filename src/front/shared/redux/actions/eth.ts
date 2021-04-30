@@ -16,7 +16,7 @@ import * as mnemonicUtils from 'common/utils/mnemonic'
 import metamask from 'helpers/metamask'
 
 
-const ethLabel = (config.binance) ? 'Binance Chair' : 'Ethereum'
+const ethLabel = (config.binance) ? 'Binance Chain' : 'Ethereum'
 const ethLabelShort = (config.binance) ? 'BNB' : 'ETH'
 
 const hasAdminFee = (
