@@ -1,7 +1,18 @@
 .mm-settings-page {
 
+  .promoText {
+    text-align: center;
+    margin: 1.6em 0 2.2em;
+    padding: 0.3em;
+
+    p {
+      max-width: 30em;
+      margin: 1.5em auto 0;
+    }
+  }
+
   section {
-    max-width: 700px;
+    max-width: 720px;
     margin: 20px auto;
 
     box-shadow: $l-box-shadow;
@@ -199,9 +210,23 @@
   }
 
   @media all and (max-width: 767px) {
+    .promoText {
+      font-size: 0.9em;
+
+      h2 {
+        font-size: 1.8em;
+      }
+    }
+    
     .history {
       padding: 15px;
       margin-top: 0;
+    }
+  }
+
+  @media all and (max-width: 500px) {
+    .promoText {
+      font-size: 0.8em;
     }
   }
 
