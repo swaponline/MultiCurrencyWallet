@@ -271,7 +271,7 @@ const getInvoices = (address) => {
 
 const getTx = (txRaw) => txRaw.transactionHash
 
-const getTxRouter = (txId) => `/eth/tx/${txId}`
+const getTxRouter = (txId) => `/${(config.binance) ? 'bnb' : 'eth'}/tx/${txId}`
 
 const getLinkToInfo = (tx) => {
   if (!tx) {
