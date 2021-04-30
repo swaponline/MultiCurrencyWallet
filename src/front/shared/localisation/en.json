@@ -6130,7 +6130,7 @@
   },
   {
     "id": "MM_MarketmakingBalanceTitle",
-    "message": "Marketmaking Balance:",
+    "message": "Total liquidity:",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]

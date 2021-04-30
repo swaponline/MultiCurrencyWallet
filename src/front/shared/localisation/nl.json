@@ -6126,7 +6126,7 @@
   },
   {
     "id": "MM_MarketmakingBalanceTitle",
-    "message": "Marktmakingsbalans:",
+    "message": "Totale liquiditeit:",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]

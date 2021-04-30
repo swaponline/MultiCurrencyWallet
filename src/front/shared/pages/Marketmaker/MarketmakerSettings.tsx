@@ -22,7 +22,7 @@ import FAQ from './FAQ'
 
 import Toggle from 'components/controls/Toggle/Toggle'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
-import ThemeTooltip from '../../components/ui/Tooltip/ThemeTooltip'
+import Tooltip from 'components/ui/Tooltip/Tooltip'
 import Input from 'components/forms/Input/Input'
 
 import btc from './images/btcIcon.svg'
@@ -546,6 +546,15 @@ class MarketmakerSettings extends Component<any, any> {
                   id="MMPercentEarn"
                   defaultMessage="You will earn 0.5% from each swap"
                 />
+                {' '}
+                <Tooltip id="MM_EarnEachSwapTooltip">
+                  <div style={{ maxWidth: '24em', textAlign: 'center' }}>
+                    <FormattedMessage
+                      id="MM_Promo_TitleBody"
+                      defaultMessage="Users in our swap.io exchanger exchange BTC for WBTC (a token that costs like BTC, but works on Ethereum), and vice versa. You get a commission of 0.5% if the exchange takes place with you."
+                    />
+                  </div>
+                </Tooltip>
               </p>
             </div>
             <div styleName='section-items__item'>
@@ -573,7 +582,7 @@ class MarketmakerSettings extends Component<any, any> {
               <p styleName='item-text__secondary-title'>
                 <FormattedMessage
                   id="MM_MarketmakingBalanceTitle"
-                  defaultMessage="Marketmaking Balance:"
+                  defaultMessage="Total liquidity:"
                 />
               </p>
               <p>
@@ -650,18 +659,14 @@ class MarketmakerSettings extends Component<any, any> {
                     />
                   </p>
                   <p>
+                    <span styleName='iconPosition' data-tip data-for="wbtcIcon">
+                      <img src={wbtc} alt='wbtc' />
+                    </span>
+                    {' '}
                     <span id='tokenBalance' styleName='balanceSecondary'>{tokenBalance}</span>
                     {' '}
-                    <>
-                      <span styleName='iconPosition' data-tip data-for="wbtcIcon">
-                        <img src={wbtc} alt='wbtc' />
-                      </span>
-                      <ThemeTooltip
-                        styleName='iconTooltip'
-                        id="wbtcIcon"
-                        effect="solid"
-                        place="right"
-                      >
+                    <Tooltip id="MM_whatIsWBTCTooltip">
+                      <div style={{ maxWidth: '30em', textAlign: 'center' }}>
                         <FormattedMessage
                           id="MM_whatIsWBTCTooltip1"
                           defaultMessage="Wrapped Bitcoin (WBTC) is an ERC-20 token that represents Bitcoin (BTC) on the Ethereum blockchain."
@@ -671,8 +676,8 @@ class MarketmakerSettings extends Component<any, any> {
                           id="MM_whatIsWBTCTooltip2"
                           defaultMessage="WBTC was created to allow Bitcoin holders to participate in decentralized finance (“DeFi”) apps that are popular on Ethereum."
                         />
-                      </ThemeTooltip>
-                    </>
+                      </div>
+                    </Tooltip>
                   </p>
                   {this._metamaskEnabled && (
                     <div style={{ marginBottom: '15px' }}>

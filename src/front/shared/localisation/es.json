@@ -6130,7 +6130,7 @@
   },
   {
     "id": "MM_MarketmakingBalanceTitle",
-    "message": "Equilibrio de creación de mercado:",
+    "message": "Liquidez total:",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]

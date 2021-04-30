@@ -6130,7 +6130,7 @@
   },
   {
     "id": "MM_MarketmakingBalanceTitle",
-    "message": "Saldo tworzenia rynku:",
+    "message": "Całkowita płynność:",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]

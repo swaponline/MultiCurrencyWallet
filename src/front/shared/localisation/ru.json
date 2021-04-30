@@ -6130,7 +6130,7 @@
   },
   {
     "id": "MM_MarketmakingBalanceTitle",
-    "message": "Баланс маркетмейкинга:",
+    "message": "Общая ликвидность:",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
