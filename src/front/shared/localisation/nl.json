@@ -6088,5 +6088,19 @@
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
+  },
+  {
+    "id": "MM_whatIsWBTCTooltip1",
+    "message": "Wrapped Bitcoin (WBTC) is een ERC-20-token dat Bitcoin (BTC) vertegenwoordigt op de Ethereum-blockchain.",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_whatIsWBTCTooltip2",
+    "message": "WBTC is gemaakt om Bitcoin-houders in staat te stellen deel te nemen aan apps voor gedecentraliseerde financiën (\"DeFi\") die populair zijn op Ethereum.",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   }
 ]

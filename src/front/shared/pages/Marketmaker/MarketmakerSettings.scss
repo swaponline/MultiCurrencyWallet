@@ -209,6 +209,15 @@
     }
   }
 
+  .iconPosition {
+    position: relative;
+    bottom: 3px;
+  }
+
+  .iconTooltip {
+    max-width: 400px;
+  }
+
   @media all and (max-width: 767px) {
     .promoText {
       font-size: 0.9em;
@@ -217,7 +226,7 @@
         font-size: 1.8em;
       }
     }
-    
+
     .history {
       padding: 15px;
       margin-top: 0;

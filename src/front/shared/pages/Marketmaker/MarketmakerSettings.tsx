@@ -22,8 +22,11 @@ import FAQ from './FAQ'
 
 import Toggle from 'components/controls/Toggle/Toggle'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
-import ThemeTooltip from 'components/ui/Tooltip/ThemeTooltip'
+import ThemeTooltip from '../../components/ui/Tooltip/ThemeTooltip'
 import Input from 'components/forms/Input/Input'
+
+import btc from './images/btcIcon.svg'
+import wbtc from './images/wbtcIcon.svg'
 
 import { AddressType } from 'domain/address'
 
@@ -599,9 +602,9 @@ class MarketmakerSettings extends Component<any, any> {
                       />
                     </p>
                     <p>
-                      <span id='btcBalance' styleName='item__balance'>{btcBalance}</span>
+                      <img src={btc} alt="btc" />
                       {' '}
-                      <span styleName='item-text__secondary'>BTC</span>
+                      <span id='btcBalance' styleName='item__balance'>{btcBalance}</span>
                     </p>
                     <p styleName='item-text__secondary'>
                       <FormattedMessage
@@ -622,9 +625,9 @@ class MarketmakerSettings extends Component<any, any> {
                       />
                     </p>
                     <p>
-                      <span id='btcBalance' styleName='item__balance'>{btcBalance}</span>
+                      <img src={btc} alt="btc" />
                       {' '}
-                      <span styleName='item-text__secondary'>BTC</span>
+                      <span id='btcBalance' styleName='item__balance'>{btcBalance}</span>
                     </p>
                   </>
                 )
@@ -643,7 +646,27 @@ class MarketmakerSettings extends Component<any, any> {
               <p>
                 <span id='tokenBalance' styleName='item__balance'>{tokenBalance}</span>
                 {' '}
-                <span styleName='item-text__secondary'>{marketToken.toUpperCase()}</span>
+                <>
+                  <span styleName='iconPosition' data-tip data-for="wbtcIcon">
+                    <img src={wbtc} alt='wbtc' />
+                  </span>
+                  <ThemeTooltip
+                    styleName='iconTooltip'
+                    id="wbtcIcon"
+                    effect="solid"
+                    place="right"
+                  >
+                    <FormattedMessage
+                      id="MM_whatIsWBTCTooltip1"
+                      defaultMessage="Wrapped Bitcoin (WBTC) is an ERC-20 token that represents Bitcoin (BTC) on the Ethereum blockchain."
+                    />
+                    <br />
+                    <FormattedMessage
+                      id="MM_whatIsWBTCTooltip2"
+                      defaultMessage="WBTC was created to allow Bitcoin holders to participate in decentralized finance (“DeFi”) apps that are popular on Ethereum."
+                    />
+                  </ThemeTooltip>
+                </>
               </p>
               {this._metamaskEnabled && (
                 <div style={{ marginBottom: '15px' }}>
