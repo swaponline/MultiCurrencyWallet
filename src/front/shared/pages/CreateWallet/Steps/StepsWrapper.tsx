@@ -133,7 +133,7 @@ export default class StepsWrapper extends Component<any, any> {
     if (!all) {
       if (config.opts.addCustomERC20) {
         newStartPack = [{
-          name: 'Custom ERC20',
+          name: `Custom ${config.binance ? 'BEP20' : 'ERC20'}`,
           capture: <FormattedMessage id="createWallet_customERC20" defaultMessage="Подключить токен" />,
         }, ...startPack, ...coins]
       } else {
