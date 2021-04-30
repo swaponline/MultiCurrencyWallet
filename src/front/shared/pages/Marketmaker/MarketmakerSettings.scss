@@ -52,7 +52,6 @@
         border-radius: 5px;
 
         .item-text__secondary-title {
-          color: $notice-color;
           font-size: 14px;
           font-weight: bold;
         }
@@ -60,14 +59,20 @@
         .item-text__secondary {
           color: $notice-color;
           font-size: 12px;
+        }
+
+        .balanceSecondary, .balancePrimary {
           font-weight: bold;
         }
 
-        .item__balance {
+        .balanceSecondary {
+          font-size: 20px;
+          line-height: 24px;
+        }
+
+        .balancePrimary {
           font-size: 24px;
           line-height: 32px;
-          color: #1f2d48;
-          font-weight: bold;
         }
 
       }
@@ -209,6 +214,15 @@
     }
   }
 
+  .iconPosition {
+    position: relative;
+    bottom: 3px;
+  }
+
+  .iconTooltip {
+    max-width: 400px;
+  }
+
   @media all and (max-width: 767px) {
     .promoText {
       font-size: 0.9em;
@@ -217,7 +231,7 @@
         font-size: 1.8em;
       }
     }
-    
+
     .history {
       padding: 15px;
       margin-top: 0;

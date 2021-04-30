@@ -22,7 +22,11 @@ import FAQ from './FAQ'
 
 import Toggle from 'components/controls/Toggle/Toggle'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
+import ThemeTooltip from '../../components/ui/Tooltip/ThemeTooltip'
 import Input from 'components/forms/Input/Input'
+
+import btc from './images/btcIcon.svg'
+import wbtc from './images/wbtcIcon.svg'
 
 import { AddressType } from 'domain/address'
 
@@ -521,6 +525,19 @@ class MarketmakerSettings extends Component<any, any> {
                 </span>
               </div>
               <p styleName='item-text__secondary'>
+                {isMarketEnabled ? (
+                  <FormattedMessage
+                    id="MM_ToggleTextEnabled"
+                    defaultMessage="You must be online all the time, otherwise your will not earn"
+                  />
+                ) : (
+                  <FormattedMessage
+                    id="MM_ToggleTextDisabled"
+                    defaultMessage="Turn On toggle to start earn"
+                  />
+                )}
+              </p>
+              <p styleName='item-text__secondary'>
                 <FormattedMessage
                   id="MMPercentEarn"
                   defaultMessage="You will earn 0.5% from each swap"
@@ -530,17 +547,44 @@ class MarketmakerSettings extends Component<any, any> {
             <div styleName='section-items__item'>
               <p styleName='item-text__secondary-title'>
                 <FormattedMessage
-                  id="TotalEarned"
+                  id="MM_TotalEarned"
                   defaultMessage="Total earned:"
                 />
               </p>
               <p>
-                <span styleName='item__balance'>{totalBalance}</span>
+                <span styleName='balancePrimary'>
+                  0
+                </span>
                 {' '}
                 <span styleName='item-text__secondary'>
                   <FormattedMessage
-                    id="MM_TotalBalance"
-                    defaultMessage="{token}, BTC"
+                    id="MM_MarketmakingSimbols"
+                    defaultMessage="{token} + BTC"
+                    values={{
+                      token: marketToken.toUpperCase(),
+                    }}
+                  />
+                </span>
+              </p>
+              <p styleName='item-text__secondary-title'>
+                <FormattedMessage
+                  id="MM_MarketmakingBalanceTitle"
+                  defaultMessage="Marketmaking Balance:"
+                />
+              </p>
+              <p>
+                <span styleName='balancePrimary'>
+                {isMarketEnabled ? (
+                  totalBalance
+                ) : (
+                  '0'
+                )}
+                </span>
+                {' '}
+                <span styleName='item-text__secondary'>
+                  <FormattedMessage
+                    id="MM_MarketmakingSimbols"
+                    defaultMessage="{token} + BTC"
                     values={{
                       token: marketToken.toUpperCase(),
                     }}
@@ -558,9 +602,9 @@ class MarketmakerSettings extends Component<any, any> {
                       />
                     </p>
                     <p>
-                      <span id='btcBalance' styleName='item__balance'>{btcBalance}</span>
+                      <img src={btc} alt="btc" />
                       {' '}
-                      <span styleName='item-text__secondary'>BTC</span>
+                      <span id='btcBalance' styleName='balanceSecondary'>{btcBalance}</span>
                     </p>
                     <p styleName='item-text__secondary'>
                       <FormattedMessage
@@ -581,9 +625,9 @@ class MarketmakerSettings extends Component<any, any> {
                       />
                     </p>
                     <p>
-                      <span id='btcBalance' styleName='item__balance'>{btcBalance}</span>
+                      <img src={btc} alt="btc" />
                       {' '}
-                      <span styleName='item-text__secondary'>BTC</span>
+                      <span id='btcBalance' styleName='balanceSecondary'>{btcBalance}</span>
                     </p>
                   </>
                 )
@@ -600,9 +644,29 @@ class MarketmakerSettings extends Component<any, any> {
                 />
               </p>
               <p>
-                <span id='tokenBalance' styleName='item__balance'>{tokenBalance}</span>
+                <span id='tokenBalance' styleName='balanceSecondary'>{tokenBalance}</span>
                 {' '}
-                <span styleName='item-text__secondary'>{marketToken.toUpperCase()}</span>
+                <>
+                  <span styleName='iconPosition' data-tip data-for="wbtcIcon">
+                    <img src={wbtc} alt='wbtc' />
+                  </span>
+                  <ThemeTooltip
+                    styleName='iconTooltip'
+                    id="wbtcIcon"
+                    effect="solid"
+                    place="right"
+                  >
+                    <FormattedMessage
+                      id="MM_whatIsWBTCTooltip1"
+                      defaultMessage="Wrapped Bitcoin (WBTC) is an ERC-20 token that represents Bitcoin (BTC) on the Ethereum blockchain."
+                    />
+                    <br />
+                    <FormattedMessage
+                      id="MM_whatIsWBTCTooltip2"
+                      defaultMessage="WBTC was created to allow Bitcoin holders to participate in decentralized finance (“DeFi”) apps that are popular on Ethereum."
+                    />
+                  </ThemeTooltip>
+                </>
               </p>
               {this._metamaskEnabled && (
                 <div style={{ marginBottom: '15px' }}>
