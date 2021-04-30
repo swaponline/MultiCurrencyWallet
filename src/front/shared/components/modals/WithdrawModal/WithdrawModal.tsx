@@ -26,6 +26,8 @@ import helpers, {
 } from 'helpers'
 import btcUtils from 'common/utils/coin/btc'
 
+import config from 'app-config'
+
 import Modal from 'components/modal/Modal/Modal'
 import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
 import Input from 'components/forms/Input/Input'
@@ -174,7 +176,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
       : new BigNumber(0)
     // save ethereum wallet for token exchange's rate
     const arrWithEthWallet = items.filter(item => {
-      return item.currency.toLowerCase() === 'eth'
+      return item.currency.toLowerCase() === (config.binance) ? 'bnb' : 'eth'
         && item.infoAboutCurrency
         && item.infoAboutCurrency.price_fiat
     })
