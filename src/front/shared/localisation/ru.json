@@ -2625,7 +2625,7 @@
   },
   {
     "id": "customERC20_Address",
-    "message": "Адрес контракта",
+    "message": "{type} контракта",
     "files": [
       "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
     ]
@@ -2681,7 +2681,7 @@
   },
   {
     "id": "customERC20_Title",
-    "message": "Добавление токена ERC20",
+    "message": "Добавление токена",
     "files": [
       "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
     ]

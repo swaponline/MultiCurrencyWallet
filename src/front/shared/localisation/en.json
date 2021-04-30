@@ -2671,7 +2671,7 @@
   },
   {
     "id": "customERC20_Address",
-    "message": "erc20 address",
+    "message": "{type} address",
     "files": [
       "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
     ]
@@ -2727,7 +2727,7 @@
   },
   {
     "id": "customERC20_Title",
-    "message": "Add new ERC20",
+    "message": "Add new token",
     "files": [
       "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
     ]
