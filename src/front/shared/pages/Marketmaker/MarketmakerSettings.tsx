@@ -552,7 +552,7 @@ class MarketmakerSettings extends Component<any, any> {
                 />
               </p>
               <p>
-                <span styleName='item__balance'>
+                <span styleName='balancePrimary'>
                   0
                 </span>
                 {' '}
@@ -573,7 +573,7 @@ class MarketmakerSettings extends Component<any, any> {
                 />
               </p>
               <p>
-                <span styleName='item__balance'>
+                <span styleName='balancePrimary'>
                 {isMarketEnabled ? (
                   totalBalance
                 ) : (
@@ -604,7 +604,7 @@ class MarketmakerSettings extends Component<any, any> {
                     <p>
                       <img src={btc} alt="btc" />
                       {' '}
-                      <span id='btcBalance' styleName='item__balance'>{btcBalance}</span>
+                      <span id='btcBalance' styleName='balanceSecondary'>{btcBalance}</span>
                     </p>
                     <p styleName='item-text__secondary'>
                       <FormattedMessage
@@ -627,7 +627,7 @@ class MarketmakerSettings extends Component<any, any> {
                     <p>
                       <img src={btc} alt="btc" />
                       {' '}
-                      <span id='btcBalance' styleName='item__balance'>{btcBalance}</span>
+                      <span id='btcBalance' styleName='balanceSecondary'>{btcBalance}</span>
                     </p>
                   </>
                 )
@@ -644,7 +644,7 @@ class MarketmakerSettings extends Component<any, any> {
                 />
               </p>
               <p>
-                <span id='tokenBalance' styleName='item__balance'>{tokenBalance}</span>
+                <span id='tokenBalance' styleName='balanceSecondary'>{tokenBalance}</span>
                 {' '}
                 <>
                   <span styleName='iconPosition' data-tip data-for="wbtcIcon">
