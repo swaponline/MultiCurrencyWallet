@@ -16,5 +16,11 @@ export default {
     decimals: 18,
     fullName: 'Weenus',
     canSwap: true,
+  },
+  btcb: {
+    address: '0x87b7b0ed5c4a785e4389d8e496a599f7324a709a',
+    decimals: 18,
+    fullName: 'BTCB Token',
+    canSwap: true,
   }
 }
