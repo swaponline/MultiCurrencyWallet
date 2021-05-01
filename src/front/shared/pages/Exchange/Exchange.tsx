@@ -1465,6 +1465,10 @@ class Exchange extends PureComponent<any, any> {
     })
   }
 
+  renderCoinName = (coin) => {
+    return (coin.toUpperCase() === `ETH` && config.binance) ? `BSC` : coin.toUpperCase()
+  }
+
   render() {
     const {
       currencies,
@@ -1508,6 +1512,7 @@ class Exchange extends PureComponent<any, any> {
       ordersIsOpen,
     } = this.state
 
+
     const sellCoin = haveCurrency.toUpperCase()
     const buyCoin = getCurrency.toUpperCase()
     const balance = this.getBalance(sellCoin)
@@ -1548,7 +1553,7 @@ class Exchange extends PureComponent<any, any> {
                     .toString()
                 : new BigNumber(balance).dp(5, BigNumber.ROUND_FLOOR).toString()}
               {'  '}
-              {sellCoin}
+              {this.renderCoinName(sellCoin)}
             </>
           )}
         </p>
@@ -1733,8 +1738,8 @@ class Exchange extends PureComponent<any, any> {
                     id="PartialPriceNoOrdersReduceAllInfo"
                     defaultMessage="This trade amount is too high for present market liquidity. Please reduce amount to {maxForSell}."
                     values={{
-                      maxForBuy: `${maxAmount} ${getCurrency.toUpperCase()}`,
-                      maxForSell: `${maxBuyAmount.toFixed(8)} ${haveCurrency.toUpperCase()}`,
+                      maxForBuy: `${maxAmount} ${this.renderCoinName(getCurrency)}`,
+                      maxForSell: `${maxBuyAmount.toFixed(8)} ${this.renderCoinName(haveCurrency)}`,
                     }}
                   />
                 </p>
@@ -1794,7 +1799,7 @@ class Exchange extends PureComponent<any, any> {
               {isPrice &&
                 `1 ${getCurrency.toUpperCase()} = ${oneCryptoCost.toFixed(
                   5
-                )} ${haveCurrency.toUpperCase()}`}
+                )} ${this.renderCoinName(haveCurrency)}`}
               {isErrorNoOrders && '?'}
             </div>
 
@@ -1821,7 +1826,7 @@ class Exchange extends PureComponent<any, any> {
                     </span>
                   ) : (
                     <span>
-                      {pairFees.sell.fee} {pairFees.sell.coin} + {pairFees.buy.fee} {pairFees.buy.coin}
+                      {pairFees.sell.fee} {this.renderCoinName(pairFees.sell.coin)} + {pairFees.buy.fee} {this.renderCoinName(pairFees.buy.coin)}
                       {' ≈ '}
                       {fiatFeeCalculation > 0 ? <>${fiatFeeCalculation}</> : 0}
                       {' '}

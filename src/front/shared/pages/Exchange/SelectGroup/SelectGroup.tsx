@@ -5,6 +5,7 @@ import CSSModules from 'react-css-modules'
 import styles from './SelectGroup.scss'
 import partialStyles from '../Exchange.scss'
 import { constants } from 'helpers'
+import config from 'app-config'
 
 import Input from 'components/forms/Input/Input'
 import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
@@ -86,7 +87,9 @@ const SelectGroup = (props) => {
           </div>
         )}
         <CurrencySelect
-          selectedItemRender={(item) => item.fullTitle}
+          selectedItemRender={(item) => {
+            return (item.name.toUpperCase() === `ETH` && config.binance) ? `BSC` : item.fullTitle
+          }}
           styleName="currencySelect"
           placeholder="Enter the name of coin"
           selectedValue={selectedValue}
@@ -113,7 +116,7 @@ const SelectGroup = (props) => {
                 values={{
                   availableBalance: `${new BigNumber(balance).minus(
                     dynamicFee
-                  )} ${selectedValue.toUpperCase()}`,
+                  )} ${(selectedValue.toUpperCase() === 'ETH' && config.binance) ? 'BSC' : selectedValue.toUpperCase()}`,
                   tooltip: <Tooltip id={idFee}> {tooltipAboutFee}</Tooltip>,
                 }}
               />
