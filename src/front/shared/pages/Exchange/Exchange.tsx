@@ -226,8 +226,8 @@ class Exchange extends PureComponent<any, any> {
       }
     }
 
-    let haveCurrency = sell || config.opts.defaultExchangePair.sell
-    let getCurrency = buy || (!isWidgetBuild ? config.opts.defaultExchangePair.buy : config.erc20token)
+    let haveCurrency = sell || (config.binance) ? `btc` : config.opts.defaultExchangePair.sell
+    let getCurrency = buy || (config.binance) ? `btcb` : (!isWidgetBuild ? config.opts.defaultExchangePair.buy : config.erc20token)
 
     const exchangeDataStr = localStorage.getItem(constants.localStorage.exchangeSettings)
     const exchangeSettings = exchangeDataStr && JSON.parse(exchangeDataStr)
