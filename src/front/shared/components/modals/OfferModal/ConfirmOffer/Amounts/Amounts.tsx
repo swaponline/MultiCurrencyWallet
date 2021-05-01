@@ -6,6 +6,7 @@ import styles from './Amounts.scss'
 import Row from '../Row/Row'
 import Value from '../Value/Value'
 import { FormattedMessage } from 'react-intl'
+import config from 'app-config'
 
 
 const title = (
@@ -14,9 +15,9 @@ const title = (
 
 const Amounts = ({ buyAmount, sellAmount, buyCurrency, sellCurrency }) => (
   <Row title={title}>
-    <Value value={sellAmount} currency={sellCurrency} />
+    <Value value={sellAmount} currency={(sellCurrency.toUpperCase() === `ETH` && config.binance) ? `BSC` : sellCurrency} />
     <span styleName="arrow">&rarr;</span>
-    <Value value={buyAmount} currency={buyCurrency} />
+    <Value value={buyAmount} currency={(buyCurrency.toUpperCase() === `ETH` && config.binance) ? `BSC` : buyCurrency} />
   </Row>
 )
 
