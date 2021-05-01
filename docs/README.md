@@ -6,12 +6,18 @@
 ## MultiCurrencyWallet
    
 - 👛 Crypto wallet: BTC, ETН, USDT, {your_token}...
-- 💵 Fiat gateway: USD, EUR, RUB, UAH...
+- 💵 Fiat gateway: USD, EUR, RUB, UAH... via itez.com
 - ⚛️ P2P exchange – atomic swaps
 - 💡 Open-source, client-side
 - 📦 Embeddable into your site!
   
-Live version here: https://swaponline.github.io (mirror https://swaponline.io)
+Live version here: 
+https://swaponline.github.io (mirror https://swaponline.io) . Testnet https://ropsten.swaponline.io/
+http://bsc.swap.io/ - Binance  Smart Chin . https://bsc-testnet.swaponline.site/
+
+Testnet:
+http://bsc-testnet.swaponline.site/
+
 
 No coding skills? Use :package: [WordPress plugin with admin panel](https://codecanyon.net/item/multicurrency-crypto-wallet-and-exchange-widgets-for-wordpress/23532064) :package: 
 
