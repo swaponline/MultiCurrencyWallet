@@ -2,6 +2,9 @@ import React from 'react'
 import cssModules from 'react-css-modules'
 import { FormattedMessage } from 'react-intl'
 
+import config from 'app-config'
+
+
 import styles from './MarketmakerPromo.scss'
 import { feedback, links, constants } from 'helpers'
 import Button from 'components/controls/Button/Button'
@@ -25,7 +28,11 @@ export default class MarketmakerPromo extends React.Component<{}, {}> {
 
   onSelectBrowser() {
     feedback.marketmaking.selected('browser')
-    redirectTo(`${links.marketmaker}/WBTC`)
+    if (config.binance) {
+      redirectTo(`${links.marketmaker}/BTCB`)
+    } else {
+      redirectTo(`${links.marketmaker}/WBTC`)
+    }
   }
 
   onSelectServer() {
