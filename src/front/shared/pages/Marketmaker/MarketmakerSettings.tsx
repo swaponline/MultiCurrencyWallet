@@ -653,22 +653,25 @@ class MarketmakerSettings extends Component<any, any> {
                   <span styleName='iconPosition' data-tip data-for="wbtcIcon">
                     <img src={wbtc} alt='wbtc' />
                   </span>
-                  <ThemeTooltip
-                    styleName='iconTooltip'
-                    id="wbtcIcon"
-                    effect="solid"
-                    place="right"
-                  >
-                    <FormattedMessage
-                      id="MM_whatIsWBTCTooltip1"
-                      defaultMessage="Wrapped Bitcoin (WBTC) is an ERC-20 token that represents Bitcoin (BTC) on the Ethereum blockchain."
-                    />
-                    <br />
-                    <FormattedMessage
-                      id="MM_whatIsWBTCTooltip2"
-                      defaultMessage="WBTC was created to allow Bitcoin holders to participate in decentralized finance (“DeFi”) apps that are popular on Ethereum."
-                    />
-                  </ThemeTooltip>
+                  {/* to-do - нужно поправить локализацию - проверка бинанса, тип токена, тип ab (эфира) */}
+                  {!config.binance && (
+                    <ThemeTooltip
+                      styleName='iconTooltip'
+                      id="wbtcIcon"
+                      effect="solid"
+                      place="right"
+                    >
+                      <FormattedMessage
+                        id="MM_whatIsWBTCTooltip1"
+                        defaultMessage="Wrapped Bitcoin (WBTC) is an ERC-20 token that represents Bitcoin (BTC) on the Ethereum blockchain."
+                      />
+                      <br />
+                      <FormattedMessage
+                        id="MM_whatIsWBTCTooltip2"
+                        defaultMessage="WBTC was created to allow Bitcoin holders to participate in decentralized finance (“DeFi”) apps that are popular on Ethereum."
+                      />
+                    </ThemeTooltip>
+                  )}
                 </>
               </p>
               {this._metamaskEnabled && (
