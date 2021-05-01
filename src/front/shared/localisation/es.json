@@ -5955,7 +5955,7 @@
   },
   {
     "id": "MM_ETHBalance",
-    "message": "Equilibrio ETH: {balance} (para los mineros)",
+    "message": "Equilibrio {AB_Coin}: {balance} (para los mineros)",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]

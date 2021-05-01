@@ -699,8 +699,9 @@ class MarketmakerSettings extends Component<any, any> {
                     <span styleName='item-text__secondary'>
                       <FormattedMessage
                         id="MM_ETHBalance"
-                        defaultMessage="Balance ETH: {balance} (for miners fee)"
+                        defaultMessage="Balance {AB_Coin}: {balance} (for miners fee)"
                         values={{
+                          AB_Coin: (config.binance) ? `BNB` : `ETH`,
                           balance: new BigNumber(ethBalance).dp(5).toNumber()
                         }}
                       />
@@ -719,8 +720,9 @@ class MarketmakerSettings extends Component<any, any> {
                   <p styleName='item-text__secondary'>
                     <FormattedMessage
                       id="MM_ETHBalance"
-                      defaultMessage="Balance ETH: {balance} (for miners fee)"
+                      defaultMessage="Balance {AB_Coin}: {balance} (for miners fee)"
                       values={{
+                        AB_Coin: (config.binance) ? `BNB` : `ETH`,
                         balance: new BigNumber(ethBalance).dp(5).toNumber()
                       }}
                     />

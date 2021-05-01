@@ -5951,7 +5951,7 @@
   },
   {
     "id": "MM_ETHBalance",
-    "message": "Balans ETH: {balance} (voor mijnwerkers vergoeding)",
+    "message": "Balans {AB_Coin}: {balance} (voor mijnwerkers vergoeding)",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
