@@ -11,7 +11,7 @@ const Option = (props) => {
   let { icon, title } = props
   if (icon.toLowerCase() === `eth` && config.binance) {
     icon = `bnb`
-    title = `Binance`
+    title = `BSC`
   }
   return (
     <div styleName="optionrow">

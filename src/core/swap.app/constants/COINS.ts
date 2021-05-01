@@ -25,7 +25,7 @@ export const COIN_DATA = {
   },
   'BNB': {
     ticker: 'BNB',
-    name: 'Binance',
+    name: 'BSC',
     type: COIN_TYPE.NATIVE,
     model: COIN_MODEL.AB,
     precision: 18,

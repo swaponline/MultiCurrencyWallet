@@ -8,7 +8,7 @@ import SwapApp from 'swap.app'
 import Web3Connect from '../../../common/web3connect'
 
 
-const mmLabel = (config.binance) ? `Binance` : `Ethereum`
+const mmLabel = (config.binance) ? `BSC` : `Ethereum`
 const mmLabelShort = (config.binance) ? `BNB` : `ETH`
 
 

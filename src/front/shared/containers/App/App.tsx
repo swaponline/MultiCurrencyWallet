@@ -49,11 +49,11 @@ const metamaskNetworks = defineMessages({
   },
   bnb_mainnet: {
     id: `MetamaskNetworkAlert_BnBNetworkMainnet`,
-    defaultMessage: `Mainnet Binance`,
+    defaultMessage: `Mainnet Binance Smart Chain`,
   },
   bnb_testnet: {
     id: `MetamaskNetworkAlert_BnBNetworkTestnet`,
-    defaultMessage: `Testnet Binance`,
+    defaultMessage: `Testnet Binance Smart Chain`,
   },
 })
 
