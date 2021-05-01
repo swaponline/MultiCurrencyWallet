@@ -10,13 +10,11 @@
 - ⚛️ P2P exchange – atomic swaps
 - 💡 Open-source, client-side
 - 📦 Embeddable into your site!
+- Marketmaker extention https://chrome.google.com/webstore/detail/multicurrencywallet/oldojieloelkkfeacfinhcngmbkepnlm?hl=ru 
   
 Live version here: 
-https://swaponline.github.io (mirror https://swaponline.io) . Testnet https://ropsten.swaponline.io/
-http://bsc.swap.io/ - Binance  Smart Chin . https://bsc-testnet.swaponline.site/
-
-Testnet:
-http://bsc-testnet.swaponline.site/
+https://swaponline.io (mirror https://swaponline.github.io) . Testnet https://ropsten.swaponline.io/
+<br> Binance  Smart Chin : https://bsc.swap.io/ . Testnet: https://bsc-testnet.swaponline.site/
 
 
 No coding skills? Use :package: [WordPress plugin with admin panel](https://codecanyon.net/item/multicurrency-crypto-wallet-and-exchange-widgets-for-wordpress/23532064) :package: 
