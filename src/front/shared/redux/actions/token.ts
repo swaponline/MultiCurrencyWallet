@@ -27,6 +27,7 @@ const erc20Decoder = new InputDataDecoder(ERC20_ABI)
 
 const AddCustomERC20 = (contract, symbol, decimals) => {
   const configStorage = (process.env.MAINNET) ? 'mainnet' : 'testnet'
+  //@ts-ignore: strictNullChecks
   let tokensInfo = JSON.parse(localStorage.getItem(constants.localStorage.customERC))
 
   if (!tokensInfo) {
@@ -47,6 +48,7 @@ const AddCustomERC20 = (contract, symbol, decimals) => {
 const GetCustromERC20 = () => {
   const configStorage = (process.env.MAINNET) ? 'mainnet' : 'testnet'
 
+  //@ts-ignore: strictNullChecks
   let tokensInfo = JSON.parse(localStorage.getItem(constants.localStorage.customERC))
   if (!tokensInfo || !tokensInfo[configStorage]) return {}
   return tokensInfo[configStorage]
