@@ -5715,7 +5715,7 @@
   },
   {
     "id": "MM_FAQ_ItemContent3-1",
-    "message": "It depends on the number of swaps and the spread. But if there are no swaps, you will get SWAP tokens at the rate of 10% APY. To get it, write to ",
+    "message": "It depends on the number of swaps and the spread. Ask any questions",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
@@ -5785,7 +5785,7 @@
   },
   {
     "id": "MM_FAQ_ItemContent8",
-    "message": "Our clients love and support decentralization, our exchanger works through smart contracts and we will not be able to freeze the client's funds for more than 3 hours.",
+    "message": "Our clients love and support decentralization, exchange works through smart contracts and we will not be able to freeze the client's funds for more than 3 hours.",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
@@ -5946,7 +5946,7 @@
   },
   {
     "id": "MM_Promo_Title",
-    "message": "How to earn on my BTC deposit?",
+    "message": "How to Earn Interest on Bitcoin",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx",
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
@@ -5954,7 +5954,7 @@
   },
   {
     "id": "MM_Promo_TitleBody",
-    "message": "Users in our swap.io exchanger exchange BTC for WBTC (a token that costs like BTC, but works on Ethereum), and vice versa. You get a commission of 0.5% if the exchange takes place with you.",
+    "message": "On swap.io users exchange BTC for WBTC (a token that costs like BTC, but works on Ethereum), and vice versa. You get a commission of 0.5% if the exchange takes place with you.",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx",
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
