@@ -103,7 +103,7 @@ export const getMenuItems = (props) => {
   ]
 
   // Marketmaker testnet ********
-  if (externalConfig.entry === `testnet` && !isWidgetBuild) {
+  if (!isWidgetBuild) {
     const marketmakerItem = {
       title: intl.formatMessage(messages.marketmaker),
       link: (externalConfig.binance) ? `${links.marketmaker}/BTCB` : `${links.marketmaker}/WBTC`,
@@ -116,7 +116,7 @@ export const getMenuItems = (props) => {
   }
 
   // Farm ************************
-  if (externalConfig.entry === 'testnet' && !isWidgetBuild) {
+  if (!isWidgetBuild) {
     const farmItem = {
       title: intl.formatMessage(messages.farm),
       link: farm,
