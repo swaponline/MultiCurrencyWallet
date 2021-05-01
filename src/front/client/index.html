@@ -801,6 +801,7 @@
       const startedSplashScreenIsDisabled = getCookie('startedSplashScreenIsDisabled');
 
       const isWidgetBuild = '<%= htmlWebpackPlugin.options.isWidget %>';
+      const isBinanceBuild = ('<%= htmlWebpackPlugin.options.isBinanceBuild %>' === 'true') ? true : false;
 
       // Open modal if cookie false
       if (
@@ -808,9 +809,13 @@
         swapIsHome() &&
         !isWidgetBuild &&
         !swapIsWalletCreate() &&
+        !isBinanceBuild &&
         localStorageIsOk
       ) {
         document.getElementById('starter-modal').classList.remove('d-none');
+      }
+      if (isBinanceBuild) {
+        redirectionTo('#/exchange/btc-to-btcb')
       }
 
 

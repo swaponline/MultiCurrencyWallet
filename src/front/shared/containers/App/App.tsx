@@ -349,6 +349,7 @@ class App extends React.Component<RouteComponentProps<any>, any> {
       !startPage ||
       utils.getCookie('startedSplashScreenIsDisabled') ||
       isWalletCreated ||
+      config.binance ||
       window.location.hash !== '#/'
     ) {
       this.setState(() => ({
