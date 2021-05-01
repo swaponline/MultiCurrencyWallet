@@ -6035,7 +6035,7 @@
   },
   {
     "id": "MM_ToggleText",
-    "message": "Marketmaking BTC/WBTC",
+    "message": "Marketmaking BTC/{token}",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]

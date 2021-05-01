@@ -6039,7 +6039,7 @@
   },
   {
     "id": "MM_ToggleText",
-    "message": "Tworzenie rynku BTC/WBTC",
+    "message": "Tworzenie rynku BTC/{token}",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]

@@ -6039,7 +6039,7 @@
   },
   {
     "id": "MM_ToggleText",
-    "message": "Маркетмейкер BTC/WBTC",
+    "message": "Маркетмейкер BTC/{token}",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]

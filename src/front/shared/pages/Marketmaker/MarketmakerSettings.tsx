@@ -517,7 +517,10 @@ class MarketmakerSettings extends Component<any, any> {
                 <p styleName='mm-toggle__text'>
                   <FormattedMessage
                     id="MM_ToggleText"
-                    defaultMessage="Marketmaking BTC/WBTC"
+                    defaultMessage="Marketmaking BTC/{token}"
+                    values={{
+                      token: marketToken.toUpperCase(),
+                    }}
                   />
                 </p>
                 <span styleName='mm-toggle__switch'>
