@@ -27,7 +27,7 @@ const ExchangeRateGroup = ({
     placeholder={placeholder}
   >
     <span styleName="currencyRatio">
-      {(sellCurrency.toUpperCase() === `ETH` && config.binance) ? `BSC` : sellCurrency} / {(buyCurrency.toUpperCase() === `ETH` && config.binance) ? `BSC` : buyCurrency}
+      {(sellCurrency.toUpperCase() === `ETH` && config.binance) ? `BNB` : sellCurrency} / {(buyCurrency.toUpperCase() === `ETH` && config.binance) ? `BNB` : buyCurrency}
     </span>
   </Group>
 )

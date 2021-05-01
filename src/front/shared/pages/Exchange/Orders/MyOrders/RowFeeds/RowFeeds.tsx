@@ -40,7 +40,7 @@ class RowFeeds extends Component<any, any> {
   }
 
   renderCoinName(coin) {
-    return (coin.toUpperCase() === `ETH` && config.binance) ? `BSC` : coin.toUpperCase()
+    return (coin.toUpperCase() === `ETH` && config.binance) ? `BNB` : coin.toUpperCase()
   }
 
   render() {

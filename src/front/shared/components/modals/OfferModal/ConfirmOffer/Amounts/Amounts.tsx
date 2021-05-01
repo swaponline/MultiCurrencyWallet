@@ -15,9 +15,9 @@ const title = (
 
 const Amounts = ({ buyAmount, sellAmount, buyCurrency, sellCurrency }) => (
   <Row title={title}>
-    <Value value={sellAmount} currency={(sellCurrency.toUpperCase() === `ETH` && config.binance) ? `BSC` : sellCurrency} />
+    <Value value={sellAmount} currency={(sellCurrency.toUpperCase() === `ETH` && config.binance) ? `BNB` : sellCurrency} />
     <span styleName="arrow">&rarr;</span>
-    <Value value={buyAmount} currency={(buyCurrency.toUpperCase() === `ETH` && config.binance) ? `BSC` : buyCurrency} />
+    <Value value={buyAmount} currency={(buyCurrency.toUpperCase() === `ETH` && config.binance) ? `BNB` : buyCurrency} />
   </Row>
 )
 
