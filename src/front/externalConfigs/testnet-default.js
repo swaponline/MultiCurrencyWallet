@@ -83,7 +83,7 @@ window.buildOptions = {
   },
   blockchainSwapEnabled: {
     btc: true,
-    eth: false,
+    eth: true,
     ghost: false,
     next: false,
   },

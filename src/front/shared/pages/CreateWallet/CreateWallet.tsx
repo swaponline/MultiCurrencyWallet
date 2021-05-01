@@ -75,7 +75,7 @@ const CreateWallet: React.FC<any> = (props) => {
     'BTC (SMS-Protected)',
     'BTC (PIN-Protected)',
     'BTC (Multisig)',
-    'ETH',
+    ...[(config.binance) ? 'BNB' : 'ETH'],
     'GHOST',
     'NEXT',
   ]
@@ -140,7 +140,7 @@ const CreateWallet: React.FC<any> = (props) => {
       'BTC (SMS-Protected)',
       'BTC (PIN-Protected)',
       'BTC (Multisig)',
-      'ETH',
+      ...[(config.binance) ? 'BNB' : 'ETH'],
       'GHOST',
       'NEXT',
     ]
@@ -207,8 +207,9 @@ const CreateWallet: React.FC<any> = (props) => {
     }
 
     const isIgnoreSecondStep = !Object.keys(currencies).includes('BTC') // ['ETH', 'SWAP', 'EURS', 'Custom ERC20'].find(el => Object.keys(currencies).includes(el))
+    const tokenType = `Custom ${config.binance ? 'BEP20' : 'ERC20'}`
 
-    if (isIgnoreSecondStep && !currencies['Custom ERC20']) {
+    if (isIgnoreSecondStep && !currencies[tokenType]) {
       Object.keys(currencies).forEach((currency) => {
         if (currencies[currency]) {
           actions.core.markCoinAsVisible(currency.toUpperCase(), true)
@@ -224,7 +225,7 @@ const CreateWallet: React.FC<any> = (props) => {
       return
     }
 
-    if (currencies['Custom ERC20']) {
+    if (currencies[tokenType]) {
       goHome()
       actions.modals.open(constants.modals.AddCustomERC20)
       return

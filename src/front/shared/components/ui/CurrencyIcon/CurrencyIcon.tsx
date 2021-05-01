@@ -23,6 +23,7 @@ const CurrencyIcon = ({ className, style, name}: CurrencyIconProps) => {
   }
   const isIconExist = iconNames.includes(name.toLowerCase())
 
+  if (config.binance && name.toLowerCase() === `eth`) name = `bnb`
   if (config
     && config.erc20
     && config.erc20[name.toLowerCase()]

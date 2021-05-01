@@ -377,9 +377,13 @@ interface I_getWallet_FindCondition {
 const getWallet = (findCondition: I_getWallet_FindCondition) => {
   // specify addressType,
   // otherwise it finds the first wallet from all origins, including metamask
-  const { currency, address, addressType, connected } = findCondition
+  const { address, addressType, connected } = findCondition
+  let { currency } = findCondition
+
+  if (currency.toLowerCase() === `eth` && config.binance) currency = `bnb`
 
   const wallets = getWallets({ withInternal: true })
+
   const founded = wallets.filter((wallet) => {
     if (wallet.isMetamask && !wallet.isConnected) return false
     const conditionOk = currency && wallet.currency.toLowerCase() === currency.toLowerCase()
@@ -522,7 +526,6 @@ const fetchWalletBalance = async (walletData): Promise<number> => {
 }
 
 const rememberSwap = (swap) => {
-  console.log('>>>>>> rememberSwap', swap)
   let swapsIds = JSON.parse(localStorage.getItem('swapId'))
 
   if (swapsIds === null || swapsIds.length === 0) {

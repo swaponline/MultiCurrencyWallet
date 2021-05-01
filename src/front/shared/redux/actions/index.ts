@@ -34,7 +34,7 @@ import backupManager from './backupManager'
 
 import multisigTx from './multisigTx'
 
-
+const bnb = eth
 const tokens = {}
 
 Object.keys(config.erc20)
@@ -57,6 +57,7 @@ export default {
   btc,
   btcmultisig,
   eth,
+  bnb,
   ghost,
   next,
 

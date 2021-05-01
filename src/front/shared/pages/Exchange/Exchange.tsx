@@ -226,8 +226,8 @@ class Exchange extends PureComponent<any, any> {
       }
     }
 
-    let haveCurrency = sell || config.opts.defaultExchangePair.sell
-    let getCurrency = buy || (!isWidgetBuild ? config.opts.defaultExchangePair.buy : config.erc20token)
+    let haveCurrency = sell || (config.binance) ? `btc` : config.opts.defaultExchangePair.sell
+    let getCurrency = buy || (config.binance) ? `btcb` : (!isWidgetBuild ? config.opts.defaultExchangePair.buy : config.erc20token)
 
     const exchangeDataStr = localStorage.getItem(constants.localStorage.exchangeSettings)
     const exchangeSettings = exchangeDataStr && JSON.parse(exchangeDataStr)
@@ -562,6 +562,10 @@ class Exchange extends PureComponent<any, any> {
       )
     }
 
+    if (config.binance) {
+      balances[`ETH`] = balances[`BNB`]
+    }
+
     this.setState(() => ({
       isPending: false,
       balances,
@@ -710,7 +714,8 @@ class Exchange extends PureComponent<any, any> {
       balances,
     } = this.state
 
-    return (balances && balances[`ETH`]) ? balances[`ETH`] : 0
+    const ethBalance = (balances && balances[(config.binance) ? `BNB` : `ETH`]) ? balances[(config.binance) ? `BNB` : `ETH`] : 0
+    return ethBalance
   }
 
   checkBalanceForSwapPossibility = (checkParams) => {
@@ -758,6 +763,7 @@ class Exchange extends PureComponent<any, any> {
         balanceIsOk = true
       }
     } catch (error) {
+      console.log('>>> fail check fee')
       this.reportError(error, `from checkBalanceForSwapPossibility()`)
       return false
     }
@@ -786,11 +792,11 @@ class Exchange extends PureComponent<any, any> {
               defaultMessage="You must have at least {amount} {currency} on your balance. {br} Miner commission {sellFee} {sellCoin} and {buyFee} {buyCoin}"
               values={{
                 amount: amount.toNumber(),
-                currency: sellCurrency.toUpperCase(),
+                currency: this.renderCoinName(sellCurrency),
                 sellFee,
-                sellCoin,
+                sellCoin: this.renderCoinName(sellCoin),
                 buyFee,
-                buyCoin,
+                buyCoin: this.renderCoinName(buyCoin),
                 br: <br />,
               }}
             />
@@ -806,7 +812,7 @@ class Exchange extends PureComponent<any, any> {
         ),
         message: alertMessage,
         canClose: true,
-        currency: buyCurrency,
+        currency: this.renderCoinName(buyCurrency),
         address,
         actionType: 'deposit',
       })
@@ -1459,6 +1465,10 @@ class Exchange extends PureComponent<any, any> {
     })
   }
 
+  renderCoinName = (coin) => {
+    return (coin.toUpperCase() === `ETH` && config.binance) ? `BNB` : coin.toUpperCase()
+  }
+
   render() {
     const {
       currencies,
@@ -1502,6 +1512,7 @@ class Exchange extends PureComponent<any, any> {
       ordersIsOpen,
     } = this.state
 
+
     const sellCoin = haveCurrency.toUpperCase()
     const buyCoin = getCurrency.toUpperCase()
     const balance = this.getBalance(sellCoin)
@@ -1542,7 +1553,7 @@ class Exchange extends PureComponent<any, any> {
                     .toString()
                 : new BigNumber(balance).dp(5, BigNumber.ROUND_FLOOR).toString()}
               {'  '}
-              {sellCoin}
+              {this.renderCoinName(sellCoin)}
             </>
           )}
         </p>
@@ -1727,8 +1738,8 @@ class Exchange extends PureComponent<any, any> {
                     id="PartialPriceNoOrdersReduceAllInfo"
                     defaultMessage="This trade amount is too high for present market liquidity. Please reduce amount to {maxForSell}."
                     values={{
-                      maxForBuy: `${maxAmount} ${getCurrency.toUpperCase()}`,
-                      maxForSell: `${maxBuyAmount.toFixed(8)} ${haveCurrency.toUpperCase()}`,
+                      maxForBuy: `${maxAmount} ${this.renderCoinName(getCurrency)}`,
+                      maxForSell: `${maxBuyAmount.toFixed(8)} ${this.renderCoinName(haveCurrency)}`,
                     }}
                   />
                 </p>
@@ -1788,7 +1799,7 @@ class Exchange extends PureComponent<any, any> {
               {isPrice &&
                 `1 ${getCurrency.toUpperCase()} = ${oneCryptoCost.toFixed(
                   5
-                )} ${haveCurrency.toUpperCase()}`}
+                )} ${this.renderCoinName(haveCurrency)}`}
               {isErrorNoOrders && '?'}
             </div>
 
@@ -1815,7 +1826,7 @@ class Exchange extends PureComponent<any, any> {
                     </span>
                   ) : (
                     <span>
-                      {pairFees.sell.fee} {pairFees.sell.coin} + {pairFees.buy.fee} {pairFees.buy.coin}
+                      {pairFees.sell.fee} {this.renderCoinName(pairFees.sell.coin)} + {pairFees.buy.fee} {this.renderCoinName(pairFees.buy.coin)}
                       {' ≈ '}
                       {fiatFeeCalculation > 0 ? <>${fiatFeeCalculation}</> : 0}
                       {' '}

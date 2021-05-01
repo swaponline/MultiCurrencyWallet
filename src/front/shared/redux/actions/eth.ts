@@ -16,6 +16,9 @@ import * as mnemonicUtils from 'common/utils/mnemonic'
 import metamask from 'helpers/metamask'
 
 
+const ethLabel = (config.binance) ? 'BSC' : 'Ethereum'
+const ethLabelShort = (config.binance) ? 'BNB' : 'ETH'
+
 const hasAdminFee = (
   config
     && config.opts
@@ -153,6 +156,12 @@ const login = (privateKey, mnemonic = null, mnemonicKeys = null) => {
   web3.eth.accounts.wallet.add(data.privateKey)
   data.isMnemonic = sweepToMnemonicReady
 
+  data = {
+    ...data,
+    fullName: ethLabel,
+    currency: ethLabelShort,
+  }
+
   reducers.user.setAuthData({ name: 'ethData', data })
   window.getEthAddress = () => data.address
   referral.newReferral(data.address)
@@ -182,8 +191,8 @@ const login = (privateKey, mnemonic = null, mnemonicKeys = null) => {
     reducers.user.addWallet({
       name: 'ethMnemonicData',
       data: {
-        currency: 'ETH',
-        fullName: 'Ethereum (New)',
+        currency: ethLabelShort,
+        fullName: `${ethLabel} (New)`,
         balance: 0,
         isBalanceFetched: false,
         balanceError: null,
@@ -262,7 +271,7 @@ const getInvoices = (address) => {
 
 const getTx = (txRaw) => txRaw.transactionHash
 
-const getTxRouter = (txId) => `/eth/tx/${txId}`
+const getTxRouter = (txId) => `/${(config.binance) ? 'bnb' : 'eth'}/tx/${txId}`
 
 const getLinkToInfo = (tx) => {
   if (!tx) {
@@ -281,7 +290,7 @@ const getTransaction = (address: string = ``, ownType: string = ``) =>
       resolve([])
     }
 
-    const type = (ownType) || 'eth'
+    const type = (ownType) || (config.binance) ? 'bnb' : 'eth'
     // First - get internal txs
     const internalUrl = `?module=account&action=txlistinternal&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=${config.api.etherscan_ApiKey}`
     const url = `?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=${config.api.etherscan_ApiKey}`

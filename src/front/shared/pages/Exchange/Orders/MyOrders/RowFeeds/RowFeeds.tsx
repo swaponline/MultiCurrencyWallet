@@ -39,6 +39,10 @@ class RowFeeds extends Component<any, any> {
     return offerUrl
   }
 
+  renderCoinName(coin) {
+    return (coin.toUpperCase() === `ETH` && config.binance) ? `BNB` : coin.toUpperCase()
+  }
+
   render() {
     const {
       row: { requests, buyAmount, buyCurrency, sellAmount, sellCurrency, exchangeRate, id, isTurbo },
@@ -63,17 +67,17 @@ class RowFeeds extends Component<any, any> {
         <td>
           <span className='sellAmountOrders' styleName="value">{sellAmount.toFixed(5)}</span>
           {' '}
-          <span styleName="currency">{sellCurrency}</span>
+          <span styleName="currency">{this.renderCoinName(sellCurrency)}</span>
         </td>
         <td>
           <span className='buyAmountOrders' styleName="value">{buyAmount.toFixed(5)}</span>
           {' '}
-          <span styleName="currency">{buyCurrency}</span>
+          <span styleName="currency">{this.renderCoinName(buyCurrency)}</span>
         </td>
         <td>
           <span styleName="value">{rate.toFixed(5)}</span>
           {' '}
-          <span styleName="currency">{`${buyCurrency}/${sellCurrency}`}</span>
+          <span styleName="currency">{`${this.renderCoinName(buyCurrency)}/${this.renderCoinName(sellCurrency)}`}</span>
         </td>
         <td>
           <div styleName="buttons">

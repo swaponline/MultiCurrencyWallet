@@ -26,6 +26,8 @@ import helpers, {
 } from 'helpers'
 import btcUtils from 'common/utils/coin/btc'
 
+import config from 'app-config'
+
 import Modal from 'components/modal/Modal/Modal'
 import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
 import Input from 'components/forms/Input/Input'
@@ -174,7 +176,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
       : new BigNumber(0)
     // save ethereum wallet for token exchange's rate
     const arrWithEthWallet = items.filter(item => {
-      return item.currency.toLowerCase() === 'eth'
+      return item.currency.toLowerCase() === (config.binance) ? 'bnb' : 'eth'
         && item.infoAboutCurrency
         && item.infoAboutCurrency.price_fiat
     })
@@ -595,6 +597,9 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
     if (isEthToken) {
       return typeforce.isCoinAddress.ETH(address)
     }
+    if (config.binance && getCurrencyKey(currency, false).toUpperCase() === `BNB`) {
+      return typeforce.isCoinAddress.ETH(address)
+    }
 
     return typeforce.isCoinAddress[getCurrencyKey(currency, false).toUpperCase()](address)
   }
@@ -686,7 +691,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
     const maxService = usedAdminFee
         ? new BigNumber(usedAdminFee.fee).dividedBy(ONE_HUNDRED_PERCENT).multipliedBy(balances.balance)
         : new BigNumber(0)
-    const maxAmount = balances.balance.minus(minerFee).minus(maxService).dp(currentDecimals, BigNumber.ROUND_CEIL)
+    const maxAmount = new BigNumber(balances.balance.minus(minerFee).minus(maxService).dp(currentDecimals, BigNumber.ROUND_CEIL))
     const maxFiatAmount = maxAmount.multipliedBy(exCurrencyRate).dp(2, BigNumber.ROUND_CEIL)
 
     if (maxAmount.isGreaterThan(balances.balance) || maxAmount.isLessThanOrEqualTo(0)) {
@@ -881,7 +886,11 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
       },
     })
 
-    const dataCurrency = isEthToken ? 'ETH' : currency.toUpperCase()
+    const dataCurrency = isEthToken
+      ? config.binance
+        ? 'BNB'
+        : 'ETH'
+      : currency.toUpperCase()
 
     const formRender = (
       <Fragment>

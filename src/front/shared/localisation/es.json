@@ -2664,7 +2664,7 @@
   },
   {
     "id": "customERC20_Address",
-    "message": "erc20 direccion",
+    "message": "{type} direccion",
     "files": [
       "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
     ]
@@ -2720,7 +2720,7 @@
   },
   {
     "id": "customERC20_Title",
-    "message": "Agregar nuevo ERC20",
+    "message": "Agregar nuevo token",
     "files": [
       "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
     ]
@@ -3524,7 +3524,7 @@
   },
   {
     "id": "MainFAQ2_content1",
-    "message": "Para los tokens ERC20, se requiere que tenga al menos 0.001 ETH en sus billeteras.¡Recuerda! al enviar tokens ERC20, debe mantener algunos ETH como tarifas de mineros para las transacciones. Este también es el caso de todos los intercambios atómicos por tokens ETH y ERC20. ",
+    "message": "Para los tokens {tokenType}, se requiere que tenga al menos 0.001 {currency} en sus billeteras.¡Recuerda! al enviar tokens {tokenType}, debe mantener algunos {currency} como tarifas de mineros para las transacciones. Este también es el caso de todos los intercambios atómicos por tokens {currency} y {tokenType}. ",
     "files": [
       "src/front/shared/components/FAQ/FAQ.tsx"
     ]
@@ -5997,7 +5997,7 @@
   },
   {
     "id": "MM_ETHBalance",
-    "message": "Equilibrio ETH: {balance} (para los mineros)",
+    "message": "Equilibrio {AB_Coin}: {balance} (para los mineros)",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
@@ -6081,7 +6081,7 @@
   },
   {
     "id": "MM_ToggleText",
-    "message": "Creación de mercado BTC/WBTC",
+    "message": "Creación de mercado BTC/{token}",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
