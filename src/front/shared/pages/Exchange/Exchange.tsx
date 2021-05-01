@@ -792,11 +792,11 @@ class Exchange extends PureComponent<any, any> {
               defaultMessage="You must have at least {amount} {currency} on your balance. {br} Miner commission {sellFee} {sellCoin} and {buyFee} {buyCoin}"
               values={{
                 amount: amount.toNumber(),
-                currency: sellCurrency.toUpperCase(),
+                currency: this.renderCoinName(sellCurrency),
                 sellFee,
-                sellCoin,
+                sellCoin: this.renderCoinName(sellCoin),
                 buyFee,
-                buyCoin,
+                buyCoin: this.renderCoinName(buyCoin),
                 br: <br />,
               }}
             />
@@ -812,7 +812,7 @@ class Exchange extends PureComponent<any, any> {
         ),
         message: alertMessage,
         canClose: true,
-        currency: buyCurrency,
+        currency: this.renderCoinName(buyCurrency),
         address,
         actionType: 'deposit',
       })
