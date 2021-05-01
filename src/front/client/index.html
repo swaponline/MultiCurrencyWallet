@@ -589,6 +589,22 @@
     <script type="text/javascript" src="https://unpkg.com/react@16.10.2/umd/react.production.min.js"></script>
     <script type="text/javascript" src="https://unpkg.com/react-dom@16.10.2/umd/react-dom.production.min.js"></script>
 
+    <!-- Extension: icon click => open tab -->
+    <script>
+      if (chrome && chrome.browserAction) {
+        chrome.browserAction.onClicked.addListener(function(tab) {
+          console.log('Extension: add click listener')
+          chrome.tabs.create({
+            'url': chrome.extension.getURL('/application/index.html#/marketmaker/WBTC')
+          }, (tab) =>{
+           // fallback
+          });
+        });
+      } else {
+        console.log('Extension: can`t add click listener (possibly not extension)')
+      }
+    </script>
+
     <script>
       try {
         JSON.parse("<!-- BACK_SO -->");

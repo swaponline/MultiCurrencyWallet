@@ -4,7 +4,7 @@ on:
   # but only for the master branch
   push:
     branches:
-      - extpage
+      - master
 
 jobs:
   build:
@@ -45,4 +45,4 @@ jobs:
         client-secret:  ${{ secrets.CLIENTSECRET }}
         file-name: 'zipped-chrome-extension-mainnet.zip'
         app-id: 'oldojieloelkkfeacfinhcngmbkepnlm'
-        publish: false
+        publish: true

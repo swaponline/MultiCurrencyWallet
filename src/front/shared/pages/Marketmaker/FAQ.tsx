@@ -111,6 +111,52 @@ class FAQ extends React.Component<{isDark: boolean}, {}> {
           <Expandable
             title={
               <FormattedMessage
+                id="MM_FAQ_ItemTitle7"
+                defaultMessage="Why do I need WBTC? I am only interested in earning BTC."
+              />
+            }
+            content={
+              <>
+                <div>
+                  <FormattedMessage
+                    id="MM_FAQ_ItemContent7-1"
+                    defaultMessage="You can replenish only with Bitcoin, but inevitably, at some periods, your BTC balance may decrease, and WBTC may increase, and vice versa."
+                  />
+                </div>
+                <div>
+                  <FormattedMessage
+                    id="MM_FAQ_ItemContent7-2"
+                    defaultMessage="At any given time, the sum of these balances will be greater than before."
+                  />
+                </div>
+                <div>
+                  <FormattedMessage
+                    id="MM_FAQ_ItemContent7-3"
+                    defaultMessage="If you want to withdraw BTC, but some of them are in WBTC, then you will have to change WBTC yourself, for example, through the Binance exchange."
+                  />
+                </div>
+              </>
+            }
+            onExpand={() => { feedback.marketmaking.faqOpened('What is the minimum balance needed to get started?') }}
+          />
+          <Expandable
+            title={
+              <FormattedMessage
+                id="MM_FAQ_ItemTitle8"
+                defaultMessage="Why don't users exchange themselves through the Binance exchange?"
+              />
+            }
+            content={
+              <FormattedMessage
+                id="MM_FAQ_ItemContent8"
+                defaultMessage="Our clients love and support decentralization, our exchanger works through smart contracts and we will not be able to freeze the client's funds for more than 3 hours."
+              />
+            }
+            onExpand={() => { feedback.marketmaking.faqOpened('What is the minimum balance needed to get started?') }}
+          />
+          <Expandable
+            title={
+              <FormattedMessage
                 id="MM_FAQ_ItemTitle4"
                 defaultMessage="What is the minimum balance needed to get started?"
               />

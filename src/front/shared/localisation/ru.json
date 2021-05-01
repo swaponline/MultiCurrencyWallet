@@ -5715,7 +5715,7 @@
   },
   {
     "id": "MM_FAQ_ItemContent3-1",
-    "message": "Зависит от количества обменов и спреда. Но если обменов не будет, вы получите SWAP токены из расчета 10% APY. Для получения напишите в",
+    "message": "Зависит от количества обменов и спреда. Но если обменов не будет, вы получите SWAP токены из расчета 10% APY. Для получения напишите в ",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
@@ -5744,6 +5744,48 @@
   {
     "id": "MM_FAQ_ItemContent6",
     "message": "Расскажите о возможности обмена в сообществах где вы состоите.",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_ItemTitle7",
+    "message": "Зачем мне WBTC? Меня интересует заработок только BTC.",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_ItemContent7-1",
+    "message": "Вы можете пополнять только биткоином, но неизбежно в какие-то периоды ваш баланс BTC может уменьшиться, а WBTC увеличиться и наоборот.",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_ItemContent7-2",
+    "message": "В любой момент времени сумма этих балансов будет больше чем раньше.",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_ItemContent7-3",
+    "message": "Если вы хотите вывести BTC, но часть из них в WBTC, то вам прийдется самому менять WBTC, например через биржу Binance.",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_ItemTitle8",
+    "message": "Почему пользователи сами не поменяют через биржу Binance?",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_ItemContent8",
+    "message": "Наши клиенты любят и поддерживают децентрализацию, наш обменник работает через смарт контракты и мы никак не сможем заморозить средства клиента больше чем на 3 часа.",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
@@ -5904,7 +5946,7 @@
   },
   {
     "id": "MM_Promo_Title",
-    "message": "How to make money on atomic swaps?",
+    "message": "Как заработать на моем BTC депозите?",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx",
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
@@ -5912,7 +5954,7 @@
   },
   {
     "id": "MM_Promo_TitleBody",
-    "message": "Станьте маркет-мейкером, предоставив свой капитал для обеспечения атомарных свопов. Когда пользователи будут совершать обмены, вы будете зарабатывать 0,5%.",
+    "message": "Пользователи в нашем обменнике swap.io меняют BTC на WBTC (токен который стоит как BTC, но работает на Ethereum), и обратно. Вы получаете комиссию 0.5% если обмен происходит с вами.",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx",
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
@@ -6088,7 +6130,7 @@
   },
   {
     "id": "MM_MarketmakingBalanceTitle",
-    "message": "Баланс маркетмейкинга:",
+    "message": "Общая ликвидность:",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]

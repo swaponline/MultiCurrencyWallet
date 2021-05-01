@@ -5711,7 +5711,7 @@
   },
   {
     "id": "MM_FAQ_ItemContent3-1",
-    "message": "It depends on the number of swaps and the spread. But if there are no swaps, you will get SWAP tokens at the rate of 10% APY. To get it, write to",
+    "message": "It depends on the number of swaps and the spread. Ask any questions ",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
@@ -5740,6 +5740,48 @@
   {
     "id": "MM_FAQ_ItemContent6",
     "message": "Tell about the possibility of swap in the communities where you are a member.",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_ItemTitle7",
+    "message": "Why do I need WBTC? I am only interested in earning BTC.",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_ItemContent7-1",
+    "message": "You can replenish only with Bitcoin, but inevitably, at some periods, your BTC balance may decrease, and WBTC may increase, and vice versa.",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_ItemContent7-2",
+    "message": "At any given time, the sum of these balances will be greater than before.",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_ItemContent7-3",
+    "message": "If you want to withdraw BTC, but some of them are in WBTC, then you will have to change WBTC yourself, for example, through the Binance exchange.",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_ItemTitle8",
+    "message": "Why don't users exchange themselves through the Binance exchange?",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_ItemContent8",
+    "message": "Our clients love and support decentralization, our exchange works through smart contracts and we will not be able to freeze the client's funds for more than 3 hours.",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
@@ -5900,7 +5942,7 @@
   },
   {
     "id": "MM_Promo_Title",
-    "message": "How to make money on atomic swaps?",
+    "message": "How to Earn Interest on Bitcoin",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx",
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
@@ -5908,7 +5950,7 @@
   },
   {
     "id": "MM_Promo_TitleBody",
-    "message": "Become a marketmaker by providing your capital to atomic swaps. When users make orders, you will earn 0.5%.",
+    "message": "On swap.io users exchange BTC for WBTC (a token that costs like BTC, but works on Ethereum), and vice versa. You get a commission of 0.5% if the exchange takes place with you.",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx",
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
@@ -6077,7 +6119,7 @@
   },
   {
     "id": "MM_MarketmakingBalanceTitle",
-    "message": "Marketmaking Balance:",
+    "message": "Total liquidity:",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
