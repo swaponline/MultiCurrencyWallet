@@ -5950,7 +5950,7 @@
   },
   {
     "id": "MM_Promo_TitleBody",
-    "message": "Gebruikers in onze swap.io wisselaar wisselen BTC uit voor WBTC (een token dat net als BTC kost, maar werkt op Ethereum) en vice versa. U krijgt een commissie van 0,5% als de uitwisseling met u plaatsvindt.",
+    "message": "Gebruikers in onze swap.io wisselaar wisselen BTC uit voor {token} (een token dat net als BTC kost, maar werkt op {Ab_Title}) en vice versa. U krijgt een commissie van 0,5% als de uitwisseling met u plaatsvindt.",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx",
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
@@ -6007,7 +6007,7 @@
   },
   {
     "id": "MM_NeedSaveMnemonic",
-    "message": "We maken BTC, ETH, WBTC hot portefeuilles. Je moet 12 woorden schrijven als je dat nog niet eerder hebt gedaan",
+    "message": "We maken BTC, {AB_Coin}, {token} hot portefeuilles. Je moet 12 woorden schrijven als je dat nog niet eerder hebt gedaan",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
