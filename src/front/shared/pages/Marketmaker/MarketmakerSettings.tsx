@@ -486,7 +486,11 @@ class MarketmakerSettings extends Component<any, any> {
           <p>
             <FormattedMessage
               id="MM_Promo_TitleBody"
-              defaultMessage="Become a marketmaker by providing your capital to atomic swaps. When users make orders, you will earn 0.5%."
+              defaultMessage="On swap.io users exchange BTC for {token} (a token that costs like BTC, but works on {Ab_Title}), and vice versa. You get a commission of 0.5% if the exchange takes place with you."
+              values={{
+                token: marketToken.toUpperCase(),
+                Ab_Title: (config.binance) ? `Binance Smart Chain` : `Ethereum`,
+              }}
             />
           </p>
         </div>
@@ -497,7 +501,11 @@ class MarketmakerSettings extends Component<any, any> {
             <p>
               <FormattedMessage
                 id="MM_NeedSaveMnemonic"
-                defaultMessage="We will create BTC,ETH,WBTC hot wallets. You need to write 12 words if you have not done so earlier"
+                defaultMessage="We will create BTC, {AB_Coin}, {token} hot wallets. You need to write 12 words if you have not done so earlier"
+                values={{
+                  token: marketToken.toUpperCase(),
+                  AB_Coin: (config.binance) ? `BNB` : `ETH`,
+                }}
               />
             </p>
             <div styleName='restoreBtn'>

@@ -5950,7 +5950,7 @@
   },
   {
     "id": "MM_Promo_TitleBody",
-    "message": "On swap.io users exchange BTC for WBTC (a token that costs like BTC, but works on Ethereum), and vice versa. You get a commission of 0.5% if the exchange takes place with you.",
+    "message": "On swap.io users exchange BTC for {token} (a token that costs like BTC, but works on {Ab_Title}), and vice versa. You get a commission of 0.5% if the exchange takes place with you.",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx",
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
@@ -5993,7 +5993,7 @@
   },
   {
     "id": "MM_ETHBalance",
-    "message": "Balance ETH: {balance} (for miners fee)",
+    "message": "Balance {AB_Coin}: {balance} (for miners fee)",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
@@ -6007,7 +6007,7 @@
   },
   {
     "id": "MM_NeedSaveMnemonic",
-    "message": "We will create BTC,ETH,WBTC hot wallets. You need to write 12 words if you have not done so earlier",
+    "message": "We will create BTC, {AB_Coin}, {token} hot wallets. You need to write 12 words if you have not done so earlier",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]

@@ -8,7 +8,9 @@ export const getActivatedCurrencies = () => {
     currencies.push('BTC (PIN-Protected)')
     currencies.push('BTC (Multisig)')
   }
-  if (!config.opts.curEnabled || config.opts.curEnabled.eth) currencies.push('ETH')
+  if (!config.opts.curEnabled || config.opts.curEnabled.eth) {
+    currencies.push((config.binance) ? `BNB` : `ETH`)
+  }
 
   if (!config.opts.curEnabled || config.opts.curEnabled.ghost) currencies.push('GHOST')
 

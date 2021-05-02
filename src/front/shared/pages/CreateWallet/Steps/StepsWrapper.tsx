@@ -21,9 +21,13 @@ export default class StepsWrapper extends Component<any, any> {
     ...(!config.opts.curEnabled || config.opts.curEnabled.ghost) ? [{ name: "GHOST", capture: "Ghost" }] : [],
     ...(!config.opts.curEnabled || config.opts.curEnabled.next) ? [{ name: "NEXT", capture: "NEXT.coin" }] : [],
     ...(process.env.MAINNET) ? [{ name: "SWAP", capture: "Swap" }] : [{ name: "WEENUS", capture: "Weenus" }],
-    { name: "WBTC", capture: "Wrapped Bitcoin" },
-    { name: "USDT", capture: "Tether" },
-    { name: "EURS", capture: "Eurs" },
+    ...((config.binance) ? [
+      { name: "BTCP", capture: "BTCB Token" },
+    ] : [
+      { name: "WBTC", capture: "Wrapped Bitcoin" },
+      { name: "USDT", capture: "Tether" },
+      { name: "EURS", capture: "Eurs" },
+    ]),
   ]
 
   widgetStartPack = [
@@ -80,9 +84,14 @@ export default class StepsWrapper extends Component<any, any> {
     }
 
     const enabledCurrencies = getActivatedCurrencies()
-    const items = currencies
+
+    let items = currencies
       .filter(({ addAssets, name }) => addAssets)
       .filter(({ name }) => enabledCurrencies.includes(name))
+    if (config.binance) {
+      items = items.filter(({ name }) => name !== `ETH`)
+    }
+
     const untouchable = this.defaultStartPack.map(({ name }) => name)
 
     const coins = items
