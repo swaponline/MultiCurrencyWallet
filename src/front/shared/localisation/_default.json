@@ -5993,7 +5993,7 @@
   },
   {
     "id": "MM_ETHBalance",
-    "message": "Balance ETH: {balance} (for miners fee)",
+    "message": "Balance {AB_Coin}: {balance} (for miners fee)",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
