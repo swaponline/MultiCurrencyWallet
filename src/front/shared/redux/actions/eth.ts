@@ -71,8 +71,10 @@ const getAllMyAddresses = () => {
   if (metamask
     && metamask.isEnabled()
     && metamask.isConnected()
+    //@ts-ignore: strictNullChecks
     && retData.indexOf(metamask.getAddress().toLowerCase()) === -1
   ) {
+    //@ts-ignore: strictNullChecks
     retData.push(metamask.getAddress().toLowerCase())
   }
 
@@ -120,6 +122,7 @@ const login = (privateKey, mnemonic = null, mnemonicKeys = null) => {
   if (privateKey
     && mnemonic
     && mnemonicKeys
+    //@ts-ignore: strictNullChecks
     && mnemonicKeys.eth === privateKey
   ) {
     sweepToMnemonicReady = true
@@ -137,9 +140,11 @@ const login = (privateKey, mnemonic = null, mnemonicKeys = null) => {
     console.info('Created account Ethereum ...')
     // data = web3.eth.accounts.create()
     if (!mnemonic) {
+      //@ts-ignore: strictNullChecks
       mnemonic = bip39.generateMnemonic()
     }
 
+    //@ts-ignore: strictNullChecks
     const accData = getWalletByWords(mnemonic)
     console.log('Eth. Generated wallet from random 12 words')
     console.log(accData)
@@ -167,13 +172,16 @@ const login = (privateKey, mnemonic = null, mnemonicKeys = null) => {
     }
 
     if (!mnemonicKeys
+      //@ts-ignore: strictNullChecks
       || !mnemonicKeys.eth
     ) {
       console.error('Sweep. Cant auth. Login key undefined')
       return
     }
 
+    //@ts-ignore: strictNullChecks
     const mnemonicData = web3.eth.accounts.privateKeyToAccount(mnemonicKeys.eth)
+    //@ts-ignore: strictNullChecks
     web3.eth.accounts.wallet.add(mnemonicKeys.eth)
     //@ts-ignore
     mnemonicData.isMnemonic = sweepToMnemonicReady
@@ -456,7 +464,9 @@ const sendDefault = ({ from, to, amount, gasPrice = null, gasLimit = null, speed
 
     const isSendToContract = await addressIsContract(to)
 
+    //@ts-ignore: strictNullChecks
     gasPrice = gasPrice || await helpers.eth.estimateGasPrice({ speed })
+    //@ts-ignore: strictNullChecks
     gasLimit = gasLimit || (
       isSendToContract
         ? DEFAULT_CURRENCY_PARAMETERS.eth.limit.contractInteract

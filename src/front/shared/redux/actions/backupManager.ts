@@ -53,6 +53,7 @@ const backup = (mark, label, overide) => {
   }
 
   let backups = localStorage.getItem(constants.localStorage.backups)
+  //@ts-ignore: strictNullChecks
   try { backups = JSON.parse(backups) } catch (e) { }
   //@ts-ignore
   if (!(backups instanceof Array)) {
@@ -60,6 +61,7 @@ const backup = (mark, label, overide) => {
     backups = []
   }
 
+  //@ts-ignore: strictNullChecks
   if ((backups.indexOf(mark) !== -1) && !overide) return `exists`
   //@ts-ignore
   backups.unshift(mark)
@@ -96,6 +98,7 @@ const restory = (mark) => {
 
 const list = () => {
   let backups = localStorage.getItem(constants.localStorage.backups)
+  //@ts-ignore: strictNullChecks
   try { backups = JSON.parse(backups) } catch (e) { }
   //@ts-ignore
   if (!(backups instanceof Array)) {
@@ -105,6 +108,7 @@ const list = () => {
   //@ts-ignore
   backups = backups.map((mark) => {
     let backupData = localStorage.getItem(`${constants.localStorage.backups_prefix}:${mark}`)
+    //@ts-ignore: strictNullChecks
     try { backupData = JSON.parse(backupData) } catch (e) { }
     if (backupData
       //@ts-ignore
@@ -126,6 +130,7 @@ const list = () => {
 
 const exists = (mark) => {
   let backupData = localStorage.getItem(`${constants.localStorage.backups_prefix}:${mark}`)
+  //@ts-ignore: strictNullChecks
   try { backupData = JSON.parse(backupData) } catch (e) { }
   if (backupData
     //@ts-ignore

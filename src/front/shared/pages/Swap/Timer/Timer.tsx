@@ -29,6 +29,7 @@ export default class Timer extends React.Component<TimerProps, TimerState> {
 
     this.state = {
       lockTime,
+      //@ts-ignore: strictNullChecks
       cancelTime,
       timeLeft: null,
       cancelTimeLeft: null,
@@ -55,12 +56,15 @@ export default class Timer extends React.Component<TimerProps, TimerState> {
   tick = () => {
     const { timeLeft, cancelTimeLeft } = this.state
     const { enabledButton } = this.props
+    //@ts-ignore: strictNullChecks
     const newTimeLeft = timeLeft - 1000
+    //@ts-ignore: strictNullChecks
     const newCancelTimeLeft = cancelTimeLeft - 1000
 
     if (newTimeLeft <= 0 && typeof enabledButton === 'function') {
       enabledButton()
     } else {
+      //@ts-ignore: strictNullChecks
       this.timer = setTimeout(this.tick, 1000)
       this.setState({
         timeLeft: newTimeLeft,
@@ -72,11 +76,14 @@ export default class Timer extends React.Component<TimerProps, TimerState> {
   render() {
     const { timeLeft, cancelTimeLeft, cancelTime } = this.state
     const { isRefund, defaultMessage } = this.props
+    //@ts-ignore: strictNullChecks
     const min = Math.ceil(timeLeft / 1000 / 60)
+    //@ts-ignore: strictNullChecks
     const minToCancel = Math.ceil(cancelTimeLeft / 1000 / 60)
 
     return (
       <Fragment>
+        {/* @ts-ignore: strictNullChecks */}
         {cancelTime && cancelTimeLeft > 0 && !isRefund ? (
           <div styleName="timer">
             <FormattedMessage
@@ -87,6 +94,7 @@ export default class Timer extends React.Component<TimerProps, TimerState> {
           </div>
         ) : (
           <Fragment>
+            {/* @ts-ignore: strictNullChecks */}
             {cancelTime && cancelTimeLeft <= 0 && (
               <div styleName="timer">
                 <FormattedMessage

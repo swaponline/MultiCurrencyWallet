@@ -101,11 +101,13 @@ const setFilter = (filter) => {
 }
 
 const acceptRequest = (orderId, participantPeer) => {
+  //@ts-ignore: strictNullChecks
   const order = SwapApp.shared().services.orders.getByKey(orderId)
   order.acceptRequest(participantPeer)
 }
 
 const declineRequest = (orderId, participantPeer) => {
+  //@ts-ignore: strictNullChecks
   const order = SwapApp.shared().services.orders.getByKey(orderId)
   order.declineRequest(participantPeer)
 }
@@ -136,22 +138,27 @@ const forgetOrders = (orderId) => {
 
 const removeOrder = (orderId) => {
   actions.feed.deleteItemToFeed(orderId)
+  //@ts-ignore: strictNullChecks
   SwapApp.shared().services.orders.remove(orderId)
   actions.core.updateCore()
 }
 
 const showMyOrders = () => {
+  //@ts-ignore: strictNullChecks
   SwapApp.shared().services.orders.showMyOrders()
 }
 
 const hideMyOrders = () => {
+  //@ts-ignore: strictNullChecks
   SwapApp.shared().services.orders.hideMyOrders()
 }
 
 const deletedPartialCurrency = (orderId) => {
+  //@ts-ignore: strictNullChecks
   const deletedOrder = SwapApp.shared().services.orders.getByKey(orderId)
   const deletedOrderSellCurrency = deletedOrder.sellCurrency
   const deletedOrderBuyCurrency = deletedOrder.buyCurrency
+  //@ts-ignore: strictNullChecks
   const orders = SwapApp.shared().services.orders.items
 
   const deletedOrderSell = orders.filter(
@@ -170,12 +177,14 @@ const deletedPartialCurrency = (orderId) => {
   }
 }
 
+//@ts-ignore: strictNullChecks
 const hasHiddenOrders = () => SwapApp.shared().services.orders.hasHiddenOrders()
 
 const sendRequest = (orderId, destination = {}, callback) => {
   //@ts-ignore
   const { address: destinationAddress } = destination
 
+  //@ts-ignore: strictNullChecks
   const order = SwapApp.shared().services.orders.getByKey(orderId)
 
   const userCurrencyData = getUserData(order.buyCurrency)
@@ -197,6 +206,7 @@ const sendRequestForPartial = (orderId, newValues, destination = {}, callback) =
   //@ts-ignore
   const { address: destinationAddress } = destination
 
+  //@ts-ignore: strictNullChecks
   const order = SwapApp.shared().services.orders.getByKey(orderId)
 
   console.log('>>>sendRequestForPartial(), order =', order)
@@ -224,7 +234,9 @@ const sendRequestForPartial = (orderId, newValues, destination = {}, callback) =
       callback(newOrder, isAccepted)
     },
     (oldOrder, newOrder) => {
+      //@ts-ignore: strictNullChecks
       const oldPrice = Pair.fromOrder(oldOrder).price
+      //@ts-ignore: strictNullChecks
       const newPrice = Pair.fromOrder(newOrder).price
 
       console.log('prices', oldPrice.toString(), newPrice.toString())
@@ -236,6 +248,7 @@ const sendRequestForPartial = (orderId, newValues, destination = {}, callback) =
 
 const createOrder = (data, isPartial = false) => {
   console.log('>>>>> createOrder', data)
+  //@ts-ignore: strictNullChecks
   const order = SwapApp.shared().services.orders.create(data)
   if (!isPartial) {
     return order
@@ -261,6 +274,7 @@ const setupPartialOrder = (order) => {
     // if BID, then
     // price == buyAmount / sellAmount
 
+    //@ts-ignore: strictNullChecks
     const buyAmount = oldPair.isBid() ? sellAmount.div(price) : sellAmount.times(price)
 
     debug('newBuyAmount', buyAmount)
@@ -282,6 +296,7 @@ const setupPartialOrder = (order) => {
     // price = 10 = buyAmount / sellAmount
     // newSellAmount = buyAmount / price
 
+    //@ts-ignore: strictNullChecks
     const sellAmount = oldPair.isBid() ? buyAmount.times(price) : buyAmount.div(price)
 
     debug('newSellAmount', sellAmount)
@@ -294,6 +309,7 @@ const setupPartialOrder = (order) => {
 }
 
 const initPartialOrders = () => {
+  //@ts-ignore: strictNullChecks
   SwapApp.shared().services.orders.items.forEach((order) => {
     if (order && order.isMy && order.isPartial) {
       actions.core.setupPartialOrder(order)
@@ -302,11 +318,13 @@ const initPartialOrders = () => {
 }
 
 const requestToPeer = (event, peer, data, callback) => {
+  //@ts-ignore: strictNullChecks
   SwapApp.shared().services.orders.requestToPeer(event, peer, data, callback)
 }
 
 const updateCore = () => {
   SwapApp.onInit(() => {
+    //@ts-ignore: strictNullChecks
     const orders = SwapApp.shared().services.orders.items
 
     getOrders(orders)
@@ -316,6 +334,7 @@ const updateCore = () => {
 }
 
 const getSwapHistory = () => {
+  //@ts-ignore: strictNullChecks
   const swapId = JSON.parse(localStorage.getItem('swapId'))
 
   if (swapId === null || swapId.length === 0) {
@@ -330,7 +349,9 @@ const getSwapHistory = () => {
 const getInformationAboutSwap = (swapId) => {
   if (swapId.length > 0 && typeof swapId === 'string') {
     return {
+      //@ts-ignore: strictNullChecks
       ...SwapApp.shared().env.storage.getItem(`swap.${swapId}`),
+      //@ts-ignore: strictNullChecks
       ...SwapApp.shared().env.storage.getItem(`flow.${swapId}`),
     }
   }
@@ -356,6 +377,7 @@ const markCoinAsHidden = (coin, doBackup = false) => {
 const markCoinAsVisible = (coin, doBackup = false) => {
   const { hiddenCoinsList } = constants.localStorage
 
+  //@ts-ignore: strictNullChecks
   const findedCoin = JSON.parse(localStorage.getItem(hiddenCoinsList)).find(
     (el) => el.includes(coin) && el.includes(':')
   )
@@ -523,6 +545,7 @@ const fetchWalletBalance = async (walletData): Promise<number> => {
 
 const rememberSwap = (swap) => {
   console.log('>>>>>> rememberSwap', swap)
+  //@ts-ignore: strictNullChecks
   let swapsIds = JSON.parse(localStorage.getItem('swapId'))
 
   if (swapsIds === null || swapsIds.length === 0) {

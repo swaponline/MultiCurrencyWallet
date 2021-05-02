@@ -44,12 +44,15 @@ export default class DepositWindow extends Component<any, any> {
 
     this.currency = swap.sellCurrency.toLowerCase()
 
+    //@ts-ignore: strictNullChecks
     this.isSellCurrencyEthOrEthToken = helpers.ethToken.isEthOrEthToken({ name: swap.sellCurrency })
+    //@ts-ignore: strictNullChecks
     this.isSellCurrencyEthToken = helpers.ethToken.isEthToken({ name: swap.sellCurrency })
 
     this.state = {
       swap,
       dynamicFee: 0,
+      //@ts-ignore: strictNullChecks
       remainingBalance: this.swap.sellAmount,
       flow: swap.flow.state,
       isBalanceEnough: false,
@@ -62,6 +65,7 @@ export default class DepositWindow extends Component<any, any> {
         ? currencyData.address
         : flow.scriptAddress,
       currencyFullName: currencyData.fullName,
+      //@ts-ignore: strictNullChecks
       sellAmount: this.swap.sellAmount,
     }
   }
@@ -79,6 +83,7 @@ export default class DepositWindow extends Component<any, any> {
         actualBalance = await actions.eth.getBalance()
       }
     } else {
+      //@ts-ignore: strictNullChecks
       const unspents = await actions[this.currency].fetchUnspents(address)
       const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
       actualBalance = new BigNumber(totalUnspent).dividedBy(1e8)
@@ -110,7 +115,9 @@ export default class DepositWindow extends Component<any, any> {
 
     let dynamicFee = 0
 
+    //@ts-ignore: strictNullChecks
     if (COINS_WITH_DYNAMIC_FEE.includes(this.currency)) {
+      //@ts-ignore: strictNullChecks
       dynamicFee = await helpers[this.currency].estimateFeeValue({ method: 'swap', fixed: true })
 
       this.setState(() => ({
@@ -145,6 +152,7 @@ export default class DepositWindow extends Component<any, any> {
 
   createCycleUpdatingBalance = async () => {
     const { sellAmount, balance } = this.state
+    //@ts-ignore: strictNullChecks
     const { scriptValues } = this._fields
 
     let checker
@@ -302,8 +310,11 @@ export default class DepositWindow extends Component<any, any> {
     }
 
     const {
+      //@ts-ignore: strictNullChecks
       currencyName,
+      //@ts-ignore: strictNullChecks
       explorerLink,
+      //@ts-ignore: strictNullChecks
       scriptValues,
     } = this._fields
 
