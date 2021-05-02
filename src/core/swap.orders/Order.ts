@@ -45,6 +45,7 @@ class Order {
   constructor(app, parentCollection, data) {
     this.id             = data.id
     this.isMy           = null
+    //@ts-ignore: strictNullChecks
     this.isTurbo        = null
     this.owner          = null
     this.participant    = null

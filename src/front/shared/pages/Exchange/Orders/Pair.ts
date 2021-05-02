@@ -185,7 +185,7 @@ export default class Pair {
     try {
       const pair = Pair.fromOrder(order)
       const { MAIN, BASE } = parsePair(ticker.toUpperCase())
-
+      //@ts-ignore: strictNullChecks
       return pair.ticker === `${MAIN}-${BASE}`
     } catch (err) {
       return false
@@ -195,7 +195,7 @@ export default class Pair {
   static compareOrders(order1, order2) {
     const pair1 = Pair.fromOrder(order1)
     const pair2 = Pair.fromOrder(order2)
-
+    //@ts-ignore: strictNullChecks
     return pair1.price.comparedTo(pair2.price)
   }
 

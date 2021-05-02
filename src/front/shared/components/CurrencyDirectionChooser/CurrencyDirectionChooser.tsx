@@ -50,6 +50,7 @@ export default class CurrencyDirectionChooser extends Component<any, any> {
       return
     }
 
+    //@ts-ignore: strictNullChecks
     actions.modals.open(constants.modals.Offer, {
       buyCurrency,
       sellCurrency,

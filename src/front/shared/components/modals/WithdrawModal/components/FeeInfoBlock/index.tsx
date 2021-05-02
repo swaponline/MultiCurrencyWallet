@@ -136,7 +136,9 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
           </span>
           <FeeRadios
             speedType={bitcoinFeeSpeedType}
+            //@ts-ignore: strictNullChecks
             fees={bitcoinFees}
+            //@ts-ignore: strictNullChecks
             setFee={setBitcoinFee}
             isLoading={isLoading}
           />
@@ -151,6 +153,7 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
           {isLoading
             ? <div styleName='paleLoader'><InlineLoader /></div>
             : <span styleName='fee'>
+                {/* @ts-ignore: strictNullChecks */}
                 {hasTxSize && feeCurrentCurrency > 0 ? transactionSize : null}
                 {+minerFee}&nbsp;{minerFeeTicker}
                 {' '}

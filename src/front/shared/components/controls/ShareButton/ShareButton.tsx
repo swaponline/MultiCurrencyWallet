@@ -14,6 +14,7 @@ export default class ShareButton extends React.Component<any, any> {
 
   openShareModal = () => {
     const { link, title } = this.props
+    //@ts-ignore: strictNullChecks
     actions.modals.open(constants.modals.Share, {
       link: link,
       title: title

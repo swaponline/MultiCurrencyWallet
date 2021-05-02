@@ -123,6 +123,7 @@ class ETH2NEXT extends AtomicAB2UTXO {
     super._persistState()
   }
 
+  //@ts-ignore: strictNullChecks
   _getSteps() {
     const flow = this
 

@@ -33,6 +33,7 @@ const btcSwap = new BtcSwap({
   broadcastTx: (tx) => btcOwnerBitcoin.broadcastTx(tx),
 })
 
+//@ts-ignore: strictNullChecks
 const swapAppInstance = SwapApp.shared()
 console.log('swapAppInstance =', swapAppInstance)
 btcSwap._initSwap(swapAppInstance)

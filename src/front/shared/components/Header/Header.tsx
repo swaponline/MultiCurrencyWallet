@@ -86,6 +86,8 @@ class Header extends Component<any, any> {
     const dinamicPath = pathname.includes(exchange)
       ? `${unlocalisedUrl(intl.locale, pathname)}`
       : `${home}`
+
+    //@ts-ignore: strictNullChecks
     let lsWalletCreated: string | boolean = localStorage.getItem(isWalletCreate)
     if (config && config.isWidget) {
       lsWalletCreated = true
@@ -242,6 +244,7 @@ class Header extends Component<any, any> {
     }
 
     userCurrencies = userCurrencies.filter(({ currency }) =>
+      //@ts-ignore: strictNullChecks
       getActivatedCurrencies().includes(currency)
     )
 

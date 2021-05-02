@@ -38,6 +38,7 @@ class WalletAddressModal extends React.PureComponent<any, any> {
     const { fullName, address } = data
 
     return (
+      //@ts-ignore: strictNullChecks
       <Modal
         name={name}
         onClose={this.handleCloseModal}

@@ -54,6 +54,7 @@ const getItem = (key) => {
     const value = localStorage.getItem(key)
 
     try {
+      //@ts-ignore: strictNullChecks
       return JSON.parse(value)
     }
     catch (err) {

@@ -18,6 +18,7 @@ const web3connect = new Web3Connect({
 
 const _onWeb3Changed = (newWeb3) => {
   setProvider(newWeb3)
+  //@ts-ignore: strictNullChecks
   SwapApp.shared().setWeb3Provider(newWeb3)
   _initReduxState()
   actions.user.sign_to_tokens()
@@ -56,6 +57,7 @@ const _init = async () => {
     if (web3connect.hasCachedProvider()) {
       let _web3 = false
       try {
+        //@ts-ignore: strictNullChecks
         _web3 = web3connect.getWeb3()
       } catch (err) {
         web3connect.clearCache()
@@ -92,8 +94,10 @@ const getBalance = () => {
       return balanceInCache
     }
 
+    //@ts-ignore: strictNullChecks
     return web3connect.getWeb3().eth.getBalance(address)
       .then(result => {
+        //@ts-ignore: strictNullChecks
         const amount = web3connect.getWeb3().utils.fromWei(result)
 
         cacheStorageSet('currencyBalances', `eth_${address}`, amount, 30)
@@ -196,7 +200,9 @@ const handleConnectMetamask = (options?: {
   cbFunction?: Function
 }) => {
   const {
+    //@ts-ignore: strictNullChecks
     dontRedirect,
+    //@ts-ignore: strictNullChecks
     cbFunction,
   } = options
 

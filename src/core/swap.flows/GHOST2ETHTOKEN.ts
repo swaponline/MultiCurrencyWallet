@@ -97,6 +97,7 @@ export default (tokenName) => {
       super._persistState()
     }
 
+    //@ts-ignore: strictNullChecks
     _getSteps() {
       const flow = this
 

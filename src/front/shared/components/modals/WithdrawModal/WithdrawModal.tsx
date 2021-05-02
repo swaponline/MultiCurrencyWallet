@@ -225,6 +225,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
 
   componentWillUnmount() {
     this.mounted = false
+    //@ts-ignore: strictNullChecks
     clearTimeout(this.btcFeeTimer)
   }
 
@@ -332,9 +333,12 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
     const { bitcoinFees, txSize, currentDecimals } = this.state;
 
     let feeInByte = speedType === 'custom' ?
+      //@ts-ignore: strictNullChecks
       new BigNumber(customValue) :
+      //@ts-ignore: strictNullChecks
       new BigNumber(bitcoinFees[speedType]).div(1024).dp(0, BigNumber.ROUND_HALF_EVEN);
 
+    //@ts-ignore: strictNullChecks
     let fee = feeInByte.multipliedBy(txSize).multipliedBy(1e-8);
 
     this.setState((state) => ({
@@ -485,6 +489,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
       if (selectedItem.isUserProtected) nextStepModal = constants.modals.WithdrawBtcMultisig
 
       actions.modals.close(name)
+      //@ts-ignore: strictNullChecks
       actions.modals.open(nextStepModal, {
         wallet: selectedItem,
         invoice,
@@ -629,6 +634,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
     } = this.state
 
     if (isBTC) {
+      //@ts-ignore: strictNullChecks
       clearTimeout(this.btcFeeTimer)
       this.btcFeeTimer = setTimeout(() => {
         this.setBtcFeeRate()
@@ -961,6 +967,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
         </div>
         <div styleName={`lowLevel ${isDark ? 'dark' : ''}`} style={{ marginBottom: '30px' }}>
           {/* why style ? see tip for max button */}
+          {/* @ts-ignore: strictNullChecks */}
           <div style={usedAdminFee ? { right: '20px' } : null} styleName="additionalСurrencies">
             {criptoCurrencyHaveInfoPrice && <>
                 <span
@@ -985,6 +992,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
             </span>
           </div>
           {/* why style ? see tip for max button */}
+          {/* @ts-ignore: strictNullChecks */}
           <p style={usedAdminFee ? { right: '10px' } : null} styleName='balance'>
             {new BigNumber(amount).isGreaterThan(0) && criptoCurrencyHaveInfoPrice && (
               <FormattedMessage
@@ -1032,6 +1040,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
                   </Button>
                 </div>
                 {!isMobile && (
+                  //@ts-ignore: strictNullChecks
                   <Tooltip id="Withdrow134" place="top" mark={false}>
                     <FormattedMessage
                       id="WithdrawButton32"
@@ -1189,7 +1198,9 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
                 isLoading={fetchFee}
                 usedAdminFee={usedAdminFee}
                 hasTxSize={isBTCWallet}
+                //@ts-ignore: strictNullChecks
                 txSize={txSize}
+                //@ts-ignore: strictNullChecks
                 bitcoinFees={bitcoinFees}
                 bitcoinFeeSpeedType={bitcoinFeeSpeedType}
                 setBitcoinFee={this.setBitcoinFeeRate}
@@ -1214,6 +1225,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
     return portalUI ? (
       formRender
     ) : (
+      //@ts-ignore: strictNullChecks
       <Modal
         name={name}
         onClose={this.handleClose}

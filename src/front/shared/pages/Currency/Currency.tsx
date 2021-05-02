@@ -109,6 +109,7 @@ class Currency extends Component<any, any> {
 
     currency = currency.toUpperCase()
 
+    //@ts-ignore: strictNullChecks
     actions.modals.open(constants.modals.ReceiveModal, {
       currency,
       address,

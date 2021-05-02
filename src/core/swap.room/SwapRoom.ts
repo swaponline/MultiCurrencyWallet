@@ -33,6 +33,7 @@ class SwapRoom extends ServiceInterface {
     this._events        = new Events()
     this.peer           = null
     this.connection     = null
+    //@ts-ignore: strictNullChecks
     this.roomName       = null
   }
 
@@ -249,6 +250,7 @@ class SwapRoom extends ServiceInterface {
       }
 
       if (typeof callback === 'function') {
+        //@ts-ignore: strictNullChecks
         callback(delivered)
       }
     })

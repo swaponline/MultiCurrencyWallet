@@ -202,12 +202,14 @@ class MarketmakerSettings extends Component<any, any> {
 
   componentDidMount() {
     SwapApp.onInit(() => {
+      //@ts-ignore: strictNullChecks
       const isMarketEnabled = (SwapApp.shared().services.orders.getMyOrders().length > 0)
 
       const swapsIds = []
       const swapsByIds = {}
 
       this.fetchWalletsWithBalances()
+      //@ts-ignore: strictNullChecks
       const lsSwapId = JSON.parse(localStorage.getItem('swapId'))
 
       if (lsSwapId === null || lsSwapId.length === 0) {
@@ -216,13 +218,17 @@ class MarketmakerSettings extends Component<any, any> {
 
       const swapsCore = lsSwapId.map((id) => new Swap(id, SwapApp.shared()))
 
+      //@ts-ignore: strictNullChecks
       SwapApp.shared().attachedSwaps.items.forEach((swap) => {
         const swapState = this.extractSwapStatus(swap)
+        //@ts-ignore: strictNullChecks
         swapsIds.push(swapState.id)
         swapsByIds[swapState.id] = swapState
       })
 
+      //@ts-ignore: strictNullChecks
       SwapApp.shared().on('swap attached', this._handleSwapAttachedHandle)
+      //@ts-ignore: strictNullChecks
       SwapApp.shared().on('swap enter step', this._handleSwapEnterStep)
 
       this.setState({
@@ -271,11 +277,14 @@ class MarketmakerSettings extends Component<any, any> {
 
   componentWillUnmount() {
     this._mounted = false
+    //@ts-ignore: strictNullChecks
     SwapApp.shared().off('swap attached', this._handleSwapAttachedHandle)
+    //@ts-ignore: strictNullChecks
     SwapApp.shared().off('swap enter step', this._handleSwapEnterStep)
   }
 
   handleSaveMnemonic() {
+    //@ts-ignore: strictNullChecks
     actions.modals.open(constants.modals.SaveMnemonicModal, {
       onClose: () => {
         const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
@@ -306,6 +315,7 @@ class MarketmakerSettings extends Component<any, any> {
 
     if (!isEthBalanceOk) {
       hasError = true
+      //@ts-ignore: strictNullChecks
       actions.modals.open(constants.modals.AlertModal, {
         message: (
           <FormattedMessage
@@ -317,6 +327,7 @@ class MarketmakerSettings extends Component<any, any> {
     }
     if (!isTokenBalanceOk && !isBtcBalanceOk) {
       hasError = true
+      //@ts-ignore: strictNullChecks
       actions.modals.open(constants.modals.AlertModal, {
         message: (
           <FormattedMessage
@@ -354,7 +365,9 @@ class MarketmakerSettings extends Component<any, any> {
   }
 
   cleanupMarketMakerOrder() {
+    //@ts-ignore: strictNullChecks
     SwapApp.shared().services.orders.getMyOrders().forEach((order) => {
+      //@ts-ignore: strictNullChecks
       SwapApp.shared().services.orders.remove(order.id)
     })
   }
@@ -403,6 +416,7 @@ class MarketmakerSettings extends Component<any, any> {
         sellCurrency: marketToken,
       }
       console.log(sellTokenOrderData)
+      //@ts-ignore: strictNullChecks
       const sellOrder = SwapApp.shared().services.orders.create(sellTokenOrderData)
       console.log('sellOrder', sellOrder)
       actions.core.setupPartialOrder(sellOrder)
@@ -433,6 +447,7 @@ class MarketmakerSettings extends Component<any, any> {
         buyCurrency: marketToken,
       }
       console.log(buyTokenOrderData)
+      //@ts-ignore: strictNullChecks
       const buyOrder = SwapApp.shared().services.orders.create(buyTokenOrderData)
       console.log('buyOrder', buyOrder)
       actions.core.setupPartialOrder(buyOrder)

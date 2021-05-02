@@ -118,9 +118,11 @@ class SaveMnemonicModal extends React.Component<any, any> {
 
     const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
 
+    //@ts-ignore: strictNullChecks
     const randomedWords = (mnemonic !== '-') ? mnemonic.split(` `) : []
     randomedWords.sort(() => .5 - Math.random())
 
+    //@ts-ignore: strictNullChecks
     const words = (mnemonic !== '-') ? mnemonic.split(` `) : []
 
     this.state = {
@@ -232,6 +234,7 @@ class SaveMnemonicModal extends React.Component<any, any> {
 
     const { mnemonic } = this.state
 
+    //@ts-ignore: strictNullChecks
     actions.modals.open(constants.modals.Share, {
       title: intl.formatMessage(langLabels.shareMnemonicTitle),
       link: mnemonic,
@@ -259,6 +262,7 @@ class SaveMnemonicModal extends React.Component<any, any> {
     // const linked = Link.all(this, 'address', 'amount', 'from')
 
     return (
+      //@ts-ignore: strictNullChecks
       <Modal name={name} title={`${intl.formatMessage(langLabels.title)}`} onClose={this.handleClose} showCloseButton={true}>
         {step === `confirmMnemonic` && (
           <p styleName="notice mnemonicNotice">

@@ -78,6 +78,7 @@ export default class TurboTaker extends Flow {
     super._persistSteps()
   }
 
+  //@ts-ignore: strictNullChecks
   _getSteps() {
     const flow = this
     const swap = this.swap

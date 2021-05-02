@@ -102,6 +102,7 @@ function BalanceForm({
         </div>
         <div styleName="yourBalanceCurrencies">
           <button
+            //@ts-ignore: strictNullChecks
             styleName={selectedCurrency === active && 'active'}
             onClick={() => handleClickCurrency(active)}
           >
@@ -110,6 +111,7 @@ function BalanceForm({
           </button>
           <span />
           <button
+            //@ts-ignore: strictNullChecks
             styleName={selectedCurrency === currency && 'active'}
             onClick={() => handleClickCurrency(currency)}
           >

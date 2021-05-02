@@ -143,6 +143,7 @@ export default (tokenName) => {
       super._persistState()
     }
 
+    //@ts-ignore: strictNullChecks
     _getSteps() {
       const flow = this
 
@@ -361,6 +362,7 @@ export default (tokenName) => {
             return false
           }
 
+          //@ts-ignore: strictNullChecks
           refundHandler(hash)
 
           return true

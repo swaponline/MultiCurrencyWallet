@@ -8,6 +8,7 @@ import reducers from 'redux/core/reducers'
 const GetCustromERC20 = () => {
   const configStorage = (process.env.MAINNET) ? 'mainnet' : 'testnet'
 
+  //@ts-ignore: strictNullChecks
   let tokensInfo = JSON.parse(localStorage.getItem('customERC'))
   if (!tokensInfo || !tokensInfo[configStorage]) return {}
   return tokensInfo[configStorage]

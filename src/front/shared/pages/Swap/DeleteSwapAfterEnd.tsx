@@ -37,6 +37,7 @@ class DeleteSwapAfterEnd extends Component<any, any> {
     const { swap } = this.props
 
     if (swap.flow.state.isFinished) {
+      //@ts-ignore: strictNullChecks
       const deletedOrder = SwapApp.shared().services.orders.getByKey(swap.id)
       if (deletedOrder !== undefined) {
         actions.core.deletedPartialCurrency(swap.id)

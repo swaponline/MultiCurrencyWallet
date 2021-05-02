@@ -81,6 +81,7 @@ export default class StepsWrapper extends Component<any, any> {
     const enabledCurrencies = getActivatedCurrencies()
     const items = currencies
       .filter(({ addAssets, name }) => addAssets)
+      //@ts-ignore: strictNullChecks
       .filter(({ name }) => enabledCurrencies.includes(name))
     const untouchable = this.defaultStartPack.map(({ name }) => name)
 

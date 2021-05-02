@@ -159,6 +159,7 @@ class App extends React.Component<RouteComponentProps<any>, any> {
     //@ts-ignore
     const { intl } = this.props
 
+    //@ts-ignore: strictNullChecks
     actions.modals.open(constants.modals.AlertModal, {
       title: (
         <FormattedMessage 
@@ -373,9 +374,13 @@ class App extends React.Component<RouteComponentProps<any>, any> {
   }
 
   removeStartPageListeners = () => {
+    //@ts-ignore: strictNullChecks
     document.getElementById('preloaderCreateBtn').removeEventListener('click', this.setCompleteCreation)
+    //@ts-ignore: strictNullChecks
     document.getElementById('preloaderConnectBtn').removeEventListener('click', this.setCompleteCreation)
+    //@ts-ignore: strictNullChecks
     document.getElementById('preloaderRestoreBtn').removeEventListener('click', this.setCompleteCreation)
+    //@ts-ignore: strictNullChecks
     document.getElementById('preloaderSkipBtn').removeEventListener('click', this.setCompleteCreation)
   }
 

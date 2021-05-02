@@ -68,6 +68,7 @@ class Share extends Component<any, any> {
     let titleModal = 'Share';
     
     return (
+      //@ts-ignore: strictNullChecks
       <Modal name={name} title={titleModal} >
           <span styleName="targets">
           <a styleName="button" href={'https://www.facebook.com/sharer/sharer.php?u=' + encodeURI(link) + '&t=' + title} target="_blank">

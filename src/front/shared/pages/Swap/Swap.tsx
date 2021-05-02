@@ -77,7 +77,7 @@ class SwapComponent extends PureComponent<any, any> {
     } = this.state
 
     if (step >= 3) {
-
+      //@ts-ignore: strictNullChecks
       let swapsId = JSON.parse(localStorage.getItem('axiosSwaps'))
 
       if (swapsId === null || swapsId.length === 0) {

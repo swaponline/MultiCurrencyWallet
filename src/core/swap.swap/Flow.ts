@@ -65,10 +65,12 @@ class Flow {
   constructor(swap) {
     this.swap     = swap
     this.steps    = []
+    //@ts-ignore: strictNullChecks
     this.app      = null
 
     this.stepNumbers = {}
 
+    //@ts-ignore: strictNullChecks
     this.state = {
       step: 0,
       isWaitingForOwner: false,
@@ -213,6 +215,7 @@ class Flow {
           isWaitingForOwner: true,
         })
 
+        //@ts-ignore: strictNullChecks
         this.app.services.room.on('new orders', function ({ orders }) {
           const order = orders.find(({ id }) => id === orderId)
 

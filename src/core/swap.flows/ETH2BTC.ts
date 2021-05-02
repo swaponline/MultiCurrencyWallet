@@ -139,6 +139,7 @@ class ETH2BTC extends AtomicAB2UTXO {
     super._persistState()
   }
 
+  //@ts-ignore: strictNullChecks
   _getSteps() {
     const flow = this
 
@@ -353,6 +354,7 @@ class ETH2BTC extends AtomicAB2UTXO {
           return false
         }
 
+        //@ts-ignore: strictNullChecks
         refundHandler(hash)
 
         return true

@@ -43,6 +43,7 @@ class AlertWindow extends Component<any, any> {
     const { locale } = intl
 
     if (actionType === 'deposit') {
+      //@ts-ignore: strictNullChecks
       actions.modals.open(constants.modals.ReceiveModal, {
         currency,
         address,
