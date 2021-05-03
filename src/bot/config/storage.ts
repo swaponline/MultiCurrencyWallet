@@ -103,6 +103,7 @@ const getTradePairs = (): any => {
   return false
 }
 
+//@ts-ignore: strictNullChecks
 const loadJson = (network: Networks = Networks.testnet): boolean => {
   _hasTradeConfig = false
   const filePath = `${__dirname}/../../../tradeconfig.${network}.json`

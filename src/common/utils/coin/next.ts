@@ -131,6 +131,7 @@ const fetchTxInfo = (options) => {
       const adminOutput = vout.filter((out) => (
         out.scriptPubKey.addresses
         && out.scriptPubKey.addresses[0] === hasAdminFee.address
+        //@ts-ignore: strictNullChecks
         && !(new BigNumber(out.value).eq(amount))
       ))
 

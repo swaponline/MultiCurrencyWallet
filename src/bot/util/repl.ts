@@ -29,7 +29,9 @@ const _ = (async () => {
 
     const [ peer, id ] = swapID.split('-')
 
+    //@ts-ignore: strictNullChecks
     if (peer !== room.peer) {
+      //@ts-ignore: strictNullChecks
       console.log(`Peers do not match:`, peer, room.peer)
     }
 

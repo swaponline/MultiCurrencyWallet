@@ -21,6 +21,7 @@ const fetchPrice = async (obj, type?) => {
         setTimeout(() => (_isOutdated = true), 5 * 1000)
       }
 
+      //@ts-ignore: strictNullChecks
       _prices[ticker] = await getPriceByPair(ticker, type)
     }
 

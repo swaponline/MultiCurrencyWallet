@@ -36,6 +36,8 @@ const doSwap = async order => {
   await ready(room)
   console.log('info:', wallet.view())
 
+  //@ts-ignore: strictNullChecks
   orders.on('new orders', orders => orders.map(doSwap))
+  //@ts-ignore: strictNullChecks
   orders.on('new order', doSwap)
 })()
