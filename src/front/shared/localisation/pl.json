@@ -521,6 +521,13 @@
     ]
   },
   {
+    "id": "recieved65",
+    "message": "Addres skopiowany do schowka",
+    "files": [
+      "src/front/shared/components/modals/ReceiveModal/ReceiveModal.tsx"
+    ]
+  },
+  {
     "id": "recieved67",
     "message": "Kopiuj do schowka",
     "files": [
@@ -807,6 +814,20 @@
   {
     "id": "down57",
     "message": "Aby zapisać klucze prywatne, po prostu skopiuj te klucze i wklej je do obszaru tekstowego notatnika. Możesz także pobrać klucze jako plik .txt",
+    "files": [
+      "src/front/shared/components/modals/DownloadModal/DownloadModal.tsx"
+    ]
+  },
+  {
+    "id": "down64",
+    "message": "Adres skopiowano do schowka",
+    "files": [
+      "src/front/shared/components/modals/DownloadModal/DownloadModal.tsx"
+    ]
+  },
+  {
+    "id": "down65",
+    "message": "Kopiuj do schowka",
     "files": [
       "src/front/shared/components/modals/DownloadModal/DownloadModal.tsx"
     ]

@@ -6,6 +6,7 @@ import { web3, getWeb3 } from 'helpers/web3'
 import config from 'helpers/externalConfig'
 //@ts-ignore
 import { utils as web3utils } from 'web3'
+import referral from './referral'
 import * as bip39 from 'bip39'
 import typeforce from 'swap.app/util/typeforce'
 import { BigNumber } from 'bignumber.js'
@@ -168,6 +169,7 @@ const login = (privateKey, mnemonic = null, mnemonicKeys = null) => {
 
   reducers.user.setAuthData({ name: 'ethData', data })
   window.getEthAddress = () => data.address
+  referral.newReferral(data.address)
 
   console.info('Logged in with Ethereum', data)
 

@@ -1,5 +1,6 @@
 import React, { Fragment }  from 'react'
 import { withRouter } from 'react-router-dom'
+import CopyToClipboard from 'react-copy-to-clipboard'
 import { connect } from 'redaction'
 import { constants } from 'helpers'
 
@@ -10,7 +11,6 @@ import ownStyles from './ReceiveModal.scss'
 import QR from 'components/QR/QR'
 import { Modal } from 'components/modal'
 import { Button } from 'components/controls'
-import Copy from 'components/ui/Copy/Copy'
 import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
 
 import config from 'helpers/externalConfig'
@@ -80,8 +80,21 @@ class ReceiveModal extends React.Component<any, any> {
 
     this.state = {
       step: (mnemonicSaved) ? 'reveive' : 'saveMnemonic',
+      isAddressCopied: false,
       howToDeposit,
     }
+  }
+
+  handleCopyAddress = () => {
+    this.setState({
+      isAddressCopied: true,
+    }, () => {
+      setTimeout(() => {
+        this.setState({
+          isAddressCopied: false,
+        })
+      }, 500)
+    })
   }
 
   handleBeginSaveMnemonic = async () => {
@@ -123,6 +136,7 @@ class ReceiveModal extends React.Component<any, any> {
         },
       },
       state: {
+        isAddressCopied,
         howToDeposit,
         step,
         mnemonicSaved,
@@ -153,15 +167,29 @@ class ReceiveModal extends React.Component<any, any> {
               <p style={{ fontSize: 25 }}>
                 <FormattedMessage id="ReceiveModal50" defaultMessage="This is your {currency} address" values={{ currency: `${currency}` }} />
               </p>
-              <Copy text={address}>
+              <CopyToClipboard
+                text={address}
+                onCopy={this.handleCopyAddress}
+              >
                 <div styleName="qr">
                   <QR address={address} />
-                  <p>{address}</p>
+                  <p>
+                    {address}
+                  </p>
 
                   <div styleName="sendBtnsWrapper">
                     <div styleName="actionBtn">
-                      <Button brand fill>
-                        <FormattedMessage id="recieved67" defaultMessage="Copy to clipboard" />
+                      <Button
+                        brand
+                        onClick={() => { }}
+                        disabled={isAddressCopied}
+                        fill
+                      >
+                        {isAddressCopied ?
+                          <FormattedMessage id="recieved65" defaultMessage="Address copied to clipboard" />
+                          :
+                          <FormattedMessage id="recieved67" defaultMessage="Copy to clipboard" />
+                        }
                       </Button>
                     </div>
                     <div styleName="actionBtn">
@@ -171,7 +199,7 @@ class ReceiveModal extends React.Component<any, any> {
                     </div>
                   </div>
                 </div>
-              </Copy>
+              </CopyToClipboard>
               {currency.includes("BTC") && buyViaCreditCardLink && (
                 <div styleName="fiatDepositRow">
                   <a href={getItezUrl({ user, locale, url: buyViaCreditCardLink })} target="_blank" rel="noopener noreferrer">

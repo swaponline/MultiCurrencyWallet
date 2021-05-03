@@ -573,6 +573,13 @@
     ]
   },
   {
+    "id": "recieved65",
+    "message": "Адресс скопирован",
+    "files": [
+      "src/front/shared/components/modals/ReceiveModal/ReceiveModal.tsx"
+    ]
+  },
+  {
     "id": "recieved67",
     "message": "Скопировать",
     "files": [
@@ -859,6 +866,20 @@
   {
     "id": "down57",
     "message": "Похоже, что Вы пытаетесь сохранить свои приватные ключи. Скопируйте их в надеждное место! Так же вы можете скачать их как документ .txt формата.",
+    "files": [
+      "src/front/shared/components/modals/DownloadModal/DownloadModal.tsx"
+    ]
+  },
+  {
+    "id": "down64",
+    "message": "Скопировано в буфер обмена",
+    "files": [
+      "src/front/shared/components/modals/DownloadModal/DownloadModal.tsx"
+    ]
+  },
+  {
+    "id": "down65",
+    "message": "Скопировать",
     "files": [
       "src/front/shared/components/modals/DownloadModal/DownloadModal.tsx"
     ]
