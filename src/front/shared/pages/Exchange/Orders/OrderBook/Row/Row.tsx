@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import { connect } from 'redaction'
 import actions from 'redux/actions'
 import styles from './Row.scss'
+import config from 'app-config'
 
 import helpers, { links, constants, ethToken } from 'helpers'
 import { IPairFees } from 'helpers/getPairFees'
@@ -148,6 +149,10 @@ class Row extends Component<RowProps, RowState> {
     }
   }
 
+  renderCoinName = (coin) => {
+    return (coin.toUpperCase() === `ETH` && config.binance) ? `BNB` : coin.toUpperCase()
+  }
+
   sendSwapRequest = async (orderId, currency) => {
     const {
       row: {
@@ -165,7 +170,7 @@ class Row extends Component<RowProps, RowState> {
 
     const balance = this.getBalance()
 
-    feedback.offers.buyPressed(`${sellCurrency}->${buyCurrency}`)
+    feedback.offers.buyPressed(`${this.renderCoinName(sellCurrency)}->${this.renderCoinName(buyCurrency)}`)
 
     const pair = Pair.fromOrder(row)
     //@ts-ignore: strictNullChecks
@@ -195,7 +200,7 @@ class Row extends Component<RowProps, RowState> {
     actions.modals.open(constants.modals.ConfirmBeginSwap, {
       order: row,
       onAccept: async (customWallet) => {
-        feedback.offers.swapRequested(`${sellCurrency}->${buyCurrency}`)
+        feedback.offers.swapRequested(`${this.renderCoinName(sellCurrency)}->${this.renderCoinName(buyCurrency)}`)
 
         this.setState({ isFetching: true })
 
@@ -242,9 +247,9 @@ class Row extends Component<RowProps, RowState> {
               : intl.formatMessage(messages.buy)
             }`,
             amount: `${this.getDecimals(amount, main)}`,
-            main: `${main}`,
+            main: `${this.renderCoinName(main)}`,
             total: `${this.getDecimals(total, base)}`,
-            base: `${base}`,
+            base: `${this.renderCoinName(base)}`,
             price: `${exchangeRates}`,
           }}
         />
@@ -356,17 +361,17 @@ class Row extends Component<RowProps, RowState> {
         </td>
         <td styleName='rowCell'>
           <span styleName='rowAmount'>
-            {`${this.getDecimals(sellAmountOut, sellCurrencyOut)} ${sellCurrencyOut}`}
+            {`${this.getDecimals(sellAmountOut, sellCurrencyOut)} ${this.renderCoinName(sellCurrencyOut)}`}
           </span>
         </td>
         <td styleName='rowCell'>
           <span styleName='rowAmount'>
-            {`${this.getDecimals(getAmountOut, getCurrencyOut)} ${getCurrencyOut}`}
+            {`${this.getDecimals(getAmountOut, getCurrencyOut)} ${this.renderCoinName(getCurrencyOut)}`}
           </span>
         </td>
         <td styleName='rowCell'>
           <span styleName='rowAmount'>
-            {`${this.getDecimals(priceOut, getCurrencyOut)} ${getCurrencyOut}/${sellCurrencyOut}`}
+            {`${this.getDecimals(priceOut, getCurrencyOut)} ${this.renderCoinName(getCurrencyOut)}/${this.renderCoinName(sellCurrencyOut)}`}
           </span>
         </td>
         <td styleName='rowCell'>
@@ -407,7 +412,11 @@ class Row extends Component<RowProps, RowState> {
                           :
                           () => {}
                         }
-                        data={{ type, main, base }}
+                        data={{
+                          type,
+                          main: this.renderCoinName(main),
+                          base: this.renderCoinName(base),
+                        }}
                       />
                     )
                   )
@@ -453,7 +462,7 @@ class Row extends Component<RowProps, RowState> {
                   ? (<FormattedMessage id="RowMobileYouGet" defaultMessage="You get" />)
                   : (<FormattedMessage id="RowMobileYouSend" defaultMessage="You send" />)}
               </span>
-              <span styleName='rowAmount'>{`${mobileFormatCrypto(total, base)} ${base}`}</span>
+              <span styleName='rowAmount'>{`${mobileFormatCrypto(total, base)} ${this.renderCoinName(base)}`}</span>
             </div>
             <div styleName="tdContainer-3">
               {
@@ -495,7 +504,11 @@ class Row extends Component<RowProps, RowState> {
                                 :
                                 () => {}
                               }
-                              data={{ type, main, base }}
+                              data={{
+                                type,
+                                main: this.renderCoinName(main),
+                                base: this.renderCoinName(base),
+                              }}
                             />
                           )
                         )

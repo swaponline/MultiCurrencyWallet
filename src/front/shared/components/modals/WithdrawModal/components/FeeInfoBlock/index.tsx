@@ -80,7 +80,7 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
     // check after converting
     // if  0.<two-digit number more 0> then cut result to two numbers
     // else cut result to currency decimals
-    let bigNumResult = currency.multipliedBy(exchangeRate)
+    let bigNumResult = new BigNumber(currency).multipliedBy(exchangeRate)
     const strResult = bigNumResult.toString()
     const haveTwoZeroAfterDot =
       strResult.match(/\./)

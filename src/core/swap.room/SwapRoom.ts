@@ -76,8 +76,8 @@ class SwapRoom extends ServiceInterface {
     this.peer = peer.id
 
     const defaultRoomName = this.app.isMainNet()
-      ? 'swap.online'
-      : 'testnet.swap.online'
+      ? (this.app.env.isBinance) ? 'bsc.swap.online' : 'swap.online'
+      : (this.app.env.isBinance) ? 'bsc-testnet.swap.online' : 'testnet.swap.online'
 
     this.roomName = this._config.roomName || defaultRoomName
 

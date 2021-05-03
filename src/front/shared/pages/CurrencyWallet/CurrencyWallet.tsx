@@ -181,6 +181,7 @@ class CurrencyWallet extends Component<any, any> {
         }
       }
     })
+
     if (!itemCurrency.length) {
       itemCurrency = items.filter((item) => {
         if (item.balance > 0 && item.currency.toLowerCase() === ticker.toLowerCase()) return true
@@ -653,7 +654,8 @@ class CurrencyWallet extends Component<any, any> {
       isLoading,
     } = this.state
 
-    const currencyKey = getCurrencyKey(currency, true)
+    let currencyKey = getCurrencyKey(currency, true)
+    if (config.binance && currencyKey === `eth`) currencyKey = `bnb`
 
     if (isRedirecting) return null
 

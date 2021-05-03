@@ -22,7 +22,7 @@ import FAQ from './FAQ'
 
 import Toggle from 'components/controls/Toggle/Toggle'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
-import Tooltip from 'components/ui/Tooltip/Tooltip'
+import ThemeTooltip from '../../components/ui/Tooltip/ThemeTooltip'
 import Input from 'components/forms/Input/Input'
 
 import btc from './images/btcIcon.svg'
@@ -75,7 +75,6 @@ class MarketmakerSettings extends Component<any, any> {
       isEthBalanceOk: false,
       isBtcBalanceOk: false,
       isTokenBalanceOk: false,
-      isNeedDeposit: false,
       marketSpread: 0.1, // 10% spread
       mnemonicSaved,
     }
@@ -346,7 +345,6 @@ class MarketmakerSettings extends Component<any, any> {
         isBtcBalanceOk,
         isEthBalanceOk,
         isTokenBalanceOk,
-        isNeedDeposit: false
       }, () => {
         if (!isMarketEnabled) {
           // New state - On
@@ -359,7 +357,6 @@ class MarketmakerSettings extends Component<any, any> {
     } else {
       this.setState({
         isMarketEnabled: false,
-        isNeedDeposit: true
       })
     }
   }
@@ -484,7 +481,6 @@ class MarketmakerSettings extends Component<any, any> {
       marketToken,
       isBalanceFetching,
       isMarketEnabled,
-      isNeedDeposit,
       mnemonicSaved,
     } = this.state
 
@@ -499,13 +495,17 @@ class MarketmakerSettings extends Component<any, any> {
           <h2>
             <FormattedMessage
               id="MM_Promo_Title"
-              defaultMessage="How to earn on my BTC deposit?"
+              defaultMessage="How to make money on atomic swaps?"
             />
           </h2>
           <p>
             <FormattedMessage
               id="MM_Promo_TitleBody"
-              defaultMessage="Users in our swap.io exchanger exchange BTC for WBTC (a token that costs like BTC, but works on Ethereum), and vice versa. You get a commission of 0.5% if the exchange takes place with you."
+              defaultMessage="On swap.io users exchange BTC for {token} (a token that costs like BTC, but works on {Ab_Title}), and vice versa. You get a commission of 0.5% if the exchange takes place with you."
+              values={{
+                token: marketToken.toUpperCase(),
+                Ab_Title: (config.binance) ? `Binance Smart Chain` : `Ethereum`,
+              }}
             />
           </p>
         </div>
@@ -516,7 +516,11 @@ class MarketmakerSettings extends Component<any, any> {
             <p>
               <FormattedMessage
                 id="MM_NeedSaveMnemonic"
-                defaultMessage="We will create BTC,ETH,WBTC hot wallets. You need to write 12 words if you have not done so earlier"
+                defaultMessage="We will create BTC, {AB_Coin}, {token} hot wallets. You need to write 12 words if you have not done so earlier"
+                values={{
+                  token: marketToken.toUpperCase(),
+                  AB_Coin: (config.binance) ? `BNB` : `ETH`,
+                }}
               />
             </p>
             <div styleName='restoreBtn'>
@@ -536,7 +540,10 @@ class MarketmakerSettings extends Component<any, any> {
                 <p styleName='mm-toggle__text'>
                   <FormattedMessage
                     id="MM_ToggleText"
-                    defaultMessage="Marketmaking BTC/WBTC"
+                    defaultMessage="Marketmaking BTC/{token}"
+                    values={{
+                      token: marketToken.toUpperCase(),
+                    }}
                   />
                 </p>
                 <span styleName='mm-toggle__switch'>
@@ -561,15 +568,6 @@ class MarketmakerSettings extends Component<any, any> {
                   id="MMPercentEarn"
                   defaultMessage="You will earn 0.5% from each swap"
                 />
-                {' '}
-                <Tooltip id="MM_EarnEachSwapTooltip">
-                  <div style={{ maxWidth: '24em', textAlign: 'center' }}>
-                    <FormattedMessage
-                      id="MM_Promo_TitleBody"
-                      defaultMessage="Users in our swap.io exchanger exchange BTC for WBTC (a token that costs like BTC, but works on Ethereum), and vice versa. You get a commission of 0.5% if the exchange takes place with you."
-                    />
-                  </div>
-                </Tooltip>
               </p>
             </div>
             <div styleName='section-items__item'>
@@ -597,7 +595,7 @@ class MarketmakerSettings extends Component<any, any> {
               <p styleName='item-text__secondary-title'>
                 <FormattedMessage
                   id="MM_MarketmakingBalanceTitle"
-                  defaultMessage="Total liquidity:"
+                  defaultMessage="Marketmaking Balance:"
                 />
               </p>
               <p>
@@ -620,136 +618,141 @@ class MarketmakerSettings extends Component<any, any> {
                 </span>
               </p>
             </div>
-            {(isNeedDeposit || isMarketEnabled) && (
-              <>
-                <div styleName='section-items__item'>
-                  {btcWallet ? (
-                      <>
-                        <p styleName='item-text__secondary-title'>
-                          <FormattedMessage
-                            id="MM_BTCBalance"
-                            defaultMessage="Balance BTC:"
-                          />
-                        </p>
-                        <p>
-                          <img src={btc} alt="btc" />
-                          {' '}
-                          <span id='btcBalance' styleName='balanceSecondary'>{btcBalance}</span>
-                        </p>
-                        <p styleName='item-text__secondary'>
-                          <FormattedMessage
-                            id="MM_DepositeWallet"
-                            defaultMessage="to top up, transfer to {address}"
-                            values={{
-                              address: btcWallet.address,
-                            }}
-                          />
-                        </p>
-                      </>
-                    ) : (
-                      <>
-                        <p styleName='item-text__secondary-title'>
-                          <FormattedMessage
-                            id="MM_BTCBalance"
-                            defaultMessage="Balance BTC:"
-                          />
-                        </p>
-                        <p>
-                          <img src={btc} alt="btc" />
-                          {' '}
-                          <span id='btcBalance' styleName='balanceSecondary'>{btcBalance}</span>
-                        </p>
-                      </>
-                    )
-                  }
+            <div styleName='section-items__item'>
+              {btcWallet ? (
+                  <>
+                    <p styleName='item-text__secondary-title'>
+                      <FormattedMessage
+                        id="MM_BTCBalance"
+                        defaultMessage="Balance BTC:"
+                      />
+                    </p>
+                    <p>
+                      <img src={btc} alt="btc" />
+                      {' '}
+                      <span id='btcBalance' styleName='balanceSecondary'>{btcBalance}</span>
+                    </p>
+                    <p styleName='item-text__secondary'>
+                      <FormattedMessage
+                        id="MM_DepositeWallet"
+                        defaultMessage="to top up, transfer to {address}"
+                        values={{
+                          address: btcWallet.address,
+                        }}
+                      />
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <p styleName='item-text__secondary-title'>
+                      <FormattedMessage
+                        id="MM_BTCBalance"
+                        defaultMessage="Balance BTC:"
+                      />
+                    </p>
+                    <p>
+                      <img src={btc} alt="btc" />
+                      {' '}
+                      <span id='btcBalance' styleName='balanceSecondary'>{btcBalance}</span>
+                    </p>
+                  </>
+                )
+              }
+            </div>
+            <div styleName='section-items__item'>
+              <p styleName='item-text__secondary-title'>
+                <FormattedMessage
+                  id="MM_TokenBalance"
+                  defaultMessage="Balance {token}:"
+                  values={{
+                    token: marketToken.toUpperCase(),
+                  }}
+                />
+              </p>
+              <p>
+                <span id='tokenBalance' styleName='balanceSecondary'>{tokenBalance}</span>
+                {' '}
+                <>
+                  <span styleName='iconPosition' data-tip data-for="wbtcIcon">
+                    <img src={wbtc} alt='wbtc' />
+                  </span>
+                  {/* to-do - нужно поправить локализацию - проверка бинанса, тип токена, тип ab (эфира) */}
+                  {!config.binance && (
+                    <ThemeTooltip
+                      styleName='iconTooltip'
+                      id="wbtcIcon"
+                      effect="solid"
+                      place="right"
+                    >
+                      <FormattedMessage
+                        id="MM_whatIsWBTCTooltip1"
+                        defaultMessage="Wrapped Bitcoin (WBTC) is an ERC-20 token that represents Bitcoin (BTC) on the Ethereum blockchain."
+                      />
+                      <br />
+                      <FormattedMessage
+                        id="MM_whatIsWBTCTooltip2"
+                        defaultMessage="WBTC was created to allow Bitcoin holders to participate in decentralized finance (“DeFi”) apps that are popular on Ethereum."
+                      />
+                    </ThemeTooltip>
+                  )}
+                </>
+              </p>
+              {this._metamaskEnabled && (
+                <div style={{ marginBottom: '15px' }}>
+                {metamask.isConnected() ? (
+                    <Button blue onClick={this.processDisconnectWallet.bind(this)}>
+                      <FormattedMessage
+                        id="MM_DisconnectMetamask"
+                        defaultMessage="Disconnect Metamask"
+                      />
+                    </Button>
+                  ) : (
+                    <Button blue onClick={this.processConnectWallet.bind(this)}>
+                      <FormattedMessage
+                        id="MM_ConnectMetamask"
+                        defaultMessage="Connect Metamask"
+                      />
+                    </Button>
+                  )
+                }
                 </div>
-                <div styleName='section-items__item'>
-                  <p styleName='item-text__secondary-title'>
+              )}
+              {ethWallet ? (
+                  <>
+                    <span styleName='item-text__secondary'>
+                      <FormattedMessage
+                        id="MM_ETHBalance"
+                        defaultMessage="Balance {AB_Coin}: {balance} (for miners fee)"
+                        values={{
+                          AB_Coin: (config.binance) ? `BNB` : `ETH`,
+                          balance: new BigNumber(ethBalance).dp(5).toNumber()
+                        }}
+                      />
+                    </span>
+                    <p styleName='item-text__secondary'>
+                      <FormattedMessage
+                        id="MM_DepositeWallet"
+                        defaultMessage="to top up, transfer to {address}"
+                        values={{
+                          address: ethWallet.address,
+                        }}
+                      />
+                    </p>
+                  </>
+                ) : (
+                  <p styleName='item-text__secondary'>
                     <FormattedMessage
-                      id="MM_TokenBalance"
-                      defaultMessage="Balance {token}:"
+                      id="MM_ETHBalance"
+                      defaultMessage="Balance {AB_Coin}: {balance} (for miners fee)"
                       values={{
-                        token: marketToken.toUpperCase(),
+                        AB_Coin: (config.binance) ? `BNB` : `ETH`,
+                        balance: new BigNumber(ethBalance).dp(5).toNumber()
                       }}
                     />
                   </p>
-                  <p>
-                    <span styleName='iconPosition' data-tip data-for="wbtcIcon">
-                      <img src={wbtc} alt='wbtc' />
-                    </span>
-                    {' '}
-                    <span id='tokenBalance' styleName='balanceSecondary'>{tokenBalance}</span>
-                    {' '}
-                    <Tooltip id="MM_whatIsWBTCTooltip">
-                      <div style={{ maxWidth: '30em', textAlign: 'center' }}>
-                        <FormattedMessage
-                          id="MM_whatIsWBTCTooltip1"
-                          defaultMessage="Wrapped Bitcoin (WBTC) is an ERC-20 token that represents Bitcoin (BTC) on the Ethereum blockchain."
-                        />
-                        <br />
-                        <FormattedMessage
-                          id="MM_whatIsWBTCTooltip2"
-                          defaultMessage="WBTC was created to allow Bitcoin holders to participate in decentralized finance (“DeFi”) apps that are popular on Ethereum."
-                        />
-                      </div>
-                    </Tooltip>
-                  </p>
-                  {this._metamaskEnabled && (
-                    <div style={{ marginBottom: '15px' }}>
-                    {metamask.isConnected() ? (
-                        <Button blue onClick={this.processDisconnectWallet.bind(this)}>
-                          <FormattedMessage
-                            id="MM_DisconnectMetamask"
-                            defaultMessage="Disconnect Metamask"
-                          />
-                        </Button>
-                      ) : (
-                        <Button blue onClick={this.processConnectWallet.bind(this)}>
-                          <FormattedMessage
-                            id="MM_ConnectMetamask"
-                            defaultMessage="Connect Metamask"
-                          />
-                        </Button>
-                      )
-                    }
-                    </div>
-                  )}
-                  {ethWallet ? (
-                      <>
-                        <span styleName='item-text__secondary'>
-                          <FormattedMessage
-                            id="MM_ETHBalance"
-                            defaultMessage="Balance ETH: {balance} (for miners fee)"
-                            values={{
-                              balance: new BigNumber(ethBalance).dp(5).toNumber()
-                            }}
-                          />
-                        </span>
-                        <p styleName='item-text__secondary'>
-                          <FormattedMessage
-                            id="MM_DepositeWallet"
-                            defaultMessage="to top up, transfer to {address}"
-                            values={{
-                              address: ethWallet.address,
-                            }}
-                          />
-                        </p>
-                      </>
-                    ) : (
-                      <p styleName='item-text__secondary'>
-                        <FormattedMessage
-                          id="MM_ETHBalance"
-                          defaultMessage="Balance ETH: {balance} (for miners fee)"
-                          values={{
-                            balance: new BigNumber(ethBalance).dp(5).toNumber()
-                          }}
-                        />
-                      </p>
-                    )
-                  }
-                </div>
-              </>
-            )}
+                )
+              }
+            </div>
           </div>
         ) : (
           <>

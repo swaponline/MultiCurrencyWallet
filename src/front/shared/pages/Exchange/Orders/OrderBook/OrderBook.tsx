@@ -161,6 +161,11 @@ class OrderBook extends Component {
     actions.core.updateCore()
   }
 
+  
+  renderCoinName(coin) {
+    return (coin.toUpperCase() === `ETH` && config.binance) ? `BNB` : coin.toUpperCase()
+  }
+
   render() {
     const {
       buyOrders,
@@ -254,8 +259,18 @@ class OrderBook extends Component {
       <Fragment>
         <PageSeo
           location={location}
-          defaultTitle={intl.formatMessage(title.metaTitle, { buyCurrency, sellCurrency, buyCurrencyFullName, sellCurrencyFullName })}
-          defaultDescription={intl.formatMessage(description.metaDescription, { buyCurrency, sellCurrency, buyCurrencyFullName, sellCurrencyFullName })}
+          defaultTitle={intl.formatMessage(title.metaTitle, {
+            buyCurrency: this.renderCoinName(buyCurrency),
+            sellCurrency: this.renderCoinName(sellCurrency),
+            buyCurrencyFullName,
+            sellCurrencyFullName,
+          })}
+          defaultDescription={intl.formatMessage(description.metaDescription, {
+            buyCurrency: this.renderCoinName(buyCurrency),
+            sellCurrency: this.renderCoinName(sellCurrency),
+            buyCurrencyFullName,
+            sellCurrencyFullName,
+          })}
         />
 
         {!!myOrders.length &&
@@ -271,7 +286,10 @@ class OrderBook extends Component {
                   <FormattedMessage
                     id="orders1381"
                     defaultMessage="{buyCurrency} 🔁 {sellCurrency}"
-                    values={{ buyCurrency, sellCurrency }}
+                    values={{
+                      buyCurrency: this.renderCoinName(buyCurrency),
+                      sellCurrency: this.renderCoinName(sellCurrency),
+                    }}
                   />
                   {/*
                   //@ts-ignore */}
@@ -295,13 +313,13 @@ class OrderBook extends Component {
               <FormattedMessage
                 id="orders159"
                 defaultMessage="{currency} offers"
-                values={{ currency: `${buyCurrency}` }} />
+                values={{ currency: this.renderCoinName(buyCurrency) }} />
             </h3>
             <div styleName="subtitle">
               <FormattedMessage
                 id="orders156"
                 defaultMessage="Buy {currency} here"
-                values={{ currency: `${buyCurrency}` }}
+                values={{ currency: this.renderCoinName(buyCurrency) }}
               />
             </div>
           </Fragment>
@@ -346,13 +364,13 @@ class OrderBook extends Component {
               <FormattedMessage
                 id="orders159"
                 defaultMessage="{currency} offers"
-                values={{ currency: `${sellCurrency}` }} />
+                values={{ currency: this.renderCoinName(sellCurrency) }} />
             </h3>
             <div styleName="subtitle">
               <FormattedMessage
                 id="orders156"
                 defaultMessage="Buy {currency} here"
-                values={{ currency: `${sellCurrency}` }}
+                values={{ currency: this.renderCoinName(sellCurrency) }}
               />
             </div>
           </Fragment>

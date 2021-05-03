@@ -62,6 +62,7 @@ if (config && config.isWidget) {
     }
   })
 }
+
 export default [
   ...swap,
 ]

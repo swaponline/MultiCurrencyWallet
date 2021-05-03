@@ -2625,7 +2625,7 @@
   },
   {
     "id": "customERC20_Address",
-    "message": "Адрес контракта",
+    "message": "{type} контракта",
     "files": [
       "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
     ]
@@ -2681,7 +2681,7 @@
   },
   {
     "id": "customERC20_Title",
-    "message": "Добавление токена ERC20",
+    "message": "Добавление токена",
     "files": [
       "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
     ]
@@ -3524,7 +3524,7 @@
   },
   {
     "id": "MainFAQ2_content1",
-    "message": "Для токенов ERC20 требуется, чтобы на ваших кошельках было не менее 0,001 ETH. Помнить! при отправке токенов ERC20 вы должны удерживать некоторое количество ETH в качестве комиссии майнеров за транзакции. Это также относится ко всем атомным свопам для токенов ETH и ERC20.",
+    "message": "Для токенов {tokenType} требуется, чтобы на ваших кошельках было не менее 0,001 {currency}. Помнить! при отправке токенов {tokenType} вы должны удерживать некоторое количество {currency} в качестве комиссии майнеров за транзакции. Это также относится ко всем атомным свопам для токенов {currency} и {tokenType}.",
     "files": [
       "src/front/shared/components/FAQ/FAQ.tsx"
     ]
@@ -5954,7 +5954,7 @@
   },
   {
     "id": "MM_Promo_TitleBody",
-    "message": "Пользователи в нашем обменнике swap.io меняют BTC на WBTC (токен который стоит как BTC, но работает на Ethereum), и обратно. Вы получаете комиссию 0.5% если обмен происходит с вами.",
+    "message": "Пользователи в нашем обменнике swap.io меняют BTC на {token} (токен который стоит как BTC, но работает на {Ab_Title}), и обратно. Вы получаете комиссию 0.5% если обмен происходит с вами.",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx",
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
@@ -5997,7 +5997,7 @@
   },
   {
     "id": "MM_ETHBalance",
-    "message": "Баланс ETH: {balance} (для майнер комиссии)",
+    "message": "Баланс {AB_Coin}: {balance} (для майнер комиссии)",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
@@ -6011,7 +6011,7 @@
   },
   {
     "id": "MM_NeedSaveMnemonic",
-    "message": "Мы создадим BTC, ETH, WBTC горячие кошельки. Вы должны написать 12 слов, если вы не делали этого раньше",
+    "message": "Мы создадим BTC, {AB_Coin}, {token} горячие кошельки. Вы должны написать 12 слов, если вы не делали этого раньше",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
@@ -6081,7 +6081,7 @@
   },
   {
     "id": "MM_ToggleText",
-    "message": "Маркетмейкер BTC/WBTC",
+    "message": "Маркетмейкер BTC/{token}",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]

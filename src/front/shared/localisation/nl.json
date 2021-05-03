@@ -2646,7 +2646,7 @@
   },
   {
     "id": "customERC20_Address",
-    "message": "erc20 address",
+    "message": "{type} address",
     "files": [
       "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
     ]
@@ -2702,7 +2702,7 @@
   },
   {
     "id": "customERC20_Title",
-    "message": "Add new ERC20",
+    "message": "Add new token",
     "files": [
       "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
     ]
@@ -3499,7 +3499,7 @@
   },
   {
     "id": "MainFAQ2_content1",
-    "message": "Voor ERC20 tokens is het nodig dat u tenminste 0.001 ETH in uw wallet heeft. Onthoud! Bij het zenden van ERC20 tokens, is het nodig om ETH the hebben voor de miner fee^ Dit is geldt ook voor alle atomic swaps voor ETH & ERC20. Opmerkiing: U kunt de benodigde 'miner fee' voor elke valuto vinden via google.",
+    "message": "Voor {tokenType} tokens is het nodig dat u tenminste 0.001 {currency} in uw wallet heeft. Onthoud! Bij het zenden van {tokenType} tokens, is het nodig om {currency} the hebben voor de miner fee^ Dit is geldt ook voor alle atomic swaps voor {currency} & {tokenType}. Opmerkiing: U kunt de benodigde 'miner fee' voor elke valuto vinden via google.",
     "files": [
       "src/front/shared/components/FAQ/FAQ.tsx"
     ]
@@ -5950,7 +5950,7 @@
   },
   {
     "id": "MM_Promo_TitleBody",
-    "message": "Gebruikers in onze swap.io wisselaar wisselen BTC uit voor WBTC (een token dat net als BTC kost, maar werkt op Ethereum) en vice versa. U krijgt een commissie van 0,5% als de uitwisseling met u plaatsvindt.",
+    "message": "Gebruikers in onze swap.io wisselaar wisselen BTC uit voor {token} (een token dat net als BTC kost, maar werkt op {Ab_Title}) en vice versa. U krijgt een commissie van 0,5% als de uitwisseling met u plaatsvindt.",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx",
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
@@ -5993,7 +5993,7 @@
   },
   {
     "id": "MM_ETHBalance",
-    "message": "Balans ETH: {balance} (voor mijnwerkers vergoeding)",
+    "message": "Balans {AB_Coin}: {balance} (voor mijnwerkers vergoeding)",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
@@ -6007,7 +6007,7 @@
   },
   {
     "id": "MM_NeedSaveMnemonic",
-    "message": "We maken BTC, ETH, WBTC hot portefeuilles. Je moet 12 woorden schrijven als je dat nog niet eerder hebt gedaan",
+    "message": "We maken BTC, {AB_Coin}, {token} hot portefeuilles. Je moet 12 woorden schrijven als je dat nog niet eerder hebt gedaan",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
@@ -6077,7 +6077,7 @@
   },
   {
     "id": "MM_ToggleText",
-    "message": "Marketmaking BTC/WBTC",
+    "message": "Marketmaking BTC/{token}",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]

@@ -7,6 +7,12 @@ import { setMetamask, setProvider, setDefaultProvider, getWeb3 as getDefaultWeb3
 import SwapApp from 'swap.app'
 import Web3Connect from '../../../common/web3connect'
 
+
+const mmLabel = (config.binance) ? `BSC` : `Ethereum`
+const mmLabelShort = (config.binance) ? `BNB` : `ETH`
+
+
+
 const web3connect = new Web3Connect({
   web3ChainId: (config.binance)
     ? (process.env.MAINNET) ? 56 : 97  // 56 = Mainnet, 97 = Testnet
@@ -150,8 +156,8 @@ const _initReduxState = () => {
         balanceError: false,
         isConnected: true,
         isMetamask: true,
-        currency: "ETH",
-        fullName: `Ethereum (${web3connect.getProviderTitle()})`,
+        currency: mmLabelShort,
+        fullName: `${mmLabel} (${web3connect.getProviderTitle()})`,
         infoAboutCurrency: ethData.infoAboutCurrency,
         isBalanceFetched: true,
         isMnemonic: true,
@@ -167,8 +173,8 @@ const _initReduxState = () => {
         balanceError: false,
         isConnected: false,
         isMetamask: true,
-        currency: "ETH",
-        fullName: `Ethereum (external wallet)`,
+        currency: mmLabelShort,
+        fullName: `${mmLabel} (external wallet)`,
         infoAboutCurrency: ethData.infoAboutCurrency,
         isBalanceFetched: true,
         isMnemonic: true,

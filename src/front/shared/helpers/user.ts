@@ -12,8 +12,11 @@ export const getActivatedCurrencies = () => {
     //@ts-ignore: strictNullChecks
     currencies.push('BTC (Multisig)')
   }
-  //@ts-ignore: strictNullChecks
-  if (!config.opts.curEnabled || config.opts.curEnabled.eth) currencies.push('ETH')
+
+  if (!config.opts.curEnabled || config.opts.curEnabled.eth) {
+    //@ts-ignore: strictNullChecks
+    currencies.push((config.binance) ? `BNB` : `ETH`)
+  }
 
   //@ts-ignore: strictNullChecks
   if (!config.opts.curEnabled || config.opts.curEnabled.ghost) currencies.push('GHOST')

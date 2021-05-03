@@ -165,7 +165,7 @@ class AddCustomERC20 extends React.Component<any, any> {
     const localeLabel = defineMessages({
       title: {
         id: 'customERC20_Title',
-        defaultMessage: 'Add new ERC20',
+        defaultMessage: 'Add new token',
       },
       addressPlaceholder: {
         id: 'customERC20_addressPlaceholder',
@@ -185,7 +185,13 @@ class AddCustomERC20 extends React.Component<any, any> {
               <div styleName="highLevel">
                 <FieldLabel inRow>
                   <span style={{ fontSize: '16px' }}>
-                    <FormattedMessage id="customERC20_Address" defaultMessage="erc20 address" />
+                    <FormattedMessage
+                      id="customERC20_Address"
+                      defaultMessage="{type} address"
+                      values={{
+                        type: config.binance ? 'bep20' : 'erc20'
+                      }}
+                    />
                   </span>
                 </FieldLabel>
                 <Input
@@ -235,7 +241,13 @@ class AddCustomERC20 extends React.Component<any, any> {
               <div styleName="lowLevel">
                 <FieldLabel inRow>
                   <span styleName="title">
-                    <FormattedMessage id="customERC20_Address" defaultMessage="erc20 address" />
+                    <FormattedMessage
+                      id="customERC20_Address"
+                      defaultMessage="{type} address"
+                      values={{
+                        type: config.binance ? 'bep20' : 'erc20'
+                      }}
+                    />
                   </span>
                 </FieldLabel>
                 <div styleName="fakeInput">{tokenAddress}</div>

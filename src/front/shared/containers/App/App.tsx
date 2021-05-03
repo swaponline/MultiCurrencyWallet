@@ -47,6 +47,14 @@ const metamaskNetworks = defineMessages({
     id: `MetamaskNetworkAlert_NetworkTestnet`,
     defaultMessage: `Тестовая сеть (Ropsten)`,
   },
+  bnb_mainnet: {
+    id: `MetamaskNetworkAlert_BnBNetworkMainnet`,
+    defaultMessage: `Mainnet Binance Smart Chain`,
+  },
+  bnb_testnet: {
+    id: `MetamaskNetworkAlert_BnBNetworkTestnet`,
+    defaultMessage: `Testnet Binance Smart Chain`,
+  },
 })
 
 
@@ -172,7 +180,7 @@ class App extends React.Component<RouteComponentProps<any>, any> {
           id="MetamaskNetworkAlert_Message"
           defaultMessage="Для продолжения выберите в кошельке {walletTitle} &quot;{network}&quot; или отключите кошелек"
           values={{
-            network: intl.formatMessage(metamaskNetworks[config.entry]),
+            network: intl.formatMessage(metamaskNetworks[(config.binance) ? `bnb_${config.entry}` : config.entry]),
             walletTitle: metamask.web3connect.getProviderTitle(),
           }}
         />
@@ -342,6 +350,7 @@ class App extends React.Component<RouteComponentProps<any>, any> {
       !startPage ||
       utils.getCookie('startedSplashScreenIsDisabled') ||
       isWalletCreated ||
+      config.binance ||
       window.location.hash !== '#/'
     ) {
       this.setState(() => ({

@@ -1,5 +1,8 @@
 import { COIN_DATA, COIN_MODEL, COIN_TYPE } from 'swap.app/constants/COINS'
 import helpers from 'helpers'
+import config from 'app-config'
+
+
 
 const reportAboutProblem = (params) => {
   const { isError = false, info } = params
@@ -173,7 +176,14 @@ type PairFeesParams = {
 }
 
 export const getPairFees = (params: PairFeesParams): Promise<IPairFees> => {
-  const { sellCurrency, buyCurrency, updateCacheValue = false } = params
+  let { sellCurrency, buyCurrency, updateCacheValue = false } = params
+  let originSell = sellCurrency.toLowerCase()
+  let originBuy = buyCurrency.toLowerCase()
+
+  if (config.binance) {
+    if (sellCurrency.toLowerCase() === `bnb`) sellCurrency = `eth`
+    if (buyCurrency.toLowerCase() === `bnb`) buyCurrency = `eth`
+  }
 
   return new Promise(async (feeResolved) => {
     const sell = await fetchCoinFee({
@@ -191,6 +201,14 @@ export const getPairFees = (params: PairFeesParams): Promise<IPairFees> => {
       [buy.coin]: buy,
       [sell.coin]: sell,
     }
+
+    if (
+      config.binance &&
+      (
+        originBuy.toLowerCase() === `eth`
+        || originSell.toLowerCase() === `eth`
+      )
+    ) byCoins[`BNB`] = byCoins[`ETH`]
 
     const result = {
       sell,
