@@ -10,4 +10,5 @@ export default {
   swapsExplorer: 'swapsExplorer',
   metamask: 'metamask',
   getWeb3: 'getWeb3',
+  isBinance: 'isBinance',
 }

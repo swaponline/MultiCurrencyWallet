@@ -44,6 +44,8 @@ import stats from './stats.swaponline'
 
 import { getPairFees } from './getPairFees'
 
+const bnb = eth
+
 
 export default {
   btc,

@@ -20,6 +20,7 @@ import pay from './pay.png'
 import eurs from './eurs.svg'
 import ghost from './ghost.svg'
 import next from './next.svg'
+import bnb from './bnb.svg'
 
 
 export default {
@@ -48,4 +49,5 @@ export default {
   eurs,
   ghost,
   next,
+  bnb,
 }

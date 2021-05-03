@@ -3517,7 +3517,7 @@
   },
   {
     "id": "MainFAQ2_content1",
-    "message": "Para los tokens ERC20, se requiere que tenga al menos 0.001 ETH en sus billeteras.¡Recuerda! al enviar tokens ERC20, debe mantener algunos ETH como tarifas de mineros para las transacciones. Este también es el caso de todos los intercambios atómicos por tokens ETH y ERC20. ",
+    "message": "Para los tokens {tokenType}, se requiere que tenga al menos 0.001 {currency} en sus billeteras.¡Recuerda! al enviar tokens {tokenType}, debe mantener algunos {currency} como tarifas de mineros para las transacciones. Este también es el caso de todos los intercambios atómicos por tokens {currency} y {tokenType}. ",
     "files": [
       "src/front/shared/components/FAQ/FAQ.tsx"
     ]
@@ -5708,7 +5708,7 @@
   },
   {
     "id": "MM_FAQ_ItemContent3-1",
-    "message": "Depende del número de swaps y del spread. Pero si no hay swaps, obtendrá tokens de SWAP a una tasa del 10% APY. Para conseguirlo, escriba a",
+    "message": "Depende del número de swaps y del spread. Pero si no hay swaps, obtendrá tokens de SWAP a una tasa del 10% APY. Para conseguirlo, escriba a ",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
@@ -5737,6 +5737,48 @@
   {
     "id": "MM_FAQ_ItemContent6",
     "message": "Cuéntanos sobre la posibilidad de swap en las comunidades en las que eres miembro.",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_ItemTitle7",
+    "message": "¿Por qué necesito WBTC? Solo estoy interesado en ganar BTC.",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_ItemContent7-1",
+    "message": "Puede reponer solo con Bitcoin, pero inevitablemente, en algunos períodos, su saldo de BTC puede disminuir y WBTC puede aumentar, y viceversa.",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_ItemContent7-2",
+    "message": "En un momento dado, la suma de estos saldos será mayor que antes.",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_ItemContent7-3",
+    "message": "Si desea retirar BTC, pero algunos de ellos están en WBTC, tendrá que cambiar WBTC usted mismo, por ejemplo, a través del intercambio de Binance.",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_ItemTitle8",
+    "message": "¿Por qué los usuarios no se intercambian a sí mismos a través del intercambio de Binance?",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_ItemContent8",
+    "message": "Nuestros clientes aman y apoyan la descentralización, nuestro intercambiador funciona a través de contratos inteligentes y no podremos congelar los fondos del cliente por más de 3 horas.",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
@@ -5897,7 +5939,7 @@
   },
   {
     "id": "MM_Promo_Title",
-    "message": "Cómo hacer dinero en atomic swaps?",
+    "message": "¿Cómo ganar con mi depósito de BTC?",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx",
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
@@ -5905,7 +5947,7 @@
   },
   {
     "id": "MM_Promo_TitleBody",
-    "message": "Conviértase en un creador de mercado al proporcionar su capital a atomic swaps. Cuando los usuarios hacen pedidos, usted ganará 0.5%.",
+    "message": "Los usuarios de nuestro intercambiador swap.io intercambian BTC por {token} (un token que cuesta como BTC, pero funciona en {Ab_Title}) y viceversa. Obtienes una comisión del 0,5% si el intercambio se realiza contigo.",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx",
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
@@ -5948,7 +5990,7 @@
   },
   {
     "id": "MM_ETHBalance",
-    "message": "Equilibrio ETH: {balance} (para los mineros)",
+    "message": "Equilibrio {AB_Coin}: {balance} (para los mineros)",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
@@ -5962,7 +6004,7 @@
   },
   {
     "id": "MM_NeedSaveMnemonic",
-    "message": "Crearemos billeteras calientes de BTC, ETH, WBTC. Necesitas escribir 12 palabras si no lo has hecho antes",
+    "message": "Crearemos billeteras calientes de BTC, {AB_Coin}, {token}. Necesitas escribir 12 palabras si no lo has hecho antes",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
@@ -6032,7 +6074,7 @@
   },
   {
     "id": "MM_ToggleText",
-    "message": "Creación de mercado BTC/WBTC",
+    "message": "Creación de mercado BTC/{token}",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
@@ -6052,8 +6094,50 @@
     ]
   },
   {
-    "id": "TotalEarned",
+    "id": "MM_ToggleTextEnabled",
+    "message": "Debes estar en línea todo el tiempo, de lo contrario no ganarás",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_ToggleTextDisabled",
+    "message": "Encienda la palanca para comenzar a ganar",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_TotalEarned",
     "message": "Total devengado:",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_MarketmakingSimbols",
+    "message": "{token} + BTC",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_MarketmakingBalanceTitle",
+    "message": "Liquidez total:",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_whatIsWBTCTooltip1",
+    "message": "Wrapped Bitcoin (WBTC) es un token ERC-20 que representa Bitcoin (BTC) en la cadena de bloques Ethereum.",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_whatIsWBTCTooltip2",
+    "message": "WBTC se creó para permitir que los titulares de Bitcoin participen en aplicaciones de finanzas descentralizadas (\"DeFi\") que son populares en Ethereum.",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]

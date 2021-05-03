@@ -34,7 +34,6 @@ import backupManager from './backupManager'
 
 import multisigTx from './multisigTx'
 
-
 const tokens = {}
 
 Object.keys(config.erc20)

@@ -212,7 +212,7 @@ class AddCustomERC20 extends React.Component<CustomTokenProps, CustomTokenState>
                       id="customERC20_Address"
                       defaultMessage="{type} address"
                       values={{
-                        type: config.binance ? 'bep20 ' : 'erc20'
+                        type: config.binance ? 'bep20' : 'erc20'
                       }}
                     />
                   </span>
@@ -264,7 +264,7 @@ class AddCustomERC20 extends React.Component<CustomTokenProps, CustomTokenState>
                       id="customERC20_Address"
                       defaultMessage="{type} address"
                       values={{
-                        type: config.binance ? 'bep20 ' : 'erc20'
+                        type: config.binance ? 'bep20' : 'erc20'
                       }}
                     />
                   </span>

@@ -1,8 +1,8 @@
 import ethToken from './ethToken'
 
-
 export default (currency, returnToken) => {
   let key = currency.toLowerCase()
+
   switch (key) {
     case 'currency':
     case 'btc (sms-protected)':

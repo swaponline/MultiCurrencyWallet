@@ -2656,7 +2656,7 @@
   },
   {
     "id": "customERC20_Address",
-    "message": "{type} adres",
+    "message": "{type} addres",
     "files": [
       "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
     ]
@@ -3502,7 +3502,7 @@
   },
   {
     "id": "MainFAQ2_content1",
-    "message": "For ERC20 tokens, it is required that you have at least 0.001 ETH on your wallets. Remember! when sending ERC20 tokens, you are required to hold some ETH as miners fees for transactions. This is also the case for all atomic swaps for ETH & ERC20 tokens.",
+    "message": "For {tokenType} tokens, it is required that you have at least 0.001 {currency} on your wallets. Remember! when sending {tokenType} tokens, you are required to hold some {currency} as miners fees for transactions. This is also the case for all atomic swaps for {currency} & {tokenType} tokens.",
     "files": [
       "src/front/shared/components/FAQ/FAQ.tsx"
     ]
@@ -5708,7 +5708,7 @@
   },
   {
     "id": "MM_FAQ_ItemContent3-1",
-    "message": "Zależy to od liczby swapów i spreadu. Ale jeśli nie ma swapów, otrzymasz tokeny swapowe w tempie 10% APY. Aby go zdobyć, napisz do",
+    "message": "Zależy to od liczby swapów i spreadu. Ale jeśli nie ma swapów, otrzymasz tokeny swapowe w tempie 10% APY. Aby go zdobyć, napisz do ",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
@@ -5737,6 +5737,48 @@
   {
     "id": "MM_FAQ_ItemContent6",
     "message": "Opowiedz o możliwości wymiany w społecznościach, w których jesteś członkiem",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_ItemTitle7",
+    "message": "Dlaczego potrzebuję WBTC? Interesuje mnie tylko zarabianie BTC.",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_ItemContent7-1",
+    "message": "Możesz doładować tylko za pomocą Bitcoin, ale nieuchronnie w niektórych okresach saldo BTC może się zmniejszyć, a WBTC może wzrosnąć i odwrotnie.",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_ItemContent7-2",
+    "message": "W dowolnym momencie suma tych sald będzie większa niż wcześniej.",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_ItemContent7-3",
+    "message": "Jeśli chcesz wypłacić BTC, ale część z nich jest na WBTC, będziesz musiał samodzielnie zmienić WBTC, na przykład za pośrednictwem giełdy Binance.",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_ItemTitle8",
+    "message": "Dlaczego użytkownicy nie wymieniają się za pośrednictwem giełdy Binance?",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_ItemContent8",
+    "message": "Nasi klienci kochają i wspierają decentralizację, nasz wymiennik działa na podstawie inteligentnych kontraktów i nie będziemy w stanie zamrozić środków klienta na dłużej niż 3 godziny.",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
@@ -5897,7 +5939,7 @@
   },
   {
     "id": "MM_Promo_Title",
-    "message": "Jak zarabiać na zamianach atomowych?",
+    "message": "Jak zarabiać na moim depozycie BTC?",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx",
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
@@ -5905,7 +5947,7 @@
   },
   {
     "id": "MM_Promo_TitleBody",
-    "message": "Zostań animatorem rynku, dostarczając swój kapitał na Atomic swaps. Kiedy użytkownicy składają zamówienia, zarobisz 0,5%.",
+    "message": "Użytkownicy w naszym wymienniku swap.io wymieniają BTC na {token} (token, który kosztuje jak BTC, ale działa na {Ab_Title}) i odwrotnie. Otrzymujesz prowizję w wysokości 0,5%, jeśli wymiana odbywa się u Ciebie.",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx",
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
@@ -5948,7 +5990,7 @@
   },
   {
     "id": "MM_ETHBalance",
-    "message": "Równowaga ETH: {balance} (dla górników opłata)",
+    "message": "Równowaga {AB_Coin}: {balance} (dla górników opłata)",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
@@ -5962,7 +6004,7 @@
   },
   {
     "id": "MM_NeedSaveMnemonic",
-    "message": "Stworzymy gorące portfele BTC, ETH, WBTC. Musisz napisać 12 słów, jeśli wcześniej tego nie zrobiłeś",
+    "message": "Stworzymy gorące portfele BTC, {AB_Coin}, {token}. Musisz napisać 12 słów, jeśli wcześniej tego nie zrobiłeś",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
@@ -6032,7 +6074,7 @@
   },
   {
     "id": "MM_ToggleText",
-    "message": "Tworzenie rynku BTC/WBTC",
+    "message": "Tworzenie rynku BTC/{token}",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
@@ -6052,8 +6094,50 @@
     ]
   },
   {
-    "id": "TotalEarned",
+    "id": "MM_ToggleTextEnabled",
+    "message": "Musisz być cały czas online, w przeciwnym razie nie zarobisz",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_ToggleTextDisabled",
+    "message": "Włącz przełącznik, aby zacząć zarabiać",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_TotalEarned",
     "message": "Ogółem zarobione:",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_MarketmakingSimbols",
+    "message": "{token} + BTC",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_MarketmakingBalanceTitle",
+    "message": "Całkowita płynność:",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_whatIsWBTCTooltip1",
+    "message": "Wrapped Bitcoin (WBTC) to token ERC-20, który reprezentuje Bitcoin (BTC) w łańcuchu blokowym Ethereum.",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_whatIsWBTCTooltip2",
+    "message": "WBTC zostało stworzone, aby umożliwić posiadaczom Bitcoinów udział w zdecentralizowanych aplikacjach finansowych („DeFi”), które są popularne w Ethereum.",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]

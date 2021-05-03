@@ -595,6 +595,9 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
     if (isEthToken) {
       return typeforce.isCoinAddress.ETH(address)
     }
+    if (config.binance && getCurrencyKey(currency, false).toUpperCase() === `BNB`) {
+      return typeforce.isCoinAddress.ETH(address)
+    }
 
     return typeforce.isCoinAddress[getCurrencyKey(currency, false).toUpperCase()](address)
   }
@@ -686,7 +689,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
     const maxService = usedAdminFee
         ? new BigNumber(usedAdminFee.fee).dividedBy(ONE_HUNDRED_PERCENT).multipliedBy(balances.balance)
         : new BigNumber(0)
-    const maxAmount = balances.balance.minus(minerFee).minus(maxService).dp(currentDecimals, BigNumber.ROUND_CEIL)
+    const maxAmount = new BigNumber(balances.balance.minus(minerFee).minus(maxService).dp(currentDecimals, BigNumber.ROUND_CEIL))
     const maxFiatAmount = maxAmount.multipliedBy(exCurrencyRate).dp(2, BigNumber.ROUND_CEIL)
 
     if (maxAmount.isGreaterThan(balances.balance) || maxAmount.isLessThanOrEqualTo(0)) {

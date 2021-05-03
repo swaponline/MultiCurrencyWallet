@@ -83,6 +83,7 @@ const FAQ = (props) => {
     setOpenedTabsCounter({ ...openedTabsCounter, [tabName]: ++openedTabsCounter[tabName] })
   }
 
+  const ethOrBnb = externalConfig.binance ? 'BNB' : 'ETH'
   const BtcPrecentFee = adminFee.isEnabled('BTC')
   const EthPrecentFee = adminFee.isEnabled('ETH')
   const BnbPrecentFee = adminFee.isEnabled('BNB')
@@ -124,7 +125,14 @@ const FAQ = (props) => {
               <FormattedMessage id="MainFAQ2_content" defaultMessage="You pay the standard TX (miners fees) for all transactions you conduct on the platform." />
             </p>
             <p>
-              <FormattedMessage id="MainFAQ2_content1" defaultMessage="For ERC20 tokens, it is required that you have at least 0.001 ETH on your wallets. Remember! when sending ERC20 tokens, you are required to hold some ETH as miners fees for transactions. This is also the case for all atomic swaps for ETH & ERC20 tokens." />
+              <FormattedMessage
+                id="MainFAQ2_content1"
+                defaultMessage="For {tokenType} tokens, it is required that you have at least 0.001 {currency} on your wallets. Remember! when sending {tokenType} tokens, you are required to hold some {currency} as miners fees for transactions. This is also the case for all atomic swaps for {currency} & {tokenType} tokens."
+                values={{
+                  currency: ethOrBnb,
+                  tokenType: externalConfig.binance ? 'BEP20' : 'ERC20'
+                }}
+              />
             </p>
             <p>
               <FormattedMessage id="MainFAQ2_content2" defaultMessage="NOTE: You can easily check the ‘miners fees’ required for each respective coin by simply googling them." />

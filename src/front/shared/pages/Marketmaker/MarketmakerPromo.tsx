@@ -2,6 +2,9 @@ import React from 'react'
 import cssModules from 'react-css-modules'
 import { FormattedMessage } from 'react-intl'
 
+import config from 'app-config'
+
+
 import styles from './MarketmakerPromo.scss'
 import { feedback, links, constants } from 'helpers'
 import Button from 'components/controls/Button/Button'
@@ -25,7 +28,11 @@ export default class MarketmakerPromo extends React.Component<{}, {}> {
 
   onSelectBrowser() {
     feedback.marketmaking.selected('browser')
-    redirectTo(`${links.marketmaker}/WBTC`)
+    if (config.binance) {
+      redirectTo(`${links.marketmaker}/BTCB`)
+    } else {
+      redirectTo(`${links.marketmaker}/WBTC`)
+    }
   }
 
   onSelectServer() {
@@ -50,13 +57,17 @@ export default class MarketmakerPromo extends React.Component<{}, {}> {
           <h2 styleName="section-title">
             <FormattedMessage
               id="MM_Promo_Title"
-              defaultMessage="How to make money on atomic swaps?"
+              defaultMessage="How to earn on my BTC deposit?"
             />
           </h2>
           <p>
             <FormattedMessage
               id="MM_Promo_TitleBody"
-              defaultMessage="Become a marketmaker by providing your capital to atomic swaps. When users make orders, you will earn 0.5%."
+              defaultMessage="On swap.io users exchange BTC for {token} (a token that costs like BTC, but works on {Ab_Title}), and vice versa. You get a commission of 0.5% if the exchange takes place with you."
+              values={{
+                token: (config.binance) ? `BTCP` : `WBTC`,
+                Ab_Title: (config.binance) ? `Binance Smart Chain` : `Ethereum`,
+              }}
             />
           </p>
         </section>

@@ -12,6 +12,7 @@ import SecondStep from './SecondStep'
 const isWidgetBuild = config && config.isWidget
 const curEnabled = config.opts.curEnabled
 
+
 @connect(({ currencies: { items: currencies } }) => ({ currencies }))
 export default class StepsWrapper extends Component<any, any> {
   defaultStartPack = [
@@ -22,9 +23,13 @@ export default class StepsWrapper extends Component<any, any> {
     ...(!curEnabled || curEnabled.ghost) ? [{ name: "GHOST", capture: "Ghost" }] : [],
     ...(!curEnabled || curEnabled.next) ? [{ name: "NEXT", capture: "NEXT.coin" }] : [],
     ...(process.env.MAINNET) ? [{ name: "SWAP", capture: "Swap" }] : [{ name: "WEENUS", capture: "Weenus" }],
-    { name: "WBTC", capture: "Wrapped Bitcoin" },
-    { name: "USDT", capture: "Tether" },
-    { name: "EURS", capture: "Eurs" },
+    ...((config.binance) ? [
+      { name: "BTCP", capture: "BTCB Token" },
+    ] : [
+      { name: "WBTC", capture: "Wrapped Bitcoin" },
+      { name: "USDT", capture: "Tether" },
+      { name: "EURS", capture: "Eurs" },
+    ]),
   ]
 
   widgetStartPack = [
@@ -51,7 +56,7 @@ export default class StepsWrapper extends Component<any, any> {
         this.defaultStartPack.push({ name: "BTC", capture: "Bitcoin" })
       }
       if (!config.opts.curEnabled || config.opts.curEnabled.eth) {
-        this.defaultStartPack.push({ name: "ETH", capture: "Ethereum" })
+        this.defaultStartPack.push((config.binance) ? { name: "BNB", capture: "BSC" } : { name: "ETH", capture: "Ethereum" })
       }
       if (!config.opts.curEnabled || config.opts.curEnabled.bnb) {
         this.defaultStartPack.push({ name: "BNB", capture: "Binance Coin" })
@@ -86,9 +91,14 @@ export default class StepsWrapper extends Component<any, any> {
     }
 
     const enabledCurrencies = getActivatedCurrencies()
-    const items = currencies
+
+    let items = currencies
       .filter(({ addAssets, name }) => addAssets)
       .filter(({ name }) => enabledCurrencies.includes(name))
+    if (config.binance) {
+      items = items.filter(({ name }) => name !== `ETH`)
+    }
+
     const untouchable = this.defaultStartPack.map(({ name }) => name)
 
     const coins = items
