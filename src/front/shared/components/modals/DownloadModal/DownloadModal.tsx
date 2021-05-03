@@ -100,6 +100,7 @@ class DownloadModal extends React.Component<any, any> {
     )
 
     return (
+      //@ts-ignore: strictNullChecks
       <Modal name={name} title={intl.formatMessage(title.downloadModal)}>
         <div styleName="subTitle">
           <FormattedMessage

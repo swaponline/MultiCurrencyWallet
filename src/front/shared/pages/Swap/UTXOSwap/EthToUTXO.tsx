@@ -44,6 +44,7 @@ export default class EthToUTXO extends Component<any, any> {
       depositWindow,
       enabledButton: false,
       isAddressCopied: false,
+      //@ts-ignore: strictNullChecks
       flow: this.swap.flow.state,
       isShowingGhostScript: false,
       currencyAddress: currencyData.address,
@@ -51,6 +52,7 @@ export default class EthToUTXO extends Component<any, any> {
   }
 
   componentWillMount() {
+    //@ts-ignore: strictNullChecks
     this.swap.on('state update', this.handleFlowStateUpdate)
 
   }
@@ -59,10 +61,12 @@ export default class EthToUTXO extends Component<any, any> {
     const { swap, flow: { isSignFetching, isMeSigned, step } } = this.state
     window.addEventListener('resize', this.updateWindowDimensions)
     this.updateWindowDimensions()
+    //@ts-ignore: strictNullChecks
     this.signTimer = setInterval(() => {
       if (!this.state.flow.isMeSigned) {
         this.signSwap()
       } else {
+        //@ts-ignore: strictNullChecks
         clearInterval(this.signTimer)
       }
     }, 3000)
@@ -80,6 +84,7 @@ export default class EthToUTXO extends Component<any, any> {
   }
 
   componentWillUnmount() {
+    //@ts-ignore: strictNullChecks
     this.swap.off('state update', this.handleFlowStateUpdate)
     window.removeEventListener('resize', this.updateWindowDimensions)
   }
@@ -90,9 +95,11 @@ export default class EthToUTXO extends Component<any, any> {
 
   confirmScriptChecked = () => {
     const {
+      //@ts-ignore: strictNullChecks
       verifyScriptFunc,
     } = this._fields
 
+    //@ts-ignore: strictNullChecks
     this.swap.flow[verifyScriptFunc]()
   }
 
@@ -104,6 +111,7 @@ export default class EthToUTXO extends Component<any, any> {
       },
     } = this.state
 
+    //@ts-ignore: strictNullChecks
     const { currencyName } = this._fields
 
     this.setState({
@@ -113,6 +121,7 @@ export default class EthToUTXO extends Component<any, any> {
   }
 
   signSwap = () => {
+    //@ts-ignore: strictNullChecks
     this.swap.flow.sign()
     this.setState(() => ({
       signed: true,
@@ -141,14 +150,19 @@ export default class EthToUTXO extends Component<any, any> {
         <div styleName="swapContainer" style={(isMobile && (windowWidth < 569)) ? { paddingTop: 120 } : { paddingTop: 0 }}>
           <div>
             <div styleName="swapInfo">
+              {/* @ts-ignore: strictNullChecks */}
               {this.swap.id &&
                 (
                   <strong>
+                    {/* @ts-ignore: strictNullChecks */}
                     {this.swap.sellAmount.toFixed(6)}
                     {' '}
+                    {/* @ts-ignore: strictNullChecks */}
                     {this.swap.sellCurrency} &#10230; {' '}
+                    {/* @ts-ignore: strictNullChecks */}
                     {this.swap.buyAmount.toFixed(6)}
                     {' '}
+                    {/* @ts-ignore: strictNullChecks */}
                     {this.swap.buyCurrency}
                   </strong>
                 )

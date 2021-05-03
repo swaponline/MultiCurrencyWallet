@@ -60,6 +60,7 @@ export default (app, { id }, callback) => {
 
     if (baseIsUTXO && process.env.MIN_AMOUNT_FORCONFIRM) {
       getNoxonPrice(main, 'USD').then((usdPrice) => {
+        //@ts-ignore: strictNullChecks
         const minAmount = new BigNumber(process.env.MIN_AMOUNT_FORCONFIRM)
         if (usdPrice.multipliedBy(swap.sellAmount).isGreaterThanOrEqualTo(minAmount)) {
           swap.needWaitConfirm()

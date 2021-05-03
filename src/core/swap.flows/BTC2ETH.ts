@@ -105,6 +105,7 @@ class BTC2ETH extends AtomicAB2UTXO {
     super._persistState()
   }
 
+  //@ts-ignore: strictNullChecks
   _getSteps() {
     const flow = this
 

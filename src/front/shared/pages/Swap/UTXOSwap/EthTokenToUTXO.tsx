@@ -41,6 +41,7 @@ export default class EthTokenToUTXO extends Component<any, any> {
       signed: false,
       enabledButton: false,
       isAddressCopied: false,
+      //@ts-ignore: strictNullChecks
       flow: this.swap.flow.state,
       currencyAddress: currencyData.address,
     }
@@ -49,10 +50,12 @@ export default class EthTokenToUTXO extends Component<any, any> {
   }
 
   componentWillMount() {
+    //@ts-ignore: strictNullChecks
     this.swap.on('state update', this.handleFlowStateUpdate)
   }
 
   componentWillUnmount() {
+    //@ts-ignore: strictNullChecks
     this.swap.off('state update', this.handleFlowStateUpdate)
   }
 
@@ -65,10 +68,12 @@ export default class EthTokenToUTXO extends Component<any, any> {
       },
     } = this.state
 
+    //@ts-ignore: strictNullChecks
     this.signTimer = setInterval(() => {
       if (!this.state.flow.isMeSigned) {
         this.signSwap()
       } else {
+        //@ts-ignore: strictNullChecks
         clearInterval(this.signTimer)
       }
     }, 3000)
@@ -87,6 +92,7 @@ export default class EthTokenToUTXO extends Component<any, any> {
   }
 
   confirmScriptChecked = () => {
+    //@ts-ignore: strictNullChecks
     this.swap.flow[this._fields.verifyScriptFunc]()
   }
 
@@ -97,6 +103,7 @@ export default class EthTokenToUTXO extends Component<any, any> {
   }
 
   signSwap = () => {
+    //@ts-ignore: strictNullChecks
     this.swap.flow.sign()
     this.setState(() => ({
       signed: true,
@@ -105,7 +112,9 @@ export default class EthTokenToUTXO extends Component<any, any> {
 
   
   requestMaxAllowance = () => {
+    //@ts-ignore: strictNullChecks
     const { sellCurrency, sellAmount } = this.swap
+    //@ts-ignore: strictNullChecks
     const { ethTokenSwap } = this.swap.flow
 
     actions.token.setAllowance({
@@ -147,14 +156,19 @@ export default class EthTokenToUTXO extends Component<any, any> {
         <div styleName="swapContainer">
           <div>
             <div styleName="swapInfo">
+              {/* @ts-ignore: strictNullChecks */}
               {this.swap.id &&
                 (
                   <strong>
+                    {/* @ts-ignore: strictNullChecks */}
                     {this.swap.sellAmount.toFixed(6)}
                     {' '}
+                    {/* @ts-ignore: strictNullChecks */}
                     {this.swap.sellCurrency} &#10230; {' '}
+                    {/* @ts-ignore: strictNullChecks */}
                     {this.swap.buyAmount.toFixed(6)}
                     {' '}
+                    {/* @ts-ignore: strictNullChecks */}
                     {this.swap.buyCurrency}
                   </strong>
                 )

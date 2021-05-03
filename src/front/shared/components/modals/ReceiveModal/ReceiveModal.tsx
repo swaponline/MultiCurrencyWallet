@@ -151,6 +151,7 @@ class ReceiveModal extends React.Component<any, any> {
 
     if (howToDeposit) {
       return (
+        //@ts-ignore: strictNullChecks
         <Modal name={name} title={intl.formatMessage(langs.title)}>
           <div dangerouslySetInnerHTML={{ __html: howToDeposit }} />
         </Modal>
@@ -158,6 +159,7 @@ class ReceiveModal extends React.Component<any, any> {
     }
 
     return (
+      //@ts-ignore: strictNullChecks
       <Modal name={name} title={intl.formatMessage(langs.title)}>
         <div styleName="content">
           {step === 'reveive' && (

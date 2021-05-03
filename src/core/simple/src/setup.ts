@@ -23,8 +23,10 @@ export default (settings) => {
 
   const wallet = new Wallet(swapApp, constants, config)
 
+  //@ts-ignore: strictNullChecks
   swapApp.services.wallet = wallet
 
+  //@ts-ignore: strictNullChecks
   const { auth, room, orders } = swapApp.services
 
   const app = {

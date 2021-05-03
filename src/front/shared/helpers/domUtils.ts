@@ -5,6 +5,7 @@ export const bodySelector = document.querySelector('body')
 export const portalSelector = document.getElementById('portal')
 
 export const fixBodyOverflow = (fix) => {
+  //@ts-ignore: strictNullChecks
   bodySelector.style.overflow = !!fix ? 'hidden' : 'auto'
 }
 
@@ -17,7 +18,9 @@ export const inputReplaceCommaWithDot = (event) => {
   }
 }
 
-export const createPortal = (component, customSelector = null) => ReactDOM.createPortal(component, customSelector || portalSelector)
+export const createPortal = (component, customSelector = null) =>
+  //@ts-ignore: strictNullChecks
+  ReactDOM.createPortal(component, customSelector || portalSelector)
 
 export const animate = (draw, duration) => {
   let start = performance.now()

@@ -128,12 +128,14 @@ class SwapRow extends Component<any, any> {
 
     this.tryRefund(timeLeft)
     */
+    //@ts-ignore: strictNullChecks
     SwapApp.shared().on('swap enter step', this._handleSwapEnterStep)
   }
 
   componentWillUnmount() {
     console.log('History unmounted')
     this._mounted = false
+    //@ts-ignore: strictNullChecks
     SwapApp.shared().off('swap enter step', this._handleSwapEnterStep)
   }
 
@@ -171,6 +173,7 @@ class SwapRow extends Component<any, any> {
 
     let lockDateAndTime = null
     if (values) {
+      //@ts-ignore: strictNullChecks
       lockDateAndTime = moment.unix(values.lockTime || date).format('HH:mm:ss DD/MM/YYYY')
     }
 
@@ -216,6 +219,7 @@ class SwapRow extends Component<any, any> {
               <p>
                 {(lockDateAndTime !== null) && (
                   <Fragment>
+                    {/* @ts-ignore: strictNullChecks */}
                     {lockDateAndTime.split(' ').map((item, key) => (
                       <Fragment key={key}> {item}</Fragment>
                     ))}

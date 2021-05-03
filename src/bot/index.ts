@@ -95,6 +95,7 @@ if (rewritedEnv.SECRET_PHRASE) {
 
 // NETWORK
 if (rewritedEnv.NETWORK !== undefined || process.env.NETWORK !== undefined) {
+  //@ts-ignore: strictNullChecks
   configStorage.setNetwork(getNetworkType(rewritedEnv.NETWORK))
 }
 

@@ -44,6 +44,7 @@ if (
   migrate().finally(() => setTimeout(() => {
     ReactDOM.render(
       <Sentry.ErrorBoundary>
+        {/* @ts-ignore: strictNullChecks */}
         <Root history={history} store={store} routes={routes} />
       </Sentry.ErrorBoundary>,
       rootEl

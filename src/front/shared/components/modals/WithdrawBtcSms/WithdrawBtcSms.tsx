@@ -498,6 +498,7 @@ class WithdrawModalMultisig extends React.Component<any, any> {
     return portalUI ? (
       formRender
     ) : (
+      //@ts-ignore: strictNullChecks
       <Modal
         name={name}
         title={`${intl.formatMessage(labels.withdrowModal)}${' '}${currency.toUpperCase()}`}

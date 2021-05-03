@@ -51,17 +51,21 @@ const createP2PNode = (options) => {
     let peerId = null
     if (peerIdJson) {
       try {
+        //@ts-ignore: strictNullChecks
         peerId = await PeerId.createFromJSON(peerIdJson)
       } catch (e) {}
     }
 
     if (!peerId) {
+      //@ts-ignore: strictNullChecks
       peerId = await PeerId.create()
     }
 
+    //@ts-ignore: strictNullChecks
     console.log('Peer id:', peerId._idB58String)
 
     const p2pNode = new Libp2p({
+      //@ts-ignore: strictNullChecks
       peerId,
       addresses: {
         listen: (listen || defaultListen),

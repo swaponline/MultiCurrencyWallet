@@ -31,6 +31,7 @@ export default class TimerButton extends Component<any, any> {
   }
 
   componentWillUnmount() {
+    //@ts-ignore: strictNullChecks
     clearTimeout(this.timer)
   }
 
@@ -42,6 +43,7 @@ export default class TimerButton extends Component<any, any> {
       this.props.handleClick()
     }
     else {
+      //@ts-ignore: strictNullChecks
       this.timer = setTimeout(this.tick, 1000)
       this.setState({
         timeLeft: newTimeLeft,

@@ -150,6 +150,7 @@ export default class DropDown extends Component<DropDownProps, DropDownState> {
     const moreThenOneOption = itemsFiltered.length > 1
 
     return (
+      //@ts-ignore: strictNullChecks
       <OutsideClick outsideAction={this.handleClickOutside}>
         <div styleName={`${dropDownStyleName} ${isDark ? 'dark' : ''}`} className={className}>
           <div

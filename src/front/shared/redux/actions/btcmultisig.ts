@@ -67,6 +67,7 @@ const getSmsKeyFromMnemonic = (mnemonic) => {
 
 const _loadBtcMultisigKeys = () => {
   let savedKeys = localStorage.getItem(constants.privateKeyNames.btcMultisigOtherOwnerKey)
+  //@ts-ignore: strictNullChecks
   try { savedKeys = JSON.parse(savedKeys) } catch (e) { }
   //@ts-ignore
   if (!(savedKeys instanceof Array)) {
@@ -154,14 +155,19 @@ const getBtcMultisigKeys = (params) => {
 
     const savedKeys = _loadBtcMultisigKeys()
     const keysInfo = []
+    //@ts-ignore: strictNullChecks
     if (savedKeys.length > 0) {
+      //@ts-ignore: strictNullChecks
       for (let i = 0; i < savedKeys.length; i++) {
+        //@ts-ignore: strictNullChecks
         if (savedKeys[i]) {
+          //@ts-ignore: strictNullChecks
           const walletData = login_USER(privateKey, savedKeys[i], true)
 
           walletData.index = i
           //@ts-ignore
           walletData.balance = (opts.dontFetchBalance) ? 0 : await fetchBalance(walletData.address)
+          //@ts-ignore: strictNullChecks
           keysInfo.push(walletData)
         }
       }
@@ -174,6 +180,7 @@ const getBtcMultisigKeys = (params) => {
 const addBtcMultisigKey = (publicKey, isPrimary) => {
   const savedKeys = _loadBtcMultisigKeys()
 
+  //@ts-ignore: strictNullChecks
   if (!savedKeys.includes(publicKey)) {
     //@ts-ignore
     savedKeys.push(publicKey)
@@ -188,8 +195,10 @@ const switchBtcMultisigKey = (keyOrIndex) => {
   const savedKeys = _loadBtcMultisigKeys()
 
   let index = keyOrIndex
+  //@ts-ignore: strictNullChecks
   if (!Number.isInteger(index)) index = savedKeys.indexOf(keyOrIndex)
 
+  //@ts-ignore: strictNullChecks
   if ((index > -1) && (index < savedKeys.length)) {
     if (index !== 0) {
       //@ts-ignore
@@ -217,6 +226,7 @@ const removeBtcMultisigNey = (keyOrIndex) => {
   const savedKeys = _loadBtcMultisigKeys()
 
   let index = keyOrIndex
+  //@ts-ignore: strictNullChecks
   if (!Number.isInteger(index)) index = savedKeys.indexOf(keyOrIndex)
 
   if (index > -1) {
@@ -403,9 +413,11 @@ const login_USER = (privateKey, otherOwnerPublicKey, onlyCheck) => {
   actions.pubsubRoom.onReady(() => {
     const { user: { btcMultisigUserData: { address } } } = getState()
     const onRequestEventName = `btc multisig request sign ${address}`
+    //@ts-ignore: strictNullChecks
     SwapApp.shared().services.room.subscribe(onRequestEventName, (_data) => {
       const { txData } = _data
       if (txData && txData.address && txData.amount && txData.currency && txData.txRaw) {
+        //@ts-ignore: strictNullChecks
         SwapApp.shared().services.room.sendMessagePeer(
           _data.fromPeer,
           {
@@ -414,6 +426,7 @@ const login_USER = (privateKey, otherOwnerPublicKey, onlyCheck) => {
           }
         )
         actions.notifications.show('BTCMultisignRequest', txData)
+        //@ts-ignore: strictNullChecks
         actions.modals.open(constants.modals.BtcMultisignConfirmTx, {
           txData: txData.txRaw,
         })
@@ -447,10 +460,13 @@ const login_ = (privateKey, otherOwnerPublicKey, sortKeys) => {
   if (otherOwnerPublicKey) {
     let publicKeysRaw = []
     if (otherOwnerPublicKey instanceof Array) {
+      //@ts-ignore: strictNullChecks
       otherOwnerPublicKey.forEach((key) => { publicKeysRaw.push(key) })
     } else {
+      //@ts-ignore: strictNullChecks
       publicKeysRaw.push(otherOwnerPublicKey)
     }
+    //@ts-ignore: strictNullChecks
     publicKeysRaw.push(publicKey_1)
 
     if (sortKeys) publicKeysRaw = publicKeysRaw.sort()
@@ -529,6 +545,7 @@ const onUserMultisigJoin = (data) => {
   if (checkKey === btcData.publicKey.toString('hex') && publicKey && (publicKey.length === 66)) {
     console.log('checks ok - connect')
     addBtcMultisigKey(publicKey, true)
+    //@ts-ignore: strictNullChecks
     SwapApp.shared().services.room.sendMessagePeer(fromPeer, {
       event: 'btc multisig join ready',
       data: {},
@@ -552,6 +569,7 @@ const broadcastTX2Room = (txData, cbSuccess, cbFail) => {
     console.log('broadcast sucess', data)
     //@ts-ignore
     clearTimeout(failTimer)
+    //@ts-ignore: strictNullChecks
     SwapApp.shared().services.room.unsubscribe(onSuccessEventName, onSuccessEvent)
     if (cbSuccess) cbSuccess()
   }
@@ -560,6 +578,7 @@ const broadcastTX2Room = (txData, cbSuccess, cbFail) => {
     console.log('broadcast multisig canceled')
     //@ts-ignore
     clearTimeout(failTimer)
+    //@ts-ignore: strictNullChecks
     SwapApp.shared().services.room.unsubscribe(onSuccessEventName, onSuccessEvent)
   }
 
@@ -567,15 +586,18 @@ const broadcastTX2Room = (txData, cbSuccess, cbFail) => {
     console.log('broadcast multisig fail timer')
     //@ts-ignore
     clearTimeout(failTimer)
+    //@ts-ignore: strictNullChecks
     SwapApp.shared().services.room.unsubscribe(onSuccessEventName, onSuccessEvent)
     if (cbFail) cbFail()
   }
   //@ts-ignore
   failTimer = setTimeout(onFailTimer, 30000)
 
+  //@ts-ignore: strictNullChecks
   SwapApp.shared().services.room.subscribe(onSuccessEventName, onSuccessEvent)
 
   // Broadcast TX
+  //@ts-ignore: strictNullChecks
   SwapApp.shared().services.room.sendMessageRoom({
     event: `btc multisig request sign ${address}`,
     data: {
@@ -615,14 +637,17 @@ const beginRegisterSMS = async (phone, mnemonic, ownPublicKey) => {
   if (mnemonic && !ownPublicKey) {
     // 2of3 - extract public key from mnemonic
     const mnemonicAccount = actions.btc.getWalletByWords(mnemonic, 1)
+    //@ts-ignore: strictNullChecks
     publicKeys.push(mnemonicAccount.publicKey)
   }
 
   // Возможность использовать произвольный публик-кей для разблокирования
   if (ownPublicKey) {
+    //@ts-ignore: strictNullChecks
     publicKeys.push(ownPublicKey)
   }
 
+  //@ts-ignore: strictNullChecks
   publicKeys.push(publicKey.toString('Hex'))
 
   const sign = _getSign()
@@ -667,15 +692,18 @@ const confirmRegisterSMS = async (phone, smsCode, mnemonic, ownPublicKey) => {
     const mnemonicAccount = actions.btc.getWalletByWords(mnemonic, 1)
     //@ts-ignore
     mnemonicKey = mnemonicAccount.publicKey
+    //@ts-ignore: strictNullChecks
     publicKeys.push(mnemonicKey)
   }
 
   // Возможность использовать произвольный публик-кей для разблокирования
   if (ownPublicKey) {
+    //@ts-ignore: strictNullChecks
     publicKeys.push(ownPublicKey)
     mnemonicKey = ownPublicKey
   }
 
+  //@ts-ignore: strictNullChecks
   publicKeys.push(publicKey.toString('Hex'))
 
   const sign = _getSign()
@@ -787,9 +815,11 @@ const addPinWallet = async (mnemonicOrKey) => {
     mnemonicKey = mnemonicAccount.publicKey
   }
 
+  //@ts-ignore: strictNullChecks
   let btcPinMnemonicKey: MnemonicKey = localStorage.getItem(constants.privateKeyNames.btcPinMnemonicKey)
   
   try { 
+    //@ts-ignore: strictNullChecks
     btcPinMnemonicKey = JSON.parse(btcPinMnemonicKey) 
   } catch (e) {
     console.error(e)
@@ -817,6 +847,7 @@ const addPinWallet = async (mnemonicOrKey) => {
   await actions.btcmultisig.login_PIN(privateKey, btcPinPublicKeys)
   const { user: { btcMultisigPinData: { address } } } = getState()
 
+  //@ts-ignore: strictNullChecks
   await getBalance(address, 'btcMultisigPinData')
 }
 
@@ -835,9 +866,11 @@ const addSMSWallet = async (mnemonicOrKey) => {
     mnemonicKey = mnemonicAccount.publicKey
   }
 
+  //@ts-ignore: strictNullChecks
   let btcSmsMnemonicKey: MnemonicKey = localStorage.getItem(constants.privateKeyNames.btcSmsMnemonicKey)
   
   try { 
+    //@ts-ignore: strictNullChecks
     btcSmsMnemonicKey = JSON.parse(btcSmsMnemonicKey) 
   } catch (e) {
     console.error(e)
@@ -914,12 +947,14 @@ const getBalance = (ownAddress = null, ownDataKey = null) => {
 const getBalancePin = () => {
   const { user: { btcMultisigPinData: { address } } } = getState()
 
+  //@ts-ignore: strictNullChecks
   return getBalance(address, 'btcMultisigPinData')
 }
 
 const getBalanceUser = (checkAddress) => {
   const { user: { btcMultisigUserData: { address } } } = getState()
   if (!checkAddress) {
+    //@ts-ignore: strictNullChecks
     return getBalance(address, 'btcMultisigUserData')
   }
   return getAddrBalance(checkAddress).then(({ balance, unconfirmedBalance }) => {
@@ -1461,8 +1496,11 @@ const parseRawTX = async (txHash) => {
       }
 
       parsedTX.output.push({
+        //@ts-ignore: strictNullChecks
         address,
+        //@ts-ignore: strictNullChecks
         valueSatoshi: out.value,
+        //@ts-ignore: strictNullChecks
         value: new BigNumber(out.value).dividedBy(1e8).toNumber(),
       })
     })
@@ -1499,6 +1537,7 @@ const signMofNByMnemonic = async (txHash, option_M, publicKeys, mnemonic, wallet
     console.log(txb)
     //@ts-ignore
     txb.__INPUTS.forEach((input, index) => {
+      //@ts-ignore: strictNullChecks
       txb.sign(index, bitcoin.ECPair.fromWIF(mnemonicWallet.WIF, btc.network), p2sh.redeem.output)
     })
 
@@ -1581,9 +1620,11 @@ const signSmsMnemonicAndBuild = (txHash, mnemonic) => {
 
 const checkPinCanRestory = (mnemonic) => {
   const mnemonicWallet = actions.btc.getWalletByWords(mnemonic, 1)
+  //@ts-ignore: strictNullChecks
   let btcSmsMnemonicKey: MnemonicKey = localStorage.getItem(constants.privateKeyNames.btcSmsMnemonicKey)
   
   try {
+    //@ts-ignore: strictNullChecks
     btcSmsMnemonicKey = JSON.parse(btcSmsMnemonicKey)
   } catch (e) {
     console.error(e)

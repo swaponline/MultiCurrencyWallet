@@ -67,6 +67,7 @@ const initApiStatus = (name, apiServers) => {
         lastCheck: getUnixTimeStamp(),
         online: true,
       }
+      //@ts-ignore: strictNullChecks
       stat.prior.push(url)
     })
     stat.last = apiServers[apiServers.length - 1]
@@ -76,6 +77,7 @@ const initApiStatus = (name, apiServers) => {
       lastCheck: getUnixTimeStamp(),
       online: true,
     }
+    //@ts-ignore: strictNullChecks
     stat.prior.push(apiServers)
     stat.last = apiServers
   }

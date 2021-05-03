@@ -100,6 +100,7 @@ const createOrders = (orderType, balance, ticker, tickerOrders, basePrice) => {
         return
       }
 
+      //@ts-ignore: strictNullChecks
       orders.push(new Pair({ ticker, price, type, amount }))
     })
   }
@@ -143,6 +144,7 @@ const fillOrders = async (balances, ticker, create) => {
     debug('new orders', orders.length)
 
     orders
+      //@ts-ignore: strictNullChecks
       .map(pair => ({ ...pair.toOrder(), isPartial: true }))
       .map(create)
       .map((order: Order) => order.setRequestHandlerForPartial('buyAmount',

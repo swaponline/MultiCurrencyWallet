@@ -273,7 +273,9 @@ class Exchange extends PureComponent<any, any> {
       pairFees: false,
       balances: false,
       haveBalance: false,
+      //@ts-ignore: strictNullChecks
       fromAddress: this.makeAddressObject(haveType, haveCurrency.toUpperCase()),
+      //@ts-ignore: strictNullChecks
       toAddress: this.makeAddressObject(getType, getCurrency.toUpperCase()),
       isTurbo: false,
       redirectToSwap: null,
@@ -421,6 +423,7 @@ class Exchange extends PureComponent<any, any> {
     timerProcess()
 
     SwapApp.onInit(() => {
+      //@ts-ignore: strictNullChecks
       SwapApp.shared().services.room.on('new orders', () => this.checkPair())
     })
 
@@ -470,8 +473,11 @@ class Exchange extends PureComponent<any, any> {
     })
 
     const allowance = await erc20tokens.checkAllowance({
+      //@ts-ignore: strictNullChecks
       tokenOwnerAddress: tokenObj.address,
+      //@ts-ignore: strictNullChecks
       tokenContractAddress: tokenObj.contractAddress,
+      //@ts-ignore: strictNullChecks
       decimals: tokenObj.decimals,
     })
 
@@ -703,6 +709,7 @@ class Exchange extends PureComponent<any, any> {
 
     const { haveCurrency, getCurrency } = this.state
 
+    //@ts-ignore: strictNullChecks
     actions.modals.open(constants.modals.Offer, {
       sellCurrency: haveCurrency,
       buyCurrency: getCurrency,
@@ -803,6 +810,7 @@ class Exchange extends PureComponent<any, any> {
           )}
         </Fragment>
       )
+      //@ts-ignore: strictNullChecks
       actions.modals.open(constants.modals.AlertWindow, {
         title: (
           <FormattedMessage
@@ -914,6 +922,7 @@ class Exchange extends PureComponent<any, any> {
     const declineSwap = actions.core.getSwapById(this.props.decline[indexOfDecline])
 
     if (declineSwap !== undefined) {
+      //@ts-ignore: strictNullChecks
       actions.modals.open(constants.modals.DeclineOrdersModal, {
         declineSwap,
       })
@@ -979,6 +988,7 @@ class Exchange extends PureComponent<any, any> {
   }
 
   getLinkToDeclineSwap = () => {
+    //@ts-ignore: strictNullChecks
     const orders = SwapApp.shared().services.orders.items
 
     const unfinishedOrder = orders
@@ -1460,6 +1470,7 @@ class Exchange extends PureComponent<any, any> {
 
   showIncompleteSwap = () => {
     const { desclineOrders } = this.state
+    //@ts-ignore: strictNullChecks
     actions.modals.open(constants.modals.IncompletedSwaps, {
       desclineOrders,
     })
@@ -1534,7 +1545,7 @@ class Exchange extends PureComponent<any, any> {
 
     if (pairFees && pairFees.byCoins) {
       const sellCoinFee = pairFees.byCoins[sellCoin] || false
-      
+      //@ts-ignore: strictNullChecks
       balanceTooltip = (
         <p styleName="maxAmount">
           {new BigNumber(balance).toNumber() === 0 ||
@@ -1560,8 +1571,10 @@ class Exchange extends PureComponent<any, any> {
       )
     }
 
+    //@ts-ignore: strictNullChecks
     const haveFiat = new BigNumber(exHaveRate).times(haveAmount).dp(2, BigNumber.ROUND_CEIL)
 
+    //@ts-ignore: strictNullChecks
     const getFiat = new BigNumber(exGetRate).times(getAmount).dp(2, BigNumber.ROUND_CEIL)
 
     const fiatFeeCalculation =
@@ -1901,6 +1914,7 @@ class Exchange extends PureComponent<any, any> {
               <Button
                 id="createOrderReactTooltipMessageForUser"
                 styleName={`button link-like ${haveBalance ? '' : 'noMany'}`}
+                //@ts-ignore: strictNullChecks
                 onClick={haveBalance ? this.createOffer : null}
               >
                 <FormattedMessage id="orders128" defaultMessage="Create offer" />
@@ -1949,6 +1963,7 @@ class Exchange extends PureComponent<any, any> {
       <div styleName="exchangeWrap">
         <div
           styleName={`promoContainer ${isDark ? '--dark' : ''}`}
+          //@ts-ignore: strictNullChecks
           ref={(ref) => (this.promoContainer = ref)}
         >
           {config && config.showHowItsWork && (
