@@ -78,6 +78,11 @@
   color: $color-brand;
 }
 
+.link {
+  color: $color-link;
+  text-decoration: underline;
+}
+
 // .small selector after .blue so that the font size is applied
 .small {
   width: 100%;
