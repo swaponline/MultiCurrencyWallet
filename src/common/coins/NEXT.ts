@@ -46,6 +46,7 @@ const NEXT: ICoin = {
     getBalance: async (addr) =>
       await connector.fetchBalance(networkType.mainnet, addr),
     createTx: async ({ account, amount, to }) =>
+      //@ts-ignore: strictNullChecks
       await libAdapter.createTx({
         netName: netNames.mainnet,
         account,
@@ -53,6 +54,7 @@ const NEXT: ICoin = {
         to
       }),
     publishTx: async (rawTx) =>
+      //@ts-ignore: strictNullChecks
       await connector.publishTx(networkType.mainnet, rawTx),
     getTxUrl: (txId) =>
       connector.getTxUrl(networkType.mainnet, txId),
@@ -121,6 +123,7 @@ const libAdapter: ILibAdapter = {
 
     const network = NEXT[netName]
     const addressStr = address.toString()
+    //@ts-ignore: strictNullChecks
     const unspent = await connector.fetchUnspents(network.type, addressStr)
 
     const tx = new bitcore.Transaction()

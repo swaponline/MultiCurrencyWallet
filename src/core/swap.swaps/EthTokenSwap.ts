@@ -161,6 +161,7 @@ class EthTokenSwap extends SwapInterface {
    * @param {function} handleTransactionHash
    * @returns {Promise}
    */
+  //@ts-ignore: strictNullChecks
   async approve(data, handleTransactionHash: Function = null) {
     const { amount } = data
 

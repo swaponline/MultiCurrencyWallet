@@ -70,16 +70,19 @@ export default class Modal extends Component<ModalProps, null> {
     if (closeOnLocationChange) {
       let currentLocation = window.location.hash
 
+      //@ts-ignore: strictNullChecks
       this.catchLocationChange = setInterval(() => {
         if (window.location.hash != currentLocation) {
           if (typeof onLocationChange === 'function') {
             if (onLocationChange(window.location.hash)) {
               currentLocation = window.location.hash
             } else {
+              //@ts-ignore: strictNullChecks
               clearInterval(this.catchLocationChange)
               this.close(null, true)
             }
           } else {
+            //@ts-ignore: strictNullChecks
             clearInterval(this.catchLocationChange)
             this.close(null, true)
           }
@@ -92,6 +95,7 @@ export default class Modal extends Component<ModalProps, null> {
     const { name } = this.props
 
     window.removeEventListener('popstate', () => actions.modals.close(name))
+    //@ts-ignore: strictNullChecks
     clearInterval(this.catchLocationChange)
   }
 
@@ -109,7 +113,9 @@ export default class Modal extends Component<ModalProps, null> {
         onClose(isLocationChange)
       }
 
+      //@ts-ignore: strictNullChecks
       if (typeof data.onClose === 'function') {
+        //@ts-ignore: strictNullChecks
         data.onClose(isLocationChange)
       }
     }

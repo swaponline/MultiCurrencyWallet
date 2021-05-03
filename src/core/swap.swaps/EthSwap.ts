@@ -541,6 +541,7 @@ class EthSwap extends SwapInterface {
    * @param {function} handleTransactionHash
    * @returns {Promise}
    */
+  //@ts-ignore: strictNullChecks
   async refund(data, handleTransactionHash: Function = null) {
     const { participantAddress } = data
 

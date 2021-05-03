@@ -13,6 +13,7 @@ class KrakenApi {
 
   constructor() {
     const secret = process.env.KRAKEN_API_SECRET
+    //@ts-ignore: strictNullChecks
     this.key = process.env.KRAKEN_API_KEY
     this.core = new KrakenClient(this.key, secret, { dev: true })
     this.pair = 'XETHXXBT'

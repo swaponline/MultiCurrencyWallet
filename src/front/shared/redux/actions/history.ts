@@ -6,6 +6,7 @@ import getCurrencyKey from 'helpers/getCurrencyKey'
 
 
 const pullTransactions = transactions => {
+  //@ts-ignore: strictNullChecks
   let data = [].concat([], ...transactions).sort((a, b) => b.date - a.date)
   reducers.history.setTransactions(data)
 }

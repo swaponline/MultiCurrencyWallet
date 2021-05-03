@@ -11,6 +11,7 @@ export const checkParticipant = (participant): boolean => {
     if (participant[coin] !== undefined
       && participant[coin].address !== undefined
     ) {
+      //@ts-ignore: strictNullChecks
       activeSwaps += SwapApp.shared().getSwapsByAddress(
         coin,
         participant[coin].address

@@ -113,6 +113,7 @@ const NewDesignLayout = (props: NewDesignLayoutProps) => {
     tableRows = tableRows.filter(({ currency }) => widgetCurrencies.includes(currency))
   }
 
+  //@ts-ignore: strictNullChecks
   tableRows = tableRows.filter(({ currency }) => enabledCurrencies.includes(currency))
 
   tableRows.forEach(({ name, infoAboutCurrency, balance, currency }) => {
@@ -212,6 +213,7 @@ export default connect(
     let widgetMultiTokens = []
     if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
       Object.keys(window.widgetERC20Tokens).forEach((key) => {
+        //@ts-ignore: strictNullChecks
         widgetMultiTokens.push(key.toUpperCase())
       })
     }

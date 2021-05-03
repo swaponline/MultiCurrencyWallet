@@ -34,6 +34,7 @@ export default class Address extends Component<IAddress, {}> {
       color: null,
     }
     if (type === AddressType.Metamask) {
+      //@ts-ignore: strictNullChecks
       colorizing.color = '#e4761b'
     }
 

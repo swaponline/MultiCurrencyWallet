@@ -26,6 +26,8 @@ import helpers, {
 } from 'helpers'
 import btcUtils from 'common/utils/coin/btc'
 
+import config from 'app-config'
+
 import Modal from 'components/modal/Modal/Modal'
 import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
 import Input from 'components/forms/Input/Input'
@@ -174,7 +176,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
       : new BigNumber(0)
     // save ethereum wallet for token exchange's rate
     const arrWithEthWallet = items.filter(item => {
-      return item.currency.toLowerCase() === 'eth'
+      return item.currency.toLowerCase() === (config.binance) ? 'bnb' : 'eth'
         && item.infoAboutCurrency
         && item.infoAboutCurrency.price_fiat
     })
@@ -225,6 +227,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
 
   componentWillUnmount() {
     this.mounted = false
+    //@ts-ignore: strictNullChecks
     clearTimeout(this.btcFeeTimer)
   }
 
@@ -332,9 +335,12 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
     const { bitcoinFees, txSize, currentDecimals } = this.state;
 
     let feeInByte = speedType === 'custom' ?
+      //@ts-ignore: strictNullChecks
       new BigNumber(customValue) :
+      //@ts-ignore: strictNullChecks
       new BigNumber(bitcoinFees[speedType]).div(1024).dp(0, BigNumber.ROUND_HALF_EVEN);
 
+    //@ts-ignore: strictNullChecks
     let fee = feeInByte.multipliedBy(txSize).multipliedBy(1e-8);
 
     this.setState((state) => ({
@@ -485,6 +491,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
       if (selectedItem.isUserProtected) nextStepModal = constants.modals.WithdrawBtcMultisig
 
       actions.modals.close(name)
+      //@ts-ignore: strictNullChecks
       actions.modals.open(nextStepModal, {
         wallet: selectedItem,
         invoice,
@@ -595,6 +602,9 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
     if (isEthToken) {
       return typeforce.isCoinAddress.ETH(address)
     }
+    if (config.binance && getCurrencyKey(currency, false).toUpperCase() === `BNB`) {
+      return typeforce.isCoinAddress.ETH(address)
+    }
 
     return typeforce.isCoinAddress[getCurrencyKey(currency, false).toUpperCase()](address)
   }
@@ -629,6 +639,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
     } = this.state
 
     if (isBTC) {
+      //@ts-ignore: strictNullChecks
       clearTimeout(this.btcFeeTimer)
       this.btcFeeTimer = setTimeout(() => {
         this.setBtcFeeRate()
@@ -686,7 +697,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
     const maxService = usedAdminFee
         ? new BigNumber(usedAdminFee.fee).dividedBy(ONE_HUNDRED_PERCENT).multipliedBy(balances.balance)
         : new BigNumber(0)
-    const maxAmount = balances.balance.minus(minerFee).minus(maxService).dp(currentDecimals, BigNumber.ROUND_CEIL)
+    const maxAmount = new BigNumber(balances.balance.minus(minerFee).minus(maxService).dp(currentDecimals, BigNumber.ROUND_CEIL))
     const maxFiatAmount = maxAmount.multipliedBy(exCurrencyRate).dp(2, BigNumber.ROUND_CEIL)
 
     if (maxAmount.isGreaterThan(balances.balance) || maxAmount.isLessThanOrEqualTo(0)) {
@@ -881,7 +892,11 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
       },
     })
 
-    const dataCurrency = isEthToken ? 'ETH' : currency.toUpperCase()
+    const dataCurrency = isEthToken
+      ? config.binance
+        ? 'BNB'
+        : 'ETH'
+      : currency.toUpperCase()
 
     const formRender = (
       <Fragment>
@@ -961,6 +976,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
         </div>
         <div styleName={`lowLevel ${isDark ? 'dark' : ''}`} style={{ marginBottom: '30px' }}>
           {/* why style ? see tip for max button */}
+          {/* @ts-ignore: strictNullChecks */}
           <div style={usedAdminFee ? { right: '20px' } : null} styleName="additionalСurrencies">
             {criptoCurrencyHaveInfoPrice && <>
                 <span
@@ -985,6 +1001,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
             </span>
           </div>
           {/* why style ? see tip for max button */}
+          {/* @ts-ignore: strictNullChecks */}
           <p style={usedAdminFee ? { right: '10px' } : null} styleName='balance'>
             {new BigNumber(amount).isGreaterThan(0) && criptoCurrencyHaveInfoPrice && (
               <FormattedMessage
@@ -1032,6 +1049,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
                   </Button>
                 </div>
                 {!isMobile && (
+                  //@ts-ignore: strictNullChecks
                   <Tooltip id="Withdrow134" place="top" mark={false}>
                     <FormattedMessage
                       id="WithdrawButton32"
@@ -1189,7 +1207,9 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
                 isLoading={fetchFee}
                 usedAdminFee={usedAdminFee}
                 hasTxSize={isBTCWallet}
+                //@ts-ignore: strictNullChecks
                 txSize={txSize}
+                //@ts-ignore: strictNullChecks
                 bitcoinFees={bitcoinFees}
                 bitcoinFeeSpeedType={bitcoinFeeSpeedType}
                 setBitcoinFee={this.setBitcoinFeeRate}
@@ -1214,6 +1234,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
     return portalUI ? (
       formRender
     ) : (
+      //@ts-ignore: strictNullChecks
       <Modal
         name={name}
         onClose={this.handleClose}

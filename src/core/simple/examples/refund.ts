@@ -118,6 +118,7 @@ const _ = (async () => {
     case KEY_HASH[0]:
       console.log('Key type is HASH', '\n')
 
+      //@ts-ignore: strictNullChecks
       swapID = await hash2id(app, key)
 
       if (swapID) {
@@ -135,6 +136,7 @@ const _ = (async () => {
     case KEY_SECRET[0]:
       console.log('Key type is SECRET', '\n')
 
+      //@ts-ignore: strictNullChecks
       swapID = await secret2id(app, key)
 
       if (swapID) {

@@ -41,8 +41,10 @@ const FAQ = (props) => {
         // remove memory leak
         if (_mounted) {
           // divided by 1 kb to convert it to satoshi / byte
+          //@ts-ignore: strictNullChecks
           setBtcFee(Math.ceil(btcSatoshiPrice / BYTE_IN_KB))
           // return gas * 1e9 - divided by 1e9 to convert
+          //@ts-ignore: strictNullChecks
           setEthFee(new BigNumber(ethGasPrice).dividedBy(1e9).toNumber())
         }
       } catch (error) {
@@ -81,8 +83,9 @@ const FAQ = (props) => {
     setOpenedTabsCounter({ ...openedTabsCounter, [tabName]: ++openedTabsCounter[tabName] })
   }
 
+  const ethOrBnb = externalConfig.binance ? 'BNB' : 'ETH'
   const BtcPrecentFee = adminFee.isEnabled('BTC')
-  const EthPrecentFee = adminFee.isEnabled('ETH')
+  const EthPrecentFee = adminFee.isEnabled(ethOrBnb)
 
   return (
     <div className={`${styles.faQuestions} ${isDark ? styles.dark : ''}`}>
@@ -121,7 +124,14 @@ const FAQ = (props) => {
               <FormattedMessage id="MainFAQ2_content" defaultMessage="You pay the standard TX (miners fees) for all transactions you conduct on the platform." />
             </p>
             <p>
-              <FormattedMessage id="MainFAQ2_content1" defaultMessage="For ERC20 tokens, it is required that you have at least 0.001 ETH on your wallets. Remember! when sending ERC20 tokens, you are required to hold some ETH as miners fees for transactions. This is also the case for all atomic swaps for ETH & ERC20 tokens." />
+              <FormattedMessage
+                id="MainFAQ2_content1"
+                defaultMessage="For {tokenType} tokens, it is required that you have at least 0.001 {currency} on your wallets. Remember! when sending {tokenType} tokens, you are required to hold some {currency} as miners fees for transactions. This is also the case for all atomic swaps for {currency} & {tokenType} tokens."
+                values={{
+                  currency: ethOrBnb,
+                  tokenType: externalConfig.binance ? 'BEP20' : 'ERC20'
+                }}
+              />
             </p>
             <p>
               <FormattedMessage id="MainFAQ2_content2" defaultMessage="NOTE: You can easily check the ‘miners fees’ required for each respective coin by simply googling them." />
@@ -142,7 +152,7 @@ const FAQ = (props) => {
               }
             </div>
             <div className={styles.descriptionFee}>
-              <span>ETH:</span>{' '}
+              <span>{ethOrBnb}:</span>{' '}
               {ethFee
                 ? (
                   <span>
@@ -171,13 +181,13 @@ const FAQ = (props) => {
               }
             </p>
             <p className={styles.descriptionFee}>
-              <span>ETH:</span>{' '}
+              <span>{ethOrBnb}:</span>{' '}
               {EthPrecentFee
                   ? (
                     <span>
                       {EthPrecentFee.fee + '%, '}
                       <FormattedMessage id="FAQServiceFeeDescription" defaultMessage="no less than" />
-                      {' '}<b>{adminFee.calc('ETH', null)}</b> ETH
+                      {' '}<b>{adminFee.calc(ethOrBnb, null)}</b> {ethOrBnb}
                     </span>
                   )
                   : <span>0%</span>

@@ -12,6 +12,7 @@ const push = ({ key, data, time }) => {
 
   let cacheKeys = localStorage.getItem(`${process.env.ENTRY}:cacheKeys`)
   try {
+    //@ts-ignore: strictNullChecks
     cacheKeys = JSON.parse(cacheKeys)
   } catch (e) {}
   //@ts-ignore
@@ -25,6 +26,7 @@ const push = ({ key, data, time }) => {
 const get = (key) => {
   let data = localStorage.getItem(`${process.env.ENTRY}:cache:${key}`)
   try {
+    //@ts-ignore: strictNullChecks
     data = JSON.parse(data)
     //@ts-ignore
     if (data && data.data) {
@@ -45,6 +47,7 @@ const cleanup = () => {
   let cacheKeys = localStorage.getItem(`${process.env.ENTRY}:cacheKeys`)
   const newKeys = {}
   try {
+    //@ts-ignore: strictNullChecks
     cacheKeys = JSON.parse(cacheKeys)
   } catch (e) {}
   //@ts-ignore
@@ -52,10 +55,13 @@ const cleanup = () => {
 
   const curTime = getUnixTimeStamp()
 
+  //@ts-ignore: strictNullChecks
   Object.keys(cacheKeys).forEach((key) => {
+    //@ts-ignore: strictNullChecks
     if (!cacheKeys[key] || (curTime > cacheKeys[key])) {
       remove(key)
     } else {
+      //@ts-ignore: strictNullChecks
       newKeys[key] = cacheKeys[key]
     }
   })

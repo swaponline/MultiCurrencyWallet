@@ -349,6 +349,7 @@ class RegisterSMSProtected extends React.Component<any, any> {
   handleShareInstruction = async () => {
     const { restoreInstruction } = this.state
 
+    //@ts-ignore: strictNullChecks
     actions.modals.open(constants.modals.Share, {
       title: `BTC Sms-protected wallet restory instruction`,
       link: restoreInstruction,
@@ -356,6 +357,7 @@ class RegisterSMSProtected extends React.Component<any, any> {
   }
 
   handleBeginSaveMnemonic = async () => {
+    //@ts-ignore: strictNullChecks
     actions.modals.open(constants.modals.SaveMnemonicModal, {
       onClose: () => {
         const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
@@ -499,6 +501,7 @@ class RegisterSMSProtected extends React.Component<any, any> {
 
     const sentBtnDisabled = isShipped || !phone || (phone && !isValidPhoneNumber(phone))
     return (
+      //@ts-ignore: strictNullChecks
       <Modal name={name} title={`${intl.formatMessage(langs.registerSMSModal)}`}>
         <div styleName="registerSMSModalHolder">
           <style

@@ -189,6 +189,7 @@ class InfoInvoice extends React.Component<any, any> {
           unconfirmedBalance,
         } = payWallet
 
+        //@ts-ignore: strictNullChecks
         actions.modals.open(withdrawType, {
           currency,
           address,
@@ -223,6 +224,7 @@ class InfoInvoice extends React.Component<any, any> {
       },
     } = this.state
 
+    //@ts-ignore: strictNullChecks
     actions.modals.open(constants.modals.Confirm, {
       onAccept: async () => {
         await actions.invoices.cancelInvoice(invoiceData.id)
@@ -301,6 +303,7 @@ class InfoInvoice extends React.Component<any, any> {
     }
 
     return (
+      //@ts-ignore: strictNullChecks
       <Modal 
         name="InfoInvoice" title={modalTitle} 
         onClose={this.handleClose} 

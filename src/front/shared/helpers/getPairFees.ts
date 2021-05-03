@@ -1,5 +1,8 @@
 import { COIN_DATA, COIN_MODEL, COIN_TYPE } from 'swap.app/constants/COINS'
 import helpers from 'helpers'
+import config from 'app-config'
+
+
 
 const reportAboutProblem = (params) => {
   const { isError = false, info } = params
@@ -66,6 +69,7 @@ const fetchCoinFee = (params): Promise<CoinFee> => {
     if (coinData) {
       switch (coinData.type) {
         case COIN_TYPE.NATIVE:
+          //@ts-ignore: strictNullChecks
           obtainedResult = await fetchFeeForNativeCoin({
             coinData,
             swapUTXOMethod: isBuyingUTXO ? 'withdraw' : 'deposit',
@@ -74,6 +78,7 @@ const fetchCoinFee = (params): Promise<CoinFee> => {
           doResolve(obtainedResult)
           break
         case COIN_TYPE.ETH_TOKEN:
+          //@ts-ignore: strictNullChecks
           obtainedResult = await fetchFeeForEthToken({
             coinData,
             swapABMethod: isBuyingAB ? 'withdraw' : 'deposit',
@@ -171,7 +176,14 @@ type PairFeesParams = {
 }
 
 export const getPairFees = (params: PairFeesParams): Promise<IPairFees> => {
-  const { sellCurrency, buyCurrency, updateCacheValue = false } = params
+  let { sellCurrency, buyCurrency, updateCacheValue = false } = params
+  let originSell = sellCurrency.toLowerCase()
+  let originBuy = buyCurrency.toLowerCase()
+
+  if (config.binance) {
+    if (sellCurrency.toLowerCase() === `bnb`) sellCurrency = `eth`
+    if (buyCurrency.toLowerCase() === `bnb`) buyCurrency = `eth`
+  }
 
   return new Promise(async (feeResolved) => {
     const sell = await fetchCoinFee({
@@ -189,6 +201,14 @@ export const getPairFees = (params: PairFeesParams): Promise<IPairFees> => {
       [buy.coin]: buy,
       [sell.coin]: sell,
     }
+
+    if (
+      config.binance &&
+      (
+        originBuy.toLowerCase() === `eth`
+        || originSell.toLowerCase() === `eth`
+      )
+    ) byCoins[`BNB`] = byCoins[`ETH`]
 
     const result = {
       sell,

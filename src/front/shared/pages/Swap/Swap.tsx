@@ -77,7 +77,7 @@ class SwapComponent extends PureComponent<any, any> {
     } = this.state
 
     if (step >= 3) {
-
+      //@ts-ignore: strictNullChecks
       let swapsId = JSON.parse(localStorage.getItem('axiosSwaps'))
 
       if (swapsId === null || swapsId.length === 0) {
@@ -177,7 +177,7 @@ class SwapComponent extends PureComponent<any, any> {
       console.log('swap flow name:', swap.flow._flowName);
 
       const SwapComponent = swapComponents[swap.flow._flowName]
-      const ethData = items.filter(item => item.currency === 'ETH')
+      const ethData = items.filter(item => item.currency === (config.binance) ? 'BNB' : 'ETH')
       const currencyData = items.concat(tokenItems)
         .filter(item => item.currency === swap.sellCurrency.toUpperCase())[0]
       const currencies = [

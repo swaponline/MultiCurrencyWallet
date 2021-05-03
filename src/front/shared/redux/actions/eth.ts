@@ -6,7 +6,6 @@ import { web3, getWeb3 } from 'helpers/web3'
 import config from 'helpers/externalConfig'
 //@ts-ignore
 import { utils as web3utils } from 'web3'
-import referral from './referral'
 import * as bip39 from 'bip39'
 import typeforce from 'swap.app/util/typeforce'
 import { BigNumber } from 'bignumber.js'
@@ -15,6 +14,9 @@ import * as mnemonicUtils from 'common/utils/mnemonic'
 
 import metamask from 'helpers/metamask'
 
+
+const ethLabel = (config.binance) ? 'BSC' : 'Ethereum'
+const ethLabelShort = (config.binance) ? 'BNB' : 'ETH'
 
 const hasAdminFee = (
   config
@@ -71,8 +73,10 @@ const getAllMyAddresses = () => {
   if (metamask
     && metamask.isEnabled()
     && metamask.isConnected()
+    //@ts-ignore: strictNullChecks
     && retData.indexOf(metamask.getAddress().toLowerCase()) === -1
   ) {
+    //@ts-ignore: strictNullChecks
     retData.push(metamask.getAddress().toLowerCase())
   }
 
@@ -120,6 +124,7 @@ const login = (privateKey, mnemonic = null, mnemonicKeys = null) => {
   if (privateKey
     && mnemonic
     && mnemonicKeys
+    //@ts-ignore: strictNullChecks
     && mnemonicKeys.eth === privateKey
   ) {
     sweepToMnemonicReady = true
@@ -137,9 +142,11 @@ const login = (privateKey, mnemonic = null, mnemonicKeys = null) => {
     console.info('Created account Ethereum ...')
     // data = web3.eth.accounts.create()
     if (!mnemonic) {
+      //@ts-ignore: strictNullChecks
       mnemonic = bip39.generateMnemonic()
     }
 
+    //@ts-ignore: strictNullChecks
     const accData = getWalletByWords(mnemonic)
     console.log('Eth. Generated wallet from random 12 words')
     console.log(accData)
@@ -153,9 +160,14 @@ const login = (privateKey, mnemonic = null, mnemonicKeys = null) => {
   web3.eth.accounts.wallet.add(data.privateKey)
   data.isMnemonic = sweepToMnemonicReady
 
+  data = {
+    ...data,
+    fullName: ethLabel,
+    currency: ethLabelShort,
+  }
+
   reducers.user.setAuthData({ name: 'ethData', data })
   window.getEthAddress = () => data.address
-  referral.newReferral(data.address)
 
   console.info('Logged in with Ethereum', data)
 
@@ -167,13 +179,16 @@ const login = (privateKey, mnemonic = null, mnemonicKeys = null) => {
     }
 
     if (!mnemonicKeys
+      //@ts-ignore: strictNullChecks
       || !mnemonicKeys.eth
     ) {
       console.error('Sweep. Cant auth. Login key undefined')
       return
     }
 
+    //@ts-ignore: strictNullChecks
     const mnemonicData = web3.eth.accounts.privateKeyToAccount(mnemonicKeys.eth)
+    //@ts-ignore: strictNullChecks
     web3.eth.accounts.wallet.add(mnemonicKeys.eth)
     //@ts-ignore
     mnemonicData.isMnemonic = sweepToMnemonicReady
@@ -182,8 +197,8 @@ const login = (privateKey, mnemonic = null, mnemonicKeys = null) => {
     reducers.user.addWallet({
       name: 'ethMnemonicData',
       data: {
-        currency: 'ETH',
-        fullName: 'Ethereum (New)',
+        currency: ethLabelShort,
+        fullName: `${ethLabel} (New)`,
         balance: 0,
         isBalanceFetched: false,
         balanceError: null,
@@ -262,7 +277,7 @@ const getInvoices = (address) => {
 
 const getTx = (txRaw) => txRaw.transactionHash
 
-const getTxRouter = (txId) => `/eth/tx/${txId}`
+const getTxRouter = (txId) => `/${(config.binance) ? 'bnb' : 'eth'}/tx/${txId}`
 
 const getLinkToInfo = (tx) => {
   if (!tx) {
@@ -281,7 +296,7 @@ const getTransaction = (address: string = ``, ownType: string = ``) =>
       resolve([])
     }
 
-    const type = (ownType) || 'eth'
+    const type = (ownType) || (config.binance) ? 'bnb' : 'eth'
     // First - get internal txs
     const internalUrl = `?module=account&action=txlistinternal&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=${config.api.etherscan_ApiKey}`
     const url = `?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=${config.api.etherscan_ApiKey}`
@@ -456,7 +471,9 @@ const sendDefault = ({ from, to, amount, gasPrice = null, gasLimit = null, speed
 
     const isSendToContract = await addressIsContract(to)
 
+    //@ts-ignore: strictNullChecks
     gasPrice = gasPrice || await helpers.eth.estimateGasPrice({ speed })
+    //@ts-ignore: strictNullChecks
     gasLimit = gasLimit || (
       isSendToContract
         ? DEFAULT_CURRENCY_PARAMETERS.eth.limit.contractInteract

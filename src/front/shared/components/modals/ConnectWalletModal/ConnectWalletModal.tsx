@@ -91,6 +91,7 @@ class ConnectWalletModal extends React.Component<any, any> {
   handleInjected = () => {
     metamask.web3connect.connectTo('INJECTED').then((connected) => {
       if (!connected && metamask.web3connect.isLocked()) {
+        //@ts-ignore: strictNullChecks
         actions.modals.open(constants.modals.AlertModal, {
           message: (
             <FormattedMessage

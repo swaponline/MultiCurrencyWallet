@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react'
 import { FormattedMessage, injectIntl, IntlShape } from 'react-intl'
+import config from 'app-config'
 
 import CSSModules from 'react-css-modules'
 import styles from './SelectGroup.scss'
@@ -61,7 +62,9 @@ const SelectGroup = ({ intl: IntlShape,  dynamicFee, isToken, extendedControls, 
         }
         <CurrencySelect
           styleName="currencySelect"
-          selectedItemRender={(item) => item.fullTitle}
+          selectedItemRender={(item) => {
+            return (item.name === `ETH` && config.binance) ? `BSC` : item.fullTitle
+          }}
           placeholder="Enter the name of coin"
           selectedValue={selectedValue}
           onSelect={onSelect}

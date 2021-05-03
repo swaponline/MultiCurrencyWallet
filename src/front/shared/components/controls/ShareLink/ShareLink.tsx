@@ -27,6 +27,7 @@ export default class ShareLink extends React.Component<any, any> {
   }
 
   componentDidMount() {
+    //@ts-ignore: strictNullChecks
     this.qrLoaderTimer = setTimeout(() => {
       this.setState({
         qrLoaded: true,
@@ -35,6 +36,7 @@ export default class ShareLink extends React.Component<any, any> {
   }
 
   componentWillUnmount() {
+    //@ts-ignore: strictNullChecks
     clearTimeout(this.qrLoaderTimer)
   }
 

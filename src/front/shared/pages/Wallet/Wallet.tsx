@@ -67,6 +67,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
     let widgetMultiTokens = []
     if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
       Object.keys(window.widgetERC20Tokens).forEach((key) => {
+        //@ts-ignore: strictNullChecks
         widgetMultiTokens.push(key.toUpperCase())
       })
     }
@@ -322,7 +323,7 @@ class Wallet extends Component<any, any> {
     if (!hiddenCoinsList.includes('BTC (PIN-Protected)'))
       widgetCurrencies.push('BTC (PIN-Protected)')
     if (!hiddenCoinsList.includes('BTC (Multisig)')) widgetCurrencies.push('BTC (Multisig)')
-    widgetCurrencies.push('ETH')
+    widgetCurrencies.push((config.binance) ? 'BNB' : 'ETH')
     widgetCurrencies.push('GHOST')
     widgetCurrencies.push('NEXT')
     if (isWidgetBuild) {
@@ -349,6 +350,7 @@ class Wallet extends Component<any, any> {
         )
       })
 
+    //@ts-ignore: strictNullChecks
     actions.modals.open(constants.modals.CurrencyAction, {
       currencies,
       context,
@@ -509,7 +511,7 @@ class Wallet extends Component<any, any> {
     if (!hiddenCoinsList.includes('BTC (PIN-Protected)'))
       widgetCurrencies.push('BTC (PIN-Protected)')
     if (!hiddenCoinsList.includes('BTC (Multisig)')) widgetCurrencies.push('BTC (Multisig)')
-    widgetCurrencies.push('ETH')
+    widgetCurrencies.push((config.binance) ? 'BNB' : 'ETH')
     widgetCurrencies.push('GHOST')
     widgetCurrencies.push('NEXT')
     if (isWidgetBuild) {
@@ -546,6 +548,7 @@ class Wallet extends Component<any, any> {
       tableRows = tableRows.filter(({ currency }) => widgetCurrencies.includes(currency))
     }
 
+    if (config.binance) enabledCurrencies.push('BNB')
     tableRows = tableRows.filter(({ currency }) => enabledCurrencies.includes(currency))
 
     tableRows = tableRows.map((el) => {

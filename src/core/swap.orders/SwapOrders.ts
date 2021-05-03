@@ -63,6 +63,7 @@ const checkIncomeOrderOwner = ({ owner: { peer } }, fromPeer) =>
 
 
 const checkIncomeOrderWhitelisted = ({ owner: { peer } }) => {
+  //@ts-ignore: strictNullChecks
   return !visibleMakers.length || visibleMakers.includes(peer)
 }
 
@@ -269,6 +270,7 @@ class SwapOrders extends aggregation(ServiceInterface, Collection) {
       if (checkIncomeOrder(data, fromPeer)) {
         const order = this._create(data)
 
+        //@ts-ignore: strictNullChecks
         newOrders.push(order)
       }
     })

@@ -203,6 +203,7 @@ class SweepToMnemonicKeys extends React.Component<any, any> {
 
 
     return (
+      //@ts-ignore: strictNullChecks
       <Modal name={name} title={`${intl.formatMessage(langLabels.title)}`} onClose={this.handleClose} showCloseButton={(step === `ready`) ? false : showCloseButton}>
         { step === `begin` && (
           <p styleName="notice">

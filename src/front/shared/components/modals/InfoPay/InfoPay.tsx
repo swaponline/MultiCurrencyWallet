@@ -120,6 +120,7 @@ class InfoPay extends React.Component<any, any> {
     }
 
     return (
+      //@ts-ignore: strictNullChecks
       <Modal name={name} title={intl.formatMessage(labels.Title)} onClose={this.handleClose} showCloseButton={true}>
         <div styleName="blockCenter">
           <div>

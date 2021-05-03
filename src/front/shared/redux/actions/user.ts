@@ -34,6 +34,7 @@ const initReducerState = () => {
 
 const sign_btc_multisig = async (btcPrivateKey) => {
   let btcMultisigOwnerKey = localStorage.getItem(constants.privateKeyNames.btcMultisigOtherOwnerKey)
+  //@ts-ignore: strictNullChecks
   try { btcMultisigOwnerKey = JSON.parse(btcMultisigOwnerKey) } catch (e) { }
   //@ts-ignore
   const _btcMultisigPrivateKey = actions.btcmultisig.login_USER(btcPrivateKey, btcMultisigOwnerKey)
@@ -44,9 +45,11 @@ const sign_btc_multisig = async (btcPrivateKey) => {
 const sign_btc_2fa = async (btcPrivateKey) => {
   const btcSMSServerKey = config.swapContract.protectedBtcKey
   let btcSmsPublicKeys = [btcSMSServerKey]
+  //@ts-ignore: strictNullChecks
   let btcSmsMnemonicKey: MnemonicKey = localStorage.getItem(constants.privateKeyNames.btcSmsMnemonicKey)
   
   try { 
+    //@ts-ignore: strictNullChecks
     btcSmsMnemonicKey = JSON.parse(btcSmsMnemonicKey) 
   } catch (e) {
     console.error(e)
@@ -61,9 +64,11 @@ const sign_btc_2fa = async (btcPrivateKey) => {
 const sign_btc_pin = async (btcPrivateKey) => {
   const btcPinServerKey = config.swapContract.btcPinKey
   let btcPinPublicKeys = [btcPinServerKey]
+  //@ts-ignore: strictNullChecks
   let btcPinMnemonicKey: MnemonicKey = localStorage.getItem(constants.privateKeyNames.btcPinMnemonicKey)
   
   try { 
+    //@ts-ignore: strictNullChecks
     btcPinMnemonicKey = JSON.parse(btcPinMnemonicKey) 
   } catch (e) {
     console.error(e)
@@ -106,14 +111,18 @@ const sign = async () => {
         //@ts-ignore
       if (!mnemonicKeys.next) mnemonicKeys.next = actions.next.sweepToMnemonic(mnemonic)
       if (!mnemonicKeys.btcSms) {
+        //@ts-ignore: strictNullChecks
         mnemonicKeys.btcSms = actions.btcmultisig.getSmsKeyFromMnemonic(mnemonic)
+        //@ts-ignore: strictNullChecks
         localStorage.setItem(constants.privateKeyNames.btcSmsMnemonicKeyGenerated, mnemonicKeys.btcSms)
       }
     }
     // Sweep-Switch
+    //@ts-ignore: strictNullChecks
     let btcNewSmsMnemonicKey: MnemonicKey = localStorage.getItem(constants.privateKeyNames.btcSmsMnemonicKeyMnemonic)
     
     try { 
+      //@ts-ignore: strictNullChecks
       btcNewSmsMnemonicKey = JSON.parse(btcNewSmsMnemonicKey) 
     } catch (e) {
       console.error(e)
@@ -123,9 +132,11 @@ const sign = async () => {
       localStorage.setItem(constants.privateKeyNames.btcSmsMnemonicKeyMnemonic, JSON.stringify([]))
     }
 
+    //@ts-ignore: strictNullChecks
     let btcNewMultisigOwnerKey: MnemonicKey = localStorage.getItem(constants.privateKeyNames.btcMultisigOtherOwnerKeyMnemonic)
     
     try { 
+      //@ts-ignore: strictNullChecks
       btcNewMultisigOwnerKey = JSON.parse(btcNewMultisigOwnerKey) 
     } catch (e) {
       console.error(e)
@@ -142,9 +153,13 @@ const sign = async () => {
     const nextPrivateKey = localStorage.getItem(constants.privateKeyNames.next)
 
 
+    //@ts-ignore: strictNullChecks
     const _ethPrivateKey = actions.eth.login(ethPrivateKey, mnemonic, mnemonicKeys)
+    //@ts-ignore: strictNullChecks
     const _btcPrivateKey = actions.btc.login(btcPrivateKey, mnemonic, mnemonicKeys)
+    //@ts-ignore: strictNullChecks
     const _ghostPrivateKey = actions.ghost.login(ghostPrivateKey, mnemonic, mnemonicKeys)
+    //@ts-ignore: strictNullChecks
     const _nextPrivateKey = actions.next.login(nextPrivateKey, mnemonic, mnemonicKeys)
 
     // btc multisig with 2fa (2of3)
@@ -323,9 +338,13 @@ const getDemoMoney = process.env.MAINNET ? () => { } : () => {
   request.get('https://swap.wpmix.net/demokeys.php', {})
     .then((r) => {
       window.localStorage.clear()
+      //@ts-ignore: strictNullChecks
       localStorage.setItem(constants.privateKeyNames.btc, r[0])
+      //@ts-ignore: strictNullChecks
       localStorage.setItem(constants.privateKeyNames.eth, r[1])
+      //@ts-ignore: strictNullChecks
       localStorage.setItem(constants.privateKeyNames.ghost, r[2])
+      //@ts-ignore: strictNullChecks
       localStorage.setItem(constants.privateKeyNames.next, r[3])
       localStorage.setItem(constants.localStorage.demoMoneyReceived, 'true')
       window.location.reload()
@@ -432,6 +451,7 @@ const mergeTransactions = (mergeTxs: any[]) => {
       transactions,
     },
   } = getState()
+  //@ts-ignore: strictNullChecks
   let data = [].concat(transactions, ...mergeTxs).sort((a, b) => b.date - a.date).filter((item) => item)
   reducers.history.setTransactions(data)
 }
@@ -467,6 +487,7 @@ type ObjCurrencyType = {
   }
 }
 
+//@ts-ignore: strictNullChecks
 const setTransactions = async (objCurrency: ObjCurrencyType | {} = null) => {
   const isBtcSweeped = actions.btc.isSweeped()
   const isEthSweeped = actions.eth.isSweeped()
@@ -490,6 +511,7 @@ const setTransactions = async (objCurrency: ObjCurrencyType | {} = null) => {
       actions.btcmultisig.getTransactionPIN(),
       actions.btcmultisig.getTransactionUser(),
       actions.eth.getTransaction(),
+      //@ts-ignore: strictNullChecks
       ...(metamask.isEnabled() && metamask.isConnected()) ? [actions.eth.getTransaction(metamask.getAddress())] : [],
       ...(isEthSweeped) ? [] : [actions.eth.getTransaction(actions.eth.getSweepAddress())],
       ...objCurrency && objCurrency['GHOST'] ? [actions.ghost.getTransaction()] : [],
@@ -497,6 +519,7 @@ const setTransactions = async (objCurrency: ObjCurrencyType | {} = null) => {
     ]
     
     const erc20 = Object.keys(config.erc20)
+      //@ts-ignore: strictNullChecks
       .filter((key) => !hiddenCoinsList.includes(key.toUpperCase()) && enabledCurrencies.includes(key.toUpperCase()))
 
     fetchTxsPromises.forEach((txPromise: Promise<any[]>) => {
@@ -592,8 +615,11 @@ export const isOwner = (addr, currency) => {
     return addr.toLowerCase() === address.toLowerCase()
   }
 
+  //@ts-ignore: strictNullChecks
   if (actions.btc.getAllMyAddresses().indexOf(addr.toLowerCase()) !== -1) return true
+  //@ts-ignore: strictNullChecks
   if (actions.ghost.getAllMyAddresses().indexOf(addr.toLowerCase()) !== -1) return true
+  //@ts-ignore: strictNullChecks
   if (actions.next.getAllMyAddresses().indexOf(addr.toLowerCase()) !== -1) return true
   if (actions.eth.getAllMyAddresses().indexOf(addr.toLowerCase()) !== -1) return true
 

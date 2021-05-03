@@ -108,6 +108,7 @@ const webpackConfig = {
     new HtmlWebpackPlugin({
       title: 'Hot Wallet with p2p exchange',
       isWidget: config.isWidget,
+      isBinanceBuild: config.binance,
       template: config.paths.client('index.html'),
       hash: false,
       filename: 'index.html',

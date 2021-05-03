@@ -227,6 +227,7 @@ class RestoryMnemonicWallet extends React.Component {
       const btcPrivKey = await actions.btc.login(false, mnemonic)
       const btcSmsKey = actions.btcmultisig.getSmsKeyFromMnemonic(mnemonic)
 
+      //@ts-ignore: strictNullChecks
       localStorage.setItem(constants.privateKeyNames.btcSmsMnemonicKeyGenerated, btcSmsKey)
       localStorage.setItem(constants.localStorage.isWalletCreate, 'true')
 
@@ -268,6 +269,7 @@ class RestoryMnemonicWallet extends React.Component {
     } = this.state
 
     return (
+      //@ts-ignore: strictNullChecks
       <Modal
         name={name}
         title={`${intl.formatMessage(langLabels.title)}`}

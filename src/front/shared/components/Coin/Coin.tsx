@@ -74,6 +74,7 @@ const Coin = ({ className, size, name }) => {
   }
 
   return (
+    //@ts-ignore: strictNullChecks
     <div styleName={`coin ${isDark ? 'dark' : ''}`} className={className} style={style}>
       <CurrencyIcon {...iconProps} />
     </div>

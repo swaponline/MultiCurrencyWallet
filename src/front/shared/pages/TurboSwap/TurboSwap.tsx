@@ -67,6 +67,7 @@ class TurboSwap extends PureComponent<any, ITurboSwapState> {
     this.history = history
 
     this.state = {
+      //@ts-ignore: strictNullChecks
       swap: null,
       flowState: null,
     }
@@ -185,6 +186,7 @@ class TurboSwap extends PureComponent<any, ITurboSwapState> {
   }*/
 
   goToWallet = () => {
+    //@ts-ignore: strictNullChecks
     this.history.push(links.wallet)
   }
 
@@ -204,11 +206,15 @@ class TurboSwap extends PureComponent<any, ITurboSwapState> {
     const buyCurrencyKey = swap.buyCurrency.toLowerCase()
 
     const myAddressSend =
+      //@ts-ignore: strictNullChecks
       swap.app.services.auth.accounts[sellCurrencyKey].address ||
+      //@ts-ignore: strictNullChecks
       swap.app.services.auth.accounts[sellCurrencyKey].getAddress()
 
     const myAddressReceive =
+      //@ts-ignore: strictNullChecks
       swap.app.services.auth.accounts[buyCurrencyKey].address ||
+      //@ts-ignore: strictNullChecks
       swap.app.services.auth.accounts[buyCurrencyKey].getAddress()
 
     const participantAddressSend = swap.participant[buyCurrencyKey].address
@@ -294,6 +300,7 @@ class TurboSwap extends PureComponent<any, ITurboSwapState> {
             amount={takerTx.amount}
             ticker={takerTx.currency}
             id={takerTx.hash}
+            //@ts-ignore: strictNullChecks
             url={takerTx.url}
             direction={'right'}
             status={takerTx.status}
@@ -314,6 +321,7 @@ class TurboSwap extends PureComponent<any, ITurboSwapState> {
             amount={makerTx.amount}
             ticker={makerTx.currency}
             id={makerTx.hash}
+            //@ts-ignore: strictNullChecks
             url={makerTx.url}
             direction={'left'}
             status={makerTx.status}

@@ -114,6 +114,20 @@ class SwapRow extends Component<any, any> {
     }
   }
 
+  getSwapStatusText = (isFinished: boolean, isRefunded: boolean, isStoppedSwap: boolean) => {
+    if (isFinished) {
+      return <FormattedMessage id="RowHistory94" defaultMessage="Finished" />
+    }
+    if (isRefunded) {
+      return <FormattedMessage id="RowHistory77" defaultMessage="Refunded" />
+    }
+    if (isStoppedSwap) {
+      return <FormattedMessage id="RowHistory139" defaultMessage="Stopped" />
+    }
+
+    return ''
+  }
+
   componentDidMount() {
     /*
     const {
@@ -128,12 +142,14 @@ class SwapRow extends Component<any, any> {
 
     this.tryRefund(timeLeft)
     */
+    //@ts-ignore: strictNullChecks
     SwapApp.shared().on('swap enter step', this._handleSwapEnterStep)
   }
 
   componentWillUnmount() {
     console.log('History unmounted')
     this._mounted = false
+    //@ts-ignore: strictNullChecks
     SwapApp.shared().off('swap enter step', this._handleSwapEnterStep)
   }
 
@@ -171,6 +187,7 @@ class SwapRow extends Component<any, any> {
 
     let lockDateAndTime = null
     if (values) {
+      //@ts-ignore: strictNullChecks
       lockDateAndTime = moment.unix(values.lockTime || date).format('HH:mm:ss DD/MM/YYYY')
     }
 
@@ -194,9 +211,11 @@ class SwapRow extends Component<any, any> {
         {step > 1 && (
           <Fragment>
             <td>
-              {isMy
-                ? `${sellAmount.toFixed(5)} ${sellCurrency.toUpperCase()}`
-                : `${buyAmount.toFixed(5)} ${buyCurrency.toUpperCase()}`}
+              <p>
+                {isMy
+                  ? `${sellAmount.toFixed(5)} ${sellCurrency.toUpperCase()}`
+                  : `${buyAmount.toFixed(5)} ${buyCurrency.toUpperCase()}`}
+              </p>
             </td>
             <td>
               <p>
@@ -204,30 +223,33 @@ class SwapRow extends Component<any, any> {
               </p>
             </td>
             <td>
-              {isMy
-                ? `${buyAmount.toFixed(5)} ${buyCurrency.toUpperCase()}`
-                : `${sellAmount.toFixed(5)} ${sellCurrency.toUpperCase()}`}
+              <p>
+                {isMy
+                  ? `${buyAmount.toFixed(5)} ${buyCurrency.toUpperCase()}`
+                  : `${sellAmount.toFixed(5)} ${sellCurrency.toUpperCase()}`}
+              </p>
             </td>
             <td>
-              {(lockDateAndTime !== null) && (
-                <Fragment>
-                  {lockDateAndTime.split(' ').map((item, key) => (
-                    <Fragment key={key}> {item}</Fragment>
-                  ))}
-                </Fragment>
-              )}
+              <p>
+                {(lockDateAndTime !== null) && (
+                  <Fragment>
+                    {/* @ts-ignore: strictNullChecks */}
+                    {lockDateAndTime.split(' ').map((item, key) => (
+                      <Fragment key={key}> {item}</Fragment>
+                    ))}
+                  </Fragment>
+                )}
+              </p>
             </td>
             <td>
               <p
                 className={cx({
                   [styles.statusFinished]: isFinished,
                   [styles.statusRefunded]: isRefunded,
-                  [styles.statusStopped]: !isFinished && isStoppedSwap,
+                  [styles.statusStopped]: !isFinished && !isRefunded && isStoppedSwap,
                 })}
               >
-                {isFinished && <FormattedMessage id="RowHistory94" defaultMessage="Finished" />}
-                {isRefunded && <FormattedMessage id="RowHistory77" defaultMessage="Refunded" />}
-                {!isFinished && isStoppedSwap && <FormattedMessage id="RowHistory139" defaultMessage="Stopped" />}
+                {this.getSwapStatusText(isFinished, isRefunded, isStoppedSwap)}
                 {!isDeletedSwap &&
                   (canBeRefunded ? (
                     <Timer lockTime={values.lockTime * 1000} enabledButton={this.tryRefund} />
@@ -237,9 +259,11 @@ class SwapRow extends Component<any, any> {
               </p>
             </td>
             <td>
-              <Link to={swapUri}>
-                <FormattedMessage id="RowHistory91" defaultMessage="Link" />
-              </Link>
+              <p>
+                <Link to={swapUri}>
+                  <FormattedMessage id="RowHistory91" defaultMessage="Link" />
+                </Link>
+              </p>
             </td>
           </Fragment>
         )}

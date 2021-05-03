@@ -186,6 +186,7 @@ class CurrencyAction extends React.Component<any, any> {
                 }
                 return (
                   <div styleName="card" key={item.currency} onClick={() => this.handleClickCurrency(item)}>
+                    {/* @ts-ignore: strictNullChecks */}
                     <div styleName={`circle ${iconName}`} style={renderStyle}>
                       <img src={renderIcon} alt={`${name} icon`} role="image" />
                     </div>
