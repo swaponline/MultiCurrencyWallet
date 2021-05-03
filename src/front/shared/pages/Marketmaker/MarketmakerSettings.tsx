@@ -766,82 +766,85 @@ class MarketmakerSettings extends Component<any, any> {
         </section>
 
         {/* Swaps history + Active swaps */}
-        <section styleName={`${isDark ? 'dark' : '' }`}>
-          <h2 styleName="section-title">
-            <FormattedMessage
-              id="MM_SwapHistory_Title"
-              defaultMessage="Swap history"
-            />
-          </h2>
-          <table styleName="swapHistory">
-            <thead>
-              <tr>
-                <td>
-                  <p>
-                    <FormattedMessage
-                      id="MM_SwapHistory_YouBuy"
-                      defaultMessage="You buy"
-                    />
-                  </p>
-                </td>
-                <td>
-                  <p>
-                   <FormattedMessage
-                      id="MM_SwapHistory_Step"
-                      defaultMessage="Step"
-                    />
-                  </p>
-                </td>
-                <td>
-                  <p>
-                    <FormattedMessage
-                      id="MM_SwapHistory_YouSell"
-                      defaultMessage="You sell"
-                    />
-                  </p>
-                </td>
-                <td>
-                  <p>
-                   <FormattedMessage
-                      id="MM_SwapHistory_LockTime"
-                      defaultMessage="Lock time"
-                    />
-                  </p>
-                </td>
-                <td>
-                  <p>
-                   <FormattedMessage
-                      id="MM_SwapHistory_Status"
-                      defaultMessage="Status"
-                    />
-                  </p>
-                </td>
-                <td></td>
-              </tr>
-            </thead>
-            <tbody>
-              {!!sortedSwaps.length && sortedSwaps.map((swapId, rowIndex) => {
-                return (
-                  <SwapRow
-                    key={swapId}
-                    row={swapsByIds[swapId]}
-                    extractSwapStatus={this.extractSwapStatus}
-                  />
-                )
-              })}
-              {!sortedSwaps.length && (
+        { mnemonicSaved && (
+          <section styleName={`${isDark ? 'dark' : '' }`}>
+            <h2 styleName="section-title">
+              <FormattedMessage
+                id="MM_SwapHistory_Title"
+                defaultMessage="Swap history"
+              />
+            </h2>
+            <table styleName="swapHistory">
+              <thead>
                 <tr>
-                  <td colSpan={6}>
-                    <FormattedMessage
-                      id="MM_SwapHistory_Empty"
-                      defaultMessage="You have not any swaps, turn on MM and wait when someone accept your orders"
-                    />
+                  <td>
+                    <p>
+                      <FormattedMessage
+                        id="MM_SwapHistory_YouBuy"
+                        defaultMessage="You buy"
+                      />
+                    </p>
                   </td>
+                  <td>
+                    <p>
+                      <FormattedMessage
+                        id="MM_SwapHistory_Step"
+                        defaultMessage="Step"
+                      />
+                    </p>
+                  </td>
+                  <td>
+                    <p>
+                      <FormattedMessage
+                        id="MM_SwapHistory_YouSell"
+                        defaultMessage="You sell"
+                      />
+                    </p>
+                  </td>
+                  <td>
+                    <p>
+                      <FormattedMessage
+                        id="MM_SwapHistory_LockTime"
+                        defaultMessage="Lock time"
+                      />
+                    </p>
+                  </td>
+                  <td>
+                    <p>
+                      <FormattedMessage
+                        id="MM_SwapHistory_Status"
+                        defaultMessage="Status"
+                      />
+                    </p>
+                  </td>
+                  <td></td>
                 </tr>
-              )}
-            </tbody>
-          </table>
-        </section>
+              </thead>
+              <tbody>
+                {!!sortedSwaps.length && sortedSwaps.map((swapId, rowIndex) => {
+                  return (
+                    <SwapRow
+                      key={swapId}
+                      row={swapsByIds[swapId]}
+                      extractSwapStatus={this.extractSwapStatus}
+                    />
+                  )
+                })}
+                {!sortedSwaps.length && (
+                  <tr>
+                    <td colSpan={6}>
+                      <FormattedMessage
+                        id="MM_SwapHistory_Empty"
+                        defaultMessage="You have not any swaps, turn on MM and wait when someone accept your orders"
+                      />
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </section>
+        )}
+
 
         <FAQ
           isDark={isDark}
