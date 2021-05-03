@@ -521,13 +521,6 @@
     ]
   },
   {
-    "id": "recieved65",
-    "message": "Dirección copiada al portapapeles",
-    "files": [
-      "src/front/shared/components/modals/ReceiveModal/ReceiveModal.tsx"
-    ]
-  },
-  {
     "id": "recieved67",
     "message": "Copiar al portapapeles",
     "files": [
@@ -814,20 +807,6 @@
   {
     "id": "down57",
     "message": "Para guardar tus claves privadas, solo copia las claves y pegalas en el bloc de notas. También puedes descargar las clases en formato.txt",
-    "files": [
-      "src/front/shared/components/modals/DownloadModal/DownloadModal.tsx"
-    ]
-  },
-  {
-    "id": "down64",
-    "message": "Direccion copiada al portapapeles",
-    "files": [
-      "src/front/shared/components/modals/DownloadModal/DownloadModal.tsx"
-    ]
-  },
-  {
-    "id": "down65",
-    "message": "Copiar al portapapeles",
     "files": [
       "src/front/shared/components/modals/DownloadModal/DownloadModal.tsx"
     ]

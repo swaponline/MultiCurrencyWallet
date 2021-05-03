@@ -482,13 +482,6 @@
     ]
   },
   {
-    "id": "recieved65",
-    "message": "Address copied to clipboard",
-    "files": [
-      "src/front/shared/components/modals/ReceiveModal/ReceiveModal.tsx"
-    ]
-  },
-  {
     "id": "recieved67",
     "message": "Copy to clipboard",
     "files": [
@@ -775,20 +768,6 @@
   {
     "id": "down57",
     "message": "It seems like you're trying to save your private keys. Just copy this keys and paste into notepad textarea. Also you can download it as a .txt file.",
-    "files": [
-      "src/front/shared/components/modals/DownloadModal/DownloadModal.tsx"
-    ]
-  },
-  {
-    "id": "down64",
-    "message": "Address copied to clipboard",
-    "files": [
-      "src/front/shared/components/modals/DownloadModal/DownloadModal.tsx"
-    ]
-  },
-  {
-    "id": "down65",
-    "message": "Copy to clipboard",
     "files": [
       "src/front/shared/components/modals/DownloadModal/DownloadModal.tsx"
     ]
