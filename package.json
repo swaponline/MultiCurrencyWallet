@@ -287,7 +287,6 @@
     "superagent": "^6.1.0",
     "swiper": "^6.5.8",
     "typeforce": "^1.18.0",
-    "url-parse": "^1.4.7",
     "valuelink": "^1.6.2",
     "web3": "^1.3.4"
   }
