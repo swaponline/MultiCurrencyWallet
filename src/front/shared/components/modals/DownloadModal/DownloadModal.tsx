@@ -1,6 +1,4 @@
 import React, { Fragment } from 'react'
-import PropTypes from 'prop-types'
-
 import { connect } from 'redaction'
 import actions from 'redux/actions'
 
@@ -9,7 +7,7 @@ import styles from './DownloadModal.scss'
 
 import Modal from 'components/modal/Modal/Modal'
 import Button from 'components/controls/Button/Button'
-import CopyToClipboard from 'react-copy-to-clipboard'
+import Copy from 'components/ui/Copy/Copy'
 
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 
@@ -26,59 +24,24 @@ const title = defineMessages({
 @withRouter
 @connect(
   ({
-    user: { ethData, btcData, ghostData, nextData, tokensData },
+    user: { ethData, btcData, ghostData, nextData },
   }) => ({
     items: [ethData, btcData, ghostData, nextData],
   })
 )
 @cssModules(styles)
 class DownloadModal extends React.Component<any, any> {
-
-  props: any
-
-  state = {
-    isTextCopied: false,
-    Ru: false,
-  }
-
-  componentWillMount() {
-    this.checkLang()
-  }
-
-  handleCopyText = () => {
-    this.setState({
-      isTextCopied: true,
-    }, () => {
-      setTimeout(() => {
-        this.setState({
-          isTextCopied: false,
-        })
-      }, 15 * 1000)
-    })
-  }
-
   handleDownloadTxt = () => {
     actions.user.downloadPrivateKeys()
   }
 
-  checkLang = () => {
-    const { match: { params: { locale } } } = this.props
-    if (locale === 'ru') {
-      this.setState({
-        Ru: true,
-      })
-    }
-  }
-
   render() {
-    const { isTextCopied, Ru } = this.state
-    const { items, name, match: { params: { locale } }, intl } = this.props
-
+    const { items, name, intl } = this.props
     const textToCopy = actions.user.getText()
 
     const Account = () => (
-      items.map(item => (
-        <Fragment>
+      items.map((item, index) => (
+        <Fragment key={index}>
           <a>
             {item.fullName}
             {' '}
@@ -109,14 +72,11 @@ class DownloadModal extends React.Component<any, any> {
           />
         </div>
         <div styleName="buttonsContainer">
-          <CopyToClipboard text={textToCopy} onCopy={this.handleCopyText}>
-            <Button styleName="button" brand disabled={isTextCopied}>
-              {isTextCopied ?
-                <FormattedMessage id="down64" defaultMessage="Address copied to clipboard" /> :
-                <FormattedMessage id="down65" defaultMessage="Copy to clipboard" />
-              }
+          <Copy text={textToCopy}>
+            <Button styleName="button" brand>
+              <FormattedMessage id="recieved67" defaultMessage="Copy to clipboard" />
             </Button>
-          </CopyToClipboard>
+          </Copy>
           {
             !(/iPad|iPhone|iPod/.test(navigator.userAgent)) && (
               <Fragment>
