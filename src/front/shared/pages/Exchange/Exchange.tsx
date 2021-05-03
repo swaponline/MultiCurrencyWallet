@@ -1991,7 +1991,7 @@ class Exchange extends PureComponent<any, any> {
               <Button
                 onClick={this.toggleOrdersVisibility}
                 styleName="button orderbook"
-                link
+                brand
               >
                 <FormattedMessage id="Orderbook" defaultMessage='Orderbook' />
               </Button>

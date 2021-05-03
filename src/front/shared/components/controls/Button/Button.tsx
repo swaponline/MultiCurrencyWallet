@@ -18,7 +18,6 @@ type ButtonProps = {
   big?: boolean
   small?: boolean
   empty?: boolean
-  link?: boolean
   fill?: boolean
   disabled?: boolean
   pending?: boolean
@@ -43,7 +42,6 @@ const Button = (props: ButtonProps) => {
     big,
     small,
     empty,
-    link,
     autoHeight,
     onClick,
     id = '',
@@ -62,7 +60,6 @@ const Button = (props: ButtonProps) => {
     big,
     small,
     empty,
-    link,
     autoHeight,
     disabled,
     "darkTheme-white": isDark && white,
