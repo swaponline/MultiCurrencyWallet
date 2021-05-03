@@ -114,20 +114,6 @@ class SwapRow extends Component<any, any> {
     }
   }
 
-  getSwapStatusText = (isFinished: boolean, isRefunded: boolean, isStoppedSwap: boolean) => {
-    if (isFinished) {
-      return <FormattedMessage id="RowHistory94" defaultMessage="Finished" />
-    }
-    if (isRefunded) {
-      return <FormattedMessage id="RowHistory77" defaultMessage="Refunded" />
-    }
-    if (isStoppedSwap) {
-      return <FormattedMessage id="RowHistory139" defaultMessage="Stopped" />
-    }
-
-    return ''
-  }
-
   componentDidMount() {
     /*
     const {
@@ -249,7 +235,11 @@ class SwapRow extends Component<any, any> {
                   [styles.statusStopped]: !isFinished && !isRefunded && isStoppedSwap,
                 })}
               >
-                {this.getSwapStatusText(isFinished, isRefunded, isStoppedSwap)}
+                {isStoppedSwap
+                  && isFinished ? <FormattedMessage id="RowHistory94" defaultMessage="Finished" />
+                  : isRefunded ? <FormattedMessage id="RowHistory77" defaultMessage="Refunded" />
+                  : <FormattedMessage id="RowHistory139" defaultMessage="Stopped" />
+                }
                 {!isDeletedSwap &&
                   (canBeRefunded ? (
                     <Timer lockTime={values.lockTime * 1000} enabledButton={this.tryRefund} />
