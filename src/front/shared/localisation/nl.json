@@ -6123,5 +6123,19 @@
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
+  },
+  {
+    "id": "MM_InstallExtentionTitle",
+    "message": "Installeer de Chrome-extensie en begin met verdienen",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
+    ]
+  },
+  {
+    "id": "MM_InstallExtentionBtn",
+    "message": "Install Chrome ExtensionInstalleer de Chrome-extensie",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
+    ]
   }
 ]
