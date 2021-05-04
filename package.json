@@ -47,7 +47,7 @@
     "clean:mainnet": "rimraf ./build-mainnet",
     "clean:mainnet-widget": "rimraf ./build-mainnet-widget",
     "clean:chrome-extension": "rimraf ./build-chrome-extension",
-    "copy:chrome-extension": "cp -r ./src/front/chrome-extension/* ./build-chrome-extension && mv ./build-chrome-extension/manifest_.json ./build-chrome-extension/manifest.json && rm -rf ./build-chrome-extension/application/assets/manifest.json",
+    "copy:chrome-extension": "cp -r ./src/front/chrome-extension/* ./build-chrome-extension && mv ./build-chrome-extension/manifest_.json ./build-chrome-extension/manifest.json && rm -rf ./build-chrome-extension/application/assets/manifest.json && EXT_VERSION=\"$(git rev-parse HEAD | cut -c1-6)\" && sed -i -e \"s/EXT_VERSION_AUTOCHANGE/${EXT_VERSION}/g\" ./build-chrome-extension/manifest.json",
     "zip:chrome-extension-testnet": "cd build-chrome-extension/ && zip -r zipped-chrome-extension-testnet.zip ./* && cd - && echo 'Zipped!'",
     "zip:chrome-extension-mainnet": "cd build-chrome-extension/ && zip -r zipped-chrome-extension-mainnet.zip ./* && cd - && echo 'Zipped!'",
     "build:pages": "npm run clean:pages && cross-env DEBUG=app:*,swap.core:* CONFIG=mainnet.pages.prod node ./src/front/bin/compile",
