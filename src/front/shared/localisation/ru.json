@@ -4785,6 +4785,13 @@
     ]
   },
   {
+    "id": "AddLiquidity",
+    "message": "Добавить Ликвидность",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
     "id": "MainFAQ2_content3",
     "message": "Текущие комиссии майнеров:",
     "files": [
@@ -6126,6 +6133,20 @@
     "message": "WBTC был создан, чтобы позволить держателям биткойнов участвовать в приложениях децентрализованных финансов («DeFi»), которые популярны на Ethereum.",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_InstallExtentionTitle",
+    "message": "Установи Расширение Chrome и Начни Зарабатывать",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
+    ]
+  },
+  {
+    "id": "MM_InstallExtentionBtn",
+    "message": "Установить Расширение Chrome",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
     ]
   }
 ]

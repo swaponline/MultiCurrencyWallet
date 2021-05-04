@@ -4763,6 +4763,13 @@
     ]
   },
   {
+    "id": "AddLiquidity",
+    "message": "Dodaj płynność",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
     "id": "MainFAQ2_content3",
     "message": "Current mining fees:",
     "files": [
@@ -6126,6 +6133,20 @@
     "message": "WBTC zostało stworzone, aby umożliwić posiadaczom Bitcoinów udział w zdecentralizowanych aplikacjach finansowych („DeFi”), które są popularne w Ethereum.",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_InstallExtentionTitle",
+    "message": "Zainstaluj rozszerzenie Chrome i zacznij zarabiać",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
+    ]
+  },
+  {
+    "id": "MM_InstallExtentionBtn",
+    "message": "Zainstaluj rozszerzenie Chrome",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
     ]
   }
 ]

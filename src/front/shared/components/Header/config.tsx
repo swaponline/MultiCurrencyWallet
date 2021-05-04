@@ -102,18 +102,16 @@ export const getMenuItems = (props) => {
     },
   ]
 
-  // Marketmaker testnet ********
-  if (!isWidgetBuild) {
-    const marketmakerItem = {
-      title: intl.formatMessage(messages.marketmaker),
-      link: (externalConfig.binance) ? `${links.marketmaker}/BTCB` : `${links.marketmaker}/WBTC`,
-      exact: true,
-      currentPageFlag: true,
-    }
-
-    itemsWithWallet.push(marketmakerItem)
-    itemsWithoutWallet.push(marketmakerItem)
+  const marketmakerItem = {
+    title: intl.formatMessage(messages.marketmaker),
+    link: !isWidgetBuild ? `${links.marketmaker}/` : (externalConfig.binance) ? `${links.marketmaker}/BTCB` : `${links.marketmaker}/WBTC`,
+    exact: true,
+    currentPageFlag: true,
   }
+
+  itemsWithWallet.push(marketmakerItem)
+  itemsWithoutWallet.push(marketmakerItem)
+
 
   // temporarily hidden
   // Farm ************************

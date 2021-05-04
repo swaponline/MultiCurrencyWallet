@@ -4778,6 +4778,13 @@
     ]
   },
   {
+    "id": "AddLiquidity",
+    "message": "Add Liquidity",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
     "id": "MainFAQ2_content3",
     "message": "Current mining fees:",
     "files": [
@@ -6126,6 +6133,20 @@
     "message": "WBTC was created to allow Bitcoin holders to participate in decentralized finance (“DeFi”) apps that are popular on Ethereum.",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_InstallExtentionTitle",
+    "message": "Install Chrome Extension and Start Earn",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
+    ]
+  },
+  {
+    "id": "MM_InstallExtentionBtn",
+    "message": "Install Chrome Extension",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
     ]
   }
 ]
