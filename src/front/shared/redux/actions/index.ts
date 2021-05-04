@@ -22,7 +22,6 @@ import token from './token'
 
 import api from './api'
 import pairs from './pairs'
-import referral from './referral'
 import analytics from './analytics'
 
 import pubsubRoom from './pubsubRoom'
@@ -64,7 +63,6 @@ export default {
   token,
   feed,
   analytics,
-  referral,
   pubsubRoom,
   api,
   pairs,
