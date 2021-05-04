@@ -61,7 +61,7 @@ export const getMenuItems = (props) => {
   const { 
     exchange: linksExchange,
     createWallet: create,
-    farm,
+    // farm,
     history,
     home,
   } = links
@@ -115,19 +115,20 @@ export const getMenuItems = (props) => {
     itemsWithoutWallet.push(marketmakerItem)
   }
 
+  // temporarily hidden
   // Farm ************************
-  if (!isWidgetBuild) {
-    const farmItem = {
-      title: intl.formatMessage(messages.farm),
-      link: farm,
-      isExternal: true,
-      exact: true,
-      currentPageFlag: true,
-    }
+  // if (!isWidgetBuild) {
+  //   const farmItem = {
+  //     title: intl.formatMessage(messages.farm),
+  //     link: farm,
+  //     isExternal: true,
+  //     exact: true,
+  //     currentPageFlag: true,
+  //   }
 
-    itemsWithWallet.push(farmItem)
-    itemsWithoutWallet.push(farmItem)
-  }
+  //   itemsWithWallet.push(farmItem)
+  //   itemsWithoutWallet.push(farmItem)
+  // }
 
   return localStorage.getItem('isWalletCreate') === 'true'
     || externalConfig && externalConfig.isWidget
@@ -141,7 +142,7 @@ export const getMenuItemsMobile = (props, isWalletCreate, dinamicPath) => {
   const { exchange, wallet, createWallet } = messages
   const { 
     exchange: linksExchange,
-    farm,
+    // farm,
     history,
   } = links
 
@@ -181,19 +182,20 @@ export const getMenuItemsMobile = (props, isWalletCreate, dinamicPath) => {
     },
   ]
 
+  // temporarily hidden
   // Farm ************************
-  if (externalConfig.entry === 'testnet' && !isWidgetBuild) {
-    const farmItem = {
-      title: props.intl.formatMessage(messages.farm),
-      link: farm,
-      isExternal: true,
-      exact: true,
-      icon: <i className="fas fa-coins" aria-hidden="true" />,
-    }
+  // if (externalConfig.entry === 'testnet' && !isWidgetBuild) {
+  //   const farmItem = {
+  //     title: props.intl.formatMessage(messages.farm),
+  //     link: farm,
+  //     isExternal: true,
+  //     exact: true,
+  //     icon: <i className="fas fa-coins" aria-hidden="true" />,
+  //   }
 
-    mobileItemsWithWallet.push(farmItem)
-    mobileItemsWithoutWallet.push(farmItem)
-  }
+  //   mobileItemsWithWallet.push(farmItem)
+  //   mobileItemsWithoutWallet.push(farmItem)
+  // }
 
   return localStorage.getItem('isWalletCreate') === 'true'
       ? mobileItemsWithWallet
