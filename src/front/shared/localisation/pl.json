@@ -4763,6 +4763,13 @@
     ]
   },
   {
+    "id": "AddLiquidity",
+    "message": "Dodaj płynność",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
     "id": "MainFAQ2_content3",
     "message": "Current mining fees:",
     "files": [

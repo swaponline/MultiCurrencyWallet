@@ -4778,6 +4778,13 @@
     ]
   },
   {
+    "id": "AddLiquidity",
+    "message": "Add Liquidity",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
     "id": "MainFAQ2_content3",
     "message": "Current mining fees:",
     "files": [

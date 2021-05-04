@@ -4774,6 +4774,13 @@
     ]
   },
   {
+    "id": "AddLiquidity",
+    "message": "Liquiditeit toevoegen",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
     "id": "MainFAQ2_content3",
     "message": "Huidige mijnvergoedingen:",
     "files": [

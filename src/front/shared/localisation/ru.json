@@ -4785,6 +4785,13 @@
     ]
   },
   {
+    "id": "AddLiquidity",
+    "message": "Добавить Ликвидность",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
     "id": "MainFAQ2_content3",
     "message": "Текущие комиссии майнеров:",
     "files": [
