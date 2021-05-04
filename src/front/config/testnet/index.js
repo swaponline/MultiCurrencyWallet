@@ -1,6 +1,7 @@
 import web3 from './web3'
 import link from './link'
 import pubsubRoom from './pubsubRoom'
+import bep20 from './bep20'
 import erc20 from './erc20'
 import api from './api'
 import swapContract from './swapContract'
@@ -16,6 +17,7 @@ export default {
   api,
   pubsubRoom,
   erc20,
+  bep20,
   swapContract,
   feeRates,
   hiddenCoins,

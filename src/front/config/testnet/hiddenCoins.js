@@ -3,6 +3,7 @@ export default [
   'BTC (SMS-Protected)',
   'BTC (Multisig)',
   'ETH',
+  'BNB',
   'GHOST',
   'NEXT',
   'SWAP',

@@ -19,6 +19,11 @@ window.widgetERC20Comisions = {
     address: '0x276747801B0dbb7ba04685BA27102F1B27Ca0815',
     min: '0,01',
   },
+  bnb: {
+    fee: '7',
+    address: '0x276747801B0dbb7ba04685BA27102F1B27Ca0815',
+    min: '0,01',
+  },
   erc20: {
     address: '0x276747801B0dbb7ba04685BA27102F1B27Ca0815',
   },
@@ -75,12 +80,14 @@ window.buildOptions = {
     // inited from window.CUR_<NAME>_DISABLED
     btc: true,
     eth: true,
+    bnb: true,
     ghost: true,
     next: true,
   },
   blockchainSwapEnabled: {
     btc: true,
     eth: true,
+    bnb: true,
     ghost: false,
     next: false,
   },

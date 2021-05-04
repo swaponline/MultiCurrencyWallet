@@ -1,24 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react'
-
 import CSSModules from 'react-css-modules'
 import styles from '../CreateWallet.scss'
-
-import { connect } from 'redaction'
 import reducers from 'redux/core/reducers'
 
-import ReactTooltip from 'react-tooltip'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { isMobile } from 'react-device-detect'
 
-import config from 'app-config'
 import actions from 'redux/actions'
-import {
-  constants,
-  stats
-} from 'helpers'
+import { constants } from 'helpers'
 import ethToken from 'helpers/ethToken'
 import feedback from 'shared/helpers/feedback'
-import getTopLocation from 'helpers/getTopLocation'
 import Explanation from '../Explanation'
 import icons from '../images'
 import Cupture, {
@@ -43,6 +34,7 @@ const SecondStep = (props) => {
     nothing: {
       btc: true,
       eth: true,
+      bnb: true,
       ghost: true,
       next: true,
       erc: true,

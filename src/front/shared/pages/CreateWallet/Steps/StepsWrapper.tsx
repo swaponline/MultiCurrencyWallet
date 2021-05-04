@@ -46,8 +46,7 @@ export default class StepsWrapper extends Component<any, any> {
     const { currencies } = props
     
     if (config
-      && config.opts
-      && config.opts.ownTokens
+      && config.opts?.ownTokens
       && Object.keys(config.opts.ownTokens)
       && Object.keys(config.opts.ownTokens).length
     ) {
@@ -56,7 +55,7 @@ export default class StepsWrapper extends Component<any, any> {
         this.defaultStartPack.push({ name: "BTC", capture: "Bitcoin" })
       }
       if (!config.opts.curEnabled || config.opts.curEnabled.eth) {
-        this.defaultStartPack.push((config.binance) ? { name: "BNB", capture: "BSC" } : { name: "ETH", capture: "Ethereum" })
+        this.defaultStartPack.push({ name: "ETH", capture: "Ethereum" })
       }
       if (!config.opts.curEnabled || config.opts.curEnabled.bnb) {
         this.defaultStartPack.push({ name: "BNB", capture: "Binance Coin" })

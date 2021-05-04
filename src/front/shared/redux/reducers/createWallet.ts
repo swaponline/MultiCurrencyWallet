@@ -8,10 +8,6 @@ export const initialState = {
     usdt: false,
     swap: false,
   },
-  usersData: {
-    userName: '',
-    eMail: '',
-  },
   secure: '',
   step: 1,
 }

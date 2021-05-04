@@ -33,16 +33,16 @@ const externalConfig = () => {
   config.opts = {
     inited: true,
     curEnabled: {
-      eth: !config.binance,
-      bnb: config.binance,
+      eth: true,
+      bnb: true,
       btc: true,
       ghost: true,
       next: true,
     },
     blockchainSwapEnabled: {
       btc: true,
-      eth: !config.binance,
-      bnb: false,
+      eth: true,
+      bnb: true,
       ghost: true,
       next: true,
     },

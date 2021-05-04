@@ -34,7 +34,6 @@ const CreateWallet: React.FC<any> = (props) => {
     location: { pathname },
     userData,
     core: { hiddenCoinsList },
-    activeFiat,
   } = props
 
   const { locale } = useIntl()
@@ -43,6 +42,7 @@ const CreateWallet: React.FC<any> = (props) => {
 
   const {
     ethData,
+    bnbData,
     btcData,
     ghostData,
     nextData,
@@ -59,6 +59,7 @@ const CreateWallet: React.FC<any> = (props) => {
     btcMultisigSMSData,
     btcMultisigUserData,
     ethData,
+    bnbData,
     ghostData,
     nextData,
   ].map(({ balance, currency, infoAboutCurrency }) => ({
@@ -75,7 +76,8 @@ const CreateWallet: React.FC<any> = (props) => {
     'BTC (SMS-Protected)',
     'BTC (PIN-Protected)',
     'BTC (Multisig)',
-    ...[(config.binance) ? 'BNB' : 'ETH'],
+    'ETH',
+    'BNB',
     'GHOST',
     'NEXT',
   ]
@@ -135,31 +137,23 @@ const CreateWallet: React.FC<any> = (props) => {
   }, [pathname])
 
   useEffect(() => {
-    const widgetCurrencies = [
-      'BTC',
-      'BTC (SMS-Protected)',
-      'BTC (PIN-Protected)',
-      'BTC (Multisig)',
-      ...[(config.binance) ? 'BNB' : 'ETH'],
-      'GHOST',
-      'NEXT',
-    ]
+    const widgetCurrenciesWithTokens = [...widgetCurrencies]
 
     if (isWidgetBuild) {
       if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
         // Multi token widget build
         Object.keys(window.widgetERC20Tokens).forEach((key) => {
-          widgetCurrencies.push(key.toUpperCase())
+          widgetCurrenciesWithTokens.push(key.toUpperCase())
         })
       } else {
-        widgetCurrencies.push(config.erc20token.toUpperCase())
+        widgetCurrenciesWithTokens.push(config.erc20token.toUpperCase())
       }
     }
 
     if (currencyBalance) {
       currencyBalance.forEach((item) => {
         if (
-          (!isWidgetBuild || widgetCurrencies.includes(item.name)) &&
+          (!isWidgetBuild || widgetCurrenciesWithTokens.includes(item.name)) &&
           item.infoAboutCurrency &&
           item.balance !== 0
         ) {
@@ -210,7 +204,7 @@ const CreateWallet: React.FC<any> = (props) => {
     }
 
     const isIgnoreSecondStep = !Object.keys(currencies).includes('BTC')
-    const tokenType = `Custom ${config.binance ? 'BEP20' : 'ERC20'}`
+    const tokenType = `${config.binance ? 'BEP20' : 'ERC20'}`
 
     if (isIgnoreSecondStep && !currencies[tokenType]) {
       Object.keys(currencies).forEach((currency) => {

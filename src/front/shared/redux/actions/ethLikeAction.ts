@@ -1,3 +1,4 @@
+import Web3 from 'web3'
 import { BigNumber } from 'bignumber.js'
 import { getState } from 'redux/core'
 import actions from 'redux/actions'
@@ -5,7 +6,6 @@ import reducers from 'redux/core/reducers'
 import DEFAULT_CURRENCY_PARAMETERS from 'common/helpers/constants/DEFAULT_CURRENCY_PARAMETERS'
 import * as mnemonicUtils from 'common/utils/mnemonic'
 import typeforce from 'swap.app/util/typeforce'
-import { web3 } from 'helpers/web3'
 import externalConfig from 'helpers/externalConfig'
 import metamask from 'helpers/metamask'
 import helpers, { feedback, constants, cacheStorageGet, cacheStorageSet, apiLooper } from 'helpers'
@@ -22,11 +22,19 @@ class EthLikeAction {
     address: string // where to send
     min: string // min amount
   }
-
+  private Web3: IUniversalObj
   private cache = new Map([['addressIsContract', {}]])
 
   constructor(options) {
-    const { coinName, ticker, explorerName, explorerLink, explorerApiKey, adminFeeObj } = options
+    const {
+      coinName,
+      ticker,
+      explorerName,
+      explorerLink,
+      explorerApiKey,
+      adminFeeObj,
+      web3,
+    } = options
 
     this.coinName = coinName
     this.ticker = ticker
@@ -35,6 +43,7 @@ class EthLikeAction {
     this.explorerLink = explorerLink
     this.explorerApiKey = explorerApiKey
     this.adminFeeObj = adminFeeObj
+    this.Web3 = web3
   }
 
   reportError = (error) => {
@@ -81,9 +90,9 @@ class EthLikeAction {
   }
 
   fetchBalance = (address): Promise<number> => {
-    return web3.eth
+    return this.Web3.eth
       .getBalance(address)
-      .then((result) => Number(web3.utils.fromWei(result)))
+      .then((result) => Number(this.Web3.utils.fromWei(result)))
       .catch((error) => console.error(error))
   }
 
@@ -99,9 +108,9 @@ class EthLikeAction {
           if (response && response.result) {
             const { from, to, value, gas, gasPrice, blockHash } = response.result
 
-            const amount = web3.utils.fromWei(value)
-            const minerFee = new BigNumber(web3.utils.toBN(gas).toNumber())
-              .multipliedBy(web3.utils.toBN(gasPrice).toNumber())
+            const amount = this.Web3.utils.fromWei(value)
+            const minerFee = new BigNumber(this.Web3.utils.toBN(gas).toNumber())
+              .multipliedBy(this.Web3.utils.toBN(gasPrice).toNumber())
               .dividedBy(1e18)
               .toNumber()
 
@@ -153,7 +162,7 @@ class EthLikeAction {
     let data
 
     if (privateKey) {
-      data = web3.eth.accounts.privateKeyToAccount(privateKey)
+      data = this.Web3.eth.accounts.privateKeyToAccount(privateKey)
     } else {
       if (!mnemonic) {
         mnemonic = mnemonicUtils.getRandomMnemonicWords()
@@ -162,7 +171,7 @@ class EthLikeAction {
       const accData = this.getWalletByWords(mnemonic)
 
       privateKey = accData.privateKey
-      data = web3.eth.accounts.privateKeyToAccount(privateKey)
+      data = this.Web3.eth.accounts.privateKeyToAccount(privateKey)
       localStorage.setItem(constants.privateKeyNames[`${this.tickerKey}Mnemonic`], privateKey)
 
       // TODO: for compatible. Delete after BNB as separate coin
@@ -180,7 +189,7 @@ class EthLikeAction {
 
     localStorage.setItem(constants.privateKeyNames[this.tickerKey], data.privateKey)
 
-    web3.eth.accounts.wallet.add(data.privateKey)
+    this.Web3.eth.accounts.wallet.add(data.privateKey)
     data.isMnemonic = sweepToMnemonicReady
 
     reducers.user.setAuthData({ name: `${this.tickerKey}Data`, data })
@@ -200,9 +209,9 @@ class EthLikeAction {
         return
       }
 
-      const mnemonicData = web3.eth.accounts.privateKeyToAccount(mnemonicKeys[this.tickerKey])
+      const mnemonicData = this.Web3.eth.accounts.privateKeyToAccount(mnemonicKeys[this.tickerKey])
 
-      web3.eth.accounts.wallet.add(mnemonicKeys[this.tickerKey])
+      this.Web3.eth.accounts.wallet.add(mnemonicKeys[this.tickerKey])
       mnemonicData.isMnemonic = sweepToMnemonicReady
 
       reducers.user.addWallet({
@@ -335,7 +344,7 @@ class EthLikeAction {
                   confirmations: item.confirmations,
                   hash: item.hash,
                   status: item.blockHash !== null ? 1 : 0,
-                  value: web3.utils.fromWei(
+                  value: this.Web3.utils.fromWei(
                     internals[item.hash] && internals[item.hash].value > 0
                       ? internals[item.hash].value
                       : item.value
@@ -402,13 +411,13 @@ class EthLikeAction {
           DEFAULT_CURRENCY_PARAMETERS.eth.limit.contractInteract
         : DEFAULT_CURRENCY_PARAMETERS.eth.limit.send)
 
-    let sendMethod = web3.eth.sendTransaction
+    let sendMethod = this.Web3.eth.sendTransaction
     let txObject = {
       from: ownerAddress,
       to: to.trim(),
       gasPrice,
       gas: gasLimit,
-      value: web3.utils.toWei(String(amount)),
+      value: this.Web3.utils.toWei(String(amount)),
     }
     const walletData = actions.core.getWallet({
       address: ownerAddress,
@@ -417,9 +426,9 @@ class EthLikeAction {
     const privateKey = this.getPrivateKeyByAddress(ownerAddress)
 
     if (!walletData.isMetamask) {
-      const signedTx = await web3.eth.accounts.signTransaction(txObject, privateKey)
+      const signedTx = await this.Web3.eth.accounts.signTransaction(txObject, privateKey)
       txObject = signedTx.rawTransaction
-      sendMethod = web3.eth.sendSignedTransaction
+      sendMethod = this.Web3.eth.sendSignedTransaction
     }
 
     return new Promise((res, rej) => {
@@ -458,18 +467,20 @@ class EthLikeAction {
       to: this.adminFeeObj.address.trim(),
       gasPrice,
       gas: gasLimit,
-      value: web3.utils.toWei(String(feeFromUsersAmount)),
+      value: this.Web3.utils.toWei(String(feeFromUsersAmount)),
     }
 
     return new Promise(async (res) => {
-      const signedTxObj = await web3.eth.accounts.signTransaction(adminFeeParams, privateKey)
+      const signedTxObj = await this.Web3.eth.accounts.signTransaction(adminFeeParams, privateKey)
 
-      web3.eth.sendSignedTransaction(signedTxObj.rawTransaction).on('transactionHash', (hash) => {
-        console.group('%c Admin commission is sended', 'color: green;')
-        console.log('tx hash', hash)
-        console.groupEnd()
-        res(hash)
-      })
+      this.Web3.eth
+        .sendSignedTransaction(signedTxObj.rawTransaction)
+        .on('transactionHash', (hash) => {
+          console.group('%c Admin commission is sended', 'color: green;')
+          console.log('tx hash', hash)
+          console.groupEnd()
+          res(hash)
+        })
     })
   }
 
@@ -525,7 +536,7 @@ class EthLikeAction {
       return contractsList[lowerAddress]
     }
 
-    const codeAtAddress = await web3.eth.getCode(address)
+    const codeAtAddress = await this.Web3.eth.getCode(address)
     const codeIsEmpty = !codeAtAddress || codeAtAddress === '0x' || codeAtAddress === '0x0'
 
     contractsList[lowerAddress] = !codeIsEmpty
@@ -545,6 +556,7 @@ export default {
     explorerLink: externalConfig.link.etherscan,
     explorerApiKey: externalConfig.api.etherscan_ApiKey,
     adminFeeObj: externalConfig.opts?.fee?.eth,
+    web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.provider)),
   }),
   BNB: new EthLikeAction({
     coinName: 'Binance Coin',
@@ -553,5 +565,6 @@ export default {
     explorerLink: externalConfig.link.bscscan,
     explorerApiKey: externalConfig.api.bscscan_ApiKey,
     adminFeeObj: externalConfig.opts?.fee?.bnb,
+    web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.binance_provider)),
   }),
 }
