@@ -84,7 +84,8 @@ class Erc20LikeAction {
 
   // TODO: better name - getToken. Rename after intergation with bep20
   GetCustromERC20 = () => {
-    let tokensInfo = JSON.parse(localStorage.getItem(constants.localStorage.customERC))
+    let customERC = constants.localStorage.customERC || ''
+    let tokensInfo = JSON.parse(localStorage.getItem(customERC))
 
     if (!tokensInfo || !tokensInfo[NETWORK]) return {}
     return tokensInfo[NETWORK]

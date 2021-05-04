@@ -165,5 +165,5 @@ class ConnectWalletModal extends React.Component<any, null> {
     )
   }
 }
-
+//@ts-ignore: strictNullChecks
 export default injectIntl(ConnectWalletModal)
