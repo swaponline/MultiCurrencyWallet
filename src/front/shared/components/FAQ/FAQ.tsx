@@ -19,15 +19,15 @@ const tabsIdsDictionary = {
 }
 
 const FAQ = (props) => {
-  const [btcFee, setBtcFee] = useState(null)
-  const [ethFee, setEthFee] = useState(null)
-  const [bnbFee, setBnbFee] = useState(null)
+  const [btcFee, setBtcFee] = useState(0)
+  const [ethFee, setEthFee] = useState(0)
+  const [bnbFee, setBnbFee] = useState(0)
 
   useEffect(() => {
     let _mounted = true
-    let btcSatoshiPrice = null
-    let ethGasPrice = null
-    let bnbGasPrice = null
+    let btcSatoshiPrice = 0
+    let ethGasPrice = 0
+    let bnbGasPrice = 0
 
     async function fetchFees() {
       try {
@@ -42,15 +42,12 @@ const FAQ = (props) => {
         // remove memory leak
         if (_mounted) {
           // divided by 1 kb to convert it to satoshi / byte
-          //@ts-ignore: strictNullChecks
-          setBtcFee(Math.ceil(btcSatoshiPrice / BYTE_IN_KB))
+          setBtcFee( Math.ceil(btcSatoshiPrice / BYTE_IN_KB) )
 
           // return gas * 1e9 - divided by 1e9 to convert
           externalConfig.binance
-            //@ts-ignore: strictNullChecks
-            ? setBnbFee(new BigNumber(bnbGasPrice).dividedBy(1e9).toNumber())
-            //@ts-ignore: strictNullChecks
-            : setEthFee(new BigNumber(ethGasPrice).dividedBy(1e9).toNumber())
+            ? setBnbFee( new BigNumber(bnbGasPrice).dividedBy(1e9).toNumber() )
+            : setEthFee( new BigNumber(ethGasPrice).dividedBy(1e9).toNumber() )
         }
       } catch (error) {
         feedback.faq.failed(`FAQ. Fetch fees error(${error.message})`)
