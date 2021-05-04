@@ -17,3 +17,6 @@ The list of faucets that we recommend to use when developing
 
 ## [`WEENUS`](https://github.com/bokkypoobah/WeenusTokenFaucet) (Ropsten testnet) - test ERC20 token
 - send 0 ETH to contract `0x101848D5C5bBca18E6b4431eEdF6B95E9ADF82FA` - it will send back 1000 WEENUS
+
+## `BNB` + pegged tokens (Binance Smart Chain testnet)
+- https://testnet.binance.org/faucet-smart (6.25 BNB per 2 hours)
