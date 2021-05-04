@@ -379,6 +379,7 @@ class RegisterPINProtected extends React.Component<any, any> {
   handleShareInstruction = async () => {
     const { restoreInstruction } = this.state
 
+    //@ts-ignore: strictNullChecks
     actions.modals.open(constants.modals.Share, {
       title: `BTC Sms-protected wallet restory instruction`,
       link: restoreInstruction,
@@ -386,6 +387,7 @@ class RegisterPINProtected extends React.Component<any, any> {
   }
 
   handleBeginSaveMnemonic = async () => {
+    //@ts-ignore: strictNullChecks
     actions.modals.open(constants.modals.SaveMnemonicModal, {
       onClose: () => {
         const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
@@ -564,6 +566,7 @@ class RegisterPINProtected extends React.Component<any, any> {
     const linked = Link.all(this, 'pinCode', 'pinCodeConfirm', 'mnemonic')
 
     return (
+      //@ts-ignore: strictNullChecks
       <Modal name={name} title={`${intl.formatMessage(langs.registerPinModal)}`}>
         <div styleName="registerPINModalHolder">
           {step === 'saveMnemonicWords' && (

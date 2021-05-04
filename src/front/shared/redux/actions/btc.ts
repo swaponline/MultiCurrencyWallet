@@ -125,6 +125,7 @@ const login = (privateKey, mnemonic = null, mnemonicKeys = null) => {
   if (privateKey
     && mnemonic
     && mnemonicKeys
+    //@ts-ignore: strictNullChecks
     && mnemonicKeys.btc === privateKey
   ) sweepToMnemonicReady = true
 
@@ -141,8 +142,10 @@ const login = (privateKey, mnemonic = null, mnemonicKeys = null) => {
     // keyPair     = bitcoin.ECPair.makeRandom({ network: btc.network })
     // privateKey  = keyPair.toWIF()
     // use random 12 words
+    //@ts-ignore: strictNullChecks
     if (!mnemonic) mnemonic = bip39.generateMnemonic()
 
+    //@ts-ignore: strictNullChecks
     const accData = getWalletByWords(mnemonic)
     console.log('Btc. Generated wallet from random 12 words')
     console.log(accData)
@@ -171,6 +174,7 @@ const login = (privateKey, mnemonic = null, mnemonicKeys = null) => {
     }
 
     if (!mnemonicKeys
+      //@ts-ignore: strictNullChecks
       || !mnemonicKeys.btc
     ) {
       console.error('Sweep. Cant auth. Login key undefined')
@@ -178,6 +182,7 @@ const login = (privateKey, mnemonic = null, mnemonicKeys = null) => {
     }
 
     const mnemonicData = {
+      //@ts-ignore: strictNullChecks
       ...auth(mnemonicKeys.btc),
       isMnemonic: true,
     }
@@ -349,21 +354,27 @@ const getAllMyAddresses = () => {
     && btcData.address
     && btcMnemonicData.address !== btcData.address
   ) {
+    //@ts-ignore: strictNullChecks
     retData.push(btcMnemonicData.address.toLowerCase())
   }
 
+  //@ts-ignore: strictNullChecks
   retData.push(btcData.address.toLowerCase())
 
+  //@ts-ignore: strictNullChecks
   if (btcMultisigSMSData && btcMultisigSMSData.address) retData.push(btcMultisigSMSData.address.toLowerCase())
   // @ToDo - SMS MultiWallet
 
+  //@ts-ignore: strictNullChecks
   if (btcMultisigUserData && btcMultisigUserData.address) retData.push(btcMultisigUserData.address.toLowerCase())
   if (btcMultisigUserData && btcMultisigUserData.wallets && btcMultisigUserData.wallets.length) {
     btcMultisigUserData.wallets.map((wallet) => {
+      //@ts-ignore: strictNullChecks
       retData.push(wallet.address.toLowerCase())
     })
   }
 
+  //@ts-ignore: strictNullChecks
   if (btcMultisigPinData && btcMultisigPinData.address) retData.push(btcMultisigPinData.address.toLowerCase())
 
   return retData
@@ -531,6 +542,7 @@ const broadcastTx = (txRaw) => bitcoinUtils.broadcastTx({
 
 const signMessage = (message, encodedPrivateKey) => {
   const keyPair = bitcoin.ECPair.fromWIF(encodedPrivateKey, [bitcoin.networks.bitcoin, bitcoin.networks.testnet])
+  //@ts-ignore: strictNullChecks
   const privateKeyBuff = Buffer.from(keyPair.privateKey)
 
   const signature = bitcoinMessage.sign(message, privateKeyBuff, keyPair.compressed)

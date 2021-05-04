@@ -106,6 +106,7 @@ const _ = (async () => {
       swapID = key
 
       if (swapHistory.includes(swapID)) {
+        //@ts-ignore: strictNullChecks
         refundResult = await refund(app, swapID)
 
         if (refundResult) {
@@ -122,9 +123,11 @@ const _ = (async () => {
     case KEY_HASH[0]:
       console.log('Key type is HASH', '\n')
 
+      //@ts-ignore: strictNullChecks
       swapID = await hash2id(app, key)
 
       if (swapID) {
+        //@ts-ignore: strictNullChecks
         refundResult = await refund(app, swapID)
 
         if (refundResult) {
@@ -139,9 +142,11 @@ const _ = (async () => {
     case KEY_SECRET[0]:
       console.log('Key type is SECRET', '\n')
 
+      //@ts-ignore: strictNullChecks
       swapID = await secret2id(app, key)
 
       if (swapID) {
+        //@ts-ignore: strictNullChecks
         refundResult = await refund(app, swapID)
 
         if (refundResult) {
@@ -159,6 +164,7 @@ const _ = (async () => {
       for (let a = 0; a < swapHistory.length; a++) {
         swapID = swapHistory[a]
 
+        //@ts-ignore: strictNullChecks
         refundResult = await refund(app, swapID)
 
         if (refundResult) {

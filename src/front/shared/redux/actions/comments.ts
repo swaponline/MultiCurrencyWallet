@@ -13,6 +13,7 @@ const setComment = ({ comment, key }) => {
   ))
 }
 
+//@ts-ignore: strictNullChecks
 const getComments = () => JSON.parse(localStorage.getItem('historyComments')) || {}
 
 const returnDefaultComment = (hiddenList, ind) => {

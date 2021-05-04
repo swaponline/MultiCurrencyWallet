@@ -197,6 +197,7 @@ class WithdrawBtcMultisig extends React.Component<any, any> {
       </Fragment>
     )
     return (portalUI) ? formRender : (
+      //@ts-ignore: strictNullChecks
       <Modal name={name} title={`${intl.formatMessage(labels.withdrowModal)}${' '}${currency.toUpperCase()}`}>
         {formRender}
       </Modal>

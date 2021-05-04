@@ -50,6 +50,7 @@ class HowToWithdrawModal extends React.Component<any, any> {
     } = this
 
     return (
+      //@ts-ignore: strictNullChecks
       <Modal name={name} title={intl.formatMessage(langLabels.title)}>
         <div dangerouslySetInnerHTML={{ __html: howToWithdraw }} />
       </Modal>

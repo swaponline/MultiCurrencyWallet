@@ -94,6 +94,7 @@ export default class StepsWrapper extends Component<any, any> {
 
     let items = currencies
       .filter(({ addAssets, name }) => addAssets)
+      //@ts-ignore: strictNullChecks
       .filter(({ name }) => enabledCurrencies.includes(name))
     if (config.binance) {
       items = items.filter(({ name }) => name !== `ETH`)

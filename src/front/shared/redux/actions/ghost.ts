@@ -127,6 +127,7 @@ const login = (privateKey, mnemonic = null, mnemonicKeys = null) => {
   if (privateKey
     && mnemonic
     && mnemonicKeys
+    //@ts-ignore: strictNullChecks
     && mnemonicKeys.ghost === privateKey
   ) sweepToMnemonicReady = true
 
@@ -143,8 +144,10 @@ const login = (privateKey, mnemonic = null, mnemonicKeys = null) => {
     // keyPair     = bitcoin.ECPair.makeRandom({ network: ghost.network })
     // privateKey  = keyPair.toWIF()
     // use random 12 words
+    //@ts-ignore: strictNullChecks
     if (!mnemonic) mnemonic = bip39.generateMnemonic()
 
+    //@ts-ignore: strictNullChecks
     const accData = getWalletByWords(mnemonic)
     console.log('Ghost. Generated wallet from random 12 words')
     console.log(accData)
@@ -174,6 +177,7 @@ const login = (privateKey, mnemonic = null, mnemonicKeys = null) => {
     }
 
     if (!mnemonicKeys
+      //@ts-ignore: strictNullChecks
       || !mnemonicKeys.ghost
     ) {
       console.error('Sweep. Cant auth. Login key undefined')
@@ -181,6 +185,7 @@ const login = (privateKey, mnemonic = null, mnemonicKeys = null) => {
     }
 
     const mnemonicData = {
+      //@ts-ignore: strictNullChecks
       ...auth(mnemonicKeys.ghost),
       isMnemonic: true,
     }
@@ -332,6 +337,7 @@ const fetchTxInfo = (hash, cacheResponse?) =>
         const adminOutput = vout.filter((out) => (
           out.scriptPubKey.addresses
           && out.scriptPubKey.addresses[0] === hasAdminFee.address
+          //@ts-ignore: strictNullChecks
           && !(new BigNumber(out.value).eq(amount))
         ))
 
@@ -400,21 +406,27 @@ const getAllMyAddresses = () => {
     && ghostData.address
     && ghostMnemonicData.address !== ghostData.address
   ) {
+    //@ts-ignore: strictNullChecks
     retData.push(ghostMnemonicData.address.toLowerCase())
   }
 
+  //@ts-ignore: strictNullChecks
   retData.push(ghostData.address.toLowerCase())
 
+  //@ts-ignore: strictNullChecks
   if (ghostMultisigSMSData && ghostMultisigSMSData.address) retData.push(ghostMultisigSMSData.address.toLowerCase())
   // @ToDo - SMS MultiWallet
 
+  //@ts-ignore: strictNullChecks
   if (ghostMultisigUserData && ghostMultisigUserData.address) retData.push(ghostMultisigUserData.address.toLowerCase())
   if (ghostMultisigUserData && ghostMultisigUserData.wallets && ghostMultisigUserData.wallets.length) {
     ghostMultisigUserData.wallets.map((wallet) => {
+      //@ts-ignore: strictNullChecks
       retData.push(wallet.address.toLowerCase())
     })
   }
 
+  //@ts-ignore: strictNullChecks
   if (ghostMultisigPinData && ghostMultisigPinData.address) retData.push(ghostMultisigPinData.address.toLowerCase())
 
   return retData
@@ -484,6 +496,7 @@ const getTransaction = (address: string = ``, ownType: string = ``) =>
         return ({
           type,
           hash: item.txid,
+          //@ts-ignore: strictNullChecks
           canEdit: (myAllWallets.indexOf(address) !== -1),
           confirmations: item.confirmations,
           value: isSelf
@@ -548,6 +561,7 @@ const broadcastTx = (txRaw) => {
 
 const signMessage = (message, encodedPrivateKey) => {
   const keyPair = bitcoin.ECPair.fromWIF(encodedPrivateKey, [ghost.networks.mainnet, ghost.networks.testnet])
+  //@ts-ignore: strictNullChecks
   const privateKeyBuff = Buffer.from(keyPair.privateKey)
 
   const signature = bitcoinMessage.sign(message, privateKeyBuff, keyPair.compressed)

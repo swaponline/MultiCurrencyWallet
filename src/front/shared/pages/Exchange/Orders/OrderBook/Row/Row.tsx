@@ -137,10 +137,12 @@ class Row extends Component<RowProps, RowState> {
   }
 
   handleDeclineOrdersModalOpen = (indexOfDecline) => {
+    //@ts-ignore: strictNullChecks
     const orders = SwapApp.shared().services.orders.items
     const declineSwap = actions.core.getSwapById(this.props.decline[indexOfDecline])
 
     if (declineSwap !== undefined) {
+      //@ts-ignore: strictNullChecks
       actions.modals.open(constants.modals.DeclineOrdersModal, {
         declineSwap,
       })
@@ -171,6 +173,7 @@ class Row extends Component<RowProps, RowState> {
     feedback.offers.buyPressed(`${this.renderCoinName(sellCurrency)}->${this.renderCoinName(buyCurrency)}`)
 
     const pair = Pair.fromOrder(row)
+    //@ts-ignore: strictNullChecks
     const { price, amount, total, main, base, type } = pair
 
     if (!checkSwapAllow({
@@ -193,6 +196,7 @@ class Row extends Component<RowProps, RowState> {
       },
     })
 
+    //@ts-ignore: strictNullChecks
     actions.modals.open(constants.modals.ConfirmBeginSwap, {
       order: row,
       onAccept: async (customWallet) => {
@@ -222,6 +226,7 @@ class Row extends Component<RowProps, RowState> {
                 `${links.atomicSwap}/${id}`
               
               console.log(`Redirect to swap: ${swapUri}`)
+              //@ts-ignore: strictNullChecks
               history.push(localisedUrl(intl.locale, swapUri))
             })
           } else {
@@ -236,7 +241,9 @@ class Row extends Component<RowProps, RowState> {
           defaultMessage="Do you want to {action} {amount} {main} for {total} {base} at price {price} {main}/{base}?"
           values={{
             action: `${type === PAIR_TYPES.BID
+              //@ts-ignore: strictNullChecks
               ? intl.formatMessage(messages.sell)
+              //@ts-ignore: strictNullChecks
               : intl.formatMessage(messages.buy)
             }`,
             amount: `${this.getDecimals(amount, main)}`,
@@ -284,6 +291,7 @@ class Row extends Component<RowProps, RowState> {
     } = this.props
 
     const pair = Pair.fromOrder(this.props.row)
+    //@ts-ignore: strictNullChecks
     const { price, amount, total, main, base, type } = pair
 
     const isSwapButtonEnabled = checkSwapAllow({

@@ -96,6 +96,7 @@ class NEXT2BTC extends Flow {
     super._persistState()
   }
 
+  //@ts-ignore: strictNullChecks
   _getSteps() {
     const flow = this
 
@@ -149,6 +150,7 @@ class NEXT2BTC extends Flow {
 
         const scriptCheckResult = await flow.btcSwap.checkScript(flow.state.btcScriptValues, {
           value: buyAmount,
+          //@ts-ignore: strictNullChecks
           recipientPublicKey: this.app.services.auth.accounts.btc.getPublicKey(),
           lockTime: getLockTime(),
         })
@@ -161,6 +163,7 @@ class NEXT2BTC extends Flow {
 
         const scriptValues = {
           secretHash:         flow.state.secretHash,
+          //@ts-ignore: strictNullChecks
           ownerPublicKey:     this.app.services.auth.accounts.next.getPublicKey(),
           recipientPublicKey: participant.next.publicKey,
           lockTime:           getLockTime(),
@@ -281,6 +284,7 @@ class NEXT2BTC extends Flow {
     const { participant } = this.swap
 
     const swapData = {
+      //@ts-ignore: strictNullChecks
       ownerAddress:       this.app.services.auth.accounts.next.address,
       participantAddress: participant.next.address
     }
@@ -345,6 +349,7 @@ class NEXT2BTC extends Flow {
       isBalanceFetching: true,
     })
 
+    //@ts-ignore: strictNullChecks
     const balance = await this.nextSwap.fetchBalance(this.app.services.auth.accounts.next.getAddress())
 
     const isEnoughMoney = sellAmount.isLessThanOrEqualTo(balance)

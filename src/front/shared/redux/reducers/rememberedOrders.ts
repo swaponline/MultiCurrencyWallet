@@ -1,5 +1,7 @@
 const initialState = {
+  //@ts-ignore: strictNullChecks
   savedOrders: JSON.parse(localStorage.getItem('savedOrders')) || [],
+  //@ts-ignore: strictNullChecks
   deletedOrders: JSON.parse(localStorage.getItem('deletedOrders')) || [],
 }
 

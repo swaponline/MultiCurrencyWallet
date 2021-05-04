@@ -12,6 +12,7 @@ type NavProps = {
   intl: any
 }
 
+//@ts-ignore: strictNullChecks
 @withRouter
 @CSSModules(styles, { allowMultiple: true })
 class Nav extends Component<NavProps, null> {
@@ -64,4 +65,5 @@ class Nav extends Component<NavProps, null> {
   }
 }
 
+//@ts-ignore: strictNullChecks
 export default injectIntl(Nav)

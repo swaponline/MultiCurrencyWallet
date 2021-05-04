@@ -48,19 +48,27 @@ export default class SaveKeys extends Component<SaveKeysProps, null> {
         <div styleName="row" >
           <div styleName="cell" >
             <Field
+              //@ts-ignore: strictNullChecks
               label={ethData.currency}
+              //@ts-ignore: strictNullChecks
               privateKey={ethData.privateKey}
             />
             <Field
+              //@ts-ignore: strictNullChecks
               label={btcData.currency}
+              //@ts-ignore: strictNullChecks
               privateKey={btcData.privateKey}
             />
             <Field
+              //@ts-ignore: strictNullChecks
               label={ghostData.currency}
+              //@ts-ignore: strictNullChecks
               privateKey={ghostData.privateKey}
             />
             <Field
+              //@ts-ignore: strictNullChecks
               label={nextData.currency}
+              //@ts-ignore: strictNullChecks
               privateKey={nextData.privateKey}
             />
           </div>
@@ -68,6 +76,7 @@ export default class SaveKeys extends Component<SaveKeysProps, null> {
           <Button brand onClick={onDownload} id="SaveKeysDownload">
             <FormattedMessage id="SaveKe33" defaultMessage="Download" />
           </Button>
+          {/* @ts-ignore: strictNullChecks */}
           <Tooltip id="SaveKeysDownload" mark={false} place="bottom">
             <FormattedMessage id="SaveKe37" defaultMessage="Download text document with keys and accounts" />
           </Tooltip>

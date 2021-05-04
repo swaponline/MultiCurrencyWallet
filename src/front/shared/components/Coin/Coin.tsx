@@ -80,6 +80,7 @@ const Coin = (props: CoinProps) => {
   }
 
   return (
+    //@ts-ignore: strictNullChecks
     <div styleName={`coin ${isDark ? 'dark' : ''}`} className={className} style={style}>
       <CurrencyIcon {...currencyIconProps} />
     </div>

@@ -230,6 +230,7 @@ class Row extends Component<RowProps, RowState> {
       itemData
     } = this.props
 
+    //@ts-ignore: strictNullChecks
     actions.modals.open(constants.modals.Withdraw, itemData)
   }
 
@@ -237,6 +238,7 @@ class Row extends Component<RowProps, RowState> {
     const {
       itemData: { currency, address },
       history,
+      //@ts-ignore: strictNullChecks
       intl: { locale },
     } = this.props
 
@@ -261,6 +263,7 @@ class Row extends Component<RowProps, RowState> {
 
     const isToken = helpers.ethToken.isEthToken({ name: currency })
 
+    //@ts-ignore: strictNullChecks
     history.push(
       localisedUrl(
         locale,
@@ -274,6 +277,7 @@ class Row extends Component<RowProps, RowState> {
       itemData: { currency, address },
     } = this.props
 
+    //@ts-ignore: strictNullChecks
     actions.modals.open(constants.modals.ReceiveModal, {
       currency,
       address,
@@ -281,14 +285,17 @@ class Row extends Component<RowProps, RowState> {
   }
 
   handleActivateProtected = async () => {
+    //@ts-ignore: strictNullChecks
     actions.modals.open(constants.modals.RegisterSMSProtected, {})
   }
 
   handleActivatePinProtected = async () => {
+    //@ts-ignore: strictNullChecks
     actions.modals.open(constants.modals.RegisterPINProtected, {})
   }
 
   handleGenerateMultisignLink = async () => {
+    //@ts-ignore: strictNullChecks
     actions.modals.open(constants.modals.MultisignJoinLink, {})
   }
 
@@ -297,6 +304,7 @@ class Row extends Component<RowProps, RowState> {
       itemData: { currency, address },
     } = this.props
 
+    //@ts-ignore: strictNullChecks
     actions.modals.open(constants.modals.HowToWithdrawModal, {
       currency,
       address,
@@ -314,6 +322,7 @@ class Row extends Component<RowProps, RowState> {
       itemData: { currency, address },
     } = this.props
 
+    //@ts-ignore: strictNullChecks
     actions.modals.open(constants.modals.InvoiceLinkModal, {
       currency,
       address,
@@ -337,6 +346,7 @@ class Row extends Component<RowProps, RowState> {
       },
     } = this.props
 
+    //@ts-ignore: strictNullChecks
     actions.modals.open(constants.modals.InvoiceModal, {
       currency,
       address,
@@ -351,14 +361,17 @@ class Row extends Component<RowProps, RowState> {
   goToExchange = () => {
     const {
       history,
+      //@ts-ignore: strictNullChecks
       intl: { locale },
     } = this.props
+    //@ts-ignore: strictNullChecks
     history.push(localisedUrl(locale, '/exchange'))
   }
 
   goToCurrencyHistory = () => {
     const {
       history,
+      //@ts-ignore: strictNullChecks
       intl: { locale },
       itemData: { currency, balance, address },
     } = this.props
@@ -374,6 +387,7 @@ class Row extends Component<RowProps, RowState> {
 
     const isToken = helpers.ethToken.isEthToken({ name: currency })
 
+    //@ts-ignore: strictNullChecks
     history.push(
       localisedUrl(
         locale,
@@ -388,6 +402,7 @@ class Row extends Component<RowProps, RowState> {
     } = this.props
 
     if (balance > 0) {
+      //@ts-ignore: strictNullChecks
       actions.modals.open(constants.modals.AlertModal, {
         message: (
           <FormattedMessage
@@ -414,6 +429,7 @@ class Row extends Component<RowProps, RowState> {
       itemData: { address, fullName },
     } = this.props
 
+    //@ts-ignore: strictNullChecks
     actions.modals.open(constants.modals.WalletAddressModal, {
       address,
       fullName,
@@ -426,7 +442,9 @@ class Row extends Component<RowProps, RowState> {
       ethDataHelper,
     } = this.props
 
+    //@ts-ignore: strictNullChecks
     actions.modals.open(constants.modals.PrivateKeysModal, {
+      //@ts-ignore: strictNullChecks
       key: address === ethDataHelper.address ? ethDataHelper.privateKey : privateKey,
       fullName,
     })
@@ -502,6 +520,7 @@ class Row extends Component<RowProps, RowState> {
       id: number
     }
 
+    //@ts-ignore: strictNullChecks
     let dropDownMenuItems: DropDownItem[] = [
       {
         id: 1001,
@@ -880,6 +899,7 @@ class Row extends Component<RowProps, RowState> {
                                 <br />
                                 <span
                                   styleName="unconfirmedBalance"
+                                  //@ts-ignore: strictNullChecks
                                   title={intl.formatMessage(
                                     langLabels.unconfirmedBalance
                                   )}
@@ -944,6 +964,8 @@ class Row extends Component<RowProps, RowState> {
               <div styleName="assetsTableValue">
                 {msConfirmCount && !isMobile && (
                   <p styleName="txWaitConfirm" onClick={this.goToCurrencyHistory}>
+                    {/* 
+                    //@ts-ignore: strictNullChecks */}
                     {intl.formatMessage(
                       langLabels.msConfirmCount,
                       {

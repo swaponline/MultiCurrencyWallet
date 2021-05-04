@@ -13,6 +13,7 @@
     "noEmit": true,
     "sourceMap": true,
     "noImplicitAny": false,
+    "strictNullChecks": true,
     "experimentalDecorators": true,
     "jsx": "react",
     "lib": [

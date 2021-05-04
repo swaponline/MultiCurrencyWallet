@@ -5,21 +5,29 @@ import { Flow } from 'swap.swap'
 
 
 class UTXOBlockchain extends SwapInterface {
-
+  //@ts-ignore: strictNullChecks
   _swapName: string = null
+  //@ts-ignore: strictNullChecks
   fetchBalance: Function = undefined
+  //@ts-ignore: strictNullChecks
   fetchUnspents: Function = undefined
+  //@ts-ignore: strictNullChecks
   broadcastTx: Function = undefined
+  //@ts-ignore: strictNullChecks
   checkWithdraw: Function = undefined
   feeValue: number = 546
+  //@ts-ignore: strictNullChecks
   fetchTxInfo: Function = undefined
+  //@ts-ignore: strictNullChecks
   estimateFeeValue: Function = undefined
 
   // Парсит транзакцию, извлекает скрипт для получения секрета
   // Нужна, если taker создает AB контракт первый, чтобы maker мог получить
   // секрет из транзакции к UTXO скрипту
+  //@ts-ignore: strictNullChecks
   fetchTxInputScript: Function = undefined
 
+  //@ts-ignore: strictNullChecks
   account: string = undefined
   networks: any = undefined
   network: any = undefined
@@ -29,9 +37,11 @@ class UTXOBlockchain extends SwapInterface {
   skipLockTime: boolean = false
   skipRecipientPublickKey: boolean = false
 
+  //@ts-ignore: strictNullChecks
   processUnspent: Function = undefined
   sendTransaction: Function
 
+  //@ts-ignore: strictNullChecks
   app: SwapApp = undefined
   /**
    *
@@ -273,6 +283,7 @@ class UTXOBlockchain extends SwapInterface {
 
     const hashType      = this.app.env.bitcoin.Transaction.SIGHASH_ALL
     const privKey = this.app.env.bitcoin.ECPair.fromWIF(
+      //@ts-ignore: strictNullChecks
       this.app.services.auth.accounts[this.account].getPrivateKey(),
       this.network
     )
@@ -286,6 +297,7 @@ class UTXOBlockchain extends SwapInterface {
         output: scriptData.redeem.output, 
         input: this.app.env.bitcoin.script.compile([ 
           this.app.env.bitcoin.script.signature.encode(privKey.sign(signatureHash), hashType),
+          //@ts-ignore: strictNullChecks
           this.app.services.auth.accounts[this.account].getPublicKeyBuffer(),
           Buffer.from(secret.replace(/^0x/, ''), 'hex'),
         ]) 
@@ -474,6 +486,7 @@ class UTXOBlockchain extends SwapInterface {
           return
         }
 
+        //@ts-ignore: strictNullChecks
         const ownerAddress = this.app.services.auth.accounts[this.account].getAddress()
 
         const fundValue     = amount.multipliedBy(1e8).integerValue().toNumber()
@@ -493,9 +506,11 @@ class UTXOBlockchain extends SwapInterface {
           tx.addInput(txid, vout, 0xffffffff)
         })
         tx.addOutput(scriptAddress, fundValue)
+        //@ts-ignore: strictNullChecks
         tx.addOutput(this.app.services.auth.accounts[this.account].getAddress(), skipValue)
 
         const privKey = this.app.env.bitcoin.ECPair.fromWIF(
+          //@ts-ignore: strictNullChecks
           this.app.services.auth.accounts[this.account].getPrivateKey(),
           this.network
         )
@@ -558,6 +573,7 @@ class UTXOBlockchain extends SwapInterface {
    */
   async getWithdrawRawTransaction(data: any, isRefund: boolean, hashName?: string) {
     const { scriptValues, secret, destinationAddress } = data
+    //@ts-ignore: strictNullChecks
     const destAddress = (destinationAddress) ? destinationAddress : this.app.services.auth.accounts[this.account].getAddress()
 
     const { script, scriptAddress } = this.createScript(scriptValues, hashName)

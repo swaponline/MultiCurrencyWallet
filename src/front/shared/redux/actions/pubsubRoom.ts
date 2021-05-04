@@ -42,6 +42,7 @@ const waitPeer = (peer, cbSuccess, cbFail, timeOut) => {
 
     const waitFunc = () => {
       if (isWaiting) {
+        //@ts-ignore: strictNullChecks
         if (SwapApp.shared().services.room.connection.hasPeer(peer)) {
           clearTimeout(failtTimer)
           if (cbSuccess) cbSuccess()

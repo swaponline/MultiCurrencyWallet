@@ -24,6 +24,7 @@ const aggregation = (baseClass, ...mixins) => {
           return
         }
 
+        //@ts-ignore: strictNullChecks
         Object.defineProperty(target, prop, Object.getOwnPropertyDescriptor(source, prop))
       })
   }

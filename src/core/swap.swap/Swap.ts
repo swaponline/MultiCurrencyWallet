@@ -32,14 +32,21 @@ class Swap {
 
   constructor(id, app, order?) {
     SwapApp.required(app)
+    //@ts-ignore: strictNullChecks
     this.id                     = null
+    //@ts-ignore: strictNullChecks
     this.isMy                   = null
+    //@ts-ignore: strictNullChecks
     this.isTurbo                = null
     this.owner                  = null
     this.participant            = null
+    //@ts-ignore: strictNullChecks
     this.buyCurrency            = null
+    //@ts-ignore: strictNullChecks
     this.sellCurrency           = null
+    //@ts-ignore: strictNullChecks
     this.buyAmount              = null
+    //@ts-ignore: strictNullChecks
     this.sellAmount             = null
     this.ownerSwap              = null
     this.participantSwap        = null
@@ -56,6 +63,7 @@ class Swap {
     let data = this.app.env.storage.getItem(`swap.${id}`)
 
     if (!data) {
+      //@ts-ignore: strictNullChecks
       order = order || this.app.services.orders.getByKey(id)
 
       data = this._getDataFromOrder(order)

@@ -198,6 +198,7 @@ class AddCustomERC20 extends React.Component<CustomTokenProps, CustomTokenState>
     })
 
     return (
+      //@ts-ignore: strictNullChecks
       <Modal
         name={name}
         title={`${intl.formatMessage(localeLabel.title)}`}

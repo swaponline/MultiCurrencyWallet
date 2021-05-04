@@ -83,6 +83,7 @@ class WallerSlider extends React.Component {
   processItezBanner = (inBanners) => {
     const {
       user,
+      //@ts-ignore: strictNullChecks
       intl: { locale: intlLocale },
     } = this.props
 
@@ -162,6 +163,7 @@ class WallerSlider extends React.Component {
   }
 
   handleShowMnemonic = () => {
+    //@ts-ignore: strictNullChecks
     actions.modals.open(constants.modals.SaveMnemonicModal, {
       onClose: () => {
         const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)

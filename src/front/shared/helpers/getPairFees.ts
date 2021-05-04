@@ -69,6 +69,7 @@ const fetchCoinFee = (params): Promise<CoinFee> => {
     if (coinData) {
       switch (coinData.type) {
         case COIN_TYPE.NATIVE:
+          //@ts-ignore: strictNullChecks
           obtainedResult = await fetchFeeForNativeCoin({
             coinData,
             swapUTXOMethod: isBuyingUTXO ? 'withdraw' : 'deposit',
@@ -77,6 +78,7 @@ const fetchCoinFee = (params): Promise<CoinFee> => {
           doResolve(obtainedResult)
           break
         case COIN_TYPE.ETH_TOKEN:
+          //@ts-ignore: strictNullChecks
           obtainedResult = await fetchFeeForEthToken({
             coinData,
             swapABMethod: isBuyingAB ? 'withdraw' : 'deposit',

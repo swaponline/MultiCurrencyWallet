@@ -7,6 +7,7 @@ import * as cryptoLib from 'crypto'
 
 class AtomicAB2UTXO extends Flow {
 
+  //@ts-ignore: strictNullChecks
   utxoCoin: string = null
   isUTXOSide: boolean = false
 
@@ -17,6 +18,7 @@ class AtomicAB2UTXO extends Flow {
   constructor(swap) {
     super(swap)
 
+    //@ts-ignore: strictNullChecks
     this.state = {
       ...this.state,
       ...{
@@ -251,6 +253,7 @@ class AtomicAB2UTXO extends Flow {
 
       const scriptCheckError = await this[`${this.utxoCoin}Swap`].checkScript(utxoScriptValues, {
         value: buyAmount,
+        //@ts-ignore: strictNullChecks
         recipientPublicKey: this.app.services.auth.accounts[this.utxoCoin].getPublicKey(),
         lockTime: utcNow(),
         confidence: 0.8,
@@ -465,6 +468,7 @@ class AtomicAB2UTXO extends Flow {
         const { scriptAddress } = this.utxoBlockchain.createScript(utxoScriptValues)
 
         const destinationAddress = this.swap.destinationBuyAddress
+        //@ts-ignore: strictNullChecks
         const destAddress = (destinationAddress) ? destinationAddress : this.app.services.auth.accounts.btc.getAddress()
 
         const hasWithdraw = await this.utxoBlockchain.checkWithdraw(scriptAddress)
@@ -527,7 +531,9 @@ class AtomicAB2UTXO extends Flow {
 
     const scriptValues = {
       secretHash:         secretHash,
+      //@ts-ignore: strictNullChecks
       ownerPublicKey:     (isOwner) ? this.app.services.auth.accounts[this.utxoCoin].getPublicKey() : participant[this.utxoCoin].publicKey,
+      //@ts-ignore: strictNullChecks
       recipientPublicKey: (isOwner) ? participant[this.utxoCoin].publicKey : this.app.services.auth.accounts[this.utxoCoin].getPublicKey(),
       lockTime:           getLockTime(),
     }
@@ -581,6 +587,7 @@ class AtomicAB2UTXO extends Flow {
       isBalanceFetching: true,
     })
 
+    //@ts-ignore: strictNullChecks
     const utxoAddress = this.app.services.auth.accounts[this.utxoCoin].getAddress()
 
     const txFee = await this.utxoBlockchain.estimateFeeValue({ method: 'swap', fixed: true, address: utxoAddress })

@@ -121,6 +121,7 @@ class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
       selectedType: selectedType || 'Internal',
       walletAddressFocused: false,
       isMetamaskConnected: metamask.isConnected(),
+      //@ts-ignore: strictNullChecks
       metamaskAddress: metamask.getAddress(),
       isScanActive: false,
     }
@@ -174,6 +175,7 @@ class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
   onWeb3Updated = () => {
     this.setState({
       isMetamaskConnected: metamask.isConnected(),
+      //@ts-ignore: strictNullChecks
       metamaskAddress: metamask.getAddress(),
     })
   }
@@ -198,6 +200,7 @@ class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
       this.setState({
         currency: newCurrency,
         hasError,
+        //@ts-ignore: strictNullChecks
         selectedType,
       })
     }
@@ -240,6 +243,7 @@ class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
         this.setState(
           {
             isMetamaskConnected: true,
+            //@ts-ignore: strictNullChecks
             metamaskAddress: metamask.getAddress(),
           },
           () => {

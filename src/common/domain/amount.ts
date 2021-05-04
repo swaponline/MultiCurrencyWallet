@@ -52,6 +52,7 @@ const amount = (value: number, unit: Unit | Coin): Amount => {
   // use overload
   return {
     value: new BigNumber(value), // BigNumber overload
+    //@ts-ignore: strictNullChecks
     unit: null// ...
   }
 }

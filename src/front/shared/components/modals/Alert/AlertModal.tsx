@@ -139,4 +139,5 @@ class AlertModal extends React.Component<AlertModalProps, null> {
   }
 }
 
+//@ts-ignore: strictNullChecks
 export default injectIntl(AlertModal)

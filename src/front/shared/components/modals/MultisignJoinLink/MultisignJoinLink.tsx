@@ -99,6 +99,7 @@ class MultisignJoinLink extends React.Component<any, any> {
 
     const linkAction = (action) ? action : `join`
 
+    //@ts-ignore: strictNullChecks
     const joinLink = `${getFullOrigin()}${links.multisign}/btc/${linkAction}/${publicKey}/${SwapApp.shared().services.room.peer}`
 
     this.setState({
@@ -107,6 +108,7 @@ class MultisignJoinLink extends React.Component<any, any> {
   }
 
   handleBeginSaveMnemonic = async () => {
+    //@ts-ignore: strictNullChecks
     actions.modals.open(constants.modals.SaveMnemonicModal, {
       onClose: () => {
         const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
@@ -165,6 +167,7 @@ class MultisignJoinLink extends React.Component<any, any> {
     } = this.props
 
     return (
+      //@ts-ignore: strictNullChecks
       <Modal name={name} title={`${intl.formatMessage(langLabels.multiSignJoinLink)}`} onClose={this.handleClose} showCloseButton={showCloseButton}>
         {step === 'savemnemonic' && (
           <Fragment>

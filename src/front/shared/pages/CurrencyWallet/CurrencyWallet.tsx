@@ -289,6 +289,7 @@ class CurrencyWallet extends Component<any, any> {
       // if (itemCurrency.isSmsProtected) modalType = WithdrawMultisigSMS
       // if (itemCurrency.isUserProtected) modalType = WithdrawMultisigUser
 
+      //@ts-ignore: strictNullChecks
       actions.modals.open(modalType, {
         currency,
         address,
@@ -302,6 +303,7 @@ class CurrencyWallet extends Component<any, any> {
       }
     }
     if (this.props.history.location.pathname.toLowerCase() === receiveUrl.toLowerCase()) {
+      //@ts-ignore: strictNullChecks
       actions.modals.open(constants.modals.ReceiveModal, {
         currency,
         address,
@@ -468,6 +470,7 @@ class CurrencyWallet extends Component<any, any> {
             const currentUrl = this.props.location.pathname.toLowerCase()
 
             if (currentUrl === withdrawUrl.toLowerCase()) {
+              //@ts-ignore: strictNullChecks
               actions.modals.open(modalWithdraw, {
                 currency,
                 address,
@@ -480,6 +483,7 @@ class CurrencyWallet extends Component<any, any> {
               })
             }
             if (currentUrl === receiveUrl.toLowerCase()) {
+              //@ts-ignore: strictNullChecks
               actions.modals.open(constants.modals.ReceiveModal, {
                 currency,
                 address,
@@ -502,6 +506,7 @@ class CurrencyWallet extends Component<any, any> {
 
   pullTransactions = (transactions) => {
     if (!this._mounted) return
+    //@ts-ignore: strictNullChecks
     let data = [].concat([], ...transactions).sort((a, b) => b.date - a.date)
     this.setState({
       txItems: data,
@@ -522,6 +527,7 @@ class CurrencyWallet extends Component<any, any> {
   handleReceive = () => {
     const { currency, address } = this.state
 
+    //@ts-ignore: strictNullChecks
     actions.modals.open(constants.modals.ReceiveModal, {
       currency,
       address,
@@ -531,6 +537,7 @@ class CurrencyWallet extends Component<any, any> {
   handleInvoice = () => {
     const { currency, address } = this.state
 
+    //@ts-ignore: strictNullChecks
     actions.modals.open(constants.modals.InvoiceModal, {
       currency: currency.toUpperCase(),
       toAddress: address,

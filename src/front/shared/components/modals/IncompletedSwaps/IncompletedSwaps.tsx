@@ -35,6 +35,7 @@ export default class IncompletedSwaps extends Component<any, any> {
     const { decline, swapHistory } = this.props
 
     return (
+      //@ts-ignore: strictNullChecks
       <Modal name="IncompletedSwaps" title={title} shouldCenterVertically={false}>
         <div styleName="modal">
           <div styleName="modal_column">

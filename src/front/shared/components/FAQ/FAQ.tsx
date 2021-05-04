@@ -42,11 +42,14 @@ const FAQ = (props) => {
         // remove memory leak
         if (_mounted) {
           // divided by 1 kb to convert it to satoshi / byte
+          //@ts-ignore: strictNullChecks
           setBtcFee(Math.ceil(btcSatoshiPrice / BYTE_IN_KB))
 
           // return gas * 1e9 - divided by 1e9 to convert
           externalConfig.binance
+            //@ts-ignore: strictNullChecks
             ? setBnbFee(new BigNumber(bnbGasPrice).dividedBy(1e9).toNumber())
+            //@ts-ignore: strictNullChecks
             : setEthFee(new BigNumber(ethGasPrice).dividedBy(1e9).toNumber())
         }
       } catch (error) {

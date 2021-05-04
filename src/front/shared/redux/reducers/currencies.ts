@@ -3,7 +3,7 @@ import config from 'app-config'
 
 const GetCustromERC20 = () => {
   const configStorage = (process.env.MAINNET) ? 'mainnet' : 'testnet'
-
+  //@ts-ignore: strictNullChecks
   let tokensInfo = JSON.parse(localStorage.getItem('customERC'))
   if (!tokensInfo || !tokensInfo[configStorage]) return {}
   return tokensInfo[configStorage]
@@ -317,10 +317,15 @@ if (config.isWidget) {
 
   initialState.addSelectedItems = [
     {
+      //@ts-ignore: strictNullChecks
       name: config.erc20token.toUpperCase(),
+      //@ts-ignore: strictNullChecks
       title: config.erc20token.toUpperCase(),
+      //@ts-ignore: strictNullChecks
       icon: config.erc20token,
+      //@ts-ignore: strictNullChecks
       value: config.erc20token,
+      //@ts-ignore: strictNullChecks
       fullTitle: config.erc20[config.erc20token].fullName,
     },
   ]
