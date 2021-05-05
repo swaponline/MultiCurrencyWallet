@@ -26,7 +26,6 @@ import swapsHelper from 'helpers/swaps'
 import SwapApp from 'swap.app'
 
 import helpers, {
-  redirectTo,
   localStorage,
   getPairFees,
   constants,
