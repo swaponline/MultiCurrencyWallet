@@ -1910,7 +1910,7 @@ class Exchange extends PureComponent<any, any> {
               </Button>
             )}
 
-            <>
+            {/* <>
               <Button
                 id="createOrderReactTooltipMessageForUser"
                 styleName={`button link-like ${haveBalance ? '' : 'noMany'}`}
@@ -1943,7 +1943,13 @@ class Exchange extends PureComponent<any, any> {
                   />
                 </ThemeTooltip>
               )}
-            </>
+            </> */}
+
+              <div styleName="link button-like">
+                <a href={!isWidgetBuild ? `#${links.marketmaker}/` : (config.binance) ? `#${links.marketmaker}/BTCB` : `#${links.marketmaker}/WBTC`}>
+                  <FormattedMessage id="AddLiquidity" defaultMessage="Add Liquidity" />
+                </a>
+              </div>
 
             {isIncompletedSwaps && (
               <Button blue styleName="buttonContinueSwap" onClick={this.showIncompleteSwap}>

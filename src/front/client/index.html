@@ -830,10 +830,10 @@
       ) {
         document.getElementById('starter-modal').classList.remove('d-none');
       }
-      if (isBinanceBuild) {
+
+      if (isBinanceBuild && window.location.hash === '#/') {
         redirectionTo('#/exchange/btc-to-btcb')
       }
-
 
       const btnCreateWallet = document.getElementById('preloaderCreateBtn');
       const btnConnectWallet = document.getElementById('preloaderConnectBtn');

@@ -35,7 +35,7 @@ jobs:
         path: | 
           ./zipped-chrome-extension-mainnet.zip
           ./zipped-chrome-extension-testnet.zip
-    - name: publish extention to crhome web store
+    - name: publish bsc extention to crhome web store
       uses: Passiverecords/chrome-extension-upload-action@1.4.1
       with:
         refresh-token:  ${{ secrets.CHROMEUPDATETOKEN }}
@@ -43,4 +43,13 @@ jobs:
         client-secret:  ${{ secrets.CLIENTSECRET }}
         file-name: 'zipped-chrome-extension-mainnet.zip'
         app-id: 'oldojieloelkkfeacfinhcngmbkepnlm'
+        publish: false
+    - name: publish ropsten extention to crhome web store
+      uses: Passiverecords/chrome-extension-upload-action@1.4.1
+      with:
+        refresh-token:  ${{ secrets.CHROMEUPDATETOKEN }}
+        client-id:  ${{ secrets.CLIENTID }}
+        client-secret:  ${{ secrets.CLIENTSECRET }}
+        file-name: 'zipped-chrome-extension-testnet.zip'
+        app-id: 'lihimbnmcnbecbnfbbkccoblfjaomiil'
         publish: false

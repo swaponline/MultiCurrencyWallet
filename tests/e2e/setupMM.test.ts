@@ -1,7 +1,7 @@
 import { setup, importWallet, turnOnMM, timeOut } from './utils'
 
-const SEED = ['vast', 'bronze', 'oyster', 'trade', 'love', 'once', 'fog', 'match', 'rail', 'lock', 'cake', 'science']
-const btcAddress = 'mosm1NmQZETUQvH68C9kbS8F3nuVKD7RDk'
+const SEED = ['neither', 'already', 'situate', 'silent', 'ripple', 'milk', 'paddle', 'glass', 'leopard', 'track', 'mansion', 'junk']
+const btcAddress = 'n2Y2rbg6wVEQnnpNxisiHK4wCDUAq59iv6'
 
 jest.setTimeout(50 * 1000)
 

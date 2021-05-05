@@ -124,6 +124,22 @@
   text-align: center;
 }
 
+.link {
+  margin-top: 0;
+  width: 50%;
+  border-radius: 3px;
+  height: 55px;
+  font-size: 16px;
+  line-height: 1em;
+}
+
+.link.button-like {
+  color: $color-link;
+  font-weight: 600;
+  text-decoration: underline;
+  padding: 1em 0;
+}
+
 .button {
   margin-top: 0;
   width: 50%;

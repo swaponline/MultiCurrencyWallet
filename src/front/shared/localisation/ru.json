@@ -4778,6 +4778,13 @@
     ]
   },
   {
+    "id": "AddLiquidity",
+    "message": "Добавить Ликвидность",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
     "id": "MainFAQ2_content3",
     "message": "Текущие комиссии майнеров:",
     "files": [
@@ -5997,7 +6004,7 @@
   },
   {
     "id": "MM_NotEnoughtEth",
-    "message": "Недостаточно ETH, чтобы заплатить комиссию майнерам. У вас должно быть не менее 0,02 ETH",
+    "message": "Недостаточно {AB_Coin}, чтобы заплатить комиссию майнерам. У вас должно быть не менее 0,02 {AB_Coin}",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
@@ -6109,16 +6116,30 @@
   },
   {
     "id": "MM_whatIsWBTCTooltip1",
-    "message": "Wrapped Bitcoin (WBTC) - это токен ERC-20, который представляет Биткойн (BTC) в блокчейне Ethereum.",
+    "message": "{tokenFullName} ({token}) - это токен {tokenStandart}, который представляет Биткойн (BTC) в блокчейне {blockchainName}.",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
   },
   {
     "id": "MM_whatIsWBTCTooltip2",
-    "message": "WBTC был создан, чтобы позволить держателям биткойнов участвовать в приложениях децентрализованных финансов («DeFi»), которые популярны на Ethereum.",
+    "message": "{token} был создан, чтобы позволить держателям биткойнов участвовать в приложениях децентрализованных финансов («DeFi»), которые популярны на {blockchainName}.",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_InstallExtentionTitle",
+    "message": "Установи Расширение Chrome и Начни Зарабатывать",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
+    ]
+  },
+  {
+    "id": "MM_InstallExtentionBtn",
+    "message": "Установить Расширение Chrome",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
     ]
   }
 ]

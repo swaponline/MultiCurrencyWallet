@@ -5,6 +5,7 @@ import { BigNumber } from 'bignumber.js'
 
 const isEnabled = (currency) => {
   currency = getCurrencyKey(currency, false).toLowerCase()
+
   if (config && config.opts && config.opts.fee) {
     if (
       currency === `token` &&
@@ -14,8 +15,11 @@ const isEnabled = (currency) => {
     ) {
       return config.opts.fee.erc20
     } else {
-      if (config.opts.fee[currency]) {
-        return config.opts.fee[currency]
+      // TODO: temporary check
+      const currencyKey = config.binance && currency === 'bnb' ? 'eth' : currency
+  
+      if (config.opts.fee[currencyKey]) {
+        return config.opts.fee[currencyKey]
       }
     }
   }
