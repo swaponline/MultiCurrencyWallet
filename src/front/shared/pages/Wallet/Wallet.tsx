@@ -320,10 +320,14 @@ class Wallet extends Component<any, any> {
     if (!hiddenCoinsList.includes('BTC (SMS-Protected)'))
       widgetCurrencies.push('BTC (SMS-Protected)')
       */
-    if (!hiddenCoinsList.includes('BTC (PIN-Protected)'))
+    if (!hiddenCoinsList.includes('BTC (PIN-Protected)')) {
       widgetCurrencies.push('BTC (PIN-Protected)')
-    if (!hiddenCoinsList.includes('BTC (Multisig)')) widgetCurrencies.push('BTC (Multisig)')
-    widgetCurrencies.push((config.binance) ? 'BNB' : 'ETH')
+    }
+    if (!hiddenCoinsList.includes('BTC (Multisig)')) {
+      widgetCurrencies.push('BTC (Multisig)')
+    }
+    widgetCurrencies.push('ETH')
+    widgetCurrencies.push('BNB')
     widgetCurrencies.push('GHOST')
     widgetCurrencies.push('NEXT')
     if (isWidgetBuild) {
@@ -506,10 +510,14 @@ class Wallet extends Component<any, any> {
     if (!hiddenCoinsList.includes('BTC (SMS-Protected)'))
       widgetCurrencies.push('BTC (SMS-Protected)')
       */
-    if (!hiddenCoinsList.includes('BTC (PIN-Protected)'))
+    if (!hiddenCoinsList.includes('BTC (PIN-Protected)')) {
       widgetCurrencies.push('BTC (PIN-Protected)')
-    if (!hiddenCoinsList.includes('BTC (Multisig)')) widgetCurrencies.push('BTC (Multisig)')
-    widgetCurrencies.push((config.binance) ? 'BNB' : 'ETH')
+    }
+    if (!hiddenCoinsList.includes('BTC (Multisig)')) {
+      widgetCurrencies.push('BTC (Multisig)')
+    }
+    widgetCurrencies.push('ETH')
+    widgetCurrencies.push('BNB')
     widgetCurrencies.push('GHOST')
     widgetCurrencies.push('NEXT')
     if (isWidgetBuild) {
@@ -539,7 +547,6 @@ class Wallet extends Component<any, any> {
       tableRows = tableRows.filter(({ currency }) => widgetCurrencies.includes(currency))
     }
 
-    if (config.binance) enabledCurrencies.push('BNB')
     tableRows = tableRows.filter(({ currency }) => enabledCurrencies.includes(currency))
 
     tableRows = tableRows.map((el) => {

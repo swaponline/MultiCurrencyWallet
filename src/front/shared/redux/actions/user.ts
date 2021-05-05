@@ -250,6 +250,8 @@ const getBalances = () => {
         ? [ { func: metamask.getBalance, name: 'metamask' } ]
         : [],
       { func: actions.btc.getBalance, name: 'btc' },
+      { func: actions.eth.getBalance, name: 'eth' },
+      { func: actions.bnb.getBalance, name: 'bnb' },
       { func: actions.ghost.getBalance, name: 'ghost' },
       { func: actions.next.getBalance, name: 'next' },
       { func: actions.btcmultisig.getBalance, name: 'btc-sms' },
@@ -257,18 +259,6 @@ const getBalances = () => {
       { func: actions.btcmultisig.getBalancePin, name: 'btc-pin' },
       { func: actions.btcmultisig.fetchMultisigBalances, name: 'btc-ms' }
     ]
-
-    if (config.binance) {
-      balances.push({
-        func: actions.bnb.getBalance,
-        name: 'bnb',
-      })
-    } else {
-      balances.push({
-        func: actions.eth.getBalance,
-        name: 'eth',
-      })
-    }
 
     balances.forEach(async (obj) => {
       try {
@@ -493,7 +483,8 @@ type ObjCurrencyType = {
 const setTransactions = async (objCurrency: ObjCurrencyType | {} = null) => {
   const activeCurrency = config.binance ? 'bnb' : 'eth'
   const isBtcSweeped = actions.btc.isSweeped()
-  const isEthOrBnbSweeped = actions[activeCurrency].isSweeped()
+  const isEthSweeped = actions.eth.isSweeped()
+  const isBnbSweeped = actions.bnb.isSweeped()
 
   const {
     core: { hiddenCoinsList },
@@ -513,12 +504,12 @@ const setTransactions = async (objCurrency: ObjCurrencyType | {} = null) => {
       actions.btcmultisig.getTransactionSMS(),
       actions.btcmultisig.getTransactionPIN(),
       actions.btcmultisig.getTransactionUser(),
-      // ETH or BNB ===========
-      actions[activeCurrency].getTransaction(),
+      actions.eth.getTransaction(),
+      actions.bnb.getTransaction(),
       //@ts-ignore: strictNullChecks
       ...(metamask.isEnabled() && metamask.isConnected()) ? [actions[activeCurrency].getTransaction(metamask.getAddress())] : [],
-      ...(isEthOrBnbSweeped) ? [] : [actions[activeCurrency].getTransaction(actions[activeCurrency].getSweepAddress())],
-      // ======================
+      ...(isEthSweeped) ? [] : [actions.eth.getTransaction(actions.eth.getSweepAddress())],
+      ...(isBnbSweeped) ? [] : [actions.bnb.getTransaction(actions.bnb.getSweepAddress())],
       ...objCurrency && objCurrency['GHOST'] ? [actions.ghost.getTransaction()] : [],
       ...objCurrency && objCurrency['NEXT'] ? [actions.next.getTransaction()] : [],
     ]

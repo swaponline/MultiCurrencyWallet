@@ -3,6 +3,7 @@ import { BigNumber } from 'bignumber.js'
 import { getState } from 'redux/core'
 import actions from 'redux/actions'
 import reducers from 'redux/core/reducers'
+import config from 'app-config'
 import DEFAULT_CURRENCY_PARAMETERS from 'common/helpers/constants/DEFAULT_CURRENCY_PARAMETERS'
 import * as mnemonicUtils from 'common/utils/mnemonic'
 import typeforce from 'swap.app/util/typeforce'
@@ -407,9 +408,8 @@ class EthLikeAction {
     gasLimit =
       gasLimit ||
       (recipientIsContract
-        ? // ? will use eth data for all ABBlockchains ?
-          DEFAULT_CURRENCY_PARAMETERS.eth.limit.contractInteract
-        : DEFAULT_CURRENCY_PARAMETERS.eth.limit.send)
+        ? DEFAULT_CURRENCY_PARAMETERS[this.tickerKey].limit.contractInteract
+        : DEFAULT_CURRENCY_PARAMETERS[this.tickerKey].limit.send)
 
     let sendMethod = this.Web3.eth.sendTransaction
     let txObject = {
@@ -556,7 +556,7 @@ export default {
     explorerLink: externalConfig.link.etherscan,
     explorerApiKey: externalConfig.api.etherscan_ApiKey,
     adminFeeObj: externalConfig.opts?.fee?.eth,
-    web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.provider)),
+    web3: new Web3(new Web3.providers.HttpProvider(config.web3.provider)),
   }),
   BNB: new EthLikeAction({
     coinName: 'Binance Coin',
@@ -565,6 +565,6 @@ export default {
     explorerLink: externalConfig.link.bscscan,
     explorerApiKey: externalConfig.api.bscscan_ApiKey,
     adminFeeObj: externalConfig.opts?.fee?.bnb,
-    web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.binance_provider)),
+    web3: new Web3(new Web3.providers.HttpProvider(config.web3.binance_provider)),
   }),
 }
