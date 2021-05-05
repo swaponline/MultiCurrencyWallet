@@ -319,7 +319,10 @@ class MarketmakerSettings extends Component<any, any> {
         message: (
           <FormattedMessage
             id="MM_NotEnoughtEth"
-            defaultMessage="Not enough ETH to pay the miners commission. You need to have at least 0.02 ETH"
+            defaultMessage="Not enough {AB_Coin} to pay the miners commission. You need to have at least 0.02 {AB_Coin}"
+            values={{
+              AB_Coin: (config.binance) ? `BNB` : `ETH`,
+            }}
           />
         ),
       })

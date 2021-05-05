@@ -6011,7 +6011,7 @@
   },
   {
     "id": "MM_NotEnoughtEth",
-    "message": "Недостаточно ETH, чтобы заплатить комиссию майнерам. У вас должно быть не менее 0,02 ETH",
+    "message": "Недостаточно {AB_Coin}, чтобы заплатить комиссию майнерам. У вас должно быть не менее 0,02 {AB_Coin}",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]

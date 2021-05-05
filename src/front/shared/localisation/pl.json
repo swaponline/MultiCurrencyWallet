@@ -6011,7 +6011,7 @@
   },
   {
     "id": "MM_NotEnoughtEth",
-    "message": "Za mało ETH, by zapłacić górnikom. Musisz mieć co najmniej 0.02 ETH",
+    "message": "Za mało {AB_Coin}, by zapłacić górnikom. Musisz mieć co najmniej 0.02 {AB_Coin}",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]

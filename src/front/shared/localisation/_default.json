@@ -6007,7 +6007,7 @@
   },
   {
     "id": "MM_NotEnoughtEth",
-    "message": "Not enough ETH to pay the miners commission. You need to have at least 0.02 ETH",
+    "message": "Not enough {AB_Coin} to pay the miners commission. You need to have at least 0.02 {AB_Coin}",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
