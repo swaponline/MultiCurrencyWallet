@@ -151,7 +151,7 @@ describe('BTC Send Tests', () => {
       ]);
     const options = {
       from: '2N7zffm6Yt4VQS7Z5cuzNi2sdhpZjitLW9Y',
-      to: 'mosm1NmQZETUQvH68C9kbS8F3nuVKD7RDk',
+      to: 'mwcbYjxbizC5ejSrfjUhjuiT56vQCTqLmY',
       amount: 1e-5,
       feeValue: new BigNumber(1e-5),
       speed: "fast",
