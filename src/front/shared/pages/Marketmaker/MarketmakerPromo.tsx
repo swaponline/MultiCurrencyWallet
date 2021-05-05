@@ -73,7 +73,7 @@ export default class MarketmakerPromo extends React.Component<{}, {}> {
               id="MM_Promo_TitleBody"
               defaultMessage="On swap.io users exchange BTC for {token} (a token that costs like BTC, but works on {Ab_Title}), and vice versa. You get a commission of 0.5% if the exchange takes place with you."
               values={{
-                token: (config.binance) ? `BTCP` : `WBTC`,
+                token: (config.binance) ? `BTCB` : `WBTC`,
                 Ab_Title: (config.binance) ? `Binance Smart Chain` : `Ethereum`,
               }}
             />
