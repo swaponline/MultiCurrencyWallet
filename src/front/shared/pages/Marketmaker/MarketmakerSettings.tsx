@@ -22,7 +22,7 @@ import FAQ from './FAQ'
 
 import Toggle from 'components/controls/Toggle/Toggle'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
-import ThemeTooltip from '../../components/ui/Tooltip/ThemeTooltip'
+import Tooltip from 'components/ui/Tooltip/Tooltip'
 import Input from 'components/forms/Input/Input'
 
 import btc from './images/btcIcon.svg'
@@ -675,32 +675,37 @@ class MarketmakerSettings extends Component<any, any> {
                     />
                   </p>
                   <p>
+                    {config.binance ? (
+                      <img src={btc} alt="btcb" />
+                    ): (
+                      <img styleName='iconPosition' src={wbtc} alt="wbtc" />
+                    )}
+                    {' '}
                     <span id='tokenBalance' styleName='balanceSecondary'>{tokenBalance}</span>
                     {' '}
-                    <>
-                      <span styleName='iconPosition' data-tip data-for="wbtcIcon">
-                        <img src={wbtc} alt='wbtc' />
-                      </span>
-                      {/* to-do - нужно поправить локализацию - проверка бинанса, тип токена, тип ab (эфира) */}
-                      {!config.binance && (
-                        <ThemeTooltip
-                          styleName='iconTooltip'
-                          id="wbtcIcon"
-                          effect="solid"
-                          place="right"
-                        >
-                          <FormattedMessage
-                            id="MM_whatIsWBTCTooltip1"
-                            defaultMessage="Wrapped Bitcoin (WBTC) is an ERC-20 token that represents Bitcoin (BTC) on the Ethereum blockchain."
-                          />
-                          <br />
-                          <FormattedMessage
-                            id="MM_whatIsWBTCTooltip2"
-                            defaultMessage="WBTC was created to allow Bitcoin holders to participate in decentralized finance (“DeFi”) apps that are popular on Ethereum."
-                          />
-                        </ThemeTooltip>
-                      )}
-                    </>
+                    <Tooltip id="FeeInfoBlockMinerFeeTooltip">
+                      <div style={{ maxWidth: '30em' }}>
+                        <FormattedMessage
+                          id="MM_whatIsWBTCTooltip1"
+                          defaultMessage="{tokenFullName} ({token}) is an {tokenStandart} token that represents Bitcoin (BTC) on the {blockchainName} blockchain."
+                          values={{
+                            tokenFullName: config.binance ? 'Bitcoin BEP2' : 'Wrapped Bitcoin',
+                            tokenStandart: config.binance ? 'BEP-20' : 'ERC-20',
+                            token: marketToken.toUpperCase(),
+                            blockchainName: config.binance ? 'Binance' : 'Ethereum'
+                          }}
+                        />
+                        <br />
+                        <FormattedMessage
+                          id="MM_whatIsWBTCTooltip2"
+                          defaultMessage="{token} was created to allow Bitcoin holders to participate in decentralized finance (“DeFi”) apps that are popular on {blockchainName}."
+                          values={{
+                            token: marketToken.toUpperCase(),
+                            blockchainName: config.binance ? 'Binance' : 'Ethereum'
+                          }}
+                        />
+                      </div>
+                    </Tooltip>
                   </p>
                   {this._metamaskEnabled && (
                     <div style={{ marginBottom: '15px' }}>
