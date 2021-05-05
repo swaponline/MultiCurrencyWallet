@@ -175,6 +175,11 @@ export const getEtherWallet = () => {
   return `/eth/${address}`
 }
 
+export const getBnbWallet = () => {
+  const { address } = actions.user.getAuthData('bnb')
+  return `/bnb/${address}`
+}
+
 export const getGhostWallet = () => {
   const { address } = actions.user.getAuthData('ghost')
   return `/ghost/${address}`

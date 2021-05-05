@@ -5,7 +5,7 @@ import actions from 'redux/actions'
 import { withRouter } from 'react-router-dom'
 
 import helpers, { links, constants, ethToken } from 'helpers'
-import { getTokenWallet, getBitcoinWallet, getEtherWallet, getGhostWallet, getNextWallet } from 'helpers/links'
+import { getTokenWallet, getBitcoinWallet, getEtherWallet, getBnbWallet, getGhostWallet, getNextWallet } from 'helpers/links'
 
 import CSSModules from 'react-css-modules'
 import styles from './CurrencyWallet.scss'
@@ -69,72 +69,18 @@ class CurrencyWallet extends Component<any, any> {
 
     const {
       match: {
-        params: { fullName = null, ticker = null, address = null, action = null },
+        params: { fullName = null, ticker = null, address = null },
       },
-      txHistory,
       hiddenCoinsList,
     } = props
 
     const items = actions.core.getWallets({})
 
-    if (!address && !ticker) {
-      if (fullName) {
-        // Если это токен - перенаправляем на адрес /token/name/address
-        if (ethToken.isEthToken({ name: fullName })) {
-          this.state = {
-            ...this.state,
-            ...{
-              isRedirecting: true,
-              redirectUrl: getTokenWallet(fullName),
-            },
-          }
-          return
-        }
-
-        if (fullName.toLowerCase() === `bitcoin`) {
-          this.state = {
-            ...this.state,
-            ...{
-              isRedirecting: true,
-              redirectUrl: getBitcoinWallet(),
-            },
-          }
-          return
-        }
-        if (fullName.toLowerCase() === `ghost`) {
-          this.state = {
-            ...this.state,
-            ...{
-              isRedirecting: true,
-              redirectUrl: getGhostWallet(),
-            },
-          }
-          return
-        }
-        if (fullName.toLowerCase() === `next`) {
-          this.state = {
-            ...this.state,
-            ...{
-              isRedirecting: true,
-              redirectUrl: getNextWallet(),
-            },
-          }
-          return
-        }
-
-        if (fullName.toLowerCase() === `ethereum`) {
-          this.state = {
-            ...this.state,
-            ...{
-              isRedirecting: true,
-              redirectUrl: getEtherWallet(),
-            },
-          }
-          return
-        }
-      }
-      // @ToDO throw error
-    }
+    this.updateRedirectUrls({
+      address,
+      ticker,
+      fullName,
+    })
 
     const walletAddress = address
 
@@ -320,66 +266,11 @@ class CurrencyWallet extends Component<any, any> {
     ) {
       const items = actions.core.getWallets({})
 
-      if (!address && !ticker) {
-        if (fullName) {
-          // Если это токен - перенаправляем на адрес /token/name/address
-          if (ethToken.isEthToken({ name: fullName })) {
-            this.state = {
-              ...this.state,
-              ...{
-                isRedirecting: true,
-                redirectUrl: getTokenWallet(fullName),
-              },
-            }
-            return
-          }
-
-          if (fullName.toLowerCase() === `bitcoin`) {
-            this.state = {
-              ...this.state,
-              ...{
-                isRedirecting: true,
-                redirectUrl: getBitcoinWallet(),
-              },
-            }
-            return
-          }
-
-          if (fullName.toLowerCase() === `ghost`) {
-            this.state = {
-              ...this.state,
-              ...{
-                isRedirecting: true,
-                redirectUrl: getGhostWallet(),
-              },
-            }
-            return
-          }
-
-          if (fullName.toLowerCase() === `next`) {
-            this.state = {
-              ...this.state,
-              ...{
-                isRedirecting: true,
-                redirectUrl: getNextWallet(),
-              },
-            }
-            return
-          }
-
-          if (fullName.toLowerCase() === `ethereum`) {
-            this.state = {
-              ...this.state,
-              ...{
-                isRedirecting: true,
-                redirectUrl: getEtherWallet(),
-              },
-            }
-            return
-          }
-        }
-        // @ToDO throw error
-      }
+      this.updateRedirectUrls({
+        address,
+        ticker,
+        fullName,
+      })
 
       const walletAddress = address
 
@@ -476,6 +367,53 @@ class CurrencyWallet extends Component<any, any> {
   componentWillUnmount() {
     this._mounted = false
     console.log('CurrencyWallet unmounted')
+  }
+
+  updateRedirectUrls = (props) => {
+    const { address, ticker, fullName } = props
+
+    const setRedirectUrl = (url) => {
+      this.setState(() => ({
+        isRedirecting: true,
+        redirectUrl: url,
+      }))
+    }
+
+    if (!address && !ticker) {
+      if (fullName) {
+        if (ethToken.isEthToken({ name: fullName })) {
+          setRedirectUrl(getTokenWallet(fullName))
+          return
+        }
+
+        if (fullName.toLowerCase() === `bitcoin`) {
+          setRedirectUrl(getBitcoinWallet())
+          return
+        }
+
+        if (fullName.toLowerCase() === `ghost`) {
+          setRedirectUrl(getGhostWallet())
+          return
+        }
+
+        if (fullName.toLowerCase() === `next`) {
+          setRedirectUrl(getNextWallet())
+          return
+        }
+
+        if (fullName.toLowerCase() === `ethereum`) {
+          setRedirectUrl(getEtherWallet())
+          return
+        }
+
+        if (fullName.toLowerCase() === `binance coin`) {
+          setRedirectUrl(getBnbWallet())
+          return
+        }
+      }
+
+      throw new Error('Currency wallet: wrong url parameters')
+    }
   }
 
   getRows = (txHistory) => {
