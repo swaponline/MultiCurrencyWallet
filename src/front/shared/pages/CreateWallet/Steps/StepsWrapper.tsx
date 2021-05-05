@@ -51,19 +51,19 @@ export default class StepsWrapper extends Component<any, any> {
       && Object.keys(config.opts.ownTokens).length
     ) {
       this.defaultStartPack = []
-      if (!config.opts.curEnabled || config.opts.curEnabled.btc) {
+      if (!curEnabled || curEnabled.btc) {
         this.defaultStartPack.push({ name: "BTC", capture: "Bitcoin" })
       }
-      if (!config.opts.curEnabled || config.opts.curEnabled.eth) {
+      if (!curEnabled || curEnabled.eth) {
         this.defaultStartPack.push({ name: "ETH", capture: "Ethereum" })
       }
-      if (!config.opts.curEnabled || config.opts.curEnabled.bnb) {
+      if (!curEnabled || curEnabled.bnb) {
         this.defaultStartPack.push({ name: "BNB", capture: "Binance Coin" })
       }
-      if (!config.opts.curEnabled || config.opts.curEnabled.ghost) {
+      if (!curEnabled || curEnabled.ghost) {
         this.defaultStartPack.push({ name: "GHOST", capture: "Ghost" })
       }
-      if (!config.opts.curEnabled || config.opts.curEnabled.next) {
+      if (!curEnabled || curEnabled.next) {
         this.defaultStartPack.push({ name: "NEXT", capture: "NEXT.coin" })
       }
       const ownTokensKeys = Object.keys(config.opts.ownTokens)
@@ -95,9 +95,6 @@ export default class StepsWrapper extends Component<any, any> {
       .filter(({ addAssets, name }) => addAssets)
       //@ts-ignore: strictNullChecks
       .filter(({ name }) => enabledCurrencies.includes(name))
-    if (config.binance) {
-      items = items.filter(({ name }) => name !== `ETH`)
-    }
 
     const untouchable = this.defaultStartPack.map(({ name }) => name)
 
