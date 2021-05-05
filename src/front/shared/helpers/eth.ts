@@ -41,27 +41,6 @@ const estimateGasPrice = async ({ speed = 'fast' } = {}) => {
 
   let apiResult
 
-  // Binance ===========================================
-
-  if (config.binance) {
-    try {
-      // returned in hex wei value
-      apiResult = await api.asyncFetchApi(link)
-    } catch (err) {
-      console.error(err)
-      return defaultPrice.fast
-    }
-
-    // convert to decimal value
-    const weiGasPrice = new BigNumber( parseInt(apiResult.result).toString(10) )
-  
-    return weiGasPrice.isGreaterThan(defaultPrice.fast)
-      ? weiGasPrice.toNumber()
-      : defaultPrice.fast
-  }
-
-  // ==================================================
-
   try {
     apiResult = await api.asyncFetchApi(link)
   } catch (err) {

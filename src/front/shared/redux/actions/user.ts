@@ -481,7 +481,6 @@ type ObjCurrencyType = {
 
 //@ts-ignore: strictNullChecks
 const setTransactions = async (objCurrency: ObjCurrencyType | {} = null) => {
-  const activeCurrency = config.binance ? 'bnb' : 'eth'
   const isBtcSweeped = actions.btc.isSweeped()
   const isEthSweeped = actions.eth.isSweeped()
   const isBnbSweeped = actions.bnb.isSweeped()
@@ -507,7 +506,9 @@ const setTransactions = async (objCurrency: ObjCurrencyType | {} = null) => {
       actions.eth.getTransaction(),
       actions.bnb.getTransaction(),
       //@ts-ignore: strictNullChecks
-      ...(metamask.isEnabled() && metamask.isConnected()) ? [actions[activeCurrency].getTransaction(metamask.getAddress())] : [],
+      ...(metamask.isEnabled() && metamask.isConnected()) ? [actions.eth.getTransaction(metamask.getAddress())] : [],
+      //@ts-ignore: strictNullChecks
+      ...(metamask.isEnabled() && metamask.isConnected()) ? [actions.bnb.getTransaction(metamask.getAddress())] : [],
       ...(isEthSweeped) ? [] : [actions.eth.getTransaction(actions.eth.getSweepAddress())],
       ...(isBnbSweeped) ? [] : [actions.bnb.getTransaction(actions.bnb.getSweepAddress())],
       ...objCurrency && objCurrency['GHOST'] ? [actions.ghost.getTransaction()] : [],

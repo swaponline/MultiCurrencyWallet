@@ -15,11 +15,8 @@ const isEnabled = (currency) => {
     ) {
       return config.opts.fee.erc20
     } else {
-      // TODO: temporary check
-      const currencyKey = config.binance && currency === 'bnb' ? 'eth' : currency
-  
-      if (config.opts.fee[currencyKey]) {
-        return config.opts.fee[currencyKey]
+      if (config.opts.fee[currency]) {
+        return config.opts.fee[currency]
       }
     }
   }
