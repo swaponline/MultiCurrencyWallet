@@ -1,7 +1,7 @@
 import { setup, importWallet, selectSendCurrency, timeOut } from './utils'
 
-const SEED = ['vast', 'bronze', 'oyster', 'trade', 'love', 'once', 'fog', 'match', 'rail', 'lock', 'cake', 'science']
-const btcAddress = 'mosm1NmQZETUQvH68C9kbS8F3nuVKD7RDk'
+const SEED = ['neither', 'already', 'situate', 'silent', 'ripple', 'milk', 'paddle', 'glass', 'leopard', 'track', 'mansion', 'junk']
+const btcAddress = 'n2Y2rbg6wVEQnnpNxisiHK4wCDUAq59iv6'
 const toAddress = 'n4JjB9D9axszdsFxyxDmF43z4WwttN6oPb'
 const amount = 5_000e-8
 
