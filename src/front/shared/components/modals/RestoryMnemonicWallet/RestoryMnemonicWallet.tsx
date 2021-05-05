@@ -223,21 +223,16 @@ class RestoryMnemonicWallet extends React.Component {
       localStorage.setItem(constants.privateKeyNames.btcSmsMnemonicKeyGenerated, btcSmsKey)
       localStorage.setItem(constants.localStorage.isWalletCreate, 'true')
 
-      // Temporarily
-      if (config.binance) {
-        await actions.bnb.login(false, mnemonic)
-        actions.core.markCoinAsVisible('BNB', true)
-      } else {
-        await actions.eth.login(false, mnemonic)
-        actions.core.markCoinAsVisible('ETH', true)
-      }
-
-      actions.core.markCoinAsVisible('BTC', true)
-
+      await actions.bnb.login(false, mnemonic)
+      await actions.eth.login(false, mnemonic)
       await actions.ghost.login(false, mnemonic)
       await actions.next.login(false, mnemonic)
       await actions.user.sign_btc_2fa(btcPrivKey)
       await actions.user.sign_btc_multisig(btcPrivKey)
+
+      actions.core.markCoinAsVisible('BNB', true)
+      actions.core.markCoinAsVisible('ETH', true)
+      actions.core.markCoinAsVisible('BTC', true)
 
       this.setState({
         isFetching: false,

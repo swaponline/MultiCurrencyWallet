@@ -65,7 +65,7 @@ const initialState = {
       title: 'BNB',
       icon: 'bnb',
       value: 'bnb',
-      fullTitle: 'binance',
+      fullTitle: 'binance coin',
       addAssets: true,
     }] : [],
     //@ts-ignore
@@ -176,12 +176,12 @@ const initialState = {
     ...(Object.keys(config.erc20)
       .filter(key => config.erc20[key].canSwap)
       .map(key => ({
-            name: key.toUpperCase(),
-            title: key.toUpperCase(),
-            icon: key,
-            value: key,
-            fullTitle: config.erc20[key].fullName || key,
-          }
+          name: key.toUpperCase(),
+          title: key.toUpperCase(),
+          icon: key,
+          value: key,
+          fullTitle: config.erc20[key].fullName || key,
+        }
       ))),
   ],
   addSelectedItems: [],
@@ -206,7 +206,7 @@ if (config.isWidget) {
       title: 'BNB',
       icon: 'bnb',
       value: 'bnb',
-      fullTitle: 'binance',
+      fullTitle: 'binance coin',
     },
     //@ts-ignore
     {
@@ -247,7 +247,7 @@ if (config.isWidget) {
       title: 'BNB',
       icon: 'bnb',
       value: 'bnb',
-      fullTitle: 'binance',
+      fullTitle: 'binance coin',
     },
     {
       name: 'BTC',

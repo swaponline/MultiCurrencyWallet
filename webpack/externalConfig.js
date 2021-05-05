@@ -5,10 +5,7 @@ import fs from 'fs'
 
 
 const externalConfig = () => {
-  let from = config.binance === true
-    ? `src/front/externalConfigs/bsc-${config.entry}-default.js`
-    : `src/front/externalConfigs/${config.entry}-default.js`
-
+  let from = `src/front/externalConfigs/${config.entry}-default.js`
   const targetHost = getHostName(config.publicPath)
 
   if (targetHost) {
