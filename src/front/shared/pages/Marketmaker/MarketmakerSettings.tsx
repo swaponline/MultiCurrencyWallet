@@ -538,7 +538,7 @@ class MarketmakerSettings extends Component<any, any> {
         )}
         {!isBalanceFetching && mnemonicSaved ? (
           <div styleName={`section-items ${isDark ? '--dark' : '' }`}>
-            <div styleName='section-items__item'>
+            <div styleName='section-items__item' style={{ zIndex: 2 }}> {/* zIndex need for Tooltip */}
               <div styleName={`mm-toggle ${isDark ? '--dark' : '' }`}>
                 <p styleName='mm-toggle__text'>
                   <FormattedMessage
@@ -571,6 +571,19 @@ class MarketmakerSettings extends Component<any, any> {
                   id="MMPercentEarn"
                   defaultMessage="You will earn 0.5% from each swap"
                 />
+                {' '}
+                <Tooltip id="FullEarnDiscription">
+                  <div style={{ maxWidth: '30em' }}>
+                    <FormattedMessage
+                      id="MM_Promo_TitleBody"
+                      defaultMessage="On swap.io users exchange BTC for {token} (a token that costs like BTC, but works on {Ab_Title}), and vice versa. You get a commission of 0.5% if the exchange takes place with you."
+                      values={{
+                        token: marketToken.toUpperCase(),
+                        Ab_Title: (config.binance) ? `Binance Smart Chain` : `Ethereum`,
+                      }}
+                    />
+                  </div>
+                </Tooltip>
               </p>
             </div>
             <div styleName='section-items__item'>
@@ -683,7 +696,7 @@ class MarketmakerSettings extends Component<any, any> {
                     {' '}
                     <span id='tokenBalance' styleName='balanceSecondary'>{tokenBalance}</span>
                     {' '}
-                    <Tooltip id="FeeInfoBlockMinerFeeTooltip">
+                    <Tooltip id="WhatIsToken">
                       <div style={{ maxWidth: '30em' }}>
                         <FormattedMessage
                           id="MM_whatIsWBTCTooltip1"
