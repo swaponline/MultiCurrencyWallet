@@ -2,7 +2,6 @@ import React, { Component, Fragment } from 'react'
 
 import { connect } from 'redaction'
 import actions from 'redux/actions'
-import Slider from 'pages/Wallet/components/WallerSlider'
 import { withRouter } from 'react-router-dom'
 
 import helpers, { links, constants, ethToken } from 'helpers'
@@ -39,36 +38,17 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
     core,
     user,
     history: { transactions, swapHistory },
-    history,
     user: {
-      ethData,
-      btcData,
-      ghostData,
-      nextData,
       activeFiat,
       activeCurrency,
-      btcMultisigSMSData,
-      btcMultisigUserData,
       isFetching,
       isBalanceFetching,
-      tokensData,
       multisigStatus,
       multisigPendingCount,
     },
   }) => ({
-    items: [
-      ethData,
-      btcData,
-      ghostData,
-      nextData,
-      btcMultisigSMSData,
-      btcMultisigUserData,
-      ...Object.keys(tokensData).map((k) => tokensData[k]),
-    ],
-    tokens: [...Object.keys(tokensData).map((k) => tokensData[k])],
     user,
     activeFiat,
-    historyTx: history,
     hiddenCoinsList: core.hiddenCoinsList,
     txHistory: transactions,
     swapHistory,
@@ -91,8 +71,6 @@ class CurrencyWallet extends Component<any, any> {
       match: {
         params: { fullName = null, ticker = null, address = null, action = null },
       },
-      intl: { locale },
-      //items,
       txHistory,
       hiddenCoinsList,
     } = props
@@ -564,15 +542,6 @@ class CurrencyWallet extends Component<any, any> {
     history.push(localisedUrl(locale, (isToken ? '/token' : '') + `/${targetCurrency}/${address}/send`))
   }
 
-  handleGoWalletHome = () => {
-    const {
-      history,
-      intl: { locale },
-    } = this.props
-
-    history.push(localisedUrl(locale, links.wallet))
-  }
-
   handleGoTrade = () => {
     const { currency } = this.state
     const {
@@ -655,7 +624,6 @@ class CurrencyWallet extends Component<any, any> {
     } = this.state
 
     let currencyKey = getCurrencyKey(currency, true)
-    if (config.binance && currencyKey === `eth`) currencyKey = `bnb`
 
     if (isRedirecting) return null
 
@@ -715,16 +683,6 @@ class CurrencyWallet extends Component<any, any> {
       changePercent = infoAboutCurrency.percent_change_1h
     } else {
       currencyFiatBalance = 0
-    }
-
-    let settings = {
-      infinite: true,
-      speed: 500,
-      autoplay: true,
-      autoplaySpeed: 6000,
-      fade: true,
-      slidesToShow: 1,
-      slidesToScroll: 1,
     }
 
     return (

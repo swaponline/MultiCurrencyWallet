@@ -401,11 +401,7 @@ const getWallet = (findCondition: GetWalletFindCondition) => {
   // specify addressType,
   // otherwise it finds the first wallet from all origins, including metamask
   const { address, addressType, connected } = findCondition
-  let { currency } = findCondition
-
-  //@ts-ignore: strictNullChecks
-  if (currency.toLowerCase() === `eth` && config.binance) currency = `bnb`
-
+  const { currency } = findCondition
   const wallets = getWallets({ withInternal: true })
 
   const founded = wallets.filter((wallet) => {

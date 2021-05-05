@@ -388,7 +388,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
             speed: 'fast',
           })
         } else {
-          MIN_AMOUNT.bnb = await helpers.eth.estimateFeeValue({
+          MIN_AMOUNT.eth = await helpers.eth.estimateFeeValue({
             method: 'send',
             speed: 'fast',
           })

@@ -60,12 +60,6 @@ class Invoice extends PureComponent<InvoceProps, InvoceState> {
     }
   }
 
-  handleGoWalletHome = () => {
-    const { history, intl: { locale } } = this.props
-
-    history.push(localisedUrl(locale, links.wallet))
-  }
-
   fetchInvoice = () => {
     const { uniqhash, infoModal } = this.state
     const { history, intl: { locale } } = this.props
