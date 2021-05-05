@@ -6011,7 +6011,7 @@
   },
   {
     "id": "MM_NotEnoughtEth",
-    "message": "Za mało ETH, by zapłacić górnikom. Musisz mieć co najmniej 0.02 ETH",
+    "message": "Za mało {AB_Coin}, by zapłacić górnikom. Musisz mieć co najmniej 0.02 {AB_Coin}",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
@@ -6123,14 +6123,14 @@
   },
   {
     "id": "MM_whatIsWBTCTooltip1",
-    "message": "Wrapped Bitcoin (WBTC) to token ERC-20, który reprezentuje Bitcoin (BTC) w łańcuchu blokowym Ethereum.",
+    "message": "{tokenFullName} ({token}) to token {tokenStandart}, który reprezentuje Bitcoin (BTC) w łańcuchu blokowym {blockchainName}.",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
   },
   {
     "id": "MM_whatIsWBTCTooltip2",
-    "message": "WBTC zostało stworzone, aby umożliwić posiadaczom Bitcoinów udział w zdecentralizowanych aplikacjach finansowych („DeFi”), które są popularne w Ethereum.",
+    "message": "{token} zostało stworzone, aby umożliwić posiadaczom Bitcoinów udział w zdecentralizowanych aplikacjach finansowych („DeFi”), które są popularne w {blockchainName}.",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
