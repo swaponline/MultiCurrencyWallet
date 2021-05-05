@@ -26,6 +26,7 @@ import swapsHelper from 'helpers/swaps'
 import SwapApp from 'swap.app'
 
 import helpers, {
+  redirectTo,
   localStorage,
   getPairFees,
   constants,
@@ -1946,7 +1947,7 @@ class Exchange extends PureComponent<any, any> {
             </> */}
 
               <div styleName="link button-like">
-                <a href={!isWidgetBuild ? `${links.marketmaker}/` : (config.binance) ? `${links.marketmaker}/BTCB` : `${links.marketmaker}/WBTC`}>
+                <a href={!isWidgetBuild ? `#${links.marketmaker}/` : (config.binance) ? `#${links.marketmaker}/BTCB` : `#${links.marketmaker}/WBTC`}>
                   <FormattedMessage id="AddLiquidity" defaultMessage="Add Liquidity" />
                 </a>
               </div>
