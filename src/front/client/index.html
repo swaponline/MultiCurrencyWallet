@@ -591,8 +591,16 @@
 
     
     <script>
+      /*
+        extension hostname examples:
+        'cambabgemgnnfmjooccfikimmohjppen',
+        'oldojieloelkkfeacfinhcngmbkepnlm'
+      */
+      const isExtension = window.location.hostname.length === 32 && window.location.hostname.indexOf('.') === -1;
+
+
       // Extension icon click => open tab
-      if (chrome && chrome.browserAction) {
+      if (isExtension && chrome && chrome.browserAction) {
         chrome.browserAction.onClicked.addListener(function(tab) {
           console.log('Extension: add click listener')
           chrome.tabs.create({
@@ -785,13 +793,12 @@
 
       window.buyViaCreditCardLink = 'https://buy.itez.com/swaponline';
 
-      /* /Loader before any JS */
+      /* End Loader before any JS */
+
 
       /* Start Modal Scripts */
 
-      /**
-       * For setCookie() function
-       */
+      // For setCookie() function
       const SEC_IN_HOUR = 60 * 60
       const SEC_IN_DAY = SEC_IN_HOUR * 24
       const SEC_IN_MONTH = SEC_IN_DAY * daysInThisMonth()
@@ -895,8 +902,6 @@
 
       /* Google Analytics */
       const isMainDomain = window.location.hostname === 'swaponline.io';
-      const isExtension =
-        window.location.hostname === 'jbhhiineefefhcaoocmnkbmgfjbhninc';
 
       if (isMainDomain || isExtension) {
         const gtagScript = document.createElement('script');
