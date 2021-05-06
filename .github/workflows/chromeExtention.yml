@@ -31,7 +31,7 @@ jobs:
         ls
     - uses: actions/upload-artifact@v2
       with:
-        name: mainnet-extentions
+        name: extentions
         path: | 
           ./zipped-chrome-extension-mainnet.zip
           ./zipped-chrome-extension-testnet.zip
