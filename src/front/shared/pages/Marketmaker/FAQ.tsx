@@ -5,6 +5,7 @@ import styles from './FAQ.scss'
 import { feedback } from 'helpers'
 import Expandable from 'components/ui/Expandable/Expandable'
 
+import config from 'helpers/externalConfig'
 
 @cssModules(styles, { allowMultiple: true })
 class FAQ extends React.Component<{isDark: boolean}, {}> {
@@ -112,7 +113,10 @@ class FAQ extends React.Component<{isDark: boolean}, {}> {
             title={
               <FormattedMessage
                 id="MM_FAQ_ItemTitle7"
-                defaultMessage="Why do I need WBTC? I am only interested in earning BTC."
+                defaultMessage="Why do I need {token}? I am only interested in earning BTC."
+                values={{
+                  token: config.binance ? 'BTCB' : 'WBTC',
+                }}
               />
             }
             content={
@@ -120,7 +124,10 @@ class FAQ extends React.Component<{isDark: boolean}, {}> {
                 <div>
                   <FormattedMessage
                     id="MM_FAQ_ItemContent7-1"
-                    defaultMessage="You can replenish only with Bitcoin, but inevitably, at some periods, your BTC balance may decrease, and WBTC may increase, and vice versa."
+                    defaultMessage="You can replenish only with Bitcoin, but inevitably, at some periods, your BTC balance may decrease, and {token} may increase, and vice versa."
+                    values={{
+                      token: config.binance ? 'BTCB' : 'WBTC',
+                    }}
                   />
                 </div>
                 <div>
@@ -132,7 +139,10 @@ class FAQ extends React.Component<{isDark: boolean}, {}> {
                 <div>
                   <FormattedMessage
                     id="MM_FAQ_ItemContent7-3"
-                    defaultMessage="If you want to withdraw BTC, but some of them are in WBTC, then you will have to change WBTC yourself, for example, through the Binance exchange."
+                    defaultMessage="If you want to withdraw BTC, but some of them are in {token}, then you will have to change {token} yourself, for example, through the Binance exchange."
+                    values={{
+                      token: config.binance ? 'BTCB' : 'WBTC',
+                    }}
                   />
                 </div>
               </>
