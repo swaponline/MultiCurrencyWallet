@@ -5736,14 +5736,14 @@
   },
   {
     "id": "MM_FAQ_ItemTitle7",
-    "message": "Why do I need WBTC? I am only interested in earning BTC.",
+    "message": "Why do I need {token}? I am only interested in earning BTC.",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
   },
   {
     "id": "MM_FAQ_ItemContent7-1",
-    "message": "You can replenish only with Bitcoin, but inevitably, at some periods, your BTC balance may decrease, and WBTC may increase, and vice versa.",
+    "message": "You can replenish only with Bitcoin, but inevitably, at some periods, your BTC balance may decrease, and {token} may increase, and vice versa.",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
@@ -5757,7 +5757,7 @@
   },
   {
     "id": "MM_FAQ_ItemContent7-3",
-    "message": "If you want to withdraw BTC, but some of them are in WBTC, then you will have to change WBTC yourself, for example, through the Binance exchange.",
+    "message": "If you want to withdraw BTC, but some of them are in {token}, then you will have to change {token} yourself, for example, through the Binance exchange.",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]

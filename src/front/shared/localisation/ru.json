@@ -5736,14 +5736,14 @@
   },
   {
     "id": "MM_FAQ_ItemTitle7",
-    "message": "Зачем мне WBTC? Меня интересует заработок только BTC.",
+    "message": "Зачем мне {token}? Меня интересует заработок только BTC.",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
   },
   {
     "id": "MM_FAQ_ItemContent7-1",
-    "message": "Вы можете пополнять только биткоином, но неизбежно в какие-то периоды ваш баланс BTC может уменьшиться, а WBTC увеличиться и наоборот.",
+    "message": "Вы можете пополнять только биткоином, но неизбежно в какие-то периоды ваш баланс BTC может уменьшиться, а {token} увеличиться и наоборот.",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
@@ -5757,7 +5757,7 @@
   },
   {
     "id": "MM_FAQ_ItemContent7-3",
-    "message": "Если вы хотите вывести BTC, но часть из них в WBTC, то вам прийдется самому менять WBTC, например через биржу Binance.",
+    "message": "Если вы хотите вывести BTC, но часть из них в {token}, то вам прийдется самому менять {token}, например через биржу Binance.",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
