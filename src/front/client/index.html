@@ -589,8 +589,9 @@
     <script type="text/javascript" src="https://unpkg.com/react@16.10.2/umd/react.production.min.js"></script>
     <script type="text/javascript" src="https://unpkg.com/react-dom@16.10.2/umd/react-dom.production.min.js"></script>
 
-    <!-- Extension: icon click => open tab -->
+    
     <script>
+      // Extension icon click => open tab
       if (chrome && chrome.browserAction) {
         chrome.browserAction.onClicked.addListener(function(tab) {
           console.log('Extension: add click listener')
@@ -603,14 +604,15 @@
       } else {
         console.log('Extension: can`t add click listener (possibly not extension)')
       }
-    </script>
+      // End: Extension icon click => open tab
 
-    <script>
+
       try {
         JSON.parse("<!-- BACK_SO -->");
       } catch (e) {
         console.log("warning: caching backend is down")
       }
+
 
       let localStorageIsOk = true;
       try {
