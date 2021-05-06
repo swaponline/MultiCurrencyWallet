@@ -9,6 +9,7 @@ import SECIO from 'libp2p-secio'
 import PeerId from 'peer-id'
 
 
+
 const createP2PNode = (options) => {
   const {
     listen,
@@ -83,6 +84,9 @@ const createP2PNode = (options) => {
         maxParallelDials: 100,
         maxDialsPerPeer: 100,
         dialTimeout: 1e3
+      },
+      transportManager: {
+        faultTolerance: 1
       },
       connectionManager: {
         maxConnections: Infinity,
