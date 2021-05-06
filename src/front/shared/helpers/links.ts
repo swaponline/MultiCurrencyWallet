@@ -52,6 +52,8 @@ const linksManager = {
   reddit: '#',
   youtube: '#',
 
+  transactionRate: 'https://en.bitcoin.it/wiki/Maximum_transaction_rate#:~:text=Each%20transaction%20input%20requires%20at,the%20minimum-sized%20Bitcoin%20transaction',
+
   // footer links
   etherdelta: 'https://etherdelta.com/#0x14a52cf6b4f68431bd5d9524e4fcd6f41ce4ade9-ETH',
   button: 'https://wiki.swaponline.io/about-swap-online/#b2b',
