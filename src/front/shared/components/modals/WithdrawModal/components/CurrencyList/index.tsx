@@ -9,6 +9,7 @@ import helpers, { constants } from 'helpers'
 import actions from 'redux/actions'
 import { localisedUrl } from 'helpers/locale'
 import getCurrencyKey from 'helpers/getCurrencyKey'
+import OutsideClick from 'components/OutsideClick'
 
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
@@ -51,6 +52,18 @@ export default class CurrencyList extends Component<any, any> {
     })
   }
 
+  closeList = () => {
+    this.setState(() => ({
+      isAssetsOpen: false,
+    }))
+  }
+
+  toggleListDisplay = () => {
+    this.setState((state) => ({
+      isAssetsOpen: !state.isAssetsOpen,
+    }))
+  }
+
   render() {
     const {
       currentActiveAsset,
@@ -66,11 +79,12 @@ export default class CurrencyList extends Component<any, any> {
     } = this.state
 
     return (
-      <>
+      //@ts-ignore: strictNullChecks
+      <OutsideClick outsideAction={this.closeList}>
         <div
           id='currencyList'
           styleName={`customSelectValue ${isDark ? 'dark' : ''}`}
-          onClick={() => this.setState(({ isAssetsOpen }) => ({ isAssetsOpen: !isAssetsOpen }))}
+          onClick={this.toggleListDisplay}
         >
           <div styleName="coin">
             <Coin name={currentActiveAsset.currency} />
@@ -129,7 +143,7 @@ export default class CurrencyList extends Component<any, any> {
             ))}
           </div>
         )}
-      </>
+      </OutsideClick>
     )
   }
 }

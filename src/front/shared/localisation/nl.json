@@ -4774,6 +4774,13 @@
     ]
   },
   {
+    "id": "AddLiquidity",
+    "message": "Liquiditeit toevoegen",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
     "id": "MainFAQ2_content3",
     "message": "Huidige mijnvergoedingen:",
     "files": [
@@ -5725,14 +5732,14 @@
   },
   {
     "id": "MM_FAQ_ItemTitle7",
-    "message": "Waarom heb ik WBTC nodig? Ik ben alleen geïnteresseerd in het verdienen van BTC.",
+    "message": "Waarom heb ik {token} nodig? Ik ben alleen geïnteresseerd in het verdienen van BTC.",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
   },
   {
     "id": "MM_FAQ_ItemContent7-1",
-    "message": "U kunt alleen aanvullen met Bitcoin, maar het is onvermijdelijk dat in sommige periodes uw BTC-saldo kan afnemen en WBTC kan toenemen, en vice versa.",
+    "message": "U kunt alleen aanvullen met Bitcoin, maar het is onvermijdelijk dat in sommige periodes uw BTC-saldo kan afnemen en {token} kan toenemen, en vice versa.",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
@@ -5746,7 +5753,7 @@
   },
   {
     "id": "MM_FAQ_ItemContent7-3",
-    "message": "Als u BTC wilt opnemen, maar sommige zijn in WBTC, dan moet u WBTC zelf wijzigen, bijvoorbeeld via de Binance-uitwisseling.",
+    "message": "Als u BTC wilt opnemen, maar sommige zijn in {token}, dan moet u {token} zelf wijzigen, bijvoorbeeld via de Binance-uitwisseling.",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
@@ -6000,7 +6007,7 @@
   },
   {
     "id": "MM_NotEnoughtEth",
-    "message": "Niet genoeg om de mijnwerkerscommissie te betalen. Je moet minstens 0,02 ETH hebben",
+    "message": "Niet genoeg om de mijnwerkerscommissie te betalen. Je moet minstens 0,02 {AB_Coin} hebben",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
@@ -6112,16 +6119,30 @@
   },
   {
     "id": "MM_whatIsWBTCTooltip1",
-    "message": "Wrapped Bitcoin (WBTC) is een ERC-20-token dat Bitcoin (BTC) vertegenwoordigt op de Ethereum-blockchain.",
+    "message": "{tokenFullName} ({token}) is een {tokenStandart}-token dat Bitcoin (BTC) vertegenwoordigt op de {blockchainName}-blockchain.",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
   },
   {
     "id": "MM_whatIsWBTCTooltip2",
-    "message": "WBTC is gemaakt om Bitcoin-houders in staat te stellen deel te nemen aan apps voor gedecentraliseerde financiën (\"DeFi\") die populair zijn op Ethereum.",
+    "message": "{token} is gemaakt om Bitcoin-houders in staat te stellen deel te nemen aan apps voor gedecentraliseerde financiën (\"DeFi\") die populair zijn op {blockchainName}.",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_InstallExtentionTitle",
+    "message": "Installeer de Chrome-extensie en begin met verdienen",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
+    ]
+  },
+  {
+    "id": "MM_InstallExtentionBtn",
+    "message": "Install Chrome ExtensionInstalleer de Chrome-extensie",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
     ]
   }
 ]

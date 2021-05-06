@@ -4778,6 +4778,13 @@
     ]
   },
   {
+    "id": "AddLiquidity",
+    "message": "Add Liquidity",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
     "id": "MainFAQ2_content3",
     "message": "Current mining fees:",
     "files": [
@@ -5729,14 +5736,14 @@
   },
   {
     "id": "MM_FAQ_ItemTitle7",
-    "message": "Why do I need WBTC? I am only interested in earning BTC.",
+    "message": "Why do I need {token}? I am only interested in earning BTC.",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
   },
   {
     "id": "MM_FAQ_ItemContent7-1",
-    "message": "You can replenish only with Bitcoin, but inevitably, at some periods, your BTC balance may decrease, and WBTC may increase, and vice versa.",
+    "message": "You can replenish only with Bitcoin, but inevitably, at some periods, your BTC balance may decrease, and {token} may increase, and vice versa.",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
@@ -5750,7 +5757,7 @@
   },
   {
     "id": "MM_FAQ_ItemContent7-3",
-    "message": "If you want to withdraw BTC, but some of them are in WBTC, then you will have to change WBTC yourself, for example, through the Binance exchange.",
+    "message": "If you want to withdraw BTC, but some of them are in {token}, then you will have to change {token} yourself, for example, through the Binance exchange.",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
@@ -6004,7 +6011,7 @@
   },
   {
     "id": "MM_NotEnoughtEth",
-    "message": "Not enough ETH to pay the miners commission. You need to have at least 0.02 ETH",
+    "message": "Not enough {AB_Coin} to pay the miners commission. You need to have at least 0.02 {AB_Coin}",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
@@ -6116,16 +6123,30 @@
   },
   {
     "id": "MM_whatIsWBTCTooltip1",
-    "message": "Wrapped Bitcoin (WBTC) is an ERC-20 token that represents Bitcoin (BTC) on the Ethereum blockchain.",
+    "message": "{tokenFullName} ({token}) is an {tokenStandart} token that represents Bitcoin (BTC) on the {blockchainName} blockchain.",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
   },
   {
     "id": "MM_whatIsWBTCTooltip2",
-    "message": "WBTC was created to allow Bitcoin holders to participate in decentralized finance (“DeFi”) apps that are popular on Ethereum.",
+    "message": "{token} was created to allow Bitcoin holders to participate in decentralized finance (“DeFi”) apps that are popular on {blockchainName}.",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_InstallExtentionTitle",
+    "message": "Install Chrome Extension and Start Earn",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
+    ]
+  },
+  {
+    "id": "MM_InstallExtentionBtn",
+    "message": "Install Chrome Extension",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
     ]
   }
 ]

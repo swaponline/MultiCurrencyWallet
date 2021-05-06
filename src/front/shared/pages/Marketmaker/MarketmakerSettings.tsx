@@ -22,7 +22,7 @@ import FAQ from './FAQ'
 
 import Toggle from 'components/controls/Toggle/Toggle'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
-import ThemeTooltip from '../../components/ui/Tooltip/ThemeTooltip'
+import Tooltip from 'components/ui/Tooltip/Tooltip'
 import Input from 'components/forms/Input/Input'
 
 import btc from './images/btcIcon.svg'
@@ -75,6 +75,7 @@ class MarketmakerSettings extends Component<any, any> {
       isEthBalanceOk: false,
       isBtcBalanceOk: false,
       isTokenBalanceOk: false,
+      isNeedDeposit: false,
       marketSpread: 0.1, // 10% spread
       mnemonicSaved,
     }
@@ -203,6 +204,7 @@ class MarketmakerSettings extends Component<any, any> {
     SwapApp.onInit(() => {
       //@ts-ignore: strictNullChecks
       const isMarketEnabled = (SwapApp.shared().services.orders.getMyOrders().length > 0)
+      this.setState({isMarketEnabled})
 
       const swapsIds = []
       const swapsByIds = {}
@@ -214,8 +216,6 @@ class MarketmakerSettings extends Component<any, any> {
       if (lsSwapId === null || lsSwapId.length === 0) {
         return
       }
-
-      const swapsCore = lsSwapId.map((id) => new Swap(id, SwapApp.shared()))
 
       //@ts-ignore: strictNullChecks
       SwapApp.shared().attachedSwaps.items.forEach((swap) => {
@@ -233,7 +233,6 @@ class MarketmakerSettings extends Component<any, any> {
       this.setState({
         swapsIds,
         swapsByIds,
-        isMarketEnabled,
       })
     })
   }
@@ -319,7 +318,10 @@ class MarketmakerSettings extends Component<any, any> {
         message: (
           <FormattedMessage
             id="MM_NotEnoughtEth"
-            defaultMessage="Not enough ETH to pay the miners commission. You need to have at least 0.02 ETH"
+            defaultMessage="Not enough {AB_Coin} to pay the miners commission. You need to have at least 0.02 {AB_Coin}"
+            values={{
+              AB_Coin: (config.binance) ? `BNB` : `ETH`,
+            }}
           />
         ),
       })
@@ -345,6 +347,7 @@ class MarketmakerSettings extends Component<any, any> {
         isBtcBalanceOk,
         isEthBalanceOk,
         isTokenBalanceOk,
+        isNeedDeposit: false
       }, () => {
         if (!isMarketEnabled) {
           // New state - On
@@ -357,6 +360,7 @@ class MarketmakerSettings extends Component<any, any> {
     } else {
       this.setState({
         isMarketEnabled: false,
+        isNeedDeposit: true
       })
     }
   }
@@ -481,6 +485,7 @@ class MarketmakerSettings extends Component<any, any> {
       marketToken,
       isBalanceFetching,
       isMarketEnabled,
+      isNeedDeposit,
       mnemonicSaved,
     } = this.state
 
@@ -535,7 +540,7 @@ class MarketmakerSettings extends Component<any, any> {
         )}
         {!isBalanceFetching && mnemonicSaved ? (
           <div styleName={`section-items ${isDark ? '--dark' : '' }`}>
-            <div styleName='section-items__item'>
+            <div styleName='section-items__item' style={{ zIndex: 2 }}> {/* zIndex need for Tooltip */}
               <div styleName={`mm-toggle ${isDark ? '--dark' : '' }`}>
                 <p styleName='mm-toggle__text'>
                   <FormattedMessage
@@ -568,6 +573,19 @@ class MarketmakerSettings extends Component<any, any> {
                   id="MMPercentEarn"
                   defaultMessage="You will earn 0.5% from each swap"
                 />
+                {' '}
+                <Tooltip id="FullEarnDiscription">
+                  <div style={{ maxWidth: '30em' }}>
+                    <FormattedMessage
+                      id="MM_Promo_TitleBody"
+                      defaultMessage="On swap.io users exchange BTC for {token} (a token that costs like BTC, but works on {Ab_Title}), and vice versa. You get a commission of 0.5% if the exchange takes place with you."
+                      values={{
+                        token: marketToken.toUpperCase(),
+                        Ab_Title: (config.binance) ? `Binance Smart Chain` : `Ethereum`,
+                      }}
+                    />
+                  </div>
+                </Tooltip>
               </p>
             </div>
             <div styleName='section-items__item'>
@@ -618,141 +636,150 @@ class MarketmakerSettings extends Component<any, any> {
                 </span>
               </p>
             </div>
-            <div styleName='section-items__item'>
-              {btcWallet ? (
-                  <>
-                    <p styleName='item-text__secondary-title'>
-                      <FormattedMessage
-                        id="MM_BTCBalance"
-                        defaultMessage="Balance BTC:"
-                      />
-                    </p>
-                    <p>
-                      <img src={btc} alt="btc" />
-                      {' '}
-                      <span id='btcBalance' styleName='balanceSecondary'>{btcBalance}</span>
-                    </p>
-                    <p styleName='item-text__secondary'>
-                      <FormattedMessage
-                        id="MM_DepositeWallet"
-                        defaultMessage="to top up, transfer to {address}"
-                        values={{
-                          address: btcWallet.address,
-                        }}
-                      />
-                    </p>
-                  </>
-                ) : (
-                  <>
-                    <p styleName='item-text__secondary-title'>
-                      <FormattedMessage
-                        id="MM_BTCBalance"
-                        defaultMessage="Balance BTC:"
-                      />
-                    </p>
-                    <p>
-                      <img src={btc} alt="btc" />
-                      {' '}
-                      <span id='btcBalance' styleName='balanceSecondary'>{btcBalance}</span>
-                    </p>
-                  </>
-                )
-              }
-            </div>
-            <div styleName='section-items__item'>
-              <p styleName='item-text__secondary-title'>
-                <FormattedMessage
-                  id="MM_TokenBalance"
-                  defaultMessage="Balance {token}:"
-                  values={{
-                    token: marketToken.toUpperCase(),
-                  }}
-                />
-              </p>
-              <p>
-                <span id='tokenBalance' styleName='balanceSecondary'>{tokenBalance}</span>
-                {' '}
-                <>
-                  <span styleName='iconPosition' data-tip data-for="wbtcIcon">
-                    <img src={wbtc} alt='wbtc' />
-                  </span>
-                  {/* to-do - нужно поправить локализацию - проверка бинанса, тип токена, тип ab (эфира) */}
-                  {!config.binance && (
-                    <ThemeTooltip
-                      styleName='iconTooltip'
-                      id="wbtcIcon"
-                      effect="solid"
-                      place="right"
-                    >
-                      <FormattedMessage
-                        id="MM_whatIsWBTCTooltip1"
-                        defaultMessage="Wrapped Bitcoin (WBTC) is an ERC-20 token that represents Bitcoin (BTC) on the Ethereum blockchain."
-                      />
-                      <br />
-                      <FormattedMessage
-                        id="MM_whatIsWBTCTooltip2"
-                        defaultMessage="WBTC was created to allow Bitcoin holders to participate in decentralized finance (“DeFi”) apps that are popular on Ethereum."
-                      />
-                    </ThemeTooltip>
-                  )}
-                </>
-              </p>
-              {this._metamaskEnabled && (
-                <div style={{ marginBottom: '15px' }}>
-                {metamask.isConnected() ? (
-                    <Button blue onClick={this.processDisconnectWallet.bind(this)}>
-                      <FormattedMessage
-                        id="MM_DisconnectMetamask"
-                        defaultMessage="Disconnect Metamask"
-                      />
-                    </Button>
-                  ) : (
-                    <Button blue onClick={this.processConnectWallet.bind(this)}>
-                      <FormattedMessage
-                        id="MM_ConnectMetamask"
-                        defaultMessage="Connect Metamask"
-                      />
-                    </Button>
-                  )
-                }
+            {(isNeedDeposit || isMarketEnabled) && (
+              <>
+                <div styleName='section-items__item'>
+                  {btcWallet ? (
+                      <>
+                        <p styleName='item-text__secondary-title'>
+                          <FormattedMessage
+                            id="MM_BTCBalance"
+                            defaultMessage="Balance BTC:"
+                          />
+                        </p>
+                        <p>
+                          <img src={btc} alt="btc" />
+                          {' '}
+                          <span id='btcBalance' styleName='balanceSecondary'>{btcBalance}</span>
+                        </p>
+                        <p styleName='item-text__secondary'>
+                          <FormattedMessage
+                            id="MM_DepositeWallet"
+                            defaultMessage="to top up, transfer to {address}"
+                            values={{
+                              address: btcWallet.address,
+                            }}
+                          />
+                        </p>
+                      </>
+                    ) : (
+                      <>
+                        <p styleName='item-text__secondary-title'>
+                          <FormattedMessage
+                            id="MM_BTCBalance"
+                            defaultMessage="Balance BTC:"
+                          />
+                        </p>
+                        <p>
+                          <img src={btc} alt="btc" />
+                          {' '}
+                          <span id='btcBalance' styleName='balanceSecondary'>{btcBalance}</span>
+                        </p>
+                      </>
+                    )
+                  }
                 </div>
-              )}
-              {ethWallet ? (
-                  <>
-                    <span styleName='item-text__secondary'>
-                      <FormattedMessage
-                        id="MM_ETHBalance"
-                        defaultMessage="Balance {AB_Coin}: {balance} (for miners fee)"
-                        values={{
-                          AB_Coin: (config.binance) ? `BNB` : `ETH`,
-                          balance: new BigNumber(ethBalance).dp(5).toNumber()
-                        }}
-                      />
-                    </span>
-                    <p styleName='item-text__secondary'>
-                      <FormattedMessage
-                        id="MM_DepositeWallet"
-                        defaultMessage="to top up, transfer to {address}"
-                        values={{
-                          address: ethWallet.address,
-                        }}
-                      />
-                    </p>
-                  </>
-                ) : (
-                  <p styleName='item-text__secondary'>
+                <div styleName='section-items__item'>
+                  <p styleName='item-text__secondary-title'>
                     <FormattedMessage
-                      id="MM_ETHBalance"
-                      defaultMessage="Balance {AB_Coin}: {balance} (for miners fee)"
+                      id="MM_TokenBalance"
+                      defaultMessage="Balance {token}:"
                       values={{
-                        AB_Coin: (config.binance) ? `BNB` : `ETH`,
-                        balance: new BigNumber(ethBalance).dp(5).toNumber()
+                        token: marketToken.toUpperCase(),
                       }}
                     />
                   </p>
-                )
-              }
-            </div>
+                  <p>
+                    {config.binance ? (
+                      <img src={btc} alt="btcb" />
+                    ): (
+                      <img styleName='iconPosition' src={wbtc} alt="wbtc" />
+                    )}
+                    {' '}
+                    <span id='tokenBalance' styleName='balanceSecondary'>{tokenBalance}</span>
+                    {' '}
+                    <Tooltip id="WhatIsToken">
+                      <div style={{ maxWidth: '30em' }}>
+                        <FormattedMessage
+                          id="MM_whatIsWBTCTooltip1"
+                          defaultMessage="{tokenFullName} ({token}) is an {tokenStandart} token that represents Bitcoin (BTC) on the {blockchainName} blockchain."
+                          values={{
+                            tokenFullName: config.binance ? 'Bitcoin BEP2' : 'Wrapped Bitcoin',
+                            tokenStandart: config.binance ? 'BEP-20' : 'ERC-20',
+                            token: marketToken.toUpperCase(),
+                            blockchainName: config.binance ? 'Binance' : 'Ethereum'
+                          }}
+                        />
+                        <br />
+                        <FormattedMessage
+                          id="MM_whatIsWBTCTooltip2"
+                          defaultMessage="{token} was created to allow Bitcoin holders to participate in decentralized finance (“DeFi”) apps that are popular on {blockchainName}."
+                          values={{
+                            token: marketToken.toUpperCase(),
+                            blockchainName: config.binance ? 'Binance' : 'Ethereum'
+                          }}
+                        />
+                      </div>
+                    </Tooltip>
+                  </p>
+                  {this._metamaskEnabled && (
+                    <div style={{ marginBottom: '15px' }}>
+                    {metamask.isConnected() ? (
+                        <Button blue onClick={this.processDisconnectWallet.bind(this)}>
+                          <FormattedMessage
+                            id="MM_DisconnectMetamask"
+                            defaultMessage="Disconnect Metamask"
+                          />
+                        </Button>
+                      ) : (
+                        <Button blue onClick={this.processConnectWallet.bind(this)}>
+                          <FormattedMessage
+                            id="MM_ConnectMetamask"
+                            defaultMessage="Connect Metamask"
+                          />
+                        </Button>
+                      )
+                    }
+                    </div>
+                  )}
+                  {ethWallet ? (
+                      <>
+                        <span styleName='item-text__secondary'>
+                          <FormattedMessage
+                            id="MM_ETHBalance"
+                            defaultMessage="Balance {AB_Coin}: {balance} (for miners fee)"
+                            values={{
+                              AB_Coin: (config.binance) ? `BNB` : `ETH`,
+                              balance: new BigNumber(ethBalance).dp(5).toNumber()
+                            }}
+                          />
+                        </span>
+                        <p styleName='item-text__secondary'>
+                          <FormattedMessage
+                            id="MM_DepositeWallet"
+                            defaultMessage="to top up, transfer to {address}"
+                            values={{
+                              address: ethWallet.address,
+                            }}
+                          />
+                        </p>
+                      </>
+                    ) : (
+                      <p styleName='item-text__secondary'>
+                        <FormattedMessage
+                          id="MM_ETHBalance"
+                          defaultMessage="Balance {AB_Coin}: {balance} (for miners fee)"
+                          values={{
+                            AB_Coin: (config.binance) ? `BNB` : `ETH`,
+                            balance: new BigNumber(ethBalance).dp(5).toNumber()
+                          }}
+                        />
+                      </p>
+                    )
+                  }
+                </div>
+              </>
+            )}
           </div>
         ) : (
           <>
@@ -766,82 +793,85 @@ class MarketmakerSettings extends Component<any, any> {
         </section>
 
         {/* Swaps history + Active swaps */}
-        <section styleName={`${isDark ? 'dark' : '' }`}>
-          <h2 styleName="section-title">
-            <FormattedMessage
-              id="MM_SwapHistory_Title"
-              defaultMessage="Swap history"
-            />
-          </h2>
-          <table styleName="swapHistory">
-            <thead>
-              <tr>
-                <td>
-                  <p>
-                    <FormattedMessage
-                      id="MM_SwapHistory_YouBuy"
-                      defaultMessage="You buy"
-                    />
-                  </p>
-                </td>
-                <td>
-                  <p>
-                   <FormattedMessage
-                      id="MM_SwapHistory_Step"
-                      defaultMessage="Step"
-                    />
-                  </p>
-                </td>
-                <td>
-                  <p>
-                    <FormattedMessage
-                      id="MM_SwapHistory_YouSell"
-                      defaultMessage="You sell"
-                    />
-                  </p>
-                </td>
-                <td>
-                  <p>
-                   <FormattedMessage
-                      id="MM_SwapHistory_LockTime"
-                      defaultMessage="Lock time"
-                    />
-                  </p>
-                </td>
-                <td>
-                  <p>
-                   <FormattedMessage
-                      id="MM_SwapHistory_Status"
-                      defaultMessage="Status"
-                    />
-                  </p>
-                </td>
-                <td></td>
-              </tr>
-            </thead>
-            <tbody>
-              {!!sortedSwaps.length && sortedSwaps.map((swapId, rowIndex) => {
-                return (
-                  <SwapRow
-                    key={swapId}
-                    row={swapsByIds[swapId]}
-                    extractSwapStatus={this.extractSwapStatus}
-                  />
-                )
-              })}
-              {!sortedSwaps.length && (
+        { mnemonicSaved && (
+          <section styleName={`${isDark ? 'dark' : '' }`}>
+            <h2 styleName="section-title">
+              <FormattedMessage
+                id="MM_SwapHistory_Title"
+                defaultMessage="Swap history"
+              />
+            </h2>
+            <table styleName="swapHistory">
+              <thead>
                 <tr>
-                  <td colSpan={6}>
-                    <FormattedMessage
-                      id="MM_SwapHistory_Empty"
-                      defaultMessage="You have not any swaps, turn on MM and wait when someone accept your orders"
-                    />
+                  <td>
+                    <p>
+                      <FormattedMessage
+                        id="MM_SwapHistory_YouBuy"
+                        defaultMessage="You buy"
+                      />
+                    </p>
                   </td>
+                  <td>
+                    <p>
+                      <FormattedMessage
+                        id="MM_SwapHistory_Step"
+                        defaultMessage="Step"
+                      />
+                    </p>
+                  </td>
+                  <td>
+                    <p>
+                      <FormattedMessage
+                        id="MM_SwapHistory_YouSell"
+                        defaultMessage="You sell"
+                      />
+                    </p>
+                  </td>
+                  <td>
+                    <p>
+                      <FormattedMessage
+                        id="MM_SwapHistory_LockTime"
+                        defaultMessage="Lock time"
+                      />
+                    </p>
+                  </td>
+                  <td>
+                    <p>
+                      <FormattedMessage
+                        id="MM_SwapHistory_Status"
+                        defaultMessage="Status"
+                      />
+                    </p>
+                  </td>
+                  <td></td>
                 </tr>
-              )}
-            </tbody>
-          </table>
-        </section>
+              </thead>
+              <tbody>
+                {!!sortedSwaps.length && sortedSwaps.map((swapId, rowIndex) => {
+                  return (
+                    <SwapRow
+                      key={swapId}
+                      row={swapsByIds[swapId]}
+                      extractSwapStatus={this.extractSwapStatus}
+                    />
+                  )
+                })}
+                {!sortedSwaps.length && (
+                  <tr>
+                    <td colSpan={6}>
+                      <FormattedMessage
+                        id="MM_SwapHistory_Empty"
+                        defaultMessage="You have not any swaps, turn on MM and wait when someone accept your orders"
+                      />
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </section>
+        )}
+
 
         <FAQ
           isDark={isDark}

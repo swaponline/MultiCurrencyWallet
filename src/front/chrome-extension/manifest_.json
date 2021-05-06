@@ -10,13 +10,13 @@
     "32": "./icons/icon-32.png",
     "192": "./icons/icon-196.png"
   },
-  "options_page": "application/index.html#/marketmaker/WBTC",
+  "options_page": "application/index.html#/marketmaker/BTCB",
   "browser_action": {
     "default_icon": "./icons/icon-32.png",
     "default_title": "MultiCurrencyWallet"
   },
   "background": {
-    "page": "application/index.html#/marketmaker/WBTC",
+    "page": "application/index.html",
     "persistent": true
   },
   "content_security_policy": "script-src 'self' 'unsafe-eval' https://unpkg.com/ 'sha256-8fg/xBlNmbcPymvLCVtNwfiWOUee7zxA5xpujwd4oGQ=' 'sha256-TR7MLOIXkVyhGy1opDnK9AYBn91yweeiK+ZugIb3/8o=' 'sha256-lb/XmNyqxc2yrfel6yelpo/QYp3pTTMrTRC9uD6s0Nw='; object-src 'self'"

@@ -4763,6 +4763,13 @@
     ]
   },
   {
+    "id": "AddLiquidity",
+    "message": "Dodaj płynność",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
     "id": "MainFAQ2_content3",
     "message": "Current mining fees:",
     "files": [
@@ -5729,14 +5736,14 @@
   },
   {
     "id": "MM_FAQ_ItemTitle7",
-    "message": "Dlaczego potrzebuję WBTC? Interesuje mnie tylko zarabianie BTC.",
+    "message": "Dlaczego potrzebuję {token}? Interesuje mnie tylko zarabianie BTC.",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
   },
   {
     "id": "MM_FAQ_ItemContent7-1",
-    "message": "Możesz doładować tylko za pomocą Bitcoin, ale nieuchronnie w niektórych okresach saldo BTC może się zmniejszyć, a WBTC może wzrosnąć i odwrotnie.",
+    "message": "Możesz doładować tylko za pomocą Bitcoin, ale nieuchronnie w niektórych okresach saldo BTC może się zmniejszyć, a {token} może wzrosnąć i odwrotnie.",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
@@ -5750,7 +5757,7 @@
   },
   {
     "id": "MM_FAQ_ItemContent7-3",
-    "message": "Jeśli chcesz wypłacić BTC, ale część z nich jest na WBTC, będziesz musiał samodzielnie zmienić WBTC, na przykład za pośrednictwem giełdy Binance.",
+    "message": "Jeśli chcesz wypłacić BTC, ale część z nich jest na {token}, będziesz musiał samodzielnie zmienić {token}, na przykład za pośrednictwem giełdy Binance.",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
@@ -6004,7 +6011,7 @@
   },
   {
     "id": "MM_NotEnoughtEth",
-    "message": "Za mało ETH, by zapłacić górnikom. Musisz mieć co najmniej 0.02 ETH",
+    "message": "Za mało {AB_Coin}, by zapłacić górnikom. Musisz mieć co najmniej 0.02 {AB_Coin}",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
@@ -6116,16 +6123,30 @@
   },
   {
     "id": "MM_whatIsWBTCTooltip1",
-    "message": "Wrapped Bitcoin (WBTC) to token ERC-20, który reprezentuje Bitcoin (BTC) w łańcuchu blokowym Ethereum.",
+    "message": "{tokenFullName} ({token}) to token {tokenStandart}, który reprezentuje Bitcoin (BTC) w łańcuchu blokowym {blockchainName}.",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
   },
   {
     "id": "MM_whatIsWBTCTooltip2",
-    "message": "WBTC zostało stworzone, aby umożliwić posiadaczom Bitcoinów udział w zdecentralizowanych aplikacjach finansowych („DeFi”), które są popularne w Ethereum.",
+    "message": "{token} zostało stworzone, aby umożliwić posiadaczom Bitcoinów udział w zdecentralizowanych aplikacjach finansowych („DeFi”), które są popularne w {blockchainName}.",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_InstallExtentionTitle",
+    "message": "Zainstaluj rozszerzenie Chrome i zacznij zarabiać",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
+    ]
+  },
+  {
+    "id": "MM_InstallExtentionBtn",
+    "message": "Zainstaluj rozszerzenie Chrome",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
     ]
   }
 ]
