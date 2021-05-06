@@ -182,6 +182,7 @@ class CurrencyWallet extends Component<any, any> {
       // actions.analytics.dataEvent(`open-page-${currency.toLowerCase()}-wallet`)
     }
     if (token) {
+      // TODO: replace actions with erc20, bep20 ...
       actions.token.getBalance(currency.toLowerCase())
     }
 

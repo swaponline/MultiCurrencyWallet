@@ -57,6 +57,8 @@ export default {
   eth: EthLikeAction.ETH,
   bnb: EthLikeAction.BNB,
   token: Erc20LikeAction.token,
+  erc20: Erc20LikeAction.erc20,
+  bep20: Erc20LikeAction.bep20,
   ghost,
   next,
 

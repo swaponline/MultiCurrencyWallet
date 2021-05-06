@@ -847,7 +847,7 @@ class Exchange extends PureComponent<any, any> {
     this.setState(() => ({
       isPendingTokenApprove: true,
     }))
-
+    // TODO: replace actions with erc20, bep20 ...
     actions.token
       .approve({
         to: config.swapContract.erc20,

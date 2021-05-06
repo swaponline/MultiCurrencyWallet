@@ -177,6 +177,7 @@ const sign = async () => {
 
     Object.keys(config.erc20)
       .forEach(name => {
+        // TODO: replace actions with erc20, bep20 ...
         actions.token.login(
           _ethPrivateKey,
           config.erc20[name].address,
@@ -197,6 +198,7 @@ const sign_to_tokens = () => {
   ])
   Object.keys(config.erc20)
     .forEach(name => {
+      // TODO: replace actions with erc20, bep20 ...
       actions.token.login(
         privateKey,
         config.erc20[name].address,
@@ -274,6 +276,7 @@ const getBalances = () => {
         Object.keys(config.erc20)
           .forEach(async (name) => {
             try {
+              // TODO: replace actions with erc20, bep20 ...
               await actions.token.getBalance(name)
             } catch (error) {
               console.error(`Fail fetch balance for ${name.toUpperCase()} token`, error)
@@ -526,6 +529,7 @@ const setTransactions = async (objCurrency: ObjCurrencyType | {} = null) => {
     })
     erc20.map((name, index) => {
       delay(650 * index).then(() => {
+        // TODO: replace actions with erc20, bep20 ...
         actions.token.getTransaction(null, name).then((ercTxs: any[]) => {
           mergeTransactions(ercTxs)
         })

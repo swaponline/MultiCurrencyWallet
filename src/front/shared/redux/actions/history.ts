@@ -44,20 +44,6 @@ const setTransactions = async (address, type, callback) => {
     } else {
       pullTransactions([...currencyTxs])
     }
-    /*
-    await new Promise(async resolve => {
-      const ercArray = await Promise.all(Object.keys(config.erc20)
-        .map(async (name, index) => {
-          await delay(650 * index)
-          const res = await actions.token.getTransaction(name)
-          // console.log('name - ', name, '\n', '\n', res)
-          return res
-        }))
-      return resolve(ercArray)
-    }).then((ercTokens) => {
-      pullTransactions([...mainTokens, ...ercTokens])
-    })
-    */
   } catch (error) {
     console.error('getTransError: ', error)
   }

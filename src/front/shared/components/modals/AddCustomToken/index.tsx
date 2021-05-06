@@ -56,7 +56,7 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
       step: 'enterAddress',
       explorerApi: props.data.api,
       explorerApiKey: props.data.apiKey,
-      tokenType: props.data.type,
+      tokenType: props.data.type.toLowerCase(),
       tokenAddress: '',
       tokenTitle: '',
       tokenSymbol: '',
@@ -144,8 +144,8 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
   }
 
   handleConfirm = async () => {
-    const { tokenAddress, tokenSymbol, tokenDecimals } = this.state
-    actions.token.AddCustomERC20(tokenAddress, tokenSymbol, tokenDecimals)
+    const { tokenType, tokenAddress, tokenSymbol, tokenDecimals } = this.state
+    actions[tokenType].addToken(tokenAddress, tokenSymbol, tokenDecimals)
     actions.core.markCoinAsVisible(tokenSymbol.toUpperCase(), true)
 
     this.setState({

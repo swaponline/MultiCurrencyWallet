@@ -116,7 +116,7 @@ export default class EthTokenToUTXO extends Component<any, any> {
     const { sellCurrency, sellAmount } = this.swap
     //@ts-ignore: strictNullChecks
     const { ethTokenSwap } = this.swap.flow
-
+    // TODO: replace actions with erc20, bep20 ...
     actions.token.setAllowance({
       name: sellCurrency,
       to: ethTokenSwap.address, // swap contract address

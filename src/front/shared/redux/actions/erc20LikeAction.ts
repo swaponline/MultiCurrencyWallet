@@ -58,11 +58,10 @@ class Erc20LikeAction {
     console.groupEnd()
   }
 
-  // TODO: better name - addToken. Rename after intergation with bep20
-  AddCustomERC20 = (contract, symbol, decimals) => {
+  addToken = (contract, symbol, decimals) => {
     let customTokens = JSON.parse(localStorage.getItem(constants.localStorage.customERC) || '{}')
 
-    if (!customTokens) {
+    if (!Object.keys(customTokens).length) {
       customTokens = {
         mainnet: {},
         testnet: {},
@@ -78,8 +77,7 @@ class Erc20LikeAction {
     localStorage.setItem(constants.localStorage.customERC, JSON.stringify(customTokens))
   }
 
-  // TODO: better name - getToken. Rename after intergation with bep20
-  GetCustromERC20 = () => {
+  getToken = () => {
     let customERC = constants.localStorage.customERC || ''
     let tokensInfo = JSON.parse(localStorage.getItem(customERC) || '{}')
 
@@ -525,28 +523,35 @@ class Erc20LikeAction {
   }
 }
 
-// Temporarily
-const TokenInstance = externalConfig.binance
-  ? new Erc20LikeAction({
-      currency: 'BNB',
-      type: 'BEP20',
-      explorerName: 'bscscan',
-      explorerLink: externalConfig.link.bscscan,
-      explorerApiKey: externalConfig.api.bscscan_ApiKey,
-      adminFeeObj: externalConfig.opts?.fee?.erc20,
-      web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.binance_provider)),
-    })
-  : new Erc20LikeAction({
-      currency: 'ETH',
-      type: 'ERC20',
-      explorerName: 'etherscan',
-      explorerLink: externalConfig.link.etherscan,
-      explorerApiKey: externalConfig.api.etherscan_ApiKey,
-      adminFeeObj: externalConfig.opts?.fee?.erc20,
-      web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.provider)),
-    })
+// TODO: Temporarily
+const TokenInstance = new Erc20LikeAction({
+  currency: 'ETH',
+  type: 'ERC20',
+  explorerName: 'etherscan',
+  explorerLink: externalConfig.link.etherscan,
+  explorerApiKey: externalConfig.api.etherscan_ApiKey,
+  adminFeeObj: externalConfig.opts?.fee?.erc20,
+  web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.provider)),
+})
 
 export default {
-  // TODO: integrate with BNB and replace with keys: bep20, erc20
   token: TokenInstance,
+  erc20: new Erc20LikeAction({
+    currency: 'ETH',
+    type: 'ERC20',
+    explorerName: 'etherscan',
+    explorerLink: externalConfig.link.etherscan,
+    explorerApiKey: externalConfig.api.etherscan_ApiKey,
+    adminFeeObj: externalConfig.opts?.fee?.erc20,
+    web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.provider)),
+  }),
+  bep20: new Erc20LikeAction({
+    currency: 'BNB',
+    type: 'BEP20',
+    explorerName: 'bscscan',
+    explorerLink: externalConfig.link.bscscan,
+    explorerApiKey: externalConfig.api.bscscan_ApiKey,
+    adminFeeObj: externalConfig.opts?.fee?.erc20,
+    web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.binance_provider)),
+  })
 }

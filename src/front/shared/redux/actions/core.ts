@@ -537,6 +537,7 @@ const fetchWalletBalance = async (walletData): Promise<number> => {
 
   if (helpers.ethToken.isEthToken({ name })) {
     try {
+      // TODO: replace actions with erc20, bep20 ...
       const balance = await actions.token.fetchBalance(
         walletData.address,
         walletData.contractAddress,

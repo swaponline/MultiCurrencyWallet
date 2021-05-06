@@ -99,6 +99,7 @@ class Transaction extends Component<any, any> {
     let error = null
     try {
       if (currencyKey === `token`) {
+        // TODO: replace actions with erc20, bep20 ...
         //@ts-ignore: strictNullChecks
         infoTx = await actions.token.fetchTokenTxInfo(ticker, txId, 5 * 60 * 1000)
       } else {

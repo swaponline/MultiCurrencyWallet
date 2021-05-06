@@ -207,6 +207,7 @@ const createSwapApp = async () => {
               //@ts-ignore
               decimals: config.erc20[key].decimals,
               tokenAddress: config.erc20[key].address,
+              // TODO: replace actions with erc20, bep20 ...
               fetchBalance: (address) => actions.token.fetchBalance(address, config.erc20[key].address, config.erc20[key].decimals),
               //@ts-ignore
               estimateGasPrice: ({ speed } = {}) => helpers.ethToken.estimateGasPrice({ speed }),
