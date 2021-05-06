@@ -224,7 +224,7 @@ const CreateWallet: React.FC<any> = (props) => {
 
     if (currencies[tokenType]) {
       goHome()
-      actions.modals.open(constants.modals.AddCustomERC20)
+      actions.modals.open(constants.modals.AddCustomToken)
       return
     }
 

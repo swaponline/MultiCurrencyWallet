@@ -6,7 +6,7 @@ import config from 'app-config'
 
 import cssModules from 'react-css-modules'
 import styles from '../Styles/default.scss'
-import ownStyle from './AddCustomERC20.scss'
+import ownStyle from './index.scss'
 
 import Modal from 'components/modal/Modal/Modal'
 import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
@@ -63,7 +63,7 @@ const decimalsSignature = '0x313ce567'
 const symbolSignature = '0x95d89b41'
 
 @cssModules({ ...styles, ...ownStyle }, { allowMultiple: true })
-class AddCustomERC20 extends React.Component<CustomTokenProps, CustomTokenState> {
+class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState> {
   constructor(props) {
     super(props)
 
@@ -344,4 +344,4 @@ class AddCustomERC20 extends React.Component<CustomTokenProps, CustomTokenState>
   }
 }
 
-export default injectIntl(AddCustomERC20)
+export default injectIntl(AddCustomToken)
