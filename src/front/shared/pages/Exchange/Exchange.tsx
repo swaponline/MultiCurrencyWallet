@@ -1359,12 +1359,13 @@ class Exchange extends PureComponent<any, any> {
         ? haveCurrency
         : noPairToken
 
-    const selected = actions.pairs.selectPairPartial(checkingValue)
-    const check = selected.map((item) => item.value).includes(getCurrency)
+    const dropDownCurrencies = actions.pairs.selectPairPartial(checkingValue)
+    const check = dropDownCurrencies.map((item) => item.value).includes(getCurrency)
+
     this.getFiatBalance()
 
-    if (!check || getCurrency === checkingValue) {
-      this.chooseCurrencyToRender(selected)
+    if (dropDownCurrencies.length && (!check || getCurrency === checkingValue)) {
+      this.chooseCurrencyToRender(dropDownCurrencies)
     }
   }
 

@@ -831,7 +831,9 @@
         document.getElementById('starter-modal').classList.remove('d-none');
       }
 
-      if (isBinanceBuild && window.location.hash === '#/') {
+      const urlHash = window.location.hash
+
+      if (isBinanceBuild && (urlHash === '#/' || urlHash === '#/createWallet')) {
         redirectionTo('#/exchange/btc-to-btcb')
       }
 
