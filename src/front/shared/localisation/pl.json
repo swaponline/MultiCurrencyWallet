@@ -5729,14 +5729,14 @@
   },
   {
     "id": "MM_FAQ_ItemTitle7",
-    "message": "Dlaczego potrzebuję WBTC? Interesuje mnie tylko zarabianie BTC.",
+    "message": "Dlaczego potrzebuję {token}? Interesuje mnie tylko zarabianie BTC.",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
   },
   {
     "id": "MM_FAQ_ItemContent7-1",
-    "message": "Możesz doładować tylko za pomocą Bitcoin, ale nieuchronnie w niektórych okresach saldo BTC może się zmniejszyć, a WBTC może wzrosnąć i odwrotnie.",
+    "message": "Możesz doładować tylko za pomocą Bitcoin, ale nieuchronnie w niektórych okresach saldo BTC może się zmniejszyć, a {token} może wzrosnąć i odwrotnie.",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
@@ -5750,7 +5750,7 @@
   },
   {
     "id": "MM_FAQ_ItemContent7-3",
-    "message": "Jeśli chcesz wypłacić BTC, ale część z nich jest na WBTC, będziesz musiał samodzielnie zmienić WBTC, na przykład za pośrednictwem giełdy Binance.",
+    "message": "Jeśli chcesz wypłacić BTC, ale część z nich jest na {token}, będziesz musiał samodzielnie zmienić {token}, na przykład za pośrednictwem giełdy Binance.",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]

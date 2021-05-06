@@ -949,7 +949,7 @@ class Row extends Component<RowProps, RowState> {
                               isBTC={itemData.isBTC}
                               style={{
                                 position: 'relative',
-                                bottom: '13px',
+                                bottom: '16px',
                               }} 
                             />
                           ) : <p id={`${currency.toLowerCase()}Address`}>{itemData.address}</p>

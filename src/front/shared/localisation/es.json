@@ -5729,14 +5729,14 @@
   },
   {
     "id": "MM_FAQ_ItemTitle7",
-    "message": "¿Por qué necesito WBTC? Solo estoy interesado en ganar BTC.",
+    "message": "¿Por qué necesito {token}? Solo estoy interesado en ganar BTC.",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
   },
   {
     "id": "MM_FAQ_ItemContent7-1",
-    "message": "Puede reponer solo con Bitcoin, pero inevitablemente, en algunos períodos, su saldo de BTC puede disminuir y WBTC puede aumentar, y viceversa.",
+    "message": "Puede reponer solo con Bitcoin, pero inevitablemente, en algunos períodos, su saldo de BTC puede disminuir y {token} puede aumentar, y viceversa.",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
@@ -5750,7 +5750,7 @@
   },
   {
     "id": "MM_FAQ_ItemContent7-3",
-    "message": "Si desea retirar BTC, pero algunos de ellos están en WBTC, tendrá que cambiar WBTC usted mismo, por ejemplo, a través del intercambio de Binance.",
+    "message": "Si desea retirar BTC, pero algunos de ellos están en {token}, tendrá que cambiar {token} usted mismo, por ejemplo, a través del intercambio de Binance.",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
