@@ -221,10 +221,22 @@ const CreateWallet: React.FC<any> = (props) => {
       return
     }
 
-    if (currencies['ERC20'] || currencies['BEP20']) {
+    if (currencies['ERC20']) {
       goHome()
       actions.modals.open(constants.modals.AddCustomToken, {
-        type: Object.keys(currencies)[0]
+        api: config.api.etherscan,
+        apiKey: config.api.etherscan_ApiKey,
+        type: Object.keys(currencies)[0],
+      })
+      return
+    }
+
+    if (currencies['BEP20']) {
+      goHome()
+      actions.modals.open(constants.modals.AddCustomToken, {
+        api: config.api.bscscan,
+        apiKey: config.api.bscscan_ApiKey,
+        type: Object.keys(currencies)[0],
       })
       return
     }

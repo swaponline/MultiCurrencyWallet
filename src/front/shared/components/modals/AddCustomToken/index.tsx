@@ -24,11 +24,15 @@ type CustomTokenProps = {
   style: IUniversalObj
   intl: IUniversalObj
   data: {
+    api: string
+    apiKey: string
     type: string
   }
 }
 
 type CustomTokenState = {
+  explorerApi: string
+  explorerApiKey: string
   step: string
   tokenType: string
   tokenAddress: string
@@ -37,28 +41,6 @@ type CustomTokenState = {
   tokenDecimals: number
   notFound: boolean
   isPending: boolean
-}
-
-const getExplorerApiUrl = (params) => {
-  const { address, signature } = params
-  let api = config.api.etherscan instanceof Array
-    ? config.api.etherscan[0]
-    : config.api.etherscan
-  let apiKey = config.api.etherscan_ApiKey
-
-  if (config.binance) {
-    api = config.api.bscscan instanceof Array
-      ? config.api.bscscan[0]
-      : config.api.bscscan
-    apiKey = config.api.bscscan_ApiKey
-  }
-
-  return (
-    `${api}?module=proxy&action=eth_call` +
-    `&to=${address}` +
-    `&data=${signature}&tag=latest` +
-    `&apikey=${apiKey}`
-  )
 }
 
 const nameSignature = '0x06fdde03'
@@ -72,6 +54,8 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
 
     this.state = {
       step: 'enterAddress',
+      explorerApi: props.data.api,
+      explorerApiKey: props.data.apiKey,
       tokenType: props.data.type,
       tokenAddress: '',
       tokenTitle: '',
@@ -82,8 +66,20 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
     }
   }
 
+  getExplorerApiUrl = (params) => {
+    const { explorerApi, explorerApiKey } = this.state
+    const { address, signature } = params
+
+    return ''.concat(
+      `${explorerApi}?module=proxy&action=eth_call`,
+      `&to=${address}`,
+      `&data=${signature}&tag=latest`,
+      `&apikey=${explorerApiKey}`,
+    )
+  }
+
   async getName(address) {
-    const response: any = await request.get(getExplorerApiUrl({
+    const response: any = await request.get(this.getExplorerApiUrl({
       signature: nameSignature,
       address,
     }))
@@ -94,7 +90,7 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
   }
 
   async getSymbol(address) {
-    const response: any = await request.get(getExplorerApiUrl({
+    const response: any = await request.get(this.getExplorerApiUrl({
       signature: symbolSignature,
       address,
     }))
@@ -105,7 +101,7 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
   }
 
   async getDecimals(address) {
-    const response: any = await request.get(getExplorerApiUrl({
+    const response: any = await request.get(this.getExplorerApiUrl({
       signature: decimalsSignature,
       address,
     }))
@@ -163,6 +159,8 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
 
   addressIsCorrect() {
     const { tokenAddress } = this.state
+    // TODO: how to check Token main currency (ETH for ERC20, BNB for BEP20, ...)
+    // TODO: need to use address check with main currency
     return typeforce.isCoinAddress.ETH(tokenAddress)
   }
 
