@@ -26,16 +26,15 @@ type FeeInfoBlockProps = {
   exCurrencyRate?: BigNumber
   minerFee: BigNumber
   serviceFee: BigNumber
-  totalFee: BigNumber
   usedAdminFee: undefined | {
     address: string
     fee: number // percent (%)
     min: number
   }
   bitcoinFees?: {
-    slow: number | any
-    normal: number | any
-    fast: number | any,
+    slow: number
+    normal: number
+    fast: number
     custom: number
   }
 
@@ -55,7 +54,6 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
     minerFee: initialMinerFee,
     serviceFee,
     usedAdminFee,
-    totalFee,
     hasTxSize,
     txSize,
     feeCurrentCurrency,
@@ -97,10 +95,12 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
 
   let minerFee = initialMinerFee
 
-  // show a double miner fee if an admin fee is enabled
+  // double miner fee for user and admin transactions
   if (usedAdminFee && (isEthToken || COIN_DATA[currency]?.model === COIN_MODEL.AB)) {
     minerFee = initialMinerFee.multipliedBy(2)
   }
+
+  const totalFee = minerFee.plus(serviceFee)
 
   const fiatMinerFee = isEthToken
     ? exEthereumRate > 0 // eth rate for tokens
