@@ -79,6 +79,22 @@ const createP2PNode = (options) => {
         dht: KadDHT,
         pubsub: Gossipsub
       },
+      dialer: {
+        maxParallelDials: 100,
+        maxDialsPerPeer: 100,
+        dialTimeout: 30e3
+      },
+      connectionManager: {
+        maxConnections: Infinity,
+        minConnections: 0,
+        pollInterval: 500,
+        defaultPeerValue: 1,
+        maxData: Infinity,
+        maxSentData: Infinity,
+        maxReceivedData: Infinity,
+        maxEventLoopDelay: Infinity,
+        movingAverageInterval: 1000
+      },
       config: {
         transport: {
           [WebrtcStar.prototype[Symbol.toStringTag]]: {
@@ -97,11 +113,14 @@ const createP2PNode = (options) => {
             list: discoveryPeers || defaultDiscoveryPeers,
           }
         },
+        /*
         dialer: {
           maxParallelDials: 100,
           maxDialsPerPeer: 100,
           dialTimeout: 30e3
         },
+        */
+        /*
         connectionManager: {
           maxConnections: Infinity,
           minConnections: 0,
@@ -113,6 +132,7 @@ const createP2PNode = (options) => {
           maxEventLoopDelay: Infinity,
           movingAverageInterval: 1000
         },
+        */
         // @ts-ignore
         relay: {
           enabled: true,
