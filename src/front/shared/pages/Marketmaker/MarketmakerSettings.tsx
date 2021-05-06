@@ -204,6 +204,7 @@ class MarketmakerSettings extends Component<any, any> {
     SwapApp.onInit(() => {
       //@ts-ignore: strictNullChecks
       const isMarketEnabled = (SwapApp.shared().services.orders.getMyOrders().length > 0)
+      this.setState({isMarketEnabled})
 
       const swapsIds = []
       const swapsByIds = {}
@@ -215,8 +216,6 @@ class MarketmakerSettings extends Component<any, any> {
       if (lsSwapId === null || lsSwapId.length === 0) {
         return
       }
-
-      const swapsCore = lsSwapId.map((id) => new Swap(id, SwapApp.shared()))
 
       //@ts-ignore: strictNullChecks
       SwapApp.shared().attachedSwaps.items.forEach((swap) => {
@@ -234,7 +233,6 @@ class MarketmakerSettings extends Component<any, any> {
       this.setState({
         swapsIds,
         swapsByIds,
-        isMarketEnabled,
       })
     })
   }
