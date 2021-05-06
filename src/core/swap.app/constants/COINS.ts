@@ -37,6 +37,13 @@ export const COIN_DATA = {
     model: COIN_MODEL.AB,
     precision: 18,
   },
+  'BTCB': {
+    ticker: 'BTCB',
+    name: 'BTCB Token',
+    type: COIN_TYPE.ETH_TOKEN,
+    model: COIN_MODEL.AB,
+    precision: 18,
+  },
   'EURS': {
     ticker: 'EURS',
     name: 'STASIS EURO',
@@ -87,6 +94,7 @@ export const NATIVE = {
 
 export const ETH_TOKENS = {
   usdt: 'USDT',
+  btcb: 'BTCB',
   eurs: 'EURS',
   swap: 'SWAP',
   pay: 'PAY',
