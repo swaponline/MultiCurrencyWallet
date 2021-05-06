@@ -255,6 +255,7 @@
     "libp2p-secio": "^0.13.1",
     "libp2p-websockets": "^0.15.6",
     "lodash": "^4.17.15",
+    "lodash.merge": "^4.6.2",
     "module-alias": "^2.2.2",
     "moment": "^2.29.1",
     "moment-with-locales-es6": "^1.0.1",
