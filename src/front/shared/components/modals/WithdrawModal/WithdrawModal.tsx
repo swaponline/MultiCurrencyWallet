@@ -87,12 +87,12 @@ type WithdrawModalState = {
 
   currentDecimals: number
   btcFeeRate: number | any
-  txSize: null | number
+  txSize: undefined | number
   bitcoinFeeSpeedType: string
-  bitcoinFees: null | {
-      slow: number | any
-      normal: number | any
-      fast: number | any,
+  bitcoinFees: {
+      slow: number
+      normal: number
+      fast: number
       custom: number
   }
 
@@ -220,7 +220,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
       },
       btcFeeRate: null,
       fetchFee: true,
-      txSize: null,
+      txSize: undefined,
       isInvoicePay: !!(currentActiveAsset.invoice),
     }
   }
@@ -1207,15 +1207,12 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
                 isLoading={fetchFee}
                 usedAdminFee={usedAdminFee}
                 hasTxSize={isBTCWallet}
-                //@ts-ignore: strictNullChecks
                 txSize={txSize}
-                //@ts-ignore: strictNullChecks
                 bitcoinFees={bitcoinFees}
                 bitcoinFeeSpeedType={bitcoinFeeSpeedType}
                 setBitcoinFee={this.setBitcoinFeeRate}
                 minerFee={fees.miner}
                 serviceFee={fees.service}
-                totalFee={fees.total}
               />
             </div>
             {devError && (
