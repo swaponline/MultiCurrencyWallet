@@ -288,7 +288,7 @@ class CurrencyWallet extends Component<any, any> {
             return true
           }
         } else {
-          if (!ethToken.isEthToken({ name: ticker }) && item.address.toLowerCase() === walletAddress.toLowerCase()) {
+          if (item.address.toLowerCase() === walletAddress.toLowerCase() && item.currency === ticker) {
             return true
           }
         }

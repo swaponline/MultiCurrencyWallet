@@ -169,21 +169,14 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
     const usedAdminFee = adminFee.isEnabled(selectedItem.currency)
     const infoAboutCurrency = currentActiveAsset.infoAboutCurrency
     const isEthToken = helpers.ethToken.isEthToken({ name: currency.toLowerCase() })
-    const commissionCurrency = isEthToken ? config.binance
-        ? 'BNB'
-        : 'ETH'
-      : currency.toUpperCase()
+    const commissionCurrency = isEthToken ? 'ETH': currency.toUpperCase()
     const exCurrencyRate = infoAboutCurrency && infoAboutCurrency.price_fiat
       ? new BigNumber(currentActiveAsset.infoAboutCurrency.price_fiat)
       : new BigNumber(0)
 
     // save wallet for token exchange's rate
     const walletForTokenFee = items.find(wallet => {
-      const walletCurrency = wallet.currency.toLowerCase()
-
-      return config.binance === true
-        ? walletCurrency === 'bnb'
-        : walletCurrency === 'eth'
+      return wallet.currency.toLowerCase() === 'eth'
     })
 
     this.state = {
