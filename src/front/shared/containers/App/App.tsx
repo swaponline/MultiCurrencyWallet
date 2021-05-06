@@ -239,7 +239,7 @@ class App extends React.Component<RouteComponentProps<any>, any> {
               redirectTo(links.home)
               window.location.reload()
             } else {
-              redirectTo(links.createWallet)
+              redirectTo(config.binance ? links.exchange : links.createWallet)
               if (wpLoader) wpLoader.style.display = 'none'
             }
           }

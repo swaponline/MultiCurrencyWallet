@@ -67,6 +67,7 @@ type AddressSelectProps = {
   currency: string
   selectedType?: string
   placeholder?: string
+  balance?: number
   hasError?: boolean
   isDark: boolean
   onChange: ({}) => void
@@ -339,6 +340,7 @@ class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
   render() {
     const {
       currency,
+      balance,
       isDark,
       label,
       role,
@@ -356,10 +358,14 @@ class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
 
     const ticker = this.getTicker()
 
-    const { balance: internalBalance } = actions.core.getWallet({
+    let { balance: internalBalance } = actions.core.getWallet({
       currency,
       addressType: AddressType.Internal,
     })
+
+    if (selectedType === AddressType.Internal && !!balance) {
+      internalBalance = balance
+    }
 
     const isInternalOptionDisabled =
       role === AddressRole.Send && (!internalBalance || internalBalance === 0)
