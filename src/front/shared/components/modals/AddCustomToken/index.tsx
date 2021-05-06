@@ -22,18 +22,21 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
 type CustomTokenProps = {
   name: string
   style: IUniversalObj
-  history: IUniversalObj
   intl: IUniversalObj
+  data: {
+    type: string
+  }
 }
 
 type CustomTokenState = {
   step: string
+  tokenType: string
   tokenAddress: string
   tokenTitle: string
   tokenSymbol: string
   tokenDecimals: number
   notFound: boolean
-  isShipped: boolean
+  isPending: boolean
 }
 
 const getExplorerApiUrl = (params) => {
@@ -69,12 +72,13 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
 
     this.state = {
       step: 'enterAddress',
+      tokenType: props.data.type,
       tokenAddress: '',
       tokenTitle: '',
       tokenSymbol: '',
       tokenDecimals: 0,
       notFound: false,
-      isShipped: false,
+      isPending: false,
     }
   }
 
@@ -115,7 +119,7 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
     const { tokenAddress } = this.state
 
     this.setState({
-      isShipped: true,
+      isPending: true,
     })
 
     const tokenTitle = await this.getName(tokenAddress)
@@ -128,12 +132,12 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
         tokenSymbol,
         tokenDecimals,
         step: 'confirm',
-        isShipped: false,
+        isPending: false,
       })
     } else {
       this.setState({
         notFound: true,
-        isShipped: false,
+        isPending: false,
       })
       setTimeout(() => {
         this.setState({
@@ -173,7 +177,7 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
       tokenTitle,
       tokenSymbol,
       tokenDecimals,
-      isShipped,
+      isPending,
       notFound,
     } = this.state
 
@@ -184,7 +188,7 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
 
     const linked = Link.all(this, 'tokenAddress')
 
-    const isDisabled = !tokenAddress || isShipped || !this.addressIsCorrect()
+    const isDisabled = !tokenAddress || isPending || !this.addressIsCorrect()
 
     const localeLabel = defineMessages({
       title: {
@@ -210,7 +214,7 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
                 <FieldLabel inRow>
                   <span style={{ fontSize: '16px' }}>
                     <FormattedMessage
-                      id="customERC20_Address"
+                      id="customTokenAddress"
                       defaultMessage="{type} address"
                       values={{
                         type: config.binance ? 'bep20' : 'erc20'
@@ -227,7 +231,7 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
                 {notFound && (
                   <div styleName="rednote">
                     <FormattedMessage
-                      id="customERC20_NotFound"
+                      id="customTokenNotFound"
                       defaultMessage="This is not ERC20 address"
                     />
                   </div>
@@ -235,7 +239,7 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
                 {tokenAddress && !this.addressIsCorrect() && (
                   <div styleName="rednote">
                     <FormattedMessage
-                      id="customERC20_IncorrectAddress"
+                      id="customTokenIncorrectAddress"
                       defaultMessage="Invalid erc20 address"
                     />
                   </div>
@@ -247,12 +251,9 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
                 fullWidth
                 disabled={isDisabled}
                 onClick={this.handleSubmit}
-                pending={isShipped}
+                pending={isPending}
               >
-                <FormattedMessage
-                  id="customERC20_NextStep"
-                  defaultMessage="Nеxt"
-                />
+                <FormattedMessage id="NextId" defaultMessage="Nеxt" />
               </Button>
             </Fragment>
           )}
@@ -262,7 +263,7 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
                 <FieldLabel inRow>
                   <span styleName="title">
                     <FormattedMessage
-                      id="customERC20_Address"
+                      id="customTokenAddress"
                       defaultMessage="{type} address"
                       values={{
                         type: config.binance ? 'bep20' : 'erc20'
@@ -275,10 +276,7 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
               <div styleName="lowLevel">
                 <FieldLabel inRow>
                   <span styleName="title">
-                    <FormattedMessage
-                      id="customERC20_TokenTitle"
-                      defaultMessage="Title"
-                    />
+                    <FormattedMessage id="TitleId" defaultMessage="Title" />
                   </span>
                 </FieldLabel>
                 <div styleName="fakeInput">{tokenTitle}</div>
@@ -286,7 +284,7 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
               <div styleName="lowLevel">
                 <FieldLabel inRow>
                   <span styleName="title">
-                    <FormattedMessage id="customERC20_TokenSymbol" defaultMessage="Symbol" />
+                    <FormattedMessage id="SymbolId" defaultMessage="Symbol" />
                   </span>
                 </FieldLabel>
                 <div styleName="fakeInput">{tokenSymbol}</div>
@@ -294,10 +292,7 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
               <div styleName="lowLevel">
                 <FieldLabel inRow>
                   <span styleName="title">
-                    <FormattedMessage
-                      id="customERC20_TokenDecimals"
-                      defaultMessage="Decimals"
-                    />
+                    <FormattedMessage id="DecimalsId" defaultMessage="Decimals" />
                   </span>
                 </FieldLabel>
                 <div styleName="fakeInput">{tokenDecimals}</div>
@@ -308,10 +303,10 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
                 fullWidth
                 disabled={isDisabled}
                 onClick={this.handleConfirm}
-                pending={isShipped}
+                pending={isPending}
               >
                 <FormattedMessage
-                  id="customERC20_ConfirmStep"
+                  id="customTokenConfirm"
                   defaultMessage="Add this token"
                 />
               </Button>
@@ -321,7 +316,7 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
             <Fragment>
               <h4 styleName="readyTitle">
                 <FormattedMessage
-                  id="customERC20_ReadyMessage"
+                  id="customTokenAdded"
                   defaultMessage="Token added successfully"
                 />
               </h4>
@@ -333,7 +328,7 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
                 onClick={this.handleReady}
               >
                 <Fragment>
-                  <FormattedMessage id="customERC20_Ready" defaultMessage="Done" />
+                  <FormattedMessage id="SweepBannerButton" defaultMessage="Done" />
                 </Fragment>
               </Button>
             </Fragment>

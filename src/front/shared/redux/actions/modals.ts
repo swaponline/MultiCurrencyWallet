@@ -1,7 +1,9 @@
 import reducers from 'redux/core/reducers'
 
 
-const open = (name, data = null) => reducers.modals.open({ name, data })
+const open = (name, data: IUniversalObj | null = null) => {
+  reducers.modals.open({ name, data })
+}
 
 const close = (name) => reducers.modals.close(name)
 
