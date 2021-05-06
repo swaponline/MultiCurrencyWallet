@@ -5,8 +5,15 @@ import { parsePair } from 'shared/pages/Exchange/Orders/Pair'
 import TRADE_TICKERS from 'helpers/constants/TRADE_TICKERS'
 import actions from 'redux/actions'
 
+type Currency = {
+  fullTitle: string
+  icon: string
+  name: string
+  title: string
+  value: string
+}
 
-const filter = (value, tikers, items) => {
+const filter = (value, tikers, items): Currency[] => {
   const selectedPairsBase = tikers
     .map(ticker => parsePair(ticker))
     .filter(({ BASE }) => BASE.toLowerCase() === value)
@@ -34,10 +41,11 @@ const selectPair = (value) => { // addOffer drop down
   return pairs
 }
 
-const selectPairPartial = (value) => { // partial drop down
+// partial drop down
+const selectPairPartial = (value): Currency[] | [] => {
   const partialItems = getState().currencies.partialItems // eslint-disable-line
-
   const pairs = actions.pairs.filter(value, TRADE_TICKERS, partialItems)
+
   reducers.currencies.addPartialItems(pairs)
 
   return pairs
