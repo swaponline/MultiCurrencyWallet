@@ -61,7 +61,7 @@ export default class MarketmakerPromo extends React.Component<{}, {}> {
   render() {
     return (
       <div styleName="mm-promo-page">
-        <section styleName="how-to-earn">
+        <section styleName="promoHeader">
           <h2 styleName="section-title">
             <FormattedMessage
               id="MM_Promo_Title"
@@ -71,10 +71,11 @@ export default class MarketmakerPromo extends React.Component<{}, {}> {
           <p>
             <FormattedMessage
               id="MM_Promo_TitleBody"
-              defaultMessage="On swap.io users exchange BTC for {token} (a token that costs like BTC, but works on {Ab_Title}), and vice versa. You get a commission of 0.5% if the exchange takes place with you."
+              defaultMessage="On swap.io users exchange BTC for {token} (a token that costs like BTC, but works on {Ab_Title}), and vice versa. You get min. 10% APY (annual per year) as a commission from exchanges with low impermanent loss {link}."
               values={{
                 token: (config.binance) ? `BTCB` : `WBTC`,
                 Ab_Title: (config.binance) ? `Binance Smart Chain` : `Ethereum`,
+                link: <a href={links.impermanentLoss} target="_blank">(?)</a>,
               }}
             />
           </p>

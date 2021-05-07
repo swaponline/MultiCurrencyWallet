@@ -506,10 +506,11 @@ class MarketmakerSettings extends Component<any, any> {
           <p>
             <FormattedMessage
               id="MM_Promo_TitleBody"
-              defaultMessage="On swap.io users exchange BTC for {token} (a token that costs like BTC, but works on {Ab_Title}), and vice versa. You get a commission of 0.5% if the exchange takes place with you."
+              defaultMessage="On swap.io users exchange BTC for {token} (a token that costs like BTC, but works on {Ab_Title}), and vice versa. You get min. 10% APY (annual per year) as a commission from exchanges with low impermanent loss {link}."
               values={{
                 token: marketToken.toUpperCase(),
                 Ab_Title: (config.binance) ? `Binance Smart Chain` : `Ethereum`,
+                link: <a href={links.impermanentLoss} target="_blank">(?)</a>,
               }}
             />
           </p>
@@ -578,10 +579,11 @@ class MarketmakerSettings extends Component<any, any> {
                   <div style={{ maxWidth: '30em' }}>
                     <FormattedMessage
                       id="MM_Promo_TitleBody"
-                      defaultMessage="On swap.io users exchange BTC for {token} (a token that costs like BTC, but works on {Ab_Title}), and vice versa. You get a commission of 0.5% if the exchange takes place with you."
+                      defaultMessage="On swap.io users exchange BTC for {token} (a token that costs like BTC, but works on {Ab_Title}), and vice versa. You get min. 10% APY (annual per year) as a commission from exchanges with low impermanent loss {link}."
                       values={{
                         token: marketToken.toUpperCase(),
                         Ab_Title: (config.binance) ? `Binance Smart Chain` : `Ethereum`,
+                        link: <a href={links.impermanentLoss} target="_blank">(?)</a>,
                       }}
                     />
                   </div>

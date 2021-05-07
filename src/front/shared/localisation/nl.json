@@ -5936,7 +5936,7 @@
   },
   {
     "id": "MM_Promo_TitleBody",
-    "message": "Gebruikers in onze swap.io wisselaar wisselen BTC uit voor {token} (een token dat net als BTC kost, maar werkt op {Ab_Title}) en vice versa. U krijgt een commissie van 0,5% als de uitwisseling met u plaatsvindt.",
+    "message": "Gebruikers in onze swap.io wisselaar wisselen BTC uit voor {token} (een token dat net als BTC kost, maar werkt op {Ab_Title}) en vice versa. Jij krijgt min. 10% APY (jaarlijks per jaar) als provisie op beurzen met een gering tijdelijk verlies {link}.",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx",
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"

@@ -5940,7 +5940,7 @@
   },
   {
     "id": "MM_Promo_TitleBody",
-    "message": "Пользователи в нашем обменнике swap.io меняют BTC на {token} (токен который стоит как BTC, но работает на {Ab_Title}), и обратно. Вы получаете комиссию 0.5% если обмен происходит с вами.",
+    "message": "Пользователи в нашем обменнике swap.io меняют BTC на {token} (токен который стоит как BTC, но работает на {Ab_Title}), и обратно. Ты получишь мин. 10% годовых (ежегодно) в качестве комиссии c обменов с низкими непостоянными потерями {link}.",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx",
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"

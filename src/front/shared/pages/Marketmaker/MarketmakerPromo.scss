@@ -24,8 +24,14 @@
     margin-bottom: 0.5em;
   }
 
-  .how-to-earn {
+  .promoHeader {
     padding-top: 0;
+    text-align: center;
+
+    p {
+      max-width: 40em;
+      margin: 0 auto;
+    }
   }
 
   .installExtensionBody {
