@@ -129,7 +129,7 @@ const createP2PNode = (options) => {
           }
         },
         dht: {
-          enabled: true,
+          enabled: false,
           randomWalk: {
             enabled: false,
           }
