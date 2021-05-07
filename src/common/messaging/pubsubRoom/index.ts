@@ -52,6 +52,20 @@ export default class PubSubRoom extends EventEmitter {
 
     this._libp2p.pubsub.subscribe(this._topic, this._handleMessage)
 
+    this._libp2p.on('peer:discovery', async (peerId) => {
+      const tryConnect = async (peerId, tryNumber, tryCounts) => {
+        try {
+          await this._libp2p.dialer.connectToPeer(peerId)
+        } catch (e) {
+          if (tryNumber > tryCounts) return
+          setTimeout(async () => {
+            await tryConnect(peerId, tryNumber+1, tryCounts)
+          }, 1000)
+        }
+      }
+      await tryConnect(peerId, 0, 1)
+    })
+
     this._libp2p.on('error', (error) => {
       console.log('Libp2p error', error)
     })
