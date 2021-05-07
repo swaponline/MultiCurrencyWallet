@@ -1,10 +1,9 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
-import helpers, { constants } from 'helpers'
+import { constants } from 'helpers'
 import actions from 'redux/actions'
 import { Link } from 'react-router-dom'
 import { connect } from 'redaction'
-import config from 'app-config'
 
 import cssModules from 'react-css-modules'
 
@@ -12,20 +11,13 @@ import defaultStyles from '../Styles/default.scss'
 import styles from './SaveMnemonicModal.scss'
 import okSvg from 'shared/images/ok.svg'
 
-import { BigNumber } from 'bignumber.js'
 import Modal from 'components/modal/Modal/Modal'
-import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
-import Input from 'components/forms/Input/Input'
 import Button from 'components/controls/Button/Button'
-import Tooltip from 'components/ui/Tooltip/Tooltip'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
-import ReactTooltip from 'react-tooltip'
-import { isMobile } from 'react-device-detect'
-import CopyToClipboard from 'react-copy-to-clipboard'
+import Copy from 'components/ui/Copy/Copy'
 
 import links from 'helpers/links'
 import feedback from 'shared/helpers/feedback'
-
 
 const langPrefix = `SaveMnemonicModal`
 const langLabels = defineMessages({
@@ -36,18 +28,6 @@ const langLabels = defineMessages({
   enterMnemonicNotice: {
     id: `${langPrefix}_EnterNotice`,
     defaultMessage: `Нажмите слова, чтобы поместить их рядом друг с другом в правильном порядке`,
-  },
-  mnemonicCopied: {
-    id: `${langPrefix}_MnemonicCopied`,
-    defaultMessage: `Скопировано...`,
-  },
-  copyMnemonic: {
-    id: `${langPrefix}_CopyMnemonic`,
-    defaultMessage: `Скопировать`,
-  },
-  shareMnemonic: {
-    id: `${langPrefix}_ShareMnemonic`,
-    defaultMessage: `Share`,
   },
   shareMnemonicTitle: {
     id: `${langPrefix}_ShareMnemonicTitle`,
@@ -105,9 +85,6 @@ const langLabels = defineMessages({
 )
 @cssModules({ ...defaultStyles, ...styles }, { allowMultiple: true })
 class SaveMnemonicModal extends React.Component<any, any> {
-
-  props: any
-
   static propTypes = {
     name: PropTypes.string,
     data: PropTypes.object,
@@ -133,7 +110,6 @@ class SaveMnemonicModal extends React.Component<any, any> {
       randomedWords,
       mnemonicInvalid: true,
       incorrectWord: false,
-      isMnemonicCopied: false,
     }
   }
 
@@ -215,33 +191,6 @@ class SaveMnemonicModal extends React.Component<any, any> {
     })
   }
 
-  handleCopyMnemonic = () => {
-    this.setState({
-      isMnemonicCopied: true,
-    }, () => {
-      setTimeout(() => {
-        this.setState({
-          isMnemonicCopied: false,
-        })
-      }, 500)
-    })
-  }
-
-  handleShareMnemonic = () => {
-    const {
-      intl,
-    } = this.props
-
-    const { mnemonic } = this.state
-
-    //@ts-ignore: strictNullChecks
-    actions.modals.open(constants.modals.Share, {
-      title: intl.formatMessage(langLabels.shareMnemonicTitle),
-      link: mnemonic,
-    })
-  }
-
-
   render() {
     const {
       name,
@@ -256,10 +205,7 @@ class SaveMnemonicModal extends React.Component<any, any> {
       randomedWords,
       mnemonicInvalid,
       incorrectWord,
-      isMnemonicCopied,
     } = this.state
-
-    // const linked = Link.all(this, 'address', 'amount', 'from')
 
     return (
       //@ts-ignore: strictNullChecks
@@ -376,39 +322,24 @@ class SaveMnemonicModal extends React.Component<any, any> {
                     })
                   }
                 </div>
-                <p styleName="notice saveMnemonicToPaper mnemonicNotice">
+                <p styleName="notice mnemonicNotice">
                   <FormattedMessage {...langLabels.saveMnemonicStep1} />
+                  <br />
                   <FormattedMessage {...langLabels.saveMnemonicStep2} values={{ domain: location.hostname }} />
                 </p>
-                {/*
-                <div styleName="buttonsHolder">
-                  <CopyToClipboard
-                    text={mnemonic}
-                    onCopy={this.handleCopyMnemonic}
-                  >
-                    <Button blue disabled={isMnemonicCopied} onClick={this.handleCopyMnemonic}>
-                      {isMnemonicCopied ? (
-                        <FormattedMessage { ...langLabels.mnemonicCopied } />
-                      ) : (
-                        <FormattedMessage { ...langLabels.copyMnemonic } />
-                      )}
-                    </Button>
-                  </CopyToClipboard>
-                  <Button blue onClick={this.handleShareMnemonic}>
-                    <FormattedMessage { ...langLabels.shareMnemonic } />
+              </div>
+
+              <div styleName="mnemonicButtonsWrapper">
+                <Copy text={mnemonic}>
+                  <Button brand>
+                    <FormattedMessage id="FeeControler49" defaultMessage="Copy"/>
+                  </Button>
+                </Copy>
+                <div styleName="continueBtnWrapper">
+                  <Button brand onClick={this.handleGoToConfirm}>
+                    <FormattedMessage {...langLabels.Continue} />
                   </Button>
                 </div>
-              */}
-              </div>
-              <div styleName="lowLevel">
-                <Button
-                  styleName="buttonCenter buttonHalfFullWidth"
-                  blue
-                  onClick={this.handleGoToConfirm}
-                  fullWidth
-                >
-                  <FormattedMessage {...langLabels.Continue} />
-                </Button>
               </div>
             </Fragment>
           )}

@@ -22,11 +22,6 @@
   margin-bottom: 30px;
 }
 
-.saveMnemonicToPaper span {
-  display: block;
-  font-size: 120%;
-}
-
 .mnemonicView {
   max-width: 500px;
   margin: 0 auto;
@@ -82,10 +77,6 @@
   border: 1px solid red;
 }
 
-.buttonFinish {
-  min-width: 50%;
-}
-
 .mnemonicWords {
   max-width: 500px;
   margin: 0 auto;
@@ -103,6 +94,15 @@
     padding: 0 0.2em;
     font-family: 'Roboto Mono', monospace;
   }
+}
+
+.mnemonicButtonsWrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.continueBtnWrapper {
+  margin-left: 1em;
 }
 
 @include media-mobile {
