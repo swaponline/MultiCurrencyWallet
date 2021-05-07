@@ -68,7 +68,7 @@ export default class MarketmakerPromo extends React.Component<{}, {}> {
               defaultMessage="How to earn on my BTC deposit?"
             />
           </h2>
-          <p>
+          <p styleName="promoDescription">
             <FormattedMessage
               id="MM_Promo_TitleBody"
               defaultMessage="On swap.io users exchange BTC for {token} (a token that costs like BTC, but works on {Ab_Title}), and vice versa. You get min. 10% APY (annual per year) as a commission from exchanges with low impermanent loss {link}."

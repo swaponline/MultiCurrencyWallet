@@ -569,14 +569,14 @@ class MarketmakerSettings extends Component<any, any> {
                   />
                 )}
               </p>
-              <p styleName='item-text__secondary'>
+              <div styleName='item-text__secondary'>
                 <FormattedMessage
                   id="MMPercentEarn"
                   defaultMessage="You will earn 0.5% from each swap"
                 />
                 {' '}
                 <Tooltip id="FullEarnDiscription">
-                  <div style={{ maxWidth: '30em' }}>
+                  <span styleName="tooltipText">
                     <FormattedMessage
                       id="MM_Promo_TitleBody"
                       defaultMessage="On swap.io users exchange BTC for {token} (a token that costs like BTC, but works on {Ab_Title}), and vice versa. You get min. 10% APY (annual per year) as a commission from exchanges with low impermanent loss {link}."
@@ -586,9 +586,9 @@ class MarketmakerSettings extends Component<any, any> {
                         link: <a href={links.impermanentLoss} target="_blank">(?)</a>,
                       }}
                     />
-                  </div>
+                  </span>
                 </Tooltip>
-              </p>
+              </div>
             </div>
             <div styleName='section-items__item'>
               <p styleName='item-text__secondary-title'>
@@ -691,7 +691,7 @@ class MarketmakerSettings extends Component<any, any> {
                       }}
                     />
                   </p>
-                  <p>
+                  <div>
                     {config.binance ? (
                       <img src={btc} alt="btcb" />
                     ): (
@@ -701,7 +701,7 @@ class MarketmakerSettings extends Component<any, any> {
                     <span id='tokenBalance' styleName='balanceSecondary'>{tokenBalance}</span>
                     {' '}
                     <Tooltip id="WhatIsToken">
-                      <div style={{ maxWidth: '30em' }}>
+                      <span styleName="tooltipText">
                         <FormattedMessage
                           id="MM_whatIsWBTCTooltip1"
                           defaultMessage="{tokenFullName} ({token}) is an {tokenStandart} token that represents Bitcoin (BTC) on the {blockchainName} blockchain."
@@ -721,9 +721,9 @@ class MarketmakerSettings extends Component<any, any> {
                             blockchainName: config.binance ? 'Binance' : 'Ethereum'
                           }}
                         />
-                      </div>
+                      </span>
                     </Tooltip>
-                  </p>
+                  </div>
                   {this._metamaskEnabled && (
                     <div style={{ marginBottom: '15px' }}>
                     {metamask.isConnected() ? (
