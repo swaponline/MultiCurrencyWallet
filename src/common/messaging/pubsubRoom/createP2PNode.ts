@@ -91,7 +91,7 @@ const createP2PNode = (options) => {
         maxReceivedData: Infinity,
         maxEventLoopDelay: Infinity,
         pollInterval: 2000,
-        autoDialInterval: 1000,
+        autoDialInterval: 5000,
         movingAverageInterval: 1000,
         defaultPeerValue: 1
       },
