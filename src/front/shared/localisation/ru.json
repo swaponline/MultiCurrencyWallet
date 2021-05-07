@@ -398,7 +398,7 @@
   },
   {
     "id": "HowItWorks10",
-    "message": "Как это работает ",
+    "message": "Как Это Работает",
     "files": [
       "src/front/shared/pages/Exchange/HowItWorks/HowItWorks.tsx"
     ]
@@ -496,10 +496,7 @@
   },
   {
     "id": "orders128",
-    "message": "Создать предложение",
-    "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
-    ]
+    "message": "Создать предложение"
   },
   {
     "id": "addoffer381",
@@ -576,6 +573,7 @@
     "id": "recieved67",
     "message": "Скопировать",
     "files": [
+      "src/front/shared/components/modals/DownloadModal/DownloadModal.tsx",
       "src/front/shared/components/modals/ReceiveModal/ReceiveModal.tsx"
     ]
   },
@@ -2505,13 +2503,6 @@
     ]
   },
   {
-    "id": "PartialHowItWorks10",
-    "message": "Как это работает?",
-    "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
-    ]
-  },
-  {
     "id": "continueDeclined977",
     "message": "Продолжить обмен",
     "files": [
@@ -3470,7 +3461,8 @@
     "id": "MainFAQHeader",
     "message": "FAQ",
     "files": [
-      "src/front/shared/components/FAQ/FAQ.tsx"
+      "src/front/shared/components/FAQ/FAQ.tsx",
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
   },
   {
@@ -4772,17 +4764,11 @@
   },
   {
     "id": "createOrderMessageForUser",
-    "message": "Вы должны быть онлайн все время, иначе ваше предложение не будет видно другим пользователям",
-    "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
-    ]
+    "message": "Вы должны быть онлайн все время, иначе ваше предложение не будет видно другим пользователям"
   },
   {
     "id": "createOrderNoManyMessageForUser",
-    "message": "Пополните свой баланс",
-    "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
-    ]
+    "message": "Пополните свой баланс"
   },
   {
     "id": "AddLiquidity",
@@ -5658,28 +5644,28 @@
     ]
   },
   {
-    "id": "MM_FAQ_ItemBody2-1",
-    "message": "- Система находится в стадии бета-тестирования",
+    "id": "MM_FAQ_TotalSum",
+    "message": "- В любой момент времени сумма балансов BTC и {token} будет больше, чем раньше.",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
   },
   {
-    "id": "MM_FAQ_ItemBody2-2",
-    "message": "- Есть аудит от dsec",
+    "id": "MM_FAQ_Audit",
+    "message": "- Приложение прошло аудит от {link}.",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
   },
   {
-    "id": "MM_FAQ_ItemBody2-3",
-    "message": "- Мы рекомендуем инвестировать только те средства, которые вы не готовы потерять",
+    "id": "MM_FAQ_NotStore",
+    "message": "- Не храните большие суммы или заемные средства.",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
   },
   {
-    "id": "MM_FAQ_ItemBody2-4",
+    "id": "MM_FAQ_FundAccess",
     "message": "- Ключи к вашим средствам только у вас, у нас нет доступа к ним",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
@@ -5700,15 +5686,8 @@
     ]
   },
   {
-    "id": "MM_FAQ_ItemContent3-1",
-    "message": "Зависит от количества обменов и спреда. Но если обменов не будет, вы получите SWAP токены из расчета 10% APY. Для получения напишите в ",
-    "files": [
-      "src/front/shared/pages/Marketmaker/FAQ.tsx"
-    ]
-  },
-  {
-    "id": "MM_FAQ_ItemContent3-2",
-    "message": "поддержку.",
+    "id": "MM_FAQ_HowMuchEarn",
+    "message": "Мы заявляем от 10% в год (APY). Если количество обменов недостаточно, мы будем мотивировать пользователей совершать обмены с помощью баунти программ.",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
@@ -5784,8 +5763,8 @@
     ]
   },
   {
-    "id": "MM_FAQ_ItemTitle2",
-    "message": "Это безопасно?",
+    "id": "MM_FAQ_Safety",
+    "message": "Это безопасно? Может ли баланс уменьшиться?",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
@@ -5820,115 +5799,67 @@
   },
   {
     "id": "MM_Choose_Farming_Body1",
-    "message": "Получайте дополнительную награду в SWAP токенах, заморозив LP токены.",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
-    ]
+    "message": "Получайте дополнительную награду в SWAP токенах, заморозив LP токены."
   },
   {
     "id": "MM_Choose_Farming_Button",
-    "message": "Начать фарминг",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
-    ]
+    "message": "Начать фарминг"
   },
   {
     "id": "MM_Choose_Farming_Title",
-    "message": "Фарминг",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
-    ]
+    "message": "Фарминг"
   },
   {
     "id": "MM_Choose_InBrowser_Body1",
-    "message": "Подходит для того, что бы попробовать.",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
-    ]
+    "message": "Подходит для того, что бы попробовать."
   },
   {
     "id": "MM_Choose_InBrowser_Body2",
-    "message": "Если вы закроете браузер, вы перестанете зарабатывать.",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
-    ]
+    "message": "Если вы закроете браузер, вы перестанете зарабатывать."
   },
   {
     "id": "MM_Choose_InBrowser_Button",
-    "message": "Начать в браузере",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
-    ]
+    "message": "Начать в браузере"
   },
   {
     "id": "MM_Choose_InBrowser_Title",
-    "message": "Маркетмейкер в браузере",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
-    ]
+    "message": "Маркетмейкер в браузере"
   },
   {
     "id": "MM_Choose_Server_Body1",
-    "message": "Подходит для продвинутых пользователей.",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
-    ]
+    "message": "Подходит для продвинутых пользователей."
   },
   {
     "id": "MM_Choose_Server_Body2",
-    "message": "Требуется сервер для разворачивания образа Docker.",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
-    ]
+    "message": "Требуется сервер для разворачивания образа Docker."
   },
   {
     "id": "MM_Choose_Server_Button",
-    "message": "Читать инструкцию",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
-    ]
+    "message": "Читать инструкцию"
   },
   {
     "id": "MM_Choose_Server_Title",
-    "message": "Маркетмейкер-сервер",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
-    ]
+    "message": "Маркетмейкер-сервер"
   },
   {
     "id": "MM_Choose_Title",
-    "message": "Выберите способ",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
-    ]
+    "message": "Выберите способ"
   },
   {
     "id": "MM_Choose_Uniswap_Body1",
-    "message": "Подходит для продвинутых пользователей.",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
-    ]
+    "message": "Подходит для продвинутых пользователей."
   },
   {
     "id": "MM_Choose_Uniswap_Body2",
-    "message": "Зарабатывайте когда другие продают или покупают SWAP токены.",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
-    ]
+    "message": "Зарабатывайте когда другие продают или покупают SWAP токены."
   },
   {
     "id": "MM_Choose_Uniswap_Button",
-    "message": "Создать пул",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
-    ]
+    "message": "Создать пул"
   },
   {
     "id": "MM_Choose_Uniswap_Title",
-    "message": "Создайте uniswap-пул SWAP/ETH",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
-    ]
+    "message": "Создайте uniswap-пул SWAP/ETH"
   },
   {
     "id": "MM_Promo_Title",
@@ -5940,7 +5871,7 @@
   },
   {
     "id": "MM_Promo_TitleBody",
-    "message": "Пользователи в нашем обменнике swap.io меняют BTC на {token} (токен который стоит как BTC, но работает на {Ab_Title}), и обратно. Вы получаете комиссию 0.5% если обмен происходит с вами.",
+    "message": "Пользователи в нашем обменнике swap.io меняют BTC на {token} (токен который стоит как BTC, но работает на {Ab_Title}), и обратно. Ты получишь мин. 10% годовых в качестве комиссии c обменов с низким impermanent loss {link}.",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx",
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
@@ -6081,10 +6012,7 @@
   },
   {
     "id": "MM_TotalBalance",
-    "message": "{token}, BTC",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
-    ]
+    "message": "{token}, BTC"
   },
   {
     "id": "MM_ToggleTextEnabled",
@@ -6145,6 +6073,48 @@
   {
     "id": "MM_InstallExtentionBtn",
     "message": "Установить Расширение Chrome",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
+    ]
+  },
+  {
+    "id": "MetamaskNetworkAlert_BnBNetworkMainnet",
+    "message": "Mainnet Binance Smart Chain",
+    "files": [
+      "src/front/shared/containers/App/App.tsx"
+    ]
+  },
+  {
+    "id": "MetamaskNetworkAlert_BnBNetworkTestnet",
+    "message": "Testnet Binance Smart Chain",
+    "files": [
+      "src/front/shared/containers/App/App.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_HighRisk",
+    "message": "- Любая операция с криптовалютой сопряжена с высоким риском.",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_ImpermanentLoss",
+    "message": "Какие издержки предпологаются?",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_ImpermanentLossContent",
+    "message": "В любой момент времени сумма этих остатков будет больше, чем раньше. Если вы хотите вывести BTC, но некоторые из них находятся в {token}, то вам придется обменять {token} самостоятельно, например, через биржу Binance.",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_InstallDevExtention",
+    "message": "Скачать версию для разработки",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
     ]
