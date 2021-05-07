@@ -69,7 +69,10 @@ const createP2PNode = (options) => {
       //@ts-ignore: strictNullChecks
       peerId,
       addresses: {
-        listen: (listen || defaultListen),
+        listen: [
+          '/dns4/wrtc-star1.par.dwebops.pub/tcp/443/wss/p2p-webrtc-star',
+          '/dns4/wrtc-star2.sjc.dwebops.pub/tcp/443/wss/p2p-webrtc-star'
+        ],
       },
       modules: {
         transport: [WebrtcStar],
