@@ -444,10 +444,7 @@
   },
   {
     "id": "orders128",
-    "message": "Utwórz ofertę",
-    "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
-    ]
+    "message": "Utwórz ofertę"
   },
   {
     "id": "addoffer381",
@@ -524,6 +521,7 @@
     "id": "recieved67",
     "message": "Kopiuj do schowka",
     "files": [
+      "src/front/shared/components/modals/DownloadModal/DownloadModal.tsx",
       "src/front/shared/components/modals/ReceiveModal/ReceiveModal.tsx"
     ]
   },
@@ -3448,7 +3446,8 @@
     "id": "MainFAQHeader",
     "message": "FAQ",
     "files": [
-      "src/front/shared/components/FAQ/FAQ.tsx"
+      "src/front/shared/components/FAQ/FAQ.tsx",
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
   },
   {
@@ -4743,17 +4742,11 @@
   },
   {
     "id": "createOrderMessageForUser",
-    "message": "You must be online all the time, otherwise your order will not be visible to other users",
-    "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
-    ]
+    "message": "You must be online all the time, otherwise your order will not be visible to other users"
   },
   {
     "id": "createOrderNoManyMessageForUser",
-    "message": "Top up your balance",
-    "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
-    ]
+    "message": "Top up your balance"
   },
   {
     "id": "AddLiquidity",
@@ -5806,115 +5799,67 @@
   },
   {
     "id": "MM_Choose_Farming_Body1",
-    "message": "Получайте дополнительную награду в SWAP токенах, заморозив LP токены.",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
-    ]
+    "message": "Получайте дополнительную награду в SWAP токенах, заморозив LP токены."
   },
   {
     "id": "MM_Choose_Farming_Button",
-    "message": "Начать фарминг",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
-    ]
+    "message": "Начать фарминг"
   },
   {
     "id": "MM_Choose_Farming_Title",
-    "message": "Фарминг",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
-    ]
+    "message": "Фарминг"
   },
   {
     "id": "MM_Choose_InBrowser_Body1",
-    "message": "Подходит для того, что бы попробовать.",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
-    ]
+    "message": "Подходит для того, что бы попробовать."
   },
   {
     "id": "MM_Choose_InBrowser_Body2",
-    "message": "Если вы закроете браузер, вы перестанете зарабатывать.",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
-    ]
+    "message": "Если вы закроете браузер, вы перестанете зарабатывать."
   },
   {
     "id": "MM_Choose_InBrowser_Button",
-    "message": "Начать в браузере",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
-    ]
+    "message": "Начать в браузере"
   },
   {
     "id": "MM_Choose_InBrowser_Title",
-    "message": "Маркетмейкер в браузере",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
-    ]
+    "message": "Маркетмейкер в браузере"
   },
   {
     "id": "MM_Choose_Server_Body1",
-    "message": "Подходит для продвинутых пользователей.",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
-    ]
+    "message": "Подходит для продвинутых пользователей."
   },
   {
     "id": "MM_Choose_Server_Body2",
-    "message": "Требуется сервер для разворачивания образа Docker.",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
-    ]
+    "message": "Требуется сервер для разворачивания образа Docker."
   },
   {
     "id": "MM_Choose_Server_Button",
-    "message": "Читать инструкцию",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
-    ]
+    "message": "Читать инструкцию"
   },
   {
     "id": "MM_Choose_Server_Title",
-    "message": "Маркетмейкер-сервер",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
-    ]
+    "message": "Маркетмейкер-сервер"
   },
   {
     "id": "MM_Choose_Title",
-    "message": "Выберите способ",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
-    ]
+    "message": "Выберите способ"
   },
   {
     "id": "MM_Choose_Uniswap_Body1",
-    "message": "Подходит для продвинутых пользователей.",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
-    ]
+    "message": "Подходит для продвинутых пользователей."
   },
   {
     "id": "MM_Choose_Uniswap_Body2",
-    "message": "Зарабатывайте когда другие продают или покупают SWAP токены.",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
-    ]
+    "message": "Зарабатывайте когда другие продают или покупают SWAP токены."
   },
   {
     "id": "MM_Choose_Uniswap_Button",
-    "message": "Создать пул",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
-    ]
+    "message": "Создать пул"
   },
   {
     "id": "MM_Choose_Uniswap_Title",
-    "message": "Создайте uniswap-пул SWAP/ETH",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
-    ]
+    "message": "Создайте uniswap-пул SWAP/ETH"
   },
   {
     "id": "MM_Promo_Title",
@@ -6067,10 +6012,7 @@
   },
   {
     "id": "MM_TotalBalance",
-    "message": "{token}, BTC",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
-    ]
+    "message": "{token}, BTC"
   },
   {
     "id": "MM_ToggleTextEnabled",
@@ -6131,6 +6073,48 @@
   {
     "id": "MM_InstallExtentionBtn",
     "message": "Zainstaluj rozszerzenie Chrome",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
+    ]
+  },
+  {
+    "id": "MetamaskNetworkAlert_BnBNetworkMainnet",
+    "message": "Mainnet Binance Smart Chain",
+    "files": [
+      "src/front/shared/containers/App/App.tsx"
+    ]
+  },
+  {
+    "id": "MetamaskNetworkAlert_BnBNetworkTestnet",
+    "message": "Testnet Binance Smart Chain",
+    "files": [
+      "src/front/shared/containers/App/App.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_HighRisk",
+    "message": "- Każda operacja kryptowaluta jest wysokie ryzyko.",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_ImpermanentLoss",
+    "message": "Jakiej straty się spodziewać?",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_ImpermanentLossContent",
+    "message": "W danym momencie suma tych sald będzie większa niż wcześniej. Jeśli chcesz wypłacić BTC, ale niektóre z nich są w {token}, musisz zmienić {token} samodzielnie, na przykład za pośrednictwem giełdy Binance.",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_InstallDevExtention",
+    "message": "Pobierz wersję rozwojową",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
     ]
