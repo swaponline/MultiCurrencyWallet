@@ -128,6 +128,7 @@ type ExchangeState = {
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 const isWidgetBuild = config && config.isWidget
+const isChromeExtention = config && config.dir === 'chrome-extension/application'
 const bannedPeers = {} // rejected swap peers
 
 @connect(
@@ -1949,7 +1950,7 @@ class Exchange extends PureComponent<any, any> {
             </> */}
 
               <div styleName="link button-like">
-                <a href={!isWidgetBuild ? `#${links.marketmaker}/` : (config.binance) ? `#${links.marketmaker}/BTCB` : `#${links.marketmaker}/WBTC`}>
+                <a href={!isChromeExtention ? `#${links.marketmaker}/` : (config.binance) ? `#${links.marketmaker}/BTCB` : `#${links.marketmaker}/WBTC`}>
                   <FormattedMessage id="AddLiquidity" defaultMessage="Add Liquidity" />
                 </a>
               </div>
