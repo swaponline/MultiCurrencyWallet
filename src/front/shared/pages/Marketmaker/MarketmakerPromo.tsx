@@ -83,11 +83,12 @@ export default class MarketmakerPromo extends React.Component<{}, {}> {
 
         <section>
           <h2 styleName="section-title">
-              <FormattedMessage
-                id="MM_InstallExtentionTitle"
-                defaultMessage="Install Chrome Extension and Start Earn"
-              />
+            <FormattedMessage
+              id="MM_InstallExtentionTitle"
+              defaultMessage="Install Chrome Extension and Start Earn"
+            />
           </h2>
+
           <div styleName="installExtensionBody">
             <img styleName="extensionPromoImg" src={isDark ? extensionPromoDark : extensionPromoLight} alt="extention_promo"/>
             <Button brand onClick={this.openChromeStore}>
@@ -96,6 +97,16 @@ export default class MarketmakerPromo extends React.Component<{}, {}> {
                 defaultMessage="Install Chrome Extension"
               />
             </Button>
+            <a
+              styleName="devVersionLink"
+              target="_blank"
+              href="https://github.com/swaponline/MultiCurrencyWallet/actions/workflows/chromeExtention.yml"
+            >
+              <FormattedMessage
+                id="MM_InstallDevExtention"
+                defaultMessage="Download development version"
+              />
+            </a>
           </div>
         </section>
 

@@ -2529,13 +2529,6 @@
     ]
   },
   {
-    "id": "PartialHowItWorks10",
-    "message": "Jak to działa?",
-    "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
-    ]
-  },
-  {
     "id": "continueDeclined977",
     "message": "Kontynuuj Twoją wymianę",
     "files": [

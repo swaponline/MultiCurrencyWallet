@@ -215,6 +215,24 @@ class FAQ extends React.Component<{isDark: boolean}, {}> {
             }
             onExpand={() => { feedback.marketmaking.faqOpened('How to increase earnings?') }}
           />
+          <Expandable
+            title={
+              <FormattedMessage
+                id="MM_FAQ_ImpermanentLoss"
+                defaultMessage="What Impermanent Loss expected?"
+              />
+            }
+            content={
+              <FormattedMessage
+                id="MM_FAQ_ImpermanentLossContent"
+                defaultMessage="At any given time, the sum of these balances will be greater than before. If you want to withdraw BTC, but some of them are in {token}, then you will have to change {token} yourself, for example, through the Binance exchange."
+                values={{
+                  token: config.binance ? 'BTCB' : 'WBTC',
+                }}
+              />
+            }
+            onExpand={() => { feedback.marketmaking.faqOpened('What Impermanent Loss expected?') }}
+          />
         </section>
       </div>
     )

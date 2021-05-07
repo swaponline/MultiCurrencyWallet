@@ -2505,13 +2505,6 @@
     ]
   },
   {
-    "id": "PartialHowItWorks10",
-    "message": "Как это работает?",
-    "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
-    ]
-  },
-  {
     "id": "continueDeclined977",
     "message": "Продолжить обмен",
     "files": [

@@ -172,7 +172,6 @@ class Exchange extends PureComponent<any, any> {
   promoContainer: Element
   fiatRates: { [key: string]: number }
   onRequestAnswer: (newOrder: IUniversalObj, isAccepted: boolean) => void
-  scrollTrigger: any // undefined | ?
 
   static getDerivedStateFromProps(props, state) {
     const { orders } = props
@@ -427,8 +426,6 @@ class Exchange extends PureComponent<any, any> {
       SwapApp.shared().services.room.on('new orders', () => this.checkPair())
     })
 
-    document.addEventListener('scroll', this.rmScrollAdvice)
-
     setTimeout(() => {
       if (this._mounted) {
         this.setState({
@@ -592,13 +589,6 @@ class Exchange extends PureComponent<any, any> {
           break
         }
       }
-    }
-  }
-
-  rmScrollAdvice = () => {
-    if (window.scrollY > window.innerHeight * 0.7 && this.scrollTrigger) {
-      this.scrollTrigger.classList.add('hidden')
-      document.removeEventListener('scroll', this.rmScrollAdvice)
     }
   }
 
@@ -1975,23 +1965,6 @@ class Exchange extends PureComponent<any, any> {
           //@ts-ignore: strictNullChecks
           ref={(ref) => (this.promoContainer = ref)}
         >
-          {config && config.showHowItsWork && (
-            <div
-              styleName="scrollToTutorialSection"
-              ref={(ref) => (this.scrollTrigger = ref)}
-              onClick={() =>
-                animate((timePassed) => {
-                  window.scrollTo(0, this.promoContainer.clientHeight * (timePassed / 100))
-                }, 100)
-              }
-            >
-              <span styleName="scrollAdvice">
-                <FormattedMessage id="PartialHowItWorks10" defaultMessage="How it works?" />
-              </span>
-              <span styleName="scrollTrigger" />
-            </div>
-          )}
-
           <Fragment>
             <div styleName="container">
               <Promo />

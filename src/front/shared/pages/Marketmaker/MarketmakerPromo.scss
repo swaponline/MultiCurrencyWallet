@@ -36,14 +36,24 @@
 
   .installExtensionBody {
     display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
 
     .extensionPromoImg {
       display: block;
       margin: 0 auto 1em;
       width: 70%;
       height: intrinsic;
+    }
+
+    button {
+      @include ff-light;
+    }
+
+    .devVersionLink {
+      display: inline-block;
+      margin-top: 1em;
+      text-decoration: underline;
     }
   }
 
