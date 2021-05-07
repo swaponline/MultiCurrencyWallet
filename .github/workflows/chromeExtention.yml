@@ -25,31 +25,31 @@ jobs:
       run: |
         npm i
         npm run build:chrome-extension-bsc-mainnet
-        cp ./build-chrome-extension/zipped-chrome-extension-mainnet.zip ./zipped-chrome-extension-mainnet.zip
+        cp ./build-chrome-extension/zipped-chrome-extension-bsc.zip ./zipped-chrome-extension-bsc.zip
         npm run build:chrome-extension-bsc-testnet
-        cp ./build-chrome-extension/zipped-chrome-extension-testnet.zip ./zipped-chrome-extension-testnet.zip
+        cp ./build-chrome-extension/zipped-chrome-extension-bsc-testnet.zip ./zipped-chrome-extension-bsc-testnet.zip
         ls
     - uses: actions/upload-artifact@v2
       with:
-        name: extentions
+        name: extensions
         path: | 
-          ./zipped-chrome-extension-mainnet.zip
-          ./zipped-chrome-extension-testnet.zip
-    - name: publish bsc extention to crhome web store
+          ./zipped-chrome-extension-bsc.zip
+          ./zipped-chrome-extension-bsc-testnet.zip
+    - name: publish bsc extension to chrome web store
       uses: Passiverecords/chrome-extension-upload-action@1.4.1
       with:
         refresh-token:  ${{ secrets.CHROMEUPDATETOKEN }}
         client-id:  ${{ secrets.CLIENTID }}
         client-secret:  ${{ secrets.CLIENTSECRET }}
-        file-name: 'zipped-chrome-extension-mainnet.zip'
+        file-name: 'zipped-chrome-extension-bsc.zip'
         app-id: 'oldojieloelkkfeacfinhcngmbkepnlm'
         publish: false
-    - name: publish ropsten extention to crhome web store
+    - name: publish ropsten extension to crhome web store
       uses: Passiverecords/chrome-extension-upload-action@1.4.1
       with:
         refresh-token:  ${{ secrets.CHROMEUPDATETOKEN }}
         client-id:  ${{ secrets.CLIENTID }}
         client-secret:  ${{ secrets.CLIENTSECRET }}
-        file-name: 'zipped-chrome-extension-testnet.zip'
+        file-name: 'zipped-chrome-extension-bsc-testnet.zip'
         app-id: 'lihimbnmcnbecbnfbbkccoblfjaomiil'
         publish: false

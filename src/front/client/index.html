@@ -592,14 +592,20 @@
     <!-- Extension: icon click => open tab -->
     <script>
       if (chrome && chrome.browserAction) {
-        chrome.browserAction.onClicked.addListener(function(tab) {
+        if (!chrome.browserAction.isClickListenerAdded) {
           console.log('Extension: add click listener')
-          chrome.tabs.create({
-            'url': chrome.extension.getURL('/application/index.html#/marketmaker/WBTC')
-          }, (tab) =>{
-           // fallback
+          chrome.browserAction.onClicked.addListener(function(tab) {
+            console.log('Extension: icon clicked')
+            chrome.tabs.create({
+              'url': chrome.extension.getURL('/application/index.html#/marketmaker/WBTC')
+            }, (tab) =>{
+             // fallback
+            });
           });
-        });
+          chrome.browserAction.isClickListenerAdded = true;
+        } else {
+          console.log('Extension: click listener already added');
+        }
       } else {
         console.log('Extension: can`t add click listener (possibly not extension)')
       }
