@@ -12,7 +12,7 @@
 
   .section-title {
     margin: 0 auto 1em;
-    max-width: 500px;
+    max-width: 20em;
     font-style: normal;
     line-height: 1em;
     font-size: 30px;
@@ -48,6 +48,7 @@
 
     button {
       @include ff-light;
+      letter-spacing: 0.05rem;
     }
 
     .devVersionLink {
@@ -95,4 +96,19 @@
     }
   }
 
+}
+
+@include media-mobile {
+  .mm-promo-page {
+    .promoHeader {
+      padding: 1em;
+    }
+  }
+
+  .installExtensionBody {
+    button,
+    .devVersionLink {
+      font-size: 0.9em;
+    }
+  }
 }
