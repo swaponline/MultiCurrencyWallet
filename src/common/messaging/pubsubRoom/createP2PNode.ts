@@ -9,7 +9,6 @@ import SECIO from 'libp2p-secio'
 import PeerId from 'peer-id'
 
 
-
 const createP2PNode = (options) => {
   const {
     listen,
@@ -19,7 +18,7 @@ const createP2PNode = (options) => {
 
   const defaultListen = [
     //'/ip4/0.0.0.0/tcp/4002',
-    '/dns4/webrtc-star-1.swaponline.io/tcp/443/wss/p2p-webrtc-star/',
+    '/dns4/webrtc-star-1.swaponline.io/tcp/443/wss/p2p-webrtc-star',
     //'/dns4/webrtc-star.discovery.libp2p.io/tcp/443/wss/p2p-webrtc-star/',
     //'/dns4/secure-beyond-12878.herokuapp.com/tcp/443/wss/p2p-webrtc-star/',
     //'/dns4/wrtc-star2.sjc.dwebops.pub/tcp/443/wss/p2p-webrtc-star/'
@@ -75,7 +74,6 @@ const createP2PNode = (options) => {
         transport: [WebrtcStar],
         streamMuxer: [MPLEX],
         connEncryption: [SECIO],
-        // @ts-ignore
         peerDiscovery: [Bootstrap],
         dht: KadDHT,
         pubsub: Gossipsub
@@ -83,21 +81,19 @@ const createP2PNode = (options) => {
       dialer: {
         maxParallelDials: 100,
         maxDialsPerPeer: 100,
-        dialTimeout: 1e3
-      },
-      transportManager: {
-        faultTolerance: 1
+        dialTimeout: 30e3
       },
       connectionManager: {
         maxConnections: Infinity,
-        minConnections: 0,
-        pollInterval: 500,
-        defaultPeerValue: 1,
+        minConnections: Infinity,
         maxData: Infinity,
         maxSentData: Infinity,
         maxReceivedData: Infinity,
         maxEventLoopDelay: Infinity,
-        movingAverageInterval: 500
+        pollInterval: 2000,
+        autoDialInterval: 1000,
+        movingAverageInterval: 60000,
+        defaultPeerValue: 1
       },
       config: {
         transport: {
@@ -107,7 +103,6 @@ const createP2PNode = (options) => {
         },
         peerDiscovery: {
           autoDial: true,
-          // @ts-ignore
           webRTCStar: {
             enabled: true
           },
@@ -115,9 +110,8 @@ const createP2PNode = (options) => {
             enabled: true,
             interval: 1e3,
             list: discoveryPeers || defaultDiscoveryPeers,
-          }
+          },
         },
-        // @ts-ignore
         relay: {
           enabled: true,
           hop: {
@@ -128,7 +122,7 @@ const createP2PNode = (options) => {
         dht: {
           enabled: true,
           randomWalk: {
-            enabled: false,
+            enabled: true,
           }
         }
       }
