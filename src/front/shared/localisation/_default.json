@@ -1609,7 +1609,7 @@
   },
   {
     "id": "HowItWorks10",
-    "message": "How it works",
+    "message": "How Does It Work",
     "files": [
       "src/front/shared/pages/Exchange/HowItWorks/HowItWorks.tsx"
     ]

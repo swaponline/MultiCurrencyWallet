@@ -388,7 +388,7 @@
   },
   {
     "id": "HowItWorks10",
-    "message": "Jak to działa?",
+    "message": "Jak To Działa",
     "files": [
       "src/front/shared/pages/Exchange/HowItWorks/HowItWorks.tsx"
     ]

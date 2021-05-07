@@ -398,7 +398,7 @@
   },
   {
     "id": "HowItWorks10",
-    "message": "Как это работает ",
+    "message": "Как Это Работает",
     "files": [
       "src/front/shared/pages/Exchange/HowItWorks/HowItWorks.tsx"
     ]
