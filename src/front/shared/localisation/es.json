@@ -5871,7 +5871,7 @@
   },
   {
     "id": "MM_Promo_TitleBody",
-    "message": "Los usuarios de nuestro intercambiador swap.io intercambian BTC por {token} (un token que cuesta como BTC, pero funciona en {Ab_Title}) y viceversa. Tienes a min. 10% APY (anual por año) como comisión de intercambios con baja pérdida temporal {link}.",
+    "message": "Los usuarios de nuestro intercambiador swap.io intercambian BTC por {token} (un token que cuesta como BTC, pero funciona en {Ab_Title}) y viceversa. Tienes a min. 10% APY (anual por año) como comisión de intercambios con baja impermanent loss {link}.",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx",
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"

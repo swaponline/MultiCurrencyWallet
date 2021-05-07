@@ -5871,7 +5871,7 @@
   },
   {
     "id": "MM_Promo_TitleBody",
-    "message": "Użytkownicy w naszym wymienniku swap.io wymieniają BTC na {token} (token, który kosztuje jak BTC, ale działa na {Ab_Title}) i odwrotnie. Dostajesz min. 10% APY (rocznie) jako prowizja od giełd z niską nietrwałą stratą {link}.",
+    "message": "Użytkownicy w naszym wymienniku swap.io wymieniają BTC na {token} (token, który kosztuje jak BTC, ale działa na {Ab_Title}) i odwrotnie. Dostajesz min. 10% APY (rocznie) jako prowizja od giełd z niską impermanent loss {link}.",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx",
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
