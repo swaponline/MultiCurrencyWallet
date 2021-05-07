@@ -278,7 +278,12 @@ class Row extends Component<RowProps, RowState> {
         sellCurrency,
         isRequested,
         isProcessing,
-        owner: { peer: ownerPeer },
+        owner: {
+          peer: ownerPeer,
+          eth: {
+            address: ownerEthAddress,
+          },
+        },
       },
       buy,
       sell,
@@ -353,6 +358,7 @@ class Row extends Component<RowProps, RowState> {
             <Avatar
               value={ownerPeer}
               size={30}
+              ownerEthAddress={ownerEthAddress}
             />
             {isTurbo &&
               <TurboIcon />
