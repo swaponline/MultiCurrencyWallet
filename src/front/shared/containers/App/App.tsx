@@ -163,6 +163,51 @@ class App extends React.Component<RouteComponentProps<any>, any> {
     });
   }
 
+  syncExtensionBgTab() {
+    const isExtension = window.location.hostname.length === 32 && window.location.hostname.indexOf('.') === -1;
+
+    if (isExtension) {
+      const signalPeriod = 500
+      const checkPeriod = 1000
+
+      const getLastActivity = () => localStorage.getItem(constants.localStorage.extensionLastActivity)
+      const setLastActivity = (value) => localStorage.setItem(constants.localStorage.extensionLastActivity, value)
+      const getNow = () => Date.now().toString()
+
+      const lastActivityInitial = getLastActivity()
+
+      setTimeout(() => {
+        const lastActivityLater = getLastActivity()
+
+        const isBackgroundTab = lastActivityInitial === lastActivityLater
+
+        if (isBackgroundTab) { // wait for other tabs to close & no signal...
+          let lastActivityOld = lastActivityLater
+
+          setInterval(() => {
+            const lastActivityNew = getLastActivity()
+            const isOtherTabClosed = lastActivityOld === lastActivityNew
+
+            if (isOtherTabClosed) {
+              console.log('Ext-sync: [bg tab] reload')
+              location.reload() // ... and apply new settings
+            } else {
+              lastActivityOld = lastActivityNew
+              console.log('Ext-sync: [bg tab] wait for settings')
+            }
+          }, checkPeriod)
+        }
+
+        if (!isBackgroundTab) { // signal to wait
+          setInterval(() => {
+            console.log('Ext-sync: [settings tab] emit "i`m active" signal')
+            setLastActivity(getNow())
+          }, signalPeriod)
+        }
+      }, checkPeriod)
+    }
+  }
+
   popupIncorrectNetwork() {
     //@ts-ignore
     const { intl } = this.props
@@ -266,6 +311,8 @@ class App extends React.Component<RouteComponentProps<any>, any> {
     const { currencies } = this.props
 
     this.preventMultiTabs(false)
+
+    this.syncExtensionBgTab()
 
     const isWalletCreate = localStorage.getItem(constants.localStorage.isWalletCreate)
 

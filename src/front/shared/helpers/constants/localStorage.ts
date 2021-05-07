@@ -34,4 +34,5 @@ export default {
   testnetSkipPKCheck: 'testnetSkipPKCheck',
   prevWPUser: 'wp_widget_prev_userid',
   exchangeSettings: 'exchangeSettings',
+  extensionLastActivity: 'extensionLastActivity',
 }

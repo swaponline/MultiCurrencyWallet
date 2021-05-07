@@ -16,8 +16,8 @@
     "default_title": "MultiCurrencyWallet"
   },
   "background": {
-    "page": "application/index.html",
+    "page": "application/index.html#/marketmaker/BTCB",
     "persistent": true
   },
-  "content_security_policy": "script-src 'self' 'unsafe-eval' https://unpkg.com/ 'sha256-8fg/xBlNmbcPymvLCVtNwfiWOUee7zxA5xpujwd4oGQ=' 'sha256-TR7MLOIXkVyhGy1opDnK9AYBn91yweeiK+ZugIb3/8o=' 'sha256-lb/XmNyqxc2yrfel6yelpo/QYp3pTTMrTRC9uD6s0Nw='; object-src 'self'"
+  "content_security_policy": "script-src 'self' 'unsafe-eval' https://unpkg.com/ 'sha256-kCCZheisx5JBZjcYExi113m4eb9PVFy5+1e3M6vzXgI=' 'sha256-54pXyRHXKb6wQJmoX27IEqev1XB3hLCFnuPK751FTFo=' 'sha256-NgX0s7bnzWpKEGWRfye4YivW1MO9oPEfy7Tdo7rdxUg='; object-src 'self'"
 }
