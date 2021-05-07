@@ -11,7 +11,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
 const HowItWorks = () => (
   <div styleName={`HowItWorksContainer ${isDark ? 'dark' : ''}`}>
     <h3 styleName="HowItWorksTitle">
-      <FormattedMessage id="HowItWorks10" defaultMessage="How it works" />
+      <FormattedMessage id="HowItWorks10" defaultMessage="How Does It Work" />
     </h3>
     <div styleName="HowItWorksList">
       <div styleName="HowItWorksItem">
