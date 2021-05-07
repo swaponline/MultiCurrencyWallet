@@ -5658,28 +5658,28 @@
     ]
   },
   {
-    "id": "MM_FAQ_ItemBody2-1",
-    "message": "- Система находится в стадии бета-тестирования",
+    "id": "MM_FAQ_TotalSum",
+    "message": "- В любой момент времени сумма балансов BTC и {token} будет больше, чем раньше.",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
   },
   {
-    "id": "MM_FAQ_ItemBody2-2",
-    "message": "- Есть аудит от dsec",
+    "id": "MM_FAQ_Audit",
+    "message": "- Приложение прошло аудит от {link}.",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
   },
   {
-    "id": "MM_FAQ_ItemBody2-3",
-    "message": "- Мы рекомендуем инвестировать только те средства, которые вы не готовы потерять",
+    "id": "MM_FAQ_NotStore",
+    "message": "- Не храните большие суммы или заемные средства.",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
   },
   {
-    "id": "MM_FAQ_ItemBody2-4",
+    "id": "MM_FAQ_FundAccess",
     "message": "- Ключи к вашим средствам только у вас, у нас нет доступа к ним",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
@@ -5700,15 +5700,8 @@
     ]
   },
   {
-    "id": "MM_FAQ_ItemContent3-1",
-    "message": "Зависит от количества обменов и спреда. Но если обменов не будет, вы получите SWAP токены из расчета 10% APY. Для получения напишите в ",
-    "files": [
-      "src/front/shared/pages/Marketmaker/FAQ.tsx"
-    ]
-  },
-  {
-    "id": "MM_FAQ_ItemContent3-2",
-    "message": "поддержку.",
+    "id": "MM_FAQ_HowMuchEarn",
+    "message": "Мы заявляем от 10% в год (APY). Если количество обменов недостаточно, мы будем мотивировать пользователей совершать обмены с помощью баунти программ.",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
@@ -5784,8 +5777,8 @@
     ]
   },
   {
-    "id": "MM_FAQ_ItemTitle2",
-    "message": "Это безопасно?",
+    "id": "MM_FAQ_Safety",
+    "message": "Это безопасно? Может ли баланс уменьшиться?",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]

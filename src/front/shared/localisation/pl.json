@@ -5658,28 +5658,28 @@
     ]
   },
   {
-    "id": "MM_FAQ_ItemBody2-1",
-    "message": "- System jest w wersji beta",
+    "id": "MM_FAQ_TotalSum",
+    "message": "- W danym momencie suma sald BTC i {token} będzie większa niż wcześniej.",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
   },
   {
-    "id": "MM_FAQ_ItemBody2-2",
-    "message": "- Jest audyt z dsec",
+    "id": "MM_FAQ_Audit",
+    "message": "- Aplikacja przeszła audyt z {link}.",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
   },
   {
-    "id": "MM_FAQ_ItemBody2-3",
-    "message": "- Zalecamy inwestowanie tylko tych funduszy, które nie mają nic przeciwko utracie",
+    "id": "MM_FAQ_NotStore",
+    "message": "- Nie przechowuj dużych kwot ani pożyczonych środków.",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
   },
   {
-    "id": "MM_FAQ_ItemBody2-4",
+    "id": "MM_FAQ_FundAccess",
     "message": "- Klucze do Twoich środków są tylko przy tobie, nie mamy dostępu do Twoich środków",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
@@ -5700,15 +5700,8 @@
     ]
   },
   {
-    "id": "MM_FAQ_ItemContent3-1",
-    "message": "Zależy to od liczby swapów i spreadu. Ale jeśli nie ma swapów, otrzymasz tokeny swapowe w tempie 10% APY. Aby go zdobyć, napisz do ",
-    "files": [
-      "src/front/shared/pages/Marketmaker/FAQ.tsx"
-    ]
-  },
-  {
-    "id": "MM_FAQ_ItemContent3-2",
-    "message": "wsparcie.",
+    "id": "MM_FAQ_HowMuchEarn",
+    "message": "Deklarujemy od 10% rocznie( APY), jeśli liczba wymian nie wystarczy, będziemy motywować użytkowników do wymiany za pomocą bounties.",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
@@ -5784,8 +5777,8 @@
     ]
   },
   {
-    "id": "MM_FAQ_ItemTitle2",
-    "message": "Czy to bezpieczne?",
+    "id": "MM_FAQ_Safety",
+    "message": "Czy to bezpieczne? Czy równowaga może się zmniejszyć?",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]

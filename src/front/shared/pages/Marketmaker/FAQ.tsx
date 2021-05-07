@@ -2,7 +2,7 @@ import React from 'react'
 import cssModules from 'react-css-modules'
 import { FormattedMessage } from 'react-intl'
 import styles from './FAQ.scss'
-import { feedback } from 'helpers'
+import { feedback, links } from 'helpers'
 import Expandable from 'components/ui/Expandable/Expandable'
 
 import config from 'helpers/externalConfig'
@@ -28,6 +28,23 @@ class FAQ extends React.Component<{isDark: boolean}, {}> {
           <Expandable
             title={
               <FormattedMessage
+                id="MM_FAQ_ItemTitle3"
+                defaultMessage="How much will I earn?"
+              />
+            }
+            content={
+              <div>
+                <FormattedMessage
+                  id="MM_FAQ_HowMuchEarn"
+                  defaultMessage="We declare from 10% per year (APY), if the number of exchanges is not enough we will motivate users to do exchanges using bounties."
+                />
+              </div>
+            }
+            onExpand={() => { feedback.marketmaking.faqOpened('How much will I earn?') }}
+          />
+          <Expandable
+            title={
+              <FormattedMessage
                 id="MM_FAQ_ItemTitle1"
                 defaultMessage="Why it works?"
               />
@@ -43,34 +60,46 @@ class FAQ extends React.Component<{isDark: boolean}, {}> {
           <Expandable
             title={
               <FormattedMessage
-                id="MM_FAQ_ItemTitle2"
-                defaultMessage="Is it safe?"
+                id="MM_FAQ_Safety"
+                defaultMessage="Is it safe? Could the balance decrease?"
               />
             }
             content={
               <>
                 <div>
                   <FormattedMessage
-                    id="MM_FAQ_ItemBody2-1"
-                    defaultMessage="- The system is in beta"
+                    id="MM_FAQ_TotalSum"
+                    defaultMessage="- At any given time, the sum of BTC and {token} balances will be greater than before."
+                    values={{
+                      token: config.binance ? 'BTCB' : 'WBTC'
+                    }}
                   />
                 </div>
                 <div>
                   <FormattedMessage
-                    id="MM_FAQ_ItemBody2-2"
-                    defaultMessage="- There is an audit from dsec"
-                  />
-                </div>
-                <div>
-                  <FormattedMessage
-                    id="MM_FAQ_ItemBody2-3"
-                    defaultMessage="- We recommend investing only those funds that you do not mind losing"
-                  />
-                </div>
-                <div>
-                  <FormattedMessage
-                    id="MM_FAQ_ItemBody2-4"
+                    id="MM_FAQ_FundAccess"
                     defaultMessage="- The keys to your funds are only with you, we do not have access to your funds"
+                  />
+                </div>
+                <div>
+                  <FormattedMessage
+                    id="MM_FAQ_HighRisk"
+                    defaultMessage="- Any cryptocurrency operation is high risk."
+                  />
+                </div>
+                <div>
+                  <FormattedMessage
+                    id="MM_FAQ_Audit"
+                    defaultMessage="- The app passed audit from {link}."
+                    values={{
+                      link: <a href={links.swapAudit} target="_blank">dsec</a>
+                    }}
+                  />
+                </div>
+                <div>
+                  <FormattedMessage
+                    id="MM_FAQ_NotStore"
+                    defaultMessage="- Do not store large amounts or borrowed funds."
                   />
                 </div>
                 <div>
@@ -85,29 +114,6 @@ class FAQ extends React.Component<{isDark: boolean}, {}> {
               </>
             }
             onExpand={() => { feedback.marketmaking.faqOpened('Is it safe?') }}
-          />
-          <Expandable
-            title={
-              <FormattedMessage
-                id="MM_FAQ_ItemTitle3"
-                defaultMessage="How much will I earn?"
-              />
-            }
-            content={
-              <div>
-                <FormattedMessage
-                  id="MM_FAQ_ItemContent3-1"
-                  defaultMessage="It depends on the number of swaps and the spread. But if there are no swaps, you will get SWAP tokens at the rate of 10% APY. To get it, write to "
-                />
-                <a href="https://t.me/swaponlinebot" target="_blank">
-                  <FormattedMessage
-                    id="MM_FAQ_ItemContent3-2"
-                    defaultMessage="support."
-                  />
-                </a>
-              </div>
-            }
-            onExpand={() => { feedback.marketmaking.faqOpened('How much will I earn?') }}
           />
           <Expandable
             title={

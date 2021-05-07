@@ -5658,28 +5658,28 @@
     ]
   },
   {
-    "id": "MM_FAQ_ItemBody2-1",
-    "message": "- El sistema está en beta",
+    "id": "MM_FAQ_TotalSum",
+    "message": "- En un momento dado, la suma de los saldos de BTC y {token} será mayor que antes.",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
   },
   {
-    "id": "MM_FAQ_ItemBody2-2",
-    "message": "- Hay una auditoría de dsec",
+    "id": "MM_FAQ_Audit",
+    "message": "- La aplicación pasó la auditoría de {link}.",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
   },
   {
-    "id": "MM_FAQ_ItemBody2-3",
-    "message": "- Recomendamos invertir solo aquellos fondos que no le importa perder",
+    "id": "MM_FAQ_NotStore",
+    "message": "- No almacenar grandes cantidades o fondos prestados.",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
   },
   {
-    "id": "MM_FAQ_ItemBody2-4",
+    "id": "MM_FAQ_FundAccess",
     "message": "- Las llaves de sus fondos están solo con usted, no tenemos acceso a sus fondos",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
@@ -5700,15 +5700,8 @@
     ]
   },
   {
-    "id": "MM_FAQ_ItemContent3-1",
-    "message": "Depende del número de swaps y del spread. Pero si no hay swaps, obtendrá tokens de SWAP a una tasa del 10% APY. Para conseguirlo, escriba a ",
-    "files": [
-      "src/front/shared/pages/Marketmaker/FAQ.tsx"
-    ]
-  },
-  {
-    "id": "MM_FAQ_ItemContent3-2",
-    "message": "apoyo.",
+    "id": "MM_FAQ_HowMuchEarn",
+    "message": "Declaramos a partir del 10% anual (APY), si el número de intercambios no es suficiente motivaremos a los usuarios a realizar intercambios utilizando bounties.",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
@@ -5784,8 +5777,8 @@
     ]
   },
   {
-    "id": "MM_FAQ_ItemTitle2",
-    "message": "Es seguro?",
+    "id": "MM_FAQ_Safety",
+    "message": "¿Es seguro? ¿Podría disminuir el equilibrio?",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
