@@ -92,7 +92,7 @@ const createP2PNode = (options) => {
         maxEventLoopDelay: Infinity,
         pollInterval: 2000,
         autoDialInterval: 1000,
-        movingAverageInterval: 60000,
+        movingAverageInterval: 1000,
         defaultPeerValue: 1
       },
       config: {

@@ -60,7 +60,7 @@ export default class Connection extends EventEmitter {
 
     const peerInfo = this._libp2p.peerStore.get(this._remoteId)
 
-    const dial = await this._libp2p.dialProtocol (peerInfo.id, PROTOCOL)
+    const dial = await this._libp2p.dialProtocol(peerInfo.id, PROTOCOL)
 
     const { stream } = dial
 
