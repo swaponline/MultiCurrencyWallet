@@ -164,6 +164,8 @@ class App extends React.Component<RouteComponentProps<any>, any> {
   }
 
   syncExtensionBgTab() {
+    const debug = false
+
     const isExtension = window.location.hostname.length === 32 && window.location.hostname.indexOf('.') === -1;
 
     if (isExtension) {
@@ -177,30 +179,37 @@ class App extends React.Component<RouteComponentProps<any>, any> {
       const lastActivityInitial = getLastActivity()
 
       setTimeout(() => {
-        const lastActivityLater = getLastActivity()
+        //const lastActivityInitial2 = getLastActivity()
+        //const isBackgroundTab = lastActivityInitial === lastActivityInitial2
 
-        const isBackgroundTab = lastActivityInitial === lastActivityLater
+        // not so good
+        const root = document.getElementById('root')
+        const isBackgroundTab = root && root.offsetWidth === 0
 
         if (isBackgroundTab) { // wait for other tabs to close & no signal...
-          let lastActivityOld = lastActivityLater
+          let lastActivityOld = lastActivityInitial
 
           setInterval(() => {
             const lastActivityNew = getLastActivity()
+            if (lastActivityNew === lastActivityInitial) {
+              debug && console.log('Ext-sync: [bg tab] settings were not open, wait')
+              return
+            }
             const isOtherTabClosed = lastActivityOld === lastActivityNew
 
             if (isOtherTabClosed) {
-              console.log('Ext-sync: [bg tab] reload')
-              location.reload() // ... and apply new settings
+              debug && console.log('Ext-sync: [bg tab] reload (apply new settings)')
+              location.reload()
             } else {
               lastActivityOld = lastActivityNew
-              console.log('Ext-sync: [bg tab] wait for settings')
+              debug && console.log('Ext-sync: [bg tab] wait for opened settings')
             }
           }, checkPeriod)
         }
 
         if (!isBackgroundTab) { // signal to wait
           setInterval(() => {
-            console.log('Ext-sync: [settings tab] emit "i`m active" signal')
+            debug && console.log('Ext-sync: [settings tab] emit "i`m active" signal')
             setLastActivity(getNow())
           }, signalPeriod)
         }
