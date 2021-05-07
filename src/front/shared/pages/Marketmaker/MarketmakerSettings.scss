@@ -57,8 +57,14 @@
         }
 
         .item-text__secondary {
-          color: $notice-color;
+          margin: 1em 0 1em;
           font-size: 12px;
+          color: $notice-color;
+        }
+
+        .tooltipText {
+          display: inline-block;
+          max-width: 30em;
         }
 
         .balanceSecondary, .balancePrimary {
