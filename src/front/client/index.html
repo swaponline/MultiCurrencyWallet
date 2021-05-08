@@ -595,6 +595,10 @@
         var extViews = chrome.extension.getViews()
         var extBgWindow = chrome.extension.getBackgroundPage()
         if (window !== extBgWindow) {
+          if (chrome.extension.getViews().length > 2) {
+            chrome.runtime.openOptionsPage()
+            window.close()
+          }
           window.onbeforeunload = () => {
             // With this window and bg window = 2
             if (chrome.extension.getViews().length === 2) {
