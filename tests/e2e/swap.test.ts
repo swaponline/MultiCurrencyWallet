@@ -8,8 +8,55 @@ const takerBtcAddress = 'n4JjB9D9axszdsFxyxDmF43z4WwttN6oPb'
 
 jest.setTimeout(100 * 1000)
 
-describe('Try swap', () => {
-  it('turn on MM', async () => {
+
+describe('Start e2e tests', () => {
+
+  it('restore wallets, turnOn MM, check messaging', async () => {
+    const { browser: MakerBrowser, page: MakerPage } = await setup()
+    const { browser: TakerBrowser, page: TakerPage } = await setup()
+
+    await importWallet(MakerPage, MAKER_SEED)
+    await importWallet(TakerPage, TAKER_SEED)
+
+    await MakerPage.waitForSelector('#btcAddress') // waits for Maker wallet to load
+    await TakerPage.waitForSelector('#btcAddress') // waits for Taker wallet to load
+
+    const recoveredMakerBtcAddress= await MakerPage.$eval('#btcAddress', el => el.textContent)
+    const recoveredTakerBtcAddress= await TakerPage.$eval('#btcAddress', el => el.textContent)
+
+    console.log("checks for restore wallets")
+    expect(recoveredMakerBtcAddress).toBe(makerBtcAddress)
+    expect(recoveredTakerBtcAddress).toBe(takerBtcAddress)
+
+    await addAssetToWallet(MakerPage, 'wbtc')
+    await addAssetToWallet(TakerPage, 'wbtc')
+
+    await timeOut(3 * 1000)
+
+    try {
+      await MakerPage.goto(`${MakerPage.url()}marketmaker/WBTC`)
+       // move to exchange page
+      await TakerPage.$('a[href="#/exchange"]').then((a) => a.click())
+
+      await timeOut(3 * 1000)
+
+      await takeScreenshot(MakerPage, 'MakerPage_addAsset')
+      await takeScreenshot(TakerPage, 'TakerPage_addAsset')
+
+    } catch (error) {
+      console.log('Error: ', error)
+      await MakerBrowser.close()
+      await TakerBrowser.close()
+    }
+    await MakerBrowser.close()
+    await TakerBrowser.close()
+
+  })
+})
+
+
+// describe('Try swap', () => {
+//   it('turn on MM', async () => {
     // const { browser: MakerBrowser, page: MakerPage } = await setup()
     // const { browser: TakerBrowser, page: TakerPage } = await setup()
 
@@ -62,6 +109,6 @@ describe('Try swap', () => {
     // await MakerBrowser.close()
     // await TakerBrowser.close()
 
-  })
+//   })
 
-})
+// })
