@@ -644,7 +644,7 @@ class MarketmakerSettings extends Component<any, any> {
                 </span>
               </p>
             </div>
-            {(isNeedDeposit || isMarketEnabled) && (
+            {(true) && (
               <>
                 <div styleName='section-items__item'>
                   {btcWallet ? (
