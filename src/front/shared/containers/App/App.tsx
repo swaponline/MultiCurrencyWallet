@@ -145,6 +145,17 @@ class App extends React.Component<RouteComponentProps<any>, any> {
         const { appID } = this.state;
 
         if (appID !== switchId) {
+          //@ts-ignore
+          if (chrome && chrome.extension) {
+            //@ts-ignore
+            const extViews = chrome.extension.getViews()
+            //@ts-ignore
+            const extBgWindow = chrome.extension.getBackgroundPage()
+            if (extBgWindow !== window && extViews.length > 2) {
+              window.close()
+              return
+            }
+          }
           this.setState({
             multiTabs: true
           });
@@ -161,60 +172,6 @@ class App extends React.Component<RouteComponentProps<any>, any> {
 
       localStorage.setItem(constants.localStorage.enter, newId);
     });
-  }
-
-  syncExtensionBgTab() {
-    const debug = false
-
-    const isExtension = window.location.hostname.length === 32 && window.location.hostname.indexOf('.') === -1;
-
-    if (isExtension) {
-      const signalPeriod = 500
-      const checkPeriod = 1000
-
-      const getLastActivity = () => localStorage.getItem(constants.localStorage.extensionLastActivity)
-      const setLastActivity = (value) => localStorage.setItem(constants.localStorage.extensionLastActivity, value)
-      const getNow = () => Date.now().toString()
-
-      const lastActivityInitial = getLastActivity()
-
-      setTimeout(() => {
-        //const lastActivityInitial2 = getLastActivity()
-        //const isBackgroundTab = lastActivityInitial === lastActivityInitial2
-
-        // not so good
-        const root = document.getElementById('root')
-        const isBackgroundTab = root && root.offsetWidth === 0
-
-        if (isBackgroundTab) { // wait for other tabs to close & no signal...
-          let lastActivityOld = lastActivityInitial
-
-          setInterval(() => {
-            const lastActivityNew = getLastActivity()
-            if (lastActivityNew === lastActivityInitial) {
-              debug && console.log('Ext-sync: [bg tab] settings were not open, wait')
-              return
-            }
-            const isOtherTabClosed = lastActivityOld === lastActivityNew
-
-            if (isOtherTabClosed) {
-              debug && console.log('Ext-sync: [bg tab] reload (apply new settings)')
-              location.reload()
-            } else {
-              lastActivityOld = lastActivityNew
-              debug && console.log('Ext-sync: [bg tab] wait for opened settings')
-            }
-          }, checkPeriod)
-        }
-
-        if (!isBackgroundTab) { // signal to wait
-          setInterval(() => {
-            debug && console.log('Ext-sync: [settings tab] emit "i`m active" signal')
-            setLastActivity(getNow())
-          }, signalPeriod)
-        }
-      }, checkPeriod)
-    }
   }
 
   popupIncorrectNetwork() {
@@ -320,8 +277,6 @@ class App extends React.Component<RouteComponentProps<any>, any> {
     const { currencies } = this.props
 
     this.preventMultiTabs(false)
-
-    this.syncExtensionBgTab()
 
     const isWalletCreate = localStorage.getItem(constants.localStorage.isWalletCreate)
 

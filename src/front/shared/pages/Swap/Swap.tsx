@@ -247,6 +247,9 @@ class SwapComponent extends PureComponent<any, any> {
     }
 
     if (swap !== null) {
+      if (this.checkIsFinished() || this.checkStoppedSwap()) {
+        return
+      }
       this.sendDebugInfoTimer = setInterval(() => {
         this.sendSwapDebugInformation(orderId)
       }, 1000)
@@ -292,9 +295,21 @@ class SwapComponent extends PureComponent<any, any> {
   }
 
   checkStoppedSwap = () => {
-    const { swap: { id, flow: { state: { isStoppedSwap } } } } = this.state
+    const {
+      swap: {
+        id,
+        flow: {
+          state: {
+            isStoppedSwap,
+            isFinished,
+            isRefunded,
+            isSwapTimeout,
+          },
+        },
+      },
+    } = this.state
 
-    if (!isStoppedSwap) {
+    if (!isStoppedSwap || isFinished || isRefunded || isSwapTimeout) {
       return false
     }
 
@@ -313,9 +328,21 @@ class SwapComponent extends PureComponent<any, any> {
   }
 
   checkIsFinished = () => {
-    const { swap: { id, flow: { state: { isFinished, step, isRefunded } } } } = this.state
+    const {
+      swap: {
+        id,
+        flow: {
+          state: {
+            isFinished,
+            isSwapTimeout,
+            step,
+            isRefunded,
+          },
+        },
+      },
+    } = this.state
 
-    if (isFinished || step > 7 || isRefunded) {
+    if (isFinished || isSwapTimeout || step > 7 || isRefunded) {
       this.deleteThisSwap(id)
       return true
     }
