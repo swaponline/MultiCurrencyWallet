@@ -292,9 +292,21 @@ class SwapComponent extends PureComponent<any, any> {
   }
 
   checkStoppedSwap = () => {
-    const { swap: { id, flow: { state: { isStoppedSwap } } } } = this.state
+    const {
+      swap: {
+        id,
+        flow: {
+          state: {
+            isStoppedSwap,
+            isFinished,
+            isRefunded,
+            isSwapTimeout,
+          },
+        },
+      },
+    } = this.state
 
-    if (!isStoppedSwap) {
+    if (!isStoppedSwap || isFinished || isRefunded || isSwapTimeout) {
       return false
     }
 
