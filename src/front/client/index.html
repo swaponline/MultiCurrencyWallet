@@ -591,16 +591,24 @@
 
     <!-- Extension: icon click => open tab -->
     <script>
+      if (chrome && chrome.extension) {
+        var extViews = chrome.extension.getViews()
+        var extBgWindow = chrome.extension.getBackgroundPage()
+        if (window !== extBgWindow) {
+          window.onbeforeunload = () => {
+            // With this window and bg window = 2
+            if (chrome.extension.getViews().length === 2) {
+              extBgWindow.location.reload()
+            }
+          }
+        }
+      }
       if (chrome && chrome.browserAction) {
         if (!chrome.browserAction.isClickListenerAdded) {
           console.log('Extension: add click listener')
           chrome.browserAction.onClicked.addListener(function(tab) {
             console.log('Extension: icon clicked')
-            chrome.tabs.create({
-              'url': chrome.extension.getURL('/application/index.html#/marketmaker/WBTC')
-            }, (tab) =>{
-             // fallback
-            });
+            chrome.runtime.openOptionsPage()
           });
           chrome.browserAction.isClickListenerAdded = true;
         } else {
