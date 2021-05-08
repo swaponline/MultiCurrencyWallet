@@ -7,15 +7,27 @@ import { toSvg } from 'jdenticon'
 import CSSModules from 'react-css-modules'
 import styles from './Avatar.scss'
 
+const hasGravatar = (ethAddress) => {
+  if (config && config.gravatarUsers) {
+    let has = false
+    Object.keys(config.gravatarUsers).forEach((key) => {
+      if (key.toLowerCase() === ethAddress.toLowerCase()) {
+        has = config.gravatarUsers[key]
+        return false
+      }
+    })
+    return has
+  }
+  return false
+}
 
 const Avatar = ({ value, className, size, ownerEthAddress }) => {
   let avatarUrl = `data:image/svg+xml,${encodeURIComponent(toSvg(value, size))}`
-  if (ownerEthAddress
-    && config
-    && config.gravatarUsers
-    && config.gravatarUsers[ownerEthAddress]
-  ) {
-    avatarUrl = `https://www.gravatar.com/avatar/${config.gravatarUsers[ownerEthAddress]}?s=${size}`
+  if (ownerEthAddress) {
+    const gravatar = hasGravatar(ownerEthAddress)
+    if (gravatar) {
+      avatarUrl = `https://www.gravatar.com/avatar/${gravatar}?s=${size}`
+    }
   }
   return (
     <Fragment>
