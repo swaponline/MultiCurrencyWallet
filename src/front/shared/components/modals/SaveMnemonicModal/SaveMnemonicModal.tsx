@@ -54,14 +54,6 @@ const langLabels = defineMessages({
     defaultMessage: `You have already saved your 12-words seed. {href}`,
     values: { href: <Link to={links.savePrivateKeys}> <FormattedMessage id="MnemoniceDeleted_hrefText" defaultMessage="Try export private key" /></Link> }
   },
-  Continue: {
-    id: `${langPrefix}_Continue`,
-    defaultMessage: `Продолжить`,
-  },
-  Ready: {
-    id: `${langPrefix}_Ready`,
-    defaultMessage: `Готово`,
-  },
   beginNotice: {
     id: `${langPrefix}_BeginNotice`,
     defaultMessage: `Сейчас мы вам покажем 12 слов вашей секретной фразы.{br}Если вы ее потеряете мы не сможем восстановить ваш кошелек`,
@@ -258,7 +250,7 @@ class SaveMnemonicModal extends React.Component<any, any> {
                   blue
                   onClick={this.handleFinish}
                 >
-                  <FormattedMessage {...langLabels.Ready} />
+                  <FormattedMessage id="WithdrawMSUserFinish" defaultMessage="Ready"/>
                 </Button>
               </div>
             </Fragment>
@@ -296,7 +288,7 @@ class SaveMnemonicModal extends React.Component<any, any> {
                   disabled={mnemonicInvalid}
                   onClick={this.handleFinish}
                 >
-                  <FormattedMessage {...langLabels.Ready} />
+                  <FormattedMessage id="WithdrawMSUserFinish" defaultMessage="Ready"/>
                 </Button>
               </div>
             </Fragment>
@@ -337,7 +329,7 @@ class SaveMnemonicModal extends React.Component<any, any> {
                 </Copy>
                 <div styleName="continueBtnWrapper">
                   <Button brand onClick={this.handleGoToConfirm}>
-                    <FormattedMessage {...langLabels.Continue} />
+                    <FormattedMessage id="createWalletButton1" defaultMessage="Continue"/>
                   </Button>
                 </div>
               </div>

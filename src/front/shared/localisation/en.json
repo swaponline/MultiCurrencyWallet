@@ -444,7 +444,10 @@
   },
   {
     "id": "orders128",
-    "message": "Create offer"
+    "message": "Create offer",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
   },
   {
     "id": "addoffer381",
@@ -1140,6 +1143,7 @@
     "id": "FeeControler49",
     "message": "Copy",
     "files": [
+      "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx",
       "src/front/shared/pages/Swap/FeeControler/FeeControler.tsx"
     ]
   },
@@ -1627,6 +1631,7 @@
     "id": "createWalletButton1",
     "message": "Continue",
     "files": [
+      "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx",
       "src/front/shared/pages/CreateWallet/Steps/FirstStep.tsx"
     ]
   },
@@ -1774,6 +1779,7 @@
     "id": "WithdrawMSUserFinish",
     "message": "Ready",
     "files": [
+      "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx",
       "src/front/shared/components/modals/WithdrawBtcMultisig/WithdrawBtcMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
     ]
@@ -3141,13 +3147,6 @@
     ]
   },
   {
-    "id": "SaveMnemonicModal_Continue",
-    "message": "Continue",
-    "files": [
-      "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx"
-    ]
-  },
-  {
     "id": "SaveMnemonicModal_EnterNotice",
     "message": "Сlick on words to place them in the correct order",
     "files": [
@@ -3157,13 +3156,6 @@
   {
     "id": "SaveMnemonicModal_MnemoniceDeleted",
     "message": "You have already saved your 12-words seed. {href}",
-    "files": [
-      "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx"
-    ]
-  },
-  {
-    "id": "SaveMnemonicModal_Ready",
-    "message": "Ready",
     "files": [
       "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx"
     ]
@@ -4736,11 +4728,17 @@
   },
   {
     "id": "createOrderMessageForUser",
-    "message": "You must be online all the time, otherwise your order will not be visible to other users"
+    "message": "You must be online all the time, otherwise your order will not be visible to other users",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
   },
   {
     "id": "createOrderNoManyMessageForUser",
-    "message": "Top up your balance"
+    "message": "Top up your balance",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
   },
   {
     "id": "AddLiquidity",
