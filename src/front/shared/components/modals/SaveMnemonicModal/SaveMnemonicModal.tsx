@@ -1,5 +1,4 @@
 import React, { Fragment } from 'react'
-import PropTypes from 'prop-types'
 import { constants } from 'helpers'
 import actions from 'redux/actions'
 import { Link } from 'react-router-dom'
@@ -68,6 +67,25 @@ const langLabels = defineMessages({
   },
 })
 
+type MnemonicModalProps = {
+  intl: IUniversalObj
+  name: string
+  onClose: () => void
+  data: {
+    onClose: () => void
+  }
+}
+
+type MnemonicModalState = {
+  step: string
+  mnemonic: string | null
+  words: string[]
+  enteredWords: string[]
+  randomWords: string[]
+  mnemonicInvalid: boolean
+  incorrectWord: boolean
+}
+
 @connect(
   ({
     user: { btcMultisigUserData },
@@ -76,20 +94,15 @@ const langLabels = defineMessages({
   })
 )
 @cssModules({ ...defaultStyles, ...styles }, { allowMultiple: true })
-class SaveMnemonicModal extends React.Component<any, any> {
-  static propTypes = {
-    name: PropTypes.string,
-    data: PropTypes.object,
-  }
-
+class SaveMnemonicModal extends React.Component<MnemonicModalProps, MnemonicModalState> {
   constructor(props) {
     super(props)
 
     const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
 
     //@ts-ignore: strictNullChecks
-    const randomedWords = (mnemonic !== '-') ? mnemonic.split(` `) : []
-    randomedWords.sort(() => .5 - Math.random())
+    const randomWords = (mnemonic !== '-') ? mnemonic.split(` `) : []
+    randomWords.sort(() => .5 - Math.random())
 
     //@ts-ignore: strictNullChecks
     const words = (mnemonic !== '-') ? mnemonic.split(` `) : []
@@ -99,7 +112,7 @@ class SaveMnemonicModal extends React.Component<any, any> {
       mnemonic,
       words,
       enteredWords: [],
-      randomedWords,
+      randomWords,
       mnemonicInvalid: true,
       incorrectWord: false,
     }
@@ -138,7 +151,7 @@ class SaveMnemonicModal extends React.Component<any, any> {
 
   handleClickWord = (index) => {
     const {
-      randomedWords,
+      randomWords,
       enteredWords,
       words,
       mnemonic,
@@ -148,7 +161,7 @@ class SaveMnemonicModal extends React.Component<any, any> {
 
     const currentWord = enteredWords.length
 
-    if (words[currentWord] !== randomedWords[index]) {
+    if (words[currentWord] !== randomWords[index]) {
 
       this.setState({
         incorrectWord: true,
@@ -162,17 +175,17 @@ class SaveMnemonicModal extends React.Component<any, any> {
       return
     }
 
-    clickedWord = randomedWords.splice(index, 1)
+    clickedWord = randomWords.splice(index, 1)
     enteredWords.push(clickedWord)
 
 
     this.setState({
-      randomedWords,
+      randomWords,
       enteredWords,
       incorrectWord: false,
       mnemonicInvalid: (enteredWords.join(` `) !== mnemonic),
     }, () => {
-      if (randomedWords.length === 0) {
+      if (randomWords.length === 0) {
         localStorage.setItem(constants.privateKeyNames.twentywords, '-')
         actions.backupManager.serverCleanupSeed()
 
@@ -194,7 +207,7 @@ class SaveMnemonicModal extends React.Component<any, any> {
       words,
       enteredWords,
       mnemonic,
-      randomedWords,
+      randomWords,
       mnemonicInvalid,
       incorrectWord,
     } = this.state
@@ -271,7 +284,7 @@ class SaveMnemonicModal extends React.Component<any, any> {
                 </div>
                 <div styleName="mnemonicWords">
                   {
-                    randomedWords.map((word, index) => {
+                    randomWords.map((word, index) => {
                       return (
                         <button key={index} onClick={() => this.handleClickWord(index)} className="ym-hide-content notranslate" translate="no">
                           {word}
