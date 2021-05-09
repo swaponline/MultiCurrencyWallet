@@ -1,8 +1,11 @@
 import path from 'path'
+import gravatarUsers from './gravatarUsers'
 
 
 const rootPath = path.resolve(process.cwd())
 const basePath = path.resolve(__dirname, '../../../')
+
+
 
 const config = {
   propENV: process.env.CONFIG, // from package.json
@@ -23,6 +26,8 @@ const config = {
     host: process.env.HOST || 'localhost',
     port: process.env.PORT || 9001,
   },
+
+  gravatarUsers,
 
   i18nDate: {
     month: 'long',

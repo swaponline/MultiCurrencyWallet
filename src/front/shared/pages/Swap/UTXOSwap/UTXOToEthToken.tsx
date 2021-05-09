@@ -57,8 +57,8 @@ export default class UTXOToEthToken extends Component<any, any> {
   }
 
   componentDidMount() {
-    const { swap, flow: { step, isParticipantSigned } } = this.state
-
+    const { swap, flow: { step, isParticipantSigned, isStoppedSwap } } = this.state
+    if (isStoppedSwap) return
     //@ts-ignore: strictNullChecks
     this.ParticipantTimer = setInterval(() => {
       if (this.state.flow.isParticipantSigned && this.state.destinationBuyAddress) {

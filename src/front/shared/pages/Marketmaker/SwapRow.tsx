@@ -142,8 +142,21 @@ class SwapRow extends Component<any, any> {
 
     this.tryRefund(timeLeft)
     */
-    //@ts-ignore: strictNullChecks
-    SwapApp.shared().on('swap enter step', this._handleSwapEnterStep)
+    
+    const {
+      row: {
+        isFinished,
+        isRefunded,
+        isStoppedSwap,
+        isSwapTimeout,
+        id,
+      },
+    } = this.props
+
+    if (!isFinished && !isRefunded && !isStoppedSwap && !isSwapTimeout) {
+      //@ts-ignore: strictNullChecks
+      SwapApp.shared().on('swap enter step', this._handleSwapEnterStep)
+    }
   }
 
   componentWillUnmount() {
@@ -174,11 +187,14 @@ class SwapRow extends Component<any, any> {
       isTurbo,
       sellCurrency,
       isFinished,
+      isSwapTimeout,
       id,
       scriptValues,
       isStoppedSwap,
       step,
     } = swapState
+
+    if (step <=1 && isSwapTimeout) return null
 
     const canBeRefunded = values && scriptBalance > 0
     const isDeletedSwap = isFinished || isRefunded || isStoppedSwap
