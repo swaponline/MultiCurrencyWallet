@@ -37,7 +37,7 @@
     display: inline-block;
     padding: 0.2em;
     margin: 0.1em 0.2em;
-    border: 1px solid #999;
+    border: 1px solid $notice-color;
     border-radius: 2px;
 
     span {
@@ -45,8 +45,9 @@
       padding: 0 0.2em;
       font-family: 'Roboto Mono', monospace;
     }
+
     span:nth-child(1) {
-      color: #999;
+      color: $notice-color;
     }
   }
 }
@@ -64,7 +65,7 @@
     display: inline-block;
     padding: 0.2em;
     margin: 0.1em 0.2em;
-    border: 1px solid #999;
+    border: 1px solid $notice-color;
     border-radius: 2px;
     background: none;
     font-size: 120%;
@@ -74,7 +75,7 @@
 }
 
 .mnemonicError {
-  border: 1px solid red;
+  border: 1px solid $color-f-error;
 }
 
 .mnemonicWords {
