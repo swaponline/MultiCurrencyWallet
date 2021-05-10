@@ -48,15 +48,10 @@ export const addAssetToWallet = async (page: puppeteer.Page, currency: string = 
 }
 
 export const turnOnMM = async (page: puppeteer.Page) => {
-  // move to earn page
-  const earnPage = await page.$('a[href="#/marketmaker"]')
-  await earnPage.click()
 
-  // choose try MM in browser
-  const [tryMMInBrowserBtn] = await page.$x("//button[contains(., 'Начать в браузере')]");
-  if (tryMMInBrowserBtn) {
-      await tryMMInBrowserBtn.click();
-  }
+  // turn on MM
+  const toggleSelector = 'input[type="checkbox"]'
+  await page.evaluate((selector) => document.querySelector(selector).click(), toggleSelector);
 
   await page.waitForSelector('#btcBalance') // waits for settings of mm to load
 
@@ -65,10 +60,6 @@ export const turnOnMM = async (page: puppeteer.Page) => {
   let tokenBalance = await page.$eval('#tokenBalance', el => el.textContent)
   btcBalance = new BigNumber(btcBalance).toFixed(5)
   tokenBalance = new BigNumber(tokenBalance).toFixed(5)
-
-  // turn on MM
-  const toggleSelector = 'input[type="checkbox"]'
-  await page.evaluate((selector) => document.querySelector(selector).click(), toggleSelector);
 
   return {
     btcBalance,
