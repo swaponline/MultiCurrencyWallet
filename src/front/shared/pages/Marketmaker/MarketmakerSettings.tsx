@@ -28,10 +28,12 @@ import Input from 'components/forms/Input/Input'
 import btc from './images/btcIcon.svg'
 import wbtc from './images/wbtcIcon.svg'
 
-import { AddressType } from 'domain/address'
-
 import metamask from 'helpers/metamask'
 import { Button } from 'components/controls'
+
+import { AddressType, AddressFormat } from 'domain/address'
+import Address from 'components/ui/Address/Address'
+
 
 const isDark = !!localStorage.getItem(constants.localStorage.isDark)
 
@@ -663,11 +665,10 @@ class MarketmakerSettings extends Component<any, any> {
                         <p styleName='item-text__secondary'>
                           <FormattedMessage
                             id="MM_DepositeWallet"
-                            defaultMessage="to top up, transfer to {address}"
-                            values={{
-                              address: btcWallet.address,
-                            }}
+                            defaultMessage="to top up, transfer to"
                           />
+                          <br />
+                          <Address address={btcWallet.address} format={AddressFormat.Full} />
                         </p>
                       </>
                     ) : (
@@ -765,11 +766,10 @@ class MarketmakerSettings extends Component<any, any> {
                         <p styleName='item-text__secondary'>
                           <FormattedMessage
                             id="MM_DepositeWallet"
-                            defaultMessage="to top up, transfer to {address}"
-                            values={{
-                              address: ethWallet.address,
-                            }}
+                            defaultMessage="to top up, transfer to"
                           />
+                          <br />
+                          <Address address={ethWallet.address} format={AddressFormat.Full} />
                         </p>
                       </>
                     ) : (

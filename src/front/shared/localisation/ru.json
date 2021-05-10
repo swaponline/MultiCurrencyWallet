@@ -5877,7 +5877,7 @@
   },
   {
     "id": "MM_DepositeWallet",
-    "message": "для пополнения переведите на {address}",
+    "message": "для пополнения переведите на",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]

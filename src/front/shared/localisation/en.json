@@ -5877,7 +5877,7 @@
   },
   {
     "id": "MM_DepositeWallet",
-    "message": "to top up, transfer to {address}",
+    "message": "to top up, transfer to",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
