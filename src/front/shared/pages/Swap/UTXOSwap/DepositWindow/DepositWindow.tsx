@@ -33,7 +33,6 @@ export default class DepositWindow extends Component<any, any> {
     const {
       swap,
       flow,
-      onCopyAddress,
       currencyData,
       fields,
     } = options
@@ -44,16 +43,18 @@ export default class DepositWindow extends Component<any, any> {
 
     this.currency = swap.sellCurrency.toLowerCase()
 
+    //@ts-ignore: strictNullChecks
     this.isSellCurrencyEthOrEthToken = helpers.ethToken.isEthOrEthToken({ name: swap.sellCurrency })
+    //@ts-ignore: strictNullChecks
     this.isSellCurrencyEthToken = helpers.ethToken.isEthToken({ name: swap.sellCurrency })
 
     this.state = {
       swap,
       dynamicFee: 0,
+      //@ts-ignore: strictNullChecks
       remainingBalance: this.swap.sellAmount,
       flow: swap.flow.state,
       isBalanceEnough: false,
-      isAddressCopied: false,
       isBalanceFetching: false,
       balance: this.isSellCurrencyEthOrEthToken
         ? currencyData.balance - (currencyData.unconfirmedBalance || 0)
@@ -62,6 +63,7 @@ export default class DepositWindow extends Component<any, any> {
         ? currencyData.address
         : flow.scriptAddress,
       currencyFullName: currencyData.fullName,
+      //@ts-ignore: strictNullChecks
       sellAmount: this.swap.sellAmount,
     }
   }
@@ -79,6 +81,7 @@ export default class DepositWindow extends Component<any, any> {
         actualBalance = await actions.eth.getBalance()
       }
     } else {
+      //@ts-ignore: strictNullChecks
       const unspents = await actions[this.currency].fetchUnspents(address)
       const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
       actualBalance = new BigNumber(totalUnspent).dividedBy(1e8)
@@ -109,8 +112,9 @@ export default class DepositWindow extends Component<any, any> {
     const { sellAmount } = this.state
 
     let dynamicFee = 0
-
+    //@ts-ignore: strictNullChecks
     if (COINS_WITH_DYNAMIC_FEE.includes(this.currency)) {
+      //@ts-ignore: strictNullChecks
       dynamicFee = await helpers[this.currency].estimateFeeValue({ method: 'swap', fixed: true })
 
       this.setState(() => ({
@@ -145,6 +149,7 @@ export default class DepositWindow extends Component<any, any> {
 
   createCycleUpdatingBalance = async () => {
     const { sellAmount, balance } = this.state
+    //@ts-ignore: strictNullChecks
     const { scriptValues } = this._fields
 
     let checker
@@ -197,12 +202,6 @@ export default class DepositWindow extends Component<any, any> {
     }, 5000)
   }
 
-  onCopyAddress = (e) => {
-    this.setState({
-      isPressCtrl: true,
-    })
-  }
-
   handleReloadBalance = async () => {
     const { isBalanceFetching } = this.state
 
@@ -214,18 +213,6 @@ export default class DepositWindow extends Component<any, any> {
       setTimeout(() => {
         this.setState({
           isBalanceFetching: false,
-        })
-      }, 500)
-    })
-  }
-
-  handleCopyAddress = (e) => {
-    this.setState({
-      isAddressCopied: true,
-    }, () => {
-      setTimeout(() => {
-        this.setState({
-          isAddressCopied: false,
         })
       }, 500)
     })
@@ -253,11 +240,9 @@ export default class DepositWindow extends Component<any, any> {
       address,
       dynamicFee,
       sellAmount,
-      isPressCtrl,
       flowBalance,
       requiredAmount,
       missingBalance,
-      isAddressCopied,
       isBalanceEnough,
       currencyFullName,
       remainingBalance,
@@ -301,11 +286,8 @@ export default class DepositWindow extends Component<any, any> {
       br: <br />,
     }
 
-    const {
-      currencyName,
-      explorerLink,
-      scriptValues,
-    } = this._fields
+    //@ts-ignore: strictNullChecks
+    const { currencyName, explorerLink, scriptValues } = this._fields
 
     return (
       <Fragment>
@@ -332,10 +314,7 @@ export default class DepositWindow extends Component<any, any> {
               <QR address={`${address}?amount=${remainingBalance}`} />
             </div>
           </div>
-          <CopyToClipboard
-            text={address}
-            onCopy={this.onCopyAddress}
-          >
+          <CopyToClipboard text={address}>
             <div>
               <a styleName="linkText">
                 <FormattedMessage
@@ -361,19 +340,11 @@ export default class DepositWindow extends Component<any, any> {
                 </strong>
               </div>
               <div styleName="qr">
-                <a
-                  styleName="linkAddress"
-                  onDoubleClick={this.onCopyAddress}
-                  onClick={this.onCopyAddress}
-                >
+                <a styleName="linkAddress">
                   {address}
                 </a>
-                <Button
-                  brand
-                  disabled={isAddressCopied}
-                  fullWidth
-                >
-                  {isAddressCopied ? <i className="fas fa-copy fa-copy-in" /> : <i className="fas fa-copy" />}
+                <Button brand fullWidth>
+                  <i className="fas fa-copy" />
                   <span className="copyText"><FormattedMessage id="deposit312" defaultMessage="copy" /></span>
                 </Button>
               </div>
@@ -440,5 +411,4 @@ export default class DepositWindow extends Component<any, any> {
       </Fragment>
     )
   }
-
 }

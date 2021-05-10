@@ -46,6 +46,7 @@ const GHOST: ICoin = {
     getBalance: async (addr) =>
       await connector.fetchBalance(networkType.mainnet, addr),
     publishRawTx: async (rawTx) =>
+      //@ts-ignore: strictNullChecks
       await connector.publishRawTx(networkType.mainnet, rawTx),
     getTxUrl: (txId) =>
       connector.getTxUrl(networkType.mainnet, txId),
@@ -73,6 +74,7 @@ const GHOST: ICoin = {
     getBalance: async (addr) =>
       await connector.fetchBalance(networkType.testnet, addr),
     createTx: async ({ account, amount, to }) =>
+      //@ts-ignore: strictNullChecks
       await libAdapter.createTx({
         netName: netNames.testnet,
         account,
@@ -80,6 +82,7 @@ const GHOST: ICoin = {
         to
       }),
     publishRawTx: async (rawTx) =>
+      //@ts-ignore: strictNullChecks
       await connector.publishRawTx(networkType.testnet, rawTx),
     getTxUrl: (txId) =>
       connector.getTxUrl(networkType.testnet, txId),
@@ -130,6 +133,7 @@ const libAdapter: ILibAdapter = {
 
     const network = GHOST[netName]
     const addressStr = address.toString()
+    //@ts-ignore: strictNullChecks
     const unspent = await connector.fetchUnspents(network.type, addressStr)
 
     const tx = new ghost_bitcore.Transaction()
@@ -158,6 +162,7 @@ const connector: IConnector = {
     throw new Error(`Unknown networkType: ${netType}`)
   },
 
+  //@ts-ignore: strictNullChecks
   getTxUrl(netType, txId) {
     if (netType == networkType.mainnet) {
       return `https://ghostscan.io/tx/${txId}`

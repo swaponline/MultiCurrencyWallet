@@ -47,6 +47,7 @@ class DeclineOrdersModal extends Component<any, any> {
     const { intl } = this.props
 
     return (
+      //@ts-ignore: strictNullChecks
       <Modal name="DeclineOrdersModal" title={intl.formatMessage(title.downloadModal)}>
         <div styleName="subTitle">
           <FormattedMessage id="decline43" defaultMessage="Sorry, but you have cannot start until you complete the swaps started earlier " />

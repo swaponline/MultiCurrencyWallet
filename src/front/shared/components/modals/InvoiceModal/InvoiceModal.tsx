@@ -307,6 +307,7 @@ class InvoiceModal extends React.Component<InvoiceModalProps, InvoiceModalState>
       !amount || isShipped || !destination || !contact || (address && !this.addressIsCorrect())
 
     return (
+      //@ts-ignore: strictNullChecks
       <Modal
         name={name}
         title={`${intl.formatMessage(localeLabel.title)}${' '}${currency.toUpperCase()}`}
@@ -369,6 +370,7 @@ class InvoiceModal extends React.Component<InvoiceModalProps, InvoiceModalState>
               qr={isMobile}
               openScan={this.openScan}
             />
+            {/* @ts-ignore: strictNullChecks */}
             {destination && !this.addressIsCorrect(destination) && (
               <div styleName="rednote">
                 <FormattedMessage
@@ -441,6 +443,7 @@ class InvoiceModal extends React.Component<InvoiceModalProps, InvoiceModalState>
               />
             </div>
           </div>
+          {/* @ts-ignore: strictNullChecks */}
           <Button fullWidth blue big disabled={isDisabled} onClick={this.handleSubmit}>
             {isShipped ? (
               <Fragment>

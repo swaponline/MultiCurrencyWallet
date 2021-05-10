@@ -2,59 +2,236 @@ import React from 'react'
 import cssModules from 'react-css-modules'
 import { FormattedMessage } from 'react-intl'
 import styles from './FAQ.scss'
-import { feedback } from 'helpers'
-import Button from 'components/controls/Button/Button'
+import { feedback, links } from 'helpers'
 import Expandable from 'components/ui/Expandable/Expandable'
 
+import config from 'helpers/externalConfig'
 
 @cssModules(styles, { allowMultiple: true })
-export default class FAQ extends React.Component<{}, {}> {
+class FAQ extends React.Component<{isDark: boolean}, {}> {
   constructor(props) {
     super(props)
   }
 
   render() {
+    const { isDark } = this.props
+
     return (
-      <div styleName="mm-faq-page">
-        <section>
-          <h2 styleName="section-title">FAQ</h2>
+      <div styleName='mm-faq-page'>
+        <section styleName={`${isDark ? 'dark' : '' }`}>
+          <h2 styleName="section-title">
+            <FormattedMessage
+              id="MainFAQHeader"
+              defaultMessage="FAQ"
+            />
+          </h2>
           <Expandable
-            title="Почему это работает?"
-            content="Маркетмейкер зарабатывает на разности курсов при обслуживании покупки и продажи (спред)"
-            onExpand={() => { feedback.marketmaking.faqOpened('Почему это работает?') }}
+            title={
+              <FormattedMessage
+                id="MM_FAQ_ItemTitle3"
+                defaultMessage="How much will I earn?"
+              />
+            }
+            content={
+              <div>
+                <FormattedMessage
+                  id="MM_FAQ_HowMuchEarn"
+                  defaultMessage="We declare from 10% per year (APY), if the number of exchanges is not enough we will motivate users to do exchanges using bounties."
+                />
+              </div>
+            }
+            onExpand={() => { feedback.marketmaking.faqOpened('How much will I earn?') }}
           />
           <Expandable
-            title="Это безопасно?"
+            title={
+              <FormattedMessage
+                id="MM_FAQ_ItemTitle1"
+                defaultMessage="Why it works?"
+              />
+            }
+            content={
+              <FormattedMessage
+                id="MM_FAQ_ItemContent1"
+                defaultMessage="The market maker earns on the difference in exchange rates when servicing the purchase and sale (spread)"
+              />
+            }
+            onExpand={() => { feedback.marketmaking.faqOpened('Why it works?') }}
+          />
+          <Expandable
+            title={
+              <FormattedMessage
+                id="MM_FAQ_Safety"
+                defaultMessage="Is it safe? Could the balance decrease?"
+              />
+            }
             content={
               <>
-                <div>- Система находится в бета версии</div>
-                <div>- Есть аудит от dsec</div>
-                <div>- Рекомендуем инвестировать только те средства, которые не жалко потерять</div>
-                <div>- Ключи от ваших средств находятся только у вас, мы не имеем доступа к вашим средствам</div>
-                <div>- <a href="https://github.com/swaponline/MultiCurrencyWallet/blob/master/docs/RISKS.md" target="_blank">Уведомление о рисках</a></div>
+                <div>
+                  <FormattedMessage
+                    id="MM_FAQ_TotalSum"
+                    defaultMessage="- At any given time, the sum of BTC and {token} balances will be greater than before."
+                    values={{
+                      token: config.binance ? 'BTCB' : 'WBTC'
+                    }}
+                  />
+                </div>
+                <div>
+                  <FormattedMessage
+                    id="MM_FAQ_FundAccess"
+                    defaultMessage="- The keys to your funds are only with you, we do not have access to your funds"
+                  />
+                </div>
+                <div>
+                  <FormattedMessage
+                    id="MM_FAQ_HighRisk"
+                    defaultMessage="- Any cryptocurrency operation is high risk."
+                  />
+                </div>
+                <div>
+                  <FormattedMessage
+                    id="MM_FAQ_Audit"
+                    defaultMessage="- The app passed audit from {link}."
+                    values={{
+                      link: <a href={links.swapAudit} target="_blank">dsec</a>
+                    }}
+                  />
+                </div>
+                <div>
+                  <FormattedMessage
+                    id="MM_FAQ_NotStore"
+                    defaultMessage="- Do not store large amounts or borrowed funds."
+                  />
+                </div>
+                <div>
+                  {'- '}
+                  <a href="https://github.com/swaponline/MultiCurrencyWallet/blob/master/docs/RISKS.md" target="_blank">
+                    <FormattedMessage
+                      id="MM_FAQ_ItemBody2-5"
+                      defaultMessage="Risk Notification"
+                    />
+                  </a>
+                </div>
               </>
             }
-            onExpand={() => { feedback.marketmaking.faqOpened('Это безопасно?') }}
+            onExpand={() => { feedback.marketmaking.faqOpened('Is it safe?') }}
           />
           <Expandable
-            title="Сколько я заработаю?"
-            content={<div>Зависит от количества обменов и спреда. Но если обменов не будет, вы получите SWAP токены из расчета 10% APY. Для получения напишите в <a href="https://t.me/swaponlinebot" target="_blank">саппорт</a>.</div>}
-            onExpand={() => { feedback.marketmaking.faqOpened('Сколько я заработаю?') }}
+            title={
+              <FormattedMessage
+                id="MM_FAQ_ItemTitle7"
+                defaultMessage="Why do I need {token}? I am only interested in earning BTC."
+                values={{
+                  token: config.binance ? 'BTCB' : 'WBTC',
+                }}
+              />
+            }
+            content={
+              <>
+                <div>
+                  <FormattedMessage
+                    id="MM_FAQ_ItemContent7-1"
+                    defaultMessage="You can replenish only with Bitcoin, but inevitably, at some periods, your BTC balance may decrease, and {token} may increase, and vice versa."
+                    values={{
+                      token: config.binance ? 'BTCB' : 'WBTC',
+                    }}
+                  />
+                </div>
+                <div>
+                  <FormattedMessage
+                    id="MM_FAQ_ItemContent7-2"
+                    defaultMessage="At any given time, the sum of these balances will be greater than before."
+                  />
+                </div>
+                <div>
+                  <FormattedMessage
+                    id="MM_FAQ_ItemContent7-3"
+                    defaultMessage="If you want to withdraw BTC, but some of them are in {token}, then you will have to change {token} yourself, for example, through the Binance exchange."
+                    values={{
+                      token: config.binance ? 'BTCB' : 'WBTC',
+                    }}
+                  />
+                </div>
+              </>
+            }
+            onExpand={() => { feedback.marketmaking.faqOpened('What is the minimum balance needed to get started?') }}
           />
           <Expandable
-            title="Какой минимальный баланс нужен для начала?"
-            content="(в разработке)"
-            onExpand={() => { feedback.marketmaking.faqOpened('Какой минимальный баланс нужен для начала?') }}
+            title={
+              <FormattedMessage
+                id="MM_FAQ_ItemTitle8"
+                defaultMessage="Why don't users exchange themselves through the Binance exchange?"
+              />
+            }
+            content={
+              <FormattedMessage
+                id="MM_FAQ_ItemContent8"
+                defaultMessage="Our clients love and support decentralization, our exchanger works through smart contracts and we will not be able to freeze the client's funds for more than 3 hours."
+              />
+            }
+            onExpand={() => { feedback.marketmaking.faqOpened('What is the minimum balance needed to get started?') }}
           />
           <Expandable
-            title="Какой минимальный срок маркетмейкинга?"
-            content="Минимального срока нет, вы можете вывести средства в любой момент."
-            onExpand={() => { feedback.marketmaking.faqOpened('Какой минимальный срок маркетмейкинга?') }}
+            title={
+              <FormattedMessage
+                id="MM_FAQ_ItemTitle4"
+                defaultMessage="What is the minimum balance needed to get started?"
+              />
+            }
+            content={
+              <FormattedMessage
+                id="MM_FAQ_ItemContent4"
+                defaultMessage="(in development)"
+              />
+            }
+            onExpand={() => { feedback.marketmaking.faqOpened('What is the minimum balance needed to get started?') }}
           />
           <Expandable
-            title="Как увеличить заработок?"
-            content="Расскажите о возможности обмена в сообществах где вы состоите."
-            onExpand={() => { feedback.marketmaking.faqOpened('Как увеличить заработок?') }}
+            title={
+              <FormattedMessage
+                id="MM_FAQ_ItemTitle5"
+                defaultMessage="What is the minimum period of marketmaking?"
+              />
+            }
+            content={
+              <FormattedMessage
+                id="MM_FAQ_ItemContent5"
+                defaultMessage="There is no minimum term, you can withdraw funds at any time."
+              />
+            }
+            onExpand={() => { feedback.marketmaking.faqOpened('What is the minimum period of marketmaking?') }}
+          />
+          <Expandable
+            title={
+              <FormattedMessage
+                id="MM_FAQ_ItemTitle6"
+                defaultMessage="How to increase earnings?"
+              />
+            }
+            content={
+              <FormattedMessage
+                id="MM_FAQ_ItemContent6"
+                defaultMessage="Tell about the possibility of swap in the communities where you are a member."
+              />
+            }
+            onExpand={() => { feedback.marketmaking.faqOpened('How to increase earnings?') }}
+          />
+          <Expandable
+            title={
+              <FormattedMessage
+                id="MM_FAQ_ImpermanentLoss"
+                defaultMessage="What Impermanent Loss expected?"
+              />
+            }
+            content={
+              <FormattedMessage
+                id="MM_FAQ_ImpermanentLossContent"
+                defaultMessage="At any given time, the sum of these balances will be greater than before. If you want to withdraw BTC, but some of them are in {token}, then you will have to change {token} yourself, for example, through the Binance exchange."
+                values={{
+                  token: config.binance ? 'BTCB' : 'WBTC',
+                }}
+              />
+            }
+            onExpand={() => { feedback.marketmaking.faqOpened('What Impermanent Loss expected?') }}
           />
         </section>
       </div>
@@ -62,3 +239,5 @@ export default class FAQ extends React.Component<{}, {}> {
   }
 
 }
+
+export default FAQ

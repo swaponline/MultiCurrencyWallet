@@ -213,6 +213,7 @@ export const getCoinPriceCache = (coin: string): BigNumber => {
       return _priceCache[coin].price
     }
   }
+  //@ts-ignore: strictNullChecks
   return null
 }
 

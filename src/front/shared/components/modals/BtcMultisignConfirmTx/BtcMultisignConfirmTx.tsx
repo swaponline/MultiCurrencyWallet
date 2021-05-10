@@ -123,6 +123,7 @@ class BtcMultisignConfirmTx extends React.Component<any, any> {
           },
           () => {
             // Fetching full tx info (rawTX)
+            //@ts-ignore: strictNullChecks
             actions.multisigTx.fetchRawTx(from, txId).then((txAuthedData: any) => {
               if (txAuthedData) {
                 actions.btcmultisig.parseRawTX(txAuthedData.rawTx).then((txDataParsed) => {
@@ -258,6 +259,7 @@ class BtcMultisignConfirmTx extends React.Component<any, any> {
     const linked = Link.all(this, 'address', 'amount', 'from')
 
     return (
+      //@ts-ignore: strictNullChecks
       <Modal
         name={name}
         title={`${intl.formatMessage(langLabels.title)}`}

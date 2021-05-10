@@ -1,7 +1,7 @@
 import { setup, importWallet, addAssetToWallet, turnOnMM, takeScreenshot, timeOut } from './utils'
 
-const MAKER_SEED = ['vast', 'bronze', 'oyster', 'trade', 'love', 'once', 'fog', 'match', 'rail', 'lock', 'cake', 'science']
-const makerBtcAddress = 'mosm1NmQZETUQvH68C9kbS8F3nuVKD7RDk'
+const MAKER_SEED = ['neither', 'already', 'situate', 'silent', 'ripple', 'milk', 'paddle', 'glass', 'leopard', 'track', 'mansion', 'junk']
+const makerBtcAddress = 'n2Y2rbg6wVEQnnpNxisiHK4wCDUAq59iv6'
 
 const TAKER_SEED = ['honey', 'stereo', 'harsh', 'diary', 'select', 'episode', 'ready', 'ritual', 'best', 'target', 'paper', 'auto']
 const takerBtcAddress = 'n4JjB9D9axszdsFxyxDmF43z4WwttN6oPb'

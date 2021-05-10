@@ -12,7 +12,7 @@
 
   .section-title {
     margin: 0 auto 1em;
-    max-width: 572px;
+    max-width: 20em;
     font-style: normal;
     line-height: 1em;
     font-size: 30px;
@@ -24,8 +24,38 @@
     margin-bottom: 0.5em;
   }
 
-  .how-to-earn {
+  .promoHeader {
     padding-top: 0;
+    text-align: center;
+
+    p {
+      max-width: 40em;
+      margin: 0 auto;
+    }
+  }
+
+  .installExtensionBody {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .extensionPromoImg {
+      display: block;
+      margin: 0 auto 1em;
+      width: 70%;
+      height: intrinsic;
+    }
+
+    button {
+      @include ff-light;
+      letter-spacing: 0.05rem;
+    }
+
+    .devVersionLink {
+      display: inline-block;
+      margin-top: 1em;
+      text-decoration: underline;
+    }
   }
 
   .select-mode {
@@ -66,4 +96,28 @@
     }
   }
 
+}
+
+@include media-mobile {
+  .mm-promo-page {
+    .promoHeader {
+      padding: 1em;
+    }
+
+    .section-title {
+      font-size: 1.5em;
+      line-height: 1.3em;
+    }
+
+    .promoDescription {
+      font-size: 0.95em;
+    }
+  }
+
+  .installExtensionBody {
+    button,
+    .devVersionLink {
+      font-size: 0.9em;
+    }
+  }
 }

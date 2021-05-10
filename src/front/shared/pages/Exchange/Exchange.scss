@@ -69,22 +69,6 @@
   }
 }
 
-.scrollToTutorialSection {
-  display: flex;
-  justify-content: space-between;
-  position: absolute;
-  bottom: 56px;
-  right: 50%;
-  color: gray;
-  cursor: pointer;
-  transition: opacity 0.3s ease, visibility 0.1s 0.3s;
-
-  &:global(.hidden) {
-    opacity: 0;
-    visibility: hidden;
-  }
-}
-
 .switchButton {
   display: flex;
   position: relative;
@@ -98,22 +82,6 @@
   }
 }
 
-.scrollTrigger {
-  content: '';
-  background: black;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  animation: scrollAnimation 5s linear infinite;
-}
-
-.scrollAdvice {
-  display: inline-block;
-  margin-right: 15px;
-  font-size: 10px;
-  line-height: 1.1em;
-}
-
 .exchangeWrap {
   position: relative;
 }
@@ -121,6 +89,23 @@
 .container {
   max-width: 1200px;
   margin: 0 auto;
+  text-align: center;
+}
+
+.link {
+  margin-top: 0;
+  width: 50%;
+  border-radius: 3px;
+  height: 55px;
+  font-size: 16px;
+  line-height: 1em;
+}
+
+.link.button-like {
+  color: $color-link;
+  font-weight: 600;
+  text-decoration: underline;
+  padding: 1em 0;
 }
 
 .button {
@@ -130,7 +115,6 @@
   height: 55px;
   font-size: 16px;
   line-height: 1em;
-  box-shadow: none;
 }
 
 .button.link-like {
@@ -146,6 +130,12 @@
 
 .button.disabled {
   background: #f5f5f5;
+}
+
+.button.orderbook {
+  width: auto;
+  height: auto;
+  margin-bottom: 1.5em;
 }
 
 .buttonContinueSwap {
@@ -432,11 +422,6 @@
 }
 
 @include media-mobile {
-  .scrollToTutorialSection {
-    bottom: 40px;
-    right: 40%;
-  }
-
   .inform {
     margin-top: 10px;
   }

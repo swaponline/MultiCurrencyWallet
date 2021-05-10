@@ -1,3 +1,4 @@
+//@ts-ignore: strictNullChecks
 const network = process.env.NETWORK.toLowerCase()
 
 const TRADE_TICKERS = require(`./${network}/TRADE_TICKERS`)

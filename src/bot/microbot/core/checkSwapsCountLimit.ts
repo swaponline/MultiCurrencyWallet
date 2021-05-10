@@ -7,6 +7,7 @@ export const checkSwapsCountLimit = (): boolean => {
   if (process.env.MAX_PARALLEL_SWAPS !== undefined
     && Number(process.env.MAX_PARALLEL_SWAPS) !== 0
   ) {
+    //@ts-ignore: strictNullChecks
     const activeSwapsCount = SwapApp.shared().getActiveSwaps().length
     if (activeSwapsCount >= Number(process.env.MAX_PARALLEL_SWAPS)) {
       return false

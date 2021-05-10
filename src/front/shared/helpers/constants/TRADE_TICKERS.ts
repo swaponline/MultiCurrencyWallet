@@ -4,6 +4,7 @@ import config from 'helpers/externalConfig'
 const GetCustromERC20 = () => {
   const configStorage = (process.env.MAINNET) ? 'mainnet' : 'testnet'
 
+  //@ts-ignore: strictNullChecks
   let tokensInfo = JSON.parse(localStorage.getItem('customERC'))
   if (!tokensInfo || !tokensInfo[configStorage]) return {}
   return tokensInfo[configStorage]
@@ -61,6 +62,7 @@ if (config && config.isWidget) {
     }
   })
 }
+
 export default [
   ...swap,
 ]

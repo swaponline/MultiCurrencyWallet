@@ -84,6 +84,7 @@ class SwapProgress extends Component<any, any> {
     this.history = history
     this.locale = locale
 
+    //@ts-ignore: strictNullChecks
     this.isSellCurrencyEthOrEthToken = ethToken.isEthOrEthToken({ name: swap.sellCurrency })
 
     this.state = {
@@ -106,6 +107,7 @@ class SwapProgress extends Component<any, any> {
   }
 
   onPushGoToWallet = () => {
+    //@ts-ignore: strictNullChecks
     this.history.push(localisedUrl(this.locale, '/wallet'))
   }
 
@@ -116,8 +118,11 @@ class SwapProgress extends Component<any, any> {
         swap,
       },
       _fields: {
+        //@ts-ignore: strictNullChecks
         currencyName,
+        //@ts-ignore: strictNullChecks
         withdrawTransactionHash,
+        //@ts-ignore: strictNullChecks
         explorerLink,
       },
     } = this
@@ -144,6 +149,7 @@ class SwapProgress extends Component<any, any> {
         },
       },
       _fields: {
+        //@ts-ignore: strictNullChecks
         currencyName,
       }
     } = this
@@ -176,6 +182,7 @@ class SwapProgress extends Component<any, any> {
   }
 
   componentDidMount() {
+    //@ts-ignore: strictNullChecks
     this.swap.on('state update', this.handleFlowStateUpdate)
     this.handleBarProgress()
     localStorage.setItem(constants.localStorage.startSwap, Date.now().toString())
@@ -183,15 +190,21 @@ class SwapProgress extends Component<any, any> {
   }
 
   componentWillUnmount() {
+    //@ts-ignore: strictNullChecks
     this.swap.off('state update', this.handleFlowStateUpdate)
+    //@ts-ignore: strictNullChecks
     clearTimeout(this.timer)
   }
 
   reloadPage = () => {
+    //@ts-ignore: strictNullChecks
     this.timer = setTimeout(() => {
+      //@ts-ignore: strictNullChecks
       const startSwapTime: number = new BigNumber(localStorage.getItem(constants.localStorage.startSwap)).toNumber()
 
+      //@ts-ignore: strictNullChecks
       if (this.swap.flow.isFinished) {
+        //@ts-ignore: strictNullChecks
         clearTimeout(this.timer)
       }
 
@@ -200,6 +213,7 @@ class SwapProgress extends Component<any, any> {
       if (((Date.now() - startSwapTime) > 600 * 1000) && isSwapPage) {
         console.warn('UPS!!! SWAP IS FROZEN - RELOAD')
         localStorage.removeItem(constants.localStorage.startSwap)
+        //@ts-ignore: strictNullChecks
         clearTimeout(this.timer)
         window.location.reload()
       }
@@ -216,7 +230,9 @@ class SwapProgress extends Component<any, any> {
     const { state, stepNumbers } = swap.flow
 
     const {
+      //@ts-ignore: strictNullChecks
       scriptCreatingTransactionHash,
+      //@ts-ignore: strictNullChecks
       withdrawTransactionHash,
     } = this._fields
 
@@ -279,6 +295,7 @@ class SwapProgress extends Component<any, any> {
   handleFocusSecretInput = (event) => event.target.select();
 
   tryRefund = async () => {
+    //@ts-ignore: strictNullChecks
     const { flow } = this.swap
 
     await flow.tryRefund()
@@ -305,6 +322,7 @@ class SwapProgress extends Component<any, any> {
 
   confirmScriptChecked = () => {
     const {
+      //@ts-ignore: strictNullChecks
       verifyScriptFunc,
     } = this._fields
     // this.swap.flow[verifyScriptFunc]()
@@ -335,15 +353,21 @@ class SwapProgress extends Component<any, any> {
     const isUTXOSide = swap.flow.isUTXOSide
 
     const {
+      //@ts-ignore: strictNullChecks
       currencyName,
+      //@ts-ignore: strictNullChecks
       scriptValues,
+      //@ts-ignore: strictNullChecks
       explorerLink,
+      //@ts-ignore: strictNullChecks
       withdrawTransactionHash,
     } = this._fields
 
     const progress = Math.floor(90 * stepValue)
     const finishIcon = <img src={finishSvg} alt="finishIcon" />
+    //@ts-ignore: strictNullChecks
     const showWalletButton = (!this.swap.destinationBuyAddress)
+      //@ts-ignore: strictNullChecks
       || (this.swap.destinationBuyAddress === this.wallets[buyCurrency.toUpperCase()])
 
     const canRefund = this.checkCanRefund()

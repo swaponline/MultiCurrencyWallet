@@ -67,6 +67,7 @@ class MnemonicInput extends Component {
 
     if (autoFill) {
       this.isAutofill = true
+      //@ts-ignore: strictNullChecks
       this.TESTNET_TAGS = this.TESTNET_TEST_PHRASE.split(' ').map(word => {
         return suggestions.find(obj => obj.name === word)
       })
@@ -183,7 +184,9 @@ class MnemonicInput extends Component {
           onDelete={this.onDelete}
           onAddition={this.onAddition}
           onInput={this.onInput}
+          //@ts-ignore: strictNullChecks
           placeholderText={isPlaceholderVisible ? intl.formatMessage(langLabels.placeholder) : ''}
+          //@ts-ignore: strictNullChecks
           removeButtonText={intl.formatMessage(langLabels.deleteText)}
           delimiters={[`Enter`, `Tab`, ` `, `,`]}
         />

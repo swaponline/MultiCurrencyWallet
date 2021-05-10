@@ -74,6 +74,7 @@ const BTC: ICoin = {
     getBalance: async (addr) =>
       await connector.fetchBalance(networkType.testnet, addr),
     publishTx: async (rawTx) =>
+      //@ts-ignore: strictNullChecks
       await connector.publishTx(networkType.testnet, rawTx),
     getTxUrl: (txId) =>
       connector.getTxUrl(networkType.testnet, txId),
@@ -152,6 +153,7 @@ const connector: IConnector = {
     throw new Error('Unknown networkType')
   },
 
+  //@ts-ignore: strictNullChecks
   getTxUrl(netType, txId) {
     if (netType == networkType.mainnet) {
       return `https://www.blockchain.com/btc/tx/${txId}`

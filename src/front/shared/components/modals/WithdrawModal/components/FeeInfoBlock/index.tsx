@@ -3,10 +3,11 @@ import cssModules from 'react-css-modules'
 import styles from './index.scss'
 import { BigNumber } from 'bignumber.js'
 import { FormattedMessage } from 'react-intl'
-
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import FeeRadios  from "./FeeRadios";
+import { links } from 'helpers'
+import { COIN_DATA, COIN_MODEL } from 'swap.app/constants/COINS'
 
 type FeeInfoBlockProps = {
   isLoading: boolean
@@ -25,16 +26,15 @@ type FeeInfoBlockProps = {
   exCurrencyRate?: BigNumber
   minerFee: BigNumber
   serviceFee: BigNumber
-  totalFee: BigNumber
   usedAdminFee: undefined | {
     address: string
     fee: number // percent (%)
     min: number
   }
   bitcoinFees?: {
-    slow: number | any
-    normal: number | any
-    fast: number | any,
+    slow: number
+    normal: number
+    fast: number
     custom: number
   }
 
@@ -51,10 +51,9 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
     exEthereumRate = 0,
     exCurrencyRate = 0,
     isLoading,
-    minerFee,
+    minerFee: initialMinerFee,
     serviceFee,
     usedAdminFee,
-    totalFee,
     hasTxSize,
     txSize,
     feeCurrentCurrency,
@@ -80,7 +79,7 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
     // check after converting
     // if  0.<two-digit number more 0> then cut result to two numbers
     // else cut result to currency decimals
-    let bigNumResult = currency.multipliedBy(exchangeRate)
+    let bigNumResult = new BigNumber(currency).multipliedBy(exchangeRate)
     const strResult = bigNumResult.toString()
     const haveTwoZeroAfterDot =
       strResult.match(/\./)
@@ -93,6 +92,15 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
 
     return bigNumResult.toNumber()
   }
+
+  let minerFee = initialMinerFee
+
+  // double miner fee for user and admin transactions
+  if (usedAdminFee && (isEthToken || COIN_DATA[currency]?.model === COIN_MODEL.AB)) {
+    minerFee = initialMinerFee.multipliedBy(2)
+  }
+
+  const totalFee = minerFee.plus(serviceFee)
 
   const fiatMinerFee = isEthToken
     ? exEthereumRate > 0 // eth rate for tokens
@@ -112,18 +120,11 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
     ? convertToFiat(totalFee, exCurrencyRate)
     : 0
 
-  const linkToTxSizeInfo = (
-    <a
-      href="https://en.bitcoin.it/wiki/Maximum_transaction_rate#:~:text=Each%20transaction%20input%20requires%20at,the%20minimum-sized%20Bitcoin%20transaction"
-      target="_blank"
-    >
-      (?)
-    </a>
-  )
-
   const transactionSize = (
     <>
-      {feeCurrentCurrency}&nbsp;sat/byte * {txSize}&nbsp;bytes&nbsp;{linkToTxSizeInfo} ={' '}
+      {feeCurrentCurrency}&nbsp;sat/byte * {txSize}&nbsp;bytes&nbsp;
+      <a href={links.transactionRate} target="_blank">(?)</a>{' '}
+      ={' '}
     </>
   )
 
@@ -136,7 +137,9 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
           </span>
           <FeeRadios
             speedType={bitcoinFeeSpeedType}
+            //@ts-ignore: strictNullChecks
             fees={bitcoinFees}
+            //@ts-ignore: strictNullChecks
             setFee={setBitcoinFee}
             isLoading={isLoading}
           />
@@ -151,6 +154,7 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
           {isLoading
             ? <div styleName='paleLoader'><InlineLoader /></div>
             : <span styleName='fee'>
+                {/* @ts-ignore: strictNullChecks */}
                 {hasTxSize && feeCurrentCurrency > 0 ? transactionSize : null}
                 {+minerFee}&nbsp;{minerFeeTicker}
                 {' '}

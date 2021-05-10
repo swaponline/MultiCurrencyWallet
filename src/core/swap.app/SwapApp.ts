@@ -77,6 +77,7 @@ class SwapApp extends EventEmitter {
 
   static onInit(cb) {
     const waitInit = () => {
+      //@ts-ignore: strictNullChecks
       if (SwapApp._swapAppInstance && SwapApp._swapAppInstance.isInited()) {
         cb()
       } else {
@@ -92,6 +93,7 @@ class SwapApp extends EventEmitter {
 
   static init(options: SwapAppOptions, makeShared: boolean = false) {
     if (makeShared) {
+      //@ts-ignore: strictNullChecks
       SwapApp._swapAppInstance = new SwapApp(options)
       return SwapApp._swapAppInstance
     }
@@ -102,7 +104,9 @@ class SwapApp extends EventEmitter {
     if (!SwapApp._swapAppInstance) {
       throw new Error(`Shared instance not initialized. Use SwapApp.setup() first.`)
     }
+    //@ts-ignore: strictNullChecks
     SwapApp._swapAppInstance.env.web3 = web3provider
+    //@ts-ignore: strictNullChecks
     SwapApp._swapAppInstance.initFlows()
   }
 
@@ -115,6 +119,7 @@ class SwapApp extends EventEmitter {
     if (SwapApp._swapAppInstance && !forceFreshSetup) {
       throw new Error(`Shared instance already initialized. Use SwapApp.shared() to access it.`)
     }
+    //@ts-ignore: strictNullChecks
     SwapApp._swapAppInstance = new SwapApp(options)
   }
 
@@ -129,6 +134,7 @@ class SwapApp extends EventEmitter {
   attachSwap(swap: Swap): Swap {
     if (!this.attachedSwaps.isExistByKey(swap.id)) {
       this.attachedSwaps.append(swap, swap.id)
+      //@ts-ignore: strictNullChecks
       return null
     } else {
       return this.attachedSwaps.getByKey(swap.id)
@@ -277,6 +283,7 @@ class SwapApp extends EventEmitter {
   getMyEthAddress() {
     return this.env.metamask && this.env.metamask.isEnabled() && this.env.metamask.isConnected()
       ? this.env.metamask.getAddress()
+      //@ts-ignore: strictNullChecks
       : this.services.auth.accounts.eth.address
   }
 

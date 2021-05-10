@@ -24,7 +24,7 @@ import WalletTour from './WalletTour/WalletTour'
 import { WidgetWalletTour } from './WidgetTours'
 
 import Loader from 'components/loaders/Loader/Loader'
-import { localisedUrl, unlocalisedUrl } from '../../helpers/locale'
+import { localisedUrl } from '../../helpers/locale'
 import { messages, getMenuItems, getMenuItemsMobile } from './config'
 import { getActivatedCurrencies } from 'helpers/user'
 import { ThemeSwitcher } from './ThemeSwitcher'
@@ -79,13 +79,11 @@ class Header extends Component<any, any> {
       location: { pathname },
       intl,
     } = props
-    const { exchange, home, wallet, history: historyLink } = links
-    const { products, invest, history } = messages
+    const { exchange, home, wallet } = links
     const { isWalletCreate } = constants.localStorage
 
-    const dinamicPath = pathname.includes(exchange)
-      ? `${unlocalisedUrl(intl.locale, pathname)}`
-      : `${home}`
+    const dynamicPath = pathname.includes(exchange) ? `${pathname}` : `${home}`
+    //@ts-ignore: strictNullChecks
     let lsWalletCreated: string | boolean = localStorage.getItem(isWalletCreate)
     if (config && config.isWidget) {
       lsWalletCreated = true
@@ -99,7 +97,7 @@ class Header extends Component<any, any> {
       isTourOpen: false,
       isWallet: false,
       menuItems: getMenuItems(props),
-      menuItemsMobile: getMenuItemsMobile(props, lsWalletCreated, dinamicPath),
+      menuItemsMobile: getMenuItemsMobile(props, lsWalletCreated, dynamicPath),
       createdWalletLoader: isWalletPage && !lsWalletCreated,
     }
     this.lastScrollTop = 0
@@ -195,7 +193,6 @@ class Header extends Component<any, any> {
     const isPartialPage = path.includes(exchange) || path === `/ru${exchange}`
 
     const isMarketPage = path.includes(marketmaker) || path.includes(marketmaker_short)
-    console.log('>>>>> isMarketPage', isMarketPage)
     const didOpenWalletCreate = localStorage.getItem(isWalletCreate)
 
     const wasOnWalletLs = localStorage.getItem(wasOnWallet)
@@ -243,6 +240,7 @@ class Header extends Component<any, any> {
     }
 
     userCurrencies = userCurrencies.filter(({ currency }) =>
+      //@ts-ignore: strictNullChecks
       getActivatedCurrencies().includes(currency)
     )
 
@@ -257,7 +255,6 @@ class Header extends Component<any, any> {
         tourEvent = this.openWidgetWalletTour
         break
       case !userCurrencies.length && isWalletPage && !config.opts.plugins.backupPlugin:
-      console.log('>>>> Header - redirect to create wallet')
         this.openCreateWallet({ onClose: tourEvent })
         break
       default:

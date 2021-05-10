@@ -23,9 +23,23 @@ export const COIN_DATA = {
     model: COIN_MODEL.AB,
     precision: 18,
   },
+  'BNB': {
+    ticker: 'BNB',
+    name: 'BSC',
+    type: COIN_TYPE.NATIVE,
+    model: COIN_MODEL.AB,
+    precision: 18,
+  },
   'USDT': {
     ticker: 'USDT',
     name: 'Tether',
+    type: COIN_TYPE.ETH_TOKEN,
+    model: COIN_MODEL.AB,
+    precision: 18,
+  },
+  'BTCB': {
+    ticker: 'BTCB',
+    name: 'BTCB Token',
     type: COIN_TYPE.ETH_TOKEN,
     model: COIN_MODEL.AB,
     precision: 18,
@@ -73,12 +87,14 @@ export const COIN_DATA = {
 export const NATIVE = {
   btc: 'BTC',
   eth: 'ETH',
+  bnb: 'BNB',
   ghost: 'GHOST',
   next: 'NEXT',
 }
 
 export const ETH_TOKENS = {
   usdt: 'USDT',
+  btcb: 'BTCB',
   eurs: 'EURS',
   swap: 'SWAP',
   pay: 'PAY',

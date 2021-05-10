@@ -15,6 +15,7 @@ type NavProps = {
   isHidden?: boolean
   intl: any
 }
+//@ts-ignore: strictNullChecks
 @withRouter
 @CSSModules(styles, { allowMultiple: true })
 class NavMobile extends Component<NavProps, null> {
@@ -77,4 +78,5 @@ class NavMobile extends Component<NavProps, null> {
   }
 }
 
+//@ts-ignore: strictNullChecks
 export default injectIntl(NavMobile)

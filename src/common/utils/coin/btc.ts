@@ -180,10 +180,12 @@ const fetchTxInfo = (options) : any => {
     */
 
     if (afterOutput.length) {
+      //@ts-ignore: strictNullChecks
       afterBalance = new BigNumber(afterOutput[0].value).dividedBy(1e8).toNumber()
     }
 
     if (adminOutput.length) {
+      //@ts-ignore: strictNullChecks
       adminFee = new BigNumber(adminOutput[0].value).dividedBy(1e8).toNumber()
     }
 
@@ -300,6 +302,7 @@ const prepareUnspents = (options: IPrepareUnspentsOptions): Promise<IBtcUnspent[
     })
     
     // let's try to find one unspent input which will enough for all commission
+    //@ts-ignore: strictNullChecks
     let oneUnspent: IBtcUnspent = null
     sortedUnspents.forEach((unspent: IBtcUnspent) => {
       if (oneUnspent === null
@@ -491,6 +494,7 @@ const fetchTxInputScript = (options) => {
       && inInfo.inputs.length === 1
     ) {
       return bitcoin.script.toASM(
+        //@ts-ignore: strictNullChecks
         bitcoin.script.decompile(
           Buffer.from(inInfo.inputs[0].script, 'hex')
         )
@@ -905,10 +909,14 @@ const calculateTxSize = async (params: CalculateTxSizeParams) => {
 
   // general formula
   // (<one input size> × <number of inputs>) + (<one output size> × <number of outputs>) + <tx size>
+  //@ts-ignore: strictNullChecks
   if (txIn > 0) {
     txSize =
+    //@ts-ignore: strictNullChecks
     txIn * TRANSACTION[`${fromAddressType}_IN_SIZE`] +
+    //@ts-ignore: strictNullChecks
     txOut * TRANSACTION.P2PKH_OUT_SIZE +
+    //@ts-ignore: strictNullChecks
     (TRANSACTION.TX_SIZE + txIn - txOut)
   }
 
@@ -981,6 +989,7 @@ const estimateFeeRateBLOCKCYPHER = (options) => {
         name: `blocyper`,
       },
     } )
+    //@ts-ignore: strictNullChecks
     .then(info => Number(info[_speed]))
 }
 
@@ -1130,6 +1139,7 @@ const prepareFees = async ({
 
   let unspents = []
   try {
+    //@ts-ignore: strictNullChecks
     unspents = await fetchUnspents({address: from, NETWORK})
   } catch (eUnspents) {
     return { message: `Fail fetch unspents `+ eUnspents.message}
@@ -1139,6 +1149,7 @@ const prepareFees = async ({
   amount = new BigNumber(amount).multipliedBy(1e8).plus(feeValue).plus(feeFromAmount).multipliedBy(1e-8).toNumber()
 
   try {
+    //@ts-ignore: strictNullChecks
     unspents = await prepareUnspents({ unspents, amount })
   } catch (eUnspents) {
     return { message: `Fail prepare unspents `+ eUnspents.message}

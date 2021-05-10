@@ -68,6 +68,7 @@ const SecondStep = (props) => {
   }
 
   const { hiddenCoinsList } = constants.localStorage
+  //@ts-ignore: strictNullChecks
   const hiddenCoins = JSON.parse(localStorage.getItem(hiddenCoinsList))
 
   if (currencies.BTC) {

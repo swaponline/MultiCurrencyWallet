@@ -27,7 +27,9 @@ const Href = ({ children, to, redirect, tab, rel, className }: HrefProps) => {
       styleName="link"
       className={className}
       href={redirect || tab}
+      //@ts-ignore: strictNullChecks
       target={tab ? '_blank' : null}
+      //@ts-ignore: strictNullChecks
       rel={rel || null}
     >
       {children}

@@ -25,11 +25,14 @@ beforeAll(async () => {
 })
 
 test('check app loaded', () => {
+  //@ts-ignore: strictNullChecks
   expect(orders.items.length).toBe(0)
 })
 
 test('check order creation', () => {
+  //@ts-ignore: strictNullChecks
   orders.create(_ORDER)
 
+  //@ts-ignore: strictNullChecks
   expect(orders.items.length).toBe(1)
 })

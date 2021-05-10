@@ -32,6 +32,7 @@ export default class UTXOToEth extends Component<any, any> {
     this.state = {
       currencyData,
       enabledButton: false,
+      //@ts-ignore: strictNullChecks
       flow: this.swap.flow.state,
       currencyAddress: currencyData.address,
       secret: crypto.randomBytes(32).toString('hex'),
@@ -39,18 +40,22 @@ export default class UTXOToEth extends Component<any, any> {
   }
 
   componentWillMount() {
+    //@ts-ignore: strictNullChecks
     this.swap.on('state update', this.handleFlowStateUpdate)
   }
 
   componentDidMount() {
-    const { flow: { isSignFetching, isMeSigned, step, isParticipantSigned } } = this.state
+    const { flow: { isSignFetching, isMeSigned, step, isParticipantSigned, isStoppedSwap } } = this.state
+    if (isStoppedSwap) return
     window.addEventListener('resize', this.updateWindowDimensions)
     this.updateWindowDimensions()
+    //@ts-ignore: strictNullChecks
     this.ParticipantTimer = setInterval(() => {
       if (this.state.flow.isParticipantSigned && this.state.destinationBuyAddress) {
         //this.submitSecret()
       }
       else {
+        //@ts-ignore: strictNullChecks
         clearInterval(this.ParticipantTimer)
       }
     }, 3000)
@@ -59,7 +64,9 @@ export default class UTXOToEth extends Component<any, any> {
   componentWillUnmount() {
     const { swap, flow: { isMeSigned } } = this.state
     window.removeEventListener('resize', this.updateWindowDimensions)
+    //@ts-ignore: strictNullChecks
     this.swap.off('state update', this.handleFlowStateUpdate)
+    //@ts-ignore: strictNullChecks
     clearInterval(this.ParticipantTimer)
   }
 
@@ -69,6 +76,7 @@ export default class UTXOToEth extends Component<any, any> {
 
   submitSecret = () => {
     const { secret } = this.state
+    //@ts-ignore: strictNullChecks
     this.swap.flow.submitSecret(secret)
   }
 
@@ -79,10 +87,12 @@ export default class UTXOToEth extends Component<any, any> {
   }
 
   updateBalance = () => {
+    //@ts-ignore: strictNullChecks
     this.swap.flow.syncBalance()
   }
 
   tryRefund = () => {
+    //@ts-ignore: strictNullChecks
     this.swap.flow.tryRefund()
     this.setState(() => ({ enabledButton: false }))
   }
@@ -90,12 +100,14 @@ export default class UTXOToEth extends Component<any, any> {
   getRefundTxHex = () => {
     const { flow } = this.state
 
+    //@ts-ignore: strictNullChecks
     const { scriptValues } = this._fields
 
     if (flow.refundTxHex) {
       return flow.refundTxHex
     }
     else if (flow[scriptValues]) {
+      //@ts-ignore: strictNullChecks
       this.swap.flow.getRefundTxHex()
     }
   }
@@ -127,14 +139,19 @@ export default class UTXOToEth extends Component<any, any> {
           }>
           <div>
             <div styleName="swapInfo">
+              {/* @ts-ignore: strictNullChecks */}
               {this.swap.id &&
                 (
                   <strong>
+                    {/* @ts-ignore: strictNullChecks */}
                     {this.swap.sellAmount.toFixed(6)}
                     {' '}
+                    {/* @ts-ignore: strictNullChecks */}
                     {this.swap.sellCurrency} &#10230; {' '}
+                    {/* @ts-ignore: strictNullChecks */}
                     {this.swap.buyAmount.toFixed(6)}
                     {' '}
+                    {/* @ts-ignore: strictNullChecks */}
                     {this.swap.buyCurrency}
                   </strong>
                 )

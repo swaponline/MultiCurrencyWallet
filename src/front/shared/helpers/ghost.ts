@@ -211,7 +211,9 @@ const estimateFeeValue = async (options: EstimateFeeValueOptions) => {
 
   const calculatedFeeValue = BigNumber.maximum(
     DUST,
+    //@ts-ignore: strictNullChecks
     new BigNumber(feeRate)
+      //@ts-ignore: strictNullChecks
       .multipliedBy(txSize)
       .div(1024) // divide by one kilobyte
       .dp(0, BigNumber.ROUND_HALF_EVEN),

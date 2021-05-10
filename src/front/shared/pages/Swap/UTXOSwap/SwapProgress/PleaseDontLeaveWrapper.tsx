@@ -22,6 +22,7 @@ const PleaseDontLeaveWrapper = (props) => {
         <FormattedMessage id="swapprogressDONTLEAVE" defaultMessage="Please do not leave this page " />
         <Tooltip
           id="swapjsdontleave"
+          //@ts-ignore: strictNullChecks
           dontHideMobile
         >
           <p>

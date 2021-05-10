@@ -45,6 +45,7 @@ export default class Web3Connect extends EventEmitter {
         lsProvider.isConnected().then(async (isConnected) => {
           if (isConnected) {
             if (await lsProvider.Connect()) {
+              //@ts-ignore: strictNullChecks
               this._cachedProviderName = cachedProviderName
               this._cachedProvider = lsProvider
               this._setupEvents()
@@ -72,8 +73,10 @@ export default class Web3Connect extends EventEmitter {
 
   getProviderTitle() {
     switch (this._cachedProviderName) {
+      //@ts-ignore: strictNullChecks
       case SUPPORTED_PROVIDERS.WALLETCONNECT:
         return 'Wallet Connect'
+      //@ts-ignore: strictNullChecks
       case SUPPORTED_PROVIDERS.INJECTED:
         return this.getInjectedTitle()
       default:
@@ -94,8 +97,10 @@ export default class Web3Connect extends EventEmitter {
 
   getProviderType() {
      switch (this._cachedProviderName) {
+      //@ts-ignore: strictNullChecks
       case SUPPORTED_PROVIDERS.WALLETCONNECT:
         return SUPPORTED_PROVIDERS.WALLETCONNECT
+      //@ts-ignore: strictNullChecks
       case SUPPORTED_PROVIDERS.INJECTED:
         return this.getInjectedType()
       default:
@@ -163,6 +168,7 @@ export default class Web3Connect extends EventEmitter {
 
   _setupEvents() {
     if (this._cachedProvider) {
+      //@ts-ignore: strictNullChecks
       this._cachedProvider.on(ConnectorEvent.Update, (data) => {
         if (data
           && data.account
@@ -181,6 +187,7 @@ export default class Web3Connect extends EventEmitter {
           this.emit('updated')
         }
       })
+      //@ts-ignore: strictNullChecks
       this._cachedProvider.on(ConnectorEvent.Deactivate, () => {
         this.clearCache()
         this.emit('disconnect')
@@ -190,8 +197,11 @@ export default class Web3Connect extends EventEmitter {
   }
 
   async _cacheProviderData() {
+    //@ts-ignore: strictNullChecks
     this._cachedAddress = await this._cachedProvider.getAccount()
+    //@ts-ignore: strictNullChecks
     this._cachedChainId = await this._cachedProvider.getChainId()
+    //@ts-ignore: strictNullChecks
     const _web3provider = await this._cachedProvider.getProvider()
     await _web3provider.enable()
 
@@ -203,9 +213,11 @@ export default class Web3Connect extends EventEmitter {
       }
     }
 
+    //@ts-ignore: strictNullChecks
     this._cachedWeb3 = new Web3(
       _web3provider
     )
+    //@ts-ignore: strictNullChecks
     this._cachedWeb3.isMetamask = true
   }
 
@@ -251,6 +263,7 @@ export default class Web3Connect extends EventEmitter {
     // @ToDo - test Metamask dAppBrowser
     return (
       `${this._web3ChainId}` === `${this._cachedChainId}`
+      //@ts-ignore: strictNullChecks
       || this._web3ChainId === Number.parseInt(this._cachedChainId)
       || `0x0${this._web3ChainId}` === `${this._cachedChainId}`
       || `0x${this._web3ChainId}` === `${this._cachedChainId}` // Opera Mobile
@@ -272,6 +285,7 @@ export default class Web3Connect extends EventEmitter {
   async Disconnect() {
     if (this._cachedProvider) {
       this._isConnected = false
+      //@ts-ignore: strictNullChecks
       await this._cachedProvider.Disconnect()
       this.clearCache()
       this.emit('disconnect')

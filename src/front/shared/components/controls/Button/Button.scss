@@ -59,7 +59,6 @@
 
 .brand {
   background-color: $color-brand;
-  box-shadow: 1px 1px 6px #929292;
   color: #fff;
 
   &:hover {
@@ -77,6 +76,11 @@
   border: 1px solid $color-brand;
   background-color: transparent;
   color: $color-brand;
+}
+
+.link {
+  color: $color-link;
+  text-decoration: underline;
 }
 
 // .small selector after .blue so that the font size is applied

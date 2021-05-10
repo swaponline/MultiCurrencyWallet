@@ -46,6 +46,7 @@ class WalletRow extends Component<any, any> {
   handleRemove = () => {
     const { item: { index }, handleRefresh } = this.props
 
+    //@ts-ignore: strictNullChecks
     actions.modals.open(constants.modals.Confirm, {
       onAccept: () => {
         actions.btcmultisig.removeBtcMultisigNey(index)

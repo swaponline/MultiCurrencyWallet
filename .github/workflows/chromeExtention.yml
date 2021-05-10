@@ -1,0 +1,55 @@
+name: Deploy Chrome Extantion
+on:
+  # Trigger the workflow on push or pull request,
+  # but only for the master branch
+  push:
+    branches:
+      - ext
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [14.x]
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: npm install, build extension 
+      run: |
+        npm i
+        npm run build:chrome-extension-bsc-mainnet
+        cp ./build-chrome-extension/zipped-chrome-extension-bsc.zip ./zipped-chrome-extension-bsc.zip
+        npm run build:chrome-extension-eth-testnet
+        cp ./build-chrome-extension/zipped-chrome-extension-eth-testnet.zip ./zipped-chrome-extension-eth-testnet.zip
+        ls
+    - uses: actions/upload-artifact@v2
+      with:
+        name: extensions
+        path: | 
+          ./zipped-chrome-extension-bsc.zip
+          ./zipped-chrome-extension-eth-testnet.zip
+    - name: publish bsc extension to chrome web store
+      uses: Passiverecords/chrome-extension-upload-action@1.4.1
+      with:
+        refresh-token:  ${{ secrets.CHROMEUPDATETOKEN }}
+        client-id:  ${{ secrets.CLIENTID }}
+        client-secret:  ${{ secrets.CLIENTSECRET }}
+        file-name: 'zipped-chrome-extension-bsc.zip'
+        app-id: 'oldojieloelkkfeacfinhcngmbkepnlm'
+        publish: false
+    - name: publish ropsten extension to crhome web store
+      uses: Passiverecords/chrome-extension-upload-action@1.4.1
+      with:
+        refresh-token:  ${{ secrets.CHROMEUPDATETOKEN }}
+        client-id:  ${{ secrets.CLIENTID }}
+        client-secret:  ${{ secrets.CLIENTSECRET }}
+        file-name: 'zipped-chrome-extension-bsc-testnet.zip'
+        app-id: 'lihimbnmcnbecbnfbbkccoblfjaomiil'
+        publish: false

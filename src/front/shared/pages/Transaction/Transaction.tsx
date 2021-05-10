@@ -99,6 +99,7 @@ class Transaction extends Component<any, any> {
     let error = null
     try {
       if (currencyKey === `token`) {
+        //@ts-ignore: strictNullChecks
         infoTx = await actions.token.fetchTokenTxInfo(ticker, txId, 5 * 60 * 1000)
       } else {
         infoTx = await actions[currencyKey].fetchTxInfo(txId, 5 * 60 * 1000)
@@ -199,11 +200,15 @@ class Transaction extends Component<any, any> {
 
     const wallets = []
     if (walletOne instanceof Array) {
+      //@ts-ignore: strictNullChecks
       walletOne.forEach((wallet) => wallets.push(wallet))
+    //@ts-ignore: strictNullChecks
     } else wallets.push(walletOne)
 
     if (walletTwo instanceof Array) {
+      //@ts-ignore: strictNullChecks
       walletTwo.forEach((wallet) => wallets.push(wallet))
+    //@ts-ignore: strictNullChecks
     } else wallets.push(walletTwo)
 
     const walletLink = getWalletLink(ticker, wallets)

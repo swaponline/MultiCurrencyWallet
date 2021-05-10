@@ -15,9 +15,11 @@ export const hash2id = (app, hash) =>
 
       switch (currency) {
         case 'btc':
+          //@ts-ignore: strictNullChecks
           currentHash = flowState.utxoScriptCreatingTransactionHash
           break
         case 'eth':
+          //@ts-ignore: strictNullChecks
           currentHash = flowState.ethSwapCreationTransactionHash
           break
       }

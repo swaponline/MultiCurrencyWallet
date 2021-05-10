@@ -89,6 +89,7 @@ class SaveKeysModal extends React.Component<SaveKeysModalProps, SaveKeysModalSta
     const { intl } = this.props
 
     return (
+      //@ts-ignore: strictNullChecks
       <Modal name="SaveKeysModal" title={`${intl.formatMessage(langLabels.title)}`} onClose={this.handleClose} showCloseButton>
         {
           process.env.TESTNET && (
@@ -106,6 +107,7 @@ class SaveKeysModal extends React.Component<SaveKeysModalProps, SaveKeysModalSta
         }
         {
           view === views.saveKeys &&
+          //@ts-ignore: strictNullChecks
           <SaveKeys
             onDownload={this.handleDownload}
             onChange={() => {

@@ -4,6 +4,7 @@ import rimraf from 'rimraf'
 jest.unmock('swap.app')
 jest.setTimeout(30000)
 
+//@ts-ignore: strictNullChecks
 const orders = app.services.orders
 
 const _ORDER = {
@@ -18,11 +19,14 @@ beforeAll(() => orders.getMyOrders().map(({ id }) => orders.remove(id)))
 afterAll(done => rimraf('.storage', done))
 
 test('check app loaded', () => {
+  //@ts-ignore: strictNullChecks
   expect(app.isTestNet()).toBe(true)
+  //@ts-ignore: strictNullChecks
   expect(app.isMainNet()).toBe(false)
 })
 
 test('sets the right type of room', () => {
+  //@ts-ignore: strictNullChecks
   expect(app.services.room.roomName).toBe('swap.core.tests.swap.online')
 })
 

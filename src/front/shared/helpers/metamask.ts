@@ -7,6 +7,12 @@ import { setMetamask, setProvider, setDefaultProvider, getWeb3 as getDefaultWeb3
 import SwapApp from 'swap.app'
 import Web3Connect from '../../../common/web3connect'
 
+
+const mmLabel = (config.binance) ? `BSC` : `Ethereum`
+const mmLabelShort = (config.binance) ? `BNB` : `ETH`
+
+
+
 const web3connect = new Web3Connect({
   web3ChainId: (config.binance)
     ? (process.env.MAINNET) ? 56 : 97  // 56 = Mainnet, 97 = Testnet
@@ -18,6 +24,7 @@ const web3connect = new Web3Connect({
 
 const _onWeb3Changed = (newWeb3) => {
   setProvider(newWeb3)
+  //@ts-ignore: strictNullChecks
   SwapApp.shared().setWeb3Provider(newWeb3)
   _initReduxState()
   actions.user.sign_to_tokens()
@@ -56,6 +63,7 @@ const _init = async () => {
     if (web3connect.hasCachedProvider()) {
       let _web3 = false
       try {
+        //@ts-ignore: strictNullChecks
         _web3 = web3connect.getWeb3()
       } catch (err) {
         web3connect.clearCache()
@@ -92,8 +100,10 @@ const getBalance = () => {
       return balanceInCache
     }
 
+    //@ts-ignore: strictNullChecks
     return web3connect.getWeb3().eth.getBalance(address)
       .then(result => {
+        //@ts-ignore: strictNullChecks
         const amount = web3connect.getWeb3().utils.fromWei(result)
 
         cacheStorageSet('currencyBalances', `eth_${address}`, amount, 30)
@@ -146,8 +156,8 @@ const _initReduxState = () => {
         balanceError: false,
         isConnected: true,
         isMetamask: true,
-        currency: "ETH",
-        fullName: `Ethereum (${web3connect.getProviderTitle()})`,
+        currency: mmLabelShort,
+        fullName: `${mmLabel} (${web3connect.getProviderTitle()})`,
         infoAboutCurrency: ethData.infoAboutCurrency,
         isBalanceFetched: true,
         isMnemonic: true,
@@ -163,8 +173,8 @@ const _initReduxState = () => {
         balanceError: false,
         isConnected: false,
         isMetamask: true,
-        currency: "ETH",
-        fullName: `Ethereum (external wallet)`,
+        currency: mmLabelShort,
+        fullName: `${mmLabel} (external wallet)`,
         infoAboutCurrency: ethData.infoAboutCurrency,
         isBalanceFetched: true,
         isMnemonic: true,
@@ -196,7 +206,9 @@ const handleConnectMetamask = (options?: {
   cbFunction?: Function
 }) => {
   const {
+    //@ts-ignore: strictNullChecks
     dontRedirect,
+    //@ts-ignore: strictNullChecks
     cbFunction,
   } = options
 
