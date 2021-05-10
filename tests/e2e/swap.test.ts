@@ -1,5 +1,7 @@
 import { setup, importWallet, addAssetToWallet, turnOnMM, takeScreenshot, timeOut } from './utils'
 
+import BigNumber from 'bignumber.js'
+
 const MAKER_SEED = ['neither', 'already', 'situate', 'silent', 'ripple', 'milk', 'paddle', 'glass', 'leopard', 'track', 'mansion', 'junk']
 const makerBtcAddress = 'n2Y2rbg6wVEQnnpNxisiHK4wCDUAq59iv6'
 
@@ -8,60 +10,119 @@ const takerBtcAddress = 'n4JjB9D9axszdsFxyxDmF43z4WwttN6oPb'
 
 jest.setTimeout(100 * 1000)
 
-describe('Try swap', () => {
-  it('turn on MM', async () => {
-    // const { browser: MakerBrowser, page: MakerPage } = await setup()
-    // const { browser: TakerBrowser, page: TakerPage } = await setup()
 
-    // await importWallet(MakerPage, MAKER_SEED)
-    // await importWallet(TakerPage, TAKER_SEED)
+describe('Start e2e tests', () => {
 
-    // await MakerPage.waitForSelector('#btcAddress') // waits for Maker wallet to load
-    // await TakerPage.waitForSelector('#btcAddress') // waits for Taker wallet to load
+  it('restore wallets, turnOn MM, check messaging', async () => {
+    console.log("SETUP BROWSERS")
+    const { browser: MakerBrowser, page: MakerPage } = await setup()
+    const { browser: TakerBrowser, page: TakerPage } = await setup()
 
-    // await addAssetToWallet(MakerPage, 'wbtc')
-    // await addAssetToWallet(TakerPage, 'wbtc')
+    try {
+      console.log("TEST IMPORT WALLETS")
 
-    // await turnOnMM(MakerPage)
+      await importWallet(MakerPage, MAKER_SEED)
+      await importWallet(TakerPage, TAKER_SEED)
 
-    // await timeOut(2 * 1000)
+      await MakerPage.waitForSelector('#btcAddress') // waits for Maker wallet to load
+      await TakerPage.waitForSelector('#btcAddress') // waits for Taker wallet to load
 
-    // // move to exchange page
-    // const takerExchangePageLink = await TakerPage.$('a[href="#/exchange"]')
-    // await takerExchangePageLink.click()
+      const recoveredMakerBtcAddress= await MakerPage.$eval('#btcAddress', el => el.textContent)
+      const recoveredTakerBtcAddress= await TakerPage.$eval('#btcAddress', el => el.textContent)
 
-    // await timeOut(2 * 1000)
+      console.log("checks for restore wallets start")
+      expect(recoveredMakerBtcAddress).toBe(makerBtcAddress)
+      expect(recoveredTakerBtcAddress).toBe(takerBtcAddress)
+      console.log("checks for restore wallets done")
 
-    // try {
-    //   const [sellCurrencySelectorList, fromWalletSelectorList, buyCurrencySelectorList, toWalletSelectorList] = await TakerPage.$$('.itemsSelector')
+    } catch (error) {
+      await MakerBrowser.close()
+      await TakerBrowser.close()
+      console.error('IMPORT WALLETS Error: ', error)
+      expect(false).toBe(true)
+    }
 
-    //   await buyCurrencySelectorList.click();
-    //   await TakerPage.click(`#wbtc`)
+    try {
+      console.log("PREPARE PAGES FOR NEXT TESTS")
+      await addAssetToWallet(MakerPage, 'wbtc')
+      await addAssetToWallet(TakerPage, 'wbtc')
 
-    //   await fromWalletSelectorList.click()
-    //   await takeScreenshot(TakerPage, 'Taker_Page_fromWalletSelectorList')
-    //   await TakerPage.click('#Internal')
+      await timeOut(3 * 1000)
 
-    //   await timeOut(2 * 1000)
+      // taker move to exchange page and try connecting to peers
+      await TakerPage.$('a[href="#/exchange"]').then((aToExchange) => aToExchange.click())
 
-    //   await toWalletSelectorList.click({clickCount: 2})
-    //   await takeScreenshot(TakerPage, 'Taker_Page_toWalletSelectorList')
-    //   await TakerPage.click('#Internal')
+      const [sellCurrencySelectorList, fromWalletSelectorList, buyCurrencySelectorList, toWalletSelectorList] = await TakerPage.$$('.itemsSelector')
 
-    //   await timeOut(10 * 1000)
+      await buyCurrencySelectorList.click();
+      await TakerPage.click(`#wbtc`)
+      await TakerPage.$('#orderbookBtn').then((orderbookBtn) => orderbookBtn.click())
 
-    //   await takeScreenshot(MakerPage, 'Maker_Page_Wallet')
-    //   await takeScreenshot(TakerPage, 'Taker_Page_Wallet')
-    // } catch (error) {
-    //   console.log('Error: ', error)
-    //   await MakerBrowser.close()
-    //   await TakerBrowser.close()
-    // }
+    } catch (error) {
+      await MakerBrowser.close()
+      await TakerBrowser.close()
+      console.error('PREPARE PAGES Error: ', error)
+      expect(false).toBe(true)
+    }
 
+    try {
+      console.log("TEST SETUP MM")
+       // checks setupMM
+      await MakerPage.goto(`${MakerPage.url()}marketmaker/WBTC`)
 
-    // await MakerBrowser.close()
-    // await TakerBrowser.close()
+      await timeOut(3 * 1000)
+
+      var { btcBalance: makerBtcBalance, tokenBalance: makerTokenBalance } = await turnOnMM(MakerPage)
+
+      await MakerPage.$('a[href="#/exchange"]').then((aToExchange) => aToExchange.click())
+
+      await MakerPage.$('#orderbookBtn').then((orderbookBtn) => orderbookBtn.click())
+
+      // find all maker orders
+      const sellAmountOrders  = await MakerPage.$$eval('.sellAmountOrders', elements => elements.map(el => el.textContent))
+      const buyAmountOrders   = await MakerPage.$$eval('.buyAmountOrders', elements => elements.map(el => el.textContent))
+      const mmOrders = [...sellAmountOrders, ...buyAmountOrders]
+
+      console.log("checks for setup MM start")
+      +makerBtcBalance ? expect(mmOrders).toContain(makerBtcBalance) : console.log('maker have not btc balance')
+      +makerTokenBalance ? expect(mmOrders).toContain(makerTokenBalance) : console.log('maker have not token balance')
+      console.log("checks for setup MM done")
+
+    } catch (error) {
+      await MakerBrowser.close()
+      await TakerBrowser.close()
+      console.error('SETUP MM Error: ', error)
+      expect(false).toBe(true)
+    }
+
+    try {
+      console.log("TEST MESSAGING")
+      await timeOut(3 * 1000)
+
+      // find btc maker orders
+      const btcSellAmountsOfOrders  = await TakerPage.$$eval('.btcSellAmountOfOrder', elements => elements.map(el => el.textContent))
+      const btcGetAmountsOfOrders   = await TakerPage.$$eval('.btcGetAmountOfOrder', elements => elements.map(el => el.textContent))
+      const btcOrders = [...btcSellAmountsOfOrders, ...btcGetAmountsOfOrders]
+
+      // find wbtc maker orders
+      const wbtcSellAmountsOfOrders  = await TakerPage.$$eval('.wbtcSellAmountOfOrder', elements => elements.map(el => el.textContent))
+      const wbtcGetAmountsOfOrders   = await TakerPage.$$eval('.wbtcGetAmountOfOrder', elements => elements.map(el => el.textContent))
+      const wbtcOrders = [...wbtcSellAmountsOfOrders, ...wbtcGetAmountsOfOrders]
+
+      const allOrders = [...btcOrders.map((amount) => new BigNumber(amount).toFixed(5)), ...wbtcOrders.map((amount) => new BigNumber(amount).toFixed(5))]
+
+      console.log("checks for messaging start")
+      +makerBtcBalance ? expect(allOrders).toContain(makerBtcBalance) : console.log('maker have not btc balance')
+      +makerTokenBalance ? expect(allOrders).toContain(makerTokenBalance) : console.log('maker have not token balance')
+      console.log("checks for messaging done")
+    } catch (error) {
+      await MakerBrowser.close()
+      await TakerBrowser.close()
+      console.error('MESSAGING Error: ', error)
+      expect(false).toBe(true)
+    }
+    await MakerBrowser.close()
+    await TakerBrowser.close()
 
   })
-
 })
