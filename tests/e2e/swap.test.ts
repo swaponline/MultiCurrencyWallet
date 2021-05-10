@@ -33,15 +33,22 @@ describe('Start e2e tests', () => {
 
     await timeOut(3 * 1000)
 
+    await MakerPage.goto(`${MakerPage.url()}marketmaker/WBTC`)
+      // move to exchange page
+    await TakerPage.$('a[href="#/exchange"]').then((a) => a.click())
+
+    await timeOut(3 * 1000)
+
     try {
-      await MakerPage.goto(`${MakerPage.url()}marketmaker/WBTC`)
-       // move to exchange page
-      await TakerPage.$('a[href="#/exchange"]').then((a) => a.click())
+      const { btcBalance: makerBtcBalance, tokenBalance: makerTokenBalance } = await turnOnMM(MakerPage)
 
-      await timeOut(3 * 1000)
+      console.log('makerBtcBalance', makerBtcBalance)
+      console.log('makerTokenBalance', makerTokenBalance)
 
-      await takeScreenshot(MakerPage, 'MakerPage_addAsset')
-      await takeScreenshot(TakerPage, 'TakerPage_addAsset')
+      await MakerPage.$('a[href="#/exchange"]').then((a) => a.click())
+
+      await takeScreenshot(MakerPage, 'MakerPage_exchangePage')
+      await takeScreenshot(TakerPage, 'TakerPage_exchangePage')
 
     } catch (error) {
       console.log('Error: ', error)
