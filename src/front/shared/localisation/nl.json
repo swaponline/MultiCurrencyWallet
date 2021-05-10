@@ -447,7 +447,10 @@
   },
   {
     "id": "orders128",
-    "message": "Creёer aanbod"
+    "message": "Creёer aanbod",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
   },
   {
     "id": "addoffer381",
@@ -1122,6 +1125,7 @@
     "id": "FeeControler49",
     "message": "Copy",
     "files": [
+      "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx",
       "src/front/shared/pages/Swap/FeeControler/FeeControler.tsx"
     ]
   },
@@ -1609,6 +1613,7 @@
     "id": "createWalletButton1",
     "message": "Volgende",
     "files": [
+      "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx",
       "src/front/shared/pages/CreateWallet/Steps/FirstStep.tsx"
     ]
   },
@@ -1756,6 +1761,7 @@
     "id": "WithdrawMSUserFinish",
     "message": "Gereed",
     "files": [
+      "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx",
       "src/front/shared/components/modals/WithdrawBtcMultisig/WithdrawBtcMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
     ]
@@ -3116,20 +3122,6 @@
     ]
   },
   {
-    "id": "SaveMnemonicModal_Continue",
-    "message": "Volgende",
-    "files": [
-      "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx"
-    ]
-  },
-  {
-    "id": "SaveMnemonicModal_CopyMnemonic",
-    "message": "Copy",
-    "files": [
-      "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx"
-    ]
-  },
-  {
     "id": "SaveMnemonicModal_EnterNotice",
     "message": "Klik de woorden aan en plaats ze in de juiste volgorde",
     "files": [
@@ -3137,22 +3129,8 @@
     ]
   },
   {
-    "id": "SaveMnemonicModal_MnemonicCopied",
-    "message": "Copied...",
-    "files": [
-      "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx"
-    ]
-  },
-  {
     "id": "SaveMnemonicModal_MnemoniceDeleted",
     "message": "You have already saved your 12-words seed. {href}",
-    "files": [
-      "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx"
-    ]
-  },
-  {
-    "id": "SaveMnemonicModal_Ready",
-    "message": "Gereed",
     "files": [
       "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx"
     ]
@@ -3174,13 +3152,6 @@
   {
     "id": "SaveMnemonicModal_SaveMnemonicStep2",
     "message": "2. Wees zeker dat dit de sleutel is naar {domain}",
-    "files": [
-      "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx"
-    ]
-  },
-  {
-    "id": "SaveMnemonicModal_ShareMnemonic",
-    "message": "Delen",
     "files": [
       "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx"
     ]
@@ -4753,11 +4724,17 @@
   },
   {
     "id": "createOrderMessageForUser",
-    "message": "U moet de hele tijd online zijn, anders zal uw order niet zichtbaar zijn voor andere gebruikers"
+    "message": "U moet de hele tijd online zijn, anders zal uw order niet zichtbaar zijn voor andere gebruikers",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
   },
   {
     "id": "createOrderNoManyMessageForUser",
-    "message": "Uw balans bijvullen"
+    "message": "Uw balans bijvullen",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
   },
   {
     "id": "AddLiquidity",

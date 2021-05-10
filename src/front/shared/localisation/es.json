@@ -444,7 +444,10 @@
   },
   {
     "id": "orders128",
-    "message": "Crear oferta"
+    "message": "Crear oferta",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
   },
   {
     "id": "addoffer381",
@@ -1133,6 +1136,7 @@
     "id": "FeeControler49",
     "message": "Copiar",
     "files": [
+      "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx",
       "src/front/shared/pages/Swap/FeeControler/FeeControler.tsx"
     ]
   },
@@ -1620,6 +1624,7 @@
     "id": "createWalletButton1",
     "message": "Continuar",
     "files": [
+      "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx",
       "src/front/shared/pages/CreateWallet/Steps/FirstStep.tsx"
     ]
   },
@@ -1767,6 +1772,7 @@
     "id": "WithdrawMSUserFinish",
     "message": "Listo",
     "files": [
+      "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx",
       "src/front/shared/components/modals/WithdrawBtcMultisig/WithdrawBtcMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
     ]
@@ -3134,20 +3140,6 @@
     ]
   },
   {
-    "id": "SaveMnemonicModal_Continue",
-    "message": "Continuar",
-    "files": [
-      "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx"
-    ]
-  },
-  {
-    "id": "SaveMnemonicModal_CopyMnemonic",
-    "message": "Copiar",
-    "files": [
-      "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx"
-    ]
-  },
-  {
     "id": "SaveMnemonicModal_EnterNotice",
     "message": "Haga clic en las palabras para colocarlas en el orden correcto",
     "files": [
@@ -3155,22 +3147,8 @@
     ]
   },
   {
-    "id": "SaveMnemonicModal_MnemonicCopied",
-    "message": "Copiado...",
-    "files": [
-      "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx"
-    ]
-  },
-  {
     "id": "SaveMnemonicModal_MnemoniceDeleted",
     "message": "Ya ha guardado sus 12 palabras clave. {href}",
-    "files": [
-      "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx"
-    ]
-  },
-  {
-    "id": "SaveMnemonicModal_Ready",
-    "message": "Listo",
     "files": [
       "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx"
     ]
@@ -3192,13 +3170,6 @@
   {
     "id": "SaveMnemonicModal_SaveMnemonicStep2",
     "message": "2. Asegúrate de aclarar que esta es la clave para {domain}",
-    "files": [
-      "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx"
-    ]
-  },
-  {
-    "id": "SaveMnemonicModal_ShareMnemonic",
-    "message": "Compartir",
     "files": [
       "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx"
     ]
@@ -4757,11 +4728,17 @@
   },
   {
     "id": "createOrderMessageForUser",
-    "message": "Debe estar en línea todo el tiempo, de lo contrario su order no será visible para otros usuarios"
+    "message": "Debe estar en línea todo el tiempo, de lo contrario su order no será visible para otros usuarios",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
   },
   {
     "id": "createOrderNoManyMessageForUser",
-    "message": "Recarga tu saldo"
+    "message": "Recarga tu saldo",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
   },
   {
     "id": "AddLiquidity",

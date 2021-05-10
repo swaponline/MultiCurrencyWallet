@@ -22,11 +22,6 @@
   margin-bottom: 30px;
 }
 
-.saveMnemonicToPaper span {
-  display: block;
-  font-size: 120%;
-}
-
 .mnemonicView {
   max-width: 500px;
   margin: 0 auto;
@@ -42,7 +37,7 @@
     display: inline-block;
     padding: 0.2em;
     margin: 0.1em 0.2em;
-    border: 1px solid #999;
+    border: 1px solid $notice-color;
     border-radius: 2px;
 
     span {
@@ -50,8 +45,9 @@
       padding: 0 0.2em;
       font-family: 'Roboto Mono', monospace;
     }
+
     span:nth-child(1) {
-      color: #999;
+      color: $notice-color;
     }
   }
 }
@@ -69,7 +65,7 @@
     display: inline-block;
     padding: 0.2em;
     margin: 0.1em 0.2em;
-    border: 1px solid #999;
+    border: 1px solid $notice-color;
     border-radius: 2px;
     background: none;
     font-size: 120%;
@@ -79,11 +75,7 @@
 }
 
 .mnemonicError {
-  border: 1px solid red;
-}
-
-.buttonFinish {
-  min-width: 50%;
+  border: 1px solid $color-f-error;
 }
 
 .mnemonicWords {
@@ -103,6 +95,15 @@
     padding: 0 0.2em;
     font-family: 'Roboto Mono', monospace;
   }
+}
+
+.mnemonicButtonsWrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.continueBtnWrapper {
+  margin-left: 1em;
 }
 
 @include media-mobile {
