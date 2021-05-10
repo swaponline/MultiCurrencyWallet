@@ -17,9 +17,9 @@ import { localisedUrl } from 'helpers/locale'
 import { BigNumber } from 'bignumber.js'
 import { Button } from 'components/controls'
 import web3Icons from '../../../images'
-import PartOfAddress from '../components/PartOfAddress'
+import PartOfAddress from '../PartOfAddress'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
-import { ApiEndpoint } from '../components/Endpoints'
+import { ApiEndpoint } from '../Endpoints'
 import Copy from '../../../components/ui/Copy/Copy'
 
 type RowProps = {

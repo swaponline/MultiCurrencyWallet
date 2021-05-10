@@ -4,7 +4,7 @@ import config from 'app-config'
 import styles from './Wallet.scss'
 import Button from 'components/controls/Button/Button'
 import Row from './Row/Row'
-import Slider from './components/WallerSlider'
+import Slider from './WallerSlider'
 import Table from 'components/tables/Table/Table'
 
 import { FormattedMessage } from 'react-intl'

@@ -8,12 +8,12 @@ import 'swiper/swiper-bundle.css'
 import { constants, getItezUrl } from 'helpers'
 import actions from 'redux/actions'
 import axios from 'axios'
-import security from '../NotityBlock/images/security.svg'
+import security from '../images/security.svg'
 import styles from '../NotityBlock/NotifyBlock.scss'
 import NotifyBlock from '../NotityBlock/NotifyBlock'
-import ContentLoader from '../../../../components/loaders/ContentLoader/ContentLoader'
+import ContentLoader from 'components/loaders/ContentLoader/ContentLoader'
 import { FormattedMessage, injectIntl } from 'react-intl'
-import linksManager from '../../../../helpers/links'
+import linksManager from 'helpers/links'
 
 
 type WallerSliderProps = {
