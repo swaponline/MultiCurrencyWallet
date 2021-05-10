@@ -21,7 +21,7 @@ const _onWeb3Changed = (newWeb3) => {
   //@ts-ignore: strictNullChecks
   SwapApp.shared().setWeb3Provider(newWeb3)
   _initReduxState()
-  actions.user.sign_to_tokens()
+  actions.user.loginWithTokens()
   actions.user.getBalances()
 }
 

@@ -34,14 +34,13 @@ import helpers, {
   ethToken,
   links,
 } from 'helpers'
-import { animate } from 'helpers/domUtils'
 import Switching from 'components/controls/Switching/Switching'
 import AddressSelect from './AddressSelect/AddressSelect'
 import { AddressType, AddressRole } from 'domain/address'
 import { SwapMode } from 'domain/swap'
 import NetworkStatus from 'components/NetworkStatus/NetworkStatus'
 import Orders from './Orders/Orders'
-import erc20tokens from 'common/erc20tokens'
+import erc20Like from 'common/erc20Like'
 import turboSwap from 'common/helpers/turboSwap'
 import Toggle from 'components/controls/Toggle/Toggle'
 import TurboIcon from 'shared/components/ui/TurboIcon/TurboIcon'
@@ -470,7 +469,7 @@ class Exchange extends PureComponent<any, any> {
       return tokenObj.name === haveCurrency.toLowerCase()
     })
 
-    const allowance = await erc20tokens.checkAllowance({
+    const allowance = await erc20Like.checkAllowance({
       //@ts-ignore: strictNullChecks
       tokenOwnerAddress: tokenObj.address,
       //@ts-ignore: strictNullChecks

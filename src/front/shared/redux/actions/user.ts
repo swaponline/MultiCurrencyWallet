@@ -3,11 +3,11 @@ import moment from 'moment/moment'
 import { constants, ethToken } from 'helpers'
 import request from 'common/utils/request'
 import * as mnemonicUtils from 'common/utils/mnemonic'
+import TOKEN_STANDARDS from 'common/helpers/constants/TOKEN_STANDARDS'
 import actions from 'redux/actions'
 import { getState } from 'redux/core'
 
 import reducers from 'redux/core/reducers'
-import * as bip39 from 'bip39'
 
 import { getActivatedCurrencies } from 'helpers/user'
 import getCurrencyKey from 'helpers/getCurrencyKey'
@@ -152,6 +152,11 @@ const sign = async () => {
     const btcMultisigPrivateKey = localStorage.getItem(constants.privateKeyNames.btcMultisig)
     const ghostPrivateKey = localStorage.getItem(constants.privateKeyNames.ghost)
     const nextPrivateKey = localStorage.getItem(constants.privateKeyNames.next)
+    // TODO: using ETH wallet for BNB. They're compatible (temporarily. Use BNB with ETH)
+    const ABTypePrivateKey = localStorage.getItem(constants.privateKeyNames.eth)
+
+    actions.eth.login(ABTypePrivateKey, mnemonic, mnemonicKeys)
+    actions.bnb.login(ABTypePrivateKey, mnemonic, mnemonicKeys)
     //@ts-ignore: strictNullChecks
     const _btcPrivateKey = actions.btc.login(btcPrivateKey, mnemonic, mnemonicKeys)
     //@ts-ignore: strictNullChecks
@@ -168,45 +173,30 @@ const sign = async () => {
     // btc multisig with pin protect (2of3)
     await sign_btc_pin(_btcPrivateKey)
 
-    // TODO: using ETH wallet for BNB. They're compatible (temporarily. Use BNB with ETH)
-    const ABTypePrivateKey = localStorage.getItem(constants.privateKeyNames.eth)
-    //@ts-ignore: strictNullChecks
-    const _ethPrivateKey = actions.eth.login(ABTypePrivateKey, mnemonic, mnemonicKeys)
-    //@ts-ignore: strictNullChecks
-    const _bnbPrivateKey = actions.bnb.login(ABTypePrivateKey, mnemonic, mnemonicKeys)
+    loginWithTokens()
 
-    Object.keys(config.erc20)
-      .forEach(name => {
-        // TODO: replace actions with erc20, bep20 ...
-        actions.token.login(
-          _ethPrivateKey,
-          config.erc20[name].address,
-          name,
-          config.erc20[name].decimals,
-          config.erc20[name].fullName
-        )
-      })
-
-    reducers.user.setTokenSigned(true)
     await getReputation()
   })
 }
 
-const sign_to_tokens = () => {
-  const privateKey = localStorage.getItem(constants.privateKeyNames[
-    config.binance ? 'bnb' : 'eth'
-  ])
-  Object.keys(config.erc20)
-    .forEach(name => {
-      // TODO: replace actions with erc20, bep20 ...
-      actions.token.login(
+const loginWithTokens = () => {
+  Object.keys(TOKEN_STANDARDS).forEach((key) => {
+    const standardObj = TOKEN_STANDARDS[key]
+    const privateKey = localStorage.getItem(constants.privateKeyNames[standardObj.currency])
+    const standardName = standardObj.standard
+
+    Object.keys(config[standardName]).forEach(tokenName => {
+      actions[standardName].login(
         privateKey,
-        config.erc20[name].address,
-        name,
-        config.erc20[name].decimals,
-        config.erc20[name].fullName
+        config[standardName][tokenName].address,
+        tokenName,
+        config[standardName][tokenName].decimals,
+        config[standardName][tokenName].fullName
       )
     })
+  })
+
+  reducers.user.setTokenSigned(true)
 }
 
 const getReputation = async () => {
@@ -271,22 +261,28 @@ const getBalances = () => {
     })
 
     if (isTokenSigned) {
-      // wait until all token data is loaded and will be in the store
-      setTimeout(() => {
-        Object.keys(config.erc20)
-          .forEach(async (name) => {
-            try {
-              // TODO: replace actions with erc20, bep20 ...
-              await actions.token.getBalance(name)
-            } catch (error) {
-              console.error(`Fail fetch balance for ${name.toUpperCase()} token`, error)
-            }
-          })
-      })
+      await getTokensBalances()
     }
 
     reducers.user.setIsBalanceFetching({ isBalanceFetching: false })
     resolve(true)
+  })
+}
+
+const getTokensBalances = async () => {
+  Object.keys(TOKEN_STANDARDS).forEach((key) => {
+    const standardObj = TOKEN_STANDARDS[key]
+    const standardName = standardObj.standard
+    
+    Object.keys(config[standardName]).forEach(async (tokenName) => {
+      try {
+        await actions[standardName].getBalance(tokenName)
+      } catch (error) {
+        console.group('Actions >%c user > getTokensBalances', 'color: red;')
+        console.error(`Fail fetch balance for ${tokenName.toUpperCase()} token`, error)
+        console.groupEnd()
+      }
+    })
   })
 }
 
@@ -682,7 +678,7 @@ export default {
   sign_btc_2fa,
   sign_btc_pin,
   sign_btc_multisig,
-  sign_to_tokens,
+  loginWithTokens,
   getBalances,
   setTransactions,
   downloadPrivateKeys,

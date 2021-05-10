@@ -41,7 +41,6 @@ type RowProps = {
 
 type RowState = {
   isBalanceFetching: boolean
-  isAddressCopied: boolean
   isBalanceEmpty: boolean
   isDropdownOpen: boolean
 }
@@ -89,7 +88,6 @@ class Row extends Component<RowProps, RowState> {
 
     this.state = {
       isBalanceFetching: false,
-      isAddressCopied: false,
       isBalanceEmpty: true,
       isDropdownOpen: false,
     }

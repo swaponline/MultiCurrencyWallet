@@ -226,7 +226,7 @@ const CreateWallet: React.FC<any> = (props) => {
       actions.modals.open(constants.modals.AddCustomToken, {
         api: config.api.etherscan,
         apiKey: config.api.etherscan_ApiKey,
-        type: Object.keys(currencies)[0],
+        standard: Object.keys(currencies)[0],
       })
       return
     }
@@ -236,7 +236,7 @@ const CreateWallet: React.FC<any> = (props) => {
       actions.modals.open(constants.modals.AddCustomToken, {
         api: config.api.bscscan,
         apiKey: config.api.bscscan_ApiKey,
-        type: Object.keys(currencies)[0],
+        standard: Object.keys(currencies)[0],
       })
       return
     }

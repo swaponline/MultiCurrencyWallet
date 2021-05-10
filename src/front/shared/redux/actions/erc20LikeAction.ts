@@ -6,7 +6,7 @@ import { getState } from 'redux/core'
 import actions from 'redux/actions'
 import reducers from 'redux/core/reducers'
 import DEFAULT_CURRENCY_PARAMETERS from 'common/helpers/constants/DEFAULT_CURRENCY_PARAMETERS'
-import erc20tokens from 'common/erc20tokens'
+import erc20Like from 'common/erc20Like'
 import helpers, { apiLooper, constants, cacheStorageGet, cacheStorageSet, feedback } from 'helpers'
 import externalConfig from 'helpers/externalConfig'
 import metamask from 'helpers/metamask'
@@ -17,7 +17,7 @@ const Decoder = new InputDataDecoder(TokenAbi)
 class Erc20LikeAction {
   readonly currency: string
   readonly currencyKey: string
-  readonly type: string // (ex. ERC20)
+  readonly standard: string // (ex. ERC20)
   readonly explorerName: string
   readonly explorerLink: string
   readonly explorerApiKey: string
@@ -31,7 +31,7 @@ class Erc20LikeAction {
   constructor(params) {
     const {
       currency,
-      type,
+      standard,
       explorerName,
       explorerLink,
       explorerApiKey,
@@ -41,7 +41,7 @@ class Erc20LikeAction {
 
     this.currency = currency
     this.currencyKey = currency.toLowerCase()
-    this.type = type
+    this.standard = standard
     this.explorerName = explorerName
     this.explorerLink = explorerLink
     this.explorerApiKey = explorerApiKey
@@ -51,9 +51,9 @@ class Erc20LikeAction {
 
   reportError = (error) => {
     feedback.actions.failed(
-      ''.concat(`details - type: ${this.type}, `, `error message - ${error.message} `)
+      ''.concat(`details - standard: ${this.standard}, `, `error message - ${error.message} `)
     )
-    console.group(`Actions >%c ${this.type}`, 'color: red;')
+    console.group(`Actions >%c ${this.standard}`, 'color: red;')
     console.error('error: ', error)
     console.groupEnd()
   }
@@ -364,9 +364,9 @@ class Erc20LikeAction {
       isMnemonic: isSweeped,
       isMetamask: false,
       isConnected: false,
-      // TODO: use a type key delete this key
+      // TODO: use a type key and delete this key
       isERC20: true,
-      type: this.type,
+      standard: this.standard,
     }
 
     if (metamask.isEnabled() && metamask.isConnected()) {
@@ -447,7 +447,7 @@ class Erc20LikeAction {
         .send(txArguments)
         .on('transactionHash', (hash) => {
           console.group('%c Admin commission is sended', 'color: green;')
-          console.log('type', this.type)
+          console.log('standard', this.standard)
           console.log('tx hash', hash)
           console.groupEnd()
           res(hash)
@@ -467,7 +467,7 @@ class Erc20LikeAction {
         .send(feeResult)
         .on('transactionHash', (hash) => {
           console.group('Actions >%c approve the token', 'color: green')
-          console.log(`type: ${this.type}; name: ${name}`)
+          console.log(`standard: ${this.standard}; name: ${name}`)
           console.log('tx hash: ', hash)
           console.groupEnd()
         })
@@ -486,7 +486,7 @@ class Erc20LikeAction {
 
     const { decimals } = this.returnTokenInfo(name)
     const ownerAddress = getState().user.tokensData[name].address
-    const allowance = await erc20tokens.checkAllowance({
+    const allowance = await erc20Like.checkAllowance({
       tokenOwnerAddress: ownerAddress,
       tokenContractAddress: to,
       decimals: decimals,
@@ -503,7 +503,7 @@ class Erc20LikeAction {
   }
 
   returnTokenInfo = (name) => {
-    if (!name) throw new Error(`${this.type} actions; returnTokenInfo(name): name is undefined`)
+    if (!name) throw new Error(`${this.standard} actions; returnTokenInfo(name): name is undefined`)
 
     name = name.toLowerCase()
 
@@ -526,7 +526,7 @@ class Erc20LikeAction {
 // TODO: Temporarily
 const TokenInstance = new Erc20LikeAction({
   currency: 'ETH',
-  type: 'ERC20',
+  standard: 'erc20',
   explorerName: 'etherscan',
   explorerLink: externalConfig.link.etherscan,
   explorerApiKey: externalConfig.api.etherscan_ApiKey,
@@ -538,7 +538,7 @@ export default {
   token: TokenInstance,
   erc20: new Erc20LikeAction({
     currency: 'ETH',
-    type: 'ERC20',
+    standard: 'erc20',
     explorerName: 'etherscan',
     explorerLink: externalConfig.link.etherscan,
     explorerApiKey: externalConfig.api.etherscan_ApiKey,
@@ -547,11 +547,11 @@ export default {
   }),
   bep20: new Erc20LikeAction({
     currency: 'BNB',
-    type: 'BEP20',
+    standard: 'bep20',
     explorerName: 'bscscan',
     explorerLink: externalConfig.link.bscscan,
     explorerApiKey: externalConfig.api.bscscan_ApiKey,
-    adminFeeObj: externalConfig.opts?.fee?.erc20,
+    adminFeeObj: externalConfig.opts?.fee?.bep20,
     web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.binance_provider)),
   })
 }

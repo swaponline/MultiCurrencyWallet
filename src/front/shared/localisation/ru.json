@@ -2595,7 +2595,7 @@
   },
   {
     "id": "customTokenAddress",
-    "message": "{type} адрес",
+    "message": "Адрес токена",
     "files": [
       "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
     ]
@@ -2623,7 +2623,7 @@
   },
   {
     "id": "customTokenNotFound",
-    "message": "По указаному адресу не найден токен ERC20",
+    "message": "По указаному адресу не найден {standard} токен",
     "files": [
       "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
     ]

@@ -2,7 +2,6 @@ import React, { Fragment } from 'react'
 import request from 'common/utils/request'
 import actions from 'redux/actions'
 import Link from 'local_modules/sw-valuelink'
-import config from 'app-config'
 
 import cssModules from 'react-css-modules'
 import styles from '../Styles/default.scss'
@@ -26,7 +25,7 @@ type CustomTokenProps = {
   data: {
     api: string
     apiKey: string
-    type: string
+    standard: string
   }
 }
 
@@ -34,7 +33,7 @@ type CustomTokenState = {
   explorerApi: string
   explorerApiKey: string
   step: string
-  tokenType: string
+  tokenStandard: string
   tokenAddress: string
   tokenTitle: string
   tokenSymbol: string
@@ -56,7 +55,7 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
       step: 'enterAddress',
       explorerApi: props.data.api,
       explorerApiKey: props.data.apiKey,
-      tokenType: props.data.type.toLowerCase(),
+      tokenStandard: props.data.standard.toLowerCase(),
       tokenAddress: '',
       tokenTitle: '',
       tokenSymbol: '',
@@ -144,8 +143,8 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
   }
 
   handleConfirm = async () => {
-    const { tokenType, tokenAddress, tokenSymbol, tokenDecimals } = this.state
-    actions[tokenType].addToken(tokenAddress, tokenSymbol, tokenDecimals)
+    const { tokenStandard, tokenAddress, tokenSymbol, tokenDecimals } = this.state
+    actions[tokenStandard].addToken(tokenAddress, tokenSymbol, tokenDecimals)
     actions.core.markCoinAsVisible(tokenSymbol.toUpperCase(), true)
 
     this.setState({
@@ -171,6 +170,7 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
   render() {
     const {
       step,
+      tokenStandard,
       tokenAddress,
       tokenTitle,
       tokenSymbol,
@@ -213,10 +213,7 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
                   <span style={{ fontSize: '16px' }}>
                     <FormattedMessage
                       id="customTokenAddress"
-                      defaultMessage="{type} address"
-                      values={{
-                        type: config.binance ? 'bep20' : 'erc20'
-                      }}
+                      defaultMessage="Token address"
                     />
                   </span>
                 </FieldLabel>
@@ -230,7 +227,10 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
                   <div styleName="rednote">
                     <FormattedMessage
                       id="customTokenNotFound"
-                      defaultMessage="This is not ERC20 address"
+                      defaultMessage="This is not {standard} address"
+                      values={{
+                        standard: tokenStandard
+                      }}
                     />
                   </div>
                 )}
@@ -238,7 +238,7 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
                   <div styleName="rednote">
                     <FormattedMessage
                       id="customTokenIncorrectAddress"
-                      defaultMessage="Invalid erc20 address"
+                      defaultMessage="Invalid address"
                     />
                   </div>
                 )}
@@ -262,10 +262,7 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
                   <span styleName="title">
                     <FormattedMessage
                       id="customTokenAddress"
-                      defaultMessage="{type} address"
-                      values={{
-                        type: config.binance ? 'bep20' : 'erc20'
-                      }}
+                      defaultMessage="Token address"
                     />
                   </span>
                 </FieldLabel>

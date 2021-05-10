@@ -2626,7 +2626,7 @@
   },
   {
     "id": "customTokenAddress",
-    "message": "{type} addres",
+    "message": "Token addres",
     "files": [
       "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
     ]
@@ -2640,7 +2640,7 @@
   },
   {
     "id": "customTokenIncorrectAddress",
-    "message": "Nieprawidłowy erc20 addres",
+    "message": "Nieprawidłowy addres",
     "files": [
       "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
     ]
@@ -2654,7 +2654,7 @@
   },
   {
     "id": "customTokenNotFound",
-    "message": "To nie jest adres ERC20",
+    "message": "To nie jest adres {standard}",
     "files": [
       "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
     ]
