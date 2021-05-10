@@ -64,10 +64,12 @@ export default class EthTokenToUTXO extends Component<any, any> {
       flow: {
         isSignFetching,
         isMeSigned,
+        isStoppedSwap,
         step,
       },
     } = this.state
 
+    if (isStoppedSwap) return
     //@ts-ignore: strictNullChecks
     this.signTimer = setInterval(() => {
       if (!this.state.flow.isMeSigned) {

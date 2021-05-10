@@ -45,7 +45,8 @@ export default class UTXOToEth extends Component<any, any> {
   }
 
   componentDidMount() {
-    const { flow: { isSignFetching, isMeSigned, step, isParticipantSigned } } = this.state
+    const { flow: { isSignFetching, isMeSigned, step, isParticipantSigned, isStoppedSwap } } = this.state
+    if (isStoppedSwap) return
     window.addEventListener('resize', this.updateWindowDimensions)
     this.updateWindowDimensions()
     //@ts-ignore: strictNullChecks
