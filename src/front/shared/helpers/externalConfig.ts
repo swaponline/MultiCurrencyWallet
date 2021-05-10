@@ -224,6 +224,7 @@ const externalConfig = () => {
     })
     config.erc20 = cleanERC20
   }
+  // TODO: rename - addCustomERC20 -> addCustomToken ?
   if (!config.isWidget && config.opts.addCustomERC20) {
     // Add custom tokens
     const customTokenConfig = getCustomTokenConfig()

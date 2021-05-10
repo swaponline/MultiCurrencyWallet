@@ -89,7 +89,6 @@ class Erc20LikeAction {
   }
 
   getTxRouter = (txId, currency) => {
-    // TODO: change with '/<erc20|bep20|...>/<token name>/tx/<tx id>'
     return `/token/${currency.toUpperCase()}/tx/${txId}`
   }
 

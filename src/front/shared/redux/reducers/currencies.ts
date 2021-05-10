@@ -330,6 +330,7 @@ if (config.isWidget) {
     },
   ]
 } else {
+  // TODO: rename - addCustomERC20 -> addCustomToken ?
   if (!config.isWidget && buildOpts.addCustomERC20) {
     const customTokenConfig = getCustomTokenConfig()
 

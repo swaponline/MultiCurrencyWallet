@@ -3,8 +3,8 @@ import React, { Component, Fragment } from 'react'
 import { connect } from 'redaction'
 import actions from 'redux/actions'
 import { withRouter } from 'react-router-dom'
-
-import helpers, { links, constants, ethToken } from 'helpers'
+import erc20Like from 'common/erc20Like'
+import { links, constants } from 'helpers'
 import { getTokenWallet, getBitcoinWallet, getEtherWallet, getBnbWallet, getGhostWallet, getNextWallet } from 'helpers/links'
 
 import CSSModules from 'react-css-modules'
@@ -92,7 +92,7 @@ class CurrencyWallet extends Component<any, any> {
 
     // MultiWallet - after Sweep - названию валюты доверять нельзя - нужно проверяться также адрес - и выбирать по адресу
     let itemCurrency = items.filter((item) => {
-      if (ethToken.isEthToken({ name: ticker })) {
+      if (erc20Like.isToken({ name: ticker })) {
         if (
           item.currency.toLowerCase() === ticker.toLowerCase() &&
           item.address.toLowerCase() === walletAddress.toLowerCase()
@@ -100,7 +100,7 @@ class CurrencyWallet extends Component<any, any> {
           return true
         }
       } else {
-        if (!ethToken.isEthToken({ name: ticker }) && item.address.toLowerCase() === walletAddress.toLowerCase()) {
+        if (item.address.toLowerCase() === walletAddress.toLowerCase() && item.currency === ticker) {
           return true
         }
       }
@@ -137,7 +137,7 @@ class CurrencyWallet extends Component<any, any> {
         isLoading: false,
         infoAboutCurrency,
         filterValue: walletAddress || address || '',
-        token: ethToken.isEthToken({ name: ticker }),
+        token: erc20Like.isToken({ name: ticker }),
       }
     }
   }
@@ -201,7 +201,7 @@ class CurrencyWallet extends Component<any, any> {
     const { Withdraw, WithdrawMultisigSMS, WithdrawMultisigUser } = constants.modals
 
     const targetCurrency = getCurrencyKey(currency.toLowerCase(), true)
-    const isToken = helpers.ethToken.isEthToken({ name: currency })
+    const isToken = erc20Like.isToken({ name: currency })
 
     const withdrawUrl = (isToken ? '/token' : '') + `/${targetCurrency}/${address}/send`
     const receiveUrl = (isToken ? '/token' : '') + `/${targetCurrency}/${address}/receive`
@@ -278,7 +278,7 @@ class CurrencyWallet extends Component<any, any> {
       }
       // MultiWallet - after Sweep - названию валюты доверять нельзя - нужно проверяться также адрес - и выбирать по адресу
       let itemCurrency = items.filter((item) => {
-        if (ethToken.isEthToken({ name: ticker })) {
+        if (erc20Like.isToken({ name: currency })) {
           if (
             item.currency.toLowerCase() === ticker.toLowerCase() &&
             item.address.toLowerCase() === walletAddress.toLowerCase()
@@ -321,7 +321,7 @@ class CurrencyWallet extends Component<any, any> {
             isLoading: false,
             infoAboutCurrency,
             filterValue: address || '',
-            token: ethToken.isEthToken({ name: ticker }),
+            token: erc20Like.isToken({ name: currency }),
           },
           () => {
             if (prevProps.location.pathname !== this.props.location.pathname) {
@@ -330,7 +330,7 @@ class CurrencyWallet extends Component<any, any> {
               }
             }
             const targetCurrency = getCurrencyKey(currency.toLowerCase(), true)
-            const isToken = helpers.ethToken.isEthToken({ name: currency })
+            const isToken = erc20Like.isToken({ name: currency })
 
             const withdrawUrl = (isToken ? '/token' : '') + `/${targetCurrency}/${address}/send`
             const receiveUrl = (isToken ? '/token' : '') + `/${targetCurrency}/${address}/receive`
@@ -367,8 +367,8 @@ class CurrencyWallet extends Component<any, any> {
     console.log('CurrencyWallet unmounted')
   }
 
-  updateRedirectUrls = (props) => {
-    const { address, ticker, fullName } = props
+  updateRedirectUrls = (params) => {
+    const { address, ticker, fullName } = params
 
     const setRedirectUrl = (url) => {
       this.setState(() => ({
@@ -379,7 +379,7 @@ class CurrencyWallet extends Component<any, any> {
 
     if (!address && !ticker) {
       if (fullName) {
-        if (ethToken.isEthToken({ name: fullName })) {
+        if (erc20Like.isToken({ name: fullName })) {
           setRedirectUrl(getTokenWallet(fullName))
           return
         }
@@ -461,19 +461,17 @@ class CurrencyWallet extends Component<any, any> {
   handleWithdraw = () => {
     const {
       history,
-      hiddenCoinsList,
       intl: { locale },
     } = this.props
-    const { itemCurrency, currency, address, contractAddress, decimals, balance, isBalanceEmpty } = this.state
+    const { itemCurrency, currency, address } = this.state
 
-    // actions.analytics.dataEvent(`balances-withdraw-${currency.toLowerCase()}`)
     let withdrawModal = constants.modals.Withdraw
     if (itemCurrency.isSmsProtected) withdrawModal = withdrawModal = constants.modals.WithdrawMultisigSMS
     if (itemCurrency.isUserProtected) withdrawModal = constants.modals.WithdrawMultisigUser
 
     let targetCurrency = getCurrencyKey(currency.toLowerCase(), true).toLowerCase()
 
-    const isToken = helpers.ethToken.isEthToken({ name: currency })
+    const isToken = erc20Like.isToken({ name: currency })
 
     history.push(localisedUrl(locale, (isToken ? '/token' : '') + `/${targetCurrency}/${address}/send`))
   }

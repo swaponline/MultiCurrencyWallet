@@ -2,13 +2,14 @@ import React, { Component } from 'react'
 import cssModules from 'react-css-modules'
 import styles from './index.scss'
 import cx from 'classnames'
-import Coin from 'components/Coin/Coin'
 import PartOfAddress from 'pages/Wallet/PartOfAddress'
 import { isMobile } from 'react-device-detect'
-import helpers, { constants } from 'helpers'
 import actions from 'redux/actions'
+import erc20Like from 'common/erc20Like'
+import { constants } from 'helpers'
 import { localisedUrl } from 'helpers/locale'
 import getCurrencyKey from 'helpers/getCurrencyKey'
+import Coin from 'components/Coin/Coin'
 import OutsideClick from 'components/OutsideClick'
 
 
@@ -50,7 +51,7 @@ export default class CurrencyList extends Component<any, any> {
           break
       }
 
-      const isToken = helpers.ethToken.isEthToken({ name: currency })
+      const isToken = erc20Like.isToken({ name: currency })
 
       history.push(
         localisedUrl(locale, (isToken ? '/token' : '') + `/${targetCurrency}/${currentAsset[0].address}/send`)

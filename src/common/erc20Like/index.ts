@@ -1,19 +1,33 @@
 import config from 'app-config'
-import web3 from 'helpers/web3'
 import ERC20_ABI from 'human-standard-token-abi'
 import { BigNumber } from 'bignumber.js'
+import TOKEN_STANDARDS from 'common/helpers/constants/TOKEN_STANDARDS'
+import web3 from 'helpers/web3'
 
 const reportAboutProblem = (params) => {
   const { isError = false, info } = params
 
   console.group(
-    'common > %c erc20tokens',
+    'common > %c erc20Like',
     `color: ${isError ? 'red' : 'orange'};`
   )
   isError ? console.error(info) : console.warn(info)
   console.groupEnd()
 }
 
+const isToken = (params) => {
+  const { name } = params
+
+  for (const prop in TOKEN_STANDARDS) {
+    const standard = TOKEN_STANDARDS[prop].standard
+
+    if (Object.keys(config[standard])?.includes(name.toLowerCase())) {
+      return true
+    }
+  }
+
+  return false
+}
 
 type CheckAllowanceParams = {
   tokenOwnerAddress: string
@@ -47,5 +61,6 @@ const checkAllowance = async (params: CheckAllowanceParams): Promise<number> => 
 }
 
 export default {
+  isToken,
   checkAllowance,
 }
