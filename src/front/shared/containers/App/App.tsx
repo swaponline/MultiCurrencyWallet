@@ -145,6 +145,17 @@ class App extends React.Component<RouteComponentProps<any>, any> {
         const { appID } = this.state;
 
         if (appID !== switchId) {
+          //@ts-ignore
+          if (chrome && chrome.extension) {
+            //@ts-ignore
+            const extViews = chrome.extension.getViews()
+            //@ts-ignore
+            const extBgWindow = chrome.extension.getBackgroundPage()
+            if (extBgWindow !== window && extViews.length > 2) {
+              window.close()
+              return
+            }
+          }
           this.setState({
             multiTabs: true
           });

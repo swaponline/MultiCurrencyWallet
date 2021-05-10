@@ -204,7 +204,6 @@ class MarketmakerSettings extends Component<any, any> {
     SwapApp.onInit(() => {
       //@ts-ignore: strictNullChecks
       const isMarketEnabled = (SwapApp.shared().services.orders.getMyOrders().length > 0)
-      this.setState({isMarketEnabled})
 
       const swapsIds = []
       const swapsByIds = {}
@@ -213,16 +212,22 @@ class MarketmakerSettings extends Component<any, any> {
       //@ts-ignore: strictNullChecks
       const lsSwapId = JSON.parse(localStorage.getItem('swapId'))
 
-      if (lsSwapId === null || lsSwapId.length === 0) {
-        return
+      if (!(lsSwapId === null || lsSwapId.length === 0)) {
+        const swapsCore = lsSwapId.map((id) => {
+          try {
+            return new Swap(id, SwapApp.shared())
+          } catch (e) {}
+        })
       }
 
       //@ts-ignore: strictNullChecks
       SwapApp.shared().attachedSwaps.items.forEach((swap) => {
-        const swapState = this.extractSwapStatus(swap)
-        //@ts-ignore: strictNullChecks
-        swapsIds.push(swapState.id)
-        swapsByIds[swapState.id] = swapState
+        if (swap && swap.flow) {
+          const swapState = this.extractSwapStatus(swap)
+          //@ts-ignore: strictNullChecks
+          swapsIds.push(swapState.id)
+          swapsByIds[swapState.id] = swapState
+        }
       })
 
       //@ts-ignore: strictNullChecks
@@ -233,6 +238,7 @@ class MarketmakerSettings extends Component<any, any> {
       this.setState({
         swapsIds,
         swapsByIds,
+        isMarketEnabled,
       })
     })
   }
@@ -638,7 +644,7 @@ class MarketmakerSettings extends Component<any, any> {
                 </span>
               </p>
             </div>
-            {(isNeedDeposit || isMarketEnabled) && (
+            {(true) && (
               <>
                 <div styleName='section-items__item'>
                   {btcWallet ? (

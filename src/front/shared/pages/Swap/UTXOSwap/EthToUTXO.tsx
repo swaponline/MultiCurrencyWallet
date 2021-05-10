@@ -58,7 +58,8 @@ export default class EthToUTXO extends Component<any, any> {
   }
 
   componentDidMount() {
-    const { swap, flow: { isSignFetching, isMeSigned, step } } = this.state
+    const { swap, flow: { isSignFetching, isMeSigned, step, isStoppedSwap } } = this.state
+    if (isStoppedSwap) return
     window.addEventListener('resize', this.updateWindowDimensions)
     this.updateWindowDimensions()
     //@ts-ignore: strictNullChecks
