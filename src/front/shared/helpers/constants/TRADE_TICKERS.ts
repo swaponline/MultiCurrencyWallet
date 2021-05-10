@@ -1,13 +1,12 @@
 import config from 'helpers/externalConfig'
 
+const NETWORK = process.env.MAINNET ? 'mainnet' : 'testnet'
 
-const GetCustromERC20 = () => {
-  const configStorage = (process.env.MAINNET) ? 'mainnet' : 'testnet'
-
+const getCustomTokenConfig = () => {
   //@ts-ignore: strictNullChecks
-  let tokensInfo = JSON.parse(localStorage.getItem('customERC'))
-  if (!tokensInfo || !tokensInfo[configStorage]) return {}
-  return tokensInfo[configStorage]
+  let tokensInfo = JSON.parse(localStorage.getItem('customToken'))
+  if (!tokensInfo || !tokensInfo[NETWORK]) return {}
+  return tokensInfo[NETWORK]
 }
 
 const swap = (config && config.isWidget) ?
@@ -42,24 +41,34 @@ if (config && config.isWidget) {
   if (!config.opts.curEnabled || config.opts.curEnabled.ghost) swap.push('ETH-GHOST')
   if (!config.opts.curEnabled || config.opts.curEnabled.next) swap.push('ETH-NEXT')
 } else {
-  const customERC = GetCustromERC20()
-  // swap.push('GHOST-BTC')
-  // swap.push('GHOST-ETH')
-  Object.keys(customERC).forEach((tokenContract) => {
-    const symbol = customERC[tokenContract].symbol
-    const pair = `${symbol.toUpperCase()}-BTC`
+  const customTokenConfig = getCustomTokenConfig()
 
-    if (swap.indexOf(pair) === -1) swap.push(pair)
+  Object.keys(customTokenConfig).forEach((standard) => {
+    Object.keys(customTokenConfig[standard]).forEach((tokenContractAddr) => {
+      const tokenObj = customTokenConfig[standard][tokenContractAddr]
+      const { symbol } = tokenObj
+      const pair = `${symbol.toUpperCase()}-BTC`
+  
+      if (!swap.includes(pair)) {
+        swap.push(pair)
+      }
+  
+      if (!config.opts.curEnabled || config.opts.curEnabled.ghost) {
+        const ghostPair = `${symbol.toUpperCase()}-GHOST`
 
-    if (!config.opts.curEnabled || config.opts.curEnabled.ghost) {
-      const ghostPair = `${symbol.toUpperCase()}-GHOST`
-      if (swap.indexOf(ghostPair) === -1) swap.push(ghostPair)
-    }
+        if (!swap.includes(ghostPair)) {
+          swap.push(ghostPair)
+        }
+      }
+  
+      if (!config.opts.curEnabled || config.opts.curEnabled.next) {
+        const nextPair = `${symbol.toUpperCase()}-NEXT`
 
-    if (!config.opts.curEnabled || config.opts.curEnabled.next) {
-      const nextPair = `${symbol.toUpperCase()}-NEXT`
-      if (swap.indexOf(nextPair) === -1) swap.push(nextPair)
-    }
+        if (!swap.includes(nextPair)) {
+          swap.push(nextPair)
+        }
+      }
+    })
   })
 }
 

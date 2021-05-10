@@ -4,14 +4,13 @@ import { constants } from 'swap.app'
 import BigNumber from 'bignumber.js'
 import reducers from 'redux/core/reducers'
 
+const NETWORK = process.env.MAINNET ? 'mainnet' : 'testnet'
 
-const GetCustromERC20 = () => {
-  const configStorage = (process.env.MAINNET) ? 'mainnet' : 'testnet'
-
+const getCustomTokenConfig = () => {
   //@ts-ignore: strictNullChecks
-  let tokensInfo = JSON.parse(localStorage.getItem('customERC'))
-  if (!tokensInfo || !tokensInfo[configStorage]) return {}
-  return tokensInfo[configStorage]
+  let tokensInfo = JSON.parse(localStorage.getItem('customToken'))
+  if (!tokensInfo || !tokensInfo[NETWORK]) return {}
+  return tokensInfo[NETWORK]
 }
 
 const initExternalConfig = () => {
@@ -227,16 +226,21 @@ const externalConfig = () => {
   }
   if (!config.isWidget && config.opts.addCustomERC20) {
     // Add custom tokens
-    const customERC = GetCustromERC20()
+    const customTokenConfig = getCustomTokenConfig()
 
-    Object.keys(customERC).forEach((tokenContract) => {
-      if (!config.erc20[customERC[tokenContract].symbol.toLowerCase()]) {
-        config.erc20[customERC[tokenContract].symbol.toLowerCase()] = {
-          address: customERC[tokenContract].address,
-          decimals: customERC[tokenContract].decimals,
-          fullName: customERC[tokenContract].symbol,
+    Object.keys(customTokenConfig).forEach((standard) => {
+      Object.keys(customTokenConfig[standard]).forEach((tokenContractAddr) => {
+        const tokenObj = customTokenConfig[standard][tokenContractAddr]
+        const { symbol } = tokenObj
+
+        if (!config[standard][symbol.toLowerCase()]) {
+          config[standard][symbol.toLowerCase()] = {
+            address: tokenObj.address,
+            decimals: tokenObj.decimals,
+            fullName: tokenObj.symbol,
+          }
         }
-      }
+      })
     })
   }
 

@@ -1,12 +1,12 @@
 import config from 'app-config'
 
+const NETWORK = process.env.MAINNET ? 'mainnet' : 'testnet'
 
-const GetCustromERC20 = () => {
-  const configStorage = (process.env.MAINNET) ? 'mainnet' : 'testnet'
+const getCustomTokenConfig = () => {
   //@ts-ignore: strictNullChecks
-  let tokensInfo = JSON.parse(localStorage.getItem('customERC'))
-  if (!tokensInfo || !tokensInfo[configStorage]) return {}
-  return tokensInfo[configStorage]
+  let tokensInfo = JSON.parse(localStorage.getItem('customToken'))
+  if (!tokensInfo || !tokensInfo[NETWORK]) return {}
+  return tokensInfo[NETWORK]
 }
 
 let buildOpts = {
@@ -331,23 +331,28 @@ if (config.isWidget) {
   ]
 } else {
   if (!config.isWidget && buildOpts.addCustomERC20) {
-    const customERC = GetCustromERC20()
-    Object.keys(customERC).forEach((tokenContract) => {
-      const symbol = customERC[tokenContract].symbol
-      //@ts-ignore
-      initialState.items.push({
-        name: symbol.toUpperCase(),
-        title: symbol.toUpperCase(),
-        icon: symbol.toLowerCase(),
-        value: symbol.toLowerCase(),
-        fullTitle: symbol,
-      })
-      initialState.partialItems.push({
-        name: symbol.toUpperCase(),
-        title: symbol.toUpperCase(),
-        icon: symbol.toLowerCase(),
-        value: symbol.toLowerCase(),
-        fullTitle: symbol,
+    const customTokenConfig = getCustomTokenConfig()
+
+    Object.keys(customTokenConfig).forEach((standard) => {
+      Object.keys(customTokenConfig[standard]).forEach((tokenContractAddr) => {
+        const tokenObj = customTokenConfig[standard][tokenContractAddr]
+        const { symbol } = tokenObj
+
+        //@ts-ignore
+        initialState.items.push({
+          name: symbol.toUpperCase(),
+          title: symbol.toUpperCase(),
+          icon: symbol.toLowerCase(),
+          value: symbol.toLowerCase(),
+          fullTitle: symbol,
+        })
+        initialState.partialItems.push({
+          name: symbol.toUpperCase(),
+          title: symbol.toUpperCase(),
+          icon: symbol.toLowerCase(),
+          value: symbol.toLowerCase(),
+          fullTitle: symbol,
+        })
       })
     })
   }

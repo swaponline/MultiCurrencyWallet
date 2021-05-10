@@ -38,11 +38,7 @@
   position: relative;
   display: flex;
   flex-direction: column;
-<<<<<<< HEAD
   background-color: $l-background-elements;
-=======
-  background: $l-background-elements;
->>>>>>> master
   padding: 32px;
   width: 100%;
   max-width: 640px;
@@ -59,14 +55,9 @@
   }
 
   &.dark {
-<<<<<<< HEAD
     box-shadow: none;
     background-color: $d-background-elements;
     color: $d-color;
-=======
-    color: $d-color;
-    background-color: $d-background-elements;
->>>>>>> master
   }
 }
 

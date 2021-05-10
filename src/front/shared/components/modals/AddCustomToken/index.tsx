@@ -144,7 +144,12 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
 
   handleConfirm = async () => {
     const { tokenStandard, tokenAddress, tokenSymbol, tokenDecimals } = this.state
-    actions[tokenStandard].addToken(tokenAddress, tokenSymbol, tokenDecimals)
+    actions[tokenStandard].addToken({
+      standard: tokenStandard,
+      contractAddr: tokenAddress,
+      symbol: tokenSymbol,
+      decimals: tokenDecimals,
+    })
     actions.core.markCoinAsVisible(tokenSymbol.toUpperCase(), true)
 
     this.setState({

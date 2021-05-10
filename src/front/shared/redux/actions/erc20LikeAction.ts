@@ -6,6 +6,7 @@ import { getState } from 'redux/core'
 import actions from 'redux/actions'
 import reducers from 'redux/core/reducers'
 import DEFAULT_CURRENCY_PARAMETERS from 'common/helpers/constants/DEFAULT_CURRENCY_PARAMETERS'
+import TOKEN_STANDARDS from 'common/helpers/constants/TOKEN_STANDARDS'
 import erc20Like from 'common/erc20Like'
 import helpers, { apiLooper, constants, cacheStorageGet, cacheStorageSet, feedback } from 'helpers'
 import externalConfig from 'helpers/externalConfig'
@@ -58,31 +59,29 @@ class Erc20LikeAction {
     console.groupEnd()
   }
 
-  addToken = (contract, symbol, decimals) => {
-    let customTokens = JSON.parse(localStorage.getItem(constants.localStorage.customERC) || '{}')
+  addToken = (params) => {
+    const { standard, contractAddr, symbol, decimals } = params
+    let customTokens = JSON.parse(localStorage.getItem(constants.localStorage.customToken) || '{}')
 
     if (!Object.keys(customTokens).length) {
       customTokens = {
-        mainnet: {},
-        testnet: {},
+        [NETWORK]: {},
       }
+
+      Object.keys(TOKEN_STANDARDS).forEach((key) => {
+        const standard = TOKEN_STANDARDS[key].standard
+
+        customTokens[NETWORK][standard] = {}
+      })
     }
 
-    customTokens[NETWORK][contract] = {
-      address: contract,
+    customTokens[NETWORK][standard][contractAddr] = {
+      address: contractAddr,
       symbol,
       decimals,
     }
 
-    localStorage.setItem(constants.localStorage.customERC, JSON.stringify(customTokens))
-  }
-
-  getToken = () => {
-    let customERC = constants.localStorage.customERC || ''
-    let tokensInfo = JSON.parse(localStorage.getItem(customERC) || '{}')
-
-    if (!tokensInfo || !tokensInfo[NETWORK]) return {}
-    return tokensInfo[NETWORK]
+    localStorage.setItem(constants.localStorage.customToken, JSON.stringify(customTokens))
   }
 
   getTx = (txRaw) => {
