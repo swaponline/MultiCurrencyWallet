@@ -33,19 +33,30 @@ describe('Start e2e tests', () => {
 
     await timeOut(3 * 1000)
 
+    // taker move to exchange page and try connecting to peers
+    await TakerPage.$('a[href="#/exchange"]').then((aToExchange) => aToExchange.click())
+
+    // checks setupMM
     await MakerPage.goto(`${MakerPage.url()}marketmaker/WBTC`)
-      // move to exchange page
-    await TakerPage.$('a[href="#/exchange"]').then((a) => a.click())
 
     await timeOut(3 * 1000)
 
+    const { btcBalance: makerBtcBalance, tokenBalance: makerTokenBalance } = await turnOnMM(MakerPage)
+
+    await MakerPage.$('a[href="#/exchange"]').then((aToExchange) => aToExchange.click())
+
+    await MakerPage.$('#orderbookBtn').then((orderbookBtn) => orderbookBtn.click())
+
+    // find all maker orders
+    const sellAmountOrders  = await MakerPage.$$eval('.sellAmountOrders', elements => elements.map(el => el.textContent))
+    const buyAmountOrders   = await MakerPage.$$eval('.buyAmountOrders', elements => elements.map(el => el.textContent))
+    const orders = [...sellAmountOrders, ...buyAmountOrders]
+
+    console.log("checks for setup MM")
+    +makerBtcBalance ? expect(orders).toContain(makerBtcBalance) : console.log('maker have not btc balance')
+    +makerTokenBalance ? expect(orders).toContain(makerTokenBalance) : console.log('maker have not token balance')
+
     try {
-      const { btcBalance: makerBtcBalance, tokenBalance: makerTokenBalance } = await turnOnMM(MakerPage)
-
-      console.log('makerBtcBalance', makerBtcBalance)
-      console.log('makerTokenBalance', makerTokenBalance)
-
-      await MakerPage.$('a[href="#/exchange"]').then((a) => a.click())
 
       await takeScreenshot(MakerPage, 'MakerPage_exchangePage')
       await takeScreenshot(TakerPage, 'TakerPage_exchangePage')
