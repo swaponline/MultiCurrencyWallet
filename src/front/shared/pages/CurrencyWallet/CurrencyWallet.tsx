@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react'
 
 import { connect } from 'redaction'
 import actions from 'redux/actions'
-import Slider from 'pages/Wallet/components/WallerSlider'
+import Slider from 'pages/Wallet/WallerSlider'
 import { withRouter } from 'react-router-dom'
 
 import helpers, { links, constants, ethToken } from 'helpers'
