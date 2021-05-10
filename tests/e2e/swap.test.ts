@@ -36,9 +36,10 @@ describe('Start e2e tests', () => {
       console.log("checks for restore wallets done")
 
     } catch (error) {
-      console.log('IMPORT WALLETS Error: ', error)
       await MakerBrowser.close()
       await TakerBrowser.close()
+      console.error('IMPORT WALLETS Error: ', error)
+      expect(false).toBe(true)
     }
 
     try {
@@ -58,9 +59,10 @@ describe('Start e2e tests', () => {
       await TakerPage.$('#orderbookBtn').then((orderbookBtn) => orderbookBtn.click())
 
     } catch (error) {
-      console.log('PREPARE PAGES Error: ', error)
       await MakerBrowser.close()
       await TakerBrowser.close()
+      console.error('PREPARE PAGES Error: ', error)
+      expect(false).toBe(true)
     }
 
     try {
@@ -87,9 +89,10 @@ describe('Start e2e tests', () => {
       console.log("checks for setup MM done")
 
     } catch (error) {
-      console.log('SETUP MM Error: ', error)
       await MakerBrowser.close()
       await TakerBrowser.close()
+      console.error('SETUP MM Error: ', error)
+      expect(false).toBe(true)
     }
 
     try {
@@ -113,9 +116,10 @@ describe('Start e2e tests', () => {
       +makerTokenBalance ? expect(allOrders).toContain(makerTokenBalance) : console.log('maker have not token balance')
       console.log("checks for messaging done")
     } catch (error) {
-      console.log('MESSAGING Error: ', error)
       await MakerBrowser.close()
       await TakerBrowser.close()
+      console.error('MESSAGING Error: ', error)
+      expect(false).toBe(true)
     }
     await MakerBrowser.close()
     await TakerBrowser.close()
