@@ -33,7 +33,7 @@ label.Switch {
   }
 
   & > span:after {
-    background-color: $indicating-color;
+    background-color: $primary;
     border-radius: 50%;
     content: '';
     width: 15px;
