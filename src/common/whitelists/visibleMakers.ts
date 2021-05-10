@@ -12,5 +12,4 @@ The list is empty? => any maker will be allowed
 export default [
   // add peer ids:
   // 'Q...',
-  'QmSHDV4wE1wrNZUGa9aRocds1nTydLEb921ENjKuuSnczH'
 ]

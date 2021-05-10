@@ -589,8 +589,15 @@
     <script type="text/javascript" src="https://unpkg.com/react@16.10.2/umd/react.production.min.js"></script>
     <script type="text/javascript" src="https://unpkg.com/react-dom@16.10.2/umd/react-dom.production.min.js"></script>
 
-    <!-- Extension: icon click => open tab -->
+
+    <!--
+      * Please use only one inline script in this file (each additional script requires an additional hash in the extension manifest).
+
+      * Each change to this script requires a hash change in the extension manifest.
+    -->
+
     <script>
+      // Extension: prevent 2 tabs
       if (chrome && chrome.extension) {
         var extViews = chrome.extension.getViews()
         var extBgWindow = chrome.extension.getBackgroundPage()
@@ -607,6 +614,8 @@
           }
         }
       }
+
+      // Extension: icon click => open tab
       if (chrome && chrome.browserAction) {
         if (!chrome.browserAction.isClickListenerAdded) {
           console.log('Extension: add click listener')
@@ -621,11 +630,10 @@
       } else {
         console.log('Extension: can`t add click listener (possibly not extension)')
       }
-    </script>
 
-    <script>
+      // Check caching backend
       try {
-        JSON.parse("<!-- BACK_SO -->");
+        JSON.parse("<!-- BACK_SO");
       } catch (e) {
         console.log("warning: caching backend is down")
       }
