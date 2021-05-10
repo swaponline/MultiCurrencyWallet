@@ -9,7 +9,7 @@ import actions from 'redux/actions'
 import SwapApp from 'swap.app'
 import Swap from 'swap.swap'
 
-import { constants, links } from 'helpers'
+import { constants, links, feedback } from 'helpers'
 import config from 'helpers/externalConfig'
 
 
@@ -243,6 +243,7 @@ class MarketmakerSettings extends Component<any, any> {
         isMarketEnabled,
       })
     })
+    feedback.marketmaking.enteredSettings()
   }
 
   onSwapEnterStep(data) {
@@ -321,6 +322,7 @@ class MarketmakerSettings extends Component<any, any> {
 
     if (!isEthBalanceOk) {
       hasError = true
+      const AB_Coin = (config.binance) ? `BNB` : `ETH`
       //@ts-ignore: strictNullChecks
       actions.modals.open(constants.modals.AlertModal, {
         message: (
@@ -328,14 +330,16 @@ class MarketmakerSettings extends Component<any, any> {
             id="MM_NotEnoughtEth"
             defaultMessage="Not enough {AB_Coin} to pay the miners commission. You need to have at least 0.02 {AB_Coin}"
             values={{
-              AB_Coin: (config.binance) ? `BNB` : `ETH`,
+              AB_Coin,
             }}
           />
         ),
       })
+      feedback.marketmaking.prevented(`Not enough ${AB_Coin}`)
     }
     if (!isTokenBalanceOk && !isBtcBalanceOk) {
       hasError = true
+      const token = marketToken.toUpperCase()
       //@ts-ignore: strictNullChecks
       actions.modals.open(constants.modals.AlertModal, {
         message: (
@@ -343,11 +347,12 @@ class MarketmakerSettings extends Component<any, any> {
             id="MM_NotEnoughCoins"
             defaultMessage="Insufficient funds. You need to top up your BTC or {token}"
             values={{
-              token: marketToken.toUpperCase(),
+              token,
             }}
           />
         ),
       })
+      feedback.marketmaking.prevented(`Not enough BTC or ${token}`)
     }
     if (!hasError) {
       this.setState({
@@ -360,9 +365,11 @@ class MarketmakerSettings extends Component<any, any> {
         if (!isMarketEnabled) {
           // New state - On
           this.createMakerMakerOrder()
+          feedback.marketmaking.enabled()
         } else {
           // New state - Off
           this.cleanupMarketMakerOrder()
+          feedback.marketmaking.disabled()
         }
       })
     } else {

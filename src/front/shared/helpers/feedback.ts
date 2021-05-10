@@ -97,9 +97,13 @@ const events = {
     failed: 'failed',
   },
   marketmaking: {
-    entered: 'entered',
+    enteredPromo: 'enteredPromo',
     selected: 'selected',
+    enteredSettings: 'enteredSettings',
     faqOpened: 'faqOpened',
+    prevented: 'prevented',
+    enabled: 'enabled',
+    disabled: 'disabled',
   },
   theme: {
     switched: 'switched',

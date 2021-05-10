@@ -26,7 +26,7 @@ export default class MarketmakerPromo extends React.Component<{}, {}> {
   }
 
   componentDidMount() {
-    feedback.marketmaking.entered()
+    feedback.marketmaking.enteredPromo()
   }
 
   // onSelectBrowser() {
