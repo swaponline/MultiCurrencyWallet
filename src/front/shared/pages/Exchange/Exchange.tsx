@@ -1978,6 +1978,7 @@ class Exchange extends PureComponent<any, any> {
               {Form}
 
               <Button
+                id="orderbookBtn"
                 onClick={this.toggleOrdersVisibility}
                 styleName="button orderbook"
                 link
