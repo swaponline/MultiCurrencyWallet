@@ -573,7 +573,7 @@ class MarketmakerSettings extends Component<any, any> {
                 ) : (
                   <FormattedMessage
                     id="MM_ToggleTextDisabled"
-                    defaultMessage="Turn On toggle to start earn"
+                    defaultMessage="Turn on this toggle to start earn"
                   />
                 )}
               </p>
@@ -599,12 +599,12 @@ class MarketmakerSettings extends Component<any, any> {
               </div>
             </div>
             <div styleName='section-items__item'>
-              <p styleName='item-text__secondary-title'>
+              <h2 styleName='item-text__secondary-title'>
                 <FormattedMessage
                   id="MM_TotalEarned"
                   defaultMessage="Total earned:"
                 />
-              </p>
+              </h2>
               <p>
                 <span styleName='balancePrimary'>
                   0
@@ -620,12 +620,13 @@ class MarketmakerSettings extends Component<any, any> {
                   />
                 </span>
               </p>
-              <p styleName='item-text__secondary-title'>
+              <hr />
+              <h2 styleName='item-text__secondary-title'>
                 <FormattedMessage
                   id="MM_MarketmakingBalanceTitle"
                   defaultMessage="Marketmaking Balance:"
                 />
-              </p>
+              </h2>
               <p>
                 <span styleName='balancePrimary'>
                 {isMarketEnabled ? (
@@ -651,17 +652,18 @@ class MarketmakerSettings extends Component<any, any> {
                 <div styleName='section-items__item'>
                   {btcWallet ? (
                       <>
-                        <p styleName='item-text__secondary-title'>
+                        <h2 styleName='item-text__secondary-title'>
                           <FormattedMessage
                             id="MM_BTCBalance"
                             defaultMessage="Balance BTC:"
                           />
-                        </p>
+                        </h2>
                         <p>
                           <img src={btc} alt="btc" />
                           {' '}
                           <span id='btcBalance' styleName='balanceSecondary'>{btcBalance}</span>
                         </p>
+                        <hr />
                         <p styleName='item-text__secondary'>
                           <FormattedMessage
                             id="MM_DepositeWallet"
@@ -673,12 +675,12 @@ class MarketmakerSettings extends Component<any, any> {
                       </>
                     ) : (
                       <>
-                        <p styleName='item-text__secondary-title'>
+                        <h2 styleName='item-text__secondary-title'>
                           <FormattedMessage
                             id="MM_BTCBalance"
                             defaultMessage="Balance BTC:"
                           />
-                        </p>
+                        </h2>
                         <p>
                           <img src={btc} alt="btc" />
                           {' '}
@@ -689,7 +691,7 @@ class MarketmakerSettings extends Component<any, any> {
                   }
                 </div>
                 <div styleName='section-items__item'>
-                  <p styleName='item-text__secondary-title'>
+                  <h2 styleName='item-text__secondary-title'>
                     <FormattedMessage
                       id="MM_TokenBalance"
                       defaultMessage="Balance {token}:"
@@ -697,7 +699,7 @@ class MarketmakerSettings extends Component<any, any> {
                         token: marketToken.toUpperCase(),
                       }}
                     />
-                  </p>
+                  </h2>
                   <div>
                     {config.binance ? (
                       <img src={btc} alt="btcb" />
@@ -753,7 +755,7 @@ class MarketmakerSettings extends Component<any, any> {
                   )}
                   {ethWallet ? (
                       <>
-                        <span styleName='item-text__secondary'>
+                        <p styleName='item-text__secondary'>
                           <FormattedMessage
                             id="MM_ETHBalance"
                             defaultMessage="Balance {AB_Coin}: {balance} (for miners fee)"
@@ -762,7 +764,8 @@ class MarketmakerSettings extends Component<any, any> {
                               balance: new BigNumber(ethBalance).dp(5).toNumber()
                             }}
                           />
-                        </span>
+                        </p>
+                        <hr />
                         <p styleName='item-text__secondary'>
                           <FormattedMessage
                             id="MM_DepositeWallet"
@@ -776,7 +779,7 @@ class MarketmakerSettings extends Component<any, any> {
                       <p styleName='item-text__secondary'>
                         <FormattedMessage
                           id="MM_ETHBalance"
-                          defaultMessage="Balance {AB_Coin}: {balance} (for miners fee)"
+                          defaultMessage="Balance {AB_Coin}: {balance} (for miner fees)"
                           values={{
                             AB_Coin: (config.binance) ? `BNB` : `ETH`,
                             balance: new BigNumber(ethBalance).dp(5).toNumber()
