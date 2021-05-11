@@ -1,6 +1,7 @@
-import { setup, importWallet, addAssetToWallet, turnOnMM, takeScreenshot, timeOut } from './utils'
-
 import BigNumber from 'bignumber.js'
+
+import { createBrowser, importWallet, addAssetToWallet, turnOnMM, takeScreenshot, timeOut } from './utils'
+
 
 const MAKER_SEED = ['neither', 'already', 'situate', 'silent', 'ripple', 'milk', 'paddle', 'glass', 'leopard', 'track', 'mansion', 'junk']
 const makerBtcAddress = 'n2Y2rbg6wVEQnnpNxisiHK4wCDUAq59iv6'
@@ -8,15 +9,16 @@ const makerBtcAddress = 'n2Y2rbg6wVEQnnpNxisiHK4wCDUAq59iv6'
 const TAKER_SEED = ['honey', 'stereo', 'harsh', 'diary', 'select', 'episode', 'ready', 'ritual', 'best', 'target', 'paper', 'auto']
 const takerBtcAddress = 'n4JjB9D9axszdsFxyxDmF43z4WwttN6oPb'
 
+
 jest.setTimeout(100 * 1000)
 
 
 describe('Start e2e tests', () => {
 
   it('restore wallets, turnOn MM, check messaging', async () => {
-    console.log("SETUP BROWSERS")
-    const { browser: MakerBrowser, page: MakerPage } = await setup()
-    const { browser: TakerBrowser, page: TakerPage } = await setup()
+    console.log("CREATE BROWSERS")
+    const { browser: MakerBrowser, page: MakerPage } = await createBrowser()
+    const { browser: TakerBrowser, page: TakerPage } = await createBrowser()
 
     try {
       console.log("TEST IMPORT WALLETS")
@@ -24,11 +26,12 @@ describe('Start e2e tests', () => {
       await importWallet(MakerPage, MAKER_SEED)
       await importWallet(TakerPage, TAKER_SEED)
 
+
       await MakerPage.waitForSelector('#btcAddress') // waits for Maker wallet to load
       await TakerPage.waitForSelector('#btcAddress') // waits for Taker wallet to load
 
-      const recoveredMakerBtcAddress= await MakerPage.$eval('#btcAddress', el => el.textContent)
-      const recoveredTakerBtcAddress= await TakerPage.$eval('#btcAddress', el => el.textContent)
+      const recoveredMakerBtcAddress = await MakerPage.$eval('#btcAddress', el => el.textContent)
+      const recoveredTakerBtcAddress = await TakerPage.$eval('#btcAddress', el => el.textContent)
 
       console.log("checks for restore wallets start")
       expect(recoveredMakerBtcAddress).toBe(makerBtcAddress)

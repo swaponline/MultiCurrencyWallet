@@ -598,7 +598,7 @@
 
     <script>
       // Extension: prevent 2 tabs
-      if (chrome && chrome.extension) {
+      if (window.chrome && window.chrome.extension) {
         var extViews = chrome.extension.getViews()
         var extBgWindow = chrome.extension.getBackgroundPage()
         if (window !== extBgWindow) {
@@ -616,7 +616,7 @@
       }
 
       // Extension: icon click => open tab
-      if (chrome && chrome.browserAction) {
+      if (window.chrome && window.chrome.browserAction) {
         if (!chrome.browserAction.isClickListenerAdded) {
           console.log('Extension: add click listener')
           chrome.browserAction.onClicked.addListener(function(tab) {
