@@ -342,8 +342,8 @@ const getExchangeRate = (sellCurrency, buyCurrency): Promise<number> => {
   })
 }
 
-const getInfoAboutCurrency = (currencyNames) =>
-  new Promise((resolve, reject) => {
+const getInfoAboutCurrency = (currencyNames) => {
+  return new Promise((resolve, reject) => {
     const hasCustomRate = (cur) => {
       const dataobj = Object.keys(config.erc20).find(el => el.toLowerCase() === cur.toLowerCase())
       return dataobj ? (config.erc20[dataobj] || { customEcxchangeRate: false }).customEcxchangeRate : false
@@ -430,6 +430,7 @@ const getInfoAboutCurrency = (currencyNames) =>
       reject(error)
     }).finally(() => reducers.user.setIsFetching({ isFetching: false }))
   })
+}
 
 
 const clearTransactions = () => {
