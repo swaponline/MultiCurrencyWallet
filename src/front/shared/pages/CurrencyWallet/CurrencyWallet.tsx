@@ -5,7 +5,7 @@ import actions from 'redux/actions'
 import { withRouter } from 'react-router-dom'
 import erc20Like from 'common/erc20Like'
 import { links, constants } from 'helpers'
-import { getTokenWallet, getBitcoinWallet, getEtherWallet, getBnbWallet, getGhostWallet, getNextWallet } from 'helpers/links'
+import { getWalletUrl, getTokenWallet } from 'helpers/links'
 
 import CSSModules from 'react-css-modules'
 import styles from './CurrencyWallet.scss'
@@ -90,20 +90,10 @@ class CurrencyWallet extends Component<any, any> {
       ticker = fullName
     }
 
-    // MultiWallet - after Sweep - названию валюты доверять нельзя - нужно проверяться также адрес - и выбирать по адресу
-    let itemCurrency = items.filter((item) => {
-      if (erc20Like.isToken({ name: ticker })) {
-        if (
-          item.currency.toLowerCase() === ticker.toLowerCase() &&
-          item.address.toLowerCase() === walletAddress.toLowerCase()
-        ) {
-          return true
-        }
-      } else {
-        if (item.address.toLowerCase() === walletAddress.toLowerCase() && item.currency === ticker) {
-          return true
-        }
-      }
+    let itemCurrency = this.filterCurrencies({
+      items,
+      ticker,
+      walletAddress,
     })
 
     if (!itemCurrency.length) {
@@ -121,8 +111,9 @@ class CurrencyWallet extends Component<any, any> {
       itemCurrency = itemCurrency[0]
       //@ts-ignore
       const { currency, address, contractAddress, decimals, balance, infoAboutCurrency } = itemCurrency
-
       const hasCachedData = lsDataCache.get(`TxHistory_${getCurrencyKey(currency, true).toLowerCase()}_${address}`)
+      const isErc20Token = erc20Like.erc20.isToken({ name: currency })
+      const isBep20Token = erc20Like.bep20.isToken({ name: currency })
 
       this.state = {
         itemCurrency,
@@ -137,6 +128,8 @@ class CurrencyWallet extends Component<any, any> {
         isLoading: false,
         infoAboutCurrency,
         filterValue: walletAddress || address || '',
+        isErc20Token,
+        isBep20Token,
         token: erc20Like.isToken({ name: ticker }),
       }
     }
@@ -144,11 +137,13 @@ class CurrencyWallet extends Component<any, any> {
 
   componentDidMount() {
     this._mounted = true
-    console.log('CurrencyWallet mounted')
+    
     const {
       currency,
       itemCurrency,
       token,
+      isErc20Token,
+      isBep20Token,
       isRedirecting,
       redirectUrl,
       balance,
@@ -179,18 +174,22 @@ class CurrencyWallet extends Component<any, any> {
     } = this.props
 
     if (token) {
-      if (erc20Like.erc20.isToken({ name: currency })) {
+      if (isErc20Token) {
         actions.erc20.getBalance(currency.toLowerCase())
-      } else if (erc20Like.bep20.isToken({ name: currency })) {
+      }
+
+      if (isBep20Token) {
         actions.bep20.getBalance(currency.toLowerCase())
       }
     }
 
-    // set balance for the address
-    address &&
-      actions[getCurrencyKey(currency.toLowerCase(), false)]
-        .fetchBalance(address)
-        .then((balance) => this.setState({ balance }))
+    const actionName = isErc20Token
+      ? 'erc20' : isBep20Token
+      ? 'bep20' : currency.toLowerCase()
+
+    address && actions[getCurrencyKey(actionName, false)]
+      .fetchBalance(address)
+      .then((balance) => this.setState({ balance }))
 
     // if address is null, take transactions from current user
     address
@@ -279,20 +278,11 @@ class CurrencyWallet extends Component<any, any> {
       if (fullName) {
         ticker = fullName
       }
-      // MultiWallet - after Sweep - названию валюты доверять нельзя - нужно проверяться также адрес - и выбирать по адресу
-      let itemCurrency = items.filter((item) => {
-        if (erc20Like.isToken({ name: currency })) {
-          if (
-            item.currency.toLowerCase() === ticker.toLowerCase() &&
-            item.address.toLowerCase() === walletAddress.toLowerCase()
-          ) {
-            return true
-          }
-        } else {
-          if (item.address.toLowerCase() === walletAddress.toLowerCase() && item.currency === ticker) {
-            return true
-          }
-        }
+      
+      let itemCurrency = this.filterCurrencies({
+        items,
+        ticker,
+        walletAddress,
       })
 
       if (itemCurrency.length) {
@@ -367,11 +357,29 @@ class CurrencyWallet extends Component<any, any> {
 
   componentWillUnmount() {
     this._mounted = false
-    console.log('CurrencyWallet unmounted')
+  }
+
+  filterCurrencies = (params) => {
+    const { items, ticker, walletAddress } = params
+    // MultiWallet - after Sweep - названию валюты доверять нельзя - нужно проверяться также адрес - и выбирать по адресу
+    return items.filter((item) => {
+      if (erc20Like.isToken({ name: ticker })) {
+        if (
+          item.currency.toLowerCase() === ticker.toLowerCase() &&
+          item.address.toLowerCase() === walletAddress.toLowerCase()
+        ) {
+          return true
+        }
+      } else {
+        if (item.address.toLowerCase() === walletAddress.toLowerCase() && item.currency === ticker) {
+          return true
+        }
+      }
+    })
   }
 
   updateRedirectUrls = (params) => {
-    const { address, ticker, fullName } = params
+    const { address, ticker, fullName, isErc20Token, isBep20Token } = params
 
     const setRedirectUrl = (url) => {
       this.setState(() => ({
@@ -383,32 +391,37 @@ class CurrencyWallet extends Component<any, any> {
     if (!address && !ticker) {
       if (fullName) {
         if (erc20Like.isToken({ name: fullName })) {
-          setRedirectUrl(getTokenWallet(fullName))
+          const tokenCurrency = isErc20Token ? 'eth' : isBep20Token ? 'bnb' : ''
+          const tokenWallet = getTokenWallet({
+            tokenName: fullName,
+            currency: tokenCurrency,
+          })
+          setRedirectUrl(tokenWallet)
           return
         }
 
         if (fullName.toLowerCase() === `bitcoin`) {
-          setRedirectUrl(getBitcoinWallet())
+          setRedirectUrl(getWalletUrl({ name: 'btc' }))
           return
         }
 
         if (fullName.toLowerCase() === `ghost`) {
-          setRedirectUrl(getGhostWallet())
+          setRedirectUrl(getWalletUrl({ name: 'ghost' }))
           return
         }
 
         if (fullName.toLowerCase() === `next`) {
-          setRedirectUrl(getNextWallet())
+          setRedirectUrl(getWalletUrl({ name: 'next' }))
           return
         }
 
         if (fullName.toLowerCase() === `ethereum`) {
-          setRedirectUrl(getEtherWallet())
+          setRedirectUrl(getWalletUrl({ name: 'eth' }))
           return
         }
 
         if (fullName.toLowerCase() === `binance coin`) {
-          setRedirectUrl(getBnbWallet())
+          setRedirectUrl(getWalletUrl({ name: 'bnb' }))
           return
         }
       }

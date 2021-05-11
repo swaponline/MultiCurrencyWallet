@@ -388,7 +388,7 @@ class Erc20LikeAction {
       from,
     }
 
-    const weiAmount = new BigNumber(amount).multipliedBy(10 ** decimals).toNumber()
+    const weiAmount = new BigNumber(amount).multipliedBy(10 ** decimals).toString()
     const walletData = actions.core.getWallet({
       address: from,
       currency: name,
