@@ -33,13 +33,7 @@ import ABBtcLikeToEthToken from './ABSwapProgressText/BtcLikeToEthToken'
 import ABEthToBtcLike from './ABSwapProgressText/EthToBtcLike'
 import ABEthTokenToBtcLike from './ABSwapProgressText/EthTokenToBtcLike'
 
-
 import metamask from 'helpers/metamask'
-
-
-
-import * as animation from './images'
-import finishSvg from './images/finish.svg'
 
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
@@ -280,18 +274,6 @@ class SwapProgress extends Component<any, any> {
     this.handleBarProgress()
   }
 
-  // TODO add animation css, if the app will have error and try to on 10s step, will show the 9th of animathin
-
-  handleStepChangeImage = (step) => {
-    if (step < 10) {
-      return <img src={animation[`icon${step}`]} alt="step" />
-    }
-    if (step === 10) {
-      // eslint-disable-next-line
-      return <img src={animation['icon9']} alt="step" />
-    }
-  }
-
   handleFocusSecretInput = (event) => event.target.select();
 
   tryRefund = async () => {
@@ -346,7 +328,6 @@ class SwapProgress extends Component<any, any> {
       sellCurrency,
       enabledButton,
       refundError,
-      stepValue,
       isSecretCopied,
     } = this.state
 
@@ -363,8 +344,6 @@ class SwapProgress extends Component<any, any> {
       withdrawTransactionHash,
     } = this._fields
 
-    const progress = Math.floor(90 * stepValue)
-    const finishIcon = <img src={finishSvg} alt="finishIcon" />
     //@ts-ignore: strictNullChecks
     const showWalletButton = (!this.swap.destinationBuyAddress)
       //@ts-ignore: strictNullChecks
@@ -409,18 +388,6 @@ class SwapProgress extends Component<any, any> {
         <div styleName="container">
           <div styleName="stepContainer">
             <SwapController swap={swap} />
-            <div styleName="progressContainer">
-              <div styleName={progress > 180 ? 'progress-pie-chart gt-50' : 'progress-pie-chart'}>
-                <div styleName="ppc-progress">
-                  <div styleName="ppc-progress-fill" style={{ transform: `rotate(${progress}deg)` }} />
-                </div>
-              </div>
-              <div styleName="step">
-                <div styleName="stepImg">
-                  {flow.isFinished ? finishIcon : this.handleStepChangeImage(flow.step)}
-                </div>
-              </div>
-            </div>
             <div styleName="stepInfo">
 
               <span styleName="stepHeading">

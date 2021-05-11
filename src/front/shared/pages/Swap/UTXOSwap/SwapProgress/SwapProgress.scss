@@ -13,17 +13,6 @@
   }
 }
 
-.progress {
-  content: "";
-  position: absolute;
-  border-radius: 50%;
-  left: calc(50% - 100px);
-  top: calc(50% - 100px);
-  width: 200px;
-  height: 200px;
-  clip: rect(0, 200px, 200px, 100px);
-  top: 40px;
-}
 .metamask_attention,
 .attention {
   display: block;
@@ -50,77 +39,6 @@
   }
 }
 
-@mixin circle($size) {
-  content: "";
-  position: absolute;
-  border-radius: 50%;
-  left: calc(50% - #{$size/2});
-  top: calc(50% - #{$size/2});
-  width: $size;
-  height: $size;
-}
-
-$size: 200px;
-.progress-pie-chart {
-  width: $size;
-  height: $size;
-  border-radius: 50%;
-  background-color: #E5E5E5;
-  position: absolute;
-  top: 72px;
-  left: 50%;
-  transform: translateX(-50%);
-  &.gt-50 {
-    background-color: #5100dc;
-  }
-}
-.ppc-progress {
-  @include circle($size);
-  clip: rect(0, $size, $size, #{$size/2});
-  .ppc-progress-fill {
-    @include circle($size);
-    clip: rect(0, #{$size/2}, $size, 0);
-    background: #5100dc;
-    transition: 0.3s transform ease;
-    transform: rotate(200deg);
-  }
-  .gt-50 & {
-    clip: rect(0, #{$size/2}, $size, 0);
-    .ppc-progress-fill {
-      clip: rect(0, $size, $size, #{$size/2});
-      transition: 0.3s transform ease;
-      background: #E5E5E5;
-    }
-  }
-}
-
-.finishImg {
-  width: 160px;
-  position: absolute;
-  left: 50%;
-  transform: translate(-50%,-50%);
-  top: 50%;
-}
-
-.bar {
-  content: "";
-  position: absolute;
-  border-radius: 50%;
-  left: calc(50% - 100px);
-  top: calc(50% - 100px);
-  width: 200px;
-  height: 200px;
-  clip: rect(0, 100px, 200px, 0);
-  background: #81CE97;
-  transform: rotate(170deg);
-}
-.steps {
-  color: #8e8e8e;
-  position: absolute;
-  right: 65px;
-  top: 68px;
-  font-size: 17px;
-}
 .info {
   margin-top: 10px;
   display: block;
@@ -193,31 +111,6 @@ $size: 200px;
   text-align: center;
   border: 1px solid #ccc;
   border-radius: 20px;
-}
-
-.step {
-  text-align: center;
-  padding: 50px;
-  padding-bottom: 30px;
-  z-index: 1;
-  border-radius: 20px;
-  padding-top: 70px;
-}
-
-.stepImg {
-  width: 184px;
-  height: 184px;
-  border-radius: 50%;
-  margin: auto;
-  margin-bottom: 60px;
-  z-index: 1111;
-  background: #fff;
-  position: relative;
-  top: 9px;
-  img {
-    width: 100%;
-    border-radius: 50%;
-  }
 }
 
 .stepInfo {
@@ -296,9 +189,6 @@ $size: 200px;
   }
 }
 
-.progressContainer {
-  color: #000;
-}
 
 .refundTransaction,
 .refundTransactionHash {
@@ -311,10 +201,6 @@ $size: 200px;
 @include media-tablet {
   .container {
     width: 600px;
-  }
-  .steps {
-    top: -30px;
-    right: 0;
   }
 }
 
@@ -334,11 +220,6 @@ $size: 200px;
       font-size: 13px;
     }
   }
-  .steps {
-    font-size: 13px;
-    top: -25px;
-    right: 0;
-  }
   .link {
     font-size: 13px;
   }
@@ -346,22 +227,8 @@ $size: 200px;
     width: 100%;
     border: none;
   }
-  .step {
-    border: none;
-    text-align: center;
-    padding: 0;
-    padding-bottom: 30px;
-    z-index: 1;
-    border-radius: 20px;
-    padding-top: 71px;
-  }
   .stepInfo {
     margin-top: -50px;
-  }
-  .progressContainer {
-    color: #000;
-    transform: scale(0.8);
-    margin-top: -80px;
   }
   .overlay {
     border-bottom: 1px solid #eee;
