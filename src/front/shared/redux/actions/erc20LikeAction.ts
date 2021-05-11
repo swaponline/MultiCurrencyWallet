@@ -361,8 +361,8 @@ class Erc20LikeAction {
       isMnemonic: isSweeped,
       isMetamask: false,
       isConnected: false,
-      // TODO: use a type key and delete this key
-      isERC20: true,
+      // TODO: use a standard key and delete this key
+      isERC20: this.standard === 'erc20',
       standard: this.standard,
     }
 

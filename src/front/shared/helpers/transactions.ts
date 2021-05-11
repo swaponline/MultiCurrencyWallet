@@ -66,6 +66,14 @@ const getTxRouter = (currency, txId) => {
 }
 
 const getLink = (currency, txId) => {
+  if (erc20Like.erc20.isToken({ name: currency })) {
+    return actions.erc20.getLinkToInfo(txId)
+  }
+  
+  if (erc20Like.bep20.isToken({ name: currency })) {
+    return actions.bep20.getLinkToInfo(txId)
+  }
+
   const prefix = helpers.getCurrencyKey(currency, false)
 
   if (actions[prefix]?.getLinkToInfo) {
