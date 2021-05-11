@@ -5863,7 +5863,7 @@
   },
   {
     "id": "MM_DepositeWallet",
-    "message": "doładowanie, przelew na {address}",
+    "message": "doładowanie, przelew na",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
