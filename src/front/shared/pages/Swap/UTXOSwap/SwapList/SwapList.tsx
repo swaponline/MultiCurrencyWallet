@@ -18,15 +18,15 @@ import ABThirdStep from './ABSteps/ThirdStep'
 import ABFourthStep from './ABSteps/FourthStep'
 
 
-import UTXOBtcLikeToEth from '../SwapProgress/UTXOSwapProgressText/BtcLikeToEth'
-import UTXOBtcLikeToEthToken from '../SwapProgress/UTXOSwapProgressText/BtcLikeToEthToken'
-import UTXOEthToBtcLike from '../SwapProgress/UTXOSwapProgressText/EthToBtcLike'
-import UTXOEthTokenToBtcLike from '../SwapProgress/UTXOSwapProgressText/EthTokenToBtcLike'
+import UTXOBtcLikeToEth from './UTXOSwapProgressText/BtcLikeToEth'
+import UTXOBtcLikeToEthToken from './UTXOSwapProgressText/BtcLikeToEthToken'
+import UTXOEthToBtcLike from './UTXOSwapProgressText/EthToBtcLike'
+import UTXOEthTokenToBtcLike from './UTXOSwapProgressText/EthTokenToBtcLike'
 
-import ABBtcLikeToEth from '../SwapProgress/ABSwapProgressText/BtcLikeToEth'
-import ABBtcLikeToEthToken from '../SwapProgress/ABSwapProgressText/BtcLikeToEthToken'
-import ABEthToBtcLike from '../SwapProgress/ABSwapProgressText/EthToBtcLike'
-import ABEthTokenToBtcLike from '../SwapProgress/ABSwapProgressText/EthTokenToBtcLike'
+import ABBtcLikeToEth from './ABSwapProgressText/BtcLikeToEth'
+import ABBtcLikeToEthToken from './ABSwapProgressText/BtcLikeToEthToken'
+import ABEthToBtcLike from './ABSwapProgressText/EthToBtcLike'
+import ABEthTokenToBtcLike from './ABSwapProgressText/EthTokenToBtcLike'
 
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
