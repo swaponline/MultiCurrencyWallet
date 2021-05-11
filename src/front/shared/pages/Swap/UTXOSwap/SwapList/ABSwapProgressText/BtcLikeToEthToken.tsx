@@ -1,12 +1,7 @@
 import React, { Component } from 'react'
 
-import styles from '../SwapProgress.scss'
-import CSSModules from 'react-css-modules'
-
 import { FormattedMessage } from 'react-intl'
 
-
-@CSSModules(styles)
 export default class BtcLikeToEthToken extends Component<any, any> {
   BtcLikeToEthToken = (step, coinName, flow) => {
     if (!flow.isTakerMakerModel
