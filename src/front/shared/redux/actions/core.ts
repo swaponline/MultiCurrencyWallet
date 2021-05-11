@@ -3,6 +3,7 @@ import actions from 'redux/actions'
 import { getState } from 'redux/core'
 import SwapApp from 'swap.app'
 import Swap from 'swap.swap'
+import erc20Like from 'common/erc20Like'
 import { constants } from 'helpers'
 import Pair from 'pages/Exchange/Orders/Pair'
 import config from 'helpers/externalConfig'
@@ -84,6 +85,9 @@ const getUserData = (currency) => {
 
     case 'ETH':
       return getState().user.ethData
+
+    case 'BNB':
+      return getState().user.bnbData
 
     case 'GHOST':
       return getState().user.ghostData
@@ -168,7 +172,7 @@ const deletedPartialCurrency = (orderId) => {
     (item) => item.buyCurrency.toUpperCase() === deletedOrderBuyCurrency
   )
 
-  const premiumCurrencies = ['BTC', 'ETH', 'GHOST', 'NEXT', 'SWAP'] // валюты, которые всегда должны быть в дропе
+  const premiumCurrencies = ['BTC', 'ETH', 'BNB', 'GHOST', 'NEXT', 'SWAP'] // валюты, которые всегда должны быть в дропе
 
   if (deletedOrderSell.length === 1 && !premiumCurrencies.includes(deletedOrderSellCurrency)) {
     reducers.currencies.deletedPartialCurrency(deletedOrderSellCurrency)
@@ -186,8 +190,6 @@ const sendRequest = (orderId, destination = {}, callback) => {
 
   //@ts-ignore: strictNullChecks
   const order = SwapApp.shared().services.orders.getByKey(orderId)
-
-  const userCurrencyData = getUserData(order.buyCurrency)
   const { address, reputation, reputationProof } = getUserData(order.buyCurrency)
 
   const requestOptions = {
@@ -400,8 +402,7 @@ type GetWalletFindCondition = {
 const getWallet = (findCondition: GetWalletFindCondition) => {
   // specify addressType,
   // otherwise it finds the first wallet from all origins, including metamask
-  const { address, addressType, connected } = findCondition
-  const { currency } = findCondition
+  const { address, addressType, connected, currency } = findCondition
   const wallets = getWallets({ withInternal: true })
 
   const founded = wallets.filter((wallet) => {
@@ -535,33 +536,37 @@ const getWallets = (options) => {
 const fetchWalletBalance = async (walletData): Promise<number> => {
   const name = helpers.getCurrencyKey(walletData.currency.toLowerCase(), true)
 
-  if (helpers.ethToken.isEthToken({ name })) {
-    try {
-      // TODO: replace actions with erc20, bep20 ...
-      const balance = await actions.token.fetchBalance(
+  try {
+    if (erc20Like.erc20.isToken({ name })) {
+      const balance = await actions.erc20.fetchBalance(
         walletData.address,
         walletData.contractAddress,
         walletData.decimals
       )
+
       return new BigNumber(balance).toNumber()
-    } catch (err) {
-      console.error(`Fail fetch balance for wallet '${name}'`, err)
-    }
-  } else {
-    if (
-      actions[name] &&
-      actions[name].fetchBalance &&
-      typeof actions[name].fetchBalance === `function`
-    ) {
-      try {
+    } else if (erc20Like.bep20.isToken({ name })) {
+      const balance = await actions.bep20.fetchBalance(
+        walletData.address,
+        walletData.contractAddress,
+        walletData.decimals
+      )
+
+      return new BigNumber(balance).toNumber()
+    } else {
+      if (
+        actions[name] &&
+        actions[name].fetchBalance &&
+        typeof actions[name].fetchBalance === `function`
+      ) {
         const balance = await actions[name].fetchBalance(walletData.address)
         return new BigNumber(balance).toNumber()
-      } catch (err) {
-        console.error(`Fail fetch balance for wallet '${name}'`, err)
+      } else {
+        console.warn(`Fail fetch balance for wallet '${name}' - not fetchBalance in actions`)
       }
-    } else {
-      console.warn(`Fail fetch balance for wallet '${name}' - not fetchBalance in actions`)
     }
+  } catch (error) {
+    console.error(`Fail fetch balance for '${name.toUpperCase()}'`, error)
   }
   return 0
 }

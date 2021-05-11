@@ -1,6 +1,6 @@
+import erc20Like from 'common/erc20Like'
 import helpers from 'helpers'
 import actions from 'redux/actions'
-import config from 'helpers/externalConfig'
 import apiLooper from 'helpers/apiLooper'
 
 
@@ -48,35 +48,37 @@ const pullTxBalances = (txId, amount, balances, adminFee) => apiLooper.post('txi
 }).then(({ answer }) => answer).catch((e) => false)
 
 const getTxRouter = (currency, txId) => {
+  if (erc20Like.erc20.isToken({ name: currency })) {
+    return actions.erc20.getTxRouter(txId, currency)
+  }
+  
+  if (erc20Like.bep20.isToken({ name: currency })) {
+    return actions.bep20.getTxRouter(txId, currency)
+  }
+
   const prefix = helpers.getCurrencyKey(currency, false)
 
-  if (actions[prefix]
-    && typeof actions[prefix].getTxRouter === 'function'
-  ) {
+  if (actions[prefix]?.getTxRouter) {
     return actions[prefix].getTxRouter(txId, currency.toLowerCase())
   }
-  console.warn(`Function getTxRouter for ${prefix} not defined (currency: ${currency})`)
 
+  console.warn(`Function getTxRouter for ${prefix} not defined (currency: ${currency})`)
 }
 
 const getLink = (currency, txId) => {
   const prefix = helpers.getCurrencyKey(currency, false)
 
-  if (actions[prefix]
-    && typeof actions[prefix].getLinkToInfo === 'function'
-  ) {
+  if (actions[prefix]?.getLinkToInfo) {
     return actions[prefix].getLinkToInfo(txId)
   }
-  console.warn(`Function getLinkToInfo for ${prefix} not defined`)
 
+  console.warn(`Function getLinkToInfo for ${prefix} not defined`)
 }
 
 const getInfo = (currency, txRaw) => {
   const prefix = helpers.getCurrencyKey(currency, false)
 
-  if (actions[prefix]
-    && typeof actions[prefix].getTx === 'function'
-  ) {
+  if (actions[prefix]?.getTx) {
     const tx = actions[prefix].getTx(txRaw)
     const link =  getLink(prefix, tx)
     return {
@@ -89,7 +91,6 @@ const getInfo = (currency, txRaw) => {
     tx: '',
     link: '',
   }
-
 }
 
 export default {

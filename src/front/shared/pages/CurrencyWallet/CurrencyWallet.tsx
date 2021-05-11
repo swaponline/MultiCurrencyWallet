@@ -179,8 +179,11 @@ class CurrencyWallet extends Component<any, any> {
     } = this.props
 
     if (token) {
-      // TODO: replace actions with erc20, bep20 ...
-      actions.token.getBalance(currency.toLowerCase())
+      if (erc20Like.erc20.isToken({ name: currency })) {
+        actions.erc20.getBalance(currency.toLowerCase())
+      } else if (erc20Like.bep20.isToken({ name: currency })) {
+        actions.bep20.getBalance(currency.toLowerCase())
+      }
     }
 
     // set balance for the address

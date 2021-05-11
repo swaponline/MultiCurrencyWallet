@@ -1,4 +1,5 @@
 import config from 'app-config'
+import TOKEN_STANDARDS from 'common/helpers/constants/TOKEN_STANDARDS'
 
 import * as types from './types'
 
@@ -37,8 +38,13 @@ const tokens = {}
 
 Object.keys(config.erc20)
   .forEach(key => {
-    tokens[key] = Erc20LikeAction.token
+    tokens[key] = Erc20LikeAction.erc20
   })
+
+// Object.keys(config.bep20)
+//   .forEach(key => {
+//     tokens[key] = Erc20LikeAction.bep20
+//   })
 
 export default {
   ...tokens,

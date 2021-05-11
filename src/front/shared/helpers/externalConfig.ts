@@ -198,9 +198,10 @@ const externalConfig = () => {
   if ((config && config.isWidget) || config.opts.ownTokens) {
     // clean old erc20 config - leave only swap token (need for correct swap work)
     if (!config.isWidget) {
-      const newERC20 = {}
-      // newERC20.swap = config.erc20.swap
-      config.erc20 = newERC20
+      const newTokens = {}
+      // newTokens.swap = config.erc20.swap
+      config.erc20 = newTokens
+      config.bep20 = newTokens
     }
 
     if (Object.keys(config.opts.ownTokens).length) {

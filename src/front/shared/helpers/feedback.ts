@@ -105,7 +105,10 @@ const events = {
   },
   actions: {
     failed: 'failed'
-  }
+  },
+  helpers: {
+    failed: 'failed'
+  },
 }
 
 interface IFeedback {

@@ -2,7 +2,6 @@ import React, { Fragment } from 'react'
 import cx from 'classnames'
 import cssModules from 'react-css-modules'
 import styles from './WithdrawModal.scss'
-import config from 'app-config'
 import actions from 'redux/actions'
 import Link from 'local_modules/sw-valuelink'
 import { connect } from 'redaction'
@@ -25,6 +24,7 @@ import helpers, {
   feedback,
 } from 'helpers'
 import btcUtils from 'common/utils/coin/btc'
+import erc20Like from 'common/erc20Like'
 
 import Modal from 'components/modal/Modal/Modal'
 import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
@@ -72,6 +72,7 @@ type WithdrawModalProps = {
 type WithdrawModalState = {
   isShipped: boolean
   isEthToken: boolean
+  isBnbToken: boolean
   fetchFee: boolean
   isInvoicePay?: boolean
   openScanCam: boolean
@@ -168,15 +169,26 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
     const selectedItem = actions.user.getWithdrawWallet(currency, withdrawWallet)
     const usedAdminFee = adminFee.isEnabled(selectedItem.currency)
     const infoAboutCurrency = currentActiveAsset.infoAboutCurrency
-    const isEthToken = helpers.ethToken.isEthToken({ name: currency.toLowerCase() })
-    const commissionCurrency = isEthToken ? 'ETH': currency.toUpperCase()
+    
+    const isBnbToken = erc20Like.bep20.isToken({ name: currency })
+    const isEthToken = erc20Like.erc20.isToken({ name: currency })
+    const commissionCurrency = isEthToken ?
+      'ETH' : isBnbToken ?
+      'BNB' : currency.toUpperCase()
+    
     const exCurrencyRate = infoAboutCurrency && infoAboutCurrency.price_fiat
       ? new BigNumber(currentActiveAsset.infoAboutCurrency.price_fiat)
       : new BigNumber(0)
 
     // save wallet for token exchange's rate
     const walletForTokenFee = items.find(wallet => {
-      return wallet.currency.toLowerCase() === 'eth'
+      if (isEthToken) {
+        return wallet.currency.toLowerCase() === 'eth'
+      }
+
+      if (isBnbToken) {
+        return wallet.currency.toLowerCase() === 'bnb'
+      }
     })
 
     this.state = {
@@ -188,6 +200,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
       amount: '',
       selectedItem,
       isEthToken,
+      isBnbToken,
       commissionCurrency,
       currentDecimals,
       selectedValue: currency,
@@ -356,6 +369,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
     } = this.props
     const {
       isEthToken,
+      isBnbToken,
       selectedItem,
       usedAdminFee,
       amount,
@@ -374,20 +388,23 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
         // if decimals < 7 then equal 0.0...1
         // if decimals >= 7 then equal 1e-<decimals>
         MIN_AMOUNT[currentCoin] = 10 ** -currentDecimals
+        MIN_AMOUNT.eth = await helpers.eth.estimateFeeValue({
+          method: 'send',
+          speed: 'fast',
+        })
 
-        if (config.binance) {
-          MIN_AMOUNT.bnb = await helpers.bnb.estimateFeeValue({
-            method: 'send',
-            speed: 'fast',
-          })
-        } else {
-          MIN_AMOUNT.eth = await helpers.eth.estimateFeeValue({
-            method: 'send',
-            speed: 'fast',
-          })
-        }
-        
-        newMinerFee = new BigNumber(await helpers.ethToken.estimateFeeValue({
+        newMinerFee = new BigNumber(await erc20Like.erc20.estimateFeeValue({
+          method: 'send',
+          speed: 'fast',
+        }))
+      } else if (isBnbToken) {
+        MIN_AMOUNT[currentCoin] = 10 ** -currentDecimals
+        MIN_AMOUNT.bnb = await helpers.bnb.estimateFeeValue({
+          method: 'send',
+          speed: 'fast',
+        })
+
+        newMinerFee = new BigNumber(await erc20Like.bep20.estimateFeeValue({
           method: 'send',
           speed: 'fast',
         }))
@@ -437,6 +454,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
       fees,
       selectedItem,
       isEthToken,
+      isBnbToken,
       comment = '',
       selectedItem: {
         isBTC,
@@ -457,7 +475,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
       to,
       amount,
       speed: 'fast',
-      name: isEthToken ? currency.toLowerCase() : '',
+      name: isEthToken || isBnbToken ? currency.toLowerCase() : '',
       feeValue: isBTC && fees.miner,
     }
 
@@ -494,10 +512,15 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
       return
     }
 
-    await actions[currency.toLowerCase()]
+    const actionName = isEthToken
+      ? 'erc20' : isBnbToken
+      ? 'bep20' : currency.toLowerCase()
+
+    await actions[actionName]
       .send(sendOptions)
       .then(async (txRaw) => {
-        actions[currency.toLowerCase()].getBalance(currency)
+        actions[actionName].getBalance(currency)
+
         if (invoice) {
           await actions.invoices.markInvoice(invoice.id, 'ready', txRaw, address)
         }
@@ -511,7 +534,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
         }
 
         // Redirect to tx
-        const txInfo = helpers.transactions.getInfo(currency.toLowerCase(), txRaw)
+        const txInfo = helpers.transactions.getInfo(actionName, txRaw)
         const { tx: txId } = txInfo
 
         // Не используем await. Сбрасываем статистику по транзакции (final balance)
@@ -542,7 +565,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
           })
         }
 
-        const txInfoUrl = helpers.transactions.getTxRouter(currency.toLowerCase(), txId)
+        const txInfoUrl = helpers.transactions.getTxRouter(currency, txId)
         redirectTo(txInfoUrl)
       })
       .then(() => {
@@ -580,7 +603,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
     const {
       data: { currency },
     } = this.props
-    const { address, isEthToken } = this.state
+    const { address, isEthToken, isBnbToken } = this.state
 
     if (getCurrencyKey(currency, false).toLowerCase() === `btc`) {
       if (!typeforce.isCoinAddress.BTC(address)) {
@@ -591,6 +614,10 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
 
     if (isEthToken) {
       return typeforce.isCoinAddress.ETH(address)
+    }
+
+    if (isBnbToken) {
+      return typeforce.isCoinAddress.BNB(address)
     }
 
     return typeforce.isCoinAddress[getCurrencyKey(currency, false).toUpperCase()](address)
@@ -827,7 +854,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
     const selectedValueView = getCurrencyKey(selectedValue, true).toUpperCase()
     const criptoCurrencyHaveInfoPrice = returnHaveInfoPrice();
     const ethBalanceLessThanMiner = new BigNumber(walletForTokenFee.balance).isLessThan(fees.miner)
-    const exEthereumRate = new BigNumber(walletForTokenFee.infoAboutCurrency.price_fiat || 0)
+    const exEthereumRate = new BigNumber(walletForTokenFee?.infoAboutCurrency?.price_fiat || 0)
 
     function returnHaveInfoPrice(): boolean {
       let result = true

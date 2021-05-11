@@ -18,7 +18,7 @@ const Decoder = new InputDataDecoder(TokenAbi)
 class Erc20LikeAction {
   readonly currency: string
   readonly currencyKey: string
-  readonly standard: string // (ex. ERC20)
+  readonly standard: string // (ex. erc20, bep20, ...)
   readonly explorerName: string
   readonly explorerLink: string
   readonly explorerApiKey: string
@@ -253,9 +253,8 @@ class Erc20LikeAction {
 
             for (const key in tokensData) {
               if (
-                tokensData[key] &&
-                tokensData[key].contractAddress?.toLowerCase() == contractAddress.toLowerCase() &&
-                tokensData[key].decimals
+                tokensData[key]?.decimals &&
+                tokensData[key].contractAddress?.toLowerCase() == contractAddress.toLowerCase()
               ) {
                 tokenDecimal = tokensData[key].decimals
                 break
@@ -305,7 +304,7 @@ class Erc20LikeAction {
               adminFee,
               confirmed: blockHash !== null,
               isContractTx:
-                contractAddress.toLowerCase() === externalConfig.swapContract.erc20.toLowerCase(),
+                contractAddress.toLowerCase() === externalConfig.swapContract[this.standard].toLowerCase(),
             })
           } else {
             res(false)
@@ -508,7 +507,7 @@ class Erc20LikeAction {
     const ownerAddress = getState().user.tokensData[name].address
     const {
       [name]: { address: contractAddress, decimals },
-    } = externalConfig.erc20
+    } = externalConfig[this.standard]
     const tokenContract = new this.Web3.eth.Contract(TokenAbi, contractAddress, {
       from: ownerAddress,
     })
