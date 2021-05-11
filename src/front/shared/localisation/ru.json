@@ -496,7 +496,10 @@
   },
   {
     "id": "orders128",
-    "message": "Создать предложение"
+    "message": "Создать предложение",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
   },
   {
     "id": "addoffer381",
@@ -1206,6 +1209,7 @@
     "id": "FeeControler49",
     "message": "Скопировать",
     "files": [
+      "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx",
       "src/front/shared/pages/Swap/FeeControler/FeeControler.tsx"
     ]
   },
@@ -1700,6 +1704,7 @@
     "id": "createWalletButton1",
     "message": "Продолжить",
     "files": [
+      "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx",
       "src/front/shared/pages/CreateWallet/Steps/FirstStep.tsx"
     ]
   },
@@ -1791,6 +1796,7 @@
     "id": "WithdrawMSUserFinish",
     "message": "Ready",
     "files": [
+      "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx",
       "src/front/shared/components/modals/WithdrawBtcMultisig/WithdrawBtcMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
     ]
@@ -3120,20 +3126,6 @@
     ]
   },
   {
-    "id": "SaveMnemonicModal_Continue",
-    "message": "Продолжить",
-    "files": [
-      "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx"
-    ]
-  },
-  {
-    "id": "SaveMnemonicModal_CopyMnemonic",
-    "message": "Скопировать",
-    "files": [
-      "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx"
-    ]
-  },
-  {
     "id": "SaveMnemonicModal_EnterNotice",
     "message": "Нажмите слова, чтобы поместить их рядом друг с другом в правильном порядке",
     "files": [
@@ -3141,22 +3133,8 @@
     ]
   },
   {
-    "id": "SaveMnemonicModal_MnemonicCopied",
-    "message": "Скопировано...",
-    "files": [
-      "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx"
-    ]
-  },
-  {
     "id": "SaveMnemonicModal_MnemoniceDeleted",
     "message": "Вы уже сохранили секретную фразу. {href}.",
-    "files": [
-      "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx"
-    ]
-  },
-  {
-    "id": "SaveMnemonicModal_Ready",
-    "message": "Готово",
     "files": [
       "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx"
     ]
@@ -3178,13 +3156,6 @@
   {
     "id": "SaveMnemonicModal_SaveMnemonicStep2",
     "message": "2. Обязательно подпишите что это ключ от {domain}",
-    "files": [
-      "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx"
-    ]
-  },
-  {
-    "id": "SaveMnemonicModal_ShareMnemonic",
-    "message": "Share",
     "files": [
       "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx"
     ]
@@ -4764,11 +4735,17 @@
   },
   {
     "id": "createOrderMessageForUser",
-    "message": "Вы должны быть онлайн все время, иначе ваше предложение не будет видно другим пользователям"
+    "message": "Вы должны быть онлайн все время, иначе ваше предложение не будет видно другим пользователям",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
   },
   {
     "id": "createOrderNoManyMessageForUser",
-    "message": "Пополните свой баланс"
+    "message": "Пополните свой баланс",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
   },
   {
     "id": "AddLiquidity",
@@ -5900,7 +5877,7 @@
   },
   {
     "id": "MM_DepositeWallet",
-    "message": "для пополнения переведите на {address}",
+    "message": "для пополнения переведите на",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]

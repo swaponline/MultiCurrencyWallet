@@ -25,9 +25,9 @@ jobs:
     - name: build testnet
       run: |
         npm run build:testnet
-    # - name: run e2e tests
-    #   run: |
-    #     npm run test:e2e:actions
+    - name: run e2e tests
+      run: |
+        npm run test:e2e:actions
     - name: bot test
       run: |
         npm run bot:test

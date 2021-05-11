@@ -23,18 +23,6 @@
   }
 }
 
-.closeButton {
-  width: 20px;
-  height: 20px;
-  opacity: 0.5;
-  transition: opacity .33s $ease-out-quadratic;
-
-  &:hover {
-    opacity: 1;
-    transition: none;
-  }
-}
-
 .modal-overlay {
   position: sticky;
   width: 100%;
@@ -54,7 +42,7 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  background: #fff;
+  background: $l-background-elements;
   padding: 32px;
   width: 100%;
   max-width: 640px;
@@ -68,6 +56,11 @@
     max-width: none;
     width: 100%;
     height: 100%;
+  }
+
+  &.dark {
+    color: $d-color;
+    background-color: $d-background-elements;
   }
 }
 

@@ -278,7 +278,12 @@ class Row extends Component<RowProps, RowState> {
         sellCurrency,
         isRequested,
         isProcessing,
-        owner: { peer: ownerPeer },
+        owner: {
+          peer: ownerPeer,
+          eth: {
+            address: ownerEthAddress,
+          },
+        },
       },
       buy,
       sell,
@@ -353,6 +358,7 @@ class Row extends Component<RowProps, RowState> {
             <Avatar
               value={ownerPeer}
               size={30}
+              ownerEthAddress={ownerEthAddress}
             />
             {isTurbo &&
               <TurboIcon />
@@ -361,12 +367,16 @@ class Row extends Component<RowProps, RowState> {
         </td>
         <td styleName='rowCell'>
           <span styleName='rowAmount'>
-            {`${this.getDecimals(sellAmountOut, sellCurrencyOut)} ${this.renderCoinName(sellCurrencyOut)}`}
+            <span className={`${sellCurrencyOut.toLowerCase()}SellAmountOfOrder`}>{`${this.getDecimals(sellAmountOut, sellCurrencyOut)}`}</span>
+            {' '}
+            <span>{`${this.renderCoinName(sellCurrencyOut)}`}</span>
           </span>
         </td>
         <td styleName='rowCell'>
           <span styleName='rowAmount'>
-            {`${this.getDecimals(getAmountOut, getCurrencyOut)} ${this.renderCoinName(getCurrencyOut)}`}
+            <span className={`${getCurrencyOut.toLowerCase()}GetAmountOfOrder`}>{`${this.getDecimals(getAmountOut, getCurrencyOut)}`}</span>
+            {' '}
+            <span>{`${this.renderCoinName(getCurrencyOut)}`}</span>
           </span>
         </td>
         <td styleName='rowCell'>

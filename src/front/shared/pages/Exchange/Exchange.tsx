@@ -1639,6 +1639,8 @@ class Exchange extends PureComponent<any, any> {
 
     const isIncompletedSwaps = !!desclineOrders.length
 
+    const isDevBuild = (config.env === 'development')
+
     const Form = (
       <div styleName="section">
         <div styleName="formExchange">
@@ -1904,46 +1906,51 @@ class Exchange extends PureComponent<any, any> {
               </Button>
             )}
 
-            {/* <>
-              <Button
-                id="createOrderReactTooltipMessageForUser"
-                styleName={`button link-like ${haveBalance ? '' : 'noMany'}`}
-                //@ts-ignore: strictNullChecks
-                onClick={haveBalance ? this.createOffer : null}
-              >
-                <FormattedMessage id="orders128" defaultMessage="Create offer" />
-              </Button>
-
-              {haveBalance ? (
-                <ThemeTooltip
+            {(isWidgetBuild || isDevBuild) && (
+              <>
+                <Button
                   id="createOrderReactTooltipMessageForUser"
-                  effect="solid"
-                  place="bottom"
+                  styleName={`button link-like ${haveBalance ? '' : 'noMany'}`}
+                  //@ts-ignore: strictNullChecks
+                  onClick={haveBalance ? this.createOffer : null}
                 >
-                  <FormattedMessage
-                    id="createOrderMessageForUser"
-                    defaultMessage="You must be online all the time, otherwise your order will not be visible to other users"
-                  />
-                </ThemeTooltip>
-              ) : (
-                <ThemeTooltip
-                  id="createOrderReactTooltipMessageForUser"
-                  effect="solid"
-                  place="bottom"
-                >
-                  <FormattedMessage
-                    id="createOrderNoManyMessageForUser"
-                    defaultMessage="Top up your balance"
-                  />
-                </ThemeTooltip>
-              )}
-            </> */}
+                  <FormattedMessage id="orders128" defaultMessage="Create offer" />
+                </Button>
 
-              <div styleName="link button-like">
-                <a href={!isChromeExtention ? `#${links.marketmaker}/` : (config.binance) ? `#${links.marketmaker}/BTCB` : `#${links.marketmaker}/WBTC`}>
-                  <FormattedMessage id="AddLiquidity" defaultMessage="Add Liquidity" />
-                </a>
-              </div>
+                {haveBalance ? (
+                  <ThemeTooltip
+                    id="createOrderReactTooltipMessageForUser"
+                    effect="solid"
+                    place="bottom"
+                  >
+                    <FormattedMessage
+                      id="createOrderMessageForUser"
+                      defaultMessage="You must be online all the time, otherwise your order will not be visible to other users"
+                    />
+                  </ThemeTooltip>
+                ) : (
+                  <ThemeTooltip
+                    id="createOrderReactTooltipMessageForUser"
+                    effect="solid"
+                    place="bottom"
+                  >
+                    <FormattedMessage
+                      id="createOrderNoManyMessageForUser"
+                      defaultMessage="Top up your balance"
+                    />
+                  </ThemeTooltip>
+                )}
+              </>
+            )}
+            {(!isWidgetBuild || isDevBuild) && (
+              <>
+                <div styleName="link button-like">
+                  <a href={!isChromeExtention ? `#${links.marketmaker}/` : (config.binance) ? `#${links.marketmaker}/BTCB` : `#${links.marketmaker}/WBTC`}>
+                    <FormattedMessage id="AddLiquidity" defaultMessage="Add Liquidity" />
+                  </a>
+                </div>
+              </>
+            )}
 
             {isIncompletedSwaps && (
               <Button blue styleName="buttonContinueSwap" onClick={this.showIncompleteSwap}>
@@ -1972,6 +1979,7 @@ class Exchange extends PureComponent<any, any> {
               {Form}
 
               <Button
+                id="orderbookBtn"
                 onClick={this.toggleOrdersVisibility}
                 styleName="button orderbook"
                 link

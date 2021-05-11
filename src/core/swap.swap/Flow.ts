@@ -149,6 +149,7 @@ class Flow {
       isStoppedSwap,
       isRefunded,
       isFinished,
+      isSwapTimeout,
     } = this.state
 
     if (this.swap.checkTimeout(3600)) {
@@ -189,8 +190,11 @@ class Flow {
     setTimeout(() => {
       if ((this.state.step >= this.steps.length)
         || this._isFinished()
-      ) return
-      else this._goStep(this.state.step)
+      ) {
+        return
+      } else {
+        this._goStep(this.state.step)
+      }
     }, 0)
   }
 
@@ -251,12 +255,21 @@ class Flow {
   }
 
   finishStep(data?, constraints?) {
+    const {
+      isStoppedSwap,
+    } = this.state
+
+
     debug('swap.core:swap')(`on step ${this.state.step}, constraints =`, constraints)
 
     if (constraints) {
       const { step, silentError } = constraints
 
       const n_step = this.stepNumbers[step]
+      if (isStoppedSwap) {
+        console.error(`Cant finish step ${step} = ${n_step} when swap is stopped`)
+        return
+      }
       debug('swap.core:swap')(`trying to finish step ${step} = ${n_step} when on step ${this.state.step}`)
 
       if (step && this.state.step != n_step) {
@@ -276,7 +289,12 @@ class Flow {
   }
 
   _goNextStep(data) {
-    const { step } = this.state
+    const {
+      step,
+      isStoppedSwap,
+    } = this.state
+
+    if (isStoppedSwap) return
     const newStep = step + 1
     console.warn("this.state", this.state)
     this.swap.events.dispatch('leave step', step)
@@ -291,6 +309,12 @@ class Flow {
   }
 
   _goStep(index) {
+    const {
+      isStoppedSwap,
+    } = this.state
+
+    if (isStoppedSwap) return
+
     this.swap.events.dispatch('enter step', index)
     this.steps[index]()
   }

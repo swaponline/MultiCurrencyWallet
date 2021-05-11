@@ -589,18 +589,39 @@
     <script type="text/javascript" src="https://unpkg.com/react@16.10.2/umd/react.production.min.js"></script>
     <script type="text/javascript" src="https://unpkg.com/react-dom@16.10.2/umd/react-dom.production.min.js"></script>
 
-    <!-- Extension: icon click => open tab -->
+
+    <!--
+      * Please use only one inline script in this file (each additional script requires an additional hash in the extension manifest).
+
+      * Each change to this script requires a hash change in the extension manifest.
+    -->
+
     <script>
-      if (chrome && chrome.browserAction) {
+      // Extension: prevent 2 tabs
+      if (window.chrome && window.chrome.extension) {
+        var extViews = chrome.extension.getViews()
+        var extBgWindow = chrome.extension.getBackgroundPage()
+        if (window !== extBgWindow) {
+          if (chrome.extension.getViews().length > 2) {
+            chrome.runtime.openOptionsPage()
+            window.close()
+          }
+          window.onbeforeunload = () => {
+            // With this window and bg window = 2
+            if (chrome.extension.getViews().length === 2) {
+              extBgWindow.location.reload()
+            }
+          }
+        }
+      }
+
+      // Extension: icon click => open tab
+      if (window.chrome && window.chrome.browserAction) {
         if (!chrome.browserAction.isClickListenerAdded) {
           console.log('Extension: add click listener')
           chrome.browserAction.onClicked.addListener(function(tab) {
             console.log('Extension: icon clicked')
-            chrome.tabs.create({
-              'url': chrome.extension.getURL('/application/index.html#/marketmaker/WBTC')
-            }, (tab) =>{
-             // fallback
-            });
+            chrome.runtime.openOptionsPage()
           });
           chrome.browserAction.isClickListenerAdded = true;
         } else {
@@ -609,11 +630,10 @@
       } else {
         console.log('Extension: can`t add click listener (possibly not extension)')
       }
-    </script>
 
-    <script>
+      // Check caching backend
       try {
-        JSON.parse("<!-- BACK_SO -->");
+        JSON.parse("<!-- BACK_SO");
       } catch (e) {
         console.log("warning: caching backend is down")
       }
