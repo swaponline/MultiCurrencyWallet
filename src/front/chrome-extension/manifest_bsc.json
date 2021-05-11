@@ -1,6 +1,6 @@
 {
   "manifest_version": 2,
-  "version": "1.3.6",
+  "version": "1.3.7",
   "name": "Wallet with marketmaking",
   "short_name": "MultiCurrencyWallet",
   "description": "Hot wallet with marketmaking for earning interest on bitcoin and other cryptocurrencies",
@@ -19,5 +19,5 @@
     "page": "application/index.html#/marketmaker/BTCB",
     "persistent": true
   },
-  "content_security_policy": "script-src 'self' 'unsafe-eval' https://unpkg.com/ 'sha256-hvbtPlOWm6OpLVttxlfxXsyoMF6ii7FPu/BZ56HvuRM='; object-src 'self'"
+  "content_security_policy": "script-src 'self' 'unsafe-eval' https://unpkg.com/ 'sha256-4DrEhT27jOSN2+u3NlPmxokkJ3ykqEfwHkk5DJe8WMI='; object-src 'self'"
 }
