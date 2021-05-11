@@ -380,7 +380,7 @@ class Erc20LikeAction {
 
   send = async (params) => {
     const { name, from, to, amount, ...feeConfig } = params
-    const { tokenContract } = this.returnTokenInfo(name)
+    const { tokenContract, decimals } = this.returnTokenInfo(name)
     const feeResult = await this.fetchFees({ ...feeConfig })
     const txArguments = {
       gas: feeResult.gas,
@@ -388,7 +388,7 @@ class Erc20LikeAction {
       from,
     }
 
-    const weiAmount = this.Web3.utils.toWei(amount)
+    const weiAmount = new BigNumber(amount).multipliedBy(10 ** decimals).toNumber()
     const walletData = actions.core.getWallet({
       address: from,
       currency: name,

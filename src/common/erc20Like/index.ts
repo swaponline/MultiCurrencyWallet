@@ -73,8 +73,7 @@ class erc20LikeHelper {
         .allowance(tokenOwnerAddress, config.swapContract[this.standard])
         .call({ from: tokenOwnerAddress })
       
-      // TODO: use Web3.fromWei
-      // formating without token decimals
+      // formatting without token decimals
       allowanceAmount = new BigNumber(allowanceAmount)
         .dp(0, BigNumber.ROUND_UP)
         .div(new BigNumber(10).pow(decimals))
