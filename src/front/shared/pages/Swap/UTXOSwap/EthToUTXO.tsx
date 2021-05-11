@@ -182,7 +182,6 @@ export default class EthToUTXO extends Component<any, any> {
                     : (
                       <SwapProgress
                         flow={flow}
-                        name="EthToBtcLike"
                         swap={swap}
                         history={history}
                         signed={signed}
@@ -205,6 +204,7 @@ export default class EthToUTXO extends Component<any, any> {
             onClickCancelSwap={onClickCancelSwap}
             swap={swap}
             fields={this._fields}
+            swapName="EthToBtcLike"
           />
           <div styleName="swapContainerInfo">{children}</div>
         </div>

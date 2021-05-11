@@ -171,7 +171,6 @@ export default class UTXOToEth extends Component<any, any> {
                       : (
                         <SwapProgress
                           flow={flow}
-                          name="BtcLikeToEth"
                           swap={swap}
                           history={history}
                           locale={locale}
@@ -194,6 +193,7 @@ export default class UTXOToEth extends Component<any, any> {
             name={swap.sellCurrency}
             swap={swap}
             fields={this._fields}
+            swapName="BtcLikeToEth"
           />
           <div styleName="swapContainerInfo">{children}</div>
         </div>

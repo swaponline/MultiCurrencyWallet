@@ -16,6 +16,7 @@ const FourthStep = (props) => {
     fields: {
       currencyName,
     },
+    text,
   } = props
 
   const currencyStep = swap.sellCurrency === currencyName ? seventh : eighth
@@ -31,6 +32,11 @@ const FourthStep = (props) => {
           id="BtcToEthToken123"
           defaultMessage="The swap is finish!" />
       </p>
+      {step >= currencyStep && (
+        <span styleName="stepHeading">
+          {text}
+        </span>
+      )}
     </div>
   )
 }

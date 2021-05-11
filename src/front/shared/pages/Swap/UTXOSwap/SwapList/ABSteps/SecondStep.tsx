@@ -32,6 +32,7 @@ const SecondStep = (props) => {
       currencyName,
       scriptCreatingTransactionHash,
     },
+    text,
   } = props
 
   const currencyStep = sellCurrency === currencyName ? fifth : fourth
@@ -82,6 +83,11 @@ const SecondStep = (props) => {
           />
         </Tooltip >
       </div>
+      {stepItemActive && (
+        <span styleName="stepHeading">
+          {text}
+        </span>
+      )}
     </div>
   )
 }

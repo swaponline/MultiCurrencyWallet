@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 
 import { isMobile } from 'react-device-detect'
 import { constants } from 'helpers'
@@ -16,6 +16,17 @@ import ABFirstStep from './ABSteps/FirstStep'
 import ABSecondStep from './ABSteps/SecondStep'
 import ABThirdStep from './ABSteps/ThirdStep'
 import ABFourthStep from './ABSteps/FourthStep'
+
+
+import UTXOBtcLikeToEth from '../SwapProgress/UTXOSwapProgressText/BtcLikeToEth'
+import UTXOBtcLikeToEthToken from '../SwapProgress/UTXOSwapProgressText/BtcLikeToEthToken'
+import UTXOEthToBtcLike from '../SwapProgress/UTXOSwapProgressText/EthToBtcLike'
+import UTXOEthTokenToBtcLike from '../SwapProgress/UTXOSwapProgressText/EthTokenToBtcLike'
+
+import ABBtcLikeToEth from '../SwapProgress/ABSwapProgressText/BtcLikeToEth'
+import ABBtcLikeToEthToken from '../SwapProgress/ABSwapProgressText/BtcLikeToEthToken'
+import ABEthToBtcLike from '../SwapProgress/ABSwapProgressText/EthToBtcLike'
+import ABEthTokenToBtcLike from '../SwapProgress/ABSwapProgressText/EthTokenToBtcLike'
 
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
@@ -80,21 +91,51 @@ export default class SwapList extends Component<any, any> {
       swap,
       enoughBalance,
       windowWidth,
+      fields
     } = this.props
     const { first, second, fourth, fifth, sixth, seventh, eighth } = this.state
 
+    const { currencyName } = fields
+
     const isUTXOSide = flowClass.isUTXOSide
+
     const FirstStep = (isUTXOSide) ? UTXOFirstStep : ABFirstStep
     const SecondStep = (isUTXOSide) ? UTXOSecondStep : ABSecondStep
     const ThirdStep = (isUTXOSide) ? UTXOThirdStep : ABThirdStep
     const FourthStep = (isUTXOSide) ? UTXOFourthStep : ABFourthStep
 
+    const BtcLikeToEth = (isUTXOSide) ? UTXOBtcLikeToEth : ABBtcLikeToEth
+    const EthToBtcLike = (isUTXOSide) ? UTXOEthToBtcLike : ABEthToBtcLike
+    const BtcLikeToEthToken = (isUTXOSide) ? UTXOBtcLikeToEthToken : ABBtcLikeToEthToken
+    const EthTokenToBtcLike = (isUTXOSide) ? UTXOEthTokenToBtcLike : ABEthTokenToBtcLike
+
+    const swapTexts = (
+      <Fragment>
+        {
+          this.props.swapName === 'BtcLikeToEth' &&
+            <BtcLikeToEth step={flow.step} flow={flow} swap={swap} coinName={currencyName} />
+        }
+        {
+          this.props.swapName === 'EthToBtcLike' &&
+            <EthToBtcLike step={flow.step} flow={flow} swap={swap} coinName={currencyName} />
+        }
+        {
+          this.props.swapName === 'BtcLikeToEthToken' &&
+            <BtcLikeToEthToken step={flow.step} flow={flow} swap={swap} coinName={currencyName} />
+        }
+        {
+          this.props.swapName === 'EthTokenToBtcLike' &&
+            <EthTokenToBtcLike step={flow.step} flow={flow} swap={swap} coinName={currencyName} />
+        }
+      </Fragment>
+    )
+
     return (
       <div styleName={`${isMobile ? 'stepList isMobile' : 'stepList'} ${isDark ? 'dark' : ''}`}>
-        {!isMobile && <FirstStep step={flow.step} first={first} second={second} fields={this._fields} />}
-        <SecondStep step={flow.step} swap={swap} second={second} windowWidth={windowWidth} fifth={fifth} fourth={fourth} sixth={sixth} fields={this._fields} />
-        <ThirdStep step={flow.step} windowWidth={windowWidth} swap={swap} sixth={sixth} seventh={seventh} eighth={eighth} fields={this._fields}  />
-        {!isMobile && <FourthStep step={flow.step} swap={swap} seventh={seventh} eighth={eighth} fields={this._fields}  />}
+        {!isMobile && <FirstStep step={flow.step} first={first} second={second} fields={this._fields} text={swapTexts} />}
+        <SecondStep step={flow.step} swap={swap} second={second} windowWidth={windowWidth} fifth={fifth} fourth={fourth} sixth={sixth} fields={this._fields} text={swapTexts} />
+        <ThirdStep step={flow.step} windowWidth={windowWidth} swap={swap} sixth={sixth} seventh={seventh} eighth={eighth} fields={this._fields} text={swapTexts} />
+        {!isMobile && <FourthStep step={flow.step} swap={swap} seventh={seventh} eighth={eighth} fields={this._fields} text={swapTexts} />}
       </div>
     )
   }

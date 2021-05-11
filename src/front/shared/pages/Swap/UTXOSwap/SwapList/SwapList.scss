@@ -10,6 +10,9 @@
       color: #828f96;
     }
   }
+  .stepHeading {
+    color: $notice-color;
+  }
 }
 
 .stepList,
@@ -59,6 +62,7 @@
 .stepItem {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   margin-bottom: 17px;
   font-size: 14px;
   opacity: 0.3;
@@ -119,6 +123,13 @@
   }
 }
 
+.stepHeading {
+  font-size: 26px;
+  font-weight: 500;
+  flex-basis: 80%;
+  margin: auto;
+}
+
 @media all and (max-width: 1000px) {
   .stepList {
     width: 100%;
@@ -175,5 +186,9 @@
   }
   .stepText {
     font-size: 12px;
+  }
+  .stepHeading {
+    color: #000;
+    font-size: 18px;
   }
 }

@@ -7,10 +7,7 @@
   flex-direction: row-reverse;
 }
 
-.dark {
-  .stepHeading {
-    color: #8e9aa3;
-  }
+.dark { // need add style in component when added something
 }
 
 .metamask_attention,
@@ -170,13 +167,6 @@
   margin-right: 20px;
 }
 
-.stepHeading {
-  font-size: 26px;
-  font-weight: 500;
-  line-height: 1.2;
-  padding-bottom: 24px;
-}
-
 .dontLeave {
   margin-bottom: 24px;
   color: #d66f6f;
@@ -237,11 +227,6 @@
     border-top: 1px solid #eee;
     padding-top: 20px;
     width: 100%;
-  }
-
-  .stepHeading {
-    color: #000;
-    font-size: 18px;
   }
   .transaction {
     top: -5px;

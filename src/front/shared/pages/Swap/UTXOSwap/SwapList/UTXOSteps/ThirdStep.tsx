@@ -32,6 +32,7 @@ const ThirdStep = (props) => {
       currencyName,
       explorerLink,
     },
+    text,
   } = props
 
   const currencyStep = sellCurrency === currencyName ? seventh : eighth
@@ -83,6 +84,11 @@ const ThirdStep = (props) => {
           />
         </Tooltip >
       </div>
+      {stepItemActive && (
+        <span styleName="stepHeading">
+          {text}
+        </span>
+      )}
     </div>
   )
 }

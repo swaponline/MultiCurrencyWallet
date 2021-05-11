@@ -128,7 +128,6 @@ export default class UTXOToEthToken extends Component<any, any> {
     const swapProgressView = (
       <SwapProgress
         flow={flow}
-        name="BtcLikeToEthToken"
         swap={this.props.swap}
         history={history}
         locale={locale}
@@ -189,6 +188,7 @@ export default class UTXOToEthToken extends Component<any, any> {
             swap={this.props.swap}
             onClickCancelSwap={onClickCancelSwap}
             fields={this._fields}
+            swapName="BtcLikeToEthToken"
           />
         </div>
         <div styleName="swapContainerInfo">{children}</div>

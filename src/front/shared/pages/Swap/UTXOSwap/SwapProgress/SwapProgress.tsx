@@ -23,16 +23,6 @@ import { Button, TimerButton } from 'components/controls'
 import SwapController from '../../SwapController'
 import PleaseDontLeaveWrapper from './PleaseDontLeaveWrapper'
 
-import UTXOBtcLikeToEth from './UTXOSwapProgressText/BtcLikeToEth'
-import UTXOBtcLikeToEthToken from './UTXOSwapProgressText/BtcLikeToEthToken'
-import UTXOEthToBtcLike from './UTXOSwapProgressText/EthToBtcLike'
-import UTXOEthTokenToBtcLike from './UTXOSwapProgressText/EthTokenToBtcLike'
-
-import ABBtcLikeToEth from './ABSwapProgressText/BtcLikeToEth'
-import ABBtcLikeToEthToken from './ABSwapProgressText/BtcLikeToEthToken'
-import ABEthToBtcLike from './ABSwapProgressText/EthToBtcLike'
-import ABEthTokenToBtcLike from './ABSwapProgressText/EthTokenToBtcLike'
-
 import metamask from 'helpers/metamask'
 
 
@@ -331,8 +321,6 @@ class SwapProgress extends Component<any, any> {
       isSecretCopied,
     } = this.state
 
-    const isUTXOSide = swap.flow.isUTXOSide
-
     const {
       //@ts-ignore: strictNullChecks
       currencyName,
@@ -357,42 +345,12 @@ class SwapProgress extends Component<any, any> {
       _refundTx = flow.refundTransactionHash.transactionHash || flow.refundTransactionHash
     }
 
-    const BtcLikeToEth = (isUTXOSide) ? UTXOBtcLikeToEth : ABBtcLikeToEth
-    const EthToBtcLike = (isUTXOSide) ? UTXOEthToBtcLike : ABEthToBtcLike
-    const BtcLikeToEthToken = (isUTXOSide) ? UTXOBtcLikeToEthToken : ABBtcLikeToEthToken
-    const EthTokenToBtcLike = (isUTXOSide) ? UTXOEthTokenToBtcLike : ABEthTokenToBtcLike
-    /** todo **/
-    const swapTexts = (
-      <Fragment>
-        {
-          this.props.name === 'BtcLikeToEth' &&
-            <BtcLikeToEth step={flow.step} flow={flow} swap={swap} coinName={currencyName} />
-        }
-        {
-          this.props.name === 'EthToBtcLike' &&
-            <EthToBtcLike step={flow.step} flow={flow} swap={swap} coinName={currencyName} />
-        }
-        {
-          this.props.name === 'BtcLikeToEthToken' &&
-            <BtcLikeToEthToken step={flow.step} flow={flow} swap={swap} coinName={currencyName} />
-        }
-        {
-          this.props.name === 'EthTokenToBtcLike' &&
-            <EthTokenToBtcLike step={flow.step} flow={flow} swap={swap} coinName={currencyName} />
-        }
-      </Fragment>
-    )
-
     return (
-      <div styleName={`overlay ${isDark ? 'dark' : ''}`}>
+      <div styleName={`overlay ${isDark ? '' : ''}`}>
         <div styleName="container">
           <div styleName="stepContainer">
             <SwapController swap={swap} />
             <div styleName="stepInfo">
-
-              <span styleName="stepHeading">
-                {swapTexts}
-              </span>
 
               {signed && flow.step < 4 && (
                 <div>
