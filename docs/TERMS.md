@@ -73,6 +73,7 @@ The peer who accepted the offer (initiated the swap)
 ...
 
 - synonyms: `marketmaker bot` / `bot`
+- abbreviations: `mm`
 
 
 ## Offer

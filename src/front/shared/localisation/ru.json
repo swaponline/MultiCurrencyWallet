@@ -5897,15 +5897,29 @@
     ]
   },
   {
-    "id": "MM_MakeSaveMnemonic",
-    "message": "Сохраните секретную фразу",
+    "id": "MM_StartHere",
+    "message": "Начните маркетмейкинг здесь",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
   },
   {
-    "id": "MM_NeedSaveMnemonic",
-    "message": "Мы создадим BTC, {AB_Coin}, {token} горячие кошельки. Вы должны написать 12 слов, если вы не делали этого раньше",
+    "id": "MM_Wallet_Required",
+    "message": "Для запуска маркетмейкинга необходим горячий кошелёк (BTC, {AB_Coin}, {token}).",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_Wallet_Create",
+    "message": "Создать кошелёк",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_Wallet_Restore",
+    "message": "Восстановить из 12 слов",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
