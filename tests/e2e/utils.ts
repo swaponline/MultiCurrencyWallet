@@ -1,19 +1,43 @@
 import puppeteer from 'puppeteer'
-import BigNumber from 'bignumber.js';
+import BigNumber from 'bignumber.js'
+
 
 const link = process.env.ACTIONS ? 'file:///home/runner/work/MultiCurrencyWallet/MultiCurrencyWallet/build-testnet/index.html' : 'http://localhost:9001/'
 
-export const setup = async () => {
-  const browser = await puppeteer.launch();
-  const page = await browser.newPage();
-  await page.setViewport({ width: 1920, height: 1080 });
+const isDebug = false
+
+
+export const createBrowser = async (): Promise<{ browser: puppeteer.browser, page: puppeteer.Page}> => {
+  const browser = await puppeteer.launch({
+    headless: !isDebug,
+    //slowMo: 100,
+  })
+
+  const page = await browser.newPage()
+  await page.setViewport({
+    width: 1100,
+    height: 1080
+  })
+
+  page.on('error', err => {
+    console.log('[puppeteer] error: ', err)
+  })
+
+  page.on('pageerror', err => {
+    console.log('[puppeteer] pageerror: ', err)
+  })
+
   await page.goto(link)
 
   return { browser, page }
 }
 
 export const importWallet = async (page: puppeteer.Page, SEED: string[]) => {
+
+  await page.waitForSelector('#preloaderRestoreBtn')
+
   await page.click('#preloaderRestoreBtn')
+
 
   await page.waitForSelector('.react-tags__search-input')
 
@@ -77,7 +101,7 @@ export const takeScreenshot = async (page: puppeteer.Page, fileName: string) => 
 export const timeOut = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 export default {
-    setup,
+    createBrowser,
     importWallet,
     selectSendCurrency,
     addAssetToWallet,
