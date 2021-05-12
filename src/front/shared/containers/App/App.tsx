@@ -264,6 +264,10 @@ class App extends React.Component<RouteComponentProps<any>, any> {
           backupUserData.backupUser().then(() => {
             if (wpLoader) wpLoader.style.display = 'none'
           })
+
+          if (config.binance || window.location.host === 'bsc.swap.io') {
+            redirectTo('#/exchange/btc-to-btcb')
+          }
         } else {
           if (wpLoader) wpLoader.style.display = 'none'
         }

@@ -333,28 +333,12 @@ const getExchangeRate = (sellCurrency, buyCurrency): Promise<number> => {
   })
 }
 
-const getDemoMoney = process.env.MAINNET ? () => { } : () => {
-  // googe bitcoin (or ropsten) faucet
-  request.get('https://swap.wpmix.net/demokeys.php', {})
-    .then((r) => {
-      window.localStorage.clear()
-      //@ts-ignore: strictNullChecks
-      localStorage.setItem(constants.privateKeyNames.btc, r[0])
-      //@ts-ignore: strictNullChecks
-      localStorage.setItem(constants.privateKeyNames.eth, r[1])
-      //@ts-ignore: strictNullChecks
-      localStorage.setItem(constants.privateKeyNames.ghost, r[2])
-      //@ts-ignore: strictNullChecks
-      localStorage.setItem(constants.privateKeyNames.next, r[3])
-      localStorage.setItem(constants.localStorage.demoMoneyReceived, 'true')
-      window.location.reload()
-    })
-}
-
-
-const getInfoAboutCurrency = (currencyNames) =>
-
-  new Promise((resolve, reject) => {
+const getInfoAboutCurrency = (currencyNames) => {
+  return  new Promise((resolve, reject) => {
+    // TODO: Temporarily. Replace ETH price with BNB
+    if (config.binance) {
+      currencyNames = currencyNames.map((currency) => currency === 'ETH' ? 'BNB' : currency)
+    }
 
     const hasCustomRate = (cur) => {
       const dataobj = Object.keys(config.erc20).find(el => el.toLowerCase() === cur.toLowerCase())
@@ -396,9 +380,11 @@ const getInfoAboutCurrency = (currencyNames) =>
               price_fiat: (ownPrice) ? ownPrice : currencyInfoItem.quote[fiat].price,
               price_btc: priceInBtc,
             }
+            // TODO: Temporarily. Replace ETH price with BNB
+            const caseToCheck = config.binance ? 'BNB' : 'ETH'
 
             switch (currencyInfoItem.symbol) {
-              case 'BTC': {
+              case 'BTC':
                 reducers.user.setInfoAboutCurrency({ name: 'btcData', infoAboutCurrency: currencyInfo })
                 reducers.user.setInfoAboutCurrency({ name: 'btcMnemonicData', infoAboutCurrency: currencyInfo }) // Sweep (for future)
                 reducers.user.setInfoAboutCurrency({ name: 'btcMultisigSMSData', infoAboutCurrency: currencyInfo })
@@ -406,30 +392,28 @@ const getInfoAboutCurrency = (currencyNames) =>
                 reducers.user.setInfoAboutCurrency({ name: 'btcMultisigG2FAData', infoAboutCurrency: currencyInfo })
                 reducers.user.setInfoAboutCurrency({ name: 'btcMultisigPinData', infoAboutCurrency: currencyInfo })
                 break
-              }
-              case 'ETH': {
+
+              case caseToCheck:
                 reducers.user.setInfoAboutCurrency({ name: 'ethData', infoAboutCurrency: currencyInfo })
                 reducers.user.setInfoAboutCurrency({ name: 'ethMnemonicData', infoAboutCurrency: currencyInfo }) // Sweep (for future)
                 break
-              }
-              case 'GHOST': {
+
+              case 'GHOST':
                 reducers.user.setInfoAboutCurrency({ name: 'ghostData', infoAboutCurrency: currencyInfo })
                 reducers.user.setInfoAboutCurrency({ name: 'ghostMnemonicData', infoAboutCurrency: currencyInfo }) // Sweep (for future)
                 break
-              }
-              case 'NEXT': {
+
+              case 'NEXT':
                 reducers.user.setInfoAboutCurrency({ name: 'nextData', infoAboutCurrency: currencyInfo })
                 reducers.user.setInfoAboutCurrency({ name: 'nextMnemonicData', infoAboutCurrency: currencyInfo }) // Sweep (for future)
                 break
-              }
-              default: {
+
+              default:
                 if (ethToken.isEthToken({ name: currencyInfoItem.symbol })) {
                   reducers.user.setInfoAboutToken({ name: currencyInfoItem.symbol.toLowerCase(), infoAboutCurrency: currencyInfo })
                 } else {
                   reducers.user.setInfoAboutCurrency({ name: `${currencyInfoItem.symbol.toLowerCase()}Data`, infoAboutCurrency: currencyInfo })
                 }
-                break
-              }
             }
           }
         }
@@ -439,6 +423,7 @@ const getInfoAboutCurrency = (currencyNames) =>
       reject(error)
     }).finally(() => reducers.user.setIsFetching({ isFetching: false }))
   })
+}
 
 
 const clearTransactions = () => {
@@ -674,7 +659,6 @@ export default {
   sign_btc_multisig,
   sign_to_tokens,
   getBalances,
-  getDemoMoney,
   setTransactions,
   downloadPrivateKeys,
   getText,

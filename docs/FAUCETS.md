@@ -23,3 +23,7 @@ The list of faucets that we recommend to use when developing
 
 ## `BNB` + pegged tokens (Binance Smart Chain testnet)
 - https://testnet.binance.org/faucet-smart (2.5 BNB per 6 hours)
+
+## `BTCB` (Binance Smart Chain testnet token)
+- send 0 BNB to contract `0x87B7B0eD5c4a785E4389D8E496A599f7324A709A` - it will send back 1000 BTCB
+- <sub>(the more popular testnet contract `0x6ce8dA28E2f864420840cF74474eFf5fD80E65B8` is not used)</sub>
