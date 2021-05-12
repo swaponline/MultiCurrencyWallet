@@ -158,7 +158,7 @@ TODO: надо изучить какие есь варианты (https://coinma
 
 # 11 One-liner description
 > Provide a snappy and concise tagline for the project. E,g, KAVA - A Cross-Chain Platform for Decentralized Finance. Band Protocol - Secure and scalable decentralized oracle for Web3.0. See more examples here: https://research.binance.com/
-(?) Whitelabel cross-chain wallet / P2P exchange with AMM
+(?) Cross-chain whitelabel wallet and P2P exchange with AMM
 
 
 # 12 Detailed Project Description (Cryptoasset)
@@ -193,10 +193,10 @@ Russia
 TODO проверить кондишены и тп
 
 # 19 Website 1
-swap.io
+https://swap.io/
 
 # 17 Website 2 (Optional)(optional)
-swaponline.io
+https://swaponline.io/
 
 # 18 Annex A - Rich List & Reserve Addresses (Mandatory for Circulating Supply/Ranking)(optional)
 >Paste the URL of your completed Annex A Google Sheet here. Please refer to the instructions in Cell A1 of this link and ensure that your submission is in the CORRECT format: https://docs.google.com/spreadsheets/d/1ON2o9fZtdj6aa_uaT7ALtGx1VxFnIDUi8-uS-fWji0o/edit#gid=1181839735.
@@ -220,7 +220,8 @@ https://github.com/swaponline
 
 # 23 Whitepaper / Technical Documentation(optional)
 - Whitepaper: https://wiki.swaponline.io/en.pdf
-- Docs: https://github.com/swaponline/MultiCurrencyWallet/tree/master/docs
+- Dev docs: https://github.com/swaponline/MultiCurrencyWallet/tree/master/docs
+- Client docs: https://support.swaponline.io/
 
 # 24 Announcement (e.g. Bitcointalk)(optional)
 https://twitter.com/SwapOnlineTeam/status/1321844352369500160
