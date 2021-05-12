@@ -28,7 +28,7 @@
 }
 
 .fee {
-  font-family: 'Roboto Mono', monospace;
+  @include ff-mono;
 }
 
 .serviceFeeConditions {

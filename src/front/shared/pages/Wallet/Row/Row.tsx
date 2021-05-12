@@ -495,9 +495,9 @@ class Row extends Component<RowProps, RowState> {
       balance,
       isBalanceFetched,
       fullName,
-      title,
       unconfirmedBalance,
       balanceError,
+      standard,
     } = itemData
 
     let nodeDownErrorShow = true
@@ -817,7 +817,6 @@ class Row extends Component<RowProps, RowState> {
       && <tr>
         <td styleName={`assetsTableRow ${isDark ? 'dark' : ''}`}>
           <div styleName="assetsTableCurrency">
-            {/* Currency icon */}
             <Coin className={styles.assetsTableIcon} name={currency} />
             
             {/* Title-Link */}
@@ -839,9 +838,12 @@ class Row extends Component<RowProps, RowState> {
                   title={`Online ${fullName} wallet`}
                 >
                   {fullName}
+                  {/* label for tokens */}
+                  {standard ? (
+                    <span styleName="tokenStandard">{`${standard.toUpperCase()}`}</span>
+                  ) : ''}
                 </a>
               </div>
-              {title ? <strong>{title}</strong> : ''}
             </div>
             
             {/* Tip - if something wrong with endpoint */}

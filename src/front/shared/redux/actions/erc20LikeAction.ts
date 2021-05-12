@@ -388,7 +388,7 @@ class Erc20LikeAction {
       from,
     }
 
-    const weiAmount = new BigNumber(amount).multipliedBy(10 ** decimals).toString()
+    const amountWithDecimals = String(amount) + '0'.repeat(decimals)
     const walletData = actions.core.getWallet({
       address: from,
       currency: name,
@@ -396,7 +396,7 @@ class Erc20LikeAction {
 
     return new Promise(async (res, rej) => {
       const receipt = tokenContract.methods
-        .transfer(to, weiAmount)
+        .transfer(to, amountWithDecimals)
         .send(txArguments)
         .on('transactionHash', (hash) => res({ transactionHash: hash }))
         .on('error', (error) => {
