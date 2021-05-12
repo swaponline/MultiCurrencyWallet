@@ -478,6 +478,8 @@ class Row extends Component<RowProps, RowState> {
     const {
       isBalanceFetching,
       isBalanceEmpty,
+      isErc20Token,
+      isBep20Token,
     } = this.state
 
     const {

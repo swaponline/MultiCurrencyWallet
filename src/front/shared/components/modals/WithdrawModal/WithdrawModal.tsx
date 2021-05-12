@@ -1051,7 +1051,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
               {isToken && notEnoughForTokenMinerFee
                 ? (
                     <FormattedMessage
-                      id="WithdrowBalanceNotEnoughtEthereumBalancePrompt"
+                      id="WithdrowTokenCurrencyBalance"
                       defaultMessage="Not enough {tokenCurrency} balance for miner fee"
                       values={{
                         tokenCurrency: walletForTokenFee?.currency

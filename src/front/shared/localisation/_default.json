@@ -5382,8 +5382,8 @@
     ]
   },
   {
-    "id": "WithdrowBalanceNotEnoughtEthereumBalancePrompt",
-    "message": "Not enough ethereum balance for miner fee",
+    "id": "WithdrowTokenCurrencyBalance",
+    "message": "Not enough {tokenCurrency} balance for miner fee",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
     ]

@@ -5350,8 +5350,8 @@
     ]
   },
   {
-    "id": "WithdrowBalanceNotEnoughtEthereumBalancePrompt",
-    "message": "Za mało salda ethereum dla opłaty górnika",
+    "id": "WithdrowTokenCurrencyBalance",
+    "message": "Za mało salda {tokenCurrency} dla opłaty górnika",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
     ]

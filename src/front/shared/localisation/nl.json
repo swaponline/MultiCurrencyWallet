@@ -5375,8 +5375,8 @@
     ]
   },
   {
-    "id": "WithdrowBalanceNotEnoughtEthereumBalancePrompt",
-    "message": "Niet genoeg ethereum-saldo voor mijnwerkersvergoeding",
+    "id": "WithdrowTokenCurrencyBalance",
+    "message": "Niet genoeg {tokenCurrency} voor mijnwerkersvergoeding",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
     ]
