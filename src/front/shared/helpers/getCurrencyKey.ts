@@ -1,4 +1,4 @@
-import ethToken from './ethToken'
+import erc20Like from 'common/erc20Like'
 
 export default (currency, returnToken) => {
   let key = currency.toLowerCase()
@@ -19,7 +19,7 @@ export default (currency, returnToken) => {
       return 'next'
   }
 
-  if (ethToken.isEthToken({ name: key })) {
+  if (erc20Like.isToken({ name: key })) {
     key = (returnToken) ? key : 'token'
   }
 

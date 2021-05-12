@@ -11,7 +11,7 @@ import { COIN_DATA, COIN_MODEL } from 'swap.app/constants/COINS'
 
 type FeeInfoBlockProps = {
   isLoading: boolean
-  isEthToken: boolean
+  isToken: boolean
   hasTxSize: boolean
 
   currency: string
@@ -22,7 +22,7 @@ type FeeInfoBlockProps = {
   currentDecimals: number
   txSize?: number
   feeCurrentCurrency?: number
-  exEthereumRate?: BigNumber
+  exchangeRateForTokens?: BigNumber
   exCurrencyRate?: BigNumber
   minerFee: BigNumber
   serviceFee: BigNumber
@@ -43,12 +43,12 @@ type FeeInfoBlockProps = {
 
 function FeeInfoBlock(props: FeeInfoBlockProps) {
   const {
-    isEthToken,
+    isToken,
     currency,
     currentDecimals,
     activeFiat,
     dataCurrency,
-    exEthereumRate = 0,
+    exchangeRateForTokens = 0,
     exCurrencyRate = 0,
     isLoading,
     minerFee: initialMinerFee,
@@ -96,15 +96,15 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
   let minerFee = initialMinerFee
 
   // double miner fee for user and admin transactions
-  if (usedAdminFee && (isEthToken || COIN_DATA[currency]?.model === COIN_MODEL.AB)) {
+  if (usedAdminFee && (isToken || COIN_DATA[currency]?.model === COIN_MODEL.AB)) {
     minerFee = initialMinerFee.multipliedBy(2)
   }
 
   const totalFee = minerFee.plus(serviceFee)
 
-  const fiatMinerFee = isEthToken
-    ? exEthereumRate > 0 // eth rate for tokens
-      ? convertToFiat(minerFee, exEthereumRate)
+  const fiatMinerFee = isToken
+    ? exchangeRateForTokens > 0 // eth rate for tokens
+      ? convertToFiat(minerFee, exchangeRateForTokens)
       : 0
     : exCurrencyRate > 0 // own currency rate for another
       ? convertToFiat(minerFee, exCurrencyRate)
@@ -116,7 +116,7 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
       : 0
     : 0
 
-  const fiatTotalFee = exCurrencyRate > 0 && !isEthToken
+  const fiatTotalFee = exCurrencyRate > 0 && !isToken
     ? convertToFiat(totalFee, exCurrencyRate)
     : 0
 
@@ -201,7 +201,7 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
         )
       }
 
-      {!isEthToken && (
+      {!isToken && (
         <div styleName='feeRow'>
           <span styleName='feeRowTitle'>
             <FormattedMessage id="FeeInfoBlockTotalFee" defaultMessage="Total fees you pay:" />
