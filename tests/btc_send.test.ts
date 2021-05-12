@@ -115,7 +115,7 @@ describe('BTC Send Tests', () => {
     expect(amount).toBe(options.amount);
     expect(minerFee).toBeWithinRange(toFloorValue(options.feeValue), toCeilingValue(options.feeValue));
     expect(size).toBeWithinRange(toFloorValue(new BigNumber(txSize)), toCeilingValue(new BigNumber(txSize)));
-  }, 1250000)
+  }, 125000)
 
   it('send and check transaction via regular wallet with 1000 satoshis with adminFee', async () => {
     const serviceFee = {
