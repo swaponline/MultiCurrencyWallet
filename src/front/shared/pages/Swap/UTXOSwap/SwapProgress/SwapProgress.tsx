@@ -20,7 +20,6 @@ import { injectIntl, FormattedMessage } from 'react-intl'
 import Timer from '../../Timer/Timer'
 import { Button, TimerButton } from 'components/controls'
 
-import SwapController from '../../SwapController'
 import PleaseDontLeaveWrapper from './PleaseDontLeaveWrapper'
 
 import metamask from 'helpers/metamask'
@@ -349,7 +348,6 @@ class SwapProgress extends Component<any, any> {
       <div styleName={`overlay ${isDark ? '' : ''}`}>
         <div styleName="container">
           <div styleName="stepContainer">
-            <SwapController swap={swap} />
             <div styleName="stepInfo">
 
               {signed && flow.step < 4 && (

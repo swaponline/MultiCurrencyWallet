@@ -11,6 +11,7 @@ import SwapList from './SwapList/SwapList'
 import FeeControler from '../FeeControler/FeeControler'
 import FailControler from '../FailControler/FailControler'
 import DepositWindow from './DepositWindow/DepositWindow'
+import SwapController from '../SwapController'
 
 
 @CSSModules(styles)
@@ -176,6 +177,15 @@ export default class EthTokenToUTXO extends Component<any, any> {
                 )
               }
             </div>
+            <SwapController swap={swap} />
+            <SwapList
+              enoughBalance={enoughBalance}
+              flow={flow}
+              swap={swap}
+              onClickCancelSwap={onClickCancelSwap}
+              fields={this._fields}
+              swapName="EthTokenToBtcLike"
+            />
             {!enoughBalance && flow.step === 4
               ? (
                 <div styleName="swapDepositWindow">
@@ -216,14 +226,6 @@ export default class EthTokenToUTXO extends Component<any, any> {
               )
             }
           </div>
-          <SwapList
-            enoughBalance={enoughBalance}
-            flow={flow}
-            swap={swap}
-            onClickCancelSwap={onClickCancelSwap}
-            fields={this._fields}
-            swapName="EthTokenToBtcLike"
-          />
         </div>
         <div styleName="swapContainerInfo">{children}</div>
       </div>
