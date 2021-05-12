@@ -476,7 +476,7 @@ class SwapProgress extends Component<any, any> {
                   />
                 </strong>
               )}
-              {flow.step > 3 && !this.isSellCurrencyEthOrEthToken &&
+              {flow.step > 3 && !flow.isRefunded && !flow.isFinished  && !this.isSellCurrencyEthOrEthToken &&
                 <PleaseDontLeaveWrapper isBtcLike={flow.secret ? flow.secret : false} />
               }
             </div>
