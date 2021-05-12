@@ -1,36 +1,35 @@
 import getCurrencyKey from './getCurrencyKey'
-import ethToken from './ethToken'
 import actions from 'redux/actions'
-
+import erc20Like from 'common/erc20Like'
 
 const getWalletLink = (currency, checkAddress) => {
-  let ourWallets = false
-  const isEthToken = ethToken.isEthToken({ name: currency })
+  let ourWallets: string[] = []
+  const isToken = erc20Like.isToken({ name: currency })
   const prefix = getCurrencyKey(currency, false)
 
-  if (isEthToken) {
-    //@ts-ignore
-    ourWallets = actions.eth.getAllMyAddresses()
+  if (isToken) {
+    if (erc20Like.erc20.isToken({ name: currency })) {
+      ourWallets = actions.eth.getAllMyAddresses()
+    } else if (erc20Like.bep20.isToken({ name: currency })) {
+      ourWallets = actions.bnb.getAllMyAddresses()
+    }
   } else {
-    if (actions[prefix]
-      && typeof actions[prefix].getAllMyAddresses === 'function'
-    ) {
+    if (actions[prefix]?.getAllMyAddresses) {
       ourWallets = actions[prefix].getAllMyAddresses()
     } else {
       console.warn(`Function getAllMyAddresses not defined (currency ${currency})`)
     }
   }
 
-  if (!ourWallets) return false
+  if (!ourWallets.length) return false
 
-  //@ts-ignore
   const our = checkAddress.filter((address) => ourWallets.includes(address.toLowerCase()))
 
   if (our.length) {
     const targetWallet = our[0]
 
-    return (isEthToken) ?
-      `/token/${currency.toUpperCase()}/${targetWallet}`
+    return isToken
+      ? `/token/${currency.toUpperCase()}/${targetWallet}`
       : `/${prefix.toUpperCase()}/${targetWallet}`
   }
 
