@@ -4,7 +4,24 @@
 
 .dark {
   code{
-    color: white;
+    color: $d-color;
+  }
+  .swapInfo {
+    color: $d-color;
+  }
+  .topUpLink,
+  .linkAddress,
+  .qr > button {
+    box-shadow: $d-box-shadow;
+    background: $d-background-elements;
+    color: $d-color;
+  }
+  .linkAddress:hover,
+  .qr > button:hover {
+    background: $indicating-color;
+  }
+  .qrImg  {
+    margin: 1rem 0
   }
 }
 
@@ -107,7 +124,8 @@
 }
 
 .topUpLink {
-  border: 1px solid #cecece;
+  border: 1px solid $color-border;
+  box-shadow: $l-box-shadow;
   font-size: 18px;
   margin-top: 0px;
   position: relative;
@@ -117,7 +135,7 @@
   display: inline-block;
   text-align: left;
   padding-bottom: 75px;
-  background: white;
+  background: $l-background-elements;
   max-width: 600px;
 }
 
@@ -245,8 +263,10 @@
     display: flex;
     width: 56px;
     justify-content: center;
-    background: #eee;
-    color: #000;
+    border: 1px solid $color-border;
+    box-shadow: $l-box-shadow;
+    background: $l-background-elements;
+    color: $l-color;
     align-items: center;
     flex-direction: column;
     &:hover {
@@ -280,12 +300,13 @@
   display: flex;
   color: #fff;
   display: flex;
-  background: #fff;
+  border: 1px solid $color-border;
+  box-shadow: $l-box-shadow;
+  background: $l-background-elements;
   padding: 10px 15px;
-  box-shadow: 1px 1px 6px #929292;
-  color: #000;
+  color: $l-color;
   &:hover {
-    color: #000;
+    color: $l-color;
     background: #eee;
   }
 }

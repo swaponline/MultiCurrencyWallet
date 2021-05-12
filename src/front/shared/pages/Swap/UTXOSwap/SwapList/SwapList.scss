@@ -2,7 +2,7 @@
   .checked {
     .stepNumber {
       background: #9066da;
-      color: #fff;
+      color: $d-color;
       border: 1px solid #5100dc;
       min-width: 35px;
     }
@@ -11,7 +11,7 @@
     }
   }
   .stepHeading {
-    color: $notice-color;
+    color: $d-color;
   }
 }
 
@@ -19,7 +19,7 @@
 .stepItem,
 .stepNumber,
 .stepText {
-  color: #000;
+  color: $indicating-color;
 }
 
 .stepNumber {
