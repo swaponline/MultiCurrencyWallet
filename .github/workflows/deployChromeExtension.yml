@@ -21,6 +21,9 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
+    - name: Get changed files using defaults
+      id: changed-files
+      uses: tj-actions/changed-files@v5.3
     - name: npm install, build extension
       run: |
         npm i
