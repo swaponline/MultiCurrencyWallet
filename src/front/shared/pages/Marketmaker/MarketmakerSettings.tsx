@@ -33,6 +33,7 @@ import { AddressType } from 'domain/address'
 import metamask from 'helpers/metamask'
 import { Button } from 'components/controls'
 
+
 const isDark = !!localStorage.getItem(constants.localStorage.isDark)
 
 
@@ -301,6 +302,14 @@ class MarketmakerSettings extends Component<any, any> {
     })
   }
 
+  handleRestoreMnemonic() {
+    //@ts-ignore: strictNullChecks
+    actions.modals.open(constants.modals.RestoryMnemonicWallet, {
+      noRedirect: true,
+      onClose: () => { window.location.reload() }
+    })
+  }
+
   handleToggleMarketmaker(checked) {
     const { isMarketEnabled } = this.state
 
@@ -551,7 +560,7 @@ class MarketmakerSettings extends Component<any, any> {
                 </Button>
               </div>
               <div styleName='wallet-button'>
-                <Button blue onClick={this.handleSaveMnemonic.bind(this)}>
+                <Button blue onClick={this.handleRestoreMnemonic.bind(this)}>
                   <FormattedMessage
                     id="MM_Wallet_Restore"
                     defaultMessage="Restore from 12-word seed"

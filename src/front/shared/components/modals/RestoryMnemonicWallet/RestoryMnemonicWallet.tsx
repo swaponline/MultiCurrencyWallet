@@ -73,8 +73,8 @@ type RestoryMnemonicWalletProps = {
 
   data: {
     btcBalance: number
-    fiatBalance: number
     onClose: () => void
+    noRedirect?: boolean
   }
 }
 
@@ -161,7 +161,7 @@ class RestoryMnemonicWallet extends React.Component {
   }
 
   handleClose = () => {
-    const { name, data, onClose } = this.props
+    const { name, data, data: { noRedirect }, onClose } = this.props
 
     if (typeof onClose === 'function') {
       onClose()
@@ -170,17 +170,23 @@ class RestoryMnemonicWallet extends React.Component {
     if (data && typeof data.onClose === 'function') {
       data.onClose()
     } else {
-      window.location.assign(links.hashHome)
+      if (!noRedirect) {
+        window.location.assign(links.hashHome)
+      }
     }
 
     actions.modals.close(name)
   }
 
   handleFinish = () => {
+    const { data: { noRedirect } } = this.props
+
     this.handleClose()
 
-    window.location.assign(links.hashHome)
-    window.location.reload()
+    if (!noRedirect) {
+      window.location.assign(links.hashHome)
+      window.location.reload()
+    }
   }
 
   handleRestoryWallet = () => {
