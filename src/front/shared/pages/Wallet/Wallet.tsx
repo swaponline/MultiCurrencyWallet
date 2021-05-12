@@ -52,7 +52,6 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
       btcMultisigUserData,
       btcMultisigUserDataList,
       tokensData,
-      isFetching,
       isBalanceFetching,
       multisigPendingCount,
       activeCurrency,
@@ -60,26 +59,8 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
       metamaskData,
     },
     currencies: { items: currencies },
-    createWallet: { currencies: assets },
     modals,
-    ui: { dashboardModalsAllowed },
   }) => {
-    let widgetMultiTokens = []
-    if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
-      Object.keys(window.widgetERC20Tokens).forEach((key) => {
-        //@ts-ignore: strictNullChecks
-        widgetMultiTokens.push(key.toUpperCase())
-      })
-    }
-    const tokens =
-      config && config.isWidget
-        ? window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length
-          ? widgetMultiTokens
-          : [config.erc20token.toUpperCase()]
-        : Object.keys(tokensData).map((k) => tokensData[k].currency)
-
-    const tokensItems = Object.keys(tokensData).map((k) => tokensData[k])
-
     const allData = [
       btcData,
       btcMultisigSMSData,
@@ -92,24 +73,13 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
       ...data,
     }))
 
-    const items = (config && config.isWidget
-      ? [btcData, ethData, ghostData, nextData]
-      : [btcData, btcMultisigSMSData, btcMultisigUserData, ethData, ghostData, nextData]
-    ).map((data) => data.currency)
-
     return {
-      tokens,
-      items,
       allData,
-      tokensItems,
       messagingToken,
       currencies,
-      assets,
-      isFetching,
       isBalanceFetching,
       multisigPendingCount,
       hiddenCoinsList: hiddenCoinsList,
-      userEthAddress: ethData.address,
       user,
       activeCurrency,
       activeFiat,
@@ -126,7 +96,6 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
         btcMultisigUserData,
         btcMultisigUserDataList,
       },
-      dashboardView: dashboardModalsAllowed,
       modals,
     }
   }
@@ -554,7 +523,7 @@ class Wallet extends Component<any, any> {
         ...el,
         balance: el.balance,
         fiatBalance:
-          el.balance > 0 && el.infoAboutCurrency && el.infoAboutCurrency.price_fiat
+          el.balance > 0 && el.infoAboutCurrency?.price_fiat
             ? new BigNumber(el.balance)
                 .multipliedBy(el.infoAboutCurrency.price_fiat)
                 .dp(2, BigNumber.ROUND_FLOOR)
