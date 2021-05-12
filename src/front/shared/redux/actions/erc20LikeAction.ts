@@ -7,8 +7,9 @@ import actions from 'redux/actions'
 import reducers from 'redux/core/reducers'
 import DEFAULT_CURRENCY_PARAMETERS from 'common/helpers/constants/DEFAULT_CURRENCY_PARAMETERS'
 import TOKEN_STANDARDS from 'common/helpers/constants/TOKEN_STANDARDS'
+import ethLikeHelper from 'common/helpers/ethLikeHelper'
 import erc20Like from 'common/erc20Like'
-import helpers, { apiLooper, constants, cacheStorageGet, cacheStorageSet, feedback } from 'helpers'
+import { apiLooper, constants, cacheStorageGet, cacheStorageSet, feedback } from 'helpers'
 import externalConfig from 'helpers/externalConfig'
 import metamask from 'helpers/metamask'
 
@@ -319,7 +320,7 @@ class Erc20LikeAction {
 
   fetchFees = async (params) => {
     const { gasPrice, gasLimit, speed } = params
-    const newGasPrice = gasPrice || (await helpers[this.currencyKey].estimateGasPrice({ speed }))
+    const newGasPrice = gasPrice || await ethLikeHelper[this.currencyKey].estimateGasPrice({ speed })
     const newGasLimit = gasLimit || DEFAULT_CURRENCY_PARAMETERS.ethToken.limit.send
 
     return {

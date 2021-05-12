@@ -3,6 +3,12 @@ import DEFAULT_CURRENCY_PARAMETERS from 'common/helpers/constants/DEFAULT_CURREN
 import api from './api'
 import BigNumber from 'bignumber.js'
 
+// TODO: =================================
+
+// ! Deprecated. Use common/helpers/ethLikeHelper.bnb
+
+// TODO: =================================
+
 type EstimateFeeParams = {
   method: string
   speed: 'fastest' | 'fast' | 'slow'

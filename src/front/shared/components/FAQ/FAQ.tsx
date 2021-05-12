@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react'
 import BigNumber from 'bignumber.js'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import btcUtils from 'common/utils/coin/btc'
+import ethLikeHelper from 'common/helpers/ethLikeHelper'
 import { FormattedMessage, injectIntl } from 'react-intl'
-import { constants, feedback, adminFee, eth, bnb, externalConfig } from 'helpers'
+import { constants, feedback, adminFee, externalConfig } from 'helpers'
 import cssModules from 'react-css-modules'
 import cx from 'classnames'
 import styles from './styles.scss'
@@ -34,8 +35,8 @@ const FAQ = (props) => {
         const BYTE_IN_KB = 1024
 
         btcSatoshiPrice = await btcUtils.estimateFeeRate({ speed: 'fast', NETWORK })
-        bnbGasPrice = await bnb.estimateGasPrice()
-        ethGasPrice = await eth.estimateGasPrice({ speed: 'fast' })
+        bnbGasPrice = await ethLikeHelper.bnb.estimateGasPrice({ speed: 'fast' })
+        ethGasPrice = await ethLikeHelper.eth.estimateGasPrice({ speed: 'fast' })
 
         // remove memory leak
         if (_mounted) {

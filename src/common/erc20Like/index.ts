@@ -100,18 +100,7 @@ const isToken = (params) => {
   return false
 }
 
-// TODO: =========== delete code above ====================
-
-const reportAboutProblem = (params) => {
-  const { isError = false, info } = params
-
-  console.group(
-    'common > %c erc20Like',
-    `color: ${isError ? 'red' : 'orange'};`
-  )
-  isError ? console.error(info) : console.warn(info)
-  console.groupEnd()
-}
+// TODO: =========== delete code below ====================
 
 type CheckAllowanceParams = {
   tokenOwnerAddress: string
@@ -136,13 +125,13 @@ const checkAllowance = async (params: CheckAllowanceParams): Promise<number> => 
       .div(new BigNumber(10).pow(decimals))
       .toNumber()
   } catch (error) {
-    reportAboutProblem({
-      info: error,
-    })
+    console.error(error)
   }
 
   return allowanceAmount
 }
+
+// TODO: =========== delete code above ====================
 
 export default {
   isToken,

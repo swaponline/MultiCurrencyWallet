@@ -4,6 +4,12 @@ import bnb from './bnb'
 import DEFAULT_CURRENCY_PARAMETERS from 'common/helpers/constants/DEFAULT_CURRENCY_PARAMETERS'
 import BigNumber from 'bignumber.js'
 
+// TODO: =================================
+
+// ! Deprecated. Use common/erc20Like
+
+// TODO: =================================
+
 const isEthToken = ({ name }) => Object.keys(config.erc20).includes(name.toLowerCase())
 const isEthOrEthToken = ({ name }) => Object.keys(config.erc20).concat('eth').includes(name.toLowerCase())
 

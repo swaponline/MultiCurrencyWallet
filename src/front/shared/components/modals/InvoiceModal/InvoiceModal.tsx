@@ -7,7 +7,6 @@ import cssModules from 'react-css-modules'
 import styles from '../Styles/default.scss'
 import dropDownStyles from 'components/ui/DropDown/index.scss'
 import ownStyle from './InvoiceModal.scss'
-
 import Modal from 'components/modal/Modal/Modal'
 import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
 import Input from 'components/forms/Input/Input'

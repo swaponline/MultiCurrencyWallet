@@ -1,30 +1,17 @@
 import React from 'react'
 import { connect } from 'redaction'
-import CopyToClipboard from 'react-copy-to-clipboard'
 import cx from 'classnames'
 
 import cssModules from 'react-css-modules'
-
+import erc20Like from 'common/erc20Like'
 import styles from './CurrencyAction.scss'
-import helpers, { links, constants } from 'helpers'
-import Coin from 'components/Coin/Coin'
+import { constants } from 'helpers'
 
-import QR from 'components/QR/QR'
-import { Modal } from 'components/modal'
-import { Button } from 'components/controls'
-import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
-import { ConsoleView } from 'react-device-detect'
+import { FormattedMessage, injectIntl } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
 import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
 import icons from './images'
 import config from 'app-config'
-
-const title = defineMessages({
-  CurrencyAction: {
-    id: 'CurrencyAction',
-    defaultMessage: 'CurrencyAction'
-  }
-})
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
@@ -86,7 +73,7 @@ class CurrencyAction extends React.Component<any, any> {
           break
       }
 
-      const isToken = helpers.ethToken.isEthToken({ name: currency })
+      const isToken = erc20Like.isToken({ name: currency })
       this.handleClose()
 
       history.push(

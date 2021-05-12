@@ -6,7 +6,7 @@ import * as ghost from 'bitcoinjs-lib'
 import * as next from 'bitcoinjs-lib'
 
 import abi from 'human-standard-token-abi'
-
+import ethLikeHelper from 'common/helpers/ethLikeHelper'
 import config, { initExternalConfig } from 'helpers/externalConfig'
 
 import helpers, { constants as privateKeys, utils } from 'helpers'
@@ -130,7 +130,7 @@ const createSwapApp = async () => {
           /* eslint-enable */
           fetchBalance: (address) => actions.eth.fetchBalance(address),
           //@ts-ignore
-          estimateGasPrice: ({ speed } = {}) => helpers.eth.estimateGasPrice({ speed }),
+          estimateGasPrice: ({ speed } = {}) => ethLikeHelper.eth.estimateGasPrice({ speed }),
           sendTransaction: ({ to, amount }) => actions.eth.sendTransaction({ to, amount }),
         }),
         new BtcSwap({

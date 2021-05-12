@@ -4,11 +4,12 @@ import { getState } from 'redux/core'
 import actions from 'redux/actions'
 import reducers from 'redux/core/reducers'
 import DEFAULT_CURRENCY_PARAMETERS from 'common/helpers/constants/DEFAULT_CURRENCY_PARAMETERS'
+import ethLikeHelper from 'common/helpers/ethLikeHelper'
 import * as mnemonicUtils from 'common/utils/mnemonic'
 import typeforce from 'swap.app/util/typeforce'
 import externalConfig from 'helpers/externalConfig'
 import metamask from 'helpers/metamask'
-import helpers, { feedback, constants, cacheStorageGet, cacheStorageSet, apiLooper } from 'helpers'
+import { feedback, constants, cacheStorageGet, cacheStorageSet, apiLooper } from 'helpers'
 
 class EthLikeAction {
   readonly coinName: string
@@ -403,7 +404,7 @@ class EthLikeAction {
     const ownerAddress = getState().user[`${this.tickerKey}Data`].address
     const recipientIsContract = await this.isContract(to)
 
-    gasPrice = 0 || (await helpers[this.tickerKey].estimateGasPrice({ speed }))
+    gasPrice = 0 || await ethLikeHelper[this.tickerKey].estimateGasPrice({ speed })
     gasLimit =
       gasLimit ||
       (recipientIsContract

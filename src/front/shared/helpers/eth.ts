@@ -3,6 +3,13 @@ import DEFAULT_CURRENCY_PARAMETERS from 'common/helpers/constants/DEFAULT_CURREN
 import api from './api'
 import BigNumber from 'bignumber.js'
 
+
+// TODO: =================================
+
+// ! Deprecated. Use common/helpers/ethLikeHelper.eth
+
+// TODO: =================================
+
 const reportAboutProblem = (params) => {
   const { isError = false, info } = params
 

@@ -33,7 +33,7 @@ class ethLikeHelper {
     console.groupEnd()
   }
 
-  estimateFeeValue = async (params) => {
+  estimateFeeValue = async (params): Promise<number> => {
     const { method, speed } = params
     const gasPrice = await this.estimateGasPrice({ speed })
     const defaultGasLimit = this.defaultParams.limit[method]
@@ -44,17 +44,36 @@ class ethLikeHelper {
       .multipliedBy(theSmallestPart)
       .toNumber()
   }
+
   // TODO: BNB has different calculation
-  // TODO: will we use two methods or will better to use the same api ?
-  estimateGasPrice = async (params) => {
+  // TODO: ? > temporarily < solution for BNB. Will we use the same api for ETH ?
+  estimateGasPriceForBnb = async (): Promise<number> => {
+    let apiResult
+
+    try {
+      // returned in hex wei value
+      apiResult = await api.asyncFetchApi(this.feeRatesLink)
+    } catch (err) {
+      return this.defaultParams.price.fast
+    }
+
+    // convert to decimal value
+    const weiGasPrice = new BigNumber(parseInt(apiResult.result).toString(10))
+
+    return weiGasPrice.isGreaterThan(this.defaultParams.price.fast)
+      ? weiGasPrice.toNumber()
+      : this.defaultParams.price.fast
+  }
+
+  estimateGasPrice = async (params): Promise<number> => {
     const { speed } = params
     const defaultPrice = this.defaultParams.price
   
-    if (!this.feeRatesLink) {
-      return this.defaultParams.price[speed]
-    }
-  
     let apiResult
+
+    if (this.currency === 'BNB') {
+      return this.estimateGasPriceForBnb()
+    }
   
     try {
       apiResult = await api.asyncFetchApi(this.feeRatesLink)
@@ -77,7 +96,7 @@ class ethLikeHelper {
     const apiPrice = new BigNumber(apiResult[apiSpeed]).dividedBy(10).multipliedBy(1e9)
   
     return apiPrice >= defaultPrice[speed] 
-      ? apiPrice.toString()
+      ? apiPrice.toNumber()
       : defaultPrice[speed]
   }
 }
@@ -93,6 +112,6 @@ export default {
     currency: 'BNB',
     currencyKey: 'bnb',
     defaultParams: DEFAULT_CURRENCY_PARAMETERS.bnb,
-    feeRatesLink: config.feeRates.bnb,
+    feeRatesLink: config.feeRates.bsc,
   }),
 }
