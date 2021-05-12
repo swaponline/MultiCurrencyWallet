@@ -34,10 +34,8 @@ const FAQ = (props) => {
         const BYTE_IN_KB = 1024
 
         btcSatoshiPrice = await btcUtils.estimateFeeRate({ speed: 'fast', NETWORK })
-
-        externalConfig.binance
-          ? bnbGasPrice = await bnb.estimateGasPrice()
-          : ethGasPrice = await eth.estimateGasPrice({ speed: 'fast' })
+        bnbGasPrice = await bnb.estimateGasPrice()
+        ethGasPrice = await eth.estimateGasPrice({ speed: 'fast' })
 
         // remove memory leak
         if (_mounted) {
@@ -45,9 +43,8 @@ const FAQ = (props) => {
           setBtcFee( Math.ceil(btcSatoshiPrice / BYTE_IN_KB) )
 
           // return gas * 1e9 - divided by 1e9 to convert
-          externalConfig.binance
-            ? setBnbFee( new BigNumber(bnbGasPrice).dividedBy(1e9).toNumber() )
-            : setEthFee( new BigNumber(ethGasPrice).dividedBy(1e9).toNumber() )
+          setBnbFee( new BigNumber(bnbGasPrice).dividedBy(1e9).toNumber() )
+          setEthFee( new BigNumber(ethGasPrice).dividedBy(1e9).toNumber() )
         }
       } catch (error) {
         feedback.faq.failed(`FAQ. Fetch fees error(${error.message})`)
@@ -109,6 +106,7 @@ const FAQ = (props) => {
             <FormattedMessage id="MainFAQ1_content" defaultMessage="Your private keys are stored ONLY on your device, in the localStorage of your browser. Please backup your keys, because your browser or device may be crashed." />
           </div>
         </article>
+
         <article className={styles.tab}>
           <h6 className={styles.tab__header} onClick={() => handleTabClick('SECOND_TAB')}>
             <div className={cx({
@@ -137,7 +135,10 @@ const FAQ = (props) => {
             <p>
               <FormattedMessage id="MainFAQ2_content2" defaultMessage="NOTE: You can easily check the ‘miners fees’ required for each respective coin by simply googling them." />
             </p>
-            <FormattedMessage id="MainFAQ2_content3" defaultMessage="Current mining fees:" />
+
+            <p className={styles.feeInfoTitle}>
+              <FormattedMessage id="MainFAQ2_content3" defaultMessage="Current mining fees:" />
+            </p>
             <div className={styles.descriptionFee}>
               <span>BTC:</span>{' '}
               {btcFee
@@ -153,40 +154,35 @@ const FAQ = (props) => {
               }
             </div>
             <div className={styles.descriptionFee}>
-              {externalConfig.binance ? (
-                <>
-                  <span>BNB:</span>{' '}
-                  {bnbFee
-                    ? (
-                      <span>
-                        <b>{bnbFee}</b> gwei
-                        {' '}
-                        <a className={styles.link} href={externalConfig.feeRates.bsc} target="_blank">
-                          <FormattedMessage id="FAQFeeApiLink" defaultMessage="(source)" />
-                        </a>
-                      </span>
-                    ) : <InlineLoader />
-                  }
-                </>
-              ) : (
-                <>
-                  <span>ETH:</span>{' '}
-                  {ethFee
-                    ? (
-                      <span>
-                        <b>{ethFee}</b> gwei
-                        {' '}
-                        <a className={styles.link} href={externalConfig.api.defipulse} target="_blank">
-                          <FormattedMessage id="FAQFeeApiLink" defaultMessage="(source)" />
-                        </a>
-                      </span>
-                    ) : <InlineLoader />
-                  }
-                </>
-              )}
+              <span>ETH:</span>{' '}
+              {ethFee
+                ? (
+                  <span>
+                    <b>{ethFee}</b> gwei
+                    {' '}
+                    <a className={styles.link} href={externalConfig.api.defipulse} target="_blank">
+                      <FormattedMessage id="FAQFeeApiLink" defaultMessage="(source)" />
+                    </a>
+                  </span>
+                ) : <InlineLoader />
+              }
             </div>
+            <div className={styles.descriptionFee}>
+              <span>BNB:</span>{' '}
+              {bnbFee
+                ? (
+                  <span>
+                    <b>{bnbFee}</b> gwei
+                  </span>
+                ) : <InlineLoader />
+              }
+            </div>
+
             <br />
-            <FormattedMessage id="FAQServiceFee" defaultMessage="Service fee (only withdraw):" />
+
+            <p className={styles.feeInfoTitle}>
+              <FormattedMessage id="FAQServiceFee" defaultMessage="Service fee (only withdraw):" />
+            </p>
             <p className={styles.descriptionFee}>
               <span>BTC:</span>{' '}
               {BtcPrecentFee
@@ -200,38 +196,35 @@ const FAQ = (props) => {
                 : <span>0%</span>
               }
             </p>
-
-            {externalConfig.binance ? (
-              <p className={styles.descriptionFee}>
-                <span>BNB:</span>{' '}
-                {BnbPrecentFee
+            <p className={styles.descriptionFee}>
+              <span>ETH:</span>{' '}
+              {EthPrecentFee
                   ? (
                     <span>
-                      {BnbPrecentFee.fee + '%, '}
+                      {EthPrecentFee.fee + '%, '}
                       <FormattedMessage id="FAQServiceFeeDescription" defaultMessage="no less than" />
-                      {' '}<b>{adminFee.calc('BNB', null)}</b> BNB
+                      {' '}<b>{adminFee.calc('ETH', null)}</b> ETH
                     </span>
                   )
                   : <span>0%</span>
-                }
-              </p>
-            ) : (
-              <p className={styles.descriptionFee}>
-                <span>ETH:</span>{' '}
-                {EthPrecentFee
-                    ? (
-                      <span>
-                        {EthPrecentFee.fee + '%, '}
-                        <FormattedMessage id="FAQServiceFeeDescription" defaultMessage="no less than" />
-                        {' '}<b>{adminFee.calc('ETH', null)}</b> ETH
-                      </span>
-                    )
-                    : <span>0%</span>
-                }
-              </p>
-            )}
+              }
+            </p>
+            <p className={styles.descriptionFee}>
+              <span>BNB:</span>{' '}
+              {BnbPrecentFee
+                ? (
+                  <span>
+                    {BnbPrecentFee.fee + '%, '}
+                    <FormattedMessage id="FAQServiceFeeDescription" defaultMessage="no less than" />
+                    {' '}<b>{adminFee.calc('BNB', null)}</b> BNB
+                  </span>
+                )
+                : <span>0%</span>
+              }
+            </p>
           </div>
         </article>
+
         <article className={styles.tab}>
           <h6 className={styles.tab__header} onClick={() => handleTabClick('THIRD_TAB')}>
             <div className={cx({
