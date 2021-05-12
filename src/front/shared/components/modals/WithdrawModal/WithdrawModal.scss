@@ -113,16 +113,6 @@
 .highLevel {
   position: relative;
   margin-bottom: 40px;
-  // below rules solve problem with qr button display
-  border: 1px solid rgba(0, 0, 0, 0.2);
-
-  input,
-  input:focus {
-    border: none;
-  }
-  &:focus-within {
-    border: 2px solid $primary;
-  }
 }
 
 .lowLevel {
@@ -382,6 +372,26 @@
 
   .prompt {
     font-size: 10px;
+  }
+}
+
+@include media-mobile {
+  .highLevel {
+    position: relative;
+    margin-bottom: 42px;
+    // below rules solve a problem with qr button display
+    border: 1px solid rgba(0, 0, 0, 0.2);
+  
+    input,
+    input:focus {
+      border: none;
+    }
+
+    &:focus-within {
+      margin-bottom: 40px;
+      border-radius: 2px;
+      border: 2px solid $primary;
+    }
   }
 }
 

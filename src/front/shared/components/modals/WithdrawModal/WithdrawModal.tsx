@@ -769,40 +769,19 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
     }))
   }
 
-  amountInputKeyDownCallback = (event) => {
-    const { currentDecimals, currentActiveAsset, selectedValue } = this.state
-    // key codes
-    const BACKSPACE = 8
-    const LEFT_ARROW = 37
-    const RIGHT_ARROW = 39
-    const DELETE = 46
-    const isNumber = +event.key >= 0 && +event.key <= 9
-    const amountValue = event.target.value
+  returnHaveInfoPrice = (params) => {
+    const { currentActiveAsset } = this.state
+    const { arrOfCurrencies } = params
+    const activeCriptoCurrency = getCurrencyKey(currentActiveAsset.currency, true).toUpperCase()
+    let result = true
 
-    if (event.key === ',') {
-      inputReplaceCommaWithDot(event)
-    }
+    arrOfCurrencies.forEach(item => {
+      if (item.currency === activeCriptoCurrency) {
+        result = item.infoAboutCurrency && item.infoAboutCurrency.price_fiat
+      }
+    })
 
-    if (
-      !(isNumber ||
-        event.keyCode === BACKSPACE ||
-        event.keyCode === LEFT_ARROW ||
-        event.keyCode === RIGHT_ARROW ||
-        event.keyCode === DELETE ||
-        event.key === '.' ||
-        event.key === ','
-      )
-    ) {
-      event.preventDefault()
-    } else if (amountValue.includes('.')) {
-      // block number input if quantity decimal places
-      // more than allowed (crypto: currentDecimals | fiat: 2)
-      const maxQuantityDecimals = selectedValue === currentActiveAsset.currency
-        ? amountValue.split('.')[1].length === currentDecimals
-        : amountValue.split('.')[1].length === 2
-
-      maxQuantityDecimals && isNumber && event.preventDefault()
-    }
+    return result
   }
 
   render() {
@@ -859,21 +838,11 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
 
     const activeCriptoCurrency = getCurrencyKey(currentActiveAsset.currency, true).toUpperCase()
     const selectedValueView = getCurrencyKey(selectedValue, true).toUpperCase()
-    const criptoCurrencyHaveInfoPrice = returnHaveInfoPrice();
-    const ethBalanceLessThanMiner = new BigNumber(walletForTokenFee.balance).isLessThan(fees.miner)
+    const criptoCurrencyHaveInfoPrice = this.returnHaveInfoPrice({
+      arrOfCurrencies: tableRows,
+    })
+    const notEnoughForTokenMinerFee = new BigNumber(walletForTokenFee?.balance).isLessThan(fees.miner)
     const exchangeRateForTokens = new BigNumber(walletForTokenFee?.infoAboutCurrency?.price_fiat || 0)
-
-    function returnHaveInfoPrice(): boolean {
-      let result = true
-
-      tableRows.forEach(item => {
-        if (item.currency === activeCriptoCurrency) {
-          result = item.infoAboutCurrency && item.infoAboutCurrency.price_fiat
-        }
-      })
-
-      return result
-    }
 
     const isDisabled =
       !address ||
@@ -881,7 +850,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
       isShipped ||
       !!ownTx ||
       !this.addressIsCorrect() ||
-      isErc20Token && ethBalanceLessThanMiner ||
+      isErc20Token && notEnoughForTokenMinerFee ||
       new BigNumber(amount).isGreaterThan(balances.balance) ||
       new BigNumber(amount).dp() > currentDecimals
 
@@ -991,8 +960,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
         </div>
         <div styleName={`lowLevel ${isDark ? 'dark' : ''}`} style={{ marginBottom: '30px' }}>
           {/* why style ? see tip for max button */}
-          {/* @ts-ignore: strictNullChecks */}
-          <div style={usedAdminFee ? { right: '20px' } : null} styleName="additionalСurrencies">
+          <div style={usedAdminFee ? { right: '20px' } : undefined} styleName="additionalСurrencies">
             {criptoCurrencyHaveInfoPrice && <>
                 <span
                   styleName={cx('additionalСurrenciesItem', {
@@ -1016,8 +984,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
             </span>
           </div>
           {/* why style ? see tip for max button */}
-          {/* @ts-ignore: strictNullChecks */}
-          <p style={usedAdminFee ? { right: '10px' } : null} styleName='balance'>
+          <p style={usedAdminFee ? { right: '10px' } : undefined} styleName='balance'>
             {new BigNumber(amount).isGreaterThan(0) && criptoCurrencyHaveInfoPrice && (
               <FormattedMessage
                 {...labels[
@@ -1046,7 +1013,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
             <Input
               id='amountInput'
               pattern="0-9\."
-              onKeyDown={this.amountInputKeyDownCallback}
+              onKeyDown={inputReplaceCommaWithDot}
               valueLink={selectedValue === currentActiveAsset.currency
                 ? linked.amount.pipe(this.handleAmount)
                 : linked.fiatAmount.pipe(this.handleAmount)
@@ -1081,11 +1048,14 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
           {/* hint for amount value */}
           {dashboardView && (
             <div styleName={`prompt ${fetchFee ? 'hide' : ''}`}>
-              {isErc20Token && ethBalanceLessThanMiner
+              {isToken && notEnoughForTokenMinerFee
                 ? (
                     <FormattedMessage
                       id="WithdrowBalanceNotEnoughtEthereumBalancePrompt"
-                      defaultMessage="Not enough ethereum balance for miner fee"
+                      defaultMessage="Not enough {tokenCurrency} balance for miner fee"
+                      values={{
+                        tokenCurrency: walletForTokenFee?.currency
+                      }}
                     />
                   )
                 : balances.allowedCurrency.isEqualTo(0) ?
