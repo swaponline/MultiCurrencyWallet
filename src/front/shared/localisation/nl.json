@@ -5873,7 +5873,7 @@
   },
   {
     "id": "MM_DepositeWallet",
-    "message": "om op te laden, overzetten naar {address}",
+    "message": "om op te laden, overzetten naar",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]

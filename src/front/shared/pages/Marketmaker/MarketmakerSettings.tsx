@@ -9,7 +9,7 @@ import actions from 'redux/actions'
 import SwapApp from 'swap.app'
 import Swap from 'swap.swap'
 
-import { constants, links } from 'helpers'
+import { constants, links, feedback } from 'helpers'
 import config from 'helpers/externalConfig'
 
 
@@ -28,10 +28,11 @@ import Input from 'components/forms/Input/Input'
 import btc from './images/btcIcon.svg'
 import wbtc from './images/wbtcIcon.svg'
 
-import { AddressType } from 'domain/address'
-
 import metamask from 'helpers/metamask'
 import { Button } from 'components/controls'
+
+import { AddressType, AddressFormat } from 'domain/address'
+import Address from 'components/ui/Address/Address'
 
 
 const isDark = !!localStorage.getItem(constants.localStorage.isDark)
@@ -242,6 +243,7 @@ class MarketmakerSettings extends Component<any, any> {
         isMarketEnabled,
       })
     })
+    feedback.marketmaking.enteredSettings()
   }
 
   onSwapEnterStep(data) {
@@ -328,6 +330,7 @@ class MarketmakerSettings extends Component<any, any> {
 
     if (!isEthBalanceOk) {
       hasError = true
+      const AB_Coin = (config.binance) ? `BNB` : `ETH`
       //@ts-ignore: strictNullChecks
       actions.modals.open(constants.modals.AlertModal, {
         message: (
@@ -335,14 +338,16 @@ class MarketmakerSettings extends Component<any, any> {
             id="MM_NotEnoughtEth"
             defaultMessage="Not enough {AB_Coin} to pay the miners commission. You need to have at least 0.02 {AB_Coin}"
             values={{
-              AB_Coin: (config.binance) ? `BNB` : `ETH`,
+              AB_Coin,
             }}
           />
         ),
       })
+      feedback.marketmaking.prevented(`Not enough ${AB_Coin}`)
     }
     if (!isTokenBalanceOk && !isBtcBalanceOk) {
       hasError = true
+      const token = marketToken.toUpperCase()
       //@ts-ignore: strictNullChecks
       actions.modals.open(constants.modals.AlertModal, {
         message: (
@@ -350,11 +355,12 @@ class MarketmakerSettings extends Component<any, any> {
             id="MM_NotEnoughCoins"
             defaultMessage="Insufficient funds. You need to top up your BTC or {token}"
             values={{
-              token: marketToken.toUpperCase(),
+              token,
             }}
           />
         ),
       })
+      feedback.marketmaking.prevented(`Not enough BTC or ${token}`)
     }
     if (!hasError) {
       this.setState({
@@ -367,9 +373,11 @@ class MarketmakerSettings extends Component<any, any> {
         if (!isMarketEnabled) {
           // New state - On
           this.createMakerMakerOrder()
+          feedback.marketmaking.enabled()
         } else {
           // New state - Off
           this.cleanupMarketMakerOrder()
+          feedback.marketmaking.disabled()
         }
       })
     } else {
@@ -596,7 +604,7 @@ class MarketmakerSettings extends Component<any, any> {
                 ) : (
                   <FormattedMessage
                     id="MM_ToggleTextDisabled"
-                    defaultMessage="Turn On toggle to start earn"
+                    defaultMessage="Turn on this toggle to start earn"
                   />
                 )}
               </p>
@@ -622,12 +630,12 @@ class MarketmakerSettings extends Component<any, any> {
               </div>
             </div>
             <div styleName='section-items__item'>
-              <p styleName='item-text__secondary-title'>
+              <h2 styleName='item-text__secondary-title'>
                 <FormattedMessage
                   id="MM_TotalEarned"
                   defaultMessage="Total earned:"
                 />
-              </p>
+              </h2>
               <p>
                 <span styleName='balancePrimary'>
                   0
@@ -643,12 +651,13 @@ class MarketmakerSettings extends Component<any, any> {
                   />
                 </span>
               </p>
-              <p styleName='item-text__secondary-title'>
+              <hr />
+              <h2 styleName='item-text__secondary-title'>
                 <FormattedMessage
                   id="MM_MarketmakingBalanceTitle"
                   defaultMessage="Marketmaking Balance:"
                 />
-              </p>
+              </h2>
               <p>
                 <span styleName='balancePrimary'>
                 {isMarketEnabled ? (
@@ -674,35 +683,35 @@ class MarketmakerSettings extends Component<any, any> {
                 <div styleName='section-items__item'>
                   {btcWallet ? (
                       <>
-                        <p styleName='item-text__secondary-title'>
+                        <h2 styleName='item-text__secondary-title'>
                           <FormattedMessage
                             id="MM_BTCBalance"
                             defaultMessage="Balance BTC:"
                           />
-                        </p>
+                        </h2>
                         <p>
                           <img src={btc} alt="btc" />
                           {' '}
                           <span id='btcBalance' styleName='balanceSecondary'>{btcBalance}</span>
                         </p>
+                        <hr />
                         <p styleName='item-text__secondary'>
                           <FormattedMessage
                             id="MM_DepositeWallet"
-                            defaultMessage="to top up, transfer to {address}"
-                            values={{
-                              address: btcWallet.address,
-                            }}
+                            defaultMessage="to top up, transfer to"
                           />
+                          <br />
+                          <Address address={btcWallet.address} format={AddressFormat.Full} />
                         </p>
                       </>
                     ) : (
                       <>
-                        <p styleName='item-text__secondary-title'>
+                        <h2 styleName='item-text__secondary-title'>
                           <FormattedMessage
                             id="MM_BTCBalance"
                             defaultMessage="Balance BTC:"
                           />
-                        </p>
+                        </h2>
                         <p>
                           <img src={btc} alt="btc" />
                           {' '}
@@ -713,7 +722,7 @@ class MarketmakerSettings extends Component<any, any> {
                   }
                 </div>
                 <div styleName='section-items__item'>
-                  <p styleName='item-text__secondary-title'>
+                  <h2 styleName='item-text__secondary-title'>
                     <FormattedMessage
                       id="MM_TokenBalance"
                       defaultMessage="Balance {token}:"
@@ -721,7 +730,7 @@ class MarketmakerSettings extends Component<any, any> {
                         token: marketToken.toUpperCase(),
                       }}
                     />
-                  </p>
+                  </h2>
                   <div>
                     {config.binance ? (
                       <img src={btc} alt="btcb" />
@@ -777,7 +786,7 @@ class MarketmakerSettings extends Component<any, any> {
                   )}
                   {ethWallet ? (
                       <>
-                        <span styleName='item-text__secondary'>
+                        <p styleName='item-text__secondary'>
                           <FormattedMessage
                             id="MM_ETHBalance"
                             defaultMessage="Balance {AB_Coin}: {balance} (for miners fee)"
@@ -786,22 +795,22 @@ class MarketmakerSettings extends Component<any, any> {
                               balance: new BigNumber(ethBalance).dp(5).toNumber()
                             }}
                           />
-                        </span>
+                        </p>
+                        <hr />
                         <p styleName='item-text__secondary'>
                           <FormattedMessage
                             id="MM_DepositeWallet"
-                            defaultMessage="to top up, transfer to {address}"
-                            values={{
-                              address: ethWallet.address,
-                            }}
+                            defaultMessage="to top up, transfer to"
                           />
+                          <br />
+                          <Address address={ethWallet.address} format={AddressFormat.Full} />
                         </p>
                       </>
                     ) : (
                       <p styleName='item-text__secondary'>
                         <FormattedMessage
                           id="MM_ETHBalance"
-                          defaultMessage="Balance {AB_Coin}: {balance} (for miners fee)"
+                          defaultMessage="Balance {AB_Coin}: {balance} (for miner fees)"
                           values={{
                             AB_Coin: (config.binance) ? `BNB` : `ETH`,
                             balance: new BigNumber(ethBalance).dp(5).toNumber()

@@ -5873,7 +5873,7 @@
   },
   {
     "id": "MM_DepositeWallet",
-    "message": "to top up, transfer to {address}",
+    "message": "to top up, transfer to",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
@@ -5887,7 +5887,7 @@
   },
   {
     "id": "MM_ETHBalance",
-    "message": "Balance {AB_Coin}: {balance} (for miners fee)",
+    "message": "Balance {AB_Coin}: {balance} (for miner fees)",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
@@ -6006,7 +6006,7 @@
   },
   {
     "id": "MM_ToggleTextDisabled",
-    "message": "Turn On toggle to start earn",
+    "message": "Turn on this toggle to start earn",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
