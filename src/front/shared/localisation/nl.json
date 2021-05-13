@@ -5893,15 +5893,29 @@
     ]
   },
   {
-    "id": "MM_MakeSaveMnemonic",
-    "message": "Bewaar een geheime zin",
+    "id": "MM_StartHere",
+    "message": "Start hier met marketmaking",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
   },
   {
-    "id": "MM_NeedSaveMnemonic",
-    "message": "We maken BTC, {AB_Coin}, {token} hot portefeuilles. Je moet 12 woorden schrijven als je dat nog niet eerder hebt gedaan",
+    "id": "MM_Wallet_Required",
+    "message": "Een hot wallet is vereist om marketmaking te lanceren (BTC, {AB_Coin}, {token}).",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_Wallet_Create",
+    "message": "Creëer wallet",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_Wallet_Restore",
+    "message": "Herstel van seed van 12 woorden",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]

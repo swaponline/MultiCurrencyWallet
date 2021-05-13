@@ -197,7 +197,7 @@ const CreateWallet: React.FC<any> = (props) => {
 
   const handleRestoreMnemonic = () => {
     //@ts-ignore: strictNullChecks
-    actions.modals.open(constants.modals.RestoryMnemonicWallet, { btcBalance, fiatBalance })
+    actions.modals.open(constants.modals.RestoryMnemonicWallet, { btcBalance })
   }
 
   const validate = () => {
