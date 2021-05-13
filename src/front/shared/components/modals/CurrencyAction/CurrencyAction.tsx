@@ -52,7 +52,6 @@ class CurrencyAction extends React.Component<any, any> {
       actions.modals.open(constants.modals.ReceiveModal, {
         currency,
         address,
-        isToken,
       })
     } else {
       const { Withdraw, WithdrawMultisigSMS, WithdrawMultisigUser } = constants.modals
