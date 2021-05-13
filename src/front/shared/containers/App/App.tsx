@@ -250,7 +250,7 @@ class App extends React.Component<RouteComponentProps<any>, any> {
               redirectTo(links.home)
               window.location.reload()
             } else {
-              redirectTo(config.binance ? links.exchange : links.createWallet)
+              redirectTo(window.location.host === 'bsc.swap.io' ? links.exchange : links.createWallet)
               if (wpLoader) wpLoader.style.display = 'none'
             }
           }
@@ -265,7 +265,7 @@ class App extends React.Component<RouteComponentProps<any>, any> {
             if (wpLoader) wpLoader.style.display = 'none'
           })
 
-          if (config.binance || window.location.host === 'bsc.swap.io') {
+          if (window.location.host === 'bsc.swap.io') {
             redirectTo('#/exchange/btc-to-btcb')
           }
         } else {
