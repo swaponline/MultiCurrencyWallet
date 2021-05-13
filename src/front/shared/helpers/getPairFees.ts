@@ -180,11 +180,6 @@ export const getPairFees = (params: PairFeesParams): Promise<IPairFees> => {
   let originSell = sellCurrency.toLowerCase()
   let originBuy = buyCurrency.toLowerCase()
 
-  if (config.binance) {
-    if (sellCurrency.toLowerCase() === `bnb`) sellCurrency = `eth`
-    if (buyCurrency.toLowerCase() === `bnb`) buyCurrency = `eth`
-  }
-
   return new Promise(async (feeResolved) => {
     const sell = await fetchCoinFee({
       coinName: sellCurrency.toUpperCase(),
@@ -201,14 +196,6 @@ export const getPairFees = (params: PairFeesParams): Promise<IPairFees> => {
       [buy.coin]: buy,
       [sell.coin]: sell,
     }
-
-    if (
-      config.binance &&
-      (
-        originBuy.toLowerCase() === `eth`
-        || originSell.toLowerCase() === `eth`
-      )
-    ) byCoins[`BNB`] = byCoins[`ETH`]
 
     const result = {
       sell,

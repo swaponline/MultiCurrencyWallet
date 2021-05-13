@@ -6,8 +6,6 @@ import styles from './Amounts.scss'
 import Row from '../Row/Row'
 import Value from '../Value/Value'
 import { FormattedMessage } from 'react-intl'
-import config from 'app-config'
-
 
 const title = (
   <FormattedMessage id="amount" defaultMessage="Exchange" />
@@ -15,9 +13,9 @@ const title = (
 
 const Amounts = ({ buyAmount, sellAmount, buyCurrency, sellCurrency }) => (
   <Row title={title}>
-    <Value value={sellAmount} currency={(sellCurrency.toUpperCase() === `ETH` && config.binance) ? `BNB` : sellCurrency} />
+    <Value value={sellAmount} currency={sellCurrency} />
     <span styleName="arrow">&rarr;</span>
-    <Value value={buyAmount} currency={(buyCurrency.toUpperCase() === `ETH` && config.binance) ? `BNB` : buyCurrency} />
+    <Value value={buyAmount} currency={buyCurrency} />
   </Row>
 )
 

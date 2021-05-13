@@ -81,7 +81,6 @@ const FAQ = (props) => {
     setOpenedTabsCounter({ ...openedTabsCounter, [tabName]: ++openedTabsCounter[tabName] })
   }
 
-  const ethOrBnb = externalConfig.binance ? 'BNB' : 'ETH'
   const BtcPrecentFee = adminFee.isEnabled('BTC')
   const EthPrecentFee = adminFee.isEnabled('ETH')
   const BnbPrecentFee = adminFee.isEnabled('BNB')
@@ -128,8 +127,8 @@ const FAQ = (props) => {
                 id="MainFAQ2_content1"
                 defaultMessage="For {tokenType} tokens, it is required that you have at least 0.001 {currency} on your wallets. Remember! when sending {tokenType} tokens, you are required to hold some {currency} as miners fees for transactions. This is also the case for all atomic swaps for {currency} & {tokenType} tokens."
                 values={{
-                  currency: ethOrBnb,
-                  tokenType: externalConfig.binance ? 'BEP20' : 'ERC20'
+                  currency: 'ETH',
+                  tokenType: 'ERC20'
                 }}
               />
             </p>

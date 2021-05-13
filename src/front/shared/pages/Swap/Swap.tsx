@@ -177,7 +177,7 @@ class SwapComponent extends PureComponent<any, any> {
       console.log('swap flow name:', swap.flow._flowName);
 
       const SwapComponent = swapComponents[swap.flow._flowName]
-      const ethData = items.filter(item => item.currency === (config.binance) ? 'BNB' : 'ETH')
+      const ethData = items.filter(item => item.currency === 'ETH')
       const currencyData = items.concat(tokenItems)
         .filter(item => item.currency === swap.sellCurrency.toUpperCase())[0]
       const currencies = [

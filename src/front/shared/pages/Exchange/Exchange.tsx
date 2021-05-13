@@ -225,8 +225,8 @@ class Exchange extends PureComponent<any, any> {
       }
     }
 
-    let haveCurrency = sell || (config.binance) ? `btc` : config.opts.defaultExchangePair.sell
-    let getCurrency = buy || (config.binance) ? `btcb` : (!isWidgetBuild ? config.opts.defaultExchangePair.buy : config.erc20token)
+    let haveCurrency = sell || config.opts.defaultExchangePair.sell
+    let getCurrency = buy || (!isWidgetBuild ? config.opts.defaultExchangePair.buy : config.erc20token)
 
     const exchangeDataStr = localStorage.getItem(constants.localStorage.exchangeSettings)
     const exchangeSettings = exchangeDataStr && JSON.parse(exchangeDataStr)
@@ -565,10 +565,6 @@ class Exchange extends PureComponent<any, any> {
       )
     }
 
-    if (config.binance) {
-      balances[`ETH`] = balances[`BNB`]
-    }
-
     this.setState(() => ({
       isPending: false,
       balances,
@@ -711,7 +707,7 @@ class Exchange extends PureComponent<any, any> {
       balances,
     } = this.state
 
-    const ethBalance = (balances && balances[(config.binance) ? `BNB` : `ETH`]) ? balances[(config.binance) ? `BNB` : `ETH`] : 0
+    const ethBalance = (balances && balances[`ETH`]) ? balances.ETH : 0
     return ethBalance
   }
 
@@ -1468,7 +1464,7 @@ class Exchange extends PureComponent<any, any> {
   }
 
   renderCoinName = (coin) => {
-    return (coin.toUpperCase() === `ETH` && config.binance) ? `BNB` : coin.toUpperCase()
+    return coin.toUpperCase()
   }
 
   render() {
@@ -1944,7 +1940,7 @@ class Exchange extends PureComponent<any, any> {
             {(!isWidgetBuild || isDevBuild) && (
               <>
                 <div styleName="link button-like">
-                  <a href={!isChromeExtention ? `#${links.marketmaker}/` : (config.binance) ? `#${links.marketmaker}/BTCB` : `#${links.marketmaker}/WBTC`}>
+                  <a href={!isChromeExtention ? `#${links.marketmaker}/` : `#${links.marketmaker}/WBTC`}>
                     <FormattedMessage id="AddLiquidity" defaultMessage="Add Liquidity" />
                   </a>
                 </div>

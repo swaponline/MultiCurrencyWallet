@@ -1,3 +1,4 @@
+import erc20Like from 'common/erc20Like';
 import config from 'app-config'
 import moment from 'moment/moment'
 import { constants, ethToken } from 'helpers'
@@ -416,7 +417,7 @@ const getInfoAboutCurrency = (currencyNames) => {
                 break
 
               default:
-                if (ethToken.isEthToken({ name: currencyInfoItem.symbol })) {
+                if (erc20Like.isToken({ name: currencyInfoItem.symbol })) {
                   reducers.user.setInfoAboutToken({ name: currencyInfoItem.symbol.toLowerCase(), infoAboutCurrency: currencyInfo })
                 } else {
                   reducers.user.setInfoAboutCurrency({ name: `${currencyInfoItem.symbol.toLowerCase()}Data`, infoAboutCurrency: currencyInfo })
@@ -602,15 +603,16 @@ export const getWithdrawWallet = (currency, addr) => {
 export const isOwner = (addr, currency) => {
   const lowerAddr = addr.toLowerCase()
 
-  if (ethToken.isEthToken({ name: currency })) {
-    const allAddresses = actions[config.binance ? 'bnb' : 'eth'].getAllMyAddresses()
-    //@ts-ignore: strictNullChecks
+  if (erc20Like.isToken({ name: currency })) {
+    const isErc20 = erc20Like.erc20.isToken({ name: currency })
+    const isBep20 = erc20Like.bep20.isToken({ name: currency })
+    const actionName = isErc20 ? 'eth' : isBep20 ? 'bnb' : 'eth'
+    const allAddresses = actions[actionName].getAllMyAddresses()
+
     if (allAddresses.includes(lowerAddr)) return true
 
     const { user } = getState()
-    const storeOwnerAddress = user[
-      config.binance ? 'bnbData' : 'ethData'
-    ].address.toLowerCase()
+    const storeOwnerAddress = user[`${actionName}Data`].address.toLowerCase()
 
     return lowerAddr === storeOwnerAddress
   }
@@ -622,9 +624,7 @@ export const isOwner = (addr, currency) => {
     actions.ghost.getAllMyAddresses().includes(lowerAddr) ||
     //@ts-ignore: strictNullChecks
     actions.next.getAllMyAddresses().includes(lowerAddr) ||
-    //@ts-ignore: strictNullChecks
     actions.eth.getAllMyAddresses().includes(lowerAddr) ||
-    //@ts-ignore: strictNullChecks
     actions.bnb.getAllMyAddresses().includes(lowerAddr)
   ) {
     return true

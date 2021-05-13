@@ -163,7 +163,7 @@ class OrderBook extends Component {
 
   
   renderCoinName(coin) {
-    return (coin.toUpperCase() === `ETH` && config.binance) ? `BNB` : coin.toUpperCase()
+    return coin.toUpperCase()
   }
 
   render() {
