@@ -861,10 +861,9 @@
       const host = window.location.host
 
       if (
-        isBinanceBuild && (
+        host === 'bsc.swap.io' && (
           urlHash === '#/' ||
-          urlHash === '#/createWallet' ||
-          host === 'bsc.swap.io'
+          urlHash === '#/createWallet'
         )
       ) {
         redirectionTo('#/exchange/btc-to-btcb')
