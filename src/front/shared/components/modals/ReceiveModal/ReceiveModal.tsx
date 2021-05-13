@@ -15,7 +15,7 @@ import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
 
 import config from 'helpers/externalConfig'
 import getCurrencyKey from 'helpers/getCurrencyKey'
-import { ethToken, getItezUrl } from 'helpers'
+import { getItezUrl } from 'helpers'
 
 
 const langPrefix = `ReceiveModal`
@@ -57,6 +57,7 @@ class ReceiveModal extends React.Component<any, any> {
       data: {
         address,
         currency,
+        isToken,
       },
     } = props
 
@@ -73,9 +74,8 @@ class ReceiveModal extends React.Component<any, any> {
     howToDeposit = howToDeposit.replace(/{userAddress}/g, address);
 
     const targetCurrency = getCurrencyKey(currency.toLowerCase(), true)
-    const isToken = ethToken.isEthToken({ name: currency })
-
     const recieveUrl = (isToken ? '/token' : '') + `/${targetCurrency}/${address}/receive`
+    
     props.history.push(recieveUrl)
 
     this.state = {

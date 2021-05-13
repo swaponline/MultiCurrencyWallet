@@ -10,7 +10,7 @@ import { constants } from 'helpers'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
 import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
-import icons from './images'
+import icons from 'components/ui/CurrencyIcon/images'
 import config from 'app-config'
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
@@ -22,9 +22,6 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
 }))
 @cssModules(styles, { allowMultiple: true })
 class CurrencyAction extends React.Component<any, any> {
-
-  props: any
-
   handleClose = () => {
     const { name, data, onClose } = this.props
 
@@ -39,23 +36,23 @@ class CurrencyAction extends React.Component<any, any> {
     actions.modals.close(name)
   }
 
-  handleClickCurrency = item => {
+  handleClickCurrency = (item) => {
     const {
-      name,
       data: { context },
       history,
       intl: { locale },
     } = this.props
 
-
     const { currency, address } = item
+    const isToken = erc20Like.isToken({ name: currency })
 
     if (context === 'Deposit') {
       this.handleClose()
       //@ts-ignore
       actions.modals.open(constants.modals.ReceiveModal, {
         currency,
-        address
+        address,
+        isToken,
       })
     } else {
       const { Withdraw, WithdrawMultisigSMS, WithdrawMultisigUser } = constants.modals
@@ -73,14 +70,10 @@ class CurrencyAction extends React.Component<any, any> {
           break
       }
 
-      const isToken = erc20Like.isToken({ name: currency })
       this.handleClose()
 
       history.push(
-        localisedUrl(
-          locale,
-          (isToken ? '/token' : '') + `/${targetCurrency}/${address}/send`
-        )
+        localisedUrl(locale, (isToken ? '/token' : '') + `/${targetCurrency}/${address}/send`)
       )
     }
 
@@ -97,8 +90,8 @@ class CurrencyAction extends React.Component<any, any> {
     // if currencies is one, do autoselect
     if (currencies.length == 1) {
       this.handleClickCurrency(currencies.shift())
-      //return
     }
+
     return (
       <div styleName={cx({
         "modal-overlay": true,
@@ -155,8 +148,11 @@ class CurrencyAction extends React.Component<any, any> {
 
                 if (!icons[iconName] || !styles[iconName]) {
                   iconName = 'eth' // prevent styles fail for unknown asset
-                  if (config && config.isWidget) {
-                    iconName = 'eth' // Нужно нарисовать картинку для erc20 токена
+
+                  if (item.standard === 'erc20') {
+                    iconName = 'eth'
+                  } else if (item.standard === 'bep20') {
+                    iconName = 'bnb'
                   }
                 }
 
@@ -174,7 +170,7 @@ class CurrencyAction extends React.Component<any, any> {
                 return (
                   <div styleName="card" key={item.currency} onClick={() => this.handleClickCurrency(item)}>
                     {/* @ts-ignore: strictNullChecks */}
-                    <div styleName={`circle ${iconName}`} style={renderStyle}>
+                    <div styleName={`circle ${renderIcon ? '' : iconName}`} style={renderStyle}>
                       <img src={renderIcon} alt={`${name} icon`} role="image" />
                     </div>
                     <b>{itemTitle}</b>

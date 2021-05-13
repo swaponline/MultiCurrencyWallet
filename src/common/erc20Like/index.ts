@@ -1,3 +1,4 @@
+import Web3 from 'web3'
 import config from 'app-config'
 import TokenApi from 'human-standard-token-abi'
 import { BigNumber } from 'bignumber.js'
@@ -12,18 +13,21 @@ class erc20LikeHelper {
   readonly currency: string // (ex. ETH)
   readonly currencyKey: string // (ex. eth)
   readonly defaultParams: IUniversalObj
+  readonly Web3: IUniversalObj
 
   constructor(params) {
     const {
       standard,
       currency,
       defaultParams,
+      web3,
     } = params
 
     this.standard = standard
     this.currency = currency
     this.currencyKey = currency.toLowerCase()
     this.defaultParams = defaultParams
+    this.Web3 = web3
   }
 
   reportError = (error) => {
@@ -67,7 +71,7 @@ class erc20LikeHelper {
     decimals: number
   }): Promise<number> => {
     const { tokenOwnerAddress, tokenContractAddress, decimals } = params
-    const tokenContract = new web3.eth.Contract(TokenApi, tokenContractAddress)
+    const tokenContract = new this.Web3.eth.Contract(TokenApi, tokenContractAddress)
   
     let allowanceAmount
   
@@ -109,10 +113,12 @@ export default {
     standard: 'erc20',
     currency: 'ETH',
     defaultParams: DEFAULT_CURRENCY_PARAMETERS.ethToken,
+    web3: new Web3(new Web3.providers.HttpProvider(config.web3.provider)),
   }),
   bep20: new erc20LikeHelper({
     standard: 'bep20',
     currency: 'BNB',
     defaultParams: DEFAULT_CURRENCY_PARAMETERS.ethToken,
+    web3: new Web3(new Web3.providers.HttpProvider(config.web3.binance_provider)),
   }),
 }
