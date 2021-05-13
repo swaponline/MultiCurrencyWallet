@@ -89,7 +89,6 @@ export const initialState = {
   activeCurrency: 'BTC',
   multisigStatus: {},
   multisigPendingCount: 0,
-  messagingToken: null,
   metamaskData: false,
 }
 

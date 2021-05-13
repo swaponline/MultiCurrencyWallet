@@ -1,8 +1,5 @@
 import { COIN_DATA, COIN_MODEL, COIN_TYPE } from 'swap.app/constants/COINS'
 import helpers from 'helpers'
-import config from 'app-config'
-
-
 
 const reportAboutProblem = (params) => {
   const { isError = false, info } = params
@@ -40,7 +37,7 @@ const fetchCoinFee = (params): Promise<CoinFee> => {
 
   return new Promise(async (feeResolved) => {
     const hasFeeInCache = !updateCacheValue && feeCache[action] && feeCache[action][coinName]
-    const coinData = COIN_DATA[coinName]
+    const coinData = COIN_DATA[coinName.toUpperCase()]
     let isBuyingUTXO = action === 'buy' && coinData.model === COIN_MODEL.UTXO
     let isBuyingAB = action === 'buy' && coinData.model === COIN_MODEL.AB
 
@@ -177,8 +174,6 @@ type PairFeesParams = {
 
 export const getPairFees = (params: PairFeesParams): Promise<IPairFees> => {
   let { sellCurrency, buyCurrency, updateCacheValue = false } = params
-  let originSell = sellCurrency.toLowerCase()
-  let originBuy = buyCurrency.toLowerCase()
 
   return new Promise(async (feeResolved) => {
     const sell = await fetchCoinFee({

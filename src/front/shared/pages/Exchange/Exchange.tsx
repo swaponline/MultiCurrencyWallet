@@ -1830,7 +1830,7 @@ class Exchange extends PureComponent<any, any> {
                     </span>
                   ) : (
                     <span>
-                      {pairFees.sell.fee} {this.renderCoinName(pairFees.sell.coin)} + {pairFees.buy.fee} {this.renderCoinName(pairFees.buy.coin)}
+                      {pairFees.sell.fee} {pairFees.sell.coin} + {pairFees.buy.fee} {pairFees.buy.coin}
                       {' ≈ '}
                       {fiatFeeCalculation > 0 ? <>${fiatFeeCalculation}</> : 0}
                       {' '}

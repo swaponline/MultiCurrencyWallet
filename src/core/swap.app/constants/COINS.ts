@@ -41,7 +41,7 @@ export const COIN_DATA = {
   'BTCB': {
     ticker: 'BTCB',
     name: 'BTCB Token',
-    type: COIN_TYPE.ETH_TOKEN,
+    type: COIN_TYPE.BNB_TOKEN,
     model: COIN_MODEL.AB,
     precision: 18,
   },

@@ -55,7 +55,6 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
       isBalanceFetching,
       multisigPendingCount,
       activeCurrency,
-      messagingToken,
       metamaskData,
     },
     currencies: { items: currencies },
@@ -75,7 +74,6 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
 
     return {
       allData,
-      messagingToken,
       currencies,
       isBalanceFetching,
       multisigPendingCount,
@@ -412,10 +410,6 @@ class Wallet extends Component<any, any> {
             ip: ipInfo.ip,
           }
 
-          if (this.props.messagingToken) {
-            //@ts-ignore
-            registrationData.messaging_token = this.props.messagingToken
-          }
           let widgetUrl
           if (appConfig.isWidget) {
             widgetUrl = getTopLocation().origin

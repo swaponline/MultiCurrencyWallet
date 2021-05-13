@@ -1,5 +1,5 @@
 import config from 'app-config'
-
+import TOKEN_STANDARDS from 'common/helpers/constants/TOKEN_STANDARDS'
 const NETWORK = process.env.MAINNET ? 'mainnet' : 'testnet'
 
 const getCustomTokenConfig = () => {
@@ -32,6 +32,8 @@ if (window
 ) {
   buildOpts.ownTokens = window.widgetERC20Tokens
 }
+// TODO: need to split user's own tokens in the buildOpts.ownTokens
+// TODO: and make different objects (example: buildOpts.ownTokens[erc20|bep20|...])
 if (buildOpts.ownTokens && Object.keys(buildOpts.ownTokens).length) {
   // Multi token mode
   const cleanERC20 = {}
@@ -47,6 +49,43 @@ if (buildOpts.ownTokens && Object.keys(buildOpts.ownTokens).length) {
   })
   config.erc20 = cleanERC20
 }
+
+const tokenItems: IUniversalObj[] = []
+
+Object.keys(TOKEN_STANDARDS).forEach((key) => {
+  const standard = TOKEN_STANDARDS[key].standard
+
+  Object.keys(config[standard]).forEach((name) => {
+    tokenItems.push({
+      name: name.toUpperCase(),
+      title: name.toUpperCase(),
+      icon: name,
+      value: name,
+      fullTitle: name,
+      addAssets: true,
+      standard,
+    })
+  })
+})
+
+const tokenPartialItems: IUniversalObj[] = []
+
+Object.keys(TOKEN_STANDARDS).forEach((key) => {
+  const standard = TOKEN_STANDARDS[key].standard
+
+  Object.keys(config[standard])
+    .filter((name) => config[standard][name].canSwap)
+    .forEach((name) => {
+      tokenPartialItems.push({
+        name: name.toUpperCase(),
+        title: name.toUpperCase(),
+        icon: name,
+        value: name,
+        fullTitle: config[standard][name].fullName || name,
+        standard,
+      })
+    })
+})
 
 const initialState = {
   items: [
@@ -122,15 +161,7 @@ const initialState = {
       addAssets: false,
       dontCreateOrder: true,
     }] : [],
-    ...(Object.keys(config.erc20)
-      .map(key => ({
-        name: key.toUpperCase(),
-        title: key.toUpperCase(),
-        icon: key,
-        value: key,
-        fullTitle: key,
-        addAssets: true,
-      }))),
+    ...tokenItems,
   ],
   partialItems: [
     //@ts-ignore
@@ -173,16 +204,7 @@ const initialState = {
       value: 'btc',
       fullTitle: 'bitcoin',
     }] : [],
-    ...(Object.keys(config.erc20)
-      .filter(key => config.erc20[key].canSwap)
-      .map(key => ({
-          name: key.toUpperCase(),
-          title: key.toUpperCase(),
-          icon: key,
-          value: key,
-          fullTitle: config.erc20[key].fullName || key,
-        }
-      ))),
+    ...tokenPartialItems,
   ],
   addSelectedItems: [],
   addPartialItems: [],
