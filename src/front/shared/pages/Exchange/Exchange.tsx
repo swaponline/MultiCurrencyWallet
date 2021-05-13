@@ -63,8 +63,6 @@ type ExchangeProps = {
   match: IUniversalObj
   location: IUniversalObj
   history: IUniversalObj
-  usersData: IUniversalObj[]
-  currenciesData: IUniversalObj[]
   tokensData: IUniversalObj[]
   currencies: { [key: string]: string }[]
   allCurrencyies: CurrencyObj[]
@@ -135,26 +133,15 @@ const bannedPeers = {} // rejected swap peers
     currencies,
     rememberedOrders,
     core: { orders },
-    user: { ethData, btcData, ghostData, nextData, tokensData, activeFiat, ...rest },
+    user: { tokensData, activeFiat },
   }) => ({
     currencies: swapsHelper.isExchangeAllowed(currencies.partialItems),
     allCurrencyies: currencies.items,
     addSelectedItems: swapsHelper.isExchangeAllowed(currencies.addPartialItems),
     orders: swapsHelper.filterIsPartial(orders),
-    currenciesData: [ethData, btcData, ghostData, nextData],
     tokensData: [...Object.keys(tokensData).map((k) => tokensData[k])],
     decline: rememberedOrders.savedOrders,
     activeFiat,
-    usersData: [
-      ethData,
-      btcData,
-      ghostData,
-      nextData,
-      ...Object.values(tokensData).filter(({ address }) => address),
-      ...Object.values(rest)
-        .filter((coinData) => coinData && coinData.address)
-        .filter(({ address }) => address),
-    ],
   })
 )
 @CSSModules(styles, { allowMultiple: true })
@@ -869,7 +856,7 @@ class Exchange extends PureComponent<any, any> {
 
   // @ToDo - need refactiong without BTC
   initSwap = async () => {
-    const { decline, usersData } = this.props
+    const { decline } = this.props
 
     const { haveCurrency, haveAmount, getCurrency, haveType } = this.state
     const haveTicker = haveCurrency.toUpperCase()

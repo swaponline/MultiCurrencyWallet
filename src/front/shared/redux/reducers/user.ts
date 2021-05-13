@@ -1,3 +1,13 @@
+import TOKEN_STANDARDS from 'common/helpers/constants/TOKEN_STANDARDS'
+
+const tokensData = {}
+
+Object.keys(TOKEN_STANDARDS).forEach((key) => {
+  const standard = TOKEN_STANDARDS[key].standard
+
+  tokensData[standard] = {}
+})
+
 export const initialState = {
   ghostData: {
     balance: 0,
@@ -81,7 +91,7 @@ export const initialState = {
     balanceError: null,
   },
   fiats: [],
-  tokensData: {},
+  tokensData,
   isFetching: false,
   isBalanceFetching: false,
   isTokenSigned: false,
@@ -136,7 +146,7 @@ export const setTokenSigned = (state, booleanValue) => ({
   isTokenSigned: booleanValue,
 })
 
-export const setTokenAuthData = (state, { name, data }) => ({
+export const setTokenAuthData = (state, { name, standard, data }) => ({
   ...state,
   tokensData: {
     ...state.tokensData,
@@ -161,7 +171,7 @@ export const setBtcMultisigBalance = (state, { address, amount, unconfirmedBalan
   }
 }
 
-export const setBalance = (state, { name, amount, unconfirmedBalance }) => ({
+export const setBalance = (state, { name, standard, amount, unconfirmedBalance }) => ({
   ...state,
   tokensData: {
     ...state.tokensData,
@@ -175,7 +185,7 @@ export const setBalance = (state, { name, amount, unconfirmedBalance }) => ({
   },
 })
 
-export const setInfoAboutToken = (state, { name, infoAboutCurrency }) => ({
+export const setInfoAboutToken = (state, { name, standard, infoAboutCurrency }) => ({
   ...state,
   tokensData: {
     ...state.tokensData,
@@ -186,7 +196,7 @@ export const setInfoAboutToken = (state, { name, infoAboutCurrency }) => ({
   },
 })
 
-export const setInfoAboutCurrency = (state, { name, infoAboutCurrency }) => ({
+export const setInfoAboutCurrency = (state, { name, standard, infoAboutCurrency }) => ({
   ...state,
   tokensData: {
     ...state.tokensData,
@@ -209,7 +219,7 @@ export const setBalanceError = (state, { name }) => ({
   },
 })
 
-export const setTokenBalanceError = (state, { name }) => ({
+export const setTokenBalanceError = (state, { name, standard }) => ({
   ...state,
   tokensData: {
     ...state.tokensData,
@@ -220,7 +230,7 @@ export const setTokenBalanceError = (state, { name }) => ({
   },
 })
 
-export const setTokenBalance = (state, { name, amount }) => ({
+export const setTokenBalance = (state, { name, standard, amount }) => ({
   ...state,
   tokensData: {
     ...state.tokensData,

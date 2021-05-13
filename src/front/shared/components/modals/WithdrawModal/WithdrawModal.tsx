@@ -43,22 +43,10 @@ const NETWORK = process.env.MAINNET
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
-type Currency = {
-  addAssets: boolean
-  fullTitle: string
-  icon: string
-  name: string
-  title: string
-  value: string
-}
-
 type WithdrawModalProps = {
   name: 'WithdrawModal'
   activeFiat: string
-  activeCurrency: string
   dashboardView: boolean
-  isBalanceFetching: boolean
-  currencies: Currency[]
 
   intl: IUniversalObj
   history: IUniversalObj
@@ -125,7 +113,6 @@ type WithdrawModalState = {
 
 @connect(
   ({
-    currencies,
     user: {
       ethData,
       bnbData,
@@ -134,18 +121,13 @@ type WithdrawModalState = {
       nextData,
       tokensData,
       activeFiat,
-      isBalanceFetching,
-      activeCurrency,
     },
     ui: { dashboardModalsAllowed },
   }) => ({
     activeFiat,
-    activeCurrency,
-    currencies: currencies.items,
     items: [ethData, bnbData, btcData, ghostData, nextData],
     tokenItems: [...Object.keys(tokensData).map((k) => tokensData[k])],
     dashboardView: dashboardModalsAllowed,
-    isBalanceFetching,
   })
 )
 @cssModules(styles, { allowMultiple: true })

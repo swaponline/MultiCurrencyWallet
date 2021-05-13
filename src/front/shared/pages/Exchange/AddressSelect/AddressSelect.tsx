@@ -91,10 +91,14 @@ type AddressSelectState = {
 
 @withRouter
 @connect(
-  ({ core: { hiddenCoinsList }, user: { btcData, ethData, ghostData, nextData, tokensData } }) => {
+  ({
+    core: { hiddenCoinsList },
+    user: { btcData, ethData, bnbData, ghostData, nextData, tokensData },
+  }) => {
     const allData = [
       btcData,
       ethData,
+      bnbData,
       ghostData,
       nextData,
       ...Object.keys(tokensData).map((k) => tokensData[k]),

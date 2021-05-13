@@ -77,7 +77,7 @@ export default class DepositWindow extends Component<any, any> {
     if (this.isSellCurrencyEthOrEthToken) {
       if (this.isSellCurrencyEthToken) {
         // TODO: replace actions with erc20, bep20 ...
-        actualBalance = await actions.token.getBalance(this.currency)
+        actualBalance = await actions.erc20.getBalance(this.currency)
       } else {
         actualBalance = await actions.eth.getBalance()
       }
