@@ -6,7 +6,9 @@ import styles from '../SwapList.scss'
 import config from 'app-config'
 import { isMobile } from 'react-device-detect'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
+import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import { FormattedMessage } from 'react-intl'
+import checkedIcon from '../../../images/checked.svg';
 
 
 const SecondStep = (props) => {
@@ -54,6 +56,8 @@ const SecondStep = (props) => {
             rel="noreferrer noopener"
           >
             <FormattedMessage id="FourthStep37BtcLike" defaultMessage="({currencyName} tx)" values={{ currencyName : currencyName.toLowerCase() }} />
+            {' '}
+            <img styleName="checkedIcon" src={checkedIcon} alt='checked' />
             <i className="fas fa-link" />
           </a>
         </strong>
@@ -71,6 +75,7 @@ const SecondStep = (props) => {
               values={{ otherCurrency: sellCurrency === currencyName ? buyCurrency.toLowerCase() : sellCurrency.toLowerCase() }}
             />
             <i className="fas fa-link" />
+            <InlineLoader />
           </a>
         </strong>
       )}

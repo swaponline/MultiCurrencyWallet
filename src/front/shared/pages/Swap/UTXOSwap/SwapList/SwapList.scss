@@ -103,15 +103,18 @@
   position: relative;
   a {
     font-size: 14px;
-    margin-top: -12px;
     display: block;
     margin-right: 4px;
     display: flex;
+    align-items: center;
     border-bottom: 1px solid;
     padding-bottom: 3px;
     &:hover {
       border-bottom: none;
       color: #007bff;
+    }
+    .checkedIcon {
+      margin-left: 2px;
     }
   }
   i {
