@@ -25,7 +25,7 @@ import helpers, {
 } from 'helpers'
 import btcUtils from 'common/utils/coin/btc'
 import erc20Like from 'common/erc20Like'
-
+import ethLikeHelper from 'common/helpers/ethLikeHelper'
 import Modal from 'components/modal/Modal/Modal'
 import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
 import Input from 'components/forms/Input/Input'
@@ -397,7 +397,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
         // if decimals < 7 then equal 0.0...1
         // if decimals >= 7 then equal 1e-<decimals>
         MIN_AMOUNT[currentCoin] = 10 ** -currentDecimals
-        MIN_AMOUNT.eth = await helpers.eth.estimateFeeValue({
+        MIN_AMOUNT.eth = await ethLikeHelper.eth.estimateFeeValue({
           method: 'send',
           speed: 'fast',
         })
@@ -408,7 +408,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
         }))
       } else if (isBep20Token) {
         MIN_AMOUNT[currentCoin] = 10 ** -currentDecimals
-        MIN_AMOUNT.bnb = await helpers.bnb.estimateFeeValue({
+        MIN_AMOUNT.bnb = await ethLikeHelper.bnb.estimateFeeValue({
           method: 'send',
           speed: 'fast',
         })

@@ -107,18 +107,12 @@ class Row extends Component<RowProps, RowState> {
     }
   }
 
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.handleSliceAddress)
-  }
-
   async componentDidMount() {
     const { balance } = this.props.itemData
 
     this.setState({
       isBalanceEmpty: balance === 0,
     })
-
-    window.addEventListener('resize', this.handleSliceAddress)
   }
 
   componentDidUpdate(prevProps) {
@@ -227,19 +221,6 @@ class Row extends Component<RowProps, RowState> {
     )
   }
 
-  handleSliceAddress = () => {
-    const {
-      itemData: { address },
-    } = this.props
-
-    const firstPart = address.substr(0, 6)
-    const secondPart = address.substr(address.length - 4)
-
-    return window.innerWidth < 700 || isMobile || address.length > 42
-      ? `${firstPart}...${secondPart}`
-      : address
-  }
-
   handleWithdrawPopup = () => {
     const {
       itemData: { currency },
@@ -257,6 +238,7 @@ class Row extends Component<RowProps, RowState> {
       //@ts-ignore: strictNullChecks
       intl: { locale },
     } = this.props
+    const { isToken } = this.state
 
     if (currency.toLowerCase() === 'ghost') {
       this.handleWithdrawPopup()
@@ -277,14 +259,9 @@ class Row extends Component<RowProps, RowState> {
         break
     }
 
-    const isToken = helpers.ethToken.isEthToken({ name: currency })
-
     //@ts-ignore: strictNullChecks
     history.push(
-      localisedUrl(
-        locale,
-        (isToken ? '/token' : '') + `/${targetCurrency}/${address}/send`
-      )
+      localisedUrl(locale, (isToken ? '/token' : '') + `/${targetCurrency}/${address}/send`)
     )
   }
 
@@ -389,8 +366,9 @@ class Row extends Component<RowProps, RowState> {
       history,
       //@ts-ignore: strictNullChecks
       intl: { locale },
-      itemData: { currency, balance, address },
+      itemData: { currency, address },
     } = this.props
+    const  { isToken } = this.state
 
     let targetCurrency = currency
     switch (currency.toLowerCase()) {
@@ -401,14 +379,9 @@ class Row extends Component<RowProps, RowState> {
         break
     }
 
-    const isToken = helpers.ethToken.isEthToken({ name: currency })
-
     //@ts-ignore: strictNullChecks
     history.push(
-      localisedUrl(
-        locale,
-        (isToken ? '/token' : '') + `/${targetCurrency}/${address}`
-      )
+      localisedUrl(locale, (isToken ? '/token' : '') + `/${targetCurrency}/${address}`)
     )
   }
 
@@ -520,8 +493,7 @@ class Row extends Component<RowProps, RowState> {
     if (
       config &&
       config.erc20 &&
-      config.erc20[this.props.currency.currency.toLowerCase()] &&
-      config.erc20[this.props.currency.currency.toLowerCase()].howToWithdraw
+      config.erc20[this.props.currency.currency.toLowerCase()]?.howToWithdraw
     ) {
       hasHowToWithdraw = true
     }

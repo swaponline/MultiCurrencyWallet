@@ -16,6 +16,7 @@ type CreateInvoiceProps = {
   user: {
     btcData,
     ethData,
+    bnbData,
     ghostData,
     nextData,
   },
@@ -24,6 +25,7 @@ type CreateInvoiceProps = {
     data: {
       btc: btcData,
       eth: ethData,
+      bnb: bnbData,
       ghost: ghostData,
       next: nextData,
     }
