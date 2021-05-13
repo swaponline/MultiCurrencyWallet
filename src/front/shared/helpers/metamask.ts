@@ -7,13 +7,11 @@ import { setMetamask, setProvider, setDefaultProvider, getWeb3 as getDefaultWeb3
 import SwapApp from 'swap.app'
 import Web3Connect from 'common/web3connect'
 
+// Binance Smart Chain: 56 = Mainnet, 97 = Testnet
+// Ethereum: 1 = Mainnet, 3 = Ropsten
 const web3connect = new Web3Connect({
-  web3ChainId: (config.binance)
-    ? (process.env.MAINNET) ? 56 : 97  // 56 = Mainnet, 97 = Testnet
-    : (process.env.MAINNET) ? 1 : 3, // 1 = Mainnet, 3 = Ropsten
-  web3RPC: (config.binance)
-    ? config.web3.binance_provider
-    : config.web3.provider,
+  web3ChainId: process.env.MAINNET ? 1 : 3,
+  web3RPC: config.web3.provider,
 })
 
 const _onWeb3Changed = (newWeb3) => {
@@ -27,12 +25,6 @@ const _onWeb3Changed = (newWeb3) => {
 
 web3connect.on('connected', async () => {
   localStorage.setItem(constants.localStorage.isWalletCreate, 'true')
-
-  if (config.binance) {
-    actions.core.markCoinAsVisible(`BNB`)
-  } else {
-    actions.core.markCoinAsVisible(`ETH`)
-  }
 
   _onWeb3Changed(web3connect.getWeb3())
 })
@@ -205,24 +197,22 @@ const handleDisconnectWallet = (cbDisconnected?) => {
   }
 }
 
-const handleConnectMetamask = (options?: {
+type MetamaskConnectParams = {
   dontRedirect?: boolean
-  cbFunction?: Function
-}) => {
-  const {
-    //@ts-ignore: strictNullChecks
-    dontRedirect,
-    //@ts-ignore: strictNullChecks
-    cbFunction,
-  } = options
+  callback?: () => void
+}
+
+const handleConnectMetamask = (options?: MetamaskConnectParams) => {
+  //@ts-ignore: strictNullChecks
+  const { dontRedirect, callback } = options
 
   connect({ dontRedirect }).then(async (connected) => {
     if (connected) {
       await actions.user.sign()
       await actions.user.getBalances()
-      if (cbFunction) cbFunction(true)
+      if (callback) callback(true)
     } else {
-      if (cbFunction) cbFunction(false)
+      if (callback) callback(false)
     }
   })
 }

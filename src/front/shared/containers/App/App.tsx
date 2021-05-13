@@ -41,19 +41,19 @@ moment.locale(userLanguage)
 const metamaskNetworks = defineMessages({
   mainnet: {
     id: `MetamaskNetworkAlert_NetworkMainnet`,
-    defaultMessage: `Основная сеть (Mainnet)`,
+    defaultMessage: `Main Network (Mainnet)`,
   },
   testnet: {
     id: `MetamaskNetworkAlert_NetworkTestnet`,
-    defaultMessage: `Тестовая сеть (Ropsten)`,
+    defaultMessage: `Test Network (Ropsten)`,
   },
   bnb_mainnet: {
     id: `MetamaskNetworkAlert_BnBNetworkMainnet`,
-    defaultMessage: `Mainnet Binance Smart Chain`,
+    defaultMessage: `Binance Smart Chain (Mainnet)`,
   },
   bnb_testnet: {
     id: `MetamaskNetworkAlert_BnBNetworkTestnet`,
-    defaultMessage: `Testnet Binance Smart Chain`,
+    defaultMessage: `Binance Smart Chain (Testnet)`,
   },
 })
 

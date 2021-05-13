@@ -479,6 +479,7 @@ class MarketmakerSettings extends Component<any, any> {
   processConnectWallet() {
     metamask.handleConnectMetamask({
       dontRedirect: true,
+      // @ts-ignore
       cbFunction: (isConnected) => {
         if (isConnected) {
           this.fetchWalletsWithBalances()

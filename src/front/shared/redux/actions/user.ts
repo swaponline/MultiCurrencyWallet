@@ -153,7 +153,7 @@ const sign = async () => {
     const btcMultisigPrivateKey = localStorage.getItem(constants.privateKeyNames.btcMultisig)
     const ghostPrivateKey = localStorage.getItem(constants.privateKeyNames.ghost)
     const nextPrivateKey = localStorage.getItem(constants.privateKeyNames.next)
-    // TODO: using ETH wallet for BNB. They're compatible (temporarily. Use BNB with ETH)
+    // using ETH wallet info for BNB. They're compatible
     const ABTypePrivateKey = localStorage.getItem(constants.privateKeyNames.eth)
 
     actions.eth.login(ABTypePrivateKey, mnemonic, mnemonicKeys)
@@ -486,15 +486,6 @@ const setTransactions = async (objCurrency: ObjCurrencyType | {} = null) => {
   const isEthSweeped = actions.eth.isSweeped()
   const isBnbSweeped = actions.bnb.isSweeped()
 
-  const {
-    core: { hiddenCoinsList },
-  } = getState()
-  const enabledCurrencies = getActivatedCurrencies()
-
-  /*
-    fetching penging btc-ms txs
-  */
-
   try {
     clearTransactions()
 
@@ -515,31 +506,53 @@ const setTransactions = async (objCurrency: ObjCurrencyType | {} = null) => {
       ...objCurrency && objCurrency['GHOST'] ? [actions.ghost.getTransaction()] : [],
       ...objCurrency && objCurrency['NEXT'] ? [actions.next.getTransaction()] : [],
     ]
-    
-    const erc20 = Object.keys(config.erc20)
-      //@ts-ignore: strictNullChecks
-      .filter((key) => !hiddenCoinsList.includes(key.toUpperCase()) && enabledCurrencies.includes(key.toUpperCase()))
 
     fetchTxsPromises.forEach((txPromise: Promise<any[]>) => {
       txPromise.then((txList: any[]) => {
         mergeTransactions(txList)
       })
     })
-    erc20.map((name, index) => {
-      delay(650 * index).then(() => {
-        // TODO: replace actions with erc20, bep20 ...
-        actions.token.getTransaction(null, name).then((ercTxs: any[]) => {
-          mergeTransactions(ercTxs)
-        })
-      })
-    })
+
+    await setTokensTransaction()
   } catch (error) {
-    console.error('getTransError: ', error)
+    console.group('Actions >%c user > setTransactions', 'color: red;')
+    console.error('error: ', error)
+    console.groupEnd()
   }
 }
 
+const setTokensTransaction = async () => {
+  const { core: { hiddenCoinsList } } = getState()
+  const enabledCurrencies = getActivatedCurrencies()
+  const tokens: { [key: string]: string[] } = {}
+
+  Object.keys(TOKEN_STANDARDS).forEach((key) => {
+    const standard = TOKEN_STANDARDS[key].standard
+    const standardTokens = Object.keys(config[standard]).filter((name) => {
+      return (
+        !hiddenCoinsList.includes(name.toUpperCase()) &&
+        enabledCurrencies.includes(name.toUpperCase())
+      )
+    })
+
+    tokens[standard] = standardTokens
+  })
+
+  Object.keys(tokens).forEach((standard) => {
+    tokens[standard].forEach((tokenName, index) => {
+      const customMs = 650
+
+      delay(customMs * index).then(() => {
+        actions[standard].getTransaction(null, tokenName).then((tokenTxs) => {
+          mergeTransactions(tokenTxs)
+        })
+      })
+    })
+  })
+}
+
 const getText = () => {
-  const { user: { ethData, btcData, ghostData, nextData } } = getState()
+  const { user: { ethData, bnbData, btcData, ghostData, nextData } } = getState()
 
 
   let text = `
@@ -553,13 +566,18 @@ ${window.location.hostname} emergency only instruction
 \r\n
 #ETHEREUM
 \r\n
-Ethereum address: ${ethData.address}  \r\n
+Ethereum address: ${ethData.address}\r\n
 Private key: ${ethData.privateKey}\r\n
 \r\n
 How to access tokens and ethers: \r\n
 1. Go here https://www.myetherwallet.com/#send-transaction \r\n
 2. Select 'Private key'\r\n
 3. paste private key to input and click "unlock"\r\n
+\r\n
+#BINANCE SMART CHAIN
+\r\n
+BSC address: ${bnbData.address}\r\n
+Private key: ${bnbData.privateKey}\r\n
 \r\n
 # BITCOIN\r\n
 \r\n

@@ -444,7 +444,7 @@ class Row extends Component<RowProps, RowState> {
   }
 
   connectMetamask = () => {
-    metamask.handleConnectMetamask({})
+    metamask.handleConnectMetamask()
   }
 
   render() {
