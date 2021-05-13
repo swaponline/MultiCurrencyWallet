@@ -12,6 +12,7 @@ noxon@swaponline.io
 
 # 2 Subject Field (Please adhere to the format):  
 >[Project's full name] - [Symbol] - [Request, e.g. Add Market, Add cryptoasset/exchange, Update cryptoasset/exchange, update supply]
+
 Swap Online - [SWAP] - Add cryptoasset
 
 # 3 Methodology Review 
@@ -21,11 +22,13 @@ Swap Online - [SWAP] - Add cryptoasset
 
 # 4  Support Term
 >I acknowledge that CoinMarketCap reserves the right, in their sole discretion, to determine the suitability of my request for the site. In the event that CoinMarketCap rejects my request, I acknowledge that CoinMarketCap is not obligated to inform me or provide any reasons for such refusal.
+
 Да
 
 # 5  Accuracy Declaration. 
 >I declare that the information provided on the form is accurate and complete to the best of my knowledge and that failure to fulfill these requirements may render my request inadmissible.
 >просят аккуратно заполнить, а не абы как иначе будет отклонено
+
 Да
 
 https://support.coinmarketcap.com/hc/en-us/articles/360043659351-Listings-Criteria
@@ -129,67 +132,90 @@ https://support.coinmarketcap.com/hc/en-us/articles/360043659351-Listings-Criter
 
 # 6 Relationship with the Project
 >Please describe your relationship with the project (e.g. CEO, founder, employee, community member and exchange)
+
 CEO and co-founder
 
 # 7 Project Launch Date
 >The date the project launched (e.g. token sale, genesis block, formation of company, drafting of business plan) Where possible, provide evidence/links for verification.
+
 - Launch: Feb 2018 (?)
 - More than 3 years of code activity: https://github.com/swaponline/MultiCurrencyWallet/graphs/contributors
 - Token created May 2018: https://etherscan.io/tx/0xa3ba3494faf76b4ab29d688937dda843ff6bf1b0b7184e963f7ae1839a0946d9
 
 # 8 Project Name
 >Please provide the FULL name of the project (e.g. Bitcoin, Ethereum, Ripple, Holochain, Binance, Bittrex).
+
 Swap Online
 
 # 9 Project Ticker/Symbol
 > (e.g. BTC, ETH, XRP, HOT)
+
 SWAP 
 
 # 10 Cryptoasset Tags - Sector/Categories
 >You may select more than one tag. Doing so would allow users to filter assets by category membership.
 TODO: надо изучить какие есь варианты (https://coinmarketcap.com/cryptocurrency-category/)
+
 - "AMM"
 - "Decentralized exchange"
 - "BSC Ecosystem"
 - "Launchpad"
 - "DeFi"
-- "NFTs & Collectibles" (?)
 - "Interoperability"
 
 # 11 One-liner description
 > Provide a snappy and concise tagline for the project. E,g, KAVA - A Cross-Chain Platform for Decentralized Finance. Band Protocol - Secure and scalable decentralized oracle for Web3.0. See more examples here: https://research.binance.com/
+
 (?) Cross-chain whitelabel wallet and P2P exchange with AMM
 
 
 # 12 Detailed Project Description (Cryptoasset)
 > Our data shows that our users spend more time on pages that use descriptions that adhere to this template: https://tinyurl.com/yy2mw9v7. Recommended word count: 450 - 600 words. Provide a detailed description of your project, which may be used on the asset page (https://coinmarketcap.com/currencies/cardano/), Minimize the use of hyperbole, superlatives, and redundant statements (e.g. leading, amazing, best, first of its kind, state of the art, decentralized blockchain). It should not read like a sales pitch. Focus on factual statements about your project. Write in third-person. Be concise - avoid redundant statements. (e.g. decentralized blockchain). For example, Launched in [dd/mm/yyyy] by a team based in [country], [project] is a smart contract platform that enables developers to build decentralized applications. See https://coinmarketcap.com/currencies/cardano/.
+
 TODO 
 
 # 13 Platform (e.g. EOS, NEO, Ethereum, proprietary blockchain).
 > Please specify all token platforms that the asset is currently on. For example, CHZ has ERC20 and BEP20 tokens and is therefore on the Ethereum and Binance blockchains.
+
 - Ethereum / ERC20
 - Binance Smart Chain / BEP20
 - more info here: https://github.com/swaponline/MultiCurrencyWallet/blob/master/docs/SWAPTOKEN.md
 
 # 14 Team/Backers/Investors
 > Provide a list of key employees, investors, and advisors. Describe their core competencies and past experience/achievements, and explain their involvement in your project. Where possible, provide evidence/links for verification.
+
 https://github.com/swaponline/MultiCurrencyWallet/graphs/contributors
+
+```
+We are a team of 5 developers: 
+1 https://www.linkedin.com/in/noxonsu/ CEO, co-founder 
+2 https://github.com/shendel
+3 https://github.com/NotEternal
+4 https://github.com/iower
+5 https://github.com/VitaliyShulik
+```
 
 # 15 Media Coverage/Awards(optional)
 > Provide valid URL(s) to articles/references.
 
+https://blog.qtum.org/atomic-cross-chain-swap-on-qtum-7e756a890ed7
+
+
 # 16 Traction/Adoption/Partnerships/MVPs/Apps
 > This can take the form of user growth, partnerships, enterprise/consumer adoption, and roadmap progress. Quantify and qualify your points with concrete and specific examples. Where possible, provide evidence/links for verification.
+
 - Clients: https://github.com/swaponline/MultiCurrencyWallet/blob/master/docs/CLIENTS.md
 - Product sells: https://codecanyon.net/item/multicurrency-crypto-wallet-and-exchange-widgets-for-wordpress/23532064
 - Roadmap: https://github.com/swaponline/MultiCurrencyWallet/blob/master/docs/SWAPTOKEN.md#timeline
 
 # 17 Country of Origin (where majority of team is located)
 > Please indicate the country where the majority of your team is located. If applicable, please provide a list of countries and indicate the location of your headquarters.
+
 Russia
 
 # 18 Link to Logo
 > 3 conditions MUST be met: (1) Transparent background; (2) Square (200x200); unequal dimensions will be rejected! (3) PNG format. See https://onlinepngtools.com/create-transparent-png and https://www.photoresizer.com/.
+
 TODO проверить кондишены и тп
 
 # 19 Website 1
@@ -269,10 +295,12 @@ No
 
 # 39 API endpoint that displays ONLY TOTAL SUPPLY as a NUMERICAL value (Type 'NA' if not applicable)(optional)
 >MUST be in this EXACT format - http://chainz.cryptoid.info/grs/api.dws?q=totalcoins. Total Supply refers to the # of coins in existence right now (minus any coins that have been verifiably burned.
+
 TODO?
 
 # 40 API endpoint that displays ONLY Circulating Supply as a numerical value(optional)
->MUST be in this EXACT format - http://chainz.cryptoid.info/grs/api.dws?q=circulating. Circulating Supply refers to the # of coins that are circulating in the market and in the general public's hands
+>MUST be in this EXACT format - http://chainz.cryptoid.info/grs/api.dws?q=circulating. Circulating Supply refers to the # of coins that are circulating in the 
+market and in the general public's hands
 
 # 41 List of CMC-supported exchanges(optional)
 >Enter NA if not applicable. Provide (i) screenshots (e.g. imgur/gyazo) and (ii) URLs that link directly to the market(s)/pair(s). Separate each URL with a comma. See example - https://www.binance.com/en/trade/BTC_USDT
