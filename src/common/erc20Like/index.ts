@@ -17,13 +17,12 @@ class erc20LikeHelper {
     const {
       standard,
       currency,
-      currencyKey,
       defaultParams,
     } = params
 
     this.standard = standard
     this.currency = currency
-    this.currencyKey = currencyKey
+    this.currencyKey = currency.toLowerCase()
     this.defaultParams = defaultParams
   }
 
@@ -100,7 +99,7 @@ const isToken = (params) => {
   return false
 }
 
-// TODO: =========== delete code below ====================
+// TODO: ==== delete code below and use checkAllowance from instances ====
 
 type CheckAllowanceParams = {
   tokenOwnerAddress: string
@@ -139,13 +138,11 @@ export default {
   erc20: new erc20LikeHelper({
     standard: 'erc20',
     currency: 'ETH',
-    currencyKey: 'eth',
     defaultParams: DEFAULT_CURRENCY_PARAMETERS.ethToken,
   }),
   bep20: new erc20LikeHelper({
     standard: 'bep20',
     currency: 'BNB',
-    currencyKey: 'bnb',
     defaultParams: DEFAULT_CURRENCY_PARAMETERS.ethToken,
   }),
 }
