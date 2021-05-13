@@ -1,18 +1,37 @@
 .FeeController {
-  color: rgb(231, 43, 179);
-  background: white;
-  font-size: 16px;
-  text-align: center;
-  border: 1px solid #ccc;
-  border-radius: 20px;
-  padding: 30px 15px;
   display: flex;
   align-items: center;
   justify-content: center;
+  text-align: center;
+  width: 600px;
+  border-radius: 20px;
+  padding: 30px 15px;
+  border: 1px solid $color-border;
+  box-shadow: $l-box-shadow;
+  background: $l-background-elements;
+  color: $l-color;
+  font-size: 16px;
+
+  &.dark {
+    box-shadow: $d-box-shadow;
+    background: $d-background-elements;
+    color: $d-color;
+  }
+
+  .address {
+    font-weight: bold;
+    max-width: 540px;
+    margin: 30px 0;
+    padding: 12px;
+    border-radius: 5px;
+    border: 1px solid $color-border;
+    font-size: 18px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }
 
 .feeHeading {
-  color: #000;
   font-size: 18px;
   margin-bottom: 1em;
 }
@@ -34,14 +53,3 @@
   }
 }
 
-.address {
-  font-weight: bold;
-  margin: 30px 0;
-  padding: 12px;
-  border-radius: 5px;
-  font-size: 18px;
-  color: #373737;
-  box-shadow: 1px 1px 6px #929292;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
