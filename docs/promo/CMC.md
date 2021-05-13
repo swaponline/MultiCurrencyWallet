@@ -198,7 +198,7 @@ We are a team of 5 developers: 
 # 15 Media Coverage/Awards(optional)
 > Provide valid URL(s) to articles/references.
 
-https://blog.qtum.org/atomic-cross-chain-swap-on-qtum-7e756a890ed7
+Technical proof from QTUM team:   "The swap.online project [5] realizes swaps among Bitcoin-like, Ethereum-like, and EOS cryptocurrencies, and made a product for users to execute swaps [6]"  https://blog.qtum.org/atomic-cross-chain-swap-on-qtum-7e756a890ed7
 
 
 # 16 Traction/Adoption/Partnerships/MVPs/Apps
