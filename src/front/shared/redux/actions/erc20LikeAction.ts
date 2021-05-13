@@ -484,7 +484,7 @@ class Erc20LikeAction {
 
     const { decimals } = this.returnTokenInfo(name)
     const ownerAddress = getState().user.tokensData[name].address
-    const allowance = await erc20Like.checkAllowance({
+    const allowance = await erc20Like[this.standard].checkAllowance({
       tokenOwnerAddress: ownerAddress,
       tokenContractAddress: to,
       decimals: decimals,

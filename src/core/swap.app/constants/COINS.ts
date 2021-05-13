@@ -1,6 +1,7 @@
 export const COIN_TYPE = Object.freeze({
   NATIVE: 'NATIVE',
   ETH_TOKEN: 'ETH_TOKEN',
+  BNB_TOKEN: 'BNB_TOKEN',
 })
 
 export const COIN_MODEL = Object.freeze({

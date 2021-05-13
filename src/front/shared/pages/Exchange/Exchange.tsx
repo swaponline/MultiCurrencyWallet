@@ -469,7 +469,7 @@ class Exchange extends PureComponent<any, any> {
       return tokenObj.name === haveCurrency.toLowerCase()
     })
 
-    const allowance = await erc20Like.checkAllowance({
+    const allowance = await erc20Like.erc20.checkAllowance({
       //@ts-ignore: strictNullChecks
       tokenOwnerAddress: tokenObj.address,
       //@ts-ignore: strictNullChecks
@@ -838,7 +838,7 @@ class Exchange extends PureComponent<any, any> {
       isPendingTokenApprove: true,
     }))
     // TODO: replace actions with erc20, bep20 ...
-    actions.token
+    actions.erc20
       .approve({
         to: config.swapContract.erc20,
         name: haveCurrency,

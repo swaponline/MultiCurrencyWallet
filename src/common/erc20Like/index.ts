@@ -61,7 +61,11 @@ class erc20LikeHelper {
     return Object.keys(config[this.standard]).includes(name.toLowerCase())
   }
 
-  checkAllowance = async (params): Promise<number> => {
+  checkAllowance = async (params: {
+    tokenOwnerAddress: string
+    tokenContractAddress: string
+    decimals: number
+  }): Promise<number> => {
     const { tokenOwnerAddress, tokenContractAddress, decimals } = params
     const tokenContract = new web3.eth.Contract(TokenApi, tokenContractAddress)
   
@@ -99,42 +103,8 @@ const isToken = (params) => {
   return false
 }
 
-// TODO: ==== delete code below and use checkAllowance from instances ====
-
-type CheckAllowanceParams = {
-  tokenOwnerAddress: string
-  tokenContractAddress: string
-  decimals: number
-}
-
-const checkAllowance = async (params: CheckAllowanceParams): Promise<number> => {
-  const { tokenOwnerAddress, tokenContractAddress, decimals } = params
-  const tokenContract = new web3.eth.Contract(TokenApi, tokenContractAddress)
-
-  let allowanceAmount = 0
-
-  try {
-    allowanceAmount = await tokenContract.methods
-      .allowance(tokenOwnerAddress, config.swapContract.erc20)
-      .call({ from: tokenOwnerAddress })
-    
-    // formating without token decimals
-    allowanceAmount = new BigNumber(allowanceAmount)
-      .dp(0, BigNumber.ROUND_UP)
-      .div(new BigNumber(10).pow(decimals))
-      .toNumber()
-  } catch (error) {
-    console.error(error)
-  }
-
-  return allowanceAmount
-}
-
-// TODO: =========== delete code above ====================
-
 export default {
   isToken,
-  checkAllowance,
   erc20: new erc20LikeHelper({
     standard: 'erc20',
     currency: 'ETH',
