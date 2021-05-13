@@ -794,8 +794,6 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
       isShipped,
       fiatAmount,
       isToken,
-      isErc20Token,
-      isBep20Token,
       commissionCurrency,
       openScanCam,
       exCurrencyRate,

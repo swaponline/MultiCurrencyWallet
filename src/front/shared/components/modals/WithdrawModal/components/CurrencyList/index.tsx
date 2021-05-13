@@ -96,6 +96,7 @@ export default class CurrencyList extends Component<any, any> {
           <div styleName="coin">
             <Coin name={currentActiveAsset.currency} />
           </div>
+
           <div>
             <a>{currentActiveAsset.currency}</a>
             <span styleName="address">{currentAddress}</span>
@@ -103,6 +104,7 @@ export default class CurrencyList extends Component<any, any> {
               {isMobile ? <PartOfAddress address={currentAddress} withoutLink /> : ''}
             </span>
           </div>
+
           <div styleName="amount">
             <span styleName="currency">
               {currentBalance} {getCurrencyKey(currency, true).toUpperCase()}
@@ -116,6 +118,7 @@ export default class CurrencyList extends Component<any, any> {
           </div>
           <div styleName={cx('customSelectArrow', { active: isAssetsOpen })}></div>
         </div>
+
         {isAssetsOpen && (
           <div styleName={`customSelectList ${isDark ? 'darkList' : ''}`}>
             {tableRows.map((item, index) => (
@@ -128,13 +131,20 @@ export default class CurrencyList extends Component<any, any> {
                 }}
               >
                 <Coin name={item.currency} />
+
                 <div>
-                  <a>{item.fullName}</a>
+                  <a>
+                    {item.fullName}
+                    {item.standard ? (
+                      <span styleName="tokenStandard">{item.standard.toUpperCase()}</span>
+                    ) : ''}
+                  </a>
                   <span styleName="address">{item.address}</span>
                   <span styleName="mobileAddress">
                     {isMobile ? <PartOfAddress address={item.address} withoutLink /> : ''}
                   </span>
                 </div>
+ 
                 <div styleName="amount">
                   <span styleName="currency">
                     {item.balance} {getCurrencyKey(item.currency, true).toUpperCase()}

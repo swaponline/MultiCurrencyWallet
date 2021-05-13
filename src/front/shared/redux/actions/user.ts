@@ -1,7 +1,7 @@
 import erc20Like from 'common/erc20Like';
 import config from 'app-config'
 import moment from 'moment/moment'
-import { constants, ethToken } from 'helpers'
+import { constants } from 'helpers'
 import request from 'common/utils/request'
 import * as mnemonicUtils from 'common/utils/mnemonic'
 import TOKEN_STANDARDS from 'common/helpers/constants/TOKEN_STANDARDS'
