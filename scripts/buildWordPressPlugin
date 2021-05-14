@@ -8,13 +8,6 @@ npm run build:mainnet-widget
 
 npm run build:testnet-widget
 
-### BSC (Binance)
-
-npm run build:bsc-mainnet-widget
-
-npm run build:bsc-testnet-widget
-
-
 
 # update repo or clone
 #rm -rf WalletWpPlugin
@@ -29,8 +22,7 @@ rm -rf assets
 rm -rf images
 rm -rf fonts
 rm -rf testnet
-rm -rf bsc-mainnet
-rm -rf bsc-testnet
+rm -rf mainnet
 rm -rf *.css
 rm -rf *.js
 rm -rf *.map # remove source maps
