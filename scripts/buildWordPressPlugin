@@ -18,6 +18,8 @@ git fetch origin
 git reset --hard origin/master
 
 # clean React code from repo
+rm -rf bsc-mainnet
+rm -rf bsc-testnet
 rm -rf assets
 rm -rf images
 rm -rf fonts
