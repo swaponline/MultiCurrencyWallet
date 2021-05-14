@@ -19,6 +19,8 @@ Minimum commitment: $1200
 
 # Варианты
 http://wiki.swaponline.io/swap_logo_20x3.png
+```
 bsc.swap.io - Provide liquidity in cross-chain DEX. Become a marketmaker.
 bsc.swap.io - Earn interest on Bitcoin by providing liquidity in BTC<>BSC crosschain bridge. Read more.
 bsc.swap.io - Chrome extention to earn interest on bitcoin. Install now.
+```
