@@ -353,6 +353,7 @@ class App extends React.Component<RouteComponentProps<any>, any> {
 
     if (
       !startPage ||
+      config.isWidget ||
       utils.getCookie('startedSplashScreenIsDisabled') ||
       isWalletCreated ||
       window.location.hash !== '#/'
