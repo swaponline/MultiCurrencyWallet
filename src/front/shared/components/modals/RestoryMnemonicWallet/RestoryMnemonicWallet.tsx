@@ -69,8 +69,8 @@ type RestoryMnemonicWalletProps = {
 
   data: {
     btcBalance: number
-    fiatBalance: number
     onClose: () => void
+    noRedirect?: boolean
   }
 }
 
@@ -82,7 +82,6 @@ type RestoryMnemonicWalletState = {
   data: {
     btcBalance: number
     usdBalance: number
-    showCloseButton: boolean
   }
 }
 
@@ -102,7 +101,7 @@ type RestoryMnemonicWalletState = {
   })
 )
 @cssModules({ ...defaultStyles, ...styles }, { allowMultiple: true })
-class RestoryMnemonicWallet extends React.Component {
+class RestoryMnemonicWallet extends React.Component<RestoryMnemonicWalletProps, RestoryMnemonicWalletState> {
 
   props: RestoryMnemonicWalletProps
   state: RestoryMnemonicWalletState
@@ -120,7 +119,6 @@ class RestoryMnemonicWallet extends React.Component {
       data: {
         btcBalance: data ? data.btcBalance : 0,
         usdBalance: data ? data.usdBalance : 0,
-        showCloseButton: data ? data.showCloseButton : true,
       },
     }
   }
@@ -166,17 +164,23 @@ class RestoryMnemonicWallet extends React.Component {
     if (data && typeof data.onClose === 'function') {
       data.onClose()
     } else {
-      window.location.assign(links.hashHome)
+      if (!(data && data.noRedirect)) {
+        window.location.assign(links.hashHome)
+      }
     }
 
     actions.modals.close(name)
   }
 
   handleFinish = () => {
+    const { data } = this.props
+
     this.handleClose()
 
-    window.location.assign(links.hashHome)
-    window.location.reload()
+    if (!(data && data.noRedirect)) {
+      window.location.assign(links.hashHome)
+      window.location.reload()
+    }
   }
 
   handleRestoryWallet = () => {
@@ -258,7 +262,7 @@ class RestoryMnemonicWallet extends React.Component {
       mnemonicIsInvalid,
       isFetching,
 
-      data: { showCloseButton, btcBalance = 0, usdBalance = 1 },
+      data: { btcBalance = 0, usdBalance = 1 },
     } = this.state
 
     return (
@@ -267,7 +271,7 @@ class RestoryMnemonicWallet extends React.Component {
         name={name}
         title={`${intl.formatMessage(langLabels.title)}`}
         onClose={this.handleClose}
-        showCloseButton={showCloseButton}
+        showCloseButton={true}
       >
         <div styleName="restoreModalHolder">
           {step === `enter` && (

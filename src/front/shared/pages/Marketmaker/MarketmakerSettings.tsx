@@ -304,6 +304,14 @@ class MarketmakerSettings extends Component<any, any> {
     })
   }
 
+  handleRestoreMnemonic() {
+    //@ts-ignore: strictNullChecks
+    actions.modals.open(constants.modals.RestoryMnemonicWallet, {
+      noRedirect: true,
+      onClose: () => { window.location.reload() }
+    })
+  }
+
   handleToggleMarketmaker(checked) {
     const { isMarketEnabled } = this.state
 
@@ -535,23 +543,39 @@ class MarketmakerSettings extends Component<any, any> {
         <section styleName={`${isDark ? 'dark' : '' }`}>
         {!mnemonicSaved && (
           <>
-            <p>
+            <h3 styleName="start-here">
               <FormattedMessage
-                id="MM_NeedSaveMnemonic"
-                defaultMessage="We will create BTC, {AB_Coin}, {token} hot wallets. You need to write 12 words if you have not done so earlier"
+                id="MM_StartHere"
+                defaultMessage="Start marketmaking here"
+              />
+            </h3>
+            <p styleName="wallet-required">
+              <FormattedMessage
+                id="MM_Wallet_Required"
+                defaultMessage="A hot wallet is required to launch marketmaking (BTC, {AB_Coin}, {token})."
                 values={{
                   token: marketToken.toUpperCase(),
                   AB_Coin: (config.binance) ? `BNB` : `ETH`,
                 }}
               />
             </p>
-            <div styleName='restoreBtn'>
-              <Button blue onClick={this.handleSaveMnemonic.bind(this)}>
-                <FormattedMessage
-                  id="MM_MakeSaveMnemonic"
-                  defaultMessage="Save a secret phrase"
-                />
-              </Button>
+            <div styleName='wallet-buttons'>
+              <div styleName='wallet-button'>
+                <Button blue onClick={this.handleSaveMnemonic.bind(this)}>
+                  <FormattedMessage
+                    id="MM_Wallet_Create"
+                    defaultMessage="Create wallet"
+                  />
+                </Button>
+              </div>
+              <div styleName='wallet-button'>
+                <Button blue onClick={this.handleRestoreMnemonic.bind(this)}>
+                  <FormattedMessage
+                    id="MM_Wallet_Restore"
+                    defaultMessage="Restore from 12-word seed"
+                  />
+                </Button>
+              </div>
             </div>
           </>
         )}
@@ -803,7 +827,7 @@ class MarketmakerSettings extends Component<any, any> {
         ) : (
           <>
             {mnemonicSaved && (
-              <div styleName='controlsLoader'>
+              <div styleName='controls-loader'>
                 <InlineLoader />
               </div>
             )}

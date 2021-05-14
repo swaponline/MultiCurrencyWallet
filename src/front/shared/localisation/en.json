@@ -5876,15 +5876,29 @@
     ]
   },
   {
-    "id": "MM_MakeSaveMnemonic",
-    "message": "Save a secret phrase",
+    "id": "MM_StartHere",
+    "message": "Start marketmaking here",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
   },
   {
-    "id": "MM_NeedSaveMnemonic",
-    "message": "We will create BTC, {AB_Coin}, {token} hot wallets. You need to write 12 words if you have not done so earlier",
+    "id": "MM_Wallet_Required",
+    "message": "A hot wallet is required to launch marketmaking (BTC, {AB_Coin}, {token}).",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_Wallet_Create",
+    "message": "Create wallet",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_Wallet_Restore",
+    "message": "Restore from 12-word seed",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]

@@ -5876,15 +5876,29 @@
     ]
   },
   {
-    "id": "MM_MakeSaveMnemonic",
-    "message": "Guardar una frase secreta",
+    "id": "MM_StartHere",
+    "message": "Empiece a hacer mercado aquí",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
   },
   {
-    "id": "MM_NeedSaveMnemonic",
-    "message": "Crearemos billeteras calientes de BTC, {AB_Coin}, {token}. Necesitas escribir 12 palabras si no lo has hecho antes",
+    "id": "MM_Wallet_Required",
+    "message": "Se requiere una billetera caliente para lanzar la creación de mercado (BTC, {AB_Coin}, {token}).",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_Wallet_Create",
+    "message": "Crear billetera",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_Wallet_Restore",
+    "message": "Restaurar desde semilla de 12 palabras",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
