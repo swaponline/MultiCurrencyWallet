@@ -20,9 +20,20 @@
     border-radius: 4px;
     padding: 25px;
 
-    .restoreBtn, .controlsLoader {
+    .start-here,
+    .wallet-required {
+      text-align: center;
+      margin: 0 1em 1em;
+    }
+
+    .wallet-buttons,
+    .controls-loader {
       display: flex;
       justify-content: center;
+    }
+
+    .wallet-button {
+      margin: 1em
     }
 
     .section-items {

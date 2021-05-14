@@ -43,11 +43,17 @@ Clients need to respond as quickly as possible, while their questions are releva
 - check if the error remains
 - check the commission settings, check what is passed on the wallet to the `window` and think
 
+### Is it possible to integrate this plugin into %PluginName%?
+> This plugin was not designed to interact with %PluginName%.
+
+### I already bought your plugin. How do I get the NTF plugin?
+> Please contact us privately https://t.me/swaponlinebot – we will help you.
+
 ### Where to read about ...
 > http://support.swaponline.io/
 
 ### In difficult cases
-> Please contact our technical support for further instructions - https://t.me/swaponlinebot
+> Please contact our developers for further instructions - https://t.me/swaponlinebot
 
 ### I need support
 > Talk to humans https://t.me/swaponlinebot
@@ -58,7 +64,8 @@ Clients need to respond as quickly as possible, while their questions are releva
 > If the plugin doesn't work on your site, here are the options for how this can be fixed:
 >
 > - What exactly isn't working? Please let us know.
-> - Please give access to the wp-admin panel. We will try to solve the problem.
+> - Please give your website address privately here https://t.me/swaponlinebot. We will check for problems.
+> - Please give access to the wp-admin panel privately here https://t.me/swaponlinebot. We will try to solve the problem.
 > - Please try disable all plugins except MCWallet (some plugins break the MCWallet plugin)
 >
 > If you are not considering fixing problems and want to initiate a refund:

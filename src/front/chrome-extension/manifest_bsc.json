@@ -19,5 +19,5 @@
     "page": "application/index.html#/marketmaker/BTCB",
     "persistent": true
   },
-  "content_security_policy": "script-src 'self' 'unsafe-eval' https://unpkg.com/ 'sha256-4DrEhT27jOSN2+u3NlPmxokkJ3ykqEfwHkk5DJe8WMI='; object-src 'self'"
+  "content_security_policy": "script-src 'self' 'unsafe-eval' https://unpkg.com/ 'sha256-3TyqYHGyxyLd2q2R9qwRuhZReGrdjgQYgYY+qmHQaHo='; object-src 'self'"
 }
