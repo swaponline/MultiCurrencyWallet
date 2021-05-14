@@ -183,7 +183,7 @@ const addMetamaskWallet = () => {
         balanceError: false,
         isConnected: false,
         isMetamask: true,
-        currency: 'ETH', // after changing wallet row disappears
+        currency: 'ETH',
         fullName: 'External wallet',
         infoAboutCurrency: undefined,
         isBalanceFetched: true,
@@ -213,14 +213,13 @@ const handleDisconnectWallet = (cbDisconnected?) => {
 
 type MetamaskConnectParams = {
   dontRedirect?: boolean
-  callback?: () => void
+  callback?: (boolean) => void
 }
 
-const handleConnectMetamask = (options?: MetamaskConnectParams) => {
-  //@ts-ignore: strictNullChecks
-  const { dontRedirect, callback } = options
+const handleConnectMetamask = (params: MetamaskConnectParams = {}) => {
+  const { callback } = params
 
-  connect({ dontRedirect }).then(async (connected) => {
+  connect(params).then(async (connected) => {
     if (connected) {
       await actions.user.sign()
       await actions.user.getBalances()

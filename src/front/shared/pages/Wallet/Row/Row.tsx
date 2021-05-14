@@ -800,7 +800,7 @@ class Row extends Component<RowProps, RowState> {
             <div styleName="assetsTableInfo">
               <div styleName="nameRow">
                 <a onClick={metamaskDisconnected
-                    ? this.connectMetamask.bind(this)
+                    ? this.connectMetamask
                     : mnemonicSaved || metamaskIsConnected
                       ? this.goToCurrencyHistory
                       : () => null
