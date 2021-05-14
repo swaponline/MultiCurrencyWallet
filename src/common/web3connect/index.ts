@@ -255,6 +255,10 @@ export default class Web3Connect extends EventEmitter {
       : providers.filter((name) => name !== SUPPORTED_PROVIDERS.INJECTED)
   }
 
+  getChainId = () => {
+    return this._cachedChainId
+  }
+
   isConnected() {
     return (this._cachedProvider) ? true : false
   }

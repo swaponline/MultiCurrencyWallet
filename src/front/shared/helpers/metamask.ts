@@ -18,7 +18,7 @@ const _onWeb3Changed = (newWeb3) => {
   setProvider(newWeb3)
   //@ts-ignore: strictNullChecks
   SwapApp.shared().setWeb3Provider(newWeb3)
-  _initReduxState()
+  addMetamaskWallet()
   actions.user.loginWithTokens()
   actions.user.getBalances()
 }
@@ -59,19 +59,19 @@ const _init = async () => {
         _web3 = web3connect.getWeb3()
       } catch (err) {
         web3connect.clearCache()
-        _initReduxState()
+        addMetamaskWallet()
         return
       }
       setMetamask(_web3)
-      _initReduxState()
+      addMetamaskWallet()
     } else {
-      _initReduxState()
+      addMetamaskWallet()
     }
   })
 }
 
 const addWallet = () => {
-  _initReduxState()
+  addMetamaskWallet()
   if (isConnected()) {
     getBalance()
   }
@@ -131,59 +131,73 @@ const connect = (options) => new Promise(async (resolved, reject) => {
 /* metamask wallet layer */
 const isCorrectNetwork = () => web3connect.isCorrectNetwork()
 
-// TODO: Need to move this code into Redux
-const _initReduxState = () => {
+const addMetamaskWallet = () => {
   const { user } = getState()
 
-  let currencyName = 'ETH'
-  let fullWalletName = `Ethereum (${web3connect.getProviderTitle()})`
-  let fullDisconnectedWalletName = `Ethereum (external wallet)`
-  const currencyInfo = user[`${config.binance ? 'bnb' : 'eth'}Data`].infoAboutCurrency
-
-  if (config.binance) {
-    currencyName = 'BNB'
-    fullWalletName = `Binance (${web3connect.getProviderTitle()})`
-    fullDisconnectedWalletName = `Binance (external wallet)`
-  }
-
-  const connectedWallet = {
-    name: 'metamaskData',
-    data: {
-      address: getAddress(),
-      balance: 0,
-      balanceError: false,
-      isConnected: true,
-      isMetamask: true,
-      currency: currencyName,
-      fullName: fullWalletName,
-      infoAboutCurrency: currencyInfo,
-      isBalanceFetched: true,
-      isMnemonic: true,
-      unconfirmedBalance: 0,
-    },
-  }
-
-  const disconnectedWallet = {
-    ...connectedWallet,
-    data: {
-      ...connectedWallet.data,
-      address: 'Not connected',
-      isConnected: false,
-      fullName: fullDisconnectedWalletName,
-    }
-  }
-
   if (isConnected()) {
-    reducers.user.addWallet(connectedWallet)
+    const ethWalletInfo = {
+      currencyName: 'ETH',
+      fullWalletName: `Ethereum (${web3connect.getProviderTitle()})`,
+      currencyInfo: user.ethData?.infoAboutCurrency,
+    }
+    const bscWalletInfo = {
+      currencyName: 'BNB',
+      fullWalletName: `BSC (${web3connect.getProviderTitle()})`,
+      currencyInfo: user.bnbData?.infoAboutCurrency,
+    }
+    const walletMap = new Map([
+      [1, ethWalletInfo], // ETH Mainnet
+      [3, ethWalletInfo], // ETH Testnet (Ropsten)
+      [56, bscWalletInfo], // BSC Mainnet
+      [97, bscWalletInfo], // BSC Testnet
+    ])
+
+    const hexChainId = web3connect.getChainId()
+    const chainId = Number(Number(hexChainId).toString(10))
+    const currencyName = walletMap.get(chainId)?.currencyName
+    const fullWalletName = walletMap.get(chainId)?.fullWalletName
+    const currencyInfo = walletMap.get(chainId)?.currencyInfo
+
+    reducers.user.addWallet({
+      name: 'metamaskData',
+      data: {
+        address: getAddress(),
+        balance: 0,
+        balanceError: false,
+        isConnected: true,
+        isMetamask: true,
+        currency: currencyName,
+        fullName: fullWalletName,
+        infoAboutCurrency: currencyInfo,
+        isBalanceFetched: true,
+        isMnemonic: true,
+        unconfirmedBalance: 0,
+      },
+    })
   } else {
-    reducers.user.addWallet(disconnectedWallet)
+    reducers.user.addWallet({
+      name: 'metamaskData',
+      data: {
+        address: 'Not connected',
+        balance: 0,
+        balanceError: false,
+        isConnected: false,
+        isMetamask: true,
+        currency: 'ETH', // after changing wallet row disappears
+        fullName: 'External wallet',
+        infoAboutCurrency: undefined,
+        isBalanceFetched: true,
+        isMnemonic: true,
+        unconfirmedBalance: 0,
+      },
+    })
   }
 }
 
 if (web3connect.hasCachedProvider()) {
   _init()
 } else {
-  _initReduxState()
+  addMetamaskWallet()
 }
 
 
