@@ -46,6 +46,9 @@ Clients need to respond as quickly as possible, while their questions are releva
 ### Is it possible to integrate this plugin into %PluginName%?
 > This plugin was not designed to interact with %PluginName%.
 
+### I already bought your plugin. How do I get the NTF plugin?
+> Please contact us privately https://t.me/swaponlinebot – we will help you.
+
 ### Where to read about ...
 > http://support.swaponline.io/
 
