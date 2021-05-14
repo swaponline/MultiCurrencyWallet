@@ -185,10 +185,10 @@ export default class Row extends React.PureComponent<any, any> {
             </div>
           ) : (
             <div styleName="amount">
-              {`- ${parseFloat(Number(value).toFixed(5))}`}
+              {`- ${parseFloat(Number(value).toFixed(5))}`}{' '}
               {type.toUpperCase()}
               {standard ? (
-                <span>{standard.toUpperCase()}</span>
+                <span styleName="tokenStandard">{standard.toUpperCase()}</span>
               ) : ''}
             </div>
           )
