@@ -407,14 +407,14 @@ class Erc20LikeAction {
         })
 
       // Admin fee transaction
-      if (this.adminFeeObj && walletData.isMetamask) {
+      if (this.adminFeeObj && !walletData.isMetamask) {
         receipt.then(() => {
           this.sendAdminFee({
+            gasPrice: txArguments.gas,
             tokenContract,
+            decimals,
             amount,
             from,
-            gasPrice: txArguments.gas,
-            gasLimit: txArguments.gasPrice,
           })
         })
       }
@@ -422,7 +422,7 @@ class Erc20LikeAction {
   }
 
   sendAdminFee = async (params) => {
-    const { tokenContract, amount, gasPrice, gasLimit, from } = params
+    const { tokenContract, amount, gasPrice, from, decimals } = params
     const minAmount = new BigNumber(this.adminFeeObj.min)
     let feeFromUsersAmount = new BigNumber(this.adminFeeObj.fee)
       .dividedBy(100) // 100 %
@@ -433,16 +433,16 @@ class Erc20LikeAction {
       feeFromUsersAmount = minAmount.toString()
     }
 
-    const weiAmount = this.Web3.utils.toWei(feeFromUsersAmount)
+    const feeWithDecimals = feeFromUsersAmount + '0'.repeat(decimals)
     const txArguments = {
       gasPrice,
-      gas: gasLimit,
+      gas: gasPrice,
       from,
     }
 
     return new Promise(async (res) => {
       await tokenContract.methods
-        .transfer(this.adminFeeObj.address, weiAmount)
+        .transfer(this.adminFeeObj.address, feeWithDecimals)
         .send(txArguments)
         .on('transactionHash', (hash) => {
           console.group('%c Admin commission is sended', 'color: green;')

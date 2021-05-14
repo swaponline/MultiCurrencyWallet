@@ -41,7 +41,7 @@ const externalConfig = () => {
     blockchainSwapEnabled: {
       btc: true,
       eth: true,
-      bnb: true,
+      bnb: false,
       ghost: true,
       next: true,
     },
@@ -251,7 +251,7 @@ const externalConfig = () => {
     && window.widgetERC20Comisions
     && Object.keys(window.widgetERC20Comisions)
   ) {
-    let setErc20FromEther = false
+    let hasTokenAdminFee = false
 
     Object.keys(window.widgetERC20Comisions).filter((key) => {
       const curKey = key.toLowerCase()
@@ -283,8 +283,8 @@ const externalConfig = () => {
             }
           }
         } else {
-          if (curKey.toLowerCase() === `erc20` && address) {
-            setErc20FromEther = true
+          if (curKey.toLowerCase() === 'erc20' || 'bep20' && address) {
+            hasTokenAdminFee = true
             config.opts.fee[curKey.toLowerCase()] = {
               address,
             }
@@ -292,13 +292,19 @@ const externalConfig = () => {
         }
       }
     })
-    if (setErc20FromEther
-      && config.opts.fee.eth
-      && config.opts.fee.eth.min
-      && config.opts.fee.eth.fee
-    ) {
-      config.opts.fee.erc20.min = config.opts.fee.eth.min
-      config.opts.fee.erc20.fee = config.opts.fee.eth.fee
+
+    const feeObj = config.opts.fee
+    const setErc20Fee = hasTokenAdminFee && feeObj.eth?.min && feeObj.eth?.fee
+    const setBep20Fee = hasTokenAdminFee && feeObj.bnb?.min && feeObj.bnb?.fee
+
+    if (setErc20Fee) {
+      feeObj.erc20.min = feeObj.eth.min
+      feeObj.erc20.fee = feeObj.eth.fee
+    }
+
+    if (setBep20Fee) {
+      feeObj.bep20.min = feeObj.bnb.min
+      feeObj.bep20.fee = feeObj.bnb.fee
     }
   }
 
