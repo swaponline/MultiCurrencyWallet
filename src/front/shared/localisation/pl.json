@@ -4720,14 +4720,14 @@
   },
   {
     "id": "MetamaskNetworkAlert_NetworkMainnet",
-    "message": "Main network (Mainnet)",
+    "message": "Ethereum (Mainnet) lub Binance Smart Chain (Mainnet)",
     "files": [
       "src/front/shared/containers/App/App.tsx"
     ]
   },
   {
     "id": "MetamaskNetworkAlert_NetworkTestnet",
-    "message": "Test network (Ropsten)",
+    "message": "Ethereum (Ropsten) lub Binance Smart Chain (Testnet)",
     "files": [
       "src/front/shared/containers/App/App.tsx"
     ]
@@ -6038,20 +6038,6 @@
     "message": "Zainstaluj rozszerzenie Chrome",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
-    ]
-  },
-  {
-    "id": "MetamaskNetworkAlert_BnBNetworkMainnet",
-    "message": "Mainnet Binance Smart Chain",
-    "files": [
-      "src/front/shared/containers/App/App.tsx"
-    ]
-  },
-  {
-    "id": "MetamaskNetworkAlert_BnBNetworkTestnet",
-    "message": "Testnet Binance Smart Chain",
-    "files": [
-      "src/front/shared/containers/App/App.tsx"
     ]
   },
   {

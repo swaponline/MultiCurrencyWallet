@@ -2,8 +2,8 @@ import React from 'react'
 import { constants } from 'helpers'
 import CSSModules from 'react-css-modules'
 import styles from './Coin.scss'
-
-import CurrencyIcon, { iconNames } from 'components/ui/CurrencyIcon/CurrencyIcon'
+import web3Icons from 'images'
+import CurrencyIcon, { currencyIcons } from 'components/ui/CurrencyIcon/CurrencyIcon'
 import config from 'app-config'
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
@@ -31,13 +31,13 @@ const Coin = (props: CoinProps) => {
     name,
   } = props
 
-  const isIconExist = iconNames.includes(name.toLowerCase())
+  const isIconExist = currencyIcons.includes(name.toLowerCase())
+  const iconSource = web3Icons[name]
   let isIconConfigExist = false
 
-  if (config
-    && config.erc20
-    && config.erc20[name.toLowerCase()]
-    && config.erc20[name.toLowerCase()].icon
+  if (
+    config?.erc20[name.toLowerCase()]?.icon ||
+    config?.bep20[name.toLowerCase()]?.icon
   ) {
     isIconConfigExist = true
   }
@@ -53,12 +53,13 @@ const Coin = (props: CoinProps) => {
   if (defaultCurrencyColors[name.toLowerCase()]) {
     style.backgroundColor = defaultCurrencyColors[name.toLowerCase()]
   }
-  if (config &&
-    config.erc20 &&
-    config.erc20[name.toLowerCase()] &&
-    config.erc20[name.toLowerCase()].iconBgColor
-  ) {
+
+  if (config?.erc20[name.toLowerCase()]?.iconBgColor) {
     style.backgroundColor = config.erc20[name.toLowerCase()].iconBgColor
+  }
+
+  if (config?.bep20[name.toLowerCase()]?.iconBgColor) {
+    style.backgroundColor = config.bep20[name.toLowerCase()].iconBgColor
   }
 
   // *************************************
@@ -67,6 +68,7 @@ const Coin = (props: CoinProps) => {
     name: name.toLowerCase(),
     styleName: '',
     style: {},
+    source: iconSource,
   }
 
   if (isIconExist || isIconConfigExist) {
@@ -80,8 +82,16 @@ const Coin = (props: CoinProps) => {
   }
 
   return (
-    //@ts-ignore: strictNullChecks
-    <div styleName={`coin ${isDark ? 'dark' : ''}`} className={className} style={style}>
+    <div 
+      styleName={`
+        coin
+        ${isDark ? 'dark' : ''}
+        ${iconSource ? 'noColors' : ''}
+      `}
+      className={className}
+      //@ts-ignore: strictNullChecks
+      style={style}
+    >
       <CurrencyIcon {...currencyIconProps} />
     </div>
   )

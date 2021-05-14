@@ -782,14 +782,19 @@ class Row extends Component<RowProps, RowState> {
     
     const isMetamask = itemData.isMetamask
     const metamaskIsConnected = isMetamask && itemData.isConnected
-    const metamaskDisconnected = isMetamask && !metamaskIsConnected
+    const metamaskDisconnected = isMetamask && !itemData.isConnected
 
     return (
       !ethRowWithoutExternalProvider
       && <tr>
         <td styleName={`assetsTableRow ${isDark ? 'dark' : ''}`}>
           <div styleName="assetsTableCurrency">
-            <Coin className={styles.assetsTableIcon} name={currency} />
+            <Coin
+              className={styles.assetsTableIcon}
+              name={ // replace currency icon if metamask is disconnected
+                web3Type === 'METAMASK' && metamaskDisconnected ? web3Type : currency
+              }
+            />
             
             {/* Title-Link */}
             <div styleName="assetsTableInfo">
