@@ -11,10 +11,9 @@ import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import { FormattedMessage } from 'react-intl'
 import checkedIcon from '../../../images/checked.svg'
 
+let _mounted = false
 
 const ThirdStep = (props) => {
-  let _mounted = false
-
   const {
     step,
     sixth,
@@ -41,6 +40,16 @@ const ThirdStep = (props) => {
 
   const [withdrawHashIsConfirmed, setWithdrawHashIsConfirmed] = useState(false)
   const [ethSwapWithdrawHashIsConfirmed, setEthSwapWithdrawHashIsConfirmed] = useState(false)
+  const [ethSwapWithdrawHash, setEthSwapWithdrawHash] = useState('')
+  const [withdrawHash, setWithdrawHash] = useState('')
+
+  if (ethSwapWithdrawTransactionHash && !ethSwapWithdrawHash) {
+    setEthSwapWithdrawHash(ethSwapWithdrawTransactionHash)
+  }
+
+  if (flowState[withdrawTransactionHash] && !withdrawHash) {
+    setWithdrawHash(flowState[withdrawTransactionHash])
+  }
 
   const checkTransactionHash = (txHash, currencyName, refreshTime) => {
     setTimeout(async () => {
@@ -74,16 +83,18 @@ const ThirdStep = (props) => {
   }
 
   useEffect(() => {
-    if (flowState[withdrawTransactionHash] && !withdrawHashIsConfirmed){
-      checkTransactionHash(flowState[withdrawTransactionHash], currencyName, 20)
+    _mounted = true
+    if (withdrawHash && !withdrawHashIsConfirmed){
+      checkTransactionHash(withdrawHash, currencyName, 20)
     }
-  }, [flowState[withdrawTransactionHash]])
+  }, [withdrawHash])
 
   useEffect(() => {
-    if (ethSwapWithdrawTransactionHash && !ethSwapWithdrawHashIsConfirmed){
-      checkTransactionHash(ethSwapWithdrawTransactionHash, 'eth', 20)
+    _mounted = true
+    if (ethSwapWithdrawHash && !ethSwapWithdrawHashIsConfirmed){
+      checkTransactionHash(ethSwapWithdrawHash, 'eth', 20)
     }
-  }, [ethSwapWithdrawTransactionHash])
+  }, [ethSwapWithdrawHash])
 
   useEffect(() => {
     _mounted = true

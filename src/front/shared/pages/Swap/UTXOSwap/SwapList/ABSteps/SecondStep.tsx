@@ -11,10 +11,9 @@ import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import { FormattedMessage } from 'react-intl'
 import checkedIcon from '../../../images/checked.svg'
 
+let _mounted = false
 
 const SecondStep = (props) => {
-  let _mounted = false
-
   const {
     step,
     fifth,
@@ -42,6 +41,16 @@ const SecondStep = (props) => {
 
   const [scriptHashIsConfirmed, setScriptHashIsConfirmed] = useState(false)
   const [ethSwapHashIsConfirmed, setEthSwapHashIsConfirmed] = useState(false)
+  const [ethSwapHash, setEthSwapHash] = useState('')
+  const [scriptHash, setScriptHash] = useState('')
+
+  if (ethSwapCreationTransactionHash && !ethSwapHash) {
+    setEthSwapHash(ethSwapCreationTransactionHash)
+  }
+
+  if (flowState[scriptCreatingTransactionHash] && !scriptHash) {
+    setScriptHash(flowState[scriptCreatingTransactionHash])
+  }
 
   const checkTransactionHash = (txHash, currencyName, refreshTime) => {
     setTimeout(async () => {
@@ -75,16 +84,18 @@ const SecondStep = (props) => {
   }
 
   useEffect(() => {
-    if (flowState[scriptCreatingTransactionHash] && !scriptHashIsConfirmed){
-      checkTransactionHash(flowState[scriptCreatingTransactionHash], currencyName, 20)
+    _mounted = true
+    if (scriptHash && !scriptHashIsConfirmed){
+      checkTransactionHash(scriptHash, currencyName, 20)
     }
-  }, [flowState[scriptCreatingTransactionHash]])
+  }, [scriptHash])
 
   useEffect(() => {
-    if (ethSwapCreationTransactionHash && !ethSwapHashIsConfirmed){
-      checkTransactionHash(ethSwapCreationTransactionHash, 'eth', 20)
+    _mounted = true
+    if (ethSwapHash && !ethSwapHashIsConfirmed){
+      checkTransactionHash(ethSwapHash, 'eth', 20)
     }
-  }, [ethSwapCreationTransactionHash])
+  }, [ethSwapHash])
 
   useEffect(() => {
     _mounted = true
