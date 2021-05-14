@@ -427,13 +427,14 @@ class Erc20LikeAction {
     let feeFromUsersAmount = new BigNumber(this.adminFeeObj.fee)
       .dividedBy(100) // 100 %
       .multipliedBy(amount)
-      .toString()
 
     if (minAmount.isGreaterThan(feeFromUsersAmount)) {
-      feeFromUsersAmount = minAmount.toString()
+      feeFromUsersAmount = minAmount
     }
 
-    const feeWithDecimals = feeFromUsersAmount + '0'.repeat(decimals)
+    const hexFeeWithDecimals = feeFromUsersAmount
+      .multipliedBy(10 ** decimals)
+      .toString(16)
     const txArguments = {
       gasPrice,
       gas: gasPrice,
@@ -442,7 +443,8 @@ class Erc20LikeAction {
 
     return new Promise(async (res) => {
       await tokenContract.methods
-        .transfer(this.adminFeeObj.address, feeWithDecimals)
+        // hex amount fixes a BigNumber error
+        .transfer(this.adminFeeObj.address, '0x' + hexFeeWithDecimals)
         .send(txArguments)
         .on('transactionHash', (hash) => {
           console.group('%c Admin commission is sended', 'color: green;')
