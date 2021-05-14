@@ -29,10 +29,6 @@ const hasAdminFee = (config
   && config.opts.fee.next.min
 ) ? config.opts.fee.next : false
 
-const getRandomMnemonicWords = () => bip39.generateMnemonic()
-const validateMnemonicWords = (mnemonic) => bip39.validateMnemonic(mnemonicUtils.convertMnemonicToValid(mnemonic))
-
-
 const sweepToMnemonic = (mnemonic, path) => {
   const wallet = getWalletByWords(mnemonic, path)
   localStorage.setItem(constants.privateKeyNames.nextMnemonic, wallet.WIF)
@@ -549,8 +545,6 @@ export default {
   getLinkToInfo,
   getInvoices,
   getWalletByWords,
-  getRandomMnemonicWords,
-  validateMnemonicWords,
   sweepToMnemonic,
   isSweeped,
   getSweepAddress,

@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 
 import { connect } from 'redaction'
 import actions from 'redux/actions'
+import ethLikeHelper from 'common/helpers/ethLikeHelper'
+import erc20Like from 'common/erc20Like'
 import helpers, { constants } from 'helpers'
 import swapsHelper from 'helpers/swaps'
 
@@ -159,8 +161,11 @@ export default class AddOffer extends Component<any, any> {
   }
 
   correctMinAmountSell = async (sellCurrency) => {
-    if (COINS_WITH_DYNAMIC_FEE.includes(sellCurrency) && !helpers.ethToken.isEthToken({ name: sellCurrency })) {
+    const isToken = erc20Like.isToken({ name: sellCurrency })
+
+    if (COINS_WITH_DYNAMIC_FEE.includes(sellCurrency) && !isToken) {
       const minimalestAmountForSell = await helpers[sellCurrency].estimateFeeValue({ method: 'swap', speed: 'fast' })
+
       this.setState({
         minimalestAmountForSell,
       })
@@ -170,6 +175,7 @@ export default class AddOffer extends Component<any, any> {
   correctMinAmountBuy = async (buyCurrency) => {
     if (COINS_WITH_DYNAMIC_FEE.includes(buyCurrency)) {
       const minimalestAmountForBuy = await helpers[buyCurrency].estimateFeeValue({ method: 'swap', speed: 'fast' })
+
       this.setState({
         minimalestAmountForBuy,
       })

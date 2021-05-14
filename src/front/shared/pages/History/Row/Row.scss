@@ -141,6 +141,14 @@
   top: 45px;
 }
 
+.tokenStandard {
+  @include ff-mono;
+  display: inline-block;
+  margin-left: 0.6em;
+  font-size: 0.8em;
+  color: $notice-color;
+}
+
 .historyInfo {
   margin-left: 50px;
   margin-top: -37px;

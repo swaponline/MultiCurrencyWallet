@@ -4,14 +4,13 @@ import { constants } from 'swap.app'
 import BigNumber from 'bignumber.js'
 import reducers from 'redux/core/reducers'
 
+const NETWORK = process.env.MAINNET ? 'mainnet' : 'testnet'
 
-const GetCustromERC20 = () => {
-  const configStorage = (process.env.MAINNET) ? 'mainnet' : 'testnet'
-
+const getCustomTokenConfig = () => {
   //@ts-ignore: strictNullChecks
-  let tokensInfo = JSON.parse(localStorage.getItem('customERC'))
-  if (!tokensInfo || !tokensInfo[configStorage]) return {}
-  return tokensInfo[configStorage]
+  let tokensInfo = JSON.parse(localStorage.getItem('customToken'))
+  if (!tokensInfo || !tokensInfo[NETWORK]) return {}
+  return tokensInfo[NETWORK]
 }
 
 const initExternalConfig = () => {
@@ -34,6 +33,7 @@ const externalConfig = () => {
     inited: true,
     curEnabled: {
       eth: true,
+      bnb: true,
       btc: true,
       ghost: true,
       next: true,
@@ -41,6 +41,7 @@ const externalConfig = () => {
     blockchainSwapEnabled: {
       btc: true,
       eth: true,
+      bnb: false,
       ghost: true,
       next: true,
     },
@@ -141,6 +142,11 @@ const externalConfig = () => {
     config.opts.blockchainSwapEnabled.next = false
   }
 
+  if (window && window.CUR_BNB_DISABLED === true) {
+    config.opts.curEnabled.bnb = false
+    config.opts.blockchainSwapEnabled.bnb = false
+  }
+
 
   // Plugins
   if (window
@@ -192,9 +198,10 @@ const externalConfig = () => {
   if ((config && config.isWidget) || config.opts.ownTokens) {
     // clean old erc20 config - leave only swap token (need for correct swap work)
     if (!config.isWidget) {
-      const newERC20 = {}
-      // newERC20.swap = config.erc20.swap
-      config.erc20 = newERC20
+      const newTokens = {}
+      // newTokens.swap = config.erc20.swap
+      config.erc20 = newTokens
+      config.bep20 = newTokens
     }
 
     if (Object.keys(config.opts.ownTokens).length) {
@@ -218,18 +225,24 @@ const externalConfig = () => {
     })
     config.erc20 = cleanERC20
   }
+  // TODO: rename - addCustomERC20 -> addCustomToken ?
   if (!config.isWidget && config.opts.addCustomERC20) {
     // Add custom tokens
-    const customERC = GetCustromERC20()
+    const customTokenConfig = getCustomTokenConfig()
 
-    Object.keys(customERC).forEach((tokenContract) => {
-      if (!config.erc20[customERC[tokenContract].symbol.toLowerCase()]) {
-        config.erc20[customERC[tokenContract].symbol.toLowerCase()] = {
-          address: customERC[tokenContract].address,
-          decimals: customERC[tokenContract].decimals,
-          fullName: customERC[tokenContract].symbol,
+    Object.keys(customTokenConfig).forEach((standard) => {
+      Object.keys(customTokenConfig[standard]).forEach((tokenContractAddr) => {
+        const tokenObj = customTokenConfig[standard][tokenContractAddr]
+        const { symbol } = tokenObj
+
+        if (!config[standard][symbol.toLowerCase()]) {
+          config[standard][symbol.toLowerCase()] = {
+            address: tokenObj.address,
+            decimals: tokenObj.decimals,
+            fullName: tokenObj.symbol,
+          }
         }
-      }
+      })
     })
   }
 
@@ -238,7 +251,7 @@ const externalConfig = () => {
     && window.widgetERC20Comisions
     && Object.keys(window.widgetERC20Comisions)
   ) {
-    let setErc20FromEther = false
+    let hasTokenAdminFee = false
 
     Object.keys(window.widgetERC20Comisions).filter((key) => {
       const curKey = key.toLowerCase()
@@ -270,8 +283,8 @@ const externalConfig = () => {
             }
           }
         } else {
-          if (curKey.toLowerCase() === `erc20` && address) {
-            setErc20FromEther = true
+          if (curKey.toLowerCase() === 'erc20' || 'bep20' && address) {
+            hasTokenAdminFee = true
             config.opts.fee[curKey.toLowerCase()] = {
               address,
             }
@@ -279,13 +292,19 @@ const externalConfig = () => {
         }
       }
     })
-    if (setErc20FromEther
-      && config.opts.fee.eth
-      && config.opts.fee.eth.min
-      && config.opts.fee.eth.fee
-    ) {
-      config.opts.fee.erc20.min = config.opts.fee.eth.min
-      config.opts.fee.erc20.fee = config.opts.fee.eth.fee
+
+    const feeObj = config.opts.fee
+    const setErc20Fee = hasTokenAdminFee && feeObj.eth?.min && feeObj.eth?.fee
+    const setBep20Fee = hasTokenAdminFee && feeObj.bnb?.min && feeObj.bnb?.fee
+
+    if (setErc20Fee) {
+      feeObj.erc20.min = feeObj.eth.min
+      feeObj.erc20.fee = feeObj.eth.fee
+    }
+
+    if (setBep20Fee) {
+      feeObj.bep20.min = feeObj.bnb.min
+      feeObj.bep20.fee = feeObj.bnb.fee
     }
   }
 

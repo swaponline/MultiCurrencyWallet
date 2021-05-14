@@ -62,9 +62,7 @@ const SelectGroup = ({ intl: IntlShape,  dynamicFee, isToken, extendedControls, 
         }
         <CurrencySelect
           styleName="currencySelect"
-          selectedItemRender={(item) => {
-            return (item.name === `ETH` && config.binance) ? `BSC` : item.fullTitle
-          }}
+          selectedItemRender={(item) => item.fullTitle}
           placeholder="Enter the name of coin"
           selectedValue={selectedValue}
           onSelect={onSelect}

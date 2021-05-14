@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import actions from 'redux/actions'
-
+import erc20Like from 'common/erc20Like'
 import helpers from 'helpers'
 
 import cssModules from 'react-css-modules'
@@ -37,10 +37,17 @@ class ConfirmOffer extends Component<any, any> {
 
   isActualFee = async () => {
     const { offer: { sellCurrency } } = this.props
-    const { feeValue } = this.state
 
-    if (helpers.ethToken.isEthToken({ name: sellCurrency.toLowerCase() })) {
-      const feeValueDynamic = await helpers.ethToken.estimateFeeValue({ method: 'send', speed: 'fast' })
+    if ( erc20Like.erc20.isToken({ name: sellCurrency }) ) {
+      const feeValueDynamic = await erc20Like.erc20.estimateFeeValue({ method: 'send', speed: 'fast' })
+
+      this.setState(() => ({
+        tokenFee: true,
+        feeValue: feeValueDynamic,
+      }))
+    } else if ( erc20Like.bep20.isToken({ name: sellCurrency }) ) {
+      const feeValueDynamic = await erc20Like.bep20.estimateFeeValue({ method: 'send', speed: 'fast' })
+
       this.setState(() => ({
         tokenFee: true,
         feeValue: feeValueDynamic,

@@ -1,5 +1,3 @@
-import config from 'app-config'
-
 import * as types from './types'
 
 import modals from './modals'
@@ -17,8 +15,8 @@ import btc from './btc'
 import ghost from './ghost'
 import next from './next'
 import btcmultisig from './btcmultisig'
-import eth from './eth'
-import token from './token'
+import EthLikeAction from './ethLikeAction'
+import Erc20LikeAction from './erc20LikeAction'
 
 import api from './api'
 import pairs from './pairs'
@@ -33,16 +31,7 @@ import backupManager from './backupManager'
 
 import multisigTx from './multisigTx'
 
-const bnb = eth
-const tokens = {}
-
-Object.keys(config.erc20)
-  .forEach(key => {
-    tokens[key] = token
-  })
-
 export default {
-  ...tokens,
   types,
   filter,
   modals,
@@ -55,12 +44,13 @@ export default {
 
   btc,
   btcmultisig,
-  eth,
-  bnb,
+  eth: EthLikeAction.ETH,
+  bnb: EthLikeAction.BNB,
+  erc20: Erc20LikeAction.erc20,
+  bep20: Erc20LikeAction.bep20,
   ghost,
   next,
 
-  token,
   feed,
   analytics,
   pubsubRoom,

@@ -23,13 +23,13 @@ class ExchangeRate extends PureComponent<any, any> {
     const { sellCurrency, buyCurrency, exchangeRate, intl } = this.props
     return (
       <Row title={intl.formatMessage(title.ExchangeRate)}>
-        <Value value={1} currency={(buyCurrency.toUpperCase() === `ETH` && config.binance) ? `BNB` : buyCurrency} />
+        <Value value={1} currency={buyCurrency} />
         {' '}
         <div styleName="equal">
           <FormattedMessage id="ExchangeRate14" defaultMessage="=" />
         </div>
         {' '}
-        <Value value={new BigNumber(exchangeRate).toString()} currency={(sellCurrency.toUpperCase() === `ETH` && config.binance) ? `BNB` : sellCurrency} />
+        <Value value={new BigNumber(exchangeRate).toString()} currency={sellCurrency} />
       </Row>
     )
   }

@@ -2,11 +2,7 @@ import Web3 from 'web3'
 import config from 'app-config'
 
 let web3: IEtheriumProvider = new Web3(
-  new Web3.providers.HttpProvider(
-    (config.binance)
-      ? config.web3.binance_provider
-      : config.web3.provider
-  )
+  new Web3.providers.HttpProvider(config.web3.provider)
 )
 
 const setMetamask = async (provider) => {
@@ -20,11 +16,7 @@ const setProvider = (provider) => {
 
 const setDefaultProvider = () => {
   web3 = new Web3(
-    new Web3.providers.HttpProvider(
-      (config.binance)
-        ? config.web3.binance_provider
-        : config.web3.provider
-    )
+    new Web3.providers.HttpProvider(config.web3.provider)
   )
 
   web3.isMetamask = false

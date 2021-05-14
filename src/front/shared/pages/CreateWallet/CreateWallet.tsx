@@ -34,7 +34,6 @@ const CreateWallet: React.FC<any> = (props) => {
     location: { pathname },
     userData,
     core: { hiddenCoinsList },
-    activeFiat,
   } = props
 
   const { locale } = useIntl()
@@ -43,6 +42,7 @@ const CreateWallet: React.FC<any> = (props) => {
 
   const {
     ethData,
+    bnbData,
     btcData,
     ghostData,
     nextData,
@@ -59,6 +59,7 @@ const CreateWallet: React.FC<any> = (props) => {
     btcMultisigSMSData,
     btcMultisigUserData,
     ethData,
+    bnbData,
     ghostData,
     nextData,
   ].map(({ balance, currency, infoAboutCurrency }) => ({
@@ -75,7 +76,8 @@ const CreateWallet: React.FC<any> = (props) => {
     'BTC (SMS-Protected)',
     'BTC (PIN-Protected)',
     'BTC (Multisig)',
-    ...[(config.binance) ? 'BNB' : 'ETH'],
+    'ETH',
+    'BNB',
     'GHOST',
     'NEXT',
   ]
@@ -135,31 +137,23 @@ const CreateWallet: React.FC<any> = (props) => {
   }, [pathname])
 
   useEffect(() => {
-    const widgetCurrencies = [
-      'BTC',
-      'BTC (SMS-Protected)',
-      'BTC (PIN-Protected)',
-      'BTC (Multisig)',
-      ...[(config.binance) ? 'BNB' : 'ETH'],
-      'GHOST',
-      'NEXT',
-    ]
+    const widgetCurrenciesWithTokens = [...widgetCurrencies]
 
     if (isWidgetBuild) {
       if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
         // Multi token widget build
         Object.keys(window.widgetERC20Tokens).forEach((key) => {
-          widgetCurrencies.push(key.toUpperCase())
+          widgetCurrenciesWithTokens.push(key.toUpperCase())
         })
       } else {
-        widgetCurrencies.push(config.erc20token.toUpperCase())
+        widgetCurrenciesWithTokens.push(config.erc20token.toUpperCase())
       }
     }
 
     if (currencyBalance) {
       currencyBalance.forEach((item) => {
         if (
-          (!isWidgetBuild || widgetCurrencies.includes(item.name)) &&
+          (!isWidgetBuild || widgetCurrenciesWithTokens.includes(item.name)) &&
           item.infoAboutCurrency &&
           item.balance !== 0
         ) {
@@ -209,10 +203,9 @@ const CreateWallet: React.FC<any> = (props) => {
       return
     }
 
-    const isIgnoreSecondStep = !Object.keys(currencies).includes('BTC') // ['ETH', 'SWAP', 'EURS', 'Custom ERC20'].find(el => Object.keys(currencies).includes(el))
-    const tokenType = `Custom ${config.binance ? 'BEP20' : 'ERC20'}`
+    const isIgnoreSecondStep = !Object.keys(currencies).includes('BTC')
 
-    if (isIgnoreSecondStep && !currencies[tokenType]) {
+    if (isIgnoreSecondStep && !currencies['ERC20'] && !currencies['BEP20']) {
       Object.keys(currencies).forEach((currency) => {
         if (currencies[currency]) {
           actions.core.markCoinAsVisible(currency.toUpperCase(), true)
@@ -228,9 +221,23 @@ const CreateWallet: React.FC<any> = (props) => {
       return
     }
 
-    if (currencies[tokenType]) {
+    if (currencies['ERC20']) {
       goHome()
-      actions.modals.open(constants.modals.AddCustomERC20)
+      actions.modals.open(constants.modals.AddCustomToken, {
+        api: config.api.etherscan,
+        apiKey: config.api.etherscan_ApiKey,
+        standard: Object.keys(currencies)[0],
+      })
+      return
+    }
+
+    if (currencies['BEP20']) {
+      goHome()
+      actions.modals.open(constants.modals.AddCustomToken, {
+        api: config.api.bscscan,
+        apiKey: config.api.bscscan_ApiKey,
+        standard: Object.keys(currencies)[0],
+      })
       return
     }
 

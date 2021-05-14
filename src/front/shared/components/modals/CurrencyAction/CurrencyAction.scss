@@ -33,14 +33,6 @@
   border-bottom: 1px solid #f5f5f5;
 }
 
-.headerContent {
-  height: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: relative;
-}
-
 .title {
   color: #1F2D48;
   @include ff-bold;
@@ -124,6 +116,10 @@
 
 .eth {
   background: black;
+}
+
+.bnb {
+  background: #47454a;
 }
 
 .usdt {
@@ -242,26 +238,6 @@
   }
 }
 
-
-.notification-overlay {
-  display: flex;
-  flex-grow: 1;
-  align-items: center;
-  padding: 32px 0;
-}
-
-.notification {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  font-size: 16px;
-}
-
-.button-overlay {
-  display: flex;
-  justify-content: space-around;
-}
-
 @include media-mobile {
   .modal {
     height: 100%;
@@ -273,14 +249,6 @@
   .title {
     font-size: 18px;
     ;
-  }
-
-  .notification-overlay {
-    height: 100%;
-  }
-
-  .button-overlay {
-    justify-content: space-between;
   }
 }
 

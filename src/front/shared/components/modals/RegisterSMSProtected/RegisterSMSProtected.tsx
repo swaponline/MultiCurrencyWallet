@@ -8,7 +8,7 @@ import { connect } from 'redaction'
 import cssModules from 'react-css-modules'
 import styles from '../Styles/default.scss'
 import ownStyle from './RegisterSMSProtected.scss'
-
+import * as mnemonicUtils from 'common/utils/mnemonic'
 import { isValidPhoneNumber } from 'react-phone-number-input'
 
 import Modal from 'components/modal/Modal/Modal'
@@ -18,8 +18,6 @@ import { PhoneInput } from 'components/forms/PhoneInput'
 import Button from 'components/controls/Button/Button'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 
-import typeforce from 'swap.app/util/typeforce'
-// import { isCoinAddress } from 'swap.app/util/typeforce'
 import CopyToClipboard from 'react-copy-to-clipboard'
 import moment from 'moment/moment'
 import okSvg from 'shared/images/ok.svg'
@@ -75,7 +73,7 @@ class RegisterSMSProtected extends React.Component<any, any> {
       generatedKey,
       useGeneratedKeyEnabled,
       mnemonicSaved,
-      mnemonic: version === '2of3' ? actions.btc.getRandomMnemonicWords() : false,
+      mnemonic: version === '2of3' ? mnemonicUtils.getRandomMnemonicWords() : false,
       mnemonicWallet: false,
       isMnemonicCopied: false,
       isMnemonicGenerated: false,
@@ -102,7 +100,7 @@ class RegisterSMSProtected extends React.Component<any, any> {
 
     if (!useGeneratedKey) {
       // Old - own mnemonic for unlock
-      if (version === '2of3' && !actions.btc.validateMnemonicWords(mnemonic.trim())) {
+      if (version === '2of3' && !mnemonicUtils.validateMnemonicWords(mnemonic)) {
         this.setState({
           isMnemonicValid: false,
           error: false,
@@ -230,7 +228,7 @@ class RegisterSMSProtected extends React.Component<any, any> {
   handleRestoreWallet = async () => {
     const { mnemonic } = this.state
 
-    if (!mnemonic || !actions.btc.validateMnemonicWords(mnemonic.trim())) {
+    if (!mnemonic || !mnemonicUtils.validateMnemonicWords(mnemonic)) {
       this.setState({
         isMnemonicValid: false,
         error: false,
@@ -324,7 +322,7 @@ class RegisterSMSProtected extends React.Component<any, any> {
       {
         isMnemonicGenerated: true,
         isMnemonicValid: true,
-        mnemonic: actions.btc.getRandomMnemonicWords(),
+        mnemonic: mnemonicUtils.getRandomMnemonicWords(),
       },
       () => {
         setTimeout(() => {

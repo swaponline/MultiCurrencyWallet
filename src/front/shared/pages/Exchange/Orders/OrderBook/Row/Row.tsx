@@ -150,7 +150,7 @@ class Row extends Component<RowProps, RowState> {
   }
 
   renderCoinName = (coin) => {
-    return (coin.toUpperCase() === `ETH` && config.binance) ? `BNB` : coin.toUpperCase()
+    return coin.toUpperCase()
   }
 
   sendSwapRequest = async (orderId, currency) => {

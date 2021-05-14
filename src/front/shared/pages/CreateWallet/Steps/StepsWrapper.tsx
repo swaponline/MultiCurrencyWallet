@@ -6,35 +6,48 @@ import feedback from 'shared/helpers/feedback'
 import { getActivatedCurrencies } from 'helpers/user'
 import config from 'helpers/externalConfig'
 
-import { FormattedMessage } from 'react-intl'
 import FirstStep from './FirstStep'
 import SecondStep from './SecondStep'
 
 const isWidgetBuild = config && config.isWidget
+const curEnabled = config.opts.curEnabled
 
 
 @connect(({ currencies: { items: currencies } }) => ({ currencies }))
 export default class StepsWrapper extends Component<any, any> {
+
+  // TODO: it's crazy. Move|split this packs somewhere
+  // ? additional check for tokens? Example: if ETH was disabled then we can't use erc20
+
   defaultStartPack = [
-    ...(!config.opts.curEnabled || config.opts.curEnabled.btc) ? [{ name: "BTC", capture: "Bitcoin" }] : [],
-    ...(!config.opts.curEnabled || config.opts.curEnabled.eth) ? [(config.binance) ? { name: "BNB", capture: "BSC" } : { name: "ETH", capture: "Ethereum" }] : [],
-    ...(!config.opts.curEnabled || config.opts.curEnabled.ghost) ? [{ name: "GHOST", capture: "Ghost" }] : [],
-    ...(!config.opts.curEnabled || config.opts.curEnabled.next) ? [{ name: "NEXT", capture: "NEXT.coin" }] : [],
-    ...(process.env.MAINNET) ? [{ name: "SWAP", capture: "Swap" }] : [{ name: "WEENUS", capture: "Weenus" }],
-    ...((config.binance) ? [
-      { name: "BTCB", capture: "BTCB Token" },
-    ] : [
+    ...(!curEnabled || curEnabled.btc) ? [{ name: "BTC", capture: "Bitcoin" }] : [],
+
+    ...(!curEnabled || curEnabled.eth) ? [{ name: "ETH", capture: "Ethereum" }] : [],
+    ...config.erc20 ? [{ name: 'ERC20', capture: 'Token' }] : [],
+
+    ...(!curEnabled || curEnabled.bnb) ? [{ name: "BNB", capture: "Binance Coin" }] : [],
+    ...config.bep20 ? [{ name: 'BEP20', capture: 'Token' }] : [],
+
+    ...(!curEnabled || curEnabled.ghost) ? [{ name: "GHOST", capture: "Ghost" }] : [],
+    ...(!curEnabled || curEnabled.next) ? [{ name: "NEXT", capture: "NEXT.coin" }] : [],
+
+    ...config.bep20 ? [{ name: "BTCB", capture: "BTCB Token" }] : [],
+    ...config.erc20 ? [
       { name: "WBTC", capture: "Wrapped Bitcoin" },
       { name: "USDT", capture: "Tether" },
       { name: "EURS", capture: "Eurs" },
-    ]),
+    ] : [],
+    ...(process.env.MAINNET) ? [{ name: "SWAP", capture: "Swap" }] : [{ name: "WEENUS", capture: "Weenus" }],
   ]
 
   widgetStartPack = [
-    ...(!config.opts.curEnabled || config.opts.curEnabled.btc) ? [{ name: "BTC", capture: "Bitcoin" }] : [],
-    ...(!config.opts.curEnabled || config.opts.curEnabled.eth) ? [(config.binance) ? { name: "BNB", capture: "Binance" } : { name: "ETH", capture: "Ethereum" }] : [],
-    ...(!config.opts.curEnabled || config.opts.curEnabled.ghost) ? [{ name: "GHOST", capture: "Ghost" }] : [],
-    ...(!config.opts.curEnabled || config.opts.curEnabled.next) ? [{ name: "NEXT", capture: "NEXT.coin" }] : [],
+    ...config.erc20 ? [{ name: 'ERC20', capture: 'Token' }] : [],
+    ...config.bep20 ? [{ name: 'BEP20', capture: 'Token' }] : [],
+    ...(!curEnabled || curEnabled.btc) ? [{ name: "BTC", capture: "Bitcoin" }] : [],
+    ...(!curEnabled || curEnabled.eth) ? [{ name: "ETH", capture: "Ethereum" }] : [],
+    ...(!curEnabled || curEnabled.bnb) ? [{ name: "BNB", capture: "Binance Coin" }] : [],
+    ...(!curEnabled || curEnabled.ghost) ? [{ name: "GHOST", capture: "Ghost" }] : [],
+    ...(!curEnabled || curEnabled.next) ? [{ name: "NEXT", capture: "NEXT.coin" }] : [],
   ]
 
   constructor(props) {
@@ -42,22 +55,24 @@ export default class StepsWrapper extends Component<any, any> {
     const { currencies } = props
     
     if (config
-      && config.opts
-      && config.opts.ownTokens
+      && config.opts?.ownTokens
       && Object.keys(config.opts.ownTokens)
       && Object.keys(config.opts.ownTokens).length
     ) {
       this.defaultStartPack = []
-      if (!config.opts.curEnabled || config.opts.curEnabled.btc) {
+      if (!curEnabled || curEnabled.btc) {
         this.defaultStartPack.push({ name: "BTC", capture: "Bitcoin" })
       }
-      if (!config.opts.curEnabled || config.opts.curEnabled.eth) {
-        this.defaultStartPack.push((config.binance) ? { name: "BNB", capture: "BSC" } : { name: "ETH", capture: "Ethereum" })
+      if (!curEnabled || curEnabled.eth) {
+        this.defaultStartPack.push({ name: "ETH", capture: "Ethereum" })
       }
-      if (!config.opts.curEnabled || config.opts.curEnabled.ghost) {
+      if (!curEnabled || curEnabled.bnb) {
+        this.defaultStartPack.push({ name: "BNB", capture: "Binance Coin" })
+      }
+      if (!curEnabled || curEnabled.ghost) {
         this.defaultStartPack.push({ name: "GHOST", capture: "Ghost" })
       }
-      if (!config.opts.curEnabled || config.opts.curEnabled.next) {
+      if (!curEnabled || curEnabled.next) {
         this.defaultStartPack.push({ name: "NEXT", capture: "NEXT.coin" })
       }
       const ownTokensKeys = Object.keys(config.opts.ownTokens)
@@ -89,9 +104,6 @@ export default class StepsWrapper extends Component<any, any> {
       .filter(({ addAssets, name }) => addAssets)
       //@ts-ignore: strictNullChecks
       .filter(({ name }) => enabledCurrencies.includes(name))
-    if (config.binance) {
-      items = items.filter(({ name }) => name !== `ETH`)
-    }
 
     const untouchable = this.defaultStartPack.map(({ name }) => name)
 
@@ -126,7 +138,7 @@ export default class StepsWrapper extends Component<any, any> {
   }
 
 
-  handleClick = name => {
+  handleClick = (name) => {
     feedback.createWallet.currencySelected(name)
     const { setError } = this.props
     const { curState } = this.state
@@ -135,22 +147,6 @@ export default class StepsWrapper extends Component<any, any> {
     this.setState(() => ({ curState: dataToReturn }))
     reducers.createWallet.newWalletData({ type: 'currencies', data: dataToReturn })
     setError(null)
-  }
-
-  etcClick = () => {
-    const { coins, startPack, all } = this.state
-    let newStartPack = this.defaultStartPack
-    if (!all) {
-      if (config.opts.addCustomERC20) {
-        newStartPack = [{
-          name: `Custom ${config.binance ? 'BEP20' : 'ERC20'}`,
-          capture: <FormattedMessage id="createWallet_customERC20" defaultMessage="Подключить токен" />,
-        }, ...startPack, ...coins]
-      } else {
-        newStartPack = [...startPack, ...coins]
-      }
-    }
-    this.setState(() => ({ startPack: newStartPack, all: !all }))
   }
 
   render() {
@@ -175,7 +171,6 @@ export default class StepsWrapper extends Component<any, any> {
               onClick={onClick}
               currencies={currenciesForSecondStep}
               setError={setError}
-              etcClick={this.etcClick}
               handleClick={this.handleClick}
               forcedCurrencyData
             />
@@ -187,7 +182,6 @@ export default class StepsWrapper extends Component<any, any> {
                   error={error} 
                   onClick={onClick}
                   setError={setError}
-                  etcClick={this.etcClick}
                   handleClick={this.handleClick}
                   curState={curState}
                   startPack={startPack}
@@ -201,7 +195,6 @@ export default class StepsWrapper extends Component<any, any> {
                   onClick={onClick} 
                   currencies={currenciesForSecondStep}
                   setError={setError}
-                  etcClick={this.etcClick}
                   handleClick={this.handleClick}
                   ethData={ethData}
                 />

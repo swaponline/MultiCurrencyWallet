@@ -255,18 +255,26 @@ export default class Web3Connect extends EventEmitter {
       : providers.filter((name) => name !== SUPPORTED_PROVIDERS.INJECTED)
   }
 
+  getChainId = () => {
+    return this._cachedChainId
+  }
+
   isConnected() {
     return (this._cachedProvider) ? true : false
   }
 
   isCorrectNetwork() {
     // @ToDo - test Metamask dAppBrowser
+    const availableNetworks = [1, 3, 56, 97]
+    const nonExistent = -42 // random (fix ts error)
+
     return (
       `${this._web3ChainId}` === `${this._cachedChainId}`
       //@ts-ignore: strictNullChecks
       || this._web3ChainId === Number.parseInt(this._cachedChainId)
       || `0x0${this._web3ChainId}` === `${this._cachedChainId}`
       || `0x${this._web3ChainId}` === `${this._cachedChainId}` // Opera Mobile
+      || availableNetworks.includes(this._web3ChainId || nonExistent)
     )
   }
 

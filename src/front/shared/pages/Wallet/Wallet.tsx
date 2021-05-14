@@ -18,7 +18,7 @@ import helpers, {
 import { localisedUrl } from 'helpers/locale'
 import { getActivatedCurrencies } from 'helpers/user'
 import getTopLocation from 'helpers/getTopLocation'
-import { injectIntl } from 'react-intl'
+import { FormattedMessage, injectIntl } from 'react-intl'
 
 import appConfig from 'app-config'
 import config from 'helpers/externalConfig'
@@ -52,34 +52,14 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
       btcMultisigUserData,
       btcMultisigUserDataList,
       tokensData,
-      isFetching,
       isBalanceFetching,
       multisigPendingCount,
       activeCurrency,
-      messagingToken,
       metamaskData,
     },
     currencies: { items: currencies },
-    createWallet: { currencies: assets },
     modals,
-    ui: { dashboardModalsAllowed },
   }) => {
-    let widgetMultiTokens = []
-    if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
-      Object.keys(window.widgetERC20Tokens).forEach((key) => {
-        //@ts-ignore: strictNullChecks
-        widgetMultiTokens.push(key.toUpperCase())
-      })
-    }
-    const tokens =
-      config && config.isWidget
-        ? window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length
-          ? widgetMultiTokens
-          : [config.erc20token.toUpperCase()]
-        : Object.keys(tokensData).map((k) => tokensData[k].currency)
-
-    const tokensItems = Object.keys(tokensData).map((k) => tokensData[k])
-
     const allData = [
       btcData,
       btcMultisigSMSData,
@@ -92,24 +72,12 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
       ...data,
     }))
 
-    const items = (config && config.isWidget
-      ? [btcData, ethData, ghostData, nextData]
-      : [btcData, btcMultisigSMSData, btcMultisigUserData, ethData, ghostData, nextData]
-    ).map((data) => data.currency)
-
     return {
-      tokens,
-      items,
       allData,
-      tokensItems,
-      messagingToken,
       currencies,
-      assets,
-      isFetching,
       isBalanceFetching,
       multisigPendingCount,
       hiddenCoinsList: hiddenCoinsList,
-      userEthAddress: ethData.address,
       user,
       activeCurrency,
       activeFiat,
@@ -126,7 +94,6 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
         btcMultisigUserData,
         btcMultisigUserDataList,
       },
-      dashboardView: dashboardModalsAllowed,
       modals,
     }
   }
@@ -320,10 +287,14 @@ class Wallet extends Component<any, any> {
     if (!hiddenCoinsList.includes('BTC (SMS-Protected)'))
       widgetCurrencies.push('BTC (SMS-Protected)')
       */
-    if (!hiddenCoinsList.includes('BTC (PIN-Protected)'))
+    if (!hiddenCoinsList.includes('BTC (PIN-Protected)')) {
       widgetCurrencies.push('BTC (PIN-Protected)')
-    if (!hiddenCoinsList.includes('BTC (Multisig)')) widgetCurrencies.push('BTC (Multisig)')
-    widgetCurrencies.push((config.binance) ? 'BNB' : 'ETH')
+    }
+    if (!hiddenCoinsList.includes('BTC (Multisig)')) {
+      widgetCurrencies.push('BTC (Multisig)')
+    }
+    widgetCurrencies.push('ETH')
+    widgetCurrencies.push('BNB')
     widgetCurrencies.push('GHOST')
     widgetCurrencies.push('NEXT')
     if (isWidgetBuild) {
@@ -378,7 +349,16 @@ class Wallet extends Component<any, any> {
     })
 
     if (tableRows.length === 0) {
-      // @ToDo AlertModal - balance is empty
+      actions.notifications.show(
+        constants.notifications.Message,
+        {message: (
+          <FormattedMessage 
+            id="WalletEmptyBalance"
+            defaultMessage="Balance is empty"
+          />
+        )}
+      )
+
       return
     }
 
@@ -411,18 +391,7 @@ class Wallet extends Component<any, any> {
       lastCheckMoment.add(1, 'hours')
     )
 
-    const { ethData, btcData, ghostData, nextData } = this.props.tokensData
-
-    const balancesData = {
-      ethBalance: ethData.balance,
-      btcBalance: btcData.balance,
-      ghostBalance: ghostData.balance,
-      nextBalance: nextData.balance,
-      ethAddress: ethData.address,
-      btcAddress: btcData.address,
-      ghostAddress: ghostData.address,
-      nextAddress: nextData.address,
-    }
+    const { ethData } = this.props.tokensData
 
     //@ts-ignore
     this.syncTimer = setTimeout(async () => {
@@ -441,10 +410,6 @@ class Wallet extends Component<any, any> {
             ip: ipInfo.ip,
           }
 
-          if (this.props.messagingToken) {
-            //@ts-ignore
-            registrationData.messaging_token = this.props.messagingToken
-          }
           let widgetUrl
           if (appConfig.isWidget) {
             widgetUrl = getTopLocation().origin
@@ -508,10 +473,14 @@ class Wallet extends Component<any, any> {
     if (!hiddenCoinsList.includes('BTC (SMS-Protected)'))
       widgetCurrencies.push('BTC (SMS-Protected)')
       */
-    if (!hiddenCoinsList.includes('BTC (PIN-Protected)'))
+    if (!hiddenCoinsList.includes('BTC (PIN-Protected)')) {
       widgetCurrencies.push('BTC (PIN-Protected)')
-    if (!hiddenCoinsList.includes('BTC (Multisig)')) widgetCurrencies.push('BTC (Multisig)')
-    widgetCurrencies.push((config.binance) ? 'BNB' : 'ETH')
+    }
+    if (!hiddenCoinsList.includes('BTC (Multisig)')) {
+      widgetCurrencies.push('BTC (Multisig)')
+    }
+    widgetCurrencies.push('ETH')
+    widgetCurrencies.push('BNB')
     widgetCurrencies.push('GHOST')
     widgetCurrencies.push('NEXT')
     if (isWidgetBuild) {
@@ -537,18 +506,10 @@ class Wallet extends Component<any, any> {
     })
 
     if (isWidgetBuild) {
-      //tableRows = allData.filter(({ currency }) => widgetCurrencies.includes(currency))
-      tableRows = allData.filter(
-        ({ currency, address, balance }) =>
-          (!hiddenCoinsList.includes(currency) &&
-            !hiddenCoinsList.includes(`${currency}:${address}`)) ||
-          balance > 0
-      )
       // Отфильтруем валюты, исключив те, которые не используются в этом билде
       tableRows = tableRows.filter(({ currency }) => widgetCurrencies.includes(currency))
     }
 
-    if (config.binance) enabledCurrencies.push('BNB')
     tableRows = tableRows.filter(({ currency }) => enabledCurrencies.includes(currency))
 
     tableRows = tableRows.map((el) => {
@@ -556,7 +517,7 @@ class Wallet extends Component<any, any> {
         ...el,
         balance: el.balance,
         fiatBalance:
-          el.balance > 0 && el.infoAboutCurrency && el.infoAboutCurrency.price_fiat
+          el.balance > 0 && el.infoAboutCurrency?.price_fiat
             ? new BigNumber(el.balance)
                 .multipliedBy(el.infoAboutCurrency.price_fiat)
                 .dp(2, BigNumber.ROUND_FLOOR)

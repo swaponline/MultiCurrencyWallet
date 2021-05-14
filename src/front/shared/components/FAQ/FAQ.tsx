@@ -1,11 +1,10 @@
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-/* eslint-disable max-len */
 import React, { useState, useEffect } from 'react'
 import BigNumber from 'bignumber.js'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import btcUtils from 'common/utils/coin/btc'
+import ethLikeHelper from 'common/helpers/ethLikeHelper'
 import { FormattedMessage, injectIntl } from 'react-intl'
-import { constants, feedback, adminFee, btc, eth, externalConfig } from 'helpers'
+import { constants, feedback, adminFee, externalConfig } from 'helpers'
 import cssModules from 'react-css-modules'
 import cx from 'classnames'
 import styles from './styles.scss'
@@ -21,35 +20,35 @@ const tabsIdsDictionary = {
 }
 
 const FAQ = (props) => {
-  const [btcFee, setBtcFee] = useState(null)
-  const [ethFee, setEthFee] = useState(null)
+  const [btcFee, setBtcFee] = useState(0)
+  const [ethFee, setEthFee] = useState(0)
+  const [bnbFee, setBnbFee] = useState(0)
 
   useEffect(() => {
     let _mounted = true
-    /*
-     * waiting for a response with fees and set them
-     */
-    let btcSatoshiPrice = null
-    let ethGasPrice = null
+    let btcSatoshiPrice = 0
+    let ethGasPrice = 0
+    let bnbGasPrice = 0
 
     async function fetchFees() {
       try {
         const BYTE_IN_KB = 1024
 
         btcSatoshiPrice = await btcUtils.estimateFeeRate({ speed: 'fast', NETWORK })
-        ethGasPrice = await eth.estimateGasPrice({ speed: 'fast' })
+        bnbGasPrice = await ethLikeHelper.bnb.estimateGasPrice({ speed: 'fast' })
+        ethGasPrice = await ethLikeHelper.eth.estimateGasPrice({ speed: 'fast' })
+
         // remove memory leak
         if (_mounted) {
           // divided by 1 kb to convert it to satoshi / byte
-          //@ts-ignore: strictNullChecks
-          setBtcFee(Math.ceil(btcSatoshiPrice / BYTE_IN_KB))
+          setBtcFee( Math.ceil(btcSatoshiPrice / BYTE_IN_KB) )
+
           // return gas * 1e9 - divided by 1e9 to convert
-          //@ts-ignore: strictNullChecks
-          setEthFee(new BigNumber(ethGasPrice).dividedBy(1e9).toNumber())
+          setBnbFee( new BigNumber(bnbGasPrice).dividedBy(1e9).toNumber() )
+          setEthFee( new BigNumber(ethGasPrice).dividedBy(1e9).toNumber() )
         }
       } catch (error) {
-        console.error('FAQ -> useEffect: ', error)
-        feedback.faq.failed(`fetch fees error(${error.message})`)
+        feedback.faq.failed(`FAQ. Fetch fees error(${error.message})`)
       }
     }
 
@@ -58,7 +57,6 @@ const FAQ = (props) => {
       _mounted = false
     }
   })
-
 
   const { intl: { formatMessage } } = props
   const [openedTabs, setOpenedTabs] = useState({
@@ -83,9 +81,9 @@ const FAQ = (props) => {
     setOpenedTabsCounter({ ...openedTabsCounter, [tabName]: ++openedTabsCounter[tabName] })
   }
 
-  const ethOrBnb = externalConfig.binance ? 'BNB' : 'ETH'
   const BtcPrecentFee = adminFee.isEnabled('BTC')
-  const EthPrecentFee = adminFee.isEnabled(ethOrBnb)
+  const EthPrecentFee = adminFee.isEnabled('ETH')
+  const BnbPrecentFee = adminFee.isEnabled('BNB')
 
   return (
     <div className={`${styles.faQuestions} ${isDark ? styles.dark : ''}`}>
@@ -108,6 +106,7 @@ const FAQ = (props) => {
             <FormattedMessage id="MainFAQ1_content" defaultMessage="Your private keys are stored ONLY on your device, in the localStorage of your browser. Please backup your keys, because your browser or device may be crashed." />
           </div>
         </article>
+
         <article className={styles.tab}>
           <h6 className={styles.tab__header} onClick={() => handleTabClick('SECOND_TAB')}>
             <div className={cx({
@@ -128,15 +127,18 @@ const FAQ = (props) => {
                 id="MainFAQ2_content1"
                 defaultMessage="For {tokenType} tokens, it is required that you have at least 0.001 {currency} on your wallets. Remember! when sending {tokenType} tokens, you are required to hold some {currency} as miners fees for transactions. This is also the case for all atomic swaps for {currency} & {tokenType} tokens."
                 values={{
-                  currency: ethOrBnb,
-                  tokenType: externalConfig.binance ? 'BEP20' : 'ERC20'
+                  currency: 'ETH',
+                  tokenType: 'ERC20'
                 }}
               />
             </p>
             <p>
               <FormattedMessage id="MainFAQ2_content2" defaultMessage="NOTE: You can easily check the ‘miners fees’ required for each respective coin by simply googling them." />
             </p>
-            <FormattedMessage id="MainFAQ2_content3" defaultMessage="Current mining fees:" />
+
+            <p className={styles.feeInfoTitle}>
+              <FormattedMessage id="MainFAQ2_content3" defaultMessage="Current mining fees:" />
+            </p>
             <div className={styles.descriptionFee}>
               <span>BTC:</span>{' '}
               {btcFee
@@ -152,7 +154,7 @@ const FAQ = (props) => {
               }
             </div>
             <div className={styles.descriptionFee}>
-              <span>{ethOrBnb}:</span>{' '}
+              <span>ETH:</span>{' '}
               {ethFee
                 ? (
                   <span>
@@ -165,36 +167,64 @@ const FAQ = (props) => {
                 ) : <InlineLoader />
               }
             </div>
+            <div className={styles.descriptionFee}>
+              <span>BNB:</span>{' '}
+              {bnbFee
+                ? (
+                  <span>
+                    <b>{bnbFee}</b> gwei
+                  </span>
+                ) : <InlineLoader />
+              }
+            </div>
+
             <br />
-            <FormattedMessage id="FAQServiceFee" defaultMessage="Service fee (only withdraw):" />
+
+            <p className={styles.feeInfoTitle}>
+              <FormattedMessage id="FAQServiceFee" defaultMessage="Service fee (only withdraw):" />
+            </p>
             <p className={styles.descriptionFee}>
               <span>BTC:</span>{' '}
               {BtcPrecentFee
-                  ? (
-                    <span>
-                      {BtcPrecentFee.fee + '%, '}
-                      <FormattedMessage id="FAQServiceFeeDescription" defaultMessage="no less than" />
-                      {' '}<b>{adminFee.calc('BTC', null)}</b> BTC
-                    </span>
-                  )
-                  : <span>0%</span>
+                ? (
+                  <span>
+                    {BtcPrecentFee.fee + '%, '}
+                    <FormattedMessage id="FAQServiceFeeDescription" defaultMessage="no less than" />
+                    {' '}<b>{adminFee.calc('BTC', null)}</b> BTC
+                  </span>
+                )
+                : <span>0%</span>
               }
             </p>
             <p className={styles.descriptionFee}>
-              <span>{ethOrBnb}:</span>{' '}
+              <span>ETH:</span>{' '}
               {EthPrecentFee
                   ? (
                     <span>
                       {EthPrecentFee.fee + '%, '}
                       <FormattedMessage id="FAQServiceFeeDescription" defaultMessage="no less than" />
-                      {' '}<b>{adminFee.calc(ethOrBnb, null)}</b> {ethOrBnb}
+                      {' '}<b>{adminFee.calc('ETH', null)}</b> ETH
                     </span>
                   )
                   : <span>0%</span>
               }
             </p>
+            <p className={styles.descriptionFee}>
+              <span>BNB:</span>{' '}
+              {BnbPrecentFee
+                ? (
+                  <span>
+                    {BnbPrecentFee.fee + '%, '}
+                    <FormattedMessage id="FAQServiceFeeDescription" defaultMessage="no less than" />
+                    {' '}<b>{adminFee.calc('BNB', null)}</b> BNB
+                  </span>
+                )
+                : <span>0%</span>
+              }
+            </p>
           </div>
         </article>
+
         <article className={styles.tab}>
           <h6 className={styles.tab__header} onClick={() => handleTabClick('THIRD_TAB')}>
             <div className={cx({

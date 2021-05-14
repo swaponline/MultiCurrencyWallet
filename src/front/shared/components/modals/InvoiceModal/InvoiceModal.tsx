@@ -7,7 +7,6 @@ import cssModules from 'react-css-modules'
 import styles from '../Styles/default.scss'
 import dropDownStyles from 'components/ui/DropDown/index.scss'
 import ownStyle from './InvoiceModal.scss'
-
 import Modal from 'components/modal/Modal/Modal'
 import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
 import Input from 'components/forms/Input/Input'
@@ -16,7 +15,7 @@ import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import CurrencySelect from 'components/ui/CurrencySelect/CurrencySelect'
 import { isMobile } from 'react-device-detect'
 import QrReader from 'components/QrReader'
-
+import erc20Like from 'common/erc20Like'
 import typeforce from 'swap.app/util/typeforce'
 import { inputReplaceCommaWithDot } from 'helpers/domUtils'
 import getCurrencyKey from 'helpers/getCurrencyKey'
@@ -61,6 +60,8 @@ type InvoiceModalProps = {
 type InvoiceModalState = {
   toAddressEnabled: boolean
   openScanCam: boolean
+  isErc20: boolean
+  isBep20: boolean
   isShipped: boolean
   selectedValue: string
   payerAddress: string
@@ -69,7 +70,6 @@ type InvoiceModalState = {
   contact: string
   fiatAmount: string
   amount: string
-  minus: string
   label: string
   currentDecimals: number
   multiplier: BigNumber
@@ -92,6 +92,8 @@ class InvoiceModal extends React.Component<InvoiceModalProps, InvoiceModalState>
       payerAddress = false,
     } = props
 
+    const isErc20 = erc20Like.erc20.isToken({ name: currency })
+    const isBep20 = erc20Like.bep20.isToken({ name: currency })
     const currentDecimals = constants.tokenDecimals[getCurrencyKey(currency, true).toLowerCase()]
     const walletData = actions.core.getWallet({ currency })
     const { infoAboutCurrency } = walletData
@@ -100,13 +102,14 @@ class InvoiceModal extends React.Component<InvoiceModalProps, InvoiceModalState>
       : 1
 
     this.state = {
+      isErc20,
+      isBep20,
       isShipped: false,
       openScanCam: false,
       toAddressEnabled: !!toAddress,
       address: toAddress || '',
       destination: address,
       payerAddress,
-      minus: '',
       contact: '',
       label: '',
       selectedValue: currency,
@@ -179,17 +182,21 @@ class InvoiceModal extends React.Component<InvoiceModalProps, InvoiceModalState>
 
   addressIsCorrect(otherAddress = null) {
     const {
+      isErc20,
+      isBep20,
       address,
       walletData: {
         currency,
-        isERC20: isEthToken,
       },
     } = this.state
     const checkAddress = otherAddress ? otherAddress : address
 
-    if (isEthToken) {
+    if (isErc20) {
       return typeforce.isCoinAddress.ETH(checkAddress)
+    } else if (isBep20) {
+      return typeforce.isCoinAddress.BNB(checkAddress)
     }
+
     let checkCurrency = getCurrencyKey(currency, true).toUpperCase()
 
     return typeforce.isCoinAddress[checkCurrency](checkAddress)

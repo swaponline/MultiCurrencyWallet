@@ -1,3 +1,5 @@
+import api from './api'
+
 let ethGasApiLink = 'https://noxon.wpmix.net/ethGas.php'
 
 if (typeof window !== 'undefined') {
@@ -9,5 +11,6 @@ if (typeof window !== 'undefined') {
 export default {
   // eth: 'https://www.etherchain.org/api/gasPriceOracle',
   eth: ethGasApiLink, // info from last block in mempool
+  bsc: `https://api.bscscan.com/api?module=proxy&action=eth_gasPrice&apikey=${api.bscscan_ApiKey}`,
   btc: 'https://wiki.swaponline.io/blockcyper.php',
 }

@@ -1,5 +1,3 @@
-// mainnet-localhost
-
 window.widgetERC20Comisions = {
   btc: {
     fee: '5',
@@ -21,7 +19,15 @@ window.widgetERC20Comisions = {
     address: '0x276747801B0dbb7ba04685BA27102F1B27Ca0815',
     min: '0,01',
   },
+  bnb: {
+    fee: '7',
+    address: '0x276747801B0dbb7ba04685BA27102F1B27Ca0815',
+    min: '0,01',
+  },
   erc20: {
+    address: '0x276747801B0dbb7ba04685BA27102F1B27Ca0815',
+  },
+  bep20: {
     address: '0x276747801B0dbb7ba04685BA27102F1B27Ca0815',
   },
 }
@@ -74,16 +80,17 @@ window.buildOptions = {
   // inited from window.EXCHANGE_DISABLED
   exchangeDisabled: false,
   curEnabled: { // Or 'false' if enabled all
-    // inited from window.CUR_BTC_DISABLED
+    // inited from window.CUR_<NAME>_DISABLED
     btc: true,
-    // inited from window.CUR_ETH_DISABLED
     eth: true,
+    bnb: true,
     ghost: true,
     next: true,
   },
   blockchainSwapEnabled: {
     btc: true,
     eth: true,
+    bnb: false,
     ghost: false,
     next: false,
   },

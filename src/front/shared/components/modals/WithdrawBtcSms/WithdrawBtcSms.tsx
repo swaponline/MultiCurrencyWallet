@@ -15,7 +15,7 @@ import Input from 'components/forms/Input/Input'
 import Button from 'components/controls/Button/Button'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import InvoiceInfoBlock from 'components/InvoiceInfoBlock/InvoiceInfoBlock'
-
+import * as mnemonicUtils from 'common/utils/mnemonic'
 import redirectTo from 'helpers/redirectTo'
 import lsDataCache from 'helpers/lsDataCache'
 import MnemonicInput from 'components/forms/MnemonicInput/MnemonicInput'
@@ -208,7 +208,7 @@ class WithdrawModalMultisig extends React.Component<any, any> {
   handleMnemonicSign = () => {
     const { mnemonic, rawTx } = this.state
 
-    if (!mnemonic || !actions.btc.validateMnemonicWords(mnemonic.trim())) {
+    if (!mnemonic || !mnemonicUtils.validateMnemonicWords(mnemonic)) {
       this.setState({
         error: (
           <FormattedMessage

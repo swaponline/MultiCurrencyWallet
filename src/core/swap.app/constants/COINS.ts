@@ -1,6 +1,7 @@
 export const COIN_TYPE = Object.freeze({
   NATIVE: 'NATIVE',
   ETH_TOKEN: 'ETH_TOKEN',
+  BNB_TOKEN: 'BNB_TOKEN',
 })
 
 export const COIN_MODEL = Object.freeze({
@@ -25,7 +26,7 @@ export const COIN_DATA = {
   },
   'BNB': {
     ticker: 'BNB',
-    name: 'BSC',
+    name: 'Binance Coin',
     type: COIN_TYPE.NATIVE,
     model: COIN_MODEL.AB,
     precision: 18,
@@ -40,7 +41,7 @@ export const COIN_DATA = {
   'BTCB': {
     ticker: 'BTCB',
     name: 'BTCB Token',
-    type: COIN_TYPE.ETH_TOKEN,
+    type: COIN_TYPE.BNB_TOKEN,
     model: COIN_MODEL.AB,
     precision: 18,
   },

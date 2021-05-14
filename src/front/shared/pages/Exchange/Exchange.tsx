@@ -34,14 +34,13 @@ import helpers, {
   ethToken,
   links,
 } from 'helpers'
-import { animate } from 'helpers/domUtils'
 import Switching from 'components/controls/Switching/Switching'
 import AddressSelect from './AddressSelect/AddressSelect'
 import { AddressType, AddressRole } from 'domain/address'
 import { SwapMode } from 'domain/swap'
 import NetworkStatus from 'components/NetworkStatus/NetworkStatus'
 import Orders from './Orders/Orders'
-import erc20tokens from 'common/erc20tokens'
+import erc20Like from 'common/erc20Like'
 import turboSwap from 'common/helpers/turboSwap'
 import Toggle from 'components/controls/Toggle/Toggle'
 import TurboIcon from 'shared/components/ui/TurboIcon/TurboIcon'
@@ -64,8 +63,6 @@ type ExchangeProps = {
   match: IUniversalObj
   location: IUniversalObj
   history: IUniversalObj
-  usersData: IUniversalObj[]
-  currenciesData: IUniversalObj[]
   tokensData: IUniversalObj[]
   currencies: { [key: string]: string }[]
   allCurrencyies: CurrencyObj[]
@@ -136,26 +133,15 @@ const bannedPeers = {} // rejected swap peers
     currencies,
     rememberedOrders,
     core: { orders },
-    user: { ethData, btcData, ghostData, nextData, tokensData, activeFiat, ...rest },
+    user: { tokensData, activeFiat },
   }) => ({
     currencies: swapsHelper.isExchangeAllowed(currencies.partialItems),
     allCurrencyies: currencies.items,
     addSelectedItems: swapsHelper.isExchangeAllowed(currencies.addPartialItems),
     orders: swapsHelper.filterIsPartial(orders),
-    currenciesData: [ethData, btcData, ghostData, nextData],
     tokensData: [...Object.keys(tokensData).map((k) => tokensData[k])],
     decline: rememberedOrders.savedOrders,
     activeFiat,
-    usersData: [
-      ethData,
-      btcData,
-      ghostData,
-      nextData,
-      ...Object.values(tokensData).filter(({ address }) => address),
-      ...Object.values(rest)
-        .filter((coinData) => coinData && coinData.address)
-        .filter(({ address }) => address),
-    ],
   })
 )
 @CSSModules(styles, { allowMultiple: true })
@@ -226,8 +212,8 @@ class Exchange extends PureComponent<any, any> {
       }
     }
 
-    let haveCurrency = sell || (config.binance) ? `btc` : config.opts.defaultExchangePair.sell
-    let getCurrency = buy || (config.binance) ? `btcb` : (!isWidgetBuild ? config.opts.defaultExchangePair.buy : config.erc20token)
+    let haveCurrency = sell || config.opts.defaultExchangePair.sell
+    let getCurrency = buy || (!isWidgetBuild ? config.opts.defaultExchangePair.buy : config.erc20token)
 
     const exchangeDataStr = localStorage.getItem(constants.localStorage.exchangeSettings)
     const exchangeSettings = exchangeDataStr && JSON.parse(exchangeDataStr)
@@ -470,7 +456,7 @@ class Exchange extends PureComponent<any, any> {
       return tokenObj.name === haveCurrency.toLowerCase()
     })
 
-    const allowance = await erc20tokens.checkAllowance({
+    const allowance = await erc20Like.erc20.checkAllowance({
       //@ts-ignore: strictNullChecks
       tokenOwnerAddress: tokenObj.address,
       //@ts-ignore: strictNullChecks
@@ -564,10 +550,6 @@ class Exchange extends PureComponent<any, any> {
       balances[`${feeSellWallet.currency}`] = await actions.core.fetchWalletBalance(
         feeSellWallet
       )
-    }
-
-    if (config.binance) {
-      balances[`ETH`] = balances[`BNB`]
     }
 
     this.setState(() => ({
@@ -712,7 +694,7 @@ class Exchange extends PureComponent<any, any> {
       balances,
     } = this.state
 
-    const ethBalance = (balances && balances[(config.binance) ? `BNB` : `ETH`]) ? balances[(config.binance) ? `BNB` : `ETH`] : 0
+    const ethBalance = (balances && balances[`ETH`]) ? balances.ETH : 0
     return ethBalance
   }
 
@@ -838,14 +820,14 @@ class Exchange extends PureComponent<any, any> {
     this.setState(() => ({
       isPendingTokenApprove: true,
     }))
-
-    actions.token
+    // TODO: replace actions with erc20, bep20 ...
+    actions.erc20
       .approve({
         to: config.swapContract.erc20,
         name: haveCurrency,
         amount: new BigNumber(haveAmount).dp(0, BigNumber.ROUND_UP),
       })
-      .then((response) => {
+      .then((txHash) => {
         this.updateTokenAllowance()
 
         actions.notifications.show(
@@ -855,7 +837,7 @@ class Exchange extends PureComponent<any, any> {
               id="ExchangeTokenWasApproved"
               defaultMessage="Token was approved.{br}Explorer link: {txLink}"
               values={{
-                txLink: <a href={`${config.link.etherscan}/tx/${response.transactionHash}`} target="_blank">Transaction</a>,
+                txLink: <a href={`${config.link.etherscan}/tx/${txHash}`} target="_blank">Transaction</a>,
                 br: <br />,
               }}
             />
@@ -874,7 +856,7 @@ class Exchange extends PureComponent<any, any> {
 
   // @ToDo - need refactiong without BTC
   initSwap = async () => {
-    const { decline, usersData } = this.props
+    const { decline } = this.props
 
     const { haveCurrency, haveAmount, getCurrency, haveType } = this.state
     const haveTicker = haveCurrency.toUpperCase()
@@ -1469,7 +1451,7 @@ class Exchange extends PureComponent<any, any> {
   }
 
   renderCoinName = (coin) => {
-    return (coin.toUpperCase() === `ETH` && config.binance) ? `BNB` : coin.toUpperCase()
+    return coin.toUpperCase()
   }
 
   render() {
@@ -1835,7 +1817,7 @@ class Exchange extends PureComponent<any, any> {
                     </span>
                   ) : (
                     <span>
-                      {pairFees.sell.fee} {this.renderCoinName(pairFees.sell.coin)} + {pairFees.buy.fee} {this.renderCoinName(pairFees.buy.coin)}
+                      {pairFees.sell.fee} {pairFees.sell.coin} + {pairFees.buy.fee} {pairFees.buy.coin}
                       {' ≈ '}
                       {fiatFeeCalculation > 0 ? <>${fiatFeeCalculation}</> : 0}
                       {' '}
@@ -1945,7 +1927,7 @@ class Exchange extends PureComponent<any, any> {
             {(!isWidgetBuild || isDevBuild) && (
               <>
                 <div styleName="link button-like">
-                  <a href={!isChromeExtention ? `#${links.marketmaker}/` : (config.binance) ? `#${links.marketmaker}/BTCB` : `#${links.marketmaker}/WBTC`}>
+                  <a href={!isChromeExtention ? `#${links.marketmaker}/` : `#${links.marketmaker}/WBTC`}>
                     <FormattedMessage id="AddLiquidity" defaultMessage="Add Liquidity" />
                   </a>
                 </div>

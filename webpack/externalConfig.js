@@ -17,6 +17,7 @@ const externalConfig = () => {
     }
   }
 
+  console.log(`TargetHost (${targetHost})`)
   console.log(`Config: used external (${from})`)
 
   return new CopyWebpackPlugin({

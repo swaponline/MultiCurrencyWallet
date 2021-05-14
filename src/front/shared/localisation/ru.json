@@ -538,13 +538,6 @@
     ]
   },
   {
-    "id": "Amount68",
-    "message": "История",
-    "files": [
-      "src/front/shared/pages/History/History.tsx"
-    ]
-  },
-  {
     "id": "Reqstbttn16",
     "message": "Купить",
     "files": [
@@ -1710,7 +1703,7 @@
   },
   {
     "id": "createWalletCapture1",
-    "message": "На выбор Bitcoin, Ethereum, Swap",
+    "message": "На выбор Bitcoin, Ethereum, Swap, Tokens",
     "files": [
       "src/front/shared/pages/CreateWallet/Steps/texts.tsx"
     ]
@@ -2411,13 +2404,6 @@
     ]
   },
   {
-    "id": "CurrencyAction",
-    "message": "CurrencyAction",
-    "files": [
-      "src/front/shared/components/modals/CurrencyAction/CurrencyAction.tsx"
-    ]
-  },
-  {
     "id": "currencyAction81",
     "message": "Please choose a currency, which you want to {context}",
     "files": [
@@ -2600,56 +2586,42 @@
     ]
   },
   {
-    "id": "customERC20_Address",
-    "message": "{type} контракта",
+    "id": "customTokenAddress",
+    "message": "Адрес токена",
     "files": [
       "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
     ]
   },
   {
-    "id": "customERC20_ConfirmStep",
+    "id": "customTokenConfirm",
     "message": "Добавить этот токен",
     "files": [
       "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
     ]
   },
   {
-    "id": "customERC20_IncorrectAddress",
+    "id": "customTokenIncorrectAddress",
     "message": "Вы ввели не коректный адрес",
     "files": [
       "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
     ]
   },
   {
-    "id": "customERC20_NextStep",
+    "id": "NextId",
     "message": "Далее",
     "files": [
       "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
     ]
   },
   {
-    "id": "customERC20_NotFound",
-    "message": "По указаному адресу не найден токен ERC20",
+    "id": "customTokenNotFound",
+    "message": "По указаному адресу не найден {standard} токен",
     "files": [
       "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
     ]
   },
   {
-    "id": "customERC20_Processing",
-    "message": "Обработка ...",
-    "files": [
-      "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
-    ]
-  },
-  {
-    "id": "customERC20_Ready",
-    "message": "Готово",
-    "files": [
-      "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
-    ]
-  },
-  {
-    "id": "customERC20_ReadyMessage",
+    "id": "customTokenAdded",
     "message": "Токен успешно добавлен",
     "files": [
       "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
@@ -2663,21 +2635,21 @@
     ]
   },
   {
-    "id": "customERC20_TokenDecimals",
+    "id": "DecimalsId",
     "message": "Знаков после запятой",
     "files": [
       "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
     ]
   },
   {
-    "id": "customERC20_TokenSymbol",
+    "id": "SymbolId",
     "message": "Символ токена",
     "files": [
       "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
     ]
   },
   {
-    "id": "customERC20_TokenTitle",
+    "id": "TitleId",
     "message": "Название токена",
     "files": [
       "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
@@ -3423,7 +3395,7 @@
   },
   {
     "id": "SweepBannerButton",
-    "message": "Done",
+    "message": "Готово",
     "files": [
       "src/front/shared/components/layout/DashboardLayout/DashboardLayout.tsx"
     ]
@@ -4770,14 +4742,14 @@
   },
   {
     "id": "MetamaskNetworkAlert_NetworkMainnet",
-    "message": "Основная сеть (Mainnet)",
+    "message": "Ethereum (Mainnet) или Binance Smart Chain (Mainnet)",
     "files": [
       "src/front/shared/containers/App/App.tsx"
     ]
   },
   {
     "id": "MetamaskNetworkAlert_NetworkTestnet",
-    "message": "Тестовая сеть (Ropsten)",
+    "message": "Ethereum (Ropsten) или Binance Smart Chain (Testnet)",
     "files": [
       "src/front/shared/containers/App/App.tsx"
     ]
@@ -5400,8 +5372,8 @@
     ]
   },
   {
-    "id": "WithdrowBalanceNotEnoughtEthereumBalancePrompt",
-    "message": "Недостаточно эфира для комиссии за майнинг",
+    "id": "WithdrowTokenCurrencyBalance",
+    "message": "Недостаточно {tokenCurrency} для комиссии за майнинг",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
     ]
@@ -6066,20 +6038,6 @@
     "message": "Установить Расширение Chrome",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
-    ]
-  },
-  {
-    "id": "MetamaskNetworkAlert_BnBNetworkMainnet",
-    "message": "Mainnet Binance Smart Chain",
-    "files": [
-      "src/front/shared/containers/App/App.tsx"
-    ]
-  },
-  {
-    "id": "MetamaskNetworkAlert_BnBNetworkTestnet",
-    "message": "Testnet Binance Smart Chain",
-    "files": [
-      "src/front/shared/containers/App/App.tsx"
     ]
   },
   {

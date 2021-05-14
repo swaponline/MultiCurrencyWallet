@@ -14,11 +14,13 @@ export default {
   nextExplorer: 'https://explore.next.exchange/api',
   nextExplorerCustom: 'https://next.swaponline.io/mainnet',
   blockcypher: 'https://api.blockcypher.com/v1/btc/test3',
-  etherscan: [
-    'https://api-ropsten.etherscan.io/api',
-    'https://invoices.swaponline.site/proxyetherscan-testnet',
-  ],
+  etherscan: 'https://api-ropsten.etherscan.io/api',
+  etherscanInvoices: 'https://invoices.swaponline.site/proxyetherscan-testnet',
   etherscan_ApiKey: 'RHHFPNMAZMD6I4ZWBZBF6FA11CMW9AXZNM',
+  bscscan: 'https://api-testnet.bscscan.com/api',
+  // TODO: replace proxy link
+  bscscanInvoices: 'https://invoices.swaponline.site/proxyetherscan-testnet',
+  bscscan_ApiKey: 'WI4QEJSV19U3TF2H1DPQ2HR6712HW4MYKJ',
   faucet: 'https://faucet.swaponline.site/testnet/',
   btc2FAProtected: 'https://2fa.swaponline.site',
   btcPin: 'https://2fapin.swaponline.site',

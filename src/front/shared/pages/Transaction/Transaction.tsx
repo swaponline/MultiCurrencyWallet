@@ -1,10 +1,11 @@
 import { withRouter } from 'react-router-dom'
 import React, { Component, Fragment } from 'react'
 import actions from 'redux/actions'
-import helpers, { constants, links } from 'helpers'
+import erc20Like from 'common/erc20Like'
+import helpers, { links } from 'helpers'
 
 import getCurrencyKey from 'helpers/getCurrencyKey'
-import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
+import { defineMessages, injectIntl } from 'react-intl'
 import getWalletLink from 'helpers/getWalletLink'
 
 import TxInfo from './TxInfo'
@@ -31,7 +32,6 @@ class Transaction extends Component<any, any> {
     super(props)
 
     const {
-      history,
       match: {
         params: {
           ticker = null,
@@ -90,19 +90,22 @@ class Transaction extends Component<any, any> {
     }
   }
 
-  async fetchTxInfo(currencyKey, txId, ticker) {
+  async fetchTxInfo(currency, txId, ticker) {
     const {
       infoTx: cachedTxInfo,
     } = this.state
 
-    let infoTx = null
+    let infoTx
     let error = null
+
+
     try {
-      if (currencyKey === `token`) {
-        //@ts-ignore: strictNullChecks
-        infoTx = await actions.token.fetchTokenTxInfo(ticker, txId, 5 * 60 * 1000)
+      if (erc20Like.erc20.isToken({ name: currency })) {
+        infoTx = await actions.erc20.fetchTokenTxInfo(ticker, txId, 5 * 60 * 1000)
+      } else if (erc20Like.bep20.isToken({ name: currency })) {
+        infoTx = await actions.bep20.fetchTokenTxInfo(ticker, txId, 5 * 60 * 1000)
       } else {
-        infoTx = await actions[currencyKey].fetchTxInfo(txId, 5 * 60 * 1000)
+        infoTx = await actions[currency].fetchTxInfo(txId, 5 * 60 * 1000)
       }
     } catch (err) {
       console.error(err)
@@ -120,7 +123,7 @@ class Transaction extends Component<any, any> {
 
     if (!this.unmounted) {
       lsDataCache.push({
-        key: `TxInfo_${currencyKey.toLowerCase()}_${txId}`,
+        key: `TxInfo_${currency.toLowerCase()}_${txId}`,
         time: 3600,
         data: infoTx,
       })
@@ -167,7 +170,8 @@ class Transaction extends Component<any, any> {
       return
     }
 
-    const currency = getCurrencyKey(ticker, false)
+    const currency = getCurrencyKey(ticker, true)
+
     this.fetchTxInfo(currency, txId, ticker)
     this.fetchTxFinalBalances(getCurrencyKey(ticker, true), txId)
 

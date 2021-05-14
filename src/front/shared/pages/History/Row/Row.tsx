@@ -47,7 +47,7 @@ export default class Row extends React.PureComponent<any, any> {
   componentDidMount() {
     const { type, tokensData } = this.props
     /*
-    * request fiat balance if token have currency price
+    * request fiat balance if currency has fiat price
     */
     Object.keys(tokensData).forEach(key => {
       if (key.includes(type)) {
@@ -161,7 +161,7 @@ export default class Row extends React.PureComponent<any, any> {
   }
 
   parseFloat = (direction, value, directionType, type) => {
-    const { txType } = this.props
+    const { txType, standard } = this.props
     switch (type) {
       case 'btc (sms-protected)': type = 'BTC'
         break
@@ -173,11 +173,25 @@ export default class Row extends React.PureComponent<any, any> {
 
     return (
       <Fragment>
-        {direction === directionType ?
-          <div styleName="amount">{`+ ${parseFloat(Number(value).toFixed(5))}`} {type.toUpperCase()}
-            {txType === 'INVOICE' ? <span styleName="smallTooltip"><Tooltip id='RowTooltipInvoice'>Invoice</Tooltip></span> : ''}
-          </div> :
-          <div styleName="amount">{`- ${parseFloat(Number(value).toFixed(5))}`} {type.toUpperCase()}</div>
+        {direction === directionType ? (
+            <div styleName="amount">
+              {`+ ${parseFloat(Number(value).toFixed(5))}`} {type.toUpperCase()}
+              {standard ? (
+                <span styleName="tokenStandard">{standard.toUpperCase()}</span>
+              ) : ''}
+              {txType === 'INVOICE' ? (
+                <span styleName="smallTooltip"><Tooltip id='RowTooltipInvoice'>Invoice</Tooltip></span>
+              ) : ''}
+            </div>
+          ) : (
+            <div styleName="amount">
+              {`- ${parseFloat(Number(value).toFixed(5))}`}{' '}
+              {type.toUpperCase()}
+              {standard ? (
+                <span styleName="tokenStandard">{standard.toUpperCase()}</span>
+              ) : ''}
+            </div>
+          )
         }
       </Fragment>
     )
@@ -187,6 +201,7 @@ export default class Row extends React.PureComponent<any, any> {
     const {
       activeFiat,
       address,
+      standard,
       type,
       direction,
       value,

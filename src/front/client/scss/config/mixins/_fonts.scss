@@ -21,3 +21,7 @@
 @mixin ff-bold {
   font-family: 'Manrope-Bold';
 }
+
+@mixin ff-mono {
+  font-family: 'Roboto Mono', monospace;
+}

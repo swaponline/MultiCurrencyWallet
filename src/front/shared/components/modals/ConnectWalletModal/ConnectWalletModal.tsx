@@ -1,22 +1,19 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'redaction'
-import cx from 'classnames'
-
 import actions from 'redux/actions'
-import { constants, links } from 'helpers'
-import { localisedUrl } from 'helpers/locale'
-
+import { connect } from 'redaction'
+import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import cssModules from 'react-css-modules'
+import cx from 'classnames'
 import styles from './ConnectWalletModal.scss'
 
-import { Modal } from 'components/modal'
-import { Button } from 'components/controls'
-import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
-import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
-
+import { constants, links } from 'helpers'
+import { localisedUrl } from 'helpers/locale'
 import metamask from 'helpers/metamask'
 
+import { Button } from 'components/controls'
+import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
+
+const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 const defaultLanguage = defineMessages({
   title: {
@@ -44,7 +41,7 @@ const providerTitles = defineMessages({
   dashboardModalsAllowed,
 }))
 @cssModules(styles)
-class ConnectWalletModal extends React.Component<any, any> {
+class ConnectWalletModal extends React.Component<any, null> {
   goToPage(link) {
     const {
       name,
@@ -112,7 +109,7 @@ class ConnectWalletModal extends React.Component<any, any> {
   }
 
   render() {
-    const { intl, name, dashboardModalsAllowed } = this.props
+    const { intl, dashboardModalsAllowed } = this.props
 
     const labels = {
       title: intl.formatMessage(defaultLanguage.title),
@@ -129,6 +126,7 @@ class ConnectWalletModal extends React.Component<any, any> {
         <div
           className={cx({
             [styles['modal']]: true,
+            [styles['dark']]: isDark,
             [styles['modal_dashboardView']]: dashboardModalsAllowed,
           })}
         >
@@ -167,5 +165,5 @@ class ConnectWalletModal extends React.Component<any, any> {
     )
   }
 }
-
+//@ts-ignore: strictNullChecks
 export default injectIntl(ConnectWalletModal)

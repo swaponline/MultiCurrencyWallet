@@ -17,10 +17,6 @@
   font-size: 20px;
   font-weight: 700;
   text-align: center;
-
-  &.uppercase {
-    text-transform: uppercase;
-  }
 }
 
 .modal-overlay {
@@ -42,13 +38,13 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  background: $l-background-elements;
+  background-color: $l-background-elements;
   padding: 32px;
   width: 100%;
   max-width: 640px;
   height: auto;
   border-radius: 10px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, .4);
+  box-shadow: $l-box-shadow;
 
   &_dashboardView {
     background-color: none;
@@ -59,8 +55,9 @@
   }
 
   &.dark {
-    color: $d-color;
+    box-shadow: none;
     background-color: $d-background-elements;
+    color: $d-color;
   }
 }
 
@@ -74,13 +71,11 @@
   max-width: none;
 }
 
-
 .content {
   height: 100%;
   display: flex;
   flex-direction: column;
 }
-
 
 .notification-overlay {
   display: flex;
@@ -112,11 +107,9 @@
 
   .title {
     font-size: 18px;
-    ;
   }
 
   .notification-overlay {
     height: 100%;
   }
-
 }
