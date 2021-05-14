@@ -6,6 +6,7 @@ const gravatarUsers = {
   '0x3B85D38c3A7AEabABA8B7DEb7a73177688270abC': '3acadd9952a49c013f40321bd2cc04f8', // noxon
   '0x57d49704F453CdD2b995280d9D7F557E42847d82': 'a33f0d8f07900b0fb7f6367d3c3f0c57', // NotEternal
   '0x6644199df2D554086839df872b2fe3875cD96271': '205e460b479e2e5b48aec07710c08d50', //testnet public
+  '0x700b42Cf65dE2b74a5570723FfE278eFfD58823e': 'ec849eedf69dc1adea2f25aa63d59504', //mainnet bot
 }
 
 

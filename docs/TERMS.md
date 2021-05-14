@@ -56,7 +56,7 @@ Room participant, can communicate with other peers using messages
 
 
 ## Maker
-The peer who created the offer
+The peer who created the offer. https://youtu.be/XkLsW5qxdEc?t=458 (ru)
 
 - synonyms: `offer maker`
 - deprecated: `owner`
