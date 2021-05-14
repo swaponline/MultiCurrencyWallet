@@ -390,7 +390,9 @@ class Erc20LikeAction {
       from,
     }
 
-    const amountWithDecimals = String(amount) + '0'.repeat(decimals)
+    const hexAmountWithDecimals = new BigNumber(amount)
+      .multipliedBy(10 ** decimals)
+      .toString(16)
     const walletData = actions.core.getWallet({
       address: from,
       currency: name,
@@ -398,7 +400,8 @@ class Erc20LikeAction {
 
     return new Promise(async (res, rej) => {
       const receipt = tokenContract.methods
-        .transfer(to, amountWithDecimals)
+        // hex amount fixes a BigNumber error
+        .transfer(to, '0x' + hexAmountWithDecimals)
         .send(txArguments)
         .on('transactionHash', (hash) => res({ transactionHash: hash }))
         .on('error', (error) => {
