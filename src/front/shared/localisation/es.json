@@ -486,13 +486,6 @@
     ]
   },
   {
-    "id": "Amount68",
-    "message": "transacciones",
-    "files": [
-      "src/front/shared/pages/History/History.tsx"
-    ]
-  },
-  {
     "id": "Reqstbttn16",
     "message": "Comprar",
     "files": [

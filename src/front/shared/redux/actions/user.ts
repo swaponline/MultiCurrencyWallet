@@ -274,7 +274,10 @@ const getTokensBalances = async () => {
   Object.keys(TOKEN_STANDARDS).forEach((key) => {
     const standardObj = TOKEN_STANDARDS[key]
     const standardName = standardObj.standard
-    
+
+    // TODO: need to consider about the identical token names in the different blockchains
+    // TODO: get balance not only with name
+
     Object.keys(config[standardName]).forEach(async (tokenName) => {
       try {
         await actions[standardName].getBalance(tokenName)
@@ -525,6 +528,9 @@ const setTokensTransaction = async () => {
   const { core: { hiddenCoinsList } } = getState()
   const enabledCurrencies = getActivatedCurrencies()
   const tokens: { [key: string]: string[] } = {}
+
+  // TODO: need to consider about the identical token names in the different blockchains
+  // TODO: get Transaction not only with name
 
   Object.keys(TOKEN_STANDARDS).forEach((key) => {
     const standard = TOKEN_STANDARDS[key].standard

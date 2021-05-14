@@ -157,6 +157,7 @@ class Erc20LikeAction {
             .map((item) => ({
               confirmations: item.confirmations,
               type: tokenName.toLowerCase(),
+              standard: this.standard,
               hash: item.hash,
               contractAddress: item.contractAddress,
               status: item.blockHash !== null ? 1 : 0,
@@ -216,7 +217,7 @@ class Erc20LikeAction {
           //@ts-ignore: strictNullChecks
           txInfo.amount = ourTx[0].value
           //@ts-ignore: strictNullChecks
-          txInfo.adminFee = false // Swap dont have service fee
+          txInfo.adminFee = false // Swap doesn't have service fee
 
           if (ourTx[0].direction == `in`) {
             txInfo = {
@@ -521,19 +522,7 @@ class Erc20LikeAction {
   }
 }
 
-// TODO: Temporarily
-const TokenInstance = new Erc20LikeAction({
-  currency: 'ETH',
-  standard: 'erc20',
-  explorerName: 'etherscan',
-  explorerLink: externalConfig.link.etherscan,
-  explorerApiKey: externalConfig.api.etherscan_ApiKey,
-  adminFeeObj: externalConfig.opts?.fee?.erc20,
-  web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.provider)),
-})
-
 export default {
-  token: TokenInstance,
   erc20: new Erc20LikeAction({
     currency: 'ETH',
     standard: 'erc20',

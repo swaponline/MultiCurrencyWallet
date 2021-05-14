@@ -554,12 +554,9 @@ const fetchWalletBalance = async (walletData): Promise<number> => {
 
       return new BigNumber(balance).toNumber()
     } else {
-      if (
-        actions[name] &&
-        actions[name].fetchBalance &&
-        typeof actions[name].fetchBalance === `function`
-      ) {
+      if (typeof actions[name]?.fetchBalance) {
         const balance = await actions[name].fetchBalance(walletData.address)
+
         return new BigNumber(balance).toNumber()
       } else {
         console.warn(`Fail fetch balance for wallet '${name}' - not fetchBalance in actions`)

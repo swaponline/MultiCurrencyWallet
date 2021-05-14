@@ -1,6 +1,3 @@
-import config from 'app-config'
-import TOKEN_STANDARDS from 'common/helpers/constants/TOKEN_STANDARDS'
-
 import * as types from './types'
 
 import modals from './modals'
@@ -34,20 +31,7 @@ import backupManager from './backupManager'
 
 import multisigTx from './multisigTx'
 
-const tokens = {}
-
-Object.keys(config.erc20)
-  .forEach(key => {
-    tokens[key] = Erc20LikeAction.erc20
-  })
-
-// Object.keys(config.bep20)
-//   .forEach(key => {
-//     tokens[key] = Erc20LikeAction.bep20
-//   })
-
 export default {
-  ...tokens,
   types,
   filter,
   modals,
@@ -62,7 +46,6 @@ export default {
   btcmultisig,
   eth: EthLikeAction.ETH,
   bnb: EthLikeAction.BNB,
-  token: Erc20LikeAction.token,
   erc20: Erc20LikeAction.erc20,
   bep20: Erc20LikeAction.bep20,
   ghost,

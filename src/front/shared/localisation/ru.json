@@ -538,13 +538,6 @@
     ]
   },
   {
-    "id": "Amount68",
-    "message": "История",
-    "files": [
-      "src/front/shared/pages/History/History.tsx"
-    ]
-  },
-  {
     "id": "Reqstbttn16",
     "message": "Купить",
     "files": [
