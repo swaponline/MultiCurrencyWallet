@@ -152,39 +152,43 @@ class Erc20LikeAction {
           cacheResponse: 30 * 1000, // 30 seconds
         })
         .then((response: IUniversalObj) => {
-          const transactions = response.result
-            .filter((item) => item.value > 0)
-            .map((item) => ({
-              confirmations: item.confirmations,
-              type: tokenName.toLowerCase(),
-              standard: this.standard,
-              hash: item.hash,
-              contractAddress: item.contractAddress,
-              status: item.blockHash !== null ? 1 : 0,
-              value: new BigNumber(String(item.value))
-                .dividedBy(new BigNumber(10).pow(Number(item.tokenDecimal)))
-                .toNumber(),
-              address: item.to,
-              date: item.timeStamp * 1000,
-              direction: address.toLowerCase() === item.to.toLowerCase() ? 'in' : 'out',
-            }))
-            .filter((item) => {
-              if (
-                item.direction === 'in' ||
-                !this.adminFeeObj ||
-                address.toLowerCase() === this.adminFeeObj.address.toLowerCase()
-              ) {
+          if (Array.isArray(response.result)) {
+            const transactions = response.result
+              .filter((item) => item.value > 0)
+              .map((item) => ({
+                confirmations: item.confirmations,
+                type: tokenName.toLowerCase(),
+                standard: this.standard,
+                hash: item.hash,
+                contractAddress: item.contractAddress,
+                status: item.blockHash !== null ? 1 : 0,
+                value: new BigNumber(String(item.value))
+                  .dividedBy(new BigNumber(10).pow(Number(item.tokenDecimal)))
+                  .toNumber(),
+                address: item.to,
+                date: item.timeStamp * 1000,
+                direction: address.toLowerCase() === item.to.toLowerCase() ? 'in' : 'out',
+              }))
+              .filter((item) => {
+                if (
+                  item.direction === 'in' ||
+                  !this.adminFeeObj ||
+                  address.toLowerCase() === this.adminFeeObj.address.toLowerCase()
+                ) {
+                  return true
+                }
+
+                if (item.address.toLowerCase() === this.adminFeeObj.address.toLowerCase()) {
+                  return false
+                }
+
                 return true
-              }
+              })
 
-              if (item.address.toLowerCase() === this.adminFeeObj.address.toLowerCase()) {
-                return false
-              }
-
-              return true
-            })
-
-          res(transactions)
+            res(transactions)
+          } else {
+            res([])
+          }
         })
         .catch((error) => {
           this.reportError(error)
