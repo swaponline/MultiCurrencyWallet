@@ -5,6 +5,11 @@ import { BigNumber } from 'bignumber.js'
 import { EthLikeSwap, BtcSwap } from 'swap.swaps'
 
 
+interface IBtcToEthLike {
+  flowName: string
+  getMyAddress: Function
+  getParticipantAddress: Function
+}
 class BtcToEthLike extends AtomicAB2UTXO {
 
   _flowName: string
@@ -17,7 +22,7 @@ class BtcToEthLike extends AtomicAB2UTXO {
   getMyAddress: Function
   getParticipantAddress: Function
 
-  constructor(swap, options) {
+  constructor(swap, options: IBtcToEthLike) {
     super(swap)
 
     if (!options.flowName) {
@@ -212,8 +217,8 @@ class BtcToEthLike extends AtomicAB2UTXO {
             } = flow.state
             if (secretHash && utxoScriptValues) {
               const isSwapCreated = await flow.ethLikeSwap.isSwapCreated({
-                ownerAddress: flow.app.getParticipantEthAddress(flow.swap),
-                participantAddress: flow.app.getMyEthAddress(),
+                ownerAddress: flow.getParticipantAddress(flow.swap),
+                participantAddress: flow.getMyAddress(),
                 secretHash,
               })
               if (isSwapCreated) {
@@ -387,7 +392,7 @@ class BtcToEthLike extends AtomicAB2UTXO {
       console.warn(`Hash does not match! state: ${secretHash}, given: ${_secretHash}`)
 
     const data = {
-      ownerAddress: this.app.getParticipantEthAddress(this.swap),
+      ownerAddress: this.getParticipantAddress(this.swap),
       secret: _secret,
     }
 

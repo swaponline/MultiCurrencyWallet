@@ -4,16 +4,21 @@ import { AtomicAB2UTXO } from 'swap.swap'
 import { EthLikeSwap, BtcSwap } from 'swap.swaps'
 
 
+interface IEthLikeToBtc {
+  flowName: string
+  getMyAddress: Function
+  getParticipantAddress: Function
+}
 class EthLikeToBtc extends AtomicAB2UTXO {
 
   _flowName: string
   ethLikeSwap: EthLikeSwap
   btcSwap: BtcSwap
   state: any
-  getMyAddress: any
-  getParticipantAddress: any
+  getMyAddress: Function
+  getParticipantAddress: Function
 
-  constructor(swap, options) {
+  constructor(swap, options: IEthLikeToBtc) {
     super(swap)
 
     if (!options.flowName) {
@@ -198,8 +203,8 @@ class EthLikeToBtc extends AtomicAB2UTXO {
 
           await util.helpers.repeatAsyncUntilResult(async () => {
             const isSwapCreated = await flow.ethLikeSwap.isSwapCreated({
-              ownerAddress: flow.app.getMyEthAddress(),
-              participantAddress: flow.app.getParticipantEthAddress(flow.swap),
+              ownerAddress: flow.getMyAddress(),
+              participantAddress: flow.getParticipantAddress(flow.swap),
               secretHash,
             })
 
@@ -315,8 +320,8 @@ class EthLikeToBtc extends AtomicAB2UTXO {
 
   _checkSwapAlreadyExists() {
     const swapData = {
-      ownerAddress: this.app.getMyEthAddress(),
-      participantAddress: this.app.getParticipantEthAddress(this.swap)
+      ownerAddress: this.getMyAddress(),
+      participantAddress: this.getParticipantAddress(this.swap)
     }
 
     return this.ethLikeSwap.checkSwapExists(swapData)
@@ -354,7 +359,7 @@ class EthLikeToBtc extends AtomicAB2UTXO {
     }
 
     return this.ethLikeSwap.refund({
-      participantAddress: this.app.getParticipantEthAddress(this.swap),
+      participantAddress: this.getParticipantAddress(this.swap),
     })
       .then((hash) => {
         if (!hash) {
