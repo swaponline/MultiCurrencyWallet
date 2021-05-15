@@ -770,7 +770,7 @@ class EthLikeTokenSwap extends SwapInterface {
       amount: sellAmount,
       targetWallet: (flow.swap.destinationSellAddress)
         ? flow.swap.destinationSellAddress
-        : abClass.app.getParticipantAddress(flow.swap),
+        : abClass.getParticipantAddress(flow.swap),
       useTargetWallet,
       calcFee: true,
     }
