@@ -296,11 +296,11 @@ class SwapApp extends EventEmitter {
   }
 
   getBnbWeb3Adapter() {
-    // ----- //
+    return this.env.getWeb3Bnb().eth
   }
 
   getBnbWeb3Utils() {
-    // ----- //
+    return this.env.getWeb3Bnb().utils
   }
 
   getMyBnbAddress() {
