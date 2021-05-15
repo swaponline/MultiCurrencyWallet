@@ -11,13 +11,31 @@ class BtcToEthLike extends AtomicAB2UTXO {
   ethLikeSwap: EthLikeSwap
   ethLikeCoin: string
   btcSwap: BtcSwap
+
   state: any
 
-  constructor(swap) {
+  getMyAddress: Function
+  getParticipantAddress: Function
+
+  constructor(swap, options) {
     super(swap)
+
+    if (!options.flowName) {
+      throw new Error('EthLikeToBtc - option flowName requery')
+    }
+    if (!options.getMyAddress || typeof options.getMyAddress !== 'function') {
+      throw new Error(`EthLikeToBtc ${options.flowName} - option getMyAddress - function requery`)
+    }
+    if (!options.getParticipantAddress || typeof options.getParticipantAddress !== 'function') {
+      throw new Error(`EthLikeToBtc ${options.flowName} - option getParticipantAddress - function requery`)
+    }
+
+    this.getMyAddress = options.getMyAddress
+    this.getParticipantAddress = options.getParticipantAddress
+
     this.utxoCoin = `btc`
     this.ethLikeCoin = swap.ethLikeCoin
-    this._flowName = swap.flowName
+    this._flowName = options.flowName
 
     this.isUTXOSide = true
     this.isTakerMakerModel = true

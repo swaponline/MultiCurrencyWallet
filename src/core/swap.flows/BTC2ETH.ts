@@ -16,8 +16,11 @@ class BTC2ETH extends BtcToEthLike {
   }
 
   constructor(swap) {
-    swap.flowName = `BTC2ETH`
-    super(swap)
+    super(swap, {
+      flowName: `BTC2ETH`,
+      getMyAddress: swap.app.getMyEthAddress,
+      getParticipantAddress: swap.app.getParticipantEthAddress,
+    })
   }
 }
 
