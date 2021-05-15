@@ -287,9 +287,19 @@ class SwapApp extends EventEmitter {
       : this.services.auth.accounts.eth.address
   }
 
+  getMyBnbAddress() {
+    //@ts-ignore: strictNullChecks
+    return this.services.auth.accounts.bnb.address // @to-do - add metamask support
+  }
+
   getParticipantEthAddress(swap) {
     const { participant, participantMetamaskAddress } = swap
     return participantMetamaskAddress ? participantMetamaskAddress : participant.eth.address
+  }
+
+  getParticipantBnbAddress(swap) {
+    const { participant, participantMetamaskAddress } = swap
+    return participant.bnb.address // @to-do - add metamask support
   }
 
   static is(app) {

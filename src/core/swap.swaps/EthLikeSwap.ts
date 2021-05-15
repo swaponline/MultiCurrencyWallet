@@ -6,6 +6,7 @@ const debug = _debug('swap.core:swaps')
 
 class EthLikeSwap extends SwapInterface {
 
+  options: any
   address: string
   abi: any[]
   _swapName: string
@@ -16,10 +17,9 @@ class EthLikeSwap extends SwapInterface {
   sendTransaction: Function
 
   web3adapter: any // web3.eth
-  toWei: Function // web3.utils.toWei
-  bytesToHex: Function // web3.utils.bytesToHex
-  getMyAddress: Function
-  getParticipantAddress: Function
+  web3utils: any // web3.utils
+  getMyAddress: any
+  getParticipantAddress: any
   coinName: string
 
   app: any
@@ -38,6 +38,9 @@ class EthLikeSwap extends SwapInterface {
   constructor(options) {
     super()
 
+    if (options.coinName === undefined) {
+      throw new Error('EthLikeSwap swap - option `coinName` not defined')
+    }
     if (typeof options.fetchBalance !== 'function') {
       throw new Error('EthLikeSwap: "fetchBalance" required')
     }
@@ -47,32 +50,28 @@ class EthLikeSwap extends SwapInterface {
     if (!Array.isArray(options.abi)) {
       throw new Error('EthLikeSwap: "abi" required')
     }
-    if (options.web3adapter === undefined) {
+    if (options.getWeb3Adapter === undefined) {
+      throw new Error(`EthLikeSwap ${options.coinName}: option 'getWeb3Adapter' not defined`)
     }
-    if (typeof options.toWei !== 'function') {
-      
+    if (options.getWeb3Utils === undefined) {
+      throw new Error(`EthLikeSwap ${options.coinName}: option 'getWeb3Utils' not defined`)
     }
-    if (typeof options.bytesToHex !== 'function') {
+    if (options.getMyAddress === undefined) {
+      throw new Error(`EthLikeSwap ${options.coinName}: option 'getMyAddress' not defined`)
     }
-    if (typeof options.getMyAddress !== 'function') {
+    if (options.getParticipantAddress === undefined) {
+      throw new Error(`EthLikeSwap ${options.coinName}: option 'getParticipantAddress' not defined`)
     }
-    if (typeof options.getParticipantAddress !== 'function') {
-    }
-
     if (typeof options.estimateGasPrice !== 'function') {
       // ({ speed } = {}) => gasPrice
       console.warn(`EthLikeSwap: "estimateGasPrice" is not a function. You will not be able use automatic mempool-based fee`)
     }
 
+    this.options        = options
     this.address        = options.address
     this.abi            = options.abi
 
-    this.web3adapter    = options.web3adapter
-    this.getMyAddress   = options.getMyAddress
     this.coinName       = options.coinName
-    this.getParticipantAddress = options.getParticipantAddress
-    this.toWei          = options.toWei
-    this.bytesToHex     = options.bytesToHex
 
     this._swapName      = options.coinName //constants.COINS.eth
 
@@ -87,6 +86,23 @@ class EthLikeSwap extends SwapInterface {
     super._initSwap(app)
 
     this.app = app
+    if (typeof this.app[this.options.getWeb3Adapter] !== 'function') {
+      throw new Error(`EthLikeSwap ${this.coinName}: SwapApp function '${this.options.getWeb3Adapter}' not defined`)
+    }
+    if (typeof this.app[this.options.getWeb3Utils] !== 'function') {
+      throw new Error(`EthLikeSwap ${this.coinName}: SwapApp function '${this.options.getWeb3Utils}' not defined`)
+    }
+    if (typeof this.app[this.options.getMyAddress] !== 'function') {
+      throw new Error(`EthLikeSwap ${this.coinName}: SwapApp function '${this.options.getMyAddress}' not defined`)
+    }
+    if (typeof this.app[this.options.getParticipantAddress] !== 'function') {
+      throw new Error(`EthLikeSwap ${this.coinName}: SwapApp function '${this.options.getParticipantAddress}' not defined`)
+    }
+
+    this.web3adapter = this.app[this.options.getWeb3Adapter]()
+    this.web3utils = this.app[this.options.getWeb3Utils]()
+    this.getMyAddress = this.app[this.options.getMyAddress]
+    this.getParticipantAddress = this.app[this.options.getParticipantAddress]
 
     this.decoder  = new InputDataDecoder(this.abi)
 
@@ -190,7 +206,7 @@ class EthLikeSwap extends SwapInterface {
   async createSwap(data, handleTransactionHash) {
     const { secretHash, participantAddress, amount } = data
 
-    const amountWei = this.toWei(amount.toString())
+    const amountWei = this.web3utils.toWei(amount.toString())
 
     const hash = `0x${secretHash.replace(/^0x/, '')}`
     const args = [ hash, participantAddress ]
@@ -213,7 +229,7 @@ class EthLikeSwap extends SwapInterface {
 
     await this.updateGasPrice()
 
-    const amountWei = this.toWei(amount.toString())
+    const amountWei = this.web3utils.toWei(amount.toString())
 
     const hash = `0x${secretHash.replace(/^0x/, '')}`
 
@@ -612,7 +628,7 @@ class EthLikeSwap extends SwapInterface {
       .then(txResult => {
         try {
           const bytes32 = this.decoder.decodeData(txResult.input)
-          return this.bytesToHex(bytes32.inputs[0]).split('0x')[1]
+          return this.web3utils.bytesToHex(bytes32.inputs[0]).split('0x')[1]
         } catch (err) {
           debug('Trying to fetch secret from tx: ' + err.message)
           return
@@ -880,7 +896,7 @@ class EthLikeSwap extends SwapInterface {
 
       _debug('swap.core:flow')('Checking contract balance:', balance)
 
-      const needContractBalance = new BigNumber(abClass.toWei(flow.swap.buyAmount.toString()))
+      const needContractBalance = new BigNumber(abClass.web3utils.toWei(flow.swap.buyAmount.toString()))
 
       if (new BigNumber(balance).isGreaterThanOrEqualTo(needContractBalance)) {
         return true
