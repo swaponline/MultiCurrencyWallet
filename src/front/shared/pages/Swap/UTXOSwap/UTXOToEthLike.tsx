@@ -17,10 +17,11 @@ import SwapList from './SwapList/SwapList'
 
 
 @CSSModules(styles)
-export default class UTXOToEth extends Component<any, any> {
+export default class UTXOToEthLike extends Component<any, any> {
   swap = null
   _fields = null
   ParticipantTimer = null
+  ethLikeCoin = null
 
   constructor(props) {
     super(props)
@@ -29,6 +30,8 @@ export default class UTXOToEth extends Component<any, any> {
     this.swap = swap
 
     this._fields = fields
+    this.ethLikeCoin = fields.ethLikeCoin
+
     this.state = {
       currencyData,
       enabledButton: false,

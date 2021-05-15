@@ -4,11 +4,16 @@ import {
   UTXO_to_ERC20,
   ERC20_to_UTXO,
   UTXO_to_ETH,
-  ETH_to_UTXO
+  ETH_to_UTXO,
+  UTXO_to_BNB,
+  BNB_to_UTXO,
 } from './build'
 
 
 const swapComponents = {}
+swapComponents[`BTC2BNB`] = UTXO_to_BNB(`btc`)
+swapComponents[`BNB2BTC`] = BNB_to_UTXO(`btc`)
+
 Object.keys(config.swapConfig).forEach(coin => {
   swapComponents[`${coin.toUpperCase()}2ETH`] = UTXO_to_ETH(coin)
   swapComponents[`ETH2${coin.toUpperCase()}`] = ETH_to_UTXO(coin)

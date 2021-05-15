@@ -15,11 +15,12 @@ import DepositWindow from './DepositWindow/DepositWindow'
 
 
 @CSSModules(styles)
-export default class EthToUTXO extends Component<any, any> {
+export default class EthLikeToUTXO extends Component<any, any> {
   _fields = null
   swap = null
   signTimer = null
   confirmTimer = null
+  ethLikeCoin = null
 
   constructor(props) {
     super(props)
@@ -33,6 +34,7 @@ export default class EthToUTXO extends Component<any, any> {
     } = props
 
     this._fields = fields
+    this.ethLikeCoin = fields.ethLikeCoin
 
     this.swap = swap
 

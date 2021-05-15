@@ -13,10 +13,7 @@ class ETH2BTC extends EthLikeToBtc {
     return constants.COINS.btc
   }
   constructor(swap) {
-    swap = {
-      ...swap,
-      flowName: `ETH2BTC`,
-    }
+    swap.flowName = `ETH2BTC`
     super(swap)
   }
 }
