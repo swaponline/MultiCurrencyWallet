@@ -38,6 +38,10 @@ import {
   NEXT2ETHTOKEN,
   //NEXT2BTC,
   //BTC2NEXT,
+
+
+  BNB2BTC,
+  BTC2BNB,
 } from 'swap.flows'
 import { EthSwap, BnbSwap, EthTokenSwap, BtcSwap, GhostSwap, NextSwap } from 'swap.swaps'
 
@@ -239,6 +243,8 @@ const createSwapApp = async () => {
         ETH2BTC,
         BTC2ETH,
 
+        BNB2BTC,
+        BTC2BNB,
         // GHOST2BTC,
         // BTC2GHOST,
 

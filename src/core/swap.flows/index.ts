@@ -25,6 +25,10 @@ import NEXT2ETHTOKEN from './NEXT2ETHTOKEN'
 import ETHTOKEN2NEXT from './ETHTOKEN2NEXT'
 
 
+import BNB2BTC from './BNB2BTC'
+import BTC2BNB from './BTC2BNB'
+
+
 export {
   TurboMaker,
   TurboTaker,
@@ -50,4 +54,7 @@ export {
 
   NEXT2ETHTOKEN,
   ETHTOKEN2NEXT,
+
+  BNB2BTC,
+  BTC2BNB,
 }
