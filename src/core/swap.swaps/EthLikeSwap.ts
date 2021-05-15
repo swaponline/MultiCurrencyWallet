@@ -99,10 +99,10 @@ class EthLikeSwap extends SwapInterface {
       throw new Error(`EthLikeSwap ${this.coinName}: SwapApp function '${this.options.getParticipantAddress}' not defined`)
     }
 
-    this.web3adapter = this.app[this.options.getWeb3Adapter]()
-    this.web3utils = this.app[this.options.getWeb3Utils]()
-    this.getMyAddress = this.app[this.options.getMyAddress]
-    this.getParticipantAddress = this.app[this.options.getParticipantAddress]
+    this.web3adapter = this.app[this.options.getWeb3Adapter].bind(this.app)()
+    this.web3utils = this.app[this.options.getWeb3Utils].bind(this.app)()
+    this.getMyAddress = this.app[this.options.getMyAddress].bind(this.app)
+    this.getParticipantAddress = this.app[this.options.getParticipantAddress].bind(this.app)
 
     this.decoder  = new InputDataDecoder(this.abi)
 
@@ -674,7 +674,7 @@ class EthLikeSwap extends SwapInterface {
           const swapExists = await flow._checkSwapAlreadyExists()
           if (swapExists) {
             console.warn('Swap exists!! May be stucked. Try refund')
-            await flow.ethSwap.refund({
+            await flow.ethLikeSwap.refund({
               participantAddress: abClass.getParticipantAddress(flow.swap),
             }, (refundTx) => {
               _debug('swap.core:flow')('Stucked swap refunded', refundTx)
@@ -963,7 +963,7 @@ class EthLikeSwap extends SwapInterface {
       return
     }
 
-    if (flow.ethSwap.hasTargetWallet()) {
+    if (flow.ethLikeSwap.hasTargetWallet()) {
       const targetWallet = await abClass.getTargetWallet(
         abClass.getParticipantAddress(flow.swap)
       )

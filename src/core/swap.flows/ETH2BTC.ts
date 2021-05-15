@@ -15,8 +15,8 @@ class ETH2BTC extends EthLikeToBtc {
   constructor(swap) {
     super(swap, {
       flowName: `ETH2BTC`,
-      getMyAddress: swap.app.getMyEthAddress,
-      getParticipantAddress: swap.app.getParticipantEthAddress,
+      getMyAddress: swap.app.getMyEthAddress.bind(swap.app),
+      getParticipantAddress: swap.app.getParticipantEthAddress.bind(swap.app),
     })
   }
 }
