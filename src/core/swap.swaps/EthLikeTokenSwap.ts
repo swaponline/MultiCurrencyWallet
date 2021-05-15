@@ -120,10 +120,14 @@ class EthLikeTokenSwap extends SwapInterface {
       throw new Error(`EthLikeTokenSwap ${this.blockchainName}: SwapApp function '${this.options.getParticipantAddress}' not defined`)
     }
  
-    const web3 = this.app.env.getWeb3()
+    this.web3adapter = this.app[this.options.getWeb3Adapter].bind(this.app)()
+    this.web3utils = this.app[this.options.getWeb3Utils].bind(this.app)()
+    this.getMyAddress = this.app[this.options.getMyAddress].bind(this.app)
+    this.getParticipantAddress = this.app[this.options.getParticipantAddress].bind(this.app)
+
     this.decoder        = new InputDataDecoder(this.abi)
-    this.contract       = new web3.eth.Contract(this.abi, this.address)
-    this.ERC20          = new web3.eth.Contract(this.tokenAbi, this.tokenAddress)
+    this.contract       = new this.web3adapter.Contract(this.abi, this.address)
+    this.ERC20          = new this.web3adapter.Contract(this.tokenAbi, this.tokenAddress)
   }
 
   /**
@@ -156,7 +160,7 @@ class EthLikeTokenSwap extends SwapInterface {
 
     return new Promise(async (resolve, reject) => {
       const params = {
-        from: this.app.getMyEthAddress(),
+        from: this.getMyAddress(),
         gas: this.gasLimit,
         gasPrice: this.gasPrice,
         ..._params,
@@ -208,7 +212,7 @@ class EthLikeTokenSwap extends SwapInterface {
     return new Promise(async (resolve, reject) => {
       try {
         const params = {
-          from: this.app.getMyEthAddress(),
+          from: this.getMyAddress(),
           gas: this.gasLimit,
           gasPrice: this.gasPrice,
         }
@@ -250,7 +254,7 @@ class EthLikeTokenSwap extends SwapInterface {
     return new Promise(async (resolve, reject) => {
       try {
         const result = await this.ERC20.methods.allowance(owner, this.address).call({
-          from: this.app.getMyEthAddress(),
+          from: this.getMyAddress(),
         })
 
         resolve(result)
@@ -368,7 +372,7 @@ class EthLikeTokenSwap extends SwapInterface {
     const { ownerAddress } = data
 
     return this.contract.methods.getBalance(ownerAddress).call({
-      from: this.app.getMyEthAddress(),
+      from: this.getMyAddress(),
     })
   }
 
@@ -567,7 +571,7 @@ class EthLikeTokenSwap extends SwapInterface {
     return new Promise(async (resolve, reject) => {
       try {
         const targetWallet = await this.contract.methods.getTargetWallet(ownerAddress).call({
-          from: this.app.getMyEthAddress(),
+          from: this.getMyAddress(),
         })
         debug('swap.core:swaps')('EthTokenSwap->getTargetWallet',targetWallet);
 
@@ -590,7 +594,7 @@ class EthLikeTokenSwap extends SwapInterface {
   async calcWithdrawGas(data) {
     return this.calcWithdrawOtherGas({
       ownerAddress: data.ownerAddress,
-      participantAddress: this.app.getMyEthAddress(),
+      participantAddress: this.getMyAddress(),
       secret: data.secret,
     })
   }
@@ -606,7 +610,7 @@ class EthLikeTokenSwap extends SwapInterface {
   async withdraw(data, handleTransactionHash) {
     return this.withdrawOther({
       ownerAddress: data.ownerAddress,
-      participantAddress: this.app.getMyEthAddress(),
+      participantAddress: this.getMyAddress(),
       secret: data.secret,
     } , handleTransactionHash)
   }
@@ -620,7 +624,7 @@ class EthLikeTokenSwap extends SwapInterface {
    */
   async calcWithdrawNoMoneyGas(data) {
     return this.calcWithdrawOtherGas({
-      ownerAddress: this.app.getMyEthAddress(),
+      ownerAddress: this.getMyAddress(),
       participantAddress: data.participantAddress,
       secret: data.secret,
     })
@@ -636,7 +640,7 @@ class EthLikeTokenSwap extends SwapInterface {
    */
   async withdrawNoMoney(data, handleTransactionHash) {
     return this.withdrawOther({
-      ownerAddress: this.app.getMyEthAddress(),
+      ownerAddress: this.getMyAddress(),
       participantAddress: data.participantAddress,
       secret: data.secret,
     }, handleTransactionHash)
@@ -651,7 +655,7 @@ class EthLikeTokenSwap extends SwapInterface {
       const _secret = `0x${secret.replace(/^0x/, '')}`
 
       const params = {
-        from: this.app.getMyEthAddress(),
+        from: this.getMyAddress(),
         gas: this.gasLimit,
         gasPrice: this.gasPrice,
       }
@@ -711,7 +715,7 @@ class EthLikeTokenSwap extends SwapInterface {
     return new Promise(async (resolve, reject) => {
       try {
         const secret = await this.contract.methods.getSecret(participantAddress).call({
-          from: this.app.getMyEthAddress(),
+          from: this.getMyAddress(),
         })
 
         const secretValue = secret && !/^0x0+$/.test(secret) ? secret : null
@@ -731,11 +735,11 @@ class EthLikeTokenSwap extends SwapInterface {
    * @returns {Promise<any>}
    */
   getSecretFromTxhash = (transactionHash) =>
-    this.app.env.web3.eth.getTransaction(transactionHash)
+    this.web3adapter.getTransaction(transactionHash)
       .then(txResult => {
         try {
           const bytes32 = this.decoder.decodeData(txResult.input)
-          return this.app.env.web3.utils.bytesToHex(bytes32.inputs[0]).split('0x')[1]
+          return this.web3utils.bytesToHex(bytes32.inputs[0]).split('0x')[1]
         } catch (err) {
           debug('swap.core:swaps')('Trying to fetch secret from tx: ' + err.message)
           return
@@ -761,12 +765,12 @@ class EthLikeTokenSwap extends SwapInterface {
     const { secretHash } = flow.state
 
     const swapData = {
-      participantAddress: abClass.app.getParticipantEthAddress(flow.swap),
+      participantAddress: abClass.getParticipantAddress(flow.swap),
       secretHash,
       amount: sellAmount,
       targetWallet: (flow.swap.destinationSellAddress)
         ? flow.swap.destinationSellAddress
-        : abClass.app.getParticipantEthAddress(flow.swap),
+        : abClass.app.getParticipantAddress(flow.swap),
       useTargetWallet,
       calcFee: true,
     }
@@ -790,7 +794,7 @@ class EthLikeTokenSwap extends SwapInterface {
           debug('swap.core:flow')('fetching allowance')
 
           const allowance = await abClass.checkAllowance({
-            owner: abClass.app.getMyEthAddress(),
+            owner: abClass.getMyAddress(),
           })
 
           debug('swap.core:flow')('allowance', allowance)
@@ -807,7 +811,7 @@ class EthLikeTokenSwap extends SwapInterface {
           if (swapExists) {
             console.warn('Swap exists!! May be stucked. Try refund')
             await abClass.refund({
-              participantAddress: abClass.app.getParticipantEthAddress(flow.swap),
+              participantAddress: abClass.getParticipantAddress(flow.swap),
             }, (refundTx) => {
               debug('swap.core:flow')('Stucked swap refunded', refundTx)
             })
@@ -940,8 +944,8 @@ class EthLikeTokenSwap extends SwapInterface {
       return await util.helpers.extractSecretFromContract({
         flow,
         swapFlow: abClass,
-        participantAddress: flow.app.getParticipantEthAddress(flow.swap),
-        ownerAddress: flow.app.getMyEthAddress(),
+        participantAddress: flow.getParticipantAddress(flow.swap),
+        ownerAddress: flow.getMyAddress(),
         app: flow.app,
       })
     }
@@ -1030,13 +1034,13 @@ class EthLikeTokenSwap extends SwapInterface {
     const { secretHash, secret } = flow.state
 
     const data = {
-      ownerAddress: flow.app.getParticipantEthAddress(flow.swap),
+      ownerAddress: flow.getParticipantAddress(flow.swap),
       secret,
     }
 
     const balanceCheckError = await abClass.checkBalance({
-      ownerAddress: flow.app.getParticipantEthAddress(flow.swap),
-      participantAddress: flow.app.getMyEthAddress(),
+      ownerAddress: flow.getParticipantAddress(flow.swap),
+      participantAddress: flow.getMyAddress(),
       expectedValue: buyAmount,
       expectedHash: secretHash,
     })
@@ -1050,11 +1054,11 @@ class EthLikeTokenSwap extends SwapInterface {
 
     if (abClass.hasTargetWallet()) {
       const targetWallet = await abClass.getTargetWallet(
-        flow.app.getParticipantEthAddress(flow.swap)
+        flow.getParticipantAddress(flow.swap)
       )
       const needTargetWallet = (flow.swap.destinationBuyAddress)
         ? flow.swap.destinationBuyAddress
-        : flow.app.getMyEthAddress()
+        : flow.getMyAddress()
 
       if (targetWallet.toLowerCase() != needTargetWallet.toLowerCase()) {
         console.error(
@@ -1073,8 +1077,8 @@ class EthLikeTokenSwap extends SwapInterface {
     }
 
     const tokenAddressIsValid = await abClass.checkTokenIsValid({
-      ownerAddress: flow.app.getParticipantEthAddress(flow.swap),
-      participantAddress: flow.app.getMyEthAddress(),
+      ownerAddress: flow.getParticipantAddress(flow.swap),
+      participantAddress: flow.getMyAddress(),
     })
 
     if (!tokenAddressIsValid) {
@@ -1209,12 +1213,11 @@ class EthLikeTokenSwap extends SwapInterface {
 
   async isContractFunded(flow) {
     const abClass = this
-    const web3 = this.app.env.getWeb3()
     const { buyAmount } = flow.swap
 
     const isContractBalanceOk = await util.helpers.repeatAsyncUntilResult(async () => {
       const balance = await abClass.getBalance({
-        ownerAddress: flow.app.getParticipantEthAddress(flow.swap),
+        ownerAddress: flow.getParticipantAddress(flow.swap),
       })
 
       const exp = new BigNumber(10).pow(abClass.decimals)
@@ -1246,11 +1249,11 @@ class EthLikeTokenSwap extends SwapInterface {
   }) {
     if (this.hasTargetWallet()) {
       const targetWallet = await this.getTargetWallet(
-        this.app.getParticipantEthAddress(flow.swap)
+        this.getParticipantAddress(flow.swap)
       )
       const needTargetWallet = (flow.swap.destinationBuyAddress)
         ? flow.swap.destinationBuyAddress
-        : this.app.getMyEthAddress()
+        : this.getMyAddress()
 
       if (targetWallet.toLowerCase() === needTargetWallet.toLowerCase()) {
         return true
