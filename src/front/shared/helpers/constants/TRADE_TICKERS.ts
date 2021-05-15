@@ -14,6 +14,7 @@ const swap = (config && config.isWidget) ?
   :
   [
     ...(!config.opts.curEnabled || (config.opts.curEnabled.eth && config.opts.curEnabled.btc)) ? ['ETH-BTC'] : [],
+    ...(!config.opts.curEnabled || (config.opts.curEnabled.bnb && config.opts.curEnabled.bnb)) ? ['BNB-BTC'] : [],
     ...(!config.opts.curEnabled || (config.opts.curEnabled.eth && config.opts.curEnabled.ghost)) ? ['ETH-GHOST'] : [],
     ...(!config.opts.curEnabled || (config.opts.curEnabled.eth && config.opts.curEnabled.next)) ? ['ETH-NEXT'] : [],
   ]
@@ -38,6 +39,7 @@ if (config && config.isWidget) {
     swap.push(`${config.erc20token.toUpperCase()}-BTC`)
   }
   swap.push('ETH-BTC')
+
   if (!config.opts.curEnabled || config.opts.curEnabled.ghost) swap.push('ETH-GHOST')
   if (!config.opts.curEnabled || config.opts.curEnabled.next) swap.push('ETH-NEXT')
 } else {
