@@ -280,11 +280,27 @@ class SwapApp extends EventEmitter {
     return true
   }
 
+  getEthWeb3Adapter() {
+    return this.env.getWeb3().eth
+  }
+
+  getEthWeb3Utils() {
+    return this.env.getWeb3().utils
+  }
+
   getMyEthAddress() {
     return this.env.metamask && this.env.metamask.isEnabled() && this.env.metamask.isConnected()
       ? this.env.metamask.getAddress()
       //@ts-ignore: strictNullChecks
       : this.services.auth.accounts.eth.address
+  }
+
+  getBnbWeb3Adapter() {
+    // ----- //
+  }
+
+  getBnbWeb3Utils() {
+    // ----- //
   }
 
   getMyBnbAddress() {
