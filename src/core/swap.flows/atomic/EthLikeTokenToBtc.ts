@@ -2,6 +2,7 @@ import debug from 'debug'
 import SwapApp, { constants, util } from 'swap.app'
 import { AtomicAB2UTXO } from 'swap.swap'
 import BigNumber from 'bignumber.js'
+import Swap from 'swap.swap'
 import { EthLikeTokenSwap, BtcSwap } from 'swap.swaps'
 
 
@@ -23,7 +24,7 @@ export default class EthLikeTokenToBtc extends AtomicAB2UTXO {
   chainName: string
   tokenName: string
 
-  constructor(swap, options: IEthLikeTokenToBtc) {
+  constructor(swap: Swap, options: IEthLikeTokenToBtc) {
     super(swap)
     if (!options.tokenName) {
       throw new Error(`EthLikeTokenToBtc - option tokenName requery`)

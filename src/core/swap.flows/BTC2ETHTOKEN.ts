@@ -1,8 +1,4 @@
-import debug from 'debug'
-import SwapApp, { constants, util } from 'swap.app'
-import { AtomicAB2UTXO } from 'swap.swap'
-import { BigNumber } from 'bignumber.js'
-import { EthTokenSwap, BtcSwap } from 'swap.swaps'
+import { constants } from 'swap.app'
 import BtcToEthLikeToken from './atomic/BtcToEthLikeToken'
 
 
@@ -21,7 +17,7 @@ export default (tokenName) => {
     }
 
     constructor(swap) {
-      super(tokenName, {
+      super(swap, {
         chainName: `ETH`,
         tokenName,
         getMyAddress: swap.app.getMyEthAddress.bind(swap.app),
