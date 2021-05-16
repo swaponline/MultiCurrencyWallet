@@ -27,6 +27,8 @@ import ETHTOKEN2NEXT from './ETHTOKEN2NEXT'
 
 import BNB2BTC from './BNB2BTC'
 import BTC2BNB from './BTC2BNB'
+import BSCTOKEN2BTC from './BSCTOKEN2BTC'
+import BTC2BSCTOKEN from './BTC2BSCTOKEN'
 
 
 export {
@@ -57,4 +59,6 @@ export {
 
   BNB2BTC,
   BTC2BNB,
+  BSCTOKEN2BTC,
+  BTC2BSCTOKEN,
 }
