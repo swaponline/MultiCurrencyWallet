@@ -145,7 +145,7 @@ class EthLikeTokenSwap extends SwapInterface {
     try {
       this.gasPrice = await this.estimateGasPrice({ speed: 'fast' })
     } catch(err) {
-      debug(`EthLikeTokenSwap: Error with gas update: ${err.message}, using old value gasPrice=${this.gasPrice}`)
+      debug(`EthLikeTokenSwap ${this.blockchainName}: Error with gas update: ${err.message}, using old value gasPrice=${this.gasPrice}`)
     }
     //@ts-ignore
     debug('gas price after update', this.gasPrice)
@@ -153,7 +153,7 @@ class EthLikeTokenSwap extends SwapInterface {
 
   async send(methodName, args, _params = {}, handleTransactionHash) {
     if (typeof this.contract.methods[methodName] !== 'function') {
-      throw new Error(`EthLikeTokenSwap.send: No method ${methodName} in contract`)
+      throw new Error(`EthLikeTokenSwap.send ${this.blockchainName}: No method ${methodName} in contract`)
     }
 
     await this.updateGasPrice()
