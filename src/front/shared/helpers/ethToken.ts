@@ -1,9 +1,16 @@
 import config from './externalConfig'
-import eth from './eth'
-import DEFAULT_CURRENCY_PARAMETERS from 'common/helpers/constants/DEFAULT_CURRENCY_PARAMETERS'
-import BigNumber from 'bignumber.js'
+import erc20Like from 'common/erc20Like'
 
-const isEthToken = ({ name }) => Object.keys(config.erc20).includes(name.toLowerCase())
+// TODO: =================================
+
+// ! Deprecated. Use common/erc20Like
+
+// TODO: =================================
+
+const isEthToken = ({ name }) => {
+  return erc20Like.erc20.isToken({ name: name })
+}
+
 const isEthOrEthToken = ({ name }) => Object.keys(config.erc20).concat('eth').includes(name.toLowerCase())
 
 type EstimateFeeOptions = {
@@ -13,23 +20,12 @@ type EstimateFeeOptions = {
 }
 
 const estimateFeeValue = async (options: EstimateFeeOptions) => {
-  const { method, speed, swapABMethod } = options
-  const gasPrice = await estimateGasPrice({ speed })
-  const methodForLimit = swapABMethod === 'deposit'
-    ? 'swapDeposit'
-    : swapABMethod === 'withdraw'
-      ? 'swapWithdraw'
-      : method
-  const defaultGasLimit = DEFAULT_CURRENCY_PARAMETERS.ethToken.limit[methodForLimit]
-  const feeValue = new BigNumber(defaultGasLimit)
-    .multipliedBy(gasPrice)
-    .multipliedBy(1e-18)
-    .toNumber()
-
-  return feeValue
+  return erc20Like.erc20.estimateFeeValue(options)
 }
 
-const estimateGasPrice = ({ speed }) => eth.estimateGasPrice({ speed })
+const estimateGasPrice = (params) => {
+  return erc20Like.erc20.estimateFeeValue(params)
+}
 
 export default {
   estimateFeeValue,

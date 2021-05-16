@@ -1,10 +1,6 @@
 import React from 'react'
-
 import styles from './ExchangeRateGroup.scss'
 import cssModules from 'react-css-modules'
-import config from 'app-config'
-
-
 import Group from '../Group/Group'
 
 const ExchangeRateGroup = ({
@@ -27,7 +23,7 @@ const ExchangeRateGroup = ({
     placeholder={placeholder}
   >
     <span styleName="currencyRatio">
-      {(sellCurrency.toUpperCase() === `ETH` && config.binance) ? `BNB` : sellCurrency} / {(buyCurrency.toUpperCase() === `ETH` && config.binance) ? `BNB` : buyCurrency}
+      {sellCurrency} / {buyCurrency}
     </span>
   </Group>
 )

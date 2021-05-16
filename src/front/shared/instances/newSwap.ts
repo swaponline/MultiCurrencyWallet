@@ -6,7 +6,7 @@ import * as ghost from 'bitcoinjs-lib'
 import * as next from 'bitcoinjs-lib'
 
 import abi from 'human-standard-token-abi'
-
+import ethLikeHelper from 'common/helpers/ethLikeHelper'
 import config, { initExternalConfig } from 'helpers/externalConfig'
 
 import helpers, { constants as privateKeys, utils } from 'helpers'
@@ -130,7 +130,7 @@ const createSwapApp = async () => {
           /* eslint-enable */
           fetchBalance: (address) => actions.eth.fetchBalance(address),
           //@ts-ignore
-          estimateGasPrice: ({ speed } = {}) => helpers.eth.estimateGasPrice({ speed }),
+          estimateGasPrice: ({ speed } = {}) => ethLikeHelper.eth.estimateGasPrice({ speed }),
           sendTransaction: ({ to, amount }) => actions.eth.sendTransaction({ to, amount }),
         }),
         new BtcSwap({
@@ -207,7 +207,8 @@ const createSwapApp = async () => {
               //@ts-ignore
               decimals: config.erc20[key].decimals,
               tokenAddress: config.erc20[key].address,
-              fetchBalance: (address) => actions.token.fetchBalance(address, config.erc20[key].address, config.erc20[key].decimals),
+              // TODO: replace actions with erc20, bep20 ...
+              fetchBalance: (address) => actions.erc20.fetchBalance(address, config.erc20[key].address, config.erc20[key].decimals),
               //@ts-ignore
               estimateGasPrice: ({ speed } = {}) => helpers.ethToken.estimateGasPrice({ speed }),
               /* eslint-disable */

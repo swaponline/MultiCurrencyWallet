@@ -1,32 +1,38 @@
 import config from 'app-config'
+import TOKEN_STANDARDS from 'common/helpers/constants/TOKEN_STANDARDS'
 
 export const getActivatedCurrencies = () => {
-  const currencies = []
+  const currencies: string[] = []
+
   if (!config.opts.curEnabled || config.opts.curEnabled.btc) {
-    //@ts-ignore: strictNullChecks
     currencies.push('BTC')
-    //@ts-ignore: strictNullChecks
     currencies.push('BTC (SMS-Protected)')
-    //@ts-ignore: strictNullChecks
     currencies.push('BTC (PIN-Protected)')
-    //@ts-ignore: strictNullChecks
     currencies.push('BTC (Multisig)')
   }
 
   if (!config.opts.curEnabled || config.opts.curEnabled.eth) {
-    //@ts-ignore: strictNullChecks
-    currencies.push((config.binance) ? `BNB` : `ETH`)
+    currencies.push('ETH')
   }
 
-  //@ts-ignore: strictNullChecks
-  if (!config.opts.curEnabled || config.opts.curEnabled.ghost) currencies.push('GHOST')
+  if (!config.opts.curEnabled || config.opts.curEnabled.bnb) {
+    currencies.push('BNB')
+  }
 
-  //@ts-ignore: strictNullChecks
-  if (!config.opts.curEnabled || config.opts.curEnabled.next) currencies.push('NEXT')
+  if (!config.opts.curEnabled || config.opts.curEnabled.ghost) {
+    currencies.push('GHOST')
+  }
 
-  Object.keys(config.erc20).forEach((token) => {
-    //@ts-ignore: strictNullChecks
-    currencies.push(token.toUpperCase())
+  if (!config.opts.curEnabled || config.opts.curEnabled.next) {
+    currencies.push('NEXT')
+  }
+
+  Object.keys(TOKEN_STANDARDS).forEach((key) => {
+    const standard = TOKEN_STANDARDS[key].standard
+
+    Object.keys(config[standard]).forEach((token) => {
+      currencies.push(token.toUpperCase())
+    })
   })
 
   return currencies

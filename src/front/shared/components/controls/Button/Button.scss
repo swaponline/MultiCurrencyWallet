@@ -59,7 +59,7 @@
 
 .brand {
   background-color: $color-brand;
-  color: #fff;
+  color: $d-color;
 
   &:hover {
     background-color: lighten($color-brand, 5%);
@@ -68,7 +68,7 @@
 
 .blue {
   background-color: $primary;
-  color: #fff;
+  color: $d-color;
   font-size: 15px;
 }
 

@@ -79,6 +79,7 @@ const createP2PNode = (options) => {
         pubsub: Gossipsub
       },
       dialer: {
+        // @ts-ignore
         maxParallelDials: 100,
         maxDialsPerPeer: 100,
         dialTimeout: 30e3

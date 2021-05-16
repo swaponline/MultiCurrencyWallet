@@ -2,7 +2,7 @@ import React, { Fragment }  from 'react'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'redaction'
 import { constants } from 'helpers'
-
+import erc20Like from 'common/erc20Like'
 import cssModules from 'react-css-modules'
 import styles from '../Styles/default.scss'
 import ownStyles from './ReceiveModal.scss'
@@ -15,7 +15,7 @@ import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
 
 import config from 'helpers/externalConfig'
 import getCurrencyKey from 'helpers/getCurrencyKey'
-import { ethToken, getItezUrl } from 'helpers'
+import { getItezUrl } from 'helpers'
 
 
 const langPrefix = `ReceiveModal`
@@ -48,9 +48,6 @@ const langs = defineMessages({
 @withRouter
 @cssModules({ ...styles, ...ownStyles }, { allowMultiple: true })
 class ReceiveModal extends React.Component<any, any> {
-
-  props: any
-
   constructor(props) {
     super(props)
     const {
@@ -73,9 +70,9 @@ class ReceiveModal extends React.Component<any, any> {
     howToDeposit = howToDeposit.replace(/{userAddress}/g, address);
 
     const targetCurrency = getCurrencyKey(currency.toLowerCase(), true)
-    const isToken = ethToken.isEthToken({ name: currency })
-
+    const isToken = erc20Like.isToken({ name: currency })
     const recieveUrl = (isToken ? '/token' : '') + `/${targetCurrency}/${address}/receive`
+    
     props.history.push(recieveUrl)
 
     this.state = {

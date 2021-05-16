@@ -1,8 +1,6 @@
 import BigInteger from 'bigi'
 
-import { BigNumber } from 'bignumber.js'
 import * as bitcoin from 'bitcoinjs-lib'
-import * as bip32 from 'bip32'
 import * as bip39 from 'bip39'
 
 import bitcoinMessage from 'bitcoinjs-message'
@@ -29,10 +27,6 @@ const hasAdminFee = (config
   && config.opts.fee.btc.address
   && config.opts.fee.btc.min
 ) ? config.opts.fee.btc : false
-
-const getRandomMnemonicWords = () => bip39.generateMnemonic()
-const validateMnemonicWords = (mnemonic) => bip39.validateMnemonic(convertMnemonicToValid(mnemonic))
-
 
 const sweepToMnemonic = (mnemonic, path) => {
   const wallet = getWalletByWords(mnemonic, path)
@@ -78,8 +72,6 @@ const getSweepAddress = () => {
   if (btcMnemonicData && btcMnemonicData.address) return btcMnemonicData.address
   return false
 }
-
-const convertMnemonicToValid = (mnemonic) => mnemonicUtils.convertMnemonicToValid(mnemonic)
 
 const getWalletByWords = (mnemonic: string, walletNumber: number = 0, path: string = '') => {
   return mnemonicUtils.getBtcWallet(btc.network, mnemonic, walletNumber, path)
@@ -584,8 +576,6 @@ export default {
   getLinkToInfo,
   getInvoices,
   getWalletByWords,
-  getRandomMnemonicWords,
-  validateMnemonicWords,
   sweepToMnemonic,
   isSweeped,
   getSweepAddress,
@@ -595,6 +585,5 @@ export default {
   getTxRouter,
   fetchTxRaw,
   addressIsCorrect,
-  convertMnemonicToValid,
   prepareUnspents,
 }

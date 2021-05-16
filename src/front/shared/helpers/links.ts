@@ -169,29 +169,19 @@ const linksManager = {
   },
 }
 
-export const getBitcoinWallet = () => {
-  const { address } = actions.user.getAuthData('btc')
-  return `/btc/${address}`
+export const getWalletUrl = (params) => {
+  let { name } = params
+  name = name.toLowerCase()
+  const { address } = actions.user.getAuthData(name)
+
+  return `/${name}/${address}`
 }
 
-export const getEtherWallet = () => {
-  const { address } = actions.user.getAuthData('eth')
-  return `/eth/${address}`
-}
+export const getTokenWallet = (params) => {
+  const { tokenName, currency } = params
+  const { address } = actions.user.getAuthData(currency)
 
-export const getGhostWallet = () => {
-  const { address } = actions.user.getAuthData('ghost')
-  return `/ghost/${address}`
-}
-
-export const getNextWallet = () => {
-  const { address } = actions.user.getAuthData('next')
-  return `/next/${address}`
-}
-
-export const getTokenWallet = (token) => {
-  const { address } = actions.user.getAuthData('eth')
-  return `/token/${token.toUpperCase()}/${address}`
+  return `/token/${tokenName.toUpperCase()}/${address}`
 }
 
 window.getTokenWallet = getTokenWallet

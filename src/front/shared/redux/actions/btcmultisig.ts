@@ -5,6 +5,7 @@ import * as bitcoin from 'bitcoinjs-lib'
 import bitcoinMessage from 'bitcoinjs-message'
 import { getState } from 'redux/core'
 import reducers from 'redux/core/reducers'
+import * as mnemonicUtils from 'common/utils/mnemonic'
 import { apiLooper, constants, api } from 'helpers'
 import btc from 'helpers/btc'
 import actions from 'redux/actions'
@@ -810,7 +811,7 @@ const addPinWallet = async (mnemonicOrKey) => {
   } = getState()
 
   let mnemonicKey = mnemonicOrKey
-  if (actions.btc.validateMnemonicWords(mnemonicOrKey)) {
+  if (mnemonicUtils.validateMnemonicWords(mnemonicOrKey)) {
     const mnemonicAccount = actions.btc.getWalletByWords(mnemonicOrKey, 1)
     mnemonicKey = mnemonicAccount.publicKey
   }
@@ -861,7 +862,7 @@ const addSMSWallet = async (mnemonicOrKey) => {
   } = getState()
 
   let mnemonicKey = mnemonicOrKey
-  if (actions.btc.validateMnemonicWords(mnemonicOrKey)) {
+  if (mnemonicUtils.validateMnemonicWords(mnemonicOrKey)) {
     const mnemonicAccount = actions.btc.getWalletByWords(mnemonicOrKey, 1)
     mnemonicKey = mnemonicAccount.publicKey
   }

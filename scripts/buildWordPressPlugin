@@ -8,13 +8,6 @@ npm run build:mainnet-widget
 
 npm run build:testnet-widget
 
-### BSC (Binance)
-
-npm run build:bsc-mainnet-widget
-
-npm run build:bsc-testnet-widget
-
-
 
 # update repo or clone
 #rm -rf WalletWpPlugin
@@ -25,12 +18,13 @@ git fetch origin
 git reset --hard origin/master
 
 # clean React code from repo
+rm -rf bsc-mainnet
+rm -rf bsc-testnet
 rm -rf assets
 rm -rf images
 rm -rf fonts
 rm -rf testnet
-rm -rf bsc-mainnet
-rm -rf bsc-testnet
+rm -rf mainnet
 rm -rf *.css
 rm -rf *.js
 rm -rf *.map # remove source maps
@@ -63,40 +57,6 @@ echo $buildIdtestnet
 mv app.${buildIdtestnet}.js app.js
 mv app.${buildIdtestnet}.css app.css
 mv vendor.${buildIdtestnet}.js vendor.js
-rm index.html
-rm erc20tokens.js
-rm -rf assets
-cd ../
-
-#binance - mainnet
-mkdir ./bsc-mainnet
-cd ./bsc-mainnet
-
-cp -rf ../../../../build-bsc-mainnet-widget/* ./.
-buildIdBscMainnet=$(find -iname "app.*?.js" | sed "s/^\.\/app\.\(.*\)\.js$/\1/")
-
-echo $buildIdBscMainnet
-
-mv app.${buildIdBscMainnet}.js app.js
-mv app.${buildIdBscMainnet}.css app.css
-mv vendor.${buildIdBscMainnet}.js vendor.js
-rm index.html
-rm erc20tokens.js
-rm -rf assets
-cd ../
-
-#binance - testnet
-mkdir ./bsc-testnet
-cd ./bsc-testnet
-
-cp -rf ../../../../build-bsc-testnet-widget/* ./.
-buildIdBscTestnet=$(find -iname "app.*?.js" | sed "s/^\.\/app\.\(.*\)\.js$/\1/")
-
-echo $buildIdBscTestnet
-
-mv app.${buildIdBscTestnet}.js app.js
-mv app.${buildIdBscTestnet}.css app.css
-mv vendor.${buildIdBscTestnet}.js vendor.js
 rm index.html
 rm erc20tokens.js
 rm -rf assets

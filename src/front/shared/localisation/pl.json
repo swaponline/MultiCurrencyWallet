@@ -486,13 +486,6 @@
     ]
   },
   {
-    "id": "Amount68",
-    "message": "Transakcje",
-    "files": [
-      "src/front/shared/pages/History/History.tsx"
-    ]
-  },
-  {
     "id": "Reqstbttn16",
     "message": "Kup",
     "files": [
@@ -1622,7 +1615,7 @@
   },
   {
     "id": "createWalletCapture1",
-    "message": "Wybierz Bitcoin/Ethereum lub Swapuj",
+    "message": "Do wyboru Bitcoin, Ethereum, Swap, Tokens",
     "files": [
       "src/front/shared/pages/CreateWallet/Steps/texts.tsx"
     ]
@@ -2435,13 +2428,6 @@
     ]
   },
   {
-    "id": "CurrencyAction",
-    "message": "CurrencyAction",
-    "files": [
-      "src/front/shared/components/modals/CurrencyAction/CurrencyAction.tsx"
-    ]
-  },
-  {
     "id": "currencyAction81",
     "message": "Please choose a currency you want to {context}",
     "files": [
@@ -2631,56 +2617,42 @@
     ]
   },
   {
-    "id": "customERC20_Address",
-    "message": "{type} addres",
+    "id": "customTokenAddress",
+    "message": "Token addres",
     "files": [
       "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
     ]
   },
   {
-    "id": "customERC20_ConfirmStep",
+    "id": "customTokenConfirm",
     "message": "Dodaj token",
     "files": [
       "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
     ]
   },
   {
-    "id": "customERC20_IncorrectAddress",
-    "message": "Nieprawidłowy erc20 addres",
+    "id": "customTokenIncorrectAddress",
+    "message": "Nieprawidłowy addres",
     "files": [
       "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
     ]
   },
   {
-    "id": "customERC20_NextStep",
+    "id": "NextId",
     "message": "Dalej",
     "files": [
       "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
     ]
   },
   {
-    "id": "customERC20_NotFound",
-    "message": "To nie jest adres ERC20",
+    "id": "customTokenNotFound",
+    "message": "To nie jest adres {standard}",
     "files": [
       "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
     ]
   },
   {
-    "id": "customERC20_Processing",
-    "message": "Przetwarzam ...",
-    "files": [
-      "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
-    ]
-  },
-  {
-    "id": "customERC20_Ready",
-    "message": "Gotowe",
-    "files": [
-      "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
-    ]
-  },
-  {
-    "id": "customERC20_ReadyMessage",
+    "id": "customTokenAdded",
     "message": "Token dodany pomyślnie",
     "files": [
       "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
@@ -2694,21 +2666,21 @@
     ]
   },
   {
-    "id": "customERC20_TokenDecimals",
+    "id": "DecimalsId",
     "message": "0",
     "files": [
       "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
     ]
   },
   {
-    "id": "customERC20_TokenSymbol",
+    "id": "SymbolId",
     "message": "Symbol",
     "files": [
       "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
     ]
   },
   {
-    "id": "customERC20_TokenTitle",
+    "id": "TitleId",
     "message": "Nazwa",
     "files": [
       "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
@@ -3408,7 +3380,7 @@
   },
   {
     "id": "SweepBannerButton",
-    "message": "Done",
+    "message": "Zrobione",
     "files": [
       "src/front/shared/components/layout/DashboardLayout/DashboardLayout.tsx"
     ]
@@ -4748,14 +4720,14 @@
   },
   {
     "id": "MetamaskNetworkAlert_NetworkMainnet",
-    "message": "Main network (Mainnet)",
+    "message": "Ethereum (Mainnet) lub Binance Smart Chain (Mainnet)",
     "files": [
       "src/front/shared/containers/App/App.tsx"
     ]
   },
   {
     "id": "MetamaskNetworkAlert_NetworkTestnet",
-    "message": "Test network (Ropsten)",
+    "message": "Ethereum (Ropsten) lub Binance Smart Chain (Testnet)",
     "files": [
       "src/front/shared/containers/App/App.tsx"
     ]
@@ -5364,8 +5336,8 @@
     ]
   },
   {
-    "id": "WithdrowBalanceNotEnoughtEthereumBalancePrompt",
-    "message": "Za mało salda ethereum dla opłaty górnika",
+    "id": "WithdrowTokenCurrencyBalance",
+    "message": "Za mało salda {tokenCurrency} dla opłaty górnika",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
     ]
@@ -6066,20 +6038,6 @@
     "message": "Zainstaluj rozszerzenie Chrome",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
-    ]
-  },
-  {
-    "id": "MetamaskNetworkAlert_BnBNetworkMainnet",
-    "message": "Mainnet Binance Smart Chain",
-    "files": [
-      "src/front/shared/containers/App/App.tsx"
-    ]
-  },
-  {
-    "id": "MetamaskNetworkAlert_BnBNetworkTestnet",
-    "message": "Testnet Binance Smart Chain",
-    "files": [
-      "src/front/shared/containers/App/App.tsx"
     ]
   },
   {

@@ -82,6 +82,7 @@ const NewDesignLayout = (props: NewDesignLayoutProps) => {
     widgetCurrencies.push('BTC (Multisig)')
   }
   widgetCurrencies.push('ETH')
+  widgetCurrencies.push('BNB')
   if (isWidgetBuild) {
     if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
       // Multi token widget build
@@ -191,24 +192,9 @@ const NewDesignLayout = (props: NewDesignLayoutProps) => {
 export default connect(
   ({
     core: { hiddenCoinsList },
-    user,
     user: {
       activeFiat,
-      ethData,
-      btcData,
-      ghostData,
-      nextData,
-      btcMultisigSMSData,
-      btcMultisigUserData,
-      btcMultisigUserDataList,
-      tokensData,
-      isFetching,
-      isBalanceFetching,
     },
-    currencies: { items: currencies },
-    createWallet: { currencies: assets },
-    modals,
-    ui: { dashboardModalsAllowed },
   }) => {
     let widgetMultiTokens = []
     if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
@@ -217,56 +203,10 @@ export default connect(
         widgetMultiTokens.push(key.toUpperCase())
       })
     }
-    const tokens =
-      config && config.isWidget
-        ? window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length
-          ? widgetMultiTokens
-          : [config.erc20token.toUpperCase()]
-        : Object.keys(tokensData).map((k) => tokensData[k].currency)
-
-    const tokensItems = Object.keys(tokensData).map((k) => tokensData[k])
-
-    const allData = [
-      btcData,
-      ghostData,
-      nextData,
-      btcMultisigSMSData,
-      btcMultisigUserData,
-      ethData,
-      ...Object.keys(tokensData).map((k) => tokensData[k]),
-    ].map(({ account, keyPair, ...data }) => ({
-      ...data,
-    }))
-
-    const items = (config && config.isWidget
-      ? [btcData, ethData, ghostData, nextData]
-      : [btcData, btcMultisigSMSData, btcMultisigUserData, ethData]
-    ).map((data) => data.currency)
 
     return {
-      tokens,
-      items,
-      allData,
-      tokensItems,
-      currencies,
-      assets,
-      isFetching,
-      isBalanceFetching,
       hiddenCoinsList,
-      userEthAddress: ethData.address,
-      user,
       activeFiat,
-      tokensData: {
-        ethData,
-        btcData,
-        ghostData,
-        nextData,
-        btcMultisigSMSData,
-        btcMultisigUserData,
-        btcMultisigUserDataList,
-      },
-      dashboardView: dashboardModalsAllowed,
-      modals,
     }
   }
 )(cssModules(NewDesignLayout, styles, { allowMultiple: true }))

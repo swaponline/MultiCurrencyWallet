@@ -1,18 +1,10 @@
-import config from 'app-config'
-import DEFAULT_CURRENCY_PARAMETERS from 'common/helpers/constants/DEFAULT_CURRENCY_PARAMETERS'
-import api from './api'
-import BigNumber from 'bignumber.js'
+import ethLikeHelper from 'common/helpers/ethLikeHelper'
 
-const reportAboutProblem = (params) => {
-  const { isError = false, info } = params
+// TODO: =================================
 
-  console.group(
-    'HELPERS >%c eth.ts',
-    `color: ${isError ? 'red' : 'yellow'};`
-  )
-  isError ? console.error(info) : console.warn(info)
-  console.groupEnd()
-}
+// ! Deprecated. Use common/helpers/ethLikeHelper.eth
+
+// TODO: =================================
 
 type EstimateFeeParams = {
   method: string
@@ -20,71 +12,11 @@ type EstimateFeeParams = {
 }
 
 const estimateFeeValue = async (params: EstimateFeeParams) => {
-  const { method, speed } = params
-  const gasPrice = await estimateGasPrice({ speed })
-  const defaultGasLimit = DEFAULT_CURRENCY_PARAMETERS.eth.limit[method]
-  const feeValue = new BigNumber(defaultGasLimit)
-    .multipliedBy(gasPrice)
-    .multipliedBy(1e-18)
-    .toNumber()
-
-  return feeValue
+  return ethLikeHelper.eth.estimateFeeValue(params)
 }
 
-const estimateGasPrice = async ({ speed = 'fast' } = {}) => {
-  const link = config.feeRates.eth
-  const defaultPrice = DEFAULT_CURRENCY_PARAMETERS.eth.price
-
-  if (!link) {
-    return defaultPrice[speed]
-  }
-
-  let apiResult
-
-  // Binance ===========================================
-
-  if (config.binance) {
-    try {
-      // returned in hex wei value
-      apiResult = await api.asyncFetchApi(link)
-    } catch (err) {
-      console.error(err)
-      return defaultPrice.fast
-    }
-
-    // convert to decimal value
-    const weiGasPrice = new BigNumber( parseInt(apiResult.result).toString(10) )
-  
-    return weiGasPrice.isGreaterThan(defaultPrice.fast)
-      ? weiGasPrice.toNumber()
-      : defaultPrice.fast
-  }
-
-  // ==================================================
-
-  try {
-    apiResult = await api.asyncFetchApi(link)
-  } catch (err) {
-    reportAboutProblem({ info: err.message })
-    return defaultPrice[speed]
-  }
-
-  const apiSpeeds = {
-    slow: 'safeLow',
-    fast: 'fast',
-    fastest: 'fastest',
-  }
-
-  const apiSpeed = apiSpeeds[speed] || apiSpeeds.fast
-  /* 
-  * api returns gas price in x10 Gwei
-  * divided by 10 to convert it to gwei
-  */
-  const apiPrice = new BigNumber(apiResult[apiSpeed]).dividedBy(10).multipliedBy(1e9)
-
-  return apiPrice >= defaultPrice[speed] 
-    ? apiPrice.toString()
-    : defaultPrice[speed]
+const estimateGasPrice = async (params) => {
+  return ethLikeHelper.eth.estimateGasPrice(params)
 }
 
 export default {

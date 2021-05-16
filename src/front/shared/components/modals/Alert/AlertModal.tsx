@@ -6,8 +6,8 @@ import cssModules from 'react-css-modules'
 import styles from './AlertModal.scss'
 import { Button } from 'components/controls'
 import { injectIntl, IntlShape, defineMessages } from 'react-intl'
-import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 import { constants } from 'helpers'
+import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 

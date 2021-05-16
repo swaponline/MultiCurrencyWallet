@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react'
 import helpers, { constants } from 'helpers'
 import actions from 'redux/actions'
-import Link from 'local_modules/sw-valuelink'
 import { connect } from 'redaction'
 import config from 'app-config'
 
@@ -10,15 +9,12 @@ import cssModules from 'react-css-modules'
 import defaultStyles from '../Styles/default.scss'
 import styles from './RestoryMnemonicWallet.scss'
 import okSvg from 'shared/images/ok.svg'
-
-import { BigNumber } from 'bignumber.js'
+import * as mnemonicUtils from 'common/utils/mnemonic'
 import Modal from 'components/modal/Modal/Modal'
 import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
-import Input from 'components/forms/Input/Input'
 import Button from 'components/controls/Button/Button'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
-import { isMobile } from 'react-device-detect'
 
 import links from 'helpers/links'
 
@@ -190,7 +186,7 @@ class RestoryMnemonicWallet extends React.Component<RestoryMnemonicWalletProps, 
   handleRestoryWallet = () => {
     const { mnemonic } = this.state
 
-    if (!mnemonic || !actions.btc.validateMnemonicWords(mnemonic)) {
+    if (!mnemonic || !mnemonicUtils.validateMnemonicWords(mnemonic)) {
       this.setState({
         mnemonicIsInvalid: true,
         isFetching: false,
@@ -207,20 +203,16 @@ class RestoryMnemonicWallet extends React.Component<RestoryMnemonicWalletProps, 
   }
 
   restoreWallet = (mnemonic) => {
-    // callback in timeout is't block ui
+    // callback in timeout doesn't block ui
     setTimeout(async () => {
       // Backup critical localStorage
       const backupMark = actions.btc.getMainPublicKey()
 
       actions.backupManager.backup(backupMark, false, true)
-      const btcWallet = await actions.btc.getWalletByWords(mnemonic)
-      const ethWallet = await actions.eth.getWalletByWords(mnemonic)
-      const ghostWallet = await actions.ghost.getWalletByWords(mnemonic)
-      const nextWallet = await actions.next.getWalletByWords(mnemonic)
-
       // clean mnemonic, if exists
       localStorage.setItem(constants.privateKeyNames.twentywords, '-')
 
+      const btcWallet = await actions.btc.getWalletByWords(mnemonic)
       // Check - if exists backup for this mnemonic
       const restoryMark = btcWallet.publicKey
 
@@ -235,15 +227,16 @@ class RestoryMnemonicWallet extends React.Component<RestoryMnemonicWalletProps, 
       localStorage.setItem(constants.privateKeyNames.btcSmsMnemonicKeyGenerated, btcSmsKey)
       localStorage.setItem(constants.localStorage.isWalletCreate, 'true')
 
+      await actions.bnb.login(false, mnemonic)
       await actions.eth.login(false, mnemonic)
       await actions.ghost.login(false, mnemonic)
       await actions.next.login(false, mnemonic)
-
       await actions.user.sign_btc_2fa(btcPrivKey)
       await actions.user.sign_btc_multisig(btcPrivKey)
 
-      actions.core.markCoinAsVisible('BTC', true)
+      actions.core.markCoinAsVisible('BNB', true)
       actions.core.markCoinAsVisible('ETH', true)
+      actions.core.markCoinAsVisible('BTC', true)
 
       this.setState({
         isFetching: false,

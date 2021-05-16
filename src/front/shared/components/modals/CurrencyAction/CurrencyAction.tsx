@@ -1,30 +1,17 @@
 import React from 'react'
 import { connect } from 'redaction'
-import CopyToClipboard from 'react-copy-to-clipboard'
 import cx from 'classnames'
 
 import cssModules from 'react-css-modules'
-
+import erc20Like from 'common/erc20Like'
 import styles from './CurrencyAction.scss'
-import helpers, { links, constants } from 'helpers'
-import Coin from 'components/Coin/Coin'
+import { constants } from 'helpers'
 
-import QR from 'components/QR/QR'
-import { Modal } from 'components/modal'
-import { Button } from 'components/controls'
-import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
-import { ConsoleView } from 'react-device-detect'
+import { FormattedMessage, injectIntl } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
 import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
-import icons from './images'
+import icons from 'components/ui/CurrencyIcon/images'
 import config from 'app-config'
-
-const title = defineMessages({
-  CurrencyAction: {
-    id: 'CurrencyAction',
-    defaultMessage: 'CurrencyAction'
-  }
-})
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
@@ -35,9 +22,6 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
 }))
 @cssModules(styles, { allowMultiple: true })
 class CurrencyAction extends React.Component<any, any> {
-
-  props: any
-
   handleClose = () => {
     const { name, data, onClose } = this.props
 
@@ -52,23 +36,22 @@ class CurrencyAction extends React.Component<any, any> {
     actions.modals.close(name)
   }
 
-  handleClickCurrency = item => {
+  handleClickCurrency = (item) => {
     const {
-      name,
       data: { context },
       history,
       intl: { locale },
     } = this.props
 
-
     const { currency, address } = item
+    const isToken = erc20Like.isToken({ name: currency })
 
     if (context === 'Deposit') {
       this.handleClose()
       //@ts-ignore
       actions.modals.open(constants.modals.ReceiveModal, {
         currency,
-        address
+        address,
       })
     } else {
       const { Withdraw, WithdrawMultisigSMS, WithdrawMultisigUser } = constants.modals
@@ -86,14 +69,10 @@ class CurrencyAction extends React.Component<any, any> {
           break
       }
 
-      const isToken = helpers.ethToken.isEthToken({ name: currency })
       this.handleClose()
 
       history.push(
-        localisedUrl(
-          locale,
-          (isToken ? '/token' : '') + `/${targetCurrency}/${address}/send`
-        )
+        localisedUrl(locale, (isToken ? '/token' : '') + `/${targetCurrency}/${address}/send`)
       )
     }
 
@@ -110,8 +89,8 @@ class CurrencyAction extends React.Component<any, any> {
     // if currencies is one, do autoselect
     if (currencies.length == 1) {
       this.handleClickCurrency(currencies.shift())
-      //return
     }
+
     return (
       <div styleName={cx({
         "modal-overlay": true,
@@ -168,8 +147,11 @@ class CurrencyAction extends React.Component<any, any> {
 
                 if (!icons[iconName] || !styles[iconName]) {
                   iconName = 'eth' // prevent styles fail for unknown asset
-                  if (config && config.isWidget) {
-                    iconName = 'eth' // Нужно нарисовать картинку для erc20 токена
+
+                  if (item.standard === 'erc20') {
+                    iconName = 'eth'
+                  } else if (item.standard === 'bep20') {
+                    iconName = 'bnb'
                   }
                 }
 

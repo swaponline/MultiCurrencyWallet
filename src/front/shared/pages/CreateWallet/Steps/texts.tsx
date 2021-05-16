@@ -13,20 +13,14 @@ export const subHeaderText1 = () => (
 )
 
 /* eslint-disable */
-const Cupture = ({ click, step }) => (
+const Cupture = () => (
   <>
     <span styleName="cupture1">
       <FormattedMessage
         id="createWalletCapture1"
-        defaultMessage="На выбор Bitcoin, Ethereum, Swap"
+        defaultMessage="На выбор Bitcoin, Ethereum, Swap, Tokens"
       />
     </span>
-    <button disabled={step > 1} styleName={`etc ${step > 1 ? "" : "decorated"}`} type="button" onClick={click}>
-      <FormattedMessage
-        id="createWalletCaptureOthers"
-        defaultMessage="или другие"
-      />
-    </button>
   </>
 )
 

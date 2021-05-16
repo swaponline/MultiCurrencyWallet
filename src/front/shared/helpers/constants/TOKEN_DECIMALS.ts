@@ -1,5 +1,5 @@
+import TOKEN_STANDARDS from 'common/helpers/constants/TOKEN_STANDARDS'
 import config from 'helpers/externalConfig'
-
 
 const decimals = {
   btc: 8,
@@ -9,10 +9,13 @@ const decimals = {
   next: 8,
 }
 
-Object.keys(config.erc20)
-  .forEach(key => {
-    decimals[key] = config.erc20[key].decimals
+Object.keys(TOKEN_STANDARDS).forEach((key) => {
+  const standard = TOKEN_STANDARDS[key].standard
+
+  Object.keys(config[standard]).forEach((tokenName) => {
+    decimals[tokenName] = config[standard][tokenName].decimals
   })
+})
 
 export default {
   ...decimals,

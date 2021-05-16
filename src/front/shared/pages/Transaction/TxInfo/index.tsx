@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { Modal } from 'components/modal'
 import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
+import erc20Like from 'common/erc20Like'
 import helpers from "helpers";
 import { getFullOrigin } from 'helpers/links'
 import { constants } from 'helpers'
@@ -10,8 +10,6 @@ import styles from './styles.scss'
 import ShareButton from 'components/controls/ShareButton/ShareButton'
 import okSvg from 'shared/images/ok.svg'
 import actions from 'redux/actions'
-import Button from 'components/controls/Button/Button'
-import { isMobile } from "react-device-detect";
 import { BigNumber } from 'bignumber.js'
 import Skeleton from 'react-loading-skeleton'
 import CommentRow from 'components/Comment/Comment'
@@ -39,30 +37,15 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
   ...animateFetching,
 }, { allowMultiple: true })
 class TxInfo extends Component<any, any> {
+  constructor(props) {
+    super(props)
 
-  updateComment = (value) => {
-    this.setState({ state: this.state });
-  }
-
-  render() {
     const {
-      intl,
       currency,
       txRaw,
       txId,
-      isFetching,
-      amount,
-      toAddress,
-      balance,
-      oldBalance,
-      confirmed,
-      confirmations,
-      minerFee,
-      minerFeeCurrency,
-      adminFee,
       error,
-      finalBalances,
-    } = this.props
+    } = props
 
     let linkBlockChain = '#'
     let linkShare = '#'
@@ -70,9 +53,22 @@ class TxInfo extends Component<any, any> {
 
     if (!error) {
       if (txRaw) {
-        const txInfo = helpers.transactions.getInfo(currency.toLowerCase(), txRaw)
-        tx = txInfo.tx
-        linkBlockChain = txInfo.link
+        if (erc20Like.erc20.isToken({ name: currency })) {
+          const txInfo = helpers.transactions.getInfo('erc20', txRaw)
+
+          tx = txInfo.tx
+          linkBlockChain = txInfo.link
+        } else if (erc20Like.bep20.isToken({ name: currency })) {
+          const txInfo = helpers.transactions.getInfo('bep20', txRaw)
+
+          tx = txInfo.tx
+          linkBlockChain = txInfo.link
+        } else {
+          const txInfo = helpers.transactions.getInfo(currency.toLowerCase(), txRaw)
+
+          tx = txInfo.tx
+          linkBlockChain = txInfo.link
+        }
       }
 
       if (txId) {
@@ -82,7 +78,39 @@ class TxInfo extends Component<any, any> {
       }
     }
 
+    this.state = {
+      linkBlockChain,
+      linkShare,
+      tx,
+    }
+  }
 
+  updateComment = (value) => {
+    this.setState({ state: this.state });
+  }
+
+  render() {
+    const {
+      intl,
+      currency,
+      txId,
+      isFetching,
+      amount,
+      toAddress,
+      oldBalance,
+      confirmed,
+      minerFee,
+      minerFeeCurrency,
+      adminFee,
+      error,
+      finalBalances,
+    } = this.props
+
+    const {
+      linkBlockChain,
+      linkShare,
+      tx,
+    } = this.state
 
     let finalAmount = amount
     let finalAdminFee = adminFee

@@ -21,23 +21,6 @@ type InvoceState = {
   infoModal?: React.ClassicComponent
 }
 
-@connect(({
-  user: {
-    btcData,
-    ethData,
-    ghostData,
-    nextData,
-  },
-}) => {
-  return {
-    data: {
-      btc: btcData,
-      eth: ethData,
-      ghost: ghostData,
-      next: nextData,
-    }
-  }
-})
 @withRouter
 class Invoice extends PureComponent<InvoceProps, InvoceState> {
   constructor(props) {
@@ -58,12 +41,6 @@ class Invoice extends PureComponent<InvoceProps, InvoceState> {
       isFetching: true,
       doshare,
     }
-  }
-
-  handleGoWalletHome = () => {
-    const { history, intl: { locale } } = this.props
-
-    history.push(localisedUrl(locale, links.wallet))
   }
 
   fetchInvoice = () => {

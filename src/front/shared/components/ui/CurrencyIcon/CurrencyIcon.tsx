@@ -1,5 +1,4 @@
 import React from 'react'
-
 import cssModules from 'react-css-modules'
 import styles from './CurrencyIcon.scss'
 
@@ -8,36 +7,37 @@ import { FormattedMessage } from 'react-intl'
 import config from 'app-config'
 
 
-export const iconNames = Object.keys(icons)
-
+export const currencyIcons = Object.keys(icons)
 
 type CurrencyIconProps = {
+  style?: { [key: string]: string }
   className?: string
-  style?: IUniversalObj,
   name: string
+  source?: string
 }
 
-const CurrencyIcon = ({ className, style, name}: CurrencyIconProps) => {
+const CurrencyIcon = (props: CurrencyIconProps) => {
+  const { className, style, name, source } = props
+
   if (typeof name === 'undefined') {
     return <p><FormattedMessage id="currencyIcon15" defaultMessage="Error" /></p>
   }
-  const isIconExist = iconNames.includes(name.toLowerCase())
 
-  if (config.binance && name.toLowerCase() === `eth`) name = `bnb`
-  if (config
-    && config.erc20
-    && config.erc20[name.toLowerCase()]
-    && config.erc20[name.toLowerCase()].icon
-  ) {
+  if (source) {
+    return <img src={source} alt="icon" role="image" />
+  }
+
+  if (config?.erc20[name.toLowerCase()]?.icon) {
     return (
       <img
-        className={className}
         src={config.erc20[name.toLowerCase()].icon}
         alt={`${name} icon`}
         role="image"
       />
     )
   }
+
+  const isIconExist = currencyIcons.includes(name.toLowerCase())
 
   if (isIconExist) {
     return (

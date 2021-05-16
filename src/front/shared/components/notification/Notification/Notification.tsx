@@ -20,6 +20,12 @@ const Notification = (props) => {
   const [isMounted, setIsMounted] = useState(false)
   const [isRemoved, setIsRemoved] = useState(false)
 
+  const closeOnEscapeKey = (event) => {
+    if (event.key === 'Escape') {
+      closeNotification()
+    }
+  }
+
   useEffect(() => {
     setIsMounted(true)
 
@@ -27,9 +33,13 @@ const Notification = (props) => {
       soundClick()
     }
 
+    document.addEventListener('keydown', closeOnEscapeKey)
     const timeout = setTimeout(closeNotification, 8000)
 
-    return () => clearTimeout(timeout)
+    return () => {
+      document.removeEventListener('keydown', closeOnEscapeKey)
+      clearTimeout(timeout)
+    }
   }, [isMounted])
 
   const closeNotification = () => {

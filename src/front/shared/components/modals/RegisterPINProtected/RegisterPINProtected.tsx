@@ -1,27 +1,20 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
-import helpers, { constants } from 'helpers'
+import { constants } from 'helpers'
 import actions from 'redux/actions'
 import Link from 'local_modules/sw-valuelink'
 import { connect } from 'redaction'
-import config from 'app-config'
 
 import cssModules from 'react-css-modules'
 import styles from '../Styles/default.scss'
 import ownStyle from './RegisterPINProtected.scss'
-
-import { BigNumber } from 'bignumber.js'
+import * as mnemonicUtils from 'common/utils/mnemonic'
 import Modal from 'components/modal/Modal/Modal'
 import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
 import Input from 'components/forms/Input/Input'
 import Button from 'components/controls/Button/Button'
-import Tooltip from 'components/ui/Tooltip/Tooltip'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
-import ReactTooltip from 'react-tooltip'
-import { isMobile } from 'react-device-detect'
 
-import typeforce from 'swap.app/util/typeforce'
-import { inputReplaceCommaWithDot } from 'helpers/domUtils'
 import CopyToClipboard from 'react-copy-to-clipboard'
 import moment from 'moment/moment'
 import okSvg from 'shared/images/ok.svg'
@@ -245,7 +238,7 @@ class RegisterPINProtected extends React.Component<any, any> {
         isShipped: true,
       },
       async () => {
-        if (!mnemonic || !actions.btc.validateMnemonicWords(mnemonic.trim())) {
+        if (!mnemonic || !mnemonicUtils.validateMnemonicWords(mnemonic)) {
           this.setState({
             error: <FormattedMessage {...langs.errorMnemonicInvalid} />,
             isShipped: false,
@@ -361,7 +354,7 @@ class RegisterPINProtected extends React.Component<any, any> {
       {
         isMnemonicGenerated: true,
         isMnemonicValid: true,
-        mnemonic: actions.btc.getRandomMnemonicWords(),
+        mnemonic: mnemonicUtils.getRandomMnemonicWords(),
       },
       () => {
         setTimeout(() => {

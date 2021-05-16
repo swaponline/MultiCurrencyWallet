@@ -23,18 +23,6 @@
   }
 }
 
-.closeButton {
-  width: 20px;
-  height: 20px;
-  opacity: 0.5;
-  transition: opacity .33s $ease-out-quadratic;
-
-  &:hover {
-    opacity: 1;
-    transition: none;
-  }
-}
-
 .modal-overlay {
   position: sticky;
   width: 100%;
@@ -54,13 +42,13 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  background: #fff;
   padding: 32px;
   width: 100%;
   max-width: 640px;
   height: auto;
   border-radius: 10px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, .4);
+  box-shadow: $l-box-shadow;
+  background: $l-background-elements;
 
   &_dashboardView {
     background-color: none;
@@ -68,6 +56,12 @@
     max-width: none;
     width: 100%;
     height: 100%;
+  }
+
+  &.dark {
+    box-shadow: none;
+    background-color: $d-background-elements;
+    color: $d-color;
   }
 }
 

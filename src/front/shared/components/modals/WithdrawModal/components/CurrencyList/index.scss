@@ -3,6 +3,14 @@
   z-index: 1;
 }
 
+.tokenStandard {
+  @include ff-mono;
+  display: inline-block;
+  margin-left: 0.6em;
+  font-size: 0.8em;
+  color: $notice-color;
+}
+
 .amount {
   position: absolute;
   text-align: right;

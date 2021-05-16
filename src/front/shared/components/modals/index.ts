@@ -15,7 +15,7 @@ import MultisignJoinLink from './MultisignJoinLink/MultisignJoinLink'
 import InvoiceModal from './InvoiceModal/InvoiceModal'
 import InvoiceLinkModal from './InvoiceLinkModal/InvoiceLinkModal'
 import AlertModal from './Alert/AlertModal'
-import AddCustomERC20 from './AddCustomERC20/AddCustomERC20'
+import AddCustomToken from './AddCustomToken'
 import BtcMultisignSwitch from './BtcMultisignSwitch/BtcMultisignSwitch'
 import ShareModal from './Share/Share'
 import InfoPay from './InfoPay/InfoPay'
@@ -59,7 +59,7 @@ export default {
   InvoiceModal,
   InvoiceLinkModal,
   AlertModal,
-  AddCustomERC20,
+  AddCustomToken,
   BtcMultisignSwitch,
   BtcMultisignConfirmTx,
   SaveMnemonicModal,

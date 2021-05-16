@@ -22,7 +22,7 @@ export default {
   didPinBtcCreated: `${process.env.ENTRY}:pinBtcCreated`,
   didProtectedBtcG2FACreated: 'protectedBtcG2FA',
   walletTitle: 'walletTitle',
-  customERC: 'customERC',
+  customToken: 'customToken',
   balanceActiveCurrency: 'balanceActiveCurrency',
   isSweepReady: 'isSweepReady',
   signedUpWithPush: 'signedUpWithPush',

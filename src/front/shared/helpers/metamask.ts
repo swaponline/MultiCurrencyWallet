@@ -1,39 +1,31 @@
 import reducers from 'redux/core/reducers'
-import { getState } from 'redux/core'
+import getState from './getReduxState'
 import actions from 'redux/actions'
 import { cacheStorageGet, cacheStorageSet, constants } from 'helpers'
 import config from 'app-config'
 import { setMetamask, setProvider, setDefaultProvider, getWeb3 as getDefaultWeb3 } from 'helpers/web3'
 import SwapApp from 'swap.app'
-import Web3Connect from '../../../common/web3connect'
+import Web3Connect from 'common/web3connect'
 
-
-const mmLabel = (config.binance) ? `BSC` : `Ethereum`
-const mmLabelShort = (config.binance) ? `BNB` : `ETH`
-
-
-
+// Binance Smart Chain: 56 = Mainnet, 97 = Testnet
+// Ethereum: 1 = Mainnet, 3 = Ropsten
 const web3connect = new Web3Connect({
-  web3ChainId: (config.binance)
-    ? (process.env.MAINNET) ? 56 : 97  // 56 = Mainnet, 97 = Testnet
-    : (process.env.MAINNET) ? 1 : 3, // 1 = Mainnet, 3 = Ropsten
-  web3RPC: (config.binance)
-    ? config.binance_provider
-    : config.web3.provider,
+  web3ChainId: process.env.MAINNET ? 1 : 3,
+  web3RPC: config.web3.provider,
 })
 
 const _onWeb3Changed = (newWeb3) => {
   setProvider(newWeb3)
   //@ts-ignore: strictNullChecks
   SwapApp.shared().setWeb3Provider(newWeb3)
-  _initReduxState()
-  actions.user.sign_to_tokens()
+  addMetamaskWallet()
+  actions.user.loginWithTokens()
   actions.user.getBalances()
 }
 
 web3connect.on('connected', async () => {
   localStorage.setItem(constants.localStorage.isWalletCreate, 'true')
-  actions.core.markCoinAsVisible(`ETH`)
+
   _onWeb3Changed(web3connect.getWeb3())
 })
 
@@ -67,19 +59,19 @@ const _init = async () => {
         _web3 = web3connect.getWeb3()
       } catch (err) {
         web3connect.clearCache()
-        _initReduxState()
+        addMetamaskWallet()
         return
       }
       setMetamask(_web3)
-      _initReduxState()
+      addMetamaskWallet()
     } else {
-      _initReduxState()
+      addMetamaskWallet()
     }
   })
 }
 
 const addWallet = () => {
-  _initReduxState()
+  addMetamaskWallet()
   if (isConnected()) {
     getBalance()
   }
@@ -90,8 +82,9 @@ const getBalance = () => {
   const { user: { metamaskData } } = getState()
   if (metamaskData) {
     const { address } = metamaskData
+    const currency = config.binance ? 'bnb' : 'eth'
+    const balanceInCache = cacheStorageGet('currencyBalances', `${currency}_${address}`)
 
-    const balanceInCache = cacheStorageGet('currencyBalances', `eth_${address}`)
     if (balanceInCache !== false) {
       reducers.user.setBalance({
         name: 'metamaskData',
@@ -106,13 +99,13 @@ const getBalance = () => {
         //@ts-ignore: strictNullChecks
         const amount = web3connect.getWeb3().utils.fromWei(result)
 
-        cacheStorageSet('currencyBalances', `eth_${address}`, amount, 30)
+        cacheStorageSet('currencyBalances', `${currency}_${address}`, amount, 30)
         reducers.user.setBalance({ name: 'metamaskData', amount })
         return amount
       })
-      .catch((e) => {
-        console.log('fail get balance')
-        console.log('error', e)
+      .catch((error) => {
+        console.error('fail get balance')
+        console.error('error', error)
         reducers.user.setBalanceError({ name: 'metamaskData' })
       })
   }
@@ -122,7 +115,6 @@ const disconnect = () => new Promise(async (resolved, reject) => {
   if (isConnected()) {
     await web3connect.Disconnect()
     resolved(true)
-    // window.location.reload()
   } else {
     resolved(true)
   }
@@ -139,15 +131,33 @@ const connect = (options) => new Promise(async (resolved, reject) => {
 /* metamask wallet layer */
 const isCorrectNetwork = () => web3connect.isCorrectNetwork()
 
-
-const _initReduxState = () => {
-  const {
-    user: {
-      ethData,
-    },
-  } = getState()
+const addMetamaskWallet = () => {
+  const { user } = getState()
 
   if (isConnected()) {
+    const ethWalletInfo = {
+      currencyName: 'ETH',
+      fullWalletName: `Ethereum (${web3connect.getProviderTitle()})`,
+      currencyInfo: user.ethData?.infoAboutCurrency,
+    }
+    const bscWalletInfo = {
+      currencyName: 'BNB',
+      fullWalletName: `BSC (${web3connect.getProviderTitle()})`,
+      currencyInfo: user.bnbData?.infoAboutCurrency,
+    }
+    const walletMap = new Map([
+      [1, ethWalletInfo], // ETH Mainnet
+      [3, ethWalletInfo], // ETH Testnet (Ropsten)
+      [56, bscWalletInfo], // BSC Mainnet
+      [97, bscWalletInfo], // BSC Testnet
+    ])
+
+    const hexChainId = web3connect.getChainId()
+    const chainId = Number(Number(hexChainId).toString(10))
+    const currencyName = walletMap.get(chainId)?.currencyName
+    const fullWalletName = walletMap.get(chainId)?.fullWalletName
+    const currencyInfo = walletMap.get(chainId)?.currencyInfo
+
     reducers.user.addWallet({
       name: 'metamaskData',
       data: {
@@ -156,9 +166,9 @@ const _initReduxState = () => {
         balanceError: false,
         isConnected: true,
         isMetamask: true,
-        currency: mmLabelShort,
-        fullName: `${mmLabel} (${web3connect.getProviderTitle()})`,
-        infoAboutCurrency: ethData.infoAboutCurrency,
+        currency: currencyName,
+        fullName: fullWalletName,
+        infoAboutCurrency: currencyInfo,
         isBalanceFetched: true,
         isMnemonic: true,
         unconfirmedBalance: 0,
@@ -173,13 +183,13 @@ const _initReduxState = () => {
         balanceError: false,
         isConnected: false,
         isMetamask: true,
-        currency: mmLabelShort,
-        fullName: `${mmLabel} (external wallet)`,
-        infoAboutCurrency: ethData.infoAboutCurrency,
+        currency: 'ETH',
+        fullName: 'External wallet',
+        infoAboutCurrency: undefined,
         isBalanceFetched: true,
         isMnemonic: true,
         unconfirmedBalance: 0,
-      }
+      },
     })
   }
 }
@@ -187,7 +197,7 @@ const _initReduxState = () => {
 if (web3connect.hasCachedProvider()) {
   _init()
 } else {
-  _initReduxState()
+  addMetamaskWallet()
 }
 
 
@@ -201,24 +211,21 @@ const handleDisconnectWallet = (cbDisconnected?) => {
   }
 }
 
-const handleConnectMetamask = (options?: {
+type MetamaskConnectParams = {
   dontRedirect?: boolean
-  cbFunction?: Function
-}) => {
-  const {
-    //@ts-ignore: strictNullChecks
-    dontRedirect,
-    //@ts-ignore: strictNullChecks
-    cbFunction,
-  } = options
+  callback?: (boolean) => void
+}
 
-  connect({ dontRedirect }).then(async (connected) => {
+const handleConnectMetamask = (params: MetamaskConnectParams = {}) => {
+  const { callback } = params
+
+  connect(params).then(async (connected) => {
     if (connected) {
       await actions.user.sign()
       await actions.user.getBalances()
-      if (cbFunction) cbFunction(true)
+      if (callback) callback(true)
     } else {
-      if (cbFunction) cbFunction(false)
+      if (callback) callback(false)
     }
   })
 }

@@ -22,6 +22,7 @@ import { isMobile } from 'react-device-detect'
 import InvoiceInfoBlock from 'components/InvoiceInfoBlock/InvoiceInfoBlock'
 
 import typeforce from 'swap.app/util/typeforce'
+import * as mnemonicUtils from 'common/utils/mnemonic'
 import MIN_AMOUNT from 'common/helpers/constants/MIN_AMOUNT'
 import { inputReplaceCommaWithDot } from 'helpers/domUtils'
 import QrReader from 'components/QrReader'
@@ -378,7 +379,7 @@ class WithdrawModalMultisig extends React.Component<any, any> {
   handleMnemonicSign = () => {
     const { mnemonic, rawTx, balance, amount, to } = this.state
 
-    if (!mnemonic || !actions.btc.validateMnemonicWords(mnemonic.trim())) {
+    if (!mnemonic || !mnemonicUtils.validateMnemonicWords(mnemonic)) {
       this.setState({
         error: (
           <FormattedMessage

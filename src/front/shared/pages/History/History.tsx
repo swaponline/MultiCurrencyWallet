@@ -7,16 +7,12 @@ import { constants } from 'helpers'
 
 import Row from './Row/Row'
 
-import config from 'helpers/externalConfig'
-
 import styles from 'components/tables/Table/Table.scss'
 import stylesHere from './History.scss'
 
 import InfiniteScrollTable from 'components/tables/InfiniteScrollTable/InfiniteScrollTable'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
-import links from 'helpers/links'
 import ContentLoader from '../../components/loaders/ContentLoader/ContentLoader'
-import { isMobile } from 'react-device-detect'
 import FilterForm from 'components/FilterForm/FilterForm'
 
 import InvoicesList from 'pages/Invoices/InvoicesList'
@@ -37,12 +33,6 @@ const filterHistory = (items, filter) => {
   return items
 }
 
-const subTitle = defineMessages({
-  subTitleHistory: {
-    id: 'Amount68',
-    defaultMessage: 'Transactions',
-  },
-})
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 @connect(({
@@ -157,8 +147,13 @@ class History extends Component<any, any> {
     const { commentsList } = this.state
 
     return (
-      <Row activeFiat={activeFiat}
-           isDark={isDark} key={rowIndex} hiddenList={commentsList} {...row} />
+      <Row
+        activeFiat={activeFiat}
+        isDark={isDark}
+        key={rowIndex}
+        hiddenList={commentsList}
+        {...row}
+      />
     )
   }
 

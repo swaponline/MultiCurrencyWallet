@@ -43,7 +43,7 @@ const routes = (
       <Route path={`/:ticker(btc|eth|bnb|ghost|next)/tx/:tx?`} component={Transaction} />
       <Route path={`/:token(token)/:ticker/tx/:tx?`} component={Transaction} />
 
-      <Route path={`/:ticker(btc|eth|ghost|next|bnb)/:address/:action(receive|send)?`} component={CurrencyWallet} />
+      <Route path={`/:ticker(btc|eth|bnb|ghost|next)/:address/:action(receive|send)?`} component={CurrencyWallet} />
       <Route path={`/:token(token)/:ticker/:address`} component={CurrencyWallet} />
       <Route path={`/:token(token)/:ticker/:address/withdraw`} component={CurrencyWallet} />
       <Route path={`/:fullName-wallet/:address?`} component={CurrencyWallet} />

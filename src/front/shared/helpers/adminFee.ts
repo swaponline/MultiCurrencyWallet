@@ -7,14 +7,16 @@ const isEnabled = (currency) => {
   currency = getCurrencyKey(currency, false).toLowerCase()
 
   if (config && config.opts && config.opts.fee) {
-    if ((currency === `token`) && config.opts.fee.erc20) {
+    if (
+      currency === `token` &&
+      config.opts.fee?.erc20?.fee &&
+      config.opts.fee?.erc20?.address &&
+      config.opts.fee?.erc20?.min
+    ) {
       return config.opts.fee.erc20
     } else {
-      // TODO: temporary check
-      const currencyKey = config.binance && currency === 'bnb' ? 'eth' : currency
-  
-      if (config.opts.fee[currencyKey]) {
-        return config.opts.fee[currencyKey]
+      if (config.opts.fee[currency]) {
+        return config.opts.fee[currency]
       }
     }
   }

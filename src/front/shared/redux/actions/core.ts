@@ -3,6 +3,7 @@ import actions from 'redux/actions'
 import { getState } from 'redux/core'
 import SwapApp from 'swap.app'
 import Swap from 'swap.swap'
+import erc20Like from 'common/erc20Like'
 import { constants } from 'helpers'
 import Pair from 'pages/Exchange/Orders/Pair'
 import config from 'helpers/externalConfig'
@@ -84,6 +85,9 @@ const getUserData = (currency) => {
 
     case 'ETH':
       return getState().user.ethData
+
+    case 'BNB':
+      return getState().user.bnbData
 
     case 'GHOST':
       return getState().user.ghostData
@@ -168,7 +172,7 @@ const deletedPartialCurrency = (orderId) => {
     (item) => item.buyCurrency.toUpperCase() === deletedOrderBuyCurrency
   )
 
-  const premiumCurrencies = ['BTC', 'ETH', 'GHOST', 'NEXT', 'SWAP'] // валюты, которые всегда должны быть в дропе
+  const premiumCurrencies = ['BTC', 'ETH', 'BNB', 'GHOST', 'NEXT', 'SWAP'] // валюты, которые всегда должны быть в дропе
 
   if (deletedOrderSell.length === 1 && !premiumCurrencies.includes(deletedOrderSellCurrency)) {
     reducers.currencies.deletedPartialCurrency(deletedOrderSellCurrency)
@@ -186,8 +190,6 @@ const sendRequest = (orderId, destination = {}, callback) => {
 
   //@ts-ignore: strictNullChecks
   const order = SwapApp.shared().services.orders.getByKey(orderId)
-
-  const userCurrencyData = getUserData(order.buyCurrency)
   const { address, reputation, reputationProof } = getUserData(order.buyCurrency)
 
   const requestOptions = {
@@ -390,21 +392,17 @@ const markCoinAsVisible = (coin, doBackup = false) => {
   }
 }
 
-interface I_getWallet_FindCondition {
+type GetWalletFindCondition = {
   currency?: string
   address?: string
   addressType?: string
   connected?: boolean
 }
-const getWallet = (findCondition: I_getWallet_FindCondition) => {
+
+const getWallet = (findCondition: GetWalletFindCondition) => {
   // specify addressType,
   // otherwise it finds the first wallet from all origins, including metamask
-  const { address, addressType, connected } = findCondition
-  let { currency } = findCondition
-
-  //@ts-ignore: strictNullChecks
-  if (currency.toLowerCase() === `eth` && config.binance) currency = `bnb`
-
+  const { address, addressType, connected, currency } = findCondition
   const wallets = getWallets({ withInternal: true })
 
   const founded = wallets.filter((wallet) => {
@@ -454,36 +452,44 @@ const getWallets = (options) => {
       btcMultisigUserData,
       btcMultisigPinData,
       ethData,
+      bnbData,
       tokensData,
-      isTokenSigned,
-
       metamaskData,
     },
   } = getState()
 
   // Sweep
   const {
-    user: { btcMnemonicData, ethMnemonicData, ghostMnemonicData, nextMnemonicData },
+    user: { btcMnemonicData, ethMnemonicData, bnbMnemonicData },
   } = getState()
 
   const metamaskConnected = metamask.isEnabled() && metamask.isConnected()
 
   const allData = [
-    ...(!config.opts.curEnabled || config.opts.curEnabled.eth
+    ...(!config.opts.curEnabled || config.opts.curEnabled.eth || config.opts.curEnabled.bnb
       ? metamaskData
         ? [metamaskData]
         : []
       : []),
+    // Sweep ===============================
     ...(!config.opts.curEnabled || config.opts.curEnabled.btc
       ? btcMnemonicData && !btcData.isMnemonic
         ? [btcMnemonicData]
         : []
-      : []), // Sweep
+      : []), 
+    // Sweep ===============================
     ...(!config.opts.curEnabled || config.opts.curEnabled.eth
       ? ethMnemonicData && !ethData.isMnemonic
         ? [ethMnemonicData]
         : []
-      : []), // Sweep
+      : []),
+    // Sweep ===============================
+    ...(!config.opts.curEnabled || config.opts.curEnabled.bnb
+      ? bnbMnemonicData && !bnbData.isMnemonic
+        ? [bnbMnemonicData]
+        : []
+      : []),
+    // Sweep ===============================
     ...(!config.opts.curEnabled || config.opts.curEnabled.btc ? [btcData] : []),
     ...(!config.opts.curEnabled || config.opts.curEnabled.btc ? [btcMultisigSMSData] : []),
     ...(!config.opts.curEnabled || config.opts.curEnabled.btc
@@ -491,12 +497,14 @@ const getWallets = (options) => {
         ? [btcMultisigPinData]
         : []
       : []),
+    // Sweep ===============================
     ...(!config.opts.curEnabled || config.opts.curEnabled.btc ? [btcMultisigUserData] : []),
     ...(!config.opts.curEnabled || config.opts.curEnabled.btc
       ? btcMultisigUserData && btcMultisigUserData.wallets
         ? btcMultisigUserData.wallets
         : []
       : []),
+    // =====================================
     ...(!config.opts.curEnabled || config.opts.curEnabled.eth
       ? metamaskConnected
         ? withInternal
@@ -504,6 +512,15 @@ const getWallets = (options) => {
           : []
         : [ethData]
       : []),
+    // =====================================
+    ...(!config.opts.curEnabled || config.opts.curEnabled.bnb
+      ? metamaskConnected
+        ? withInternal
+          ? [bnbData]
+          : []
+        : [bnbData]
+      : []),
+    // =====================================
     ...(!config.opts.curEnabled || config.opts.curEnabled.ghost ? [ghostData] : []),
     ...(!config.opts.curEnabled || config.opts.curEnabled.next ? [nextData] : []),
     ...Object.keys(tokensData)
@@ -518,32 +535,35 @@ const getWallets = (options) => {
 
 const fetchWalletBalance = async (walletData): Promise<number> => {
   const name = helpers.getCurrencyKey(walletData.currency.toLowerCase(), true)
-  if (helpers.ethToken.isEthToken({ name })) {
-    try {
-      const balance = await actions.token.fetchBalance(
+
+  try {
+    if (erc20Like.erc20.isToken({ name })) {
+      const balance = await actions.erc20.fetchBalance(
         walletData.address,
         walletData.contractAddress,
         walletData.decimals
       )
+
       return new BigNumber(balance).toNumber()
-    } catch (err) {
-      console.error(`Fail fetch balance for wallet '${name}'`, err)
-    }
-  } else {
-    if (
-      actions[name] &&
-      actions[name].fetchBalance &&
-      typeof actions[name].fetchBalance === `function`
-    ) {
-      try {
-        const balance = await actions[name].fetchBalance(walletData.address)
-        return new BigNumber(balance).toNumber()
-      } catch (err) {
-        console.error(`Fail fetch balance for wallet '${name}'`, err)
-      }
+    } else if (erc20Like.bep20.isToken({ name })) {
+      const balance = await actions.bep20.fetchBalance(
+        walletData.address,
+        walletData.contractAddress,
+        walletData.decimals
+      )
+
+      return new BigNumber(balance).toNumber()
     } else {
-      console.warn(`Fail fetch balance for wallet '${name}' - not fetchBalance in actions`)
+      if (typeof actions[name]?.fetchBalance) {
+        const balance = await actions[name].fetchBalance(walletData.address)
+
+        return new BigNumber(balance).toNumber()
+      } else {
+        console.warn(`Fail fetch balance for wallet '${name}' - not fetchBalance in actions`)
+      }
     }
+  } catch (error) {
+    console.error(`Fail fetch balance for '${name.toUpperCase()}'`, error)
   }
   return 0
 }

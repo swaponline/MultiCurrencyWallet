@@ -1,13 +1,10 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-
 import { constants } from 'helpers'
 import CSSModules from 'react-css-modules'
 import styles from './Coin.scss'
-
-import CurrencyIcon, { iconNames } from 'components/ui/CurrencyIcon/CurrencyIcon'
+import web3Icons from 'images'
+import CurrencyIcon, { currencyIcons } from 'components/ui/CurrencyIcon/CurrencyIcon'
 import config from 'app-config'
-
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
@@ -21,74 +18,83 @@ const defaultCurrencyColors = {
   'next': 'white',
 }
 
-const Coin = ({ className, size, name }) => {
+type CoinProps = {
+  className?: string
+  size?: number
+  name: string
+}
+
+const Coin = (props: CoinProps) => {
+  const {
+    size = 40,
+    className, 
+    name,
+  } = props
+
+  const isIconExist = currencyIcons.includes(name.toLowerCase())
+  const iconSource = web3Icons[name]
+  let isIconConfigExist = false
+
+  if (
+    config?.erc20[name.toLowerCase()]?.icon ||
+    config?.bep20[name.toLowerCase()]?.icon
+  ) {
+    isIconConfigExist = true
+  }
+
+  // Coin styles *************************
+
   const style = {
     width: size ? `${size}px` : null,
     height: size ? `${size}px` : null,
     backgroundColor: null,
   }
 
-  let iconProps = {
-    name: name.toLowerCase(),
-  }
-
-  const isIconExist = iconNames.includes(name.toLowerCase())
-  let isIconConfigExist = false
-
-  if (config
-    && config.erc20
-    && config.erc20[name.toLowerCase()]
-    && config.erc20[name.toLowerCase()].icon
-  ) {
-    isIconConfigExist = true
-  }
-
   if (defaultCurrencyColors[name.toLowerCase()]) {
     style.backgroundColor = defaultCurrencyColors[name.toLowerCase()]
   }
-  if (config &&
-    config.erc20 &&
-    config.erc20[name.toLowerCase()] &&
-    config.erc20[name.toLowerCase()].iconBgColor
-  ) {
+
+  if (config?.erc20[name.toLowerCase()]?.iconBgColor) {
     style.backgroundColor = config.erc20[name.toLowerCase()].iconBgColor
   }
 
-  if (isIconExist || isIconConfigExist) {
-    iconProps = {
-      ...iconProps,
-      //@ts-ignore
-      styleName: 'icon',
-    }
+  if (config?.bep20[name.toLowerCase()]?.iconBgColor) {
+    style.backgroundColor = config.bep20[name.toLowerCase()].iconBgColor
   }
-  else {
-    iconProps = {
-      ...iconProps,
-      //@ts-ignore
-      styleName: 'letter',
-      style: {
-        lineHeight: `${size}px`,
-        fontSize: `${size / 2}px`,
-      },
+
+  // *************************************
+
+  let currencyIconProps = {
+    name: name.toLowerCase(),
+    styleName: '',
+    style: {},
+    source: iconSource,
+  }
+
+  if (isIconExist || isIconConfigExist) {
+    currencyIconProps.styleName = 'icon'
+  } else {
+    currencyIconProps.styleName = 'letter'
+    currencyIconProps.style = {
+      lineHeight: `${size}px`,
+      fontSize: `${size / 2}px`,
     }
   }
 
   return (
-    //@ts-ignore: strictNullChecks
-    <div styleName={`coin ${isDark ? 'dark' : ''}`} className={className} style={style}>
-      <CurrencyIcon {...iconProps} />
+    <div 
+      styleName={`
+        coin
+        ${isDark ? 'dark' : ''}
+        ${iconSource ? 'noColors' : ''}
+      `}
+      className={className}
+      //@ts-ignore: strictNullChecks
+      style={style}
+    >
+      <CurrencyIcon {...currencyIconProps} />
     </div>
   )
-}
-
-Coin.defaultProps = {
-  size: 40,
-}
-
-Coin.propTypes = {
-  className: PropTypes.string,
-  size: PropTypes.number,
-  name: PropTypes.string.isRequired,
 }
 
 export default CSSModules(Coin, styles, { allowMultiple: true })

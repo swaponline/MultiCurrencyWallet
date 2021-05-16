@@ -14,7 +14,7 @@ const getProviderByName = (web3connect, providerName, newInstance) => {
   if (!_cachedProviders[providerName] || newInstance) {
     switch (providerName) {
       case SUPPORTED_PROVIDERS.INJECTED:
-        _cachedProviders[providerName ] = new InjectedProvider(web3connect, {
+        _cachedProviders[providerName] = new InjectedProvider(web3connect, {
           supportedChainIds: [
             web3connect._web3ChainId,
           ],

@@ -9,10 +9,7 @@ import config from 'app-config'
 
 const Option = (props) => {
   let { icon, title } = props
-  if (icon.toLowerCase() === `eth` && config.binance) {
-    icon = `bnb`
-    title = `BSC`
-  }
+
   return (
     <div styleName="optionrow">
       <span styleName="circle">

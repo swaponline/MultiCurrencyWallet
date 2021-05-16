@@ -19,14 +19,9 @@ import { FormattedMessage } from 'react-intl'
 @connect(
   ({
     currencies,
-    addSelectedItems,
-    user: { ethData, btcData, ghostData, nextData, tokensDat },
   }) => ({
     currencies: currencies.items,
     addSelectedItems: currencies.addSelectedItems[0],
-    items: [ethData, btcData, ghostData, nextData],
-    //@ts-ignore
-    tokenItems: [...Object.keys(tokensData).map(k => (tokensData[k]))],
   })
 )
 @CSSModules(styles, { allowMultiple: true })
@@ -60,7 +55,7 @@ export default class CurrencyDirectionChooser extends Component<any, any> {
   }
 
   chooseProps = () => {
-    const { currencies, tokenItems, addSelectedItems } = this.props
+    const { currencies, addSelectedItems } = this.props
 
     if (addSelectedItems === undefined) {
       return currencies

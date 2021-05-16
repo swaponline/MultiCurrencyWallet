@@ -7,8 +7,10 @@ const ApiEndpoint = (props) => {
   const lowerSymbol = symbol.toLowerCase()
   let api = '.'
 
+  // TODO: add BEP20 api
+
   if (isERC20 || lowerSymbol === 'eth') {
-    api = config.api.etherscan[0]
+    api = config.api.etherscan
   } else if (isBTC) { // btc [pin, sms, multisig]
     api = config.api.bitpay
   } else if (lowerSymbol === 'ghost') {
@@ -31,6 +33,8 @@ const LinkEndpoint = (props) => {
   } = props
   const lowerSymbol = symbol.toLowerCase()
   let link = '.'
+
+    // TODO: add BEP20 link
 
   if (isERC20 || lowerSymbol === 'eth') {
     link = config.link.etherscan

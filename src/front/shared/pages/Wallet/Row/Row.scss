@@ -19,10 +19,10 @@
       content: "";
       position: absolute;
       left: 0;
-      bottom: -.1em;
-      height: .1em;
+      bottom: -0.1em;
+      height: 1px;
       background-color: $primary;
-      transition: .2s;
+      transition: 0.2s;
     }
 
     &.desktop::before {
@@ -36,6 +36,14 @@
     &.mobile::before {
       width: 100%;
     }
+  }
+
+  .tokenStandard {
+    @include ff-mono;
+    display: inline-block;
+    margin-left: 0.6em;
+    font-size: 0.8em;
+    color: $notice-color;
   }
 
   div {
