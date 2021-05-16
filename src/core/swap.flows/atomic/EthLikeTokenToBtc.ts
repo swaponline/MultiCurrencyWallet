@@ -7,7 +7,7 @@ import { EthLikeTokenSwap, BtcSwap } from 'swap.swaps'
 
 
 interface IEthLikeTokenToBtc {
-  chainName: string
+  blockchainName: string
   tokenName: string
   getMyAddress: Function
   getParticipantAddress: Function
@@ -21,7 +21,7 @@ export default class EthLikeTokenToBtc extends AtomicAB2UTXO {
 
   getMyAddress: Function
   getParticipantAddress: Function
-  chainName: string
+  blockchainName: string
   tokenName: string
 
   constructor(swap: Swap, options: IEthLikeTokenToBtc) {
@@ -29,17 +29,17 @@ export default class EthLikeTokenToBtc extends AtomicAB2UTXO {
     if (!options.tokenName) {
       throw new Error(`EthLikeTokenToBtc - option tokenName requery`)
     }
-    if (!options.chainName) {
-      throw new Error(`EthLikeTokenToBtc - token ${options.tokenName} - option chainName requery`)
+    if (!options.blockchainName) {
+      throw new Error(`EthLikeTokenToBtc - token ${options.tokenName} - option blockchainName requery`)
     }
     if (!options.getMyAddress || typeof options.getMyAddress !== 'function') {
-      throw new Error(`EthLikeTokenToBtc ${options.chainName} - token ${options.tokenName} - option getMyAddress - function requery`)
+      throw new Error(`EthLikeTokenToBtc ${options.blockchainName} - token ${options.tokenName} - option getMyAddress - function requery`)
     }
     if (!options.getParticipantAddress || typeof options.getParticipantAddress !== 'function') {
-      throw new Error(`EthLikeTokenToBtc ${options.chainName} - token ${options.tokenName} - option getParticipantAddress - function requery`)
+      throw new Error(`EthLikeTokenToBtc ${options.blockchainName} - token ${options.tokenName} - option getParticipantAddress - function requery`)
     }
 
-    this.chainName = options.chainName
+    this.blockchainName = options.blockchainName
     this.tokenName = options.tokenName
     this.getMyAddress = options.getMyAddress
     this.getParticipantAddress = options.getParticipantAddress

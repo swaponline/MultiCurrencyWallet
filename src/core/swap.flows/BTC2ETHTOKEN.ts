@@ -5,9 +5,10 @@ import BtcToEthLikeToken from './atomic/BtcToEthLikeToken'
 export default (tokenName) => {
   class BTC2ETHTOKEN extends BtcToEthLikeToken {
     _flowName: string
+    static blockchainName = `ETH`
 
     static getName() {
-      return `${this.getFromName()}2${this.getToName()}`
+      return `${this.getFromName()}2{${this.blockchainName}}${this.getToName()}`
     }
     static getFromName() {
       return constants.COINS.btc
@@ -18,7 +19,7 @@ export default (tokenName) => {
 
     constructor(swap) {
       super(swap, {
-        chainName: `ETH`,
+        blockchainName: `ETH`,
         tokenName,
         getMyAddress: swap.app.getMyEthAddress.bind(swap.app),
         getParticipantAddress: swap.app.getParticipantEthAddress.bind(swap.app),

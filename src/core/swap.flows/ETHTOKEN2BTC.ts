@@ -6,9 +6,10 @@ export default (tokenName) => {
 
   class ETHTOKEN2BTC extends EthLikeTokenToBtc {
     _flowName: string
+    static blockchainName = `ETH`
 
     static getName() {
-      return `${this.getFromName()}2${this.getToName()}`
+      return `{${this.blockchainName}}${this.getFromName()}2${this.getToName()}`
     }
     static getFromName() {
       return tokenName.toUpperCase()
@@ -19,7 +20,7 @@ export default (tokenName) => {
 
     constructor(swap) {
       super(swap, {
-        chainName: `ETH`,
+        blockchainName: `ETH`,
         tokenName,
         getMyAddress: swap.app.getMyEthAddress.bind(swap.app),
         getParticipantAddress: swap.app.getParticipantEthAddress.bind(swap.app),

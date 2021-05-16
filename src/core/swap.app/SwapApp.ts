@@ -228,7 +228,8 @@ class SwapApp extends EventEmitter {
       )
     }
 
-    this.swaps[swap._swapName] = swap
+    const swapKey = (swap.blockchainName) ? `${swap.blockchainName}{${swap._swapName}}` : swap._swapName
+    this.swaps[swapKey] = swap
 
     if (typeof swap._initSwap === 'function') {
       swap._initSwap(this)

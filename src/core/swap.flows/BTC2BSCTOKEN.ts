@@ -4,10 +4,11 @@ import BtcToEthLikeToken from './atomic/BtcToEthLikeToken'
 
 export default (tokenName) => {
   class BTC2BSCTOKEN extends BtcToEthLikeToken {
+    static blockchainName = `BNB`
     _flowName: string
 
     static getName() {
-      return `${this.getFromName()}2${this.getToName()}`
+      return `${this.getFromName()}2{${this.blockchainName}}${this.getToName()}`
     }
     static getFromName() {
       return constants.COINS.btc
@@ -18,7 +19,7 @@ export default (tokenName) => {
 
     constructor(swap) {
       super(swap, {
-        chainName: `BSC`,
+        blockchainName: `BNB`,
         tokenName,
         getMyAddress: swap.app.getMyBnbAddress.bind(swap.app),
         getParticipantAddress: swap.app.getParticipantBnbAddress.bind(swap.app),
