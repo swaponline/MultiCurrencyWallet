@@ -7,7 +7,7 @@ import NextSwap from './NextSwap'
 
 import EthLikeSwap from './EthLikeSwap'
 import EthLikeTokenSwap from './EthLikeTokenSwap'
-
+import BscTokenSwap from './BscTokenSwap'
 
 export {
   BtcSwap,
@@ -20,4 +20,6 @@ export {
 
   EthLikeSwap,
   EthLikeTokenSwap,
+
+  BscTokenSwap,
 }
