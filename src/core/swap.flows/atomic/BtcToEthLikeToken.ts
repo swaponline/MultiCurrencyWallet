@@ -228,19 +228,19 @@ export default class BtcToEthLikeToken extends AtomicAB2UTXO {
             } = flow.state
             if (secretHash && utxoScriptValues) {
               const isSwapCreated = await flow.ethTokenSwap.isSwapCreated({
-                ownerAddress: flow.app.getParticipantEthAddress(flow.swap),
-                participantAddress: flow.app.getMyEthAddress(),
+                ownerAddress: flow.getParticipantAddress(flow.swap),
+                participantAddress: flow.getMyAddress(),
                 secretHash,
               })
               if (isSwapCreated) {
                 // check - token is valid
                 const tokenIsValid = await this.ethTokenSwap.checkTokenIsValid({
-                  ownerAddress: flow.app.getParticipantEthAddress(flow.swap),
-                  participantAddress: flow.app.getMyEthAddress(),
+                  ownerAddress: flow.getParticipantAddress(flow.swap),
+                  participantAddress: flow.getMyAddress(),
                 })
                 const tokenIsValid2 = await this.ethTokenSwap.checkTokenIsValid({
-                  ownerAddress: flow.app.getMyEthAddress(),
-                  participantAddress: flow.app.getParticipantEthAddress(flow.swap),
+                  ownerAddress: flow.getMyAddress(),
+                  participantAddress: flow.getParticipantAddress(flow.swap),
                 })
 
                 const destAddressIsOk = await this.ethTokenSwap.checkTargetAddress({ flow })
@@ -414,7 +414,7 @@ export default class BtcToEthLikeToken extends AtomicAB2UTXO {
       console.warn(`Hash does not match! state: ${secretHash}, given: ${_secretHash}`)
 
     const data = {
-      ownerAddress: this.app.getParticipantEthAddress(this.swap),
+      ownerAddress: this.getParticipantAddress(this.swap),
       secret: _secret,
     }
 
