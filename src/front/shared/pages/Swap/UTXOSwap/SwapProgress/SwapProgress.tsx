@@ -345,7 +345,7 @@ class SwapProgress extends Component<any, any> {
     }
 
     return (
-      <div styleName={`overlay ${isDark ? '' : ''}`}>
+      <div styleName="overlay">
         <div styleName="container">
           <div styleName="stepContainer">
             <div styleName="stepInfo">
