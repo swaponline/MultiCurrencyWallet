@@ -58,8 +58,8 @@ const ThirdStep = (props) => {
       try {
         let fetchedTx: any
 
-        if (['eth', 'bnb'].includes(currencyName.toLowerCase())) {
-          fetchedTx = await actions[currencyName.toLowerCase()].fetchTxInfo(txHash, (refreshTime - 5) * 1000)
+        if (currencyName === 'eth') { // TODO: needs to be improved when adding BNB
+          fetchedTx = await actions.eth.fetchTxInfo(txHash, (refreshTime - 5) * 1000)
 
           if (fetchedTx && fetchedTx.confirmed) {
             return setEthSwapWithdrawHashIsConfirmed(true)
@@ -92,7 +92,7 @@ const ThirdStep = (props) => {
   useEffect(() => {
     _mounted = true
     if (ethSwapWithdrawHash && !ethSwapWithdrawHashIsConfirmed){
-      checkTransactionHash(ethSwapWithdrawHash, currencyName, 20)
+      checkTransactionHash(ethSwapWithdrawHash, 'eth', 20)
     }
   }, [ethSwapWithdrawHash])
 
