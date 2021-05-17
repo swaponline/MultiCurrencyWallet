@@ -12,6 +12,7 @@ import { FormattedMessage } from 'react-intl'
 import checkedIcon from '../../../images/checked.svg'
 
 let _mounted = false
+const timeoutIds: NodeJS.Timeout[] = []
 
 const ThirdStep = (props) => {
   const {
@@ -52,7 +53,7 @@ const ThirdStep = (props) => {
   }
 
   const checkTransactionHash = (txHash, currencyName, refreshTime) => {
-    setTimeout(async () => {
+    const timeoutId = setTimeout(async () => {
       if (!_mounted) return
 
       try {
@@ -80,6 +81,7 @@ const ThirdStep = (props) => {
         return checkTransactionHash(txHash, currencyName, refreshTime)
       }
     }, refreshTime * 1000)
+    timeoutIds.push(timeoutId)
   }
 
   useEffect(() => {
@@ -100,6 +102,7 @@ const ThirdStep = (props) => {
     _mounted = true
     return () => {
       _mounted = false
+      timeoutIds.map((id) => clearInterval(id))
     }
   }, [])
 
