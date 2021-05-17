@@ -57,17 +57,16 @@
   }
 }
 
-.no-select-inline {
-  cursor: pointer;
-  display: inline;
+.cryptoBalanceBtn {
   user-select: none;
   width: max-content;
   display: block;
   white-space: nowrap;
-}
 
-.icon {
-  margin-right: 5px;
+  .icon {
+    display: inline-block;
+    margin-right: 5px;
+  }  
 }
 
 tr button:disabled,
@@ -108,7 +107,7 @@ tr button[disabled]:hover {
     background: $d-background-elements;
   }
 
-  .no-select-inline {
+  .cryptoBalanceBtn {
     color: white
   }
 
@@ -377,7 +376,7 @@ tr button[disabled]:hover {
 }
 
 @media all and (max-width: 480px) {
-  .no-select-inline {
+  .cryptoBalanceBtn {
     font-size: 1em;
   }
 

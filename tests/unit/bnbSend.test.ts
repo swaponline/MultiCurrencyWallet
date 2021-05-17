@@ -3,7 +3,7 @@ import testConfig from '../../src/front/config/testnet'
 import DEFAULT_CURRENCY_PARAMETERS from '../../src/common/helpers/constants/DEFAULT_CURRENCY_PARAMETERS'
 import ethLikeHelper from '../../src/common/helpers/ethLikeHelper'
 import actions from '../../src/front/shared/redux/actions'
-import testWallets from './testWallets'
+import testWallets from '../testWallets'
 
 const web3 = new Web3( new Web3.providers.HttpProvider(testConfig.web3.binance_provider) )
 const timeOut = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
