@@ -24,7 +24,7 @@ export default class EthTokenToBtcLike extends Component<any, any> {
         return (
           <FormattedMessage
             id="EthTokensToBtc24_ethtoken_to_BtcLike"
-            defaultMessage="The {coinName} Script was created and charged. Check the information below"
+            defaultMessage="The {coinName} Script was created and charged."
             values={{
               coinName,
             }}
