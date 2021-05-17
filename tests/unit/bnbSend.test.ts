@@ -1,34 +1,34 @@
 import Web3 from 'web3'
-import testConfig from '../src/front/config/testnet'
-import DEFAULT_CURRENCY_PARAMETERS from '../src/common/helpers/constants/DEFAULT_CURRENCY_PARAMETERS'
-import ethLikeHelper from '../src/common/helpers/ethLikeHelper'
-import actions from '../src/front/shared/redux/actions'
+import testConfig from '../../src/front/config/testnet'
+import DEFAULT_CURRENCY_PARAMETERS from '../../src/common/helpers/constants/DEFAULT_CURRENCY_PARAMETERS'
+import ethLikeHelper from '../../src/common/helpers/ethLikeHelper'
+import actions from '../../src/front/shared/redux/actions'
 import testWallets from './testWallets'
 
-const web3 = new Web3( new Web3.providers.HttpProvider(testConfig.web3.provider) )
+const web3 = new Web3( new Web3.providers.HttpProvider(testConfig.web3.binance_provider) )
 const timeOut = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
 
-describe('Sending ETH', () => {
+describe('Sending BNB', () => {
   const waitingForTheTest = 80_000 // ms
   const customAmount = 0.001
   let gasPrice = 0
 
   beforeEach(async () => {
-    gasPrice = await ethLikeHelper.eth.estimateGasPrice({ speed: 'fast' })
+    gasPrice = await ethLikeHelper.bnb.estimateGasPrice({ speed: 'fast' })
   })
 
-  it(`send the user transaction (amount: ${customAmount} ETH)`, async () => {
+  it(`send the user transaction (amount: ${customAmount} BNB)`, async () => {
     const gasLimit = DEFAULT_CURRENCY_PARAMETERS.eth.limit.send
     const paramsToSend = {
-      externalAddress: testWallets.eth.address.toLowerCase(),
-      externalPrivateKey: testWallets.eth.privateKey,
-      to: testWallets.eth.address.toLowerCase(),
+      externalAddress: testWallets.bnb.address.toLowerCase(),
+      externalPrivateKey: testWallets.bnb.privateKey,
+      to: testWallets.bnb.address.toLowerCase(),
       amount: customAmount,
       speed: 'fast',
       gasPrice,
       gasLimit,
     }
-    const response = await actions.eth.send(paramsToSend)
+    const response = await actions.bnb.send(paramsToSend)
 
     expect(response.transactionHash).toMatch(/0x[A-Za-z0-9]{2}/)
     // wait for a while until transaction gets into the blockchain
@@ -45,8 +45,8 @@ describe('Sending ETH', () => {
     expect(to).toBe(paramsToSend.to)
   }, waitingForTheTest)
 
-  it(`send the admin transaction (amount: ${customAmount} ETH)`, async () => {
-    const gasLimit = DEFAULT_CURRENCY_PARAMETERS.eth.limit.send
+  it(`send the admin transaction (amount: ${customAmount} BNB)`, async () => {
+    const gasLimit = DEFAULT_CURRENCY_PARAMETERS.bnb.limit.send
     const adminObj = {
       fee: 7,
       address: '0x276747801B0dbb7ba04685BA27102F1B27Ca0815',
@@ -56,14 +56,14 @@ describe('Sending ETH', () => {
       amount: customAmount,
       gasPrice,
       gasLimit,
-      privateKey: testWallets.eth.privateKey,
+      privateKey: testWallets.bnb.privateKey,
       externalAdminFeeObj: adminObj,
     }
-    const txHash = await actions.eth.sendAdminTransaction(paramsToSend)
+    const txHash = await actions.bnb.sendAdminTransaction(paramsToSend)
 
     expect(txHash).toMatch(/0x[A-Za-z0-9]{64}/)
 
-    await timeOut(30_000)
+    await timeOut(10_000)
 
     const receipt = await web3.eth.getTransactionReceipt(txHash)
 
@@ -72,7 +72,7 @@ describe('Sending ETH', () => {
     const { status, from, to } = receipt
 
     expect(status).toBe(true)
-    expect(from).toBe(testWallets.eth.address.toLowerCase())
+    expect(from).toBe(testWallets.bnb.address.toLowerCase())
     expect(to).toBe(adminObj.address.toLowerCase())
   }, waitingForTheTest)
 })
