@@ -5053,7 +5053,7 @@
   },
   {
     "id": "ethToBtcText25_eth_to_btclike",
-    "message": "The {coinName} Script was created and charged. Check the information below",
+    "message": "The {coinName} Script was created and charged.",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/EthToBtcLike.tsx"
     ]
@@ -5197,7 +5197,7 @@
   },
   {
     "id": "EthTokensToBtc24_ethtoken_to_BtcLike",
-    "message": "The {coinName} Script was created and charged. Check the information below",
+    "message": "The {coinName} Script was created and charged.",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/EthToBtcLike.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/EthTokenToBtcLike.tsx",
