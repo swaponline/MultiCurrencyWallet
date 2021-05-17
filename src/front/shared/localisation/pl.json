@@ -5400,6 +5400,84 @@
     ]
   },
   {
+    "id": "swapDisabled",
+    "message": "Zamiana wyłączona",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "noOffers",
+    "message": "Brak ofert",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "selectFromAddress",
+    "message": "Wybierz \"From address\"",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "selectToAddress",
+    "message": "Wybierz \"To address\"",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "enterToAddress",
+    "message": "Wpisz \"To address\"",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "errorWithGetAmount",
+    "message": "\"Dostajesz\" nie więcej niż 0",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "lowAmount",
+    "message": "Niska kwota",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "waitPeerAnswer",
+    "message": "Poczekaj na odpowiedź partnera",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "tryExternalWallet",
+    "message": "Spróbuj wybrać \"Portfel zewnętrzny\" w \"From address\"",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "enterLesserAmount",
+    "message": "Wpisz mniejszą kwotę do \"Wysyłasz\"",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+
+  {
+    "id": "contactSupport",
+    "message": "Skontaktuj się z pomocą techniczną",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
     "id": "TurboSwap_You",
     "message": "Wy",
     "files": [

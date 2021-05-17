@@ -5396,6 +5396,84 @@
     ]
   },
   {
+    "id": "swapDisabled",
+    "message": "Swap uitgeschakeld",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "noOffers",
+    "message": "Geen aanbiedingen",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "selectFromAddress",
+    "message": "Selecteer \"Van adres\"",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "selectToAddress",
+    "message": "Selecteer \"Naar address\"",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "enterToAddress",
+    "message": "Enter \"Naar address\"",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "errorWithGetAmount",
+    "message": "\"U ontvangt\" niet meer dan 0",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "lowAmount",
+    "message": "Laag bedrag",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "waitPeerAnswer",
+    "message": "Wacht peer-antwoord",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "tryExternalWallet",
+    "message": "Probeer \"Externe portefeuille\" te selecteren in \"Van adres\"",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "enterLesserAmount",
+    "message": "Voer een lager bedrag in bij \"U verstuurd\"",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+
+  {
+    "id": "contactSupport",
+    "message": "Neem dan contact op met ondersteuning",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
     "id": "AtomicSwap_Title",
     "message": "Atomic swap",
     "files": [

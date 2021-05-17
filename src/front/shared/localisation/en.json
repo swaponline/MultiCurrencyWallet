@@ -606,6 +606,84 @@
     ]
   },
   {
+    "id": "swapDisabled",
+    "message": "Swap Disabled",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "noOffers",
+    "message": "No Offers",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "selectFromAddress",
+    "message": "Select \"From address\"",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "selectToAddress",
+    "message": "Select \"To address\"",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "enterToAddress",
+    "message": "Enter \"To address\"",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "errorWithGetAmount",
+    "message": "\"You get\" no more than 0",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "lowAmount",
+    "message": "Low amount",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "waitPeerAnswer",
+    "message": "Wait peer answer",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "tryExternalWallet",
+    "message": "Try select \"External wallet\" in \"From address\"",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "enterLesserAmount",
+    "message": "Enter lesser amount to \"You send\"",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+
+  {
+    "id": "contactSupport",
+    "message": "Please contact support",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
     "id": "partial255",
     "message": "You get",
     "files": [

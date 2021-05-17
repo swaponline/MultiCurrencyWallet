@@ -5400,6 +5400,84 @@
     ]
   },
   {
+    "id": "swapDisabled",
+    "message": "Intercambiar deshabilitado",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "noOffers",
+    "message": "No hay ofertas",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "selectFromAddress",
+    "message": "Seleccione\"From address\"",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "selectToAddress",
+    "message": "Seleccione \"To address\"",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "enterToAddress",
+    "message": "Ingrese \"To address\"",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "errorWithGetAmount",
+    "message": "\"Tu obtienes\" no más de 0",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "lowAmount",
+    "message": "Cantidad baja",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "waitPeerAnswer",
+    "message": "Espere la respuesta de sus compañeros",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "tryExternalWallet",
+    "message": "Intente seleccionar \"Cartera externa\" en \"From address\"",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "enterLesserAmount",
+    "message": "Ingrese una cantidad menor a\"Tu envias\"",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+
+  {
+    "id": "contactSupport",
+    "message": "Comuníquese con el soporte",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
     "id": "AtomicSwap_Title",
     "message": "Atomic swap",
     "files": [
