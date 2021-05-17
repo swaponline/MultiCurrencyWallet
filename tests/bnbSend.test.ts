@@ -5,7 +5,7 @@ import ethLikeHelper from '../src/common/helpers/ethLikeHelper'
 import actions from '../src/front/shared/redux/actions'
 import testWallets from './testWallets'
 
-const web3 = new Web3(new Web3.providers.HttpProvider(testConfig.web3.binance_provider))
+const web3 = new Web3( new Web3.providers.HttpProvider(testConfig.web3.binance_provider) )
 const timeOut = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
 
 describe('Sending BNB', () => {
@@ -31,11 +31,11 @@ describe('Sending BNB', () => {
     const response = await actions.bnb.send(paramsToSend)
 
     expect(response.transactionHash).toMatch(/0x[A-Za-z0-9]{2}/)
-
+    // wait for a while until transaction gets into the blockchain
     await timeOut(60_000)
     
     const receipt = await web3.eth.getTransactionReceipt(response.transactionHash)
-    
+    // if receipt equals null then perhaps the transaction is still pending
     expect(receipt).not.toBeNull()
 
     const { status, from, to } = receipt
@@ -66,7 +66,7 @@ describe('Sending BNB', () => {
     await timeOut(10_000)
 
     const receipt = await web3.eth.getTransactionReceipt(txHash)
-    // if receipt equals null then perhaps the transaction is still pending
+
     expect(receipt).not.toBeNull()
 
     const { status, from, to } = receipt

@@ -5,11 +5,11 @@ import ethLikeHelper from '../src/common/helpers/ethLikeHelper'
 import actions from '../src/front/shared/redux/actions'
 import testWallets from './testWallets'
 
-const web3 = new Web3(new Web3.providers.HttpProvider(testConfig.web3.provider))
+const web3 = new Web3( new Web3.providers.HttpProvider(testConfig.web3.provider) )
 const timeOut = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
 
 describe('Sending ETH', () => {
-  const waitingForTheTest = 125_000 // ms
+  const waitingForTheTest = 80_000 // ms
   const customAmount = 0.001
   let gasPrice = 0
 
@@ -22,7 +22,7 @@ describe('Sending ETH', () => {
     const paramsToSend = {
       externalAddress: testWallets.eth.address.toLowerCase(),
       externalPrivateKey: testWallets.eth.privateKey,
-      to: testWallets.eth.address,
+      to: testWallets.eth.address.toLowerCase(),
       amount: customAmount,
       speed: 'fast',
       gasPrice,
@@ -31,11 +31,11 @@ describe('Sending ETH', () => {
     const response = await actions.eth.send(paramsToSend)
 
     expect(response.transactionHash).toMatch(/0x[A-Za-z0-9]{2}/)
-
-    await timeOut(60 * 1000)
+    // wait for a while until transaction gets into the blockchain
+    await timeOut(60_000)
     
     const receipt = await web3.eth.getTransactionReceipt(response.transactionHash)
-    
+    // if receipt equals null then perhaps the transaction is still pending
     expect(receipt).not.toBeNull()
 
     const { status, from, to } = receipt
@@ -63,10 +63,10 @@ describe('Sending ETH', () => {
 
     expect(txHash).toMatch(/0x[A-Za-z0-9]{64}/)
 
-    await timeOut(5 * 1000)
+    await timeOut(30_000)
 
     const receipt = await web3.eth.getTransactionReceipt(txHash)
-    // if receipt equals null then perhaps the transaction is still pending
+
     expect(receipt).not.toBeNull()
 
     const { status, from, to } = receipt
