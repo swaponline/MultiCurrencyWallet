@@ -24,10 +24,15 @@ class ethLikeHelper {
     this.feeRatesLink = feeRatesLink
   }
 
-  reportError = (error) => {
-    feedback.helpers.failed(
-      ''.concat(`details - currency: ${this.currency}, `, `error message - ${error.message} `)
-    )
+  reportError = (params) => {
+    const { error, sendFeedback = false } = params
+
+    if (sendFeedback) {
+      feedback.helpers.failed(
+        ''.concat(`details - currency: ${this.currency}, `, `error message - ${error.message} `)
+      )
+    }
+
     console.group(`Common helpers >%c ${this.currency}`, 'color: red;')
     console.error('error: ', error)
     console.groupEnd()
@@ -78,7 +83,7 @@ class ethLikeHelper {
     try {
       apiResult = await api.asyncFetchApi(this.feeRatesLink)
     } catch (error) {
-      this.reportError(error)
+      this.reportError({ error })
       return defaultPrice[speed]
     }
   
