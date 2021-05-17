@@ -1605,6 +1605,7 @@ class Exchange extends PureComponent<any, any> {
         ![AddressType.Internal, AddressType.Metamask, AddressType.Custom].includes(toAddress.type))
 
     const canStartSwap =
+      linked.haveAmount.value > 0 &&
       !isErrorExternalDisabled &&
       !isNonOffers &&
       fromAddress &&
@@ -1614,10 +1615,33 @@ class Exchange extends PureComponent<any, any> {
       !this.doesComissionPreventThisOrder() &&
       !isWaitForPeerAnswer &&
       (
-        new BigNumber(haveAmount).isGreaterThan(balance) ||
+        new BigNumber(balance).isGreaterThan(haveAmount) ||
         new BigNumber(balance).isGreaterThanOrEqualTo(availableAmount) ||
         fromAddress.type === AddressType.Custom
       )
+
+    const getTextWhyCanNotStartSwap = () => {
+      if (!(linked.haveAmount.value > 0)) return <FormattedMessage id="enterYouSend" defaultMessage='Enter "You send" amount' />
+      if (isErrorExternalDisabled) return <FormattedMessage id="swapDisabled" defaultMessage='Swap Disabled' />
+      if (isNonOffers) return <FormattedMessage id="noOffers" defaultMessage='No Offers' />
+      if (!fromAddress) return <FormattedMessage id="selectFromAddress" defaultMessage='Select "From address"' />
+      if (!toAddress) return <FormattedMessage id="selectToAddress" defaultMessage='Select "To address"' />
+      if (!toAddress.value) return <FormattedMessage id="enterToAddress" defaultMessage='Enter "To address"' />
+      if (!(new BigNumber(getAmount).isGreaterThan(0))) return <FormattedMessage id="errorWithGetAmount" defaultMessage='"You get" no more than 0' />
+      if (this.doesComissionPreventThisOrder()) return <FormattedMessage id="lowAmount" defaultMessage='Low amount' />
+      if (isWaitForPeerAnswer) return <FormattedMessage id="waitPeerAnswer" defaultMessage='Wait peer answer' />
+
+      if (!(new BigNumber(balance).isGreaterThanOrEqualTo(availableAmount)) ||
+       !(new BigNumber(balance).isGreaterThan(haveAmount))) {
+          return <FormattedMessage id="enterLesserAmount" defaultMessage='Enter lesser amount to "You send"' />
+      }
+
+      if (!(fromAddress.type === AddressType.Custom)) {
+          return <FormattedMessage id="tryExternalWallet" defaultMessage='Try select "External wallet" in "From address"' />
+        }
+
+      return <FormattedMessage id="contactSupport" defaultMessage='Please contact support' />
+    }
 
     const isIncompletedSwaps = !!desclineOrders.length
 
@@ -1862,7 +1886,7 @@ class Exchange extends PureComponent<any, any> {
                 pending={isPendingTokenApprove}
                 blue={true}
               >
-                {linked.haveAmount.value > 0
+                {canStartSwap
                   ? hasTokenAllowance
                     ? <FormattedMessage id="partial541" defaultMessage="Exchange now" />
                     : (
@@ -1872,7 +1896,7 @@ class Exchange extends PureComponent<any, any> {
                         values={{ token: haveCurrency.toUpperCase() }}
                       />
                     )
-                  : <FormattedMessage id="enterYouSend" defaultMessage='Enter "You send" amount' />
+                  : getTextWhyCanNotStartSwap()
                 }
               </Button>
             ) : (
@@ -1882,9 +1906,9 @@ class Exchange extends PureComponent<any, any> {
                 disabled={!canStartSwap}
                 blue={true}
               >
-                {linked.haveAmount.value > 0 
+                {canStartSwap
                   ? <FormattedMessage id="partial541" defaultMessage="Exchange now" />
-                  : <FormattedMessage id="enterYouSend" defaultMessage='Enter "You send" amount' />}
+                  : getTextWhyCanNotStartSwap()}
               </Button>
             )}
 
