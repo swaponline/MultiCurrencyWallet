@@ -1632,13 +1632,16 @@ class Exchange extends PureComponent<any, any> {
       if (isWaitForPeerAnswer) return <FormattedMessage id="waitPeerAnswer" defaultMessage='Wait peer answer' />
 
       if (!(new BigNumber(balance).isGreaterThanOrEqualTo(availableAmount)) ||
-       !(new BigNumber(balance).isGreaterThan(haveAmount))) {
+      !(new BigNumber(balance).isGreaterThan(haveAmount))) {
+
+          if (!(new BigNumber(balance).isGreaterThanOrEqualTo(availableAmount)) &&
+            !(new BigNumber(balance).isGreaterThan(haveAmount)) &&
+            !(fromAddress.type === AddressType.Custom)) {
+              return <FormattedMessage id="tryExternalWallet" defaultMessage='Try select "External wallet" in "From address"' />
+          }
+
           return <FormattedMessage id="enterLesserAmount" defaultMessage='Enter lesser amount to "You send"' />
       }
-
-      if (!(fromAddress.type === AddressType.Custom)) {
-          return <FormattedMessage id="tryExternalWallet" defaultMessage='Try select "External wallet" in "From address"' />
-        }
 
       return <FormattedMessage id="contactSupport" defaultMessage='Please contact support' />
     }
