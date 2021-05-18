@@ -15,6 +15,7 @@ import actions from 'redux/actions'
 import { Link } from 'react-router-dom'
 
 import { swapComponents } from './swaps'
+import { createSwapApp } from "instances/newSwap";
 import Debug from './Debug/Debug'
 import { injectIntl, FormattedMessage } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
@@ -165,52 +166,52 @@ class SwapComponent extends PureComponent<any, any> {
 
     try {
       console.log('creating swap')
+      createSwapApp().then(() => {
+        const swap = new Swap(orderId, SwapApp.shared())
+        actions.core.rememberSwap(swap)
+        window.active_swap = swap
 
-      const swap = new Swap(orderId, SwapApp.shared())
-      actions.core.rememberSwap(swap)
-      window.active_swap = swap
+        console.log('swap: ', swap)
+        console.log('swap flow name:', swap.flow._flowName);
 
-      console.log('swap: ', swap)
-      console.log('swap flow name:', swap.flow._flowName);
+        const SwapComponent = swapComponents[swap.flow._flowName]
+        const ethData = items.filter(item => item.currency === 'ETH')
+        const currencyData = items.concat(tokensData)
+          .filter(item => item.currency === swap.sellCurrency.toUpperCase())[0]
+        const currencies = [
+          {
+            currency: swap.sellCurrency,
+            amount: swap.sellAmount,
+          },
+          {
+            currency: swap.buyCurrency,
+            amount: swap.buyAmount,
+          },
+        ]
 
-      const SwapComponent = swapComponents[swap.flow._flowName]
-      const ethData = items.filter(item => item.currency === 'ETH')
-      const currencyData = items.concat(tokensData)
-        .filter(item => item.currency === swap.sellCurrency.toUpperCase())[0]
-      const currencies = [
-        {
-          currency: swap.sellCurrency,
-          amount: swap.sellAmount,
-        },
-        {
-          currency: swap.buyCurrency,
-          amount: swap.buyAmount,
-        },
-      ]
+        currencies.forEach(item => {
+          actions.user.getExchangeRate(item.currency, activeFiat.toLowerCase())
+            .then(exRate => {
+              const amount = exRate * Number(item.amount)
 
-      currencies.forEach(item => {
-        actions.user.getExchangeRate(item.currency, activeFiat.toLowerCase())
-          .then(exRate => {
-            const amount = exRate * Number(item.amount)
+              if (Number(amount) >= 50) {
+                this.setState(() => ({ isAmountMore: 'enable' }))
+              } else {
+                this.setState(() => ({ isAmountMore: 'disable' }))
+              }
+            })
+        })
 
-            if (Number(amount) >= 50) {
-              this.setState(() => ({ isAmountMore: 'enable' }))
-            } else {
-              this.setState(() => ({ isAmountMore: 'disable' }))
-            }
-          })
+        console.log('setting swap into state (swap): ', swap)
+
+        this.setState({
+          swap,
+          ethData,
+          SwapComponent,
+          currencyData,
+          ethAddress: ethData[0].address,
+        }, this.afterComponentDidMount)
       })
-
-      console.log('setting swap into state (swap): ', swap)
-
-      this.setState({
-        swap,
-        ethData,
-        SwapComponent,
-        currencyData,
-        ethAddress: ethData[0].address,
-      }, this.afterComponentDidMount)
-
       /* hide my orders */
       // disable for now TODO
       // actions.core.hideMyOrders()
