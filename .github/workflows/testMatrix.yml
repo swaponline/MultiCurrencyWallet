@@ -1,0 +1,33 @@
+name: Tests
+
+on:
+  # Trigger the workflow on push or pull request,
+  # but only for the master branch
+  push:
+    branches:
+      - testmatrix
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        testNames: [btc_send,evmnetworks_send]
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Use Node.js 14.x
+      uses: actions/setup-node@v1
+      with:
+        node-version: 14.x
+    - name: npm install, build and deploy 
+      run: |
+        npm i
+    - name: TEST
+      run: |
+        npm run test:${{ matrix.testNames }}
+      env:
+        CI: true
+        super_secret: ${{ secrets.buildbot }}
