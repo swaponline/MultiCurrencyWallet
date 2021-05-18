@@ -93,7 +93,7 @@ export const turnOnMM = async (page: puppeteer.Page) => {
 
 export const takeScreenshot = async (page: puppeteer.Page, fileName: string) => {
   await page.screenshot({
-    path: `tests//e2e/screenshots/${fileName}_${new Date().getTime().toString()}.jpg`,
+    path: `tests/e2e/screenshots/${fileName}_${new Date().getTime().toString()}.jpg`,
     type: 'jpeg'
   });
 }

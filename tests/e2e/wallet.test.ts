@@ -1,14 +1,21 @@
 import testWallets from '../testWallets'
 import { createBrowser, importWallet, takeScreenshot, timeOut } from './utils'
 
-describe('Wallet page testing', () => {
+jest.setTimeout(100_000) // ms
+
+describe('Start e2e Wallet page tests', () => {
 
   it('the balances must be displayed and updated correctly', async () => {
     const { browser, page } = await createBrowser()
     const arrOfWords = testWallets.eth.seedPhrase.split(' ')
 
+    expect(browser).toBeDefined()
+    expect(page).toBeDefined()
+
     try {
       await importWallet(page, arrOfWords)
+
+      takeScreenshot(page, 'wallet')
 
       await page.waitForSelector('#walletRowUpdateBalanceBtn')
       await page.waitForSelector('#walletRowCryptoBalance')
@@ -32,6 +39,8 @@ describe('Wallet page testing', () => {
       balances.forEach((strBalance) => {
         expect(Number(strBalance)).not.toBeNaN()
       })
+
+      takeScreenshot(page, 'walletAfterAll')
     } catch (error) {
       await browser.close()
       console.error(error)
