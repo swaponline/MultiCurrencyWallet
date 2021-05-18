@@ -5625,14 +5625,14 @@
   },
   {
     "id": "MM_FAQ_ItemContent1",
-    "message": "De market maker verdient op het verschil in wisselkoersen bij het onderhoud van de aankoop en verkoop (spread)",
+    "message": "Een market maker verdient op het verschil in wisselkoersen bij het onderhoud van de aankoop en verkoop (spread)",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
   },
   {
     "id": "MM_FAQ_HowMuchEarn",
-    "message": "Wij verklaren van 10% per jaar (APY), als het aantal uitwisselingen is niet genoeg zullen we gebruikers motiveren om uitwisselingen te doen met behulp van premies.",
+    "message": "Wij verklaren van 10% per jaar (APY). Als het aantal uitwisselingen is niet genoeg zullen we gebruikers motiveren om uitwisselingen te doen met behulp van premies.",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
@@ -5653,7 +5653,7 @@
   },
   {
     "id": "MM_FAQ_ItemContent6",
-    "message": "Vertel over de mogelijkheid van swap in de gemeenschappen waar je lid bent.",
+    "message": "Vertel de gemeenschappen waar u lid bent over de mogelijkheid van ruilen.",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
@@ -5667,7 +5667,7 @@
   },
   {
     "id": "MM_FAQ_ItemContent7-1",
-    "message": "U kunt alleen aanvullen met Bitcoin, maar het is onvermijdelijk dat in sommige periodes uw BTC-saldo kan afnemen en {token} kan toenemen, en vice versa.",
+    "message": "U kunt alleen aanvullen met Bitcoin. Maar het is onvermijdelijk dat in sommige periodes uw BTC-saldo kan afnemen en {token} kan toenemen, en vice versa.",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
@@ -5681,28 +5681,28 @@
   },
   {
     "id": "MM_FAQ_ItemContent7-3",
-    "message": "Als u BTC wilt opnemen, maar sommige zijn in {token}, dan moet u {token} zelf wijzigen, bijvoorbeeld via de Binance-uitwisseling.",
+    "message": "Als u BTC wilt opnemen, maar sommige zijn in {token}, dan moet u {token} zelf wijzigen, bijvoorbeeld via Binance-uitwisseling.",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
   },
   {
     "id": "MM_FAQ_ItemTitle8",
-    "message": "Waarom wisselen gebruikers zichzelf niet uit via de Binance-uitwisseling?",
+    "message": "Waarom wisselen gebruikers zichzelf niet uit via Binance-uitwisseling?",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
   },
   {
     "id": "MM_FAQ_ItemContent8",
-    "message": "Onze klanten houden van en ondersteunen decentralisatie, onze wisselaar werkt via slimme contracten en we zullen het geld van de klant niet langer dan 3 uur kunnen bevriezen.",
+    "message": "Onze klanten houden van en ondersteunen decentralisatie. Onze uitwisseling werkt via slimme contracten en we zullen het geld van de klant niet langer dan 3 uur kunnen bevriezen.",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
   },
   {
     "id": "MM_FAQ_ItemTitle1",
-    "message": "Waarom het werkt?",
+    "message": "Waarom werkt het?",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
@@ -5808,7 +5808,7 @@
   },
   {
     "id": "MM_Promo_Title",
-    "message": "Hoe kan ik geld verdienen met mijn BTC-storting?",
+    "message": "Verdien rente op Bitcoin",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx",
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
@@ -5816,7 +5816,7 @@
   },
   {
     "id": "MM_Promo_TitleBody",
-    "message": "Gebruikers in onze swap.io wisselaar wisselen BTC uit voor {token} (een token dat net als BTC kost, maar werkt op {Ab_Title}) en vice versa. Jij krijgt min. 10% APY (jaarlijks per jaar) als provisie op beurzen met een gering impermanent loss {link}.",
+    "message": "Gebruikers in onze swap.io wisselaar wisselen BTC uit voor {token} (een token dat net als BTC kost, maar werkt op {Ab_Title}) en vice versa. Jij krijgt min. 10% APY (jaarlijkse procentuele opbrengst) als provisie op beurzen met een gering impermanent loss {link}.",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx",
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
@@ -6024,7 +6024,7 @@
   },
   {
     "id": "MM_InstallExtentionTitle",
-    "message": "Installeer de Chrome-extensie en begin met verdienen",
+    "message": "Installeer de Chrome-extensie en begin vandaag nog met verdienen",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
     ]
@@ -6052,7 +6052,7 @@
   },
   {
     "id": "MM_FAQ_ImpermanentLossContent",
-    "message": "Op elk moment zal de som van deze saldi groter zijn dan voorheen. Als u BTC wilt intrekken, maar sommige daarvan zijn in {token}, dan moet u {token} zelf wijzigen, bijvoorbeeld via de Binance exchange.",
+    "message": "Op elk moment zal de som van deze saldi groter zijn dan voorheen. Als u BTC wilt intrekken, maar sommige daarvan zijn in {token}, dan moet u {token} zelf wijzigen, bijvoorbeeld via Binance exchange.",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
