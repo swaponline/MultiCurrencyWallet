@@ -12,8 +12,8 @@ describe('Start e2e wallet tests', () => {
     try {
       await importWallet(page, arrOfWords)
 
-      await timeOut(2000)
-      takeScreenshot(page, 'walletPageAfterImport')
+      await timeOut(5000)
+      await takeScreenshot(page, 'walletPageAfterImport')
 
       await page.waitForSelector('#walletRowUpdateBalanceBtn')
       await page.waitForSelector('#walletRowCryptoBalance')
@@ -34,16 +34,16 @@ describe('Start e2e wallet tests', () => {
 
       // waiting for the balances to be updated
       await timeOut(300)
-      takeScreenshot(page, 'walletPageUpdatesBalances')
+      await takeScreenshot(page, 'walletPageUpdatesBalances')
       
       balances.forEach((strBalance) => {
         expect(Number(strBalance)).not.toBeNaN()
       })
 
-      takeScreenshot(page, 'walletPageInTheEnd')
+      await takeScreenshot(page, 'walletPageInTheEnd')
+      await browser.close()
     } catch (error) {
       console.error(error)
-    } finally {
       await browser.close()
     }
   })
