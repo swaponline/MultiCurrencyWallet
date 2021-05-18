@@ -5671,7 +5671,7 @@
   },
   {
     "id": "MM_FAQ_ItemContent7-1",
-    "message": "Możesz doładować tylko za pomocą Bitcoin, ale nieuchronnie w niektórych okresach saldo BTC może się zmniejszyć, a {token} może wzrosnąć i odwrotnie.",
+    "message": "Możesz doładować tylko za pomocą Bitcoin. Ale nieuchronnie w niektórych okresach saldo BTC może się zmniejszyć, a {token} może wzrosnąć i odwrotnie.",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]

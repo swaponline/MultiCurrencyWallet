@@ -5615,7 +5615,7 @@
   },
   {
     "id": "MM_FAQ_FundAccess",
-    "message": "- Las llaves de sus fondos están solo con usted, no tenemos acceso a sus fondos",
+    "message": "- Las claves de sus fondos están solo con usted, no tenemos acceso a sus fondos",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
@@ -5657,7 +5657,7 @@
   },
   {
     "id": "MM_FAQ_ItemContent6",
-    "message": "Cuéntanos sobre la posibilidad de swap en las comunidades en las que eres miembro.",
+    "message": "Informe a las comunidades de las que es miembro sobre la posibilidad de intercambio.",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
@@ -5699,7 +5699,7 @@
   },
   {
     "id": "MM_FAQ_ItemContent8",
-    "message": "Nuestros clientes aman y apoyan la descentralización. Exchange funciona a través de contratos inteligentes y no podremos congelar los fondos del cliente durante más de 3 horas.",
+    "message": "Nuestros clientes aman y apoyan la descentralización. Nuestro intercambio funciona a través de contratos inteligentes y no podremos congelar los fondos del cliente por más de 3 horas.",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
