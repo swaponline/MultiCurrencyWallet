@@ -2,14 +2,14 @@ import testWallets from '../testWallets'
 import { createBrowser, importWallet, takeScreenshot, timeOut } from './utils'
 
 describe('Wallet page testing', () => {
-  
-  // TODO: test name
-  it('should ', async () => {
+
+  it('the balances must be displayed and updated correctly', async () => {
     const { browser, page } = await createBrowser()
     const arrOfWords = testWallets.eth.seedPhrase.split(' ')
 
     try {
       await importWallet(page, arrOfWords)
+
       await page.waitForSelector('#walletRowUpdateBalanceBtn')
       await page.waitForSelector('#walletRowCryptoBalance')
 
@@ -34,7 +34,7 @@ describe('Wallet page testing', () => {
       })
     } catch (error) {
       await browser.close()
-      console.error('Import wallets: ', error)
+      console.error(error)
       expect(false).toBe(true)
     }
   })
