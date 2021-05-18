@@ -1,7 +1,7 @@
 import testWallets from '../testWallets'
 import { createBrowser, importWallet, takeScreenshot, timeOut, selectSendCurrency } from './utils'
 
-jest.setTimeout(100_000) // ms
+jest.setTimeout(150_000) // ms
 
 describe('Start e2e withdraw form tests', () => {
   const checkSelectedCurrency = async (params) => {
@@ -40,6 +40,7 @@ describe('Start e2e withdraw form tests', () => {
       await checkSelectedCurrency({ page, ticker: 'btcb' })
     } catch (error) {
       console.error(error)
+      expect(false).toBe(true)
     } finally {
       await browser.close()
     }

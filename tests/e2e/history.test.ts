@@ -1,7 +1,7 @@
 import testWallets from '../testWallets'
-import { createBrowser, importWallet, takeScreenshot, timeOut, selectSendCurrency } from './utils'
+import { createBrowser, importWallet, takeScreenshot, timeOut } from './utils'
 
-jest.setTimeout(30_000) // ms
+jest.setTimeout(100_000) // ms
 
 describe('Start e2e history tests', () => {
 
@@ -11,8 +11,18 @@ describe('Start e2e history tests', () => {
 
     try {
       await importWallet(page, arrOfWords)
+      await timeOut(10_000)
+      
+      await page.goto(`${page.url()}history`)
+      await timeOut(5_000)
+      await takeScreenshot(page, 'history')
+
+      const txAmountInfo = await page.$eval('#historyRowAmountInfo', (el) => el.textContent)
+
+      expect(txAmountInfo).toMatch(/^(\-|\+) (0\.)?[\d]+ [A-Z]{3,}( [A-Z]{3}[\d]{1,3})?$/)
     } catch (error) {
       console.error(error)
+      expect(false).toBe(true)
     } finally {
       await browser.close()
     }

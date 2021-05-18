@@ -41,6 +41,7 @@ describe('Start e2e wallet tests', () => {
       })
     } catch (error) {
       console.error(error)
+      expect(false).toBe(true)
     } finally {
       await browser.close()
     }
