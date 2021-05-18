@@ -3,19 +3,17 @@ import { createBrowser, importWallet, takeScreenshot, timeOut } from './utils'
 
 jest.setTimeout(100_000) // ms
 
-describe('Start e2e Wallet page tests', () => {
+describe('Start e2e wallet tests', () => {
 
-  it('the balances must be displayed and updated correctly', async () => {
+  it('the balances should be displayed and updated correctly', async () => {
     const { browser, page } = await createBrowser()
     const arrOfWords = testWallets.eth.seedPhrase.split(' ')
-
-    expect(browser).toBeDefined()
-    expect(page).toBeDefined()
 
     try {
       await importWallet(page, arrOfWords)
 
-      takeScreenshot(page, 'wallet')
+      await timeOut(2000)
+      takeScreenshot(page, 'walletPageAfterImport')
 
       await page.waitForSelector('#walletRowUpdateBalanceBtn')
       await page.waitForSelector('#walletRowCryptoBalance')
@@ -34,17 +32,19 @@ describe('Start e2e Wallet page tests', () => {
       
       balanceUpdateBtns.forEach((btn) => btn.click())
 
+      // waiting for the balances to be updated
       await timeOut(300)
-
+      takeScreenshot(page, 'walletPageUpdatesBalances')
+      
       balances.forEach((strBalance) => {
         expect(Number(strBalance)).not.toBeNaN()
       })
 
-      takeScreenshot(page, 'walletAfterAll')
+      takeScreenshot(page, 'walletPageInTheEnd')
     } catch (error) {
-      await browser.close()
       console.error(error)
-      expect(false).toBe(true)
+    } finally {
+      await browser.close()
     }
   })
 
