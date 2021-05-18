@@ -596,7 +596,35 @@
   },
   {
     "id": "enterToAddress",
-    "message": "Enter \"To address\"",
+    "message": "Enter Destination wallet",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "connectDestinationWallet",
+    "message": "Connect your Destination wallet",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "setDestination",
+    "message": "Set Destination",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "connectYourWallet",
+    "message": "Connect your wallet in \"From address\"",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "selectSendType",
+    "message": "Select type of \"From address\"",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
@@ -618,13 +646,6 @@
   {
     "id": "waitPeerAnswer",
     "message": "Wait peer answer",
-    "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
-    ]
-  },
-  {
-    "id": "tryExternalWallet",
-    "message": "Try select \"External wallet\" in \"From address\"",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]

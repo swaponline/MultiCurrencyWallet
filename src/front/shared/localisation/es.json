@@ -5429,7 +5429,35 @@
   },
   {
     "id": "enterToAddress",
-    "message": "Ingrese \"To address\"",
+    "message": "Ingrese la billetera de destino",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "connectDestinationWallet",
+    "message": "Conecte su billetera de Destino",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "setDestination",
+    "message": "Marcar el destino",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "connectYourWallet",
+    "message": "Conecte su billetera en \"From address\"",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "selectSendType",
+    "message": "Seleccione el tipo de\"From address\"",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
@@ -5451,13 +5479,6 @@
   {
     "id": "waitPeerAnswer",
     "message": "Espere la respuesta de sus compañeros",
-    "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
-    ]
-  },
-  {
-    "id": "tryExternalWallet",
-    "message": "Intente seleccionar \"Cartera externa\" en \"From address\"",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]

@@ -5429,7 +5429,35 @@
   },
   {
     "id": "enterToAddress",
-    "message": "Wpisz \"To address\"",
+    "message": "Wprowadź portfel docelowy",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "connectDestinationWallet",
+    "message": "Podłącz swój portfel docelowy",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "setDestination",
+    "message": "Ustaw cel",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "connectYourWallet",
+    "message": "Połącz swój portfel w \"From address\"",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "selectSendType",
+    "message": "Wybierz typ \"From address\"",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
@@ -5451,13 +5479,6 @@
   {
     "id": "waitPeerAnswer",
     "message": "Poczekaj na odpowiedź partnera",
-    "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
-    ]
-  },
-  {
-    "id": "tryExternalWallet",
-    "message": "Spróbuj wybrać \"Portfel zewnętrzny\" w \"From address\"",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]

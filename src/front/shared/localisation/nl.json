@@ -5425,7 +5425,35 @@
   },
   {
     "id": "enterToAddress",
-    "message": "Enter \"Naar address\"",
+    "message": "Voer de bestemmingsportefeuille in",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "connectDestinationWallet",
+    "message": "Verbind uw bestemmingsportefeuille",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "setDestination",
+    "message": "Bestemming instellen",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "connectYourWallet",
+    "message": "Verbind uw portemonnee in \"Van adres\"",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "selectSendType",
+    "message": "Selecteer het type \"Van adres\"",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
@@ -5447,13 +5475,6 @@
   {
     "id": "waitPeerAnswer",
     "message": "Wacht peer-antwoord",
-    "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
-    ]
-  },
-  {
-    "id": "tryExternalWallet",
-    "message": "Probeer \"Externe portefeuille\" te selecteren in \"Van adres\"",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]

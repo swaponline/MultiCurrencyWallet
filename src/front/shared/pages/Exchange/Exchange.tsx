@@ -1638,16 +1638,16 @@ class Exchange extends PureComponent<any, any> {
       if (!fromAddress) return <FormattedMessage id="selectFromAddress" defaultMessage='Select "From address"' />
       if (!isFromAddressReady) {
         if (fromAddress.type === AddressType.Internal && !fromAddress.value)
-          return <FormattedMessage id="@selectSendType" defaultMessage='Select type of "From address"' />
+          return <FormattedMessage id="selectSendType" defaultMessage='Select type of "From address"' />
         if (fromAddress.type === AddressType.Metamask && !fromAddress.value || !metamask.isConnected())
-          return <FormattedMessage id="@connectYourWallet" defaultMessage='Connect your wallet in "From address"' />
+          return <FormattedMessage id="connectYourWallet" defaultMessage='Connect your wallet in "From address"' />
       }
       if (!toAddress) return <FormattedMessage id="selectToAddress" defaultMessage='Select "To address"' />
       if (!isToAddressReady) {
         if (toAddress.type === AddressType.Internal && !toAddress.value)
-          return <FormattedMessage id="@selectDestination" defaultMessage='Set Destination' />
+          return <FormattedMessage id="setDestination" defaultMessage='Set Destination' />
         if (toAddress.type === AddressType.Metamask && !toAddress.value || !metamask.isConnected())
-          return <FormattedMessage id="@connectDestinationWallet" defaultMessage='Connect your Destination wallet' />
+          return <FormattedMessage id="connectDestinationWallet" defaultMessage='Connect your Destination wallet' />
         if (toAddress.type === AddressType.Internal && !toAddress.value)
           return <FormattedMessage id="enterToAddress" defaultMessage='Enter Destination wallet' />
       }

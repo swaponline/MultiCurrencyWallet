@@ -687,7 +687,35 @@
   },
   {
     "id": "enterToAddress",
-    "message": "Введите \"На адрес\"",
+    "message": "Введите целевой кошелек",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "connectDestinationWallet",
+    "message": "Подключите свой целевой кошелек",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "setDestination",
+    "message": "Выберите тип целевого кошелька",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "connectYourWallet",
+    "message": "Подключите кошелек в \"С адреса\"",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "selectSendType",
+    "message": "Выберите тип кошелька \"С адреса\"",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
@@ -709,13 +737,6 @@
   {
     "id": "waitPeerAnswer",
     "message": "Ожидается ответ участника обмена",
-    "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
-    ]
-  },
-  {
-    "id": "tryExternalWallet",
-    "message": "Попробуйте выбрать \"Внешний кошелек\" в \"С адреса\"",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
