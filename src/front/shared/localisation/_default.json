@@ -5625,14 +5625,14 @@
   },
   {
     "id": "MM_FAQ_ItemContent1",
-    "message": "The market maker earns on the difference in exchange rates when servicing the purchase and sale (spread)",
+    "message": "A market maker earns on the difference in exchange rates when servicing the purchase and sale (spread)",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
   },
   {
     "id": "MM_FAQ_HowMuchEarn",
-    "message": "We declare from 10% per year (APY), if the number of exchanges is not enough we will motivate users to do exchanges using bounties.",
+    "message": "We declare from 10% per year (APY). If the number of exchanges is not enough we will motivate users to do exchanges using bounties.",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
@@ -5695,14 +5695,14 @@
   },
   {
     "id": "MM_FAQ_ItemContent8",
-    "message": "Our clients love and support decentralization, our exchange works through smart contracts and we will not be able to freeze the client's funds for more than 3 hours.",
+    "message": "Our clients love and support decentralization. Exchange works through smart contracts and we will not be able to freeze the client's funds for more than 3 hours.",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
   },
   {
     "id": "MM_FAQ_ItemTitle1",
-    "message": "Why it works?",
+    "message": "Why does it work?",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
@@ -5808,7 +5808,7 @@
   },
   {
     "id": "MM_Promo_Title",
-    "message": "How to Earn Interest on Bitcoin",
+    "message": "Earn interest on Bitcoin",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx",
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
@@ -5816,7 +5816,7 @@
   },
   {
     "id": "MM_Promo_TitleBody",
-    "message": "On swap.io users exchange BTC for {token} (a token that costs like BTC, but works on {Ab_Title}), and vice versa. You get min. 10% APY (annual per year) as a commission from exchanges with low impermanent loss {link}.",
+    "message": "On swap.io users exchange BTC for {token} (a token that costs like BTC, but works on {Ab_Title}), and vice versa. You get min. 10% APY (annual percentage yield) as a commission from exchanges with low impermanent loss {link}.",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx",
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
@@ -6020,7 +6020,7 @@
   },
   {
     "id": "MM_InstallExtentionTitle",
-    "message": "Install Chrome Extension and Start Earn",
+    "message": "Install Chrome extension and start earning today",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
     ]

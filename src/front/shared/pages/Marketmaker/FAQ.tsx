@@ -36,7 +36,7 @@ class FAQ extends React.Component<{isDark: boolean}, {}> {
               <div>
                 <FormattedMessage
                   id="MM_FAQ_HowMuchEarn"
-                  defaultMessage="We declare from 10% per year (APY), if the number of exchanges is not enough we will motivate users to do exchanges using bounties."
+                  defaultMessage="We declare from 10% per year (APY). If the number of exchanges is not enough we will motivate users to do exchanges using bounties."
                 />
               </div>
             }
@@ -46,13 +46,13 @@ class FAQ extends React.Component<{isDark: boolean}, {}> {
             title={
               <FormattedMessage
                 id="MM_FAQ_ItemTitle1"
-                defaultMessage="Why it works?"
+                defaultMessage="Why does it work?"
               />
             }
             content={
               <FormattedMessage
                 id="MM_FAQ_ItemContent1"
-                defaultMessage="The market maker earns on the difference in exchange rates when servicing the purchase and sale (spread)"
+                defaultMessage="A market maker earns on the difference in exchange rates when servicing the purchase and sale (spread)"
               />
             }
             onExpand={() => { feedback.marketmaking.faqOpened('Why it works?') }}
@@ -165,7 +165,7 @@ class FAQ extends React.Component<{isDark: boolean}, {}> {
             content={
               <FormattedMessage
                 id="MM_FAQ_ItemContent8"
-                defaultMessage="Our clients love and support decentralization, our exchanger works through smart contracts and we will not be able to freeze the client's funds for more than 3 hours."
+                defaultMessage="Our clients love and support decentralization. Exchange works through smart contracts and we will not be able to freeze the client's funds for more than 3 hours."
               />
             }
             onExpand={() => { feedback.marketmaking.faqOpened('What is the minimum balance needed to get started?') }}
