@@ -24,12 +24,20 @@ const CurrencyIcon = (props: CurrencyIconProps) => {
   }
 
   if (source) {
-    return <img src={source} alt="icon" role="image" />
+    return (
+      <img
+        styleName="sizeLimit"
+        src={source}
+        alt="icon"
+        role="image"
+      />
+    )
   }
 
   if (config?.erc20[name.toLowerCase()]?.icon) {
     return (
       <img
+        styleName="sizeLimit"
         src={config.erc20[name.toLowerCase()].icon}
         alt={`${name} icon`}
         role="image"
@@ -42,6 +50,7 @@ const CurrencyIcon = (props: CurrencyIconProps) => {
   if (isIconExist) {
     return (
       <img
+        styleName="sizeLimit"
         className={className}
         src={icons[name]}
         alt={`${name} icon`}
@@ -52,10 +61,10 @@ const CurrencyIcon = (props: CurrencyIconProps) => {
 
   return (
     <span
-      role="letter"
-      styleName="text"
       className={className}
       style={style}
+      styleName="text"
+      role="letter"
     >
       {name.charAt(0).toUpperCase()}
     </span>
