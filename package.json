@@ -23,6 +23,7 @@
     "test:e2e_swap": "jest tests/e2e/swap.test.ts --detectOpenHandles",
     "test:e2e_wallet": "jest tests/e2e/wallet.test.ts --detectOpenHandles",
     "test:e2e_withdraw": "jest tests/e2e/withdraw.test.ts --detectOpenHandles",
+    "test:e2e_history": "jest tests/e2e/history.test.ts --detectOpenHandles",
     "test:e2e:actions": "ACTIONS=true jest tests/e2e/*.test.ts --detectOpenHandles",
     "eslint": "eslint --fix --cache ./shared --ext js",
     "prettier": "prettier --ignore-path .gitignore \"**/*.+(js|json|ts|tsx)\" --write",

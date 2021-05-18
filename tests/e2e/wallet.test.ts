@@ -1,7 +1,7 @@
 import testWallets from '../testWallets'
 import { createBrowser, importWallet, takeScreenshot, timeOut } from './utils'
 
-jest.setTimeout(100_000) // ms
+jest.setTimeout(60_000) // ms
 
 describe('Start e2e wallet tests', () => {
 
@@ -39,11 +39,9 @@ describe('Start e2e wallet tests', () => {
       balances.forEach((strBalance) => {
         expect(Number(strBalance)).not.toBeNaN()
       })
-
-      await takeScreenshot(page, 'walletPageInTheEnd')
-      await browser.close()
     } catch (error) {
       console.error(error)
+    } finally {
       await browser.close()
     }
   })
