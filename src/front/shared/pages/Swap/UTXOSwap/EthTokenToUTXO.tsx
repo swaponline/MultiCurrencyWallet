@@ -180,49 +180,40 @@ export default class EthTokenToUTXO extends Component<any, any> {
             <SwapController swap={swap} />
             <SwapList
               enoughBalance={enoughBalance}
+              currencyData={currencyData}
+              tokenItems={tokenItems}
               flow={flow}
               swap={swap}
               onClickCancelSwap={onClickCancelSwap}
               fields={this._fields}
               swapName="EthTokenToBtcLike"
             />
-            {!enoughBalance && flow.step === 4
+            {!continueSwap
               ? (
-                <div styleName="swapDepositWindow">
-                  <DepositWindow currencyData={currencyData} swap={swap} flow={flow} tokenItems={tokenItems} fields={this._fields} />
-                </div>
-              )
-              : (
                 <Fragment>
-                  {!continueSwap
-                    ? (
-                      <Fragment>
-                        {
-                          !canCreateEthTransaction && (
-                            <FeeControler ethAddress={ethAddress} gasAmountNeeded={gasAmountNeeded} fields={this._fields} />
-                          )
-                        }
-                        {
-                          isFailedTransaction && (
-                            <FailControler ethAddress={ethAddress} message={isFailedTransactionError} fields={this._fields} />
-                          )
-                        }
-                      </Fragment>
+                  {
+                    !canCreateEthTransaction && (
+                      <FeeControler ethAddress={ethAddress} gasAmountNeeded={gasAmountNeeded} fields={this._fields} />
                     )
-                    : (
-                      <SwapProgress
-                        flow={flow}
-                        swap={swap}
-                        tokenItems={tokenItems}
-                        history={history}
-                        locale={locale}
-                        wallets={wallets}
-                        signed={signed}
-                        fields={this._fields}
-                      />
+                  }
+                  {
+                    isFailedTransaction && (
+                      <FailControler ethAddress={ethAddress} message={isFailedTransactionError} fields={this._fields} />
                     )
                   }
                 </Fragment>
+              )
+              : (
+                <SwapProgress
+                  flow={flow}
+                  swap={swap}
+                  tokenItems={tokenItems}
+                  history={history}
+                  locale={locale}
+                  wallets={wallets}
+                  signed={signed}
+                  fields={this._fields}
+                />
               )
             }
           </div>

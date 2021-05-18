@@ -161,6 +161,8 @@ export default class UTXOToEth extends Component<any, any> {
             <SwapController swap={swap} />
             <SwapList
               enoughBalance={enoughBalance}
+              currencyData={currencyData}
+              tokenItems={tokenItems}
               flow={flow}
               onClickCancelSwap={onClickCancelSwap}
               windowWidth={windowWidth}
@@ -170,29 +172,18 @@ export default class UTXOToEth extends Component<any, any> {
               swapName="BtcLikeToEth"
             />
             <div>
-              {!enoughBalance && flow.step === 3
-                ? (
-                  <div styleName="swapDepositWindow">
-                    <DepositWindow currencyData={currencyData} swap={swap} flow={flow} tokenItems={tokenItems} fields={this._fields} />
-                  </div>
-                )
+              {!continueSwap
+                ? <FeeControler ethAddress={ethAddress} />
                 : (
-                  <Fragment>
-                    {!continueSwap
-                      ? <FeeControler ethAddress={ethAddress} />
-                      : (
-                        <SwapProgress
-                          flow={flow}
-                          swap={swap}
-                          history={history}
-                          locale={locale}
-                          wallets={wallets}
-                          tokenItems={tokenItems}
-                          fields={this._fields}
-                        />
-                      )
-                    }
-                  </Fragment>
+                  <SwapProgress
+                    flow={flow}
+                    swap={swap}
+                    history={history}
+                    locale={locale}
+                    wallets={wallets}
+                    tokenItems={tokenItems}
+                    fields={this._fields}
+                  />
                 )
               }
             </div>

@@ -165,31 +165,16 @@ export default class UTXOToEthToken extends Component<any, any> {
             <SwapList
               flow={this.state.swap.flow.state}
               enoughBalance={enoughBalance}
+              currencyData={currencyData}
+              tokenItems={tokenItems}
               swap={this.props.swap}
               onClickCancelSwap={onClickCancelSwap}
               fields={this._fields}
               swapName="BtcLikeToEthToken"
             />
-            {!enoughBalance && flow.step === 3
-              ? (
-                <div styleName="swapDepositWindow">
-                  <DepositWindow
-                    currencyData={currencyData}
-                    swap={swap}
-                    flow={flow}
-                    tokenItems={tokenItems}
-                    fields={this._fields}
-                  />
-                </div>
-              )
-              : (
-                <Fragment>
-                  {!continueSwap
-                    ? ((!waitWithdrawOther) ? feeControllerView : swapProgressView)
-                    : swapProgressView
-                  }
-                </Fragment>
-              )
+            {!continueSwap
+              ? ((!waitWithdrawOther) ? feeControllerView : swapProgressView)
+              : swapProgressView
             }
           </div>
         </div>

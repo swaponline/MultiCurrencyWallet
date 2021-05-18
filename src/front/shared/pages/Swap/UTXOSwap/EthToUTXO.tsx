@@ -173,6 +173,8 @@ export default class EthToUTXO extends Component<any, any> {
             <SwapController swap={swap} />
             <SwapList
               enoughBalance={enoughBalance}
+              currencyData={currencyData}
+              tokenItems={tokenItems}
               flow={flow}
               name={swap.sellCurrency}
               windowWidth={windowWidth}
@@ -181,30 +183,19 @@ export default class EthToUTXO extends Component<any, any> {
               fields={this._fields}
               swapName="EthToBtcLike"
             />
-            {!enoughBalance && flow.step === 4
-              ? (
-                <div styleName="swapDepositWindow">
-                  <DepositWindow currencyData={currencyData} swap={swap} flow={flow} tokenItems={tokenItems} fields={this._fields} />
-                </div>
-              )
+            {!continueSwap
+              ? <FeeControler ethAddress={ethAddress} requestToFaucetSended={requestToFaucetSended} />
               : (
-                <Fragment>
-                  {!continueSwap
-                    ? <FeeControler ethAddress={ethAddress} requestToFaucetSended={requestToFaucetSended} />
-                    : (
-                      <SwapProgress
-                        flow={flow}
-                        swap={swap}
-                        history={history}
-                        signed={signed}
-                        locale={locale}
-                        wallets={wallets}
-                        tokenItems={tokenItems}
-                        fields={this._fields}
-                      />
-                    )
-                  }
-                </Fragment>
+                <SwapProgress
+                  flow={flow}
+                  swap={swap}
+                  history={history}
+                  signed={signed}
+                  locale={locale}
+                  wallets={wallets}
+                  tokenItems={tokenItems}
+                  fields={this._fields}
+                />
               )
             }
           </div>

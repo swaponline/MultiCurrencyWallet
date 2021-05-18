@@ -44,10 +44,6 @@
   }
 }
 
-.swapDepositWindow {
-  color: #000;
-}
-
 .reloadText {
   text-align: center;
   color: #acacac;
@@ -340,9 +336,6 @@
   .swapContainerInfo {
     width: 100%;
   }
-  .swapDepositWindow {
-    width: 100%;
-  }
   .linkAddress {
     font-size: 14px;
   }
@@ -350,11 +343,8 @@
 }
 
 @include media-tablet {
-  .swapDepositWindow {
-    order: 2;
-  }
   .swapContainerInfo {
-    order: 3;
+    order: 2;
   }
   .swapInfo {
     text-align: center;
@@ -380,11 +370,8 @@
   .swapInfo {
     order: 1;
   }
-  .swapDepositWindow {
-    order: 2;
-  }
   .swapContainerInfo {
-    order: 3;
+    order: 2;
   }
   .transaction {
     font-size: 8.5px;
@@ -398,9 +385,6 @@
     a {
       font-size: 11px;
     }
-  }
-  .swapDepositWindow {
-    width: 100%;
   }
   .topUpLink {
     padding: 15px 20px;
