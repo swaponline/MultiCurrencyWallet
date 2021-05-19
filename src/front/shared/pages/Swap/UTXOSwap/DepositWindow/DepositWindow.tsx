@@ -311,10 +311,10 @@ export default class DepositWindow extends Component<any, any> {
                   />
                 )}
             </div>
-            <div styleName="qrImg">
+          </div>
+          <div styleName="qrImg">
               <QR address={`${address}?amount=${remainingBalance}`} />
             </div>
-          </div>
           <CopyToClipboard text={address}>
             <div>
               <a styleName="linkText">

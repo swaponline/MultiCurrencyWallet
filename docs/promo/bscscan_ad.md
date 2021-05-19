@@ -24,3 +24,7 @@ bsc.swap.io - Provide liquidity in cross-chain DEX. Become a marketmaker.
 bsc.swap.io - Earn interest on Bitcoin by providing liquidity in BTC<>BSC crosschain bridge. Read more.
 bsc.swap.io - Chrome extention to earn interest on bitcoin. Install now.
 ```
+утвержденная строчка
+```
+Earn interest on Bitcoin by providing liquidity in BTC<>BSC cross-chain bridge. Read more at bsc.swap.io
+```

@@ -10,6 +10,7 @@ import DepositWindow from './DepositWindow/DepositWindow'
 import SwapProgress from './SwapProgress/SwapProgress'
 import SwapList from './SwapList/SwapList'
 import FeeControler from '../FeeControler/FeeControler'
+import SwapController from '../SwapController'
 
 
 @CSSModules(styles)
@@ -128,7 +129,6 @@ export default class UTXOToEthToken extends Component<any, any> {
     const swapProgressView = (
       <SwapProgress
         flow={flow}
-        name="BtcLikeToEthToken"
         swap={this.props.swap}
         history={history}
         locale={locale}
@@ -161,37 +161,24 @@ export default class UTXOToEthToken extends Component<any, any> {
                 )
               }
             </div>
-            {!enoughBalance && flow.step === 3
-              ? (
-                <div styleName="swapDepositWindow">
-                  <DepositWindow
-                    currencyData={currencyData}
-                    swap={swap}
-                    flow={flow}
-                    tokenItems={tokenItems}
-                    fields={this._fields}
-                  />
-                </div>
-              )
-              : (
-                <Fragment>
-                  {!continueSwap
-                    ? ((!waitWithdrawOther) ? feeControllerView : swapProgressView)
-                    : swapProgressView
-                  }
-                </Fragment>
-              )
+            <SwapController swap={swap} />
+            <SwapList
+              flow={this.state.swap.flow.state}
+              enoughBalance={enoughBalance}
+              currencyData={currencyData}
+              tokenItems={tokenItems}
+              swap={this.props.swap}
+              onClickCancelSwap={onClickCancelSwap}
+              fields={this._fields}
+              swapName="BtcLikeToEthToken"
+            />
+            {!continueSwap
+              ? ((!waitWithdrawOther) ? feeControllerView : swapProgressView)
+              : swapProgressView
             }
           </div>
-          <SwapList
-            flow={this.state.swap.flow.state}
-            enoughBalance={enoughBalance}
-            swap={this.props.swap}
-            onClickCancelSwap={onClickCancelSwap}
-            fields={this._fields}
-          />
         </div>
-        <div styleName="swapContainerInfo">{children}</div>
+        {children && <div styleName="swapContainerInfo">{children}</div>}
       </div>
     )
   }

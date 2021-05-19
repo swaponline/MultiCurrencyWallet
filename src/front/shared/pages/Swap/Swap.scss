@@ -3,8 +3,24 @@
 }
 
 .dark {
-  code{
-    color: white;
+  code,
+  .swapContainer,
+  .swapInfo {
+    color: $d-color;
+  }
+  .topUpLink,
+  .linkAddress,
+  .qr > button {
+    box-shadow: $d-box-shadow;
+    background: $d-background-elements;
+    color: $d-color;
+  }
+  .linkAddress:hover,
+  .qr > button:hover {
+    background: $indicating-color;
+  }
+  .qrImg  {
+    margin: 1rem 0
   }
 }
 
@@ -13,22 +29,17 @@
 }
 
 .swapContainer {
-  color: #000;
+  color: $l-color;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   position: relative;
   flex-wrap: wrap;
-  padding-bottom: 35px;
 }
 
 @media all and (max-width: 570px) {
   .swapContainer {
     display: block;
   }
-}
-
-.swapDepositWindow {
-  color: #000;
 }
 
 .reloadText {
@@ -43,7 +54,7 @@
   width: 600px;
   align-items: center;
   justify-content: space-around;
-  margin-top: 2em;
+  margin-bottom: 1.25em;
 }
 
 .linkText {
@@ -75,17 +86,16 @@
 
 .swapInfo {
   max-width: 600px;
-  margin-bottom: 1em;
+  margin-bottom: 1.25em;
   text-align: center;
   font-size: 18px;
 }
 
 .onlineIndicator {
-  position: absolute;
   font-size: 15px;
   width: 100%;
-  margin-top: 25px;
   text-align: center;
+  margin-bottom: 1.25rem;
 }
 
 .online {
@@ -108,17 +118,17 @@
 }
 
 .topUpLink {
-  border: 1px solid #cecece;
+  border: 1px solid $color-border;
+  box-shadow: $l-box-shadow;
   font-size: 18px;
   margin-top: 0px;
   position: relative;
-  padding: 30px 25px;
-  padding-left: 35px;
+  margin-bottom: 1.25rem;
+  padding: 30px 25px 75px 35px;
   border-radius: 20px;
   display: inline-block;
   text-align: left;
-  padding-bottom: 75px;
-  background: white;
+  background: $l-background-elements;
   max-width: 600px;
 }
 
@@ -246,8 +256,10 @@
     display: flex;
     width: 56px;
     justify-content: center;
-    background: #eee;
-    color: #000;
+    border: 1px solid $color-border;
+    box-shadow: $l-box-shadow;
+    background: $l-background-elements;
+    color: $l-color;
     align-items: center;
     flex-direction: column;
     &:hover {
@@ -281,12 +293,13 @@
   display: flex;
   color: #fff;
   display: flex;
-  background: #fff;
+  border: 1px solid $color-border;
+  box-shadow: $l-box-shadow;
+  background: $l-background-elements;
   padding: 10px 15px;
-  box-shadow: 1px 1px 6px #929292;
-  color: #000;
+  color: $l-color;
   &:hover {
-    color: #000;
+    color: $l-color;
     background: #eee;
   }
 }
@@ -320,9 +333,6 @@
   .swapContainerInfo {
     width: 100%;
   }
-  .swapDepositWindow {
-    width: 100%;
-  }
   .linkAddress {
     font-size: 14px;
   }
@@ -330,11 +340,8 @@
 }
 
 @include media-tablet {
-  .swapDepositWindow {
-    order: 2;
-  }
   .swapContainerInfo {
-    order: 3;
+    order: 2;
   }
   .swapInfo {
     text-align: center;
@@ -360,11 +367,8 @@
   .swapInfo {
     order: 1;
   }
-  .swapDepositWindow {
-    order: 2;
-  }
   .swapContainerInfo {
-    order: 3;
+    order: 2;
   }
   .transaction {
     font-size: 8.5px;
@@ -378,9 +382,6 @@
     a {
       font-size: 11px;
     }
-  }
-  .swapDepositWindow {
-    width: 100%;
   }
   .topUpLink {
     padding: 15px 20px;
@@ -399,12 +400,6 @@
   .linkText {
     font-size: 11px;
     margin-top: 20px;
-  }
-  .qrImg {
-    position: absolute;
-    right: 10px;
-    top: 0px;
-    width: 200px;
   }
 
   .qrImg > div {

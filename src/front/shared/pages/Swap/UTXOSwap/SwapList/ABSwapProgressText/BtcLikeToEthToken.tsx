@@ -1,12 +1,7 @@
 import React, { Component } from 'react'
 
-import styles from '../SwapProgress.scss'
-import CSSModules from 'react-css-modules'
-
 import { FormattedMessage } from 'react-intl'
 
-
-@CSSModules(styles)
 export default class BtcLikeToEthToken extends Component<any, any> {
   BtcLikeToEthToken = (step, coinName, flow) => {
     if (!flow.isTakerMakerModel
@@ -29,7 +24,7 @@ export default class BtcLikeToEthToken extends Component<any, any> {
           return (
             <FormattedMessage
               id="BitcoinBuyText33_BtcLike_to_tokens"
-              defaultMessage="Creating {coinName} Script.{br}It can take a few minutes"
+              defaultMessage="Depositing {coinName}.{br}It can take a few minutes"
               values={{
                 br: <br />,
                 coinName,
@@ -40,10 +35,9 @@ export default class BtcLikeToEthToken extends Component<any, any> {
           return (
             <FormattedMessage
               id="BitcoinBuyText37_BtcLike_to_tokens"
-              defaultMessage="{buyCurrency} Owner received {coinName} Script and Secret Hash. Waiting when he creates {buyCurrency} Contract"
+              defaultMessage="Waiting for the transaction to be mined and the {buyCurrency} owner deposit his funds to the swap's contract"
               values={{
-                buyCurrency: `${this.props.swap.buyCurrency}`,
-                coinName,
+                buyCurrency: `${this.props.swap.buyCurrency}`
               }}
             />
           )

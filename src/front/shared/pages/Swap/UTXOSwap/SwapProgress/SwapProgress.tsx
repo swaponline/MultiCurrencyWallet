@@ -20,26 +20,9 @@ import { injectIntl, FormattedMessage } from 'react-intl'
 import Timer from '../../Timer/Timer'
 import { Button, TimerButton } from 'components/controls'
 
-import SwapController from '../../SwapController'
 import PleaseDontLeaveWrapper from './PleaseDontLeaveWrapper'
 
-import UTXOBtcLikeToEth from './UTXOSwapProgressText/BtcLikeToEth'
-import UTXOBtcLikeToEthToken from './UTXOSwapProgressText/BtcLikeToEthToken'
-import UTXOEthToBtcLike from './UTXOSwapProgressText/EthToBtcLike'
-import UTXOEthTokenToBtcLike from './UTXOSwapProgressText/EthTokenToBtcLike'
-
-import ABBtcLikeToEth from './ABSwapProgressText/BtcLikeToEth'
-import ABBtcLikeToEthToken from './ABSwapProgressText/BtcLikeToEthToken'
-import ABEthToBtcLike from './ABSwapProgressText/EthToBtcLike'
-import ABEthTokenToBtcLike from './ABSwapProgressText/EthTokenToBtcLike'
-
-
 import metamask from 'helpers/metamask'
-
-
-
-import * as animation from './images'
-import finishSvg from './images/finish.svg'
 
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
@@ -280,18 +263,6 @@ class SwapProgress extends Component<any, any> {
     this.handleBarProgress()
   }
 
-  // TODO add animation css, if the app will have error and try to on 10s step, will show the 9th of animathin
-
-  handleStepChangeImage = (step) => {
-    if (step < 10) {
-      return <img src={animation[`icon${step}`]} alt="step" />
-    }
-    if (step === 10) {
-      // eslint-disable-next-line
-      return <img src={animation['icon9']} alt="step" />
-    }
-  }
-
   handleFocusSecretInput = (event) => event.target.select();
 
   tryRefund = async () => {
@@ -337,6 +308,15 @@ class SwapProgress extends Component<any, any> {
       swap: {
         flow: {
           isTakerMakerModel,
+          isUTXOSide,
+          state :{
+            isEthContractFunded,
+            utxoScriptValues,
+            scriptBalance,
+            isFinished,
+            isRefunded,
+            isStoppedSwap
+          }
         },
       },
       signed,
@@ -346,11 +326,8 @@ class SwapProgress extends Component<any, any> {
       sellCurrency,
       enabledButton,
       refundError,
-      stepValue,
       isSecretCopied,
     } = this.state
-
-    const isUTXOSide = swap.flow.isUTXOSide
 
     const {
       //@ts-ignore: strictNullChecks
@@ -363,8 +340,6 @@ class SwapProgress extends Component<any, any> {
       withdrawTransactionHash,
     } = this._fields
 
-    const progress = Math.floor(90 * stepValue)
-    const finishIcon = <img src={finishSvg} alt="finishIcon" />
     //@ts-ignore: strictNullChecks
     const showWalletButton = (!this.swap.destinationBuyAddress)
       //@ts-ignore: strictNullChecks
@@ -378,54 +353,18 @@ class SwapProgress extends Component<any, any> {
       _refundTx = flow.refundTransactionHash.transactionHash || flow.refundTransactionHash
     }
 
-    const BtcLikeToEth = (isUTXOSide) ? UTXOBtcLikeToEth : ABBtcLikeToEth
-    const EthToBtcLike = (isUTXOSide) ? UTXOEthToBtcLike : ABEthToBtcLike
-    const BtcLikeToEthToken = (isUTXOSide) ? UTXOBtcLikeToEthToken : ABBtcLikeToEthToken
-    const EthTokenToBtcLike = (isUTXOSide) ? UTXOEthTokenToBtcLike : ABEthTokenToBtcLike
-    /** todo **/
-    const swapTexts = (
-      <Fragment>
-        {
-          this.props.name === 'BtcLikeToEth' &&
-            <BtcLikeToEth step={flow.step} flow={flow} swap={swap} coinName={currencyName} />
-        }
-        {
-          this.props.name === 'EthToBtcLike' &&
-            <EthToBtcLike step={flow.step} flow={flow} swap={swap} coinName={currencyName} />
-        }
-        {
-          this.props.name === 'BtcLikeToEthToken' &&
-            <BtcLikeToEthToken step={flow.step} flow={flow} swap={swap} coinName={currencyName} />
-        }
-        {
-          this.props.name === 'EthTokenToBtcLike' &&
-            <EthTokenToBtcLike step={flow.step} flow={flow} swap={swap} coinName={currencyName} />
-        }
-      </Fragment>
-    )
+    const canBeRefunded = utxoScriptValues && (isUTXOSide ? scriptBalance > 0 : isEthContractFunded)
+    const isDeletedSwap = isFinished || isRefunded || isStoppedSwap
 
     return (
-      <div styleName={`overlay ${isDark ? 'dark' : ''}`}>
+      <div styleName="overlay">
         <div styleName="container">
           <div styleName="stepContainer">
-            <SwapController swap={swap} />
-            <div styleName="progressContainer">
-              <div styleName={progress > 180 ? 'progress-pie-chart gt-50' : 'progress-pie-chart'}>
-                <div styleName="ppc-progress">
-                  <div styleName="ppc-progress-fill" style={{ transform: `rotate(${progress}deg)` }} />
-                </div>
-              </div>
-              <div styleName="step">
-                <div styleName="stepImg">
-                  {flow.isFinished ? finishIcon : this.handleStepChangeImage(flow.step)}
-                </div>
-              </div>
-            </div>
             <div styleName="stepInfo">
-
-              <span styleName="stepHeading">
-                {swapTexts}
-              </span>
+              {!isDeletedSwap && canBeRefunded && (
+                  <Timer lockTime={utxoScriptValues.lockTime * 1000} />
+                )
+              }
 
               {signed && flow.step < 4 && (
                 <div>
@@ -553,7 +492,7 @@ class SwapProgress extends Component<any, any> {
                   />
                 </strong>
               )}
-              {flow.step > 3 && !this.isSellCurrencyEthOrEthToken &&
+              {flow.step > 3 && !flow.isRefunded && !flow.isFinished  && !this.isSellCurrencyEthOrEthToken &&
                 <PleaseDontLeaveWrapper isBtcLike={flow.secret ? flow.secret : false} />
               }
             </div>
