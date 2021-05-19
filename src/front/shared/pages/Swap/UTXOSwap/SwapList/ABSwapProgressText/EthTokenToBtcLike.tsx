@@ -1,14 +1,9 @@
 import React, { Component } from 'react'
 
-import styles from '../SwapProgress.scss'
-import CSSModules from 'react-css-modules'
-
 import { FormattedMessage } from 'react-intl'
 
-
-@CSSModules(styles)
-export default class EthToBtcLike extends Component<any, any> {
-  EthToBtcLike = (step, coinName) => {
+export default class EthTokenToBtcLike extends Component<any, any> {
+  EthTokenToBtcLike = (step, coinName) => {
 
     switch (step) {
       case 1:
@@ -37,7 +32,7 @@ export default class EthToBtcLike extends Component<any, any> {
         return (
           <FormattedMessage
             id="EthTokensToBtc24_ethtoken_to_BtcLike"
-            defaultMessage="The {coinName} Script was created and charged. Check the information below"
+            defaultMessage="The {coinName} Script was created and charged."
             values={{
               coinName,
             }}
@@ -53,6 +48,7 @@ export default class EthToBtcLike extends Component<any, any> {
   }
 
   render() {
-    return this.EthToBtcLike(this.props.step, this.props.coinName)
+
+    return this.EthTokenToBtcLike(this.props.step, this.props.coinName)
   }
 }

@@ -1,12 +1,7 @@
 import React, { Component } from 'react'
 
-import styles from '../SwapProgress.scss'
-import CSSModules from 'react-css-modules'
-
 import { FormattedMessage } from 'react-intl'
 
-
-@CSSModules(styles)
 export default class BtcLikeToEthToken extends Component<any, any> {
   BtcLikeToEthToken = (step, coinName) => {
     switch (step) {
@@ -26,7 +21,7 @@ export default class BtcLikeToEthToken extends Component<any, any> {
         return (
           <FormattedMessage
             id="BitcoinBuyText33_BtcLike_to_tokens"
-            defaultMessage="Creating {coinName} Script.{br}It can take a few minutes"
+            defaultMessage="Depositing {coinName}.{br}It can take a few minutes"
             values={{
               br: <br />,
               coinName,
@@ -36,13 +31,12 @@ export default class BtcLikeToEthToken extends Component<any, any> {
       case 5:
         return (
           <FormattedMessage
-            id="BitcoinBuyText37_BtcLike_to_tokens"
-            defaultMessage="{buyCurrency} Owner received {coinName} Script and Secret Hash. Waiting when he creates {buyCurrency} Contract"
-            values={{
-              buyCurrency: `${this.props.swap.buyCurrency}`,
-              coinName,
-            }}
-          />
+              id="BitcoinBuyText37_BtcLike_to_tokens"
+              defaultMessage="Waiting for the transaction to be mined and the {buyCurrency} owner deposit his funds to the swap's contract"
+              values={{
+                buyCurrency: `${this.props.swap.buyCurrency}`
+              }}
+            />
         )
       case 6:
         return (
