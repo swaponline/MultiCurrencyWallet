@@ -135,9 +135,11 @@ export default class SwapList extends Component<any, any> {
 
     const showDepositWindow =
       (!enoughBalance) &&
-        (this.props.swapName === 'BtcLikeToEth' || this.props.swapName === 'BtcLikeToEthToken' && flow.step === 3)
-        ||
-        (this.props.swapName === 'EthToBtcLike' || this.props.swapName === 'EthTokenToBtcLike' && flow.step === 4)
+        (
+          (this.props.swapName === 'BtcLikeToEth' || this.props.swapName === 'BtcLikeToEthToken' && flow.step === 3)
+          ||
+          (this.props.swapName === 'EthToBtcLike' || this.props.swapName === 'EthTokenToBtcLike' && flow.step === 4)
+        )
 
     return (
       <div styleName={`${isMobile ? 'stepList isMobile' : 'stepList'} ${isDark ? 'dark' : ''}`}>

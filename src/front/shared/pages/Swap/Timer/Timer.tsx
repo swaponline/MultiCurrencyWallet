@@ -103,7 +103,6 @@ export default class Timer extends React.Component<TimerProps, TimerState> {
                 />
               </div>
             )}
-            <br />
             <div styleName="timer">
               {defaultMessage === false ? (
                 <span>{min}</span>

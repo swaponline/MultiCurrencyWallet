@@ -308,6 +308,15 @@ class SwapProgress extends Component<any, any> {
       swap: {
         flow: {
           isTakerMakerModel,
+          isUTXOSide,
+          state :{
+            isEthContractFunded,
+            utxoScriptValues,
+            scriptBalance,
+            isFinished,
+            isRefunded,
+            isStoppedSwap
+          }
         },
       },
       signed,
@@ -344,11 +353,18 @@ class SwapProgress extends Component<any, any> {
       _refundTx = flow.refundTransactionHash.transactionHash || flow.refundTransactionHash
     }
 
+    const canBeRefunded = utxoScriptValues && (isUTXOSide ? scriptBalance > 0 : isEthContractFunded)
+    const isDeletedSwap = isFinished || isRefunded || isStoppedSwap
+
     return (
       <div styleName="overlay">
         <div styleName="container">
           <div styleName="stepContainer">
             <div styleName="stepInfo">
+              {!isDeletedSwap && canBeRefunded && (
+                  <Timer lockTime={utxoScriptValues.lockTime * 1000} />
+                )
+              }
 
               {signed && flow.step < 4 && (
                 <div>

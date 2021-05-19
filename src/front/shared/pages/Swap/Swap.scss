@@ -3,9 +3,8 @@
 }
 
 .dark {
-  code{
-    color: $d-color;
-  }
+  code,
+  .swapContainer,
   .swapInfo {
     color: $d-color;
   }
@@ -30,7 +29,7 @@
 }
 
 .swapContainer {
-  color: #000;
+  color: $l-color;
   display: flex;
   justify-content: center;
   position: relative;
