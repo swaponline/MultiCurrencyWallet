@@ -7,7 +7,7 @@ describe('Start e2e withdraw form tests', () => {
   const checkSelectedCurrency = async (params) => {
     const { page, ticker } = params
     // a suitable example: 0.005166 ETH ($18.23)
-    const feeRegExp = /(0\.)?[\d]+ [A-Z]{3,} \(.{1}[\d(\.)?\d]+\)/
+    const feeRegExp = /(0\.)?[\d]+ [A-Z]{3,}( \(.{1}[\d(\.)?\d]+\))?/
 
     await selectSendCurrency({ page, ticker })
 
@@ -20,12 +20,16 @@ describe('Start e2e withdraw form tests', () => {
     const totalFee = await page.$eval('#feeInfoBlockTotalFee', (el) => el.textContent)
 
     expect(minerFee).toBeTruthy()
-    expect(adminFee).toBeTruthy()
     expect(totalFee).toBeTruthy()
 
     // expect(minerFee).toMatch(feeRegExp)
-    // expect(adminFee).toMatch(feeRegExp)
     // expect(totalFee).toMatch(feeRegExp)
+
+    const minerAmount = parseFloat(minerFee)
+    const adminAmount = parseFloat(adminFee) || 0 // if admin fee was disabled
+    const totalAmount = parseFloat(totalFee)
+
+    expect(minerAmount + adminAmount).toBeCloseTo(totalAmount)
   }
 
   it('the form should displayed correctly with all currencies. Correct display of commissions', async () => {
