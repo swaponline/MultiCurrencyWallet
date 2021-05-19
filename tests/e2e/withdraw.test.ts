@@ -7,29 +7,27 @@ describe('Start e2e withdraw form tests', () => {
   const checkSelectedCurrency = async (params) => {
     const { page, ticker } = params
     // a suitable example: 0.005166 ETH ($18.23)
-    const feeRegExp = /(0\.)?[\d]+ [A-Z]{3,}( \(.{1}[\d(\.)?\d]+\))?/
+    const feeRegExp = /[\d(\.)?\d]+ [A-Z]{3,} \(.{1}[\d(\.)?\d]+\)/
 
     await selectSendCurrency({ page, ticker })
 
     await page.waitForSelector('#feeInfoBlockMinerFee')
-    await page.waitForSelector('#feeInfoBlockAdminFee')
     await page.waitForSelector('#feeInfoBlockTotalFee')
 
     const minerFee = await page.$eval('#feeInfoBlockMinerFee', (el) => el.textContent)
-    const adminFee = await page.$eval('#feeInfoBlockAdminFee', (el) => el.textContent)
     const totalFee = await page.$eval('#feeInfoBlockTotalFee', (el) => el.textContent)
 
     expect(minerFee).toBeTruthy()
     expect(totalFee).toBeTruthy()
 
+    // TODO: throw an error, but pattern works. Need to fix it
     // expect(minerFee).toMatch(feeRegExp)
     // expect(totalFee).toMatch(feeRegExp)
 
     const minerAmount = parseFloat(minerFee)
-    const adminAmount = parseFloat(adminFee) || 0 // if admin fee was disabled
     const totalAmount = parseFloat(totalFee)
 
-    expect(minerAmount + adminAmount).toBeCloseTo(totalAmount)
+    expect(minerAmount).toBeCloseTo(totalAmount)
   }
 
   it('the form should displayed correctly with all currencies. Correct display of commissions', async () => {
