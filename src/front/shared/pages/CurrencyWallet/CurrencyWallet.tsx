@@ -41,9 +41,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
     user: {
       activeFiat,
       activeCurrency,
-      isFetching,
       isBalanceFetching,
-      multisigStatus,
       multisigPendingCount,
     },
   }) => ({
@@ -52,10 +50,8 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
     hiddenCoinsList: core.hiddenCoinsList,
     txHistory: transactions,
     swapHistory,
-    isFetching,
     activeCurrency,
     isBalanceFetching,
-    multisigStatus,
     multisigPendingCount,
   })
 )
@@ -200,8 +196,6 @@ class CurrencyWallet extends Component<any, any> {
       actions.core.getSwapHistory()
     }
 
-    const { Withdraw, WithdrawMultisigSMS, WithdrawMultisigUser } = constants.modals
-
     const targetCurrency = getCurrencyKey(currency.toLowerCase(), true)
     const isToken = erc20Like.isToken({ name: currency })
 
@@ -209,12 +203,7 @@ class CurrencyWallet extends Component<any, any> {
     const receiveUrl = (isToken ? '/token' : '') + `/${targetCurrency}/${address}/receive`
 
     if (this.props.history.location.pathname.toLowerCase() === withdrawUrl.toLowerCase() && balance !== 0) {
-      let modalType = Withdraw
-      // if (itemCurrency.isSmsProtected) modalType = WithdrawMultisigSMS
-      // if (itemCurrency.isUserProtected) modalType = WithdrawMultisigUser
-
-      //@ts-ignore: strictNullChecks
-      actions.modals.open(modalType, {
+      actions.modals.open(constants.modals.Withdraw, {
         currency,
         address,
         balance,
@@ -226,8 +215,8 @@ class CurrencyWallet extends Component<any, any> {
         actions.user.pullActiveCurrency(currency.toLowerCase())
       }
     }
+
     if (this.props.history.location.pathname.toLowerCase() === receiveUrl.toLowerCase()) {
-      //@ts-ignore: strictNullChecks
       actions.modals.open(constants.modals.ReceiveModal, {
         currency,
         address,
@@ -237,15 +226,12 @@ class CurrencyWallet extends Component<any, any> {
 
   componentDidUpdate(prevProps) {
     const { currency } = this.state
-
     const { activeFiat } = this.props
-    const { activeFiat: prevFiat } = prevProps
 
     let {
       match: {
         params: { address = null, fullName = null, ticker = null, action = null },
       },
-      hiddenCoinsList,
       activeCurrency
     } = this.props
 
@@ -287,15 +273,8 @@ class CurrencyWallet extends Component<any, any> {
 
       if (itemCurrency.length) {
         itemCurrency = itemCurrency[0]
-        //@ts-ignore
+
         const { currency, address, contractAddress, decimals, balance, infoAboutCurrency } = itemCurrency
-
-        const { Withdraw, WithdrawMultisigSMS, WithdrawMultisigUser } = constants.modals
-
-        let modalWithdraw = Withdraw
-        // if (itemCurrency.isSmsProtected) modalWithdraw = WithdrawMultisigSMS
-        // if (itemCurrency.isUserProtected) modalWithdraw = WithdrawMultisigUser
-
         const {
           txItems: oldTxItems,
         } = this.state
@@ -330,20 +309,16 @@ class CurrencyWallet extends Component<any, any> {
             const currentUrl = this.props.location.pathname.toLowerCase()
 
             if (currentUrl === withdrawUrl.toLowerCase()) {
-              //@ts-ignore: strictNullChecks
-              actions.modals.open(modalWithdraw, {
+              actions.modals.open(constants.modals.Withdraw, {
                 currency,
                 address,
                 balance,
                 infoAboutCurrency,
-                hiddenCoinsList,
                 itemCurrency,
-                //@ts-ignore
-                currencyRate: itemCurrency.currencyRate,
               })
             }
+
             if (currentUrl === receiveUrl.toLowerCase()) {
-              //@ts-ignore: strictNullChecks
               actions.modals.open(constants.modals.ReceiveModal, {
                 currency,
                 address,
@@ -361,19 +336,13 @@ class CurrencyWallet extends Component<any, any> {
 
   filterCurrencies = (params) => {
     const { items, ticker, walletAddress } = params
-    // MultiWallet - after Sweep - названию валюты доверять нельзя - нужно проверяться также адрес - и выбирать по адресу
+
     return items.filter((item) => {
-      if (erc20Like.isToken({ name: ticker })) {
-        if (
-          item.currency.toLowerCase() === ticker.toLowerCase() &&
-          item.address.toLowerCase() === walletAddress.toLowerCase()
-        ) {
-          return true
-        }
-      } else {
-        if (item.address.toLowerCase() === walletAddress.toLowerCase() && item.currency === ticker) {
-          return true
-        }
+      if (
+        item.currency.toLowerCase() === ticker.toLowerCase() &&
+        item.address.toLowerCase() === walletAddress.toLowerCase()
+      ) {
+        return true
       }
     })
   }
@@ -556,7 +525,6 @@ class CurrencyWallet extends Component<any, any> {
       hiddenCoinsList,
       isBalanceFetching,
       activeFiat,
-      multisigStatus,
       activeCurrency,
       multisigPendingCount,
     } = this.props
