@@ -133,24 +133,22 @@ export default class SwapList extends Component<any, any> {
       </Fragment>
     )
 
-    const depositWindow = (
+    const showDepositWindow =
       (!enoughBalance) &&
         (this.props.swapName === 'BtcLikeToEth' || this.props.swapName === 'BtcLikeToEthToken' && flow.step === 3)
         ||
         (this.props.swapName === 'EthToBtcLike' || this.props.swapName === 'EthTokenToBtcLike' && flow.step === 4)
-        &&
-        (
-          <div styleName="swapDepositWindow">
-            <DepositWindow currencyData={currencyData} swap={swap} flow={flow} tokenItems={tokenItems} fields={this._fields} />
-          </div>
-        )
-    )
 
     return (
       <div styleName={`${isMobile ? 'stepList isMobile' : 'stepList'} ${isDark ? 'dark' : ''}`}>
         {!isMobile && <FirstStep step={flow.step} first={first} second={second} fields={this._fields} text={swapTexts} />}
-        <SecondStep step={flow.step} swap={swap} second={second} windowWidth={windowWidth} fifth={fifth} fourth={fourth} sixth={sixth} fields={this._fields} text={swapTexts} />
-        {depositWindow}
+        <SecondStep step={flow.step} swap={swap} second={second} windowWidth={windowWidth} fifth={fifth} fourth={fourth} sixth={sixth} fields={this._fields} text={swapTexts} enoughBalance={enoughBalance} />
+        {
+          showDepositWindow &&
+            <div styleName="swapDepositWindow">
+              <DepositWindow currencyData={currencyData} swap={swap} flow={flow} tokenItems={tokenItems} fields={this._fields} />
+            </div>
+        }
         <ThirdStep step={flow.step} windowWidth={windowWidth} swap={swap} sixth={sixth} seventh={seventh} eighth={eighth} fields={this._fields} text={swapTexts} />
         {!isMobile && <FourthStep step={flow.step} swap={swap} seventh={seventh} eighth={eighth} fields={this._fields} text={swapTexts} />}
       </div>

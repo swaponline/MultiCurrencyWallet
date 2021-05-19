@@ -38,6 +38,7 @@ const SecondStep = (props) => {
       scriptCreatingTransactionHash,
     },
     text,
+    enoughBalance,
   } = props
 
   const [scriptHashIsConfirmed, setScriptHashIsConfirmed] = useState(false)
@@ -157,7 +158,7 @@ const SecondStep = (props) => {
           />
         </Tooltip >
       </div>
-      {stepItemActive && (
+      {(step === 4 && !enoughBalance) ? '' : stepItemActive && (
         <span styleName="stepHeading">
           {text}
         </span>
