@@ -5615,7 +5615,7 @@
   },
   {
     "id": "MM_FAQ_FundAccess",
-    "message": "- Las llaves de sus fondos están solo con usted, no tenemos acceso a sus fondos",
+    "message": "- Las claves de sus fondos están solo con usted, no tenemos acceso a sus fondos",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
@@ -5629,14 +5629,14 @@
   },
   {
     "id": "MM_FAQ_ItemContent1",
-    "message": "El creador de mercado gana en la diferencia en los tipos de cambio al servicio de la compra y venta (spread)",
+    "message": "Un creador de mercado gana en la diferencia en los tipos de cambio al servicio de la compra y venta (spread)",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
   },
   {
     "id": "MM_FAQ_HowMuchEarn",
-    "message": "Declaramos a partir del 10% anual (APY), si el número de intercambios no es suficiente motivaremos a los usuarios a realizar intercambios utilizando bounties.",
+    "message": "Declaramos a partir del 10% anual (APY). Si el número de intercambios no es suficiente motivaremos a los usuarios a realizar intercambios utilizando bounties.",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
@@ -5657,7 +5657,7 @@
   },
   {
     "id": "MM_FAQ_ItemContent6",
-    "message": "Cuéntanos sobre la posibilidad de swap en las comunidades en las que eres miembro.",
+    "message": "Informe a las comunidades de las que es miembro sobre la posibilidad de intercambio.",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
@@ -5699,14 +5699,14 @@
   },
   {
     "id": "MM_FAQ_ItemContent8",
-    "message": "Nuestros clientes aman y apoyan la descentralización, nuestro intercambiador funciona a través de contratos inteligentes y no podremos congelar los fondos del cliente por más de 3 horas.",
+    "message": "Nuestros clientes aman y apoyan la descentralización. Nuestro intercambio funciona a través de contratos inteligentes y no podremos congelar los fondos del cliente por más de 3 horas.",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
   },
   {
     "id": "MM_FAQ_ItemTitle1",
-    "message": "Por qué funciona?",
+    "message": "¿Por qué funciona?",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
@@ -5812,7 +5812,7 @@
   },
   {
     "id": "MM_Promo_Title",
-    "message": "¿Cómo ganar con mi depósito de BTC?",
+    "message": "Gana intereses en Bitcoin",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx",
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
@@ -5820,7 +5820,7 @@
   },
   {
     "id": "MM_Promo_TitleBody",
-    "message": "Los usuarios de nuestro intercambiador swap.io intercambian BTC por {token} (un token que cuesta como BTC, pero funciona en {Ab_Title}) y viceversa. Tienes a min. 10% APY (anual por año) como comisión de intercambios con baja impermanent loss {link}.",
+    "message": "Los usuarios de nuestro intercambiador swap.io intercambian BTC por {token} (un token que cuesta como BTC, pero funciona en {Ab_Title}) y viceversa. Tienes a min. 10% APY (porcentaje de rendimiento anual) como comisión de intercambios con baja impermanent loss {link}.",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx",
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
@@ -6028,7 +6028,7 @@
   },
   {
     "id": "MM_InstallExtentionTitle",
-    "message": "Instale la extensión de Chrome y comience a ganar",
+    "message": "Instale la extensión de Chrome y comience a ganar hoy",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
     ]

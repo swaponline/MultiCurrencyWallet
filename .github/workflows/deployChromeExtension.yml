@@ -27,8 +27,8 @@ jobs:
     - name: npm install, build extension
       run: |
         npm i
-        npm run build:chrome-extension-bsc-mainnet
-        cp ./build-chrome-extension/zipped-chrome-extension-bsc.zip ./zipped-chrome-extension-bsc.zip
+        npm run build:chrome-extension-eth-mainnet
+        cp ./build-chrome-extension/zipped-chrome-extension-eth.zip ./zipped-chrome-extension-eth.zip
         npm run build:chrome-extension-eth-testnet
         cp ./build-chrome-extension/zipped-chrome-extension-eth-testnet.zip ./zipped-chrome-extension-eth-testnet.zip
         ls
@@ -36,7 +36,7 @@ jobs:
       with:
         name: extensions
         path: |
-          ./zipped-chrome-extension-bsc.zip
+          ./zipped-chrome-extension-eth.zip
           ./zipped-chrome-extension-eth-testnet.zip
     - name: publish bsc extension to chrome web store
       if: contains(steps.changed-files.outputs.modified_files, 'manifest_.json')
@@ -45,7 +45,7 @@ jobs:
         refresh-token: ${{ secrets.CHROMEUPDATETOKEN }}
         client-id: ${{ secrets.CLIENTID }}
         client-secret: ${{ secrets.CLIENTSECRET }}
-        file-name: 'zipped-chrome-extension-bsc.zip'
+        file-name: 'zipped-chrome-extension-eth.zip'
         app-id: 'oldojieloelkkfeacfinhcngmbkepnlm'
         publish: false
     - name: publish ropsten extension to chrome web store

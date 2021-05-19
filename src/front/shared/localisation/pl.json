@@ -5636,7 +5636,7 @@
   },
   {
     "id": "MM_FAQ_HowMuchEarn",
-    "message": "Deklarujemy od 10% rocznie( APY), jeśli liczba wymian nie wystarczy, będziemy motywować użytkowników do wymiany za pomocą bounties.",
+    "message": "Deklarujemy od 10% rocznie (APY). Jeśli liczba wymian nie wystarczy, będziemy motywować użytkowników do wymiany za pomocą bounties.",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
@@ -5671,7 +5671,7 @@
   },
   {
     "id": "MM_FAQ_ItemContent7-1",
-    "message": "Możesz doładować tylko za pomocą Bitcoin, ale nieuchronnie w niektórych okresach saldo BTC może się zmniejszyć, a {token} może wzrosnąć i odwrotnie.",
+    "message": "Możesz doładować tylko za pomocą Bitcoin. Ale nieuchronnie w niektórych okresach saldo BTC może się zmniejszyć, a {token} może wzrosnąć i odwrotnie.",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
@@ -5699,7 +5699,7 @@
   },
   {
     "id": "MM_FAQ_ItemContent8",
-    "message": "Nasi klienci kochają i wspierają decentralizację, nasz wymiennik działa na podstawie inteligentnych kontraktów i nie będziemy w stanie zamrozić środków klienta na dłużej niż 3 godziny.",
+    "message": "Nasi klienci kochają i wspierają decentralizację. Wymiennik działa na podstawie inteligentnych kontraktów i nie będziemy w stanie zamrozić środków klienta na dłużej niż 3 godziny.",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
@@ -6028,7 +6028,7 @@
   },
   {
     "id": "MM_InstallExtentionTitle",
-    "message": "Zainstaluj rozszerzenie Chrome i zacznij zarabiać",
+    "message": "Zainstaluj rozszerzenie Chrome i zacznij zarabiać już dziś",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
     ]

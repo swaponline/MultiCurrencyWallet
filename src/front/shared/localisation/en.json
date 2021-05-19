@@ -5615,7 +5615,7 @@
   },
   {
     "id": "MM_FAQ_FundAccess",
-    "message": "- The keys to your funds are only with you, we do not have access to your funds",
+    "message": "- Keys to your funds are only with you, we do not have access to your funds",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
@@ -5629,14 +5629,14 @@
   },
   {
     "id": "MM_FAQ_ItemContent1",
-    "message": "The market maker earns on the difference in exchange rates when servicing the purchase and sale (spread)",
+    "message": "A market maker earns on the difference in exchange rates when servicing the purchase and sale (spread)",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
   },
   {
     "id": "MM_FAQ_HowMuchEarn",
-    "message": "We declare from 10% per year (APY), if the number of exchanges is not enough we will motivate users to do exchanges using bounties.",
+    "message": "We declare from 10% per year (APY). If the number of exchanges is not enough we will motivate users to do exchanges using bounties.",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
@@ -5657,7 +5657,7 @@
   },
   {
     "id": "MM_FAQ_ItemContent6",
-    "message": "Tell about the possibility of swap in the communities where you are a member.",
+    "message": "Tell the communities where you are a member about the possibility of swap.",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
@@ -5671,7 +5671,7 @@
   },
   {
     "id": "MM_FAQ_ItemContent7-1",
-    "message": "You can replenish only with Bitcoin, but inevitably, at some periods, your BTC balance may decrease, and {token} may increase, and vice versa.",
+    "message": "You can replenish only with Bitcoin. But inevitably, at some times, your BTC balance may decrease and {token} may increase, and vice versa.",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
@@ -5685,28 +5685,28 @@
   },
   {
     "id": "MM_FAQ_ItemContent7-3",
-    "message": "If you want to withdraw BTC, but some of them are in {token}, then you will have to change {token} yourself, for example, through the Binance exchange.",
+    "message": "If you want to withdraw BTC, but some of them are in {token}, then you will have to change {token} yourself, for example, through Binance exchange.",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
   },
   {
     "id": "MM_FAQ_ItemTitle8",
-    "message": "Why don't users exchange themselves through the Binance exchange?",
+    "message": "Why don't users exchange themselves through Binance exchange?",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
   },
   {
     "id": "MM_FAQ_ItemContent8",
-    "message": "Our clients love and support decentralization, exchange works through smart contracts and we will not be able to freeze the client's funds for more than 3 hours.",
+    "message": "Our clients love and support decentralization. Our exchange works through smart contracts and we will not be able to freeze the client's funds for more than 3 hours.",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
   },
   {
     "id": "MM_FAQ_ItemTitle1",
-    "message": "Why it works?",
+    "message": "Why does it work?",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
@@ -5734,7 +5734,7 @@
   },
   {
     "id": "MM_FAQ_ItemTitle5",
-    "message": "What is the minimum period of marketmaking?",
+    "message": "What is the minimum period of market making?",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
@@ -5812,7 +5812,7 @@
   },
   {
     "id": "MM_Promo_Title",
-    "message": "How to Earn Interest on Bitcoin",
+    "message": "Earn interest on Bitcoin",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx",
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
@@ -5820,7 +5820,7 @@
   },
   {
     "id": "MM_Promo_TitleBody",
-    "message": "On swap.io users exchange BTC for {token} (a token that costs like BTC, but works on {Ab_Title}), and vice versa. You get min. 10% APY (annual per year) as a commission from exchanges with low impermanent loss {link}.",
+    "message": "On swap.io users exchange BTC for {token} (a token that costs like BTC, but works on {Ab_Title}), and vice versa. You get min. 10% APY (annual percentage yield) as a commission from exchanges with low impermanent loss {link}.",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx",
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
@@ -6028,7 +6028,7 @@
   },
   {
     "id": "MM_InstallExtentionTitle",
-    "message": "Install Chrome Extension and Start Earn",
+    "message": "Install Chrome extension and start earning today",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
     ]
@@ -6056,7 +6056,7 @@
   },
   {
     "id": "MM_FAQ_ImpermanentLossContent",
-    "message": "At any given time, the sum of these balances will be greater than before. If you want to withdraw BTC, but some of them are in {token}, then you will have to change {token} yourself, for example, through the Binance exchange.",
+    "message": "At any given time, the sum of these balances will be greater than before. If you want to withdraw BTC, but some of them are in {token}, then you will have to change {token} yourself, for example, through Binance exchange.",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]

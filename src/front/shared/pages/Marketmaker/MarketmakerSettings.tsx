@@ -524,13 +524,13 @@ class MarketmakerSettings extends Component<any, any> {
           <h2>
             <FormattedMessage
               id="MM_Promo_Title"
-              defaultMessage="How to make money on atomic swaps?"
+              defaultMessage="Earn interest on Bitcoin"
             />
           </h2>
           <p>
             <FormattedMessage
               id="MM_Promo_TitleBody"
-              defaultMessage="On swap.io users exchange BTC for {token} (a token that costs like BTC, but works on {Ab_Title}), and vice versa. You get min. 10% APY (annual per year) as a commission from exchanges with low impermanent loss {link}."
+              defaultMessage="On swap.io users exchange BTC for {token} (a token that costs like BTC, but works on {Ab_Title}), and vice versa. You get min. 10% APY (annual percentage yield) as a commission from exchanges with low impermanent loss {link}."
               values={{
                 token: marketToken.toUpperCase(),
                 Ab_Title: (config.binance) ? `Binance Smart Chain` : `Ethereum`,
