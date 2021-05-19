@@ -9,7 +9,7 @@ const isDebug = false
 
 export const createBrowser = async (): Promise<{ browser: puppeteer.browser, page: puppeteer.Page}> => {
   const browser = await puppeteer.launch({
-    headless: isDebug,
+    headless: !isDebug,
     //slowMo: 100,
   })
 
