@@ -61,7 +61,7 @@ export const importWallet = async (page: puppeteer.Page, SEED: string[]) => {
 
 export const selectSendCurrency = async (page: puppeteer.Page, currency: string = 'btc') => {
   await page.click('#sendBtn')
-  await page.click('#currencyList')
+  await page.click('#withdrawCurrencyList')
   await page.click(`#${currency}Send`)
 }
 
