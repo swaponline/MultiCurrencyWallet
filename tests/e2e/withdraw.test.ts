@@ -1,17 +1,20 @@
 import testWallets from '../testWallets'
 import { createBrowser, importWallet, takeScreenshot, timeOut, selectSendCurrency } from './utils'
 
-jest.setTimeout(150_000) // ms
+jest.setTimeout(200_000) // ms
 
 describe('Start e2e withdraw form tests', () => {
   const checkSelectedCurrency = async (params) => {
     const { page, ticker } = params
+    // a suitable example: 0.005166 ETH ($18.23)
     const feeRegExp = /(0\.)?[\d]+ [A-Z]{3,} \(.{1}(0\.)?[\d]+\)/
 
     await selectSendCurrency(page, ticker)
     await takeScreenshot(page, `withdrawSelect${ticker.toUpperCase()}`)
 
-    console.log('params: ', params)
+    await page.waitForSelector('#feeInfoBlockMinerFee')
+    await page.waitForSelector('#feeInfoBlockAdminFee')
+    await page.waitForSelector('#feeInfoBlockTotalFee')
 
     const minerFee = await page.$eval('#feeInfoBlockMinerFee', (el) => el.textContent)
     const adminFee = await page.$eval('#feeInfoBlockAdminFee', (el) => el.textContent)
@@ -28,11 +31,7 @@ describe('Start e2e withdraw form tests', () => {
 
     try {
       await importWallet(page, arrOfWords)
-      // waiting for the miner commission loading
-
       await timeOut(5_000)
-
-      // await page.waitForSelector('#feeInfoBlockMinerFee', { timeout: 70_000 })
 
       await checkSelectedCurrency({ page, ticker: 'eth' })
       await checkSelectedCurrency({ page, ticker: 'bnb' })

@@ -19,6 +19,7 @@ describe('Start e2e history tests', () => {
 
       const txAmountInfo = await page.$eval('#historyRowAmountInfo', (el) => el.textContent)
 
+      // a suitable example: + 1.2 LTC BEP20
       expect(txAmountInfo).toMatch(/^(\-|\+) (0\.)?[\d]+ [A-Z]{3,}( [A-Z]{3}[\d]{1,3})?$/)
     } catch (error) {
       console.error(error)
