@@ -172,7 +172,7 @@ export default class Row extends React.PureComponent<any, any> {
     }
 
     return (
-      <Fragment>
+      <div id="historyRowAmountInfo">
         {direction === directionType ? (
             <div styleName="amount">
               {`+ ${parseFloat(Number(value).toFixed(5))}`} {type.toUpperCase()}
@@ -193,7 +193,7 @@ export default class Row extends React.PureComponent<any, any> {
             </div>
           )
         }
-      </Fragment>
+      </div>
     )
   }
 
