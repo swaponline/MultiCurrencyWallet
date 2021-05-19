@@ -7,7 +7,7 @@ describe('Start e2e withdraw form tests', () => {
   const checkSelectedCurrency = async (params) => {
     const { page, ticker } = params
     // a suitable example: 0.005166 ETH ($18.23)
-    const feeRegExp = /(0\.)?[\d]+ [A-Z]{3,} \(.{1}(0\.)?[\d]+\)/
+    const feeRegExp = /(0\.)?[\d]+ [A-Z]{3,}( \(.{1}[0-9(\.)?0-9]+)?/
 
     await selectSendCurrency(page, ticker)
 
@@ -32,10 +32,9 @@ describe('Start e2e withdraw form tests', () => {
       await importWallet(page, arrOfWords)
       await timeOut(5_000)
 
+      await checkSelectedCurrency({ page, ticker: 'btc' })
       await checkSelectedCurrency({ page, ticker: 'eth' })
       await checkSelectedCurrency({ page, ticker: 'bnb' })
-      await checkSelectedCurrency({ page, ticker: 'weenus' })
-      await checkSelectedCurrency({ page, ticker: 'btcb' })
     } catch (error) {
       console.error(error)
       expect(false).toBe(true)

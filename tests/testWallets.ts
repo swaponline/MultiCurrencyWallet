@@ -1,4 +1,9 @@
 export default {
+  btc: {
+    seedPhrase: 'glare bargain balcony load lady crowd pizza calm snack attitude fiber flavor',
+    address: 'mymS2AQDsLTVZfyYfdqkJ9Fx6tB3HvKinx',
+    privateKey: 'cScvAnWxUagxS4TMbnbsyZguenhYggNmFhpy7wtHwyRvAkViiVu1,'
+  },
   eth: {
     seedPhrase: 'glare bargain balcony load lady crowd pizza calm snack attitude fiber flavor',
     address: '0xa5c881C6942edAc164aFFD5194420c1CceDC77E9',
