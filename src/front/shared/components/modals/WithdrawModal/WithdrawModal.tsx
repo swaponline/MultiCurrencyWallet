@@ -53,8 +53,6 @@ type WithdrawModalProps = {
   data: IUniversalObj
   tokenItems: IUniversalObj[]
   items: IUniversalObj[]
-
-  portalUI?: any
 }
 
 type WithdrawModalState = {
@@ -795,7 +793,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
       },
     } = this.state
 
-    const { name, intl, portalUI, activeFiat, dashboardView } = this.props
+    const { name, intl, activeFiat, dashboardView } = this.props
     const linked = Link.all(this, 'address', 'amount', 'ownTx', 'fiatAmount', 'comment')
 
     const {
@@ -836,7 +834,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
 
 
     const labels = defineMessages({
-      withdrowModal: {
+      withdrawModal: {
         id: 'withdrowTitle271',
         defaultMessage: `Send`,
       },
@@ -1186,16 +1184,15 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
         )}
       </Fragment>
     )
-    return portalUI ? (
-      formRender
-    ) : (
+
+    return (
       //@ts-ignore: strictNullChecks
       <Modal
         name={name}
         onClose={this.handleClose}
-        title={`${intl.formatMessage(labels.withdrowModal)}${' '}${currency.toUpperCase()}`}
+        title={`${intl.formatMessage(labels.withdrawModal)}${' '}${currency.toUpperCase()}`}
       >
-        <div style={{ paddingBottom: '50px', paddingTop: '15px' }}>{formRender}</div>
+        {formRender}
       </Modal>
     )
   }

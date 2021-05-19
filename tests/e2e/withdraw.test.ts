@@ -1,15 +1,15 @@
 import testWallets from '../testWallets'
-import { createBrowser, importWallet, timeOut, selectSendCurrency } from './utils'
+import { createBrowser, importWallet, selectSendCurrency } from './utils'
 
 jest.setTimeout(200_000) // ms
 
 describe('Start e2e withdraw form tests', () => {
   const checkSelectedCurrency = async (params) => {
-    const { page, ticker } = params
+    const { page, ticker, address } = params
     // a suitable example: 0.005166 ETH ($18.23)
-    const feeRegExp = /.*/
+    const feeRegExp = /(0\.)?[\d]+ [A-Z]{3,} \(.{1}[\d(\.)\d]+\)/
 
-    await selectSendCurrency(page, ticker)
+    await selectSendCurrency({ page, ticker })
 
     await page.waitForSelector('#feeInfoBlockMinerFee')
     await page.waitForSelector('#feeInfoBlockAdminFee')

@@ -9,7 +9,7 @@ const isDebug = false
 
 export const createBrowser = async (): Promise<{ browser: puppeteer.browser, page: puppeteer.Page}> => {
   const browser = await puppeteer.launch({
-    headless: !isDebug,
+    headless: isDebug,
     //slowMo: 100,
   })
 
@@ -59,9 +59,15 @@ export const importWallet = async (page: puppeteer.Page, SEED: string[]) => {
   await page.click('#finishWalletRecoveryButton')
 }
 
-export const selectSendCurrency = async (page: puppeteer.Page, currency: string = 'btc') => {
+export const selectSendCurrency = async (params) => {
+  const { page, currency = 'btc', waitSelector = 30_000 } = params
+
+  await page.waitForSelector('#sendBtn', { timeout: waitSelector })
   await page.click('#sendBtn')
+
+  await page.waitForSelector('#withdrawCurrencyList', { timeout: waitSelector })
   await page.click('#withdrawCurrencyList')
+
   await page.click(`#${currency}Send`)
 }
 

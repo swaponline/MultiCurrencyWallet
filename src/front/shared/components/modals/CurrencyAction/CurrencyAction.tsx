@@ -12,6 +12,7 @@ import { localisedUrl } from 'helpers/locale'
 import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
 import icons from 'components/ui/CurrencyIcon/images'
 import config from 'app-config'
+import actions from 'shared/redux/actions'
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 

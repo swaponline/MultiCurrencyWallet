@@ -148,7 +148,6 @@ class WithdrawBtcMultisig extends React.Component<any, any> {
         invoice,
       },
       intl,
-      portalUI,
     } = this.props
 
     let txConfirmLink = `${getFullOrigin()}${links.multisign}/btc/confirm/${txId}`
@@ -157,7 +156,7 @@ class WithdrawBtcMultisig extends React.Component<any, any> {
     }
 
     const labels = defineMessages({
-      withdrowModal: {
+      withdrawModal: {
         id: 'withdrowTitle271',
         defaultMessage: `Send`,
       },
@@ -196,9 +195,9 @@ class WithdrawBtcMultisig extends React.Component<any, any> {
         }
       </Fragment>
     )
-    return (portalUI) ? formRender : (
+    return (
       //@ts-ignore: strictNullChecks
-      <Modal name={name} title={`${intl.formatMessage(labels.withdrowModal)}${' '}${currency.toUpperCase()}`}>
+      <Modal name={name} title={`${intl.formatMessage(labels.withdrawModal)}${' '}${currency.toUpperCase()}`}>
         {formRender}
       </Modal>
     )
