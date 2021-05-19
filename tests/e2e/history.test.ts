@@ -1,5 +1,5 @@
 import testWallets from '../testWallets'
-import { createBrowser, importWallet, takeScreenshot, timeOut } from './utils'
+import { createBrowser, importWallet, timeOut } from './utils'
 
 jest.setTimeout(100_000) // ms
 
@@ -15,7 +15,6 @@ describe('Start e2e history tests', () => {
       
       await page.goto(`${page.url()}history`)
       await timeOut(5_000)
-      await takeScreenshot(page, 'history')
 
       const txAmountInfo = await page.$eval('#historyRowAmountInfo', (el) => el.textContent)
 

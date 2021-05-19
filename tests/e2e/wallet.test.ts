@@ -1,5 +1,5 @@
 import testWallets from '../testWallets'
-import { createBrowser, importWallet, takeScreenshot, timeOut } from './utils'
+import { createBrowser, importWallet, timeOut } from './utils'
 
 jest.setTimeout(60_000) // ms
 
@@ -11,9 +11,7 @@ describe('Start e2e wallet tests', () => {
 
     try {
       await importWallet(page, arrOfWords)
-
       await timeOut(5000)
-      await takeScreenshot(page, 'walletPageAfterImport')
 
       await page.waitForSelector('#walletRowUpdateBalanceBtn')
       await page.waitForSelector('#walletRowCryptoBalance')
@@ -34,7 +32,6 @@ describe('Start e2e wallet tests', () => {
 
       // waiting for the balances to be updated
       await timeOut(300)
-      await takeScreenshot(page, 'walletPageUpdatesBalances')
       
       balances.forEach((strBalance) => {
         expect(Number(strBalance)).not.toBeNaN()
