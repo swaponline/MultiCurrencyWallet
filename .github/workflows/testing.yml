@@ -27,7 +27,7 @@ jobs:
         npm i
     - name: TEST
       run: |
-        npm run test
+        npm run test:unit
       env:
         CI: true
         super_secret: ${{ secrets.buildbot }}

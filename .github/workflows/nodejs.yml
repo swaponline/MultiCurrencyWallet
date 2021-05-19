@@ -10,7 +10,6 @@ jobs:
     strategy:
       matrix:
         node-version: [14.x]
-        testNames: [btc_send, evmnetworks_send]
 
     steps:
     - uses: actions/checkout@v1
@@ -29,7 +28,6 @@ jobs:
     - name: run e2e tests
       run: |
         npm run test:e2e:actions
-        npm run test:${{ matrix.testNames }}
     - name: bot test
       run: |
         npm run bot:test
