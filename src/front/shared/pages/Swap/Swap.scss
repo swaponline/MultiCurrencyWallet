@@ -35,7 +35,6 @@
   justify-content: center;
   position: relative;
   flex-wrap: wrap;
-  padding-bottom: 35px;
 }
 
 @media all and (max-width: 570px) {
@@ -56,7 +55,7 @@
   width: 600px;
   align-items: center;
   justify-content: space-around;
-  margin-top: 2em;
+  margin-bottom: 1.25em;
 }
 
 .linkText {
@@ -88,7 +87,7 @@
 
 .swapInfo {
   max-width: 600px;
-  margin-bottom: 1em;
+  margin-bottom: 1.25em;
   text-align: center;
   font-size: 18px;
 }
@@ -96,8 +95,8 @@
 .onlineIndicator {
   font-size: 15px;
   width: 100%;
-  margin-top: 25px;
   text-align: center;
+  margin-bottom: 1.25rem;
 }
 
 .online {
@@ -125,12 +124,11 @@
   font-size: 18px;
   margin-top: 0px;
   position: relative;
-  padding: 30px 25px;
-  padding-left: 35px;
+  margin-bottom: 1.25rem;
+  padding: 30px 25px 75px 35px;
   border-radius: 20px;
   display: inline-block;
   text-align: left;
-  padding-bottom: 75px;
   background: $l-background-elements;
   max-width: 600px;
 }

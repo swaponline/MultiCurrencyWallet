@@ -5,6 +5,7 @@
   align-items: center;
   justify-content: flex-end;
   flex-direction: row-reverse;
+  margin-bottom: 1.25rem;
 }
 
 .metamask_attention,
@@ -121,7 +122,7 @@
 
 .transaction {
   display: block;
-  margin-bottom: 16px;
+  margin-bottom: 1.25rem;
   a {
     font-size: 13px;
   }
@@ -143,7 +144,7 @@
 
 .timerRefund {
   color: #000;
-  margin-bottom: 24px;
+  margin-bottom: 1.25rem;
 
   span {
     display: block;
@@ -152,7 +153,7 @@
 
 .finishButtonsHolder {
   line-height: 56px;
-  margin: 16px 0;
+  margin-bottom: 1.25rem;
   text-align: center;
   vertical-align: middle;
 }
@@ -163,7 +164,6 @@
 }
 
 .dontLeave {
-  margin-bottom: 24px;
   color: #d66f6f;
   font-size: 15px;
 

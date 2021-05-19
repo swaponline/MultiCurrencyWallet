@@ -178,7 +178,7 @@ export default class UTXOToEthToken extends Component<any, any> {
             }
           </div>
         </div>
-        <div styleName="swapContainerInfo">{children}</div>
+        {children && <div styleName="swapContainerInfo">{children}</div>}
       </div>
     )
   }

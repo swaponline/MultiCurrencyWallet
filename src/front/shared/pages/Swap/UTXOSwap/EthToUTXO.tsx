@@ -199,7 +199,7 @@ export default class EthToUTXO extends Component<any, any> {
               )
             }
           </div>
-          <div styleName="swapContainerInfo">{children}</div>
+          {children && <div styleName="swapContainerInfo">{children}</div>}
         </div>
       </div>
     )
