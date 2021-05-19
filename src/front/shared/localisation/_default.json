@@ -4745,10 +4745,25 @@
     ]
   },
   {
-    "id": "WalletRow_MetamaskDisconnect",
+    "id": "MetamaskDisconnect",
     "message": "Disconnect wallet",
     "files": [
-      "src/front/shared/pages/Wallet/Row/Row.tsx"
+      "src/front/shared/pages/Wallet/Row/Row.tsx",
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_DisconnectExternalWallet",
+    "message": "Marketmakig works only with internal wallet. Please disconnnect external wallet",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_TurnOffMarketmaking",
+    "message": "Marketmaking disabled because of your external wallet is connected",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
   },
   {

@@ -650,7 +650,7 @@ class Row extends Component<RowProps, RowState> {
           id: 1123,
           title: (
             <FormattedMessage
-              id="WalletRow_MetamaskDisconnect"
+              id="MetamaskDisconnect"
               defaultMessage="Отключить кошелек"
             />
           ),

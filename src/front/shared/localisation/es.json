@@ -4593,10 +4593,25 @@
     ]
   },
   {
-    "id": "WalletRow_MetamaskDisconnect",
+    "id": "MetamaskDisconnect",
     "message": "Desconectar Billetera",
     "files": [
-      "src/front/shared/pages/Wallet/Row/Row.tsx"
+      "src/front/shared/pages/Wallet/Row/Row.tsx",
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_DisconnectExternalWallet",
+    "message": "Marketmakig solo funciona con billetera interna. Desconecte la billetera externa",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_TurnOffMarketmaking",
+    "message": "Marketmaking deshabilitado debido a que su billetera externa está conectada",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
   },
   {

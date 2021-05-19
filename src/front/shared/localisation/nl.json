@@ -4660,10 +4660,25 @@
     ]
   },
   {
-    "id": "WalletRow_MetamaskDisconnect",
+    "id": "MetamaskDisconnect",
     "message": "Koppel de portemonnee los",
     "files": [
-      "src/front/shared/pages/Wallet/Row/Row.tsx"
+      "src/front/shared/pages/Wallet/Row/Row.tsx",
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_DisconnectExternalWallet",
+    "message": "Marketmakig werkt alleen met een interne portemonnee. Koppel de externe portemonnee los",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_TurnOffMarketmaking",
+    "message": "Marketmaking uitgeschakeld omdat uw externe portemonnee is verbonden",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
   },
   {

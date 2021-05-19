@@ -4643,16 +4643,31 @@
   },
   {
     "id": "WalletRow_MetamaskConnect",
-    "message": "Connect",
+    "message": "Połączyć",
     "files": [
       "src/front/shared/pages/Wallet/Row/Row.tsx"
     ]
   },
   {
-    "id": "WalletRow_MetamaskDisconnect",
-    "message": "Disconnect wallet",
+    "id": "MetamaskDisconnect",
+    "message": "Odłącz portfel",
     "files": [
-      "src/front/shared/pages/Wallet/Row/Row.tsx"
+      "src/front/shared/pages/Wallet/Row/Row.tsx",
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_DisconnectExternalWallet",
+    "message": "Marketmakig działa tylko z portfelem wewnętrznym. Odłącz zewnętrzny portfel",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_TurnOffMarketmaking",
+    "message": "Tworzenie rynku zostało wyłączone, ponieważ Twój portfel zewnętrzny jest podłączony",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
   },
   {

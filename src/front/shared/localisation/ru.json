@@ -4770,10 +4770,25 @@
     ]
   },
   {
-    "id": "WalletRow_MetamaskDisconnect",
+    "id": "MetamaskDisconnect",
     "message": "Отключить кошелек",
     "files": [
-      "src/front/shared/pages/Wallet/Row/Row.tsx"
+      "src/front/shared/pages/Wallet/Row/Row.tsx",
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_DisconnectExternalWallet",
+    "message": "Маркетмакиг работает только с внутренним кошельком. Пожалуйста, отключите внешний кошелек",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_TurnOffMarketmaking",
+    "message": "Маркетмейкинг отключен, так как подключен внешний кошелек",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
   },
   {
