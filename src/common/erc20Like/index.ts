@@ -3,7 +3,7 @@ import config from 'app-config'
 import TokenApi from 'human-standard-token-abi'
 import { BigNumber } from 'bignumber.js'
 import DEFAULT_CURRENCY_PARAMETERS from 'common/helpers/constants/DEFAULT_CURRENCY_PARAMETERS'
-import TOKEN_STANDARDS from 'common/helpers/constants/TOKEN_STANDARDS'
+import TOKEN_STANDARDS from 'helpers/constants/TOKEN_STANDARDS'
 import ethLikeHelper from 'common/helpers/ethLikeHelper'
 import { feedback } from 'helpers'
 
