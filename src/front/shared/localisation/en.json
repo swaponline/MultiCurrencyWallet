@@ -836,7 +836,7 @@
   },
   {
     "id": "ErrorBtcLowAmount",
-    "message": "{btcAmount} BTC - This amount is too low",
+    "message": "{btcAmount} BTC - This amount is too low, does not cover mining fee",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]

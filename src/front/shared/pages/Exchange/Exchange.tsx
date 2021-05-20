@@ -1788,7 +1788,7 @@ class Exchange extends PureComponent<any, any> {
               <p styleName="error">
                 <FormattedMessage
                   id="ErrorBtcLowAmount"
-                  defaultMessage="This amount is too low"
+                  defaultMessage="This amount is too low, does not cover mining fee"
                   values={{
                     btcAmount:
                       this.state.haveCurrency === 'btc'

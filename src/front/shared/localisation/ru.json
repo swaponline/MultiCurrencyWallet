@@ -888,7 +888,7 @@
   },
   {
     "id": "ErrorBtcLowAmount",
-    "message": "{btcAmount} BTC - Слишком маленькая сумма",
+    "message": "{btcAmount} BTC - Слишком маленькая сумма, не покрывает комиссию за майнинг",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
