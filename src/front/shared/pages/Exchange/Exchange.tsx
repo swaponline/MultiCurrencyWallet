@@ -1571,7 +1571,7 @@ class Exchange extends PureComponent<any, any> {
       pairFees.byCoins &&
       pairFees.byCoins[sellCoin] &&
       new BigNumber(pairFees.byCoins[sellCoin].fee).isGreaterThan(0)
-        ? new BigNumber(haveAmount).minus(pairFees.byCoins[sellCoin].fee)
+        ? new BigNumber(balance).minus(pairFees.byCoins[sellCoin].fee)
         : 0
 
     const isLowAmount = this.checkoutLowAmount()
@@ -1604,20 +1604,67 @@ class Exchange extends PureComponent<any, any> {
       (toAddress &&
         ![AddressType.Internal, AddressType.Metamask, AddressType.Custom].includes(toAddress.type))
 
+    const isFromAddressReady =
+      (fromAddress.type === AddressType.Internal && fromAddress.value) ||
+      (fromAddress.type === AddressType.Metamask && fromAddress.value && metamask.isConnected()) ||
+      (fromAddress.type === AddressType.Custom)
+
+    const isToAddressReady =
+      (toAddress.type === AddressType.Internal && toAddress.value) ||
+      (toAddress.type === AddressType.Metamask && toAddress.value && metamask.isConnected()) ||
+      (toAddress.type === AddressType.Custom && toAddress.value)
+
+    const isBalanceReady =
+      (isTokenSell && new BigNumber(balance).isGreaterThanOrEqualTo(haveAmount)) ||
+      new BigNumber(availableAmount).isGreaterThanOrEqualTo(haveAmount) ||
+      fromAddress.type === AddressType.Custom
+
     const canStartSwap =
       !isErrorExternalDisabled &&
-      !isNonOffers &&
+      linked.haveAmount.value > 0 &&
       fromAddress &&
+      isFromAddressReady &&
       toAddress &&
-      toAddress.value &&
-      new BigNumber(getAmount).isGreaterThan(0) &&
+      isToAddressReady &&
       !this.doesComissionPreventThisOrder() &&
-      !isWaitForPeerAnswer &&
-      (
-        new BigNumber(haveAmount).isGreaterThan(balance) ||
-        new BigNumber(balance).isGreaterThanOrEqualTo(availableAmount) ||
-        fromAddress.type === AddressType.Custom
-      )
+      isBalanceReady &&
+      new BigNumber(getAmount).isGreaterThan(0) &&
+      !isNonOffers &&
+      !isWaitForPeerAnswer
+
+    const getTextWhyCanNotStartSwap = () => {
+      if (isErrorExternalDisabled) return <FormattedMessage id="swapDisabled" defaultMessage='Swap Disabled' />
+      if (!(linked.haveAmount.value > 0)) return <FormattedMessage id="enterYouSend" defaultMessage='Enter "You send" amount' />
+      if (!fromAddress) return <FormattedMessage id="selectFromAddress" defaultMessage='Select "From address"' />
+      if (!isFromAddressReady) {
+        if (fromAddress.type === AddressType.Internal && !fromAddress.value)
+          return <FormattedMessage id="selectSendType" defaultMessage='Select type of "From address"' />
+        if (fromAddress.type === AddressType.Metamask && !fromAddress.value || !metamask.isConnected())
+          return <FormattedMessage id="connectYourWallet" defaultMessage='Connect your wallet in "From address"' />
+      }
+      if (!toAddress) return <FormattedMessage id="selectToAddress" defaultMessage='Select "To address"' />
+      if (!isToAddressReady) {
+        if (toAddress.type === AddressType.Internal && !toAddress.value)
+          return <FormattedMessage id="setDestination" defaultMessage='Set Destination' />
+        if (toAddress.type === AddressType.Metamask && !toAddress.value || !metamask.isConnected())
+          return <FormattedMessage id="connectDestinationWallet" defaultMessage='Connect your Destination wallet' />
+        if (toAddress.type === AddressType.Internal && !toAddress.value)
+          return <FormattedMessage id="enterToAddress" defaultMessage='Enter Destination wallet' />
+      }
+      if (this.doesComissionPreventThisOrder()) return <FormattedMessage id="lowAmount" defaultMessage='Low amount' />
+      if (!isBalanceReady) {
+        if (
+          (isTokenSell && !new BigNumber(balance).isGreaterThanOrEqualTo(haveAmount)) ||
+          !new BigNumber(availableAmount).isGreaterThanOrEqualTo(haveAmount)
+          )
+          return <FormattedMessage id="enterLesserAmount" defaultMessage='Enter lesser amount to "You send"' />
+      }
+      if (!(new BigNumber(getAmount).isGreaterThan(0))) return <FormattedMessage id="errorWithGetAmount" defaultMessage='"You get" no more than 0' />
+      if (isNonOffers) return <FormattedMessage id="noOffers" defaultMessage='No Offers' />
+      if (isWaitForPeerAnswer) return <FormattedMessage id="waitPeerAnswer" defaultMessage='Wait peer answer' />
+
+      return <FormattedMessage id="contactSupport" defaultMessage='Please contact support' />
+    }
 
     const isIncompletedSwaps = !!desclineOrders.length
 
@@ -1862,7 +1909,7 @@ class Exchange extends PureComponent<any, any> {
                 pending={isPendingTokenApprove}
                 blue={true}
               >
-                {linked.haveAmount.value > 0
+                {canStartSwap
                   ? hasTokenAllowance
                     ? <FormattedMessage id="partial541" defaultMessage="Exchange now" />
                     : (
@@ -1872,7 +1919,7 @@ class Exchange extends PureComponent<any, any> {
                         values={{ token: haveCurrency.toUpperCase() }}
                       />
                     )
-                  : <FormattedMessage id="enterYouSend" defaultMessage='Enter "You send" amount' />
+                  : getTextWhyCanNotStartSwap()
                 }
               </Button>
             ) : (
@@ -1882,9 +1929,9 @@ class Exchange extends PureComponent<any, any> {
                 disabled={!canStartSwap}
                 blue={true}
               >
-                {linked.haveAmount.value > 0 
+                {canStartSwap
                   ? <FormattedMessage id="partial541" defaultMessage="Exchange now" />
-                  : <FormattedMessage id="enterYouSend" defaultMessage='Enter "You send" amount' />}
+                  : getTextWhyCanNotStartSwap()}
               </Button>
             )}
 

@@ -13,7 +13,7 @@ const takerBtcAddress = 'n4JjB9D9axszdsFxyxDmF43z4WwttN6oPb'
 jest.setTimeout(100 * 1000)
 
 
-describe('Start e2e tests', () => {
+describe('Start e2e swap tests', () => {
 
   it('restore wallets, turnOn MM, check messaging', async () => {
     console.log("CREATE BROWSERS")

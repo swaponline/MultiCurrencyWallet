@@ -1,13 +1,18 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 
 import CSSModules from 'react-css-modules'
 import styles from '../SwapList.scss'
 
 import config from 'app-config'
+import actions from 'redux/actions'
 import { isMobile } from 'react-device-detect'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
+import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import { FormattedMessage } from 'react-intl'
+import checkedIcon from '../../../images/checked.svg'
 
+let _mounted = false
+const timeoutIds: NodeJS.Timeout[] = []
 
 const SecondStep = (props) => {
   const {
@@ -32,7 +37,76 @@ const SecondStep = (props) => {
       currencyName,
       scriptCreatingTransactionHash,
     },
+    text,
+    enoughBalance,
   } = props
+
+  const [scriptHashIsConfirmed, setScriptHashIsConfirmed] = useState(false)
+  const [ethSwapHashIsConfirmed, setEthSwapHashIsConfirmed] = useState(false)
+  const [ethSwapHash, setEthSwapHash] = useState('')
+  const [scriptHash, setScriptHash] = useState('')
+
+  if (ethSwapCreationTransactionHash && !ethSwapHash) {
+    setEthSwapHash(ethSwapCreationTransactionHash)
+  }
+
+  if (flowState[scriptCreatingTransactionHash] && !scriptHash) {
+    setScriptHash(flowState[scriptCreatingTransactionHash])
+  }
+
+  const checkTransactionHash = (txHash, currencyName, refreshTime) => {
+    const timeoutId = setTimeout(async () => {
+      if (!_mounted) return
+
+      try {
+        let fetchedTx: any
+
+        if (currencyName === 'eth') { // TODO: needs to be improved when adding BNB
+          fetchedTx = await actions.eth.fetchTxInfo(txHash, (refreshTime - 5) * 1000)
+
+          if (fetchedTx && fetchedTx.confirmed) {
+            return setEthSwapHashIsConfirmed(true)
+          } else {
+            return checkTransactionHash(txHash, currencyName, refreshTime)
+          }
+        }
+
+        fetchedTx = await actions[currencyName.toLowerCase()].fetchTx(txHash, (refreshTime - 5) * 1000)
+
+        if (fetchedTx && fetchedTx.confirmations >= 1) {
+          return setScriptHashIsConfirmed(true)
+        } else {
+          return checkTransactionHash(txHash, currencyName, refreshTime)
+        }
+      } catch (e) {
+        console.error(e)
+        return checkTransactionHash(txHash, currencyName, refreshTime)
+      }
+    }, refreshTime * 1000)
+    timeoutIds.push(timeoutId)
+  }
+
+  useEffect(() => {
+    _mounted = true
+    if (scriptHash && !scriptHashIsConfirmed){
+      checkTransactionHash(scriptHash, currencyName, 20)
+    }
+  }, [scriptHash])
+
+  useEffect(() => {
+    _mounted = true
+    if (ethSwapHash && !ethSwapHashIsConfirmed){
+      checkTransactionHash(ethSwapHash, 'eth', 20)
+    }
+  }, [ethSwapHash])
+
+  useEffect(() => {
+    _mounted = true
+    return () => {
+      _mounted = false
+      timeoutIds.map((id) => clearInterval(id))
+    }
+  }, [])
 
   const currencyStep = sellCurrency === currencyName ? fifth : fourth
   const stepItemActive = (step >= second && step < sixth)
@@ -57,6 +131,7 @@ const SecondStep = (props) => {
               values={{ otherCurrency: sellCurrency === currencyName ? buyCurrency.toLowerCase() : sellCurrency.toLowerCase() }}
             />
             <i className="fas fa-link" />
+            {ethSwapHashIsConfirmed ? <img styleName="checkedIcon" src={checkedIcon} alt='checked' /> : <InlineLoader />}
           </a>
         </strong>
       )}
@@ -70,6 +145,7 @@ const SecondStep = (props) => {
           >
             <FormattedMessage id="FourthStep37BtcLike" defaultMessage="({currencyName} tx)" values={{ currencyName : currencyName.toLowerCase() }} />
             <i className="fas fa-link" />
+            {scriptHashIsConfirmed ? <img styleName="checkedIcon" src={checkedIcon} alt='checked' /> : <InlineLoader />}
           </a>
         </strong>
       )}
@@ -82,6 +158,11 @@ const SecondStep = (props) => {
           />
         </Tooltip >
       </div>
+      {(step === 4 && !enoughBalance) ? '' : stepItemActive && (
+        <span styleName="stepHeading">
+          {text}
+        </span>
+      )}
     </div>
   )
 }

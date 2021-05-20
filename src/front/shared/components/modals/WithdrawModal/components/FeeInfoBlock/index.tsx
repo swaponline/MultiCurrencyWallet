@@ -153,7 +153,7 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
         <div className="feeRowInfo">
           {isLoading
             ? <div styleName='paleLoader'><InlineLoader /></div>
-            : <span styleName='fee'>
+            : <span styleName='fee' id="feeInfoBlockMinerFee">
                 {/* @ts-ignore: strictNullChecks */}
                 {hasTxSize && feeCurrentCurrency > 0 ? transactionSize : null}
                 {+minerFee}&nbsp;{minerFeeTicker}
@@ -190,7 +190,7 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
               </div>
               {isLoading
                 ? <div styleName='paleLoader'><InlineLoader /></div>
-                : <span styleName='fee'>
+                : <span styleName='fee' id="feeInfoBlockAdminFee">
                     {+serviceFee}&nbsp;{serviceFeeTicker}
                     {' '}
                     {fiatServiceFee > 0 && `(${activeFiatSymbol}${fiatServiceFee})`}
@@ -209,7 +209,7 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
           <div className="feeRowInfo">
             {isLoading
               ? <div styleName='paleLoader'><InlineLoader /></div>
-              : <span styleName='fee'>
+              : <span styleName='fee' id="feeInfoBlockTotalFee">
                   {+totalFee}&nbsp;{minerFeeTicker}
                   {' '}
                   {fiatTotalFee > 0 && `(${activeFiatSymbol}${fiatTotalFee})`}

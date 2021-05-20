@@ -31,7 +31,6 @@ import SaveKeysModal from "components/modals/SaveKeysModal/SaveKeysModal"
 
 import RestoryMnemonicWallet from "components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet"
 
-
 const routes = (
   <ScrollToTop>
     <Switch>

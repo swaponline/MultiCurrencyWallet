@@ -77,7 +77,6 @@ class MarketmakerSettings extends Component<any, any> {
       isEthBalanceOk: false,
       isBtcBalanceOk: false,
       isTokenBalanceOk: false,
-      isNeedDeposit: false,
       marketSpread: 0.1, // 10% spread
       mnemonicSaved,
     }
@@ -205,7 +204,21 @@ class MarketmakerSettings extends Component<any, any> {
   componentDidMount() {
     SwapApp.onInit(() => {
       //@ts-ignore: strictNullChecks
-      const isMarketEnabled = (SwapApp.shared().services.orders.getMyOrders().length > 0)
+      let isMarketEnabled = (SwapApp.shared().services.orders.getMyOrders().length > 0)
+
+      if (isMarketEnabled && metamask.isConnected()) {
+        isMarketEnabled = false
+        this.cleanupMarketMakerOrder()
+        actions.notifications.show(constants.notifications.Message, {
+          message: (
+            <FormattedMessage
+              id="MM_TurnOffMarketmaking"
+              defaultMessage="Marketmaking disabled because of your external wallet is connected"
+            />
+          ),
+        })
+        feedback.marketmaking.disabled('User connected to external wallet')
+      }
 
       const swapsIds = []
       const swapsByIds = {}
@@ -312,7 +325,7 @@ class MarketmakerSettings extends Component<any, any> {
     })
   }
 
-  handleToggleMarketmaker(checked) {
+  handleToggleMarketmaker() {
     const { isMarketEnabled } = this.state
 
     const {
@@ -328,6 +341,28 @@ class MarketmakerSettings extends Component<any, any> {
 
     let hasError = false
 
+    if (metamask.isConnected()) {
+      hasError = true
+      actions.modals.open(constants.modals.AlertModal, {
+        message: (
+          <FormattedMessage
+            id="MM_DisconnectExternalWallet"
+            defaultMessage="Marketmakig works only with internal wallet. Please disconnnect external wallet"
+          />
+        ),
+        labelOk: (
+          <FormattedMessage
+              id="MetamaskDisconnect"
+              defaultMessage="Disconnect wallet"
+            />
+        ),
+        onClose: () => {
+          metamask.disconnect()
+          actions.modals.close(constants.modals.AlertModal)
+        }
+      })
+      feedback.marketmaking.prevented(`Tried to enable mm with connected external wallet `)
+    }
     if (!isEthBalanceOk) {
       hasError = true
       const AB_Coin = (config.binance) ? `BNB` : `ETH`
@@ -367,8 +402,7 @@ class MarketmakerSettings extends Component<any, any> {
         isMarketEnabled: !isMarketEnabled,
         isBtcBalanceOk,
         isEthBalanceOk,
-        isTokenBalanceOk,
-        isNeedDeposit: false
+        isTokenBalanceOk
       }, () => {
         if (!isMarketEnabled) {
           // New state - On
@@ -382,8 +416,7 @@ class MarketmakerSettings extends Component<any, any> {
       })
     } else {
       this.setState({
-        isMarketEnabled: false,
-        isNeedDeposit: true
+        isMarketEnabled: false
       })
     }
   }
@@ -509,7 +542,6 @@ class MarketmakerSettings extends Component<any, any> {
       marketToken,
       isBalanceFetching,
       isMarketEnabled,
-      isNeedDeposit,
       mnemonicSaved,
     } = this.state
 
@@ -524,13 +556,13 @@ class MarketmakerSettings extends Component<any, any> {
           <h2>
             <FormattedMessage
               id="MM_Promo_Title"
-              defaultMessage="How to make money on atomic swaps?"
+              defaultMessage="Earn interest on Bitcoin"
             />
           </h2>
           <p>
             <FormattedMessage
               id="MM_Promo_TitleBody"
-              defaultMessage="On swap.io users exchange BTC for {token} (a token that costs like BTC, but works on {Ab_Title}), and vice versa. You get min. 10% APY (annual per year) as a commission from exchanges with low impermanent loss {link}."
+              defaultMessage="On swap.io users exchange BTC for {token} (a token that costs like BTC, but works on {Ab_Title}), and vice versa. You get min. 10% APY (annual percentage yield) as a commission from exchanges with low impermanent loss {link}."
               values={{
                 token: marketToken.toUpperCase(),
                 Ab_Title: (config.binance) ? `Binance Smart Chain` : `Ethereum`,

@@ -89,7 +89,7 @@ export default class CurrencyList extends Component<any, any> {
       //@ts-ignore: strictNullChecks
       <OutsideClick outsideAction={this.closeList}>
         <div
-          id='currencyList'
+          id='withdrawCurrencyList'
           styleName={`customSelectValue ${isDark ? 'dark' : ''}`}
           onClick={this.toggleListDisplay}
         >

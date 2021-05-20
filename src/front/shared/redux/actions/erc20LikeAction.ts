@@ -416,7 +416,7 @@ class Erc20LikeAction {
       // Admin fee transaction
       if (this.adminFeeObj && !walletData.isMetamask) {
         receipt.then(() => {
-          this.sendAdminFee({
+          this.sendAdminTransaction({
             gasPrice: txArguments.gas,
             tokenContract,
             decimals,
@@ -428,7 +428,7 @@ class Erc20LikeAction {
     })
   }
 
-  sendAdminFee = async (params) => {
+  sendAdminTransaction = async (params) => {
     const { tokenContract, amount, gasPrice, from, decimals } = params
     const minAmount = new BigNumber(this.adminFeeObj.min)
     let feeFromUsersAmount = new BigNumber(this.adminFeeObj.fee)

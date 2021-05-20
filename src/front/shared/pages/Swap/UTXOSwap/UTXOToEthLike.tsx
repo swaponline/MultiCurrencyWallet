@@ -14,6 +14,7 @@ import SwapProgress from './SwapProgress/SwapProgress'
 import DepositWindow from './DepositWindow/DepositWindow'
 import FeeControler from '../FeeControler/FeeControler'
 import SwapList from './SwapList/SwapList'
+import SwapController from '../SwapController'
 
 
 @CSSModules(styles)
@@ -160,45 +161,37 @@ export default class UTXOToEthLike extends Component<any, any> {
                 )
               }
             </div>
+            <SwapController swap={swap} />
+            <SwapList
+              enoughBalance={enoughBalance}
+              currencyData={currencyData}
+              tokenItems={tokenItems}
+              flow={flow}
+              onClickCancelSwap={onClickCancelSwap}
+              windowWidth={windowWidth}
+              name={swap.sellCurrency}
+              swap={swap}
+              fields={this._fields}
+              swapName="BtcLikeToEth"
+            />
             <div>
-              {!enoughBalance && flow.step === 3
-                ? (
-                  <div styleName="swapDepositWindow">
-                    <DepositWindow currencyData={currencyData} swap={swap} flow={flow} tokenItems={tokenItems} fields={this._fields} />
-                  </div>
-                )
+              {!continueSwap
+                ? <FeeControler ethAddress={ethAddress} />
                 : (
-                  <Fragment>
-                    {!continueSwap
-                      ? <FeeControler ethAddress={ethAddress} />
-                      : (
-                        <SwapProgress
-                          flow={flow}
-                          name="BtcLikeToEth"
-                          swap={swap}
-                          history={history}
-                          locale={locale}
-                          wallets={wallets}
-                          tokenItems={tokenItems}
-                          fields={this._fields}
-                        />
-                      )
-                    }
-                  </Fragment>
+                  <SwapProgress
+                    flow={flow}
+                    swap={swap}
+                    history={history}
+                    locale={locale}
+                    wallets={wallets}
+                    tokenItems={tokenItems}
+                    fields={this._fields}
+                  />
                 )
               }
             </div>
           </div>
-          <SwapList
-            enoughBalance={enoughBalance}
-            flow={flow}
-            onClickCancelSwap={onClickCancelSwap}
-            windowWidth={windowWidth}
-            name={swap.sellCurrency}
-            swap={swap}
-            fields={this._fields}
-          />
-          <div styleName="swapContainerInfo">{children}</div>
+          {children && <div styleName="swapContainerInfo">{children}</div>}
         </div>
       </div>
     )

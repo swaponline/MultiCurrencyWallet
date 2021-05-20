@@ -650,7 +650,7 @@ class Row extends Component<RowProps, RowState> {
           id: 1123,
           title: (
             <FormattedMessage
-              id="WalletRow_MetamaskDisconnect"
+              id="MetamaskDisconnect"
               defaultMessage="Отключить кошелек"
             />
           ),
@@ -879,14 +879,17 @@ class Row extends Component<RowProps, RowState> {
                             </div>
                           )
                       ) : (
-                          <div styleName="no-select-inline" onClick={this.handleReloadBalance}>
+                          <button 
+                            id="walletRowUpdateBalanceBtn"
+                            styleName="cryptoBalanceBtn"
+                            onClick={this.handleReloadBalance}
+                          >
                             <i className="fas fa-sync-alt" styleName="icon" />
-                            <span>
+                            <span id="walletRowCryptoBalance">
                               {balanceError
                                 ? '?'
-                                : new BigNumber(balance)
-                                  .dp(5, BigNumber.ROUND_FLOOR)
-                                  .toString()}{' '}
+                                : new BigNumber(balance).dp(5, BigNumber.ROUND_FLOOR).toString()
+                              }{' '}
                             </span>
                             <span styleName="assetsTableCurrencyBalance">
                               {currencyView}
@@ -906,7 +909,7 @@ class Row extends Component<RowProps, RowState> {
                                 </span>
                               </Fragment>
                             )}
-                          </div>
+                          </button>
                         )
                   }
                 </Fragment>

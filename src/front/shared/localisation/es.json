@@ -4593,10 +4593,25 @@
     ]
   },
   {
-    "id": "WalletRow_MetamaskDisconnect",
+    "id": "MetamaskDisconnect",
     "message": "Desconectar Billetera",
     "files": [
-      "src/front/shared/pages/Wallet/Row/Row.tsx"
+      "src/front/shared/pages/Wallet/Row/Row.tsx",
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_DisconnectExternalWallet",
+    "message": "Marketmakig solo funciona con billetera interna. Desconecte la billetera externa",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_TurnOffMarketmaking",
+    "message": "Marketmaking deshabilitado debido a que su billetera externa está conectada",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
   },
   {
@@ -4984,272 +4999,272 @@
     "id": "SwapProgress105_btclike_to_eth",
     "message": "Checking balance..",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/BtcLikeToEth.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/BtcLikeToEth.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/BtcLikeToEth.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/BtcLikeToEth.tsx"
     ]
   },
   {
     "id": "SwapProgress111_btclike_to_eth",
-    "message": "Creating {coinName} Script.{br}It can take a few minutes",
+    "message": "Depositando {coinName}.{br}Puede tardar unos minutos",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/BtcLikeToEth.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/BtcLikeToEth.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/BtcLikeToEth.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/BtcLikeToEth.tsx"
     ]
   },
   {
     "id": "SwapProgress117_btclike_to_eth",
     "message": "Your {coinName} are now depositing. It may require one confirmation from {coinName} Network. Waiting for other participant to deposit ETH.",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/BtcLikeToEth.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/BtcLikeToEth.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/BtcLikeToEth.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/BtcLikeToEth.tsx"
     ]
   },
   {
     "id": "SwapProgress123_btclike_to_eth",
     "message": "ETH Contract created and charged. Requesting withdrawal from ETH Contract.",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/BtcLikeToEth.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/BtcLikeToEth.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/BtcLikeToEth.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/BtcLikeToEth.tsx"
     ]
   },
   {
     "id": "SwapProgress129_btclike_to_eth",
     "message": "ETH was transferred to your wallet. Check the balance.",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/BtcLikeToEth.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/BtcLikeToEth.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/BtcLikeToEth.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/BtcLikeToEth.tsx"
     ]
   },
   {
     "id": "SwapProgress135_btclike_to_eth",
     "message": "Thank you for using Swap.Online!",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/BtcLikeToEth.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/BtcLikeToEth.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/BtcLikeToEth.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/BtcLikeToEth.tsx"
     ]
   },
   {
     "id": "SwapProgress93_btclike_to_eth",
     "message": "The order creator is offline. Waiting for him..",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/BtcLikeToEth.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/BtcLikeToEth.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/BtcLikeToEth.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/BtcLikeToEth.tsx"
     ]
   },
   {
     "id": "SwapProgress99_btclike_to_eth",
     "message": "Create a secret key",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/BtcLikeToEth.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/BtcLikeToEth.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/BtcLikeToEth.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/BtcLikeToEth.tsx"
     ]
   },
   {
     "id": "ethToBtcText20_eth_to_btclike",
     "message": "Waiting for {coinName} Owner to create Secret Key, create {coinName} Script and charge it",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/EthToBtcLike.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/EthToBtcLike.tsx"
     ]
   },
   {
     "id": "ethToBtcText25_eth_to_btclike",
-    "message": "The {coinName} Script was created and charged. Check the information below",
+    "message": "The {coinName} Script was created and charged.",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/EthToBtcLike.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/EthToBtcLike.tsx"
     ]
   },
   {
     "id": "ethToBtcText26_eth_to_btclike",
     "message": "Confirmation processing",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/EthToBtcLike.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/EthToBtcLike.tsx"
     ]
   },
   {
     "id": "ethToBtcText28_eth_to_btclike",
     "message": "Checking balance..",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/EthToBtcLike.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/EthToBtcLike.tsx"
     ]
   },
   {
     "id": "ethToBtcText32_eth_to_btclike",
     "message": "Creating Ethereum Contract.{br}It can take a few minutes",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/EthToBtcLike.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/EthToBtcLike.tsx"
     ]
   },
   {
     "id": "ethToBtcText36_eth_to_btclike",
     "message": "Waiting for {coinName} Owner to add a Secret Key to ETH Contact",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/EthToBtcLike.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/EthToBtcLike.tsx"
     ]
   },
   {
     "id": "ethToBtcText40_eth_to_btclike",
     "message": "The funds from ETH contract was successfully transferred to {coinName} owner. {coinName} owner left a secret key. Requesting withdrawal from {coinName} script.",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/EthToBtcLike.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/EthToBtcLike.tsx"
     ]
   },
   {
     "id": "ethToBtcText44_eth_to_btclike",
     "message": "Thank you for using Swap.Online",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/EthToBtcLike.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/EthToBtcLike.tsx"
     ]
   },
   {
     "id": "ethToBtcText48_eth_to_btclike",
     "message": "Thank you for using Swap.Online!",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/EthToBtcLike.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/EthToBtcLike.tsx"
     ]
   },
   {
     "id": "BitcoinBuyText17_BtcLike_to_tokens",
     "message": "Confirmation processing",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/BtcLikeToEthToken.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/BtcLikeToEthToken.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/BtcLikeToEthToken.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/BtcLikeToEthToken.tsx"
     ]
   },
   {
     "id": "BitcoinBuyText29_BtcLike_to_tokens",
     "message": "Checking balance..",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/BtcLikeToEthToken.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/BtcLikeToEthToken.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/BtcLikeToEthToken.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/BtcLikeToEthToken.tsx"
     ]
   },
   {
     "id": "BitcoinBuyText33_BtcLike_to_tokens",
-    "message": "Creating {coinName} Script.{br}It can take a few minutes",
+    "message": "Depositando {coinName}.{br}Puede tardar unos minutos",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/BtcLikeToEthToken.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/BtcLikeToEthToken.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/BtcLikeToEthToken.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/BtcLikeToEthToken.tsx"
     ]
   },
   {
     "id": "BitcoinBuyText37_BtcLike_to_tokens",
-    "message": "{buyCurrency} Owner received {coinName} Script and Secret Hash. Waiting when he creates {buyCurrency} Contract",
+    "message": "Esperando a que se extraiga la transacción y el propietario de {buyCurrency} deposite sus fondos en el contrato del swap",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/BtcLikeToEthToken.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/BtcLikeToEthToken.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/BtcLikeToEthToken.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/BtcLikeToEthToken.tsx"
     ]
   },
   {
     "id": "BitcoinBuyText41_BtcLike_to_tokens",
     "message": "{buyCurrency} Contract created and charged. Requesting withdrawal from {buyCurrency} Contract.",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/BtcLikeToEthToken.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/BtcLikeToEthToken.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/BtcLikeToEthToken.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/BtcLikeToEthToken.tsx"
     ]
   },
   {
     "id": "BitcoinBuyText45_BtcLike_to_tokens",
     "message": "{buyCurrency} tokens was transferred to your wallet. Check the balance.",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/BtcLikeToEthToken.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/BtcLikeToEthToken.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/BtcLikeToEthToken.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/BtcLikeToEthToken.tsx"
     ]
   },
   {
     "id": "BitcoinBuyText49_BtcLike_to_tokens",
     "message": "Thank you for using Swap.Online",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/BtcLikeToEthToken.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/BtcLikeToEthToken.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/BtcLikeToEthToken.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/BtcLikeToEthToken.tsx"
     ]
   },
   {
     "id": "BitcoinBuyText53_BtcLike_to_tokens",
     "message": "Thank you for using Swap.Online!",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/BtcLikeToEthToken.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/BtcLikeToEthToken.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/BtcLikeToEthToken.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/BtcLikeToEthToken.tsx"
     ]
   },
   {
     "id": "BtcToEthToken20_BtcLike_to_tokens",
     "message": "Create a secret key",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/BtcLikeToEthToken.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/BtcLikeToEthToken.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/BtcLikeToEthToken.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/BtcLikeToEthToken.tsx"
     ]
   },
   {
     "id": "EthTokensToBtc16_ethtoken_to_BtcLike",
     "message": "Confirmation processing",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/EthToBtcLike.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/EthTokenToBtcLike.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/EthTokenToBtcLike.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/EthToBtcLike.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/EthTokenToBtcLike.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/EthTokenToBtcLike.tsx"
     ]
   },
   {
     "id": "EthTokensToBtc20_ethtoken_to_BtcLike",
     "message": "Waiting for {coinName} Owner to create Secret Key, create {coinName} Script and charge it",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/EthTokenToBtcLike.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/EthTokenToBtcLike.tsx"
     ]
   },
   {
     "id": "EthTokensToBtc24_ethtoken_to_BtcLike",
-    "message": "The {coinName} Script was created and charged. Check the information below",
+    "message": "The {coinName} Script was created and charged.",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/EthToBtcLike.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/EthTokenToBtcLike.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/EthTokenToBtcLike.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/EthToBtcLike.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/EthTokenToBtcLike.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/EthTokenToBtcLike.tsx"
     ]
   },
   {
     "id": "EthTokensToBtc28_ethtoken_to_BtcLike",
     "message": "Checking balance..",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/EthToBtcLike.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/EthTokenToBtcLike.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/EthTokenToBtcLike.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/EthToBtcLike.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/EthTokenToBtcLike.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/EthTokenToBtcLike.tsx"
     ]
   },
   {
     "id": "EthTokensToBtc32_ethtoken_to_BtcLike",
     "message": "Creating Ethereum Contract. {br} It can take a few minutes",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/EthToBtcLike.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/EthTokenToBtcLike.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/EthTokenToBtcLike.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/EthToBtcLike.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/EthTokenToBtcLike.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/EthTokenToBtcLike.tsx"
     ]
   },
   {
     "id": "EthTokensToBtc36_ethtoken_to_BtcLike",
     "message": "Waiting for {coinName} Owner to add a Secret Key to ETH Contact",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/EthTokenToBtcLike.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/EthTokenToBtcLike.tsx"
     ]
   },
   {
     "id": "EthTokensToBtc40_ethtoken_to_BtcLike",
     "message": "The funds from ETH contract was successfully transferred to {coinName} owner",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/EthTokenToBtcLike.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/EthTokenToBtcLike.tsx"
     ]
   },
   {
     "id": "EthTokensToBtc44_ethtoken_to_BtcLike",
     "message": "Thank you for using Swap.Online",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/EthToBtcLike.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/EthTokenToBtcLike.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/EthTokenToBtcLike.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/EthToBtcLike.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/EthTokenToBtcLike.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/EthTokenToBtcLike.tsx"
     ]
   },
   {
     "id": "EthTokensToBtc48_ethtoken_to_BtcLike",
     "message": "Thank you for using Swap.Online!",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/UTXOSwapProgressText/EthTokenToBtcLike.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/EthTokenToBtcLike.tsx"
     ]
   },
   {
@@ -5400,6 +5415,105 @@
     ]
   },
   {
+    "id": "swapDisabled",
+    "message": "Intercambiar deshabilitado",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "noOffers",
+    "message": "No hay ofertas",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "selectFromAddress",
+    "message": "Seleccione\"From address\"",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "selectToAddress",
+    "message": "Seleccione \"To address\"",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "enterToAddress",
+    "message": "Ingrese la billetera de destino",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "connectDestinationWallet",
+    "message": "Conecte su billetera de Destino",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "setDestination",
+    "message": "Marcar el destino",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "connectYourWallet",
+    "message": "Conecte su billetera en \"From address\"",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "selectSendType",
+    "message": "Seleccione el tipo de\"From address\"",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "errorWithGetAmount",
+    "message": "\"Tu obtienes\" no más de 0",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "lowAmount",
+    "message": "Cantidad baja",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "waitPeerAnswer",
+    "message": "Espere la respuesta de sus compañeros",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "enterLesserAmount",
+    "message": "Ingrese una cantidad menor a\"Tu envias\"",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+
+  {
+    "id": "contactSupport",
+    "message": "Comuníquese con el soporte",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
     "id": "AtomicSwap_Title",
     "message": "Atomic swap",
     "files": [
@@ -5497,8 +5611,8 @@
     "id": "EthTokensToBtc20_ethtoken_to_BtcLikeTaker",
     "message": "Waiting for {coinName} Owner to create {coinName} Script and charge it",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/EthToBtcLike.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/ABSwapProgressText/EthTokenToBtcLike.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/EthToBtcLike.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/EthTokenToBtcLike.tsx"
     ]
   },
   {
@@ -5615,7 +5729,7 @@
   },
   {
     "id": "MM_FAQ_FundAccess",
-    "message": "- Las llaves de sus fondos están solo con usted, no tenemos acceso a sus fondos",
+    "message": "- Las claves de sus fondos están solo con usted, no tenemos acceso a sus fondos",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
@@ -5629,14 +5743,14 @@
   },
   {
     "id": "MM_FAQ_ItemContent1",
-    "message": "El creador de mercado gana en la diferencia en los tipos de cambio al servicio de la compra y venta (spread)",
+    "message": "Un creador de mercado gana en la diferencia en los tipos de cambio al servicio de la compra y venta (spread)",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
   },
   {
     "id": "MM_FAQ_HowMuchEarn",
-    "message": "Declaramos a partir del 10% anual (APY), si el número de intercambios no es suficiente motivaremos a los usuarios a realizar intercambios utilizando bounties.",
+    "message": "Declaramos a partir del 10% anual (APY). Si el número de intercambios no es suficiente motivaremos a los usuarios a realizar intercambios utilizando bounties.",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
@@ -5657,7 +5771,7 @@
   },
   {
     "id": "MM_FAQ_ItemContent6",
-    "message": "Cuéntanos sobre la posibilidad de swap en las comunidades en las que eres miembro.",
+    "message": "Informe a las comunidades de las que es miembro sobre la posibilidad de intercambio.",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
@@ -5699,14 +5813,14 @@
   },
   {
     "id": "MM_FAQ_ItemContent8",
-    "message": "Nuestros clientes aman y apoyan la descentralización, nuestro intercambiador funciona a través de contratos inteligentes y no podremos congelar los fondos del cliente por más de 3 horas.",
+    "message": "Nuestros clientes aman y apoyan la descentralización. Nuestro intercambio funciona a través de contratos inteligentes y no podremos congelar los fondos del cliente por más de 3 horas.",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
   },
   {
     "id": "MM_FAQ_ItemTitle1",
-    "message": "Por qué funciona?",
+    "message": "¿Por qué funciona?",
     "files": [
       "src/front/shared/pages/Marketmaker/FAQ.tsx"
     ]
@@ -5812,7 +5926,7 @@
   },
   {
     "id": "MM_Promo_Title",
-    "message": "¿Cómo ganar con mi depósito de BTC?",
+    "message": "Gana intereses en Bitcoin",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx",
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
@@ -5820,7 +5934,7 @@
   },
   {
     "id": "MM_Promo_TitleBody",
-    "message": "Los usuarios de nuestro intercambiador swap.io intercambian BTC por {token} (un token que cuesta como BTC, pero funciona en {Ab_Title}) y viceversa. Tienes a min. 10% APY (anual por año) como comisión de intercambios con baja impermanent loss {link}.",
+    "message": "Los usuarios de nuestro intercambiador swap.io intercambian BTC por {token} (un token que cuesta como BTC, pero funciona en {Ab_Title}) y viceversa. Tienes a min. 10% APY (porcentaje de rendimiento anual) como comisión de intercambios con baja impermanent loss {link}.",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx",
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
@@ -6028,7 +6142,7 @@
   },
   {
     "id": "MM_InstallExtentionTitle",
-    "message": "Instale la extensión de Chrome y comience a ganar",
+    "message": "Instale la extensión de Chrome y comience a ganar hoy",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
     ]

@@ -59,9 +59,15 @@ export const importWallet = async (page: puppeteer.Page, SEED: string[]) => {
   await page.click('#finishWalletRecoveryButton')
 }
 
-export const selectSendCurrency = async (page: puppeteer.Page, currency: string = 'btc') => {
+export const selectSendCurrency = async (params) => {
+  const { page, currency = 'btc', waitSelector = 30_000 } = params
+
+  await page.waitForSelector('#sendBtn', { timeout: waitSelector })
   await page.click('#sendBtn')
-  await page.click('#currencyList')
+
+  await page.waitForSelector('#withdrawCurrencyList', { timeout: waitSelector })
+  await page.click('#withdrawCurrencyList')
+
   await page.click(`#${currency}Send`)
 }
 
@@ -93,7 +99,7 @@ export const turnOnMM = async (page: puppeteer.Page) => {
 
 export const takeScreenshot = async (page: puppeteer.Page, fileName: string) => {
   await page.screenshot({
-    path: `tests//e2e/screenshots/${fileName}_${new Date().getTime().toString()}.jpg`,
+    path: `tests/e2e/screenshots/${fileName}.jpg`,
     type: 'jpeg'
   });
 }
@@ -101,11 +107,11 @@ export const takeScreenshot = async (page: puppeteer.Page, fileName: string) => 
 export const timeOut = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 export default {
-    createBrowser,
-    importWallet,
-    selectSendCurrency,
-    addAssetToWallet,
-    turnOnMM,
-    takeScreenshot,
-    timeOut
+  createBrowser,
+  importWallet,
+  selectSendCurrency,
+  addAssetToWallet,
+  turnOnMM,
+  takeScreenshot,
+  timeOut
 }

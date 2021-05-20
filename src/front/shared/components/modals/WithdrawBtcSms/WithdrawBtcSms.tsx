@@ -345,13 +345,12 @@ class WithdrawModalMultisig extends React.Component<any, any> {
       tokenItems,
       items,
       intl,
-      portalUI,
     } = this.props
 
     const linked = Link.all(this, 'code')
 
     const labels = defineMessages({
-      withdrowModal: {
+      withdrawModal: {
         id: 'withdrowTitle271',
         defaultMessage: `Send`,
       },
@@ -495,13 +494,11 @@ class WithdrawModalMultisig extends React.Component<any, any> {
       </Fragment>
     )
 
-    return portalUI ? (
-      formRender
-    ) : (
+    return (
       //@ts-ignore: strictNullChecks
       <Modal
         name={name}
-        title={`${intl.formatMessage(labels.withdrowModal)}${' '}${currency.toUpperCase()}`}
+        title={`${intl.formatMessage(labels.withdrawModal)}${' '}${currency.toUpperCase()}`}
       >
         {formRender}
       </Modal>

@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js'
 
-import btcUtils from  '../src/common/utils/coin/btc'
-import actions from '../src/front/shared/redux/actions'
+import btcUtils from  '../../src/common/utils/coin/btc'
+import actions from '../../src/front/shared/redux/actions'
 
 
 const NETWORK = 'TESTNET'

@@ -23,7 +23,7 @@ class EthLikeAction {
     address: string // where to send
     min: string // min amount
   }
-  private Web3: IUniversalObj
+  readonly Web3: IUniversalObj
   private cache = new Map([['addressIsContract', {}]])
 
   constructor(options) {
@@ -343,7 +343,9 @@ class EthLikeAction {
               if (Array.isArray(response.result)) {
                 const transactions = response.result
                   .filter((item: ResponseItem) => {
-                    return item.value > 0 || (internals[item.hash] && internals[item.hash].value > 0)
+                    return (
+                      item.value > 0 || (internals[item.hash] && internals[item.hash].value > 0)
+                    )
                   })
                   .map((item) => ({
                     type,
@@ -369,7 +371,8 @@ class EthLikeAction {
                   .filter((item) => {
                     if (item.direction === 'in') return true
                     if (!this.adminFeeObj) return true
-                    if (address.toLowerCase() === this.adminFeeObj.address.toLowerCase()) return true
+                    if (address.toLowerCase() === this.adminFeeObj.address.toLowerCase())
+                      return true
                     if (item.address.toLowerCase() === this.adminFeeObj.address.toLowerCase())
                       return false
 
@@ -407,12 +410,14 @@ class EthLikeAction {
     return false
   }
 
-  send = async (params): Promise<object> => {
-    let { to, amount, gasPrice, gasLimit, speed } = params
+  send = async (params): Promise<{ transactionHash: string }> => {
+    let { externalAddress, externalPrivateKey, to, amount, gasPrice, gasLimit, speed } = params
+
+    const haveExternalWallet = externalAddress && externalPrivateKey && true
     const ownerAddress = getState().user[`${this.tickerKey}Data`].address
     const recipientIsContract = await this.isContract(to)
 
-    gasPrice = 0 || await ethLikeHelper[this.tickerKey].estimateGasPrice({ speed })
+    gasPrice = gasPrice || (await ethLikeHelper[this.tickerKey].estimateGasPrice({ speed }))
     gasLimit =
       gasLimit ||
       (recipientIsContract
@@ -427,13 +432,21 @@ class EthLikeAction {
       gas: gasLimit,
       value: this.Web3.utils.toWei(String(amount)),
     }
+    let privateKey = undefined
+
+    if (haveExternalWallet) {
+      txObject.from = externalAddress
+      privateKey = externalPrivateKey
+    } else {
+      privateKey = this.getPrivateKeyByAddress(ownerAddress)
+    }
+
     const walletData = actions.core.getWallet({
       address: ownerAddress,
       currency: this.ticker,
     })
-    const privateKey = this.getPrivateKeyByAddress(ownerAddress)
 
-    if (!walletData.isMetamask) {
+    if (!walletData.isMetamask || haveExternalWallet) {
       const signedTx = await this.Web3.eth.accounts.signTransaction(txObject, privateKey)
       txObject = signedTx.rawTransaction
       sendMethod = this.Web3.eth.sendSignedTransaction
@@ -447,7 +460,7 @@ class EthLikeAction {
       // Admin fee transaction
       if (this.adminFeeObj && !walletData.isMetamask) {
         receipt.then(() => {
-          this.sendAdminFee({
+          this.sendAdminTransaction({
             amount,
             gasPrice,
             gasLimit,
@@ -458,11 +471,12 @@ class EthLikeAction {
     })
   }
 
-  sendAdminFee = async (params) => {
-    const { amount, gasPrice, gasLimit, privateKey } = params
+  sendAdminTransaction = async (params): Promise<string> => {
+    const { amount, gasPrice, gasLimit, privateKey, externalAdminFeeObj } = params
+    const adminObj = externalAdminFeeObj || this.adminFeeObj
+    const minAmount = new BigNumber(adminObj.min)
 
-    const minAmount = new BigNumber(this.adminFeeObj.min)
-    let feeFromUsersAmount = new BigNumber(this.adminFeeObj.fee)
+    let feeFromUsersAmount = new BigNumber(adminObj.fee)
       .dividedBy(100) // 100 %
       .multipliedBy(amount)
       .toNumber()
@@ -472,7 +486,7 @@ class EthLikeAction {
     }
 
     const adminFeeParams = {
-      to: this.adminFeeObj.address.trim(),
+      to: adminObj.address.trim(),
       gasPrice,
       gas: gasLimit,
       value: this.Web3.utils.toWei(String(feeFromUsersAmount)),

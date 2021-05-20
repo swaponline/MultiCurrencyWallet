@@ -45,7 +45,7 @@ jobs:
         refresh-token: ${{ secrets.CHROMEUPDATETOKEN }}
         client-id: ${{ secrets.CLIENTID }}
         client-secret: ${{ secrets.CLIENTSECRET }}
-        file-name: 'zipped-chrome-extension-bsc.zip'
+        file-name: 'zipped-chrome-extension-eth.zip'
         app-id: 'oldojieloelkkfeacfinhcngmbkepnlm'
         publish: false
     - name: publish ropsten extension to chrome web store
