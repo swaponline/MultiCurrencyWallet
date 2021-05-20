@@ -8,7 +8,6 @@ import ethLikeHelper from 'common/helpers/ethLikeHelper'
 
 type EstimateFeeParams = {
   method: string
-  speed: 'fastest' | 'fast' | 'slow'
 }
 
 const estimateFeeValue = async (params: EstimateFeeParams) => {
@@ -16,7 +15,7 @@ const estimateFeeValue = async (params: EstimateFeeParams) => {
 }
 
 const estimateGasPrice = async (): Promise<number> => {
-  return ethLikeHelper.bnb.estimateGasPriceForBnb()
+  return ethLikeHelper.bnb.estimateGasPrice()
 }
 
 export default {

@@ -1,5 +1,5 @@
 import config from 'app-config'
-import TOKEN_STANDARDS from 'common/helpers/constants/TOKEN_STANDARDS'
+import TOKEN_STANDARDS from 'helpers/constants/TOKEN_STANDARDS'
 
 export const getActivatedCurrencies = () => {
   const currencies: string[] = []

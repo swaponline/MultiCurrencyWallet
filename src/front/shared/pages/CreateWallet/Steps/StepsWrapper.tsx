@@ -17,7 +17,6 @@ const curEnabled = config.opts.curEnabled
 export default class StepsWrapper extends Component<any, any> {
 
   // TODO: it's crazy. Move|split this packs somewhere
-  // ? additional check for tokens? Example: if ETH was disabled then we can't use erc20
 
   defaultStartPack = [
     ...(!curEnabled || curEnabled.btc) ? [{ name: "BTC", capture: "Bitcoin" }] : [],

@@ -3,14 +3,14 @@ import config from 'app-config'
 
 import CSSModules from 'react-css-modules'
 import styles from './CreateWallet.scss'
-
 import { connect } from 'redaction'
 import actions from 'redux/actions'
-
-import { FormattedMessage, injectIntl, useIntl, IntlShape } from 'react-intl'
+import { FormattedMessage, useIntl } from 'react-intl'
 import { withRouter } from 'react-router-dom'
 import { isMobile } from 'react-device-detect'
 import reducers from 'redux/core/reducers'
+
+import TOKEN_STANDARDS from 'helpers/constants/TOKEN_STANDARDS'
 import links from 'helpers/links'
 import metamask from 'helpers/metamask'
 import { localisedUrl } from 'helpers/locale'
@@ -204,8 +204,28 @@ const CreateWallet: React.FC<any> = (props) => {
     }
 
     const isIgnoreSecondStep = !Object.keys(currencies).includes('BTC')
+    const tokenStandarads = Object.keys(TOKEN_STANDARDS).map((key) => TOKEN_STANDARDS[key])
 
-    if (isIgnoreSecondStep && !currencies['ERC20'] && !currencies['BEP20']) {
+    for (const standardObj of tokenStandarads) {
+      const standardName = standardObj.standard.toUpperCase()
+      
+      if (currencies[standardName] && isIgnoreSecondStep) {
+        actions.core.markCoinAsVisible(standardObj.currency.toUpperCase(), true)
+        localStorage.setItem(constants.localStorage.isWalletCreate, true)
+
+        goHome()
+
+        actions.modals.open(constants.modals.AddCustomToken, {
+          api: standardObj.explorerApi,
+          apiKey: standardObj.explorerApiKey,
+          standard: standardName,
+        })
+
+        return
+      }
+    }
+
+    if (isIgnoreSecondStep) {
       Object.keys(currencies).forEach((currency) => {
         if (currencies[currency]) {
           actions.core.markCoinAsVisible(currency.toUpperCase(), true)
@@ -218,26 +238,6 @@ const CreateWallet: React.FC<any> = (props) => {
 
     if (!secure.length && (step === 2 || forcedCurrencyData)) {
       setError('Choose something')
-      return
-    }
-
-    if (currencies['ERC20']) {
-      goHome()
-      actions.modals.open(constants.modals.AddCustomToken, {
-        api: config.api.etherscan,
-        apiKey: config.api.etherscan_ApiKey,
-        standard: Object.keys(currencies)[0],
-      })
-      return
-    }
-
-    if (currencies['BEP20']) {
-      goHome()
-      actions.modals.open(constants.modals.AddCustomToken, {
-        api: config.api.bscscan,
-        apiKey: config.api.bscscan_ApiKey,
-        standard: Object.keys(currencies)[0],
-      })
       return
     }
 
@@ -469,5 +469,4 @@ export default connect({
   currencies: 'currencies',
   userData: 'user',
   core: 'core',
-  activeFiat: 'user.activeFiat',
 })(withRouter(CSSModules(CreateWallet, styles, { allowMultiple: true })))

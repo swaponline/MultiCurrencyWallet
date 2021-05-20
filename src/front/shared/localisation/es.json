@@ -5324,17 +5324,17 @@
     ]
   },
   {
-    "id": "Swap_MetamaskAttention",
-    "message": "Confirma la transacción en tu billetera \"{walletName}\"",
-    "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
-    ]
-  },
-  {
     "id": "FAQFeeApiLink",
     "message": "(fuente)",
     "files": [
       "src/front/shared/components/FAQ/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "Swap_MetamaskAttention",
+    "message": "Confirma la transacción en tu billetera \"{walletName}\"",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
     ]
   },
   {
