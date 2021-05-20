@@ -403,7 +403,9 @@ class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
 
     const dropDownOptions: DropDownOptions[] = []
 
-    if (this.isCurrencyInInternalWallet()) {
+    const isCurrencyInInternalWallet = this.isCurrencyInInternalWallet()
+
+    if (isCurrencyInInternalWallet) {
       dropDownOptions.push(
         {
           value: AddressType.Internal,
@@ -463,7 +465,7 @@ class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
       }
     }
 
-    if (isCustomAddressOption) {
+    if (role === AddressRole.Receive || !isCurrencyInInternalWallet && isCustomAddressOption) {
       dropDownOptions.push(
         {
           value: AddressType.Custom,

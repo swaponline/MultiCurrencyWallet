@@ -730,7 +730,7 @@
   },
   {
     "id": "ErrorBtcLowAmount",
-    "message": "{btcAmount} BTC - Esta cantidad es demasiada baja",
+    "message": "{btcAmount} BTC - Esta cantidad es demasiado baja, no cubre la tarifa de minería",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]

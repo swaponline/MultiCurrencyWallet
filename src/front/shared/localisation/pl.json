@@ -730,7 +730,7 @@
   },
   {
     "id": "ErrorBtcLowAmount",
-    "message": "{btcAmount} BTC - Ta kwota jest zbyt niska",
+    "message": "{btcAmount} BTC - Kwota ta jest zbyt niska, nie obejmuje opłaty eksploatacyjnej",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
