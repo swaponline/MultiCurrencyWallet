@@ -35,8 +35,8 @@ const FAQ = (props) => {
         const BYTE_IN_KB = 1024
 
         btcSatoshiPrice = await btcUtils.estimateFeeRate({ speed: 'fast', NETWORK })
-        bnbGasPrice = await ethLikeHelper.bnb.estimateGasPrice({ speed: 'fast' })
-        ethGasPrice = await ethLikeHelper.eth.estimateGasPrice({ speed: 'fast' })
+        bnbGasPrice = await ethLikeHelper.bnb.estimateGasPrice()
+        ethGasPrice = await ethLikeHelper.eth.estimateGasPrice()
 
         // remove memory leak
         if (_mounted) {
@@ -160,7 +160,7 @@ const FAQ = (props) => {
                   <span>
                     <b>{ethFee}</b> gwei
                     {' '}
-                    <a className={styles.link} href={externalConfig.api.defipulse} target="_blank">
+                    <a className={styles.link} href={externalConfig.feeRates.eth} target="_blank">
                       <FormattedMessage id="FAQFeeApiLink" defaultMessage="(source)" />
                     </a>
                   </span>
@@ -173,6 +173,10 @@ const FAQ = (props) => {
                 ? (
                   <span>
                     <b>{bnbFee}</b> gwei
+                    {' '}
+                    <a className={styles.link} href={externalConfig.feeRates.bsc} target="_blank">
+                      <FormattedMessage id="FAQFeeApiLink" defaultMessage="(source)" />
+                    </a>
                   </span>
                 ) : <InlineLoader />
               }
