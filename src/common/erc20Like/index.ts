@@ -6,7 +6,6 @@ import DEFAULT_CURRENCY_PARAMETERS from 'common/helpers/constants/DEFAULT_CURREN
 import TOKEN_STANDARDS from 'common/helpers/constants/TOKEN_STANDARDS'
 import ethLikeHelper from 'common/helpers/ethLikeHelper'
 import { feedback } from 'helpers'
-import web3 from 'helpers/web3'
 
 class erc20LikeHelper {
   readonly standard: string // (ex. erc20, bep20, ...)
@@ -30,18 +29,23 @@ class erc20LikeHelper {
     this.Web3 = web3
   }
 
-  reportError = (error) => {
-    feedback.helpers.failed(
-      ''.concat(`details - standard: ${this.standard}, `, `error message - ${error.message} `)
-    )
+  reportError = (params) => {
+    const { error, sendFeedback = false } = params
+
+    if (sendFeedback) {
+      feedback.helpers.failed(
+        ''.concat(`details - standard: ${this.standard}, `, `error message - ${error.message} `)
+      )
+    }
+
     console.group(`Common erc20LikeHelper >%c ${this.standard}`, 'color: red;')
     console.error('error: ', error)
     console.groupEnd()
   }
 
   estimateFeeValue = async (params): Promise<number> => {
-    const { method, speed, swapABMethod } = params
-    const gasPrice = await this.estimateGasPrice({ speed })
+    const { method, swapABMethod } = params
+    const gasPrice = await this.estimateGasPrice()
     const methodForLimit = swapABMethod === 'deposit'
       ? 'swapDeposit'
       : swapABMethod === 'withdraw'
@@ -55,8 +59,8 @@ class erc20LikeHelper {
       .toNumber()
   }
 
-  estimateGasPrice = async (params): Promise<number> => {
-    return ethLikeHelper[this.currencyKey].estimateGasPrice(params)
+  estimateGasPrice = async (): Promise<number> => {
+    return ethLikeHelper[this.currencyKey].estimateGasPrice()
   }
 
   isToken = (params): boolean => {
@@ -86,7 +90,7 @@ class erc20LikeHelper {
         .div(new BigNumber(10).pow(decimals))
         .toNumber()
     } catch (error) {
-      this.reportError(error)
+      this.reportError({ error })
     }
 
     return allowanceAmount || 0
