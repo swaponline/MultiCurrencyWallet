@@ -719,7 +719,7 @@
   },
   {
     "id": "ErrorBtcLowAmount",
-    "message": "{btcAmount} BTC - This amount is too low",
+    "message": "{btcAmount} BTC - Dit bedrag is te laag, dekt geen mijnvergoeding",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]

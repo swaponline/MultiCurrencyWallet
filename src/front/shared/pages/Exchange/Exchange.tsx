@@ -311,7 +311,7 @@ class Exchange extends PureComponent<any, any> {
         }
       case AddressType.Custom:
         return {
-          type: AddressType.Internal,
+          type: AddressType.Custom,
           currency,
           value: ``,
         }
@@ -362,7 +362,7 @@ class Exchange extends PureComponent<any, any> {
     if (storageType) {
       return storageType
     }
-    
+
     let resultType = 'Internal'
 
     if (COIN_DATA[currency]) {
@@ -1687,7 +1687,7 @@ class Exchange extends PureComponent<any, any> {
                 currencies={currencies}
                 onFocus={() => this.extendedControlsSet(true)}
                 onBlur={() => setTimeout(() => this.extendedControlsSet(false), 200)}
-                inputToolTip={balanceTooltip}
+                inputToolTip={(haveType !== AddressType.Custom) && balanceTooltip}
               />
 
               <AddressSelect
@@ -1788,7 +1788,7 @@ class Exchange extends PureComponent<any, any> {
               <p styleName="error">
                 <FormattedMessage
                   id="ErrorBtcLowAmount"
-                  defaultMessage="This amount is too low"
+                  defaultMessage="This amount is too low, does not cover mining fee"
                   values={{
                     btcAmount:
                       this.state.haveCurrency === 'btc'
