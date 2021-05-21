@@ -20,6 +20,7 @@ const SelectGroup = ({ intl: IntlShape,  dynamicFee, isToken, extendedControls, 
 }) => {
   const currAllowed = currencies.filter((item) => !item.dontCreateOrder)
 
+console.log('>>>>> SelectGroup ->>>>', currAllowed)
   return (
     <div styleName={`${isDark ? 'dark' : ''}`}>
       <div styleName="groupField" className={className}>
@@ -62,7 +63,7 @@ const SelectGroup = ({ intl: IntlShape,  dynamicFee, isToken, extendedControls, 
         }
         <CurrencySelect
           styleName="currencySelect"
-          selectedItemRender={(item) => item.fullTitle}
+          selectedItemRender={(item) => (item.blockchain) ? `$item.fullTitle (${item.blockchain})` : item.fullTitle}
           placeholder="Enter the name of coin"
           selectedValue={selectedValue}
           onSelect={onSelect}

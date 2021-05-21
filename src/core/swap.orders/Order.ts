@@ -43,6 +43,7 @@ class Order {
    * @param {number}  data.sellAmount
    */
   constructor(app, parentCollection, data) {
+    console.log('>>>>>>>>>>>>>>> createOrder', data)
     this.id             = data.id
     this.isMy           = null
     //@ts-ignore: strictNullChecks

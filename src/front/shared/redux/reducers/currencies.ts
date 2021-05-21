@@ -1,5 +1,10 @@
 import config from 'app-config'
 import TOKEN_STANDARDS from 'common/helpers/constants/TOKEN_STANDARDS'
+import { BLOCKCHAIN as BLOCKCHAIN_TYPE } from 'swap.app/constants/COINS'
+
+console.log('>>>>> curriencies', BLOCKCHAIN_TYPE)
+
+
 const NETWORK = process.env.MAINNET ? 'mainnet' : 'testnet'
 
 const getCustomTokenConfig = () => {
@@ -63,6 +68,7 @@ Object.keys(TOKEN_STANDARDS).forEach((key) => {
       value: name,
       fullTitle: name,
       addAssets: true,
+      blockchain: BLOCKCHAIN_TYPE.ETH,
       standard,
     })
   })
@@ -72,6 +78,7 @@ const tokenPartialItems: IUniversalObj[] = []
 
 Object.keys(TOKEN_STANDARDS).forEach((key) => {
   const standard = TOKEN_STANDARDS[key].standard
+  const blockchain = TOKEN_STANDARDS[key].currency
 
   Object.keys(config[standard])
     .filter((name) => config[standard][name].canSwap)
@@ -82,10 +89,12 @@ Object.keys(TOKEN_STANDARDS).forEach((key) => {
         icon: name,
         value: name,
         fullTitle: config[standard][name].fullName || name,
+        blockchain: BLOCKCHAIN_TYPE[blockchain.toUpperCase()],
         standard,
       })
     })
 })
+console.log('>>>>>> tokenPartialItems', tokenPartialItems, TOKEN_STANDARDS, BLOCKCHAIN_TYPE)
 
 const initialState = {
   items: [
@@ -96,6 +105,7 @@ const initialState = {
       icon: 'eth',
       value: 'eth',
       fullTitle: 'ethereum',
+      blockchain: BLOCKCHAIN_TYPE.ETH,
       addAssets: true,
     }] : [],
      //@ts-ignore
@@ -105,6 +115,7 @@ const initialState = {
       icon: 'bnb',
       value: 'bnb',
       fullTitle: 'binance coin',
+      blockchain: BLOCKCHAIN_TYPE.BNB,
       addAssets: true,
     }] : [],
     //@ts-ignore
@@ -114,6 +125,7 @@ const initialState = {
       icon: 'ghost',
       value: 'ghost',
       fullTitle: 'ghost',
+      blockchain: BLOCKCHAIN_TYPE.GHOST,
       addAssets: true,
     }] : [],
     //@ts-ignore
@@ -123,6 +135,7 @@ const initialState = {
       icon: 'next',
       value: 'next',
       fullTitle: 'next',
+      blockchain: BLOCKCHAIN_TYPE.NEXT,
       addAssets: true,
     }] : [],
     //@ts-ignore
@@ -132,6 +145,7 @@ const initialState = {
       icon: 'btc',
       value: 'btc',
       fullTitle: 'bitcoin',
+      blockchain: BLOCKCHAIN_TYPE.BTC,
       addAssets: true,
     },
     {
@@ -141,6 +155,7 @@ const initialState = {
       value: 'btcMultisig',
       fullTitle: 'bitcoinMultisig',
       addAssets: false,
+      blockchain: BLOCKCHAIN_TYPE.BTC,
       dontCreateOrder: true,
     },
     {
@@ -149,6 +164,7 @@ const initialState = {
       icon: 'btc',
       value: 'btcMultisigPin',
       fullTitle: 'bitcoinMultisigPin',
+      blockchain: BLOCKCHAIN_TYPE.BTC,
       addAssets: false,
       dontCreateOrder: true,
     },
@@ -158,6 +174,7 @@ const initialState = {
       icon: 'btc',
       value: 'btcMultisig',
       fullTitle: 'bitcoinMultisig',
+      blockchain: BLOCKCHAIN_TYPE.BTC,
       addAssets: false,
       dontCreateOrder: true,
     }] : [],

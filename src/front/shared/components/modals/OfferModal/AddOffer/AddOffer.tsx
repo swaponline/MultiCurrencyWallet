@@ -64,6 +64,7 @@ export default class AddOffer extends Component<any, any> {
 
   constructor(props) {
     super(props)
+    console.log('>>>>> add offer', props)
     const { items, tokenItems, initialData } = props
 
     if (config && config.isWidget) {
@@ -449,6 +450,7 @@ export default class AddOffer extends Component<any, any> {
 
   render() {
     const { currencies, tokenItems, addSelectedItems } = this.props
+    console.log('>>>> create offer >>>> ', currencies, tokenItems, addSelectedItems)
     const { 
       exchangeRate, buyAmount,
       sellAmount, buyCurrency,
