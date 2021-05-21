@@ -8,10 +8,11 @@ jest.setTimeout(140 * 1000)
 
 describe('Prepare to swap e2e tests', () => {
 
-  test('turnOn MM', async () => {
+  test('TurnOn MM', async () => {
     const { browser, page } = await createBrowser()
 
     try {
+      console.log('TurnOn MM -> Restore wallet')
       await importWallet(page, testWallets.btcTurnOnMM.seedPhrase.split(' '))
 
       await page.waitForSelector('#btcAddress')
@@ -21,13 +22,14 @@ describe('Prepare to swap e2e tests', () => {
       expect(recoveredRWBtcAddress).toBe(testWallets.btcTurnOnMM.address)
 
     } catch (error) {
+      await takeScreenshot(page, 'TurnOnMM_RestoreWalletError')
       await browser.close()
-      console.error('turnOnMM restore wallets Error: ', error)
+      console.error('TurnOn MM -> Restore wallet error: ', error)
       expect(false).toBe(true)
     }
 
     try {
-      // TurnOn MM test
+      console.log('TurnOn MM test')
       await addAssetToWallet(page, 'wbtc')
 
       await timeOut(3 * 1000)
@@ -37,6 +39,8 @@ describe('Prepare to swap e2e tests', () => {
       await timeOut(3 * 1000)
 
       const { btcBalance, tokenBalance } = await turnOnMM(page)
+
+      await timeOut(3 * 1000)
 
       await page.$('a[href="#/exchange"]').then((aToExchange) => aToExchange.click())
 
@@ -51,23 +55,23 @@ describe('Prepare to swap e2e tests', () => {
       +tokenBalance ? expect(mmOrders).toContain(tokenBalance) : console.log('turnOnMM address have not token balance')
 
     } catch (error) {
+      await takeScreenshot(page, 'TurnOnMMTestError')
       await browser.close()
-      console.error('TurnOn MM Error: ', error)
+      console.error('TurnOn MM test error: ', error)
       expect(false).toBe(true)
     }
 
     await browser.close()
   })
 
-  test('check messaging', async () => {
+  test('Check messaging', async () => {
     const { browser: MakerBrowser, page: MakerPage } = await createBrowser()
     const { browser: TakerBrowser, page: TakerPage } = await createBrowser()
 
     try {
-
+      console.log('Check messaging -> Restore wallets')
       await importWallet(MakerPage, testWallets.btcMMaker.seedPhrase.split(' '))
       await importWallet(TakerPage, testWallets.btcMTaker.seedPhrase.split(' '))
-
 
       await MakerPage.waitForSelector('#btcAddress') // waits for Maker wallet to load
       await TakerPage.waitForSelector('#btcAddress') // waits for Taker wallet to load
@@ -79,14 +83,16 @@ describe('Prepare to swap e2e tests', () => {
       expect(recoveredTakerBtcAddress).toBe(testWallets.btcMTaker.address)
 
     } catch (error) {
+      await takeScreenshot(MakerPage, 'MakerPage_CheckMessaging_RestoreWalletError')
+      await takeScreenshot(TakerPage, 'TakerPage_CheckMessaging_RestoreWalletError')
       await MakerBrowser.close()
       await TakerBrowser.close()
-      console.error('restore wallets Error: ', error)
+      console.error('Check messaging -> Restore wallets error: ', error)
       expect(false).toBe(true)
     }
 
     try {
-      // Prepare pages for next tests
+      console.log('Check messaging -> Prepare pages for next actions')
       await addAssetToWallet(MakerPage, 'wbtc')
       await addAssetToWallet(TakerPage, 'wbtc')
 
@@ -102,14 +108,16 @@ describe('Prepare to swap e2e tests', () => {
       await TakerPage.$('#orderbookBtn').then((orderbookBtn) => orderbookBtn.click())
 
     } catch (error) {
+      await takeScreenshot(MakerPage, 'MakerPage_CheckMessaging_PreparePagesError')
+      await takeScreenshot(TakerPage, 'TakerPage_CheckMessaging_PreparePagesError')
       await MakerBrowser.close()
       await TakerBrowser.close()
-      console.error('prepare pages Error: ', error)
+      console.error('Check messaging -> Prepare pages for next actions error: ', error)
       expect(false).toBe(true)
     }
 
     try {
-       // Setup MM
+      console.log('Check messaging -> Setup MM')
       await MakerPage.goto(`${MakerPage.url()}marketmaker/WBTC`)
 
       await timeOut(3 * 1000)
@@ -129,14 +137,16 @@ describe('Prepare to swap e2e tests', () => {
       +makerTokenBalance ? expect(mmOrders).toContain(makerTokenBalance) : console.log('maker have not token balance')
 
     } catch (error) {
+      await takeScreenshot(MakerPage, 'MakerPage_CheckMessaging_SetupMMError')
+      await takeScreenshot(TakerPage, 'TakerPage_CheckMessaging_SetupMMError')
       await MakerBrowser.close()
       await TakerBrowser.close()
-      console.error('setup mm Error: ', error)
+      console.error('Check messaging -> Setup MM error: ', error)
       expect(false).toBe(true)
     }
 
     try {
-      // Messaging test
+      console.log('Check messaging test')
       await timeOut(3 * 1000)
 
       // find btc maker orders
@@ -154,9 +164,11 @@ describe('Prepare to swap e2e tests', () => {
       +makerBtcBalance ? expect(allOrders).toContain(makerBtcBalance) : console.log('maker have not btc balance')
       +makerTokenBalance ? expect(allOrders).toContain(makerTokenBalance) : console.log('maker have not token balance')
     } catch (error) {
+      await takeScreenshot(MakerPage, 'MakerPage_CheckMessagingTestError')
+      await takeScreenshot(TakerPage, 'TakerPage_CheckMessagingTestError')
       await MakerBrowser.close()
       await TakerBrowser.close()
-      console.error('MESSAGING Error: ', error)
+      console.error('Check messaging test error: ', error)
       expect(false).toBe(true)
     }
     await MakerBrowser.close()
