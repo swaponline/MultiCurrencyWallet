@@ -51,8 +51,6 @@ describe('Prepare to swap e2e tests', () => {
       const buyAmountOrders   = await page.$$eval('.buyAmountOrders', elements => elements.map(el => el.textContent))
       const mmOrders = [...sellAmountOrders, ...buyAmountOrders];
 
-      await takeScreenshot(page, 'findAllMakerOrders')
-
       +btcBalance ? expect(mmOrders).toContain(btcBalance) : console.log('turnOnMM address have not btc balance')
       +tokenBalance ? expect(mmOrders).toContain(tokenBalance) : console.log('turnOnMM address have not token balance')
 
