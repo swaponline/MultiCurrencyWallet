@@ -1,30 +1,72 @@
 import BigNumber from 'bignumber.js'
+import testWallets from '../testWallets'
 
 import { createBrowser, importWallet, addAssetToWallet, turnOnMM, takeScreenshot, timeOut } from './utils'
 
 
-const MAKER_SEED = ['neither', 'already', 'situate', 'silent', 'ripple', 'milk', 'paddle', 'glass', 'leopard', 'track', 'mansion', 'junk']
-const makerBtcAddress = 'n2Y2rbg6wVEQnnpNxisiHK4wCDUAq59iv6'
+jest.setTimeout(140 * 1000)
 
-const TAKER_SEED = ['honey', 'stereo', 'harsh', 'diary', 'select', 'episode', 'ready', 'ritual', 'best', 'target', 'paper', 'auto']
-const takerBtcAddress = 'n4JjB9D9axszdsFxyxDmF43z4WwttN6oPb'
+describe('Prepare to swap e2e tests', () => {
 
+  test('turnOn MM', async () => {
+    const { browser, page } = await createBrowser()
 
-jest.setTimeout(100 * 1000)
+    try {
+      await importWallet(page, testWallets.btcTurnOnMM.seedPhrase.split(' '))
 
+      await page.waitForSelector('#btcAddress')
 
-describe('Start e2e swap tests', () => {
+      const recoveredRWBtcAddress = await page.$eval('#btcAddress', el => el.textContent)
 
-  it('restore wallets, turnOn MM, check messaging', async () => {
-    console.log("CREATE BROWSERS")
+      expect(recoveredRWBtcAddress).toBe(testWallets.btcTurnOnMM.address)
+
+    } catch (error) {
+      await browser.close()
+      console.error('turnOnMM restore wallets Error: ', error)
+      expect(false).toBe(true)
+    }
+
+    try {
+      // TurnOn MM test
+      await addAssetToWallet(page, 'wbtc')
+
+      await timeOut(3 * 1000)
+
+      await page.goto(`${page.url()}marketmaker/WBTC`)
+
+      await timeOut(3 * 1000)
+
+      const { btcBalance, tokenBalance } = await turnOnMM(page)
+
+      await page.$('a[href="#/exchange"]').then((aToExchange) => aToExchange.click())
+
+      await page.$('#orderbookBtn').then((orderbookBtn) => orderbookBtn.click())
+
+      // find all maker orders
+      const sellAmountOrders  = await page.$$eval('.sellAmountOrders', elements => elements.map(el => el.textContent))
+      const buyAmountOrders   = await page.$$eval('.buyAmountOrders', elements => elements.map(el => el.textContent))
+      const mmOrders = [...sellAmountOrders, ...buyAmountOrders];
+
+      +btcBalance ? expect(mmOrders).toContain(btcBalance) : console.log('turnOnMM address have not btc balance')
+      +tokenBalance ? expect(mmOrders).toContain(tokenBalance) : console.log('turnOnMM address have not token balance')
+
+    } catch (error) {
+      await browser.close()
+      console.error('TurnOn MM Error: ', error)
+      expect(false).toBe(true)
+    }
+
+    await browser.close()
+  })
+
+  test('check messaging', async () => {
     const { browser: MakerBrowser, page: MakerPage } = await createBrowser()
     const { browser: TakerBrowser, page: TakerPage } = await createBrowser()
 
     try {
-      console.log("TEST IMPORT WALLETS")
 
-      await importWallet(MakerPage, MAKER_SEED)
-      await importWallet(TakerPage, TAKER_SEED)
+      await importWallet(MakerPage, testWallets.btcMMaker.seedPhrase.split(' '))
+      await importWallet(TakerPage, testWallets.btcMTaker.seedPhrase.split(' '))
 
 
       await MakerPage.waitForSelector('#btcAddress') // waits for Maker wallet to load
@@ -33,20 +75,18 @@ describe('Start e2e swap tests', () => {
       const recoveredMakerBtcAddress = await MakerPage.$eval('#btcAddress', el => el.textContent)
       const recoveredTakerBtcAddress = await TakerPage.$eval('#btcAddress', el => el.textContent)
 
-      console.log("checks for restore wallets start")
-      expect(recoveredMakerBtcAddress).toBe(makerBtcAddress)
-      expect(recoveredTakerBtcAddress).toBe(takerBtcAddress)
-      console.log("checks for restore wallets done")
+      expect(recoveredMakerBtcAddress).toBe(testWallets.btcMMaker.address)
+      expect(recoveredTakerBtcAddress).toBe(testWallets.btcMTaker.address)
 
     } catch (error) {
       await MakerBrowser.close()
       await TakerBrowser.close()
-      console.error('IMPORT WALLETS Error: ', error)
+      console.error('restore wallets Error: ', error)
       expect(false).toBe(true)
     }
 
     try {
-      console.log("PREPARE PAGES FOR NEXT TESTS")
+      // Prepare pages for next tests
       await addAssetToWallet(MakerPage, 'wbtc')
       await addAssetToWallet(TakerPage, 'wbtc')
 
@@ -64,13 +104,12 @@ describe('Start e2e swap tests', () => {
     } catch (error) {
       await MakerBrowser.close()
       await TakerBrowser.close()
-      console.error('PREPARE PAGES Error: ', error)
+      console.error('prepare pages Error: ', error)
       expect(false).toBe(true)
     }
 
     try {
-      console.log("TEST SETUP MM")
-       // checks setupMM
+       // Setup MM
       await MakerPage.goto(`${MakerPage.url()}marketmaker/WBTC`)
 
       await timeOut(3 * 1000)
@@ -84,22 +123,20 @@ describe('Start e2e swap tests', () => {
       // find all maker orders
       const sellAmountOrders  = await MakerPage.$$eval('.sellAmountOrders', elements => elements.map(el => el.textContent))
       const buyAmountOrders   = await MakerPage.$$eval('.buyAmountOrders', elements => elements.map(el => el.textContent))
-      const mmOrders = [...sellAmountOrders, ...buyAmountOrders]
+      const mmOrders = [...sellAmountOrders, ...buyAmountOrders];
 
-      console.log("checks for setup MM start")
       +makerBtcBalance ? expect(mmOrders).toContain(makerBtcBalance) : console.log('maker have not btc balance')
       +makerTokenBalance ? expect(mmOrders).toContain(makerTokenBalance) : console.log('maker have not token balance')
-      console.log("checks for setup MM done")
 
     } catch (error) {
       await MakerBrowser.close()
       await TakerBrowser.close()
-      console.error('SETUP MM Error: ', error)
+      console.error('setup mm Error: ', error)
       expect(false).toBe(true)
     }
 
     try {
-      console.log("TEST MESSAGING")
+      // Messaging test
       await timeOut(3 * 1000)
 
       // find btc maker orders
@@ -112,12 +149,10 @@ describe('Start e2e swap tests', () => {
       const wbtcGetAmountsOfOrders   = await TakerPage.$$eval('.wbtcGetAmountOfOrder', elements => elements.map(el => el.textContent))
       const wbtcOrders = [...wbtcSellAmountsOfOrders, ...wbtcGetAmountsOfOrders]
 
-      const allOrders = [...btcOrders.map((amount) => new BigNumber(amount).toFixed(5)), ...wbtcOrders.map((amount) => new BigNumber(amount).toFixed(5))]
+      const allOrders = [...btcOrders.map((amount) => new BigNumber(amount).toFixed(5)), ...wbtcOrders.map((amount) => new BigNumber(amount).toFixed(5))];
 
-      console.log("checks for messaging start")
       +makerBtcBalance ? expect(allOrders).toContain(makerBtcBalance) : console.log('maker have not btc balance')
       +makerTokenBalance ? expect(allOrders).toContain(makerTokenBalance) : console.log('maker have not token balance')
-      console.log("checks for messaging done")
     } catch (error) {
       await MakerBrowser.close()
       await TakerBrowser.close()
