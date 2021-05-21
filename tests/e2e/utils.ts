@@ -94,10 +94,11 @@ export const turnOnMM = async (page: puppeteer.Page) => {
 }
 
 export const takeScreenshot = async (page: puppeteer.Page, fileName: string) => {
+  const dir = 'tests/e2e/screenshots'
   // check if ./screenshots directory exists
-  if (!fs.existsSync('./screenshots')) {
+  if (!fs.existsSync(dir)) {
     // create tests/e2e/screenshots directory
-    await fs.mkdir('tests/e2e/screenshots', (err) => {
+    await fs.mkdir(dir, (err) => {
       if (err) {
           throw err;
       }
