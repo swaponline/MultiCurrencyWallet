@@ -27,7 +27,12 @@ jobs:
         npm run build:testnet
     - name: run e2e tests
       run: |
+        mkdir ./tests/e2e/screenshots
         npm run test:e2e:actions
+    - uses: actions/upload-artifact@v2
+      with:
+        name: screenshots
+        path: ./tests/e2e/screenshots
     - name: bot test
       run: |
         npm run bot:test
