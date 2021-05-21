@@ -61,7 +61,21 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
     currencies: { items: currencies },
     modals,
   }) => {
+    const allData = [
+      btcData,
+      btcMultisigSMSData,
+      btcMultisigUserData,
+      ethData,
+      bnbData,
+      ghostData,
+      nextData,
+      ...Object.keys(tokensData).map((k) => tokensData[k]),
+    ].map(({ account, keyPair, ...data }) => ({
+      ...data,
+    }))
+
     return {
+      allData,
       currencies,
       isBalanceFetching,
       multisigPendingCount,
@@ -97,9 +111,8 @@ class Wallet extends PureComponent<any, any> {
         params: { page = null },
       },
       multisigPendingCount,
+      allData,
     } = props
-
-    const allData = actions.core.getWallets({})
 
     let activeView = 0
 
@@ -138,6 +151,15 @@ class Wallet extends PureComponent<any, any> {
   componentDidUpdate(prevProps) {
     const {
       match: {
+        params: { page: prevPage = null },
+      },
+      multisigPendingCount: prevMultisigPendingCount,
+      location: { pathname: prevPathname },
+      allData: prevAllData,
+    } = prevProps
+
+    const {
+      match: {
         params: { page = null },
       },
       multisigPendingCount,
@@ -145,11 +167,14 @@ class Wallet extends PureComponent<any, any> {
       intl: { locale },
       location: { pathname },
       history,
+      allData,
     } = this.props
 
-    const {
-      location: { pathname: prevPathname },
-    } = prevProps
+    if (JSON.stringify(allData) !== JSON.stringify(prevAllData)) {
+      this.setState(() => ({
+        allData,
+      }))
+    }
 
     if (
       pathname.toLowerCase() != prevPathname.toLowerCase() &&
@@ -157,13 +182,6 @@ class Wallet extends PureComponent<any, any> {
     ) {
       this.handleConnectWallet()
     }
-
-    const {
-      match: {
-        params: { page: prevPage = null },
-      },
-      multisigPendingCount: prevMultisigPendingCount,
-    } = prevProps
 
     if (page !== prevPage || multisigPendingCount !== prevMultisigPendingCount) {
       let activeView = 0
@@ -177,10 +195,10 @@ class Wallet extends PureComponent<any, any> {
         }, intl)
       }
 
-      this.setState({
+      this.setState(() => ({
         activeView,
         multisigPendingCount,
-      })
+      }))
     }
     //@ts-ignore
     clearTimeout(this.syncTimer)
@@ -235,7 +253,7 @@ class Wallet extends PureComponent<any, any> {
   }
 
   handleWithdraw = (params) => {
-    const { allData } = this.props
+    const { allData } = this.state
     const { address, amount } = params
     const item = allData.find(
       ({ currency }) => currency.toLowerCase() === params.currency.toLowerCase()
