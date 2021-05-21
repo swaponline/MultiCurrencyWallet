@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 
 import { connect } from 'redaction'
 import actions from 'redux/actions'
@@ -45,6 +45,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
     user: {
       activeFiat,
       ethData,
+      bnbData,
       btcData,
       ghostData,
       nextData,
@@ -60,24 +61,11 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
     currencies: { items: currencies },
     modals,
   }) => {
-    const allData = [
-      btcData,
-      btcMultisigSMSData,
-      btcMultisigUserData,
-      ethData,
-      ghostData,
-      nextData,
-      ...Object.keys(tokensData).map((k) => tokensData[k]),
-    ].map(({ account, keyPair, ...data }) => ({
-      ...data,
-    }))
-
     return {
-      allData,
       currencies,
       isBalanceFetching,
       multisigPendingCount,
-      hiddenCoinsList: hiddenCoinsList,
+      hiddenCoinsList,
       user,
       activeCurrency,
       activeFiat,
@@ -100,7 +88,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
 )
 @withRouter
 @cssModules(styles, { allowMultiple: true })
-class Wallet extends Component<any, any> {
+class Wallet extends PureComponent<any, any> {
   constructor(props) {
     super(props)
 
@@ -111,6 +99,8 @@ class Wallet extends Component<any, any> {
       multisigPendingCount,
     } = props
 
+    const allData = actions.core.getWallets({})
+
     let activeView = 0
 
     if (page === 'history' && !isMobile) {
@@ -119,6 +109,7 @@ class Wallet extends Component<any, any> {
     if (page === 'invoices') activeView = 2
 
     this.state = {
+      allData,
       activeView,
       btcBalance: 0,
       enabledCurrencies: getActivatedCurrencies(),
@@ -277,7 +268,7 @@ class Wallet extends Component<any, any> {
   }
 
   handleModalOpen = (context) => {
-    const { enabledCurrencies } = this.state
+    const { enabledCurrencies, allData } = this.state
     const { hiddenCoinsList } = this.props
 
     /* @ToDo Вынести отдельно */
@@ -308,9 +299,7 @@ class Wallet extends Component<any, any> {
       }
     }
 
-    const currencies = actions.core
-      .getWallets({})
-      .filter(({ isMetamask, isConnected, currency, address, balance }) => {
+    const currencies = allData.filter(({ isMetamask, isConnected, currency, address, balance }) => {
         return (
           (context === 'Send' ? balance : true) &&
           !hiddenCoinsList.includes(currency) &&
@@ -329,13 +318,12 @@ class Wallet extends Component<any, any> {
   }
 
   handleWithdrawFirstAsset = () => {
-    const { hiddenCoinsList } = this.props
     const {
       history,
       intl: { locale },
+      hiddenCoinsList,
     } = this.props
-
-    const allData = actions.core.getWallets({})
+    const { allData } = this.state
 
     let tableRows = allData.filter(({ currency, address, balance }) => {
       // @ToDo - В будущем нужно убрать проверку только по типу монеты.
@@ -444,6 +432,7 @@ class Wallet extends Component<any, any> {
 
   render() {
     const {
+      allData,
       activeView,
       infoAboutCurrency,
       enabledCurrencies,
@@ -460,8 +449,6 @@ class Wallet extends Component<any, any> {
       },
     } = this.props
 
-    const allData = actions.core.getWallets({})
-
     this.syncData()
 
     let btcBalance = 0
@@ -469,10 +456,7 @@ class Wallet extends Component<any, any> {
 
     // Набор валют для виджета
     const widgetCurrencies = ['BTC']
-    /*
-    if (!hiddenCoinsList.includes('BTC (SMS-Protected)'))
-      widgetCurrencies.push('BTC (SMS-Protected)')
-      */
+
     if (!hiddenCoinsList.includes('BTC (PIN-Protected)')) {
       widgetCurrencies.push('BTC (PIN-Protected)')
     }
@@ -504,11 +488,6 @@ class Wallet extends Component<any, any> {
         balance > 0
       )
     })
-
-    if (isWidgetBuild) {
-      // Отфильтруем валюты, исключив те, которые не используются в этом билде
-      tableRows = tableRows.filter(({ currency }) => widgetCurrencies.includes(currency))
-    }
 
     tableRows = tableRows.filter(({ currency }) => enabledCurrencies.includes(currency))
 
