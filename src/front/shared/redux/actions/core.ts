@@ -523,9 +523,7 @@ const getWallets = (options) => {
     // =====================================
     ...(!config.opts.curEnabled || config.opts.curEnabled.ghost ? [ghostData] : []),
     ...(!config.opts.curEnabled || config.opts.curEnabled.next ? [nextData] : []),
-    ...Object.keys(tokensData)
-      .filter((k) => !tokensData[k].reducerDataTarget)
-      .map((k) => tokensData[k]),
+    ...Object.keys(tokensData).map((k) => tokensData[k]),
   ].map(({ account, keyPair, ...data }) => ({
     ...data,
   }))

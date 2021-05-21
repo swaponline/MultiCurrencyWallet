@@ -209,7 +209,6 @@ class CurrencyWallet extends Component<any, any> {
         balance,
         infoAboutCurrency,
         hiddenCoinsList,
-        currencyRate: itemCurrency.currencyRate,
       })
       if (activeCurrency.toUpperCase() !== activeFiat) {
         actions.user.pullActiveCurrency(currency.toLowerCase())

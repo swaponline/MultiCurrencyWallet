@@ -62,19 +62,7 @@ class Erc20LikeAction {
 
   addToken = (params) => {
     const { standard, contractAddr, symbol, decimals } = params
-    let customTokens = JSON.parse(localStorage.getItem(constants.localStorage.customToken) || '{}')
-
-    if (!Object.keys(customTokens).length) {
-      customTokens = {
-        [NETWORK]: {},
-      }
-
-      Object.keys(TOKEN_STANDARDS).forEach((key) => {
-        const standard = TOKEN_STANDARDS[key].standard
-
-        customTokens[NETWORK][standard] = {}
-      })
-    }
+    const customTokens = this.getCustomTokensConfig()
 
     customTokens[NETWORK][standard][contractAddr] = {
       address: contractAddr,
@@ -83,6 +71,29 @@ class Erc20LikeAction {
     }
 
     localStorage.setItem(constants.localStorage.customToken, JSON.stringify(customTokens))
+  }
+
+  getCustomTokensConfig = () => {
+    const customTokens = JSON.parse(localStorage.getItem(constants.localStorage.customToken) || '{}')
+    const fillInTokensConfig = (configName) => {
+      customTokens[configName] = {}
+
+      Object.keys(TOKEN_STANDARDS).forEach((key) => {
+        const standard = TOKEN_STANDARDS[key].standard
+
+        customTokens[configName][standard] = {}
+      })
+    }
+
+    if (!customTokens.testnet) {
+      fillInTokensConfig('testnet')
+    }
+
+    if (!customTokens.mainnet) {
+      fillInTokensConfig('mainnet')
+    }
+
+    return customTokens
   }
 
   getTx = (txRaw) => {
@@ -363,7 +374,6 @@ class Erc20LikeAction {
       currency: nameContract.toUpperCase(),
       contractAddress,
       decimals,
-      currencyRate: 1,
       isMnemonic: isSweeped,
       isMetamask: false,
       isConnected: false,
