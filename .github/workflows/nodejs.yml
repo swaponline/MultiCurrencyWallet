@@ -29,9 +29,9 @@ jobs:
       run: |
         mkdir ./tests/e2e/screenshots
         npm run test:e2e:actions
-      uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v2
       with:
-        name: extensions
+        name: screenshots
         path: ./tests/e2e/screenshots
     - name: bot test
       run: |
