@@ -63,7 +63,7 @@ console.log('>>>>> SelectGroup ->>>>', currAllowed)
         }
         <CurrencySelect
           styleName="currencySelect"
-          selectedItemRender={(item) => (item.blockchain) ? `$item.fullTitle (${item.blockchain})` : item.fullTitle}
+          selectedItemRender={(item) => (item.blockchain) ? `${item.fullTitle} (${item.blockchain})` : item.fullTitle}
           placeholder="Enter the name of coin"
           selectedValue={selectedValue}
           onSelect={onSelect}
