@@ -70,13 +70,6 @@
     ]
   },
   {
-    "id": "transactionLink28",
-    "message": "Transaction: ",
-    "files": [
-      "src/front/shared/components/Href/TransactionLink.tsx"
-    ]
-  },
-  {
     "id": "Loader21",
     "message": "Please wait, it takes from 3 to 5 minutes to complete the transaction. ",
     "files": [

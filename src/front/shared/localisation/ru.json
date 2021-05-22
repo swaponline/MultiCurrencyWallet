@@ -74,13 +74,6 @@
     ]
   },
   {
-    "id": "transactionLink28",
-    "message": "Транзакция: ",
-    "files": [
-      "src/front/shared/components/Href/TransactionLink.tsx"
-    ]
-  },
-  {
     "id": "Loader21",
     "message": "Пожалуйста подождите, потребуется 3-5 минут для проведения транзакции. ",
     "files": [

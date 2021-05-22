@@ -74,13 +74,6 @@
     ]
   },
   {
-    "id": "transactionLink28",
-    "message": "Transakcja: ",
-    "files": [
-      "src/front/shared/components/Href/TransactionLink.tsx"
-    ]
-  },
-  {
     "id": "Loader21",
     "message": "Proszę czekać, standartowo transkacja zajmuje 5-15 minut. ",
     "files": [

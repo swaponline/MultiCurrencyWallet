@@ -74,13 +74,6 @@
     ]
   },
   {
-    "id": "transactionLink28",
-    "message": "Transacción: ",
-    "files": [
-      "src/front/shared/components/Href/TransactionLink.tsx"
-    ]
-  },
-  {
     "id": "Loader21",
     "message": "Por favor espere, demora de 3 a 5 minutos en completar la transacción. ",
     "files": [
