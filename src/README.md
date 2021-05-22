@@ -164,7 +164,7 @@
 │   │   ├── coin.ts
 │   │   ├── network.ts
 │   │   └── swap.ts
-│   ├── erc20tokens
+│   ├── erc20Like
 │   │   └── index.ts
 │   ├── examples
 │   │   ├── send.ts
@@ -186,6 +186,7 @@
 │   │   │   ├── MIN_AMOUNT_OFFER.ts
 │   │   │   ├── MIN_AMOUNT.ts
 │   │   │   └── TRANSACTION.ts
+│   │   ├── ethLikeHelper.ts
 │   │   └── turboSwap.ts
 │   ├── messaging
 │   │   └── pubsubRoom
@@ -362,7 +363,8 @@
 │   │   │   ├── icon-16.png
 │   │   │   ├── icon-196.png
 │   │   │   └── icon-32.png
-│   │   └── manifest_.json
+│   │   ├── manifest_bsc.json
+│   │   └── manifest_eth.json
 │   ├── client
 │   │   ├── favicon.png
 │   │   ├── fonts
@@ -412,41 +414,13 @@
 │   │           ├── index.scss
 │   │           └── _manrope.scss
 │   ├── config
-│   │   ├── bsc-mainnet
-│   │   │   ├── api.js
-│   │   │   ├── erc20.js
-│   │   │   ├── feeRates.js
-│   │   │   ├── hiddenCoins.js
-│   │   │   ├── index.js
-│   │   │   ├── link.js
-│   │   │   ├── noExchangeCoins.js
-│   │   │   ├── pubsubRoom.js
-│   │   │   ├── swapConfig.js
-│   │   │   ├── swapContract.js
-│   │   │   └── web3.js
-│   │   ├── bsc-mainnet.dev.js
-│   │   ├── bsc-mainnet.prod.js
-│   │   ├── bsc-mainnet.widget.prod.js
-│   │   ├── bsc-testnet
-│   │   │   ├── api.js
-│   │   │   ├── erc20.js
-│   │   │   ├── feeRates.js
-│   │   │   ├── hiddenCoins.js
-│   │   │   ├── index.js
-│   │   │   ├── link.js
-│   │   │   ├── noExchangeCoins.js
-│   │   │   ├── pubsubRoom.js
-│   │   │   ├── swapConfig.js
-│   │   │   ├── swapContract.js
-│   │   │   └── web3.js
-│   │   ├── bsc-testnet.dev.js
-│   │   ├── bsc-testnet.prod.js
-│   │   ├── bsc-testnet.widget.prod.js
 │   │   ├── chrome-extension-mainnet.prod.js
 │   │   ├── chrome-extension-testnet.prod.js
 │   │   ├── default.js
+│   │   ├── gravatarUsers.js
 │   │   ├── mainnet
 │   │   │   ├── api.js
+│   │   │   ├── bep20.js
 │   │   │   ├── erc20.js
 │   │   │   ├── feeRates.js
 │   │   │   ├── hiddenCoins.js
@@ -466,6 +440,7 @@
 │   │   ├── mainnet.widget.prod.js
 │   │   ├── testnet
 │   │   │   ├── api.js
+│   │   │   ├── bep20.js
 │   │   │   ├── erc20.js
 │   │   │   ├── feeRates.js
 │   │   │   ├── hiddenCoins.js
@@ -632,8 +607,7 @@
 │   │   │   │       └── WidgetWalletTour.tsx
 │   │   │   ├── Href
 │   │   │   │   ├── Href.scss
-│   │   │   │   ├── Href.tsx
-│   │   │   │   └── TransactionLink.tsx
+│   │   │   │   └── Href.tsx
 │   │   │   ├── InvoiceInfoBlock
 │   │   │   │   ├── InvoiceInfoBlock.scss
 │   │   │   │   └── InvoiceInfoBlock.tsx
@@ -692,9 +666,9 @@
 │   │   │   │       ├── ModalContainer.scss
 │   │   │   │       └── ModalContainer.tsx
 │   │   │   ├── modals
-│   │   │   │   ├── AddCustomERC20
-│   │   │   │   │   ├── AddCustomERC20.scss
-│   │   │   │   │   └── AddCustomERC20.tsx
+│   │   │   │   ├── AddCustomToken
+│   │   │   │   │   ├── index.scss
+│   │   │   │   │   └── index.tsx
 │   │   │   │   ├── Alert
 │   │   │   │   │   ├── AlertModal.scss
 │   │   │   │   │   └── AlertModal.tsx
@@ -720,9 +694,7 @@
 │   │   │   │   │   └── ConnectWalletModal.tsx
 │   │   │   │   ├── CurrencyAction
 │   │   │   │   │   ├── CurrencyAction.scss
-│   │   │   │   │   ├── CurrencyAction.tsx
-│   │   │   │   │   └── images
-│   │   │   │   │       └── index.ts
+│   │   │   │   │   └── CurrencyAction.tsx
 │   │   │   │   ├── DeclineOrdersModal
 │   │   │   │   │   ├── DeclineOrdersModal.scss
 │   │   │   │   │   └── DeclineOrdersModal.tsx
@@ -816,9 +788,6 @@
 │   │   │   │   │   └── Share.tsx
 │   │   │   │   ├── Styles
 │   │   │   │   │   └── default.scss
-│   │   │   │   ├── SweepToMnemonicKeys
-│   │   │   │   │   ├── SweepToMnemonicKeys.scss
-│   │   │   │   │   └── SweepToMnemonicKeys.tsx
 │   │   │   │   ├── WalletAddressModal
 │   │   │   │   │   ├── WalletAddressModal.scss
 │   │   │   │   │   └── WalletAddressModal.tsx
@@ -872,6 +841,8 @@
 │   │   │   │   └── SuccessWithdraw
 │   │   │   │       ├── SuccessWithdraw.scss
 │   │   │   │       └── SuccessWithdraw.tsx
+│   │   │   ├── OutsideClick
+│   │   │   │   └── index.tsx
 │   │   │   ├── PageHeadline
 │   │   │   │   ├── PageHeadline.scss
 │   │   │   │   ├── PageHeadline.tsx
@@ -963,8 +934,7 @@
 │   │   │       │       └── Option.tsx
 │   │   │       ├── DropDown
 │   │   │       │   ├── index.scss
-│   │   │       │   ├── index.tsx
-│   │   │       │   └── OutsideClick.tsx
+│   │   │       │   └── index.tsx
 │   │   │       ├── DropdownMenu
 │   │   │       │   ├── DropdownMenu.scss
 │   │   │       │   ├── DropdownMenu.tsx
@@ -974,11 +944,6 @@
 │   │   │       ├── Expandable
 │   │   │       │   ├── Expandable.scss
 │   │   │       │   └── Expandable.tsx
-│   │   │       ├── MenuIcon
-│   │   │       │   ├── images
-│   │   │       │   │   └── menu.svg
-│   │   │       │   ├── MenuIcon.scss
-│   │   │       │   └── MenuIcon.tsx
 │   │   │       ├── Panel
 │   │   │       │   ├── Panel.scss
 │   │   │       │   └── Panel.tsx
@@ -1004,6 +969,7 @@
 │   │   │   ├── adminFee.ts
 │   │   │   ├── apiLooper.ts
 │   │   │   ├── api.ts
+│   │   │   ├── bnb.ts
 │   │   │   ├── btc.ts
 │   │   │   ├── cache.ts
 │   │   │   ├── constants
@@ -1014,6 +980,7 @@
 │   │   │   │   ├── PAIR_TYPES.ts
 │   │   │   │   ├── privateKeyNames.ts
 │   │   │   │   ├── TOKEN_DECIMALS.ts
+│   │   │   │   ├── TOKEN_STANDARDS.ts
 │   │   │   │   └── TRADE_TICKERS.ts
 │   │   │   ├── domUtils.ts
 │   │   │   ├── ethToken.ts
@@ -1024,6 +991,7 @@
 │   │   │   ├── getItezUrl.ts
 │   │   │   ├── getPageOffset.ts
 │   │   │   ├── getPairFees.ts
+│   │   │   ├── getReduxState.ts
 │   │   │   ├── getTopLocation.ts
 │   │   │   ├── getUnixTimeStamp.ts
 │   │   │   ├── getWalletLink.ts
@@ -1196,6 +1164,8 @@
 │   │   │   │   ├── FAQ.tsx
 │   │   │   │   ├── images
 │   │   │   │   │   ├── btcIcon.svg
+│   │   │   │   │   ├── extensionPromoDark.png
+│   │   │   │   │   ├── extensionPromoLight.png
 │   │   │   │   │   └── wbtcIcon.svg
 │   │   │   │   ├── MarketmakerPromo.scss
 │   │   │   │   ├── MarketmakerPromo.tsx
@@ -1223,6 +1193,8 @@
 │   │   │   │   ├── FeeControler
 │   │   │   │   │   ├── FeeControler.scss
 │   │   │   │   │   └── FeeControler.tsx
+│   │   │   │   ├── images
+│   │   │   │   │   └── checked.svg
 │   │   │   │   ├── SwapController.tsx
 │   │   │   │   ├── swaps
 │   │   │   │   │   ├── build.ts
@@ -1243,40 +1215,27 @@
 │   │   │   │       │   │   ├── FourthStep.tsx
 │   │   │   │       │   │   ├── SecondStep.tsx
 │   │   │   │       │   │   └── ThirdStep.tsx
-│   │   │   │       │   ├── SwapList.scss
-│   │   │   │       │   ├── SwapList.tsx
-│   │   │   │       │   └── UTXOSteps
-│   │   │   │       │       ├── FirstStep.tsx
-│   │   │   │       │       ├── FourthStep.tsx
-│   │   │   │       │       ├── SecondStep.tsx
-│   │   │   │       │       └── ThirdStep.tsx
-│   │   │   │       ├── SwapProgress
 │   │   │   │       │   ├── ABSwapProgressText
 │   │   │   │       │   │   ├── BtcLikeToEthToken.tsx
 │   │   │   │       │   │   ├── BtcLikeToEth.tsx
 │   │   │   │       │   │   ├── EthToBtcLike.tsx
 │   │   │   │       │   │   └── EthTokenToBtcLike.tsx
-│   │   │   │       │   ├── images
-│   │   │   │       │   │   ├── finish.svg
-│   │   │   │       │   │   ├── icon0.gif
-│   │   │   │       │   │   ├── icon1.gif
-│   │   │   │       │   │   ├── icon2.gif
-│   │   │   │       │   │   ├── icon3.gif
-│   │   │   │       │   │   ├── icon4.gif
-│   │   │   │       │   │   ├── icon5.gif
-│   │   │   │       │   │   ├── icon6.gif
-│   │   │   │       │   │   ├── icon7.gif
-│   │   │   │       │   │   ├── icon8.gif
-│   │   │   │       │   │   ├── icon9.gif
-│   │   │   │       │   │   └── index.ts
-│   │   │   │       │   ├── PleaseDontLeaveWrapper.tsx
-│   │   │   │       │   ├── SwapProgress.scss
-│   │   │   │       │   ├── SwapProgress.tsx
+│   │   │   │       │   ├── SwapList.scss
+│   │   │   │       │   ├── SwapList.tsx
+│   │   │   │       │   ├── UTXOSteps
+│   │   │   │       │   │   ├── FirstStep.tsx
+│   │   │   │       │   │   ├── FourthStep.tsx
+│   │   │   │       │   │   ├── SecondStep.tsx
+│   │   │   │       │   │   └── ThirdStep.tsx
 │   │   │   │       │   └── UTXOSwapProgressText
 │   │   │   │       │       ├── BtcLikeToEthToken.tsx
 │   │   │   │       │       ├── BtcLikeToEth.tsx
 │   │   │   │       │       ├── EthToBtcLike.tsx
 │   │   │   │       │       └── EthTokenToBtcLike.tsx
+│   │   │   │       ├── SwapProgress
+│   │   │   │       │   ├── PleaseDontLeaveWrapper.tsx
+│   │   │   │       │   ├── SwapProgress.scss
+│   │   │   │       │   └── SwapProgress.tsx
 │   │   │   │       ├── UTXOToEthToken.tsx
 │   │   │   │       └── UTXOToEth.tsx
 │   │   │   ├── Transaction
@@ -1293,26 +1252,24 @@
 │   │   │   │   ├── TxSide.tsx
 │   │   │   │   └── Tx.tsx
 │   │   │   └── Wallet
-│   │   │       ├── components
-│   │   │       │   ├── Endpoints
-│   │   │       │   │   └── index.tsx
-│   │   │       │   ├── NotityBlock
-│   │   │       │   │   ├── images
-│   │   │       │   │   │   └── security.svg
-│   │   │       │   │   ├── NotifyBlock.scss
-│   │   │       │   │   └── NotifyBlock.tsx
-│   │   │       │   ├── PartOfAddress
-│   │   │       │   │   └── index.tsx
-│   │   │       │   └── WallerSlider
-│   │   │       │       └── index.tsx
 │   │   │       ├── CurrenciesList.tsx
+│   │   │       ├── Endpoints
+│   │   │       │   └── index.tsx
 │   │   │       ├── images
 │   │   │       │   ├── btc.svg
 │   │   │       │   ├── dollar.svg
-│   │   │       │   └── pen.svg
+│   │   │       │   ├── pen.svg
+│   │   │       │   └── security.svg
+│   │   │       ├── NotityBlock
+│   │   │       │   ├── NotifyBlock.scss
+│   │   │       │   └── NotifyBlock.tsx
+│   │   │       ├── PartOfAddress
+│   │   │       │   └── index.tsx
 │   │   │       ├── Row
 │   │   │       │   ├── Row.scss
 │   │   │       │   └── Row.tsx
+│   │   │       ├── WallerSlider
+│   │   │       │   └── index.tsx
 │   │   │       ├── Wallet.scss
 │   │   │       └── Wallet.tsx
 │   │   ├── plugins
@@ -1328,7 +1285,8 @@
 │   │   │   │   ├── btc.ts
 │   │   │   │   ├── comments.ts
 │   │   │   │   ├── core.ts
-│   │   │   │   ├── eth.ts
+│   │   │   │   ├── erc20LikeAction.ts
+│   │   │   │   ├── ethLikeAction.ts
 │   │   │   │   ├── feed.ts
 │   │   │   │   ├── filter.ts
 │   │   │   │   ├── ghost.ts
@@ -1343,7 +1301,6 @@
 │   │   │   │   ├── noxon.ts
 │   │   │   │   ├── pairs.ts
 │   │   │   │   ├── pubsubRoom.ts
-│   │   │   │   ├── token.ts
 │   │   │   │   ├── types.ts
 │   │   │   │   ├── ui.ts
 │   │   │   │   ├── usdt.ts
@@ -1382,4 +1339,4 @@
 │       └── run.js
 └── README.md
 
-350 directories, 1032 files
+343 directories, 996 files
