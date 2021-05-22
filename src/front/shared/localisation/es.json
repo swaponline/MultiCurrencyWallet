@@ -3331,62 +3331,6 @@
     ]
   },
   {
-    "id": "SweepToMnemonicKeys_ButtonMakeSweep",
-    "message": "Hecho",
-    "files": [
-      "src/front/shared/components/modals/SweepToMnemonicKeys/SweepToMnemonicKeys.tsx"
-    ]
-  },
-  {
-    "id": "SweepToMnemonicKeys_ButtonRestoreOld",
-    "message": "Restaurar",
-    "files": [
-      "src/front/shared/components/modals/SweepToMnemonicKeys/SweepToMnemonicKeys.tsx"
-    ]
-  },
-  {
-    "id": "SweepToMnemonicKeys_Cancel",
-    "message": "Cancelar",
-    "files": [
-      "src/front/shared/components/modals/SweepToMnemonicKeys/SweepToMnemonicKeys.tsx"
-    ]
-  },
-  {
-    "id": "SweepToMnemonicKeys_Continue",
-    "message": "Continuar",
-    "files": [
-      "src/front/shared/components/modals/SweepToMnemonicKeys/SweepToMnemonicKeys.tsx"
-    ]
-  },
-  {
-    "id": "SweepToMnemonicKeys_NoticeMakeSweep",
-    "message": "Por favor, mueva sus fondos a\"new\" direcciones (USDT y otros ERC20 se envían a la nueva dirección de Ethereum. Haga clic en este botón: \"DONE\". Se ocultarán las direcciones antiguas.",
-    "files": [
-      "src/front/shared/components/modals/SweepToMnemonicKeys/SweepToMnemonicKeys.tsx"
-    ]
-  },
-  {
-    "id": "SweepToMnemonicKeys_NoticeRestoreOld",
-    "message": "Ya has hecho una limpieza. Aquí puede recuperar el acceso a su billetera anterior.",
-    "files": [
-      "src/front/shared/components/modals/SweepToMnemonicKeys/SweepToMnemonicKeys.tsx"
-    ]
-  },
-  {
-    "id": "SweepToMnemonicKeys_Ready",
-    "message": "Listo",
-    "files": [
-      "src/front/shared/components/modals/SweepToMnemonicKeys/SweepToMnemonicKeys.tsx"
-    ]
-  },
-  {
-    "id": "SweepToMnemonicKeys_Title",
-    "message": "Limpiar",
-    "files": [
-      "src/front/shared/components/modals/SweepToMnemonicKeys/SweepToMnemonicKeys.tsx"
-    ]
-  },
-  {
     "id": "SweepBannerButton",
     "message": "Terminado",
     "files": [
