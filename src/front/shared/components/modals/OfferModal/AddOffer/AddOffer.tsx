@@ -65,7 +65,6 @@ export default class AddOffer extends Component<any, any> {
 
   constructor(props) {
     super(props)
-    console.log('>>>>> add offer', props)
     const { items, tokenItems, initialData } = props
 
     if (config && config.isWidget) {
