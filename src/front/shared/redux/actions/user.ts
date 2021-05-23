@@ -4,7 +4,7 @@ import moment from 'moment/moment'
 import { constants } from 'helpers'
 import request from 'common/utils/request'
 import * as mnemonicUtils from 'common/utils/mnemonic'
-import TOKEN_STANDARDS from 'common/helpers/constants/TOKEN_STANDARDS'
+import TOKEN_STANDARDS from 'helpers/constants/TOKEN_STANDARDS'
 import actions from 'redux/actions'
 import { getState } from 'redux/core'
 

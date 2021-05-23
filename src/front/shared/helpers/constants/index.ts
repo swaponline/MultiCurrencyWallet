@@ -5,6 +5,7 @@ import modals from './modals'
 import tradeTicker from './TRADE_TICKERS'
 import tokenDecimals from './TOKEN_DECIMALS'
 import pairTypes from './PAIR_TYPES'
+import tokenStandards from './TOKEN_STANDARDS'
 
 export default {
   localStorage,
@@ -14,4 +15,5 @@ export default {
   notifications,
   pairTypes,
   modals,
+  tokenStandards,
 }

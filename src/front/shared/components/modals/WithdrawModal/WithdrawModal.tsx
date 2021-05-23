@@ -379,25 +379,25 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
         MIN_AMOUNT[currentCoin] = 10 ** -currentDecimals
         MIN_AMOUNT.eth = await ethLikeHelper.eth.estimateFeeValue({
           method: 'send',
-          speed: 'fast',
         })
 
         newMinerFee = new BigNumber(await erc20Like.erc20.estimateFeeValue({
           method: 'send',
-          speed: 'fast',
         }))
-      } else if (isBep20Token) {
+      } 
+
+      else if (isBep20Token) {
         MIN_AMOUNT[currentCoin] = 10 ** -currentDecimals
         MIN_AMOUNT.bnb = await ethLikeHelper.bnb.estimateFeeValue({
           method: 'send',
-          speed: 'fast',
         })
 
         newMinerFee = new BigNumber(await erc20Like.bep20.estimateFeeValue({
           method: 'send',
-          speed: 'fast',
         }))
-      } else if (COINS_WITH_DYNAMIC_FEE.includes(currentCoin)) {
+      }
+
+      else if (COINS_WITH_DYNAMIC_FEE.includes(currentCoin)) {
         let method = 'send'
         if (selectedItem.isUserProtected) method = 'send_multisig'
         if (selectedItem.isPinProtected || selectedItem.isSmsProtected) method = 'send_2fa'

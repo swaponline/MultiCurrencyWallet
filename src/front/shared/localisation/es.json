@@ -74,13 +74,6 @@
     ]
   },
   {
-    "id": "transactionLink28",
-    "message": "Transacción: ",
-    "files": [
-      "src/front/shared/components/Href/TransactionLink.tsx"
-    ]
-  },
-  {
     "id": "Loader21",
     "message": "Por favor espere, demora de 3 a 5 minutos en completar la transacción. ",
     "files": [
@@ -730,7 +723,7 @@
   },
   {
     "id": "ErrorBtcLowAmount",
-    "message": "{btcAmount} BTC - Esta cantidad es demasiada baja",
+    "message": "{btcAmount} BTC - Esta cantidad es demasiado baja, no cubre la tarifa de minería",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
@@ -3338,62 +3331,6 @@
     ]
   },
   {
-    "id": "SweepToMnemonicKeys_ButtonMakeSweep",
-    "message": "Hecho",
-    "files": [
-      "src/front/shared/components/modals/SweepToMnemonicKeys/SweepToMnemonicKeys.tsx"
-    ]
-  },
-  {
-    "id": "SweepToMnemonicKeys_ButtonRestoreOld",
-    "message": "Restaurar",
-    "files": [
-      "src/front/shared/components/modals/SweepToMnemonicKeys/SweepToMnemonicKeys.tsx"
-    ]
-  },
-  {
-    "id": "SweepToMnemonicKeys_Cancel",
-    "message": "Cancelar",
-    "files": [
-      "src/front/shared/components/modals/SweepToMnemonicKeys/SweepToMnemonicKeys.tsx"
-    ]
-  },
-  {
-    "id": "SweepToMnemonicKeys_Continue",
-    "message": "Continuar",
-    "files": [
-      "src/front/shared/components/modals/SweepToMnemonicKeys/SweepToMnemonicKeys.tsx"
-    ]
-  },
-  {
-    "id": "SweepToMnemonicKeys_NoticeMakeSweep",
-    "message": "Por favor, mueva sus fondos a\"new\" direcciones (USDT y otros ERC20 se envían a la nueva dirección de Ethereum. Haga clic en este botón: \"DONE\". Se ocultarán las direcciones antiguas.",
-    "files": [
-      "src/front/shared/components/modals/SweepToMnemonicKeys/SweepToMnemonicKeys.tsx"
-    ]
-  },
-  {
-    "id": "SweepToMnemonicKeys_NoticeRestoreOld",
-    "message": "Ya has hecho una limpieza. Aquí puede recuperar el acceso a su billetera anterior.",
-    "files": [
-      "src/front/shared/components/modals/SweepToMnemonicKeys/SweepToMnemonicKeys.tsx"
-    ]
-  },
-  {
-    "id": "SweepToMnemonicKeys_Ready",
-    "message": "Listo",
-    "files": [
-      "src/front/shared/components/modals/SweepToMnemonicKeys/SweepToMnemonicKeys.tsx"
-    ]
-  },
-  {
-    "id": "SweepToMnemonicKeys_Title",
-    "message": "Limpiar",
-    "files": [
-      "src/front/shared/components/modals/SweepToMnemonicKeys/SweepToMnemonicKeys.tsx"
-    ]
-  },
-  {
     "id": "SweepBannerButton",
     "message": "Terminado",
     "files": [
@@ -5324,17 +5261,17 @@
     ]
   },
   {
-    "id": "Swap_MetamaskAttention",
-    "message": "Confirma la transacción en tu billetera \"{walletName}\"",
-    "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
-    ]
-  },
-  {
     "id": "FAQFeeApiLink",
     "message": "(fuente)",
     "files": [
       "src/front/shared/components/FAQ/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "Swap_MetamaskAttention",
+    "message": "Confirma la transacción en tu billetera \"{walletName}\"",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
     ]
   },
   {

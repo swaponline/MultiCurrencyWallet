@@ -1,8 +1,6 @@
 import config from 'app-config'
-import TOKEN_STANDARDS from 'common/helpers/constants/TOKEN_STANDARDS'
+import TOKEN_STANDARDS from 'helpers/constants/TOKEN_STANDARDS'
 import { BLOCKCHAIN as BLOCKCHAIN_TYPE } from 'swap.app/constants/COINS'
-
-console.log('>>>>> curriencies', BLOCKCHAIN_TYPE)
 
 
 const NETWORK = process.env.MAINNET ? 'mainnet' : 'testnet'
@@ -68,7 +66,7 @@ Object.keys(TOKEN_STANDARDS).forEach((key) => {
       value: name,
       fullTitle: name,
       addAssets: true,
-      blockchain: BLOCKCHAIN_TYPE.ETH,
+      blockchain: BLOCKCHAIN_TYPE[blockchain.toUpperCase()],
       standard,
     })
   })

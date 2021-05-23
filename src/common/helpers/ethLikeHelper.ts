@@ -39,8 +39,8 @@ class ethLikeHelper {
   }
 
   estimateFeeValue = async (params): Promise<number> => {
-    const { method, speed } = params
-    const gasPrice = await this.estimateGasPrice({ speed })
+    const { method } = params
+    const gasPrice = await this.estimateGasPrice()
     const defaultGasLimit = this.defaultParams.limit[method]
     const theSmallestPart = 1e-18
   
@@ -50,9 +50,7 @@ class ethLikeHelper {
       .toNumber()
   }
 
-  // TODO: BNB has different calculation
-  // TODO: ? > temporarily < solution for BNB. Will we use the same api for ETH ?
-  estimateGasPriceForBnb = async (): Promise<number> => {
+  estimateGasPrice = async (): Promise<number> => {
     let apiResult
 
     try {
@@ -68,41 +66,6 @@ class ethLikeHelper {
     return weiGasPrice.isGreaterThan(this.defaultParams.price.fast)
       ? weiGasPrice.toNumber()
       : this.defaultParams.price.fast
-  }
-
-  estimateGasPrice = async (params): Promise<number> => {
-    const { speed } = params
-    const defaultPrice = this.defaultParams.price
-  
-    let apiResult
-
-    if (this.currency === 'BNB') {
-      return this.estimateGasPriceForBnb()
-    }
-  
-    try {
-      apiResult = await api.asyncFetchApi(this.feeRatesLink)
-    } catch (error) {
-      this.reportError({ error })
-      return defaultPrice[speed]
-    }
-  
-    const apiSpeeds = {
-      slow: 'safeLow',
-      fast: 'fast',
-      fastest: 'fastest',
-    }
-  
-    const apiSpeed = apiSpeeds[speed] || apiSpeeds.fast
-    /* 
-    * api returns gas price in x10 Gwei
-    * divided by 10 to convert it to gwei
-    */
-    const apiPrice = new BigNumber(apiResult[apiSpeed]).dividedBy(10).multipliedBy(1e9)
-  
-    return apiPrice >= defaultPrice[speed] 
-      ? apiPrice.toNumber()
-      : defaultPrice[speed]
   }
 }
 
