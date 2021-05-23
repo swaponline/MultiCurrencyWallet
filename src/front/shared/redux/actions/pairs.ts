@@ -14,6 +14,7 @@ type Currency = {
 }
 
 const filter = (value, tikers, items): Currency[] => {
+  console.log('>>>>> filter', value, tikers, items)
   const selectedPairsBase = tikers
     .map(ticker => parsePair(ticker))
     .filter(({ BASE }) => BASE.toLowerCase() === value)
@@ -25,10 +26,11 @@ const filter = (value, tikers, items): Currency[] => {
     .map(({ MAIN, BASE }) => BASE)
 
   const pairs = selectedPairsBase.concat(selectedPairsMain)
+  console.log('>>>>>> pairs', pairs)
   const selectedItems = items
-    .filter(item => pairs.includes(item.name))
-    .concat(items.filter(item => item.value === value))
-
+    .filter(item => pairs.includes(item.value.toUpperCase()))
+    .concat(items.filter(item => item.value.toLowerCase() === value.toLowerCase()))
+console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', selectedItems)
   return selectedItems
 }
 
@@ -43,6 +45,7 @@ const selectPair = (value) => { // addOffer drop down
 
 // partial drop down
 const selectPairPartial = (value): Currency[] | [] => {
+  console.log('>>>>>>>>>>>>>> selectPairPartial', value)
   const partialItems = getState().currencies.partialItems // eslint-disable-line
   const pairs = actions.pairs.filter(value, TRADE_TICKERS, partialItems)
 

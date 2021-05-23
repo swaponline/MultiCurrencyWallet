@@ -8,14 +8,14 @@ import config from 'app-config'
 
 
 const Option = (props) => {
-  let { icon, title } = props
+  let { icon, title, blockchain } = props
 
   return (
     <div styleName="optionrow">
       <span styleName="circle">
         <CurrencyIcon styleName="icon" name={icon} />
       </span>
-      {title}
+      {(blockchain) ? `${title} (${blockchain})` : title}
     </div>
   )
 }

@@ -18,9 +18,9 @@ const SelectGroup = ({ intl: IntlShape,  dynamicFee, isToken, extendedControls, 
   currencies, fiat, placeholder, label, disabled, className, inputValueLink, tooltip, balance, error,
   id, type, idFee, tooltipAboutFee, haveAmount, dontDisplayError, activeFiat, ...props
 }) => {
-  const currAllowed = currencies.filter((item) => !item.dontCreateOrder)
+  const currAllowed = currencies
+    .filter((item) => !item.dontCreateOrder)
 
-console.log('>>>>> SelectGroup ->>>>', currAllowed)
   return (
     <div styleName={`${isDark ? 'dark' : ''}`}>
       <div styleName="groupField" className={className}>

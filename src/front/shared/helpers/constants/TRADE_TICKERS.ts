@@ -21,11 +21,15 @@ const swap = (config && config.isWidget) ?
 
 Object.keys(config.erc20)
   .forEach(key => {
-    swap.push(`${key.toUpperCase()}-BTC`)
+    swap.push(`{ETH}${key.toUpperCase()}-BTC`)
     if (!config.opts.curEnabled || config.opts.curEnabled.ghost) swap.push(`${key.toUpperCase()}-GHOST`)
     if (!config.opts.curEnabled || config.opts.curEnabled.next) swap.push(`${key.toUpperCase()}-NEXT`)
   })
-
+Object.keys(config.bep20)
+  .forEach(key => {
+    swap.push(`{BNB}${key.toUpperCase()}-BTC`)
+  })
+  
 
 if (config && config.isWidget) {
   swap.length = 0

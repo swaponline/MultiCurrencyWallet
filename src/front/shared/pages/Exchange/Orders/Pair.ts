@@ -51,7 +51,8 @@ export const parseTicker = (order) => {
 }
 
 export const parsePair = (str) => {
-
+  //console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
+//console.log('>>>>>> parsePair', str)
   if (!str) {
     throw new Error(`Empty string: ${str}`)
   }
@@ -62,6 +63,7 @@ export const parsePair = (str) => {
 
   const tokens = str.split('-')
 
+//console.log('>>>>> tokens', tokens)
   if (tokens.length !== 2) {
     throw new Error(`ParseTickerError: Wrong tokens: ${str}`)
   }
@@ -77,6 +79,7 @@ export const parsePair = (str) => {
   const MAIN = tokens[0].toUpperCase()
   const BASE = tokens[1].toUpperCase()
 
+//console.log('>>>>>> BASE, MAIN', BASE, MAIN)
   return {
     MAIN,
     BASE,

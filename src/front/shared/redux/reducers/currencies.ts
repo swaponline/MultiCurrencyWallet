@@ -57,13 +57,14 @@ const tokenItems: IUniversalObj[] = []
 
 Object.keys(TOKEN_STANDARDS).forEach((key) => {
   const standard = TOKEN_STANDARDS[key].standard
+  const blockchain = TOKEN_STANDARDS[key].currency
 
   Object.keys(config[standard]).forEach((name) => {
     tokenItems.push({
       name: name.toUpperCase(),
       title: name.toUpperCase(),
       icon: name,
-      value: name,
+      value: `{${blockchain.toUpperCase()}}${name}`,
       fullTitle: name,
       addAssets: true,
       blockchain: BLOCKCHAIN_TYPE[blockchain.toUpperCase()],
@@ -85,7 +86,7 @@ Object.keys(TOKEN_STANDARDS).forEach((key) => {
         name: name.toUpperCase(),
         title: name.toUpperCase(),
         icon: name,
-        value: name,
+        value: `{${blockchain.toUpperCase()}}${name}`,
         fullTitle: config[standard][name].fullName || name,
         blockchain: BLOCKCHAIN_TYPE[blockchain.toUpperCase()],
         standard,

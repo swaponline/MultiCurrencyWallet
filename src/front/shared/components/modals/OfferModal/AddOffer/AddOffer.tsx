@@ -55,6 +55,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
     addSelectedItems: swapsHelper.isExchangeAllowed(currencies.addPartialItems),
     items: [ethData, btcData, ghostData, nextData],
     tokenItems: [...Object.keys(tokensData).map(k => (tokensData[k]))],
+    currenciesOrig: currencies,
   })
 )
 @cssModules(styles, { allowMultiple: true })
@@ -92,6 +93,8 @@ export default class AddOffer extends Component<any, any> {
       exchangeRate: exchangeRate || 1,
       buyCurrency: buyCurrency || 'btc',
       sellCurrency: sellCurrency || 'eth',
+      buyBlockchain: ``,
+      sellBlockchain: ``,
       minimalestAmountForBuy: MIN_AMOUNT_OFFER[buyCurrency] || MIN_AMOUNT_OFFER.btc,
       minimalestAmountForSell: MIN_AMOUNT_OFFER[sellCurrency] || MIN_AMOUNT_OFFER.eth,
       ethBalance: 0,
@@ -196,7 +199,9 @@ export default class AddOffer extends Component<any, any> {
     })
   }
 
-  handleBuyCurrencySelect = async ({ value }) => {
+  handleBuyCurrencySelect = async (selectedItem) => {
+    const { value, blockchain } = selectedItem
+    console.log('handleBuyCurrencySelect', selectedItem)
     const { buyCurrency, sellCurrency, buyAmount, sellAmount } = this.state
 
     this.setState({
@@ -212,6 +217,7 @@ export default class AddOffer extends Component<any, any> {
 
       this.setState(() => ({
         buyCurrency: value,
+        buyBlockchain: blockchain,
       }))
 
       if (sellAmount > 0 || buyAmount > 0) {
@@ -223,7 +229,9 @@ export default class AddOffer extends Component<any, any> {
     }
   }
 
-  handleSellCurrencySelect = async ({ value }) => {
+  handleSellCurrencySelect = async (selectedItem) => {
+    const { value, blockchain } = selectedItem
+    console.log('handleSellCurrencySelect', selectedItem)
     const { buyCurrency, sellCurrency, sellAmount, buyAmount } = this.state
 
     this.setState({
@@ -239,6 +247,7 @@ export default class AddOffer extends Component<any, any> {
 
       this.setState(() => ({
         sellCurrency: value,
+        sellBlockchain: blockchain,
       }))
 
       if (sellAmount > 0 || buyAmount > 0) {
@@ -438,7 +447,9 @@ export default class AddOffer extends Component<any, any> {
   }
 
   checkPair = (value) => {
+    console.log('>>>>>> checkPair', value)
     const selected = actions.pairs.selectPairPartial(value)
+    console.log('>>>>>> after selected', selected)
     const check = selected.map(item => item.value).includes(this.state.buyCurrency)
 
     if (!check) {
@@ -450,7 +461,7 @@ export default class AddOffer extends Component<any, any> {
 
   render() {
     const { currencies, tokenItems, addSelectedItems } = this.props
-    console.log('>>>> create offer >>>> ', currencies, tokenItems, addSelectedItems)
+
     const { 
       exchangeRate, buyAmount,
       sellAmount, buyCurrency,

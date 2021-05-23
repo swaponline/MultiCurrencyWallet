@@ -11,12 +11,15 @@ const allowedCoins = [
 const isExchangeAllowed = (currencies) =>
   currencies.filter((c) => {
     const isErc = Object.keys(config.erc20)
-      .map((i) => i.toLowerCase())
-      .includes(c.value.toLowerCase())
+      .map((i) => `{eth}${i.toLowerCase()}`)
+      .includes(`${c.value}`.toLowerCase())
+    const isBep = Object.keys(config.bep20)
+      .map((i) => `{bnb}${i.toLowerCase()}`)
+      .includes(`${c.value}`.toLowerCase())
 
   const isAllowedCoin = allowedCoins.map((i) => i.toLowerCase()).includes(c.value.toLowerCase())
 
-  return isAllowedCoin || isErc
+  return isAllowedCoin || isErc || isBep
 })
 
 const filterIsPartial = (orders) =>
