@@ -12,8 +12,10 @@ class Order {
   owner: any
   participant: any
   buyCurrency: any
+  buyBlockchain: any
   exchangeRate: any
   sellCurrency: any
+  sellBlockchain: any
   buyAmount: any
   sellAmount: any
   collection: any
@@ -51,8 +53,10 @@ class Order {
     this.owner          = null
     this.participant    = null
     this.buyCurrency    = null
+    this.buyBlockchain  = null
     this.exchangeRate   = null
     this.sellCurrency   = null
+    this.sellBlockchain = null
     this.buyAmount      = null
     this.sellAmount     = null
 

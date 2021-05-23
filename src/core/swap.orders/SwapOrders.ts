@@ -6,6 +6,7 @@ import aggregation from './aggregation'
 import events from './events'
 import Order from './Order'
 import visibleMakers from 'common/whitelists/visibleMakers'
+import getCoinInfo from 'common/coins/getCoinInfo'
 
 
 const checkIncomeOrderFormat = (order) => {
@@ -34,8 +35,10 @@ const checkIncomeOrderFormat = (order) => {
       })(),
     },
     sellCurrency: util.typeforce.isCoinName,
+    sellBlockchain: '?String',
     sellAmount: util.typeforce.isNumeric,
     buyCurrency: util.typeforce.isCoinName,
+    buyBlockchain: '?String',
     buyAmount: util.typeforce.isNumeric,
     exchangeRate: util.typeforce.t.maybe(util.typeforce.isNumeric),
     isProcessing: '?Boolean',
@@ -146,7 +149,9 @@ class SwapOrders extends aggregation(ServiceInterface, Collection) {
         'id',
         'owner',
         'buyCurrency',
+        'buyBlockchain',
         'sellCurrency',
+        'sellBlockchain',
         'buyAmount',
         'exchangeRate',
         'sellAmount',
@@ -235,9 +240,13 @@ class SwapOrders extends aggregation(ServiceInterface, Collection) {
   _create(data) {
     const { id, buyAmount, sellAmount, buyCurrency, sellCurrency, ...rest } = data
 
+    const buyData = getCoinInfo(buyCurrency.toUpperCase())
+    const sellData = getCoinInfo(sellCurrency.toUpperCase())
+    console.log('>>> buyData, sellData', buyData, sellData)
     const buy = buyCurrency.toUpperCase()
     const sell = sellCurrency.toUpperCase()
     // Error in the bottom line: Cannot read property 'precision' of undefined
+    console.log('>>>>>>>>>>>> constants.COIN_DATA', constants.COIN_DATA, constants)
     const roundedBuyAmount = new BigNumber(buyAmount).dp(constants.COIN_DATA[buy].precision)
     const roundedSellAmount = new BigNumber(sellAmount).dp(constants.COIN_DATA[sell].precision)
 
@@ -253,6 +262,21 @@ class SwapOrders extends aggregation(ServiceInterface, Collection) {
     this.append(order, order.id)
 
     return order
+  }
+
+  _extractBlockchain(coin) {
+    if (coin.indexOf(`}`) !== -1 && coin.indexOf(`{`) === 0) {
+      let coinData = coin.split(`}`)
+      return {
+        coin: coinData[1],
+        blockchain: coinData[0].substr(1),
+      }
+    } else {
+      return {
+        coin,
+        blockchain: ``,
+      }
+    }
   }
 
   _handleCreate(data) {
@@ -311,7 +335,9 @@ class SwapOrders extends aggregation(ServiceInterface, Collection) {
       'id',
       'owner',
       'buyCurrency',
+      'buyBlockchain',
       'sellCurrency',
+      'sellBlockchain',
       'buyAmount',
       'sellAmount',
       'exchangeRate',
@@ -360,8 +386,10 @@ class SwapOrders extends aggregation(ServiceInterface, Collection) {
           'id',
           'owner',
           'buyCurrency',
+          'buyBlockchain',
           'exchangeRate',
           'sellCurrency',
+          'sellBlockchain',
           'buyAmount',
           'sellAmount',
           'isRequested',
