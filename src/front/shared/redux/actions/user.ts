@@ -421,7 +421,13 @@ const getInfoAboutCurrency = (currencyNames) => {
 
               default:
                 if (erc20Like.isToken({ name: currencyInfoItem.symbol })) {
-                  reducers.user.setInfoAboutToken({ name: currencyInfoItem.symbol.toLowerCase(), infoAboutCurrency: currencyInfo })
+                  const standard = tokenStandardByPlatform(currencyInfoItem.platform?.name)
+
+                  reducers.user.setInfoAboutToken({
+                    standard,
+                    name: currencyInfoItem.symbol.toLowerCase(),
+                    infoAboutCurrency: currencyInfo,
+                  })
                 } else {
                   reducers.user.setInfoAboutCurrency({ name: `${currencyInfoItem.symbol.toLowerCase()}Data`, infoAboutCurrency: currencyInfo })
                 }
@@ -436,6 +442,13 @@ const getInfoAboutCurrency = (currencyNames) => {
   })
 }
 
+const tokenStandardByPlatform = (platform): string | undefined => {
+  return Object.keys(TOKEN_STANDARDS).find((key) => {
+    if (TOKEN_STANDARDS[key].platform === platform) {
+      return TOKEN_STANDARDS[key].standard
+    }
+  })
+}
 
 const clearTransactions = () => {
   reducers.history.setTransactions([])

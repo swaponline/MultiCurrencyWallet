@@ -125,6 +125,7 @@ class Erc20LikeAction {
 
     if (balanceInCache !== false) {
       reducers.user.setTokenBalance({
+        standard: this.standard,
         name,
         amount: balanceInCache,
       })
@@ -134,13 +135,20 @@ class Erc20LikeAction {
     try {
       const amount = await this.fetchBalance(address, contractAddress, decimals)
 
-      reducers.user.setTokenBalance({ name, amount })
+      reducers.user.setTokenBalance({
+        standard: this.standard,
+        name,
+        amount,
+      })
       cacheStorageSet('currencyBalances', `token_${tokenName}_${address}`, amount, 60)
 
       return amount
     } catch (error) {
       console.error(error)
-      reducers.user.setTokenBalanceError({ name })
+      reducers.user.setTokenBalanceError({
+        standard: this.standard,
+        name,
+      })
     }
   }
 
@@ -391,7 +399,11 @@ class Erc20LikeAction {
       }
     }
 
-    reducers.user.setTokenAuthData({ name: data.name, data })
+    reducers.user.setTokenAuthData({
+      standard: this.standard,
+      name: data.name,
+      data,
+    })
   }
 
   send = async (params) => {

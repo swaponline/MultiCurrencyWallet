@@ -146,16 +146,33 @@ export const setTokenSigned = (state, booleanValue) => ({
   isTokenSigned: booleanValue,
 })
 
-export const setTokenAuthData = (state, { name, standard, data }) => ({
-  ...state,
-  tokensData: {
-    ...state.tokensData,
+export const setTokenAuthData = (state, { name, standard, data }) => {
+  const standardData = {
+    ...state.tokensData[standard],
     [name]: {
-      ...state.tokensData[name],
+      ...state.tokensData[standard][name],
       ...data,
     },
-  },
-})
+  }
+
+  return {
+    ...state,
+    tokensData: {
+      ...state.tokensData,
+
+      // TODO: deprecated. Will be removed
+      [name]: {
+        ...state.tokensData[name],
+        ...data,
+      },
+      // --------------------
+
+      [standard]: {
+        ...standardData,
+      },
+    },
+  }
+}
 
 export const setBtcMultisigBalance = (state, { address, amount, unconfirmedBalance }) => {
   state.btcMultisigUserData.wallets.forEach((wallet) => {
@@ -171,11 +188,8 @@ export const setBtcMultisigBalance = (state, { address, amount, unconfirmedBalan
   }
 }
 
-export const setBalance = (state, { name, standard, amount, unconfirmedBalance }) => ({
+export const setBalance = (state, { name, amount, unconfirmedBalance }) => ({
   ...state,
-  tokensData: {
-    ...state.tokensData,
-  },
   [name]: {
     ...state[name],
     balance: Number(amount),
@@ -185,26 +199,36 @@ export const setBalance = (state, { name, standard, amount, unconfirmedBalance }
   },
 })
 
-export const setInfoAboutToken = (state, { name, standard, infoAboutCurrency }) => ({
-  ...state,
-  tokensData: {
-    ...state.tokensData,
+export const setInfoAboutToken = (state, { name, standard, infoAboutCurrency }) => {
+  const standardData = {
+    ...state.tokensData[standard],
     [name]: {
-      ...state.tokensData[name],
+      ...state.tokensData[standard][name],
       infoAboutCurrency,
     },
-  },
-})
+  }
 
-export const setInfoAboutCurrency = (state, { name, standard, infoAboutCurrency }) => ({
-  ...state,
-  tokensData: {
-    ...state.tokensData,
-    [name]: {
-      ...state.tokensData[name],
-      infoAboutCurrency,
+  return {
+    ...state,
+    tokensData: {
+      ...state.tokensData,
+
+      // TODO: deprecated. Will be removed
+      [name]: {
+        ...state.tokensData[name],
+        infoAboutCurrency,
+      },
+      // --------------------
+
+      [standard]: {
+        ...standardData,
+      },
     },
-  },
+  }
+}
+
+export const setInfoAboutCurrency = (state, { name, infoAboutCurrency }) => ({
+  ...state,
   [name]: {
     ...state[name],
     infoAboutCurrency,
@@ -219,29 +243,65 @@ export const setBalanceError = (state, { name }) => ({
   },
 })
 
-export const setTokenBalanceError = (state, { name, standard }) => ({
-  ...state,
-  tokensData: {
-    ...state.tokensData,
+export const setTokenBalanceError = (state, { name, standard }) => {
+  const standardData = {
+    ...state.tokensData[standard],
     [name]: {
-      ...state.tokensData[name],
+      ...state.tokensData[standard][name],
       balanceError: true,
     },
-  },
-})
+  }
 
-export const setTokenBalance = (state, { name, standard, amount }) => ({
-  ...state,
-  tokensData: {
-    ...state.tokensData,
+  return {
+    ...state,
+    tokensData: {
+      ...state.tokensData,
+
+      // TODO: deprecated. Will be removed
+      [name]: {
+        ...state.tokensData[name],
+        balanceError: true,
+      },
+      // --------------------
+
+      [standard]: {
+        ...standardData,
+      },
+    },
+  }
+}
+
+export const setTokenBalance = (state, { name, standard, amount }) => {
+  const standardData = {
+    ...state.tokensData[standard],
     [name]: {
-      ...state.tokensData[name],
+      ...state.tokensData[standard][name],
       balance: Number(amount),
       isBalanceFetched: true,
       balanceError: false,
     },
-  },
-})
+  }
+
+  return {
+    ...state,
+    tokensData: {
+      ...state.tokensData,
+
+      // TODO: deprecated. Will be removed
+      [name]: {
+        ...state.tokensData[name],
+        balance: Number(amount),
+        isBalanceFetched: true,
+        balanceError: false,
+      },
+      // --------------------
+
+      [standard]: {
+        ...standardData,
+      },
+    },
+  }
+}
 
 export const setIsBalanceFetching = (state, { isBalanceFetching }) => ({
   ...state,
