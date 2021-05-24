@@ -790,9 +790,7 @@ class Row extends Component<RowProps, RowState> {
           <div styleName="assetsTableCurrency">
             <Coin
               className={styles.assetsTableIcon}
-              name={ // replace currency icon if metamask is disconnected
-                web3Type === 'METAMASK' && metamaskDisconnected ? web3Type : currency
-              }
+              name={metamaskDisconnected ? web3Type : currency}
             />
             
             {/* Title-Link */}
