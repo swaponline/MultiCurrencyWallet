@@ -1903,6 +1903,7 @@ class Exchange extends PureComponent<any, any> {
           <div styleName="buttons">
             {isTokenSell && linked.haveAmount.value > 0 && !hasTokenAllowance ? (
               <Button
+                id='exchangeButton'
                 styleName="button"
                 onClick={hasTokenAllowance ? this.initSwap : this.approveTheToken}
                 disabled={!canStartSwap || isPendingTokenApprove}
@@ -1924,6 +1925,7 @@ class Exchange extends PureComponent<any, any> {
               </Button>
             ) : (
               <Button
+                id='exchangeButton'
                 styleName="button"
                 onClick={this.initSwap}
                 disabled={!canStartSwap}
