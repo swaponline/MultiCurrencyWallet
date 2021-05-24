@@ -22,9 +22,9 @@ jobs:
       uses: bahmutov/npm-install@v1
       with:
        useLockFile: false
-    - name: build testnet
+    - name: build testnet for tests
       run: |
-        npm run build:testnet
+        npm run build:testnet-tests
     - name: run e2e tests
       run: |
         mkdir ./tests/e2e/screenshots
