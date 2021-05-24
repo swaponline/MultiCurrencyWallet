@@ -1,14 +1,15 @@
 import React, { PureComponent } from 'react'
-
+import { withRouter } from 'react-router-dom'
+import { FormattedMessage, injectIntl } from 'react-intl'
 import { connect } from 'redaction'
-import actions from 'redux/actions'
-
 import cssModules from 'react-css-modules'
-import styles from './Wallet.scss'
 import { isMobile } from 'react-device-detect'
+import { BigNumber } from 'bignumber.js'
 import moment from 'moment'
 
-import History from 'pages/History/History'
+import appConfig from 'app-config'
+import actions from 'redux/actions'
+import styles from './Wallet.scss'
 
 import helpers, {
   links,
@@ -18,22 +19,18 @@ import helpers, {
 import { localisedUrl } from 'helpers/locale'
 import { getActivatedCurrencies } from 'helpers/user'
 import getTopLocation from 'helpers/getTopLocation'
-import { FormattedMessage, injectIntl } from 'react-intl'
-
-import appConfig from 'app-config'
 import config from 'helpers/externalConfig'
-import { withRouter } from 'react-router-dom'
+import metamask from 'helpers/metamask'
+import wpLogoutModal from 'helpers/wpLogoutModal'
+import feedback from 'helpers/feedback'
+import TOKEN_STANDARDS from 'helpers/constants/TOKEN_STANDARDS'
+
 import CurrenciesList from './CurrenciesList'
 import InvoicesList from 'pages/Invoices/InvoicesList'
-
+import History from 'pages/History/History'
 import DashboardLayout from 'components/layout/DashboardLayout/DashboardLayout'
 import BalanceForm from 'components/BalanceForm/BalanceForm'
 
-import { BigNumber } from 'bignumber.js'
-import metamask from 'helpers/metamask'
-
-import wpLogoutModal from 'helpers/wpLogoutModal'
-import feedback from 'shared/helpers/feedback'
 
 const isWidgetBuild = config && config.isWidget
 const isDark = localStorage.getItem(constants.localStorage.isDark)
@@ -61,7 +58,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
     currencies: { items: currencies },
     modals,
   }) => {
-    const allData = [
+    const userCurrencyData = {
       btcData,
       btcMultisigSMSData,
       btcMultisigUserData,
@@ -69,13 +66,14 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
       bnbData,
       ghostData,
       nextData,
-      ...Object.keys(tokensData).map((k) => tokensData[k]),
-    ].map(({ account, keyPair, ...data }) => ({
-      ...data,
-    }))
+    }
+
+    Object.keys(tokensData).forEach((k) => {
+      userCurrencyData[k] = tokensData[k]
+    })
 
     return {
-      allData,
+      userCurrencyData,
       currencies,
       isBalanceFetching,
       multisigPendingCount,
@@ -103,6 +101,8 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
 @withRouter
 @cssModules(styles, { allowMultiple: true })
 class Wallet extends PureComponent<any, any> {
+  syncTimer: ReturnType<typeof setTimeout> | null = null
+
   constructor(props) {
     super(props)
 
@@ -111,25 +111,30 @@ class Wallet extends PureComponent<any, any> {
         params: { page = null },
       },
       multisigPendingCount,
-      allData,
+      userCurrencyData,
     } = props
 
-    let activeView = 0
+    const tokenStandards = Object.keys(TOKEN_STANDARDS).map((key) => {
+      return TOKEN_STANDARDS[key].standard
+    })
+
+    let activeComponentNum = 0
 
     if (page === 'history' && !isMobile) {
-      activeView = 1
+      activeComponentNum = 1
     }
-    if (page === 'invoices') activeView = 2
+    if (page === 'invoices') {
+      activeComponentNum = 2
+    }
 
     this.state = {
-      allData,
-      activeView,
+      userCurrencyData,
+      tokenStandards,
+      activeComponentNum,
       btcBalance: 0,
       enabledCurrencies: getActivatedCurrencies(),
       multisigPendingCount,
     }
-    //@ts-ignore
-    this.syncTimer = null
   }
 
   handleConnectWallet() {
@@ -155,7 +160,7 @@ class Wallet extends PureComponent<any, any> {
       },
       multisigPendingCount: prevMultisigPendingCount,
       location: { pathname: prevPathname },
-      allData: prevAllData,
+      userCurrencyData: prevAllData,
     } = prevProps
 
     const {
@@ -167,12 +172,12 @@ class Wallet extends PureComponent<any, any> {
       intl: { locale },
       location: { pathname },
       history,
-      allData,
+      userCurrencyData,
     } = this.props
 
-    if (JSON.stringify(allData) !== JSON.stringify(prevAllData)) {
+    if (JSON.stringify(userCurrencyData) !== JSON.stringify(prevAllData)) {
       this.setState(() => ({
-        allData,
+        userCurrencyData,
       }))
     }
 
@@ -184,10 +189,10 @@ class Wallet extends PureComponent<any, any> {
     }
 
     if (page !== prevPage || multisigPendingCount !== prevMultisigPendingCount) {
-      let activeView = 0
+      let activeComponentNum = 0
 
-      if (page === 'history' && !isMobile) activeView = 1
-      if (page === 'invoices') activeView = 2
+      if (page === 'history' && !isMobile) activeComponentNum = 1
+      if (page === 'invoices') activeComponentNum = 2
 
       if (page === 'exit') {
         wpLogoutModal(() => {
@@ -196,7 +201,7 @@ class Wallet extends PureComponent<any, any> {
       }
 
       this.setState(() => ({
-        activeView,
+        activeComponentNum,
         multisigPendingCount,
       }))
     }
@@ -241,10 +246,6 @@ class Wallet extends PureComponent<any, any> {
     })
   }
 
-  componentWillUnmount() {
-    console.log('Wallet unmounted')
-  }
-
   getInfoAboutCurrency = async () => {
     const { currencies } = this.props
     const currencyNames = currencies.map(({ name }) => name)
@@ -253,9 +254,9 @@ class Wallet extends PureComponent<any, any> {
   }
 
   handleWithdraw = (params) => {
-    const { allData } = this.state
+    const { userCurrencyData } = this.state
     const { address, amount } = params
-    const item = allData.find(
+    const item = userCurrencyData.find(
       ({ currency }) => currency.toLowerCase() === params.currency.toLowerCase()
     )
 
@@ -286,7 +287,7 @@ class Wallet extends PureComponent<any, any> {
   }
 
   handleModalOpen = (context) => {
-    const { enabledCurrencies, allData } = this.state
+    const { enabledCurrencies, userCurrencyData } = this.state
     const { hiddenCoinsList } = this.props
 
     /* @ToDo Вынести отдельно */
@@ -317,7 +318,7 @@ class Wallet extends PureComponent<any, any> {
       }
     }
 
-    const currencies = allData.filter(({ isMetamask, isConnected, currency, address, balance }) => {
+    const currencies = userCurrencyData.filter(({ isMetamask, isConnected, currency, address, balance }) => {
         return (
           (context === 'Send' ? balance : true) &&
           !hiddenCoinsList.includes(currency) &&
@@ -341,9 +342,9 @@ class Wallet extends PureComponent<any, any> {
       intl: { locale },
       hiddenCoinsList,
     } = this.props
-    const { allData } = this.state
+    const { userCurrencyData } = this.state
 
-    let tableRows = allData.filter(({ currency, address, balance }) => {
+    let tableRows = userCurrencyData.filter(({ currency, address, balance }) => {
       // @ToDo - В будущем нужно убрать проверку только по типу монеты.
       // Старую проверку оставил, чтобы у старых пользователей не вывалились скрытые кошельки
 
@@ -386,6 +387,160 @@ class Wallet extends PureComponent<any, any> {
     )
   }
 
+  // TODO: maybe to move it in helpers/user
+  returnWidgetCurrencies = () => {
+    const { hiddenCoinsList } = this.props
+    const widgetCurrencies = ['BTC']
+
+    if (!hiddenCoinsList.includes('BTC (PIN-Protected)')) {
+      widgetCurrencies.push('BTC (PIN-Protected)')
+    }
+    if (!hiddenCoinsList.includes('BTC (Multisig)')) {
+      widgetCurrencies.push('BTC (Multisig)')
+    }
+
+    widgetCurrencies.push('ETH')
+    widgetCurrencies.push('BNB')
+    widgetCurrencies.push('GHOST')
+    widgetCurrencies.push('NEXT')
+
+    if (isWidgetBuild) {
+      if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
+        // Multi token widget build
+        Object.keys(window.widgetERC20Tokens).forEach((key) => {
+          widgetCurrencies.push(key.toUpperCase())
+        })
+      } else {
+        widgetCurrencies.push(config.erc20token.toUpperCase())
+      }
+    }
+
+    return widgetCurrencies
+  }
+
+  filterUserCurrencyData = (currencyData) => {
+    const { hiddenCoinsList } = this.props
+    const { tokenStandards, enabledCurrencies } = this.state
+    const filteredData = {}
+
+    function isAllowed(target): boolean {
+      return (
+        (!hiddenCoinsList.includes(target.currency) &&
+          !hiddenCoinsList.includes(`${target.currency}:${target.address}`) &&
+          enabledCurrencies.includes(target.currency)
+        ) || target.balance > 0
+      )
+    }
+
+    for (let dataKey in currencyData) {
+      const dataItem = currencyData[dataKey]
+
+      // filter a nested tokens data
+      if ( tokenStandards.includes(dataKey) ) {
+        // TODO: seems it's the same internal loop. Improve
+        for (let tokenKey in dataItem) {
+          const token = dataItem[tokenKey]
+
+          if ( isAllowed(token) ) {
+            filteredData[dataKey] = {
+              ...filteredData[dataKey],
+              [tokenKey]: token
+            }
+          }
+        }
+      }
+
+      if ( isAllowed(dataItem) ) {
+        filteredData[dataKey] = dataItem
+      }
+    }
+
+    return filteredData
+  }
+
+  addFiatBalanceInUserCurrencyData = (currencyData) => {
+    const { tokenStandards } = this.state
+
+    function returnFiatBalance(target) {
+      return target.balance > 0 && target.infoAboutCurrency?.price_fiat
+        ? new BigNumber(target.balance)
+            .multipliedBy(target.infoAboutCurrency.price_fiat)
+            .dp(2, BigNumber.ROUND_FLOOR)
+        : 0
+    }
+
+    return Object.keys(currencyData).map((dataKey) => {
+      const dataItem = currencyData[dataKey]
+
+      // filter a nested tokens data
+      if ( tokenStandards.includes(dataKey) ) {
+        for (let tokenKey in dataItem) {
+          const token = dataItem[tokenKey]
+
+          return {
+            ...currencyData[dataKey],
+            [tokenKey]: {
+              ...token,
+              fiatBalance: returnFiatBalance(token),
+            }
+          }
+        }
+      }
+
+      return {
+        ...dataItem,
+        fiatBalance: returnFiatBalance(dataItem),
+      }
+    })
+  }
+
+  returnBtcInfo = (currencyData) => {
+    const widgetCurrencies = this.returnWidgetCurrencies()
+    let btcBalance = 0
+    let changePercent = 0
+
+    currencyData.forEach(({ name, infoAboutCurrency, balance, currency }) => {
+      const currName = currency || name
+
+      if (
+        (!isWidgetBuild || widgetCurrencies.includes(currName)) &&
+        infoAboutCurrency &&
+        balance !== 0
+      ) {
+        if (currName === 'BTC') {
+          changePercent = infoAboutCurrency.percent_change_1h
+        }
+        btcBalance += balance * infoAboutCurrency.price_btc
+      }
+    })
+
+    return {
+      btcBalance,
+      changePercent,
+    }
+  }
+
+  returnTotalFiatBalance = (currencyData) => {
+    const { tokenStandards } = this.state
+    let balance = new BigNumber(0)
+
+    Object.keys(currencyData).forEach((dataKey) => {
+      const dataItem = currencyData[dataKey]
+
+      if ( tokenStandards.includes(dataKey) ) {
+        for (let tokenKey in dataItem) {
+          const token = dataItem[tokenKey]
+
+          balance = balance.plus(token.fiatBalance)
+        }
+      } else {
+        balance = balance.plus(dataItem.fiatBalance)
+      }
+    })
+
+    return balance.toNumber()
+  }
+
   syncData = () => {
     // that is for noxon, dont delete it :)
     const now = moment().format('HH:mm:ss DD/MM/YYYY')
@@ -399,7 +554,6 @@ class Wallet extends PureComponent<any, any> {
 
     const { ethData } = this.props.tokensData
 
-    //@ts-ignore
     this.syncTimer = setTimeout(async () => {
       if (config?.entry !== 'mainnet' || !metamask.isCorrectNetwork()) {
         return;
@@ -450,10 +604,9 @@ class Wallet extends PureComponent<any, any> {
 
   render() {
     const {
-      allData,
-      activeView,
+      userCurrencyData,
+      activeComponentNum,
       infoAboutCurrency,
-      enabledCurrencies,
       multisigPendingCount,
     } = this.state
 
@@ -469,75 +622,12 @@ class Wallet extends PureComponent<any, any> {
 
     this.syncData()
 
-    let btcBalance = 0
-    let changePercent = 0
+    let tableRows = this.filterUserCurrencyData(userCurrencyData)
 
-    // Набор валют для виджета
-    const widgetCurrencies = ['BTC']
+    tableRows = this.addFiatBalanceInUserCurrencyData(tableRows)
 
-    if (!hiddenCoinsList.includes('BTC (PIN-Protected)')) {
-      widgetCurrencies.push('BTC (PIN-Protected)')
-    }
-    if (!hiddenCoinsList.includes('BTC (Multisig)')) {
-      widgetCurrencies.push('BTC (Multisig)')
-    }
-    widgetCurrencies.push('ETH')
-    widgetCurrencies.push('BNB')
-    widgetCurrencies.push('GHOST')
-    widgetCurrencies.push('NEXT')
-    if (isWidgetBuild) {
-      if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
-        // Multi token widget build
-        Object.keys(window.widgetERC20Tokens).forEach((key) => {
-          widgetCurrencies.push(key.toUpperCase())
-        })
-      } else {
-        widgetCurrencies.push(config.erc20token.toUpperCase())
-      }
-    }
-
-    let tableRows = allData.filter(({ currency, address, balance }) => {
-      // @ToDo - В будущем нужно убрать проверку только по типу монеты.
-      // Старую проверку оставил, чтобы у старых пользователей не вывалились скрытые кошельки
-
-      return (
-        (!hiddenCoinsList.includes(currency) &&
-          !hiddenCoinsList.includes(`${currency}:${address}`)) ||
-        balance > 0
-      )
-    })
-
-    tableRows = tableRows.filter(({ currency }) => enabledCurrencies.includes(currency))
-
-    tableRows = tableRows.map((el) => {
-      return {
-        ...el,
-        balance: el.balance,
-        fiatBalance:
-          el.balance > 0 && el.infoAboutCurrency?.price_fiat
-            ? new BigNumber(el.balance)
-                .multipliedBy(el.infoAboutCurrency.price_fiat)
-                .dp(2, BigNumber.ROUND_FLOOR)
-            : 0,
-      }
-    })
-
-    tableRows.forEach(({ name, infoAboutCurrency, balance, currency }) => {
-      const currName = currency || name
-
-      if (
-        (!isWidgetBuild || widgetCurrencies.includes(currName)) &&
-        infoAboutCurrency &&
-        balance !== 0
-      ) {
-        if (currName === 'BTC') {
-          changePercent = infoAboutCurrency.percent_change_1h
-        }
-        btcBalance += balance * infoAboutCurrency.price_btc
-      }
-    })
-
-    const allFiatBalance = tableRows.reduce((acc, cur) => new BigNumber(cur.fiatBalance).plus(acc), 0)
+    const { btcBalance, changePercent } = this.returnBtcInfo(tableRows)
+    const allFiatBalance = this.returnTotalFiatBalance(tableRows)
 
     return (
       <DashboardLayout
@@ -562,17 +652,17 @@ class Wallet extends PureComponent<any, any> {
           />
         }
       >
-        {activeView === 0 && (
+        {activeComponentNum === 0 && (
           <CurrenciesList
             isDark={!!isDark}
-            tableRows={tableRows}
+            tableRows={[]} // * tableRows
             hiddenCoinsList={hiddenCoinsList}
             goToСreateWallet={this.goToСreateWallet}
             multisigPendingCount={multisigPendingCount}
           />
         )}
-        {activeView === 1 && <History {...this.props} isDark={isDark} />}
-        {activeView === 2 && <InvoicesList {...this.props} onlyTable={true} isDark={isDark} />}
+        {activeComponentNum === 1 && <History {...this.props} isDark={isDark} />}
+        {activeComponentNum === 2 && <InvoicesList {...this.props} onlyTable={true} isDark={isDark} />}
       </DashboardLayout>
     )
   }

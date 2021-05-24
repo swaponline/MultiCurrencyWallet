@@ -90,7 +90,6 @@ export const initialState = {
     fullName: 'Tether',
     balanceError: null,
   },
-  fiats: [],
   tokensData,
   isFetching: false,
   isBalanceFetching: false,
@@ -312,8 +311,6 @@ export const setIsFetching = (state, { isFetching }) => ({
   ...state,
   isFetching,
 })
-
-export const setFiats = (state, { fiats }) => ({ ...state, fiats })
 
 export const setActiveCurrency = (state, { activeCurrency }) => ({ ...state, activeCurrency })
 

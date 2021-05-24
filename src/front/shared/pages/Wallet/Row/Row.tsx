@@ -17,11 +17,11 @@ import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
 import { BigNumber } from 'bignumber.js'
 import { Button } from 'components/controls'
-import web3Icons from '../../../images'
+import web3Icons from 'images'
 import PartOfAddress from '../PartOfAddress'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 import { ApiEndpoint } from '../Endpoints'
-import Copy from '../../../components/ui/Copy/Copy'
+import Copy from 'components/ui/Copy/Copy'
 
 type RowProps = {
   // from component
@@ -147,7 +147,6 @@ class Row extends Component<RowProps, RowState> {
       reduxActionName,
     } = this.state
     const {
-      itemData,
       itemData: {
         isMetamask,
         isConnected,
