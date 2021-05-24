@@ -10,12 +10,8 @@ import moment from 'moment'
 import appConfig from 'app-config'
 import actions from 'redux/actions'
 import styles from './Wallet.scss'
-
-import helpers, {
-  links,
-  constants,
-  stats
-} from 'helpers'
+import erc20Like from 'common/erc20Like'
+import { links, constants, stats } from 'helpers'
 import { localisedUrl } from 'helpers/locale'
 import { getActivatedCurrencies } from 'helpers/user'
 import getTopLocation from 'helpers/getTopLocation'
@@ -69,7 +65,16 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
     }
 
     Object.keys(tokensData).forEach((k) => {
-      userCurrencyData[k] = tokensData[k]
+      // TODO: temporarily.
+      // delete this loop when in the tokensDat
+      // will be only token's standards
+      Object.keys(TOKEN_STANDARDS).forEach((key) => {
+        const standard = TOKEN_STANDARDS[key].standard
+
+        userCurrencyData[standard] = tokensData[standard]
+      })
+
+      // userCurrencyData[k] = tokensData[k]
     })
 
     return {
@@ -277,24 +282,24 @@ class Wallet extends PureComponent<any, any> {
     history.push(localisedUrl(locale, links.createWallet))
   }
 
-  handleModalOpen = (context) => {
-    const { enabledCurrencies, userCurrencyData } = this.state
-    const { hiddenCoinsList } = this.props
+  handleReceive = (context) => {
+    const { userCurrencyData } = this.state
     const widgetCurrencies = this.returnWidgetCurrencies()
-    const currencies = userCurrencyData.filter(({ isMetamask, isConnected, currency, address, balance }) => {
-        return (
-          (context === 'Send' ? balance : true) &&
-          !hiddenCoinsList.includes(currency) &&
-          !hiddenCoinsList.includes(`${currency}:${address}`) &&
-          enabledCurrencies.includes(currency) &&
-          (!isMetamask || (isMetamask && isConnected)) &&
-          (isWidgetBuild ? widgetCurrencies.includes(currency) : true)
-        )
-      })
+    const filteredCurrencies = this.filterUserCurrencyData(userCurrencyData)
+    const flattenedCurrencyData = this.flattenUserCurrencyData(filteredCurrencies)
 
-    //@ts-ignore: strictNullChecks
+    const availableWallets = flattenedCurrencyData.filter((item) => {
+      const { isMetamask, isConnected, currency, balance } = item
+
+      return (
+        (context !== 'Send' || balance) &&
+        (!isMetamask || (isMetamask && isConnected)) &&
+        (!isWidgetBuild || widgetCurrencies.includes(currency))
+      )
+    })
+
     actions.modals.open(constants.modals.CurrencyAction, {
-      currencies,
+      currencies: availableWallets,
       context,
     })
   }
@@ -303,28 +308,17 @@ class Wallet extends PureComponent<any, any> {
     const {
       history,
       intl: { locale },
-      hiddenCoinsList,
     } = this.props
     const { userCurrencyData } = this.state
+    const availableWallets = this.filterUserCurrencyData(userCurrencyData)
 
-    let tableRows = userCurrencyData.filter(({ currency, address, balance }) => {
-      // @ToDo - В будущем нужно убрать проверку только по типу монеты.
-      // Старую проверку оставил, чтобы у старых пользователей не вывалились скрытые кошельки
-
-      return (
-        !hiddenCoinsList.includes(currency) &&
-        !hiddenCoinsList.includes(`${currency}:${address}`) &&
-        balance > 0
-      )
-    })
-
-    if (tableRows.length === 0) {
+    if (!Object.keys(availableWallets).length) {
       actions.notifications.show(
         constants.notifications.Message,
         {message: (
           <FormattedMessage 
             id="WalletEmptyBalance"
-            defaultMessage="Balance is empty"
+            defaultMessage="No wallets available"
           />
         )}
       )
@@ -332,18 +326,18 @@ class Wallet extends PureComponent<any, any> {
       return
     }
 
-    const { currency, address } = tableRows[0]
-
+    const flattenedCurrencyData = this.flattenUserCurrencyData(availableWallets)
+    const { currency, address } = flattenedCurrencyData[0]
     let targetCurrency = currency
+
     switch (currency.toLowerCase()) {
       case 'btc (multisig)':
       case 'btc (sms-protected)':
       case 'btc (pin-protected)':
         targetCurrency = 'btc'
-        break
     }
 
-    const isToken = helpers.ethToken.isEthToken({ name: currency })
+    const isToken = erc20Like.isToken({ name: currency })
 
     history.push(
       localisedUrl(locale, (isToken ? '/token' : '') + `/${targetCurrency}/${address}/send`)
@@ -400,7 +394,6 @@ class Wallet extends PureComponent<any, any> {
 
       // filter a nested tokens data
       if ( tokenStandards.includes(dataKey) ) {
-        // TODO: seems it's the same internal loop. Improve
         for (let tokenKey in dataItem) {
           const token = dataItem[tokenKey]
 
@@ -411,9 +404,7 @@ class Wallet extends PureComponent<any, any> {
             }
           }
         }
-      }
-
-      if ( isAllowed(dataItem) ) {
+      } else if ( isAllowed(dataItem) ) {
         filteredData[dataKey] = dataItem
       }
     }
@@ -613,16 +604,12 @@ class Wallet extends PureComponent<any, any> {
 
     this.syncData()
 
-    console.log('%c Wallet', 'color: pink; font-size: 20px')
-
     let filteredUserData = this.filterUserCurrencyData(userCurrencyData)
-
     filteredUserData = this.addFiatBalanceInUserCurrencyData(filteredUserData)
 
+    const balanceInBtc = this.returnBalanceInBtc(filteredUserData)
+    const allFiatBalance = this.returnTotalFiatBalance(filteredUserData)
     const tableRows = this.flattenUserCurrencyData(filteredUserData)
-
-    const balanceInBtc = this.returnBalanceInBtc(tableRows)
-    const allFiatBalance = this.returnTotalFiatBalance(tableRows)
 
     return (
       <DashboardLayout
@@ -635,7 +622,7 @@ class Wallet extends PureComponent<any, any> {
             fiatBalance={allFiatBalance}
             currencyBalance={balanceInBtc}
             activeCurrency={activeCurrency}
-            handleReceive={this.handleModalOpen}
+            handleReceive={this.handleReceive}
             handleWithdraw={this.handleWithdrawFirstAsset}
             isFetching={isBalanceFetching}
             type="wallet"
