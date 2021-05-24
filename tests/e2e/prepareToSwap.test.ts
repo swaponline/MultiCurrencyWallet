@@ -101,7 +101,7 @@ describe('Prepare to swap e2e tests', () => {
       // taker move to exchange page and try connecting to peers
       await TakerPage.$('a[href="#/exchange"]').then((aToExchange) => aToExchange.click())
 
-      const [sellCurrencySelectorList, fromWalletSelectorList, buyCurrencySelectorList, toWalletSelectorList] = await TakerPage.$$('.itemsSelector')
+      const [sellCurrencySelectorList, buyCurrencySelectorList] = await TakerPage.$$('.dropDownSelectCurrency')
 
       await buyCurrencySelectorList.click();
       await TakerPage.click(`#wbtc`)

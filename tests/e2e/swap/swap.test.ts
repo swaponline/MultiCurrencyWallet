@@ -45,10 +45,14 @@ describe('Swap e2e test', () => {
       // taker move to exchange page and try connecting to peers
       await TakerPage.$('a[href="#/exchange"]').then((aToExchange) => aToExchange.click())
 
-      const [sellCurrencySelectorList, fromWalletSelectorList, buyCurrencySelectorList, toWalletSelectorList] = await TakerPage.$$('.itemsSelector')
+      const [sellCurrencySelectorList, buyCurrencySelectorList] = await TakerPage.$$('.dropDownSelectCurrency')
 
-      await buyCurrencySelectorList.click();
+      await buyCurrencySelectorList.click()
       await TakerPage.click(`#wbtc`)
+
+      await TakerPage.evaluate((selector) => document.querySelector(selector).click(), '.dropDownReceive')
+      await TakerPage.click(`#Internal`)
+
       await TakerPage.$('#orderbookBtn').then((orderbookBtn) => orderbookBtn.click())
 
     } catch (error) {
@@ -90,7 +94,7 @@ describe('Swap e2e test', () => {
     }
 
     try {
-      console.log('SwapWIW -> Check messaging test')
+      console.log('SwapWIW -> Check messaging')
       await timeOut(3 * 1000)
 
       // find btc maker orders
@@ -104,6 +108,9 @@ describe('Swap e2e test', () => {
       const wbtcOrders = [...wbtcSellAmountsOfOrders, ...wbtcGetAmountsOfOrders]
 
       const allOrders = [...btcOrders.map((amount) => new BigNumber(amount).toFixed(5)), ...wbtcOrders.map((amount) => new BigNumber(amount).toFixed(5))];
+
+      await takeScreenshot(MakerPage, 'MakerPage_SwapWIW_Messaging')
+      await takeScreenshot(TakerPage, 'TakerPage_SwapWIW_Messaging')
 
       +makerBtcBalance ? expect(allOrders).toContain(makerBtcBalance) : console.log('maker have not btc balance')
       +makerTokenBalance ? expect(allOrders).toContain(makerTokenBalance) : console.log('maker have not token balance')

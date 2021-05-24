@@ -499,6 +499,7 @@ class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
           disableSearch={true}
           dontScroll={true}
           arrowSide="left"
+          role={role}
           itemRender={(item) => <Option {...item} />}
           onSelect={this.handleOptionSelect}
         />

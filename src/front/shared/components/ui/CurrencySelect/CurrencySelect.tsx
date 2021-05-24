@@ -28,6 +28,7 @@ const CurrencySelect = (props) => {
       itemRender={item => <Option {...item} />}
       onSelect={onSelect}
       name={name}
+      role="SelectCurrency"
     />
   )
 }
