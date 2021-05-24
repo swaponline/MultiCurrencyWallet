@@ -1,11 +1,13 @@
 import testWallets from '../testWallets'
-import { createBrowser, importWallet, selectSendCurrency } from './utils'
+import { createBrowser, importWallet, selectSendCurrency, takeScreenshot } from './utils'
 
 jest.setTimeout(200_000) // ms
 
-describe('Start e2e withdraw form tests', () => {
+describe('Withdraw form tests', () => {
   const checkSelectedCurrency = async (params) => {
     const { page, ticker } = params
+
+    console.log(`Withdraw form tests -> ${ticker.toUpperCase()} checking`)
     // a suitable example: 0.005166 ETH ($18.23)
     const feeRegExp = /[\d(\.)?\d]+ [A-Z]{3,} \(.{1}[\d(\.)?\d]+\)/
 
@@ -35,6 +37,7 @@ describe('Start e2e withdraw form tests', () => {
     const arrOfWords = testWallets.eth.seedPhrase.split(' ')
 
     try {
+      console.log('Withdraw form tests')
       await importWallet(page, arrOfWords)
       await page.waitForTimeout(5_000)
 
@@ -42,7 +45,8 @@ describe('Start e2e withdraw form tests', () => {
       await checkSelectedCurrency({ page, ticker: 'eth' })
       await checkSelectedCurrency({ page, ticker: 'bnb' })
     } catch (error) {
-      console.error(error)
+      console.error('Withdraw form tests error', error)
+      await takeScreenshot(page, 'WithdrawFormTestsError')
       expect(false).toBe(true)
     } finally {
       await browser.close()
