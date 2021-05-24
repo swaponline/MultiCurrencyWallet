@@ -277,47 +277,10 @@ class Wallet extends PureComponent<any, any> {
     history.push(localisedUrl(locale, links.createWallet))
   }
 
-  handleGoExchange = () => {
-    const {
-      history,
-      intl: { locale },
-    } = this.props
-
-    history.push(localisedUrl(locale, links.exchange))
-  }
-
   handleModalOpen = (context) => {
     const { enabledCurrencies, userCurrencyData } = this.state
     const { hiddenCoinsList } = this.props
-
-    /* @ToDo Вынести отдельно */
-    // Набор валют для виджета
-    const widgetCurrencies = ['BTC']
-    /*
-    if (!hiddenCoinsList.includes('BTC (SMS-Protected)'))
-      widgetCurrencies.push('BTC (SMS-Protected)')
-      */
-    if (!hiddenCoinsList.includes('BTC (PIN-Protected)')) {
-      widgetCurrencies.push('BTC (PIN-Protected)')
-    }
-    if (!hiddenCoinsList.includes('BTC (Multisig)')) {
-      widgetCurrencies.push('BTC (Multisig)')
-    }
-    widgetCurrencies.push('ETH')
-    widgetCurrencies.push('BNB')
-    widgetCurrencies.push('GHOST')
-    widgetCurrencies.push('NEXT')
-    if (isWidgetBuild) {
-      if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
-        // Multi token widget build
-        Object.keys(window.widgetERC20Tokens).forEach((key) => {
-          widgetCurrencies.push(key.toUpperCase())
-        })
-      } else {
-        widgetCurrencies.push(config.erc20token.toUpperCase())
-      }
-    }
-
+    const widgetCurrencies = this.returnWidgetCurrencies()
     const currencies = userCurrencyData.filter(({ isMetamask, isConnected, currency, address, balance }) => {
         return (
           (context === 'Send' ? balance : true) &&
@@ -460,64 +423,74 @@ class Wallet extends PureComponent<any, any> {
 
   addFiatBalanceInUserCurrencyData = (currencyData) => {
     const { tokenStandards } = this.state
+    const newData = {}
 
     function returnFiatBalance(target) {
       return target.balance > 0 && target.infoAboutCurrency?.price_fiat
         ? new BigNumber(target.balance)
             .multipliedBy(target.infoAboutCurrency.price_fiat)
             .dp(2, BigNumber.ROUND_FLOOR)
+            .toNumber()
         : 0
     }
 
-    return Object.keys(currencyData).map((dataKey) => {
+    for (let dataKey in currencyData) {
       const dataItem = currencyData[dataKey]
 
-      // filter a nested tokens data
       if ( tokenStandards.includes(dataKey) ) {
         for (let tokenKey in dataItem) {
           const token = dataItem[tokenKey]
 
-          return {
-            ...currencyData[dataKey],
-            [tokenKey]: {
-              ...token,
-              fiatBalance: returnFiatBalance(token),
-            }
+          token.fiatBalance = returnFiatBalance(dataItem)
+
+          newData[dataKey] = {
+            ...newData[dataKey],
+            [tokenKey]: token,
           }
         }
+      } else {
+        dataItem.fiatBalance = returnFiatBalance(dataItem)
+        newData[dataKey] = dataItem
       }
+    }
 
-      return {
-        ...dataItem,
-        fiatBalance: returnFiatBalance(dataItem),
-      }
-    })
+    return newData
   }
 
-  returnBtcInfo = (currencyData) => {
+  returnBalanceInBtc = (currencyData) => {
+    const { tokenStandards } = this.state
     const widgetCurrencies = this.returnWidgetCurrencies()
-    let btcBalance = 0
-    let changePercent = 0
+    let balance = 0
 
-    currencyData.forEach(({ name, infoAboutCurrency, balance, currency }) => {
-      const currName = currency || name
-
+    function returnAmount(target) {
+      const name = target.currency || target.name
       if (
-        (!isWidgetBuild || widgetCurrencies.includes(currName)) &&
-        infoAboutCurrency &&
-        balance !== 0
+        (!isWidgetBuild || widgetCurrencies.includes(name)) &&
+        target.infoAboutCurrency?.price_btc &&
+        target.balance !== 0
       ) {
-        if (currName === 'BTC') {
-          changePercent = infoAboutCurrency.percent_change_1h
-        }
-        btcBalance += balance * infoAboutCurrency.price_btc
+        return target.balance * target.infoAboutCurrency.price_btc
       }
-    })
 
-    return {
-      btcBalance,
-      changePercent,
+      return 0
     }
+
+    for (let dataKey in currencyData) {
+      const dataItem = currencyData[dataKey]
+      const name = dataItem.currency || dataItem.name
+
+      if ( tokenStandards.includes(dataKey) ) {
+        for (let tokenKey in dataItem) {
+          const token = dataItem[tokenKey]
+
+          balance += returnAmount(token)
+        }
+      } else {
+        balance += returnAmount(dataItem)
+      }
+    }
+
+    return balance
   }
 
   returnTotalFiatBalance = (currencyData) => {
@@ -539,6 +512,25 @@ class Wallet extends PureComponent<any, any> {
     })
 
     return balance.toNumber()
+  }
+
+  flattenUserCurrencyData = (currencyData) => {
+    const { tokenStandards } = this.state
+    const rows: IUniversalObj[] = []
+
+    Object.keys(currencyData).map((dataKey) => {
+      const dataItem = currencyData[dataKey]
+
+      if ( tokenStandards.includes(dataKey) ) {
+        Object.keys(dataItem).forEach((tokenName) => {
+          rows.push(dataItem[tokenName])
+        })
+      } else {
+        rows.push(dataItem)
+      }
+    })
+
+    return rows
   }
 
   syncData = () => {
@@ -606,7 +598,6 @@ class Wallet extends PureComponent<any, any> {
     const {
       userCurrencyData,
       activeComponentNum,
-      infoAboutCurrency,
       multisigPendingCount,
     } = this.state
 
@@ -622,11 +613,15 @@ class Wallet extends PureComponent<any, any> {
 
     this.syncData()
 
-    let tableRows = this.filterUserCurrencyData(userCurrencyData)
+    console.log('%c Wallet', 'color: pink; font-size: 20px')
 
-    tableRows = this.addFiatBalanceInUserCurrencyData(tableRows)
+    let filteredUserData = this.filterUserCurrencyData(userCurrencyData)
 
-    const { btcBalance, changePercent } = this.returnBtcInfo(tableRows)
+    filteredUserData = this.addFiatBalanceInUserCurrencyData(filteredUserData)
+
+    const tableRows = this.flattenUserCurrencyData(filteredUserData)
+
+    const balanceInBtc = this.returnBalanceInBtc(tableRows)
     const allFiatBalance = this.returnTotalFiatBalance(tableRows)
 
     return (
@@ -638,16 +633,13 @@ class Wallet extends PureComponent<any, any> {
             isDark={isDark}
             activeFiat={activeFiat}
             fiatBalance={allFiatBalance}
-            currencyBalance={btcBalance}
-            changePercent={changePercent}
+            currencyBalance={balanceInBtc}
             activeCurrency={activeCurrency}
             handleReceive={this.handleModalOpen}
             handleWithdraw={this.handleWithdrawFirstAsset}
-            handleExchange={this.handleGoExchange}
             isFetching={isBalanceFetching}
             type="wallet"
             currency="btc"
-            infoAboutCurrency={infoAboutCurrency}
             multisigPendingCount={multisigPendingCount}
           />
         }
@@ -655,7 +647,7 @@ class Wallet extends PureComponent<any, any> {
         {activeComponentNum === 0 && (
           <CurrenciesList
             isDark={!!isDark}
-            tableRows={[]} // * tableRows
+            tableRows={tableRows}
             hiddenCoinsList={hiddenCoinsList}
             goToСreateWallet={this.goToСreateWallet}
             multisigPendingCount={multisigPendingCount}
