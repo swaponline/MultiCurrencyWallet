@@ -66,7 +66,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
 
     Object.keys(tokensData).forEach((k) => {
       // TODO: temporarily.
-      // delete this loop when in the tokensDat
+      // delete this loop when in the tokensData
       // will be only token's standards
       Object.keys(TOKEN_STANDARDS).forEach((key) => {
         const standard = TOKEN_STANDARDS[key].standard
@@ -86,7 +86,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
       user,
       activeCurrency,
       activeFiat,
-      tokensData: {
+      coinsData: {
         ethData,
         metamaskData: {
           ...metamaskData,
@@ -468,7 +468,6 @@ class Wallet extends PureComponent<any, any> {
 
     for (let dataKey in currencyData) {
       const dataItem = currencyData[dataKey]
-      const name = dataItem.currency || dataItem.name
 
       if ( tokenStandards.includes(dataKey) ) {
         for (let tokenKey in dataItem) {
@@ -535,7 +534,7 @@ class Wallet extends PureComponent<any, any> {
       lastCheckMoment.add(1, 'hours')
     )
 
-    const { ethData } = this.props.tokensData
+    const { ethData } = this.props.coinsData
 
     this.syncTimer = setTimeout(async () => {
       if (config?.entry !== 'mainnet' || !metamask.isCorrectNetwork()) {
@@ -546,7 +545,12 @@ class Wallet extends PureComponent<any, any> {
         try {
           const ipInfo = await stats.getIPInfo()
 
-          const registrationData = {
+          const registrationData: {
+            locale: string
+            ip: string
+            widget_url?: string
+            wallets?: IUniversalObj[]
+          } = {
             locale:
               ipInfo.locale ||
               (navigator.userLanguage || navigator.language || 'en-gb').split('-')[0],
@@ -556,11 +560,11 @@ class Wallet extends PureComponent<any, any> {
           let widgetUrl
           if (appConfig.isWidget) {
             widgetUrl = getTopLocation().origin
-            //@ts-ignore
+
             registrationData.widget_url = widgetUrl
           }
 
-          const tokensArray: any[] = Object.values(this.props.tokensData)
+          const tokensArray: any[] = Object.values(this.props.coinsData)
 
           const wallets = tokensArray.map((item) => ({
             symbol: item && item.currency ? item.currency.split(' ')[0] : '',
@@ -569,17 +573,15 @@ class Wallet extends PureComponent<any, any> {
             balance: item && item.balance ? new BigNumber(item.balance).toNumber() : 0,
             public_key: item && item.publicKey ? item.publicKey.toString('Hex') : '',
             entry: config?.entry ? config.entry : 'testnet:undefined',
-            // TODO: let this work
-            // nounce: 1,
-            // signatures_required: 1,
-            // signatories: [],
           }))
-          //@ts-ignore
+
           registrationData.wallets = wallets
 
           await stats.updateUser(ethData.address, getTopLocation().host, registrationData)
         } catch (error) {
+          console.group('wallet >%c syncData', 'color: red;')
           console.error(`Sync error in wallet: ${error}`)
+          console.groupEnd()
         }
       }
     }, 2000)

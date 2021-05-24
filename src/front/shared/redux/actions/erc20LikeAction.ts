@@ -112,13 +112,13 @@ class Erc20LikeAction {
   getBalance = async (tokenName) => {
     if (tokenName === undefined) return
 
+    const { user: { tokensData } } = getState()
     const {
-      user: {
-        tokensData: {
-          [tokenName.toLowerCase()]: { address: ownerAddress, contractAddress, decimals, name },
-        },
-      },
-    } = getState()
+      address: ownerAddress,
+      contractAddress,
+      decimals,
+      name,
+    } = tokensData[this.standard][tokenName.toLowerCase()]
 
     const address = metamask.isConnected() ? metamask.getAddress() : ownerAddress
     const balanceInCache = cacheStorageGet('currencyBalances', `token_${tokenName}_${address}`)
