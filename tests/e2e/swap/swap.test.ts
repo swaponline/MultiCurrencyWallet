@@ -3,6 +3,7 @@ import testWallets from '../../testWallets'
 
 import { createBrowser, importWallet, addAssetToWallet, turnOnMM, takeScreenshot, timeOut } from '../utils'
 
+const btcAmount = 500_000e-8
 
 jest.setTimeout(140 * 1000)
 
@@ -52,6 +53,12 @@ describe('Swap e2e test', () => {
 
       await TakerPage.evaluate((selector) => document.querySelector(selector).click(), '.dropDownReceive')
       await TakerPage.click(`#Internal`)
+
+      const [sellCurrencySelectorInput, buyCurrencySelectorInput] = await TakerPage.$$('.inputContainer')
+
+      await sellCurrencySelectorInput.click()
+      await sellCurrencySelectorInput.press('Backspace')
+      await sellCurrencySelectorInput.type(btcAmount.toString())
 
       await TakerPage.$('#orderbookBtn').then((orderbookBtn) => orderbookBtn.click())
 
