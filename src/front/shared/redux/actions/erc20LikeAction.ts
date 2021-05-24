@@ -154,10 +154,9 @@ class Erc20LikeAction {
 
   getTransaction = (ownAddress, tokenName) => {
     return new Promise((res) => {
-      const {
-        user: { tokensData },
-      } = getState()
-      const { address = ownAddress, contractAddress } = tokensData[tokenName.toLowerCase()]
+      const { user: { tokensData } } = getState()
+      const { address = ownAddress, contractAddress } = tokensData[this.standard][tokenName.toLowerCase()]
+
       const url = ''.concat(
         `?module=account&action=tokentx`,
         `&contractaddress=${contractAddress}`,
@@ -515,7 +514,9 @@ class Erc20LikeAction {
     name = name.toLowerCase()
 
     const { decimals } = this.returnTokenInfo(name)
-    const ownerAddress = getState().user.tokensData[name].address
+    const { user: { tokensData } } = getState()
+    const { address: ownerAddress } = tokensData[this.standard][name]
+
     const allowance = await erc20Like[this.standard].checkAllowance({
       tokenOwnerAddress: ownerAddress,
       tokenContractAddress: to,
@@ -537,10 +538,10 @@ class Erc20LikeAction {
 
     name = name.toLowerCase()
 
-    const ownerAddress = getState().user.tokensData[name].address
-    const {
-      [name]: { address: contractAddress, decimals },
-    } = externalConfig[this.standard]
+    const { user: { tokensData } } = getState()
+    const { address: ownerAddress } = tokensData[this.standard][name]
+    const { address: contractAddress, decimals } = externalConfig[this.standard][name]
+
     const tokenContract = new this.Web3.eth.Contract(TokenAbi, contractAddress, {
       from: ownerAddress,
     })
