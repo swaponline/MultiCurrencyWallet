@@ -366,9 +366,10 @@ class Row extends Component<RowProps, RowState> {
       history,
       //@ts-ignore: strictNullChecks
       intl: { locale },
-      itemData: { currency, address },
+      itemData: { currency, address, blockchain, isToken },
+      itemData,
     } = this.props
-    const  { isToken } = this.state
+    console.log('>>>>>> goToCurrencyHistory', itemData)
 
     let targetCurrency = currency
     switch (currency.toLowerCase()) {
@@ -379,6 +380,7 @@ class Row extends Component<RowProps, RowState> {
         break
     }
 
+    targetCurrency = (blockchain && isToken) ? `{${blockchain}}${targetCurrency}` : targetCurrency 
     //@ts-ignore: strictNullChecks
     history.push(
       localisedUrl(locale, (isToken ? '/token' : '') + `/${targetCurrency}/${address}`)

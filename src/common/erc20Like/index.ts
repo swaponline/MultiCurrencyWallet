@@ -6,6 +6,8 @@ import DEFAULT_CURRENCY_PARAMETERS from 'common/helpers/constants/DEFAULT_CURREN
 import TOKEN_STANDARDS from 'helpers/constants/TOKEN_STANDARDS'
 import ethLikeHelper from 'common/helpers/ethLikeHelper'
 import { feedback } from 'helpers'
+import getCoinInfo from 'common/coins/getCoinInfo'
+
 
 class erc20LikeHelper {
   readonly standard: string // (ex. erc20, bep20, ...)
@@ -64,7 +66,13 @@ class erc20LikeHelper {
   }
 
   isToken = (params): boolean => {
-    const { name } = params
+    const { name: coinInfo } = params
+    const {
+      coin: name,
+      blockchain,
+    } = getCoinInfo(coinInfo)
+
+    if (blockchain && blockchain.toLowerCase() !== this.currency.toLowerCase()) return false
 
     return Object.keys(config[this.standard]).includes(name.toLowerCase())
   }
