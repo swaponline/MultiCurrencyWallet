@@ -101,7 +101,7 @@ class Erc20LikeAction {
   }
 
   getTxRouter = (txId, currency) => {
-    return `/token/${currency.toUpperCase()}/tx/${txId}`
+    return `/${this.standard}/${currency.toUpperCase()}/tx/${txId}`
   }
 
   getLinkToInfo = (tx) => {

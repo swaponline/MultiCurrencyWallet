@@ -14,7 +14,6 @@ import { inputReplaceCommaWithDot } from 'helpers/domUtils'
 import { localisedUrl } from 'helpers/locale'
 import MIN_AMOUNT from 'common/helpers/constants/MIN_AMOUNT'
 import COINS_WITH_DYNAMIC_FEE from 'common/helpers/constants/COINS_WITH_DYNAMIC_FEE'
-import TOKEN_STANDARDS from 'helpers/constants/TOKEN_STANDARDS'
 import getCurrencyKey from 'helpers/getCurrencyKey'
 import lsDataCache from 'helpers/lsDataCache'
 import helpers, {
@@ -119,34 +118,11 @@ type WithdrawModalState = {
       btcData,
       ghostData,
       nextData,
-      tokensData,
       activeFiat,
     },
     ui: { dashboardModalsAllowed },
   }) => {
-    const userCurrencyData = {
-      btcData,
-      ethData,
-      bnbData,
-      ghostData,
-      nextData,
-    }
-
-    Object.keys(tokensData).forEach((k) => {
-      // TODO: temporarily.
-      // delete this loop when in the tokensData
-      // will be only token's standards
-      Object.keys(TOKEN_STANDARDS).forEach((key) => {
-        const standard = TOKEN_STANDARDS[key].standard
-
-        userCurrencyData[standard] = tokensData[standard]
-      })
-
-      // userCurrencyData[k] = tokensData[k]
-    })
-
     return {
-      userCurrencyData,
       activeFiat,
       coinsData: [ethData, bnbData, btcData, ghostData, nextData],
       dashboardView: dashboardModalsAllowed,
@@ -162,7 +138,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
     super(props)
 
     const {
-      userCurrencyData,
+      // userCurrencyData,
       coinsData,
       data: {
         toAddress,
@@ -202,7 +178,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
     })
 
     this.state = {
-      userCurrencyData,
+      userCurrencyData: user.getUserCurrencyData(),
       isShipped: false,
       usedAdminFee,
       openScanCam: false,
@@ -260,14 +236,6 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
 
   componentDidUpdate(prevProps, prevState) {
     const {
-      userCurrencyData: prevUserData,
-      data: prevData,
-    } = prevProps
-    const {
-      userCurrencyData,
-      data,
-    } = this.props
-    const {
       amount: prevAmount,
       fiatAmount: prevFiatAmount,
     } = prevState
@@ -276,7 +244,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
       fiatAmount,
     } = this.state
 
-    if (prevData !== data || prevUserData !== userCurrencyData) {
+    if (JSON.stringify(prevProps) !== JSON.stringify(this.props)) {
       this.updateCurrencyData()
     }
     if (prevAmount !== amount || prevFiatAmount !== fiatAmount) {
@@ -295,10 +263,10 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
   }
 
   updateCurrencyData = () => {
-    const { data, userCurrencyData } = this.props
+    const { data } = this.props
 
     this.setState(() => ({
-      userCurrencyData,
+      userCurrencyData: user.getUserCurrencyData(),
       selectedCurrency: data,
     }))
   }

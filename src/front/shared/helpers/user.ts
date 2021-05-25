@@ -39,6 +39,42 @@ export const getActivatedCurrencies = () => {
   return currencies
 }
 
+export const getUserCurrencyData = () => {
+  const {
+    user: {
+      btcData,
+      ethData,
+      bnbData,
+      ghostData,
+      nextData,
+      tokensData,
+    }
+  } = store.getState()
+
+  const finalData = {
+    btcData,
+    ethData,
+    bnbData,
+    ghostData,
+    nextData,
+  }
+
+  Object.keys(tokensData).forEach((k) => {
+    // TODO: temporarily.
+    // delete this loop when in the tokensData
+    // will be only token's standards
+    Object.keys(TOKEN_STANDARDS).forEach((key) => {
+      const standard = TOKEN_STANDARDS[key].standard
+
+      finalData[standard] = tokensData[standard]
+    })
+
+    // finalData[k] = tokensData[k]
+  })
+
+  return finalData
+}
+
 export const filterUserCurrencyData = (currencyData) => {
   const { core: { hiddenCoinsList } } = store.getState()
   const enabledCurrencies = getActivatedCurrencies()

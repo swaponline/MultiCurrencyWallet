@@ -197,12 +197,12 @@ class CurrencyWallet extends Component<any, any> {
     }
 
     const targetCurrency = getCurrencyKey(currency.toLowerCase(), true)
-    const isToken = erc20Like.isToken({ name: currency })
+    const tokenUrlPart = itemCurrency.standard ? `/${itemCurrency.standard}` : ''
+    const withdrawUrl = tokenUrlPart + `/${targetCurrency}/${address}/send`
+    const receiveUrl = tokenUrlPart + `/${targetCurrency}/${address}/receive`
+    const currentUrl = this.props.history.location.pathname.toLowerCase()
 
-    const withdrawUrl = (isToken ? '/token' : '') + `/${targetCurrency}/${address}/send`
-    const receiveUrl = (isToken ? '/token' : '') + `/${targetCurrency}/${address}/receive`
-
-    if (this.props.history.location.pathname.toLowerCase() === withdrawUrl.toLowerCase() && balance !== 0) {
+    if (currentUrl === withdrawUrl.toLowerCase() && balance !== 0) {
       actions.modals.open(constants.modals.Withdraw, {
         currency,
         address,
@@ -273,7 +273,15 @@ class CurrencyWallet extends Component<any, any> {
       if (itemCurrency.length) {
         itemCurrency = itemCurrency[0]
 
-        const { currency, address, contractAddress, decimals, balance, infoAboutCurrency } = itemCurrency
+        const {
+          currency,
+          address,
+          contractAddress,
+          decimals,
+          balance,
+          infoAboutCurrency,
+          standard,
+        } = itemCurrency
         const {
           txItems: oldTxItems,
         } = this.state
@@ -301,10 +309,9 @@ class CurrencyWallet extends Component<any, any> {
               }
             }
             const targetCurrency = getCurrencyKey(currency.toLowerCase(), true)
-            const isToken = erc20Like.isToken({ name: currency })
-
-            const withdrawUrl = (isToken ? '/token' : '') + `/${targetCurrency}/${address}/send`
-            const receiveUrl = (isToken ? '/token' : '') + `/${targetCurrency}/${address}/receive`
+            const tokenUrlPart = standard ? `/${standard}` : ''
+            const withdrawUrl = tokenUrlPart + `/${targetCurrency}/${address}/send`
+            const receiveUrl = tokenUrlPart + `/${targetCurrency}/${address}/receive`
             const currentUrl = this.props.location.pathname.toLowerCase()
 
             if (currentUrl === withdrawUrl.toLowerCase()) {
@@ -449,15 +456,13 @@ class CurrencyWallet extends Component<any, any> {
     } = this.props
     const { itemCurrency, currency, address } = this.state
 
-    let withdrawModal = constants.modals.Withdraw
-    if (itemCurrency.isSmsProtected) withdrawModal = withdrawModal = constants.modals.WithdrawMultisigSMS
-    if (itemCurrency.isUserProtected) withdrawModal = constants.modals.WithdrawMultisigUser
-
     let targetCurrency = getCurrencyKey(currency.toLowerCase(), true).toLowerCase()
+    const tokenUrlPart = itemCurrency.standard ? `/${itemCurrency.standard}` : ''
 
-    const isToken = erc20Like.isToken({ name: currency })
-
-    history.push(localisedUrl(locale, (isToken ? '/token' : '') + `/${targetCurrency}/${address}/send`))
+    history.push(localisedUrl(
+      locale,
+      tokenUrlPart + `/${targetCurrency}/${address}/send`
+    ))
   }
 
   handleGoTrade = () => {

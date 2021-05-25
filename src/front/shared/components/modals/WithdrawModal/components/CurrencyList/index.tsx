@@ -23,7 +23,10 @@ export default class CurrencyList extends Component<any, any> {
     }
   }
 
-  openModal = (currency, address) => {
+  openModal = (params) => {
+    const { target } = params
+    let { currency, address, standard } = target
+
     this.setState({
       isAssetsOpen: false,
     }, () => {
@@ -39,10 +42,8 @@ export default class CurrencyList extends Component<any, any> {
           currency = 'btc'
       }
 
-      const isToken = erc20Like.isToken({ name: currency })
-
       history.push(
-        localisedUrl(locale, (isToken ? '/token' : '') + `/${currency}/${address}/send`)
+        localisedUrl(locale, (standard ? `/${standard}` : '') + `/${currency}/${address}/send`)
       )
     })
   }
@@ -119,9 +120,7 @@ export default class CurrencyList extends Component<any, any> {
                 styleName={cx('customSelectListItem customSelectValue', {
                   disabled: item.balance === 0,
                 })}
-                onClick={() => {
-                  this.openModal(item.currency, item.address)
-                }}
+                onClick={() => this.openModal({ target: item })}
               >
                 <Coin name={item.currency} />
 

@@ -10,7 +10,6 @@ import moment from 'moment'
 import appConfig from 'app-config'
 import actions from 'redux/actions'
 import styles from './Wallet.scss'
-import erc20Like from 'common/erc20Like'
 import { links, constants, stats, user } from 'helpers'
 import { localisedUrl } from 'helpers/locale'
 import getTopLocation from 'helpers/getTopLocation'
@@ -44,7 +43,6 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
       btcMultisigSMSData,
       btcMultisigUserData,
       btcMultisigUserDataList,
-      tokensData,
       isBalanceFetching,
       multisigPendingCount,
       activeCurrency,
@@ -53,31 +51,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
     currencies: { items: currencies },
     modals,
   }) => {
-    const userCurrencyData = {
-      btcData,
-      btcMultisigSMSData,
-      btcMultisigUserData,
-      ethData,
-      bnbData,
-      ghostData,
-      nextData,
-    }
-
-    Object.keys(tokensData).forEach((k) => {
-      // TODO: temporarily.
-      // delete this loop when in the tokensData
-      // will be only token's standards
-      Object.keys(TOKEN_STANDARDS).forEach((key) => {
-        const standard = TOKEN_STANDARDS[key].standard
-
-        userCurrencyData[standard] = tokensData[standard]
-      })
-
-      // userCurrencyData[k] = tokensData[k]
-    })
-
     return {
-      userCurrencyData,
       currencies,
       isBalanceFetching,
       multisigPendingCount,
@@ -87,6 +61,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
       activeFiat,
       coinsData: {
         ethData,
+        bnbData,
         metamaskData: {
           ...metamaskData,
           currency: 'ETH Metamask',
@@ -115,7 +90,6 @@ class Wallet extends PureComponent<any, any> {
         params: { page = null },
       },
       multisigPendingCount,
-      userCurrencyData,
     } = props
 
     const tokenStandards = Object.keys(TOKEN_STANDARDS).map((key) => {
@@ -132,7 +106,7 @@ class Wallet extends PureComponent<any, any> {
     }
 
     this.state = {
-      userCurrencyData,
+      userCurrencyData: user.getUserCurrencyData(),
       tokenStandards,
       activeComponentNum,
       btcBalance: 0,
@@ -164,7 +138,6 @@ class Wallet extends PureComponent<any, any> {
       },
       multisigPendingCount: prevMultisigPendingCount,
       location: { pathname: prevPathname },
-      userCurrencyData: prevAllData,
     } = prevProps
 
     const {
@@ -176,12 +149,11 @@ class Wallet extends PureComponent<any, any> {
       intl: { locale },
       location: { pathname },
       history,
-      userCurrencyData,
     } = this.props
 
-    if (JSON.stringify(userCurrencyData) !== JSON.stringify(prevAllData)) {
+    if (JSON.stringify(prevProps) !== JSON.stringify(this.props)) {
       this.setState(() => ({
-        userCurrencyData,
+        userCurrencyData: user.getUserCurrencyData(),
       }))
     }
 
@@ -326,7 +298,7 @@ class Wallet extends PureComponent<any, any> {
     }
 
     const flattenedCurrencyData = user.flattenUserCurrencyData(availableWallets)
-    const { currency, address } = flattenedCurrencyData[0]
+    const { currency, address, standard } = flattenedCurrencyData[0]
     let targetCurrency = currency
 
     switch (currency.toLowerCase()) {
@@ -336,10 +308,10 @@ class Wallet extends PureComponent<any, any> {
         targetCurrency = 'btc'
     }
 
-    const isToken = erc20Like.isToken({ name: currency })
+    const tokenUrlPart = standard ? `/${standard}` : ''
 
     history.push(
-      localisedUrl(locale, (isToken ? '/token' : '') + `/${targetCurrency}/${address}/send`)
+      localisedUrl(locale, tokenUrlPart + `/${targetCurrency}/${address}/send`)
     )
   }
 

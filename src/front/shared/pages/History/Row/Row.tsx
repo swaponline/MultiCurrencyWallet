@@ -258,7 +258,7 @@ export default class Row extends React.PureComponent<any, any> {
     /* eslint-disable */
     let txLink = `/${getCurrencyKey(type, false)}/tx/${hash}`
     if (ethToken.isEthToken({ name: type })) {
-      txLink = `/token/${type}/tx/${hash}`
+      txLink = `${standard ? `/${standard}` : ''}/${type}/tx/${hash}`
     }
 
     if (txType === 'INVOICE' && invoiceData.uniqhash) {
