@@ -175,8 +175,6 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
     const currentDecimals = constants.tokenDecimals[getCurrencyKey(currency, true).toLowerCase()]
     const selectedItem = actions.user.getWithdrawWallet(currency, withdrawWallet)
     const usedAdminFee = adminFee.isEnabled(selectedItem.currency)
-    const infoAboutCurrency = selectedCurrency.infoAboutCurrency
-    
     const isToken = erc20Like.isToken({ name: currency })
     const isBep20Token = erc20Like.bep20.isToken({ name: currency })
     const isErc20Token = erc20Like.erc20.isToken({ name: currency })
@@ -187,8 +185,8 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
     const commissionCurrency = isErc20Token ?
       'ETH' : isBep20Token ?
       'BNB' : currency.toUpperCase()
-    
-    const exCurrencyRate = infoAboutCurrency && infoAboutCurrency.price_fiat
+
+    const exCurrencyRate = selectedCurrency.infoAboutCurrency?.price_fiat
       ? new BigNumber(selectedCurrency.infoAboutCurrency.price_fiat)
       : new BigNumber(0)
 
@@ -906,6 +904,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
               <FormattedMessage id="Withdrow559" defaultMessage="Send from wallet " />
             </FieldLabel>
             <CurrencyList
+              {...this.props}
               selectedCurrency={selectedCurrency}
               currentBalance={currentBalance}
               currency={currency}

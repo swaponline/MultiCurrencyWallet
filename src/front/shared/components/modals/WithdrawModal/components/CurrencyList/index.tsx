@@ -4,7 +4,6 @@ import styles from './index.scss'
 import cx from 'classnames'
 import PartOfAddress from 'pages/Wallet/PartOfAddress'
 import { isMobile } from 'react-device-detect'
-import actions from 'redux/actions'
 import erc20Like from 'common/erc20Like'
 import { constants } from 'helpers'
 import { localisedUrl } from 'helpers/locale'
@@ -33,28 +32,17 @@ export default class CurrencyList extends Component<any, any> {
         intl: { locale },
       } = this.props
 
-      const currentAsset = actions.core.getWallets({})
-        .filter((item) => {
-          return (
-            currency === item.currency
-            && address.toLowerCase() === item.address.toLowerCase()
-          )
-        })
-
-      let targetCurrency = currentAsset[0].currency
-
       switch (currency.toLowerCase()) {
         case 'btc (multisig)':
         case 'btc (sms-protected)':
         case 'btc (pin-protected)':
-          targetCurrency = 'btc'
-          break
+          currency = 'btc'
       }
 
       const isToken = erc20Like.isToken({ name: currency })
 
       history.push(
-        localisedUrl(locale, (isToken ? '/token' : '') + `/${targetCurrency}/${currentAsset[0].address}/send`)
+        localisedUrl(locale, (isToken ? '/token' : '') + `/${currency}/${address}/send`)
       )
     })
   }
@@ -85,6 +73,8 @@ export default class CurrencyList extends Component<any, any> {
       isAssetsOpen,
     } = this.state
 
+    const standard = selectedCurrency.itemCurrency?.standard
+
     return (
       //@ts-ignore: strictNullChecks
       <OutsideClick outsideAction={this.closeList}>
@@ -98,7 +88,10 @@ export default class CurrencyList extends Component<any, any> {
           </div>
 
           <div>
-            <a>{selectedCurrency.currency}</a>
+            <a>
+              {selectedCurrency.currency}
+              {standard && <span styleName="tokenStandard">{standard.toUpperCase()}</span>}
+            </a>
             <span styleName="address">{currentAddress}</span>
             <span styleName="mobileAddress">
               {isMobile ? <PartOfAddress address={currentAddress} withoutLink /> : ''}
@@ -135,9 +128,7 @@ export default class CurrencyList extends Component<any, any> {
                 <div>
                   <a>
                     {item.fullName}
-                    {item.standard ? (
-                      <span styleName="tokenStandard">{item.standard.toUpperCase()}</span>
-                    ) : ''}
+                    {item.standard && <span styleName="tokenStandard">{item.standard.toUpperCase()}</span>}
                   </a>
                   <span styleName="address">{item.address}</span>
                   <span styleName="mobileAddress">
