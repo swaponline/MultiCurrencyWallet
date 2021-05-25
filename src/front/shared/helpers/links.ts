@@ -178,6 +178,8 @@ export const getTokenWallet = (params) => {
   const { tokenName, currency } = params
   const { address } = actions.user.getAuthData(currency)
 
+  // TODO: обновить к /token/{baseCur}name/address
+
   return `/token/${tokenName.toUpperCase()}/${address}`
 }
 

@@ -197,9 +197,10 @@ class CurrencyWallet extends Component<any, any> {
     }
 
     const targetCurrency = getCurrencyKey(currency.toLowerCase(), true)
-    const tokenUrlPart = itemCurrency.tokenKey ? `/token/${itemCurrency.tokenKey}` : ''
-    const withdrawUrl = tokenUrlPart + `/${targetCurrency}/${address}/send`
-    const receiveUrl = tokenUrlPart + `/${targetCurrency}/${address}/receive`
+    const firstUrlPart = itemCurrency.tokenKey ? `/token/${itemCurrency.tokenKey}` : `/${targetCurrency}`
+    const withdrawUrl = `${firstUrlPart}/${address}/send`
+    const receiveUrl = `${firstUrlPart}/${address}/receive`
+
     const currentUrl = this.props.history.location.pathname.toLowerCase()
 
     if (currentUrl === withdrawUrl.toLowerCase() && balance !== 0) {
@@ -309,9 +310,9 @@ class CurrencyWallet extends Component<any, any> {
               }
             }
             const targetCurrency = getCurrencyKey(currency.toLowerCase(), true)
-            const tokenUrlPart = tokenKey ? `/token/${tokenKey}` : ''
-            const withdrawUrl = tokenUrlPart + `/${targetCurrency}/${address}/send`
-            const receiveUrl = tokenUrlPart + `/${targetCurrency}/${address}/receive`
+            const firstUrlPart = tokenKey ? `/token/${tokenKey}` : `/${targetCurrency}`
+            const withdrawUrl = `${firstUrlPart}/${address}/send`
+            const receiveUrl = `${firstUrlPart}/${address}/receive`
             const currentUrl = this.props.location.pathname.toLowerCase()
 
             if (currentUrl === withdrawUrl.toLowerCase()) {
@@ -345,8 +346,10 @@ class CurrencyWallet extends Component<any, any> {
 
     return items.filter((item) => {
       if (
-        item.currency.toLowerCase() === ticker.toLowerCase() &&
-        item.address.toLowerCase() === walletAddress.toLowerCase()
+        (
+          item.currency.toLowerCase() === ticker.toLowerCase() ||
+          item.tokenKey?.toLowerCase() === ticker.toLowerCase()
+        ) && item.address.toLowerCase() === walletAddress.toLowerCase()
       ) {
         return true
       }
@@ -366,7 +369,10 @@ class CurrencyWallet extends Component<any, any> {
     if (!address && !ticker) {
       if (fullName) {
         if (erc20Like.isToken({ name: fullName })) {
+          // TODO: сразу передавать нужный ключ для токена
+          // TODO: tokenCurrency можно удалить, тк все уже есть в обьекте токена
           const tokenCurrency = isErc20Token ? 'eth' : isBep20Token ? 'bnb' : ''
+
           const tokenWallet = getTokenWallet({
             tokenName: fullName,
             currency: tokenCurrency,
@@ -456,12 +462,12 @@ class CurrencyWallet extends Component<any, any> {
     } = this.props
     const { itemCurrency, currency, address } = this.state
 
-    let targetCurrency = getCurrencyKey(currency.toLowerCase(), true).toLowerCase()
-    const tokenUrlPart = itemCurrency.tokenKey ? `/token/${itemCurrency.tokenKey}` : ''
+    const targetCurrency = getCurrencyKey(currency.toLowerCase(), true).toLowerCase()
+    const firstUrlPart = itemCurrency.tokenKey ? `/token/${itemCurrency.tokenKey}` : `/${targetCurrency}`
 
     history.push(localisedUrl(
       locale,
-      tokenUrlPart + `/${targetCurrency}/${address}/send`
+      `${firstUrlPart}/${address}/send`
     ))
   }
 

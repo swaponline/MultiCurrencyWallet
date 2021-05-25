@@ -304,10 +304,10 @@ class Wallet extends PureComponent<any, any> {
         targetCurrency = 'btc'
     }
 
-    const tokenUrlPart = tokenKey ? `/token/${tokenKey}` : ''
+    const firstUrlPart = tokenKey ? `/token/${tokenKey}` : `/${currency}`
 
     history.push(
-      localisedUrl(locale, tokenUrlPart + `/${targetCurrency}/${address}/send`)
+      localisedUrl(locale, `${firstUrlPart}/${address}/send`)
     )
   }
 

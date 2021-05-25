@@ -249,11 +249,11 @@ class Row extends Component<RowProps, RowState> {
         break
     }
 
-    const tokenUrlPart = itemData.tokenKey ? `/token/${itemData.tokenKey}` : ''
+    const firstUrlPart = itemData.tokenKey ? `/token/${itemData.tokenKey}` : `/${targetCurrency}`
 
     //@ts-ignore: strictNullChecks
     history.push(
-      localisedUrl(locale, tokenUrlPart + `/${targetCurrency}/${itemData.address}/send`)
+      localisedUrl(locale, `${firstUrlPart}/${itemData.address}/send`)
     )
   }
 
@@ -370,11 +370,11 @@ class Row extends Component<RowProps, RowState> {
         break
     }
 
-    const tokenUrlPart = itemData.tokenKey ? `/token/${itemData.tokenKey}` : ''
+    const firstUrlPart = itemData.tokenKey ? `/token/${itemData.tokenKey}` : `/${targetCurrency}`
 
     //@ts-ignore: strictNullChecks
     history.push(
-      localisedUrl(locale, tokenUrlPart + `/${targetCurrency}/${itemData.address}`)
+      localisedUrl(locale, `${firstUrlPart}/${itemData.address}`)
     )
   }
 
