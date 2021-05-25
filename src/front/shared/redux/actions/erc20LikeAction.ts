@@ -109,12 +109,13 @@ console.log('>>>>>> erc20LikeAction -> getBalance', tokenName, this.getReduxName
       },
     } = getState()
 
+console.log('>>>>>>>>>>>>>>>>>>>>>>>>>', ownerAddress, contractAddress, decimals, name )
     const address = metamask.isConnected() ? metamask.getAddress() : ownerAddress
-    const balanceInCache = cacheStorageGet('currencyBalances', `token_${tokenName}_${address}`)
+    const balanceInCache = cacheStorageGet('currencyBalances', `token_${this.getReduxName(tokenName)}_${address}`)
 
     if (balanceInCache !== false) {
       reducers.user.setTokenBalance({
-        name,
+        name: this.getReduxName(tokenName),
         amount: balanceInCache,
       })
       return balanceInCache
@@ -123,13 +124,13 @@ console.log('>>>>>> erc20LikeAction -> getBalance', tokenName, this.getReduxName
     try {
       const amount = await this.fetchBalance(address, contractAddress, decimals)
 
-      reducers.user.setTokenBalance({ name, amount })
-      cacheStorageSet('currencyBalances', `token_${tokenName}_${address}`, amount, 60)
+      reducers.user.setTokenBalance({ name: this.getReduxName(tokenName), amount })
+      cacheStorageSet('currencyBalances', `token_${this.getReduxName(tokenName)}_${address}`, amount, 60)
 
       return amount
     } catch (error) {
       console.error(error)
-      reducers.user.setTokenBalanceError({ name })
+      reducers.user.setTokenBalanceError({ name: this.getReduxName(tokenName) })
     }
   }
 
