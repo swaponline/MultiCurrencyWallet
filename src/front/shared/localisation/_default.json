@@ -70,13 +70,6 @@
     ]
   },
   {
-    "id": "transactionLink28",
-    "message": "Transaction: ",
-    "files": [
-      "src/front/shared/components/Href/TransactionLink.tsx"
-    ]
-  },
-  {
     "id": "Loader21",
     "message": "Please wait, it takes from 3 to 5 minutes to complete the transaction. ",
     "files": [
@@ -3402,62 +3395,6 @@
     "message": "For you",
     "files": [
       "src/front/shared/pages/Wallet/components/WallerSlider/index.tsx"
-    ]
-  },
-  {
-    "id": "SweepToMnemonicKeys_ButtonMakeSweep",
-    "message": "Done",
-    "files": [
-      "src/front/shared/components/modals/SweepToMnemonicKeys/SweepToMnemonicKeys.tsx"
-    ]
-  },
-  {
-    "id": "SweepToMnemonicKeys_ButtonRestoreOld",
-    "message": "Восстановить",
-    "files": [
-      "src/front/shared/components/modals/SweepToMnemonicKeys/SweepToMnemonicKeys.tsx"
-    ]
-  },
-  {
-    "id": "SweepToMnemonicKeys_Cancel",
-    "message": "Отмена",
-    "files": [
-      "src/front/shared/components/modals/SweepToMnemonicKeys/SweepToMnemonicKeys.tsx"
-    ]
-  },
-  {
-    "id": "SweepToMnemonicKeys_Continue",
-    "message": "Продолжить",
-    "files": [
-      "src/front/shared/components/modals/SweepToMnemonicKeys/SweepToMnemonicKeys.tsx"
-    ]
-  },
-  {
-    "id": "SweepToMnemonicKeys_NoticeMakeSweep",
-    "message": "Пожалуйста, переместите все средства на кошельки помеченные \"new\" (USDT и остальные токены переведите на Ethereum адрес). Затем нажмите кнопку \"SWEEP\". Старые адреса будут скрыты.",
-    "files": [
-      "src/front/shared/components/modals/SweepToMnemonicKeys/SweepToMnemonicKeys.tsx"
-    ]
-  },
-  {
-    "id": "SweepToMnemonicKeys_NoticeRestoreOld",
-    "message": "Вы уже произвели переход на 12 слов. Сдесь вы можете восстановить доступ к своим старым кошелькам",
-    "files": [
-      "src/front/shared/components/modals/SweepToMnemonicKeys/SweepToMnemonicKeys.tsx"
-    ]
-  },
-  {
-    "id": "SweepToMnemonicKeys_Ready",
-    "message": "Готово",
-    "files": [
-      "src/front/shared/components/modals/SweepToMnemonicKeys/SweepToMnemonicKeys.tsx"
-    ]
-  },
-  {
-    "id": "SweepToMnemonicKeys_Title",
-    "message": "Sweep",
-    "files": [
-      "src/front/shared/components/modals/SweepToMnemonicKeys/SweepToMnemonicKeys.tsx"
     ]
   },
   {
