@@ -1,5 +1,7 @@
 import { COIN_DATA, COIN_MODEL, COIN_TYPE } from 'swap.app/constants/COINS'
 import helpers from 'helpers'
+import getCoinInfo from 'common/coins/getCoinInfo'
+
 
 const reportAboutProblem = (params) => {
   const { isError = false, info } = params
@@ -33,9 +35,15 @@ const feeCache = {
 }
 
 const fetchCoinFee = (params): Promise<CoinFee> => {
-  const { coinName, action, updateCacheValue } = params
+  const { coinName: coinInfo , action, updateCacheValue } = params
 
   return new Promise(async (feeResolved) => {
+    const {
+      coin: coinName,
+      blockchain,
+    } = getCoinInfo(coinInfo)
+
+    console.log('>>>> fetch coinFee', coinName, blockchain)
     const hasFeeInCache = !updateCacheValue && feeCache[action] && feeCache[action][coinName]
     const coinData = COIN_DATA[coinName.toUpperCase()]
     let isBuyingUTXO = action === 'buy' && coinData.model === COIN_MODEL.UTXO

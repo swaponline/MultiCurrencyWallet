@@ -19,7 +19,7 @@ export default class Address extends Component<IAddress, {}> {
   }
 
   render() {
-    const {
+    let {
       address,
       format,
       type,
@@ -27,6 +27,7 @@ export default class Address extends Component<IAddress, {}> {
       style,
     } = this.props
 
+if (!address) address = '123123123123'
     const addressStart = address.substring(0, 4)
     const addressEnd = address.substring(address.length - 4, address.length)
 

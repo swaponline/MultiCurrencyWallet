@@ -243,8 +243,15 @@ class SwapOrders extends aggregation(ServiceInterface, Collection) {
     const buyData = getCoinInfo(buyCurrency.toUpperCase())
     const sellData = getCoinInfo(sellCurrency.toUpperCase())
     console.log('>>> buyData, sellData', buyData, sellData)
-    const buy = buyCurrency.toUpperCase()
-    const sell = sellCurrency.toUpperCase()
+    const {
+      coin: buy,
+      blockchain: buyBlockchain,
+    } = getCoinInfo(buyCurrency)
+    const {
+      coin: sell,
+      blockchain: sellBlockchain,
+    } = getCoinInfo(sellCurrency)
+
     // Error in the bottom line: Cannot read property 'precision' of undefined
     console.log('>>>>>>>>>>>> constants.COIN_DATA', constants.COIN_DATA, constants)
     const roundedBuyAmount = new BigNumber(buyAmount).dp(constants.COIN_DATA[buy].precision)
@@ -255,28 +262,15 @@ class SwapOrders extends aggregation(ServiceInterface, Collection) {
       buyAmount:    roundedBuyAmount,
       sellAmount:   roundedSellAmount,
       buyCurrency:  buy,
+      buyBlockchain,
       sellCurrency: sell,
+      sellBlockchain,
       ...rest,
     })
 
     this.append(order, order.id)
 
     return order
-  }
-
-  _extractBlockchain(coin) {
-    if (coin.indexOf(`}`) !== -1 && coin.indexOf(`{`) === 0) {
-      let coinData = coin.split(`}`)
-      return {
-        coin: coinData[1],
-        blockchain: coinData[0].substr(1),
-      }
-    } else {
-      return {
-        coin,
-        blockchain: ``,
-      }
-    }
   }
 
   _handleCreate(data) {
