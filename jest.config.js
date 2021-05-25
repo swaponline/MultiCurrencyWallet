@@ -1,6 +1,7 @@
 module.exports = {
   verbose: true,
   testURL: "https://swaponline.io",
+  testEnvironment: 'jsdom',
   modulePaths: [
     "<rootDir>/src/",
     "<rootDir>/src/core",
