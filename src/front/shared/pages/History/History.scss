@@ -6,6 +6,11 @@
   padding: 25px;
   margin-top: 20px;
   width: 100%;
+
+  &.dark {
+    box-shadow: $d-box-shadow;
+    background: $d-background-elements;
+  }
 }
 
 .historyHeading {
@@ -44,9 +49,6 @@
 }
 
 .dark {
-  box-shadow: $d-box-shadow;
-  background: $d-background-elements;
-
   .historyHeading {
     color: $d-color;
   }
