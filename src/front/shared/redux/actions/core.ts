@@ -11,6 +11,7 @@ import { BigNumber } from 'bignumber.js'
 
 import metamask from 'helpers/metamask'
 import { AddressType } from 'domain/address'
+import getCoinInfo from 'common/coins/getCoinInfo'
 
 import helpers from 'helpers'
 
@@ -397,17 +398,31 @@ type GetWalletFindCondition = {
   address?: string
   addressType?: string
   connected?: boolean
+  blockchain?: string
 }
 
 const getWallet = (findCondition: GetWalletFindCondition) => {
   // specify addressType,
   // otherwise it finds the first wallet from all origins, including metamask
-  const { address, addressType, connected, currency } = findCondition
+  const { address, addressType, connected, currency: currencyData, blockchain: optBlockchain } = findCondition
   const wallets = getWallets({ withInternal: true })
+  
+  const {
+    coin: currency,
+    blockchain: coinBlockchain,
+  } = getCoinInfo(currencyData)
+  const blockchain = coinBlockchain || optBlockchain
+  console.log('>>>> actions.core.getWallet', findCondition, currency, coinBlockchain)
 
   const founded = wallets.filter((wallet) => {
     if (wallet.isMetamask && !wallet.isConnected) return false
-    const conditionOk = currency && wallet.currency.toLowerCase() === currency.toLowerCase()
+    const conditionOk = (
+        blockchain && wallet.blockchain
+          ? blockchain.toLowerCase() === wallet.blockchain.toLowerCase()
+          : true
+      )
+      && currency
+      && wallet.currency.toLowerCase() === currency.toLowerCase()
 
     if (address) {
       if (wallet.address.toLowerCase() === address.toLowerCase()) {
@@ -436,7 +451,7 @@ const getWallet = (findCondition: GetWalletFindCondition) => {
 
     return conditionOk
   })
-
+console.log('>>>>>>', founded.length ? founded[0] : false)
   return founded.length ? founded[0] : false
 }
 
@@ -524,7 +539,7 @@ const getWallets = (options) => {
     ...(!config.opts.curEnabled || config.opts.curEnabled.ghost ? [ghostData] : []),
     ...(!config.opts.curEnabled || config.opts.curEnabled.next ? [nextData] : []),
     ...Object.keys(tokensData)
-      .filter((k) => !tokensData[k].reducerDataTarget)
+      .filter((k) => !tokensData[k].reducerDataTarget && k.split(`-`).length === 2)
       .map((k) => tokensData[k]),
   ].map(({ account, keyPair, ...data }) => ({
     ...data,
@@ -532,6 +547,10 @@ const getWallets = (options) => {
 
   return allData.filter((item) => item && item.address)
 }
+
+window.getWallets = getWallets
+window.getWallet = getWallet
+
 
 const fetchWalletBalance = async (walletData): Promise<number> => {
   const name = helpers.getCurrencyKey(walletData.currency.toLowerCase(), true)

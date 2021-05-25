@@ -100,11 +100,11 @@ class Erc20LikeAction {
 
   getBalance = async (tokenName) => {
     if (tokenName === undefined) return
-
+console.log('>>>>>> erc20LikeAction -> getBalance', tokenName, this.getReduxName(tokenName))
     const {
       user: {
         tokensData: {
-          [tokenName.toLowerCase()]: { address: ownerAddress, contractAddress, decimals, name },
+          [this.getReduxName(tokenName)]: { address: ownerAddress, contractAddress, decimals, name },
         },
       },
     } = getState()
@@ -134,11 +134,12 @@ class Erc20LikeAction {
   }
 
   getTransaction = (ownAddress, tokenName) => {
+    console.log('erc20LikeAction - getTransaction', tokenName)
     return new Promise((res) => {
       const {
         user: { tokensData },
       } = getState()
-      const { address = ownAddress, contractAddress } = tokensData[tokenName.toLowerCase()]
+      const { address = ownAddress, contractAddress } = tokensData[this.getReduxName(tokenName)]
       const url = ''.concat(
         `?module=account&action=tokentx`,
         `&contractaddress=${contractAddress}`,
@@ -370,6 +371,8 @@ class Erc20LikeAction {
       // TODO: use a standard key and delete this key
       isERC20: this.standard === 'erc20',
       standard: this.standard,
+      isToken: true,
+      blockchain: TOKEN_STANDARDS[this.standard].currency,
     }
 
     if (metamask.isEnabled() && metamask.isConnected()) {
@@ -381,7 +384,7 @@ class Erc20LikeAction {
       }
     }
 
-    reducers.user.setTokenAuthData({ name: data.name, data })
+    reducers.user.setTokenAuthData({ name: this.getReduxName(data.name), data })
   }
 
   send = async (params) => {
@@ -490,7 +493,7 @@ class Erc20LikeAction {
 
   setAllowance = async (params) => {
     let { name, to, targetAllowance } = params
-    name = name.toLowerCase()
+    name = this.getReduxName(name)
 
     const { decimals } = this.returnTokenInfo(name)
     const ownerAddress = getState().user.tokensData[name].address
@@ -513,7 +516,7 @@ class Erc20LikeAction {
   returnTokenInfo = (name) => {
     if (!name) throw new Error(`${this.standard} actions; returnTokenInfo(name): name is undefined`)
 
-    name = name.toLowerCase()
+    name = this.getReduxName(name)
 
     const ownerAddress = getState().user.tokensData[name].address
     const {
@@ -528,6 +531,10 @@ class Erc20LikeAction {
       tokenContract,
       decimals,
     }
+  }
+
+  getReduxName = (name) => {
+    return `${this.standard.toLowerCase()}-${name.toLowerCase()}`
   }
 }
 
