@@ -86,6 +86,10 @@ class Row extends Component<RowProps, RowState> {
     super(props)
     
     const { currency, itemData } = props
+
+    console.log('%c wallet row', 'color; orange; font-size: 20px')
+    console.log('this.props: ', this.props)
+
     const currencyName = currency.currency
     const isToken = erc20Like.isToken({ name: currencyName })
     const reduxActionName = itemData.standard ? itemData.standard : currencyName.toLowerCase()

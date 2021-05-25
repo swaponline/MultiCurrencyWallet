@@ -10,10 +10,12 @@ import { BigNumber } from 'bignumber.js'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import { isMobile } from 'react-device-detect'
 
-import { inputReplaceCommaWithDot } from 'helpers/domUtils'
-import { localisedUrl } from 'helpers/locale'
 import MIN_AMOUNT from 'common/helpers/constants/MIN_AMOUNT'
 import COINS_WITH_DYNAMIC_FEE from 'common/helpers/constants/COINS_WITH_DYNAMIC_FEE'
+
+import TOKEN_STANDARDS from 'helpers/constants/TOKEN_STANDARDS'
+import { inputReplaceCommaWithDot } from 'helpers/domUtils'
+import { localisedUrl } from 'helpers/locale'
 import getCurrencyKey from 'helpers/getCurrencyKey'
 import lsDataCache from 'helpers/lsDataCache'
 import helpers, {
@@ -106,7 +108,6 @@ type WithdrawModalState = {
 
   hiddenCoinsList: string[]
   selectedCurrency: IUniversalObj
-  userCurrencyData: IUniversalObj
   selectedItem: IUniversalObj
 }
 
@@ -118,11 +119,22 @@ type WithdrawModalState = {
       btcData,
       ghostData,
       nextData,
+      tokensData,
       activeFiat,
     },
     ui: { dashboardModalsAllowed },
   }) => {
+    const userCurrencyData = [
+      ethData,
+      bnbData,
+      btcData,
+      ghostData,
+      nextData,
+      ...Object.keys(tokensData).map((k) => tokensData[k]),
+    ]
+
     return {
+      userCurrencyData,
       activeFiat,
       coinsData: [ethData, bnbData, btcData, ghostData, nextData],
       dashboardView: dashboardModalsAllowed,
@@ -138,7 +150,6 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
     super(props)
 
     const {
-      // userCurrencyData,
       coinsData,
       data: {
         toAddress,
@@ -154,31 +165,25 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
     const isToken = erc20Like.isToken({ name: currency })
     const isBep20Token = erc20Like.bep20.isToken({ name: currency })
     const isErc20Token = erc20Like.erc20.isToken({ name: currency })
-    const reduxActionName =  isErc20Token
-      ? 'erc20' : isBep20Token
-      ? 'bep20' : currency.toLowerCase()
+    const reduxActionName = selectedItem.standard || currency.toLowerCase()
 
-    const commissionCurrency = isErc20Token ?
-      'ETH' : isBep20Token ?
-      'BNB' : currency.toUpperCase()
+    let commissionCurrency = currency.toUpperCase()
+
+    // save wallet for token exchange's rate
+    const walletForTokenFee = coinsData.find((wallet) => {
+      if (TOKEN_STANDARDS[selectedItem.standard]) {
+        const tokenCurrency =  TOKEN_STANDARDS[selectedItem.standard].currency.toUpperCase()
+        commissionCurrency = tokenCurrency
+
+        return wallet.currency.toUpperCase() === tokenCurrency
+      }
+    })
 
     const exCurrencyRate = selectedCurrency.infoAboutCurrency?.price_fiat
       ? new BigNumber(selectedCurrency.infoAboutCurrency.price_fiat)
       : new BigNumber(0)
 
-    // save wallet for token exchange's rate
-    const walletForTokenFee = coinsData.find(wallet => {
-      if (isErc20Token) {
-        return wallet.currency.toLowerCase() === 'eth'
-      }
-
-      if (isBep20Token) {
-        return wallet.currency.toLowerCase() === 'bnb'
-      }
-    })
-
     this.state = {
-      userCurrencyData: user.getUserCurrencyData(),
       isShipped: false,
       usedAdminFee,
       openScanCam: false,
@@ -236,6 +241,13 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
 
   componentDidUpdate(prevProps, prevState) {
     const {
+      data: prevData,
+    } = prevProps
+    const {
+      data,
+    } = this.props
+
+    const {
       amount: prevAmount,
       fiatAmount: prevFiatAmount,
     } = prevState
@@ -244,7 +256,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
       fiatAmount,
     } = this.state
 
-    if (JSON.stringify(prevProps) !== JSON.stringify(this.props)) {
+    if (prevData !== this.props.data) {
       this.updateCurrencyData()
     }
     if (prevAmount !== amount || prevFiatAmount !== fiatAmount) {
@@ -266,7 +278,6 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
     const { data } = this.props
 
     this.setState(() => ({
-      userCurrencyData: user.getUserCurrencyData(),
       selectedCurrency: data,
     }))
   }
@@ -757,6 +768,9 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
 
   render() {
     const {
+      userCurrencyData,
+    } = this.props
+    const {
       ownTx,
       amount,
       address,
@@ -769,7 +783,6 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
       openScanCam,
       exCurrencyRate,
       currentDecimals,
-      userCurrencyData,
       selectedCurrency,
       selectedValue,
       usedAdminFee,
@@ -794,8 +807,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
       invoice,
     } = selectedCurrency
 
-    const filteredData = user.filterUserCurrencyData(userCurrencyData)
-    const tableRows = user.flattenUserCurrencyData(filteredData)
+    const tableRows = user.filterUserCurrencyData(userCurrencyData)
     const activeCryptoCurrency = getCurrencyKey(selectedCurrency.currency, true).toUpperCase()
     const selectedValueView = getCurrencyKey(selectedValue, true).toUpperCase()
     const criptoCurrencyHaveInfoPrice = this.returnHaveInfoPrice({

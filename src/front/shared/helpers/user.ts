@@ -39,93 +39,22 @@ export const getActivatedCurrencies = () => {
   return currencies
 }
 
-export const getUserCurrencyData = () => {
-  const {
-    user: {
-      btcData,
-      ethData,
-      bnbData,
-      ghostData,
-      nextData,
-      tokensData,
-    }
-  } = store.getState()
-
-  const finalData = {
-    btcData,
-    ethData,
-    bnbData,
-    ghostData,
-    nextData,
-  }
-
-  Object.keys(tokensData).forEach((k) => {
-    // TODO: temporarily.
-    // delete this loop when in the tokensData
-    // will be only token's standards
-    Object.keys(TOKEN_STANDARDS).forEach((key) => {
-      const standard = TOKEN_STANDARDS[key].standard
-
-      finalData[standard] = tokensData[standard]
-    })
-
-    // finalData[k] = tokensData[k]
-  })
-
-  return finalData
-}
-
 export const filterUserCurrencyData = (currencyData) => {
   const { core: { hiddenCoinsList } } = store.getState()
   const enabledCurrencies = getActivatedCurrencies()
-  const filteredData = {}
 
-  function isAllowed(target): boolean {
+  function isAllowed(target) {
+    const currency = target.currency?.toUpperCase()
+
     return (
-      (!hiddenCoinsList.includes(target.currency) &&
-        !hiddenCoinsList.includes(`${target.currency}:${target.address}`) &&
-        enabledCurrencies.includes(target.currency)
-      ) || target.balance > 0
+      !hiddenCoinsList.includes(currency) &&
+      !hiddenCoinsList.includes(`${currency}:${target.address?.toUpperCase()}`) &&
+      enabledCurrencies.includes(currency) &&
+      target.balance > 0
     )
   }
 
-  for (let dataKey in currencyData) {
-    const dataItem = currencyData[dataKey]
-
-    // filter a nested tokens data
-    if ( Object.keys(TOKEN_STANDARDS).includes(dataKey) ) { 
-      for (let tokenKey in dataItem) {
-        const token = dataItem[tokenKey]
-
-        if ( isAllowed(token) ) {
-          filteredData[dataKey] = {
-            ...filteredData[dataKey],
-            [tokenKey]: token
-          }
-        }
-      }
-    } else if ( isAllowed(dataItem) ) {
-      filteredData[dataKey] = dataItem
-    }
-  }
-
-  return filteredData
-}
-
-export const flattenUserCurrencyData = (currencyData) => {
-  const finalData: IUniversalObj[] = []
-
-  Object.keys(currencyData).map((dataKey) => {
-    const dataItem = currencyData[dataKey]
-
-    if ( Object.keys(TOKEN_STANDARDS).includes(dataKey) ) {
-      Object.keys(dataItem).forEach((tokenName) => {
-        finalData.push(dataItem[tokenName])
-      })
-    } else {
-      finalData.push(dataItem)
-    }
+  return currencyData.filter((wallet) => {
+    return isAllowed(wallet)
   })
-
-  return finalData
 }

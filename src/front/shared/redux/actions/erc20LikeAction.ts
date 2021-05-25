@@ -101,7 +101,9 @@ class Erc20LikeAction {
   }
 
   getTxRouter = (txId, currency) => {
-    return `/${this.standard}/${currency.toUpperCase()}/tx/${txId}`
+    const tokenKey = `{${this.currencyKey}}${currency}`
+
+    return `/token/${tokenKey}/tx/${txId}`
   }
 
   getLinkToInfo = (tx) => {
@@ -112,13 +114,14 @@ class Erc20LikeAction {
   getBalance = async (tokenName) => {
     if (tokenName === undefined) return
 
+    const tokenKey = `{${this.currencyKey}}${tokenName.toLowerCase()}`
     const { user: { tokensData } } = getState()
     const {
       address: ownerAddress,
       contractAddress,
       decimals,
       name,
-    } = tokensData[this.standard][tokenName.toLowerCase()]
+    } = tokensData[tokenKey]
 
     const address = metamask.isConnected() ? metamask.getAddress() : ownerAddress
     const balanceInCache = cacheStorageGet('currencyBalances', `token_${tokenName}_${address}`)
@@ -136,7 +139,7 @@ class Erc20LikeAction {
       const amount = await this.fetchBalance(address, contractAddress, decimals)
 
       reducers.user.setTokenBalance({
-        standard: this.standard,
+        baseCurrency: this.currencyKey,
         name,
         amount,
       })
@@ -146,7 +149,7 @@ class Erc20LikeAction {
     } catch (error) {
       console.error(error)
       reducers.user.setTokenBalanceError({
-        standard: this.standard,
+        baseCurrency: this.currencyKey,
         name,
       })
     }
@@ -387,6 +390,7 @@ class Erc20LikeAction {
       // TODO: use a standard key and delete this key
       isERC20: this.standard === 'erc20',
       standard: this.standard,
+      baseCurrency: this.currencyKey,
     }
 
     if (metamask.isEnabled() && metamask.isConnected()) {
@@ -399,7 +403,7 @@ class Erc20LikeAction {
     }
 
     reducers.user.setTokenAuthData({
-      standard: this.standard,
+      baseCurrency: this.currencyKey,
       name: data.name,
       data,
     })
@@ -513,9 +517,10 @@ class Erc20LikeAction {
     let { name, to, targetAllowance } = params
     name = name.toLowerCase()
 
+    const tokenKey = `{${this.currencyKey}}${name.toLowerCase()}`
     const { decimals } = this.returnTokenInfo(name)
     const { user: { tokensData } } = getState()
-    const { address: ownerAddress } = tokensData[this.standard][name]
+    const { address: ownerAddress } = tokensData[tokenKey]
 
     const allowance = await erc20Like[this.standard].checkAllowance({
       tokenOwnerAddress: ownerAddress,
@@ -538,8 +543,9 @@ class Erc20LikeAction {
 
     name = name.toLowerCase()
 
+    const tokenKey = `{${this.currencyKey}}${name.toLowerCase()}`
     const { user: { tokensData } } = getState()
-    const { address: ownerAddress } = tokensData[this.standard][name]
+    const { address: ownerAddress } = tokensData[tokenKey]
     const { address: contractAddress, decimals } = externalConfig[this.standard][name]
 
     const tokenContract = new this.Web3.eth.Contract(TokenAbi, contractAddress, {

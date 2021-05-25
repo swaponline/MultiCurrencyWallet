@@ -440,7 +440,7 @@ const getWallet = (findCondition: GetWalletFindCondition) => {
   return founded.length ? founded[0] : false
 }
 
-const getWallets = (options) => {
+const getWallets = (options: IUniversalObj = {}) => {
   const { withInternal } = options
 
   const {

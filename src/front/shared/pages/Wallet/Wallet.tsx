@@ -40,6 +40,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
       btcData,
       ghostData,
       nextData,
+      tokensData,
       btcMultisigSMSData,
       btcMultisigUserData,
       btcMultisigUserDataList,
@@ -51,7 +52,17 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
     currencies: { items: currencies },
     modals,
   }) => {
+    const userCurrencyData = [
+      ethData,
+      bnbData,
+      btcData,
+      ghostData,
+      nextData,
+      ...Object.keys(tokensData).map((k) => tokensData[k]),
+    ]
+
     return {
+      userCurrencyData,
       currencies,
       isBalanceFetching,
       multisigPendingCount,
@@ -106,7 +117,6 @@ class Wallet extends PureComponent<any, any> {
     }
 
     this.state = {
-      userCurrencyData: user.getUserCurrencyData(),
       tokenStandards,
       activeComponentNum,
       btcBalance: 0,
@@ -150,12 +160,6 @@ class Wallet extends PureComponent<any, any> {
       location: { pathname },
       history,
     } = this.props
-
-    if (JSON.stringify(prevProps) !== JSON.stringify(this.props)) {
-      this.setState(() => ({
-        userCurrencyData: user.getUserCurrencyData(),
-      }))
-    }
 
     if (
       pathname.toLowerCase() != prevPathname.toLowerCase() &&
@@ -254,12 +258,11 @@ class Wallet extends PureComponent<any, any> {
   }
 
   handleReceive = (context) => {
-    const { userCurrencyData } = this.state
+    const { userCurrencyData } = this.props
     const widgetCurrencies = this.returnWidgetCurrencies()
     const filteredCurrencies = user.filterUserCurrencyData(userCurrencyData)
-    const flattenedCurrencyData = user.flattenUserCurrencyData(filteredCurrencies)
 
-    const availableWallets = flattenedCurrencyData.filter((item) => {
+    const availableWallets = filteredCurrencies.filter((item) => {
       const { isMetamask, isConnected, currency, balance } = item
 
       return (
@@ -280,7 +283,7 @@ class Wallet extends PureComponent<any, any> {
       history,
       intl: { locale },
     } = this.props
-    const { userCurrencyData } = this.state
+    const { userCurrencyData } = this.props
     const availableWallets = user.filterUserCurrencyData(userCurrencyData)
 
     if (!Object.keys(availableWallets).length) {
@@ -297,8 +300,7 @@ class Wallet extends PureComponent<any, any> {
       return
     }
 
-    const flattenedCurrencyData = user.flattenUserCurrencyData(availableWallets)
-    const { currency, address, standard } = flattenedCurrencyData[0]
+    const { currency, address, standard } = availableWallets[0]
     let targetCurrency = currency
 
     switch (currency.toLowerCase()) {
@@ -347,9 +349,6 @@ class Wallet extends PureComponent<any, any> {
   }
 
   addFiatBalanceInUserCurrencyData = (currencyData) => {
-    const { tokenStandards } = this.state
-    const newData = {}
-
     function returnFiatBalance(target) {
       return target.balance > 0 && target.infoAboutCurrency?.price_fiat
         ? new BigNumber(target.balance)
@@ -359,27 +358,11 @@ class Wallet extends PureComponent<any, any> {
         : 0
     }
 
-    for (let dataKey in currencyData) {
-      const dataItem = currencyData[dataKey]
+    currencyData.forEach((wallet) => {
+      wallet.fiatBalance = returnFiatBalance(wallet)
+    })
 
-      if ( tokenStandards.includes(dataKey) ) {
-        for (let tokenKey in dataItem) {
-          const token = dataItem[tokenKey]
-
-          token.fiatBalance = returnFiatBalance(dataItem)
-
-          newData[dataKey] = {
-            ...newData[dataKey],
-            [tokenKey]: token,
-          }
-        }
-      } else {
-        dataItem.fiatBalance = returnFiatBalance(dataItem)
-        newData[dataKey] = dataItem
-      }
-    }
-
-    return newData
+    return currencyData
   }
 
   returnBalanceInBtc = (currencyData) => {
@@ -504,12 +487,12 @@ class Wallet extends PureComponent<any, any> {
 
   render() {
     const {
-      userCurrencyData,
       activeComponentNum,
       multisigPendingCount,
     } = this.state
 
     const {
+      userCurrencyData,
       hiddenCoinsList,
       isBalanceFetching,
       activeFiat,
@@ -521,12 +504,11 @@ class Wallet extends PureComponent<any, any> {
 
     this.syncData()
 
-    let filteredUserData = user.filterUserCurrencyData(userCurrencyData)
-    filteredUserData = this.addFiatBalanceInUserCurrencyData(filteredUserData)
+    let userWallets = user.filterUserCurrencyData(userCurrencyData)
+    userWallets = this.addFiatBalanceInUserCurrencyData(userWallets)
 
-    const balanceInBtc = this.returnBalanceInBtc(filteredUserData)
-    const allFiatBalance = this.returnTotalFiatBalance(filteredUserData)
-    const tableRows = user.flattenUserCurrencyData(filteredUserData)
+    const balanceInBtc = this.returnBalanceInBtc(userWallets)
+    const allFiatBalance = this.returnTotalFiatBalance(userWallets)
 
     return (
       <DashboardLayout
@@ -551,7 +533,7 @@ class Wallet extends PureComponent<any, any> {
         {activeComponentNum === 0 && (
           <CurrenciesList
             isDark={!!isDark}
-            tableRows={tableRows}
+            tableRows={userWallets}
             hiddenCoinsList={hiddenCoinsList}
             goToСreateWallet={this.goToСreateWallet}
             multisigPendingCount={multisigPendingCount}

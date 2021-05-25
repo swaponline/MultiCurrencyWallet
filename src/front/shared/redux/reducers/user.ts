@@ -1,13 +1,3 @@
-import TOKEN_STANDARDS from 'helpers/constants/TOKEN_STANDARDS'
-
-const tokensData = {}
-
-Object.keys(TOKEN_STANDARDS).forEach((key) => {
-  const standard = TOKEN_STANDARDS[key].standard
-
-  tokensData[standard] = {}
-})
-
 export const initialState = {
   ghostData: {
     balance: 0,
@@ -90,7 +80,7 @@ export const initialState = {
     fullName: 'Tether',
     balanceError: null,
   },
-  tokensData,
+  tokensData: {},
   isFetching: false,
   isBalanceFetching: false,
   isTokenSigned: false,
@@ -145,29 +135,16 @@ export const setTokenSigned = (state, booleanValue) => ({
   isTokenSigned: booleanValue,
 })
 
-export const setTokenAuthData = (state, { name, standard, data }) => {
-  const standardData = {
-    ...state.tokensData[standard],
-    [name]: {
-      ...state.tokensData[standard][name],
-      ...data,
-    },
-  }
+export const setTokenAuthData = (state, { name, baseCurrency, data }) => {
+  const tokenKey = `{${baseCurrency}}${name}`
 
   return {
     ...state,
     tokensData: {
       ...state.tokensData,
-
-      // TODO: deprecated. Will be removed
-      [name]: {
-        ...state.tokensData[name],
+      [tokenKey]: {
+        ...state.tokensData[tokenKey],
         ...data,
-      },
-      // --------------------
-
-      [standard]: {
-        ...standardData,
       },
     },
   }
@@ -198,29 +175,16 @@ export const setBalance = (state, { name, amount, unconfirmedBalance }) => ({
   },
 })
 
-export const setInfoAboutToken = (state, { name, standard, infoAboutCurrency }) => {
-  const standardData = {
-    ...state.tokensData[standard],
-    [name]: {
-      ...state.tokensData[standard][name],
-      infoAboutCurrency,
-    },
-  }
+export const setInfoAboutToken = (state, { name, baseCurrency, infoAboutCurrency }) => {
+  const tokenKey = `{${baseCurrency}}${name}`
 
   return {
     ...state,
     tokensData: {
       ...state.tokensData,
-
-      // TODO: deprecated. Will be removed
-      [name]: {
-        ...state.tokensData[name],
+      [tokenKey]: {
+        ...state.tokensData[tokenKey],
         infoAboutCurrency,
-      },
-      // --------------------
-
-      [standard]: {
-        ...standardData,
       },
     },
   }
@@ -242,61 +206,33 @@ export const setBalanceError = (state, { name }) => ({
   },
 })
 
-export const setTokenBalanceError = (state, { name, standard }) => {
-  const standardData = {
-    ...state.tokensData[standard],
-    [name]: {
-      ...state.tokensData[standard][name],
-      balanceError: true,
-    },
-  }
+export const setTokenBalanceError = (state, { name, baseCurrency }) => {
+  const tokenKey = `{${baseCurrency}}${name}`
 
   return {
     ...state,
     tokensData: {
       ...state.tokensData,
-
-      // TODO: deprecated. Will be removed
-      [name]: {
-        ...state.tokensData[name],
+      [tokenKey]: {
+        ...state.tokensData[tokenKey],
         balanceError: true,
-      },
-      // --------------------
-
-      [standard]: {
-        ...standardData,
       },
     },
   }
 }
 
-export const setTokenBalance = (state, { name, standard, amount }) => {
-  const standardData = {
-    ...state.tokensData[standard],
-    [name]: {
-      ...state.tokensData[standard][name],
-      balance: Number(amount),
-      isBalanceFetched: true,
-      balanceError: false,
-    },
-  }
+export const setTokenBalance = (state, { name, baseCurrency, amount }) => {
+  const tokenKey = `{${baseCurrency}}${name}`
 
   return {
     ...state,
     tokensData: {
       ...state.tokensData,
-
-      // TODO: deprecated. Will be removed
-      [name]: {
-        ...state.tokensData[name],
+      [tokenKey]: {
+        ...state.tokensData[tokenKey],
         balance: Number(amount),
         isBalanceFetched: true,
         balanceError: false,
-      },
-      // --------------------
-
-      [standard]: {
-        ...standardData,
       },
     },
   }
