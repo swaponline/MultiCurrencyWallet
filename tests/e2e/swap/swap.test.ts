@@ -6,11 +6,11 @@ import { createBrowser, importWallet, addAssetToWallet, turnOnMM, takeScreenshot
 const takerBtcSellAmount = 500_000e-8
 const takerWbtcBuyAmount = 450_000e-8
 
-jest.setTimeout(500 * 1000)
+jest.setTimeout(1000 * 1000)
 
 describe('Swap e2e test', () => {
 
-  test('Swap with internal wallets', async () => {
+  test('BTC/WBTC swap with internal wallets', async () => {
     const { browser: MakerBrowser, page: MakerPage } = await createBrowser()
     const { browser: TakerBrowser, page: TakerPage } = await createBrowser()
 
@@ -132,6 +132,12 @@ describe('Swap e2e test', () => {
       console.log('SwapWIW -> Start swap')
       await timeOut(3 * 1000)
 
+      // first go to /exchange, second at mm settings
+      await MakerPage.goBack()
+      await MakerPage.goBack()
+
+      await timeOut(5 * 1000)
+
       const textOfExchangeButton = await TakerPage.$eval('#exchangeButton', el => el.textContent)
       console.log('textOfExchangeButton', textOfExchangeButton)
 
@@ -155,28 +161,40 @@ describe('Swap e2e test', () => {
       console.log('SwapWIW -> Swap progress')
       await timeOut(3 * 1000)
 
-      await takeScreenshot(MakerPage, 'MakerPage_SwapWIW_SwapProgress')
-      await takeScreenshot(TakerPage, 'TakerPage_SwapWIW_SwapProgress')
+      await TakerPage.waitForSelector('#firtsStepDoneIcon')
+
+      await takeScreenshot(MakerPage, 'MakerPage_SwapWIW_SwapProgress_firtsStepDoneIcon')
+      await takeScreenshot(TakerPage, 'TakerPage_SwapWIW_SwapProgress_firtsStepDoneIcon')
+
+      await TakerPage.waitForSelector('#utxoDepositHashLink')
+
+      await takeScreenshot(MakerPage, 'MakerPage_SwapWIW_SwapProgress_utxoDepositHashLink')
+      await takeScreenshot(TakerPage, 'TakerPage_SwapWIW_SwapProgress_utxoDepositHashLink')
+
+      await TakerPage.waitForSelector('#evmDepositHashLink', {timeout: 90 * 1000})
+
+      await takeScreenshot(MakerPage, 'MakerPage_SwapWIW_SwapProgress_evmDepositHashLink')
+      await takeScreenshot(TakerPage, 'TakerPage_SwapWIW_SwapProgress_evmDepositHashLink')
+
+      await TakerPage.waitForSelector('#evmWithdrawalHashLink', {timeout: 300 * 1000})
+
+      await takeScreenshot(MakerPage, 'MakerPage_SwapWIW_SwapProgress_evmWithdrawalHashLink')
+      await takeScreenshot(TakerPage, 'TakerPage_SwapWIW_SwapProgress_evmWithdrawalHashLink')
+
+      await TakerPage.waitForSelector('#utxoWithdrawalHashLink', {timeout: 300 * 1000})
+
+      await takeScreenshot(MakerPage, 'MakerPage_SwapWIW_SwapProgress_utxoWithdrawalHashLink')
+      await takeScreenshot(TakerPage, 'TakerPage_SwapWIW_SwapProgress_utxoWithdrawalHashLink')
+
+      await TakerPage.waitForSelector('#swapCompleted')
+
+      await takeScreenshot(MakerPage, 'MakerPage_SwapWIW_SwapProgress_swapCompleted')
+      await takeScreenshot(TakerPage, 'TakerPage_SwapWIW_SwapProgress_swapCompleted')
 
       await timeOut(15 * 1000)
 
-      await takeScreenshot(MakerPage, 'MakerPage_SwapWIW_SwapProgress1')
-      await takeScreenshot(TakerPage, 'TakerPage_SwapWIW_SwapProgress1')
-
-      await timeOut(15 * 1000)
-
-      await takeScreenshot(MakerPage, 'MakerPage_SwapWIW_SwapProgress2')
-      await takeScreenshot(TakerPage, 'TakerPage_SwapWIW_SwapProgress2')
-
-      await timeOut(20 * 1000)
-
-      await takeScreenshot(MakerPage, 'MakerPage_SwapWIW_SwapProgress3')
-      await takeScreenshot(TakerPage, 'TakerPage_SwapWIW_SwapProgress3')
-
-      await timeOut(20 * 1000)
-
-      await takeScreenshot(MakerPage, 'MakerPage_SwapWIW_SwapProgress4')
-      await takeScreenshot(TakerPage, 'TakerPage_SwapWIW_SwapProgress4')
+      await takeScreenshot(MakerPage, 'MakerPage_SwapWIW_SwapProgress_swapCompleted_End')
+      await takeScreenshot(TakerPage, 'TakerPage_SwapWIW_SwapProgress_swapCompleted_End')
 
     } catch (error) {
       await takeScreenshot(MakerPage, 'MakerPage_SwapWIW_SwapProgressError')
