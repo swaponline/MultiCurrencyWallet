@@ -1,4 +1,5 @@
 import config from 'app-config'
+import store from 'redux/store'
 import TOKEN_STANDARDS from 'helpers/constants/TOKEN_STANDARDS'
 
 export const getActivatedCurrencies = () => {
@@ -36,4 +37,59 @@ export const getActivatedCurrencies = () => {
   })
 
   return currencies
+}
+
+export const filterUserCurrencyData = (currencyData) => {
+  const { core: { hiddenCoinsList } } = store.getState()
+  const enabledCurrencies = getActivatedCurrencies()
+  const filteredData = {}
+
+  function isAllowed(target): boolean {
+    return (
+      (!hiddenCoinsList.includes(target.currency) &&
+        !hiddenCoinsList.includes(`${target.currency}:${target.address}`) &&
+        enabledCurrencies.includes(target.currency)
+      ) || target.balance > 0
+    )
+  }
+
+  for (let dataKey in currencyData) {
+    const dataItem = currencyData[dataKey]
+
+    // filter a nested tokens data
+    if ( Object.keys(TOKEN_STANDARDS).includes(dataKey) ) { 
+      for (let tokenKey in dataItem) {
+        const token = dataItem[tokenKey]
+
+        if ( isAllowed(token) ) {
+          filteredData[dataKey] = {
+            ...filteredData[dataKey],
+            [tokenKey]: token
+          }
+        }
+      }
+    } else if ( isAllowed(dataItem) ) {
+      filteredData[dataKey] = dataItem
+    }
+  }
+
+  return filteredData
+}
+
+export const flattenUserCurrencyData = (currencyData) => {
+  const finalData: IUniversalObj[] = []
+
+  Object.keys(currencyData).map((dataKey) => {
+    const dataItem = currencyData[dataKey]
+
+    if ( Object.keys(TOKEN_STANDARDS).includes(dataKey) ) {
+      Object.keys(dataItem).forEach((tokenName) => {
+        finalData.push(dataItem[tokenName])
+      })
+    } else {
+      finalData.push(dataItem)
+    }
+  })
+
+  return finalData
 }

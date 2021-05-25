@@ -14,14 +14,16 @@ import { inputReplaceCommaWithDot } from 'helpers/domUtils'
 import { localisedUrl } from 'helpers/locale'
 import MIN_AMOUNT from 'common/helpers/constants/MIN_AMOUNT'
 import COINS_WITH_DYNAMIC_FEE from 'common/helpers/constants/COINS_WITH_DYNAMIC_FEE'
-import redirectTo from 'helpers/redirectTo'
+import TOKEN_STANDARDS from 'helpers/constants/TOKEN_STANDARDS'
 import getCurrencyKey from 'helpers/getCurrencyKey'
 import lsDataCache from 'helpers/lsDataCache'
 import helpers, {
+  user,
   constants,
   links,
   adminFee,
   feedback,
+  redirectTo,
 } from 'helpers'
 import btcUtils from 'common/utils/coin/btc'
 import erc20Like from 'common/erc20Like'
@@ -51,8 +53,8 @@ type WithdrawModalProps = {
   intl: IUniversalObj
   history: IUniversalObj
   data: IUniversalObj
-  tokenItems: IUniversalObj[]
-  items: IUniversalObj[]
+  coinsData: IUniversalObj[]
+  userCurrencyData: IUniversalObj
 }
 
 type WithdrawModalState = {
@@ -78,10 +80,10 @@ type WithdrawModalState = {
   txSize: undefined | number
   bitcoinFeeSpeedType: string
   bitcoinFees: {
-      slow: number
-      normal: number
-      fast: number
-      custom: number
+    slow: number
+    normal: number
+    fast: number
+    custom: number
   }
 
   walletForTokenFee: IUniversalObj
@@ -104,8 +106,8 @@ type WithdrawModalState = {
   }
 
   hiddenCoinsList: string[]
-  currentActiveAsset: IUniversalObj
-  allCurrencyies: IUniversalObj[]
+  selectedCurrency: IUniversalObj
+  userCurrencyData: IUniversalObj
   selectedItem: IUniversalObj
 }
 
@@ -121,12 +123,35 @@ type WithdrawModalState = {
       activeFiat,
     },
     ui: { dashboardModalsAllowed },
-  }) => ({
-    activeFiat,
-    items: [ethData, bnbData, btcData, ghostData, nextData],
-    tokenItems: [...Object.keys(tokensData).map((k) => tokensData[k])],
-    dashboardView: dashboardModalsAllowed,
-  })
+  }) => {
+    const userCurrencyData = {
+      btcData,
+      ethData,
+      bnbData,
+      ghostData,
+      nextData,
+    }
+
+    Object.keys(tokensData).forEach((k) => {
+      // TODO: temporarily.
+      // delete this loop when in the tokensData
+      // will be only token's standards
+      Object.keys(TOKEN_STANDARDS).forEach((key) => {
+        const standard = TOKEN_STANDARDS[key].standard
+
+        userCurrencyData[standard] = tokensData[standard]
+      })
+
+      // userCurrencyData[k] = tokensData[k]
+    })
+
+    return {
+      userCurrencyData,
+      activeFiat,
+      coinsData: [ethData, bnbData, btcData, ghostData, nextData],
+      dashboardView: dashboardModalsAllowed,
+    }
+  }
 )
 @cssModules(styles, { allowMultiple: true })
 class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalState> {
@@ -137,7 +162,8 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
     super(props)
 
     const {
-      items,
+      userCurrencyData,
+      coinsData,
       data: {
         toAddress,
         currency,
@@ -145,12 +171,11 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
       },
     } = props
 
-    const currentActiveAsset = props.data
+    const selectedCurrency = props.data
     const currentDecimals = constants.tokenDecimals[getCurrencyKey(currency, true).toLowerCase()]
-    const allCurrencyies = actions.core.getWallets({}) //items.concat(tokenItems)
     const selectedItem = actions.user.getWithdrawWallet(currency, withdrawWallet)
     const usedAdminFee = adminFee.isEnabled(selectedItem.currency)
-    const infoAboutCurrency = currentActiveAsset.infoAboutCurrency
+    const infoAboutCurrency = selectedCurrency.infoAboutCurrency
     
     const isToken = erc20Like.isToken({ name: currency })
     const isBep20Token = erc20Like.bep20.isToken({ name: currency })
@@ -164,11 +189,11 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
       'BNB' : currency.toUpperCase()
     
     const exCurrencyRate = infoAboutCurrency && infoAboutCurrency.price_fiat
-      ? new BigNumber(currentActiveAsset.infoAboutCurrency.price_fiat)
+      ? new BigNumber(selectedCurrency.infoAboutCurrency.price_fiat)
       : new BigNumber(0)
 
     // save wallet for token exchange's rate
-    const walletForTokenFee = items.find(wallet => {
+    const walletForTokenFee = coinsData.find(wallet => {
       if (isErc20Token) {
         return wallet.currency.toLowerCase() === 'eth'
       }
@@ -179,6 +204,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
     })
 
     this.state = {
+      userCurrencyData,
       isShipped: false,
       usedAdminFee,
       openScanCam: false,
@@ -195,10 +221,9 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
       selectedValue: currency,
       ownTx: '',
       hiddenCoinsList: actions.core.getHiddenCoins(),
-      currentActiveAsset,
+      selectedCurrency,
       walletForTokenFee: walletForTokenFee || {},
       exCurrencyRate,
-      allCurrencyies,
       bitcoinFees: {
         slow: 5 * 1024,
         normal: 15 * 1024,
@@ -220,7 +245,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
       btcFeeRate: null,
       fetchFee: true,
       txSize: undefined,
-      isInvoicePay: !!(currentActiveAsset.invoice),
+      isInvoicePay: !!(selectedCurrency.invoice),
     }
   }
 
@@ -237,12 +262,12 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
 
   componentDidUpdate(prevProps, prevState) {
     const {
+      userCurrencyData: prevUserData,
       data: prevData,
-      items: prevItems,
     } = prevProps
     const {
+      userCurrencyData,
       data,
-      items,
     } = this.props
     const {
       amount: prevAmount,
@@ -253,8 +278,8 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
       fiatAmount,
     } = this.state
 
-    if (prevData !== data || prevItems !== items) {
-      this.setCurrenctActiveAsset()
+    if (prevData !== data || prevUserData !== userCurrencyData) {
+      this.updateCurrencyData()
     }
     if (prevAmount !== amount || prevFiatAmount !== fiatAmount) {
       this.updateServiceAndTotalFee()
@@ -271,13 +296,13 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
     )
   }
 
-  setCurrenctActiveAsset = () => {
-    const { items, tokenItems, data } = this.props
-    const allCurrencyies = items.concat(tokenItems)
-    this.setState({
-      currentActiveAsset: data,
-      allCurrencyies,
-    })
+  updateCurrencyData = () => {
+    const { data, userCurrencyData } = this.props
+
+    this.setState(() => ({
+      userCurrencyData,
+      selectedCurrency: data,
+    }))
   }
 
   fetchBtcFee = async () => {
@@ -628,7 +653,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
   // (value: any) => void' is not assignable to parameter of type Transform<string>
   handleAmount = (value): any => {
     const {
-      currentActiveAsset,
+      selectedCurrency,
       currentDecimals,
       exCurrencyRate,
       selectedValue,
@@ -647,7 +672,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
 
     const hasExCurrencyRate = exCurrencyRate.isGreaterThan(0)
 
-    if (selectedValue === currentActiveAsset.currency) {
+    if (selectedValue === selectedCurrency.currency) {
       this.setState({
         fiatAmount: value && hasExCurrencyRate
           ? exCurrencyRate.times(value).dp(2, BigNumber.ROUND_CEIL).toString()
@@ -750,13 +775,13 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
   }
 
   returnHaveInfoPrice = (params) => {
-    const { currentActiveAsset } = this.state
+    const { selectedCurrency } = this.state
     const { arrOfCurrencies } = params
-    const activeCriptoCurrency = getCurrencyKey(currentActiveAsset.currency, true).toUpperCase()
+    const activeCryptoCurrency = getCurrencyKey(selectedCurrency.currency, true).toUpperCase()
     let result = true
 
     arrOfCurrencies.forEach(item => {
-      if (item.currency === activeCriptoCurrency) {
+      if (item.currency === activeCryptoCurrency) {
         result = item.infoAboutCurrency && item.infoAboutCurrency.price_fiat
       }
     })
@@ -778,8 +803,8 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
       openScanCam,
       exCurrencyRate,
       currentDecimals,
-      hiddenCoinsList,
-      currentActiveAsset,
+      userCurrencyData,
+      selectedCurrency,
       selectedValue,
       usedAdminFee,
       fees,
@@ -801,20 +826,11 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
       address: currentAddress,
       balance: currentBalance,
       invoice,
-    } = currentActiveAsset
+    } = selectedCurrency
 
-    let tableRows = actions.core.getWallets({}).filter(({ currency, address, balance }) => {
-      // @ToDo - В будущем нужно убрать проверку только по типу монеты.
-      // Старую проверку оставил, чтобы у старых пользователей не вывалились скрытые кошельки
-
-      return (
-        (!hiddenCoinsList.includes(currency) &&
-          !hiddenCoinsList.includes(`${currency}:${address}`)) ||
-        balance > 0
-      )
-    })
-
-    const activeCriptoCurrency = getCurrencyKey(currentActiveAsset.currency, true).toUpperCase()
+    const filteredData = user.filterUserCurrencyData(userCurrencyData)
+    const tableRows = user.flattenUserCurrencyData(filteredData)
+    const activeCryptoCurrency = getCurrencyKey(selectedCurrency.currency, true).toUpperCase()
     const selectedValueView = getCurrencyKey(selectedValue, true).toUpperCase()
     const criptoCurrencyHaveInfoPrice = this.returnHaveInfoPrice({
       arrOfCurrencies: tableRows,
@@ -890,11 +906,9 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
               <FormattedMessage id="Withdrow559" defaultMessage="Send from wallet " />
             </FieldLabel>
             <CurrencyList
-              {...this.props}
-              currentActiveAsset={currentActiveAsset}
+              selectedCurrency={selectedCurrency}
               currentBalance={currentBalance}
               currency={currency}
-              exCurrencyRate={exCurrencyRate.toNumber()}
               activeFiat={activeFiat}
               tableRows={tableRows}
               currentAddress={currentAddress}
@@ -954,11 +968,11 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
             <span
               styleName={cx('additionalСurrenciesItem', {
                 additionalСurrenciesItemActive:
-                  selectedValueView === activeCriptoCurrency,
+                  selectedValueView === activeCryptoCurrency,
               })}
-              onClick={() => this.handleBuyCurrencySelect(currentActiveAsset.currency)}
+              onClick={() => this.handleBuyCurrencySelect(selectedCurrency.currency)}
             >
-              {activeCriptoCurrency}
+              {activeCryptoCurrency}
             </span>
           </div>
           {/* why style ? see tip for max button */}
@@ -978,7 +992,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
                   amount: selectedValue !== activeFiat
                     ? new BigNumber(fiatAmount).dp(2, BigNumber.ROUND_CEIL).toNumber()
                     : new BigNumber(amount).dp(6, BigNumber.ROUND_CEIL).toNumber(),
-                  currency: selectedValue !== activeFiat ? activeFiat : activeCriptoCurrency.toUpperCase(),
+                  currency: selectedValue !== activeFiat ? activeFiat : activeCryptoCurrency.toUpperCase(),
                 }}
               />
             )}
@@ -992,7 +1006,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
               id='amountInput'
               pattern="0-9\."
               onKeyDown={inputReplaceCommaWithDot}
-              valueLink={selectedValue === currentActiveAsset.currency
+              valueLink={selectedValue === selectedCurrency.currency
                 ? linked.amount.pipe(this.handleAmount)
                 : linked.fiatAmount.pipe(this.handleAmount)
               }
@@ -1047,11 +1061,11 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
                       id="Withdrow170"
                       defaultMessage="Maximum amount you can send is {allowedBalance} {currency}"
                       values={{
-                        allowedBalance: selectedValue === currentActiveAsset.currency
+                        allowedBalance: selectedValue === selectedCurrency.currency
                           ? balances.allowedCurrency.toNumber()
                           : balances.allowedFiat.toNumber(),
-                        currency: selectedValue === currentActiveAsset.currency
-                          ? activeCriptoCurrency
+                        currency: selectedValue === selectedCurrency.currency
+                          ? activeCryptoCurrency
                           : activeFiat,
                       }}
                     />

@@ -275,9 +275,6 @@ const getTokensBalances = async () => {
     const standardObj = TOKEN_STANDARDS[key]
     const standardName = standardObj.standard
 
-    // TODO: need to consider about the identical token names in the different blockchains
-    // TODO: get balance not only with name
-
     Object.keys(config[standardName]).forEach(async (tokenName) => {
       try {
         await actions[standardName].getBalance(tokenName)

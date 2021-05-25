@@ -11,9 +11,8 @@ import appConfig from 'app-config'
 import actions from 'redux/actions'
 import styles from './Wallet.scss'
 import erc20Like from 'common/erc20Like'
-import { links, constants, stats } from 'helpers'
+import { links, constants, stats, user } from 'helpers'
 import { localisedUrl } from 'helpers/locale'
-import { getActivatedCurrencies } from 'helpers/user'
 import getTopLocation from 'helpers/getTopLocation'
 import config from 'helpers/externalConfig'
 import metamask from 'helpers/metamask'
@@ -137,7 +136,7 @@ class Wallet extends PureComponent<any, any> {
       tokenStandards,
       activeComponentNum,
       btcBalance: 0,
-      enabledCurrencies: getActivatedCurrencies(),
+      enabledCurrencies: user.getActivatedCurrencies(),
       multisigPendingCount,
     }
   }
@@ -285,8 +284,8 @@ class Wallet extends PureComponent<any, any> {
   handleReceive = (context) => {
     const { userCurrencyData } = this.state
     const widgetCurrencies = this.returnWidgetCurrencies()
-    const filteredCurrencies = this.filterUserCurrencyData(userCurrencyData)
-    const flattenedCurrencyData = this.flattenUserCurrencyData(filteredCurrencies)
+    const filteredCurrencies = user.filterUserCurrencyData(userCurrencyData)
+    const flattenedCurrencyData = user.flattenUserCurrencyData(filteredCurrencies)
 
     const availableWallets = flattenedCurrencyData.filter((item) => {
       const { isMetamask, isConnected, currency, balance } = item
@@ -310,7 +309,7 @@ class Wallet extends PureComponent<any, any> {
       intl: { locale },
     } = this.props
     const { userCurrencyData } = this.state
-    const availableWallets = this.filterUserCurrencyData(userCurrencyData)
+    const availableWallets = user.filterUserCurrencyData(userCurrencyData)
 
     if (!Object.keys(availableWallets).length) {
       actions.notifications.show(
@@ -326,7 +325,7 @@ class Wallet extends PureComponent<any, any> {
       return
     }
 
-    const flattenedCurrencyData = this.flattenUserCurrencyData(availableWallets)
+    const flattenedCurrencyData = user.flattenUserCurrencyData(availableWallets)
     const { currency, address } = flattenedCurrencyData[0]
     let targetCurrency = currency
 
@@ -373,43 +372,6 @@ class Wallet extends PureComponent<any, any> {
     }
 
     return widgetCurrencies
-  }
-
-  filterUserCurrencyData = (currencyData) => {
-    const { hiddenCoinsList } = this.props
-    const { tokenStandards, enabledCurrencies } = this.state
-    const filteredData = {}
-
-    function isAllowed(target): boolean {
-      return (
-        (!hiddenCoinsList.includes(target.currency) &&
-          !hiddenCoinsList.includes(`${target.currency}:${target.address}`) &&
-          enabledCurrencies.includes(target.currency)
-        ) || target.balance > 0
-      )
-    }
-
-    for (let dataKey in currencyData) {
-      const dataItem = currencyData[dataKey]
-
-      // filter a nested tokens data
-      if ( tokenStandards.includes(dataKey) ) {
-        for (let tokenKey in dataItem) {
-          const token = dataItem[tokenKey]
-
-          if ( isAllowed(token) ) {
-            filteredData[dataKey] = {
-              ...filteredData[dataKey],
-              [tokenKey]: token
-            }
-          }
-        }
-      } else if ( isAllowed(dataItem) ) {
-        filteredData[dataKey] = dataItem
-      }
-    }
-
-    return filteredData
   }
 
   addFiatBalanceInUserCurrencyData = (currencyData) => {
@@ -504,25 +466,6 @@ class Wallet extends PureComponent<any, any> {
     return balance.toNumber()
   }
 
-  flattenUserCurrencyData = (currencyData) => {
-    const { tokenStandards } = this.state
-    const rows: IUniversalObj[] = []
-
-    Object.keys(currencyData).map((dataKey) => {
-      const dataItem = currencyData[dataKey]
-
-      if ( tokenStandards.includes(dataKey) ) {
-        Object.keys(dataItem).forEach((tokenName) => {
-          rows.push(dataItem[tokenName])
-        })
-      } else {
-        rows.push(dataItem)
-      }
-    })
-
-    return rows
-  }
-
   syncData = () => {
     // that is for noxon, dont delete it :)
     const now = moment().format('HH:mm:ss DD/MM/YYYY')
@@ -606,12 +549,12 @@ class Wallet extends PureComponent<any, any> {
 
     this.syncData()
 
-    let filteredUserData = this.filterUserCurrencyData(userCurrencyData)
+    let filteredUserData = user.filterUserCurrencyData(userCurrencyData)
     filteredUserData = this.addFiatBalanceInUserCurrencyData(filteredUserData)
 
     const balanceInBtc = this.returnBalanceInBtc(filteredUserData)
     const allFiatBalance = this.returnTotalFiatBalance(filteredUserData)
-    const tableRows = this.flattenUserCurrencyData(filteredUserData)
+    const tableRows = user.flattenUserCurrencyData(filteredUserData)
 
     return (
       <DashboardLayout

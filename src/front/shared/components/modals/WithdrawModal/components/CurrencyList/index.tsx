@@ -73,7 +73,7 @@ export default class CurrencyList extends Component<any, any> {
 
   render() {
     const {
-      currentActiveAsset,
+      selectedCurrency,
       currentBalance,
       currency,
       activeFiat,
@@ -94,11 +94,11 @@ export default class CurrencyList extends Component<any, any> {
           onClick={this.toggleListDisplay}
         >
           <div styleName="coin">
-            <Coin name={currentActiveAsset.currency} />
+            <Coin name={selectedCurrency.currency} />
           </div>
 
           <div>
-            <a>{currentActiveAsset.currency}</a>
+            <a>{selectedCurrency.currency}</a>
             <span styleName="address">{currentAddress}</span>
             <span styleName="mobileAddress">
               {isMobile ? <PartOfAddress address={currentAddress} withoutLink /> : ''}
@@ -110,8 +110,8 @@ export default class CurrencyList extends Component<any, any> {
               {currentBalance} {getCurrencyKey(currency, true).toUpperCase()}
             </span>
             <span styleName="usd">
-              {currentActiveAsset.infoAboutCurrency && currentActiveAsset.infoAboutCurrency.price_fiat
-                ? <span>{(currentBalance * currentActiveAsset.infoAboutCurrency.price_fiat).toFixed(2)} {activeFiat}</span>
+              {selectedCurrency.infoAboutCurrency && selectedCurrency.infoAboutCurrency.price_fiat
+                ? <span>{(currentBalance * selectedCurrency.infoAboutCurrency.price_fiat).toFixed(2)} {activeFiat}</span>
                 : null
               }
             </span>
