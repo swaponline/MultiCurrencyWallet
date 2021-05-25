@@ -146,7 +146,7 @@
     "http-browserify": "^1.7.0",
     "https-browserify": "^1.0.0",
     "hyperdiff": "^2.0.8",
-    "jest": "^26.6.3",
+    "jest": "^27.0.0",
     "kraken-api": "^1.0.1",
     "libp2p-kad-dht": "^0.22.0",
     "libp2p-webrtc-star": "^0.22.3",
