@@ -43,12 +43,8 @@ const routes = (
       <Route path={`/:token(token)/:ticker/tx/:tx?`} component={Transaction} />
 
       <Route path={`/:ticker(btc|eth|bnb|ghost|next)/:address/:action(receive|send)?`} component={CurrencyWallet} />
-      {/* routes below are deprecated. Will be deleted */}
       <Route path={`/:token(token)/:ticker/:address`} component={CurrencyWallet} />
       <Route path={`/:token(token)/:ticker/:address/withdraw`} component={CurrencyWallet} />
-      {/* ------------- ^ ------------------------ */}
-      <Route path={`/:standard/:ticker/:address`} component={CurrencyWallet} />
-      <Route path={`/:standard/:ticker/:address/withdraw`} component={CurrencyWallet} />
       <Route path={`/:fullName-wallet/:address?`} component={CurrencyWallet} />
 
       <Route path={`${links.exchange}/:sell-to-:buy/:linkedOrderId`} component={Exchange} />

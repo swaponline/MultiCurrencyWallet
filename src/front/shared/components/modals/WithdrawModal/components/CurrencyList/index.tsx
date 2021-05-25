@@ -4,7 +4,6 @@ import styles from './index.scss'
 import cx from 'classnames'
 import PartOfAddress from 'pages/Wallet/PartOfAddress'
 import { isMobile } from 'react-device-detect'
-import erc20Like from 'common/erc20Like'
 import { constants } from 'helpers'
 import { localisedUrl } from 'helpers/locale'
 import getCurrencyKey from 'helpers/getCurrencyKey'
@@ -25,7 +24,7 @@ export default class CurrencyList extends Component<any, any> {
 
   openModal = (params) => {
     const { target } = params
-    let { currency, address, standard } = target
+    let { currency, address, tokenKey } = target
 
     this.setState({
       isAssetsOpen: false,
@@ -43,7 +42,7 @@ export default class CurrencyList extends Component<any, any> {
       }
 
       history.push(
-        localisedUrl(locale, (standard ? `/${standard}` : '') + `/${currency}/${address}/send`)
+        localisedUrl(locale, (tokenKey ? `/token/${tokenKey}` : '') + `/${currency}/${address}/send`)
       )
     })
   }

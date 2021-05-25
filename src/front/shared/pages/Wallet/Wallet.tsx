@@ -17,7 +17,6 @@ import config from 'helpers/externalConfig'
 import metamask from 'helpers/metamask'
 import wpLogoutModal from 'helpers/wpLogoutModal'
 import feedback from 'helpers/feedback'
-import TOKEN_STANDARDS from 'helpers/constants/TOKEN_STANDARDS'
 
 import CurrenciesList from './CurrenciesList'
 import InvoicesList from 'pages/Invoices/InvoicesList'
@@ -103,10 +102,6 @@ class Wallet extends PureComponent<any, any> {
       multisigPendingCount,
     } = props
 
-    const tokenStandards = Object.keys(TOKEN_STANDARDS).map((key) => {
-      return TOKEN_STANDARDS[key].standard
-    })
-
     let activeComponentNum = 0
 
     if (page === 'history' && !isMobile) {
@@ -117,7 +112,6 @@ class Wallet extends PureComponent<any, any> {
     }
 
     this.state = {
-      tokenStandards,
       activeComponentNum,
       btcBalance: 0,
       enabledCurrencies: user.getActivatedCurrencies(),
@@ -300,7 +294,7 @@ class Wallet extends PureComponent<any, any> {
       return
     }
 
-    const { currency, address, standard } = availableWallets[0]
+    const { currency, address, tokenKey } = availableWallets[0]
     let targetCurrency = currency
 
     switch (currency.toLowerCase()) {
@@ -310,7 +304,7 @@ class Wallet extends PureComponent<any, any> {
         targetCurrency = 'btc'
     }
 
-    const tokenUrlPart = standard ? `/${standard}` : ''
+    const tokenUrlPart = tokenKey ? `/token/${tokenKey}` : ''
 
     history.push(
       localisedUrl(locale, tokenUrlPart + `/${targetCurrency}/${address}/send`)
@@ -366,9 +360,8 @@ class Wallet extends PureComponent<any, any> {
   }
 
   returnBalanceInBtc = (currencyData) => {
-    const { tokenStandards } = this.state
     const widgetCurrencies = this.returnWidgetCurrencies()
-    let balance = 0
+    let balance = new BigNumber(0)
 
     function returnAmount(target) {
       const name = target.currency || target.name
@@ -383,39 +376,18 @@ class Wallet extends PureComponent<any, any> {
       return 0
     }
 
-    for (let dataKey in currencyData) {
-      const dataItem = currencyData[dataKey]
+    currencyData.forEach((wallet) => {
+      balance = balance.plus(returnAmount(wallet))
+    })
 
-      if ( tokenStandards.includes(dataKey) ) {
-        for (let tokenKey in dataItem) {
-          const token = dataItem[tokenKey]
-
-          balance += returnAmount(token)
-        }
-      } else {
-        balance += returnAmount(dataItem)
-      }
-    }
-
-    return balance
+    return balance.toNumber()
   }
 
   returnTotalFiatBalance = (currencyData) => {
-    const { tokenStandards } = this.state
     let balance = new BigNumber(0)
 
-    Object.keys(currencyData).forEach((dataKey) => {
-      const dataItem = currencyData[dataKey]
-
-      if ( tokenStandards.includes(dataKey) ) {
-        for (let tokenKey in dataItem) {
-          const token = dataItem[tokenKey]
-
-          balance = balance.plus(token.fiatBalance)
-        }
-      } else {
-        balance = balance.plus(dataItem.fiatBalance)
-      }
+    currencyData.forEach((wallet) => {
+      balance = balance.plus(wallet.fiatBalance)
     })
 
     return balance.toNumber()

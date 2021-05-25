@@ -124,11 +124,11 @@ class Erc20LikeAction {
     } = tokensData[tokenKey]
 
     const address = metamask.isConnected() ? metamask.getAddress() : ownerAddress
-    const balanceInCache = cacheStorageGet('currencyBalances', `token_${tokenName}_${address}`)
+    const balanceInCache = cacheStorageGet('currencyBalances', `token_${tokenKey}_${address}`)
 
     if (balanceInCache !== false) {
       reducers.user.setTokenBalance({
-        standard: this.standard,
+        baseCurrency: this.currencyKey,
         name,
         amount: balanceInCache,
       })
@@ -143,7 +143,7 @@ class Erc20LikeAction {
         name,
         amount,
       })
-      cacheStorageSet('currencyBalances', `token_${tokenName}_${address}`, amount, 60)
+      cacheStorageSet('currencyBalances', `token_${tokenKey}_${address}`, amount, 60)
 
       return amount
     } catch (error) {
@@ -158,7 +158,8 @@ class Erc20LikeAction {
   getTransaction = (ownAddress, tokenName) => {
     return new Promise((res) => {
       const { user: { tokensData } } = getState()
-      const { address = ownAddress, contractAddress } = tokensData[this.standard][tokenName.toLowerCase()]
+      const tokenKey = `{${this.currencyKey}}${tokenName.toLowerCase()}`
+      const { address = ownAddress, contractAddress } = tokensData[tokenKey]
 
       const url = ''.concat(
         `?module=account&action=tokentx`,
@@ -180,6 +181,7 @@ class Erc20LikeAction {
                 confirmations: item.confirmations,
                 type: tokenName.toLowerCase(),
                 standard: this.standard,
+                baseCurrency: this.currencyKey,
                 hash: item.hash,
                 contractAddress: item.contractAddress,
                 status: item.blockHash !== null ? 1 : 0,
@@ -391,6 +393,7 @@ class Erc20LikeAction {
       isERC20: this.standard === 'erc20',
       standard: this.standard,
       baseCurrency: this.currencyKey,
+      tokenKey: `{${this.currencyKey}}${nameContract.toLowerCase()}`,
     }
 
     if (metamask.isEnabled() && metamask.isConnected()) {

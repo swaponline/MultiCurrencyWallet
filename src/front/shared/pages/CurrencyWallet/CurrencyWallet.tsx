@@ -197,7 +197,7 @@ class CurrencyWallet extends Component<any, any> {
     }
 
     const targetCurrency = getCurrencyKey(currency.toLowerCase(), true)
-    const tokenUrlPart = itemCurrency.standard ? `/${itemCurrency.standard}` : ''
+    const tokenUrlPart = itemCurrency.tokenKey ? `/token/${itemCurrency.tokenKey}` : ''
     const withdrawUrl = tokenUrlPart + `/${targetCurrency}/${address}/send`
     const receiveUrl = tokenUrlPart + `/${targetCurrency}/${address}/receive`
     const currentUrl = this.props.history.location.pathname.toLowerCase()
@@ -280,7 +280,7 @@ class CurrencyWallet extends Component<any, any> {
           decimals,
           balance,
           infoAboutCurrency,
-          standard,
+          tokenKey,
         } = itemCurrency
         const {
           txItems: oldTxItems,
@@ -309,7 +309,7 @@ class CurrencyWallet extends Component<any, any> {
               }
             }
             const targetCurrency = getCurrencyKey(currency.toLowerCase(), true)
-            const tokenUrlPart = standard ? `/${standard}` : ''
+            const tokenUrlPart = tokenKey ? `/token/${tokenKey}` : ''
             const withdrawUrl = tokenUrlPart + `/${targetCurrency}/${address}/send`
             const receiveUrl = tokenUrlPart + `/${targetCurrency}/${address}/receive`
             const currentUrl = this.props.location.pathname.toLowerCase()
@@ -457,7 +457,7 @@ class CurrencyWallet extends Component<any, any> {
     const { itemCurrency, currency, address } = this.state
 
     let targetCurrency = getCurrencyKey(currency.toLowerCase(), true).toLowerCase()
-    const tokenUrlPart = itemCurrency.standard ? `/${itemCurrency.standard}` : ''
+    const tokenUrlPart = itemCurrency.tokenKey ? `/token/${itemCurrency.tokenKey}` : ''
 
     history.push(localisedUrl(
       locale,
