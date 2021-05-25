@@ -4993,7 +4993,7 @@
   },
   {
     "id": "SwapProgress105_btclike_to_eth",
-    "message": "Checking balance..",
+    "message": "Saldo controleren..",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/BtcLikeToEth.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/BtcLikeToEth.tsx"
@@ -5009,7 +5009,7 @@
   },
   {
     "id": "SwapProgress117_btclike_to_eth",
-    "message": "Your {coinName} are now depositing. It may require one confirmation from {coinName} Network. Waiting for other participant to deposit ETH.",
+    "message": "Uw {coinName} is nu aan het storten. Mogelijk is één bevestiging van {coinName} Network vereist. Wachten op andere deelnemer om ETH te storten.",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/BtcLikeToEth.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/BtcLikeToEth.tsx"
@@ -5017,7 +5017,7 @@
   },
   {
     "id": "SwapProgress123_btclike_to_eth",
-    "message": "ETH Contract created and charged. Requesting withdrawal from ETH Contract.",
+    "message": "ETH-contract gemaakt en in rekening gebracht. Verzoek om terugtrekking uit het ETH-contract.",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/BtcLikeToEth.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/BtcLikeToEth.tsx"
@@ -5025,7 +5025,7 @@
   },
   {
     "id": "SwapProgress129_btclike_to_eth",
-    "message": "ETH was transferred to your wallet. Check the balance.",
+    "message": "ETH is overgebracht naar uw portemonnee. Controleer het saldo.",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/BtcLikeToEth.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/BtcLikeToEth.tsx"
@@ -5033,7 +5033,7 @@
   },
   {
     "id": "SwapProgress135_btclike_to_eth",
-    "message": "Thank you for using Swap.Online!",
+    "message": "Bedankt voor het gebruik van Swap.Online!",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/BtcLikeToEth.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/BtcLikeToEth.tsx"
@@ -5041,7 +5041,7 @@
   },
   {
     "id": "SwapProgress93_btclike_to_eth",
-    "message": "The order creator is offline. Waiting for him..",
+    "message": "De maker van de bestelling is offline. Wachten op hem..",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/BtcLikeToEth.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/BtcLikeToEth.tsx"
@@ -5049,7 +5049,7 @@
   },
   {
     "id": "SwapProgress99_btclike_to_eth",
-    "message": "Create a secret key",
+    "message": "Maak een geheime sleutel",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/BtcLikeToEth.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/BtcLikeToEth.tsx"
@@ -5057,70 +5057,70 @@
   },
   {
     "id": "ethToBtcText20_eth_to_btclike",
-    "message": "Waiting for {coinName} Owner to create Secret Key, create {coinName} Script and charge it",
+    "message": "Wachten op de eigenaar van {coinName} om een geheime sleutel te maken, het {coinName}-script te maken en het in rekening te brengen",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/EthToBtcLike.tsx"
     ]
   },
   {
     "id": "ethToBtcText25_eth_to_btclike",
-    "message": "The {coinName} Script was created and charged.",
+    "message": "Het {coinName}-script is gemaakt en geladen.",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/EthToBtcLike.tsx"
     ]
   },
   {
     "id": "ethToBtcText26_eth_to_btclike",
-    "message": "Confirmation processing",
+    "message": "Wacht alsjeblieft",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/EthToBtcLike.tsx"
     ]
   },
   {
     "id": "ethToBtcText28_eth_to_btclike",
-    "message": "Checking balance..",
+    "message": "Saldo controleren..",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/EthToBtcLike.tsx"
     ]
   },
   {
     "id": "ethToBtcText32_eth_to_btclike",
-    "message": "Creating Ethereum Contract.{br}It can take a few minutes",
+    "message": "Ethereum-contract maken. {br}Het kan enkele minuten duren",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/EthToBtcLike.tsx"
     ]
   },
   {
     "id": "ethToBtcText36_eth_to_btclike",
-    "message": "Waiting for {coinName} Owner to add a Secret Key to ETH Contact",
+    "message": "Wachten op eigenaar van {coinName} om een geheime sleutel toe te voegen aan ETH-contactpersoon",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/EthToBtcLike.tsx"
     ]
   },
   {
     "id": "ethToBtcText40_eth_to_btclike",
-    "message": "The funds from ETH contract was successfully transferred to {coinName} owner. {coinName} owner left a secret key. Requesting withdrawal from {coinName} script.",
+    "message": "Het geld van het ETH-contract is met succes overgedragen aan de eigenaar van {coinName}. De eigenaar van {coinName} heeft een geheime sleutel achtergelaten. Verzoek om opname van het {coinName}-script.",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/EthToBtcLike.tsx"
     ]
   },
   {
     "id": "ethToBtcText44_eth_to_btclike",
-    "message": "Thank you for using Swap.Online",
+    "message": "Bedankt voor het gebruik van Swap.Online",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/EthToBtcLike.tsx"
     ]
   },
   {
     "id": "ethToBtcText48_eth_to_btclike",
-    "message": "Thank you for using Swap.Online!",
+    "message": "Bedankt voor het gebruik van Swap.Online!",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/EthToBtcLike.tsx"
     ]
   },
   {
     "id": "BitcoinBuyText17_BtcLike_to_tokens",
-    "message": "Confirmation processing",
+    "message": "Wacht alsjeblieft",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/BtcLikeToEthToken.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/BtcLikeToEthToken.tsx"
@@ -5128,7 +5128,7 @@
   },
   {
     "id": "BitcoinBuyText29_BtcLike_to_tokens",
-    "message": "Checking balance..",
+    "message": "Saldo controleren..",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/BtcLikeToEthToken.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/BtcLikeToEthToken.tsx"
@@ -5152,7 +5152,7 @@
   },
   {
     "id": "BitcoinBuyText41_BtcLike_to_tokens",
-    "message": "{buyCurrency} Contract created and charged. Requesting withdrawal from {buyCurrency} Contract.",
+    "message": "{buyCurrency} Contract gemaakt en in rekening gebracht. Verzoek om opname van contract {buyCurrency}.",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/BtcLikeToEthToken.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/BtcLikeToEthToken.tsx"
@@ -5160,7 +5160,7 @@
   },
   {
     "id": "BitcoinBuyText45_BtcLike_to_tokens",
-    "message": "{buyCurrency} tokens was transferred to your wallet. Check the balance.",
+    "message": "{buyCurrency}-tokens zijn overgebracht naar uw portemonnee. Controleer het saldo.",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/BtcLikeToEthToken.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/BtcLikeToEthToken.tsx"
@@ -5168,7 +5168,7 @@
   },
   {
     "id": "BitcoinBuyText49_BtcLike_to_tokens",
-    "message": "Thank you for using Swap.Online",
+    "message": "Bedankt voor het gebruik van Swap.Online",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/BtcLikeToEthToken.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/BtcLikeToEthToken.tsx"
@@ -5176,7 +5176,7 @@
   },
   {
     "id": "BitcoinBuyText53_BtcLike_to_tokens",
-    "message": "Thank you for using Swap.Online!",
+    "message": "Bedankt voor het gebruik van Swap.Online!",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/BtcLikeToEthToken.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/BtcLikeToEthToken.tsx"
@@ -5184,7 +5184,7 @@
   },
   {
     "id": "BtcToEthToken20_BtcLike_to_tokens",
-    "message": "Create a secret key",
+    "message": "Maak een geheime sleutel",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/BtcLikeToEthToken.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/BtcLikeToEthToken.tsx"
@@ -5192,7 +5192,7 @@
   },
   {
     "id": "EthTokensToBtc16_ethtoken_to_BtcLike",
-    "message": "Confirmation processing",
+    "message": "Wacht alsjeblieft",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/EthToBtcLike.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/EthTokenToBtcLike.tsx",
@@ -5201,14 +5201,14 @@
   },
   {
     "id": "EthTokensToBtc20_ethtoken_to_BtcLike",
-    "message": "Waiting for {coinName} Owner to create Secret Key, create {coinName} Script and charge it",
+    "message": "Wachten op de eigenaar van {coinName} om een geheime sleutel te maken, het {coinName}-script te maken en het in rekening te brengen",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/EthTokenToBtcLike.tsx"
     ]
   },
   {
     "id": "EthTokensToBtc24_ethtoken_to_BtcLike",
-    "message": "The {coinName} Script was created and charged.",
+    "message": "Het {coinName}-script is gemaakt en geladen.",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/EthToBtcLike.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/EthTokenToBtcLike.tsx",
@@ -5217,7 +5217,7 @@
   },
   {
     "id": "EthTokensToBtc28_ethtoken_to_BtcLike",
-    "message": "Checking balance..",
+    "message": "Saldo controleren..",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/EthToBtcLike.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/EthTokenToBtcLike.tsx",
@@ -5226,7 +5226,7 @@
   },
   {
     "id": "EthTokensToBtc32_ethtoken_to_BtcLike",
-    "message": "Creating Ethereum Contract. {br} It can take a few minutes",
+    "message": "Ethereum-contract creëren. {br} Het kan een paar minuten duren",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/EthToBtcLike.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/EthTokenToBtcLike.tsx",
@@ -5235,21 +5235,21 @@
   },
   {
     "id": "EthTokensToBtc36_ethtoken_to_BtcLike",
-    "message": "Waiting for {coinName} Owner to add a Secret Key to ETH Contact",
+    "message": "Wachten op eigenaar van {coinName} om een geheime sleutel toe te voegen aan ETH-contactpersoon",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/EthTokenToBtcLike.tsx"
     ]
   },
   {
     "id": "EthTokensToBtc40_ethtoken_to_BtcLike",
-    "message": "The funds from ETH contract was successfully transferred to {coinName} owner",
+    "message": "Het geld van het ETH-contract is met succes overgedragen aan de eigenaar van {coinName}",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/EthTokenToBtcLike.tsx"
     ]
   },
   {
     "id": "EthTokensToBtc44_ethtoken_to_BtcLike",
-    "message": "Thank you for using Swap.Online",
+    "message": "Bedankt voor het gebruik van Swap.Online",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/EthToBtcLike.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/EthTokenToBtcLike.tsx",
@@ -5258,7 +5258,7 @@
   },
   {
     "id": "EthTokensToBtc48_ethtoken_to_BtcLike",
-    "message": "Thank you for using Swap.Online!",
+    "message": "Bedankt voor het gebruik van Swap.Online!",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/EthTokenToBtcLike.tsx"
     ]
@@ -5605,7 +5605,7 @@
   },
   {
     "id": "EthTokensToBtc20_ethtoken_to_BtcLikeTaker",
-    "message": "Waiting for {coinName} Owner to create {coinName} Script and charge it",
+    "message": "Wachten op de eigenaar van {coinName} om het script voor {coinName} te maken en het in rekening te brengen",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/EthToBtcLike.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/EthTokenToBtcLike.tsx"
