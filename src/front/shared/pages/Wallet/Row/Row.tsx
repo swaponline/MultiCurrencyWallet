@@ -777,8 +777,7 @@ class Row extends Component<RowProps, RowState> {
 
     const ethRowWithoutExternalProvider = itemData.address.toLowerCase() === 'not connected' && !metamask.web3connect.isInjectedEnabled()
     const web3Type = metamask.web3connect.getInjectedType()
-    const web3Icon = (web3Icons[web3Type] && web3Type !== `UNKNOWN` && web3Type !== `NONE`) ? web3Icons[web3Type] : false
-    
+
     const isMetamask = itemData.isMetamask
     const metamaskIsConnected = isMetamask && itemData.isConnected
     const metamaskDisconnected = isMetamask && !itemData.isConnected
@@ -790,9 +789,7 @@ class Row extends Component<RowProps, RowState> {
           <div styleName="assetsTableCurrency">
             <Coin
               className={styles.assetsTableIcon}
-              name={ // replace currency icon if metamask is disconnected
-                web3Type === 'METAMASK' && metamaskDisconnected ? web3Type : currency
-              }
+              name={metamaskDisconnected ? web3Type : currency}
             />
             
             {/* Title-Link */}
@@ -860,7 +857,6 @@ class Row extends Component<RowProps, RowState> {
                   */}
                   {metamaskDisconnected ? (
                       <Button small empty onClick={metamask.handleConnectMetamask}>
-                        {web3Icon && <img styleName="web3ProviderIcon" src={web3Icon} />}
                         <FormattedMessage id="CommonTextConnect" defaultMessage="Connect" />
                       </Button>
                     ) : !isBalanceFetched || isBalanceFetching ? (
