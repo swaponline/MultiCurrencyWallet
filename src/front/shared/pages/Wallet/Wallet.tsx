@@ -253,7 +253,7 @@ class Wallet extends PureComponent<any, any> {
 
   handleReceive = (context) => {
     const { userCurrencyData } = this.props
-    const widgetCurrencies = this.returnWidgetCurrencies()
+    const widgetCurrencies = user.getWidgetCurrencies()
     const filteredCurrencies = user.filterUserCurrencyData(userCurrencyData)
 
     const availableWallets = filteredCurrencies.filter((item) => {
@@ -311,37 +311,6 @@ class Wallet extends PureComponent<any, any> {
     )
   }
 
-  // TODO: maybe to move it in helpers/user
-  returnWidgetCurrencies = () => {
-    const { hiddenCoinsList } = this.props
-    const widgetCurrencies = ['BTC']
-
-    if (!hiddenCoinsList.includes('BTC (PIN-Protected)')) {
-      widgetCurrencies.push('BTC (PIN-Protected)')
-    }
-    if (!hiddenCoinsList.includes('BTC (Multisig)')) {
-      widgetCurrencies.push('BTC (Multisig)')
-    }
-
-    widgetCurrencies.push('ETH')
-    widgetCurrencies.push('BNB')
-    widgetCurrencies.push('GHOST')
-    widgetCurrencies.push('NEXT')
-
-    if (isWidgetBuild) {
-      if (window?.widgetERC20Tokens?.length) {
-        // Multi token widget build
-        window.widgetERC20Tokens.forEach((token) => {
-          widgetCurrencies.push(token.symbol.toUpperCase())
-        })
-      } else {
-        widgetCurrencies.push(config.erc20token.toUpperCase())
-      }
-    }
-
-    return widgetCurrencies
-  }
-
   addFiatBalanceInUserCurrencyData = (currencyData) => {
     function returnFiatBalance(target) {
       return target.balance > 0 && target.infoAboutCurrency?.price_fiat
@@ -360,7 +329,7 @@ class Wallet extends PureComponent<any, any> {
   }
 
   returnBalanceInBtc = (currencyData) => {
-    const widgetCurrencies = this.returnWidgetCurrencies()
+    const widgetCurrencies = user.getWidgetCurrencies()
     let balance = new BigNumber(0)
 
     function returnAmount(target) {

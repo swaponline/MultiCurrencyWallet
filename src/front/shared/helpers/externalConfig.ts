@@ -56,7 +56,7 @@ const externalConfig = () => {
     ownTokens: false,
     // TODO: addCustomERC20 -> addCustomToken
     addCustomERC20: true,
-    invoiceEnabled: (config.isWidget) ? false : true,
+    invoiceEnabled: !config.isWidget,
     showWalletBanners: false,
     showHowItsWork: false,
     fee: {},

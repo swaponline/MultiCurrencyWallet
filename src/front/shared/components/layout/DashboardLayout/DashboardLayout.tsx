@@ -1,9 +1,8 @@
-import React, { useState, useEffect, ReactNode } from 'react'
-import { withRouter } from 'react-router-dom'
+import React, { useState, ReactNode } from 'react'
 import cssModules from 'react-css-modules'
 import { connect } from 'redaction'
 import { constants } from 'helpers'
-import { getActivatedCurrencies } from 'helpers/user'
+import { user } from 'helpers'
 import config from 'app-config'
 import actions from 'redux/actions'
 import { FormattedMessage } from 'react-intl'
@@ -57,7 +56,7 @@ const NewDesignLayout = (props: NewDesignLayoutProps) => {
     activeCurrency: activeFiat.toLowerCase(),
     walletTitle: 'Wallet',
     editTitle: false,
-    enabledCurrencies: getActivatedCurrencies(),
+    enabledCurrencies: user.getActivatedCurrencies(),
     showSweepBanner,
     isMnemonicSaved: mnemonic === `-`,
   })
@@ -69,32 +68,7 @@ const NewDesignLayout = (props: NewDesignLayoutProps) => {
   let changePercent = 0
 
   const allData = actions.core.getWallets({})
-
-  // Набор валют для виджета
-  const widgetCurrencies = ['BTC']
-  if (!hiddenCoinsList.includes('BTC (SMS-Protected)')) {
-    widgetCurrencies.push('BTC (SMS-Protected)')
-  }
-  if (!hiddenCoinsList.includes('BTC (PIN-Protected)')) {
-    widgetCurrencies.push('BTC (PIN-Protected)')
-  }
-  if (!hiddenCoinsList.includes('BTC (Multisig)')) {
-    widgetCurrencies.push('BTC (Multisig)')
-  }
-
-  widgetCurrencies.push('ETH')
-  widgetCurrencies.push('BNB')
-
-  if (isWidgetBuild) {
-    if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
-      // Multi token widget build
-      Object.keys(window.widgetERC20Tokens).forEach((key) => {
-        widgetCurrencies.push(key.toUpperCase())
-      })
-    } else {
-      widgetCurrencies.push(config.erc20token.toUpperCase())
-    }
-  }
+  const widgetCurrencies = user.getWidgetCurrencies()
 
   let tableRows = allData.filter(
     ({ currency, address, balance }) =>

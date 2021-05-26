@@ -1,4 +1,5 @@
 import config from 'app-config'
+import externalConfig from './externalConfig'
 import store from 'redux/store'
 import TOKEN_STANDARDS from 'helpers/constants/TOKEN_STANDARDS'
 
@@ -37,6 +38,36 @@ export const getActivatedCurrencies = () => {
   })
 
   return currencies
+}
+
+export const getWidgetCurrencies = () => {
+  const { core: { hiddenCoinsList } } = store.getState()
+  const widgetCurrencies = [
+    'BTC',
+    'ETH',
+    'BNB',
+    'GHOST',
+    'NEXT'
+  ]
+
+  if (!hiddenCoinsList.includes('BTC (PIN-Protected)')) {
+    widgetCurrencies.push('BTC (PIN-Protected)')
+  }
+  if (!hiddenCoinsList.includes('BTC (Multisig)')) {
+    widgetCurrencies.push('BTC (Multisig)')
+  }
+
+  if (externalConfig.isWidget) {
+    if (window?.widgetERC20Tokens?.length) {
+      window.widgetERC20Tokens.forEach((token) => {
+        widgetCurrencies.push(token.symbol.toUpperCase())
+      })
+    } else {
+      widgetCurrencies.push(config.erc20token.toUpperCase())
+    }
+  }
+
+  return widgetCurrencies
 }
 
 export const filterUserCurrencyData = (currencyData) => {

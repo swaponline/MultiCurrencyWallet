@@ -64,12 +64,13 @@ export default class AddOffer extends Component<any, any> {
 
   constructor(props) {
     super(props)
-    const { items, tokenItems, initialData } = props
 
-    if (config && config.isWidget) {
-      if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
-        Object.keys(window.widgetERC20Tokens).forEach((key) => {
-          MIN_AMOUNT_OFFER[key] = 1
+    const { initialData } = props
+
+    if (config?.isWidget) {
+      if (window?.widgetERC20Tokens?.length) {
+        window.widgetERC20Tokens.forEach((token) => {
+          MIN_AMOUNT_OFFER[token.symbol.toLowerCase()] = 1
         })
       } else {
         MIN_AMOUNT_OFFER[config.erc20token] = 1

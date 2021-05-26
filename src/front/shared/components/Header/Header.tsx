@@ -26,7 +26,7 @@ import { WidgetWalletTour } from './WidgetTours'
 import Loader from 'components/loaders/Loader/Loader'
 import { localisedUrl } from '../../helpers/locale'
 import { messages, getMenuItems, getMenuItemsMobile } from './config'
-import { getActivatedCurrencies } from 'helpers/user'
+import { user } from 'helpers'
 import { ThemeSwitcher } from './ThemeSwitcher'
 
 // Incoming swap requests and tooltips (revert)
@@ -202,26 +202,7 @@ class Header extends Component<any, any> {
     let tourEvent = () => {}
 
     const allData = actions.core.getWallets({})
-
-    const widgetCurrencies = ['BTC', 'ETH']
-    const optionsalCur = ['BTC (SMS-Protected)', 'BTC (Multisig)', 'BTC (PIN-Protected)']
-
-    optionsalCur.forEach((el) => {
-      if (!hiddenCoinsList.includes(el)) {
-        widgetCurrencies.push(el)
-      }
-    })
-
-    if (isWidgetBuild) {
-      if (window?.widgetERC20Tokens?.length) {
-        // Multi token widget build
-        window.widgetERC20Tokens.forEach((token) => {
-          widgetCurrencies.push(token.symbol.toUpperCase())
-        })
-      } else {
-        widgetCurrencies.push(config.erc20token.toUpperCase())
-      }
-    }
+    const widgetCurrencies = user.getWidgetCurrencies()
 
     let userCurrencies = allData.filter(({ currency, address, balance }) => {
       return (
@@ -240,8 +221,7 @@ class Header extends Component<any, any> {
     }
 
     userCurrencies = userCurrencies.filter(({ currency }) =>
-      //@ts-ignore: strictNullChecks
-      getActivatedCurrencies().includes(currency)
+      user.getActivatedCurrencies().includes(currency)
     )
 
     switch (true) {
