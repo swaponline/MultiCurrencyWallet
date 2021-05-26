@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
-import erc20Like from 'common/erc20Like'
 import helpers from "helpers";
 import { getFullOrigin } from 'helpers/links'
 import { constants } from 'helpers'
@@ -35,7 +34,7 @@ class TxInfo extends Component<any, any> {
     super(props)
 
     const {
-      currency,
+      currency: sourceCurrency,
       txRaw,
       txId,
       error,
@@ -47,7 +46,7 @@ class TxInfo extends Component<any, any> {
 
     if (!error) {
       if (txRaw) {
-        const txInfo = helpers.transactions.getInfo(currency.toLowerCase(), txRaw)
+        const txInfo = helpers.transactions.getInfo(sourceCurrency.toLowerCase(), txRaw)
 
         tx = txInfo.tx
         linkBlockChain = txInfo.link
@@ -55,12 +54,16 @@ class TxInfo extends Component<any, any> {
 
       if (txId) {
         tx = txId
-        linkShare = helpers.transactions.getTxRouter(currency.toLowerCase(), txId)
-        linkBlockChain = helpers.transactions.getLink(currency.toLowerCase(), txId)
+        linkShare = helpers.transactions.getTxRouter(sourceCurrency.toLowerCase(), txId)
+        linkBlockChain = helpers.transactions.getLink(sourceCurrency.toLowerCase(), txId)
       }
     }
 
+    // delete tokens base currency prefix
+    const currency = sourceCurrency.replace(/^\{[a-z]+\}/, '')
+
     this.state = {
+      currency,
       linkBlockChain,
       linkShare,
       tx,
@@ -74,7 +77,6 @@ class TxInfo extends Component<any, any> {
   render() {
     const {
       intl,
-      currency,
       txId,
       isFetching,
       amount,
@@ -89,6 +91,7 @@ class TxInfo extends Component<any, any> {
     } = this.props
 
     const {
+      currency,
       linkBlockChain,
       linkShare,
       tx,

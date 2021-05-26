@@ -154,13 +154,17 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
       data: {
         toAddress,
         currency,
-        address: withdrawWallet,
+        address: walletAddressOwner,
+        itemCurrency,
       },
     } = props
 
     const selectedCurrency = props.data
     const currentDecimals = constants.tokenDecimals[getCurrencyKey(currency, true).toLowerCase()]
-    const selectedItem = actions.user.getWithdrawWallet(currency, withdrawWallet)
+    const selectedItem = actions.user.getWithdrawWallet(
+      itemCurrency?.tokenKey || itemCurrency?.currency || currency,
+      walletAddressOwner
+    )
     const usedAdminFee = adminFee.isEnabled(selectedItem.currency)
     const isToken = erc20Like.isToken({ name: currency })
     const isBep20Token = erc20Like.bep20.isToken({ name: currency })
