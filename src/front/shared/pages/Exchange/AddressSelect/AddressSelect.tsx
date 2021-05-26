@@ -379,10 +379,8 @@ class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
     // Forbid `Custom address` option when using ethereum/tokens
     // because you need to make a request to the contract
     const isCustomAddressOption = !ethToken.isEthOrEthToken({ name: currency })
-    const isCustomOptionInputHidden =
-      role === AddressRole.Send &&
-      COIN_DATA[ticker] &&
-      COIN_DATA[ticker].model === COIN_MODEL.UTXO
+    const isUTXOModel = COIN_DATA[ticker] && COIN_DATA[ticker].model === COIN_MODEL.UTXO
+    const isCustomOptionInputHidden = role === AddressRole.Send && isUTXOModel
 
     const web3Icon = metamask.isConnected()
       ? web3Icons[metamask.web3connect.getProviderType()] || false
@@ -465,7 +463,7 @@ class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
       }
     }
 
-    if (role === AddressRole.Receive || !isCurrencyInInternalWallet && isCustomAddressOption) {
+    if ((role === AddressRole.Receive || isCurrencyInInternalWallet) && isCustomAddressOption) {
       dropDownOptions.push(
         {
           value: AddressType.Custom,

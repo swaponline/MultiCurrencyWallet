@@ -353,6 +353,19 @@ class Exchange extends PureComponent<any, any> {
       return userWalletTypes[currency]
     }
 
+    // Uncommenting when tokens will have blockchain type
+
+    // const isWalletCreate = localStorage.getItem(constants.localStorage.isWalletCreate)
+    // const currencyWalletData = actions.core.getWallet({ currency })
+
+    // if(isWalletCreate && currencyWalletData && !!currencyWalletData.address) {
+    //   const walletType = currencyWalletData.isMetamask ? AddressType.Metamask : AddressType.Internal
+
+    //   this.setDefaultCurrencyType(currency, walletType)
+
+    //   return walletType
+    // }
+
     return false
   }
 
