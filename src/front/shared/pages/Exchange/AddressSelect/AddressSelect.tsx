@@ -463,7 +463,7 @@ class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
       }
     }
 
-    if ((role === AddressRole.Receive || isCurrencyInInternalWallet) && isCustomAddressOption) {
+    if ((role === AddressRole.Receive || !isCurrencyInInternalWallet) && isCustomAddressOption) {
       dropDownOptions.push(
         {
           value: AddressType.Custom,
