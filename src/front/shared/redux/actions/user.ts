@@ -454,15 +454,19 @@ const clearTransactions = () => {
   reducers.history.setTransactions([])
 }
 
-const mergeTransactions = (mergeTxs: any[]) => {
+const mergeTransactions = (mergeTxs: IUniversalObj[]) => {
   const {
     history: {
       transactions,
     },
   } = getState()
-  //@ts-ignore: strictNullChecks
-  let data = [].concat(transactions, ...mergeTxs).sort((a, b) => b.date - a.date).filter((item) => item)
-  reducers.history.setTransactions(data)
+
+  const allTransactions = transactions
+    .concat(mergeTxs)
+    .sort((a, b) => b.date - a.date)
+    .filter((item) => item)
+
+  reducers.history.setTransactions(allTransactions)
 }
 
 const pullActiveCurrency = (currency) => {
@@ -541,9 +545,6 @@ const setTokensTransaction = async () => {
   const { core: { hiddenCoinsList } } = getState()
   const enabledCurrencies = getActivatedCurrencies()
   const tokens: { [key: string]: string[] } = {}
-
-  // TODO: need to consider about the identical token names in the different blockchains
-  // TODO: get Transaction not only with name
 
   Object.keys(TOKEN_STANDARDS).forEach((key) => {
     const standard = TOKEN_STANDARDS[key].standard

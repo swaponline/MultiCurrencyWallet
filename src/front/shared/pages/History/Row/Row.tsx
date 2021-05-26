@@ -45,18 +45,17 @@ export default class Row extends React.PureComponent<any, any> {
   }
 
   componentDidMount() {
-    const { type, tokensData } = this.props
-    /*
-    * request fiat balance if currency has fiat price
-    */
-    Object.keys(tokensData).forEach(key => {
+    const { type, userWallets } = this.props
+
+    // request fiat balance if wallet has fiat price
+    Object.keys(userWallets).forEach(key => {
       if (key.includes(type)) {
-        if (tokensData[key].infoAboutCurrency) {
+        if (userWallets[key].infoAboutCurrency) {
           this.getFiatBalance(type)
         } else {
-          this.setState({
+          this.setState(() => ({
             showFiat: false
-          })
+          }))
         }
       }
     })
