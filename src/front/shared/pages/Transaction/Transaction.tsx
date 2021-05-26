@@ -158,7 +158,6 @@ class Transaction extends Component<any, any> {
   }
 
   componentDidMount() {
-    console.log('Transaction mounted')
     const {
       ticker,
       txId,
@@ -202,18 +201,19 @@ class Transaction extends Component<any, any> {
       ticker,
     } = this.state
 
-    const wallets = []
+    const wallets: IUniversalObj[] = []
+
     if (walletOne instanceof Array) {
-      //@ts-ignore: strictNullChecks
       walletOne.forEach((wallet) => wallets.push(wallet))
-    //@ts-ignore: strictNullChecks
-    } else wallets.push(walletOne)
+    } else {
+      wallets.push(walletOne)
+    }
 
     if (walletTwo instanceof Array) {
-      //@ts-ignore: strictNullChecks
       walletTwo.forEach((wallet) => wallets.push(wallet))
-    //@ts-ignore: strictNullChecks
-    } else wallets.push(walletTwo)
+    } else {
+      wallets.push(walletTwo)
+    }
 
     const walletLink = getWalletLink(ticker, wallets)
     history.push((walletLink) || '/')

@@ -17,17 +17,11 @@ import CommentRow from 'components/Comment/Comment'
 import animateFetching from 'components/loaders/ContentLoader/ElementLoading.scss'
 
 
-
 const labels = defineMessages({
-  Title: {
-    id: 'InfoPay_1',
-    defaultMessage: 'Transaction is completed',
-  },
   Text: {
     id: 'InfoPay_2',
     defaultMessage: 'successfully transferred to'
   },
-
 })
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
@@ -53,22 +47,10 @@ class TxInfo extends Component<any, any> {
 
     if (!error) {
       if (txRaw) {
-        if (erc20Like.erc20.isToken({ name: currency })) {
-          const txInfo = helpers.transactions.getInfo('erc20', txRaw)
+        const txInfo = helpers.transactions.getInfo(currency.toLowerCase(), txRaw)
 
-          tx = txInfo.tx
-          linkBlockChain = txInfo.link
-        } else if (erc20Like.bep20.isToken({ name: currency })) {
-          const txInfo = helpers.transactions.getInfo('bep20', txRaw)
-
-          tx = txInfo.tx
-          linkBlockChain = txInfo.link
-        } else {
-          const txInfo = helpers.transactions.getInfo(currency.toLowerCase(), txRaw)
-
-          tx = txInfo.tx
-          linkBlockChain = txInfo.link
-        }
+        tx = txInfo.tx
+        linkBlockChain = txInfo.link
       }
 
       if (txId) {
@@ -144,8 +126,6 @@ class TxInfo extends Component<any, any> {
                 isFetching
                   ? (
                     <span>
-                      {/*
-                      // @ts-ignore */}
                       <Skeleton count={2} />
                     </span>
                   )
@@ -183,22 +163,16 @@ class TxInfo extends Component<any, any> {
               <>
                 <tr>
                   <td colSpan={2}>
-                    {/*
-                      // @ts-ignore */}
                     <Skeleton />
                   </td>
                 </tr>
                 <tr>
                   <td colSpan={2}>
-                    {/*
-                      // @ts-ignore */}
                     <Skeleton />
                   </td>
                 </tr>
                 <tr>
                   <td colSpan={2}>
-                    {/*
-                      // @ts-ignore */}
                     <Skeleton />
                   </td>
                 </tr>

@@ -1,8 +1,24 @@
+import { BASE_TOKEN_CURRENCY } from 'swap.app/constants/COINS'
 import erc20Like from 'common/erc20Like'
 import helpers from 'helpers'
 import actions from 'redux/actions'
 import apiLooper from 'helpers/apiLooper'
 
+const getTokenBaseCurrency = (tokenKey) => {
+  const baseCurrencyRegExp = /^\{[a-z]+\}/
+  const baseTokenCurrencyPrefix = tokenKey.match(baseCurrencyRegExp)
+
+  if (baseTokenCurrencyPrefix) {
+    const baseTokenCurrency = baseTokenCurrencyPrefix[0].match(/[a-z]+/)
+    const constantCurrency = baseTokenCurrency && BASE_TOKEN_CURRENCY[baseTokenCurrency[0].toUpperCase()]
+
+    if (constantCurrency) {
+      return constantCurrency.toLowerCase()
+    }
+  }
+
+  return false
+}
 
 /**
  * Запрашивает информацию о tx (final balances)
@@ -107,4 +123,5 @@ export default {
   getTxRouter,
   pullTxBalances,
   fetchTxBalances,
+  getTokenBaseCurrency,
 }

@@ -108,6 +108,8 @@ class CurrencyWallet extends Component<any, any> {
       //@ts-ignore
       const { currency, address, contractAddress, decimals, balance, infoAboutCurrency } = itemCurrency
       const hasCachedData = lsDataCache.get(`TxHistory_${getCurrencyKey(currency, true).toLowerCase()}_${address}`)
+      
+      // TODO: delete
       const isErc20Token = erc20Like.erc20.isToken({ name: currency })
       const isBep20Token = erc20Like.bep20.isToken({ name: currency })
 

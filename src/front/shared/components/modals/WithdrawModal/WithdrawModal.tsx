@@ -447,9 +447,6 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
       isToken,
       reduxActionName,
       comment = '',
-      selectedItem: {
-        isBTC,
-      },
     } = this.state
 
     const {
@@ -467,7 +464,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
       amount,
       speed: 'fast',
       name: isToken ? currency.toLowerCase() : '',
-      feeValue: isBTC && fees.miner,
+      feeValue: selectedItem.isBTC && fees.miner,
     }
 
     if (invoice && ownTx) {
