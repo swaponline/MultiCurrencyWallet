@@ -54,6 +54,7 @@ const externalConfig = () => {
       sell: 'btc',
     },
     ownTokens: false,
+    // TODO: addCustomERC20 -> addCustomToken
     addCustomERC20: true,
     invoiceEnabled: (config.isWidget) ? false : true,
     showWalletBanners: false,
@@ -192,10 +193,7 @@ const externalConfig = () => {
     config.opts.hideShowPrivateKey = window.SWAP_HIDE_EXPORT_PRIVATEKEY
   }
 
-  if (window
-    && window.widgetERC20Tokens
-    && Object.keys(window.widgetERC20Tokens)
-  ) {
+  if (window?.widgetERC20Tokens?.length) {
     config.opts.ownTokens = window.widgetERC20Tokens
   }
 
@@ -212,14 +210,9 @@ const externalConfig = () => {
       })
     }
 
-    // TODO: split token's data in config.opts.ownTokens by a standard
-    if (Object.keys(config.opts.ownTokens).length) {
-      // Multi token mode
-      Object.keys(config.opts.ownTokens).forEach((key) => {
-        const tokenData = config.opts.ownTokens[key]
-        config.erc20[key] = tokenData
-      })
-    }
+    config.opts.ownTokens.forEach((token) => {
+      config[token.standard][token.symbol.toLowerCase()] = token
+    })
 
     // Clean not uninitialized single-token
     // ? we can't use here as whole string {#WIDGETTOKENCODE#} ?
@@ -236,13 +229,12 @@ const externalConfig = () => {
           ownTokens[key] = config[standard][key]
         }
       })
+
       config[standard] = ownTokens
     })
   }
 
-  // TODO: rename - addCustomERC20 -> addCustomToken ?
   if (config.opts.addCustomERC20) {
-    // Add custom tokens
     const customTokenConfig = getCustomTokenConfig()
 
     Object.keys(customTokenConfig).forEach((standard) => {

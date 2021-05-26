@@ -156,6 +156,8 @@ class Erc20LikeAction {
   getTransaction = (ownAddress, tokenName) => {
     return new Promise((res) => {
       const { user: { tokensData } } = getState()
+      // if we have a base currency prefix then delete it
+      tokenName = tokenName.replace(/^\{[a-z]+\}/, '')
       const tokenKey = `{${this.currencyKey}}${tokenName.toLowerCase()}`
       const { address = ownAddress, contractAddress } = tokensData[tokenKey]
 
@@ -227,10 +229,9 @@ class Erc20LikeAction {
       .toNumber()
   }
 
-  fetchTokenTxInfo = (ticker, hash, cacheResponse) => {
+  fetchTokenTxInfo = async (ticker, hash, cacheTime) => {
     return new Promise(async (res) => {
-      //@ts-ignore: strictNullChecks
-      let txInfo = await this.fetchTxInfo(hash, cacheResponse)
+      let txInfo = await this.fetchTxInfo(hash, cacheTime)
       //@ts-ignore: strictNullChecks
       if (txInfo.isContractTx) {
         // This is tx to contract. Fetch all txs and find this tx
@@ -260,18 +261,18 @@ class Erc20LikeAction {
     })
   }
 
-  fetchTxInfo = (hash, cacheResponse): Promise<IUniversalObj | false> => {
+  fetchTxInfo = async (hash, cacheTime): Promise<IUniversalObj | false> => {
     return new Promise((res, rej) => {
       const {
         user: { tokensData },
       } = getState()
       const url = `?module=proxy&action=eth_getTransactionByHash&txhash=${hash}&apikey=${this.explorerApiKey}`
 
-      return apiLooper
+      apiLooper
         .get(this.explorerName, url, {
-          cacheResponse,
+          cacheResponse: cacheTime,
         })
-        .then((response: any) => {
+        .then((response: IUniversalObj) => {
           if (response && response.result) {
             let amount = 0
             let receiverAddress = response.result.to
@@ -281,7 +282,7 @@ class Erc20LikeAction {
             for (const key in tokensData) {
               if (
                 tokensData[key]?.decimals &&
-                tokensData[key].contractAddress?.toLowerCase() == contractAddress.toLowerCase()
+                tokensData[key]?.contractAddress?.toLowerCase() == contractAddress.toLowerCase()
               ) {
                 tokenDecimal = tokensData[key].decimals
                 break

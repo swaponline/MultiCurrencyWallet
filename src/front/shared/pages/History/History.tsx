@@ -92,7 +92,8 @@ class History extends Component<any, any> {
     })
   }
 
-  componentDidUpdate({ items: prevItems }) {
+  componentDidUpdate(prevProps) {
+    const { items: prevItems } = prevProps
     const { items } = this.props
 
     if (items !== prevItems) {
@@ -175,7 +176,12 @@ class History extends Component<any, any> {
         </h3>
         {items ? (
           <div>
-            <FilterForm filterValue={filterValue} onSubmit={this.handleFilter} onChange={this.handleFilterChange} resetFilter={this.resetFilter} />
+            <FilterForm
+              filterValue={filterValue}
+              onSubmit={this.handleFilter}
+              onChange={this.handleFilterChange}
+              resetFilter={this.resetFilter}
+            />
             <div>
               {
                 items.length > 0 && !isLoading ? (

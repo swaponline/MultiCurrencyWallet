@@ -1,5 +1,5 @@
 import { withRouter } from 'react-router-dom'
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import actions from 'redux/actions'
 import erc20Like from 'common/erc20Like'
 import helpers, { links } from 'helpers'
@@ -35,13 +35,13 @@ class Transaction extends Component<any, any> {
       match: {
         params: {
           ticker = null,
-          tx: txId = null,
+          tx: txHash = null,
         },
       } = null,
     } = props
 
     const currency = getCurrencyKey(ticker, true)
-    const infoTx = lsDataCache.get(`TxInfo_${currency.toLowerCase()}_${txId}`)
+    const infoTx = lsDataCache.get(`TxInfo_${currency.toLowerCase()}_${txHash}`)
 
     let rest = {}
     if (infoTx) {
@@ -73,7 +73,7 @@ class Transaction extends Component<any, any> {
     this.state = {
       currency,
       ticker,
-      txId,
+      txHash,
       isFetching: !(infoTx),
       infoTx,
       amount: 0,
@@ -90,7 +90,7 @@ class Transaction extends Component<any, any> {
     }
   }
 
-  async fetchTxInfo(currency, txId, ticker) {
+  fetchTxInfo = async (currency, txHash, ticker) => {
     const {
       infoTx: cachedTxInfo,
     } = this.state
@@ -101,11 +101,15 @@ class Transaction extends Component<any, any> {
 
     try {
       if (erc20Like.erc20.isToken({ name: currency })) {
-        infoTx = await actions.erc20.fetchTokenTxInfo(ticker, txId, 5 * 60 * 1000)
-      } else if (erc20Like.bep20.isToken({ name: currency })) {
-        infoTx = await actions.bep20.fetchTokenTxInfo(ticker, txId, 5 * 60 * 1000)
-      } else {
-        infoTx = await actions[currency].fetchTxInfo(txId, 5 * 60 * 1000)
+        infoTx = await actions.erc20.fetchTokenTxInfo(ticker, txHash, 5 * 60 * 1000)
+      }
+
+      else if (erc20Like.bep20.isToken({ name: currency })) {
+        infoTx = await actions.bep20.fetchTokenTxInfo(ticker, txHash, 5 * 60 * 1000)
+      }
+
+      else {
+        infoTx = await actions[currency].fetchTxInfo(txHash, 5 * 60 * 1000)
       }
     } catch (err) {
       console.error(err)
@@ -123,7 +127,7 @@ class Transaction extends Component<any, any> {
 
     if (!this.unmounted) {
       lsDataCache.push({
-        key: `TxInfo_${currency.toLowerCase()}_${txId}`,
+        key: `TxInfo_${currency.toLowerCase()}_${txHash}`,
         time: 3600,
         data: infoTx,
       })
@@ -160,10 +164,10 @@ class Transaction extends Component<any, any> {
   componentDidMount() {
     const {
       ticker,
-      txId,
+      txHash,
     } = this.state
 
-    if (!txId) {
+    if (!txHash) {
       //@ts-ignore
       history.push(links.notFound)
       return
@@ -171,17 +175,17 @@ class Transaction extends Component<any, any> {
 
     const currency = getCurrencyKey(ticker, true)
 
-    this.fetchTxInfo(currency, txId, ticker)
-    this.fetchTxFinalBalances(getCurrencyKey(ticker, true), txId)
+    this.fetchTxInfo(currency, txHash, ticker)
+    this.fetchTxFinalBalances(getCurrencyKey(ticker, true), txHash)
 
     if (typeof document !== 'undefined') {
       document.body.classList.add('overflowY-hidden-force')
     }
   }
 
-  fetchTxFinalBalances = (currency, txId) => {
+  fetchTxFinalBalances = (currency, txHash) => {
     setTimeout(async () => {
-      const finalBalances = await helpers.transactions.fetchTxBalances(currency, txId)
+      const finalBalances = await helpers.transactions.fetchTxBalances(currency, txHash)
       if (finalBalances && !this.unmounted) {
         this.setState({
           finalBalances,
@@ -220,7 +224,6 @@ class Transaction extends Component<any, any> {
   }
 
   componentWillUnmount() {
-    console.log('Transaction unmounted')
     this.unmounted = true
 
     if (typeof document !== 'undefined') {

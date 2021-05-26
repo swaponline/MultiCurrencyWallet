@@ -32,35 +32,52 @@ window.widgetERC20Comisions = {
   },
 }
 
-// TODO: replace this window key with an array
-// { name: {...}, ... } => [{...}, {...}]
-/* window.widgetERC20Tokens = {
-  usdt: {
+window.widgetERC20Tokens = [
+  // {
+  //   standard: '',
+  //   address: '',
+  //   decimals: ,
+  //   name: '',
+  //   fullName: '',
+  //   // icon: '',
+  //   // customExchangeRate: '',
+  //   // iconBgColor: '',
+  //   // howToDeposit: '',
+  //   // howToWithdraw: '',
+  // },
+  // {
+  //   standard: 'erc20',
+  //   address: '0xdac17f958d2ee523a2206206994597c13d831ec7',
+  //   decimals: 6,
+  //   symbol: 'USDT',
+  //   fullName: 'Usdt',
+  //   icon: 'https://growup.wpmix.net/wp-content/uploads/2016/10/favicon.png',
+  // },
+  // {
+  //   standard: 'erc20',
+  //   address: '0xc060b26e60698e91a6acc84051a26b32e38dd1a4',
+  //   decimals: 18,
+  //   fullName: 'Proxima',
+  //   icon: 'https://growup.wpmix.net/wp-content/uploads/2016/10/favicon.png',
+  //   iconBgColor: '#ccc',
+  // },
+  {
     standard: 'erc20',
-    address: '0xdac17f958d2ee523a2206206994597c13d831ec7',
-    decimals: 6,
-    fullName: 'Usdt',
-    icon: 'https://growup.wpmix.net/wp-content/uploads/2016/10/favicon.png',
-    // customExchangeRate: '',
-    // iconBgColor: '',
-    // howToDeposit: '',
-    // howToWithdraw: '',
-  },
-  // Symbol of ERC20 token in lowerCase
-  proxima: {
-    standard: 'erc20',
-    // Address of ERC20 contract
-    address: '0xc060b26e60698e91a6acc84051a26b32e38dd1a4',
-    // Count of decimals after dot
+    address: '0xe9233e51fb8c7463504983e8b7c15d2e624d71e2',
     decimals: 18,
-    // Display name in wallet (By default - its symbol of ERC20, but can be other userfriendy text)
-    fullName: 'Proxima',
-    // Icon of currency (image)
-    icon: 'https://growup.wpmix.net/wp-content/uploads/2016/10/favicon.png',
-    // Background color of icon
-    iconBgColor: '#ccc',
+    symbol: 'FUNT',
+    fullName: 'Funny Token',
+    iconBgColor: '#ecb',
   },
-} */
+  {
+    standard: 'bep20',
+    address: '0x9bef8885edc95dc6cb056bfa2a45dd6a513087cb',
+    decimals: 13,
+    symbol: 'Shadow',
+    fullName: 'Shadow Token',
+    iconBgColor: '#131313',
+  },
+]
 
 window.buildOptions = {
   // ownTokens: true, // Will be inited from window.widgetERC20Tokens
