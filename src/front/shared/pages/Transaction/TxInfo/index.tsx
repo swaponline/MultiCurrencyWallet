@@ -126,25 +126,17 @@ class TxInfo extends Component<any, any> {
           <div className="p-3">
             <div styleName="shortInfoHolder">
               {
-                isFetching
-                  ? (
+                isFetching ? (
+                    <Skeleton count={2} />
+                  ) : error ? (
+                    <FormattedMessage id="InfoPay_2_Error" defaultMessage="Error loading data" />
+                  ) : (
                     <span>
-                      <Skeleton count={2} />
+                      <strong id='txAmout'> {finalAmount}  {currency.toUpperCase()} </strong>
+                      <FormattedMessage id="InfoPay_2_Ready" defaultMessage="были успешно переданы" />
+                      <br />
+                      <strong id='txToAddress'>{toAddress}</strong>
                     </span>
-                  )
-                  : error
-                  ? (
-                    <span>
-                        <span><FormattedMessage id="InfoPay_2_Error" defaultMessage="Error loading data" /></span>
-                      </span>
-                  )
-                  : (
-                    <span>
-                        <span><strong id='txAmout'> {finalAmount}  {currency.toUpperCase()} </strong></span>
-                        <FormattedMessage id="InfoPay_2_Ready" defaultMessage="были успешно переданы" />
-                        <br />
-                        <strong id='txToAddress'>{toAddress}</strong>
-                      </span>
                   )
               }
             </div>

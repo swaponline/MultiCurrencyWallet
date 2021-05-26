@@ -162,10 +162,11 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
     const selectedCurrency = props.data
     const currentDecimals = constants.tokenDecimals[getCurrencyKey(currency, true).toLowerCase()]
     const selectedItem = actions.user.getWithdrawWallet(
-      itemCurrency?.tokenKey || itemCurrency?.currency || currency,
+      itemCurrency?.tokenKey || currency,
       walletAddressOwner
     )
-    const usedAdminFee = adminFee.isEnabled(selectedItem.currency)
+
+    const usedAdminFee = adminFee.isEnabled(currency)
     const isToken = erc20Like.isToken({ name: currency })
     const isBep20Token = erc20Like.bep20.isToken({ name: currency })
     const isErc20Token = erc20Like.erc20.isToken({ name: currency })
@@ -553,7 +554,9 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
           })
         }
 
-        const txInfoUrl = helpers.transactions.getTxRouter(currency, txId)
+        const { tokenKey, currency: selectedCurrency } = selectedItem
+        const txInfoUrl = helpers.transactions.getTxRouter(tokenKey || selectedCurrency, txId)
+
         redirectTo(txInfoUrl)
       })
       .then(() => {

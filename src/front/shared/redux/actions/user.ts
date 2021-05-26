@@ -628,9 +628,9 @@ Private key: ${nextData.privateKey}\r\n
 export const getWithdrawWallet = (currency, addressOwner) => {
   const needType = getCurrencyKey(currency, true).toUpperCase()
 
-  const filtered = actions.core.getWallets({}).filter((wallet) => {
-    const name = wallet.tokenKey || wallet.currency
-    const walletType = getCurrencyKey(name, true).toUpperCase()
+  const filtered = actions.core.getWallets().filter((wallet) => {
+    const walletName = wallet.tokenKey || wallet.currency
+    const walletType = getCurrencyKey(walletName, true).toUpperCase()
 
     return (
       (walletType === needType && addressOwner === wallet.address) ||

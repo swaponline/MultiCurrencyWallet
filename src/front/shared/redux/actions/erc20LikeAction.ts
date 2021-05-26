@@ -101,9 +101,7 @@ class Erc20LikeAction {
   }
 
   getTxRouter = (txId, currency) => {
-    const tokenKey = `{${this.currencyKey}}${currency}`
-
-    return `/token/${tokenKey}/tx/${txId}`
+    return `/token/${currency}/tx/${txId}`
   }
 
   getLinkToInfo = (tx) => {

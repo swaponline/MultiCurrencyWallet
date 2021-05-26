@@ -528,7 +528,7 @@ const getWallets = (options: IUniversalObj = {}) => {
     ...data,
   }))
 
-  return allData.filter((item) => item && item.address)
+  return allData.filter((item) => item?.address && item?.currency)
 }
 
 const fetchWalletBalance = async (walletData): Promise<number> => {

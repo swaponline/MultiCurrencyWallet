@@ -19,10 +19,12 @@ const getWalletLink = (currency, checkAddresses) => {
 
   if (!ourWallets.length) return false
 
-  const our = checkAddresses.filter((address) => ourWallets.includes(address.toLowerCase()))
+  const availableAddresses = checkAddresses.filter((address) => (
+    address && ourWallets.includes( address.toLowerCase() )
+  ))
 
-  if (our.length) {
-    const targetWallet = our[0]
+  if (availableAddresses.length) {
+    const targetWallet = availableAddresses[0]
 
     return tokenBaseCurrency
       ? `/token/${currency}/${targetWallet}`

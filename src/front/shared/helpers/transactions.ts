@@ -100,7 +100,7 @@ const getLink = (currency, txId) => {
 }
 
 const getInfo = (currency, txRaw) => {
-  const prefix = helpers.getCurrencyKey(currency, false)
+  const prefix = helpers.getCurrencyKey(currency, true)
 
   if (actions[prefix]?.getTx) {
     const tx = actions[prefix].getTx(txRaw)
