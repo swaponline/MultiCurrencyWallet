@@ -288,10 +288,13 @@ const getTokensBalances = async () => {
 }
 
 const customRate = (cur) => {
-  const wTokens = window.widgetERC20Tokens
+  const widgetTokens = window.widgetERC20Tokens
 
-  const dataobj = wTokens && Object.keys(wTokens).find(el => el === cur.toLowerCase())
-  return dataobj ? (wTokens[dataobj] || { customEcxchangeRate: null }).customEcxchangeRate : null
+  const targetToken = widgetTokens.length && widgetTokens.find((token) => {
+    return token.symbol.toLowerCase() === cur.toLowerCase()
+  })
+
+  return targetToken ? (targetToken || { customEcxchangeRate: null }).customEcxchangeRate : null
 }
 
 const getExchangeRate = (sellCurrency, buyCurrency): Promise<number> => {

@@ -77,6 +77,14 @@ window.widgetERC20Tokens = [
     fullName: 'Shadow Token',
     iconBgColor: '#131313',
   },
+  {
+    standard: 'erc20',
+    address: '0xc9f3f868d5888ab7c8187a590b56d0819d2bc90e',
+    decimals: 13,
+    symbol: 'Shadow',
+    fullName: 'Shadow Token',
+    iconBgColor: '#411141',
+  },
 ]
 
 window.buildOptions = {

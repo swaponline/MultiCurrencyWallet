@@ -112,14 +112,18 @@ export default class StepsWrapper extends Component<any, any> {
 
     const curState = {}
     items.forEach(({ currency }) => { curState[currency] = false })
-    if (isWidgetBuild && config && config.erc20) {
-      if (window && window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
+
+    if (isWidgetBuild && config?.erc20) {
+      if (window?.widgetERC20Tokens?.length) {
         // Multi token build
-        Object.keys(window.widgetERC20Tokens).forEach((tokenSymbol) => {
-          if (config.erc20[tokenSymbol]) {
+        window.widgetERC20Tokens.forEach((token) => {
+          const symbol = token.symbol.toLowerCase()
+          const standard = token.standard.toLowerCase()
+
+          if (config[standard][symbol]) {
             this.widgetStartPack.push({
-              name: tokenSymbol.toUpperCase(),
-              capture: config.erc20[tokenSymbol].fullName,
+              name: symbol.toUpperCase(),
+              capture: config[standard][symbol].fullName,
             })
           }
         })
@@ -133,7 +137,12 @@ export default class StepsWrapper extends Component<any, any> {
         }
       }
     }
-    this.state = { curState, coins, startPack: (isWidgetBuild) ? this.widgetStartPack : this.defaultStartPack }
+
+    this.state = {
+      curState,
+      coins,
+      startPack: (isWidgetBuild) ? this.widgetStartPack : this.defaultStartPack,
+    }
   }
 
 

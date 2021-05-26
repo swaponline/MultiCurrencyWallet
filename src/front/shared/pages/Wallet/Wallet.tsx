@@ -329,10 +329,10 @@ class Wallet extends PureComponent<any, any> {
     widgetCurrencies.push('NEXT')
 
     if (isWidgetBuild) {
-      if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
+      if (window?.widgetERC20Tokens?.length) {
         // Multi token widget build
-        Object.keys(window.widgetERC20Tokens).forEach((key) => {
-          widgetCurrencies.push(key.toUpperCase())
+        window.widgetERC20Tokens.forEach((token) => {
+          widgetCurrencies.push(token.symbol.toUpperCase())
         })
       } else {
         widgetCurrencies.push(config.erc20token.toUpperCase())

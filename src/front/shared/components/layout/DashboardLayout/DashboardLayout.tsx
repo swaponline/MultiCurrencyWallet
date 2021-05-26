@@ -81,8 +81,10 @@ const NewDesignLayout = (props: NewDesignLayoutProps) => {
   if (!hiddenCoinsList.includes('BTC (Multisig)')) {
     widgetCurrencies.push('BTC (Multisig)')
   }
+
   widgetCurrencies.push('ETH')
   widgetCurrencies.push('BNB')
+
   if (isWidgetBuild) {
     if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
       // Multi token widget build

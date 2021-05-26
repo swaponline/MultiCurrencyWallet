@@ -26,13 +26,16 @@ Object.keys(config.erc20)
   })
 
 
-if (config && config.isWidget) {
+if (config?.isWidget) {
   swap.length = 0
-  if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
-    Object.keys(window.widgetERC20Tokens).forEach((key) => {
-      swap.push(`${key.toUpperCase()}-BTC`)
-      if (!config.opts.curEnabled || config.opts.curEnabled.ghost) swap.push(`${key.toUpperCase()}-GHOST`)
-      if (!config.opts.curEnabled || config.opts.curEnabled.next) swap.push(`${key.toUpperCase()}-NEXT`)
+
+  if (window?.widgetERC20Tokens?.length) {
+    window.widgetERC20Tokens.forEach((token) => {
+      const symbol = token.symbol.toUpperCase()
+
+      swap.push(`${symbol}-BTC`)
+      if (!config.opts.curEnabled || config.opts.curEnabled.ghost) swap.push(`${symbol}-GHOST`)
+      if (!config.opts.curEnabled || config.opts.curEnabled.next) swap.push(`${symbol}-NEXT`)
     })
   } else {
     swap.push(`${config.erc20token.toUpperCase()}-BTC`)

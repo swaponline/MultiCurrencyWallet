@@ -83,10 +83,9 @@ const CreateWallet: React.FC<any> = (props) => {
   ]
 
   if (isWidgetBuild) {
-    if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
-      // Multi token widget build
-      Object.keys(window.widgetERC20Tokens).forEach((key) => {
-        widgetCurrencies.push(key.toUpperCase())
+    if (window?.widgetERC20Tokens?.length) {
+      window.widgetERC20Tokens.forEach((token) => {
+        widgetCurrencies.push(token.symbol.toUpperCase())
       })
     } else {
       widgetCurrencies.push(config.erc20token.toUpperCase())
@@ -140,10 +139,10 @@ const CreateWallet: React.FC<any> = (props) => {
     const widgetCurrenciesWithTokens = [...widgetCurrencies]
 
     if (isWidgetBuild) {
-      if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
+      if (window?.widgetERC20Tokens?.length) {
         // Multi token widget build
-        Object.keys(window.widgetERC20Tokens).forEach((key) => {
-          widgetCurrenciesWithTokens.push(key.toUpperCase())
+        window.widgetERC20Tokens.forEach((token) => {
+          widgetCurrenciesWithTokens.push(token.symbol.toUpperCase())
         })
       } else {
         widgetCurrenciesWithTokens.push(config.erc20token.toUpperCase())
