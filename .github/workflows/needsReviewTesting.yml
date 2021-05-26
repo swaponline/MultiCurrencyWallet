@@ -26,9 +26,6 @@ jobs:
         npm i
         npm run build:testnet-tests
 
-    - name: Run a one-line script
-      run: echo Hello, world!
-
     - name: run e2e swap test
       run: |
         mkdir ./tests/e2e/screenshots
