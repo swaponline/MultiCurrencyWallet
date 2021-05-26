@@ -22,6 +22,7 @@ type DropDownProps = {
   arrowSide?: string
   disableSearch?: boolean
   dontScroll?: boolean
+  role?: string
 }
 
 type DropDownState = {
@@ -129,6 +130,7 @@ export default class DropDown extends Component<DropDownProps, DropDownState> {
       disableSearch,
       dontScroll, // Show all items, for small lists
       arrowSide,
+      role,
     } = this.props
 
     const { optionToggleIsOpen, inputValue } = this.state
@@ -149,12 +151,14 @@ export default class DropDown extends Component<DropDownProps, DropDownState> {
     const noOptions = itemsFiltered.length === 0
     const moreThenOneOption = itemsFiltered.length > 1
 
+    const dropDownId = role ? `dropDown${role}` : 'dropDownNoRole'
+
     return (
       //@ts-ignore: strictNullChecks
       <OutsideClick outsideAction={this.handleClickOutside}>
         <div styleName={`${dropDownStyleName} ${isDark ? 'dark' : ''}`} className={className}>
           <div
-            className='itemsSelector'
+            className={dropDownId}
             styleName={`
               selectedItem
               ${arrowSide === 'left' ? 'left' : ''}
@@ -164,7 +168,7 @@ export default class DropDown extends Component<DropDownProps, DropDownState> {
           >
             {/* Drop Down arrow */}
             {moreThenOneOption && <div styleName={`arrow ${arrowSide === 'left' ? 'left' : ''}`} />}
-            
+
             {/* Search input */}
             {optionToggleIsOpen && !disableSearch ? (
               <Input

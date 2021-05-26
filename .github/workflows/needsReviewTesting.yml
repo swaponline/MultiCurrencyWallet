@@ -1,10 +1,12 @@
 name: Node CI
 
-on: [pull_request]
+on:
+  pull_request:
+    types: [ labeled ]
 
 jobs:
   build:
-
+    if: ${{ github.event.label.name == 'needs review' }}
     runs-on: ubuntu-latest
 
     strategy:
@@ -12,30 +14,27 @@ jobs:
         node-version: [14.x]
 
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
 
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - name: npm install
-      uses: bahmutov/npm-install@v1
-      with:
-       useLockFile: false
-    - name: build testnet for tests
+
+    - name: npm install and build testnet for tests
       run: |
+        npm i
         npm run build:testnet-tests
-    - name: run e2e tests
+
+    - name: run e2e swap test
       run: |
         mkdir ./tests/e2e/screenshots
-        npm run test:e2e:actions
+        npm run test:e2e_swap:actions
+
     - uses: actions/upload-artifact@v2
       with:
         name: screenshots
         path: ./tests/e2e/screenshots
-    - name: bot test
-      run: |
-        npm run bot:test
+
       env:
         CI: true
-

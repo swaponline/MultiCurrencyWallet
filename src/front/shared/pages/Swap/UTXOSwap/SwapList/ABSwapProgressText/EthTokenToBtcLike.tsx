@@ -8,7 +8,7 @@ export default class EthTokenToBtcLike extends Component<any, any> {
     switch (step) {
       case 1:
         return (
-          <FormattedMessage id="EthTokensToBtc16_ethtoken_to_BtcLike" defaultMessage="Confirmation processing" />
+          <FormattedMessage id="EthTokensToBtc16_ethtoken_to_BtcLike" defaultMessage="Please wait" />
         )
       case 2:
         return (
