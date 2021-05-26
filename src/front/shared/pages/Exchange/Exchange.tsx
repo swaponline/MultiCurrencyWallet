@@ -1281,6 +1281,7 @@ class Exchange extends PureComponent<any, any> {
     const isWalletCreate = localStorage.getItem(constants.localStorage.isWalletCreate)
 
     if (isToAddressUTXOModel && isWalletCreate) {
+      this.setDefaultCurrencyType(toAddress.currency, AddressType.Internal)
       toAddress.type = AddressType.Internal
     }
 
