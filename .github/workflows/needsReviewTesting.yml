@@ -21,8 +21,9 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
-    - name: build testnet for tests
+    - name: npm install and build testnet for tests
       run: |
+        npm i
         npm run build:testnet-tests
 
     - name: Run a one-line script
