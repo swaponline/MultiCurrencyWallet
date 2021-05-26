@@ -9,7 +9,34 @@ jobs:
     if: ${{ github.event.label.name == 'needs review' }}
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        node-version: [14.x]
+
     steps:
     - uses: actions/checkout@v2
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: build testnet for tests
+      run: |
+        npm run build:testnet-tests
+
     - name: Run a one-line script
       run: echo Hello, world!
+
+    - name: run e2e swap test
+      run: |
+        mkdir ./tests/e2e/screenshots
+        npm run test:e2e_swap:actions
+
+    - uses: actions/upload-artifact@v2
+      with:
+        name: screenshots
+        path: ./tests/e2e/screenshots
+
+      env:
+        CI: true
