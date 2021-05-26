@@ -62,11 +62,9 @@ class History extends Component<any, any> {
       }
     } = props
 
-    const userWallets = actions.core.getWallets()
     const commentsList = actions.comments.getComments()
 
     this.state = {
-      userWallets,
       page,
       items,
       filterValue: "",
@@ -119,11 +117,10 @@ class History extends Component<any, any> {
 
   rowRender = (row, rowIndex) => {
     const { activeFiat } = this.props
-    const { commentsList, userWallets } = this.state
+    const { commentsList } = this.state
 
     return (
       <Row
-        userWallets={userWallets}
         activeFiat={activeFiat}
         isDark={isDark}
         key={rowIndex}

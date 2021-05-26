@@ -1,6 +1,5 @@
-import React, { Fragment } from 'react'
+import React, { PureComponent } from 'react'
 import cx from 'classnames'
-import { connect } from 'redaction'
 import cssModules from 'react-css-modules'
 import styles from './Row.scss'
 import { FormattedMessage } from 'react-intl'
@@ -19,22 +18,18 @@ import { AddressFormat } from 'domain/address'
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
-@connect(({
-  user: { tokensData },
-}) => ({
-  tokensData,
-}))
 @cssModules(styles, { allowMultiple: true })
-
-export default class Row extends React.PureComponent<any, any> {
+export default class Row extends PureComponent<any, any> {
   constructor(props) {
     super(props)
 
     const { hash, type, hiddenList, invoiceData, viewType } = props
     const dataInd = invoiceData && invoiceData.id
     const ind = `${dataInd || hash}-${type}`
+    const userWallets = actions.core.getWallets()
 
     this.state = {
+      userWallets,
       viewType: (viewType || 'transaction'),
       exCurrencyRate: 0,
       comment: actions.comments.returnDefaultComment(hiddenList, ind),
@@ -45,12 +40,13 @@ export default class Row extends React.PureComponent<any, any> {
   }
 
   componentDidMount() {
-    const { type, userWallets } = this.props
+    const { type } = this.props
+    const { userWallets } = this.state
 
     // request fiat balance if wallet has fiat price
-    Object.keys(userWallets).forEach(key => {
-      if (key.includes(type)) {
-        if (userWallets[key].infoAboutCurrency) {
+    userWallets.forEach((wallet) => {
+      if (wallet.currency.toLowerCase() === type.toLowerCase()) {
+        if (wallet.infoAboutCurrency) {
           this.getFiatBalance(type)
         } else {
           this.setState(() => ({
@@ -68,6 +64,7 @@ export default class Row extends React.PureComponent<any, any> {
       actions.user.getExchangeRate(type, activeFiat.toLowerCase()).then((exCurrencyRate) => {
         this.setState(() => ({
           exCurrencyRate,
+          showFiat: true,
         }))
       })
     }
@@ -220,8 +217,8 @@ export default class Row extends React.PureComponent<any, any> {
     const hash = (invoiceData && invoiceData.txInfo) ? invoiceData.txInfo : propsHash
 
     const { exCurrencyRate, cancelled, payed } = this.state
-    const getFiat = value * exCurrencyRate
-    
+    const fiatValue = value * exCurrencyRate
+
     const paymentAddress = invoiceData
       ? invoiceData.destAddress
         ? invoiceData.destAddress
@@ -440,7 +437,7 @@ export default class Row extends React.PureComponent<any, any> {
               {invoiceData ? this.parseFloat(direction, value, 'out', type) : this.parseFloat(direction, value, 'in', type)}
               {
                 showFiat
-                  ? <span styleName='amountUsd'>{`~${getFiat.toFixed(2)}`}{` `}{activeFiat}</span>
+                  ? <span styleName='amountUsd'>{`~${fiatValue.toFixed(2)}`}{` `}{activeFiat}</span>
                   : null
               }
             </div>
