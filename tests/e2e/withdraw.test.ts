@@ -11,7 +11,7 @@ describe('Withdraw form tests', () => {
     // a suitable example: 0.005166 ETH ($18.23)
     const feeRegExp = /[\d(\.)?\d]+ [A-Z]{3,} \(.{1}[\d(\.)?\d]+\)/
 
-    await selectSendCurrency({ page, ticker })
+    await selectSendCurrency({ page, currency: ticker })
 
     await page.waitForSelector('#feeInfoBlockMinerFee')
     await page.waitForSelector('#feeInfoBlockTotalFee')
