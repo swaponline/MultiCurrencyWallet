@@ -173,10 +173,10 @@ export default connect(
     },
   }) => {
     let widgetMultiTokens = []
-    if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
-      Object.keys(window.widgetERC20Tokens).forEach((key) => {
+    if (window?.widgetERC20Tokens?.length) {
+      window.widgetERC20Tokens.forEach((token) => {
         //@ts-ignore: strictNullChecks
-        widgetMultiTokens.push(key.toUpperCase())
+        widgetMultiTokens.push(token.name.toUpperCase())
       })
     }
 

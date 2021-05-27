@@ -9,7 +9,7 @@ export default {
     explorerApiKey: config.api.etherscan_ApiKey,
   },
   bep20: {
-    platform: 'binance chain', // ? 'Smart' does not matter ?
+    platform: 'binance smart chain',
     standard: 'bep20',
     currency: 'bnb',
     explorerApi: config.api.bscscan,

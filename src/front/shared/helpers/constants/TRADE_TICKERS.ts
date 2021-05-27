@@ -31,11 +31,11 @@ if (config?.isWidget) {
 
   if (window?.widgetERC20Tokens?.length) {
     window.widgetERC20Tokens.forEach((token) => {
-      const symbol = token.symbol.toUpperCase()
+      const name = token.name.toUpperCase()
 
-      swap.push(`${symbol}-BTC`)
-      if (!config.opts.curEnabled || config.opts.curEnabled.ghost) swap.push(`${symbol}-GHOST`)
-      if (!config.opts.curEnabled || config.opts.curEnabled.next) swap.push(`${symbol}-NEXT`)
+      swap.push(`${name}-BTC`)
+      if (!config.opts.curEnabled || config.opts.curEnabled.ghost) swap.push(`${name}-GHOST`)
+      if (!config.opts.curEnabled || config.opts.curEnabled.next) swap.push(`${name}-NEXT`)
     })
   } else {
     swap.push(`${config.erc20token.toUpperCase()}-BTC`)

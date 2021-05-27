@@ -60,7 +60,7 @@ export const getWidgetCurrencies = () => {
   if (externalConfig.isWidget) {
     if (window?.widgetERC20Tokens?.length) {
       window.widgetERC20Tokens.forEach((token) => {
-        widgetCurrencies.push(token.symbol.toUpperCase())
+        widgetCurrencies.push(token.name.toUpperCase())
       })
     } else {
       widgetCurrencies.push(config.erc20token.toUpperCase())

@@ -123,7 +123,7 @@ const CreateWallet = (props) => {
       if (window?.widgetERC20Tokens?.length) {
         // Multi token widget build
         window.widgetERC20Tokens.forEach((token) => {
-          widgetCurrenciesWithTokens.push(token.symbol.toUpperCase())
+          widgetCurrenciesWithTokens.push(token.name.toUpperCase())
         })
       } else {
         widgetCurrenciesWithTokens.push(config.erc20token.toUpperCase())
