@@ -30,8 +30,6 @@ if (window?.widgetERC20Tokens?.length) {
 }
 
 if (Array.isArray(buildOpts.ownTokens) && buildOpts.ownTokens.length) {
-  // Multi token mode
-  const cleanTokenConfig = {}
   // ? we can't use here as whole string {#WIDGETTOKENCODE#} ?
   const wcPb = `{#`
   const wcP = (`WIDGETTOKENCODE`).toUpperCase()

@@ -18,16 +18,16 @@ import { localisedUrl } from 'helpers/locale'
 import StepsWrapper from './Steps/StepsWrapper'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 
-import { constants, localStorage } from 'helpers'
+import { constants, localStorage, user } from 'helpers'
 import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
-import web3Icons from '../../images'
+import web3Icons from 'images'
 
 const isWidgetBuild = config && config.isWidget
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 
 
-const CreateWallet: React.FC<any> = (props) => {
+const CreateWallet = (props) => {
   const {
     history,
     createWallet: { currencies, secure },
@@ -71,26 +71,7 @@ const CreateWallet: React.FC<any> = (props) => {
   let btcBalance = 0
   let fiatBalance = 0
 
-  const widgetCurrencies = [
-    'BTC',
-    'BTC (SMS-Protected)',
-    'BTC (PIN-Protected)',
-    'BTC (Multisig)',
-    'ETH',
-    'BNB',
-    'GHOST',
-    'NEXT',
-  ]
-
-  if (isWidgetBuild) {
-    if (window?.widgetERC20Tokens?.length) {
-      window.widgetERC20Tokens.forEach((token) => {
-        widgetCurrencies.push(token.symbol.toUpperCase())
-      })
-    } else {
-      widgetCurrencies.push(config.erc20token.toUpperCase())
-    }
-  }
+  const widgetCurrencies = user.getWidgetCurrencies()
 
   if (currencyBalance) {
     currencyBalance.forEach(async (item) => {

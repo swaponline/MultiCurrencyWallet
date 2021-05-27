@@ -169,14 +169,10 @@ const externalConfig = () => {
   ) {
     config.opts.plugins.setItemPlugin = window.setItemPlugin
   }
-  if (window
-    && window.getItemPlugin
-  ) {
+  if (window && window.getItemPlugin) {
     config.opts.plugins.getItemPlugin = window.getItemPlugin
   }
-  if (window
-    && window.userDataPluginApi
-  ) {
+  if (window && window.userDataPluginApi) {
     config.opts.plugins.userDataPluginApi = window.userDataPluginApi
   }
 
@@ -197,36 +193,25 @@ const externalConfig = () => {
     config.opts.ownTokens = window.widgetERC20Tokens
   }
 
-  if (config?.isWidget || config?.opts.ownTokens) {
-    // clean old configs - leave only swap token (need for correct swap work)
-    if (!config.isWidget) {
-      const cleanConfig = {}
-      // cleanConfig.swap = config.erc20.swap
-
-      Object.keys(TOKEN_STANDARDS).forEach((key) => {
-        const standard = TOKEN_STANDARDS[key].standard
-
-        config[standard] = cleanConfig
-      })
-    }
-
+  if (config?.isWidget || config?.opts.ownTokens?.length) {
     config.opts.ownTokens.forEach((token) => {
       config[token.standard][token.symbol.toLowerCase()] = token
+      reducers.core.markCoinAsVisible(token.symbol.toUpperCase())
     })
 
     // Clean not uninitialized single-token
     // ? we can't use here as whole string {#WIDGETTOKENCODE#} ?
     const wcPb = `{#`
-    const wcP = (`WIDGETTOKENCODE`).toUpperCase()
+    const wcP = `WIDGETTOKENCODE`
     const wcPe = `#}`
 
     Object.keys(TOKEN_STANDARDS).forEach((key) => {
       const standard = TOKEN_STANDARDS[key].standard
       const ownTokens = {}
 
-      Object.keys(config[standard]).forEach((key) => {
-        if (key !== (`${wcPb}${wcP}${wcPe}`)) {
-          ownTokens[key] = config[standard][key]
+      Object.keys(config[standard]).forEach((tokenSymbol) => {
+        if (tokenSymbol !== `${wcPb}${wcP}${wcPe}`) {
+          ownTokens[tokenSymbol] = config[standard][tokenSymbol]
         }
       })
 

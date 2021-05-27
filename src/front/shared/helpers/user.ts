@@ -80,8 +80,7 @@ export const filterUserCurrencyData = (currencyData) => {
     return (
       !hiddenCoinsList.includes(currency) &&
       !hiddenCoinsList.includes(`${currency}:${target.address?.toUpperCase()}`) &&
-      enabledCurrencies.includes(currency) &&
-      target.balance > 0
+      enabledCurrencies.includes(currency)
     )
   }
 
