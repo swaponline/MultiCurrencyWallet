@@ -9,7 +9,7 @@ import config from 'helpers/externalConfig'
 import FirstStep from './FirstStep'
 import SecondStep from './SecondStep'
 
-const isWidgetBuild = true// config && config.isWidget
+const isWidgetBuild = config && config.isWidget
 const curEnabled = config.opts.curEnabled
 
 
