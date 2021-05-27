@@ -46,6 +46,8 @@ import Toggle from 'components/controls/Toggle/Toggle'
 import TurboIcon from 'shared/components/ui/TurboIcon/TurboIcon'
 
 import { COIN_DATA, COIN_MODEL, COIN_TYPE } from 'swap.app/constants/COINS'
+import getCoinInfo from 'common/coins/getCoinInfo'
+
 
 type CurrencyObj = {
   addAssets?: boolean
@@ -163,15 +165,28 @@ class Exchange extends PureComponent<any, any> {
   static getDerivedStateFromProps(props, state) {
     const { orders } = props
     const { haveCurrency, getCurrency, isTurbo } = state
+    const {
+      coin: haveCoin,
+      blockchain: haveBlockchain,
+    } = getCoinInfo(haveCurrency)
+    const {
+      coin: getCoin,
+      blockchain: getBlockchain,
+    } = getCoinInfo(getCurrency)
 
     if (!orders.length) {
       return null
     }
 
-    const directionOrders = orders.filter(order =>
+
+
+//console.log('>>>>>> getDerivedStateFromProps', orders, getCurrency.toUpperCase(), haveCurrency.toUpperCase(), haveCoin, haveBlockchain, getCoin, getBlockchain)
+    const directionOrders = orders.filter(order => 
       !order.isMy &&
-      order.sellCurrency === getCurrency.toUpperCase() &&
-      order.buyCurrency === haveCurrency.toUpperCase()
+      order.sellCurrency.toUpperCase() === getCoin.toUpperCase() &&
+      order.sellBlockchain.toUpperCase() === getBlockchain.toUpperCase() && 
+      order.buyCurrency.toUpperCase() === haveCoin.toUpperCase() &&
+      order.buyBlockchain.toUpperCase() === haveBlockchain.toUpperCase()
     )
 
     const filteredOrders = directionOrders.filter(order =>

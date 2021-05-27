@@ -22,8 +22,15 @@ const filteredDecimals = ({ amount, currency }) =>
   new BigNumber(amount).decimalPlaces(TOKEN_DECIMALS[currency] || 0).toString()
 
 export const parseTicker = (order) => {
-  const { buyCurrency: buy, sellCurrency: sell } = order
+  const {
+    buyCurrency,
+    buyBlockchain,
+    sellCurrency,
+    sellBlockchain,
+  } = order
 
+  const buy = (buyBlockchain !== ``) ? `{${buyBlockchain}}${buyCurrency}` : buyCurrency
+  const sell = (sellBlockchain !== ``) ? `{${sellBlockchain}}${sellCurrency}` : sellCurrency
   const BS = `${buy}-${sell}`.toUpperCase() // buys ETH, sells BTC, BID
   const SB = `${sell}-${buy}`.toUpperCase() // sells ETH = ASK
 
@@ -51,6 +58,7 @@ export const parseTicker = (order) => {
 }
 
 export const parsePair = (str) => {
+  console.log('>>>>>> parsePair', str)
   if (!str) {
     throw new Error(`Empty string: ${str}`)
   }
@@ -158,6 +166,7 @@ export default class Pair {
     const { buyCurrency, sellCurrency, buyAmount, sellAmount } = order
     const { ticker, type } = parseTicker(order)
 
+console.log('>>>> from order pair', ticker, type, order)
     if (ticker === 'none') {
       return
     }
@@ -182,7 +191,10 @@ export default class Pair {
   static check(order, ticker) {
     try {
       const pair = Pair.fromOrder(order)
+      console.log('>>>>>> Pair ->>> check', order, pair)
       const { MAIN, BASE } = parsePair(ticker.toUpperCase())
+      //@ts-ignore: strictNullChecks
+      console.log( pair.ticker === `${MAIN}-${BASE}`,  pair.ticker , `${MAIN}-${BASE}` )
       //@ts-ignore: strictNullChecks
       return pair.ticker === `${MAIN}-${BASE}`
     } catch (err) {

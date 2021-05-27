@@ -29,6 +29,7 @@ import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import config from 'app-config'
 import feedback from 'shared/helpers/feedback'
 import { links } from 'helpers'
+import getCoinInfo from 'common/coins/getCoinInfo'
 
 
 type OrderBookProps = {
@@ -65,12 +66,12 @@ type OrderBookState = {
 const filterMyOrders = (orders, peer) => orders
   .filter(order => order.owner.peer === peer)
 
-const filterOrders = (orders, filter) => orders
+const filterOrders = (orders, filter) => { console.log('>>>> filter orders', orders, filter); return orders
   .filter(order => order.isProcessing !== true)
   .filter(order => order.isHidden !== true)
   .filter(order => Pair.check(order, filter))
   .sort((a, b) => Pair.compareOrders(b, a))
-
+}
 @connect(({
   rememberedOrders,
   core: { orders, filter },
@@ -95,15 +96,26 @@ class OrderBook extends Component {
     if (orders.length === 0) {
       return null
     }
+    const {
+      coin: sellCoin,
+      blockchain: sellBlockchain,
+    } = getCoinInfo(sellCurrency)
+    const {
+      coin: buyCoin,
+      blockchain: buyBlockchain,
+    } = getCoinInfo(buyCurrency)
 
+console.log('>>>>>> OrderBook', orders, sellCurrency, buyCurrency)
     const sellOrders = orders.filter(order =>
-      order.buyCurrency.toLowerCase() === buyCurrency &&
-      order.sellCurrency.toLowerCase() === sellCurrency
+      order.buyCurrency.toLowerCase() === buyCoin.toLowerCase() &&
+      
+      order.sellCurrency.toLowerCase() === sellCoin.toLowerCase()
+
     ).sort((a, b) => Pair.compareOrders(b, a))
 
     const buyOrders = orders.filter(order =>
-      order.buyCurrency.toLowerCase() === sellCurrency &&
-      order.sellCurrency.toLowerCase() === buyCurrency
+      order.buyCurrency.toLowerCase() === sellCoin.toLowerCase() &&
+      order.sellCurrency.toLowerCase() === buyCoin.toLowerCase()
     ).sort((a, b) => Pair.compareOrders(a, b))
       
     return {
