@@ -40,7 +40,7 @@ if (Array.isArray(buildOpts.ownTokens) && buildOpts.ownTokens.length) {
   })
 
   buildOpts.ownTokens.forEach((token) => {
-    const symbol = token.symbol.toLowerCase()
+    const symbol = token.name.toLowerCase()
     const standard = token.standard.toLowerCase()
 
     if (symbol.toUpperCase() !== (`${wcPb}${wcP}${wcPe}`)) {
@@ -300,24 +300,24 @@ if (config.isWidget) {
     // First token in list - is main - fill single-token erc20 config
     const firstToken = widgetCustomTokens[0]
 
-    config.erc20token = firstToken.symbol
-    config[firstToken.standard][firstToken.symbol] = firstToken
+    config.erc20token = firstToken.name
+    config[firstToken.standard][firstToken.name] = firstToken
 
     widgetCustomTokens.forEach((token) => {
-      const symbol = token.symbol
+      const name = token.name
 
       initialState.items.push({
-        name: symbol.toUpperCase(),
-        title: symbol.toUpperCase(),
-        icon: symbol,
-        value: symbol,
+        name: name.toUpperCase(),
+        title: name.toUpperCase(),
+        icon: name,
+        value: name,
         fullTitle: token.fullName,
       })
       initialState.partialItems.push({
-        name: symbol.toUpperCase(),
-        title: symbol.toUpperCase(),
-        icon: symbol,
-        value: symbol,
+        name: name.toUpperCase(),
+        title: name.toUpperCase(),
+        icon: name,
+        value: name,
         fullTitle: token.fullName.fullName,
       })
     })
