@@ -49,7 +49,7 @@ window.widgetERC20Tokens = [
   //   standard: 'erc20',
   //   address: '0xdac17f958d2ee523a2206206994597c13d831ec7',
   //   decimals: 6,
-  //   symbol: 'USDT',
+  //   name: 'USDT',
   //   fullName: 'Usdt',
   //   icon: 'https://growup.wpmix.net/wp-content/uploads/2016/10/favicon.png',
   // },
