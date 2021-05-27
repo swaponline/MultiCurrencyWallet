@@ -99,22 +99,29 @@ const getLink = (currency, txId) => {
   console.warn(`Function getLinkToInfo for ${prefix} not defined`)
 }
 
-const getInfo = (currency, txRaw) => {
-  const prefix = helpers.getCurrencyKey(currency, true)
+type GetInfoResult = {
+  tx: string
+  link: string
+}
 
-  if (actions[prefix]?.getTx) {
-    const tx = actions[prefix].getTx(txRaw)
-    const link =  getLink(prefix, tx)
-    return {
-      tx,
-      link,
-    }
-  }
-  console.warn(`Function getTx for ${prefix} not defined`)
-  return {
+const getInfo = (currency, txRaw): GetInfoResult => {
+  const prefix = helpers.getCurrencyKey(currency, true)
+  const info = {
     tx: '',
     link: '',
   }
+
+  if (actions[prefix]?.getTx) {
+    const tx = actions[prefix].getTx(txRaw)
+    const link = getLink(prefix, tx)
+
+    info.tx = tx
+    info.link = link
+  } else {
+    console.warn(`Function getTx for ${prefix} not defined`)
+  }
+
+  return info
 }
 
 export default {

@@ -18,7 +18,6 @@ import AlertModal from './Alert/AlertModal'
 import AddCustomToken from './AddCustomToken'
 import BtcMultisignSwitch from './BtcMultisignSwitch/BtcMultisignSwitch'
 import ShareModal from './Share/Share'
-import InfoPay from './InfoPay/InfoPay'
 import BtcMultisignConfirmTx from './BtcMultisignConfirmTx/BtcMultisignConfirmTx'
 import SaveMnemonicModal from './SaveMnemonicModal/SaveMnemonicModal'
 import RestoryMnemonicWallet from './RestoryMnemonicWallet/RestoryMnemonicWallet'
@@ -41,7 +40,6 @@ import ConnectWalletModal from './ConnectWalletModal/ConnectWalletModal'
 
 export default {
   DeclineOrdersModal,
-  InfoPay,
   ShareModal,
   OfferModal,
   WithdrawModal,

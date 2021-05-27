@@ -36,7 +36,7 @@ class TxInfo extends Component<any, any> {
     const {
       currency: sourceCurrency,
       txRaw,
-      txId,
+      txHash,
       error,
     } = props
 
@@ -52,10 +52,10 @@ class TxInfo extends Component<any, any> {
         linkBlockChain = txInfo.link
       }
 
-      if (txId) {
-        tx = txId
-        linkShare = helpers.transactions.getTxRouter(sourceCurrency.toLowerCase(), txId)
-        linkBlockChain = helpers.transactions.getLink(sourceCurrency.toLowerCase(), txId)
+      if (txHash) {
+        tx = txHash
+        linkShare = helpers.transactions.getTxRouter(sourceCurrency.toLowerCase(), txHash)
+        linkBlockChain = helpers.transactions.getLink(sourceCurrency.toLowerCase(), txHash)
       }
     }
 

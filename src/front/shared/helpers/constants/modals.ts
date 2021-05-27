@@ -20,7 +20,6 @@ export default {
   AddCustomToken: 'AddCustomToken',
   BtcMultisignSwitch: 'BtcMultisignSwitch',
   Share: 'ShareModal',
-  InfoPay: 'InfoPay',
   BtcMultisignConfirmTx: 'BtcMultisignConfirmTx',
   SaveMnemonicModal: 'SaveMnemonicModal',
   RestoryMnemonicWallet: 'RestoryMnemonicWallet',

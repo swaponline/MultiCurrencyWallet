@@ -207,17 +207,6 @@ class WithdrawModalMultisig extends React.Component<any, any> {
     }
     this.setBalanceOnState(currency)
 
-    /*
-    actions.modals.open(constants.modals.InfoPay, {
-      amount,
-      currency,
-      balance,
-      oldBalance: 0, // @Todo доделать old balance
-      txId,
-      toAddress: to
-    })
-    */
-
     // Сохраняем транзакцию в кеш
     const txInfoCache = {
       amount,
