@@ -353,6 +353,15 @@ class Exchange extends PureComponent<any, any> {
       return userWalletTypes[currency]
     }
 
+    const ticker = currency.toUpperCase()
+    const isUTXOModel = COIN_DATA[ticker] && COIN_DATA[ticker].model === COIN_MODEL.UTXO
+    const isWalletCreate = localStorage.getItem(constants.localStorage.isWalletCreate)
+
+    if (isUTXOModel && isWalletCreate) {
+      this.setDefaultCurrencyType(currency, AddressType.Internal)
+      return AddressType.Internal
+    }
+
     return false
   }
 
@@ -1267,13 +1276,22 @@ class Exchange extends PureComponent<any, any> {
       `${haveCurrency}->${getCurrency} => ${getCurrency}->${haveCurrency}`
     )
 
+    const toAddressTicker = toAddress.currency.toUpperCase()
+    const isToAddressUTXOModel = COIN_DATA[toAddressTicker] && COIN_DATA[toAddressTicker].model === COIN_MODEL.UTXO
+    const isWalletCreate = localStorage.getItem(constants.localStorage.isWalletCreate)
+
+    if (isToAddressUTXOModel && isWalletCreate) {
+      this.setDefaultCurrencyType(toAddress.currency, AddressType.Internal)
+      toAddress.type = AddressType.Internal
+    }
+
     this.resetState()
     this.changeUrl(getCurrency, haveCurrency)
     this.setState(
       {
         haveCurrency: getCurrency,
         getCurrency: haveCurrency,
-        haveType: getType,
+        haveType: toAddress.type,
         getType: haveType,
         exHaveRate: exGetRate,
         exGetRate: exHaveRate,
