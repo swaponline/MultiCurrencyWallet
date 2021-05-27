@@ -106,6 +106,7 @@ const createSwapApp = async () => {
         sessionStorage: window.sessionStorage,
         metamask,
         isBinance: !!config.binance,
+        isTest: !!config.isTest,
       },
 
       // White list (Список адресов btc довереных продавцов)

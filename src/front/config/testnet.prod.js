@@ -14,5 +14,7 @@ export default {
 
   time: moment(Date.now()).format('LLLL'),
 
+  isTest: process.env.IS_TEST,
+
   ...config,
 }

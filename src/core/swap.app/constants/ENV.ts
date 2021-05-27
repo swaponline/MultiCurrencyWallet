@@ -11,7 +11,7 @@ export default {
   metamask: 'metamask',
   getWeb3: 'getWeb3',
   isBinance: 'isBinance',
-
   web3bnb: 'web3bnb',
   getWeb3Bnb: 'getWeb3Bnb',
+  isTest: 'isTest',
 }

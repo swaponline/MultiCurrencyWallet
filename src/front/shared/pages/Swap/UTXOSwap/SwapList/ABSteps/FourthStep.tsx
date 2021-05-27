@@ -27,7 +27,7 @@ const FourthStep = (props) => {
       style={{ paddingTop: fourthStepPadding }}
       styleName={step >= currencyStep ? 'stepItem active checked' : 'stepItem'}>
       <span styleName="stepNumber">{step >= currencyStep ? <i className="fas fa-check" /> : 4}</span>
-      <p styleName="stepText">
+      <p id="swapCompleted" styleName="stepText">
         <FormattedMessage
           id="BtcToEthToken123"
           defaultMessage="The swap is finish!" />

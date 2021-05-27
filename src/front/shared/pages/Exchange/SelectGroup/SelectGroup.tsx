@@ -60,6 +60,7 @@ const SelectGroup = (props) => {
         <Input
           styleName="inputRoot"
           inputContainerClassName="inputContainer"
+          inputClassName="selectGroupInput"
           valueLink={inputValueLink}
           type="number"
           placeholder={placeholder}
