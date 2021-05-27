@@ -32,9 +32,6 @@ const labels = defineMessages({
   ...animateFetching,
 }, { allowMultiple: true })
 class InfoPay extends React.Component<any, any> {
-
-  props: any
-
   constructor(props) {
     super(props)
 

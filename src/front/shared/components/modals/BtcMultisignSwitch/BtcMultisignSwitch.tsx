@@ -1,18 +1,12 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
-import helpers, { constants } from 'helpers'
 import actions from 'redux/actions'
-import Link from 'local_modules/sw-valuelink'
-import { connect } from 'redaction'
-import config from 'app-config'
-
 import cssModules from 'react-css-modules'
 
 import defaultStyles from '../Styles/default.scss'
 import styles from './BtcMultisignSwitch.scss'
 
 import Modal from 'components/modal/Modal/Modal'
-import Button from 'components/controls/Button/Button'
 
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 
@@ -22,9 +16,6 @@ import WalletRow from './WalletRow'
 
 @cssModules({ ...defaultStyles, ...styles }, { allowMultiple: true })
 class BtcMultisignSwitch extends React.Component<any, any> {
-
-  props: any
-
   static propTypes = {
     name: PropTypes.string,
     data: PropTypes.object,

@@ -32,11 +32,7 @@ type WallerSliderState = {
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 @connect(({ user }) => ({ user }))
-class WallerSlider extends React.Component {
-
-  props: WallerSliderProps
-  state: WallerSliderState
-  
+class WallerSlider extends React.Component<WallerSliderProps, WallerSliderState> {
   _mounted = false
 
   constructor(props) {

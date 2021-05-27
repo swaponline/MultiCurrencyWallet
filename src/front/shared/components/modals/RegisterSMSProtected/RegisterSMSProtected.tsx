@@ -29,8 +29,6 @@ import okSvg from 'shared/images/ok.svg'
 }))
 @cssModules({ ...styles, ...ownStyle }, { allowMultiple: true })
 class RegisterSMSProtected extends React.Component<any, any> {
-  props: any
-
   static propTypes = {
     name: PropTypes.string,
     data: PropTypes.object,

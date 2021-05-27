@@ -86,11 +86,7 @@ const filterOrders = (orders, filter) => orders
 }))
 @withRouter
 @cssModules(styles, { allowMultiple: true })
-class OrderBook extends Component {
-
-  props: OrderBookProps
-  state: OrderBookState
-
+class OrderBook extends Component<OrderBookProps, OrderBookState> {
   static getDerivedStateFromProps({ orders, sellCurrency, buyCurrency }) {
     if (orders.length === 0) {
       return null

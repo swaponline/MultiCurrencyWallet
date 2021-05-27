@@ -45,7 +45,7 @@ type MnemonicInputState = {
 }
 
 @cssModules(styles, { allowMultiple: true })
-class MnemonicInput extends Component {
+class MnemonicInput extends Component<MnemonicInputProps, MnemonicInputState> {
   /* 
   * This phrase just for test
   * If config entry point equals testnet
@@ -55,8 +55,6 @@ class MnemonicInput extends Component {
   private TESTNET_TAGS: Tags
   private isAutofill = false
 
-  props: MnemonicInputProps
-  state: MnemonicInputState
   reactTags: RefObject<any>
 
   constructor (props) {

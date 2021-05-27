@@ -66,9 +66,6 @@ const langLabels = defineMessages({
 )
 @cssModules({ ...defaultStyles, ...styles }, { allowMultiple: true })
 class MultisignJoinLink extends React.Component<any, any> {
-
-  props: any
-
   static propTypes = {
     name: PropTypes.string,
     data: PropTypes.object,

@@ -19,9 +19,6 @@ const title = defineMessages({
 
 @cssModules(styles, { allowMultiple: true })
 class PrivateKeysModal extends React.PureComponent<any, any> {
-
-  props: any
-
   handleSaveToClipBoard = () => {
     const { data } = this.props
     const { key } = data
