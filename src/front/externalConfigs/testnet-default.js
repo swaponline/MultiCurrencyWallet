@@ -61,30 +61,6 @@ window.widgetERC20Tokens = [
   //   icon: 'https://growup.wpmix.net/wp-content/uploads/2016/10/favicon.png',
   //   iconBgColor: '#ccc',
   // },
-  {
-    standard: 'erc20',
-    address: '0xe9233e51fb8c7463504983e8b7c15d2e624d71e2',
-    decimals: 18,
-    symbol: 'FUNT',
-    fullName: 'Funny Token',
-    iconBgColor: '#ecb',
-  },
-  {
-    standard: 'bep20',
-    address: '0x9bef8885edc95dc6cb056bfa2a45dd6a513087cb',
-    decimals: 13,
-    symbol: 'Shadow',
-    fullName: 'Shadow Token',
-    iconBgColor: '#131313',
-  },
-  {
-    standard: 'erc20',
-    address: '0xc9f3f868d5888ab7c8187a590b56d0819d2bc90e',
-    decimals: 13,
-    symbol: 'Shadow',
-    fullName: 'Shadow Token',
-    iconBgColor: '#411141',
-  },
 ]
 
 window.buildOptions = {
