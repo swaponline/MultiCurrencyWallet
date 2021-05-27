@@ -44,7 +44,6 @@ const selectPair = (value) => { // addOffer drop down
 
 // partial drop down
 const selectPairPartial = (value): Currency[] | [] => {
-  console.log('>>>>>>>>>>>>>> selectPairPartial', value)
   const partialItems = getState().currencies.partialItems // eslint-disable-line
   const pairs = actions.pairs.filter(value, TRADE_TICKERS, partialItems)
 

@@ -178,9 +178,6 @@ class Exchange extends PureComponent<any, any> {
       return null
     }
 
-
-
-//console.log('>>>>>> getDerivedStateFromProps', orders, getCurrency.toUpperCase(), haveCurrency.toUpperCase(), haveCoin, haveBlockchain, getCoin, getBlockchain)
     const directionOrders = orders.filter(order => 
       !order.isMy &&
       order.sellCurrency.toUpperCase() === getCoin.toUpperCase() &&
@@ -736,6 +733,13 @@ class Exchange extends PureComponent<any, any> {
     let hasEnoughBalanceForFullPayment = false
     let balanceIsOk = false
 
+console.log('>>>> checkBalanceForSwapPossibility', checkParams, isUserSellToken, isUserBuyToken,
+  hasEnoughBalanceSellAmount,
+  hasEnoughBalanceForSellFee,
+  hasEnoughBalanceForBuyFee,
+  hasEnoughBalanceForFullPayment
+)
+return true
     try {
       const sellFee = pairFees && pairFees.sell?.fee
       const buyFee = pairFees && pairFees.buy?.fee

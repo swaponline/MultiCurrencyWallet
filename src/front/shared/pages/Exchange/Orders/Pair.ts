@@ -58,7 +58,6 @@ export const parseTicker = (order) => {
 }
 
 export const parsePair = (str) => {
-  console.log('>>>>>> parsePair', str)
   if (!str) {
     throw new Error(`Empty string: ${str}`)
   }
@@ -166,7 +165,6 @@ export default class Pair {
     const { buyCurrency, sellCurrency, buyAmount, sellAmount } = order
     const { ticker, type } = parseTicker(order)
 
-console.log('>>>> from order pair', ticker, type, order)
     if (ticker === 'none') {
       return
     }
@@ -191,10 +189,9 @@ console.log('>>>> from order pair', ticker, type, order)
   static check(order, ticker) {
     try {
       const pair = Pair.fromOrder(order)
-      console.log('>>>>>> Pair ->>> check', order, pair)
+
       const { MAIN, BASE } = parsePair(ticker.toUpperCase())
-      //@ts-ignore: strictNullChecks
-      console.log( pair.ticker === `${MAIN}-${BASE}`,  pair.ticker , `${MAIN}-${BASE}` )
+
       //@ts-ignore: strictNullChecks
       return pair.ticker === `${MAIN}-${BASE}`
     } catch (err) {
