@@ -2,6 +2,12 @@
 import path from 'path'
 import fs from 'fs'
 
+export const delay = (ms) => {
+  return new Promise((res) => {
+    setTimeout(() => res(true), ms)
+  })
+}
+
 export const removeRepo = (pathToRepo) => {
   /**
    * Check NODE_ENV if env = test or window === undefined

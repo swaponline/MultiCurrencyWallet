@@ -12,6 +12,7 @@ import erc20Like from 'common/erc20Like'
 import { apiLooper, constants, cacheStorageGet, cacheStorageSet, feedback } from 'helpers'
 import externalConfig from 'helpers/externalConfig'
 import metamask from 'helpers/metamask'
+import { utils } from 'helpers'
 
 const NETWORK = process.env.MAINNET ? 'mainnet' : 'testnet'
 const Decoder = new InputDataDecoder(TokenAbi)
@@ -257,7 +258,12 @@ class Erc20LikeAction {
   }
 
   fetchTxInfo = async (hash, cacheTime): Promise<IUniversalObj | false> => {
-    return new Promise((res, rej) => {
+    return new Promise(async (res, rej) => {
+      // fixing incorrect display of information about transaction
+      if (this.standard === 'bep20') {
+        await utils.delay(5000)
+      }
+
       const {
         user: { tokensData },
       } = getState()
@@ -507,6 +513,7 @@ class Erc20LikeAction {
   setAllowance = async (params) => {
     let { name, to, targetAllowance } = params
     name = name.toLowerCase()
+
 
     const tokenKey = `{${this.currencyKey}}${name.toLowerCase()}`
     const { decimals } = this.returnTokenInfo(name)
