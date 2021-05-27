@@ -153,7 +153,7 @@ class Erc20LikeAction {
     }
   }
 
-  getTransaction = (ownAddress, tokenName) => {
+  getTransaction = (ownAddress, tokenName): Promise<IUniversalObj[]> => {
     return new Promise((res) => {
       const { user: { tokensData } } = getState()
       // if we have a base currency prefix then delete it
@@ -232,25 +232,20 @@ class Erc20LikeAction {
   fetchTokenTxInfo = async (ticker, hash, cacheTime) => {
     return new Promise(async (res) => {
       let txInfo = await this.fetchTxInfo(hash, cacheTime)
-      //@ts-ignore: strictNullChecks
-      if (txInfo.isContractTx) {
+
+      if (txInfo && txInfo.isContractTx) {
         // This is tx to contract. Fetch all txs and find this tx
-        //@ts-ignore: strictNullChecks
         const transactions: IUniversalObj = await this.getTransaction(txInfo.senderAddress, ticker)
         const ourTx = transactions.filter((tx) => tx.hash.toLowerCase() === hash.toLowerCase())
 
         if (ourTx.length) {
-          //@ts-ignore: strictNullChecks
           txInfo.amount = ourTx[0].value
-          //@ts-ignore: strictNullChecks
           txInfo.adminFee = false // Swap doesn't have service fee
 
           if (ourTx[0].direction == `in`) {
             txInfo = {
               ...txInfo,
-              //@ts-ignore: strictNullChecks
               receiverAddress: txInfo.senderAddress,
-              //@ts-ignore: strictNullChecks
               senderAddress: txInfo.receiverAddress,
             }
           }
@@ -444,11 +439,10 @@ class Erc20LikeAction {
       if (this.adminFeeObj && !walletData.isMetamask) {
         receipt.then(() => {
           this.sendAdminTransaction({
-            gasPrice: txArguments.gas,
+            txArguments,
             tokenContract,
             decimals,
             amount,
-            from,
           })
         })
       }
@@ -456,7 +450,7 @@ class Erc20LikeAction {
   }
 
   sendAdminTransaction = async (params) => {
-    const { tokenContract, amount, gasPrice, from, decimals } = params
+    const { tokenContract, amount, decimals, txArguments } = params
     const minAmount = new BigNumber(this.adminFeeObj.min)
     let feeFromUsersAmount = new BigNumber(this.adminFeeObj.fee)
       .dividedBy(100) // 100 %
@@ -469,11 +463,6 @@ class Erc20LikeAction {
     const hexFeeWithDecimals = feeFromUsersAmount
       .multipliedBy(10 ** decimals)
       .toString(16)
-    const txArguments = {
-      gasPrice,
-      gas: gasPrice,
-      from,
-    }
 
     return new Promise(async (res) => {
       await tokenContract.methods
