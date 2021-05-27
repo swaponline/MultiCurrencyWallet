@@ -17,11 +17,11 @@ import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
 import { BigNumber } from 'bignumber.js'
 import { Button } from 'components/controls'
-import web3Icons from '../../../images'
+import web3Icons from 'images'
 import PartOfAddress from '../PartOfAddress'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 import { ApiEndpoint } from '../Endpoints'
-import Copy from '../../../components/ui/Copy/Copy'
+import Copy from 'components/ui/Copy/Copy'
 
 type RowProps = {
   // from component
@@ -44,8 +44,6 @@ type RowState = {
   isBalanceEmpty: boolean
   isDropdownOpen: boolean
   isToken: boolean
-  isErc20Token: boolean
-  isBep20Token: boolean
   reduxActionName: string
 }
 
@@ -87,22 +85,16 @@ class Row extends Component<RowProps, RowState> {
   constructor(props) {
     super(props)
     
-    const { currency } = props
+    const { currency, itemData } = props
     const currencyName = currency.currency
-    const isErc20Token = erc20Like.erc20.isToken({ name: currencyName })
-    const isBep20Token = erc20Like.bep20.isToken({ name: currencyName })
     const isToken = erc20Like.isToken({ name: currencyName })
-    const reduxActionName = isErc20Token ?
-      'erc20' : isBep20Token ?
-      'bep20' : currencyName.toLowerCase()
+    const reduxActionName = itemData.standard || currencyName.toLowerCase()
 
     this.state = {
       isBalanceFetching: false,
       isBalanceEmpty: true,
       isDropdownOpen: false,
       isToken,
-      isErc20Token,
-      isBep20Token,
       reduxActionName,
     }
   }
@@ -147,7 +139,6 @@ class Row extends Component<RowProps, RowState> {
       reduxActionName,
     } = this.state
     const {
-      itemData,
       itemData: {
         isMetamask,
         isConnected,
@@ -233,25 +224,24 @@ class Row extends Component<RowProps, RowState> {
 
   handleWithdraw = () => {
     const {
-      itemData: { currency, address },
+      itemData,
       history,
       //@ts-ignore: strictNullChecks
       intl: { locale },
     } = this.props
-    const { isToken } = this.state
 
-    if (currency.toLowerCase() === 'ghost') {
+    if (itemData.currency.toLowerCase() === 'ghost') {
       this.handleWithdrawPopup()
       return
     }
 
-    if (currency.toLowerCase() === 'next') {
+    if (itemData.currency.toLowerCase() === 'next') {
       this.handleWithdrawPopup()
       return
     }
 
-    let targetCurrency = currency
-    switch (currency.toLowerCase()) {
+    let targetCurrency = itemData.currency
+    switch (itemData.currency.toLowerCase()) {
       case 'btc (multisig)':
       case 'btc (sms-protected)':
       case 'btc (pin-protected)':
@@ -259,9 +249,11 @@ class Row extends Component<RowProps, RowState> {
         break
     }
 
+    const firstUrlPart = itemData.tokenKey ? `/token/${itemData.tokenKey}` : `/${targetCurrency}`
+
     //@ts-ignore: strictNullChecks
     history.push(
-      localisedUrl(locale, (isToken ? '/token' : '') + `/${targetCurrency}/${address}/send`)
+      localisedUrl(locale, `${firstUrlPart}/${itemData.address}/send`)
     )
   }
 
@@ -366,13 +358,12 @@ class Row extends Component<RowProps, RowState> {
       history,
       //@ts-ignore: strictNullChecks
       intl: { locale },
-      itemData: { currency, address, blockchain, isToken },
       itemData,
     } = this.props
-    console.log('>>>>>> goToCurrencyHistory', itemData)
 
-    let targetCurrency = currency
-    switch (currency.toLowerCase()) {
+
+    let targetCurrency = itemData.currency
+    switch (itemData.currency.toLowerCase()) {
       case 'btc (multisig)':
       case 'btc (sms-protected)':
       case 'btc (pin-protected)':
@@ -380,10 +371,12 @@ class Row extends Component<RowProps, RowState> {
         break
     }
 
-    targetCurrency = (blockchain && isToken) ? `{${blockchain}}${targetCurrency}` : targetCurrency 
+
+    const firstUrlPart = itemData.tokenKey ? `/token/${itemData.tokenKey}` : `/${targetCurrency}`
+
     //@ts-ignore: strictNullChecks
     history.push(
-      localisedUrl(locale, (isToken ? '/token' : '') + `/${targetCurrency}/${address}`)
+      localisedUrl(locale, `${firstUrlPart}/${itemData.address}`)
     )
   }
 
@@ -453,8 +446,6 @@ class Row extends Component<RowProps, RowState> {
     const {
       isBalanceFetching,
       isBalanceEmpty,
-      isErc20Token,
-      isBep20Token,
     } = this.state
 
     const {

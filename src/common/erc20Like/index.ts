@@ -74,7 +74,10 @@ class erc20LikeHelper {
 
     if (blockchain && blockchain.toLowerCase() !== this.currency.toLowerCase()) return false
 
-    return Object.keys(config[this.standard]).includes(name.toLowerCase())
+    return (
+      Object.keys(config[this.standard]).includes(name.toLowerCase()) ||
+      name.startsWith(`{${this.currencyKey}}`)
+    )
   }
 
   checkAllowance = async (params: {

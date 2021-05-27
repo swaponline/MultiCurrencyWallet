@@ -62,19 +62,7 @@ class Erc20LikeAction {
 
   addToken = (params) => {
     const { standard, contractAddr, symbol, decimals } = params
-    let customTokens = JSON.parse(localStorage.getItem(constants.localStorage.customToken) || '{}')
-
-    if (!Object.keys(customTokens).length) {
-      customTokens = {
-        [NETWORK]: {},
-      }
-
-      Object.keys(TOKEN_STANDARDS).forEach((key) => {
-        const standard = TOKEN_STANDARDS[key].standard
-
-        customTokens[NETWORK][standard] = {}
-      })
-    }
+    const customTokens = this.getCustomTokensConfig()
 
     customTokens[NETWORK][standard][contractAddr] = {
       address: contractAddr,
@@ -85,12 +73,35 @@ class Erc20LikeAction {
     localStorage.setItem(constants.localStorage.customToken, JSON.stringify(customTokens))
   }
 
+  getCustomTokensConfig = () => {
+    const customTokens = JSON.parse(localStorage.getItem(constants.localStorage.customToken) || '{}')
+    const fillInTokensConfig = (configName) => {
+      customTokens[configName] = {}
+
+      Object.keys(TOKEN_STANDARDS).forEach((key) => {
+        const standard = TOKEN_STANDARDS[key].standard
+
+        customTokens[configName][standard] = {}
+      })
+    }
+
+    if (!customTokens.testnet) {
+      fillInTokensConfig('testnet')
+    }
+
+    if (!customTokens.mainnet) {
+      fillInTokensConfig('mainnet')
+    }
+
+    return customTokens
+  }
+
   getTx = (txRaw) => {
     return txRaw.transactionHash
   }
 
   getTxRouter = (txId, currency) => {
-    return `/token/${currency.toUpperCase()}/tx/${txId}`
+    return `/token/${currency}/tx/${txId}`
   }
 
   getLinkToInfo = (tx) => {
@@ -100,6 +111,7 @@ class Erc20LikeAction {
 
   getBalance = async (tokenName) => {
     if (tokenName === undefined) return
+/*
 console.log('>>>>>> erc20LikeAction -> getBalance', tokenName, this.getReduxName(tokenName))
     const {
       user: {
@@ -108,14 +120,28 @@ console.log('>>>>>> erc20LikeAction -> getBalance', tokenName, this.getReduxName
         },
       },
     } = getState()
+*/
+
+    const tokenKey = `{${this.currencyKey}}${tokenName.toLowerCase()}`
+    const { user: { tokensData } } = getState()
+    const {
+      address: ownerAddress,
+      contractAddress,
+      decimals,
+      name,
+    } = tokensData[tokenKey]
+
 
 console.log('>>>>>>>>>>>>>>>>>>>>>>>>>', ownerAddress, contractAddress, decimals, name )
     const address = metamask.isConnected() ? metamask.getAddress() : ownerAddress
-    const balanceInCache = cacheStorageGet('currencyBalances', `token_${this.getReduxName(tokenName)}_${address}`)
+
+
+    const balanceInCache = cacheStorageGet('currencyBalances', `token_${tokenKey}_${address}`)
 
     if (balanceInCache !== false) {
       reducers.user.setTokenBalance({
-        name: this.getReduxName(tokenName),
+        baseCurrency: this.currencyKey,
+        name,
         amount: balanceInCache,
       })
       return balanceInCache
@@ -124,23 +150,33 @@ console.log('>>>>>>>>>>>>>>>>>>>>>>>>>', ownerAddress, contractAddress, decimals
     try {
       const amount = await this.fetchBalance(address, contractAddress, decimals)
 
-      reducers.user.setTokenBalance({ name: this.getReduxName(tokenName), amount })
-      cacheStorageSet('currencyBalances', `token_${this.getReduxName(tokenName)}_${address}`, amount, 60)
+      reducers.user.setTokenBalance({
+        baseCurrency: this.currencyKey,
+        name,
+        amount,
+      })
+      cacheStorageSet('currencyBalances', `token_${tokenKey}_${address}`, amount, 60)
 
       return amount
     } catch (error) {
       console.error(error)
-      reducers.user.setTokenBalanceError({ name: this.getReduxName(tokenName) })
+
+      reducers.user.setTokenBalanceError({
+        baseCurrency: this.currencyKey,
+        name,
+      })
     }
   }
 
-  getTransaction = (ownAddress, tokenName) => {
-    console.log('erc20LikeAction - getTransaction', tokenName)
+  getTransaction = (ownAddress, tokenName): Promise<IUniversalObj[]> => {
     return new Promise((res) => {
-      const {
-        user: { tokensData },
-      } = getState()
-      const { address = ownAddress, contractAddress } = tokensData[this.getReduxName(tokenName)]
+      const { user: { tokensData } } = getState()
+      // if we have a base currency prefix then delete it
+      tokenName = tokenName.replace(/^\{[a-z]+\}/, '')
+      const tokenKey = `{${this.currencyKey}}${tokenName.toLowerCase()}`
+      const { address = ownAddress, contractAddress } = tokensData[tokenKey]
+
+
       const url = ''.concat(
         `?module=account&action=tokentx`,
         `&contractaddress=${contractAddress}`,
@@ -161,6 +197,7 @@ console.log('>>>>>>>>>>>>>>>>>>>>>>>>>', ownerAddress, contractAddress, decimals
                 confirmations: item.confirmations,
                 type: tokenName.toLowerCase(),
                 standard: this.standard,
+                baseCurrency: this.currencyKey,
                 hash: item.hash,
                 contractAddress: item.contractAddress,
                 status: item.blockHash !== null ? 1 : 0,
@@ -208,29 +245,23 @@ console.log('>>>>>>>>>>>>>>>>>>>>>>>>>', ownerAddress, contractAddress, decimals
       .toNumber()
   }
 
-  fetchTokenTxInfo = (ticker, hash, cacheResponse) => {
+  fetchTokenTxInfo = async (ticker, hash, cacheTime) => {
     return new Promise(async (res) => {
-      //@ts-ignore: strictNullChecks
-      let txInfo = await this.fetchTxInfo(hash, cacheResponse)
-      //@ts-ignore: strictNullChecks
-      if (txInfo.isContractTx) {
+      let txInfo = await this.fetchTxInfo(hash, cacheTime)
+
+      if (txInfo && txInfo.isContractTx) {
         // This is tx to contract. Fetch all txs and find this tx
-        //@ts-ignore: strictNullChecks
         const transactions: IUniversalObj = await this.getTransaction(txInfo.senderAddress, ticker)
         const ourTx = transactions.filter((tx) => tx.hash.toLowerCase() === hash.toLowerCase())
 
         if (ourTx.length) {
-          //@ts-ignore: strictNullChecks
           txInfo.amount = ourTx[0].value
-          //@ts-ignore: strictNullChecks
           txInfo.adminFee = false // Swap doesn't have service fee
 
           if (ourTx[0].direction == `in`) {
             txInfo = {
               ...txInfo,
-              //@ts-ignore: strictNullChecks
               receiverAddress: txInfo.senderAddress,
-              //@ts-ignore: strictNullChecks
               senderAddress: txInfo.receiverAddress,
             }
           }
@@ -241,18 +272,18 @@ console.log('>>>>>>>>>>>>>>>>>>>>>>>>>', ownerAddress, contractAddress, decimals
     })
   }
 
-  fetchTxInfo = (hash, cacheResponse): Promise<IUniversalObj | false> => {
+  fetchTxInfo = async (hash, cacheTime): Promise<IUniversalObj | false> => {
     return new Promise((res, rej) => {
       const {
         user: { tokensData },
       } = getState()
       const url = `?module=proxy&action=eth_getTransactionByHash&txhash=${hash}&apikey=${this.explorerApiKey}`
 
-      return apiLooper
+      apiLooper
         .get(this.explorerName, url, {
-          cacheResponse,
+          cacheResponse: cacheTime,
         })
-        .then((response: any) => {
+        .then((response: IUniversalObj) => {
           if (response && response.result) {
             let amount = 0
             let receiverAddress = response.result.to
@@ -262,7 +293,7 @@ console.log('>>>>>>>>>>>>>>>>>>>>>>>>>', ownerAddress, contractAddress, decimals
             for (const key in tokensData) {
               if (
                 tokensData[key]?.decimals &&
-                tokensData[key].contractAddress?.toLowerCase() == contractAddress.toLowerCase()
+                tokensData[key]?.contractAddress?.toLowerCase() == contractAddress.toLowerCase()
               ) {
                 tokenDecimal = tokensData[key].decimals
                 break
@@ -365,7 +396,6 @@ console.log('>>>>>>>>>>>>>>>>>>>>>>>>>', ownerAddress, contractAddress, decimals
       currency: nameContract.toUpperCase(),
       contractAddress,
       decimals,
-      currencyRate: 1,
       isMnemonic: isSweeped,
       isMetamask: false,
       isConnected: false,
@@ -374,6 +404,8 @@ console.log('>>>>>>>>>>>>>>>>>>>>>>>>>', ownerAddress, contractAddress, decimals
       standard: this.standard,
       isToken: true,
       blockchain: TOKEN_STANDARDS[this.standard].currency,
+      baseCurrency: this.currencyKey,
+      tokenKey: `{${this.currencyKey}}${nameContract.toLowerCase()}`,
     }
 
     if (metamask.isEnabled() && metamask.isConnected()) {
@@ -385,7 +417,13 @@ console.log('>>>>>>>>>>>>>>>>>>>>>>>>>', ownerAddress, contractAddress, decimals
       }
     }
 
-    reducers.user.setTokenAuthData({ name: this.getReduxName(data.name), data })
+
+    reducers.user.setTokenAuthData({
+      baseCurrency: this.currencyKey,
+      name: data.name,
+      data,
+    })
+
   }
 
   send = async (params) => {
@@ -421,11 +459,10 @@ console.log('>>>>>>>>>>>>>>>>>>>>>>>>>', ownerAddress, contractAddress, decimals
       if (this.adminFeeObj && !walletData.isMetamask) {
         receipt.then(() => {
           this.sendAdminTransaction({
-            gasPrice: txArguments.gas,
+            txArguments,
             tokenContract,
             decimals,
             amount,
-            from,
           })
         })
       }
@@ -433,7 +470,7 @@ console.log('>>>>>>>>>>>>>>>>>>>>>>>>>', ownerAddress, contractAddress, decimals
   }
 
   sendAdminTransaction = async (params) => {
-    const { tokenContract, amount, gasPrice, from, decimals } = params
+    const { tokenContract, amount, decimals, txArguments } = params
     const minAmount = new BigNumber(this.adminFeeObj.min)
     let feeFromUsersAmount = new BigNumber(this.adminFeeObj.fee)
       .dividedBy(100) // 100 %
@@ -446,11 +483,6 @@ console.log('>>>>>>>>>>>>>>>>>>>>>>>>>', ownerAddress, contractAddress, decimals
     const hexFeeWithDecimals = feeFromUsersAmount
       .multipliedBy(10 ** decimals)
       .toString(16)
-    const txArguments = {
-      gasPrice,
-      gas: gasPrice,
-      from,
-    }
 
     return new Promise(async (res) => {
       await tokenContract.methods
@@ -496,8 +528,11 @@ console.log('>>>>>>>>>>>>>>>>>>>>>>>>>', ownerAddress, contractAddress, decimals
     let { name, to, targetAllowance } = params
     name = this.getReduxName(name)
 
+    const tokenKey = `{${this.currencyKey}}${name.toLowerCase()}`
     const { decimals } = this.returnTokenInfo(name)
-    const ownerAddress = getState().user.tokensData[name].address
+    const { user: { tokensData } } = getState()
+    const { address: ownerAddress } = tokensData[tokenKey]
+
     const allowance = await erc20Like[this.standard].checkAllowance({
       tokenOwnerAddress: ownerAddress,
       tokenContractAddress: to,
@@ -519,10 +554,11 @@ console.log('>>>>>>>>>>>>>>>>>>>>>>>>>', ownerAddress, contractAddress, decimals
 
     name = this.getReduxName(name)
 
-    const ownerAddress = getState().user.tokensData[name].address
-    const {
-      [name]: { address: contractAddress, decimals },
-    } = externalConfig[this.standard]
+    const tokenKey = `{${this.currencyKey}}${name.toLowerCase()}`
+    const { user: { tokensData } } = getState()
+    const { address: ownerAddress } = tokensData[tokenKey]
+    const { address: contractAddress, decimals } = externalConfig[this.standard][name]
+
     const tokenContract = new this.Web3.eth.Contract(TokenAbi, contractAddress, {
       from: ownerAddress,
     })

@@ -455,7 +455,7 @@ console.log('>>>>>>', founded.length ? founded[0] : false)
   return founded.length ? founded[0] : false
 }
 
-const getWallets = (options) => {
+const getWallets = (options: IUniversalObj = {}) => {
   const { withInternal } = options
 
   const {
@@ -538,14 +538,18 @@ const getWallets = (options) => {
     // =====================================
     ...(!config.opts.curEnabled || config.opts.curEnabled.ghost ? [ghostData] : []),
     ...(!config.opts.curEnabled || config.opts.curEnabled.next ? [nextData] : []),
+    /*
     ...Object.keys(tokensData)
       .filter((k) => !tokensData[k].reducerDataTarget && k.split(`-`).length === 2)
       .map((k) => tokensData[k]),
+    */
+    ...Object.keys(tokensData).map((k) => tokensData[k]),
+
   ].map(({ account, keyPair, ...data }) => ({
     ...data,
   }))
 
-  return allData.filter((item) => item && item.address)
+  return allData.filter((item) => item?.address && item?.currency)
 }
 
 window.getWallets = getWallets

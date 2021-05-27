@@ -10,6 +10,11 @@ export const BLOCKCHAIN = Object.freeze({
   NEXT: 'NEXT',
   ETH: 'ETH',
   BNB: 'BNB',
+}
+
+export const BASE_TOKEN_CURRENCY = Object.freeze({
+  ETH: 'ETH',
+  BNB: 'BNB',
 })
 
 export const COIN_MODEL = Object.freeze({

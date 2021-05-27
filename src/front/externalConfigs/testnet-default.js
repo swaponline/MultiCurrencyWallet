@@ -32,49 +32,66 @@ window.widgetERC20Comisions = {
   },
 }
 
-/*
-window.widgetERC20Tokens = {
-  usdt: {
-    address: '0xdac17f958d2ee523a2206206994597c13d831ec7',
-    decimals: 6,
-    fullName: 'Usdt',
-    icon: 'https://growup.wpmix.net/wp-content/uploads/2016/10/favicon.png',
-  },
-  // Symbol of ERC20 token in lowerCase
-  proxima: {
-    // Address of ERC20 contract
-    address: '0xc060b26e60698e91a6acc84051a26b32e38dd1a4',
-    // Count of decimals after dot
+window.widgetERC20Tokens = [
+  // {
+  //   standard: '',
+  //   address: '',
+  //   decimals: ,
+  //   name: '',
+  //   fullName: '',
+  //   icon: '',
+  //   customExchangeRate: '',
+  //   iconBgColor: '',
+  //   howToDeposit: '',
+  //   howToWithdraw: '',
+  // },
+  // {
+  //   standard: 'erc20',
+  //   address: '0xdac17f958d2ee523a2206206994597c13d831ec7',
+  //   decimals: 6,
+  //   symbol: 'USDT',
+  //   fullName: 'Usdt',
+  //   icon: 'https://growup.wpmix.net/wp-content/uploads/2016/10/favicon.png',
+  // },
+  // {
+  //   standard: 'erc20',
+  //   address: '0xc060b26e60698e91a6acc84051a26b32e38dd1a4',
+  //   decimals: 18,
+  //   fullName: 'Proxima',
+  //   icon: 'https://growup.wpmix.net/wp-content/uploads/2016/10/favicon.png',
+  //   iconBgColor: '#ccc',
+  // },
+  {
+    standard: 'erc20',
+    address: '0xe9233e51fb8c7463504983e8b7c15d2e624d71e2',
     decimals: 18,
-    // Display name in wallet (By default - its symbol of ERC20, but can be other userfriendy text)
-    fullName: 'Proxima',
-    // Icon of currency (image)
-    icon: 'https://growup.wpmix.net/wp-content/uploads/2016/10/favicon.png',
-    // Background color of icon
-    iconBgColor: '#ccc',
+    symbol: 'FUNT',
+    fullName: 'Funny Token',
+    iconBgColor: '#ecb',
   },
-}
+  {
+    standard: 'bep20',
+    address: '0x9bef8885edc95dc6cb056bfa2a45dd6a513087cb',
+    decimals: 13,
+    symbol: 'Shadow',
+    fullName: 'Shadow Token',
+    iconBgColor: '#131313',
+  },
+  {
+    standard: 'erc20',
+    address: '0xc9f3f868d5888ab7c8187a590b56d0819d2bc90e',
+    decimals: 13,
+    symbol: 'Shadow',
+    fullName: 'Shadow Token',
+    iconBgColor: '#411141',
+  },
+]
 
 window.buildOptions = {
-  ownTokens: true, // Will be inited from window.widgetERC20Tokens
-  addCustomERC20: true, // Allow user add custom erc20 tokens
-  curEnabled: false,
-  showWalletBanners: true, // Allow to see banners
-  invoiceEnabled: true, // Allow create invoices
-  hideShowPrivateKey: true, // Hide 'Copy Private Key' Menu item, default false, inited also from window.SWAP_HIDE_EXPORT_PRIVATEKEY
-//  fee: { btc .... }, // Can be inited from window.widgetERC20Comisions
-  // inited from window.EXCHANGE_DISABLED
-  exchangeDisabled: true,
-  curEnabled: { // Or 'false' if enabled all
-    // inited from window.CUR_BTC_DISABLED
-    btc: false,
-    // inited from window.CUR_ETH_DISABLED
-    eth: false,
-  },
-}
-*/
-
-window.buildOptions = {
+  // ownTokens: true, // Will be inited from window.widgetERC20Tokens
+  // addCustomERC20: true, // Allow user add custom erc20 tokens
+  // invoiceEnabled: true, // Allow create invoices
+  // hideShowPrivateKey: true, // Hide 'Copy Private Key' Menu item, default false, inited also from window.SWAP_HIDE_EXPORT_PRIVATEKEY
   showWalletBanners: true, // Allow to see banners
   showHowItsWork: true, // Can be inited from window.showHowItWorksOnExchangePage
   // inited from window.EXCHANGE_DISABLED

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'redaction'
 import reducers from 'redux/core/reducers'
-
+import TOKEN_STANDARDS from 'helpers/constants/TOKEN_STANDARDS'
 import feedback from 'shared/helpers/feedback'
 import { getActivatedCurrencies } from 'helpers/user'
 import config from 'helpers/externalConfig'
@@ -112,14 +112,26 @@ export default class StepsWrapper extends Component<any, any> {
 
     const curState = {}
     items.forEach(({ currency }) => { curState[currency] = false })
-    if (isWidgetBuild && config && config.erc20) {
-      if (window && window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
+
+    let haveTokenConfig = true 
+
+    Object.keys(TOKEN_STANDARDS).forEach((key) => {
+      if (!config[TOKEN_STANDARDS[key].standard]) {
+        haveTokenConfig = false
+      }
+    })
+
+    if (isWidgetBuild && haveTokenConfig) {
+      if (window?.widgetERC20Tokens?.length) {
         // Multi token build
-        Object.keys(window.widgetERC20Tokens).forEach((tokenSymbol) => {
-          if (config.erc20[tokenSymbol]) {
+        window.widgetERC20Tokens.forEach((token) => {
+          const symbol = token.symbol.toLowerCase()
+          const standard = token.standard.toLowerCase()
+
+          if (config[standard][symbol]) {
             this.widgetStartPack.push({
-              name: tokenSymbol.toUpperCase(),
-              capture: config.erc20[tokenSymbol].fullName,
+              name: symbol.toUpperCase(),
+              capture: config[standard][symbol].fullName,
             })
           }
         })
@@ -133,7 +145,12 @@ export default class StepsWrapper extends Component<any, any> {
         }
       }
     }
-    this.state = { curState, coins, startPack: (isWidgetBuild) ? this.widgetStartPack : this.defaultStartPack }
+
+    this.state = {
+      curState,
+      coins,
+      startPack: (isWidgetBuild) ? this.widgetStartPack : this.defaultStartPack,
+    }
   }
 
 

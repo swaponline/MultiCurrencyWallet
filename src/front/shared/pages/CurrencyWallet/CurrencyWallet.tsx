@@ -111,10 +111,11 @@ console.log('>>>>>>> CurrencyWallet', ticker)
       //@ts-ignore
       const { currency, address, contractAddress, decimals, balance, infoAboutCurrency } = itemCurrency
       const hasCachedData = lsDataCache.get(`TxHistory_${getCurrencyKey(currency, true).toLowerCase()}_${address}`)
+
       const isErc20Token = erc20Like.erc20.isToken({ name: ticker })
       const isBep20Token = erc20Like.bep20.isToken({ name: ticker })
 
-console.log('>>>>>>>>>>>>>>>>>>>> redux.actions', actions)
+
       this.state = {
         itemCurrency,
         address,
@@ -204,19 +205,19 @@ console.log('>>>>>>>>>>>>>>>>>>>> redux.actions', actions)
     }
 
     const targetCurrency = getCurrencyKey(currency.toLowerCase(), true)
-    const isToken = erc20Like.isToken({ name: currency })
+    const firstUrlPart = itemCurrency.tokenKey ? `/token/${itemCurrency.tokenKey}` : `/${targetCurrency}`
+    const withdrawUrl = `${firstUrlPart}/${address}/send`
+    const receiveUrl = `${firstUrlPart}/${address}/receive`
 
-    const withdrawUrl = (isToken ? '/token' : '') + `/${targetCurrency}/${address}/send`
-    const receiveUrl = (isToken ? '/token' : '') + `/${targetCurrency}/${address}/receive`
+    const currentUrl = this.props.history.location.pathname.toLowerCase()
 
-    if (this.props.history.location.pathname.toLowerCase() === withdrawUrl.toLowerCase() && balance !== 0) {
+    if (currentUrl === withdrawUrl.toLowerCase() && balance !== 0) {
       actions.modals.open(constants.modals.Withdraw, {
         currency,
         address,
         balance,
         infoAboutCurrency,
         hiddenCoinsList,
-        currencyRate: itemCurrency.currencyRate,
       })
       if (activeCurrency.toUpperCase() !== activeFiat) {
         actions.user.pullActiveCurrency(currency.toLowerCase())
@@ -281,7 +282,15 @@ console.log('>>>>>>>>>>>>>>>>>>>> redux.actions', actions)
       if (itemCurrency.length) {
         itemCurrency = itemCurrency[0]
 
-        const { currency, address, contractAddress, decimals, balance, infoAboutCurrency } = itemCurrency
+        const {
+          currency,
+          address,
+          contractAddress,
+          decimals,
+          balance,
+          infoAboutCurrency,
+          tokenKey,
+        } = itemCurrency
         const {
           txItems: oldTxItems,
         } = this.state
@@ -309,10 +318,9 @@ console.log('>>>>>>>>>>>>>>>>>>>> redux.actions', actions)
               }
             }
             const targetCurrency = getCurrencyKey(currency.toLowerCase(), true)
-            const isToken = erc20Like.isToken({ name: currency })
-
-            const withdrawUrl = (isToken ? '/token' : '') + `/${targetCurrency}/${address}/send`
-            const receiveUrl = (isToken ? '/token' : '') + `/${targetCurrency}/${address}/receive`
+            const firstUrlPart = tokenKey ? `/token/${tokenKey}` : `/${targetCurrency}`
+            const withdrawUrl = `${firstUrlPart}/${address}/send`
+            const receiveUrl = `${firstUrlPart}/${address}/receive`
             const currentUrl = this.props.location.pathname.toLowerCase()
 
             if (currentUrl === withdrawUrl.toLowerCase()) {
@@ -374,7 +382,10 @@ console.log('>>>>>>>>>>>>>>>>>>>> redux.actions', actions)
     if (!address && !ticker) {
       if (fullName) {
         if (erc20Like.isToken({ name: fullName })) {
+          // TODO: сразу передавать нужный ключ для токена
+          // TODO: tokenCurrency можно удалить, тк все уже есть в обьекте токена
           const tokenCurrency = isErc20Token ? 'eth' : isBep20Token ? 'bnb' : ''
+
           const tokenWallet = getTokenWallet({
             tokenName: fullName,
             currency: tokenCurrency,
@@ -464,15 +475,13 @@ console.log('>>>>>>>>>>>>>>>>>>>> redux.actions', actions)
     } = this.props
     const { itemCurrency, currency, address } = this.state
 
-    let withdrawModal = constants.modals.Withdraw
-    if (itemCurrency.isSmsProtected) withdrawModal = withdrawModal = constants.modals.WithdrawMultisigSMS
-    if (itemCurrency.isUserProtected) withdrawModal = constants.modals.WithdrawMultisigUser
+    const targetCurrency = getCurrencyKey(currency.toLowerCase(), true).toLowerCase()
+    const firstUrlPart = itemCurrency.tokenKey ? `/token/${itemCurrency.tokenKey}` : `/${targetCurrency}`
 
-    let targetCurrency = getCurrencyKey(currency.toLowerCase(), true).toLowerCase()
-
-    const isToken = erc20Like.isToken({ name: currency })
-
-    history.push(localisedUrl(locale, (isToken ? '/token' : '') + `/${targetCurrency}/${address}/send`))
+    history.push(localisedUrl(
+      locale,
+      `${firstUrlPart}/${address}/send`
+    ))
   }
 
   handleGoTrade = () => {

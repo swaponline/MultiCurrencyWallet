@@ -12,6 +12,7 @@ import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
 import Input from 'components/forms/Input/Input'
 import Button from 'components/controls/Button/Button'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
+import TOKEN_STANDARDS from 'helpers/constants/TOKEN_STANDARDS'
 import { constants } from 'helpers'
 import typeforce from 'swap.app/util/typeforce'
 import Web3 from 'web3'
@@ -162,10 +163,10 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
   }
 
   addressIsCorrect() {
-    const { tokenAddress } = this.state
-    // TODO: how to check Token main currency (ETH for ERC20, BNB for BEP20, ...)
-    // TODO: need to use address check with main currency
-    return typeforce.isCoinAddress.ETH(tokenAddress)
+    const { tokenStandard, tokenAddress } = this.state
+    const currencyName =  TOKEN_STANDARDS[tokenStandard].currency.toUpperCase()
+
+    return typeforce.isCoinAddress[currencyName](tokenAddress)
   }
 
   handleError = (err) => {

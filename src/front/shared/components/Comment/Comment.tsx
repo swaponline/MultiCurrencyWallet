@@ -118,7 +118,7 @@ export default class CommentRow extends React.PureComponent<WithdrawModalProps, 
 
     const {
       isOpen = false,
-      comment = null
+      comment = ''
     } = this.state
 
     return (
