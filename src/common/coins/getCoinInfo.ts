@@ -1,3 +1,5 @@
+import { BASE_TOKEN_CURRENCY } from 'swap.app/constants/COINS'
+
 const getCoinInfo = (coin) => {
   coin = coin.toUpperCase()
 
@@ -5,7 +7,7 @@ const getCoinInfo = (coin) => {
     let coinData = coin.split(`}`)
     return {
       coin: coinData[1],
-      blockchain: coinData[0].substr(1),
+      blockchain: BASE_TOKEN_CURRENCY[coinData[0].substr(1).toUpperCase()] || ``,
     }
   } else {
     return {

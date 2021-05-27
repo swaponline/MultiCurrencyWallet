@@ -412,7 +412,7 @@ const getWallet = (findCondition: GetWalletFindCondition) => {
     blockchain: coinBlockchain,
   } = getCoinInfo(currencyData)
   const blockchain = coinBlockchain || optBlockchain
-  console.log('>>>> actions.core.getWallet', findCondition, currency, coinBlockchain)
+
 
   const founded = wallets.filter((wallet) => {
     if (wallet.isMetamask && !wallet.isConnected) return false
@@ -451,7 +451,7 @@ const getWallet = (findCondition: GetWalletFindCondition) => {
 
     return conditionOk
   })
-console.log('>>>>>>', founded.length ? founded[0] : false)
+
   return founded.length ? founded[0] : false
 }
 
@@ -479,6 +479,11 @@ const getWallets = (options: IUniversalObj = {}) => {
   } = getState()
 
   const metamaskConnected = metamask.isEnabled() && metamask.isConnected()
+
+  const tokenWallets = Object.keys(tokensData).map((k) => {
+    const tokenInfo = getCoinInfo(k)
+    return (tokenInfo.coin && tokenInfo.blockchain !== ``) ? tokensData[k] : false
+  }).filter((d) => d !== false)
 
   const allData = [
     ...(!config.opts.curEnabled || config.opts.curEnabled.eth || config.opts.curEnabled.bnb
@@ -538,12 +543,7 @@ const getWallets = (options: IUniversalObj = {}) => {
     // =====================================
     ...(!config.opts.curEnabled || config.opts.curEnabled.ghost ? [ghostData] : []),
     ...(!config.opts.curEnabled || config.opts.curEnabled.next ? [nextData] : []),
-    /*
-    ...Object.keys(tokensData)
-      .filter((k) => !tokensData[k].reducerDataTarget && k.split(`-`).length === 2)
-      .map((k) => tokensData[k]),
-    */
-    ...Object.keys(tokensData).map((k) => tokensData[k]),
+    ...tokenWallets,
 
   ].map(({ account, keyPair, ...data }) => ({
     ...data,

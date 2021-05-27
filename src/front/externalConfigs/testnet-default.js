@@ -31,7 +31,7 @@ window.widgetERC20Comisions = {
     address: '0x276747801B0dbb7ba04685BA27102F1B27Ca0815',
   },
 }
-
+/*
 window.widgetERC20Tokens = [
   // {
   //   standard: '',
@@ -86,6 +86,7 @@ window.widgetERC20Tokens = [
     iconBgColor: '#411141',
   },
 ]
+*/
 
 window.buildOptions = {
   // ownTokens: true, // Will be inited from window.widgetERC20Tokens
