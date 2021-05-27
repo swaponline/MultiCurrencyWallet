@@ -123,7 +123,7 @@ class CurrencyAction extends React.Component<any, any> {
               "currenciesWrapper": true,
               "currenciesWrapper_dashboardView": dashboardView
             })}>
-              {currencies.map(item => {
+              {currencies.map((item, index) => {
                 let iconName = item.currency.toLowerCase()
                 let itemTitle = item.currency
                 let itemFullTitle = item.fullName
@@ -149,10 +149,8 @@ class CurrencyAction extends React.Component<any, any> {
                 if (!icons[iconName] || !styles[iconName]) {
                   iconName = 'eth' // prevent styles fail for unknown asset
 
-                  if (item.standard === 'erc20') {
-                    iconName = 'eth'
-                  } else if (item.standard === 'bep20') {
-                    iconName = 'bnb'
+                  if (item.standard && item.baseCurrency) {
+                    iconName = item.baseCurrency
                   }
                 }
 
@@ -160,15 +158,23 @@ class CurrencyAction extends React.Component<any, any> {
                 let renderStyle = {
                   backgroundColor: null,
                 }
-                if (config && config.erc20 && config.erc20[item.currency.toLowerCase()]) {
-                  if (config.erc20[item.currency.toLowerCase()].icon)
-                    renderIcon = config.erc20[item.currency.toLowerCase()].icon
-                  if (config.erc20[item.currency.toLowerCase()].iconBgColor) {
-                    renderStyle.backgroundColor = config.erc20[item.currency.toLowerCase()].iconBgColor
+
+                const tokenStandard = item.standard?.toLowerCase()
+                const currencyKey = item.currency.toLowerCase()
+
+                if (tokenStandard && config[tokenStandard][currencyKey]) {
+                  const token = config[tokenStandard][currencyKey]
+
+                  if (token.icon) {
+                    renderIcon = token.icon
+                  }
+                  if (token.iconBgColor) {
+                    renderStyle.backgroundColor = token.iconBgColor
                   }
                 }
+
                 return (
-                  <div styleName="card" key={item.currency} onClick={() => this.handleClickCurrency(item)}>
+                  <div styleName="card" key={index} onClick={() => this.handleClickCurrency(item)}>
                     {/* @ts-ignore: strictNullChecks */}
                     <div styleName={`circle ${iconName}`} style={renderStyle}>
                       <img src={renderIcon} alt={`${name} icon`} role="image" />
