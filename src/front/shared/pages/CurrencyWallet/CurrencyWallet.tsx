@@ -5,7 +5,6 @@ import actions from 'redux/actions'
 import { withRouter } from 'react-router-dom'
 import erc20Like from 'common/erc20Like'
 import { links, constants } from 'helpers'
-import { getWalletUrl, getTokenWallet } from 'helpers/links'
 
 import CSSModules from 'react-css-modules'
 import styles from './CurrencyWallet.scss'
@@ -71,13 +70,6 @@ class CurrencyWallet extends Component<any, any> {
     } = props
 
     const items = actions.core.getWallets({})
-
-    this.updateRedirectUrls({
-      address,
-      ticker,
-      fullName,
-    })
-
     const walletAddress = address
 
     // оставляю запасной вариант для старых ссылок
@@ -108,10 +100,6 @@ class CurrencyWallet extends Component<any, any> {
       //@ts-ignore
       const { currency, address, contractAddress, decimals, balance, infoAboutCurrency } = itemCurrency
       const hasCachedData = lsDataCache.get(`TxHistory_${getCurrencyKey(currency, true).toLowerCase()}_${address}`)
-      
-      // TODO: delete
-      const isErc20Token = erc20Like.erc20.isToken({ name: currency })
-      const isBep20Token = erc20Like.bep20.isToken({ name: currency })
 
       this.state = {
         itemCurrency,
@@ -126,8 +114,6 @@ class CurrencyWallet extends Component<any, any> {
         isLoading: false,
         infoAboutCurrency,
         filterValue: walletAddress || address || '',
-        isErc20Token,
-        isBep20Token,
         token: erc20Like.isToken({ name: ticker }),
       }
     }
@@ -140,28 +126,12 @@ class CurrencyWallet extends Component<any, any> {
       currency,
       itemCurrency,
       token,
-      isErc20Token,
-      isBep20Token,
-      isRedirecting,
-      redirectUrl,
       balance,
       infoAboutCurrency,
       hiddenCoinsList,
     } = this.state
 
     actions.user.getBalances()
-
-    if (isRedirecting) {
-      const {
-        history,
-        intl: { locale },
-      } = this.props
-      history.push(localisedUrl(locale, redirectUrl))
-      setTimeout(() => {
-        location.reload()
-      }, 100)
-      return
-    }
 
     let {
       match: {
@@ -171,19 +141,11 @@ class CurrencyWallet extends Component<any, any> {
       activeFiat
     } = this.props
 
-    if (token) {
-      if (isErc20Token) {
-        actions.erc20.getBalance(currency.toLowerCase())
-      }
-
-      if (isBep20Token) {
-        actions.bep20.getBalance(currency.toLowerCase())
-      }
+    if (token && itemCurrency.standard) {
+      actions[itemCurrency.standard].getBalance(currency.toLowerCase())
     }
 
-    const actionName = isErc20Token
-      ? 'erc20' : isBep20Token
-      ? 'bep20' : currency.toLowerCase()
+    const actionName = itemCurrency.standard || currency.toLowerCase()
 
     address && actions[getCurrencyKey(actionName, false)]
       .fetchBalance(address)
@@ -253,13 +215,6 @@ class CurrencyWallet extends Component<any, any> {
       prevProps.isBalanceFetching !== this.props.isBalanceFetching
     ) {
       const items = actions.core.getWallets({})
-
-      this.updateRedirectUrls({
-        address,
-        ticker,
-        fullName,
-      })
-
       const walletAddress = address
 
       // оставляю запасной вариант для старых ссылок
@@ -356,61 +311,6 @@ class CurrencyWallet extends Component<any, any> {
         return true
       }
     })
-  }
-
-  updateRedirectUrls = (params) => {
-    const { address, ticker, fullName, isErc20Token, isBep20Token } = params
-
-    const setRedirectUrl = (url) => {
-      this.setState(() => ({
-        isRedirecting: true,
-        redirectUrl: url,
-      }))
-    }
-
-    if (!address && !ticker) {
-      if (fullName) {
-        if (erc20Like.isToken({ name: fullName })) {
-          // TODO: сразу передавать нужный ключ для токена
-          // TODO: tokenCurrency можно удалить, тк все уже есть в обьекте токена
-          const tokenCurrency = isErc20Token ? 'eth' : isBep20Token ? 'bnb' : ''
-
-          const tokenWallet = getTokenWallet({
-            tokenName: fullName,
-            currency: tokenCurrency,
-          })
-          setRedirectUrl(tokenWallet)
-          return
-        }
-
-        if (fullName.toLowerCase() === `bitcoin`) {
-          setRedirectUrl(getWalletUrl({ name: 'btc' }))
-          return
-        }
-
-        if (fullName.toLowerCase() === `ghost`) {
-          setRedirectUrl(getWalletUrl({ name: 'ghost' }))
-          return
-        }
-
-        if (fullName.toLowerCase() === `next`) {
-          setRedirectUrl(getWalletUrl({ name: 'next' }))
-          return
-        }
-
-        if (fullName.toLowerCase() === `ethereum`) {
-          setRedirectUrl(getWalletUrl({ name: 'eth' }))
-          return
-        }
-
-        if (fullName.toLowerCase() === `binance coin`) {
-          setRedirectUrl(getWalletUrl({ name: 'bnb' }))
-          return
-        }
-      }
-
-      throw new Error('Currency wallet: wrong url parameters')
-    }
   }
 
   getRows = (txHistory) => {
@@ -547,15 +447,12 @@ class CurrencyWallet extends Component<any, any> {
       balance,
       fullName,
       infoAboutCurrency,
-      isRedirecting,
       txItems,
       filterValue,
       isLoading,
     } = this.state
 
     let currencyKey = getCurrencyKey(currency, true)
-
-    if (isRedirecting) return null
 
     txHistory = txItems || txHistory
 
