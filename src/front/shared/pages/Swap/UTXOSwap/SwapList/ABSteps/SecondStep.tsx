@@ -121,6 +121,7 @@ const SecondStep = (props) => {
       {ethSwapCreationTransactionHash && (
         <strong styleName="transactionInStep">
           <a
+            id="evmDepositHashLink"
             href={`${config.link.etherscan}/tx/${ethSwapCreationTransactionHash}`}
             target="_blank"
             rel="noreferrer noopener"
@@ -131,13 +132,14 @@ const SecondStep = (props) => {
               values={{ otherCurrency: sellCurrency === currencyName ? buyCurrency.toLowerCase() : sellCurrency.toLowerCase() }}
             />
             <i className="fas fa-link" />
-            {ethSwapHashIsConfirmed ? <img styleName="checkedIcon" src={checkedIcon} alt='checked' /> : <InlineLoader />}
+            {ethSwapHashIsConfirmed ? <img id="checkedEvmDepositHashIcon" styleName="checkedIcon" src={checkedIcon} alt='checked' /> : <InlineLoader />}
           </a>
         </strong>
       )}
       {flowState[scriptCreatingTransactionHash] && (
         <strong styleName="transactionInStep">
           <a
+            id="utxoDepositHashLink"
             title={`${explorerLink}/tx/${flowState[scriptCreatingTransactionHash]}`}
             href={`${explorerLink}/tx/${flowState[scriptCreatingTransactionHash]}`}
             target="_blank"
@@ -145,7 +147,7 @@ const SecondStep = (props) => {
           >
             <FormattedMessage id="FourthStep37BtcLike" defaultMessage="({currencyName} tx)" values={{ currencyName : currencyName.toLowerCase() }} />
             <i className="fas fa-link" />
-            {scriptHashIsConfirmed ? <img styleName="checkedIcon" src={checkedIcon} alt='checked' /> : <InlineLoader />}
+            {scriptHashIsConfirmed ? <img id="checkedUtxoDepositHashIcon" styleName="checkedIcon" src={checkedIcon} alt='checked' /> : <InlineLoader />}
           </a>
         </strong>
       )}

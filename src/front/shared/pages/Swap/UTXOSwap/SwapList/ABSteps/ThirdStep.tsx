@@ -121,19 +121,21 @@ const ThirdStep = (props) => {
       {flowState[withdrawTransactionHash] && (
         <strong styleName="transactionInStep">
           <a
+            id="utxoWithdrawalHashLink"
             href={`${explorerLink}/tx/${flowState[withdrawTransactionHash]}`}
             target="_blank"
             rel="noreferrer noopener"
           >
             <FormattedMessage id="FourthStep37_BtcLike" defaultMessage="({currencyName} tx)" values={{ currencyName: currencyName.toLowerCase() }} />
             <i className="fas fa-link" />
-            {withdrawHashIsConfirmed ? <img styleName="checkedIcon" src={checkedIcon} alt='checked' /> : <InlineLoader />}
+            {withdrawHashIsConfirmed ? <img id="checkedUtxoWithdrawalHashIcon" styleName="checkedIcon" src={checkedIcon} alt='checked' /> : <InlineLoader />}
           </a>
         </strong>
       )}
       {ethSwapWithdrawTransactionHash && (
         <strong styleName="transactionInStep">
           <a
+            id="evmWithdrawalHashLink"
             href={`${config.link.etherscan}/tx/${ethSwapWithdrawTransactionHash}`}
             target="_blank"
             rel="noreferrer noopener"
@@ -144,7 +146,7 @@ const ThirdStep = (props) => {
               values={{ sell: sellCurrency === currencyName ? buyCurrency.toLowerCase() : sellCurrency.toLowerCase()  }}
             />
             <i className="fas fa-link" />
-            {ethSwapWithdrawHashIsConfirmed ? <img styleName="checkedIcon" src={checkedIcon} alt='checked' /> : <InlineLoader />}
+            {ethSwapWithdrawHashIsConfirmed ? <img id="checkedEvmWithdrawalHashIcon" styleName="checkedIcon" src={checkedIcon} alt='checked' /> : <InlineLoader />}
           </a>
         </strong>
       )}

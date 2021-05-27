@@ -10,7 +10,7 @@ export default class BtcLikeToEthToken extends Component<any, any> {
       switch (step) {
         case 1:
           return (
-            <FormattedMessage id="BitcoinBuyText17_BtcLike_to_tokens" defaultMessage="Confirmation processing" />
+            <FormattedMessage id="BitcoinBuyText17_BtcLike_to_tokens" defaultMessage="Please wait" />
           )
         case 2:
           return (

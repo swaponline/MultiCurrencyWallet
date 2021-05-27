@@ -5111,7 +5111,7 @@
   },
   {
     "id": "ethToBtcText26_eth_to_btclike",
-    "message": "Confirmation processing",
+    "message": "Please wait",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/EthToBtcLike.tsx"
     ]
@@ -5160,7 +5160,7 @@
   },
   {
     "id": "BitcoinBuyText17_BtcLike_to_tokens",
-    "message": "Confirmation processing",
+    "message": "Please wait",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/BtcLikeToEthToken.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/BtcLikeToEthToken.tsx"
@@ -5232,7 +5232,7 @@
   },
   {
     "id": "EthTokensToBtc16_ethtoken_to_BtcLike",
-    "message": "Confirmation processing",
+    "message": "Please wait",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/EthToBtcLike.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/EthTokenToBtcLike.tsx",

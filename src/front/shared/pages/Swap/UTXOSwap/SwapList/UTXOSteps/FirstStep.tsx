@@ -8,7 +8,7 @@ import { FormattedMessage } from 'react-intl'
 
 const FirstStep = ({ step, first, second, fields, text }) => (
   <div styleName={(step === first && 'stepItem active') || (step < second && 'stepItem') || 'stepItem active checked'}>
-    <span styleName="stepNumber">{step < second ? 1 : <i className="fas fa-check" />}</span>
+    <span styleName="stepNumber">{step < second ? 1 : <i id="firtsStepDoneIcon" className="fas fa-check" />}</span>
     <p styleName="stepText">
       <FormattedMessage
         id="Confirmation14"
