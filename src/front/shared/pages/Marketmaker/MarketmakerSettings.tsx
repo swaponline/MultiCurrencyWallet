@@ -565,15 +565,17 @@ class MarketmakerSettings extends Component<any, any> {
             />
           </h2>
           <p>
-            <FormattedMessage
-              id="MM_Promo_TitleBody"
-              defaultMessage="On swap.io users exchange BTC for {token} (a token that costs like BTC, but works on {Ab_Title}), and vice versa. You get min. 10% APY (annual percentage yield) as a commission from exchanges with low impermanent loss {link}."
-              values={{
-                token: marketToken.toUpperCase(),
-                Ab_Title: (config.binance) ? `Binance Smart Chain` : `Ethereum`,
-                link: <a href={links.impermanentLoss} target="_blank">(?)</a>,
-              }}
-            />
+            {tokenWallet && ethWallet && (
+              <FormattedMessage
+                id="MM_Promo_TitleBody"
+                defaultMessage="On swap.io users exchange BTC for {token} (a token that costs like BTC, but works on {Ab_Title}), and vice versa. You get min. 10% APY (annual percentage yield) as a commission from exchanges with low impermanent loss {link}."
+                values={{
+                  token: tokenWallet.currency.toUpperCase(),
+                  Ab_Title: ethWallet.fullName,
+                  link: <a href={links.impermanentLoss} target="_blank">(?)</a>,
+                }}
+              />
+            )}
           </p>
         </div>
 
@@ -616,7 +618,7 @@ class MarketmakerSettings extends Component<any, any> {
             </div>
           </>
         )}
-        {!isBalanceFetching && mnemonicSaved ? (
+        {!isBalanceFetching && tokenWallet && mnemonicSaved ? (
           <div styleName={`section-items ${isDark ? '--dark' : '' }`}>
             <div styleName='section-items__item' style={{ zIndex: 2 }}> {/* zIndex need for Tooltip */}
               <div styleName={`mm-toggle ${isDark ? '--dark' : '' }`}>
