@@ -12,7 +12,8 @@ jobs:
         node-version: [14.x]
 
     steps:
-    - uses: actions/checkout@v1
+    - name: Checkout
+      uses: actions/checkout@v1
 
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
@@ -29,10 +30,19 @@ jobs:
       run: |
         mkdir ./tests/e2e/screenshots
         npm run test:e2e:actions
-    - uses: actions/upload-artifact@v2
+    - name: Upload failure screenshots
+      uses: actions/upload-artifact@v2
+      if: failure()
+      with:
+        name: failure-screenshots
+        path: ./tests/e2e/screenshots
+        if-no-files-found: ignore
+    - name: Upload screenshots
+      uses: actions/upload-artifact@v2
       with:
         name: screenshots
         path: ./tests/e2e/screenshots
+        if-no-files-found: ignore
     - name: bot test
       run: |
         npm run bot:test
