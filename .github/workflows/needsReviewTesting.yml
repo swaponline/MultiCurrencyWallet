@@ -37,7 +37,7 @@ jobs:
       if: failure()
       with:
         name: failure-screenshots
-        path: path/to/artifact/
+        path: ./tests/e2e/screenshots
         if-no-files-found: ignore
     - name: Upload screenshots
       uses: actions/upload-artifact@v2
