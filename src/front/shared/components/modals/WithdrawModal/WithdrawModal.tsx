@@ -55,7 +55,6 @@ type WithdrawModalProps = {
   history: IUniversalObj
   data: IUniversalObj
   coinsData: IUniversalObj[]
-  userCurrencyData: IUniversalObj
 }
 
 type WithdrawModalState = {
@@ -119,22 +118,11 @@ type WithdrawModalState = {
       btcData,
       ghostData,
       nextData,
-      tokensData,
       activeFiat,
     },
     ui: { dashboardModalsAllowed },
   }) => {
-    const userCurrencyData = [
-      ethData,
-      bnbData,
-      btcData,
-      ghostData,
-      nextData,
-      ...Object.keys(tokensData).map((k) => tokensData[k]),
-    ]
-
     return {
-      userCurrencyData,
       activeFiat,
       coinsData: [ethData, bnbData, btcData, ghostData, nextData],
       dashboardView: dashboardModalsAllowed,
@@ -772,7 +760,6 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
 
   render() {
     const {
-      userCurrencyData,
     } = this.props
     const {
       ownTx,
@@ -811,7 +798,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
       invoice,
     } = selectedCurrency
 
-    const tableRows = user.filterUserCurrencyData(userCurrencyData)
+    const tableRows = user.filterUserCurrencyData(actions.core.getWallets())
     const activeCryptoCurrency = getCurrencyKey(selectedCurrency.currency, true).toUpperCase()
     const selectedValueView = getCurrencyKey(selectedValue, true).toUpperCase()
     const criptoCurrencyHaveInfoPrice = this.returnHaveInfoPrice({

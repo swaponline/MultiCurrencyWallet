@@ -125,13 +125,13 @@ export default class StepsWrapper extends Component<any, any> {
       if (window?.widgetERC20Tokens?.length) {
         // Multi token build
         window.widgetERC20Tokens.forEach((token) => {
-          const symbol = token.symbol.toLowerCase()
+          const name = token.name.toLowerCase()
           const standard = token.standard.toLowerCase()
 
-          if (config[standard][symbol]) {
+          if (config[standard][name]) {
             this.widgetStartPack.push({
-              name: symbol.toUpperCase(),
-              capture: config[standard][symbol].fullName,
+              name: name.toUpperCase(),
+              capture: config[standard][name].fullName,
             })
           }
         })

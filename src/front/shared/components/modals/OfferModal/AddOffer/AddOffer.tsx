@@ -71,7 +71,7 @@ export default class AddOffer extends Component<any, any> {
     if (config?.isWidget) {
       if (window?.widgetERC20Tokens?.length) {
         window.widgetERC20Tokens.forEach((token) => {
-          MIN_AMOUNT_OFFER[token.symbol.toLowerCase()] = 1
+          MIN_AMOUNT_OFFER[token.name.toLowerCase()] = 1
         })
       } else {
         MIN_AMOUNT_OFFER[config.erc20token] = 1

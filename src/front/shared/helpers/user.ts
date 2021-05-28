@@ -60,7 +60,7 @@ export const getWidgetCurrencies = () => {
   if (externalConfig.isWidget) {
     if (window?.widgetERC20Tokens?.length) {
       window.widgetERC20Tokens.forEach((token) => {
-        widgetCurrencies.push(token.symbol.toUpperCase())
+        widgetCurrencies.push(token.name.toUpperCase())
       })
     } else {
       widgetCurrencies.push(config.erc20token.toUpperCase())
@@ -75,11 +75,11 @@ export const filterUserCurrencyData = (currencyData) => {
   const enabledCurrencies = getActivatedCurrencies()
 
   function isAllowed(target) {
-    const currency = target.currency?.toUpperCase()
+    const currency = target.currency
 
     return (
       !hiddenCoinsList.includes(currency) &&
-      !hiddenCoinsList.includes(`${currency}:${target.address?.toUpperCase()}`) &&
+      !hiddenCoinsList.includes(`${currency}:${target.address}`) &&
       enabledCurrencies.includes(currency)
     )
   }

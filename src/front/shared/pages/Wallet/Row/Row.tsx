@@ -386,7 +386,6 @@ class Row extends Component<RowProps, RowState> {
     } = this.props
 
     if (balance > 0) {
-      //@ts-ignore: strictNullChecks
       actions.modals.open(constants.modals.AlertModal, {
         message: (
           <FormattedMessage

@@ -5,7 +5,6 @@ import actions from 'redux/actions'
 import { withRouter } from 'react-router-dom'
 import erc20Like from 'common/erc20Like'
 import { links, constants } from 'helpers'
-import { getWalletUrl, getTokenWallet } from 'helpers/links'
 
 import CSSModules from 'react-css-modules'
 import styles from './CurrencyWallet.scss'
@@ -71,15 +70,7 @@ class CurrencyWallet extends Component<any, any> {
       hiddenCoinsList,
     } = props
 
-console.log('>>>>>>> CurrencyWallet', ticker)
     const items = actions.core.getWallets({})
-
-    this.updateRedirectUrls({
-      address,
-      ticker,
-      fullName,
-    })
-
     const walletAddress = address
 
     // оставляю запасной вариант для старых ссылок
@@ -112,10 +103,6 @@ console.log('>>>>>>> CurrencyWallet', ticker)
       const { currency, address, contractAddress, decimals, balance, infoAboutCurrency } = itemCurrency
       const hasCachedData = lsDataCache.get(`TxHistory_${getCurrencyKey(currency, true).toLowerCase()}_${address}`)
 
-      const isErc20Token = erc20Like.erc20.isToken({ name: ticker })
-      const isBep20Token = erc20Like.bep20.isToken({ name: ticker })
-
-
       this.state = {
         itemCurrency,
         address,
@@ -129,10 +116,7 @@ console.log('>>>>>>> CurrencyWallet', ticker)
         isLoading: false,
         infoAboutCurrency,
         filterValue: walletAddress || address || '',
-        isErc20Token,
-        isBep20Token,
-        token: itemCurrency.isToken,
-        ticker,
+        token: erc20Like.isToken({ name: ticker }),
       }
     }
   }
@@ -144,10 +128,6 @@ console.log('>>>>>>> CurrencyWallet', ticker)
       currency,
       itemCurrency,
       token,
-      isErc20Token,
-      isBep20Token,
-      isRedirecting,
-      redirectUrl,
       balance,
       infoAboutCurrency,
       hiddenCoinsList,
@@ -155,18 +135,6 @@ console.log('>>>>>>> CurrencyWallet', ticker)
     } = this.state
 
     actions.user.getBalances()
-
-    if (isRedirecting) {
-      const {
-        history,
-        intl: { locale },
-      } = this.props
-      history.push(localisedUrl(locale, redirectUrl))
-      setTimeout(() => {
-        location.reload()
-      }, 100)
-      return
-    }
 
     let {
       match: {
@@ -176,20 +144,11 @@ console.log('>>>>>>> CurrencyWallet', ticker)
       activeFiat
     } = this.props
 
-    if (token) {
-      if (isErc20Token) {
-        actions.erc20.getBalance(currency.toLowerCase())
-      }
-
-      if (isBep20Token) {
-        actions.bep20.getBalance(currency.toLowerCase())
-      }
+    if (token && itemCurrency.standard) {
+      actions[itemCurrency.standard].getBalance(currency.toLowerCase())
     }
 
-    // @to-do - make switch or use option in wallet - reducerName
-    const actionName = isErc20Token
-      ? 'erc20' : isBep20Token
-      ? 'bep20' : currency.toLowerCase()
+    const actionName = itemCurrency.standard || currency.toLowerCase()
 
     address && actions[getCurrencyKey(actionName, false)]
       .fetchBalance(address)
@@ -259,13 +218,6 @@ console.log('>>>>>>> CurrencyWallet', ticker)
       prevProps.isBalanceFetching !== this.props.isBalanceFetching
     ) {
       const items = actions.core.getWallets({})
-
-      this.updateRedirectUrls({
-        address,
-        ticker,
-        fullName,
-      })
-
       const walletAddress = address
 
       // оставляю запасной вариант для старых ссылок
@@ -367,61 +319,6 @@ console.log('>>>>>>> CurrencyWallet', ticker)
         return true
       }
     })
-  }
-
-  updateRedirectUrls = (params) => {
-    const { address, ticker, fullName, isErc20Token, isBep20Token } = params
-
-    const setRedirectUrl = (url) => {
-      this.setState(() => ({
-        isRedirecting: true,
-        redirectUrl: url,
-      }))
-    }
-
-    if (!address && !ticker) {
-      if (fullName) {
-        if (erc20Like.isToken({ name: fullName })) {
-          // TODO: сразу передавать нужный ключ для токена
-          // TODO: tokenCurrency можно удалить, тк все уже есть в обьекте токена
-          const tokenCurrency = isErc20Token ? 'eth' : isBep20Token ? 'bnb' : ''
-
-          const tokenWallet = getTokenWallet({
-            tokenName: fullName,
-            currency: tokenCurrency,
-          })
-          setRedirectUrl(tokenWallet)
-          return
-        }
-
-        if (fullName.toLowerCase() === `bitcoin`) {
-          setRedirectUrl(getWalletUrl({ name: 'btc' }))
-          return
-        }
-
-        if (fullName.toLowerCase() === `ghost`) {
-          setRedirectUrl(getWalletUrl({ name: 'ghost' }))
-          return
-        }
-
-        if (fullName.toLowerCase() === `next`) {
-          setRedirectUrl(getWalletUrl({ name: 'next' }))
-          return
-        }
-
-        if (fullName.toLowerCase() === `ethereum`) {
-          setRedirectUrl(getWalletUrl({ name: 'eth' }))
-          return
-        }
-
-        if (fullName.toLowerCase() === `binance coin`) {
-          setRedirectUrl(getWalletUrl({ name: 'bnb' }))
-          return
-        }
-      }
-
-      throw new Error('Currency wallet: wrong url parameters')
-    }
   }
 
   getRows = (txHistory) => {
@@ -558,15 +455,12 @@ console.log('>>>>>>> CurrencyWallet', ticker)
       balance,
       fullName,
       infoAboutCurrency,
-      isRedirecting,
       txItems,
       filterValue,
       isLoading,
     } = this.state
 
     let currencyKey = getCurrencyKey(currency, true)
-
-    if (isRedirecting) return null
 
     txHistory = txItems || txHistory
 
@@ -657,7 +551,10 @@ console.log('>>>>>>> CurrencyWallet', ticker)
                 handleWithdraw={this.handleWithdraw}
                 handleExchange={this.handleGoTrade}
                 handleInvoice={this.handleInvoice}
-                showButtons={actions.user.isOwner(address, currency)}
+                showButtons={actions.user.isOwner(
+                  address,
+                  itemCurrency.tokenKey || currency
+                )}
                 currency={currency.toLowerCase()}
                 singleWallet={true}
                 multisigPendingCount={multisigPendingCount}
@@ -680,6 +577,9 @@ console.log('>>>>>>> CurrencyWallet', ticker)
             {txHistory &&
               !isLoading &&
               (txHistory.length > 0 ? (
+                // TODO: use the infinite list component or smth else
+                // if we have lots of tx with the Table then it 
+                // load long time and display all transaction
                 <Table rows={txHistory} styleName="currencyHistory" rowRender={this.rowRender} />
               ) : (
                   <div styleName="historyContent">

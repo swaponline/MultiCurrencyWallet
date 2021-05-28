@@ -195,8 +195,8 @@ const externalConfig = () => {
 
   if (config?.isWidget || config?.opts.ownTokens?.length) {
     config.opts.ownTokens.forEach((token) => {
-      config[token.standard][token.symbol.toLowerCase()] = token
-      reducers.core.markCoinAsVisible(token.symbol.toUpperCase())
+      config[token.standard][token.name.toLowerCase()] = token
+      reducers.core.markCoinAsVisible(token.name.toUpperCase())
     })
 
     // Clean not uninitialized single-token

@@ -173,7 +173,7 @@ class TxInfo extends Component<any, any> {
                 </tr>
               </>
             ) : error
-              ? ''
+              ? null
               : (
                 <>
                   {(confirmed) ? (

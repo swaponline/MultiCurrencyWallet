@@ -6,7 +6,6 @@ import { FormattedMessage } from 'react-intl'
 import actions from 'redux/actions'
 import { constants, links } from 'helpers'
 import { Link } from 'react-router-dom'
-import ethToken from 'helpers/ethToken'
 import { getFullOrigin } from 'helpers/links'
 
 import CommentRow from 'components/Comment/Comment'
@@ -14,6 +13,7 @@ import Tooltip from 'components/ui/Tooltip/Tooltip'
 import getCurrencyKey from 'helpers/getCurrencyKey'
 import Address from 'components/ui/Address/Address'
 import { AddressFormat } from 'domain/address'
+import erc20Like from 'common/erc20Like'
 
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
@@ -193,11 +193,37 @@ export default class Row extends PureComponent<any, any> {
     )
   }
 
+  returnLinkRouter = (params) => {
+    let {
+      location,
+      targetPath,
+      tokenPart,
+      name,
+      hash,
+      tokenBaseCurrency,
+    } = params
+
+    if (erc20Like.isToken({ name }) && tokenBaseCurrency) {
+      // react router doesn't rewrite url
+      // it fix problem with token transaction info url
+      if (location.pathname.includes(tokenPart)) {
+        targetPath = `tx/${hash}`
+      } else {
+        targetPath = `token/{${tokenBaseCurrency}}${name}/tx/${hash}`
+      }
+    }
+
+    return {
+      ...location,
+      pathname: targetPath,
+    }
+  }
+
   render() {
     const {
       activeFiat,
       address,
-      standard,
+      baseCurrency: tokenBaseCurrency,
       type,
       direction,
       value,
@@ -251,11 +277,8 @@ export default class Row extends PureComponent<any, any> {
       invoiceStatusClass = 'confirm red'
       invoiceStatusText = <FormattedMessage id="RowHistoryInvoiceCancelled" defaultMessage="Отклонен" />
     }
-    /* eslint-disable */
+
     let txLink = `/${getCurrencyKey(type, false)}/tx/${hash}`
-    if (ethToken.isEthToken({ name: type })) {
-      txLink = `${standard ? `/${standard}` : ''}/${type}/tx/${hash}`
-    }
 
     if (txType === 'INVOICE' && invoiceData.uniqhash) {
       txLink = `${links.invoice}/${invoiceData.uniqhash}`
@@ -297,7 +320,16 @@ export default class Row extends PureComponent<any, any> {
                     </div>
                   </> :
                   <>
-                    <Link to={txLink}>
+                    <Link
+                      to={(location) => this.returnLinkRouter({
+                        location,
+                        targetPath: txLink,
+                        tokenPart: `token/{${tokenBaseCurrency}}${type}/`,
+                        name: type,
+                        hash: hash,
+                        tokenBaseCurrency,
+                      })}
+                    >
                       {(txType === 'CONFIRM') ? (
                         <FormattedMessage id="RowHistory_Confirm_Sending" defaultMessage="Sent" />
                       ) : (

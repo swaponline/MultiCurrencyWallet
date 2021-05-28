@@ -252,9 +252,8 @@ class Wallet extends PureComponent<any, any> {
   }
 
   handleReceive = (context) => {
-    const { userCurrencyData } = this.props
     const widgetCurrencies = user.getWidgetCurrencies()
-    const filteredCurrencies = user.filterUserCurrencyData(userCurrencyData)
+    const filteredCurrencies = user.filterUserCurrencyData(actions.core.getWallets())
 
     const availableWallets = filteredCurrencies.filter((item) => {
       const { isMetamask, isConnected, currency, balance } = item
@@ -433,7 +432,6 @@ class Wallet extends PureComponent<any, any> {
     } = this.state
 
     const {
-      userCurrencyData,
       hiddenCoinsList,
       isBalanceFetching,
       activeFiat,
@@ -446,6 +444,7 @@ class Wallet extends PureComponent<any, any> {
     this.syncData()
 
     let userWallets = user.filterUserCurrencyData(actions.core.getWallets({}))
+
     userWallets = this.addFiatBalanceInUserCurrencyData(userWallets)
 
     const balanceInBtc = this.returnBalanceInBtc(userWallets)

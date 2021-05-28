@@ -3,6 +3,7 @@ import actions from 'redux/actions'
 import { getState } from 'redux/core'
 import SwapApp from 'swap.app'
 import Swap from 'swap.swap'
+import getCoinInfo from 'common/coins/getCoinInfo'
 import erc20Like from 'common/erc20Like'
 import { constants } from 'helpers'
 import Pair from 'pages/Exchange/Orders/Pair'
@@ -544,7 +545,6 @@ const getWallets = (options: IUniversalObj = {}) => {
     ...(!config.opts.curEnabled || config.opts.curEnabled.ghost ? [ghostData] : []),
     ...(!config.opts.curEnabled || config.opts.curEnabled.next ? [nextData] : []),
     ...tokenWallets,
-
   ].map(({ account, keyPair, ...data }) => ({
     ...data,
   }))

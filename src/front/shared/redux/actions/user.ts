@@ -4,6 +4,7 @@ import moment from 'moment/moment'
 import { constants } from 'helpers'
 import request from 'common/utils/request'
 import * as mnemonicUtils from 'common/utils/mnemonic'
+import transactions from 'helpers/transactions'
 import TOKEN_STANDARDS from 'helpers/constants/TOKEN_STANDARDS'
 import actions from 'redux/actions'
 import { getState } from 'redux/core'
@@ -29,12 +30,9 @@ const initReducerState = () => {
     },
   } = getState()
 
-console.log('>>>>>> called initReducerState', getState())
   if (!activeCurrency) reducers.user.setActiveCurrency({ activeCurrency: 'BTC' })
   if (!activeFiat) reducers.user.setActiveFiat({ activeFiat: window.DEFAULT_FIAT || 'USD' })
 
-  // Blockchain migration
-  console.log('>>>>>> currencies initialState', currenciesInitialState)
 }
 
 const sign_btc_multisig = async (btcPrivateKey) => {
@@ -295,7 +293,7 @@ const customRate = (cur) => {
   const widgetTokens = window.widgetERC20Tokens
 
   const targetToken = widgetTokens && widgetTokens.length && widgetTokens.find((token) => {
-    return token.symbol.toLowerCase() === cur.toLowerCase()
+    return token.name.toLowerCase() === cur.toLowerCase()
   })
 
   return targetToken ? (targetToken || { customEcxchangeRate: null }).customEcxchangeRate : null
@@ -427,11 +425,13 @@ const getInfoAboutCurrency = (currencyNames) => {
                 if (erc20Like.isToken({ name: currencyInfoItem.symbol })) {
                   const baseCurrency = tokenCurrencyByPlatform(currencyInfoItem.platform?.name)
 
-                  reducers.user.setInfoAboutToken({
-                    baseCurrency,
-                    name: currencyInfoItem.symbol.toLowerCase(),
-                    infoAboutCurrency: currencyInfo,
-                  })
+                  if (baseCurrency) {
+                    reducers.user.setInfoAboutToken({
+                      baseCurrency,
+                      name: currencyInfoItem.symbol.toLowerCase(),
+                      infoAboutCurrency: currencyInfo,
+                    })
+                  }
                 } else {
                   reducers.user.setInfoAboutCurrency({
                     name: `${currencyInfoItem.symbol.toLowerCase()}Data`,
@@ -450,11 +450,15 @@ const getInfoAboutCurrency = (currencyNames) => {
 }
 
 const tokenCurrencyByPlatform = (platform): string | undefined => {
-  return Object.keys(TOKEN_STANDARDS).find((key) => {
-    if (TOKEN_STANDARDS[key].platform === platform) {
-      return TOKEN_STANDARDS[key].currency
+  let baseCurrency= undefined
+
+  Object.keys(TOKEN_STANDARDS).forEach((key) => {
+    if (TOKEN_STANDARDS[key].platform === platform?.toLowerCase()) {
+      baseCurrency = TOKEN_STANDARDS[key].currency
     }
   })
+
+  return baseCurrency
 }
 
 const clearTransactions = () => {
@@ -651,17 +655,15 @@ export const getWithdrawWallet = (currency, addressOwner) => {
 
 export const isOwner = (addr, currency) => {
   const lowerAddr = addr.toLowerCase()
+  const baseTokenCurrency = transactions.getTokenBaseCurrency(currency)
 
-  if (erc20Like.isToken({ name: currency })) {
-    const isErc20 = erc20Like.erc20.isToken({ name: currency })
-    const isBep20 = erc20Like.bep20.isToken({ name: currency })
-    const actionName = isErc20 ? 'eth' : isBep20 ? 'bnb' : 'eth'
-    const allAddresses = actions[actionName].getAllMyAddresses()
+  if (baseTokenCurrency) {
+    const allAddresses = actions[baseTokenCurrency].getAllMyAddresses()
 
     if (allAddresses.includes(lowerAddr)) return true
 
     const { user } = getState()
-    const storeOwnerAddress = user[`${actionName}Data`].address.toLowerCase()
+    const storeOwnerAddress = user[`${baseTokenCurrency}Data`].address.toLowerCase()
 
     return lowerAddr === storeOwnerAddress
   }

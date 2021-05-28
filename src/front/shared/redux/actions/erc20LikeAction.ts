@@ -247,7 +247,7 @@ console.log('>>>>>>>>>>>>>>>>>>>>>>>>>', ownerAddress, contractAddress, decimals
 
   fetchTokenTxInfo = async (ticker, hash, cacheTime) => {
     return new Promise(async (res) => {
-      let txInfo = await this.fetchTxInfo(hash, cacheTime)
+      let txInfo = await this.fetchTxInfo(hash)
 
       if (txInfo && txInfo.isContractTx) {
         // This is tx to contract. Fetch all txs and find this tx
@@ -272,82 +272,74 @@ console.log('>>>>>>>>>>>>>>>>>>>>>>>>>', ownerAddress, contractAddress, decimals
     })
   }
 
-  fetchTxInfo = async (hash, cacheTime): Promise<IUniversalObj | false> => {
-    return new Promise((res, rej) => {
+  fetchTxInfo = async (hash): Promise<IUniversalObj | false> => {
+    return new Promise(async (res) => {
       const {
         user: { tokensData },
       } = getState()
-      const url = `?module=proxy&action=eth_getTransactionByHash&txhash=${hash}&apikey=${this.explorerApiKey}`
 
-      apiLooper
-        .get(this.explorerName, url, {
-          cacheResponse: cacheTime,
-        })
-        .then((response: IUniversalObj) => {
-          if (response && response.result) {
-            let amount = 0
-            let receiverAddress = response.result.to
-            const contractAddress = response.result.to
-            let tokenDecimal = 18
+      this.Web3.eth.getTransaction(hash)
+        .then((tx) => {
+          let amount = 0
+          let receiverAddress = tx.to
+          const contractAddress = tx.to
+          let tokenDecimal = 18
 
-            for (const key in tokensData) {
-              if (
-                tokensData[key]?.decimals &&
-                tokensData[key]?.contractAddress?.toLowerCase() == contractAddress.toLowerCase()
-              ) {
-                tokenDecimal = tokensData[key].decimals
-                break
-              }
-            }
-
-            const txData = Decoder.decodeData(response.result.input)
-
+          for (const key in tokensData) {
             if (
-              (txData && txData.inputs?.length === 2 && txData.name === `transfer`) ||
-              txData.method === `transfer`
+              tokensData[key]?.decimals &&
+              tokensData[key]?.contractAddress?.toLowerCase() == contractAddress.toLowerCase()
             ) {
-              receiverAddress = `0x${txData.inputs[0]}`
-              amount = new BigNumber(txData.inputs[1])
-                .div(new BigNumber(10).pow(tokenDecimal))
-                .toNumber()
+              tokenDecimal = tokensData[key].decimals
+              break
             }
-
-            const { from, gas, gasPrice, blockHash } = response.result
-
-            const minerFee = new BigNumber(this.Web3.utils.toBN(gas).toNumber())
-              .multipliedBy(this.Web3.utils.toBN(gasPrice).toNumber())
-              .dividedBy(1e18)
-              .toNumber()
-
-            let adminFee: number | false = false
-
-            if (this.adminFeeObj) {
-              const feeFromUsersAmount = new BigNumber(this.adminFeeObj.fee)
-                .dividedBy(100)
-                .multipliedBy(amount)
-
-              if (new BigNumber(this.adminFeeObj.min).isGreaterThan(feeFromUsersAmount)) {
-                adminFee = new BigNumber(this.adminFeeObj.min).toNumber()
-              } else {
-                adminFee = feeFromUsersAmount.toNumber()
-              }
-            }
-
-            res({
-              amount,
-              afterBalance: null,
-              receiverAddress,
-              senderAddress: from,
-              minerFee,
-              minerFeeCurrency: this.currency,
-              adminFee,
-              confirmed: blockHash !== null,
-              isContractTx:
-                contractAddress.toLowerCase() === externalConfig.swapContract[this.standard].toLowerCase(),
-            })
-          } else {
-            res(false)
           }
+
+          const txData = Decoder.decodeData(tx.input)
+
+          if (
+            (txData && txData.inputs?.length === 2 && txData.name === `transfer`) ||
+            txData.method === `transfer`
+          ) {
+            receiverAddress = `0x${txData.inputs[0]}`
+            amount = new BigNumber(txData.inputs[1])
+              .div(new BigNumber(10).pow(tokenDecimal))
+              .toNumber()
+          }
+
+          const { from, gas, gasPrice, blockHash } = tx
+
+          const minerFee = new BigNumber(this.Web3.utils.toBN(gas).toNumber())
+            .multipliedBy(this.Web3.utils.toBN(gasPrice).toNumber())
+            .dividedBy(1e18)
+            .toNumber()
+
+          let adminFee: number | false = false
+
+          if (this.adminFeeObj) {
+            const feeFromUsersAmount = new BigNumber(this.adminFeeObj.fee)
+              .dividedBy(100)
+              .multipliedBy(amount)
+
+            if (new BigNumber(this.adminFeeObj.min).isGreaterThan(feeFromUsersAmount)) {
+              adminFee = new BigNumber(this.adminFeeObj.min).toNumber()
+            } else {
+              adminFee = feeFromUsersAmount.toNumber()
+            }
+          }
+
+          res({
+            amount,
+            afterBalance: null,
+            receiverAddress,
+            senderAddress: from,
+            minerFee,
+            minerFeeCurrency: this.currency,
+            adminFee,
+            confirmed: blockHash !== null,
+            isContractTx:
+              contractAddress.toLowerCase() === externalConfig.swapContract[this.standard].toLowerCase(),
+          })
         })
         .catch((error) => {
           this.reportError(error)
@@ -527,6 +519,7 @@ console.log('>>>>>>>>>>>>>>>>>>>>>>>>>', ownerAddress, contractAddress, decimals
   setAllowance = async (params) => {
     let { name, to, targetAllowance } = params
     name = this.getReduxName(name)
+
 
     const tokenKey = `{${this.currencyKey}}${name.toLowerCase()}`
     const { decimals } = this.returnTokenInfo(name)
