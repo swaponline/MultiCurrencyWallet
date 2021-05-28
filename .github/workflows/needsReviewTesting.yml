@@ -32,9 +32,15 @@ jobs:
         npm run test:e2e_swap:actions
 
     - uses: actions/upload-artifact@v2
+      if: failure()
+      with:
+        name: failure-screenshots
+        path: path/to/artifact/
+    - uses: actions/upload-artifact@v2
       with:
         name: screenshots
         path: ./tests/e2e/screenshots
+        if-no-files-found: ignore
 
       env:
         CI: true
