@@ -6,7 +6,6 @@ import { FormattedMessage } from 'react-intl'
 import actions from 'redux/actions'
 import { constants, links } from 'helpers'
 import { Link } from 'react-router-dom'
-import ethToken from 'helpers/ethToken'
 import { getFullOrigin } from 'helpers/links'
 
 import CommentRow from 'components/Comment/Comment'
@@ -14,6 +13,7 @@ import Tooltip from 'components/ui/Tooltip/Tooltip'
 import getCurrencyKey from 'helpers/getCurrencyKey'
 import Address from 'components/ui/Address/Address'
 import { AddressFormat } from 'domain/address'
+import erc20Like from 'common/erc20Like'
 
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
@@ -197,7 +197,7 @@ export default class Row extends PureComponent<any, any> {
     const {
       activeFiat,
       address,
-      standard,
+      baseCurrency: tokenBaseCurrency,
       type,
       direction,
       value,
@@ -251,10 +251,11 @@ export default class Row extends PureComponent<any, any> {
       invoiceStatusClass = 'confirm red'
       invoiceStatusText = <FormattedMessage id="RowHistoryInvoiceCancelled" defaultMessage="Отклонен" />
     }
-    /* eslint-disable */
+
     let txLink = `/${getCurrencyKey(type, false)}/tx/${hash}`
-    if (ethToken.isEthToken({ name: type })) {
-      txLink = `${standard ? `/${standard}` : ''}/${type}/tx/${hash}`
+
+    if (erc20Like.isToken({ name: type }) && tokenBaseCurrency) {
+      txLink = `token/{${tokenBaseCurrency}}${type}/tx/${hash}`
     }
 
     if (txType === 'INVOICE' && invoiceData.uniqhash) {
