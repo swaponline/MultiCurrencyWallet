@@ -12,6 +12,7 @@ const UTXO_to_ERC20 = (coinName) => {
         ...props,
         fields: {
           currencyName: coinName,
+          etherscanLink: config.link.etherscan,
           ...config.swapConfig[coinName],
         },
       })
@@ -27,6 +28,7 @@ const UTXO_to_BEP20 = (coinName) => {
         ...props,
         fields: {
           currencyName: coinName,
+          etherscanLink: config.link.bscscan,
           ...config.swapConfig[coinName],
         },
       })
@@ -42,6 +44,7 @@ const ERC20_to_UTXO = (coinName) => {
         ...props,
         fields: {
           currencyName: coinName,
+          etherscanLink: config.link.etherscan,
           ...config.swapConfig[coinName],
         },
       })
@@ -57,6 +60,7 @@ const BEP20_to_UTXO = (coinName) => {
         ...props,
         fields: {
           currencyName: coinName,
+          etherscanLink: config.link.bscscan,
           ...config.swapConfig[coinName],
         },
       })
@@ -73,6 +77,7 @@ const UTXO_to_ETH = (coinName) => {
         fields: {
           currencyName: coinName,
           ethLikeCoin: `ETH`,
+          etherscanLink: config.link.etherscan,
           ...config.swapConfig[coinName],
         },
       })
@@ -89,6 +94,7 @@ const UTXO_to_BNB = (coinName) => {
         fields: {
           currencyName: coinName,
           ethLikeCoin: `BNB`,
+          etherscanLink: config.link.bscscan,
           ...config.swapConfig[coinName],
         },
       })
@@ -105,6 +111,7 @@ const ETH_to_UTXO = (coinName) => {
         fields: {
           currencyName: coinName,
           ethLikeCoin: `ETH`,
+          etherscanLink: config.link.etherscan,
           ...config.swapConfig[coinName],
         },
       })
@@ -121,6 +128,7 @@ const BNB_to_UTXO = (coinName) => {
         fields: {
           currencyName: coinName,
           ethLikeCoin: `BNB`,
+          etherscanLink: config.link.bscscan,
           ...config.swapConfig[coinName],
         },
       })

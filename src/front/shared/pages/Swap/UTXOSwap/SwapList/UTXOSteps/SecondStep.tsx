@@ -34,6 +34,7 @@ const SecondStep = (props) => {
     },
     fields: {
       explorerLink,
+      etherscanLink,
       currencyName,
       scriptCreatingTransactionHash,
     },
@@ -137,7 +138,7 @@ const SecondStep = (props) => {
         <strong styleName="transactionInStep">
           <a
             id="evmDepositHashLink"
-            href={`${config.link.etherscan}/tx/${ethSwapCreationTransactionHash}`}
+            href={`${etherscanLink}/tx/${ethSwapCreationTransactionHash}`}
             target="_blank"
             rel="noreferrer noopener"
           >

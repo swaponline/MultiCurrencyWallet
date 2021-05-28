@@ -35,6 +35,7 @@ const ThirdStep = (props) => {
       withdrawTransactionHash,
       currencyName,
       explorerLink,
+      etherscanLink,
     },
     text,
   } = props
@@ -136,7 +137,7 @@ const ThirdStep = (props) => {
         <strong styleName="transactionInStep">
           <a
             id="evmWithdrawalHashLink"
-            href={`${config.link.etherscan}/tx/${ethSwapWithdrawTransactionHash}`}
+            href={`${etherscanLink}/tx/${ethSwapWithdrawTransactionHash}`}
             target="_blank"
             rel="noreferrer noopener"
           >
