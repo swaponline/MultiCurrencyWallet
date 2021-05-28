@@ -280,6 +280,10 @@ const createSwapApp = async () => {
         NEXT2ETH,
         ETH2NEXT,
 
+        ...(Object.keys(config.bep20))
+          .map(key => BSCTOKEN2BTC(key)),
+        ...(Object.keys(config.bep20))
+          .map(key => BTC2BSCTOKEN(key)),
         ...(Object.keys(config.erc20))
           .map(key => ETHTOKEN2BTC(key)),
 
