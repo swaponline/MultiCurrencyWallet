@@ -11,7 +11,7 @@ import styles from 'components/tables/Table/Table.scss'
 import stylesHere from './History.scss'
 
 import InfiniteScrollTable from 'components/tables/InfiniteScrollTable/InfiniteScrollTable'
-import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
+import { FormattedMessage, injectIntl } from 'react-intl'
 import ContentLoader from '../../components/loaders/ContentLoader/ContentLoader'
 import FilterForm from 'components/FilterForm/FilterForm'
 
@@ -63,6 +63,7 @@ class History extends Component<any, any> {
     } = props
 
     const commentsList = actions.comments.getComments()
+
     this.state = {
       page,
       items,
@@ -73,53 +74,26 @@ class History extends Component<any, any> {
     }
   }
 
-
   componentDidMount() {
-    console.log('History mounted')
-    // actions.analytics.dataEvent('open-page-history')
-    if (this.props.match
-      && this.props.match.params
-      && this.props.match.params.page === 'invoices'
-    ) {
-    } else {
-      if (this.props.match &&
-        this.props.match.params &&
-        this.props.match.params.address
-      ) {
-        // @ToDo - этот роутер не работает - возможно артефакт после перевода ссылок на /(btc|eth)/walletAddress
+    const user = this.props.user
+    const objCurrency = {}
 
-        let { match: { params: { address = null } } } = this.props
-        //@ts-ignore
-        actions.history.setTransactions(address)
-      } else {
-        const user = this.props.user
-        const objCurrency = {}
-
-        for (let prop in user) {
-          if (
-            user[prop]
-            && typeof user[prop] === 'object'
-            && user[prop].currency
-          ) {
-            objCurrency[user[prop].currency] = {
-              isBalanceFetched: user[prop].isBalanceFetched,
-            }
-          }
+    for (let prop in user) {
+      if (typeof user[prop] === 'object' && user[prop].currency) {
+        objCurrency[user[prop].currency] = {
+          isBalanceFetched: user[prop].isBalanceFetched,
         }
-
-        actions.user.setTransactions(objCurrency)
-        onSwapCoreInited(() => {
-          actions.core.getSwapHistory()
-        })
       }
     }
+
+    actions.user.setTransactions(objCurrency)
+    onSwapCoreInited(() => {
+      actions.core.getSwapHistory()
+    })
   }
 
-  componentWillUnmount() {
-    console.log('History unmounted')
-  }
-
-  componentDidUpdate({ items: prevItems }) {
+  componentDidUpdate(prevProps) {
+    const { items: prevItems } = prevProps
     const { items } = this.props
 
     if (items !== prevItems) {
@@ -192,9 +166,7 @@ class History extends Component<any, any> {
   render() {
     const { filterValue, items, isLoading } = this.state
     const { swapHistory } = this.props
-
     const titles = []
-    const activeTab = 0
 
     return (
       <Fragment>
@@ -204,7 +176,12 @@ class History extends Component<any, any> {
         </h3>
         {items ? (
           <div>
-            <FilterForm filterValue={filterValue} onSubmit={this.handleFilter} onChange={this.handleFilterChange} resetFilter={this.resetFilter} />
+            <FilterForm
+              filterValue={filterValue}
+              onSubmit={this.handleFilter}
+              onChange={this.handleFilterChange}
+              resetFilter={this.resetFilter}
+            />
             <div>
               {
                 items.length > 0 && !isLoading ? (

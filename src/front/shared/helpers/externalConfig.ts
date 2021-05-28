@@ -3,13 +3,17 @@ import { util } from 'swap.app'
 import { constants } from 'swap.app'
 import BigNumber from 'bignumber.js'
 import reducers from 'redux/core/reducers'
+import TOKEN_STANDARDS from 'helpers/constants/TOKEN_STANDARDS'
 
 const NETWORK = process.env.MAINNET ? 'mainnet' : 'testnet'
 
 const getCustomTokenConfig = () => {
-  //@ts-ignore: strictNullChecks
-  let tokensInfo = JSON.parse(localStorage.getItem('customToken'))
-  if (!tokensInfo || !tokensInfo[NETWORK]) return {}
+  const tokensInfo = JSON.parse(localStorage.getItem('customToken') || '{}')
+
+  if (!Object.keys(tokensInfo).length || !tokensInfo[NETWORK]) {
+    return {}
+  }
+
   return tokensInfo[NETWORK]
 }
 
@@ -50,8 +54,9 @@ const externalConfig = () => {
       sell: 'btc',
     },
     ownTokens: false,
+    // TODO: addCustomERC20 -> addCustomToken
     addCustomERC20: true,
-    invoiceEnabled: (config.isWidget) ? false : true,
+    invoiceEnabled: !config.isWidget,
     showWalletBanners: false,
     showHowItsWork: false,
     fee: {},
@@ -164,14 +169,10 @@ const externalConfig = () => {
   ) {
     config.opts.plugins.setItemPlugin = window.setItemPlugin
   }
-  if (window
-    && window.getItemPlugin
-  ) {
+  if (window && window.getItemPlugin) {
     config.opts.plugins.getItemPlugin = window.getItemPlugin
   }
-  if (window
-    && window.userDataPluginApi
-  ) {
+  if (window && window.userDataPluginApi) {
     config.opts.plugins.userDataPluginApi = window.userDataPluginApi
   }
 
@@ -188,46 +189,37 @@ const externalConfig = () => {
     config.opts.hideShowPrivateKey = window.SWAP_HIDE_EXPORT_PRIVATEKEY
   }
 
-  if (window
-    && window.widgetERC20Tokens
-    && Object.keys(window.widgetERC20Tokens)
-  ) {
+  if (window?.widgetERC20Tokens?.length) {
     config.opts.ownTokens = window.widgetERC20Tokens
   }
 
-  if ((config && config.isWidget) || config.opts.ownTokens) {
-    // clean old erc20 config - leave only swap token (need for correct swap work)
-    if (!config.isWidget) {
-      const newTokens = {}
-      // newTokens.swap = config.erc20.swap
-      config.erc20 = newTokens
-      config.bep20 = newTokens
-    }
-
-    if (Object.keys(config.opts.ownTokens).length) {
-      // Multi token mode
-      Object.keys(config.opts.ownTokens).forEach((key) => {
-        const tokenData = config.opts.ownTokens[key]
-        config.erc20[key] = tokenData
-      })
-    }
-
-    // Clean not inited single-token
-    // Обходим оптимизацию, нам нельзя, чтобы в этом месте было соптимизированно в целую строку {#WIDGETTOKENCODE#}
-    const wcPb = `{#`
-    const wcP = (`WIDGETTOKENCODE`).toUpperCase()
-    const wcPe = `#}`
-    const cleanERC20 = {}
-    Object.keys(config.erc20).forEach((key) => {
-      if (key !== (`${wcPb}${wcP}${wcPe}`)) {
-        cleanERC20[key] = config.erc20[key]
-      }
+  if (config?.isWidget || config?.opts.ownTokens?.length) {
+    config.opts.ownTokens.forEach((token) => {
+      config[token.standard][token.name.toLowerCase()] = token
+      reducers.core.markCoinAsVisible(token.name.toUpperCase())
     })
-    config.erc20 = cleanERC20
+
+    // Clean not uninitialized single-token
+    // ? we can't use here as whole string {#WIDGETTOKENCODE#} ?
+    const wcPb = `{#`
+    const wcP = `WIDGETTOKENCODE`
+    const wcPe = `#}`
+
+    Object.keys(TOKEN_STANDARDS).forEach((key) => {
+      const standard = TOKEN_STANDARDS[key].standard
+      const ownTokens = {}
+
+      Object.keys(config[standard]).forEach((tokenSymbol) => {
+        if (tokenSymbol !== `${wcPb}${wcP}${wcPe}`) {
+          ownTokens[tokenSymbol] = config[standard][tokenSymbol]
+        }
+      })
+
+      config[standard] = ownTokens
+    })
   }
-  // TODO: rename - addCustomERC20 -> addCustomToken ?
-  if (!config.isWidget && config.opts.addCustomERC20) {
-    // Add custom tokens
+
+  if (config.opts.addCustomERC20) {
     const customTokenConfig = getCustomTokenConfig()
 
     Object.keys(customTokenConfig).forEach((standard) => {
@@ -283,7 +275,7 @@ const externalConfig = () => {
             }
           }
         } else {
-          if (curKey.toLowerCase() === 'erc20' || 'bep20' && address) {
+          if (TOKEN_STANDARDS[curKey.toLowerCase()] && address) {
             hasTokenAdminFee = true
             config.opts.fee[curKey.toLowerCase()] = {
               address,

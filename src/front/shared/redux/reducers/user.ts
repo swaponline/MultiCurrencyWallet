@@ -1,13 +1,3 @@
-import TOKEN_STANDARDS from 'helpers/constants/TOKEN_STANDARDS'
-
-const tokensData = {}
-
-Object.keys(TOKEN_STANDARDS).forEach((key) => {
-  const standard = TOKEN_STANDARDS[key].standard
-
-  tokensData[standard] = {}
-})
-
 export const initialState = {
   ghostData: {
     balance: 0,
@@ -90,8 +80,7 @@ export const initialState = {
     fullName: 'Tether',
     balanceError: null,
   },
-  fiats: [],
-  tokensData,
+  tokensData: {},
   isFetching: false,
   isBalanceFetching: false,
   isTokenSigned: false,
@@ -146,16 +135,20 @@ export const setTokenSigned = (state, booleanValue) => ({
   isTokenSigned: booleanValue,
 })
 
-export const setTokenAuthData = (state, { name, standard, data }) => ({
-  ...state,
-  tokensData: {
-    ...state.tokensData,
-    [name]: {
-      ...state.tokensData[name],
-      ...data,
+export const setTokenAuthData = (state, { name, baseCurrency, data }) => {
+  const tokenKey = `{${baseCurrency}}${name}`
+
+  return {
+    ...state,
+    tokensData: {
+      ...state.tokensData,
+      [tokenKey]: {
+        ...state.tokensData[tokenKey],
+        ...data,
+      },
     },
-  },
-})
+  }
+}
 
 export const setBtcMultisigBalance = (state, { address, amount, unconfirmedBalance }) => {
   state.btcMultisigUserData.wallets.forEach((wallet) => {
@@ -171,11 +164,8 @@ export const setBtcMultisigBalance = (state, { address, amount, unconfirmedBalan
   }
 }
 
-export const setBalance = (state, { name, standard, amount, unconfirmedBalance }) => ({
+export const setBalance = (state, { name, amount, unconfirmedBalance }) => ({
   ...state,
-  tokensData: {
-    ...state.tokensData,
-  },
   [name]: {
     ...state[name],
     balance: Number(amount),
@@ -185,26 +175,23 @@ export const setBalance = (state, { name, standard, amount, unconfirmedBalance }
   },
 })
 
-export const setInfoAboutToken = (state, { name, standard, infoAboutCurrency }) => ({
-  ...state,
-  tokensData: {
-    ...state.tokensData,
-    [name]: {
-      ...state.tokensData[name],
-      infoAboutCurrency,
-    },
-  },
-})
+export const setInfoAboutToken = (state, { name, baseCurrency, infoAboutCurrency }) => {
+  const tokenKey = `{${baseCurrency}}${name}`
 
-export const setInfoAboutCurrency = (state, { name, standard, infoAboutCurrency }) => ({
-  ...state,
-  tokensData: {
-    ...state.tokensData,
-    [name]: {
-      ...state.tokensData[name],
-      infoAboutCurrency,
+  return {
+    ...state,
+    tokensData: {
+      ...state.tokensData,
+      [tokenKey]: {
+        ...state.tokensData[tokenKey],
+        infoAboutCurrency,
+      },
     },
-  },
+  }
+}
+
+export const setInfoAboutCurrency = (state, { name, infoAboutCurrency }) => ({
+  ...state,
   [name]: {
     ...state[name],
     infoAboutCurrency,
@@ -219,29 +206,37 @@ export const setBalanceError = (state, { name }) => ({
   },
 })
 
-export const setTokenBalanceError = (state, { name, standard }) => ({
-  ...state,
-  tokensData: {
-    ...state.tokensData,
-    [name]: {
-      ...state.tokensData[name],
-      balanceError: true,
-    },
-  },
-})
+export const setTokenBalanceError = (state, { name, baseCurrency }) => {
+  const tokenKey = `{${baseCurrency}}${name}`
 
-export const setTokenBalance = (state, { name, standard, amount }) => ({
-  ...state,
-  tokensData: {
-    ...state.tokensData,
-    [name]: {
-      ...state.tokensData[name],
-      balance: Number(amount),
-      isBalanceFetched: true,
-      balanceError: false,
+  return {
+    ...state,
+    tokensData: {
+      ...state.tokensData,
+      [tokenKey]: {
+        ...state.tokensData[tokenKey],
+        balanceError: true,
+      },
     },
-  },
-})
+  }
+}
+
+export const setTokenBalance = (state, { name, baseCurrency, amount }) => {
+  const tokenKey = `{${baseCurrency}}${name}`
+
+  return {
+    ...state,
+    tokensData: {
+      ...state.tokensData,
+      [tokenKey]: {
+        ...state.tokensData[tokenKey],
+        balance: Number(amount),
+        isBalanceFetched: true,
+        balanceError: false,
+      },
+    },
+  }
+}
 
 export const setIsBalanceFetching = (state, { isBalanceFetching }) => ({
   ...state,
@@ -252,8 +247,6 @@ export const setIsFetching = (state, { isFetching }) => ({
   ...state,
   isFetching,
 })
-
-export const setFiats = (state, { fiats }) => ({ ...state, fiats })
 
 export const setActiveCurrency = (state, { activeCurrency }) => ({ ...state, activeCurrency })
 

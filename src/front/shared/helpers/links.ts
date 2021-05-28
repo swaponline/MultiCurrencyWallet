@@ -1,6 +1,3 @@
-import actions from '../redux/actions'
-
-
 const linksManager = {
   home: '/',
   hashHome: '#/',
@@ -165,23 +162,6 @@ const linksManager = {
     return false
   },
 }
-
-export const getWalletUrl = (params) => {
-  let { name } = params
-  name = name.toLowerCase()
-  const { address } = actions.user.getAuthData(name)
-
-  return `/${name}/${address}`
-}
-
-export const getTokenWallet = (params) => {
-  const { tokenName, currency } = params
-  const { address } = actions.user.getAuthData(currency)
-
-  return `/token/${tokenName.toUpperCase()}/${address}`
-}
-
-window.getTokenWallet = getTokenWallet
 
 export const getFullOrigin = () => `${location.origin}${location.pathname}#`
 
