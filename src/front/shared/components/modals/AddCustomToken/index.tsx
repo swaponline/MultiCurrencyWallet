@@ -35,9 +35,10 @@ type CustomTokenState = {
   step: string
   tokenStandard: string
   tokenAddress: string
-  tokenTitle: string
+  tokenName: string
   tokenSymbol: string
   tokenDecimals: number
+  baseCurrency: string
   notFound: boolean
   isPending: boolean
 }
@@ -51,13 +52,16 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
   constructor(props) {
     super(props)
 
+    const { data } = props
+
     this.state = {
       step: 'enterAddress',
-      explorerApi: props.data.api,
-      explorerApiKey: props.data.apiKey,
-      tokenStandard: props.data.standard.toLowerCase(),
+      explorerApi: data.api,
+      explorerApiKey: data.apiKey,
+      tokenStandard: data.standard.toLowerCase(),
+      baseCurrency: data.baseCurrency,
       tokenAddress: '',
-      tokenTitle: '',
+      tokenName: '',
       tokenSymbol: '',
       tokenDecimals: 0,
       notFound: false,
@@ -117,13 +121,13 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
       isPending: true,
     })
 
-    const tokenTitle = await this.getName(tokenAddress)
+    const tokenName = await this.getName(tokenAddress)
     const tokenSymbol = await this.getSymbol(tokenAddress)
     const tokenDecimals = await this.getDecimals(tokenAddress)
 
     if (tokenSymbol) {
       this.setState({
-        tokenTitle,
+        tokenName,
         tokenSymbol,
         tokenDecimals,
         step: 'confirm',
@@ -138,17 +142,18 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
         this.setState({
           notFound: false,
         })
-      }, 5000)
+      }, 4000)
     }
   }
 
   handleConfirm = async () => {
-    const { tokenStandard, tokenAddress, tokenSymbol, tokenDecimals } = this.state
+    const { tokenStandard, tokenAddress, tokenSymbol, tokenDecimals, baseCurrency } = this.state
     actions[tokenStandard].addToken({
       standard: tokenStandard,
       contractAddr: tokenAddress,
       symbol: tokenSymbol,
       decimals: tokenDecimals,
+      baseCurrency: baseCurrency.toLowerCase(),
     })
     actions.core.markCoinAsVisible(tokenSymbol.toUpperCase(), true)
 
@@ -162,10 +167,9 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
   }
 
   addressIsCorrect() {
-    const { tokenAddress } = this.state
-    // TODO: how to check Token main currency (ETH for ERC20, BNB for BEP20, ...)
-    // TODO: need to use address check with main currency
-    return typeforce.isCoinAddress.ETH(tokenAddress)
+    const { tokenAddress, baseCurrency } = this.state
+
+    return typeforce.isCoinAddress[baseCurrency.toUpperCase()](tokenAddress)
   }
 
   handleError = (err) => {
@@ -177,7 +181,7 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
       step,
       tokenStandard,
       tokenAddress,
-      tokenTitle,
+      tokenName,
       tokenSymbol,
       tokenDecimals,
       isPending,
@@ -279,7 +283,7 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
                     <FormattedMessage id="TitleId" defaultMessage="Title" />
                   </span>
                 </FieldLabel>
-                <div styleName="fakeInput">{tokenTitle}</div>
+                <div styleName="fakeInput">{tokenName}</div>
               </div>
               <div styleName="lowLevel">
                 <FieldLabel inRow>

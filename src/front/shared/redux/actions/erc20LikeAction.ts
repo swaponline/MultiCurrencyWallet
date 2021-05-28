@@ -61,8 +61,9 @@ class Erc20LikeAction {
   }
 
   addToken = (params) => {
-    const { standard, contractAddr, symbol, decimals } = params
+    const { standard, contractAddr, symbol, decimals, baseCurrency } = params
     let customTokens = JSON.parse(localStorage.getItem(constants.localStorage.customToken) || '{}')
+    const privateKey = localStorage.getItem(constants.privateKeyNames[baseCurrency])
 
     if (!Object.keys(customTokens).length) {
       customTokens = {
@@ -83,6 +84,7 @@ class Erc20LikeAction {
     }
 
     localStorage.setItem(constants.localStorage.customToken, JSON.stringify(customTokens))
+    this.login(privateKey, contractAddr, symbol, decimals, symbol)
   }
 
   getTx = (txRaw) => {
