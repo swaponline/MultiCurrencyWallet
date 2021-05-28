@@ -91,8 +91,8 @@ class Swap {
       participantPeer: this.participant.peer,
     })
 
-    const buyCoin = ((data.buyBlockchain) ? `{${data.buyBlockchain}}data.buyCurrency` : data.buyCurrency).toUpperCase()
-    const sellCoin = ((data.sellBlockchain) ? `{${data.sellBlockchain}}data.sellCurrency` : data.sellCurrency).toUpperCase()
+    const buyCoin = ((data.buyBlockchain) ? `{${data.buyBlockchain}}${data.buyCurrency}` : data.buyCurrency).toUpperCase()
+    const sellCoin = ((data.sellBlockchain) ? `{${data.sellBlockchain}}${data.sellCurrency}` : data.sellCurrency).toUpperCase()
 
 
     this.ownerSwap        = this.app.swaps[buyCoin]
