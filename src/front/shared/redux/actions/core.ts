@@ -12,7 +12,6 @@ import { BigNumber } from 'bignumber.js'
 
 import metamask from 'helpers/metamask'
 import { AddressType } from 'domain/address'
-import getCoinInfo from 'common/coins/getCoinInfo'
 
 import helpers from 'helpers'
 
