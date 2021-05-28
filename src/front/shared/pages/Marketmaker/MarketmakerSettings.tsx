@@ -440,6 +440,7 @@ class MarketmakerSettings extends Component<any, any> {
     const {
       tokenBalance,
       marketToken,
+      tokenWallet,
       btcBalance,
       ethBalance,
       isBtcBalanceOk,
@@ -475,7 +476,9 @@ class MarketmakerSettings extends Component<any, any> {
         minimalestAmountForSell: 0.00038906,
         sellAmount,
         buyCurrency: `BTC`,
-        sellCurrency: marketToken,
+        buyBlockchain: ``,
+        sellCurrency: tokenWallet.currency.toUpperCase(),
+        sellBlockchain: tokenWallet.blockchain.toUpperCase(),
       }
       console.log(sellTokenOrderData)
       //@ts-ignore: strictNullChecks
@@ -506,7 +509,9 @@ class MarketmakerSettings extends Component<any, any> {
         minimalestAmountForSell: 0.00038906,
         buyAmount,
         sellCurrency: `BTC`,
-        buyCurrency: marketToken,
+        sellBlockchain: ``,
+        buyCurrency: tokenWallet.currency.toUpperCase(),
+        buyBlockchain: tokenWallet.blockchain.toUpperCase(),
       }
       console.log(buyTokenOrderData)
       //@ts-ignore: strictNullChecks
