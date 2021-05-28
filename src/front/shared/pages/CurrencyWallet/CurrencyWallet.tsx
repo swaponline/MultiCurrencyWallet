@@ -543,7 +543,10 @@ class CurrencyWallet extends Component<any, any> {
                 handleWithdraw={this.handleWithdraw}
                 handleExchange={this.handleGoTrade}
                 handleInvoice={this.handleInvoice}
-                showButtons={actions.user.isOwner(address, currency)}
+                showButtons={actions.user.isOwner(
+                  address,
+                  itemCurrency.tokenKey || currency
+                )}
                 currency={currency.toLowerCase()}
                 singleWallet={true}
                 multisigPendingCount={multisigPendingCount}
@@ -566,6 +569,9 @@ class CurrencyWallet extends Component<any, any> {
             {txHistory &&
               !isLoading &&
               (txHistory.length > 0 ? (
+                // TODO: use the infinite list component or smth else
+                // if we have lots of tx with the Table then it 
+                // load long time and display all transaction
                 <Table rows={txHistory} styleName="currencyHistory" rowRender={this.rowRender} />
               ) : (
                   <div styleName="historyContent">

@@ -4,6 +4,7 @@ import moment from 'moment/moment'
 import { constants } from 'helpers'
 import request from 'common/utils/request'
 import * as mnemonicUtils from 'common/utils/mnemonic'
+import transactions from 'helpers/transactions'
 import TOKEN_STANDARDS from 'helpers/constants/TOKEN_STANDARDS'
 import actions from 'redux/actions'
 import { getState } from 'redux/core'
@@ -653,17 +654,15 @@ export const getWithdrawWallet = (currency, addressOwner) => {
 
 export const isOwner = (addr, currency) => {
   const lowerAddr = addr.toLowerCase()
+  const baseTokenCurrency = transactions.getTokenBaseCurrency(currency)
 
-  if (erc20Like.isToken({ name: currency })) {
-    const isErc20 = erc20Like.erc20.isToken({ name: currency })
-    const isBep20 = erc20Like.bep20.isToken({ name: currency })
-    const actionName = isErc20 ? 'eth' : isBep20 ? 'bnb' : 'eth'
-    const allAddresses = actions[actionName].getAllMyAddresses()
+  if (baseTokenCurrency) {
+    const allAddresses = actions[baseTokenCurrency].getAllMyAddresses()
 
     if (allAddresses.includes(lowerAddr)) return true
 
     const { user } = getState()
-    const storeOwnerAddress = user[`${actionName}Data`].address.toLowerCase()
+    const storeOwnerAddress = user[`${baseTokenCurrency}Data`].address.toLowerCase()
 
     return lowerAddr === storeOwnerAddress
   }

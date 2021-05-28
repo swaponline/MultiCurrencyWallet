@@ -193,6 +193,32 @@ export default class Row extends PureComponent<any, any> {
     )
   }
 
+  returnLinkRouter = (params) => {
+    let {
+      location,
+      targetPath,
+      tokenPart,
+      name,
+      hash,
+      tokenBaseCurrency,
+    } = params
+
+    if (erc20Like.isToken({ name }) && tokenBaseCurrency) {
+      // react router doesn't rewrite url
+      // it fix problem with token transaction info url
+      if (location.pathname.includes(tokenPart)) {
+        targetPath = `tx/${hash}`
+      } else {
+        targetPath = `token/{${tokenBaseCurrency}}${name}/tx/${hash}`
+      }
+    }
+
+    return {
+      ...location,
+      pathname: targetPath,
+    }
+  }
+
   render() {
     const {
       activeFiat,
@@ -254,10 +280,6 @@ export default class Row extends PureComponent<any, any> {
 
     let txLink = `/${getCurrencyKey(type, false)}/tx/${hash}`
 
-    if (erc20Like.isToken({ name: type }) && tokenBaseCurrency) {
-      txLink = `token/{${tokenBaseCurrency}}${type}/tx/${hash}`
-    }
-
     if (txType === 'INVOICE' && invoiceData.uniqhash) {
       txLink = `${links.invoice}/${invoiceData.uniqhash}`
     }
@@ -298,7 +320,16 @@ export default class Row extends PureComponent<any, any> {
                     </div>
                   </> :
                   <>
-                    <Link to={txLink}>
+                    <Link
+                      to={(location) => this.returnLinkRouter({
+                        location,
+                        targetPath: txLink,
+                        tokenPart: `token/{${tokenBaseCurrency}}${type}/`,
+                        name: type,
+                        hash: hash,
+                        tokenBaseCurrency,
+                      })}
+                    >
                       {(txType === 'CONFIRM') ? (
                         <FormattedMessage id="RowHistory_Confirm_Sending" defaultMessage="Sent" />
                       ) : (
