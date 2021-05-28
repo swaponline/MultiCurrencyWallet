@@ -75,7 +75,7 @@ export const filterUserCurrencyData = (currencyData) => {
   const enabledCurrencies = getActivatedCurrencies()
 
   function isAllowed(target) {
-    const currency = target.currency?.toUpperCase()
+    const currency = target.currency
 
     return (
       !hiddenCoinsList.includes(currency) &&
