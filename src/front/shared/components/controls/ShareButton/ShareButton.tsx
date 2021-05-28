@@ -9,9 +9,6 @@ import Button from 'components/controls/Button/Button'
 @CSSModules(styles, { allowMultiple: true })
 
 export default class ShareButton extends React.Component<any, any> {
-
-  props: any
-
   openShareModal = () => {
     const { link, title } = this.props
     //@ts-ignore: strictNullChecks
