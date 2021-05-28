@@ -318,42 +318,24 @@ if (config.isWidget) {
         title: name.toUpperCase(),
         icon: name,
         value: name,
-        fullTitle: token.fullName.fullName,
+        fullTitle: token.fullName,
       })
-    })
-
-  } else {
-    //@ts-ignore
-    initialState.items.push({
-      name: config.erc20token.toUpperCase(),
-      title: config.erc20token.toUpperCase(),
-      icon: config.erc20token,
-      value: config.erc20token,
-      fullTitle: config.erc20[config.erc20token].fullName,
-    })
-    initialState.partialItems.push({
-      name: config.erc20token.toUpperCase(),
-      title: config.erc20token.toUpperCase(),
-      icon: config.erc20token,
-      value: config.erc20token,
-      fullTitle: config.erc20[config.erc20token].fullName,
+      initialState.addSelectedItems.push({
+        //@ts-ignore
+        name: name.toUpperCase(),
+        //@ts-ignore
+        title: name.toUpperCase(),
+        //@ts-ignore
+        icon: name,
+        //@ts-ignore
+        value: name,
+        //@ts-ignore
+        fullTitle: token.fullName,
+      })
     })
   }
 
-  initialState.addSelectedItems = [
-    {
-      //@ts-ignore: strictNullChecks
-      name: config.erc20token.toUpperCase(),
-      //@ts-ignore: strictNullChecks
-      title: config.erc20token.toUpperCase(),
-      //@ts-ignore: strictNullChecks
-      icon: config.erc20token,
-      //@ts-ignore: strictNullChecks
-      value: config.erc20token,
-      //@ts-ignore: strictNullChecks
-      fullTitle: config.erc20[config.erc20token].fullName,
-    },
-  ]
+
 } else {
   // TODO: addCustomERC20 -> addCustomToken
   if (!config.isWidget && buildOpts.addCustomERC20) {
