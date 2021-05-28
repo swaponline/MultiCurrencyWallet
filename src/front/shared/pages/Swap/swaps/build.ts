@@ -20,6 +20,21 @@ const UTXO_to_ERC20 = (coinName) => {
   return _UTXO_to_ERC20
 }
 
+const UTXO_to_BEP20 = (coinName) => {
+  class _UTXO_to_BEP20 extends UTXOToEthToken {
+    constructor(props) {
+      super({
+        ...props,
+        fields: {
+          currencyName: coinName,
+          ...config.swapConfig[coinName],
+        },
+      })
+    }
+  }
+  return _UTXO_to_BEP20
+}
+
 const ERC20_to_UTXO = (coinName) => {
   class _ERC20_to_UTXO extends EthTokenToUTXO {
     constructor(props) {
@@ -33,6 +48,21 @@ const ERC20_to_UTXO = (coinName) => {
     }
   }
   return _ERC20_to_UTXO
+}
+
+const BEP20_to_UTXO = (coinName) => {
+  class _BEP20_to_UTXO extends EthTokenToUTXO {
+    constructor(props) {
+      super({
+        ...props,
+        fields: {
+          currencyName: coinName,
+          ...config.swapConfig[coinName],
+        },
+      })
+    }
+  }
+  return _BEP20_to_UTXO
 }
 
 const UTXO_to_ETH = (coinName) => {
@@ -102,6 +132,8 @@ const BNB_to_UTXO = (coinName) => {
 export {
   UTXO_to_ERC20,
   ERC20_to_UTXO,
+  UTXO_to_BEP20,
+  BEP20_to_UTXO,
   UTXO_to_ETH,
   ETH_to_UTXO,
   UTXO_to_BNB,

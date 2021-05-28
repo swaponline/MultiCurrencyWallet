@@ -25,6 +25,7 @@ export default (tokenName) => {
         getMyAddress: swap.app.getMyBnbAddress.bind(swap.app),
         getParticipantAddress: swap.app.getParticipantBnbAddress.bind(swap.app),
       })
+      this._flowName = BSCTOKEN2BTC.getName()
     }
   }
 

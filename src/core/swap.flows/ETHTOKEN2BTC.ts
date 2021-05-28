@@ -25,6 +25,7 @@ export default (tokenName) => {
         getMyAddress: swap.app.getMyEthAddress.bind(swap.app),
         getParticipantAddress: swap.app.getParticipantEthAddress.bind(swap.app),
       })
+      this._flowName = ETHTOKEN2BTC.getName()
     }
   }
 
