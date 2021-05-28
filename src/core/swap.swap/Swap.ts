@@ -15,7 +15,9 @@ class Swap {
   owner: any
   participant: any
   buyCurrency: string // @ToDo CoinType
+  buyBlockchain: string
   sellCurrency: string// @ToDo CoinType
+  sellBlockchain: string
   buyAmount: BigNumber
   sellAmount: BigNumber
   ownerSwap: any
@@ -43,7 +45,11 @@ class Swap {
     //@ts-ignore: strictNullChecks
     this.buyCurrency            = null
     //@ts-ignore: strictNullChecks
+    this.buyBlockchain          = null
+    //@ts-ignore: strictNullChecks
     this.sellCurrency           = null
+    //@ts-ignore: strictNullChecks
+    this.sellBlockchain         = null
     //@ts-ignore: strictNullChecks
     this.buyAmount              = null
     //@ts-ignore: strictNullChecks
@@ -85,13 +91,17 @@ class Swap {
       participantPeer: this.participant.peer,
     })
 
-    this.ownerSwap        = this.app.swaps[data.buyCurrency.toUpperCase()]
-    this.participantSwap  = this.app.swaps[data.sellCurrency.toUpperCase()]
+    const buyCoin = ((data.buyBlockchain) ? `{${data.buyBlockchain}}data.buyCurrency` : data.buyCurrency).toUpperCase()
+    const sellCoin = ((data.sellBlockchain) ? `{${data.sellBlockchain}}data.sellCurrency` : data.sellCurrency).toUpperCase()
+
+
+    this.ownerSwap        = this.app.swaps[buyCoin]
+    this.participantSwap  = this.app.swaps[sellCoin]
 
     const flowKey = this.isTurbo ?
       (this.isMy ? 'TurboMaker' : 'TurboTaker')
       :
-      `${data.sellCurrency.toUpperCase()}2${data.buyCurrency.toUpperCase()}`
+      `${sellCoin}2${buyCoin}`
 
     if (!this.app.flows[flowKey]) {
       throw new Error(`Flow with name "${flowKey}" not found in SwapApp.flows`)
@@ -184,8 +194,10 @@ class Swap {
       'owner',
       'participant',
       'sellCurrency',
+      'sellBlockchain',
       'sellAmount',
       'buyCurrency',
+      'buyBlockchain',
       'buyAmount',
       'destination',
     )
@@ -198,9 +210,13 @@ class Swap {
       //@ts-ignore
       sellCurrency,
       //@ts-ignore
+      sellBlockchain,
+      //@ts-ignore
       sellAmount,
       //@ts-ignore
       buyCurrency,
+      //@ts-ignore
+      buyBlockchain,
       //@ts-ignore
       buyAmount,
       //@ts-ignore
@@ -215,8 +231,10 @@ class Swap {
       isMy,
       isTurbo,
       sellCurrency: isMy ? sellCurrency : buyCurrency,
+      sellBlockchain: isMy ? sellBlockchain : buyBlockchain,
       sellAmount: isMy ? sellAmount : buyAmount,
       buyCurrency: isMy ? buyCurrency : sellCurrency,
+      buyBlockchain: isMy ? buyBlockchain : sellBlockchain,
       buyAmount: isMy ? buyAmount : sellAmount,
       destinationBuyAddress: isMy ? ownerAddress : participantAddress,
       destinationSellAddress: isMy ? participantAddress : ownerAddress,
@@ -239,8 +257,10 @@ class Swap {
       'owner',
       'participant',
       'sellCurrency',
+      'sellBlockchain',
       'sellAmount',
       'buyCurrency',
+      'buyBlockchain',
       'buyAmount',
       'destinationBuyAddress',
       'destinationSellAddress',
