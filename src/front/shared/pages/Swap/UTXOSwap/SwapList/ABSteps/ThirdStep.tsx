@@ -28,6 +28,7 @@ const ThirdStep = (props) => {
         state: flowState,
         state: {
           ethSwapWithdrawTransactionHash,
+          utxoSwapWithdrawTransactionHash,
         },
       },
     },
@@ -49,8 +50,8 @@ const ThirdStep = (props) => {
     setEthSwapWithdrawHash(ethSwapWithdrawTransactionHash)
   }
 
-  if (flowState[withdrawTransactionHash] && !withdrawHash) {
-    setWithdrawHash(flowState[withdrawTransactionHash])
+  if (utxoSwapWithdrawTransactionHash && !withdrawHash) {
+    setWithdrawHash(utxoSwapWithdrawTransactionHash)
   }
 
   const checkTransactionHash = (txHash, currencyName, refreshTime) => {
@@ -119,11 +120,11 @@ const ThirdStep = (props) => {
       <p styleName="stepText">
         <FormattedMessage id="thirdStep24" defaultMessage="WITHDRAW" />
       </p>
-      {flowState[withdrawTransactionHash] && (
+      {utxoSwapWithdrawTransactionHash && (
         <strong styleName="transactionInStep">
           <a
             id="utxoWithdrawalHashLink"
-            href={`${explorerLink}/tx/${flowState[withdrawTransactionHash]}`}
+            href={`${explorerLink}/tx/${utxoSwapWithdrawTransactionHash}`}
             target="_blank"
             rel="noreferrer noopener"
           >

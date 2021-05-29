@@ -29,6 +29,7 @@ const SecondStep = (props) => {
         state: flowState,
         state: {
           ethSwapCreationTransactionHash,
+          utxoScriptCreatingTransactionHash,
         },
       },
     },
@@ -51,8 +52,8 @@ const SecondStep = (props) => {
     setEthSwapHash(ethSwapCreationTransactionHash)
   }
 
-  if (flowState[scriptCreatingTransactionHash] && !scriptHash) {
-    setScriptHash(flowState[scriptCreatingTransactionHash])
+  if (utxoScriptCreatingTransactionHash && !scriptHash) {
+    setScriptHash(utxoScriptCreatingTransactionHash)
   }
 
   const checkTransactionHash = (txHash, currencyName, refreshTime) => {
@@ -137,12 +138,12 @@ const SecondStep = (props) => {
           </a>
         </strong>
       )}
-      {flowState[scriptCreatingTransactionHash] && (
+      {utxoScriptCreatingTransactionHash && (
         <strong styleName="transactionInStep">
           <a
             id="utxoDepositHashLink"
-            title={`${explorerLink}/tx/${flowState[scriptCreatingTransactionHash]}`}
-            href={`${explorerLink}/tx/${flowState[scriptCreatingTransactionHash]}`}
+            title={`${explorerLink}/tx/${utxoScriptCreatingTransactionHash}`}
+            href={`${explorerLink}/tx/${utxoScriptCreatingTransactionHash}`}
             target="_blank"
             rel="noreferrer noopener"
           >
