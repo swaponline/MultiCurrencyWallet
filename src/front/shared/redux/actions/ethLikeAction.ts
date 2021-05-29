@@ -15,6 +15,7 @@ class EthLikeAction {
   readonly coinName: string
   readonly ticker: string // upper case (ex. ETH)
   readonly tickerKey: string // lower case (ex. eth)
+  readonly privateKeyName: string
   readonly explorerName: string
   readonly explorerLink: string
   readonly explorerApiKey: string
@@ -30,6 +31,7 @@ class EthLikeAction {
     const {
       coinName,
       ticker,
+      privateKeyName,
       explorerName,
       explorerLink,
       explorerApiKey,
@@ -39,6 +41,7 @@ class EthLikeAction {
 
     this.coinName = coinName
     this.ticker = ticker
+    this.privateKeyName = privateKeyName.toLowerCase()
     this.tickerKey = ticker.toLowerCase()
     this.explorerName = explorerName
     this.explorerLink = explorerLink
@@ -177,22 +180,11 @@ class EthLikeAction {
 
       privateKey = accData.privateKey
       data = this.Web3.eth.accounts.privateKeyToAccount(privateKey)
-      localStorage.setItem(constants.privateKeyNames[`${this.tickerKey}Mnemonic`], privateKey)
+      localStorage.setItem(constants.privateKeyNames[`${this.privateKeyName}Mnemonic`], privateKey)
 
-      // BNB and ETH addresses are compatible
-      if (this.ticker === 'BNB' || this.ticker === 'ETH') {
-        localStorage.setItem(constants.privateKeyNames.ethMnemonic, privateKey)
-        localStorage.setItem(constants.privateKeyNames.bnbMnemonic, privateKey)
-      }
     }
 
-    // BNB and ETH addresses are compatible
-    if (this.ticker === 'BNB' || this.ticker === 'ETH') {
-      localStorage.setItem(constants.privateKeyNames.bnb, data.privateKey)
-      localStorage.setItem(constants.privateKeyNames.eth, data.privateKey)
-    }
-
-    localStorage.setItem(constants.privateKeyNames[this.tickerKey], data.privateKey)
+    localStorage.setItem(constants.privateKeyNames[this.privateKeyName], data.privateKey)
 
     this.Web3.eth.accounts.wallet.add(data.privateKey)
     data.isMnemonic = sweepToMnemonicReady
@@ -574,6 +566,7 @@ export default {
   ETH: new EthLikeAction({
     coinName: 'Ethereum',
     ticker: 'ETH',
+    privateKeyName: 'eth',
     explorerName: 'etherscan',
     explorerLink: externalConfig.link.etherscan,
     explorerApiKey: externalConfig.api.etherscan_ApiKey,
@@ -583,6 +576,7 @@ export default {
   BNB: new EthLikeAction({
     coinName: 'Binance Coin',
     ticker: 'BNB',
+    privateKeyName: 'eth', // Используем приватный ключ эфира
     explorerName: 'bscscan',
     explorerLink: externalConfig.link.bscscan,
     explorerApiKey: externalConfig.api.bscscan_ApiKey,
