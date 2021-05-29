@@ -112,7 +112,7 @@ export default class AddOffer extends Component<any, any> {
     this.updateExchangeRate(sellCurrency, buyCurrency)
     this.isTokenOffer(sellCurrency, buyCurrency)
     this.getFee()
-    this.checkEthBalance()
+    this.checkBalanceForTokenFee()
   }
 
   getFee = () => {
@@ -126,7 +126,7 @@ export default class AddOffer extends Component<any, any> {
     const {
       sellBlockchain,
       buyBlockchain,
-    }
+    } = this.state
     const balanceForBuyTokenFee = (buyBlockchain !== ``)
       ? await actions[buyBlockchain.toLowerCase()].getBalance()
       : 0
@@ -233,16 +233,19 @@ export default class AddOffer extends Component<any, any> {
       await this.checkBalance(sellCurrency)
       await this.updateExchangeRate(sellCurrency, value)
 
-      this.setState(() => ({
+      this.setState({
         buyCurrency: value,
         buyBlockchain: blockchain,
-      }))
+      }, () => {
+        this.checkBalanceForTokenFee()
+      })
 
       if (sellAmount > 0 || buyAmount > 0) {
         this.handleBuyAmountChange(buyAmount)
         this.handleSellAmountChange(sellAmount)
       }
       this.isTokenOffer(sellCurrency, value)
+
       this.getFee()
     }
   }
@@ -263,16 +266,19 @@ export default class AddOffer extends Component<any, any> {
       await this.checkBalance(value)
       await this.updateExchangeRate(value, buyCurrency)
 
-      this.setState(() => ({
+      this.setState({
         sellCurrency: value,
         sellBlockchain: blockchain,
-      }))
+      }, () => {
+        this.checkBalanceForTokenFee()
+      })
 
       if (sellAmount > 0 || buyAmount > 0) {
         this.handleBuyAmountChange(buyAmount)
         this.handleSellAmountChange(sellAmount)
       }
       this.isTokenOffer(value, buyCurrency)
+
       this.getFee()
     }
   }
