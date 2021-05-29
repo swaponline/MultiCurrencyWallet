@@ -127,23 +127,19 @@ export default class AddOffer extends Component<any, any> {
   }
 
   checkBalance = async (sellCurrency) => {
-    await actions[sellCurrency].getBalance(sellCurrency)
+    const sellWallet = actions.core.getWallet({ currency: sellCurrency })
+    let balance = new BigNumber(
+      await actions.core.fetchWalletBalance(sellWallet)
+    )
+    let { unconfirmedBalance } = sellWallet
 
-    const { items, tokenItems } = this.props
-
-    const currency = items.concat(tokenItems)
-      .filter(item => item.currency === sellCurrency.toUpperCase())[0]
-
-    let { balance, unconfirmedBalance } = currency
-
-    balance = new BigNumber(balance)
     unconfirmedBalance = new BigNumber(unconfirmedBalance)
 
     const currentBalance = unconfirmedBalance.isNaN() && unconfirmedBalance.isLessThan(0)
       ? balance.plus(unconfirmedBalance)
       : balance
 
-    const balanceWithoutFee = (helpers.ethToken.isEthToken({ name: this.state.sellCurrency }))
+    const balanceWithoutFee = !erc20Like.isToken({ name: sellCurrency })
       ? currentBalance
       : currentBalance.minus(this.state.minimalestAmountForSell)
 
@@ -155,8 +151,8 @@ export default class AddOffer extends Component<any, any> {
   }
 
   isEthToken = (sellCurrency, buyCurrency) => {
-    const isTokenSell = helpers.ethToken.isEthToken({ name: sellCurrency })
-    const isTokenBuy = helpers.ethToken.isEthToken({ name: buyCurrency })
+    const isTokenSell = erc20Like.isToken({ name: sellCurrency })
+    const isTokenBuy = erc20Like.isToken({ name: buyCurrency })
 
     this.setState(() => ({
       isTokenBuy,
@@ -177,7 +173,9 @@ export default class AddOffer extends Component<any, any> {
   }
 
   correctMinAmountBuy = async (buyCurrency) => {
-    if (COINS_WITH_DYNAMIC_FEE.includes(buyCurrency)) {
+    const isToken = erc20Like.isToken({ name: buyCurrency })
+
+    if (COINS_WITH_DYNAMIC_FEE.includes(buyCurrency) && !isToken) {
       const minimalestAmountForBuy = await helpers[buyCurrency].estimateFeeValue({ method: 'swap', speed: 'fast' })
 
       this.setState({
@@ -201,7 +199,6 @@ export default class AddOffer extends Component<any, any> {
 
   handleBuyCurrencySelect = async (selectedItem) => {
     const { value, blockchain } = selectedItem
-    console.log('handleBuyCurrencySelect', selectedItem)
     const { buyCurrency, sellCurrency, buyAmount, sellAmount } = this.state
 
     this.setState({
@@ -231,7 +228,7 @@ export default class AddOffer extends Component<any, any> {
 
   handleSellCurrencySelect = async (selectedItem) => {
     const { value, blockchain } = selectedItem
-    console.log('handleSellCurrencySelect', selectedItem)
+
     const { buyCurrency, sellCurrency, sellAmount, buyAmount } = this.state
 
     this.setState({
@@ -447,9 +444,7 @@ export default class AddOffer extends Component<any, any> {
   }
 
   checkPair = (value) => {
-    console.log('>>>>>> checkPair', value)
     const selected = actions.pairs.selectPairPartial(value)
-    console.log('>>>>>> after selected', selected)
     const check = selected.map(item => item.value).includes(this.state.buyCurrency)
 
     if (!check) {
