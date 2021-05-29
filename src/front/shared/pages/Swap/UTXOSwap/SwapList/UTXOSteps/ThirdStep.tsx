@@ -36,6 +36,7 @@ const ThirdStep = (props) => {
       withdrawTransactionHash,
       currencyName,
       explorerLink,
+      ethLikeCoin,
       etherscanLink,
     },
     text,
@@ -61,8 +62,8 @@ const ThirdStep = (props) => {
       try {
         let fetchedTx: any
 
-        if (currencyName === 'eth') { // TODO: needs to be improved when adding BNB
-          fetchedTx = await actions.eth.fetchTxInfo(txHash, (refreshTime - 5) * 1000)
+        if (currencyName === ethLikeCoin.toLowerCase()) { // TODO: needs to be improved when adding BNB
+          fetchedTx = await actions[ethLikeCoin.toLowerCase()].fetchTxInfo(txHash, (refreshTime - 5) * 1000)
 
           if (fetchedTx && fetchedTx.confirmed) {
             return setEthSwapWithdrawHashIsConfirmed(true)
@@ -96,7 +97,7 @@ const ThirdStep = (props) => {
   useEffect(() => {
     _mounted = true
     if (ethSwapWithdrawHash && !ethSwapWithdrawHashIsConfirmed){
-      checkTransactionHash(ethSwapWithdrawHash, 'eth', 20)
+      checkTransactionHash(ethSwapWithdrawHash, ethLikeCoin.toLowerCase(), 20)
     }
   }, [ethSwapWithdrawHash])
 
