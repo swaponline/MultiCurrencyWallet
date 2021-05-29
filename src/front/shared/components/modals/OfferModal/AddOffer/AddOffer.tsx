@@ -98,6 +98,9 @@ export default class AddOffer extends Component<any, any> {
       minimalestAmountForBuy: MIN_AMOUNT_OFFER[buyCurrency] || MIN_AMOUNT_OFFER.btc,
       minimalestAmountForSell: MIN_AMOUNT_OFFER[sellCurrency] || MIN_AMOUNT_OFFER.eth,
       ethBalance: 0,
+      // @to-do buy and sell for support token-token orders
+      balanceForBuyTokenFee: 0,
+      balanceForSellTokenFee: 0,
     }
   }
 
@@ -107,7 +110,7 @@ export default class AddOffer extends Component<any, any> {
     actions.pairs.selectPairPartial(sellCurrency)
     this.checkBalance(sellCurrency)
     this.updateExchangeRate(sellCurrency, buyCurrency)
-    this.isEthToken(sellCurrency, buyCurrency)
+    this.isTokenOffer(sellCurrency, buyCurrency)
     this.getFee()
     this.checkEthBalance()
   }
@@ -117,6 +120,24 @@ export default class AddOffer extends Component<any, any> {
 
     this.correctMinAmountSell(sellCurrency)
     this.correctMinAmountBuy(buyCurrency)
+  }
+
+  checkBalanceForTokenFee = async () => {
+    const {
+      sellBlockchain,
+      buyBlockchain,
+    }
+    const balanceForBuyTokenFee = (buyBlockchain !== ``)
+      ? await actions[buyBlockchain.toLowerCase()].getBalance()
+      : 0
+    const balanceForSellTokenFee = (sellBlockchain !== ``)
+      ? await actions[sellBlockchain.toLowerCase()].getBalance()
+      : 0
+
+    this.setState({
+      balanceForBuyTokenFee,
+      balanceForSellTokenFee,
+    })
   }
 
   checkEthBalance = async () => {
@@ -150,7 +171,7 @@ export default class AddOffer extends Component<any, any> {
     })
   }
 
-  isEthToken = (sellCurrency, buyCurrency) => {
+  isTokenOffer = (sellCurrency, buyCurrency) => {
     const isTokenSell = erc20Like.isToken({ name: sellCurrency })
     const isTokenBuy = erc20Like.isToken({ name: buyCurrency })
 
@@ -221,7 +242,7 @@ export default class AddOffer extends Component<any, any> {
         this.handleBuyAmountChange(buyAmount)
         this.handleSellAmountChange(sellAmount)
       }
-      this.isEthToken(sellCurrency, value)
+      this.isTokenOffer(sellCurrency, value)
       this.getFee()
     }
   }
@@ -251,7 +272,7 @@ export default class AddOffer extends Component<any, any> {
         this.handleBuyAmountChange(buyAmount)
         this.handleSellAmountChange(sellAmount)
       }
-      this.isEthToken(value, buyCurrency)
+      this.isTokenOffer(value, buyCurrency)
       this.getFee()
     }
   }
@@ -438,7 +459,7 @@ export default class AddOffer extends Component<any, any> {
 
       actions.pairs.selectPairPartial(buyCurrency)
 
-      this.isEthToken(this.state.sellCurrency, this.state.buyCurrency)
+      this.isTokenOffer(this.state.sellCurrency, this.state.buyCurrency)
       this.getFee()
     })
   }
