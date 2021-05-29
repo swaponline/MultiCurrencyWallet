@@ -516,7 +516,10 @@ class Exchange extends PureComponent<any, any> {
   }
 
   fetchPairFees = async (updateCacheValue = false): Promise<void> => {
-    const { haveCurrency: sell, getCurrency: buy } = this.state
+    const {
+      haveCurrency: sell,
+      getCurrency: buy,
+    } = this.state
 
     this.setState(() => ({ isPending: true }))
 
@@ -558,8 +561,8 @@ class Exchange extends PureComponent<any, any> {
     const feeSellWallet = actions.core.getWallet({ currency: pairFees.sell.coin })
 
     const balances = {}
-    balances[`${buyWallet.currency}`] = await actions.core.fetchWalletBalance(buyWallet)
-    balances[`${sellWallet.currency}`] = await actions.core.fetchWalletBalance(sellWallet)
+    balances[`${buyCurrency.toUpperCase()}`] = await actions.core.fetchWalletBalance(buyWallet)
+    balances[`${sellCurrency.toUpperCase()}`] = await actions.core.fetchWalletBalance(sellWallet)
 
     if (balances[`${feeBuyWallet.currency}`] === undefined) {
       balances[`${feeBuyWallet.currency}`] = await actions.core.fetchWalletBalance(
@@ -721,10 +724,20 @@ class Exchange extends PureComponent<any, any> {
 
   checkBalanceForSwapPossibility = (checkParams) => {
     const { sellCurrency, buyCurrency, amount, fromType, isSilentError } = checkParams
+    const buyWallet = actions.core.getWallet({ currency: buyCurrency })
+    const sellWallet = actions.core.getWallet({ currency: sellCurrency })
+    const {
+      coin: sellCoin,
+      blockchain: sellBlockchain,
+    } = getCoinInfo(sellCurrency)
+    const {
+      coin: buyCoin,
+      blockchain: buyBlockchain,
+    } = getCoinInfo(buyCurrency)
     const { pairFees, balances } = this.state
 
-    const isUserSellToken = ethToken.isEthToken({ name: sellCurrency })
-    const isUserBuyToken = ethToken.isEthToken({ name: buyCurrency })
+    const isUserSellToken = sellWallet.isToken
+    const isUserBuyToken = buyWallet.isToken
     const sellBalance = new BigNumber(balances[sellCurrency.toUpperCase()] || 0)
     const ethBalance = new BigNumber(this.getEthBalance())
     let hasEnoughBalanceSellAmount = false
@@ -733,40 +746,26 @@ class Exchange extends PureComponent<any, any> {
     let hasEnoughBalanceForFullPayment = false
     let balanceIsOk = false
 
-console.log('>>>> checkBalanceForSwapPossibility', checkParams, isUserSellToken, isUserBuyToken,
-  hasEnoughBalanceSellAmount,
-  hasEnoughBalanceForSellFee,
-  hasEnoughBalanceForBuyFee,
-  hasEnoughBalanceForFullPayment
-)
-return true
     try {
       const sellFee = pairFees && pairFees.sell?.fee
       const buyFee = pairFees && pairFees.buy?.fee
       const isUTXOSell = pairFees && pairFees.sell?.isUTXO
+      const sellBlockchainBalance = new BigNumber((isUserSellToken) ? balances[sellBlockchain] : 0)
+      const buyBlockchainBalance = new BigNumber((isUserBuyToken) ? balances[buyBlockchain] : 0)
 
       hasEnoughBalanceSellAmount = sellBalance.isGreaterThanOrEqualTo(amount)
 
-      hasEnoughBalanceForSellFee = isUserSellToken
-        ? ethBalance.isGreaterThanOrEqualTo(sellFee)
-        : sellBalance.isGreaterThanOrEqualTo(sellFee)
-
-      hasEnoughBalanceForBuyFee = isUserBuyToken
-        ? ethBalance.isGreaterThanOrEqualTo(buyFee)
-        : sellBalance.isGreaterThanOrEqualTo(buyFee)
-
-      if (isUserSellToken && hasEnoughBalanceSellAmount && ethBalance.isGreaterThanOrEqualTo(sellFee)) {
+      if (isUserSellToken && hasEnoughBalanceSellAmount && sellBlockchainBalance.isGreaterThanOrEqualTo(sellFee)) {
         hasEnoughBalanceForFullPayment = true
-      } else if (isUserBuyToken && (fromType === AddressType.Custom || hasEnoughBalanceSellAmount) && ethBalance.isGreaterThanOrEqualTo(buyFee)) {
+      } else if (isUserBuyToken && (fromType === AddressType.Custom || hasEnoughBalanceSellAmount) &&  buyBlockchainBalance.isGreaterThanOrEqualTo(buyFee)) {
         hasEnoughBalanceForFullPayment = true
-      } else if (isUTXOSell && sellBalance.isGreaterThanOrEqualTo(new BigNumber(amount).plus(sellFee)) && ethBalance.isGreaterThanOrEqualTo(buyFee)) {
+      } else if (isUTXOSell && sellBalance.isGreaterThanOrEqualTo(new BigNumber(amount).plus(sellFee)) && buyBlockchainBalance.isGreaterThanOrEqualTo(buyFee)) {
         hasEnoughBalanceForFullPayment = true
-      } else if (fromType === AddressType.Custom && ethBalance.isGreaterThanOrEqualTo(buyFee)) {
+      } else if (fromType === AddressType.Custom && buyBlockchainBalance.isGreaterThanOrEqualTo(buyFee)) {
         hasEnoughBalanceForFullPayment = true
       } else if (sellBalance.isGreaterThanOrEqualTo(new BigNumber(amount).plus(sellFee))) {
         hasEnoughBalanceForFullPayment = true
       }
-
       if (hasEnoughBalanceForFullPayment) {
         balanceIsOk = true
       }
@@ -775,7 +774,6 @@ return true
       this.reportError(error, `from checkBalanceForSwapPossibility()`)
       return false
     }
-
     if (isSilentError) {
       return balanceIsOk
     }

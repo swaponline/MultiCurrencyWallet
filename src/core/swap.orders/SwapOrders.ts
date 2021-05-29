@@ -253,7 +253,6 @@ class SwapOrders extends aggregation(ServiceInterface, Collection) {
     } = getCoinInfo(sellCurrency)
 
     // Error in the bottom line: Cannot read property 'precision' of undefined
-    console.log('>>>>>>>>>>>> constants.COIN_DATA', constants.COIN_DATA, constants)
     const roundedBuyAmount = new BigNumber(buyAmount).dp(constants.COIN_DATA[buy].precision)
     const roundedSellAmount = new BigNumber(sellAmount).dp(constants.COIN_DATA[sell].precision)
 
