@@ -242,7 +242,7 @@ class SwapOrders extends aggregation(ServiceInterface, Collection) {
 
     const buyData = getCoinInfo(buyCurrency.toUpperCase())
     const sellData = getCoinInfo(sellCurrency.toUpperCase())
-    console.log('>>> buyData, sellData', buyData, sellData)
+
     const {
       coin: buy,
       blockchain: buyBlockchain,

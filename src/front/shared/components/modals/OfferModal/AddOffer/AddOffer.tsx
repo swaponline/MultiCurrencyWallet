@@ -134,7 +134,6 @@ export default class AddOffer extends Component<any, any> {
       ? await actions[sellBlockchain.toLowerCase()].getBalance()
       : 0
 
-console.log('>>>> checkBalanceForTokenFee', sellBlockchain, buyBlockchain, balanceForSellTokenFee, balanceForBuyTokenFee)
     this.setState({
       balanceForBuyTokenFee,
       balanceForSellTokenFee,

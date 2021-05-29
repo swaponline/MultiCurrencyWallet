@@ -146,7 +146,6 @@ export default class DropDown extends Component<DropDownProps, DropDownState> {
       itemsFiltered = items
         .filter((item) => item.name.includes(inputValue.toUpperCase()))
         .filter((item) => item.value !== selectedValue)
-        console.log('>>>>>>> DropDown >>>>> selectedValue', selectedValue, items, itemsFiltered)
     }
 
     const noOptions = itemsFiltered.length === 0

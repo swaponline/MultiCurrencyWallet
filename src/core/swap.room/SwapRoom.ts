@@ -78,7 +78,7 @@ class SwapRoom extends ServiceInterface {
     const defaultRoomName = this.app.env.isTest ? 'tests.swap.online'
       : this.app.isMainNet()
         ? (this.app.env.isBinance) ? 'bsc.swap.online' : 'swap.online'
-        : (this.app.env.isBinance) ? 'bsc-testnet.swap.online' : 'testnet-tt.swap.online'
+        : (this.app.env.isBinance) ? 'bsc-testnet.swap.online' : 'testnet.swap.online'
 
     this.roomName = this._config.roomName || defaultRoomName
 

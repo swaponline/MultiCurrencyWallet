@@ -66,12 +66,12 @@ type OrderBookState = {
 const filterMyOrders = (orders, peer) => orders
   .filter(order => order.owner.peer === peer)
 
-const filterOrders = (orders, filter) => { console.log('>>>> filter orders', orders, filter); return orders
+const filterOrders = (orders, filter) => orders
   .filter(order => order.isProcessing !== true)
   .filter(order => order.isHidden !== true)
   .filter(order => Pair.check(order, filter))
   .sort((a, b) => Pair.compareOrders(b, a))
-}
+
 @connect(({
   rememberedOrders,
   core: { orders, filter },
@@ -105,7 +105,6 @@ class OrderBook extends Component {
       blockchain: buyBlockchain,
     } = getCoinInfo(buyCurrency)
 
-console.log('>>>>>> OrderBook', orders, sellCurrency, buyCurrency)
     const sellOrders = orders.filter(order =>
       order.buyCurrency.toLowerCase() === buyCoin.toLowerCase() &&
       
