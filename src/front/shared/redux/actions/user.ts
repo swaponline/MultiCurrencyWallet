@@ -291,7 +291,7 @@ const getTokensBalances = async () => {
 const customRate = (cur) => {
   const widgetTokens = window.widgetERC20Tokens
 
-  const targetToken = widgetTokens.length && widgetTokens.find((token) => {
+  const targetToken = widgetTokens?.length && widgetTokens.find((token) => {
     return token.name.toLowerCase() === cur.toLowerCase()
   })
 
