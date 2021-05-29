@@ -13,6 +13,7 @@ import { AddressFormat } from 'domain/address'
 import metamask from 'helpers/metamask'
 import { Button } from 'components/controls'
 import ethToken from 'helpers/ethToken'
+import erc20Like from 'common/erc20Like'
 import Option from './Option/Option'
 import { links } from 'helpers'
 import { localisedUrl } from 'helpers/locale'
@@ -78,6 +79,16 @@ type AddressSelectProps = {
   allData: IUniversalObj[]
 }
 
+type DropDownOptions = {
+  value: string
+  disabled?: boolean
+  reduceSelectedItemText?: boolean
+  dontSelect?: boolean
+  hidden?: boolean
+  title: JSX.Element
+  icon?: SVGElement
+}
+
 type AddressSelectState = {
   address: string
   currency: string
@@ -87,7 +98,10 @@ type AddressSelectState = {
   isMetamaskConnected: boolean
   isScanActive: boolean
   hasError: boolean
+  dropDownOptions: Array<DropDownOptions>
 }
+
+
 
 @withRouter
 @connect(
@@ -129,6 +143,7 @@ class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
       //@ts-ignore: strictNullChecks
       metamaskAddress: metamask.getAddress(),
       isScanActive: false,
+      dropDownOptions: [],
     }
   }
 
@@ -137,20 +152,12 @@ class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
   }
 
   getInternalAddress = () => {
-    const { allData } = this.props
-    const ticker = this.getTicker()
-    let internalAddress
-    
-    for (let i = 0; i < allData.length; i++) {
-      const item = allData[i]
-      
-      if (ticker === item.currency && item.address) {
-        internalAddress = item.address
-        break
-      }
-    }
-
-    return internalAddress
+    const { currency } = this.props
+    const { address } = actions.core.getWallet({
+      currency,
+      addressType: AddressType.Internal,
+    })
+    return address
   }
 
   isCurrencyInInternalWallet = () => {
@@ -187,6 +194,7 @@ class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
 
   componentDidMount() {
     metamask.web3connect.on('updated', this.onWeb3Updated)
+    this.prepareDropDownOptions()
   }
 
   componentWillUnmount() {
@@ -205,8 +213,8 @@ class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
       this.setState({
         currency: newCurrency,
         hasError,
-        //@ts-ignore: strictNullChecks
-        selectedType,
+      }, () => {
+        this.prepareDropDownOptions(selectedType)
       })
     }
   }
@@ -341,24 +349,22 @@ class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
     })
   }
 
-  render() {
+  prepareDropDownOptions = (newSelectedType?) => {
     const {
       currency,
       balance,
-      isDark,
-      label,
       role,
-      placeholder = 'Enter address',
     } = this.props
 
     const {
-      selectedType,
-      walletAddressFocused,
+      selectedType: oldSelectedType,
       isMetamaskConnected,
       metamaskAddress,
-      isScanActive,
-      hasError,
     } = this.state
+
+    let selectedType = (newSelectedType && oldSelectedType !== newSelectedType)
+      ? newSelectedType
+      : oldSelectedType
 
     const ticker = this.getTicker()
 
@@ -374,30 +380,20 @@ class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
     const isInternalOptionDisabled =
       role === AddressRole.Send && (!internalBalance || internalBalance === 0)
 
-    const isMetamaskOption = ethToken.isEthOrEthToken({ name: currency })
+    const isMetamaskOption = erc20Like.erc20.isToken({ name: currency }) || currency.toUpperCase() === `ETH`
 
     // Forbid `Custom address` option when using ethereum/tokens
     // because you need to make a request to the contract
-    const isCustomAddressOption = !ethToken.isEthOrEthToken({ name: currency })
+    const isCustomAddressOption = !erc20Like.isToken({ name: currency })
+      && currency.toUpperCase() !== `ETH`
+      && currency.toUpperCase() !== `BNB` // @to-do - need refacting - may be use walletData
+
     const isUTXOModel = COIN_DATA[ticker] && COIN_DATA[ticker].model === COIN_MODEL.UTXO
     const isCustomOptionInputHidden = role === AddressRole.Send && isUTXOModel
 
     const web3Icon = metamask.isConnected()
       ? web3Icons[metamask.web3connect.getProviderType()] || false
       : web3Icons[metamask.web3connect.getInjectedType()] || false
-
-    // =======================================================
-    // Drop Down Options =====================================
-
-    type DropDownOptions = {
-      value: string
-      disabled?: boolean
-      reduceSelectedItemText?: boolean
-      dontSelect?: boolean
-      hidden?: boolean
-      title: JSX.Element
-      icon?: SVGElement
-    }
 
     const dropDownOptions: DropDownOptions[] = []
 
@@ -473,6 +469,38 @@ class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
         },
       )
     }
+
+    const hasSelectedType = dropDownOptions.filter(({ value }) => value === selectedType)
+    if (!hasSelectedType.length && dropDownOptions.length) selectedType = dropDownOptions[0].value
+
+    this.setState({
+      dropDownOptions,
+      selectedType,
+    })
+  }
+
+  render() {
+    const {
+      isDark,
+      label,
+      role,
+      placeholder = 'Enter address',
+    } = this.props
+
+    const {
+      selectedType,
+      walletAddressFocused,
+      isMetamaskConnected,
+      isScanActive,
+      hasError,
+      dropDownOptions,
+    } = this.state
+
+    const ticker = this.getTicker()
+
+    const isUTXOModel = COIN_DATA[ticker] && COIN_DATA[ticker].model === COIN_MODEL.UTXO
+    const isCustomOptionInputHidden = role === AddressRole.Send && isUTXOModel
+
 
     // =======================================================
 
