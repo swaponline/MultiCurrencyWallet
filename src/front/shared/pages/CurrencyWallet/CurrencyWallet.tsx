@@ -116,6 +116,7 @@ class CurrencyWallet extends Component<any, any> {
         isLoading: false,
         infoAboutCurrency,
         filterValue: walletAddress || address || '',
+        ticker,
         token: erc20Like.isToken({ name: ticker }),
       }
     }
