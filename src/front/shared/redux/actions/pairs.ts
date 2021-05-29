@@ -16,12 +16,12 @@ type Currency = {
 const filter = (value, tikers, items): Currency[] => {
   const selectedPairsBase = tikers
     .map(ticker => parsePair(ticker))
-    .filter(({ BASE }) => BASE.toLowerCase() === value)
+    .filter(({ BASE }) => BASE.toLowerCase() === value.toLowerCase())
     .map(({ MAIN, BASE }) => MAIN)
 
   const selectedPairsMain = tikers
     .map(ticker => parsePair(ticker))
-    .filter(({ MAIN }) => MAIN.toLowerCase() === value)
+    .filter(({ MAIN }) => MAIN.toLowerCase() === value.toLowerCase())
     .map(({ MAIN, BASE }) => BASE)
 
   const pairs = selectedPairsBase.concat(selectedPairsMain)
