@@ -134,6 +134,7 @@ export default class AddOffer extends Component<any, any> {
       ? await actions[sellBlockchain.toLowerCase()].getBalance()
       : 0
 
+console.log('>>>> checkBalanceForTokenFee', sellBlockchain, buyBlockchain, balanceForSellTokenFee, balanceForBuyTokenFee)
     this.setState({
       balanceForBuyTokenFee,
       balanceForSellTokenFee,
@@ -452,13 +453,22 @@ export default class AddOffer extends Component<any, any> {
   }
 
   switching = async () => {
-    const { sellCurrency, buyCurrency, sellAmount, buyAmount } = this.state
+    const {
+      sellCurrency,
+      buyCurrency,
+      sellAmount,
+      buyAmount,
+      balanceForSellTokenFee,
+      balanceForBuyTokenFee,
+    } = this.state
 
     this.setState({
       sellAmount: '',
       buyAmount: '',
       sellCurrency: buyCurrency,
+      balanceForSellTokenFee: balanceForBuyTokenFee,
       buyCurrency: sellCurrency,
+      balanceForBuyTokenFee: balanceForSellTokenFee,
     }, async () => {
       await this.checkBalance(buyCurrency)
       await this.updateExchangeRate(buyCurrency, sellCurrency)
