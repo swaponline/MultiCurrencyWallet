@@ -75,6 +75,25 @@ export default class SwapList extends Component<any, any> {
     console.groupEnd()
   }
 
+  getStepName = () => {
+    const {
+      flow: {
+        stepNumbers,
+        step
+      }
+     } = this.props
+
+     let stepName = ''
+
+    Object.keys(stepNumbers).forEach((key) => {
+      if (stepNumbers[key] === step) {
+        stepName = key
+      }
+    })
+
+    return stepName
+  }
+
   render() {
     const {
       swap: {
@@ -103,7 +122,7 @@ export default class SwapList extends Component<any, any> {
     const FourthStep = (isUTXOSide) ? UTXOFourthStep : ABFourthStep
 
     const UtxoToAbTexts = (flow.isTaker()) ? TakerUtxoToAbTexts : MakerUtxoToAbtTexts
-    const EthToBtcLike = (flow.isTaker()) ? TakerAbToUtxoTexts : MakerAbToUtxoTexts
+    const AbToUtxoTexts = (flow.isTaker()) ? TakerAbToUtxoTexts : MakerAbToUtxoTexts
 
     const swapTexts = (
       <Fragment>
@@ -113,7 +132,7 @@ export default class SwapList extends Component<any, any> {
         }
         {
           ['EthToBtcLike', 'EthTokenToBtcLike'].includes(this.props.swapName) &&
-            <EthToBtcLike step={flow.step} flow={flow} swap={swap} coinName={currencyName} />
+            <AbToUtxoTexts step={flow.step} flow={flow} swap={swap} coinName={currencyName} />
         }
       </Fragment>
     )
