@@ -378,7 +378,12 @@ class Exchange extends PureComponent<any, any> {
   }
 
   getDefaultWalletType(currency) {
-    const storageType = this.getLocalStorageWalletType(currency)
+    const {
+      coin: currencyName,
+      blockchain,
+    } = getCoinInfo(currency)
+
+    const storageType = this.getLocalStorageWalletType(currencyName)
 
     if (storageType) {
       return storageType
@@ -386,18 +391,19 @@ class Exchange extends PureComponent<any, any> {
 
     let resultType = 'Internal'
 
-    if (COIN_DATA[currency]) {
-      if (COIN_DATA[currency].model === COIN_MODEL.UTXO) {
+    if (COIN_DATA[currencyName]) {
+      if (COIN_DATA[currencyName].model === COIN_MODEL.UTXO) {
         resultType = AddressType.Custom
       } else if (
-        COIN_DATA[currency].type === COIN_TYPE.ETH_TOKEN ||
-        COIN_DATA[currency].model === COIN_MODEL.AB
+        COIN_DATA[currencyName].type === COIN_TYPE.ETH_TOKEN ||
+        COIN_DATA[currencyName].type === COIN_TYPE.BNB_TOKEN ||
+        COIN_DATA[currencyName].model === COIN_MODEL.AB
       ) {
         resultType = AddressType.Metamask
       }
     } else {
       console.group('Exchange > %c getDefaultWalletType', 'color: yellow;')
-      console.warn(`Unknown coin ${currency}`)
+      console.warn(`Unknown coin ${currencyName}`)
       console.groupEnd()
     }
 

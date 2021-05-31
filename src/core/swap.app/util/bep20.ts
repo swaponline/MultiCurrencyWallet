@@ -1,5 +1,5 @@
 import constants from '../constants'
-import { BLOCKCHAIN as BLOCKCHAIN_TYPE, COIN_TYPE, TOKEN_STANDART } from '../constants/COINS'
+import { BLOCKCHAIN as BLOCKCHAIN_TYPE, COIN_TYPE, TOKEN_STANDARD } from '../constants/COINS'
 import typeforce from './typeforce'
 
 
@@ -9,7 +9,7 @@ const register = (code, precision) => {
     ticker: code.toUpperCase(),
     name: code.toUpperCase(),
     blockchain: BLOCKCHAIN_TYPE.BNB,
-    standart: TOKEN_STANDART.BEP20,
+    standart: TOKEN_STANDARD.BEP20,
     type: COIN_TYPE.BNB_TOKEN,
     model: `AB`,
     precision: precision,
