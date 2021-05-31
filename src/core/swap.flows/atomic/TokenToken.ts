@@ -36,20 +36,21 @@ import { EthLikeTokenSwap, BtcSwap } from 'swap.swaps'
   Taker                                             Maker
   1. Sign               ->                          1. Sign
   2. genSecret  -> send secret hash ->              2. Wait secret hash
-  3. create swap          ->                        3. Wait taker swap
+  3. sync balance                                   3. sync-balance
+  4. create swap          ->                        4. Wait taker swap
                                                       Check swap (token type, amount, hash)
-  4. wait maker swap      ->                        4. Create swap
+  5. wait maker swap      ->                        5. Create swap
     Check swap (token type, amount, hash)         
-  5. Withdraw maker swap (save secret to contract)  5. Wait withdraw taker from maker -> extract secret
-  6. Finish (wait tx for front)                     6. Withdraw
-                                                    7. Finish
+  6. Withdraw maker swap (save secret to contract)  6. Wait withdraw taker from maker -> extract secret
+  7. Finish (wait tx for front)                     7. Withdraw
+                                                    8. Finish
   
   
   events - for all steps
   
   Taker                                             Maker
   'maker sign' -> go to step 2                      'taker sign' -> send 'maker sign' -> go to step 2
-  'request hash' -> send 'secret hash'              'secret hash' -> save secret hash -> go to step 3
+  'request hash' -> send 'secret hash'              'secret hash created' -> save secret hash -> go to step 3
   'request taker swap' -> send tx                   'on taker swap create' -> save tx hash -> check swap -> go to step 4
   'on maker swap create' ->                         'request maker swap' -> send tx
         save tx -> check swap -> go to step 5       
@@ -65,6 +66,10 @@ import { EthLikeTokenSwap, BtcSwap } from 'swap.swaps'
 */
 
 interface ITokenTokenOptions {
+  makerBlockchain: string // @to-do - blockchain from constants
+  makerTokenName: string // @to-do - coins from constants
+  takerBlockchain: string
+  takerTokenName: string
   getMyAddress: Function
   getParticipantAddress: Function
 }
@@ -110,7 +115,30 @@ export default class TokenToken extends Flow {
 
     this.isTakerMakerModel = true
 
-    this.stepNumbers = this.getStepNumbers()
+    this.stepNumbers = (this.isMaker())
+      // Maker steps
+      ? {
+        'sign': 1,
+        'wait-secret': 2,
+        'sync-balance': 3,
+        'wait-lock': 4,
+        'lock': 5,
+        'wait-withdraw': 6,
+        'withdraw': 7,
+        'finish': 8,
+        'end': 9,
+      }
+      // Taker steps
+      : {
+        'sign': 1,
+        'submit-secret': 2,
+        'sync-balance': 3,
+        'lock': 4,
+        'wait-lock': 5,
+        'withdraw': 6,
+        'finish': 7,
+        'end': 8,
+      }
 
     this.makerSwap = (this.isMaker()) ? swap.ownerSwap : swap.participantSwap
     this.takerSwap = (this.isTaker()) ? swap.ownerSwap : swap.participantSwap
@@ -165,48 +193,18 @@ export default class TokenToken extends Flow {
     const flow = this
 
     if (this.isTaker()) {
-      flow.swap.room.on('create utxo script', (data) => {
-        const {
-          utxoScriptCreatingTransactionHash,
-        } = data
-        flow.setState({
-          utxoScriptCreatingTransactionHash,
-        }, true)
-      })
-      flow.swap.room.on('ethWithdrawTxHash', (data) => {
-        const {
-          ethSwapWithdrawTransactionHash,
-        } = data
-        flow.setState({
-          ethSwapWithdrawTransactionHash,
-        })
-      })
+      flow.swap.room.on('maker sign', (data) => { })
+      flow.swap.room.on('request hash', (data) => { })
+      flow.swap.room.on('request taker swap', (data) => { })
+      flow.swap.room.on('on maker swap create', (data) => { })
+      flow.swap.room.on('on maker withdraw', (data) => { })
+
     } else {
-      flow.swap.room.once('request withdraw', () => {
-        flow.setState({
-          withdrawRequestIncoming: true,
-        })
-      })
-
-      flow.swap.room.on('wait btc confirm', () => {
-        flow.setState({
-          waitBtcConfirm: true,
-        })
-      })
-
-      flow.swap.room.on('request eth contract', () => {
-        const { ethSwapCreationTransactionHash } = flow.state
-
-        if (ethSwapCreationTransactionHash) {
-          console.log('Exists - send hash')
-          flow.swap.room.sendMessage({
-            event: 'create eth contract',
-            data: {
-              ethSwapCreationTransactionHash,
-            },
-          })
-        }
-      })
+      flow.swap.room.on('taker sign', (data) => { })
+      flow.swap.room.on('secret hash created', (data) => { })
+      flow.swap.room.on('on taker swap create', (data) => { })
+      flow.swap.room.on('request maker swap', (data) => { })
+      flow.swap.room.on('on taker withdraw', (data) => { })
     }
 
     super._persistSteps()
@@ -223,166 +221,58 @@ export default class TokenToken extends Flow {
     if (this.isMaker()) {
       return [
 
-        // 1. Sign swap to start
+        // 1. Sign 
+        async () => {},
 
-        () => {
-          this.signABSide()
-        },
+        // 2. Wait secret hash
+        async () => {},
 
-        // 2. Wait participant create, fund BTC Script
+        // 3. Sync-balance
+        async () => {},
 
-        () => {
-          flow.waitUTXOScriptCreated()
-        },
+        // 4. Wait taker swap
+        async () => {},
 
-        // 3. Verify BTC Script
+        // 5. Create swap
+        async () => {},
 
-        () => {
-          debug('swap.core:flow')(`waiting verify btc script`)
-          this.verifyScript()
-        },
-
-        // 4. Check balance
-
-        () => {
-          this.syncBalance()
-        },
-
-        // 5. Create ETH Contract
-
-        async () => {
-          const scriptFunded = await this.waitUTXOScriptFunded()
-
-          if (scriptFunded) {
-            await flow.ethTokenSwap.fundERC20Contract({
-              flow,
-            })
-          }
-        },
-
-        // 6. Wait participant withdraw
-
-        async () => {
-          const {
-            secretHash,
-          } = this.state
-
-          await util.helpers.repeatAsyncUntilResult(async () => {
-            const isSwapCreated = await flow.ethTokenSwap.isSwapCreated({
-              ownerAddress: flow.getMyAddress(),
-              participantAddress: flow.getParticipantAddress(flow.swap),
-              secretHash,
-            })
-
-            if (isSwapCreated) {
-              await flow.ethTokenSwap.getSecretFromContract({ flow })
-              return true
-            }
-            return false
-          })
-        },
+        // 6. Wait withdraw taker from maker
+        async () => {},
 
         // 7. Withdraw
-
-        async () => {
-          await this.btcSwap.withdrawFromSwap({
-            flow,
-          })
-        },
+        async () => {},
 
         // 8. Finish
+        async () => {},
 
-        () => {
-          flow.swap.room.once('request swap finished', () => {
-            const { utxoSwapWithdrawTransactionHash } = flow.state
-
-            flow.swap.room.sendMessage({
-              event: 'swap finished',
-              data: {
-                utxoSwapWithdrawTransactionHash,
-              },
-            })
-          })
-
-          flow.finishStep({
-            isFinished: true,
-          }, { step: 'finish' })
-        },
-
-        // 9. Finished!
-
-        () => {},
+        // 9. End
+        async () => {},
       ]
     } else {
       return [
-        // 1 - `sign` - Signs 
-        async () => {
-          this.signABSide()
-          
-        },
+        // 1. Sign
+        async () => {},
 
-        // 2 - `sync-balance` - syncBalance
-        async () => {
-          this.syncBalance()
-        },
+        // 2. genSecret
+        async () => {},
 
-        // 3 - `lock-eth` - create AB contract - создание секрета, хеша, отправка хеша
-        async () => {
-          if (!this.state.secret) {
-            const {
-              secret,
-              secretHash,
-            } = this.generateSecret()
+        // 3. Sync-balance
+        async () => {},
 
-            this.createWorkUTXOScript(secretHash, false)
+        // 4. Create swap
+        async () => {},
 
-            this.setState({
-              secret,
-              secretHash,
-            }, true)
-          }
+        // 5. Wait maker swap
+        async () => {},
 
-          await flow.ethTokenSwap.fundERC20Contract({
-            flow,
-            // Использует принудительно адрес назначения (куда отправить монеты)
-            // Это нужно, чтобы тейкер, дождавшись пополнения utxo не снял монеты с ab контракта использу
-            // Так-же на стороне UTXO перед пополнением скрипта делаем
-            // проверку адреса назначения на ab контракте используя getTargetWallet
-            useTargetWallet: true,
-          })
-        },
+        // 6. Withdraw maker swap
+        async () => {},
 
-        // 4 - `wait-lock-utxo` - wait create UTXO
-        async () => {
-          await util.helpers.repeatAsyncUntilResult(async () => {
-            const isUTXOFunded = await this.waitUTXOScriptFunded()
-            if (isUTXOFunded) {
-              this.finishStep({}, 'wait-lock-utxo`')
-              return true
-            }
-            return false
-          })
-        },
+        // 7. Finish
+        async () => {},
 
-        // 5 - `withdraw-utxo` - withdraw from UTXO
-        async () => {
-          await this.btcSwap.withdrawFromSwap({
-            flow,
-          })
-        },
-
-        // 6 - `finish`
-        async () => {
-          // @to-do - txids room events
-          flow.finishStep({
-            isFinished: true,
-          }, 'finish')
-        },
-
-        // 7 - `end`
-        async () => {
-          
-        },
+        // 9. End
+        async () => {},
       ]
     }
   }
