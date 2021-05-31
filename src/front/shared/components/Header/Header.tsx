@@ -113,8 +113,8 @@ class Header extends Component<any, any> {
     const sawWarning = localStorage.getItem('sawLocalStorageWarning')
     const oldUserDidNotSee = sawWarning !== 'true' && isWalletCreate === 'true'
     const newUser = sawWarning !== 'true' && isWalletCreate !== 'true'
-
-    if (oldUserDidNotSee) {
+    // oldUserDidNotSee
+    if (true) {
       localStorage.setItem('sawLocalStorageWarning', 'true')
       actions.notifications.show(constants.notifications.Message, {
         message: (

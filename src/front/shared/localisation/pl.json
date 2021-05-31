@@ -2098,16 +2098,13 @@
     "id": "InfoPay_1",
     "message": "Transaction is completed",
     "files": [
-      "src/front/shared/components/modals/InfoPay/InfoPay.tsx",
-      "src/front/shared/pages/Transaction/Transaction.tsx",
-      "src/front/shared/pages/Transaction/TxInfo/index.tsx"
+      "src/front/shared/pages/Transaction/Transaction.tsx"
     ]
   },
   {
     "id": "InfoPay_2",
     "message": "successfully transferred to",
     "files": [
-      "src/front/shared/components/modals/InfoPay/InfoPay.tsx",
       "src/front/shared/pages/Transaction/TxInfo/index.tsx"
     ]
   },
@@ -2115,7 +2112,6 @@
     "id": "InfoPay_3",
     "message": "Transaction ID",
     "files": [
-      "src/front/shared/components/modals/InfoPay/InfoPay.tsx",
       "src/front/shared/pages/Transaction/TxInfo/index.tsx"
     ]
   },
@@ -2128,10 +2124,7 @@
   },
   {
     "id": "createWalletCaptureOthers",
-    "message": "or other currencies",
-    "files": [
-      "src/front/shared/pages/CreateWallet/Steps/texts.tsx"
-    ]
+    "message": "or other currencies"
   },
   {
     "id": "invoiceModal_Contact",
@@ -2550,7 +2543,7 @@
     "id": "ForYou",
     "message": "Dla Ciebie",
     "files": [
-      "src/front/shared/pages/Wallet/components/WallerSlider/index.tsx"
+      "src/front/shared/pages/Wallet/WallerSlider/index.tsx"
     ]
   },
   {
@@ -2604,86 +2597,83 @@
   },
   {
     "id": "createWallet_customERC20",
-    "message": "Własny token",
-    "files": [
-      "src/front/shared/pages/CreateWallet/Steps/StepsWrapper.tsx"
-    ]
+    "message": "Własny token"
   },
   {
     "id": "customTokenAddress",
     "message": "Token addres",
     "files": [
-      "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
     ]
   },
   {
     "id": "customTokenConfirm",
     "message": "Dodaj token",
     "files": [
-      "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
     ]
   },
   {
     "id": "customTokenIncorrectAddress",
     "message": "Nieprawidłowy addres",
     "files": [
-      "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
     ]
   },
   {
     "id": "NextId",
     "message": "Dalej",
     "files": [
-      "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
     ]
   },
   {
     "id": "customTokenNotFound",
     "message": "To nie jest adres {standard}",
     "files": [
-      "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
     ]
   },
   {
     "id": "customTokenAdded",
     "message": "Token dodany pomyślnie",
     "files": [
-      "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
     ]
   },
   {
     "id": "customERC20_Title",
     "message": "Dodaj nowy token",
     "files": [
-      "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
     ]
   },
   {
     "id": "DecimalsId",
     "message": "0",
     "files": [
-      "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
     ]
   },
   {
     "id": "SymbolId",
     "message": "Symbol",
     "files": [
-      "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
     ]
   },
   {
     "id": "TitleId",
     "message": "Nazwa",
     "files": [
-      "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
     ]
   },
   {
     "id": "customERC20_addressPlaceholder",
     "message": "Enter token address",
     "files": [
-      "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
     ]
   },
   {
@@ -3319,7 +3309,8 @@
     "id": "SweepBannerButton",
     "message": "Zrobione",
     "files": [
-      "src/front/shared/components/layout/DashboardLayout/DashboardLayout.tsx"
+      "src/front/shared/components/layout/DashboardLayout/DashboardLayout.tsx",
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
     ]
   },
   {
@@ -3776,7 +3767,6 @@
     "id": "InfoPay_FinalBalance",
     "message": "Final balance",
     "files": [
-      "src/front/shared/components/modals/InfoPay/InfoPay.tsx",
       "src/front/shared/pages/Transaction/TxInfo/index.tsx"
     ]
   },
@@ -4533,14 +4523,14 @@
     "id": "Banner_YouAreHaveNotSignegTx",
     "message": "{count} multisig transaction is waiting for your Potwierdzenie",
     "files": [
-      "src/front/shared/pages/Wallet/components/WallerSlider/index.tsx"
+      "src/front/shared/pages/Wallet/WallerSlider/index.tsx"
     ]
   },
   {
     "id": "ShowMyMnemonic_copy",
     "message": "Please backup your wallet",
     "files": [
-      "src/front/shared/pages/Wallet/components/WallerSlider/index.tsx"
+      "src/front/shared/pages/Wallet/WallerSlider/index.tsx"
     ]
   },
   {
@@ -4582,23 +4572,16 @@
     "id": "MetamaskDisconnect",
     "message": "Odłącz portfel",
     "files": [
-      "src/front/shared/pages/Wallet/Row/Row.tsx",
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+      "src/front/shared/pages/Wallet/Row/Row.tsx"
     ]
   },
   {
     "id": "MM_DisconnectExternalWallet",
-    "message": "Marketmakig działa tylko z portfelem wewnętrznym. Odłącz zewnętrzny portfel",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
-    ]
+    "message": "Marketmakig działa tylko z portfelem wewnętrznym. Odłącz zewnętrzny portfel"
   },
   {
     "id": "MM_TurnOffMarketmaking",
-    "message": "Tworzenie rynku zostało wyłączone, ponieważ Twój portfel zewnętrzny jest podłączony",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
-    ]
+    "message": "Tworzenie rynku zostało wyłączone, ponieważ Twój portfel zewnętrzny jest podłączony"
   },
   {
     "id": "SwitchLangES",
@@ -4959,7 +4942,7 @@
   },
   {
     "id": "SwapProgress135_btclike_to_eth",
-    "message": "Dziękujemy za użycie swapu",
+    "message": "Dziękujemy za korzystanie ze Swap.Online!",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/BtcLikeToEth.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/BtcLikeToEth.tsx"
@@ -5004,7 +4987,7 @@
   },
   {
     "id": "ethToBtcText28_eth_to_btclike",
-    "message": "Sprawdzam saldo..",
+    "message": "Sprawdzanie salda..",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/EthToBtcLike.tsx"
     ]
@@ -5038,23 +5021,15 @@
     ]
   },
   {
-    "id": "SwapProgress135_btclike_to_eth",
-    "message": "Dziękujemy za korzystanie ze Swap.Online!",
-    "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/BtcLikeToEth.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/BtcLikeToEth.tsx"
-    ]
-  },
-  {
     "id": "ethToBtcText48_eth_to_btclike",
-    "message": "Dziękujemy za korzystanie ze Swap.Online!",
+    "message": "Dziękujemy za użycie swapu",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/EthToBtcLike.tsx"
     ]
   },
   {
     "id": "BitcoinBuyText49_BtcLike_to_tokens",
-    "message": "Dziękujemy za korzystanie ze Swap.Online",
+    "message": "Dziękujemy za użycie Swapu",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/BtcLikeToEthToken.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/BtcLikeToEthToken.tsx"
@@ -5062,7 +5037,7 @@
   },
   {
     "id": "BitcoinBuyText53_BtcLike_to_tokens",
-    "message": "Dziękujemy za korzystanie ze Swap.Online!",
+    "message": "Dziękujemy za użycie Swapu",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/BtcLikeToEthToken.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/BtcLikeToEthToken.tsx"
@@ -5070,7 +5045,7 @@
   },
   {
     "id": "EthTokensToBtc44_ethtoken_to_BtcLike",
-    "message": "Dziękujemy za korzystanie ze Swap.Online",
+    "message": "Dziękujemy za użycie Swapu",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/EthToBtcLike.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/EthTokenToBtcLike.tsx",
@@ -5079,16 +5054,9 @@
   },
   {
     "id": "EthTokensToBtc48_ethtoken_to_BtcLike",
-    "message": "Dziękujemy za korzystanie ze Swap.Online!",
+    "message": "Dziękujemy za użycie Swapu!",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/EthTokenToBtcLike.tsx"
-    ]
-  },
-  {
-    "id": "ethToBtcText48_eth_to_btclike",
-    "message": "Dziękujemy za użycie swapu",
-    "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/EthToBtcLike.tsx"
     ]
   },
   {
@@ -5101,7 +5069,7 @@
   },
   {
     "id": "BitcoinBuyText29_BtcLike_to_tokens",
-    "message": "Sprawdzam saldo..",
+    "message": "Sprawdzanie salda..",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/BtcLikeToEthToken.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/BtcLikeToEthToken.tsx"
@@ -5137,29 +5105,6 @@
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/BtcLikeToEthToken.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/BtcLikeToEthToken.tsx"
-    ]
-  },
-  {
-    "id": "BitcoinBuyText49_BtcLike_to_tokens",
-    "message": "Dziękujemy za użycie Swapu",
-    "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/BtcLikeToEthToken.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/BtcLikeToEthToken.tsx"
-    ]
-  },
-  {
-    "id": "BitcoinBuyText53_BtcLike_to_tokens",
-    "message": "Dziękujemy za użycie Swapu",
-    "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/BtcLikeToEthToken.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/BtcLikeToEthToken.tsx"
-    ]
-  },
-  {
-    "id": "ethToBtcText28_eth_to_btclike",
-    "message": "Sprawdzanie salda..",
-    "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/EthToBtcLike.tsx"
     ]
   },
   {
@@ -5205,14 +5150,6 @@
     ]
   },
   {
-    "id": "BitcoinBuyText29_BtcLike_to_tokens",
-    "message": "Sprawdzanie salda..",
-    "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/BtcLikeToEthToken.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/BtcLikeToEthToken.tsx"
-    ]
-  },
-  {
     "id": "EthTokensToBtc32_ethtoken_to_BtcLike",
     "message": "Tworzenie kontraktu Ethereum. {br} Może to zająć kilka minut",
     "files": [
@@ -5231,22 +5168,6 @@
   {
     "id": "EthTokensToBtc40_ethtoken_to_BtcLike",
     "message": "Środki z kontraktu ETH zostały pomyślnie przekazane właścicielowi {coinName}",
-    "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/EthTokenToBtcLike.tsx"
-    ]
-  },
-  {
-    "id": "EthTokensToBtc44_ethtoken_to_BtcLike",
-    "message": "Dziękujemy za użycie Swapu",
-    "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/EthToBtcLike.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/EthTokenToBtcLike.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/EthTokenToBtcLike.tsx"
-    ]
-  },
-  {
-    "id": "EthTokensToBtc48_ethtoken_to_BtcLike",
-    "message": "Dziękujemy za użycie Swapu!",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/EthTokenToBtcLike.tsx"
     ]
@@ -5497,7 +5418,6 @@
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
   },
-
   {
     "id": "contactSupport",
     "message": "Skontaktuj się z pomocą techniczną",
@@ -5920,164 +5840,99 @@
     "id": "MM_Promo_Title",
     "message": "Jak zarabiać na moim depozycie BTC?",
     "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx",
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
     ]
   },
   {
     "id": "MM_Promo_TitleBody",
     "message": "Użytkownicy w naszym wymienniku swap.io wymieniają BTC na {token} (token, który kosztuje jak BTC, ale działa na {Ab_Title}) i odwrotnie. Dostajesz min. 10% APY (rocznie) jako prowizja od giełd z niską impermanent loss {link}.",
     "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx",
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
     ]
   },
   {
     "id": "MMPercentEarn",
-    "message": "Zarobisz 0,5% z każdego swapu",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
-    ]
+    "message": "Zarobisz 0,5% z każdego swapu"
   },
   {
     "id": "MM_BTCBalance",
-    "message": "Równowaga BTC:",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
-    ]
+    "message": "Równowaga BTC:"
   },
   {
     "id": "MM_ConnectMetamask",
-    "message": "Połącz Metamask",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
-    ]
+    "message": "Połącz Metamask"
   },
   {
     "id": "MM_DepositeWallet",
-    "message": "doładowanie, przelew na",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
-    ]
+    "message": "doładowanie, przelew na"
   },
   {
     "id": "MM_DisconnectMetamask",
-    "message": "Rozłącz Metamask",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
-    ]
+    "message": "Rozłącz Metamask"
   },
   {
     "id": "MM_ETHBalance",
-    "message": "Równowaga {AB_Coin}: {balance} (dla górników opłata)",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
-    ]
+    "message": "Równowaga {AB_Coin}: {balance} (dla górników opłata)"
   },
   {
     "id": "MM_StartHere",
-    "message": "Zacznij tworzyć rynek tutaj",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
-    ]
+    "message": "Zacznij tworzyć rynek tutaj"
   },
   {
     "id": "MM_Wallet_Required",
-    "message": "Do uruchomienia tworzenia rynku wymagany jest gorący portfel (BTC, {AB_Coin}, {token}).",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
-    ]
+    "message": "Do uruchomienia tworzenia rynku wymagany jest gorący portfel (BTC, {AB_Coin}, {token})."
   },
   {
     "id": "MM_Wallet_Create",
-    "message": "Utwórz portfel",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
-    ]
+    "message": "Utwórz portfel"
   },
   {
     "id": "MM_Wallet_Restore",
-    "message": "Przywróć z nasion 12-wyrazowych",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
-    ]
+    "message": "Przywróć z nasion 12-wyrazowych"
   },
   {
     "id": "MM_NotEnoughCoins",
-    "message": "Niewystarczające fundusze. Musisz doładować swój BTC lub {token}",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
-    ]
+    "message": "Niewystarczające fundusze. Musisz doładować swój BTC lub {token}"
   },
   {
     "id": "MM_NotEnoughtEth",
-    "message": "Za mało {AB_Coin}, by zapłacić górnikom. Musisz mieć co najmniej 0.02 {AB_Coin}",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
-    ]
+    "message": "Za mało {AB_Coin}, by zapłacić górnikom. Musisz mieć co najmniej 0.02 {AB_Coin}"
   },
   {
     "id": "MM_SwapHistory_Empty",
-    "message": "Nie masz żadnych swapów, włącz MM i czekaj, gdy ktoś przyjmie Twoje zamówienia",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
-    ]
+    "message": "Nie masz żadnych swapów, włącz MM i czekaj, gdy ktoś przyjmie Twoje zamówienia"
   },
   {
     "id": "MM_SwapHistory_LockTime",
-    "message": "Czas blokady",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
-    ]
+    "message": "Czas blokady"
   },
   {
     "id": "MM_SwapHistory_Status",
-    "message": "Status",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
-    ]
+    "message": "Status"
   },
   {
     "id": "MM_SwapHistory_Step",
-    "message": "Krok",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
-    ]
+    "message": "Krok"
   },
   {
     "id": "MM_SwapHistory_Title",
-    "message": "Historia wymiany",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
-    ]
+    "message": "Historia wymiany"
   },
   {
     "id": "MM_SwapHistory_YouBuy",
-    "message": "Kupujesz",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
-    ]
+    "message": "Kupujesz"
   },
   {
     "id": "MM_SwapHistory_YouSell",
-    "message": "Sprzedajesz",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
-    ]
+    "message": "Sprzedajesz"
   },
   {
     "id": "MM_ToggleText",
-    "message": "Tworzenie rynku BTC/{token}",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
-    ]
+    "message": "Tworzenie rynku BTC/{token}"
   },
   {
     "id": "MM_TokenBalance",
-    "message": "Równowaga {token}:",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
-    ]
+    "message": "Równowaga {token}:"
   },
   {
     "id": "MM_TotalBalance",
@@ -6085,52 +5940,31 @@
   },
   {
     "id": "MM_ToggleTextEnabled",
-    "message": "Musisz być cały czas online, w przeciwnym razie nie zarobisz",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
-    ]
+    "message": "Musisz być cały czas online, w przeciwnym razie nie zarobisz"
   },
   {
     "id": "MM_ToggleTextDisabled",
-    "message": "Włącz przełącznik, aby zacząć zarabiać",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
-    ]
+    "message": "Włącz przełącznik, aby zacząć zarabiać"
   },
   {
     "id": "MM_TotalEarned",
-    "message": "Ogółem zarobione:",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
-    ]
+    "message": "Ogółem zarobione:"
   },
   {
     "id": "MM_MarketmakingSimbols",
-    "message": "{token} + BTC",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
-    ]
+    "message": "{token} + BTC"
   },
   {
     "id": "MM_MarketmakingBalanceTitle",
-    "message": "Całkowita płynność:",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
-    ]
+    "message": "Całkowita płynność:"
   },
   {
     "id": "MM_whatIsWBTCTooltip1",
-    "message": "{tokenFullName} ({token}) to token {tokenStandart}, który reprezentuje Bitcoin (BTC) w łańcuchu blokowym {blockchainName}.",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
-    ]
+    "message": "{tokenFullName} ({token}) to token {tokenStandart}, który reprezentuje Bitcoin (BTC) w łańcuchu blokowym {blockchainName}."
   },
   {
     "id": "MM_whatIsWBTCTooltip2",
-    "message": "{token} zostało stworzone, aby umożliwić posiadaczom Bitcoinów udział w zdecentralizowanych aplikacjach finansowych („DeFi”), które są popularne w {blockchainName}.",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
-    ]
+    "message": "{token} zostało stworzone, aby umożliwić posiadaczom Bitcoinów udział w zdecentralizowanych aplikacjach finansowych („DeFi”), które są popularne w {blockchainName}."
   },
   {
     "id": "MM_InstallExtentionTitle",
@@ -6172,6 +6006,20 @@
     "message": "Pobierz wersję rozwojową",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
+    ]
+  },
+  {
+    "id": "CleanLocalStorage",
+    "message": "UPS, wygląda na to, że aplikacja musi przeładować lokalny magazyn. Zapisz 12 słów seed phrase (jeśli nie zapisałeś go wcześniej), a następnie Wyczyść magazyn lokalny ({link}) i zaimportuj 12 słów seed ponownie. Przepraszamy za niedogodności.",
+    "files": [
+      "src/front/shared/components/Header/Header.tsx"
+    ]
+  },
+  {
+    "id": "WalletEmptyBalance",
+    "message": "Brak portfeli",
+    "files": [
+      "src/front/shared/pages/Wallet/Wallet.tsx"
     ]
   }
 ]

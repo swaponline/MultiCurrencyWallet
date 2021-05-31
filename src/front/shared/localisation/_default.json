@@ -650,7 +650,6 @@
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
   },
-
   {
     "id": "contactSupport",
     "message": "Please contact support",
@@ -2150,10 +2149,7 @@
   },
   {
     "id": "createWalletCaptureOthers",
-    "message": "или другие",
-    "files": [
-      "src/front/shared/pages/CreateWallet/Steps/texts.tsx"
-    ]
+    "message": "или другие"
   },
   {
     "id": "invoiceModal_Address",
@@ -2626,86 +2622,83 @@
   },
   {
     "id": "createWallet_customERC20",
-    "message": "Подключить токен",
-    "files": [
-      "src/front/shared/pages/CreateWallet/Steps/StepsWrapper.tsx"
-    ]
+    "message": "Подключить токен"
   },
   {
     "id": "customTokenAddress",
     "message": "Token address",
     "files": [
-      "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
     ]
   },
   {
     "id": "customTokenConfirm",
     "message": "Add this token",
     "files": [
-      "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
     ]
   },
   {
     "id": "customTokenIncorrectAddress",
     "message": "Invalid address",
     "files": [
-      "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
     ]
   },
   {
     "id": "NextId",
     "message": "Nеxt",
     "files": [
-      "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
     ]
   },
   {
     "id": "customTokenNotFound",
     "message": "This is not {standard} address",
     "files": [
-      "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
     ]
   },
   {
     "id": "customTokenAdded",
     "message": "Token added successfully",
     "files": [
-      "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
     ]
   },
   {
     "id": "customERC20_Title",
     "message": "Add a new token",
     "files": [
-      "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
     ]
   },
   {
     "id": "DecimalsId",
     "message": "Decimals",
     "files": [
-      "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
     ]
   },
   {
     "id": "SymbolId",
     "message": "Symbol",
     "files": [
-      "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
     ]
   },
   {
     "id": "TitleId",
     "message": "Title",
     "files": [
-      "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
     ]
   },
   {
     "id": "customERC20_addressPlaceholder",
     "message": "Enter token address",
     "files": [
-      "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
     ]
   },
   {
@@ -2775,16 +2768,13 @@
     "id": "InfoPay_1",
     "message": "Transaction is completed",
     "files": [
-      "src/front/shared/components/modals/InfoPay/InfoPay.tsx",
-      "src/front/shared/pages/Transaction/Transaction.tsx",
-      "src/front/shared/pages/Transaction/TxInfo/index.tsx"
+      "src/front/shared/pages/Transaction/Transaction.tsx"
     ]
   },
   {
     "id": "InfoPay_2",
     "message": "successfully transferred to",
     "files": [
-      "src/front/shared/components/modals/InfoPay/InfoPay.tsx",
       "src/front/shared/pages/Transaction/TxInfo/index.tsx"
     ]
   },
@@ -2792,7 +2782,6 @@
     "id": "InfoPay_3",
     "message": "Transaction ID",
     "files": [
-      "src/front/shared/components/modals/InfoPay/InfoPay.tsx",
       "src/front/shared/pages/Transaction/TxInfo/index.tsx"
     ]
   },
@@ -3394,14 +3383,15 @@
     "id": "ForYou",
     "message": "For you",
     "files": [
-      "src/front/shared/pages/Wallet/components/WallerSlider/index.tsx"
+      "src/front/shared/pages/Wallet/WallerSlider/index.tsx"
     ]
   },
   {
     "id": "SweepBannerButton",
     "message": "Done",
     "files": [
-      "src/front/shared/components/layout/DashboardLayout/DashboardLayout.tsx"
+      "src/front/shared/components/layout/DashboardLayout/DashboardLayout.tsx",
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
     ]
   },
   {
@@ -3837,7 +3827,6 @@
     "id": "InfoPay_FinalBalance",
     "message": "Final balance",
     "files": [
-      "src/front/shared/components/modals/InfoPay/InfoPay.tsx",
       "src/front/shared/pages/Transaction/TxInfo/index.tsx"
     ]
   },
@@ -4629,14 +4618,14 @@
     "id": "Banner_YouAreHaveNotSignegTx",
     "message": "{count} multisig transaction is waiting for your confirmation",
     "files": [
-      "src/front/shared/pages/Wallet/components/WallerSlider/index.tsx"
+      "src/front/shared/pages/Wallet/WallerSlider/index.tsx"
     ]
   },
   {
     "id": "ShowMyMnemonic_copy",
     "message": "Please backup your wallet",
     "files": [
-      "src/front/shared/pages/Wallet/components/WallerSlider/index.tsx"
+      "src/front/shared/pages/Wallet/WallerSlider/index.tsx"
     ]
   },
   {
@@ -4678,23 +4667,16 @@
     "id": "MetamaskDisconnect",
     "message": "Disconnect wallet",
     "files": [
-      "src/front/shared/pages/Wallet/Row/Row.tsx",
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+      "src/front/shared/pages/Wallet/Row/Row.tsx"
     ]
   },
   {
     "id": "MM_DisconnectExternalWallet",
-    "message": "Marketmakig works only with internal wallet. Please disconnnect external wallet",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
-    ]
+    "message": "Marketmakig works only with internal wallet. Please disconnnect external wallet"
   },
   {
     "id": "MM_TurnOffMarketmaking",
-    "message": "Marketmaking disabled because of your external wallet is connected",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
-    ]
+    "message": "Marketmaking disabled because of your external wallet is connected"
   },
   {
     "id": "SwitchLangES",
@@ -5854,213 +5836,127 @@
     "id": "MM_Promo_Title",
     "message": "Earn interest on Bitcoin",
     "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx",
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
     ]
   },
   {
     "id": "MM_Promo_TitleBody",
     "message": "On swap.io users exchange BTC for {token} (a token that costs like BTC, but works on {Ab_Title}), and vice versa. You get min. 10% APY (annual percentage yield) as a commission from exchanges with low impermanent loss {link}.",
     "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx",
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
     ]
   },
   {
     "id": "MMPercentEarn",
-    "message": "You will earn 0.5% from each swap",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
-    ]
+    "message": "You will earn 0.5% from each swap"
   },
   {
     "id": "MM_BTCBalance",
-    "message": "Balance BTC:",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
-    ]
+    "message": "Balance BTC:"
   },
   {
     "id": "MM_ConnectMetamask",
-    "message": "Connect Metamask",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
-    ]
+    "message": "Connect Metamask"
   },
   {
     "id": "MM_DepositeWallet",
-    "message": "to top up, transfer to",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
-    ]
+    "message": "to top up, transfer to"
   },
   {
     "id": "MM_DisconnectMetamask",
-    "message": "Disconnect Metamask",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
-    ]
+    "message": "Disconnect Metamask"
   },
   {
     "id": "MM_ETHBalance",
-    "message": "Balance {AB_Coin}: {balance} (for miner fees)",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
-    ]
+    "message": "Balance {AB_Coin}: {balance} (for miner fees)"
   },
   {
     "id": "MM_StartHere",
-    "message": "Start marketmaking here",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
-    ]
+    "message": "Start marketmaking here"
   },
   {
     "id": "MM_Wallet_Required",
-    "message": "A hot wallet is required to launch marketmaking (BTC, {AB_Coin}, {token}).",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
-    ]
+    "message": "A hot wallet is required to launch marketmaking (BTC, {AB_Coin}, {token})."
   },
   {
     "id": "MM_Wallet_Create",
-    "message": "Create wallet",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
-    ]
+    "message": "Create wallet"
   },
   {
     "id": "MM_Wallet_Restore",
-    "message": "Restore from 12-word seed",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
-    ]
+    "message": "Restore from 12-word seed"
   },
   {
     "id": "MM_NotEnoughCoins",
-    "message": "Insufficient funds. You need to top up your BTC or {token}",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
-    ]
+    "message": "Insufficient funds. You need to top up your BTC or {token}"
   },
   {
     "id": "MM_NotEnoughtEth",
-    "message": "Not enough {AB_Coin} to pay the miners commission. You need to have at least 0.02 {AB_Coin}",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
-    ]
+    "message": "Not enough {AB_Coin} to pay the miners commission. You need to have at least 0.02 {AB_Coin}"
   },
   {
     "id": "MM_SwapHistory_Empty",
-    "message": "You have not any swaps, turn on MM and wait when someone accept your orders",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
-    ]
+    "message": "You have not any swaps, turn on MM and wait when someone accept your orders"
   },
   {
     "id": "MM_SwapHistory_LockTime",
-    "message": "Lock time",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
-    ]
+    "message": "Lock time"
   },
   {
     "id": "MM_SwapHistory_Status",
-    "message": "Status",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
-    ]
+    "message": "Status"
   },
   {
     "id": "MM_SwapHistory_Step",
-    "message": "Step",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
-    ]
+    "message": "Step"
   },
   {
     "id": "MM_SwapHistory_Title",
-    "message": "Swap history",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
-    ]
+    "message": "Swap history"
   },
   {
     "id": "MM_SwapHistory_YouBuy",
-    "message": "You buy",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
-    ]
+    "message": "You buy"
   },
   {
     "id": "MM_SwapHistory_YouSell",
-    "message": "You sell",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
-    ]
+    "message": "You sell"
   },
   {
     "id": "MM_ToggleText",
-    "message": "Marketmaking BTC/{token}",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
-    ]
+    "message": "Marketmaking BTC/{token}"
   },
   {
     "id": "MM_TokenBalance",
-    "message": "Balance {token}:",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
-    ]
+    "message": "Balance {token}:"
   },
   {
     "id": "MM_ToggleTextEnabled",
-    "message": "You must be online all the time, otherwise your will not earn",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
-    ]
+    "message": "You must be online all the time, otherwise your will not earn"
   },
   {
     "id": "MM_ToggleTextDisabled",
-    "message": "Turn on this toggle to start earn",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
-    ]
+    "message": "Turn on this toggle to start earn"
   },
   {
     "id": "MM_TotalEarned",
-    "message": "Total earned:",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
-    ]
+    "message": "Total earned:"
   },
   {
     "id": "MM_MarketmakingSimbols",
-    "message": "{token} + BTC",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
-    ]
+    "message": "{token} + BTC"
   },
   {
     "id": "MM_MarketmakingBalanceTitle",
-    "message": "Total liquidity:",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
-    ]
+    "message": "Total liquidity:"
   },
   {
     "id": "MM_whatIsWBTCTooltip1",
-    "message": "{tokenFullName} ({token}) is an {tokenStandart} token that represents Bitcoin (BTC) on the {blockchainName} blockchain.",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
-    ]
+    "message": "{tokenFullName} ({token}) is an {tokenStandart} token that represents Bitcoin (BTC) on the {blockchainName} blockchain."
   },
   {
     "id": "MM_whatIsWBTCTooltip2",
-    "message": "{token} was created to allow Bitcoin holders to participate in decentralized finance (“DeFi”) apps that are popular on {blockchainName}.",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
-    ]
+    "message": "{token} was created to allow Bitcoin holders to participate in decentralized finance (“DeFi”) apps that are popular on {blockchainName}."
   },
   {
     "id": "MM_InstallExtentionTitle",
@@ -6102,6 +5998,20 @@
     "message": "Download development version",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
+    ]
+  },
+  {
+    "id": "CleanLocalStorage",
+    "message": "Oops, looks like the app needs to reload your local storage. Please save your 12 words seed phrase (if you have not saved it before), then clear local storage ({link}) and import 12 words seed again. Sorry for the inconvenience.",
+    "files": [
+      "src/front/shared/components/Header/Header.tsx"
+    ]
+  },
+  {
+    "id": "WalletEmptyBalance",
+    "message": "No wallets available",
+    "files": [
+      "src/front/shared/pages/Wallet/Wallet.tsx"
     ]
   }
 ]
