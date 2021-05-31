@@ -1,6 +1,6 @@
 import debug from 'debug'
 import SwapApp, { constants, util } from 'swap.app'
-import { AtomicAB2UTXO } from 'swap.swap'
+import { Flow } from 'swap.swap'
 import BigNumber from 'bignumber.js'
 import Swap from 'swap.swap'
 import { EthLikeTokenSwap, BtcSwap } from 'swap.swaps'
@@ -64,62 +64,59 @@ import { EthLikeTokenSwap, BtcSwap } from 'swap.swaps'
 
 */
 
-interface IEthLikeTokenToBtc {
-  blockchainName: string
-  tokenName: string
+interface ITokenTokenOptions {
   getMyAddress: Function
   getParticipantAddress: Function
 }
 
-export default class TokenToken extends AtomicAB2UTXO {
+export default class TokenToken extends Flow {
+  makerBlockchain: string
+  makerTokenName: string
+  takerBlockchain: string
+  takerTokenName: string
+  flowName: string
 
-  ethTokenSwap: EthLikeTokenSwap
-  btcSwap: BtcSwap
+  takerSwap: EthLikeTokenSwap
+  makerSwap: EthLikeTokenSwap
+
   state: any
 
   getMyAddress: Function
   getParticipantAddress: Function
-  blockchainName: string
-  tokenName: string
 
-  constructor(swap: Swap, options: IEthLikeTokenToBtc) {
+  constructor(swap: Swap, options: ITokenTokenOptions) {
     super(swap)
-    if (!options.tokenName) {
-      throw new Error(`EthLikeTokenToBtc - option tokenName requery`)
-    }
-    if (!options.blockchainName) {
-      throw new Error(`EthLikeTokenToBtc - token ${options.tokenName} - option blockchainName requery`)
-    }
+    if (!options.makerBlockchain) throw new Error(`TokenToken - option makerBlockchain required`)
+    if (!options.makerTokenName) throw new Error(`TokenToken - option makerTokenName required`)
+    if (!options.takerBlockchain) throw new Error(`TokenToken - option takerBlockchain required`)
+    if (!options.takerTokenName) throw new Error(`TokenToken - option takerTokenName required`)
+
+    this.makerBlockchain = options.makerBlockchain.toUpperCase()
+    this.makerTokenName = options.makerTokenName.toUpperCase()
+    this.takerBlockchain = options.takerBlockchain.toUpperCase()
+    this.takerTokenName = options.takerTokenName.toUpperCase()
+
+    this.flowName = `{${this.makerBlockchain}}${this.makerTokenName}2{${this.takerBlockchain}}${this.takerTokenName}`
+
     if (!options.getMyAddress || typeof options.getMyAddress !== 'function') {
-      throw new Error(`EthLikeTokenToBtc ${options.blockchainName} - token ${options.tokenName} - option getMyAddress - function requery`)
+      throw new Error(`TokenToken ${this.flowName} - option getMyAddress - function requery`)
     }
     if (!options.getParticipantAddress || typeof options.getParticipantAddress !== 'function') {
-      throw new Error(`EthLikeTokenToBtc ${options.blockchainName} - token ${options.tokenName} - option getParticipantAddress - function requery`)
+      throw new Error(`TokenToken ${this.flowName} - option getParticipantAddress - function requery`)
     }
 
-    this.blockchainName = options.blockchainName
-    this.tokenName = options.tokenName
     this.getMyAddress = options.getMyAddress
     this.getParticipantAddress = options.getParticipantAddress
 
-    this.utxoCoin = `btc`
-
     this.isTakerMakerModel = true
-    this.setupTakerMakerEvents()
+
     this.stepNumbers = this.getStepNumbers()
 
-    this.ethTokenSwap = swap.participantSwap
-    this.btcSwap = swap.ownerSwap
+    this.makerSwap = (this.isMaker()) ? swap.ownerSwap : swap.participantSwap
+    this.takerSwap = (this.isTaker()) ? swap.ownerSwap : swap.participantSwap
 
-    this.abBlockchain = this.ethTokenSwap
-    this.utxoBlockchain = this.btcSwap
-
-    if (!this.ethTokenSwap) {
-      throw new Error('ETHTOKEN2BTC: "ethTokenSwap" of type object required')
-    }
-    if (!this.btcSwap) {
-      throw new Error('ETHTOKEN2BTC: "btcSwap" of type object required')
-    }
+    if (!this.makerSwap) throw new Error(`TokenToken ${this.flowName} - makerSwap requery`)
+    if (!this.takerSwap) throw new Error(`TokenToken ${this.flowName} - takerSwap requery`)
 
     this.state = {
       step: 0,

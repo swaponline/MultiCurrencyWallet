@@ -60,6 +60,14 @@ class Flow {
     scriptAddress?: string
     scriptBalance?: number
     isEthContractFunded?: boolean
+
+    // ---- AB/AB ----
+
+    makerCreateSwapTx?: string
+    takerCreateSwapTx?: string
+
+    makerWithdrawTx?: string
+    takerWithdrawTx?: string
   }
 
   constructor(swap) {
