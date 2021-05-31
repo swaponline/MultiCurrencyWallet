@@ -6,16 +6,16 @@ import styles from '../SwapList.scss'
 import { FormattedMessage } from 'react-intl'
 
 
-const FirstStep = ({ step, first, second, fields, text }) => (
-  <div styleName={(step === first && 'stepItem active') || (step < second && 'stepItem') || 'stepItem active checked'}>
-    <span styleName="stepNumber">{step < second ? 1 : <i id="firtsStepDoneIcon" className="fas fa-check" />}</span>
+const FirstStep = ({ stepName, text }) => (
+  <div styleName={ stepName === 'sign' ? 'stepItem active' : 'stepItem active checked'}>
+    <span styleName="stepNumber">{stepName === 'sign' ? 1 : <i id="firtsStepDoneIcon" className="fas fa-check" />}</span>
     <p styleName="stepText">
       <FormattedMessage
         id="Confirmation14"
         defaultMessage="Confirmation"
       />
     </p>
-    {step < second && (
+    {stepName === 'sign' && (
       <span styleName="stepHeading">
         {text}
       </span>

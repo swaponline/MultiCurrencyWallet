@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
 import CSSModules from 'react-css-modules'
-import styles from '../SwapList.scss'
+import styles from '../../SwapList.scss'
 
 import config from 'app-config'
 import actions from 'redux/actions'
@@ -9,7 +9,7 @@ import { isMobile } from 'react-device-detect'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import { FormattedMessage } from 'react-intl'
-import checkedIcon from '../../../images/checked.svg'
+import checkedIcon from '../../../../images/checked.svg'
 
 let _mounted = false
 const timeoutIds: NodeJS.Timeout[] = []
