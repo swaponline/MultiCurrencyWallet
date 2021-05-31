@@ -283,10 +283,12 @@ export default class TokenToken extends Flow {
       participantAddress: this.getParticipantAddress(this.swap)
     }
 
-    return this.ethTokenSwap.checkSwapExists(swapData)
+    // use taker or maker swap interface ? - may be taker
+    // return this.ethTokenSwap.checkSwapExists(swapData)
   }
 
   async tryRefund() {
+    /*
     const { secretHash } = this.state
 
     const refundHandler = (hash = null) => {
@@ -331,6 +333,7 @@ export default class TokenToken extends Flow {
         return true
       })
       .catch((error) => false)
+    */
   }
 
 
@@ -340,6 +343,7 @@ export default class TokenToken extends Flow {
   }
 
   async tryWithdraw(_secret) {
+    /*
     const { secret, secretHash, isEthWithdrawn, isbtcWithdrawn, utxoScriptValues } = this.state
 
     if (!_secret)
@@ -388,5 +392,7 @@ export default class TokenToken extends Flow {
         isbtcWithdrawn: true,
       }, { step: 'withdraw-utxo' })
     })
+    
+    */
   }
 }
