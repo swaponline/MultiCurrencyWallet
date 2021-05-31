@@ -106,18 +106,32 @@ class Header extends Component<any, any> {
   componentDidMount() {
     this.handlerAsync()
 
-    actions.notifications.show(constants.notifications.Message, {
-      message: (
-        <FormattedMessage
-          id="CleanLocalStorage"
-          defaultMessage="Oops, looks like the app needs to reload your local storage (because we released the new version). please save your 12 words seed phrase (if have not saved before), then clear localstorage ({link}) and import 12 words seed again"
-          values={{
-            link: <a href='https://www.leadshook.com/help/how-to-clear-local-storage-in-google-chrome-browser/' target='_blank'>how to do it</a>
-          }}
-        />
-      ),
-      timeout: false,
-    })
+    // Temporarily
+    // show a request for users that they have to clean
+    // their local storage part with our data
+    const isWalletCreate = localStorage.getItem(constants.localStorage.isWalletCreate)
+    const sawWarning = localStorage.getItem('sawLocalStorageWarning')
+    const oldUserDidNotSee = sawWarning !== 'true' && isWalletCreate === 'true'
+    const newUser = sawWarning !== 'true' && isWalletCreate !== 'true'
+
+    if (oldUserDidNotSee) {
+      localStorage.setItem('sawLocalStorageWarning', 'true')
+      actions.notifications.show(constants.notifications.Message, {
+        message: (
+          <FormattedMessage
+            id="CleanLocalStorage"
+            defaultMessage="Oops, looks like the app needs to reload your local storage. Please save your 12 words seed phrase (if you have not saved it before), then clear local storage ({link}) and import 12 words seed again. Sorry for the inconvenience."
+            values={{
+              link: <a href='https://www.leadshook.com/help/how-to-clear-local-storage-in-google-chrome-browser/' target='_blank'>how to do it</a>
+            }}
+          />
+        ),
+        timeout: false,
+      })
+    } else if (newUser) {
+      // no problem with new user's storage
+      localStorage.setItem('sawLocalStorageWarning', 'true')
+    }
   }
 
   handlerAsync = async () => {
