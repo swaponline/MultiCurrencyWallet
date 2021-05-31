@@ -4474,13 +4474,6 @@
     ]
   },
   {
-    "id": "InfoPay_2_copy",
-    "message": "han sido transferidos con éxito",
-    "files": [
-      "src/front/shared/components/modals/InfoPay/InfoPay.tsx"
-    ]
-  },
-  {
     "id": "Banner_YouAreHaveNotSignegTx",
     "message": "{count} transacción multifirma esta esperando tu confirmación",
     "files": [

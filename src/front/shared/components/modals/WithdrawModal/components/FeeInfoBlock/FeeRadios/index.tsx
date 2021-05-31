@@ -167,7 +167,7 @@ export default class FeeRadios extends Component<FeeRadiosProps, FeeRadiosState>
                         id="sat/byte"
                         name="volume"
                         min="1"
-                        max="150"
+                        max="250"
                         value={this.state.customFeeValue}
                         onChange={this.onCustomFeeValueChange}
                       />

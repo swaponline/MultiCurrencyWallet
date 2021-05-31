@@ -25,29 +25,28 @@ if (window
   buildOpts = { ...buildOpts, ...window.buildOptions }
 }
 
-if (window
-  && window.widgetERC20Tokens
-  && Object.keys(window.widgetERC20Tokens)
-  && Object.keys(window.widgetERC20Tokens).length
-) {
+if (window?.widgetERC20Tokens?.length) {
   buildOpts.ownTokens = window.widgetERC20Tokens
 }
-// TODO: need to split user's own tokens in the buildOpts.ownTokens
-// TODO: and make different objects (example: buildOpts.ownTokens[erc20|bep20|...])
-if (buildOpts.ownTokens && Object.keys(buildOpts.ownTokens).length) {
-  // Multi token mode
-  const cleanERC20 = {}
-  // Обходим оптимизацию, нам нельзя, чтобы в этом месте было соптимизированно в целую строку {#WIDGETTOKENCODE#}
+
+if (Array.isArray(buildOpts.ownTokens) && buildOpts.ownTokens.length) {
+  // ? we can't use here as whole string {#WIDGETTOKENCODE#} ?
   const wcPb = `{#`
   const wcP = (`WIDGETTOKENCODE`).toUpperCase()
   const wcPe = `#}`
-  Object.keys(buildOpts.ownTokens).forEach((key) => {
-    if (key !== (`${wcPb}${wcP}${wcPe}`)) {
-      const tokenData = buildOpts.ownTokens[key]
-      cleanERC20[key] = tokenData
+
+  Object.keys(TOKEN_STANDARDS).forEach((key) => {
+    config[TOKEN_STANDARDS[key].standard.toLowerCase()] = {}
+  })
+
+  buildOpts.ownTokens.forEach((token) => {
+    const symbol = token.name.toLowerCase()
+    const standard = token.standard.toLowerCase()
+
+    if (symbol.toUpperCase() !== (`${wcPb}${wcP}${wcPe}`)) {
+      config[standard][symbol] = token
     }
   })
-  config.erc20 = cleanERC20
 }
 
 const tokenItems: IUniversalObj[] = []
@@ -295,64 +294,50 @@ if (config.isWidget) {
   ]
 
   // Мульти валюта с обратной совместимостью одиночного билда
-  const multiTokenNames = (window.widgetERC20Tokens) ? Object.keys(window.widgetERC20Tokens) : []
+  const widgetCustomTokens = window?.widgetERC20Tokens?.length ? window.widgetERC20Tokens : []
 
-  if (multiTokenNames.length > 0) {
+  if (widgetCustomTokens.length) {
     // First token in list - is main - fill single-token erc20 config
-    config.erc20token = multiTokenNames[0]
-    config.erc20[config.erc20token] = window.widgetERC20Tokens[config.erc20token]
-    multiTokenNames.forEach((key) => {
-      //@ts-ignore
+    const firstToken = widgetCustomTokens[0]
+
+    config.erc20token = firstToken.name
+    config[firstToken.standard][firstToken.name] = firstToken
+
+    widgetCustomTokens.forEach((token) => {
+      const name = token.name
+
       initialState.items.push({
-        name: key.toUpperCase(),
-        title: key.toUpperCase(),
-        icon: key,
-        value: key,
-        fullTitle: window.widgetERC20Tokens[key].fullName,
+        name: name.toUpperCase(),
+        title: name.toUpperCase(),
+        icon: name,
+        value: name,
+        fullTitle: token.fullName,
       })
       initialState.partialItems.push({
-        name: key.toUpperCase(),
-        title: key.toUpperCase(),
-        icon: key,
-        value: key,
-        fullTitle: window.widgetERC20Tokens[key].fullName,
+        name: name.toUpperCase(),
+        title: name.toUpperCase(),
+        icon: name,
+        value: name,
+        fullTitle: token.fullName,
       })
-    })
-
-  } else {
-    //@ts-ignore
-    initialState.items.push({
-      name: config.erc20token.toUpperCase(),
-      title: config.erc20token.toUpperCase(),
-      icon: config.erc20token,
-      value: config.erc20token,
-      fullTitle: config.erc20[config.erc20token].fullName,
-    })
-    initialState.partialItems.push({
-      name: config.erc20token.toUpperCase(),
-      title: config.erc20token.toUpperCase(),
-      icon: config.erc20token,
-      value: config.erc20token,
-      fullTitle: config.erc20[config.erc20token].fullName,
+      initialState.addSelectedItems.push({
+        //@ts-ignore
+        name: name.toUpperCase(),
+        //@ts-ignore
+        title: name.toUpperCase(),
+        //@ts-ignore
+        icon: name,
+        //@ts-ignore
+        value: name,
+        //@ts-ignore
+        fullTitle: token.fullName,
+      })
     })
   }
 
-  initialState.addSelectedItems = [
-    {
-      //@ts-ignore: strictNullChecks
-      name: config.erc20token.toUpperCase(),
-      //@ts-ignore: strictNullChecks
-      title: config.erc20token.toUpperCase(),
-      //@ts-ignore: strictNullChecks
-      icon: config.erc20token,
-      //@ts-ignore: strictNullChecks
-      value: config.erc20token,
-      //@ts-ignore: strictNullChecks
-      fullTitle: config.erc20[config.erc20token].fullName,
-    },
-  ]
+
 } else {
-  // TODO: rename - addCustomERC20 -> addCustomToken ?
+  // TODO: addCustomERC20 -> addCustomToken
   if (!config.isWidget && buildOpts.addCustomERC20) {
     const customTokenConfig = getCustomTokenConfig()
 

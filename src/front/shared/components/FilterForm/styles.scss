@@ -1,58 +1,58 @@
 .filterForm {
-    border: 1px solid #eceff0;
-    box-sizing: border-box;
-    border-radius: 2px;
+  border: 1px solid #eceff0;
+  box-sizing: border-box;
+  border-radius: 2px;
+  width: 100%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 9px;
+  input {
     width: 100%;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 8px 9px;
-    input {
-      width: 100%;
-    }
-    input::placeholder {
-      color: #1F2D48;
-      opacity: 0.2;
-    }
   }
-
-  .dark {
-    border: 1px solid #454b4d;
-    input {
-      color: white;
-    }
-    input::placeholder {
-      color: white;
-    }
-
-    div {
-      button {
-        color: white
-      }
-    }
-  }
-  
-  .buttons {
-    width: 110px;
-    display: flex;
-  }
-  
-  .show,
-  .all {
-    width: 55px;
+  input::placeholder {
     color: #1F2D48;
-    text-transform: capitalize;
-  }
-
-  .active {
-    color: $primary; 
-  }
-  
-  .show {
     opacity: 0.2;
   }
-  
-  .all {
-    opacity: 0.6;
+}
+
+.dark {
+  border: 1px solid #454b4d;
+  input {
+    color: white;
   }
+  input::placeholder {
+    color: white;
+  }
+
+  div {
+    button {
+      color: white
+    }
+  }
+}
+
+.buttons {
+  width: 110px;
+  display: flex;
+}
+
+.show,
+.all {
+  width: 55px;
+  color: #1F2D48;
+  text-transform: capitalize;
+}
+
+.active {
+  color: $color-brand;
+}
+
+.show {
+  opacity: 0.2;
+}
+
+.all {
+  opacity: 0.8;
+}
