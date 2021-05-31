@@ -86,11 +86,11 @@
 
 @include media-mobile {
   .notification {
-    width: 80%;
-    left: 15px;
+    width: 90%;
+    margin: 0 auto;
   }
   .content {
-    font-size: 12px;
+    font-size: 14px;
     word-break: break-word;
   }
 }
