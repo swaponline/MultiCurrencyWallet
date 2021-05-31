@@ -245,7 +245,7 @@ class Exchange extends PureComponent<any, any> {
     const getType = this.getDefaultWalletType(getCurrency.toUpperCase())
 
     this.state = {
-      isTokenSell: ethToken.isEthToken({ name: haveCurrency }),
+      isTokenSell: erc20Like.isToken({ name: haveCurrency }),
       isPendingTokenApprove: false,
       hasTokenAllowance: false,
       haveCurrency,
@@ -463,7 +463,7 @@ class Exchange extends PureComponent<any, any> {
     const { haveCurrency, haveAmount } = this.state
 
     if (prevHaveCurrency !== haveCurrency) {
-      const isTokenSell = ethToken.isEthToken({ name: haveCurrency })
+      const isTokenSell = erc20Like.isToken({ name: haveCurrency })
 
       this.setState(() => ({
         isTokenSell,
@@ -483,18 +483,18 @@ class Exchange extends PureComponent<any, any> {
       return tokenObj.name === haveCurrency.toLowerCase()
     })
 
-    const allowance = await erc20Like.erc20.checkAllowance({
-      //@ts-ignore: strictNullChecks
-      tokenOwnerAddress: tokenObj.address,
-      //@ts-ignore: strictNullChecks
-      tokenContractAddress: tokenObj.contractAddress,
-      //@ts-ignore: strictNullChecks
-      decimals: tokenObj.decimals,
-    })
-
-    this.setState(() => ({
-      hasTokenAllowance: new BigNumber(allowance).isGreaterThanOrEqualTo(haveAmount),
-    }))
+    if (tokenObj) {
+      // TODO: consider different token's standards
+      const allowance = await erc20Like.erc20.checkAllowance({
+        tokenOwnerAddress: tokenObj.address,
+        tokenContractAddress: tokenObj.contractAddress,
+        decimals: tokenObj.decimals,
+      })
+  
+      this.setState(() => ({
+        hasTokenAllowance: new BigNumber(allowance).isGreaterThanOrEqualTo(haveAmount),
+      }))
+    }
   }
 
   getInfoAboutCurrency = async (): Promise<void> => {
