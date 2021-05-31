@@ -105,6 +105,19 @@ class Header extends Component<any, any> {
 
   componentDidMount() {
     this.handlerAsync()
+
+    actions.notifications.show(constants.notifications.Message, {
+      message: (
+        <FormattedMessage
+          id="CleanLocalStorage"
+          defaultMessage="Oops, looks like the app needs to reload your local storage (because we released the new version). please save your 12 words seed phrase (if have not saved before), then clear localstorage ({link}) and import 12 words seed again"
+          values={{
+            link: <a href='https://www.leadshook.com/help/how-to-clear-local-storage-in-google-chrome-browser/' target='_blank'>how to do it</a>
+          }}
+        />
+      ),
+      timeout: false,
+    })
   }
 
   handlerAsync = async () => {
