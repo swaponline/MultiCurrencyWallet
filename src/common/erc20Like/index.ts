@@ -66,13 +66,7 @@ class erc20LikeHelper {
   }
 
   isToken = (params): boolean => {
-    const { name: coinInfo } = params
-    const {
-      coin: name,
-      blockchain,
-    } = getCoinInfo(coinInfo)
-
-    if (blockchain && blockchain.toLowerCase() !== this.currency.toLowerCase()) return false
+    const { name } = params
 
     return (
       Object.keys(config[this.standard]).includes(name.toLowerCase()) ||

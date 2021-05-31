@@ -26,13 +26,13 @@ class BtcToEthLike extends AtomicAB2UTXO {
     super(swap)
 
     if (!options.flowName) {
-      throw new Error('EthLikeToBtc - option flowName requery')
+      throw new Error('BtcToEthLike - option flowName requery')
     }
     if (!options.getMyAddress || typeof options.getMyAddress !== 'function') {
-      throw new Error(`EthLikeToBtc ${options.flowName} - option getMyAddress - function requery`)
+      throw new Error(`BtcToEthLike ${options.flowName} - option getMyAddress - function requery`)
     }
     if (!options.getParticipantAddress || typeof options.getParticipantAddress !== 'function') {
-      throw new Error(`EthLikeToBtc ${options.flowName} - option getParticipantAddress - function requery`)
+      throw new Error(`BtcToEthLike ${options.flowName} - option getParticipantAddress - function requery`)
     }
 
     this.getMyAddress = options.getMyAddress
@@ -54,10 +54,10 @@ class BtcToEthLike extends AtomicAB2UTXO {
     this.utxoBlockchain = this.btcSwap
 
     if (!this.ethLikeSwap) {
-      throw new Error('BTC2ETH: "ethLikeSwap" of type object required')
+      throw new Error(`BTC2${this.ethLikeCoin}: "ethLikeSwap" of type object required`)
     }
     if (!this.btcSwap) {
-      throw new Error('BTC2ETH: "btcSwap" of type object required')
+      throw new Error(`BTC2${this.ethLikeCoin}: "btcSwap" of type object required`)
     }
 
     this.state = {

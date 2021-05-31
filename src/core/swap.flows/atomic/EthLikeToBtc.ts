@@ -12,6 +12,7 @@ interface IEthLikeToBtc {
 class EthLikeToBtc extends AtomicAB2UTXO {
 
   _flowName: string
+  ethLikeCoin: string
   ethLikeSwap: EthLikeSwap
   btcSwap: BtcSwap
   state: any
@@ -35,6 +36,7 @@ class EthLikeToBtc extends AtomicAB2UTXO {
     this.getParticipantAddress = options.getParticipantAddress
 
     this.utxoCoin = `btc`
+    this.ethLikeCoin = swap.ethLikeCoin
     this._flowName = options.flowName
 
     this.isTakerMakerModel = true
@@ -48,10 +50,10 @@ class EthLikeToBtc extends AtomicAB2UTXO {
     this.utxoBlockchain = this.btcSwap
 
     if (!this.ethLikeSwap) {
-      throw new Error('BTC2ETH: "ethLikeSwap" of type object required')
+      throw new Error(`${this.ethLikeCoin}2BTC: "ethLikeSwap" of type object required`)
     }
     if (!this.btcSwap) {
-      throw new Error('BTC2ETH: "btcSwap" of type object required')
+      throw new Error(`${this.ethLikeCoin}2BTC: "btcSwap" of type object required`)
     }
 
     this.state = {
