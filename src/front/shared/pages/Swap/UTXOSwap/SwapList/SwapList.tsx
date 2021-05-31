@@ -19,15 +19,10 @@ import ABThirdStep from './ABSteps/ThirdStep'
 import ABFourthStep from './ABSteps/FourthStep'
 
 
-import UTXOBtcLikeToEth from './UTXOSwapProgressText/BtcLikeToEth'
-import UTXOBtcLikeToEthToken from './UTXOSwapProgressText/BtcLikeToEthToken'
-import UTXOEthToBtcLike from './UTXOSwapProgressText/EthToBtcLike'
-import UTXOEthTokenToBtcLike from './UTXOSwapProgressText/EthTokenToBtcLike'
-
-import ABBtcLikeToEth from './ABSwapProgressText/BtcLikeToEth'
-import ABBtcLikeToEthToken from './ABSwapProgressText/BtcLikeToEthToken'
-import ABEthToBtcLike from './ABSwapProgressText/EthToBtcLike'
-import ABEthTokenToBtcLike from './ABSwapProgressText/EthTokenToBtcLike'
+import MakerUtxoToAbtTexts from './SwapProgressTexts/MakerUtxoToAb'
+import TakerUtxoToAbTexts from './SwapProgressTexts/TakerUtxoToAb'
+import MakerAbToUtxoTexts from './SwapProgressTexts/MakerAbToUtxo'
+import TakerAbToUtxoTexts from './SwapProgressTexts/TakerAbToUtxo'
 
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
@@ -107,28 +102,18 @@ export default class SwapList extends Component<any, any> {
     const ThirdStep = (isUTXOSide) ? UTXOThirdStep : ABThirdStep
     const FourthStep = (isUTXOSide) ? UTXOFourthStep : ABFourthStep
 
-    const BtcLikeToEth = (isUTXOSide) ? UTXOBtcLikeToEth : ABBtcLikeToEth
-    const EthToBtcLike = (isUTXOSide) ? UTXOEthToBtcLike : ABEthToBtcLike
-    const BtcLikeToEthToken = (isUTXOSide) ? UTXOBtcLikeToEthToken : ABBtcLikeToEthToken
-    const EthTokenToBtcLike = (isUTXOSide) ? UTXOEthTokenToBtcLike : ABEthTokenToBtcLike
+    const UtxoToAbTexts = (flow.isTaker()) ? TakerUtxoToAbTexts : MakerUtxoToAbtTexts
+    const EthToBtcLike = (flow.isTaker()) ? TakerAbToUtxoTexts : MakerAbToUtxoTexts
 
     const swapTexts = (
       <Fragment>
         {
-          this.props.swapName === 'BtcLikeToEth' &&
-            <BtcLikeToEth step={flow.step} flow={flow} swap={swap} coinName={currencyName} />
+          ['BtcLikeToEth', 'BtcLikeToEthToken'].includes(this.props.swapName) &&
+            <UtxoToAbTexts step={flow.step} flow={flow} swap={swap} coinName={currencyName} />
         }
         {
-          this.props.swapName === 'EthToBtcLike' &&
+          ['EthToBtcLike', 'EthTokenToBtcLike'].includes(this.props.swapName) &&
             <EthToBtcLike step={flow.step} flow={flow} swap={swap} coinName={currencyName} />
-        }
-        {
-          this.props.swapName === 'BtcLikeToEthToken' &&
-            <BtcLikeToEthToken step={flow.step} flow={flow} swap={swap} coinName={currencyName} />
-        }
-        {
-          this.props.swapName === 'EthTokenToBtcLike' &&
-            <EthTokenToBtcLike step={flow.step} flow={flow} swap={swap} coinName={currencyName} />
         }
       </Fragment>
     )
