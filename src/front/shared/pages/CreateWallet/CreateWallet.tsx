@@ -199,6 +199,7 @@ const CreateWallet = (props) => {
           api: standardObj.explorerApi,
           apiKey: standardObj.explorerApiKey,
           standard: standardName,
+          baseCurrency: standardObj.currency,
         })
 
         return
