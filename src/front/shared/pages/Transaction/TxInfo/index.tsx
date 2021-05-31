@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
-import erc20Like from 'common/erc20Like'
 import helpers from "helpers";
 import { getFullOrigin } from 'helpers/links'
 import { constants } from 'helpers'
@@ -17,17 +16,11 @@ import CommentRow from 'components/Comment/Comment'
 import animateFetching from 'components/loaders/ContentLoader/ElementLoading.scss'
 
 
-
 const labels = defineMessages({
-  Title: {
-    id: 'InfoPay_1',
-    defaultMessage: 'Transaction is completed',
-  },
   Text: {
     id: 'InfoPay_2',
     defaultMessage: 'successfully transferred to'
   },
-
 })
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
@@ -41,9 +34,9 @@ class TxInfo extends Component<any, any> {
     super(props)
 
     const {
-      currency,
+      currency: sourceCurrency,
       txRaw,
-      txId,
+      txHash,
       error,
     } = props
 
@@ -53,32 +46,24 @@ class TxInfo extends Component<any, any> {
 
     if (!error) {
       if (txRaw) {
-        if (erc20Like.erc20.isToken({ name: currency })) {
-          const txInfo = helpers.transactions.getInfo('erc20', txRaw)
+        const txInfo = helpers.transactions.getInfo(sourceCurrency.toLowerCase(), txRaw)
 
-          tx = txInfo.tx
-          linkBlockChain = txInfo.link
-        } else if (erc20Like.bep20.isToken({ name: currency })) {
-          const txInfo = helpers.transactions.getInfo('bep20', txRaw)
-
-          tx = txInfo.tx
-          linkBlockChain = txInfo.link
-        } else {
-          const txInfo = helpers.transactions.getInfo(currency.toLowerCase(), txRaw)
-
-          tx = txInfo.tx
-          linkBlockChain = txInfo.link
-        }
+        tx = txInfo.tx
+        linkBlockChain = txInfo.link
       }
 
-      if (txId) {
-        tx = txId
-        linkShare = helpers.transactions.getTxRouter(currency.toLowerCase(), txId)
-        linkBlockChain = helpers.transactions.getLink(currency.toLowerCase(), txId)
+      if (txHash) {
+        tx = txHash
+        linkShare = helpers.transactions.getTxRouter(sourceCurrency.toLowerCase(), txHash)
+        linkBlockChain = helpers.transactions.getLink(sourceCurrency.toLowerCase(), txHash)
       }
     }
 
+    // delete tokens base currency prefix
+    const currency = sourceCurrency.replace(/^\{[a-z]+\}/, '')
+
     this.state = {
+      currency,
       linkBlockChain,
       linkShare,
       tx,
@@ -92,7 +77,6 @@ class TxInfo extends Component<any, any> {
   render() {
     const {
       intl,
-      currency,
       txId,
       isFetching,
       amount,
@@ -107,6 +91,7 @@ class TxInfo extends Component<any, any> {
     } = this.props
 
     const {
+      currency,
       linkBlockChain,
       linkShare,
       tx,
@@ -141,27 +126,17 @@ class TxInfo extends Component<any, any> {
           <div className="p-3">
             <div styleName="shortInfoHolder">
               {
-                isFetching
-                  ? (
+                isFetching ? (
+                    <Skeleton count={2} />
+                  ) : error ? (
+                    <FormattedMessage id="InfoPay_2_Error" defaultMessage="Error loading data" />
+                  ) : (
                     <span>
-                      {/*
-                      // @ts-ignore */}
-                      <Skeleton count={2} />
+                      <strong id='txAmout'> {finalAmount}  {currency.toUpperCase()} </strong>
+                      <FormattedMessage id="InfoPay_2_Ready" defaultMessage="были успешно переданы" />
+                      <br />
+                      <strong id='txToAddress'>{toAddress}</strong>
                     </span>
-                  )
-                  : error
-                  ? (
-                    <span>
-                        <span><FormattedMessage id="InfoPay_2_Error" defaultMessage="Error loading data" /></span>
-                      </span>
-                  )
-                  : (
-                    <span>
-                        <span><strong id='txAmout'> {finalAmount}  {currency.toUpperCase()} </strong></span>
-                        <FormattedMessage id="InfoPay_2_Ready" defaultMessage="были успешно переданы" />
-                        <br />
-                        <strong id='txToAddress'>{toAddress}</strong>
-                      </span>
                   )
               }
             </div>
@@ -183,28 +158,22 @@ class TxInfo extends Component<any, any> {
               <>
                 <tr>
                   <td colSpan={2}>
-                    {/*
-                      // @ts-ignore */}
                     <Skeleton />
                   </td>
                 </tr>
                 <tr>
                   <td colSpan={2}>
-                    {/*
-                      // @ts-ignore */}
                     <Skeleton />
                   </td>
                 </tr>
                 <tr>
                   <td colSpan={2}>
-                    {/*
-                      // @ts-ignore */}
                     <Skeleton />
                   </td>
                 </tr>
               </>
             ) : error
-              ? ''
+              ? null
               : (
                 <>
                   {(confirmed) ? (

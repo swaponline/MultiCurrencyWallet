@@ -66,7 +66,10 @@ class erc20LikeHelper {
   isToken = (params): boolean => {
     const { name } = params
 
-    return Object.keys(config[this.standard]).includes(name.toLowerCase())
+    return (
+      Object.keys(config[this.standard]).includes(name.toLowerCase()) ||
+      name.startsWith(`{${this.currencyKey}}`)
+    )
   }
 
   checkAllowance = async (params: {

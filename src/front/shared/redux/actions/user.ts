@@ -4,6 +4,7 @@ import moment from 'moment/moment'
 import { constants } from 'helpers'
 import request from 'common/utils/request'
 import * as mnemonicUtils from 'common/utils/mnemonic'
+import transactions from 'helpers/transactions'
 import TOKEN_STANDARDS from 'helpers/constants/TOKEN_STANDARDS'
 import actions from 'redux/actions'
 import { getState } from 'redux/core'
@@ -275,9 +276,6 @@ const getTokensBalances = async () => {
     const standardObj = TOKEN_STANDARDS[key]
     const standardName = standardObj.standard
 
-    // TODO: need to consider about the identical token names in the different blockchains
-    // TODO: get balance not only with name
-
     Object.keys(config[standardName]).forEach(async (tokenName) => {
       try {
         await actions[standardName].getBalance(tokenName)
@@ -291,10 +289,13 @@ const getTokensBalances = async () => {
 }
 
 const customRate = (cur) => {
-  const wTokens = window.widgetERC20Tokens
+  const widgetTokens = window.widgetERC20Tokens
 
-  const dataobj = wTokens && Object.keys(wTokens).find(el => el === cur.toLowerCase())
-  return dataobj ? (wTokens[dataobj] || { customEcxchangeRate: null }).customEcxchangeRate : null
+  const targetToken = widgetTokens.length && widgetTokens.find((token) => {
+    return token.name.toLowerCase() === cur.toLowerCase()
+  })
+
+  return targetToken ? (targetToken || { customEcxchangeRate: null }).customEcxchangeRate : null
 }
 
 const getExchangeRate = (sellCurrency, buyCurrency): Promise<number> => {
@@ -421,9 +422,20 @@ const getInfoAboutCurrency = (currencyNames) => {
 
               default:
                 if (erc20Like.isToken({ name: currencyInfoItem.symbol })) {
-                  reducers.user.setInfoAboutToken({ name: currencyInfoItem.symbol.toLowerCase(), infoAboutCurrency: currencyInfo })
+                  const baseCurrency = tokenCurrencyByPlatform(currencyInfoItem.platform?.name)
+
+                  if (baseCurrency) {
+                    reducers.user.setInfoAboutToken({
+                      baseCurrency,
+                      name: currencyInfoItem.symbol.toLowerCase(),
+                      infoAboutCurrency: currencyInfo,
+                    })
+                  }
                 } else {
-                  reducers.user.setInfoAboutCurrency({ name: `${currencyInfoItem.symbol.toLowerCase()}Data`, infoAboutCurrency: currencyInfo })
+                  reducers.user.setInfoAboutCurrency({
+                    name: `${currencyInfoItem.symbol.toLowerCase()}Data`,
+                    infoAboutCurrency: currencyInfo,
+                  })
                 }
             }
           }
@@ -436,20 +448,35 @@ const getInfoAboutCurrency = (currencyNames) => {
   })
 }
 
+const tokenCurrencyByPlatform = (platform): string | undefined => {
+  let baseCurrency= undefined
+
+  Object.keys(TOKEN_STANDARDS).forEach((key) => {
+    if (TOKEN_STANDARDS[key].platform === platform?.toLowerCase()) {
+      baseCurrency = TOKEN_STANDARDS[key].currency
+    }
+  })
+
+  return baseCurrency
+}
 
 const clearTransactions = () => {
   reducers.history.setTransactions([])
 }
 
-const mergeTransactions = (mergeTxs: any[]) => {
+const mergeTransactions = (mergeTxs: IUniversalObj[]) => {
   const {
     history: {
       transactions,
     },
   } = getState()
-  //@ts-ignore: strictNullChecks
-  let data = [].concat(transactions, ...mergeTxs).sort((a, b) => b.date - a.date).filter((item) => item)
-  reducers.history.setTransactions(data)
+
+  const allTransactions = transactions
+    .concat(mergeTxs)
+    .sort((a, b) => b.date - a.date)
+    .filter((item) => item)
+
+  reducers.history.setTransactions(allTransactions)
 }
 
 const pullActiveCurrency = (currency) => {
@@ -528,9 +555,6 @@ const setTokensTransaction = async () => {
   const { core: { hiddenCoinsList } } = getState()
   const enabledCurrencies = getActivatedCurrencies()
   const tokens: { [key: string]: string[] } = {}
-
-  // TODO: need to consider about the identical token names in the different blockchains
-  // TODO: get Transaction not only with name
 
   Object.keys(TOKEN_STANDARDS).forEach((key) => {
     const standard = TOKEN_STANDARDS[key].standard
@@ -612,13 +636,17 @@ Private key: ${nextData.privateKey}\r\n
   return text
 }
 
-export const getWithdrawWallet = (currency, addr) => {
+export const getWithdrawWallet = (currency, addressOwner) => {
   const needType = getCurrencyKey(currency, true).toUpperCase()
 
-  const filtered = actions.core.getWallets({}).filter((wallet) => {
-    const walletType = getCurrencyKey(wallet.currency, true).toUpperCase()
+  const filtered = actions.core.getWallets().filter((wallet) => {
+    const walletName = wallet.tokenKey || wallet.currency
+    const walletType = getCurrencyKey(walletName, true).toUpperCase()
 
-    return (walletType === needType && addr === wallet.address) || (!addr && (walletType === needType))
+    return (
+      (walletType === needType && addressOwner === wallet.address) ||
+      (!addressOwner && (walletType === needType))
+    )
   })
 
   return (filtered.length) ? filtered[0] : false
@@ -626,17 +654,15 @@ export const getWithdrawWallet = (currency, addr) => {
 
 export const isOwner = (addr, currency) => {
   const lowerAddr = addr.toLowerCase()
+  const baseTokenCurrency = transactions.getTokenBaseCurrency(currency)
 
-  if (erc20Like.isToken({ name: currency })) {
-    const isErc20 = erc20Like.erc20.isToken({ name: currency })
-    const isBep20 = erc20Like.bep20.isToken({ name: currency })
-    const actionName = isErc20 ? 'eth' : isBep20 ? 'bnb' : 'eth'
-    const allAddresses = actions[actionName].getAllMyAddresses()
+  if (baseTokenCurrency) {
+    const allAddresses = actions[baseTokenCurrency].getAllMyAddresses()
 
     if (allAddresses.includes(lowerAddr)) return true
 
     const { user } = getState()
-    const storeOwnerAddress = user[`${actionName}Data`].address.toLowerCase()
+    const storeOwnerAddress = user[`${baseTokenCurrency}Data`].address.toLowerCase()
 
     return lowerAddr === storeOwnerAddress
   }

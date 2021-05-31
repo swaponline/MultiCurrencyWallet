@@ -76,6 +76,7 @@ const createP2PNode = (options) => {
         connEncryption: [SECIO],
         peerDiscovery: [Bootstrap],
         dht: KadDHT,
+        // @ts-ignore
         pubsub: Gossipsub
       },
       dialer: {

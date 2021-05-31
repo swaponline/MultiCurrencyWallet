@@ -4,6 +4,11 @@ export const COIN_TYPE = Object.freeze({
   BNB_TOKEN: 'BNB_TOKEN',
 })
 
+export const BASE_TOKEN_CURRENCY = Object.freeze({
+  ETH: 'ETH',
+  BNB: 'BNB',
+})
+
 export const COIN_MODEL = Object.freeze({
   UTXO: 'UTXO', // Unspent Transaction Outputs model
   AB: 'AB' // Account/Balance model
