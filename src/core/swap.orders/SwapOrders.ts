@@ -240,9 +240,6 @@ class SwapOrders extends aggregation(ServiceInterface, Collection) {
   _create(data) {
     const { id, buyAmount, sellAmount, buyCurrency, sellCurrency, ...rest } = data
 
-    const buyData = getCoinInfo(buyCurrency.toUpperCase())
-    const sellData = getCoinInfo(sellCurrency.toUpperCase())
-
     const {
       coin: buy,
       blockchain: buyBlockchain,

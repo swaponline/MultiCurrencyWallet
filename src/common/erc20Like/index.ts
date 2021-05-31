@@ -107,8 +107,13 @@ const isToken = (params) => {
 
   for (const prop in TOKEN_STANDARDS) {
     const standard = TOKEN_STANDARDS[prop].standard
+    const baseCurrency = TOKEN_STANDARDS[prop].currency
+    const lowerName = name.toLowerCase()
 
-    if (Object.keys(config[standard])?.includes(name.toLowerCase())) {
+    if (
+      Object.keys(config[standard])?.includes(lowerName) ||
+      lowerName.startsWith(`{${baseCurrency}}`)
+    ) {
       return true
     }
   }

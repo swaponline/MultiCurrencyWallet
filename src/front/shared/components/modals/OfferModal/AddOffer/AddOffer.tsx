@@ -134,10 +134,10 @@ export default class AddOffer extends Component<any, any> {
       ? await actions[sellBlockchain.toLowerCase()].getBalance()
       : 0
 
-    this.setState({
+    this.setState(() => ({
       balanceForBuyTokenFee,
       balanceForSellTokenFee,
-    })
+    }))
   }
 
   checkEthBalance = async () => {
@@ -219,7 +219,7 @@ export default class AddOffer extends Component<any, any> {
   }
 
   handleBuyCurrencySelect = async (selectedItem) => {
-    const { value, blockchain } = selectedItem
+    const { value, blockchain, standard } = selectedItem
     const { buyCurrency, sellCurrency, buyAmount, sellAmount } = this.state
 
     this.setState({
@@ -232,19 +232,23 @@ export default class AddOffer extends Component<any, any> {
       this.checkPair(sellCurrency)
       await this.checkBalance(sellCurrency)
       await this.updateExchangeRate(sellCurrency, value)
+      this.isTokenOffer(sellCurrency, value)
 
-      this.setState({
+      this.setState(() => ({
         buyCurrency: value,
         buyBlockchain: blockchain,
-      }, () => {
-        this.checkBalanceForTokenFee()
+      }), () => {
+        const { isTokenBuy } = this.state
+
+        if (isTokenBuy) {
+          this.checkBalanceForTokenFee()
+        }
       })
 
       if (sellAmount > 0 || buyAmount > 0) {
         this.handleBuyAmountChange(buyAmount)
         this.handleSellAmountChange(sellAmount)
       }
-      this.isTokenOffer(sellCurrency, value)
 
       this.getFee()
     }
@@ -265,19 +269,23 @@ export default class AddOffer extends Component<any, any> {
       this.checkPair(value)
       await this.checkBalance(value)
       await this.updateExchangeRate(value, buyCurrency)
+      this.isTokenOffer(value, buyCurrency)
 
-      this.setState({
+      this.setState(() => ({
         sellCurrency: value,
         sellBlockchain: blockchain,
-      }, () => {
-        this.checkBalanceForTokenFee()
+      }), () => {
+        const { isTokenSell } = this.state
+
+        if (isTokenSell) {
+          this.checkBalanceForTokenFee()
+        }
       })
 
       if (sellAmount > 0 || buyAmount > 0) {
         this.handleBuyAmountChange(buyAmount)
         this.handleSellAmountChange(sellAmount)
       }
-      this.isTokenOffer(value, buyCurrency)
 
       this.getFee()
     }
