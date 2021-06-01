@@ -57,6 +57,8 @@ class Erc20LikeAction {
     )
     console.group(`Actions >%c ${this.standard}`, 'color: red;')
     console.error('error: ', error)
+    console.log('%c Stack trance', 'color: orange;')
+    console.trace()
     console.groupEnd()
   }
 
@@ -534,19 +536,24 @@ class Erc20LikeAction {
   returnTokenInfo = (name) => {
     if (!name) throw new Error(`${this.standard} actions; returnTokenInfo(name): name is undefined`)
 
-    const tokenKey = `{${this.currencyKey}}${name.toLowerCase()}`
-    const { user: { tokensData } } = getState()
-    const { address: ownerAddress } = tokensData[tokenKey]
-    const { address: contractAddress, decimals } = externalConfig[this.standard][name]
-
-    const tokenContract = new this.Web3.eth.Contract(TokenAbi, contractAddress, {
-      from: ownerAddress,
-    })
-
-    return {
-      contractAddress,
-      tokenContract,
-      decimals,
+    try {
+      const tokenKey = `{${this.currencyKey}}${name.toLowerCase()}`
+      const { user: { tokensData } } = getState()
+      const { address: ownerAddress } = tokensData[tokenKey]
+      const { address: contractAddress, decimals } = externalConfig[this.standard][name]
+  
+      const tokenContract = new this.Web3.eth.Contract(TokenAbi, contractAddress, {
+        from: ownerAddress,
+      })
+  
+      return {
+        contractAddress,
+        tokenContract,
+        decimals,
+      }
+    } catch (error) {
+      this.reportError(error)
+      throw new Error(error)
     }
   }
 
