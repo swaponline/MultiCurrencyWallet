@@ -209,7 +209,7 @@ class Exchange extends PureComponent<any, any> {
     this.fiatRates = {}
     this.onRequestAnswer = (newOrder, isAccepted) => {}
 
-    const isRootPage = history.location.pathname === '/' || history.location.pathname === '/ru'
+    const isRootPage = history.location.pathname === '/'
     const {
       url,
       params: { buy, sell },
@@ -282,7 +282,9 @@ class Exchange extends PureComponent<any, any> {
     }
 
     if (config.isWidget) {
-      this.state.getCurrency = config.erc20token
+      this.setState(() => ({
+        getCurrency: config.erc20token
+      }))
     }
   }
 

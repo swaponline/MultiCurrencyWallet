@@ -111,6 +111,37 @@ export default class AddOffer extends Component<any, any> {
     this.checkBalanceForTokenFee()
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    const {
+      sellCurrency: prevSellCurrency,
+      buyCurrency: prevBuyCurrency,
+    } = prevState
+    const {
+      sellCurrency,
+      buyCurrency,
+      isTokenBuy,
+      isTokenSell,
+      buyBlockchain,
+      sellBlockchain,
+    } = this.state
+
+    if (prevSellCurrency !== sellCurrency && isTokenSell) {
+      this.updateTokenBaseWalletBalance(sellBlockchain)
+    }
+
+    if (prevBuyCurrency !== buyCurrency && isTokenBuy) {
+      this.updateTokenBaseWalletBalance(buyBlockchain)
+    }
+  }
+
+  updateTokenBaseWalletBalance = async (baseCurrency) => {
+    const tokenBaseCurrencyBalance = await actions[baseCurrency.toLowerCase()].getBalance()
+
+    this.setState(() => ({
+      tokenBaseCurrencyBalance,
+    }))
+  }
+
   getFee = () => {
     const { sellCurrency, buyCurrency } = this.state
 
@@ -245,7 +276,6 @@ export default class AddOffer extends Component<any, any> {
 
   handleSellCurrencySelect = async (selectedItem) => {
     const { value, blockchain } = selectedItem
-
     const { buyCurrency, sellCurrency, sellAmount, buyAmount } = this.state
 
     this.setState({

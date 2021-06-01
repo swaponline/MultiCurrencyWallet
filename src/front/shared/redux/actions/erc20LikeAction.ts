@@ -524,7 +524,6 @@ console.log('>>>>>>>>>>>>>>>>>>>>>>>>>', ownerAddress, contractAddress, decimals
     let { name, to, targetAllowance } = params
     name = this.getReduxName(name)
 
-
     const tokenKey = `{${this.currencyKey}}${name.toLowerCase()}`
     const { decimals } = this.returnTokenInfo(name)
     const { user: { tokensData } } = getState()
