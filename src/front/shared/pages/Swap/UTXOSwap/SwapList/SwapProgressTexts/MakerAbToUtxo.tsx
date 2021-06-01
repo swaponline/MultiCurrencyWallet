@@ -27,7 +27,7 @@ export default class MakerAbToUtxoTexts extends Component<any, any> {
         return (
           <FormattedMessage
             id="SwapProgressText_VerifyScript"
-            defaultMessage="The {buyCurrency} Script was created and charged."
+            defaultMessage="The {buyCurrency} Script was created and charged"
             values={{
               buyCurrency: `${this.props.swap.buyCurrency}`
             }}
@@ -76,7 +76,7 @@ export default class MakerAbToUtxoTexts extends Component<any, any> {
         return (
           <FormattedMessage
             id="SwapProgressText_Finish"
-            defaultMessage="{buyCurrency} tokens was transferred to your wallet. Check the balance."
+            defaultMessage="{buyCurrency} tokens was transferred to your wallet. Check the balance"
             values={{
               buyCurrency: `${this.props.swap.buyCurrency}`
             }}

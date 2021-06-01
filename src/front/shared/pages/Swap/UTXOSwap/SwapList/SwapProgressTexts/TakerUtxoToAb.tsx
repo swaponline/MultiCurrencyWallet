@@ -61,7 +61,7 @@ export default class TakerUtxoToAbTexts extends Component<any, any> {
         return (
           <FormattedMessage
             id="SwapProgressText_Finish"
-            defaultMessage="{buyCurrency} tokens was transferred to your wallet. Check the balance."
+            defaultMessage="{buyCurrency} tokens was transferred to your wallet. Check the balance"
             values={{
               buyCurrency: `${this.props.swap.buyCurrency}`
             }}
