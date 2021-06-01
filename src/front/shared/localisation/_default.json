@@ -1176,8 +1176,7 @@
     "id": "BtcToEthToken123",
     "message": "Finished!",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSteps/FourthStep.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSteps/FourthStep.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapSteps/FourthStep.tsx"
     ]
   },
   {
@@ -1342,32 +1341,32 @@
     "id": "BtcToEthToken24",
     "message": "Deposit",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSteps/SecondStep.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSteps/SecondStep.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapSteps/ABSteps/SecondStep.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapSteps/UTXOSteps/SecondStep.tsx"
     ]
   },
   {
     "id": "FourthStep52",
     "message": "({otherCurrency} tx)",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSteps/SecondStep.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSteps/SecondStep.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapSteps/ABSteps/SecondStep.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapSteps/UTXOSteps/SecondStep.tsx"
     ]
   },
   {
     "id": "FourthStep34",
     "message": "({sell} tx)",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSteps/ThirdStep.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSteps/ThirdStep.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapSteps/ABSteps/ThirdStep.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapSteps/UTXOSteps/ThirdStep.tsx"
     ]
   },
   {
     "id": "thirdStep24",
     "message": "WITHDRAW",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSteps/ThirdStep.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSteps/ThirdStep.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapSteps/ABSteps/ThirdStep.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapSteps/UTXOSteps/ThirdStep.tsx"
     ]
   },
   {
@@ -1511,8 +1510,7 @@
     "id": "Confirmation14",
     "message": "Confirmation",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSteps/FirstStep.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSteps/FirstStep.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapSteps/FirstStep.tsx"
     ]
   },
   {
@@ -1556,16 +1554,16 @@
     "id": "SecondStep",
     "message": "On this step, the crypto goes not to your wallet {br}or to the wallet of your counterparty but directly to the swap contract",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSteps/SecondStep.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSteps/SecondStep.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapSteps/ABSteps/SecondStep.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapSteps/UTXOSteps/SecondStep.tsx"
     ]
   },
   {
     "id": "thirdStep",
     "message": "Оn this step crypto is transferred from {br}the contract to your wallet and to the wallet {br} of your counterparty {br}",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSteps/ThirdStep.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSteps/ThirdStep.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapSteps/ABSteps/ThirdStep.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapSteps/UTXOSteps/ThirdStep.tsx"
     ]
   },
   {
@@ -5015,16 +5013,16 @@
     "id": "FourthStep37BtcLike",
     "message": "({currencyName} tx)",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSteps/SecondStep.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSteps/SecondStep.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapSteps/ABSteps/SecondStep.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapSteps/UTXOSteps/SecondStep.tsx"
     ]
   },
   {
     "id": "FourthStep37_BtcLike",
     "message": "({currencyName} tx)",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSteps/ThirdStep.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSteps/ThirdStep.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapSteps/ABSteps/ThirdStep.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapSteps/UTXOSteps/ThirdStep.tsx"
     ]
   },
   {
