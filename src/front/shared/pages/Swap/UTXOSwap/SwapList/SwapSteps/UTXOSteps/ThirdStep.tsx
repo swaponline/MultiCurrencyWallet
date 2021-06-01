@@ -108,18 +108,18 @@ const ThirdStep = (props) => {
   const TAKER_UTXO_THIRD_STEPS = ['withdraw-eth']
   const MAKER_UTXO_THIRD_STEPS  = ['wait-withdraw-utxo', 'withdraw-eth']
 
-  const activeStep = flowState.isTaker ? TAKER_UTXO_SECOND_STEPS : MAKER_UTXO_SECOND_STEPS
+  const secondActiveStep = flowState.isTaker ? TAKER_UTXO_SECOND_STEPS : MAKER_UTXO_SECOND_STEPS
   const thirdActiveStep = flowState.isTaker ? TAKER_UTXO_THIRD_STEPS : MAKER_UTXO_THIRD_STEPS
 
   const isFirstStepActive = (stepName === 'sign')
-  const isSecondStepActive = (activeStep.includes(stepName))
+  const isSecondStepActive = (secondActiveStep.includes(stepName))
   const isThirdStepActive = (thirdActiveStep.includes(stepName))
 
   const showStepNumber = isFirstStepActive || isSecondStepActive || isThirdStepActive
 
   return (
     <div
-      styleName={(isFirstStepActive && 'stepItem active') || ((isFirstStepActive || isSecondStepActive) && 'stepItem') || 'stepItem active checked'}>
+      styleName={(isThirdStepActive && 'stepItem active') || ((isFirstStepActive || isSecondStepActive) && 'stepItem') || 'stepItem active checked'}>
       <span styleName="stepNumber">{!isMobile ? (showStepNumber ? 3 : <i className="fas fa-check" />) : (showStepNumber ? 2 : <i className="fas fa-check" />)}</span>
       <p styleName="stepText">
         <FormattedMessage id="thirdStep24" defaultMessage="WITHDRAW" />
@@ -165,7 +165,7 @@ const ThirdStep = (props) => {
           />
         </Tooltip >
       </div>
-      {isFirstStepActive && (
+      {isThirdStepActive && (
         <span styleName="stepHeading">
           {text}
         </span>

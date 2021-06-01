@@ -108,11 +108,11 @@ const ThirdStep = (props) => {
   const TAKER_AB_THIRD_STEPS = ['withdraw-utxo']
   const MAKER_AB_THIRD_STEPS  = ['wait-withdraw-eth', 'withdraw-utxo']
 
-  const activeStep = flowState.isTaker ? TAKER_AB_SECOND_STEPS : MAKER_AB_SECOND_STEPS
+  const secondActiveStep = flowState.isTaker ? TAKER_AB_SECOND_STEPS : MAKER_AB_SECOND_STEPS
   const thirdActiveStep = flowState.isTaker ? TAKER_AB_THIRD_STEPS : MAKER_AB_THIRD_STEPS
 
   const isFirstStepActive = (stepName === 'sign')
-  const isSecondStepActive = (activeStep.includes(stepName))
+  const isSecondStepActive = (secondActiveStep.includes(stepName))
   const isThirdStepActive = (thirdActiveStep.includes(stepName))
 
   const showStepNumber = isFirstStepActive || isSecondStepActive || isThirdStepActive
