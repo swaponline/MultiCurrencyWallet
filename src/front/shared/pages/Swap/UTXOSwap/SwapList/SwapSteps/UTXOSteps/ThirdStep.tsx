@@ -16,11 +16,7 @@ const timeoutIds: NodeJS.Timeout[] = []
 
 const ThirdStep = (props) => {
   const {
-    step,
-    sixth,
-    seventh,
-    eighth,
-    windowWidth,
+    stepName,
     swap: {
       sellCurrency,
       buyCurrency,
@@ -106,15 +102,25 @@ const ThirdStep = (props) => {
     }
   }, [])
 
-  const currencyStep = sellCurrency === currencyName ? seventh : eighth
-  const stepItemActive = (step >= sixth && step < currencyStep)
-  const stepItemDefault = (step < currencyStep)
-  const thirdStepPadding = (stepItemActive && isMobile && windowWidth < 569) || (!stepItemDefault && !stepItemActive && isMobile && windowWidth < 569) ? 50 : 0
+  const TAKER_UTXO_SECOND_STEPS = ['submit-secret', 'sync-balance', 'lock-utxo', 'wait-lock-eth']
+  const MAKER_UTXO_SECOND_STEPS = ['sync-balance', 'wait-lock-eth', 'lock-utxo']
+
+  const TAKER_UTXO_THIRD_STEPS = ['withdraw-eth']
+  const MAKER_UTXO_THIRD_STEPS  = ['wait-withdraw-utxo', 'withdraw-eth']
+
+  const activeStep = flowState.isTaker ? TAKER_UTXO_SECOND_STEPS : MAKER_UTXO_SECOND_STEPS
+  const thirdActiveStep = flowState.isTaker ? TAKER_UTXO_THIRD_STEPS : MAKER_UTXO_THIRD_STEPS
+
+  const isFirstStepActive = (stepName === 'sign')
+  const isSecondStepActive = (activeStep.includes(stepName))
+  const isThirdStepActive = (thirdActiveStep.includes(stepName))
+
+  const showStepNumber = isFirstStepActive || isSecondStepActive || isThirdStepActive
 
   return (
     <div
-      styleName={((stepItemActive) && 'stepItem active') || (stepItemDefault && 'stepItem') || 'stepItem active checked'}>
-      <span styleName="stepNumber">{!isMobile ? (step < currencyStep ? 3 : <i className="fas fa-check" />) : (step < currencyStep ? 2 : <i className="fas fa-check" />)}</span>
+      styleName={(isFirstStepActive && 'stepItem active') || ((isFirstStepActive || isSecondStepActive) && 'stepItem') || 'stepItem active checked'}>
+      <span styleName="stepNumber">{!isMobile ? (showStepNumber ? 3 : <i className="fas fa-check" />) : (showStepNumber ? 2 : <i className="fas fa-check" />)}</span>
       <p styleName="stepText">
         <FormattedMessage id="thirdStep24" defaultMessage="WITHDRAW" />
       </p>
@@ -159,7 +165,7 @@ const ThirdStep = (props) => {
           />
         </Tooltip >
       </div>
-      {stepItemActive && (
+      {isFirstStepActive && (
         <span styleName="stepHeading">
           {text}
         </span>

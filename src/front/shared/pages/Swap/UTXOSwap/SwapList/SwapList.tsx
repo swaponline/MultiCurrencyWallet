@@ -76,13 +76,9 @@ export default class SwapList extends Component<any, any> {
       flow,
       swap,
       enoughBalance,
-      windowWidth,
-      fields,
       currencyData,
       tokenItems
     } = this.props
-
-    const { currencyName } = fields
 
     const isUTXOSide = flowClass.isUTXOSide
 
@@ -117,7 +113,7 @@ export default class SwapList extends Component<any, any> {
               <DepositWindow currencyData={currencyData} swap={swap} flow={flow} tokenItems={tokenItems} fields={this._fields} />
             </div>
         }
-        {/* <ThirdStep step={flow.step} windowWidth={windowWidth} swap={swap} sixth={sixth} seventh={seventh} eighth={eighth} fields={this._fields} text={swapTexts} /> */}
+        <ThirdStep stepName={this.getStepName()} swap={swap} fields={this._fields} text={swapTexts} />
         {!isMobile && <FourthStep stepName={this.getStepName()} text={swapTexts} />}
       </div>
     )
