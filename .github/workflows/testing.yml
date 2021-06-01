@@ -1,11 +1,11 @@
 name: Tests
 
-on:
+on: [pull_request]
   # Trigger the workflow on push or pull request,
   # but only for the master branch
-  push:
-    branches:
-      - master
+  # push:
+  #   branches:
+  #     - master
 
 jobs:
   build:
