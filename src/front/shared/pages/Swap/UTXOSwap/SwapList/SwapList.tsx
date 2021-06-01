@@ -17,27 +17,25 @@ import UTXOThirdStep from './SwapSteps/UTXOSteps/ThirdStep'
 import ABSecondStep from './SwapSteps/ABSteps/SecondStep'
 import ABThirdStep from './SwapSteps/ABSteps/ThirdStep'
 
-
 import MakerUtxoToAbtTexts from './SwapProgressTexts/MakerUtxoToAb'
 import TakerUtxoToAbTexts from './SwapProgressTexts/TakerUtxoToAb'
 import MakerAbToUtxoTexts from './SwapProgressTexts/MakerAbToUtxo'
 import TakerAbToUtxoTexts from './SwapProgressTexts/TakerAbToUtxo'
 
-const FIRST_STEP = ['sign']
+import SWAP_STEPS from 'common/helpers/constants/SWAP_STEPS'
 
-const TAKER_UTXO_SECOND_STEPS = ['submit-secret', 'sync-balance', 'lock-utxo', 'wait-lock-eth']
-const MAKER_UTXO_SECOND_STEPS = ['sync-balance', 'wait-lock-eth', 'lock-utxo']
-
-const TAKER_AB_SECOND_STEPS = ['submit-secret', 'sync-balance', 'lock-eth', 'wait-lock-utxo']
-const MAKER_AB_SECOND_STEPS = ['wait-lock-utxo', 'verify-script', 'sync-balance', 'lock-eth']
-
-const TAKER_UTXO_THIRD_STEPS = ['withdraw-eth']
-const MAKER_UTXO_THIRD_STEPS  = ['wait-withdraw-utxo', 'withdraw-eth']
-
-const TAKER_AB_THIRD_STEPS = ['withdraw-utxo']
-const MAKER_AB_THIRD_STEPS  = ['wait-withdraw-eth', 'withdraw-utxo']
-
-const FOURTH_STEP = ['finish', 'end']
+const {
+  FIRST_STEP,
+  TAKER_UTXO_SECOND_STEPS,
+  MAKER_UTXO_SECOND_STEPS,
+  TAKER_AB_SECOND_STEPS,
+  MAKER_AB_SECOND_STEPS,
+  TAKER_UTXO_THIRD_STEPS,
+  MAKER_UTXO_THIRD_STEPS,
+  TAKER_AB_THIRD_STEPS,
+  MAKER_AB_THIRD_STEPS,
+  FOURTH_STEP
+} = SWAP_STEPS
 
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
