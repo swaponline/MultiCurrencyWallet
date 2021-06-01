@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react'
 import CSSModules from 'react-css-modules'
 import styles from '../../SwapList.scss'
 
-import config from 'app-config'
 import actions from 'redux/actions'
 import { isMobile } from 'react-device-detect'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
@@ -23,7 +22,6 @@ const ThirdStep = (props) => {
       sellCurrency,
       buyCurrency,
       flow: {
-        state: flowState,
         state: {
           ethSwapWithdrawTransactionHash,
           utxoSwapWithdrawTransactionHash,
@@ -31,7 +29,6 @@ const ThirdStep = (props) => {
       },
     },
     fields: {
-      withdrawTransactionHash,
       currencyName,
       explorerLink,
       ethLikeCoin,
@@ -118,11 +115,11 @@ const ThirdStep = (props) => {
       <p styleName="stepText">
         <FormattedMessage id="thirdStep24" defaultMessage="WITHDRAW" />
       </p>
-      {flowState[withdrawTransactionHash] && (
+      {utxoSwapWithdrawTransactionHash && (
         <strong styleName="transactionInStep">
           <a
             id="utxoWithdrawalHashLink"
-            href={`${explorerLink}/tx/${flowState[withdrawTransactionHash]}`}
+            href={`${explorerLink}/tx/${utxoSwapWithdrawTransactionHash}`}
             target="_blank"
             rel="noreferrer noopener"
           >

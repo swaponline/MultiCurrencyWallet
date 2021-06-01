@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react'
 import CSSModules from 'react-css-modules'
 import styles from '../../SwapList.scss'
 
-import config from 'app-config'
 import actions from 'redux/actions'
 import { isMobile } from 'react-device-detect'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
@@ -23,7 +22,6 @@ const SecondStep = (props) => {
       sellCurrency,
       buyCurrency,
       flow: {
-        state: flowState,
         state: {
           ethSwapCreationTransactionHash,
           utxoScriptCreatingTransactionHash,
@@ -35,7 +33,6 @@ const SecondStep = (props) => {
       etherscanLink,
       currencyName,
       ethLikeCoin,
-      scriptCreatingTransactionHash,
     },
     text,
   } = props
@@ -117,12 +114,12 @@ const SecondStep = (props) => {
       <p styleName="stepText">
         <FormattedMessage id="BtcToEthToken24" defaultMessage="Deposit" />
       </p>
-      {flowState[scriptCreatingTransactionHash] && (
+      {utxoScriptCreatingTransactionHash && (
         <strong styleName="transactionInStep">
           <a
             id="utxoDepositHashLink"
-            title={`${explorerLink}/tx/${flowState[scriptCreatingTransactionHash]}`}
-            href={`${explorerLink}/tx/${flowState[scriptCreatingTransactionHash]}`}
+            title={`${explorerLink}/tx/${utxoScriptCreatingTransactionHash}`}
+            href={`${explorerLink}/tx/${utxoScriptCreatingTransactionHash}`}
             target="_blank"
             rel="noreferrer noopener"
           >
