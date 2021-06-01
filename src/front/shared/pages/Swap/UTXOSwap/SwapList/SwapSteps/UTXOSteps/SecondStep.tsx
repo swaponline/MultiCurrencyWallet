@@ -16,7 +16,9 @@ const timeoutIds: NodeJS.Timeout[] = []
 
 const SecondStep = (props) => {
   const {
-    stepName,
+    showDepositWindow,
+    isFirstStepActive,
+    isSecondStepActive,
     swap: {
       sellCurrency,
       buyCurrency,
@@ -33,7 +35,6 @@ const SecondStep = (props) => {
       scriptCreatingTransactionHash,
     },
     text,
-    enoughBalance,
   } = props
 
   const [scriptHashIsConfirmed, setScriptHashIsConfirmed] = useState(false)
@@ -103,16 +104,9 @@ const SecondStep = (props) => {
     }
   }, [])
 
-
-  const TAKER_UTXO_SECOND_STEPS = ['submit-secret', 'sync-balance', 'lock-utxo', 'wait-lock-eth']
-  const MAKER_UTXO_SECOND_STEPS = ['sync-balance', 'wait-lock-eth', 'lock-utxo']
-
-  const activeStep = flowState.isTaker ? TAKER_UTXO_SECOND_STEPS : MAKER_UTXO_SECOND_STEPS
-
-  const isSecondStepActive = (activeStep.includes(stepName))
-  const isFirstStepActive = (stepName === 'sign')
-
   const showStepNumber = isFirstStepActive || isSecondStepActive
+  const showStepText = isMobile ? showStepNumber : isSecondStepActive
+
   return (
     <div
       styleName={(isSecondStepActive && 'stepItem active') || (isFirstStepActive && 'stepItem') || 'stepItem active checked'}>
@@ -162,7 +156,7 @@ const SecondStep = (props) => {
           />
         </Tooltip >
       </div>
-      {(stepName === 'sync-balance' && !enoughBalance) ? '' : isSecondStepActive && (
+      {showDepositWindow ? '' : showStepText && (
         <span styleName="stepHeading">
           {text}
         </span>

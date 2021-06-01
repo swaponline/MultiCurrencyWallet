@@ -16,7 +16,9 @@ const timeoutIds: NodeJS.Timeout[] = []
 
 const ThirdStep = (props) => {
   const {
-    stepName,
+    isFirstStepActive,
+    isSecondStepActive,
+    isThirdStepActive,
     swap: {
       sellCurrency,
       buyCurrency,
@@ -102,24 +104,13 @@ const ThirdStep = (props) => {
     }
   }, [])
 
-  const TAKER_AB_SECOND_STEPS = ['submit-secret', 'sync-balance', 'lock-eth', 'wait-lock-utxo']
-  const MAKER_AB_SECOND_STEPS = ['wait-lock-utxo', 'verify-script', 'sync-balance', 'lock-eth']
-
-  const TAKER_AB_THIRD_STEPS = ['withdraw-utxo']
-  const MAKER_AB_THIRD_STEPS  = ['wait-withdraw-eth', 'withdraw-utxo']
-
-  const secondActiveStep = flowState.isTaker ? TAKER_AB_SECOND_STEPS : MAKER_AB_SECOND_STEPS
-  const thirdActiveStep = flowState.isTaker ? TAKER_AB_THIRD_STEPS : MAKER_AB_THIRD_STEPS
-
-  const isFirstStepActive = (stepName === 'sign')
-  const isSecondStepActive = (secondActiveStep.includes(stepName))
-  const isThirdStepActive = (thirdActiveStep.includes(stepName))
-
-  const showStepNumber = isFirstStepActive || isSecondStepActive || isThirdStepActive
+  const isLowStep = isFirstStepActive || isSecondStepActive
+  const showStepNumber = isThirdStepActive || isLowStep
+  const showStepText = isMobile ? (isThirdStepActive || !isLowStep) : isThirdStepActive
 
   return (
     <div
-      styleName={(isThirdStepActive && 'stepItem active') || ((isFirstStepActive || isSecondStepActive) && 'stepItem') || 'stepItem active checked'}>
+      styleName={(isThirdStepActive && 'stepItem active') || (isLowStep && 'stepItem') || 'stepItem active checked'}>
       <span styleName="stepNumber">{!isMobile ? (showStepNumber ? 3 : <i className="fas fa-check" />) : (showStepNumber ? 2 : <i className="fas fa-check" />)}</span>
       <p styleName="stepText">
         <FormattedMessage id="thirdStep24" defaultMessage="WITHDRAW" />
@@ -165,7 +156,7 @@ const ThirdStep = (props) => {
           />
         </Tooltip >
       </div>
-      {isThirdStepActive && (
+      {showStepText && (
         <span styleName="stepHeading">
           {text}
         </span>

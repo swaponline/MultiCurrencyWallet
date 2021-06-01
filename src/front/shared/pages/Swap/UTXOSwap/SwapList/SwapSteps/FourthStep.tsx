@@ -9,27 +9,23 @@ import { FormattedMessage } from 'react-intl'
 
 const FourthStep = (props) => {
   const {
-    stepName,
+    isFourthStepActive,
     text,
   } = props
 
-  const FOURTH_STEP = ['finish', 'end']
-
-  const isSwapFinished = FOURTH_STEP.includes(stepName)
-
-  const fourthStepPadding = (isSwapFinished && isMobile) ? 150 : 0
+  const fourthStepPadding = (isFourthStepActive && isMobile) ? 150 : 0
 
   return (
     <div
       style={{ paddingTop: fourthStepPadding }}
-      styleName={isSwapFinished ? 'stepItem active checked' : 'stepItem'}>
-      <span styleName="stepNumber">{isSwapFinished ? <i className="fas fa-check" /> : 4}</span>
+      styleName={isFourthStepActive ? 'stepItem active checked' : 'stepItem'}>
+      <span styleName="stepNumber">{isFourthStepActive ? <i className="fas fa-check" /> : 4}</span>
       <p id="swapCompleted" styleName="stepText">
         <FormattedMessage
           id="BtcToEthToken123"
           defaultMessage="The swap is finish!" />
       </p>
-      {isSwapFinished && (
+      {isFourthStepActive && (
         <span styleName="stepHeading">
           {text}
         </span>
