@@ -239,8 +239,8 @@ export default class AddOffer extends Component<any, any> {
   }
 
   handleBuyCurrencySelect = async (selectedItem) => {
-    const { value, blockchain, standard } = selectedItem
-    const { buyCurrency, sellCurrency, buyAmount, sellAmount } = this.state
+    const { value, blockchain } = selectedItem
+    const { sellCurrency, buyAmount, sellAmount } = this.state
 
     this.setState({
       isTurbo: false,

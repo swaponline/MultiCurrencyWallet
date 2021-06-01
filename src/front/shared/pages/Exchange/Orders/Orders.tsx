@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from 'react'
-import PropTypes from 'prop-types'
 
 import cssModules from 'react-css-modules'
 import styles from './Orders.scss'
@@ -32,15 +31,6 @@ import config from 'app-config'
 }))
 @cssModules(styles, { allowMultiple: true })
 class Offers extends Component<any, any> {
-
-  static propTypes = {
-    faqList: PropTypes.arrayOf(PropTypes.shape({
-      title: PropTypes.string.isRequired,
-      description: PropTypes.string.isRequired,
-    })),
-    faqFetching: PropTypes.bool,
-  }
-
   constructor(props) {
     super(props)
     const { initialData, intl: { locale } } = props
@@ -192,8 +182,6 @@ class Offers extends Component<any, any> {
                 currencies={currencies}
               />
               <div styleName="videoContainer">
-                {/*
-                //@ts-ignore */}
                 <Center relative centerVertically={false}>
                   <SubTitle>
                     <FormattedMessage id="Home153" defaultMessage="What is atomic swap?" />
@@ -221,9 +209,7 @@ class Offers extends Component<any, any> {
               </div>
             </PageHeadline>
           ) : (
-            //@ts-ignore
             <OrderBook
-              //@ts-ignore
               handleSellCurrencySelect={this.handleSellCurrencySelect}
               handleBuyCurrencySelect={this.handleBuyCurrencySelect}
               buyCurrency={buyCurrency}
