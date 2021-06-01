@@ -105,25 +105,19 @@ export default class SwapList extends Component<any, any> {
       </Fragment>
     )
 
-    const showDepositWindow =
-      (!enoughBalance) &&
-        (
-          (this.props.swapName === 'BtcLikeToEth' || this.props.swapName === 'BtcLikeToEthToken' && flow.step === 3)
-          ||
-          (this.props.swapName === 'EthToBtcLike' || this.props.swapName === 'EthTokenToBtcLike' && flow.step === 4)
-        )
+    const showDepositWindow = !enoughBalance && this.getStepName() === 'sync-balance'
 
     return (
       <div styleName={`${isMobile ? 'stepList isMobile' : 'stepList'} ${isDark ? 'dark' : ''}`}>
         {!isMobile && <FirstStep stepName={this.getStepName()} text={swapTexts} />}
-        {/* <SecondStep step={flow.step} swap={swap} second={second} windowWidth={windowWidth} fifth={fifth} fourth={fourth} sixth={sixth} fields={this._fields} text={swapTexts} enoughBalance={enoughBalance} />
+        <SecondStep stepName={this.getStepName()} swap={swap} fields={this._fields} text={swapTexts} enoughBalance={enoughBalance} />
         {
           showDepositWindow &&
             <div styleName="swapDepositWindow">
               <DepositWindow currencyData={currencyData} swap={swap} flow={flow} tokenItems={tokenItems} fields={this._fields} />
             </div>
         }
-        <ThirdStep step={flow.step} windowWidth={windowWidth} swap={swap} sixth={sixth} seventh={seventh} eighth={eighth} fields={this._fields} text={swapTexts} /> */}
+        {/* <ThirdStep step={flow.step} windowWidth={windowWidth} swap={swap} sixth={sixth} seventh={seventh} eighth={eighth} fields={this._fields} text={swapTexts} /> */}
         {!isMobile && <FourthStep stepName={this.getStepName()} text={swapTexts} />}
       </div>
     )

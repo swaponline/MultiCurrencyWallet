@@ -16,12 +16,7 @@ const timeoutIds: NodeJS.Timeout[] = []
 
 const SecondStep = (props) => {
   const {
-    step,
-    fifth,
-    fourth,
-    second,
-    sixth,
-    windowWidth,
+    stepName,
     swap: {
       sellCurrency,
       buyCurrency,
@@ -108,13 +103,19 @@ const SecondStep = (props) => {
     }
   }, [])
 
-  const currencyStep = sellCurrency === currencyName ? fifth : fourth
-  const stepItemActive = (step >= second && step < sixth)
-  const stepItemDefault = (step < sixth)
+  const TAKER_AB_SECOND_STEPS = ['submit-secret', 'sync-balance', 'lock-eth', 'wait-lock-utxo']
+  const MAKER_AB_SECOND_STEPS = ['wait-lock-utxo', 'verify-script', 'sync-balance', 'lock-eth']
+
+  const activeStep = flowState.isTaker ? TAKER_AB_SECOND_STEPS : MAKER_AB_SECOND_STEPS
+
+  const isSecondStepActive = (activeStep.includes(stepName))
+  const isFirstStepActive = (stepName === 'sign')
+
+  const showStepNumber = isFirstStepActive || isSecondStepActive
   return (
     <div
-      styleName={((stepItemActive) && 'stepItem active') || (stepItemDefault && 'stepItem') || 'stepItem active checked'}>
-      <span styleName="stepNumber">{!isMobile ? (stepItemDefault ? 2 : <i className="fas fa-check" />) : (stepItemDefault ? 1 : <i className="fas fa-check" />) }</span>
+      styleName={((isSecondStepActive) && 'stepItem active') || (isFirstStepActive && 'stepItem') || 'stepItem active checked'}>
+      <span styleName="stepNumber">{!isMobile ? (showStepNumber ? 2 : <i className="fas fa-check" />) : (showStepNumber ? 1 : <i className="fas fa-check" />) }</span>
       <p styleName="stepText">
         <FormattedMessage id="BtcToEthToken24" defaultMessage="Deposit" />
       </p>
@@ -160,7 +161,7 @@ const SecondStep = (props) => {
           />
         </Tooltip >
       </div>
-      {(step === 4 && !enoughBalance) ? '' : stepItemActive && (
+      {(stepName === 'sync-balance' && !enoughBalance) ? '' : isSecondStepActive && (
         <span styleName="stepHeading">
           {text}
         </span>
