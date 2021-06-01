@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
 import CSSModules from 'react-css-modules'
-import styles from '../SwapList.scss'
+import styles from '../../SwapList.scss'
 
 import config from 'app-config'
 import actions from 'redux/actions'
@@ -9,19 +9,16 @@ import { isMobile } from 'react-device-detect'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import { FormattedMessage } from 'react-intl'
-import checkedIcon from '../../../images/checked.svg'
+import checkedIcon from '../../../../images/checked.svg'
 
 let _mounted = false
 const timeoutIds: NodeJS.Timeout[] = []
 
 const SecondStep = (props) => {
   const {
-    step,
-    fifth,
-    fourth,
-    second,
-    sixth,
-    windowWidth,
+    showDepositWindow,
+    isFirstStepActive,
+    isSecondStepActive,
     swap: {
       sellCurrency,
       buyCurrency,
@@ -38,7 +35,6 @@ const SecondStep = (props) => {
       scriptCreatingTransactionHash,
     },
     text,
-    enoughBalance,
   } = props
 
   const [scriptHashIsConfirmed, setScriptHashIsConfirmed] = useState(false)
@@ -108,13 +104,13 @@ const SecondStep = (props) => {
     }
   }, [])
 
-  const currencyStep = sellCurrency === currencyName ? fifth : fourth
-  const stepItemActive = (step >= second && step < sixth)
-  const stepItemDefault = (step < sixth)
+  const showStepNumber = isFirstStepActive || isSecondStepActive
+  const showStepText = isMobile ? showStepNumber : isSecondStepActive
+
   return (
     <div
-      styleName={((stepItemActive) && 'stepItem active') || (stepItemDefault && 'stepItem') || 'stepItem active checked'}>
-      <span styleName="stepNumber">{!isMobile ? (stepItemDefault ? 2 : <i className="fas fa-check" />) : (stepItemDefault ? 1 : <i className="fas fa-check" />) }</span>
+      styleName={((isSecondStepActive) && 'stepItem active') || (isFirstStepActive && 'stepItem') || 'stepItem active checked'}>
+      <span styleName="stepNumber">{!isMobile ? (showStepNumber ? 2 : <i className="fas fa-check" />) : (showStepNumber ? 1 : <i className="fas fa-check" />) }</span>
       <p styleName="stepText">
         <FormattedMessage id="BtcToEthToken24" defaultMessage="Deposit" />
       </p>
@@ -160,7 +156,7 @@ const SecondStep = (props) => {
           />
         </Tooltip >
       </div>
-      {(step === 4 && !enoughBalance) ? '' : stepItemActive && (
+      {showDepositWindow ? '' : showStepText && (
         <span styleName="stepHeading">
           {text}
         </span>

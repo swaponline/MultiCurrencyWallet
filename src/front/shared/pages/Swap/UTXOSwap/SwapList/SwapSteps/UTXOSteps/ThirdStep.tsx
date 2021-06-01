@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
 import CSSModules from 'react-css-modules'
-import styles from '../SwapList.scss'
+import styles from '../../SwapList.scss'
 
 import config from 'app-config'
 import actions from 'redux/actions'
@@ -9,18 +9,16 @@ import { isMobile } from 'react-device-detect'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import { FormattedMessage } from 'react-intl'
-import checkedIcon from '../../../images/checked.svg'
+import checkedIcon from '../../../../images/checked.svg'
 
 let _mounted = false
 const timeoutIds: NodeJS.Timeout[] = []
 
 const ThirdStep = (props) => {
   const {
-    step,
-    sixth,
-    seventh,
-    eighth,
-    windowWidth,
+    isFirstStepActive,
+    isSecondStepActive,
+    isThirdStepActive,
     swap: {
       sellCurrency,
       buyCurrency,
@@ -106,15 +104,14 @@ const ThirdStep = (props) => {
     }
   }, [])
 
-  const currencyStep = sellCurrency === currencyName ? seventh : eighth
-  const stepItemActive = (step >= sixth && step < currencyStep)
-  const stepItemDefault = (step < currencyStep)
-  const thirdStepPadding = (stepItemActive && isMobile && windowWidth < 569) || (!stepItemDefault && !stepItemActive && isMobile && windowWidth < 569) ? 50 : 0
+  const isLowStep = isFirstStepActive || isSecondStepActive
+  const showStepNumber = isThirdStepActive || isLowStep
+  const showStepText = isMobile ? (isThirdStepActive || !isLowStep) : isThirdStepActive
 
   return (
     <div
-      styleName={((stepItemActive) && 'stepItem active') || (stepItemDefault && 'stepItem') || 'stepItem active checked'}>
-      <span styleName="stepNumber">{!isMobile ? (step < currencyStep ? 3 : <i className="fas fa-check" />) : (step < currencyStep ? 2 : <i className="fas fa-check" />)}</span>
+      styleName={(isThirdStepActive && 'stepItem active') || (isLowStep && 'stepItem') || 'stepItem active checked'}>
+      <span styleName="stepNumber">{!isMobile ? (showStepNumber ? 3 : <i className="fas fa-check" />) : (showStepNumber ? 2 : <i className="fas fa-check" />)}</span>
       <p styleName="stepText">
         <FormattedMessage id="thirdStep24" defaultMessage="WITHDRAW" />
       </p>
@@ -159,7 +156,7 @@ const ThirdStep = (props) => {
           />
         </Tooltip >
       </div>
-      {stepItemActive && (
+      {showStepText && (
         <span styleName="stepHeading">
           {text}
         </span>
