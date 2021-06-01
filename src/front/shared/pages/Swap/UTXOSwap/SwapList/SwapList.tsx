@@ -28,12 +28,12 @@ const {
   FIRST_STEP,
   TAKER_UTXO_SECOND_STEPS,
   MAKER_UTXO_SECOND_STEPS,
-  TAKER_AB_SECOND_STEPS,
-  MAKER_AB_SECOND_STEPS,
+  TAKER_EVM_SECOND_STEPS,
+  MAKER_EVM_SECOND_STEPS,
   TAKER_UTXO_THIRD_STEPS,
   MAKER_UTXO_THIRD_STEPS,
-  TAKER_AB_THIRD_STEPS,
-  MAKER_AB_THIRD_STEPS,
+  TAKER_EVM_THIRD_STEPS,
+  MAKER_EVM_THIRD_STEPS,
   FOURTH_STEP
 } = SWAP_STEPS
 
@@ -119,12 +119,12 @@ export default class SwapList extends React.PureComponent<any, any> {
     const secondActiveStep = isUTXOSide ?
       flow.isTaker ? TAKER_UTXO_SECOND_STEPS : MAKER_UTXO_SECOND_STEPS
       :
-      flow.isTaker ? TAKER_AB_SECOND_STEPS : MAKER_AB_SECOND_STEPS
+      flow.isTaker ? TAKER_EVM_SECOND_STEPS : MAKER_EVM_SECOND_STEPS
 
     const thirdActiveStep = isUTXOSide ?
       flow.isTaker ? TAKER_UTXO_THIRD_STEPS : MAKER_UTXO_THIRD_STEPS
       :
-      flow.isTaker ? TAKER_AB_THIRD_STEPS : MAKER_AB_THIRD_STEPS
+      flow.isTaker ? TAKER_EVM_THIRD_STEPS : MAKER_EVM_THIRD_STEPS
 
     const isFirstStepActive = (FIRST_STEP.includes(stepName))
     const isSecondStepActive = (secondActiveStep.includes(stepName))
