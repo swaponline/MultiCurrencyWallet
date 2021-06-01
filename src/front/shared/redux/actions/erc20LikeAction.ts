@@ -115,16 +115,6 @@ class Erc20LikeAction {
 
   getBalance = async (tokenName) => {
     if (tokenName === undefined) return
-/*
-console.log('>>>>>> erc20LikeAction -> getBalance', tokenName, this.getReduxName(tokenName))
-    const {
-      user: {
-        tokensData: {
-          [this.getReduxName(tokenName)]: { address: ownerAddress, contractAddress, decimals, name },
-        },
-      },
-    } = getState()
-*/
 
     const tokenKey = `{${this.currencyKey}}${tokenName.toLowerCase()}`
     const { user: { tokensData } } = getState()
@@ -135,11 +125,7 @@ console.log('>>>>>> erc20LikeAction -> getBalance', tokenName, this.getReduxName
       name,
     } = tokensData[tokenKey]
 
-
-console.log('>>>>>>>>>>>>>>>>>>>>>>>>>', ownerAddress, contractAddress, decimals, name )
     const address = metamask.isConnected() ? metamask.getAddress() : ownerAddress
-
-
     const balanceInCache = cacheStorageGet('currencyBalances', `token_${tokenKey}_${address}`)
 
     if (balanceInCache !== false) {
@@ -547,8 +533,6 @@ console.log('>>>>>>>>>>>>>>>>>>>>>>>>>', ownerAddress, contractAddress, decimals
 
   returnTokenInfo = (name) => {
     if (!name) throw new Error(`${this.standard} actions; returnTokenInfo(name): name is undefined`)
-
-    name = this.getReduxName(name)
 
     const tokenKey = `{${this.currencyKey}}${name.toLowerCase()}`
     const { user: { tokensData } } = getState()
