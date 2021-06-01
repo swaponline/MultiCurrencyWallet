@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import React, { Fragment } from 'react'
 
 import { isMobile } from 'react-device-detect'
 import { constants } from 'helpers'
@@ -8,76 +8,90 @@ import styles from './SwapList.scss'
 
 import DepositWindow from '../DepositWindow/DepositWindow'
 
-import UTXOFirstStep from './UTXOSteps/FirstStep'
-import UTXOSecondStep from './UTXOSteps/SecondStep'
-import UTXOThirdStep from './UTXOSteps/ThirdStep'
-import UTXOFourthStep from './UTXOSteps/FourthStep'
+import FirstStep from './SwapSteps/FirstStep'
+import FourthStep from './SwapSteps/FourthStep'
 
-import ABFirstStep from './ABSteps/FirstStep'
-import ABSecondStep from './ABSteps/SecondStep'
-import ABThirdStep from './ABSteps/ThirdStep'
-import ABFourthStep from './ABSteps/FourthStep'
+import UTXOSecondStep from './SwapSteps/UTXOSteps/SecondStep'
+import UTXOThirdStep from './SwapSteps/UTXOSteps/ThirdStep'
 
+import ABSecondStep from './SwapSteps/ABSteps/SecondStep'
+import ABThirdStep from './SwapSteps/ABSteps/ThirdStep'
 
-import UTXOBtcLikeToEth from './UTXOSwapProgressText/BtcLikeToEth'
-import UTXOBtcLikeToEthToken from './UTXOSwapProgressText/BtcLikeToEthToken'
-import UTXOEthToBtcLike from './UTXOSwapProgressText/EthToBtcLike'
-import UTXOEthTokenToBtcLike from './UTXOSwapProgressText/EthTokenToBtcLike'
+import MakerUtxoToAbtTexts from './SwapProgressTexts/MakerUtxoToAb'
+import TakerUtxoToAbTexts from './SwapProgressTexts/TakerUtxoToAb'
+import MakerAbToUtxoTexts from './SwapProgressTexts/MakerAbToUtxo'
+import TakerAbToUtxoTexts from './SwapProgressTexts/TakerAbToUtxo'
 
-import ABBtcLikeToEth from './ABSwapProgressText/BtcLikeToEth'
-import ABBtcLikeToEthToken from './ABSwapProgressText/BtcLikeToEthToken'
-import ABEthToBtcLike from './ABSwapProgressText/EthToBtcLike'
-import ABEthTokenToBtcLike from './ABSwapProgressText/EthTokenToBtcLike'
+import SWAP_STEPS from 'common/helpers/constants/SWAP_STEPS'
+
+const {
+  FIRST_STEP,
+  TAKER_UTXO_SECOND_STEPS,
+  MAKER_UTXO_SECOND_STEPS,
+  TAKER_EVM_SECOND_STEPS,
+  MAKER_EVM_SECOND_STEPS,
+  TAKER_UTXO_THIRD_STEPS,
+  MAKER_UTXO_THIRD_STEPS,
+  TAKER_EVM_THIRD_STEPS,
+  MAKER_EVM_THIRD_STEPS,
+  FOURTH_STEP
+} = SWAP_STEPS
 
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 @CSSModules(styles, { allowMultiple: true })
-export default class SwapList extends Component<any, any> {
+export default class SwapList extends React.PureComponent<any, any> {
 
   _fields = null
 
   constructor(props) {
     super(props)
 
-    const {
-      swap: {
-        sellCurrency,
-        flow: {
-          stepNumbers,
-          isTakerMakerModel,
-        },
-        flow,
-      },
-      fields,
-    } = props
-
-    const isTaker = flow.isTaker()
-
-    this._fields = fields
-
-    const { currencyName } = fields
-
-    const first = stepNumbers.sign
-    const second = sellCurrency === currencyName ? stepNumbers[`submit-secret`] : stepNumbers[`wait-lock-utxo`]
-    const fourth = sellCurrency === currencyName ? stepNumbers[`lock-utxo`] : stepNumbers[`sync-balance`]
-    const fifth = sellCurrency === currencyName ? stepNumbers[`wait-lock-eth`] : stepNumbers[`lock-eth`]
-    const sixth = sellCurrency === currencyName ? stepNumbers[`withdraw-eth`] : stepNumbers[`wait-withdraw-eth`]
-    const seventh = sellCurrency === currencyName ? stepNumbers.finish : stepNumbers[`withdraw-utxo`]
-    const eighth = sellCurrency === currencyName ? stepNumbers.end : stepNumbers.finish
-
     this.state = {
-      first,
-      second,
-      fourth,
-      fifth,
-      sixth,
-      seventh,
-      eighth,
+      stepName: this.getStepName()
     }
+
+    this._fields = props.fields
 
     console.group('SwapList >%c constructor', 'color: green;')
     console.log('fields: ', this._fields)
     console.groupEnd()
+  }
+
+  getStepName = () => {
+    const {
+      swap: {
+        flow: {
+          stepNumbers
+        }
+      },
+      flow: {
+        step
+      }
+     } = this.props
+
+     let stepName = ''
+
+    Object.keys(stepNumbers).forEach((key) => {
+      if (stepNumbers[key] === step) {
+        stepName = key
+      }
+    })
+
+    console.log('stepName', stepName)
+
+    return stepName
+  }
+
+  componentDidUpdate(prevProps) {
+    const { flow: { step: prevStep } } = prevProps
+    const { flow: { step } } = this.props
+
+    if(prevStep !== step) {
+      this.setState({
+        stepName: this.getStepName()
+      })
+    }
   }
 
   render() {
@@ -91,68 +105,76 @@ export default class SwapList extends Component<any, any> {
       flow,
       swap,
       enoughBalance,
-      windowWidth,
-      fields,
       currencyData,
       tokenItems
     } = this.props
-    const { first, second, fourth, fifth, sixth, seventh, eighth } = this.state
 
-    const { currencyName } = fields
+    const { stepName } = this.state
 
     const isUTXOSide = flowClass.isUTXOSide
 
-    const FirstStep = (isUTXOSide) ? UTXOFirstStep : ABFirstStep
     const SecondStep = (isUTXOSide) ? UTXOSecondStep : ABSecondStep
     const ThirdStep = (isUTXOSide) ? UTXOThirdStep : ABThirdStep
-    const FourthStep = (isUTXOSide) ? UTXOFourthStep : ABFourthStep
 
-    const BtcLikeToEth = (isUTXOSide) ? UTXOBtcLikeToEth : ABBtcLikeToEth
-    const EthToBtcLike = (isUTXOSide) ? UTXOEthToBtcLike : ABEthToBtcLike
-    const BtcLikeToEthToken = (isUTXOSide) ? UTXOBtcLikeToEthToken : ABBtcLikeToEthToken
-    const EthTokenToBtcLike = (isUTXOSide) ? UTXOEthTokenToBtcLike : ABEthTokenToBtcLike
+    const secondActiveStep = isUTXOSide ?
+      flow.isTaker ? TAKER_UTXO_SECOND_STEPS : MAKER_UTXO_SECOND_STEPS
+      :
+      flow.isTaker ? TAKER_EVM_SECOND_STEPS : MAKER_EVM_SECOND_STEPS
+
+    const thirdActiveStep = isUTXOSide ?
+      flow.isTaker ? TAKER_UTXO_THIRD_STEPS : MAKER_UTXO_THIRD_STEPS
+      :
+      flow.isTaker ? TAKER_EVM_THIRD_STEPS : MAKER_EVM_THIRD_STEPS
+
+    const isFirstStepActive = (FIRST_STEP.includes(stepName))
+    const isSecondStepActive = (secondActiveStep.includes(stepName))
+    const isThirdStepActive = (thirdActiveStep.includes(stepName))
+    const isFourthStepActive = (FOURTH_STEP.includes(stepName))
+
+    const UtxoToAbTexts = (flow.isTaker) ? TakerUtxoToAbTexts : MakerUtxoToAbtTexts
+    const AbToUtxoTexts = (flow.isTaker) ? TakerAbToUtxoTexts : MakerAbToUtxoTexts
 
     const swapTexts = (
       <Fragment>
         {
-          this.props.swapName === 'BtcLikeToEth' &&
-            <BtcLikeToEth step={flow.step} flow={flow} swap={swap} coinName={currencyName} />
+          ['BtcLikeToEth', 'BtcLikeToEthToken'].includes(this.props.swapName) &&
+            <UtxoToAbTexts flow={flow} swap={swap} stepName={stepName} />
         }
         {
-          this.props.swapName === 'EthToBtcLike' &&
-            <EthToBtcLike step={flow.step} flow={flow} swap={swap} coinName={currencyName} />
-        }
-        {
-          this.props.swapName === 'BtcLikeToEthToken' &&
-            <BtcLikeToEthToken step={flow.step} flow={flow} swap={swap} coinName={currencyName} />
-        }
-        {
-          this.props.swapName === 'EthTokenToBtcLike' &&
-            <EthTokenToBtcLike step={flow.step} flow={flow} swap={swap} coinName={currencyName} />
+          ['EthToBtcLike', 'EthTokenToBtcLike'].includes(this.props.swapName) &&
+            <AbToUtxoTexts flow={flow} swap={swap} stepName={stepName} />
         }
       </Fragment>
     )
 
-    const showDepositWindow =
-      (!enoughBalance) &&
-        (
-          (this.props.swapName === 'BtcLikeToEth' || this.props.swapName === 'BtcLikeToEthToken' && flow.step === 3)
-          ||
-          (this.props.swapName === 'EthToBtcLike' || this.props.swapName === 'EthTokenToBtcLike' && flow.step === 4)
-        )
+    const showDepositWindow = !enoughBalance && stepName === 'sync-balance'
 
     return (
       <div styleName={`${isMobile ? 'stepList isMobile' : 'stepList'} ${isDark ? 'dark' : ''}`}>
-        {!isMobile && <FirstStep step={flow.step} first={first} second={second} fields={this._fields} text={swapTexts} />}
-        <SecondStep step={flow.step} swap={swap} second={second} windowWidth={windowWidth} fifth={fifth} fourth={fourth} sixth={sixth} fields={this._fields} text={swapTexts} enoughBalance={enoughBalance} />
+        {!isMobile && <FirstStep text={swapTexts} isFirstStepActive={isFirstStepActive} />}
+        <SecondStep
+          isFirstStepActive={isFirstStepActive}
+          isSecondStepActive={isSecondStepActive}
+          text={swapTexts}
+          showDepositWindow={showDepositWindow}
+          swap={swap}
+          fields={this._fields}
+        />
         {
           showDepositWindow &&
             <div styleName="swapDepositWindow">
               <DepositWindow currencyData={currencyData} swap={swap} flow={flow} tokenItems={tokenItems} fields={this._fields} />
             </div>
         }
-        <ThirdStep step={flow.step} windowWidth={windowWidth} swap={swap} sixth={sixth} seventh={seventh} eighth={eighth} fields={this._fields} text={swapTexts} />
-        {!isMobile && <FourthStep step={flow.step} swap={swap} seventh={seventh} eighth={eighth} fields={this._fields} text={swapTexts} />}
+        <ThirdStep
+          isFirstStepActive={isFirstStepActive}
+          isSecondStepActive={isSecondStepActive}
+          isThirdStepActive={isThirdStepActive}
+          swap={swap}
+          fields={this._fields}
+          text={swapTexts}
+        />
+        {!isMobile && <FourthStep isFourthStepActive={isFourthStepActive} text={swapTexts} />}
       </div>
     )
   }

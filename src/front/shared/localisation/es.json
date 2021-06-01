@@ -1144,8 +1144,7 @@
     "id": "BtcToEthToken123",
     "message": "El intercambio ha terminado!!",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSteps/FourthStep.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSteps/FourthStep.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapSteps/FourthStep.tsx"
     ]
   },
   {
@@ -1310,32 +1309,32 @@
     "id": "BtcToEthToken24",
     "message": "Depositar",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSteps/SecondStep.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSteps/SecondStep.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapSteps/ABSteps/SecondStep.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapSteps/UTXOSteps/SecondStep.tsx"
     ]
   },
   {
     "id": "FourthStep52",
     "message": "({otherCurrency} tx)",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSteps/SecondStep.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSteps/SecondStep.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapSteps/ABSteps/SecondStep.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapSteps/UTXOSteps/SecondStep.tsx"
     ]
   },
   {
     "id": "FourthStep34",
     "message": "({sell} tx)",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSteps/ThirdStep.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSteps/ThirdStep.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapSteps/ABSteps/ThirdStep.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapSteps/UTXOSteps/ThirdStep.tsx"
     ]
   },
   {
     "id": "thirdStep24",
     "message": "RETIRAR",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSteps/ThirdStep.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSteps/ThirdStep.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapSteps/ABSteps/ThirdStep.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapSteps/UTXOSteps/ThirdStep.tsx"
     ]
   },
   {
@@ -1479,8 +1478,7 @@
     "id": "Confirmation14",
     "message": "Confirmación",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSteps/FirstStep.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSteps/FirstStep.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapSteps/FirstStep.tsx"
     ]
   },
   {
@@ -1517,16 +1515,16 @@
     "id": "SecondStep",
     "message": "En este paso, la criptografía no va a su billetera {br} ni a la billetera de su contraparte, sino directamente al contrato de intercambio",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSteps/SecondStep.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSteps/SecondStep.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapSteps/ABSteps/SecondStep.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapSteps/UTXOSteps/SecondStep.tsx"
     ]
   },
   {
     "id": "thirdStep",
     "message": "En este paso, las criptomonedas se transfieren de {br} el contrato a su billetera y a la billetera {br} de su contraparte {br}",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSteps/ThirdStep.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSteps/ThirdStep.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapSteps/ABSteps/ThirdStep.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapSteps/UTXOSteps/ThirdStep.tsx"
     ]
   },
   {
@@ -4913,288 +4911,108 @@
     "id": "FourthStep37BtcLike",
     "message": "({currencyName} tx)",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSteps/SecondStep.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSteps/SecondStep.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapSteps/ABSteps/SecondStep.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapSteps/UTXOSteps/SecondStep.tsx"
     ]
   },
   {
     "id": "FourthStep37_BtcLike",
     "message": "({currencyName} tx)",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSteps/ThirdStep.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSteps/ThirdStep.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapSteps/ABSteps/ThirdStep.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapSteps/UTXOSteps/ThirdStep.tsx"
     ]
   },
   {
-    "id": "SwapProgress105_btclike_to_eth",
+    "id": "SwapProgressText_FirstStep",
+    "message": "Espere por favor",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerAbToUtxo.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerUtxoToAb.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerUtxoToAb.tsx"
+    ]
+  },
+  {
+    "id": "SwapProgressText_CheckingBalance",
     "message": "Comprobando el saldo..",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/BtcLikeToEth.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/BtcLikeToEth.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerAbToUtxo.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerUtxoToAb.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerUtxoToAb.tsx"
     ]
   },
   {
-    "id": "SwapProgress111_btclike_to_eth",
-    "message": "Depositando {coinName}.{br}Puede tardar unos minutos",
+    "id": "SwapProgressText_WaitPatricipantDeposit",
+    "message": "Esperando que otro participante deposite {buyCurrency}",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/BtcLikeToEth.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/BtcLikeToEth.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerAbToUtxo.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerUtxoToAb.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerUtxoToAb.tsx"
     ]
   },
   {
-    "id": "SwapProgress117_btclike_to_eth",
-    "message": "Tu {coinName} ahora está depositando. Puede requerir una confirmación de la red {coinName}. Esperando que otro participante deposite ETH.",
+    "id": "SwapProgressText_DepositingYourSide",
+    "message": "Depositando {sellCurrency}.{br}Puede tardar unos minutos",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/BtcLikeToEth.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/BtcLikeToEth.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerAbToUtxo.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerUtxoToAb.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerUtxoToAb.tsx"
     ]
   },
   {
-    "id": "SwapProgress123_btclike_to_eth",
-    "message": "ETH Contrato creado y cargado. Solicitud de retiro del contrato ETH.",
+    "id": "SwapProgressText_WithdrawRequest",
+    "message": "Solicitud de retiro del contrato {buyCurrency}",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/BtcLikeToEth.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/BtcLikeToEth.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerAbToUtxo.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerUtxoToAb.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerUtxoToAb.tsx"
     ]
   },
   {
-    "id": "SwapProgress129_btclike_to_eth",
-    "message": "ETH se transfirió a su billetera. Verifique el saldo.",
+    "id": "SwapProgressText_Finish",
+    "message": "Se transfirieron tokens de {buyCurrency} a su billetera. Comprobar el saldo",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/BtcLikeToEth.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/BtcLikeToEth.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerAbToUtxo.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerUtxoToAb.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerUtxoToAb.tsx"
     ]
   },
   {
-    "id": "SwapProgress135_btclike_to_eth",
+    "id": "SwapProgressText_End",
     "message": "Gracias por usar Swap.Online!",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/BtcLikeToEth.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/BtcLikeToEth.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerAbToUtxo.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerUtxoToAb.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerUtxoToAb.tsx"
     ]
   },
   {
-    "id": "SwapProgress93_btclike_to_eth",
-    "message": "El creador del pedido no está conectado. Esperándolo..",
+    "id": "SwapProgressText_MakerWaitTakerWithdraw",
+    "message": "Esperando a que el propietario de {buyCurrency} agregue una clave secreta al contacto de {sellCurrency}",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/BtcLikeToEth.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/BtcLikeToEth.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerAbToUtxo.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerUtxoToAb.tsx"
     ]
   },
   {
-    "id": "SwapProgress99_btclike_to_eth",
+    "id": "SwapProgressText_CreateSecret",
     "message": "Crea una clave secreta",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/BtcLikeToEth.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/BtcLikeToEth.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerUtxoToAb.tsx"
     ]
   },
   {
-    "id": "ethToBtcText20_eth_to_btclike",
-    "message": "Esperando a que el propietario de {coinName} cree la clave secreta, cree el script de {coinName} y cárguelo",
+    "id": "SwapProgressText_VerifyScript",
+    "message": "Se creó y cargó el script {buyCurrency}",
     "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/EthToBtcLike.tsx"
-    ]
-  },
-  {
-    "id": "ethToBtcText25_eth_to_btclike",
-    "message": "Se creó y cargó el script {coinName}.",
-    "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/EthToBtcLike.tsx"
-    ]
-  },
-  {
-    "id": "ethToBtcText26_eth_to_btclike",
-    "message": "Espere por favor",
-    "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/EthToBtcLike.tsx"
-    ]
-  },
-  {
-    "id": "ethToBtcText28_eth_to_btclike",
-    "message": "Comprobando el saldo..",
-    "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/EthToBtcLike.tsx"
-    ]
-  },
-  {
-    "id": "ethToBtcText32_eth_to_btclike",
-    "message": "Creación de contrato Ethereum. {br}Puede tardar unos minutos",
-    "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/EthToBtcLike.tsx"
-    ]
-  },
-  {
-    "id": "ethToBtcText36_eth_to_btclike",
-    "message": "Esperando a que el propietario de {coinName} agregue una clave secreta al contacto de ETH",
-    "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/EthToBtcLike.tsx"
-    ]
-  },
-  {
-    "id": "ethToBtcText40_eth_to_btclike",
-    "message": "Los fondos del contrato ETH se transfirieron correctamente al propietario de {coinName}. El propietario de {coinName} dejó una clave secreta. Solicitando retiro del script {coinName}.",
-    "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/EthToBtcLike.tsx"
-    ]
-  },
-  {
-    "id": "ethToBtcText44_eth_to_btclike",
-    "message": "Gracias por usar Swap.Online",
-    "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/EthToBtcLike.tsx"
-    ]
-  },
-  {
-    "id": "ethToBtcText48_eth_to_btclike",
-    "message": "Gracias por usar Swap.Online!",
-    "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/EthToBtcLike.tsx"
-    ]
-  },
-  {
-    "id": "BitcoinBuyText17_BtcLike_to_tokens",
-    "message": "Espere por favor",
-    "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/BtcLikeToEthToken.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/BtcLikeToEthToken.tsx"
-    ]
-  },
-  {
-    "id": "BitcoinBuyText29_BtcLike_to_tokens",
-    "message": "Comprobando el saldo..",
-    "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/BtcLikeToEthToken.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/BtcLikeToEthToken.tsx"
-    ]
-  },
-  {
-    "id": "BitcoinBuyText33_BtcLike_to_tokens",
-    "message": "Depositando {coinName}.{br}Puede tardar unos minutos",
-    "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/BtcLikeToEthToken.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/BtcLikeToEthToken.tsx"
-    ]
-  },
-  {
-    "id": "BitcoinBuyText37_BtcLike_to_tokens",
-    "message": "Esperando a que se extraiga la transacción y el propietario de {buyCurrency} deposite sus fondos en el contrato del swap",
-    "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/BtcLikeToEthToken.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/BtcLikeToEthToken.tsx"
-    ]
-  },
-  {
-    "id": "BitcoinBuyText41_BtcLike_to_tokens",
-    "message": "{buyCurrency} Contrato creado y cargado. Solicitando retiro del contrato {buyCurrency}.",
-    "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/BtcLikeToEthToken.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/BtcLikeToEthToken.tsx"
-    ]
-  },
-  {
-    "id": "BitcoinBuyText45_BtcLike_to_tokens",
-    "message": "{buyCurrency} tokens was transferred to your wallet. Check the balance.",
-    "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/BtcLikeToEthToken.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/BtcLikeToEthToken.tsx"
-    ]
-  },
-  {
-    "id": "BitcoinBuyText49_BtcLike_to_tokens",
-    "message": "Gracias por usar Swap.Online",
-    "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/BtcLikeToEthToken.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/BtcLikeToEthToken.tsx"
-    ]
-  },
-  {
-    "id": "BitcoinBuyText53_BtcLike_to_tokens",
-    "message": "Gracias por usar Swap.Online!",
-    "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/BtcLikeToEthToken.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/BtcLikeToEthToken.tsx"
-    ]
-  },
-  {
-    "id": "BtcToEthToken20_BtcLike_to_tokens",
-    "message": "Crea una clave secreta",
-    "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/BtcLikeToEthToken.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/BtcLikeToEthToken.tsx"
-    ]
-  },
-  {
-    "id": "EthTokensToBtc16_ethtoken_to_BtcLike",
-    "message": "Espere por favor",
-    "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/EthToBtcLike.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/EthTokenToBtcLike.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/EthTokenToBtcLike.tsx"
-    ]
-  },
-  {
-    "id": "EthTokensToBtc20_ethtoken_to_BtcLike",
-    "message": "Esperando a que el propietario de {coinName} cree la clave secreta, cree el script de {coinName} y cárguelo",
-    "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/EthTokenToBtcLike.tsx"
-    ]
-  },
-  {
-    "id": "EthTokensToBtc24_ethtoken_to_BtcLike",
-    "message": "Se creó y cargó el script {coinName}.",
-    "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/EthToBtcLike.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/EthTokenToBtcLike.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/EthTokenToBtcLike.tsx"
-    ]
-  },
-  {
-    "id": "EthTokensToBtc28_ethtoken_to_BtcLike",
-    "message": "Comprobando el saldo..",
-    "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/EthToBtcLike.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/EthTokenToBtcLike.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/EthTokenToBtcLike.tsx"
-    ]
-  },
-  {
-    "id": "EthTokensToBtc32_ethtoken_to_BtcLike",
-    "message": "Creación de contrato Ethereum. {br} Puede tardar unos minutos",
-    "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/EthToBtcLike.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/EthTokenToBtcLike.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/EthTokenToBtcLike.tsx"
-    ]
-  },
-  {
-    "id": "EthTokensToBtc36_ethtoken_to_BtcLike",
-    "message": "Esperando a que el propietario de {coinName} agregue una clave secreta al contacto de ETH",
-    "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/EthTokenToBtcLike.tsx"
-    ]
-  },
-  {
-    "id": "EthTokensToBtc40_ethtoken_to_BtcLike",
-    "message": "Los fondos del contrato ETH se transfirieron correctamente al propietario de {coinName}",
-    "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/EthTokenToBtcLike.tsx"
-    ]
-  },
-  {
-    "id": "EthTokensToBtc44_ethtoken_to_BtcLike",
-    "message": "Gracias por usar Swap.Online",
-    "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/EthToBtcLike.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/EthTokenToBtcLike.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/EthTokenToBtcLike.tsx"
-    ]
-  },
-  {
-    "id": "EthTokensToBtc48_ethtoken_to_BtcLike",
-    "message": "Gracias por usar Swap.Online!",
-    "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/UTXOSwapProgressText/EthTokenToBtcLike.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerAbToUtxo.tsx"
     ]
   },
   {
@@ -5535,14 +5353,6 @@
     "message": "Aprobar {token}",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
-    ]
-  },
-  {
-    "id": "EthTokensToBtc20_ethtoken_to_BtcLikeTaker",
-    "message": "Esperando a que el propietario de {coinName} cree el script de {coinName} y lo cargue",
-    "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/EthToBtcLike.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/ABSwapProgressText/EthTokenToBtcLike.tsx"
     ]
   },
   {
