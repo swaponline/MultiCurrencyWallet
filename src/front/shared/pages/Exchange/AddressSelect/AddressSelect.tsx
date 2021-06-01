@@ -12,7 +12,6 @@ import Address from 'components/ui/Address/Address'
 import { AddressFormat } from 'domain/address'
 import metamask from 'helpers/metamask'
 import { Button } from 'components/controls'
-import ethToken from 'helpers/ethToken'
 import erc20Like from 'common/erc20Like'
 import Option from './Option/Option'
 import { links } from 'helpers'
@@ -76,7 +75,6 @@ type AddressSelectProps = {
   intl: IUniversalObj
   label: IUniversalObj 
   hiddenCoinsList: string[]
-  allData: IUniversalObj[]
 }
 
 type DropDownOptions = {
@@ -107,21 +105,8 @@ type AddressSelectState = {
 @connect(
   ({
     core: { hiddenCoinsList },
-    user: { btcData, ethData, bnbData, ghostData, nextData, tokensData },
   }) => {
-    const allData = [
-      btcData,
-      ethData,
-      bnbData,
-      ghostData,
-      nextData,
-      ...Object.keys(tokensData).map((k) => tokensData[k]),
-    ].map(({ account, keyPair, ...data }) => ({
-      ...data,
-    }))
-
     return {
-      allData,
       hiddenCoinsList,
     }
   }
@@ -386,7 +371,7 @@ class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
     // because you need to make a request to the contract
     const isCustomAddressOption = !erc20Like.isToken({ name: currency })
       && currency.toUpperCase() !== `ETH`
-      && currency.toUpperCase() !== `BNB` // @to-do - need refacting - may be use walletData
+      && currency.toUpperCase() !== `BNB` // @to-do - need refactoring - may be use walletData
 
     const isUTXOModel = COIN_DATA[ticker] && COIN_DATA[ticker].model === COIN_MODEL.UTXO
     const isCustomOptionInputHidden = role === AddressRole.Send && isUTXOModel

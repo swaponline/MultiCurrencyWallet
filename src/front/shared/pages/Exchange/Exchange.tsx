@@ -332,12 +332,9 @@ class Exchange extends PureComponent<any, any> {
   }
 
   getExchangeSettingsFromLocalStorage() {
-    const exchangeSettingsStr = localStorage.getItem(constants.localStorage.exchangeSettings)
+    const exchangeSettings = localStorage.getItem(constants.localStorage.exchangeSettings)
 
-    if (exchangeSettingsStr) {
-      return JSON.parse(exchangeSettingsStr)
-    }
-    return {}
+    return JSON.parse(exchangeSettings || '{}')
   }
 
   setDefaultCurrencyType(currency, type) {
@@ -480,12 +477,11 @@ class Exchange extends PureComponent<any, any> {
     const { haveCurrency, haveAmount } = this.state
 
     const tokenObj = tokensData.find(tokenObj => {
-      return tokenObj.name === haveCurrency.toLowerCase()
+      return tokenObj.tokenKey === haveCurrency.toLowerCase()
     })
 
     if (tokenObj) {
-      // TODO: consider different token's standards
-      const allowance = await erc20Like.erc20.checkAllowance({
+      const allowance = await erc20Like[tokenObj.standard].checkAllowance({
         tokenOwnerAddress: tokenObj.address,
         tokenContractAddress: tokenObj.contractAddress,
         decimals: tokenObj.decimals,
@@ -724,8 +720,7 @@ class Exchange extends PureComponent<any, any> {
       balances,
     } = this.state
 
-    const ethBalance = (balances && balances[`ETH`]) ? balances.ETH : 0
-    return ethBalance
+    return (balances && balances[`ETH`]) ? balances.ETH : 0
   }
 
   checkBalanceForSwapPossibility = (checkParams) => {
@@ -1537,7 +1532,6 @@ class Exchange extends PureComponent<any, any> {
       isPending,
       ordersIsOpen,
     } = this.state
-
 
     const sellCoin = haveCurrency.toUpperCase()
     const buyCoin = getCurrency.toUpperCase()
