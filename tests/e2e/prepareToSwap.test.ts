@@ -104,7 +104,7 @@ describe('Prepare to swap e2e tests', () => {
       const [sellCurrencySelectorList, buyCurrencySelectorList] = await TakerPage.$$('.dropDownSelectCurrency')
 
       await buyCurrencySelectorList.click();
-      await TakerPage.click(`#wbtc`)
+      await TakerPage.click("[id='{ETH}wbtc']")
       await TakerPage.$('#orderbookBtn').then((orderbookBtn) => orderbookBtn.click())
 
     } catch (error) {

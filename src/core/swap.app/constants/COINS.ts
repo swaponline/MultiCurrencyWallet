@@ -4,7 +4,7 @@ export const COIN_TYPE = Object.freeze({
   BNB_TOKEN: 'BNB_TOKEN',
 })
 
-export const TOKEN_STANDART = Object.freeze({
+export const TOKEN_STANDARD = Object.freeze({
   ERC20: 'ERC20',
   BEP20: 'BEP20',
 })
@@ -57,7 +57,7 @@ export const COIN_DATA = {
     name: 'Tether',
     type: COIN_TYPE.ETH_TOKEN,
     blockchain: BLOCKCHAIN.ETH,
-    standart: TOKEN_STANDART.ERC20,
+    standart: TOKEN_STANDARD.ERC20,
     model: COIN_MODEL.AB,
     precision: 18,
   },
@@ -66,7 +66,7 @@ export const COIN_DATA = {
     name: 'BTCB Token',
     type: COIN_TYPE.BNB_TOKEN,
     blockchain: BLOCKCHAIN.BNB,
-    standart: TOKEN_STANDART.BEP20,
+    standart: TOKEN_STANDARD.BEP20,
     model: COIN_MODEL.AB,
     precision: 18,
   },
@@ -75,7 +75,7 @@ export const COIN_DATA = {
     name: 'STASIS EURO',
     type: COIN_TYPE.ETH_TOKEN,
     blockchain: BLOCKCHAIN.ETH,
-    standart: TOKEN_STANDART.ERC20,
+    standart: TOKEN_STANDARD.ERC20,
     model: COIN_MODEL.AB,
     precision: 18,
   },
@@ -100,7 +100,7 @@ export const COIN_DATA = {
     name: 'SWAP',
     type: COIN_TYPE.ETH_TOKEN,
     blockchain: BLOCKCHAIN.ETH,
-    standart: TOKEN_STANDART.ERC20,
+    standart: TOKEN_STANDARD.ERC20,
     model: COIN_MODEL.AB,
     precision: 18,
   },
@@ -109,7 +109,7 @@ export const COIN_DATA = {
     name: 'SWAP',
     type: COIN_TYPE.ETH_TOKEN,
     blockchain: BLOCKCHAIN.ETH,
-    standart: TOKEN_STANDART.ERC20,
+    standart: TOKEN_STANDARD.ERC20,
     model: COIN_MODEL.AB,
     precision: 18,
   },

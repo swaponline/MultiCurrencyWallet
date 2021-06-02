@@ -220,8 +220,6 @@ class TurboSwap extends PureComponent<any, ITurboSwapState> {
     const participantAddressSend = swap.participant[buyCurrencyKey].address
     const participantAddressReceive = swap.participant[sellCurrencyKey].address
 
-    //const isToken = helpers.ethToken.isEthToken({ name: currency })
-
     const swapIdShortened = swap.id
       .split('-').map(part =>
         parseInt(part) || part

@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 
 import { connect } from 'redaction'
 import actions from 'redux/actions'
-import ethLikeHelper from 'common/helpers/ethLikeHelper'
 import erc20Like from 'common/erc20Like'
 import helpers, { constants } from 'helpers'
 import swapsHelper from 'helpers/swaps'
@@ -49,12 +48,9 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
 @connect(
   ({
     currencies,
-    user: { ethData, btcData, ghostData, nextData, tokensData },
   }) => ({
     currencies: swapsHelper.isExchangeAllowed(currencies.partialItems),
     addSelectedItems: swapsHelper.isExchangeAllowed(currencies.addPartialItems),
-    items: [ethData, btcData, ghostData, nextData],
-    tokenItems: [...Object.keys(tokensData).map(k => (tokensData[k]))],
     currenciesOrig: currencies,
   })
 )
@@ -97,7 +93,7 @@ export default class AddOffer extends Component<any, any> {
       sellBlockchain: ``,
       minimalestAmountForBuy: MIN_AMOUNT_OFFER[buyCurrency] || MIN_AMOUNT_OFFER.btc,
       minimalestAmountForSell: MIN_AMOUNT_OFFER[sellCurrency] || MIN_AMOUNT_OFFER.eth,
-      ethBalance: 0,
+      tokenBaseCurrencyBalance: 0,
       // @to-do buy and sell for support token-token orders
       balanceForBuyTokenFee: 0,
       balanceForSellTokenFee: 0,
@@ -113,6 +109,37 @@ export default class AddOffer extends Component<any, any> {
     this.isTokenOffer(sellCurrency, buyCurrency)
     this.getFee()
     this.checkBalanceForTokenFee()
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const {
+      sellCurrency: prevSellCurrency,
+      buyCurrency: prevBuyCurrency,
+    } = prevState
+    const {
+      sellCurrency,
+      buyCurrency,
+      isTokenBuy,
+      isTokenSell,
+      buyBlockchain,
+      sellBlockchain,
+    } = this.state
+
+    if (prevSellCurrency !== sellCurrency && isTokenSell) {
+      this.updateTokenBaseWalletBalance(sellBlockchain)
+    }
+
+    if (prevBuyCurrency !== buyCurrency && isTokenBuy) {
+      this.updateTokenBaseWalletBalance(buyBlockchain)
+    }
+  }
+
+  updateTokenBaseWalletBalance = async (baseCurrency) => {
+    const tokenBaseCurrencyBalance = await actions[baseCurrency.toLowerCase()].getBalance()
+
+    this.setState(() => ({
+      tokenBaseCurrencyBalance,
+    }))
   }
 
   getFee = () => {
@@ -134,17 +161,10 @@ export default class AddOffer extends Component<any, any> {
       ? await actions[sellBlockchain.toLowerCase()].getBalance()
       : 0
 
-    this.setState({
+    this.setState(() => ({
       balanceForBuyTokenFee,
       balanceForSellTokenFee,
-    })
-  }
-
-  checkEthBalance = async () => {
-    const ethBalance = await actions.eth.getBalance()
-    this.setState({
-      ethBalance,
-    })
+    }))
   }
 
   checkBalance = async (sellCurrency) => {
@@ -220,7 +240,7 @@ export default class AddOffer extends Component<any, any> {
 
   handleBuyCurrencySelect = async (selectedItem) => {
     const { value, blockchain } = selectedItem
-    const { buyCurrency, sellCurrency, buyAmount, sellAmount } = this.state
+    const { sellCurrency, buyAmount, sellAmount } = this.state
 
     this.setState({
       isTurbo: false,
@@ -232,19 +252,23 @@ export default class AddOffer extends Component<any, any> {
       this.checkPair(sellCurrency)
       await this.checkBalance(sellCurrency)
       await this.updateExchangeRate(sellCurrency, value)
+      this.isTokenOffer(sellCurrency, value)
 
-      this.setState({
+      this.setState(() => ({
         buyCurrency: value,
         buyBlockchain: blockchain,
-      }, () => {
-        this.checkBalanceForTokenFee()
+      }), () => {
+        const { isTokenBuy } = this.state
+
+        if (isTokenBuy) {
+          this.checkBalanceForTokenFee()
+        }
       })
 
       if (sellAmount > 0 || buyAmount > 0) {
         this.handleBuyAmountChange(buyAmount)
         this.handleSellAmountChange(sellAmount)
       }
-      this.isTokenOffer(sellCurrency, value)
 
       this.getFee()
     }
@@ -252,7 +276,6 @@ export default class AddOffer extends Component<any, any> {
 
   handleSellCurrencySelect = async (selectedItem) => {
     const { value, blockchain } = selectedItem
-
     const { buyCurrency, sellCurrency, sellAmount, buyAmount } = this.state
 
     this.setState({
@@ -265,19 +288,23 @@ export default class AddOffer extends Component<any, any> {
       this.checkPair(value)
       await this.checkBalance(value)
       await this.updateExchangeRate(value, buyCurrency)
+      this.isTokenOffer(value, buyCurrency)
 
-      this.setState({
+      this.setState(() => ({
         sellCurrency: value,
         sellBlockchain: blockchain,
-      }, () => {
-        this.checkBalanceForTokenFee()
+      }), () => {
+        const { isTokenSell } = this.state
+
+        if (isTokenSell) {
+          this.checkBalanceForTokenFee()
+        }
       })
 
       if (sellAmount > 0 || buyAmount > 0) {
         this.handleBuyAmountChange(buyAmount)
         this.handleSellAmountChange(sellAmount)
       }
-      this.isTokenOffer(value, buyCurrency)
 
       this.getFee()
     }
@@ -491,21 +518,28 @@ export default class AddOffer extends Component<any, any> {
   }
 
   render() {
-    const { currencies, tokenItems, addSelectedItems } = this.props
+    const { currencies, addSelectedItems } = this.props
 
     const { 
-      exchangeRate, buyAmount,
-      sellAmount, buyCurrency,
-      sellCurrency, minimalestAmountForSell,
-      minimalestAmountForBuy, balance,
-      ethBalance, manualRate,
-      isPartial, isTurbo, isTokenSell,
-      isTokenBuy, sellInputValueIsOk
+      exchangeRate,
+      buyAmount,
+      sellAmount,
+      buyCurrency,
+      sellCurrency,
+      minimalestAmountForSell,
+      minimalestAmountForBuy,
+      balance,
+      tokenBaseCurrencyBalance,
+      manualRate,
+      isPartial,
+      isTurbo,
+      isTokenSell,
+      isTokenBuy,
     } = this.state
 
     // @to-do - fetch eth miner fee for swap
-    const minNeedEthBalance = 0.004
-    const needEthBalance = (new BigNumber(ethBalance).isLessThan(minNeedEthBalance) && (isTokenBuy || isTokenSell))
+    const minAmountForSwap = 0.004
+    const needEthBalance = (new BigNumber(tokenBaseCurrencyBalance).isLessThan(minAmountForSwap) && (isTokenBuy || isTokenSell))
     const linked = Link.all(this, 'exchangeRate', 'buyAmount', 'sellAmount')
 
     const minimalAmountSell = !isTokenSell
@@ -659,7 +693,7 @@ export default class AddOffer extends Component<any, any> {
                 defaultMessage="Для покупки {buyCurrency} вам нужно иметь {ethAmount} ETH для оплаты коммисии"
                 values={{
                   buyCurrency: buyCurrency.toUpperCase(),
-                  ethAmount: minNeedEthBalance,
+                  ethAmount: minAmountForSwap,
                 }}
               />
             )}
@@ -669,7 +703,7 @@ export default class AddOffer extends Component<any, any> {
                 defaultMessage="Для продажи {sellCurrency} вам нужно иметь {ethAmount} ETH для оплаты коммисии"
                 values={{
                   sellCurrency: sellCurrency.toUpperCase(),
-                  ethAmount: minNeedEthBalance,
+                  ethAmount: minAmountForSwap,
                 }}
               />
             )}

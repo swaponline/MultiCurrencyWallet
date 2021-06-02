@@ -209,16 +209,18 @@ class Exchange extends PureComponent<any, any> {
     this.fiatRates = {}
     this.onRequestAnswer = (newOrder, isAccepted) => {}
 
-    const isRootPage = history.location.pathname === '/' || history.location.pathname === '/ru'
+    const isRootPage = history.location.pathname === '/'
     const {
       url,
       params: { buy, sell },
     } = match || { params: { buy: 'btc', sell: 'usdt' } }
 
     if (sell && buy && !isRootPage) {
+      const { coin: sellName } = getCoinInfo(sell)
+      const { coin: buyName } = getCoinInfo(buy)
       if (
-        !allCurrencyies.map((item) => item.name).includes(sell.toUpperCase()) ||
-        !allCurrencyies.map((item) => item.name).includes(buy.toUpperCase())
+        !allCurrencyies.map((item) => item.name).includes(sellName.toUpperCase()) ||
+        !allCurrencyies.map((item) => item.name).includes(buyName.toUpperCase())
       ) {
         history.push(localisedUrl(locale, `${links.exchange}/eth-to-btc`))
       }
@@ -245,7 +247,7 @@ class Exchange extends PureComponent<any, any> {
     const getType = this.getDefaultWalletType(getCurrency.toUpperCase())
 
     this.state = {
-      isTokenSell: ethToken.isEthToken({ name: haveCurrency }),
+      isTokenSell: erc20Like.isToken({ name: haveCurrency }),
       isPendingTokenApprove: false,
       hasTokenAllowance: false,
       haveCurrency,
@@ -282,7 +284,9 @@ class Exchange extends PureComponent<any, any> {
     }
 
     if (config.isWidget) {
-      this.state.getCurrency = config.erc20token
+      this.setState(() => ({
+        getCurrency: config.erc20token
+      }))
     }
   }
 
@@ -332,12 +336,9 @@ class Exchange extends PureComponent<any, any> {
   }
 
   getExchangeSettingsFromLocalStorage() {
-    const exchangeSettingsStr = localStorage.getItem(constants.localStorage.exchangeSettings)
+    const exchangeSettings = localStorage.getItem(constants.localStorage.exchangeSettings)
 
-    if (exchangeSettingsStr) {
-      return JSON.parse(exchangeSettingsStr)
-    }
-    return {}
+    return JSON.parse(exchangeSettings || '{}')
   }
 
   setDefaultCurrencyType(currency, type) {
@@ -370,7 +371,7 @@ class Exchange extends PureComponent<any, any> {
     const isWalletCreate = localStorage.getItem(constants.localStorage.isWalletCreate)
 
     if (isUTXOModel && isWalletCreate) {
-      this.setDefaultCurrencyType(currency, AddressType.Internal)
+      this.setDefaultCurrencyType(currency.toUpperCase(), AddressType.Internal)
       return AddressType.Internal
     }
 
@@ -378,7 +379,12 @@ class Exchange extends PureComponent<any, any> {
   }
 
   getDefaultWalletType(currency) {
-    const storageType = this.getLocalStorageWalletType(currency)
+    const {
+      coin: currencyName,
+      blockchain,
+    } = getCoinInfo(currency)
+
+    const storageType = this.getLocalStorageWalletType(currencyName)
 
     if (storageType) {
       return storageType
@@ -386,18 +392,19 @@ class Exchange extends PureComponent<any, any> {
 
     let resultType = 'Internal'
 
-    if (COIN_DATA[currency]) {
-      if (COIN_DATA[currency].model === COIN_MODEL.UTXO) {
+    if (COIN_DATA[currencyName]) {
+      if (COIN_DATA[currencyName].model === COIN_MODEL.UTXO) {
         resultType = AddressType.Custom
       } else if (
-        COIN_DATA[currency].type === COIN_TYPE.ETH_TOKEN ||
-        COIN_DATA[currency].model === COIN_MODEL.AB
+        COIN_DATA[currencyName].type === COIN_TYPE.ETH_TOKEN ||
+        COIN_DATA[currencyName].type === COIN_TYPE.BNB_TOKEN ||
+        COIN_DATA[currencyName].model === COIN_MODEL.AB
       ) {
         resultType = AddressType.Metamask
       }
     } else {
       console.group('Exchange > %c getDefaultWalletType', 'color: yellow;')
-      console.warn(`Unknown coin ${currency}`)
+      console.warn(`Unknown coin ${currencyName}`)
       console.groupEnd()
     }
 
@@ -457,7 +464,7 @@ class Exchange extends PureComponent<any, any> {
     const { haveCurrency, haveAmount } = this.state
 
     if (prevHaveCurrency !== haveCurrency) {
-      const isTokenSell = ethToken.isEthToken({ name: haveCurrency })
+      const isTokenSell = erc20Like.isToken({ name: haveCurrency })
 
       this.setState(() => ({
         isTokenSell,
@@ -474,21 +481,20 @@ class Exchange extends PureComponent<any, any> {
     const { haveCurrency, haveAmount } = this.state
 
     const tokenObj = tokensData.find(tokenObj => {
-      return tokenObj.name === haveCurrency.toLowerCase()
+      return tokenObj.tokenKey === haveCurrency.toLowerCase()
     })
 
-    const allowance = await erc20Like.erc20.checkAllowance({
-      //@ts-ignore: strictNullChecks
-      tokenOwnerAddress: tokenObj.address,
-      //@ts-ignore: strictNullChecks
-      tokenContractAddress: tokenObj.contractAddress,
-      //@ts-ignore: strictNullChecks
-      decimals: tokenObj.decimals,
-    })
-
-    this.setState(() => ({
-      hasTokenAllowance: new BigNumber(allowance).isGreaterThanOrEqualTo(haveAmount),
-    }))
+    if (tokenObj) {
+      const allowance = await erc20Like[tokenObj.standard].checkAllowance({
+        tokenOwnerAddress: tokenObj.address,
+        tokenContractAddress: tokenObj.contractAddress,
+        decimals: tokenObj.decimals,
+      })
+  
+      this.setState(() => ({
+        hasTokenAllowance: new BigNumber(allowance).isGreaterThanOrEqualTo(haveAmount),
+      }))
+    }
   }
 
   getInfoAboutCurrency = async (): Promise<void> => {
@@ -718,8 +724,7 @@ class Exchange extends PureComponent<any, any> {
       balances,
     } = this.state
 
-    const ethBalance = (balances && balances[`ETH`]) ? balances.ETH : 0
-    return ethBalance
+    return (balances && balances[`ETH`]) ? balances.ETH : 0
   }
 
   checkBalanceForSwapPossibility = (checkParams) => {
@@ -846,12 +851,15 @@ class Exchange extends PureComponent<any, any> {
     this.setState(() => ({
       isPendingTokenApprove: true,
     }))
-    // TODO: replace actions with erc20, bep20 ...
-    actions.erc20
+
+    const { coin: haveCurrencyName } = getCoinInfo(haveCurrency)
+    const coinStandart = COIN_DATA[haveCurrencyName].standart.toLowerCase()
+
+    actions[coinStandart]
       .approve({
-        to: config.swapContract.erc20,
-        name: haveCurrency,
-        amount: new BigNumber(haveAmount).dp(0, BigNumber.ROUND_UP),
+        to: config.swapContract[coinStandart],
+        name: haveCurrencyName,
+        amount: new BigNumber(haveAmount).dp(0, BigNumber.ROUND_UP).toString(),
       })
       .then((txHash) => {
         this.updateTokenAllowance()
@@ -1202,7 +1210,7 @@ class Exchange extends PureComponent<any, any> {
   }
 
   handleSetGetValue = ({ value }) => {
-    const { haveCurrency, getCurrency } = this.state
+    const { haveCurrency } = this.state
 
     if (value === haveCurrency) {
       this.flipCurrency()
@@ -1216,6 +1224,9 @@ class Exchange extends PureComponent<any, any> {
           pairFees: false,
         },
         () => {
+          const { haveCurrency, haveType, getCurrency, getType } = this.state
+          this.setDefaultCurrencyType(haveCurrency.toUpperCase(), haveType)
+          this.setDefaultCurrencyType(getCurrency.toUpperCase(), getType)
           this.fetchPairFeesAndBalances()
           this.changeUrl(haveCurrency, value)
           actions.analytics.dataEvent({
@@ -1228,7 +1239,7 @@ class Exchange extends PureComponent<any, any> {
   }
 
   handleSetHaveValue = async ({ value }) => {
-    const { haveCurrency, getCurrency } = this.state
+    const { getCurrency } = this.state
 
     if (value === getCurrency) {
       this.flipCurrency()
@@ -1242,6 +1253,9 @@ class Exchange extends PureComponent<any, any> {
           pairFees: false,
         },
         () => {
+          const { haveCurrency, haveType, getCurrency, getType } = this.state
+          this.setDefaultCurrencyType(haveCurrency.toUpperCase(), haveType)
+          this.setDefaultCurrencyType(getCurrency.toUpperCase(), getType)
           this.fetchPairFeesAndBalances()
           this.changeUrl(value, getCurrency)
           actions.analytics.dataEvent({
@@ -1298,7 +1312,7 @@ class Exchange extends PureComponent<any, any> {
     const isWalletCreate = localStorage.getItem(constants.localStorage.isWalletCreate)
 
     if (isToAddressUTXOModel && isWalletCreate) {
-      this.setDefaultCurrencyType(toAddress.currency, AddressType.Internal)
+      this.setDefaultCurrencyType(toAddress.currency.toUpperCase(), AddressType.Internal)
       toAddress.type = AddressType.Internal
     }
 
@@ -1362,8 +1376,8 @@ class Exchange extends PureComponent<any, any> {
     const noPairToken = config && config.isWidget ? config.erc20token : 'swap'
 
     const checkingValue = this.props.allCurrencyies
-      .map((item) => item.name)
-      .includes(haveCurrency.toUpperCase())
+      .map((item) => item.value)
+      .includes(haveCurrency)
         ? haveCurrency
         : noPairToken
 
@@ -1531,7 +1545,6 @@ class Exchange extends PureComponent<any, any> {
       isPending,
       ordersIsOpen,
     } = this.state
-
 
     const sellCoin = haveCurrency.toUpperCase()
     const buyCoin = getCurrency.toUpperCase()
