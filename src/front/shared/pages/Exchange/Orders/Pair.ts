@@ -42,7 +42,6 @@ export const parseTicker = (order) => {
   }
 
   if (TRADE_TICKERS.includes(SB)) {
-
     return {
       ticker: SB,
       type: PAIR_ASK,
