@@ -9,7 +9,7 @@ const register = (code, precision) => {
     ticker: code.toUpperCase(),
     name: code.toUpperCase(),
     blockchain: BLOCKCHAIN_TYPE.ETH,
-    standart: TOKEN_STANDARD.ERC20,
+    standard: TOKEN_STANDARD.ERC20,
     type: `ETH_TOKEN`,
     model: `AB`,
     precision: precision,

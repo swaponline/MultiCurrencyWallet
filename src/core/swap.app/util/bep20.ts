@@ -9,7 +9,7 @@ const register = (code, precision) => {
     ticker: code.toUpperCase(),
     name: code.toUpperCase(),
     blockchain: BLOCKCHAIN_TYPE.BNB,
-    standart: TOKEN_STANDARD.BEP20,
+    standard: TOKEN_STANDARD.BEP20,
     type: COIN_TYPE.BNB_TOKEN,
     model: `AB`,
     precision: precision,

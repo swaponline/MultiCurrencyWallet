@@ -148,7 +148,7 @@ const fetchFeeForEthLikeToken = (params) => {
   const { coinData, swapABMethod } = params
 
   return new Promise((resolve) => {
-    erc20Like[coinData.standart.toLowerCase()]
+    erc20Like[coinData.standard.toLowerCase()]
       .estimateFeeValue({
         method: 'swap',
         speed: 'fast',

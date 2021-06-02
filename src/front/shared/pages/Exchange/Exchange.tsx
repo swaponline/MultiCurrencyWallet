@@ -851,11 +851,11 @@ class Exchange extends PureComponent<any, any> {
     }))
 
     const { coin: haveCurrencyName } = getCoinInfo(haveCurrency)
-    const coinStandart = COIN_DATA[haveCurrencyName].standart.toLowerCase()
+    const coinStandard = COIN_DATA[haveCurrencyName].standard.toLowerCase()
 
-    actions[coinStandart]
+    actions[coinStandard]
       .approve({
-        to: config.swapContract[coinStandart],
+        to: config.swapContract[coinStandard],
         name: haveCurrencyName,
         amount: new BigNumber(haveAmount).dp(0, BigNumber.ROUND_UP).toString(),
       })
