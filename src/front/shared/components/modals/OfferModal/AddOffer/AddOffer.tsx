@@ -26,6 +26,7 @@ import COINS_WITH_DYNAMIC_FEE from 'common/helpers/constants/COINS_WITH_DYNAMIC_
 import TurboIcon from 'shared/components/ui/TurboIcon/TurboIcon'
 import MIN_AMOUNT_OFFER from 'common/helpers/constants/MIN_AMOUNT'
 import turboSwap from 'common/helpers/turboSwap'
+import getCoinInfo from 'common/coins/getCoinInfo'
 
 
 const mathConstants = {
@@ -101,7 +102,7 @@ export default class AddOffer extends Component<any, any> {
   }
 
   componentDidMount() {
-    const { sellCurrency, buyCurrency, value } = this.state
+    const { sellCurrency, buyCurrency } = this.state
 
     actions.pairs.selectPairPartial(sellCurrency)
     this.checkBalance(sellCurrency)
@@ -109,27 +110,22 @@ export default class AddOffer extends Component<any, any> {
     this.isTokenOffer(sellCurrency, buyCurrency)
     this.getFee()
     this.checkBalanceForTokenFee()
-  }
 
-  componentDidUpdate(prevProps, prevState) {
     const {
-      sellCurrency: prevSellCurrency,
-      buyCurrency: prevBuyCurrency,
-    } = prevState
+      coin: sellName,
+      blockchain: sellBlockchain,
+    } = getCoinInfo(sellCurrency)
     const {
-      sellCurrency,
-      buyCurrency,
-      isTokenBuy,
-      isTokenSell,
-      buyBlockchain,
-      sellBlockchain,
-    } = this.state
+      coin: buyName,
+      blockchain: buyBlockchain,
+    } = getCoinInfo(buyCurrency)
 
-    if (prevSellCurrency !== sellCurrency && isTokenSell) {
+    if (sellBlockchain) {
+      this.setState(() => ({ sellBlockchain }))
       this.updateTokenBaseWalletBalance(sellBlockchain)
     }
-
-    if (prevBuyCurrency !== buyCurrency && isTokenBuy) {
+    if (buyBlockchain) {
+      this.setState(() => ({ buyBlockchain }))
       this.updateTokenBaseWalletBalance(buyBlockchain)
     }
   }
@@ -262,6 +258,7 @@ export default class AddOffer extends Component<any, any> {
 
         if (isTokenBuy) {
           this.checkBalanceForTokenFee()
+          this.updateTokenBaseWalletBalance(blockchain)
         }
       })
 
@@ -298,6 +295,7 @@ export default class AddOffer extends Component<any, any> {
 
         if (isTokenSell) {
           this.checkBalanceForTokenFee()
+          this.updateTokenBaseWalletBalance(blockchain)
         }
       })
 
@@ -458,7 +456,6 @@ export default class AddOffer extends Component<any, any> {
   handleNext = () => {
     const { onNext } = this.props
 
-    // actions.analytics.dataEvent('orderbook-addoffer-click-next-button')
     onNext(this.state)
   }
 
@@ -486,16 +483,21 @@ export default class AddOffer extends Component<any, any> {
       buyAmount,
       balanceForSellTokenFee,
       balanceForBuyTokenFee,
+      buyBlockchain,
+      sellBlockchain,
     } = this.state
 
-    this.setState({
-      sellAmount: '',
-      buyAmount: '',
+    this.setState(() => ({
       sellCurrency: buyCurrency,
+      sellBlockchain: buyBlockchain,
+      sellAmount: buyAmount,
       balanceForSellTokenFee: balanceForBuyTokenFee,
+      // ----
       buyCurrency: sellCurrency,
+      buyBlockchain: sellBlockchain,
+      buyAmount: sellAmount,
       balanceForBuyTokenFee: balanceForSellTokenFee,
-    }, async () => {
+    }), async () => {
       await this.checkBalance(buyCurrency)
       await this.updateExchangeRate(buyCurrency, sellCurrency)
 

@@ -1,7 +1,5 @@
 import React, { Component, Fragment } from 'react'
 import actions from 'redux/actions'
-import erc20Like from 'common/erc20Like'
-import helpers from 'helpers'
 
 import cssModules from 'react-css-modules'
 import styles from './ConfirmOffer.scss'
@@ -12,10 +10,7 @@ import Coins from 'components/Coins/Coins'
 
 import Amounts from './Amounts/Amounts'
 import ExchangeRate from './ExchangeRate/ExchangeRate'
-import { connect } from 'redaction'
 import { FormattedMessage, injectIntl } from 'react-intl'
-import MIN_AMOUNT_OFFER from 'common/helpers/constants/MIN_AMOUNT'
-import COINS_WITH_DYNAMIC_FEE from 'common/helpers/constants/COINS_WITH_DYNAMIC_FEE'
 import feedback from 'shared/helpers/feedback'
 
 
@@ -46,7 +41,7 @@ class ConfirmOffer extends Component<any, any> {
         <ExchangeRate {...{ sellCurrency, buyCurrency, exchangeRate }} />
 
         <Row styleName="buttonsInRow">
-          <Button styleName="button" gray onClick={onBack}>
+          <Button styleName="button" brand onClick={onBack}>
             <FormattedMessage id="ConfirmOffer69" defaultMessage="Back" />
           </Button>
           <Button styleName="button" id="confirm" brand onClick={this.handleConfirm}>
