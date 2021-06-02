@@ -1373,8 +1373,8 @@ class Exchange extends PureComponent<any, any> {
     const noPairToken = config && config.isWidget ? config.erc20token : 'swap'
 
     const checkingValue = this.props.allCurrencyies
-      .map((item) => item.name)
-      .includes(haveCurrency.toUpperCase())
+      .map((item) => item.value)
+      .includes(haveCurrency)
         ? haveCurrency
         : noPairToken
 
@@ -1509,6 +1509,8 @@ class Exchange extends PureComponent<any, any> {
         params: { linkedOrderId },
       },
     } = this.props
+    console.log('addSelectedItems', addSelectedItems)
+    console.log('currencies', currencies)
     const {
       isTokenSell,
       isPendingTokenApprove,
