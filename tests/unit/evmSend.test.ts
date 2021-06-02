@@ -9,9 +9,23 @@ const ethWeb3 = new Web3( new Web3.providers.HttpProvider(testConfig.web3.provid
 const bscWeb3 = new Web3( new Web3.providers.HttpProvider(testConfig.web3.binance_provider) )
 const timeOut = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
 
+async function repeatActionWithDelay(params) {
+  const { times, delay, callback } = params
+
+  for (let i = 0; i < times; i += 1) {
+    await timeOut(delay)
+
+    const success = await callback()
+
+    if (success) break
+  }
+}
+
 describe('Sending ETH', () => {
-  const waitingTxMining = 60_000
-  const waitingForTheTest = 80_000 // ms
+  const waitingTxMining = 30_000 // ms
+  const requestsForTxInfo = 3
+  const extraDelay = 10_000
+  const waitingForTheTest = waitingTxMining * requestsForTxInfo + extraDelay
   const customAmount = 0.001
   let gasPrice = 0
 
@@ -34,9 +48,18 @@ describe('Sending ETH', () => {
 
     expect(response.transactionHash).toMatch(/0x[A-Za-z0-9]{2}/)
     // wait for a while until transaction gets into the blockchain
-    await timeOut(waitingTxMining)
-    
-    const receipt = await ethWeb3.eth.getTransactionReceipt(response.transactionHash)
+    let receipt = null
+
+    await repeatActionWithDelay({
+      times: requestsForTxInfo,
+      delay: waitingTxMining,
+      callback: async () => {
+        receipt = await ethWeb3.eth.getTransactionReceipt(response.transactionHash)
+
+        if (receipt !== null) return true
+      },
+    })
+
     // if receipt equals null then perhaps the transaction is still pending
     expect(receipt).not.toBeNull()
 
@@ -65,9 +88,17 @@ describe('Sending ETH', () => {
 
     expect(txHash).toMatch(/0x[A-Za-z0-9]{64}/)
 
-    await timeOut(waitingTxMining)
+    let receipt = null
 
-    const receipt = await ethWeb3.eth.getTransactionReceipt(txHash)
+    await repeatActionWithDelay({
+      times: requestsForTxInfo,
+      delay: waitingTxMining,
+      callback: async () => {
+        receipt = await ethWeb3.eth.getTransactionReceipt(txHash)
+
+        if (receipt !== null) return true
+      },
+    })
 
     expect(receipt).not.toBeNull()
 
@@ -80,8 +111,10 @@ describe('Sending ETH', () => {
 })
 
 describe('Sending BNB', () => {
-  const waitingTxMining = 40_000
-  const waitingForTheTest = 80_000 // ms
+  const waitingTxMining = 30_000
+  const requestsForTxInfo = 3
+  const extraDelay = 10_000
+  const waitingForTheTest = waitingTxMining * requestsForTxInfo + extraDelay
   const customAmount = 0.001
   let gasPrice = 0
 
@@ -103,10 +136,20 @@ describe('Sending BNB', () => {
     const response = await actions.bnb.send(paramsToSend)
 
     expect(response.transactionHash).toMatch(/0x[A-Za-z0-9]{2}/)
+
     // wait for a while until transaction gets into the blockchain
-    await timeOut(waitingTxMining)
-    
-    const receipt = await bscWeb3.eth.getTransactionReceipt(response.transactionHash)
+    let receipt = null
+
+    await repeatActionWithDelay({
+      times: requestsForTxInfo,
+      delay: waitingTxMining,
+      callback: async () => {
+        receipt = await bscWeb3.eth.getTransactionReceipt(response.transactionHash)
+
+        if (receipt !== null) return true
+      },
+    })
+
     // if receipt equals null then perhaps the transaction is still pending
     expect(receipt).not.toBeNull()
 
@@ -135,9 +178,17 @@ describe('Sending BNB', () => {
 
     expect(txHash).toMatch(/0x[A-Za-z0-9]{64}/)
 
-    await timeOut(waitingTxMining)
+    let receipt = null
 
-    const receipt = await bscWeb3.eth.getTransactionReceipt(txHash)
+    await repeatActionWithDelay({
+      times: requestsForTxInfo,
+      delay: waitingTxMining,
+      callback: async () => {
+        receipt = await bscWeb3.eth.getTransactionReceipt(txHash)
+
+        if (receipt !== null) return true
+      },
+    })
 
     expect(receipt).not.toBeNull()
 
