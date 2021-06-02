@@ -216,9 +216,11 @@ class Exchange extends PureComponent<any, any> {
     } = match || { params: { buy: 'btc', sell: 'usdt' } }
 
     if (sell && buy && !isRootPage) {
+      const { coin: sellName } = getCoinInfo(sell)
+      const { coin: buyName } = getCoinInfo(buy)
       if (
-        !allCurrencyies.map((item) => item.name).includes(sell.toUpperCase()) ||
-        !allCurrencyies.map((item) => item.name).includes(buy.toUpperCase())
+        !allCurrencyies.map((item) => item.name).includes(sellName.toUpperCase()) ||
+        !allCurrencyies.map((item) => item.name).includes(buyName.toUpperCase())
       ) {
         history.push(localisedUrl(locale, `${links.exchange}/eth-to-btc`))
       }
@@ -1267,9 +1269,6 @@ class Exchange extends PureComponent<any, any> {
   applyAddress = (addressRole, addressData) => {
     // address value or missing either already validated
     const { type, value, currency } = addressData
-
-    console.log('addressData', addressData)
-    console.log('addressRole', addressRole)
 
     this.setDefaultCurrencyType(currency.toUpperCase(), type)
     feedback.exchangeForm.selectedAddress(`${addressRole} ${currency.toUpperCase()} ${type}`)
