@@ -851,12 +851,15 @@ class Exchange extends PureComponent<any, any> {
     this.setState(() => ({
       isPendingTokenApprove: true,
     }))
-    // TODO: replace actions with erc20, bep20 ...
-    actions.erc20
+
+    const { coin: haveCurrencyName } = getCoinInfo(haveCurrency)
+    const coinStandart = COIN_DATA[haveCurrencyName].standart.toLowerCase()
+
+    actions[coinStandart]
       .approve({
-        to: config.swapContract.erc20,
-        name: haveCurrency,
-        amount: new BigNumber(haveAmount).dp(0, BigNumber.ROUND_UP),
+        to: config.swapContract[coinStandart],
+        name: haveCurrencyName,
+        amount: new BigNumber(haveAmount).dp(0, BigNumber.ROUND_UP).toString(),
       })
       .then((txHash) => {
         this.updateTokenAllowance()
@@ -1509,8 +1512,6 @@ class Exchange extends PureComponent<any, any> {
         params: { linkedOrderId },
       },
     } = this.props
-    console.log('addSelectedItems', addSelectedItems)
-    console.log('currencies', currencies)
     const {
       isTokenSell,
       isPendingTokenApprove,

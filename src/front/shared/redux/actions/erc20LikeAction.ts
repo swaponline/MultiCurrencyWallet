@@ -540,12 +540,12 @@ class Erc20LikeAction {
       const tokenKey = `{${this.currencyKey}}${name.toLowerCase()}`
       const { user: { tokensData } } = getState()
       const { address: ownerAddress } = tokensData[tokenKey]
-      const { address: contractAddress, decimals } = externalConfig[this.standard][name]
-  
+      const { address: contractAddress, decimals } = externalConfig[this.standard][name.toLowerCase()]
+
       const tokenContract = new this.Web3.eth.Contract(TokenAbi, contractAddress, {
         from: ownerAddress,
       })
-  
+
       return {
         contractAddress,
         tokenContract,
