@@ -35,7 +35,6 @@ export const parseTicker = (order) => {
   const SB = `${sell}-${buy}`.toUpperCase() // sells ETH = ASK
 
   if (TRADE_TICKERS.includes(BS)) {
-
     return {
       ticker: BS,
       type: PAIR_BID,

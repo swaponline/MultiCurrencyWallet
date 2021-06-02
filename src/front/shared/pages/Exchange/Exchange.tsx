@@ -295,6 +295,8 @@ class Exchange extends PureComponent<any, any> {
 
     console.group('%c Exchange', 'color: red;')
     console.error(`details(${details}) : error(${JSON.stringify(error)})`)
+    console.log('%c Stack trace', 'color: brown')
+    console.trace()
     console.groupEnd()
 
     actions.notifications.show(
@@ -744,17 +746,14 @@ class Exchange extends PureComponent<any, any> {
     const isUserSellToken = sellWallet.isToken
     const isUserBuyToken = buyWallet.isToken
     const sellBalance = new BigNumber(balances[sellCurrency.toUpperCase()] || 0)
-    const ethBalance = new BigNumber(this.getEthBalance())
     let hasEnoughBalanceSellAmount = false
-    let hasEnoughBalanceForSellFee = false
-    let hasEnoughBalanceForBuyFee = false
     let hasEnoughBalanceForFullPayment = false
     let balanceIsOk = false
 
     try {
-      const sellFee = pairFees && pairFees.sell?.fee
-      const buyFee = pairFees && pairFees.buy?.fee
-      const isUTXOSell = pairFees && pairFees.sell?.isUTXO
+      const sellFee = pairFees?.sell?.fee
+      const buyFee = pairFees?.buy?.fee
+      const isUTXOSell = pairFees?.sell?.isUTXO
       const sellBlockchainBalance = new BigNumber((isUserSellToken) ? balances[sellBlockchain] : 0)
       const buyBlockchainBalance = new BigNumber((isUserBuyToken) ? balances[buyBlockchain] : 0)
 
@@ -775,7 +774,6 @@ class Exchange extends PureComponent<any, any> {
         balanceIsOk = true
       }
     } catch (error) {
-      console.log('>>> fail check fee')
       this.reportError(error, `from checkBalanceForSwapPossibility()`)
       return false
     }
