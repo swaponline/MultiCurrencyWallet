@@ -1,5 +1,5 @@
 import config from 'helpers/externalConfig'
-
+import TOKEN_STANDARDS from 'helpers/constants/TOKEN_STANDARDS'
 const NETWORK = process.env.MAINNET ? 'mainnet' : 'testnet'
 
 const getCustomTokenConfig = () => {
@@ -22,8 +22,8 @@ const swap = (config && config.isWidget) ?
 Object.keys(config.erc20)
   .forEach(key => {
     swap.push(`{ETH}${key.toUpperCase()}-BTC`)
-    if (!config.opts.curEnabled || config.opts.curEnabled.ghost) swap.push(`${key.toUpperCase()}-GHOST`)
-    if (!config.opts.curEnabled || config.opts.curEnabled.next) swap.push(`${key.toUpperCase()}-NEXT`)
+    if (!config.opts.curEnabled || config.opts.curEnabled.ghost) swap.push(`{ETH}${key.toUpperCase()}-GHOST`)
+    if (!config.opts.curEnabled || config.opts.curEnabled.next) swap.push(`{ETH}${key.toUpperCase()}-NEXT`)
   })
 Object.keys(config.bep20)
   .forEach(key => {
@@ -36,11 +36,13 @@ if (config?.isWidget) {
 
   if (window?.widgetERC20Tokens?.length) {
     window.widgetERC20Tokens.forEach((token) => {
-      const name = token.name.toUpperCase()
+      const { name, standard } = token
+      const baseCurrency = TOKEN_STANDARDS[standard]?.currency
+      const tokenKey = `{${baseCurrency.toUpperCase()}}${name.toUpperCase()}`
 
-      swap.push(`${name}-BTC`)
-      if (!config.opts.curEnabled || config.opts.curEnabled.ghost) swap.push(`${name}-GHOST`)
-      if (!config.opts.curEnabled || config.opts.curEnabled.next) swap.push(`${name}-NEXT`)
+      swap.push(`${tokenKey}-BTC`)
+      if (!config.opts.curEnabled || config.opts.curEnabled.ghost) swap.push(`${tokenKey}-GHOST`)
+      if (!config.opts.curEnabled || config.opts.curEnabled.next) swap.push(`${tokenKey}-NEXT`)
     })
   } else {
     swap.push(`${config.erc20token.toUpperCase()}-BTC`)
@@ -55,15 +57,16 @@ if (config?.isWidget) {
   Object.keys(customTokenConfig).forEach((standard) => {
     Object.keys(customTokenConfig[standard]).forEach((tokenContractAddr) => {
       const tokenObj = customTokenConfig[standard][tokenContractAddr]
-      const { symbol } = tokenObj
-      const pair = `${symbol.toUpperCase()}-BTC`
-  
+      const { symbol, baseCurrency } = tokenObj
+      const tokenKey = `{${baseCurrency.toUpperCase()}}${symbol.toUpperCase()}`
+      const pair = `${tokenKey}-BTC`
+
       if (!swap.includes(pair)) {
         swap.push(pair)
       }
   
       if (!config.opts.curEnabled || config.opts.curEnabled.ghost) {
-        const ghostPair = `${symbol.toUpperCase()}-GHOST`
+        const ghostPair = `${tokenKey}-GHOST`
 
         if (!swap.includes(ghostPair)) {
           swap.push(ghostPair)
@@ -71,7 +74,7 @@ if (config?.isWidget) {
       }
   
       if (!config.opts.curEnabled || config.opts.curEnabled.next) {
-        const nextPair = `${symbol.toUpperCase()}-NEXT`
+        const nextPair = `${tokenKey}-NEXT`
 
         if (!swap.includes(nextPair)) {
           swap.push(nextPair)
