@@ -572,4 +572,15 @@ export default {
     adminFeeObj: externalConfig.opts?.fee?.bnb,
     web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.binance_provider)),
   }),
+  /*
+  MATIC: new EthLikeAction({
+    coinName: 'MATIC',
+    ticker: 'MATIC',
+    privateKeyName: 'eth', // Используем приватный ключ эфира
+    explorerName: 'maticscan', 
+    explorerLink: externalConfig.link.bscscan, // not used
+    explorerApiKey: externalConfig.api.bscscan_ApiKey, // not used
+    adminFeeObj: externalConfig.opts?.fee?.matic,
+    web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.matic_provider)),
+  }),*/
 }
