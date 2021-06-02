@@ -58,7 +58,7 @@ const ThirdStep = (props) => {
         let fetchedTx: any
 
         if (currencyName === ethLikeCoin.toLowerCase()) { // TODO: needs to be improved when adding BNB
-          fetchedTx = await actions[ethLikeCoin.toLowerCase()].fetchTxInfo(txHash, (refreshTime - 5) * 1000)
+          fetchedTx = await actions[ethLikeCoin.toLowerCase()].fetchTxInfo(txHash)
 
           if (fetchedTx && fetchedTx.confirmed) {
             return setEthSwapWithdrawHashIsConfirmed(true)

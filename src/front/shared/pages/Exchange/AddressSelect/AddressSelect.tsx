@@ -161,7 +161,6 @@ class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
         return false
       }
     }
-
     return true
   }
 
@@ -188,13 +187,19 @@ class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
     metamask.web3connect.off('updated', this.onWeb3Updated)
   }
 
-  componentDidUpdate() {
-    const { currency: newCurrency, selectedType, hasError = false } = this.props
+  componentDidUpdate(prevProps) {
+    const { currency: newCurrency, selectedType, hasError = false, balance } = this.props
+
+    const {balance: oldBalance} = prevProps
 
     const {
       currency: oldCurrency,
       hasError: oldHasError = false,
     } = this.state
+
+    if(oldBalance !== balance){
+      this.prepareDropDownOptions(selectedType)
+    }
 
     if (newCurrency !== oldCurrency || hasError !== oldHasError) {
       this.setState({
@@ -360,7 +365,10 @@ class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
       addressType: AddressType.Internal,
     })
 
-    if (selectedType === AddressType.Internal && !!balance) {
+    if (
+      (selectedType === AddressType.Internal
+      || (selectedType === AddressType.Metamask && !metamask.isConnected()))
+      && !!balance) {
       internalBalance = balance
     }
 

@@ -364,8 +364,8 @@ class Exchange extends PureComponent<any, any> {
     const exchangeSettings = this.getExchangeSettingsFromLocalStorage()
     const { userWalletTypes } = exchangeSettings
 
-    if (userWalletTypes && userWalletTypes[currency]) {
-      return userWalletTypes[currency]
+    if (userWalletTypes && userWalletTypes[currency.toUpperCase()]) {
+      return userWalletTypes[currency.toUpperCase()]
     }
 
     const ticker = currency.toUpperCase()
@@ -386,7 +386,7 @@ class Exchange extends PureComponent<any, any> {
       blockchain,
     } = getCoinInfo(currency)
 
-    const storageType = this.getLocalStorageWalletType(currencyName)
+    const storageType = this.getLocalStorageWalletType(currency)
 
     if (storageType) {
       return storageType
@@ -1017,14 +1017,15 @@ class Exchange extends PureComponent<any, any> {
     const partialItemsArray = [...partialItems]
 
     formCurrencies.forEach((item) => {
-      if (allCurrencies.includes(item.toUpperCase())) {
-        if (!partialCurrency.includes(item.toUpperCase())) {
+      const { coin } = getCoinInfo(item)
+      if (allCurrencies.includes(coin.toUpperCase())) {
+        if (!partialCurrency.includes(coin.toUpperCase())) {
           partialItemsArray.push({
-            name: item.toUpperCase(),
-            title: item.toUpperCase(),
-            icon: item.toLowerCase(),
-            value: item.toLowerCase(),
-            fullTitle: item.toLowerCase(),
+            name: coin.toUpperCase(),
+            title: coin.toUpperCase(),
+            icon: coin.toLowerCase(),
+            value: coin.toLowerCase(),
+            fullTitle: coin.toLowerCase(),
           })
           reducers.currencies.updatePartialItems(partialItemsArray)
         }

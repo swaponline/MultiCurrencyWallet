@@ -426,7 +426,7 @@ class Order {
    */
   acceptRequestForPartial(newValues, participantPeer) {
     console.log('>>> acceptRequestForPartial() newValues =', newValues)
-    const { buyCurrency, sellCurrency, isTurbo } = this
+    const { buyCurrency, sellCurrency, isTurbo, buyBlockchain, sellBlockchain } = this
     const { buyAmount, sellAmount } = newValues
 
     const updatedRequests = this.requests.filter(({ participant: { peer } }) => {
@@ -444,7 +444,9 @@ class Order {
       buyAmount,
       sellAmount,
       buyCurrency,
+      buyBlockchain,
       sellCurrency,
+      sellBlockchain,
       isTurbo
     })
 
