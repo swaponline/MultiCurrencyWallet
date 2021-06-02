@@ -5,7 +5,7 @@ import TOKEN_STANDARDS from 'helpers/constants/TOKEN_STANDARDS'
 import feedback from 'shared/helpers/feedback'
 import { getActivatedCurrencies } from 'helpers/user'
 import config from 'helpers/externalConfig'
-
+import { defaultPack, widgetPack } from './startPacks'
 import FirstStep from './FirstStep'
 import SecondStep from './SecondStep'
 
@@ -16,38 +16,8 @@ const curEnabled = config.opts.curEnabled
 @connect(({ currencies: { items: currencies } }) => ({ currencies }))
 export default class StepsWrapper extends Component<any, any> {
 
-  // TODO: it's crazy. Move|split this packs somewhere
-
-  defaultStartPack = [
-    ...(!curEnabled || curEnabled.btc) ? [{ name: "BTC", capture: "Bitcoin" }] : [],
-
-    ...(!curEnabled || curEnabled.eth) ? [{ name: "ETH", capture: "Ethereum" }] : [],
-    ...config.erc20 ? [{ name: 'ERC20', capture: 'Token' }] : [],
-
-    ...(!curEnabled || curEnabled.bnb) ? [{ name: "BNB", capture: "Binance Coin" }] : [],
-    ...config.bep20 ? [{ name: 'BEP20', capture: 'Token' }] : [],
-
-    ...(!curEnabled || curEnabled.ghost) ? [{ name: "GHOST", capture: "Ghost" }] : [],
-    ...(!curEnabled || curEnabled.next) ? [{ name: "NEXT", capture: "NEXT.coin" }] : [],
-
-    ...config.bep20 ? [{ name: "BTCB", capture: "BTCB Token" }] : [],
-    ...config.erc20 ? [
-      { name: "WBTC", capture: "Wrapped Bitcoin" },
-      { name: "USDT", capture: "Tether" },
-      { name: "EURS", capture: "Eurs" },
-    ] : [],
-    ...(process.env.MAINNET) ? [{ name: "SWAP", capture: "Swap" }] : [{ name: "WEENUS", capture: "Weenus" }],
-  ]
-
-  widgetStartPack = [
-    ...config.erc20 ? [{ name: 'ERC20', capture: 'Token' }] : [],
-    ...config.bep20 ? [{ name: 'BEP20', capture: 'Token' }] : [],
-    ...(!curEnabled || curEnabled.btc) ? [{ name: "BTC", capture: "Bitcoin" }] : [],
-    ...(!curEnabled || curEnabled.eth) ? [{ name: "ETH", capture: "Ethereum" }] : [],
-    ...(!curEnabled || curEnabled.bnb) ? [{ name: "BNB", capture: "Binance Coin" }] : [],
-    ...(!curEnabled || curEnabled.ghost) ? [{ name: "GHOST", capture: "Ghost" }] : [],
-    ...(!curEnabled || curEnabled.next) ? [{ name: "NEXT", capture: "NEXT.coin" }] : [],
-  ]
+  defaultStartPack = defaultPack
+  widgetStartPack = widgetPack
 
   constructor(props) {
     super(props)

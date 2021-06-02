@@ -361,6 +361,7 @@ class Row extends Component<RowProps, RowState> {
       itemData,
     } = this.props
 
+
     let targetCurrency = itemData.currency
     switch (itemData.currency.toLowerCase()) {
       case 'btc (multisig)':
@@ -369,6 +370,7 @@ class Row extends Component<RowProps, RowState> {
         targetCurrency = 'btc'
         break
     }
+
 
     const firstUrlPart = itemData.tokenKey ? `/token/${itemData.tokenKey}` : `/${targetCurrency}`
 

@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react'
 import CSSModules from 'react-css-modules'
 import styles from '../../SwapList.scss'
 
-import config from 'app-config'
 import actions from 'redux/actions'
 import { isMobile } from 'react-device-detect'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
@@ -23,16 +22,17 @@ const SecondStep = (props) => {
       sellCurrency,
       buyCurrency,
       flow: {
-        state: flowState,
         state: {
           ethSwapCreationTransactionHash,
+          utxoScriptCreatingTransactionHash,
         },
       },
     },
     fields: {
       explorerLink,
+      etherscanLink,
       currencyName,
-      scriptCreatingTransactionHash,
+      ethLikeCoin,
     },
     text,
   } = props
@@ -46,8 +46,8 @@ const SecondStep = (props) => {
     setEthSwapHash(ethSwapCreationTransactionHash)
   }
 
-  if (flowState[scriptCreatingTransactionHash] && !scriptHash) {
-    setScriptHash(flowState[scriptCreatingTransactionHash])
+  if (utxoScriptCreatingTransactionHash && !scriptHash) {
+    setScriptHash(utxoScriptCreatingTransactionHash)
   }
 
   const checkTransactionHash = (txHash, currencyName, refreshTime) => {
@@ -57,8 +57,8 @@ const SecondStep = (props) => {
       try {
         let fetchedTx: any
 
-        if (currencyName === 'eth') { // TODO: needs to be improved when adding BNB
-          fetchedTx = await actions.eth.fetchTxInfo(txHash)
+        if (currencyName === ethLikeCoin.toLowerCase()) { // TODO: needs to be improved when adding BNB
+          fetchedTx = await actions[ethLikeCoin.toLowerCase()].fetchTxInfo(txHash)
 
           if (fetchedTx && fetchedTx.confirmed) {
             return setEthSwapHashIsConfirmed(true)
@@ -92,7 +92,7 @@ const SecondStep = (props) => {
   useEffect(() => {
     _mounted = true
     if (ethSwapHash && !ethSwapHashIsConfirmed){
-      checkTransactionHash(ethSwapHash, 'eth', 20)
+      checkTransactionHash(ethSwapHash, ethLikeCoin.toLowerCase(), 20)
     }
   }, [ethSwapHash])
 
@@ -118,7 +118,7 @@ const SecondStep = (props) => {
         <strong styleName="transactionInStep">
           <a
             id="evmDepositHashLink"
-            href={`${config.link.etherscan}/tx/${ethSwapCreationTransactionHash}`}
+            href={`${etherscanLink}/tx/${ethSwapCreationTransactionHash}`}
             target="_blank"
             rel="noreferrer noopener"
           >
@@ -132,12 +132,12 @@ const SecondStep = (props) => {
           </a>
         </strong>
       )}
-      {flowState[scriptCreatingTransactionHash] && (
+      {utxoScriptCreatingTransactionHash && (
         <strong styleName="transactionInStep">
           <a
             id="utxoDepositHashLink"
-            title={`${explorerLink}/tx/${flowState[scriptCreatingTransactionHash]}`}
-            href={`${explorerLink}/tx/${flowState[scriptCreatingTransactionHash]}`}
+            title={`${explorerLink}/tx/${utxoScriptCreatingTransactionHash}`}
+            href={`${explorerLink}/tx/${utxoScriptCreatingTransactionHash}`}
             target="_blank"
             rel="noreferrer noopener"
           >

@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react'
 import CSSModules from 'react-css-modules'
 import styles from '../../SwapList.scss'
 
-import config from 'app-config'
 import actions from 'redux/actions'
 import { isMobile } from 'react-device-detect'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
@@ -23,16 +22,17 @@ const ThirdStep = (props) => {
       sellCurrency,
       buyCurrency,
       flow: {
-        state: flowState,
         state: {
           ethSwapWithdrawTransactionHash,
+          utxoSwapWithdrawTransactionHash,
         },
       },
     },
     fields: {
-      withdrawTransactionHash,
       currencyName,
       explorerLink,
+      ethLikeCoin,
+      etherscanLink,
     },
     text,
   } = props
@@ -46,8 +46,8 @@ const ThirdStep = (props) => {
     setEthSwapWithdrawHash(ethSwapWithdrawTransactionHash)
   }
 
-  if (flowState[withdrawTransactionHash] && !withdrawHash) {
-    setWithdrawHash(flowState[withdrawTransactionHash])
+  if (utxoSwapWithdrawTransactionHash && !withdrawHash) {
+    setWithdrawHash(utxoSwapWithdrawTransactionHash)
   }
 
   const checkTransactionHash = (txHash, currencyName, refreshTime) => {
@@ -57,8 +57,8 @@ const ThirdStep = (props) => {
       try {
         let fetchedTx: any
 
-        if (currencyName === 'eth') { // TODO: needs to be improved when adding BNB
-          fetchedTx = await actions.eth.fetchTxInfo(txHash)
+        if (currencyName === ethLikeCoin.toLowerCase()) { // TODO: needs to be improved when adding BNB
+          fetchedTx = await actions[ethLikeCoin.toLowerCase()].fetchTxInfo(txHash)
 
           if (fetchedTx && fetchedTx.confirmed) {
             return setEthSwapWithdrawHashIsConfirmed(true)
@@ -92,7 +92,7 @@ const ThirdStep = (props) => {
   useEffect(() => {
     _mounted = true
     if (ethSwapWithdrawHash && !ethSwapWithdrawHashIsConfirmed){
-      checkTransactionHash(ethSwapWithdrawHash, 'eth', 20)
+      checkTransactionHash(ethSwapWithdrawHash, ethLikeCoin.toLowerCase(), 20)
     }
   }, [ethSwapWithdrawHash])
 
@@ -119,7 +119,7 @@ const ThirdStep = (props) => {
         <strong styleName="transactionInStep">
           <a
             id="evmWithdrawalHashLink"
-            href={`${config.link.etherscan}/tx/${ethSwapWithdrawTransactionHash}`}
+            href={`${etherscanLink}/tx/${ethSwapWithdrawTransactionHash}`}
             target="_blank"
             rel="noreferrer noopener"
           >
@@ -133,11 +133,11 @@ const ThirdStep = (props) => {
           </a>
         </strong>
       )}
-      {flowState[withdrawTransactionHash] && (
+      {utxoSwapWithdrawTransactionHash && (
         <strong styleName="transactionInStep">
           <a
             id="utxoWithdrawalHashLink"
-            href={`${explorerLink}/tx/${flowState[withdrawTransactionHash]}`}
+            href={`${explorerLink}/tx/${utxoSwapWithdrawTransactionHash}`}
             target="_blank"
             rel="noreferrer noopener"
           >

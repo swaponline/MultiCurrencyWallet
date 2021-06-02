@@ -12,8 +12,10 @@ class Order {
   owner: any
   participant: any
   buyCurrency: any
+  buyBlockchain: any
   exchangeRate: any
   sellCurrency: any
+  sellBlockchain: any
   buyAmount: any
   sellAmount: any
   collection: any
@@ -50,8 +52,10 @@ class Order {
     this.owner          = null
     this.participant    = null
     this.buyCurrency    = null
+    this.buyBlockchain  = null
     this.exchangeRate   = null
     this.sellCurrency   = null
+    this.sellBlockchain = null
     this.buyAmount      = null
     this.sellAmount     = null
 
@@ -422,7 +426,7 @@ class Order {
    */
   acceptRequestForPartial(newValues, participantPeer) {
     console.log('>>> acceptRequestForPartial() newValues =', newValues)
-    const { buyCurrency, sellCurrency, isTurbo } = this
+    const { buyCurrency, sellCurrency, isTurbo, buyBlockchain, sellBlockchain } = this
     const { buyAmount, sellAmount } = newValues
 
     const updatedRequests = this.requests.filter(({ participant: { peer } }) => {
@@ -440,7 +444,9 @@ class Order {
       buyAmount,
       sellAmount,
       buyCurrency,
+      buyBlockchain,
       sellCurrency,
+      sellBlockchain,
       isTurbo
     })
 

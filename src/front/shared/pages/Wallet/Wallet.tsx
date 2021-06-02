@@ -443,7 +443,8 @@ class Wallet extends PureComponent<any, any> {
 
     this.syncData()
 
-    let userWallets = user.filterUserCurrencyData(actions.core.getWallets())
+    let userWallets = user.filterUserCurrencyData(actions.core.getWallets({}))
+
     userWallets = this.addFiatBalanceInUserCurrencyData(userWallets)
 
     const balanceInBtc = this.returnBalanceInBtc(userWallets)

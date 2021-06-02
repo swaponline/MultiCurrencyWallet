@@ -3,7 +3,7 @@ import React, { Fragment, Component } from 'react'
 import config from 'app-config'
 import actions from 'redux/actions'
 import helpers from 'helpers'
-
+import erc20Like from 'common/erc20Like'
 import CSSModules from 'react-css-modules'
 import styles from '../../Swap.scss'
 
@@ -46,7 +46,7 @@ export default class DepositWindow extends Component<any, any> {
     //@ts-ignore: strictNullChecks
     this.isSellCurrencyEthOrEthToken = helpers.ethToken.isEthOrEthToken({ name: swap.sellCurrency })
     //@ts-ignore: strictNullChecks
-    this.isSellCurrencyEthToken = helpers.ethToken.isEthToken({ name: swap.sellCurrency })
+    this.isSellCurrencyEthToken = erc20Like.erc20.isToken({ name: swap.sellCurrency })
 
     this.state = {
       swap,

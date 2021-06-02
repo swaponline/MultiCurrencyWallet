@@ -1,143 +1,157 @@
 import React, { Component, Fragment } from 'react'
 
-import actions from 'redux/actions'
-import crypto from 'crypto'
+
 
 import CSSModules from 'react-css-modules'
 import styles from '../Swap.scss'
 
+import config from 'app-config'
 import { isMobile } from 'react-device-detect'
-import { FormattedMessage } from 'react-intl'
-import { BigNumber } from 'bignumber.js'
 
-import SwapProgress from './SwapProgress/SwapProgress'
-import DepositWindow from './DepositWindow/DepositWindow'
 import FeeControler from '../FeeControler/FeeControler'
+import SwapProgress from './SwapProgress/SwapProgress'
 import SwapList from './SwapList/SwapList'
+import DepositWindow from './DepositWindow/DepositWindow'
 import SwapController from '../SwapController'
 
 
 @CSSModules(styles)
-export default class UTXOToEth extends Component<any, any> {
-  swap = null
+export default class EthLikeToUTXO extends Component<any, any> {
   _fields = null
-  ParticipantTimer = null
+  swap = null
+  signTimer = null
+  confirmTimer = null
+  ethLikeCoin = null
 
   constructor(props) {
     super(props)
-    const { swap, currencyData, fields } = props
+    const {
+      swap,
+      currencyData,
+      depositWindow,
+      enoughBalance,
+      verifyScriptFunc,
+      fields,
+    } = props
+
+    this._fields = fields
+    this.ethLikeCoin = fields.ethLikeCoin
 
     this.swap = swap
 
-    this._fields = fields
     this.state = {
+      swap,
       currencyData,
+      enoughBalance,
+      signed: false,
+      depositWindow,
       enabledButton: false,
+      isAddressCopied: false,
       //@ts-ignore: strictNullChecks
       flow: this.swap.flow.state,
+      isShowingGhostScript: false,
       currencyAddress: currencyData.address,
-      secret: crypto.randomBytes(32).toString('hex'),
     }
   }
 
   componentWillMount() {
     //@ts-ignore: strictNullChecks
     this.swap.on('state update', this.handleFlowStateUpdate)
+
   }
 
   componentDidMount() {
-    const { flow: { isSignFetching, isMeSigned, step, isParticipantSigned, isStoppedSwap } } = this.state
+    const { swap, flow: { isSignFetching, isMeSigned, step, isStoppedSwap } } = this.state
     if (isStoppedSwap) return
     window.addEventListener('resize', this.updateWindowDimensions)
     this.updateWindowDimensions()
     //@ts-ignore: strictNullChecks
-    this.ParticipantTimer = setInterval(() => {
-      if (this.state.flow.isParticipantSigned && this.state.destinationBuyAddress) {
-        //this.submitSecret()
-      }
-      else {
+    this.signTimer = setInterval(() => {
+      if (!this.state.flow.isMeSigned) {
+        this.signSwap()
+      } else {
         //@ts-ignore: strictNullChecks
-        clearInterval(this.ParticipantTimer)
+        clearInterval(this.signTimer)
       }
     }, 3000)
+
+    /*
+    // verify script auto in core flow
+    this.confirmTimer = setInterval(() => {
+      if (this.state.flow.step === 3) {
+        this.confirmScriptChecked()
+      } else {
+        clearInterval(this.confirmTimer)
+      }
+    }, 3000)
+    */
   }
 
   componentWillUnmount() {
-    const { swap, flow: { isMeSigned } } = this.state
-    window.removeEventListener('resize', this.updateWindowDimensions)
     //@ts-ignore: strictNullChecks
     this.swap.off('state update', this.handleFlowStateUpdate)
-    //@ts-ignore: strictNullChecks
-    clearInterval(this.ParticipantTimer)
+    window.removeEventListener('resize', this.updateWindowDimensions)
   }
 
   updateWindowDimensions = () => {
     this.setState({ windowWidth: window.innerWidth })
   }
 
-  submitSecret = () => {
-    const { secret } = this.state
+  confirmScriptChecked = () => {
+    const {
+      //@ts-ignore: strictNullChecks
+      verifyScriptFunc,
+    } = this._fields
+
     //@ts-ignore: strictNullChecks
-    this.swap.flow.submitSecret(secret)
+    this.swap.flow[verifyScriptFunc]()
   }
 
   handleFlowStateUpdate = (values) => {
+    const {
+      swap,
+      flow: {
+        isMeSigned,
+      },
+    } = this.state
+
+    //@ts-ignore: strictNullChecks
+    const { currencyName } = this._fields
+
     this.setState({
       flow: values,
     })
+
   }
 
-  updateBalance = () => {
+  signSwap = () => {
     //@ts-ignore: strictNullChecks
-    this.swap.flow.syncBalance()
+    this.swap.flow.sign()
+    this.setState(() => ({
+      signed: true,
+    }))
   }
-
-  tryRefund = () => {
-    //@ts-ignore: strictNullChecks
-    this.swap.flow.tryRefund()
-    this.setState(() => ({ enabledButton: false }))
-  }
-
-  getRefundTxHex = () => {
-    const { flow } = this.state
-
-    //@ts-ignore: strictNullChecks
-    const { scriptValues } = this._fields
-
-    if (flow.refundTxHex) {
-      return flow.refundTxHex
-    }
-    else if (flow[scriptValues]) {
-      //@ts-ignore: strictNullChecks
-      this.swap.flow.getRefundTxHex()
-    }
-  }
-
 
   render() {
     const {
+      tokenItems,
       continueSwap,
       enoughBalance,
-      swap,
       history,
-      tokenItems,
       ethAddress,
       children,
+      requestToFaucetSended,
       onClickCancelSwap,
       locale,
       wallets,
-    }  = this.props
+    } = this.props
 
-    const { flow, isShowingGhostScript, currencyData, windowWidth } = this.state
+    const { currencyAddress, flow, swap, currencyData, signed, buyCurrency, sellCurrency, windowWidth } = this.state
+    const stepse = flow.step
 
     return (
       <div>
-        <div
-          styleName="swapContainer"
-          style={(isMobile && (windowWidth < 569))
-            ? { paddingTop: 120 }
-            : { paddingTop: 0 }
-          }>
+        <div styleName="swapContainer" style={(isMobile && (windowWidth < 569)) ? { paddingTop: 120 } : { paddingTop: 0 }}>
           <div>
             <div styleName="swapInfo">
               {/* @ts-ignore: strictNullChecks */}
@@ -164,29 +178,28 @@ export default class UTXOToEth extends Component<any, any> {
               currencyData={currencyData}
               tokenItems={tokenItems}
               flow={flow}
-              onClickCancelSwap={onClickCancelSwap}
-              windowWidth={windowWidth}
               name={swap.sellCurrency}
+              windowWidth={windowWidth}
+              onClickCancelSwap={onClickCancelSwap}
               swap={swap}
               fields={this._fields}
-              swapName="BtcLikeToEth"
+              swapName="EthToBtcLike"
             />
-            <div>
-              {!continueSwap
-                ? <FeeControler ethAddress={ethAddress} />
-                : (
-                  <SwapProgress
-                    flow={flow}
-                    swap={swap}
-                    history={history}
-                    locale={locale}
-                    wallets={wallets}
-                    tokenItems={tokenItems}
-                    fields={this._fields}
-                  />
-                )
-              }
-            </div>
+            {!continueSwap
+              ? <FeeControler ethAddress={ethAddress} requestToFaucetSended={requestToFaucetSended} />
+              : (
+                <SwapProgress
+                  flow={flow}
+                  swap={swap}
+                  history={history}
+                  signed={signed}
+                  locale={locale}
+                  wallets={wallets}
+                  tokenItems={tokenItems}
+                  fields={this._fields}
+                />
+              )
+            }
           </div>
           {children && <div styleName="swapContainerInfo">{children}</div>}
         </div>

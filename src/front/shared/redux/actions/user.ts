@@ -16,7 +16,7 @@ import getCurrencyKey from 'helpers/getCurrencyKey'
 import metamask from 'helpers/metamask'
 
 import { MnemonicKey } from './types'
-
+import { initialState as currenciesInitialState } from 'redux/reducers/currencies'
 
 /*
   Когда добавляем reducers, для старых пользователей они не инициализированы
@@ -32,6 +32,7 @@ const initReducerState = () => {
 
   if (!activeCurrency) reducers.user.setActiveCurrency({ activeCurrency: 'BTC' })
   if (!activeFiat) reducers.user.setActiveFiat({ activeFiat: window.DEFAULT_FIAT || 'USD' })
+
 }
 
 const sign_btc_multisig = async (btcPrivateKey) => {

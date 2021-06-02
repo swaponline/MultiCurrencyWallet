@@ -50,6 +50,10 @@ class EthLikeAction {
     this.Web3 = web3
   }
 
+  getWeb3 = () => {
+    return this.Web3
+  }
+
   reportError = (error) => {
     feedback.actions.failed(
       ''.concat(`details - ticker: ${this.ticker}, `, `error message - ${error.message} `)

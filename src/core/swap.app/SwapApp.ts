@@ -228,7 +228,8 @@ class SwapApp extends EventEmitter {
       )
     }
 
-    this.swaps[swap._swapName] = swap
+    const swapKey = (swap.blockchainName) ? `{${swap.blockchainName}}${swap._swapName}` : swap._swapName
+    this.swaps[swapKey] = swap
 
     if (typeof swap._initSwap === 'function') {
       swap._initSwap(this)
@@ -280,6 +281,14 @@ class SwapApp extends EventEmitter {
     return true
   }
 
+  getEthWeb3Adapter() {
+    return this.env.getWeb3().eth
+  }
+
+  getEthWeb3Utils() {
+    return this.env.getWeb3().utils
+  }
+
   getMyEthAddress() {
     return this.env.metamask && this.env.metamask.isEnabled() && this.env.metamask.isConnected()
       ? this.env.metamask.getAddress()
@@ -287,9 +296,27 @@ class SwapApp extends EventEmitter {
       : this.services.auth.accounts.eth.address
   }
 
+  getBnbWeb3Adapter() {
+    return this.env.getWeb3Bnb().eth
+  }
+
+  getBnbWeb3Utils() {
+    return this.env.getWeb3Bnb().utils
+  }
+
+  getMyBnbAddress() {
+    //@ts-ignore: strictNullChecks
+    return this.services.auth.accounts.bnb.address // @to-do - add metamask support
+  }
+
   getParticipantEthAddress(swap) {
     const { participant, participantMetamaskAddress } = swap
     return participantMetamaskAddress ? participantMetamaskAddress : participant.eth.address
+  }
+
+  getParticipantBnbAddress(swap) {
+    const { participant, participantMetamaskAddress } = swap
+    return participant.bnb.address // @to-do - add metamask support
   }
 
   static is(app) {

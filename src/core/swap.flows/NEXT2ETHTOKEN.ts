@@ -7,6 +7,7 @@ import { BigNumber } from 'bignumber.js'
 export default (tokenName) => {
 
   class NEXT2ETHTOKEN extends AtomicAB2UTXO {
+    static blockchainName = `ETH`
 
     _flowName: string
     ethTokenSwap: any
@@ -14,7 +15,7 @@ export default (tokenName) => {
     state: any
 
     static getName() {
-      return `${this.getFromName()}2${this.getToName()}`
+      return `${this.getFromName()}2{${this.blockchainName}}${this.getToName()}`
     }
     static getFromName() {
       return constants.COINS.next

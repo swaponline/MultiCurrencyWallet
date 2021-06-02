@@ -170,8 +170,7 @@ const SecondStep = (props) => {
   }
 
   const currencyName = Object.keys(currencies).filter((el) => currencies[el])[0] || 'Cant define currency'
-
-  const currencyKey = (ethToken.isEthToken({ name: currencyName })) ? `erc` : currencyName.toLowerCase()
+  const currencyKey = currencyName.toLowerCase()
 
   const coins = [
     {

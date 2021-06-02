@@ -398,17 +398,31 @@ type GetWalletFindCondition = {
   address?: string
   addressType?: string
   connected?: boolean
+  blockchain?: string
 }
 
 const getWallet = (findCondition: GetWalletFindCondition) => {
   // specify addressType,
   // otherwise it finds the first wallet from all origins, including metamask
-  const { address, addressType, connected, currency } = findCondition
+  const { address, addressType, connected, currency: currencyData, blockchain: optBlockchain } = findCondition
   const wallets = getWallets({ withInternal: true })
+  
+  const {
+    coin: currency,
+    blockchain: coinBlockchain,
+  } = getCoinInfo(currencyData)
+  const blockchain = coinBlockchain || optBlockchain
+
 
   const founded = wallets.filter((wallet) => {
     if (wallet.isMetamask && !wallet.isConnected) return false
-    const conditionOk = currency && wallet.currency.toLowerCase() === currency.toLowerCase()
+    const conditionOk = (
+        blockchain && wallet.blockchain
+          ? blockchain.toLowerCase() === wallet.blockchain.toLowerCase()
+          : true
+      )
+      && currency
+      && wallet.currency.toLowerCase() === currency.toLowerCase()
 
     if (address) {
       if (wallet.address.toLowerCase() === address.toLowerCase()) {
@@ -536,6 +550,10 @@ const getWallets = (options: IUniversalObj = {}) => {
 
   return allData.filter((item) => item?.address && item?.currency)
 }
+
+window.getWallets = getWallets
+window.getWallet = getWallet
+
 
 const fetchWalletBalance = async (walletData): Promise<number> => {
   const name = helpers.getCurrencyKey(walletData.currency.toLowerCase(), true)
