@@ -309,8 +309,6 @@ export default class AddOffer extends Component<any, any> {
   }
 
   handleExchangeRateChange = (value) => {
-    let { buyAmount, sellAmount } = this.state
-
     if (!isNumberStringFormatCorrect(value)) {
       return undefined
     }
@@ -479,8 +477,6 @@ export default class AddOffer extends Component<any, any> {
     const {
       sellCurrency,
       buyCurrency,
-      sellAmount,
-      buyAmount,
       balanceForSellTokenFee,
       balanceForBuyTokenFee,
       buyBlockchain,
@@ -490,12 +486,12 @@ export default class AddOffer extends Component<any, any> {
     this.setState(() => ({
       sellCurrency: buyCurrency,
       sellBlockchain: buyBlockchain,
-      sellAmount: buyAmount,
+      sellAmount: '',
       balanceForSellTokenFee: balanceForBuyTokenFee,
       // ----
       buyCurrency: sellCurrency,
       buyBlockchain: sellBlockchain,
-      buyAmount: sellAmount,
+      buyAmount: '',
       balanceForBuyTokenFee: balanceForSellTokenFee,
     }), async () => {
       await this.checkBalance(buyCurrency)
@@ -573,7 +569,7 @@ export default class AddOffer extends Component<any, any> {
         </span>
       )
     }
-    if (linked.buyAmount.value !== '' && linked.sellAmount.value > 0) {
+    if (linked.buyAmount.value !== '' && linked.buyAmount.value > 0) {
       linked.buyAmount.check((value) => (new BigNumber(value).isGreaterThan(minimalAmountBuy)),
         <span>
           <FormattedMessage id="transaction450" defaultMessage="Buy amount must be greater than " />
