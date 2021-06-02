@@ -24,6 +24,8 @@ import QrReader from 'components/QrReader'
 import iconInternal from 'images/logo/logo-black.svg'
 import iconCustom from 'images/custom.svg'
 
+import getCoinInfo from 'common/coins/getCoinInfo'
+
 import { AddressType, AddressRole } from 'domain/address'
 import { COIN_DATA, COIN_MODEL } from 'swap.app/constants/COINS'
 
@@ -365,13 +367,14 @@ class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
     const isInternalOptionDisabled =
       role === AddressRole.Send && (!internalBalance || internalBalance === 0)
 
-    const isMetamaskOption = erc20Like.erc20.isToken({ name: currency }) || currency.toUpperCase() === `ETH`
+    const coinInfo = getCoinInfo(currency)
+
+    const isMetamaskOption = erc20Like.isToken({ name: coinInfo.coin }) || ['ETH', 'BNB'].includes(coinInfo.coin.toUpperCase())
 
     // Forbid `Custom address` option when using ethereum/tokens
     // because you need to make a request to the contract
-    const isCustomAddressOption = !erc20Like.isToken({ name: currency })
-      && currency.toUpperCase() !== `ETH`
-      && currency.toUpperCase() !== `BNB` // @to-do - need refactoring - may be use walletData
+    const isCustomAddressOption = !erc20Like.isToken({ name: coinInfo.coin })
+      && !['ETH', 'BNB'].includes(coinInfo.coin.toUpperCase())
 
     const isUTXOModel = COIN_DATA[ticker] && COIN_DATA[ticker].model === COIN_MODEL.UTXO
     const isCustomOptionInputHidden = role === AddressRole.Send && isUTXOModel

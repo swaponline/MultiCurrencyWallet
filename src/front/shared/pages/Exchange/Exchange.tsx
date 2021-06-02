@@ -1205,7 +1205,7 @@ class Exchange extends PureComponent<any, any> {
   }
 
   handleSetGetValue = ({ value }) => {
-    const { haveCurrency, getCurrency } = this.state
+    const { haveCurrency } = this.state
 
     if (value === haveCurrency) {
       this.flipCurrency()
@@ -1219,6 +1219,9 @@ class Exchange extends PureComponent<any, any> {
           pairFees: false,
         },
         () => {
+          const { haveCurrency, haveType, getCurrency, getType } = this.state
+          this.setDefaultCurrencyType(haveCurrency.toUpperCase(), haveType)
+          this.setDefaultCurrencyType(getCurrency.toUpperCase(), getType)
           this.fetchPairFeesAndBalances()
           this.changeUrl(haveCurrency, value)
           actions.analytics.dataEvent({
@@ -1231,7 +1234,7 @@ class Exchange extends PureComponent<any, any> {
   }
 
   handleSetHaveValue = async ({ value }) => {
-    const { haveCurrency, getCurrency } = this.state
+    const { getCurrency } = this.state
 
     if (value === getCurrency) {
       this.flipCurrency()
@@ -1245,6 +1248,9 @@ class Exchange extends PureComponent<any, any> {
           pairFees: false,
         },
         () => {
+          const { haveCurrency, haveType, getCurrency, getType } = this.state
+          this.setDefaultCurrencyType(haveCurrency.toUpperCase(), haveType)
+          this.setDefaultCurrencyType(getCurrency.toUpperCase(), getType)
           this.fetchPairFeesAndBalances()
           this.changeUrl(value, getCurrency)
           actions.analytics.dataEvent({
@@ -1261,6 +1267,9 @@ class Exchange extends PureComponent<any, any> {
   applyAddress = (addressRole, addressData) => {
     // address value or missing either already validated
     const { type, value, currency } = addressData
+
+    console.log('addressData', addressData)
+    console.log('addressRole', addressRole)
 
     this.setDefaultCurrencyType(currency.toUpperCase(), type)
     feedback.exchangeForm.selectedAddress(`${addressRole} ${currency.toUpperCase()} ${type}`)
