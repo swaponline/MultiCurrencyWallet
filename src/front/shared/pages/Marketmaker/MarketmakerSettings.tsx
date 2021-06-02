@@ -93,6 +93,8 @@ class MarketmakerSettings extends Component<any, any> {
       buyAmount,
       sellAmount,
       createUnixTimeStamp,
+      buyBlockchain,
+      sellBlockchain,
       flow: {
         state,
       },
@@ -105,6 +107,8 @@ class MarketmakerSettings extends Component<any, any> {
       buyAmount,
       sellAmount,
       createUnixTimeStamp,
+      buyBlockchain,
+      sellBlockchain,
       ...state,
     }
   }

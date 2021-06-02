@@ -1057,7 +1057,8 @@ class Exchange extends PureComponent<any, any> {
 
   setAmountOnState = (maxAmount, getAmount, buyAmount) => {
     const { getCurrency, haveAmount } = this.state
-    const decimalPlaces = constants.tokenDecimals[getCurrency.toLowerCase()]
+    const {coin: getCurrencyName } = getCoinInfo(getCurrency)
+    const decimalPlaces = constants.tokenDecimals[getCurrencyName.toLowerCase()]
 
     this.setState(() => ({
       maxAmount: Number(maxAmount),
