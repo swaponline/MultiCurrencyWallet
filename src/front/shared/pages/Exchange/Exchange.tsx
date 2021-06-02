@@ -1719,8 +1719,6 @@ class Exchange extends PureComponent<any, any> {
 
     const isDevBuild = (config.env === 'development')
 
-    console.log('balances', balances)
-
     const Form = (
       <div styleName="section">
         <div styleName="formExchange">
