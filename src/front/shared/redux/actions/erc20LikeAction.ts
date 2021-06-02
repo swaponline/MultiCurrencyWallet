@@ -57,7 +57,7 @@ class Erc20LikeAction {
     )
     console.group(`Actions >%c ${this.standard}`, 'color: red;')
     console.error('error: ', error)
-    console.log('%c Stack trance', 'color: orange;')
+    console.log('%c Stack trace', 'color: orange;')
     console.trace()
     console.groupEnd()
   }
