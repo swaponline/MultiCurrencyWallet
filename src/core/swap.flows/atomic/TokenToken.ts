@@ -121,9 +121,9 @@ export default class TokenToken extends Flow {
         'sign': 1,
         'wait-secret': 2,
         'sync-balance': 3,
-        'wait-lock': 4,
+        'wait-taker-lock': 4,
         'lock': 5,
-        'wait-withdraw': 6,
+        'wait-taker-withdraw': 6,
         'withdraw': 7,
         'finish': 8,
         'end': 9,
@@ -134,7 +134,7 @@ export default class TokenToken extends Flow {
         'submit-secret': 2,
         'sync-balance': 3,
         'lock': 4,
-        'wait-lock': 5,
+        'wait-maker-lock': 5,
         'withdraw': 6,
         'finish': 7,
         'end': 8,
@@ -194,14 +194,21 @@ export default class TokenToken extends Flow {
 
     if (this.isTaker()) {
       flow.swap.room.on('maker sign', (data) => { })
-      flow.swap.room.on('request hash', (data) => { })
+      flow.swap.room.on('request hash', (data) => {
+        flow.sendSecretHash()
+      })
       flow.swap.room.on('request taker swap', (data) => { })
       flow.swap.room.on('on maker swap create', (data) => { })
       flow.swap.room.on('on maker withdraw', (data) => { })
 
     } else {
       flow.swap.room.on('taker sign', (data) => { })
-      flow.swap.room.on('secret hash created', (data) => { })
+      flow.swap.room.on('secret hash created', (data) => {
+        const { secretHash } = data
+        if (secretHash) {
+          flow.setState({ secretHash })
+        }
+      })
       flow.swap.room.on('on taker swap create', (data) => { })
       flow.swap.room.on('request maker swap', (data) => { })
       flow.swap.room.on('on taker withdraw', (data) => { })
@@ -221,57 +228,153 @@ export default class TokenToken extends Flow {
     if (this.isMaker()) {
       return [
 
-        // 1. Sign 
+        // 1. Sign  'sign'
+        async () => {
+          this.swap.room.once('request sign', () => {
+            this.swap.room.sendMessage({
+              event: 'swap sign',
+            })
+            this.setState({
+              isParticipantSigned: true,
+            }, true)
+          })
+
+          const isSignOk = await util.helpers.repeatAsyncUntilResult(() => {
+            const {
+              isParticipantSigned,
+            } = this.state
+
+            this.swap.processMetamask()
+            this.swap.room.sendMessage({
+              event: 'swap sign',
+            })
+
+            return isParticipantSigned
+          })
+          if (isSignOk) {
+            this.finishStep({}, { step: 'sign' })
+          }
+        },
+
+        // 2. Wait secret hash  'wait-secret'
+        async () => {
+          const isSecretHashOk = await util.helpers.repeatAsyncUntilResult(async () => {
+            const {
+              secretHash,
+            } = this.state
+            if (!secretHash) {
+              this.swap.room.sendMessage({
+                event: 'request secret hash',
+              })
+              return false
+            }
+            return true
+          })
+          if (isSecretHashOk) {
+            this.finishStep({}, { step: 'wait-secret' })
+          }
+        },
+
+        // 3. Sync-balance  'sync-balance'
         async () => {},
 
-        // 2. Wait secret hash
+        // 4. Wait taker swap 'wait-taker-lock'
         async () => {},
 
-        // 3. Sync-balance
+        // 5. Create swap 'lock'
         async () => {},
 
-        // 4. Wait taker swap
+        // 6. Wait withdraw taker from maker  'wait-taker-withdraw'
         async () => {},
 
-        // 5. Create swap
+        // 7. Withdraw  'withdraw'
         async () => {},
 
-        // 6. Wait withdraw taker from maker
+        // 8. Finish  'finish'
         async () => {},
 
-        // 7. Withdraw
-        async () => {},
-
-        // 8. Finish
-        async () => {},
-
-        // 9. End
+        // 9. End 'end'
         async () => {},
       ]
     } else {
+      /* Taker steps */
       return [
-        // 1. Sign
+        // 1. Sign  'sign'
+        async () => {
+          this.swap.processMetamask()
+          this.swap.room.once('swap sign', () => {
+            const { step } = this.state
+
+            if (step >= 2) {
+              return
+            }
+
+            this.setState({
+              isParticipantSigned: true,
+            }, true)
+
+          })
+
+          this.swap.room.once('swap exists', () => {
+            this.setState({
+              isSwapExist: true,
+            })
+
+            console.log('>>>>>>>>>>> STOP SWAP PROCESS - SWAP EXISTS EVENT')
+            this.stopSwapProcess()
+          })
+
+          const isSignOk = await util.helpers.repeatAsyncUntilResult(() => {
+            const {
+              isParticipantSigned,
+            } = this.state
+
+            this.swap.processMetamask()
+            this.swap.room.sendMessage({
+              event: 'request sign',
+            })
+
+            return isParticipantSigned
+          })
+
+          if (isSignOk) {
+            this.finishStep({}, { step: 'sign' })
+          }
+        },
+
+        // 2. genSecret 'submit-secret'
+        async () => {
+          if (!this.state.secret) {
+            const {
+              secret,
+              secretHash,
+            } = this.generateSecret()
+
+            this.setState({
+              secret,
+              secretHash,
+            }, true)
+          }
+          this.sendSecretHash()
+          this.finishStep({}, { step: 'submit-secret' })
+        },
+
+        // 3. Sync-balance  'sync-balance'
         async () => {},
 
-        // 2. genSecret
+        // 4. Create swap 'lock'
         async () => {},
 
-        // 3. Sync-balance
+        // 5. Wait maker swap 'wait-maker-lock'
         async () => {},
 
-        // 4. Create swap
+        // 6. Withdraw maker swap 'withdraw'
         async () => {},
 
-        // 5. Wait maker swap
+        // 7. Finish  'finish'
         async () => {},
 
-        // 6. Withdraw maker swap
-        async () => {},
-
-        // 7. Finish
-        async () => {},
-
-        // 9. End
+        // 9. End 'end'
         async () => {},
       ]
     }
@@ -285,6 +388,89 @@ export default class TokenToken extends Flow {
 
     // use taker or maker swap interface ? - may be taker
     // return this.ethTokenSwap.checkSwapExists(swapData)
+  }
+
+  sendSecretHash() {
+    const {
+      secret,
+      secretHash,
+    } = this.state
+    if (secret && secretHash) {
+      this.swap.room.sendMessage({
+        event: 'secret hash created',
+        data: {
+          secretHash,
+        }
+      })
+    }
+  }
+  async signMakerSide() {
+    this.swap.room.once('request sign', () => {
+      this.swap.room.sendMessage({
+        event: 'swap sign',
+      })
+      this.setState({
+        isParticipantSigned: true,
+      }, true)
+    })
+
+    const isSignOk = await util.helpers.repeatAsyncUntilResult(() => {
+      const {
+        isParticipantSigned,
+      } = this.state
+
+      this.swap.processMetamask()
+      this.swap.room.sendMessage({
+        event: 'swap sign',
+      })
+
+      return isParticipantSigned
+    })
+    if (isSignOk) {
+      this.finishStep({}, { step: 'sign' })
+    }
+  }
+
+  async signTakerSide() {
+    this.swap.processMetamask()
+    this.swap.room.once('swap sign', () => {
+      const { step } = this.state
+
+      if (step >= 2) {
+        return
+      }
+
+      this.setState({
+        isParticipantSigned: true,
+      }, true)
+
+    })
+
+    this.swap.room.once('swap exists', () => {
+      this.setState({
+        isSwapExist: true,
+      })
+
+      console.log('>>>>>>>>>>> STOP SWAP PROCESS - SWAP EXISTS EVENT')
+      this.stopSwapProcess()
+    })
+
+    const isSignOk = await util.helpers.repeatAsyncUntilResult(() => {
+      const {
+        isParticipantSigned,
+      } = this.state
+
+      this.swap.processMetamask()
+      this.swap.room.sendMessage({
+        event: 'request sign',
+      })
+
+      return isParticipantSigned
+    })
+
+    if (isSignOk) {
+      this.finishStep({}, { step: 'sign' })
+    }
   }
 
   async tryRefund() {

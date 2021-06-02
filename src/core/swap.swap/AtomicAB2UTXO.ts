@@ -482,17 +482,6 @@ class AtomicAB2UTXO extends Flow {
     return false
   }
 
-  generateSecret() {
-    const secret = cryptoLib.randomBytes(32).toString('hex')
-    const secretHash = this.app.env.bitcoin.crypto.ripemd160(Buffer.from(secret, 'hex')).toString('hex')
-    const _secret = `0x${secret.replace(/^0x/, '')}`
-
-    return {
-      secret,
-      secretHash,
-    }
-  }
-
   submitSecret() {
     const {
       isParticipantSigned,

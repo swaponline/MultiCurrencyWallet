@@ -2,6 +2,7 @@ import debug from 'debug'
 import SwapApp, { util } from 'swap.app'
 import Room from './Room'
 import Swap from './Swap'
+import * as cryptoLib from 'crypto'
 
 
 class Flow {
@@ -133,6 +134,17 @@ class Flow {
 
   isMaker(): boolean {
     return this.swap.isMy
+  }
+
+  generateSecret() {
+    const secret = cryptoLib.randomBytes(32).toString('hex')
+    const secretHash = this.app.env.bitcoin.crypto.ripemd160(Buffer.from(secret, 'hex')).toString('hex')
+    const _secret = `0x${secret.replace(/^0x/, '')}`
+
+    return {
+      secret,
+      secretHash,
+    }
   }
 
   _attachSwapApp(app: SwapApp) {
