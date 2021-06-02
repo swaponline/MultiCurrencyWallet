@@ -58,7 +58,7 @@ const SecondStep = (props) => {
         let fetchedTx: any
 
         if (currencyName === 'eth') { // TODO: needs to be improved when adding BNB
-          fetchedTx = await actions.eth.fetchTxInfo(txHash, (refreshTime - 5) * 1000)
+          fetchedTx = await actions.eth.fetchTxInfo(txHash)
 
           if (fetchedTx && fetchedTx.confirmed) {
             return setEthSwapHashIsConfirmed(true)
