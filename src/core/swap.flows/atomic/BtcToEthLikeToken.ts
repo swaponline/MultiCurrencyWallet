@@ -243,16 +243,21 @@ export default class BtcToEthLikeToken extends AtomicAB2UTXO {
                   ownerAddress: flow.getMyAddress(),
                   participantAddress: flow.getParticipantAddress(flow.swap),
                 })
+                console.log('>>>>>>>>>>>>>>>>>>>>> check token is valid', tokenIsValid, tokenIsValid2)
 
-                const destAddressIsOk = await this.ethTokenSwap.checkTargetAddress({ flow })
+                if (tokenIsValid || tokenIsValid2) {
+                  const destAddressIsOk = await this.ethTokenSwap.checkTargetAddress({ flow })
 
-                if (destAddressIsOk) {
-                  await this.btcSwap.fundSwapScript({
-                    flow,
-                  })
-                  return true
+                  if (destAddressIsOk) {
+                    await this.btcSwap.fundSwapScript({
+                      flow,
+                    })
+                    return true
+                  } else {
+                    console.warn('Destination address not valid. Stop swap now!')
+                  }
                 } else {
-                  console.warn('Destination address not valid. Stop swap now!')
+                  console.warn('Token type not valid. Stop swap now!')
                 }
               } else {
                 console.log('Swap not mined - wait')
