@@ -197,7 +197,11 @@ class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
       hasError: oldHasError = false,
     } = this.state
 
-    if (newCurrency !== oldCurrency || hasError !== oldHasError || oldBalance !== balance) {
+    if(oldBalance !== balance){
+      this.prepareDropDownOptions(selectedType)
+    }
+
+    if (newCurrency !== oldCurrency || hasError !== oldHasError) {
       this.setState({
         currency: newCurrency,
         hasError,
@@ -361,7 +365,10 @@ class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
       addressType: AddressType.Internal,
     })
 
-    if (selectedType === AddressType.Internal && !!balance) {
+    if (
+      (selectedType === AddressType.Internal
+      || (selectedType === AddressType.Metamask && !metamask.isConnected()))
+      && !!balance) {
       internalBalance = balance
     }
 
