@@ -10,12 +10,13 @@ const bscWeb3 = new Web3( new Web3.providers.HttpProvider(testConfig.web3.binanc
 const timeOut = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
 
 describe('Sending ETH', () => {
+  const waitingTxMining = 60_000
   const waitingForTheTest = 80_000 // ms
   const customAmount = 0.001
   let gasPrice = 0
 
   beforeEach(async () => {
-    gasPrice = await ethLikeHelper.eth.estimateGasPrice({ speed: 'fast' })
+    gasPrice = await ethLikeHelper.eth.estimateGasPrice()
   })
 
   it(`send the user transaction (amount: ${customAmount} ETH)`, async () => {
@@ -33,7 +34,7 @@ describe('Sending ETH', () => {
 
     expect(response.transactionHash).toMatch(/0x[A-Za-z0-9]{2}/)
     // wait for a while until transaction gets into the blockchain
-    await timeOut(60_000)
+    await timeOut(waitingTxMining)
     
     const receipt = await ethWeb3.eth.getTransactionReceipt(response.transactionHash)
     // if receipt equals null then perhaps the transaction is still pending
@@ -64,7 +65,7 @@ describe('Sending ETH', () => {
 
     expect(txHash).toMatch(/0x[A-Za-z0-9]{64}/)
 
-    await timeOut(30_000)
+    await timeOut(waitingTxMining)
 
     const receipt = await ethWeb3.eth.getTransactionReceipt(txHash)
 
@@ -79,12 +80,13 @@ describe('Sending ETH', () => {
 })
 
 describe('Sending BNB', () => {
+  const waitingTxMining = 40_000
   const waitingForTheTest = 80_000 // ms
   const customAmount = 0.001
   let gasPrice = 0
 
   beforeEach(async () => {
-    gasPrice = await ethLikeHelper.bnb.estimateGasPrice({ speed: 'fast' })
+    gasPrice = await ethLikeHelper.bnb.estimateGasPrice()
   })
 
   it(`send the user transaction (amount: ${customAmount} BNB)`, async () => {
@@ -102,7 +104,7 @@ describe('Sending BNB', () => {
 
     expect(response.transactionHash).toMatch(/0x[A-Za-z0-9]{2}/)
     // wait for a while until transaction gets into the blockchain
-    await timeOut(60_000)
+    await timeOut(waitingTxMining)
     
     const receipt = await bscWeb3.eth.getTransactionReceipt(response.transactionHash)
     // if receipt equals null then perhaps the transaction is still pending
@@ -133,7 +135,7 @@ describe('Sending BNB', () => {
 
     expect(txHash).toMatch(/0x[A-Za-z0-9]{64}/)
 
-    await timeOut(10_000)
+    await timeOut(waitingTxMining)
 
     const receipt = await bscWeb3.eth.getTransactionReceipt(txHash)
 
