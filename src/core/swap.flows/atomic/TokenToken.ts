@@ -150,6 +150,8 @@ export default class TokenToken extends Flow {
     this.state = {
       step: 0,
 
+      isContractFunded: false,
+
       isStoppedSwap: false,
 
       signTransactionHash: null,
@@ -198,8 +200,21 @@ export default class TokenToken extends Flow {
       flow.swap.room.on('request hash', (data) => {
         flow.sendSecretHash()
       })
-      flow.swap.room.on('request taker swap', (data) => { })
-      flow.swap.room.on('on maker swap create', (data) => { })
+      flow.swap.room.on('request taker swap', (data) => {
+        const { takerCreateSwapTx } = flow.state
+        if (takerCreateSwapTx) {
+          flow.swap.room.sendMessage({
+            event: 'taker swap create',
+            data: {
+              takerCreateSwapTx,
+            },
+          })
+        }
+      })
+      flow.swap.room.on('maker swap create', (data) => {
+        const { makerCreateSwapTx } = data
+        flow.setState({ makerCreateSwapTx })
+      })
       flow.swap.room.on('on maker withdraw', (data) => { })
 
     } else {
@@ -210,8 +225,21 @@ export default class TokenToken extends Flow {
           flow.setState({ secretHash })
         }
       })
-      flow.swap.room.on('on taker swap create', (data) => { })
-      flow.swap.room.on('request maker swap', (data) => { })
+      flow.swap.room.on('taker swap create', (data) => {
+        const { takerCreateSwapTx } = data
+        flow.setState({ takerCreateSwapTx })
+      })
+      flow.swap.room.on('request maker swap', (data) => {
+        const { makerCreateSwapTx } = flow.state
+        if (makerCreateSwapTx) {
+          flow.swap.room.sendMessage({
+            event: 'maker swap create',
+            data: {
+              makerCreateSwapTx,
+            },
+          })
+        }
+      })
       flow.swap.room.on('on taker withdraw', (data) => { })
     }
 
@@ -291,11 +319,41 @@ export default class TokenToken extends Flow {
         },
 
         // 5. Create swap 'lock'
-        async () => {},
+        async () => {
+          const isContractFunded = await this.lockFunds()
+          if (isContractFunded) {
+            this.finishStep({
+              isContractFunded,
+            }, { step: 'lock' })
+          }
+        },
 
         // 6. Wait withdraw taker from maker  'wait-taker-withdraw'
         async () => {
-          
+          const { participant } = flow.swap
+          const flow = this
+          const checkSecretExist = async () => {
+            return await util.helpers.extractSecretFromContract({
+              flow,
+              swapFlow: flow.takerSwap,
+              participantAddress: flow.getParticipantAddress(flow.swap),
+              ownerAddress: flow.getMyAddress(),
+              app: flow.app,
+            })
+          }
+
+          const secretFromContract = await util.helpers.repeatAsyncUntilResult((stopRepeat) => {
+            return checkSecretExist()
+          })
+
+          if (secretFromContract) {
+            debug('swap.core:flow')('got secret from smart contract', secretFromContract)
+
+            flow.finishStep({
+              isEthWithdrawn: true,
+              secret: secretFromContract,
+            }, { step: 'wait-taker-withdraw' })
+          }
         },
 
         // 7. Withdraw  'withdraw'
@@ -378,7 +436,12 @@ export default class TokenToken extends Flow {
 
         // 4. Create swap 'lock'
         async () => {
-          
+          const isContractFunded = await this.lockFunds()
+          if (isContractFunded) {
+            this.finishStep({
+              isContractFunded,
+            }, { step: 'lock' })
+          }
         },
 
         // 5. Wait maker swap 'wait-maker-lock'
@@ -390,7 +453,9 @@ export default class TokenToken extends Flow {
         },
 
         // 6. Withdraw maker swap 'withdraw'
-        async () => {},
+        async () => {
+          
+        },
 
         // 7. Finish  'finish'
         async () => {},
@@ -401,12 +466,13 @@ export default class TokenToken extends Flow {
     }
   }
 
-  _checkSwapAlreadyExists() {
+  async _checkSwapAlreadyExists() {
     const swapData = {
       ownerAddress: this.getMyAddress(),
       participantAddress: this.getParticipantAddress(this.swap)
     }
 
+    return false
     // use taker or maker swap interface ? - may be taker
     // return this.ethTokenSwap.checkSwapExists(swapData)
   }
@@ -423,13 +489,13 @@ export default class TokenToken extends Flow {
     const { secretHash } = this.state
 
     const swapData = {
-      participantAddress: abClass.getParticipantAddress(flow.swap),
+      participantAddress: workSwap.getParticipantAddress(flow.swap),
       secretHash,
       amount: sellAmount,
       targetWallet: (flow.swap.destinationSellAddress)
         ? flow.swap.destinationSellAddress
-        : abClass.getParticipantAddress(flow.swap),
-      useTargetWallet,
+        : workSwap.getParticipantAddress(flow.swap),
+      useTargetWallet: true,
       calcFee: true,
     }
 
@@ -445,21 +511,21 @@ export default class TokenToken extends Flow {
     //debug('swap.core:flow')('create swap fee', flow.state.createSwapFee)
 
     const tryCreateSwap = async () => {
-      const { isEthContractFunded } = flow.state
+      const { isContractFunded } = flow.state
 
-      if (!isEthContractFunded) {
+      if (!isContractFunded) {
         try {
           debug('swap.core:flow')('fetching allowance')
 
-          const allowance = await abClass.checkAllowance({
-            owner: abClass.getMyAddress(),
+          const allowance = await workSwap.checkAllowance({
+            owner: workSwap.getMyAddress(),
           })
 
           debug('swap.core:flow')('allowance', allowance)
 
           if (new BigNumber(allowance).isLessThan(sellAmount)) {
             debug('swap.core:flow')('allowance < sellAmount', allowance, sellAmount)
-            await abClass.approve({
+            await workSwap.approve({
               amount: sellAmount,
             })
           }
@@ -468,41 +534,43 @@ export default class TokenToken extends Flow {
           const swapExists = await flow._checkSwapAlreadyExists()
           if (swapExists) {
             console.warn('Swap exists!! May be stucked. Try refund')
-            await abClass.refund({
-              participantAddress: abClass.getParticipantAddress(flow.swap),
+            await workSwap.refund({
+              participantAddress: workSwap.getParticipantAddress(flow.swap),
             }, (refundTx) => {
               debug('swap.core:flow')('Stucked swap refunded', refundTx)
             })
           }
-          await abClass.create(swapData, async (hash) => {
+          await workSwap.create(swapData, async (hash) => {
             debug('swap.core:flow')('create swap tx hash', hash)
-            flow.swap.room.sendMessage({
-              event: 'create eth contract',
-              data: {
-                ethSwapCreationTransactionHash: hash,
-              },
-            })
-
-            flow.swap.room.on('request eth contract', () => {
+            if (flow.isMaker()) {
               flow.swap.room.sendMessage({
-                event: 'create eth contract',
+                event: 'maker swap create',
                 data: {
-                  ethSwapCreationTransactionHash: hash,
+                  makerCreateSwapTx: hash,
                 },
               })
-            })
-
-            flow.setState({
-              ethSwapCreationTransactionHash: hash,
-              canCreateEthTransaction: true,
-              isFailedTransaction: false,
-            }, true)
-
+              flow.setState({
+                makerCreateSwapTx: hash,
+                canCreateEthTransaction: true,
+                isFailedTransaction: false,
+              })
+            } else if (flow.isTaker()) {
+              flow.swap.room.sendMessage({
+                event: 'taker swap create',
+                data: {
+                  takerCreateSwapTx: hash,
+                },
+              })
+              flow.setState({
+                takerCreateSwapTx: hash,
+                canCreateEthTransaction: true,
+                isFailedTransaction: false,
+              })
+            }
             debug('swap.core:flow')('created swap!', hash)
           })
-
         } catch (error) {
-          if (flow.state.ethSwapCreationTransactionHash) {
+          if (flow.state[(flow.isMaker()) ? `makerCreateSwapTx` : `takerCreateSwapTx`]) {
             console.error('fail create swap, but tx already exists')
             flow.setState({
               canCreateEthTransaction: true,
@@ -547,18 +615,16 @@ export default class TokenToken extends Flow {
       return true
     }
 
-    const isEthContractFunded = await util.helpers.repeatAsyncUntilResult(() =>
+    const isContractFunded = await util.helpers.repeatAsyncUntilResult(() =>
       tryCreateSwap(),
     )
 
     const { isStoppedSwap } = flow.state
 
-    if (isEthContractFunded && !isStoppedSwap) {
-      debug('swap.core:flow')(`finish step`)
-      flow.finishStep({
-        isEthContractFunded,
-      }, {step: stepName})
+    if (isContractFunded && !isStoppedSwap) {
+      return true
     }
+    return false
   }
 
   async waitOtherSideLockFunds() {
