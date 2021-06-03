@@ -106,11 +106,11 @@ const ThirdStep = (props) => {
 
   const isLowStep = isFirstStepActive || isSecondStepActive
   const showStepNumber = isThirdStepActive || isLowStep
-  const showStepText = isMobile ? (isThirdStepActive || !isLowStep) : isThirdStepActive
+  const isStepActive = isMobile ? showStepNumber : isThirdStepActive
 
   return (
     <div
-      styleName={(isThirdStepActive && 'stepItem active') || (isLowStep && 'stepItem') || 'stepItem active checked'}>
+      styleName={(isStepActive && 'stepItem active') || (isLowStep && 'stepItem') || 'stepItem active checked'}>
       <span styleName="stepNumber">{!isMobile ? (showStepNumber ? 3 : <i className="fas fa-check" />) : (showStepNumber ? 2 : <i className="fas fa-check" />)}</span>
       <p styleName="stepText">
         <FormattedMessage id="thirdStep24" defaultMessage="WITHDRAW" />
@@ -156,7 +156,7 @@ const ThirdStep = (props) => {
           />
         </Tooltip >
       </div>
-      {showStepText && (
+      {isStepActive && (
         <span styleName="stepHeading">
           {text}
         </span>
