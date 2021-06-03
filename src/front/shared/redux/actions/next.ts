@@ -120,7 +120,13 @@ const getPrivateKeyByAddress = (address) => {
   if (mnemonicAddress === address) return mnemonicKey
 }
 
-const login = (privateKey, mnemonic = null, mnemonicKeys = null) => {
+const login = (
+  privateKey,
+  mnemonic: string | null = null,
+  mnemonicKeys: null | {
+    [key: string]: string | null
+  } = null,
+) => {
   let sweepToMnemonicReady = false
 
   if (privateKey

@@ -90,6 +90,9 @@ const getUserData = (currency) => {
     case 'BNB':
       return getState().user.bnbData
 
+    case 'MATIC':
+      return getState().user.maticData
+
     case 'GHOST':
       return getState().user.ghostData
 
@@ -173,7 +176,8 @@ const deletedPartialCurrency = (orderId) => {
     (item) => item.buyCurrency.toUpperCase() === deletedOrderBuyCurrency
   )
 
-  const premiumCurrencies = ['BTC', 'ETH', 'BNB', 'GHOST', 'NEXT', 'SWAP'] // валюты, которые всегда должны быть в дропе
+  // currencies which must be all time in the drop
+  const premiumCurrencies = ['BTC', 'ETH', 'BNB', 'MATIC', 'GHOST', 'NEXT', 'SWAP']
 
   if (deletedOrderSell.length === 1 && !premiumCurrencies.includes(deletedOrderSellCurrency)) {
     reducers.currencies.deletedPartialCurrency(deletedOrderSellCurrency)
@@ -212,8 +216,6 @@ const sendRequestForPartial = (orderId, newValues, destination = {}, callback) =
   //@ts-ignore: strictNullChecks
   const order = SwapApp.shared().services.orders.getByKey(orderId)
 
-  console.log('>>>sendRequestForPartial(), order =', order)
-
   const { address, reputation, reputationProof } = getUserData(order.buyCurrency)
 
   const requestOptions = {
@@ -224,8 +226,6 @@ const sendRequestForPartial = (orderId, newValues, destination = {}, callback) =
       reputationProof,
     },
   }
-
-  //console.log('>>> core:sendRequestForPartial requestOptions =', requestOptions)
 
   order.sendRequestForPartial(
     newValues,
@@ -250,7 +250,6 @@ const sendRequestForPartial = (orderId, newValues, destination = {}, callback) =
 }
 
 const createOrder = (data, isPartial = false) => {
-  console.log('>>>>> createOrder', data)
   //@ts-ignore: strictNullChecks
   const order = SwapApp.shared().services.orders.create(data)
   if (!isPartial) {
@@ -468,6 +467,7 @@ const getWallets = (options: IUniversalObj = {}) => {
       btcMultisigPinData,
       ethData,
       bnbData,
+      maticData,
       tokensData,
       metamaskData,
     },
@@ -475,7 +475,7 @@ const getWallets = (options: IUniversalObj = {}) => {
 
   // Sweep
   const {
-    user: { btcMnemonicData, ethMnemonicData, bnbMnemonicData },
+    user: { btcMnemonicData, ethMnemonicData, bnbMnemonicData, maticMnemonicData },
   } = getState()
 
   const metamaskConnected = metamask.isEnabled() && metamask.isConnected()
@@ -510,6 +510,12 @@ const getWallets = (options: IUniversalObj = {}) => {
         : []
       : []),
     // Sweep ===============================
+    ...(!config.opts.curEnabled || config.opts.curEnabled.matic
+      ? maticMnemonicData && !maticData.isMnemonic
+        ? [maticMnemonicData]
+        : []
+      : []),
+    // Sweep ===============================
     ...(!config.opts.curEnabled || config.opts.curEnabled.btc ? [btcData] : []),
     ...(!config.opts.curEnabled || config.opts.curEnabled.btc ? [btcMultisigSMSData] : []),
     ...(!config.opts.curEnabled || config.opts.curEnabled.btc
@@ -541,6 +547,14 @@ const getWallets = (options: IUniversalObj = {}) => {
         : [bnbData]
       : []),
     // =====================================
+    ...(!config.opts.curEnabled || config.opts.curEnabled.matic
+      ? metamaskConnected
+        ? withInternal
+          ? [maticData]
+          : []
+        : [maticData]
+      : []),
+    // =====================================
     ...(!config.opts.curEnabled || config.opts.curEnabled.ghost ? [ghostData] : []),
     ...(!config.opts.curEnabled || config.opts.curEnabled.next ? [nextData] : []),
     ...tokenWallets,
@@ -559,16 +573,9 @@ const fetchWalletBalance = async (walletData): Promise<number> => {
   const name = helpers.getCurrencyKey(walletData.currency.toLowerCase(), true)
 
   try {
-    if (erc20Like.erc20.isToken({ name })) {
-      const balance = await actions.erc20.fetchBalance(
-        walletData.address,
-        walletData.contractAddress,
-        walletData.decimals
-      )
-
-      return new BigNumber(balance).toNumber()
-    } else if (erc20Like.bep20.isToken({ name })) {
-      const balance = await actions.bep20.fetchBalance(
+    if (walletData.isToken) {
+      const standard = walletData.standard
+      const balance = await actions[standard].fetchBalance(
         walletData.address,
         walletData.contractAddress,
         walletData.decimals
@@ -591,7 +598,6 @@ const fetchWalletBalance = async (walletData): Promise<number> => {
 }
 
 const rememberSwap = (swap) => {
-  console.log('>>>>>> rememberSwap', swap)
   //@ts-ignore: strictNullChecks
   let swapsIds = JSON.parse(localStorage.getItem('swapId'))
 

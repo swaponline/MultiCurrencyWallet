@@ -21,6 +21,10 @@ export const getActivatedCurrencies = () => {
     currencies.push('BNB')
   }
 
+  if (!config.opts.curEnabled || config.opts.curEnabled.matic) {
+    currencies.push('MATIC')
+  }
+
   if (!config.opts.curEnabled || config.opts.curEnabled.ghost) {
     currencies.push('GHOST')
   }
@@ -46,8 +50,9 @@ export const getWidgetCurrencies = () => {
     'BTC',
     'ETH',
     'BNB',
+    'MATIC',
     'GHOST',
-    'NEXT'
+    'NEXT',
   ]
 
   if (!hiddenCoinsList.includes('BTC (PIN-Protected)')) {

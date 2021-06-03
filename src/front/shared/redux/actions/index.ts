@@ -46,6 +46,7 @@ export default {
   btcmultisig,
   eth: EthLikeAction.ETH,
   bnb: EthLikeAction.BNB,
+  matic: EthLikeAction.MATIC,
   erc20: Erc20LikeAction.erc20,
   bep20: Erc20LikeAction.bep20,
   ghost,
