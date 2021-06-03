@@ -12,6 +12,8 @@ export const defaultPack = [
   ...(!curEnabled || curEnabled.bnb ? [{ name: 'BNB', capture: 'Binance Coin' }] : []),
   ...(config.bep20 ? [{ name: 'BEP20', capture: 'Token', baseChain: 'BSC' }] : []),
 
+  ...(!curEnabled || curEnabled.matic ? [{ name: 'MATIC', capture: 'MATIC Token' }] : []),
+
   ...(!curEnabled || curEnabled.ghost ? [{ name: 'GHOST', capture: 'Ghost' }] : []),
   ...(!curEnabled || curEnabled.next ? [{ name: 'NEXT', capture: 'NEXT.coin' }] : []),
 
@@ -34,6 +36,7 @@ export const widgetPack = [
   ...(config.erc20 ? [{ name: 'ERC20', capture: 'Token', baseChain: 'ETH' }] : []),
   ...(!curEnabled || curEnabled.bnb ? [{ name: 'BNB', capture: 'Binance Coin' }] : []),
   ...(config.bep20 ? [{ name: 'BEP20', capture: 'Token', baseChain: 'BSC' }] : []),
+  ...(!curEnabled || curEnabled.matic ? [{ name: 'MATIC', capture: 'MATIC Token' }] : []),
   ...(!curEnabled || curEnabled.ghost ? [{ name: 'GHOST', capture: 'Ghost' }] : []),
   ...(!curEnabled || curEnabled.next ? [{ name: 'NEXT', capture: 'NEXT.coin' }] : []),
 ]

@@ -558,6 +558,7 @@ export default {
     privateKeyName: 'eth',
     explorerName: 'etherscan',
     explorerLink: externalConfig.link.etherscan,
+    // TODO: use Web3 and delete explorers keys
     explorerApiKey: externalConfig.api.etherscan_ApiKey,
     adminFeeObj: externalConfig.opts?.fee?.eth,
     web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.provider)),
@@ -565,22 +566,21 @@ export default {
   BNB: new EthLikeAction({
     coinName: 'Binance Coin',
     ticker: 'BNB',
-    privateKeyName: 'eth', // Используем приватный ключ эфира
+    privateKeyName: 'eth', // use an ethereum private key
     explorerName: 'bscscan',
     explorerLink: externalConfig.link.bscscan,
     explorerApiKey: externalConfig.api.bscscan_ApiKey,
     adminFeeObj: externalConfig.opts?.fee?.bnb,
     web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.binance_provider)),
   }),
-  /*
   MATIC: new EthLikeAction({
-    coinName: 'MATIC',
+    coinName: 'MATIC Token',
     ticker: 'MATIC',
-    privateKeyName: 'eth', // Используем приватный ключ эфира
-    explorerName: 'maticscan', 
-    explorerLink: externalConfig.link.bscscan, // not used
-    explorerApiKey: externalConfig.api.bscscan_ApiKey, // not used
+    privateKeyName: '',
+    explorerName: 'explorer-mumbai', 
+    explorerLink: externalConfig.link.maticscan,
+    explorerApiKey:'',
     adminFeeObj: externalConfig.opts?.fee?.matic,
     web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.matic_provider)),
-  }),*/
+  }),
 }

@@ -14,7 +14,8 @@ export const BLOCKCHAIN = Object.freeze({
   GHOST: 'GHOST',
   NEXT: 'NEXT',
   ETH: 'ETH',
-  BNB: 'BNB',
+  BNB: 'BNB', // TODO: rename with BSC
+  MATIC: 'MATIC',
 })
 
 export const BASE_TOKEN_CURRENCY = Object.freeze({

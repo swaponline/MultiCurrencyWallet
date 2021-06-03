@@ -31,6 +31,14 @@ export const initialState = {
     balanceError: null,
     infoAboutCurrency: null,
   },
+  maticData: {
+    balance: 0,
+    isBalanceFetched: false,
+    currency: 'MATIC',
+    fullName: 'MATIC Token',
+    balanceError: null,
+    infoAboutCurrency: null,
+  },
   btcData: {
     balance: 0,
     isBalanceFetched: false,

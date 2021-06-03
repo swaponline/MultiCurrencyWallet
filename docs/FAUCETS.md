@@ -13,7 +13,10 @@ The list of faucets that we recommend to use when developing
 - https://faucet.dimensions.network/ (5 ETH per day)
 
 ## `BNB` (Testnet)
-- https://testnet.binance.org/faucet-smart (1, 2.5, 6.25 per 18 hours)
+- https://testnet.binance.org/faucet-smart (1 per 18 hours)
+
+## `MATIC` (Mumbai testnet)
+- https://faucet.matic.network/
 
 ## `USDT` (Ropsten testnet)
  - contact swaponline developers [here](https://t.me/swaponlinebot)
