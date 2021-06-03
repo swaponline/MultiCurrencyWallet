@@ -228,6 +228,8 @@ describe('Swap e2e test', () => {
       await MakerPage.waitForSelector('#feeInfoBlockMinerFee')
       await MakerPage.evaluate((selector) => document.querySelector(selector).click(), '#slow');
 
+      await timeOut(5 * 1000)
+
       await MakerPage.$('#sendButton').then((sendButton) => sendButton.click())
       await TakerPage.$('#sendButton').then((sendButton) => sendButton.click())
 
