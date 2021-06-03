@@ -105,11 +105,11 @@ const SecondStep = (props) => {
   }, [])
 
   const showStepNumber = isFirstStepActive || isSecondStepActive
-  const showStepText = isMobile ? showStepNumber : isSecondStepActive
+  const isStepActive = isMobile ? showStepNumber : isSecondStepActive
 
   return (
     <div
-      styleName={(isSecondStepActive && 'stepItem active') || (isFirstStepActive && 'stepItem') || 'stepItem active checked'}>
+      styleName={(isStepActive && 'stepItem active') || (isFirstStepActive && 'stepItem') || 'stepItem active checked'}>
       <span styleName="stepNumber">{!isMobile ? (showStepNumber ? 2 : <i className="fas fa-check" />) : (showStepNumber ? 1 : <i className="fas fa-check" />) }</span>
       <p styleName="stepText">
         <FormattedMessage id="BtcToEthToken24" defaultMessage="Deposit" />
@@ -156,7 +156,7 @@ const SecondStep = (props) => {
           />
         </Tooltip >
       </div>
-      {showDepositWindow ? '' : showStepText && (
+      {showDepositWindow ? '' : isStepActive && (
         <span styleName="stepHeading">
           {text}
         </span>
