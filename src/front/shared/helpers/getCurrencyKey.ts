@@ -20,6 +20,8 @@ export default (currencyData, returnToken) => {
       return 'eth'
     case 'bnb':
       return 'bnb'
+    case 'matic':
+      return 'matic'
     case 'ghost':
       return 'ghost'
     case 'next':

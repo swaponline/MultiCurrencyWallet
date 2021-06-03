@@ -116,7 +116,7 @@ const initialState = {
       addAssets: true,
     }] : [],
     //@ts-ignore
-      ...(!buildOpts.curEnabled || buildOpts.curEnabled.bnb) ? [{
+      ...(!buildOpts.curEnabled || buildOpts.curEnabled.matic) ? [{
       name: 'MATIC',
       title: 'MATIC',
       icon: 'matic',

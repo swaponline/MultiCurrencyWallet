@@ -13,13 +13,12 @@ class ethLikeHelper {
   constructor(params) {
     const {
       currency,
-      currencyKey,
       defaultParams,
       feeRatesLink,
     } = params
 
     this.currency = currency
-    this.currencyKey = currencyKey
+    this.currencyKey = currency.toLowerCase()
     this.defaultParams = defaultParams
     this.feeRatesLink = feeRatesLink
   }
@@ -72,14 +71,17 @@ class ethLikeHelper {
 export default {
   eth: new ethLikeHelper({
     currency: 'ETH',
-    currencyKey: 'eth',
     defaultParams: DEFAULT_CURRENCY_PARAMETERS.eth,
     feeRatesLink: config.feeRates.eth,
   }),
   bnb: new ethLikeHelper({
     currency: 'BNB',
-    currencyKey: 'bnb',
     defaultParams: DEFAULT_CURRENCY_PARAMETERS.bnb,
     feeRatesLink: config.feeRates.bsc,
+  }),
+  matic: new ethLikeHelper({
+    currency: 'MATIC',
+    defaultParams: DEFAULT_CURRENCY_PARAMETERS.matic,
+    feeRatesLink: config.feeRates.matic,
   }),
 }

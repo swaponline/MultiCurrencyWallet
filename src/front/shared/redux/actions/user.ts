@@ -590,22 +590,15 @@ const setTokensTransaction = async () => {
 
 const getText = () => {
   const {
-    user: { ethData, bnbData, btcData, ghostData, nextData } } = getState()
-
-    const coinDataNames = [
-      'ethData',
-      'bnbData',
-      'maticData',
-      'btcData',
-      'ghostData',
-      'nextData',
-    ]
-
-    const { user } = getState()
-
-    coinDataNames.forEach((dataName) => {
-      const data = user[dataName]
-    })
+    user: {
+      ethData,
+      bnbData,
+      maticData,
+      btcData,
+      ghostData,
+      nextData,
+    }
+  } = getState()
 
   let text = `
     You will need this instruction only in case of emergency (if you lost your keys) \r\n
@@ -631,7 +624,13 @@ const getText = () => {
     BSC address: ${bnbData.address}\r\n
     Private key: ${bnbData.privateKey}\r\n
     \r\n
-    # BITCOIN\r\n
+    \r\n
+    #MATIC CHAIN
+    \r\n
+    MATIC address: ${maticData.address}\r\n
+    Private key: ${maticData.privateKey}\r\n
+    \r\n
+    # BITCOIN
     \r\n
     Bitcoin address: ${btcData.address}\r\n
     Private key: ${btcData.privateKey}\r\n
@@ -641,12 +640,12 @@ const getText = () => {
     3. Go to settings > addresses > import\r\n
     4. paste private key and click "Ok"\r\n
     \r\n
-    # GHOST\r\n
+    # GHOST
     \r\n
     Ghost address: ${ghostData.address}\r\n
     Private key: ${ghostData.privateKey}\r\n
     \r\n
-    # NEXT\r\n
+    # NEXT
     \r\n
     Next address: ${nextData.address}\r\n
     Private key: ${nextData.privateKey}\r\n

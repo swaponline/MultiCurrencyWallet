@@ -26,7 +26,7 @@ window.widgetERC20Comisions = {
   },
   matic: {
     fee: '7',
-    address: '0x276747801B0dbb7ba04685BA27102F1B27Ca0815',
+    address: '0x57d49704F453CdD2b995280d9D7F557E42847d82',
     min: '0,01',
   },
   erc20: {

@@ -107,41 +107,41 @@ class EthLikeAction {
   fetchTxInfo = (hash) => {
     return new Promise((res, rej) => {
       this.Web3.eth.getTransaction(hash)
-      .then((tx) => {
-        const { from, to, value, gas, gasPrice, blockHash } = tx
+        .then((tx) => {
+          const { from, to, value, gas, gasPrice, blockHash } = tx
 
-        const amount = this.Web3.utils.fromWei(value)
-        const minerFee = new BigNumber(this.Web3.utils.toBN(gas).toNumber())
-          .multipliedBy(this.Web3.utils.toBN(gasPrice).toNumber())
-          .dividedBy(1e18)
-          .toNumber()
+          const amount = this.Web3.utils.fromWei(value)
+          const minerFee = new BigNumber(this.Web3.utils.toBN(gas).toNumber())
+            .multipliedBy(this.Web3.utils.toBN(gasPrice).toNumber())
+            .dividedBy(1e18)
+            .toNumber()
 
-        let adminFee: number | false = false
+          let adminFee: number | false = false
 
-        if (this.adminFeeObj && to !== this.adminFeeObj.address) {
-          const feeFromUsersAmount = new BigNumber(this.adminFeeObj.fee)
-            .dividedBy(100)
-            .multipliedBy(amount)
+          if (this.adminFeeObj && to !== this.adminFeeObj.address) {
+            const feeFromUsersAmount = new BigNumber(this.adminFeeObj.fee)
+              .dividedBy(100)
+              .multipliedBy(amount)
 
-          if (new BigNumber(this.adminFeeObj.min).isGreaterThan(feeFromUsersAmount)) {
-            adminFee = new BigNumber(this.adminFeeObj.min).toNumber()
-          } else {
-            adminFee = feeFromUsersAmount.toNumber()
+            if (new BigNumber(this.adminFeeObj.min).isGreaterThan(feeFromUsersAmount)) {
+              adminFee = new BigNumber(this.adminFeeObj.min).toNumber()
+            } else {
+              adminFee = feeFromUsersAmount.toNumber()
+            }
           }
-        }
 
-        res({
-          amount,
-          afterBalance: null,
-          receiverAddress: to,
-          senderAddress: from,
-          minerFee,
-          minerFeeCurrency: this.ticker,
-          adminFee,
-          confirmed: blockHash !== null,
+          res({
+            amount,
+            afterBalance: null,
+            receiverAddress: to,
+            senderAddress: from,
+            minerFee,
+            minerFeeCurrency: this.ticker,
+            adminFee,
+            confirmed: blockHash !== null,
+          })
         })
-      })
-      .catch((error) => rej(error))
+        .catch((error) => rej(error))
     })
   }
 
