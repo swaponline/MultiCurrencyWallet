@@ -163,7 +163,7 @@ const sign = async () => {
 
     actions.eth.login(ethPrivateKey, mnemonic, mnemonicKeys)
     actions.bnb.login(ethPrivateKey, mnemonic, mnemonicKeys)
-    actions.matic.login(maticPrivateKey, mnemonic, mnemonicKeys)
+    actions.matic.login(ethPrivateKey, mnemonic, mnemonicKeys)
     const _btcPrivateKey = actions.btc.login(btcPrivateKey, mnemonic, mnemonicKeys)
     const _ghostPrivateKey = actions.ghost.login(ghostPrivateKey, mnemonic, mnemonicKeys)
     const _nextPrivateKey = actions.next.login(nextPrivateKey, mnemonic, mnemonicKeys)

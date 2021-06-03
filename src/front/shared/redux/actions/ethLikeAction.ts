@@ -563,10 +563,11 @@ export default {
     adminFeeObj: externalConfig.opts?.fee?.eth,
     web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.provider)),
   }),
+  // use an ethereum private key for EVM compatible blockchains
   BNB: new EthLikeAction({
     coinName: 'Binance Coin',
     ticker: 'BNB',
-    privateKeyName: 'eth', // use an ethereum private key
+    privateKeyName: 'eth',
     explorerName: 'bscscan',
     explorerLink: externalConfig.link.bscscan,
     explorerApiKey: externalConfig.api.bscscan_ApiKey,
@@ -576,7 +577,7 @@ export default {
   MATIC: new EthLikeAction({
     coinName: 'MATIC Token',
     ticker: 'MATIC',
-    privateKeyName: '',
+    privateKeyName: 'eth',
     explorerName: 'explorer-mumbai', 
     explorerLink: externalConfig.link.maticscan,
     explorerApiKey:'',
