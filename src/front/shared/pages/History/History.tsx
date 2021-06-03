@@ -79,7 +79,7 @@ class History extends Component<any, any> {
     const objCurrency = {}
 
     for (let prop in user) {
-      if (typeof user[prop] === 'object' && user[prop].currency) {
+      if (typeof user[prop] === 'object' && !!user[prop] && user[prop].currency) {
         objCurrency[user[prop].currency] = {
           isBalanceFetched: user[prop].isBalanceFetched,
         }
