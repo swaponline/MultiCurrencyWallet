@@ -5,6 +5,7 @@
 export default [
   'eth',
   'bnb',
+  'matic',
   'btc',
   'ghost',
   'next',

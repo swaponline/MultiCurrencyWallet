@@ -350,39 +350,50 @@ const getExchangeRate = (sellCurrency, buyCurrency): Promise<number> => {
   })
 }
 
+const customTokenExchangeRate = (name) => {
+  let customRate = false
+
+  outsidelLbel: {
+    for (const key in TOKEN_STANDARDS) {
+      const standard = TOKEN_STANDARDS[key].standard
+
+      for (const tokenName in config[standard]) {
+        const exRate = config[standard][tokenName].customEcxchangeRate
+        
+        if (exRate) customRate = exRate
+        break outsidelLbel
+      }
+    }
+  }
+
+  return customRate
+}
+
 const getInfoAboutCurrency = (currencyNames) => {
   return new Promise((resolve, reject) => {
-    const hasCustomRate = (cur) => {
-      const dataobj = Object.keys(config.erc20).find(el => el.toLowerCase() === cur.toLowerCase())
-      return dataobj ? (config.erc20[dataobj] || { customEcxchangeRate: false }).customEcxchangeRate : false
-    }
-
     const url = 'https://noxon.wpmix.net/cursAll.php'
     reducers.user.setIsFetching({ isFetching: true })
 
     const fiat = (config && config.opts && config.opts.activeFiat) ? config.opts.activeFiat : `USD`
 
     request.get(url, {
-      cacheResponse: 60 * 60 * 1000, // кеш 1 час
+      cacheResponse: 60 * 60 * 1000, // cache for 1 hour
       query: {
         fiat,
         tokens: currencyNames.join(`,`),
       }
     }).then((answer: any) => {
       let infoAboutBTC = answer.data.filter(currencyInfo => {
-        if (currencyInfo.symbol.toLowerCase() === 'btc') return true
+        return currencyInfo.symbol.toLowerCase() === 'btc'
       })
 
-      const btcPrice = (
-        infoAboutBTC?.length
-        && infoAboutBTC[0]?.quote[fiat]?.price
-      ) ? infoAboutBTC[0].quote[fiat].price : 7000
+      const btcPrice = infoAboutBTC?.length && infoAboutBTC[0]?.quote[fiat]?.price
 
       answer.data.map(currencyInfoItem => {
         if (currencyNames.includes(currencyInfoItem.symbol)) {
           if (currencyInfoItem.quote && currencyInfoItem.quote[fiat]) {
-            const priceInBtc = currencyInfoItem.quote[fiat].price / btcPrice
-            const ownPrice = hasCustomRate(currencyInfoItem.symbol)
+            const priceInBtc = btcPrice && currencyInfoItem.quote[fiat].price / btcPrice
+            const ownPrice = customTokenExchangeRate(currencyInfoItem.symbol)
 
             const currencyInfo = {
               ...currencyInfoItem.quote[fiat],
@@ -533,6 +544,7 @@ const setTransactions = async (objCurrency: ObjCurrencyType | {} = null) => {
       actions.btcmultisig.getTransactionUser(),
       actions.eth.getTransaction(),
       actions.bnb.getTransaction(),
+      actions.matic.getTransaction(),
       //@ts-ignore: strictNullChecks
       ...(metamask.isEnabled() && metamask.isConnected()) ? [actions.eth.getTransaction(metamask.getAddress())] : [],
       //@ts-ignore: strictNullChecks
