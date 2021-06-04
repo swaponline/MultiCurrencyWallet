@@ -11,21 +11,8 @@ export default {
       fast: 2 * 1e9,
     },
   },
-  ethLikeToken: {
-    limit: {
-      send: 100 * 1e3,
-      swap: 300 * 1e3,
-      swapDeposit: 170 * 1e3,
-      swapWithdraw: 100 * 1e3,
-    },
-    price: {
-      slow: 0.1 * 1e9,
-      normal: 1 * 1e9,
-      fast: 2 * 1e9,
-    },
-  },
 
-  // TODO: delete. Deprecated. Use objects above
+  // TODO: delete. Deprecated. Use evmLike object
   eth: {
     limit: {
       send: 21 * 1e3,

@@ -16,7 +16,7 @@ export default {
     explorerApiKey: config.api.bscscan_ApiKey,
   },
   erc20matic: {
-    platform: 'matic chain',
+    platform: 'ethereum',
     standard: 'erc20matic',
     currency: 'matic',
     // explorerApi: config.api,
