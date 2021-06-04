@@ -2588,20 +2588,6 @@
     ]
   },
   {
-    "id": "multiSignJoinLinkCopied",
-    "message": "Gotowe. Link skopiowany do schowka",
-    "files": [
-      "src/front/shared/components/modals/MultisignJoinLink/MultisignJoinLink.tsx"
-    ]
-  },
-  {
-    "id": "multiSignJoinLinkCopy",
-    "message": "Kopiuj do schowka",
-    "files": [
-      "src/front/shared/components/modals/MultisignJoinLink/MultisignJoinLink.tsx"
-    ]
-  },
-  {
     "id": "createWallet_customERC20",
     "message": "Własny token",
     "files": [
