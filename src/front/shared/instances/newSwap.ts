@@ -265,7 +265,7 @@ const createSwapApp = async () => {
               /* eslint-enable */
             })
           )),
-          // Binance
+        // Binance
         ...(Object.keys(config.bep20)
           .map(key =>
             new BscTokenSwap({
@@ -283,7 +283,7 @@ const createSwapApp = async () => {
               /* eslint-enable */
             })
           )),
-          // Matic
+        // Matic
         ...(Object.keys(config.erc20Matic)
         .map(key =>
           new MaticTokenSwap({
