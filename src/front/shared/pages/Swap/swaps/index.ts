@@ -37,7 +37,7 @@ Object.keys(config.bep20).forEach(tokenName => {
   swapComponents[`{BNB}${tokenName.toUpperCase()}2BTC`] = BEP20_to_UTXO(`BTC`)
   swapComponents[`BTC2{BNB}${tokenName.toUpperCase()}`] = UTXO_to_BEP20(`BTC`)
 })
-Object.keys(config.erc20Matic).forEach(tokenName => {
+Object.keys(config.erc20matic).forEach(tokenName => {
   swapComponents[`{MATIC}${tokenName.toUpperCase()}2BTC`] = ERC20MATIC_to_UTXO(`BTC`)
   swapComponents[`BTC2{MATIC}${tokenName.toUpperCase()}`] = UTXO_to_ERC20MATIC(`BTC`)
 })

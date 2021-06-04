@@ -311,12 +311,15 @@ const externalConfig = () => {
     }
 
     if (setErc20MaticFee) {
-      feeObj.erc20Matic.min = feeObj.matic.min
-      feeObj.erc20Matic.fee = feeObj.matic.fee
+      feeObj.erc20matic.min = feeObj.matic.min
+      feeObj.erc20matic.fee = feeObj.matic.fee
     }
   }
 
-  console.log('externalConfig', config)
+  console.group('%c External config', 'color: green;')
+  console.log(config)
+  console.groupEnd()
+
   return config
 }
 

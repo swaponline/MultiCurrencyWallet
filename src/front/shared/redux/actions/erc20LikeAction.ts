@@ -581,13 +581,13 @@ export default {
     adminFeeObj: externalConfig.opts?.fee?.bep20,
     web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.binance_provider)),
   }),
-  erc20Matic: new Erc20LikeAction({
+  erc20matic: new Erc20LikeAction({
     currency: 'MATIC',
-    standard: 'erc20Matic',
+    standard: 'erc20matic',
     explorerName: 'explorer-mumbai',
     explorerLink: externalConfig.link.maticscan,
     explorerApiKey: '',
-    adminFeeObj: externalConfig.opts?.fee?.erc20Matic,
+    adminFeeObj: externalConfig.opts?.fee?.erc20matic,
     web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.matic_provider)),
   })
 }

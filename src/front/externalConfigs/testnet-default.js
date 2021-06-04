@@ -35,7 +35,7 @@ window.widgetERC20Comisions = {
   bep20: {
     address: '0x276747801B0dbb7ba04685BA27102F1B27Ca0815',
   },
-  erc20Matic: {
+  erc20matic: {
     address: '0x276747801B0dbb7ba04685BA27102F1B27Ca0815',
   },
 }

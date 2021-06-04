@@ -135,8 +135,8 @@ export default {
     defaultParams: DEFAULT_CURRENCY_PARAMETERS.ethToken,
     web3: new Web3(new Web3.providers.HttpProvider(config.web3.binance_provider)),
   }),
-  erc20Matic: new erc20LikeHelper({
-    standard: 'erc20Matic',
+  erc20matic: new erc20LikeHelper({
+    standard: 'erc20matic',
     currency: 'MATIC',
     defaultParams: DEFAULT_CURRENCY_PARAMETERS.ethToken,
     web3: new Web3(new Web3.providers.HttpProvider(config.web3.matic_provider)),

@@ -17,7 +17,7 @@ const isExchangeAllowed = (currencies) =>
     const isBep = Object.keys(config.bep20)
       .map((i) => `{bnb}${i.toLowerCase()}`)
       .includes(`${c.value}`.toLowerCase())
-    const isErcMatic = Object.keys(config.erc20Matic)
+    const isErcMatic = Object.keys(config.erc20matic)
       .map((i) => `{matic}${i.toLowerCase()}`)
       .includes(`${c.value}`.toLowerCase())
 

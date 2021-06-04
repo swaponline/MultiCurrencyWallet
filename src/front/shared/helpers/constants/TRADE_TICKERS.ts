@@ -31,7 +31,7 @@ Object.keys(config.bep20)
     swap.push(`{BNB}${key.toUpperCase()}-BTC`)
   })
 
-Object.keys(config.erc20Matic)
+Object.keys(config.erc20matic)
   .forEach(key => {
     swap.push(`{MATIC}${key.toUpperCase()}-BTC`)
   })
