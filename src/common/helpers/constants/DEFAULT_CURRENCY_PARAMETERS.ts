@@ -11,7 +11,7 @@ export default {
       fast: 2 * 1e9,
     },
   },
-  ethLikeToken: {
+  evmLikeToken: {
     limit: {
       send: 100 * 1e3,
       swap: 300 * 1e3,

@@ -126,19 +126,19 @@ export default {
   erc20: new erc20LikeHelper({
     standard: 'erc20',
     currency: 'ETH',
-    defaultParams: DEFAULT_CURRENCY_PARAMETERS.ethLikeToken,
+    defaultParams: DEFAULT_CURRENCY_PARAMETERS.evmLikeToken,
     web3: new Web3(new Web3.providers.HttpProvider(config.web3.provider)),
   }),
   bep20: new erc20LikeHelper({
     standard: 'bep20',
     currency: 'BNB',
-    defaultParams: DEFAULT_CURRENCY_PARAMETERS.ethLikeToken,
+    defaultParams: DEFAULT_CURRENCY_PARAMETERS.evmLikeToken,
     web3: new Web3(new Web3.providers.HttpProvider(config.web3.binance_provider)),
   }),
   erc20matic: new erc20LikeHelper({
     standard: 'erc20matic',
     currency: 'MATIC',
-    defaultParams: DEFAULT_CURRENCY_PARAMETERS.ethLikeToken,
+    defaultParams: DEFAULT_CURRENCY_PARAMETERS.evmLikeToken,
     web3: new Web3(new Web3.providers.HttpProvider(config.web3.matic_provider)),
   }),
 }
