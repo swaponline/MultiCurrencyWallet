@@ -298,6 +298,7 @@ const externalConfig = () => {
     const feeObj = config.opts.fee
     const setErc20Fee = hasTokenAdminFee && feeObj.eth?.min && feeObj.eth?.fee
     const setBep20Fee = hasTokenAdminFee && feeObj.bnb?.min && feeObj.bnb?.fee
+    const setErc20MaticFee = hasTokenAdminFee && feeObj.matic?.min && feeObj.matic?.fee
 
     if (setErc20Fee) {
       feeObj.erc20.min = feeObj.eth.min
@@ -307,6 +308,11 @@ const externalConfig = () => {
     if (setBep20Fee) {
       feeObj.bep20.min = feeObj.bnb.min
       feeObj.bep20.fee = feeObj.bnb.fee
+    }
+
+    if (setErc20MaticFee) {
+      feeObj.erc20Matic.min = feeObj.matic.min
+      feeObj.erc20Matic.fee = feeObj.matic.fee
     }
   }
 
