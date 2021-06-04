@@ -3187,13 +3187,6 @@
     ]
   },
   {
-    "id": "RestoryMnemonicWallet_MnemonicPlaceholder",
-    "message": "Ingrese la frase guardada para restaurar la billetera",
-    "files": [
-      "src/front/shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.tsx"
-    ]
-  },
-  {
     "id": "RestoryMnemonicWallet_Ready",
     "message": "Listo",
     "files": [

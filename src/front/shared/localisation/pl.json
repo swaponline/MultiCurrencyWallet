@@ -3180,13 +3180,6 @@
     ]
   },
   {
-    "id": "RestoryMnemonicWallet_MnemonicPlaceholder",
-    "message": "Wpisz zapisaną frazę aby przywrócić portfel",
-    "files": [
-      "src/front/shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.tsx"
-    ]
-  },
-  {
     "id": "RestoryMnemonicWallet_Ready",
     "message": "Gotowe",
     "files": [

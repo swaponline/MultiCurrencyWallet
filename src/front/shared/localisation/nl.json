@@ -3162,13 +3162,6 @@
     ]
   },
   {
-    "id": "RestoryMnemonicWallet_MnemonicPlaceholder",
-    "message": "Enter the saved phrase to restore the wallet",
-    "files": [
-      "src/front/shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.tsx"
-    ]
-  },
-  {
     "id": "RestoryMnemonicWallet_Ready",
     "message": "Gereed",
     "files": [

@@ -3272,13 +3272,6 @@
     ]
   },
   {
-    "id": "RestoryMnemonicWallet_MnemonicPlaceholder",
-    "message": "Введите сохраненную фразу, для восстановления кошелька",
-    "files": [
-      "src/front/shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.tsx"
-    ]
-  },
-  {
     "id": "RestoryMnemonicWallet_Ready",
     "message": "Готово",
     "files": [

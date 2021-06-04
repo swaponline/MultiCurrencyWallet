@@ -31,10 +31,6 @@ const langLabels = defineMessages({
     id: `${langPrefix}_MnemonicField`,
     defaultMessage: `Секретная фраза (12 слов):`,
   },
-  mnemonicPlaceholder: {
-    id: `${langPrefix}_MnemonicPlaceholder`,
-    defaultMessage: `Введите сохраненную фразу, для восстановления кошелька`,
-  },
   readyNotice: {
     id: `${langPrefix}_ReadyNotice`,
     defaultMessage: `Теперь вы можете добавить BTC, ETH и другие валюты`,
@@ -87,10 +83,16 @@ type RestoryMnemonicWalletState = {
 
 @connect(
   ({
-    user: { btcData, btcMultisigSMSData, btcMultisigUserData, ethData, ghostData, nextData },
+    user: {
+      btcData,
+      btcMultisigSMSData,
+      btcMultisigUserData,
+      ethData,
+      ghostData, 
+      nextData,
+    },
   }) => ({
     allCurrensies: [
-      btcData,
       btcData,
       btcMultisigSMSData,
       btcMultisigUserData,
@@ -102,10 +104,6 @@ type RestoryMnemonicWalletState = {
 )
 @cssModules({ ...defaultStyles, ...styles }, { allowMultiple: true })
 class RestoryMnemonicWallet extends React.Component<RestoryMnemonicWalletProps, RestoryMnemonicWalletState> {
-
-  props: RestoryMnemonicWalletProps
-  state: RestoryMnemonicWalletState
-
   constructor(props) {
     super(props)
 
@@ -229,6 +227,7 @@ class RestoryMnemonicWallet extends React.Component<RestoryMnemonicWalletProps, 
 
       await actions.bnb.login(false, mnemonic)
       await actions.eth.login(false, mnemonic)
+      await actions.matic.login(false, mnemonic)
       await actions.ghost.login(false, mnemonic)
       await actions.next.login(false, mnemonic)
       await actions.user.sign_btc_2fa(btcPrivKey)
@@ -236,6 +235,7 @@ class RestoryMnemonicWallet extends React.Component<RestoryMnemonicWalletProps, 
 
       actions.core.markCoinAsVisible('BNB', true)
       actions.core.markCoinAsVisible('ETH', true)
+      actions.core.markCoinAsVisible('MATIC', true)
       actions.core.markCoinAsVisible('BTC', true)
 
       this.setState({

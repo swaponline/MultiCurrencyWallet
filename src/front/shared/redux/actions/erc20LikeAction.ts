@@ -570,7 +570,7 @@ export default {
     explorerLink: externalConfig.link.etherscan,
     explorerApiKey: externalConfig.api.etherscan_ApiKey,
     adminFeeObj: externalConfig.opts?.fee?.erc20,
-    web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.provider)),
+    web3: new Web3( new Web3.providers.HttpProvider(externalConfig.web3.provider) ),
   }),
   bep20: new Erc20LikeAction({
     currency: 'BNB',
@@ -579,7 +579,7 @@ export default {
     explorerLink: externalConfig.link.bscscan,
     explorerApiKey: externalConfig.api.bscscan_ApiKey,
     adminFeeObj: externalConfig.opts?.fee?.bep20,
-    web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.binance_provider)),
+    web3: new Web3( new Web3.providers.HttpProvider(externalConfig.web3.binance_provider) ),
   }),
   erc20matic: new Erc20LikeAction({
     currency: 'MATIC',
@@ -588,6 +588,6 @@ export default {
     explorerLink: externalConfig.link.maticscan,
     explorerApiKey: '',
     adminFeeObj: externalConfig.opts?.fee?.erc20matic,
-    web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.matic_provider)),
+    web3: new Web3( new Web3.providers.HttpProvider(externalConfig.web3.matic_provider) ),
   })
 }
