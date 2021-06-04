@@ -19,11 +19,10 @@ export {
   GhostSwap,
   NextSwap,
 
-
-  EthLikeSwap,
-  EthLikeTokenSwap,
-
   EthTokenSwap,
   BscTokenSwap,
   MaticTokenSwap,
+
+  EthLikeSwap,
+  EthLikeTokenSwap,
 }
