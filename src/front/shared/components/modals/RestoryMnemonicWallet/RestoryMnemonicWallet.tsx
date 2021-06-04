@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react'
-import helpers, { constants } from 'helpers'
+import { constants } from 'helpers'
 import actions from 'redux/actions'
-import { connect } from 'redaction'
 import config from 'app-config'
 
 import cssModules from 'react-css-modules'
@@ -57,99 +56,39 @@ const langLabels = defineMessages({
   },
 })
 
-type RestoryMnemonicWalletProps = {
+type ComponentProps = {
   name: string
   onClose: () => void
-  intl: { [key: string]: any }
-  allCurrensies: { [key: string]: any }[]
+  intl: IUniversalObj
 
   data: {
-    btcBalance: number
     onClose: () => void
     noRedirect?: boolean
   }
 }
 
-type RestoryMnemonicWalletState = {
+type ComponentState = {
   mnemonic: string
   step: string
   mnemonicIsInvalid: boolean
   isFetching: boolean
-  data: {
-    btcBalance: number
-    usdBalance: number
-  }
 }
 
-@connect(
-  ({
-    user: {
-      btcData,
-      btcMultisigSMSData,
-      btcMultisigUserData,
-      ethData,
-      ghostData, 
-      nextData,
-    },
-  }) => ({
-    allCurrensies: [
-      btcData,
-      btcMultisigSMSData,
-      btcMultisigUserData,
-      ethData,
-      ghostData,
-      nextData,
-    ],
-  })
-)
 @cssModules({ ...defaultStyles, ...styles }, { allowMultiple: true })
-class RestoryMnemonicWallet extends React.Component<RestoryMnemonicWalletProps, RestoryMnemonicWalletState> {
+class RestoryMnemonicWallet extends React.Component<ComponentProps, ComponentState> {
   constructor(props) {
     super(props)
-
-    const { data } = props
 
     this.state = {
       step: `enter`,
       mnemonic: '',
       mnemonicIsInvalid: false,
       isFetching: false,
-      data: {
-        btcBalance: data ? data.btcBalance : 0,
-        usdBalance: data ? data.usdBalance : 0,
-      },
     }
   }
 
   componentDidMount() {
-    this.fetchData()
     feedback.restore.started()
-  }
-
-  fetchData = async () => {
-    const { allCurrensies } = this.props
-
-    const { btcBalance, usdBalance } = allCurrensies.reduce(
-      (acc, curr) => {
-        const { name, infoAboutCurrency, balance } = curr
-        if (
-          //@ts-ignore
-          (!isWidgetBuild || widgetCurrencies.includes(name)) &&
-          infoAboutCurrency &&
-          balance !== 0
-        ) {
-          acc.btcBalance += balance * infoAboutCurrency.price_btc
-          acc.usdBalance +=
-            balance * (infoAboutCurrency.price_fiat ? infoAboutCurrency.price_fiat : 1)
-        }
-        return acc
-      },
-      { btcBalance: 0, usdBalance: 0 }
-    )
-
-    this.setState((data) => ({
-      data: { btcBalance, usdBalance, ...data },
-    }))
   }
 
   handleClose = () => {
@@ -161,10 +100,8 @@ class RestoryMnemonicWallet extends React.Component<RestoryMnemonicWalletProps, 
 
     if (data && typeof data.onClose === 'function') {
       data.onClose()
-    } else {
-      if (!(data && data.noRedirect)) {
-        window.location.assign(links.hashHome)
-      }
+    } else if (!(data && data.noRedirect)) {
+      window.location.assign(links.hashHome)
     }
 
     actions.modals.close(name)
@@ -192,12 +129,11 @@ class RestoryMnemonicWallet extends React.Component<RestoryMnemonicWalletProps, 
       return
     }
 
-    this.setState(
-      {
-        isFetching: true,
-      },
-      () => this.restoreWallet(mnemonic)
-    )
+    this.setState(() => ({
+      isFetching: true,
+    }), () => {
+      this.restoreWallet(mnemonic)
+    })
   }
 
   restoreWallet = (mnemonic) => {
@@ -261,8 +197,6 @@ class RestoryMnemonicWallet extends React.Component<RestoryMnemonicWalletProps, 
       mnemonic,
       mnemonicIsInvalid,
       isFetching,
-
-      data: { btcBalance = 0, usdBalance = 1 },
     } = this.state
 
     return (
@@ -287,24 +221,20 @@ class RestoryMnemonicWallet extends React.Component<RestoryMnemonicWalletProps, 
                     <FormattedMessage {...langLabels.mnemonicLabel} />
                     &nbsp;
                     <Tooltip id="ImportKeys_RestoreMnemonic_tooltip">
-                      <span>
+                      <>
                         <FormattedMessage
                           id="ImportKeys_RestoreMnemonic_Tooltip"
                           defaultMessage="12-word backup phrase"
                         />
-                        {(btcBalance > 0 || usdBalance > 0) && (
-                          <React.Fragment>
-                            <br />
-                            <br />
-                            <div styleName="alertTooltipWrapper">
-                              <FormattedMessage
-                                id="ImportKeys_RestoreMnemonic_Tooltip_withBalance"
-                                defaultMessage="Please, be causious!"
-                              />
-                            </div>
-                          </React.Fragment>
-                        )}
-                      </span>
+                        <br />
+                        <br />
+                        <div styleName="alertTooltipWrapper">
+                          <FormattedMessage
+                            id="ImportKeys_RestoreMnemonic_Tooltip_withBalance"
+                            defaultMessage="Please, be causious!"
+                          />
+                        </div>
+                      </>
                     </Tooltip>
                   </span>
                 </FieldLabel>
