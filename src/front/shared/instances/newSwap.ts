@@ -46,6 +46,11 @@ import {
   BTC2BNB,
   BSCTOKEN2BTC,
   BTC2BSCTOKEN,
+
+  MATIC2BTC,
+  BTC2MATIC,
+  MATICTOKEN2BTC,
+  BTC2MATICTOKEN,
 } from 'swap.flows'
 import {
   BtcSwap,
@@ -311,6 +316,10 @@ const createSwapApp = async () => {
 
         BNB2BTC,
         BTC2BNB,
+
+        MATIC2BTC,
+        BTC2MATIC,
+
         // GHOST2BTC,
         // BTC2GHOST,
 
@@ -327,6 +336,12 @@ const createSwapApp = async () => {
           .map(key => BSCTOKEN2BTC(key)),
         ...(Object.keys(config.bep20))
           .map(key => BTC2BSCTOKEN(key)),
+
+          ...(Object.keys(config.erc20matic))
+          .map(key => MATICTOKEN2BTC(key)),
+        ...(Object.keys(config.erc20matic))
+          .map(key => BTC2MATICTOKEN(key)),
+
         ...(Object.keys(config.erc20))
           .map(key => ETHTOKEN2BTC(key)),
 
