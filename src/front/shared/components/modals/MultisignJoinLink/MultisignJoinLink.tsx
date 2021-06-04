@@ -29,14 +29,6 @@ const langLabels = defineMessages({
     id: 'multiSignJoinLink',
     defaultMessage: `Создание BTC-Multisign кошелька`,
   },
-  multiSignJoinLinkCopied: {
-    id: 'multiSignJoinLinkCopied',
-    defaultMessage: `Ready. Link copied to clipboard`,
-  },
-  multiSignJoinLinkCopy: {
-    id: 'multiSignJoinLinkCopy',
-    defaultMessage: `Copy to clipboard`,
-  },
   needSaveMnemonicToContinue: {
     id: 'multiSignJoinLink_YouNeedSaveMnemonic',
     defaultMessage: `Для активации btc-multisig вы должны сохранить 12 слов.`,
