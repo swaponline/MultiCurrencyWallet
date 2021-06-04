@@ -3,18 +3,25 @@ import config from 'app-config'
 import {
   UTXO_to_ERC20,
   UTXO_to_BEP20,
+  UTXO_to_ERC20MATIC,
   ERC20_to_UTXO,
   BEP20_to_UTXO,
+  ERC20MATIC_to_UTXO,
+
   UTXO_to_ETH,
-  ETH_to_UTXO,
   UTXO_to_BNB,
+  UTXO_to_MATIC,
+  ETH_to_UTXO,
   BNB_to_UTXO,
+  MATIC_to_UTXO
 } from './build'
 
 
 const swapComponents = {}
 swapComponents[`BTC2BNB`] = UTXO_to_BNB(`btc`)
 swapComponents[`BNB2BTC`] = BNB_to_UTXO(`btc`)
+swapComponents[`BTC2MATIC`] = UTXO_to_MATIC(`btc`)
+swapComponents[`MATIC2BTC`] = MATIC_to_UTXO(`btc`)
 
 Object.keys(config.swapConfig).forEach(coin => {
   swapComponents[`${coin.toUpperCase()}2ETH`] = UTXO_to_ETH(coin)
@@ -30,7 +37,11 @@ Object.keys(config.bep20).forEach(tokenName => {
   swapComponents[`{BNB}${tokenName.toUpperCase()}2BTC`] = BEP20_to_UTXO(`BTC`)
   swapComponents[`BTC2{BNB}${tokenName.toUpperCase()}`] = UTXO_to_BEP20(`BTC`)
 })
-  
+Object.keys(config.erc20Matic).forEach(tokenName => {
+  swapComponents[`{MATIC}${tokenName.toUpperCase()}2BTC`] = ERC20MATIC_to_UTXO(`BTC`)
+  swapComponents[`BTC2{MATIC}${tokenName.toUpperCase()}`] = UTXO_to_ERC20MATIC(`BTC`)
+})
+
 window.swapComponents = swapComponents
 export {
   swapComponents,
