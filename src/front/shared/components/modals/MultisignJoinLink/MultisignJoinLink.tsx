@@ -96,15 +96,14 @@ class MultisignJoinLink extends React.Component<any, any> {
     } = this.props
 
     const publicKey = btcData.publicKey.toString('Hex')
-
-    const linkAction = (action) ? action : `join`
+    const linkAction = action || `join`
 
     //@ts-ignore: strictNullChecks
     const joinLink = `${getFullOrigin()}${links.multisign}/btc/${linkAction}/${publicKey}/${SwapApp.shared().services.room.peer}`
 
-    this.setState({
+    this.setState(() => ({
       joinLink,
-    })
+    }))
   }
 
   handleBeginSaveMnemonic = async () => {
