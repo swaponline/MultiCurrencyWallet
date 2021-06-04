@@ -140,6 +140,7 @@ const createSwapApp = async () => {
           // TODO need init swapApp only after private keys created!!!!!!!!!!!!!!!!!!!
           eth: localStorage.getItem(privateKeys.privateKeyNames.eth),
           bnb: localStorage.getItem(privateKeys.privateKeyNames.eth), // for ab like blockchain use eth private key
+          matic: localStorage.getItem(privateKeys.privateKeyNames.eth), // for ab like blockchain use eth private key
           btc: localStorage.getItem(privateKeys.privateKeyNames.btc),
           ghost: localStorage.getItem(privateKeys.privateKeyNames.ghost),
           next: localStorage.getItem(privateKeys.privateKeyNames.next),
