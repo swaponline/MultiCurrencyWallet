@@ -2,11 +2,13 @@ export const COIN_TYPE = Object.freeze({
   NATIVE: 'NATIVE',
   ETH_TOKEN: 'ETH_TOKEN',
   BNB_TOKEN: 'BNB_TOKEN',
+  MATIC_TOKEN: 'MATIC_TOKEN',
 })
 
 export const TOKEN_STANDARD = Object.freeze({
   ERC20: 'ERC20',
   BEP20: 'BEP20',
+  ERC20MATIC: 'ERC20MATIC'
 })
 
 export const BLOCKCHAIN = Object.freeze({
@@ -21,6 +23,7 @@ export const BLOCKCHAIN = Object.freeze({
 export const BASE_TOKEN_CURRENCY = Object.freeze({
   ETH: 'ETH',
   BNB: 'BNB',
+  MATIC: 'MATIC'
 })
 
 export const COIN_MODEL = Object.freeze({
