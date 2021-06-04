@@ -31,13 +31,13 @@ const isWidgetBuild = config && config.isWidget
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 @connect(({
-  user: { ethData, bnbData, btcData, ghostData, nextData, tokensData, activeFiat },
+  user: { ethData, bnbData, maticData, btcData, ghostData, nextData, tokensData, activeFiat },
   pubsubRoom: { peer },
   rememberedOrders,
 }) => ({
   activeFiat,
-  items: [ethData, bnbData, btcData, ghostData, nextData],
-  currenciesData: [ethData, btcData, ghostData, nextData],
+  items: [ethData, bnbData, maticData, btcData, ghostData, nextData],
+  currenciesData: [ethData, bnbData, maticData, btcData, ghostData, nextData],
   tokensData: [...Object.keys(tokensData).map(k => (tokensData[k]))],
   savedOrders: rememberedOrders.savedOrders,
   peer,
