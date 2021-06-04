@@ -309,6 +309,19 @@ class SwapApp extends EventEmitter {
     return this.services.auth.accounts.bnb.address // @to-do - add metamask support
   }
 
+  getMaticWeb3Adapter() {
+    return this.env.getWeb3Matic().eth
+  }
+
+  getMaticWeb3Utils() {
+    return this.env.getWeb3Matic().utils
+  }
+
+  getMyMaticAddress() {
+    //@ts-ignore: strictNullChecks
+    return this.services.auth.accounts.matic.address // @to-do - add metamask support
+  }
+
   getParticipantEthAddress(swap) {
     const { participant, participantMetamaskAddress } = swap
     return participantMetamaskAddress ? participantMetamaskAddress : participant.eth.address
@@ -317,6 +330,11 @@ class SwapApp extends EventEmitter {
   getParticipantBnbAddress(swap) {
     const { participant, participantMetamaskAddress } = swap
     return participant.bnb.address // @to-do - add metamask support
+  }
+
+  getParticipantMaticAddress(swap) {
+    const { participant, participantMetamaskAddress } = swap
+    return participant.matic.address // @to-do - add metamask support
   }
 
   static is(app) {

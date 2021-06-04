@@ -81,6 +81,7 @@ const createSwapApp = async () => {
       : await getWeb3()
 
     const web3bnb = actions.bnb.getWeb3()
+    const web3Matic = actions.matic.getWeb3()
 
     const NETWORK = process.env.MAINNET ? `MAINNET` : `TESTNET`
 
@@ -92,6 +93,8 @@ const createSwapApp = async () => {
         getWeb3,
         web3bnb,
         getWeb3Bnb: actions.bnb.getWeb3,
+        web3Matic,
+        getWeb3Matic: actions.matic.getWeb3,
         bitcoin,
         ghost,
         next,
