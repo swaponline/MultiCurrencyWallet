@@ -15,6 +15,7 @@ const swap = (config && config.isWidget) ?
   [
     ...(!config.opts.curEnabled || (config.opts.curEnabled.eth && config.opts.curEnabled.btc)) ? ['ETH-BTC'] : [],
     ...(!config.opts.curEnabled || (config.opts.curEnabled.bnb && config.opts.curEnabled.bnb)) ? ['BNB-BTC'] : [],
+    ...(!config.opts.curEnabled || (config.opts.curEnabled.bnb && config.opts.curEnabled.bnb)) ? ['MATIC-BTC'] : [],
     ...(!config.opts.curEnabled || (config.opts.curEnabled.eth && config.opts.curEnabled.ghost)) ? ['ETH-GHOST'] : [],
     ...(!config.opts.curEnabled || (config.opts.curEnabled.eth && config.opts.curEnabled.next)) ? ['ETH-NEXT'] : [],
   ]
@@ -29,7 +30,11 @@ Object.keys(config.bep20)
   .forEach(key => {
     swap.push(`{BNB}${key.toUpperCase()}-BTC`)
   })
-  
+
+Object.keys(config.erc20Matic)
+  .forEach(key => {
+    swap.push(`{MATIC}${key.toUpperCase()}-BTC`)
+  })
 
 if (config?.isWidget) {
   swap.length = 0

@@ -144,9 +144,12 @@ export const BNB_TOKENS = {
   btcb: 'BTCB',
 }
 
+export const MATIC_TOKENS = {
+  wbtc: 'WBTC',
+}
+
 export const ETH_TOKENS = {
   usdt: 'USDT',
-  btcb: 'BTCB',
   eurs: 'EURS',
   swap: 'SWAP',
   pay: 'PAY',
@@ -167,5 +170,6 @@ export default {
   ...NATIVE,
   ...ETH_TOKENS,
   ...BNB_TOKENS,
+  ...MATIC_TOKENS,
   ...COIN_DATA,
 }
