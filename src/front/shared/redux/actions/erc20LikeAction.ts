@@ -580,5 +580,14 @@ export default {
     explorerApiKey: externalConfig.api.bscscan_ApiKey,
     adminFeeObj: externalConfig.opts?.fee?.bep20,
     web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.binance_provider)),
+  }),
+  erc20Matic: new Erc20LikeAction({
+    currency: 'MATIC',
+    standard: 'erc20Matic',
+    explorerName: 'explorer-mumbai',
+    explorerLink: externalConfig.link.maticscan,
+    explorerApiKey: '',
+    adminFeeObj: externalConfig.opts?.fee?.erc20Matic,
+    web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.matic_provider)),
   })
 }
