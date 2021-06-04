@@ -2595,20 +2595,6 @@
     ]
   },
   {
-    "id": "multiSignJoinLinkCopied",
-    "message": "Listo. Enlace copiado al portapapeles",
-    "files": [
-      "src/front/shared/components/modals/MultisignJoinLink/MultisignJoinLink.tsx"
-    ]
-  },
-  {
-    "id": "multiSignJoinLinkCopy",
-    "message": "Copiar al portapapeles",
-    "files": [
-      "src/front/shared/components/modals/MultisignJoinLink/MultisignJoinLink.tsx"
-    ]
-  },
-  {
     "id": "createWallet_customERC20",
     "message": "Token personalizado",
     "files": [

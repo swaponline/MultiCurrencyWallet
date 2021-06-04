@@ -2701,20 +2701,6 @@
     ]
   },
   {
-    "id": "multiSignJoinLinkCopied",
-    "message": "Ready. Link copied to clipboard",
-    "files": [
-      "src/front/shared/components/modals/MultisignJoinLink/MultisignJoinLink.tsx"
-    ]
-  },
-  {
-    "id": "multiSignJoinLinkCopy",
-    "message": "Copy to clipboard",
-    "files": [
-      "src/front/shared/components/modals/MultisignJoinLink/MultisignJoinLink.tsx"
-    ]
-  },
-  {
     "id": "createWallet_customERC20",
     "message": "Custom token",
     "files": [
