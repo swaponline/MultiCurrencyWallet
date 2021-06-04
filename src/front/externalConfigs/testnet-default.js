@@ -92,7 +92,7 @@ window.buildOptions = {
     btc: true,
     eth: true,
     bnb: true,
-    matic: false,
+    matic: true,
     ghost: false,
     next: false,
   },
