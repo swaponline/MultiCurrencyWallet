@@ -71,17 +71,17 @@ class ethLikeHelper {
 export default {
   eth: new ethLikeHelper({
     currency: 'ETH',
-    defaultParams: DEFAULT_CURRENCY_PARAMETERS.eth,
+    defaultParams: DEFAULT_CURRENCY_PARAMETERS.evmLike,
     feeRatesLink: config.feeRates.eth,
   }),
   bnb: new ethLikeHelper({
     currency: 'BNB',
-    defaultParams: DEFAULT_CURRENCY_PARAMETERS.bnb,
+    defaultParams: DEFAULT_CURRENCY_PARAMETERS.evmLike,
     feeRatesLink: config.feeRates.bsc,
   }),
   matic: new ethLikeHelper({
     currency: 'MATIC',
-    defaultParams: DEFAULT_CURRENCY_PARAMETERS.matic,
+    defaultParams: DEFAULT_CURRENCY_PARAMETERS.evmLike,
     feeRatesLink: config.feeRates.matic,
   }),
 }

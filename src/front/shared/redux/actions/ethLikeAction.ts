@@ -402,8 +402,8 @@ class EthLikeAction {
     gasLimit =
       gasLimit ||
       (recipientIsContract
-        ? DEFAULT_CURRENCY_PARAMETERS[this.tickerKey].limit.contractInteract
-        : DEFAULT_CURRENCY_PARAMETERS[this.tickerKey].limit.send)
+        ? DEFAULT_CURRENCY_PARAMETERS.evmLike.limit.contractInteract
+        : DEFAULT_CURRENCY_PARAMETERS.evmLike.limit.send)
 
     let sendMethod = this.Web3.eth.sendTransaction
     let txObject = {

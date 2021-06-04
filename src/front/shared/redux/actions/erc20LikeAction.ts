@@ -343,7 +343,7 @@ class Erc20LikeAction {
   fetchFees = async (params) => {
     const { gasPrice, gasLimit, speed } = params
     const newGasPrice = gasPrice || await ethLikeHelper[this.currencyKey].estimateGasPrice({ speed })
-    const newGasLimit = gasLimit || DEFAULT_CURRENCY_PARAMETERS.ethLike.limit.send
+    const newGasLimit = gasLimit || DEFAULT_CURRENCY_PARAMETERS.ethLikeToken.limit.send
 
     return {
       gas: newGasLimit,

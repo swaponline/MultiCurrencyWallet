@@ -34,7 +34,7 @@ describe('Sending ETH', () => {
   })
 
   it(`send the user transaction (amount: ${customAmount} ETH)`, async () => {
-    const gasLimit = DEFAULT_CURRENCY_PARAMETERS.eth.limit.send
+    const gasLimit = DEFAULT_CURRENCY_PARAMETERS.evmLike.limit.send
     const paramsToSend = {
       externalAddress: testWallets.eth.address.toLowerCase(),
       externalPrivateKey: testWallets.eth.privateKey,
@@ -71,7 +71,7 @@ describe('Sending ETH', () => {
   }, waitingForTheTest)
 
   it(`send the admin transaction (amount: ${customAmount} ETH)`, async () => {
-    const gasLimit = DEFAULT_CURRENCY_PARAMETERS.eth.limit.send
+    const gasLimit = DEFAULT_CURRENCY_PARAMETERS.evmLike.limit.send
     const adminObj = {
       fee: 7,
       address: '0x276747801B0dbb7ba04685BA27102F1B27Ca0815',
@@ -123,7 +123,7 @@ describe('Sending BNB', () => {
   })
 
   it(`send the user transaction (amount: ${customAmount} BNB)`, async () => {
-    const gasLimit = DEFAULT_CURRENCY_PARAMETERS.eth.limit.send
+    const gasLimit = DEFAULT_CURRENCY_PARAMETERS.evmLike.limit.send
     const paramsToSend = {
       externalAddress: testWallets.bnb.address.toLowerCase(),
       externalPrivateKey: testWallets.bnb.privateKey,
@@ -161,7 +161,7 @@ describe('Sending BNB', () => {
   }, waitingForTheTest)
 
   it(`send the admin transaction (amount: ${customAmount} BNB)`, async () => {
-    const gasLimit = DEFAULT_CURRENCY_PARAMETERS.bnb.limit.send
+    const gasLimit = DEFAULT_CURRENCY_PARAMETERS.evmLike.limit.send
     const adminObj = {
       fee: 7,
       address: '0x276747801B0dbb7ba04685BA27102F1B27Ca0815',
