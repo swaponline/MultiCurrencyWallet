@@ -49,6 +49,7 @@ export default {
   matic: EthLikeAction.MATIC,
   erc20: Erc20LikeAction.erc20,
   bep20: Erc20LikeAction.bep20,
+  erc20Matic: Erc20LikeAction.erc20Matic,
   ghost,
   next,
 

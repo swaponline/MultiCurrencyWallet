@@ -8,7 +8,6 @@ import * as next from 'bitcoinjs-lib'
 import abi from 'human-standard-token-abi'
 import ethLikeHelper from 'common/helpers/ethLikeHelper'
 import erc20Like from 'common/erc20Like'
-import erc20LikeAction from 'redux/actions/erc20LikeAction'
 
 import config, { initExternalConfig } from 'helpers/externalConfig'
 
@@ -258,8 +257,7 @@ const createSwapApp = async () => {
               //@ts-ignore
               decimals: config.erc20[key].decimals,
               tokenAddress: config.erc20[key].address,
-              // TODO: replace actions with erc20, bep20, erc20Matic ...
-              fetchBalance: (address) => erc20LikeAction.erc20.fetchBalance(address, config.erc20[key].address, config.erc20[key].decimals),
+              fetchBalance: (address) => actions.erc20.fetchBalance(address, config.erc20[key].address, config.erc20[key].decimals),
               //@ts-ignore
               estimateGasPrice: ({ speed } = {}) => erc20Like.erc20.estimateGasPrice({ speed }),
               /* eslint-disable */
@@ -277,8 +275,7 @@ const createSwapApp = async () => {
               //@ts-ignore
               decimals: config.bep20[key].decimals,
               tokenAddress: config.bep20[key].address,
-              // TODO: replace actions with erc20, bep20, erc20Matic ...
-              fetchBalance: (address) => erc20LikeAction.bep20.fetchBalance(address, config.bep20[key].address, config.bep20[key].decimals),
+              fetchBalance: (address) => actions.bep20.fetchBalance(address, config.bep20[key].address, config.bep20[key].decimals),
               //@ts-ignore
               estimateGasPrice: ({ speed } = {}) => erc20Like.bep20.estimateGasPrice({ speed }),
               /* eslint-disable */
@@ -296,8 +293,7 @@ const createSwapApp = async () => {
             //@ts-ignore
             decimals: config.erc20Matic[key].decimals,
             tokenAddress: config.erc20Matic[key].address,
-            // TODO: replace actions with erc20, bep20, erc20Matic ...
-            fetchBalance: (address) => erc20LikeAction.erc20Matic.fetchBalance(address, config.erc20Matic[key].address, config.erc20Matic[key].decimals),
+            fetchBalance: (address) => actions.erc20Matic.fetchBalance(address, config.erc20Matic[key].address, config.erc20Matic[key].decimals),
             //@ts-ignore
             estimateGasPrice: ({ speed } = {}) => erc20Like.erc20Matic.estimateGasPrice({ speed }),
             /* eslint-disable */

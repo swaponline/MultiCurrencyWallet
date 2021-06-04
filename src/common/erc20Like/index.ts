@@ -10,7 +10,7 @@ import getCoinInfo from 'common/coins/getCoinInfo'
 
 
 class erc20LikeHelper {
-  readonly standard: string // (ex. erc20, bep20, ...)
+  readonly standard: string // (ex. erc20, bep20, erc20Matic, ...)
   readonly currency: string // (ex. ETH)
   readonly currencyKey: string // (ex. eth)
   readonly defaultParams: IUniversalObj
@@ -134,5 +134,11 @@ export default {
     currency: 'BNB',
     defaultParams: DEFAULT_CURRENCY_PARAMETERS.ethToken,
     web3: new Web3(new Web3.providers.HttpProvider(config.web3.binance_provider)),
+  }),
+  erc20Matic: new erc20LikeHelper({
+    standard: 'erc20Matic',
+    currency: 'MATIC',
+    defaultParams: DEFAULT_CURRENCY_PARAMETERS.ethToken,
+    web3: new Web3(new Web3.providers.HttpProvider(config.web3.matic_provider)),
   }),
 }
