@@ -237,7 +237,6 @@ const CreateWallet = (props) => {
         case 'sms':
           if (currencies.BTC) {
             if (!actions.btcmultisig.checkSMSActivated()) {
-              //@ts-ignore: strictNullChecks
               actions.modals.open(constants.modals.RegisterSMSProtected, {
                 callback: () => {
                   actions.core.markCoinAsVisible('BTC (SMS-Protected)', true)
@@ -246,7 +245,7 @@ const CreateWallet = (props) => {
               })
               return
             }
-            //@ts-ignore: strictNullChecks
+
             actions.modals.open(constants.modals.Confirm, {
               title: (
                 <FormattedMessage
@@ -263,7 +262,6 @@ const CreateWallet = (props) => {
               labelYes: <FormattedMessage id="ConfirmActivateSMS_Yes" defaultMessage="Да" />,
               labelNo: <FormattedMessage id="ConfirmActivateSMS_No" defaultMessage="Нет" />,
               onAccept: () => {
-                //@ts-ignore: strictNullChecks
                 actions.modals.open(constants.modals.RegisterSMSProtected, {
                   callback: () => {
                     actions.core.markCoinAsVisible('BTC (SMS-Protected)', true)
@@ -282,7 +280,6 @@ const CreateWallet = (props) => {
         case 'pin':
           if (currencies.BTC) {
             if (!actions.btcmultisig.checkPINActivated()) {
-              //@ts-ignore: strictNullChecks
               actions.modals.open(constants.modals.RegisterPINProtected, {
                 callback: () => {
                   actions.core.markCoinAsVisible('BTC (PIN-Protected)', true)
@@ -291,7 +288,7 @@ const CreateWallet = (props) => {
               })
               return
             }
-            //@ts-ignore: strictNullChecks
+
             actions.modals.open(constants.modals.Confirm, {
               title: (
                 <FormattedMessage
@@ -308,7 +305,6 @@ const CreateWallet = (props) => {
               labelYes: <FormattedMessage id="ConfirmActivatePIN_Yes" defaultMessage="Да" />,
               labelNo: <FormattedMessage id="ConfirmActivatePIN_No" defaultMessage="Нет" />,
               onAccept: () => {
-                //@ts-ignore: strictNullChecks
                 actions.modals.open(constants.modals.RegisterPINProtected, {
                   callback: () => {
                     actions.core.markCoinAsVisible('BTC (PIN-Protected)', true)
@@ -326,7 +322,6 @@ const CreateWallet = (props) => {
           break
         case 'multisignature':
           if (currencies.BTC) {
-            //@ts-ignore: strictNullChecks
             actions.modals.open(constants.modals.MultisignJoinLink, {
               callback: () => {
                 actions.core.markCoinAsVisible('BTC (Multisig)', true)
@@ -363,22 +358,14 @@ const CreateWallet = (props) => {
 
   return (
     <div styleName={`wrapper ${isDark ? '--dark' : ''}`}>
-      {
+      {userWallets.length && !localStorage.getItem(constants.localStorage.wasOnWallet) && (
         //@ts-ignore
-        userWallets.length && !localStorage.getItem(constants.wasOnWallet) ? (
-          <>
-            {/*
-            //@ts-ignore */}
-            <CloseIcon
-              styleName="closeButton"
-              onClick={goHome}
-              data-testid="modalCloseIcon"
-            />
-          </>
-        ) : (
-          ''
-        )
-      }
+        <CloseIcon
+          styleName="closeButton"
+          onClick={goHome}
+          data-testid="modalCloseIcon"
+        />
+      )}
 
       <div styleName={isMobile ? 'mobileFormBody' : 'formBody'}>
         <h2>

@@ -108,7 +108,6 @@ class MultisignJoinLink extends React.Component<any, any> {
   }
 
   handleBeginSaveMnemonic = async () => {
-    //@ts-ignore: strictNullChecks
     actions.modals.open(constants.modals.SaveMnemonicModal, {
       onClose: () => {
         const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
