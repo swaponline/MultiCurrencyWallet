@@ -358,7 +358,7 @@ const CreateWallet = (props) => {
 
   return (
     <div styleName={`wrapper ${isDark ? '--dark' : ''}`}>
-      {userWallets.length && !localStorage.getItem(constants.localStorage.wasOnWallet) && (
+      {userWallets.length && (
         //@ts-ignore
         <CloseIcon
           styleName="closeButton"
