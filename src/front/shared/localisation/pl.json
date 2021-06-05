@@ -924,7 +924,7 @@
   },
   {
     "id": "Withdrow170",
-    "message": "Maksymalna kwota, jaką możesz wysłać to {allowedCriptoBalance} {currency}",
+    "message": "Maksymalna kwota, jaką możesz wysłać to {allowedBalance} {currency}",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
