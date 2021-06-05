@@ -281,14 +281,6 @@ class SwapApp extends EventEmitter {
     return true
   }
 
-  getEthWeb3Adapter() {
-    return this.env.getWeb3().eth
-  }
-
-  getEthWeb3Utils() {
-    return this.env.getWeb3().utils
-  }
-
   getEvmLikeAddress(coinType) {
     return this.env.metamask && this.env.metamask.isEnabled() && this.env.metamask.isConnected()
       ? this.env.metamask.getAddress()
@@ -301,7 +293,20 @@ class SwapApp extends EventEmitter {
   getMyBnbAddress() { return this.getEvmLikeAddress(`bnb`) }
   getMyMaticAddress() { return this.getEvmLikeAddress(`matic`) }
 
+
+  getEthWeb3Adapter() {
+    return this.env.getWeb3().eth
+  }
+
+  getEthWeb3Utils() {
+    return this.env.getWeb3().utils
+  }
+
   getBnbWeb3Adapter() {
+    // Если подключен метамаск - безем конектор эфира - он автоматически переключается на метамаск при активации
+    if (this.env.metamask && this.env.metamask.isEnabled() && this.env.metamask.isConnected()) {
+      return this.env.getWeb3().eth
+    }
     return this.env.getWeb3Bnb().eth
   }
 
@@ -309,9 +314,11 @@ class SwapApp extends EventEmitter {
     return this.env.getWeb3Bnb().utils
   }
 
-
-
   getMaticWeb3Adapter() {
+    // Если подключен метамаск - безем конектор эфира - он автоматически переключается на метамаск при активации
+    if (this.env.metamask && this.env.metamask.isEnabled() && this.env.metamask.isConnected()) {
+      return this.env.getWeb3().eth
+    }
     return this.env.getWeb3Matic().eth
   }
 
