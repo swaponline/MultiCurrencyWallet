@@ -9,8 +9,7 @@ try {
   window.localStorage.setItem('test', 'test')
   window.localStorage.removeItem('test')
   isLocalStorageEnabled = true
-}
-catch (e) {
+} catch (e) {
   isLocalStorageEnabled = false
 }
 
@@ -23,12 +22,7 @@ const getPluginMethod = (name, data) => {
 
 const setItem = (key, value) => {
   if (isLocalStorageEnabled) {
-    const setItemPlugin = (
-      config
-      && config.opts
-      && config.opts.plugins
-      && config.opts.plugins.setItemPlugin
-    ) ? config.opts.plugins.setItemPlugin : false
+    const setItemPlugin = config?.opts?.plugins?.setItemPlugin || false
 
     if (setItemPlugin) {
       getPluginMethod(setItemPlugin, { key, value })
@@ -41,27 +35,26 @@ const setItem = (key, value) => {
 const getItem = (key) => {
   if (isLocalStorageEnabled) {
     const { localStorage } = window
-    const getItemPlugin = (
-      config
-      && config.opts
-      && config.opts.plugins
-      && config.opts.plugins.getItemPlugin
-    ) ? config.opts.plugins.getItemPlugin : false
+    const getItemPlugin = config?.opts?.plugins?.getItemPlugin || false
 
     if (getItemPlugin) {
       return getPluginMethod(getItemPlugin, { key })
     }
+
     const value = localStorage.getItem(key)
 
     try {
       //@ts-ignore: strictNullChecks
       return JSON.parse(value)
-    }
-    catch (err) {
-      console.log('localStorage.getItem: parse error')
+    } catch (err) {
+      console.group('helpers >%c localStorage', 'color: red;')
+      console.error('getItem parse error: ', err)
+      console.groupEnd()
+
       return value
     }
   }
+
   return undefined
 }
 

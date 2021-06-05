@@ -57,6 +57,8 @@ class Erc20LikeAction {
     )
     console.group(`Actions >%c ${this.standard}`, 'color: red;')
     console.error('error: ', error)
+    console.log('%c Stack trace', 'color: orange;')
+    console.trace()
     console.groupEnd()
   }
 
@@ -150,6 +152,7 @@ class Erc20LikeAction {
       return amount
     } catch (error) {
       console.error(error)
+
       reducers.user.setTokenBalanceError({
         baseCurrency: this.currencyKey,
         name,
@@ -164,6 +167,7 @@ class Erc20LikeAction {
       tokenName = tokenName.replace(/^\{[a-z]+\}/, '')
       const tokenKey = `{${this.currencyKey}}${tokenName.toLowerCase()}`
       const { address = ownAddress, contractAddress } = tokensData[tokenKey]
+
 
       const url = ''.concat(
         `?module=account&action=tokentx`,
@@ -382,6 +386,8 @@ class Erc20LikeAction {
       // TODO: use a standard key and delete this key
       isERC20: this.standard === 'erc20',
       standard: this.standard,
+      isToken: true,
+      blockchain: TOKEN_STANDARDS[this.standard].currency,
       baseCurrency: this.currencyKey,
       tokenKey: `{${this.currencyKey}}${nameContract.toLowerCase()}`,
     }
@@ -395,11 +401,13 @@ class Erc20LikeAction {
       }
     }
 
+
     reducers.user.setTokenAuthData({
       baseCurrency: this.currencyKey,
       name: data.name,
       data,
     })
+
   }
 
   send = async (params) => {
@@ -502,8 +510,7 @@ class Erc20LikeAction {
 
   setAllowance = async (params) => {
     let { name, to, targetAllowance } = params
-    name = name.toLowerCase()
-
+    name = this.getReduxName(name)
 
     const tokenKey = `{${this.currencyKey}}${name.toLowerCase()}`
     const { decimals } = this.returnTokenInfo(name)
@@ -529,22 +536,29 @@ class Erc20LikeAction {
   returnTokenInfo = (name) => {
     if (!name) throw new Error(`${this.standard} actions; returnTokenInfo(name): name is undefined`)
 
-    name = name.toLowerCase()
+    try {
+      const tokenKey = `{${this.currencyKey}}${name.toLowerCase()}`
+      const { user: { tokensData } } = getState()
+      const { address: ownerAddress } = tokensData[tokenKey]
+      const { address: contractAddress, decimals } = externalConfig[this.standard][name.toLowerCase()]
 
-    const tokenKey = `{${this.currencyKey}}${name.toLowerCase()}`
-    const { user: { tokensData } } = getState()
-    const { address: ownerAddress } = tokensData[tokenKey]
-    const { address: contractAddress, decimals } = externalConfig[this.standard][name]
+      const tokenContract = new this.Web3.eth.Contract(TokenAbi, contractAddress, {
+        from: ownerAddress,
+      })
 
-    const tokenContract = new this.Web3.eth.Contract(TokenAbi, contractAddress, {
-      from: ownerAddress,
-    })
-
-    return {
-      contractAddress,
-      tokenContract,
-      decimals,
+      return {
+        contractAddress,
+        tokenContract,
+        decimals,
+      }
+    } catch (error) {
+      this.reportError(error)
+      throw new Error(error)
     }
+  }
+
+  getReduxName = (name) => {
+    return `${this.standard.toLowerCase()}-${name.toLowerCase()}`
   }
 }
 

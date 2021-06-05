@@ -29,14 +29,6 @@ const langLabels = defineMessages({
     id: 'multiSignJoinLink',
     defaultMessage: `Создание BTC-Multisign кошелька`,
   },
-  multiSignJoinLinkCopied: {
-    id: 'multiSignJoinLinkCopied',
-    defaultMessage: `Ready. Link copied to clipboard`,
-  },
-  multiSignJoinLinkCopy: {
-    id: 'multiSignJoinLinkCopy',
-    defaultMessage: `Copy to clipboard`,
-  },
   needSaveMnemonicToContinue: {
     id: 'multiSignJoinLink_YouNeedSaveMnemonic',
     defaultMessage: `Для активации btc-multisig вы должны сохранить 12 слов.`,
@@ -96,19 +88,17 @@ class MultisignJoinLink extends React.Component<any, any> {
     } = this.props
 
     const publicKey = btcData.publicKey.toString('Hex')
-
-    const linkAction = (action) ? action : `join`
+    const linkAction = action || `join`
 
     //@ts-ignore: strictNullChecks
     const joinLink = `${getFullOrigin()}${links.multisign}/btc/${linkAction}/${publicKey}/${SwapApp.shared().services.room.peer}`
 
-    this.setState({
+    this.setState(() => ({
       joinLink,
-    })
+    }))
   }
 
   handleBeginSaveMnemonic = async () => {
-    //@ts-ignore: strictNullChecks
     actions.modals.open(constants.modals.SaveMnemonicModal, {
       onClose: () => {
         const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)

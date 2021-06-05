@@ -130,6 +130,7 @@ const extractSecretFromTx = async ({
   return secretFromTxhash
 }
 
+
 export default {
   repeatAsyncUntilResult,
   waitDelay,

@@ -107,11 +107,13 @@ class SwapProgress extends Component<any, any> {
         withdrawTransactionHash,
         //@ts-ignore: strictNullChecks
         explorerLink,
+        //@ts-ignore: strictNullChecks
+        etherscanLink,
       },
     } = this
 
     if (flow.ethSwapWithdrawTransactionHash && swap.sellCurrency === currencyName) {
-      window.open(`${config.link.etherscan}/tx/${flow.ethSwapWithdrawTransactionHash}`, '_blank')
+      window.open(`${etherscanLink}/tx/${flow.ethSwapWithdrawTransactionHash}`, '_blank')
     }
     if (flow[withdrawTransactionHash]) {
       window.open(`${explorerLink}/tx/${flow[withdrawTransactionHash]}`, '_blank')
@@ -337,6 +339,8 @@ class SwapProgress extends Component<any, any> {
       //@ts-ignore: strictNullChecks
       explorerLink,
       //@ts-ignore: strictNullChecks
+      etherscanLink,
+      //@ts-ignore: strictNullChecks
       withdrawTransactionHash,
     } = this._fields
 
@@ -369,7 +373,7 @@ class SwapProgress extends Component<any, any> {
               {signed && flow.step < 4 && (
                 <div>
                   <strong>
-                    <a href={`${config.link.etherscan}/tx/${flow.signTransactionHash}`} target="_blank" rel="noopener noreferrer">
+                    <a href={`${etherscanLink}/tx/${flow.signTransactionHash}`} target="_blank" rel="noopener noreferrer">
                       <FormattedMessage id="swappropgress193" defaultMessage="Sign ETH transaction: {transaction}" values={{ transaction: flow.signTransactionHash }} />
                     </a>
                   </strong>
@@ -397,7 +401,7 @@ class SwapProgress extends Component<any, any> {
                       <a
                         href={swap.sellCurrency === currencyName
                           ? `${explorerLink}/tx/${_refundTx}`
-                          : `${config.link.etherscan}/tx/${_refundTx}`
+                          : `${etherscanLink}/tx/${_refundTx}`
                         }
                         target="_blank"
                         rel="noopener noreferrer"
@@ -500,7 +504,7 @@ class SwapProgress extends Component<any, any> {
             {flow.ethSwapWithdrawTransactionHash && !this.isSellCurrencyEthOrEthToken && (
               <strong styleName="transaction">
                 <a
-                  href={`${config.link.etherscan}/tx/${flow.ethSwapWithdrawTransactionHash}`}
+                  href={`${etherscanLink}/tx/${flow.ethSwapWithdrawTransactionHash}`}
                   target="_blank"
                   rel="noreferrer noopener"
                 >

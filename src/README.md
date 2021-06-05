@@ -153,6 +153,7 @@
 ├── common
 │   ├── coins
 │   │   ├── BTC.ts
+│   │   ├── getCoinInfo.ts
 │   │   ├── GHOST.ts
 │   │   ├── index.ts
 │   │   ├── interfaces.ts
@@ -185,6 +186,7 @@
 │   │   │   ├── index.ts
 │   │   │   ├── MIN_AMOUNT_OFFER.ts
 │   │   │   ├── MIN_AMOUNT.ts
+│   │   │   ├── SWAP_STEPS.ts
 │   │   │   └── TRANSACTION.ts
 │   │   ├── ethLikeHelper.ts
 │   │   └── turboSwap.ts
@@ -281,12 +283,14 @@
 │   │   ├── SwapApp.ts
 │   │   ├── SwapInterface.ts
 │   │   └── util
+│   │       ├── bep20.ts
 │   │       ├── erc20.ts
 │   │       ├── helpers.ts
 │   │       ├── index.ts
 │   │       ├── pullProps.ts
 │   │       └── typeforce.ts
 │   ├── swap.auth
+│   │   ├── bnb.ts
 │   │   ├── btc.ts
 │   │   ├── eth.ts
 │   │   ├── ghost.ts
@@ -294,6 +298,15 @@
 │   │   ├── next.ts
 │   │   └── SwapAuth.ts
 │   ├── swap.flows
+│   │   ├── atomic
+│   │   │   ├── BtcToEthLikeToken.ts
+│   │   │   ├── BtcToEthLike.ts
+│   │   │   ├── EthLikeToBtc.ts
+│   │   │   └── EthLikeTokenToBtc.ts
+│   │   ├── BNB2BTC.ts
+│   │   ├── BSCTOKEN2BTC.ts
+│   │   ├── BTC2BNB.ts
+│   │   ├── BTC2BSCTOKEN.ts
 │   │   ├── BTC2ETHTOKEN.ts
 │   │   ├── BTC2ETH.ts
 │   │   ├── ETH2BTC.ts
@@ -330,7 +343,11 @@
 │   │   ├── Steps.ts
 │   │   └── Swap.ts
 │   ├── swap.swaps
+│   │   ├── BnbSwap.ts
+│   │   ├── BscTokenSwap.ts
 │   │   ├── BtcSwap.ts
+│   │   ├── EthLikeSwap.ts
+│   │   ├── EthLikeTokenSwap.ts
 │   │   ├── EthSwap.ts
 │   │   ├── EthTokenSwap.ts
 │   │   ├── GhostSwap.ts
@@ -715,9 +732,6 @@
 │   │   │   │   │   │   └── ready.svg
 │   │   │   │   │   ├── InfoInvoice.scss
 │   │   │   │   │   └── InfoInvoice.tsx
-│   │   │   │   ├── InfoPay
-│   │   │   │   │   ├── InfoPay.scss
-│   │   │   │   │   └── InfoPay.tsx
 │   │   │   │   ├── InvoiceLinkModal
 │   │   │   │   │   ├── InvoiceLinkModal.scss
 │   │   │   │   │   └── InvoiceLinkModal.tsx
@@ -969,6 +983,7 @@
 │   │   │   ├── adminFee.ts
 │   │   │   ├── apiLooper.ts
 │   │   │   ├── api.ts
+│   │   │   ├── bepToken.ts
 │   │   │   ├── bnb.ts
 │   │   │   ├── btc.ts
 │   │   │   ├── cache.ts
@@ -1068,6 +1083,7 @@
 │   │   │   │   └── Steps
 │   │   │   │       ├── FirstStep.tsx
 │   │   │   │       ├── SecondStep.tsx
+│   │   │   │       ├── startPacks.ts
 │   │   │   │       ├── StepsWrapper.tsx
 │   │   │   │       └── texts.tsx
 │   │   │   ├── Currency
@@ -1207,37 +1223,31 @@
 │   │   │   │   └── UTXOSwap
 │   │   │   │       ├── DepositWindow
 │   │   │   │       │   └── DepositWindow.tsx
+│   │   │   │       ├── EthLikeToUTXO.tsx
 │   │   │   │       ├── EthTokenToUTXO.tsx
-│   │   │   │       ├── EthToUTXO.tsx
 │   │   │   │       ├── SwapList
-│   │   │   │       │   ├── ABSteps
-│   │   │   │       │   │   ├── FirstStep.tsx
-│   │   │   │       │   │   ├── FourthStep.tsx
-│   │   │   │       │   │   ├── SecondStep.tsx
-│   │   │   │       │   │   └── ThirdStep.tsx
-│   │   │   │       │   ├── ABSwapProgressText
-│   │   │   │       │   │   ├── BtcLikeToEthToken.tsx
-│   │   │   │       │   │   ├── BtcLikeToEth.tsx
-│   │   │   │       │   │   ├── EthToBtcLike.tsx
-│   │   │   │       │   │   └── EthTokenToBtcLike.tsx
 │   │   │   │       │   ├── SwapList.scss
 │   │   │   │       │   ├── SwapList.tsx
-│   │   │   │       │   ├── UTXOSteps
-│   │   │   │       │   │   ├── FirstStep.tsx
-│   │   │   │       │   │   ├── FourthStep.tsx
-│   │   │   │       │   │   ├── SecondStep.tsx
-│   │   │   │       │   │   └── ThirdStep.tsx
-│   │   │   │       │   └── UTXOSwapProgressText
-│   │   │   │       │       ├── BtcLikeToEthToken.tsx
-│   │   │   │       │       ├── BtcLikeToEth.tsx
-│   │   │   │       │       ├── EthToBtcLike.tsx
-│   │   │   │       │       └── EthTokenToBtcLike.tsx
+│   │   │   │       │   ├── SwapProgressTexts
+│   │   │   │       │   │   ├── MakerAbToUtxo.tsx
+│   │   │   │       │   │   ├── MakerUtxoToAb.tsx
+│   │   │   │       │   │   ├── TakerAbToUtxo.tsx
+│   │   │   │       │   │   └── TakerUtxoToAb.tsx
+│   │   │   │       │   └── SwapSteps
+│   │   │   │       │       ├── ABSteps
+│   │   │   │       │       │   ├── SecondStep.tsx
+│   │   │   │       │       │   └── ThirdStep.tsx
+│   │   │   │       │       ├── FirstStep.tsx
+│   │   │   │       │       ├── FourthStep.tsx
+│   │   │   │       │       └── UTXOSteps
+│   │   │   │       │           ├── SecondStep.tsx
+│   │   │   │       │           └── ThirdStep.tsx
 │   │   │   │       ├── SwapProgress
 │   │   │   │       │   ├── PleaseDontLeaveWrapper.tsx
 │   │   │   │       │   ├── SwapProgress.scss
 │   │   │   │       │   └── SwapProgress.tsx
-│   │   │   │       ├── UTXOToEthToken.tsx
-│   │   │   │       └── UTXOToEth.tsx
+│   │   │   │       ├── UTXOToEthLike.tsx
+│   │   │   │       └── UTXOToEthToken.tsx
 │   │   │   ├── Transaction
 │   │   │   │   ├── styles.scss
 │   │   │   │   ├── Transaction.tsx
@@ -1339,4 +1349,4 @@
 │       └── run.js
 └── README.md
 
-343 directories, 996 files
+343 directories, 1006 files

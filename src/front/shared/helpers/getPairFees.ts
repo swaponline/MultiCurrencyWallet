@@ -1,5 +1,8 @@
 import { COIN_DATA, COIN_MODEL, COIN_TYPE } from 'swap.app/constants/COINS'
 import helpers from 'helpers'
+import getCoinInfo from 'common/coins/getCoinInfo'
+import erc20Like from 'common/erc20Like'
+
 
 const reportAboutProblem = (params) => {
   const { isError = false, info } = params
@@ -33,11 +36,17 @@ const feeCache = {
 }
 
 const fetchCoinFee = (params): Promise<CoinFee> => {
-  const { coinName, action, updateCacheValue } = params
+  const { coinName: coinInfo , action, updateCacheValue } = params
 
   return new Promise(async (feeResolved) => {
+    const {
+      coin: coinName,
+      blockchain,
+    } = getCoinInfo(coinInfo)
+
     const hasFeeInCache = !updateCacheValue && feeCache[action] && feeCache[action][coinName]
     const coinData = COIN_DATA[coinName.toUpperCase()]
+
     let isBuyingUTXO = action === 'buy' && coinData.model === COIN_MODEL.UTXO
     let isBuyingAB = action === 'buy' && coinData.model === COIN_MODEL.AB
 
@@ -74,9 +83,10 @@ const fetchCoinFee = (params): Promise<CoinFee> => {
           })
           doResolve(obtainedResult)
           break
+        case COIN_TYPE.BNB_TOKEN:
         case COIN_TYPE.ETH_TOKEN:
           //@ts-ignore: strictNullChecks
-          obtainedResult = await fetchFeeForEthToken({
+          obtainedResult = await fetchFeeForEthLikeToken({
             coinData,
             swapABMethod: isBuyingAB ? 'withdraw' : 'deposit',
           })
@@ -134,31 +144,31 @@ const fetchFeeForNativeCoin = (params) => {
   })
 }
 
-const fetchFeeForEthToken = (params) => {
+const fetchFeeForEthLikeToken = (params) => {
   const { coinData, swapABMethod } = params
 
   return new Promise((resolve) => {
-    helpers.ethToken
+    erc20Like[coinData.standard.toLowerCase()]
       .estimateFeeValue({
         method: 'swap',
         speed: 'fast',
         swapABMethod,
       })
-      .then((ethFee) =>
+      .then((basecoinFee) =>
         resolve({
-          coin: `ETH`,
-          fee: ethFee,
+          coin: coinData.blockchain,
+          fee: basecoinFee,
           isUTXO: false,
         })
       )
       .catch((err) => {
         reportAboutProblem({
-          info: `Fail fetch fee for token ${coinData.ticker} (ETH). ${err}`,
+          info: `Fail fetch fee for token ${coinData.ticker} (${coinData.blockchain}). ${err}`,
           isError: true,
         })
         feeCache.isEnabled = false
         resolve({
-          coin: `ETH`,
+          coin: coinData.blockchain,
           fee: 0,
           isUTXO: false,
         })

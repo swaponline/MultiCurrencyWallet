@@ -19,7 +19,7 @@ export default class Address extends Component<IAddress, {}> {
   }
 
   render() {
-    const {
+    let {
       address,
       format,
       type,

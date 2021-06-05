@@ -50,6 +50,10 @@ class EthLikeAction {
     this.Web3 = web3
   }
 
+  getWeb3 = () => {
+    return this.Web3
+  }
+
   reportError = (error) => {
     feedback.actions.failed(
       ''.concat(`details - ticker: ${this.ticker}, `, `error message - ${error.message} `)
@@ -100,55 +104,44 @@ class EthLikeAction {
       .catch((error) => console.error(error))
   }
 
-  fetchTxInfo = (hash, cacheResponse) => {
-    const url = `?module=proxy&action=eth_getTransactionByHash&txhash=${hash}&apikey=${this.explorerApiKey}`
-
+  fetchTxInfo = (hash) => {
     return new Promise((res, rej) => {
-      return apiLooper
-        .get(this.explorerName, url, {
-          cacheResponse,
-        })
-        .then((response: any) => {
-          if (response && response.result) {
-            const { from, to, value, gas, gasPrice, blockHash } = response.result
+      this.Web3.eth.getTransaction(hash)
+      .then((tx) => {
+        const { from, to, value, gas, gasPrice, blockHash } = tx
 
-            const amount = this.Web3.utils.fromWei(value)
-            const minerFee = new BigNumber(this.Web3.utils.toBN(gas).toNumber())
-              .multipliedBy(this.Web3.utils.toBN(gasPrice).toNumber())
-              .dividedBy(1e18)
-              .toNumber()
+        const amount = this.Web3.utils.fromWei(value)
+        const minerFee = new BigNumber(this.Web3.utils.toBN(gas).toNumber())
+          .multipliedBy(this.Web3.utils.toBN(gasPrice).toNumber())
+          .dividedBy(1e18)
+          .toNumber()
 
-            let adminFee: number | false = false
+        let adminFee: number | false = false
 
-            if (this.adminFeeObj && to !== this.adminFeeObj.address) {
-              const feeFromUsersAmount = new BigNumber(this.adminFeeObj.fee)
-                .dividedBy(100)
-                .multipliedBy(amount)
+        if (this.adminFeeObj && to !== this.adminFeeObj.address) {
+          const feeFromUsersAmount = new BigNumber(this.adminFeeObj.fee)
+            .dividedBy(100)
+            .multipliedBy(amount)
 
-              if (new BigNumber(this.adminFeeObj.min).isGreaterThan(feeFromUsersAmount)) {
-                adminFee = new BigNumber(this.adminFeeObj.min).toNumber()
-              } else {
-                adminFee = feeFromUsersAmount.toNumber()
-              }
-            }
-
-            res({
-              amount,
-              afterBalance: null,
-              receiverAddress: to,
-              senderAddress: from,
-              minerFee,
-              minerFeeCurrency: this.ticker,
-              adminFee,
-              confirmed: blockHash !== null,
-            })
+          if (new BigNumber(this.adminFeeObj.min).isGreaterThan(feeFromUsersAmount)) {
+            adminFee = new BigNumber(this.adminFeeObj.min).toNumber()
           } else {
-            res(false)
+            adminFee = feeFromUsersAmount.toNumber()
           }
+        }
+
+        res({
+          amount,
+          afterBalance: null,
+          receiverAddress: to,
+          senderAddress: from,
+          minerFee,
+          minerFeeCurrency: this.ticker,
+          adminFee,
+          confirmed: blockHash !== null,
         })
-        .catch((error) => {
-          rej(error)
-        })
+      })
+      .catch((error) => rej(error))
     })
   }
 

@@ -1,44 +1,40 @@
 import React, { useState, useEffect } from 'react'
 
 import CSSModules from 'react-css-modules'
-import styles from '../SwapList.scss'
+import styles from '../../SwapList.scss'
 
-import config from 'app-config'
 import actions from 'redux/actions'
 import { isMobile } from 'react-device-detect'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import { FormattedMessage } from 'react-intl'
-import checkedIcon from '../../../images/checked.svg'
+import checkedIcon from '../../../../images/checked.svg'
 
 let _mounted = false
 const timeoutIds: NodeJS.Timeout[] = []
 
 const SecondStep = (props) => {
   const {
-    step,
-    fifth,
-    fourth,
-    second,
-    sixth,
-    windowWidth,
+    showDepositWindow,
+    isFirstStepActive,
+    isSecondStepActive,
     swap: {
       sellCurrency,
       buyCurrency,
       flow: {
-        state: flowState,
         state: {
           ethSwapCreationTransactionHash,
+          utxoScriptCreatingTransactionHash,
         },
       },
     },
     fields: {
       explorerLink,
+      etherscanLink,
       currencyName,
-      scriptCreatingTransactionHash,
+      ethLikeCoin,
     },
     text,
-    enoughBalance,
   } = props
 
   const [scriptHashIsConfirmed, setScriptHashIsConfirmed] = useState(false)
@@ -50,8 +46,8 @@ const SecondStep = (props) => {
     setEthSwapHash(ethSwapCreationTransactionHash)
   }
 
-  if (flowState[scriptCreatingTransactionHash] && !scriptHash) {
-    setScriptHash(flowState[scriptCreatingTransactionHash])
+  if (utxoScriptCreatingTransactionHash && !scriptHash) {
+    setScriptHash(utxoScriptCreatingTransactionHash)
   }
 
   const checkTransactionHash = (txHash, currencyName, refreshTime) => {
@@ -61,8 +57,8 @@ const SecondStep = (props) => {
       try {
         let fetchedTx: any
 
-        if (currencyName === 'eth') { // TODO: needs to be improved when adding BNB
-          fetchedTx = await actions.eth.fetchTxInfo(txHash, (refreshTime - 5) * 1000)
+        if (currencyName === ethLikeCoin.toLowerCase()) { // TODO: needs to be improved when adding BNB
+          fetchedTx = await actions[ethLikeCoin.toLowerCase()].fetchTxInfo(txHash)
 
           if (fetchedTx && fetchedTx.confirmed) {
             return setEthSwapHashIsConfirmed(true)
@@ -96,7 +92,7 @@ const SecondStep = (props) => {
   useEffect(() => {
     _mounted = true
     if (ethSwapHash && !ethSwapHashIsConfirmed){
-      checkTransactionHash(ethSwapHash, 'eth', 20)
+      checkTransactionHash(ethSwapHash, ethLikeCoin.toLowerCase(), 20)
     }
   }, [ethSwapHash])
 
@@ -108,36 +104,21 @@ const SecondStep = (props) => {
     }
   }, [])
 
-  const currencyStep = sellCurrency === currencyName ? fifth : fourth
-  const stepItemActive = (step >= second && step < sixth)
-  const stepItemDefault = (step < sixth)
+  const showStepNumber = isFirstStepActive || isSecondStepActive
+  const isStepActive = isMobile ? showStepNumber : isSecondStepActive
+
   return (
     <div
-      styleName={((stepItemActive) && 'stepItem active') || (stepItemDefault && 'stepItem') || 'stepItem active checked'}>
-      <span styleName="stepNumber">{!isMobile ? (stepItemDefault ? 2 : <i className="fas fa-check" />) : (stepItemDefault ? 1 : <i className="fas fa-check" />) }</span>
+      styleName={((isStepActive) && 'stepItem active') || (isFirstStepActive && 'stepItem') || 'stepItem active checked'}>
+      <span styleName="stepNumber">{!isMobile ? (showStepNumber ? 2 : <i className="fas fa-check" />) : (showStepNumber ? 1 : <i className="fas fa-check" />) }</span>
       <p styleName="stepText">
         <FormattedMessage id="BtcToEthToken24" defaultMessage="Deposit" />
       </p>
-      {flowState[scriptCreatingTransactionHash] && (
-        <strong styleName="transactionInStep">
-          <a
-            id="utxoDepositHashLink"
-            title={`${explorerLink}/tx/${flowState[scriptCreatingTransactionHash]}`}
-            href={`${explorerLink}/tx/${flowState[scriptCreatingTransactionHash]}`}
-            target="_blank"
-            rel="noreferrer noopener"
-          >
-            <FormattedMessage id="FourthStep37BtcLike" defaultMessage="({currencyName} tx)" values={{ currencyName : currencyName.toLowerCase() }} />
-            {scriptHashIsConfirmed ? <img id="checkedUtxoDepositHashIcon" styleName="checkedIcon" src={checkedIcon} alt='checked' /> : <InlineLoader />}
-            <i className="fas fa-link" />
-          </a>
-        </strong>
-      )}
       {ethSwapCreationTransactionHash && (
         <strong styleName="transactionInStep">
           <a
             id="evmDepositHashLink"
-            href={`${config.link.etherscan}/tx/${ethSwapCreationTransactionHash}`}
+            href={`${etherscanLink}/tx/${ethSwapCreationTransactionHash}`}
             target="_blank"
             rel="noreferrer noopener"
           >
@@ -151,6 +132,21 @@ const SecondStep = (props) => {
           </a>
         </strong>
       )}
+      {utxoScriptCreatingTransactionHash && (
+        <strong styleName="transactionInStep">
+          <a
+            id="utxoDepositHashLink"
+            title={`${explorerLink}/tx/${utxoScriptCreatingTransactionHash}`}
+            href={`${explorerLink}/tx/${utxoScriptCreatingTransactionHash}`}
+            target="_blank"
+            rel="noreferrer noopener"
+          >
+            <FormattedMessage id="FourthStep37BtcLike" defaultMessage="({currencyName} tx)" values={{ currencyName : currencyName.toLowerCase() }} />
+            <i className="fas fa-link" />
+            {scriptHashIsConfirmed ? <img id="checkedUtxoDepositHashIcon" styleName="checkedIcon" src={checkedIcon} alt='checked' /> : <InlineLoader />}
+          </a>
+        </strong>
+      )}
       <div styleName="tooltip">
         <Tooltip id="SecondStep">
           <FormattedMessage
@@ -160,7 +156,7 @@ const SecondStep = (props) => {
           />
         </Tooltip >
       </div>
-      {(step === 3 && !enoughBalance) ? '' : stepItemActive && (
+      {showDepositWindow ? '' : isStepActive && (
         <span styleName="stepHeading">
           {text}
         </span>

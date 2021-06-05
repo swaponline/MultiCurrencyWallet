@@ -1,6 +1,13 @@
 import erc20Like from 'common/erc20Like'
+import getCoinInfo from 'common/coins/getCoinInfo'
 
-export default (currency, returnToken) => {
+
+export default (currencyData, returnToken) => {
+  const {
+    coin: currency,
+    blockchain,
+  } = getCoinInfo(currencyData)
+
   let key = currency.toLowerCase()
 
   switch (key) {

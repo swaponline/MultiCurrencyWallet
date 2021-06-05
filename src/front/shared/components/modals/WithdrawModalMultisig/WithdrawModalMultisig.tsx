@@ -90,7 +90,6 @@ class WithdrawModalMultisig extends React.Component<any, any> {
       minus: '',
       balance: selectedItem.balance || 0,
       ethBalance: null,
-      isEthToken: false,
       currentDecimals,
       getFiat: 0,
       error: false,
@@ -333,7 +332,7 @@ class WithdrawModalMultisig extends React.Component<any, any> {
   }
 
   sellAllBalance = async () => {
-    const { amount, balance, currency, isEthToken, min, usedAdminFee } = this.state
+    const { amount, balance, currency, min, usedAdminFee } = this.state
 
     const { data } = this.props
 

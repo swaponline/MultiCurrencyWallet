@@ -6,6 +6,8 @@ import DEFAULT_CURRENCY_PARAMETERS from 'common/helpers/constants/DEFAULT_CURREN
 import TOKEN_STANDARDS from 'helpers/constants/TOKEN_STANDARDS'
 import ethLikeHelper from 'common/helpers/ethLikeHelper'
 import { feedback } from 'helpers'
+import getCoinInfo from 'common/coins/getCoinInfo'
+
 
 class erc20LikeHelper {
   readonly standard: string // (ex. erc20, bep20, ...)
@@ -105,8 +107,13 @@ const isToken = (params) => {
 
   for (const prop in TOKEN_STANDARDS) {
     const standard = TOKEN_STANDARDS[prop].standard
+    const baseCurrency = TOKEN_STANDARDS[prop].currency
+    const lowerName = name.toLowerCase()
 
-    if (Object.keys(config[standard])?.includes(name.toLowerCase())) {
+    if (
+      Object.keys(config[standard])?.includes(lowerName) ||
+      lowerName.startsWith(`{${baseCurrency}}`)
+    ) {
       return true
     }
   }

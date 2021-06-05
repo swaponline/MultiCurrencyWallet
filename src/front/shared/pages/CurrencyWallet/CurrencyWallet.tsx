@@ -27,6 +27,7 @@ import DashboardLayout from 'components/layout/DashboardLayout/DashboardLayout'
 
 import getCurrencyKey from 'helpers/getCurrencyKey'
 import lsDataCache from 'helpers/lsDataCache'
+import getCoinInfo from 'common/coins/getCoinInfo'
 
 
 const isWidgetBuild = config && config.isWidget
@@ -97,6 +98,7 @@ class CurrencyWallet extends Component<any, any> {
 
     if (itemCurrency.length) {
       itemCurrency = itemCurrency[0]
+
       //@ts-ignore
       const { currency, address, contractAddress, decimals, balance, infoAboutCurrency } = itemCurrency
       const hasCachedData = lsDataCache.get(`TxHistory_${getCurrencyKey(currency, true).toLowerCase()}_${address}`)
@@ -114,6 +116,7 @@ class CurrencyWallet extends Component<any, any> {
         isLoading: false,
         infoAboutCurrency,
         filterValue: walletAddress || address || '',
+        ticker,
         token: erc20Like.isToken({ name: ticker }),
       }
     }
@@ -129,6 +132,7 @@ class CurrencyWallet extends Component<any, any> {
       balance,
       infoAboutCurrency,
       hiddenCoinsList,
+      ticker,
     } = this.state
 
     actions.user.getBalances()
@@ -153,7 +157,7 @@ class CurrencyWallet extends Component<any, any> {
 
     // if address is null, take transactions from current user
     address
-      ? actions.history.setTransactions(address, currency.toLowerCase(), this.pullTransactions)
+      ? actions.history.setTransactions(address, ticker.toLowerCase(), this.pullTransactions)
       : actions.user.setTransactions()
 
     if (!address) {
@@ -301,12 +305,17 @@ class CurrencyWallet extends Component<any, any> {
   filterCurrencies = (params) => {
     const { items, ticker, walletAddress } = params
 
+    const {
+      coin,
+      blockchain,
+    } = getCoinInfo(ticker)
+
     return items.filter((item) => {
+      const blockchainOk = (blockchain && item.blockchain) ? item.blockchain.toLowerCase() === blockchain.toLowerCase() : true
       if (
-        (
-          item.currency.toLowerCase() === ticker.toLowerCase() ||
-          item.tokenKey?.toLowerCase() === ticker.toLowerCase()
-        ) && item.address.toLowerCase() === walletAddress.toLowerCase()
+        item.currency.toLowerCase() === coin.toLowerCase() &&
+        item.address.toLowerCase() === walletAddress.toLowerCase() &&
+        blockchainOk
       ) {
         return true
       }
