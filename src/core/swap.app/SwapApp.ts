@@ -289,12 +289,17 @@ class SwapApp extends EventEmitter {
     return this.env.getWeb3().utils
   }
 
-  getMyEthAddress() {
+  getEvmLikeAddress(coinType) {
     return this.env.metamask && this.env.metamask.isEnabled() && this.env.metamask.isConnected()
       ? this.env.metamask.getAddress()
       //@ts-ignore: strictNullChecks
-      : this.services.auth.accounts.eth.address
+      : this.services.auth.accounts[coinType].address
   }
+
+  // @to-do use directy getEvmLikeAddress in EthLikeSwaps
+  getMyEthAddress() { return this.getEvmLikeAddress(`eth`) }
+  getMyBnbAddress() { return this.getEvmLikeAddress(`bnb`) }
+  getMyMaticAddress() { return this.getEvmLikeAddress(`matic`) }
 
   getBnbWeb3Adapter() {
     return this.env.getWeb3Bnb().eth
@@ -304,10 +309,7 @@ class SwapApp extends EventEmitter {
     return this.env.getWeb3Bnb().utils
   }
 
-  getMyBnbAddress() {
-    //@ts-ignore: strictNullChecks
-    return this.services.auth.accounts.bnb.address // @to-do - add metamask support
-  }
+
 
   getMaticWeb3Adapter() {
     return this.env.getWeb3Matic().eth
@@ -317,25 +319,16 @@ class SwapApp extends EventEmitter {
     return this.env.getWeb3Matic().utils
   }
 
-  getMyMaticAddress() {
-    //@ts-ignore: strictNullChecks
-    return this.services.auth.accounts.matic.address // @to-do - add metamask support
+
+  getParticipantEvmLikeAddress(coinType, swap) {
+    const { participant, participantMetamaskAddress } = swap
+    return participantMetamaskAddress ? participantMetamaskAddress : participant[coinType].address
   }
 
-  getParticipantEthAddress(swap) {
-    const { participant, participantMetamaskAddress } = swap
-    return participantMetamaskAddress ? participantMetamaskAddress : participant.eth.address
-  }
-
-  getParticipantBnbAddress(swap) {
-    const { participant, participantMetamaskAddress } = swap
-    return participant.bnb.address // @to-do - add metamask support
-  }
-
-  getParticipantMaticAddress(swap) {
-    const { participant, participantMetamaskAddress } = swap
-    return participant.matic.address // @to-do - add metamask support
-  }
+  // @to-do use directy getParticipantEvmLikeAddress in EthLikeSwaps
+  getParticipantEthAddress(swap) { return this.getParticipantEvmLikeAddress(`eth`, swap) }
+  getParticipantBnbAddress(swap) { return this.getParticipantEvmLikeAddress(`bnb`, swap) }
+  getParticipantMaticAddress(swap) { return this.getParticipantEvmLikeAddress(`matic`, swap) }
 
   static is(app) {
     return app && app.isSwapApp && app.isSwapApp() && app instanceof SwapApp
