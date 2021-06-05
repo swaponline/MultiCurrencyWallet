@@ -96,8 +96,8 @@ const createSwapApp = async () => {
       ? await metamask.getWeb3()
       : await getWeb3()
 
-    const web3bnb = actions.bnb.getWeb3()
-    const web3Matic = actions.matic.getWeb3()
+    const web3bnb = (metamask.isEnabled() && metamask.isConnected()) ? await metamask.getWeb3() : await actions.bnb.getWeb3()
+    const web3Matic = (metamask.isEnabled() && metamask.isConnected()) ? await metamask.getWeb3() : await actions.matic.getWeb3()
 
     const NETWORK = process.env.MAINNET ? `MAINNET` : `TESTNET`
 
