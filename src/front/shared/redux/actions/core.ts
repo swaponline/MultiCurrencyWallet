@@ -3,6 +3,7 @@ import actions from 'redux/actions'
 import { getState } from 'redux/core'
 import SwapApp from 'swap.app'
 import Swap from 'swap.swap'
+import getCoinInfo from 'common/coins/getCoinInfo'
 import erc20Like from 'common/erc20Like'
 import { constants } from 'helpers'
 import Pair from 'pages/Exchange/Orders/Pair'
@@ -397,17 +398,31 @@ type GetWalletFindCondition = {
   address?: string
   addressType?: string
   connected?: boolean
+  blockchain?: string
 }
 
 const getWallet = (findCondition: GetWalletFindCondition) => {
   // specify addressType,
   // otherwise it finds the first wallet from all origins, including metamask
-  const { address, addressType, connected, currency } = findCondition
+  const { address, addressType, connected, currency: currencyData, blockchain: optBlockchain } = findCondition
   const wallets = getWallets({ withInternal: true })
+  
+  const {
+    coin: currency,
+    blockchain: coinBlockchain,
+  } = getCoinInfo(currencyData)
+  const blockchain = coinBlockchain || optBlockchain
+
 
   const founded = wallets.filter((wallet) => {
     if (wallet.isMetamask && !wallet.isConnected) return false
-    const conditionOk = currency && wallet.currency.toLowerCase() === currency.toLowerCase()
+    const conditionOk = (
+        blockchain && wallet.blockchain
+          ? blockchain.toLowerCase() === wallet.blockchain.toLowerCase()
+          : true
+      )
+      && currency
+      && wallet.currency.toLowerCase() === currency.toLowerCase()
 
     if (address) {
       if (wallet.address.toLowerCase() === address.toLowerCase()) {
@@ -440,7 +455,7 @@ const getWallet = (findCondition: GetWalletFindCondition) => {
   return founded.length ? founded[0] : false
 }
 
-const getWallets = (options) => {
+const getWallets = (options: IUniversalObj = {}) => {
   const { withInternal } = options
 
   const {
@@ -464,6 +479,11 @@ const getWallets = (options) => {
   } = getState()
 
   const metamaskConnected = metamask.isEnabled() && metamask.isConnected()
+
+  const tokenWallets = Object.keys(tokensData).map((k) => {
+    const tokenInfo = getCoinInfo(k)
+    return (tokenInfo.coin && tokenInfo.blockchain !== ``) ? tokensData[k] : false
+  }).filter((d) => d !== false)
 
   const allData = [
     ...(!config.opts.curEnabled || config.opts.curEnabled.eth || config.opts.curEnabled.bnb
@@ -523,15 +543,17 @@ const getWallets = (options) => {
     // =====================================
     ...(!config.opts.curEnabled || config.opts.curEnabled.ghost ? [ghostData] : []),
     ...(!config.opts.curEnabled || config.opts.curEnabled.next ? [nextData] : []),
-    ...Object.keys(tokensData)
-      .filter((k) => !tokensData[k].reducerDataTarget)
-      .map((k) => tokensData[k]),
+    ...tokenWallets,
   ].map(({ account, keyPair, ...data }) => ({
     ...data,
   }))
 
-  return allData.filter((item) => item && item.address)
+  return allData.filter((item) => item?.address && item?.currency)
 }
+
+window.getWallets = getWallets
+window.getWallet = getWallet
+
 
 const fetchWalletBalance = async (walletData): Promise<number> => {
   const name = helpers.getCurrencyKey(walletData.currency.toLowerCase(), true)

@@ -3,15 +3,12 @@ import React, { Component, Fragment } from 'react'
 import { connect } from 'redaction'
 import actions from 'redux/actions'
 import { withRouter } from 'react-router-dom'
-import { isMobile } from 'react-device-detect'
 
 import constants from 'helpers/constants'
-import { localisedUrl } from 'helpers/locale'
 
 import cssModules from 'react-css-modules'
 import styles from './OrderBook.scss'
 
-import { Button } from 'components/controls'
 import Panel from 'components/ui/Panel/Panel'
 import Table from 'components/tables/Table/Table'
 import tableStyles from 'components/tables/Table/Table.scss'
@@ -20,7 +17,6 @@ import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import PageSeo from 'components/Seo/PageSeo'
 import { getSeoPage } from 'helpers/seo'
 
-import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
 import Pair from './../Pair'
 import Row from './Row/Row'
 import MyOrders from './../MyOrders/MyOrders'
@@ -28,7 +24,7 @@ import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 
 import config from 'app-config'
 import feedback from 'shared/helpers/feedback'
-import { links } from 'helpers'
+import getCoinInfo from 'common/coins/getCoinInfo'
 
 
 type OrderBookProps = {
@@ -65,11 +61,15 @@ type OrderBookState = {
 const filterMyOrders = (orders, peer) => orders
   .filter(order => order.owner.peer === peer)
 
-const filterOrders = (orders, filter) => orders
-  .filter(order => order.isProcessing !== true)
-  .filter(order => order.isHidden !== true)
-  .filter(order => Pair.check(order, filter))
-  .sort((a, b) => Pair.compareOrders(b, a))
+const filterOrders = (orders, filter) => {
+  return orders
+    .filter(order => order.isProcessing !== true)
+    .filter(order => order.isHidden !== true)
+    .filter(order => Pair.check(order, filter))
+    .sort((a, b) => {
+      return Pair.compareOrders(b, a)
+    })
+}
 
 @connect(({
   rememberedOrders,
@@ -91,15 +91,25 @@ class OrderBook extends Component<OrderBookProps, OrderBookState> {
     if (orders.length === 0) {
       return null
     }
+    const {
+      coin: sellCoin,
+      blockchain: sellBlockchain,
+    } = getCoinInfo(sellCurrency)
+    const {
+      coin: buyCoin,
+      blockchain: buyBlockchain,
+    } = getCoinInfo(buyCurrency)
 
     const sellOrders = orders.filter(order =>
-      order.buyCurrency.toLowerCase() === buyCurrency &&
-      order.sellCurrency.toLowerCase() === sellCurrency
+      order.buyCurrency.toLowerCase() === buyCoin.toLowerCase() &&
+      
+      order.sellCurrency.toLowerCase() === sellCoin.toLowerCase()
+
     ).sort((a, b) => Pair.compareOrders(b, a))
 
     const buyOrders = orders.filter(order =>
-      order.buyCurrency.toLowerCase() === sellCurrency &&
-      order.sellCurrency.toLowerCase() === buyCurrency
+      order.buyCurrency.toLowerCase() === sellCoin.toLowerCase() &&
+      order.sellCurrency.toLowerCase() === buyCoin.toLowerCase()
     ).sort((a, b) => Pair.compareOrders(a, b))
       
     return {
@@ -123,8 +133,17 @@ class OrderBook extends Component<OrderBookProps, OrderBookState> {
     const { buyOrders, sellOrders } = this.state
 
     if (orders.length === 0) {
-      buyOrders.length && this.setState({ buyOrders: [] })
-      sellOrders.length && this.setState({ sellOrders: [] })
+      if (buyOrders.length) {
+        this.setState(() => ({
+          buyOrders: [],
+        }))
+      }
+
+      if (sellOrders.length) {
+        this.setState({
+          sellOrders: [],
+        })
+      }
     }
   }
 

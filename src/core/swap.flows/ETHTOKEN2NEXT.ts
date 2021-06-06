@@ -6,6 +6,7 @@ import { AtomicAB2UTXO } from 'swap.swap'
 export default (tokenName) => {
 
   class ETHTOKEN2NEXT extends AtomicAB2UTXO {
+    static blockchainName = `ETH`
 
     _flowName: string
     ethTokenSwap: any
@@ -13,7 +14,7 @@ export default (tokenName) => {
     state: any
 
     static getName() {
-      return `${this.getFromName()}2${this.getToName()}`
+      return `{${this.blockchainName}}${this.getFromName()}2${this.getToName()}`
     }
     static getFromName() {
       return tokenName.toUpperCase()

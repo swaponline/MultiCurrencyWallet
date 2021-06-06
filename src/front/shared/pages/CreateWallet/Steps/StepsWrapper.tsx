@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'redaction'
 import reducers from 'redux/core/reducers'
-
+import TOKEN_STANDARDS from 'helpers/constants/TOKEN_STANDARDS'
 import feedback from 'shared/helpers/feedback'
 import { getActivatedCurrencies } from 'helpers/user'
 import config from 'helpers/externalConfig'
-
+import { defaultPack, widgetPack } from './startPacks'
 import FirstStep from './FirstStep'
 import SecondStep from './SecondStep'
 
@@ -16,38 +16,8 @@ const curEnabled = config.opts.curEnabled
 @connect(({ currencies: { items: currencies } }) => ({ currencies }))
 export default class StepsWrapper extends Component<any, any> {
 
-  // TODO: it's crazy. Move|split this packs somewhere
-
-  defaultStartPack = [
-    ...(!curEnabled || curEnabled.btc) ? [{ name: "BTC", capture: "Bitcoin" }] : [],
-
-    ...(!curEnabled || curEnabled.eth) ? [{ name: "ETH", capture: "Ethereum" }] : [],
-    ...config.erc20 ? [{ name: 'ERC20', capture: 'Token' }] : [],
-
-    ...(!curEnabled || curEnabled.bnb) ? [{ name: "BNB", capture: "Binance Coin" }] : [],
-    ...config.bep20 ? [{ name: 'BEP20', capture: 'Token' }] : [],
-
-    ...(!curEnabled || curEnabled.ghost) ? [{ name: "GHOST", capture: "Ghost" }] : [],
-    ...(!curEnabled || curEnabled.next) ? [{ name: "NEXT", capture: "NEXT.coin" }] : [],
-
-    ...config.bep20 ? [{ name: "BTCB", capture: "BTCB Token" }] : [],
-    ...config.erc20 ? [
-      { name: "WBTC", capture: "Wrapped Bitcoin" },
-      { name: "USDT", capture: "Tether" },
-      { name: "EURS", capture: "Eurs" },
-    ] : [],
-    ...(process.env.MAINNET) ? [{ name: "SWAP", capture: "Swap" }] : [{ name: "WEENUS", capture: "Weenus" }],
-  ]
-
-  widgetStartPack = [
-    ...config.erc20 ? [{ name: 'ERC20', capture: 'Token' }] : [],
-    ...config.bep20 ? [{ name: 'BEP20', capture: 'Token' }] : [],
-    ...(!curEnabled || curEnabled.btc) ? [{ name: "BTC", capture: "Bitcoin" }] : [],
-    ...(!curEnabled || curEnabled.eth) ? [{ name: "ETH", capture: "Ethereum" }] : [],
-    ...(!curEnabled || curEnabled.bnb) ? [{ name: "BNB", capture: "Binance Coin" }] : [],
-    ...(!curEnabled || curEnabled.ghost) ? [{ name: "GHOST", capture: "Ghost" }] : [],
-    ...(!curEnabled || curEnabled.next) ? [{ name: "NEXT", capture: "NEXT.coin" }] : [],
-  ]
+  defaultStartPack = defaultPack
+  widgetStartPack = widgetPack
 
   constructor(props) {
     super(props)
@@ -112,14 +82,26 @@ export default class StepsWrapper extends Component<any, any> {
 
     const curState = {}
     items.forEach(({ currency }) => { curState[currency] = false })
-    if (isWidgetBuild && config && config.erc20) {
-      if (window && window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
+
+    let haveTokenConfig = true 
+
+    Object.keys(TOKEN_STANDARDS).forEach((key) => {
+      if (!config[TOKEN_STANDARDS[key].standard]) {
+        haveTokenConfig = false
+      }
+    })
+
+    if (isWidgetBuild && haveTokenConfig) {
+      if (window?.widgetERC20Tokens?.length) {
         // Multi token build
-        Object.keys(window.widgetERC20Tokens).forEach((tokenSymbol) => {
-          if (config.erc20[tokenSymbol]) {
+        window.widgetERC20Tokens.forEach((token) => {
+          const name = token.name.toLowerCase()
+          const standard = token.standard.toLowerCase()
+
+          if (config[standard][name]) {
             this.widgetStartPack.push({
-              name: tokenSymbol.toUpperCase(),
-              capture: config.erc20[tokenSymbol].fullName,
+              name: name.toUpperCase(),
+              capture: config[standard][name].fullName,
             })
           }
         })
@@ -133,7 +115,12 @@ export default class StepsWrapper extends Component<any, any> {
         }
       }
     }
-    this.state = { curState, coins, startPack: (isWidgetBuild) ? this.widgetStartPack : this.defaultStartPack }
+
+    this.state = {
+      curState,
+      coins,
+      startPack: (isWidgetBuild) ? this.widgetStartPack : this.defaultStartPack,
+    }
   }
 
 

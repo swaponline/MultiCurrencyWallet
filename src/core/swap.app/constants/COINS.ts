@@ -4,6 +4,24 @@ export const COIN_TYPE = Object.freeze({
   BNB_TOKEN: 'BNB_TOKEN',
 })
 
+export const TOKEN_STANDARD = Object.freeze({
+  ERC20: 'ERC20',
+  BEP20: 'BEP20',
+})
+
+export const BLOCKCHAIN = Object.freeze({
+  BTC: 'BTC',
+  GHOST: 'GHOST',
+  NEXT: 'NEXT',
+  ETH: 'ETH',
+  BNB: 'BNB',
+})
+
+export const BASE_TOKEN_CURRENCY = Object.freeze({
+  ETH: 'ETH',
+  BNB: 'BNB',
+})
+
 export const COIN_MODEL = Object.freeze({
   UTXO: 'UTXO', // Unspent Transaction Outputs model
   AB: 'AB' // Account/Balance model
@@ -14,6 +32,7 @@ export const COIN_DATA = {
     ticker: 'BTC',
     name: 'Bitcoin',
     type: COIN_TYPE.NATIVE,
+    blockchain: BLOCKCHAIN.BTC,
     model: COIN_MODEL.UTXO,
     precision: 8,
   },
@@ -21,6 +40,7 @@ export const COIN_DATA = {
     ticker: 'ETH',
     name: 'Ethereum',
     type: COIN_TYPE.NATIVE,
+    blockchain: BLOCKCHAIN.ETH,
     model: COIN_MODEL.AB,
     precision: 18,
   },
@@ -28,6 +48,7 @@ export const COIN_DATA = {
     ticker: 'BNB',
     name: 'Binance Coin',
     type: COIN_TYPE.NATIVE,
+    blockchain: BLOCKCHAIN.BNB,
     model: COIN_MODEL.AB,
     precision: 18,
   },
@@ -35,6 +56,8 @@ export const COIN_DATA = {
     ticker: 'USDT',
     name: 'Tether',
     type: COIN_TYPE.ETH_TOKEN,
+    blockchain: BLOCKCHAIN.ETH,
+    standard: TOKEN_STANDARD.ERC20,
     model: COIN_MODEL.AB,
     precision: 18,
   },
@@ -42,6 +65,8 @@ export const COIN_DATA = {
     ticker: 'BTCB',
     name: 'BTCB Token',
     type: COIN_TYPE.BNB_TOKEN,
+    blockchain: BLOCKCHAIN.BNB,
+    standard: TOKEN_STANDARD.BEP20,
     model: COIN_MODEL.AB,
     precision: 18,
   },
@@ -49,6 +74,8 @@ export const COIN_DATA = {
     ticker: 'EURS',
     name: 'STASIS EURO',
     type: COIN_TYPE.ETH_TOKEN,
+    blockchain: BLOCKCHAIN.ETH,
+    standard: TOKEN_STANDARD.ERC20,
     model: COIN_MODEL.AB,
     precision: 18,
   },
@@ -56,6 +83,7 @@ export const COIN_DATA = {
     ticker: 'GHOST',
     name: 'Ghost',
     type: COIN_TYPE.NATIVE,
+    blockchain: BLOCKCHAIN.GHOST,
     model: COIN_MODEL.UTXO,
     precision: 8,
   },
@@ -63,6 +91,7 @@ export const COIN_DATA = {
     ticker: 'NEXT',
     name: 'NEXT.coin',
     type: COIN_TYPE.NATIVE,
+    blockchain: BLOCKCHAIN.NEXT,
     model: COIN_MODEL.UTXO,
     precision: 8,
   },
@@ -70,6 +99,8 @@ export const COIN_DATA = {
     ticker: 'SWAP',
     name: 'SWAP',
     type: COIN_TYPE.ETH_TOKEN,
+    blockchain: BLOCKCHAIN.ETH,
+    standard: TOKEN_STANDARD.ERC20,
     model: COIN_MODEL.AB,
     precision: 18,
   },
@@ -77,6 +108,8 @@ export const COIN_DATA = {
     ticker: 'SONM',
     name: 'SWAP',
     type: COIN_TYPE.ETH_TOKEN,
+    blockchain: BLOCKCHAIN.ETH,
+    standard: TOKEN_STANDARD.ERC20,
     model: COIN_MODEL.AB,
     precision: 18,
   },
@@ -91,6 +124,10 @@ export const NATIVE = {
   bnb: 'BNB',
   ghost: 'GHOST',
   next: 'NEXT',
+}
+
+export const BNB_TOKENS = {
+  btcb: 'BTCB',
 }
 
 export const ETH_TOKENS = {
@@ -115,5 +152,6 @@ export const ETH_TOKENS = {
 export default {
   ...NATIVE,
   ...ETH_TOKENS,
+  ...BNB_TOKENS,
   ...COIN_DATA,
 }

@@ -18,16 +18,16 @@ import { localisedUrl } from 'helpers/locale'
 import StepsWrapper from './Steps/StepsWrapper'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 
-import { constants, localStorage } from 'helpers'
+import { constants, localStorage, user } from 'helpers'
 import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
-import web3Icons from '../../images'
+import web3Icons from 'images'
 
 const isWidgetBuild = config && config.isWidget
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 
 
-const CreateWallet: React.FC<any> = (props) => {
+const CreateWallet = (props) => {
   const {
     history,
     createWallet: { currencies, secure },
@@ -71,27 +71,7 @@ const CreateWallet: React.FC<any> = (props) => {
   let btcBalance = 0
   let fiatBalance = 0
 
-  const widgetCurrencies = [
-    'BTC',
-    'BTC (SMS-Protected)',
-    'BTC (PIN-Protected)',
-    'BTC (Multisig)',
-    'ETH',
-    'BNB',
-    'GHOST',
-    'NEXT',
-  ]
-
-  if (isWidgetBuild) {
-    if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
-      // Multi token widget build
-      Object.keys(window.widgetERC20Tokens).forEach((key) => {
-        widgetCurrencies.push(key.toUpperCase())
-      })
-    } else {
-      widgetCurrencies.push(config.erc20token.toUpperCase())
-    }
-  }
+  const widgetCurrencies = user.getWidgetCurrencies()
 
   if (currencyBalance) {
     currencyBalance.forEach(async (item) => {
@@ -140,10 +120,10 @@ const CreateWallet: React.FC<any> = (props) => {
     const widgetCurrenciesWithTokens = [...widgetCurrencies]
 
     if (isWidgetBuild) {
-      if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
+      if (window?.widgetERC20Tokens?.length) {
         // Multi token widget build
-        Object.keys(window.widgetERC20Tokens).forEach((key) => {
-          widgetCurrenciesWithTokens.push(key.toUpperCase())
+        window.widgetERC20Tokens.forEach((token) => {
+          widgetCurrenciesWithTokens.push(token.name.toUpperCase())
         })
       } else {
         widgetCurrenciesWithTokens.push(config.erc20token.toUpperCase())
@@ -219,6 +199,7 @@ const CreateWallet: React.FC<any> = (props) => {
           api: standardObj.explorerApi,
           apiKey: standardObj.explorerApiKey,
           standard: standardName,
+          baseCurrency: standardObj.currency,
         })
 
         return
@@ -256,7 +237,6 @@ const CreateWallet: React.FC<any> = (props) => {
         case 'sms':
           if (currencies.BTC) {
             if (!actions.btcmultisig.checkSMSActivated()) {
-              //@ts-ignore: strictNullChecks
               actions.modals.open(constants.modals.RegisterSMSProtected, {
                 callback: () => {
                   actions.core.markCoinAsVisible('BTC (SMS-Protected)', true)
@@ -265,7 +245,7 @@ const CreateWallet: React.FC<any> = (props) => {
               })
               return
             }
-            //@ts-ignore: strictNullChecks
+
             actions.modals.open(constants.modals.Confirm, {
               title: (
                 <FormattedMessage
@@ -282,7 +262,6 @@ const CreateWallet: React.FC<any> = (props) => {
               labelYes: <FormattedMessage id="ConfirmActivateSMS_Yes" defaultMessage="Да" />,
               labelNo: <FormattedMessage id="ConfirmActivateSMS_No" defaultMessage="Нет" />,
               onAccept: () => {
-                //@ts-ignore: strictNullChecks
                 actions.modals.open(constants.modals.RegisterSMSProtected, {
                   callback: () => {
                     actions.core.markCoinAsVisible('BTC (SMS-Protected)', true)
@@ -301,7 +280,6 @@ const CreateWallet: React.FC<any> = (props) => {
         case 'pin':
           if (currencies.BTC) {
             if (!actions.btcmultisig.checkPINActivated()) {
-              //@ts-ignore: strictNullChecks
               actions.modals.open(constants.modals.RegisterPINProtected, {
                 callback: () => {
                   actions.core.markCoinAsVisible('BTC (PIN-Protected)', true)
@@ -310,7 +288,7 @@ const CreateWallet: React.FC<any> = (props) => {
               })
               return
             }
-            //@ts-ignore: strictNullChecks
+
             actions.modals.open(constants.modals.Confirm, {
               title: (
                 <FormattedMessage
@@ -327,7 +305,6 @@ const CreateWallet: React.FC<any> = (props) => {
               labelYes: <FormattedMessage id="ConfirmActivatePIN_Yes" defaultMessage="Да" />,
               labelNo: <FormattedMessage id="ConfirmActivatePIN_No" defaultMessage="Нет" />,
               onAccept: () => {
-                //@ts-ignore: strictNullChecks
                 actions.modals.open(constants.modals.RegisterPINProtected, {
                   callback: () => {
                     actions.core.markCoinAsVisible('BTC (PIN-Protected)', true)
@@ -345,7 +322,6 @@ const CreateWallet: React.FC<any> = (props) => {
           break
         case 'multisignature':
           if (currencies.BTC) {
-            //@ts-ignore: strictNullChecks
             actions.modals.open(constants.modals.MultisignJoinLink, {
               callback: () => {
                 actions.core.markCoinAsVisible('BTC (Multisig)', true)
@@ -382,22 +358,14 @@ const CreateWallet: React.FC<any> = (props) => {
 
   return (
     <div styleName={`wrapper ${isDark ? '--dark' : ''}`}>
-      {
+      {userWallets.length && !localStorage.getItem(constants.localStorage.wasOnWallet) && (
         //@ts-ignore
-        userWallets.length && !localStorage.getItem(constants.wasOnWallet) ? (
-          <>
-            {/*
-            //@ts-ignore */}
-            <CloseIcon
-              styleName="closeButton"
-              onClick={goHome}
-              data-testid="modalCloseIcon"
-            />
-          </>
-        ) : (
-          ''
-        )
-      }
+        <CloseIcon
+          styleName="closeButton"
+          onClick={goHome}
+          data-testid="modalCloseIcon"
+        />
+      )}
 
       <div styleName={isMobile ? 'mobileFormBody' : 'formBody'}>
         <h2>

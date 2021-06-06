@@ -1,40 +1,38 @@
 import React, { useState, useEffect } from 'react'
 
 import CSSModules from 'react-css-modules'
-import styles from '../SwapList.scss'
+import styles from '../../SwapList.scss'
 
-import config from 'app-config'
 import actions from 'redux/actions'
 import { isMobile } from 'react-device-detect'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import { FormattedMessage } from 'react-intl'
-import checkedIcon from '../../../images/checked.svg'
+import checkedIcon from '../../../../images/checked.svg'
 
 let _mounted = false
 const timeoutIds: NodeJS.Timeout[] = []
 
 const ThirdStep = (props) => {
   const {
-    step,
-    sixth,
-    seventh,
-    eighth,
-    windowWidth,
+    isFirstStepActive,
+    isSecondStepActive,
+    isThirdStepActive,
     swap: {
       sellCurrency,
       buyCurrency,
       flow: {
-        state: flowState,
         state: {
           ethSwapWithdrawTransactionHash,
+          utxoSwapWithdrawTransactionHash,
         },
       },
     },
     fields: {
-      withdrawTransactionHash,
       currencyName,
       explorerLink,
+      ethLikeCoin,
+      etherscanLink,
     },
     text,
   } = props
@@ -48,8 +46,8 @@ const ThirdStep = (props) => {
     setEthSwapWithdrawHash(ethSwapWithdrawTransactionHash)
   }
 
-  if (flowState[withdrawTransactionHash] && !withdrawHash) {
-    setWithdrawHash(flowState[withdrawTransactionHash])
+  if (utxoSwapWithdrawTransactionHash && !withdrawHash) {
+    setWithdrawHash(utxoSwapWithdrawTransactionHash)
   }
 
   const checkTransactionHash = (txHash, currencyName, refreshTime) => {
@@ -59,8 +57,8 @@ const ThirdStep = (props) => {
       try {
         let fetchedTx: any
 
-        if (currencyName === 'eth') { // TODO: needs to be improved when adding BNB
-          fetchedTx = await actions.eth.fetchTxInfo(txHash, (refreshTime - 5) * 1000)
+        if (currencyName === ethLikeCoin.toLowerCase()) { // TODO: needs to be improved when adding BNB
+          fetchedTx = await actions[ethLikeCoin.toLowerCase()].fetchTxInfo(txHash)
 
           if (fetchedTx && fetchedTx.confirmed) {
             return setEthSwapWithdrawHashIsConfirmed(true)
@@ -94,7 +92,7 @@ const ThirdStep = (props) => {
   useEffect(() => {
     _mounted = true
     if (ethSwapWithdrawHash && !ethSwapWithdrawHashIsConfirmed){
-      checkTransactionHash(ethSwapWithdrawHash, 'eth', 20)
+      checkTransactionHash(ethSwapWithdrawHash, ethLikeCoin.toLowerCase(), 20)
     }
   }, [ethSwapWithdrawHash])
 
@@ -106,23 +104,36 @@ const ThirdStep = (props) => {
     }
   }, [])
 
-  const currencyStep = sellCurrency === currencyName ? seventh : eighth
-  const stepItemActive = (step >= sixth && step < currencyStep)
-  const stepItemDefault = (step < currencyStep)
-  const thirdStepPadding = (stepItemActive && isMobile && windowWidth < 569) || (!stepItemDefault && !stepItemActive && isMobile && windowWidth < 569) ? 50 : 0
+  const isLowStep = isFirstStepActive || isSecondStepActive
+  const showStepNumber = isThirdStepActive || isLowStep
+  const isStepActive = isMobile ? showStepNumber : isThirdStepActive
 
   return (
     <div
-      styleName={((stepItemActive) && 'stepItem active') || (stepItemDefault && 'stepItem') || 'stepItem active checked'}>
-      <span styleName="stepNumber">{!isMobile ? (step < currencyStep ? 3 : <i className="fas fa-check" />) : (step < currencyStep ? 2 : <i className="fas fa-check" />)}</span>
+      styleName={(isStepActive && 'stepItem active') || (isLowStep && 'stepItem') || 'stepItem active checked'}>
+      <span styleName="stepNumber">{!isMobile ? (showStepNumber ? 3 : <i className="fas fa-check" />) : (showStepNumber ? 2 : <i className="fas fa-check" />)}</span>
       <p styleName="stepText">
         <FormattedMessage id="thirdStep24" defaultMessage="WITHDRAW" />
       </p>
+      {utxoSwapWithdrawTransactionHash && (
+        <strong styleName="transactionInStep">
+          <a
+            id="utxoWithdrawalHashLink"
+            href={`${explorerLink}/tx/${utxoSwapWithdrawTransactionHash}`}
+            target="_blank"
+            rel="noreferrer noopener"
+          >
+            <FormattedMessage id="FourthStep37_BtcLike" defaultMessage="({currencyName} tx)" values={{ currencyName: currencyName.toLowerCase() }} />
+            <i className="fas fa-link" />
+            {withdrawHashIsConfirmed ? <img id="checkedUtxoWithdrawalHashIcon" styleName="checkedIcon" src={checkedIcon} alt='checked' /> : <InlineLoader />}
+          </a>
+        </strong>
+      )}
       {ethSwapWithdrawTransactionHash && (
         <strong styleName="transactionInStep">
           <a
             id="evmWithdrawalHashLink"
-            href={`${config.link.etherscan}/tx/${ethSwapWithdrawTransactionHash}`}
+            href={`${etherscanLink}/tx/${ethSwapWithdrawTransactionHash}`}
             target="_blank"
             rel="noreferrer noopener"
           >
@@ -136,20 +147,6 @@ const ThirdStep = (props) => {
           </a>
         </strong>
       )}
-      {flowState[withdrawTransactionHash] && (
-        <strong styleName="transactionInStep">
-          <a
-            id="utxoWithdrawalHashLink"
-            href={`${explorerLink}/tx/${flowState[withdrawTransactionHash]}`}
-            target="_blank"
-            rel="noreferrer noopener"
-          >
-            <FormattedMessage id="FourthStep37_BtcLike" defaultMessage="({currencyName} tx)" values={{ currencyName: currencyName.toLowerCase() }} />
-            <i className="fas fa-link" />
-            {withdrawHashIsConfirmed ? <img id="checkedUtxoWithdrawalHashIcon" styleName="checkedIcon" src={checkedIcon} alt='checked' /> : <InlineLoader />}
-          </a>
-        </strong>
-      )}
       <div styleName="tooltip">
         <Tooltip id="thirdStep">
           <FormattedMessage
@@ -159,7 +156,7 @@ const ThirdStep = (props) => {
           />
         </Tooltip >
       </div>
-      {stepItemActive && (
+      {isStepActive && (
         <span styleName="stepHeading">
           {text}
         </span>

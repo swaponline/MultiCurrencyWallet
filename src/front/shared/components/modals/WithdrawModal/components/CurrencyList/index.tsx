@@ -4,8 +4,6 @@ import styles from './index.scss'
 import cx from 'classnames'
 import PartOfAddress from 'pages/Wallet/PartOfAddress'
 import { isMobile } from 'react-device-detect'
-import actions from 'redux/actions'
-import erc20Like from 'common/erc20Like'
 import { constants } from 'helpers'
 import { localisedUrl } from 'helpers/locale'
 import getCurrencyKey from 'helpers/getCurrencyKey'
@@ -24,7 +22,10 @@ export default class CurrencyList extends Component<any, any> {
     }
   }
 
-  openModal = (currency, address) => {
+  openModal = (params) => {
+    const { target } = params
+    let { currency, address, tokenKey } = target
+
     this.setState({
       isAssetsOpen: false,
     }, () => {
@@ -33,28 +34,17 @@ export default class CurrencyList extends Component<any, any> {
         intl: { locale },
       } = this.props
 
-      const currentAsset = actions.core.getWallets({})
-        .filter((item) => {
-          return (
-            currency === item.currency
-            && address.toLowerCase() === item.address.toLowerCase()
-          )
-        })
-
-      let targetCurrency = currentAsset[0].currency
-
       switch (currency.toLowerCase()) {
         case 'btc (multisig)':
         case 'btc (sms-protected)':
         case 'btc (pin-protected)':
-          targetCurrency = 'btc'
-          break
+          currency = 'btc'
       }
 
-      const isToken = erc20Like.isToken({ name: currency })
+      const firstUrlPart = tokenKey ? `/token/${tokenKey}` : `/${currency}`
 
       history.push(
-        localisedUrl(locale, (isToken ? '/token' : '') + `/${targetCurrency}/${currentAsset[0].address}/send`)
+        localisedUrl(locale, `${firstUrlPart}/${address}/send`)
       )
     })
   }
@@ -73,7 +63,7 @@ export default class CurrencyList extends Component<any, any> {
 
   render() {
     const {
-      currentActiveAsset,
+      selectedCurrency,
       currentBalance,
       currency,
       activeFiat,
@@ -85,6 +75,8 @@ export default class CurrencyList extends Component<any, any> {
       isAssetsOpen,
     } = this.state
 
+    const standard = selectedCurrency.itemCurrency?.standard
+
     return (
       //@ts-ignore: strictNullChecks
       <OutsideClick outsideAction={this.closeList}>
@@ -94,11 +86,14 @@ export default class CurrencyList extends Component<any, any> {
           onClick={this.toggleListDisplay}
         >
           <div styleName="coin">
-            <Coin name={currentActiveAsset.currency} />
+            <Coin name={selectedCurrency.currency} />
           </div>
 
           <div>
-            <a>{currentActiveAsset.currency}</a>
+            <a>
+              {selectedCurrency.currency}
+              {standard && <span styleName="tokenStandard">{standard.toUpperCase()}</span>}
+            </a>
             <span styleName="address">{currentAddress}</span>
             <span styleName="mobileAddress">
               {isMobile ? <PartOfAddress address={currentAddress} withoutLink /> : ''}
@@ -110,8 +105,8 @@ export default class CurrencyList extends Component<any, any> {
               {currentBalance} {getCurrencyKey(currency, true).toUpperCase()}
             </span>
             <span styleName="usd">
-              {currentActiveAsset.infoAboutCurrency && currentActiveAsset.infoAboutCurrency.price_fiat
-                ? <span>{(currentBalance * currentActiveAsset.infoAboutCurrency.price_fiat).toFixed(2)} {activeFiat}</span>
+              {selectedCurrency.infoAboutCurrency && selectedCurrency.infoAboutCurrency.price_fiat
+                ? <span>{(currentBalance * selectedCurrency.infoAboutCurrency.price_fiat).toFixed(2)} {activeFiat}</span>
                 : null
               }
             </span>
@@ -126,18 +121,14 @@ export default class CurrencyList extends Component<any, any> {
                 styleName={cx('customSelectListItem customSelectValue', {
                   disabled: item.balance === 0,
                 })}
-                onClick={() => {
-                  this.openModal(item.currency, item.address)
-                }}
+                onClick={() => this.openModal({ target: item })}
               >
                 <Coin name={item.currency} />
 
                 <div>
                   <a>
                     {item.fullName}
-                    {item.standard ? (
-                      <span styleName="tokenStandard">{item.standard.toUpperCase()}</span>
-                    ) : ''}
+                    {item.standard && <span styleName="tokenStandard">{item.standard.toUpperCase()}</span>}
                   </a>
                   <span styleName="address">{item.address}</span>
                   <span styleName="mobileAddress">

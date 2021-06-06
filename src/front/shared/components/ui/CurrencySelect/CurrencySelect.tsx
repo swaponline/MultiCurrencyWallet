@@ -15,7 +15,6 @@ const CurrencySelect = (props) => {
     selectedItemRender,
   } = props
 
-  // TODO: Add debug logger message to see if some currency have been dropped
   const defaultRenderSelected = (item) => <Option {...item} />
   const usedSelectedItemRender = (selectedItemRender || defaultRenderSelected)
   return (

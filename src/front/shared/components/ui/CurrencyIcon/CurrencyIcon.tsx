@@ -3,6 +3,7 @@ import cssModules from 'react-css-modules'
 import styles from './CurrencyIcon.scss'
 
 import icons from './images'
+import getCoinInfo from 'common/coins/getCoinInfo'
 import { FormattedMessage } from 'react-intl'
 import config from 'app-config'
 
@@ -17,7 +18,11 @@ type CurrencyIconProps = {
 }
 
 const CurrencyIcon = (props: CurrencyIconProps) => {
-  const { className, style, name, source } = props
+  const { className, style, name: coinName , source } = props
+  const {
+    coin: name,
+    blockchain,
+  } = getCoinInfo(coinName)
 
   if (typeof name === 'undefined') {
     return <p><FormattedMessage id="currencyIcon15" defaultMessage="Error" /></p>
@@ -52,7 +57,7 @@ const CurrencyIcon = (props: CurrencyIconProps) => {
       <img
         styleName="sizeLimit"
         className={className}
-        src={icons[name]}
+        src={icons[name.toLowerCase()]}
         alt={`${name} icon`}
         role="image"
       />

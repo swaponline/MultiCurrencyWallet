@@ -31,7 +31,7 @@ export default class CommentRow extends React.PureComponent<WithdrawModalProps, 
     this.commentTextarea = React.createRef()
     this.state = {
       isOpen: false,
-      comment: null,
+      comment: '',
     }
   }
 
@@ -118,7 +118,7 @@ export default class CommentRow extends React.PureComponent<WithdrawModalProps, 
 
     const {
       isOpen = false,
-      comment = null
+      comment = ''
     } = this.state
 
     return (

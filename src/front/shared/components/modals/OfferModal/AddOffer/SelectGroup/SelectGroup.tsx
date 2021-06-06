@@ -18,7 +18,8 @@ const SelectGroup = ({ intl: IntlShape,  dynamicFee, isToken, extendedControls, 
   currencies, fiat, placeholder, label, disabled, className, inputValueLink, tooltip, balance, error,
   id, type, idFee, tooltipAboutFee, haveAmount, dontDisplayError, activeFiat, ...props
 }) => {
-  const currAllowed = currencies.filter((item) => !item.dontCreateOrder)
+  const currAllowed = currencies
+    .filter((item) => !item.dontCreateOrder)
 
   return (
     <div styleName={`${isDark ? 'dark' : ''}`}>
@@ -62,7 +63,7 @@ const SelectGroup = ({ intl: IntlShape,  dynamicFee, isToken, extendedControls, 
         }
         <CurrencySelect
           styleName="currencySelect"
-          selectedItemRender={(item) => item.fullTitle}
+          selectedItemRender={(item) => (item.blockchain) ? `${item.fullTitle} (${item.blockchain})` : item.fullTitle}
           placeholder="Enter the name of coin"
           selectedValue={selectedValue}
           onSelect={onSelect}

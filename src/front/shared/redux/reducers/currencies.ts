@@ -1,5 +1,8 @@
 import config from 'app-config'
 import TOKEN_STANDARDS from 'helpers/constants/TOKEN_STANDARDS'
+import { BLOCKCHAIN as BLOCKCHAIN_TYPE } from 'swap.app/constants/COINS'
+
+
 const NETWORK = process.env.MAINNET ? 'mainnet' : 'testnet'
 
 const getCustomTokenConfig = () => {
@@ -25,44 +28,45 @@ if (window
   buildOpts = { ...buildOpts, ...window.buildOptions }
 }
 
-if (window
-  && window.widgetERC20Tokens
-  && Object.keys(window.widgetERC20Tokens)
-  && Object.keys(window.widgetERC20Tokens).length
-) {
+if (window?.widgetERC20Tokens?.length) {
   buildOpts.ownTokens = window.widgetERC20Tokens
 }
-// TODO: need to split user's own tokens in the buildOpts.ownTokens
-// TODO: and make different objects (example: buildOpts.ownTokens[erc20|bep20|...])
-if (buildOpts.ownTokens && Object.keys(buildOpts.ownTokens).length) {
-  // Multi token mode
-  const cleanERC20 = {}
-  // Обходим оптимизацию, нам нельзя, чтобы в этом месте было соптимизированно в целую строку {#WIDGETTOKENCODE#}
+
+if (Array.isArray(buildOpts.ownTokens) && buildOpts.ownTokens.length) {
+  // ? we can't use here as whole string {#WIDGETTOKENCODE#} ?
   const wcPb = `{#`
   const wcP = (`WIDGETTOKENCODE`).toUpperCase()
   const wcPe = `#}`
-  Object.keys(buildOpts.ownTokens).forEach((key) => {
-    if (key !== (`${wcPb}${wcP}${wcPe}`)) {
-      const tokenData = buildOpts.ownTokens[key]
-      cleanERC20[key] = tokenData
+
+  Object.keys(TOKEN_STANDARDS).forEach((key) => {
+    config[TOKEN_STANDARDS[key].standard.toLowerCase()] = {}
+  })
+
+  buildOpts.ownTokens.forEach((token) => {
+    const symbol = token.name.toLowerCase()
+    const standard = token.standard.toLowerCase()
+
+    if (symbol.toUpperCase() !== (`${wcPb}${wcP}${wcPe}`)) {
+      config[standard][symbol] = token
     }
   })
-  config.erc20 = cleanERC20
 }
 
 const tokenItems: IUniversalObj[] = []
 
 Object.keys(TOKEN_STANDARDS).forEach((key) => {
   const standard = TOKEN_STANDARDS[key].standard
+  const blockchain = TOKEN_STANDARDS[key].currency
 
   Object.keys(config[standard]).forEach((name) => {
     tokenItems.push({
       name: name.toUpperCase(),
       title: name.toUpperCase(),
       icon: name,
-      value: name,
+      value: `{${blockchain.toUpperCase()}}${name}`,
       fullTitle: name,
       addAssets: true,
+      blockchain: BLOCKCHAIN_TYPE[blockchain.toUpperCase()],
       standard,
     })
   })
@@ -72,6 +76,7 @@ const tokenPartialItems: IUniversalObj[] = []
 
 Object.keys(TOKEN_STANDARDS).forEach((key) => {
   const standard = TOKEN_STANDARDS[key].standard
+  const blockchain = TOKEN_STANDARDS[key].currency
 
   Object.keys(config[standard])
     .filter((name) => config[standard][name].canSwap)
@@ -80,12 +85,14 @@ Object.keys(TOKEN_STANDARDS).forEach((key) => {
         name: name.toUpperCase(),
         title: name.toUpperCase(),
         icon: name,
-        value: name,
+        value: `{${blockchain.toUpperCase()}}${name}`,
         fullTitle: config[standard][name].fullName || name,
+        blockchain: BLOCKCHAIN_TYPE[blockchain.toUpperCase()],
         standard,
       })
     })
 })
+console.log('>>>>>> tokenPartialItems', tokenPartialItems, TOKEN_STANDARDS, BLOCKCHAIN_TYPE)
 
 const initialState = {
   items: [
@@ -96,6 +103,7 @@ const initialState = {
       icon: 'eth',
       value: 'eth',
       fullTitle: 'ethereum',
+      blockchain: BLOCKCHAIN_TYPE.ETH,
       addAssets: true,
     }] : [],
      //@ts-ignore
@@ -105,6 +113,7 @@ const initialState = {
       icon: 'bnb',
       value: 'bnb',
       fullTitle: 'binance coin',
+      blockchain: BLOCKCHAIN_TYPE.BNB,
       addAssets: true,
     }] : [],
     //@ts-ignore
@@ -114,6 +123,7 @@ const initialState = {
       icon: 'ghost',
       value: 'ghost',
       fullTitle: 'ghost',
+      blockchain: BLOCKCHAIN_TYPE.GHOST,
       addAssets: true,
     }] : [],
     //@ts-ignore
@@ -123,6 +133,7 @@ const initialState = {
       icon: 'next',
       value: 'next',
       fullTitle: 'next',
+      blockchain: BLOCKCHAIN_TYPE.NEXT,
       addAssets: true,
     }] : [],
     //@ts-ignore
@@ -132,6 +143,7 @@ const initialState = {
       icon: 'btc',
       value: 'btc',
       fullTitle: 'bitcoin',
+      blockchain: BLOCKCHAIN_TYPE.BTC,
       addAssets: true,
     },
     {
@@ -141,6 +153,7 @@ const initialState = {
       value: 'btcMultisig',
       fullTitle: 'bitcoinMultisig',
       addAssets: false,
+      blockchain: BLOCKCHAIN_TYPE.BTC,
       dontCreateOrder: true,
     },
     {
@@ -149,6 +162,7 @@ const initialState = {
       icon: 'btc',
       value: 'btcMultisigPin',
       fullTitle: 'bitcoinMultisigPin',
+      blockchain: BLOCKCHAIN_TYPE.BTC,
       addAssets: false,
       dontCreateOrder: true,
     },
@@ -158,6 +172,7 @@ const initialState = {
       icon: 'btc',
       value: 'btcMultisig',
       fullTitle: 'bitcoinMultisig',
+      blockchain: BLOCKCHAIN_TYPE.BTC,
       addAssets: false,
       dontCreateOrder: true,
     }] : [],
@@ -295,64 +310,50 @@ if (config.isWidget) {
   ]
 
   // Мульти валюта с обратной совместимостью одиночного билда
-  const multiTokenNames = (window.widgetERC20Tokens) ? Object.keys(window.widgetERC20Tokens) : []
+  const widgetCustomTokens = window?.widgetERC20Tokens?.length ? window.widgetERC20Tokens : []
 
-  if (multiTokenNames.length > 0) {
+  if (widgetCustomTokens.length) {
     // First token in list - is main - fill single-token erc20 config
-    config.erc20token = multiTokenNames[0]
-    config.erc20[config.erc20token] = window.widgetERC20Tokens[config.erc20token]
-    multiTokenNames.forEach((key) => {
-      //@ts-ignore
+    const firstToken = widgetCustomTokens[0]
+
+    config.erc20token = firstToken.name
+    config[firstToken.standard][firstToken.name] = firstToken
+
+    widgetCustomTokens.forEach((token) => {
+      const name = token.name
+
       initialState.items.push({
-        name: key.toUpperCase(),
-        title: key.toUpperCase(),
-        icon: key,
-        value: key,
-        fullTitle: window.widgetERC20Tokens[key].fullName,
+        name: name.toUpperCase(),
+        title: name.toUpperCase(),
+        icon: name,
+        value: name,
+        fullTitle: token.fullName,
       })
       initialState.partialItems.push({
-        name: key.toUpperCase(),
-        title: key.toUpperCase(),
-        icon: key,
-        value: key,
-        fullTitle: window.widgetERC20Tokens[key].fullName,
+        name: name.toUpperCase(),
+        title: name.toUpperCase(),
+        icon: name,
+        value: name,
+        fullTitle: token.fullName,
       })
-    })
-
-  } else {
-    //@ts-ignore
-    initialState.items.push({
-      name: config.erc20token.toUpperCase(),
-      title: config.erc20token.toUpperCase(),
-      icon: config.erc20token,
-      value: config.erc20token,
-      fullTitle: config.erc20[config.erc20token].fullName,
-    })
-    initialState.partialItems.push({
-      name: config.erc20token.toUpperCase(),
-      title: config.erc20token.toUpperCase(),
-      icon: config.erc20token,
-      value: config.erc20token,
-      fullTitle: config.erc20[config.erc20token].fullName,
+      initialState.addSelectedItems.push({
+        //@ts-ignore
+        name: name.toUpperCase(),
+        //@ts-ignore
+        title: name.toUpperCase(),
+        //@ts-ignore
+        icon: name,
+        //@ts-ignore
+        value: name,
+        //@ts-ignore
+        fullTitle: token.fullName,
+      })
     })
   }
 
-  initialState.addSelectedItems = [
-    {
-      //@ts-ignore: strictNullChecks
-      name: config.erc20token.toUpperCase(),
-      //@ts-ignore: strictNullChecks
-      title: config.erc20token.toUpperCase(),
-      //@ts-ignore: strictNullChecks
-      icon: config.erc20token,
-      //@ts-ignore: strictNullChecks
-      value: config.erc20token,
-      //@ts-ignore: strictNullChecks
-      fullTitle: config.erc20[config.erc20token].fullName,
-    },
-  ]
+
 } else {
-  // TODO: rename - addCustomERC20 -> addCustomToken ?
+  // TODO: addCustomERC20 -> addCustomToken
   if (!config.isWidget && buildOpts.addCustomERC20) {
     const customTokenConfig = getCustomTokenConfig()
 

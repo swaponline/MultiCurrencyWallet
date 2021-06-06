@@ -22,13 +22,19 @@ const filteredDecimals = ({ amount, currency }) =>
   new BigNumber(amount).decimalPlaces(TOKEN_DECIMALS[currency] || 0).toString()
 
 export const parseTicker = (order) => {
-  const { buyCurrency: buy, sellCurrency: sell } = order
+  const {
+    buyCurrency,
+    buyBlockchain,
+    sellCurrency,
+    sellBlockchain,
+  } = order
 
+  const buy = (buyBlockchain !== ``) ? `{${buyBlockchain}}${buyCurrency}` : buyCurrency
+  const sell = (sellBlockchain !== ``) ? `{${sellBlockchain}}${sellCurrency}` : sellCurrency
   const BS = `${buy}-${sell}`.toUpperCase() // buys ETH, sells BTC, BID
   const SB = `${sell}-${buy}`.toUpperCase() // sells ETH = ASK
 
   if (TRADE_TICKERS.includes(BS)) {
-
     return {
       ticker: BS,
       type: PAIR_BID,
@@ -36,7 +42,6 @@ export const parseTicker = (order) => {
   }
 
   if (TRADE_TICKERS.includes(SB)) {
-
     return {
       ticker: SB,
       type: PAIR_ASK,
@@ -51,7 +56,6 @@ export const parseTicker = (order) => {
 }
 
 export const parsePair = (str) => {
-
   if (!str) {
     throw new Error(`Empty string: ${str}`)
   }
@@ -134,7 +138,6 @@ export default class Pair {
   toOrder() {
     const { ticker, type, price, amount } = this
 
-    console.log(`create order ${this}`)
     const { MAIN, BASE } = parsePair(ticker)
     //@ts-ignore
     if (!MAIN || !BASE) throw new Error(`CreateOrderError: No currency: ${main}-${base}`)
@@ -184,7 +187,9 @@ export default class Pair {
   static check(order, ticker) {
     try {
       const pair = Pair.fromOrder(order)
+
       const { MAIN, BASE } = parsePair(ticker.toUpperCase())
+
       //@ts-ignore: strictNullChecks
       return pair.ticker === `${MAIN}-${BASE}`
     } catch (err) {

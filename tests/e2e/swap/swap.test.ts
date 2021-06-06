@@ -50,7 +50,7 @@ describe('Swap e2e test', () => {
       const [sellCurrencySelectorList, buyCurrencySelectorList] = await TakerPage.$$('.dropDownSelectCurrency')
 
       await buyCurrencySelectorList.click()
-      await TakerPage.click(`#wbtc`)
+      await TakerPage.click("[id='{ETH}wbtc']")
 
       await TakerPage.evaluate((selector) => document.querySelector(selector).click(), '.dropDownReceive')
       await TakerPage.click(`#Internal`)
@@ -227,6 +227,8 @@ describe('Swap e2e test', () => {
 
       await MakerPage.waitForSelector('#feeInfoBlockMinerFee')
       await MakerPage.evaluate((selector) => document.querySelector(selector).click(), '#slow');
+
+      await timeOut(5 * 1000)
 
       await MakerPage.$('#sendButton').then((sendButton) => sendButton.click())
       await TakerPage.$('#sendButton').then((sendButton) => sendButton.click())

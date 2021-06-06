@@ -1,8 +1,24 @@
+import { BASE_TOKEN_CURRENCY } from 'swap.app/constants/COINS'
 import erc20Like from 'common/erc20Like'
 import helpers from 'helpers'
 import actions from 'redux/actions'
 import apiLooper from 'helpers/apiLooper'
 
+const getTokenBaseCurrency = (tokenKey) => {
+  const baseCurrencyRegExp = /^\{[a-z]+\}/
+  const baseTokenCurrencyPrefix = tokenKey.match(baseCurrencyRegExp)
+
+  if (baseTokenCurrencyPrefix) {
+    const baseTokenCurrency = baseTokenCurrencyPrefix[0].match(/[a-z]+/)
+    const constantCurrency = baseTokenCurrency && BASE_TOKEN_CURRENCY[baseTokenCurrency[0].toUpperCase()]
+
+    if (constantCurrency) {
+      return constantCurrency.toLowerCase()
+    }
+  }
+
+  return false
+}
 
 /**
  * Запрашивает информацию о tx (final balances)
@@ -83,22 +99,29 @@ const getLink = (currency, txId) => {
   console.warn(`Function getLinkToInfo for ${prefix} not defined`)
 }
 
-const getInfo = (currency, txRaw) => {
-  const prefix = helpers.getCurrencyKey(currency, false)
+type GetInfoResult = {
+  tx: string
+  link: string
+}
 
-  if (actions[prefix]?.getTx) {
-    const tx = actions[prefix].getTx(txRaw)
-    const link =  getLink(prefix, tx)
-    return {
-      tx,
-      link,
-    }
-  }
-  console.warn(`Function getTx for ${prefix} not defined`)
-  return {
+const getInfo = (currency, txRaw): GetInfoResult => {
+  const prefix = helpers.getCurrencyKey(currency, true)
+  const info = {
     tx: '',
     link: '',
   }
+
+  if (actions[prefix]?.getTx) {
+    const tx = actions[prefix].getTx(txRaw)
+    const link = getLink(prefix, tx)
+
+    info.tx = tx
+    info.link = link
+  } else {
+    console.warn(`Function getTx for ${prefix} not defined`)
+  }
+
+  return info
 }
 
 export default {
@@ -107,4 +130,5 @@ export default {
   getTxRouter,
   pullTxBalances,
   fetchTxBalances,
+  getTokenBaseCurrency,
 }

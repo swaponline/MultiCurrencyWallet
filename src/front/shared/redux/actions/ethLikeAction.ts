@@ -15,6 +15,7 @@ class EthLikeAction {
   readonly coinName: string
   readonly ticker: string // upper case (ex. ETH)
   readonly tickerKey: string // lower case (ex. eth)
+  readonly privateKeyName: string
   readonly explorerName: string
   readonly explorerLink: string
   readonly explorerApiKey: string
@@ -30,6 +31,7 @@ class EthLikeAction {
     const {
       coinName,
       ticker,
+      privateKeyName,
       explorerName,
       explorerLink,
       explorerApiKey,
@@ -39,12 +41,17 @@ class EthLikeAction {
 
     this.coinName = coinName
     this.ticker = ticker
+    this.privateKeyName = privateKeyName.toLowerCase()
     this.tickerKey = ticker.toLowerCase()
     this.explorerName = explorerName
     this.explorerLink = explorerLink
     this.explorerApiKey = explorerApiKey
     this.adminFeeObj = adminFeeObj
     this.Web3 = web3
+  }
+
+  getWeb3 = () => {
+    return this.Web3
   }
 
   reportError = (error) => {
@@ -97,55 +104,44 @@ class EthLikeAction {
       .catch((error) => console.error(error))
   }
 
-  fetchTxInfo = (hash, cacheResponse) => {
-    const url = `?module=proxy&action=eth_getTransactionByHash&txhash=${hash}&apikey=${this.explorerApiKey}`
-
+  fetchTxInfo = (hash) => {
     return new Promise((res, rej) => {
-      return apiLooper
-        .get(this.explorerName, url, {
-          cacheResponse,
-        })
-        .then((response: any) => {
-          if (response && response.result) {
-            const { from, to, value, gas, gasPrice, blockHash } = response.result
+      this.Web3.eth.getTransaction(hash)
+      .then((tx) => {
+        const { from, to, value, gas, gasPrice, blockHash } = tx
 
-            const amount = this.Web3.utils.fromWei(value)
-            const minerFee = new BigNumber(this.Web3.utils.toBN(gas).toNumber())
-              .multipliedBy(this.Web3.utils.toBN(gasPrice).toNumber())
-              .dividedBy(1e18)
-              .toNumber()
+        const amount = this.Web3.utils.fromWei(value)
+        const minerFee = new BigNumber(this.Web3.utils.toBN(gas).toNumber())
+          .multipliedBy(this.Web3.utils.toBN(gasPrice).toNumber())
+          .dividedBy(1e18)
+          .toNumber()
 
-            let adminFee: number | false = false
+        let adminFee: number | false = false
 
-            if (this.adminFeeObj && to !== this.adminFeeObj.address) {
-              const feeFromUsersAmount = new BigNumber(this.adminFeeObj.fee)
-                .dividedBy(100)
-                .multipliedBy(amount)
+        if (this.adminFeeObj && to !== this.adminFeeObj.address) {
+          const feeFromUsersAmount = new BigNumber(this.adminFeeObj.fee)
+            .dividedBy(100)
+            .multipliedBy(amount)
 
-              if (new BigNumber(this.adminFeeObj.min).isGreaterThan(feeFromUsersAmount)) {
-                adminFee = new BigNumber(this.adminFeeObj.min).toNumber()
-              } else {
-                adminFee = feeFromUsersAmount.toNumber()
-              }
-            }
-
-            res({
-              amount,
-              afterBalance: null,
-              receiverAddress: to,
-              senderAddress: from,
-              minerFee,
-              minerFeeCurrency: this.ticker,
-              adminFee,
-              confirmed: blockHash !== null,
-            })
+          if (new BigNumber(this.adminFeeObj.min).isGreaterThan(feeFromUsersAmount)) {
+            adminFee = new BigNumber(this.adminFeeObj.min).toNumber()
           } else {
-            res(false)
+            adminFee = feeFromUsersAmount.toNumber()
           }
+        }
+
+        res({
+          amount,
+          afterBalance: null,
+          receiverAddress: to,
+          senderAddress: from,
+          minerFee,
+          minerFeeCurrency: this.ticker,
+          adminFee,
+          confirmed: blockHash !== null,
         })
-        .catch((error) => {
-          rej(error)
-        })
+      })
+      .catch((error) => rej(error))
     })
   }
 
@@ -173,22 +169,11 @@ class EthLikeAction {
 
       privateKey = accData.privateKey
       data = this.Web3.eth.accounts.privateKeyToAccount(privateKey)
-      localStorage.setItem(constants.privateKeyNames[`${this.tickerKey}Mnemonic`], privateKey)
+      localStorage.setItem(constants.privateKeyNames[`${this.privateKeyName}Mnemonic`], privateKey)
 
-      // BNB and ETH addresses are compatible
-      if (this.ticker === 'BNB' || this.ticker === 'ETH') {
-        localStorage.setItem(constants.privateKeyNames.ethMnemonic, privateKey)
-        localStorage.setItem(constants.privateKeyNames.bnbMnemonic, privateKey)
-      }
     }
 
-    // BNB and ETH addresses are compatible
-    if (this.ticker === 'BNB' || this.ticker === 'ETH') {
-      localStorage.setItem(constants.privateKeyNames.bnb, data.privateKey)
-      localStorage.setItem(constants.privateKeyNames.eth, data.privateKey)
-    }
-
-    localStorage.setItem(constants.privateKeyNames[this.tickerKey], data.privateKey)
+    localStorage.setItem(constants.privateKeyNames[this.privateKeyName], data.privateKey)
 
     this.Web3.eth.accounts.wallet.add(data.privateKey)
     data.isMnemonic = sweepToMnemonicReady
@@ -570,6 +555,7 @@ export default {
   ETH: new EthLikeAction({
     coinName: 'Ethereum',
     ticker: 'ETH',
+    privateKeyName: 'eth',
     explorerName: 'etherscan',
     explorerLink: externalConfig.link.etherscan,
     explorerApiKey: externalConfig.api.etherscan_ApiKey,
@@ -579,6 +565,7 @@ export default {
   BNB: new EthLikeAction({
     coinName: 'Binance Coin',
     ticker: 'BNB',
+    privateKeyName: 'eth', // Используем приватный ключ эфира
     explorerName: 'bscscan',
     explorerLink: externalConfig.link.bscscan,
     explorerApiKey: externalConfig.api.bscscan_ApiKey,
