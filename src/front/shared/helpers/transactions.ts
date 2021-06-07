@@ -64,16 +64,8 @@ const pullTxBalances = (txId, amount, balances, adminFee) => apiLooper.post('txi
 }).then(({ answer }) => answer).catch((e) => false)
 
 const getTxRouter = (currency, txId) => {
-  if (erc20Like.erc20.isToken({ name: currency })) {
-    return actions.erc20.getTxRouter(txId, currency)
-  }
-  
-  if (erc20Like.bep20.isToken({ name: currency })) {
-    return actions.bep20.getTxRouter(txId, currency)
-  }
-
-  if (erc20Like.erc20matic.isToken({ name: currency })) {
-    return actions.erc20matic.getTxRouter(txId, currency)
+  if (erc20Like.isToken({ name: currency })) {
+    return `/token/${currency}/tx/${txId}`
   }
 
   const prefix = helpers.getCurrencyKey(currency, false)
@@ -89,7 +81,7 @@ const getLink = (currency, txId) => {
   if (erc20Like.erc20.isToken({ name: currency })) {
     return actions.erc20.getLinkToInfo(txId)
   }
-  
+
   if (erc20Like.bep20.isToken({ name: currency })) {
     return actions.bep20.getLinkToInfo(txId)
   }
