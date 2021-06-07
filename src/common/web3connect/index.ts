@@ -265,7 +265,7 @@ export default class Web3Connect extends EventEmitter {
 
   isCorrectNetwork() {
     // @ToDo - test Metamask dAppBrowser
-    const availableNetworks = [1, 3, 56, 97]
+    const availableNetworks = [1, 3, 56, 97, 137, 80001]
     const nonExistent = -42 // random (fix ts error)
 
     return (

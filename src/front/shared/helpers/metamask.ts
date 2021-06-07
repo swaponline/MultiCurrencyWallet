@@ -145,11 +145,18 @@ const addMetamaskWallet = () => {
       fullWalletName: `BSC (${web3connect.getProviderTitle()})`,
       currencyInfo: user.bnbData?.infoAboutCurrency,
     }
+    const maticWalletInfo = {
+      currencyName: 'MATIC',
+      fullWalletName: `MATIC (${web3connect.getProviderTitle()})`,
+      currencyInfo: user.maticData?.infoAboutCurrency,
+    }
     const walletMap = new Map([
       [1, ethWalletInfo], // ETH Mainnet
       [3, ethWalletInfo], // ETH Testnet (Ropsten)
       [56, bscWalletInfo], // BSC Mainnet
       [97, bscWalletInfo], // BSC Testnet
+      [137, maticWalletInfo], // MATIC Mainnet
+      [80001, maticWalletInfo], // MATIC Testnet
     ])
 
     const hexChainId = web3connect.getChainId()
