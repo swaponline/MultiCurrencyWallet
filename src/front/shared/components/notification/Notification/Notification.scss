@@ -66,21 +66,18 @@
   padding: 20px 15px 10px 15px;
   z-index: 5;
   border-radius: 4px;
-  
-  &.error-notification-heading {
-    font-size: 16px;
-  }
-  
-  &.error-notification-text {
-    font-size: 14px;
-  }
-  
+
   p {
     margin-bottom: 20px;
   }
 }
 
+.warning {
+  background-color: $color-warning,
+}
+
 .content {
+  margin-right: 0.5rem;
   font-size: 18px;
 }
 

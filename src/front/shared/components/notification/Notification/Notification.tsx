@@ -75,6 +75,7 @@ const Notification = (props) => {
     'mounted': isMounted,
     'removed': isRemoved,
     'errorNotification': type === 'ErrorNotification',
+    'warning': type === 'warning'
   })
 
   return (

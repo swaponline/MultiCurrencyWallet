@@ -4676,16 +4676,23 @@
     "id": "MetamaskDisconnect",
     "message": "Отключить кошелек",
     "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx",
       "src/front/shared/pages/Wallet/Row/Row.tsx"
     ]
   },
   {
     "id": "MM_DisconnectExternalWallet",
-    "message": "Маркетмакиг работает только с внутренним кошельком. Пожалуйста, отключите внешний кошелек"
+    "message": "Маркетмакиг работает только с внутренним кошельком. Пожалуйста, отключите внешний кошелек",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_TurnOffMarketmaking",
-    "message": "Маркетмейкинг отключен, так как подключен внешний кошелек"
+    "message": "Маркетмейкинг отключен, так как подключен внешний кошелек",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "SwitchLangES",
@@ -5002,8 +5009,8 @@
     "message": "Пожалуйста, подождите",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerAbToUtxo.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerUtxoToAb.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerUtxoToAb.tsx"
     ]
   },
@@ -5012,8 +5019,8 @@
     "message": "Проверка баланса..",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerAbToUtxo.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerUtxoToAb.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerUtxoToAb.tsx"
     ]
   },
@@ -5022,8 +5029,8 @@
     "message": "Ожидание внесения {buyCurrency} другим участником",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerAbToUtxo.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerUtxoToAb.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerUtxoToAb.tsx"
     ]
   },
@@ -5032,8 +5039,8 @@
     "message": "Пополнение счета {sellCurrency}.{br}Это может занять несколько минут",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerAbToUtxo.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerUtxoToAb.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerUtxoToAb.tsx"
     ]
   },
@@ -5042,8 +5049,8 @@
     "message": "Запрос на вывод средств из контракта {buyCurrency}",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerAbToUtxo.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerUtxoToAb.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerUtxoToAb.tsx"
     ]
   },
@@ -5052,8 +5059,8 @@
     "message": "{{buyCurrency} токены были переведены в ваш кошелек. Проверьте баланс",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerAbToUtxo.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerUtxoToAb.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerUtxoToAb.tsx"
     ]
   },
@@ -5062,8 +5069,8 @@
     "message": "Спасибо за использование Swap.Online!",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerAbToUtxo.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerUtxoToAb.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerUtxoToAb.tsx"
     ]
   },
@@ -5636,99 +5643,164 @@
     "id": "MM_Promo_Title",
     "message": "Как заработать на моем BTC депозите?",
     "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
+      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx",
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
   },
   {
     "id": "MM_Promo_TitleBody",
     "message": "Пользователи в нашем обменнике swap.io меняют BTC на {token} (токен который стоит как BTC, но работает на {Ab_Title}), и обратно. Ты получишь мин. 10% годовых в качестве комиссии c обменов с низким impermanent loss {link}.",
     "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
+      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx",
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
   },
   {
     "id": "MMPercentEarn",
-    "message": "Вы будете зарабатывать 0,5% с каждого свопа"
+    "message": "Вы будете зарабатывать 0,5% с каждого свопа",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_BTCBalance",
-    "message": "Баланс BTC:"
+    "message": "Баланс BTC:",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_ConnectMetamask",
-    "message": "Подключить Metamask"
+    "message": "Подключить Metamask",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_DepositeWallet",
-    "message": "для пополнения переведите на"
+    "message": "для пополнения переведите на",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_DisconnectMetamask",
-    "message": "Отключить Metamask"
+    "message": "Отключить Metamask",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_ETHBalance",
-    "message": "Баланс {AB_Coin}: {balance} (для майнер комиссии)"
+    "message": "Баланс {AB_Coin}: {balance} (для майнер комиссии)",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_StartHere",
-    "message": "Начните маркетмейкинг здесь"
+    "message": "Начните маркетмейкинг здесь",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_Wallet_Required",
-    "message": "Для запуска маркетмейкинга необходим горячий кошелёк (BTC, {AB_Coin}, {token})."
+    "message": "Для запуска маркетмейкинга необходим горячий кошелёк (BTC, {AB_Coin}, {token}).",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_Wallet_Create",
-    "message": "Создать кошелёк"
+    "message": "Создать кошелёк",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_Wallet_Restore",
-    "message": "Восстановить из 12 слов"
+    "message": "Восстановить из 12 слов",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_NotEnoughCoins",
-    "message": "Недостаточно средств. Вам нужно пополнить свой BTC или {token}"
+    "message": "Недостаточно средств. Вам нужно пополнить свой BTC или {token}",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_NotEnoughtEth",
-    "message": "Недостаточно {AB_Coin}, чтобы заплатить комиссию майнерам. У вас должно быть не менее 0,02 {AB_Coin}"
+    "message": "Недостаточно {AB_Coin}, чтобы заплатить комиссию майнерам. У вас должно быть не менее 0,02 {AB_Coin}",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_SwapHistory_Empty",
-    "message": "У вас нет свапов, включите маркетмейкинг и ждите пока кто-то примет ваши заказы"
+    "message": "У вас нет свапов, включите маркетмейкинг и ждите пока кто-то примет ваши заказы",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_SwapHistory_LockTime",
-    "message": "Время блокировки"
+    "message": "Время блокировки",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_SwapHistory_Status",
-    "message": "Статус"
+    "message": "Статус",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_SwapHistory_Step",
-    "message": "Шаг"
+    "message": "Шаг",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_SwapHistory_Title",
-    "message": "История свапов"
+    "message": "История свапов",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_SwapHistory_YouBuy",
-    "message": "Вы покупаете"
+    "message": "Вы покупаете",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_SwapHistory_YouSell",
-    "message": "Вы продаете"
+    "message": "Вы продаете",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_ToggleText",
-    "message": "Маркетмейкер BTC/{token}"
+    "message": "Маркетмейкер BTC/{token}",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_TokenBalance",
-    "message": "Баланс {token}:"
+    "message": "Баланс {token}:",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_TotalBalance",
@@ -5736,31 +5808,52 @@
   },
   {
     "id": "MM_ToggleTextEnabled",
-    "message": "Вы должны быть в сети все время, иначе вы не будете зарабатывать"
+    "message": "Вы должны быть в сети все время, иначе вы не будете зарабатывать",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_ToggleTextDisabled",
-    "message": "Включите переключатель, чтобы начать зарабатывать"
+    "message": "Включите переключатель, чтобы начать зарабатывать",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_TotalEarned",
-    "message": "Всего заработано:"
+    "message": "Всего заработано:",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_MarketmakingSimbols",
-    "message": "{token} + BTC"
+    "message": "{token} + BTC",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_MarketmakingBalanceTitle",
-    "message": "Общая ликвидность:"
+    "message": "Общая ликвидность:",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_whatIsWBTCTooltip1",
-    "message": "{tokenFullName} ({token}) - это токен {tokenStandart}, который представляет Биткойн (BTC) в блокчейне {blockchainName}."
+    "message": "{tokenFullName} ({token}) - это токен {tokenStandart}, который представляет Биткойн (BTC) в блокчейне {blockchainName}.",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_whatIsWBTCTooltip2",
-    "message": "{token} был создан, чтобы позволить держателям биткойнов участвовать в приложениях децентрализованных финансов («DeFi»), которые популярны на {blockchainName}."
+    "message": "{token} был создан, чтобы позволить держателям биткойнов участвовать в приложениях децентрализованных финансов («DeFi»), которые популярны на {blockchainName}.",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_InstallExtentionTitle",
@@ -5806,7 +5899,7 @@
   },
   {
     "id": "CleanLocalStorage",
-    "message": "Упс, похоже приложению нужно перезагрузить локальное хранилище. Пожалуйста, сохраните начальную фразу из 12 слов (если вы не сохраняли ее раньше), затем очистите локальное хранилище ({link}) и снова импортируйте начальную фразу из 12 слов. Извините за неудобства.",
+    "message": "Упс, похоже, приложение должно очистить ваше локальное хранилище. Пожалуйста, сохраните свою начальную фразу из 12 слов (если вы не сохраняли ее раньше), затем очистите локальное хранилище, нажав на кнопку и снова импортируйте начальную фразу из 12 слов. Извините за неудобства. {indent} {button}",
     "files": [
       "src/front/shared/components/Header/Header.tsx"
     ]
@@ -5816,6 +5909,13 @@
     "message": "Нет доступных кошельков",
     "files": [
       "src/front/shared/pages/Wallet/Wallet.tsx"
+    ]
+  },
+  {
+    "id": "ClearAndReload",
+    "message": "Очистить и перезагрузить",
+    "files": [
+      "src/front/shared/components/Header/Header.tsx"
     ]
   }
 ]

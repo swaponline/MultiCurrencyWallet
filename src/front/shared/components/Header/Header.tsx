@@ -28,7 +28,7 @@ import { localisedUrl } from '../../helpers/locale'
 import { messages, getMenuItems, getMenuItemsMobile } from './config'
 import { user } from 'helpers'
 import { ThemeSwitcher } from './ThemeSwitcher'
-
+import Button from 'components/controls/Button/Button'
 // Incoming swap requests and tooltips (revert)
 import UserTooltip from 'components/Header/UserTooltip/UserTooltip'
 import feedback from 'shared/helpers/feedback'
@@ -103,26 +103,35 @@ class Header extends Component<any, any> {
     this.lastScrollTop = 0
   }
 
+  clearLocalStorage = () => {
+    window.localStorage.clear()
+    window.location.reload()
+  }
+
   componentDidMount() {
     this.handlerAsync()
 
     // Temporarily
-    // show a request for users that they have to clean
-    // their local storage part with our data
+    // show a request for users to clear their local storage
     const isWalletCreate = localStorage.getItem(constants.localStorage.isWalletCreate)
     const sawWarning = localStorage.getItem('sawLocalStorageWarning')
     const oldUserDidNotSee = sawWarning !== 'true' && isWalletCreate === 'true'
     const newUser = sawWarning !== 'true' && isWalletCreate !== 'true'
 
     if (oldUserDidNotSee) {
-      localStorage.setItem('sawLocalStorageWarning', 'true')
+      feedback.app.warning('Modal about local storage was opened')
       actions.notifications.show(constants.notifications.Message, {
         message: (
           <FormattedMessage
             id="CleanLocalStorage"
-            defaultMessage="Oops, looks like the app needs to reload your local storage. Please save your 12 words seed phrase (if you have not saved it before), then clear local storage ({link}) and import 12 words seed again. Sorry for the inconvenience."
+            defaultMessage="Oops, looks like the app needs to clean your local storage. Please save your 12 words seed phrase (if you have not saved it before), then clear local storage by clicking on the button and import 12 words seed again. Sorry for the inconvenience. {indent} {button}"
             values={{
-              link: <a href='https://www.leadshook.com/help/how-to-clear-local-storage-in-google-chrome-browser/' target='_blank'>how to do it</a>
+              indent: <><br /><br /></>,
+              button: (
+                <Button empty onClick={this.clearLocalStorage}>
+                  <FormattedMessage id="ClearAndReload" defaultMessage="Clear and reload" />
+                </Button>
+              )
             }}
           />
         ),

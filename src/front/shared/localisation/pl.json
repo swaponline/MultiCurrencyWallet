@@ -4557,16 +4557,23 @@
     "id": "MetamaskDisconnect",
     "message": "Odłącz portfel",
     "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx",
       "src/front/shared/pages/Wallet/Row/Row.tsx"
     ]
   },
   {
     "id": "MM_DisconnectExternalWallet",
-    "message": "Marketmakig działa tylko z portfelem wewnętrznym. Odłącz zewnętrzny portfel"
+    "message": "Marketmakig działa tylko z portfelem wewnętrznym. Odłącz zewnętrzny portfel",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_TurnOffMarketmaking",
-    "message": "Tworzenie rynku zostało wyłączone, ponieważ Twój portfel zewnętrzny jest podłączony"
+    "message": "Tworzenie rynku zostało wyłączone, ponieważ Twój portfel zewnętrzny jest podłączony",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "SwitchLangES",
@@ -4890,8 +4897,8 @@
     "message": "Proszę czekać",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerAbToUtxo.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerUtxoToAb.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerUtxoToAb.tsx"
     ]
   },
@@ -4900,8 +4907,8 @@
     "message": "Sprawdzanie salda..",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerAbToUtxo.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerUtxoToAb.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerUtxoToAb.tsx"
     ]
   },
@@ -4910,8 +4917,8 @@
     "message": "Oczekiwanie na wpłatę {buyCurrency} przez innego uczestnika",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerAbToUtxo.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerUtxoToAb.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerUtxoToAb.tsx"
     ]
   },
@@ -4920,8 +4927,8 @@
     "message": "vWpłata na {sellCurrency}.{br}Może to potrwać kilka minut",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerAbToUtxo.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerUtxoToAb.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerUtxoToAb.tsx"
     ]
   },
@@ -4930,8 +4937,8 @@
     "message": "Żądanie odstąpienia od umowy {buyCurrency}",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerAbToUtxo.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerUtxoToAb.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerUtxoToAb.tsx"
     ]
   },
@@ -4940,8 +4947,8 @@
     "message": "{buyCurrency} tokeny zostały dodane do Twojego portfela. Sprawdź saldo",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerAbToUtxo.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerUtxoToAb.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerUtxoToAb.tsx"
     ]
   },
@@ -4950,8 +4957,8 @@
     "message": "Dziękujemy za korzystanie ze Swap.Online!",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerAbToUtxo.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerUtxoToAb.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerUtxoToAb.tsx"
     ]
   },
@@ -5636,99 +5643,164 @@
     "id": "MM_Promo_Title",
     "message": "Jak zarabiać na moim depozycie BTC?",
     "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
+      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx",
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
   },
   {
     "id": "MM_Promo_TitleBody",
     "message": "Użytkownicy w naszym wymienniku swap.io wymieniają BTC na {token} (token, który kosztuje jak BTC, ale działa na {Ab_Title}) i odwrotnie. Dostajesz min. 10% APY (rocznie) jako prowizja od giełd z niską impermanent loss {link}.",
     "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
+      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx",
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
   },
   {
     "id": "MMPercentEarn",
-    "message": "Zarobisz 0,5% z każdego swapu"
+    "message": "Zarobisz 0,5% z każdego swapu",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_BTCBalance",
-    "message": "Równowaga BTC:"
+    "message": "Równowaga BTC:",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_ConnectMetamask",
-    "message": "Połącz Metamask"
+    "message": "Połącz Metamask",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_DepositeWallet",
-    "message": "doładowanie, przelew na"
+    "message": "doładowanie, przelew na",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_DisconnectMetamask",
-    "message": "Rozłącz Metamask"
+    "message": "Rozłącz Metamask",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_ETHBalance",
-    "message": "Równowaga {AB_Coin}: {balance} (dla górników opłata)"
+    "message": "Równowaga {AB_Coin}: {balance} (dla górników opłata)",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_StartHere",
-    "message": "Zacznij tworzyć rynek tutaj"
+    "message": "Zacznij tworzyć rynek tutaj",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_Wallet_Required",
-    "message": "Do uruchomienia tworzenia rynku wymagany jest gorący portfel (BTC, {AB_Coin}, {token})."
+    "message": "Do uruchomienia tworzenia rynku wymagany jest gorący portfel (BTC, {AB_Coin}, {token}).",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_Wallet_Create",
-    "message": "Utwórz portfel"
+    "message": "Utwórz portfel",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_Wallet_Restore",
-    "message": "Przywróć z nasion 12-wyrazowych"
+    "message": "Przywróć z nasion 12-wyrazowych",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_NotEnoughCoins",
-    "message": "Niewystarczające fundusze. Musisz doładować swój BTC lub {token}"
+    "message": "Niewystarczające fundusze. Musisz doładować swój BTC lub {token}",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_NotEnoughtEth",
-    "message": "Za mało {AB_Coin}, by zapłacić górnikom. Musisz mieć co najmniej 0.02 {AB_Coin}"
+    "message": "Za mało {AB_Coin}, by zapłacić górnikom. Musisz mieć co najmniej 0.02 {AB_Coin}",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_SwapHistory_Empty",
-    "message": "Nie masz żadnych swapów, włącz MM i czekaj, gdy ktoś przyjmie Twoje zamówienia"
+    "message": "Nie masz żadnych swapów, włącz MM i czekaj, gdy ktoś przyjmie Twoje zamówienia",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_SwapHistory_LockTime",
-    "message": "Czas blokady"
+    "message": "Czas blokady",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_SwapHistory_Status",
-    "message": "Status"
+    "message": "Status",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_SwapHistory_Step",
-    "message": "Krok"
+    "message": "Krok",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_SwapHistory_Title",
-    "message": "Historia wymiany"
+    "message": "Historia wymiany",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_SwapHistory_YouBuy",
-    "message": "Kupujesz"
+    "message": "Kupujesz",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_SwapHistory_YouSell",
-    "message": "Sprzedajesz"
+    "message": "Sprzedajesz",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_ToggleText",
-    "message": "Tworzenie rynku BTC/{token}"
+    "message": "Tworzenie rynku BTC/{token}",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_TokenBalance",
-    "message": "Równowaga {token}:"
+    "message": "Równowaga {token}:",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_TotalBalance",
@@ -5736,31 +5808,52 @@
   },
   {
     "id": "MM_ToggleTextEnabled",
-    "message": "Musisz być cały czas online, w przeciwnym razie nie zarobisz"
+    "message": "Musisz być cały czas online, w przeciwnym razie nie zarobisz",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_ToggleTextDisabled",
-    "message": "Włącz przełącznik, aby zacząć zarabiać"
+    "message": "Włącz przełącznik, aby zacząć zarabiać",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_TotalEarned",
-    "message": "Ogółem zarobione:"
+    "message": "Ogółem zarobione:",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_MarketmakingSimbols",
-    "message": "{token} + BTC"
+    "message": "{token} + BTC",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_MarketmakingBalanceTitle",
-    "message": "Całkowita płynność:"
+    "message": "Całkowita płynność:",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_whatIsWBTCTooltip1",
-    "message": "{tokenFullName} ({token}) to token {tokenStandart}, który reprezentuje Bitcoin (BTC) w łańcuchu blokowym {blockchainName}."
+    "message": "{tokenFullName} ({token}) to token {tokenStandart}, który reprezentuje Bitcoin (BTC) w łańcuchu blokowym {blockchainName}.",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_whatIsWBTCTooltip2",
-    "message": "{token} zostało stworzone, aby umożliwić posiadaczom Bitcoinów udział w zdecentralizowanych aplikacjach finansowych („DeFi”), które są popularne w {blockchainName}."
+    "message": "{token} zostało stworzone, aby umożliwić posiadaczom Bitcoinów udział w zdecentralizowanych aplikacjach finansowych („DeFi”), które są popularne w {blockchainName}.",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_InstallExtentionTitle",
@@ -5806,7 +5899,7 @@
   },
   {
     "id": "CleanLocalStorage",
-    "message": "UPS, wygląda na to, że aplikacja musi przeładować lokalny magazyn. Zapisz 12 słów seed phrase (jeśli nie zapisałeś go wcześniej), a następnie Wyczyść magazyn lokalny ({link}) i zaimportuj 12 słów seed ponownie. Przepraszamy za niedogodności.",
+    "message": "UPS, wygląda na to, że aplikacja musi wyczyścić pamięć lokalną. Zapisz swoją frazę 12 words seed (jeśli nie zapisałeś jej wcześniej), a następnie wyczyść lokalny magazyn, klikając przycisk i importuj ponownie 12 words seed. Przepraszamy za niedogodności. {indent} {button}",
     "files": [
       "src/front/shared/components/Header/Header.tsx"
     ]
@@ -5816,6 +5909,13 @@
     "message": "Brak portfeli",
     "files": [
       "src/front/shared/pages/Wallet/Wallet.tsx"
+    ]
+  },
+  {
+    "id": "ClearAndReload",
+    "message": "Wyczyść i przeładuj",
+    "files": [
+      "src/front/shared/components/Header/Header.tsx"
     ]
   }
 ]

@@ -4567,16 +4567,23 @@
     "id": "MetamaskDisconnect",
     "message": "Koppel de portemonnee los",
     "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx",
       "src/front/shared/pages/Wallet/Row/Row.tsx"
     ]
   },
   {
     "id": "MM_DisconnectExternalWallet",
-    "message": "Marketmakig werkt alleen met een interne portemonnee. Koppel de externe portemonnee los"
+    "message": "Marketmakig werkt alleen met een interne portemonnee. Koppel de externe portemonnee los",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_TurnOffMarketmaking",
-    "message": "Marketmaking uitgeschakeld omdat uw externe portemonnee is verbonden"
+    "message": "Marketmaking uitgeschakeld omdat uw externe portemonnee is verbonden",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "SwitchLangES",
@@ -4893,8 +4900,8 @@
     "message": "Wacht alsjeblieft",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerAbToUtxo.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerUtxoToAb.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerUtxoToAb.tsx"
     ]
   },
@@ -4903,8 +4910,8 @@
     "message": "Saldo controleren..",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerAbToUtxo.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerUtxoToAb.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerUtxoToAb.tsx"
     ]
   },
@@ -4913,8 +4920,8 @@
     "message": "Wachten op andere deelnemer om {buyCurrency} te storten",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerAbToUtxo.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerUtxoToAb.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerUtxoToAb.tsx"
     ]
   },
@@ -4923,8 +4930,8 @@
     "message": "Het storten van {sellCurrency}.{br}Het kan een paar minuten duren",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerAbToUtxo.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerUtxoToAb.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerUtxoToAb.tsx"
     ]
   },
@@ -4933,8 +4940,8 @@
     "message": "Verzoek om terugtrekking uit het {buyCurrency}-contract",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerAbToUtxo.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerUtxoToAb.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerUtxoToAb.tsx"
     ]
   },
@@ -4943,8 +4950,8 @@
     "message": "{buyCurrency}-tokens zijn overgebracht naar uw portemonnee. Controleer het saldo",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerAbToUtxo.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerUtxoToAb.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerUtxoToAb.tsx"
     ]
   },
@@ -4953,8 +4960,8 @@
     "message": "Bedankt voor het gebruik van Swap.Online!",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerAbToUtxo.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerUtxoToAb.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerUtxoToAb.tsx"
     ]
   },
@@ -5632,99 +5639,164 @@
     "id": "MM_Promo_Title",
     "message": "Verdien rente op Bitcoin",
     "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
+      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx",
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
   },
   {
     "id": "MM_Promo_TitleBody",
     "message": "Gebruikers in onze swap.io wisselaar wisselen BTC uit voor {token} (een token dat net als BTC kost, maar werkt op {Ab_Title}) en vice versa. Jij krijgt min. 10% APY (jaarlijkse procentuele opbrengst) als provisie op beurzen met een gering impermanent loss {link}.",
     "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
+      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx",
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
   },
   {
     "id": "MMPercentEarn",
-    "message": "U verdient 0,5% van elke swap"
+    "message": "U verdient 0,5% van elke swap",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_BTCBalance",
-    "message": "Balans BTC:"
+    "message": "Balans BTC:",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_ConnectMetamask",
-    "message": "Verbinding Metamask"
+    "message": "Verbinding Metamask",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_DepositeWallet",
-    "message": "om op te laden, overzetten naar"
+    "message": "om op te laden, overzetten naar",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_DisconnectMetamask",
-    "message": "Koppelen Metamask"
+    "message": "Koppelen Metamask",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_ETHBalance",
-    "message": "Balans {AB_Coin}: {balance} (voor mijnwerkers vergoeding)"
+    "message": "Balans {AB_Coin}: {balance} (voor mijnwerkers vergoeding)",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_StartHere",
-    "message": "Start hier met marketmaking"
+    "message": "Start hier met marketmaking",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_Wallet_Required",
-    "message": "Een hot wallet is vereist om marketmaking te lanceren (BTC, {AB_Coin}, {token})."
+    "message": "Een hot wallet is vereist om marketmaking te lanceren (BTC, {AB_Coin}, {token}).",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_Wallet_Create",
-    "message": "Creëer wallet"
+    "message": "Creëer wallet",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_Wallet_Restore",
-    "message": "Herstel van seed van 12 woorden"
+    "message": "Herstel van seed van 12 woorden",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_NotEnoughCoins",
-    "message": "Onvoldoende middelen. U moet uw BTC bijvullen of {token}"
+    "message": "Onvoldoende middelen. U moet uw BTC bijvullen of {token}",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_NotEnoughtEth",
-    "message": "Niet genoeg om de mijnwerkerscommissie te betalen. Je moet minstens 0,02 {AB_Coin} hebben"
+    "message": "Niet genoeg om de mijnwerkerscommissie te betalen. Je moet minstens 0,02 {AB_Coin} hebben",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_SwapHistory_Empty",
-    "message": "U hebt geen swaps, zet MM aan en wacht wanneer iemand uw bestellingen accepteert"
+    "message": "U hebt geen swaps, zet MM aan en wacht wanneer iemand uw bestellingen accepteert",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_SwapHistory_LockTime",
-    "message": "Tijd vergrendelen"
+    "message": "Tijd vergrendelen",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_SwapHistory_Status",
-    "message": "Status"
+    "message": "Status",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_SwapHistory_Step",
-    "message": "Stap"
+    "message": "Stap",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_SwapHistory_Title",
-    "message": "Geschiedenis wisselen"
+    "message": "Geschiedenis wisselen",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_SwapHistory_YouBuy",
-    "message": "U koopt"
+    "message": "U koopt",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_SwapHistory_YouSell",
-    "message": "U verkoopt"
+    "message": "U verkoopt",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_ToggleText",
-    "message": "Marketmaking BTC/{token}"
+    "message": "Marketmaking BTC/{token}",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_TokenBalance",
-    "message": "Balans {token}:"
+    "message": "Balans {token}:",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_TotalBalance",
@@ -5732,31 +5804,52 @@
   },
   {
     "id": "MM_ToggleTextEnabled",
-    "message": "Je moet altijd online zijn, anders verdien je niets"
+    "message": "Je moet altijd online zijn, anders verdien je niets",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_ToggleTextDisabled",
-    "message": "Schakel de schakelaar in om te beginnen met verdienen"
+    "message": "Schakel de schakelaar in om te beginnen met verdienen",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_TotalEarned",
-    "message": "Totaal verdiend:"
+    "message": "Totaal verdiend:",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_MarketmakingSimbols",
-    "message": "{token} + BTC"
+    "message": "{token} + BTC",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_MarketmakingBalanceTitle",
-    "message": "Totale liquiditeit:"
+    "message": "Totale liquiditeit:",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_whatIsWBTCTooltip1",
-    "message": "{tokenFullName} ({token}) is een {tokenStandart}-token dat Bitcoin (BTC) vertegenwoordigt op de {blockchainName}-blockchain."
+    "message": "{tokenFullName} ({token}) is een {tokenStandart}-token dat Bitcoin (BTC) vertegenwoordigt op de {blockchainName}-blockchain.",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_whatIsWBTCTooltip2",
-    "message": "{token} is gemaakt om Bitcoin-houders in staat te stellen deel te nemen aan apps voor gedecentraliseerde financiën (\"DeFi\") die populair zijn op {blockchainName}."
+    "message": "{token} is gemaakt om Bitcoin-houders in staat te stellen deel te nemen aan apps voor gedecentraliseerde financiën (\"DeFi\") die populair zijn op {blockchainName}.",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
   },
   {
     "id": "MM_InstallExtentionTitle",
@@ -5802,7 +5895,7 @@
   },
   {
     "id": "CleanLocalStorage",
-    "message": "Oops, lijkt erop dat de app nodig heeft om uw lokale opslag te herladen. Sla uw 12 woorden zaad zin (als je het niet eerder hebt opgeslagen), dan clear local storage ({link}) en importeer 12 woorden zaad opnieuw. Sorry voor het ongemak.",
+    "message": "Oops, lijkt erop dat de app nodig heeft om uw lokale opslag schoon te maken. Sla uw 12 woorden zaad zin op( als je het niet eerder hebt opgeslagen), verwijder dan lokale opslag door op de knop te klikken en importeer 12 woorden zaad opnieuw. Sorry voor het ongemak. {indent} {button}",
     "files": [
       "src/front/shared/components/Header/Header.tsx"
     ]
@@ -5812,6 +5905,13 @@
     "message": "Geen portefeuilles beschikbaar",
     "files": [
       "src/front/shared/pages/Wallet/Wallet.tsx"
+    ]
+  },
+  {
+    "id": "ClearAndReload",
+    "message": "Wissen en herladen",
+    "files": [
+      "src/front/shared/components/Header/Header.tsx"
     ]
   }
 ]
