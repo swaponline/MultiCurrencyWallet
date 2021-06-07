@@ -35,7 +35,7 @@ function FirstStep(props) {
           </Explanation>
           <div styleName={`currencyChooserWrapper ${startPack.length < 4 ? "smallArr" : ""}`}>
             {startPack.map((el, index) => {
-              const { name, capture, baseChain } = el
+              const { name, capture } = el
 
               return (
                 <div id={`${name.toLowerCase()}Wallet`} key={index} styleName={`card ${curState[name] ? 'purpleBorder' : ''}`} onClick={() => handleClick(name)}>
@@ -50,7 +50,7 @@ function FirstStep(props) {
                   </div>
                   <div styleName="listGroup">
                     <li><b>{name}</b></li>
-                    <li>{baseChain && `(${baseChain})`} {capture}</li>
+                    <li>{capture}</li>
                   </div>
                 </div>
               )

@@ -10,7 +10,7 @@ jest.setTimeout(1500 * 1000)
 
 describe('Swap e2e test', () => {
 
-  test('BTC/WBTC swap with internal wallets', async () => {
+  test('BTC/(ETHEREUM)WBTC swap with internal wallets', async () => {
     const { browser: MakerBrowser, page: MakerPage } = await createBrowser()
     const { browser: TakerBrowser, page: TakerPage } = await createBrowser()
 
