@@ -80,28 +80,14 @@ const addCurrencyFromOrders = (orders) => {
 const getSwapById = (id) => new Swap(id, SwapApp.shared())
 
 const getUserData = (currency) => {
-  switch (currency.toUpperCase()) {
-    case 'BTC':
-      return getState().user.btcData
+  const { user } = getState()
+  const targetData = user[`${currency.toLowerCase()}Data`]
 
-    case 'ETH':
-      return getState().user.ethData
-
-    case 'BNB':
-      return getState().user.bnbData
-
-    case 'MATIC':
-      return getState().user.maticData
-
-    case 'GHOST':
-      return getState().user.ghostData
-
-    case 'NEXT':
-      return getState().user.nextData
-
-    default:
-      return {}
+  if (targetData) {
+    return targetData
   }
+
+  return {}
 }
 
 const setFilter = (filter) => {

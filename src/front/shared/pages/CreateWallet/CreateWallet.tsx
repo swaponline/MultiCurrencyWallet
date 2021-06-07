@@ -358,14 +358,14 @@ const CreateWallet = (props) => {
 
   return (
     <div styleName={`wrapper ${isDark ? '--dark' : ''}`}>
-      {userWallets.length && (
+      {userWallets.length ? (
         //@ts-ignore
         <CloseIcon
           styleName="closeButton"
           onClick={goHome}
           data-testid="modalCloseIcon"
         />
-      )}
+      ) : null}
 
       <div styleName={isMobile ? 'mobileFormBody' : 'formBody'}>
         <h2>

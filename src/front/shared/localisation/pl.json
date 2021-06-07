@@ -500,13 +500,6 @@
     ]
   },
   {
-    "id": "fee9",
-    "message": "Prowizja górnika",
-    "files": [
-      "src/front/shared/components/modals/OfferModal/ConfirmOffer/Fee/Fee.tsx"
-    ]
-  },
-  {
     "id": "recieved67",
     "message": "Kopiuj do schowka",
     "files": [

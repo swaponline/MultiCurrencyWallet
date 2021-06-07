@@ -552,13 +552,6 @@
     ]
   },
   {
-    "id": "fee9",
-    "message": "Комиссия майнеров",
-    "files": [
-      "src/front/shared/components/modals/OfferModal/ConfirmOffer/Fee/Fee.tsx"
-    ]
-  },
-  {
     "id": "recieved67",
     "message": "Скопировать",
     "files": [

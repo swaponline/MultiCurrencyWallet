@@ -461,13 +461,6 @@
     ]
   },
   {
-    "id": "fee9",
-    "message": "Miner fee",
-    "files": [
-      "src/front/shared/components/modals/OfferModal/ConfirmOffer/Fee/Fee.tsx"
-    ]
-  },
-  {
     "id": "recieved67",
     "message": "Copy to clipboard",
     "files": [
