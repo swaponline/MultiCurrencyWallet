@@ -2086,16 +2086,13 @@
     "id": "InfoPay_1",
     "message": "Transaction is completed",
     "files": [
-      "src/front/shared/components/modals/InfoPay/InfoPay.tsx",
-      "src/front/shared/pages/Transaction/Transaction.tsx",
-      "src/front/shared/pages/Transaction/TxInfo/index.tsx"
+      "src/front/shared/pages/Transaction/Transaction.tsx"
     ]
   },
   {
     "id": "InfoPay_2",
     "message": "successfully transferred to",
     "files": [
-      "src/front/shared/components/modals/InfoPay/InfoPay.tsx",
       "src/front/shared/pages/Transaction/TxInfo/index.tsx"
     ]
   },
@@ -2103,7 +2100,6 @@
     "id": "InfoPay_3",
     "message": "Transaction ID",
     "files": [
-      "src/front/shared/components/modals/InfoPay/InfoPay.tsx",
       "src/front/shared/pages/Transaction/TxInfo/index.tsx"
     ]
   },
@@ -2116,10 +2112,7 @@
   },
   {
     "id": "createWalletCaptureOthers",
-    "message": "or other currencies",
-    "files": [
-      "src/front/shared/pages/CreateWallet/Steps/texts.tsx"
-    ]
+    "message": "or other currencies"
   },
   {
     "id": "invoiceModal_Contact",
@@ -2531,7 +2524,7 @@
     "id": "ForYou",
     "message": "Voor jouw",
     "files": [
-      "src/front/shared/pages/Wallet/components/WallerSlider/index.tsx"
+      "src/front/shared/pages/Wallet/WallerSlider/index.tsx"
     ]
   },
   {
@@ -2570,87 +2563,80 @@
     ]
   },
   {
-    "id": "createWallet_customERC20",
-    "message": "Custom token",
-    "files": [
-      "src/front/shared/pages/CreateWallet/Steps/StepsWrapper.tsx"
-    ]
-  },
-  {
     "id": "customTokenAddress",
     "message": "Token address",
     "files": [
-      "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
     ]
   },
   {
     "id": "customTokenConfirm",
     "message": "Add token",
     "files": [
-      "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
     ]
   },
   {
     "id": "customTokenIncorrectAddress",
     "message": "Invalid address",
     "files": [
-      "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
     ]
   },
   {
     "id": "NextId",
     "message": "Volgende",
     "files": [
-      "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
     ]
   },
   {
     "id": "customTokenNotFound",
     "message": "This is not {standard} address",
     "files": [
-      "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
     ]
   },
   {
     "id": "customTokenAdded",
     "message": "Token ble lagt til",
     "files": [
-      "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
     ]
   },
   {
     "id": "customERC20_Title",
     "message": "Een nieuw token toevoegen",
     "files": [
-      "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
     ]
   },
   {
     "id": "DecimalsId",
     "message": "Decimals",
     "files": [
-      "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
     ]
   },
   {
     "id": "SymbolId",
     "message": "Symbol",
     "files": [
-      "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
     ]
   },
   {
     "id": "TitleId",
     "message": "Title",
     "files": [
-      "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
     ]
   },
   {
     "id": "customERC20_addressPlaceholder",
     "message": "Введите адрес токена",
     "files": [
-      "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
     ]
   },
   {
@@ -3279,7 +3265,8 @@
     "id": "SweepBannerButton",
     "message": "Gemaakt",
     "files": [
-      "src/front/shared/components/layout/DashboardLayout/DashboardLayout.tsx"
+      "src/front/shared/components/layout/DashboardLayout/DashboardLayout.tsx",
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
     ]
   },
   {
@@ -3736,7 +3723,6 @@
     "id": "InfoPay_FinalBalance",
     "message": "Final balance",
     "files": [
-      "src/front/shared/components/modals/InfoPay/InfoPay.tsx",
       "src/front/shared/pages/Transaction/TxInfo/index.tsx"
     ]
   },
@@ -4493,14 +4479,14 @@
     "id": "Banner_YouAreHaveNotSignegTx",
     "message": "{count} multisig transaction is waiting for your confirmation",
     "files": [
-      "src/front/shared/pages/Wallet/components/WallerSlider/index.tsx"
+      "src/front/shared/pages/Wallet/WallerSlider/index.tsx"
     ]
   },
   {
     "id": "ShowMyMnemonic_copy",
     "message": "Please backup your wallet",
     "files": [
-      "src/front/shared/pages/Wallet/components/WallerSlider/index.tsx"
+      "src/front/shared/pages/Wallet/WallerSlider/index.tsx"
     ]
   },
   {
@@ -4563,8 +4549,8 @@
     "id": "MetamaskDisconnect",
     "message": "Koppel de portemonnee los",
     "files": [
-      "src/front/shared/pages/Wallet/Row/Row.tsx",
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx",
+      "src/front/shared/pages/Wallet/Row/Row.tsx"
     ]
   },
   {
@@ -4896,8 +4882,8 @@
     "message": "Wacht alsjeblieft",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerAbToUtxo.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerUtxoToAb.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerUtxoToAb.tsx"
     ]
   },
@@ -4906,8 +4892,8 @@
     "message": "Saldo controleren..",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerAbToUtxo.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerUtxoToAb.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerUtxoToAb.tsx"
     ]
   },
@@ -4916,8 +4902,8 @@
     "message": "Wachten op andere deelnemer om {buyCurrency} te storten",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerAbToUtxo.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerUtxoToAb.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerUtxoToAb.tsx"
     ]
   },
@@ -4926,8 +4912,8 @@
     "message": "Het storten van {sellCurrency}.{br}Het kan een paar minuten duren",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerAbToUtxo.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerUtxoToAb.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerUtxoToAb.tsx"
     ]
   },
@@ -4936,8 +4922,8 @@
     "message": "Verzoek om terugtrekking uit het {buyCurrency}-contract",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerAbToUtxo.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerUtxoToAb.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerUtxoToAb.tsx"
     ]
   },
@@ -4946,8 +4932,8 @@
     "message": "{buyCurrency}-tokens zijn overgebracht naar uw portemonnee. Controleer het saldo",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerAbToUtxo.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerUtxoToAb.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerUtxoToAb.tsx"
     ]
   },
@@ -4956,8 +4942,8 @@
     "message": "Bedankt voor het gebruik van Swap.Online!",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerAbToUtxo.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerUtxoToAb.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerUtxoToAb.tsx"
     ]
   },
@@ -5221,7 +5207,6 @@
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
   },
-
   {
     "id": "contactSupport",
     "message": "Neem dan contact op met ondersteuning",
@@ -5888,6 +5873,13 @@
     "message": "Download ontwikkelversie",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
+    ]
+  },
+  {
+    "id": "WalletEmptyBalance",
+    "message": "No wallets available",
+    "files": [
+      "src/front/shared/pages/Wallet/Wallet.tsx"
     ]
   }
 ]

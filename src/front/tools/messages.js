@@ -70,7 +70,7 @@ async function mergeToJson(locale, toBuild) {
 
   console.info(`Messages updated in: ${fileName}`)
 
-  if (toBuild && locale !== '_default') {
+  if (toBuild) {
     const buildFileName = `build/messages/${locale}.json`
     try {
       await writeMessages(buildFileName, result)
@@ -82,7 +82,7 @@ async function mergeToJson(locale, toBuild) {
 }
 
 /**
- * Call everytime before updating file!
+ * Call every time before updating file!
  * */
 function mergeMessages() {
   messages = {}
@@ -121,7 +121,7 @@ function mergeMessages() {
 async function updateMessages(toBuild) {
   mergeMessages()
   await Promise.all(
-    ['_default', ...Object.keys(locales)].map(locale => mergeToJson(locale, toBuild))
+    [...Object.keys(locales)].map(locale => mergeToJson(locale, toBuild))
   )
 }
 

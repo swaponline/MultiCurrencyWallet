@@ -734,7 +734,6 @@
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
   },
-
   {
     "id": "contactSupport",
     "message": "Обратитесь в службу поддержки",
@@ -2215,10 +2214,7 @@
   },
   {
     "id": "createWalletCaptureOthers",
-    "message": "или другие",
-    "files": [
-      "src/front/shared/pages/CreateWallet/Steps/texts.tsx"
-    ]
+    "message": "или другие"
   },
   {
     "id": "invoiceModal_Address",
@@ -2649,86 +2645,83 @@
   },
   {
     "id": "createWallet_customERC20",
-    "message": "Подключить токен",
-    "files": [
-      "src/front/shared/pages/CreateWallet/Steps/StepsWrapper.tsx"
-    ]
+    "message": "Подключить токен"
   },
   {
     "id": "customTokenAddress",
     "message": "Адрес токена",
     "files": [
-      "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
     ]
   },
   {
     "id": "customTokenConfirm",
     "message": "Добавить этот токен",
     "files": [
-      "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
     ]
   },
   {
     "id": "customTokenIncorrectAddress",
     "message": "Вы ввели не коректный адрес",
     "files": [
-      "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
     ]
   },
   {
     "id": "NextId",
     "message": "Далее",
     "files": [
-      "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
     ]
   },
   {
     "id": "customTokenNotFound",
     "message": "По указаному адресу не найден {standard} токен",
     "files": [
-      "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
     ]
   },
   {
     "id": "customTokenAdded",
     "message": "Токен успешно добавлен",
     "files": [
-      "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
     ]
   },
   {
     "id": "customERC20_Title",
     "message": "Добавление токена",
     "files": [
-      "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
     ]
   },
   {
     "id": "DecimalsId",
     "message": "Знаков после запятой",
     "files": [
-      "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
     ]
   },
   {
     "id": "SymbolId",
     "message": "Символ токена",
     "files": [
-      "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
     ]
   },
   {
     "id": "TitleId",
     "message": "Название токена",
     "files": [
-      "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
     ]
   },
   {
     "id": "customERC20_addressPlaceholder",
     "message": "Введите адрес токена",
     "files": [
-      "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
     ]
   },
   {
@@ -2791,16 +2784,13 @@
     "id": "InfoPay_1",
     "message": "Транзакция завершена",
     "files": [
-      "src/front/shared/components/modals/InfoPay/InfoPay.tsx",
-      "src/front/shared/pages/Transaction/Transaction.tsx",
-      "src/front/shared/pages/Transaction/TxInfo/index.tsx"
+      "src/front/shared/pages/Transaction/Transaction.tsx"
     ]
   },
   {
     "id": "InfoPay_2",
     "message": "успешно отправлены",
     "files": [
-      "src/front/shared/components/modals/InfoPay/InfoPay.tsx",
       "src/front/shared/pages/Transaction/TxInfo/index.tsx"
     ]
   },
@@ -2808,7 +2798,6 @@
     "id": "InfoPay_3",
     "message": "Transaction ID",
     "files": [
-      "src/front/shared/components/modals/InfoPay/InfoPay.tsx",
       "src/front/shared/pages/Transaction/TxInfo/index.tsx"
     ]
   },
@@ -3396,14 +3385,15 @@
     "id": "ForYou",
     "message": "Для вас",
     "files": [
-      "src/front/shared/pages/Wallet/components/WallerSlider/index.tsx"
+      "src/front/shared/pages/Wallet/WallerSlider/index.tsx"
     ]
   },
   {
     "id": "SweepBannerButton",
     "message": "Готово",
     "files": [
-      "src/front/shared/components/layout/DashboardLayout/DashboardLayout.tsx"
+      "src/front/shared/components/layout/DashboardLayout/DashboardLayout.tsx",
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
     ]
   },
   {
@@ -3867,7 +3857,6 @@
     "id": "InfoPay_FinalBalance",
     "message": "Final balance",
     "files": [
-      "src/front/shared/components/modals/InfoPay/InfoPay.tsx",
       "src/front/shared/pages/Transaction/TxInfo/index.tsx"
     ]
   },
@@ -4624,14 +4613,14 @@
     "id": "Banner_YouAreHaveNotSignegTx",
     "message": "{count} multisig transaction is waiting for your confirmation",
     "files": [
-      "src/front/shared/pages/Wallet/components/WallerSlider/index.tsx"
+      "src/front/shared/pages/Wallet/WallerSlider/index.tsx"
     ]
   },
   {
     "id": "ShowMyMnemonic_copy",
     "message": "Please backup your wallet",
     "files": [
-      "src/front/shared/pages/Wallet/components/WallerSlider/index.tsx"
+      "src/front/shared/pages/Wallet/WallerSlider/index.tsx"
     ]
   },
   {
@@ -4673,8 +4662,8 @@
     "id": "MetamaskDisconnect",
     "message": "Отключить кошелек",
     "files": [
-      "src/front/shared/pages/Wallet/Row/Row.tsx",
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx",
+      "src/front/shared/pages/Wallet/Row/Row.tsx"
     ]
   },
   {
@@ -5006,8 +4995,8 @@
     "message": "Пожалуйста, подождите",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerAbToUtxo.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerUtxoToAb.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerUtxoToAb.tsx"
     ]
   },
@@ -5016,8 +5005,8 @@
     "message": "Проверка баланса..",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerAbToUtxo.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerUtxoToAb.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerUtxoToAb.tsx"
     ]
   },
@@ -5026,8 +5015,8 @@
     "message": "Ожидание внесения {buyCurrency} другим участником",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerAbToUtxo.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerUtxoToAb.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerUtxoToAb.tsx"
     ]
   },
@@ -5036,8 +5025,8 @@
     "message": "Пополнение счета {sellCurrency}.{br}Это может занять несколько минут",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerAbToUtxo.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerUtxoToAb.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerUtxoToAb.tsx"
     ]
   },
@@ -5046,8 +5035,8 @@
     "message": "Запрос на вывод средств из контракта {buyCurrency}",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerAbToUtxo.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerUtxoToAb.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerUtxoToAb.tsx"
     ]
   },
@@ -5056,8 +5045,8 @@
     "message": "{{buyCurrency} токены были переведены в ваш кошелек. Проверьте баланс",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerAbToUtxo.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerUtxoToAb.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerUtxoToAb.tsx"
     ]
   },
@@ -5066,8 +5055,8 @@
     "message": "Спасибо за использование Swap.Online!",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerAbToUtxo.tsx",
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerUtxoToAb.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerUtxoToAb.tsx"
     ]
   },
@@ -5892,6 +5881,13 @@
     "message": "Скачать версию для разработки",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
+    ]
+  },
+  {
+    "id": "WalletEmptyBalance",
+    "message": "No wallets available",
+    "files": [
+      "src/front/shared/pages/Wallet/Wallet.tsx"
     ]
   }
 ]

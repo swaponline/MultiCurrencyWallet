@@ -307,68 +307,72 @@ class EthLikeAction {
       apiLooper
         .get(this.explorerName, internalUrl)
         .then((response: any) => {
-          const internals: ResponseItem[] = []
-
-          response.result.map((item: ResponseItem) => {
-            const { value, to, hash } = item
-
-            internals[hash] = {
-              value,
-              to,
-            }
-          })
-
-          apiLooper
-            .get(this.explorerName, url)
-            .then((response: any) => {
-              if (Array.isArray(response.result)) {
-                const transactions = response.result
-                  .filter((item: ResponseItem) => {
-                    return (
-                      item.value > 0 || (internals[item.hash] && internals[item.hash].value > 0)
-                    )
-                  })
-                  .map((item) => ({
-                    type,
-                    confirmations: item.confirmations,
-                    hash: item.hash,
-                    status: item.blockHash !== null ? 1 : 0,
-                    value: this.Web3.utils.fromWei(
-                      internals[item.hash] && internals[item.hash].value > 0
-                        ? internals[item.hash].value
-                        : item.value
-                    ),
-                    address: item.to,
-                    canEdit: address === ownerAddress,
-                    date: item.timeStamp * 1000,
-                    direction:
-                      internals[item.hash] &&
-                      internals[item.hash].to.toLowerCase() === address.toLowerCase()
-                        ? 'in'
-                        : address.toLowerCase() === item.to.toLowerCase()
-                        ? 'in'
-                        : 'out',
-                  }))
-                  .filter((item) => {
-                    if (item.direction === 'in') return true
-                    if (!this.adminFeeObj) return true
-                    if (address.toLowerCase() === this.adminFeeObj.address.toLowerCase())
-                      return true
-                    if (item.address.toLowerCase() === this.adminFeeObj.address.toLowerCase())
-                      return false
-
-                    return true
-                  })
-
-                resolve(transactions)
-              } else {
-                resolve([])
+          if (Array.isArray(response?.result)) {
+            const internals: ResponseItem[] = []
+  
+            response.result.map((item: ResponseItem) => {
+              const { value, to, hash } = item
+  
+              internals[hash] = {
+                value,
+                to,
               }
             })
-            .catch((error) => {
-              this.reportError(error)
-              resolve([])
-            })
+  
+            apiLooper
+              .get(this.explorerName, url)
+              .then((response: any) => {
+                if (Array.isArray(response.result)) {
+                  const transactions = response.result
+                    .filter((item: ResponseItem) => {
+                      return (
+                        item.value > 0 || (internals[item.hash] && internals[item.hash].value > 0)
+                      )
+                    })
+                    .map((item) => ({
+                      type,
+                      confirmations: item.confirmations,
+                      hash: item.hash,
+                      status: item.blockHash !== null ? 1 : 0,
+                      value: this.Web3.utils.fromWei(
+                        internals[item.hash] && internals[item.hash].value > 0
+                          ? internals[item.hash].value
+                          : item.value
+                      ),
+                      address: item.to,
+                      canEdit: address === ownerAddress,
+                      date: item.timeStamp * 1000,
+                      direction:
+                        internals[item.hash] &&
+                        internals[item.hash].to.toLowerCase() === address.toLowerCase()
+                          ? 'in'
+                          : address.toLowerCase() === item.to.toLowerCase()
+                          ? 'in'
+                          : 'out',
+                    }))
+                    .filter((item) => {
+                      if (item.direction === 'in') return true
+                      if (!this.adminFeeObj) return true
+                      if (address.toLowerCase() === this.adminFeeObj.address.toLowerCase())
+                        return true
+                      if (item.address.toLowerCase() === this.adminFeeObj.address.toLowerCase())
+                        return false
+  
+                      return true
+                    })
+  
+                  resolve(transactions)
+                } else {
+                  resolve([])
+                }
+              })
+              .catch((error) => {
+                this.reportError(error)
+                resolve([])
+              })
+          } else {
+            resolve([])
+          }
         })
         .catch((error) => {
           this.reportError(error)
