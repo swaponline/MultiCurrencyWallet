@@ -295,24 +295,20 @@ const externalConfig = () => {
       }
     })
 
-    const feeObj = config.opts.fee
-    const setErc20Fee = hasTokenAdminFee && feeObj.eth?.min && feeObj.eth?.fee
-    const setBep20Fee = hasTokenAdminFee && feeObj.bnb?.min && feeObj.bnb?.fee
-    const setErc20MaticFee = hasTokenAdminFee && feeObj.matic?.min && feeObj.matic?.fee
+    // add currency commissions for tokens
+    if (hasTokenAdminFee) {
+      const feeObj = config.opts.fee
 
-    if (setErc20Fee) {
-      feeObj.erc20.min = feeObj.eth.min
-      feeObj.erc20.fee = feeObj.eth.fee
-    }
+      Object.keys(TOKEN_STANDARDS).forEach((key) => {
+        const standard = TOKEN_STANDARDS[key].standard.toLowerCase()
+        const baseCurrency = TOKEN_STANDARDS[key].currency.toLowerCase()
+        const currencyFee = feeObj[baseCurrency]
 
-    if (setBep20Fee) {
-      feeObj.bep20.min = feeObj.bnb.min
-      feeObj.bep20.fee = feeObj.bnb.fee
-    }
-
-    if (setErc20MaticFee) {
-      feeObj.erc20matic.min = feeObj.matic.min
-      feeObj.erc20matic.fee = feeObj.matic.fee
+        if (currencyFee?.min && currencyFee?.fee) {
+          feeObj[standard].min = currencyFee.min
+          feeObj[standard].fee = currencyFee.fee
+        }
+      })
     }
   }
 

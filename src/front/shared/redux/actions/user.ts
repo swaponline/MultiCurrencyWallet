@@ -298,7 +298,7 @@ const customRate = (cur) => {
     return token.name.toLowerCase() === cur.toLowerCase()
   })
 
-  return targetToken ? (targetToken || { customEcxchangeRate: null }).customEcxchangeRate : null
+  return targetToken ? (targetToken || { customExchangeRate: null }).customExchangeRate : null
 }
 
 const getExchangeRate = (sellCurrency, buyCurrency): Promise<number> => {
@@ -353,15 +353,17 @@ const getExchangeRate = (sellCurrency, buyCurrency): Promise<number> => {
 const customTokenExchangeRate = (name) => {
   let customRate = false
 
-  outsidelLbel: {
+  outsideLabel: {
     for (const key in TOKEN_STANDARDS) {
       const standard = TOKEN_STANDARDS[key].standard
 
       for (const tokenName in config[standard]) {
-        const exRate = config[standard][tokenName].customEcxchangeRate
-        
-        if (exRate) customRate = exRate
-        break outsidelLbel
+        const exRate = config[standard][tokenName].customExchangeRate
+
+        if (tokenName === name && exRate) {
+          customRate = exRate
+          break outsideLabel
+        }
       }
     }
   }
@@ -401,58 +403,31 @@ const getInfoAboutCurrency = (currencyNames) => {
               price_btc: priceInBtc,
             }
 
-            switch (currencyInfoItem.symbol) {
-              case 'BTC':
-                reducers.user.setInfoAboutCurrency({ name: 'btcData', infoAboutCurrency: currencyInfo })
-                reducers.user.setInfoAboutCurrency({ name: 'btcMnemonicData', infoAboutCurrency: currencyInfo }) // Sweep (for future)
+            const { user } = getState()
+            const targetDataKey = `${currencyInfoItem.symbol.toLowerCase()}Data`
+            const targetMnemonicDataKey = `${currencyInfoItem.symbol.toLowerCase()}MnemonicData`
+
+            if (user[targetDataKey]) {
+              reducers.user.setInfoAboutCurrency({ name: targetDataKey, infoAboutCurrency: currencyInfo })
+              // Sweep (for future)
+              reducers.user.setInfoAboutCurrency({ name: targetMnemonicDataKey, infoAboutCurrency: currencyInfo })
+
+              if (currencyInfoItem.symbol === 'BTC') {
                 reducers.user.setInfoAboutCurrency({ name: 'btcMultisigSMSData', infoAboutCurrency: currencyInfo })
                 reducers.user.setInfoAboutCurrency({ name: 'btcMultisigUserData', infoAboutCurrency: currencyInfo })
                 reducers.user.setInfoAboutCurrency({ name: 'btcMultisigG2FAData', infoAboutCurrency: currencyInfo })
                 reducers.user.setInfoAboutCurrency({ name: 'btcMultisigPinData', infoAboutCurrency: currencyInfo })
-                break
+              }
+            } else if (erc20Like.isToken({ name: currencyInfoItem.symbol })) {
+              const baseCurrency = tokenCurrencyByPlatform(currencyInfoItem.platform?.name)
 
-              case 'ETH':
-                reducers.user.setInfoAboutCurrency({ name: 'ethData', infoAboutCurrency: currencyInfo })
-                reducers.user.setInfoAboutCurrency({ name: 'ethMnemonicData', infoAboutCurrency: currencyInfo }) // Sweep (for future)
-                break
-              
-              case 'BNB':
-                reducers.user.setInfoAboutCurrency({ name: 'bnbData', infoAboutCurrency: currencyInfo })
-                reducers.user.setInfoAboutCurrency({ name: 'bnbMnemonicData', infoAboutCurrency: currencyInfo }) // Sweep (for future)
-                break
-              
-              case 'MATIC':
-                reducers.user.setInfoAboutCurrency({ name: 'maticData', infoAboutCurrency: currencyInfo })
-                reducers.user.setInfoAboutCurrency({ name: 'maticMnemonicData', infoAboutCurrency: currencyInfo }) // Sweep (for future)
-                break
-
-              case 'GHOST':
-                reducers.user.setInfoAboutCurrency({ name: 'ghostData', infoAboutCurrency: currencyInfo })
-                reducers.user.setInfoAboutCurrency({ name: 'ghostMnemonicData', infoAboutCurrency: currencyInfo }) // Sweep (for future)
-                break
-
-              case 'NEXT':
-                reducers.user.setInfoAboutCurrency({ name: 'nextData', infoAboutCurrency: currencyInfo })
-                reducers.user.setInfoAboutCurrency({ name: 'nextMnemonicData', infoAboutCurrency: currencyInfo }) // Sweep (for future)
-                break
-
-              default:
-                if (erc20Like.isToken({ name: currencyInfoItem.symbol })) {
-                  const baseCurrency = tokenCurrencyByPlatform(currencyInfoItem.platform?.name)
-
-                  if (baseCurrency) {
-                    reducers.user.setInfoAboutToken({
-                      baseCurrency,
-                      name: currencyInfoItem.symbol.toLowerCase(),
-                      infoAboutCurrency: currencyInfo,
-                    })
-                  }
-                } else {
-                  reducers.user.setInfoAboutCurrency({
-                    name: `${currencyInfoItem.symbol.toLowerCase()}Data`,
-                    infoAboutCurrency: currencyInfo,
-                  })
-                }
+              if (baseCurrency) {
+                reducers.user.setInfoAboutToken({
+                  baseCurrency,
+                  name: currencyInfoItem.symbol.toLowerCase(),
+                  infoAboutCurrency: currencyInfo,
+                })
+              }
             }
           }
         }
@@ -613,15 +588,13 @@ const getText = () => {
   } = getState()
 
   let text = `
-    You will need this instruction only in case of emergency (if you lost your keys) \r\n
-    please do NOT waste your time and go back to swap.online\r\n
-    \r\n
-    \r\n
+    You will need this instruction only in case of emergency (if you lost your keys)\r\n
+    please do NOT waste your time and go back to swap.online
     \r\n
     \r\n
     ${window.location.hostname} emergency only instruction
     \r\n
-    #ETHEREUM
+    # ETHEREUM
     \r\n
     Ethereum address: ${ethData.address}\r\n
     Private key: ${ethData.privateKey}\r\n
@@ -631,13 +604,13 @@ const getText = () => {
     2. Select 'Private key'\r\n
     3. paste private key to input and click "unlock"\r\n
     \r\n
-    #BINANCE SMART CHAIN
+    # BINANCE SMART CHAIN
     \r\n
     BSC address: ${bnbData.address}\r\n
     Private key: ${bnbData.privateKey}\r\n
     \r\n
     \r\n
-    #MATIC CHAIN
+    # MATIC CHAIN
     \r\n
     MATIC address: ${maticData.address}\r\n
     Private key: ${maticData.privateKey}\r\n
