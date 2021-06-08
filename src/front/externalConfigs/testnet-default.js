@@ -100,7 +100,7 @@ window.buildOptions = {
     next: false,
   },
   defaultExchangePair: {
-    buy: 'usdt',
+    buy: '{eth}usdt',
     sell: 'btc',
   }
 }

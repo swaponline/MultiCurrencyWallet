@@ -1,4 +1,4 @@
-export const AWAILABLE_NETWORKS = [
+export const AVAILABLE_NETWORKS = [
     1,          // ETH Mainnet
     3,          // ETH Testnet (Ropsten)
     56,         // BSC Mainnet
@@ -7,13 +7,13 @@ export const AWAILABLE_NETWORKS = [
     80001,      // MATIC Testnet
 ]
 
-export const AWAILABLE_NETWORKS_BY_COIN = {
+export const AVAILABLE_NETWORKS_BY_COIN = {
     ETH: [1, 3], // [MAINNET, TESTNET]
     BNB: [56, 97],
     MATIC: [137, 80001]
 }
 
 export default {
-    AWAILABLE_NETWORKS,
-    AWAILABLE_NETWORKS_BY_COIN,
+    AVAILABLE_NETWORKS,
+    AVAILABLE_NETWORKS_BY_COIN,
 }

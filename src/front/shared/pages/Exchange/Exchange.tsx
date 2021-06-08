@@ -49,7 +49,7 @@ import TurboIcon from 'shared/components/ui/TurboIcon/TurboIcon'
 
 import { COIN_DATA, COIN_MODEL, COIN_TYPE } from 'swap.app/constants/COINS'
 import getCoinInfo from 'common/coins/getCoinInfo'
-import { AWAILABLE_NETWORKS_BY_COIN } from 'common/helpers/constants/AWAILABLE_EVM_NETWORKS'
+import { AVAILABLE_NETWORKS_BY_COIN } from 'common/helpers/constants/AVAILABLE_EVM_NETWORKS'
 
 const NETWORK = process.env.MAINNET ? 'MAINNET' : 'TESTNET'
 const NETWORK_NUMBER = NETWORK === 'MAINNET' ? 0 : 1 // 0 - MAINNET, 1 - TESTNET
@@ -219,7 +219,7 @@ class Exchange extends PureComponent<any, any> {
     const {
       url,
       params: { buy, sell },
-    } = match || { params: { buy: 'btc', sell: 'usdt' } }
+    } = match || { params: { buy: 'btc', sell: '{eth}usdt' } }
 
     if (sell && buy && !isRootPage) {
       const { coin: sellName } = getCoinInfo(sell)
@@ -1516,9 +1516,9 @@ class Exchange extends PureComponent<any, any> {
     const isUTXOModel = COIN_DATA[ticker]?.model === COIN_MODEL.UTXO
 
     return !isUTXOModel && (blockchain ?
-      AWAILABLE_NETWORKS_BY_COIN[blockchain][NETWORK_NUMBER]
+      AVAILABLE_NETWORKS_BY_COIN[blockchain][NETWORK_NUMBER]
       :
-      AWAILABLE_NETWORKS_BY_COIN[ticker][NETWORK_NUMBER])
+      AVAILABLE_NETWORKS_BY_COIN[ticker][NETWORK_NUMBER])
   }
 
   render() {

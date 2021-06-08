@@ -6,7 +6,7 @@ import INJECTED_TYPE from './providers/InjectedType'
 import getProviderByName from './providers'
 import { isInjectedEnabled } from './providers'
 import { isMobile } from 'react-device-detect'
-import { AWAILABLE_NETWORKS } from 'common/helpers/constants/AWAILABLE_EVM_NETWORKS'
+import { AVAILABLE_NETWORKS } from 'common/helpers/constants/AVAILABLE_EVM_NETWORKS'
 
 export default class Web3Connect extends EventEmitter {
   _cachedProvider = null
@@ -273,7 +273,7 @@ export default class Web3Connect extends EventEmitter {
       || this._web3ChainId === Number.parseInt(this._cachedChainId)
       || `0x0${this._web3ChainId}` === `${this._cachedChainId}`
       || `0x${this._web3ChainId}` === `${this._cachedChainId}` // Opera Mobile
-      || AWAILABLE_NETWORKS.includes(this._web3ChainId || nonExistent)
+      || AVAILABLE_NETWORKS.includes(this._web3ChainId || nonExistent)
     )
   }
 
