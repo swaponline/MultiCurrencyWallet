@@ -34,6 +34,8 @@ import helpers, {
   ethToken,
   links,
 } from 'helpers'
+
+import { getCurrentWeb3 } from 'helpers/web3'
 import Switching from 'components/controls/Switching/Switching'
 import AddressSelect from './AddressSelect/AddressSelect'
 import { AddressType, AddressRole } from 'domain/address'
@@ -1667,6 +1669,14 @@ class Exchange extends PureComponent<any, any> {
       new BigNumber(availableAmount).isGreaterThanOrEqualTo(haveAmount) ||
       fromAddress.type === AddressType.Custom
 
+    const metamaskNetworkVersion = getCurrentWeb3()?.currentProvider?.networkVersion
+    // console.log('metamaskNetworkVersion', metamaskNetworkVersion)
+    // let isCorrectMetamaskNetwork = metamask.isConnected() ?
+    //   (fromAddress.type === AddressType.Metamask || toAddress.type === AddressType.Metamask) &&
+    //     (metamaskNetworkVersion === sellCoin || metamaskNetworkVersion === sellCoin)
+    //   :
+    //   true
+
     const canStartSwap =
       !isErrorExternalDisabled &&
       linked.haveAmount.value > 0 &&
@@ -1678,6 +1688,7 @@ class Exchange extends PureComponent<any, any> {
       isBalanceReady &&
       new BigNumber(getAmount).isGreaterThan(0) &&
       !isNonOffers &&
+      //isCorrectMetamaskNetwork &&
       !isWaitForPeerAnswer
 
     const getTextWhyCanNotStartSwap = () => {

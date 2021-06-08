@@ -6,7 +6,7 @@ import INJECTED_TYPE from './providers/InjectedType'
 import getProviderByName from './providers'
 import { isInjectedEnabled } from './providers'
 import { isMobile } from 'react-device-detect'
-
+import { AWAILABLE_NETWORKS } from 'common/helpers/constants/AWAILABLE_EVM_NETWORKS'
 
 export default class Web3Connect extends EventEmitter {
   _cachedProvider = null
@@ -265,7 +265,6 @@ export default class Web3Connect extends EventEmitter {
 
   isCorrectNetwork() {
     // @ToDo - test Metamask dAppBrowser
-    const availableNetworks = [1, 3, 56, 97, 137, 80001]
     const nonExistent = -42 // random (fix ts error)
 
     return (
@@ -274,7 +273,7 @@ export default class Web3Connect extends EventEmitter {
       || this._web3ChainId === Number.parseInt(this._cachedChainId)
       || `0x0${this._web3ChainId}` === `${this._cachedChainId}`
       || `0x${this._web3ChainId}` === `${this._cachedChainId}` // Opera Mobile
-      || availableNetworks.includes(this._web3ChainId || nonExistent)
+      || AWAILABLE_NETWORKS.includes(this._web3ChainId || nonExistent)
     )
   }
 

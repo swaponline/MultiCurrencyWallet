@@ -6,6 +6,11 @@ import config from 'app-config'
 import { setMetamask, setProvider, setDefaultProvider, getWeb3 as getDefaultWeb3 } from 'helpers/web3'
 import SwapApp from 'swap.app'
 import Web3Connect from 'common/web3connect'
+import { AWAILABLE_NETWORKS_BY_COIN } from 'common/helpers/constants/AWAILABLE_EVM_NETWORKS'
+
+const NETWORK = process.env.MAINNET
+  ? 'MAINNET'
+  : 'TESTNET'
 
 // Binance Smart Chain: 56 = Mainnet, 97 = Testnet
 // Ethereum: 1 = Mainnet, 3 = Ropsten
@@ -151,12 +156,9 @@ const addMetamaskWallet = () => {
       currencyInfo: user.maticData?.infoAboutCurrency,
     }
     const walletMap = new Map([
-      [1, ethWalletInfo], // ETH Mainnet
-      [3, ethWalletInfo], // ETH Testnet (Ropsten)
-      [56, bscWalletInfo], // BSC Mainnet
-      [97, bscWalletInfo], // BSC Testnet
-      [137, maticWalletInfo], // MATIC Mainnet
-      [80001, maticWalletInfo], // MATIC Testnet
+      [AWAILABLE_NETWORKS_BY_COIN.ETH[NETWORK === 'MAINNET' ? 0 : 1], ethWalletInfo],
+      [AWAILABLE_NETWORKS_BY_COIN.BNB[NETWORK === 'MAINNET' ? 0 : 1], bscWalletInfo],
+      [AWAILABLE_NETWORKS_BY_COIN.MATIC[NETWORK === 'MAINNET' ? 0 : 1], maticWalletInfo],
     ])
 
     const hexChainId = web3connect.getChainId()
