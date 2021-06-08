@@ -7,36 +7,36 @@ export const defaultPack = [
   ...(!curEnabled || curEnabled.btc ? [{ name: 'BTC', capture: 'Bitcoin' }] : []),
 
   ...(!curEnabled || curEnabled.eth ? [{ name: 'ETH', capture: 'Ethereum' }] : []),
-  ...(config.erc20 ? [{ name: '{ETH}ERC20', capture: 'Token' }] : []),
+  ...(config.erc20 ? [{ name: 'ERC20', capture: 'Token', baseCurrency: 'ETH' }] : []),
 
   ...(!curEnabled || curEnabled.bnb ? [{ name: 'BNB', capture: 'Binance Coin' }] : []),
-  ...(config.bep20 ? [{ name: '{BSC}BEP20', capture: 'Token' }] : []),
+  ...(config.bep20 ? [{ name: 'BEP20', capture: 'Token', baseCurrency: 'BNB' }] : []),
 
   ...(!curEnabled || curEnabled.matic ? [{ name: 'MATIC', capture: 'MATIC Token' }] : []),
 
   ...(!curEnabled || curEnabled.ghost ? [{ name: 'GHOST', capture: 'Ghost' }] : []),
   ...(!curEnabled || curEnabled.next ? [{ name: 'NEXT', capture: 'NEXT.coin' }] : []),
 
-  ...(config.bep20 ? [{ name: '{BSC}BTCB', capture: 'BTCB Token' }] : []),
+  ...(config.bep20 ? [{ name: 'BTCB', capture: 'BTCB Token', baseCurrency: 'BNB' }] : []),
   ...(config.erc20
     ? [
-        { name: '{ETH}WBTC', capture: 'Wrapped Bitcoin' },
-        { name: '{ETH}USDT', capture: 'Tether' },
-        { name: '{ETH}EURS', capture: 'Eurs' },
+        { name: 'WBTC', capture: 'Wrapped Bitcoin', baseCurrency: 'ETH' },
+        { name: 'USDT', capture: 'Tether', baseCurrency: 'ETH' },
+        { name: 'EURS', capture: 'Eurs', baseCurrency: 'ETH' },
       ]
     : []),
-  ...(config.erc20matic ? [{ name: '{MATIC}WBTC', capture: 'WBTC Token' }] : []),
+  ...(config.erc20matic ? [{ name: 'WBTC', capture: 'WBTC Token', baseCurrency: 'MATIC' }] : []),
   ...(process.env.MAINNET
-    ? [{ name: 'SWAP', capture: 'Swap' }]
-    : [{ name: 'WEENUS', capture: 'Weenus' }]),
+    ? [{ name: 'SWAP', capture: 'Swap', baseCurrency: 'ETH' }]
+    : [{ name: 'WEENUS', capture: 'Weenus', baseCurrency: 'ETH' }]),
 ]
 
 export const widgetPack = [
   ...(!curEnabled || curEnabled.btc ? [{ name: 'BTC', capture: 'Bitcoin' }] : []),
   ...(!curEnabled || curEnabled.eth ? [{ name: 'ETH', capture: 'Ethereum' }] : []),
-  ...(config.erc20 ? [{ name: 'ERC20', capture: 'Token', baseChain: 'ETH' }] : []),
+  ...(config.erc20 ? [{ name: 'ERC20', capture: 'Token', baseCurrency: 'ETH' }] : []),
   ...(!curEnabled || curEnabled.bnb ? [{ name: 'BNB', capture: 'Binance Coin' }] : []),
-  ...(config.bep20 ? [{ name: 'BEP20', capture: 'Token', baseChain: 'BSC' }] : []),
+  ...(config.bep20 ? [{ name: 'BEP20', capture: 'Token', baseCurrency: 'BNB' }] : []),
   ...(!curEnabled || curEnabled.matic ? [{ name: 'MATIC', capture: 'MATIC Token' }] : []),
   ...(!curEnabled || curEnabled.ghost ? [{ name: 'GHOST', capture: 'Ghost' }] : []),
   ...(!curEnabled || curEnabled.next ? [{ name: 'NEXT', capture: 'NEXT.coin' }] : []),

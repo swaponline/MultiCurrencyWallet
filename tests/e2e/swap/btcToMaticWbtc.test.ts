@@ -16,17 +16,23 @@ describe('Swap e2e test', () => {
 
     try {
       console.log('SwapWIW -> Restore wallets')
-      await importWallet(MakerPage, testWallets.btcMMaker.seedPhrase.split(' '))
-      await importWallet(TakerPage, testWallets.btcMTaker.seedPhrase.split(' '))
+      await importWallet({
+        page: MakerPage,
+        seed: testWallets.btcMMaker.seedPhrase.split(' '),
+      })
+      await importWallet({
+        page: TakerPage,
+        seed: testWallets.btcMTaker.seedPhrase.split(' '),
+      })
 
       await MakerPage.waitForSelector('#btcAddress') // waits for Maker wallet to load
-      await TakerPage.waitForSelector('#btcAddress') // waits for Taker wallet to load
+      await TakerPage.waitForSelector('#wbtcAddress') // waits for Taker wallet to load
 
       const recoveredMakerBtcAddress = await MakerPage.$eval('#btcAddress', el => el.textContent)
-      const recoveredTakerBtcAddress = await TakerPage.$eval('#btcAddress', el => el.textContent)
+      const recoveredTakerWbtcAddress = await TakerPage.$eval('#wbtcAddress', el => el.textContent)
 
       expect(recoveredMakerBtcAddress).toBe(testWallets.btcMMaker.address)
-      expect(recoveredTakerBtcAddress).toBe(testWallets.btcMTaker.address)
+      expect(recoveredTakerWbtcAddress).toBe(testWallets.btcMTaker.address)
 
     } catch (error) {
       await takeScreenshot(MakerPage, 'MakerPage_SwapWIW_RestoreWalletError')

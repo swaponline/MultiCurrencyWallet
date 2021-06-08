@@ -10,7 +10,10 @@ describe('Wallet tests', () => {
 
     try {
       console.log('Restore wallet test')
-      await importWallet(page, testWallets.btcRW.seedPhrase.split(' '))
+      await importWallet({
+        page,
+        seed: testWallets.btcRW.seedPhrase.split(' '),
+      })
 
       await page.waitForSelector('#btcAddress')
 
@@ -34,7 +37,10 @@ describe('Wallet tests', () => {
 
     try {
       console.log('Balance test')
-      await importWallet(page, arrOfWords)
+      await importWallet({
+        page,
+        seed: arrOfWords,
+      })
       await timeOut(5000)
 
       await page.waitForSelector('#walletRowUpdateBalanceBtn')

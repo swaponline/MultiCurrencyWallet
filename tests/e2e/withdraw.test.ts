@@ -38,7 +38,10 @@ describe('Withdraw form tests', () => {
 
     try {
       console.log('Withdraw form tests')
-      await importWallet(page, arrOfWords)
+      await importWallet({
+        page,
+        seed: arrOfWords,
+      })
       await page.waitForTimeout(5_000)
 
       await checkSelectedCurrency({ page, ticker: 'btc' })

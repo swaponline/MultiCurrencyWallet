@@ -13,7 +13,11 @@ describe('Prepare to swap e2e tests', () => {
 
     try {
       console.log('TurnOn MM -> Restore wallet')
-      await importWallet(page, testWallets.btcTurnOnMM.seedPhrase.split(' '))
+      await importWallet({
+        page,
+        seed: testWallets.btcTurnOnMM.seedPhrase.split(' '),
+        timeout: 60_000,
+      })
 
       await page.waitForSelector('#btcAddress')
 
@@ -30,7 +34,7 @@ describe('Prepare to swap e2e tests', () => {
 
     try {
       console.log('TurnOn MM test')
-      await addAssetToWallet(page, '{eth}wbtc')
+      await addAssetToWallet(page, 'ethwbtc')
 
       await timeOut(3 * 1000)
 
@@ -70,8 +74,14 @@ describe('Prepare to swap e2e tests', () => {
 
     try {
       console.log('Check messaging -> Restore wallets')
-      await importWallet(MakerPage, testWallets.btcMMaker.seedPhrase.split(' '))
-      await importWallet(TakerPage, testWallets.btcMTaker.seedPhrase.split(' '))
+      await importWallet({
+        page: MakerPage, 
+        seed: testWallets.btcMMaker.seedPhrase.split(' '),
+      })
+      await importWallet({
+        page: TakerPage,
+        seed: testWallets.btcMTaker.seedPhrase.split(' '),
+      })
 
       await MakerPage.waitForSelector('#btcAddress') // waits for Maker wallet to load
       await TakerPage.waitForSelector('#btcAddress') // waits for Taker wallet to load
@@ -93,8 +103,8 @@ describe('Prepare to swap e2e tests', () => {
 
     try {
       console.log('Check messaging -> Prepare pages for next actions')
-      await addAssetToWallet(MakerPage, 'wbtc')
-      await addAssetToWallet(TakerPage, 'wbtc')
+      await addAssetToWallet(MakerPage, 'ethwbtc')
+      await addAssetToWallet(TakerPage, 'ethwbtc')
 
       await timeOut(3 * 1000)
 

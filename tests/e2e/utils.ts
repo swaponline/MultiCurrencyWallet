@@ -28,14 +28,21 @@ export const createBrowser = async (): Promise<{ browser: puppeteer.Browser, pag
   return { browser, page }
 }
 
-export const importWallet = async (page: puppeteer.Page, SEED: string[]) => {
+type ImportWalletParams = {
+  page: puppeteer.Page
+  seed: string[]
+  timeout?: number
+}
+
+export const importWallet = async (params: ImportWalletParams) => {
+  const { page, seed, timeout = 30_000 } = params
 
   await page.waitForSelector('#preloaderRestoreBtn')
-
   await page.click('#preloaderRestoreBtn')
 
-
-  await page.waitForSelector('.react-tags__search-input')
+  await page.waitForSelector('.react-tags__search-input', {
+    timeout,
+  })
 
   const wordInput = await page.$(`.react-tags__search-input`)
 
@@ -46,7 +53,7 @@ export const importWallet = async (page: puppeteer.Page, SEED: string[]) => {
 
   // type seed
   for (let i = 0; i < 12; i++) {
-    await wordInput.type(SEED[i])
+    await wordInput.type(seed[i])
     await wordInput.press('Enter')
   }
 

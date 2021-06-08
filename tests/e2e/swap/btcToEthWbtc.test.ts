@@ -16,8 +16,14 @@ describe('Swap e2e test', () => {
 
     try {
       console.log('SwapWIW -> Restore wallets')
-      await importWallet(MakerPage, testWallets.btcMMaker.seedPhrase.split(' '))
-      await importWallet(TakerPage, testWallets.btcMTaker.seedPhrase.split(' '))
+      await importWallet({
+        page: MakerPage,
+        seed: testWallets.btcMMaker.seedPhrase.split(' '),
+      })
+      await importWallet({
+        page: TakerPage,
+        seed: testWallets.btcMTaker.seedPhrase.split(' '),
+      })
 
       await MakerPage.waitForSelector('#btcAddress') // waits for Maker wallet to load
       await TakerPage.waitForSelector('#btcAddress') // waits for Taker wallet to load
