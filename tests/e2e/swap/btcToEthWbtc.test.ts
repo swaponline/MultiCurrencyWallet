@@ -9,6 +9,9 @@ const wbtcBuyAmount = 450_000e-8
 jest.setTimeout(1500 * 1000)
 
 describe('Swap e2e test', () => {
+  function getExchangeUrl(sourceUrl) {
+    return sourceUrl.replace(/marketmaker.+/, 'exchange/btc-to-{ETH}wbtc')
+  }
 
   test('BTC/(ETHEREUM)WBTC swap with internal wallets', async () => {
     const { browser: MakerBrowser, page: MakerPage } = await createBrowser()
@@ -45,13 +48,13 @@ describe('Swap e2e test', () => {
 
     try {
       console.log('SwapWIW -> Prepare pages for next actions')
-      await addAssetToWallet(MakerPage, '{eth}wbtc')
-      await addAssetToWallet(TakerPage, '{eth}wbtc')
+      await addAssetToWallet(MakerPage, 'ethwbtc')
+      await addAssetToWallet(TakerPage, 'ethwbtc')
 
       await timeOut(3 * 1000)
 
       // taker move to exchange page and try connecting to peers
-      await TakerPage.$('a[href="#/exchange"]').then((aToExchange) => aToExchange.click())
+      await TakerPage.goto(`${TakerPage.url()}exchange/btc-to-{ETH}wbtc`)
 
       const [sellCurrencySelectorList, buyCurrencySelectorList] = await TakerPage.$$('.dropDownSelectCurrency')
 
@@ -80,13 +83,13 @@ describe('Swap e2e test', () => {
 
     try {
       console.log('SwapWIW -> Setup MM')
-      await MakerPage.goto(`${MakerPage.url()}marketmaker/WBTC`)
+      await MakerPage.goto(`${MakerPage.url()}marketmaker/{ETH}WBTC`)
 
       await timeOut(3 * 1000)
 
       var { btcBalance: makerBtcBalance, tokenBalance: makerTokenBalance } = await turnOnMM(MakerPage)
 
-      await MakerPage.$('a[href="#/exchange"]').then((aToExchange) => aToExchange.click())
+      await MakerPage.goto( getExchangeUrl(MakerPage.url()) )
 
       await MakerPage.$('#orderbookBtn').then((orderbookBtn) => orderbookBtn.click())
 
