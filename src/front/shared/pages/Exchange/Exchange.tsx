@@ -1669,7 +1669,7 @@ class Exchange extends PureComponent<any, any> {
       new BigNumber(availableAmount).isGreaterThanOrEqualTo(haveAmount) ||
       fromAddress.type === AddressType.Custom
 
-    const metamaskNetworkVersion = getCurrentWeb3().currentProvider.networkVersion || false
+    const metamaskNetworkVersion = getCurrentWeb3()?.currentProvider?.networkVersion
     // console.log('metamaskNetworkVersion', metamaskNetworkVersion)
     // let isCorrectMetamaskNetwork = metamask.isConnected() ?
     //   (fromAddress.type === AddressType.Metamask || toAddress.type === AddressType.Metamask) &&
