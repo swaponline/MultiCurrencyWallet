@@ -237,7 +237,7 @@ class Erc20LikeAction {
       .toNumber()
   }
 
-  fetchTokenTxInfo = async (ticker, hash, cacheTime) => {
+  fetchTokenTxInfo = async (ticker, hash) => {
     return new Promise(async (res) => {
       let txInfo = await this.fetchTxInfo(hash)
 

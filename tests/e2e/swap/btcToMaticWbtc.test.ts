@@ -3,14 +3,14 @@ import testWallets from '../../testWallets'
 
 import { createBrowser, importWallet, addAssetToWallet, turnOnMM, selectSendCurrency, takeScreenshot, timeOut } from '../utils'
 
-const btcSellAmount = 500_000e-8
-const wbtcBuyAmount = 450_000e-8
+const wbtcSellAmount = 450_000e-8
+const btcBuyAmount = 500_000e-8
 
 jest.setTimeout(1500 * 1000)
 
 describe('Swap e2e test', () => {
 
-  test('BTC/(MATIC)WBTC swap with internal wallets', async () => {
+  test('(MATIC)WBTC/BTC swap with internal wallets', async () => {
     const { browser: MakerBrowser, page: MakerPage } = await createBrowser()
     const { browser: TakerBrowser, page: TakerPage } = await createBrowser()
 
@@ -41,8 +41,8 @@ describe('Swap e2e test', () => {
       console.log('SwapWIW -> Prepare pages for next actions')
 
       // TODO: fill it
-      await addAssetToWallet(MakerPage, '')
-      await addAssetToWallet(TakerPage, '')
+      await addAssetToWallet(MakerPage, '{matic}wbtc')
+      await addAssetToWallet(TakerPage, '{matic}wbtc')
 
       await timeOut(3 * 1000)
 
@@ -52,7 +52,7 @@ describe('Swap e2e test', () => {
       const [sellCurrencySelectorList, buyCurrencySelectorList] = await TakerPage.$$('.dropDownSelectCurrency')
 
       await buyCurrencySelectorList.click()
-      await TakerPage.click("[id='{MATIC}wbtc']")
+      await TakerPage.click("[id='btc']")
 
       await TakerPage.evaluate((selector) => document.querySelector(selector).click(), '.dropDownReceive')
       await TakerPage.click(`#Internal`)
@@ -61,7 +61,7 @@ describe('Swap e2e test', () => {
 
       await sellCurrencySelectorInput.click()
       await sellCurrencySelectorInput.press('Backspace')
-      await sellCurrencySelectorInput.type(btcSellAmount.toString())
+      await sellCurrencySelectorInput.type(wbtcSellAmount.toString())
 
       await TakerPage.$('#orderbookBtn').then((orderbookBtn) => orderbookBtn.click())
 
@@ -80,7 +80,10 @@ describe('Swap e2e test', () => {
 
       await timeOut(3 * 1000)
 
-      var { btcBalance: makerBtcBalance, tokenBalance: makerTokenBalance } = await turnOnMM(MakerPage)
+      const {
+        btcBalance: makerBtcBalance,
+        tokenBalance: makerTokenBalance,
+      } = await turnOnMM(MakerPage)
 
       await MakerPage.$('a[href="#/exchange"]').then((aToExchange) => aToExchange.click())
 
@@ -91,8 +94,8 @@ describe('Swap e2e test', () => {
       const buyAmountOrders   = await MakerPage.$$eval('.buyAmountOrders', elements => elements.map(el => el.textContent))
       const mmOrders = [...sellAmountOrders, ...buyAmountOrders];
 
-      +makerBtcBalance ? expect(mmOrders).toContain(makerBtcBalance) : console.log('maker have not btc balance')
-      +makerTokenBalance ? expect(mmOrders).toContain(makerTokenBalance) : console.log('maker have not token balance')
+      +makerBtcBalance ? expect(mmOrders).toContain(makerBtcBalance) : console.log('maker has not btc balance')
+      +makerTokenBalance ? expect(mmOrders).toContain(makerTokenBalance) : console.log('maker has not token balance')
 
     } catch (error) {
       await takeScreenshot(MakerPage, 'MakerPage_SwapWIW_SetupMMError')
@@ -119,8 +122,8 @@ describe('Swap e2e test', () => {
 
       const allOrders = [...btcOrders.map((amount) => new BigNumber(amount).toFixed(5)), ...wbtcOrders.map((amount) => new BigNumber(amount).toFixed(5))];
 
-      +makerBtcBalance ? expect(allOrders).toContain(makerBtcBalance) : console.log('maker have not btc balance')
-      +makerTokenBalance ? expect(allOrders).toContain(makerTokenBalance) : console.log('maker have not token balance')
+      +makerBtcBalance ? expect(allOrders).toContain(makerBtcBalance) : console.log('maker has not btc balance')
+      +makerTokenBalance ? expect(allOrders).toContain(makerTokenBalance) : console.log('maker has not token balance')
     } catch (error) {
       await takeScreenshot(MakerPage, 'MakerPage_SwapWIW_MessagingError')
       await takeScreenshot(TakerPage, 'TakerPage_SwapWIW_MessagingError')
@@ -222,8 +225,8 @@ describe('Swap e2e test', () => {
       await MakerPage.type('#toAddressInput', testWallets.btcMTaker.address)
       await TakerPage.type('#toAddressInput', testWallets.btcMMaker.ethAddress)
 
-      await MakerPage.type('#amountInput', btcSellAmount.toString())
-      await TakerPage.type('#amountInput', wbtcBuyAmount.toString())
+      await MakerPage.type('#amountInput', wbtcSellAmount.toString())
+      await TakerPage.type('#amountInput', btcBuyAmount.toString())
 
       await timeOut(10 * 1000)
 
@@ -243,8 +246,8 @@ describe('Swap e2e test', () => {
       await takeScreenshot(MakerPage, 'MakerPage_SwapWIW_SendBTC_TxInfo')
       await takeScreenshot(TakerPage, 'TakerPage_SwapWIW_SendWBTC_TxInfo')
 
-      expect(btcTxAmout).toContain(btcSellAmount.toString())
-      expect(wbtcTxAmout).toContain(wbtcBuyAmount.toString())
+      expect(btcTxAmout).toContain(wbtcSellAmount.toString())
+      expect(wbtcTxAmout).toContain(btcBuyAmount.toString())
 
     } catch (error) {
       await takeScreenshot(MakerPage, 'MakerPage_SwapWIW_SendBTCError')

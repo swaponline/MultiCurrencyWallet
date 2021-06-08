@@ -39,8 +39,8 @@ describe('Swap e2e test', () => {
 
     try {
       console.log('SwapWIW -> Prepare pages for next actions')
-      await addAssetToWallet(MakerPage, 'wbtc')
-      await addAssetToWallet(TakerPage, 'wbtc')
+      await addAssetToWallet(MakerPage, '{eth}wbtc')
+      await addAssetToWallet(TakerPage, '{eth}wbtc')
 
       await timeOut(3 * 1000)
 
