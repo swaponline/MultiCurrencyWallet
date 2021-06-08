@@ -492,7 +492,7 @@ class Exchange extends PureComponent<any, any> {
         tokenContractAddress: tokenObj.contractAddress,
         decimals: tokenObj.decimals,
       })
-  
+
       this.setState(() => ({
         hasTokenAllowance: new BigNumber(allowance).isGreaterThanOrEqualTo(haveAmount),
       }))
@@ -1953,14 +1953,16 @@ class Exchange extends PureComponent<any, any> {
               <Button
                 id='exchangeButton'
                 styleName="button"
-                onClick={hasTokenAllowance ? this.initSwap : this.approveTheToken}
+                onClick={haveType === AddressType.Metamask ? this.initSwap : this.approveTheToken}
                 disabled={!canStartSwap || isPendingTokenApprove}
                 pending={isPendingTokenApprove}
                 blue={true}
               >
                 {canStartSwap
-                  ? hasTokenAllowance
-                    ? <FormattedMessage id="partial541" defaultMessage="Exchange now" />
+                  ? haveType === AddressType.Metamask
+                    ? canStartSwap
+                      ? <FormattedMessage id="partial541" defaultMessage="Exchange now" />
+                      : getTextWhyCanNotStartSwap()
                     : (
                       <FormattedMessage
                         id="FormattedMessageIdApprove"
