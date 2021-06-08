@@ -2570,10 +2570,13 @@
     ]
   },
   {
+<<<<<<< HEAD
     "id": "createWallet_customERC20",
     "message": "Custom token"
   },
   {
+=======
+>>>>>>> master
     "id": "customTokenAddress",
     "message": "Token address",
     "files": [
@@ -5912,6 +5915,13 @@
     "message": "Wissen en herladen",
     "files": [
       "src/front/shared/components/Header/Header.tsx"
+    ]
+  },
+  {
+    "id": "WalletEmptyBalance",
+    "message": "No wallets available",
+    "files": [
+      "src/front/shared/pages/Wallet/Wallet.tsx"
     ]
   }
 ]

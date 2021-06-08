@@ -924,7 +924,7 @@
   },
   {
     "id": "Withdrow170",
-    "message": "Maksymalna kwota, jaką możesz wysłać to {allowedCriptoBalance} {currency}",
+    "message": "Maksymalna kwota, jaką możesz wysłać to {allowedBalance} {currency}",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
@@ -5916,6 +5916,13 @@
     "message": "Wyczyść i przeładuj",
     "files": [
       "src/front/shared/components/Header/Header.tsx"
+    ]
+  },
+  {
+    "id": "WalletEmptyBalance",
+    "message": "No wallets available",
+    "files": [
+      "src/front/shared/pages/Wallet/Wallet.tsx"
     ]
   }
 ]

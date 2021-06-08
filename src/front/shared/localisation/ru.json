@@ -5917,5 +5917,12 @@
     "files": [
       "src/front/shared/components/Header/Header.tsx"
     ]
+  },
+  {
+    "id": "WalletEmptyBalance",
+    "message": "No wallets available",
+    "files": [
+      "src/front/shared/pages/Wallet/Wallet.tsx"
+    ]
   }
 ]

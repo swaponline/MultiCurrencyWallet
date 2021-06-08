@@ -2693,10 +2693,6 @@
     ]
   },
   {
-    "id": "createWallet_customERC20",
-    "message": "Custom token"
-  },
-  {
     "id": "customTokenAddress",
     "message": "Token address",
     "files": [
