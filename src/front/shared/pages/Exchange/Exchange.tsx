@@ -49,6 +49,10 @@ import TurboIcon from 'shared/components/ui/TurboIcon/TurboIcon'
 
 import { COIN_DATA, COIN_MODEL, COIN_TYPE } from 'swap.app/constants/COINS'
 import getCoinInfo from 'common/coins/getCoinInfo'
+import { AWAILABLE_NETWORKS_BY_COIN } from 'common/helpers/constants/AWAILABLE_EVM_NETWORKS'
+
+const NETWORK = process.env.MAINNET ? 'MAINNET' : 'TESTNET'
+const NETWORK_NUMBER = NETWORK === 'MAINNET' ? 0 : 1 // 0 - MAINNET, 1 - TESTNET
 
 
 type CurrencyObj = {
@@ -1505,6 +1509,18 @@ class Exchange extends PureComponent<any, any> {
     return coin.toUpperCase()
   }
 
+  getCurrencyNetwork = (currency) => {
+    const { coin, blockchain } = getCoinInfo(currency)
+    const ticker = coin.toUpperCase()
+
+    const isUTXOModel = COIN_DATA[ticker]?.model === COIN_MODEL.UTXO
+
+    return !isUTXOModel && (blockchain ?
+      AWAILABLE_NETWORKS_BY_COIN[blockchain][NETWORK_NUMBER]
+      :
+      AWAILABLE_NETWORKS_BY_COIN[ticker][NETWORK_NUMBER])
+  }
+
   render() {
     const {
       currencies,
@@ -1669,13 +1685,13 @@ class Exchange extends PureComponent<any, any> {
       new BigNumber(availableAmount).isGreaterThanOrEqualTo(haveAmount) ||
       fromAddress.type === AddressType.Custom
 
-    const metamaskNetworkVersion = getCurrentWeb3()?.currentProvider?.networkVersion
-    // console.log('metamaskNetworkVersion', metamaskNetworkVersion)
-    // let isCorrectMetamaskNetwork = metamask.isConnected() ?
-    //   (fromAddress.type === AddressType.Metamask || toAddress.type === AddressType.Metamask) &&
-    //     (metamaskNetworkVersion === sellCoin || metamaskNetworkVersion === sellCoin)
-    //   :
-    //   true
+    const sellCoinNetworkVersion = this.getCurrencyNetwork(sellCoin)
+    const buyCoinNetworkVersion = this.getCurrencyNetwork(buyCoin)
+    const metamaskNetworkVersion = +getCurrentWeb3()?.currentProvider?.networkVersion
+
+    const isCorrectMetamaskNetwork = !metamask.isConnected() ||
+      (fromAddress.type === AddressType.Metamask || toAddress.type === AddressType.Metamask) &&
+      (metamaskNetworkVersion === sellCoinNetworkVersion || metamaskNetworkVersion === buyCoinNetworkVersion)
 
     const canStartSwap =
       !isErrorExternalDisabled &&
@@ -1688,7 +1704,7 @@ class Exchange extends PureComponent<any, any> {
       isBalanceReady &&
       new BigNumber(getAmount).isGreaterThan(0) &&
       !isNonOffers &&
-      //isCorrectMetamaskNetwork &&
+      isCorrectMetamaskNetwork &&
       !isWaitForPeerAnswer
 
     const getTextWhyCanNotStartSwap = () => {
@@ -1720,6 +1736,7 @@ class Exchange extends PureComponent<any, any> {
       }
       if (!(new BigNumber(getAmount).isGreaterThan(0))) return <FormattedMessage id="errorWithGetAmount" defaultMessage='"You get" no more than 0' />
       if (isNonOffers) return <FormattedMessage id="noOffers" defaultMessage='No Offers' />
+      if (!isCorrectMetamaskNetwork) return <FormattedMessage id="incorrectMetamaskNetwork" defaultMessage='Please choose correct metamask network' />
       if (isWaitForPeerAnswer) return <FormattedMessage id="waitPeerAnswer" defaultMessage='Wait peer answer' />
 
       return <FormattedMessage id="contactSupport" defaultMessage='Please contact support' />
