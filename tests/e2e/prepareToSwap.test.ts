@@ -46,8 +46,7 @@ describe('Prepare to swap e2e tests', () => {
 
       await timeOut(3 * 1000)
 
-      await page.$('a[href="#/exchange"]').then((aToExchange) => aToExchange.click())
-
+      await page.goto(`${page.url()}`.replace(/marketmaker.+/, 'exchange/btc-to-{ETH}wbtc'))
       await page.$('#orderbookBtn').then((orderbookBtn) => orderbookBtn.click())
 
       // find all your orders
@@ -109,7 +108,7 @@ describe('Prepare to swap e2e tests', () => {
       await timeOut(3 * 1000)
 
       // taker move to exchange page and try connecting to peers
-      await TakerPage.$('a[href="#/exchange"]').then((aToExchange) => aToExchange.click())
+      await TakerPage.$('a[href="#/exchange"]').then((linkToExchange) => linkToExchange.click())
 
       const [sellCurrencySelectorList, buyCurrencySelectorList] = await TakerPage.$$('.dropDownSelectCurrency')
 
@@ -134,7 +133,7 @@ describe('Prepare to swap e2e tests', () => {
 
       var { btcBalance: makerBtcBalance, tokenBalance: makerTokenBalance } = await turnOnMM(MakerPage)
 
-      await MakerPage.$('a[href="#/exchange"]').then((aToExchange) => aToExchange.click())
+      await MakerPage.$('a[href="#/exchange"]').then((linkToExchange) => linkToExchange.click())
 
       await MakerPage.$('#orderbookBtn').then((orderbookBtn) => orderbookBtn.click())
 

@@ -5,12 +5,13 @@ import fs from 'fs'
 
 const link = process.env.ACTIONS ? 'file:///home/runner/work/MultiCurrencyWallet/MultiCurrencyWallet/build-testnet/index.html' : 'http://localhost:9001/'
 
+// if it's true then you will be able to see puppeteer's browser
 const isDebug = false
 
 export const createBrowser = async (): Promise<{ browser: puppeteer.Browser, page: puppeteer.Page}> => {
   const browser = await puppeteer.launch({
     headless: !isDebug,
-    //slowMo: 100,
+    // slowMo: 100,
   })
 
   const page = await browser.newPage()
