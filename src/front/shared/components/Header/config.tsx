@@ -5,15 +5,10 @@ import externalConfig from 'helpers/externalConfig'
 
 
 const isWidgetBuild = externalConfig && externalConfig.isWidget
-const isChromeExtention = externalConfig && externalConfig.dir === 'chrome-extension/application'
+const isChromeExtension = externalConfig && externalConfig.dir === 'chrome-extension/application'
 
 
 export const messages = defineMessages({
-  products: {
-    id: 'menu.products',
-    description: 'Menu item "Wallet"',
-    defaultMessage: 'Our products',
-  },
   wallet: {
     id: 'menu.wallet',
     description: 'Menu item "Wallet"',
@@ -43,16 +38,6 @@ export const messages = defineMessages({
     id: 'menu.farm',
     description: 'Menu item "Staking & Farming"',
     defaultMessage: 'Farming',
-  },
-  invest: {
-    id: 'menu.invest.info',
-    description: 'Menu item "Transactions"',
-    defaultMessage: 'How to invest?',
-  },
-  investMobile: {
-    id: 'menu.invest',
-    description: 'Menu item "Transactions"',
-    defaultMessage: 'Invest',
   },
 })
 
@@ -107,7 +92,7 @@ export const getMenuItems = (props) => {
   if (!isWidgetBuild) {
     const marketmakerItem = {
       title: intl.formatMessage(messages.marketmaker),
-      link: !isChromeExtention ? `${links.marketmaker}/` : (externalConfig.binance) ? `${links.marketmaker}/BTCB` : `${links.marketmaker}/WBTC`,
+      link: !isChromeExtension ? `${links.marketmaker}/` : `${links.marketmaker}/{ETH}WBTC`,
       exact: true,
       currentPageFlag: true,
     }

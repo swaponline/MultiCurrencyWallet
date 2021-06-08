@@ -2392,27 +2392,6 @@
     ]
   },
   {
-    "id": "menu.invest",
-    "message": "Invertir",
-    "files": [
-      "src/front/shared/components/Header/config.tsx"
-    ]
-  },
-  {
-    "id": "menu.invest.info",
-    "message": "Como invertir?",
-    "files": [
-      "src/front/shared/components/Header/config.tsx"
-    ]
-  },
-  {
-    "id": "menu.products",
-    "message": "Nuestros productos",
-    "files": [
-      "src/front/shared/components/Header/config.tsx"
-    ]
-  },
-  {
     "id": "currencyAction81",
     "message": "Elija una moneda que desee {context}",
     "files": [

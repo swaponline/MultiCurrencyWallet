@@ -30,11 +30,11 @@ describe('Prepare to swap e2e tests', () => {
 
     try {
       console.log('TurnOn MM test')
-      await addAssetToWallet(page, 'wbtc')
+      await addAssetToWallet(page, '{eth}wbtc')
 
       await timeOut(3 * 1000)
 
-      await page.goto(`${page.url()}marketmaker/WBTC`)
+      await page.goto(`${page.url()}marketmaker/{ETH}WBTC`)
 
       await timeOut(3 * 1000)
 
@@ -118,7 +118,7 @@ describe('Prepare to swap e2e tests', () => {
 
     try {
       console.log('Check messaging -> Setup MM')
-      await MakerPage.goto(`${MakerPage.url()}marketmaker/WBTC`)
+      await MakerPage.goto(`${MakerPage.url()}marketmaker/{ETH}WBTC`)
 
       await timeOut(3 * 1000)
 

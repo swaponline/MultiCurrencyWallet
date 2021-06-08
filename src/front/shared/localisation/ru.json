@@ -1248,20 +1248,6 @@
     ]
   },
   {
-    "id": "menu.products",
-    "message": "Наши предложения",
-    "files": [
-      "src/front/shared/components/Header/config.tsx"
-    ]
-  },
-  {
-    "id": "menu.invest",
-    "message": "Как инвестировать?",
-    "files": [
-      "src/front/shared/components/Header/config.tsx"
-    ]
-  },
-  {
     "id": "SwitchLang20",
     "message": "EN",
     "files": [
@@ -2473,13 +2459,6 @@
     "message": "Приватный ключ",
     "files": [
       "src/front/shared/pages/Wallet/Row/Row.tsx"
-    ]
-  },
-  {
-    "id": "menu.invest.info",
-    "message": "How to invest?",
-    "files": [
-      "src/front/shared/components/Header/config.tsx"
     ]
   },
   {
