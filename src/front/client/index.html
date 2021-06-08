@@ -860,7 +860,7 @@
       const urlHash = window.location.hash
       const host = window.location.host
 
-      const isHomePath = (urlHash === '#/' || urlHash === '#/createWallet')
+      const isHomePath = (urlHash === '#/' || urlHash === '#/createWallet' || urlHash === '' )
 
       if (host === 'bsc.swap.io' && isHomePath) {
         redirectionTo('#/exchange/btc-to-{BNB}btcb}')
