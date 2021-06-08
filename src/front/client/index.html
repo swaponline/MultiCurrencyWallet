@@ -860,13 +860,14 @@
       const urlHash = window.location.hash
       const host = window.location.host
 
-      if (
-        host === 'bsc.swap.io' && (
-          urlHash === '#/' ||
-          urlHash === '#/createWallet'
-        )
-      ) {
-        redirectionTo('#/exchange/btc-to-btcb')
+      const isHomePath = (urlHash === '#/' || urlHash === '#/createWallet')
+
+      if (host === 'bsc.swap.io' && isHomePath) {
+        redirectionTo('#/exchange/btc-to-{BNB}btcb}')
+      }
+
+      if (host === 'matic.swap.io' && isHomePath) {
+        redirectionTo('#/exchange/btc-to-{MATIC}wbtc')
       }
 
       const btnCreateWallet = document.getElementById('preloaderCreateBtn');

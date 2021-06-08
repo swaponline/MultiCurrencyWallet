@@ -2054,7 +2054,7 @@ class Exchange extends PureComponent<any, any> {
             {(!isWidgetBuild || isDevBuild) && (
               <>
                 <div styleName="link button-like">
-                  <a href={!isChromeExtention ? `#${links.marketmaker}/` : `#${links.marketmaker}/WBTC`}>
+                  <a href={!isChromeExtention ? `#${links.marketmaker}/` : `#${links.marketmaker}/{MATIC}WBTC`}>
                     <FormattedMessage id="AddLiquidity" defaultMessage="Add Liquidity" />
                   </a>
                 </div>
