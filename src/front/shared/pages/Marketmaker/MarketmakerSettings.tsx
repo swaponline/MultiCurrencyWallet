@@ -78,7 +78,7 @@ class MarketmakerSettings extends Component<any, any> {
       isEthBalanceOk: false,
       isBtcBalanceOk: false,
       isTokenBalanceOk: false,
-      marketSpread: 0.1, // 10% spread
+      marketSpread: 0, // 0% spread
       mnemonicSaved,
     }
   }

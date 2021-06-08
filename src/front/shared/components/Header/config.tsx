@@ -92,7 +92,7 @@ export const getMenuItems = (props) => {
   if (!isWidgetBuild) {
     const marketmakerItem = {
       title: intl.formatMessage(messages.marketmaker),
-      link: !isChromeExtension ? `${links.marketmaker}/` : `${links.marketmaker}/{ETH}WBTC`,
+      link: !isChromeExtension ? `${links.marketmaker}/` : `${links.marketmaker}/{MATIC}WBTC`,
       exact: true,
       currentPageFlag: true,
     }
