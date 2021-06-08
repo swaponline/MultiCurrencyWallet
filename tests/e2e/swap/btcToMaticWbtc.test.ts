@@ -32,7 +32,7 @@ describe('Swap e2e test', () => {
       const recoveredTakerWbtcAddress = await TakerPage.$eval('#wbtcAddress', el => el.textContent)
 
       expect(recoveredMakerBtcAddress).toBe(testWallets.btcMMaker.address)
-      expect(recoveredTakerWbtcAddress).toBe(testWallets.btcMTaker.address)
+      expect(recoveredTakerWbtcAddress).toBe(testWallets.btcMTaker.ethAddress)
 
     } catch (error) {
       await takeScreenshot(MakerPage, 'MakerPage_SwapWIW_RestoreWalletError')
@@ -46,9 +46,8 @@ describe('Swap e2e test', () => {
     try {
       console.log('SwapWIW -> Prepare pages for next actions')
 
-      // TODO: fill it
-      await addAssetToWallet(MakerPage, '{matic}wbtc')
-      await addAssetToWallet(TakerPage, '{matic}wbtc')
+      await addAssetToWallet(MakerPage, 'maticwbtc')
+      await addAssetToWallet(TakerPage, 'maticwbtc')
 
       await timeOut(3 * 1000)
 
