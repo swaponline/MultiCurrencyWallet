@@ -86,7 +86,7 @@ const sign_btc_pin = async (btcPrivateKey) => {
 }
 
 const sign = async () => {
-  metamask.web3connect.onInit( async () => {
+  await metamask.web3connect.onInit( async () => {
     initReducerState()
 
     let mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)

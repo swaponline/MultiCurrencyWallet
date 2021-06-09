@@ -336,8 +336,10 @@ class App extends React.Component<RouteComponentProps<any>, any> {
   completeAppCreation = async () => {
     console.group('App >%c loading...', 'color: green;')
 
-    actions.user.sign()
-    await createSwapApp()
+    if(!window.SwapApp){
+      await actions.user.sign()
+      await createSwapApp()
+    }
 
     this.setState(() => ({
       initialFetching: false,

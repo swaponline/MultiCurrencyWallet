@@ -91,7 +91,7 @@ const onInit = (cb) => {
 }
 
 const createSwapApp = async () => {
-  metamask.web3connect.onInit(async () => {
+  await metamask.web3connect.onInit(async () => {
     const web3 = (metamask.isEnabled() && metamask.isConnected())
       ? await metamask.getWeb3()
       : await getWeb3()

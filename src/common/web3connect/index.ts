@@ -136,15 +136,15 @@ export default class Web3Connect extends EventEmitter {
     return isInjectedEnabled()
   }
 
-  onInit(cb) {
-    const waitInit = () => {
+  async onInit(cb) {
+    const waitInit = async () => {
       if (this._inited) {
         cb()
       } else {
-        setTimeout( waitInit, 100 )
+        await setTimeout( waitInit, 100 )
       }
     }
-    waitInit()
+     await waitInit()
   }
 
   hasCachedProvider() {

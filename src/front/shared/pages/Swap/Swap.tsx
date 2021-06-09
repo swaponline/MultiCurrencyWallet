@@ -141,7 +141,7 @@ class SwapComponent extends PureComponent<any, any> {
   }
 
 
-  componentDidMount() {
+  async componentDidMount() {
     console.group('Swap page >%c didMount', 'color: green')
 
     const { items, currenciesData, tokensData } = this.props
@@ -168,11 +168,13 @@ class SwapComponent extends PureComponent<any, any> {
       console.log('creating swap')
       console.log('orderId', orderId)
       console.log('SwapApp', window.SwapApp)
-      window.SwapApp ?
-        (this.createSwap({ orderId, items, tokensData, activeFiat })) :
-        (createSwapApp().then(() => {
-          this.createSwap({ orderId, items, tokensData, activeFiat })
-        }))
+      if (window.SwapApp) {
+        this.createSwap({ orderId, items, tokensData, activeFiat })
+      } else {
+        await actions.user.sign()
+        await createSwapApp()
+        this.createSwap({ orderId, items, tokensData, activeFiat })
+      }
 
     } catch (error) {
       console.error(error)
