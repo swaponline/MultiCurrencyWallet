@@ -36,7 +36,7 @@ export default (webpackConfig) => {
     minimizer: [
       new TerserPlugin({
         parallel: true, // default -> os.cpus().length - 1
-        sourceMap: false,
+        sourceMap: true,
       }),
     ],
     splitChunks: {
@@ -59,12 +59,14 @@ export default (webpackConfig) => {
   webpackConfig.devtool = 'source-map'
 
   webpackConfig.plugins.push(
+    /*	  
     new webpack.SourceMapDevToolPlugin({
       publicPath: config.publicPath,
       filename: '[name].[hash:6].js.map',
       fileContext: 'public',
       exclude: ['vendor.js'],
     }),
+    */
     new WebpackRequireFrom({
       variableName: 'publicUrl',
       suppressErrors: true
