@@ -134,6 +134,7 @@ class SwapComponent extends PureComponent<any, any> {
       waitWithdrawOther: false,
       isFaucetRequested: false,
       isSwapCancelled: false,
+      errorInfo: '',
     }
   }
 
@@ -176,7 +177,7 @@ class SwapComponent extends PureComponent<any, any> {
     } catch (error) {
       console.error(error)
       actions.notifications.show(constants.notifications.ErrorNotification, {
-        error: 'Sorry, but this order do not exsit already'
+        error: 'Sorry, but this order does not exist already'
       })
       this.props.history.push(localisedUrl(links.exchange))
     }
@@ -333,6 +334,17 @@ class SwapComponent extends PureComponent<any, any> {
   checkIsConfirmed = () => {
     const { swap: { flow: { state: { step } } } } = this.state
     return !(step === 1)
+  }
+
+  componentDidCatch(error, info) {
+    this.setState(() => ({
+      errorInfo: info,
+    }))
+
+    actions.notifications.show(
+      constants.notifications.ErrorNotification,
+      { error: error.message }
+    )
   }
 
   checkIsFinished = () => {
@@ -553,6 +565,7 @@ class SwapComponent extends PureComponent<any, any> {
       isAddressCopied,
       waitWithdrawOther,
       isSwapCancelled,
+      errorInfo,
     } = this.state
 
     if (!swap || !SwapComponent || !peer || !isAmountMore) {
@@ -614,6 +627,13 @@ class SwapComponent extends PureComponent<any, any> {
             <h3 styleName="canceled" onClick={this.goWallet}>
               <FormattedMessage id="swappropgress327" defaultMessage="This swap is canceled" />
             </h3>
+
+            {errorInfo && (
+              <div>
+                {errorInfo}
+              </div>
+            )}
+
             <h3>
               <FormattedMessage
                 id="swappropgress400"

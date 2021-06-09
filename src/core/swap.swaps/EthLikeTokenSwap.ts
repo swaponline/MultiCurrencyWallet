@@ -130,14 +130,6 @@ class EthLikeTokenSwap extends SwapInterface {
     this.ERC20          = new this.web3adapter.Contract(this.tokenAbi, this.tokenAddress)
   }
 
-  /**
-   * @deprecated
-   */
-  updateGas() {
-    console.warn(`EthLikeTokenSwap.updateGas() ${this.blockchainName} - is deprecated and will be removed. Use .updateGasPrice()`)
-    return this.updateGasPrice()
-  }
-
   async updateGasPrice() {
     //@ts-ignore
     debug('gas price before update', this.gasPrice)

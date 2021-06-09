@@ -99,6 +99,8 @@ export default class EthTokenToUTXO extends Component<any, any> {
     console.log('%c Stack trace', 'color: orange;')
     console.trace()
     console.groupEnd()
+
+    throw new Error(error)
   }
 
   confirmScriptChecked = () => {

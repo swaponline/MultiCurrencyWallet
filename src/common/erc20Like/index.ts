@@ -81,14 +81,14 @@ class erc20LikeHelper {
   }): Promise<number> => {
     const { tokenOwnerAddress, tokenContractAddress, decimals } = params
     const tokenContract = new this.Web3.eth.Contract(TokenApi, tokenContractAddress)
-  
-    let allowanceAmount
-  
+
+    let allowanceAmount = 0
+
     try {
       allowanceAmount = await tokenContract.methods
         .allowance(tokenOwnerAddress, config.swapContract[this.standard])
         .call({ from: tokenOwnerAddress })
-      
+
       // formatting without token decimals
       allowanceAmount = new BigNumber(allowanceAmount)
         .dp(0, BigNumber.ROUND_UP)
@@ -98,7 +98,7 @@ class erc20LikeHelper {
       this.reportError({ error })
     }
 
-    return allowanceAmount || 0
+    return allowanceAmount
   }
 }
 
