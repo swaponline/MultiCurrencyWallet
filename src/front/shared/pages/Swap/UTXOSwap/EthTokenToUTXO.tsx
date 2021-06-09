@@ -93,6 +93,14 @@ export default class EthTokenToUTXO extends Component<any, any> {
     this.requestMaxAllowance()
   }
 
+  reportError = (error) => {
+    console.group('%c EthTokenToUTXO swap', 'color: red;')
+    console.error('error: ', error)
+    console.log('%c Stack trace', 'color: orange;')
+    console.trace()
+    console.groupEnd()
+  }
+
   confirmScriptChecked = () => {
     //@ts-ignore: strictNullChecks
     this.swap.flow[this._fields.verifyScriptFunc]()
@@ -115,15 +123,19 @@ export default class EthTokenToUTXO extends Component<any, any> {
   
   requestMaxAllowance = () => {
     //@ts-ignore: strictNullChecks
-    const { sellCurrency, sellAmount } = this.swap
-    //@ts-ignore: strictNullChecks
-    const { ethTokenSwap } = this.swap.flow
-    // TODO: replace actions with erc20, bep20 ...
-    actions.erc20.setAllowance({
-      name: sellCurrency,
-      to: ethTokenSwap.address, // swap contract address
-      targetAllowance: sellAmount,
-    })
+    const { sellCurrency, sellAmount, flow } = this.swap
+    const { ethTokenSwap } = flow
+    const { standard } = ethTokenSwap.options
+
+    try {
+      actions[standard].setAllowance({
+        name: sellCurrency,
+        to: ethTokenSwap.address, // swap contract address
+        targetAllowance: String(sellAmount),
+      })
+    } catch (error) {
+      this.reportError(error)
+    }
   }
 
   render() {

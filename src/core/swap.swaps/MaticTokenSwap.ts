@@ -10,7 +10,8 @@ class MaticTokenSwap extends EthLikeTokenSwap {
       getWeb3Utils: `getMaticWeb3Utils`,
       getMyAddress: `getMyMaticAddress`,
       getParticipantAddress: `getParticipantMaticAddress`,
-      blockchainName: constants.COINS.matic
+      blockchainName: constants.COINS.matic,
+      standard: constants.TOKEN_STANDARD.ERC20MATIC.toLowerCase(),
     }
     super(options)
   }

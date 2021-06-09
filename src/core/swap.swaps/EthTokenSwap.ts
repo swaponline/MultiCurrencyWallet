@@ -10,7 +10,8 @@ class EthTokenSwap extends EthLikeTokenSwap {
       getWeb3Utils: `getEthWeb3Utils`,
       getMyAddress: `getMyEthAddress`,
       getParticipantAddress: `getParticipantEthAddress`,
-      blockchainName: constants.COINS.eth
+      blockchainName: constants.COINS.eth,
+      standard: constants.TOKEN_STANDARD.ERC20.toLowerCase(),
     }
     super(options)
   }

@@ -509,28 +509,31 @@ class Erc20LikeAction {
   }
 
   setAllowance = async (params) => {
-    let { name, to, targetAllowance } = params
-    name = this.getReduxName(name)
-
-    const tokenKey = `{${this.currencyKey}}${name.toLowerCase()}`
+    const { name, to, targetAllowance } = params
     const { decimals } = this.returnTokenInfo(name)
     const { user: { tokensData } } = getState()
+
+    const tokenKey = `{${this.currencyKey}}${name.toLowerCase()}`
     const { address: ownerAddress } = tokensData[tokenKey]
 
-    const allowance = await erc20Like[this.standard].checkAllowance({
-      tokenOwnerAddress: ownerAddress,
-      tokenContractAddress: to,
-      decimals: decimals,
-    })
+    try {
+      const allowance = await erc20Like[this.standard].checkAllowance({
+        tokenOwnerAddress: ownerAddress,
+        tokenContractAddress: to,
+        decimals: decimals,
+      })
 
-    // if contract has enough allowance then skip
-    const weiAllowance = this.Web3.utils.toWei(targetAllowance)
+      // if contract has enough allowance then skip
+      const weiAllowance = this.Web3.utils.toWei(targetAllowance)
 
-    if (new BigNumber(weiAllowance).isLessThanOrEqualTo(allowance)) {
-      return Promise.resolve()
+      if (new BigNumber(weiAllowance).isLessThanOrEqualTo(allowance)) {
+        return Promise.resolve()
+      }
+
+      return this.approve({ name, to, amount: targetAllowance })
+    } catch (error) {
+      this.reportError(error)
     }
-
-    return this.approve({ name, to, amount: targetAllowance })
   }
 
   returnTokenInfo = (name) => {
@@ -555,10 +558,6 @@ class Erc20LikeAction {
       this.reportError(error)
       throw new Error(error)
     }
-  }
-
-  getReduxName = (name) => {
-    return `${this.standard.toLowerCase()}-${name.toLowerCase()}`
   }
 }
 

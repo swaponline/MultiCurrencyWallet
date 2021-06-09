@@ -289,7 +289,7 @@ class SwapComponent extends PureComponent<any, any> {
         if (!this.checkIsConfirmed()) {
           window.location.reload()
         }
-      }, 30000)
+      }, 30_000)
 
       this.checkingConfirmSuccessTimer = checkingConfirmSuccess
       this.checkingCycleTimer = checkingCycle
