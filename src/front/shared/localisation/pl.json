@@ -5174,6 +5174,13 @@
     ]
   },
   {
+    "id": "incorrectMetamaskNetwork",
+    "message": "Wybierz prawidłową sieć metamasek",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
     "id": "lowAmount",
     "message": "Niska kwota",
     "files": [
