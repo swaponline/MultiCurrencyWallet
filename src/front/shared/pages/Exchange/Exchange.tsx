@@ -857,7 +857,7 @@ class Exchange extends PureComponent<any, any> {
     }))
 
     const { coin: haveCurrencyName } = getCoinInfo(haveCurrency)
-    const coinStandard = COIN_DATA[haveCurrencyName].standard.toLowerCase()
+    const coinStandard = COIN_DATA[haveCurrency.toUpperCase()].standard.toLowerCase()
 
     actions[coinStandard]
       .approve({
