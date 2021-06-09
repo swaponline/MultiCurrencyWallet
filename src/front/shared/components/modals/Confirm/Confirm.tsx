@@ -38,9 +38,6 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 @cssModules(styles, { allowMultiple: true })
 class Confirm extends React.Component<any, any> {
-
-  props: any
-
   static propTypes = {
     onAccept: PropTypes.func,
   }

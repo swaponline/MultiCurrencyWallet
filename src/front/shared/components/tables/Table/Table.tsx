@@ -14,7 +14,7 @@ type TableProps = {
   id?: string
   className?: string
   isLoading?: boolean
-  textIfEmpty?: JSX.Element
+  textIfEmpty?: JSX.Element | string
   loadingText?: JSX.Element
   titles?: (string | JSX.Element)[]
 }

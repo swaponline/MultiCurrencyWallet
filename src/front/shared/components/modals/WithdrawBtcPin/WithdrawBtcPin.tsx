@@ -106,8 +106,6 @@ const langs = defineMessages({
 }))
 @cssModules({ ...styles, ...ownStyle }, { allowMultiple: true })
 class WithdrawBtcPin extends React.Component<any, any> {
-  props: any
-
   static propTypes = {
     name: PropTypes.string,
     data: PropTypes.object,

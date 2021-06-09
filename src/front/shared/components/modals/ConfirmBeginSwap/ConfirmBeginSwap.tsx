@@ -49,9 +49,6 @@ const defaultLanguage = defineMessages({
 }))
 @CSSModules(styles, { allowMultiple: true })
 class ConfirmBeginSwap extends React.Component<any, any> {
-
-  props: any
-
   static propTypes = {
     onAccept: PropTypes.func,
   }

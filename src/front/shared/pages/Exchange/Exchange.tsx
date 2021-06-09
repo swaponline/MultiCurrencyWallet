@@ -1,10 +1,10 @@
 import React, { PureComponent, Fragment } from 'react'
 import Link from 'local_modules/sw-valuelink'
 
-import ThemeTooltip from '../../components/ui/Tooltip/ThemeTooltip'
+import ThemeTooltip from 'components/ui/Tooltip/ThemeTooltip'
 import CSSModules from 'react-css-modules'
 import styles from './Exchange.scss'
-
+import Swap from 'swap.swap'
 import { connect } from 'redaction'
 import actions from 'redux/actions'
 import { BigNumber } from 'bignumber.js'
@@ -81,18 +81,21 @@ type Address = {
 
 type ExchangeState = {
   haveAmount: number
+  getAmount: number
   goodRate: number
   maxAmount: number
   haveFiat: number
-  getFiat: number
+  exHaveRate?: number
+  exGetRate?: number
   maxBuyAmount: BigNumber
-
-  getAmount: string
+  
+  getFiat: string
   haveCurrency: string
   haveType: string
   getCurrency: string
   getType: string
   peer: string
+  wayToDeclinedOrder: string
 
   ordersIsOpen: boolean
   hasTokenAllowance: boolean
@@ -109,8 +112,6 @@ type ExchangeState = {
   isNoAnyOrders?: boolean
   isFullLoadingComplete?: boolean
 
-  exHaveRate?: string
-  exGetRate?: string
   orderId?: string
   redirectToSwap: null | SwapMode
 
@@ -118,7 +119,7 @@ type ExchangeState = {
   pairFees: any
   directionOrders: IUniversalObj[]
   filteredOrders: IUniversalObj[]
-  desclineOrders: string[]
+  desclineOrders: Swap[] | []
 
   fromAddress: Address
   toAddress: Address
@@ -147,10 +148,7 @@ const bannedPeers = {} // rejected swap peers
   })
 )
 @CSSModules(styles, { allowMultiple: true })
-class Exchange extends PureComponent<any, any> {
-  props: ExchangeProps
-  state: ExchangeState
-
+class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
   private _mounted = false
 
   static defaultProps = {
@@ -254,18 +252,22 @@ class Exchange extends PureComponent<any, any> {
       haveType,
       getCurrency,
       getType,
+      exHaveRate: 0,
+      exGetRate: 0,
       haveAmount: 0,
-      getAmount: '',
+      getAmount: 0,
       haveFiat: 0,
-      getFiat: 0,
+      getFiat: '',
       isLowAmount: false,
       maxAmount: 0,
       maxBuyAmount: new BigNumber(0),
       peer: '',
+      wayToDeclinedOrder: '',
       goodRate: 0,
       directionOrders: [],
       filteredOrders: [],
       isNonOffers: false,
+      isNoAnyOrders: false,
       isDeclinedOffer: false,
       extendedControls: false,
       isWaitForPeerAnswer: false,
@@ -285,7 +287,7 @@ class Exchange extends PureComponent<any, any> {
 
     if (config.isWidget) {
       this.setState(() => ({
-        getCurrency: config.erc20token
+        getCurrency: config.erc20token,
       }))
     }
   }
@@ -1039,7 +1041,7 @@ class Exchange extends PureComponent<any, any> {
 
   setDeclinedOffer = () => {
     this.setState(() => ({
-      haveAmount: '',
+      haveAmount: 0,
       isWaitForPeerAnswer: false,
       isDeclinedOffer: true,
     }))
@@ -1062,7 +1064,7 @@ class Exchange extends PureComponent<any, any> {
 
     this.setState(() => ({
       maxAmount: Number(maxAmount),
-      getAmount: new BigNumber(getAmount).dp(decimalPlaces).toString(),
+      getAmount: new BigNumber(getAmount).dp(decimalPlaces).toNumber(),
       maxBuyAmount: buyAmount,
     }))
 
@@ -1072,7 +1074,7 @@ class Exchange extends PureComponent<any, any> {
     )
   }
 
-  setAmount = (value) => {
+  setAmount = (value): any => {
     this.setState(() => {
       return {
         haveAmount: value,
@@ -1358,9 +1360,7 @@ class Exchange extends PureComponent<any, any> {
   resetState = () => {
     this.setState(() => ({
       haveAmount: 0,
-      haveHeat: 0,
-      getHeat: 0,
-      getAmount: '',
+      getAmount: 0,
       maxAmount: 0,
       maxBuyAmount: new BigNumber(0),
       peer: '',

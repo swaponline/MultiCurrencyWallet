@@ -18,9 +18,6 @@ import { FormattedMessage } from 'react-intl'
 )
 @cssModules(styles, { allowMultiple: true })
 export default class NetworkStatus extends React.Component<any, any> {
-
-  props: any
-
   static propTypes = {
     isOnline: PropTypes.bool.isRequired,
     onlineUsers: PropTypes.number,

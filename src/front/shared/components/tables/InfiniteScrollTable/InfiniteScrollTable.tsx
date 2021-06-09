@@ -4,14 +4,12 @@ import { withInfiniteScroll } from 'decorators/withInfiniteScroll'
 
 @withInfiniteScroll()
 export default class InfiniteScrollTable extends React.Component<any, any> {
-
-  props: any
-
   render() {
     const { items, ...rest } = this.props
+    const { rowRender } = rest
 
     return (
-      <Table {...rest} rows={items} />
+      <Table {...rest} rowRender={rowRender} rows={items} />
     )
   }
 }

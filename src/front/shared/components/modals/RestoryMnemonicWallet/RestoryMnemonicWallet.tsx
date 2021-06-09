@@ -102,10 +102,6 @@ type RestoryMnemonicWalletState = {
 )
 @cssModules({ ...defaultStyles, ...styles }, { allowMultiple: true })
 class RestoryMnemonicWallet extends React.Component<RestoryMnemonicWalletProps, RestoryMnemonicWalletState> {
-
-  props: RestoryMnemonicWalletProps
-  state: RestoryMnemonicWalletState
-
   constructor(props) {
     super(props)
 

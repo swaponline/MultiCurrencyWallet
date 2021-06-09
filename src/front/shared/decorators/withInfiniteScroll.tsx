@@ -4,9 +4,6 @@ import PropTypes from 'prop-types'
 
 export const withInfiniteScroll = () => Component => {
   class InfiniteScroll extends React.Component<any, any> {
-
-    props: any
-
     componentDidMount() {
       window.addEventListener('scroll', this.onScroll)
     }
