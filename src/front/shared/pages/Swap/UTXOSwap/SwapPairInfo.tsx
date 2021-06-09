@@ -24,15 +24,6 @@ const SwapPairInfo = (props: ISwapPairInfoProps) => {
   const { coin: sellCurrencyName, blockchain: sellCurrencyBlockchain } = getCoinInfo(sellCurrency)
   const { coin: buyCurrencyName, blockchain: buyCurrencyBlockchain } = getCoinInfo(buyCurrency)
 
-
-  console.log('sellCurrency', sellCurrency)
-  console.log('sellCurrencyName', sellCurrencyName)
-  console.log('sellCurrencyBlockchain', sellCurrencyBlockchain)
-
-  console.log('buyCurrency', buyCurrency)
-  console.log('buyCurrencyName', buyCurrencyName)
-  console.log('buyCurrencyBlockchain', buyCurrencyBlockchain)
-
   return (
     <div styleName="swapInfo">
       <strong>
