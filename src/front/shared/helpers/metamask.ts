@@ -56,7 +56,7 @@ const getAddress = () => (isConnected()) ? web3connect.getAddress() : ``
 const getWeb3 = () => (isConnected()) ? web3connect.getWeb3() : false
 
 const _init = async () => {
-  web3connect.onInit(() => {
+  await web3connect.onInit(() => {
     if (web3connect.hasCachedProvider()) {
       let _web3 = false
       try {
