@@ -714,6 +714,13 @@
     ]
   },
   {
+    "id": "incorrectMetamaskNetwork",
+    "message": "Пожалуйста, выберите правильную сеть метамаска",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
     "id": "lowAmount",
     "message": "Низкая сумма",
     "files": [

@@ -662,6 +662,13 @@
     ]
   },
   {
+    "id": "incorrectMetamaskNetwork",
+    "message": "Please choose correct metamask network",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
     "id": "lowAmount",
     "message": "Low amount",
     "files": [
