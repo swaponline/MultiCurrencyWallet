@@ -1700,10 +1700,10 @@ class Exchange extends PureComponent<any, any> {
       isFromAddressReady &&
       toAddress &&
       isToAddressReady &&
+      !isNonOffers &&
       !this.doesComissionPreventThisOrder() &&
       isBalanceReady &&
       new BigNumber(getAmount).isGreaterThan(0) &&
-      !isNonOffers &&
       isCorrectMetamaskNetwork &&
       !isWaitForPeerAnswer
 
@@ -1726,6 +1726,7 @@ class Exchange extends PureComponent<any, any> {
         if (toAddress.type === AddressType.Internal && !toAddress.value)
           return <FormattedMessage id="enterToAddress" defaultMessage='Enter Destination wallet' />
       }
+      if (isNonOffers) return <FormattedMessage id="noOffers" defaultMessage='No Offers' />
       if (this.doesComissionPreventThisOrder()) return <FormattedMessage id="lowAmount" defaultMessage='Low amount' />
       if (!isBalanceReady) {
         if (
@@ -1735,7 +1736,6 @@ class Exchange extends PureComponent<any, any> {
           return <FormattedMessage id="enterLesserAmount" defaultMessage='Enter lesser amount to "You send"' />
       }
       if (!(new BigNumber(getAmount).isGreaterThan(0))) return <FormattedMessage id="errorWithGetAmount" defaultMessage='"You get" no more than 0' />
-      if (isNonOffers) return <FormattedMessage id="noOffers" defaultMessage='No Offers' />
       if (!isCorrectMetamaskNetwork) return <FormattedMessage id="incorrectMetamaskNetwork" defaultMessage='Please choose correct metamask network' />
       if (isWaitForPeerAnswer) return <FormattedMessage id="waitPeerAnswer" defaultMessage='Wait peer answer' />
 
