@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from 'react'
 
 import actions from 'redux/actions'
-import { constants } from 'helpers'
 
 import CSSModules from 'react-css-modules'
 import styles from '../Swap.scss'
@@ -10,8 +9,8 @@ import SwapProgress from './SwapProgress/SwapProgress'
 import SwapList from './SwapList/SwapList'
 import FeeControler from '../FeeControler/FeeControler'
 import FailControler from '../FailControler/FailControler'
-import DepositWindow from './DepositWindow/DepositWindow'
 import SwapController from '../SwapController'
+import SwapPairInfo from './SwapPairInfo'
 
 
 @CSSModules(styles)
@@ -158,25 +157,7 @@ export default class EthTokenToUTXO extends Component<any, any> {
       <div>
         <div styleName="swapContainer">
           <div>
-            <div styleName="swapInfo">
-              {/* @ts-ignore: strictNullChecks */}
-              {this.swap.id &&
-                (
-                  <strong>
-                    {/* @ts-ignore: strictNullChecks */}
-                    {this.swap.sellAmount.toFixed(6)}
-                    {' '}
-                    {/* @ts-ignore: strictNullChecks */}
-                    {this.swap.sellCurrency} &#10230; {' '}
-                    {/* @ts-ignore: strictNullChecks */}
-                    {this.swap.buyAmount.toFixed(6)}
-                    {' '}
-                    {/* @ts-ignore: strictNullChecks */}
-                    {this.swap.buyCurrency}
-                  </strong>
-                )
-              }
-            </div>
+            {swap.id && <SwapPairInfo swap={swap} />}
             <SwapController swap={swap} />
             <SwapList
               enoughBalance={enoughBalance}
