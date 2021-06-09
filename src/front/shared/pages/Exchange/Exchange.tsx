@@ -875,7 +875,14 @@ class Exchange extends PureComponent<any, any> {
               id="ExchangeTokenWasApproved"
               defaultMessage="Token was approved.{br}Explorer link: {txLink}"
               values={{
-                txLink: <a href={`${config.link.etherscan}/tx/${txHash}`} target="_blank">Transaction</a>,
+                txLink: (
+                  <a
+                    href={`${actions[coinStandard].explorerLink}/tx/${txHash}`}
+                    target="_blank"
+                  >
+                    Transaction
+                  </a>
+                ),
                 br: <br />,
               }}
             />

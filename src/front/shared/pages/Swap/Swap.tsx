@@ -9,10 +9,8 @@ import styles from './Swap.scss'
 
 import { connect } from 'redaction'
 import helpers, { links, constants, apiLooper } from 'helpers'
-import request from 'common/utils/request'
 import { isMobile } from 'react-device-detect'
 import actions from 'redux/actions'
-import { Link } from 'react-router-dom'
 
 import { swapComponents } from './swaps'
 import { createSwapApp } from "instances/newSwap";
@@ -20,7 +18,6 @@ import Debug from './Debug/Debug'
 import { injectIntl, FormattedMessage } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
 import DeleteSwapAfterEnd from './DeleteSwapAfterEnd'
-import CopyToClipboard from 'react-copy-to-clipboard'
 
 import feedback from 'shared/helpers/feedback'
 
@@ -529,10 +526,9 @@ class SwapComponent extends PureComponent<any, any> {
   }
 
   toggleDebug = () => {
-    const isShowDebug = this.state.isShowDebug;
-    this.setState({
-      isShowDebug: !isShowDebug,
-    })
+    this.setState((state) => ({
+      isShowDebug: !state.isShowDebug,
+    }))
   }
 
   goWallet = () => {
@@ -590,7 +586,7 @@ class SwapComponent extends PureComponent<any, any> {
                   id="SwapStuck"
                   defaultMessage="The swap was stuck? Try to "
                 />
-                <span styleName="pseudolink" onClick={() => this.toggleDebug()}>
+                <span styleName="pseudolink" onClick={this.toggleDebug}>
                   <FormattedMessage
                     id="SwapDebug"
                     defaultMessage="debug"
@@ -608,29 +604,30 @@ class SwapComponent extends PureComponent<any, any> {
                 </span>
               </p>
 
-              {isShowDebug &&
-                <Debug flow={swap.flow} />
-              }
-
               {peer === swap.owner.peer &&
                 <DeleteSwapAfterEnd swap={swap} />
               }
             </div>
           </div>
           :
-          <div>
+          <div styleName="canceledSwapInfo">
             <h3 styleName="canceled" onClick={this.goWallet}>
               <FormattedMessage id="swappropgress327" defaultMessage="This swap is canceled" />
             </h3>
-            <div>
-              <h3 styleName="refHex">
-                <FormattedMessage
-                  id="swappropgress400"
-                  defaultMessage="Refund is taking automatically"
-                />
-              </h3>
+            <h3>
+              <FormattedMessage
+                id="swappropgress400"
+                defaultMessage="Refund is taking automatically"
+              />
+            </h3>
+            <div styleName="pseudolink" onClick={this.toggleDebug}>
+              <FormattedMessage id="SwapDebug" defaultMessage="debug" />
             </div>
           </div>
+        }
+
+        {isShowDebug &&
+          <Debug flow={swap.flow} />
         }
       </Fragment>
     )
