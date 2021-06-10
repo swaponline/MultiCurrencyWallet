@@ -1,6 +1,5 @@
 /* eslint-disable import/no-mutable-exports,max-len */
 import 'abortcontroller-polyfill/dist/abortcontroller-polyfill-only'
-import { getWeb3 } from 'helpers/web3'
 import * as bitcoin from 'bitcoinjs-lib'
 import * as ghost from 'bitcoinjs-lib'
 import * as next from 'bitcoinjs-lib'
@@ -92,12 +91,10 @@ const onInit = (cb) => {
 
 const createSwapApp = async () => {
   await metamask.web3connect.onInit(async () => {
-    const web3 = (metamask.isEnabled() && metamask.isConnected())
-      ? await metamask.getWeb3()
-      : await getWeb3()
+    const web3 = actions.eth.getWeb3()
 
-    const web3bnb = (metamask.isEnabled() && metamask.isConnected()) ? await metamask.getWeb3() : await actions.bnb.getWeb3()
-    const web3Matic = (metamask.isEnabled() && metamask.isConnected()) ? await metamask.getWeb3() : await actions.matic.getWeb3()
+    const web3bnb = actions.bnb.getWeb3()
+    const web3Matic = actions.matic.getWeb3()
 
     const NETWORK = process.env.MAINNET ? `MAINNET` : `TESTNET`
 
@@ -106,7 +103,7 @@ const createSwapApp = async () => {
 
       env: {
         web3,
-        getWeb3,
+        getWeb3: actions.eth.getWeb3,
         web3bnb,
         getWeb3Bnb: actions.bnb.getWeb3,
         web3Matic,

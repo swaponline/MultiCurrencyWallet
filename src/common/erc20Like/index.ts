@@ -5,8 +5,7 @@ import { BigNumber } from 'bignumber.js'
 import DEFAULT_CURRENCY_PARAMETERS from 'common/helpers/constants/DEFAULT_CURRENCY_PARAMETERS'
 import TOKEN_STANDARDS from 'helpers/constants/TOKEN_STANDARDS'
 import ethLikeHelper from 'common/helpers/ethLikeHelper'
-import { feedback } from 'helpers'
-import getCoinInfo from 'common/coins/getCoinInfo'
+import { feedback, metamask } from 'helpers'
 
 
 class erc20LikeHelper {
@@ -45,6 +44,8 @@ class erc20LikeHelper {
     console.groupEnd()
   }
 
+  getCurrentWeb3 = () => metamask.getWeb3() || this.Web3
+
   estimateFeeValue = async (params): Promise<number> => {
     const { method, swapABMethod } = params
     const gasPrice = await this.estimateGasPrice()
@@ -80,7 +81,8 @@ class erc20LikeHelper {
     decimals: number
   }): Promise<number> => {
     const { tokenOwnerAddress, tokenContractAddress, decimals } = params
-    const tokenContract = new this.Web3.eth.Contract(TokenApi, tokenContractAddress)
+    const Web3 = this.getCurrentWeb3()
+    const tokenContract = new Web3.eth.Contract(TokenApi, tokenContractAddress)
 
     let allowanceAmount = 0
 
