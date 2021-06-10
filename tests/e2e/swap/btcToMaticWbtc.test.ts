@@ -174,17 +174,18 @@ describe('Swap e2e test', () => {
       await TakerPage.evaluate((selector) => document.querySelector(selector).click(), '.dropDownSend')
       await TakerPage.click(`#Internal`)
 
-      const textOfExchangeButton = await TakerPage.$eval('#exchangeButton', el => el.textContent)
+      let textOfExchangeButton = await TakerPage.$eval('#exchangeButton', el => el.textContent)
       console.log('Taker exchange button: ', textOfExchangeButton)
 
       // at first need to approve token amount
       if (textOfExchangeButton === 'Approve {MATIC}WBTC') {
         await TakerPage.click('#exchangeButton')
+        // wait a modal about successful approving
         await TakerPage.waitForSelector('#notificationModal', {
           timeout: 40_000,
         })
-
-        console.log('Taker exchange button after token approving: ', textOfExchangeButton)
+        // update button content after that
+        textOfExchangeButton = await TakerPage.$eval('#exchangeButton', el => el.textContent)
       }
 
       expect(textOfExchangeButton).toBe('Exchange now')
