@@ -19,7 +19,7 @@ export default {
     platform: 'ethereum',
     standard: 'erc20matic',
     currency: 'matic',
-    // explorerApi: config.api,
-    // explorerApiKey: config.api,
+    explorerApi: config.api.maticscan,
+    explorerApiKey: config.api.polygon_ApiKey,
   },
 }

@@ -486,6 +486,13 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
     }
   }
 
+  componentDidCatch(error, info) {
+    console.group('%c Exchange', 'color: red;')
+    console.error(error)
+    console.trace()
+    console.groupEnd()
+  }
+
   updateTokenAllowance = async () => {
     const { tokensData } = this.props
     const { haveCurrency, haveAmount } = this.state
@@ -1521,11 +1528,14 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
     const ticker = coin.toUpperCase()
 
     const isUTXOModel = COIN_DATA[ticker]?.model === COIN_MODEL.UTXO
+    const chainNetworks = !isUTXOModel && (
+      blockchain ? AVAILABLE_NETWORKS_BY_COIN[blockchain]
+        : AVAILABLE_NETWORKS_BY_COIN[ticker]
+    )
 
-    return !isUTXOModel && (blockchain ?
-      AVAILABLE_NETWORKS_BY_COIN[blockchain][NETWORK_NUMBER]
-      :
-      AVAILABLE_NETWORKS_BY_COIN[ticker][NETWORK_NUMBER])
+    if (chainNetworks) {
+      return chainNetworks[NETWORK_NUMBER]
+    }
   }
 
   render() {
@@ -2016,45 +2026,43 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
               </Button>
             )}
 
-            {(isWidgetBuild || isDevBuild) && (
-              <>
-                <Button
-                  id="createOrderReactTooltipMessageForUser"
-                  styleName={`button link-like ${haveBalance ? '' : 'noMany'}`}
-                  //@ts-ignore: strictNullChecks
-                  onClick={haveBalance ? this.createOffer : null}
-                >
-                  <FormattedMessage id="orders128" defaultMessage="Create offer" />
-                </Button>
+            <>
+              <Button
+                id="createOrderReactTooltipMessageForUser"
+                styleName={`button link-like ${haveBalance ? '' : 'noMany'}`}
+                //@ts-ignore: strictNullChecks
+                onClick={haveBalance ? this.createOffer : null}
+              >
+                <FormattedMessage id="orders128" defaultMessage="Create offer" />
+              </Button>
 
-                {haveBalance ? (
-                  <ThemeTooltip
-                    id="createOrderReactTooltipMessageForUser"
-                    effect="solid"
-                    place="bottom"
-                  >
-                    <FormattedMessage
-                      id="createOrderMessageForUser"
-                      defaultMessage="You must be online all the time, otherwise your order will not be visible to other users"
-                    />
-                  </ThemeTooltip>
-                ) : (
-                  <ThemeTooltip
-                    id="createOrderReactTooltipMessageForUser"
-                    effect="solid"
-                    place="bottom"
-                  >
-                    <FormattedMessage
-                      id="createOrderNoManyMessageForUser"
-                      defaultMessage="Top up your balance"
-                    />
-                  </ThemeTooltip>
-                )}
-              </>
-            )}
+              {haveBalance ? (
+                <ThemeTooltip
+                  id="createOrderReactTooltipMessageForUser"
+                  effect="solid"
+                  place="bottom"
+                >
+                  <FormattedMessage
+                    id="createOrderMessageForUser"
+                    defaultMessage="You must be online all the time, otherwise your order will not be visible to other users"
+                  />
+                </ThemeTooltip>
+              ) : (
+                <ThemeTooltip
+                  id="createOrderReactTooltipMessageForUser"
+                  effect="solid"
+                  place="bottom"
+                >
+                  <FormattedMessage
+                    id="createOrderNoManyMessageForUser"
+                    defaultMessage="Top up your balance"
+                  />
+                </ThemeTooltip>
+              )}
+            </>
             {(!isWidgetBuild || isDevBuild) && (
               <>
-                <div styleName="link button-like">
+                <div styleName="link button-like liquidity">
                   <a href={!isChromeExtention ? `#${links.marketmaker}/` : `#${links.marketmaker}/{MATIC}WBTC`}>
                     <FormattedMessage id="AddLiquidity" defaultMessage="Add Liquidity" />
                   </a>
