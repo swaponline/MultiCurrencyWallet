@@ -14,7 +14,6 @@ class SwapRoom extends ServiceInterface {
   connection: any
   roomName: string
 
-  app: any
   CheckReceiptsT: any
   //@ts-ignore
   static get name() {

@@ -25,8 +25,6 @@ import MnemonicInput from 'components/forms/MnemonicInput/MnemonicInput'
 }))
 @cssModules({ ...styles, ...ownStyle }, { allowMultiple: true })
 class WithdrawModalMultisig extends React.Component<any, any> {
-  props: any
-
   static propTypes = {
     name: PropTypes.string,
     data: PropTypes.object,

@@ -26,9 +26,6 @@ import { getFullOrigin } from 'helpers/links'
 )
 @cssModules({ ...styles, ...ownStyle }, { allowMultiple: true })
 class WithdrawBtcMultisig extends React.Component<any, any> {
-
-  props: any
-
   static propTypes = {
     name: PropTypes.string,
     data: PropTypes.object,

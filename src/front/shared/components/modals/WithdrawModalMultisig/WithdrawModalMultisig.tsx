@@ -46,8 +46,6 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
 )
 @cssModules({ ...styles, ...ownStyle }, { allowMultiple: true })
 class WithdrawModalMultisig extends React.Component<any, any> {
-  props: any
-
   static propTypes = {
     name: PropTypes.string,
     data: PropTypes.object,
