@@ -865,7 +865,7 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
       .approve({
         to: config.swapContract[coinStandard],
         name: haveCurrencyName,
-        amount: new BigNumber(haveAmount).dp(0, BigNumber.ROUND_UP).toString(),
+        amount: haveAmount,
       })
       .then((txHash) => {
         this.updateTokenAllowance()
@@ -1988,23 +1988,17 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
               <Button
                 id='exchangeButton'
                 styleName="button"
-                onClick={haveType === AddressType.Metamask ? this.initSwap : this.approveTheToken}
+                onClick={this.approveTheToken}
                 disabled={!canStartSwap || isPendingTokenApprove}
                 pending={isPendingTokenApprove}
                 blue={true}
               >
-                {canStartSwap
-                  ? haveType === AddressType.Metamask
-                    ? canStartSwap
-                      ? <FormattedMessage id="partial541" defaultMessage="Exchange now" />
-                      : getTextWhyCanNotStartSwap()
-                    : (
+                {canStartSwap ?
                       <FormattedMessage
                         id="FormattedMessageIdApprove"
                         defaultMessage="Approve {token}"
                         values={{ token: haveCurrency.toUpperCase() }}
                       />
-                    )
                   : getTextWhyCanNotStartSwap()
                 }
               </Button>
