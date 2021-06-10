@@ -20,6 +20,10 @@ export default {
   // TODO: replace proxy link
   bscscanInvoices: 'https://invoices.swaponline.site/proxyetherscan-testnet',
   bscscan_ApiKey: 'WI4QEJSV19U3TF2H1DPQ2HR6712HW4MYKJ',
+  // not yet for testnet
+  maticscan: '',
+  polygon_ApiKey: '',
+  // ------------------
   faucet: 'https://faucet.swaponline.site/testnet/',
   btc2FAProtected: 'https://2fa.swaponline.site',
   btcPin: 'https://2fapin.swaponline.site',

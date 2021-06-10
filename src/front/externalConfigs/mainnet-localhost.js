@@ -60,7 +60,7 @@ window.buildOptions = {
     next: false,
   },
   defaultExchangePair: {
-    buy: 'wbtc',
+    buy: '{eth}wbtc',
     sell: 'btc',
   },
   invoiceEnabled: false, // Allow create invoices

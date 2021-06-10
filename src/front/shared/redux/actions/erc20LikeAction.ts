@@ -595,7 +595,7 @@ export default {
     standard: 'erc20matic',
     explorerName: 'explorer-mumbai',
     explorerLink: externalConfig.link.maticscan,
-    explorerApiKey: '',
+    explorerApiKey: externalConfig.api.polygon_ApiKey,
     adminFeeObj: externalConfig.opts?.fee?.erc20matic,
     web3: new Web3( new Web3.providers.HttpProvider(externalConfig.web3.matic_provider) ),
   })
