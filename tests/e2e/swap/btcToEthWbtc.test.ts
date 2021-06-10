@@ -215,7 +215,7 @@ describe('Swap e2e test', () => {
     }
 
     try {
-      console.log('SwapWIW -> Send BTC and WBTC')
+      console.log('SwapWIW -> Send BTC and (ETHEREUM)WBTC')
       await timeOut(3 * 1000)
 
       await MakerPage.$('a[href="#/"]').then((aToWallet) => aToWallet.click())
@@ -224,7 +224,7 @@ describe('Swap e2e test', () => {
       await timeOut(3 * 1000)
 
       await selectSendCurrency({page: MakerPage, currency: 'btc'})
-      await selectSendCurrency({page: TakerPage, currency: 'wbtc'})
+      await selectSendCurrency({page: TakerPage, currency: 'ethwbtc'})
 
       await MakerPage.type('#toAddressInput', testWallets.btcMTaker.address)
       await TakerPage.type('#toAddressInput', testWallets.btcMMaker.ethAddress)
@@ -258,7 +258,7 @@ describe('Swap e2e test', () => {
       await takeScreenshot(TakerPage, 'TakerPage_SwapWIW_SendWBTCError')
       await MakerBrowser.close()
       await TakerBrowser.close()
-      console.error('SwapWIW -> Send BTC and WBTC error: ', error)
+      console.error('SwapWIW -> Send BTC and (ETHEREUM)WBTC error: ', error)
       expect(false).toBe(true)
     }
 
