@@ -4,7 +4,7 @@ import { getState } from 'redux/core'
 import SwapApp from 'swap.app'
 import Swap from 'swap.swap'
 import getCoinInfo from 'common/coins/getCoinInfo'
-import erc20Like from 'common/erc20Like'
+import { AVAILABLE_NETWORKS_BY_COIN } from 'common/helpers/constants/AVAILABLE_EVM_NETWORKS'
 import { constants } from 'helpers'
 import Pair from 'pages/Exchange/Orders/Pair'
 import config from 'helpers/externalConfig'
@@ -14,6 +14,9 @@ import metamask from 'helpers/metamask'
 import { AddressType } from 'domain/address'
 
 import helpers from 'helpers'
+
+const NETWORK = process.env.MAINNET ? 'MAINNET' : 'TESTNET'
+const NETWORK_NUMBER = NETWORK === 'MAINNET' ? 0 : 1 // 0 - MAINNET, 1 - TESTNET
 
 const debug = (...args) => console.log(...args)
 
@@ -467,8 +470,15 @@ const getWallets = (options: IUniversalObj = {}) => {
   const metamaskConnected = metamask.isEnabled() && metamask.isConnected()
 
   const tokenWallets = Object.keys(tokensData).map((k) => {
-    const tokenInfo = getCoinInfo(k)
-    return (tokenInfo.coin && tokenInfo.blockchain !== ``) ? tokensData[k] : false
+    const { coin, blockchain } = getCoinInfo(k)
+    if (metamaskConnected) {
+      return (
+        coin && blockchain !== `` &&
+          (metamaskData?.networkVersion === AVAILABLE_NETWORKS_BY_COIN[blockchain][NETWORK_NUMBER]) ?
+            tokensData[k] : false
+          )
+    }
+    return (coin && blockchain !== ``) ? tokensData[k] : false
   }).filter((d) => d !== false)
 
   const allData = [
