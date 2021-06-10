@@ -22,7 +22,7 @@ const rootEl = document.getElementById('root')
 
 if (process.env.NODE_ENV !== 'development') {
   Sentry.init({
-    dsn: 'https://4d903dcd28e24737b28b3b381f6f58e5@o552924.ingest.sentry.io/5679412',
+    dsn: 'https://d35a56c4518c4a6987b0c36b9b0bf123@sentry.wpmix.net/2',
     integrations: [new Integrations.BrowserTracing()],
     tracesSampleRate: 1.0,
   });
