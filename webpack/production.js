@@ -33,12 +33,12 @@ export default (webpackConfig) => {
   })
 
   webpackConfig.optimization = {
-    minimizer: [
+    /*minimizer: [
       new TerserPlugin({
         parallel: true, // default -> os.cpus().length - 1
-        sourceMap: false,
+        sourceMap: true,
       }),
-    ],
+    ],*/
     splitChunks: {
       chunks: 'all',
       cacheGroups: {
@@ -59,7 +59,7 @@ export default (webpackConfig) => {
   webpackConfig.devtool = 'source-map'
 
   webpackConfig.plugins.push(
-  /*
+    /*	  
     new webpack.SourceMapDevToolPlugin({
       publicPath: config.publicPath,
       filename: '[name].[hash:6].js.map',
