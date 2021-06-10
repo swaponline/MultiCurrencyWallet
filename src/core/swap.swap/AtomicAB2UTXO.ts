@@ -527,7 +527,24 @@ class AtomicAB2UTXO extends Flow {
     const { participant } = this.swap
 
     const utcNow = () => Math.floor(Date.now() / 1000)
-    const getLockTime = () => utcNow() + 60 * 60 * 3 // 3 hours from now
+    const defaultLockTime = 60 * 60 * 3 // 3 hours
+    const takermakerLockTime = 60 * 45 // 45 minutes
+
+    let lockTime = defaultLockTime
+
+    if (this.isTakerMakerModel) {
+      if (!this.isUTXOSide && this.isTaker()) lockTime = takermakerLockTime
+      if (this.isUTXOSide && this.isMaker()) lockTime = takermakerLockTime
+    }
+
+    console.group('>>> AtomicAB2UTXO -> createScript')
+    console.log('isTakerMakerModel', this.isTakerMakerModel)
+    console.log('isUTXOSide', this.isUTXOSide)
+    console.log('isTaker / isMaker', this.isTaker(), this.isMaker())
+    console.log('lockTime', lockTime)
+    console.groupEnd()
+
+    const getLockTime = () => utcNow() + lockTime
 
     const scriptValues = {
       secretHash:         secretHash,
