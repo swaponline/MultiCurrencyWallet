@@ -116,39 +116,46 @@ export default class CurrencyList extends Component<any, any> {
 
         {isAssetsOpen && (
           <div styleName={`customSelectList ${isDark ? 'darkList' : ''}`}>
-            {tableRows.map((item, index) => (
-              <div id={`${item.currency.toLowerCase()}Send`} key={index}
-                styleName={cx('customSelectListItem customSelectValue', {
-                  disabled: item.balance === 0,
-                })}
-                onClick={() => this.openModal({ target: item })}
-              >
-                <Coin name={item.currency} />
+            {tableRows.map((item, index) => {
+              const baseCurrency = item.baseCurrency
+              const itemId = `${
+                baseCurrency ? baseCurrency.toLowerCase() : ''
+              }${item.currency.toLowerCase()}Send`
 
-                <div>
-                  <a>
-                    {item.fullName}
-                    {item.standard && <span styleName="tokenStandard">{item.standard.toUpperCase()}</span>}
-                  </a>
-                  <span styleName="address">{item.address}</span>
-                  <span styleName="mobileAddress">
-                    {isMobile ? <PartOfAddress address={item.address} withoutLink /> : ''}
-                  </span>
+              return (
+                <div id={itemId} key={index}
+                  styleName={cx('customSelectListItem customSelectValue', {
+                    disabled: item.balance === 0,
+                  })}
+                  onClick={() => this.openModal({ target: item })}
+                >
+                  <Coin name={item.currency} />
+
+                  <div>
+                    <a>
+                      {item.fullName}
+                      {item.standard && <span styleName="tokenStandard">{item.standard.toUpperCase()}</span>}
+                    </a>
+                    <span styleName="address">{item.address}</span>
+                    <span styleName="mobileAddress">
+                      {isMobile ? <PartOfAddress address={item.address} withoutLink /> : ''}
+                    </span>
+                  </div>
+   
+                  <div styleName="amount">
+                    <span styleName="currency">
+                      {item.balance} {getCurrencyKey(item.currency, true).toUpperCase()}
+                    </span>
+                    <span styleName="usd">
+                      {item.infoAboutCurrency && item.infoAboutCurrency.price_fiat
+                        ? <span>{(item.balance * item.infoAboutCurrency.price_fiat).toFixed(2)} {activeFiat}</span>
+                        : null
+                      }
+                    </span>
+                  </div>
                 </div>
- 
-                <div styleName="amount">
-                  <span styleName="currency">
-                    {item.balance} {getCurrencyKey(item.currency, true).toUpperCase()}
-                  </span>
-                  <span styleName="usd">
-                    {item.infoAboutCurrency && item.infoAboutCurrency.price_fiat
-                      ? <span>{(item.balance * item.infoAboutCurrency.price_fiat).toFixed(2)} {activeFiat}</span>
-                      : null
-                    }
-                  </span>
-                </div>
-              </div>
-            ))}
+              )
+            })}
           </div>
         )}
       </OutsideClick>

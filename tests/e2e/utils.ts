@@ -75,29 +75,33 @@ export const selectSendCurrency = async (params) => {
   await page.click(`#${currency}Send`)
 }
 
-export const addAssetToWallet = async (page: puppeteer.Page, currency: string = 'wbtc') => {
+export const addAssetToWallet = async (page: puppeteer.Page, currency: string = 'ethwbtc') => {
+  await page.waitForSelector('#addAssetBtn')
   await page.click('#addAssetBtn')
   await page.click(`#${currency}Wallet`)
   await page.click('#continueBtn')
 }
 
 export const turnOnMM = async (page: puppeteer.Page) => {
+  try {
+    await page.waitForSelector('#btcBalance') // waits for settings of mm to load
 
-  await page.waitForSelector('#btcBalance') // waits for settings of mm to load
+    // turn on MM
+    const toggleSelector = 'input[type="checkbox"]'
+    await page.evaluate((selector) => document.querySelector(selector).click(), toggleSelector);
 
-  // turn on MM
-  const toggleSelector = 'input[type="checkbox"]'
-  await page.evaluate((selector) => document.querySelector(selector).click(), toggleSelector);
+    // prepare balances for checking
+    let btcBalance = await page.$eval('#btcBalance', el => el.textContent)
+    let tokenBalance = await page.$eval('#tokenBalance', el => el.textContent)
+    btcBalance = new BigNumber(btcBalance).toFixed(5)
+    tokenBalance = new BigNumber(tokenBalance).toFixed(5)
 
-  // prepare balances for checking
-  let btcBalance = await page.$eval('#btcBalance', el => el.textContent)
-  let tokenBalance = await page.$eval('#tokenBalance', el => el.textContent)
-  btcBalance = new BigNumber(btcBalance).toFixed(5)
-  tokenBalance = new BigNumber(tokenBalance).toFixed(5)
-
-  return {
-    btcBalance,
-    tokenBalance
+    return {
+      btcBalance,
+      tokenBalance
+    }
+  } catch (error) {
+    throw new Error(error)
   }
 }
 

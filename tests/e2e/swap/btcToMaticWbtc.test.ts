@@ -26,10 +26,14 @@ describe('Swap e2e test', () => {
       })
 
       await MakerPage.waitForSelector('#btcAddress') // waits for Maker wallet to load
-      await TakerPage.waitForSelector('#wbtcAddress') // waits for Taker wallet to load
+
+      await addAssetToWallet(TakerPage, 'maticwbtc')
+      await timeOut(3 * 1000)
+
+      await TakerPage.waitForSelector('#maticwbtcAddress') // waits for Taker wallet to load
 
       const recoveredMakerBtcAddress = await MakerPage.$eval('#btcAddress', el => el.textContent)
-      const recoveredTakerWbtcAddress = await TakerPage.$eval('#wbtcAddress', el => el.textContent)
+      const recoveredTakerWbtcAddress = await TakerPage.$eval('#maticwbtcAddress', el => el.textContent)
 
       expect(recoveredMakerBtcAddress).toBe(testWallets.btcMMaker.address)
       expect(recoveredTakerWbtcAddress).toBe(testWallets.btcMTaker.ethAddress)
@@ -47,12 +51,11 @@ describe('Swap e2e test', () => {
       console.log('SwapWIW -> Prepare pages for next actions')
 
       await addAssetToWallet(MakerPage, 'maticwbtc')
-      await addAssetToWallet(TakerPage, 'maticwbtc')
 
       await timeOut(3 * 1000)
 
       // taker move to exchange page and try connecting to peers
-      await TakerPage.$('a[href="#/exchange"]').then((aToExchange) => aToExchange.click())
+      await TakerPage.$('a[href="#/exchange"]').then((linkToExchange) => linkToExchange.click())
 
       const [sellCurrencySelectorList, buyCurrencySelectorList] = await TakerPage.$$('.dropDownSelectCurrency')
 
@@ -79,20 +82,26 @@ describe('Swap e2e test', () => {
       expect(false).toBe(true)
     }
 
+    console.log('SwapWIW -> Setup MM')
+    await MakerPage.goto(`${MakerPage.url()}marketmaker/{MATIC}WBTC`)
+
+    await timeOut(3 * 1000)
+
+    const {
+      btcBalance: makerBtcBalance,
+      tokenBalance: makerTokenBalance,
+    } = await turnOnMM(MakerPage)
+
     try {
-      console.log('SwapWIW -> Setup MM')
-      await MakerPage.goto(`${MakerPage.url()}marketmaker/{MATIC}WBTC`)
-
-      await timeOut(3 * 1000)
-
-      const {
-        btcBalance: makerBtcBalance,
-        tokenBalance: makerTokenBalance,
-      } = await turnOnMM(MakerPage)
-
-      await MakerPage.$('a[href="#/exchange"]').then((aToExchange) => aToExchange.click())
-
+      await MakerPage.$('a[href="#/exchange"]').then((linkToExchange) => linkToExchange.click())
       await MakerPage.$('#orderbookBtn').then((orderbookBtn) => orderbookBtn.click())
+
+      const [sellCurrencySelectorList, buyCurrencySelectorList] = await MakerPage.$$('.dropDownSelectCurrency')
+
+      await buyCurrencySelectorList.click()
+      await MakerPage.click("[id='{MATIC}wbtc']")
+
+      await timeOut(25_000)
 
       // find all maker orders
       const sellAmountOrders  = await MakerPage.$$eval('.sellAmountOrders', elements => elements.map(el => el.textContent))
@@ -115,17 +124,26 @@ describe('Swap e2e test', () => {
       console.log('SwapWIW -> Check messaging')
       await timeOut(3 * 1000)
 
-      // find btc maker orders
+      const [sellCurrencySelectorList, buyCurrencySelectorList] = await TakerPage.$$('.dropDownSelectCurrency')
+
+      await sellCurrencySelectorList.click()
+      await TakerPage.click("[id='{MATIC}wbtc']")
+      await buyCurrencySelectorList.click()
+      await TakerPage.click("[id='btc']")
+
+      await timeOut(25_000)
+
+      // find btc orders
       const btcSellAmountsOfOrders  = await TakerPage.$$eval('.btcSellAmountOfOrder', elements => elements.map(el => el.textContent))
       const btcGetAmountsOfOrders   = await TakerPage.$$eval('.btcGetAmountOfOrder', elements => elements.map(el => el.textContent))
       const btcOrders = [...btcSellAmountsOfOrders, ...btcGetAmountsOfOrders]
 
-      // find wbtc maker orders
+      // find wbtc orders
       const wbtcSellAmountsOfOrders  = await TakerPage.$$eval('.wbtcSellAmountOfOrder', elements => elements.map(el => el.textContent))
       const wbtcGetAmountsOfOrders   = await TakerPage.$$eval('.wbtcGetAmountOfOrder', elements => elements.map(el => el.textContent))
       const wbtcOrders = [...wbtcSellAmountsOfOrders, ...wbtcGetAmountsOfOrders]
 
-      const allOrders = [...btcOrders.map((amount) => new BigNumber(amount).toFixed(5)), ...wbtcOrders.map((amount) => new BigNumber(amount).toFixed(5))];
+      const allOrders = [...btcOrders.map((amount) => new BigNumber(amount).toFixed(5)), ...wbtcOrders.map((amount) => new BigNumber(amount).toFixed(5))]
 
       +makerBtcBalance ? expect(allOrders).toContain(makerBtcBalance) : console.log('maker has not btc balance')
       +makerTokenBalance ? expect(allOrders).toContain(makerTokenBalance) : console.log('maker has not token balance')
@@ -146,10 +164,23 @@ describe('Swap e2e test', () => {
       await MakerPage.goBack()
       await MakerPage.goBack()
 
-      await timeOut(5 * 1000)
+      await timeOut(5_000)
+
+      await TakerPage.evaluate((selector) => document.querySelector(selector).click(), '.dropDownSend')
+      await TakerPage.click(`#Internal`)
 
       const textOfExchangeButton = await TakerPage.$eval('#exchangeButton', el => el.textContent)
-      console.log('textOfExchangeButton', textOfExchangeButton)
+      console.log('Taker exchange button: ', textOfExchangeButton)
+
+      // at first need to approve token amount
+      if (textOfExchangeButton === 'Approve {MATIC}WBTC') {
+        await TakerPage.click('#exchangeButton')
+        await TakerPage.waitForSelector('#notificationModal', {
+          timeout: 40_000,
+        })
+
+        console.log('Taker exchange button after token approving: ', textOfExchangeButton)
+      }
 
       expect(textOfExchangeButton).toBe('Exchange now')
 
@@ -225,7 +256,7 @@ describe('Swap e2e test', () => {
       await timeOut(3 * 1000)
 
       await selectSendCurrency({page: MakerPage, currency: 'btc'})
-      await selectSendCurrency({page: TakerPage, currency: '{matic}wbtc'})
+      await selectSendCurrency({page: TakerPage, currency: 'maticwbtc'})
 
       await MakerPage.type('#toAddressInput', testWallets.btcMTaker.address)
       await TakerPage.type('#toAddressInput', testWallets.btcMMaker.ethAddress)

@@ -1,7 +1,7 @@
 export default {
   erc20: '0xd4938c7f00c9e80aa53cab3ea79d9ab1013c7c1b',  // Ropsten
   bep20: '0x1a09113c8e4b238721e9cbe4b227c68a31c990ff',
-  erc20matic: '0x0F400c0cE80D20E65CB66E5c7a814F5fEfa711cC',
+  erc20matic: '0xDb317405A1F1cA955c07834b1b43241d651A5875',
   eth: '0x6e9c98a8a481bf038ba7e1d669a0086547dd144e',
   bnb: '0x6aa1bdc159e28beca44cc7f1a260a25e7b63f53d',
   matic: '0xf02f99d8D5fd6d40404bf151a4636F8b2e21D057',
