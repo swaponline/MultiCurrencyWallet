@@ -131,7 +131,7 @@ describe('Swap e2e test', () => {
       await buyCurrencySelectorList.click()
       await TakerPage.click("[id='btc']")
 
-      await timeOut(25_000)
+      await timeOut(30_000)
 
       // find btc orders
       const btcSellAmountsOfOrders  = await TakerPage.$$eval('.btcSellAmountOfOrder', elements => elements.map(el => el.textContent))
@@ -144,11 +144,6 @@ describe('Swap e2e test', () => {
       const wbtcOrders = [...wbtcSellAmountsOfOrders, ...wbtcGetAmountsOfOrders]
 
       const allOrders = [...btcOrders.map((amount) => new BigNumber(amount).toFixed(5)), ...wbtcOrders.map((amount) => new BigNumber(amount).toFixed(5))]
-
-      console.log('Taker Page ---------------')
-      console.log('btcOrders: ', btcOrders)
-      console.log('wbtcOrders: ', wbtcOrders)
-      console.log('allOrders: ', allOrders)
 
       +makerBtcBalance ? expect(allOrders).toContain(makerBtcBalance) : console.log('maker has not btc balance')
       +makerTokenBalance ? expect(allOrders).toContain(makerTokenBalance) : console.log('maker has not token balance')
@@ -163,11 +158,6 @@ describe('Swap e2e test', () => {
 
     try {
       console.log('SwapWIW -> Start swap')
-      await timeOut(3 * 1000)
-
-      // first go to /exchange, second at mm settings
-      await MakerPage.goBack()
-      await MakerPage.goBack()
 
       await timeOut(5_000)
 
@@ -182,7 +172,7 @@ describe('Swap e2e test', () => {
         await TakerPage.click('#exchangeButton')
         // wait a modal about successful approving
         await TakerPage.waitForSelector('#notificationModal', {
-          timeout: 40_000,
+          timeout: 60_000,
         })
         // update button content after that
         textOfExchangeButton = await TakerPage.$eval('#exchangeButton', el => el.textContent)
