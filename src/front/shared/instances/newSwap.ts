@@ -103,7 +103,7 @@ const createSwapApp = async () => {
 
       env: {
         web3,
-        getWeb3: actions.eth.getWeb3(),
+        getWeb3: actions.eth.getWeb3,
         web3bnb,
         getWeb3Bnb: actions.bnb.getWeb3,
         web3Matic,
