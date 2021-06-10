@@ -23,12 +23,14 @@ const FAQ = (props) => {
   const [btcFee, setBtcFee] = useState(0)
   const [ethFee, setEthFee] = useState(0)
   const [bnbFee, setBnbFee] = useState(0)
+  const [maticFee, setMaticFee] = useState(0)
 
   useEffect(() => {
     let _mounted = true
     let btcSatoshiPrice = 0
     let ethGasPrice = 0
     let bnbGasPrice = 0
+    let maticGasPrice = 0
 
     async function fetchFees() {
       try {
@@ -37,6 +39,7 @@ const FAQ = (props) => {
         btcSatoshiPrice = await btcUtils.estimateFeeRate({ speed: 'fast', NETWORK })
         bnbGasPrice = await ethLikeHelper.bnb.estimateGasPrice()
         ethGasPrice = await ethLikeHelper.eth.estimateGasPrice()
+        maticGasPrice = await ethLikeHelper.matic.estimateGasPrice()
 
         // remove memory leak
         if (_mounted) {
@@ -46,6 +49,7 @@ const FAQ = (props) => {
           // return gas * 1e9 - divided by 1e9 to convert
           setBnbFee( new BigNumber(bnbGasPrice).dividedBy(1e9).toNumber() )
           setEthFee( new BigNumber(ethGasPrice).dividedBy(1e9).toNumber() )
+          setMaticFee( new BigNumber(maticGasPrice).dividedBy(1e9).toNumber() )
         }
       } catch (error) {
         feedback.faq.failed(`FAQ. Fetch fees error(${error.message})`)
@@ -84,6 +88,7 @@ const FAQ = (props) => {
   const BtcPrecentFee = adminFee.isEnabled('BTC')
   const EthPrecentFee = adminFee.isEnabled('ETH')
   const BnbPrecentFee = adminFee.isEnabled('BNB')
+  const MaticPrecentFee = adminFee.isEnabled('MATIC')
 
   return (
     <div className={`${styles.faQuestions} ${isDark ? styles.dark : ''}`}>
@@ -181,6 +186,20 @@ const FAQ = (props) => {
                 ) : <InlineLoader />
               }
             </div>
+            <div className={styles.descriptionFee}>
+              <span>MATIC:</span>{' '}
+              {bnbFee
+                ? (
+                  <span>
+                    <b>{maticFee}</b> gwei
+                    {' '}
+                    <a className={styles.link} href={externalConfig.feeRates.matic} target="_blank">
+                      <FormattedMessage id="FAQFeeApiLink" defaultMessage="(source)" />
+                    </a>
+                  </span>
+                ) : <InlineLoader />
+              }
+            </div>
 
             <br />
 
@@ -221,6 +240,19 @@ const FAQ = (props) => {
                     {BnbPrecentFee.fee + '%, '}
                     <FormattedMessage id="FAQServiceFeeDescription" defaultMessage="no less than" />
                     {' '}<b>{adminFee.calc('BNB', null)}</b> BNB
+                  </span>
+                )
+                : <span>0%</span>
+              }
+            </p>
+            <p className={styles.descriptionFee}>
+              <span>MATIC:</span>{' '}
+              {MaticPrecentFee
+                ? (
+                  <span>
+                    {MaticPrecentFee.fee + '%, '}
+                    <FormattedMessage id="FAQServiceFeeDescription" defaultMessage="no less than" />
+                    {' '}<b>{adminFee.calc('MATIC', null)}</b> MATIC
                   </span>
                 )
                 : <span>0%</span>

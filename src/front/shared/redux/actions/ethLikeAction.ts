@@ -574,7 +574,6 @@ export default {
     privateKeyName: 'eth',
     explorerName: 'etherscan',
     explorerLink: externalConfig.link.etherscan,
-    // TODO: use Web3 and delete explorers keys
     explorerApiKey: externalConfig.api.etherscan_ApiKey,
     adminFeeObj: externalConfig.opts?.fee?.eth,
     web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.provider)),
@@ -596,7 +595,7 @@ export default {
     privateKeyName: 'eth',
     explorerName: 'explorer-mumbai', 
     explorerLink: externalConfig.link.maticscan,
-    explorerApiKey:'',
+    explorerApiKey: externalConfig.api.polygon_ApiKey,
     adminFeeObj: externalConfig.opts?.fee?.matic,
     web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.matic_provider)),
   }),

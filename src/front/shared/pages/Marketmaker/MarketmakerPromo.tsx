@@ -1,9 +1,8 @@
 import React from 'react'
 import cssModules from 'react-css-modules'
 import { FormattedMessage } from 'react-intl'
-
+import { Link } from 'react-router-dom'
 import config from 'app-config'
-
 
 import styles from './MarketmakerPromo.scss'
 import { feedback, links, constants } from 'helpers'
@@ -107,6 +106,18 @@ export default class MarketmakerPromo extends React.Component<{}, {}> {
                 defaultMessage="Download development version"
               />
             </a>
+
+            <div styleName="pseudLinksWrapper">
+              <Link to={'/marketmaker/{eth}wbtc'} styleName="pseudLink">
+                (ETH)WBTC
+              </Link>
+              <Link to={'/marketmaker/{bnb}wbtc'} styleName="pseudLink">
+                (BNB)WBTC
+              </Link>
+              <Link to={'/marketmaker/{matic}wbtc'} styleName="pseudLink">
+                (MATIC)WBTC
+              </Link>
+            </div>
           </div>
         </section>
 

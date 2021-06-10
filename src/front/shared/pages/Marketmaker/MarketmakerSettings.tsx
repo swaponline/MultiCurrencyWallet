@@ -600,8 +600,8 @@ class MarketmakerSettings extends Component<any, any> {
                 id="MM_Wallet_Required"
                 defaultMessage="A hot wallet is required to launch marketmaking (BTC, {AB_Coin}, {token})."
                 values={{
-                  token: tokenWallet.currency.toUpperCase(),
-                  AB_Coin: ethWallet.currency.toUpperCase(),
+                  token: tokenWallet?.currency?.toUpperCase(),
+                  AB_Coin: ethWallet?.currency?.toUpperCase(),
                 }}
               />
             </p>

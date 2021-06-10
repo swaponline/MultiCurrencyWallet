@@ -95,7 +95,27 @@
       }
     }
   }
+}
 
+.pseudLinksWrapper {
+  margin-top: 1em;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  opacity: 0.6;
+}
+
+.pseudLink {
+  color: $notice-color;
+  font-size: 0.8rem;
+
+  &:hover {
+    color: $notice-color;
+  }
+
+  & + & {
+    margin-left: 0.5rem;
+  }
 }
 
 @include media-mobile {
