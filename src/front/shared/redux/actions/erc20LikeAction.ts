@@ -62,7 +62,7 @@ class Erc20LikeAction {
     console.groupEnd()
   }
 
-  currentWeb3 = () => metamask.getWeb3() || this.Web3
+  getCurrentWeb3 = () => metamask.getWeb3() || this.Web3
 
   addToken = (params) => {
     const { standard, contractAddr, symbol, decimals, baseCurrency } = params
@@ -231,7 +231,7 @@ class Erc20LikeAction {
   }
 
   fetchBalance = async (address, contractAddress, decimals) => {
-    const Web3 = this.currentWeb3()
+    const Web3 = this.getCurrentWeb3()
     const contract = new Web3.eth.Contract(TokenAbi, contractAddress)
     const result = await contract.methods.balanceOf(address).call()
 
@@ -272,7 +272,7 @@ class Erc20LikeAction {
       const {
         user: { tokensData },
       } = getState()
-      const Web3 = this.currentWeb3()
+      const Web3 = this.getCurrentWeb3()
       Web3.eth.getTransaction(hash)
         .then((tx) => {
           let amount = 0
@@ -357,7 +357,7 @@ class Erc20LikeAction {
   login = (privateKey, contractAddress, nameContract, decimals, fullName) => {
     let data
 
-    const Web3 = this.currentWeb3()
+    const Web3 = this.getCurrentWeb3()
     if (privateKey) {
       data = Web3.eth.accounts.privateKeyToAccount(privateKey)
     } else {
@@ -370,7 +370,7 @@ class Erc20LikeAction {
   }
 
   setupContract = (ethAddress, contractAddress, nameContract, decimals, fullName) => {
-    const Web3 = this.currentWeb3()
+    const Web3 = this.getCurrentWeb3()
     if (!Web3.eth.accounts.wallet[ethAddress]) {
       throw new Error('web3 does not have given address')
     }
@@ -520,7 +520,7 @@ class Erc20LikeAction {
     const { decimals } = this.returnTokenInfo(name)
     const { user: { tokensData } } = getState()
 
-    const Web3 = this.currentWeb3()
+    const Web3 = this.getCurrentWeb3()
 
     const tokenKey = `{${this.currencyKey}}${name.toLowerCase()}`
     const { address: ownerAddress } = tokensData[tokenKey]
@@ -547,7 +547,7 @@ class Erc20LikeAction {
 
   returnTokenInfo = (name) => {
     if (!name) throw new Error(`${this.standard} actions; returnTokenInfo(name): name is undefined`)
-    const Web3 = this.currentWeb3()
+    const Web3 = this.getCurrentWeb3()
 
     try {
       const tokenKey = `{${this.currencyKey}}${name.toLowerCase()}`
