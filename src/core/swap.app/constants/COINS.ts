@@ -2,11 +2,13 @@ export const COIN_TYPE = Object.freeze({
   NATIVE: 'NATIVE',
   ETH_TOKEN: 'ETH_TOKEN',
   BNB_TOKEN: 'BNB_TOKEN',
+  MATIC_TOKEN: 'MATIC_TOKEN',
 })
 
 export const TOKEN_STANDARD = Object.freeze({
   ERC20: 'ERC20',
   BEP20: 'BEP20',
+  ERC20MATIC: 'ERC20MATIC'
 })
 
 export const BLOCKCHAIN = Object.freeze({
@@ -14,12 +16,14 @@ export const BLOCKCHAIN = Object.freeze({
   GHOST: 'GHOST',
   NEXT: 'NEXT',
   ETH: 'ETH',
-  BNB: 'BNB',
+  BNB: 'BNB', // TODO: rename with BSC
+  MATIC: 'MATIC',
 })
 
 export const BASE_TOKEN_CURRENCY = Object.freeze({
   ETH: 'ETH',
   BNB: 'BNB',
+  MATIC: 'MATIC'
 })
 
 export const COIN_MODEL = Object.freeze({
@@ -27,6 +31,10 @@ export const COIN_MODEL = Object.freeze({
   AB: 'AB' // Account/Balance model
 })
 
+// TODO: change this structure
+// 1) here isn't only coins (rename it?)
+// 2) we can't add currencies with identical names
+//    example: identical tokens but on different blockchains
 export const COIN_DATA = {
   'BTC': {
     ticker: 'BTC',
@@ -49,6 +57,14 @@ export const COIN_DATA = {
     name: 'Binance Coin',
     type: COIN_TYPE.NATIVE,
     blockchain: BLOCKCHAIN.BNB,
+    model: COIN_MODEL.AB,
+    precision: 18,
+  },
+  'MATIC': {
+    ticker: 'MATIC',
+    name: 'MATIC Token',
+    type: COIN_TYPE.NATIVE,
+    blockchain: BLOCKCHAIN.MATIC,
     model: COIN_MODEL.AB,
     precision: 18,
   },
@@ -122,6 +138,7 @@ export const NATIVE = {
   btc: 'BTC',
   eth: 'ETH',
   bnb: 'BNB',
+  matic: 'MATIC',
   ghost: 'GHOST',
   next: 'NEXT',
 }
@@ -130,9 +147,12 @@ export const BNB_TOKENS = {
   btcb: 'BTCB',
 }
 
+export const MATIC_TOKENS = {
+  wbtc: 'WBTC',
+}
+
 export const ETH_TOKENS = {
   usdt: 'USDT',
-  btcb: 'BTCB',
   eurs: 'EURS',
   swap: 'SWAP',
   pay: 'PAY',
@@ -153,5 +173,6 @@ export default {
   ...NATIVE,
   ...ETH_TOKENS,
   ...BNB_TOKENS,
+  ...MATIC_TOKENS,
   ...COIN_DATA,
 }

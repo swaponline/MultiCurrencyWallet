@@ -19,11 +19,14 @@ const getCustomTokenConfig = () => {
 
 const initExternalConfig = () => {
   // Add to swap.core not exists tokens
-  Object.keys(config.erc20).forEach((tokenCode) => {
-    if (!constants.COIN_DATA[tokenCode]) {
-      console.info('Add token to swap.core', tokenCode, config.erc20[tokenCode].address, config.erc20[tokenCode].decimals, config.erc20[tokenCode].fullName)
-      util.erc20.register(tokenCode, config.erc20[tokenCode].decimals)
-    }
+  Object.keys(TOKEN_STANDARDS).forEach((key) => {
+    const standard = TOKEN_STANDARDS[key].standard.toLowerCase()
+
+    Object.keys(config[standard]).forEach((tokenSymbol) => {
+      if (!constants.COIN_DATA[tokenSymbol]) {
+        util[standard].register(tokenSymbol, config[standard][tokenSymbol].decimals)
+      }
+    })
   })
 }
 
@@ -38,6 +41,7 @@ const externalConfig = () => {
     curEnabled: {
       eth: true,
       bnb: true,
+      matic: true,
       btc: true,
       ghost: true,
       next: true,
@@ -46,6 +50,7 @@ const externalConfig = () => {
       btc: true,
       eth: true,
       bnb: false,
+      matic: false,
       ghost: true,
       next: true,
     },
@@ -150,6 +155,11 @@ const externalConfig = () => {
   if (window && window.CUR_BNB_DISABLED === true) {
     config.opts.curEnabled.bnb = false
     config.opts.blockchainSwapEnabled.bnb = false
+  }
+
+  if (window && window.CUR_MATIC_DISABLED === true) {
+    config.opts.curEnabled.matic = false
+    config.opts.blockchainSwapEnabled.matic = false
   }
 
 
@@ -285,22 +295,27 @@ const externalConfig = () => {
       }
     })
 
-    const feeObj = config.opts.fee
-    const setErc20Fee = hasTokenAdminFee && feeObj.eth?.min && feeObj.eth?.fee
-    const setBep20Fee = hasTokenAdminFee && feeObj.bnb?.min && feeObj.bnb?.fee
+    // add currency commissions for tokens
+    if (hasTokenAdminFee) {
+      const feeObj = config.opts.fee
 
-    if (setErc20Fee) {
-      feeObj.erc20.min = feeObj.eth.min
-      feeObj.erc20.fee = feeObj.eth.fee
-    }
+      Object.keys(TOKEN_STANDARDS).forEach((key) => {
+        const standard = TOKEN_STANDARDS[key].standard.toLowerCase()
+        const baseCurrency = TOKEN_STANDARDS[key].currency.toLowerCase()
+        const currencyFee = feeObj[baseCurrency]
 
-    if (setBep20Fee) {
-      feeObj.bep20.min = feeObj.bnb.min
-      feeObj.bep20.fee = feeObj.bnb.fee
+        if (currencyFee?.min && currencyFee?.fee) {
+          feeObj[standard].min = currencyFee.min
+          feeObj[standard].fee = currencyFee.fee
+        }
+      })
     }
   }
 
-  console.log('externalConfig', config)
+  console.group('%c External config', 'color: green;')
+  console.log(config)
+  console.groupEnd()
+
   return config
 }
 

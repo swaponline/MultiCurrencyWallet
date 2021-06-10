@@ -1,18 +1,15 @@
-import React, { Component, Fragment } from 'react'
-
-
+import React, { Component } from 'react'
 
 import CSSModules from 'react-css-modules'
 import styles from '../Swap.scss'
 
-import config from 'app-config'
 import { isMobile } from 'react-device-detect'
 
 import FeeControler from '../FeeControler/FeeControler'
 import SwapProgress from './SwapProgress/SwapProgress'
 import SwapList from './SwapList/SwapList'
-import DepositWindow from './DepositWindow/DepositWindow'
 import SwapController from '../SwapController'
+import SwapPairInfo from './SwapPairInfo'
 
 
 @CSSModules(styles)
@@ -146,32 +143,13 @@ export default class EthLikeToUTXO extends Component<any, any> {
       wallets,
     } = this.props
 
-    const { currencyAddress, flow, swap, currencyData, signed, buyCurrency, sellCurrency, windowWidth } = this.state
-    const stepse = flow.step
+    const { flow, swap, currencyData, signed, windowWidth } = this.state
 
     return (
       <div>
         <div styleName="swapContainer" style={(isMobile && (windowWidth < 569)) ? { paddingTop: 120 } : { paddingTop: 0 }}>
           <div>
-            <div styleName="swapInfo">
-              {/* @ts-ignore: strictNullChecks */}
-              {this.swap.id &&
-                (
-                  <strong>
-                    {/* @ts-ignore: strictNullChecks */}
-                    {this.swap.sellAmount.toFixed(6)}
-                    {' '}
-                    {/* @ts-ignore: strictNullChecks */}
-                    {this.swap.sellCurrency} &#10230; {' '}
-                    {/* @ts-ignore: strictNullChecks */}
-                    {this.swap.buyAmount.toFixed(6)}
-                    {' '}
-                    {/* @ts-ignore: strictNullChecks */}
-                    {this.swap.buyCurrency}
-                  </strong>
-                )
-              }
-            </div>
+            {swap.id && <SwapPairInfo swap={swap} />}
             <SwapController swap={swap} />
             <SwapList
               enoughBalance={enoughBalance}

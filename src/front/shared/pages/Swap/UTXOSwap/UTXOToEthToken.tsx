@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 
 import CSSModules from 'react-css-modules'
 import styles from '../Swap.scss'
@@ -6,11 +6,11 @@ import styles from '../Swap.scss'
 import crypto from 'crypto'
 import SwapApp from 'swap.app'
 
-import DepositWindow from './DepositWindow/DepositWindow'
 import SwapProgress from './SwapProgress/SwapProgress'
 import SwapList from './SwapList/SwapList'
 import FeeControler from '../FeeControler/FeeControler'
 import SwapController from '../SwapController'
+import SwapPairInfo from './SwapPairInfo'
 
 
 @CSSModules(styles)
@@ -142,25 +142,7 @@ export default class UTXOToEthToken extends Component<any, any> {
       <div>
         <div styleName="swapContainer">
           <div>
-            <div styleName="swapInfo">
-              {/* @ts-ignore: strictNullChecks */}
-              {this.swap.id &&
-                (
-                  <strong>
-                    {/* @ts-ignore: strictNullChecks */}
-                    {this.swap.sellAmount.toFixed(6)}
-                    {' '}
-                    {/* @ts-ignore: strictNullChecks */}
-                    {this.swap.sellCurrency} &#10230; {' '}
-                    {/* @ts-ignore: strictNullChecks */}
-                    {this.swap.buyAmount.toFixed(6)}
-                    {' '}
-                    {/* @ts-ignore: strictNullChecks */}
-                    {this.swap.buyCurrency}
-                  </strong>
-                )
-              }
-            </div>
+            {swap.id && <SwapPairInfo swap={swap} />}
             <SwapController swap={swap} />
             <SwapList
               flow={this.state.swap.flow.state}

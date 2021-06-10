@@ -36,6 +36,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
       activeFiat,
       ethData,
       bnbData,
+      maticData,
       btcData,
       ghostData,
       nextData,
@@ -54,6 +55,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
     const userCurrencyData = [
       ethData,
       bnbData,
+      maticData,
       btcData,
       ghostData,
       nextData,
@@ -72,6 +74,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
       coinsData: {
         ethData,
         bnbData,
+        maticData,
         metamaskData: {
           ...metamaskData,
           currency: 'ETH Metamask',

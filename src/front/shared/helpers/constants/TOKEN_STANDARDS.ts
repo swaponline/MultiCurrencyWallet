@@ -15,4 +15,11 @@ export default {
     explorerApi: config.api.bscscan,
     explorerApiKey: config.api.bscscan_ApiKey,
   },
+  erc20matic: {
+    platform: 'ethereum',
+    standard: 'erc20matic',
+    currency: 'matic',
+    // explorerApi: config.api,
+    // explorerApiKey: config.api,
+  },
 }

@@ -4,16 +4,6 @@ export default {
     address: 'mymS2AQDsLTVZfyYfdqkJ9Fx6tB3HvKinx',
     privateKey: 'cScvAnWxUagxS4TMbnbsyZguenhYggNmFhpy7wtHwyRvAkViiVu1,'
   },
-  eth: {
-    seedPhrase: 'glare bargain balcony load lady crowd pizza calm snack attitude fiber flavor',
-    address: '0xa5c881C6942edAc164aFFD5194420c1CceDC77E9',
-    privateKey: '0xe7dfb6dc43416771b8aa7b4d31a1d9e4027ec11ea94e51e68a525eb80addf063',
-  },
-  bnb: {
-    seedPhrase: 'glare bargain balcony load lady crowd pizza calm snack attitude fiber flavor',
-    address: '0xa5c881C6942edAc164aFFD5194420c1CceDC77E9',
-    privateKey: '0xe7dfb6dc43416771b8aa7b4d31a1d9e4027ec11ea94e51e68a525eb80addf063',
-  },
   btcMMaker: {
     seedPhrase: 'neither already situate silent ripple milk paddle glass leopard track mansion junk',
     address: 'n2Y2rbg6wVEQnnpNxisiHK4wCDUAq59iv6',
@@ -31,5 +21,20 @@ export default {
   btcTurnOnMM: {
     seedPhrase: 'tank noble shine corn marriage vote pear lonely bomb still toward host',
     address: 'mwcbYjxbizC5ejSrfjUhjuiT56vQCTqLmY',
-  }
+  },
+  eth: {
+    seedPhrase: 'glare bargain balcony load lady crowd pizza calm snack attitude fiber flavor',
+    address: '0xa5c881C6942edAc164aFFD5194420c1CceDC77E9',
+    privateKey: '0xe7dfb6dc43416771b8aa7b4d31a1d9e4027ec11ea94e51e68a525eb80addf063',
+  },
+  bnb: {
+    seedPhrase: 'glare bargain balcony load lady crowd pizza calm snack attitude fiber flavor',
+    address: '0xa5c881C6942edAc164aFFD5194420c1CceDC77E9',
+    privateKey: '0xe7dfb6dc43416771b8aa7b4d31a1d9e4027ec11ea94e51e68a525eb80addf063',
+  },
+  matic: {
+    seedPhrase: 'glare bargain balcony load lady crowd pizza calm snack attitude fiber flavor',
+    address: '0xa5c881C6942edAc164aFFD5194420c1CceDC77E9',
+    privateKey: '0xe7dfb6dc43416771b8aa7b4d31a1d9e4027ec11ea94e51e68a525eb80addf063',
+  },
 }

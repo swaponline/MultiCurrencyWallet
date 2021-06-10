@@ -35,10 +35,18 @@ function FirstStep(props) {
           </Explanation>
           <div styleName={`currencyChooserWrapper ${startPack.length < 4 ? "smallArr" : ""}`}>
             {startPack.map((el, index) => {
-              const { name, capture, baseChain } = el
+              const { name, capture, baseCurrency } = el
+              const firstIdPart = `${baseCurrency ? `${baseCurrency}${name}` : `${name}`}`
+              const secondIdPart = 'Wallet'
+              const selectedCurrency = `${baseCurrency ? `{${baseCurrency}}${name}` : `${name}`}`
 
               return (
-                <div id={`${name.toLowerCase()}Wallet`} key={index} styleName={`card ${curState[name] ? 'purpleBorder' : ''}`} onClick={() => handleClick(name)}>
+                <div
+                  id={firstIdPart.toLowerCase() + secondIdPart}
+                  key={index}
+                  styleName={`card ${curState[selectedCurrency] ? 'purpleBorder' : ''}`}
+                  onClick={() => handleClick(selectedCurrency.toUpperCase())}
+                >
                   <div styleName="logo">
                     <Coin
                       name={name}
@@ -50,7 +58,7 @@ function FirstStep(props) {
                   </div>
                   <div styleName="listGroup">
                     <li><b>{name}</b></li>
-                    <li>{baseChain && `(${baseChain})`} {capture}</li>
+                    <li>{baseCurrency && `(${baseCurrency}) `}{capture}</li>
                   </div>
                 </div>
               )

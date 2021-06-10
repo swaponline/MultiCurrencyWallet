@@ -11,7 +11,10 @@ describe('History tests', () => {
 
     try {
       console.log('History test')
-      await importWallet(page, arrOfWords)
+      await importWallet({
+        page,
+        seed: arrOfWords,
+      })
       await timeOut(10_000)
 
       await page.goto(`${page.url()}history`)

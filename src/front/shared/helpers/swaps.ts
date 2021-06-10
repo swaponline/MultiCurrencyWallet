@@ -4,6 +4,7 @@ const allowedCoins = [
   ...(!config.opts.blockchainSwapEnabled || config.opts.blockchainSwapEnabled.btc ? ['BTC'] : []),
   ...(!config.opts.blockchainSwapEnabled || config.opts.blockchainSwapEnabled.eth ? ['ETH'] : []),
   ...(!config.opts.blockchainSwapEnabled || config.opts.blockchainSwapEnabled.bnb ? ['BNB'] : []),
+  ...(!config.opts.blockchainSwapEnabled || config.opts.blockchainSwapEnabled.matic ? ['MATIC'] : []),
   ...(!config.opts.blockchainSwapEnabled || config.opts.blockchainSwapEnabled.ghost ? ['GHOST'] : []),
   ...(!config.opts.blockchainSwapEnabled || config.opts.blockchainSwapEnabled.next ? ['NEXT'] : []),
   ]
@@ -16,10 +17,13 @@ const isExchangeAllowed = (currencies) =>
     const isBep = Object.keys(config.bep20)
       .map((i) => `{bnb}${i.toLowerCase()}`)
       .includes(`${c.value}`.toLowerCase())
+    const isErcMatic = Object.keys(config.erc20matic)
+      .map((i) => `{matic}${i.toLowerCase()}`)
+      .includes(`${c.value}`.toLowerCase())
 
   const isAllowedCoin = allowedCoins.map((i) => i.toLowerCase()).includes(c.value.toLowerCase())
 
-  return isAllowedCoin || isErc || isBep
+  return isAllowedCoin || isErc || isBep || isErcMatic
 })
 
 const filterIsPartial = (orders) =>

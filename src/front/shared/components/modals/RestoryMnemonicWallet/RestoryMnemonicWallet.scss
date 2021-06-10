@@ -27,10 +27,6 @@
   border-radius: 2px;
 }
 
-.for12words {
-  min-width: 400px;
-}
-
 .finishImg {
   display: block;
   height: 120px;
@@ -41,11 +37,6 @@
 .mnemonicNotice {
   margin-bottom: 30px;
 }
-
-.buttonFinish {
-  min-width: 50%;
-}
-
 
 @include media-mobile {
   .mnemonicNotice {

@@ -65,7 +65,7 @@
 }
 
 .canceled {
-  color: #e32950;
+  color: $color-f-error;
   font-size: 24px;
   text-align: center;
   text-transform: uppercase;
@@ -74,8 +74,14 @@
   cursor: pointer;
 }
 
-.refHex {
-  text-align: center;
+.canceledSwapInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .pseudolink {
+    margin: 2em 0;
+  }
 }
 
 .included {
@@ -320,6 +326,7 @@
 }
 
 .pseudolink {
+  cursor: pointer;
   text-decoration: underline;
 }
 

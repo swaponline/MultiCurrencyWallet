@@ -201,8 +201,8 @@ class App extends React.Component<RouteComponentProps<any>, any> {
     })
   }
 
-  processMetamask () {
-    metamask.web3connect.onInit(() => {
+  async processMetamask () {
+    await metamask.web3connect.onInit(() => {
       const _checkChain = () => {
         if (metamask.isCorrectNetwork()) {
           actions.modals.close(constants.modals.AlertModal)
@@ -283,7 +283,7 @@ class App extends React.Component<RouteComponentProps<any>, any> {
     }
 
     this.processUserBackup()
-    this.processMetamask()
+    await this.processMetamask()
 
     this.checkIfDashboardModalsAllowed()
     window.actions = actions;
@@ -336,8 +336,10 @@ class App extends React.Component<RouteComponentProps<any>, any> {
   completeAppCreation = async () => {
     console.group('App >%c loading...', 'color: green;')
 
-    actions.user.sign()
-    await createSwapApp()
+    if(!window.SwapApp){
+      await actions.user.sign()
+      await createSwapApp()
+    }
 
     this.setState(() => ({
       initialFetching: false,

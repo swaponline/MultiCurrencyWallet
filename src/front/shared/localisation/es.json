@@ -500,13 +500,6 @@
     ]
   },
   {
-    "id": "fee9",
-    "message": "Comisión de minero",
-    "files": [
-      "src/front/shared/components/modals/OfferModal/ConfirmOffer/Fee/Fee.tsx"
-    ]
-  },
-  {
     "id": "recieved67",
     "message": "Copiar al portapapeles",
     "files": [
@@ -2399,27 +2392,6 @@
     ]
   },
   {
-    "id": "menu.invest",
-    "message": "Invertir",
-    "files": [
-      "src/front/shared/components/Header/config.tsx"
-    ]
-  },
-  {
-    "id": "menu.invest.info",
-    "message": "Como invertir?",
-    "files": [
-      "src/front/shared/components/Header/config.tsx"
-    ]
-  },
-  {
-    "id": "menu.products",
-    "message": "Nuestros productos",
-    "files": [
-      "src/front/shared/components/Header/config.tsx"
-    ]
-  },
-  {
     "id": "currencyAction81",
     "message": "Elija una moneda que desee {context}",
     "files": [
@@ -3172,13 +3144,6 @@
   {
     "id": "RestoryMnemonicWallet_MnemonicInvalid",
     "message": "Has especificado un conjunto de palabras no válido",
-    "files": [
-      "src/front/shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.tsx"
-    ]
-  },
-  {
-    "id": "RestoryMnemonicWallet_MnemonicPlaceholder",
-    "message": "Ingrese la frase guardada para restaurar la billetera",
     "files": [
       "src/front/shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.tsx"
     ]
@@ -5204,6 +5169,13 @@
   {
     "id": "errorWithGetAmount",
     "message": "\"Tu obtienes\" no más de 0",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "incorrectMetamaskNetwork",
+    "message": "Elija la red de metamask correcta",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]

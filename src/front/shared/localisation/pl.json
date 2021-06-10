@@ -500,13 +500,6 @@
     ]
   },
   {
-    "id": "fee9",
-    "message": "Prowizja górnika",
-    "files": [
-      "src/front/shared/components/modals/OfferModal/ConfirmOffer/Fee/Fee.tsx"
-    ]
-  },
-  {
     "id": "recieved67",
     "message": "Kopiuj do schowka",
     "files": [
@@ -2392,27 +2385,6 @@
     ]
   },
   {
-    "id": "menu.invest",
-    "message": "Inwestuj",
-    "files": [
-      "src/front/shared/components/Header/config.tsx"
-    ]
-  },
-  {
-    "id": "menu.invest.info",
-    "message": "Jak inwestować?",
-    "files": [
-      "src/front/shared/components/Header/config.tsx"
-    ]
-  },
-  {
-    "id": "menu.products",
-    "message": "Our products",
-    "files": [
-      "src/front/shared/components/Header/config.tsx"
-    ]
-  },
-  {
     "id": "currencyAction81",
     "message": "Please choose a currency you want to {context}",
     "files": [
@@ -3165,13 +3137,6 @@
   {
     "id": "RestoryMnemonicWallet_MnemonicInvalid",
     "message": "Wybrałeś nieprawidłową kolejność słów",
-    "files": [
-      "src/front/shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.tsx"
-    ]
-  },
-  {
-    "id": "RestoryMnemonicWallet_MnemonicPlaceholder",
-    "message": "Wpisz zapisaną frazę aby przywrócić portfel",
     "files": [
       "src/front/shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.tsx"
     ]
@@ -5204,6 +5169,13 @@
   {
     "id": "errorWithGetAmount",
     "message": "\"Dostajesz\" nie więcej niż 0",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "incorrectMetamaskNetwork",
+    "message": "Wybierz prawidłową sieć metamasek",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]

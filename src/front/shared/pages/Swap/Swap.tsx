@@ -9,10 +9,8 @@ import styles from './Swap.scss'
 
 import { connect } from 'redaction'
 import helpers, { links, constants, apiLooper } from 'helpers'
-import request from 'common/utils/request'
 import { isMobile } from 'react-device-detect'
 import actions from 'redux/actions'
-import { Link } from 'react-router-dom'
 
 import { swapComponents } from './swaps'
 import { createSwapApp } from "instances/newSwap";
@@ -20,7 +18,6 @@ import Debug from './Debug/Debug'
 import { injectIntl, FormattedMessage } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
 import DeleteSwapAfterEnd from './DeleteSwapAfterEnd'
-import CopyToClipboard from 'react-copy-to-clipboard'
 
 import feedback from 'shared/helpers/feedback'
 
@@ -31,13 +28,13 @@ const isWidgetBuild = config && config.isWidget
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 @connect(({
-  user: { ethData, bnbData, btcData, ghostData, nextData, tokensData, activeFiat },
+  user: { ethData, bnbData, maticData, btcData, ghostData, nextData, tokensData, activeFiat },
   pubsubRoom: { peer },
   rememberedOrders,
 }) => ({
   activeFiat,
-  items: [ethData, bnbData, btcData, ghostData, nextData],
-  currenciesData: [ethData, btcData, ghostData, nextData],
+  items: [ethData, bnbData, maticData, btcData, ghostData, nextData],
+  currenciesData: [ethData, bnbData, maticData, btcData, ghostData, nextData],
   tokensData: [...Object.keys(tokensData).map(k => (tokensData[k]))],
   savedOrders: rememberedOrders.savedOrders,
   peer,
@@ -137,11 +134,12 @@ class SwapComponent extends PureComponent<any, any> {
       waitWithdrawOther: false,
       isFaucetRequested: false,
       isSwapCancelled: false,
+      errorInfo: '',
     }
   }
 
 
-  componentDidMount() {
+  async componentDidMount() {
     console.group('Swap page >%c didMount', 'color: green')
 
     const { items, currenciesData, tokensData } = this.props
@@ -168,16 +166,18 @@ class SwapComponent extends PureComponent<any, any> {
       console.log('creating swap')
       console.log('orderId', orderId)
       console.log('SwapApp', window.SwapApp)
-      window.SwapApp ?
-        (this.createSwap({ orderId, items, tokensData, activeFiat })) :
-        (createSwapApp().then(() => {
-          this.createSwap({ orderId, items, tokensData, activeFiat })
-        }))
+      if (window.SwapApp) {
+        this.createSwap({ orderId, items, tokensData, activeFiat })
+      } else {
+        await actions.user.sign()
+        await createSwapApp()
+        this.createSwap({ orderId, items, tokensData, activeFiat })
+      }
 
     } catch (error) {
       console.error(error)
       actions.notifications.show(constants.notifications.ErrorNotification, {
-        error: 'Sorry, but this order do not exsit already'
+        error: 'Sorry, but this order does not exist already'
       })
       this.props.history.push(localisedUrl(links.exchange))
     }
@@ -290,7 +290,7 @@ class SwapComponent extends PureComponent<any, any> {
         if (!this.checkIsConfirmed()) {
           window.location.reload()
         }
-      }, 30000)
+      }, 30_000)
 
       this.checkingConfirmSuccessTimer = checkingConfirmSuccess
       this.checkingCycleTimer = checkingCycle
@@ -334,6 +334,17 @@ class SwapComponent extends PureComponent<any, any> {
   checkIsConfirmed = () => {
     const { swap: { flow: { state: { step } } } } = this.state
     return !(step === 1)
+  }
+
+  componentDidCatch(error, info) {
+    this.setState(() => ({
+      errorInfo: info,
+    }))
+
+    actions.notifications.show(
+      constants.notifications.ErrorNotification,
+      { error: error.message }
+    )
   }
 
   checkIsFinished = () => {
@@ -527,10 +538,9 @@ class SwapComponent extends PureComponent<any, any> {
   }
 
   toggleDebug = () => {
-    const isShowDebug = this.state.isShowDebug;
-    this.setState({
-      isShowDebug: !isShowDebug,
-    })
+    this.setState((state) => ({
+      isShowDebug: !state.isShowDebug,
+    }))
   }
 
   goWallet = () => {
@@ -555,6 +565,7 @@ class SwapComponent extends PureComponent<any, any> {
       isAddressCopied,
       waitWithdrawOther,
       isSwapCancelled,
+      errorInfo,
     } = this.state
 
     if (!swap || !SwapComponent || !peer || !isAmountMore) {
@@ -588,7 +599,7 @@ class SwapComponent extends PureComponent<any, any> {
                   id="SwapStuck"
                   defaultMessage="The swap was stuck? Try to "
                 />
-                <span styleName="pseudolink" onClick={() => this.toggleDebug()}>
+                <span styleName="pseudolink" onClick={this.toggleDebug}>
                   <FormattedMessage
                     id="SwapDebug"
                     defaultMessage="debug"
@@ -606,29 +617,37 @@ class SwapComponent extends PureComponent<any, any> {
                 </span>
               </p>
 
-              {isShowDebug &&
-                <Debug flow={swap.flow} />
-              }
-
               {peer === swap.owner.peer &&
                 <DeleteSwapAfterEnd swap={swap} />
               }
             </div>
           </div>
           :
-          <div>
+          <div styleName="canceledSwapInfo">
             <h3 styleName="canceled" onClick={this.goWallet}>
               <FormattedMessage id="swappropgress327" defaultMessage="This swap is canceled" />
             </h3>
-            <div>
-              <h3 styleName="refHex">
-                <FormattedMessage
-                  id="swappropgress400"
-                  defaultMessage="Refund is taking automatically"
-                />
-              </h3>
+
+            {errorInfo && (
+              <div>
+                {errorInfo}
+              </div>
+            )}
+
+            <h3>
+              <FormattedMessage
+                id="swappropgress400"
+                defaultMessage="Refund is taking automatically"
+              />
+            </h3>
+            <div styleName="pseudolink" onClick={this.toggleDebug}>
+              <FormattedMessage id="SwapDebug" defaultMessage="debug" />
             </div>
           </div>
+        }
+
+        {isShowDebug &&
+          <Debug flow={swap.flow} />
         }
       </Fragment>
     )

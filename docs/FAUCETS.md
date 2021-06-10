@@ -6,14 +6,16 @@ The list of faucets that we recommend to use when developing
 ## `BTC` (Testnet)
  - https://bitcoinfaucet.uo1.net/ (0.00093 per hour)
  - https://testnet-faucet.mempool.co/ (0.0099 per hour)
- - https://coinfaucet.eu/en/btc-testnet/ (0.018 per 12 hours)
 
 ## `ETH` (Ropsten testnet)
 - https://faucet.ropsten.be/ (1 ETH per day)
 - https://faucet.dimensions.network/ (5 ETH per day)
 
 ## `BNB` (Testnet)
-- https://testnet.binance.org/faucet-smart (1, 2.5, 6.25 per 18 hours)
+- https://testnet.binance.org/faucet-smart (1 per 18 hours)
+
+## `MATIC` (Mumbai testnet)
+- https://faucet.matic.network/
 
 ## `USDT` (Ropsten testnet)
  - contact swaponline developers [here](https://t.me/swaponlinebot)
@@ -30,3 +32,6 @@ The list of faucets that we recommend to use when developing
 ## `BTCB` (Binance Smart Chain testnet token)
 - send 0 BNB to contract `0x87B7B0eD5c4a785E4389D8E496A599f7324A709A` - it will send back 1000 BTCB
 - <sub>(the more popular testnet contract `0x6ce8dA28E2f864420840cF74474eFf5fD80E65B8` is not used)</sub>
+
+## `WBTC` (Matic Mumbai testnet)
+- send 0 MATIC token to contract `0xeb8df6700e24802a5d435e5b0e4228065ca9e0f3` - it will send back 1000 WBTC
