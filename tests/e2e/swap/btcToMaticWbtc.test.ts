@@ -145,6 +145,11 @@ describe('Swap e2e test', () => {
 
       const allOrders = [...btcOrders.map((amount) => new BigNumber(amount).toFixed(5)), ...wbtcOrders.map((amount) => new BigNumber(amount).toFixed(5))]
 
+      console.log('Taker Page ---------------')
+      console.log('btcOrders: ', btcOrders)
+      console.log('wbtcOrders: ', wbtcOrders)
+      console.log('allOrders: ', allOrders)
+
       +makerBtcBalance ? expect(allOrders).toContain(makerBtcBalance) : console.log('maker has not btc balance')
       +makerTokenBalance ? expect(allOrders).toContain(makerTokenBalance) : console.log('maker has not token balance')
     } catch (error) {
