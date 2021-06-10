@@ -1702,6 +1702,7 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
 
     const canStartSwap =
       !isErrorExternalDisabled &&
+      isCorrectMetamaskNetwork &&
       linked.haveAmount.value > 0 &&
       fromAddress &&
       isFromAddressReady &&
@@ -1711,11 +1712,11 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
       !this.doesComissionPreventThisOrder() &&
       isBalanceReady &&
       new BigNumber(getAmount).isGreaterThan(0) &&
-      isCorrectMetamaskNetwork &&
       !isWaitForPeerAnswer
 
     const getTextWhyCanNotStartSwap = () => {
       if (isErrorExternalDisabled) return <FormattedMessage id="swapDisabled" defaultMessage='Swap Disabled' />
+      if (!isCorrectMetamaskNetwork) return <FormattedMessage id="incorrectMetamaskNetwork" defaultMessage='Please choose correct metamask network' />
       if (!(linked.haveAmount.value > 0)) return <FormattedMessage id="enterYouSend" defaultMessage='Enter "You send" amount' />
       if (!fromAddress) return <FormattedMessage id="selectFromAddress" defaultMessage='Select "From address"' />
       if (!isFromAddressReady) {
@@ -1743,7 +1744,6 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
           return <FormattedMessage id="enterLesserAmount" defaultMessage='Enter lesser amount to "You send"' />
       }
       if (!(new BigNumber(getAmount).isGreaterThan(0))) return <FormattedMessage id="errorWithGetAmount" defaultMessage='"You get" no more than 0' />
-      if (!isCorrectMetamaskNetwork) return <FormattedMessage id="incorrectMetamaskNetwork" defaultMessage='Please choose correct metamask network' />
       if (isWaitForPeerAnswer) return <FormattedMessage id="waitPeerAnswer" defaultMessage='Wait peer answer' />
 
       return <FormattedMessage id="contactSupport" defaultMessage='Please contact support' />
