@@ -33,12 +33,12 @@ export default (webpackConfig) => {
   })
 
   webpackConfig.optimization = {
-    minimizer: [
+    /*minimizer: [
       new TerserPlugin({
         parallel: true, // default -> os.cpus().length - 1
         sourceMap: true,
       }),
-    ],
+    ],*/
     splitChunks: {
       chunks: 'all',
       cacheGroups: {
