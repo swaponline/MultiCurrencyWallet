@@ -84,10 +84,20 @@ class AtomicAB2UTXO extends Flow {
         if (!hasSecretHash && !hasUtxoScriptValues) {
           const scriptIsOk = this.checkWorkUTXOScriptIsOk(utxoScriptValues)
           console.log('>>> scriptIsOk', scriptIsOk)
-          flow.setState({
-            utxoScriptValues,
-            secretHash,
-          }, true)
+          if (scriptIsOk) {
+            flow.setState({
+              utxoScriptValues,
+              secretHash,
+            }, true)
+          } else {
+            console.warn('>>> UTXO Script Values not correct. Stop swap now!')
+            flow.setState({
+              wrongScript: true,
+              wrongScriptValues: utxoScriptValues,
+              wrongSecretHash: secretHash,
+              isStoppedSwap: true,
+            }, true)
+          }
         }
       })
     }
