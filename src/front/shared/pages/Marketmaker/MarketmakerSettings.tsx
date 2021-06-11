@@ -1,21 +1,18 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import CSSModules from 'react-css-modules'
 
 import { BigNumber } from 'bignumber.js'
 
-import { connect } from 'redaction'
 import actions from 'redux/actions'
-
 import SwapApp from 'swap.app'
 import Swap from 'swap.swap'
 
 import { constants, links, feedback } from 'helpers'
 import config from 'helpers/externalConfig'
 
-
 import styles from './MarketmakerSettings.scss'
 
-import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
+import { FormattedMessage, injectIntl } from 'react-intl'
 
 import SwapRow from './SwapRow'
 import FAQ from './FAQ'
@@ -23,7 +20,6 @@ import FAQ from './FAQ'
 import Toggle from 'components/controls/Toggle/Toggle'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
-import Input from 'components/forms/Input/Input'
 
 import btc from './images/btcIcon.svg'
 import wbtc from './images/wbtcIcon.svg'
@@ -199,7 +195,12 @@ class MarketmakerSettings extends Component<any, any> {
         }
       }
     } = this.props
-    if (prevMarketToken.toLowerCase() !== marketToken.toLowerCase()) {
+    const { mnemonicSaved } = this.state
+
+    if (
+      mnemonicSaved &&
+      prevMarketToken.toLowerCase() !== marketToken.toLowerCase()  
+    ) {
       this.setState({
         marketToken,
         tokenBalance: 0,
@@ -210,7 +211,11 @@ class MarketmakerSettings extends Component<any, any> {
     }
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+    const { mnemonicSaved } = this.state
+
+    if (!mnemonicSaved) return
+
     SwapApp.onInit(() => {
       //@ts-ignore: strictNullChecks
       let isMarketEnabled = (SwapApp.shared().services.orders.getMyOrders().length > 0)
@@ -304,12 +309,17 @@ class MarketmakerSettings extends Component<any, any> {
     }
   }
 
-  componentWillUnmount() {
+  async componentWillUnmount() {
+    const { mnemonicSaved } = this.state
+
     this._mounted = false
-    //@ts-ignore: strictNullChecks
-    SwapApp.shared().off('swap attached', this._handleSwapAttachedHandle)
-    //@ts-ignore: strictNullChecks
-    SwapApp.shared().off('swap enter step', this._handleSwapEnterStep)
+
+    if (mnemonicSaved) {
+      //@ts-ignore: strictNullChecks
+      SwapApp.shared().off('swap attached', this._handleSwapAttachedHandle)
+      //@ts-ignore: strictNullChecks
+      SwapApp.shared().off('swap enter step', this._handleSwapEnterStep)
+    }
   }
 
   handleSaveMnemonic() {
