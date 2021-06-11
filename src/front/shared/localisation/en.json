@@ -684,7 +684,7 @@
   },
   {
     "id": "enterLesserAmount",
-    "message": "Enter lesser amount to \"You send\"",
+    "message": "Enter less amount to \"You send\"",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
