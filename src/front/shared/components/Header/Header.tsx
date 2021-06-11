@@ -108,6 +108,14 @@ class Header extends Component<any, any> {
     window.location.reload()
   }
 
+  saveMnemonicAndClearStorage = () => {
+    actions.modals.open(constants.modals.SaveMnemonicModal, {
+      onClose: () => {
+        this.clearLocalStorage()
+      }
+    })
+  }
+
   componentDidMount() {
     this.handlerAsync()
 
@@ -120,6 +128,19 @@ class Header extends Component<any, any> {
 
     if (oldUserDidNotSee) {
       feedback.app.warning('Modal about local storage was opened')
+
+      const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
+      // user must save a mnemonic phrase if he hasn't done it
+      const modalButton = mnemonic !== '-' ? (
+        <Button empty onClick={this.saveMnemonicAndClearStorage}>
+          <FormattedMessage id="registerSMSMPlaceHolder" defaultMessage="Secret phrase (12 words)" />
+        </Button>
+      ) : (
+        <Button empty onClick={this.clearLocalStorage}>
+          <FormattedMessage id="ClearAndReload" defaultMessage="Clear and reload" />
+        </Button>
+      )
+
       actions.notifications.show(constants.notifications.Message, {
         message: (
           <FormattedMessage
@@ -127,11 +148,7 @@ class Header extends Component<any, any> {
             defaultMessage="Oops, looks like the app needs to clean your local storage. Please save your 12 words seed phrase (if you have not saved it before), then clear local storage by clicking on the button and import 12 words seed again. Sorry for the inconvenience. {indent} {button}"
             values={{
               indent: <><br /><br /></>,
-              button: (
-                <Button empty onClick={this.clearLocalStorage}>
-                  <FormattedMessage id="ClearAndReload" defaultMessage="Clear and reload" />
-                </Button>
-              )
+              button: modalButton,
             }}
           />
         ),
