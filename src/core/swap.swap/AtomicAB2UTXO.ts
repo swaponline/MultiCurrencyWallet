@@ -14,6 +14,15 @@ class AtomicAB2UTXO extends Flow {
   abBlockchain: any // @to-do - make inmlementation for ABswap
   utxoBlockchain: any // @to-do - make implementation for UTXOSwap
 
+  // Время lockTime для utxo скрипта
+  scriptDefaultLockTime: number = 60 * 60 * 3 // 3 hours
+  scriptTakerMakerLockTime: number = 60 * 45 // 45 minutes
+  // Допустимый разброс времени между сторонами свапа
+  // Нужно чтобы нивелировать расхождение в часах
+  // У одной из сторон могут отставать или спешить часы относительно UTC
+  scriptLockTimeMaxAvg: number = 60 * 5 * -1 // 5 minutes
+
+  getUtcNow: Function = () => Math.floor(Date.now() / 1000)
 
   constructor(swap) {
     super(swap)
@@ -67,11 +76,19 @@ class AtomicAB2UTXO extends Flow {
           utxoScriptValues,
           secretHash,
         } = data
+        const {
+          utxoScriptValues: hasUtxoScriptValues,
+          secretHash: hasSecretHash,
+        } = flow.state
 
-        flow.setState({
-          utxoScriptValues,
-          secretHash,
-        }, true)
+        if (!hasSecretHash && !hasUtxoScriptValues) {
+          const scriptIsOk = this.checkWorkUTXOScriptIsOk(utxoScriptValues)
+          console.log('>>> scriptIsOk', scriptIsOk)
+          flow.setState({
+            utxoScriptValues,
+            secretHash,
+          }, true)
+        }
       })
     }
   }
@@ -518,6 +535,80 @@ class AtomicAB2UTXO extends Flow {
     }
   }
 
+  checkWorkUTXOScriptIsOk(utxoScriptValues) {
+    const {
+      lockTime: inLockTime,
+      lockTimeStartFrom: inLockTimeStartFrom,
+      lockTimeLength: inLockTimeLength,
+
+      ownerPublicKey: inOwnerPublicKey,
+      recipientPublicKey: inRecipientPublicKey,
+    } = utxoScriptValues
+
+    const { participant } = this.swap
+
+    let calcedLockTimeLength = this.scriptDefaultLockTime
+
+    if (this.isTakerMakerModel) {
+      if (!this.isUTXOSide && this.isTaker()) calcedLockTimeLength = this.scriptTakerMakerLockTime
+      if (this.isUTXOSide && this.isMaker()) calcedLockTimeLength = this.scriptTakerMakerLockTime
+    }
+
+    const calcedLockTimeStartFrom = this.getUtcNow()
+    const calcedLockTime = calcedLockTimeStartFrom + calcedLockTimeLength
+
+    const avgLockTimeStartFrom = calcedLockTimeStartFrom - inLockTimeStartFrom
+    const avgLockTimeLenght = calcedLockTimeLength - inLockTimeLength
+    const avgLockTime = calcedLockTime - inLockTime
+    // Расчетные параметры вычисляются после того как вторая сторона их сгенерировала
+    // Следовательно переданные параметры lockTime должны быть меньше или равны расчетным
+
+    // Проверка публичных ключей
+    const ownerPublicKey = (this.isUTXOSide)
+      //@ts-ignore: strictNullChecks
+      ? this.app.services.auth.accounts[this.utxoCoin].getPublicKey()
+      //@ts-ignore: strictNullChecks
+      : participant[this.utxoCoin].publicKey
+    const recipientPublicKey = (this.isUTXOSide)
+      //@ts-ignore: strictNullChecks
+      ? participant[this.utxoCoin].publicKey
+      //@ts-ignore: strictNullChecks
+      : this.app.services.auth.accounts[this.utxoCoin].getPublicKey()
+    const publicKeysIsOk = (ownerPublicKey === inOwnerPublicKey && recipientPublicKey === inRecipientPublicKey)
+
+    const scriptIsOk = (
+      // Продолжительность лок-тайма не может расходиться (разница ноль)
+      avgLockTimeLenght === 0
+      // Время, откуда идет отсчет лок-тайма может расходится (из-за рассинхронизации часов у тейкера и мейкера)
+      && this.scriptLockTimeMaxAvg <= avgLockTime
+      && this.scriptLockTimeMaxAvg <= avgLockTimeStartFrom
+      // Публичные ключи должны совпадать
+      && publicKeysIsOk
+    )
+
+    console.groupCollapsed('>>> checkWorkUTXOScriptIsOk', scriptIsOk)
+    console.table({
+      lockTime: {
+        inValue: inLockTime,
+        calced: calcedLockTime,
+        avg: avgLockTime,
+      },
+      lockTimeLength: {
+        inValue: inLockTimeLength,
+        calced: calcedLockTimeLength,
+        avg: avgLockTimeLenght,
+      },
+      lockTimeStartFrom: {
+        inValue: inLockTimeStartFrom,
+        calced: calcedLockTimeStartFrom,
+        avg: avgLockTimeStartFrom,
+      },
+    })
+    console.log('>>> publicKeysIsOk', publicKeysIsOk)
+    console.groupEnd()
+    return scriptIsOk
+  }
+
   createWorkUTXOScript(secretHash, isOwner = true) {
     if (this.state.utxoScriptValues) {
       debug('swap.core:flow')('BTC Script already generated', this.state.utxoScriptValues)
@@ -527,24 +618,23 @@ class AtomicAB2UTXO extends Flow {
     const { participant } = this.swap
 
     const utcNow = () => Math.floor(Date.now() / 1000)
-    const defaultLockTime = 60 * 60 * 3 // 3 hours
-    const takermakerLockTime = 60 * 45 // 45 minutes
 
-    let lockTime = defaultLockTime
+    let lockTimeLength = this.scriptDefaultLockTime
 
     if (this.isTakerMakerModel) {
-      if (!this.isUTXOSide && this.isTaker()) lockTime = takermakerLockTime
-      if (this.isUTXOSide && this.isMaker()) lockTime = takermakerLockTime
+      if (!this.isUTXOSide && this.isTaker()) lockTimeLength = this.scriptTakerMakerLockTime
+      if (this.isUTXOSide && this.isMaker()) lockTimeLength = this.scriptTakerMakerLockTime
     }
 
     console.group('>>> AtomicAB2UTXO -> createScript')
     console.log('isTakerMakerModel', this.isTakerMakerModel)
     console.log('isUTXOSide', this.isUTXOSide)
     console.log('isTaker / isMaker', this.isTaker(), this.isMaker())
-    console.log('lockTime', lockTime)
+    console.log('lockTimeLength', lockTimeLength)
     console.groupEnd()
 
-    const getLockTime = () => utcNow() + lockTime
+    const lockTimeStartFrom = this.getUtcNow() + 2*60 // @to-do - test time not sync
+    const lockTime = lockTimeStartFrom + lockTimeLength
 
     const scriptValues = {
       secretHash:         secretHash,
@@ -552,7 +642,9 @@ class AtomicAB2UTXO extends Flow {
       ownerPublicKey:     (isOwner) ? this.app.services.auth.accounts[this.utxoCoin].getPublicKey() : participant[this.utxoCoin].publicKey,
       //@ts-ignore: strictNullChecks
       recipientPublicKey: (isOwner) ? participant[this.utxoCoin].publicKey : this.app.services.auth.accounts[this.utxoCoin].getPublicKey(),
-      lockTime:           getLockTime(),
+      lockTime,
+      lockTimeStartFrom,  // utc откуда отчитываем лок-тайм
+      lockTimeLength,     // кол-во секунд для лок-тайма
     }
 
     const { scriptAddress } = this.utxoBlockchain.createScript(scriptValues)
