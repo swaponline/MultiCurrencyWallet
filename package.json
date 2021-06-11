@@ -24,6 +24,7 @@
     "test:e2e_restoreWallet": "jest tests/e2e/restoreWallet.test.ts --detectOpenHandles",
     "test:e2e_prepareToSwap": "jest tests/e2e/prepareToSwap.test.ts --detectOpenHandles",
     "test:swap_btc_to_ethWbtc": "jest tests/e2e/swap/btcToEthWbtc.test.ts --detectOpenHandles",
+    "test:send_btc": "jest tests/e2e/send/sendBtc.test.ts --detectOpenHandles",
     "test:swap_maticWbtc_to_btc": "jest tests/e2e/swap/maticWbtcToBtc.test.ts --detectOpenHandles",
     "test:e2e_swap": "jest tests/e2e/swap/*.test.ts --detectOpenHandles",
     "test:e2e_swap:actions": "ACTIONS=true jest tests/e2e/swap/maticWbtcToBtc.test.ts --detectOpenHandles",

@@ -3,7 +3,7 @@ import testWallets from '../../testWallets'
 
 import { createBrowser, importWallet, addAssetToWallet, turnOnMM, selectSendCurrency, takeScreenshot, timeOut } from '../utils'
 
-const wbtcSellAmount = 450_000e-8
+const wbtcSellAmount = 500_000e-8
 const btcBuyAmount = 500_000e-8
 
 jest.setTimeout(1500 * 1000)
@@ -244,7 +244,7 @@ describe('Swap e2e test', () => {
     }
 
     try {
-      console.log('SwapWIW -> Send BTC and (MATIC)WBTC')
+      console.log('SwapWIW -> Send (MATIC)WBTC and BTC')
       await timeOut(3 * 1000)
 
       await MakerPage.$('a[href="#/"]').then((aToWallet) => aToWallet.click())
@@ -252,42 +252,42 @@ describe('Swap e2e test', () => {
 
       await timeOut(3 * 1000)
 
-      await selectSendCurrency({page: MakerPage, currency: 'btc'})
-      await selectSendCurrency({page: TakerPage, currency: 'maticwbtc'})
+      await selectSendCurrency({page: MakerPage, currency: 'maticwbtc'})
+      await selectSendCurrency({page: TakerPage, currency: 'btc'})
 
-      await MakerPage.type('#toAddressInput', testWallets.btcMTaker.address)
-      await TakerPage.type('#toAddressInput', testWallets.btcMMaker.ethAddress)
+      await MakerPage.type('#toAddressInput', testWallets.btcMTaker.ethAddress)
+      await TakerPage.type('#toAddressInput', testWallets.btcMMaker.address)
 
       await MakerPage.type('#amountInput', wbtcSellAmount.toString())
       await TakerPage.type('#amountInput', btcBuyAmount.toString())
 
       await timeOut(10 * 1000)
 
-      await MakerPage.waitForSelector('#feeInfoBlockMinerFee')
-      await MakerPage.evaluate((selector) => document.querySelector(selector).click(), '#slow');
+      await TakerPage.waitForSelector('#feeInfoBlockMinerFee')
+      await TakerPage.evaluate((selector) => document.querySelector(selector).click(), '#slow')
 
       await timeOut(5 * 1000)
 
-      await MakerPage.$('#sendButton').then((sendButton) => sendButton.click())
       await TakerPage.$('#sendButton').then((sendButton) => sendButton.click())
+      await MakerPage.$('#sendButton').then((sendButton) => sendButton.click())
 
       await MakerPage.waitForSelector('#txAmout', {timeout: 60 * 1000})
       await TakerPage.waitForSelector('#txAmout', {timeout: 60 * 1000})
-      const btcTxAmout  = await MakerPage.$eval('#txAmout', el => el.textContent)
-      const wbtcTxAmout  = await TakerPage.$eval('#txAmout', el => el.textContent)
+      const wbtcTxAmout  = await MakerPage.$eval('#txAmout', el => el.textContent)
+      const btcTxAmout  = await TakerPage.$eval('#txAmout', el => el.textContent)
 
       await takeScreenshot(MakerPage, 'MakerPage_SwapWIW_SendBTC_TxInfo')
       await takeScreenshot(TakerPage, 'TakerPage_SwapWIW_SendWBTC_TxInfo')
 
-      expect(btcTxAmout).toContain(wbtcSellAmount.toString())
-      expect(wbtcTxAmout).toContain(btcBuyAmount.toString())
+      expect(wbtcTxAmout).toContain(wbtcSellAmount.toString())
+      expect(btcTxAmout).toContain(btcBuyAmount.toString())
 
     } catch (error) {
       await takeScreenshot(MakerPage, 'MakerPage_SwapWIW_SendBTCError')
       await takeScreenshot(TakerPage, 'TakerPage_SwapWIW_SendWBTCError')
       await MakerBrowser.close()
       await TakerBrowser.close()
-      console.error('SwapWIW -> Send BTC and (MATIC)WBTC error: ', error)
+      console.error('SwapWIW -> Send (MATIC)WBTC and BTC error: ', error)
       expect(false).toBe(true)
     }
 

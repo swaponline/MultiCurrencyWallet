@@ -4,7 +4,7 @@ import testWallets from '../../testWallets'
 import { createBrowser, importWallet, addAssetToWallet, turnOnMM, selectSendCurrency, takeScreenshot, timeOut } from '../utils'
 
 const btcSellAmount = 500_000e-8
-const wbtcBuyAmount = 450_000e-8
+const wbtcBuyAmount = 500_000e-8
 
 jest.setTimeout(1500 * 1000)
 
@@ -235,7 +235,7 @@ describe('Swap e2e test', () => {
       await timeOut(10 * 1000)
 
       await MakerPage.waitForSelector('#feeInfoBlockMinerFee')
-      await MakerPage.evaluate((selector) => document.querySelector(selector).click(), '#slow');
+      await MakerPage.evaluate((selector) => document.querySelector(selector).click(), '#slow')
 
       await timeOut(5 * 1000)
 
