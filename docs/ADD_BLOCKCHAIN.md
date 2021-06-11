@@ -118,17 +118,6 @@ Important note: Our core team focused on BTC-ETH swaps. If another blockchain ad
 - `src/front/shared/components/ui/CurrencyIcon/images/<coin>.svg`
 - export it here: `src/front/shared/components/ui/CurrencyIcon/images/index.ts`
 
-
-### Set default
-
-- `src/common/helpers/constants/DEFAULT_CURRENCY_PARAMETERS.ts`
-- `src/common/helpers/constants/COINS_WITH_DYNAMIC_FEE.ts`
-- `src/common/helpers/constants/MIN_AMOUNT.ts`
-- `src/common/helpers/constants/MIN_AMOUNT_OFFER.ts`
-
-if you're adding evm chain
-- `src/common/helpers/constants/AVAILABLE_EVM_NETWORKS.ts`
-
 ### Set coin decimals
 
 - `src/front/shared/helpers/constants/TOKEN_DECIMALS.ts`
@@ -139,7 +128,7 @@ if you're adding evm chain
 - `src/front/shared/helpers/constants/privateKeyNames.js`
 
 
-### Add coin accordingly as is done for btc
+### Add coin accordingly as is done for btc/eth
 
 - `src/front/shared/redux/actions/user.ts`
 
@@ -172,6 +161,12 @@ Add swap instances:
 	* `bitcore-lib` - add network settings
 	* signMessage
 
+
+if you're adding an evm coin
+- new instance `src/front/shared/redux/actions/ethLikeAction.ts`
+
+if you're adding a new token standard
+- new instance `src/front/shared/redux/actions/erc20LikeAction.ts`
 
 ### Add `coinData`
 
@@ -215,6 +210,21 @@ Add swap instances:
 --------------------------------------------
 
 
+## Common changes
+- `src/common/helpers/constants/DEFAULT_CURRENCY_PARAMETERS.ts`
+- `src/common/helpers/constants/COINS_WITH_DYNAMIC_FEE.ts`
+- `src/common/helpers/constants/MIN_AMOUNT.ts`
+- `src/common/helpers/constants/MIN_AMOUNT_OFFER.ts`
+
+if you're adding an evm chain
+- `src/common/helpers/constants/AVAILABLE_EVM_NETWORKS.ts`
+
+if you're adding a new token standard
+- new instance in `common/erc20Like`
+
+--------------------------------------------
+
+
 ## Core changes
 
 - `src/core/swap.app/constants/COINS.ts`
@@ -223,13 +233,15 @@ Add swap instances:
 - `src/core/swap.app/util/typeforce.ts`
 - `src/core/swap.auth/*.ts`
 - `src/core/swap.flows/index.ts`
-- `src/core/swap.flows/ETH2*.ts`
-- `src/core/swap.flows/ETHTOKEN2*.ts`
-- `src/core/swap.flows/*2ETH.ts`
-- `src/core/swap.flows/*2ETHTOKEN.ts`
+- `src/core/swap.flows/<ETH,BNB,...>2*.ts`
+- `src/core/swap.flows/<ETHTOKEN, BSCTOKEN, ...>2*.ts`
+- `src/core/swap.flows/*2<ETH,BNB,...>.ts`
+- `src/core/swap.flows/*2<ETHTOKEN, BSCTOKEN, ...>.ts`
 - `src/core/swap.swaps/index.ts`
 - `src/core/swap.swaps/*Swap.ts`
-- `package.json` (install lib via `npm i`)
+
+if you're adding a new token standard
+- `src/core/swap.app/util/<standard>.ts`
 
 `*` = `GHOST`, for example
 
@@ -239,9 +251,14 @@ Add swap instances:
 
 ## Additional changes
 
+### Tests
+
+- `tests/unit/...`
+- `tests/e2e/swap/...`
+
 ### Update README
 
-- `src/core/README.md` (add coin to the table)
+- `docs/core/README.md` (add coin to the tables)
 - `docs/ADD_BLOCKCHAIN.md` (improve this doc)
 
 
