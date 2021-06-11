@@ -126,7 +126,7 @@ class Header extends Component<any, any> {
     const oldUserDidNotSee = isWalletCreate === 'true' && sawWarning !== 'true'
     const newUser = isWalletCreate !== 'true' && sawWarning !== 'true'
 
-    if (oldUserDidNotSee) {
+    if (oldUserDidNotSee && false) { // Времено отключено
       feedback.app.warning('Modal about local storage was opened')
 
       const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
