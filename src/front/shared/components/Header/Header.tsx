@@ -123,8 +123,8 @@ class Header extends Component<any, any> {
     // show a request for users to clear their local storage
     const isWalletCreate = localStorage.getItem(constants.localStorage.isWalletCreate)
     const sawWarning = localStorage.getItem('sawLocalStorageWarning')
-    const oldUserDidNotSee = sawWarning !== 'true' && isWalletCreate === 'true'
-    const newUser = sawWarning !== 'true' && isWalletCreate !== 'true'
+    const oldUserDidNotSee = isWalletCreate === 'true' && sawWarning !== 'true'
+    const newUser = isWalletCreate !== 'true' && sawWarning !== 'true'
 
     if (oldUserDidNotSee) {
       feedback.app.warning('Modal about local storage was opened')
