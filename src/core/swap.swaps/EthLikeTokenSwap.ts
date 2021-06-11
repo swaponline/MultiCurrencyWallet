@@ -789,10 +789,14 @@ class EthLikeTokenSwap extends SwapInterface {
             owner: abClass.getMyAddress(),
           })
 
+          const allowanceAmount = new BigNumber(allowance)
+            .dp(0, BigNumber.ROUND_UP)
+            .div(new BigNumber(10).pow(this.decimals))
+
           debug('swap.core:flow')('allowance', allowance)
 
-          if (new BigNumber(allowance).isLessThan(sellAmount)) {
-            debug('swap.core:flow')('allowance < sellAmount', allowance, sellAmount)
+          if (allowanceAmount.isLessThan(sellAmount)) {
+            debug('swap.core:flow')('allowanceAmount < sellAmount', allowanceAmount.toNumber(), sellAmount)
             await abClass.approve({
               amount: sellAmount,
             })

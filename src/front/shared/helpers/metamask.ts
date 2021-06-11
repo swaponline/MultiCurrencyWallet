@@ -86,8 +86,7 @@ const getBalance = () => {
   console.log('metamask getBalance')
   const { user: { metamaskData } } = getState()
   if (metamaskData) {
-    const { address } = metamaskData
-    const currency = config.binance ? 'bnb' : 'eth'
+    const { address, currency } = metamaskData
     const balanceInCache = cacheStorageGet('currencyBalances', `${currency}_${address}`)
 
     if (balanceInCache !== false) {
