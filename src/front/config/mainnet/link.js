@@ -3,6 +3,7 @@ export default {
   blockcypher: 'https://live.blockcypher.com/',
   etherscan: 'https://etherscan.io',
   bscscan: 'https://bscscan.com',
+  maticscan: 'https://polygonscan.com',
   ghostscan: 'https://ghostscan.io',
   nextExplorer: 'https://explore.next.exchange',
 }

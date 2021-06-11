@@ -12,9 +12,6 @@ import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 
 @CSSModules(styles, { allowMultiple: true })
 export default class ShareLink extends React.Component<any, any> {
-
-  props: any
-
   qrLoaderTimer = null
 
   constructor(props) {

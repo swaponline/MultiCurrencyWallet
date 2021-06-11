@@ -38,6 +38,22 @@ const UTXO_to_BEP20 = (coinName) => {
   }
   return _UTXO_to_BEP20
 }
+const UTXO_to_ERC20MATIC = (coinName) => {
+  class _UTXO_to_ERC20MATIC extends UTXOToEthToken {
+    constructor(props) {
+      super({
+        ...props,
+        fields: {
+          currencyName: coinName,
+          ethLikeCoin: `MATIC`,
+          etherscanLink: config.link.maticscan,
+          ...config.swapConfig[coinName],
+        },
+      })
+    }
+  }
+  return _UTXO_to_ERC20MATIC
+}
 
 const ERC20_to_UTXO = (coinName) => {
   class _ERC20_to_UTXO extends EthTokenToUTXO {
@@ -71,6 +87,23 @@ const BEP20_to_UTXO = (coinName) => {
     }
   }
   return _BEP20_to_UTXO
+}
+
+const ERC20MATIC_to_UTXO = (coinName) => {
+  class _ERC20MATIC_to_UTXO extends EthTokenToUTXO {
+    constructor(props) {
+      super({
+        ...props,
+        fields: {
+          currencyName: coinName,
+          ethLikeCoin: `MATIC`,
+          etherscanLink: config.link.maticscan,
+          ...config.swapConfig[coinName],
+        },
+      })
+    }
+  }
+  return _ERC20MATIC_to_UTXO
 }
 
 const UTXO_to_ETH = (coinName) => {
@@ -107,6 +140,23 @@ const UTXO_to_BNB = (coinName) => {
   return _UTXO_to_BNB
 }
 
+const UTXO_to_MATIC = (coinName) => {
+  class _UTXO_to_MATIC extends UTXOToEthLike {
+    constructor(props) {
+      super({
+        ...props,
+        fields: {
+          currencyName: coinName,
+          ethLikeCoin: `MATIC`,
+          etherscanLink: config.link.maticscan,
+          ...config.swapConfig[coinName],
+        },
+      })
+    }
+  }
+  return _UTXO_to_MATIC
+}
+
 const ETH_to_UTXO = (coinName) => {
   class _ETH_to_UTXO extends EthLikeToUTXO {
     constructor(props) {
@@ -141,13 +191,35 @@ const BNB_to_UTXO = (coinName) => {
   return _BNB_to_UTXO
 }
 
+const MATIC_to_UTXO = (coinName) => {
+  class _MATIC_to_UTXO extends EthLikeToUTXO {
+    constructor(props) {
+      super({
+        ...props,
+        fields: {
+          currencyName: coinName,
+          ethLikeCoin: `MATIC`,
+          etherscanLink: config.link.maticscan,
+          ...config.swapConfig[coinName],
+        },
+      })
+    }
+  }
+  return _MATIC_to_UTXO
+}
+
 export {
   UTXO_to_ERC20,
-  ERC20_to_UTXO,
   UTXO_to_BEP20,
+  UTXO_to_ERC20MATIC,
+  ERC20_to_UTXO,
   BEP20_to_UTXO,
+  ERC20MATIC_to_UTXO,
+
   UTXO_to_ETH,
-  ETH_to_UTXO,
   UTXO_to_BNB,
+  UTXO_to_MATIC,
+  ETH_to_UTXO,
   BNB_to_UTXO,
+  MATIC_to_UTXO
 }

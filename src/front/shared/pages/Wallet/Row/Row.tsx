@@ -457,6 +457,7 @@ class Row extends Component<RowProps, RowState> {
 
     const {
       currency,
+      baseCurrency,
       balance,
       isBalanceFetched,
       fullName,
@@ -938,7 +939,13 @@ class Row extends Component<RowProps, RowState> {
                                 bottom: '16px',
                               }} 
                             />
-                          ) : <p id={`${currency.toLowerCase()}Address`}>{itemData.address}</p>
+                          ) : (
+                            <p id={`${
+                              baseCurrency ? baseCurrency + currency.toLowerCase() : currency.toLowerCase()
+                            }Address`}>
+                              {itemData.address}
+                            </p>
+                          )
                         }
                       </Copy>
                     </div>

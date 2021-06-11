@@ -500,13 +500,6 @@
     ]
   },
   {
-    "id": "fee9",
-    "message": "Miner fee",
-    "files": [
-      "src/front/shared/components/modals/OfferModal/ConfirmOffer/Fee/Fee.tsx"
-    ]
-  },
-  {
     "id": "recieved67",
     "message": "Copy to clipboard",
     "files": [
@@ -664,6 +657,13 @@
   {
     "id": "errorWithGetAmount",
     "message": "\"You get\" no more than 0",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "incorrectMetamaskNetwork",
+    "message": "Please choose correct metamask network",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
@@ -2504,27 +2504,6 @@
     ]
   },
   {
-    "id": "menu.invest",
-    "message": "Invest",
-    "files": [
-      "src/front/shared/components/Header/config.tsx"
-    ]
-  },
-  {
-    "id": "menu.invest.info",
-    "message": "How to invest?",
-    "files": [
-      "src/front/shared/components/Header/config.tsx"
-    ]
-  },
-  {
-    "id": "menu.products",
-    "message": "Our products",
-    "files": [
-      "src/front/shared/components/Header/config.tsx"
-    ]
-  },
-  {
     "id": "currencyAction81",
     "message": "Please choose a currency you want to {context}",
     "files": [
@@ -3273,13 +3252,6 @@
   {
     "id": "RestoryMnemonicWallet_MnemonicInvalid",
     "message": "You specified an invalid set of words",
-    "files": [
-      "src/front/shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.tsx"
-    ]
-  },
-  {
-    "id": "RestoryMnemonicWallet_MnemonicPlaceholder",
-    "message": "Enter the saved phrase to restore the wallet",
     "files": [
       "src/front/shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.tsx"
     ]

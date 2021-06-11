@@ -92,7 +92,6 @@ Object.keys(TOKEN_STANDARDS).forEach((key) => {
       })
     })
 })
-console.log('>>>>>> tokenPartialItems', tokenPartialItems, TOKEN_STANDARDS, BLOCKCHAIN_TYPE)
 
 const initialState = {
   items: [
@@ -114,6 +113,16 @@ const initialState = {
       value: 'bnb',
       fullTitle: 'binance coin',
       blockchain: BLOCKCHAIN_TYPE.BNB,
+      addAssets: true,
+    }] : [],
+    //@ts-ignore
+      ...(!buildOpts.curEnabled || buildOpts.curEnabled.matic) ? [{
+      name: 'MATIC',
+      title: 'MATIC',
+      icon: 'matic',
+      value: 'matic',
+      fullTitle: 'matic token',
+      blockchain: BLOCKCHAIN_TYPE.MATIC,
       addAssets: true,
     }] : [],
     //@ts-ignore
@@ -196,6 +205,14 @@ const initialState = {
       fullTitle: 'binance coin',
     }] : [],
     //@ts-ignore
+    ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.matic) ? [{
+      name: 'MATIC',
+      title: 'MATIC',
+      icon: 'matic',
+      value: 'matic',
+      fullTitle: 'matic token',
+    }] : [],
+    //@ts-ignore
     ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.ghost) ? [{
       name: 'GHOST',
       title: 'GHOST',
@@ -227,9 +244,7 @@ const initialState = {
 
 
 if (config.isWidget) {
-  //@ts-ignore
   initialState.items = [
-    //@ts-ignore
     {
       name: 'ETH',
       title: 'ETH',
@@ -237,7 +252,6 @@ if (config.isWidget) {
       value: 'eth',
       fullTitle: 'ethereum',
     },
-    //@ts-ignore
     {
       name: 'BNB',
       title: 'BNB',
@@ -245,7 +259,13 @@ if (config.isWidget) {
       value: 'bnb',
       fullTitle: 'binance coin',
     },
-    //@ts-ignore
+    {
+      name: 'MATIC',
+      title: 'MATIC',
+      icon: 'matic',
+      value: 'matic',
+      fullTitle: 'matic token',
+    },
     {
       name: 'BTC',
       title: 'BTC',
@@ -253,7 +273,6 @@ if (config.isWidget) {
       value: 'btc',
       fullTitle: 'bitcoin',
     },
-    //@ts-ignore
     {
       name: 'GHOST',
       title: 'GHOST',
@@ -261,7 +280,6 @@ if (config.isWidget) {
       value: 'ghost',
       fullTitle: 'ghost',
     },
-    //@ts-ignore
     {
       name: 'NEXT',
       title: 'NEXT',
@@ -285,6 +303,13 @@ if (config.isWidget) {
       icon: 'bnb',
       value: 'bnb',
       fullTitle: 'binance coin',
+    },
+    {
+      name: 'MATIC',
+      title: 'MATIC',
+      icon: 'matic',
+      value: 'matic',
+      fullTitle: 'matic token',
     },
     {
       name: 'BTC',
@@ -350,8 +375,6 @@ if (config.isWidget) {
       })
     })
   }
-
-
 } else {
   // TODO: addCustomERC20 -> addCustomToken
   if (!config.isWidget && buildOpts.addCustomERC20) {

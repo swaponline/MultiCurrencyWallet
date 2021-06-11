@@ -552,13 +552,6 @@
     ]
   },
   {
-    "id": "fee9",
-    "message": "Комиссия майнеров",
-    "files": [
-      "src/front/shared/components/modals/OfferModal/ConfirmOffer/Fee/Fee.tsx"
-    ]
-  },
-  {
     "id": "recieved67",
     "message": "Скопировать",
     "files": [
@@ -716,6 +709,13 @@
   {
     "id": "errorWithGetAmount",
     "message": "\"Получаете\" не больше 0",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "incorrectMetamaskNetwork",
+    "message": "Пожалуйста, выберите правильную сеть метамаска",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
@@ -1252,20 +1252,6 @@
     "message": "Пользователь ({reputation}) предлагает обмен",
     "files": [
       "src/front/shared/components/Header/UserTooltip/UserTooltip.tsx"
-    ]
-  },
-  {
-    "id": "menu.products",
-    "message": "Наши предложения",
-    "files": [
-      "src/front/shared/components/Header/config.tsx"
-    ]
-  },
-  {
-    "id": "menu.invest",
-    "message": "Как инвестировать?",
-    "files": [
-      "src/front/shared/components/Header/config.tsx"
     ]
   },
   {
@@ -2483,13 +2469,6 @@
     ]
   },
   {
-    "id": "menu.invest.info",
-    "message": "How to invest?",
-    "files": [
-      "src/front/shared/components/Header/config.tsx"
-    ]
-  },
-  {
     "id": "currencyAction81",
     "message": "Please choose a currency, which you want to {context}",
     "files": [
@@ -3256,13 +3235,6 @@
   {
     "id": "RestoryMnemonicWallet_MnemonicInvalid",
     "message": "Вы указали не валидный набор слов",
-    "files": [
-      "src/front/shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.tsx"
-    ]
-  },
-  {
-    "id": "RestoryMnemonicWallet_MnemonicPlaceholder",
-    "message": "Введите сохраненную фразу, для восстановления кошелька",
     "files": [
       "src/front/shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.tsx"
     ]

@@ -85,6 +85,7 @@ const fetchCoinFee = (params): Promise<CoinFee> => {
           break
         case COIN_TYPE.BNB_TOKEN:
         case COIN_TYPE.ETH_TOKEN:
+        case COIN_TYPE.MATIC_TOKEN:
           //@ts-ignore: strictNullChecks
           obtainedResult = await fetchFeeForEthLikeToken({
             coinData,

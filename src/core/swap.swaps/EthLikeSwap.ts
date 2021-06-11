@@ -109,15 +109,6 @@ class EthLikeSwap extends SwapInterface {
     this.contract = new this.web3adapter.Contract(this.abi, this.address)
   }
 
-  /**
-   * @deprecated
-   */
-  updateGas() {
-    console.warn(`EthLikeSwap.updateGas() ${this.coinName} is deprecated and will be removed. Use .updateGasPrice()`)
-    //@ts-ignore
-    return updateGasPrice()
-  }
-
   async updateGasPrice() {
     debug('gas price before update', this.gasPrice)
 

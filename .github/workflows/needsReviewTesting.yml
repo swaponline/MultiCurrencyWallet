@@ -1,4 +1,4 @@
-name: Node CI
+name: BTC,ETH,BSC,MATIC e2e swap test
 
 on:
   pull_request:

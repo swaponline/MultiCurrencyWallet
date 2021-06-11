@@ -39,6 +39,7 @@ export {
   getWeb3,
   setDefaultProvider,
   setProvider,
+  getCurrentWeb3
 }
 
 export default web3

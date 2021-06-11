@@ -1,4 +1,9 @@
-import COINS, { NATIVE, ETH_TOKENS, COIN_DATA } from './COINS'
+import COINS, {
+  NATIVE,
+  ETH_TOKENS,
+  COIN_DATA,
+  TOKEN_STANDARD,
+} from './COINS'
 import ENV from './ENV'
 import SERVICES from './SERVICES'
 import NETWORKS from './NETWORKS'
@@ -9,6 +14,7 @@ export default {
   NATIVE,
   ETH_TOKENS,
   COIN_DATA,
+  TOKEN_STANDARD,
 
   ENV,
   SERVICES,

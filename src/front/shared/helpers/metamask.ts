@@ -6,6 +6,11 @@ import config from 'app-config'
 import { setMetamask, setProvider, setDefaultProvider, getWeb3 as getDefaultWeb3 } from 'helpers/web3'
 import SwapApp from 'swap.app'
 import Web3Connect from 'common/web3connect'
+import { AVAILABLE_NETWORKS_BY_COIN } from 'common/helpers/constants/AVAILABLE_EVM_NETWORKS'
+
+const NETWORK = process.env.MAINNET
+  ? 'MAINNET'
+  : 'TESTNET'
 
 // Binance Smart Chain: 56 = Mainnet, 97 = Testnet
 // Ethereum: 1 = Mainnet, 3 = Ropsten
@@ -51,7 +56,7 @@ const getAddress = () => (isConnected()) ? web3connect.getAddress() : ``
 const getWeb3 = () => (isConnected()) ? web3connect.getWeb3() : false
 
 const _init = async () => {
-  web3connect.onInit(() => {
+  await web3connect.onInit(() => {
     if (web3connect.hasCachedProvider()) {
       let _web3 = false
       try {
@@ -81,8 +86,7 @@ const getBalance = () => {
   console.log('metamask getBalance')
   const { user: { metamaskData } } = getState()
   if (metamaskData) {
-    const { address } = metamaskData
-    const currency = config.binance ? 'bnb' : 'eth'
+    const { address, currency } = metamaskData
     const balanceInCache = cacheStorageGet('currencyBalances', `${currency}_${address}`)
 
     if (balanceInCache !== false) {
@@ -145,11 +149,15 @@ const addMetamaskWallet = () => {
       fullWalletName: `BSC (${web3connect.getProviderTitle()})`,
       currencyInfo: user.bnbData?.infoAboutCurrency,
     }
+    const maticWalletInfo = {
+      currencyName: 'MATIC',
+      fullWalletName: `MATIC (${web3connect.getProviderTitle()})`,
+      currencyInfo: user.maticData?.infoAboutCurrency,
+    }
     const walletMap = new Map([
-      [1, ethWalletInfo], // ETH Mainnet
-      [3, ethWalletInfo], // ETH Testnet (Ropsten)
-      [56, bscWalletInfo], // BSC Mainnet
-      [97, bscWalletInfo], // BSC Testnet
+      [AVAILABLE_NETWORKS_BY_COIN.ETH[NETWORK === 'MAINNET' ? 0 : 1], ethWalletInfo],
+      [AVAILABLE_NETWORKS_BY_COIN.BNB[NETWORK === 'MAINNET' ? 0 : 1], bscWalletInfo],
+      [AVAILABLE_NETWORKS_BY_COIN.MATIC[NETWORK === 'MAINNET' ? 0 : 1], maticWalletInfo],
     ])
 
     const hexChainId = web3connect.getChainId()
@@ -172,6 +180,7 @@ const addMetamaskWallet = () => {
         isBalanceFetched: true,
         isMnemonic: true,
         unconfirmedBalance: 0,
+        networkVersion: chainId
       },
     })
   } else {

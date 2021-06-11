@@ -5,12 +5,11 @@ import { BigNumber } from 'bignumber.js'
 import DEFAULT_CURRENCY_PARAMETERS from 'common/helpers/constants/DEFAULT_CURRENCY_PARAMETERS'
 import TOKEN_STANDARDS from 'helpers/constants/TOKEN_STANDARDS'
 import ethLikeHelper from 'common/helpers/ethLikeHelper'
-import { feedback } from 'helpers'
-import getCoinInfo from 'common/coins/getCoinInfo'
+import { feedback, metamask } from 'helpers'
 
 
 class erc20LikeHelper {
-  readonly standard: string // (ex. erc20, bep20, ...)
+  readonly standard: string // (ex. erc20, bep20, erc20Matic, ...)
   readonly currency: string // (ex. ETH)
   readonly currencyKey: string // (ex. eth)
   readonly defaultParams: IUniversalObj
@@ -44,6 +43,8 @@ class erc20LikeHelper {
     console.error('error: ', error)
     console.groupEnd()
   }
+
+  getCurrentWeb3 = () => metamask.getWeb3() || this.Web3
 
   estimateFeeValue = async (params): Promise<number> => {
     const { method, swapABMethod } = params
@@ -80,15 +81,16 @@ class erc20LikeHelper {
     decimals: number
   }): Promise<number> => {
     const { tokenOwnerAddress, tokenContractAddress, decimals } = params
-    const tokenContract = new this.Web3.eth.Contract(TokenApi, tokenContractAddress)
-  
-    let allowanceAmount
-  
+    const Web3 = this.getCurrentWeb3()
+    const tokenContract = new Web3.eth.Contract(TokenApi, tokenContractAddress)
+
+    let allowanceAmount = 0
+
     try {
       allowanceAmount = await tokenContract.methods
         .allowance(tokenOwnerAddress, config.swapContract[this.standard])
         .call({ from: tokenOwnerAddress })
-      
+
       // formatting without token decimals
       allowanceAmount = new BigNumber(allowanceAmount)
         .dp(0, BigNumber.ROUND_UP)
@@ -98,7 +100,7 @@ class erc20LikeHelper {
       this.reportError({ error })
     }
 
-    return allowanceAmount || 0
+    return allowanceAmount
   }
 }
 
@@ -126,13 +128,19 @@ export default {
   erc20: new erc20LikeHelper({
     standard: 'erc20',
     currency: 'ETH',
-    defaultParams: DEFAULT_CURRENCY_PARAMETERS.ethToken,
+    defaultParams: DEFAULT_CURRENCY_PARAMETERS.evmLikeToken,
     web3: new Web3(new Web3.providers.HttpProvider(config.web3.provider)),
   }),
   bep20: new erc20LikeHelper({
     standard: 'bep20',
     currency: 'BNB',
-    defaultParams: DEFAULT_CURRENCY_PARAMETERS.ethToken,
+    defaultParams: DEFAULT_CURRENCY_PARAMETERS.evmLikeToken,
     web3: new Web3(new Web3.providers.HttpProvider(config.web3.binance_provider)),
+  }),
+  erc20matic: new erc20LikeHelper({
+    standard: 'erc20matic',
+    currency: 'MATIC',
+    defaultParams: DEFAULT_CURRENCY_PARAMETERS.evmLikeToken,
+    web3: new Web3(new Web3.providers.HttpProvider(config.web3.matic_provider)),
   }),
 }

@@ -69,8 +69,6 @@ const langLabels = defineMessages({
 }))
 @cssModules({ ...defaultStyles, ...styles }, { allowMultiple: true })
 class BtcMultisignConfirmTx extends React.Component<any, any> {
-  props: any
-
   static propTypes = {
     name: PropTypes.string,
     data: PropTypes.object,

@@ -2,12 +2,7 @@ import erc20Like from 'common/erc20Like'
 import getCoinInfo from 'common/coins/getCoinInfo'
 
 
-export default (currencyData, returnToken) => {
-  const {
-    coin: currency,
-    blockchain,
-  } = getCoinInfo(currencyData)
-
+export default (currency, returnToken) => {
   let key = currency.toLowerCase()
 
   switch (key) {
@@ -20,6 +15,8 @@ export default (currencyData, returnToken) => {
       return 'eth'
     case 'bnb':
       return 'bnb'
+    case 'matic':
+      return 'matic'
     case 'ghost':
       return 'ghost'
     case 'next':

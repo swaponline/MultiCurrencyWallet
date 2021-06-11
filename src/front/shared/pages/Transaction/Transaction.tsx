@@ -101,11 +101,15 @@ class Transaction extends Component<any, any> {
 
     try {
       if (erc20Like.erc20.isToken({ name: currency })) {
-        infoTx = await actions.erc20.fetchTokenTxInfo(ticker, txHash, 5 * 60 * 1000)
+        infoTx = await actions.erc20.fetchTokenTxInfo(ticker, txHash)
       }
 
       else if (erc20Like.bep20.isToken({ name: currency })) {
-        infoTx = await actions.bep20.fetchTokenTxInfo(ticker, txHash, 5 * 60 * 1000)
+        infoTx = await actions.bep20.fetchTokenTxInfo(ticker, txHash)
+      }
+
+      else if (erc20Like.erc20matic.isToken({ name: currency })) {
+        infoTx = await actions.erc20matic.fetchTokenTxInfo(ticker, txHash)
       }
 
       else {

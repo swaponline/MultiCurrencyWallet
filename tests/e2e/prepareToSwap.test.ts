@@ -7,13 +7,20 @@ import { createBrowser, importWallet, addAssetToWallet, turnOnMM, takeScreenshot
 jest.setTimeout(140 * 1000)
 
 describe('Prepare to swap e2e tests', () => {
+  function getExchangeUrl(sourceUrl) {
+    return sourceUrl.replace(/marketmaker.+/, 'exchange/btc-to-{ETH}wbtc')
+  }
 
   test('TurnOn MM', async () => {
     const { browser, page } = await createBrowser()
 
     try {
       console.log('TurnOn MM -> Restore wallet')
-      await importWallet(page, testWallets.btcTurnOnMM.seedPhrase.split(' '))
+      await importWallet({
+        page,
+        seed: testWallets.btcTurnOnMM.seedPhrase.split(' '),
+        timeout: 60_000,
+      })
 
       await page.waitForSelector('#btcAddress')
 
@@ -30,11 +37,11 @@ describe('Prepare to swap e2e tests', () => {
 
     try {
       console.log('TurnOn MM test')
-      await addAssetToWallet(page, 'wbtc')
+      await addAssetToWallet(page, 'ethwbtc')
 
       await timeOut(3 * 1000)
 
-      await page.goto(`${page.url()}marketmaker/WBTC`)
+      await page.goto(`${page.url()}marketmaker/{ETH}WBTC`)
 
       await timeOut(3 * 1000)
 
@@ -42,8 +49,7 @@ describe('Prepare to swap e2e tests', () => {
 
       await timeOut(3 * 1000)
 
-      await page.$('a[href="#/exchange"]').then((aToExchange) => aToExchange.click())
-
+      await page.goto( getExchangeUrl(page.url()) )
       await page.$('#orderbookBtn').then((orderbookBtn) => orderbookBtn.click())
 
       // find all your orders
@@ -70,8 +76,14 @@ describe('Prepare to swap e2e tests', () => {
 
     try {
       console.log('Check messaging -> Restore wallets')
-      await importWallet(MakerPage, testWallets.btcMMaker.seedPhrase.split(' '))
-      await importWallet(TakerPage, testWallets.btcMTaker.seedPhrase.split(' '))
+      await importWallet({
+        page: MakerPage, 
+        seed: testWallets.btcMMaker.seedPhrase.split(' '),
+      })
+      await importWallet({
+        page: TakerPage,
+        seed: testWallets.btcMTaker.seedPhrase.split(' '),
+      })
 
       await MakerPage.waitForSelector('#btcAddress') // waits for Maker wallet to load
       await TakerPage.waitForSelector('#btcAddress') // waits for Taker wallet to load
@@ -93,14 +105,15 @@ describe('Prepare to swap e2e tests', () => {
 
     try {
       console.log('Check messaging -> Prepare pages for next actions')
-      await addAssetToWallet(MakerPage, 'wbtc')
-      await addAssetToWallet(TakerPage, 'wbtc')
+      await addAssetToWallet(MakerPage, 'ethwbtc')
+      await addAssetToWallet(TakerPage, 'ethwbtc')
 
       await timeOut(3 * 1000)
 
       // taker move to exchange page and try connecting to peers
-      await TakerPage.$('a[href="#/exchange"]').then((aToExchange) => aToExchange.click())
+      await TakerPage.goto(`${TakerPage.url()}exchange/btc-to-{ETH}wbtc`)
 
+      // await TakerPage.waitForSelector('.dropDownSelectCurrency')
       const [sellCurrencySelectorList, buyCurrencySelectorList] = await TakerPage.$$('.dropDownSelectCurrency')
 
       await buyCurrencySelectorList.click();
@@ -118,13 +131,13 @@ describe('Prepare to swap e2e tests', () => {
 
     try {
       console.log('Check messaging -> Setup MM')
-      await MakerPage.goto(`${MakerPage.url()}marketmaker/WBTC`)
+      await MakerPage.goto(`${MakerPage.url()}marketmaker/{ETH}WBTC`)
 
       await timeOut(3 * 1000)
 
       var { btcBalance: makerBtcBalance, tokenBalance: makerTokenBalance } = await turnOnMM(MakerPage)
 
-      await MakerPage.$('a[href="#/exchange"]').then((aToExchange) => aToExchange.click())
+      await MakerPage.goto( getExchangeUrl(MakerPage.url()) )
 
       await MakerPage.$('#orderbookBtn').then((orderbookBtn) => orderbookBtn.click())
 

@@ -62,6 +62,8 @@ class Erc20LikeAction {
     console.groupEnd()
   }
 
+  getCurrentWeb3 = () => metamask.getWeb3() || this.Web3
+
   addToken = (params) => {
     const { standard, contractAddr, symbol, decimals, baseCurrency } = params
     const customTokens = this.getCustomTokensConfig()
@@ -229,7 +231,8 @@ class Erc20LikeAction {
   }
 
   fetchBalance = async (address, contractAddress, decimals) => {
-    const contract = new this.Web3.eth.Contract(TokenAbi, contractAddress)
+    const Web3 = this.getCurrentWeb3()
+    const contract = new Web3.eth.Contract(TokenAbi, contractAddress)
     const result = await contract.methods.balanceOf(address).call()
 
     return new BigNumber(String(result))
@@ -237,7 +240,7 @@ class Erc20LikeAction {
       .toNumber()
   }
 
-  fetchTokenTxInfo = async (ticker, hash, cacheTime) => {
+  fetchTokenTxInfo = async (ticker, hash) => {
     return new Promise(async (res) => {
       let txInfo = await this.fetchTxInfo(hash)
 
@@ -269,8 +272,8 @@ class Erc20LikeAction {
       const {
         user: { tokensData },
       } = getState()
-
-      this.Web3.eth.getTransaction(hash)
+      const Web3 = this.getCurrentWeb3()
+      Web3.eth.getTransaction(hash)
         .then((tx) => {
           let amount = 0
           let receiverAddress = tx.to
@@ -301,8 +304,8 @@ class Erc20LikeAction {
 
           const { from, gas, gasPrice, blockHash } = tx
 
-          const minerFee = new BigNumber(this.Web3.utils.toBN(gas).toNumber())
-            .multipliedBy(this.Web3.utils.toBN(gasPrice).toNumber())
+          const minerFee = new BigNumber(Web3.utils.toBN(gas).toNumber())
+            .multipliedBy(Web3.utils.toBN(gasPrice).toNumber())
             .dividedBy(1e18)
             .toNumber()
 
@@ -343,7 +346,7 @@ class Erc20LikeAction {
   fetchFees = async (params) => {
     const { gasPrice, gasLimit, speed } = params
     const newGasPrice = gasPrice || await ethLikeHelper[this.currencyKey].estimateGasPrice({ speed })
-    const newGasLimit = gasLimit || DEFAULT_CURRENCY_PARAMETERS.ethToken.limit.send
+    const newGasLimit = gasLimit || DEFAULT_CURRENCY_PARAMETERS.evmLikeToken.limit.send
 
     return {
       gas: newGasLimit,
@@ -354,19 +357,21 @@ class Erc20LikeAction {
   login = (privateKey, contractAddress, nameContract, decimals, fullName) => {
     let data
 
+    const Web3 = this.getCurrentWeb3()
     if (privateKey) {
-      data = this.Web3.eth.accounts.privateKeyToAccount(privateKey)
+      data = Web3.eth.accounts.privateKeyToAccount(privateKey)
     } else {
-      data = this.Web3.eth.accounts.create()
-      this.Web3.eth.accounts.wallet.add(data)
+      data = Web3.eth.accounts.create()
+      Web3.eth.accounts.wallet.add(data)
     }
 
-    this.Web3.eth.accounts.wallet.add(data.privateKey)
+    Web3.eth.accounts.wallet.add(data.privateKey)
     this.setupContract(data.address, contractAddress, nameContract, decimals, fullName)
   }
 
   setupContract = (ethAddress, contractAddress, nameContract, decimals, fullName) => {
-    if (!this.Web3.eth.accounts.wallet[ethAddress]) {
+    const Web3 = this.getCurrentWeb3()
+    if (!Web3.eth.accounts.wallet[ethAddress]) {
       throw new Error('web3 does not have given address')
     }
 
@@ -485,9 +490,11 @@ class Erc20LikeAction {
 
   approve = async (params) => {
     const { name, to, amount } = params
-    const { tokenContract } = this.returnTokenInfo(name)
+    const { tokenContract, decimals } = this.returnTokenInfo(name)
     const feeResult = await this.fetchFees({ speed: 'fast' })
-    const weiAmount = this.Web3.utils.toWei(amount)
+
+    const exp = new BigNumber(10).pow(decimals)
+    const weiAmount = new BigNumber(amount).times(exp).toString()
 
     return new Promise(async (res, rej) => {
       const receipt = await tokenContract.methods
@@ -509,32 +516,38 @@ class Erc20LikeAction {
   }
 
   setAllowance = async (params) => {
-    let { name, to, targetAllowance } = params
-    name = this.getReduxName(name)
-
-    const tokenKey = `{${this.currencyKey}}${name.toLowerCase()}`
+    const { name, to, targetAllowance } = params
     const { decimals } = this.returnTokenInfo(name)
     const { user: { tokensData } } = getState()
+
+    const Web3 = this.getCurrentWeb3()
+
+    const tokenKey = `{${this.currencyKey}}${name.toLowerCase()}`
     const { address: ownerAddress } = tokensData[tokenKey]
 
-    const allowance = await erc20Like[this.standard].checkAllowance({
-      tokenOwnerAddress: ownerAddress,
-      tokenContractAddress: to,
-      decimals: decimals,
-    })
+    try {
+      const allowance = await erc20Like[this.standard].checkAllowance({
+        tokenOwnerAddress: ownerAddress,
+        tokenContractAddress: to,
+        decimals: decimals,
+      })
 
-    // if contract has enough allowance then skip
-    const weiAllowance = this.Web3.utils.toWei(targetAllowance)
+      // if contract has enough allowance then skip
+      const weiAllowance = Web3.utils.toWei(targetAllowance)
 
-    if (new BigNumber(weiAllowance).isLessThanOrEqualTo(allowance)) {
-      return Promise.resolve()
+      if (new BigNumber(weiAllowance).isLessThanOrEqualTo(allowance)) {
+        return Promise.resolve()
+      }
+
+      return this.approve({ name, to, amount: targetAllowance })
+    } catch (error) {
+      this.reportError(error)
     }
-
-    return this.approve({ name, to, amount: targetAllowance })
   }
 
   returnTokenInfo = (name) => {
     if (!name) throw new Error(`${this.standard} actions; returnTokenInfo(name): name is undefined`)
+    const Web3 = this.getCurrentWeb3()
 
     try {
       const tokenKey = `{${this.currencyKey}}${name.toLowerCase()}`
@@ -542,7 +555,7 @@ class Erc20LikeAction {
       const { address: ownerAddress } = tokensData[tokenKey]
       const { address: contractAddress, decimals } = externalConfig[this.standard][name.toLowerCase()]
 
-      const tokenContract = new this.Web3.eth.Contract(TokenAbi, contractAddress, {
+      const tokenContract = new Web3.eth.Contract(TokenAbi, contractAddress, {
         from: ownerAddress,
       })
 
@@ -556,10 +569,6 @@ class Erc20LikeAction {
       throw new Error(error)
     }
   }
-
-  getReduxName = (name) => {
-    return `${this.standard.toLowerCase()}-${name.toLowerCase()}`
-  }
 }
 
 export default {
@@ -570,7 +579,7 @@ export default {
     explorerLink: externalConfig.link.etherscan,
     explorerApiKey: externalConfig.api.etherscan_ApiKey,
     adminFeeObj: externalConfig.opts?.fee?.erc20,
-    web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.provider)),
+    web3: new Web3( new Web3.providers.HttpProvider(externalConfig.web3.provider) ),
   }),
   bep20: new Erc20LikeAction({
     currency: 'BNB',
@@ -579,6 +588,15 @@ export default {
     explorerLink: externalConfig.link.bscscan,
     explorerApiKey: externalConfig.api.bscscan_ApiKey,
     adminFeeObj: externalConfig.opts?.fee?.bep20,
-    web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.binance_provider)),
+    web3: new Web3( new Web3.providers.HttpProvider(externalConfig.web3.binance_provider) ),
+  }),
+  erc20matic: new Erc20LikeAction({
+    currency: 'MATIC',
+    standard: 'erc20matic',
+    explorerName: 'explorer-mumbai',
+    explorerLink: externalConfig.link.maticscan,
+    explorerApiKey: externalConfig.api.polygon_ApiKey,
+    adminFeeObj: externalConfig.opts?.fee?.erc20matic,
+    web3: new Web3( new Web3.providers.HttpProvider(externalConfig.web3.matic_provider) ),
   })
 }

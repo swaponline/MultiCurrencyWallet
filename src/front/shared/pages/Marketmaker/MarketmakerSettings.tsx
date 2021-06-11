@@ -78,7 +78,7 @@ class MarketmakerSettings extends Component<any, any> {
       isEthBalanceOk: false,
       isBtcBalanceOk: false,
       isTokenBalanceOk: false,
-      marketSpread: 0.1, // 10% spread
+      marketSpread: 0, // 0% spread
       mnemonicSaved,
     }
   }
@@ -341,7 +341,8 @@ class MarketmakerSettings extends Component<any, any> {
       ethBalance,
       btcBalance,
       tokenBalance,
-      marketToken,
+      ethWallet,
+      tokenWallet,
     } = this.state
 
     const isEthBalanceOk = new BigNumber(ethBalance).isGreaterThanOrEqualTo(0.02)
@@ -374,7 +375,7 @@ class MarketmakerSettings extends Component<any, any> {
     }
     if (!isEthBalanceOk) {
       hasError = true
-      const AB_Coin = (config.binance) ? `BNB` : `ETH`
+      const AB_Coin = ethWallet.currency.toUpperCase()
       //@ts-ignore: strictNullChecks
       actions.modals.open(constants.modals.AlertModal, {
         message: (
@@ -391,8 +392,7 @@ class MarketmakerSettings extends Component<any, any> {
     }
     if (!isTokenBalanceOk && !isBtcBalanceOk) {
       hasError = true
-      const token = marketToken.toUpperCase()
-      //@ts-ignore: strictNullChecks
+      const token = tokenWallet.currency.toUpperCase()
       actions.modals.open(constants.modals.AlertModal, {
         message: (
           <FormattedMessage
@@ -443,7 +443,6 @@ class MarketmakerSettings extends Component<any, any> {
     this.cleanupMarketMakerOrder()
     const {
       tokenBalance,
-      marketToken,
       tokenWallet,
       btcBalance,
       ethBalance,
@@ -553,7 +552,6 @@ class MarketmakerSettings extends Component<any, any> {
       tokenWallet,
       tokenBalance,
       ethBalance,
-      marketToken,
       isBalanceFetching,
       isMarketEnabled,
       mnemonicSaved,
@@ -579,7 +577,7 @@ class MarketmakerSettings extends Component<any, any> {
                 id="MM_Promo_TitleBody"
                 defaultMessage="On swap.io users exchange BTC for {token} (a token that costs like BTC, but works on {Ab_Title}), and vice versa. You get min. 10% APY (annual percentage yield) as a commission from exchanges with low impermanent loss {link}."
                 values={{
-                  token: tokenWallet.currency.toUpperCase(),
+                  token: tokenWallet.tokenKey.toUpperCase(),
                   Ab_Title: ethWallet.fullName,
                   link: <a href={links.impermanentLoss} target="_blank">(?)</a>,
                 }}
@@ -602,8 +600,8 @@ class MarketmakerSettings extends Component<any, any> {
                 id="MM_Wallet_Required"
                 defaultMessage="A hot wallet is required to launch marketmaking (BTC, {AB_Coin}, {token})."
                 values={{
-                  token: marketToken.toUpperCase(),
-                  AB_Coin: (config.binance) ? `BNB` : `ETH`,
+                  token: tokenWallet?.currency?.toUpperCase(),
+                  AB_Coin: ethWallet?.currency?.toUpperCase(),
                 }}
               />
             </p>
@@ -636,7 +634,7 @@ class MarketmakerSettings extends Component<any, any> {
                     id="MM_ToggleText"
                     defaultMessage="Marketmaking BTC/{token}"
                     values={{
-                      token: tokenWallet.currency.toUpperCase(),
+                      token: tokenWallet.tokenKey.toUpperCase(),
                     }}
                   />
                 </p>

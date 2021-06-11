@@ -21,9 +21,6 @@ const labels = defineMessages({
 
 @cssModules(styles)
 class InvoiceLinkModal extends React.Component<any, any> {
-
-  props: any
-
   constructor(props) {
     super(props)
     this.state = {

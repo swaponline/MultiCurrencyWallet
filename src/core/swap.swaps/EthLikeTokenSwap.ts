@@ -130,14 +130,6 @@ class EthLikeTokenSwap extends SwapInterface {
     this.ERC20          = new this.web3adapter.Contract(this.tokenAbi, this.tokenAddress)
   }
 
-  /**
-   * @deprecated
-   */
-  updateGas() {
-    console.warn(`EthLikeTokenSwap.updateGas() ${this.blockchainName} - is deprecated and will be removed. Use .updateGasPrice()`)
-    return this.updateGasPrice()
-  }
-
   async updateGasPrice() {
     //@ts-ignore
     debug('gas price before update', this.gasPrice)
@@ -797,10 +789,14 @@ class EthLikeTokenSwap extends SwapInterface {
             owner: abClass.getMyAddress(),
           })
 
+          const allowanceAmount = new BigNumber(allowance)
+            .dp(0, BigNumber.ROUND_UP)
+            .div(new BigNumber(10).pow(this.decimals))
+
           debug('swap.core:flow')('allowance', allowance)
 
-          if (new BigNumber(allowance).isLessThan(sellAmount)) {
-            debug('swap.core:flow')('allowance < sellAmount', allowance, sellAmount)
+          if (allowanceAmount.isLessThan(sellAmount)) {
+            debug('swap.core:flow')('allowanceAmount < sellAmount', allowanceAmount.toNumber(), sellAmount)
             await abClass.approve({
               amount: sellAmount,
             })

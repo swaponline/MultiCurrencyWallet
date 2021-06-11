@@ -142,7 +142,6 @@ export default class StepsWrapper extends Component<any, any> {
       error,
       setError,
       btcData,
-      ethData,
       step,
       currenciesForSecondStep
     } = this.props
@@ -182,7 +181,6 @@ export default class StepsWrapper extends Component<any, any> {
                   currencies={currenciesForSecondStep}
                   setError={setError}
                   handleClick={this.handleClick}
-                  ethData={ethData}
                 />
               }
             </div>

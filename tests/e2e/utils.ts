@@ -5,12 +5,13 @@ import fs from 'fs'
 
 const link = process.env.ACTIONS ? 'file:///home/runner/work/MultiCurrencyWallet/MultiCurrencyWallet/build-testnet/index.html' : 'http://localhost:9001/'
 
+// if it's true then you will be able to see puppeteer's browser
 const isDebug = false
 
 export const createBrowser = async (): Promise<{ browser: puppeteer.Browser, page: puppeteer.Page}> => {
   const browser = await puppeteer.launch({
     headless: !isDebug,
-    //slowMo: 100,
+    // slowMo: 100,
   })
 
   const page = await browser.newPage()
@@ -28,14 +29,21 @@ export const createBrowser = async (): Promise<{ browser: puppeteer.Browser, pag
   return { browser, page }
 }
 
-export const importWallet = async (page: puppeteer.Page, SEED: string[]) => {
+type ImportWalletParams = {
+  page: puppeteer.Page
+  seed: string[]
+  timeout?: number
+}
+
+export const importWallet = async (params: ImportWalletParams) => {
+  const { page, seed, timeout = 30_000 } = params
 
   await page.waitForSelector('#preloaderRestoreBtn')
-
   await page.click('#preloaderRestoreBtn')
 
-
-  await page.waitForSelector('.react-tags__search-input')
+  await page.waitForSelector('.react-tags__search-input', {
+    timeout,
+  })
 
   const wordInput = await page.$(`.react-tags__search-input`)
 
@@ -46,7 +54,7 @@ export const importWallet = async (page: puppeteer.Page, SEED: string[]) => {
 
   // type seed
   for (let i = 0; i < 12; i++) {
-    await wordInput.type(SEED[i])
+    await wordInput.type(seed[i])
     await wordInput.press('Enter')
   }
 
@@ -67,29 +75,33 @@ export const selectSendCurrency = async (params) => {
   await page.click(`#${currency}Send`)
 }
 
-export const addAssetToWallet = async (page: puppeteer.Page, currency: string = 'wbtc') => {
+export const addAssetToWallet = async (page: puppeteer.Page, currency: string = 'ethwbtc') => {
+  await page.waitForSelector('#addAssetBtn')
   await page.click('#addAssetBtn')
   await page.click(`#${currency}Wallet`)
   await page.click('#continueBtn')
 }
 
 export const turnOnMM = async (page: puppeteer.Page) => {
+  try {
+    await page.waitForSelector('#btcBalance') // waits for settings of mm to load
 
-  await page.waitForSelector('#btcBalance') // waits for settings of mm to load
+    // turn on MM
+    const toggleSelector = 'input[type="checkbox"]'
+    await page.evaluate((selector) => document.querySelector(selector).click(), toggleSelector);
 
-  // turn on MM
-  const toggleSelector = 'input[type="checkbox"]'
-  await page.evaluate((selector) => document.querySelector(selector).click(), toggleSelector);
+    // prepare balances for checking
+    let btcBalance = await page.$eval('#btcBalance', el => el.textContent)
+    let tokenBalance = await page.$eval('#tokenBalance', el => el.textContent)
+    btcBalance = new BigNumber(btcBalance).toFixed(5)
+    tokenBalance = new BigNumber(tokenBalance).toFixed(5)
 
-  // prepare balances for checking
-  let btcBalance = await page.$eval('#btcBalance', el => el.textContent)
-  let tokenBalance = await page.$eval('#tokenBalance', el => el.textContent)
-  btcBalance = new BigNumber(btcBalance).toFixed(5)
-  tokenBalance = new BigNumber(tokenBalance).toFixed(5)
-
-  return {
-    btcBalance,
-    tokenBalance
+    return {
+      btcBalance,
+      tokenBalance
+    }
+  } catch (error) {
+    throw new Error(error)
   }
 }
 

@@ -1,10 +1,10 @@
 import React, { PureComponent, Fragment } from 'react'
 import Link from 'local_modules/sw-valuelink'
 
-import ThemeTooltip from '../../components/ui/Tooltip/ThemeTooltip'
+import ThemeTooltip from 'components/ui/Tooltip/ThemeTooltip'
 import CSSModules from 'react-css-modules'
 import styles from './Exchange.scss'
-
+import Swap from 'swap.swap'
 import { connect } from 'redaction'
 import actions from 'redux/actions'
 import { BigNumber } from 'bignumber.js'
@@ -34,6 +34,8 @@ import helpers, {
   ethToken,
   links,
 } from 'helpers'
+
+import { getCurrentWeb3 } from 'helpers/web3'
 import Switching from 'components/controls/Switching/Switching'
 import AddressSelect from './AddressSelect/AddressSelect'
 import { AddressType, AddressRole } from 'domain/address'
@@ -47,6 +49,10 @@ import TurboIcon from 'shared/components/ui/TurboIcon/TurboIcon'
 
 import { COIN_DATA, COIN_MODEL, COIN_TYPE } from 'swap.app/constants/COINS'
 import getCoinInfo from 'common/coins/getCoinInfo'
+import { AVAILABLE_NETWORKS_BY_COIN } from 'common/helpers/constants/AVAILABLE_EVM_NETWORKS'
+
+const NETWORK = process.env.MAINNET ? 'MAINNET' : 'TESTNET'
+const NETWORK_NUMBER = NETWORK === 'MAINNET' ? 0 : 1 // 0 - MAINNET, 1 - TESTNET
 
 
 type CurrencyObj = {
@@ -81,18 +87,21 @@ type Address = {
 
 type ExchangeState = {
   haveAmount: number
+  getAmount: number
   goodRate: number
   maxAmount: number
   haveFiat: number
-  getFiat: number
+  exHaveRate?: number
+  exGetRate?: number
   maxBuyAmount: BigNumber
-
-  getAmount: string
+  
+  getFiat: string
   haveCurrency: string
   haveType: string
   getCurrency: string
   getType: string
   peer: string
+  wayToDeclinedOrder: string
 
   ordersIsOpen: boolean
   hasTokenAllowance: boolean
@@ -109,8 +118,6 @@ type ExchangeState = {
   isNoAnyOrders?: boolean
   isFullLoadingComplete?: boolean
 
-  exHaveRate?: string
-  exGetRate?: string
   orderId?: string
   redirectToSwap: null | SwapMode
 
@@ -118,7 +125,7 @@ type ExchangeState = {
   pairFees: any
   directionOrders: IUniversalObj[]
   filteredOrders: IUniversalObj[]
-  desclineOrders: string[]
+  desclineOrders: Swap[] | []
 
   fromAddress: Address
   toAddress: Address
@@ -147,10 +154,7 @@ const bannedPeers = {} // rejected swap peers
   })
 )
 @CSSModules(styles, { allowMultiple: true })
-class Exchange extends PureComponent<any, any> {
-  props: ExchangeProps
-  state: ExchangeState
-
+class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
   private _mounted = false
 
   static defaultProps = {
@@ -213,7 +217,7 @@ class Exchange extends PureComponent<any, any> {
     const {
       url,
       params: { buy, sell },
-    } = match || { params: { buy: 'btc', sell: 'usdt' } }
+    } = match || { params: { buy: 'btc', sell: '{eth}usdt' } }
 
     if (sell && buy && !isRootPage) {
       const { coin: sellName } = getCoinInfo(sell)
@@ -254,18 +258,22 @@ class Exchange extends PureComponent<any, any> {
       haveType,
       getCurrency,
       getType,
+      exHaveRate: 0,
+      exGetRate: 0,
       haveAmount: 0,
-      getAmount: '',
+      getAmount: 0,
       haveFiat: 0,
-      getFiat: 0,
+      getFiat: '',
       isLowAmount: false,
       maxAmount: 0,
       maxBuyAmount: new BigNumber(0),
       peer: '',
+      wayToDeclinedOrder: '',
       goodRate: 0,
       directionOrders: [],
       filteredOrders: [],
       isNonOffers: false,
+      isNoAnyOrders: false,
       isDeclinedOffer: false,
       extendedControls: false,
       isWaitForPeerAnswer: false,
@@ -285,7 +293,7 @@ class Exchange extends PureComponent<any, any> {
 
     if (config.isWidget) {
       this.setState(() => ({
-        getCurrency: config.erc20token
+        getCurrency: config.erc20token,
       }))
     }
   }
@@ -478,6 +486,13 @@ class Exchange extends PureComponent<any, any> {
     }
   }
 
+  componentDidCatch(error, info) {
+    console.group('%c Exchange', 'color: red;')
+    console.error(error)
+    console.trace()
+    console.groupEnd()
+  }
+
   updateTokenAllowance = async () => {
     const { tokensData } = this.props
     const { haveCurrency, haveAmount } = this.state
@@ -492,7 +507,7 @@ class Exchange extends PureComponent<any, any> {
         tokenContractAddress: tokenObj.contractAddress,
         decimals: tokenObj.decimals,
       })
-  
+
       this.setState(() => ({
         hasTokenAllowance: new BigNumber(allowance).isGreaterThanOrEqualTo(haveAmount),
       }))
@@ -851,13 +866,13 @@ class Exchange extends PureComponent<any, any> {
     }))
 
     const { coin: haveCurrencyName } = getCoinInfo(haveCurrency)
-    const coinStandard = COIN_DATA[haveCurrencyName].standard.toLowerCase()
+    const coinStandard = COIN_DATA[haveCurrency.toUpperCase()].standard.toLowerCase()
 
     actions[coinStandard]
       .approve({
         to: config.swapContract[coinStandard],
         name: haveCurrencyName,
-        amount: new BigNumber(haveAmount).dp(0, BigNumber.ROUND_UP).toString(),
+        amount: haveAmount,
       })
       .then((txHash) => {
         this.updateTokenAllowance()
@@ -869,7 +884,14 @@ class Exchange extends PureComponent<any, any> {
               id="ExchangeTokenWasApproved"
               defaultMessage="Token was approved.{br}Explorer link: {txLink}"
               values={{
-                txLink: <a href={`${config.link.etherscan}/tx/${txHash}`} target="_blank">Transaction</a>,
+                txLink: (
+                  <a
+                    href={`${actions[coinStandard].explorerLink}/tx/${txHash}`}
+                    target="_blank"
+                  >
+                    Transaction
+                  </a>
+                ),
                 br: <br />,
               }}
             />
@@ -1039,7 +1061,7 @@ class Exchange extends PureComponent<any, any> {
 
   setDeclinedOffer = () => {
     this.setState(() => ({
-      haveAmount: '',
+      haveAmount: 0,
       isWaitForPeerAnswer: false,
       isDeclinedOffer: true,
     }))
@@ -1062,7 +1084,7 @@ class Exchange extends PureComponent<any, any> {
 
     this.setState(() => ({
       maxAmount: Number(maxAmount),
-      getAmount: new BigNumber(getAmount).dp(decimalPlaces).toString(),
+      getAmount: new BigNumber(getAmount).dp(decimalPlaces).toNumber(),
       maxBuyAmount: buyAmount,
     }))
 
@@ -1072,7 +1094,7 @@ class Exchange extends PureComponent<any, any> {
     )
   }
 
-  setAmount = (value) => {
+  setAmount = (value): any => {
     this.setState(() => {
       return {
         haveAmount: value,
@@ -1358,9 +1380,7 @@ class Exchange extends PureComponent<any, any> {
   resetState = () => {
     this.setState(() => ({
       haveAmount: 0,
-      haveHeat: 0,
-      getHeat: 0,
-      getAmount: '',
+      getAmount: 0,
       maxAmount: 0,
       maxBuyAmount: new BigNumber(0),
       peer: '',
@@ -1501,6 +1521,21 @@ class Exchange extends PureComponent<any, any> {
 
   renderCoinName = (coin) => {
     return coin.toUpperCase()
+  }
+
+  getCurrencyNetwork = (currency) => {
+    const { coin, blockchain } = getCoinInfo(currency)
+    const ticker = coin.toUpperCase()
+
+    const isUTXOModel = COIN_DATA[ticker]?.model === COIN_MODEL.UTXO
+    const chainNetworks = !isUTXOModel && (
+      blockchain ? AVAILABLE_NETWORKS_BY_COIN[blockchain]
+        : AVAILABLE_NETWORKS_BY_COIN[ticker]
+    )
+
+    if (chainNetworks) {
+      return chainNetworks[NETWORK_NUMBER]
+    }
   }
 
   render() {
@@ -1667,21 +1702,31 @@ class Exchange extends PureComponent<any, any> {
       new BigNumber(availableAmount).isGreaterThanOrEqualTo(haveAmount) ||
       fromAddress.type === AddressType.Custom
 
+    const sellCoinNetworkVersion = this.getCurrencyNetwork(sellCoin)
+    const buyCoinNetworkVersion = this.getCurrencyNetwork(buyCoin)
+    const metamaskNetworkVersion = +getCurrentWeb3()?.currentProvider?.networkVersion
+
+    const isCorrectMetamaskNetwork = !metamask.isConnected() ||
+      (fromAddress.type === AddressType.Metamask || toAddress.type === AddressType.Metamask) &&
+      (metamaskNetworkVersion === sellCoinNetworkVersion || metamaskNetworkVersion === buyCoinNetworkVersion)
+
     const canStartSwap =
       !isErrorExternalDisabled &&
+      isCorrectMetamaskNetwork &&
       linked.haveAmount.value > 0 &&
       fromAddress &&
       isFromAddressReady &&
       toAddress &&
       isToAddressReady &&
+      !isNonOffers &&
       !this.doesComissionPreventThisOrder() &&
       isBalanceReady &&
       new BigNumber(getAmount).isGreaterThan(0) &&
-      !isNonOffers &&
       !isWaitForPeerAnswer
 
     const getTextWhyCanNotStartSwap = () => {
       if (isErrorExternalDisabled) return <FormattedMessage id="swapDisabled" defaultMessage='Swap Disabled' />
+      if (!isCorrectMetamaskNetwork) return <FormattedMessage id="incorrectMetamaskNetwork" defaultMessage='Please choose correct metamask network' />
       if (!(linked.haveAmount.value > 0)) return <FormattedMessage id="enterYouSend" defaultMessage='Enter "You send" amount' />
       if (!fromAddress) return <FormattedMessage id="selectFromAddress" defaultMessage='Select "From address"' />
       if (!isFromAddressReady) {
@@ -1699,6 +1744,7 @@ class Exchange extends PureComponent<any, any> {
         if (toAddress.type === AddressType.Internal && !toAddress.value)
           return <FormattedMessage id="enterToAddress" defaultMessage='Enter Destination wallet' />
       }
+      if (isNonOffers) return <FormattedMessage id="noOffers" defaultMessage='No Offers' />
       if (this.doesComissionPreventThisOrder()) return <FormattedMessage id="lowAmount" defaultMessage='Low amount' />
       if (!isBalanceReady) {
         if (
@@ -1708,7 +1754,6 @@ class Exchange extends PureComponent<any, any> {
           return <FormattedMessage id="enterLesserAmount" defaultMessage='Enter lesser amount to "You send"' />
       }
       if (!(new BigNumber(getAmount).isGreaterThan(0))) return <FormattedMessage id="errorWithGetAmount" defaultMessage='"You get" no more than 0' />
-      if (isNonOffers) return <FormattedMessage id="noOffers" defaultMessage='No Offers' />
       if (isWaitForPeerAnswer) return <FormattedMessage id="waitPeerAnswer" defaultMessage='Wait peer answer' />
 
       return <FormattedMessage id="contactSupport" defaultMessage='Please contact support' />
@@ -1953,21 +1998,17 @@ class Exchange extends PureComponent<any, any> {
               <Button
                 id='exchangeButton'
                 styleName="button"
-                onClick={hasTokenAllowance ? this.initSwap : this.approveTheToken}
+                onClick={this.approveTheToken}
                 disabled={!canStartSwap || isPendingTokenApprove}
                 pending={isPendingTokenApprove}
                 blue={true}
               >
-                {canStartSwap
-                  ? hasTokenAllowance
-                    ? <FormattedMessage id="partial541" defaultMessage="Exchange now" />
-                    : (
+                {canStartSwap ?
                       <FormattedMessage
                         id="FormattedMessageIdApprove"
                         defaultMessage="Approve {token}"
                         values={{ token: haveCurrency.toUpperCase() }}
                       />
-                    )
                   : getTextWhyCanNotStartSwap()
                 }
               </Button>
@@ -1985,46 +2026,44 @@ class Exchange extends PureComponent<any, any> {
               </Button>
             )}
 
-            {(isWidgetBuild || isDevBuild) && (
-              <>
-                <Button
-                  id="createOrderReactTooltipMessageForUser"
-                  styleName={`button link-like ${haveBalance ? '' : 'noMany'}`}
-                  //@ts-ignore: strictNullChecks
-                  onClick={haveBalance ? this.createOffer : null}
-                >
-                  <FormattedMessage id="orders128" defaultMessage="Create offer" />
-                </Button>
+            <>
+              <Button
+                id="createOrderReactTooltipMessageForUser"
+                styleName={`button link-like ${haveBalance ? '' : 'noMany'}`}
+                //@ts-ignore: strictNullChecks
+                onClick={haveBalance ? this.createOffer : null}
+              >
+                <FormattedMessage id="orders128" defaultMessage="Create offer" />
+              </Button>
 
-                {haveBalance ? (
-                  <ThemeTooltip
-                    id="createOrderReactTooltipMessageForUser"
-                    effect="solid"
-                    place="bottom"
-                  >
-                    <FormattedMessage
-                      id="createOrderMessageForUser"
-                      defaultMessage="You must be online all the time, otherwise your order will not be visible to other users"
-                    />
-                  </ThemeTooltip>
-                ) : (
-                  <ThemeTooltip
-                    id="createOrderReactTooltipMessageForUser"
-                    effect="solid"
-                    place="bottom"
-                  >
-                    <FormattedMessage
-                      id="createOrderNoManyMessageForUser"
-                      defaultMessage="Top up your balance"
-                    />
-                  </ThemeTooltip>
-                )}
-              </>
-            )}
+              {haveBalance ? (
+                <ThemeTooltip
+                  id="createOrderReactTooltipMessageForUser"
+                  effect="solid"
+                  place="bottom"
+                >
+                  <FormattedMessage
+                    id="createOrderMessageForUser"
+                    defaultMessage="You must be online all the time, otherwise your order will not be visible to other users"
+                  />
+                </ThemeTooltip>
+              ) : (
+                <ThemeTooltip
+                  id="createOrderReactTooltipMessageForUser"
+                  effect="solid"
+                  place="bottom"
+                >
+                  <FormattedMessage
+                    id="createOrderNoManyMessageForUser"
+                    defaultMessage="Top up your balance"
+                  />
+                </ThemeTooltip>
+              )}
+            </>
             {(!isWidgetBuild || isDevBuild) && (
               <>
-                <div styleName="link button-like">
-                  <a href={!isChromeExtention ? `#${links.marketmaker}/` : `#${links.marketmaker}/WBTC`}>
+                <div styleName="link button-like liquidity">
+                  <a href={!isChromeExtention ? `#${links.marketmaker}/` : `#${links.marketmaker}/{MATIC}WBTC`}>
                     <FormattedMessage id="AddLiquidity" defaultMessage="Add Liquidity" />
                   </a>
                 </div>

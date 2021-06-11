@@ -79,7 +79,7 @@ const Notification = (props) => {
   })
 
   return (
-    <div styleName={containerStyleName}>
+    <div id="notificationModal" styleName={containerStyleName}>
       <div styleName={notificationStyleName}>
         <div styleName="content" className={className}>
           {children}

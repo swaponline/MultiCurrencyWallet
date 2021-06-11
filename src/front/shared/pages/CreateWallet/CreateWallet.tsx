@@ -9,7 +9,7 @@ import { FormattedMessage, useIntl } from 'react-intl'
 import { withRouter } from 'react-router-dom'
 import { isMobile } from 'react-device-detect'
 import reducers from 'redux/core/reducers'
-
+import getCoinInfo from 'common/coins/getCoinInfo'
 import TOKEN_STANDARDS from 'helpers/constants/TOKEN_STANDARDS'
 import links from 'helpers/links'
 import metamask from 'helpers/metamask'
@@ -184,12 +184,14 @@ const CreateWallet = (props) => {
     }
 
     const isIgnoreSecondStep = !Object.keys(currencies).includes('BTC')
-    const tokenStandarads = Object.keys(TOKEN_STANDARDS).map((key) => TOKEN_STANDARDS[key])
+    const tokenStandards = Object.keys(TOKEN_STANDARDS).map((key) => TOKEN_STANDARDS[key])
 
-    for (const standardObj of tokenStandarads) {
+    for (const standardObj of tokenStandards) {
       const standardName = standardObj.standard.toUpperCase()
-      
-      if (currencies[standardName] && isIgnoreSecondStep) {
+      const baseCurrency = standardObj.currency.toUpperCase()
+      const key = `{${baseCurrency}}${standardName}`
+
+      if (currencies[key] && isIgnoreSecondStep) {
         actions.core.markCoinAsVisible(standardObj.currency.toUpperCase(), true)
         localStorage.setItem(constants.localStorage.isWalletCreate, true)
 
@@ -209,7 +211,9 @@ const CreateWallet = (props) => {
     if (isIgnoreSecondStep) {
       Object.keys(currencies).forEach((currency) => {
         if (currencies[currency]) {
-          actions.core.markCoinAsVisible(currency.toUpperCase(), true)
+          const { coin, blockchain } = getCoinInfo(currency)
+
+          actions.core.markCoinAsVisible(coin.toUpperCase(), true)
         }
       })
       localStorage.setItem(constants.localStorage.isWalletCreate, true)
@@ -358,14 +362,14 @@ const CreateWallet = (props) => {
 
   return (
     <div styleName={`wrapper ${isDark ? '--dark' : ''}`}>
-      {userWallets.length && !localStorage.getItem(constants.localStorage.wasOnWallet) && (
+      {userWallets.length ? (
         //@ts-ignore
         <CloseIcon
           styleName="closeButton"
           onClick={goHome}
           data-testid="modalCloseIcon"
         />
-      )}
+      ) : null}
 
       <div styleName={isMobile ? 'mobileFormBody' : 'formBody'}>
         <h2>
@@ -426,7 +430,6 @@ const CreateWallet = (props) => {
           setError={setError}
           btcData={btcData}
           currenciesForSecondStep={currencies}
-          ethData={ethData}
         />
       </div>
     </div>

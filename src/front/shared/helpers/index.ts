@@ -3,6 +3,7 @@ import ghost from './ghost'
 import next from './next'
 import eth from './eth'
 import bnb from './bnb'
+import matic from './matic'
 import ethToken from './ethToken'
 import bepToken from './bepToken'
 import * as user from './user'
@@ -50,6 +51,7 @@ export default {
   btc,
   eth,
   bnb,
+  matic,
   ghost,
   next,
   ethToken,
@@ -63,6 +65,7 @@ export {
   btc,
   eth,
   bnb,
+  matic,
   ghost,
   next,
   ethToken,

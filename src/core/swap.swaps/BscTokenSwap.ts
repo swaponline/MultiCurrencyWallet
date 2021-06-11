@@ -10,7 +10,8 @@ class BscTokenSwap extends EthLikeTokenSwap {
       getWeb3Utils: `getBnbWeb3Utils`,
       getMyAddress: `getMyBnbAddress`,
       getParticipantAddress: `getParticipantBnbAddress`,
-      blockchainName: constants.COINS.bnb
+      blockchainName: constants.COINS.bnb,
+      standard: constants.TOKEN_STANDARD.BEP20.toLowerCase(),
     }
     super(options)
   }

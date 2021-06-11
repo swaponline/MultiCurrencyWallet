@@ -51,6 +51,7 @@ window.buildOptions = {
     btc: true,
     eth: true,
     bnb: true,
+    matic: true,
     ghost: true,
     next: true,
   },
@@ -58,11 +59,12 @@ window.buildOptions = {
     btc: true,
     eth: false,
     bnb: false,
+    matic: false,
     ghost: false,
     next: false,
   },
   defaultExchangePair: {
-    buy: 'wbtc',
+    buy: '{eth}wbtc',
     sell: 'btc',
   }
 }

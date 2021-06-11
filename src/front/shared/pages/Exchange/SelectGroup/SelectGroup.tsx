@@ -14,6 +14,7 @@ import Tooltip from 'components/ui/Tooltip/Tooltip'
 import { BigNumber } from 'bignumber.js'
 
 import { inputReplaceCommaWithDot } from 'helpers/domUtils'
+import getCoinInfo from 'common/coins/getCoinInfo'
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
@@ -88,7 +89,11 @@ const SelectGroup = (props) => {
           </div>
         )}
         <CurrencySelect
-          selectedItemRender={(item) => item.fullTitle}
+          selectedItemRender={(item) =>  {
+            const {blockchain} = getCoinInfo(item.value)
+
+            return blockchain ? `${item.title} (${blockchain})` : item.fullTitle
+          }}
           styleName="currencySelect"
           placeholder="Enter the name of coin"
           selectedValue={selectedValue}

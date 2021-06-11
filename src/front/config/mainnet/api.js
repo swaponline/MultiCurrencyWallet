@@ -16,6 +16,8 @@ export default {
   etherscan_ApiKey: 'RHHFPNMAZMD6I4ZWBZBF6FA11CMW9AXZNM',
   bscscan: 'https://api.bscscan.com/api',
   bscscan_ApiKey: 'WI4QEJSV19U3TF2H1DPQ2HR6712HW4MYKJ',
+  maticscan: 'https://api.polygonscan.com/api',
+  polygon_ApiKey: '8S2R45ZWG94HI7YK9RCXSK4VCASJ4XVA15',
   faucet: 'https://faucet.swaponline.site/mainnet/',
   btc2FAProtected: 'https://2fa.swaponline.site',
   btcPin: 'https://2fapin.swaponline.site',

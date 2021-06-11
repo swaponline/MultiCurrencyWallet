@@ -1,5 +1,5 @@
 export default {
-  eth: {
+  evmLike: {
     limit: {
       send: 21 * 1e3,
       contractInteract: 100 * 1e3,
@@ -11,19 +11,7 @@ export default {
       fast: 2 * 1e9,
     },
   },
-  bnb: {
-    limit: {
-      send: 21 * 1e3,
-      contractInteract: 100 * 1e3,
-      swap: 70 * 1e3,
-    },
-    price: {
-      slow: 0.1 * 1e9,
-      normal: 1 * 1e9,
-      fast: 2 * 1e9,
-    },
-  },
-  ethToken: {
+  evmLikeToken: {
     limit: {
       send: 100 * 1e3,
       swap: 300 * 1e3,
