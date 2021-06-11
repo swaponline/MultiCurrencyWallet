@@ -5870,6 +5870,27 @@
     ]
   },
   {
+    "id": "CleanLocalStorage",
+    "message": "Oops, parece que la aplicación necesita limpiar su almacenamiento local. Guarde su frase semilla de 12 palabras (si no la ha guardado antes), luego borre el almacenamiento local haciendo clic en el botón e importe nuevamente la semilla de 12 palabras. Disculpe las molestias. {indent} {button}",
+    "files": [
+      "src/front/shared/components/Header/Header.tsx"
+    ]
+  },
+  {
+    "id": "WalletEmptyBalance",
+    "message": "No hay carteras disponibles",
+    "files": [
+      "src/front/shared/pages/Wallet/Wallet.tsx"
+    ]
+  },
+  {
+    "id": "ClearAndReload",
+    "message": "Limpiar y recargar",
+    "files": [
+      "src/front/shared/components/Header/Header.tsx"
+    ]
+  },
+  {
     "id": "WalletEmptyBalance",
     "message": "No wallets available",
     "files": [

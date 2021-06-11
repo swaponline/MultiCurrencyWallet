@@ -12,7 +12,11 @@ const sendMessage = ({ appPart, eventName, details }) => {
 
   const host = getTopLocation().host || window.location.hostname || document.location.host
 
-  const prefixMark = eventName === 'failed' ? '🛑' : ''
+  let prefixMark = ''
+  
+  if (eventName === 'failed') prefixMark = '🛑'
+  if (eventName === 'warning') prefixMark = '🔥'
+
   const textToSend = `${prefixMark} [${host}] ${appPart} - ${eventName}${details ? ` {${details}}` : ``} |`
 
   if (host && host.includes('localhost')) {
@@ -38,6 +42,7 @@ const events = {
     otherTabsClosed: 'otherTabsClosed',
     //closed: 'closed',
     failed: 'failed',
+    warning: 'warning',
   },
   createWallet: {
     //started: 'started',

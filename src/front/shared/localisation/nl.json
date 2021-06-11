@@ -5862,6 +5862,27 @@
     ]
   },
   {
+    "id": "CleanLocalStorage",
+    "message": "Oops, lijkt erop dat de app nodig heeft om uw lokale opslag schoon te maken. Sla uw 12 woorden zaad zin op( als je het niet eerder hebt opgeslagen), verwijder dan lokale opslag door op de knop te klikken en importeer 12 woorden zaad opnieuw. Sorry voor het ongemak. {indent} {button}",
+    "files": [
+      "src/front/shared/components/Header/Header.tsx"
+    ]
+  },
+  {
+    "id": "WalletEmptyBalance",
+    "message": "Geen portefeuilles beschikbaar",
+    "files": [
+      "src/front/shared/pages/Wallet/Wallet.tsx"
+    ]
+  },
+  {
+    "id": "ClearAndReload",
+    "message": "Wissen en herladen",
+    "files": [
+      "src/front/shared/components/Header/Header.tsx"
+    ]
+  },
+  {
     "id": "WalletEmptyBalance",
     "message": "No wallets available",
     "files": [
