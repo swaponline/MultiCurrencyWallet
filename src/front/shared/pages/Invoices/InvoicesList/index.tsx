@@ -27,6 +27,8 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
   user: {
     btcData,
     ethData,
+    bnbData,
+    maticData,
     ghostData,
     nextData,
     multisigStatus,
@@ -37,6 +39,8 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
     data: {
       btc: btcData,
       eth: ethData,
+      bnb: bnbData,
+      matic: maticData,
       ghost: ghostData,
       next: nextData,
     },
