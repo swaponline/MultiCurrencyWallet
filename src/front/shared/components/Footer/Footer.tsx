@@ -1,7 +1,8 @@
 import React from 'react'
 import cx from 'classnames'
 import { isMobile } from 'react-device-detect'
-import { constants } from 'helpers'
+import { FormattedMessage } from 'react-intl'
+import { constants, links } from 'helpers'
 
 import config from 'helpers/externalConfig'
 
@@ -34,6 +35,18 @@ const Footer = () => {
         <WidthContainer styleName="container">
           <SwitchLang />
 
+          {!config.isWidget && (
+            <p styleName="swapDescription">
+              <FormattedMessage
+                id="FooterSwapDescription"
+                defaultMessage="Online since 2018. Check our {twitter} and {github} history"
+                values={{
+                  github: <a href={links.github} target="_blank">github</a>,
+                  twitter: <a href={links.twitter} target="_blank">twitter</a>,
+                }}
+              />
+            </p>
+          )}
           {!config.isWidget && <SocialMenu />}
 
           <div styleName="version">

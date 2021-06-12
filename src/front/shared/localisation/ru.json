@@ -2904,6 +2904,7 @@
     "id": "registerSMSMPlaceHolder",
     "message": "12 слов",
     "files": [
+      "src/front/shared/components/Header/Header.tsx",
       "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx",
       "src/front/shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
@@ -5891,10 +5892,10 @@
     ]
   },
   {
-    "id": "WalletEmptyBalance",
-    "message": "No wallets available",
+    "id": "FooterSwapDescription",
+    "message": "Онлайн с 2018 года. Проверьте нашу историю {twitter} и {github}",
     "files": [
-      "src/front/shared/pages/Wallet/Wallet.tsx"
+      "src/front/shared/components/Footer/Footer.tsx"
     ]
   }
 ]
