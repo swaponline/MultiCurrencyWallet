@@ -29,6 +29,7 @@ export default [
         options: {
           sourceMap: true,
           postcssOptions: {
+            hideNothingWarning: true,
             plugins: () => [
               autoprefixer([
                 'Android >= 4',
