@@ -86,6 +86,13 @@ const externalConfig = () => {
   }
 
   if (window
+    && window.SO_createWalletCoinsOrder
+    && window.SO_createWalletCoinsOrder.length
+  ) {
+    config.opts.createWalletCoinsOrder = window.SO_createWalletCoinsOrder
+  }
+
+  if (window
     && window.invoiceEnabled
   ) {
     config.opts.invoiceEnabled = true
