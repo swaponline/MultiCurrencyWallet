@@ -901,9 +901,9 @@
         });
       }
 
-      window.logoUrl = '#';
-      window.darkLogoUrl = '';
-      window.loaderLogoUrl = '';
+      window.logoUrl = window.logoUrl || '#';
+      window.darkLogoUrl = window.darkLogoUrl || '';
+      window.loaderLogoUrl = window.loaderLogoUrl || '';
 
       if (window.localStorage.getItem('isDark')) {
         window.logoUrl = window.darkLogoUrl || window.logoUrl;
