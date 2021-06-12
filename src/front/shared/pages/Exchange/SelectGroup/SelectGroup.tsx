@@ -74,6 +74,7 @@ const SelectGroup = (props) => {
         />
         {(selectedValue === 'eth' ||
           selectedValue === 'bnb' ||
+          selectedValue === 'matic' ||
           selectedValue === 'btc' ||
           selectedValue === 'ghost' ||
           selectedValue === 'next') &&

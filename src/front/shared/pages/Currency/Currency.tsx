@@ -27,11 +27,20 @@ import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
 @withRouter
 @connect(({
   core: { hiddenCoinsList },
-  user: { ethData, bnbData, btcData, ghostData, nextData, tokensData },
+  user: {
+    ethData,
+    bnbData,
+    maticData,
+    btcData,
+    ghostData,
+    nextData,
+    tokensData,
+  },
 }) => ({
   items: [
     ethData,
     bnbData,
+    maticData,
     btcData,
     ghostData,
     nextData, 
@@ -41,10 +50,22 @@ import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
 }))
 @CSSModules(styles, { allowMultiple: true })
 class Currency extends Component<any, any> {
+  constructor(props) {
+    super(props)
 
-  constructor({ match: { params: { currency } }, items, tokens, history, intl: { locale } }) {
-    //@ts-ignore
-    super()
+    const {
+      match: {
+        params: {
+          currency,
+        }
+      },
+      items,
+      tokens,
+      history,
+      intl: {
+        locale,
+      },
+    } = props
 
     this.state = {
       isBalanceFetching: false,

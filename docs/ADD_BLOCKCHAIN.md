@@ -83,7 +83,7 @@ Important note: Our core team focused on BTC-ETH swaps. If another blockchain ad
 ### Add explorer link
 
 - `src/front/config/mainnet/link.js`
-- `src/front/config/testnet/api.js`
+- `src/front/config/testnet/link.js`
 
 
 ### Set configs
@@ -91,50 +91,36 @@ Important note: Our core team focused on BTC-ETH swaps. If another blockchain ad
 - `src/front/externalConfigs/swaponline.github.io`
 - `src/front/externalConfigs/mainnet-localhost.js`
 - `src/front/externalConfigs/testnet-default.js`
-- `src/front/shared/helpers/externalConfig.js`
+- `src/front/shared/helpers/externalConfig.ts`
 
 
 ### Add coin on
 
 - `src/front/config/testnet/hiddenCoins.js`
-- `src/front/shared/components/Coin/Coin.js`
-- `src/front/shared/components/modals/WithdrawModal/WithdrawModal.js`
-- `src/front/shared/helpers/getCurrencyKey.js`
-- `src/front/shared/helpers/user.js`
-- `src/front/shared/pages/CreateWallet/CreateWallet.js`
+- `src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx`
+- `src/front/shared/helpers/getCurrencyKey.ts`
+- `src/front/shared/helpers/user.ts`
+- `src/front/shared/pages/CreateWallet/CreateWallet.tsx`
 - `src/front/shared/pages/CreateWallet/CreateWallet.scss`
-- `src/front/shared/pages/CreateWallet/Steps/FirstStep.js`
-- `src/front/shared/pages/CreateWallet/Steps/SecondStep.js`
-- `src/front/shared/pages/Currency/Currency.js`
-- `src/front/shared/pages/Wallet/Wallet.js`
-- `src/front/shared/redux/reducers/createWallet.js`
-- `src/front/shared/redux/reducers/currencies.js`
+- `src/front/shared/pages/CreateWallet/Steps/FirstStep.tsx`
+- `src/front/shared/pages/CreateWallet/Steps/SecondStep.tsx`
+- `src/front/shared/pages/CreateWallet/Steps/StepsWrapper.tsx`
+- `src/front/shared/pages/CreateWallet/Steps/startPacks.ts`
+- `src/front/shared/pages/Currency/Currency.tsx`
+- `src/front/shared/pages/Wallet/Wallet.tsx`
+- `src/front/shared/redux/reducers/createWallet.ts`
+- `src/front/shared/redux/reducers/currencies.ts`
+- `src/front/shared/redux/reducers/user.ts`
 
 
 ### Add logo
 
-- `src/front/shared/components/ui/CurrencyIcon/images/coin.svg`
-- export it here: `src/front/shared/components/ui/CurrencyIcon/images/index.js`
-
-
-### Set fee default
-
-- `src/front/shared/helpers/constants/DEFAULT_FEE_RATES.js`
-
+- `src/front/shared/components/ui/CurrencyIcon/images/<coin>.svg`
+- export it here: `src/front/shared/components/ui/CurrencyIcon/images/index.ts`
 
 ### Set coin decimals
 
-- `src/front/shared/helpers/constants/TOKEN_DECIMALS.js`
-
-
-### Add coin as dynamic fee
-
-- `src/front/shared/helpers/constants/coinsWithDynamicFee.js`
-
-
-### Add min amount
-
-- `src/front/shared/helpers/constants/minAmount.js`
+- `src/front/shared/helpers/constants/TOKEN_DECIMALS.ts`
 
 
 ### Create `privateKey` / `mnemonicKey` names for your coin
@@ -142,16 +128,14 @@ Important note: Our core team focused on BTC-ETH swaps. If another blockchain ad
 - `src/front/shared/helpers/constants/privateKeyNames.js`
 
 
-### Add coin accordingly as is done for btc
+### Add coin accordingly as is done for btc/eth
 
-- `src/front/shared/redux/actions/user.js`
+- `src/front/shared/redux/actions/user.ts`
 
-
-### More changes!
 
 Create helper, use btc as reference:
 
-- `src/front/shared/helpers/coin.js`
+- `src/front/shared/helpers/<coin>.ts`
 - import helper `src/front/shared/helpers/index.js`
 
 Add swap instances:
@@ -161,8 +145,8 @@ Add swap instances:
 
 ### Create coin actions
 
-- `src/front/shared/redux/actions/index.js`
-- `src/front/shared/redux/actions/coin.js`
+- `src/front/shared/redux/actions/index.ts`
+- `src/front/shared/redux/actions/coin.ts`
 	* use `btc.js` as reference
 	* getWalletByWords - set coin index
 	* set urls
@@ -178,35 +162,31 @@ Add swap instances:
 	* signMessage
 
 
+if you're adding an evm coin
+- new instance `src/front/shared/redux/actions/ethLikeAction.ts`
+
+if you're adding a new token standard
+- new instance `src/front/shared/redux/actions/erc20LikeAction.ts`
+
 ### Add `coinData`
 
-- `src/front/shared/components/CurrencyDirectionChooser/CurrencyDirectionChooser.js`
-- `src/front/shared/components/Header/User/UserTooltip/UserTooltip.js`
-- `src/front/shared/components/layout/DashboardLayout/DashboardLayout.js`
-- `src/front/shared/components/modals/ConfirmBeginSwap/ConfirmBeginSwap.js`
-- `src/front/shared/components/modals/DownloadModal/DownloadModal.js`
-- `src/front/shared/components/modals/InvoiceModal/InvoiceModal.js`
-- `src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.js`
-- `src/front/shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.js`
-- `src/front/shared/components/modals/ShowMoreCoins/ShowMoreCoins.js`
-- `src/front/shared/components/SaveKeys/SaveKeys.js`
-- `src/front/shared/containers/App/App.js`
-- `src/front/shared/pages/CurrencyWallet/CurrencyWallet.js`
-- `src/front/shared/pages/Exchange/Exchange.js`
-- `src/front/shared/pages/Exchange/SelectGroup/SelectGroup.js`
-- `src/front/shared/pages/History/Row/Row.js`
-- `src/front/shared/pages/History/SwapsHistory/RowHistory/RowHistory.js`
-- `src/front/shared/pages/Invoices/CreateInvoice/index.js`
-- `src/front/shared/pages/Invoices/Invoice/index.js`
-- `src/front/shared/pages/Invoices/InvoicesList/index.js`
-- `src/front/shared/pages/PointOfSell/PointOfSell.js`
-- `src/front/shared/pages/Swap/Swap.js`
-- `src/front/shared/redux/actions/core.js`
-- `src/front/shared/redux/reducers/user.js`
-- `src/front/shared/helpers/links`
-- `src/front/shared/helpers/constants/TRADE_TICKERS.js`
-- `src/front/shared/pages/Wallet/Row/Row.js`
-- `src/front/shared/plugins/backupUserData.js`
+- `src/front/shared/components/CurrencyDirectionChooser/CurrencyDirectionChooser.tsx`
+- `src/front/shared/components/layout/DashboardLayout/DashboardLayout.tsx`
+- `src/front/shared/components/modals/ConfirmBeginSwap/ConfirmBeginSwap.tsx`
+- `src/front/shared/components/modals/DownloadModal/DownloadModal.tsx`
+- `src/front/shared/components/modals/InvoiceModal/InvoiceModal.tsx`
+- `src/front/shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.tsx`
+- `src/front/shared/components/SaveKeys/SaveKeys.tsx`
+- `src/front/shared/containers/App/App.tsx`
+- `src/front/shared/pages/Exchange/Exchange.tsx`
+- `src/front/shared/pages/Exchange/SelectGroup/SelectGroup.tsx`
+- `src/front/shared/pages/History/SwapsHistory/RowHistory/RowHistory.tsx`
+- `src/front/shared/pages/Invoices/CreateInvoice/index.tsx`
+- `src/front/shared/pages/Invoices/InvoicesList/index.tsx`
+- `src/front/shared/pages/Swap/Swap.tsx`
+- `src/front/shared/redux/actions/core.ts`
+- `src/front/shared/helpers/constants/TRADE_TICKERS.ts`
+- `src/front/shared/plugins/backupUserData.ts`
 
 
 ### Set routes
@@ -218,42 +198,50 @@ Add swap instances:
 
 - `src/front/shared/pages/Swap/...`
 - `src/front/shared/pages/Swap/CoinSwap/...`
-- `src/front/shared/pages/Swap/SwapProgress/SwapProgress.js`
+- `src/front/shared/pages/Swap/SwapProgress/SwapProgress.tsx`
 - `src/front/shared/pages/Swap/SwapProgress/SwapProgressText/...`
-- `src/front/shared/pages/Swap/swaps/index.js`
+- `src/front/shared/pages/Swap/swaps/index.ts`
 
 
-### Create swap localisation
+### Update localization for all languages
 
-- `src/front/shared/localisation/_default.json`
-- `src/front/shared/localisation/en.json`
-- `src/front/shared/localisation/nl.json`
-- `src/front/shared/localisation/ru.json`
+- `src/front/shared/localisation/...`
+
+--------------------------------------------
 
 
-### Other
+## Common changes
+- `src/common/helpers/constants/DEFAULT_CURRENCY_PARAMETERS.ts`
+- `src/common/helpers/constants/COINS_WITH_DYNAMIC_FEE.ts`
+- `src/common/helpers/constants/MIN_AMOUNT.ts`
+- `src/common/helpers/constants/MIN_AMOUNT_OFFER.ts`
 
-- `src/front/shared/pages/Wallet/components/LinkAccount/index.js`
+if you're adding an evm chain
+- `src/common/helpers/constants/AVAILABLE_EVM_NETWORKS.ts`
 
+if you're adding a new token standard
+- new instance in `common/erc20Like`
 
 --------------------------------------------
 
 
 ## Core changes
 
-- `src/core/swap.app/constants/COINS.js`
-- `src/core/swap.app/constants/ENV.js`
-- `src/core/swap.app/constants/TRADE_TICKERS.js`
-- `src/core/swap.app/util/typeforce.js`
-- `src/core/swap.auth/*.js`
-- `src/core/swap.flows/index.js`
-- `src/core/swap.flows/ETH2*.js`
-- `src/core/swap.flows/ETHTOKEN2*.js`
-- `src/core/swap.flows/*2ETH.js`
-- `src/core/swap.flows/*2ETHTOKEN.js`
-- `src/core/swap.swaps/index.js`
-- `src/core/swap.swaps/*Swap.js`
-- `package.json` (install lib via `npm i`)
+- `src/core/swap.app/constants/COINS.ts`
+- `src/core/swap.app/constants/ENV.ts`
+- `src/core/swap.app/constants/TRADE_TICKERS.ts`
+- `src/core/swap.app/util/typeforce.ts`
+- `src/core/swap.auth/*.ts`
+- `src/core/swap.flows/index.ts`
+- `src/core/swap.flows/<ETH,BNB,...>2*.ts`
+- `src/core/swap.flows/<ETHTOKEN, BSCTOKEN, ...>2*.ts`
+- `src/core/swap.flows/*2<ETH,BNB,...>.ts`
+- `src/core/swap.flows/*2<ETHTOKEN, BSCTOKEN, ...>.ts`
+- `src/core/swap.swaps/index.ts`
+- `src/core/swap.swaps/*Swap.ts`
+
+if you're adding a new token standard
+- `src/core/swap.app/util/<standard>.ts`
 
 `*` = `GHOST`, for example
 
@@ -263,9 +251,14 @@ Add swap instances:
 
 ## Additional changes
 
+### Tests
+
+- `tests/unit/...`
+- `tests/e2e/swap/...`
+
 ### Update README
 
-- `src/core/README.md` (add coin to the table)
+- `docs/core/README.md` (add coin to the tables)
 - `docs/ADD_BLOCKCHAIN.md` (improve this doc)
 
 
@@ -284,3 +277,8 @@ Add swap instances:
 ### NEXT.coin
 
 - [Task + PRs](https://github.com/swaponline/swap.core/issues/504)
+
+### Matic token with ERC20 Token on Polygon(Matic)
+
+- [Task](https://github.com/swaponline/MultiCurrencyWallet/issues/4448)
+- [Pull request](https://github.com/swaponline/MultiCurrencyWallet/pull/4496)

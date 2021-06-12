@@ -11,22 +11,19 @@ import { FormattedMessage } from 'react-intl'
 type SaveKeysProps = {
   onChange: () => void
   onDownload: () => void
-  // from store
-  ethData?: IUniversalObj
-  btcData?: IUniversalObj
-  ghostData?: IUniversalObj
-  nextData?: IUniversalObj
+  data: IUniversalObj
 }
 
-@connect(({ user: { ethData, btcData, ghostData, nextData } }) => ({ btcData, ethData, ghostData, nextData }))
+@connect(({
+  user: { ethData, bnbData, maticData, btcData, ghostData, nextData }
+}) => ({
+  data: [ btcData, bnbData, maticData, ethData, ghostData, nextData ]
+}))
 @CSSModules(styles)
 export default class SaveKeys extends Component<SaveKeysProps, null> {
   render() {
     const {
-      ethData,
-      btcData,
-      ghostData,
-      nextData,
+      data,
       onChange,
       onDownload,
       ...otherProps
@@ -47,30 +44,15 @@ export default class SaveKeys extends Component<SaveKeysProps, null> {
 
         <div styleName="row" >
           <div styleName="cell" >
-            <Field
-              //@ts-ignore: strictNullChecks
-              label={ethData.currency}
-              //@ts-ignore: strictNullChecks
-              privateKey={ethData.privateKey}
-            />
-            <Field
-              //@ts-ignore: strictNullChecks
-              label={btcData.currency}
-              //@ts-ignore: strictNullChecks
-              privateKey={btcData.privateKey}
-            />
-            <Field
-              //@ts-ignore: strictNullChecks
-              label={ghostData.currency}
-              //@ts-ignore: strictNullChecks
-              privateKey={ghostData.privateKey}
-            />
-            <Field
-              //@ts-ignore: strictNullChecks
-              label={nextData.currency}
-              //@ts-ignore: strictNullChecks
-              privateKey={nextData.privateKey}
-            />
+            {data.map((currencyData, index) => {
+              return (
+                <Field
+                  key={index}
+                  label={currencyData.currency}
+                  privateKey={currencyData.privateKey}
+                />
+              )
+            })}
           </div>
           
           <Button brand onClick={onDownload} id="SaveKeysDownload">
