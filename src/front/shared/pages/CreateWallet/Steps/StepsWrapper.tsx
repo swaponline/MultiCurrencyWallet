@@ -72,60 +72,6 @@ export default class StepsWrapper extends Component<any, any> {
       }
     }
 
-    // Порядок коинов в списке
-    if (config.opts.createWalletCoinsOrder && config.opts.createWalletCoinsOrder.length) {
-      const setCoinOrder = (coinInfo, order) => {
-        const {
-          coin,
-          blockchain,
-        } = getCoinInfo(coinInfo)
-        let isCustomToken = false
-        let customTokenType = ``
-        if (coinInfo === `CUSTOM_ERC20` || coinInfo === `CUSTOM_BEP20` || coinInfo === `CUSTOM_ERC20MATIC`) {
-          customTokenType = coinInfo.split(`_`)[1]
-          isCustomToken = true
-        }
-        Object.keys(this.defaultStartPack).forEach((coinIndex) => {
-          if (isCustomToken) {
-            if (this.defaultStartPack[coinIndex].name === customTokenType
-              && this.defaultStartPack[coinIndex].capture === `Token`
-            ) {
-              this.defaultStartPack[coinIndex].order = order
-              return false
-            }
-          } else {
-            if (blockchain) {
-              if (this.defaultStartPack[coinIndex].name === coin
-                && this.defaultStartPack[coinIndex].standard === blockchain
-              ) {
-                this.defaultStartPack[coinIndex].order = order
-                return false
-              }
-            } else {
-              if (this.defaultStartPack[coinIndex].name === coin) {
-                this.defaultStartPack[coinIndex].order = order
-                return false
-              }
-            }
-          }
-        })
-      }
-      Object.keys(this.defaultStartPack).forEach((coinIndex, index) => {
-        this.defaultStartPack[coinIndex].order = this.defaultStartPack.length + index
-      })
-      config.opts.createWalletCoinsOrder.forEach((coin, order) => {
-        setCoinOrder(coin, order)
-      })
-      this.defaultStartPack.sort((pack1, pack2) => {
-        //@ts-ignore
-        if (pack1.order < pack2.order) {
-          return -1
-        } else {
-          return 1
-        }
-        return 0
-      })
-    }
     const enabledCurrencies = getActivatedCurrencies()
 
     let items = currencies
@@ -161,6 +107,7 @@ export default class StepsWrapper extends Component<any, any> {
             this.widgetStartPack.push({
               name: name.toUpperCase(),
               capture: config[standard][name].fullName,
+              baseCurrency: standard.toUpperCase(),
             })
           }
         })
@@ -170,11 +117,70 @@ export default class StepsWrapper extends Component<any, any> {
           this.widgetStartPack.push({
             name: config.erc20token.toUpperCase(),
             capture: config.erc20[config.erc20token].fullName,
+            baseCurrency: `ERC20`,
           })
         }
       }
     }
 
+    // Порядок коинов в списке
+    if (config.opts.createWalletCoinsOrder && config.opts.createWalletCoinsOrder.length) {
+      const sortPacks = (packList) => {
+        const setCoinOrder = (coinInfo, order) => {
+          const {
+            coin,
+            blockchain,
+          } = getCoinInfo(coinInfo)
+          let isCustomToken = false
+          let customTokenType = ``
+          if (coinInfo === `CUSTOM_ERC20` || coinInfo === `CUSTOM_BEP20` || coinInfo === `CUSTOM_ERC20MATIC`) {
+            customTokenType = coinInfo.split(`_`)[1]
+            isCustomToken = true
+          }
+          Object.keys(packList).forEach((coinIndex) => {
+            if (isCustomToken) {
+              if (packList[coinIndex].name === customTokenType
+                && packList[coinIndex].capture === `Token`
+              ) {
+                packList[coinIndex].order = order
+                return false
+              }
+            } else {
+              if (blockchain) {
+                if (packList[coinIndex].name === coin
+                  && packList[coinIndex].standard === blockchain
+                ) {
+                  packList[coinIndex].order = order
+                  return false
+                }
+              } else {
+                if (packList[coinIndex].name === coin) {
+                  packList[coinIndex].order = order
+                  return false
+                }
+              }
+            }
+          })
+        }
+        Object.keys(packList).forEach((coinIndex, index) => {
+          packList[coinIndex].order = packList.length + index
+        })
+        config.opts.createWalletCoinsOrder.forEach((coin, order) => {
+          setCoinOrder(coin, order)
+        })
+        packList.sort((pack1, pack2) => {
+          //@ts-ignore
+          if (pack1.order < pack2.order) {
+            return -1
+          } else {
+            return 1
+          }
+          return 0
+        })
+      }
+      sortPacks((isWidgetBuild) ? this.widgetStartPack : this.defaultStartPack)
+    }
+    
     this.state = {
       curState,
       coins,
