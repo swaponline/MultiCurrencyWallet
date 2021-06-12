@@ -54,6 +54,7 @@ const externalConfig = () => {
       ghost: true,
       next: true,
     },
+    createWalletCoinsOrder: false,
     defaultExchangePair: {
       buy: 'eth',
       sell: 'btc',
