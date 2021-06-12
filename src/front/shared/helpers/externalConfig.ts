@@ -81,6 +81,7 @@ const externalConfig = () => {
     exchangeDisabled: false,
     ui: {
       footerDisabled: false,
+      bannersSource: 'https://noxon.wpmix.net/swapBanners/banners.php',
     },
   }
 

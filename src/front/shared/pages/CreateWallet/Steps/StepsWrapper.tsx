@@ -150,7 +150,7 @@ export default class StepsWrapper extends Component<any, any> {
       }
     })
 
-    if (/*isWidgetBuild &&*/ haveTokenConfig) {
+    if (isWidgetBuild && haveTokenConfig) {
       if (window?.widgetERC20Tokens?.length) {
         // Multi token build
         window.widgetERC20Tokens.forEach((token) => {

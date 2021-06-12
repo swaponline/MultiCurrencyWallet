@@ -4,6 +4,7 @@ import { connect } from 'redaction'
 
 import Swiper from 'swiper'
 import 'swiper/swiper-bundle.css'
+import config from 'helpers/externalConfig'
 
 import { constants, getItezUrl } from 'helpers'
 import actions from 'redux/actions'
@@ -125,8 +126,11 @@ class WallerSlider extends React.Component<WallerSliderProps, WallerSliderState>
       )
     } else {
       try {
+        const bannersSource = (config?.opts?.ui?.bannersSource)
+          ? config.opts.ui.bannersSource
+          : 'https://noxon.wpmix.net/swapBanners/banners.php'
         return axios
-          .get('https://noxon.wpmix.net/swapBanners/banners.php')
+          .get(bannersSource)
           .then(({ data }) => {
             const banners = this.processItezBanner(data).filter((el) => el && el.length)
 
