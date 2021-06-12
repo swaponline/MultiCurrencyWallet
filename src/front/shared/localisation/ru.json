@@ -5870,6 +5870,27 @@
     ]
   },
   {
+    "id": "CleanLocalStorage",
+    "message": "Упс, похоже, приложение должно очистить ваше локальное хранилище. Пожалуйста, сохраните свою начальную фразу из 12 слов (если вы не сохраняли ее раньше), затем очистите локальное хранилище, нажав на кнопку и снова импортируйте начальную фразу из 12 слов. Извините за неудобства. {indent} {button}",
+    "files": [
+      "src/front/shared/components/Header/Header.tsx"
+    ]
+  },
+  {
+    "id": "WalletEmptyBalance",
+    "message": "Нет доступных кошельков",
+    "files": [
+      "src/front/shared/pages/Wallet/Wallet.tsx"
+    ]
+  },
+  {
+    "id": "ClearAndReload",
+    "message": "Очистить и перезагрузить",
+    "files": [
+      "src/front/shared/components/Header/Header.tsx"
+    ]
+  },
+  {
     "id": "WalletEmptyBalance",
     "message": "No wallets available",
     "files": [

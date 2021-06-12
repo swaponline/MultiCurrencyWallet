@@ -28,7 +28,7 @@ import { localisedUrl } from '../../helpers/locale'
 import { messages, getMenuItems, getMenuItemsMobile } from './config'
 import { user } from 'helpers'
 import { ThemeSwitcher } from './ThemeSwitcher'
-
+import Button from 'components/controls/Button/Button'
 // Incoming swap requests and tooltips (revert)
 import UserTooltip from 'components/Header/UserTooltip/UserTooltip'
 import feedback from 'shared/helpers/feedback'
@@ -103,8 +103,61 @@ class Header extends Component<any, any> {
     this.lastScrollTop = 0
   }
 
+  clearLocalStorage = () => {
+    window.localStorage.clear()
+    window.location.reload()
+  }
+
+  saveMnemonicAndClearStorage = () => {
+    actions.modals.open(constants.modals.SaveMnemonicModal, {
+      onClose: () => {
+        this.clearLocalStorage()
+      }
+    })
+  }
+
   componentDidMount() {
     this.handlerAsync()
+
+    // Temporarily
+    // show a request for users to clear their local storage
+    const isWalletCreate = localStorage.getItem(constants.localStorage.isWalletCreate)
+    const sawWarning = localStorage.getItem('sawLocalStorageWarning')
+    const oldUserDidNotSee = isWalletCreate === 'true' && sawWarning !== 'true'
+    const newUser = isWalletCreate !== 'true' && sawWarning !== 'true'
+
+    if (oldUserDidNotSee && false) { // Времено отключено
+      feedback.app.warning('Modal about local storage was opened')
+
+      const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
+      // user must save a mnemonic phrase if he hasn't done it
+      const modalButton = mnemonic !== '-' ? (
+        <Button empty onClick={this.saveMnemonicAndClearStorage}>
+          <FormattedMessage id="registerSMSMPlaceHolder" defaultMessage="Secret phrase (12 words)" />
+        </Button>
+      ) : (
+        <Button empty onClick={this.clearLocalStorage}>
+          <FormattedMessage id="ClearAndReload" defaultMessage="Clear and reload" />
+        </Button>
+      )
+
+      actions.notifications.show(constants.notifications.Message, {
+        message: (
+          <FormattedMessage
+            id="CleanLocalStorage"
+            defaultMessage="Oops, looks like the app needs to clean your local storage. Please save your 12 words seed phrase (if you have not saved it before), then clear local storage by clicking on the button and import 12 words seed again. Sorry for the inconvenience. {indent} {button}"
+            values={{
+              indent: <><br /><br /></>,
+              button: modalButton,
+            }}
+          />
+        ),
+        timeout: false,
+      })
+    } else if (newUser) {
+      // no problem with new user's storage
+      localStorage.setItem('sawLocalStorageWarning', 'true')
+    }
   }
 
   handlerAsync = async () => {
@@ -305,8 +358,10 @@ class Header extends Component<any, any> {
     feedback.theme.switched(wasDark ? 'bright' : 'dark')
     if (wasDark) {
       localStorage.removeItem(constants.localStorage.isDark)
+      localStorage.setItem(constants.localStorage.isLight, 'true')
     } else {
       localStorage.setItem(constants.localStorage.isDark, 'true')
+      localStorage.removeItem(constants.localStorage.isLight)
     }
     window.location.reload()
   }
@@ -386,7 +441,9 @@ class Header extends Component<any, any> {
           <Logo />
         </div>
         <div styleName="rightArea">
-          <ThemeSwitcher themeSwapAnimation={themeSwapAnimation} onClick={this.handleSetDark} />
+          {window.WPSO_selected_theme !== 'only_light' && window.WPSO_selected_theme !== 'only_dark' && (
+            <ThemeSwitcher themeSwapAnimation={themeSwapAnimation} onClick={this.handleSetDark} />
+          )}
 
           {isLogoutPossible && ( // some wordpress plugin cases
             <div styleName={`logoutWrapper ${isDark ? 'dark' : ''}`} onClick={this.handleLogout}>

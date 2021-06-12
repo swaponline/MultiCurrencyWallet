@@ -5870,6 +5870,27 @@
     ]
   },
   {
+    "id": "CleanLocalStorage",
+    "message": "UPS, wygląda na to, że aplikacja musi wyczyścić pamięć lokalną. Zapisz swoją frazę 12 words seed (jeśli nie zapisałeś jej wcześniej), a następnie wyczyść lokalny magazyn, klikając przycisk i importuj ponownie 12 words seed. Przepraszamy za niedogodności. {indent} {button}",
+    "files": [
+      "src/front/shared/components/Header/Header.tsx"
+    ]
+  },
+  {
+    "id": "WalletEmptyBalance",
+    "message": "Brak portfeli",
+    "files": [
+      "src/front/shared/pages/Wallet/Wallet.tsx"
+    ]
+  },
+  {
+    "id": "ClearAndReload",
+    "message": "Wyczyść i przeładuj",
+    "files": [
+      "src/front/shared/components/Header/Header.tsx"
+    ]
+  },
+  {
     "id": "WalletEmptyBalance",
     "message": "No wallets available",
     "files": [

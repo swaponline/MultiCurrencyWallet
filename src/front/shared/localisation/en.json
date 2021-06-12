@@ -684,7 +684,7 @@
   },
   {
     "id": "enterLesserAmount",
-    "message": "Enter lesser amount to \"You send\"",
+    "message": "Enter less amount to \"You send\"",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
@@ -5866,10 +5866,24 @@
     ]
   },
   {
+    "id": "CleanLocalStorage",
+    "message": "Oops, looks like the app needs to clean your local storage. Please save your 12 words seed phrase (if you have not saved it before), then clear local storage by clicking on the button and import 12 words seed again. Sorry for the inconvenience. {indent} {button}",
+    "files": [
+      "src/front/shared/components/Header/Header.tsx"
+    ]
+  },
+  {
     "id": "WalletEmptyBalance",
     "message": "No wallets available",
     "files": [
       "src/front/shared/pages/Wallet/Wallet.tsx"
+    ]
+  },
+  {
+    "id": "ClearAndReload",
+    "message": "Clear and reload",
+    "files": [
+      "src/front/shared/components/Header/Header.tsx"
     ]
   }
 ]

@@ -16,6 +16,7 @@ const Notification = (props) => {
     children,
     name,
     type,
+    timeout,
   } = props
   const [isMounted, setIsMounted] = useState(false)
   const [isRemoved, setIsRemoved] = useState(false)
@@ -34,13 +35,24 @@ const Notification = (props) => {
     }
 
     document.addEventListener('keydown', closeOnEscapeKey)
-    const timeout = setTimeout(closeNotification, 8000)
+
+    let timeoutId: ReturnType<typeof setTimeout> | undefined = undefined
+
+    if (timeout !== false) {
+      timeoutId = setTimeout(
+        closeNotification,
+        timeout === undefined ? 8000 : timeout
+      )
+    }
 
     return () => {
       document.removeEventListener('keydown', closeOnEscapeKey)
-      clearTimeout(timeout)
+
+      if (timeoutId) {
+        clearTimeout(timeoutId)
+      }
     }
-  }, [isMounted])
+  }, [isMounted, timeout])
 
   const closeNotification = () => {
     setIsRemoved(true)
@@ -63,6 +75,7 @@ const Notification = (props) => {
     'mounted': isMounted,
     'removed': isRemoved,
     'errorNotification': type === 'ErrorNotification',
+    'warning': type === 'warning'
   })
 
   return (
