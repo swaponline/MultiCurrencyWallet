@@ -31,7 +31,6 @@ import helpers, {
   constants,
   metamask,
   feedback,
-  ethToken,
   links,
 } from 'helpers'
 
@@ -73,7 +72,7 @@ type ExchangeProps = {
   history: IUniversalObj
   tokensData: IUniversalObj[]
   currencies: { [key: string]: string }[]
-  allCurrencyies: CurrencyObj[]
+  allCurrencies: CurrencyObj[]
   addSelectedItems: CurrencyObj[]
   hiddenCoinsList: string[]
   decline: string[]
@@ -145,7 +144,7 @@ const bannedPeers = {} // rejected swap peers
     user: { tokensData, activeFiat },
   }) => ({
     currencies: swapsHelper.isExchangeAllowed(currencies.partialItems),
-    allCurrencyies: currencies.items,
+    allCurrencies: currencies.items,
     addSelectedItems: swapsHelper.isExchangeAllowed(currencies.addPartialItems),
     orders: swapsHelper.filterIsPartial(orders),
     tokensData: [...Object.keys(tokensData).map((k) => tokensData[k])],
@@ -204,7 +203,7 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
     super(props)
 
     const {
-      allCurrencyies,
+      allCurrencies,
       intl: { locale },
       history,
       match,
@@ -223,8 +222,8 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
       const { coin: sellName } = getCoinInfo(sell)
       const { coin: buyName } = getCoinInfo(buy)
       if (
-        !allCurrencyies.map((item) => item.name).includes(sellName.toUpperCase()) ||
-        !allCurrencyies.map((item) => item.name).includes(buyName.toUpperCase())
+        !allCurrencies.map((item) => item.name).includes(sellName.toUpperCase()) ||
+        !allCurrencies.map((item) => item.name).includes(buyName.toUpperCase())
       ) {
         history.push(localisedUrl(locale, `${links.exchange}/eth-to-btc`))
       }
@@ -1395,7 +1394,7 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
 
     const noPairToken = config && config.isWidget ? config.erc20token : 'swap'
 
-    const checkingValue = this.props.allCurrencyies
+    const checkingValue = this.props.allCurrencies
       .map((item) => item.value)
       .includes(haveCurrency)
         ? haveCurrency
