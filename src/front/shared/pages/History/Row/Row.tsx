@@ -92,7 +92,7 @@ export default class Row extends PureComponent<any, any> {
         balance,
         unconfirmedBalance
       } = walletData
-      //@ts-ignore: strictNullChecks
+
       actions.modals.open(constants.modals.Withdraw, {
         currency,
         address,
@@ -114,7 +114,6 @@ export default class Row extends PureComponent<any, any> {
   handleCancelInvoice = async () => {
     const { invoiceData } = this.props
 
-    //@ts-ignore: strictNullChecks
     actions.modals.open(constants.modals.Confirm, {
       onAccept: async () => {
         await actions.invoices.cancelInvoice(invoiceData.id)
@@ -127,7 +126,6 @@ export default class Row extends PureComponent<any, any> {
 
   handleSendConfirmLink = () => {
     const {
-      history,
       confirmTx: {
         uniqhash,
       },
@@ -135,8 +133,6 @@ export default class Row extends PureComponent<any, any> {
 
     const link = `${getFullOrigin()}${links.multisign}/btc/confirm/${uniqhash}`
 
-    // history.push(shareLink)
-    //@ts-ignore: strictNullChecks
     actions.modals.open(constants.modals.Share, {
       link,
       title: `Confirm multisignature transaction`,

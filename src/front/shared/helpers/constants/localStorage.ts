@@ -31,6 +31,7 @@ export default {
   invoicesEnabled: `${process.env.ENTRY}:invoicesEnabled`,
   wasOnWidgetWallet: 'wasOnWidgetWallet',
   isDark: 'isDark',
+  isLight: 'isLight',
   testnetSkipPKCheck: 'testnetSkipPKCheck',
   prevWPUser: 'wp_widget_prev_userid',
   exchangeSettings: 'exchangeSettings',

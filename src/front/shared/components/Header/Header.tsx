@@ -126,7 +126,7 @@ class Header extends Component<any, any> {
     const oldUserDidNotSee = isWalletCreate === 'true' && sawWarning !== 'true'
     const newUser = isWalletCreate !== 'true' && sawWarning !== 'true'
 
-    if (oldUserDidNotSee) {
+    if (oldUserDidNotSee && false) { // Времено отключено
       feedback.app.warning('Modal about local storage was opened')
 
       const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
@@ -358,8 +358,10 @@ class Header extends Component<any, any> {
     feedback.theme.switched(wasDark ? 'bright' : 'dark')
     if (wasDark) {
       localStorage.removeItem(constants.localStorage.isDark)
+      localStorage.setItem(constants.localStorage.isLight, 'true')
     } else {
       localStorage.setItem(constants.localStorage.isDark, 'true')
+      localStorage.removeItem(constants.localStorage.isLight)
     }
     window.location.reload()
   }
@@ -439,7 +441,9 @@ class Header extends Component<any, any> {
           <Logo />
         </div>
         <div styleName="rightArea">
-          <ThemeSwitcher themeSwapAnimation={themeSwapAnimation} onClick={this.handleSetDark} />
+          {window.WPSO_selected_theme !== 'only_light' && window.WPSO_selected_theme !== 'only_dark' && (
+            <ThemeSwitcher themeSwapAnimation={themeSwapAnimation} onClick={this.handleSetDark} />
+          )}
 
           {isLogoutPossible && ( // some wordpress plugin cases
             <div styleName={`logoutWrapper ${isDark ? 'dark' : ''}`} onClick={this.handleLogout}>
