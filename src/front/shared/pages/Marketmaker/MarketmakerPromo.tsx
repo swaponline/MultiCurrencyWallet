@@ -6,6 +6,7 @@ import config from 'app-config'
 
 import styles from './MarketmakerPromo.scss'
 import { feedback, links, constants } from 'helpers'
+import actions from 'redux/actions'
 import Button from 'components/controls/Button/Button'
 import Expandable from 'components/ui/Expandable/Expandable'
 import FAQ from './FAQ'
@@ -16,16 +17,38 @@ import extensionPromoDark from './images/extensionPromoDark.png'
 
 const isDark = !!localStorage.getItem(constants.localStorage.isDark)
 
+type ComponentState = {
+  userWallets: IUniversalObj[]
+  userTokens: string[] | []
+}
+
 @cssModules(styles, { allowMultiple: true })
-export default class MarketmakerPromo extends React.Component<{}, {}> {
+export default class MarketmakerPromo extends React.Component<{}, ComponentState> {
   // step3and4enabled: boolean = false
 
   constructor(props) {
     super(props)
+
+    const userWallets = actions.core.getWallets()
+
+    this.state = {
+      userWallets,
+      userTokens: [],
+    }
   }
 
   componentDidMount() {
+    const { userWallets } = this.state
+
     feedback.marketmaking.enteredPromo()
+
+    userWallets.forEach((wallet) => {
+      if (wallet.tokenKey) {
+        this.setState((state) => ({
+          userTokens: [...state.userTokens, wallet.tokenKey],
+        }))
+      }
+    })
   }
 
   // onSelectBrowser() {
@@ -58,6 +81,8 @@ export default class MarketmakerPromo extends React.Component<{}, {}> {
   }
 
   render() {
+    const { userTokens } = this.state
+
     return (
       <div styleName="mm-promo-page">
         <section styleName="promoHeader">
@@ -107,17 +132,21 @@ export default class MarketmakerPromo extends React.Component<{}, {}> {
               />
             </a>
 
-            <div styleName="pseudLinksWrapper">
-              <Link to={'/marketmaker/{eth}wbtc'} styleName="pseudLink">
-                (ETH)WBTC
-              </Link>
-              <Link to={'/marketmaker/{bnb}wbtc'} styleName="pseudLink">
-                (BNB)WBTC
-              </Link>
-              <Link to={'/marketmaker/{matic}wbtc'} styleName="pseudLink">
-                (MATIC)WBTC
-              </Link>
-            </div>
+            {userTokens.length ? (
+              <div styleName="pseudLinksWrapper">
+                {userTokens.map((token) => {
+                  if (token.includes('wbtc')) {
+                    return (
+                      <Link to={`/marketmaker/${token}`} styleName="pseudLink">
+                        {token.toUpperCase()}
+                      </Link>
+                    )
+                  }
+
+                  return null
+                })}
+              </div>
+            ) : null}
           </div>
         </section>
 

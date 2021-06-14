@@ -151,20 +151,19 @@ class MarketmakerSettings extends Component<any, any> {
         return
       }
 
-      const ethWallet = actions.core.getWallet({
+      const evmCoinWallet = actions.core.getWallet({
         currency: tokenWallet.blockchain,
         connected: true,
         addressType: AddressType.Metamask
       })
 
-
       this.setState({
         btcWallet,
-        ethWallet,
+        evmCoinWallet,
         tokenWallet,
       }, async () => {
         const btcBalance = await actions.core.fetchWalletBalance(btcWallet)
-        const ethBalance = await actions.core.fetchWalletBalance(ethWallet)
+        const ethBalance = await actions.core.fetchWalletBalance(evmCoinWallet)
         const tokenBalance = await actions.core.fetchWalletBalance(tokenWallet)
 
         // Запрос баланса асинхронный. За это время пользователь мог уже перейти на другую страницу
@@ -357,7 +356,7 @@ class MarketmakerSettings extends Component<any, any> {
       ethBalance,
       btcBalance,
       tokenBalance,
-      ethWallet,
+      evmCoinWallet,
       tokenWallet,
     } = this.state
 
@@ -391,7 +390,7 @@ class MarketmakerSettings extends Component<any, any> {
     }
     if (!isEthBalanceOk) {
       hasError = true
-      const AB_Coin = ethWallet.currency.toUpperCase()
+      const AB_Coin = evmCoinWallet.currency.toUpperCase()
       //@ts-ignore: strictNullChecks
       actions.modals.open(constants.modals.AlertModal, {
         message: (
@@ -563,7 +562,7 @@ class MarketmakerSettings extends Component<any, any> {
       swapsIds,
       swapsByIds,
       btcWallet,
-      ethWallet,
+      evmCoinWallet,
       btcBalance,
       tokenWallet,
       tokenBalance,
@@ -589,13 +588,13 @@ class MarketmakerSettings extends Component<any, any> {
             />
           </h2>
           <p>
-            {tokenWallet && ethWallet && (
+            {tokenWallet && evmCoinWallet && (
               <FormattedMessage
                 id="MM_Promo_TitleBody"
                 defaultMessage="On swap.io users exchange BTC for {token} (a token that costs like BTC, but works on {Ab_Title}), and vice versa. You get min. 10% APY (annual percentage yield) as a commission from exchanges with low impermanent loss {link}."
                 values={{
                   token: tokenWallet.tokenKey.toUpperCase(),
-                  Ab_Title: ethWallet.fullName,
+                  Ab_Title: evmCoinWallet.fullName,
                   link: <a href={links.impermanentLoss} target="_blank">(?)</a>,
                 }}
               />
@@ -618,7 +617,7 @@ class MarketmakerSettings extends Component<any, any> {
                 defaultMessage="A hot wallet is required to launch marketmaking (BTC, {AB_Coin}, {token})."
                 values={{
                   token: tokenWallet?.currency?.toUpperCase(),
-                  AB_Coin: ethWallet?.currency?.toUpperCase(),
+                  AB_Coin: evmCoinWallet?.currency?.toUpperCase(),
                 }}
               />
             </p>
@@ -696,7 +695,7 @@ class MarketmakerSettings extends Component<any, any> {
                       defaultMessage="On swap.io users exchange BTC for {token} (a token that costs like BTC, but works on {Ab_Title}), and vice versa. You get min. 10% APY (annual percentage yield) as a commission from exchanges with low impermanent loss {link}."
                       values={{
                         token: tokenWallet.currency.toUpperCase(),
-                        Ab_Title: ethWallet.fullName,
+                        Ab_Title: evmCoinWallet.fullName,
                         link: <a href={links.impermanentLoss} target="_blank">(?)</a>,
                       }}
                     />
@@ -825,7 +824,7 @@ class MarketmakerSettings extends Component<any, any> {
                               tokenFullName: tokenWallet.fullName,
                               tokenStandart: tokenWallet.standard.toUpperCase(),
                               token: tokenWallet.currency.toUpperCase(),
-                              blockchainName: ethWallet.fullName,
+                              blockchainName: evmCoinWallet.fullName,
                             }}
                           />
                           <br />
@@ -834,7 +833,7 @@ class MarketmakerSettings extends Component<any, any> {
                             defaultMessage="{token} was created to allow Bitcoin holders to participate in decentralized finance (“DeFi”) apps that are popular on {blockchainName}."
                             values={{
                               token: tokenWallet.currency.toUpperCase(),
-                              blockchainName: ethWallet.fullName,
+                              blockchainName: evmCoinWallet.fullName,
                             }}
                           />
                         </span>
@@ -861,14 +860,14 @@ class MarketmakerSettings extends Component<any, any> {
                     }
                     </div>
                   )}
-                  {ethWallet && (
+                  {evmCoinWallet && (
                     <>
                       <p styleName='item-text__secondary'>
                         <FormattedMessage
                           id="MM_ETHBalance"
                           defaultMessage="Balance {AB_Coin}: {balance} (for miners fee)"
                           values={{
-                            AB_Coin: ethWallet.currency.toUpperCase(),
+                            AB_Coin: evmCoinWallet.currency.toUpperCase(),
                             balance: new BigNumber(ethBalance).dp(5).toNumber()
                           }}
                         />
@@ -880,7 +879,7 @@ class MarketmakerSettings extends Component<any, any> {
                           defaultMessage="to top up, transfer to"
                         />
                         <br />
-                        <Address address={ethWallet.address} format={AddressFormat.Full} />
+                        <Address address={evmCoinWallet.address} format={AddressFormat.Full} />
                       </p>
                     </>
                   )}
