@@ -215,8 +215,6 @@ class MarketmakerSettings extends Component<any, any> {
   async componentDidMount() {
     const { mnemonicSaved } = this.state
 
-    if (!mnemonicSaved) return
-
     SwapApp.onInit(() => {
       //@ts-ignore: strictNullChecks
       let isMarketEnabled = (SwapApp.shared().services.orders.getMyOrders().length > 0)
