@@ -5685,13 +5685,6 @@
     ]
   },
   {
-    "id": "MM_Wallet_Create",
-    "message": "Создать кошелёк",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
-    ]
-  },
-  {
     "id": "MM_Wallet_Restore",
     "message": "Восстановить из 12 слов",
     "files": [

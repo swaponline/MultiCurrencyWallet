@@ -55,6 +55,7 @@ class MarketmakerSettings extends Component<any, any> {
 
     const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
     const mnemonicSaved = (mnemonic === `-`)
+    const isWalletCreated = localStorage.getItem(constants.localStorage.isWalletCreate)
 
     this._handleSwapAttachedHandle = this.onSwapAttachedHandle.bind(this)
     this._handleSwapEnterStep = this.onSwapEnterStep.bind(this)
@@ -69,6 +70,7 @@ class MarketmakerSettings extends Component<any, any> {
       tokenBalance: 0,
       ethBalance: 0,
       isBalanceFetching: true,
+      isWalletCreated,
       isFirstFetchin: true,
       isMarketEnabled: false,
       isEthBalanceOk: false,
@@ -322,15 +324,21 @@ class MarketmakerSettings extends Component<any, any> {
     }
   }
 
-  handleSaveMnemonic() {
+  handleCreateWallet = () => {
+    const { history } = this.props
+
+    history.push(`${links.createWallet}/BTC`)
+  }
+
+  handleSaveMnemonic = () => {
     actions.modals.open(constants.modals.SaveMnemonicModal, {
       onClose: () => {
         const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
         const mnemonicSaved = (mnemonic === `-`)
 
-        this.setState({
+        this.setState(() => ({
           mnemonicSaved,
-        })
+        }))
       }
     })
   }
@@ -562,6 +570,7 @@ class MarketmakerSettings extends Component<any, any> {
       ethBalance,
       isBalanceFetching,
       isMarketEnabled,
+      isWalletCreated,
       mnemonicSaved,
     } = this.state
 
@@ -614,14 +623,25 @@ class MarketmakerSettings extends Component<any, any> {
               />
             </p>
             <div styleName='wallet-buttons'>
-              <div styleName='wallet-button'>
-                <Button blue onClick={this.handleSaveMnemonic.bind(this)}>
-                  <FormattedMessage
-                    id="MM_Wallet_Create"
-                    defaultMessage="Create wallet"
-                  />
-                </Button>
-              </div>
+              {isWalletCreated ? (
+                <div styleName='wallet-button'>
+                  <Button blue onClick={this.handleSaveMnemonic}>
+                    <FormattedMessage
+                      id="BTCMS_SaveMnemonicButton"
+                      defaultMessage="Save secret phrase"
+                    />
+                  </Button>
+                </div>
+              ) : (
+                <div styleName='wallet-button'>
+                  <Button blue onClick={this.handleCreateWallet}>
+                    <FormattedMessage
+                      id="menu.CreateWallet"
+                      defaultMessage="Create wallet"
+                    />
+                  </Button>
+                </div>
+              )}
               <div styleName='wallet-button'>
                 <Button blue onClick={this.handleRestoreMnemonic.bind(this)}>
                   <FormattedMessage
