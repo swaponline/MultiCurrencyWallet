@@ -82,7 +82,9 @@ class erc20LikeHelper {
   }): Promise<number> => {
     const { tokenOwnerAddress, tokenContractAddress, decimals } = params
     const Web3 = this.getCurrentWeb3()
-    const tokenContract = new Web3.eth.Contract(TokenApi, tokenContractAddress)
+    const tokenContract = new Web3.eth.Contract(TokenApi, tokenContractAddress, {
+      from: tokenOwnerAddress,
+    })
 
     let allowanceAmount = 0
 
