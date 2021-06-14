@@ -179,7 +179,7 @@ class Row extends Component<RowProps, RowState> {
             await actions.btcmultisig.getBalancePin()
             break
           default:
-            if (isMetamask && !isToken) {
+            if (isMetamask && !isToken && metamask.isAvailableNetwork()) {
               await metamask.getBalance()
             } else {
               await actions[reduxActionName].getBalance(currency)
@@ -775,6 +775,8 @@ class Row extends Component<RowProps, RowState> {
     const isMetamask = itemData.isMetamask
     const metamaskIsConnected = isMetamask && itemData.isConnected
     const metamaskDisconnected = isMetamask && !itemData.isConnected
+    const isAvailableMetamaskNetwork = isMetamask && metamask.isAvailableNetwork()
+    const isNotAvailableMetamaskNetwork = isMetamask && !metamask.isAvailableNetwork()
 
     return (
       !ethRowWithoutExternalProvider
@@ -783,24 +785,27 @@ class Row extends Component<RowProps, RowState> {
           <div styleName="assetsTableCurrency">
             <Coin
               className={styles.assetsTableIcon}
-              name={metamaskDisconnected ? web3Type : currency}
+              name={metamaskDisconnected || isNotAvailableMetamaskNetwork ? web3Type : currency }
             />
-            
+
             {/* Title-Link */}
             <div styleName="assetsTableInfo">
               <div styleName="nameRow">
-                <a onClick={metamaskDisconnected
+                <a onClick={
+                  metamaskDisconnected
                     ? this.connectMetamask
-                    : mnemonicSaved || metamaskIsConnected
-                      ? this.goToCurrencyHistory
-                      : () => null
+                    : isNotAvailableMetamaskNetwork
+                      ? () => null
+                      : mnemonicSaved || (metamaskIsConnected && isAvailableMetamaskNetwork)
+                        ? this.goToCurrencyHistory
+                        : () => null
                   }
                   styleName={`${
                     mnemonicSaved && isMobile
                       ? 'linkToHistory mobile'
-                      : mnemonicSaved || (isMetamask && metamaskIsConnected)
-                        ? 'linkToHistory desktop'
-                        : ''
+                        : mnemonicSaved || (metamaskIsConnected && isAvailableMetamaskNetwork)
+                          ? 'linkToHistory desktop'
+                          : ''
                   }`}
                   title={`Online ${fullName} wallet`}
                 >
@@ -812,7 +817,7 @@ class Row extends Component<RowProps, RowState> {
                 </a>
               </div>
             </div>
-            
+
             {/* Tip - if something wrong with endpoint */}
             {balanceError && nodeDownErrorShow && (
               <div className={styles.errorMessage}>
@@ -853,22 +858,29 @@ class Row extends Component<RowProps, RowState> {
                       <Button small empty onClick={metamask.handleConnectMetamask}>
                         <FormattedMessage id="CommonTextConnect" defaultMessage="Connect" />
                       </Button>
-                    ) : !isBalanceFetched || isBalanceFetching ? (
-                        itemData.isUserProtected &&
-                          !itemData.active ? (
-                            <span>
-                              <FormattedMessage
-                                id="walletMultisignNotJoined"
-                                defaultMessage="Not joined"
-                              />
-                            </span>
-                          ) : (
-                            <div styleName="loader">
-                              {!(balanceError && nodeDownErrorShow) && <InlineLoader />}
-                            </div>
-                          )
-                      ) : (
-                          <button 
+                    ) :
+                      isNotAvailableMetamaskNetwork
+                        ? (
+                          <Button small empty onClick={metamask.handleDisconnectWallet}>
+                            <FormattedMessage id="MetamaskDisconnect" defaultMessage="Отключить кошелек" />
+                          </Button>
+                        )
+                        : !isBalanceFetched || isBalanceFetching ? (
+                          itemData.isUserProtected &&
+                            !itemData.active ? (
+                              <span>
+                                <FormattedMessage
+                                  id="walletMultisignNotJoined"
+                                  defaultMessage="Not joined"
+                                />
+                              </span>
+                            ) : (
+                              <div styleName="loader">
+                                {!(balanceError && nodeDownErrorShow) && <InlineLoader />}
+                              </div>
+                            )
+                        ) : (
+                          <button
                             id="walletRowUpdateBalanceBtn"
                             styleName="cryptoBalanceBtn"
                             onClick={this.handleReloadBalance}
@@ -904,7 +916,7 @@ class Row extends Component<RowProps, RowState> {
                 </Fragment>
               )}
             </span>
-            
+
             {/* Address */}
             <Fragment>
               {statusInfo ?
@@ -925,33 +937,41 @@ class Row extends Component<RowProps, RowState> {
                         defaultMessage="Not connected"
                       />
                     </p>
-                    : // Address shows 
-                    <div styleName="addressStyle">
-                      <Copy text={itemData.address}>
-                        {isMobile ? (
-                            <PartOfAddress
-                              withoutLink
-                              currency={itemData.currency}
-                              contractAddress={itemData.contractAddress}
-                              address={itemData.address}
-                              style={{
-                                position: 'relative',
-                                bottom: '16px',
-                              }} 
-                            />
-                          ) : (
-                            <p id={`${
-                              baseCurrency ? baseCurrency + currency.toLowerCase() : currency.toLowerCase()
-                            }Address`}>
-                              {itemData.address}
-                            </p>
-                          )
-                        }
-                      </Copy>
-                    </div>
+                    : isNotAvailableMetamaskNetwork
+                      ?
+                        <p styleName="addressStyle">
+                          <FormattedMessage
+                            id="WalletRow_MetamaskNotAvailableNetwork"
+                            defaultMessage="Please choose another"
+                          />
+                        </p>
+                      : // Address shows
+                      <div styleName="addressStyle">
+                        <Copy text={itemData.address}>
+                          {isMobile ? (
+                              <PartOfAddress
+                                withoutLink
+                                currency={itemData.currency}
+                                contractAddress={itemData.contractAddress}
+                                address={itemData.address}
+                                style={{
+                                  position: 'relative',
+                                  bottom: '16px',
+                                }}
+                              />
+                            ) : (
+                              <p id={`${
+                                baseCurrency ? baseCurrency + currency.toLowerCase() : currency.toLowerCase()
+                              }Address`}>
+                                {itemData.address}
+                              </p>
+                            )
+                          }
+                        </Copy>
+                      </div>
               }
             </Fragment>
-            
+
             {/* Fiat amount */}
             {(currencyFiatBalance && showBalance && !balanceError) || msConfirmCount ? (
               <div styleName="assetsTableValue">
@@ -980,7 +1000,7 @@ class Row extends Component<RowProps, RowState> {
           </div>
 
           {/* Additional option. Ethereum row with external wallet */}
-          {!metamaskDisconnected &&
+          {!metamaskDisconnected && !isNotAvailableMetamaskNetwork &&
             <div onClick={this.handleOpenDropdown} styleName="assetsTableDots">
               <DropdownMenu
                 size="regular"

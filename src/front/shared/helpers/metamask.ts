@@ -6,11 +6,16 @@ import config from 'app-config'
 import { setMetamask, setProvider, setDefaultProvider, getWeb3 as getDefaultWeb3 } from 'helpers/web3'
 import SwapApp from 'swap.app'
 import Web3Connect from 'common/web3connect'
-import { AVAILABLE_NETWORKS_BY_COIN } from 'common/helpers/constants/AVAILABLE_EVM_NETWORKS'
+import { COIN_DATA, COIN_MODEL } from 'swap.app/constants/COINS'
+import getCoinInfo from 'common/coins/getCoinInfo'
+import { AVAILABLE_NETWORKS_BY_COIN, AVAILABLE_NETWORKS } from 'common/helpers/constants/AVAILABLE_EVM_NETWORKS'
 
 const NETWORK = process.env.MAINNET
   ? 'MAINNET'
   : 'TESTNET'
+
+const NETWORK_NUMBER = NETWORK === 'MAINNET'
+  ? 0 : 1 // 0 - MAINNET, 1 - TESTNET
 
 // Binance Smart Chain: 56 = Mainnet, 97 = Testnet
 // Ethereum: 1 = Mainnet, 3 = Ropsten
@@ -77,7 +82,7 @@ const _init = async () => {
 
 const addWallet = () => {
   addMetamaskWallet()
-  if (isConnected()) {
+  if (isConnected() && isAvailableNetwork()) {
     getBalance()
   }
 }
@@ -135,6 +140,34 @@ const connect = (options) => new Promise(async (resolved, reject) => {
 /* metamask wallet layer */
 const isCorrectNetwork = () => web3connect.isCorrectNetwork()
 
+const isAvailableNetwork = () => {
+    const hexChainId = web3connect.getChainId()
+    const chainId = Number(Number(hexChainId).toString(10))
+
+    return (AVAILABLE_NETWORKS[NETWORK_NUMBER].includes(chainId))
+}
+
+const isAvailableNetworkByCurrency = (currency) => {
+  const { coin, blockchain } = getCoinInfo(currency)
+  const ticker = coin.toUpperCase()
+
+  const isUTXOModel = COIN_DATA[ticker]?.model === COIN_MODEL.UTXO
+
+  if (isUTXOModel) return false
+
+  const currencyNetworkVersions =
+    (blockchain)
+    ? AVAILABLE_NETWORKS_BY_COIN[blockchain]
+    : AVAILABLE_NETWORKS_BY_COIN[ticker]
+
+  const currencyNetworkVersion = currencyNetworkVersions[NETWORK_NUMBER]
+
+  const hexChainId = web3connect.getChainId()
+  const currentNetworkVersions = Number(Number(hexChainId).toString(10))
+
+  return currencyNetworkVersion === currentNetworkVersions
+}
+
 const addMetamaskWallet = () => {
   const { user } = getState()
 
@@ -162,27 +195,48 @@ const addMetamaskWallet = () => {
 
     const hexChainId = web3connect.getChainId()
     const chainId = Number(Number(hexChainId).toString(10))
-    const currencyName = walletMap.get(chainId)?.currencyName
-    const fullWalletName = walletMap.get(chainId)?.fullWalletName
-    const currencyInfo = walletMap.get(chainId)?.currencyInfo
 
-    reducers.user.addWallet({
-      name: 'metamaskData',
-      data: {
-        address: getAddress(),
-        balance: 0,
-        balanceError: false,
-        isConnected: true,
-        isMetamask: true,
-        currency: currencyName,
-        fullName: fullWalletName,
-        infoAboutCurrency: currencyInfo,
-        isBalanceFetched: true,
-        isMnemonic: true,
-        unconfirmedBalance: 0,
-        networkVersion: chainId
-      },
-    })
+    if (isAvailableNetwork()){
+      const currencyName = walletMap.get(chainId)?.currencyName
+      const fullWalletName = walletMap.get(chainId)?.fullWalletName
+      const currencyInfo = walletMap.get(chainId)?.currencyInfo
+
+      reducers.user.addWallet({
+        name: 'metamaskData',
+        data: {
+          address: getAddress(),
+          balance: 0,
+          balanceError: false,
+          isConnected: true,
+          isMetamask: true,
+          currency: currencyName,
+          fullName: fullWalletName,
+          infoAboutCurrency: currencyInfo,
+          isBalanceFetched: true,
+          isMnemonic: true,
+          unconfirmedBalance: 0,
+          networkVersion: chainId
+        },
+      })
+    } else {
+      reducers.user.addWallet({
+        name: 'metamaskData',
+        data: {
+          address: `Please choose another`,
+          balance: 0,
+          balanceError: false,
+          isConnected: true,
+          isMetamask: true,
+          currency: 'ETH',
+          fullName: `Unknown network (${web3connect.getProviderTitle()})`,
+          infoAboutCurrency: undefined,
+          isBalanceFetched: true,
+          isMnemonic: true,
+          unconfirmedBalance: 0,
+          networkVersion: chainId
+        },
+      })
+    }
   } else {
     reducers.user.addWallet({
       name: 'metamaskData',
@@ -250,6 +304,8 @@ const metamaskApi = {
   getWeb3,
   disconnect,
   isCorrectNetwork,
+  isAvailableNetwork,
+  isAvailableNetworkByCurrency,
   handleDisconnectWallet,
   handleConnectMetamask,
 }
