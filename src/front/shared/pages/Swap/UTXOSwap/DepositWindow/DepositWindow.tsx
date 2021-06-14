@@ -219,10 +219,6 @@ export default class DepositWindow extends Component<any, any> {
     })
   }
 
-  handlerBuyWithCreditCard = (e) => {
-    e.preventDefault()
-  }
-
   componentDidMount() {
     this.createCycleUpdatingBalance()
   }

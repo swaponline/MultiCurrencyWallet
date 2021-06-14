@@ -908,7 +908,6 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
       })
   }
 
-  // @ToDo - need refactiong without BTC
   initSwap = async () => {
     const { decline } = this.props
 
@@ -1513,7 +1512,7 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
 
   showIncompleteSwap = () => {
     const { desclineOrders } = this.state
-    //@ts-ignore: strictNullChecks
+
     actions.modals.open(constants.modals.IncompletedSwaps, {
       desclineOrders,
     })
