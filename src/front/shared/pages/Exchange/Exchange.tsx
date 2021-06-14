@@ -49,10 +49,6 @@ import TurboIcon from 'shared/components/ui/TurboIcon/TurboIcon'
 
 import { COIN_DATA, COIN_MODEL, COIN_TYPE } from 'swap.app/constants/COINS'
 import getCoinInfo from 'common/coins/getCoinInfo'
-import { AVAILABLE_NETWORKS_BY_COIN } from 'common/helpers/constants/AVAILABLE_EVM_NETWORKS'
-
-const NETWORK = process.env.MAINNET ? 'MAINNET' : 'TESTNET'
-const NETWORK_NUMBER = NETWORK === 'MAINNET' ? 0 : 1 // 0 - MAINNET, 1 - TESTNET
 
 
 type CurrencyObj = {
@@ -1523,21 +1519,6 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
     return coin.toUpperCase()
   }
 
-  getCurrencyNetwork = (currency) => {
-    const { coin, blockchain } = getCoinInfo(currency)
-    const ticker = coin.toUpperCase()
-
-    const isUTXOModel = COIN_DATA[ticker]?.model === COIN_MODEL.UTXO
-    const chainNetworks = !isUTXOModel && (
-      blockchain ? AVAILABLE_NETWORKS_BY_COIN[blockchain]
-        : AVAILABLE_NETWORKS_BY_COIN[ticker]
-    )
-
-    if (chainNetworks) {
-      return chainNetworks[NETWORK_NUMBER]
-    }
-  }
-
   render() {
     const {
       currencies,
@@ -1702,13 +1683,11 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
       new BigNumber(availableAmount).isGreaterThanOrEqualTo(haveAmount) ||
       fromAddress.type === AddressType.Custom
 
-    const sellCoinNetworkVersion = this.getCurrencyNetwork(sellCoin)
-    const buyCoinNetworkVersion = this.getCurrencyNetwork(buyCoin)
-    const metamaskNetworkVersion = +getCurrentWeb3()?.currentProvider?.networkVersion
-
     const isCorrectMetamaskNetwork = !metamask.isConnected() ||
       (fromAddress.type === AddressType.Metamask || toAddress.type === AddressType.Metamask) &&
-      (metamaskNetworkVersion === sellCoinNetworkVersion || metamaskNetworkVersion === buyCoinNetworkVersion)
+      (metamask.isAvailableNetworkByCurrency(sellCoin) || metamask.isAvailableNetworkByCurrency(buyCoin))
+
+    console.log('isCorrectMetamaskNetwork', isCorrectMetamaskNetwork)
 
     const canStartSwap =
       !isErrorExternalDisabled &&

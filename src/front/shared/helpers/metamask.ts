@@ -6,11 +6,16 @@ import config from 'app-config'
 import { setMetamask, setProvider, setDefaultProvider, getWeb3 as getDefaultWeb3 } from 'helpers/web3'
 import SwapApp from 'swap.app'
 import Web3Connect from 'common/web3connect'
+import { COIN_DATA, COIN_MODEL } from 'swap.app/constants/COINS'
+import getCoinInfo from 'common/coins/getCoinInfo'
 import { AVAILABLE_NETWORKS_BY_COIN, AVAILABLE_NETWORKS } from 'common/helpers/constants/AVAILABLE_EVM_NETWORKS'
 
 const NETWORK = process.env.MAINNET
   ? 'MAINNET'
   : 'TESTNET'
+
+const NETWORK_NUMBER = NETWORK === 'MAINNET'
+  ? 0 : 1 // 0 - MAINNET, 1 - TESTNET
 
 // Binance Smart Chain: 56 = Mainnet, 97 = Testnet
 // Ethereum: 1 = Mainnet, 3 = Ropsten
@@ -140,6 +145,27 @@ const isAvailableNetwork = () => {
     const chainId = Number(Number(hexChainId).toString(10))
 
     return (AVAILABLE_NETWORKS.includes(chainId))
+}
+
+const isAvailableNetworkByCurrency = (currency) => {
+  const { coin, blockchain } = getCoinInfo(currency)
+  const ticker = coin.toUpperCase()
+
+  const isUTXOModel = COIN_DATA[ticker]?.model === COIN_MODEL.UTXO
+
+  if (isUTXOModel) return false
+
+  const currencyNetworkVersions =
+    (blockchain)
+    ? AVAILABLE_NETWORKS_BY_COIN[blockchain]
+    : AVAILABLE_NETWORKS_BY_COIN[ticker]
+
+  const currencyNetworkVersion = currencyNetworkVersions[NETWORK_NUMBER]
+
+  const hexChainId = web3connect.getChainId()
+  const currentNetworkVersions = Number(Number(hexChainId).toString(10))
+
+  return currencyNetworkVersion === currentNetworkVersions
 }
 
 const addMetamaskWallet = () => {
@@ -279,6 +305,7 @@ const metamaskApi = {
   disconnect,
   isCorrectNetwork,
   isAvailableNetwork,
+  isAvailableNetworkByCurrency,
   handleDisconnectWallet,
   handleConnectMetamask,
 }
