@@ -144,7 +144,7 @@ const isAvailableNetwork = () => {
     const hexChainId = web3connect.getChainId()
     const chainId = Number(Number(hexChainId).toString(10))
 
-    return (AVAILABLE_NETWORKS.includes(chainId))
+    return (AVAILABLE_NETWORKS[NETWORK_NUMBER].includes(chainId))
 }
 
 const isAvailableNetworkByCurrency = (currency) => {
