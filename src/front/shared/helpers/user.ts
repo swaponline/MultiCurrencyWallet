@@ -93,3 +93,7 @@ export const filterUserCurrencyData = (currencyData) => {
     return isAllowed(wallet)
   })
 }
+
+export const isCorrectWalletToShow = (wallet) => {
+  return !wallet.isMetamask || (wallet.isConnected && !wallet.unknownNetwork)
+}

@@ -282,13 +282,9 @@ class Wallet extends PureComponent<any, any> {
     const userCurrencyData = actions.core.getWallets({})
     const availableWallets = user.filterUserCurrencyData(userCurrencyData)
 
-    const isCorrectFirstWallet =
-      !availableWallets[0].isMetamask ||
-        (availableWallets[0].isConnected && !availableWallets[0].unknownNetwork)
-
     if (
       !Object.keys(availableWallets).length ||
-      (Object.keys(availableWallets).length === 1 && !isCorrectFirstWallet)
+      (Object.keys(availableWallets).length === 1 && !user.isCorrectWalletToShow(availableWallets[0]))
     ) {
       actions.notifications.show(
         constants.notifications.Message,
@@ -303,7 +299,7 @@ class Wallet extends PureComponent<any, any> {
       return
     }
 
-    const firstWallet = isCorrectFirstWallet ? availableWallets[0] : availableWallets[1]
+    const firstWallet = user.isCorrectWalletToShow(availableWallets[0]) ? availableWallets[0] : availableWallets[1]
 
     const { currency, address, tokenKey } = firstWallet
     let targetCurrency = currency
