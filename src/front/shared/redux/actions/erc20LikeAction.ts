@@ -121,6 +121,9 @@ class Erc20LikeAction {
     if (tokenName === undefined) return
 
     const tokenKey = `{${this.currencyKey}}${tokenName.toLowerCase()}`
+
+    if(metamask.isConnected() && !metamask.isAvailableNetworkByCurrency(tokenKey)) return
+
     const { user: { tokensData } } = getState()
     const {
       address: ownerAddress,
