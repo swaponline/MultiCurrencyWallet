@@ -227,24 +227,31 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
     const {
       data: prevData,
     } = prevProps
-    const {
-      data,
-    } = this.props
 
     const {
       amount: prevAmount,
       fiatAmount: prevFiatAmount,
     } = prevState
+
     const {
       amount,
       fiatAmount,
     } = this.state
 
+    const availableWallets = user.filterUserCurrencyData(actions.core.getWallets())
+
+    const walletIndex = availableWallets.findIndex(wallet => wallet.currency === this.props.data.currency && wallet.address === this.props.data.address)
+
     if (prevData !== this.props.data) {
       this.updateCurrencyData()
     }
+
     if (prevAmount !== amount || prevFiatAmount !== fiatAmount) {
       this.updateServiceAndTotalFee()
+    }
+
+    if(walletIndex === -1) {
+      this.handleHaveNotAvailableWallet(availableWallets)
     }
   }
 
@@ -260,6 +267,48 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
     actions.notifications.show(
       constants.notifications.ErrorNotification,
       { error: `name (${error.name}); message(${error.message}); details(${details})` }
+    )
+  }
+
+  handleHaveNotAvailableWallet = (availableWallets) => {
+    const {
+      history,
+      intl: { locale },
+    } = this.props
+
+    if (
+      !Object.keys(availableWallets).length ||
+      (Object.keys(availableWallets).length === 1 && !user.isCorrectWalletToShow(availableWallets[0]))
+    ) {
+      actions.notifications.show(
+        constants.notifications.Message,
+        {message: (
+          <FormattedMessage
+            id="WalletEmptyBalance"
+            defaultMessage="No wallets available"
+          />
+        )}
+      )
+
+      return
+    }
+
+    const firstWallet = user.isCorrectWalletToShow(availableWallets[0]) ? availableWallets[0] : availableWallets[1]
+
+    const { currency, address, tokenKey } = firstWallet
+    let targetCurrency = currency
+
+    switch (currency.toLowerCase()) {
+      case 'btc (multisig)':
+      case 'btc (sms-protected)':
+      case 'btc (pin-protected)':
+        targetCurrency = 'btc'
+    }
+
+    const firstUrlPart = tokenKey ? `/token/${tokenKey}` : `/${targetCurrency}`
+
+    history.push(
+      localisedUrl(locale, `${firstUrlPart}/${address}/send`)
     )
   }
 
