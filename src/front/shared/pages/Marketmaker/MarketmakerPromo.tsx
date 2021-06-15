@@ -135,7 +135,10 @@ export default class MarketmakerPromo extends React.Component<{}, ComponentState
             {userTokens.length ? (
               <div styleName="pseudLinksWrapper">
                 {userTokens.map((token, index) => {
-                  if (token.includes('wbtc')) {
+                  if (
+                    token.includes('wbtc') ||
+                    token.includes('btcb')
+                  ) {
                     return (
                       <Link key={index} to={`/marketmaker/${token}`} styleName="pseudLink">
                         {token.toUpperCase()}
