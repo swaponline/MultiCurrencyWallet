@@ -242,7 +242,7 @@ const getBalances = () => {
 
   return new Promise(async (resolve) => {
     const balances = [
-      ...(metamask.isEnabled() && metamask.isConnected())
+      ...(metamask.isEnabled() && metamask.isConnected() && metamask.isAvailableNetwork())
         ? [ { func: metamask.getBalance, name: 'metamask' } ]
         : [],
       { func: actions.btc.getBalance, name: 'btc' },
