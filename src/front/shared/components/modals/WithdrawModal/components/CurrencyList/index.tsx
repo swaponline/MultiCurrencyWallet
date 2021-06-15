@@ -71,8 +71,6 @@ export default class CurrencyList extends Component<any, any> {
       currentAddress,
     } = this.props
 
-    console.log('tableRows', tableRows)
-
     const {
       isAssetsOpen,
     } = this.state
