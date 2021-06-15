@@ -121,6 +121,9 @@ class Erc20LikeAction {
     if (tokenName === undefined) return
 
     const tokenKey = `{${this.currencyKey}}${tokenName.toLowerCase()}`
+
+    if(metamask.isConnected() && !metamask.isAvailableNetworkByCurrency(tokenKey)) return
+
     const { user: { tokensData } } = getState()
     const {
       address: ownerAddress,
@@ -520,22 +523,18 @@ class Erc20LikeAction {
     const { decimals } = this.returnTokenInfo(name)
     const { user: { tokensData } } = getState()
 
-    const Web3 = this.getCurrentWeb3()
-
     const tokenKey = `{${this.currencyKey}}${name.toLowerCase()}`
-    const { address: ownerAddress } = tokensData[tokenKey]
+    const { address: tokenOwnerAddress, contractAddress: tokenContractAddress } = tokensData[tokenKey]
 
     try {
       const allowance = await erc20Like[this.standard].checkAllowance({
-        tokenOwnerAddress: ownerAddress,
-        tokenContractAddress: to,
+        tokenOwnerAddress,
+        tokenContractAddress,
         decimals: decimals,
       })
 
       // if contract has enough allowance then skip
-      const weiAllowance = Web3.utils.toWei(targetAllowance)
-
-      if (new BigNumber(weiAllowance).isLessThanOrEqualTo(allowance)) {
+      if (new BigNumber(targetAllowance).isLessThanOrEqualTo(allowance)) {
         return Promise.resolve()
       }
 
