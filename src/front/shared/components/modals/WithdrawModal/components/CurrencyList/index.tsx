@@ -71,6 +71,8 @@ export default class CurrencyList extends Component<any, any> {
       currentAddress,
     } = this.props
 
+    console.log('tableRows', tableRows)
+
     const {
       isAssetsOpen,
     } = this.state
@@ -117,6 +119,10 @@ export default class CurrencyList extends Component<any, any> {
         {isAssetsOpen && (
           <div styleName={`customSelectList ${isDark ? 'darkList' : ''}`}>
             {tableRows.map((item, index) => {
+              const isCorrectWallet = !item.isMetamask || (item.isConnected && !item.unknownNetwork)
+
+              if (!isCorrectWallet) return
+
               const baseCurrency = item.baseCurrency
               const itemId = `${
                 baseCurrency ? baseCurrency.toLowerCase() : ''
