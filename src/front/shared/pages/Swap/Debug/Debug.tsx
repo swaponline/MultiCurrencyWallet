@@ -1,18 +1,18 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-
 import CSSModules from 'react-css-modules'
 import styles from './Debug.scss'
 import { FormattedMessage } from 'react-intl'
-
 import ShowBtcScript from './ShowBtcScript'
+import { constants } from 'helpers'
 
-@CSSModules(styles)
-export default class Debug extends Component<any, any> {
-  static propTypes = {
-    flow: PropTypes.object,
-  }
+const isDark = localStorage.getItem(constants.localStorage.isDark)
 
+type ComponentProps = {
+  flow: IUniversalObj
+}
+
+@CSSModules(styles, { allowMultiple: true })
+export default class Debug extends Component<ComponentProps, any> {
   render() {
     const {
       flow: {
@@ -24,7 +24,7 @@ export default class Debug extends Component<any, any> {
     } = this.props
 
     return (
-      <div styleName="debug">
+      <div styleName={`debug ${isDark ? 'dark' : ''}`}>
         <button styleName='button' onClick={() => document.location.href = '#/localStorage'}>
           <FormattedMessage id="DebugStoredDataLink" defaultMessage="Show stored data" />
         </button>

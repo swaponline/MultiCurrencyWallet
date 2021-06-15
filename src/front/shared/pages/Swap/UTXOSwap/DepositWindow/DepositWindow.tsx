@@ -1,6 +1,7 @@
 import React, { Fragment, Component } from 'react'
 
 import config from 'app-config'
+import { COIN_DATA, COIN_MODEL } from 'swap.app/constants/COINS'
 import actions from 'redux/actions'
 import helpers from 'helpers'
 import erc20Like from 'common/erc20Like'
@@ -24,8 +25,8 @@ type ComponentState = {
   flow: IUniversalObj
   isBalanceEnough: boolean
   isBalanceFetching: boolean
-  isSellCurrencyEthOrEthToken: boolean
-  isSellCurrencyEthToken: boolean
+  isSellCurrencyToken: boolean
+  isSellCurrencyEvmCoin: boolean
   balance: number
   address: string
   sellAmount: number
@@ -53,8 +54,8 @@ export default class DepositWindow extends Component<any, ComponentState> {
 
     this.currency = swap.sellCurrency.toLowerCase()
 
-    const isSellCurrencyEthOrEthToken = helpers.ethToken.isEthOrEthToken({ name: swap.sellCurrency })
-    const isSellCurrencyEthToken = erc20Like.erc20.isToken({ name: swap.sellCurrency })
+    const isSellCurrencyToken = erc20Like.isToken({ name: swap.sellCurrency })
+    const isSellCurrencyEvmCoin = COIN_DATA[swap.sellCurrency].model === COIN_MODEL.AB
 
     this.state = {
       swap,
@@ -64,12 +65,12 @@ export default class DepositWindow extends Component<any, ComponentState> {
       flow: swap.flow.state,
       isBalanceEnough: false,
       isBalanceFetching: false,
-      isSellCurrencyEthOrEthToken,
-      isSellCurrencyEthToken,
-      balance: isSellCurrencyEthOrEthToken
+      isSellCurrencyToken,
+      isSellCurrencyEvmCoin,
+      balance: isSellCurrencyToken || isSellCurrencyEvmCoin
         ? currencyData.balance - (currencyData.unconfirmedBalance || 0)
         : flow.scriptBalance,
-      address: isSellCurrencyEthOrEthToken
+      address: isSellCurrencyToken || isSellCurrencyEvmCoin
         ? currencyData.address
         : flow.scriptAddress,
       //@ts-ignore: strictNullChecks
@@ -80,19 +81,23 @@ export default class DepositWindow extends Component<any, ComponentState> {
 
   updateBalance = async () => {
     const {
+      swap,
       address,
-      isSellCurrencyEthOrEthToken,
-      isSellCurrencyEthToken,
+      isSellCurrencyToken,
+      isSellCurrencyEvmCoin,
     } = this.state
 
     let actualBalance
+    const sellBlockchain = swap.sellBlockchain
 
-    if (isSellCurrencyEthOrEthToken) {
-      if (isSellCurrencyEthToken) {
-        // TODO: replace actions with erc20, bep20 ...
-        actualBalance = await actions.erc20.getBalance(this.currency)
+    if (isSellCurrencyToken || isSellCurrencyEvmCoin) {
+      if (isSellCurrencyToken) {
+        const tokenKey = `{${sellBlockchain}}${swap.sellCurrency}`.toUpperCase()
+        const standard = COIN_DATA[tokenKey].standard.toLowerCase()
+
+        actualBalance = await actions[standard].getBalance(this.currency)
       } else {
-        actualBalance = await actions.eth.getBalance()
+        actualBalance = await actions[sellBlockchain.toLowerCase()].getBalance()
       }
     } else {
       //@ts-ignore: strictNullChecks
@@ -107,11 +112,11 @@ export default class DepositWindow extends Component<any, ComponentState> {
   }
 
   updateRemainingBalance = async () => {
-    const { sellAmount, balance, dynamicFee, isSellCurrencyEthToken } = this.state
+    const { sellAmount, balance, dynamicFee, isSellCurrencyToken } = this.state
 
     let remainingBalance = new BigNumber(sellAmount).minus(balance)
 
-    if (!isSellCurrencyEthToken) {
+    if (!isSellCurrencyToken) {
       remainingBalance = remainingBalance.plus(dynamicFee)
     }
 
@@ -148,17 +153,24 @@ export default class DepositWindow extends Component<any, ComponentState> {
   }
 
   checkThePayment = () => {
-    const { swap, dynamicFee, sellAmount, balance, isSellCurrencyEthOrEthToken } = this.state
+    const {
+      swap,
+      dynamicFee,
+      sellAmount,
+      balance,
+      isSellCurrencyToken,
+      isSellCurrencyEvmCoin,
+    } = this.state
 
     if (new BigNumber(sellAmount).plus(dynamicFee).isLessThanOrEqualTo(balance)) {
       this.setState(() => ({
         isBalanceEnough: true,
       }))
 
-      if (!isSellCurrencyEthOrEthToken) {
-        swap.flow.skipSyncBalance()
-      } else {
+      if (isSellCurrencyToken || isSellCurrencyEvmCoin) {
         swap.flow.syncBalance()
+      } else {
+        swap.flow.skipSyncBalance()
       }
     }
   }
@@ -218,8 +230,6 @@ export default class DepositWindow extends Component<any, ComponentState> {
   }
 
   handleReloadBalance = async () => {
-    const { isBalanceFetching } = this.state
-
     this.updateBalance()
 
     this.setState({

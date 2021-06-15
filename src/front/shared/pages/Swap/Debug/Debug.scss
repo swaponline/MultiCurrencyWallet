@@ -4,6 +4,12 @@
   border: 1px solid $notice-color;
 }
 
+.debug.dark {
+  .information {
+    color: $d-color;
+  }
+}
+
 .title {
   margin: 1em 0 0;
 }
@@ -16,5 +22,6 @@
 
 .information {
   display: block;
-  font-size: 11px;
+  font-size: 13px;
+  color: $l-color;
 }
