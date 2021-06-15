@@ -757,8 +757,8 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
     const isUserSellToken = sellWallet.isToken
     const isUserBuyToken = buyWallet.isToken
     const sellBalance = new BigNumber(balances[sellCurrency.toUpperCase()] || 0)
-    let hasEnoughBalanceSellAmount = false
-    let hasEnoughBalanceForFullPayment = false
+    let enoughBalanceForSellAmount = false
+    let enoughBalanceForFullPayment = false
     let balanceIsOk = false
 
     try {
@@ -768,20 +768,25 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
       const sellBlockchainBalance = new BigNumber((isUserSellToken) ? balances[sellBlockchain] : 0)
       const buyBlockchainBalance = new BigNumber((isUserBuyToken) ? balances[buyBlockchain] : 0)
 
-      hasEnoughBalanceSellAmount = sellBalance.isGreaterThanOrEqualTo(amount)
+      enoughBalanceForSellAmount = sellBalance.isGreaterThanOrEqualTo(amount)
 
-      if (isUserSellToken && hasEnoughBalanceSellAmount && sellBlockchainBalance.isGreaterThanOrEqualTo(sellFee)) {
-        hasEnoughBalanceForFullPayment = true
-      } else if (isUserBuyToken && (fromType === AddressType.Custom || hasEnoughBalanceSellAmount) &&  buyBlockchainBalance.isGreaterThanOrEqualTo(buyFee)) {
-        hasEnoughBalanceForFullPayment = true
-      } else if (isUTXOSell && sellBalance.isGreaterThanOrEqualTo(new BigNumber(amount).plus(sellFee)) && buyBlockchainBalance.isGreaterThanOrEqualTo(buyFee)) {
-        hasEnoughBalanceForFullPayment = true
-      } else if (fromType === AddressType.Custom && buyBlockchainBalance.isGreaterThanOrEqualTo(buyFee)) {
-        hasEnoughBalanceForFullPayment = true
-      } else if (sellBalance.isGreaterThanOrEqualTo(new BigNumber(amount).plus(sellFee))) {
-        hasEnoughBalanceForFullPayment = true
+      if (isUserSellToken && enoughBalanceForSellAmount && sellBlockchainBalance.isGreaterThanOrEqualTo(sellFee)) {
+        enoughBalanceForFullPayment = true
       }
-      if (hasEnoughBalanceForFullPayment) {
+      else if (isUserBuyToken && (fromType === AddressType.Custom || enoughBalanceForSellAmount) &&  buyBlockchainBalance.isGreaterThanOrEqualTo(buyFee)) {
+        enoughBalanceForFullPayment = true
+      }
+      else if (isUTXOSell && sellBalance.isGreaterThanOrEqualTo(new BigNumber(amount).plus(sellFee)) && buyBlockchainBalance.isGreaterThanOrEqualTo(buyFee)) {
+        enoughBalanceForFullPayment = true
+      }
+      else if (fromType === AddressType.Custom && buyBlockchainBalance.isGreaterThanOrEqualTo(buyFee)) {
+        enoughBalanceForFullPayment = true
+      }
+      else if (sellBalance.isGreaterThanOrEqualTo(new BigNumber(amount).plus(sellFee))) {
+        enoughBalanceForFullPayment = true
+      }
+
+      if (enoughBalanceForFullPayment) {
         balanceIsOk = true
       }
     } catch (error) {
@@ -795,8 +800,14 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
     if (!balanceIsOk) {
       const { address } = actions.core.getWallet({ currency: sellCurrency })
       const {
-        sell: { fee: sellFee, coin: sellCoin },
-        buy: { fee: buyFee, coin: buyCoin },
+        sell: {
+          fee: sellFee,
+          coin: sellCoin,
+        },
+        buy: {
+          fee: buyFee,
+          coin: buyCoin,
+        },
       } = pairFees
 
       const alertMessage = (
@@ -806,7 +817,7 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
             defaultMessage="Please top up your balance before you start the swap."
           />
           <br />
-          {hasEnoughBalanceForFullPayment && (
+          {enoughBalanceForFullPayment && (
             <FormattedMessage
               id="Swap_NeedMoreAmount"
               defaultMessage="You must have at least {amount} {currency} on your balance. {br} Miner commission {sellFee} {sellCoin} and {buyFee} {buyCoin}"
@@ -823,7 +834,7 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
           )}
         </Fragment>
       )
-      //@ts-ignore: strictNullChecks
+
       actions.modals.open(constants.modals.AlertWindow, {
         title: (
           <FormattedMessage

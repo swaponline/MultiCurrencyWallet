@@ -6,12 +6,10 @@ import helpers from 'helpers'
 import erc20Like from 'common/erc20Like'
 import CSSModules from 'react-css-modules'
 import styles from '../../Swap.scss'
-
 import { BigNumber } from 'bignumber.js'
 
 import { FormattedMessage } from 'react-intl'
-import CopyToClipboard from 'react-copy-to-clipboard'
-
+import Copy from 'components/ui/Copy/Copy'
 import Button from 'components/controls/Button/Button'
 import QR from 'components/QR/QR'
 import Timer from '../../Timer/Timer'
@@ -19,23 +17,35 @@ import Tooltip from 'components/ui/Tooltip/Tooltip'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import COINS_WITH_DYNAMIC_FEE from 'common/helpers/constants/COINS_WITH_DYNAMIC_FEE'
 
+type ComponentState = {
+  swap: IUniversalObj
+  dynamicFee: number
+  remainingBalance: number
+  flow: IUniversalObj
+  isBalanceEnough: boolean
+  isBalanceFetching: boolean
+  isSellCurrencyEthOrEthToken: boolean
+  isSellCurrencyEthToken: boolean
+  balance: number
+  address: string
+  sellAmount: number
+  requiredAmount: number
+}
 
 @CSSModules(styles)
-export default class DepositWindow extends Component<any, any> {
+export default class DepositWindow extends Component<any, ComponentState> {
   _fields = null
   swap = null
   currency = null
-  isSellCurrencyEthOrEthToken = null
-  isSellCurrencyEthToken = null
 
-  constructor(options) {
-    super(options)
+  constructor(props) {
+    super(props)
     const {
       swap,
       flow,
       currencyData,
       fields,
-    } = options
+    } = props
 
     this._fields = fields
 
@@ -43,10 +53,8 @@ export default class DepositWindow extends Component<any, any> {
 
     this.currency = swap.sellCurrency.toLowerCase()
 
-    //@ts-ignore: strictNullChecks
-    this.isSellCurrencyEthOrEthToken = helpers.ethToken.isEthOrEthToken({ name: swap.sellCurrency })
-    //@ts-ignore: strictNullChecks
-    this.isSellCurrencyEthToken = erc20Like.erc20.isToken({ name: swap.sellCurrency })
+    const isSellCurrencyEthOrEthToken = helpers.ethToken.isEthOrEthToken({ name: swap.sellCurrency })
+    const isSellCurrencyEthToken = erc20Like.erc20.isToken({ name: swap.sellCurrency })
 
     this.state = {
       swap,
@@ -56,26 +64,31 @@ export default class DepositWindow extends Component<any, any> {
       flow: swap.flow.state,
       isBalanceEnough: false,
       isBalanceFetching: false,
-      balance: this.isSellCurrencyEthOrEthToken
+      isSellCurrencyEthOrEthToken,
+      isSellCurrencyEthToken,
+      balance: isSellCurrencyEthOrEthToken
         ? currencyData.balance - (currencyData.unconfirmedBalance || 0)
         : flow.scriptBalance,
-      address: this.isSellCurrencyEthOrEthToken
+      address: isSellCurrencyEthOrEthToken
         ? currencyData.address
         : flow.scriptAddress,
-      currencyFullName: currencyData.fullName,
       //@ts-ignore: strictNullChecks
       sellAmount: this.swap.sellAmount,
+      requiredAmount: 0,
     }
   }
 
   updateBalance = async () => {
-    const { swap } = this.props
-    const { sellAmount, address } = this.state
+    const {
+      address,
+      isSellCurrencyEthOrEthToken,
+      isSellCurrencyEthToken,
+    } = this.state
 
     let actualBalance
 
-    if (this.isSellCurrencyEthOrEthToken) {
-      if (this.isSellCurrencyEthToken) {
+    if (isSellCurrencyEthOrEthToken) {
+      if (isSellCurrencyEthToken) {
         // TODO: replace actions with erc20, bep20 ...
         actualBalance = await actions.erc20.getBalance(this.currency)
       } else {
@@ -94,17 +107,16 @@ export default class DepositWindow extends Component<any, any> {
   }
 
   updateRemainingBalance = async () => {
-    const { swap } = this.props
-    const { sellAmount, balance, dynamicFee } = this.state
+    const { sellAmount, balance, dynamicFee, isSellCurrencyEthToken } = this.state
 
     let remainingBalance = new BigNumber(sellAmount).minus(balance)
 
-    if (!this.isSellCurrencyEthToken) {
+    if (!isSellCurrencyEthToken) {
       remainingBalance = remainingBalance.plus(dynamicFee)
     }
 
     this.setState(() => ({
-      remainingBalance: remainingBalance.dp(6, BigNumber.ROUND_UP),
+      remainingBalance: remainingBalance.dp(6, BigNumber.ROUND_UP).toNumber(),
     }))
   }
 
@@ -123,7 +135,10 @@ export default class DepositWindow extends Component<any, any> {
       }))
     }
 
-    const requiredAmount = new BigNumber(sellAmount).plus(dynamicFee).dp(6, BigNumber.ROUND_CEIL)
+    const requiredAmount = new BigNumber(sellAmount)
+      .plus(dynamicFee)
+      .dp(6, BigNumber.ROUND_CEIL)
+      .toNumber()
 
     this.setState(() => ({
       requiredAmount,
@@ -133,14 +148,14 @@ export default class DepositWindow extends Component<any, any> {
   }
 
   checkThePayment = () => {
-    const { swap, dynamicFee, sellAmount, balance } = this.state
+    const { swap, dynamicFee, sellAmount, balance, isSellCurrencyEthOrEthToken } = this.state
 
-    if (sellAmount.plus(dynamicFee).isLessThanOrEqualTo(balance)) {
+    if (new BigNumber(sellAmount).plus(dynamicFee).isLessThanOrEqualTo(balance)) {
       this.setState(() => ({
         isBalanceEnough: true,
       }))
 
-      if (!this.isSellCurrencyEthOrEthToken) {
+      if (!isSellCurrencyEthOrEthToken) {
         swap.flow.skipSyncBalance()
       } else {
         swap.flow.syncBalance()
@@ -149,7 +164,6 @@ export default class DepositWindow extends Component<any, any> {
   }
 
   createCycleUpdatingBalance = async () => {
-    const { sellAmount, balance } = this.state
     //@ts-ignore: strictNullChecks
     const { scriptValues } = this._fields
 
@@ -236,12 +250,8 @@ export default class DepositWindow extends Component<any, any> {
       balance,
       address,
       dynamicFee,
-      sellAmount,
-      flowBalance,
       requiredAmount,
-      missingBalance,
       isBalanceEnough,
-      currencyFullName,
       remainingBalance,
       isBalanceFetching,
     } = this.state
@@ -311,7 +321,7 @@ export default class DepositWindow extends Component<any, any> {
           <div styleName="qrImg">
               <QR address={`${address}?amount=${remainingBalance}`} />
             </div>
-          <CopyToClipboard text={address}>
+          <Copy text={address}>
             <div>
               <a styleName="linkText">
                 <FormattedMessage
@@ -342,11 +352,13 @@ export default class DepositWindow extends Component<any, any> {
                 </a>
                 <Button brand fullWidth>
                   <i className="fas fa-copy" />
-                  <span className="copyText"><FormattedMessage id="deposit312" defaultMessage="copy" /></span>
+                  <span className="copyText">
+                    <FormattedMessage id="deposit312" defaultMessage="copy" />
+                  </span>
                 </Button>
               </div>
             </div>
-          </CopyToClipboard>
+          </Copy>
           <div>
             <i className="fas fa-sync-alt" styleName="icon" onClick={this.handleReloadBalance} />
             {/* eslint-disable */}
