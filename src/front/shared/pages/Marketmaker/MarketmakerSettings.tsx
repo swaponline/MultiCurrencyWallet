@@ -1,21 +1,18 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import CSSModules from 'react-css-modules'
 
 import { BigNumber } from 'bignumber.js'
 
-import { connect } from 'redaction'
 import actions from 'redux/actions'
-
 import SwapApp from 'swap.app'
 import Swap from 'swap.swap'
 
 import { constants, links, feedback } from 'helpers'
 import config from 'helpers/externalConfig'
 
-
 import styles from './MarketmakerSettings.scss'
 
-import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
+import { FormattedMessage, injectIntl } from 'react-intl'
 
 import SwapRow from './SwapRow'
 import FAQ from './FAQ'
@@ -23,7 +20,6 @@ import FAQ from './FAQ'
 import Toggle from 'components/controls/Toggle/Toggle'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
-import Input from 'components/forms/Input/Input'
 
 import btc from './images/btcIcon.svg'
 import wbtc from './images/wbtcIcon.svg'
@@ -59,6 +55,7 @@ class MarketmakerSettings extends Component<any, any> {
 
     const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
     const mnemonicSaved = (mnemonic === `-`)
+    const isWalletCreated = localStorage.getItem(constants.localStorage.isWalletCreate)
 
     this._handleSwapAttachedHandle = this.onSwapAttachedHandle.bind(this)
     this._handleSwapEnterStep = this.onSwapEnterStep.bind(this)
@@ -73,6 +70,7 @@ class MarketmakerSettings extends Component<any, any> {
       tokenBalance: 0,
       ethBalance: 0,
       isBalanceFetching: true,
+      isWalletCreated,
       isFirstFetchin: true,
       isMarketEnabled: false,
       isEthBalanceOk: false,
@@ -153,20 +151,19 @@ class MarketmakerSettings extends Component<any, any> {
         return
       }
 
-      const ethWallet = actions.core.getWallet({
+      const evmCoinWallet = actions.core.getWallet({
         currency: tokenWallet.blockchain,
         connected: true,
         addressType: AddressType.Metamask
       })
 
-
       this.setState({
         btcWallet,
-        ethWallet,
+        evmCoinWallet,
         tokenWallet,
       }, async () => {
         const btcBalance = await actions.core.fetchWalletBalance(btcWallet)
-        const ethBalance = await actions.core.fetchWalletBalance(ethWallet)
+        const ethBalance = await actions.core.fetchWalletBalance(evmCoinWallet)
         const tokenBalance = await actions.core.fetchWalletBalance(tokenWallet)
 
         // Запрос баланса асинхронный. За это время пользователь мог уже перейти на другую страницу
@@ -199,7 +196,12 @@ class MarketmakerSettings extends Component<any, any> {
         }
       }
     } = this.props
-    if (prevMarketToken.toLowerCase() !== marketToken.toLowerCase()) {
+    const { mnemonicSaved } = this.state
+
+    if (
+      mnemonicSaved &&
+      prevMarketToken.toLowerCase() !== marketToken.toLowerCase()  
+    ) {
       this.setState({
         marketToken,
         tokenBalance: 0,
@@ -210,7 +212,9 @@ class MarketmakerSettings extends Component<any, any> {
     }
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+    const { mnemonicSaved } = this.state
+
     SwapApp.onInit(() => {
       //@ts-ignore: strictNullChecks
       let isMarketEnabled = (SwapApp.shared().services.orders.getMyOrders().length > 0)
@@ -304,23 +308,34 @@ class MarketmakerSettings extends Component<any, any> {
     }
   }
 
-  componentWillUnmount() {
+  async componentWillUnmount() {
+    const { mnemonicSaved } = this.state
+
     this._mounted = false
-    //@ts-ignore: strictNullChecks
-    SwapApp.shared().off('swap attached', this._handleSwapAttachedHandle)
-    //@ts-ignore: strictNullChecks
-    SwapApp.shared().off('swap enter step', this._handleSwapEnterStep)
+
+    if (mnemonicSaved) {
+      //@ts-ignore: strictNullChecks
+      SwapApp.shared().off('swap attached', this._handleSwapAttachedHandle)
+      //@ts-ignore: strictNullChecks
+      SwapApp.shared().off('swap enter step', this._handleSwapEnterStep)
+    }
   }
 
-  handleSaveMnemonic() {
+  handleCreateWallet = () => {
+    const { history } = this.props
+
+    history.push(`${links.createWallet}/BTC`)
+  }
+
+  handleSaveMnemonic = () => {
     actions.modals.open(constants.modals.SaveMnemonicModal, {
       onClose: () => {
         const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
         const mnemonicSaved = (mnemonic === `-`)
 
-        this.setState({
+        this.setState(() => ({
           mnemonicSaved,
-        })
+        }))
       }
     })
   }
@@ -339,7 +354,7 @@ class MarketmakerSettings extends Component<any, any> {
       ethBalance,
       btcBalance,
       tokenBalance,
-      ethWallet,
+      evmCoinWallet,
       tokenWallet,
     } = this.state
 
@@ -373,7 +388,7 @@ class MarketmakerSettings extends Component<any, any> {
     }
     if (!isEthBalanceOk) {
       hasError = true
-      const AB_Coin = ethWallet.currency.toUpperCase()
+      const AB_Coin = evmCoinWallet.currency.toUpperCase()
       //@ts-ignore: strictNullChecks
       actions.modals.open(constants.modals.AlertModal, {
         message: (
@@ -545,13 +560,14 @@ class MarketmakerSettings extends Component<any, any> {
       swapsIds,
       swapsByIds,
       btcWallet,
-      ethWallet,
+      evmCoinWallet,
       btcBalance,
       tokenWallet,
       tokenBalance,
       ethBalance,
       isBalanceFetching,
       isMarketEnabled,
+      isWalletCreated,
       mnemonicSaved,
     } = this.state
 
@@ -570,13 +586,13 @@ class MarketmakerSettings extends Component<any, any> {
             />
           </h2>
           <p>
-            {tokenWallet && ethWallet && (
+            {tokenWallet && evmCoinWallet && (
               <FormattedMessage
                 id="MM_Promo_TitleBody"
                 defaultMessage="On swap.io users exchange BTC for {token} (a token that costs like BTC, but works on {Ab_Title}), and vice versa. You get min. 10% APY (annual percentage yield) as a commission from exchanges with low impermanent loss {link}."
                 values={{
                   token: tokenWallet.tokenKey.toUpperCase(),
-                  Ab_Title: ethWallet.fullName,
+                  Ab_Title: evmCoinWallet.fullName,
                   link: <a href={links.impermanentLoss} target="_blank">(?)</a>,
                 }}
               />
@@ -599,19 +615,30 @@ class MarketmakerSettings extends Component<any, any> {
                 defaultMessage="A hot wallet is required to launch marketmaking (BTC, {AB_Coin}, {token})."
                 values={{
                   token: tokenWallet?.currency?.toUpperCase(),
-                  AB_Coin: ethWallet?.currency?.toUpperCase(),
+                  AB_Coin: evmCoinWallet?.currency?.toUpperCase(),
                 }}
               />
             </p>
             <div styleName='wallet-buttons'>
-              <div styleName='wallet-button'>
-                <Button blue onClick={this.handleSaveMnemonic.bind(this)}>
-                  <FormattedMessage
-                    id="MM_Wallet_Create"
-                    defaultMessage="Create wallet"
-                  />
-                </Button>
-              </div>
+              {isWalletCreated ? (
+                <div styleName='wallet-button'>
+                  <Button blue onClick={this.handleSaveMnemonic}>
+                    <FormattedMessage
+                      id="BTCMS_SaveMnemonicButton"
+                      defaultMessage="Save secret phrase"
+                    />
+                  </Button>
+                </div>
+              ) : (
+                <div styleName='wallet-button'>
+                  <Button blue onClick={this.handleCreateWallet}>
+                    <FormattedMessage
+                      id="menu.CreateWallet"
+                      defaultMessage="Create wallet"
+                    />
+                  </Button>
+                </div>
+              )}
               <div styleName='wallet-button'>
                 <Button blue onClick={this.handleRestoreMnemonic.bind(this)}>
                   <FormattedMessage
@@ -666,7 +693,7 @@ class MarketmakerSettings extends Component<any, any> {
                       defaultMessage="On swap.io users exchange BTC for {token} (a token that costs like BTC, but works on {Ab_Title}), and vice versa. You get min. 10% APY (annual percentage yield) as a commission from exchanges with low impermanent loss {link}."
                       values={{
                         token: tokenWallet.currency.toUpperCase(),
-                        Ab_Title: ethWallet.fullName,
+                        Ab_Title: evmCoinWallet.fullName,
                         link: <a href={links.impermanentLoss} target="_blank">(?)</a>,
                       }}
                     />
@@ -795,7 +822,7 @@ class MarketmakerSettings extends Component<any, any> {
                               tokenFullName: tokenWallet.fullName,
                               tokenStandart: tokenWallet.standard.toUpperCase(),
                               token: tokenWallet.currency.toUpperCase(),
-                              blockchainName: ethWallet.fullName,
+                              blockchainName: evmCoinWallet.fullName,
                             }}
                           />
                           <br />
@@ -804,7 +831,7 @@ class MarketmakerSettings extends Component<any, any> {
                             defaultMessage="{token} was created to allow Bitcoin holders to participate in decentralized finance (“DeFi”) apps that are popular on {blockchainName}."
                             values={{
                               token: tokenWallet.currency.toUpperCase(),
-                              blockchainName: ethWallet.fullName,
+                              blockchainName: evmCoinWallet.fullName,
                             }}
                           />
                         </span>
@@ -831,14 +858,14 @@ class MarketmakerSettings extends Component<any, any> {
                     }
                     </div>
                   )}
-                  {ethWallet && (
+                  {evmCoinWallet && (
                     <>
                       <p styleName='item-text__secondary'>
                         <FormattedMessage
                           id="MM_ETHBalance"
                           defaultMessage="Balance {AB_Coin}: {balance} (for miners fee)"
                           values={{
-                            AB_Coin: ethWallet.currency.toUpperCase(),
+                            AB_Coin: evmCoinWallet.currency.toUpperCase(),
                             balance: new BigNumber(ethBalance).dp(5).toNumber()
                           }}
                         />
@@ -850,7 +877,7 @@ class MarketmakerSettings extends Component<any, any> {
                           defaultMessage="to top up, transfer to"
                         />
                         <br />
-                        <Address address={ethWallet.address} format={AddressFormat.Full} />
+                        <Address address={evmCoinWallet.address} format={AddressFormat.Full} />
                       </p>
                     </>
                   )}

@@ -5677,13 +5677,6 @@
     ]
   },
   {
-    "id": "MM_Wallet_Create",
-    "message": "Creëer wallet",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
-    ]
-  },
-  {
     "id": "MM_Wallet_Restore",
     "message": "Herstel van seed van 12 woorden",
     "files": [

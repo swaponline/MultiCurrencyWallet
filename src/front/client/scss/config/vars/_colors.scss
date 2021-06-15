@@ -1,8 +1,3 @@
-$primary: var(--primary);
-$primary-hover: var(--primary-hover);
-$alternate: var(--alternate);
-$alternate-hover: var(--alternate-hover);
-
 // -----------------------------------------
 // Light theme
 
@@ -30,6 +25,11 @@ $d-read-only: rgb(44, 44, 44);
 
 // -----------------------------------------
 // Unchanging colors
+
+$primary: var(--primary);
+$primary-hover: var(--primary-hover);
+$alternate: var(--alternate);
+$alternate-hover: var(--alternate-hover);
 
 $color-border: #7774;
 $inactive-border-color: rgba(142, 154, 163, 0.16);
