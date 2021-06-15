@@ -31,11 +31,9 @@ import helpers, {
   constants,
   metamask,
   feedback,
-  ethToken,
   links,
 } from 'helpers'
 
-import { getCurrentWeb3 } from 'helpers/web3'
 import Switching from 'components/controls/Switching/Switching'
 import AddressSelect from './AddressSelect/AddressSelect'
 import { AddressType, AddressRole } from 'domain/address'
@@ -730,14 +728,6 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
       sellCurrency: haveCurrency,
       buyCurrency: getCurrency,
     })
-  }
-
-  getEthBalance() {
-    const {
-      balances,
-    } = this.state
-
-    return (balances && balances[`ETH`]) ? balances.ETH : 0
   }
 
   checkBalanceForSwapPossibility = (checkParams) => {

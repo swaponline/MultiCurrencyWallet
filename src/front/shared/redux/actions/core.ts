@@ -459,13 +459,14 @@ const getWallets = (options: IUniversalObj = {}) => {
       maticData,
       tokensData,
       metamaskData,
+      // Sweep
+      btcMnemonicData,
+      ethMnemonicData,
+      bnbMnemonicData,
+      maticMnemonicData,
     },
   } = getState()
 
-  // Sweep
-  const {
-    user: { btcMnemonicData, ethMnemonicData, bnbMnemonicData, maticMnemonicData },
-  } = getState()
 
   const metamaskConnected = metamask.isEnabled() && metamask.isConnected()
 
@@ -481,53 +482,62 @@ const getWallets = (options: IUniversalObj = {}) => {
     return (coin && blockchain !== ``) ? tokensData[k] : false
   }).filter((d) => d !== false)
 
+  // if enabledCurrencies equals FALSE then all currencies is enabled
+  const enabledCurrencies = config.opts.curEnabled
+
   const allData = [
-    ...(!config.opts.curEnabled || config.opts.curEnabled.eth || config.opts.curEnabled.bnb
-      ? metamaskData
-        ? [metamaskData]
+    ...(
+      !enabledCurrencies ||
+      enabledCurrencies.eth ||
+      enabledCurrencies.bnb ||
+      enabledCurrencies.matic
+        ? metamaskData
+          ? [metamaskData]
+          : []
         : []
-      : []),
+    ),
     // Sweep ===============================
-    ...(!config.opts.curEnabled || config.opts.curEnabled.btc
+    ...(!enabledCurrencies || enabledCurrencies.btc
       ? btcMnemonicData && !btcData.isMnemonic
         ? [btcMnemonicData]
         : []
       : []), 
     // Sweep ===============================
-    ...(!config.opts.curEnabled || config.opts.curEnabled.eth
+    ...(!enabledCurrencies || enabledCurrencies.eth
       ? ethMnemonicData && !ethData.isMnemonic
         ? [ethMnemonicData]
         : []
       : []),
     // Sweep ===============================
-    ...(!config.opts.curEnabled || config.opts.curEnabled.bnb
+    ...(!enabledCurrencies || enabledCurrencies.bnb
       ? bnbMnemonicData && !bnbData.isMnemonic
         ? [bnbMnemonicData]
         : []
       : []),
     // Sweep ===============================
-    ...(!config.opts.curEnabled || config.opts.curEnabled.matic
+    ...(!enabledCurrencies || enabledCurrencies.matic
       ? maticMnemonicData && !maticData.isMnemonic
         ? [maticMnemonicData]
         : []
       : []),
-    // Sweep ===============================
-    ...(!config.opts.curEnabled || config.opts.curEnabled.btc ? [btcData] : []),
-    ...(!config.opts.curEnabled || config.opts.curEnabled.btc ? [btcMultisigSMSData] : []),
-    ...(!config.opts.curEnabled || config.opts.curEnabled.btc
+    // =====================================
+    ...(!enabledCurrencies || enabledCurrencies.btc
+      ? [btcData, btcMultisigSMSData, btcMultisigUserData]
+      : []
+    ),
+    ...(!enabledCurrencies || enabledCurrencies.btc
       ? btcMultisigPinData && btcMultisigPinData.isRegistered
         ? [btcMultisigPinData]
         : []
       : []),
-    // Sweep ===============================
-    ...(!config.opts.curEnabled || config.opts.curEnabled.btc ? [btcMultisigUserData] : []),
-    ...(!config.opts.curEnabled || config.opts.curEnabled.btc
+    // =====================================
+    ...(!enabledCurrencies || enabledCurrencies.btc
       ? btcMultisigUserData && btcMultisigUserData.wallets
         ? btcMultisigUserData.wallets
         : []
       : []),
     // =====================================
-    ...(!config.opts.curEnabled || config.opts.curEnabled.eth
+    ...(!enabledCurrencies || enabledCurrencies.eth
       ? metamaskConnected
         ? withInternal
           ? [ethData]
@@ -535,7 +545,7 @@ const getWallets = (options: IUniversalObj = {}) => {
         : [ethData]
       : []),
     // =====================================
-    ...(!config.opts.curEnabled || config.opts.curEnabled.bnb
+    ...(!enabledCurrencies || enabledCurrencies.bnb
       ? metamaskConnected
         ? withInternal
           ? [bnbData]
@@ -543,7 +553,7 @@ const getWallets = (options: IUniversalObj = {}) => {
         : [bnbData]
       : []),
     // =====================================
-    ...(!config.opts.curEnabled || config.opts.curEnabled.matic
+    ...(!enabledCurrencies || enabledCurrencies.matic
       ? metamaskConnected
         ? withInternal
           ? [maticData]
@@ -551,8 +561,8 @@ const getWallets = (options: IUniversalObj = {}) => {
         : [maticData]
       : []),
     // =====================================
-    ...(!config.opts.curEnabled || config.opts.curEnabled.ghost ? [ghostData] : []),
-    ...(!config.opts.curEnabled || config.opts.curEnabled.next ? [nextData] : []),
+    ...(!enabledCurrencies || enabledCurrencies.ghost ? [ghostData] : []),
+    ...(!enabledCurrencies || enabledCurrencies.next ? [nextData] : []),
     ...tokenWallets,
   ].map(({ account, keyPair, ...data }) => ({
     ...data,
