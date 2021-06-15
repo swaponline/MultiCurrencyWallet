@@ -215,7 +215,8 @@ const addMetamaskWallet = () => {
           isBalanceFetched: true,
           isMnemonic: true,
           unconfirmedBalance: 0,
-          networkVersion: chainId
+          networkVersion: chainId,
+          unknownNetwork: false,
         },
       })
     } else {
@@ -233,7 +234,8 @@ const addMetamaskWallet = () => {
           isBalanceFetched: true,
           isMnemonic: true,
           unconfirmedBalance: 0,
-          networkVersion: chainId
+          networkVersion: chainId,
+          unknownNetwork: true,
         },
       })
     }

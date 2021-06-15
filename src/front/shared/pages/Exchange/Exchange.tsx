@@ -1687,8 +1687,6 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
       (fromAddress.type === AddressType.Metamask || toAddress.type === AddressType.Metamask) &&
       (metamask.isAvailableNetworkByCurrency(sellCoin) || metamask.isAvailableNetworkByCurrency(buyCoin))
 
-    console.log('isCorrectMetamaskNetwork', isCorrectMetamaskNetwork)
-
     const canStartSwap =
       !isErrorExternalDisabled &&
       isCorrectMetamaskNetwork &&
