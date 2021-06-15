@@ -407,8 +407,8 @@ class EthLikeAction {
 
     const Web3 = this.getCurrentWeb3()
 
-    const haveExternalWallet = externalAddress && externalPrivateKey && true
-    const ownerAddress = getState().user[`${this.tickerKey}Data`].address
+    const haveExternalWallet = externalAddress && !!externalPrivateKey
+    const ownerAddress = metamask.isConnected() ? metamask.getAddress() : getState().user[`${this.tickerKey}Data`].address
     const recipientIsContract = await this.isContract(to)
 
     gasPrice = gasPrice || (await ethLikeHelper[this.tickerKey].estimateGasPrice({ speed }))
@@ -440,7 +440,7 @@ class EthLikeAction {
       currency: this.ticker,
     })
 
-    if (!walletData.isMetamask || haveExternalWallet) {
+    if (haveExternalWallet && !walletData.isMetamask) {
       const signedTx = await Web3.eth.accounts.signTransaction(txObject, privateKey)
       txObject = signedTx.rawTransaction
       sendMethod = Web3.eth.sendSignedTransaction
