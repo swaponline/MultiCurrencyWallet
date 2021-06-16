@@ -38,58 +38,18 @@ const CreateWallet = (props) => {
 
   const { locale } = useIntl()
 
+  const forcedCurrency = pathname.split('/')[2]
   const allCurrencies = props.currencies.items
 
   const {
-    ethData,
-    bnbData,
     btcData,
-    ghostData,
-    nextData,
-    btcMultisigSMSData,
-    btcMultisigUserData,
   } = userData
 
   const userWallets = actions.core
     .getWallets({})
     .filter(({ currency }) => !hiddenCoinsList.includes(currency))
 
-  const currencyBalance = [
-    btcData,
-    btcMultisigSMSData,
-    btcMultisigUserData,
-    ethData,
-    bnbData,
-    ghostData,
-    nextData,
-  ].map(({ balance, currency, infoAboutCurrency }) => ({
-    balance,
-    infoAboutCurrency,
-    name: currency,
-  }))
-
-  let btcBalance = 0
-  let fiatBalance = 0
-
-  const widgetCurrencies = user.getWidgetCurrencies()
-
-  if (currencyBalance) {
-    currencyBalance.forEach(async (item) => {
-      if (
-        (!isWidgetBuild || widgetCurrencies.includes(item.name)) &&
-        item.infoAboutCurrency &&
-        item.balance !== 0
-      ) {
-        btcBalance += item.balance * item.infoAboutCurrency.price_btc
-        fiatBalance +=
-          item.balance * (item.infoAboutCurrency.price_fiat ? item.infoAboutCurrency.price_fiat : 1)
-      }
-    })
-  }
-
   useEffect(() => {
-    const forcedCurrency = pathname.split('/')[2]
-
     if (forcedCurrency) {
       const hiddenList = localStorage.getItem('hiddenCoinsList')
 
@@ -116,36 +76,6 @@ const CreateWallet = (props) => {
     }
   }, [pathname])
 
-  useEffect(() => {
-    const widgetCurrenciesWithTokens = [...widgetCurrencies]
-
-    if (isWidgetBuild) {
-      if (window?.widgetERC20Tokens?.length) {
-        // Multi token widget build
-        window.widgetERC20Tokens.forEach((token) => {
-          widgetCurrenciesWithTokens.push(token.name.toUpperCase())
-        })
-      } else {
-        widgetCurrenciesWithTokens.push(config.erc20token.toUpperCase())
-      }
-    }
-
-    if (currencyBalance) {
-      currencyBalance.forEach((item) => {
-        if (
-          (!isWidgetBuild || widgetCurrenciesWithTokens.includes(item.name)) &&
-          item.infoAboutCurrency &&
-          item.balance !== 0
-        ) {
-          btcBalance += item.balance * item.infoAboutCurrency.price_btc
-          fiatBalance +=
-            item.balance *
-            (item.infoAboutCurrency.price_fiat ? item.infoAboutCurrency.price_fiat : 1)
-        }
-      })
-    }
-  }, [])
-
   const [step, setStep] = useState(1)
   const [error, setError] = useState('Choose something')
   const [isExist, setExist] = useState(false)
@@ -170,8 +100,7 @@ const CreateWallet = (props) => {
   }
 
   const handleRestoreMnemonic = () => {
-    //@ts-ignore: strictNullChecks
-    actions.modals.open(constants.modals.RestoryMnemonicWallet, { btcBalance })
+    actions.modals.open(constants.modals.RestoryMnemonicWallet)
   }
 
   const validate = () => {
@@ -343,7 +272,6 @@ const CreateWallet = (props) => {
     handleClick()
   }
 
-  const forcedCurrency = pathname.split('/')[2]
   let forcedCurrencyData
 
   if (forcedCurrency) {
@@ -387,18 +315,16 @@ const CreateWallet = (props) => {
                   id="ImportKeys_RestoreMnemonic_Tooltip"
                   defaultMessage="12-word backup phrase"
                 />
-                {(btcBalance > 0 || fiatBalance > 0) && (
-                  <React.Fragment>
-                    <br />
-                    <br />
-                    <div styleName="alertTooltipWrapper">
-                      <FormattedMessage
-                        id="ImportKeys_RestoreMnemonic_Tooltip_withBalance"
-                        defaultMessage="Please, be causious!"
-                      />
-                    </div>
-                  </React.Fragment>
-                )}
+                <React.Fragment>
+                  <br />
+                  <br />
+                  <div styleName="alertTooltipWrapper">
+                    <FormattedMessage
+                      id="ImportKeys_RestoreMnemonic_Tooltip_withBalance"
+                      defaultMessage="Please, be causious!"
+                    />
+                  </div>
+                </React.Fragment>
               </span>
             </Tooltip>
           </div>

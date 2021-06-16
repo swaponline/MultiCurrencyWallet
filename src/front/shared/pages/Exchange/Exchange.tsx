@@ -763,6 +763,7 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
       if (isUserSellToken && enoughBalanceForSellAmount && sellBlockchainBalance.isGreaterThanOrEqualTo(sellFee)) {
         enoughBalanceForFullPayment = true
       }
+      // TODO: check this condition
       else if (isUserBuyToken && (fromType === AddressType.Custom || enoughBalanceForSellAmount) &&  buyBlockchainBalance.isGreaterThanOrEqualTo(buyFee)) {
         enoughBalanceForFullPayment = true
       }
@@ -807,6 +808,9 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
             defaultMessage="Please top up your balance before you start the swap."
           />
           <br />
+
+          {/* TODO: check this variable (why doesn't it show the message?) */}
+
           {enoughBalanceForFullPayment && (
             <FormattedMessage
               id="Swap_NeedMoreAmount"

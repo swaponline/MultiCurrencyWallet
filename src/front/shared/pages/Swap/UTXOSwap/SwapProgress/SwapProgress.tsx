@@ -358,7 +358,7 @@ class SwapProgress extends Component<any, any> {
     }
 
     const canBeRefunded = utxoScriptValues && (isUTXOSide ? scriptBalance > 0 : isEthContractFunded)
-    const isDeletedSwap = isFinished || isRefunded || isStoppedSwap
+    const isDeletedSwap = isFinished || isRefunded
 
     return (
       <div styleName="overlay">

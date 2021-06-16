@@ -140,17 +140,20 @@ class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
 
   getInternalAddress = () => {
     const { currency } = this.props
-    const { address } = actions.core.getWallet({
+    const currentWallet = actions.core.getWallet({
       currency,
       addressType: AddressType.Internal,
     })
-    return address
+
+    return currentWallet ? currentWallet.address : false
   }
 
   isCurrencyInInternalWallet = () => {
     const { hiddenCoinsList } = this.props
     const ticker = this.getTicker()
     const internalAddress = this.getInternalAddress()
+
+    if (!internalAddress) return false
 
     for (let i = 0; i < hiddenCoinsList.length; i++) {
       const hiddenCoin = hiddenCoinsList[i]
@@ -225,14 +228,12 @@ class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
   goСreateWallet = () => {
     const {
       history,
-      intl: { locale },
+      // intl: { locale },
     } = this.props
     const ticker = this.getTicker()
 
     feedback.exchangeForm.redirectedCreateWallet(ticker)
-
-    const url = localisedUrl(locale, `${links.createWallet}/${ticker}`)
-    history.push(url)
+    history.push(`${links.createWallet}/${ticker}`)
   }
 
   handleConnectMetamask = () => {
@@ -415,7 +416,7 @@ class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
           disabled: isInternalOptionDisabled,
         },
       )
-    } else {
+    } else if (isUTXOModel || !isMetamaskConnected) {
       dropDownOptions.push(
         {
           value: 'InternalAddressCreate',
