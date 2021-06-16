@@ -5,7 +5,7 @@
 }
 
 .delete {
-  color: #e32950;
+  color: $color-f-error;
   cursor: pointer;
 }
 
@@ -23,11 +23,11 @@
 }
 
 .buy {
-  color: #3de25b;
+  color: $color-good;
 }
 
 .sell {
-  color: #e32950;
+  color: $color-f-error;
 }
 
 .buttons {
@@ -48,18 +48,20 @@
   height: auto;
 }
 
-
 .statusFinished {
-  color: #0CCF14;
+  color: $color-success;
 }
 
 .statusRefunded {
-  color: #0ccfb2;
+  color: $color-good;
 }
 
 .statusStopped {
-  color: #cf0c32;
+  color: $color-f-error;
+
+  .refundStatus {
+    max-width: 10em;
+    font-size: 0.88em;
+    color: $indicating-color;
+  }
 }
-
-
-

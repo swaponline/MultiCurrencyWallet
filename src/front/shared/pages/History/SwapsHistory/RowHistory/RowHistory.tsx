@@ -129,7 +129,7 @@ class RowHistory extends Component<any, any> {
     } = row
 
     const canBeRefunded = values && scriptBalance > 0
-    const isDeletedSwap = isFinished || isRefunded || isStoppedSwap
+    const isDeletedSwap = isFinished || isRefunded
 
     const date = Date.now() / 1000
 
@@ -177,12 +177,16 @@ class RowHistory extends Component<any, any> {
             })}
           >
             {this.getSwapStatusText(isFinished, isRefunded, isStoppedSwap)}
-            {!isDeletedSwap &&
-              (canBeRefunded ? (
-                <Timer lockTime={values.lockTime * 1000} enabledButton={this.tryRefund} />
-              ) : (
-                <FormattedMessage id="RowHistory76" defaultMessage="Refund not available" />
-              ))}
+
+            {!isDeletedSwap && (
+              <div styleName="refundStatus">
+                {canBeRefunded ? (
+                  <Timer lockTime={values.lockTime * 1000} enabledButton={this.tryRefund} />
+                ) : (
+                  <FormattedMessage id="RowHistory76" defaultMessage="Refund not available" />
+                )}
+              </div>
+            )}
           </p>
         </td>
         <td>

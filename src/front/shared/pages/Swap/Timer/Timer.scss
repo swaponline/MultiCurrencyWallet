@@ -2,7 +2,7 @@
   @include inline-block;
   cursor: pointer;
   text-align: center;
-  font-size: 18px;
+  font-size: inherit;
 }
 
 @include media-mobile {

@@ -1,5 +1,4 @@
 import React, { Fragment, Component } from 'react'
-import PropTypes from 'prop-types'
 import moment from 'moment/moment'
 import cx from 'classnames'
 
@@ -11,9 +10,7 @@ import CSSModules from 'react-css-modules'
 import styles from './SwapRow.scss'
 
 import Timer from 'pages/Swap/Timer/Timer'
-import Avatar from 'components/Avatar/Avatar'
 import { FormattedMessage, injectIntl } from 'react-intl'
-import { localisedUrl } from 'helpers/locale'
 import BigNumber from 'bignumber.js'
 
 import SwapApp from 'swap.app'
@@ -197,7 +194,7 @@ class SwapRow extends Component<any, any> {
     if (step <=1 && isSwapTimeout) return null
 
     const canBeRefunded = values && scriptBalance > 0
-    const isDeletedSwap = isFinished || isRefunded || isStoppedSwap
+    const isDeletedSwap = isFinished || isRefunded
 
     const date = Date.now() / 1000
 
@@ -266,12 +263,16 @@ class SwapRow extends Component<any, any> {
                 })}
               >
                 {this.getSwapStatusText(isFinished, isRefunded, isStoppedSwap)}
-                {!isDeletedSwap &&
-                  (canBeRefunded ? (
-                    <Timer lockTime={values.lockTime * 1000} enabledButton={this.tryRefund} />
-                  ) : (
-                    <FormattedMessage id="RowHistory76" defaultMessage="Refund not available" />
-                  ))}
+
+                {!isDeletedSwap && (
+                  <div styleName="refundStatus">
+                    {canBeRefunded ? (
+                      <Timer lockTime={values.lockTime * 1000} enabledButton={this.tryRefund} />
+                    ) : (
+                      <FormattedMessage id="RowHistory76" defaultMessage="Refund not available" />
+                    )}
+                  </div>
+                )}
               </p>
             </td>
             <td>
