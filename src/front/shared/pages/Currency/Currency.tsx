@@ -230,8 +230,6 @@ class Currency extends Component<any, any> {
             <Row key={index} {...row} />
           )}
         />
-        {/*
-        //@ts-ignore */}
         <CloseIcon styleName="closeButton" onClick={() => this.props.history.push(localisedUrl(locale, links.home))} data-testid="CloseIcon" />
       </section>
     )

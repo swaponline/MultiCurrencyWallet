@@ -255,7 +255,7 @@ class SwapRow extends Component<any, any> {
               </p>
             </td>
             <td>
-              <p
+              <div
                 className={cx({
                   [styles.statusFinished]: isFinished,
                   [styles.statusRefunded]: isRefunded,
@@ -273,7 +273,7 @@ class SwapRow extends Component<any, any> {
                     )}
                   </div>
                 )}
-              </p>
+              </div>
             </td>
             <td>
               <p>

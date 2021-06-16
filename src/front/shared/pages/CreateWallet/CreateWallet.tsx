@@ -363,7 +363,6 @@ const CreateWallet = (props) => {
   return (
     <div styleName={`wrapper ${isDark ? '--dark' : ''}`}>
       {userWallets.length ? (
-        //@ts-ignore
         <CloseIcon
           styleName="closeButton"
           onClick={goHome}

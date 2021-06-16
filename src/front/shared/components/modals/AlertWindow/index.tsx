@@ -93,8 +93,7 @@ class AlertWindow extends Component<any, any> {
             //@ts-ignore */}
             <WidthContainer styleName="headerContent">
               <div styleName="title">{labels.title}</div>
-              {/*
-              //@ts-ignore */}
+
               {canClose && (<CloseIcon styleName="closeButton" onClick={this.handleClosePopup} />)}
             </WidthContainer>
           </div>

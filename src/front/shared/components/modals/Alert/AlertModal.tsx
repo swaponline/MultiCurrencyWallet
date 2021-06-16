@@ -8,6 +8,7 @@ import { Button } from 'components/controls'
 import { injectIntl, IntlShape, defineMessages } from 'react-intl'
 import { constants } from 'helpers'
 import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
+import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
@@ -32,6 +33,7 @@ type AlertModalProps = {
   dashboardModalsAllowed
   onClose: () => void
   data: {
+    canClose: boolean
     dontClose: boolean
     okButtonAutoWidth: boolean
     onClose: () => void
@@ -48,7 +50,7 @@ type AlertModalProps = {
 }))
 @cssModules(styles)
 class AlertModal extends React.Component<AlertModalProps, null> {
-  handleClose = () => {
+  closeWithCustomAction = () => {
     const {
       name,
       data,
@@ -71,9 +73,14 @@ class AlertModal extends React.Component<AlertModalProps, null> {
     actions.modals.close(name)
   }
 
+  closeModal = () => {
+    const { name } = this.props
+
+    actions.modals.close(name)
+  }
+
   handleOk = () => {
     const {
-      name,
       data: {
         callbackOk,
       },
@@ -81,10 +88,10 @@ class AlertModal extends React.Component<AlertModalProps, null> {
 
     if (typeof callbackOk === `function`) {
       if (callbackOk()) {
-        actions.modals.close(name)
+        this.closeModal()
       }
     } else {
-      this.handleClose()
+      this.closeWithCustomAction()
     }
   }
 
@@ -92,6 +99,7 @@ class AlertModal extends React.Component<AlertModalProps, null> {
     const {
       intl,
       data: {
+        canClose,
         title,
         message,
         labelOk,
@@ -111,7 +119,6 @@ class AlertModal extends React.Component<AlertModalProps, null> {
     return (
       <div className={cx({
         [styles['modal-overlay']]: true,
-        [styles['modal-overlay_dashboardView']]: dashboardModalsAllowed
       })}>
         <div className={cx({
           [styles.modal]: true,
@@ -123,6 +130,10 @@ class AlertModal extends React.Component<AlertModalProps, null> {
             //@ts-ignore */}
             <WidthContainer styleName="headerContent">
               <div styleName="title">{labels.title}</div>
+
+              {canClose && (
+                <CloseIcon styleName="closeButton" onClick={this.closeModal} />
+              )}
             </WidthContainer>
           </div>
           <div styleName="content">

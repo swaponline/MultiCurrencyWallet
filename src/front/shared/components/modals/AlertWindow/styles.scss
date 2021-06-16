@@ -1,20 +1,12 @@
 .header {
-    padding: 16px 0;
-  }
+  padding: 16px 0;
+}
 
 .closeButton {
-  width: 20px;
-  height: 20px;
-  opacity: 0.5;
-  transition: opacity 0.33s $ease-out-quadratic;
   position: absolute;
   right: 20px;
-
-  &:hover {
-    opacity: 1;
-    transition: none;
-  }
 }
+
 .headerContent {
   height: 100%;
   display: flex;

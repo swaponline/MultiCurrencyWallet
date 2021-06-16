@@ -10,9 +10,15 @@
   position: relative;
 }
 
+.closeButton {
+  position: absolute;
+  right: 0.4em;
+  width: 1em;
+  height: 1em;
+}
+
 .title {
   width: 100%;
-  padding: 0 64px;
   line-height: 18px;
   font-size: 20px;
   font-weight: 700;

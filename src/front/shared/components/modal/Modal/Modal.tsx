@@ -159,8 +159,7 @@ export default class Modal extends Component<ModalProps, null> {
                   <div styleName={titleStyleName} role="title">{title}</div>
                   {
                     showCloseButton && !disableClose && (
-                      //@ts-ignore 
-                      <CloseIcon styleName={`closeButton${delayClose ? ' delayClose' : ''}`} onClick={this.close} data-testid="modalCloseIcon" />
+                      <CloseIcon styleName={`closeButton ${delayClose ? 'delayClose' : ''}`} onClick={this.close} data-testid="modalCloseIcon" />
                     )
                   }
                 </WidthContainer>
