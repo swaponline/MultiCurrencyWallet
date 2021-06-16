@@ -55,7 +55,7 @@ const externalConfig = () => {
       next: true,
     },
     defaultExchangePair: {
-      buy: 'eth',
+      buy: '{eth}wbtc',
       sell: 'btc',
     },
     ownTokens: false,

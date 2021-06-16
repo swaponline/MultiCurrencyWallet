@@ -5685,13 +5685,6 @@
     ]
   },
   {
-    "id": "MM_Wallet_Create",
-    "message": "Crear billetera",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
-    ]
-  },
-  {
     "id": "MM_Wallet_Restore",
     "message": "Restaurar desde semilla de 12 palabras",
     "files": [

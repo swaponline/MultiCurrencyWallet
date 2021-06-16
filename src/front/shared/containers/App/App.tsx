@@ -16,6 +16,7 @@ import "scss/app.scss";
 import { createSwapApp } from "instances/newSwap";
 import Core from "containers/Core/Core";
 
+import ErrorBoundary from 'components/ErrorBoundary'
 import Header from "components/Header/Header";
 import Footer from "components/Footer/Footer";
 import Loader from "components/loaders/Loader/Loader";
@@ -484,19 +485,21 @@ class App extends React.Component<RouteComponentProps<any>, any> {
         {!isSeoDisabled &&
           <Seo location={history.location} />
         }
-        {/*
-        //@ts-ignore */}
-        <WidthContainer id="swapComponentWrapper" styleName="headerAndMain">
-          <Header />
-          <main>{children}</main>
-        </WidthContainer>
-        <Core />
-        <Footer />
-        <RequestLoader />
-        {!dashboardModalsAllowed &&
-          <ModalConductor history={history}
-        />}
-        <NotificationConductor history={history} />
+        {/* @ts-ignore */}
+        <ErrorBoundary>
+          {/* @ts-ignore */}
+          <WidthContainer id="swapComponentWrapper" styleName="headerAndMain">
+            <Header />
+            <main>{children}</main>
+          </WidthContainer>
+          <Core />
+          <Footer />
+          <RequestLoader />
+          {!dashboardModalsAllowed &&
+            <ModalConductor history={history}
+          />}
+          <NotificationConductor history={history} />
+        </ErrorBoundary>
       </div>
     </HashRouter>;
   }

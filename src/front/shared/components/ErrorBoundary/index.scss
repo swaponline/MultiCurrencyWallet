@@ -1,0 +1,31 @@
+.errorWrapper {
+  height: 100vh;
+  width: 100vw;
+  padding: 3em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.errorTitle {
+  max-width: 20em;
+  margin-bottom: 2em;
+  text-align: center;
+  color: $color-f-error;
+}
+
+.errorCode {
+  min-height: 10em;
+  max-width: 50em;
+  padding: 1em;
+  border-radius: 1rem;
+  background-color: $l-read-only;
+  color: $color-f-error;
+}
+
+.errorWrapper.dark {
+  .errorCode {
+    background-color: $d-read-only;
+  }
+}
