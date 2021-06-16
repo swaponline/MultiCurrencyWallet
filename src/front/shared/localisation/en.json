@@ -5681,13 +5681,6 @@
     ]
   },
   {
-    "id": "MM_Wallet_Create",
-    "message": "Create wallet",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
-    ]
-  },
-  {
     "id": "MM_Wallet_Restore",
     "message": "Restore from 12-word seed",
     "files": [

@@ -23,12 +23,9 @@ export default class StepsWrapper extends Component<any, any> {
     super(props)
     const { currencies } = props
     
-    if (config
-      && config.opts?.ownTokens
-      && Object.keys(config.opts.ownTokens)
-      && Object.keys(config.opts.ownTokens).length
-    ) {
+    if (config?.opts.ownTokens?.length) {
       this.defaultStartPack = []
+
       if (!curEnabled || curEnabled.btc) {
         this.defaultStartPack.push({ name: "BTC", capture: "Bitcoin" })
       }
@@ -38,33 +35,25 @@ export default class StepsWrapper extends Component<any, any> {
       if (!curEnabled || curEnabled.bnb) {
         this.defaultStartPack.push({ name: "BNB", capture: "Binance Coin" })
       }
+      if (!curEnabled || curEnabled.matic) {
+        this.defaultStartPack.push({ name: "MATIC", capture: "Matic token" })
+      }
       if (!curEnabled || curEnabled.ghost) {
         this.defaultStartPack.push({ name: "GHOST", capture: "Ghost" })
       }
       if (!curEnabled || curEnabled.next) {
         this.defaultStartPack.push({ name: "NEXT", capture: "NEXT.coin" })
       }
-      const ownTokensKeys = Object.keys(config.opts.ownTokens)
+      const ownTokensKeys = config.opts.ownTokens
 
-      // this.defaultStartPack has 5 slots
-      if (ownTokensKeys.length >= 1 && (5 - this.defaultStartPack.length)) {
+      config.opts.ownTokens.forEach((token) => {
+        config[token.standard][token.name.toLowerCase()] = token
+
         this.defaultStartPack.push({
-          name: ownTokensKeys[0].toUpperCase(),
-          capture: config.opts.ownTokens[ownTokensKeys[0]].fullName,
+          name: token.name.toUpperCase(),
+          capture: token.fullName,
         })
-      }
-      if (ownTokensKeys.length >= 2 && (5 - this.defaultStartPack.length)) {
-        this.defaultStartPack.push({
-          name: ownTokensKeys[1].toUpperCase(),
-          capture: config.opts.ownTokens[ownTokensKeys[1]].fullName,
-        })
-      }
-      if (ownTokensKeys.length >= 3 && (5 - this.defaultStartPack.length)) {
-        this.defaultStartPack.push({
-          name: ownTokensKeys[2].toUpperCase(),
-          capture: config.opts.ownTokens[ownTokensKeys[2]].fullName,
-        })
-      }
+      })
     }
 
     const enabledCurrencies = getActivatedCurrencies()

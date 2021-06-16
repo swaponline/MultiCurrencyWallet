@@ -35,6 +35,10 @@
   font-size: 0.9em;
   text-align: center;
   opacity: 0.9;
+
+  a {
+    color: $primary-hover;
+  }
 }
 
 .version {
