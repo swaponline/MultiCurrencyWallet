@@ -6,7 +6,7 @@ import { createBrowser, importWallet, addAssetToWallet, turnOnMM, selectSendCurr
 const btcSellAmount = 500_000e-8
 const wbtcBuyAmount = 500_000e-8
 
-jest.setTimeout(1500 * 1000)
+jest.setTimeout(1700 * 1000)
 
 describe('Swap e2e test', () => {
   function getExchangeUrl(sourceUrl) {
@@ -180,7 +180,7 @@ describe('Swap e2e test', () => {
       await takeScreenshot(MakerPage, 'MakerPage_SwapWIW_SwapProgress1_utxoDepositHashLink')
       await takeScreenshot(TakerPage, 'TakerPage_SwapWIW_SwapProgress1_utxoDepositHashLink')
 
-      await TakerPage.waitForSelector('#evmDepositHashLink', {timeout: 150 * 1000})
+      await TakerPage.waitForSelector('#evmDepositHashLink', {timeout: 300 * 1000})
 
       await takeScreenshot(MakerPage, 'MakerPage_SwapWIW_SwapProgress2_evmDepositHashLink')
       await takeScreenshot(TakerPage, 'TakerPage_SwapWIW_SwapProgress2_evmDepositHashLink')
