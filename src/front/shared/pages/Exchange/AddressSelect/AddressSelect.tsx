@@ -197,7 +197,7 @@ class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
       hasError: oldHasError = false,
     } = this.state
 
-    if(oldBalance !== balance){
+    if(!isNaN(Number(oldBalance)) && !isNaN(Number(balance)) && oldBalance !== balance){
       this.prepareDropDownOptions(selectedType)
     }
 
