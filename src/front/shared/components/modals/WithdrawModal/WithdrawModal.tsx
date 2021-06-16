@@ -117,12 +117,13 @@ type WithdrawModalState = {
       ghostData,
       nextData,
       activeFiat,
+      metamaskData,
     },
     ui: { dashboardModalsAllowed },
   }) => {
     return {
       activeFiat,
-      coinsData: [ethData, bnbData, maticData, btcData, ghostData, nextData],
+      coinsData: [ethData, bnbData, maticData, btcData, ghostData, nextData, metamaskData],
       dashboardView: dashboardModalsAllowed,
     }
   }
@@ -236,11 +237,25 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
     const {
       amount,
       fiatAmount,
+      selectedCurrency,
     } = this.state
 
-    const availableWallets = user.filterUserCurrencyData(actions.core.getWallets())
+    const {
+      coinsData
+    } = this.props
 
-    const walletIndex = availableWallets.findIndex(wallet => wallet.currency === this.props.data.currency && wallet.address === this.props.data.address)
+    const availableWallets = user.filterUserCurrencyData(actions.core.getWallets())
+    const walletIndex = availableWallets.findIndex(wallet => wallet.currency === selectedCurrency.currency && wallet.address === selectedCurrency.address)
+    if (walletIndex === -1) {
+      this.handleHaveNotAvailableWallet(availableWallets)
+    }
+
+    const selectedCurrencyInProps = coinsData.find(coinData => coinData.currency === selectedCurrency.currency && coinData.address === selectedCurrency.address)
+    if (selectedCurrencyInProps && selectedCurrencyInProps.balance !== selectedCurrency.balance) {
+      this.setState(() => ({
+        selectedCurrency: {...selectedCurrency, balance: selectedCurrencyInProps.balance},
+      }))
+    }
 
     if (prevData !== this.props.data) {
       this.updateCurrencyData()
@@ -248,10 +263,6 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
 
     if (prevAmount !== amount || prevFiatAmount !== fiatAmount) {
       this.updateServiceAndTotalFee()
-    }
-
-    if(walletIndex === -1) {
-      this.handleHaveNotAvailableWallet(availableWallets)
     }
   }
 
