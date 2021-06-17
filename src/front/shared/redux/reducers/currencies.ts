@@ -384,22 +384,27 @@ if (buildOpts.addCustomERC20) {
   Object.keys(customTokenConfig).forEach((standard) => {
     Object.keys(customTokenConfig[standard]).forEach((tokenContractAddr) => {
       const tokenObj = customTokenConfig[standard][tokenContractAddr]
-      const { symbol } = tokenObj
+      const { symbol, baseCurrency } = tokenObj
 
       //@ts-ignore
       initialState.items.push({
-        name: symbol.toUpperCase(),
-        title: symbol.toUpperCase(),
-        icon: symbol.toLowerCase(),
-        value: symbol.toLowerCase(),
-        fullTitle: symbol,
-      })
+          name: symbol.toUpperCase(),
+          title: symbol.toUpperCase(),
+          icon: symbol,
+          value: `{${baseCurrency.toUpperCase()}}${symbol}`,
+          fullTitle: symbol,
+          addAssets: true,
+          blockchain: BLOCKCHAIN_TYPE[baseCurrency.toUpperCase()],
+          standard,
+        })
       initialState.partialItems.push({
         name: symbol.toUpperCase(),
         title: symbol.toUpperCase(),
-        icon: symbol.toLowerCase(),
-        value: symbol.toLowerCase(),
-        fullTitle: symbol,
+        icon: symbol,
+        value: `{${baseCurrency.toUpperCase()}}${symbol}`,
+        fullTitle: config[standard][symbol]?.fullName || symbol,
+        blockchain: BLOCKCHAIN_TYPE[baseCurrency.toUpperCase()],
+        standard,
       })
     })
   })

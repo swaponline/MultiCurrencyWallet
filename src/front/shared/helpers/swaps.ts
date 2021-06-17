@@ -21,13 +21,13 @@ const isExchangeAllowed = (currencies) => {
   console.groupEnd()
   return currencies.filter((c) => {
     const isErc = Object.keys(config.erc20)
-      .map((i) => `${i.toLowerCase()}`)
+      .map((i) => `{eth}${i.toLowerCase()}`)
       .includes(`${c.value}`.toLowerCase())
     const isBep = Object.keys(config.bep20)
-      .map((i) => `${i.toLowerCase()}`)
+      .map((i) => `{bnb}${i.toLowerCase()}`)
       .includes(`${c.value}`.toLowerCase())
     const isErcMatic = Object.keys(config.erc20matic)
-      .map((i) => `${i.toLowerCase()}`)
+      .map((i) => `{matic}${i.toLowerCase()}`)
       .includes(`${c.value}`.toLowerCase())
 
     const isAllowedCoin = allowedCoins.map((i) => i.toLowerCase()).includes(c.value.toLowerCase())
