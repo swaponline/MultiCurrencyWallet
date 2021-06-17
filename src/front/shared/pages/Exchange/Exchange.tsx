@@ -1033,12 +1033,6 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
     const formCurrencies = [haveCurrency, getCurrency]
     const partialItemsArray = [...partialItems]
 
-    console.log('partialItems', partialItems)
-    console.log('partialCurrency', partialCurrency)
-    console.log('allCurrencies', allCurrencies)
-    console.log('formCurrencies', formCurrencies)
-    console.log('partialItemsArray', partialItemsArray)
-
     formCurrencies.forEach((item) => {
       const { coin } = getCoinInfo(item)
       if (allCurrencies.includes(coin.toUpperCase())) {

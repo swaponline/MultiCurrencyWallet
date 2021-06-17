@@ -9,17 +9,8 @@ const allowedCoins = [
   ...(!config.opts.blockchainSwapEnabled || config.opts.blockchainSwapEnabled.next ? ['NEXT'] : []),
   ]
 
-const isExchangeAllowed = (currencies) => {
-  console.groupCollapsed('isExchangeAllowed')
-
-  console.log('currencies', currencies)
-  console.log('allowedCoins', allowedCoins)
-  console.log('config.erc20', config.erc20)
-  console.log('config.bep20', config.bep20)
-  console.log('config.erc20matic', config.erc20matic)
-
-  console.groupEnd()
-  return currencies.filter((c) => {
+const isExchangeAllowed = (currencies) =>
+  currencies.filter((c) => {
     const isErc = Object.keys(config.erc20)
       .map((i) => `{eth}${i.toLowerCase()}`)
       .includes(`${c.value}`.toLowerCase())
@@ -34,7 +25,6 @@ const isExchangeAllowed = (currencies) => {
 
     return isAllowedCoin || isErc || isBep || isErcMatic
   })
-}
 
 const filterIsPartial = (orders) =>
   orders

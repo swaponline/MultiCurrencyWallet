@@ -47,15 +47,6 @@ const selectPairPartial = (value): Currency[] | [] => {
   const partialItems = getState().currencies.partialItems // eslint-disable-line
   const pairs = actions.pairs.filter(value, TRADE_TICKERS, partialItems)
 
-  console.groupCollapsed('selectPairPartial')
-
-  console.log('value', value)
-  console.log('partialItems', partialItems)
-  console.log('TRADE_TICKERS', TRADE_TICKERS)
-  console.log('pairs', pairs)
-
-  console.groupEnd()
-
   reducers.currencies.addPartialItems(pairs)
 
   return pairs
