@@ -13,7 +13,7 @@ let buildOpts = {
   curEnabled: false,
   blockchainSwapEnabled: false,
   ownTokens: false,
-  addCustomToken: true,
+  addCustomTokens: true,
   invoiceEnabled: true,
 }
 
@@ -55,8 +55,8 @@ Object.keys(config.erc20matic)
 if (config?.isWidget) {
   swap.length = 0
 
-  if (window?.widgetERC20Tokens?.length) {
-    window.widgetERC20Tokens.forEach((token) => {
+  if (window?.widgetEvmLikeTokens?.length) {
+    window.widgetEvmLikeTokens.forEach((token) => {
       const { name, standard } = token
       const baseCurrency = TOKEN_STANDARDS[standard]?.currency
       const tokenKey = `{${baseCurrency.toUpperCase()}}${name.toUpperCase()}`
@@ -74,7 +74,7 @@ if (config?.isWidget) {
   if (!config.opts.curEnabled || config.opts.curEnabled.next) swap.push('ETH-NEXT')
 }
 
-if (buildOpts.addCustomToken) {
+if (buildOpts.addCustomTokens) {
   const customTokenConfig = getCustomTokenConfig()
 
   Object.keys(customTokenConfig).forEach((standard) => {

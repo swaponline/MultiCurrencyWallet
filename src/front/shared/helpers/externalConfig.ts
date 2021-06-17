@@ -59,7 +59,7 @@ const externalConfig = () => {
       sell: 'btc',
     },
     ownTokens: false,
-    addCustomToken: true,
+    addCustomTokens: true,
     invoiceEnabled: !config.isWidget,
     showWalletBanners: false,
     showHowItsWork: false,
@@ -198,8 +198,8 @@ const externalConfig = () => {
     config.opts.hideShowPrivateKey = window.SWAP_HIDE_EXPORT_PRIVATEKEY
   }
 
-  if (window?.widgetERC20Tokens?.length) {
-    config.opts.ownTokens = window.widgetERC20Tokens
+  if (window?.widgetEvmLikeTokens?.length) {
+    config.opts.ownTokens = window.widgetEvmLikeTokens
   }
 
   if (config?.isWidget || config?.opts.ownTokens?.length) {
@@ -230,7 +230,7 @@ const externalConfig = () => {
     })
   }
 
-  if (config.opts.addCustomToken) {
+  if (config.opts.addCustomTokens) {
     const customTokenConfig = getCustomTokenConfig()
 
     Object.keys(customTokenConfig).forEach((standard) => {

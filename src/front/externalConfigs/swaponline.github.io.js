@@ -1,6 +1,6 @@
 // swaponline.github.io
 
-/* window.widgetERC20Tokens = [
+/* window.widgetEvmLikeTokens = [
   // {
   //   standard: '',
   //   address: '',
@@ -32,8 +32,8 @@
 ] */
 
 /* window.buildOptions = {
-  ownTokens: false, // Will be inited from window.widgetERC20Tokens
-  addCustomToken: false, // Allow user add custom erc20 tokens
+  ownTokens: false, // Will be inited from window.widgetEvmLikeTokens
+  addCustomTokens: false, // Allow user add custom evm like tokens
   curEnabled: { // Or 'false' if enabled all
     btc: true,
     eth: true,

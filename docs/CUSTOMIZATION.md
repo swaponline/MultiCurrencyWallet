@@ -95,8 +95,8 @@ To prevent any conflicts in future (when you will update your source from our br
 
 ## 9. Set custom exchange rate
 
-0. add `customEcxchangeRate` to `window.widgetERC20Tokens`
-1. add usd price for `window.widgetERC20Tokens`
+0. add `customEcxchangeRate` to `window.widgetEvmLikeTokens`
+1. add usd price for `window.widgetEvmLikeTokens`
 
 
 ## 10. Add exit button to your widget

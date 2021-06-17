@@ -16,7 +16,7 @@ let buildOpts = {
   curEnabled: false,
   blockchainSwapEnabled: false,
   ownTokens: false,
-  addCustomToken: true,
+  addCustomTokens: true,
   invoiceEnabled: true,
 }
 
@@ -28,8 +28,8 @@ if (window
   buildOpts = { ...buildOpts, ...window.buildOptions }
 }
 
-if (window?.widgetERC20Tokens?.length) {
-  buildOpts.ownTokens = window.widgetERC20Tokens
+if (window?.widgetEvmLikeTokens?.length) {
+  buildOpts.ownTokens = window.widgetEvmLikeTokens
 }
 
 if (Array.isArray(buildOpts.ownTokens) && buildOpts.ownTokens.length) {
@@ -335,7 +335,7 @@ if (config.isWidget) {
   ]
 
   // Мульти валюта с обратной совместимостью одиночного билда
-  const widgetCustomTokens = window?.widgetERC20Tokens?.length ? window.widgetERC20Tokens : []
+  const widgetCustomTokens = window?.widgetEvmLikeTokens?.length ? window.widgetEvmLikeTokens : []
 
   if (widgetCustomTokens.length) {
     // First token in list - is main - fill single-token erc20 config
@@ -383,7 +383,7 @@ if (config.isWidget) {
   }
 }
 
-if (buildOpts.addCustomToken) {
+if (buildOpts.addCustomTokens) {
   const customTokenConfig = getCustomTokenConfig()
 
   Object.keys(customTokenConfig).forEach((standard) => {
