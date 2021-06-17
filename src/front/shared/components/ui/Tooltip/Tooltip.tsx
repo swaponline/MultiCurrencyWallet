@@ -5,7 +5,7 @@ import ThemeTooltip from './ThemeTooltip'
 import styles from './Tooltip.scss'
 
 
-const Tooltip = ({ mark = true, children, id, dontHideMobile = null, place = null }) => (
+const Tooltip = ({ mark = true, children, id, dontHideMobile = false, place = null }) => (
   <Fragment>
     {mark ?
       <span data-tip data-for={id} styleName={`tooltip isMark ${dontHideMobile ? 'tooltip_truesight' : ''}`}>

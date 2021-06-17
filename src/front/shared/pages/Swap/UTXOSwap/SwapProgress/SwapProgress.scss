@@ -10,12 +10,9 @@
 
 .metamask_attention,
 .attention {
-  display: block;
-  padding-top: 5pt;
-  padding-bottom: 10pt;
-  color: #b32808;
-  font-size: 11pt;
-  line-height: 11pt;
+  padding: 0.9rem 0;
+  color: $color-f-error;
+  font-size: 1em;
 }
 
 .metamask_attention {
@@ -165,11 +162,10 @@
 
 .dontLeave {
   color: #d66f6f;
-  font-size: 15px;
 
   span {
     span {
-      color: #000
+      color: #000;
     }
   }
 }
