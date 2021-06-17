@@ -345,21 +345,27 @@ if (config.isWidget) {
     config[firstToken.standard][firstToken.name] = firstToken
 
     widgetCustomTokens.forEach((token) => {
-      const name = token.name
+      const { name, standard, fullName } = token
+      const baseCurrency = TOKEN_STANDARDS[standard]?.currency
 
       initialState.items.push({
         name: name.toUpperCase(),
         title: name.toUpperCase(),
         icon: name,
-        value: name,
-        fullTitle: token.fullName,
+        value: `{${baseCurrency.toUpperCase()}}${name}`,
+        fullTitle: fullName || name,
+        addAssets: true,
+        blockchain: BLOCKCHAIN_TYPE[baseCurrency.toUpperCase()],
+        standard,
       })
       initialState.partialItems.push({
         name: name.toUpperCase(),
         title: name.toUpperCase(),
         icon: name,
-        value: name,
-        fullTitle: token.fullName,
+        value: `{${baseCurrency.toUpperCase()}}${name}`,
+        fullTitle: fullName || name,
+        blockchain: BLOCKCHAIN_TYPE[baseCurrency.toUpperCase()],
+        standard,
       })
       initialState.addSelectedItems.push({
         //@ts-ignore
@@ -371,7 +377,7 @@ if (config.isWidget) {
         //@ts-ignore
         value: name,
         //@ts-ignore
-        fullTitle: token.fullName,
+        fullTitle: fullName || name,
       })
     })
   }
@@ -384,7 +390,8 @@ if (buildOpts.addCustomERC20) {
   Object.keys(customTokenConfig).forEach((standard) => {
     Object.keys(customTokenConfig[standard]).forEach((tokenContractAddr) => {
       const tokenObj = customTokenConfig[standard][tokenContractAddr]
-      const { symbol, baseCurrency } = tokenObj
+      const { symbol } = tokenObj
+      const baseCurrency = TOKEN_STANDARDS[standard]?.currency
 
       //@ts-ignore
       initialState.items.push({
@@ -392,7 +399,7 @@ if (buildOpts.addCustomERC20) {
           title: symbol.toUpperCase(),
           icon: symbol,
           value: `{${baseCurrency.toUpperCase()}}${symbol}`,
-          fullTitle: symbol,
+          fullTitle: config[standard][symbol]?.fullName || symbol,
           addAssets: true,
           blockchain: BLOCKCHAIN_TYPE[baseCurrency.toUpperCase()],
           standard,
