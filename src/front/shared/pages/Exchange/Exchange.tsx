@@ -763,7 +763,6 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
       if (isUserSellToken && enoughBalanceForSellAmount && sellBlockchainBalance.isGreaterThanOrEqualTo(sellFee)) {
         enoughBalanceForFullPayment = true
       }
-      // TODO: check this condition
       else if (isUserBuyToken && (fromType === AddressType.Custom || enoughBalanceForSellAmount) &&  buyBlockchainBalance.isGreaterThanOrEqualTo(buyFee)) {
         enoughBalanceForFullPayment = true
       }
@@ -809,14 +808,21 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
           />
           <br />
 
-          {/* TODO: check this variable (why doesn't it show the message?) */}
-
-          {enoughBalanceForFullPayment && (
+          {!enoughBalanceForFullPayment && fromType === AddressType.Custom ? (
+            <FormattedMessage
+              id="NotEnoughForBuy"
+              defaultMessage="You must have at least Miner commission {buyFee} {buyCoin}"
+              values={{
+                buyFee,
+                buyCoin: this.renderCoinName(buyCoin),
+              }}
+            />
+          ) : (
             <FormattedMessage
               id="Swap_NeedMoreAmount"
               defaultMessage="You must have at least {amount} {currency} on your balance. {br} Miner commission {sellFee} {sellCoin} and {buyFee} {buyCoin}"
               values={{
-                amount: amount.toNumber(),
+                amount,
                 currency: this.renderCoinName(sellCurrency),
                 sellFee,
                 sellCoin: this.renderCoinName(sellCoin),

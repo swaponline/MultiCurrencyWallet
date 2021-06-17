@@ -31,7 +31,8 @@
     "id": "menu.CreateWallet",
     "message": "Creëer wallet",
     "files": [
-      "src/front/shared/components/Header/config.tsx"
+      "src/front/shared/components/Header/config.tsx",
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
   },
   {
@@ -4389,6 +4390,7 @@
     "id": "BTCMS_SaveMnemonicButton",
     "message": "Save secret phrase",
     "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx",
       "src/front/shared/pages/Multisign/Btc/Btc.tsx"
     ]
   },
@@ -5866,6 +5868,7 @@
     "id": "WalletEmptyBalance",
     "message": "Geen portefeuilles beschikbaar",
     "files": [
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
       "src/front/shared/pages/Wallet/Wallet.tsx"
     ]
   },
@@ -5881,6 +5884,27 @@
     "message": "Online sinds 2018. Bekijk onze {twitter} en {github} geschiedenis",
     "files": [
       "src/front/shared/components/Footer/Footer.tsx"
+    ]
+  },
+  {
+    "id": "AppErrorMessage",
+    "message": "Er is iets mis. Probeer terug te komen op de homepage of herlaad deze pagina.",
+    "files": [
+      "src/front/shared/components/ErrorBoundary/index.tsx"
+    ]
+  },
+  {
+    "id": "NotEnoughForBuy",
+    "message": "Je moet tenminste mijn Commissie {buyFee} {buyCoin}",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "WalletRow_MetamaskNotAvailableNetwork",
+    "message": "Kies een andere",
+    "files": [
+      "src/front/shared/pages/Wallet/Row/Row.tsx"
     ]
   }
 ]

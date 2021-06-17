@@ -28,7 +28,8 @@
     "id": "menu.CreateWallet",
     "message": "Создать кошелёк",
     "files": [
-      "src/front/shared/components/Header/config.tsx"
+      "src/front/shared/components/Header/config.tsx",
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
   },
   {
@@ -4530,6 +4531,7 @@
     "id": "BTCMS_SaveMnemonicButton",
     "message": "Сохранить секретную фразу",
     "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx",
       "src/front/shared/pages/Multisign/Btc/Btc.tsx"
     ]
   },
@@ -5874,6 +5876,7 @@
     "id": "WalletEmptyBalance",
     "message": "Нет доступных кошельков",
     "files": [
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
       "src/front/shared/pages/Wallet/Wallet.tsx"
     ]
   },
@@ -5889,6 +5892,27 @@
     "message": "Онлайн с 2018 года. Проверьте нашу историю {twitter} и {github}",
     "files": [
       "src/front/shared/components/Footer/Footer.tsx"
+    ]
+  },
+  {
+    "id": "AppErrorMessage",
+    "message": "Что-то не так. Попробуйте вернуться на домашнюю страницу или перезагрузить эту.",
+    "files": [
+      "src/front/shared/components/ErrorBoundary/index.tsx"
+    ]
+  },
+  {
+    "id": "NotEnoughForBuy",
+    "message": "У вас должна быть комиссия за майнинг как минимум {buyFee} {buyCoin}",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "WalletRow_MetamaskNotAvailableNetwork",
+    "message": "Пожалуйста, выберите другую",
+    "files": [
+      "src/front/shared/pages/Wallet/Row/Row.tsx"
     ]
   }
 ]

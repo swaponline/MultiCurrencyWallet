@@ -222,11 +222,11 @@
   .swapHistory {
     width: 100%;
     border-collapse:separate; 
-    border-spacing: 0 1.1rem;
-    
-    THEAD {
-      TR {
-        TD {
+    border-spacing: 0 1rem;
+
+    thead {
+      tr {
+        td {
           color: var(--primary-hover);
         }
       }
