@@ -33,7 +33,7 @@
 
 /* window.buildOptions = {
   ownTokens: false, // Will be inited from window.widgetERC20Tokens
-  addCustomERC20: false, // Allow user add custom erc20 tokens
+  addCustomToken: false, // Allow user add custom erc20 tokens
   curEnabled: { // Or 'false' if enabled all
     btc: true,
     eth: true,

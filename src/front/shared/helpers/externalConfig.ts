@@ -59,8 +59,7 @@ const externalConfig = () => {
       sell: 'btc',
     },
     ownTokens: false,
-    // TODO: addCustomERC20 -> addCustomToken
-    addCustomERC20: true,
+    addCustomToken: true,
     invoiceEnabled: !config.isWidget,
     showWalletBanners: false,
     showHowItsWork: false,
@@ -231,7 +230,7 @@ const externalConfig = () => {
     })
   }
 
-  if (config.opts.addCustomERC20) {
+  if (config.opts.addCustomToken) {
     const customTokenConfig = getCustomTokenConfig()
 
     Object.keys(customTokenConfig).forEach((standard) => {

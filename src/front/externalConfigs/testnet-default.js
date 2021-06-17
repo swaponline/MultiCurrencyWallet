@@ -75,7 +75,7 @@ window.widgetERC20Tokens = [
 
 window.buildOptions = {
   // ownTokens: true, // Will be inited from window.widgetERC20Tokens
-  // addCustomERC20: true, // Allow user add custom erc20 tokens
+  // addCustomToken: true, // Allow user add custom erc20 tokens
   // invoiceEnabled: true, // Allow create invoices
   // hideShowPrivateKey: true, // Hide 'Copy Private Key' Menu item, default false, inited also from window.SWAP_HIDE_EXPORT_PRIVATEKEY
   showWalletBanners: true, // Allow to see banners

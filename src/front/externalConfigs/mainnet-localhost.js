@@ -43,7 +43,7 @@ window.widgetERC20Tokens = [
 
 window.buildOptions = {
   ownTokens: false, // Will be inited from window.widgetERC20Tokens
-  addCustomERC20: true, // Allow user add custom erc20 tokens
+  addCustomToken: true, // Allow user add custom erc20 tokens
   curEnabled: { // Or 'false' if enabled all
     btc: true,
     eth: true,

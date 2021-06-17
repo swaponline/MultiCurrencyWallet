@@ -13,7 +13,7 @@ let buildOpts = {
   curEnabled: false,
   blockchainSwapEnabled: false,
   ownTokens: false,
-  addCustomERC20: true,
+  addCustomToken: true,
   invoiceEnabled: true,
 }
 
@@ -74,7 +74,7 @@ if (config?.isWidget) {
   if (!config.opts.curEnabled || config.opts.curEnabled.next) swap.push('ETH-NEXT')
 }
 
-if (buildOpts.addCustomERC20) {
+if (buildOpts.addCustomToken) {
   const customTokenConfig = getCustomTokenConfig()
 
   Object.keys(customTokenConfig).forEach((standard) => {
