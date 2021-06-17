@@ -181,6 +181,7 @@
 │   ├── helpers
 │   │   ├── bip44.ts
 │   │   ├── constants
+│   │   │   ├── AVAILABLE_EVM_NETWORKS.ts
 │   │   │   ├── COINS_WITH_DYNAMIC_FEE.ts
 │   │   │   ├── DEFAULT_CURRENCY_PARAMETERS.ts
 │   │   │   ├── index.ts
@@ -284,6 +285,7 @@
 │   │   ├── SwapInterface.ts
 │   │   └── util
 │   │       ├── bep20.ts
+│   │       ├── erc20matic.ts
 │   │       ├── erc20.ts
 │   │       ├── helpers.ts
 │   │       ├── index.ts
@@ -295,6 +297,7 @@
 │   │   ├── eth.ts
 │   │   ├── ghost.ts
 │   │   ├── index.ts
+│   │   ├── matic.ts
 │   │   ├── next.ts
 │   │   └── SwapAuth.ts
 │   ├── swap.flows
@@ -309,6 +312,8 @@
 │   │   ├── BTC2BSCTOKEN.ts
 │   │   ├── BTC2ETHTOKEN.ts
 │   │   ├── BTC2ETH.ts
+│   │   ├── BTC2MATICTOKEN.ts
+│   │   ├── BTC2MATIC.ts
 │   │   ├── ETH2BTC.ts
 │   │   ├── ETH2GHOST.ts
 │   │   ├── ETH2NEXT.ts
@@ -319,6 +324,8 @@
 │   │   ├── GHOST2ETHTOKEN.ts
 │   │   ├── GHOST2ETH.ts
 │   │   ├── index.ts
+│   │   ├── MATIC2BTC.ts
+│   │   ├── MATICTOKEN2BTC.ts
 │   │   ├── NEXT2BTC.ts
 │   │   ├── NEXT2ETHTOKEN.ts
 │   │   ├── NEXT2ETH.ts
@@ -352,6 +359,8 @@
 │   │   ├── EthTokenSwap.ts
 │   │   ├── GhostSwap.ts
 │   │   ├── index.ts
+│   │   ├── MaticSwap.ts
+│   │   ├── MaticTokenSwap.ts
 │   │   ├── NextSwap.ts
 │   │   └── UTXOBlockchain.ts
 │   ├── tests
@@ -380,7 +389,6 @@
 │   │   │   ├── icon-16.png
 │   │   │   ├── icon-196.png
 │   │   │   └── icon-32.png
-│   │   ├── manifest_bsc.json
 │   │   └── manifest_eth.json
 │   ├── client
 │   │   ├── favicon.png
@@ -439,6 +447,7 @@
 │   │   │   ├── api.js
 │   │   │   ├── bep20.js
 │   │   │   ├── erc20.js
+│   │   │   ├── erc20matic.js
 │   │   │   ├── feeRates.js
 │   │   │   ├── hiddenCoins.js
 │   │   │   ├── index.js
@@ -459,6 +468,7 @@
 │   │   │   ├── api.js
 │   │   │   ├── bep20.js
 │   │   │   ├── erc20.js
+│   │   │   ├── erc20matic.js
 │   │   │   ├── feeRates.js
 │   │   │   ├── hiddenCoins.js
 │   │   │   ├── index.js
@@ -766,8 +776,6 @@
 │   │   │   │   │   │   ├── ExchangeRate
 │   │   │   │   │   │   │   ├── ExchangeRate.scss
 │   │   │   │   │   │   │   └── ExchangeRate.tsx
-│   │   │   │   │   │   ├── Fee
-│   │   │   │   │   │   │   └── Fee.tsx
 │   │   │   │   │   │   ├── Row
 │   │   │   │   │   │   │   ├── Row.scss
 │   │   │   │   │   │   │   └── Row.tsx
@@ -927,6 +935,7 @@
 │   │   │       │       ├── knc.png
 │   │   │       │       ├── kn.svg
 │   │   │       │       ├── lev.svg
+│   │   │       │       ├── matic.svg
 │   │   │       │       ├── next.svg
 │   │   │       │       ├── nim.svg
 │   │   │       │       ├── omg.svg
@@ -1018,6 +1027,7 @@
 │   │   │   ├── locale.ts
 │   │   │   ├── localStorage.ts
 │   │   │   ├── lsDataCache.ts
+│   │   │   ├── matic.ts
 │   │   │   ├── metamask.ts
 │   │   │   ├── migrations
 │   │   │   │   ├── 001_initMigration.ts
@@ -1057,7 +1067,6 @@
 │   │   ├── instances
 │   │   │   └── newSwap.ts
 │   │   ├── localisation
-│   │   │   ├── _default.json
 │   │   │   ├── en.json
 │   │   │   ├── es.json
 │   │   │   ├── nl.json
@@ -1242,6 +1251,7 @@
 │   │   │   │       │       └── UTXOSteps
 │   │   │   │       │           ├── SecondStep.tsx
 │   │   │   │       │           └── ThirdStep.tsx
+│   │   │   │       ├── SwapPairInfo.tsx
 │   │   │   │       ├── SwapProgress
 │   │   │   │       │   ├── PleaseDontLeaveWrapper.tsx
 │   │   │   │       │   ├── SwapProgress.scss
@@ -1349,4 +1359,4 @@
 │       └── run.js
 └── README.md
 
-343 directories, 1006 files
+342 directories, 1017 files

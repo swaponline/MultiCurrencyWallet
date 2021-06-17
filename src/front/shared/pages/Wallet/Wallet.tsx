@@ -279,14 +279,17 @@ class Wallet extends PureComponent<any, any> {
       history,
       intl: { locale },
     } = this.props
-    const { userCurrencyData } = this.props
+    const userCurrencyData = actions.core.getWallets({})
     const availableWallets = user.filterUserCurrencyData(userCurrencyData)
 
-    if (!Object.keys(availableWallets).length) {
+    if (
+      !Object.keys(availableWallets).length ||
+      (Object.keys(availableWallets).length === 1 && !user.isCorrectWalletToShow(availableWallets[0]))
+    ) {
       actions.notifications.show(
         constants.notifications.Message,
         {message: (
-          <FormattedMessage 
+          <FormattedMessage
             id="WalletEmptyBalance"
             defaultMessage="No wallets available"
           />
@@ -296,7 +299,9 @@ class Wallet extends PureComponent<any, any> {
       return
     }
 
-    const { currency, address, tokenKey } = availableWallets[0]
+    const firstWallet = user.isCorrectWalletToShow(availableWallets[0]) ? availableWallets[0] : availableWallets[1]
+
+    const { currency, address, tokenKey } = firstWallet
     let targetCurrency = currency
 
     switch (currency.toLowerCase()) {

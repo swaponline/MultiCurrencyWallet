@@ -78,7 +78,6 @@ class Invoice extends PureComponent<InvoceProps, InvoceState> {
 
     const { history, intl: { locale } } = this.props
 
-    //@ts-ignore: strictNullChecks
     actions.modals.open(constants.modals.InfoInvoice, {
       onClose: (isLocationChange) => {
         if (!isLocationChange) {

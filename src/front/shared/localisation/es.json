@@ -2813,6 +2813,7 @@
     "id": "registerSMSMPlaceHolder",
     "message": "Frase secreta(12 palabras)",
     "files": [
+      "src/front/shared/components/Header/Header.tsx",
       "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx",
       "src/front/shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
@@ -5684,13 +5685,6 @@
     ]
   },
   {
-    "id": "MM_Wallet_Create",
-    "message": "Crear billetera",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
-    ]
-  },
-  {
     "id": "MM_Wallet_Restore",
     "message": "Restaurar desde semilla de 12 palabras",
     "files": [
@@ -5891,10 +5885,10 @@
     ]
   },
   {
-    "id": "WalletEmptyBalance",
-    "message": "No wallets available",
+    "id": "FooterSwapDescription",
+    "message": "En línea desde 2018. Consulta nuestro historial de {twitter} y {github}",
     "files": [
-      "src/front/shared/pages/Wallet/Wallet.tsx"
+      "src/front/shared/components/Footer/Footer.tsx"
     ]
   }
 ]

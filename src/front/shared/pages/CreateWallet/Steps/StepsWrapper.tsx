@@ -24,13 +24,10 @@ export default class StepsWrapper extends Component<any, any> {
   constructor(props) {
     super(props)
     const { currencies } = props
-
-    if (config
-      && config.opts?.ownTokens
-      && Object.keys(config.opts.ownTokens)
-      && Object.keys(config.opts.ownTokens).length
-    ) {
+    
+    if (config?.opts.ownTokens?.length) {
       this.defaultStartPack = []
+
       if (!curEnabled || curEnabled.btc) {
         this.defaultStartPack.push({ name: "BTC", capture: "Bitcoin" })
       }
@@ -40,32 +37,29 @@ export default class StepsWrapper extends Component<any, any> {
       if (!curEnabled || curEnabled.bnb) {
         this.defaultStartPack.push({ name: "BNB", capture: "Binance Coin" })
       }
+      if (!curEnabled || curEnabled.matic) {
+        this.defaultStartPack.push({ name: "MATIC", capture: "Matic token" })
+      }
       if (!curEnabled || curEnabled.ghost) {
         this.defaultStartPack.push({ name: "GHOST", capture: "Ghost" })
       }
       if (!curEnabled || curEnabled.next) {
         this.defaultStartPack.push({ name: "NEXT", capture: "NEXT.coin" })
       }
-      if (!curEnabled || curEnabled.matic) {
-        this.defaultStartPack.push({ name: "MATIC", capture: "MATIC Token" })
-      }
 
-      if (config.opts.ownTokens.length) {
-        // Multi token build
-        config.opts.ownTokens.forEach((token) => {
-          const name = token.name.toLowerCase()
-          const standard = token.standard.toLowerCase()
+      // Multi token build
+      config.opts.ownTokens.forEach((token) => {
+        const name = token.name.toLowerCase()
+        const standard = token.standard.toLowerCase()
 
-          if (config[standard][name]) {
-            this.defaultStartPack.push({
-              name: name.toUpperCase(),
-              capture: config[standard][name].fullName,
-              baseCurrency: standard.toUpperCase(),
-            })
-          }
+        this.defaultStartPack.push({
+          name: name.toUpperCase(),
+          capture: token.fullName,
+          baseCurrency: standard.toUpperCase(),
         })
-      }
-      if (config.opts.addCustomERC20) {
+      })
+
+      if (config.opts.addCustomTokens) {
         if (config.erc20) this.defaultStartPack.push({ name: 'ERC20', capture: 'Token', baseCurrency: 'ETH' })
         if (config.bep20) this.defaultStartPack.push({ name: 'BEP20', capture: 'Token', baseCurrency: 'BNB' })
         if (config.erc20matic) this.defaultStartPack.push({ name: 'ERC20MATIC', capture: 'Token', baseCurrency: 'MATIC' })
@@ -97,9 +91,9 @@ export default class StepsWrapper extends Component<any, any> {
     })
 
     if (isWidgetBuild && haveTokenConfig) {
-      if (window?.widgetERC20Tokens?.length) {
+      if (window?.widgetEvmLikeTokens?.length) {
         // Multi token build
-        window.widgetERC20Tokens.forEach((token) => {
+        window.widgetEvmLikeTokens.forEach((token) => {
           const name = token.name.toLowerCase()
           const standard = token.standard.toLowerCase()
 

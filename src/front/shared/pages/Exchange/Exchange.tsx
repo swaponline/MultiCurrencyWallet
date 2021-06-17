@@ -31,7 +31,6 @@ import helpers, {
   constants,
   metamask,
   feedback,
-  ethToken,
   links,
 } from 'helpers'
 
@@ -49,10 +48,6 @@ import TurboIcon from 'shared/components/ui/TurboIcon/TurboIcon'
 
 import { COIN_DATA, COIN_MODEL, COIN_TYPE } from 'swap.app/constants/COINS'
 import getCoinInfo from 'common/coins/getCoinInfo'
-import { AVAILABLE_NETWORKS_BY_COIN } from 'common/helpers/constants/AVAILABLE_EVM_NETWORKS'
-
-const NETWORK = process.env.MAINNET ? 'MAINNET' : 'TESTNET'
-const NETWORK_NUMBER = NETWORK === 'MAINNET' ? 0 : 1 // 0 - MAINNET, 1 - TESTNET
 
 
 type CurrencyObj = {
@@ -73,7 +68,7 @@ type ExchangeProps = {
   history: IUniversalObj
   tokensData: IUniversalObj[]
   currencies: { [key: string]: string }[]
-  allCurrencyies: CurrencyObj[]
+  allCurrencies: CurrencyObj[]
   addSelectedItems: CurrencyObj[]
   hiddenCoinsList: string[]
   decline: string[]
@@ -145,7 +140,7 @@ const bannedPeers = {} // rejected swap peers
     user: { tokensData, activeFiat },
   }) => ({
     currencies: swapsHelper.isExchangeAllowed(currencies.partialItems),
-    allCurrencyies: currencies.items,
+    allCurrencies: currencies.items,
     addSelectedItems: swapsHelper.isExchangeAllowed(currencies.addPartialItems),
     orders: swapsHelper.filterIsPartial(orders),
     tokensData: [...Object.keys(tokensData).map((k) => tokensData[k])],
@@ -204,7 +199,7 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
     super(props)
 
     const {
-      allCurrencyies,
+      allCurrencies,
       intl: { locale },
       history,
       match,
@@ -223,8 +218,8 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
       const { coin: sellName } = getCoinInfo(sell)
       const { coin: buyName } = getCoinInfo(buy)
       if (
-        !allCurrencyies.map((item) => item.name).includes(sellName.toUpperCase()) ||
-        !allCurrencyies.map((item) => item.name).includes(buyName.toUpperCase())
+        !allCurrencies.map((item) => item.name).includes(sellName.toUpperCase()) ||
+        !allCurrencies.map((item) => item.name).includes(buyName.toUpperCase())
       ) {
         history.push(localisedUrl(locale, `${links.exchange}/eth-to-btc`))
       }
@@ -1395,7 +1390,7 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
 
     const noPairToken = config && config.isWidget ? config.erc20token : 'swap'
 
-    const checkingValue = this.props.allCurrencyies
+    const checkingValue = this.props.allCurrencies
       .map((item) => item.value)
       .includes(haveCurrency)
         ? haveCurrency
@@ -1521,21 +1516,6 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
 
   renderCoinName = (coin) => {
     return coin.toUpperCase()
-  }
-
-  getCurrencyNetwork = (currency) => {
-    const { coin, blockchain } = getCoinInfo(currency)
-    const ticker = coin.toUpperCase()
-
-    const isUTXOModel = COIN_DATA[ticker]?.model === COIN_MODEL.UTXO
-    const chainNetworks = !isUTXOModel && (
-      blockchain ? AVAILABLE_NETWORKS_BY_COIN[blockchain]
-        : AVAILABLE_NETWORKS_BY_COIN[ticker]
-    )
-
-    if (chainNetworks) {
-      return chainNetworks[NETWORK_NUMBER]
-    }
   }
 
   render() {
@@ -1702,13 +1682,9 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
       new BigNumber(availableAmount).isGreaterThanOrEqualTo(haveAmount) ||
       fromAddress.type === AddressType.Custom
 
-    const sellCoinNetworkVersion = this.getCurrencyNetwork(sellCoin)
-    const buyCoinNetworkVersion = this.getCurrencyNetwork(buyCoin)
-    const metamaskNetworkVersion = +getCurrentWeb3()?.currentProvider?.networkVersion
-
     const isCorrectMetamaskNetwork = !metamask.isConnected() ||
       (fromAddress.type === AddressType.Metamask || toAddress.type === AddressType.Metamask) &&
-      (metamaskNetworkVersion === sellCoinNetworkVersion || metamaskNetworkVersion === buyCoinNetworkVersion)
+      (metamask.isAvailableNetworkByCurrency(sellCoin) || metamask.isAvailableNetworkByCurrency(buyCoin))
 
     const canStartSwap =
       !isErrorExternalDisabled &&
@@ -1787,7 +1763,7 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
                 label={<FormattedMessage id="Exchange_FromAddress" defaultMessage="From address" />}
                 isDark={isDark}
                 currency={haveCurrency}
-                balance={balances[sellCoin]}
+                balance={this.getBalance(sellCoin)}
                 selectedType={haveType}
                 role={AddressRole.Send}
                 hasError={false}
@@ -1820,7 +1796,7 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
                 isDark={isDark}
                 role={AddressRole.Receive}
                 currency={getCurrency}
-                balance={balances[buyCoin]}
+                balance={this.getBalance(buyCoin)}
                 selectedType={getType}
                 hasError={false}
                 placeholder="To address"

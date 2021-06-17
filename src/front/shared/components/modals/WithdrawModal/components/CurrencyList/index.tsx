@@ -4,7 +4,7 @@ import styles from './index.scss'
 import cx from 'classnames'
 import PartOfAddress from 'pages/Wallet/PartOfAddress'
 import { isMobile } from 'react-device-detect'
-import { constants } from 'helpers'
+import { constants, user } from 'helpers'
 import { localisedUrl } from 'helpers/locale'
 import getCurrencyKey from 'helpers/getCurrencyKey'
 import Coin from 'components/Coin/Coin'
@@ -117,6 +117,8 @@ export default class CurrencyList extends Component<any, any> {
         {isAssetsOpen && (
           <div styleName={`customSelectList ${isDark ? 'darkList' : ''}`}>
             {tableRows.map((item, index) => {
+              if (!user.isCorrectWalletToShow(item)) return
+
               const baseCurrency = item.baseCurrency
               const itemId = `${
                 baseCurrency ? baseCurrency.toLowerCase() : ''

@@ -2791,6 +2791,7 @@
     "id": "registerSMSMPlaceHolder",
     "message": "Secret phrase (12 words)",
     "files": [
+      "src/front/shared/components/Header/Header.tsx",
       "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx",
       "src/front/shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
@@ -5676,13 +5677,6 @@
     ]
   },
   {
-    "id": "MM_Wallet_Create",
-    "message": "Creëer wallet",
-    "files": [
-      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
-    ]
-  },
-  {
     "id": "MM_Wallet_Restore",
     "message": "Herstel van seed van 12 woorden",
     "files": [
@@ -5883,10 +5877,10 @@
     ]
   },
   {
-    "id": "WalletEmptyBalance",
-    "message": "No wallets available",
+    "id": "FooterSwapDescription",
+    "message": "Online sinds 2018. Bekijk onze {twitter} en {github} geschiedenis",
     "files": [
-      "src/front/shared/pages/Wallet/Wallet.tsx"
+      "src/front/shared/components/Footer/Footer.tsx"
     ]
   }
 ]

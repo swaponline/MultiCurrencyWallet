@@ -63,8 +63,8 @@ export const getWidgetCurrencies = () => {
   }
 
   if (externalConfig.isWidget) {
-    if (window?.widgetERC20Tokens?.length) {
-      window.widgetERC20Tokens.forEach((token) => {
+    if (window?.widgetEvmLikeTokens?.length) {
+      window.widgetEvmLikeTokens.forEach((token) => {
         widgetCurrencies.push(token.name.toUpperCase())
       })
     } else {
@@ -92,4 +92,8 @@ export const filterUserCurrencyData = (currencyData) => {
   return currencyData.filter((wallet) => {
     return isAllowed(wallet)
   })
+}
+
+export const isCorrectWalletToShow = (wallet) => {
+  return !wallet.isMetamask || (wallet.isConnected && !wallet.unknownNetwork)
 }

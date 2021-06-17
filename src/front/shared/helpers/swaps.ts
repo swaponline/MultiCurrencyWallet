@@ -21,10 +21,10 @@ const isExchangeAllowed = (currencies) =>
       .map((i) => `{matic}${i.toLowerCase()}`)
       .includes(`${c.value}`.toLowerCase())
 
-  const isAllowedCoin = allowedCoins.map((i) => i.toLowerCase()).includes(c.value.toLowerCase())
+    const isAllowedCoin = allowedCoins.map((i) => i.toLowerCase()).includes(c.value.toLowerCase())
 
-  return isAllowedCoin || isErc || isBep || isErcMatic
-})
+    return isAllowedCoin || isErc || isBep || isErcMatic
+  })
 
 const filterIsPartial = (orders) =>
   orders

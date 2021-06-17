@@ -16,7 +16,7 @@ let buildOpts = {
   curEnabled: false,
   blockchainSwapEnabled: false,
   ownTokens: false,
-  addCustomERC20: true,
+  addCustomTokens: true,
   invoiceEnabled: true,
 }
 
@@ -28,8 +28,8 @@ if (window
   buildOpts = { ...buildOpts, ...window.buildOptions }
 }
 
-if (window?.widgetERC20Tokens?.length) {
-  buildOpts.ownTokens = window.widgetERC20Tokens
+if (window?.widgetEvmLikeTokens?.length) {
+  buildOpts.ownTokens = window.widgetEvmLikeTokens
 }
 
 if (Array.isArray(buildOpts.ownTokens) && buildOpts.ownTokens.length) {
@@ -335,7 +335,7 @@ if (config.isWidget) {
   ]
 
   // Мульти валюта с обратной совместимостью одиночного билда
-  const widgetCustomTokens = window?.widgetERC20Tokens?.length ? window.widgetERC20Tokens : []
+  const widgetCustomTokens = window?.widgetEvmLikeTokens?.length ? window.widgetEvmLikeTokens : []
 
   if (widgetCustomTokens.length) {
     // First token in list - is main - fill single-token erc20 config
@@ -345,21 +345,27 @@ if (config.isWidget) {
     config[firstToken.standard][firstToken.name] = firstToken
 
     widgetCustomTokens.forEach((token) => {
-      const name = token.name
+      const { name, standard, fullName } = token
+      const baseCurrency = TOKEN_STANDARDS[standard]?.currency
 
       initialState.items.push({
         name: name.toUpperCase(),
         title: name.toUpperCase(),
         icon: name,
-        value: name,
-        fullTitle: token.fullName,
+        value: `{${baseCurrency.toUpperCase()}}${name}`,
+        fullTitle: fullName || name,
+        addAssets: true,
+        blockchain: BLOCKCHAIN_TYPE[baseCurrency.toUpperCase()],
+        standard,
       })
       initialState.partialItems.push({
         name: name.toUpperCase(),
         title: name.toUpperCase(),
         icon: name,
-        value: name,
-        fullTitle: token.fullName,
+        value: `{${baseCurrency.toUpperCase()}}${name}`,
+        fullTitle: fullName || name,
+        blockchain: BLOCKCHAIN_TYPE[baseCurrency.toUpperCase()],
+        standard,
       })
       initialState.addSelectedItems.push({
         //@ts-ignore
@@ -371,38 +377,43 @@ if (config.isWidget) {
         //@ts-ignore
         value: name,
         //@ts-ignore
-        fullTitle: token.fullName,
+        fullTitle: fullName || name,
       })
     })
   }
-} else {
-  // TODO: addCustomERC20 -> addCustomToken
-  if (!config.isWidget && buildOpts.addCustomERC20) {
-    const customTokenConfig = getCustomTokenConfig()
+}
 
-    Object.keys(customTokenConfig).forEach((standard) => {
-      Object.keys(customTokenConfig[standard]).forEach((tokenContractAddr) => {
-        const tokenObj = customTokenConfig[standard][tokenContractAddr]
-        const { symbol } = tokenObj
+if (buildOpts.addCustomTokens) {
+  const customTokenConfig = getCustomTokenConfig()
 
-        //@ts-ignore
-        initialState.items.push({
+  Object.keys(customTokenConfig).forEach((standard) => {
+    Object.keys(customTokenConfig[standard]).forEach((tokenContractAddr) => {
+      const tokenObj = customTokenConfig[standard][tokenContractAddr]
+      const { symbol } = tokenObj
+      const baseCurrency = TOKEN_STANDARDS[standard]?.currency
+
+      //@ts-ignore
+      initialState.items.push({
           name: symbol.toUpperCase(),
           title: symbol.toUpperCase(),
-          icon: symbol.toLowerCase(),
-          value: symbol.toLowerCase(),
-          fullTitle: symbol,
+          icon: symbol,
+          value: `{${baseCurrency.toUpperCase()}}${symbol}`,
+          fullTitle: config[standard][symbol]?.fullName || symbol,
+          addAssets: true,
+          blockchain: BLOCKCHAIN_TYPE[baseCurrency.toUpperCase()],
+          standard,
         })
-        initialState.partialItems.push({
-          name: symbol.toUpperCase(),
-          title: symbol.toUpperCase(),
-          icon: symbol.toLowerCase(),
-          value: symbol.toLowerCase(),
-          fullTitle: symbol,
-        })
+      initialState.partialItems.push({
+        name: symbol.toUpperCase(),
+        title: symbol.toUpperCase(),
+        icon: symbol,
+        value: `{${baseCurrency.toUpperCase()}}${symbol}`,
+        fullTitle: config[standard][symbol]?.fullName || symbol,
+        blockchain: BLOCKCHAIN_TYPE[baseCurrency.toUpperCase()],
+        standard,
       })
     })
-  }
+  })
 }
 
 const addSelectedItems = (state, payload) => ({

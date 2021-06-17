@@ -242,7 +242,7 @@ const getBalances = () => {
 
   return new Promise(async (resolve) => {
     const balances = [
-      ...(metamask.isEnabled() && metamask.isConnected())
+      ...(metamask.isEnabled() && metamask.isConnected() && metamask.isAvailableNetwork())
         ? [ { func: metamask.getBalance, name: 'metamask' } ]
         : [],
       { func: actions.btc.getBalance, name: 'btc' },
@@ -292,7 +292,7 @@ const getTokensBalances = async () => {
 }
 
 const customRate = (cur) => {
-  const widgetTokens = window.widgetERC20Tokens
+  const widgetTokens = window.widgetEvmLikeTokens
 
   const targetToken = widgetTokens?.length && widgetTokens.find((token) => {
     return token.name.toLowerCase() === cur.toLowerCase()
