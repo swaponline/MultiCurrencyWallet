@@ -1768,7 +1768,7 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
                 label={<FormattedMessage id="Exchange_FromAddress" defaultMessage="From address" />}
                 isDark={isDark}
                 currency={haveCurrency}
-                balance={balances[sellCoin]}
+                balance={this.getBalance(sellCoin)}
                 selectedType={haveType}
                 role={AddressRole.Send}
                 hasError={false}
@@ -1801,7 +1801,7 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
                 isDark={isDark}
                 role={AddressRole.Receive}
                 currency={getCurrency}
-                balance={balances[buyCoin]}
+                balance={this.getBalance(buyCoin)}
                 selectedType={getType}
                 hasError={false}
                 placeholder="To address"

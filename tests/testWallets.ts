@@ -5,14 +5,14 @@ export default {
     privateKey: 'cScvAnWxUagxS4TMbnbsyZguenhYggNmFhpy7wtHwyRvAkViiVu1,'
   },
   btcMTaker: {
-    seedPhrase: 'honey stereo harsh diary select episode ready ritual best target paper auto',
-    address: 'n4JjB9D9axszdsFxyxDmF43z4WwttN6oPb',
-    ethAddress: '0x011b79E184a2fBe3343b211cAaecE46D179695c6',
-  },
-  btcMMaker: {
     seedPhrase: 'neither already situate silent ripple milk paddle glass leopard track mansion junk',
     address: 'n2Y2rbg6wVEQnnpNxisiHK4wCDUAq59iv6',
     ethAddress: '0x81df6Ec1C87bACf56065D011c295B5f6B369A36c',
+  },
+  btcMMaker: {
+    seedPhrase: 'honey stereo harsh diary select episode ready ritual best target paper auto',
+    address: 'n4JjB9D9axszdsFxyxDmF43z4WwttN6oPb',
+    ethAddress: '0x011b79E184a2fBe3343b211cAaecE46D179695c6',
   },
   btcRW: {
     seedPhrase: 'express pretty dinner first someone reform occur food dice very thumb unfold',
