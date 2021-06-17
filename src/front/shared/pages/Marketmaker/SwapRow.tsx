@@ -224,35 +224,27 @@ class SwapRow extends Component<any, any> {
         {step > 1 && (
           <Fragment>
             <td>
-              <p>
-                {isMy
-                  ? `${sellAmount.toFixed(5)} ${sellCurrency.toUpperCase()}`
-                  : `${buyAmount.toFixed(5)} ${buyCurrency.toUpperCase()}`}
-              </p>
+              {isMy
+                ? `${sellAmount.toFixed(5)} ${sellCurrency.toUpperCase()}`
+                : `${buyAmount.toFixed(5)} ${buyCurrency.toUpperCase()}`}
             </td>
             <td>
-              <p>
-                {step}
-              </p>
+              {step}
             </td>
             <td>
-              <p>
-                {isMy
-                  ? `${buyAmount.toFixed(5)} ${buyCurrency.toUpperCase()}`
-                  : `${sellAmount.toFixed(5)} ${sellCurrency.toUpperCase()}`}
-              </p>
+              {isMy
+                ? `${buyAmount.toFixed(5)} ${buyCurrency.toUpperCase()}`
+                : `${sellAmount.toFixed(5)} ${sellCurrency.toUpperCase()}`}
             </td>
             <td>
-              <p>
-                {(lockDateAndTime !== null) && (
-                  <Fragment>
-                    {/* @ts-ignore: strictNullChecks */}
-                    {lockDateAndTime.split(' ').map((item, key) => (
-                      <Fragment key={key}> {item}</Fragment>
-                    ))}
-                  </Fragment>
-                )}
-              </p>
+              {(lockDateAndTime !== null) && (
+                <Fragment>
+                  {/* @ts-ignore: strictNullChecks */}
+                  {lockDateAndTime.split(' ').map((item, key) => (
+                    <Fragment key={key}> {item}</Fragment>
+                  ))}
+                </Fragment>
+              )}
             </td>
             <td>
               <div
@@ -276,11 +268,9 @@ class SwapRow extends Component<any, any> {
               </div>
             </td>
             <td>
-              <p>
-                <Link to={swapUri}>
-                  <FormattedMessage id="RowHistory91" defaultMessage="Link" />
-                </Link>
-              </p>
+              <Link to={swapUri}>
+                <FormattedMessage id="RowHistory91" defaultMessage="Link" />
+              </Link>
             </td>
           </Fragment>
         )}
