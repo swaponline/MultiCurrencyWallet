@@ -81,9 +81,9 @@ export default class StepsWrapper extends Component<any, any> {
     })
 
     if (isWidgetBuild && haveTokenConfig) {
-      if (window?.widgetERC20Tokens?.length) {
+      if (window?.widgetEvmLikeTokens?.length) {
         // Multi token build
-        window.widgetERC20Tokens.forEach((token) => {
+        window.widgetEvmLikeTokens.forEach((token) => {
           const name = token.name.toLowerCase()
           const standard = token.standard.toLowerCase()
 

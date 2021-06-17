@@ -66,8 +66,8 @@ export default class AddOffer extends Component<any, any> {
     const { initialData } = props
 
     if (config?.isWidget) {
-      if (window?.widgetERC20Tokens?.length) {
-        window.widgetERC20Tokens.forEach((token) => {
+      if (window?.widgetEvmLikeTokens?.length) {
+        window.widgetEvmLikeTokens.forEach((token) => {
           MIN_AMOUNT_OFFER[token.name.toLowerCase()] = 1
         })
       } else {

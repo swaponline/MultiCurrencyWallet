@@ -120,9 +120,9 @@ const CreateWallet = (props) => {
     const widgetCurrenciesWithTokens = [...widgetCurrencies]
 
     if (isWidgetBuild) {
-      if (window?.widgetERC20Tokens?.length) {
+      if (window?.widgetEvmLikeTokens?.length) {
         // Multi token widget build
-        window.widgetERC20Tokens.forEach((token) => {
+        window.widgetEvmLikeTokens.forEach((token) => {
           widgetCurrenciesWithTokens.push(token.name.toUpperCase())
         })
       } else {

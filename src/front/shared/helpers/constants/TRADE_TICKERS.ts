@@ -9,6 +9,22 @@ const getCustomTokenConfig = () => {
   return tokensInfo[NETWORK]
 }
 
+let buildOpts = {
+  curEnabled: false,
+  blockchainSwapEnabled: false,
+  ownTokens: false,
+  addCustomTokens: true,
+  invoiceEnabled: true,
+}
+
+if (window
+  && window.buildOptions
+  && Object.keys(window.buildOptions)
+  && Object.keys(window.buildOptions).length
+) {
+  buildOpts = { ...buildOpts, ...window.buildOptions }
+}
+
 const swap = (config && config.isWidget) ?
   []
   :
@@ -39,8 +55,8 @@ Object.keys(config.erc20matic)
 if (config?.isWidget) {
   swap.length = 0
 
-  if (window?.widgetERC20Tokens?.length) {
-    window.widgetERC20Tokens.forEach((token) => {
+  if (window?.widgetEvmLikeTokens?.length) {
+    window.widgetEvmLikeTokens.forEach((token) => {
       const { name, standard } = token
       const baseCurrency = TOKEN_STANDARDS[standard]?.currency
       const tokenKey = `{${baseCurrency.toUpperCase()}}${name.toUpperCase()}`
@@ -56,7 +72,9 @@ if (config?.isWidget) {
 
   if (!config.opts.curEnabled || config.opts.curEnabled.ghost) swap.push('ETH-GHOST')
   if (!config.opts.curEnabled || config.opts.curEnabled.next) swap.push('ETH-NEXT')
-} else {
+}
+
+if (buildOpts.addCustomTokens) {
   const customTokenConfig = getCustomTokenConfig()
 
   Object.keys(customTokenConfig).forEach((standard) => {
@@ -69,7 +87,7 @@ if (config?.isWidget) {
       if (!swap.includes(pair)) {
         swap.push(pair)
       }
-  
+
       if (!config.opts.curEnabled || config.opts.curEnabled.ghost) {
         const ghostPair = `${tokenKey}-GHOST`
 
@@ -77,7 +95,7 @@ if (config?.isWidget) {
           swap.push(ghostPair)
         }
       }
-  
+
       if (!config.opts.curEnabled || config.opts.curEnabled.next) {
         const nextPair = `${tokenKey}-NEXT`
 
@@ -88,6 +106,7 @@ if (config?.isWidget) {
     })
   })
 }
+
 
 export default [
   ...swap,
