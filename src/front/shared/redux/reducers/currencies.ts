@@ -375,34 +375,34 @@ if (config.isWidget) {
       })
     })
   }
-} else {
-  // TODO: addCustomERC20 -> addCustomToken
-  if (!config.isWidget && buildOpts.addCustomERC20) {
-    const customTokenConfig = getCustomTokenConfig()
+}
 
-    Object.keys(customTokenConfig).forEach((standard) => {
-      Object.keys(customTokenConfig[standard]).forEach((tokenContractAddr) => {
-        const tokenObj = customTokenConfig[standard][tokenContractAddr]
-        const { symbol } = tokenObj
+// TODO: addCustomERC20 -> addCustomToken
+if (buildOpts.addCustomERC20) {
+  const customTokenConfig = getCustomTokenConfig()
 
-        //@ts-ignore
-        initialState.items.push({
-          name: symbol.toUpperCase(),
-          title: symbol.toUpperCase(),
-          icon: symbol.toLowerCase(),
-          value: symbol.toLowerCase(),
-          fullTitle: symbol,
-        })
-        initialState.partialItems.push({
-          name: symbol.toUpperCase(),
-          title: symbol.toUpperCase(),
-          icon: symbol.toLowerCase(),
-          value: symbol.toLowerCase(),
-          fullTitle: symbol,
-        })
+  Object.keys(customTokenConfig).forEach((standard) => {
+    Object.keys(customTokenConfig[standard]).forEach((tokenContractAddr) => {
+      const tokenObj = customTokenConfig[standard][tokenContractAddr]
+      const { symbol } = tokenObj
+
+      //@ts-ignore
+      initialState.items.push({
+        name: symbol.toUpperCase(),
+        title: symbol.toUpperCase(),
+        icon: symbol.toLowerCase(),
+        value: symbol.toLowerCase(),
+        fullTitle: symbol,
+      })
+      initialState.partialItems.push({
+        name: symbol.toUpperCase(),
+        title: symbol.toUpperCase(),
+        icon: symbol.toLowerCase(),
+        value: symbol.toLowerCase(),
+        fullTitle: symbol,
       })
     })
-  }
+  })
 }
 
 const addSelectedItems = (state, payload) => ({

@@ -9,22 +9,32 @@ const allowedCoins = [
   ...(!config.opts.blockchainSwapEnabled || config.opts.blockchainSwapEnabled.next ? ['NEXT'] : []),
   ]
 
-const isExchangeAllowed = (currencies) =>
-  currencies.filter((c) => {
+const isExchangeAllowed = (currencies) => {
+  console.groupCollapsed('isExchangeAllowed')
+
+  console.log('currencies', currencies)
+  console.log('allowedCoins', allowedCoins)
+  console.log('config.erc20', config.erc20)
+  console.log('config.bep20', config.bep20)
+  console.log('config.erc20matic', config.erc20matic)
+
+  console.groupEnd()
+  return currencies.filter((c) => {
     const isErc = Object.keys(config.erc20)
-      .map((i) => `{eth}${i.toLowerCase()}`)
+      .map((i) => `${i.toLowerCase()}`)
       .includes(`${c.value}`.toLowerCase())
     const isBep = Object.keys(config.bep20)
-      .map((i) => `{bnb}${i.toLowerCase()}`)
+      .map((i) => `${i.toLowerCase()}`)
       .includes(`${c.value}`.toLowerCase())
     const isErcMatic = Object.keys(config.erc20matic)
-      .map((i) => `{matic}${i.toLowerCase()}`)
+      .map((i) => `${i.toLowerCase()}`)
       .includes(`${c.value}`.toLowerCase())
 
-  const isAllowedCoin = allowedCoins.map((i) => i.toLowerCase()).includes(c.value.toLowerCase())
+    const isAllowedCoin = allowedCoins.map((i) => i.toLowerCase()).includes(c.value.toLowerCase())
 
-  return isAllowedCoin || isErc || isBep || isErcMatic
-})
+    return isAllowedCoin || isErc || isBep || isErcMatic
+  })
+}
 
 const filterIsPartial = (orders) =>
   orders

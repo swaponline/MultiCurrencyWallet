@@ -244,6 +244,7 @@ const externalConfig = () => {
             address: tokenObj.address,
             decimals: tokenObj.decimals,
             fullName: tokenObj.symbol,
+            canSwap: true
           }
         }
       })
