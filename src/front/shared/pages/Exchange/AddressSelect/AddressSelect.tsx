@@ -16,6 +16,7 @@ import erc20Like from 'common/erc20Like'
 import Option from './Option/Option'
 import { links } from 'helpers'
 import { localisedUrl } from 'helpers/locale'
+import { isAllowedCurrency } from 'helpers/user'
 import actions from 'redux/actions'
 import feedback from 'shared/helpers/feedback'
 import web3Icons from 'shared/images'
@@ -148,20 +149,11 @@ class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
   }
 
   isCurrencyInInternalWallet = () => {
-    const { hiddenCoinsList } = this.props
     const ticker = this.getTicker()
+    const { coin } = getCoinInfo(ticker)
     const internalAddress = this.getInternalAddress()
 
-    for (let i = 0; i < hiddenCoinsList.length; i++) {
-      const hiddenCoin = hiddenCoinsList[i]
-      if (
-        hiddenCoin === ticker ||
-        (internalAddress && hiddenCoin.includes(`${ticker}:${internalAddress}`))
-      ) {
-        return false
-      }
-    }
-    return true
+    return isAllowedCurrency(coin, internalAddress)
   }
 
   handleFocusAddress = () => {
