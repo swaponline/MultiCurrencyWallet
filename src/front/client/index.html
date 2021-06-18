@@ -653,10 +653,12 @@
 
           let url = 'https://noxon.wpmix.net/counter.php?msg=' + encodeURI(msg);
 
-          window.jQuery.ajax({
-            type: 'POST',
-            url: url,
-          });
+          if (!window?.STATISTIC_DISABLED) {
+            window.jQuery.ajax({
+              type: 'POST',
+              url: url,
+            });
+          }
         };
 
         if (!window.jQuery) {
