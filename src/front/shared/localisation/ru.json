@@ -1,9 +1,5 @@
 [
   {
-    "id": "menu.aboutus",
-    "message": "О Нас"
-  },
-  {
     "id": "menu.exchange",
     "message": "Обмен",
     "files": [
