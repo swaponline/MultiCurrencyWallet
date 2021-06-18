@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from 'react'
 import { withRouter } from 'react-router-dom'
-import { connect } from 'redaction'
 import Link from 'local_modules/sw-valuelink'
 
 import styles from './AddressSelect.scss'
@@ -76,8 +75,7 @@ type AddressSelectProps = {
   onChange: ({}) => void
   history: IUniversalObj
   intl: IUniversalObj
-  label: IUniversalObj 
-  hiddenCoinsList: string[]
+  label: IUniversalObj
 }
 
 type DropDownOptions = {
@@ -105,15 +103,6 @@ type AddressSelectState = {
 
 
 @withRouter
-@connect(
-  ({
-    core: { hiddenCoinsList },
-  }) => {
-    return {
-      hiddenCoinsList,
-    }
-  }
-)
 @cssModules(styles, { allowMultiple: true })
 class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
   constructor(props) {
