@@ -10,7 +10,7 @@
 - ⚛️ P2P exchange – atomic swaps
 - 💡 Open-source, client-side
 - 📦 Embeddable into your site!
-- Marketmaker extention https://chrome.google.com/webstore/detail/multicurrencywallet/oldojieloelkkfeacfinhcngmbkepnlm
+- Marketmaker extention: https://chrome.google.com/webstore/detail/multicurrencywallet/oldojieloelkkfeacfinhcngmbkepnlm
   
 Live version here: 
 https://swaponline.io (mirror https://swaponline.github.io) . Testnet https://ropsten.swaponline.io/
