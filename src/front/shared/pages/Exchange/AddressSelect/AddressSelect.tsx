@@ -117,8 +117,7 @@ class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
       selectedType: selectedType || 'Internal',
       walletAddressFocused: false,
       isMetamaskConnected: metamask.isConnected(),
-      //@ts-ignore: strictNullChecks
-      metamaskAddress: metamask.getAddress(),
+      metamaskAddress: metamask.getAddress()|| '',
       isScanActive: false,
       dropDownOptions: [],
     }
@@ -154,8 +153,7 @@ class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
   onWeb3Updated = () => {
     this.setState({
       isMetamaskConnected: metamask.isConnected(),
-      //@ts-ignore: strictNullChecks
-      metamaskAddress: metamask.getAddress(),
+      metamaskAddress: metamask.getAddress() || '',
     })
   }
 
@@ -209,10 +207,11 @@ class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
       intl: { locale },
     } = this.props
     const ticker = this.getTicker()
+    const { coin } = getCoinInfo(ticker)
 
     feedback.exchangeForm.redirectedCreateWallet(ticker)
 
-    const url = localisedUrl(locale, `${links.createWallet}/${ticker}`)
+    const url = localisedUrl(locale, `${links.createWallet}/${coin}`)
     history.push(url)
   }
 
@@ -229,8 +228,7 @@ class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
         this.setState(
           {
             isMetamaskConnected: true,
-            //@ts-ignore: strictNullChecks
-            metamaskAddress: metamask.getAddress(),
+            metamaskAddress: metamask.getAddress() || '',
           },
           () => {
             this.applyAddress({
