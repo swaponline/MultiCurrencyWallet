@@ -43,7 +43,7 @@ const langs = defineMessages({
 })
 
 @connect(
-  ({ user: { activeFiat }, user }) => ({ activeFiat, user })
+  ({ user }) => ({ user })
 )
 @withRouter
 @cssModules({ ...styles, ...ownStyles }, { allowMultiple: true })

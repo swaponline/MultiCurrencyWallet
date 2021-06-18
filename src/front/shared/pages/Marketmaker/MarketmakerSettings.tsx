@@ -379,6 +379,7 @@ class MarketmakerSettings extends Component<any, any> {
               defaultMessage="Disconnect wallet"
             />
         ),
+        canClose: true,
         onClose: () => {
           metamask.disconnect()
           actions.modals.close(constants.modals.AlertModal)

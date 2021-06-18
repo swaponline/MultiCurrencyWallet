@@ -4,9 +4,16 @@
 }
 
 .statusRefunded {
-  color: #0ccfb2;
+  color: $color-good;
 }
 
 .statusStopped {
+  text-align: right;
   color: $color-f-error;
+
+  .refundStatus {
+    max-width: 10em;
+    font-size: 0.88em;
+    color: $indicating-color;
+  }
 }

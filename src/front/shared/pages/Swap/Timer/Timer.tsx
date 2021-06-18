@@ -110,7 +110,7 @@ export default class Timer extends React.Component<TimerProps, TimerState> {
                 <span>
                   <FormattedMessage
                     id="timer671"
-                    defaultMessage="minute left for refund"
+                    defaultMessage="{min} minute left for refund"
                     values={{ min: `${min}` }}
                   />
                 </span>

@@ -31,10 +31,6 @@ export const COIN_MODEL = Object.freeze({
   AB: 'AB' // Account/Balance model
 })
 
-// TODO: change this structure
-// 1) here isn't only coins (rename it?)
-// 2) we can't add currencies with identical names
-//    example: identical tokens but on different blockchains
 export const COIN_DATA = {
   'BTC': {
     ticker: 'BTC',

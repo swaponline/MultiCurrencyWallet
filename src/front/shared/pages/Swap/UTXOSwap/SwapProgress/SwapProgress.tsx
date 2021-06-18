@@ -1,34 +1,47 @@
 import React, { Component, Fragment } from 'react'
-import PropTypes from 'prop-types'
-
-import actions from 'redux/actions'
-
 import styles from './SwapProgress.scss'
 import CSSModules from 'react-css-modules'
-
 import crypto from 'crypto'
-import swapApp from 'swap.app'
-import config from 'app-config'
 
-import { constants, links, ethToken } from 'helpers'
-import { localisedUrl } from 'helpers/locale'
 import { BigNumber } from 'bignumber.js'
 import { Link as LinkTo } from 'react-router-dom'
-
 import { injectIntl, FormattedMessage } from 'react-intl'
 
 import Timer from '../../Timer/Timer'
 import { Button, TimerButton } from 'components/controls'
-
 import PleaseDontLeaveWrapper from './PleaseDontLeaveWrapper'
 
+import { constants, links, ethToken } from 'helpers'
+import { localisedUrl } from 'helpers/locale'
 import metamask from 'helpers/metamask'
-
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
+type ComponentProps = {
+  flow: IUniversalObj
+  swap: IUniversalObj
+  history: IUniversalObj
+  signed: boolean
+  locale: string
+  wallets: { [key: string]: string }
+  fields: { [key: string]: string }
+}
+
+type ComponentState = {
+  flow: IUniversalObj
+  swap: IUniversalObj
+  signed: boolean
+  enabledButton: boolean
+  refundError: boolean
+  steps: Function[]
+  buyCurrency: string
+  sellCurrency: string
+  secret: string
+  stepValue: number
+}
+
 @CSSModules(styles, { allowMultiple: true })
-class SwapProgress extends Component<any, any> {
+class SwapProgress extends Component<ComponentProps, ComponentState> {
   swap = null
   _fields = null
   wallets = null
@@ -36,11 +49,6 @@ class SwapProgress extends Component<any, any> {
   locale = null
   timer = null
   isSellCurrencyEthOrEthToken = null
-
-
-  static propTypes = {
-    flow: PropTypes.object,
-  }
 
   static defaultProps = {
     flow: {},
@@ -51,9 +59,7 @@ class SwapProgress extends Component<any, any> {
     super(props)
     const {
       flow,
-      step,
       swap,
-      styles,
       signed,
       wallets,
       history,
@@ -71,7 +77,6 @@ class SwapProgress extends Component<any, any> {
     this.isSellCurrencyEthOrEthToken = ethToken.isEthOrEthToken({ name: swap.sellCurrency })
 
     this.state = {
-      step,
       swap,
       signed,
       enabledButton: false,
@@ -83,10 +88,6 @@ class SwapProgress extends Component<any, any> {
       secret: crypto.randomBytes(32).toString('hex'),
       stepValue: 0,
     }
-
-    console.group('SwapProgress >%c constructor', 'color: green;')
-    console.log('fields: ', this._fields)
-    console.groupEnd()
   }
 
   onPushGoToWallet = () => {
@@ -265,8 +266,6 @@ class SwapProgress extends Component<any, any> {
     this.handleBarProgress()
   }
 
-  handleFocusSecretInput = (event) => event.target.select();
-
   tryRefund = async () => {
     //@ts-ignore: strictNullChecks
     const { flow } = this.swap
@@ -303,7 +302,6 @@ class SwapProgress extends Component<any, any> {
 
   render() {
     const {
-      step,
       steps,
       flow,
       swap,
@@ -322,13 +320,10 @@ class SwapProgress extends Component<any, any> {
         },
       },
       signed,
-      buyAmount,
-      sellAmount,
       buyCurrency,
       sellCurrency,
       enabledButton,
       refundError,
-      isSecretCopied,
     } = this.state
 
     const {
@@ -358,7 +353,7 @@ class SwapProgress extends Component<any, any> {
     }
 
     const canBeRefunded = utxoScriptValues && (isUTXOSide ? scriptBalance > 0 : isEthContractFunded)
-    const isDeletedSwap = isFinished || isRefunded || isStoppedSwap
+    const isDeletedSwap = isFinished || isRefunded
 
     return (
       <div styleName="overlay">
@@ -437,7 +432,7 @@ class SwapProgress extends Component<any, any> {
                           isRefund
                           lockTime={flow[scriptValues].lockTime * 1000}
                           cancelTime={(flow[scriptValues].lockTime - 7200) * 1000}
-                          enabledButton={() => this.setState(() => ({ enabledButton: true }))}
+                          enabledButton={this.willEnable}
                         />
                       </div>
                     )

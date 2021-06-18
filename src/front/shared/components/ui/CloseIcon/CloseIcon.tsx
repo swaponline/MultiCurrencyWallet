@@ -1,18 +1,21 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import cx from 'classnames'
 import { constants } from 'helpers'
 
 import cssModules from 'react-css-modules'
 import styles from './CloseIcon.scss'
 
-
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
-const CloseIcon = ({ whiteColor, brandColor, onClick, ...rest }) => {
+type ComponentProps = {
+  onClick: (...args: any) => void
+  styleName: string
+}
+
+const CloseIcon = (props: ComponentProps) => {
+  const { onClick, styleName: externalName, ...rest } = props
+
   const styleName = cx('button', {
-    'whiteColor': whiteColor,
-    'brandColor': brandColor,
     'dark': isDark,
   })
 
@@ -22,11 +25,5 @@ const CloseIcon = ({ whiteColor, brandColor, onClick, ...rest }) => {
     </div>
   )
 }
-
-CloseIcon.propTypes = {
-  whiteColor: PropTypes.bool,
-  brandColor: PropTypes.bool,
-}
-
 
 export default cssModules(CloseIcon, styles, { allowMultiple: true })

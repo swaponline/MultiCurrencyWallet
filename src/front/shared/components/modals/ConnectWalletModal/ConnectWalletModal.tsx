@@ -120,7 +120,6 @@ class ConnectWalletModal extends React.Component<any, null> {
       <div
         className={cx({
           [styles['modal-overlay']]: true,
-          [styles['modal-overlay_dashboardView']]: dashboardModalsAllowed,
         })}
       >
         <div

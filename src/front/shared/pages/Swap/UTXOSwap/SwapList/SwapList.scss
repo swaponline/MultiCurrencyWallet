@@ -194,7 +194,8 @@
     font-size: 12px;
   }
   .stepHeading {
-    color: #000;
+    color: $l-color;
     font-size: 18px;
+    flex-basis: 70%;
   }
 }

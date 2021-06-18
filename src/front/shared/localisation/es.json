@@ -28,7 +28,8 @@
     "id": "menu.CreateWallet",
     "message": "Crear Billetera",
     "files": [
-      "src/front/shared/components/Header/config.tsx"
+      "src/front/shared/components/Header/config.tsx",
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
   },
   {
@@ -4347,6 +4348,7 @@
     "id": "BTCMS_SaveMnemonicButton",
     "message": "Guardar frase secreta",
     "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx",
       "src/front/shared/pages/Multisign/Btc/Btc.tsx"
     ]
   },
@@ -5874,6 +5876,7 @@
     "id": "WalletEmptyBalance",
     "message": "No hay carteras disponibles",
     "files": [
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
       "src/front/shared/pages/Wallet/Wallet.tsx"
     ]
   },
@@ -5889,6 +5892,27 @@
     "message": "En línea desde 2018. Consulta nuestro historial de {twitter} y {github}",
     "files": [
       "src/front/shared/components/Footer/Footer.tsx"
+    ]
+  },
+  {
+    "id": "AppErrorMessage",
+    "message": "Algo va mal. Intente volver a la página de inicio o recargar esta página.",
+    "files": [
+      "src/front/shared/components/ErrorBoundary/index.tsx"
+    ]
+  },
+  {
+    "id": "NotEnoughForBuy",
+    "message": "Usted debe tener al menos Mine commission {buyFee} {buyCoin}",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "WalletRow_MetamaskNotAvailableNetwork",
+    "message": "Por favor, elija otro",
+    "files": [
+      "src/front/shared/pages/Wallet/Row/Row.tsx"
     ]
   }
 ]
