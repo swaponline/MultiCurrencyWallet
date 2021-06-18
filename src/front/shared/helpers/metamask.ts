@@ -300,18 +300,21 @@ const addCurrencyNetwork = (currency) => {
     return
   }
 
+  const { coin, blockchain } = getCoinInfo(currency)
+  const nativeCurrency = blockchain ? blockchain : coin.toUpperCase()
+
   const {
     chainId,
     chainName,
     rpcUrls,
     blockExplorerUrls
-  } = EVM_NETWORKS[currency.toUpperCase()][NETWORK_NUMBER]
+  } = EVM_NETWORKS[nativeCurrency][NETWORK_NUMBER]
 
   const {
     name,
     symbol,
     precision: decimals
-  } = COIN_DATA[currency.toUpperCase()]
+  } = COIN_DATA[nativeCurrency]
 
   const params = {
     chainId, // A 0x-prefixed hexadecimal string
@@ -356,6 +359,7 @@ const metamaskApi = {
   isAvailableNetworkByCurrency,
   handleDisconnectWallet,
   handleConnectMetamask,
+  addCurrencyNetwork
 }
 
 window.metamaskApi = metamaskApi

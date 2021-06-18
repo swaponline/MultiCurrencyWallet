@@ -1525,6 +1525,29 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
     })
   }
 
+  handleAddCorrectNetwork = () => {
+    const {
+      haveCurrency,
+      getCurrency,
+      fromAddress,
+      toAddress
+    } = this.state
+
+    const sellCoin = this.renderCoinName(haveCurrency)
+    const buyCoin = this.renderCoinName(getCurrency)
+
+    const isSellCoinNeedAddCorrectNetwork =
+      fromAddress.type === AddressType.Metamask &&
+      !metamask.isAvailableNetworkByCurrency(sellCoin)
+
+    const isBuyCoinNeedAddCorrectNetwork =
+      toAddress.type === AddressType.Metamask &&
+      !metamask.isAvailableNetworkByCurrency(buyCoin)
+
+    metamask.addCurrencyNetwork(isSellCoinNeedAddCorrectNetwork && sellCoin || isBuyCoinNeedAddCorrectNetwork && buyCoin)
+
+  }
+
   renderCoinName = (coin) => {
     return coin.toUpperCase()
   }
@@ -1750,6 +1773,10 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
 
     const isDevBuild = (config.env === 'development')
 
+    const isIncorrectMetamaskNetwork = metamask.isConnected() &&
+      (fromAddress.type === AddressType.Metamask || toAddress.type === AddressType.Metamask) &&
+      (!metamask.isAvailableNetworkByCurrency(sellCoin) && !metamask.isAvailableNetworkByCurrency(buyCoin))
+
     const Form = (
       <div styleName="section">
         <div styleName="formExchange">
@@ -1822,8 +1849,6 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
                 <div styleName="toggleText">
                   <FormattedMessage id="AtomicSwap_Title" defaultMessage="Atomic swap" />
                 </div>
-                {/*
-                //@ts-ignore */}
                 <Toggle checked={isTurbo} isDisabled={!isTurboAllowed} onChange={() => this.setState((state) => ({ isTurbo: !state.isTurbo }))} />
                 <div styleName="toggleText">
                   <TurboIcon />
@@ -1935,7 +1960,7 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
                   <FormattedMessage id="Exchange_MinerFees" defaultMessage="Miner fee" />:
                 </span>
                 &nbsp;
-                
+
                 {/* Fees info */}
                 <>
                   {isPending || !pairFees ? (
@@ -1949,8 +1974,8 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
                       {fiatFeeCalculation > 0 ? <>${fiatFeeCalculation}</> : 0}
                       {' '}
                     </span>
-                  )}       
-                  <button 
+                  )}
+                  <button
                     className="fas fa-sync-alt"
                     styleName="minerFeeUpdateBtn"
                     onClick={this.updateFees}
@@ -1961,7 +1986,7 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
                     target="_blank"
                   >
                     (?)
-                  </a>        
+                  </a>
                 </>
               </div>
             </div>
@@ -2055,6 +2080,12 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
                   </a>
                 </div>
               </>
+            )}
+
+            {isIncorrectMetamaskNetwork && (
+              <Button styleName="button link-like" onClick={this.handleAddCorrectNetwork}>
+                <FormattedMessage id="addCorrectNetwork" defaultMessage="Add Correct Network" />
+              </Button>
             )}
 
             {isIncompletedSwaps && (
