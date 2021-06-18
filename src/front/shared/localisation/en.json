@@ -2603,6 +2603,20 @@
     ]
   },
   {
+    "id": "chooseEthereumNetwork",
+    "message": "You need open Metamask or others wallet and choose Ethereum Network",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "useCorrectNetwork",
+    "message": "Use Correct Network",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
     "id": "Yourtotalbalance",
     "message": "Your total balance",
     "files": [

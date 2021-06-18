@@ -1884,8 +1884,8 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
               <Fragment>
                 <p styleName="error">
                   <FormattedMessage
-                    id="rewqrwerwe"
-                    defaultMessage="You need open metamask and choose ETH network"
+                    id="chooseEthereumNetwork"
+                    defaultMessage="You need open Metamask or others wallet and choose Ethereum Network"
                   />
                 </p>
               </Fragment>
@@ -2101,7 +2101,7 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
 
             {isIncorrectMetamaskNetwork && !isEthNativeCoin && (
               <Button styleName="button link-like" onClick={this.handleAddCorrectNetwork}>
-                <FormattedMessage id="addCorrectNetwork" defaultMessage="Add Correct Network" />
+                <FormattedMessage id="useCorrectNetwork" defaultMessage="Use Correct Network" />
               </Button>
             )}
 

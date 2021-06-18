@@ -2473,6 +2473,20 @@
     ]
   },
   {
+    "id": "chooseEthereumNetwork",
+    "message": "Je hebt een open Metamask of andere portemonnee nodig en kies Ethereum Network",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "useCorrectNetwork",
+    "message": "Gebruik het juiste netwerk",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
     "id": "Yourtotalbalance",
     "message": "Uw totale balans",
     "files": [

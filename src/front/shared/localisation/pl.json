@@ -2484,6 +2484,20 @@
     ]
   },
   {
+    "id": "chooseEthereumNetwork",
+    "message": "Musisz otworzyć Metamask lub inny portfel i wybrać Ethereum Network",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "useCorrectNetwork",
+    "message": "Użyj właściwej sieci",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
     "id": "Yourtotalbalance",
     "message": "Twoje całkowite saldo",
     "files": [

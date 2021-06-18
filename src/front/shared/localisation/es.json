@@ -2491,6 +2491,20 @@
     ]
   },
   {
+    "id": "chooseEthereumNetwork",
+    "message": "Necesita abrir Metamask u otra billetera y elegir Ethereum Network",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "useCorrectNetwork",
+    "message": "Utilice la red correcta",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
     "id": "Yourtotalbalance",
     "message": "Tu saldo total",
     "files": [

@@ -2568,6 +2568,20 @@
     ]
   },
   {
+    "id": "chooseEthereumNetwork",
+    "message": "Вам необходимо открыть Metamask или другой кошелек и выбрать сеть Ethereum",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "useCorrectNetwork",
+    "message": "Использовать правильную сеть",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
     "id": "Yourtotalbalance",
     "message": "Ваш общий баланс",
     "files": [
