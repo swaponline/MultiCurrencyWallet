@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from 'react'
 import { withRouter } from 'react-router-dom'
-import { connect } from 'redaction'
 import Link from 'local_modules/sw-valuelink'
 
 import styles from './AddressSelect.scss'
@@ -16,6 +15,7 @@ import erc20Like from 'common/erc20Like'
 import Option from './Option/Option'
 import { links } from 'helpers'
 import { localisedUrl } from 'helpers/locale'
+import { isAllowedCurrency } from 'helpers/user'
 import actions from 'redux/actions'
 import feedback from 'shared/helpers/feedback'
 import web3Icons from 'shared/images'
@@ -75,8 +75,7 @@ type AddressSelectProps = {
   onChange: ({}) => void
   history: IUniversalObj
   intl: IUniversalObj
-  label: IUniversalObj 
-  hiddenCoinsList: string[]
+  label: IUniversalObj
 }
 
 type DropDownOptions = {
@@ -104,15 +103,6 @@ type AddressSelectState = {
 
 
 @withRouter
-@connect(
-  ({
-    core: { hiddenCoinsList },
-  }) => {
-    return {
-      hiddenCoinsList,
-    }
-  }
-)
 @cssModules(styles, { allowMultiple: true })
 class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
   constructor(props) {
@@ -127,8 +117,7 @@ class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
       selectedType: selectedType || 'Internal',
       walletAddressFocused: false,
       isMetamaskConnected: metamask.isConnected(),
-      //@ts-ignore: strictNullChecks
-      metamaskAddress: metamask.getAddress(),
+      metamaskAddress: metamask.getAddress()|| '',
       isScanActive: false,
       dropDownOptions: [],
     }
@@ -148,20 +137,11 @@ class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
   }
 
   isCurrencyInInternalWallet = () => {
-    const { hiddenCoinsList } = this.props
     const ticker = this.getTicker()
+    const { coin } = getCoinInfo(ticker)
     const internalAddress = this.getInternalAddress()
 
-    for (let i = 0; i < hiddenCoinsList.length; i++) {
-      const hiddenCoin = hiddenCoinsList[i]
-      if (
-        hiddenCoin === ticker ||
-        (internalAddress && hiddenCoin.includes(`${ticker}:${internalAddress}`))
-      ) {
-        return false
-      }
-    }
-    return true
+    return isAllowedCurrency(coin, internalAddress)
   }
 
   handleFocusAddress = () => {
@@ -173,8 +153,7 @@ class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
   onWeb3Updated = () => {
     this.setState({
       isMetamaskConnected: metamask.isConnected(),
-      //@ts-ignore: strictNullChecks
-      metamaskAddress: metamask.getAddress(),
+      metamaskAddress: metamask.getAddress() || '',
     })
   }
 
@@ -228,10 +207,11 @@ class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
       intl: { locale },
     } = this.props
     const ticker = this.getTicker()
+    const { coin } = getCoinInfo(ticker)
 
     feedback.exchangeForm.redirectedCreateWallet(ticker)
 
-    const url = localisedUrl(locale, `${links.createWallet}/${ticker}`)
+    const url = localisedUrl(locale, `${links.createWallet}/${coin}`)
     history.push(url)
   }
 
@@ -248,8 +228,7 @@ class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
         this.setState(
           {
             isMetamaskConnected: true,
-            //@ts-ignore: strictNullChecks
-            metamaskAddress: metamask.getAddress(),
+            metamaskAddress: metamask.getAddress() || '',
           },
           () => {
             this.applyAddress({

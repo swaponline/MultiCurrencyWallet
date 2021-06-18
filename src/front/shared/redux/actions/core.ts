@@ -368,8 +368,7 @@ const markCoinAsHidden = (coin, doBackup = false) => {
 const markCoinAsVisible = (coin, doBackup = false) => {
   const { hiddenCoinsList } = constants.localStorage
 
-  //@ts-ignore: strictNullChecks
-  const findedCoin = JSON.parse(localStorage.getItem(hiddenCoinsList)).find(
+  const findedCoin = JSON.parse(localStorage.getItem(hiddenCoinsList) || '[]').find(
     (el) => el.includes(coin) && el.includes(':')
   )
 
