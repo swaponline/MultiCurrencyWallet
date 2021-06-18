@@ -1777,6 +1777,12 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
       (fromAddress.type === AddressType.Metamask || toAddress.type === AddressType.Metamask) &&
       (!metamask.isAvailableNetworkByCurrency(sellCoin) && !metamask.isAvailableNetworkByCurrency(buyCoin))
 
+    const { coin: sellCoinName, blockchain: sellCoinBlockchain } = getCoinInfo(sellCoin)
+    const { coin: buyCoinName, blockchain: buyCoinBlockchain } = getCoinInfo(buyCoin)
+
+    // when Add EIP-3326: wallet_switchEthereumChain remove this
+    const isEthNativeCoin = [`${sellCoinBlockchain || sellCoinName}`, `${buyCoinBlockchain || buyCoinName}`].includes('ETH')
+
     const Form = (
       <div styleName="section">
         <div styleName="formExchange">
@@ -1869,6 +1875,17 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
                   <FormattedMessage
                     id="PartialPriceNoOrdersReduce"
                     defaultMessage="No orders found, try later or change the currency pair"
+                  />
+                </p>
+              </Fragment>
+            )}
+
+            {isIncorrectMetamaskNetwork && isEthNativeCoin && (
+              <Fragment>
+                <p styleName="error">
+                  <FormattedMessage
+                    id="rewqrwerwe"
+                    defaultMessage="You need open metamask and choose ETH network"
                   />
                 </p>
               </Fragment>
@@ -2082,7 +2099,7 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
               </>
             )}
 
-            {isIncorrectMetamaskNetwork && (
+            {isIncorrectMetamaskNetwork && !isEthNativeCoin && (
               <Button styleName="button link-like" onClick={this.handleAddCorrectNetwork}>
                 <FormattedMessage id="addCorrectNetwork" defaultMessage="Add Correct Network" />
               </Button>

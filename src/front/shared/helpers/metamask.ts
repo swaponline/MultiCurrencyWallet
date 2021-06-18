@@ -295,6 +295,7 @@ const handleConnectMetamask = (params: MetamaskConnectParams = {}) => {
   })
 }
 
+// when add EIP-3326: wallet_switchEthereumChain use this method
 const addCurrencyNetwork = (currency) => {
   if(!(isConnected())) {
     return
