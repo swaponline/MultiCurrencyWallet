@@ -43,7 +43,6 @@ class AlertWindow extends Component<any, any> {
     const { locale } = intl
 
     if (actionType === 'deposit') {
-      //@ts-ignore: strictNullChecks
       actions.modals.open(constants.modals.ReceiveModal, {
         currency,
         address,
@@ -94,8 +93,7 @@ class AlertWindow extends Component<any, any> {
             //@ts-ignore */}
             <WidthContainer styleName="headerContent">
               <div styleName="title">{labels.title}</div>
-              {/*
-              //@ts-ignore */}
+
               {canClose && (<CloseIcon styleName="closeButton" onClick={this.handleClosePopup} />)}
             </WidthContainer>
           </div>

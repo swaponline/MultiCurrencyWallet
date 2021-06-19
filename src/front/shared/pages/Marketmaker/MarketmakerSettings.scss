@@ -12,7 +12,7 @@
   }
 
   section {
-    max-width: 720px;
+    max-width: 740px;
     margin: 20px auto;
 
     box-shadow: $l-box-shadow;
@@ -221,12 +221,14 @@
 
   .swapHistory {
     width: 100%;
-    THEAD {
-      TR {
-        TD {
+    border-collapse:separate; 
+    border-spacing: 0 1.2rem;
+
+    thead {
+      tr {
+        td {
           color: var(--primary-hover);
         }
-        //border-bottom: 1px solid rgb(33, 37, 41);
       }
     }
   }

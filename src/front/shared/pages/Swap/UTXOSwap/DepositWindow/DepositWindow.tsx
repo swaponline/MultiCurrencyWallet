@@ -1,17 +1,16 @@
 import React, { Fragment, Component } from 'react'
 
 import config from 'app-config'
+import { COIN_DATA, COIN_MODEL } from 'swap.app/constants/COINS'
 import actions from 'redux/actions'
 import helpers from 'helpers'
 import erc20Like from 'common/erc20Like'
 import CSSModules from 'react-css-modules'
 import styles from '../../Swap.scss'
-
 import { BigNumber } from 'bignumber.js'
 
 import { FormattedMessage } from 'react-intl'
-import CopyToClipboard from 'react-copy-to-clipboard'
-
+import Copy from 'components/ui/Copy/Copy'
 import Button from 'components/controls/Button/Button'
 import QR from 'components/QR/QR'
 import Timer from '../../Timer/Timer'
@@ -19,23 +18,35 @@ import Tooltip from 'components/ui/Tooltip/Tooltip'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import COINS_WITH_DYNAMIC_FEE from 'common/helpers/constants/COINS_WITH_DYNAMIC_FEE'
 
+type ComponentState = {
+  swap: IUniversalObj
+  dynamicFee: number
+  remainingBalance: number
+  flow: IUniversalObj
+  isBalanceEnough: boolean
+  isBalanceFetching: boolean
+  isSellCurrencyToken: boolean
+  isSellCurrencyEvmCoin: boolean
+  balance: number
+  address: string
+  sellAmount: number
+  requiredAmount: number
+}
 
 @CSSModules(styles)
-export default class DepositWindow extends Component<any, any> {
+export default class DepositWindow extends Component<any, ComponentState> {
   _fields = null
   swap = null
   currency = null
-  isSellCurrencyEthOrEthToken = null
-  isSellCurrencyEthToken = null
 
-  constructor(options) {
-    super(options)
+  constructor(props) {
+    super(props)
     const {
       swap,
       flow,
       currencyData,
       fields,
-    } = options
+    } = props
 
     this._fields = fields
 
@@ -43,10 +54,8 @@ export default class DepositWindow extends Component<any, any> {
 
     this.currency = swap.sellCurrency.toLowerCase()
 
-    //@ts-ignore: strictNullChecks
-    this.isSellCurrencyEthOrEthToken = helpers.ethToken.isEthOrEthToken({ name: swap.sellCurrency })
-    //@ts-ignore: strictNullChecks
-    this.isSellCurrencyEthToken = erc20Like.erc20.isToken({ name: swap.sellCurrency })
+    const isSellCurrencyToken = erc20Like.isToken({ name: swap.sellCurrency })
+    const isSellCurrencyEvmCoin = COIN_DATA[swap.sellCurrency].model === COIN_MODEL.AB
 
     this.state = {
       swap,
@@ -56,30 +65,39 @@ export default class DepositWindow extends Component<any, any> {
       flow: swap.flow.state,
       isBalanceEnough: false,
       isBalanceFetching: false,
-      balance: this.isSellCurrencyEthOrEthToken
+      isSellCurrencyToken,
+      isSellCurrencyEvmCoin,
+      balance: isSellCurrencyToken || isSellCurrencyEvmCoin
         ? currencyData.balance - (currencyData.unconfirmedBalance || 0)
         : flow.scriptBalance,
-      address: this.isSellCurrencyEthOrEthToken
+      address: isSellCurrencyToken || isSellCurrencyEvmCoin
         ? currencyData.address
         : flow.scriptAddress,
-      currencyFullName: currencyData.fullName,
       //@ts-ignore: strictNullChecks
       sellAmount: this.swap.sellAmount,
+      requiredAmount: 0,
     }
   }
 
   updateBalance = async () => {
-    const { swap } = this.props
-    const { sellAmount, address } = this.state
+    const {
+      swap,
+      address,
+      isSellCurrencyToken,
+      isSellCurrencyEvmCoin,
+    } = this.state
 
     let actualBalance
+    const sellBlockchain = swap.sellBlockchain
 
-    if (this.isSellCurrencyEthOrEthToken) {
-      if (this.isSellCurrencyEthToken) {
-        // TODO: replace actions with erc20, bep20 ...
-        actualBalance = await actions.erc20.getBalance(this.currency)
+    if (isSellCurrencyToken || isSellCurrencyEvmCoin) {
+      if (isSellCurrencyToken) {
+        const tokenKey = `{${sellBlockchain}}${swap.sellCurrency}`.toUpperCase()
+        const standard = COIN_DATA[tokenKey].standard.toLowerCase()
+
+        actualBalance = await actions[standard].getBalance(this.currency)
       } else {
-        actualBalance = await actions.eth.getBalance()
+        actualBalance = await actions[sellBlockchain.toLowerCase()].getBalance()
       }
     } else {
       //@ts-ignore: strictNullChecks
@@ -94,17 +112,16 @@ export default class DepositWindow extends Component<any, any> {
   }
 
   updateRemainingBalance = async () => {
-    const { swap } = this.props
-    const { sellAmount, balance, dynamicFee } = this.state
+    const { sellAmount, balance, dynamicFee, isSellCurrencyToken } = this.state
 
     let remainingBalance = new BigNumber(sellAmount).minus(balance)
 
-    if (!this.isSellCurrencyEthToken) {
+    if (!isSellCurrencyToken) {
       remainingBalance = remainingBalance.plus(dynamicFee)
     }
 
     this.setState(() => ({
-      remainingBalance: remainingBalance.dp(6, BigNumber.ROUND_UP),
+      remainingBalance: remainingBalance.dp(6, BigNumber.ROUND_UP).toNumber(),
     }))
   }
 
@@ -123,7 +140,10 @@ export default class DepositWindow extends Component<any, any> {
       }))
     }
 
-    const requiredAmount = new BigNumber(sellAmount).plus(dynamicFee).dp(6, BigNumber.ROUND_CEIL)
+    const requiredAmount = new BigNumber(sellAmount)
+      .plus(dynamicFee)
+      .dp(6, BigNumber.ROUND_CEIL)
+      .toNumber()
 
     this.setState(() => ({
       requiredAmount,
@@ -133,23 +153,29 @@ export default class DepositWindow extends Component<any, any> {
   }
 
   checkThePayment = () => {
-    const { swap, dynamicFee, sellAmount, balance } = this.state
+    const {
+      swap,
+      dynamicFee,
+      sellAmount,
+      balance,
+      isSellCurrencyToken,
+      isSellCurrencyEvmCoin,
+    } = this.state
 
-    if (sellAmount.plus(dynamicFee).isLessThanOrEqualTo(balance)) {
+    if (new BigNumber(sellAmount).plus(dynamicFee).isLessThanOrEqualTo(balance)) {
       this.setState(() => ({
         isBalanceEnough: true,
       }))
 
-      if (!this.isSellCurrencyEthOrEthToken) {
-        swap.flow.skipSyncBalance()
-      } else {
+      if (isSellCurrencyToken || isSellCurrencyEvmCoin) {
         swap.flow.syncBalance()
+      } else {
+        swap.flow.skipSyncBalance()
       }
     }
   }
 
   createCycleUpdatingBalance = async () => {
-    const { sellAmount, balance } = this.state
     //@ts-ignore: strictNullChecks
     const { scriptValues } = this._fields
 
@@ -204,8 +230,6 @@ export default class DepositWindow extends Component<any, any> {
   }
 
   handleReloadBalance = async () => {
-    const { isBalanceFetching } = this.state
-
     this.updateBalance()
 
     this.setState({
@@ -217,10 +241,6 @@ export default class DepositWindow extends Component<any, any> {
         })
       }, 500)
     })
-  }
-
-  handlerBuyWithCreditCard = (e) => {
-    e.preventDefault()
   }
 
   componentDidMount() {
@@ -240,12 +260,8 @@ export default class DepositWindow extends Component<any, any> {
       balance,
       address,
       dynamicFee,
-      sellAmount,
-      flowBalance,
       requiredAmount,
-      missingBalance,
       isBalanceEnough,
-      currencyFullName,
       remainingBalance,
       isBalanceFetching,
     } = this.state
@@ -315,7 +331,7 @@ export default class DepositWindow extends Component<any, any> {
           <div styleName="qrImg">
               <QR address={`${address}?amount=${remainingBalance}`} />
             </div>
-          <CopyToClipboard text={address}>
+          <Copy text={address}>
             <div>
               <a styleName="linkText">
                 <FormattedMessage
@@ -346,11 +362,13 @@ export default class DepositWindow extends Component<any, any> {
                 </a>
                 <Button brand fullWidth>
                   <i className="fas fa-copy" />
-                  <span className="copyText"><FormattedMessage id="deposit312" defaultMessage="copy" /></span>
+                  <span className="copyText">
+                    <FormattedMessage id="deposit312" defaultMessage="copy" />
+                  </span>
                 </Button>
               </div>
             </div>
-          </CopyToClipboard>
+          </Copy>
           <div>
             <i className="fas fa-sync-alt" styleName="icon" onClick={this.handleReloadBalance} />
             {/* eslint-disable */}

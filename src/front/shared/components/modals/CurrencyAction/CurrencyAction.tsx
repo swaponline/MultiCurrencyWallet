@@ -95,7 +95,6 @@ class CurrencyAction extends React.Component<any, any> {
     return (
       <div styleName={cx({
         "modal-overlay": true,
-        "modal-overlay_dashboardView": dashboardView,
         "dark": isDark,
       })}>
         <div styleName={cx({
@@ -104,8 +103,7 @@ class CurrencyAction extends React.Component<any, any> {
         })}>
           <div styleName="header">
             <p styleName="title">{context}</p>
-            {/*
-            //@ts-ignore */}
+
             <CloseIcon styleName="closeButton" onClick={this.handleClose} data-testid="modalCloseIcon" />
           </div>
           <div styleName={cx({

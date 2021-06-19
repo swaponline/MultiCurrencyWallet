@@ -64,17 +64,10 @@
 }
 
 .closeButton {
-  width: 20px;
-  height: 20px;
-  opacity: 0.5;
-  transition: opacity 0.33s $ease-out-quadratic;
   position: absolute;
   right: 20px;
-  &:hover {
-    opacity: 1;
-    transition: none;
-  }
 }
+
 @keyframes delayClose {
   0% {
     opacity: 0;

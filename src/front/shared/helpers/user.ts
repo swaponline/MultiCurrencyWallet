@@ -75,23 +75,20 @@ export const getWidgetCurrencies = () => {
   return widgetCurrencies
 }
 
-export const filterUserCurrencyData = (currencyData) => {
+export const filterUserCurrencyData = (currencyData) =>
+  currencyData.filter((wallet) =>
+    isAllowedCurrency(wallet.currency, wallet.address)
+  )
+
+export const isAllowedCurrency = (currency = '', address = '') => {
   const { core: { hiddenCoinsList } } = store.getState()
   const enabledCurrencies = getActivatedCurrencies()
 
-  function isAllowed(target) {
-    const currency = target.currency
-
-    return (
-      !hiddenCoinsList.includes(currency) &&
-      !hiddenCoinsList.includes(`${currency}:${target.address}`) &&
-      enabledCurrencies.includes(currency)
-    )
-  }
-
-  return currencyData.filter((wallet) => {
-    return isAllowed(wallet)
-  })
+  return (
+    !hiddenCoinsList.includes(currency) &&
+    !hiddenCoinsList.includes(`${currency}:${address}`) &&
+    enabledCurrencies.includes(currency)
+  )
 }
 
 export const isCorrectWalletToShow = (wallet) => {

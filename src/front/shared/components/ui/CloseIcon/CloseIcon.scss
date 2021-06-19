@@ -3,56 +3,21 @@
   background: none;
   border: 0;
   outline: none;
-  -webkit-tap-highlight-color: transparent;
+  width: 20px;
+  height: 20px;
+  opacity: 0.5;
+  transition: opacity .33s $ease-out-quadratic;
+
+  &:hover {
+    opacity: 1;
+    transition: none;
+  }
 
   &.dark {
     .icon {
       &::before,
       &::after {
         background-color: white;
-      }
-    }
-   
-   }
-
-  &.whiteColor {
-    .icon {
-      &::before,
-      &::after {
-        background-color: #fff;
-      }
-    }
-
-    &:hover {
-
-      .icon {
-
-        &::before,
-        &::after {
-          background-color: $color-brand;
-        }
-      }
-    }
-  }
-
-  &.brandColor {
-
-    .icon {
-
-      &::before,
-      &::after {
-        background-color: $color-brand;
-      }
-    }
-
-    &:hover {
-
-      .icon {
-
-        &::before,
-        &::after {
-          background-color: #000;
-        }
       }
     }
   }

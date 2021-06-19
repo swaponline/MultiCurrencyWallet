@@ -1,5 +1,4 @@
 import React, { Fragment, Component } from 'react'
-import PropTypes from 'prop-types'
 import moment from 'moment/moment'
 import cx from 'classnames'
 
@@ -11,9 +10,7 @@ import CSSModules from 'react-css-modules'
 import styles from './SwapRow.scss'
 
 import Timer from 'pages/Swap/Timer/Timer'
-import Avatar from 'components/Avatar/Avatar'
 import { FormattedMessage, injectIntl } from 'react-intl'
-import { localisedUrl } from 'helpers/locale'
 import BigNumber from 'bignumber.js'
 
 import SwapApp from 'swap.app'
@@ -197,7 +194,7 @@ class SwapRow extends Component<any, any> {
     if (step <=1 && isSwapTimeout) return null
 
     const canBeRefunded = values && scriptBalance > 0
-    const isDeletedSwap = isFinished || isRefunded || isStoppedSwap
+    const isDeletedSwap = isFinished || isRefunded
 
     const date = Date.now() / 1000
 
@@ -227,38 +224,30 @@ class SwapRow extends Component<any, any> {
         {step > 1 && (
           <Fragment>
             <td>
-              <p>
-                {isMy
-                  ? `${sellAmount.toFixed(5)} ${sellCurrency.toUpperCase()}`
-                  : `${buyAmount.toFixed(5)} ${buyCurrency.toUpperCase()}`}
-              </p>
+              {isMy
+                ? `${sellAmount.toFixed(5)} ${sellCurrency.toUpperCase()}`
+                : `${buyAmount.toFixed(5)} ${buyCurrency.toUpperCase()}`}
             </td>
             <td>
-              <p>
-                {step}
-              </p>
+              {step}
             </td>
             <td>
-              <p>
-                {isMy
-                  ? `${buyAmount.toFixed(5)} ${buyCurrency.toUpperCase()}`
-                  : `${sellAmount.toFixed(5)} ${sellCurrency.toUpperCase()}`}
-              </p>
+              {isMy
+                ? `${buyAmount.toFixed(5)} ${buyCurrency.toUpperCase()}`
+                : `${sellAmount.toFixed(5)} ${sellCurrency.toUpperCase()}`}
             </td>
             <td>
-              <p>
-                {(lockDateAndTime !== null) && (
-                  <Fragment>
-                    {/* @ts-ignore: strictNullChecks */}
-                    {lockDateAndTime.split(' ').map((item, key) => (
-                      <Fragment key={key}> {item}</Fragment>
-                    ))}
-                  </Fragment>
-                )}
-              </p>
+              {(lockDateAndTime !== null) && (
+                <Fragment>
+                  {/* @ts-ignore: strictNullChecks */}
+                  {lockDateAndTime.split(' ').map((item, key) => (
+                    <Fragment key={key}> {item}</Fragment>
+                  ))}
+                </Fragment>
+              )}
             </td>
             <td>
-              <p
+              <div
                 className={cx({
                   [styles.statusFinished]: isFinished,
                   [styles.statusRefunded]: isRefunded,
@@ -266,20 +255,22 @@ class SwapRow extends Component<any, any> {
                 })}
               >
                 {this.getSwapStatusText(isFinished, isRefunded, isStoppedSwap)}
-                {!isDeletedSwap &&
-                  (canBeRefunded ? (
-                    <Timer lockTime={values.lockTime * 1000} enabledButton={this.tryRefund} />
-                  ) : (
-                    <FormattedMessage id="RowHistory76" defaultMessage="Refund not available" />
-                  ))}
-              </p>
+
+                {!isDeletedSwap && (
+                  <div styleName="refundStatus">
+                    {canBeRefunded ? (
+                      <Timer lockTime={values.lockTime * 1000} enabledButton={this.tryRefund} />
+                    ) : (
+                      <FormattedMessage id="RowHistory76" defaultMessage="Refund not available" />
+                    )}
+                  </div>
+                )}
+              </div>
             </td>
             <td>
-              <p>
-                <Link to={swapUri}>
-                  <FormattedMessage id="RowHistory91" defaultMessage="Link" />
-                </Link>
-              </p>
+              <Link to={swapUri}>
+                <FormattedMessage id="RowHistory91" defaultMessage="Link" />
+              </Link>
             </td>
           </Fragment>
         )}

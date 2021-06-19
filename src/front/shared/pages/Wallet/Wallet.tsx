@@ -449,7 +449,9 @@ class Wallet extends PureComponent<any, any> {
       },
     } = this.props
 
-    this.syncData()
+    if (!window?.STATISTIC_DISABLED) {
+      this.syncData()
+    }
 
     let userWallets = user.filterUserCurrencyData(actions.core.getWallets({}))
 

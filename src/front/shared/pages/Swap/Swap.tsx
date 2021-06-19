@@ -125,7 +125,7 @@ class SwapComponent extends PureComponent<any, any> {
       isMy: false,
       currencyData: null,
       isAmountMore: null,
-      SwapComponent: null,
+      ActiveSwap: null,
       continueSwap: true,
       enoughBalance: true,
       depositWindow: false,
@@ -194,7 +194,7 @@ class SwapComponent extends PureComponent<any, any> {
     console.log('swap: ', swap)
     console.log('swap flow name:', swap.flow._flowName);
 
-    const SwapComponent = swapComponents[swap.flow._flowName]
+    const ActiveSwap = swapComponents[swap.flow._flowName]
     const ethData = items.filter(item => item.currency === 'ETH')
     const currencyData = items.concat(tokensData)
       .filter(item => item.currency === swap.sellCurrency.toUpperCase())[0]
@@ -227,7 +227,7 @@ class SwapComponent extends PureComponent<any, any> {
     this.setState({
       swap,
       ethData,
-      SwapComponent,
+      ActiveSwap,
       currencyData,
       ethAddress: ethData[0].address,
     }, this.afterComponentDidMount)
@@ -290,7 +290,7 @@ class SwapComponent extends PureComponent<any, any> {
         if (!this.checkIsConfirmed()) {
           window.location.reload()
         }
-      }, 30_000)
+      }, 240_000) // seconds
 
       this.checkingConfirmSuccessTimer = checkingConfirmSuccess
       this.checkingCycleTimer = checkingCycle
@@ -552,7 +552,7 @@ class SwapComponent extends PureComponent<any, any> {
     const { peer, tokensData, history, intl: { locale } } = this.props
     const {
       swap,
-      SwapComponent,
+      ActiveSwap,
       currencyData,
       isAmountMore,
       ethData,
@@ -568,7 +568,7 @@ class SwapComponent extends PureComponent<any, any> {
       errorInfo,
     } = this.state
 
-    if (!swap || !SwapComponent || !peer || !isAmountMore) {
+    if (!swap || !ActiveSwap || !peer || !isAmountMore) {
       return null
     }
 
@@ -576,7 +576,7 @@ class SwapComponent extends PureComponent<any, any> {
       <Fragment>
         {!isSwapCancelled ?
           <div styleName={`${isMobile ? 'swap swapMobile' : 'swap'} ${isDark ? 'dark' : ''}`}>
-            <SwapComponent
+            <ActiveSwap
               tokenItems={tokensData}
               depositWindow={depositWindow}
               disabledTimer={isAmountMore === 'enable'}
