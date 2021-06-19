@@ -55,7 +55,7 @@ export default class StepsWrapper extends Component<any, any> {
         this.defaultStartPack.push({
           name: name.toUpperCase(),
           capture: token.fullName,
-          baseCurrency: standard.toUpperCase(),
+          baseCurrency: TOKEN_STANDARDS[standard].currency.toUpperCase(),
         })
       })
 
@@ -101,7 +101,7 @@ export default class StepsWrapper extends Component<any, any> {
             this.widgetStartPack.push({
               name: name.toUpperCase(),
               capture: config[standard][name].fullName,
-              baseCurrency: standard.toUpperCase(),
+              baseCurrency: TOKEN_STANDARDS[standard].currency.toUpperCase(),
             })
           }
         })
@@ -111,7 +111,7 @@ export default class StepsWrapper extends Component<any, any> {
           this.widgetStartPack.push({
             name: config.erc20token.toUpperCase(),
             capture: config.erc20[config.erc20token].fullName,
-            baseCurrency: `ERC20`,
+            baseCurrency: `ETH`,
           })
         }
       }
@@ -142,7 +142,7 @@ export default class StepsWrapper extends Component<any, any> {
             } else {
               if (blockchain) {
                 if (packList[coinIndex].name === coin
-                  && packList[coinIndex].standard === blockchain
+                  && packList[coinIndex].baseCurrency === blockchain.toUpperCase()
                 ) {
                   packList[coinIndex].order = order
                   return false

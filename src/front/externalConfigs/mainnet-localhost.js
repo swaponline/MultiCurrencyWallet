@@ -57,9 +57,9 @@ window.buildOptions = {
     Все остальные коины, которые не указаны, будут помещены в конец списка в произвольном порядке
   */
   createWalletCoinsOrder: [
-    '{ERC20}UNI',
+    '{ETH}UNI',
     'CUSTOM_ERC20',
-    '{ERC20}SHARE',
+    '{ETH}SHARE',
     'BTC',
     'CUSTOM_ERC20MATIC',
     'MATIC',
