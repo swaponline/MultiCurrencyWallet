@@ -153,8 +153,7 @@ const login = (
     
     //@ts-ignore: strictNullChecks
     const accData = getWalletByWords(mnemonic)
-    console.log('Next. Generated wallet from random 12 words')
-    console.log(accData)
+
     privateKey = accData.WIF
     localStorage.setItem(constants.privateKeyNames.nextMnemonic, privateKey)
   }
@@ -171,7 +170,6 @@ const login = (
   window.getNextAddress = () => data.address
   window.getNextData = () => data
 
-  console.info('Logged in with Next', data)
   reducers.user.setAuthData({
     name: 'nextData',
     data,
@@ -194,7 +192,7 @@ const login = (
       ...auth(mnemonicKeys.next),
       isMnemonic: true,
     }
-    console.info('Logged in with Next Mnemonic', mnemonicData)
+
     reducers.user.addWallet({
       name: 'nextMnemonicData',
       data: {

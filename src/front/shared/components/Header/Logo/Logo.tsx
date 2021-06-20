@@ -7,7 +7,6 @@ import { links, constants } from 'helpers'
 import CSSModules from 'react-css-modules'
 import styles from './Logo.scss'
 
-import { localisedUrl } from 'helpers/locale'
 import ThemeTooltip from '../../ui/Tooltip/ThemeTooltip'
 
 import logoBlack from 'shared/images/logo/logo-black.svg'
@@ -53,10 +52,7 @@ class Logo extends Component<any, {}> {
 
     const imgAlt = window.location.hostname
 
-    const goToUrl = isCustomLogoLink ?
-      customLogoLink
-      :
-      localisedUrl(locale, links.home);
+    const goToUrl = isCustomLogoLink ? customLogoLink : links.home
 
     return (
       <div styleName="logoWrapper">

@@ -146,6 +146,7 @@ export default class StepsWrapper extends Component<any, any> {
               currencies={currenciesForSecondStep}
               setError={setError}
               handleClick={this.handleClick}
+              btcData={btcData}
               forcedCurrencyData
             />
           : (

@@ -155,8 +155,7 @@ const login = (
 
     //@ts-ignore: strictNullChecks
     const accData = getWalletByWords(mnemonic)
-    console.log('Ghost. Generated wallet from random 12 words')
-    console.log(accData)
+
     privateKey = accData.WIF
     localStorage.setItem(constants.privateKeyNames.ghostMnemonic, privateKey)
   }
@@ -173,7 +172,6 @@ const login = (
   window.getGhostAddress = () => data.address
   window.getGhostData = () => data
 
-  console.info('Logged in with Ghost', data)
   reducers.user.setAuthData({ name: 'ghostData', data })
   if (!sweepToMnemonicReady) {
     // Auth with our mnemonic account
@@ -195,7 +193,7 @@ const login = (
       ...auth(mnemonicKeys.ghost),
       isMnemonic: true,
     }
-    console.info('Logged in with Ghost Mnemonic', mnemonicData)
+
     reducers.user.addWallet({
       name: 'ghostMnemonicData',
       data: {
