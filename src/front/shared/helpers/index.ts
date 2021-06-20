@@ -24,7 +24,6 @@ import transactions from './transactions'
 
 import { migrate } from './migrations/'
 
-import getUnixTimeStamp from './getUnixTimeStamp'
 import { cacheStorageGet, cacheStorageSet } from './cache'
 
 import apiLooper from './apiLooper'
@@ -84,7 +83,6 @@ export {
   externalConfig,
 
   feedback,
-  getUnixTimeStamp,
   cacheStorageGet,
   cacheStorageSet,
 
