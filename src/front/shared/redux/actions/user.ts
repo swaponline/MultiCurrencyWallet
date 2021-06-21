@@ -81,7 +81,6 @@ const sign_btc_pin = async (btcPrivateKey) => {
     btcPinPublicKeys.push(btcPinMnemonicKey[0])
   }
 
-  console.log('sign to btc pin', btcPinPublicKeys)
   const _btcMultisigPinPrivateKey = actions.btcmultisig.login_PIN(btcPrivateKey, btcPinPublicKeys)
 }
 
@@ -106,7 +105,6 @@ const sign = async () => {
       ghost: localStorage.getItem(constants.privateKeyNames.ghostMnemonic),
       next: localStorage.getItem(constants.privateKeyNames.nextMnemonic),
     }
-    console.log('actions user - sign', mnemonicKeys, mnemonic)
 
     if (mnemonic !== `-`) {
       //@ts-ignore

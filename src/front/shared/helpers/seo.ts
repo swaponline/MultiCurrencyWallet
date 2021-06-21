@@ -3,7 +3,7 @@ const seo = {
     medium: 'https://medium.com/@swaponline',
     twitter: 'https://twitter.com/SwapOnlineTeam',
     facebook: 'https://www.facebook.com/SwapOnlineTeam',
-    telegram: 'https://t.me/swaponlineint',
+    telegram: 'https://t.me/swaponline',
     email: 'info@swaponline.io',
     mainUrl: 'https://swaponline.io',
     logo: 'https://screenshots.wpmix.net/chrome_2019-03-28_18-55-506746c4c5-44e6-4bb5-89cb-52ce8fabcedf.png',
@@ -54,11 +54,6 @@ const seo = {
       uri: '/history',
       title: 'Transactions',
       description: 'Transactions',
-    },
-    {
-      uri: '/aboutus',
-      title: 'About Us',
-      description: 'About Us',
     },
     {
       uri: '/swap',

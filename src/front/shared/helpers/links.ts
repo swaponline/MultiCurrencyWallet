@@ -26,7 +26,6 @@ const linksManager = {
   atomicSwap: '/atomic-swaps',
   turboSwap: '/turbo-swaps',
   feed: '/feed',
-  aboutUs: '/aboutUs',
   test: 'https://testnet.swaponline.io',
   main: 'https://swaponline.io/',
   wallet: '/wallet',

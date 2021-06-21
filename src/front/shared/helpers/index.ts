@@ -6,7 +6,6 @@ import bnb from './bnb'
 import matic from './matic'
 import arbitrum from './arbitrum'
 import ethToken from './ethToken'
-import bepToken from './bepToken'
 import * as user from './user'
 import web3 from './web3'
 import links from './links'
@@ -26,7 +25,6 @@ import transactions from './transactions'
 
 import { migrate } from './migrations/'
 
-import getUnixTimeStamp from './getUnixTimeStamp'
 import { cacheStorageGet, cacheStorageSet } from './cache'
 
 import apiLooper from './apiLooper'
@@ -57,7 +55,6 @@ export default {
   ghost,
   next,
   ethToken,
-  bepToken,
   getCurrencyKey,
   handleGoTrade,
   transactions,
@@ -72,7 +69,6 @@ export {
   ghost,
   next,
   ethToken,
-  bepToken,
   user,
   web3,
   utils,
@@ -90,7 +86,6 @@ export {
   externalConfig,
 
   feedback,
-  getUnixTimeStamp,
   cacheStorageGet,
   cacheStorageSet,
 
