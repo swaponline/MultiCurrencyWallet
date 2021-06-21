@@ -11,11 +11,18 @@ The list of faucets that we recommend to use when developing
 - https://faucet.ropsten.be/ (1 ETH per day)
 - https://faucet.dimensions.network/ (5 ETH per day)
 
+## `ETH` (Rinkeby testnet)
+- https://faucet.rinkeby.io
+
 ## `BNB` (Testnet)
 - https://testnet.binance.org/faucet-smart (1 per 18 hours)
 
 ## `MATIC` (Mumbai testnet)
 - https://faucet.matic.network/
+
+## `ARBITRUM` (Rinkeby L2 testnet)
+use Arbitrum Bridge between Ethereum Rinkeby and Arbitrum
+- https://bridge.arbitrum.io/
 
 ## `USDT` (Ropsten testnet)
  - contact swaponline developers [here](https://t.me/swaponlinebot)

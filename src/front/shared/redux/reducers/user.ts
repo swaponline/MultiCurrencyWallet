@@ -42,8 +42,8 @@ export const initialState = {
   arbitrumData: {
     balance: 0,
     isBalanceFetched: false,
-    currency: 'ETH',
-    fullName: 'Ethereum',
+    currency: 'ARBITRUM',
+    fullName: 'Arbitrum',
     balanceError: null,
     infoAboutCurrency: null,
   },

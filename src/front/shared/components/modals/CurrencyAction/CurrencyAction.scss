@@ -30,7 +30,7 @@
 .header {
   padding: 16px 0;
   padding: 0px 0 25px;
-  border-bottom: 1px solid #f5f5f5;
+  border-bottom: 1px solid $color-border;
 }
 
 .title {
@@ -46,7 +46,7 @@
 }
 
 .card {
-  background: #FFFFFF;
+  background: $l-background-color;
   border: 1px solid $inactive-border-color;
   box-sizing: border-box;
   box-shadow: 0px 2px 12px rgba(142, 154, 163, 0.08);
@@ -55,7 +55,10 @@
   padding: 10px;
   height: 53px;
   list-style: none;
-  display: grid;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   height: 140px;
   cursor: pointer;
   width: 110px;
@@ -63,23 +66,11 @@
   transition: 0.2s background ease;
   text-align: center;
 
-  em {
-    position: absolute;
-    text-align: right;
-    padding-left: auto;
-    width: 120px;
-    font-size: 10px;
-    color: #9b58b6;
-  }
-
-  b {
+  .info {
     font-weight: 800;
     font-size: 13px;
     line-height: 16px;
-    text-align: center;
-    color: #1F2D48;
-    margin-top: 5px;
-    margin-bottom: -1px;
+    color: $l-color;
     @include ff-bold;
   }
 
@@ -93,14 +84,6 @@
     margin-top: -15px;
   }
 
-  li {
-    font-weight: 100;
-    color: #8E9AA3;
-    font-size: 11px;
-    line-height: 20px;
-    text-align: center;
-  }
-
   &:hover {
     background: rgba(237, 239, 240, 0.40);
   }
@@ -108,28 +91,6 @@
   &:last-child {
     margin: 0;
   }
-}
-
-.btc {
-  background: orange;
-}
-
-.eth,
-.matic,
-.ghost {
-  background: black;
-}
-
-.bnb {
-  background: #47454a;
-}
-
-.usdt {
-  background: #0ccf14;
-}
-
-.swap {
-  background: #775cf1;
 }
 
 .circle {
@@ -204,10 +165,10 @@
   }
 
   .card {
-    background: #242425;
+    background: $d-background-color;
 
-    b {
-      color: #cfd1d3;
+    .info {
+      color: $d-color;
     }
   }
 }
@@ -274,9 +235,7 @@
     }
 
     span {
-      position: absolute;
-      left: 66px;
-      bottom: 11px;
+      bottom: 10px;
     }
 
     &:last-child {

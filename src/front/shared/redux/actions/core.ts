@@ -468,7 +468,6 @@ const getWallets = (options: IUniversalObj = {}) => {
     },
   } = getState()
 
-
   const metamaskConnected = metamask.isEnabled() && metamask.isConnected()
 
   const tokenWallets = Object.keys(tokensData).map((k) => {
