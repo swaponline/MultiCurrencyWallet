@@ -1,9 +1,5 @@
 [
   {
-    "id": "menu.aboutus",
-    "message": "About Us"
-  },
-  {
     "id": "menu.exchange",
     "message": "Exchange",
     "files": [

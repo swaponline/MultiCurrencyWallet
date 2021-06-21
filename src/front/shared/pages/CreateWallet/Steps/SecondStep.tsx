@@ -8,7 +8,6 @@ import { isMobile } from 'react-device-detect'
 
 import actions from 'redux/actions'
 import { constants } from 'helpers'
-import ethToken from 'helpers/ethToken'
 import feedback from 'shared/helpers/feedback'
 import Explanation from '../Explanation'
 import icons from '../images'
