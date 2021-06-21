@@ -30,8 +30,9 @@ const swap = (config && config.isWidget) ?
   :
   [
     ...(!config.opts.curEnabled || (config.opts.curEnabled.eth && config.opts.curEnabled.btc)) ? ['ETH-BTC'] : [],
-    ...(!config.opts.curEnabled || (config.opts.curEnabled.bnb && config.opts.curEnabled.bnb)) ? ['BNB-BTC'] : [],
-    ...(!config.opts.curEnabled || (config.opts.curEnabled.bnb && config.opts.curEnabled.bnb)) ? ['MATIC-BTC'] : [],
+    ...(!config.opts.curEnabled || (config.opts.curEnabled.bnb && config.opts.curEnabled.btc)) ? ['BNB-BTC'] : [],
+    ...(!config.opts.curEnabled || (config.opts.curEnabled.matic && config.opts.curEnabled.btc)) ? ['MATIC-BTC'] : [],
+    ...(!config.opts.curEnabled || (config.opts.curEnabled.arbitrum && config.opts.curEnabled.btc)) ? ['ARBITRUM-BTC'] : [],
     ...(!config.opts.curEnabled || (config.opts.curEnabled.eth && config.opts.curEnabled.ghost)) ? ['ETH-GHOST'] : [],
     ...(!config.opts.curEnabled || (config.opts.curEnabled.eth && config.opts.curEnabled.next)) ? ['ETH-NEXT'] : [],
   ]

@@ -601,7 +601,7 @@ export default {
   }),
   ARBITRUM: new EthLikeAction({
     coinName: 'ARBITRUM',
-    ticker: 'ARB',
+    ticker: 'ARBITRUM',
     privateKeyName: 'eth',
     explorerName: 'rinkeby-explorer', 
     explorerLink: externalConfig.link.arbitrum,

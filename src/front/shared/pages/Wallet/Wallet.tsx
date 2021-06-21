@@ -466,7 +466,6 @@ class Wallet extends PureComponent<any, any> {
     return (
       <DashboardLayout
         page={page}
-        isDark={isDark}
         BalanceForm={
           <BalanceForm
             isDark={isDark}

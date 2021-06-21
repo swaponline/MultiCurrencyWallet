@@ -167,16 +167,12 @@ if you're adding a new token standard
 
 ### Add `coinData`
 
-- `src/front/shared/components/CurrencyDirectionChooser/CurrencyDirectionChooser.tsx`
-- `src/front/shared/components/layout/DashboardLayout/DashboardLayout.tsx`
 - `src/front/shared/components/modals/ConfirmBeginSwap/ConfirmBeginSwap.tsx`
 - `src/front/shared/components/modals/DownloadModal/DownloadModal.tsx`
-- `src/front/shared/components/modals/InvoiceModal/InvoiceModal.tsx`
 - `src/front/shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.tsx`
 - `src/front/shared/components/SaveKeys/SaveKeys.tsx`
 - `src/front/shared/containers/App/App.tsx`
 - `src/front/shared/pages/Exchange/Exchange.tsx`
-- `src/front/shared/pages/Exchange/SelectGroup/SelectGroup.tsx`
 - `src/front/shared/pages/History/SwapsHistory/RowHistory/RowHistory.tsx`
 - `src/front/shared/pages/Invoices/CreateInvoice/index.tsx`
 - `src/front/shared/pages/Invoices/InvoicesList/index.tsx`

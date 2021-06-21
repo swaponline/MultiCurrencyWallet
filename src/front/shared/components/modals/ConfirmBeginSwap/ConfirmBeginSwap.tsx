@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 
 import { connect } from 'redaction'
@@ -10,9 +10,8 @@ import Link from 'local_modules/sw-valuelink'
 import CSSModules from 'react-css-modules'
 import styles from './ConfirmBeginSwap.scss'
 
-import { Modal } from 'components/modal'
 import { Button, Toggle } from 'components/controls'
-import { FieldLabel, Input } from 'components/forms'
+import { Input } from 'components/forms'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 import typeforce from 'swap.app/util/typeforce'
@@ -42,9 +41,26 @@ const defaultLanguage = defineMessages({
 })
 
 @connect(({
-  user: { ethData, bnbData, maticData, btcData, ghostData, nextData, tokensData },
+  user: {
+    ethData,
+    bnbData,
+    maticData,
+    arbitrumData,
+    btcData,
+    ghostData,
+    nextData,
+    tokensData,
+  },
 }) => ({
-  currenciesData: [ethData, bnbData, maticData, btcData, ghostData, nextData],
+  currenciesData: [
+    ethData, 
+    bnbData, 
+    maticData,
+    arbitrumData, 
+    btcData, 
+    ghostData, 
+    nextData,
+  ],
   tokensData: [...Object.keys(tokensData).map(k => (tokensData[k]))],
 }))
 @CSSModules(styles, { allowMultiple: true })
