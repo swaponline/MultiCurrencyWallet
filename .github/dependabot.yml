@@ -1,0 +1,47 @@
+version: 2
+updates:
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "02:00"
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: "@types/node"
+    versions:
+    - ">= 15.a, < 16"
+  - dependency-name: postcss-loader
+    versions:
+    - 6.0.0
+  - dependency-name: ts-loader
+    versions:
+    - 9.0.2
+    - 9.2.0
+  - dependency-name: libp2p
+    versions:
+    - 0.31.0
+    - 0.31.1
+    - 0.31.2
+    - 0.31.3
+  - dependency-name: libp2p-gossipsub
+    versions:
+    - 0.9.0
+  - dependency-name: fork-ts-checker-webpack-plugin
+    versions:
+    - 6.2.2
+    - 6.2.3
+  - dependency-name: webpack
+    versions:
+    - 5.28.0
+    - 5.30.0
+    - 5.31.0
+    - 5.31.1
+    - 5.31.2
+    - 5.32.0
+    - 5.33.2
+  - dependency-name: copy-webpack-plugin
+    versions:
+    - 8.1.1
+  - dependency-name: husky
+    versions:
+    - 6.0.0
