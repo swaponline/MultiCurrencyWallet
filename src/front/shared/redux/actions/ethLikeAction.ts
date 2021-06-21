@@ -66,15 +66,17 @@ class EthLikeAction {
   }
 
   getPrivateKeyByAddress = (address) => {
-    const {
-      user: {
-        [`${this.tickerKey}Data`]: { address: oldAddress, privateKey },
-        [`${this.tickerKey}MnemonicData`]: { address: mnemonicAddress, privateKey: mnemonicKey },
-      },
-    } = getState()
+    const { user } = getState()
+    const currencyData = user[`${this.tickerKey}Data`]
+    const currencyMnemonicData = user[`${this.tickerKey}MnemonicData`]
 
-    if (oldAddress === address) return privateKey
-    if (mnemonicAddress === address) return mnemonicKey
+    if (currencyData.address === address) {
+      return currencyData.privateKey
+    }
+
+    if (currencyMnemonicData?.address === address) {
+      return currencyMnemonicData?.privateKey
+    }
   }
 
   getInvoices = () => {

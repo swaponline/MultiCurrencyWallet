@@ -65,6 +65,13 @@
   margin-right: 15px;
   transition: 0.2s background ease;
   text-align: center;
+  
+  img {
+    margin-bottom: 0.5em;
+    padding: .5em;
+    border-radius: 50%;
+    background: $l-color;
+  }
 
   .info {
     font-weight: 800;
@@ -101,11 +108,6 @@
   border-radius: 50%;
   margin: auto;
   align-items: center;
-
-  img {
-    width: auto;
-    height: 20px;
-  }
 }
 
 .closeButton {
@@ -121,7 +123,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgba(0, 0, 0, .6);
   opacity: 1;
 
   &_dashboardView {

@@ -15,10 +15,10 @@ import Center from 'components/layout/Center/Center'
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 type ModalProps = {
-  title?: any // JSX.Element, string
-  closeOnLocationChange?: any  // function or boolean
-  onClose?: (isLocationChange) => any // void or boolean
-  
+  title?: JSX.Element | string
+  closeOnLocationChange?: boolean | Function
+  onClose?: (isLocationChange) => boolean | void
+
   children: JSX.Element | JSX.Element[]
   data?: IUniversalObj
   onLocationChange?: (hash: string) => boolean

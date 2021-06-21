@@ -157,12 +157,12 @@ class ReceiveModal extends React.Component<any, any> {
 
                   <div styleName="sendBtnsWrapper">
                     <div styleName="actionBtn">
-                      <Button brand fill>
+                      <Button big brand fill>
                         <FormattedMessage id="recieved67" defaultMessage="Copy to clipboard" />
                       </Button>
                     </div>
                     <div styleName="actionBtn">
-                      <Button big fill gray onClick={this.handleClose}>
+                      <Button big brand fill onClick={this.handleClose}>
                         <FormattedMessage id="WithdrawModalCancelBtn" defaultMessage="Cancel" />
                       </Button>
                     </div>

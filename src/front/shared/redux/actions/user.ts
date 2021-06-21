@@ -522,6 +522,7 @@ const setTransactions = async (objCurrency: ObjCurrencyType | {} = null) => {
       actions.eth.getTransaction(),
       actions.bnb.getTransaction(),
       actions.matic.getTransaction(),
+      actions.arbitrum.getTransaction(),
       //@ts-ignore: strictNullChecks
       ...(metamask.isEnabled() && metamask.isConnected()) ? [actions.eth.getTransaction(metamask.getAddress())] : [],
       //@ts-ignore: strictNullChecks
@@ -681,18 +682,9 @@ export const isOwner = (addr, currency) => {
     return lowerAddr === storeOwnerAddress
   }
 
-  if (
-    //@ts-ignore: strictNullChecks
-    actions.btc.getAllMyAddresses().includes(lowerAddr) ||
-    //@ts-ignore: strictNullChecks
-    actions.ghost.getAllMyAddresses().includes(lowerAddr) ||
-    //@ts-ignore: strictNullChecks
-    actions.next.getAllMyAddresses().includes(lowerAddr) ||
-    actions.eth.getAllMyAddresses().includes(lowerAddr) ||
-    actions.bnb.getAllMyAddresses().includes(lowerAddr) ||
-    actions.matic.getAllMyAddresses().includes(lowerAddr) ||
-    actions.arbitrum.getAllMyAddresses().includes(lowerAddr)
-  ) {
+  const currencyActions = actions[currency.toLowerCase()]
+
+  if (currencyActions?.getAllMyAddresses().includes(lowerAddr)) {
     return true
   }
 
