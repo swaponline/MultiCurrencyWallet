@@ -101,12 +101,8 @@ Important note: Our core team focused on BTC-ETH swaps. If another blockchain ad
 - `src/front/shared/helpers/getCurrencyKey.ts`
 - `src/front/shared/helpers/user.ts`
 - `src/front/shared/pages/CreateWallet/CreateWallet.tsx`
-- `src/front/shared/pages/CreateWallet/CreateWallet.scss`
-- `src/front/shared/pages/CreateWallet/Steps/FirstStep.tsx`
-- `src/front/shared/pages/CreateWallet/Steps/SecondStep.tsx`
 - `src/front/shared/pages/CreateWallet/Steps/StepsWrapper.tsx`
 - `src/front/shared/pages/CreateWallet/Steps/startPacks.ts`
-- `src/front/shared/pages/Currency/Currency.tsx`
 - `src/front/shared/pages/Wallet/Wallet.tsx`
 - `src/front/shared/redux/reducers/createWallet.ts`
 - `src/front/shared/redux/reducers/currencies.ts`
@@ -145,7 +141,6 @@ Add swap instances:
 
 ### Create coin actions
 
-- `src/front/shared/redux/actions/index.ts`
 - `src/front/shared/redux/actions/coin.ts`
 	* use `btc.js` as reference
 	* getWalletByWords - set coin index
@@ -161,12 +156,14 @@ Add swap instances:
 	* `bitcore-lib` - add network settings
 	* signMessage
 
-
 if you're adding an evm coin
 - new instance `src/front/shared/redux/actions/ethLikeAction.ts`
 
 if you're adding a new token standard
 - new instance `src/front/shared/redux/actions/erc20LikeAction.ts`
+
+- import a new file here `src/front/shared/redux/actions/index.ts`
+
 
 ### Add `coinData`
 

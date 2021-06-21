@@ -84,4 +84,9 @@ export default {
     defaultParams: DEFAULT_CURRENCY_PARAMETERS.evmLike,
     feeRatesLink: config.feeRates.matic,
   }),
+  arbitrum: new ethLikeHelper({
+    currency: 'ARBITRUM',
+    defaultParams: DEFAULT_CURRENCY_PARAMETERS.evmLike,
+    feeRatesLink: config.feeRates.arbitrum,
+  }),
 }

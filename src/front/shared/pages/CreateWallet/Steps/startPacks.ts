@@ -1,4 +1,5 @@
 import config from 'helpers/externalConfig'
+
 const curEnabled = config.opts.curEnabled
 
 // TODO: Move it in a better place
@@ -14,6 +15,8 @@ export const defaultPack = [
 
   ...(!curEnabled || curEnabled.matic ? [{ name: 'MATIC', capture: 'MATIC Token' }] : []),
   ...(config.erc20matic ? [{ name: 'ERC20', capture: 'Token', baseCurrency: 'MATIC' }] : []),
+
+  ...(!curEnabled || curEnabled.arbitrum ? [{ name: 'ARB', capture: 'Arbitrum' }] : []),
 
   ...(!curEnabled || curEnabled.ghost ? [{ name: 'GHOST', capture: 'Ghost' }] : []),
   ...(!curEnabled || curEnabled.next ? [{ name: 'NEXT', capture: 'NEXT.coin' }] : []),
@@ -40,6 +43,7 @@ export const widgetPack = [
   ...(config.bep20 ? [{ name: 'BEP20', capture: 'Token', baseCurrency: 'BNB' }] : []),
   ...(!curEnabled || curEnabled.matic ? [{ name: 'MATIC', capture: 'MATIC Token' }] : []),
   ...(config.erc20matic ? [{ name: 'ERC20', capture: 'Token', baseCurrency: 'MATIC' }] : []),
+  ...(!curEnabled || curEnabled.arbitrum ? [{ name: 'ARB', capture: 'Arbitrum' }] : []),
   ...(!curEnabled || curEnabled.ghost ? [{ name: 'GHOST', capture: 'Ghost' }] : []),
   ...(!curEnabled || curEnabled.next ? [{ name: 'NEXT', capture: 'NEXT.coin' }] : []),
 ]

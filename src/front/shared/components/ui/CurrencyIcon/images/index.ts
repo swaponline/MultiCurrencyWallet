@@ -2,6 +2,7 @@ import btc from './btc.svg'
 import eth from './eth.svg'
 import bnb from './bnb.svg'
 import matic from './matic.svg'
+import arbitrum from './arbitrum.svg'
 import wbtc from './wbtc.svg'
 import icx from './icx.svg'
 import waves from './waves.svg'
@@ -39,6 +40,7 @@ export default {
   eth,
   bnb,
   matic,
+  arbitrum,
   syc2,
   icx,
   usdt,

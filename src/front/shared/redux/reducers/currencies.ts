@@ -126,6 +126,16 @@ const initialState = {
       addAssets: true,
     }] : [],
     //@ts-ignore
+    ...(!buildOpts.curEnabled || buildOpts.curEnabled.matic) ? [{
+      name: 'ARBITRUM',
+      title: 'ARBITRUM',
+      icon: 'arbitrum',
+      value: 'arbitrum',
+      fullTitle: 'arbitrum',
+      blockchain: BLOCKCHAIN_TYPE.MATIC,
+      addAssets: true,
+    }] : [],
+    //@ts-ignore
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.ghost) ? [{
       name: 'GHOST',
       title: 'GHOST',
@@ -267,6 +277,13 @@ if (config.isWidget) {
       fullTitle: 'matic token',
     },
     {
+      name: 'ARBITRUM',
+      title: 'ARBITRUM',
+      icon: 'arbitrum',
+      value: 'arbitrum',
+      fullTitle: 'arbitrum',
+    },
+    {
       name: 'BTC',
       title: 'BTC',
       icon: 'btc',
@@ -310,6 +327,13 @@ if (config.isWidget) {
       icon: 'matic',
       value: 'matic',
       fullTitle: 'matic token',
+    },
+    {
+      name: 'ARBITRUM',
+      title: 'ARBITRUM',
+      icon: 'arbitrum',
+      value: 'arbitrum',
+      fullTitle: 'arbitrum',
     },
     {
       name: 'BTC',

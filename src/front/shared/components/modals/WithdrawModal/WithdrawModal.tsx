@@ -113,6 +113,7 @@ type WithdrawModalState = {
       ethData,
       bnbData,
       maticData,
+      arbitrumData,
       btcData,
       ghostData,
       nextData,
@@ -123,7 +124,16 @@ type WithdrawModalState = {
   }) => {
     return {
       activeFiat,
-      coinsData: [ethData, bnbData, maticData, btcData, ghostData, nextData, metamaskData],
+      coinsData: [
+        ethData,
+        bnbData,
+        maticData,
+        arbitrumData,
+        btcData,
+        ghostData,
+        nextData,
+        metamaskData,
+      ],
       dashboardView: dashboardModalsAllowed,
     }
   }

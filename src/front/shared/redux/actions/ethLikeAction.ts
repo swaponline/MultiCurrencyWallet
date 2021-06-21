@@ -599,4 +599,14 @@ export default {
     adminFeeObj: externalConfig.opts?.fee?.matic,
     web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.matic_provider)),
   }),
+  ARBITRUM: new EthLikeAction({
+    coinName: 'ARBITRUM',
+    ticker: 'ARB',
+    privateKeyName: 'eth',
+    explorerName: 'rinkeby-explorer', 
+    explorerLink: externalConfig.link.arbitrum,
+    explorerApiKey: '',
+    adminFeeObj: externalConfig.opts?.fee?.arbitrum,
+    web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.arbitrum_provider)),
+  }),
 }
