@@ -2474,7 +2474,7 @@
   },
   {
     "id": "chooseEthereumNetwork",
-    "message": "Je hebt een open Metamask of andere portemonnee nodig en kies Ethereum Network",
+    "message": "Open de verbonden portemonnee en kies het juiste netwerk",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]

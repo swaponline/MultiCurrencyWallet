@@ -2481,7 +2481,7 @@
   },
   {
     "id": "chooseEthereumNetwork",
-    "message": "Musisz otworzyć Metamask lub inny portfel i wybrać Ethereum Network",
+    "message": "Otwórz podłączony portfel i wybierz odpowiednią sieć",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]

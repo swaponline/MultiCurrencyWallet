@@ -2600,7 +2600,7 @@
   },
   {
     "id": "chooseEthereumNetwork",
-    "message": "You need open Metamask or others wallet and choose Ethereum Network",
+    "message": "Please open connected wallet and choose correct network",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]

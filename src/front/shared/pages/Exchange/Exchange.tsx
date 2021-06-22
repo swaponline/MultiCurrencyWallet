@@ -1885,7 +1885,7 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
                 <p styleName="error">
                   <FormattedMessage
                     id="chooseEthereumNetwork"
-                    defaultMessage="You need open Metamask or others wallet and choose Ethereum Network"
+                    defaultMessage="Please open connected wallet and choose correct network"
                   />
                 </p>
               </Fragment>

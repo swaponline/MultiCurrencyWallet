@@ -2565,7 +2565,7 @@
   },
   {
     "id": "chooseEthereumNetwork",
-    "message": "Вам необходимо открыть Metamask или другой кошелек и выбрать сеть Ethereum",
+    "message": "Откройте подключенный кошелек и выберите правильную сеть",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
