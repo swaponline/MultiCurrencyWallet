@@ -201,34 +201,6 @@
     ]
   },
   {
-    "id": "Currency101",
-    "message": "Баланс: ",
-    "files": [
-      "src/front/shared/pages/Currency/Currency.tsx"
-    ]
-  },
-  {
-    "id": "CurrencyH1Seo1",
-    "message": "Цена {fullName} ({tickerName}) и Актуальный Курс Обмена.",
-    "files": [
-      "src/front/shared/pages/Currency/Currency.tsx"
-    ]
-  },
-  {
-    "id": "CurrencyWallet100",
-    "message": "Отправить",
-    "files": [
-      "src/front/shared/pages/Currency/Currency.tsx"
-    ]
-  },
-  {
-    "id": "Row35",
-    "message": "Обмен",
-    "files": [
-      "src/front/shared/pages/Currency/Row/Row.tsx"
-    ]
-  },
-  {
     "id": "RowHistory76",
     "message": "Возврат невозможен",
     "files": [
@@ -3611,13 +3583,6 @@
     "message": "Ссылка скопирована",
     "files": [
       "src/front/shared/components/modals/Share/Share.tsx"
-    ]
-  },
-  {
-    "id": "Row313",
-    "message": "Deposit",
-    "files": [
-      "src/front/shared/pages/Currency/Currency.tsx"
     ]
   },
   {

@@ -191,34 +191,6 @@
     ]
   },
   {
-    "id": "Currency101",
-    "message": "Saldo: ",
-    "files": [
-      "src/front/shared/pages/Currency/Currency.tsx"
-    ]
-  },
-  {
-    "id": "CurrencyH1Seo1",
-    "message": "{fullName} ({tickerName}) Cena & kurs wymiany.",
-    "files": [
-      "src/front/shared/pages/Currency/Currency.tsx"
-    ]
-  },
-  {
-    "id": "CurrencyWallet100",
-    "message": "Wyślij",
-    "files": [
-      "src/front/shared/pages/Currency/Currency.tsx"
-    ]
-  },
-  {
-    "id": "Row35",
-    "message": "Giełda",
-    "files": [
-      "src/front/shared/pages/Currency/Row/Row.tsx"
-    ]
-  },
-  {
     "id": "RowHistory76",
     "message": "Zwrot nie jest możliwy",
     "files": [
@@ -3492,13 +3464,6 @@
     "message": "Link copied",
     "files": [
       "src/front/shared/components/modals/Share/Share.tsx"
-    ]
-  },
-  {
-    "id": "Row313",
-    "message": "Deposit",
-    "files": [
-      "src/front/shared/pages/Currency/Currency.tsx"
     ]
   },
   {

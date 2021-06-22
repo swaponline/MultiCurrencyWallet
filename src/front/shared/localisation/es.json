@@ -191,34 +191,6 @@
     ]
   },
   {
-    "id": "Currency101",
-    "message": "Saldo: ",
-    "files": [
-      "src/front/shared/pages/Currency/Currency.tsx"
-    ]
-  },
-  {
-    "id": "CurrencyH1Seo1",
-    "message": "{fullName} ({tickerName}) Precio & Tasa de Intercambio.",
-    "files": [
-      "src/front/shared/pages/Currency/Currency.tsx"
-    ]
-  },
-  {
-    "id": "CurrencyWallet100",
-    "message": "Enviar",
-    "files": [
-      "src/front/shared/pages/Currency/Currency.tsx"
-    ]
-  },
-  {
-    "id": "Row35",
-    "message": "Intercambiar",
-    "files": [
-      "src/front/shared/pages/Currency/Row/Row.tsx"
-    ]
-  },
-  {
     "id": "RowHistory76",
     "message": "Reembolso no disponible",
     "files": [
@@ -3435,13 +3407,6 @@
     "message": "Enlace copiado",
     "files": [
       "src/front/shared/components/modals/Share/Share.tsx"
-    ]
-  },
-  {
-    "id": "Row313",
-    "message": "Depositar",
-    "files": [
-      "src/front/shared/pages/Currency/Currency.tsx"
     ]
   },
   {
