@@ -420,6 +420,10 @@ class EthLikeAction {
         ? DEFAULT_CURRENCY_PARAMETERS.evmLike.limit.contractInteract
         : DEFAULT_CURRENCY_PARAMETERS.evmLike.limit.send)
 
+    if (this.ticker === 'ARBITRUM') {
+      gasLimit = DEFAULT_CURRENCY_PARAMETERS.arbitrum.limit.send
+    }
+
     let sendMethod = Web3.eth.sendTransaction
     let txObject = {
       from: ownerAddress,

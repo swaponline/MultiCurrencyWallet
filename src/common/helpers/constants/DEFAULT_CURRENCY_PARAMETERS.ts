@@ -1,4 +1,10 @@
 export default {
+  // TODO: check all over evmLike fields and if it's necessary add them
+  arbitrum: {
+    limit: {
+      send: 800 * 1e3,
+    }
+  },
   evmLike: {
     limit: {
       send: 21 * 1e3,

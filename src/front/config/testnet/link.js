@@ -3,7 +3,7 @@ export default {
   // bitpay: 'https://test-insight.bitpay.com',
   etherscan: 'https://ropsten.etherscan.io',
   bscscan: 'https://testnet.bscscan.com',
-  arbitrum: 'https://rinkeby-explorer.arbitrum.io/',
+  arbitrum: 'https://rinkeby-explorer.arbitrum.io',
   maticscan: 'https://explorer-mumbai.maticvigil.com',
   ghostscan: 'https://testnet.ghostscan.io',
 }

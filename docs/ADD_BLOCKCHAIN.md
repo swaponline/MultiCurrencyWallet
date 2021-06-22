@@ -190,15 +190,14 @@ if you're adding a new token standard
 ### Add swap directions
 
 - `src/front/shared/pages/Swap/...`
-- `src/front/shared/pages/Swap/CoinSwap/...`
-- `src/front/shared/pages/Swap/SwapProgress/SwapProgress.tsx`
-- `src/front/shared/pages/Swap/SwapProgress/SwapProgressText/...`
+- `src/front/shared/pages/Swap/swaps/buld.ts`
 - `src/front/shared/pages/Swap/swaps/index.ts`
 
 
-### Update localization for all languages
+### Update localization for all languages if you add/change new messages
 
-- `src/front/shared/localisation/...`
+- run command `npm run messages:extract`
+- translate new messages here `src/front/shared/localisation/...`
 
 --------------------------------------------
 

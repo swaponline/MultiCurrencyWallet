@@ -281,8 +281,6 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
 
     console.group('%c Withdraw', 'color: red;')
     console.error(`Withdraw. details(${details}) : error(${JSON.stringify(error)})`)
-    console.log('%c Stack trace', 'color: orange;')
-    console.trace()
     console.groupEnd()
 
     actions.notifications.show(
