@@ -1,9 +1,10 @@
 export default {
-  // TODO: check all over evmLike fields and if it's necessary add them
   arbitrum: {
     limit: {
       send: 800 * 1e3,
-    }
+      // ? heed to check how much for swaps ?
+      swap: 800 * 1e3,
+    },
   },
   evmLike: {
     limit: {

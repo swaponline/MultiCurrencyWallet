@@ -13,6 +13,7 @@ The list of faucets that we recommend to use when developing
 
 ## `ETH` (Rinkeby testnet)
 - https://faucet.rinkeby.io
+- https://app.mycrypto.com/faucet
 
 ## `BNB` (Testnet)
 - https://testnet.binance.org/faucet-smart (1 per 18 hours)

@@ -96,10 +96,6 @@ const onInit = (cb) => {
 const createSwapApp = async () => {
   await metamask.web3connect.onInit(async () => {
     const web3 = actions.eth.getWeb3()
-
-    const web3bnb = actions.bnb.getWeb3()
-    const web3Matic = actions.matic.getWeb3()
-
     const NETWORK = process.env.MAINNET ? `MAINNET` : `TESTNET`
 
     SwapApp.setup({
@@ -108,10 +104,12 @@ const createSwapApp = async () => {
       env: {
         web3,
         getWeb3: actions.eth.getWeb3,
-        web3bnb,
+        web3bnb: actions.bnb.getWeb3(),
         getWeb3Bnb: actions.bnb.getWeb3,
-        web3Matic,
+        web3Matic: actions.matic.getWeb3(),
         getWeb3Matic: actions.matic.getWeb3,
+        web3Arbitrum: actions.arbitrum.getWeb3(),
+        getWeb3Arbitrum: actions.arbitrum.getWeb3,
         bitcoin,
         ghost,
         next,
@@ -136,12 +134,13 @@ const createSwapApp = async () => {
       // whitelistBtc: [],
 
       services: [
-        //@ts-ignore
         new SwapAuth({
           // TODO need init swapApp only after private keys created!!!!!!!!!!!!!!!!!!!
           eth: localStorage.getItem(privateKeys.privateKeyNames.eth),
-          bnb: localStorage.getItem(privateKeys.privateKeyNames.eth), // for ab like blockchain use eth private key
-          matic: localStorage.getItem(privateKeys.privateKeyNames.eth), // for ab like blockchain use eth private key
+          // for evm compatible blockchains use eth private key
+          bnb: localStorage.getItem(privateKeys.privateKeyNames.eth),
+          matic: localStorage.getItem(privateKeys.privateKeyNames.eth),
+          arbitrum: localStorage.getItem(privateKeys.privateKeyNames.eth),
           btc: localStorage.getItem(privateKeys.privateKeyNames.btc),
           ghost: localStorage.getItem(privateKeys.privateKeyNames.ghost),
           next: localStorage.getItem(privateKeys.privateKeyNames.next),

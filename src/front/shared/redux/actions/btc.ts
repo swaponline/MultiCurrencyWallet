@@ -443,7 +443,6 @@ const addressIsCorrect = (address) => {
 
 
 const send = ({ from, to, amount, feeValue = null, speed,  serviceFee = hasAdminFee }) => {
-  console.log('>>> send', from, to, amount, feeValue, speed)
   return new Promise(async (ready, reject) => {
     try {
       let privateKey = null
