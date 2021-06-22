@@ -1782,6 +1782,7 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
 
     // when Add EIP-3326: wallet_switchEthereumChain remove this
     const isEthNativeCoin = [`${sellCoinBlockchain || sellCoinName}`, `${buyCoinBlockchain || buyCoinName}`].includes('ETH')
+    const isMetamaskProvider = metamask.web3connect.getProviderTitle() === 'MetaMask'
 
     const Form = (
       <div styleName="section">
@@ -1880,7 +1881,7 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
               </Fragment>
             )}
 
-            {isIncorrectMetamaskNetwork && isEthNativeCoin && (
+            {isIncorrectMetamaskNetwork && (isEthNativeCoin || !isMetamaskProvider) && (
               <Fragment>
                 <p styleName="error">
                   <FormattedMessage
@@ -2099,7 +2100,7 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
               </>
             )}
 
-            {isIncorrectMetamaskNetwork && !isEthNativeCoin && (
+            {isIncorrectMetamaskNetwork && !isEthNativeCoin && isMetamaskProvider && (
               <Button styleName="button link-like" onClick={this.handleAddCorrectNetwork}>
                 <FormattedMessage id="useCorrectNetwork" defaultMessage="Use Correct Network" />
               </Button>
