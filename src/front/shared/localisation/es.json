@@ -1,9 +1,5 @@
 [
   {
-    "id": "menu.aboutus",
-    "message": "Quienes Somos"
-  },
-  {
     "id": "menu.exchange",
     "message": "Intercambio",
     "files": [

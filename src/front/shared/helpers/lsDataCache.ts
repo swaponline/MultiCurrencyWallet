@@ -1,5 +1,4 @@
-import getUnixTimeStamp from './getUnixTimeStamp'
-
+import getUnixTimeStamp from 'common/utils/getUnixTimeStamp'
 
 const localStorage = window.localStorage
 

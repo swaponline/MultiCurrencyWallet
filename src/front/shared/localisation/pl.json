@@ -1,9 +1,5 @@
 [
   {
-    "id": "menu.aboutus",
-    "message": "O nas"
-  },
-  {
     "id": "menu.exchange",
     "message": "Giełda",
     "files": [

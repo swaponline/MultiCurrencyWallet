@@ -7,7 +7,7 @@ import actions from 'redux/actions'
 import styles from './Row.scss'
 import config from 'app-config'
 
-import helpers, { links, constants, ethToken } from 'helpers'
+import helpers, { links, constants } from 'helpers'
 import { IPairFees } from 'helpers/getPairFees'
 import PAIR_TYPES from 'helpers/constants/PAIR_TYPES'
 import { localisedUrl } from 'helpers/locale'

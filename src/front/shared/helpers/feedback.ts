@@ -2,7 +2,7 @@ import axios from 'axios'
 import getTopLocation from 'helpers/getTopLocation'
 
 
-const isFeedbackEnabled = true
+const isFeedbackEnabled = !window?.STATISTIC_DISABLED
 
 
 const sendMessage = ({ appPart, eventName, details }) => {

@@ -346,7 +346,6 @@ const createWallet = (privateKey, otherOwnerPublicKey) => {
   window.getBtcMultisigData = () => data
   window.getBtcMultisigAddress = () => data.address
 
-  console.info('Logged in with BitcoinMultisig', data)
   reducers.user.setAuthData({ name: 'btcMultisigData', data })
 }
 
