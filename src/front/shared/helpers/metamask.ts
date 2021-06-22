@@ -9,7 +9,7 @@ import Web3Connect from 'common/web3connect'
 import { COIN_DATA, COIN_MODEL } from 'swap.app/constants/COINS'
 import getCoinInfo from 'common/coins/getCoinInfo'
 
-const web3connect = new Web3Connect({
+const web3connect: IUniversalObj = new Web3Connect({
   web3ChainId: config.evmNetworks.ETH.networkVersion,
   web3RPC: config.web3.provider,
 })
@@ -317,20 +317,25 @@ const addCurrencyNetwork = (currency) => {
     blockExplorerUrls
   }
 
-  //@ts-ignore: strictNullChecks
-  web3connect.getWeb3().eth.getAccounts((error, accounts) => {
-    //@ts-ignore: strictNullChecks
-    window.ethereum.request({
-      method: 'wallet_addEthereumChain',
-      params: [params, accounts[0]],
+  const web3 = web3connect.getWeb3()
+  const ethereum = window.ethereum
+
+  if (web3.eth  && ethereum) {
+    web3.eth.getAccounts((error, accounts) => {
+      ethereum.request({
+        method: 'wallet_addEthereumChain',
+        params: [params, accounts[0]],
+      })
+      .then((result) => {
+        console.log('Success add and switch to network')
+      })
+      .catch((error) => {
+        throw new Error(`Metamask > addCurrencyNetwork error: ${error.message}`)
+      })
     })
-    .then((result) => {
-      console.log(result)
-    })
-    .catch((error) => {
-      console.log(error)
-    });
-  })
+  } else {
+    throw new Error('Can not access to web3 or ethereum')
+  }
 }
 
 const metamaskApi = {
