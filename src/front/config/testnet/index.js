@@ -10,6 +10,8 @@ import feeRates from './feeRates'
 import hiddenCoins from './hiddenCoins'
 import noExchangeCoins from './noExchangeCoins'
 import swapConfig from './swapConfig'
+import evmNetworks from './evmNetworks'
+import evmNetworkVersions from './evmNetworkVersions'
 
 
 export default {
@@ -25,4 +27,6 @@ export default {
   hiddenCoins,
   noExchangeCoins,
   swapConfig,
+  evmNetworks,
+  evmNetworkVersions,
 }

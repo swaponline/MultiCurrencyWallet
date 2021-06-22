@@ -659,8 +659,8 @@
     ]
   },
   {
-    "id": "incorrectMetamaskNetwork",
-    "message": "Please choose correct metamask network",
+    "id": "incorrectNetwork",
+    "message": "Please choose correct network",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
@@ -2594,6 +2594,20 @@
   {
     "id": "continueDeclined977",
     "message": "Continue your swaps",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "chooseEthereumNetwork",
+    "message": "Please open connected wallet and choose correct network",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "useCorrectNetwork",
+    "message": "Use Correct Network",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]

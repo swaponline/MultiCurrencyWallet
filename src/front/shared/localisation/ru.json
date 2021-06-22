@@ -711,8 +711,8 @@
     ]
   },
   {
-    "id": "incorrectMetamaskNetwork",
-    "message": "Пожалуйста, выберите правильную сеть метамаска",
+    "id": "incorrectNetwork",
+    "message": "Пожалуйста, выберите правильную сеть",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
@@ -2559,6 +2559,20 @@
   {
     "id": "continueDeclined977",
     "message": "Продолжить обмен",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "chooseEthereumNetwork",
+    "message": "Откройте подключенный кошелек и выберите правильную сеть",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "useCorrectNetwork",
+    "message": "Использовать правильную сеть",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]

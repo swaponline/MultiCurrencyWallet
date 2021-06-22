@@ -2473,6 +2473,20 @@
     ]
   },
   {
+    "id": "chooseEthereumNetwork",
+    "message": "Open de verbonden portemonnee en kies het juiste netwerk",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "useCorrectNetwork",
+    "message": "Gebruik het juiste netwerk",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
     "id": "Yourtotalbalance",
     "message": "Uw totale balans",
     "files": [
@@ -5169,8 +5183,8 @@
     ]
   },
   {
-    "id": "incorrectMetamaskNetwork",
-    "message": "Kies het juiste metamask-netwerk",
+    "id": "incorrectNetwork",
+    "message": "Kies het juiste netwerk",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]

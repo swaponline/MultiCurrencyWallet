@@ -2487,6 +2487,20 @@
     ]
   },
   {
+    "id": "chooseEthereumNetwork",
+    "message": "Abra la billetera conectada y elija la red correcta",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "useCorrectNetwork",
+    "message": "Utilice la red correcta",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
     "id": "Yourtotalbalance",
     "message": "Tu saldo total",
     "files": [
@@ -5173,8 +5187,8 @@
     ]
   },
   {
-    "id": "incorrectMetamaskNetwork",
-    "message": "Elija la red de metamask correcta",
+    "id": "incorrectNetwork",
+    "message": "Elija la red de correcta",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
