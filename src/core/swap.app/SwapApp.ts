@@ -292,7 +292,7 @@ class SwapApp extends EventEmitter {
   getMyEthAddress() { return this.getEvmLikeAddress(`eth`) }
   getMyBnbAddress() { return this.getEvmLikeAddress(`bnb`) }
   getMyMaticAddress() { return this.getEvmLikeAddress(`matic`) }
-
+  getMyArbitrumAddress() { return this.getEvmLikeAddress(`arbitrum`) }
 
   getEthWeb3Adapter() {
     return this.env.getWeb3().eth
@@ -326,6 +326,16 @@ class SwapApp extends EventEmitter {
     return this.env.getWeb3Matic().utils
   }
 
+  getArbitrumWeb3Adapter() {
+    if (this.env.metamask && this.env.metamask.isEnabled() && this.env.metamask.isConnected()) {
+      return this.env.getWeb3().eth
+    }
+    return this.env.getWeb3Arbitrum().eth
+  }
+
+  getArbitrumWeb3Utils() {
+    return this.env.getWeb3Arbitrum().utils
+  }
 
   getParticipantEvmLikeAddress(coinType, swap) {
     const { participant, participantMetamaskAddress } = swap
@@ -336,6 +346,8 @@ class SwapApp extends EventEmitter {
   getParticipantEthAddress(swap) { return this.getParticipantEvmLikeAddress(`eth`, swap) }
   getParticipantBnbAddress(swap) { return this.getParticipantEvmLikeAddress(`bnb`, swap) }
   getParticipantMaticAddress(swap) { return this.getParticipantEvmLikeAddress(`matic`, swap) }
+  getParticipantArbitrumAddress(swap) { return this.getParticipantEvmLikeAddress(`arbitrum`, swap) }
+
 
   static is(app) {
     return app && app.isSwapApp && app.isSwapApp() && app instanceof SwapApp

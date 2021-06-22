@@ -100,6 +100,7 @@ Important note: Our core team focused on BTC-ETH swaps. If another blockchain ad
 - `src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx`
 - `src/front/shared/helpers/getCurrencyKey.ts`
 - `src/front/shared/helpers/user.ts`
+- `src/front/shared/helpers/swaps.ts`
 - `src/front/shared/pages/CreateWallet/CreateWallet.tsx`
 - `src/front/shared/pages/CreateWallet/Steps/StepsWrapper.tsx`
 - `src/front/shared/pages/CreateWallet/Steps/startPacks.ts`
@@ -223,6 +224,7 @@ if you're adding a new token standard
 - `src/core/swap.app/constants/ENV.ts`
 - `src/core/swap.app/constants/TRADE_TICKERS.ts`
 - `src/core/swap.app/util/typeforce.ts`
+- `src/core/swap.app/SwapApp.ts`
 - `src/core/swap.auth/*.ts`
 - `src/core/swap.flows/index.ts`
 - `src/core/swap.flows/<ETH,BNB,...>2*.ts`
