@@ -711,8 +711,8 @@
     ]
   },
   {
-    "id": "incorrectMetamaskNetwork",
-    "message": "Пожалуйста, выберите правильную сеть метамаска",
+    "id": "incorrectNetwork",
+    "message": "Пожалуйста, выберите правильную сеть",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]

@@ -1736,7 +1736,7 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
 
     const getTextWhyCanNotStartSwap = () => {
       if (isErrorExternalDisabled) return <FormattedMessage id="swapDisabled" defaultMessage='Swap Disabled' />
-      if (!isCorrectMetamaskNetwork) return <FormattedMessage id="incorrectMetamaskNetwork" defaultMessage='Please choose correct metamask network' />
+      if (!isCorrectMetamaskNetwork) return <FormattedMessage id="incorrectNetwork" defaultMessage='Please choose correct network' />
       if (!(linked.haveAmount.value > 0)) return <FormattedMessage id="enterYouSend" defaultMessage='Enter "You send" amount' />
       if (!fromAddress) return <FormattedMessage id="selectFromAddress" defaultMessage='Select "From address"' />
       if (!isFromAddressReady) {

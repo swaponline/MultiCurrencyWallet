@@ -5187,8 +5187,8 @@
     ]
   },
   {
-    "id": "incorrectMetamaskNetwork",
-    "message": "Elija la red de metamask correcta",
+    "id": "incorrectNetwork",
+    "message": "Elija la red de correcta",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]

@@ -659,8 +659,8 @@
     ]
   },
   {
-    "id": "incorrectMetamaskNetwork",
-    "message": "Please choose correct metamask network",
+    "id": "incorrectNetwork",
+    "message": "Please choose correct network",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]

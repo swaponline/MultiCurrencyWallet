@@ -5183,8 +5183,8 @@
     ]
   },
   {
-    "id": "incorrectMetamaskNetwork",
-    "message": "Kies het juiste metamask-netwerk",
+    "id": "incorrectNetwork",
+    "message": "Kies het juiste netwerk",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
