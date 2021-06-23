@@ -4,7 +4,6 @@ import { getState } from 'redux/core'
 import SwapApp from 'swap.app'
 import Swap from 'swap.swap'
 import getCoinInfo from 'common/coins/getCoinInfo'
-import { AVAILABLE_NETWORKS_BY_COIN } from 'common/helpers/constants/AVAILABLE_EVM_NETWORKS'
 import { constants } from 'helpers'
 import Pair from 'pages/Exchange/Orders/Pair'
 import config from 'helpers/externalConfig'
@@ -15,8 +14,6 @@ import { AddressType } from 'domain/address'
 
 import helpers from 'helpers'
 
-const NETWORK = process.env.MAINNET ? 'MAINNET' : 'TESTNET'
-const NETWORK_NUMBER = NETWORK === 'MAINNET' ? 0 : 1 // 0 - MAINNET, 1 - TESTNET
 
 const debug = (...args) => console.log(...args)
 
@@ -475,7 +472,7 @@ const getWallets = (options: IUniversalObj = {}) => {
     if (metamaskConnected) {
       return (
         coin && blockchain !== `` &&
-          (metamaskData?.networkVersion === AVAILABLE_NETWORKS_BY_COIN[blockchain][NETWORK_NUMBER]) ?
+          (metamaskData?.networkVersion === config.evmNetworks[blockchain].networkVersion) ?
             tokensData[k] : false
           )
     }

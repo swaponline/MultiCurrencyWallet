@@ -191,34 +191,6 @@
     ]
   },
   {
-    "id": "Currency101",
-    "message": "Saldo: ",
-    "files": [
-      "src/front/shared/pages/Currency/Currency.tsx"
-    ]
-  },
-  {
-    "id": "CurrencyH1Seo1",
-    "message": "{fullName} ({tickerName}) Precio & Tasa de Intercambio.",
-    "files": [
-      "src/front/shared/pages/Currency/Currency.tsx"
-    ]
-  },
-  {
-    "id": "CurrencyWallet100",
-    "message": "Enviar",
-    "files": [
-      "src/front/shared/pages/Currency/Currency.tsx"
-    ]
-  },
-  {
-    "id": "Row35",
-    "message": "Intercambiar",
-    "files": [
-      "src/front/shared/pages/Currency/Row/Row.tsx"
-    ]
-  },
-  {
     "id": "RowHistory76",
     "message": "Reembolso no disponible",
     "files": [
@@ -2487,6 +2459,20 @@
     ]
   },
   {
+    "id": "chooseEthereumNetwork",
+    "message": "Abra la billetera conectada y elija la red correcta",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "useCorrectNetwork",
+    "message": "Utilice la red correcta",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
     "id": "Yourtotalbalance",
     "message": "Tu saldo total",
     "files": [
@@ -3421,13 +3407,6 @@
     "message": "Enlace copiado",
     "files": [
       "src/front/shared/components/modals/Share/Share.tsx"
-    ]
-  },
-  {
-    "id": "Row313",
-    "message": "Depositar",
-    "files": [
-      "src/front/shared/pages/Currency/Currency.tsx"
     ]
   },
   {
@@ -5173,8 +5152,8 @@
     ]
   },
   {
-    "id": "incorrectMetamaskNetwork",
-    "message": "Elija la red de metamask correcta",
+    "id": "incorrectNetwork",
+    "message": "Elija la red de correcta",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]

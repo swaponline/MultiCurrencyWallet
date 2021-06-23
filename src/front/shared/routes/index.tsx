@@ -11,7 +11,6 @@ import History from 'pages/History/History'
 import CreateWallet from 'pages/CreateWallet/CreateWallet'
 import NotFound from 'pages/NotFound/NotFound'
 import Wallet from 'pages/Wallet/Wallet'
-import Currency from 'pages/Currency/Currency'
 import Exchange from 'pages/Exchange/Exchange'
 import CurrencyWallet from 'pages/CurrencyWallet/CurrencyWallet'
 import Transaction from 'pages/Transaction/Transaction'
@@ -95,7 +94,6 @@ const routes = (
         </>
       )}
       <Route path={`${links.currencyWallet}`} component={Wallet} />
-      <Route path={`/:currency`} component={Currency} />
 
       <Route component={NotFound} />
     </Switch>

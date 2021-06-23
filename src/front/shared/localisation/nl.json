@@ -198,34 +198,6 @@
     ]
   },
   {
-    "id": "Currency101",
-    "message": "Balance: ",
-    "files": [
-      "src/front/shared/pages/Currency/Currency.tsx"
-    ]
-  },
-  {
-    "id": "CurrencyH1Seo1",
-    "message": "{fullName} ({tickerName}) Price & Exchange Rates.",
-    "files": [
-      "src/front/shared/pages/Currency/Currency.tsx"
-    ]
-  },
-  {
-    "id": "CurrencyWallet100",
-    "message": "Verstuur",
-    "files": [
-      "src/front/shared/pages/Currency/Currency.tsx"
-    ]
-  },
-  {
-    "id": "Row35",
-    "message": "Exchange",
-    "files": [
-      "src/front/shared/pages/Currency/Row/Row.tsx"
-    ]
-  },
-  {
     "id": "RowHistory76",
     "message": "Refund not available",
     "files": [
@@ -2473,6 +2445,20 @@
     ]
   },
   {
+    "id": "chooseEthereumNetwork",
+    "message": "Open de verbonden portemonnee en kies het juiste netwerk",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "useCorrectNetwork",
+    "message": "Gebruik het juiste netwerk",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
     "id": "Yourtotalbalance",
     "message": "Uw totale balans",
     "files": [
@@ -3467,13 +3453,6 @@
     "message": "Link gekopieerd",
     "files": [
       "src/front/shared/components/modals/Share/Share.tsx"
-    ]
-  },
-  {
-    "id": "Row313",
-    "message": "Storten",
-    "files": [
-      "src/front/shared/pages/Currency/Currency.tsx"
     ]
   },
   {
@@ -5169,8 +5148,8 @@
     ]
   },
   {
-    "id": "incorrectMetamaskNetwork",
-    "message": "Kies het juiste metamask-netwerk",
+    "id": "incorrectNetwork",
+    "message": "Kies het juiste netwerk",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
