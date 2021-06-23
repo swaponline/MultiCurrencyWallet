@@ -1719,13 +1719,19 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
     const isSellCoinAvailableNetwork = metamask.isAvailableNetworkByCurrency(sellCoin)
     const isBuyCoinAvailableNetwork = metamask.isAvailableNetworkByCurrency(buyCoin)
 
+    const isSellCoinNeedAddCorrectNetwork =
+      fromAddress.type === AddressType.Metamask &&
+      !isSellCoinAvailableNetwork
+
+    const isBuyCoinNeedAddCorrectNetwork =
+      toAddress.type === AddressType.Metamask &&
+      !isBuyCoinAvailableNetwork
+
     const isCorrectMetamaskNetwork = !metamask.isConnected() ||
-      (fromAddress.type === AddressType.Metamask || toAddress.type === AddressType.Metamask) &&
-      (isSellCoinAvailableNetwork || isBuyCoinAvailableNetwork)
+      (!isSellCoinNeedAddCorrectNetwork || !isBuyCoinNeedAddCorrectNetwork)
 
     const isIncorrectMetamaskNetwork = metamask.isConnected() &&
-      (fromAddress.type === AddressType.Metamask || toAddress.type === AddressType.Metamask) &&
-      (!isSellCoinAvailableNetwork && !isBuyCoinAvailableNetwork)
+      (isSellCoinNeedAddCorrectNetwork || isBuyCoinNeedAddCorrectNetwork)
 
     const canStartSwap =
       !isErrorExternalDisabled &&
@@ -1783,21 +1789,13 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
     const { coin: sellCoinName, blockchain: sellCoinBlockchain } = getCoinInfo(sellCoin)
     const { coin: buyCoinName, blockchain: buyCoinBlockchain } = getCoinInfo(buyCoin)
 
-    const isSellCoinNeedAddCorrectNetwork =
-      fromAddress.type === AddressType.Metamask &&
-      !isSellCoinAvailableNetwork
-
-    const isBuyCoinNeedAddCorrectNetwork =
-      toAddress.type === AddressType.Metamask &&
-      !isBuyCoinAvailableNetwork
-
     const sellNativeCurrency = sellCoinBlockchain || sellCoinName
     const buyNativeCurrency = buyCoinBlockchain || buyCoinName
 
     const networkNeedsToBeUsed = isSellCoinNeedAddCorrectNetwork && sellNativeCurrency || isBuyCoinNeedAddCorrectNetwork && buyNativeCurrency
 
     // when Add EIP-3326: wallet_switchEthereumChain remove this
-    const isEthNativeCoin = [`${sellCoinBlockchain || sellCoinName}`, `${buyCoinBlockchain || buyCoinName}`].includes('ETH')
+    const isEthNativeCoin = [sellNativeCurrency, buyNativeCurrency].includes('ETH')
     const isMetamaskProvider = metamask.web3connect.getProviderTitle() === 'MetaMask'
 
     const Form = (
