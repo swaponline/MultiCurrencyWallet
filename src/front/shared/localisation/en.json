@@ -2571,15 +2571,15 @@
     ]
   },
   {
-    "id": "chooseEthereumNetwork",
-    "message": "Please open connected wallet and choose correct network",
+    "id": "chooseCorrectNetwork",
+    "message": "Please open connected wallet and choose {br}{chainName}",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
   },
   {
-    "id": "useCorrectNetwork",
-    "message": "Use Correct Network",
+    "id": "switchToCorrectNetwork",
+    "message": "Switch to {br}{chainName}",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]

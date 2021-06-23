@@ -1716,9 +1716,22 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
       new BigNumber(availableAmount).isGreaterThanOrEqualTo(haveAmount) ||
       fromAddress.type === AddressType.Custom
 
+    const isSellCoinAvailableNetwork = metamask.isAvailableNetworkByCurrency(sellCoin)
+    const isBuyCoinAvailableNetwork = metamask.isAvailableNetworkByCurrency(buyCoin)
+
+    const isSellCoinNeedAddCorrectNetwork =
+      fromAddress.type === AddressType.Metamask &&
+      !isSellCoinAvailableNetwork
+
+    const isBuyCoinNeedAddCorrectNetwork =
+      toAddress.type === AddressType.Metamask &&
+      !isBuyCoinAvailableNetwork
+
     const isCorrectMetamaskNetwork = !metamask.isConnected() ||
-      (fromAddress.type === AddressType.Metamask || toAddress.type === AddressType.Metamask) &&
-      (metamask.isAvailableNetworkByCurrency(sellCoin) || metamask.isAvailableNetworkByCurrency(buyCoin))
+      (!isSellCoinNeedAddCorrectNetwork && !isBuyCoinNeedAddCorrectNetwork)
+
+    const isIncorrectMetamaskNetwork = metamask.isConnected() &&
+      (isSellCoinNeedAddCorrectNetwork || isBuyCoinNeedAddCorrectNetwork)
 
     const canStartSwap =
       !isErrorExternalDisabled &&
@@ -1773,15 +1786,16 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
 
     const isDevBuild = (config.env === 'development')
 
-    const isIncorrectMetamaskNetwork = metamask.isConnected() &&
-      (fromAddress.type === AddressType.Metamask || toAddress.type === AddressType.Metamask) &&
-      (!metamask.isAvailableNetworkByCurrency(sellCoin) && !metamask.isAvailableNetworkByCurrency(buyCoin))
-
     const { coin: sellCoinName, blockchain: sellCoinBlockchain } = getCoinInfo(sellCoin)
     const { coin: buyCoinName, blockchain: buyCoinBlockchain } = getCoinInfo(buyCoin)
 
+    const sellNativeCurrency = sellCoinBlockchain || sellCoinName
+    const buyNativeCurrency = buyCoinBlockchain || buyCoinName
+
+    const networkNeedsToBeUsed = isSellCoinNeedAddCorrectNetwork && sellNativeCurrency || isBuyCoinNeedAddCorrectNetwork && buyNativeCurrency
+
     // when Add EIP-3326: wallet_switchEthereumChain remove this
-    const isEthNativeCoin = [`${sellCoinBlockchain || sellCoinName}`, `${buyCoinBlockchain || buyCoinName}`].includes('ETH')
+    const isEthNativeCoin = [sellNativeCurrency, buyNativeCurrency].includes('ETH')
     const isMetamaskProvider = metamask.web3connect.getProviderTitle() === 'MetaMask'
 
     const Form = (
@@ -1885,8 +1899,12 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
               <Fragment>
                 <p styleName="error">
                   <FormattedMessage
-                    id="chooseEthereumNetwork"
-                    defaultMessage="Please open connected wallet and choose correct network"
+                    id="chooseCorrectNetwork"
+                    defaultMessage="Please open connected wallet and choose {br}{chainName}"
+                    values={{
+                      br: <br />,
+                      chainName: config?.evmNetworks?.[networkNeedsToBeUsed]?.chainName || 'Correct Network'
+                    }}
                   />
                 </p>
               </Fragment>
@@ -1923,27 +1941,29 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
             )}
 
             {isDeclinedOffer && (
-              <p styleName="error link" onClick={this.goDeclimeFaq}>
-                {' '}
-                {/* eslint-disable-line */}
-                <FormattedMessage
-                  id="PartialOfferCantProceed1"
-                  defaultMessage="Request rejected, possibly you have not complete another swap {br}{link}"
-                  values={{
-                    link: (
-                      <a className="errorLink" role="button" onClick={this.goDeclimeFaq}>
-                        {' '}
-                        {/* eslint-disable-line */}
-                        <FormattedMessage
-                          id="PartialOfferCantProceed1_1"
-                          defaultMessage="Check here"
-                        />
-                      </a>
-                    ),
-                    br: <br />,
-                  }}
-                />
-              </p>
+              <div styleName="smallError">
+                <p styleName="error errorLink" onClick={this.goDeclimeFaq}>
+                  {' '}
+                  {/* eslint-disable-line */}
+                  <FormattedMessage
+                    id="PartialOfferCantProceed1"
+                    defaultMessage="Request rejected, possibly you have not complete another swap {br}{link}"
+                    values={{
+                      link: (
+                        <a className="errorLink" role="button" onClick={this.goDeclimeFaq}>
+                          {' '}
+                          {/* eslint-disable-line */}
+                          <FormattedMessage
+                            id="PartialOfferCantProceed1_1"
+                            defaultMessage="Check here"
+                          />
+                        </a>
+                      ),
+                      br: <br />,
+                    }}
+                  />
+                </p>
+              </div>
             )}
 
             {isErrorExternalDisabled && (
@@ -2031,7 +2051,7 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
                 onClick={this.approveTheToken}
                 disabled={!canStartSwap || isPendingTokenApprove}
                 pending={isPendingTokenApprove}
-                blue={true}
+                blue
               >
                 {canStartSwap ?
                       <FormattedMessage
@@ -2042,13 +2062,28 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
                   : getTextWhyCanNotStartSwap()
                 }
               </Button>
+            ) : (isIncorrectMetamaskNetwork && !isEthNativeCoin && isMetamaskProvider) ? (
+              <Button
+                styleName="button"
+                onClick={this.handleAddCorrectNetwork}
+                blue
+              >
+                <FormattedMessage
+                  id="switchToCorrectNetwork"
+                  defaultMessage="Switch to {br}{chainName}"
+                  values={{
+                    br: <br />,
+                    chainName: config?.evmNetworks?.[networkNeedsToBeUsed]?.chainName || 'Correct Network'
+                  }}
+                />
+              </Button>
             ) : (
               <Button
                 id='exchangeButton'
                 styleName="button"
                 onClick={this.initSwap}
                 disabled={!canStartSwap}
-                blue={true}
+                blue
               >
                 {canStartSwap
                   ? <FormattedMessage id="partial541" defaultMessage="Exchange now" />
@@ -2098,12 +2133,6 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
                   </a>
                 </div>
               </>
-            )}
-
-            {isIncorrectMetamaskNetwork && !isEthNativeCoin && isMetamaskProvider && (
-              <Button styleName="button link-like" onClick={this.handleAddCorrectNetwork}>
-                <FormattedMessage id="useCorrectNetwork" defaultMessage="Use Correct Network" />
-              </Button>
             )}
 
             {isIncompletedSwaps && (
