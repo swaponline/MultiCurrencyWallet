@@ -5,9 +5,18 @@ import ethLikeHelper from '../../src/common/helpers/ethLikeHelper'
 import actions from '../../src/front/shared/redux/actions'
 import testWallets from '../testWallets'
 
-const ethWeb3 = new Web3( new Web3.providers.HttpProvider(testConfig.web3.provider) )
-const bscWeb3 = new Web3( new Web3.providers.HttpProvider(testConfig.web3.binance_provider) )
-const maticWeb3 = new Web3( new Web3.providers.HttpProvider(testConfig.web3.matic_provider) )
+const ethWeb3 = new Web3(
+  new Web3.providers.HttpProvider(testConfig.web3.provider)
+)
+const bscWeb3 = new Web3(
+  new Web3.providers.HttpProvider(testConfig.web3.binance_provider)
+)
+const maticWeb3 = new Web3(
+  new Web3.providers.HttpProvider(testConfig.web3.matic_provider)
+)
+const arbitrumWeb3 = new Web3(
+  new Web3.providers.HttpProvider(testConfig.web3.arbitrum_provider)
+)
 const timeOut = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
 
 async function repeatActionWithDelay(params) {
@@ -22,220 +31,89 @@ async function repeatActionWithDelay(params) {
   }
 }
 
-describe('Sending ETH', () => {
-  const waitingTxMining = 30_000 // ms
-  const requestsForTxInfo = 3
-  const extraDelay = 10_000
-  const waitingForTheTest = waitingTxMining * requestsForTxInfo + extraDelay
-  const customAmount = 0.001
-  let gasPrice = 0
-
-  beforeEach(async () => {
-    gasPrice = await ethLikeHelper.eth.estimateGasPrice()
-  })
-
-  it(`send the user transaction (amount: ${customAmount} ETH)`, async () => {
-    const gasLimit = DEFAULT_CURRENCY_PARAMETERS.evmLike.limit.send
-    const paramsToSend = {
-      externalAddress: testWallets.eth.address.toLowerCase(),
-      externalPrivateKey: testWallets.eth.privateKey,
-      to: testWallets.eth.address.toLowerCase(),
-      amount: customAmount,
-      speed: 'fast',
-      gasPrice,
-      gasLimit,
-    }
-    const response = await actions.eth.send(paramsToSend)
-
-    expect(response.transactionHash).toMatch(/0x[A-Za-z0-9]{2}/)
-    // wait for a while until transaction gets into the blockchain
-    let receipt = null
-
-    await repeatActionWithDelay({
-      times: requestsForTxInfo,
-      delay: waitingTxMining,
-      callback: async () => {
-        receipt = await ethWeb3.eth.getTransactionReceipt(response.transactionHash)
-
-        if (receipt !== null) return true
-      },
-    })
-
-    // if receipt equals null then perhaps the transaction is still pending
-    expect(receipt).not.toBeNull()
-
-    const { status, from, to } = receipt
-
-    expect(status).toBe(true)
-    expect(from).toBe(paramsToSend.externalAddress)
-    expect(to).toBe(paramsToSend.to)
-  }, waitingForTheTest)
-
-  it(`send the admin transaction (amount: ${customAmount} ETH)`, async () => {
-    const gasLimit = DEFAULT_CURRENCY_PARAMETERS.evmLike.limit.send
-    const adminObj = {
-      fee: 7,
-      address: '0x276747801B0dbb7ba04685BA27102F1B27Ca0815',
-      min: 0.01,
-    }
-    const paramsToSend = {
-      amount: customAmount,
-      gasPrice,
-      gasLimit,
-      privateKey: testWallets.eth.privateKey,
-      externalAdminFeeObj: adminObj,
-    }
-    const txHash = await actions.eth.sendAdminTransaction(paramsToSend)
-
-    expect(txHash).toMatch(/0x[A-Za-z0-9]{64}/)
-
-    let receipt = null
-
-    await repeatActionWithDelay({
-      times: requestsForTxInfo,
-      delay: waitingTxMining,
-      callback: async () => {
-        receipt = await ethWeb3.eth.getTransactionReceipt(txHash)
-
-        if (receipt !== null) return true
-      },
-    })
-
-    expect(receipt).not.toBeNull()
-
-    const { status, from, to } = receipt
-
-    expect(status).toBe(true)
-    expect(from).toBe(testWallets.eth.address.toLowerCase())
-    expect(to).toBe(adminObj.address.toLowerCase())
-  }, waitingForTheTest)
-})
-
-describe('Sending BNB', () => {
-  const waitingTxMining = 30_000
-  const requestsForTxInfo = 3
-  const extraDelay = 10_000
-  const waitingForTheTest = waitingTxMining * requestsForTxInfo + extraDelay
-  const customAmount = 0.001
-  let gasPrice = 0
-
-  beforeEach(async () => {
-    gasPrice = await ethLikeHelper.bnb.estimateGasPrice()
-  })
-
-  it(`send the user transaction (amount: ${customAmount} BNB)`, async () => {
-    const gasLimit = DEFAULT_CURRENCY_PARAMETERS.evmLike.limit.send
-    const paramsToSend = {
-      externalAddress: testWallets.bnb.address.toLowerCase(),
-      externalPrivateKey: testWallets.bnb.privateKey,
-      to: testWallets.bnb.address.toLowerCase(),
-      amount: customAmount,
-      speed: 'fast',
-      gasPrice,
-      gasLimit,
-    }
-    const response = await actions.bnb.send(paramsToSend)
-
-    expect(response.transactionHash).toMatch(/0x[A-Za-z0-9]{2}/)
-
-    // wait for a while until transaction gets into the blockchain
-    let receipt = null
-
-    await repeatActionWithDelay({
-      times: requestsForTxInfo,
-      delay: waitingTxMining,
-      callback: async () => {
-        receipt = await bscWeb3.eth.getTransactionReceipt(response.transactionHash)
-
-        if (receipt !== null) return true
-      },
-    })
-
-    // if receipt equals null then perhaps the transaction is still pending
-    expect(receipt).not.toBeNull()
-
-    const { status, from, to } = receipt
-
-    expect(status).toBe(true)
-    expect(from).toBe(paramsToSend.externalAddress)
-    expect(to).toBe(paramsToSend.to)
-  }, waitingForTheTest)
-
-  it(`send the admin transaction (amount: ${customAmount} BNB)`, async () => {
-    const gasLimit = DEFAULT_CURRENCY_PARAMETERS.evmLike.limit.send
-    const adminObj = {
-      fee: 7,
-      address: '0x276747801B0dbb7ba04685BA27102F1B27Ca0815',
-      min: 0.01,
-    }
-    const paramsToSend = {
-      amount: customAmount,
-      gasPrice,
-      gasLimit,
-      privateKey: testWallets.bnb.privateKey,
-      externalAdminFeeObj: adminObj,
-    }
-    const txHash = await actions.bnb.sendAdminTransaction(paramsToSend)
-
-    expect(txHash).toMatch(/0x[A-Za-z0-9]{64}/)
-
-    let receipt = null
-
-    await repeatActionWithDelay({
-      times: requestsForTxInfo,
-      delay: waitingTxMining,
-      callback: async () => {
-        receipt = await bscWeb3.eth.getTransactionReceipt(txHash)
-
-        if (receipt !== null) return true
-      },
-    })
-
-    expect(receipt).not.toBeNull()
-
-    const { status, from, to } = receipt
-
-    expect(status).toBe(true)
-    expect(from).toBe(testWallets.bnb.address.toLowerCase())
-    expect(to).toBe(adminObj.address.toLowerCase())
-  }, waitingForTheTest)
-})
-
-describe('Sending MATIC', () => {
+describe('Sending EVM Coin', () => {
   const waitingTxMining = 15_000
   const requestsForTxInfo = 3
   const extraDelay = 7_000
   const waitingForTheTest = waitingTxMining * requestsForTxInfo + extraDelay
   const customAmount = 0.001
-  let gasPrice = 0
+  const usualTxCases = [
+    [
+      'ETH',
+      {
+        web3: ethWeb3,
+        paramsToSend: {
+          externalAddress: testWallets.eth.address.toLowerCase(),
+          externalPrivateKey: testWallets.eth.privateKey,
+          to: testWallets.eth.address.toLowerCase(),
+          amount: customAmount,
+          speed: 'fast',
+          gasLimit: DEFAULT_CURRENCY_PARAMETERS.evmLike.limit.send,
+        },
+      },
+    ],
+    [
+      'BNB',
+      {
+        web3: bscWeb3,
+        paramsToSend: {
+          externalAddress: testWallets.bnb.address.toLowerCase(),
+          externalPrivateKey: testWallets.bnb.privateKey,
+          to: testWallets.bnb.address.toLowerCase(),
+          amount: customAmount,
+          speed: 'fast',
+          gasLimit: DEFAULT_CURRENCY_PARAMETERS.evmLike.limit.send,
+        },
+      },
+    ],
+    [
+      'MATIC',
+      {
+        web3: maticWeb3,
+        paramsToSend: {
+          externalAddress: testWallets.matic.address.toLowerCase(),
+          externalPrivateKey: testWallets.matic.privateKey,
+          to: testWallets.matic.address.toLowerCase(),
+          amount: customAmount,
+          speed: 'fast',
+          gasLimit: DEFAULT_CURRENCY_PARAMETERS.evmLike.limit.send,
+        },
+      },
+    ],
+    // [
+    //   'ARBITRUM',
+    //   {
+    //     web3: arbitrumWeb3,
+    //     paramsToSend: {
+    //       externalAddress: testWallets.arbitrum.address.toLowerCase(),
+    //       externalPrivateKey: testWallets.arbitrum.privateKey,
+    //       to: testWallets.arbitrum.address.toLowerCase(),
+    //       amount: customAmount,
+    //       speed: 'fast',
+    //       gasLimit: DEFAULT_CURRENCY_PARAMETERS.arbitrum.limit.send,
+    //     },
+    //   },
+    // ],
+  ]
 
-  beforeEach(async () => {
-    gasPrice = await ethLikeHelper.matic.estimateGasPrice()
-  })
+  it.each(usualTxCases)('sending usual %s transaction', async (coinName, settings) => {
+    const { web3, paramsToSend } = settings
+    const lowerCoinName = coinName.toLowerCase()
 
-  it(`send the user transaction (amount: ${customAmount} MATIC)`, async () => {
-    const gasLimit = DEFAULT_CURRENCY_PARAMETERS.evmLike.limit.send
-    const paramsToSend = {
-      externalAddress: testWallets.matic.address.toLowerCase(),
-      externalPrivateKey: testWallets.matic.privateKey,
-      to: testWallets.matic.address.toLowerCase(),
-      amount: customAmount,
-      speed: 'fast',
-      gasPrice,
-      gasLimit,
-    }
-    const response = await actions.matic.send(paramsToSend)
+    paramsToSend.gasPrice = await ethLikeHelper[lowerCoinName].estimateGasPrice()
+
+    const response = await actions[lowerCoinName].send(paramsToSend)
 
     expect(response.transactionHash).toMatch(/0x[A-Za-z0-9]{2}/)
 
-    // wait for a while until transaction gets into the blockchain
     let receipt = null
 
+    // wait for a while until transaction gets into the blockchain
     await repeatActionWithDelay({
       times: requestsForTxInfo,
       delay: waitingTxMining,
       callback: async () => {
-        receipt = await maticWeb3.eth.getTransactionReceipt(response.transactionHash)
+        receipt = await web3.eth.getTransactionReceipt(response.transactionHash)
 
         if (receipt !== null) return true
       },
@@ -251,21 +129,80 @@ describe('Sending MATIC', () => {
     expect(to).toBe(paramsToSend.to)
   }, waitingForTheTest)
 
-  it(`send the admin transaction (amount: ${customAmount} MATIC)`, async () => {
-    const gasLimit = DEFAULT_CURRENCY_PARAMETERS.evmLike.limit.send
-    const adminObj = {
-      fee: 7,
-      address: '0x276747801B0dbb7ba04685BA27102F1B27Ca0815',
-      min: 0.01,
-    }
-    const paramsToSend = {
-      amount: customAmount,
-      gasPrice,
-      gasLimit,
-      privateKey: testWallets.matic.privateKey,
-      externalAdminFeeObj: adminObj,
-    }
-    const txHash = await actions.matic.sendAdminTransaction(paramsToSend)
+  const adminTxCases = [
+    [
+      'ETH',
+      {
+        web3: ethWeb3,
+        paramsToSend: {
+          amount: customAmount,
+          gasLimit: DEFAULT_CURRENCY_PARAMETERS.evmLike.limit.send,
+          privateKey: testWallets.eth.privateKey,
+          externalAdminFeeObj: {
+            fee: 7,
+            address: '0x276747801B0dbb7ba04685BA27102F1B27Ca0815',
+            min: 0.001,
+          },
+        },
+      },
+    ],
+    [
+      'BNB',
+      {
+        web3: bscWeb3,
+        paramsToSend: {
+          amount: customAmount,
+          gasLimit: DEFAULT_CURRENCY_PARAMETERS.evmLike.limit.send,
+          privateKey: testWallets.bnb.privateKey,
+          externalAdminFeeObj: {
+            fee: 7,
+            address: '0x276747801B0dbb7ba04685BA27102F1B27Ca0815',
+            min: 0.001,
+          },
+        },
+      },
+    ],
+    [
+      'MATIC',
+      {
+        web3: maticWeb3,
+        paramsToSend: {
+          amount: customAmount,
+          gasLimit: DEFAULT_CURRENCY_PARAMETERS.evmLike.limit.send,
+          privateKey: testWallets.matic.privateKey,
+          externalAdminFeeObj: {
+            fee: 7,
+            address: '0x276747801B0dbb7ba04685BA27102F1B27Ca0815',
+            min: 0.001,
+          },
+        },
+      },
+    ],
+    // [
+    //   'ARBITRUM',
+    //   {
+    //     web3: arbitrumWeb3,
+    //     paramsToSend: {
+    //       amount: customAmount,
+    //       gasLimit: DEFAULT_CURRENCY_PARAMETERS.arbitrum.limit.send,
+    //       privateKey: testWallets.arbitrum.privateKey,
+    //       externalAdminFeeObj: {
+    //         fee: 7,
+    //         address: '0x276747801B0dbb7ba04685BA27102F1B27Ca0815',
+    //         min: 0.001,
+    //       },
+    //     },
+    //   },
+    // ],
+  ]
+
+  it.each(adminTxCases)('sending admin %s transaction', async (coinName, settings) => {
+    const { web3, paramsToSend } = settings
+    const lowerCoinName = coinName.toLowerCase()
+
+    paramsToSend.gasPrice = await ethLikeHelper[lowerCoinName].estimateGasPrice()
+
+    const txHash = await actions[lowerCoinName].sendAdminTransaction(paramsToSend)
 
     expect(txHash).toMatch(/0x[A-Za-z0-9]{64}/)
 
@@ -275,7 +212,7 @@ describe('Sending MATIC', () => {
       times: requestsForTxInfo,
       delay: waitingTxMining,
       callback: async () => {
-        receipt = await maticWeb3.eth.getTransactionReceipt(txHash)
+        receipt = await web3.eth.getTransactionReceipt(txHash)
 
         if (receipt !== null) return true
       },
@@ -286,7 +223,7 @@ describe('Sending MATIC', () => {
     const { status, from, to } = receipt
 
     expect(status).toBe(true)
-    expect(from).toBe(testWallets.matic.address.toLowerCase())
-    expect(to).toBe(adminObj.address.toLowerCase())
+    expect(from).toBe(testWallets[lowerCoinName].address.toLowerCase())
+    expect(to).toBe(paramsToSend.externalAdminFeeObj.address.toLowerCase())
   }, waitingForTheTest)
 })
