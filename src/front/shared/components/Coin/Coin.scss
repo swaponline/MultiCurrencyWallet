@@ -1,18 +1,21 @@
 .coin {
   @include square-block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background-color: #47454a;
-  box-shadow: 0px 0px 5px -1px #888;
+  box-shadow: 0px 0px 5px -1px $indicating-color;
   position: relative;
   border-radius: 50%;
+
+  &.dark {
+    box-shadow: 0px 0px 5px -1px $d-read-only;
+  }
 
   &.noColors {
     background-color: transparent;
     box-shadow: none;
   }
-}
-
-.dark {
-  border-color: #232629;
 }
 
 .icon {
