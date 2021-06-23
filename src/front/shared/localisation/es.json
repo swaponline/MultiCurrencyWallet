@@ -2459,15 +2459,15 @@
     ]
   },
   {
-    "id": "chooseEthereumNetwork",
-    "message": "Abra la billetera conectada y elija la red correcta",
+    "id": "chooseCorrectNetwork",
+    "message": "Abra la billetera conectada y elija {br}{chainName}",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
   },
   {
-    "id": "useCorrectNetwork",
-    "message": "Utilice la red correcta",
+    "id": "switchToCorrectNetwork",
+    "message": "Cambiar a {br}{chainName}",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]

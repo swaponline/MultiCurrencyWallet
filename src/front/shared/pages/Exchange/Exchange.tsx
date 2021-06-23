@@ -2071,7 +2071,7 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
                 blue
               >
                 <FormattedMessage
-                  id="switchToChainName"
+                  id="switchToCorrectNetwork"
                   defaultMessage="Switch to {br}{chainName}"
                   values={{
                     br: <br />,

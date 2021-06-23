@@ -2445,15 +2445,15 @@
     ]
   },
   {
-    "id": "chooseEthereumNetwork",
-    "message": "Open de verbonden portemonnee en kies het juiste netwerk",
+    "id": "chooseCorrectNetwork",
+    "message": "Open de verbonden portemonnee en kies {br}{chainName}",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
   },
   {
-    "id": "useCorrectNetwork",
-    "message": "Gebruik het juiste netwerk",
+    "id": "switchToCorrectNetwork",
+    "message": "Overschakelen naar {br}{chainName}",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
