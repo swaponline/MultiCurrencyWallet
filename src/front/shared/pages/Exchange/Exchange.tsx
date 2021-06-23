@@ -1716,9 +1716,16 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
       new BigNumber(availableAmount).isGreaterThanOrEqualTo(haveAmount) ||
       fromAddress.type === AddressType.Custom
 
+    const isSellCoinAvailableNetwork = metamask.isAvailableNetworkByCurrency(sellCoin)
+    const isBuyCoinAvailableNetwork = metamask.isAvailableNetworkByCurrency(buyCoin)
+
     const isCorrectMetamaskNetwork = !metamask.isConnected() ||
       (fromAddress.type === AddressType.Metamask || toAddress.type === AddressType.Metamask) &&
-      (metamask.isAvailableNetworkByCurrency(sellCoin) || metamask.isAvailableNetworkByCurrency(buyCoin))
+      (isSellCoinAvailableNetwork || isBuyCoinAvailableNetwork)
+
+    const isIncorrectMetamaskNetwork = metamask.isConnected() &&
+      (fromAddress.type === AddressType.Metamask || toAddress.type === AddressType.Metamask) &&
+      (!isSellCoinAvailableNetwork && !isBuyCoinAvailableNetwork)
 
     const canStartSwap =
       !isErrorExternalDisabled &&
@@ -1773,12 +1780,21 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
 
     const isDevBuild = (config.env === 'development')
 
-    const isIncorrectMetamaskNetwork = metamask.isConnected() &&
-      (fromAddress.type === AddressType.Metamask || toAddress.type === AddressType.Metamask) &&
-      (!metamask.isAvailableNetworkByCurrency(sellCoin) && !metamask.isAvailableNetworkByCurrency(buyCoin))
-
     const { coin: sellCoinName, blockchain: sellCoinBlockchain } = getCoinInfo(sellCoin)
     const { coin: buyCoinName, blockchain: buyCoinBlockchain } = getCoinInfo(buyCoin)
+
+    const isSellCoinNeedAddCorrectNetwork =
+      fromAddress.type === AddressType.Metamask &&
+      !isSellCoinAvailableNetwork
+
+    const isBuyCoinNeedAddCorrectNetwork =
+      toAddress.type === AddressType.Metamask &&
+      !isBuyCoinAvailableNetwork
+
+    const sellNativeCurrency = sellCoinBlockchain || sellCoinName
+    const buyNativeCurrency = buyCoinBlockchain || buyCoinName
+
+    const networkNeedsToBeUsed = isSellCoinNeedAddCorrectNetwork && sellNativeCurrency || isBuyCoinNeedAddCorrectNetwork && buyNativeCurrency
 
     // when Add EIP-3326: wallet_switchEthereumChain remove this
     const isEthNativeCoin = [`${sellCoinBlockchain || sellCoinName}`, `${buyCoinBlockchain || buyCoinName}`].includes('ETH')
@@ -1885,8 +1901,12 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
               <Fragment>
                 <p styleName="error">
                   <FormattedMessage
-                    id="chooseEthereumNetwork"
-                    defaultMessage="Please open connected wallet and choose correct network"
+                    id="chooseCorrectNetwork"
+                    defaultMessage="Please open connected wallet and choose {br}{chainName}"
+                    values={{
+                      br: <br />,
+                      chainName: config.evmNetworks[networkNeedsToBeUsed].chainName
+                    }}
                   />
                 </p>
               </Fragment>
@@ -2049,8 +2069,12 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
                 blue
               >
                 <FormattedMessage
-                  id="useCorrectNetwork"
-                  defaultMessage="Use Correct Network"
+                  id="switchToChainName"
+                  defaultMessage="Switch to {br}{chainName}"
+                  values={{
+                    br: <br />,
+                    chainName: config.evmNetworks[networkNeedsToBeUsed].chainName
+                  }}
                 />
               </Button>
             ) : (
