@@ -1728,7 +1728,7 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
       !isBuyCoinAvailableNetwork
 
     const isCorrectMetamaskNetwork = !metamask.isConnected() ||
-      (!isSellCoinNeedAddCorrectNetwork || !isBuyCoinNeedAddCorrectNetwork)
+      (!isSellCoinNeedAddCorrectNetwork && !isBuyCoinNeedAddCorrectNetwork)
 
     const isIncorrectMetamaskNetwork = metamask.isConnected() &&
       (isSellCoinNeedAddCorrectNetwork || isBuyCoinNeedAddCorrectNetwork)
