@@ -1905,7 +1905,7 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
                     defaultMessage="Please open connected wallet and choose {br}{chainName}"
                     values={{
                       br: <br />,
-                      chainName: config.evmNetworks[networkNeedsToBeUsed].chainName
+                      chainName: config?.evmNetworks?.[networkNeedsToBeUsed]?.chainName || 'Correct Network'
                     }}
                   />
                 </p>
@@ -1943,27 +1943,29 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
             )}
 
             {isDeclinedOffer && (
-              <p styleName="error link" onClick={this.goDeclimeFaq}>
-                {' '}
-                {/* eslint-disable-line */}
-                <FormattedMessage
-                  id="PartialOfferCantProceed1"
-                  defaultMessage="Request rejected, possibly you have not complete another swap {br}{link}"
-                  values={{
-                    link: (
-                      <a className="errorLink" role="button" onClick={this.goDeclimeFaq}>
-                        {' '}
-                        {/* eslint-disable-line */}
-                        <FormattedMessage
-                          id="PartialOfferCantProceed1_1"
-                          defaultMessage="Check here"
-                        />
-                      </a>
-                    ),
-                    br: <br />,
-                  }}
-                />
-              </p>
+              <div styleName="smallError">
+                <p styleName="error errorLink" onClick={this.goDeclimeFaq}>
+                  {' '}
+                  {/* eslint-disable-line */}
+                  <FormattedMessage
+                    id="PartialOfferCantProceed1"
+                    defaultMessage="Request rejected, possibly you have not complete another swap {br}{link}"
+                    values={{
+                      link: (
+                        <a className="errorLink" role="button" onClick={this.goDeclimeFaq}>
+                          {' '}
+                          {/* eslint-disable-line */}
+                          <FormattedMessage
+                            id="PartialOfferCantProceed1_1"
+                            defaultMessage="Check here"
+                          />
+                        </a>
+                      ),
+                      br: <br />,
+                    }}
+                  />
+                </p>
+              </div>
             )}
 
             {isErrorExternalDisabled && (
@@ -2073,7 +2075,7 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
                   defaultMessage="Switch to {br}{chainName}"
                   values={{
                     br: <br />,
-                    chainName: config.evmNetworks[networkNeedsToBeUsed].chainName
+                    chainName: config?.evmNetworks?.[networkNeedsToBeUsed]?.chainName || 'Correct Network'
                   }}
                 />
               </Button>
