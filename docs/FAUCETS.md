@@ -12,7 +12,7 @@ The list of faucets that we recommend to use when developing
 - https://faucet.dimensions.network/ (5 ETH per day)
 
 ## `ETH` (Rinkeby testnet)
-- https://faucet.rinkeby.io
+- https://faucet.rinkeby.io (social network account required)
 - https://app.mycrypto.com/faucet
 
 ## `BNB` (Testnet)

@@ -57,7 +57,7 @@ const SecondStep = (props) => {
       try {
         let fetchedTx: any
 
-        if (currencyName === ethLikeCoin.toLowerCase()) { // TODO: needs to be improved when adding BNB
+        if (currencyName === ethLikeCoin.toLowerCase()) {
           fetchedTx = await actions[ethLikeCoin.toLowerCase()].fetchTxInfo(txHash)
 
           if (fetchedTx && fetchedTx.confirmed) {

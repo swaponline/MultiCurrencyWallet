@@ -163,7 +163,16 @@ const deletedPartialCurrency = (orderId) => {
   )
 
   // currencies which must be all time in the drop
-  const premiumCurrencies = ['BTC', 'ETH', 'BNB', 'MATIC', 'GHOST', 'NEXT', 'SWAP']
+  const premiumCurrencies = [
+    'BTC', 
+    'ETH', 
+    'BNB', 
+    'MATIC', 
+    'ARBITRUM', 
+    'GHOST', 
+    'NEXT', 
+    'SWAP',
+  ]
 
   if (deletedOrderSell.length === 1 && !premiumCurrencies.includes(deletedOrderSellCurrency)) {
     reducers.currencies.deletedPartialCurrency(deletedOrderSellCurrency)

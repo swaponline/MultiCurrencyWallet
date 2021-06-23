@@ -1,9 +1,9 @@
 export default {
   arbitrum: {
     limit: {
-      send: 800 * 1e3,
+      send: 630 * 1e3,
       // ? heed to check how much for swaps ?
-      swap: 800 * 1e3,
+      swap: 1900 * 1e3,
     },
   },
   evmLike: {
