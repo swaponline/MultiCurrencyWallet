@@ -175,10 +175,16 @@ const addMetamaskWallet = () => {
       fullWalletName: `MATIC (${web3connect.getProviderTitle()})`,
       currencyInfo: user.maticData?.infoAboutCurrency,
     }
+    const arbitrumWalletInfo = {
+      currencyName: 'ARBITRUM',
+      fullWalletName: `ARBITRUM (${web3connect.getProviderTitle()})`,
+      currencyInfo: user.arbitrumData?.infoAboutCurrency,
+    }
     const walletMap = new Map([
       [config.evmNetworks.ETH.networkVersion, ethWalletInfo],
       [config.evmNetworks.BNB.networkVersion, bscWalletInfo],
       [config.evmNetworks.MATIC.networkVersion, maticWalletInfo],
+      [config.evmNetworks.ARBITRUM.networkVersion, arbitrumWalletInfo],
     ])
 
     const hexChainId = web3connect.getChainId()

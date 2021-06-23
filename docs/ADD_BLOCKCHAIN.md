@@ -100,6 +100,7 @@ Important note: Our core team focused on BTC-ETH swaps. If another blockchain ad
 - `src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx`
 - `src/front/shared/helpers/getCurrencyKey.ts`
 - `src/front/shared/helpers/user.ts`
+- `src/front/shared/helpers/metamask.ts`
 - `src/front/shared/helpers/swaps.ts`
 - `src/front/shared/pages/CreateWallet/CreateWallet.tsx`
 - `src/front/shared/pages/CreateWallet/Steps/StepsWrapper.tsx`
