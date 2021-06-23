@@ -2452,15 +2452,15 @@
     ]
   },
   {
-    "id": "chooseEthereumNetwork",
-    "message": "Otwórz podłączony portfel i wybierz odpowiednią sieć",
+    "id": "chooseCorrectNetwork",
+    "message": "Otwórz podłączony portfel i wybierz {br}{chainName}",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
   },
   {
-    "id": "useCorrectNetwork",
-    "message": "Użyj właściwej sieci",
+    "id": "switchToCorrectNetwork",
+    "message": "Przełącz na {br}{chainName}",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]

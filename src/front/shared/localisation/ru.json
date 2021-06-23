@@ -2536,15 +2536,15 @@
     ]
   },
   {
-    "id": "chooseEthereumNetwork",
-    "message": "Откройте подключенный кошелек и выберите правильную сеть",
+    "id": "chooseCorrectNetwork",
+    "message": "Откройте подключенный кошелек и выберите {br}{chainName}",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
   },
   {
-    "id": "useCorrectNetwork",
-    "message": "Использовать правильную сеть",
+    "id": "switchToCorrectNetwork",
+    "message": "Переключить на {br}{chainName}",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
