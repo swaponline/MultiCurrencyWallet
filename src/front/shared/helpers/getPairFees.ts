@@ -186,14 +186,24 @@ type PairFeesParams = {
 export const getPairFees = (params: PairFeesParams): Promise<IPairFees> => {
   let { sellCurrency, buyCurrency, updateCacheValue = false } = params
 
+  const {
+    coin: sellCurrencyName,
+    blockchain: sellCurrencyBlockchain,
+  } = getCoinInfo(sellCurrency.toUpperCase())
+
+  const {
+    coin: buyCurrencyName,
+    blockchain: buyCurrencyBlockchain,
+  } = getCoinInfo(buyCurrency.toUpperCase())
+
   return new Promise(async (feeResolved) => {
     const sell = await fetchCoinFee({
-      coinName: sellCurrency.toUpperCase(),
+      coinName: sellCurrencyBlockchain || sellCurrencyName,
       action: 'sell',
       updateCacheValue,
     })
     const buy = await fetchCoinFee({
-      coinName: buyCurrency.toUpperCase(),
+      coinName: buyCurrencyBlockchain || buyCurrencyName,
       action: 'buy',
       updateCacheValue,
     })
