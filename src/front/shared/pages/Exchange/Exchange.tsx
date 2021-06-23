@@ -2031,7 +2031,7 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
                 onClick={this.approveTheToken}
                 disabled={!canStartSwap || isPendingTokenApprove}
                 pending={isPendingTokenApprove}
-                blue={true}
+                blue
               >
                 {canStartSwap ?
                       <FormattedMessage
@@ -2042,13 +2042,24 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
                   : getTextWhyCanNotStartSwap()
                 }
               </Button>
+            ) : (isIncorrectMetamaskNetwork && !isEthNativeCoin && isMetamaskProvider) ? (
+              <Button
+                styleName="button"
+                onClick={this.handleAddCorrectNetwork}
+                blue
+              >
+                <FormattedMessage
+                  id="useCorrectNetwork"
+                  defaultMessage="Use Correct Network"
+                />
+              </Button>
             ) : (
               <Button
                 id='exchangeButton'
                 styleName="button"
                 onClick={this.initSwap}
                 disabled={!canStartSwap}
-                blue={true}
+                blue
               >
                 {canStartSwap
                   ? <FormattedMessage id="partial541" defaultMessage="Exchange now" />
@@ -2098,12 +2109,6 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
                   </a>
                 </div>
               </>
-            )}
-
-            {isIncorrectMetamaskNetwork && !isEthNativeCoin && isMetamaskProvider && (
-              <Button styleName="button link-like" onClick={this.handleAddCorrectNetwork}>
-                <FormattedMessage id="useCorrectNetwork" defaultMessage="Use Correct Network" />
-              </Button>
             )}
 
             {isIncompletedSwaps && (
