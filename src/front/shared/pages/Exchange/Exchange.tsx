@@ -853,8 +853,8 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
     return true
   }
 
-  approveTheToken = () => {
-    const { haveCurrency, haveAmount, haveType, getCurrency } = this.state
+  approveTheToken = async () => {
+    const { haveCurrency, haveAmount, haveType, getCurrency, orderId } = this.state
 
     if (
       !this.checkBalanceForSwapPossibility({
@@ -865,6 +865,16 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
         fromType: haveType,
       })
     ) {
+      return false
+    }
+
+    const isSwapExists = await this.checkSwapExists({ haveCurrency, getCurrency, orderId })
+
+    if (isSwapExists) {
+      actions.notifications.show(
+        constants.notifications.ErrorNotification,
+        { error: 'You have Exists Swap with order participant. Please use orderbook for start swap with this pair.' }
+      )
       return false
     }
 
@@ -2251,6 +2261,7 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
                   pairFees={pairFees}
                   balances={balances}
                   checkSwapAllow={this.checkBalanceForSwapPossibility}
+                  checkSwapExists={this.checkSwapExists}
                 />
               ) : null}
             </div>
