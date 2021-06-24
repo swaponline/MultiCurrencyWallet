@@ -126,9 +126,7 @@ class WallerSlider extends React.Component<WallerSliderProps, WallerSliderState>
       )
     } else {
       try {
-        const bannersSource = (config?.opts?.ui?.bannersSource)
-          ? config.opts.ui.bannersSource
-          : 'https://noxon.wpmix.net/swapBanners/banners.php'
+        const bannersSource = config.opts.ui.bannersSource
         return axios
           .get(bannersSource)
           .then(({ data }) => {
