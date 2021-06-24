@@ -147,8 +147,8 @@ const isAvailableNetworkByCurrency = (currency) => {
 
   const currencyNetworkVersion =
     (blockchain)
-    ? config.evmNetworks[blockchain].networkVersion
-    : config.evmNetworks[ticker].networkVersion
+    ? config.evmNetworks[blockchain]?.networkVersion
+    : config.evmNetworks[ticker]?.networkVersion
 
   const hexChainId = web3connect.getChainId()
   const currentNetworkVersion = Number(Number(hexChainId).toString(10))
