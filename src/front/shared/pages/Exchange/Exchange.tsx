@@ -464,8 +464,8 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { haveCurrency: prevHaveCurrency, orderId: prevOrderId} = prevState
-    const { haveCurrency, haveAmount, orderId } = this.state
+    const { haveCurrency: prevHaveCurrency } = prevState
+    const { haveCurrency, haveAmount } = this.state
 
     if (prevHaveCurrency !== haveCurrency) {
       const isTokenSell = erc20Like.isToken({ name: haveCurrency })
@@ -477,10 +477,6 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
       if (isTokenSell && haveAmount) {
         this.updateTokenAllowance()
       }
-    }
-    console.log('prevOrderId !== orderId', prevOrderId !== orderId)
-    if (prevOrderId !== orderId) {
-      this.checkSwapExists()
     }
   }
 
@@ -922,7 +918,7 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
   initSwap = async () => {
     const { decline } = this.props
 
-    const { haveCurrency, haveAmount, getCurrency, haveType } = this.state
+    const { haveCurrency, haveAmount, getCurrency, haveType, orderId } = this.state
     const haveTicker = haveCurrency.toUpperCase()
     const getTicker = getCurrency.toUpperCase()
 
@@ -940,10 +936,11 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
       return false
     }
 
-    const isSwapExists = await this.checkSwapExists()
+    const isSwapExists = await this.checkSwapExists({ haveCurrency, getCurrency, orderId })
 
     if (isSwapExists) {
-
+      actions.modals.open(constants.modals.DeclineOrdersModal)
+      return false
     }
 
     if (decline.length === 0) {
@@ -961,8 +958,8 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
     }
   }
 
-  checkSwapExists = async () => {
-    const { haveCurrency, getCurrency, orderId } = this.state
+  checkSwapExists = async (params) => {
+    const { haveCurrency, getCurrency, orderId } = params
 
     const sellWallet = actions.core.getWallet({ currency: haveCurrency })
     const buyWallet = actions.core.getWallet({ currency: getCurrency })
