@@ -468,6 +468,7 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
     const { haveCurrency, haveAmount } = this.state
 
     if (prevHaveCurrency !== haveCurrency) {
+      this.checkSwapExists()
       const isTokenSell = erc20Like.isToken({ name: haveCurrency })
 
       this.setState(() => ({
@@ -936,6 +937,12 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
       return false
     }
 
+    const isSwapExists = await this.checkSwapExists()
+
+    if (isSwapExists) {
+
+    }
+
     if (decline.length === 0) {
       this.sendRequestForPartial()
     } else {
@@ -949,6 +956,55 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
         this.sendRequestForPartial()
       }
     }
+  }
+
+  checkSwapExists = async () => {
+    const { haveCurrency, getCurrency, orderId } = this.state
+
+    const sellWallet = actions.core.getWallet({ currency: haveCurrency })
+    const buyWallet = actions.core.getWallet({ currency: getCurrency })
+    const {
+      coin: sellCoin,
+      blockchain: sellBlockchain,
+    } = getCoinInfo(haveCurrency.toUpperCase())
+    const {
+      coin: buyCoin,
+      blockchain: buyBlockchain,
+    } = getCoinInfo(getCurrency.toUpperCase())
+
+    const isTokenSell = !!sellBlockchain
+    const isTokenBuy = !!buyBlockchain
+
+    const isEvmCoinSell = !isTokenSell && (COIN_DATA[sellCoin].model === COIN_MODEL.AB)
+    const isEvmCoinBuy = !isTokenBuy && (COIN_DATA[buyCoin].model === COIN_MODEL.AB)
+
+    const actionType =
+      (isTokenSell && sellWallet.standard) ||
+      (isTokenBuy && buyWallet.standart) ||
+      (isEvmCoinSell && sellCoin) ||
+      (isEvmCoinBuy && buyCoin)
+
+    if (!actionType) return
+    console.log('!orderId', !orderId )
+    if (!orderId) return
+
+    console.log('orderId',orderId)
+
+    console.groupCollapsed('checkSwapExists')
+
+    console.log('sellWallet', sellWallet)
+    console.log('isTokenSell', isTokenSell)
+    console.log('isEvmCoinSell', isEvmCoinSell)
+    console.log('buyWallet', buyWallet)
+    console.log('isTokenBuy', isTokenBuy)
+    console.log('isEvmCoinBuy', isEvmCoinBuy)
+    console.log('actionType', actionType.toLowerCase())
+
+    console.groupEnd()
+
+
+
+    return true // await actions[actionType.toLowerCase()].checkSwapExists({ownerAddress, participantAddress})
   }
 
   openModalDeclineOrders = (indexOfDecline) => {
