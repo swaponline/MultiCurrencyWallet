@@ -221,6 +221,7 @@ class Offers extends Component<any, any> {
               pairFees={pairFees}
               balances={balances}
               checkSwapAllow={this.props.checkSwapAllow}
+              checkSwapExists={this.props.checkSwapExists}
             />
           )
         }
