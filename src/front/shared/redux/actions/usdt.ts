@@ -36,7 +36,6 @@ const login = (privateKey) => {
     publicKey,
   }
 
-  console.info('Logged in with USDT', data)
   reducers.user.setAuthData({ name: 'usdtData', data })
 }
 

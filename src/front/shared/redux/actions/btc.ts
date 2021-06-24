@@ -153,8 +153,7 @@ const login = (
 
     //@ts-ignore: strictNullChecks
     const accData = getWalletByWords(mnemonic)
-    console.log('Btc. Generated wallet from random 12 words')
-    console.log(accData)
+
     privateKey = accData.WIF
     localStorage.setItem(constants.privateKeyNames.btcMnemonic, privateKey)
   }
@@ -170,7 +169,6 @@ const login = (
   window.getBtcAddress = () => data.address
   window.getBtcData = () => data
 
-  console.info('Logged in with Bitcoin', data)
   reducers.user.setAuthData({ name: 'btcData', data })
   if (!sweepToMnemonicReady) {
     // Auth with our mnemonic account
@@ -192,7 +190,7 @@ const login = (
       ...auth(mnemonicKeys.btc),
       isMnemonic: true,
     }
-    console.info('Logged in with Bitcoin Mnemonic', mnemonicData)
+
     reducers.user.addWallet({
       name: 'btcMnemonicData',
       data: {

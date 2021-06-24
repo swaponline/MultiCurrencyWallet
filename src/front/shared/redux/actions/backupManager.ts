@@ -1,5 +1,5 @@
 import constants from 'helpers/constants'
-import getUnixTimeStamp from 'helpers/getUnixTimeStamp'
+import getUnixTimeStamp from 'common/utils/getUnixTimeStamp'
 import config from 'helpers/externalConfig'
 import backupUserData from 'plugins/backupUserData'
 
@@ -7,7 +7,11 @@ import backupUserData from 'plugins/backupUserData'
 const backupFields = [
   constants.privateKeyNames.btcMnemonic,
   constants.privateKeyNames.ethMnemonic,
+  constants.privateKeyNames.bnbMnemonic,
+  constants.privateKeyNames.maticMnemonic,
   constants.privateKeyNames.eth,
+  constants.privateKeyNames.bnb,
+  constants.privateKeyNames.matic,
   constants.privateKeyNames.btc,
   constants.privateKeyNames.btcMultisig,
   constants.privateKeyNames.btcMultisigOtherOwnerKey,

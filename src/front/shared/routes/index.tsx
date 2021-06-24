@@ -10,9 +10,7 @@ import TurboSwap from 'pages/TurboSwap/TurboSwap'
 import History from 'pages/History/History'
 import CreateWallet from 'pages/CreateWallet/CreateWallet'
 import NotFound from 'pages/NotFound/NotFound'
-import About from 'pages/About/About'
 import Wallet from 'pages/Wallet/Wallet'
-import Currency from 'pages/Currency/Currency'
 import Exchange from 'pages/Exchange/Exchange'
 import CurrencyWallet from 'pages/CurrencyWallet/CurrencyWallet'
 import Transaction from 'pages/Transaction/Transaction'
@@ -52,7 +50,6 @@ const routes = (
       <Route path={`${links.exchange}`} component={Exchange} />
 
       <Route path={`${links.localStorage}`} component={LocalStorage} />
-      <Route path={`${links.aboutUs}`} component={About} />
 
       <Route path={`${links.send}/:currency/:address/:amount`} component={Wallet} />
       <Route path={`${links.wallet}`} component={Wallet} />
@@ -94,7 +91,6 @@ const routes = (
         </>
       )}
       <Route path={`${links.currencyWallet}`} component={Wallet} />
-      <Route path={`/:currency`} component={Currency} />
 
       <Route component={NotFound} />
     </Switch>

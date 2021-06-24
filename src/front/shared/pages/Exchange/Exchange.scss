@@ -109,7 +109,7 @@
 }
 
 .link.liquidity {
-  padding: 2em 0 1em;
+  padding: 1.4em 0 1em;
 }
 
 .button {
@@ -304,8 +304,6 @@
 }
 
 .error {
-  display: flex;
-  align-items: center;
   color: #fff;
   padding: 0.4em 1em;
   font-size: 13px;
@@ -317,10 +315,17 @@
     color: inherit;
     font-size: inherit;
     text-decoration: underline;
+    height: auto;
   }
 }
 
-.error.link {
+.smallError {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.errorLink {
   cursor: pointer;
 }
 

@@ -311,9 +311,19 @@ class CurrencyWallet extends Component<any, any> {
     } = getCoinInfo(ticker)
 
     return items.filter((item) => {
+      let {currency: currencyName} = item
+
+      switch (currencyName.toLowerCase()) {
+        case 'btc (multisig)':
+        case 'btc (sms-protected)':
+        case 'btc (pin-protected)':
+          currencyName = 'btc'
+      }
+
       const blockchainOk = (blockchain && item.blockchain) ? item.blockchain.toLowerCase() === blockchain.toLowerCase() : true
+
       if (
-        item.currency.toLowerCase() === coin.toLowerCase() &&
+        currencyName.toLowerCase() === coin.toLowerCase() &&
         item.address.toLowerCase() === walletAddress.toLowerCase() &&
         blockchainOk
       ) {

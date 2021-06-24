@@ -8,7 +8,6 @@ import { isMobile } from 'react-device-detect'
 
 import actions from 'redux/actions'
 import { constants } from 'helpers'
-import ethToken from 'helpers/ethToken'
 import feedback from 'shared/helpers/feedback'
 import Explanation from '../Explanation'
 import icons from '../images'
@@ -31,14 +30,6 @@ const SecondStep = (props) => {
   } = props
 
   const _protection = {
-    nothing: {
-      btc: true,
-      eth: true,
-      bnb: true,
-      ghost: true,
-      next: true,
-      erc: true,
-    },
     sms: {},
     pin: {
       btc: true,

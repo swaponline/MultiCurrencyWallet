@@ -1,9 +1,5 @@
 [
   {
-    "id": "menu.aboutus",
-    "message": "О Нас"
-  },
-  {
     "id": "menu.exchange",
     "message": "Обмен",
     "files": [
@@ -202,34 +198,6 @@
     "message": "? ",
     "files": [
       "src/front/shared/components/ui/Tooltip/Tooltip.tsx"
-    ]
-  },
-  {
-    "id": "Currency101",
-    "message": "Баланс: ",
-    "files": [
-      "src/front/shared/pages/Currency/Currency.tsx"
-    ]
-  },
-  {
-    "id": "CurrencyH1Seo1",
-    "message": "Цена {fullName} ({tickerName}) и Актуальный Курс Обмена.",
-    "files": [
-      "src/front/shared/pages/Currency/Currency.tsx"
-    ]
-  },
-  {
-    "id": "CurrencyWallet100",
-    "message": "Отправить",
-    "files": [
-      "src/front/shared/pages/Currency/Currency.tsx"
-    ]
-  },
-  {
-    "id": "Row35",
-    "message": "Обмен",
-    "files": [
-      "src/front/shared/pages/Currency/Row/Row.tsx"
     ]
   },
   {
@@ -715,8 +683,8 @@
     ]
   },
   {
-    "id": "incorrectMetamaskNetwork",
-    "message": "Пожалуйста, выберите правильную сеть метамаска",
+    "id": "incorrectNetwork",
+    "message": "Пожалуйста, выберите правильную сеть",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
@@ -2568,6 +2536,20 @@
     ]
   },
   {
+    "id": "chooseCorrectNetwork",
+    "message": "Откройте подключенный кошелек и выберите {br}{chainName}",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "switchToCorrectNetwork",
+    "message": "Переключить на {br}{chainName}",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
     "id": "Yourtotalbalance",
     "message": "Ваш общий баланс",
     "files": [
@@ -3601,13 +3583,6 @@
     "message": "Ссылка скопирована",
     "files": [
       "src/front/shared/components/modals/Share/Share.tsx"
-    ]
-  },
-  {
-    "id": "Row313",
-    "message": "Deposit",
-    "files": [
-      "src/front/shared/pages/Currency/Currency.tsx"
     ]
   },
   {

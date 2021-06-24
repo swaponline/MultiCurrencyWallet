@@ -1,9 +1,5 @@
 [
   {
-    "id": "menu.aboutus",
-    "message": "O nas"
-  },
-  {
     "id": "menu.exchange",
     "message": "Giełda",
     "files": [
@@ -192,34 +188,6 @@
     "message": "? ",
     "files": [
       "src/front/shared/components/ui/Tooltip/Tooltip.tsx"
-    ]
-  },
-  {
-    "id": "Currency101",
-    "message": "Saldo: ",
-    "files": [
-      "src/front/shared/pages/Currency/Currency.tsx"
-    ]
-  },
-  {
-    "id": "CurrencyH1Seo1",
-    "message": "{fullName} ({tickerName}) Cena & kurs wymiany.",
-    "files": [
-      "src/front/shared/pages/Currency/Currency.tsx"
-    ]
-  },
-  {
-    "id": "CurrencyWallet100",
-    "message": "Wyślij",
-    "files": [
-      "src/front/shared/pages/Currency/Currency.tsx"
-    ]
-  },
-  {
-    "id": "Row35",
-    "message": "Giełda",
-    "files": [
-      "src/front/shared/pages/Currency/Row/Row.tsx"
     ]
   },
   {
@@ -2484,6 +2452,20 @@
     ]
   },
   {
+    "id": "chooseCorrectNetwork",
+    "message": "Otwórz podłączony portfel i wybierz {br}{chainName}",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "switchToCorrectNetwork",
+    "message": "Przełącz na {br}{chainName}",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
     "id": "Yourtotalbalance",
     "message": "Twoje całkowite saldo",
     "files": [
@@ -3482,13 +3464,6 @@
     "message": "Link copied",
     "files": [
       "src/front/shared/components/modals/Share/Share.tsx"
-    ]
-  },
-  {
-    "id": "Row313",
-    "message": "Deposit",
-    "files": [
-      "src/front/shared/pages/Currency/Currency.tsx"
     ]
   },
   {
@@ -5177,8 +5152,8 @@
     ]
   },
   {
-    "id": "incorrectMetamaskNetwork",
-    "message": "Wybierz prawidłową sieć metamasek",
+    "id": "incorrectNetwork",
+    "message": "Wybierz prawidłową sieć",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]

@@ -1,9 +1,5 @@
 [
   {
-    "id": "menu.aboutus",
-    "message": "About Us"
-  },
-  {
     "id": "menu.exchange",
     "message": "Exchange",
     "files": [
@@ -192,34 +188,6 @@
     "message": "? ",
     "files": [
       "src/front/shared/components/ui/Tooltip/Tooltip.tsx"
-    ]
-  },
-  {
-    "id": "Currency101",
-    "message": "Balance: ",
-    "files": [
-      "src/front/shared/pages/Currency/Currency.tsx"
-    ]
-  },
-  {
-    "id": "CurrencyH1Seo1",
-    "message": "{fullName} ({tickerName}) Price & Exchange Rates.",
-    "files": [
-      "src/front/shared/pages/Currency/Currency.tsx"
-    ]
-  },
-  {
-    "id": "CurrencyWallet100",
-    "message": "Send",
-    "files": [
-      "src/front/shared/pages/Currency/Currency.tsx"
-    ]
-  },
-  {
-    "id": "Row35",
-    "message": "Exchange",
-    "files": [
-      "src/front/shared/pages/Currency/Row/Row.tsx"
     ]
   },
   {
@@ -663,8 +631,8 @@
     ]
   },
   {
-    "id": "incorrectMetamaskNetwork",
-    "message": "Please choose correct metamask network",
+    "id": "incorrectNetwork",
+    "message": "Please choose correct network",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
@@ -2603,6 +2571,20 @@
     ]
   },
   {
+    "id": "chooseCorrectNetwork",
+    "message": "Please open connected wallet and choose {br}{chainName}",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
+    "id": "switchToCorrectNetwork",
+    "message": "Switch to {br}{chainName}",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.tsx"
+    ]
+  },
+  {
     "id": "Yourtotalbalance",
     "message": "Your total balance",
     "files": [
@@ -3597,13 +3579,6 @@
     "message": "Link copied",
     "files": [
       "src/front/shared/components/modals/Share/Share.tsx"
-    ]
-  },
-  {
-    "id": "Row313",
-    "message": "Deposit",
-    "files": [
-      "src/front/shared/pages/Currency/Currency.tsx"
     ]
   },
   {

@@ -1,6 +1,4 @@
 import React from 'react'
-import cssModules from 'react-css-modules'
-import styles from './CurrencySelect.scss'
 import Option from './Option/Option'
 import DropDown from 'shared/components/ui/DropDown'
 
@@ -32,4 +30,4 @@ const CurrencySelect = (props) => {
   )
 }
 
-export default cssModules(CurrencySelect, styles)
+export default CurrencySelect

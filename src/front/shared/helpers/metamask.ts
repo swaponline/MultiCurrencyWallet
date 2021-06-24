@@ -8,19 +8,9 @@ import SwapApp from 'swap.app'
 import Web3Connect from 'common/web3connect'
 import { COIN_DATA, COIN_MODEL } from 'swap.app/constants/COINS'
 import getCoinInfo from 'common/coins/getCoinInfo'
-import { AVAILABLE_NETWORKS_BY_COIN, AVAILABLE_NETWORKS } from 'common/helpers/constants/AVAILABLE_EVM_NETWORKS'
 
-const NETWORK = process.env.MAINNET
-  ? 'MAINNET'
-  : 'TESTNET'
-
-const NETWORK_NUMBER = NETWORK === 'MAINNET'
-  ? 0 : 1 // 0 - MAINNET, 1 - TESTNET
-
-// Binance Smart Chain: 56 = Mainnet, 97 = Testnet
-// Ethereum: 1 = Mainnet, 3 = Ropsten
-const web3connect = new Web3Connect({
-  web3ChainId: process.env.MAINNET ? 1 : 3,
+const web3connect: IUniversalObj = new Web3Connect({
+  web3ChainId: config.evmNetworks.ETH.networkVersion,
   web3RPC: config.web3.provider,
 })
 
@@ -144,7 +134,7 @@ const isAvailableNetwork = () => {
     const hexChainId = web3connect.getChainId()
     const chainId = Number(Number(hexChainId).toString(10))
 
-    return (AVAILABLE_NETWORKS[NETWORK_NUMBER].includes(chainId))
+    return (config.evmNetworkVersions.includes(chainId))
 }
 
 const isAvailableNetworkByCurrency = (currency) => {
@@ -155,17 +145,15 @@ const isAvailableNetworkByCurrency = (currency) => {
 
   if (isUTXOModel) return false
 
-  const currencyNetworkVersions =
+  const currencyNetworkVersion =
     (blockchain)
-    ? AVAILABLE_NETWORKS_BY_COIN[blockchain]
-    : AVAILABLE_NETWORKS_BY_COIN[ticker]
-
-  const currencyNetworkVersion = currencyNetworkVersions[NETWORK_NUMBER]
+    ? config.evmNetworks[blockchain].networkVersion
+    : config.evmNetworks[ticker].networkVersion
 
   const hexChainId = web3connect.getChainId()
-  const currentNetworkVersions = Number(Number(hexChainId).toString(10))
+  const currentNetworkVersion = Number(Number(hexChainId).toString(10))
 
-  return currencyNetworkVersion === currentNetworkVersions
+  return currencyNetworkVersion === currentNetworkVersion
 }
 
 const addMetamaskWallet = () => {
@@ -188,9 +176,9 @@ const addMetamaskWallet = () => {
       currencyInfo: user.maticData?.infoAboutCurrency,
     }
     const walletMap = new Map([
-      [AVAILABLE_NETWORKS_BY_COIN.ETH[NETWORK === 'MAINNET' ? 0 : 1], ethWalletInfo],
-      [AVAILABLE_NETWORKS_BY_COIN.BNB[NETWORK === 'MAINNET' ? 0 : 1], bscWalletInfo],
-      [AVAILABLE_NETWORKS_BY_COIN.MATIC[NETWORK === 'MAINNET' ? 0 : 1], maticWalletInfo],
+      [config.evmNetworks.ETH.networkVersion, ethWalletInfo],
+      [config.evmNetworks.BNB.networkVersion, bscWalletInfo],
+      [config.evmNetworks.MATIC.networkVersion, maticWalletInfo],
     ])
 
     const hexChainId = web3connect.getChainId()
@@ -295,6 +283,61 @@ const handleConnectMetamask = (params: MetamaskConnectParams = {}) => {
   })
 }
 
+// when add EIP-3326: wallet_switchEthereumChain use this method
+const addCurrencyNetwork = (currency) => {
+  if(!(isConnected())) {
+    return
+  }
+
+  const { coin, blockchain } = getCoinInfo(currency)
+  const nativeCurrency = blockchain ? blockchain : coin.toUpperCase()
+
+  const {
+    chainId,
+    chainName,
+    rpcUrls,
+    blockExplorerUrls
+  } = config.evmNetworks[nativeCurrency]
+
+  const {
+    name,
+    symbol,
+    precision: decimals
+  } = COIN_DATA[nativeCurrency]
+
+  const params = {
+    chainId, // A 0x-prefixed hexadecimal string
+    chainName,
+    nativeCurrency: {
+      name,
+      symbol, // 2-6 characters long
+      decimals,
+    },
+    rpcUrls,
+    blockExplorerUrls
+  }
+
+  const web3 = web3connect.getWeb3()
+  const ethereum = window.ethereum
+
+  if (web3.eth  && ethereum) {
+    web3.eth.getAccounts((error, accounts) => {
+      ethereum.request({
+        method: 'wallet_addEthereumChain',
+        params: [params, accounts[0]],
+      })
+      .then((result) => {
+        console.log('Success add and switch to network')
+      })
+      .catch((error) => {
+        throw new Error(`Metamask > addCurrencyNetwork error: ${error.message}`)
+      })
+    })
+  } else {
+    throw new Error('Can not access to web3 or ethereum')
+  }
+}
+
 const metamaskApi = {
   connect,
   isEnabled,
@@ -310,6 +353,7 @@ const metamaskApi = {
   isAvailableNetworkByCurrency,
   handleDisconnectWallet,
   handleConnectMetamask,
+  addCurrencyNetwork
 }
 
 window.metamaskApi = metamaskApi

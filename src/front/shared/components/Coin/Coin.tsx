@@ -37,17 +37,19 @@ const Coin = (props: CoinProps) => {
 
   if (
     config?.erc20[name.toLowerCase()]?.icon ||
-    config?.bep20[name.toLowerCase()]?.icon
+    config?.bep20[name.toLowerCase()]?.icon ||
+    config?.erc20matic[name.toLowerCase()]?.icon
   ) {
     isIconConfigExist = true
   }
 
   // Coin styles *************************
 
-  const style = {
+  const style: {
+    [ k: string]: string | null
+  } = {
     width: size ? `${size}px` : null,
     height: size ? `${size}px` : null,
-    backgroundColor: null,
   }
 
   if (defaultCurrencyColors[name.toLowerCase()]) {
@@ -60,6 +62,10 @@ const Coin = (props: CoinProps) => {
 
   if (config?.bep20[name.toLowerCase()]?.iconBgColor) {
     style.backgroundColor = config.bep20[name.toLowerCase()].iconBgColor
+  }
+
+  if (config?.erc20matic[name.toLowerCase()]?.iconBgColor) {
+    style.backgroundColor = config.erc20matic[name.toLowerCase()].iconBgColor
   }
 
   // *************************************
@@ -89,7 +95,6 @@ const Coin = (props: CoinProps) => {
         ${iconSource ? 'noColors' : ''}
       `}
       className={className}
-      //@ts-ignore: strictNullChecks
       style={style}
     >
       <CurrencyIcon {...currencyIconProps} />
