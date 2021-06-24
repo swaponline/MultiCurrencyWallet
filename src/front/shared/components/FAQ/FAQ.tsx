@@ -47,9 +47,9 @@ const FAQ = (props) => {
           setBtcFee( Math.ceil(btcSatoshiPrice / BYTE_IN_KB) )
 
           // return gas * 1e9 - divided by 1e9 to convert
-          setBnbFee( new BigNumber(bnbGasPrice).dividedBy(1e9).toNumber() )
-          setEthFee( new BigNumber(ethGasPrice).dividedBy(1e9).toNumber() )
-          setMaticFee( new BigNumber(maticGasPrice).dividedBy(1e9).toNumber() )
+          setBnbFee( new BigNumber(bnbGasPrice).dividedBy(1e9).dp(0).toNumber() )
+          setEthFee( new BigNumber(ethGasPrice).dividedBy(1e9).dp(0).toNumber() )
+          setMaticFee( new BigNumber(maticGasPrice).dividedBy(1e9).dp(0).toNumber() )
         }
       } catch (error) {
         feedback.faq.failed(`FAQ. Fetch fees error(${error.message})`)

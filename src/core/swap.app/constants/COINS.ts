@@ -65,9 +65,9 @@ export const COIN_DATA = {
     model: COIN_MODEL.AB,
     precision: 18,
   },
-  'ARBITRUM': {
-    ticker: 'ARBITRUM',
-    name: 'Arbitrum',
+  'ARBETH': {
+    ticker: 'ArbETH',
+    name: 'Arbitrum ETH',
     type: COIN_TYPE.NATIVE,
     blockchain: BLOCKCHAIN.ARBITRUM,
     model: COIN_MODEL.AB,
@@ -144,7 +144,7 @@ export const NATIVE = {
   eth: 'ETH',
   bnb: 'BNB',
   matic: 'MATIC',
-  arbitrum: 'ARBITRUM',
+  arbeth: 'ARBETH',
   ghost: 'GHOST',
   next: 'NEXT',
 }

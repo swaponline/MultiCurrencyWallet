@@ -37,20 +37,20 @@ describe('Sending EVM Coin', () => {
   const extraDelay = 7_000
   const waitingForTheTest = waitingTxMining * requestsForTxInfo + extraDelay
   const usualTxCases = [
-    [
-      'ETH',
-      {
-        web3: ethWeb3,
-        paramsToSend: {
-          externalAddress: testWallets.eth.address.toLowerCase(),
-          externalPrivateKey: testWallets.eth.privateKey,
-          to: testWallets.eth.address.toLowerCase(),
-          amount: 0.001,
-          speed: 'fast',
-          gasLimit: DEFAULT_CURRENCY_PARAMETERS.evmLike.limit.send,
-        },
-      },
-    ],
+    // [
+    //   'ETH',
+    //   {
+    //     web3: ethWeb3,
+    //     paramsToSend: {
+    //       externalAddress: testWallets.eth.address.toLowerCase(),
+    //       externalPrivateKey: testWallets.eth.privateKey,
+    //       to: testWallets.eth.address.toLowerCase(),
+    //       amount: 0.001,
+    //       speed: 'fast',
+    //       gasLimit: DEFAULT_CURRENCY_PARAMETERS.evmLike.limit.send,
+    //     },
+    //   },
+    // ],
     [
       'BNB',
       {
@@ -89,7 +89,7 @@ describe('Sending EVM Coin', () => {
           to: testWallets.arbitrum.address.toLowerCase(),
           amount: 0.0001,
           speed: 'fast',
-          gasLimit: DEFAULT_CURRENCY_PARAMETERS.arbitrum.limit.send,
+          gasLimit: DEFAULT_CURRENCY_PARAMETERS.arbeth.limit.send,
         },
       },
     ],
@@ -129,22 +129,22 @@ describe('Sending EVM Coin', () => {
   }, waitingForTheTest)
 
   const adminTxCases = [
-    [
-      'ETH',
-      {
-        web3: ethWeb3,
-        paramsToSend: {
-          amount: 0.001,
-          gasLimit: DEFAULT_CURRENCY_PARAMETERS.evmLike.limit.send,
-          privateKey: testWallets.eth.privateKey,
-          externalAdminFeeObj: {
-            fee: 7,
-            address: '0x276747801B0dbb7ba04685BA27102F1B27Ca0815',
-            min: 0.001,
-          },
-        },
-      },
-    ],
+    // [
+    //   'ETH',
+    //   {
+    //     web3: ethWeb3,
+    //     paramsToSend: {
+    //       amount: 0.001,
+    //       gasLimit: DEFAULT_CURRENCY_PARAMETERS.evmLike.limit.send,
+    //       privateKey: testWallets.eth.privateKey,
+    //       externalAdminFeeObj: {
+    //         fee: 7,
+    //         address: '0x276747801B0dbb7ba04685BA27102F1B27Ca0815',
+    //         min: 0.001,
+    //       },
+    //     },
+    //   },
+    // ],
     [
       'BNB',
       {
@@ -183,7 +183,7 @@ describe('Sending EVM Coin', () => {
         web3: arbitrumWeb3,
         paramsToSend: {
           amount: 0.0001,
-          gasLimit: DEFAULT_CURRENCY_PARAMETERS.arbitrum.limit.send,
+          gasLimit: DEFAULT_CURRENCY_PARAMETERS.arbeth.limit.send,
           privateKey: testWallets.arbitrum.privateKey,
           externalAdminFeeObj: {
             fee: 1,

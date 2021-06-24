@@ -29,8 +29,8 @@ window.widgetERC20Comisions = {
     address: '0x57d49704F453CdD2b995280d9D7F557E42847d82',
     min: '0,01',
   },
-  arbitrum: {
-    fee: '7',
+  arbeth: {
+    fee: '3',
     address: '0x57d49704F453CdD2b995280d9D7F557E42847d82',
     min: '0,001',
   },
@@ -93,7 +93,7 @@ window.buildOptions = {
     eth: true,
     bnb: true,
     matic: true,
-    arbitrum: true,
+    arbeth: true,
     ghost: true,
     next: true,
   },
@@ -102,7 +102,7 @@ window.buildOptions = {
     eth: true,
     bnb: true,
     matic: true,
-    arbitrum: true,
+    arbeth: false,
     ghost: false,
     next: false,
   },

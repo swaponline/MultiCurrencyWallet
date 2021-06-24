@@ -10,7 +10,7 @@ class ArbitrumSwap extends EthLikeSwap {
       getWeb3Utils: `getArbitrumWeb3Utils`,
       getMyAddress: `getMyArbitrumAddress`,
       getParticipantAddress: `getParticipantArbitrumAddress`,
-      coinName: constants.COINS.arbitrum
+      coinName: constants.COINS.arbeth
     }
     super(options)
   }

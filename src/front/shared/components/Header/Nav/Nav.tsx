@@ -29,8 +29,8 @@ class Nav extends Component<NavProps, null> {
         <Fragment>
           {menu
             .filter(i => i.isDesktop !== false)
-            .map(item => {
-              const { title, link, exact, index, isExternal } = item
+            .map((item, index) => {
+              const { title, link, exact, isExternal } = item
 
               return (
                 <div styleName='mainMenu' key={index} className="data-tut-widget-tourFinish">

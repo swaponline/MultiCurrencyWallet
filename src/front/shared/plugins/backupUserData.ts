@@ -70,11 +70,11 @@ const backupUserData = {
           ethMnemonic:                      get(`ethMnemonic`),
           bnbMnemonic:                      get(`bnbMnemonic`),
           maticMnemonic:                    get(`maticMnemonic`),
-          arbitrumMnemonic:                 get(`arbitrumMnemonic`),
+          arbethMnemonic:                   get(`arbethMnemonic`),
           eth:                              get(`eth`),
           bnb:                              get(`bnb`),
           matic:                            get(`matic`),
-          arbitrum:                         get(`arbitrum`),
+          arbeth:                           get(`arbeth`),
           btc:                              get(`btc`),
           ghost:                            get(`ghost`),
           next:                             get(`next`),
@@ -204,8 +204,8 @@ const backupUserData = {
             set(`bnbMnemonic`, data.bnbMnemonic)
             set(`matic`, data.matic)
             set(`maticMnemonic`, data.maticMnemonic)
-            set(`arbitrum`, data.arbitrum)
-            set(`arbitrumMnemonic`, data.arbitrumMnemonic)
+            set(`arbeth`, data.arbeth)
+            set(`arbethMnemonic`, data.arbethMnemonic)
             set(`twentywords`, data.twentywords)
 
             // set other params to true (user has on tour and other pages)

@@ -10,7 +10,7 @@ class BTC2ARBITRUM extends BtcToEthLike {
     return constants.COINS.btc
   }
   static getToName() {
-    return constants.COINS.arbitrum
+    return constants.COINS.arbeth
   }
   constructor(swap) {
     super(swap, {

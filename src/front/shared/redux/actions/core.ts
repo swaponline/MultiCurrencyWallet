@@ -168,7 +168,7 @@ const deletedPartialCurrency = (orderId) => {
     'ETH', 
     'BNB', 
     'MATIC', 
-    'ARBITRUM', 
+    'ArbETH', 
     'GHOST', 
     'NEXT', 
     'SWAP',
@@ -462,7 +462,7 @@ const getWallets = (options: IUniversalObj = {}) => {
       ethData,
       bnbData,
       maticData,
-      arbitrumData,
+      arbethData,
       tokensData,
       metamaskData,
       // Sweep
@@ -470,7 +470,7 @@ const getWallets = (options: IUniversalObj = {}) => {
       ethMnemonicData,
       bnbMnemonicData,
       maticMnemonicData,
-      arbitrumMnemonicData,
+      arbethMnemonicData,
     },
   } = getState()
 
@@ -497,7 +497,7 @@ const getWallets = (options: IUniversalObj = {}) => {
       enabledCurrencies.eth ||
       enabledCurrencies.bnb ||
       enabledCurrencies.matic ||
-      enabledCurrencies.arbitrum
+      enabledCurrencies.arbeth
         ? metamaskData
           ? [metamaskData]
           : []
@@ -528,8 +528,8 @@ const getWallets = (options: IUniversalObj = {}) => {
         : []
       : []),
     // Sweep ===============================
-    ...(!enabledCurrencies || enabledCurrencies.arbitrum
-      ? arbitrumMnemonicData && !arbitrumData.isMnemonic
+    ...(!enabledCurrencies || enabledCurrencies.arbeth
+      ? arbethMnemonicData && !arbethData.isMnemonic
         ? [maticMnemonicData]
         : []
       : []),
@@ -574,12 +574,12 @@ const getWallets = (options: IUniversalObj = {}) => {
         : [maticData]
       : []),
     // =====================================
-    ...(!enabledCurrencies || enabledCurrencies.arbitrum
+    ...(!enabledCurrencies || enabledCurrencies.arbeth
       ? metamaskConnected
         ? withInternal
-          ? [arbitrumData]
+          ? [arbethData]
           : []
-        : [arbitrumData]
+        : [arbethData]
       : []),
     // =====================================
     ...(!enabledCurrencies || enabledCurrencies.ghost ? [ghostData] : []),

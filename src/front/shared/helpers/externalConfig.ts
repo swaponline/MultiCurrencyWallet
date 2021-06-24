@@ -42,7 +42,7 @@ const externalConfig = () => {
       eth: true,
       bnb: true,
       matic: true,
-      arbitrum: true,
+      arbeth: true,
       btc: true,
       ghost: true,
       next: true,
@@ -52,7 +52,7 @@ const externalConfig = () => {
       eth: true,
       bnb: false,
       matic: false,
-      arbitrum: false,
+      arbeth: false,
       ghost: true,
       next: true,
     },
@@ -164,8 +164,8 @@ const externalConfig = () => {
   }
 
   if (window && window.CUR_ARBITRUM_DISABLED === true) {
-    config.opts.curEnabled.arbitrum = false
-    config.opts.blockchainSwapEnabled.arbitrum = false
+    config.opts.curEnabled.arbeth = false
+    config.opts.blockchainSwapEnabled.arbeth = false
   }
 
 

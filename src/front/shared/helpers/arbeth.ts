@@ -11,11 +11,11 @@ type EstimateFeeParams = {
 }
 
 const estimateFeeValue = async (params: EstimateFeeParams) => {
-  return ethLikeHelper.arbitrum.estimateFeeValue(params)
+  return ethLikeHelper.arbeth.estimateFeeValue(params)
 }
 
 const estimateGasPrice = async (): Promise<number> => {
-  return ethLikeHelper.arbitrum.estimateGasPrice()
+  return ethLikeHelper.arbeth.estimateGasPrice()
 }
 
 export default {

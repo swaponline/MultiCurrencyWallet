@@ -420,8 +420,8 @@ class EthLikeAction {
         ? DEFAULT_CURRENCY_PARAMETERS.evmLike.limit.contractInteract
         : DEFAULT_CURRENCY_PARAMETERS.evmLike.limit.send)
 
-    if (this.ticker === 'ARBITRUM') {
-      gasLimit = DEFAULT_CURRENCY_PARAMETERS.arbitrum.limit.send
+    if (this.ticker === 'ArbETH') {
+      gasLimit = DEFAULT_CURRENCY_PARAMETERS.arbeth.limit.send
     }
 
     let sendMethod = Web3.eth.sendTransaction
@@ -605,14 +605,14 @@ export default {
     adminFeeObj: externalConfig.opts?.fee?.matic,
     web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.matic_provider)),
   }),
-  ARBITRUM: new EthLikeAction({
-    coinName: 'ARBITRUM',
-    ticker: 'ARBITRUM',
+  ARBETH: new EthLikeAction({
+    coinName: 'Arbitrum ETH',
+    ticker: 'ArbETH',
     privateKeyName: 'eth',
     explorerName: 'rinkeby-explorer', 
     explorerLink: externalConfig.link.arbitrum,
     explorerApiKey: '',
-    adminFeeObj: externalConfig.opts?.fee?.arbitrum,
+    adminFeeObj: externalConfig.opts?.fee?.arbeth,
     web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.arbitrum_provider)),
   }),
 }

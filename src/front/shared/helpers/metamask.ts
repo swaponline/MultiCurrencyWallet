@@ -176,9 +176,9 @@ const addMetamaskWallet = () => {
       currencyInfo: user.maticData?.infoAboutCurrency,
     }
     const arbitrumWalletInfo = {
-      currencyName: 'ARBITRUM',
-      fullWalletName: `ARBITRUM (${web3connect.getProviderTitle()})`,
-      currencyInfo: user.arbitrumData?.infoAboutCurrency,
+      currencyName: 'ArbETH',
+      fullWalletName: `ARBITRUM ETH (${web3connect.getProviderTitle()})`,
+      currencyInfo: user.arbethData?.infoAboutCurrency,
     }
     const walletMap = new Map([
       [config.evmNetworks.ETH.networkVersion, ethWalletInfo],

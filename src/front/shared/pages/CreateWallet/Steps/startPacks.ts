@@ -16,7 +16,7 @@ export const defaultPack = [
   ...(!curEnabled || curEnabled.matic ? [{ name: 'MATIC', capture: 'MATIC Token' }] : []),
   ...(config.erc20matic ? [{ name: 'ERC20', capture: 'Token', baseCurrency: 'MATIC' }] : []),
 
-  ...(!curEnabled || curEnabled.arbitrum ? [{ name: 'ARBITRUM', capture: 'Arbitrum' }] : []),
+  ...(!curEnabled || curEnabled.arbeth ? [{ name: 'ArbETH', capture: 'Arbitrum ETH' }] : []),
 
   ...(!curEnabled || curEnabled.ghost ? [{ name: 'GHOST', capture: 'Ghost' }] : []),
   ...(!curEnabled || curEnabled.next ? [{ name: 'NEXT', capture: 'NEXT.coin' }] : []),
@@ -43,7 +43,7 @@ export const widgetPack = [
   ...(config.bep20 ? [{ name: 'BEP20', capture: 'Token', baseCurrency: 'BNB' }] : []),
   ...(!curEnabled || curEnabled.matic ? [{ name: 'MATIC', capture: 'MATIC Token' }] : []),
   ...(config.erc20matic ? [{ name: 'ERC20', capture: 'Token', baseCurrency: 'MATIC' }] : []),
-  ...(!curEnabled || curEnabled.arbitrum ? [{ name: 'ARBITRUM', capture: 'Arbitrum' }] : []),
+  ...(!curEnabled || curEnabled.arbeth ? [{ name: 'ArbETH', capture: 'Arbitrum ETH' }] : []),
   ...(!curEnabled || curEnabled.ghost ? [{ name: 'GHOST', capture: 'Ghost' }] : []),
   ...(!curEnabled || curEnabled.next ? [{ name: 'NEXT', capture: 'NEXT.coin' }] : []),
 ]

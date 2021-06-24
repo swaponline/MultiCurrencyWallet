@@ -39,11 +39,11 @@ export const initialState = {
     balanceError: null,
     infoAboutCurrency: null,
   },
-  arbitrumData: {
+  arbethData: {
     balance: 0,
     isBalanceFetched: false,
-    currency: 'ARBITRUM',
-    fullName: 'Arbitrum',
+    currency: 'ArbETH',
+    fullName: 'Arbitrum ETH',
     balanceError: null,
     infoAboutCurrency: null,
   },

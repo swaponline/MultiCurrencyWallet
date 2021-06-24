@@ -4,7 +4,7 @@ import next from './next'
 import eth from './eth'
 import bnb from './bnb'
 import matic from './matic'
-import arbitrum from './arbitrum'
+import arbeth from './arbeth'
 import ethToken from './ethToken'
 import * as user from './user'
 import web3 from './web3'
@@ -51,7 +51,7 @@ export default {
   eth,
   bnb,
   matic,
-  arbitrum,
+  arbeth,
   ghost,
   next,
   ethToken,
@@ -65,7 +65,7 @@ export {
   eth,
   bnb,
   matic,
-  arbitrum,
+  arbeth,
   ghost,
   next,
   ethToken,

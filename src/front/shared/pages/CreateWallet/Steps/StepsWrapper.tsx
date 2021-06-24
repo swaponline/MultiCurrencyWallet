@@ -38,8 +38,8 @@ export default class StepsWrapper extends Component<any, any> {
       if (!curEnabled || curEnabled.matic) {
         this.defaultStartPack.push({ name: "MATIC", capture: "Matic token" })
       }
-      if (!curEnabled || curEnabled.arbitrum) {
-        this.defaultStartPack.push({ name: "ARBITRUM", capture: "Arbitrum" })
+      if (!curEnabled || curEnabled.arbeth) {
+        this.defaultStartPack.push({ name: "ArbETH", capture: "Arbitrum ETH" })
       }
       if (!curEnabled || curEnabled.ghost) {
         this.defaultStartPack.push({ name: "GHOST", capture: "Ghost" })

@@ -2,7 +2,7 @@ export default {
   eth: 0.001,
   bnb: 0.001,
   matic: 0.001,
-  arbitrum: 0.001,
+  arbeth: 0.001,
   btc: 0.00015,
   ghost: 0.00015,
   next: 0.00015,

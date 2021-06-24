@@ -101,10 +101,10 @@ export default {
       new Web3.providers.HttpProvider(config.web3.matic_provider)
     ),
   }),
-  arbitrum: new ethLikeHelper({
-    currency: 'ARBITRUM',
-    defaultParams: DEFAULT_CURRENCY_PARAMETERS.evmLike,
-    feeRatesLink: config.feeRates.arbitrum,
+  arbeth: new ethLikeHelper({
+    currency: 'ARBETH',
+    defaultParams: DEFAULT_CURRENCY_PARAMETERS.arbeth,
+    feeRatesLink: '',
     web3: new Web3(
       new Web3.providers.HttpProvider(config.web3.arbitrum_provider)
     ),
