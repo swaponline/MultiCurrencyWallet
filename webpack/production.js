@@ -3,7 +3,6 @@ import WebpackRequireFrom from 'webpack-require-from-naggertooth'
 import TerserPlugin from 'terser-webpack-plugin-legacy'
 import config from 'app-config'
 import webpack from 'webpack'
-import CopyWebpackPlugin from 'copy-webpack-plugin'
 
 import externalConfig from './externalConfig'
 
@@ -75,16 +74,7 @@ export default (webpackConfig) => {
     new MiniCssExtractPlugin({
       filename: '[name].[hash:6].css',
     }),
-    new CopyWebpackPlugin({
-      patterns: [
-        {
-          from: './src/front/client/customStyles.css',
-          to: './customStyles.css',
-          toType: 'file',
-        },
-      ],
-    }),
-    externalConfig(),
+    ...externalConfig(),
   )
 
   return webpackConfig
