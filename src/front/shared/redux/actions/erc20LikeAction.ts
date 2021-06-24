@@ -526,6 +526,7 @@ class Erc20LikeAction {
     const swapContract = new Web3.eth.Contract(tokenSwapContractAbi, externalConfig.swapContract[this.standard])
 
     const swap = await swapContract.methods.swaps(ownerAddress, participantAddress).call()
+    console.log('swap', swap)
     const balance = swap && swap.balance ? parseInt(swap.balance) : 0
 
     return balance > 0

@@ -464,11 +464,10 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { haveCurrency: prevHaveCurrency } = prevState
-    const { haveCurrency, haveAmount } = this.state
+    const { haveCurrency: prevHaveCurrency, orderId: prevOrderId} = prevState
+    const { haveCurrency, haveAmount, orderId } = this.state
 
     if (prevHaveCurrency !== haveCurrency) {
-      this.checkSwapExists()
       const isTokenSell = erc20Like.isToken({ name: haveCurrency })
 
       this.setState(() => ({
@@ -478,6 +477,10 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
       if (isTokenSell && haveAmount) {
         this.updateTokenAllowance()
       }
+    }
+    console.log('prevOrderId !== orderId', prevOrderId !== orderId)
+    if (prevOrderId !== orderId) {
+      this.checkSwapExists()
     }
   }
 
@@ -980,15 +983,28 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
 
     const actionType =
       (isTokenSell && sellWallet.standard) ||
-      (isTokenBuy && buyWallet.standart) ||
+      (isTokenBuy && buyWallet.standard) ||
       (isEvmCoinSell && sellCoin) ||
       (isEvmCoinBuy && buyCoin)
 
-    if (!actionType) return
-    console.log('!orderId', !orderId )
-    if (!orderId) return
+    const orderOwnerEvmCoin =
+      (isTokenSell && sellBlockchain) ||
+      (isTokenBuy && buyBlockchain) ||
+      (isEvmCoinSell && sellCoin) ||
+      (isEvmCoinBuy && buyCoin)
 
-    console.log('orderId',orderId)
+    console.log('!orderId', !orderId )
+    console.log('SwapApp === null', SwapApp === null)
+    console.log('!actionType', !actionType)
+    if (!actionType || SwapApp === null || !orderId) return
+
+    //@ts-ignore: strictNullChecks
+    const order = SwapApp.shared().services.orders.getByKey(orderId)
+
+    const orderOwnerEvmAddress = order.owner[orderOwnerEvmCoin.toLowerCase()].address
+
+    const swapOwnerAddress = (isTokenSell || isEvmCoinSell) ? sellWallet.address : orderOwnerEvmAddress
+    const swapParticipantAddress = (isTokenBuy || isEvmCoinBuy) ? buyWallet.address : orderOwnerEvmAddress
 
     console.groupCollapsed('checkSwapExists')
 
@@ -1000,11 +1016,12 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
     console.log('isEvmCoinBuy', isEvmCoinBuy)
     console.log('actionType', actionType.toLowerCase())
 
+    console.log('orderId',orderId)
+    console.log('order',order)
+
     console.groupEnd()
 
-
-
-    return true // await actions[actionType.toLowerCase()].checkSwapExists({ownerAddress, participantAddress})
+    return await actions[actionType.toLowerCase()].checkSwapExists({ownerAddress: swapOwnerAddress, participantAddress: swapParticipantAddress})
   }
 
   openModalDeclineOrders = (indexOfDecline) => {
