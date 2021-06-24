@@ -303,7 +303,12 @@ class EthLikeAction {
     }
 
     return new Promise((resolve) => {
-      if (!typeforce.isCoinAddress[this.ticker](address)) {
+      if (
+        // some blockchains don't have API
+        // don't show console errors in these cases
+        !this.explorerApiKey ||
+        !typeforce.isCoinAddress[this.ticker](address)
+      ) {
         resolve([])
       }
 
@@ -384,7 +389,6 @@ class EthLikeAction {
           }
         })
         .catch((error) => {
-          this.reportError(error)
           resolve([])
         })
     })

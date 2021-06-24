@@ -184,7 +184,7 @@ const addMetamaskWallet = () => {
       [config.evmNetworks.ETH.networkVersion, ethWalletInfo],
       [config.evmNetworks.BNB.networkVersion, bscWalletInfo],
       [config.evmNetworks.MATIC.networkVersion, maticWalletInfo],
-      [config.evmNetworks.ARBITRUM.networkVersion, arbitrumWalletInfo],
+      [config.evmNetworks.ARBETH.networkVersion, arbitrumWalletInfo],
     ])
 
     const hexChainId = web3connect.getChainId()
