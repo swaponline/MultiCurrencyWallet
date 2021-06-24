@@ -49,7 +49,7 @@ function FirstStep(props) {
                   <div styleName="logo">
                     <Coin
                       name={name}
-                      styleName={`assetsTableIcon coinColor`}
+                      styleName="assetsTableIcon coinColor"
                     />
                   </div>
                   <div styleName="listGroup">
