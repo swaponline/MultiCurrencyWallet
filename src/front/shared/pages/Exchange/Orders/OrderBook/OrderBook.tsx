@@ -50,6 +50,7 @@ type OrderBookProps = {
   orderId: string
 
   checkSwapAllow: ({}) => boolean
+  checkSwapExists: ({}) => boolean
 }
 
 type OrderBookState = {
@@ -202,6 +203,7 @@ class OrderBook extends Component<OrderBookProps, OrderBookState> {
       location, 
       currencies,
       checkSwapAllow,
+      checkSwapExists,
       buyCurrency: propsBuyCurrency,
       sellCurrency: propsSellCurrency,
       invalidPair,
@@ -361,6 +363,7 @@ class OrderBook extends Component<OrderBookProps, OrderBookState> {
                         pairFees={pairFees}
                         balances={balances}
                         checkSwapAllow={checkSwapAllow}
+                        checkSwapExists={checkSwapExists}
                         buy={buyCurrency}
                         sell={sellCurrency}
                       />
@@ -413,6 +416,7 @@ class OrderBook extends Component<OrderBookProps, OrderBookState> {
                         pairFees={pairFees}
                         balances={balances}
                         checkSwapAllow={checkSwapAllow}
+                        checkSwapExists={checkSwapExists}
                         buy={sellCurrency}
                         sell={buyCurrency}
                       />

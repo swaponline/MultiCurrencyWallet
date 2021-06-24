@@ -4,12 +4,14 @@ import { getState } from 'redux/core'
 import actions from 'redux/actions'
 import reducers from 'redux/core/reducers'
 import DEFAULT_CURRENCY_PARAMETERS from 'common/helpers/constants/DEFAULT_CURRENCY_PARAMETERS'
+import EVM_CONTRACTS_ABI from 'common/helpers/constants/EVM_CONTRACTS_ABI'
 import ethLikeHelper from 'common/helpers/ethLikeHelper'
 import * as mnemonicUtils from 'common/utils/mnemonic'
 import typeforce from 'swap.app/util/typeforce'
 import externalConfig from 'helpers/externalConfig'
 import metamask from 'helpers/metamask'
 import { feedback, constants, cacheStorageGet, cacheStorageSet, apiLooper } from 'helpers'
+
 
 class EthLikeAction {
   readonly coinName: string
@@ -406,6 +408,17 @@ class EthLikeAction {
     }
 
     return false
+  }
+
+  checkSwapExists = async (params) => {
+    const { ownerAddress, participantAddress } = params
+    const Web3 = this.getCurrentWeb3()
+    const swapContract = new Web3.eth.Contract(EVM_CONTRACTS_ABI.NATIVE_COIN_SWAP, externalConfig.swapContract[this.tickerKey])
+
+    const swap = await swapContract.methods.swaps(ownerAddress, participantAddress).call()
+    const balance = swap && swap.balance ? parseInt(swap.balance) : 0
+
+    return balance > 0
   }
 
   send = async (params): Promise<{ transactionHash: string }> => {
