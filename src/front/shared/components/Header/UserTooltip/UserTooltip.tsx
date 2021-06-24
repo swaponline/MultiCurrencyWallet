@@ -44,8 +44,8 @@ export default class UserTooltip extends Component<any, any> {
             return (
               mePeer === ownerPeer &&
               request.map(({ participant: { peer }, reputation }, index) => (
-                <div styleName="userTooltip" >
-                  <div key={index}>
+                <div styleName="userTooltip" key={index}>
+                  <div>
                     <div styleName="title">
                       <FormattedMessage
                         id="userTooltip43"

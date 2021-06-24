@@ -33,7 +33,7 @@ class Nav extends Component<NavProps, null> {
               const { title, link, exact, index, isExternal } = item
 
               return (
-                <div styleName='mainMenu' key={`${title} ${link}`} className="data-tut-widget-tourFinish">
+                <div styleName='mainMenu' key={index} className="data-tut-widget-tourFinish">
                   {isExternal ? (
                     <a
                       href={link}

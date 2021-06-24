@@ -3,7 +3,12 @@ export default {
     limit: {
       send: 630 * 1e3,
       // ? heed to check how much for swaps ?
-      swap: 1900 * 1e3,
+      swap: 3000 * 1e9,
+    },
+    price: {
+      slow: 0.1 * 1e9,
+      normal: 1 * 1e9,
+      fast: 20 * 1e9,
     },
   },
   evmLike: {

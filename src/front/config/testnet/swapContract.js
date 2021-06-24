@@ -5,7 +5,7 @@ export default {
   eth: '0x6e9c98a8a481bf038ba7e1d669a0086547dd144e',
   bnb: '0x6aa1bdc159e28beca44cc7f1a260a25e7b63f53d',
   matic: '0xf02f99d8D5fd6d40404bf151a4636F8b2e21D057',
-  arbitrum: '0xf02f99d8d5fd6d40404bf151a4636f8b2e21d057',
+  arbitrum: '0x129f1a081e203cb64c67f8782e238e0bf2247084',
   reputationOracle: '0x6260B5ef52d72732674fF4BDE3B37a4222dB1785',
   protectedBtcKey: '023d894571a253b87868db7d54a8b583e0c8ce53b484af8a0b0390b7722975cfaa',
   btcPinKey: '02094916ddab5abf215a49422a71be54ceb92c3d8114909048fc45ee90acdb5b32',
