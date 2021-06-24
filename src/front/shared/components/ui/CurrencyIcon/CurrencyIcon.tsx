@@ -33,6 +33,7 @@ const CurrencyIcon = (props: CurrencyIconProps) => {
       <img
         styleName="sizeLimit"
         src={source}
+        style={style}
         alt="icon"
         role="image"
       />

@@ -30,14 +30,6 @@ const SecondStep = (props) => {
   } = props
 
   const _protection = {
-    nothing: {
-      btc: true,
-      eth: true,
-      bnb: true,
-      ghost: true,
-      next: true,
-      erc: true,
-    },
     sms: {},
     pin: {
       btc: true,

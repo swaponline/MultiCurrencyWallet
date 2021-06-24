@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 
 import CSSModules from 'react-css-modules'
 import styles from '../CreateWallet.scss'
@@ -22,7 +22,6 @@ const isWidgetBuild = config && config.isWidget
 
 function FirstStep(props) {
   const { onClick, error, curState, startPack, handleClick } = props
-  const coloredIcons = ['btc', 'eth', 'bnb', 'ghost', 'next', 'swap', 'usdt', 'eurs']
 
   return (
     <div>
@@ -50,10 +49,7 @@ function FirstStep(props) {
                   <div styleName="logo">
                     <Coin
                       name={name}
-                      styleName={`assetsTableIcon ${coloredIcons.includes(name.toLowerCase())
-                        ? name.toLowerCase()
-                        : "coinColor"}`
-                      }
+                      styleName="assetsTableIcon coinColor"
                     />
                   </div>
                   <div styleName="listGroup">
