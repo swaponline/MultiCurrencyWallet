@@ -162,15 +162,7 @@ export default class StepsWrapper extends Component<any, any> {
         config.opts.createWalletCoinsOrder.forEach((coin, order) => {
           setCoinOrder(coin, order)
         })
-        packList.sort((pack1, pack2) => {
-          //@ts-ignore
-          if (pack1.order < pack2.order) {
-            return -1
-          } else {
-            return 1
-          }
-          return 0
-        })
+        packList.sort((pack1, pack2) => pack1.order - pack2.order)
       }
       sortPacks((isWidgetBuild) ? this.widgetStartPack : this.defaultStartPack)
     }
