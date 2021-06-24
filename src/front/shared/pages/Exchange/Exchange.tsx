@@ -217,8 +217,8 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
       const { coin: sellName } = getCoinInfo(sell)
       const { coin: buyName } = getCoinInfo(buy)
       if (
-        !allCurrencies.map((item) => item.name).includes(sellName.toUpperCase()) ||
-        !allCurrencies.map((item) => item.name).includes(buyName.toUpperCase())
+        !allCurrencies.map((item) => item.value.toUpperCase()).includes(sellName.toUpperCase()) ||
+        !allCurrencies.map((item) => item.value.toUpperCase()).includes(buyName.toUpperCase())
       ) {
         history.push(localisedUrl(locale, `${links.exchange}/eth-to-btc`))
       }
@@ -648,10 +648,20 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
 
   checkUrl = () => {
     const {
+      allCurrencies,
+      intl: { locale },
+      history,
       match: {
         params: { buy: buyValue, sell: sellValue },
       },
     } = this.props
+
+    if (
+      !allCurrencies.map((item) => item.value.toUpperCase()).includes(sellValue.toUpperCase()) ||
+      !allCurrencies.map((item) => item.value.toUpperCase()).includes(buyValue.toUpperCase())
+    ) {
+      history.push(localisedUrl(locale, `${links.exchange}/eth-to-btc`))
+    }
 
     const { getCurrency, haveCurrency } = this.state
 
