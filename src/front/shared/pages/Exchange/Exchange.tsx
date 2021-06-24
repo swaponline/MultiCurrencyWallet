@@ -1003,9 +1003,6 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
       (isEvmCoinSell && sellCoin) ||
       (isEvmCoinBuy && buyCoin)
 
-    console.log('!orderId', !orderId )
-    console.log('SwapApp === null', SwapApp === null)
-    console.log('!actionType', !actionType)
     if (!actionType || SwapApp === null || !orderId) return
 
     //@ts-ignore: strictNullChecks
@@ -1015,21 +1012,6 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
 
     const swapOwnerAddress = (isTokenSell || isEvmCoinSell) ? sellWallet.address : orderOwnerEvmAddress
     const swapParticipantAddress = (isTokenBuy || isEvmCoinBuy) ? buyWallet.address : orderOwnerEvmAddress
-
-    console.groupCollapsed('checkSwapExists')
-
-    console.log('sellWallet', sellWallet)
-    console.log('isTokenSell', isTokenSell)
-    console.log('isEvmCoinSell', isEvmCoinSell)
-    console.log('buyWallet', buyWallet)
-    console.log('isTokenBuy', isTokenBuy)
-    console.log('isEvmCoinBuy', isEvmCoinBuy)
-    console.log('actionType', actionType.toLowerCase())
-
-    console.log('orderId',orderId)
-    console.log('order',order)
-
-    console.groupEnd()
 
     return await actions[actionType.toLowerCase()].checkSwapExists({ownerAddress: swapOwnerAddress, participantAddress: swapParticipantAddress})
   }

@@ -190,7 +190,7 @@ class Row extends Component<RowProps, RowState> {
     if (isSwapExists) {
       actions.notifications.show(
         constants.notifications.ErrorNotification,
-        { error: 'You have Exists Swap with order participant. Please use orderbook for start swap with this pair.' }
+        { error: 'You have Exists Swap with order participant. Please use other order for start swap with this pair.' }
       )
       return false
     }
