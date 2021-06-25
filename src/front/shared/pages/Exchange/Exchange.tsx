@@ -214,11 +214,9 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
     } = match || { params: { buy: 'btc', sell: '{eth}usdt' } }
 
     if (sell && buy && !isRootPage) {
-      const { coin: sellName } = getCoinInfo(sell)
-      const { coin: buyName } = getCoinInfo(buy)
       if (
-        !allCurrencies.map((item) => item.value.toUpperCase()).includes(sellName.toUpperCase()) ||
-        !allCurrencies.map((item) => item.value.toUpperCase()).includes(buyName.toUpperCase())
+        !allCurrencies.map((item) => item.value.toUpperCase()).includes(sell.toUpperCase()) ||
+        !allCurrencies.map((item) => item.value.toUpperCase()).includes(buy.toUpperCase())
       ) {
         history.push(localisedUrl(locale, `${links.exchange}/eth-to-btc`))
       }
@@ -657,8 +655,11 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
     } = this.props
 
     if (
-      !allCurrencies.map((item) => item.value.toUpperCase()).includes(sellValue.toUpperCase()) ||
-      !allCurrencies.map((item) => item.value.toUpperCase()).includes(buyValue.toUpperCase())
+      sellValue && buyValue &&
+      (
+        !allCurrencies.map((item) => item.value.toUpperCase()).includes(sellValue.toUpperCase()) ||
+        !allCurrencies.map((item) => item.value.toUpperCase()).includes(buyValue.toUpperCase())
+      )
     ) {
       history.push(localisedUrl(locale, `${links.exchange}/eth-to-btc`))
     }
