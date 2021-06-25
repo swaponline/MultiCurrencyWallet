@@ -1398,7 +1398,7 @@
   },
   {
     "id": "CurrencyWalletTitle",
-    "message": "{fullName} ({currency}) онлайн кошелек, работащюий на технологии Atomic Swap",
+    "message": "Swap.Online - {fullName} ({currency}) онлайн кошелек, работащюий на технологии Atomic Swap",
     "files": [
       "src/front/shared/pages/CurrencyWallet/CurrencyWallet.tsx"
     ]

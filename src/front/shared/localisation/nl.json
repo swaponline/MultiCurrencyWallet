@@ -1213,7 +1213,7 @@
   },
   {
     "id": "CurrencyWalletTitle",
-    "message": "{fullName} ({currency}) Web Wallet with Atomic Swap.",
+    "message": "Swap.Online - {fullName} ({currency}) Web Wallet with Atomic Swap.",
     "files": [
       "src/front/shared/pages/CurrencyWallet/CurrencyWallet.tsx"
     ]

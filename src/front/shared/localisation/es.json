@@ -1220,7 +1220,7 @@
   },
   {
     "id": "CurrencyWalletTitle",
-    "message": "{fullName} ({currency}) Billetera web con Atomic Swap.",
+    "message": "Swap.Online - {fullName} ({currency}) Billetera web con Atomic Swap.",
     "files": [
       "src/front/shared/pages/CurrencyWallet/CurrencyWallet.tsx"
     ]
