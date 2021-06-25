@@ -5348,7 +5348,7 @@
   },
   {
     "id": "FeeRadiosSpeedTypeTimeSlow",
-    "message": "~60 more minutes",
+    "message": "60+ minutes",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
     ]
