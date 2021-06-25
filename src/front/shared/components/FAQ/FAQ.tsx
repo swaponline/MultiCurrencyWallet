@@ -88,10 +88,51 @@ const FAQ = (props) => {
     }
   }, [tabsVisibility.SECOND_TAB])
 
-  const BtcPrecentFee = adminFee.isEnabled('BTC')
-  const EthPrecentFee = adminFee.isEnabled('ETH')
-  const BnbPrecentFee = adminFee.isEnabled('BNB')
-  const MaticPrecentFee = adminFee.isEnabled('MATIC')
+  const miningFeeItems = [
+    {
+      ticker: 'BTC',
+      fee: btcFee,
+      unit: 'sat/byte',
+      sourceLink: externalConfig.api.blockcypher,
+    },
+    {
+      ticker: 'ETH',
+      fee: ethFee,
+      unit: 'gwei',
+      sourceLink: externalConfig.feeRates.eth,
+    },
+    {
+      ticker: 'BNB',
+      fee: bnbFee,
+      unit: 'gwei',
+      sourceLink: externalConfig.feeRates.bsc,
+    },
+    {
+      ticker: 'MATIC',
+      fee: maticFee,
+      unit: 'gwei',
+      sourceLink: externalConfig.feeRates.matic,
+    },
+  ]
+
+  const adminFeeItems = [
+    {
+      ticker: 'BTC',
+      percentFee: adminFee.isEnabled('BTC'),
+    },
+    {
+      ticker: 'ETH',
+      percentFee: adminFee.isEnabled('ETH'),
+    },
+    {
+      ticker: 'BNB',
+      percentFee: adminFee.isEnabled('BNB'),
+    },
+    {
+      ticker: 'MATIC',
+      percentFee: adminFee.isEnabled('MATIC'),
+    },
+  ]
 
   return (
     <div className={`${styles.faQuestions} ${isDark ? styles.dark : ''}`}>
@@ -147,120 +188,55 @@ const FAQ = (props) => {
             <p className={styles.feeInfoTitle}>
               <FormattedMessage id="MainFAQ2_content3" defaultMessage="Current mining fees:" />
             </p>
-            <div className={styles.descriptionFee}>
-              <span>BTC:</span>{' '}
-              {btcFee
-                ? (
-                  <span>
-                    <b>{btcFee}</b> sat/byte
-                    {' '}
-                    <a className={styles.link} href={externalConfig.api.blockcypher} target="_blank">
-                      <FormattedMessage id="FAQFeeApiLink" defaultMessage="(source)" />
-                    </a>
-                  </span>
-                ) : <InlineLoader />
-              }
-            </div>
-            <div className={styles.descriptionFee}>
-              <span>ETH:</span>{' '}
-              {ethFee
-                ? (
-                  <span>
-                    <b>{ethFee}</b> gwei
-                    {' '}
-                    <a className={styles.link} href={externalConfig.feeRates.eth} target="_blank">
-                      <FormattedMessage id="FAQFeeApiLink" defaultMessage="(source)" />
-                    </a>
-                  </span>
-                ) : <InlineLoader />
-              }
-            </div>
-            <div className={styles.descriptionFee}>
-              <span>BNB:</span>{' '}
-              {bnbFee
-                ? (
-                  <span>
-                    <b>{bnbFee}</b> gwei
-                    {' '}
-                    <a className={styles.link} href={externalConfig.feeRates.bsc} target="_blank">
-                      <FormattedMessage id="FAQFeeApiLink" defaultMessage="(source)" />
-                    </a>
-                  </span>
-                ) : <InlineLoader />
-              }
-            </div>
-            <div className={styles.descriptionFee}>
-              <span>MATIC:</span>{' '}
-              {bnbFee
-                ? (
-                  <span>
-                    <b>{maticFee}</b> gwei
-                    {' '}
-                    <a className={styles.link} href={externalConfig.feeRates.matic} target="_blank">
-                      <FormattedMessage id="FAQFeeApiLink" defaultMessage="(source)" />
-                    </a>
-                  </span>
-                ) : <InlineLoader />
-              }
-            </div>
+
+            {miningFeeItems.map((item, index) => {
+              const { ticker, fee, unit, sourceLink } = item
+
+              return (
+                <div className={styles.descriptionFee} key={index}>
+                  <span>{ticker}:</span>{' '}
+                  {fee ? (
+                    <span>
+                      <b>{fee}</b> {unit}
+                      {' '}
+                      {sourceLink && (
+                        <a className={styles.link} href={sourceLink} target="_blank">
+                          <FormattedMessage id="FAQFeeApiLink" defaultMessage="(source)" />
+                        </a>
+                      )}
+                    </span>
+                  ) : (
+                    <InlineLoader />
+                  )}
+                </div>
+              )
+            })}
 
             <br />
 
             <p className={styles.feeInfoTitle}>
               <FormattedMessage id="FAQServiceFee" defaultMessage="Service fee (only withdraw):" />
             </p>
-            <p className={styles.descriptionFee}>
-              <span>BTC:</span>{' '}
-              {BtcPrecentFee
-                ? (
-                  <span>
-                    {BtcPrecentFee.fee + '%, '}
-                    <FormattedMessage id="FAQServiceFeeDescription" defaultMessage="no less than" />
-                    {' '}<b>{adminFee.calc('BTC', null)}</b> BTC
-                  </span>
-                )
-                : <span>0%</span>
-              }
-            </p>
-            <p className={styles.descriptionFee}>
-              <span>ETH:</span>{' '}
-              {EthPrecentFee
-                  ? (
-                    <span>
-                      {EthPrecentFee.fee + '%, '}
-                      <FormattedMessage id="FAQServiceFeeDescription" defaultMessage="no less than" />
-                      {' '}<b>{adminFee.calc('ETH', null)}</b> ETH
-                    </span>
-                  )
-                  : <span>0%</span>
-              }
-            </p>
-            <p className={styles.descriptionFee}>
-              <span>BNB:</span>{' '}
-              {BnbPrecentFee
-                ? (
-                  <span>
-                    {BnbPrecentFee.fee + '%, '}
-                    <FormattedMessage id="FAQServiceFeeDescription" defaultMessage="no less than" />
-                    {' '}<b>{adminFee.calc('BNB', null)}</b> BNB
-                  </span>
-                )
-                : <span>0%</span>
-              }
-            </p>
-            <p className={styles.descriptionFee}>
-              <span>MATIC:</span>{' '}
-              {MaticPrecentFee
-                ? (
-                  <span>
-                    {MaticPrecentFee.fee + '%, '}
-                    <FormattedMessage id="FAQServiceFeeDescription" defaultMessage="no less than" />
-                    {' '}<b>{adminFee.calc('MATIC', null)}</b> MATIC
-                  </span>
-                )
-                : <span>0%</span>
-              }
-            </p>
+
+            {adminFeeItems.map((item, index) => {
+              const { ticker, percentFee } = item
+
+              return (
+                <p className={styles.descriptionFee} key={index}>
+                  <span>{ticker}:</span>{' '}
+                  {percentFee
+                    ? (
+                      <span>
+                        {percentFee.fee + '%, '}
+                        <FormattedMessage id="FAQServiceFeeDescription" defaultMessage="no less than" />
+                        {' '}<b>{adminFee.calc(ticker, null)}</b> {ticker}
+                      </span>
+                    )
+                    : <span>0%</span>
+                  }
+                </p>
+              )
+            })}
           </div>
         </article>
 
