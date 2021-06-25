@@ -657,8 +657,11 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
     } = this.props
 
     if (
-      !allCurrencies.map((item) => item.value.toUpperCase()).includes(sellValue.toUpperCase()) ||
-      !allCurrencies.map((item) => item.value.toUpperCase()).includes(buyValue.toUpperCase())
+      sellValue && buyValue &&
+      (
+        !allCurrencies.map((item) => item.value.toUpperCase()).includes(sellValue.toUpperCase()) ||
+        !allCurrencies.map((item) => item.value.toUpperCase()).includes(buyValue.toUpperCase())
+      )
     ) {
       history.push(localisedUrl(locale, `${links.exchange}/eth-to-btc`))
     }
