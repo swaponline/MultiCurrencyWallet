@@ -9,6 +9,8 @@ import cssModules from 'react-css-modules'
 import cx from 'classnames'
 import styles from './styles.scss'
 
+const isDark = localStorage.getItem(constants.localStorage.isDark)
+
 const NETWORK = process.env.MAINNET
   ? 'MAINNET'
   : 'TESTNET'
@@ -20,6 +22,27 @@ const tabsIdsDictionary = {
 }
 
 const FAQ = (props) => {
+  const { intl: { formatMessage } } = props
+  const [tabsVisibility, setTabsVisibility] = useState({
+    FIRST_TAB: false,
+    SECOND_TAB: false,
+    THIRD_TAB: false,
+  })
+  const [openedTabs, setOpenedTabs] = useState({
+    FIRST_TAB: false,
+    SECOND_TAB: false,
+    THIRD_TAB: false,
+  })
+
+  const handleTabClick = (tabName) => {
+    setTabsVisibility({ ...tabsVisibility, [tabName]: !tabsVisibility[tabName] })
+
+    if (!openedTabs[tabName]) {
+      feedback.faq.opened(formatMessage({ id: tabsIdsDictionary[tabName] }))
+      setOpenedTabs({ ...openedTabs, [tabName]: true })
+    }
+  }
+
   const [btcFee, setBtcFee] = useState(0)
   const [ethFee, setEthFee] = useState(0)
   const [bnbFee, setBnbFee] = useState(0)
@@ -56,34 +79,14 @@ const FAQ = (props) => {
       }
     }
 
-    fetchFees()
+    if (tabsVisibility.SECOND_TAB) {
+      fetchFees()
+    }
+
     return () => {
       _mounted = false
     }
-  })
-
-  const { intl: { formatMessage } } = props
-  const [openedTabs, setOpenedTabs] = useState({
-    FIRST_TAB: false,
-    SECOND_TAB: false,
-    THIRD_TAB: false,
-  })
-  const [openedTabsCounter, setOpenedTabsCounter] = useState({
-    FIRST_TAB: 0,
-    SECOND_TAB: 0,
-    THIRD_TAB: 0,
-  })
-
-
-  const isDark = localStorage.getItem(constants.localStorage.isDark)
-
-  const handleTabClick = (tabName) => {
-    setOpenedTabs({ ...openedTabs, [tabName]: !openedTabs[tabName] })
-    if (openedTabsCounter[tabName] === 0) {
-      feedback.faq.opened(formatMessage({ id: tabsIdsDictionary[tabName] }))
-    }
-    setOpenedTabsCounter({ ...openedTabsCounter, [tabName]: ++openedTabsCounter[tabName] })
-  }
+  }, [tabsVisibility.SECOND_TAB])
 
   const BtcPrecentFee = adminFee.isEnabled('BTC')
   const EthPrecentFee = adminFee.isEnabled('ETH')
@@ -100,13 +103,13 @@ const FAQ = (props) => {
           <h6 className={styles.tab__header} onClick={() => handleTabClick('FIRST_TAB')}>
             <div className={cx({
               [styles.chrest]: true,
-              [styles.chrest_active]: openedTabs.FIRST_TAB,
+              [styles.chrest_active]: tabsVisibility.FIRST_TAB,
             })} />
             <FormattedMessage id="MainFAQ1_header" defaultMessage="How are my private keys stored?" />
           </h6>
           <div className={cx({
             [styles.tab__content]: true,
-            [styles.tab__content_active]: openedTabs.FIRST_TAB,
+            [styles.tab__content_active]: tabsVisibility.FIRST_TAB,
           })}>
             <FormattedMessage id="MainFAQ1_content" defaultMessage="Your private keys are stored ONLY on your device, in the localStorage of your browser. Please backup your keys, because your browser or device may be crashed." />
           </div>
@@ -116,13 +119,13 @@ const FAQ = (props) => {
           <h6 className={styles.tab__header} onClick={() => handleTabClick('SECOND_TAB')}>
             <div className={cx({
               [styles.chrest]: true,
-              [styles.chrest_active]: openedTabs.SECOND_TAB,
+              [styles.chrest_active]: tabsVisibility.SECOND_TAB,
             })} />
             <FormattedMessage id="MainFAQ2_header" defaultMessage="What are the fees involved?" />
           </h6>
           <div className={cx({
             [styles.tab__content]: true,
-            [styles.tab__content_active]: openedTabs.SECOND_TAB,
+            [styles.tab__content_active]: tabsVisibility.SECOND_TAB,
           })}>
             <p>
               <FormattedMessage id="MainFAQ2_content" defaultMessage="You pay the standard TX (miners fees) for all transactions you conduct on the platform." />
@@ -265,13 +268,13 @@ const FAQ = (props) => {
           <h6 className={styles.tab__header} onClick={() => handleTabClick('THIRD_TAB')}>
             <div className={cx({
               [styles.chrest]: true,
-              [styles.chrest_active]: openedTabs.THIRD_TAB,
+              [styles.chrest_active]: tabsVisibility.THIRD_TAB,
             })} />
             <FormattedMessage id="MainFAQ3_header" defaultMessage="Why mining fee is too high?" />
           </h6>
           <div className={cx({
             [styles.tab__content]: true,
-            [styles.tab__content_active]: openedTabs.THIRD_TAB,
+            [styles.tab__content_active]: tabsVisibility.THIRD_TAB,
           })}>
             <p>
               <FormattedMessage id="MainFAQ3_content" defaultMessage="Blockchain fees depend on several factors including network congestion and transaction size (affected when converting crypto from multiple inputs such as faucet earnings or other micro-transactions)." />
