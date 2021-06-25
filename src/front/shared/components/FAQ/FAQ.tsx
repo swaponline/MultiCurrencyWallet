@@ -9,6 +9,8 @@ import cssModules from 'react-css-modules'
 import cx from 'classnames'
 import styles from './styles.scss'
 
+const isDark = localStorage.getItem(constants.localStorage.isDark)
+
 const NETWORK = process.env.MAINNET
   ? 'MAINNET'
   : 'TESTNET'
@@ -20,6 +22,27 @@ const tabsIdsDictionary = {
 }
 
 const FAQ = (props) => {
+  const { intl: { formatMessage } } = props
+  const [tabsVisibility, setTabsVisibility] = useState({
+    FIRST_TAB: false,
+    SECOND_TAB: false,
+    THIRD_TAB: false,
+  })
+  const [openedTabs, setOpenedTabs] = useState({
+    FIRST_TAB: false,
+    SECOND_TAB: false,
+    THIRD_TAB: false,
+  })
+
+  const handleTabClick = (tabName) => {
+    setTabsVisibility({ ...tabsVisibility, [tabName]: !tabsVisibility[tabName] })
+
+    if (!openedTabs[tabName]) {
+      feedback.faq.opened(formatMessage({ id: tabsIdsDictionary[tabName] }))
+      setOpenedTabs({ ...openedTabs, [tabName]: true })
+    }
+  }
+
   const [btcFee, setBtcFee] = useState(0)
   const [ethFee, setEthFee] = useState(0)
   const [bnbFee, setBnbFee] = useState(0)
@@ -56,39 +79,60 @@ const FAQ = (props) => {
       }
     }
 
-    fetchFees()
+    if (tabsVisibility.SECOND_TAB) {
+      fetchFees()
+    }
+
     return () => {
       _mounted = false
     }
-  })
+  }, [tabsVisibility.SECOND_TAB])
 
-  const { intl: { formatMessage } } = props
-  const [openedTabs, setOpenedTabs] = useState({
-    FIRST_TAB: false,
-    SECOND_TAB: false,
-    THIRD_TAB: false,
-  })
-  const [openedTabsCounter, setOpenedTabsCounter] = useState({
-    FIRST_TAB: 0,
-    SECOND_TAB: 0,
-    THIRD_TAB: 0,
-  })
+  const miningFeeItems = [
+    {
+      ticker: 'BTC',
+      fee: btcFee,
+      unit: 'sat/byte',
+      sourceLink: externalConfig.api.blockcypher,
+    },
+    {
+      ticker: 'ETH',
+      fee: ethFee,
+      unit: 'gwei',
+      sourceLink: externalConfig.feeRates.eth,
+    },
+    {
+      ticker: 'BNB',
+      fee: bnbFee,
+      unit: 'gwei',
+      sourceLink: externalConfig.feeRates.bsc,
+    },
+    {
+      ticker: 'MATIC',
+      fee: maticFee,
+      unit: 'gwei',
+      sourceLink: externalConfig.feeRates.matic,
+    },
+  ]
 
-
-  const isDark = localStorage.getItem(constants.localStorage.isDark)
-
-  const handleTabClick = (tabName) => {
-    setOpenedTabs({ ...openedTabs, [tabName]: !openedTabs[tabName] })
-    if (openedTabsCounter[tabName] === 0) {
-      feedback.faq.opened(formatMessage({ id: tabsIdsDictionary[tabName] }))
-    }
-    setOpenedTabsCounter({ ...openedTabsCounter, [tabName]: ++openedTabsCounter[tabName] })
-  }
-
-  const BtcPrecentFee = adminFee.isEnabled('BTC')
-  const EthPrecentFee = adminFee.isEnabled('ETH')
-  const BnbPrecentFee = adminFee.isEnabled('BNB')
-  const MaticPrecentFee = adminFee.isEnabled('MATIC')
+  const adminFeeItems = [
+    {
+      ticker: 'BTC',
+      percentFee: adminFee.isEnabled('BTC'),
+    },
+    {
+      ticker: 'ETH',
+      percentFee: adminFee.isEnabled('ETH'),
+    },
+    {
+      ticker: 'BNB',
+      percentFee: adminFee.isEnabled('BNB'),
+    },
+    {
+      ticker: 'MATIC',
+      percentFee: adminFee.isEnabled('MATIC'),
+    },
+  ]
 
   return (
     <div className={`${styles.faQuestions} ${isDark ? styles.dark : ''}`}>
@@ -100,13 +144,13 @@ const FAQ = (props) => {
           <h6 className={styles.tab__header} onClick={() => handleTabClick('FIRST_TAB')}>
             <div className={cx({
               [styles.chrest]: true,
-              [styles.chrest_active]: openedTabs.FIRST_TAB,
+              [styles.chrest_active]: tabsVisibility.FIRST_TAB,
             })} />
             <FormattedMessage id="MainFAQ1_header" defaultMessage="How are my private keys stored?" />
           </h6>
           <div className={cx({
             [styles.tab__content]: true,
-            [styles.tab__content_active]: openedTabs.FIRST_TAB,
+            [styles.tab__content_active]: tabsVisibility.FIRST_TAB,
           })}>
             <FormattedMessage id="MainFAQ1_content" defaultMessage="Your private keys are stored ONLY on your device, in the localStorage of your browser. Please backup your keys, because your browser or device may be crashed." />
           </div>
@@ -116,13 +160,13 @@ const FAQ = (props) => {
           <h6 className={styles.tab__header} onClick={() => handleTabClick('SECOND_TAB')}>
             <div className={cx({
               [styles.chrest]: true,
-              [styles.chrest_active]: openedTabs.SECOND_TAB,
+              [styles.chrest_active]: tabsVisibility.SECOND_TAB,
             })} />
             <FormattedMessage id="MainFAQ2_header" defaultMessage="What are the fees involved?" />
           </h6>
           <div className={cx({
             [styles.tab__content]: true,
-            [styles.tab__content_active]: openedTabs.SECOND_TAB,
+            [styles.tab__content_active]: tabsVisibility.SECOND_TAB,
           })}>
             <p>
               <FormattedMessage id="MainFAQ2_content" defaultMessage="You pay the standard TX (miners fees) for all transactions you conduct on the platform." />
@@ -144,120 +188,55 @@ const FAQ = (props) => {
             <p className={styles.feeInfoTitle}>
               <FormattedMessage id="MainFAQ2_content3" defaultMessage="Current mining fees:" />
             </p>
-            <div className={styles.descriptionFee}>
-              <span>BTC:</span>{' '}
-              {btcFee
-                ? (
-                  <span>
-                    <b>{btcFee}</b> sat/byte
-                    {' '}
-                    <a className={styles.link} href={externalConfig.api.blockcypher} target="_blank">
-                      <FormattedMessage id="FAQFeeApiLink" defaultMessage="(source)" />
-                    </a>
-                  </span>
-                ) : <InlineLoader />
-              }
-            </div>
-            <div className={styles.descriptionFee}>
-              <span>ETH:</span>{' '}
-              {ethFee
-                ? (
-                  <span>
-                    <b>{ethFee}</b> gwei
-                    {' '}
-                    <a className={styles.link} href={externalConfig.feeRates.eth} target="_blank">
-                      <FormattedMessage id="FAQFeeApiLink" defaultMessage="(source)" />
-                    </a>
-                  </span>
-                ) : <InlineLoader />
-              }
-            </div>
-            <div className={styles.descriptionFee}>
-              <span>BNB:</span>{' '}
-              {bnbFee
-                ? (
-                  <span>
-                    <b>{bnbFee}</b> gwei
-                    {' '}
-                    <a className={styles.link} href={externalConfig.feeRates.bsc} target="_blank">
-                      <FormattedMessage id="FAQFeeApiLink" defaultMessage="(source)" />
-                    </a>
-                  </span>
-                ) : <InlineLoader />
-              }
-            </div>
-            <div className={styles.descriptionFee}>
-              <span>MATIC:</span>{' '}
-              {bnbFee
-                ? (
-                  <span>
-                    <b>{maticFee}</b> gwei
-                    {' '}
-                    <a className={styles.link} href={externalConfig.feeRates.matic} target="_blank">
-                      <FormattedMessage id="FAQFeeApiLink" defaultMessage="(source)" />
-                    </a>
-                  </span>
-                ) : <InlineLoader />
-              }
-            </div>
+
+            {miningFeeItems.map((item, index) => {
+              const { ticker, fee, unit, sourceLink } = item
+
+              return (
+                <div className={styles.descriptionFee} key={index}>
+                  <span>{ticker}:</span>{' '}
+                  {fee ? (
+                    <span>
+                      <b>{fee}</b> {unit}
+                      {' '}
+                      {sourceLink && (
+                        <a className={styles.link} href={sourceLink} target="_blank">
+                          <FormattedMessage id="FAQFeeApiLink" defaultMessage="(source)" />
+                        </a>
+                      )}
+                    </span>
+                  ) : (
+                    <InlineLoader />
+                  )}
+                </div>
+              )
+            })}
 
             <br />
 
             <p className={styles.feeInfoTitle}>
               <FormattedMessage id="FAQServiceFee" defaultMessage="Service fee (only withdraw):" />
             </p>
-            <p className={styles.descriptionFee}>
-              <span>BTC:</span>{' '}
-              {BtcPrecentFee
-                ? (
-                  <span>
-                    {BtcPrecentFee.fee + '%, '}
-                    <FormattedMessage id="FAQServiceFeeDescription" defaultMessage="no less than" />
-                    {' '}<b>{adminFee.calc('BTC', null)}</b> BTC
-                  </span>
-                )
-                : <span>0%</span>
-              }
-            </p>
-            <p className={styles.descriptionFee}>
-              <span>ETH:</span>{' '}
-              {EthPrecentFee
-                  ? (
-                    <span>
-                      {EthPrecentFee.fee + '%, '}
-                      <FormattedMessage id="FAQServiceFeeDescription" defaultMessage="no less than" />
-                      {' '}<b>{adminFee.calc('ETH', null)}</b> ETH
-                    </span>
-                  )
-                  : <span>0%</span>
-              }
-            </p>
-            <p className={styles.descriptionFee}>
-              <span>BNB:</span>{' '}
-              {BnbPrecentFee
-                ? (
-                  <span>
-                    {BnbPrecentFee.fee + '%, '}
-                    <FormattedMessage id="FAQServiceFeeDescription" defaultMessage="no less than" />
-                    {' '}<b>{adminFee.calc('BNB', null)}</b> BNB
-                  </span>
-                )
-                : <span>0%</span>
-              }
-            </p>
-            <p className={styles.descriptionFee}>
-              <span>MATIC:</span>{' '}
-              {MaticPrecentFee
-                ? (
-                  <span>
-                    {MaticPrecentFee.fee + '%, '}
-                    <FormattedMessage id="FAQServiceFeeDescription" defaultMessage="no less than" />
-                    {' '}<b>{adminFee.calc('MATIC', null)}</b> MATIC
-                  </span>
-                )
-                : <span>0%</span>
-              }
-            </p>
+
+            {adminFeeItems.map((item, index) => {
+              const { ticker, percentFee } = item
+
+              return (
+                <p className={styles.descriptionFee} key={index}>
+                  <span>{ticker}:</span>{' '}
+                  {percentFee
+                    ? (
+                      <span>
+                        {percentFee.fee + '%, '}
+                        <FormattedMessage id="FAQServiceFeeDescription" defaultMessage="no less than" />
+                        {' '}<b>{adminFee.calc(ticker, null)}</b> {ticker}
+                      </span>
+                    )
+                    : <span>0%</span>
+                  }
+                </p>
+              )
+            })}
           </div>
         </article>
 
@@ -265,13 +244,13 @@ const FAQ = (props) => {
           <h6 className={styles.tab__header} onClick={() => handleTabClick('THIRD_TAB')}>
             <div className={cx({
               [styles.chrest]: true,
-              [styles.chrest_active]: openedTabs.THIRD_TAB,
+              [styles.chrest_active]: tabsVisibility.THIRD_TAB,
             })} />
             <FormattedMessage id="MainFAQ3_header" defaultMessage="Why mining fee is too high?" />
           </h6>
           <div className={cx({
             [styles.tab__content]: true,
-            [styles.tab__content_active]: openedTabs.THIRD_TAB,
+            [styles.tab__content_active]: tabsVisibility.THIRD_TAB,
           })}>
             <p>
               <FormattedMessage id="MainFAQ3_content" defaultMessage="Blockchain fees depend on several factors including network congestion and transaction size (affected when converting crypto from multiple inputs such as faucet earnings or other micro-transactions)." />
