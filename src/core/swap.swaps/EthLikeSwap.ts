@@ -75,7 +75,7 @@ class EthLikeSwap extends SwapInterface {
 
     this._swapName      = options.coinName //constants.COINS.eth
 
-    this.gasLimit       = options.gasLimit || 3e5
+    this.gasLimit       = options.gasLimit || 5e5
     this.gasPrice       = options.gasPrice || 2e9
     this.fetchBalance   = options.fetchBalance
     this.estimateGasPrice = options.estimateGasPrice || (() => {})
@@ -157,7 +157,6 @@ class EthLikeSwap extends SwapInterface {
     return new Promise(async (resolve, reject) => {
       const params = {
         from: this.getMyAddress(),
-        gas: this.gasLimit,
         gasPrice: this.gasPrice,
         ..._params,
       }
@@ -166,7 +165,7 @@ class EthLikeSwap extends SwapInterface {
 
       const gasAmount = await this.contract.methods[methodName](...args).estimateGas(params)
 
-      params.gas = gasAmount
+      params['gas'] = new BigNumber(gasAmount).multipliedBy(1.05).dp(0, BigNumber.ROUND_UP).toNumber() || this.gasLimit
 
       debug(`EthLikeSwapSwap ${this.coinName} -> ${methodName} -> gas`, gasAmount)
 
@@ -530,13 +529,12 @@ class EthLikeSwap extends SwapInterface {
 
       const params = {
         from: this.getMyAddress(),
-        gas: this.gasLimit,
         gasPrice: this.gasPrice,
       }
 
       try {
         const gasFee = await this.contract.methods.withdrawOther(_secret, ownerAddress, participantAddress).estimateGas(params);
-        resolve(gasFee)
+        resolve(new BigNumber(gasFee).multipliedBy(1.05).dp(0, BigNumber.ROUND_UP).toNumber() || this.gasLimit)
       }
       catch (err) {
         reject(err)
