@@ -140,9 +140,7 @@ const CreateWallet = (props) => {
     if (isIgnoreSecondStep) {
       Object.keys(currencies).forEach((currency) => {
         if (currencies[currency]) {
-          const { coin, blockchain } = getCoinInfo(currency)
-
-          actions.core.markCoinAsVisible(coin.toUpperCase(), true)
+          actions.core.markCoinAsVisible(currency.toUpperCase(), true)
         }
       })
       localStorage.setItem(constants.localStorage.isWalletCreate, true)

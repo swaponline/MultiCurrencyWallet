@@ -37,7 +37,7 @@ export const getActivatedCurrencies = () => {
     const standard = TOKEN_STANDARDS[key].standard
 
     Object.keys(config[standard]).forEach((token) => {
-      currencies.push(token.toUpperCase())
+      currencies.push(`{${TOKEN_STANDARDS[standard].currency.toUpperCase()}}${token.toUpperCase()}`)
     })
   })
 
@@ -65,7 +65,7 @@ export const getWidgetCurrencies = () => {
   if (externalConfig.isWidget) {
     if (window?.widgetEvmLikeTokens?.length) {
       window.widgetEvmLikeTokens.forEach((token) => {
-        widgetCurrencies.push(token.name.toUpperCase())
+        widgetCurrencies.push(`{${TOKEN_STANDARDS[token.standard].currency.toUpperCase()}}${token.name.toUpperCase()}`)
       })
     } else {
       widgetCurrencies.push(config.erc20token.toUpperCase())
@@ -75,14 +75,20 @@ export const getWidgetCurrencies = () => {
   return widgetCurrencies
 }
 
-export const filterUserCurrencyData = (currencyData) =>
-  currencyData.filter((wallet) =>
-    isAllowedCurrency(wallet.currency, wallet.address)
+export const filterUserCurrencyData = (currencyData) => {
+  console.log('currencyData', currencyData)
+  return currencyData.filter((wallet) =>
+    isAllowedCurrency(wallet.isToken ? wallet.tokenKey.toUpperCase() : wallet.currency, wallet.address)
   )
+}
 
 export const isAllowedCurrency = (currency = '', address = '') => {
   const { core: { hiddenCoinsList } } = store.getState()
   const enabledCurrencies = getActivatedCurrencies()
+
+  console.log('hiddenCoinsList', hiddenCoinsList)
+  console.log('enabledCurrencies', enabledCurrencies)
+  console.log('currency', currency)
 
   return (
     !hiddenCoinsList.includes(currency) &&

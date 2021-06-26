@@ -276,9 +276,9 @@ class App extends React.Component<RouteComponentProps<any>, any> {
     const isWalletCreate = localStorage.getItem(constants.localStorage.isWalletCreate)
 
     if (!isWalletCreate) {
-      currencies.forEach(({ name }) => {
+      currencies.forEach(({ name, standard, value }) => {
         if (name !== "BTC") {
-          actions.core.markCoinAsHidden(name)
+          actions.core.markCoinAsHidden(standard ? value.toUpperCase() : name)
         }
       })
     }
