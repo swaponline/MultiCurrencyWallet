@@ -138,15 +138,16 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
 
     const {
       coinsData,
-      data: {
-        toAddress,
-        currency,
-        address: walletAddressOwner,
-        itemCurrency,
-      },
+      data: selectedCurrency,
     } = props
 
-    const selectedCurrency = props.data
+    const {
+      toAddress,
+      currency,
+      address: walletAddressOwner,
+      itemCurrency,
+    } = selectedCurrency
+
     const currentDecimals = constants.tokenDecimals[getCurrencyKey(currency, true).toLowerCase()]
     const selectedItem = actions.user.getWithdrawWallet(
       itemCurrency?.tokenKey || currency,
