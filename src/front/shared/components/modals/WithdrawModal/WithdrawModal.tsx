@@ -629,10 +629,6 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
     } = this.props
     const { address, selectedItem } = this.state
 
-    console.log('currency', currency)
-    console.log('address', address)
-    console.log('selectedItem', selectedItem)
-
     if (getCurrencyKey(currency, false).toLowerCase() === `btc`) {
       if (!typeforce.isCoinAddress.BTC(address)) {
         return actions.btc.addressIsCorrect(address)
