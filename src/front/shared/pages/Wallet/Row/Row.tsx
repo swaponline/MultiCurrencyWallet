@@ -382,8 +382,10 @@ class Row extends Component<RowProps, RowState> {
 
   hideCurrency = () => {
     const {
-      itemData: { currency, address, balance },
+      itemData: { currency, address, balance, isToken, tokenKey },
     } = this.props
+
+    console.log('this.props', this.props.itemData)
 
     if (balance > 0) {
       actions.modals.open(constants.modals.AlertModal, {
@@ -395,7 +397,7 @@ class Row extends Component<RowProps, RowState> {
         ),
       })
     } else {
-      actions.core.markCoinAsHidden(`${currency}:${address}`)
+      actions.core.markCoinAsHidden(`${isToken ? tokenKey.toUpperCase() : currency}:${address}`)
       actions.notifications.show(constants.notifications.Message, {
         message: (
           <FormattedMessage

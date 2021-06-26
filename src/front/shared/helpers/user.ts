@@ -86,10 +86,6 @@ export const isAllowedCurrency = (currency = '', address = '') => {
   const { core: { hiddenCoinsList } } = store.getState()
   const enabledCurrencies = getActivatedCurrencies()
 
-  console.log('hiddenCoinsList', hiddenCoinsList)
-  console.log('enabledCurrencies', enabledCurrencies)
-  console.log('currency', currency)
-
   return (
     !hiddenCoinsList.includes(currency) &&
     !hiddenCoinsList.includes(`${currency}:${address}`) &&
