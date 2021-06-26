@@ -338,6 +338,12 @@ class AtomicAB2UTXO extends Flow {
   }
 
   async sign() {
+    const { isSignFetching, isMeSigned } = this.state
+
+    if (isSignFetching || isMeSigned) {
+      return true
+    }
+
     const swapExists = await this._checkSwapAlreadyExists()
 
     if (swapExists) {
@@ -352,11 +358,6 @@ class AtomicAB2UTXO extends Flow {
       console.log('>>>>> STOP SWAP PROCESS - SWAP EXIST ON SIGN')
       this.stopSwapProcess()
     } else {
-      const { isSignFetching, isMeSigned } = this.state
-
-      if (isSignFetching || isMeSigned) {
-        return true
-      }
 
       this.setState({
         isSignFetching: true,

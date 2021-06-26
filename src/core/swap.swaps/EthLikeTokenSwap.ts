@@ -96,7 +96,7 @@ class EthLikeTokenSwap extends SwapInterface {
     this.tokenAddress   = options.tokenAddress
     this.tokenAbi       = options.tokenAbi
 
-    this.gasLimit       = options.gasLimit || 2e5
+    this.gasLimit       = options.gasLimit || 5e5
     this.gasPrice       = options.gasPrice || 2e9
     this.fetchBalance   = options.fetchBalance
     this.estimateGasPrice = options.estimateGasPrice || (() => {})
@@ -153,7 +153,6 @@ class EthLikeTokenSwap extends SwapInterface {
     return new Promise(async (resolve, reject) => {
       const params = {
         from: this.getMyAddress(),
-        gas: this.gasLimit,
         gasPrice: this.gasPrice,
         ..._params,
       }
@@ -168,7 +167,7 @@ class EthLikeTokenSwap extends SwapInterface {
         return
       }
 
-      params.gas = gasAmount
+      params['gas'] = new BigNumber(gasAmount).multipliedBy(1.05).dp(0, BigNumber.ROUND_UP).toNumber() || this.gasLimit
       //@ts-ignore
       debug(`EthLikeTokenSwap $[this.blockchainName} -> ${methodName} -> gas`, gasAmount)
       const receipt = await this.contract.methods[methodName](...args).send(params)
@@ -205,13 +204,12 @@ class EthLikeTokenSwap extends SwapInterface {
       try {
         const params = {
           from: this.getMyAddress(),
-          gas: this.gasLimit,
           gasPrice: this.gasPrice,
         }
 
         const gasAmount = await this.ERC20.methods.approve(this.address, newAmount).estimateGas(params)
 
-        params.gas = gasAmount
+        params['gas'] = new BigNumber(gasAmount).multipliedBy(1.05).dp(0, BigNumber.ROUND_UP).toNumber() || this.gasLimit
 
         //@ts-ignore
         debug(`EthLikeTokenSwap ${this.blockchainName} -> approve -> params`, params)
@@ -648,13 +646,12 @@ class EthLikeTokenSwap extends SwapInterface {
 
       const params = {
         from: this.getMyAddress(),
-        gas: this.gasLimit,
         gasPrice: this.gasPrice,
       }
 
       try {
         const gasAmount = await this.contract.methods.withdrawOther(_secret, ownerAddress, participantAddress).estimateGas(params);
-        resolve(gasAmount)
+        resolve(new BigNumber(gasAmount).multipliedBy(1.05).dp(0, BigNumber.ROUND_UP).toNumber() || this.gasLimit)
       }
       catch (err) {
         reject(err)
