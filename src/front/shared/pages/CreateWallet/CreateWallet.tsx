@@ -273,7 +273,7 @@ const CreateWallet = (props) => {
   let forcedCurrencyData
 
   if (forcedCurrency) {
-    forcedCurrencyData = allCurrencies.find(({ name }) => name === forcedCurrency.toUpperCase())
+    forcedCurrencyData = allCurrencies.find(({ name, standard, value }) => (standard ? value.toUpperCase() : name ) === forcedCurrency.toUpperCase())
     if (forcedCurrencyData) {
       currencies[forcedCurrency.toLowerCase()] = true
     }
