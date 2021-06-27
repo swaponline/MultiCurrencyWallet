@@ -176,6 +176,7 @@ class CurrencyWallet extends Component<any, any> {
         currency,
         address,
         balance,
+        itemCurrency,
         infoAboutCurrency,
         hiddenCoinsList,
       })

@@ -194,6 +194,7 @@ class InfoInvoice extends React.Component<any, any> {
           currency,
           address,
           balance,
+          itemCurrency: payWallet,
           unconfirmedBalance,
           toAddress: destAddress || fromAddress,
           amount: amount,
