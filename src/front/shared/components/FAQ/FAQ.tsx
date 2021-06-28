@@ -123,7 +123,7 @@ const FAQ = (props) => {
       sourceLink: externalConfig.feeRates.matic,
     },
     {
-      ticker: 'ArbETH',
+      ticker: 'ARBETH',
       fee: fees.arbeth,
       unit: 'gwei',
     },
@@ -147,7 +147,7 @@ const FAQ = (props) => {
       percentFee: adminFee.isEnabled('MATIC'),
     },
     {
-      ticker: 'ArbETH',
+      ticker: 'ARBETH',
       percentFee: adminFee.isEnabled('ARBETH'),
     },
   ]

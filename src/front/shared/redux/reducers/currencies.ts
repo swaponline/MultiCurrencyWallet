@@ -127,8 +127,8 @@ const initialState = {
     }] : [],
     //@ts-ignore
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.arbeth) ? [{
-      name: 'ArbETH',
-      title: 'ArbETH',
+      name: 'ARBETH',
+      title: 'ARBETH',
       icon: 'arbeth',
       value: 'arbeth',
       fullTitle: 'arbitrum eth',
@@ -224,8 +224,8 @@ const initialState = {
     }] : [],
     //@ts-ignore
     ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.arbeth) ? [{
-      name: 'ArbETH',
-      title: 'ArbETH',
+      name: 'ARBETH',
+      title: 'ARBETH',
       icon: 'arbeth',
       value: 'arbeth',
       fullTitle: 'arbitrum eth',
@@ -285,8 +285,8 @@ if (config.isWidget) {
       fullTitle: 'matic token',
     },
     {
-      name: 'ArbETH',
-      title: 'ArbETH',
+      name: 'ARBETH',
+      title: 'ARBETH',
       icon: 'arbeth',
       value: 'arbeth',
       fullTitle: 'arbitrum eth',
@@ -337,8 +337,8 @@ if (config.isWidget) {
       fullTitle: 'matic token',
     },
     {
-      name: 'ArbETH',
-      title: 'ArbETH',
+      name: 'ARBETH',
+      title: 'ARBETH',
       icon: 'arbeth',
       value: 'arbeth',
       fullTitle: 'arbitrum eth',

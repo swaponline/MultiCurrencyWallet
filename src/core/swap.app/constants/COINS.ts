@@ -66,7 +66,7 @@ export const COIN_DATA = {
     precision: 18,
   },
   'ARBETH': {
-    ticker: 'ArbETH',
+    ticker: 'ARBETH',
     name: 'Arbitrum ETH',
     type: COIN_TYPE.NATIVE,
     blockchain: BLOCKCHAIN.ARBITRUM,

@@ -437,7 +437,7 @@ class EthLikeAction {
         ? DEFAULT_CURRENCY_PARAMETERS.evmLike.limit.contractInteract
         : DEFAULT_CURRENCY_PARAMETERS.evmLike.limit.send)
 
-    if (this.ticker === 'ArbETH') {
+    if (this.ticker === 'ARBETH') {
       gasLimit = DEFAULT_CURRENCY_PARAMETERS.arbeth.limit.send
     }
 
@@ -624,7 +624,7 @@ export default {
   }),
   ARBETH: new EthLikeAction({
     coinName: 'Arbitrum ETH',
-    ticker: 'ArbETH',
+    ticker: 'ARBETH',
     privateKeyName: 'eth',
     explorerName: 'rinkeby-explorer', 
     explorerLink: externalConfig.link.arbitrum,

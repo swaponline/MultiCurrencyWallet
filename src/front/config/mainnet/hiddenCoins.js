@@ -53,7 +53,7 @@ export default [
   'ETH',
   'BNB',
   'MATIC',
-  'ArbETH',
+  'ARBETH',
   'SWAP',
   'HDP',
   'USDT',

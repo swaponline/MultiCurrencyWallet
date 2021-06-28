@@ -168,7 +168,7 @@ const deletedPartialCurrency = (orderId) => {
     'ETH', 
     'BNB', 
     'MATIC', 
-    'ArbETH', 
+    'ARBETH', 
     'GHOST', 
     'NEXT', 
     'SWAP',

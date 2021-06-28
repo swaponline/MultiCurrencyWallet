@@ -173,7 +173,7 @@ class RestoryMnemonicWallet extends React.Component<ComponentProps, ComponentSta
       actions.core.markCoinAsVisible('BNB', true)
       actions.core.markCoinAsVisible('ETH', true)
       actions.core.markCoinAsVisible('MATIC', true)
-      actions.core.markCoinAsVisible('ArbETH', true)
+      actions.core.markCoinAsVisible('ARBETH', true)
       actions.core.markCoinAsVisible('BTC', true)
 
       this.setState({

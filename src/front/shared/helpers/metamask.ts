@@ -176,7 +176,7 @@ const addMetamaskWallet = () => {
       currencyInfo: user.maticData?.infoAboutCurrency,
     }
     const arbitrumWalletInfo = {
-      currencyName: 'ArbETH',
+      currencyName: 'ARBETH',
       fullWalletName: `ARBITRUM ETH (${web3connect.getProviderTitle()})`,
       currencyInfo: user.arbethData?.infoAboutCurrency,
     }
