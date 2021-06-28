@@ -46,28 +46,34 @@ describe('Displaying wallets', () => {
 
   it('adding btc wallet', async () => {
     if (testPage) {
-      await clickOn({
-        page: testPage,
-        selector: '#btcWallet',
-      })
-      await clickOn({
-        page: testPage,
-        selector: '#continueBtn',
-      })
-      await clickOn({
-        page: testPage,
-        selector: '#withoutSecure',
-      })
-      await clickOn({
-        page: testPage,
-        selector: '#createWalletBtn',
-      })
-
-      await checkWalletDisplay({
-        page: testPage,
-        name: 'btc',
-        expectedTitle: 'Bitcoin'
-      })
+      try {
+        await clickOn({
+          page: testPage,
+          selector: '#btcWallet',
+        })
+        await clickOn({
+          page: testPage,
+          selector: '#continueBtn',
+        })
+        await clickOn({
+          page: testPage,
+          selector: '#withoutSecure',
+        })
+        await clickOn({
+          page: testPage,
+          selector: '#createWalletBtn',
+        })
+        
+        await checkWalletDisplay({
+          page: testPage,
+          name: 'btc',
+          expectedTitle: 'Bitcoin'
+        })
+      } catch (error) {
+        console.error('Adding btc wallet: ', error)
+        await takeScreenshot(testPage, 'AddingWalletError_btc')
+        expect(false).toBe(true)
+      }
     } else {
       throw new Error('page is not found')
     }
@@ -75,15 +81,19 @@ describe('Displaying wallets', () => {
 
   it.each(wallets)('adding %s wallet', async (walletName, walletTitle) => {
     if (testPage) {
-      await addAssetToWallet(testPage, walletName)
-
-      await checkWalletDisplay({
-        page: testPage,
-        name: walletName,
-        expectedTitle: walletTitle,
-      })
-
-      await takeScreenshot(testPage, `Add${walletName}Wallet`)
+      try {
+        await addAssetToWallet(testPage, walletName)
+        
+        await checkWalletDisplay({
+          page: testPage,
+          name: walletName,
+          expectedTitle: walletTitle,
+        })
+      } catch (error) {
+        console.error(`Adding ${walletName} wallet: `, error)
+        await takeScreenshot(testPage, `AddingWalletError_${walletName}`)
+        expect(false).toBe(true)
+      }
     } else {
       throw new Error('page is not found')
     }

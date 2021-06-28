@@ -42,8 +42,10 @@ type ImportWalletParams = {
 export const importWallet = async (params: ImportWalletParams) => {
   const { page, seed, timeout = 30_000 } = params
 
-  await page.waitForSelector('#preloaderRestoreBtn')
-  await page.click('#preloaderRestoreBtn')
+  await clickOn({
+    page,
+    selector: '#preloaderRestoreBtn',
+  })
 
   await page.waitForSelector('.react-tags__search-input', {
     timeout,
@@ -85,10 +87,18 @@ export const selectSendCurrency = async (params) => {
 
 export const addAssetToWallet = async (page: puppeteer.Page, currency: string = 'ethwbtc') => {
   try {
-    await page.waitForSelector('#addAssetBtn')
-    await page.click('#addAssetBtn')
-    await page.click(`#${currency}Wallet`)
-    await page.click('#continueBtn')
+    await clickOn({
+      page,
+      selector: '#addAssetBtn',
+    })
+    await clickOn({
+      page,
+      selector: `#${currency}Wallet`,
+    })
+    await clickOn({
+      page,
+      selector: '#continueBtn',
+    })
   } catch (error) {
     throw new Error(error)
   }
@@ -125,9 +135,10 @@ export const turnOnMM = async (page: puppeteer.Page) => {
 export const clickOn = async (params) => {
   const { page, selector } = params
 
-  await page.$(selector).then((item) => {
+  await page.$(selector).then(async (item) => {
     if (item) {
       item.click()
+      await timeOut(1000)
     } else {
       throw new Error(`Selector (${selector}) is not found`)
     }
