@@ -12,6 +12,7 @@ describe('Wallet tests', () => {
       await importWallet({
         page,
         seed: testWallets.btcRW.seedPhrase.split(' '),
+        timeout: 40_000,
       })
 
       await page.waitForSelector('#btcAddress')
@@ -38,7 +39,9 @@ describe('Wallet tests', () => {
       await importWallet({
         page,
         seed: arrOfWords,
+        timeout: 40_000,
       })
+
       await timeOut(5000)
 
       await page.waitForSelector('#walletRowUpdateBalanceBtn')
