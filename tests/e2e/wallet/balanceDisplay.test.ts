@@ -9,7 +9,6 @@ describe('Wallet tests', () => {
     const { browser, page } = await createBrowser()
 
     try {
-      console.log('Restore wallet test')
       await importWallet({
         page,
         seed: testWallets.btcRW.seedPhrase.split(' '),
@@ -36,7 +35,6 @@ describe('Wallet tests', () => {
     const arrOfWords = testWallets.eth.seedPhrase.split(' ')
 
     try {
-      console.log('Balance test')
       await importWallet({
         page,
         seed: arrOfWords,

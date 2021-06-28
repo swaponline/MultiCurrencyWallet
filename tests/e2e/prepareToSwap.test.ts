@@ -12,7 +12,7 @@ import {
 } from './utils'
 
 
-jest.setTimeout(140 * 1000)
+jest.setTimeout(230 * 1000)
 
 describe('Prepare to swap e2e tests', () => {
   function getExchangeUrl(sourceUrl) {
@@ -23,7 +23,6 @@ describe('Prepare to swap e2e tests', () => {
     const { browser, page } = await createBrowser()
 
     try {
-      console.log('TurnOn MM -> Restore wallet')
       await importWallet({
         page,
         seed: testWallets.btcTurnOnMM.seedPhrase.split(' '),
@@ -44,7 +43,6 @@ describe('Prepare to swap e2e tests', () => {
     }
 
     try {
-      console.log('TurnOn MM test')
       await addAssetToWallet(page, 'ethwbtc')
 
       await timeOut(3 * 1000)
@@ -62,6 +60,8 @@ describe('Prepare to swap e2e tests', () => {
         page: page,
         selector: '#orderbookBtn',
       })
+
+      await timeOut(10_000)
 
       // find all your orders
       const sellAmountOrders  = await page.$$eval('.sellAmountOrders', elements => elements.map(el => el.textContent))
@@ -86,7 +86,6 @@ describe('Prepare to swap e2e tests', () => {
     const { browser: TakerBrowser, page: TakerPage } = await createBrowser()
 
     try {
-      console.log('Check messaging -> Restore wallets')
       await importWallet({
         page: MakerPage, 
         seed: testWallets.btcMMaker.seedPhrase.split(' '),
@@ -115,7 +114,6 @@ describe('Prepare to swap e2e tests', () => {
     }
 
     try {
-      console.log('Check messaging -> Prepare pages for next actions')
       await addAssetToWallet(MakerPage, 'ethwbtc')
       await addAssetToWallet(TakerPage, 'ethwbtc')
 
@@ -144,7 +142,6 @@ describe('Prepare to swap e2e tests', () => {
     }
 
     try {
-      console.log('Check messaging -> Setup MM')
       await MakerPage.goto(`${MakerPage.url()}marketmaker/{ETH}WBTC`)
 
       await timeOut(3 * 1000)
@@ -157,6 +154,8 @@ describe('Prepare to swap e2e tests', () => {
         page: MakerPage,
         selector: '#orderbookBtn',
       })
+
+      await timeOut(20_000)
 
       // find all maker orders
       const sellAmountOrders  = await MakerPage.$$eval('.sellAmountOrders', elements => elements.map(el => el.textContent))
@@ -176,7 +175,6 @@ describe('Prepare to swap e2e tests', () => {
     }
 
     try {
-      console.log('Check messaging test')
       await timeOut(3 * 1000)
 
       // find btc maker orders

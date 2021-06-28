@@ -21,7 +21,6 @@
     "test:btc_send": "cross-env CONFIG=testnet.dev jest tests/unit/btcSend.test.ts",
     "test:evmnetworks_send": "cross-env CONFIG=testnet.dev jest tests/unit/evmSend.test.ts",
     "test:unit": "cross-env CONFIG=testnet.dev jest tests/unit/*.test.ts",
-    "test:e2e_restoreWallet": "jest tests/e2e/restoreWallet.test.ts --detectOpenHandles",
     "test:e2e_prepareToSwap": "jest tests/e2e/prepareToSwap.test.ts --detectOpenHandles",
     "test:swap_btc_to_ethWbtc": "jest tests/e2e/swap/btcToEthWbtc.test.ts --detectOpenHandles",
     "test:send_btc": "jest tests/e2e/send/sendBtc.test.ts --detectOpenHandles",
