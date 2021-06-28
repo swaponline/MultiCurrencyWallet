@@ -32,7 +32,7 @@
     "test:e2e_balanceDisplay": "jest tests/e2e/wallet/balanceDisplay.test.ts --detectOpenHandles",
     "test:e2e_withdraw": "jest tests/e2e/withdraw.test.ts --detectOpenHandles",
     "test:e2e_history": "jest tests/e2e/history.test.ts --detectOpenHandles",
-    "test:e2e:actions": "ACTIONS=true jest tests/e2e/*.test.ts --detectOpenHandles",
+    "test:e2e:actions": "ACTIONS=true jest --findRelatedTests tests/e2e/*.test.ts tests/e2e/wallet/*.test.ts --detectOpenHandles",
     "eslint": "eslint --fix --cache ./shared --ext js",
     "prettier": "prettier --ignore-path .gitignore \"**/*.+(js|json|ts|tsx)\" --write",
     "start": "cross-env USE_JSON_CONFIG=true babel-node --extensions .ts,.js --config-file=./babel.bot.config.js --max-old-space-size=2048 ./src/bot",
