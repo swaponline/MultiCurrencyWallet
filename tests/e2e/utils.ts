@@ -2,13 +2,17 @@ import puppeteer from 'puppeteer'
 import BigNumber from 'bignumber.js'
 import fs from 'fs'
 
-
-const link = process.env.ACTIONS ? 'file:///home/runner/work/MultiCurrencyWallet/MultiCurrencyWallet/build-testnet/index.html' : 'http://localhost:9001/'
+const link = process.env.ACTIONS
+  ? 'file:///home/runner/work/MultiCurrencyWallet/MultiCurrencyWallet/build-testnet/index.html'
+  : 'http://localhost:9001/'
 
 // if it's true then you will be able to see puppeteer's browser
 const isDebug = false
 
-export const createBrowser = async (): Promise<{ browser: puppeteer.Browser, page: puppeteer.Page}> => {
+export const createBrowser = async (): Promise<{
+  browser: puppeteer.Browser
+  page: puppeteer.Page
+}> => {
   const browser = await puppeteer.launch({
     headless: !isDebug,
     // slowMo: 100,
@@ -17,10 +21,10 @@ export const createBrowser = async (): Promise<{ browser: puppeteer.Browser, pag
   const page = await browser.newPage()
   await page.setViewport({
     width: 1100,
-    height: 1080
+    height: 1080,
   })
 
-  page.on('error', err => {
+  page.on('error', (err) => {
     console.log('[puppeteer] error: ', err)
   })
 
@@ -45,10 +49,14 @@ export const importWallet = async (params: ImportWalletParams) => {
     timeout,
   })
 
-  const wordInput = await page.$(`.react-tags__search-input`)
+  const wordInput: puppeteer.ElementHandle | null = await page.$(`.react-tags__search-input`)
+
+  if (!wordInput) {
+    throw new Error('HTML input for for the Mnemonic phrase is not found')
+  }
 
   // remove default seed
-    for (let i = 0; i < 12; i++) {
+  for (let i = 0; i < 12; i++) {
     await wordInput.press('Backspace')
   }
 
@@ -76,10 +84,14 @@ export const selectSendCurrency = async (params) => {
 }
 
 export const addAssetToWallet = async (page: puppeteer.Page, currency: string = 'ethwbtc') => {
-  await page.waitForSelector('#addAssetBtn')
-  await page.click('#addAssetBtn')
-  await page.click(`#${currency}Wallet`)
-  await page.click('#continueBtn')
+  try {
+    await page.waitForSelector('#addAssetBtn')
+    await page.click('#addAssetBtn')
+    await page.click(`#${currency}Wallet`)
+    await page.click('#continueBtn')
+  } catch (error) {
+    throw new Error(error)
+  }
 }
 
 export const turnOnMM = async (page: puppeteer.Page) => {
@@ -88,17 +100,22 @@ export const turnOnMM = async (page: puppeteer.Page) => {
 
     // turn on MM
     const toggleSelector = 'input[type="checkbox"]'
-    await page.evaluate((selector) => document.querySelector(selector).click(), toggleSelector);
+    await page.evaluate((selector) => document.querySelector(selector).click(), toggleSelector)
 
     // prepare balances for checking
-    let btcBalance = await page.$eval('#btcBalance', el => el.textContent)
-    let tokenBalance = await page.$eval('#tokenBalance', el => el.textContent)
+    let btcBalance: string | null = await page.$eval('#btcBalance', (el) => el.textContent)
+    let tokenBalance: string | null = await page.$eval('#tokenBalance', (el) => el.textContent)
+
+    if (!btcBalance || !tokenBalance) {
+      throw new Error('BTC or Token balances are not found')
+    }
+
     btcBalance = new BigNumber(btcBalance).toFixed(5)
     tokenBalance = new BigNumber(tokenBalance).toFixed(5)
 
     return {
       btcBalance,
-      tokenBalance
+      tokenBalance,
     }
   } catch (error) {
     throw new Error(error)
@@ -112,19 +129,19 @@ export const takeScreenshot = async (page: puppeteer.Page, fileName: string) => 
     // create tests/e2e/screenshots directory
     await fs.mkdir(dir, (err) => {
       if (err) {
-          throw err;
+        throw err
       }
-      console.log("tests/e2e/screenshots directory is created.")
+      console.log('tests/e2e/screenshots directory is created.')
     })
   }
 
   await page.screenshot({
     path: `tests/e2e/screenshots/${fileName}.jpg`,
-    type: 'jpeg'
+    type: 'jpeg',
   })
 }
 
-export const timeOut = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
+export const timeOut = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
 export default {
   createBrowser,
@@ -133,5 +150,5 @@ export default {
   addAssetToWallet,
   turnOnMM,
   takeScreenshot,
-  timeOut
+  timeOut,
 }

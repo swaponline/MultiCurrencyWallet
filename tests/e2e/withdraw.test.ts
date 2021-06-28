@@ -47,6 +47,7 @@ describe('Withdraw form tests', () => {
       await checkSelectedCurrency({ page, ticker: 'btc' })
       await checkSelectedCurrency({ page, ticker: 'eth' })
       await checkSelectedCurrency({ page, ticker: 'bnb' })
+      await checkSelectedCurrency({ page, ticker: 'matic' })
     } catch (error) {
       console.error('Withdraw form tests error', error)
       await takeScreenshot(page, 'WithdrawFormTestsError')

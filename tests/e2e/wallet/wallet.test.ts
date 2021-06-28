@@ -1,5 +1,5 @@
-import testWallets from '../testWallets'
-import { createBrowser, importWallet, timeOut, takeScreenshot } from './utils'
+import testWallets from '../../testWallets'
+import { createBrowser, importWallet, timeOut, takeScreenshot } from '../utils'
 
 jest.setTimeout(80_000) // ms
 
