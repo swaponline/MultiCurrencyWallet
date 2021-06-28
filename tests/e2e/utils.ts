@@ -7,7 +7,7 @@ const link = process.env.ACTIONS
   : 'http://localhost:9001/'
 
 // if it's true then you will be able to see puppeteer's browser
-const isDebug = false
+const isDebug = true
 
 export const createBrowser = async (): Promise<{
   browser: puppeteer.Browser
@@ -120,6 +120,18 @@ export const turnOnMM = async (page: puppeteer.Page) => {
   } catch (error) {
     throw new Error(error)
   }
+}
+
+export const clickOn = async (params) => {
+  const { page, selector } = params
+
+  await page.$(selector).then((item) => {
+    if (item) {
+      item.click()
+    } else {
+      throw new Error(`Selector (${selector}) is not found`)
+    }
+  })
 }
 
 export const takeScreenshot = async (page: puppeteer.Page, fileName: string) => {

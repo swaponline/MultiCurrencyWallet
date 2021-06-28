@@ -1,7 +1,13 @@
 import puppeteer from 'puppeteer'
-import { createBrowser, addAssetToWallet, takeScreenshot, timeOut } from '../utils'
+import {
+  createBrowser,
+  addAssetToWallet,
+  takeScreenshot,
+  clickOn,
+  timeOut,
+} from '../utils'
 
-jest.setTimeout(150 * 1000)
+jest.setTimeout(250 * 1000)
 
 describe('Displaying wallets', () => {
   let testBrowser: puppeteer.Browser | undefined = undefined
@@ -17,7 +23,7 @@ describe('Displaying wallets', () => {
     await page.waitForSelector('#preloaderCreateBtn')
     await page.click('#preloaderCreateBtn')
 
-    page.waitForTimeout(90_000)
+    timeOut(60_000)
   })
 
   afterAll(async () => {
@@ -26,7 +32,24 @@ describe('Displaying wallets', () => {
 
   it('adding btc wallet', async () => {
     if (testPage) {
-      await addAssetToWallet(testPage, 'btc')
+      await clickOn({
+        page: testPage,
+        selector: '#btcWallet',
+      })
+      await clickOn({
+        page: testPage,
+        selector: '#continueBtn',
+      })
+      await clickOn({
+        page: testPage,
+        selector: '#withoutSecure',
+      })
+      await clickOn({
+        page: testPage,
+        selector: '#createWalletBtn',
+      })
+
+      // check wallet display
     } else {
       throw new Error('page is not found')
     }
@@ -35,6 +58,8 @@ describe('Displaying wallets', () => {
   it.each(wallets)('adding %s wallet', async (walletName) => {
     if (testPage) {
       await addAssetToWallet(testPage, walletName)
+
+      // check wallet display
 
       takeScreenshot(testPage, `Add${walletName}Wallet`)
     } else {

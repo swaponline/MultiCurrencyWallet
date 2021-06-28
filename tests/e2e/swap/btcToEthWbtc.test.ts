@@ -1,7 +1,16 @@
 import BigNumber from 'bignumber.js'
 import testWallets from '../../testWallets'
 
-import { createBrowser, importWallet, addAssetToWallet, turnOnMM, selectSendCurrency, takeScreenshot, timeOut } from '../utils'
+import {
+  createBrowser,
+  importWallet,
+  addAssetToWallet,
+  turnOnMM,
+  selectSendCurrency,
+  clickOn,
+  takeScreenshot,
+  timeOut,
+} from '../utils'
 
 const btcSellAmount = 500_000e-8
 const wbtcBuyAmount = 500_000e-8
@@ -70,7 +79,10 @@ describe('Swap e2e test', () => {
       await sellCurrencySelectorInput.press('Backspace')
       await sellCurrencySelectorInput.type(btcSellAmount.toString())
 
-      await TakerPage.$('#orderbookBtn').then((orderbookBtn) => orderbookBtn.click())
+      await clickOn({
+        page: TakerPage,
+        selector: '#orderbookBtn',
+      })
 
     } catch (error) {
       await takeScreenshot(MakerPage, 'MakerPage_SwapWIW_PreparePagesError')
@@ -90,8 +102,10 @@ describe('Swap e2e test', () => {
       var { btcBalance: makerBtcBalance, tokenBalance: makerTokenBalance } = await turnOnMM(MakerPage)
 
       await MakerPage.goto( getExchangeUrl(MakerPage.url()) )
-
-      await MakerPage.$('#orderbookBtn').then((orderbookBtn) => orderbookBtn.click())
+      await clickOn({
+        page: MakerPage,
+        selector: '#orderbookBtn',
+      })
 
       // find all maker orders
       const sellAmountOrders  = await MakerPage.$$eval('.sellAmountOrders', elements => elements.map(el => el.textContent))
@@ -124,7 +138,10 @@ describe('Swap e2e test', () => {
       const wbtcGetAmountsOfOrders   = await TakerPage.$$eval('.wbtcGetAmountOfOrder', elements => elements.map(el => el.textContent))
       const wbtcOrders = [...wbtcSellAmountsOfOrders, ...wbtcGetAmountsOfOrders]
 
-      const allOrders = [...btcOrders.map((amount) => new BigNumber(amount).toFixed(5)), ...wbtcOrders.map((amount) => new BigNumber(amount).toFixed(5))];
+      const allOrders = [
+        ...btcOrders.map((amount) => amount && new BigNumber(amount).toFixed(5)),
+        ...wbtcOrders.map((amount) => amount && new BigNumber(amount).toFixed(5))
+      ];
 
       +makerBtcBalance ? expect(allOrders).toContain(makerBtcBalance) : console.log('maker have not btc balance')
       +makerTokenBalance ? expect(allOrders).toContain(makerTokenBalance) : console.log('maker have not token balance')
@@ -218,8 +235,14 @@ describe('Swap e2e test', () => {
       console.log('SwapWIW -> Send BTC and (ETHEREUM)WBTC')
       await timeOut(3 * 1000)
 
-      await MakerPage.$('a[href="#/"]').then((aToWallet) => aToWallet.click())
-      await TakerPage.$('a[href="#/"]').then((aToWallet) => aToWallet.click())
+      await clickOn({
+        page: MakerPage,
+        selector: 'a[href="#/"]',
+      })
+      await clickOn({
+        page: TakerPage,
+        selector: 'a[href="#/"]',
+      })
 
       await timeOut(3 * 1000)
 
@@ -239,8 +262,14 @@ describe('Swap e2e test', () => {
 
       await timeOut(5 * 1000)
 
-      await MakerPage.$('#sendButton').then((sendButton) => sendButton.click())
-      await TakerPage.$('#sendButton').then((sendButton) => sendButton.click())
+      await clickOn({
+        page: MakerPage,
+        selector: '#sendButton',
+      })
+      await clickOn({
+        page: TakerPage,
+        selector: '#sendButton',
+      })
 
       await MakerPage.waitForSelector('#txAmout', {timeout: 60 * 1000})
       await TakerPage.waitForSelector('#txAmout', {timeout: 60 * 1000})
