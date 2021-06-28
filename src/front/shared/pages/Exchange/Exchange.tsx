@@ -214,11 +214,9 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
     } = match || { params: { buy: 'btc', sell: '{eth}usdt' } }
 
     if (sell && buy && !isRootPage) {
-      const { coin: sellName } = getCoinInfo(sell)
-      const { coin: buyName } = getCoinInfo(buy)
       if (
-        !allCurrencies.map((item) => item.name).includes(sellName.toUpperCase()) ||
-        !allCurrencies.map((item) => item.name).includes(buyName.toUpperCase())
+        !allCurrencies.map((item) => item.value.toUpperCase()).includes(sell.toUpperCase()) ||
+        !allCurrencies.map((item) => item.value.toUpperCase()).includes(buy.toUpperCase())
       ) {
         history.push(localisedUrl(locale, `${links.exchange}/eth-to-btc`))
       }
@@ -648,10 +646,23 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
 
   checkUrl = () => {
     const {
+      allCurrencies,
+      intl: { locale },
+      history,
       match: {
         params: { buy: buyValue, sell: sellValue },
       },
     } = this.props
+
+    if (
+      sellValue && buyValue &&
+      (
+        !allCurrencies.map((item) => item.value.toUpperCase()).includes(sellValue.toUpperCase()) ||
+        !allCurrencies.map((item) => item.value.toUpperCase()).includes(buyValue.toUpperCase())
+      )
+    ) {
+      history.push(localisedUrl(locale, `${links.exchange}/eth-to-btc`))
+    }
 
     const { getCurrency, haveCurrency } = this.state
 
@@ -853,8 +864,8 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
     return true
   }
 
-  approveTheToken = () => {
-    const { haveCurrency, haveAmount, haveType, getCurrency } = this.state
+  approveTheToken = async () => {
+    const { haveCurrency, haveAmount, haveType, getCurrency, orderId } = this.state
 
     if (
       !this.checkBalanceForSwapPossibility({
@@ -865,6 +876,16 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
         fromType: haveType,
       })
     ) {
+      return false
+    }
+
+    const isSwapExists = await this.checkSwapExists({ haveCurrency, getCurrency, orderId })
+
+    if (isSwapExists) {
+      actions.notifications.show(
+        constants.notifications.ErrorNotification,
+        { error: 'You have Exists Swap with order participant. Please use orderbook for start swap with this pair.' }
+      )
       return false
     }
 
@@ -918,7 +939,7 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
   initSwap = async () => {
     const { decline } = this.props
 
-    const { haveCurrency, haveAmount, getCurrency, haveType } = this.state
+    const { haveCurrency, haveAmount, getCurrency, haveType, orderId } = this.state
     const haveTicker = haveCurrency.toUpperCase()
     const getTicker = getCurrency.toUpperCase()
 
@@ -936,6 +957,16 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
       return false
     }
 
+    const isSwapExists = await this.checkSwapExists({ haveCurrency, getCurrency, orderId })
+
+    if (isSwapExists) {
+      actions.notifications.show(
+        constants.notifications.ErrorNotification,
+        { error: 'You have Exists Swap with order participant. Please use orderbook for start swap with this pair.' }
+      )
+      return false
+    }
+
     if (decline.length === 0) {
       this.sendRequestForPartial()
     } else {
@@ -949,6 +980,51 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
         this.sendRequestForPartial()
       }
     }
+  }
+
+  checkSwapExists = async (params) => {
+    const { haveCurrency, getCurrency, orderId } = params
+
+    const sellWallet = actions.core.getWallet({ currency: haveCurrency })
+    const buyWallet = actions.core.getWallet({ currency: getCurrency })
+    const {
+      coin: sellCoin,
+      blockchain: sellBlockchain,
+    } = getCoinInfo(haveCurrency.toUpperCase())
+    const {
+      coin: buyCoin,
+      blockchain: buyBlockchain,
+    } = getCoinInfo(getCurrency.toUpperCase())
+
+    const isTokenSell = !!sellBlockchain
+    const isTokenBuy = !!buyBlockchain
+
+    const isEvmCoinSell = !isTokenSell && (COIN_DATA[sellCoin].model === COIN_MODEL.AB)
+    const isEvmCoinBuy = !isTokenBuy && (COIN_DATA[buyCoin].model === COIN_MODEL.AB)
+
+    const actionType =
+      (isTokenSell && sellWallet.standard) ||
+      (isTokenBuy && buyWallet.standard) ||
+      (isEvmCoinSell && sellCoin) ||
+      (isEvmCoinBuy && buyCoin)
+
+    const orderOwnerEvmCoin =
+      (isTokenSell && sellBlockchain) ||
+      (isTokenBuy && buyBlockchain) ||
+      (isEvmCoinSell && sellCoin) ||
+      (isEvmCoinBuy && buyCoin)
+
+    if (!actionType || SwapApp === null || !orderId) return
+
+    //@ts-ignore: strictNullChecks
+    const order = SwapApp.shared().services.orders.getByKey(orderId)
+
+    const orderOwnerEvmAddress = order.owner[orderOwnerEvmCoin.toLowerCase()].address
+
+    const swapOwnerAddress = (isTokenSell || isEvmCoinSell) ? sellWallet.address : orderOwnerEvmAddress
+    const swapParticipantAddress = (isTokenBuy || isEvmCoinBuy) ? buyWallet.address : orderOwnerEvmAddress
+
+    return await actions[actionType.toLowerCase()].checkSwapExists({ownerAddress: swapOwnerAddress, participantAddress: swapParticipantAddress})
   }
 
   openModalDeclineOrders = (indexOfDecline) => {
@@ -2178,6 +2254,7 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
                   pairFees={pairFees}
                   balances={balances}
                   checkSwapAllow={this.checkBalanceForSwapPossibility}
+                  checkSwapExists={this.checkSwapExists}
                 />
               ) : null}
             </div>

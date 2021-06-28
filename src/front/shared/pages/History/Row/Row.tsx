@@ -97,6 +97,7 @@ export default class Row extends PureComponent<any, any> {
         currency,
         address,
         balance,
+        itemCurrency: walletData,
         unconfirmedBalance,
         toAddress: destAddress || fromAddress,
         amount,

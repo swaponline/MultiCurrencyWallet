@@ -49,6 +49,7 @@ type RowProps = {
 
   removeOrder: (number) => void
   checkSwapAllow: ({}) => boolean
+  checkSwapExists: ({}) => boolean
 
   currenciesData?: IUniversalObj
   intl?: IUniversalObj
@@ -166,6 +167,7 @@ class Row extends Component<RowProps, RowState> {
       intl,
       history,
       checkSwapAllow,
+      checkSwapExists,
     } = this.props
 
     const balance = this.getBalance()
@@ -182,6 +184,16 @@ class Row extends Component<RowProps, RowState> {
       amount: sellAmount,
       balance,
     })) return false
+
+    const isSwapExists = await checkSwapExists({ haveCurrency: sellCurrency, getCurrency: buyCurrency, orderId })
+
+    if (isSwapExists) {
+      actions.notifications.show(
+        constants.notifications.ErrorNotification,
+        { error: 'You have Exists Swap with order participant. Please use other order for start swap with this pair.' }
+      )
+      return false
+    }
 
     const exchangeRates = new BigNumber(price).dp(6, BigNumber.ROUND_CEIL)
 

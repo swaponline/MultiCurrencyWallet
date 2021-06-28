@@ -6,6 +6,7 @@ import { getState } from 'redux/core'
 import actions from 'redux/actions'
 import reducers from 'redux/core/reducers'
 import DEFAULT_CURRENCY_PARAMETERS from 'common/helpers/constants/DEFAULT_CURRENCY_PARAMETERS'
+import EVM_CONTRACTS_ABI from 'common/helpers/constants/EVM_CONTRACTS_ABI'
 import TOKEN_STANDARDS from 'helpers/constants/TOKEN_STANDARDS'
 import ethLikeHelper from 'common/helpers/ethLikeHelper'
 import erc20Like from 'common/erc20Like'
@@ -15,6 +16,7 @@ import metamask from 'helpers/metamask'
 
 const NETWORK = process.env.MAINNET ? 'mainnet' : 'testnet'
 const Decoder = new InputDataDecoder(TokenAbi)
+
 
 class Erc20LikeAction {
   readonly currency: string
@@ -516,6 +518,17 @@ class Erc20LikeAction {
 
       res(receipt.transactionHash)
     })
+  }
+
+  checkSwapExists = async (params) => {
+    const { ownerAddress, participantAddress } = params
+    const Web3 = this.getCurrentWeb3()
+    const swapContract = new Web3.eth.Contract(EVM_CONTRACTS_ABI.TOKEN_SWAP, externalConfig.swapContract[this.standard])
+
+    const swap = await swapContract.methods.swaps(ownerAddress, participantAddress).call()
+    const balance = swap && swap.balance ? parseInt(swap.balance) : 0
+
+    return balance > 0
   }
 
   setAllowance = async (params) => {

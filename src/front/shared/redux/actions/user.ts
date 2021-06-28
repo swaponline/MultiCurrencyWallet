@@ -98,9 +98,10 @@ const sign = async () => {
     const mnemonicKeys = {
       btc: localStorage.getItem(constants.privateKeyNames.btcMnemonic),
       btcSms: localStorage.getItem(constants.privateKeyNames.btcSmsMnemonicKeyGenerated),
+      // using ETH key for all EVM compatible chains
       eth: localStorage.getItem(constants.privateKeyNames.ethMnemonic),
-      bnb: localStorage.getItem(constants.privateKeyNames.bnbMnemonic),
-      matic: localStorage.getItem(constants.privateKeyNames.maticMnemonic),
+      bnb: localStorage.getItem(constants.privateKeyNames.ethMnemonic),
+      matic: localStorage.getItem(constants.privateKeyNames.ethMnemonic),
       ghost: localStorage.getItem(constants.privateKeyNames.ghostMnemonic),
       next: localStorage.getItem(constants.privateKeyNames.nextMnemonic),
     }
