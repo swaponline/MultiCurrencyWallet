@@ -1,14 +1,28 @@
 import React from 'react'
 import cssModules from 'react-css-modules'
 import styles from './CurrencyIcon.scss'
-
+import TOKEN_STANDARDS from 'helpers/constants/TOKEN_STANDARDS'
 import icons from './images'
 import getCoinInfo from 'common/coins/getCoinInfo'
 import { FormattedMessage } from 'react-intl'
 import config from 'app-config'
 
-
 export const currencyIcons = Object.keys(icons)
+
+function returnTokenIcon(name) {
+  try {
+    for (const key in TOKEN_STANDARDS) {
+      const standard = TOKEN_STANDARDS[key].standard
+      const icon = config[standard][name]?.icon
+
+      if (icon) return icon
+    }
+  } catch (error) {
+    console.group('%c CurrencyIcon', 'color: red')
+    console.error('can\'t to load currency icon')
+    console.groupEnd()
+  }
+}
 
 type CurrencyIconProps = {
   style?: { [key: string]: string }
@@ -40,11 +54,13 @@ const CurrencyIcon = (props: CurrencyIconProps) => {
     )
   }
 
-  if (config?.erc20[name.toLowerCase()]?.icon) {
+  const tokenIcon = returnTokenIcon(name.toLowerCase())
+
+  if (tokenIcon) {
     return (
       <img
         styleName="sizeLimit"
-        src={config.erc20[name.toLowerCase()].icon}
+        src={tokenIcon}
         alt={`${name} icon`}
         role="image"
       />
