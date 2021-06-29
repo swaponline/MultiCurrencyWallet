@@ -9,7 +9,17 @@ const name = 'Update hiddenCoinsList - add baseCurrency to tokens'
 const run = () => {
   const hiddenCoinsList = localStorage.getItem(storageKey) || '[]'
 
-  const updatedHiddenCoinsList = hiddenCoinsList.map(coin => {
+  const similarTokens: {
+    ticker: string
+    name: string
+    type: string
+    blockchain: string
+    model: string
+    precision: number
+    standard?: string
+  }[] = []
+
+  const hiddenNativeCoinsList = hiddenCoinsList.filter(coin => {
     let currency = coin.toUpperCase()
 
     if (coin.includes(':')) {
@@ -25,19 +35,33 @@ const run = () => {
         break
     }
 
-    if (COIN_DATA[currency]?.type === COIN_TYPE.NATIVE) {
-      return coin
-    }
-
-    const TokenData = COIN_DATA[currency]
+    if (COIN_DATA[currency]?.type === COIN_TYPE.NATIVE) return true
 
     const {
-      coin: tokenName,
-      blockchain: tokenBlockchain
+      coin: tokenName
     } = getCoinInfo(currency)
 
-    return tokenBlockchain ? coin : `{${ TokenData?.blockchain || 'ETH'}}${coin}`
+    Object.keys(COIN_DATA).map(tokenKey => {
+      const tokenInfo = getCoinInfo(tokenKey)
+      if (tokenInfo.coin === tokenName) {
+        similarTokens.push(COIN_DATA[tokenKey])
+      }
+    })
+
+    return false
   })
+
+  const hiddenTokensList: string[] = []
+
+  similarTokens.forEach(token => {
+    const baseCurrency = token.blockchain
+    const ticker = token.ticker
+    const tokenValue = `{${baseCurrency}}${ticker}`
+
+    !hiddenTokensList.includes(tokenValue) && hiddenTokensList.push(tokenValue)
+  })
+
+  const updatedHiddenCoinsList = [...hiddenNativeCoinsList, ...hiddenTokensList]
 
   localStorage.setItem(storageKey, updatedHiddenCoinsList)
   return Promise.resolve()
