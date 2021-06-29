@@ -24,7 +24,7 @@ describe('Displaying wallets', () => {
     const walletTitle = await page.$eval(`#${name}WalletTitle`, el => el.textContent)
 
     if (walletTitle !== expectedTitle) {
-      throw new Error('incorrect display for ${}')
+      throw new Error(`incorrect display for ${name.toUpperCase()} wallet`)
     }
   }
 

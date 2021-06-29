@@ -54,7 +54,7 @@ export const importWallet = async (params: ImportWalletParams) => {
   const wordInput: puppeteer.ElementHandle | null = await page.$(`.react-tags__search-input`)
 
   if (!wordInput) {
-    throw new Error('HTML input for for the Mnemonic phrase is not found')
+    throw new Error('HTML input for the Mnemonic phrase is not found')
   }
 
   // remove default seed
