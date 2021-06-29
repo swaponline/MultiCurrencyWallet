@@ -1,10 +1,18 @@
 import BigNumber from 'bignumber.js'
 import testWallets from '../testWallets'
 
-import { createBrowser, importWallet, addAssetToWallet, turnOnMM, takeScreenshot, timeOut } from './utils'
+import {
+  createBrowser,
+  importWallet,
+  addAssetToWallet,
+  turnOnMM,
+  clickOn,
+  takeScreenshot,
+  timeOut,
+} from './utils'
 
 
-jest.setTimeout(140 * 1000)
+jest.setTimeout(230 * 1000)
 
 describe('Prepare to swap e2e tests', () => {
   function getExchangeUrl(sourceUrl) {
@@ -15,7 +23,6 @@ describe('Prepare to swap e2e tests', () => {
     const { browser, page } = await createBrowser()
 
     try {
-      console.log('TurnOn MM -> Restore wallet')
       await importWallet({
         page,
         seed: testWallets.btcTurnOnMM.seedPhrase.split(' '),
@@ -36,7 +43,6 @@ describe('Prepare to swap e2e tests', () => {
     }
 
     try {
-      console.log('TurnOn MM test')
       await addAssetToWallet(page, 'ethwbtc')
 
       await timeOut(3 * 1000)
@@ -50,7 +56,12 @@ describe('Prepare to swap e2e tests', () => {
       await timeOut(3 * 1000)
 
       await page.goto( getExchangeUrl(page.url()) )
-      await page.$('#orderbookBtn').then((orderbookBtn) => orderbookBtn.click())
+      await clickOn({
+        page: page,
+        selector: '#orderbookBtn',
+      })
+
+      await timeOut(10_000)
 
       // find all your orders
       const sellAmountOrders  = await page.$$eval('.sellAmountOrders', elements => elements.map(el => el.textContent))
@@ -75,7 +86,6 @@ describe('Prepare to swap e2e tests', () => {
     const { browser: TakerBrowser, page: TakerPage } = await createBrowser()
 
     try {
-      console.log('Check messaging -> Restore wallets')
       await importWallet({
         page: MakerPage, 
         seed: testWallets.btcMMaker.seedPhrase.split(' '),
@@ -104,7 +114,6 @@ describe('Prepare to swap e2e tests', () => {
     }
 
     try {
-      console.log('Check messaging -> Prepare pages for next actions')
       await addAssetToWallet(MakerPage, 'ethwbtc')
       await addAssetToWallet(TakerPage, 'ethwbtc')
 
@@ -118,7 +127,10 @@ describe('Prepare to swap e2e tests', () => {
 
       await buyCurrencySelectorList.click();
       await TakerPage.click("[id='{ETH}wbtc']")
-      await TakerPage.$('#orderbookBtn').then((orderbookBtn) => orderbookBtn.click())
+      await clickOn({
+        page: TakerPage,
+        selector: '#orderbookBtn',
+      })
 
     } catch (error) {
       await takeScreenshot(MakerPage, 'MakerPage_CheckMessaging_PreparePagesError')
@@ -130,7 +142,6 @@ describe('Prepare to swap e2e tests', () => {
     }
 
     try {
-      console.log('Check messaging -> Setup MM')
       await MakerPage.goto(`${MakerPage.url()}marketmaker/{ETH}WBTC`)
 
       await timeOut(3 * 1000)
@@ -139,7 +150,12 @@ describe('Prepare to swap e2e tests', () => {
 
       await MakerPage.goto( getExchangeUrl(MakerPage.url()) )
 
-      await MakerPage.$('#orderbookBtn').then((orderbookBtn) => orderbookBtn.click())
+      await clickOn({
+        page: MakerPage,
+        selector: '#orderbookBtn',
+      })
+
+      await timeOut(20_000)
 
       // find all maker orders
       const sellAmountOrders  = await MakerPage.$$eval('.sellAmountOrders', elements => elements.map(el => el.textContent))
@@ -159,7 +175,6 @@ describe('Prepare to swap e2e tests', () => {
     }
 
     try {
-      console.log('Check messaging test')
       await timeOut(3 * 1000)
 
       // find btc maker orders
@@ -172,7 +187,10 @@ describe('Prepare to swap e2e tests', () => {
       const wbtcGetAmountsOfOrders   = await TakerPage.$$eval('.wbtcGetAmountOfOrder', elements => elements.map(el => el.textContent))
       const wbtcOrders = [...wbtcSellAmountsOfOrders, ...wbtcGetAmountsOfOrders]
 
-      const allOrders = [...btcOrders.map((amount) => new BigNumber(amount).toFixed(5)), ...wbtcOrders.map((amount) => new BigNumber(amount).toFixed(5))];
+      const allOrders = [
+        ...btcOrders.map((amount) => amount && new BigNumber(amount).toFixed(5)),
+        ...wbtcOrders.map((amount) => amount && new BigNumber(amount).toFixed(5))
+      ];
 
       +makerBtcBalance ? expect(allOrders).toContain(makerBtcBalance) : console.log('maker have not btc balance')
       +makerTokenBalance ? expect(allOrders).toContain(makerTokenBalance) : console.log('maker have not token balance')

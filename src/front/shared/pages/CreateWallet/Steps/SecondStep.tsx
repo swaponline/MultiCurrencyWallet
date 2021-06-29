@@ -327,6 +327,7 @@ const SecondStep = (props) => {
                 <div
                   key={index}
                   styleName={`${cardStyle_}`}
+                  id={name}
                   onClick={() => {
                     if (typeof el.onClickHandler !== 'undefined') { el.onClickHandler() }
                     return handleClick(index, el)
@@ -361,6 +362,7 @@ const SecondStep = (props) => {
           </div>
         </div>
         <button
+          id="createWalletBtn"
           styleName="continue"
           onClick={handleFinish}
           disabled={error || border.selected === '' || border.selected === 'fingerprint'}
