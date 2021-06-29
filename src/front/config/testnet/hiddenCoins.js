@@ -8,9 +8,9 @@ export default [
   'GHOST',
   'NEXT',
   '{ETH}SWAP',
-  'HDP',
+  '{ETH}HDP',
   '{ETH}USDT',
-  'MSK',
-  'RURCASH',
-  'USDSWIFT',
+  '{ETH}MSK',
+  '{ETH}RURCASH',
+  '{ETH}USDSWIFT',
 ]
