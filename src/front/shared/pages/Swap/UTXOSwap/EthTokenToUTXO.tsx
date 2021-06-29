@@ -27,7 +27,6 @@ export default class EthTokenToUTXO extends Component<any, any> {
     const {
       swap,
       currencyData,
-      ethBalance,
       tokenItems,
       fields,
     } = props
@@ -60,35 +59,8 @@ export default class EthTokenToUTXO extends Component<any, any> {
   }
 
   componentDidMount() {
-    const {
-      flow: {
-        isSignFetching,
-        isMeSigned,
-        isStoppedSwap,
-        step,
-      },
-    } = this.state
-
+    const { flow: { isStoppedSwap } } = this.state
     if (isStoppedSwap) return
-    //@ts-ignore: strictNullChecks
-    this.signTimer = setInterval(() => {
-      if (!this.state.flow.isMeSigned) {
-        this.signSwap()
-      } else {
-        //@ts-ignore: strictNullChecks
-        clearInterval(this.signTimer)
-      }
-    }, 3000)
-
-  /*
-    this.confirmTimer = setInterval(() => {
-      if (this.state.flow.step === 3) {
-        this.confirmScriptChecked()
-      } else {
-        clearInterval(this.confirmTimer)
-      }
-    }, 3000)
-    */
 
     this.requestMaxAllowance()
   }
@@ -114,15 +86,6 @@ export default class EthTokenToUTXO extends Component<any, any> {
     })
   }
 
-  signSwap = () => {
-    //@ts-ignore: strictNullChecks
-    this.swap.flow.sign()
-    this.setState(() => ({
-      signed: true,
-    }))
-  }
-
-  
   requestMaxAllowance = () => {
     //@ts-ignore: strictNullChecks
     const { sellCurrency, sellAmount, flow } = this.swap
@@ -143,22 +106,17 @@ export default class EthTokenToUTXO extends Component<any, any> {
   render() {
     const {
       children,
-      disabledTimer,
       continueSwap,
       enoughBalance,
       history,
       ethAddress,
-      requestToFaucetSended,
       onClickCancelSwap,
       locale,
       wallets,
     }  = this.props
 
     const {
-      currencyAddress,
       flow,
-      enabledButton,
-      isAddressCopied,
       currencyData,
       tokenItems,
       signed,

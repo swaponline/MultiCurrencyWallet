@@ -27,7 +27,6 @@ export default class EthLikeToUTXO extends Component<any, any> {
       currencyData,
       depositWindow,
       enoughBalance,
-      verifyScriptFunc,
       fields,
     } = props
 
@@ -58,30 +57,10 @@ export default class EthLikeToUTXO extends Component<any, any> {
   }
 
   componentDidMount() {
-    const { swap, flow: { isSignFetching, isMeSigned, step, isStoppedSwap } } = this.state
+    const { flow: { isStoppedSwap } } = this.state
     if (isStoppedSwap) return
     window.addEventListener('resize', this.updateWindowDimensions)
     this.updateWindowDimensions()
-    //@ts-ignore: strictNullChecks
-    this.signTimer = setInterval(() => {
-      if (!this.state.flow.isMeSigned) {
-        this.signSwap()
-      } else {
-        //@ts-ignore: strictNullChecks
-        clearInterval(this.signTimer)
-      }
-    }, 3000)
-
-    /*
-    // verify script auto in core flow
-    this.confirmTimer = setInterval(() => {
-      if (this.state.flow.step === 3) {
-        this.confirmScriptChecked()
-      } else {
-        clearInterval(this.confirmTimer)
-      }
-    }, 3000)
-    */
   }
 
   componentWillUnmount() {
@@ -105,28 +84,11 @@ export default class EthLikeToUTXO extends Component<any, any> {
   }
 
   handleFlowStateUpdate = (values) => {
-    const {
-      swap,
-      flow: {
-        isMeSigned,
-      },
-    } = this.state
-
-    //@ts-ignore: strictNullChecks
-    const { currencyName } = this._fields
 
     this.setState({
       flow: values,
     })
 
-  }
-
-  signSwap = () => {
-    //@ts-ignore: strictNullChecks
-    this.swap.flow.sign()
-    this.setState(() => ({
-      signed: true,
-    }))
   }
 
   render() {
