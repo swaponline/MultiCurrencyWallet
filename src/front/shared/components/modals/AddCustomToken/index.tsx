@@ -156,7 +156,8 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
       decimals: tokenDecimals,
       baseCurrency: baseCurrency.toLowerCase(),
     })
-    actions.core.markCoinAsVisible(`{${baseCurrency.toUpperCase()}}${tokenSymbol.toUpperCase()}`, true)
+    const tokenValue = `{${baseCurrency.toUpperCase()}}${tokenSymbol.toUpperCase()}`
+    actions.core.markCoinAsVisible(tokenValue, true)
 
     this.setState({
       step: 'ready',

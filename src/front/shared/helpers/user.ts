@@ -37,7 +37,12 @@ export const getActivatedCurrencies = () => {
     const standard = TOKEN_STANDARDS[key].standard
 
     Object.keys(config[standard]).forEach((token) => {
-      currencies.push(`{${TOKEN_STANDARDS[standard].currency.toUpperCase()}}${token.toUpperCase()}`)
+
+      const baseCurrency = TOKEN_STANDARDS[standard].currency.toUpperCase()
+      const tokenName = token.toUpperCase()
+      const tokenValue = `{${baseCurrency}}${tokenName}`
+
+      currencies.push(tokenValue)
     })
   })
 
@@ -65,7 +70,12 @@ export const getWidgetCurrencies = () => {
   if (externalConfig.isWidget) {
     if (window?.widgetEvmLikeTokens?.length) {
       window.widgetEvmLikeTokens.forEach((token) => {
-        widgetCurrencies.push(`{${TOKEN_STANDARDS[token.standard].currency.toUpperCase()}}${token.name.toUpperCase()}`)
+
+        const baseCurrency = TOKEN_STANDARDS[token.standard].currency.toUpperCase()
+        const tokenName = token.name.toUpperCase()
+        const tokenValue = `{${baseCurrency}}${tokenName}`
+
+        widgetCurrencies.push(tokenValue)
       })
     } else {
       widgetCurrencies.push(config.erc20token.toUpperCase())

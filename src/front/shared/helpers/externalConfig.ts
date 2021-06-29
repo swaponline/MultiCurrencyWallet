@@ -206,7 +206,12 @@ const externalConfig = () => {
     if (config?.opts.ownTokens?.length) {
       config.opts.ownTokens.forEach((token) => {
         config[token.standard][token.name.toLowerCase()] = token
-        reducers.core.markCoinAsVisible(`{${TOKEN_STANDARDS[token.standard].currency.toUpperCase()}}${token.name.toUpperCase()}`)
+
+        const baseCurrency = TOKEN_STANDARDS[token.standard].currency.toUpperCase()
+        const tokenName = token.name.toUpperCase()
+        const tokenValue = `{${baseCurrency}}${tokenName}`
+
+        reducers.core.markCoinAsVisible(tokenValue)
       })
     }
 
