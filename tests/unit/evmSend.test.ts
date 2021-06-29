@@ -49,7 +49,7 @@ describe('Sending ETH', () => {
 
     expect(response.transactionHash).toMatch(/0x[A-Za-z0-9]{2}/)
     // wait for a while until transaction gets into the blockchain
-    let receipt = null
+    let receipt: IUniversalObj | null = null
 
     await repeatActionWithDelay({
       times: requestsForTxInfo,
@@ -63,6 +63,10 @@ describe('Sending ETH', () => {
 
     // if receipt equals null then perhaps the transaction is still pending
     expect(receipt).not.toBeNull()
+
+    if (!receipt) {
+      throw new Error('Transaction receipt is not found')
+    }
 
     const { status, from, to } = receipt
 
@@ -89,7 +93,7 @@ describe('Sending ETH', () => {
 
     expect(txHash).toMatch(/0x[A-Za-z0-9]{64}/)
 
-    let receipt = null
+    let receipt: IUniversalObj | null = null
 
     await repeatActionWithDelay({
       times: requestsForTxInfo,
@@ -102,6 +106,10 @@ describe('Sending ETH', () => {
     })
 
     expect(receipt).not.toBeNull()
+
+    if (!receipt) {
+      throw new Error('Transaction receipt is not found')
+    }
 
     const { status, from, to } = receipt
 
@@ -139,7 +147,7 @@ describe('Sending BNB', () => {
     expect(response.transactionHash).toMatch(/0x[A-Za-z0-9]{2}/)
 
     // wait for a while until transaction gets into the blockchain
-    let receipt = null
+    let receipt: IUniversalObj | null = null
 
     await repeatActionWithDelay({
       times: requestsForTxInfo,
@@ -153,6 +161,10 @@ describe('Sending BNB', () => {
 
     // if receipt equals null then perhaps the transaction is still pending
     expect(receipt).not.toBeNull()
+
+    if (!receipt) {
+      throw new Error('Transaction receipt is not found')
+    }
 
     const { status, from, to } = receipt
 
@@ -179,7 +191,7 @@ describe('Sending BNB', () => {
 
     expect(txHash).toMatch(/0x[A-Za-z0-9]{64}/)
 
-    let receipt = null
+    let receipt: IUniversalObj | null = null
 
     await repeatActionWithDelay({
       times: requestsForTxInfo,
@@ -192,6 +204,10 @@ describe('Sending BNB', () => {
     })
 
     expect(receipt).not.toBeNull()
+
+    if (!receipt) {
+      throw new Error('Transaction receipt is not found')
+    }
 
     const { status, from, to } = receipt
 
@@ -229,7 +245,7 @@ describe('Sending MATIC', () => {
     expect(response.transactionHash).toMatch(/0x[A-Za-z0-9]{2}/)
 
     // wait for a while until transaction gets into the blockchain
-    let receipt = null
+    let receipt: IUniversalObj | null = null
 
     await repeatActionWithDelay({
       times: requestsForTxInfo,
@@ -243,6 +259,10 @@ describe('Sending MATIC', () => {
 
     // if receipt equals null then perhaps the transaction is still pending
     expect(receipt).not.toBeNull()
+
+    if (!receipt) {
+      throw new Error('Transaction receipt is not found')
+    }
 
     const { status, from, to } = receipt
 
@@ -269,7 +289,7 @@ describe('Sending MATIC', () => {
 
     expect(txHash).toMatch(/0x[A-Za-z0-9]{64}/)
 
-    let receipt = null
+    let receipt: IUniversalObj | null = null
 
     await repeatActionWithDelay({
       times: requestsForTxInfo,
@@ -282,6 +302,10 @@ describe('Sending MATIC', () => {
     })
 
     expect(receipt).not.toBeNull()
+
+    if (!receipt) {
+      throw new Error('Transaction receipt is not found')
+    }
 
     const { status, from, to } = receipt
 

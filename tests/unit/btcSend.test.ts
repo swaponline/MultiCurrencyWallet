@@ -87,11 +87,16 @@ describe('BTC Send Tests', () => {
       to: 'mmorWg8tkUmwudQ2cvn7GC3PwE5XgDaBbn',
       amount: 1e-5,
       feeValue: new BigNumber(1e-5),
-      speed: "fast"
+      speed: "fast",
     };
 
     let unspents = await actions.btc.fetchUnspents(options.from)
-    unspents = await actions.btc.prepareUnspents({ amount: options.feeValue.plus(options.amount).dp(8).toNumber(), unspents })
+
+    unspents = await actions.btc.prepareUnspents({
+      amount: options.feeValue.plus(options.amount).dp(8).toNumber(),
+      unspents
+    })
+
     const txIn = unspents.length
     const txOut = 2
 
@@ -103,7 +108,10 @@ describe('BTC Send Tests', () => {
       toAddress: options.to,
     })
     const satoshiPerByte = 2
-    options.feeValue = new BigNumber(txSize).multipliedBy(satoshiPerByte).multipliedBy(1e-8)
+
+    options.feeValue = new BigNumber(txSize)
+      .multipliedBy(satoshiPerByte)
+      .multipliedBy(1e-8)
 
     const txHash = await actions.btc.send(options);
     await timeOut(5 * 1000)
