@@ -7,9 +7,9 @@ const storageKey = constants.localStorage.hiddenCoinsList
 
 const name = 'Update hiddenCoinsList - add baseCurrency to tokens'
 const run = () => {
-  const hiddenCoinsList = JSON.parse(localStorage.getItem(storageKey) || '[]')
+  const hiddenCoinsList = localStorage.getItem(storageKey) || '[]'
 
-  hiddenCoinsList.forEach(coin => {
+  const updatedHiddenCoinsList = hiddenCoinsList.map(coin => {
     let currency = coin.toUpperCase()
 
     if (coin.includes(':')) {
@@ -25,19 +25,21 @@ const run = () => {
         break
     }
 
-    if (COIN_DATA[currency].type === COIN_TYPE.NATIVE) {
+    if (COIN_DATA[currency]?.type === COIN_TYPE.NATIVE) {
       return coin
     }
 
+    const TokenData = COIN_DATA[currency]
+
     const {
       coin: tokenName,
-      blockchain: baseCurrency
+      blockchain: tokenBlockchain
     } = getCoinInfo(currency)
 
-    return baseCurrency ? coin : `{ETH}${coin}`
+    return tokenBlockchain ? coin : `{${ TokenData?.blockchain || 'ETH'}}${coin}`
   })
 
-  localStorage.setItem(storageKey, hiddenCoinsList)
+  localStorage.setItem(storageKey, updatedHiddenCoinsList)
   return Promise.resolve()
 }
 
