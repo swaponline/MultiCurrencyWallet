@@ -268,6 +268,14 @@ class App extends React.Component<RouteComponentProps<any>, any> {
   }
 
   async componentDidMount() {
+
+    const shouldUpdatePageAfterMigration = localStorage.getItem('shouldUpdatePageAfterMigration')
+
+    if (shouldUpdatePageAfterMigration) {
+      localStorage.setItem('shouldUpdatePageAfterMigration', false)
+      window.location.reload()
+    }
+
     //@ts-ignore
     const { currencies } = this.props
 

@@ -39,5 +39,6 @@ export const migrate = () => {
   }).catch(e => console.error(e))
     .finally(() => {
       localStorage.setItem(constants.localStorage.storageRevision, revision)
+      localStorage.setItem('shouldUpdatePageAfterMigration', true)
     })
 }
