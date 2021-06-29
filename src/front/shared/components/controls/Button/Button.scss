@@ -118,8 +118,8 @@
 }
 
 .darkTheme-gray {
-  background-color: #694cff;
-  color: white;
+  background-color: $color-border;
+  color: $d-color;
 
   &:hover {
     color: black

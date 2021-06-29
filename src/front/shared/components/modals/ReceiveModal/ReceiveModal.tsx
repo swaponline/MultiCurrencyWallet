@@ -162,7 +162,7 @@ class ReceiveModal extends React.Component<any, any> {
                       </Button>
                     </div>
                     <div styleName="actionBtn">
-                      <Button big brand fill onClick={this.handleClose}>
+                      <Button big gray fill onClick={this.handleClose}>
                         <FormattedMessage id="WithdrawModalCancelBtn" defaultMessage="Cancel" />
                       </Button>
                     </div>
