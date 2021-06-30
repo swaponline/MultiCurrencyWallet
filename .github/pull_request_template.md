@@ -7,8 +7,9 @@
 - [ ] I tested light/dark theme
 - [ ] I tested different languages
 - [ ] I checked the functionality once again (**AFFECT MONEY**)
-- [ ] I checked work on the Testnet
-- [ ] I checked work on the Mainnet
+- [ ] I checked the work on the Testnet
+- [ ] I checked the work on the Mainnet
+- [ ] I checked the work in the plugin
 - [ ] I checked the **PR** once again
 
 ### Original issue
