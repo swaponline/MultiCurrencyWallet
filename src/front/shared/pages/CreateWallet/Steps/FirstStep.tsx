@@ -52,10 +52,10 @@ function FirstStep(props) {
                       styleName="assetsTableIcon coinColor"
                     />
                   </div>
-                  <div styleName="listGroup">
+                  <ul styleName="currencyInfoList">
                     <li><b>{name}</b></li>
                     <li>{baseCurrency && `(${baseCurrency}) `}{capture}</li>
-                  </div>
+                  </ul>
                 </div>
               )
             })}
