@@ -321,10 +321,6 @@ const externalConfig = () => {
     }
   }
 
-  console.group('%c External config', 'color: green;')
-  console.log(config)
-  console.groupEnd()
-
   return config
 }
 

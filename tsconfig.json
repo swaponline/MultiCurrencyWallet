@@ -16,10 +16,8 @@
     "strictNullChecks": true,
     "experimentalDecorators": true,
     "jsx": "react",
-    "lib": [
-      "dom",
-      "esnext"
-    ],
+    "types": ["jest", "node"],
+    "lib": ["dom", "esnext"],
     "paths": {
       "shared": ["src/front/shared"],
       "shared/*": ["src/front/shared/*"],
@@ -65,9 +63,7 @@
 
       "common": ["src/common/"],
       "common/*": ["src/common/*"]
-    },
+    }
   },
-  "include": [
-    "src/**/*"
-  ]
+  "include": ["src/**/*", "tests"]
 }

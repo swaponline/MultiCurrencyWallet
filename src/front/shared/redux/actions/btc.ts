@@ -442,7 +442,16 @@ const addressIsCorrect = (address) => {
 }
 
 
-const send = ({ from, to, amount, feeValue = null, speed,  serviceFee = hasAdminFee }) => {
+const send = (params) => {
+  const {
+    from,
+    to,
+    amount,
+    feeValue,
+    speed, 
+    serviceFee = hasAdminFee,
+  } = params
+
   return new Promise(async (ready, reject) => {
     try {
       let privateKey = null

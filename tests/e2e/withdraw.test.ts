@@ -7,7 +7,6 @@ describe('Withdraw form tests', () => {
   const checkSelectedCurrency = async (params) => {
     const { page, ticker } = params
 
-    console.log(`Withdraw form tests -> ${ticker.toUpperCase()} checking`)
     // a suitable example: 0.005166 ETH ($18.23)
     const feeRegExp = /[\d(\.)?\d]+ [A-Z]{3,} \(.{1}[\d(\.)?\d]+\)/
 
@@ -37,7 +36,6 @@ describe('Withdraw form tests', () => {
     const arrOfWords = testWallets.eth.seedPhrase.split(' ')
 
     try {
-      console.log('Withdraw form tests')
       await importWallet({
         page,
         seed: arrOfWords,
@@ -47,6 +45,7 @@ describe('Withdraw form tests', () => {
       await checkSelectedCurrency({ page, ticker: 'btc' })
       await checkSelectedCurrency({ page, ticker: 'eth' })
       await checkSelectedCurrency({ page, ticker: 'bnb' })
+      await checkSelectedCurrency({ page, ticker: 'matic' })
     } catch (error) {
       console.error('Withdraw form tests error', error)
       await takeScreenshot(page, 'WithdrawFormTestsError')

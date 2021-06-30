@@ -47,7 +47,13 @@ describe('Send', () => {
 
       await timeOut(5 * 1000)
 
-      await page.$('#sendButton').then((sendButton) => sendButton.click())
+      await page.$('#sendButton').then((sendButton) => {
+        if (sendButton) {
+          sendButton.click()
+        } else {
+          throw new Error('Send button is not found')
+        }
+      })
 
       await page.waitForSelector('#txAmout', {timeout: 60 * 1000})
       const btcTxAmout  = await page.$eval('#txAmout', el => el.textContent)

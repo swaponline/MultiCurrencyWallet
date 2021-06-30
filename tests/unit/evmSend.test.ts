@@ -95,7 +95,10 @@ describe('Sending EVM Coin', () => {
     ],
   ]
 
-  it.each(usualTxCases)('sending usual %s transaction', async (coinName, settings) => {
+  it.each(usualTxCases)('sending usual %s transaction', async (
+    coinName: string,
+    settings: any,
+  ) => {
     const { web3, paramsToSend } = settings
     const lowerCoinName = coinName.toLowerCase()
 
@@ -105,7 +108,8 @@ describe('Sending EVM Coin', () => {
 
     expect(response.transactionHash).toMatch(/0x[A-Za-z0-9]{2}/)
 
-    let receipt = null
+    // wait for a while until transaction gets into the blockchain
+    let receipt: IUniversalObj | null = null
 
     // wait for a while until transaction gets into the blockchain
     await repeatActionWithDelay({
@@ -120,6 +124,10 @@ describe('Sending EVM Coin', () => {
 
     // if receipt equals null then perhaps the transaction is still pending
     expect(receipt).not.toBeNull()
+
+    if (!receipt) {
+      throw new Error('Transaction receipt is not found')
+    }
 
     const { status, from, to } = receipt
 
@@ -195,7 +203,10 @@ describe('Sending EVM Coin', () => {
     ],
   ]
 
-  it.each(adminTxCases)('sending admin %s transaction', async (coinName, settings) => {
+  it.each(adminTxCases)('sending admin %s transaction', async (
+    coinName: string,
+    settings: any,
+  ) => {
     const { web3, paramsToSend } = settings
     const lowerCoinName = coinName.toLowerCase()
 
@@ -205,7 +216,7 @@ describe('Sending EVM Coin', () => {
 
     expect(txHash).toMatch(/0x[A-Za-z0-9]{64}/)
 
-    let receipt = null
+    let receipt: IUniversalObj | null = null
 
     await repeatActionWithDelay({
       times: requestsForTxInfo,
@@ -218,6 +229,10 @@ describe('Sending EVM Coin', () => {
     })
 
     expect(receipt).not.toBeNull()
+
+    if (!receipt) {
+      throw new Error('Transaction receipt is not found')
+    }
 
     const { status, from, to } = receipt
 

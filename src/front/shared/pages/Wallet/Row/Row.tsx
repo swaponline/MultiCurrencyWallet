@@ -777,6 +777,7 @@ class Row extends Component<RowProps, RowState> {
     const metamaskDisconnected = isMetamask && !itemData.isConnected
     const isAvailableMetamaskNetwork = isMetamask && metamask.isAvailableNetwork()
     const isNotAvailableMetamaskNetwork = isMetamask && !metamask.isAvailableNetwork()
+    const currencyTitleId = `${standard ? standard.toLowerCase() : ''}${currency.toLowerCase()}`
 
     return (
       !ethRowWithoutExternalProvider
@@ -789,7 +790,7 @@ class Row extends Component<RowProps, RowState> {
             />
 
             {/* Title-Link */}
-            <div styleName="assetsTableInfo">
+            <div id={currencyTitleId + 'WalletTitle'} styleName="assetsTableInfo">
               <div styleName="nameRow">
                 <a onClick={
                   metamaskDisconnected
