@@ -41,7 +41,12 @@ export const getActivatedCurrencies = () => {
     const standard = TOKEN_STANDARDS[key].standard
 
     Object.keys(config[standard]).forEach((token) => {
-      currencies.push(token.toUpperCase())
+
+      const baseCurrency = TOKEN_STANDARDS[standard].currency.toUpperCase()
+      const tokenName = token.toUpperCase()
+      const tokenValue = `{${baseCurrency}}${tokenName}`
+
+      currencies.push(tokenValue)
     })
   })
 
@@ -70,7 +75,12 @@ export const getWidgetCurrencies = () => {
   if (externalConfig.isWidget) {
     if (window?.widgetEvmLikeTokens?.length) {
       window.widgetEvmLikeTokens.forEach((token) => {
-        widgetCurrencies.push(token.name.toUpperCase())
+
+        const baseCurrency = TOKEN_STANDARDS[token.standard].currency.toUpperCase()
+        const tokenName = token.name.toUpperCase()
+        const tokenValue = `{${baseCurrency}}${tokenName}`
+
+        widgetCurrencies.push(tokenValue)
       })
     } else {
       widgetCurrencies.push(config.erc20token.toUpperCase())
@@ -82,7 +92,7 @@ export const getWidgetCurrencies = () => {
 
 export const filterUserCurrencyData = (currencyData) =>
   currencyData.filter((wallet) =>
-    isAllowedCurrency(wallet.currency, wallet.address)
+    isAllowedCurrency(wallet.isToken ? wallet.tokenKey.toUpperCase() : wallet.currency, wallet.address)
   )
 
 export const isAllowedCurrency = (currency = '', address = '') => {

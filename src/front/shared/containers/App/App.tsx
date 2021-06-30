@@ -268,6 +268,14 @@ class App extends React.Component<RouteComponentProps<any>, any> {
   }
 
   async componentDidMount() {
+
+    const shouldUpdatePageAfterMigration = localStorage.getItem('shouldUpdatePageAfterMigration')
+
+    if (shouldUpdatePageAfterMigration) {
+      localStorage.setItem('shouldUpdatePageAfterMigration', false)
+      window.location.reload()
+    }
+
     //@ts-ignore
     const { currencies } = this.props
 
@@ -276,9 +284,9 @@ class App extends React.Component<RouteComponentProps<any>, any> {
     const isWalletCreate = localStorage.getItem(constants.localStorage.isWalletCreate)
 
     if (!isWalletCreate) {
-      currencies.forEach(({ name }) => {
+      currencies.forEach(({ name, standard, value }) => {
         if (name !== "BTC") {
-          actions.core.markCoinAsHidden(name)
+          actions.core.markCoinAsHidden(standard ? value.toUpperCase() : name)
         }
       })
     }

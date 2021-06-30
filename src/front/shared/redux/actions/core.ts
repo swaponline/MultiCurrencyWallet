@@ -375,7 +375,12 @@ const markCoinAsVisible = (coin, doBackup = false) => {
   const { hiddenCoinsList } = constants.localStorage
 
   const findedCoin = JSON.parse(localStorage.getItem(hiddenCoinsList) || '[]').find(
-    (el) => el.includes(coin) && el.includes(':')
+    (el) => {
+      if (el.includes(':')) {
+        const [elCoin, elAddress] = el.split(':')
+        return elCoin === coin
+      }
+    }
   )
 
   reducers.core.markCoinAsVisible(findedCoin || coin)
