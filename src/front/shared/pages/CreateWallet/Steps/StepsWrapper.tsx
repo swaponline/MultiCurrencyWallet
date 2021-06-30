@@ -96,12 +96,13 @@ export default class StepsWrapper extends Component<any, any> {
         window.widgetEvmLikeTokens.forEach((token) => {
           const name = token.name.toLowerCase()
           const standard = token.standard.toLowerCase()
+          const baseCurrency = TOKEN_STANDARDS[standard].currency.toUpperCase()
 
           if (config[standard][name]) {
             this.widgetStartPack.push({
               name: name.toUpperCase(),
               capture: config[standard][name].fullName,
-              baseCurrency: TOKEN_STANDARDS[standard].currency.toUpperCase(),
+              baseCurrency,
             })
           }
         })
@@ -111,7 +112,7 @@ export default class StepsWrapper extends Component<any, any> {
           this.widgetStartPack.push({
             name: config.erc20token.toUpperCase(),
             capture: config.erc20[config.erc20token].fullName,
-            baseCurrency: `ETH`,
+            baseCurrency: 'ETH',
           })
         }
       }
