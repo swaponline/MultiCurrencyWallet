@@ -64,6 +64,8 @@ const run = () => {
   const updatedHiddenCoinsList = [...hiddenNativeCoinsList, ...hiddenTokensList]
 
   localStorage.setItem(storageKey, updatedHiddenCoinsList)
+
+  localStorage.setItem('shouldUpdatePageAfterMigration', true)
   return Promise.resolve()
 }
 
