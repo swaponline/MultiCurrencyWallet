@@ -14,7 +14,6 @@ import { Button } from 'components/controls'
 import erc20Like from 'common/erc20Like'
 import Option from './Option/Option'
 import { links } from 'helpers'
-import { localisedUrl } from 'helpers/locale'
 import { isAllowedCurrency } from 'helpers/user'
 import actions from 'redux/actions'
 import feedback from 'shared/helpers/feedback'
@@ -139,12 +138,11 @@ class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
 
   isCurrencyInInternalWallet = () => {
     const ticker = this.getTicker()
-    const { coin } = getCoinInfo(ticker)
     const internalAddress = this.getInternalAddress()
 
     return !internalAddress
       ? false
-      : isAllowedCurrency(coin, internalAddress)
+      : isAllowedCurrency(ticker, internalAddress)
   }
 
   handleFocusAddress = () => {
@@ -209,11 +207,10 @@ class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
       history,
     } = this.props
     const ticker = this.getTicker()
-    const { coin } = getCoinInfo(ticker)
 
     feedback.exchangeForm.redirectedCreateWallet(ticker)
 
-    history.push(`${links.createWallet}/${coin}`)
+    history.push(`${links.createWallet}/${ticker}`)
   }
 
   handleConnectMetamask = () => {

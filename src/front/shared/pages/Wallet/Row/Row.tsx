@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react'
 import actions from 'redux/actions'
 import { connect } from 'redaction'
 import erc20Like from 'common/erc20Like'
-import helpers, { constants } from 'helpers'
+import { constants } from 'helpers'
 import config from 'helpers/externalConfig'
 import { isMobile } from 'react-device-detect'
 
@@ -17,7 +17,6 @@ import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
 import { BigNumber } from 'bignumber.js'
 import { Button } from 'components/controls'
-import web3Icons from 'images'
 import PartOfAddress from '../PartOfAddress'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 import { ApiEndpoint } from '../Endpoints'
@@ -214,11 +213,9 @@ class Row extends Component<RowProps, RowState> {
 
   handleWithdrawPopup = () => {
     const {
-      itemData: { currency },
       itemData
     } = this.props
 
-    //@ts-ignore: strictNullChecks
     actions.modals.open(constants.modals.Withdraw, itemData)
   }
 
@@ -226,8 +223,7 @@ class Row extends Component<RowProps, RowState> {
     const {
       itemData,
       history,
-      //@ts-ignore: strictNullChecks
-      intl: { locale },
+      intl
     } = this.props
 
     if (itemData.currency.toLowerCase() === 'ghost') {
@@ -251,9 +247,8 @@ class Row extends Component<RowProps, RowState> {
 
     const firstUrlPart = itemData.tokenKey ? `/token/${itemData.tokenKey}` : `/${targetCurrency}`
 
-    //@ts-ignore: strictNullChecks
-    history.push(
-      localisedUrl(locale, `${firstUrlPart}/${itemData.address}/send`)
+    history?.push(
+      localisedUrl(intl?.locale, `${firstUrlPart}/${itemData.address}/send`)
     )
   }
 
@@ -262,7 +257,6 @@ class Row extends Component<RowProps, RowState> {
       itemData: { currency, address },
     } = this.props
 
-    //@ts-ignore: strictNullChecks
     actions.modals.open(constants.modals.ReceiveModal, {
       currency,
       address,
@@ -270,17 +264,14 @@ class Row extends Component<RowProps, RowState> {
   }
 
   handleActivateProtected = async () => {
-    //@ts-ignore: strictNullChecks
     actions.modals.open(constants.modals.RegisterSMSProtected, {})
   }
 
   handleActivatePinProtected = async () => {
-    //@ts-ignore: strictNullChecks
     actions.modals.open(constants.modals.RegisterPINProtected, {})
   }
 
   handleGenerateMultisignLink = async () => {
-    //@ts-ignore: strictNullChecks
     actions.modals.open(constants.modals.MultisignJoinLink, {})
   }
 
@@ -289,7 +280,6 @@ class Row extends Component<RowProps, RowState> {
       itemData: { currency, address },
     } = this.props
 
-    //@ts-ignore: strictNullChecks
     actions.modals.open(constants.modals.HowToWithdrawModal, {
       currency,
       address,
@@ -307,7 +297,6 @@ class Row extends Component<RowProps, RowState> {
       itemData: { currency, address },
     } = this.props
 
-    //@ts-ignore: strictNullChecks
     actions.modals.open(constants.modals.InvoiceLinkModal, {
       currency,
       address,
@@ -331,7 +320,6 @@ class Row extends Component<RowProps, RowState> {
       },
     } = this.props
 
-    //@ts-ignore: strictNullChecks
     actions.modals.open(constants.modals.InvoiceModal, {
       currency,
       address,
@@ -346,18 +334,15 @@ class Row extends Component<RowProps, RowState> {
   goToExchange = () => {
     const {
       history,
-      //@ts-ignore: strictNullChecks
-      intl: { locale },
+      intl,
     } = this.props
-    //@ts-ignore: strictNullChecks
-    history.push(localisedUrl(locale, '/exchange'))
+    history?.push(localisedUrl(intl?.locale, '/exchange'))
   }
 
   goToCurrencyHistory = () => {
     const {
       history,
-      //@ts-ignore: strictNullChecks
-      intl: { locale },
+      intl,
       itemData,
     } = this.props
 
@@ -374,15 +359,14 @@ class Row extends Component<RowProps, RowState> {
 
     const firstUrlPart = itemData.tokenKey ? `/token/${itemData.tokenKey}` : `/${targetCurrency}`
 
-    //@ts-ignore: strictNullChecks
-    history.push(
-      localisedUrl(locale, `${firstUrlPart}/${itemData.address}`)
+    history?.push(
+      localisedUrl(intl?.locale, `${firstUrlPart}/${itemData.address}`)
     )
   }
 
   hideCurrency = () => {
     const {
-      itemData: { currency, address, balance },
+      itemData: { currency, address, balance, isToken, tokenKey },
     } = this.props
 
     if (balance > 0) {
@@ -395,7 +379,7 @@ class Row extends Component<RowProps, RowState> {
         ),
       })
     } else {
-      actions.core.markCoinAsHidden(`${currency}:${address}`)
+      actions.core.markCoinAsHidden(`${isToken ? tokenKey.toUpperCase() : currency}:${address}`)
       actions.notifications.show(constants.notifications.Message, {
         message: (
           <FormattedMessage
@@ -412,7 +396,6 @@ class Row extends Component<RowProps, RowState> {
       itemData: { address, fullName },
     } = this.props
 
-    //@ts-ignore: strictNullChecks
     actions.modals.open(constants.modals.WalletAddressModal, {
       address,
       fullName,
@@ -425,10 +408,8 @@ class Row extends Component<RowProps, RowState> {
       ethDataHelper,
     } = this.props
 
-    //@ts-ignore: strictNullChecks
     actions.modals.open(constants.modals.PrivateKeysModal, {
-      //@ts-ignore: strictNullChecks
-      key: address === ethDataHelper.address ? ethDataHelper.privateKey : privateKey,
+      key: address === ethDataHelper?.address ? ethDataHelper?.privateKey : privateKey,
       fullName,
     })
   }
@@ -478,15 +459,13 @@ class Row extends Component<RowProps, RowState> {
         break
     }
 
-    if (itemData.infoAboutCurrency && itemData.infoAboutCurrency.price_fiat) {
+    if (itemData?.infoAboutCurrency?.price_fiat) {
       currencyFiatBalance = new BigNumber(balance).multipliedBy(itemData.infoAboutCurrency.price_fiat).dp(2, BigNumber.ROUND_FLOOR).toNumber()
     }
 
     let hasHowToWithdraw = false
     if (
-      config &&
-      config.erc20 &&
-      config.erc20[this.props.currency.currency.toLowerCase()]?.howToWithdraw
+      config?.erc20?.[this.props.currency.currency.toLowerCase()]?.howToWithdraw
     ) {
       hasHowToWithdraw = true
     }
@@ -901,8 +880,7 @@ class Row extends Component<RowProps, RowState> {
                                 <br />
                                 <span
                                   styleName="unconfirmedBalance"
-                                  //@ts-ignore: strictNullChecks
-                                  title={intl.formatMessage(
+                                  title={intl?.formatMessage(
                                     langLabels.unconfirmedBalance
                                   )}
                                 >
@@ -978,16 +956,14 @@ class Row extends Component<RowProps, RowState> {
               <div styleName="assetsTableValue">
                 {msConfirmCount && !isMobile && (
                   <p styleName="txWaitConfirm" onClick={this.goToCurrencyHistory}>
-                    {/* 
-                    //@ts-ignore: strictNullChecks */}
-                    {intl.formatMessage(
+                    {intl?.formatMessage(
                       langLabels.msConfirmCount,
                       {
                         count: msConfirmCount,
                       }
                     )}
                   </p>
-                )}  
+                )}
                 {currencyFiatBalance && showBalance && !balanceError && (
                   <>
                     <p>{currencyFiatBalance}</p>
