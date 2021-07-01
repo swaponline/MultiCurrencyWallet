@@ -25,6 +25,10 @@ export const getActivatedCurrencies = () => {
     currencies.push('MATIC')
   }
 
+  if (!config.opts.curEnabled || config.opts.curEnabled.arbeth) {
+    currencies.push('ARBETH')
+  }
+
   if (!config.opts.curEnabled || config.opts.curEnabled.ghost) {
     currencies.push('GHOST')
   }
@@ -56,6 +60,7 @@ export const getWidgetCurrencies = () => {
     'ETH',
     'BNB',
     'MATIC',
+    'ARBETH',
     'GHOST',
     'NEXT',
   ]

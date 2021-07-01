@@ -11,9 +11,11 @@ import {
   UTXO_to_ETH,
   UTXO_to_BNB,
   UTXO_to_MATIC,
+  UTXO_to_ARBITRUM,
   ETH_to_UTXO,
   BNB_to_UTXO,
-  MATIC_to_UTXO
+  MATIC_to_UTXO,
+  ARBITRUM_to_UTXO,
 } from './build'
 
 
@@ -22,6 +24,8 @@ swapComponents[`BTC2BNB`] = UTXO_to_BNB(`btc`)
 swapComponents[`BNB2BTC`] = BNB_to_UTXO(`btc`)
 swapComponents[`BTC2MATIC`] = UTXO_to_MATIC(`btc`)
 swapComponents[`MATIC2BTC`] = MATIC_to_UTXO(`btc`)
+swapComponents[`BTC2ARBITRUM`] = UTXO_to_ARBITRUM(`btc`)
+swapComponents[`ARBITRUM2BTC`] = ARBITRUM_to_UTXO(`btc`)
 
 Object.keys(config.swapConfig).forEach(coin => {
   swapComponents[`${coin.toUpperCase()}2ETH`] = UTXO_to_ETH(coin)

@@ -5,9 +5,13 @@ import iconLiquality from './liquality.png'
 import iconMetamask from './metamask.svg'
 import iconTrustWallet from './trust.svg'
 import iconClose from './close.svg'
+import iconOk from './ok.svg'
+import iconChecked from './checked.svg'
 
 export const regularIcons = {
   CLOSE: iconClose,
+  OK: iconOk,
+  CHECKED: iconChecked,
 }
 
 const web3Icons = {

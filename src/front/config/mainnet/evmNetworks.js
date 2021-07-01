@@ -23,4 +23,11 @@ export default {
     rpcUrls: [web3.matic_provider],
     blockExplorerUrls: [link.maticscan]
   },
+  ARBETH: {
+    chainId: "0xA4B1",
+    networkVersion: 42161,
+    chainName: 'Arbitrum Mainnet',
+    rpcUrls: [web3.arbitrum_provider],
+    blockExplorerUrls: [link.arbitrum]
+  },
 }

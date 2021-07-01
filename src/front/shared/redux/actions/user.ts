@@ -102,6 +102,7 @@ const sign = async () => {
       eth: localStorage.getItem(constants.privateKeyNames.ethMnemonic),
       bnb: localStorage.getItem(constants.privateKeyNames.ethMnemonic),
       matic: localStorage.getItem(constants.privateKeyNames.ethMnemonic),
+      arbeth: localStorage.getItem(constants.privateKeyNames.ethMnemonic),
       ghost: localStorage.getItem(constants.privateKeyNames.ghostMnemonic),
       next: localStorage.getItem(constants.privateKeyNames.nextMnemonic),
     }
@@ -112,6 +113,7 @@ const sign = async () => {
       if (!mnemonicKeys.eth) mnemonicKeys.eth = actions.eth.sweepToMnemonic(mnemonic)
       if (!mnemonicKeys.bnb) mnemonicKeys.bnb = actions.bnb.sweepToMnemonic(mnemonic)
       if (!mnemonicKeys.matic) mnemonicKeys.matic = actions.matic.sweepToMnemonic(mnemonic)
+      if (!mnemonicKeys.arbeth) mnemonicKeys.arbeth = actions.arbeth.sweepToMnemonic(mnemonic)
       //@ts-ignore
       if (!mnemonicKeys.ghost) mnemonicKeys.ghost = actions.ghost.sweepToMnemonic(mnemonic)
         //@ts-ignore
@@ -156,13 +158,13 @@ const sign = async () => {
     const btcMultisigPrivateKey = localStorage.getItem(constants.privateKeyNames.btcMultisig)
     const ghostPrivateKey = localStorage.getItem(constants.privateKeyNames.ghost)
     const nextPrivateKey = localStorage.getItem(constants.privateKeyNames.next)
-    const maticPrivateKey = localStorage.getItem(constants.privateKeyNames.matic)
-    // using ETH key for BNB. They're compatible
+    // using ETH key for all EVM compatible chains
     const ethPrivateKey = localStorage.getItem(constants.privateKeyNames.eth)
 
     actions.eth.login(ethPrivateKey, mnemonic, mnemonicKeys)
     actions.bnb.login(ethPrivateKey, mnemonic, mnemonicKeys)
     actions.matic.login(ethPrivateKey, mnemonic, mnemonicKeys)
+    actions.arbeth.login(ethPrivateKey, mnemonic, mnemonicKeys)
     const _btcPrivateKey = actions.btc.login(btcPrivateKey, mnemonic, mnemonicKeys)
     const _ghostPrivateKey = actions.ghost.login(ghostPrivateKey, mnemonic, mnemonicKeys)
     const _nextPrivateKey = actions.next.login(nextPrivateKey, mnemonic, mnemonicKeys)
@@ -248,6 +250,7 @@ const getBalances = () => {
       { func: actions.eth.getBalance, name: 'eth' },
       { func: actions.bnb.getBalance, name: 'bnb' },
       { func: actions.matic.getBalance, name: 'matic' },
+      { func: actions.arbeth.getBalance, name: 'arbeth' },
       { func: actions.ghost.getBalance, name: 'ghost' },
       { func: actions.next.getBalance, name: 'next' },
       { func: actions.btcmultisig.getBalance, name: 'btc-sms' },
@@ -506,6 +509,7 @@ const setTransactions = async (objCurrency: ObjCurrencyType | {} = null) => {
   const isEthSweeped = actions.eth.isSweeped()
   const isBnbSweeped = actions.bnb.isSweeped()
   const isMaticSweeped = actions.matic.isSweeped()
+  const isArbitrumSweeped = actions.arbeth.isSweeped()
 
   try {
     clearTransactions()
@@ -519,6 +523,7 @@ const setTransactions = async (objCurrency: ObjCurrencyType | {} = null) => {
       actions.eth.getTransaction(),
       actions.bnb.getTransaction(),
       actions.matic.getTransaction(),
+      actions.arbeth.getTransaction(),
       //@ts-ignore: strictNullChecks
       ...(metamask.isEnabled() && metamask.isConnected()) ? [actions.eth.getTransaction(metamask.getAddress())] : [],
       //@ts-ignore: strictNullChecks
@@ -526,6 +531,7 @@ const setTransactions = async (objCurrency: ObjCurrencyType | {} = null) => {
       ...(isEthSweeped) ? [] : [actions.eth.getTransaction(actions.eth.getSweepAddress())],
       ...(isBnbSweeped) ? [] : [actions.bnb.getTransaction(actions.bnb.getSweepAddress())],
       ...(isMaticSweeped) ? [] : [actions.matic.getTransaction(actions.matic.getSweepAddress())],
+      ...(isArbitrumSweeped) ? [] : [actions.arbeth.getTransaction(actions.arbeth.getSweepAddress())],
       ...objCurrency && objCurrency['GHOST'] ? [actions.ghost.getTransaction()] : [],
       ...objCurrency && objCurrency['NEXT'] ? [actions.next.getTransaction()] : [],
     ]
@@ -580,6 +586,7 @@ const getText = () => {
       ethData,
       bnbData,
       maticData,
+      arbethData,
       btcData,
       ghostData,
       nextData,
@@ -608,11 +615,15 @@ const getText = () => {
     BSC address: ${bnbData.address}\r\n
     Private key: ${bnbData.privateKey}\r\n
     \r\n
-    \r\n
     # MATIC CHAIN
     \r\n
     MATIC address: ${maticData.address}\r\n
     Private key: ${maticData.privateKey}\r\n
+    \r\n
+    # ARBITRUM CHAIN
+    \r\n
+    ARBITRUM address: ${arbethData.address}\r\n
+    Private key: ${arbethData.privateKey}\r\n
     \r\n
     # BITCOIN
     \r\n
@@ -672,17 +683,9 @@ export const isOwner = (addr, currency) => {
     return lowerAddr === storeOwnerAddress
   }
 
-  if (
-    //@ts-ignore: strictNullChecks
-    actions.btc.getAllMyAddresses().includes(lowerAddr) ||
-    //@ts-ignore: strictNullChecks
-    actions.ghost.getAllMyAddresses().includes(lowerAddr) ||
-    //@ts-ignore: strictNullChecks
-    actions.next.getAllMyAddresses().includes(lowerAddr) ||
-    actions.eth.getAllMyAddresses().includes(lowerAddr) ||
-    actions.bnb.getAllMyAddresses().includes(lowerAddr) ||
-    actions.matic.getAllMyAddresses().includes(lowerAddr)
-  ) {
+  const currencyActions = actions[currency.toLowerCase()]
+
+  if (currencyActions?.getAllMyAddresses().includes(lowerAddr)) {
     return true
   }
 
