@@ -1,5 +1,4 @@
 const express = require('express')
-const bodyParser = require('body-parser')
 
 const request = require('superagent')
 const app = express()
@@ -9,8 +8,8 @@ const helmet = require('helmet')
 
 app.use(helmet())
 app.use(cors())
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({
+app.use(express.json())
+app.use(express.urlencoded({
   extended: true,
 }))
 
