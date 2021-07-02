@@ -16,17 +16,15 @@ const backupUserData = {
   },
   hasServerBackup: () => {
     return new Promise((resolve) => {
-      if (config
-        && config.opts
-        && config.opts.plugins
-        && config.opts.plugins.backupPlugin
-        && config.opts.plugins.restorePluginUrl
+      const plugins = config?.opts?.plugins
+
+      if (
+        plugins?.backupPlugin
+        && plugins?.restorePluginUrl
         && window
         && window.WPuserUid
         && config.opts.WPuserHash
       ) {
-        const set = (key, value) => localStorage.setItem(constants.privateKeyNames[key], value)
-
         axios.post(config.opts.plugins.restorePluginUrl, {
           WPuserUid: window.WPuserUid,
           WPuserHash: config.opts.WPuserHash,
@@ -56,11 +54,11 @@ const backupUserData = {
   },
   backupUser: () => {
     return new Promise((resolve) => {
-      if (config
-        && config.opts
-        && config.opts.plugins
-        && config.opts.plugins.backupPlugin
-        && config.opts.plugins.backupPluginUrl
+      const plugins = config?.opts?.plugins
+
+      if (
+        plugins?.backupPlugin
+        && plugins?.backupPluginUrl
         && window
         && window.WPuserUid
         && config.opts.WPuserHash
@@ -71,10 +69,12 @@ const backupUserData = {
           btcMnemonic:                      get(`btcMnemonic`),
           ethMnemonic:                      get(`ethMnemonic`),
           bnbMnemonic:                      get(`bnbMnemonic`),
-          maticMnemonic:                      get(`maticMnemonic`),
+          maticMnemonic:                    get(`maticMnemonic`),
+          arbethMnemonic:                   get(`arbethMnemonic`),
           eth:                              get(`eth`),
           bnb:                              get(`bnb`),
-          matic:                              get(`matic`),
+          matic:                            get(`matic`),
+          arbeth:                           get(`arbeth`),
           btc:                              get(`btc`),
           ghost:                            get(`ghost`),
           next:                             get(`next`),
@@ -125,16 +125,16 @@ const backupUserData = {
   },
   cleanupSeed: () => {
     return new Promise((resolve) => {
-      if (config
-        && config.opts
-        && config.opts.plugins
-        && config.opts.plugins.backupPlugin
-        && config.opts.plugins.backupPluginUrl
+      const plugins = config?.opts?.plugins
+
+      if (
+        plugins?.backupPlugin
+        && plugins?.backupPluginUrl
         && window
         && window.WPuserUid
         && config.opts.WPuserHash
       ) {
-        axios.post(config.opts.plugins.backupPluginUrl, {
+        axios.post(plugins.backupPluginUrl, {
           WPuserUid: window.WPuserUid,
           WPuserHash: config.opts.WPuserHash,
           action: 'cleanup',
@@ -158,11 +158,11 @@ const backupUserData = {
   },
   restoreUser: () => {
     return new Promise((resolve) => {
-      if (config
-        && config.opts
-        && config.opts.plugins
-        && config.opts.plugins.backupPlugin
-        && config.opts.plugins.restorePluginUrl
+      const plugins = config?.opts?.plugins
+
+      if (
+        plugins?.backupPlugin
+        && plugins?.restorePluginUrl
         && window
         && window.WPuserUid
         && config.opts.WPuserHash
@@ -171,7 +171,7 @@ const backupUserData = {
           if (value) localStorage.setItem(constants.privateKeyNames[key], value)
         }
 
-        axios.post(config.opts.plugins.restorePluginUrl, {
+        axios.post(plugins.restorePluginUrl, {
           WPuserUid: window.WPuserUid,
           WPuserHash: config.opts.WPuserHash,
         }).then((req) => {
@@ -204,6 +204,8 @@ const backupUserData = {
             set(`bnbMnemonic`, data.bnbMnemonic)
             set(`matic`, data.matic)
             set(`maticMnemonic`, data.maticMnemonic)
+            set(`arbeth`, data.arbeth)
+            set(`arbethMnemonic`, data.arbethMnemonic)
             set(`twentywords`, data.twentywords)
 
             // set other params to true (user has on tour and other pages)

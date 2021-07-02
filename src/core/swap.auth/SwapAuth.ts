@@ -15,7 +15,7 @@ class SwapAuth extends ServiceInterface {
     return 'auth'
   }
 
-  constructor(privateKeys, useMnemonic) {
+  constructor(privateKeys, useMnemonic?: string) {
     super()
 
     this._serviceName         = 'auth'
@@ -23,8 +23,6 @@ class SwapAuth extends ServiceInterface {
 
     _privateKeys = privateKeys
     _mnemonic = useMnemonic
-    
-
   }
 
   initService() {

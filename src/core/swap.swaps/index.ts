@@ -2,6 +2,7 @@ import BtcSwap from './BtcSwap'
 import EthSwap from './EthSwap'
 import BnbSwap from './BnbSwap'
 import MaticSwap from './MaticSwap'
+import ArbitrumSwap from './ArbitrumSwap'
 import GhostSwap from './GhostSwap'
 import NextSwap from './NextSwap'
 
@@ -16,6 +17,7 @@ export {
   EthSwap,
   BnbSwap,
   MaticSwap,
+  ArbitrumSwap,
   GhostSwap,
   NextSwap,
 

@@ -1,9 +1,6 @@
-import React, { useState, ReactNode } from 'react'
+import React, { ReactNode } from 'react'
 import cssModules from 'react-css-modules'
-import { connect } from 'redaction'
 import { constants } from 'helpers'
-import { user } from 'helpers'
-import config from 'app-config'
 import actions from 'redux/actions'
 import { FormattedMessage } from 'react-intl'
 import { isMobile } from 'react-device-detect'
@@ -16,19 +13,16 @@ import { ModalConductorProvider } from 'components/modal'
 
 import styles from './styles.scss'
 
-const isWidgetBuild = config && config.isWidget
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
-type NewDesignLayoutProps = {
-  hiddenCoinsList: string[]
-  activeFiat: string
+type ComponentProps = {
   page: 'history' | 'invoices'
   children?: ReactNode
   BalanceForm: ReactNode
 }
 
-const NewDesignLayout = (props: NewDesignLayoutProps) => {
-  const { hiddenCoinsList, activeFiat, children, page } = props
+const DashboardLayout = (props: ComponentProps) => {
+  const { children, page } = props
 
   const balanceRef = React.useRef(null) // Create a ref object
 
@@ -46,68 +40,6 @@ const NewDesignLayout = (props: NewDesignLayoutProps) => {
   let showSweepBanner = !isSweepReady
 
   if (isBtcSweeped || isEthSweeped) showSweepBanner = false
-
-  const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
-
-  const [commonState, setCommonState] = useState({
-    activeView,
-    activePage: page,
-    btcBalance: 0,
-    activeCurrency: activeFiat.toLowerCase(),
-    walletTitle: 'Wallet',
-    editTitle: false,
-    enabledCurrencies: user.getActivatedCurrencies(),
-    showSweepBanner,
-    isMnemonicSaved: mnemonic === `-`,
-  })
-
-  const { enabledCurrencies } = commonState
-
-  let btcBalance = 0
-  let fiatBalance = 0
-  let changePercent = 0
-
-  const allData = actions.core.getWallets({})
-  const widgetCurrencies = user.getWidgetCurrencies()
-
-  let tableRows = allData.filter(
-    ({ currency, address, balance }) =>
-      // @ToDo - В будущем нужно убрать проверку только по типу монеты.
-      // Старую проверку оставил, чтобы у старых пользователей не вывалились скрытые кошельки
-
-      (!hiddenCoinsList.includes(currency) &&
-        !hiddenCoinsList.includes(`${currency}:${address}`)) ||
-      balance > 0
-  )
-
-  if (isWidgetBuild) {
-    // tableRows = allData.filter(({ currency }) => widgetCurrencies.includes(currency))
-    tableRows = allData.filter(
-      ({ currency, address }) =>
-        !hiddenCoinsList.includes(currency) && !hiddenCoinsList.includes(`${currency}:${address}`)
-    )
-    // Отфильтруем валюты, исключив те, которые не используются в этом билде
-    tableRows = tableRows.filter(({ currency }) => widgetCurrencies.includes(currency))
-  }
-
-  //@ts-ignore: strictNullChecks
-  tableRows = tableRows.filter(({ currency }) => enabledCurrencies.includes(currency))
-
-  tableRows.forEach(({ name, infoAboutCurrency, balance, currency }) => {
-    const currName = currency || name
-
-    if (
-      (!isWidgetBuild || widgetCurrencies.includes(currName)) &&
-      infoAboutCurrency &&
-      balance !== 0
-    ) {
-      if (currName === 'BTC') {
-        changePercent = infoAboutCurrency.percent_change_1h
-      }
-      btcBalance += balance * infoAboutCurrency.price_btc
-      fiatBalance += balance * (infoAboutCurrency.price_fiat ? infoAboutCurrency.price_fiat : 1)
-    }
-  })
 
   return (
     <article className="data-tut-start-widget-tour">
@@ -137,7 +69,7 @@ const NewDesignLayout = (props: NewDesignLayoutProps) => {
           >
             {showSweepBanner && (
               <p styleName="sweepInfo">
-                <Button blue /*onClick={this.handleMakeSweep}*/>
+                <Button blue>
                   <FormattedMessage id="SweepBannerButton" defaultMessage="Done" />
                 </Button>
                 <FormattedMessage
@@ -165,24 +97,4 @@ const NewDesignLayout = (props: NewDesignLayoutProps) => {
   )
 }
 
-export default connect(
-  ({
-    core: { hiddenCoinsList },
-    user: {
-      activeFiat,
-    },
-  }) => {
-    let widgetMultiTokens = []
-    if (window?.widgetEvmLikeTokens?.length) {
-      window.widgetEvmLikeTokens.forEach((token) => {
-        //@ts-ignore: strictNullChecks
-        widgetMultiTokens.push(token.name.toUpperCase())
-      })
-    }
-
-    return {
-      hiddenCoinsList,
-      activeFiat,
-    }
-  }
-)(cssModules(NewDesignLayout, styles, { allowMultiple: true }))
+export default cssModules(DashboardLayout, styles, { allowMultiple: true })

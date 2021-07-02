@@ -1,6 +1,4 @@
 import erc20Like from 'common/erc20Like'
-import getCoinInfo from 'common/coins/getCoinInfo'
-
 
 export default (currency, returnToken) => {
   let key = currency.toLowerCase()
@@ -10,21 +8,11 @@ export default (currency, returnToken) => {
     case 'btc (sms-protected)':
     case 'btc (pin-protected)':
     case 'btc (multisig)':
-      return 'btc'
-    case 'eth':
-      return 'eth'
-    case 'bnb':
-      return 'bnb'
-    case 'matic':
-      return 'matic'
-    case 'ghost':
-      return 'ghost'
-    case 'next':
-      return 'next'
+      key = 'btc'
   }
 
   if (erc20Like.isToken({ name: key })) {
-    key = (returnToken) ? key : 'token'
+    key = returnToken ? key : 'token'
   }
 
   return key

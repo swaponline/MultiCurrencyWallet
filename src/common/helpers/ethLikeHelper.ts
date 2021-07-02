@@ -1,26 +1,27 @@
 
 import config from 'app-config'
+import Web3 from 'web3'
 import { BigNumber } from 'bignumber.js'
 import DEFAULT_CURRENCY_PARAMETERS from 'common/helpers/constants/DEFAULT_CURRENCY_PARAMETERS'
-import { feedback, api } from 'helpers'
+import { feedback } from 'helpers'
 
 class ethLikeHelper {
   readonly currency: string
   readonly currencyKey: string
   readonly defaultParams: IUniversalObj
-  readonly feeRatesLink: string
+  readonly web3: IUniversalObj
 
   constructor(params) {
     const {
       currency,
       defaultParams,
-      feeRatesLink,
+      web3,
     } = params
 
     this.currency = currency
     this.currencyKey = currency.toLowerCase()
     this.defaultParams = defaultParams
-    this.feeRatesLink = feeRatesLink
+    this.web3 = web3
   }
 
   reportError = (params) => {
@@ -50,17 +51,15 @@ class ethLikeHelper {
   }
 
   estimateGasPrice = async (): Promise<number> => {
-    let apiResult
+    let response
 
     try {
-      // returned in hex wei value
-      apiResult = await api.asyncFetchApi(this.feeRatesLink)
+      response = await this.web3.eth.getGasPrice()
     } catch (err) {
       return this.defaultParams.price.fast
     }
 
-    // convert to decimal value
-    const weiGasPrice = new BigNumber(parseInt(apiResult.result).toString(10))
+    const weiGasPrice = new BigNumber(response)
 
     return weiGasPrice.isGreaterThan(this.defaultParams.price.fast)
       ? weiGasPrice.toNumber()
@@ -72,16 +71,29 @@ export default {
   eth: new ethLikeHelper({
     currency: 'ETH',
     defaultParams: DEFAULT_CURRENCY_PARAMETERS.evmLike,
-    feeRatesLink: config.feeRates.eth,
+    web3: new Web3(
+      new Web3.providers.HttpProvider(config.web3.provider)
+    ),
   }),
   bnb: new ethLikeHelper({
     currency: 'BNB',
     defaultParams: DEFAULT_CURRENCY_PARAMETERS.evmLike,
-    feeRatesLink: config.feeRates.bsc,
+    web3: new Web3(
+      new Web3.providers.HttpProvider(config.web3.binance_provider)
+    ),
   }),
   matic: new ethLikeHelper({
     currency: 'MATIC',
     defaultParams: DEFAULT_CURRENCY_PARAMETERS.evmLike,
-    feeRatesLink: config.feeRates.matic,
+    web3: new Web3(
+      new Web3.providers.HttpProvider(config.web3.matic_provider)
+    ),
+  }),
+  arbeth: new ethLikeHelper({
+    currency: 'ARBETH',
+    defaultParams: DEFAULT_CURRENCY_PARAMETERS.arbeth,
+    web3: new Web3(
+      new Web3.providers.HttpProvider(config.web3.arbitrum_provider)
+    ),
   }),
 }

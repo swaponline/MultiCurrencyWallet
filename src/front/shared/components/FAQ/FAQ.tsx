@@ -43,36 +43,45 @@ const FAQ = (props) => {
     }
   }
 
-  const [btcFee, setBtcFee] = useState(0)
-  const [ethFee, setEthFee] = useState(0)
-  const [bnbFee, setBnbFee] = useState(0)
-  const [maticFee, setMaticFee] = useState(0)
+  const convertToGwei = (value) => {
+    return new BigNumber(value)
+      .dividedBy(1e9)
+      .dp(2, BigNumber.ROUND_HALF_CEIL)
+      .toNumber()
+  }
+
+  const [fees, setFees] = useState({
+    btc: 0,
+    eth: 0,
+    bnb: 0,
+    matic: 0,
+    arbeth: 0,
+  })
 
   useEffect(() => {
     let _mounted = true
-    let btcSatoshiPrice = 0
-    let ethGasPrice = 0
-    let bnbGasPrice = 0
-    let maticGasPrice = 0
 
     async function fetchFees() {
       try {
         const BYTE_IN_KB = 1024
 
-        btcSatoshiPrice = await btcUtils.estimateFeeRate({ speed: 'fast', NETWORK })
-        bnbGasPrice = await ethLikeHelper.bnb.estimateGasPrice()
-        ethGasPrice = await ethLikeHelper.eth.estimateGasPrice()
-        maticGasPrice = await ethLikeHelper.matic.estimateGasPrice()
+        const btcSatoshiPrice = await btcUtils.estimateFeeRate({ speed: 'fast', NETWORK })
+        const bnbGasPrice = await ethLikeHelper.bnb.estimateGasPrice()
+        const ethGasPrice = await ethLikeHelper.eth.estimateGasPrice()
+        const maticGasPrice = await ethLikeHelper.matic.estimateGasPrice()
+        const arbethGasPrice = await ethLikeHelper.arbeth.estimateGasPrice()
 
         // remove memory leak
         if (_mounted) {
-          // divided by 1 kb to convert it to satoshi / byte
-          setBtcFee( Math.ceil(btcSatoshiPrice / BYTE_IN_KB) )
-
-          // return gas * 1e9 - divided by 1e9 to convert
-          setBnbFee( new BigNumber(bnbGasPrice).dividedBy(1e9).toNumber() )
-          setEthFee( new BigNumber(ethGasPrice).dividedBy(1e9).toNumber() )
-          setMaticFee( new BigNumber(maticGasPrice).dividedBy(1e9).toNumber() )
+          setFees((prevFees) => ({
+            ...prevFees,
+            // divided by 1 kb to convert it to satoshi / byte
+            btc: Math.ceil(btcSatoshiPrice / BYTE_IN_KB),
+            eth: convertToGwei(bnbGasPrice),
+            bnb: convertToGwei(ethGasPrice),
+            matic: convertToGwei(maticGasPrice),
+            arbeth: convertToGwei(arbethGasPrice),
+          }))
         }
       } catch (error) {
         feedback.faq.failed(`FAQ. Fetch fees error(${error.message})`)
@@ -91,27 +100,32 @@ const FAQ = (props) => {
   const miningFeeItems = [
     {
       ticker: 'BTC',
-      fee: btcFee,
+      fee: fees.btc,
       unit: 'sat/byte',
       sourceLink: externalConfig.api.blockcypher,
     },
     {
       ticker: 'ETH',
-      fee: ethFee,
+      fee: fees.eth,
       unit: 'gwei',
       sourceLink: externalConfig.feeRates.eth,
     },
     {
       ticker: 'BNB',
-      fee: bnbFee,
+      fee: fees.bnb,
       unit: 'gwei',
       sourceLink: externalConfig.feeRates.bsc,
     },
     {
       ticker: 'MATIC',
-      fee: maticFee,
+      fee: fees.matic,
       unit: 'gwei',
       sourceLink: externalConfig.feeRates.matic,
+    },
+    {
+      ticker: 'ARBETH',
+      fee: fees.arbeth,
+      unit: 'gwei',
     },
   ]
 
@@ -131,6 +145,10 @@ const FAQ = (props) => {
     {
       ticker: 'MATIC',
       percentFee: adminFee.isEnabled('MATIC'),
+    },
+    {
+      ticker: 'ARBETH',
+      percentFee: adminFee.isEnabled('ARBETH'),
     },
   ]
 

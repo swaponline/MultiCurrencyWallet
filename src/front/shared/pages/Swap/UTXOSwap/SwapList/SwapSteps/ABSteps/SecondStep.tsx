@@ -8,7 +8,7 @@ import { isMobile } from 'react-device-detect'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import { FormattedMessage } from 'react-intl'
-import checkedIcon from '../../../../images/checked.svg'
+import { regularIcons } from 'images'
 
 let _mounted = false
 const timeoutIds: NodeJS.Timeout[] = []
@@ -57,7 +57,7 @@ const SecondStep = (props) => {
       try {
         let fetchedTx: any
 
-        if (currencyName === ethLikeCoin.toLowerCase()) { // TODO: needs to be improved when adding BNB
+        if (currencyName === ethLikeCoin.toLowerCase()) {
           fetchedTx = await actions[ethLikeCoin.toLowerCase()].fetchTxInfo(txHash)
 
           if (fetchedTx && fetchedTx.confirmed) {
@@ -128,7 +128,14 @@ const SecondStep = (props) => {
               values={{ otherCurrency: sellCurrency === currencyName ? buyCurrency.toLowerCase() : sellCurrency.toLowerCase() }}
             />
             <i className="fas fa-link" />
-            {ethSwapHashIsConfirmed ? <img id="checkedEvmDepositHashIcon" styleName="checkedIcon" src={checkedIcon} alt='checked' /> : <InlineLoader />}
+            {ethSwapHashIsConfirmed ? (
+              <img
+                id="checkedEvmDepositHashIcon"
+                styleName="checkedIcon"
+                src={regularIcons.CHECKED}
+                alt='checked'
+              />
+            ) : <InlineLoader />}
           </a>
         </strong>
       )}
@@ -143,7 +150,14 @@ const SecondStep = (props) => {
           >
             <FormattedMessage id="FourthStep37BtcLike" defaultMessage="({currencyName} tx)" values={{ currencyName : currencyName.toLowerCase() }} />
             <i className="fas fa-link" />
-            {scriptHashIsConfirmed ? <img id="checkedUtxoDepositHashIcon" styleName="checkedIcon" src={checkedIcon} alt='checked' /> : <InlineLoader />}
+            {scriptHashIsConfirmed ? (
+              <img
+                id="checkedUtxoDepositHashIcon"
+                styleName="checkedIcon"
+                src={regularIcons.CHECKED}
+                alt='checked'
+              />
+            ) : <InlineLoader />}
           </a>
         </strong>
       )}

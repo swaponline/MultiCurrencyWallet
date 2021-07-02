@@ -5,6 +5,7 @@ export default [
   'ETH-GHOST',
   'ETH-NEXT',
   'BNB-BTC',
+  'ARBITRUM-BTC',
 
   ...Object.values(ETH_TOKENS).map(token => `{ETH}${token}-BTC`),
   ...Object.values(BNB_TOKENS).map(token => `{BNB}${token}-BTC`),

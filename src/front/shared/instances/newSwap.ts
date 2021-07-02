@@ -50,12 +50,16 @@ import {
   BTC2MATIC,
   MATICTOKEN2BTC,
   BTC2MATICTOKEN,
+
+  ARBITRUM2BTC,
+  BTC2ARBITRUM,  
 } from 'swap.flows'
 import {
   BtcSwap,
   EthSwap,
   BnbSwap,
   MaticSwap,
+  ArbitrumSwap,
   GhostSwap,
   NextSwap,
 
@@ -92,10 +96,6 @@ const onInit = (cb) => {
 const createSwapApp = async () => {
   await metamask.web3connect.onInit(async () => {
     const web3 = actions.eth.getWeb3()
-
-    const web3bnb = actions.bnb.getWeb3()
-    const web3Matic = actions.matic.getWeb3()
-
     const NETWORK = process.env.MAINNET ? `MAINNET` : `TESTNET`
 
     SwapApp.setup({
@@ -104,10 +104,12 @@ const createSwapApp = async () => {
       env: {
         web3,
         getWeb3: actions.eth.getWeb3,
-        web3bnb,
+        web3bnb: actions.bnb.getWeb3(),
         getWeb3Bnb: actions.bnb.getWeb3,
-        web3Matic,
+        web3Matic: actions.matic.getWeb3(),
         getWeb3Matic: actions.matic.getWeb3,
+        web3Arbitrum: actions.arbeth.getWeb3(),
+        getWeb3Arbitrum: actions.arbeth.getWeb3,
         bitcoin,
         ghost,
         next,
@@ -132,12 +134,13 @@ const createSwapApp = async () => {
       // whitelistBtc: [],
 
       services: [
-        //@ts-ignore
         new SwapAuth({
           // TODO need init swapApp only after private keys created!!!!!!!!!!!!!!!!!!!
           eth: localStorage.getItem(privateKeys.privateKeyNames.eth),
-          bnb: localStorage.getItem(privateKeys.privateKeyNames.eth), // for ab like blockchain use eth private key
-          matic: localStorage.getItem(privateKeys.privateKeyNames.eth), // for ab like blockchain use eth private key
+          // for evm compatible blockchains use eth private key
+          bnb: localStorage.getItem(privateKeys.privateKeyNames.eth),
+          matic: localStorage.getItem(privateKeys.privateKeyNames.eth),
+          arbeth: localStorage.getItem(privateKeys.privateKeyNames.eth),
           btc: localStorage.getItem(privateKeys.privateKeyNames.btc),
           ghost: localStorage.getItem(privateKeys.privateKeyNames.ghost),
           next: localStorage.getItem(privateKeys.privateKeyNames.next),
@@ -159,16 +162,14 @@ const createSwapApp = async () => {
           address: config.swapContract.eth,
           abi: EVM_CONTRACTS_ABI.NATIVE_COIN_SWAP,
           fetchBalance: (address) => actions.eth.fetchBalance(address),
-          //@ts-ignore
-          estimateGasPrice: ({ speed } = {}) => ethLikeHelper.eth.estimateGasPrice({ speed }),
+          estimateGasPrice: () => ethLikeHelper.eth.estimateGasPrice(),
           sendTransaction: ({ to, amount }) => actions.eth.sendTransaction({ to, amount }),
         }),
         new BnbSwap({
           address: config.swapContract.bnb,
           abi: EVM_CONTRACTS_ABI.NATIVE_COIN_SWAP,
           fetchBalance: (address) => actions.bnb.fetchBalance(address),
-          //@ts-ignore
-          estimateGasPrice: ({ speed } = {}) => ethLikeHelper.bnb.estimateGasPrice({ speed }),
+          estimateGasPrice: () => ethLikeHelper.bnb.estimateGasPrice(),
           sendTransaction: ({ to, amount }) => actions.bnb.sendTransaction({ to, amount }),
         }),
         ...((config?.opts?.blockchainSwapEnabled?.matic) ? [
@@ -176,9 +177,17 @@ const createSwapApp = async () => {
             address: config.swapContract.matic,
             abi: EVM_CONTRACTS_ABI.NATIVE_COIN_SWAP,
             fetchBalance: (address) => actions.matic.fetchBalance(address),
-            //@ts-ignore
-            estimateGasPrice: ({ speed } = {}) => ethLikeHelper.matic.estimateGasPrice({ speed }),
+            estimateGasPrice: () => ethLikeHelper.matic.estimateGasPrice(),
             sendTransaction: ({ to, amount }) => actions.matic.sendTransaction({ to, amount }),
+          })
+        ] : []),
+        ...((config?.opts?.blockchainSwapEnabled?.arbeth) ? [
+          new ArbitrumSwap({
+            address: config.swapContract.arbitrum,
+            abi: EVM_CONTRACTS_ABI.NATIVE_COIN_SWAP,
+            fetchBalance: (address) => actions.arbeth.fetchBalance(address),
+            estimateGasPrice: () => ethLikeHelper.arbeth.estimateGasPrice(),
+            sendTransaction: ({ to, amount }) => actions.arbeth.sendTransaction({ to, amount }),
           })
         ] : []),
         new BtcSwap({
@@ -309,6 +318,9 @@ const createSwapApp = async () => {
           MATIC2BTC,
           BTC2MATIC,
         ] : []),
+
+        ARBITRUM2BTC,
+        BTC2ARBITRUM,
 
         // GHOST2BTC,
         // BTC2GHOST,

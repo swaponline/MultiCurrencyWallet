@@ -113,6 +113,7 @@ type WithdrawModalState = {
       ethData,
       bnbData,
       maticData,
+      arbethData,
       btcData,
       ghostData,
       nextData,
@@ -123,7 +124,16 @@ type WithdrawModalState = {
   }) => {
     return {
       activeFiat,
-      coinsData: [ethData, bnbData, maticData, btcData, ghostData, nextData, metamaskData],
+      coinsData: [
+        ethData,
+        bnbData,
+        maticData,
+        arbethData,
+        btcData,
+        ghostData,
+        nextData,
+        metamaskData,
+      ],
       dashboardView: dashboardModalsAllowed,
     }
   }
@@ -272,8 +282,6 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
 
     console.group('%c Withdraw', 'color: red;')
     console.error(`Withdraw. details(${details}) : error(${JSON.stringify(error)})`)
-    console.log('%c Stack trace', 'color: orange;')
-    console.trace()
     console.groupEnd()
 
     actions.notifications.show(

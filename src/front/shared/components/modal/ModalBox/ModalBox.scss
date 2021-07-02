@@ -14,24 +14,25 @@
 }
 
 .dark {
-  background: #242425;
+  background: $d-background-elements;
+
   .header {
-    border-bottom: 1px solid #ddb8da;
-    background: #242425;
+    background: $d-background-elements;
   }
+
   .headerContent {
-    color: #fff;
+    color: $d-color;
   }
 } 
 
 .header {
   height: 88px;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid $color-border;
   position: fixed;
   left: 0px;
   top: 0px;
   right: 0px;
-  background: #fff;
+  background: $l-background-elements;
   z-index: 1002;
 }
 
@@ -42,7 +43,7 @@
   align-items: center;
   position: relative;
   @include ff-bold;
-  color: #1f2d48;
+  color: $l-color;
   font-size: 24px;
   line-height: 33px;
 }

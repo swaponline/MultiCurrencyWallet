@@ -8,7 +8,7 @@ import { isMobile } from 'react-device-detect'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import { FormattedMessage } from 'react-intl'
-import checkedIcon from '../../../../images/checked.svg'
+import { regularIcons } from 'images'
 
 let _mounted = false
 const timeoutIds: NodeJS.Timeout[] = []
@@ -129,7 +129,14 @@ const ThirdStep = (props) => {
               values={{ sell: sellCurrency === currencyName ? buyCurrency.toLowerCase() : sellCurrency.toLowerCase()  }}
             />
             <i className="fas fa-link" />
-            {ethSwapWithdrawHashIsConfirmed ? <img id="checkedEvmWithdrawalHashIcon" styleName="checkedIcon" src={checkedIcon} alt='checked' /> : <InlineLoader />}
+            {ethSwapWithdrawHashIsConfirmed ? (
+              <img
+                id="checkedEvmWithdrawalHashIcon"
+                styleName="checkedIcon"
+                src={regularIcons.CHECKED}
+                alt='checked'
+              />
+            ) : <InlineLoader />}
           </a>
         </strong>
       )}
@@ -143,7 +150,14 @@ const ThirdStep = (props) => {
           >
             <FormattedMessage id="FourthStep37_BtcLike" defaultMessage="({currencyName} tx)" values={{ currencyName: currencyName.toLowerCase() }} />
             <i className="fas fa-link" />
-            {withdrawHashIsConfirmed ? <img id="checkedUtxoWithdrawalHashIcon" styleName="checkedIcon" src={checkedIcon} alt='checked' /> : <InlineLoader />}
+            {withdrawHashIsConfirmed ? (
+              <img
+                id="checkedUtxoWithdrawalHashIcon"
+                styleName="checkedIcon"
+                src={regularIcons.CHECKED}
+                alt='checked'
+              />
+            ) : <InlineLoader />}
           </a>
         </strong>
       )}

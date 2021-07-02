@@ -39,6 +39,14 @@ export const initialState = {
     balanceError: null,
     infoAboutCurrency: null,
   },
+  arbethData: {
+    balance: 0,
+    isBalanceFetched: false,
+    currency: 'ARBETH',
+    fullName: 'Arbitrum ETH',
+    balanceError: null,
+    infoAboutCurrency: null,
+  },
   btcData: {
     balance: 0,
     isBalanceFetched: false,

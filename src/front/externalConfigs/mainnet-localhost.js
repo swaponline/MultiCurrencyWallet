@@ -47,6 +47,22 @@ window.buildOptions = {
     eth: true,
     bnb: true,
     matic: true,
+    arbeth: true,
+    ghost: true,
+    next: true,
+  },
+  blockchainSwapEnabled: {
+    btc: true,
+    eth: false,
+    bnb: false,
+    matic: false,
+    arbeth: false,
+    ghost: false,
+    next: false,
+  },
+  defaultExchangePair: {
+    buy: '{eth}wbtc',
+    sell: 'btc',
   },
   /*
     Порядок валют на странице создания кошелька

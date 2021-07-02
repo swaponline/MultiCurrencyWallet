@@ -1,4 +1,16 @@
 export default {
+  arbeth: {
+    limit: {
+      send: 630 * 1e3,
+      // ? heed to check how much for swaps ?
+      swap: 4000 * 1e3,
+    },
+    price: {
+      slow: 0.1 * 1e8,
+      normal: 1 * 1e8,
+      fast: 2 * 1e8,
+    },
+  },
   evmLike: {
     limit: {
       send: 21 * 1e3,

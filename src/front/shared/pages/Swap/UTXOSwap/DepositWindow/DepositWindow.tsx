@@ -291,9 +291,6 @@ export default class DepositWindow extends Component<any, ComponentState> {
                 }}
               />
               {/* eslint-enable */}
-              {/* <p>
-                <FormattedMessage id="deposit181" defaultMessage="You can send {currency} from a wallet of any exchange" values={{ currency: `${swap.buyCurrency}` }} />
-              </p> */}
             </div>
           </Tooltip>
         </div>

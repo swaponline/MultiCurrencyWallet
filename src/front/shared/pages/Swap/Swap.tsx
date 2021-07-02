@@ -28,17 +28,39 @@ const isWidgetBuild = config && config.isWidget
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 @connect(({
-  user: { ethData, bnbData, maticData, btcData, ghostData, nextData, tokensData, activeFiat },
+  user: {
+    ethData,
+    bnbData,
+    maticData,
+    arbethData,
+    btcData,
+    ghostData,
+    nextData,
+    tokensData,
+    activeFiat,
+  },
   pubsubRoom: { peer },
   rememberedOrders,
-}) => ({
-  activeFiat,
-  items: [ethData, bnbData, maticData, btcData, ghostData, nextData],
-  currenciesData: [ethData, bnbData, maticData, btcData, ghostData, nextData],
-  tokensData: [...Object.keys(tokensData).map(k => (tokensData[k]))],
-  savedOrders: rememberedOrders.savedOrders,
-  peer,
-}))
+}) => {
+  const coinsData = [
+    ethData,
+    bnbData,
+    maticData,
+    arbethData,
+    btcData,
+    ghostData,
+    nextData,
+  ]
+
+  return {
+    activeFiat,
+    items: [...coinsData],
+    currenciesData: [...coinsData],
+    tokensData: [...Object.keys(tokensData).map(k => (tokensData[k]))],
+    savedOrders: rememberedOrders.savedOrders,
+    peer,
+  }
+})
 
 @cssModules(styles, { allowMultiple: true })
 class SwapComponent extends PureComponent<any, any> {

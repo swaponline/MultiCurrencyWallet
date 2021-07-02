@@ -1,11 +1,10 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import { FormattedMessage, injectIntl } from 'react-intl'
 
 import CSSModules from 'react-css-modules'
 import styles from './SelectGroup.scss'
 import partialStyles from '../Exchange.scss'
 import { constants } from 'helpers'
-import config from 'app-config'
 
 import Input from 'components/forms/Input/Input'
 import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
@@ -72,17 +71,11 @@ const SelectGroup = (props) => {
           onBlur={props.onBlur ? props.onBlur : () => {}}
           onKeyDown={inputReplaceCommaWithDot}
         />
-        {(selectedValue === 'eth' ||
-          selectedValue === 'bnb' ||
-          selectedValue === 'matic' ||
-          selectedValue === 'btc' ||
-          selectedValue === 'ghost' ||
-          selectedValue === 'next') &&
-          fiat > 0 && (
-            <p styleName="textUsd">
-              {`~${fiat}`} {activeFiat}
-            </p>
-          )}
+        {fiat > 0 && (
+          <p styleName="textUsd">
+            {`~${fiat}`} {activeFiat}
+          </p>
+        )}
         {inputToolTip && inputToolTip}
         {balanceTooltip && (
           <div styleName="smallTooltip balanceTooltip">
