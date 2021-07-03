@@ -64,7 +64,7 @@ const fetchUnspents = (options) => {
     NETWORK,
   } = options
 
-  return apiLooper.get(API_ENDPOINT || getApiCustom(NETWORK), `/addr/${address}/utxo`, { cacheResponse: 5000 })
+  return apiLooper.get(API_ENDPOINT || getApiCustom(NETWORK), `/address/${address}/utxo`, { cacheResponse: 5000 })
 }
 
 const broadcastTx = (options) => {

@@ -13,8 +13,8 @@ import actions from 'redux/actions'
 import typeforce from 'swap.app/util/typeforce'
 import config from 'app-config'
 const bitcore = require('bitcore-lib')
-import * as mnemonicUtils from '../../../../common/utils/mnemonic'
-import { default as nextUtils } from '../../../../common/utils/coin/next'
+import * as mnemonicUtils from 'common/utils/mnemonic'
+import { default as nextUtils } from 'common/utils/coin/next'
 
 
 const NETWORK = (process.env.MAINNET) ? `MAINNET` : `TESTNET`
@@ -477,7 +477,7 @@ const send = ({ from, to, amount, feeValue, speed } = {}) => {
       xpubkey: next.network.bip32.public,
       xprivkey: next.network.bip32.private,
       networkMagic: 0xcbe4d0a1,
-      port: 7077,
+      port: 7077, // need check
     })
     const bitcoreNetwork = bitcore.Networks.get('next-mainnet')
 
