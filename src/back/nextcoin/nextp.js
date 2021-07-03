@@ -146,11 +146,12 @@ app.get('/:network/txs/:address', async (req, res) => {
     rpcMethod: 'getaddresstxids',
     rpcMethodParams: [{ 'addresses': [address] }],
     onSuccess: (data) => {
+      const txs = data.reverse().slice(0, 10) // return last 10 transactions
       const ret = {
-        txs: data.reverse(),
+        txs,
       }
 
-      const fetchTxInfos = data.map((txid, i) => {
+      const fetchTxInfos = txs.map((txid, i) => {
         return new Promise(async (resolve) => {
           const txInfo = await sendRequest({
             network,
