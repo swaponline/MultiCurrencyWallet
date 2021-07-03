@@ -72,7 +72,7 @@ export default NEXT
 
 
 const libAdapter: ILibAdapter = {
-
+  // @ts-ignore: strictNullChecks
   accountFromMnemonic(mnemonic, netName) {
     const network = NEXT[netName]
     const settings = network.settings
@@ -95,6 +95,7 @@ const libAdapter: ILibAdapter = {
     const libNetworkName = 'next-mainnet'
     bitcore.Networks.add({
       name: libNetworkName,
+      alias: libNetworkName,
       pubkeyhash: settings.base58prefix.pubKeyHash,
       privatekey: settings.base58prefix.privateKeyWIF,
       scripthash: settings.base58prefix.scriptHash,
@@ -103,10 +104,10 @@ const libAdapter: ILibAdapter = {
       networkMagic: settings.magic,
       port: settings.port
     })
-    const libNetwork = bitcore.Networks.get(libNetworkName)
+    const libNetwork = bitcore.Networks.get(libNetworkName, libNetworkName)
 
-    const privateKey = new bitcore.PrivateKey.fromWIF(child.toWIF())
-    const publicKey = bitcore.PublicKey(privateKey, libNetwork)
+    const privateKey = new bitcore.PrivateKey(child.toWIF(), libNetwork)
+    const publicKey = bitcore.PublicKey.fromPrivateKey(privateKey)
     const address = new bitcore.Address(publicKey, libNetwork)
 
     const account = {
@@ -124,7 +125,7 @@ const libAdapter: ILibAdapter = {
     const network = NEXT[netName]
     const addressStr = address.toString()
     //@ts-ignore: strictNullChecks
-    const unspent = await connector.fetchUnspents(network.type, addressStr)
+    const unspent: bitcore.Transaction.UnspentOutput[] = await connector.fetchUnspents(network.type, addressStr)
 
     const tx = new bitcore.Transaction()
       .from(unspent)

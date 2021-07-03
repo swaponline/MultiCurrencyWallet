@@ -12,7 +12,7 @@ import { next, apiLooper, constants, api } from 'helpers'
 import actions from 'redux/actions'
 import typeforce from 'swap.app/util/typeforce'
 import config from 'app-config'
-const bitcore = require('bitcore-lib')
+import bitcore from 'bitcore-lib'
 import * as mnemonicUtils from 'common/utils/mnemonic'
 import { default as nextUtils } from 'common/utils/coin/next'
 
@@ -470,23 +470,30 @@ const send = ({ from, to, amount, feeValue, speed } = {}) => {
   return new Promise(async (ready) => {
     bitcore.Networks.add({
       name: 'next-mainnet',
+      alias: 'next-mainnet',
       pubkeyhash: next.network.pubKeyHash,
       privatekey: next.network.wif,
       scripthash: next.network.scriptHash,
       xpubkey: next.network.bip32.public,
       xprivkey: next.network.bip32.private,
       networkMagic: 0xcbe4d0a1,
-      port: 7077, // need check
+      port: 7078, // need check
     })
-    const bitcoreNetwork = bitcore.Networks.get('next-mainnet')
+    const bitcoreNetwork = bitcore.Networks.get('next-mainnet', 'next-mainnet')
 
     const privKeyWIF = getPrivateKeyByAddress(from)
-    const privateKey = new bitcore.PrivateKey.fromWIF(privKeyWIF)
-    const publicKey = bitcore.PublicKey(privateKey, bitcoreNetwork)
+    const privateKey = new bitcore.PrivateKey(privKeyWIF, bitcoreNetwork)
+    const publicKey = bitcore.PublicKey.fromPrivateKey(privateKey)
     const addressFrom = new bitcore.Address(publicKey, bitcoreNetwork)
 
-    const unspents = await fetchUnspents(from)
+    const unspents: bitcore.Transaction.UnspentOutput[] = await fetchUnspents(from) || []
     const amountSat = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
+
+    console.log('bitcoreNetwork', bitcoreNetwork)
+    console.log('unspents', unspents)
+    console.log('amountSat', amountSat)
+    console.log('addressFrom', addressFrom)
+    console.log('privateKey', privateKey)
 
     const transaction = new bitcore.Transaction()
       .from(unspents)
@@ -494,6 +501,7 @@ const send = ({ from, to, amount, feeValue, speed } = {}) => {
       .change(addressFrom)
       .sign(privateKey)
 
+    console.log('im here')
     const rawTx = String(transaction.serialize())
     const broadcastAnswer: any = await broadcastTx(rawTx)
     const txid = broadcastAnswer.raw
@@ -505,7 +513,14 @@ const send = ({ from, to, amount, feeValue, speed } = {}) => {
 const fetchUnspents = (address) => nextUtils.fetchUnspents({
   address,
   NETWORK,
-})
+}).then((unspents: any) => unspents.map(unspent => ({
+    address: unspent.address,
+    txId: unspent.txid,
+    outputIndex: unspent.outputIndex,
+    script: unspent.script,
+    satoshis: unspent.script,
+  }))
+)
 
 
 const broadcastTx = (txRaw) => nextUtils.broadcastTx({
