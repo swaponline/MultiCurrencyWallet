@@ -174,6 +174,22 @@ app.get('/:network/txs/:address', async (req, res) => {
   })
 })
 
+app.get('/:network/tx/:txid', async (req, res) => {
+  const { network, txid } = req.params
+
+  sendRequest({
+    network,
+    rpcMethod: 'getrawtransaction',
+    rpcMethodParams: [ txid, true ],
+    onSuccess: (data) => {
+      res.status(200).json(data)
+    },
+    onError: (e) => {
+      res.status(503).json({ error: e.message })
+    },
+  })
+})
+
 // todo: unexisting address case
 
 app.get('/:network/address/:address/utxo', async (req, res) => {

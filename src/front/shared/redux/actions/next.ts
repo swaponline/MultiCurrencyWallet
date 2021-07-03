@@ -421,14 +421,13 @@ const getTransaction = (address: string = ``, ownType: string = ``) =>
       resolve([])
     }
 
-    return apiLooper.get('nextExplorer', `/txs/?address=${address}`, {
+    return apiLooper.get('nextExplorer', `/txs/${address}`, {
       checkStatus: (answer) => {
         try {
           if (answer && answer.txs !== undefined) return true
         } catch (e) { /* */ }
         return false
       },
-      query: 'next_balance',
     }).then((res: any) => {
       const transactions = res.txs.map((item) => {
         const direction = item.vin[0].addr !== address ? 'in' : 'out'

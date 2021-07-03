@@ -93,7 +93,7 @@ const fetchTx = (options) => {
     cacheResponse,
     checkStatus: (answer) => {
       try {
-        if (answer && answer.txId !== undefined) return true
+        if (answer && answer.txid !== undefined) return true
       } catch (e) { /* */ }
       return false
     },
@@ -119,7 +119,6 @@ const fetchTxInfo = (options) => {
     API_ENDPOINT,
     NETWORK,
   }).then((txInfo_ : any) => {
-    return { ...txInfo_ } /** yes - ^^^^ not working - заглужка **/
     const { vin, vout, ...rest } = txInfo_
     const senderAddress = vin ? vin[0].addr : null
     const amount = vout ? new BigNumber(vout[0].value).toNumber() : null
