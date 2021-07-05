@@ -55,7 +55,7 @@ export default (webpackConfig) => {
       publicPath: config.publicPath,
       filename: '[name].[hash:6].js.map',
       fileContext: 'public',
-      exclude: /(vendor.*)|.*\.css/,
+      exclude: /(vendor.*)|(.*\.css)/,
     }),
     new WebpackRequireFrom({
       variableName: 'publicUrl',
