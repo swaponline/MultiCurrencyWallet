@@ -181,7 +181,6 @@
     "stream-browserify": "^3.0.0",
     "style-loader": "^3.0.0",
     "superagent": "^6.1.0",
-    "terser-webpack-plugin-legacy": "^1.2.5",
     "ts-loader": "9.2.3",
     "typescript": "4.3.5",
     "url-loader": "^4.1.1",
