@@ -1,8 +1,6 @@
 import React, { Fragment } from 'react'
-import request from 'common/utils/request'
 import actions from 'redux/actions'
 import Link from 'local_modules/sw-valuelink'
-
 import cssModules from 'react-css-modules'
 import styles from '../Styles/default.scss'
 import ownStyle from './index.scss'
@@ -12,10 +10,8 @@ import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
 import Input from 'components/forms/Input/Input'
 import Button from 'components/controls/Button/Button'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
-import TOKEN_STANDARDS from 'helpers/constants/TOKEN_STANDARDS'
 import { constants } from 'helpers'
 import typeforce from 'swap.app/util/typeforce'
-import Web3 from 'web3'
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
@@ -31,8 +27,6 @@ type CustomTokenProps = {
 }
 
 type CustomTokenState = {
-  explorerApi: string
-  explorerApiKey: string
   step: string
   tokenStandard: string
   tokenAddress: string
@@ -44,10 +38,6 @@ type CustomTokenState = {
   isPending: boolean
 }
 
-const nameSignature = '0x06fdde03'
-const decimalsSignature = '0x313ce567'
-const symbolSignature = '0x95d89b41'
-
 @cssModules({ ...styles, ...ownStyle }, { allowMultiple: true })
 class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState> {
   constructor(props) {
@@ -57,8 +47,6 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
 
     this.state = {
       step: 'enterAddress',
-      explorerApi: data.api,
-      explorerApiKey: data.apiKey,
       tokenStandard: data.standard.toLowerCase(),
       baseCurrency: data.baseCurrency,
       tokenAddress: '',
@@ -70,79 +58,35 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
     }
   }
 
-  getExplorerApiUrl = (params) => {
-    const { explorerApi, explorerApiKey } = this.state
-    const { address, signature } = params
-
-    return ''.concat(
-      `${explorerApi}?module=proxy&action=eth_call`,
-      `&to=${address}`,
-      `&data=${signature}&tag=latest`,
-      `&apikey=${explorerApiKey}`,
-    )
-  }
-
-  async getName(address) {
-    const response: any = await request.get(this.getExplorerApiUrl({
-      signature: nameSignature,
-      address,
-    }))
-    const hexSymbol = response.result
-    const symbol = Web3.utils.toUtf8(hexSymbol)
-
-    return symbol.replace(/\W/g, '')
-  }
-
-  async getSymbol(address) {
-    const response: any = await request.get(this.getExplorerApiUrl({
-      signature: symbolSignature,
-      address,
-    }))
-    const hexSymbol = response.result
-    const symbol = Web3.utils.toUtf8(hexSymbol)
-
-    return symbol.replace(/\W/g, '')
-  }
-
-  async getDecimals(address) {
-    const response: any = await request.get(this.getExplorerApiUrl({
-      signature: decimalsSignature,
-      address,
-    }))
-    const hexDecimals = response.result
-    const decimals = Web3.utils.hexToNumber(hexDecimals)
-
-    return decimals
-  }
-
   handleSubmit = async () => {
-    const { tokenAddress } = this.state
+    const { tokenAddress, tokenStandard } = this.state
 
-    this.setState({
+    this.setState(() => ({
       isPending: true,
-    })
+    }))
 
-    const tokenName = await this.getName(tokenAddress)
-    const tokenSymbol = await this.getSymbol(tokenAddress)
-    const tokenDecimals = await this.getDecimals(tokenAddress)
+    const info = await actions[tokenStandard].getInfoAboutToken(tokenAddress)
 
-    if (tokenSymbol) {
-      this.setState({
-        tokenName,
-        tokenSymbol,
-        tokenDecimals,
+    if (info) {
+      const { name, symbol, decimals } = info 
+
+      this.setState(() => ({
+        tokenName: name,
+        tokenSymbol: symbol,
+        tokenDecimals: decimals,
         step: 'confirm',
         isPending: false,
-      })
+      }))
     } else {
-      this.setState({
+      this.setState(() => ({
         notFound: true,
         isPending: false,
-      })
+      }))
+
       setTimeout(() => {
-        this.setState({
+        this.setState(() => ({
           notFound: false,
-        })
+        }))
       }, 4000)
     }
   }
