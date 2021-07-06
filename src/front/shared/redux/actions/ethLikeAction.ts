@@ -68,15 +68,17 @@ class EthLikeAction {
   }
 
   getPrivateKeyByAddress = (address) => {
-    const {
-      user: {
-        [`${this.tickerKey}Data`]: { address: oldAddress, privateKey },
-        [`${this.tickerKey}MnemonicData`]: { address: mnemonicAddress, privateKey: mnemonicKey },
-      },
-    } = getState()
+    const { user } = getState()
+    const currencyData = user[`${this.tickerKey}Data`]
+    const currencyMnemonicData = user[`${this.tickerKey}MnemonicData`]
 
-    if (oldAddress === address) return privateKey
-    if (mnemonicAddress === address) return mnemonicKey
+    if (currencyData.address === address) {
+      return currencyData.privateKey
+    }
+
+    if (currencyMnemonicData?.address === address) {
+      return currencyMnemonicData?.privateKey
+    }
   }
 
   getInvoices = () => {
@@ -303,7 +305,12 @@ class EthLikeAction {
     }
 
     return new Promise((resolve) => {
-      if (!typeforce.isCoinAddress[this.ticker](address)) {
+      if (
+        // some blockchains don't have API
+        // don't show console errors in these cases
+        !this.explorerApiKey ||
+        !typeforce.isCoinAddress[this.ticker](address)
+      ) {
         resolve([])
       }
 
@@ -384,7 +391,6 @@ class EthLikeAction {
           }
         })
         .catch((error) => {
-          this.reportError(error)
           resolve([])
         })
     })
@@ -430,6 +436,10 @@ class EthLikeAction {
       (recipientIsContract
         ? DEFAULT_CURRENCY_PARAMETERS.evmLike.limit.contractInteract
         : DEFAULT_CURRENCY_PARAMETERS.evmLike.limit.send)
+
+    if (this.ticker === 'ARBETH') {
+      gasLimit = DEFAULT_CURRENCY_PARAMETERS.arbeth.limit.send
+    }
 
     let sendMethod = Web3.eth.sendTransaction
     let txObject = {
@@ -611,5 +621,15 @@ export default {
     explorerApiKey: externalConfig.api.polygon_ApiKey,
     adminFeeObj: externalConfig.opts?.fee?.matic,
     web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.matic_provider)),
+  }),
+  ARBETH: new EthLikeAction({
+    coinName: 'Arbitrum ETH',
+    ticker: 'ARBETH',
+    privateKeyName: 'eth',
+    explorerName: 'rinkeby-explorer', 
+    explorerLink: externalConfig.link.arbitrum,
+    explorerApiKey: '',
+    adminFeeObj: externalConfig.opts?.fee?.arbeth,
+    web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.arbitrum_provider)),
   }),
 }

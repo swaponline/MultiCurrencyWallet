@@ -38,13 +38,15 @@ export default class StepsWrapper extends Component<any, any> {
       if (!curEnabled || curEnabled.matic) {
         this.defaultStartPack.push({ name: "MATIC", capture: "Matic token" })
       }
+      if (!curEnabled || curEnabled.arbeth) {
+        this.defaultStartPack.push({ name: "ARBETH", capture: "Arbitrum ETH" })
+      }
       if (!curEnabled || curEnabled.ghost) {
         this.defaultStartPack.push({ name: "GHOST", capture: "Ghost" })
       }
       if (!curEnabled || curEnabled.next) {
         this.defaultStartPack.push({ name: "NEXT", capture: "NEXT.coin" })
       }
-      const ownTokensKeys = config.opts.ownTokens
 
       config.opts.ownTokens.forEach((token) => {
         config[token.standard][token.name.toLowerCase()] = token
@@ -72,7 +74,7 @@ export default class StepsWrapper extends Component<any, any> {
     const curState = {}
     items.forEach(({ currency }) => { curState[currency] = false })
 
-    let haveTokenConfig = true 
+    let haveTokenConfig = true
 
     Object.keys(TOKEN_STANDARDS).forEach((key) => {
       if (!config[TOKEN_STANDARDS[key].standard]) {
@@ -86,11 +88,16 @@ export default class StepsWrapper extends Component<any, any> {
         window.widgetEvmLikeTokens.forEach((token) => {
           const name = token.name.toLowerCase()
           const standard = token.standard.toLowerCase()
+          const baseCurrency = TOKEN_STANDARDS[standard].currency.toUpperCase()
+          const isTokenAdded = this.widgetStartPack.find((packToken) => {
+            return packToken.name.toLowerCase() === name
+          })
 
-          if (config[standard][name]) {
+          if (config[standard][name] && !isTokenAdded) {
             this.widgetStartPack.push({
               name: name.toUpperCase(),
               capture: config[standard][name].fullName,
+              baseCurrency,
             })
           }
         })
@@ -100,6 +107,7 @@ export default class StepsWrapper extends Component<any, any> {
           this.widgetStartPack.push({
             name: config.erc20token.toUpperCase(),
             capture: config.erc20[config.erc20token].fullName,
+            baseCurrency: 'ETH',
           })
         }
       }

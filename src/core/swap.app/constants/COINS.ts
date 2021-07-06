@@ -18,6 +18,7 @@ export const BLOCKCHAIN = Object.freeze({
   ETH: 'ETH',
   BNB: 'BNB', // TODO: rename with BSC
   MATIC: 'MATIC',
+  ARBITRUM: 'ARBITRUM',
 })
 
 export const BASE_TOKEN_CURRENCY = Object.freeze({
@@ -61,6 +62,14 @@ export const COIN_DATA = {
     name: 'MATIC Token',
     type: COIN_TYPE.NATIVE,
     blockchain: BLOCKCHAIN.MATIC,
+    model: COIN_MODEL.AB,
+    precision: 18,
+  },
+  'ARBETH': {
+    ticker: 'ARBETH',
+    name: 'Arbitrum ETH',
+    type: COIN_TYPE.NATIVE,
+    blockchain: BLOCKCHAIN.ARBITRUM,
     model: COIN_MODEL.AB,
     precision: 18,
   },
@@ -135,6 +144,7 @@ export const NATIVE = {
   eth: 'ETH',
   bnb: 'BNB',
   matic: 'MATIC',
+  arbeth: 'ARBETH',
   ghost: 'GHOST',
   next: 'NEXT',
 }

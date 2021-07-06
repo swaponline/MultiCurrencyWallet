@@ -37,14 +37,16 @@ function FirstStep(props) {
               const { name, capture, baseCurrency } = el
               const firstIdPart = `${baseCurrency ? `${baseCurrency}${name}` : `${name}`}`
               const secondIdPart = 'Wallet'
-              const selectedCurrency = `${baseCurrency ? `{${baseCurrency}}${name}` : `${name}`}`
+              const selectedCurrency = `${
+                baseCurrency ? `{${baseCurrency}}${name}` : `${name}`
+              }`.toUpperCase()
 
               return (
                 <div
                   id={firstIdPart.toLowerCase() + secondIdPart}
                   key={index}
                   styleName={`card ${curState[selectedCurrency] ? 'purpleBorder' : ''}`}
-                  onClick={() => handleClick(selectedCurrency.toUpperCase())}
+                  onClick={() => handleClick(selectedCurrency)}
                 >
                   <div styleName="logo">
                     <Coin
@@ -52,10 +54,10 @@ function FirstStep(props) {
                       styleName="assetsTableIcon coinColor"
                     />
                   </div>
-                  <div styleName="listGroup">
+                  <ul styleName="currencyInfoList">
                     <li><b>{name}</b></li>
                     <li>{baseCurrency && `(${baseCurrency}) `}{capture}</li>
-                  </div>
+                  </ul>
                 </div>
               )
             })}

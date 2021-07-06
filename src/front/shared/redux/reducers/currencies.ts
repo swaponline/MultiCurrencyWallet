@@ -126,6 +126,16 @@ const initialState = {
       addAssets: true,
     }] : [],
     //@ts-ignore
+    ...(!buildOpts.curEnabled || buildOpts.curEnabled.arbeth) ? [{
+      name: 'ARBETH',
+      title: 'ARBETH',
+      icon: 'arbeth',
+      value: 'arbeth',
+      fullTitle: 'arbitrum eth',
+      blockchain: BLOCKCHAIN_TYPE.ARBITRUM,
+      addAssets: true,
+    }] : [],
+    //@ts-ignore
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.ghost) ? [{
       name: 'GHOST',
       title: 'GHOST',
@@ -213,6 +223,14 @@ const initialState = {
       fullTitle: 'matic token',
     }] : [],
     //@ts-ignore
+    ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.arbeth) ? [{
+      name: 'ARBETH',
+      title: 'ARBETH',
+      icon: 'arbeth',
+      value: 'arbeth',
+      fullTitle: 'arbitrum eth',
+    }] : [],
+    //@ts-ignore
     ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.ghost) ? [{
       name: 'GHOST',
       title: 'GHOST',
@@ -267,6 +285,13 @@ if (config.isWidget) {
       fullTitle: 'matic token',
     },
     {
+      name: 'ARBETH',
+      title: 'ARBETH',
+      icon: 'arbeth',
+      value: 'arbeth',
+      fullTitle: 'arbitrum eth',
+    },
+    {
       name: 'BTC',
       title: 'BTC',
       icon: 'btc',
@@ -310,6 +335,13 @@ if (config.isWidget) {
       icon: 'matic',
       value: 'matic',
       fullTitle: 'matic token',
+    },
+    {
+      name: 'ARBETH',
+      title: 'ARBETH',
+      icon: 'arbeth',
+      value: 'arbeth',
+      fullTitle: 'arbitrum eth',
     },
     {
       name: 'BTC',

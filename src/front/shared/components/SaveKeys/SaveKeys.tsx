@@ -15,9 +15,25 @@ type SaveKeysProps = {
 }
 
 @connect(({
-  user: { ethData, bnbData, maticData, btcData, ghostData, nextData }
+  user: {
+    ethData,
+    bnbData,
+    maticData,
+    arbethData,
+    btcData,
+    ghostData,
+    nextData,
+  }
 }) => ({
-  data: [ btcData, bnbData, maticData, ethData, ghostData, nextData ]
+  data: [
+    btcData,
+    bnbData,
+    maticData,
+    arbethData,
+    ethData,
+    ghostData,
+    nextData,
+  ]
 }))
 @CSSModules(styles)
 export default class SaveKeys extends Component<SaveKeysProps, null> {

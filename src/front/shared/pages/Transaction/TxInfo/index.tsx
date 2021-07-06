@@ -7,7 +7,7 @@ import { constants } from 'helpers'
 import cssModules from 'react-css-modules'
 import styles from './styles.scss'
 import ShareButton from 'components/controls/ShareButton/ShareButton'
-import okSvg from 'shared/images/ok.svg'
+import { regularIcons } from 'images'
 import actions from 'redux/actions'
 import { BigNumber } from 'bignumber.js'
 import Skeleton from 'react-loading-skeleton'
@@ -120,7 +120,7 @@ class TxInfo extends Component<any, any> {
       <div>
         <div styleName={`blockCenter ${isDark ? 'dark' : ''}`}>
           <div>
-            <img styleName="finishImg" src={okSvg} alt="finish" />
+            <img styleName="finishImg" src={regularIcons.OK} alt="finish" />
           </div>
 
           <div className="p-3">

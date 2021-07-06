@@ -311,7 +311,7 @@ const SecondStep = (props) => {
           <Explanation subHeaderText={subHeaderText2()} step={2} isShow={forcedCurrencyData}>
             {cupture2()}
           </Explanation>
-          <div styleName="currencyChooserWrapper currencyChooserWrapperSecond">
+          <div styleName="currencyChooserWrapper">
             {coins.map((el, index) => {
               const { name, capture, text, enabled, activated } = el
 
@@ -327,6 +327,7 @@ const SecondStep = (props) => {
                 <div
                   key={index}
                   styleName={`${cardStyle_}`}
+                  id={name}
                   onClick={() => {
                     if (typeof el.onClickHandler !== 'undefined') { el.onClickHandler() }
                     return handleClick(index, el)
@@ -348,12 +349,12 @@ const SecondStep = (props) => {
                         role="image"
                       />
                     </div>
-                    <div styleName="listGroup">
+                    <ul styleName="currencyInfoList">
                       <li>
                         <b>{text}</b>
                       </li>
                       <li>{capture}</li>
-                    </div>
+                    </ul>
                   </div>
                 </div>
               )
@@ -361,6 +362,7 @@ const SecondStep = (props) => {
           </div>
         </div>
         <button
+          id="createWalletBtn"
           styleName="continue"
           onClick={handleFinish}
           disabled={error || border.selected === '' || border.selected === 'fingerprint'}

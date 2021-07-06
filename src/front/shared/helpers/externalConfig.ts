@@ -42,6 +42,7 @@ const externalConfig = () => {
       eth: true,
       bnb: true,
       matic: true,
+      arbeth: true,
       btc: true,
       ghost: true,
       next: true,
@@ -51,6 +52,7 @@ const externalConfig = () => {
       eth: true,
       bnb: false,
       matic: false,
+      arbeth: false,
       ghost: true,
       next: true,
     },
@@ -161,6 +163,11 @@ const externalConfig = () => {
     config.opts.blockchainSwapEnabled.matic = false
   }
 
+  if (window && window.CUR_ARBITRUM_DISABLED === true) {
+    config.opts.curEnabled.arbeth = false
+    config.opts.blockchainSwapEnabled.arbeth = false
+  }
+
 
   // Plugins
   if (window
@@ -206,7 +213,12 @@ const externalConfig = () => {
     if (config?.opts.ownTokens?.length) {
       config.opts.ownTokens.forEach((token) => {
         config[token.standard][token.name.toLowerCase()] = token
-        reducers.core.markCoinAsVisible(token.name.toUpperCase())
+
+        const baseCurrency = TOKEN_STANDARDS[token.standard].currency.toUpperCase()
+        const tokenName = token.name.toUpperCase()
+        const tokenValue = `{${baseCurrency}}${tokenName}`
+
+        reducers.core.markCoinAsVisible(tokenValue)
       })
     }
 
@@ -313,10 +325,6 @@ const externalConfig = () => {
       })
     }
   }
-
-  console.group('%c External config', 'color: green;')
-  console.log(config)
-  console.groupEnd()
 
   return config
 }

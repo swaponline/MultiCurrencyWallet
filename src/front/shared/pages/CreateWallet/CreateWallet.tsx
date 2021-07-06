@@ -55,7 +55,8 @@ const CreateWallet = (props) => {
 
       const isExist = hiddenList.find((el) => {
         if (el.includes(':')) {
-          return el.includes(forcedCurrency.toUpperCase())
+          const [elCoin, elAddress] = el.split(':')
+          return elCoin === forcedCurrency.toUpperCase()
         }
         return el === forcedCurrency.toUpperCase()
       })
@@ -140,9 +141,7 @@ const CreateWallet = (props) => {
     if (isIgnoreSecondStep) {
       Object.keys(currencies).forEach((currency) => {
         if (currencies[currency]) {
-          const { coin, blockchain } = getCoinInfo(currency)
-
-          actions.core.markCoinAsVisible(coin.toUpperCase(), true)
+          actions.core.markCoinAsVisible(currency.toUpperCase(), true)
         }
       })
       localStorage.setItem(constants.localStorage.isWalletCreate, true)
@@ -275,7 +274,7 @@ const CreateWallet = (props) => {
   let forcedCurrencyData
 
   if (forcedCurrency) {
-    forcedCurrencyData = allCurrencies.find(({ name }) => name === forcedCurrency.toUpperCase())
+    forcedCurrencyData = allCurrencies.find(({ name, standard, value }) => (standard ? value.toUpperCase() : name ) === forcedCurrency.toUpperCase())
     if (forcedCurrencyData) {
       currencies[forcedCurrency.toLowerCase()] = true
     }

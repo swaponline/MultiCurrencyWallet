@@ -37,6 +37,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
       ethData,
       bnbData,
       maticData,
+      arbethData,
       btcData,
       ghostData,
       nextData,
@@ -56,6 +57,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
       ethData,
       bnbData,
       maticData,
+      arbethData,
       btcData,
       ghostData,
       nextData,
@@ -75,6 +77,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
         ethData,
         bnbData,
         maticData,
+        arbethData,
         metamaskData: {
           ...metamaskData,
           currency: 'ETH Metamask',
@@ -463,7 +466,6 @@ class Wallet extends PureComponent<any, any> {
     return (
       <DashboardLayout
         page={page}
-        isDark={isDark}
         BalanceForm={
           <BalanceForm
             isDark={isDark}

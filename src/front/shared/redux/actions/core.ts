@@ -163,7 +163,16 @@ const deletedPartialCurrency = (orderId) => {
   )
 
   // currencies which must be all time in the drop
-  const premiumCurrencies = ['BTC', 'ETH', 'BNB', 'MATIC', 'GHOST', 'NEXT', 'SWAP']
+  const premiumCurrencies = [
+    'BTC', 
+    'ETH', 
+    'BNB', 
+    'MATIC', 
+    'ARBETH', 
+    'GHOST', 
+    'NEXT', 
+    'SWAP',
+  ]
 
   if (deletedOrderSell.length === 1 && !premiumCurrencies.includes(deletedOrderSellCurrency)) {
     reducers.currencies.deletedPartialCurrency(deletedOrderSellCurrency)
@@ -366,7 +375,12 @@ const markCoinAsVisible = (coin, doBackup = false) => {
   const { hiddenCoinsList } = constants.localStorage
 
   const findedCoin = JSON.parse(localStorage.getItem(hiddenCoinsList) || '[]').find(
-    (el) => el.includes(coin) && el.includes(':')
+    (el) => {
+      if (el.includes(':')) {
+        const [elCoin, elAddress] = el.split(':')
+        return elCoin === coin
+      }
+    }
   )
 
   reducers.core.markCoinAsVisible(findedCoin || coin)
@@ -453,6 +467,7 @@ const getWallets = (options: IUniversalObj = {}) => {
       ethData,
       bnbData,
       maticData,
+      arbethData,
       tokensData,
       metamaskData,
       // Sweep
@@ -460,9 +475,9 @@ const getWallets = (options: IUniversalObj = {}) => {
       ethMnemonicData,
       bnbMnemonicData,
       maticMnemonicData,
+      arbethMnemonicData,
     },
   } = getState()
-
 
   const metamaskConnected = metamask.isEnabled() && metamask.isConnected()
 
@@ -486,7 +501,8 @@ const getWallets = (options: IUniversalObj = {}) => {
       !enabledCurrencies ||
       enabledCurrencies.eth ||
       enabledCurrencies.bnb ||
-      enabledCurrencies.matic
+      enabledCurrencies.matic ||
+      enabledCurrencies.arbeth
         ? metamaskData
           ? [metamaskData]
           : []
@@ -513,6 +529,12 @@ const getWallets = (options: IUniversalObj = {}) => {
     // Sweep ===============================
     ...(!enabledCurrencies || enabledCurrencies.matic
       ? maticMnemonicData && !maticData.isMnemonic
+        ? [maticMnemonicData]
+        : []
+      : []),
+    // Sweep ===============================
+    ...(!enabledCurrencies || enabledCurrencies.arbeth
+      ? arbethMnemonicData && !arbethData.isMnemonic
         ? [maticMnemonicData]
         : []
       : []),
@@ -555,6 +577,14 @@ const getWallets = (options: IUniversalObj = {}) => {
           ? [maticData]
           : []
         : [maticData]
+      : []),
+    // =====================================
+    ...(!enabledCurrencies || enabledCurrencies.arbeth
+      ? metamaskConnected
+        ? withInternal
+          ? [arbethData]
+          : []
+        : [arbethData]
       : []),
     // =====================================
     ...(!enabledCurrencies || enabledCurrencies.ghost ? [ghostData] : []),

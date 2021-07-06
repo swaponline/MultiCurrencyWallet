@@ -1,7 +1,16 @@
 import BigNumber from 'bignumber.js'
 import testWallets from '../../testWallets'
 
-import { createBrowser, importWallet, addAssetToWallet, turnOnMM, selectSendCurrency, takeScreenshot, timeOut } from '../utils'
+import {
+  createBrowser,
+  importWallet,
+  addAssetToWallet,
+  turnOnMM,
+  selectSendCurrency,
+  clickOn,
+  takeScreenshot,
+  timeOut,
+} from '../utils'
 
 const wbtcSellAmount = 500_000e-8
 const btcBuyAmount = 500_000e-8
@@ -55,7 +64,10 @@ describe('Swap e2e test', () => {
       await timeOut(3 * 1000)
 
       // taker move to exchange page and try connecting to peers
-      await TakerPage.$('a[href="#/exchange"]').then((linkToExchange) => linkToExchange.click())
+      await clickOn({
+        page: TakerPage,
+        selector: 'a[href="#/exchange"]',
+      })
 
       const [sellCurrencySelectorList, buyCurrencySelectorList] = await TakerPage.$$('.dropDownSelectCurrency')
 
@@ -71,7 +83,10 @@ describe('Swap e2e test', () => {
       await sellCurrencySelectorInput.press('Backspace')
       await sellCurrencySelectorInput.type(wbtcSellAmount.toString())
 
-      await TakerPage.$('#orderbookBtn').then((orderbookBtn) => orderbookBtn.click())
+      await clickOn({
+        page: TakerPage,
+        selector: '#orderbookBtn',
+      })
 
     } catch (error) {
       await takeScreenshot(MakerPage, 'MakerPage_SwapWIW_PreparePagesError')
@@ -93,8 +108,14 @@ describe('Swap e2e test', () => {
     } = await turnOnMM(MakerPage)
 
     try {
-      await MakerPage.$('a[href="#/exchange"]').then((linkToExchange) => linkToExchange.click())
-      await MakerPage.$('#orderbookBtn').then((orderbookBtn) => orderbookBtn.click())
+      await clickOn({
+        page: MakerPage,
+        selector: 'a[href="#/exchange"]',
+      })
+      await clickOn({
+        page: MakerPage,
+        selector: '#orderbookBtn',
+      })
 
       const [sellCurrencySelectorList, buyCurrencySelectorList] = await MakerPage.$$('.dropDownSelectCurrency')
 
@@ -143,7 +164,10 @@ describe('Swap e2e test', () => {
       const wbtcGetAmountsOfOrders   = await TakerPage.$$eval('.wbtcGetAmountOfOrder', elements => elements.map(el => el.textContent))
       const wbtcOrders = [...wbtcSellAmountsOfOrders, ...wbtcGetAmountsOfOrders]
 
-      const allOrders = [...btcOrders.map((amount) => new BigNumber(amount).toFixed(5)), ...wbtcOrders.map((amount) => new BigNumber(amount).toFixed(5))];
+      const allOrders = [
+        ...btcOrders.map((amount) => amount && new BigNumber(amount).toFixed(5)),
+        ...wbtcOrders.map((amount) => amount && new BigNumber(amount).toFixed(5))
+      ];
 
       +makerBtcBalance ? expect(allOrders).toContain(makerBtcBalance) : console.log('maker has not btc balance')
       +makerTokenBalance ? expect(allOrders).toContain(makerTokenBalance) : console.log('maker has not token balance')
@@ -247,8 +271,14 @@ describe('Swap e2e test', () => {
       console.log('SwapWIW -> Send (MATIC)WBTC and BTC')
       await timeOut(3 * 1000)
 
-      await MakerPage.$('a[href="#/"]').then((aToWallet) => aToWallet.click())
-      await TakerPage.$('a[href="#/"]').then((aToWallet) => aToWallet.click())
+      await clickOn({
+        page: MakerPage,
+        selector: 'a[href="#/"]',
+      })
+      await clickOn({
+        page: TakerPage,
+        selector: 'a[href="#/"]',
+      })
 
       await timeOut(3 * 1000)
 
@@ -268,8 +298,14 @@ describe('Swap e2e test', () => {
 
       await timeOut(5 * 1000)
 
-      await TakerPage.$('#sendButton').then((sendButton) => sendButton.click())
-      await MakerPage.$('#sendButton').then((sendButton) => sendButton.click())
+      await clickOn({
+        page: TakerPage,
+        selector: '#sendButton',
+      })
+      await clickOn({
+        page: MakerPage,
+        selector: '#sendButton',
+      })
 
       await MakerPage.waitForSelector('#txAmout', {timeout: 60 * 1000})
       await TakerPage.waitForSelector('#txAmout', {timeout: 60 * 1000})

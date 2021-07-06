@@ -1,5 +1,5 @@
-import testWallets from '../testWallets'
-import { createBrowser, importWallet, timeOut, takeScreenshot } from './utils'
+import testWallets from '../../testWallets'
+import { createBrowser, importWallet, timeOut, takeScreenshot } from '../utils'
 
 jest.setTimeout(80_000) // ms
 
@@ -9,10 +9,10 @@ describe('Wallet tests', () => {
     const { browser, page } = await createBrowser()
 
     try {
-      console.log('Restore wallet test')
       await importWallet({
         page,
         seed: testWallets.btcRW.seedPhrase.split(' '),
+        timeout: 40_000,
       })
 
       await page.waitForSelector('#btcAddress')
@@ -36,11 +36,12 @@ describe('Wallet tests', () => {
     const arrOfWords = testWallets.eth.seedPhrase.split(' ')
 
     try {
-      console.log('Balance test')
       await importWallet({
         page,
         seed: arrOfWords,
+        timeout: 40_000,
       })
+
       await timeOut(5000)
 
       await page.waitForSelector('#walletRowUpdateBalanceBtn')

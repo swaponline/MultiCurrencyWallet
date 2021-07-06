@@ -29,6 +29,7 @@ const isCoinAddress = {
   [constants.COINS.eth]: (value) => typeof value === 'string' && /^0x[A-Fa-f0-9]{40}$/.test(value),
   [constants.COINS.bnb]: (value) => typeof value === 'string' && /^0x[A-Fa-f0-9]{40}$/.test(value),
   [constants.COINS.matic]: (value) => typeof value === 'string' && /^0x[A-Fa-f0-9]{40}$/.test(value),
+  [constants.COINS.arbeth]: (value) => typeof value === 'string' && /^0x[A-Fa-f0-9]{40}$/.test(value),
   [constants.COINS.btc]: (value) => typeof value === 'string' && /^[A-Za-z0-9]{26,35}$/.test(value),
   [constants.COINS.ghost]: (value) => typeof value === 'string' && /^[A-Za-z0-9]{26,35}$/.test(value),
   [constants.COINS.next]: (value) => typeof value === 'string' && /^[A-Za-z0-9]{26,35}$/.test(value),
@@ -37,8 +38,9 @@ const isCoinAddress = {
 
 const isPublicKey = {
   [constants.COINS.eth]: '?String', // TODO we don't have / use eth publicKey
-  [constants.COINS.bnb]: '?String', // TODO we don't have / use bnb publicKey
-  [constants.COINS.matic]: '?String', // TODO we don't have / use bnb publicKey
+  [constants.COINS.bnb]: '?String',
+  [constants.COINS.matic]: '?String',
+  [constants.COINS.arbeth]: '?String',
   [constants.COINS.btc]: (value) => typeof value === 'string' && /^[A-Za-z0-9]{66}$/.test(value),
   [constants.COINS.ghost]: (value) => typeof value === 'string' && /^[A-Za-z0-9]{66}$/.test(value),
   [constants.COINS.next]: (value) => typeof value === 'string' && /^[A-Za-z0-9]{66}$/.test(value),

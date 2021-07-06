@@ -9,6 +9,7 @@ import { constants } from 'helpers'
 
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
+import CurrencyIcon from 'components/ui/CurrencyIcon/CurrencyIcon'
 import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
 import icons from 'components/ui/CurrencyIcon/images'
 import config from 'app-config'
@@ -144,17 +145,13 @@ class CurrencyAction extends React.Component<any, any> {
                     break
                 }
 
-                if (!icons[iconName] || !styles[iconName]) {
-                  iconName = 'eth' // prevent styles fail for unknown asset
-
-                  if (item.standard && item.baseCurrency) {
-                    iconName = item.baseCurrency
-                  }
+                if (!icons[iconName] && item.standard && item.baseCurrency) {
+                  iconName = item.baseCurrency
                 }
 
                 let renderIcon = icons[iconName]
                 let renderStyle = {
-                  backgroundColor: null,
+                  backgroundColor: '',
                 }
 
                 const tokenStandard = item.standard?.toLowerCase()
@@ -173,12 +170,16 @@ class CurrencyAction extends React.Component<any, any> {
 
                 return (
                   <div styleName="card" key={index} onClick={() => this.handleClickCurrency(item)}>
-                    {/* @ts-ignore: strictNullChecks */}
-                    <div styleName={`circle ${iconName}`} style={renderStyle}>
-                      <img src={renderIcon} alt={`${name} icon`} role="image" />
+                    <CurrencyIcon
+                      styleName="circle"
+                      name={itemTitle}
+                      source={renderIcon && renderIcon}
+                      style={renderStyle}
+                    />
+                    <div styleName="info">
+                      <p>{itemTitle}</p>
+                      <span>{itemFullTitle}</span>
                     </div>
-                    <b>{itemTitle}</b>
-                    <span>{itemFullTitle}</span>
                   </div>
                 )
               })}

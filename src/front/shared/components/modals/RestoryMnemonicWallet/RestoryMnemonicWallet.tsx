@@ -164,6 +164,7 @@ class RestoryMnemonicWallet extends React.Component<ComponentProps, ComponentSta
       await actions.bnb.login(false, mnemonic)
       await actions.eth.login(false, mnemonic)
       await actions.matic.login(false, mnemonic)
+      await actions.arbeth.login(false, mnemonic)
       await actions.ghost.login(false, mnemonic)
       await actions.next.login(false, mnemonic)
       await actions.user.sign_btc_2fa(btcPrivKey)
@@ -172,6 +173,7 @@ class RestoryMnemonicWallet extends React.Component<ComponentProps, ComponentSta
       actions.core.markCoinAsVisible('BNB', true)
       actions.core.markCoinAsVisible('ETH', true)
       actions.core.markCoinAsVisible('MATIC', true)
+      actions.core.markCoinAsVisible('ARBETH', true)
       actions.core.markCoinAsVisible('BTC', true)
 
       this.setState({
