@@ -16,6 +16,7 @@ describe('Displaying wallets', () => {
     ['eth', 'Ethereum'],
     ['bnb', 'Binance Coin'],
     ['matic', 'MATIC Token'],
+    ['arbeth', 'Arbitrum ETH'],
   ]
 
   async function checkWalletDisplay(params) {
