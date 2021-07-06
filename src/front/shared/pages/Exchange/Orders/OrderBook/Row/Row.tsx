@@ -133,10 +133,10 @@ class Row extends Component<RowProps, RowState> {
     const decimals = constants.tokenDecimals[currency.toLowerCase()]
     const wrongDecimals = !Number.isInteger(decimals) || decimals < 0 || decimals > 8
     const finalDecimals = wrongDecimals ? 8 : decimals
+    const result = new BigNumber(amount).dp(finalDecimals, BigNumber.ROUND_CEIL)
 
-    return new BigNumber(amount)
-      .dp(finalDecimals, BigNumber.ROUND_CEIL)
-      .toFixed(finalDecimals)
+    // save decimals if it's float number
+    return !result.mod(1) ? result.toFixed(finalDecimals) : result.toFixed()
   }
 
   handleDeclineOrdersModalOpen = (indexOfDecline) => {
@@ -272,8 +272,11 @@ class Row extends Component<RowProps, RowState> {
   }
 
   renderContent = () => {
-    let windowWidthIn = window.innerWidth
-    this.setState({ windowWidth: windowWidthIn })
+    const windowWidth = window.innerWidth
+
+    this.setState(() => ({
+      windowWidth,
+    }))
   }
 
   render() {
@@ -371,7 +374,7 @@ class Row extends Component<RowProps, RowState> {
           <div styleName='withIcon'>
             <Avatar
               value={ownerPeer}
-              size={30}
+              size={25}
               ownerEthAddress={ownerEthAddress}
             />
             {isTurbo &&
@@ -400,7 +403,7 @@ class Row extends Component<RowProps, RowState> {
         </td>
         <td styleName='rowCell'>
           {peer === ownerPeer
-            ? <RemoveButton onClick={() => removeOrder(id)} brand={true} />
+            ? <RemoveButton onClick={() => removeOrder(id)} brand />
             :
             <Fragment>
               {

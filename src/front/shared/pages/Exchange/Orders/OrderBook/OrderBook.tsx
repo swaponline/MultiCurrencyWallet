@@ -273,7 +273,7 @@ class OrderBook extends Component<OrderBookProps, OrderBookState> {
     )
 
     return (
-      <Fragment>
+      <div styleName="orderbookWrapper">
         <PageSeo
           location={location}
           defaultTitle={intl.formatMessage(title.metaTitle, {
@@ -429,7 +429,7 @@ class OrderBook extends Component<OrderBookProps, OrderBookState> {
           }
         </Panel>
         {seoPage && seoPage.footer && <div>{seoPage.footer}</div>}
-      </Fragment>
+      </div>
     )
   }
 }
