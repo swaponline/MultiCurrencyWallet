@@ -129,12 +129,14 @@ class Row extends Component<RowProps, RowState> {
     }
   }
 
-  getDecimals = (amount, currency) => {
-    const decimalPlaces = constants.tokenDecimals[currency.toLowerCase()] || 8
+  formatWithDecimals = (amount, currency): string => {
+    const decimals = constants.tokenDecimals[currency.toLowerCase()]
+    const wrongDecimals = !Number.isInteger(decimals) || decimals < 0 || decimals > 8
+    const finalDecimals = wrongDecimals ? 8 : decimals
 
-    return decimalPlaces > 8
-      ? String(new BigNumber(amount).dp(8, BigNumber.ROUND_CEIL))
-      : String(new BigNumber(amount).dp(decimalPlaces, BigNumber.ROUND_CEIL))
+    return new BigNumber(amount)
+      .dp(finalDecimals, BigNumber.ROUND_CEIL)
+      .toFixed(finalDecimals)
   }
 
   handleDeclineOrdersModalOpen = (indexOfDecline) => {
@@ -258,9 +260,9 @@ class Row extends Component<RowProps, RowState> {
               //@ts-ignore: strictNullChecks
               : intl.formatMessage(messages.buy)
             }`,
-            amount: `${this.getDecimals(amount, main)}`,
+            amount: `${this.formatWithDecimals(amount, main)}`,
             main: `${this.renderCoinName(main)}`,
-            total: `${this.getDecimals(total, base)}`,
+            total: `${this.formatWithDecimals(total, base)}`,
             base: `${this.renderCoinName(base)}`,
             price: `${exchangeRates}`,
           }}
@@ -318,11 +320,11 @@ class Row extends Component<RowProps, RowState> {
       isSilentError: true,
     })
 
-    let sellCurrencyOut,
-      sellAmountOut,
-      getCurrencyOut,
-      getAmountOut,
-      priceOut
+    let sellCurrencyOut
+    let sellAmountOut
+    let getCurrencyOut
+    let getAmountOut
+    let priceOut
 
     if (type === PAIR_TYPES.BID) {
       sellCurrencyOut = base
@@ -379,23 +381,27 @@ class Row extends Component<RowProps, RowState> {
         </td>
         <td styleName='rowCell'>
           <span styleName='rowAmount'>
-            <span className={`${sellCurrencyOut.toLowerCase()}SellAmountOfOrder`}>{`${this.getDecimals(sellAmountOut, sellCurrencyOut)}`}</span>
+            <span className={`${sellCurrencyOut.toLowerCase()}SellAmountOfOrder`}>{`${this.formatWithDecimals(sellAmountOut, sellCurrencyOut)}`}</span>
             {' '}
             <span>{`${this.renderCoinName(sellCurrencyOut)}`}</span>
           </span>
         </td>
         <td styleName='rowCell'>
           <span styleName='rowAmount'>
-            <span className={`${getCurrencyOut.toLowerCase()}GetAmountOfOrder`}>{`${this.getDecimals(getAmountOut, getCurrencyOut)}`}</span>
+            <span className={`${getCurrencyOut.toLowerCase()}GetAmountOfOrder`}>{`${this.formatWithDecimals(getAmountOut, getCurrencyOut)}`}</span>
             {' '}
             <span>{`${this.renderCoinName(getCurrencyOut)}`}</span>
           </span>
         </td>
+
+
         <td styleName='rowCell'>
           <span styleName='rowAmount'>
-            {`${this.getDecimals(priceOut, getCurrencyOut)} ${this.renderCoinName(getCurrencyOut)}/${this.renderCoinName(sellCurrencyOut)}`}
+            {`${this.formatWithDecimals(priceOut, getCurrencyOut)} ${this.renderCoinName(getCurrencyOut)}/${this.renderCoinName(sellCurrencyOut)}`}
           </span>
         </td>
+
+
         <td styleName='rowCell'>
           {peer === ownerPeer
             ? <RemoveButton onClick={() => removeOrder(id)} brand={true} />
