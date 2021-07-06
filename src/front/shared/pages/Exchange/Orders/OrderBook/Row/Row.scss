@@ -60,18 +60,9 @@
   }
 
   .bigContainer {
-    font-size: 14px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-  }
-}
-
-@media screen and (max-width: 400px) {
-  .mobileRow {
-    .bigContainer {
-      font-size: 12px;
-    }
   }
 }
 
