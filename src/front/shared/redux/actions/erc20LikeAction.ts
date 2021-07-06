@@ -98,7 +98,7 @@ class Erc20LikeAction {
         return {
           name,
           symbol,
-          decimals,
+          decimals: Number(decimals),
         }
       } 
     } catch (error) {
