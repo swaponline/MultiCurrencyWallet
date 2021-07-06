@@ -133,7 +133,7 @@ class Row extends Component<RowProps, RowState> {
     const decimals = constants.tokenDecimals[currency.toLowerCase()]
     const wrongDecimals = !Number.isInteger(decimals) || decimals < 0 || decimals > 8
     const finalDecimals = wrongDecimals ? 8 : decimals
-    const result = new BigNumber(amount).dp(finalDecimals, BigNumber.ROUND_CEIL)
+    const result = new BigNumber(amount).dp(finalDecimals, BigNumber.ROUND_HALF_CEIL)
 
     // save decimals if it's float number
     return !result.mod(1) ? result.toFixed(finalDecimals) : result.toFixed()
