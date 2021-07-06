@@ -393,15 +393,11 @@ class Row extends Component<RowProps, RowState> {
             <span>{`${this.renderCoinName(getCurrencyOut)}`}</span>
           </span>
         </td>
-
-
         <td styleName='rowCell'>
           <span styleName='rowAmount'>
             {`${this.formatWithDecimals(priceOut, getCurrencyOut)} ${this.renderCoinName(getCurrencyOut)}/${this.renderCoinName(sellCurrencyOut)}`}
           </span>
         </td>
-
-
         <td styleName='rowCell'>
           {peer === ownerPeer
             ? <RemoveButton onClick={() => removeOrder(id)} brand={true} />
@@ -411,11 +407,11 @@ class Row extends Component<RowProps, RowState> {
                 isRequested ? (
                   <Fragment>
                     <div style={{ color: 'red' }}>
-                      <FormattedMessage id="Row148" defaultMessage="REQUESTING" />
+                      <FormattedMessage id="RowM136" defaultMessage="REQUESTING" />
                     </div>
                     {' '}
                     <Link to={swapUri}>
-                      <FormattedMessage id="Row151" defaultMessage="Go to the swap" />
+                      <FormattedMessage id="RowM139" defaultMessage="Swap" />
                     </Link>
                   </Fragment>
                 ) : (
@@ -506,7 +502,7 @@ class Row extends Component<RowProps, RowState> {
                           </div>
                           {' '}
                           <Link to={swapUri}>
-                            <FormattedMessage id="RowM139" defaultMessage="Go to the swap" />
+                            <FormattedMessage id="RowM139" defaultMessage="Swap" />
                           </Link>
                         </Fragment>
                       ) : (
