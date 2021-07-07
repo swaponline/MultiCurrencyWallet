@@ -466,23 +466,47 @@ const getTransaction = (address: string = ``, ownType: string = ``) =>
 
 //@ts-ignore
 const send = ({ from, to, amount, feeValue, speed } = {}) => {
+  
 
   return new Promise(async (ready) => {
-    bitcore.Networks.add({
+    const networks = bitcore.Networks
+    const nextNetwork = {
       name: 'next-mainnet',
       alias: 'next-mainnet',
-      pubkeyhash: next.network.pubKeyHash,
-      privatekey: next.network.wif,
-      scripthash: next.network.scriptHash,
-      xpubkey: next.network.bip32.public,
-      xprivkey: next.network.bip32.private,
+      pubkeyhash: 0x4b, //
+      privatekey: 0x80, //
+      scripthash: 0x05, //
+      xpubkey: 0x0488B21E, //
+      xprivkey: 0x0488ADE4, //
       networkMagic: 0xcbe4d0a1,
-      port: 7078, // need check
-    })
-    const bitcoreNetwork = bitcore.Networks.get('next-mainnet', 'next-mainnet')
+      port: 7078,
+      dnsSeeds: [
+        'localhost:7079',
+      ]
+    }
+    networks.add(nextNetwork)
+      // {
+    //   name: 'next-mainnet',
+    //   alias: 'next-mainnet',
+    //   pubkeyhash: next.network.pubKeyHash,
+    //   privatekey: next.network.wif,
+    //   scripthash: next.network.scriptHash,
+    //   xpubkey: next.network.bip32.public,
+    //   xprivkey: next.network.bip32.private,
+    //   networkMagic: 0xcbe4d0a1,
+    //   port: 7078, // need check
+    // })
+
+    const bitcoreNetwork = networks.get('next-mainnet', 'name')
+
+    const bitcoinNetwork = networks.get('livenet', 'name')
+
+    networks.remove(bitcoinNetwork)
+
+    console.log('bitcoreNetwork', bitcoreNetwork)
 
     const privKeyWIF = getPrivateKeyByAddress(from)
-    const privateKey = new bitcore.PrivateKey(privKeyWIF, bitcoreNetwork)
+    const privateKey = new bitcore.PrivateKey(privKeyWIF)
     const publicKey = bitcore.PublicKey.fromPrivateKey(privateKey)
     const addressFrom = new bitcore.Address(publicKey, bitcoreNetwork)
 
@@ -505,6 +529,9 @@ const send = ({ from, to, amount, feeValue, speed } = {}) => {
     const rawTx = String(transaction.serialize())
     const broadcastAnswer: any = await broadcastTx(rawTx)
     const txid = broadcastAnswer.raw
+
+    networks.add(bitcoinNetwork)
+
     ready(txid)
   })
 }
@@ -518,7 +545,7 @@ const fetchUnspents = (address) => nextUtils.fetchUnspents({
     txId: unspent.txid,
     outputIndex: unspent.outputIndex,
     script: unspent.script,
-    satoshis: unspent.script,
+    satoshis: unspent.satoshis,
   }))
 )
 
