@@ -128,8 +128,6 @@ const CreateWallet = (props) => {
         goHome()
 
         actions.modals.open(constants.modals.AddCustomToken, {
-          api: standardObj.explorerApi,
-          apiKey: standardObj.explorerApiKey,
           standard: standardName,
           baseCurrency: standardObj.currency,
         })
