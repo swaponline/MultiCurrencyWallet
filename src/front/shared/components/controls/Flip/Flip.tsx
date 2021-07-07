@@ -1,23 +1,23 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-
 import CSSModules from 'react-css-modules'
 import styles from './Flip.scss'
 
-
-const Flip = ({ onClick, className }) => (
-  //@ts-ignore 
-  <button alt="flip currency" onClick={onClick} className={className} styleName="trade-panel__change" />
-)
-
-Flip.propTypes = {
-  onClick: PropTypes.func,
-  className: PropTypes.string,
+type ComponentProps = {
+  onClick: () => void
+  className?: string
 }
 
-Flip.defaulProps = {
-  className: '',
-}
+const Flip = (props: ComponentProps) => {
+  const { onClick, className = '' } = props
 
+  return (
+    <button
+      alt="flip currency"
+      onClick={onClick}
+      className={className}
+      styleName="trade-panel__change"
+    />
+  )
+}
 
 export default CSSModules(Flip, styles)

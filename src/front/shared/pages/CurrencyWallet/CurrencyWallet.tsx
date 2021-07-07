@@ -65,19 +65,13 @@ class CurrencyWallet extends Component<any, any> {
 
     const {
       match: {
-        params: { fullName = null, ticker = null, address = null },
+        params: { ticker = null, address = null },
       },
       hiddenCoinsList,
     } = props
 
     const items = actions.core.getWallets({})
     const walletAddress = address
-
-    // оставляю запасной вариант для старых ссылок
-    if (fullName) {
-      //@ts-ignore
-      ticker = fullName
-    }
 
     let itemCurrency = this.filterCurrencies({
       items,
@@ -199,7 +193,7 @@ class CurrencyWallet extends Component<any, any> {
 
     let {
       match: {
-        params: { address = null, fullName = null, ticker = null, action = null },
+        params: { address = null, ticker = null, action = null },
       },
       activeCurrency
     } = this.props
@@ -221,11 +215,6 @@ class CurrencyWallet extends Component<any, any> {
     ) {
       const items = actions.core.getWallets({})
       const walletAddress = address
-
-      // оставляю запасной вариант для старых ссылок
-      if (fullName) {
-        ticker = fullName
-      }
       
       let itemCurrency = this.filterCurrencies({
         items,
@@ -465,7 +454,6 @@ class CurrencyWallet extends Component<any, any> {
       currency,
       itemCurrency,
       balance,
-      fullName,
       infoAboutCurrency,
       txItems,
       filterValue,
@@ -537,11 +525,11 @@ class CurrencyWallet extends Component<any, any> {
         <PageSeo
           location={location}
           defaultTitle={intl.formatMessage(title.metaTitle, {
-            fullName,
+            fullName: currency,
             currency,
           })}
           defaultDescription={intl.formatMessage(description.metaDescription, {
-            fullName,
+            fullName: currency,
             currency,
           })}
         />

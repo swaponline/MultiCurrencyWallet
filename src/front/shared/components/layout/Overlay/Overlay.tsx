@@ -1,16 +1,26 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-
+import React, { useEffect } from 'react'
 import cssModules from 'react-css-modules'
 import styles from './Overlay.scss'
 
+type ComponentProps = {
+  children: JSX.Element | JSX.Element[]
+  onClick?: () => void
+  dashboardView?: boolean
+}
 
-const Overlay = ({ children, onClick, dashboardView }) => {
-  let [evaluatedHeight, setEvaluatedHeight] = React.useState(400)
-  React.useEffect(() => {
+const Overlay = (props: ComponentProps) => {
+  const {
+    children,
+    onClick = () => undefined,
+    dashboardView = false,
+  } = props
+
+  const [evaluatedHeight, setEvaluatedHeight] = React.useState(400)
+
+  useEffect(() => {
     if (dashboardView) {
-      //@ts-ignore: strictNullChecks
-      const elWithHeight: HTMLElement = document.querySelector('.__modalConductorProvided__ .contentHeightEvaluateHere')
+      const elWithHeight: HTMLElement | null = document.querySelector('.__modalConductorProvided__ .contentHeightEvaluateHere')
+
       if (elWithHeight) {
         setEvaluatedHeight(elWithHeight.clientHeight ||
           elWithHeight.offsetHeight ||
@@ -24,11 +34,6 @@ const Overlay = ({ children, onClick, dashboardView }) => {
       {children}
     </div>
   )
-}
-
-Overlay.propTypes = {
-  children: PropTypes.node,
-  onClick: PropTypes.func,
 }
 
 export default cssModules(Overlay, styles)

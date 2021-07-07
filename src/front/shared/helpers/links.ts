@@ -17,7 +17,6 @@ const linksManager = {
   farm: 'https://farm.wpmix.net/',
   localStorage: '/localStorage',
 
-  creditCardDeposit: '/creditCardDeposit',
   wallets: '/wallets',
   send: '/withdraw',
   savePrivateSeed: '/savePrivateSeed',
@@ -29,13 +28,9 @@ const linksManager = {
   test: 'https://testnet.swaponline.io',
   main: 'https://swaponline.io/',
   wallet: '/wallet',
-  coins: '/coins',
-  partial: '/partial',
   notFound: '/NotFound',
   multisign: '/multisign',
   createInvoice: '/createinvoice',
-  BtcWallet: '/Bitcoin-wallet',
-  EthWallet: '/Ethereum-wallet',
 
   // social networks
   medium: '#',

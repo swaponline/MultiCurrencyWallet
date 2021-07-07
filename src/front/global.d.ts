@@ -2,23 +2,24 @@ import 'react'
 
 declare module 'react' {
   interface Attributes {
-    styleName?: string;
-    type?: string;
-    title?: any;
+    styleName?: string
+    type?: string
+    title?: any
+    alt?: string
   }
 }
 
 declare global {
   interface IEtheriumProvider {
-    [key: string]: any;
-    isLiquality?: boolean;
-    isTrust?: boolean;
-    isMetaMask?: boolean;
+    [key: string]: any
+    isLiquality?: boolean
+    isTrust?: boolean
+    isMetaMask?: boolean
   }
 
   interface Window {
-    [key: string]: any;
-    ethereum?: IEtheriumProvider;
+    [key: string]: any
+    ethereum?: IEtheriumProvider
   }
 
   interface Navigator {
