@@ -321,42 +321,48 @@ class Wallet extends PureComponent<any, any> {
     )
   }
 
-  addFiatBalanceInUserCurrencyData = (currencyData) => {
-    function returnFiatBalance(target) {
-      return target.balance > 0 && target.infoAboutCurrency?.price_fiat
-        ? new BigNumber(target.balance)
-            .multipliedBy(target.infoAboutCurrency.price_fiat)
-            .dp(2, BigNumber.ROUND_FLOOR)
-            .toNumber()
-        : 0
+  returnFiatBalanceByWallet = (wallet) => {
+    const hasFiatPrice = wallet.balance > 0 && wallet.infoAboutCurrency?.price_fiat
+
+    if (hasFiatPrice) {
+      return new BigNumber(wallet.balance)
+        .multipliedBy(wallet.infoAboutCurrency.price_fiat)
+        .dp(2, BigNumber.ROUND_FLOOR)
+        .toNumber()
     }
 
+    return 0
+  }
+
+  addFiatBalanceInUserCurrencyData = (currencyData) => {
     currencyData.forEach((wallet) => {
-      wallet.fiatBalance = returnFiatBalance(wallet)
+      wallet.fiatBalance = this.returnFiatBalanceByWallet(wallet)
     })
 
     return currencyData
   }
 
-  returnBalanceInBtc = (currencyData) => {
+  returnBalanceInBtc = (wallet) => {
     const widgetCurrencies = user.getWidgetCurrencies()
-    let balance = new BigNumber(0)
+    const name = wallet.currency || wallet.name
 
-    function returnAmount(target) {
-      const name = target.currency || target.name
-      if (
-        (!isWidgetBuild || widgetCurrencies.includes(name)) &&
-        target.infoAboutCurrency?.price_btc &&
-        target.balance !== 0
-      ) {
-        return target.balance * target.infoAboutCurrency.price_btc
-      }
-
-      return 0
+    if (
+      (!isWidgetBuild || widgetCurrencies.includes(name)) &&
+      !wallet.balanceError &&
+      wallet.infoAboutCurrency?.price_btc &&
+      wallet.balance > 0
+    ) {
+      return wallet.balance * wallet.infoAboutCurrency.price_btc
     }
 
+    return 0
+  }
+
+  returnTotalBalanceInBtc = (currencyData) => {
+    let balance = new BigNumber(0)
+
     currencyData.forEach((wallet) => {
-      balance = balance.plus(returnAmount(wallet))
+      balance = balance.plus(this.returnBalanceInBtc(wallet))
     })
 
     return balance.toNumber()
@@ -460,7 +466,7 @@ class Wallet extends PureComponent<any, any> {
 
     userWallets = this.addFiatBalanceInUserCurrencyData(userWallets)
 
-    const balanceInBtc = this.returnBalanceInBtc(userWallets)
+    const balanceInBtc = this.returnTotalBalanceInBtc(userWallets)
     const allFiatBalance = this.returnTotalFiatBalance(userWallets)
 
     return (

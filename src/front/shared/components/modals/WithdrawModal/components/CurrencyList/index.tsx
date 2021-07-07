@@ -127,7 +127,7 @@ export default class CurrencyList extends Component<any, any> {
               return (
                 <div id={itemId} key={index}
                   styleName={cx('customSelectListItem customSelectValue', {
-                    disabled: item.balance === 0,
+                    disabled: !item.balance || item.balanceError,
                   })}
                   onClick={() => this.openModal({ target: item })}
                 >
