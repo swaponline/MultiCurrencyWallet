@@ -503,8 +503,6 @@ const send = ({ from, to, amount, feeValue, speed } = {}) => {
 
     networks.remove(bitcoinNetwork)
 
-    console.log('bitcoreNetwork', bitcoreNetwork)
-
     const privKeyWIF = getPrivateKeyByAddress(from)
     const privateKey = new bitcore.PrivateKey(privKeyWIF)
     const publicKey = bitcore.PublicKey.fromPrivateKey(privateKey)
@@ -513,19 +511,12 @@ const send = ({ from, to, amount, feeValue, speed } = {}) => {
     const unspents: bitcore.Transaction.UnspentOutput[] = await fetchUnspents(from) || []
     const amountSat = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
 
-    console.log('bitcoreNetwork', bitcoreNetwork)
-    console.log('unspents', unspents)
-    console.log('amountSat', amountSat)
-    console.log('addressFrom', addressFrom)
-    console.log('privateKey', privateKey)
-
     const transaction = new bitcore.Transaction()
       .from(unspents)
       .to(to, amountSat)
       .change(addressFrom)
       .sign(privateKey)
 
-    console.log('im here')
     const rawTx = String(transaction.serialize())
     const broadcastAnswer: any = await broadcastTx(rawTx)
     const txid = broadcastAnswer.raw

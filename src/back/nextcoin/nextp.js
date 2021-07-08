@@ -209,6 +209,23 @@ app.get('/:network/address/:address/utxo', async (req, res) => {
   })
 })
 
+app.post('/:network/sendrawtransaction', async (req, res) => {
+  const { network } = req.params
+  const { rawtx } = req.body
+
+  sendRequest({
+    network,
+    rpcMethod: 'sendrawtransaction',
+    rpcMethodParams: [ rawtx ],
+    onSuccess: (data) => {
+      res.status(201).json({ raw: data })
+    },
+    onError: (e) => {
+      res.status(503).json({ error: e.message })
+    },
+  })
+})
+
 
 app.listen(process.env.PORT ? process.env.PORT : portDefault)
 console.log(`nextp (NEXT.coin proxy) listening: localhost:${portDefault} ⇄ NEXT.coin node`)
