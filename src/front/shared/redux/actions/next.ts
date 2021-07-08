@@ -521,8 +521,6 @@ const send = ({ from, to, amount, feeValue, speed } = {}) => {
     const broadcastAnswer: any = await broadcastTx(rawTx)
     const txid = broadcastAnswer.raw
 
-    networks.add(bitcoinNetwork)
-
     ready(txid)
   })
 }
