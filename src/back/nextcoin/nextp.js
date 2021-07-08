@@ -122,7 +122,7 @@ app.get('/:network', async (req, res) => {
 })
 
 
-app.get('/:network/address/:address', async (req, res) => {
+app.get('/:network/:var(addr|address)/:address', async (req, res) => {
   const { network, address } = req.params
 
   sendRequest({
@@ -193,7 +193,7 @@ app.get('/:network/tx/:txid', async (req, res) => {
 
 // todo: unexisting address case
 
-app.get('/:network/address/:address/utxo', async (req, res) => {
+app.get('/:network/:var(addr|address)/:address/utxo', async (req, res) => {
   const { network, address } = req.params
 
   sendRequest({
