@@ -173,6 +173,7 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
                   </span>
                 </FieldLabel>
                 <Input
+                  id="customTokenInput"
                   valueLink={linked.tokenAddress}
                   focusOnInit
                   pattern="0-9a-zA-Z:"
@@ -199,6 +200,7 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
                 )}
               </div>
               <Button
+                id="customTokenNextButton"
                 styleName="buttonFullMargin"
                 brand
                 fullWidth
@@ -248,6 +250,7 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
                 <div styleName="fakeInput">{tokenDecimals}</div>
               </div>
               <Button
+                id="customTokenAddButton"
                 styleName="buttonFullMargin"
                 brand
                 fullWidth
@@ -271,6 +274,7 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
                 />
               </h4>
               <Button
+                id="customTokenDoneButton"
                 styleName="buttonFullMargin"
                 brand
                 fullWidth

@@ -7,7 +7,7 @@ const link = process.env.ACTIONS
   : 'http://localhost:9001/'
 
 // if it's true then you will be able to see puppeteer's browser
-const isDebug = false
+const isDebug = true
 
 export const createBrowser = async (): Promise<{
   browser: puppeteer.Browser

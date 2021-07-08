@@ -28,6 +28,7 @@
     "test:e2e_swap": "jest tests/e2e/swap/*.test.ts --detectOpenHandles",
     "test:e2e_swap:actions": "ACTIONS=true jest tests/e2e/swap/btcToEthWbtc.test.ts --detectOpenHandles",
     "test:e2e_walletAddition": "jest tests/e2e/wallet/walletAddition.test.ts --detectOpenHandles",
+    "test:e2e_tokenAddition": "jest tests/e2e/wallet/tokenAddition.test.ts --detectOpenHandles",
     "test:e2e_balanceDisplay": "jest tests/e2e/wallet/balanceDisplay.test.ts --detectOpenHandles",
     "test:e2e_withdraw": "jest tests/e2e/withdraw.test.ts --detectOpenHandles",
     "test:e2e_history": "jest tests/e2e/history.test.ts --detectOpenHandles",
