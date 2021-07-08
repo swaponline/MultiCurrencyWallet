@@ -23,8 +23,8 @@ describe('Adding custom tokens', () => {
       'etherc20',
       {
         contract: '0xc778417e063141139fce010982780140aa0cd5ab',
-        titleId: 'erc20wethWalletTitle',
-        walletTitle: 'WETHERC20',
+        titleId: 'erc20weth',
+        walletTitle: 'WETH ERC20',
       },
     ],
     [
@@ -32,17 +32,17 @@ describe('Adding custom tokens', () => {
       'bnbbep20',
       {
         contract: '0xae13d989dac2f0debff460ac112a837c89baa7cd',
-        titleId: 'bep20wbnbWalletTitle',
+        titleId: 'bep20wbnb',
         walletTitle: 'WBNB BEP20',
       },
     ],
     [
-      'Custom POLYGON BEP20',
+      'Custom POLYGON ERC20',
       'maticerc20matic',
       {
         contract: '0x220afDcaE34D63EDe6ba68d9F50fFe5632d70a28',
-        titleId: 'erc20maticmonoWalletTitle',
-        walletTitle: 'MONOERC20MATIC',
+        titleId: 'erc20maticmono',
+        walletTitle: 'MONO ERC20MATIC',
       },
     ],
   ]
@@ -53,7 +53,7 @@ describe('Adding custom tokens', () => {
     const walletTitle = await page.$eval(`#${name}WalletTitle`, (el) => el.textContent)
 
     if (walletTitle !== expectedTitle) {
-      throw new Error(`incorrect display for ${name.toUpperCase()} wallet`)
+      throw new Error(`incorrect display for ${name.toUpperCase()} type`)
     }
   }
 
@@ -79,16 +79,16 @@ describe('Adding custom tokens', () => {
     if (testPage) {
       try {
         await clickOn({
-          testPage,
+          page: testPage,
           selector: `#ethWallet`,
         })
         await clickOn({
-          testPage,
+          page: testPage,
           selector: '#continueBtn',
         })
       } catch (error) {
         console.error(error)
-        await takeScreenshot(testPage, `AddingWalletError_${'etherc20'}`)
+        await takeScreenshot(testPage, `AddingWalletError_eth`)
         expect(false).toBe(true)
       }
     } else {
@@ -110,20 +110,23 @@ describe('Adding custom tokens', () => {
         }
 
         await clickOn({
-          testPage,
+          page: testPage,
           selector: '#customTokenNextButton',
         })
+
+        await testPage.waitForSelector('#customTokenAddButton')
+
         await clickOn({
-          testPage,
+          page: testPage,
           selector: '#customTokenAddButton',
         })
+
         await clickOn({
-          testPage,
+          page: testPage,
           selector: '#customTokenDoneButton',
         })
 
-        // await timeOut(60_000)
-        await testPage.waitForNavigation()
+        await testPage.waitForSelector(`#${titleId}WalletTitle`)
 
         await checkTokenDisplay({
           page: testPage,
