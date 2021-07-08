@@ -430,7 +430,7 @@ const getTransaction = (address: string = ``, ownType: string = ``) =>
       },
     }).then((res: any) => {
       const transactions = res.txs.map((item) => {
-        const direction = item.vin[0].addr !== address ? 'in' : 'out'
+        const direction = item.vin[0].address !== address ? 'in' : 'out'
 
         const isSelf = direction === 'out'
           && item.vout.filter((item) =>
