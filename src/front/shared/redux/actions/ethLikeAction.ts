@@ -450,7 +450,6 @@ class EthLikeAction {
       value: Web3.utils.toWei(String(amount)),
     }
     let privateKey: string | undefined = undefined
-    let bufferPrivateKey: Buffer | undefined = undefined
 
     if (haveExternalWallet) {
       txObject.from = externalAddress
@@ -459,16 +458,13 @@ class EthLikeAction {
       privateKey = this.getPrivateKeyByAddress(ownerAddress)
     }
 
-    privateKey = privateKey?.replace('0x', '')
-    bufferPrivateKey = Buffer.from(privateKey || '', 'hex')
-
     const walletData = actions.core.getWallet({
       address: ownerAddress,
       currency: this.ticker,
     })
 
     if (haveExternalWallet && !walletData.isMetamask) {
-      const signedTx = await Web3.eth.accounts.signTransaction(txObject, bufferPrivateKey)
+      const signedTx = await Web3.eth.accounts.signTransaction(txObject, privateKey)
 
       txObject = signedTx.rawTransaction
       sendMethod = Web3.eth.sendSignedTransaction

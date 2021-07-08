@@ -51,7 +51,7 @@ describe('Sending EVM Coin', () => {
     }
   }
 
-  type UsualTxItem = [Coin, any]
+  type UsualTxItem = [Coin, UsualSettings]
   
   const usualTxCases: UsualTxItem[] = [
     [
@@ -114,7 +114,7 @@ describe('Sending EVM Coin', () => {
 
   it.each(usualTxCases)('sending usual %s transaction', async (
     coinName: Coin,
-    settings: any,
+    settings: UsualSettings,
   ) => {
     const { web3, paramsToSend } = settings
     const lowerCoinName = coinName.toLowerCase()
@@ -168,7 +168,7 @@ describe('Sending EVM Coin', () => {
     },
   }
 
-  type AdminTxItem = [Coin, any]
+  type AdminTxItem = [Coin, AdminSettings]
 
   const adminTxCases: AdminTxItem[] = [
     [
@@ -239,7 +239,7 @@ describe('Sending EVM Coin', () => {
 
   it.each(adminTxCases)('sending admin %s transaction', async (
     coinName: Coin,
-    settings: any,
+    settings: AdminSettings,
   ) => {
     const { web3, paramsToSend } = settings
     const lowerCoinName = coinName.toLowerCase()
