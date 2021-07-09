@@ -527,9 +527,11 @@ class EthLikeAction {
       feeFromUsersAmount = minAmount.toNumber()
     }
 
+    const from = getState().user[`${this.tickerKey}Data`].address
+
     const txData = {
       chainId: this.chainId,
-      from: getState().user[`${this.tickerKey}Data`].address,
+      from,
       to: adminObj.address.trim(),
       gasPrice,
       gas: gasLimit,
@@ -561,7 +563,7 @@ class EthLikeAction {
 
     const txCount = await Web3.eth.getTransactionCount(txData.from)
     const nonce = Web3.utils.toHex(txCount)
-    const transaction = new Transaction({ ...txData, nonce}, { chain: 'ropsten' })
+    const transaction = new Transaction({ ...txData, nonce }, { chainId: this.chainId })
 
     transaction.sign(privateKey)
 

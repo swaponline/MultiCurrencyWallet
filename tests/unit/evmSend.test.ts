@@ -32,7 +32,7 @@ async function repeatActionWithDelay(params) {
 }
 
 describe('Sending EVM Coin', () => {
-  const waitingTxMining = 15_000
+  const waitingTxMining = 30_000
   const requestsForTxInfo = 3
   const extraDelay = 7_000
   const waitingForTheTest = waitingTxMining * requestsForTxInfo + extraDelay
