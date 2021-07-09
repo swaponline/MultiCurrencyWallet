@@ -447,7 +447,7 @@ class EthLikeAction {
       to: to.trim(),
       gasPrice,
       gas: gasLimit,
-      value: Web3.utils.toHex(Web3.utils.toWei(amount, 'ether')),
+      value: Web3.utils.toHex(Web3.utils.toWei(String(amount), 'ether')),
     }
     let privateKey: string | undefined = undefined
     let bufferPrivateKey: Buffer | undefined = undefined
