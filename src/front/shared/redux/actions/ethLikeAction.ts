@@ -21,6 +21,7 @@ class EthLikeAction {
   readonly explorerName: string
   readonly explorerLink: string
   readonly explorerApiKey: string
+  readonly chainId: string
   readonly adminFeeObj: {
     fee: string // percent of amount
     address: string // where to send
@@ -34,6 +35,7 @@ class EthLikeAction {
       coinName,
       ticker,
       privateKeyName,
+      chainId,
       explorerName,
       explorerLink,
       explorerApiKey,
@@ -44,6 +46,7 @@ class EthLikeAction {
     this.coinName = coinName
     this.ticker = ticker
     this.privateKeyName = privateKeyName.toLowerCase()
+    this.chainId = chainId
     this.tickerKey = ticker.toLowerCase()
     this.explorerName = explorerName
     this.explorerLink = explorerLink
@@ -424,6 +427,13 @@ class EthLikeAction {
   send = async (params): Promise<{ transactionHash: string }> => {
     let { externalAddress, externalPrivateKey, to, amount, gasPrice, gasLimit, speed } = params
 
+    // fake tx - turbo-swaps debug
+    // if (false) {
+    //   return new Promise(res => res({
+    //     transactionHash: '0x58facdbf5023a401f39998179995f0af1e54a64455145df6ed507abdecc1b0a4'
+    //   }))
+    // }
+
     const Web3 = this.getCurrentWeb3()
 
     const haveExternalWallet = externalAddress && !!externalPrivateKey
@@ -441,8 +451,16 @@ class EthLikeAction {
       gasLimit = DEFAULT_CURRENCY_PARAMETERS.arbeth.limit.send
     }
 
-    // let sendMethod = Web3.eth.sendTransaction
-    let txData = {
+    let sendMethod = Web3.eth.sendTransaction
+    let txData: string | {
+      chainId: string
+      from: string
+      to: string
+      gasPrice: number
+      gas: number
+      value: string
+    } = {
+      chainId: this.chainId,
       from: ownerAddress,
       to: to.trim(),
       gasPrice,
@@ -463,58 +481,35 @@ class EthLikeAction {
       bufferPrivateKey = Buffer.from(privateKey?.replace('0x', ''), 'hex')
     }
 
-    return new Promise((res, rej) => {
-      Web3.eth.getTransactionCount(txData.from)
-        .then(async (txCount) => {
-          const newNonce = Web3.utils.toHex(txCount)
-          const transaction = new Transaction({
-            ...txData,
-            nonce: newNonce,
-          }, {
-            chain: 'ropsten'
-          })
-
-          transaction.sign(bufferPrivateKey)
-
-          const serializedTx = transaction.serialize().toString('hex')
-
-          Web3.eth.sendSignedTransaction('0x' + serializedTx)
-            .on('transactionHash', (hash) => res({ transactionHash: hash }))
-            // .on('receipt', receipt => {
-            //   console.log('receipt:', receipt)
-            // })
-        })
+    const walletData = actions.core.getWallet({
+      address: ownerAddress,
+      currency: this.ticker,
     })
-    
 
-    // const walletData = actions.core.getWallet({
-    //   address: ownerAddress,
-    //   currency: this.ticker,
-    // })
+    if (haveExternalWallet && !walletData.isMetamask) {
+      txData = await this.signTransaction({
+        txData,
+        privateKey: bufferPrivateKey,
+      })
+      sendMethod = Web3.eth.sendSignedTransaction
+    }
 
-    // if (haveExternalWallet && !walletData.isMetamask) {
-    //   const signedTx = await Web3.eth.accounts.signTransaction(txData, bufferPrivateKey)
+    return new Promise((res, rej) => {
+      const receipt = sendMethod(txData)
+        .on('transactionHash', (hash) => res({ transactionHash: hash }))
+        .on('error', (error) => rej(error))
 
-    //   txData = signedTx.rawTransaction
-    //   sendMethod = Web3.eth.sendSignedTransaction
-    // }
-
-    // return new Promise((res, rej) => {
-    //   const receipt = sendMethod(txData)
-    //     .on('transactionHash', (hash) => res({ transactionHash: hash }))
-    //     .on('error', (error) => rej(error))
-
-    //   if (this.adminFeeObj && !walletData.isMetamask) {
-    //     receipt.then(() => {
-    //       this.sendAdminTransaction({
-    //         amount,
-    //         gasPrice,
-    //         gasLimit,
-    //         privateKey: bufferPrivateKey,
-    //       })
-    //     })
-    //   }
-    // })
+      if (this.adminFeeObj && !walletData.isMetamask) {
+        receipt.then(() => {
+          this.sendAdminTransaction({
+            amount,
+            gasPrice,
+            gasLimit,
+            privateKey: bufferPrivateKey,
+          })
+        })
+      }
+    })
   }
 
   sendAdminTransaction = async (params): Promise<string> => {
@@ -532,18 +527,25 @@ class EthLikeAction {
       feeFromUsersAmount = minAmount.toNumber()
     }
 
-    const adminFeeParams = {
+    const txData = {
+      chainId: this.chainId,
+      from: getState().user[`${this.tickerKey}Data`].address,
       to: adminObj.address.trim(),
       gasPrice,
       gas: gasLimit,
-      value: Web3.utils.toWei(String(feeFromUsersAmount)),
+      value: Web3.utils.toHex(
+        Web3.utils.toWei(String(feeFromUsersAmount),
+        'ether'
+      )),
     }
 
     return new Promise(async (res) => {
-      const signedTxObj = await Web3.eth.accounts.signTransaction(adminFeeParams, privateKey)
+      const signedTx = await this.signTransaction({
+        txData,
+        privateKey,
+      })
 
-      Web3.eth
-        .sendSignedTransaction(signedTxObj.rawTransaction)
+      Web3.eth.sendSignedTransaction(signedTx)
         .on('transactionHash', (hash) => {
           console.group('%c Admin commission is sended', 'color: green;')
           console.log('tx hash', hash)
@@ -553,23 +555,17 @@ class EthLikeAction {
     })
   }
 
-  // TODO: Seems we use this method in the TurboSwaps
-  // TODO: need to replace it with this.send() method
-  sendTransaction = async (params) => {
-    const { to, amount } = params
-    const ownerAddress = getState().user[`${this.tickerKey}Data`].address
+  signTransaction = async (params) => {
+    const { txData, privateKey } = params
+    const Web3 = this.getCurrentWeb3()
 
-    if (false) {
-      // fake tx - turboswaps debug
-      const txHash = '0x58facdbf5023a401f39998179995f0af1e54a64455145df6ed507abdecc1b0a4'
-      return txHash
-    }
+    const txCount = await Web3.eth.getTransactionCount(txData.from)
+    const nonce = Web3.utils.toHex(txCount)
+    const transaction = new Transaction({ ...txData, nonce}, { chain: 'ropsten' })
 
-    return await this.send({
-      from: ownerAddress,
-      to,
-      amount,
-    })
+    transaction.sign(privateKey)
+
+    return '0x' + transaction.serialize().toString('hex')
   }
 
   sweepToMnemonic = (mnemonic, path?) => {
@@ -624,6 +620,7 @@ export default {
     coinName: 'Ethereum',
     ticker: 'ETH',
     privateKeyName: 'eth',
+    chainId: externalConfig.evmNetworks.ETH.chainId,
     explorerName: 'etherscan',
     explorerLink: externalConfig.link.etherscan,
     explorerApiKey: externalConfig.api.etherscan_ApiKey,
@@ -635,6 +632,7 @@ export default {
     coinName: 'Binance Coin',
     ticker: 'BNB',
     privateKeyName: 'eth',
+    chainId: externalConfig.evmNetworks.BNB.chainId,
     explorerName: 'bscscan',
     explorerLink: externalConfig.link.bscscan,
     explorerApiKey: externalConfig.api.bscscan_ApiKey,
@@ -645,7 +643,8 @@ export default {
     coinName: 'MATIC Token',
     ticker: 'MATIC',
     privateKeyName: 'eth',
-    explorerName: 'explorer-mumbai', 
+    chainId: externalConfig.evmNetworks.MATIC.chainId,
+    explorerName: 'explorer-mumbai',
     explorerLink: externalConfig.link.maticscan,
     explorerApiKey: externalConfig.api.polygon_ApiKey,
     adminFeeObj: externalConfig.opts?.fee?.matic,
@@ -655,6 +654,7 @@ export default {
     coinName: 'Arbitrum ETH',
     ticker: 'ARBETH',
     privateKeyName: 'eth',
+    chainId: externalConfig.evmNetworks.ARBETH.chainId,
     explorerName: 'rinkeby-explorer', 
     explorerLink: externalConfig.link.arbitrum,
     explorerApiKey: '',
