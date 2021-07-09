@@ -1,5 +1,6 @@
 import Web3 from 'web3'
 import { BigNumber } from 'bignumber.js'
+import Transaction from 'ethereumjs-tx'
 import { getState } from 'redux/core'
 import actions from 'redux/actions'
 import reducers from 'redux/core/reducers'
@@ -11,7 +12,6 @@ import typeforce from 'swap.app/util/typeforce'
 import externalConfig from 'helpers/externalConfig'
 import metamask from 'helpers/metamask'
 import { feedback, constants, cacheStorageGet, cacheStorageSet, apiLooper } from 'helpers'
-
 
 class EthLikeAction {
   readonly coinName: string
@@ -441,51 +441,80 @@ class EthLikeAction {
       gasLimit = DEFAULT_CURRENCY_PARAMETERS.arbeth.limit.send
     }
 
-    let sendMethod = Web3.eth.sendTransaction
-    let txObject = {
+    // let sendMethod = Web3.eth.sendTransaction
+    let txData = {
       from: ownerAddress,
       to: to.trim(),
       gasPrice,
       gas: gasLimit,
-      value: Web3.utils.toWei(String(amount)),
+      value: Web3.utils.toHex(Web3.utils.toWei(amount, 'ether')),
     }
     let privateKey: string | undefined = undefined
+    let bufferPrivateKey: Buffer | undefined = undefined
 
     if (haveExternalWallet) {
-      txObject.from = externalAddress
+      txData.from = externalAddress
       privateKey = externalPrivateKey
     } else {
       privateKey = this.getPrivateKeyByAddress(ownerAddress)
     }
 
-    const walletData = actions.core.getWallet({
-      address: ownerAddress,
-      currency: this.ticker,
-    })
-
-    if (haveExternalWallet && !walletData.isMetamask) {
-      const signedTx = await Web3.eth.accounts.signTransaction(txObject, privateKey)
-
-      txObject = signedTx.rawTransaction
-      sendMethod = Web3.eth.sendSignedTransaction
+    if (privateKey) {
+      bufferPrivateKey = Buffer.from(privateKey?.replace('0x', ''), 'hex')
     }
 
     return new Promise((res, rej) => {
-      const receipt = sendMethod(txObject)
-        .on('transactionHash', (hash) => res({ transactionHash: hash }))
-        .on('error', (error) => rej(error))
-
-      if (this.adminFeeObj && !walletData.isMetamask) {
-        receipt.then(() => {
-          this.sendAdminTransaction({
-            amount,
-            gasPrice,
-            gasLimit,
-            privateKey,
+      Web3.eth.getTransactionCount(txData.from)
+        .then(async (txCount) => {
+          const newNonce = Web3.utils.toHex(txCount)
+          const transaction = new Transaction({
+            ...txData,
+            nonce: newNonce,
+          }, {
+            chain: 'ropsten'
           })
+
+          transaction.sign(bufferPrivateKey)
+
+          const serializedTx = transaction.serialize().toString('hex')
+
+          Web3.eth.sendSignedTransaction('0x' + serializedTx)
+            .on('transactionHash', (hash) => res({ transactionHash: hash }))
+            // .on('receipt', receipt => {
+            //   console.log('receipt:', receipt)
+            // })
         })
-      }
     })
+    
+
+    // const walletData = actions.core.getWallet({
+    //   address: ownerAddress,
+    //   currency: this.ticker,
+    // })
+
+    // if (haveExternalWallet && !walletData.isMetamask) {
+    //   const signedTx = await Web3.eth.accounts.signTransaction(txData, bufferPrivateKey)
+
+    //   txData = signedTx.rawTransaction
+    //   sendMethod = Web3.eth.sendSignedTransaction
+    // }
+
+    // return new Promise((res, rej) => {
+    //   const receipt = sendMethod(txData)
+    //     .on('transactionHash', (hash) => res({ transactionHash: hash }))
+    //     .on('error', (error) => rej(error))
+
+    //   if (this.adminFeeObj && !walletData.isMetamask) {
+    //     receipt.then(() => {
+    //       this.sendAdminTransaction({
+    //         amount,
+    //         gasPrice,
+    //         gasLimit,
+    //         privateKey: bufferPrivateKey,
+    //       })
+    //     })
+    //   }
+    // })
   }
 
   sendAdminTransaction = async (params): Promise<string> => {
