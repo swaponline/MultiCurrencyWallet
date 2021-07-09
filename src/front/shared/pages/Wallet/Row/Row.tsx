@@ -792,7 +792,9 @@ class Row extends Component<RowProps, RowState> {
                   {fullName}
                   {/* label for tokens */}
                   {standard ? (
-                    <span styleName="tokenStandard">{`${standard.toUpperCase()}`}</span>
+                    <span styleName="tokenStandard">
+                      {` ${standard.toUpperCase()}`}
+                    </span>
                   ) : ''}
                 </a>
               </div>

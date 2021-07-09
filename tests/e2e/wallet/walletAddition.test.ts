@@ -9,7 +9,7 @@ import {
 
 jest.setTimeout(250 * 1000)
 
-describe('Displaying wallets', () => {
+describe('Adding coins', () => {
   let testBrowser: puppeteer.Browser | undefined = undefined
   let testPage: puppeteer.Page | undefined = undefined
   const wallets = [
@@ -17,6 +17,8 @@ describe('Displaying wallets', () => {
     ['bnb', 'Binance Coin'],
     ['matic', 'MATIC Token'],
     ['arbeth', 'Arbitrum ETH'],
+    ['ghost', 'ghost'],
+    ['next', 'NEXT.coin'],
   ]
 
   async function checkWalletDisplay(params) {

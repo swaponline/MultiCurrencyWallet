@@ -1,5 +1,4 @@
 const express = require('express')
-const bodyParser = require('body-parser')
 
 const request = require('superagent')
 const app = express()
@@ -9,8 +8,8 @@ const helmet = require('helmet')
 
 app.use(helmet())
 app.use(cors())
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({
+app.use(express.json())
+app.use(express.urlencoded({
   extended: true,
 }))
 
@@ -97,11 +96,13 @@ const sendRequest = ({ network, rpcMethod, rpcMethodParams = [], onSuccess, onEr
 Planning proxy interface:
 
 /:network
-/:network/addr/:address'
+/:network/:var(addr|address)/:address'
+/:network/:var(addr|address)/:address/utxo'
 /:network/tx/send
 /:network/tx/:txId
 /:network/rawtx/:txId
 /:network/txs/:address
+/:network/sendrawtransaction
 */
 
 app.get('/:network', async (req, res) => {
@@ -122,7 +123,7 @@ app.get('/:network', async (req, res) => {
 })
 
 
-app.get('/:network/addr/:address', async (req, res) => {
+app.get('/:network/:var(addr|address)/:address', async (req, res) => {
   const { network, address } = req.params
 
   sendRequest({
@@ -146,11 +147,12 @@ app.get('/:network/txs/:address', async (req, res) => {
     rpcMethod: 'getaddresstxids',
     rpcMethodParams: [{ 'addresses': [address] }],
     onSuccess: (data) => {
+      const txs = data.reverse().slice(0, 10) // return last 10 transactions
       const ret = {
-        txs: data.reverse(),
+        txs,
       }
 
-      const fetchTxInfos = data.map((txid, i) => {
+      const fetchTxInfos = txs.map((txid, i) => {
         return new Promise(async (resolve) => {
           const txInfo = await sendRequest({
             network,
@@ -174,9 +176,25 @@ app.get('/:network/txs/:address', async (req, res) => {
   })
 })
 
+app.get('/:network/tx/:txid', async (req, res) => {
+  const { network, txid } = req.params
+
+  sendRequest({
+    network,
+    rpcMethod: 'getrawtransaction',
+    rpcMethodParams: [ txid, true ],
+    onSuccess: (data) => {
+      res.status(200).json(data)
+    },
+    onError: (e) => {
+      res.status(503).json({ error: e.message })
+    },
+  })
+})
+
 // todo: unexisting address case
 
-app.get('/:network/addr/:address/utxo', async (req, res) => {
+app.get('/:network/:var(addr|address)/:address/utxo', async (req, res) => {
   const { network, address } = req.params
 
   sendRequest({
@@ -185,6 +203,23 @@ app.get('/:network/addr/:address/utxo', async (req, res) => {
     rpcMethodParams: [{ 'addresses': [address] }],
     onSuccess: (data) => {
       res.status(200).json(data)
+    },
+    onError: (e) => {
+      res.status(503).json({ error: e.message })
+    },
+  })
+})
+
+app.post('/:network/sendrawtransaction', async (req, res) => {
+  const { network } = req.params
+  const { rawtx } = req.body
+
+  sendRequest({
+    network,
+    rpcMethod: 'sendrawtransaction',
+    rpcMethodParams: [ rawtx ],
+    onSuccess: (data) => {
+      res.status(201).json({ raw: data })
     },
     onError: (e) => {
       res.status(503).json({ error: e.message })
