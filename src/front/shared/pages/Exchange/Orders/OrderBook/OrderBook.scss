@@ -33,6 +33,18 @@
   align-items: center;
 }
 
+@media screen and (max-width: 590px) {
+  .orderbookWrapper {
+    font-size: 0.8rem;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .orderbookWrapper {
+    font-size: 0.7rem;
+  }
+}
+
 @media (max-width: 340px) {
   .offersLoadingNotice {
     font-size: 0.9em;

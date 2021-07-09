@@ -1,17 +1,20 @@
 import React, { Component } from 'react'
 import CSSModules from 'react-css-modules'
 import cx from 'classnames'
-import PropTypes from 'prop-types'
-import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import animateFetching from 'components/loaders/ContentLoader/ElementLoading.scss'
 
 import styles from './QR.scss'
 
-/**
- * @todo Amount support?
- */
+type ComponentProps = {
+  address: string
+}
+
+type ComponentState = {
+  renderQr: boolean
+}
+
 @CSSModules({ ...styles, ...animateFetching }, { allowMultiple: true })
-export default class QR extends Component<any, any> {
+export default class QR extends Component<ComponentProps, ComponentState> {
 
   constructor(props) {
     super(props)
@@ -19,10 +22,6 @@ export default class QR extends Component<any, any> {
     this.state = {
       renderQr: false,
     }
-  }
-
-  static propTypes = {
-    address: PropTypes.string.isRequired,
   }
 
   componentDidMount() {

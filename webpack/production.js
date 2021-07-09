@@ -1,6 +1,5 @@
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 import WebpackRequireFrom from 'webpack-require-from-naggertooth'
-import TerserPlugin from 'terser-webpack-plugin-legacy'
 import config from 'app-config'
 import webpack from 'webpack'
 
@@ -34,12 +33,8 @@ export default (webpackConfig) => {
   })
 
   webpackConfig.optimization = {
-    /*minimizer: [
-      new TerserPlugin({
-        parallel: true, // default -> os.cpus().length - 1
-        sourceMap: true,
-      }),
-    ],*/
+    minimize: true,
+    removeEmptyChunks: true,
     splitChunks: {
       chunks: 'all',
       cacheGroups: {
@@ -53,21 +48,16 @@ export default (webpackConfig) => {
       }
     }
   }
-  /* 
-  * disable dafault source map
-  * enable webpack plugin for maps (in plugins array)
-  */
-  webpackConfig.devtool = 'source-map'
+
+  webpackConfig.devtool = false
 
   webpackConfig.plugins.push(
-    /*	  
     new webpack.SourceMapDevToolPlugin({
       publicPath: config.publicPath,
       filename: '[name].[hash:6].js.map',
       fileContext: 'public',
-      exclude: ['vendor.js'],
+      exclude: /(vendor.*)|(.*\.css)/,
     }),
-    */
     new WebpackRequireFrom({
       variableName: 'publicUrl',
       suppressErrors: true

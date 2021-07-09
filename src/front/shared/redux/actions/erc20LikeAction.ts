@@ -83,6 +83,31 @@ class Erc20LikeAction {
     this.login(privateKey, contractAddr, symbol, decimals, symbol)
   }
 
+  getInfoAboutToken = async (contractAddress) => {
+    const isContract = await actions[this.currencyKey].isContract(contractAddress)
+
+    try {      
+      if (isContract) {
+        const Web3 = await actions[this.currencyKey].getCurrentWeb3()
+        const contract = new Web3.eth.Contract(TokenAbi, contractAddress)
+
+        const name = await contract.methods.name().call()
+        const symbol = await contract.methods.symbol().call()
+        const decimals = await contract.methods.decimals().call()
+  
+        return {
+          name,
+          symbol,
+          decimals: Number(decimals),
+        }
+      } 
+    } catch (error) {
+      this.reportError(error)
+    }
+
+    return false
+  }
+
   getCustomTokensConfig = () => {
     const customTokens = JSON.parse(localStorage.getItem(constants.localStorage.customToken) || '{}')
     const fillInTokensConfig = (configName) => {

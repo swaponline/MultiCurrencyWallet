@@ -129,12 +129,14 @@ class Row extends Component<RowProps, RowState> {
     }
   }
 
-  getDecimals = (amount, currency) => {
-    const decimalPlaces = constants.tokenDecimals[currency.toLowerCase()] || 8
+  formatWithDecimals = (amount, currency): string => {
+    const decimals = constants.tokenDecimals[currency.toLowerCase()]
+    const wrongDecimals = !Number.isInteger(decimals) || decimals < 0 || decimals > 8
+    const finalDecimals = wrongDecimals ? 8 : decimals
+    const result = new BigNumber(amount).dp(finalDecimals, BigNumber.ROUND_HALF_CEIL)
 
-    return decimalPlaces > 8
-      ? String(new BigNumber(amount).dp(8, BigNumber.ROUND_CEIL))
-      : String(new BigNumber(amount).dp(decimalPlaces, BigNumber.ROUND_CEIL))
+    // save decimals if it's float number
+    return !result.mod(1) ? result.toFixed(finalDecimals) : result.toFixed()
   }
 
   handleDeclineOrdersModalOpen = (indexOfDecline) => {
@@ -258,9 +260,9 @@ class Row extends Component<RowProps, RowState> {
               //@ts-ignore: strictNullChecks
               : intl.formatMessage(messages.buy)
             }`,
-            amount: `${this.getDecimals(amount, main)}`,
+            amount: `${this.formatWithDecimals(amount, main)}`,
             main: `${this.renderCoinName(main)}`,
-            total: `${this.getDecimals(total, base)}`,
+            total: `${this.formatWithDecimals(total, base)}`,
             base: `${this.renderCoinName(base)}`,
             price: `${exchangeRates}`,
           }}
@@ -270,8 +272,11 @@ class Row extends Component<RowProps, RowState> {
   }
 
   renderContent = () => {
-    let windowWidthIn = window.innerWidth
-    this.setState({ windowWidth: windowWidthIn })
+    const windowWidth = window.innerWidth
+
+    this.setState(() => ({
+      windowWidth,
+    }))
   }
 
   render() {
@@ -318,11 +323,11 @@ class Row extends Component<RowProps, RowState> {
       isSilentError: true,
     })
 
-    let sellCurrencyOut,
-      sellAmountOut,
-      getCurrencyOut,
-      getAmountOut,
-      priceOut
+    let sellCurrencyOut
+    let sellAmountOut
+    let getCurrencyOut
+    let getAmountOut
+    let priceOut
 
     if (type === PAIR_TYPES.BID) {
       sellCurrencyOut = base
@@ -369,7 +374,7 @@ class Row extends Component<RowProps, RowState> {
           <div styleName='withIcon'>
             <Avatar
               value={ownerPeer}
-              size={30}
+              size={25}
               ownerEthAddress={ownerEthAddress}
             />
             {isTurbo &&
@@ -379,37 +384,37 @@ class Row extends Component<RowProps, RowState> {
         </td>
         <td styleName='rowCell'>
           <span styleName='rowAmount'>
-            <span className={`${sellCurrencyOut.toLowerCase()}SellAmountOfOrder`}>{`${this.getDecimals(sellAmountOut, sellCurrencyOut)}`}</span>
+            <span className={`${sellCurrencyOut.toLowerCase()}SellAmountOfOrder`}>{`${this.formatWithDecimals(sellAmountOut, sellCurrencyOut)}`}</span>
             {' '}
             <span>{`${this.renderCoinName(sellCurrencyOut)}`}</span>
           </span>
         </td>
         <td styleName='rowCell'>
           <span styleName='rowAmount'>
-            <span className={`${getCurrencyOut.toLowerCase()}GetAmountOfOrder`}>{`${this.getDecimals(getAmountOut, getCurrencyOut)}`}</span>
+            <span className={`${getCurrencyOut.toLowerCase()}GetAmountOfOrder`}>{`${this.formatWithDecimals(getAmountOut, getCurrencyOut)}`}</span>
             {' '}
             <span>{`${this.renderCoinName(getCurrencyOut)}`}</span>
           </span>
         </td>
         <td styleName='rowCell'>
           <span styleName='rowAmount'>
-            {`${this.getDecimals(priceOut, getCurrencyOut)} ${this.renderCoinName(getCurrencyOut)}/${this.renderCoinName(sellCurrencyOut)}`}
+            {`${this.formatWithDecimals(priceOut, getCurrencyOut)} ${this.renderCoinName(getCurrencyOut)}/${this.renderCoinName(sellCurrencyOut)}`}
           </span>
         </td>
         <td styleName='rowCell'>
           {peer === ownerPeer
-            ? <RemoveButton onClick={() => removeOrder(id)} brand={true} />
+            ? <RemoveButton onClick={() => removeOrder(id)} brand />
             :
             <Fragment>
               {
                 isRequested ? (
                   <Fragment>
                     <div style={{ color: 'red' }}>
-                      <FormattedMessage id="Row148" defaultMessage="REQUESTING" />
+                      <FormattedMessage id="RowM136" defaultMessage="REQUESTING" />
                     </div>
                     {' '}
                     <Link to={swapUri}>
-                      <FormattedMessage id="Row151" defaultMessage="Go to the swap" />
+                      <FormattedMessage id="RowM139" defaultMessage="Swap" />
                     </Link>
                   </Fragment>
                 ) : (
@@ -500,7 +505,7 @@ class Row extends Component<RowProps, RowState> {
                           </div>
                           {' '}
                           <Link to={swapUri}>
-                            <FormattedMessage id="RowM139" defaultMessage="Go to the swap" />
+                            <FormattedMessage id="RowM139" defaultMessage="Swap" />
                           </Link>
                         </Fragment>
                       ) : (
