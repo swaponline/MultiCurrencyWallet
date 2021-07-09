@@ -461,7 +461,7 @@ class EthLikeAction {
       value: string
     } = {
       chainId: this.chainId,
-      from: ownerAddress,
+      from: Web3.utils.toChecksumAddress(ownerAddress),
       to: to.trim(),
       gasPrice,
       gas: gasLimit,
@@ -531,7 +531,7 @@ class EthLikeAction {
 
     const txData = {
       chainId: this.chainId,
-      from,
+      from: Web3.utils.toChecksumAddress(from),
       to: adminObj.address.trim(),
       gasPrice,
       gas: gasLimit,
