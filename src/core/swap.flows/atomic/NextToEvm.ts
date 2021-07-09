@@ -1,44 +1,45 @@
 import debug from 'debug'
 import { util } from 'swap.app'
 import { AtomicAB2UTXO } from 'swap.swap'
-import { EthLikeSwap, BtcSwap } from 'swap.swaps'
+import { EthLikeSwap, NextSwap } from 'swap.swaps'
 
 
-interface IBtcToEthLike {
+interface INextToEvm {
   flowName: string
   getMyAddress: Function
   getParticipantAddress: Function
 }
-class BtcToEthLike extends AtomicAB2UTXO {
+class NextToEvm extends AtomicAB2UTXO {
 
   _flowName: string
-  ethLikeSwap: EthLikeSwap
-  ethLikeCoin: string
-  btcSwap: BtcSwap
+  evmCoin: string
+
+  evmSwap: EthLikeSwap
+  utxoSwap: NextSwap
 
   state: any
 
   getMyAddress: Function
   getParticipantAddress: Function
 
-  constructor(swap, options: IBtcToEthLike) {
+  constructor(swap, options: INextToEvm) {
     super(swap)
 
     if (!options.flowName) {
-      throw new Error('BtcToEthLike - option flowName requery')
+      throw new Error('NextToEvm - option flowName requery')
     }
     if (!options.getMyAddress || typeof options.getMyAddress !== 'function') {
-      throw new Error(`BtcToEthLike ${options.flowName} - option getMyAddress - function requery`)
+      throw new Error(`NextToEvm ${options.flowName} - option getMyAddress - function requery`)
     }
     if (!options.getParticipantAddress || typeof options.getParticipantAddress !== 'function') {
-      throw new Error(`BtcToEthLike ${options.flowName} - option getParticipantAddress - function requery`)
+      throw new Error(`NextToEvm ${options.flowName} - option getParticipantAddress - function requery`)
     }
 
     this.getMyAddress = options.getMyAddress
     this.getParticipantAddress = options.getParticipantAddress
 
-    this.utxoCoin = `btc`
-    this.ethLikeCoin = swap.ethLikeCoin
+    this.utxoCoin = `next`
+    this.evmCoin = swap.ethLikeCoin
     this._flowName = options.flowName
 
     this.isUTXOSide = true
@@ -46,19 +47,17 @@ class BtcToEthLike extends AtomicAB2UTXO {
     this.setupTakerMakerEvents()
     this.stepNumbers = this.getStepNumbers()
 
-    this.ethLikeSwap = swap.ownerSwap
-    this.btcSwap = swap.participantSwap
+    this.evmSwap = swap.ownerSwap
+    this.utxoSwap = swap.participantSwap
 
-    this.abBlockchain = this.ethLikeSwap
-    this.utxoBlockchain = this.btcSwap
-
-    if (!this.ethLikeSwap) {
-      throw new Error(`BTC2${this.ethLikeCoin}: "ethLikeSwap" of type object required`)
+    if (!this.evmSwap) {
+      throw new Error(`${this._flowName}: "evmSwap" of type object required`)
     }
-    if (!this.btcSwap) {
-      throw new Error(`BTC2${this.ethLikeCoin}: "btcSwap" of type object required`)
+    if (!this.utxoSwap) {
+      throw new Error(`${this._flowName}: "utxoSwap" of type object required`)
     }
 
+    // ToDo: update state to UTXO and EVM names
     this.state = {
       step: 0,
 
@@ -130,7 +129,7 @@ class BtcToEthLike extends AtomicAB2UTXO {
           this.signUTXOSide()
         },
 
-        // 2. Create secret, secret hash and BTC script
+        // 2. Create secret, secret hash and UTXO script
         () => {
           this.submitSecret()
         },
@@ -140,24 +139,24 @@ class BtcToEthLike extends AtomicAB2UTXO {
           this.syncBalance()
         },
 
-        // 4. Create BTC Script, fund, notify participant
+        // 4. Fund UTXO Script and notify participant
         async () => {
-          this.btcSwap.fundSwapScript({
+          this.utxoSwap.fundSwapScript({
             flow,
           })
         },
 
-        // 5. Wait participant creates ETH Contract
+        // 5. Wait participant creates EVM Contract
         async () => {
-          await flow.ethLikeSwap.waitABContract({
+          await flow.evmSwap.waitABContract({
             flow,
-            utxoCoin: `btc`,
+            utxoCoin: this.utxoCoin,
           })
         },
 
         // 6. Withdraw
         async () => {
-          await flow.ethLikeSwap.withdrawFromABContract({ flow })
+          await flow.evmSwap.withdrawFromABContract({ flow })
         },
 
         // 7. Finish
@@ -192,10 +191,10 @@ class BtcToEthLike extends AtomicAB2UTXO {
           this.syncBalance()
         },
 
-        // 3 - `wait-lock-eth` - wait taker create AB - обмен хешем
+        // 3 - `wait-lock-eth` - wait taker create EVM - обмен хешем
         async () => {
           await util.helpers.repeatAsyncUntilResult(async () => {
-            const isContractFunded = await this.ethLikeSwap.isContractFunded(this)
+            const isContractFunded = await this.evmSwap.isContractFunded(this)
             if (isContractFunded) {
               this.finishStep({
                 isEthContractFunded: true,
@@ -215,16 +214,16 @@ class BtcToEthLike extends AtomicAB2UTXO {
               utxoScriptValues
             } = flow.state
             if (secretHash && utxoScriptValues) {
-              const isSwapCreated = await flow.ethLikeSwap.isSwapCreated({
+              const isSwapCreated = await flow.evmSwap.isSwapCreated({
                 ownerAddress: flow.getParticipantAddress(flow.swap),
                 participantAddress: flow.getMyAddress(),
                 secretHash,
               })
               if (isSwapCreated) {
-                const destAddressIsOk = await this.ethLikeSwap.checkTargetAddress({ flow })
+                const destAddressIsOk = await this.evmSwap.checkTargetAddress({ flow })
 
                 if (destAddressIsOk) {
-                  await this.btcSwap.fundSwapScript({
+                  await this.utxoSwap.fundSwapScript({
                     flow,
                   })
                   return true
@@ -248,16 +247,16 @@ class BtcToEthLike extends AtomicAB2UTXO {
             const {
               utxoScriptValues,
             } = this.state
-            const { scriptAddress } = this.utxoBlockchain.createScript(utxoScriptValues)
+            const { scriptAddress } = this.utxoSwap.createScript(utxoScriptValues)
 
-            const utxoWithdrawData = await this.btcSwap.checkWithdraw(scriptAddress)
+            const utxoWithdrawData = await this.utxoSwap.checkWithdraw(scriptAddress)
 
             if (utxoWithdrawData) {
               const {
                 txid: utxoSwapWithdrawTransactionHash,
               } = utxoWithdrawData
 
-              const secret = await this.btcSwap.getSecretFromTxhash(utxoSwapWithdrawTransactionHash)
+              const secret = await this.utxoSwap.getSecretFromTxhash(utxoSwapWithdrawTransactionHash)
               if (secret) {
                 this.finishStep({
                   secret,
@@ -271,9 +270,9 @@ class BtcToEthLike extends AtomicAB2UTXO {
           })
         },
 
-        // 6 - `withdraw-eth` - withdraw from AB
+        // 6 - `withdraw-eth` - withdraw from EVM
         async () => {
-          await flow.ethLikeSwap.withdrawFromABContract({ flow })
+          await flow.evmSwap.withdrawFromABContract({ flow })
         },
 
         // 7 - `finish`
@@ -292,7 +291,7 @@ class BtcToEthLike extends AtomicAB2UTXO {
     }
   }
 
-  getBTCScriptAddress() {
+  getUTXOScriptAddress() {
     const { scriptAddress } = this.state
     return scriptAddress;
   }
@@ -302,7 +301,7 @@ class BtcToEthLike extends AtomicAB2UTXO {
   }
 
   getRefundTxHex = () => {
-    this.btcSwap.getRefundHexTransaction({
+    this.utxoSwap.getRefundHexTransaction({
       scriptValues: this.state.utxoScriptValues,
       secret: this.state.secret,
     })
@@ -317,7 +316,7 @@ class BtcToEthLike extends AtomicAB2UTXO {
     const flow = this
     const { utxoScriptValues, secret } = flow.state
 
-    return flow.btcSwap.refund({
+    return flow.utxoSwap.refund({
       scriptValues: utxoScriptValues,
       secret: secret,
     })
@@ -347,7 +346,7 @@ class BtcToEthLike extends AtomicAB2UTXO {
           }, true)
           return true
         } else {
-          console.warn('Btc refund:', error)
+          console.warn(`${flow.utxoCoin} refund: ${error}`)
 
           return false
         }
@@ -357,10 +356,10 @@ class BtcToEthLike extends AtomicAB2UTXO {
   async isRefundSuccess() {
     const { refundTransactionHash, isRefunded } = this.state
     if (refundTransactionHash && isRefunded) {
-      if (await this.btcSwap.checkTX(refundTransactionHash)) {
+      if (await this.utxoSwap.checkTX(refundTransactionHash)) {
         return true
       } else {
-        console.warn('BTC2ETH - unknown refund transaction')
+        console.warn(`${this._flowName} - unknown refund transaction`)
         this.setState( {
           refundTransactionHash: null,
           isRefunded: false,
@@ -395,7 +394,7 @@ class BtcToEthLike extends AtomicAB2UTXO {
       secret: _secret,
     }
 
-    await this.ethLikeSwap.withdraw(data, (hash) => {
+    await this.evmSwap.withdraw(data, (hash) => {
       debug('swap.core:flow')(`TX hash=${hash}`)
       this.setState({
         ethLikeSwapWithdrawTransactionHash: hash,
@@ -410,4 +409,4 @@ class BtcToEthLike extends AtomicAB2UTXO {
   }
 }
 
-export default BtcToEthLike
+export default NextToEvm
