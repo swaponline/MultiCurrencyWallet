@@ -37,7 +37,7 @@
   opacity: 0.9;
 
   a {
-    color: $primary-hover;
+    color: $color-brand-hover;
   }
 }
 
@@ -50,10 +50,10 @@
   }
 
   a {
-    color: $primary-hover;
+    color: $color-brand;
 
     &:hover {
-      color: $alternate;
+      color: $color-brand-hover;
     }
   }
 }
