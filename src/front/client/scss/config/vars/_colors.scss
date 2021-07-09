@@ -26,17 +26,23 @@ $d-read-only: rgb(44, 44, 44);
 // -----------------------------------------
 // Unchanging colors
 
-$primary: var(--primary);
-$primary-hover: var(--primary-hover);
-$alternate: var(--alternate);
-$alternate-hover: var(--alternate-hover);
-
 $color-border: #7774;
 $inactive-border-color: rgba(142, 154, 163, 0.16);
 $pale-color: #8882;
 $indicating-color: #808080;
 $notice-color: #8e9aa3;
-$color-brand: #6144e5;
+
+// ! delete
+$primary-hover: var(--primary-hover);
+$alternate: var(--alternate);
+$alternate-hover: var(--alternate-hover);
+// * save
+$color-brand: var(--primary);
+$color-brand-hover: var(--primary-hover);
+$color-brand-background: var(--primary-background);
+$color-alternate: var(--alternate);
+$color-alternate-hover: var(--alternate-hover);
+
 $color-f-brightest: #fff;
 $color-f-error: #e32950;
 $color-success: #0CCF14;

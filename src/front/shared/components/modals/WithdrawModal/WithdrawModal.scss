@@ -204,9 +204,10 @@
     margin-left: 10px;
     a {
       font-size: 13px;
-      color: $primary;
+      color: $color-brand;
+
       &:hover {
-        color: $primary;
+        color: $color-brand;
       }
     }
     .address {
@@ -390,7 +391,7 @@
     &:focus-within {
       margin-bottom: 40px;
       border-radius: 2px;
-      border: 2px solid $primary;
+      border: 2px solid $color-brand;
     }
   }
 }

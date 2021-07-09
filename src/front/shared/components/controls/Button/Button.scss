@@ -11,7 +11,7 @@
   border-radius: 2px;
   @include ff-bold;
   @include no-user-select;
-  transition: background-color 0.23s ease, color 0.23s ease;
+  transition: background 0.23s ease, color 0.23s ease;
 
   .pending {
     position: relative;
@@ -62,12 +62,12 @@
   color: $d-color;
 
   &:hover {
-    background-color: lighten($color-brand, 5%);
+    background-color: $color-brand-hover;
   }
 }
 
 .blue {
-  background-color: $primary;
+  background-color: $color-brand;
   color: $d-color;
   font-size: 15px;
 }
@@ -129,7 +129,7 @@
 .transparent.blue {
   background: rgba(97, 68, 229, 0.1);
   font-weight: bold;
-  color: $primary;
+  color: $color-brand;
 }
 
 .disabled {

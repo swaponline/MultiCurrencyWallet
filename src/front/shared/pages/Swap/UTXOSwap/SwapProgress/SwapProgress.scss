@@ -79,25 +79,6 @@
   }
 }
 
-.link {
-  color: #fff;
-  background: #e91db4;
-  height: 40px;
-  line-height: 40px;
-  padding: 0 20px;
-  display: block;
-  width: max-content;
-  text-transform: uppercase;
-  border-radius: 20px;
-  margin: auto;
-  margin-top: 20px;
-  font-size: 16px;
-  &:hover {
-    background-color: #ff1fc5;
-    color: #fff;
-  }
-}
-
 .stepContainer {
   width: 600px;
   text-align: center;
@@ -200,9 +181,6 @@
     div {
       font-size: 13px;
     }
-  }
-  .link {
-    font-size: 13px;
   }
   .stepContainer {
     width: 100%;

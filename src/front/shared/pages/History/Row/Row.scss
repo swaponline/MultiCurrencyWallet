@@ -67,11 +67,11 @@
 .unconfirmed {
   text-align: center;
   height: auto;
-  background: rgba(97, 68, 229, 0.1);
+  background: $color-brand-background;
   font-weight: 800;
   font-size: 8px;
   line-height: 10px;
-  color: $primary;
+  color: $color-brand;
   width: auto;
   text-transform: uppercase;
   padding: 3px 10px;
@@ -200,7 +200,7 @@
   @include ff-bold;
 
   button:first-child {
-    color: $primary;
+    color: $color-brand;
   }
 
   button:last-child {
@@ -230,7 +230,7 @@
     font-weight: 800;
     font-size: 14px;
     line-height: 15px;
-    color: $primary;
+    color: $color-brand;
   }
 }
 
