@@ -20,6 +20,8 @@ export default class NextToEvmToken extends AtomicAB2UTXO {
   utxoSwap: NextSwap
   state: any
 
+  ethTokenSwap: EthLikeTokenSwap
+
   blockchainName: string
   tokenName: string
   getMyAddress: Function
@@ -57,6 +59,8 @@ export default class NextToEvmToken extends AtomicAB2UTXO {
     this.evmTokenSwap = swap.ownerSwap
     this.utxoSwap = swap.participantSwap
 
+    // need for another classes
+    this.ethTokenSwap = this.evmTokenSwap
     this.abBlockchain = this.evmTokenSwap
     this.utxoBlockchain = this.utxoSwap
 

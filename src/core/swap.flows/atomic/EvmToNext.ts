@@ -17,6 +17,8 @@ class EvmToNext extends AtomicAB2UTXO {
   evmSwap: EthLikeSwap
   utxoSwap: NextSwap
 
+  ethLikeSwap: EthLikeSwap
+
   state: any
 
   getMyAddress: Function
@@ -49,6 +51,8 @@ class EvmToNext extends AtomicAB2UTXO {
     this.evmSwap = swap.participantSwap
     this.utxoSwap = swap.ownerSwap
 
+    // need for another classes
+    this.ethLikeSwap = this.evmSwap
     this.abBlockchain = this.evmSwap
     this.utxoBlockchain = this.utxoSwap
 
