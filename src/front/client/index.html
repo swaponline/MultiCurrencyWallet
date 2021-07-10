@@ -35,9 +35,9 @@
 
     <style>
       :root {
-        --primary:rgb(97, 68, 229);
-        --primary-hover: #7371ff;
-        --primary-background: rgba(97, 68, 229, 0.1);
+        --color-brand:#6144e5;
+        --color-brand-hover: #7371ff;
+        --color-brand-background: rgba(97, 68, 229, 0.1);
         --alternate: #e91db4;
         --alternate-hover:  #ff1fc5;
       }
@@ -157,7 +157,7 @@
         bottom: 0;
         overflow: auto;
         background-color: #fff;
-        color: var(--primary);
+        color: var(--color-brand);
       }
 
       .starter-modal__container-content {
@@ -224,26 +224,26 @@
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        border: 0.1em solid var(--primary);
+        border: 0.1em solid var(--color-brand);
         border-radius: 0.2em;
         white-space: nowrap;
         letter-spacing: inherit;
         font-family: inherit;
         font-weight: 600;
         font-size: 15px;
-        background-color: var(--primary);
+        background-color: var(--color-brand);
         color: #fff;
         transition: 0.15s;
       }
 
       .starter-modal__btn_skip {
         background-color: transparent;
-        color: var(--primary);
+        color: var(--color-brand);
       }
 
       .starter-modal__btn:hover {
-        background-color: var(--primary-hover);
-        border-color: var(--primary-hover);
+        background-color: var(--color-brand-hover);
+        border-color: var(--color-brand-hover);
       }
 
       .starter-modal__btn_skip:hover {
@@ -267,7 +267,7 @@
         font-size: 15px;
         font-weight: bold;
         text-decoration: underline;
-        color: var(--primary);
+        color: var(--color-brand);
       }
 
       @media (max-width: 768px) {
@@ -809,8 +809,15 @@
       window.DEFAULT_FIAT = 'USD';
       window.DefaultCountryCode = '+1';
       window.widgetName = 'own widget name';
-
       window.buyViaCreditCardLink = 'https://buy.itez.com/swaponline';
+
+      if (window.brandColor) {
+        document.documentElement.style.setProperty("--color-brand", window.brandColor);
+      }
+
+      if (window.brandColorHover) {
+        document.documentElement.style.setProperty("--color-brand-hover", window.brandColorHover);
+      }
 
       /* /Loader before any JS */
 

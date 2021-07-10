@@ -26,7 +26,7 @@
   background: #242425;
 }
 .react-tags.is-focused {
-  border: 2px solid var(--primary);
+  border: 2px solid var(--color-brand);
 }
 
 .react-tags__selected {
@@ -145,11 +145,11 @@
 
 .react-tags__suggestions li:hover {
   cursor: pointer;
-  background: var(--primary);
+  background: var(--color-brand);
 }
 
 .react-tags__suggestions li.is-active {
-  background: var(--primary);
+  background: var(--color-brand);
 }
 
 .react-tags__suggestions li.is-disabled {

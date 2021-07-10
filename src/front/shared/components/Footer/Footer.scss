@@ -50,10 +50,10 @@
   }
 
   a {
-    color: $color-brand;
+    color: $color-brand-hover;
 
     &:hover {
-      color: $color-brand-hover;
+      color: $color-brand;
     }
   }
 }
