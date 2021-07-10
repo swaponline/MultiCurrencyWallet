@@ -49,6 +49,9 @@ class EvmToNext extends AtomicAB2UTXO {
     this.evmSwap = swap.participantSwap
     this.utxoSwap = swap.ownerSwap
 
+    this.abBlockchain = this.evmSwap
+    this.utxoBlockchain = this.utxoSwap
+
     if (!this.evmSwap) {
       throw new Error(`${this._flowName}: "evmSwap" of type object required`)
     }

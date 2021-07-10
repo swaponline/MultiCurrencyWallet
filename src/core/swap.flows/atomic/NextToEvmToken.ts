@@ -57,6 +57,9 @@ export default class NextToEvmToken extends AtomicAB2UTXO {
     this.evmTokenSwap = swap.ownerSwap
     this.utxoSwap = swap.participantSwap
 
+    this.abBlockchain = this.evmTokenSwap
+    this.utxoBlockchain = this.utxoSwap
+
     if (!this.evmTokenSwap) {
       throw new Error(`${this._flowName}: "evmTokenSwap" of type object required`)
     }

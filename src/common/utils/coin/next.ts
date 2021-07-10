@@ -120,7 +120,7 @@ const fetchTxInfo = (options) => {
     NETWORK,
   }).then((txInfo_ : any) => {
     const { vin, vout, ...rest } = txInfo_
-    const senderAddress = vin ? vin[0].addr : null
+    const senderAddress = vin ? vin[0].address : null
     const amount = vout ? new BigNumber(vout[0].value).toNumber() : null
 
     let afterBalance = vout && vout[1] ? new BigNumber(vout[1].value).toNumber() : null
@@ -162,6 +162,10 @@ const fetchTxInfo = (options) => {
         amount: new BigNumber(out.value).toNumber(),
         address: out.scriptPubKey.addresses || null,
       })),
+      inputs: vin.map((input) => ({
+        amount: new BigNumber(input.value).toNumber(),
+        address: input.scriptSig.hex || null,
+      })),
       ...rest,
     }
 
@@ -199,6 +203,35 @@ const checkWithdraw = (options) => {
         txid,
         amount,
       }
+    }
+    return false
+  })
+}
+
+const fetchTxInputScript = (options) => {
+  const {
+    hash,
+    cacheResponse,
+    API_ENDPOINT,
+    NETWORK,
+  } = options
+
+  return fetchTxInfo({
+    hash,
+    cacheResponse,
+    API_ENDPOINT,
+    NETWORK,
+  }).then((inInfo: any) => {
+    if (inInfo
+      && inInfo.inputs
+      && inInfo.inputs.length === 1
+    ) {
+      return next.script.toASM(
+        //@ts-ignore: strictNullChecks
+        bitcoin.script.decompile(
+          Buffer.from(inInfo.inputs[0].script, 'hex')
+        )
+      )
     }
     return false
   })
@@ -309,6 +342,7 @@ export default {
   fetchTx,
   fetchTxInfo,
   checkWithdraw,
+  fetchTxInputScript,
 
   estimateFeeValue,
   getCore,
