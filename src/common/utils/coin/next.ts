@@ -164,7 +164,7 @@ const fetchTxInfo = (options) => {
       })),
       inputs: vin.map((input) => ({
         amount: new BigNumber(input.value).toNumber(),
-        address: input.scriptSig.hex || null,
+        script: input.scriptSig.hex || null,
       })),
       ...rest,
     }
@@ -228,7 +228,7 @@ const fetchTxInputScript = (options) => {
     ) {
       return next.script.toASM(
         //@ts-ignore: strictNullChecks
-        bitcoin.script.decompile(
+        next.script.decompile(
           Buffer.from(inInfo.inputs[0].script, 'hex')
         )
       )

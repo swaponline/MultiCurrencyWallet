@@ -254,6 +254,10 @@ const createSwapApp = async () => {
             ...options,
             NETWORK,
           }),
+          fetchTxInputScript: (options) => nextUtils.fetchTxInputScript({
+            ...options,
+            NETWORK,
+          }),
         }),
         // Ether
         ...(Object.keys(config.erc20)

@@ -249,27 +249,21 @@ class NextToEvm extends AtomicAB2UTXO {
 
         // 5 - `wait-withdraw-utxo` - wait withdraw UTXO - fetch secret from TX - getSecretFromTxhash
         async () => {
-          console.log('im here')
           await util.helpers.repeatAsyncUntilResult(async () => {
             // check withdraw
             const {
               utxoScriptValues,
             } = this.state
             const { scriptAddress } = this.utxoSwap.createScript(utxoScriptValues)
-            console.log('scriptAddress', scriptAddress)
 
             const utxoWithdrawData = await this.utxoSwap.checkWithdraw(scriptAddress)
-            console.log('utxoWithdrawData', utxoWithdrawData)
 
             if (utxoWithdrawData) {
               const {
                 txid: utxoSwapWithdrawTransactionHash,
               } = utxoWithdrawData
 
-              console.log('utxoSwapWithdrawTransactionHash', utxoSwapWithdrawTransactionHash)
-
               const secret = await this.utxoSwap.getSecretFromTxhash(utxoSwapWithdrawTransactionHash)
-              console.log('secret', secret)
               if (secret) {
                 this.finishStep({
                   secret,
@@ -297,9 +291,7 @@ class NextToEvm extends AtomicAB2UTXO {
         },
 
         // 8 - `end`
-        async () => {
-          
-        },
+        async () => {},
       ]
     }
   }
