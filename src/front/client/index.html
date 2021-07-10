@@ -31,6 +31,7 @@
     <meta property="og:url" content="https://swaponline.io" />
     <!-- ERC20 Tokens hot plug for widget-build (Dont remove this) -->
     <script src="erc20tokens.js"></script>
+    <link rel="stylesheet" href="customStyles.css" />
     <%= htmlWebpackPlugin.options.firebugScript %>
 
     <style>
@@ -903,9 +904,9 @@
         });
       }
 
-      window.logoUrl = '#';
-      window.darkLogoUrl = '';
-      window.loaderLogoUrl = '';
+      window.logoUrl = window.logoUrl || '#';
+      window.darkLogoUrl = window.darkLogoUrl || '';
+      window.loaderLogoUrl = window.loaderLogoUrl || '';
 
       if (window.localStorage.getItem('isDark')) {
         window.logoUrl = window.darkLogoUrl || window.logoUrl;

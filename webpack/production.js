@@ -64,7 +64,7 @@ export default (webpackConfig) => {
     new MiniCssExtractPlugin({
       filename: '[name].[hash:6].css',
     }),
-    externalConfig(),
+    ...externalConfig(),
   )
 
   return webpackConfig
