@@ -3,8 +3,8 @@
 }
 
 .faqWrapper {
-  background: $l-background-elements;
-  box-shadow: $l-box-shadow;
+  background: var(--color-background-elements);
+  box-shadow: var(--box-shadow);
   border-radius: 4px;
   height: fit-content;
   padding: 25px;
@@ -14,8 +14,8 @@
 
 .wallet.dark {
   .faqWrapper {
-    box-shadow: $d-box-shadow;
-    background: $d-background-elements;
+    box-shadow: var(--box-shadow);
+    background: var(--color-background-elements);
 
     @media screen and (max-width: 480px) {
       box-shadow: none;

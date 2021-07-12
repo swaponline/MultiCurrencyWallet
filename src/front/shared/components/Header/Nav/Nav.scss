@@ -28,15 +28,15 @@ $exchangeBorder: #512ed0;
   font-size: 15px;
   @include ff-bold;
   line-height: 140%;
-  color: $notice-color;
+  color: var(--color-notice);
   white-space: nowrap;
 
   &:hover {
-    color: $l-color;
+    color: var(--color);
   }
 
   &.active {
-    color: $l-color;
+    color: var(--color);
 
     &_exchange {
       border-color: $exchangeBorder;
@@ -46,10 +46,10 @@ $exchangeBorder: #512ed0;
   &.dark {
     &:hover,
     &.active {
-      color: $d-color;
+      color: var(--color);
 
       &:hover {
-        color: $d-color;
+        color: var(--color);
       }
     }
   }

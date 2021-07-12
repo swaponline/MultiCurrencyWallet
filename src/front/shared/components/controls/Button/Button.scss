@@ -59,7 +59,7 @@
 
 .brand {
   background-color: $color-brand;
-  color: $d-color;
+  color: var(--color);
 
   &:hover {
     background-color: $color-brand-hover;
@@ -68,7 +68,7 @@
 
 .blue {
   background-color: $color-brand;
-  color: $d-color;
+  color: var(--color);
   font-size: 15px;
 }
 
@@ -118,8 +118,8 @@
 }
 
 .darkTheme-gray {
-  background-color: $color-border;
-  color: $d-color;
+  background-color: var(--color-border);
+  color: var(--color);
 
   &:hover {
     color: black

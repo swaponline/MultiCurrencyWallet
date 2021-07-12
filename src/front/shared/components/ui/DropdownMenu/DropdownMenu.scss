@@ -25,14 +25,14 @@
     padding: 5px 0px;
     min-width: 100px;
     display: none;
-    box-shadow: $l-box-shadow;
-    background: $l-background-elements;
+    box-shadow: var(--box-shadow);
+    background: var(--color-background-elements);
     @include ff;
 
     &.--dark {
-        box-shadow: $d-box-shadow;
-        background: $d-background-elements;
-        color: $d-color;
+        box-shadow: var(--box-shadow);
+        background: var(--color-background-elements);
+        color: var(--color);
 
         .dropdownMenuItem {
             border-bottom: 1px solid #161719;
@@ -48,7 +48,7 @@
 
         &:hover {
             background: $color-brand;
-            color: $d-color;
+            color: var(--color);
         }
 
         &[disabled],

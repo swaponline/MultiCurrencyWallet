@@ -1,15 +1,15 @@
 .history {
   display: block;
-  box-shadow: $l-box-shadow;
-  background: $l-background-elements;
+  box-shadow: var(--box-shadow);
+  background: var(--color-background-elements);
   border-radius: 4px;
   padding: 25px;
   margin-top: 20px;
   width: 100%;
 
   &.dark {
-    box-shadow: $d-box-shadow;
-    background: $d-background-elements;
+    box-shadow: var(--box-shadow);
+    background: var(--color-background-elements);
   }
 }
 
@@ -50,11 +50,11 @@
 
 .dark {
   .historyHeading {
-    color: $d-color;
+    color: var(--color);
   }
 
   a {
-    color: $d-color !important;
+    color: var(--color) !important;
   }
 }
 

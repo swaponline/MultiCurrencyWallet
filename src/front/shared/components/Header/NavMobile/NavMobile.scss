@@ -10,7 +10,7 @@
   background-color: $color-brand;
   overflow: hidden;
   @include ff-bold;
-  box-shadow: $l-box-shadow;
+  box-shadow: var(--box-shadow);
   transition: bottom 250ms ease !important;
 
   &-hidden {
@@ -24,14 +24,14 @@
     flex: 1;
     padding: 14px 7px;
     text-align: center;
-    color: $d-color;
+    color: var(--color);
     text-decoration: none;
     display: flex;
     flex-direction: column;
     white-space: nowrap;
 
     &:not(:last-of-type) {
-      border-right: 1px solid $d-color;
+      border-right: 1px solid var(--color);
     }
 
     &.active {
@@ -53,7 +53,7 @@
   
     a.active {
       background: $color-brand;
-      color: $d-color;
+      color: var(--color);
 
       &:not(:last-of-type) {
         border-right: 1px solid #555;
@@ -64,7 +64,7 @@
 
 .active {
   font-weight: 700;
-  background: $l-background-elements;
+  background: var(--color-background-elements);
 }
 
 .bold {

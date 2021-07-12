@@ -45,26 +45,26 @@
   position: relative;
 
   &.--dark {
-    background: $d-background-color;
-    color: $d-color;
+    background: var(--color-background);
+    color: var(--color);
 
     .formExchange {
-      box-shadow: $d-box-shadow;
-      background: $d-background-elements;
+      box-shadow: var(--box-shadow);
+      background: var(--color-background-elements);
     }
 
     &:before {
       background: #694cff !important;
-      color: $l-background-elements;
+      color: var(--color-background-elements);
     }
 
     .maxAmount {
-      color: $d-color;
-      background: $d-background-elements;
+      color: var(--color);
+      background: var(--color-background-elements);
     }
     
     .minerFeeUpdateBtn {
-      color: $d-color;
+      color: var(--color);
     }
   }
 }
@@ -236,7 +236,7 @@
 }
 
 .minerFeeUpdateBtn {
-  color: $l-color;
+  color: var(--color);
 }
 
 .buttons {
@@ -258,7 +258,7 @@
   font-family: 'Roboto Mono', monospace;
   font-size: 13px;
   font-weight: bold;
-  color: $notice-color;
+  color: var(--color-notice);
 
   .swapStartStatusLoader {
     display: inline-block;

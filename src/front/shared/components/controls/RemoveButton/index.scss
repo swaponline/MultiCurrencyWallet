@@ -24,7 +24,7 @@
     width: .1rem;
     height: 65%;
     border-radius: 4px;
-    background-color: $l-color;
+    background-color: var(--color);
   }
 
   &::before {
@@ -38,7 +38,7 @@
   &.dark {
     &::before,
     &::after {
-      background-color: $d-color;
+      background-color: var(--color);
     }
   }
 

@@ -8,8 +8,8 @@
 
   &.--dark {
     .fee-radio__label {
-        background-color: $d-box-shadow;
-        color: $d-color;
+        background-color: var(--box-shadow);
+        color: var(--color);
     }
   }
 }
@@ -27,8 +27,8 @@
   z-index: 1;
   width: 25%;
   padding: 6px 6px 7px 14px;
-  border: 1px solid $inactive-border-color;
-  box-shadow: $l-box-shadow;
+  border: 1px solid var(--color-inactive-border);
+  box-shadow: var(--box-shadow);
   border-radius: 5px;
   cursor: pointer;
   white-space: nowrap;

@@ -17,13 +17,13 @@
 
   &.dark {
     .notification {
-      box-shadow: $d-box-shadow;
-      background-color: $d-background-elements;
-      color: $d-color;
+      box-shadow: var(--box-shadow);
+      background-color: var(--color-background-elements);
+      color: var(--color);
     }
 
     .errorNotification {
-      background-color: $d-background-elements;
+      background-color: var(--color-background-elements);
       color: $color-f-error;
     }
   }
@@ -41,9 +41,9 @@
   opacity: 0;
   font-size: 14px;
   border-radius: 6px;
-  box-shadow: $l-box-shadow;
-  background-color: $l-background-elements;
-  color: $l-color;
+  box-shadow: var(--box-shadow);
+  background-color: var(--color-background-elements);
+  color: var(--color);
 
   &.mounted {
     margin-top: 0 !important;
@@ -58,7 +58,7 @@
 }
 
 .errorNotification {
-  background-color: $l-background-elements;
+  background-color: var(--color-background-elements);
   color: $color-f-error;
   position: fixed;
   bottom: 100;

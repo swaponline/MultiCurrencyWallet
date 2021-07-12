@@ -8,7 +8,7 @@
   display: inline-block;
   margin-left: 0.6em;
   font-size: 0.8em;
-  color: $notice-color;
+  color: var(--color-notice);
 }
 
 .amount {
@@ -19,7 +19,7 @@
 
   .usd {
     min-height: 13px; // top element does not go down if no currency
-    color: $notice-color;
+    color: var(--color-notice);
   }
 
   @media screen and (max-width: 480px) {
@@ -60,7 +60,7 @@
 .customSelectValue {
   border: 1px solid #ccc;
   height: 68px;
-  background: $l-background-elements;
+  background: var(--color-background-elements);
   display: flex;
   align-items: center;
   cursor: pointer;
@@ -72,7 +72,7 @@
     .amount {
       .currency,
       .usd {
-        color: $d-color;
+        color: var(--color);
         background: #2b2b2b;
       }
     }
@@ -96,14 +96,14 @@
       }
     }
     .address {
-      color: $notice-color;
+      color: var(--color-notice);
       font-size: 12px;
       @include media-mobile {
         display: none;
       }
     }
     .mobileAddress {
-      color: $notice-color;
+      color: var(--color-notice);
       font-size: 12px;
       > div {
         margin: 0;
@@ -122,14 +122,14 @@
   overflow-y: auto;
   overflow-x: hidden;
   padding: 5px 0px;
-  box-shadow: $l-box-shadow;
+  box-shadow: var(--box-shadow);
 
   .amount {
     right: 10px;
   }
 
   &.darkList {
-    box-shadow: $d-box-shadow;
+    box-shadow: var(--box-shadow);
     background:#2b2b2b;
 
     .customSelectValue {

@@ -106,11 +106,11 @@
 }
 
 .pseudLink {
-  color: $notice-color;
+  color: var(--color-notice);
   font-size: 0.8rem;
 
   &:hover {
-    color: $notice-color;
+    color: var(--color-notice);
   }
 
   & + & {

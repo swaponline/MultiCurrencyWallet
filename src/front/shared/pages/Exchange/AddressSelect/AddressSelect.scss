@@ -2,7 +2,7 @@
   position: relative;
 
   &.--dark {
-    color: $d-color;
+    color: var(--color);
 
     .dropDown {
       width: 100%;
@@ -39,7 +39,7 @@
     position: absolute;
     top: -18px;
     left: 10px;
-    background: $d-color;
+    background: var(--color);
     white-space: nowrap;
     @include media-mobile {
       top: -14px;
@@ -97,7 +97,7 @@
   height: 100%;
   width: 58%;
   z-index: 1;
-  background-color: $l-background-elements;
+  background-color: var(--color-background-elements);
 
 
   &.connectWrapper {

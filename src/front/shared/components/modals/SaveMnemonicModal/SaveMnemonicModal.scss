@@ -37,7 +37,7 @@
     display: inline-block;
     padding: 0.2em;
     margin: 0.1em 0.2em;
-    border: 1px solid $notice-color;
+    border: 1px solid var(--color-notice);
     border-radius: 2px;
 
     span {
@@ -47,7 +47,7 @@
     }
 
     span:nth-child(1) {
-      color: $notice-color;
+      color: var(--color-notice);
     }
   }
 }
@@ -65,7 +65,7 @@
     display: inline-block;
     padding: 0.2em;
     margin: 0.1em 0.2em;
-    border: 1px solid $notice-color;
+    border: 1px solid var(--color-notice);
     border-radius: 2px;
     background: none;
     font-size: 120%;

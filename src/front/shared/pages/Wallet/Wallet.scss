@@ -22,16 +22,16 @@
 }
 
 .yourAssets {
-  box-shadow: $l-box-shadow;
-  background: $l-background-elements;
+  box-shadow: var(--box-shadow);
+  background: var(--color-background-elements);
   border-radius: 4px;
   padding: 25px;
   margin-top: 20px;
 }
 
 .yourAssets.dark {
-  box-shadow: $d-box-shadow;
-  background: $d-background-elements;
+  box-shadow: var(--box-shadow);
+  background: var(--color-background-elements);
 
   @media screen and (max-width: 480px) {
     box-shadow: none;
@@ -59,8 +59,8 @@
 }
 
 .yourBalance {
-  box-shadow: $l-box-shadow;
-  background: $l-background-elements;
+  box-shadow: var(--box-shadow);
+  background: var(--color-background-elements);
   border-radius: 4px;
   height: fit-content;
   @include ff-regular;
@@ -78,8 +78,8 @@
 }
 
 .yourBalance.dark {
-  box-shadow: $d-box-shadow;
-  background: $d-background-elements;
+  box-shadow: var(--box-shadow);
+  background: var(--color-background-elements);
 
   @media screen and (max-width: 480px) {
     box-shadow: none;

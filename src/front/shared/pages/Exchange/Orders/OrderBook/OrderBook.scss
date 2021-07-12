@@ -6,7 +6,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: $notice-color;
+  color: var(--color-notice);
 
   .loader {
     margin: 0.2em 0;
@@ -14,7 +14,7 @@
 }
 
 .offersOfflineNotice {
-  color: $notice-color;
+  color: var(--color-notice);
 }
 
 .orderBookTable {

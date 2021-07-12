@@ -123,7 +123,7 @@ input[type='number'] {
   padding: 0 12px;
   font-size: 13px;
   color: $color-brand;
-  background-color: $l-background-elements;
+  background-color: var(--color-background-elements);
 }
 
 

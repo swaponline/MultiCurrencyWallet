@@ -8,7 +8,7 @@
 
   &.active {
     width: 100%;
-    border-color: $indicating-color;
+    border-color: var(--color-indicating);
     z-index: 5;
     background: #fff;
     box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);

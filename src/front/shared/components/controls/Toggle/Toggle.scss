@@ -14,7 +14,7 @@ label.Switch {
   }
 
   & > span:before {
-    background-color: $pale-color;
+    background-color: var(--color-pale);
     border-radius: 1.2em;
     border: .1em solid transparent;
     content: '';

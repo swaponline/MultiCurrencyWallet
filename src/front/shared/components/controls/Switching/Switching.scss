@@ -6,7 +6,7 @@
   z-index: 1;
   border-radius: 3px;
   border: 1px solid rgba(0, 0, 0, 0.2);
-  color: $l-color;
+  color: var(--color);
 }
 
 .noneBorder {
@@ -14,5 +14,5 @@
 }
 
 .dark {
-  color: $d-color;
+  color: var(--color);
 }

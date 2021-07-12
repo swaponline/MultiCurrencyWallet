@@ -16,8 +16,8 @@
 }
 
 .currencyWalletActivity {
-  box-shadow: $l-box-shadow;
-  background: $l-background-elements;
+  box-shadow: var(--box-shadow);
+  background: var(--color-background-elements);
   border-radius: 4px;
   padding: 25px;
   margin-top: 20px;
@@ -36,8 +36,8 @@
 
 .dark {
   .currencyWalletActivity {
-    box-shadow: $d-box-shadow;
-    background: $d-background-elements;
+    box-shadow: var(--box-shadow);
+    background: var(--color-background-elements);
   
     @media screen and (max-width: 480px) {
       box-shadow: none;
@@ -51,8 +51,8 @@
 }
 
 .darkActivity {
-  box-shadow: $d-box-shadow;
-  background: $d-background-elements;
+  box-shadow: var(--box-shadow);
+  background: var(--color-background-elements);
 
   @media screen and (max-width: 480px) {
     background: #222528;

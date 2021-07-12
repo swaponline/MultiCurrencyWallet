@@ -43,7 +43,7 @@
     display: inline-block;
     margin-left: 0.6em;
     font-size: 0.8em;
-    color: $notice-color;
+    color: var(--color-notice);
   }
 
   div {
@@ -105,7 +105,7 @@ tr button[disabled]:hover {
   .assetsTableCurrencyWrapper,
   .unconfirmedBalance,
   .assetsTableValue {
-    background: $d-background-elements;
+    background: var(--color-background-elements);
   }
 
   .cryptoBalanceBtn {
@@ -114,7 +114,7 @@ tr button[disabled]:hover {
 
   .assetsTableIcon {
     img {
-      border-color: $l-color;
+      border-color: var(--color);
     }
   }
 }
@@ -156,7 +156,7 @@ tr button[disabled]:hover {
 .statusStyle {
   font-size: 12px;
   margin-left: 10px;
-  color: $notice-color;
+  color: var(--color-notice);
   margin-top: 1px;
   position: absolute;
   left: 46px;
@@ -173,7 +173,7 @@ tr button[disabled]:hover {
   bottom: -4px;
   font-size: 12px;
   font-weight: 500;
-  color: $notice-color;
+  color: var(--color-notice);
   background: #fff;
 
   img {
@@ -200,7 +200,7 @@ tr button[disabled]:hover {
 
   strong {
     margin-left: 5px;
-    color: $notice-color;
+    color: var(--color-notice);
   }
 }
 
@@ -238,7 +238,7 @@ tr button[disabled]:hover {
 
   span {
     +span {
-      color: $notice-color;
+      color: var(--color-notice);
       font-size: 14px;
       margin-left: 3px;
     }
@@ -247,7 +247,7 @@ tr button[disabled]:hover {
   strong {
     font-size: 15px;
     line-height: 21px;
-    color: $notice-color;
+    color: var(--color-notice);
     text-transform: uppercase;
     font-weight: bold;
     margin-left: 25px;

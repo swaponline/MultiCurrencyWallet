@@ -30,7 +30,7 @@
 .header {
   padding: 16px 0;
   padding: 0px 0 25px;
-  border-bottom: 1px solid $color-border;
+  border-bottom: 1px solid var(--color-border);
 }
 
 .title {
@@ -46,8 +46,8 @@
 }
 
 .card {
-  background: $l-background-color;
-  border: 1px solid $inactive-border-color;
+  background: var(--color-background);
+  border: 1px solid var(--color-inactive-border);
   box-sizing: border-box;
   box-shadow: 0px 2px 12px rgba(142, 154, 163, 0.08);
   border-radius: 4px;
@@ -70,14 +70,14 @@
     margin-bottom: 0.5em;
     padding: .5em;
     border-radius: 50%;
-    background: $l-color;
+    background: var(--color);
   }
 
   .info {
     font-weight: 800;
     font-size: 13px;
     line-height: 16px;
-    color: $l-color;
+    color: var(--color);
     @include ff-bold;
   }
 
@@ -166,10 +166,10 @@
   }
 
   .card {
-    background: $d-background-color;
+    background: var(--color-background);
 
     .info {
-      color: $d-color;
+      color: var(--color);
     }
   }
 }

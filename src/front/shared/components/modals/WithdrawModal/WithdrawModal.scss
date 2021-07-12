@@ -1,11 +1,11 @@
 .note {
   position: absolute;
-  background-color: $l-background-elements;
+  background-color: var(--color-background-elements);
   text-align: left;
   font-family: 'Roboto Mono', monospace;
   font-size: 13px;
   z-index: 5;
-  color: $notice-color;
+  color: var(--color-notice);
   bottom: -30px;
 }
 
@@ -13,7 +13,7 @@
   margin-top: 1em;
   font-size: 13px;
   font-family: 'Roboto Mono', monospace;
-  color: $notice-color;
+  color: var(--color-notice);
 
   &.hide {
     opacity: 0;
@@ -49,7 +49,7 @@
   .note,
   .balance {
     background: none;
-    color: $notice-color;
+    color: var(--color-notice);
   }
 }
 
@@ -58,12 +58,12 @@
   right: 98px;
   top: -8px;
   padding: 0 10px 0 10px;
-  background-color: $l-background-elements;
+  background-color: var(--color-background-elements);
   text-align: left;
   font-family: 'Roboto Mono', monospace;
   font-size: 13px;
   z-index: 2;
-  color: $notice-color;
+  color: var(--color-notice);
 
   @include media-mobile {
     right: 69px;
@@ -72,7 +72,7 @@
 
 .notice {
   line-height: 140%;
-  color: $notice-color;
+  color: var(--color-notice);
   @include ff-regular;
   width: 78%;
   text-align: center;
@@ -124,7 +124,7 @@
     }
 
     .additionalСurrenciesItemActive {
-      color: $d-color;
+      color: var(--color);
     }
 
     .delimiter {
@@ -211,14 +211,14 @@
       }
     }
     .address {
-      color: $notice-color;
+      color: var(--color-notice);
       font-size: 12px;
       @include media-mobile {
         display: none;
       }
     }
     .mobileAddress {
-      color: $notice-color;
+      color: var(--color-notice);
       font-size: 12px;
       > div {
         margin: 0;
@@ -258,7 +258,7 @@
   position: absolute;
   padding-left: 0.4em;
   right: 100px;
-  background: $l-background-elements;
+  background: var(--color-background-elements);
   z-index: 1;
   display: flex;
   top: 22px;
@@ -273,7 +273,7 @@
 }
 
 .additionalСurrenciesItemActive {
-  color: $l-color;
+  color: var(--color);
 }
 
 .delimiter {
@@ -341,7 +341,7 @@
     color: #1f2d48;
   }
   .usd {
-    color: $notice-color;
+    color: var(--color-notice);
   }
 }
 

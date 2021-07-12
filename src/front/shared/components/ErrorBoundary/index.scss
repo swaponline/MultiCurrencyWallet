@@ -20,12 +20,12 @@
   max-width: 50em;
   padding: 1em;
   border-radius: 1rem;
-  background-color: $l-read-only;
+  background-color: var(--color-read-only);
   color: $color-f-error;
 }
 
 .errorWrapper.dark {
   .errorCode {
-    background-color: $d-read-only;
+    background-color: var(--color-read-only);
   }
 }
