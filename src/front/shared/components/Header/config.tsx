@@ -24,6 +24,11 @@ export const messages = defineMessages({
     description: 'Menu item "Exchange"',
     defaultMessage: 'Exchange',
   },
+  bridge: {
+    id: 'bridge',
+    description: 'Menu item "bridge"',
+    defaultMessage: 'Bridge',
+  },
   history: {
     id: 'menu.history',
     description: 'Menu item "History"',
@@ -43,12 +48,13 @@ export const messages = defineMessages({
 
 export const getMenuItems = (props) => {
   const { intl } = props
-  const { exchange, wallet, createWallet } = messages
+  const { exchange, wallet, bridge, createWallet, history } = messages
   const { 
-    exchange: linksExchange,
+    exchange: exchangeLink,
     createWallet: create,
+    bridge: bridgeLink,
     // farm,
-    history,
+    history: historyLink,
     home,
   } = links
 
@@ -60,15 +66,21 @@ export const getMenuItems = (props) => {
       currentPageFlag: true,
     },
     {
-      title: intl.formatMessage(messages.history),
-      link: history,
+      title: intl.formatMessage(history),
+      link: historyLink,
       exact: true,
       currentPageFlag: true,
     },
     !externalConfig.opts.exchangeDisabled && {
       title: intl.formatMessage(exchange),
-      link: linksExchange,
+      link: exchangeLink,
       exact: false,
+      currentPageFlag: true,
+    },
+    {
+      title: intl.formatMessage(messages.bridge),
+      link: bridgeLink,
+      exact: true,
       currentPageFlag: true,
     },
   ]
@@ -82,7 +94,13 @@ export const getMenuItems = (props) => {
     },
     !externalConfig.opts.exchangeDisabled && {
       title: intl.formatMessage(exchange),
-      link: linksExchange,
+      link: exchangeLink,
+      exact: false,
+      currentPageFlag: true,
+    },
+    {
+      title: intl.formatMessage(bridge),
+      link: bridgeLink,
       exact: false,
       currentPageFlag: true,
     },
@@ -125,11 +143,12 @@ export const getMenuItems = (props) => {
 
 export const getMenuItemsMobile = (props, isWalletCreate, dinamicPath) => {
   const { intl } = props
-  const { exchange, wallet, createWallet } = messages
+  const { exchange, wallet, bridge, createWallet, history } = messages
   const { 
-    exchange: linksExchange,
+    exchange: exchangeLink,
+    bridge: bridgeLink,
     // farm,
-    history,
+    history: historyLink,
   } = links
 
   const mobileItemsWithWallet = [
@@ -140,16 +159,22 @@ export const getMenuItemsMobile = (props, isWalletCreate, dinamicPath) => {
       icon: <i className="fa fa-home" aria-hidden="true" />,
     },
     {
-      title: props.intl.formatMessage(messages.history),
-      link: history,
+      title: props.intl.formatMessage(history),
+      link: historyLink,
       displayNone: !isWalletCreate,
       icon: <i className="fas fa-exchange-alt" aria-hidden="true" />,
     },
     !externalConfig.opts.exchangeDisabled && {
       title: intl.formatMessage(exchange),
-      link: linksExchange,
+      link: exchangeLink,
       exact: false,
       icon: <i className="fas fa-sync-alt" aria-hidden="true" />,
+    },
+    {
+      title: props.intl.formatMessage(bridge),
+      link: bridgeLink,
+      displayNone: !isWalletCreate,
+      icon: <i className="fas fa-wallet"></i>,
     },
   ]
 
@@ -162,7 +187,7 @@ export const getMenuItemsMobile = (props, isWalletCreate, dinamicPath) => {
     },
     !externalConfig.opts.exchangeDisabled && {
       title: intl.formatMessage(exchange),
-      link: linksExchange,
+      link: exchangeLink,
       exact: false,
       icon: <i className="fas fa-sync-alt" aria-hidden="true" />,
     },

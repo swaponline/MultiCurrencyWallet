@@ -15,7 +15,7 @@
     "noImplicitAny": false,
     "strictNullChecks": true,
     "experimentalDecorators": true,
-    "jsx": "react",
+    "jsx": "react-jsx",
     "types": ["jest", "node"],
     "lib": ["dom", "esnext"],
     "paths": {

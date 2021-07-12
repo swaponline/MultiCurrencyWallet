@@ -12,6 +12,7 @@ import CreateWallet from 'pages/CreateWallet/CreateWallet'
 import NotFound from 'pages/NotFound/NotFound'
 import Wallet from 'pages/Wallet/Wallet'
 import Exchange from 'pages/Exchange/Exchange'
+import Bridge from 'pages/Bridge'
 import CurrencyWallet from 'pages/CurrencyWallet/CurrencyWallet'
 import Transaction from 'pages/Transaction/Transaction'
 import BtcMultisignProcessor from 'pages/Multisign/Btc/Btc'
@@ -51,6 +52,8 @@ const routes = (
       <Route path={`${links.exchange}/:sell-to-:buy/:linkedOrderId`} component={Exchange} />
       <Route path={`${links.exchange}/:sell-to-:buy`} component={Exchange} />
       <Route path={`${links.exchange}`} component={Exchange} />
+
+      <Route path={`${links.bridge}`} component={Bridge} />
 
       <Route path={`${links.localStorage}`} component={LocalStorage} />
 
