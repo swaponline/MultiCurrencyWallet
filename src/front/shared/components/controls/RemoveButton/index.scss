@@ -43,11 +43,11 @@
   }
 
   &.brand {
-    background: $color-brand;
+    background: var(--color-brand);
 
     &::before,
     &::after {
-      background-color: $color-f-brightest;
+      background-color: var(--color-f-brightest);
     }
   }
 }

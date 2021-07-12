@@ -74,7 +74,7 @@
 .error {
   margin-top: 8px;
   font-size: 14px;
-  color: $color-f-error;
+  color: var(--color-f-error);
 
   [role = "errorLink"] {
     display: inline !important;

@@ -35,7 +35,7 @@
 
 .walletNavItem.active {
   a {
-    border-bottom: 3px solid $color-brand;
+    border-bottom: 3px solid var(--color-brand);
     color: #1f2d48;
   }
 }

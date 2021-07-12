@@ -12,7 +12,7 @@
   max-width: 20em;
   margin-bottom: 2em;
   text-align: center;
-  color: $color-f-error;
+  color: var(--color-f-error);
 }
 
 .errorCode {
@@ -21,7 +21,7 @@
   padding: 1em;
   border-radius: 1rem;
   background-color: var(--color-read-only);
-  color: $color-f-error;
+  color: var(--color-f-error);
 }
 
 .errorWrapper.dark {

@@ -209,7 +209,7 @@ $walletPaddingTop: 41px;
       &:first-child {
         position: absolute;
         display: flex;
-        background: $color-f-brightest;
+        background: var(--color-f-brightest);
         align-items: center;
         height: 40px;
         width: 50px;

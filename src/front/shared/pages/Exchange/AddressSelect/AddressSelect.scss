@@ -85,7 +85,7 @@
 
   &_error {
     .dropDown > div > span {
-      color: $color-f-error;
+      color: var(--color-f-error);
     }
   }
 }
@@ -131,7 +131,7 @@
   }
 
   &_focus {
-    border: 1px solid $color-brand !important;
+    border: 1px solid var(--color-brand) !important;
   }
 
   .customAddressInput {

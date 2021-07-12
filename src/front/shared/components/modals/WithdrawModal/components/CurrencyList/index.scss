@@ -85,10 +85,10 @@
 
     a {
       font-size: 13px;
-      color: $color-brand;
+      color: var(--color-brand);
 
       &:hover {
-        color: $color-brand;
+        color: var(--color-brand);
       }
 
       @media screen and (max-width: 480px) {

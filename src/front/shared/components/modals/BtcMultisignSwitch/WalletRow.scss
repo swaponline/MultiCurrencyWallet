@@ -74,10 +74,10 @@
   .nameRow {
     display: flex;
     font-size: 13px;
-    color: $color-brand;
+    color: var(--color-brand);
     a {
       font-size: 13px;
-      color: $color-brand;
+      color: var(--color-brand);
     }
     div {
       p {
@@ -433,7 +433,7 @@
         line-height: 13px;
         text-align: right;
         font-weight: bold;
-        color: $color-brand;
+        color: var(--color-brand);
         margin-top: 2px;
     }
 }
@@ -447,7 +447,7 @@
       }
     }
     p {
-        color: $color-brand;
+        color: var(--color-brand);
         font-size: 13px;
         margin-bottom: 1px;
     }

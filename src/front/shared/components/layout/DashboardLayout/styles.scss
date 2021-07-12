@@ -40,7 +40,7 @@
   button {
     float: right;
     border: 3px solid #fff;
-    color: $color-brand;
+    color: var(--color-brand);
     background: #fff;
   }
 }

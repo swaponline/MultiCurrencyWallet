@@ -47,7 +47,7 @@
         display: block;
 
         &:hover {
-            background: $color-brand;
+            background: var(--color-brand);
             color: var(--color);
         }
 

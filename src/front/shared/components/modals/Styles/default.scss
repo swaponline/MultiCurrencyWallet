@@ -9,7 +9,7 @@
 }
 
 .link {
-  color: $color-brand;
+  color: var(--color-brand);
 }
 
 .error {
@@ -20,7 +20,7 @@
   font-size: 12px;
   color: #aaa;
   height: 0px;
-  color: $color-f-error;
+  color: var(--color-f-error);
   position: absolute;
   bottom: -5px;
 }
@@ -60,7 +60,7 @@
 .rednotes {
   font-size: 16px;
   text-align: center;
-  color: $color-f-error;
+  color: var(--color-f-error);
 }
 
 .buttonCenter {

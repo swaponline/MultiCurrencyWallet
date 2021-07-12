@@ -37,7 +37,7 @@
   opacity: 0.9;
 
   a {
-    color: $color-brand-hover;
+    color: var(--color-brand-hover);
   }
 }
 
@@ -50,10 +50,10 @@
   }
 
   a {
-    color: $color-brand-hover;
+    color: var(--color-brand-hover);
 
     &:hover {
-      color: $color-brand;
+      color: var(--color-brand);
     }
   }
 }

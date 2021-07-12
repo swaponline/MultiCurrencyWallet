@@ -176,7 +176,7 @@
 
 .widgetNavItem.active {
   a {
-    border-bottom: 3px solid $color-brand;
+    border-bottom: 3px solid var(--color-brand);
     color: #1F2D48 !important;
   }
 }

@@ -27,7 +27,7 @@
 .rednote {
   font-size: 12px;
   height: 0px;
-  color: $color-f-error;
+  color: var(--color-f-error);
   position: absolute;
   bottom: -15px;
 
@@ -83,7 +83,7 @@
 .rednotes {
   font-size: 16px;
   text-align: center;
-  color: $color-f-error;
+  color: var(--color-f-error);
 }
 
 .buttonFull {
@@ -204,10 +204,10 @@
     margin-left: 10px;
     a {
       font-size: 13px;
-      color: $color-brand;
+      color: var(--color-brand);
 
       &:hover {
-        color: $color-brand;
+        color: var(--color-brand);
       }
     }
     .address {
@@ -391,7 +391,7 @@
     &:focus-within {
       margin-bottom: 40px;
       border-radius: 2px;
-      border: 2px solid $color-brand;
+      border: 2px solid var(--color-brand);
     }
   }
 }

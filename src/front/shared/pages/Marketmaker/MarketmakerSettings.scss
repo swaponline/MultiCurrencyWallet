@@ -189,7 +189,7 @@
 
   .walletNavItem.active {
     a {
-      border-bottom: 3px solid $color-brand;
+      border-bottom: 3px solid var(--color-brand);
       color: #1f2d48;
     }
   }
@@ -211,7 +211,7 @@
     }
 
     a {
-      color: $color-link;
+      color: var(--color-link);
     }
   }
 
@@ -227,7 +227,7 @@
     thead {
       tr {
         td {
-          color: $color-brand-hover;
+          color: var(--color-brand-hover);
         }
       }
     }

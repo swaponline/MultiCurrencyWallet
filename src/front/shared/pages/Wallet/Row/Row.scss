@@ -1,19 +1,19 @@
 .txWaitConfirm {
   padding-right: 10px;
-  color: $color-brand;
+  color: var(--color-brand);
   cursor: pointer;
 }
 
 .nameRow {
   display: flex;
   font-size: 13px;
-  color: $color-brand;
+  color: var(--color-brand);
 
   a.linkToHistory {
     cursor: pointer;
     position: relative;
     font-size: 13px;
-    color: $color-brand;
+    color: var(--color-brand);
 
     &::before {
       content: "";
@@ -21,7 +21,7 @@
       left: 0;
       bottom: -0.1em;
       height: 1px;
-      background-color: $color-brand;
+      background-color: var(--color-brand);
       transition: 0.2s;
     }
 
@@ -194,7 +194,7 @@ tr button[disabled]:hover {
     line-height: 13px;
     text-align: right;
     font-weight: bold;
-    color: $color-brand;
+    color: var(--color-brand);
     margin-top: 2px;
   }
 
@@ -215,7 +215,7 @@ tr button[disabled]:hover {
 
   a {
     font-size: 13px;
-    color: $color-link;
+    color: var(--color-link);
   }
 }
 
@@ -231,7 +231,7 @@ tr button[disabled]:hover {
   }
 
   p {
-    color: $color-brand;
+    color: var(--color-brand);
     font-size: 13px;
     margin-bottom: 1px;
   }

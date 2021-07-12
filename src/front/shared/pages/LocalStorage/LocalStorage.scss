@@ -74,7 +74,7 @@
   left: 50%;
   transform: translateX(-50%);
   padding: 0.4em 1em;
-  border: .1em solid $color-brand;
+  border: .1em solid var(--color-brand);
   border-radius: 0.3em;
   background-color: var(--color-background-elements);
   color: var(--color);

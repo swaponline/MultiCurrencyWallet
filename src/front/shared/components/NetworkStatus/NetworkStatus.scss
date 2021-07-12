@@ -26,7 +26,7 @@
       display: inline-block;
       width: 0.5em;
       height: 0.5em;
-      background: $color-bad;
+      background: var(--color-bad);
       line-height: 1em;
       vertical-align: middle;
       border-radius: 0.5em;
@@ -34,7 +34,7 @@
   }
   &.online {
     .mark {
-      background: $color-good;
+      background: var(--color-good);
     }
   }
 }

@@ -9,7 +9,7 @@
   &.active {
 
     .header {
-      background-color: $color-brand-hover;
+      background-color: var(--color-brand-hover);
       color: #fff !important;
     }
 

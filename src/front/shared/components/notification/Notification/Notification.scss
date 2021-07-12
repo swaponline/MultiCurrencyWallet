@@ -24,7 +24,7 @@
 
     .errorNotification {
       background-color: var(--color-background-elements);
-      color: $color-f-error;
+      color: var(--color-f-error);
     }
   }
 }
@@ -59,7 +59,7 @@
 
 .errorNotification {
   background-color: var(--color-background-elements);
-  color: $color-f-error;
+  color: var(--color-f-error);
   position: fixed;
   bottom: 100;
   right: 0;
@@ -73,7 +73,7 @@
 }
 
 .warning {
-  background-color: $color-warning,
+  background-color: var(--color-warning),
 }
 
 .content {

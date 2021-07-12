@@ -21,7 +21,7 @@ textarea {
   outline: none;
 
   &:focus {
-    border: 2px solid $color-brand;
+    border: 2px solid var(--color-brand);
     outline: none;
     padding: 0 14px;
   }
@@ -87,10 +87,10 @@ textarea {
   }
 
   &.withError {
-    border-color: $color-f-error;
+    border-color: var(--color-f-error);
 
     .input~.label {
-      color: $color-f-error;
+      color: var(--color-f-error);
     }
   }
 
@@ -122,7 +122,7 @@ input[type='number'] {
   margin: 0;
   padding: 0 12px;
   font-size: 13px;
-  color: $color-brand;
+  color: var(--color-brand);
   background-color: var(--color-background-elements);
 }
 
@@ -177,7 +177,7 @@ textarea.input {
 
 .error {
   font-size: 14px;
-  color: $color-f-error;
+  color: var(--color-f-error);
 
   [role='errorLink'] {
     display: inline !important;

@@ -7,7 +7,7 @@
   z-index: 1001111;
   display: flex;
   flex-direction: row;
-  background-color: $color-brand;
+  background-color: var(--color-brand);
   overflow: hidden;
   @include ff-bold;
   box-shadow: var(--box-shadow);
@@ -52,7 +52,7 @@
     background-color: #29293b;
   
     a.active {
-      background: $color-brand;
+      background: var(--color-brand);
       color: var(--color);
 
       &:not(:last-of-type) {

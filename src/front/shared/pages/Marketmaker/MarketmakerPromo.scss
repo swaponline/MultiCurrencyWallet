@@ -7,7 +7,7 @@
   }
 
   section + section {
-    border-top: 1px solid #{$color-brand}55;
+    border-top: 1px solid var(--color-brand);
   }
 
   .section-title {
@@ -76,13 +76,12 @@
 
     .mode {
       margin-bottom: 1.8em;
-      //border: 1px solid $color-brand;
       box-shadow: rgba(0,0,0, 0.2) 0 4px 24px;
       border-radius: 10px;
       padding: 1.5em 1em;
 
       .mode-title {
-        color: #{$color-brand};
+        color: var(--color-brand);
         font-weight: 500;
       }
       .number {

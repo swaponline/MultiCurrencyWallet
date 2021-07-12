@@ -65,7 +65,7 @@
 }
 
 .canceled {
-  color: $color-f-error;
+  color: var(--color-f-error);
   font-size: 24px;
   text-align: center;
   text-transform: uppercase;
@@ -108,7 +108,7 @@
   color: #3de25b;
 }
 .offline {
-  color: $color-f-error;
+  color: var(--color-f-error);
 }
 
 @include media-mobile {
