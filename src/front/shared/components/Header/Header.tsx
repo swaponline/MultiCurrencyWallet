@@ -27,7 +27,7 @@ import Loader from 'components/loaders/Loader/Loader'
 import { localisedUrl } from '../../helpers/locale'
 import { messages, getMenuItems, getMenuItemsMobile } from './config'
 import { user } from 'helpers'
-import { ThemeSwitcher } from './ThemeSwitcher'
+import ThemeSwitcher from './ThemeSwitcher'
 import Button from 'components/controls/Button/Button'
 // Incoming swap requests and tooltips (revert)
 import UserTooltip from 'components/Header/UserTooltip/UserTooltip'
@@ -351,19 +351,22 @@ class Header extends Component<any, any> {
     localStorage.setItem(wasOnExchange, 'true')
   }
 
-  handleSetDark = () => {
+  handleToggleTheme = () => {
     this.setState(() => ({ themeSwapAnimation: true }))
     const wasDark = localStorage.getItem(constants.localStorage.isDark)
+    const dataset = document.body.dataset
 
-    feedback.theme.switched(wasDark ? 'bright' : 'dark')
+    feedback.theme.switched(wasDark ? 'light' : 'dark')
+
     if (wasDark) {
       localStorage.removeItem(constants.localStorage.isDark)
       localStorage.setItem(constants.localStorage.isLight, 'true')
+      dataset.scheme = "default"
     } else {
-      localStorage.setItem(constants.localStorage.isDark, 'true')
       localStorage.removeItem(constants.localStorage.isLight)
+      localStorage.setItem(constants.localStorage.isDark, 'true')
+      dataset.scheme = "dark"
     }
-    window.location.reload()
   }
 
   declineRequest = (orderId, participantPeer) => {
@@ -442,7 +445,7 @@ class Header extends Component<any, any> {
         </div>
         <div styleName="rightArea">
           {window.WPSO_selected_theme !== 'only_light' && window.WPSO_selected_theme !== 'only_dark' && (
-            <ThemeSwitcher themeSwapAnimation={themeSwapAnimation} onClick={this.handleSetDark} />
+            <ThemeSwitcher themeSwapAnimation={themeSwapAnimation} onClick={this.handleToggleTheme} />
           )}
 
           {isLogoutPossible && ( // some wordpress plugin cases

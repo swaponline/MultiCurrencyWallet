@@ -59,7 +59,7 @@ const moon = (fill) => (
   </svg>
 )
 
-const SwitcherComponent = ({ onClick, themeSwapAnimation }) => (
+const ThemeSwitcher = ({ onClick, themeSwapAnimation }) => (
   <div
     styleName={`themeSwitcher ${themeSwapAnimation ? 'themeAnimation' : ''}`}
     onClick={onClick}
@@ -72,4 +72,4 @@ const SwitcherComponent = ({ onClick, themeSwapAnimation }) => (
   </div>
 )
 
-export const ThemeSwitcher = CSSModules(SwitcherComponent, styles, { allowMultiple: true })
+export default CSSModules(ThemeSwitcher, styles, { allowMultiple: true })

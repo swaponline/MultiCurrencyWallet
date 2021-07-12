@@ -34,16 +34,58 @@
     <%= htmlWebpackPlugin.options.firebugScript %>
 
     <style>
-      :root {
+      :root,
+      [data-scheme="default"] {
         --color-brand:#6144e5;
         --color-brand-hover: #7371ff;
         --color-brand-background: rgba(97, 68, 229, 0.1);
+        --color-page-background: #222427;
         --alternate: #e91db4;
         --alternate-hover:  #ff1fc5;
+
+        --color: #000;
+        --color-background: #f7f7f7;
+        --color-background-elements: #fff;
+        --box-shadow: 0px 4px 16px rgba(0,0,0,0.08), 0px 1px 4px rgba(0,0,0,0.08);
+        --read-only: rgb(233, 233, 233);
+
+        --color-border: #7774;
+        --inactive-border-color: rgba(142, 154, 163, 0.16);
+        --pale-color: #8882;
+        --indicating-color: #808080;
+        --notice-color: #8e9aa3;
+
+        --color-brand: var(--color-brand);
+        --color-brand-hover: var(--color-brand-hover);
+        --color-brand-background: var(--color-brand-background);
+        --color-alternate: var(--alternate);
+        --color-alternate-hover: var(--alternate-hover);
+
+        --color-f-brightest: #fff;
+        --color-f-error: #e32950;
+        --color-success: #0CCF14;
+        --color-good: #3de25b;
+        --color-bad: #f56e85;
+        --color-warning: #ffba00;
+        --color-link: #007bff;
+      }
+
+      [data-scheme="dark"] {
+        --color-brand:#6144e5;
+        --color-brand-hover: #7371ff;
+        --color-brand-background: rgba(97, 68, 229, 0.1);
+        --color-page-background: #222427;
+
+        --color: #fff;
+        --color-background: #222427;
+        --color-background-elements: #242425;
+        --box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.49),0px 1px 4px rgba(13, 13, 13, 0.06);
+        --read-only: rgb(44, 44, 44);
       }
 
       body {
-        background-color: #f7f7f7;
+        background-color: var(--color);
+        color: var(--color-background);
       }
 
       .overflowY-default {
@@ -52,10 +94,6 @@
 
       .overflowY-hidden {
         overflow: hidden;
-      }
-
-      .overflowY-dashboardView-default {
-        overflow: visible;
       }
 
       .overflowY-dashboardView-hidden {
@@ -85,11 +123,6 @@
         right: 0;
         bottom: 0;
         z-index: 1000;
-      }
-
-      .darkTheme {
-        background-color: #222427;
-        color: #fff;
       }
 
       .loader {
@@ -386,7 +419,7 @@
     </style>
   </head>
 
-  <body>
+  <body data-scheme="default">
     <!-- Start Modal -->
     <section class="starter-modal d-none" id="starter-modal">
       <div class="starter-modal__container-content">
@@ -598,6 +631,15 @@
     -->
 
     <script>
+      const isDark = localStorage.getItem('isDark')
+      const dataset = document.body.dataset
+
+      if (isDark) {
+        dataset.scheme = "dark"
+      } else {
+        dataset.scheme = "default"
+      }
+
       // Extension: prevent 2 tabs
       if (window.chrome && window.chrome.extension) {
         var extViews = chrome.extension.getViews()
@@ -722,14 +764,6 @@
           }
         }
         return '';
-      }
-
-      const wrapper = document.getElementById('wrapper_element');
-
-      if (window.localStorage.getItem('isDark')) {
-        wrapper.classList.add('darkTheme');
-      } else {
-        wrapper.classList.remove('darkTheme');
       }
 
       // detect browser's lang
