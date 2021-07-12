@@ -34,14 +34,14 @@
 
 .sweepInfo {
   background: 0% 0% / cover rgb(97, 68, 229);
-  color: #fff;
+  color: var(--color-background-elements);
   padding: 1em;
 
   button {
     float: right;
-    border: 3px solid #fff;
+    border: 3px solid var(--color-background-elements);
     color: var(--color-brand);
-    background: #fff;
+    background: var(--color-background-elements);
   }
 }
 

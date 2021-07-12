@@ -4,7 +4,7 @@
 .react-tags {
   position: relative;
   padding: 14px 6px 9px;
-  border: 2px solid rgba(0,0,0,0.2);
+  border: 2px solid var(--color-border);
   border-radius: 2px;
 
   /* shared font styles */
@@ -22,7 +22,6 @@
   width: 100%;
 }
 .--is-dark .react-tags {
-  border-color: #505050;
   background: #242425;
 }
 .react-tags.is-focused {
@@ -38,17 +37,12 @@
   box-sizing: border-box;
   margin: 0 6px 6px 0;
   padding: 6px 8px;
-  background: rgba(97,68,229,0.15);
-  color: rgba(97,68,229,0.5);
+  background: var(--color-pale);
+  color: var(--color-brand);
   font-weight: bold;
 
   font-size: inherit;
   line-height: inherit;
-}
-
-.--is-dark .react-tags__selected-tag {
-  background: #232629;
-  color: #fff;
 }
 
 .react-tags__search {
@@ -67,7 +61,6 @@
     /* this will become the offsetParent for suggestions */
     position: relative;
   }
-
 }
 
 .react-tags__search-input {
@@ -114,26 +107,21 @@
   margin: 4px -1px;
   padding: 0;
   list-style: none;
-  box-shadow: 0px 4px 16px rgba(0,0,0,0.08), 0px 1px 4px rgba(0,0,0,0.08);
-  border: 1px solid #f7f7f7;
-  background: #fff;
+  box-shadow: var(--box-shadow);
+  border: 1px solid var(--color-background);
+  background: var(--color-background-elements);
 }
-.--is-dark .react-tags__suggestions ul {
-  border: none;
-  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.49),0px 1px 4px rgba(13, 13, 13, 0.06);
-  background: #242425;
-  color: #fff;
-}
+
 .--is-dark .react-tags__suggestions li {
   border-bottom-color: #161719;
   background-color: #242425;
 }
 .--is-dark .react-tags__suggestions li mark {
-  color: #fff;
+  color: var(--color-background-elements);
 }
 .react-tags__suggestions li {
-  border-bottom: 1px solid #f7f7f7;
-  background-color: #fff;
+  border-bottom: 1px solid var(--color-background);
+  background-color: var(--color-background-elements);
   padding: 6px 8px;
 }
 

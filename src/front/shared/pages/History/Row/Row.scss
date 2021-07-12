@@ -9,13 +9,13 @@
         transform: rotate(180deg);
 
         path {
-          stroke: #0CCF14;
+          stroke: var(--color-success);
         }
       }
     }
 
     .amount {
-      color: #0CCF14;
+      color: var(--color-success);
     }
   }
 
@@ -188,7 +188,7 @@
 }
 
 .comment {
-  color: #000;
+  color: var(--color);
 }
 
 .btnWrapper {

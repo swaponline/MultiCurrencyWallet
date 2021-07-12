@@ -13,7 +13,7 @@
 
   &.--dark {
     &:not([href]) {
-      color: #8e9aa3;
+      color: var(--color-notice);
     }
   }
 }

@@ -209,7 +209,7 @@
     opacity: 0.7;
 
     &.--dark {
-      color: #fff;
+      color: var(--color-background-elements);
     }
   }
 
@@ -304,7 +304,7 @@
 }
 
 .error {
-  color: #fff;
+  color: var(--color-background-elements);
   padding: 0.4em 1em;
   font-size: 13px;
   background: var(--color-bad);
@@ -362,7 +362,7 @@
 .maxAmount {
   position: absolute;
   top: -10px;
-  background: #fff;
+  background: var(--color-background-elements);
   font-size: 13px;
   right: 10px;
   padding: 0 0.5em;

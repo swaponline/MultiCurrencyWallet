@@ -54,7 +54,7 @@ label.Switch {
   }
 
   & > input:checked + span:after {
-    background-color: #fff;
+    background-color: var(--color-background-elements);
     right: 0px;
     left: auto;
   }

@@ -105,7 +105,7 @@
 }
 
 .online {
-  color: #3de25b;
+  color: var(--color-good);
 }
 .offline {
   color: var(--color-f-error);
@@ -201,7 +201,7 @@
     text-decoration: underline;
     &:hover {
       text-decoration: none;
-      color: #007bff;
+      color: var(--color-link);
     }
   }
 }
@@ -244,7 +244,7 @@
   position: absolute;
   left: 0px;
   bottom: -40px;
-  color: #000;
+  color: var(--color);
 }
 
 .qr {
@@ -297,7 +297,7 @@
   align-items: center;
   height: 56px;
   display: flex;
-  color: #fff;
+  color: var(--color-background-elements);
   display: flex;
   border: 1px solid var(--color-border);
   box-shadow: var(--box-shadow);
@@ -316,8 +316,8 @@
 }
 
 .fa-copy-in {
-  background: #000;
-  color: #fff;
+  background: var(--color);
+  color: var(--color-background-elements);
 }
 
 .button {
@@ -356,7 +356,7 @@
     font-weight: 300;
     border-radius: 6px;
     background: #cecece3b;
-    color: #000;
+    color: var(--color);
     padding: 7px 20px;
     width: 100%;
     max-width: 600px;
@@ -400,7 +400,7 @@
     font-weight: 300;
     border-radius: 6px;
     background: #cecece3b;
-    color: #000;
+    color: var(--color);
     padding: 7px 20px;
     width: 100%;
   }

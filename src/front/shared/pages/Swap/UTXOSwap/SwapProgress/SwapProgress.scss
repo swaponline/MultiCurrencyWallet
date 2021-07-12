@@ -121,7 +121,7 @@
 }
 
 .timerRefund {
-  color: #000;
+  color: var(--color);
   margin-bottom: 1.25rem;
 
   span {
@@ -146,7 +146,7 @@
 
   span {
     span {
-      color: #000;
+      color: var(--color);
     }
   }
 }

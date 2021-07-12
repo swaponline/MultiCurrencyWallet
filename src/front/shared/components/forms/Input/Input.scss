@@ -17,7 +17,7 @@ textarea {
   font-size: 15px;
   padding-left: 15px;
   font-family: 'Roboto Mono', monospace;
-  border: 1px solid rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--color-border);
   outline: none;
 
   &:focus {
@@ -75,7 +75,7 @@ textarea {
 }
 
 .inputContainer {
-  background-color: #fff;
+  background-color: var(--color-background-elements);
   border-radius: 6px;
 
   &.withMargin {
@@ -106,7 +106,7 @@ input[type='number'] {
 .dollar {
   position: absolute;
   bottom: -30px;
-  background: #fff;
+  background: var(--color-background-elements);
   right: 10px;
   font-size: 13px;
   color: #828795;

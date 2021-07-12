@@ -52,7 +52,7 @@
 }
 
 .yourAssetsDescr {
-  color: #8e9aa3;
+  color: var(--color-notice);
   font-size: 14px;
   @include ff-regular;
   line-height: 150%;
@@ -123,7 +123,7 @@
 }
 
 .yourBalanceDescr {
-  color: #8e9aa3;
+  color: var(--color-notice);
   font-size: 13px;
   font-weight: bold;
   position: absolute;

@@ -81,7 +81,7 @@ $chrestStripHeight: 12px;
     display: block;
     content: '';
     position: relative;
-    background: #8e9aa3;
+    background: var(--color-notice);
     border-radius: 1px;
   }
 

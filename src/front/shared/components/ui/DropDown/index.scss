@@ -1,16 +1,16 @@
 .dropDown {
   @include inline-block;
-  background: #fff;
+  background: var(--color-background-elements);
   position: relative;
   border-radius: 6px;
-  box-shadow: rgba(#000, 0.08) 0 3px 9px 0;
+  box-shadow: rgba(var(--color), 0.08) 0 3px 9px 0;
   border: 1px solid transparent;
 
   &.active {
     width: 100%;
     border-color: var(--color-indicating);
     z-index: 5;
-    background: #fff;
+    background: var(--color-background-elements);
     box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
     height: max-content;
     border-radius: 2px !important;
@@ -21,7 +21,7 @@
 
     .closeBtn {
       display: block;
-      color: #000;
+      color: var(--color);
       position: absolute;
       right: 0;
       top: 20px;
@@ -33,7 +33,7 @@
 
       input {
         &:focus {
-          border-bottom: 1px solid #000;
+          border-bottom: 1px solid var(--color);
         }
       }
     }
@@ -104,7 +104,7 @@
 
 .smallTooltip,
 .dropDownLabel {
-  color: #000;
+  color: var(--color);
 }
 
 .closeBtn,
@@ -233,17 +233,17 @@
 .select {
   min-width: 100%;
   max-height: 160px;
-  background-color: #fff;
+  background-color: var(--color-background-elements);
   position: absolute;
   right: -1;
   top: 0;
   overflow-x: hidden;
   overflow-y: auto;
   z-index: 9999;
-  background: #fff;
+  background: var(--color-background-elements);
   border-radius: 6px;
   border: 1px solid #8888;
-  box-shadow: rgba(#000, 0.15) 0 3px 9px 0;
+  box-shadow: rgba(var(--color), 0.15) 0 3px 9px 0;
 }
 
 .dontscroll {
@@ -255,7 +255,7 @@
   height: 56px;
   line-height: 56px;
   border-top: 1px solid #ddd;
-  background: #fff;
+  background: var(--color-background-elements);
   padding: 0 16px;
   cursor: pointer;
   text-align: left;
@@ -267,7 +267,7 @@
   }
 
   &:hover {
-    background-color: #f7f7f7;
+    background-color: var(--color-background);
   }
 }
 

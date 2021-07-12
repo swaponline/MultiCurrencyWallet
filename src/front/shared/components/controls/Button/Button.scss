@@ -94,11 +94,11 @@
 .transparent {
   background: rgba(255, 255, 255, 0.1);
   font-size: 15px;
-  color: #fff;
+  color: var(--color-background-elements);
 }
 
 .white {
-  background-color: #fff;
+  background-color: var(--color-background-elements);
   color: inherit;
   font-size: 15px;
 }

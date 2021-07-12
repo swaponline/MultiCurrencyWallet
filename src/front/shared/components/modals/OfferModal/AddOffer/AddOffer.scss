@@ -25,7 +25,7 @@
 
   &.--dark {
     .toggleText {
-      color: #8e9aa3;
+      color: var(--color-notice);
     }
   }
 }
@@ -87,7 +87,7 @@
 .Error {
   display: flex;
   align-items: center;
-  color: #fff;
+  color: var(--color-background-elements);
   padding: 0.3em 10px;
   margin-top: -5px;
   font-size: 13px;

@@ -45,7 +45,7 @@
 
 .notifyBlockDescr {
   margin: 0 10px;
-  color: #fff;
+  color: var(--color-background-elements);
   position: absolute;
   @include ff-bold;
   bottom: 20px;

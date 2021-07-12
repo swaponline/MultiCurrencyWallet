@@ -38,7 +38,7 @@
       [data-scheme="default"] {
         --color-brand:#6144e5;
         --color-brand-hover: #7371ff;
-        --color-brand-background: rgba(97, 68, 229, 0.1);
+        --color-brand-background: #6144e51a;
         --color-page-background: #222427;
         --alternate: #e91db4;
         --alternate-hover:  #ff1fc5;
@@ -46,24 +46,21 @@
         --color: #000;
         --color-background: #f7f7f7;
         --color-background-elements: #fff;
-        --color-read-only: rgb(233, 233, 233);
+        --color-read-only: #e9e9e9;
         --box-shadow: 0px 4px 16px rgba(0,0,0,0.08), 0px 1px 4px rgba(0,0,0,0.08);
 
         --color-border: #7774;
-        --color-inactive-border: rgba(142, 154, 163, 0.16);
+        --color-inactive-border: #8e9aa329;
         --color-pale: #8882;
         --color-indicating: #808080;
         --color-notice: #8e9aa3;
 
-        --color-brand: var(--color-brand);
-        --color-brand-hover: var(--color-brand-hover);
-        --color-brand-background: var(--color-brand-background);
         --color-alternate: var(--alternate);
         --color-alternate-hover: var(--alternate-hover);
 
         --color-f-brightest: #fff;
         --color-f-error: #e32950;
-        --color-success: #0CCF14;
+        --color-success: #0ccf14;
         --color-good: #3de25b;
         --color-bad: #f56e85;
         --color-warning: #ffba00;
@@ -84,8 +81,8 @@
       }
 
       body {
-        background-color: var(--color);
-        color: var(--color-background);
+        background-color: var(--color-background);
+        color: var(--color);
       }
 
       .overflowY-default {
@@ -173,7 +170,7 @@
         margin-top: 2em;
       }
       .show-on-fail-ls .btc-open-in-new-tab > A {
-        color: #fff;
+        color: var(--color-background-elements);
         text-decoration: none;
       }
 
@@ -189,7 +186,7 @@
         right: 0;
         bottom: 0;
         overflow: auto;
-        background-color: #fff;
+        background-color: var(--color-background-elements);
         color: var(--color-brand);
       }
 
@@ -265,7 +262,7 @@
         font-weight: 600;
         font-size: 15px;
         background-color: var(--color-brand);
-        color: #fff;
+        color: var(--color-background-elements);
         transition: 0.15s;
       }
 
@@ -280,7 +277,7 @@
       }
 
       .starter-modal__btn_skip:hover {
-        color: #fff;
+        color: var(--color-background-elements);
       }
 
       .starter-modal__btn svg {

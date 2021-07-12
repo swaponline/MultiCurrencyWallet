@@ -131,7 +131,7 @@
   }
   
   .mobileName {
-    color: #000;
+    color: var(--color);
     display: block;
     margin-left: -10px;
     display: none;
@@ -294,12 +294,12 @@
       display: none;
     }
     .mobileName {
-      color: #000;
+      color: var(--color);
       display: block;
       font-size: 16px;
     }
     tr.showButtons {
-      color: #000;
+      color: var(--color);
       height: 120px;
       border-bottom: 1px solid rgba(0, 0, 0, 0.05);
       box-shadow: rgba(0, 0, 0, 0.08) 0px 0px 20px 0;
@@ -324,7 +324,7 @@
         left: 70px;
         top: 23px;
         margin: 0;
-        color: #000;
+        color: var(--color);
       }
       .buttonActivate {
         top: 0px;
@@ -488,7 +488,7 @@
       }
       a {
         span {
-          color: #007bff;
+          color: var(--color-link);
           left: calc(100% + 80px);
           top: 0;
         }
@@ -621,7 +621,7 @@
   .assetsTableInfo {
     .errorMessage {
       position: absolute;
-      background: #fff;
+      background: var(--color-background-elements);
       z-index: 111111111;
       width: calc(100vw - 95px);
       height: 40px;

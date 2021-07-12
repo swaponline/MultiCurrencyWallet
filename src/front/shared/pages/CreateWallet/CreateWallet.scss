@@ -115,7 +115,7 @@
 }
 
 .green {
-  background-color: #0ccf14;
+  background-color: var(--color-success);
 }
 
 .assetsTableIcon {
@@ -159,7 +159,7 @@
 .subHeader p {
   font-size: 13px;
   margin-bottom: 7px;
-  color: #8e9aa3;
+  color: var(--color-notice);
   @include ff-bold;
   line-height: 140%;
 }
@@ -228,7 +228,7 @@
 
   li {
     font-weight: 100;
-    color: #8e9aa3;
+    color: var(--color-notice);
     font-size: 10px;
     @include ff-bold;
     line-height: 18px;
@@ -368,7 +368,7 @@
     font-size: 11px;
     line-height: 14px;
     font-weight: 800;
-    color: #8e9aa3;
+    color: var(--color-notice);
   }
 
   .inLine {
@@ -431,7 +431,7 @@
 
     li {
       font-weight: 100;
-      color: #8e9aa3;
+      color: var(--color-notice);
       font-size: 11px;
       @include ff-bold;
       line-height: 18px;

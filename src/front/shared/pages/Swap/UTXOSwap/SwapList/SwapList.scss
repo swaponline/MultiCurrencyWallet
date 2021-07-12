@@ -74,21 +74,21 @@
 }
 
 .active {
-  color: #000;
+  color: var(--color);
   opacity: 1;
   .stepNumber {
-    background: #fff;
-    color: #fff;
+    background: var(--color-background-elements);
+    color: var(--color-background-elements);
     border: none;
-    border: 1px solid #000;
-    color: #000;
+    border: 1px solid var(--color);
+    color: var(--color);
   }
 }
 
 .checked {
   .stepNumber {
     background: #5100dc;
-    color: #fff;
+    color: var(--color-background-elements);
     border: 1px solid #5100dc;
     min-width: 35px;
   }
@@ -111,7 +111,7 @@
     padding-bottom: 3px;
     &:hover {
       border-bottom: none;
-      color: #007bff;
+      color: var(--color-link);
     }
     .checkedIcon {
       margin-left: 4px;
@@ -119,7 +119,7 @@
   }
   i {
     font-size: 19px;
-    color: #007bff;
+    color: var(--color-link);
     display: none;
     margin-left: 4px;
   }
