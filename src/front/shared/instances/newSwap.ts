@@ -163,14 +163,14 @@ const createSwapApp = async () => {
           abi: EVM_CONTRACTS_ABI.NATIVE_COIN_SWAP,
           fetchBalance: (address) => actions.eth.fetchBalance(address),
           estimateGasPrice: () => ethLikeHelper.eth.estimateGasPrice(),
-          sendTransaction: ({ to, amount }) => actions.eth.sendTransaction({ to, amount }),
+          sendTransaction: ({ to, amount }) => actions.eth.send({ to, amount }),
         }),
         new BnbSwap({
           address: config.swapContract.bnb,
           abi: EVM_CONTRACTS_ABI.NATIVE_COIN_SWAP,
           fetchBalance: (address) => actions.bnb.fetchBalance(address),
           estimateGasPrice: () => ethLikeHelper.bnb.estimateGasPrice(),
-          sendTransaction: ({ to, amount }) => actions.bnb.sendTransaction({ to, amount }),
+          sendTransaction: ({ to, amount }) => actions.bnb.send({ to, amount }),
         }),
         ...((config?.opts?.blockchainSwapEnabled?.matic) ? [
           new MaticSwap({
@@ -178,7 +178,7 @@ const createSwapApp = async () => {
             abi: EVM_CONTRACTS_ABI.NATIVE_COIN_SWAP,
             fetchBalance: (address) => actions.matic.fetchBalance(address),
             estimateGasPrice: () => ethLikeHelper.matic.estimateGasPrice(),
-            sendTransaction: ({ to, amount }) => actions.matic.sendTransaction({ to, amount }),
+            sendTransaction: ({ to, amount }) => actions.matic.send({ to, amount }),
           })
         ] : []),
         ...((config?.opts?.blockchainSwapEnabled?.arbeth) ? [
@@ -187,7 +187,7 @@ const createSwapApp = async () => {
             abi: EVM_CONTRACTS_ABI.NATIVE_COIN_SWAP,
             fetchBalance: (address) => actions.arbeth.fetchBalance(address),
             estimateGasPrice: () => ethLikeHelper.arbeth.estimateGasPrice(),
-            sendTransaction: ({ to, amount }) => actions.arbeth.sendTransaction({ to, amount }),
+            sendTransaction: ({ to, amount }) => actions.arbeth.send({ to, amount }),
           })
         ] : []),
         new BtcSwap({
