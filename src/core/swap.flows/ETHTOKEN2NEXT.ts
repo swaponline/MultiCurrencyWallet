@@ -19,7 +19,7 @@ export default (tokenName) => {
     }
     constructor(swap) {
       super(swap, {
-        flowName: ETHTOKEN2NEXT.getName() || `{ETH}${tokenName.toUpperCase()}2NEXT`,
+        flowName: ETHTOKEN2NEXT.getName(),
         blockchainName: `ETH`,
         tokenName,
         getMyAddress: swap.app.getMyEthAddress.bind(swap.app),
