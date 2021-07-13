@@ -14,3 +14,16 @@
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
   background: #fff;
 }
+
+.inputWrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.amountInput {
+  border: 1px solid gray;
+  padding: .5rem 1rem;
+  border-radius: 8px;
+  margin: 1rem;
+}
