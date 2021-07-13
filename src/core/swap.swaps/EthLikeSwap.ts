@@ -533,11 +533,12 @@ class EthLikeSwap extends SwapInterface {
       }
 
       try {
-        const gasFee = await this.contract.methods.withdrawOther(_secret, ownerAddress, participantAddress).estimateGas(params);
-        resolve(new BigNumber(gasFee).multipliedBy(1.05).dp(0, BigNumber.ROUND_UP).toNumber() || this.gasLimit)
+        const gasFee = await this.contract.methods.withdrawOther(_secret, ownerAddress, participantAddress).estimateGas(params)
+        resolve(new BigNumber(gasFee).multipliedBy(1.05).dp(0, BigNumber.ROUND_UP).toNumber())
       }
       catch (err) {
-        reject(err)
+        console.error("calcWithdrawOtherGasError", err)
+        resolve(this.gasLimit)
       }
     })
   }

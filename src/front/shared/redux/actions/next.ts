@@ -12,9 +12,9 @@ import { next, apiLooper, constants, api } from 'helpers'
 import actions from 'redux/actions'
 import typeforce from 'swap.app/util/typeforce'
 import config from 'app-config'
-const bitcore = require('bitcore-lib')
-import * as mnemonicUtils from '../../../../common/utils/mnemonic'
-import { default as nextUtils } from '../../../../common/utils/coin/next'
+import bitcore from 'bitcore-lib'
+import * as mnemonicUtils from 'common/utils/mnemonic'
+import { default as nextUtils } from 'common/utils/coin/next'
 
 
 const NETWORK = (process.env.MAINNET) ? `MAINNET` : `TESTNET`
@@ -421,17 +421,16 @@ const getTransaction = (address: string = ``, ownType: string = ``) =>
       resolve([])
     }
 
-    return apiLooper.get('nextExplorer', `/txs/?address=${address}`, {
+    return apiLooper.get('nextExplorer', `/txs/${address}`, {
       checkStatus: (answer) => {
         try {
           if (answer && answer.txs !== undefined) return true
         } catch (e) { /* */ }
         return false
       },
-      query: 'next_balance',
     }).then((res: any) => {
       const transactions = res.txs.map((item) => {
-        const direction = item.vin[0].addr !== address ? 'in' : 'out'
+        const direction = item.vin[0].address !== address ? 'in' : 'out'
 
         const isSelf = direction === 'out'
           && item.vout.filter((item) =>
@@ -469,24 +468,36 @@ const getTransaction = (address: string = ``, ownType: string = ``) =>
 const send = ({ from, to, amount, feeValue, speed } = {}) => {
 
   return new Promise(async (ready) => {
-    bitcore.Networks.add({
+    const networks = bitcore.Networks
+    const nextNetwork = {
       name: 'next-mainnet',
-      pubkeyhash: next.network.pubKeyHash,
-      privatekey: next.network.wif,
-      scripthash: next.network.scriptHash,
-      xpubkey: next.network.bip32.public,
-      xprivkey: next.network.bip32.private,
+      alias: 'next-mainnet',
+      pubkeyhash: 0x4b,
+      privatekey: 0x80,
+      scripthash: 0x05,
+      xpubkey: 0x0488B21E,
+      xprivkey: 0x0488ADE4,
       networkMagic: 0xcbe4d0a1,
-      port: 7077,
-    })
-    const bitcoreNetwork = bitcore.Networks.get('next-mainnet')
+      port: 7078,
+      dnsSeeds: [
+        config.api.nextExplorer,
+      ]
+    }
+    networks.add(nextNetwork)
+
+    const bitcoreNextNetwork = networks.get('next-mainnet', 'name')
+
+    const bitcoinNetwork = networks.get('livenet', 'name')
+    // need remove because of bitcore.PrivateKey() use 'privatekey' key to get network
+    // for validation and bitcoin.livenet.privatekey === nextNetwork.privatekey
+    networks.remove(bitcoinNetwork)
 
     const privKeyWIF = getPrivateKeyByAddress(from)
-    const privateKey = new bitcore.PrivateKey.fromWIF(privKeyWIF)
-    const publicKey = bitcore.PublicKey(privateKey, bitcoreNetwork)
-    const addressFrom = new bitcore.Address(publicKey, bitcoreNetwork)
+    const privateKey = new bitcore.PrivateKey(privKeyWIF, bitcoreNextNetwork)
+    const publicKey = bitcore.PublicKey.fromPrivateKey(privateKey)
+    const addressFrom = new bitcore.Address(publicKey, bitcoreNextNetwork)
 
-    const unspents = await fetchUnspents(from)
+    const unspents: bitcore.Transaction.UnspentOutput[] = await fetchUnspents(from) || []
     const amountSat = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
 
     const transaction = new bitcore.Transaction()
@@ -498,6 +509,7 @@ const send = ({ from, to, amount, feeValue, speed } = {}) => {
     const rawTx = String(transaction.serialize())
     const broadcastAnswer: any = await broadcastTx(rawTx)
     const txid = broadcastAnswer.raw
+
     ready(txid)
   })
 }
@@ -506,7 +518,14 @@ const send = ({ from, to, amount, feeValue, speed } = {}) => {
 const fetchUnspents = (address) => nextUtils.fetchUnspents({
   address,
   NETWORK,
-})
+}).then((unspents: any) => unspents.map(unspent => ({
+    address: unspent.address,
+    txId: unspent.txid,
+    outputIndex: unspent.outputIndex,
+    script: unspent.script,
+    satoshis: unspent.satoshis,
+  }))
+)
 
 
 const broadcastTx = (txRaw) => nextUtils.broadcastTx({

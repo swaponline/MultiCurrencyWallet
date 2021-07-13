@@ -1,7 +1,6 @@
 import debug from 'debug'
-import SwapApp, { constants, util } from 'swap.app'
+import { util } from 'swap.app'
 import { AtomicAB2UTXO } from 'swap.swap'
-import { BigNumber } from 'bignumber.js'
 import Swap from 'swap.swap'
 import { EthLikeTokenSwap, BtcSwap } from 'swap.swaps'
 

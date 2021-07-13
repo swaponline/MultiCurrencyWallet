@@ -104,7 +104,7 @@ window.buildOptions = {
     matic: true,
     arbeth: false,
     ghost: false,
-    next: false,
+    next: true,
   },
   defaultExchangePair: {
     buy: '{eth}usdt',

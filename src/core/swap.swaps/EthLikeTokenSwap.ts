@@ -159,13 +159,7 @@ class EthLikeTokenSwap extends SwapInterface {
       //@ts-ignore
       debug(`EthLikeTokenSwap ${this.blockchainName} -> ${methodName} -> params`, params)
 
-      let gasAmount = 0
-      try {
-        gasAmount = await this.contract.methods[methodName](...args).estimateGas(params)
-      } catch (estimateGasError) {
-        reject({ message: estimateGasError.message, gasAmount: new BigNumber(gasAmount).dividedBy(1e8).toString() })
-        return
-      }
+      let gasAmount = await this.contract.methods[methodName](...args).estimateGas(params)
 
       params['gas'] = new BigNumber(gasAmount).multipliedBy(1.05).dp(0, BigNumber.ROUND_UP).toNumber() || this.gasLimit
       //@ts-ignore
@@ -650,11 +644,12 @@ class EthLikeTokenSwap extends SwapInterface {
       }
 
       try {
-        const gasAmount = await this.contract.methods.withdrawOther(_secret, ownerAddress, participantAddress).estimateGas(params);
-        resolve(new BigNumber(gasAmount).multipliedBy(1.05).dp(0, BigNumber.ROUND_UP).toNumber() || this.gasLimit)
+        const gasAmount = await this.contract.methods.withdrawOther(_secret, ownerAddress, participantAddress).estimateGas(params)
+        resolve(new BigNumber(gasAmount).multipliedBy(1.05).dp(0, BigNumber.ROUND_UP).toNumber())
       }
       catch (err) {
-        reject(err)
+        console.error('calcWithdrawOtherGas', err)
+        resolve(this.gasLimit)
       }
     })
   }

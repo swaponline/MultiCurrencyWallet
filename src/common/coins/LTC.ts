@@ -75,7 +75,6 @@ export default LTC
 
 
 const libAdapter: ILibAdapter = {
-
   accountFromMnemonic(mnemonic, netName) {
     const network = LTC[netName]
     const settings = network.settings
@@ -103,6 +102,7 @@ const libAdapter: ILibAdapter = {
 
     bitcore.Networks.add({
       name: libNetworkName,
+      alias: libNetworkName,
       pubkeyhash: settings.base58prefix.pubKeyHash,
       privatekey: settings.base58prefix.privateKeyWIF,
       scripthash: settings.base58prefix.scriptHash,
@@ -110,11 +110,12 @@ const libAdapter: ILibAdapter = {
       xprivkey: settings.base58prefix.privateKeyBIP32,
       networkMagic: settings.magic,
       port: settings.port
-    });
-    const libNetwork = bitcore.Networks.get(libNetworkName)
+    })
 
-    const privateKey = new bitcore.PrivateKey.fromWIF(child.toWIF())
-    const publicKey = bitcore.PublicKey(privateKey, libNetwork)
+    const libNetwork = bitcore.Networks.get(libNetworkName, 'name')
+
+    const privateKey = new bitcore.PrivateKey(child.toWIF(), libNetwork)
+    const publicKey = bitcore.PublicKey.fromPrivateKey(privateKey)
     const address = new bitcore.Address(publicKey, libNetwork)
 
     const account = {

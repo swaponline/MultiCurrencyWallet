@@ -1,5 +1,5 @@
 import debug from 'debug'
-import SwapApp, { constants, util } from 'swap.app'
+import { util } from 'swap.app'
 import { AtomicAB2UTXO } from 'swap.swap'
 import { EthLikeSwap, BtcSwap } from 'swap.swaps'
 
@@ -313,9 +313,7 @@ class EthLikeToBtc extends AtomicAB2UTXO {
         },
 
         // 7 - `end`
-        async () => {
-          
-        },
+        async () => {},
       ]
     }
   }
@@ -381,7 +379,7 @@ class EthLikeToBtc extends AtomicAB2UTXO {
   }
 
   async tryWithdraw(_secret) {
-    const { secret, secretHash, isEthWithdrawn, isbtcWithdrawn, utxoScriptValues } = this.state
+    const { secret, secretHash, isbtcWithdrawn, utxoScriptValues } = this.state
 
     if (!_secret)
       throw new Error(`Withdrawal is automatic. For manual withdrawal, provide a secret`)
