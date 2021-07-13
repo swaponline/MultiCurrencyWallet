@@ -33,8 +33,8 @@ async function repeatActionWithDelay(params) {
 
 describe('Sending EVM Coin', () => {
   const waitingTxMining = 30_000
-  const requestsForTxInfo = 3
-  const extraDelay = 7_000
+  const requestsForTxInfo = 4
+  const extraDelay = 10_000
   const waitingForTheTest = waitingTxMining * requestsForTxInfo + extraDelay
   
   type Coin = string
@@ -158,6 +158,7 @@ describe('Sending EVM Coin', () => {
     paramsToSend: {
       amount: number
       gasLimit: number
+      from: string
       privateKey: string
       gasPrice?: number
       externalAdminFeeObj: {
@@ -178,10 +179,11 @@ describe('Sending EVM Coin', () => {
         paramsToSend: {
           amount: 0.001,
           gasLimit: DEFAULT_CURRENCY_PARAMETERS.evmLike.limit.send,
+          from: testWallets.eth.address.toLowerCase(),
           privateKey: testWallets.eth.privateKey,
           externalAdminFeeObj: {
             fee: 7,
-            address: '0x276747801B0dbb7ba04685BA27102F1B27Ca0815',
+            address: testWallets.evmAdmin.address,
             min: 0.001,
           },
         },
@@ -194,10 +196,11 @@ describe('Sending EVM Coin', () => {
         paramsToSend: {
           amount: 0.001,
           gasLimit: DEFAULT_CURRENCY_PARAMETERS.evmLike.limit.send,
+          from: testWallets.bnb.address.toLowerCase(),
           privateKey: testWallets.bnb.privateKey,
           externalAdminFeeObj: {
             fee: 7,
-            address: '0x276747801B0dbb7ba04685BA27102F1B27Ca0815',
+            address: testWallets.evmAdmin.address,
             min: 0.001,
           },
         },
@@ -210,10 +213,11 @@ describe('Sending EVM Coin', () => {
         paramsToSend: {
           amount: 0.001,
           gasLimit: DEFAULT_CURRENCY_PARAMETERS.evmLike.limit.send,
+          from: testWallets.matic.address.toLowerCase(),
           privateKey: testWallets.matic.privateKey,
           externalAdminFeeObj: {
             fee: 7,
-            address: '0x276747801B0dbb7ba04685BA27102F1B27Ca0815',
+            address: testWallets.evmAdmin.address,
             min: 0.001,
           },
         },
@@ -226,10 +230,11 @@ describe('Sending EVM Coin', () => {
         paramsToSend: {
           amount: 0.0001,
           gasLimit: DEFAULT_CURRENCY_PARAMETERS.arbeth.limit.send,
+          from: testWallets.arbeth.address.toLowerCase(),
           privateKey: testWallets.arbeth.privateKey,
           externalAdminFeeObj: {
             fee: 1,
-            address: '0x276747801B0dbb7ba04685BA27102F1B27Ca0815',
+            address: testWallets.evmAdmin.address,
             min: 0.0001,
           },
         },

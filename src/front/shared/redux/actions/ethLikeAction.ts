@@ -452,14 +452,7 @@ class EthLikeAction {
     }
 
     let sendMethod = Web3.eth.sendTransaction
-    let txData: string | {
-      chainId: string
-      from: string
-      to: string
-      gasPrice: number
-      gas: number
-      value: string
-    } = {
+    let txData: any = {
       chainId: this.chainId,
       from: Web3.utils.toChecksumAddress(ownerAddress),
       to: to.trim(),
@@ -467,6 +460,7 @@ class EthLikeAction {
       gas: gasLimit,
       value: Web3.utils.toHex(Web3.utils.toWei(String(amount), 'ether')),
     }
+
     let privateKey: string | undefined = undefined
     let bufferPrivateKey: Buffer | undefined = undefined
 
@@ -486,13 +480,6 @@ class EthLikeAction {
       currency: this.ticker,
     })
 
-    console.log('-----------------------------')
-    console.log('params: ', params)
-    console.log('privateKey: ', privateKey)
-    console.log('bufferPrivateKey: ', bufferPrivateKey)
-    console.log('walletData: ', walletData)
-    console.log('-----------------------------')
-
     if (haveExternalWallet && !walletData?.isMetamask) {
       txData = await this.signTransaction({
         txData,
@@ -509,10 +496,11 @@ class EthLikeAction {
       if (this.adminFeeObj && !walletData.isMetamask) {
         receipt.then(() => {
           this.sendAdminTransaction({
+            from: txData?.from || externalAddress,
             amount,
             gasPrice,
             gasLimit,
-            privateKey: bufferPrivateKey,
+            privateKey,
           })
         })
       }
@@ -520,10 +508,18 @@ class EthLikeAction {
   }
 
   sendAdminTransaction = async (params): Promise<string> => {
-    const { amount, gasPrice, gasLimit, privateKey, externalAdminFeeObj } = params
+    const {
+      from,
+      amount,
+      gasPrice,
+      gasLimit,
+      privateKey,
+      externalAdminFeeObj,
+    } = params
     const adminObj = externalAdminFeeObj || this.adminFeeObj
     const minAmount = new BigNumber(adminObj.min)
     const Web3 = this.getCurrentWeb3()
+    const bufferPrivateKey = Buffer.from(privateKey.replace('0x', ''), 'hex')
 
     let feeFromUsersAmount = new BigNumber(adminObj.fee)
       .dividedBy(100) // 100 %
@@ -533,8 +529,6 @@ class EthLikeAction {
     if (minAmount.isGreaterThan(feeFromUsersAmount)) {
       feeFromUsersAmount = minAmount.toNumber()
     }
-
-    const from = getState().user[`${this.tickerKey}Data`].address
 
     const txData = {
       chainId: this.chainId,
@@ -551,7 +545,7 @@ class EthLikeAction {
     return new Promise(async (res) => {
       const signedTx = await this.signTransaction({
         txData,
-        privateKey,
+        privateKey: bufferPrivateKey,
       })
 
       Web3.eth.sendSignedTransaction(signedTx)
