@@ -14,7 +14,7 @@ class ETH2NEXT extends EvmToNext {
   }
   constructor(swap) {
     super(swap, {
-      flowName: `ETH2NEXT`,
+      flowName: ETH2NEXT.getName(),
       getMyAddress: swap.app.getMyEthAddress.bind(swap.app),
       getParticipantAddress: swap.app.getParticipantEthAddress.bind(swap.app),
     })
