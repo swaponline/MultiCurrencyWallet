@@ -7,8 +7,8 @@
     margin-top: -2px;
     width: 1.2em;
     height: 1.2em;
-    background-color: $pale-color;
-    color: $indicating-color;
+    background-color: var(--color-pale);
+    color: var(--color-indicating);
     transform: scale(0.8);
     border-radius: 50%;
     text-align: center;

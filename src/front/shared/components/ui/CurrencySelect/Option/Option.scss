@@ -11,7 +11,7 @@
 .circle {
   width: 32px;
   height: 32px;
-  background: #000;
+  background: var(--color);
   border-radius: 50%;
   position: absolute;
   left: 15px;

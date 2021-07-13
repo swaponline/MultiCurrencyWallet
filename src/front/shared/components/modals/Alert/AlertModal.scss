@@ -44,13 +44,13 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  background-color: $l-background-elements;
+  background-color: var(--color-background-elements);
   padding: 32px;
   width: 100%;
   max-width: 640px;
   height: auto;
   border-radius: 10px;
-  box-shadow: $l-box-shadow;
+  box-shadow: var(--box-shadow);
 
   &_dashboardView {
     background-color: none;
@@ -62,8 +62,8 @@
 
   &.dark {
     box-shadow: none;
-    background-color: $d-background-elements;
-    color: $d-color;
+    background-color: var(--color-background-elements);
+    color: var(--color);
   }
 }
 

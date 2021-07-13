@@ -29,8 +29,6 @@ type WallerSliderState = {
   banners?: any[]
 }
 
-const isDark = localStorage.getItem(constants.localStorage.isDark)
-
 @connect(({ user }) => ({ user }))
 class WallerSlider extends React.Component<WallerSliderProps, WallerSliderState> {
   _mounted = false
@@ -193,7 +191,7 @@ class WallerSlider extends React.Component<WallerSliderProps, WallerSliderState>
 
     return window.location.hash !== linksManager.hashHome ? null : (
       <div className="data-tut-banners">
-        <h3 className={`${styles.bannersHeading} ${isDark ? styles.dark : ''}`}>
+        <h3 className={`${styles.bannersHeading}`}>
           <FormattedMessage id="ForYou" defaultMessage="For you" />
         </h3>
         {!this.state.isFetching ? (

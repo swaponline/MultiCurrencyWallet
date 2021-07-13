@@ -5,12 +5,12 @@
   border-radius: 4px;
   padding: 35px 25px 40px;
   margin-top: 5%;
-  box-shadow: $l-box-shadow;
-  background: $l-background-elements;
+  box-shadow: var(--box-shadow);
+  background: var(--color-background-elements);
 
   &.--dark {
-    box-shadow: $d-box-shadow;
-    background: $d-background-elements;
+    box-shadow: var(--box-shadow);
+    background: var(--color-background-elements);
 
     @media screen and (max-width: 480px) {
       background: #222528;
@@ -89,7 +89,7 @@
   line-height: 2.5;
   text-align: center;
   background-color: #f0eefd;
-  color: $primary;
+  color: var(--color-brand);
   border: 1px solid #f0eefd;
   font-weight: bold;
   margin-right: 10px;
@@ -110,12 +110,12 @@
 }
 
 .purple {
-  background-color: $primary;
+  background-color: var(--color-brand);
   color: #f0eefd;
 }
 
 .green {
-  background-color: #0ccf14;
+  background-color: var(--color-success);
 }
 
 .assetsTableIcon {
@@ -132,7 +132,7 @@
   font-weight: 800;
   font-size: 15px;
   line-height: 150%;
-  background: $primary;
+  background: var(--color-brand);
   color: white;
   height: 45px;
   width: 100%;
@@ -140,7 +140,7 @@
 
 .continue:disabled {
   background-color: #f0eefd;
-  color: $primary;
+  color: var(--color-brand);
 }
 
 .subHeader {
@@ -159,7 +159,7 @@
 .subHeader p {
   font-size: 13px;
   margin-bottom: 7px;
-  color: #8e9aa3;
+  color: var(--color-notice);
   @include ff-bold;
   line-height: 140%;
 }
@@ -188,7 +188,7 @@
   text-align: right;
 
   button {
-    color: $primary;
+    color: var(--color-brand);
     @include ff-bold;
     font-size: 14px;
     text-decoration: underline;
@@ -198,7 +198,7 @@
 
 .card {
   background: #ffffff;
-  border: 1px solid $inactive-border-color;
+  border: 1px solid var(--color-inactive-border);
   box-sizing: border-box;
   box-shadow: 0px 2px 12px rgba(142, 154, 163, 0.08);
   border-radius: 4px;
@@ -228,7 +228,7 @@
 
   li {
     font-weight: 100;
-    color: #8e9aa3;
+    color: var(--color-notice);
     font-size: 10px;
     @include ff-bold;
     line-height: 18px;
@@ -260,7 +260,7 @@
 }
 
 .purpleBorder {
-  border-color: $primary !important;
+  border-color: var(--color-brand) !important;
 }
 
 .cardActivated {
@@ -277,7 +277,7 @@
 }
 
 .cardActivated.purpleBorder {
-  border-color: $primary !important;
+  border-color: var(--color-brand) !important;
 
   div,
   img {
@@ -368,7 +368,7 @@
     font-size: 11px;
     line-height: 14px;
     font-weight: 800;
-    color: #8e9aa3;
+    color: var(--color-notice);
   }
 
   .inLine {
@@ -395,7 +395,7 @@
     align-items: flex-start;
 
     button {
-      color: $primary;
+      color: var(--color-brand);
       @include ff-bold;
       font-size: 14px;
       text-decoration: underline;
@@ -431,7 +431,7 @@
 
     li {
       font-weight: 100;
-      color: #8e9aa3;
+      color: var(--color-notice);
       font-size: 11px;
       @include ff-bold;
       line-height: 18px;

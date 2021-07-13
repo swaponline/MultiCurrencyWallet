@@ -982,7 +982,6 @@ class Row extends Component<RowProps, RowState> {
           {!metamaskDisconnected && !isNotAvailableMetamaskNetwork &&
             <div onClick={this.handleOpenDropdown} styleName="assetsTableDots">
               <DropdownMenu
-                size="regular"
                 className="walletControls"
                 items={dropDownMenuItems}
               />

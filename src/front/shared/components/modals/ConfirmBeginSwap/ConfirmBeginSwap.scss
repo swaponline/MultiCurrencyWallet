@@ -32,7 +32,7 @@
 .error {
   display: flex;
   align-items: center;
-  color: #fff;
+  color: var(--color-background-elements);
   padding: 0.3em 10px;
   margin-top: -5px;
   font-size: 13px;
@@ -75,7 +75,7 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  background: #fff;
+  background: var(--color-background-elements);
   padding: 32px;
   width: 100%;
   max-width: 640px;

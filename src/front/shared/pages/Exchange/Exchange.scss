@@ -45,26 +45,26 @@
   position: relative;
 
   &.--dark {
-    background: $d-background-color;
-    color: $d-color;
+    background: var(--color-background);
+    color: var(--color);
 
     .formExchange {
-      box-shadow: $d-box-shadow;
-      background: $d-background-elements;
+      box-shadow: var(--box-shadow);
+      background: var(--color-background-elements);
     }
 
     &:before {
       background: #694cff !important;
-      color: $l-background-elements;
+      color: var(--color-background-elements);
     }
 
     .maxAmount {
-      color: $d-color;
-      background: $d-background-elements;
+      color: var(--color);
+      background: var(--color-background-elements);
     }
     
     .minerFeeUpdateBtn {
-      color: $d-color;
+      color: var(--color);
     }
   }
 }
@@ -102,7 +102,7 @@
 }
 
 .link.button-like {
-  color: $color-link;
+  color: var(--color-link);
   font-weight: 600;
   text-decoration: underline;
   padding: 1em 0;
@@ -122,7 +122,7 @@
 }
 
 .button.link-like {
-  color: $color-link;
+  color: var(--color-link);
   text-decoration: underline;
 }
 
@@ -209,7 +209,7 @@
     opacity: 0.7;
 
     &.--dark {
-      color: #fff;
+      color: var(--color-background-elements);
     }
   }
 
@@ -236,7 +236,7 @@
 }
 
 .minerFeeUpdateBtn {
-  color: $l-color;
+  color: var(--color);
 }
 
 .buttons {
@@ -258,7 +258,7 @@
   font-family: 'Roboto Mono', monospace;
   font-size: 13px;
   font-weight: bold;
-  color: $notice-color;
+  color: var(--color-notice);
 
   .swapStartStatusLoader {
     display: inline-block;
@@ -304,10 +304,10 @@
 }
 
 .error {
-  color: #fff;
+  color: var(--color-background-elements);
   padding: 0.4em 1em;
   font-size: 13px;
-  background: $color-bad;
+  background: var(--color-bad);
   border-radius: 3px;
   @include errAppend();
 
@@ -362,7 +362,7 @@
 .maxAmount {
   position: absolute;
   top: -10px;
-  background: #fff;
+  background: var(--color-background-elements);
   font-size: 13px;
   right: 10px;
   padding: 0 0.5em;

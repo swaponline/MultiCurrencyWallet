@@ -34,16 +34,49 @@
     <%= htmlWebpackPlugin.options.firebugScript %>
 
     <style>
-      :root {
-        --primary:#6144e5;
-        --primary-hover: #7371ff;
-        --primary-background: rgba(97, 68, 229, 0.1);
-        --alternate: #e91db4;
-        --alternate-hover:  #ff1fc5;
+      :root,
+      [data-scheme="default"] {
+        --color-brand:#6144e5;
+        --color-brand-hover: #7371ff;
+        --color-brand-background: #6144e51a;
+        --color-page-background: #f7f7f7;
+        --color: #000;
+        --color-background: #f7f7f7;
+        --color-background-elements: #fff;
+        --color-read-only: #e9e9e9;
+
+        --color-border: #7774;
+        --color-inactive-border: #8e9aa329;
+        --color-pale: #8882;
+        --color-indicating: #808080;
+        --color-notice: #8e9aa3;
+
+        --color-f-brightest: #fff;
+        --color-f-error: #e32950;
+        --color-success: #0ccf14;
+        --color-good: #3de25b;
+        --color-bad: #f56e85;
+        --color-warning: #ffba00;
+        --color-link: #007bff;
+
+        --box-shadow: 0px 4px 16px rgba(0,0,0,0.08), 0px 1px 4px rgba(0,0,0,0.08);
+      }
+
+      [data-scheme="dark"] {
+        --color-brand:#6144e5;
+        --color-brand-hover: #7371ff;
+        --color-brand-background: rgba(97, 68, 229, 0.1);
+        --color-page-background: #222427;
+        --color: #fff;
+        --color-background: #222427;
+        --color-background-elements: #242425;
+        --box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.49),0px 1px 4px rgba(13, 13, 13, 0.06);
+        --color-read-only: rgb(44, 44, 44);
       }
 
       body {
-        background-color: #f7f7f7;
+        background-color: var(--color-background);
+        color: var(--color);
       }
 
       .overflowY-default {
@@ -52,10 +85,6 @@
 
       .overflowY-hidden {
         overflow: hidden;
-      }
-
-      .overflowY-dashboardView-default {
-        overflow: visible;
       }
 
       .overflowY-dashboardView-hidden {
@@ -78,18 +107,13 @@
         justify-content: center;
         align-items: center;
         flex-direction: column;
-        background-color: white;
+        background-color: var(--color-page-background);
         position: fixed;
         top: 0;
         left: 0;
         right: 0;
         bottom: 0;
         z-index: 1000;
-      }
-
-      .darkTheme {
-        background-color: #222427;
-        color: #fff;
       }
 
       .loader {
@@ -140,7 +164,7 @@
         margin-top: 2em;
       }
       .show-on-fail-ls .btc-open-in-new-tab > A {
-        color: #fff;
+        color: var(--color-background-elements);
         text-decoration: none;
       }
 
@@ -156,8 +180,8 @@
         right: 0;
         bottom: 0;
         overflow: auto;
-        background-color: #fff;
-        color: var(--primary);
+        background-color: var(--color-background-elements);
+        color: var(--color-brand);
       }
 
       .starter-modal__container-content {
@@ -224,30 +248,30 @@
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        border: 0.1em solid var(--primary);
+        border: 0.1em solid var(--color-brand);
         border-radius: 0.2em;
         white-space: nowrap;
         letter-spacing: inherit;
         font-family: inherit;
         font-weight: 600;
         font-size: 15px;
-        background-color: var(--primary);
-        color: #fff;
+        background-color: var(--color-brand);
+        color: var(--color-background-elements);
         transition: 0.15s;
       }
 
       .starter-modal__btn_skip {
         background-color: transparent;
-        color: var(--primary);
+        color: var(--color-brand);
       }
 
       .starter-modal__btn:hover {
-        background-color: var(--primary-hover);
-        border-color: var(--primary-hover);
+        background-color: var(--color-brand-hover);
+        border-color: var(--color-brand-hover);
       }
 
       .starter-modal__btn_skip:hover {
-        color: #fff;
+        color: var(--color-background-elements);
       }
 
       .starter-modal__btn svg {
@@ -267,7 +291,7 @@
         font-size: 15px;
         font-weight: bold;
         text-decoration: underline;
-        color: var(--primary);
+        color: var(--color-brand);
       }
 
       @media (max-width: 768px) {
@@ -386,7 +410,7 @@
     </style>
   </head>
 
-  <body>
+  <body data-scheme="default">
     <!-- Start Modal -->
     <section class="starter-modal d-none" id="starter-modal">
       <div class="starter-modal__container-content">
@@ -598,6 +622,15 @@
     -->
 
     <script>
+      const isDark = localStorage.getItem('isDark')
+      const dataset = document.body.dataset
+
+      if (isDark) {
+        dataset.scheme = "dark"
+      } else {
+        dataset.scheme = "default"
+      }
+
       // Extension: prevent 2 tabs
       if (window.chrome && window.chrome.extension) {
         var extViews = chrome.extension.getViews()
@@ -724,14 +757,6 @@
         return '';
       }
 
-      const wrapper = document.getElementById('wrapper_element');
-
-      if (window.localStorage.getItem('isDark')) {
-        wrapper.classList.add('darkTheme');
-      } else {
-        wrapper.classList.remove('darkTheme');
-      }
-
       // detect browser's lang
       const getNavigatorLanguage = () => {
         if (navigator.languages && navigator.languages.length) {
@@ -809,8 +834,15 @@
       window.DEFAULT_FIAT = 'USD';
       window.DefaultCountryCode = '+1';
       window.widgetName = 'own widget name';
-
       window.buyViaCreditCardLink = 'https://buy.itez.com/swaponline';
+
+      if (window.brandColor) {
+        document.documentElement.style.setProperty("--color-brand", window.brandColor);
+      }
+
+      if (window.brandColorHover) {
+        document.documentElement.style.setProperty("--color-brand-hover", window.brandColorHover);
+      }
 
       /* /Loader before any JS */
 

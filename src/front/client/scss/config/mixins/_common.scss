@@ -35,7 +35,7 @@
 }
 
 @mixin brand-color($property: color, $important: null) {
-  #{$property}: $color-brand $important;
+  #{$property}: var(--color-brand) $important;
 }
 
 @mixin absolute-centring {

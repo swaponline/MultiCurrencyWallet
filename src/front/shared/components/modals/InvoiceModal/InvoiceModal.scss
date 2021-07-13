@@ -3,7 +3,7 @@
   
   &.dark {
     .amountTooltip {
-      background-color: $d-background-elements;
+      background-color: var(--color-background-elements);
     }
   }
 }
@@ -16,8 +16,8 @@
   right: 7px;
   bottom: -13px;
   font-family: 'Roboto Mono', monospace;
-  background-color: $l-background-elements;
-  color: $notice-color;
+  background-color: var(--color-background-elements);
+  color: var(--color-notice);
 }
 
 @include media-mobile {

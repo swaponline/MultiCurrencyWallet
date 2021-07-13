@@ -1,11 +1,8 @@
 import React from 'react'
-import { constants } from 'helpers'
 import { FormattedMessage } from 'react-intl'
 
 import CSSModules from 'react-css-modules'
 import styles from './Table.scss'
-
-const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 type TableProps = {
   rows: { [key: string]: any }[]
@@ -89,7 +86,7 @@ export default class Table extends React.Component<TableProps, TableState> {
     } = this.props
 
     return (
-      <table styleName={`table ${isDark ? 'dark' : ''}`} className={`table ${className}`} ref={(table) => this.linkOnTable = table}>
+      <table styleName="table" className={`table ${className}`} ref={(table) => this.linkOnTable = table}>
         <thead ref={(thead) => this.linkOnTableHead = thead}>
           <tr>
             {

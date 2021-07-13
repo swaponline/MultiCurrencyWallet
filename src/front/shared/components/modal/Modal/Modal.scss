@@ -6,7 +6,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: $l-background-elements;
+  background: var(--color-background-elements);
   width: 100%;
   height: 100%;
   &_dashboardView {
@@ -14,12 +14,12 @@
   }
 
   &.dark {
-    box-shadow: $d-box-shadow;
-    background: $d-background-elements;
-    color: $d-color;
+    box-shadow: var(--box-shadow);
+    background: var(--color-background-elements);
+    color: var(--color);
 
     .title {
-      color: $d-color;
+      color: var(--color);
     }
 
     .header {

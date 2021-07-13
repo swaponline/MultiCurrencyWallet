@@ -1,10 +1,7 @@
 .footer {
   width: 100%;
   margin-top: 30px;
-
-  &.dark {
-    background-color: #222427;
-  }
+  background-color: var(--color-page-background);
 
   &.mobile {
     margin-top: 10px;
@@ -37,7 +34,7 @@
   opacity: 0.9;
 
   a {
-    color: $primary-hover;
+    color: var(--color-brand-hover);
   }
 }
 
@@ -50,10 +47,10 @@
   }
 
   a {
-    color: $primary-hover;
+    color: var(--color-brand-hover);
 
     &:hover {
-      color: $alternate;
+      color: var(--color-brand);
     }
   }
 }

@@ -14,7 +14,7 @@ label.Switch {
   }
 
   & > span:before {
-    background-color: $pale-color;
+    background-color: var(--color-pale);
     border-radius: 1.2em;
     border: .1em solid transparent;
     content: '';
@@ -33,7 +33,7 @@ label.Switch {
   }
 
   & > span:after {
-    background-color: $primary;
+    background-color: var(--color-brand);
     border-radius: 50%;
     content: '';
     width: 15px;
@@ -50,11 +50,11 @@ label.Switch {
   }
 
   & > input:checked + span:before {
-    background-color: $primary;
+    background-color: var(--color-brand);
   }
 
   & > input:checked + span:after {
-    background-color: #fff;
+    background-color: var(--color-background-elements);
     right: 0px;
     left: auto;
   }

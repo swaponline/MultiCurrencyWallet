@@ -8,7 +8,6 @@
   height: 68px;
   margin-bottom: 25px;
   vertical-align: center;
-  // box-shadow: rgba(#000, 0.08) 0 3px 9px 0;
   border-radius: 6px;
   text-align: center;
   position: relative;
@@ -52,7 +51,7 @@
   font-family: 'Roboto Mono', monospace;
   bottom: -14px;
   top: auto;
-  background: #fff;
+  background: var(--color-background-elements);
   right: auto;
   padding: 0 10px;
   font-size: 13px;
@@ -135,7 +134,7 @@ input:disabled {
   input {
     border: none;
     height: 69px;
-    border-bottom: 1px solid #000;
+    border-bottom: 1px solid var(--color);
     font-size: 16px;
     padding-left: 2px;
   }
@@ -143,10 +142,10 @@ input:disabled {
 
 .currencySelect.dropDown {
   width: 100%;
-  border: 1px solid #000;
+  border: 1px solid var(--color);
   top: 0px;
   z-index: 1;
-  background: #fff;
+  background: var(--color-background-elements);
   height: 375px;
   border-radius: 3px;
 }

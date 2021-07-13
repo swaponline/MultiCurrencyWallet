@@ -12,16 +12,16 @@
   height: 100%;
   margin-top: 20px;
   border-radius: 4px;
-  box-shadow: $l-box-shadow;
-  background: $l-background-elements;
+  box-shadow: var(--box-shadow);
+  background: var(--color-background-elements);
 }
 
 .dark {
-  box-shadow: $d-box-shadow;
-  background: $d-background-elements;
+  box-shadow: var(--box-shadow);
+  background: var(--color-background-elements);
 
   pre {
-    color: $d-color !important;
+    color: var(--color) !important;
   }
 
   @media screen and (max-width: 480px) {

@@ -1,15 +1,15 @@
 .history {
   display: block;
-  box-shadow: $l-box-shadow;
-  background: $l-background-elements;
+  box-shadow: var(--box-shadow);
+  background: var(--color-background-elements);
   border-radius: 4px;
   padding: 25px;
   margin-top: 20px;
   width: 100%;
 
   &.dark {
-    box-shadow: $d-box-shadow;
-    background: $d-background-elements;
+    box-shadow: var(--box-shadow);
+    background: var(--color-background-elements);
   }
 }
 
@@ -35,7 +35,7 @@
 
 .walletNavItem.active {
   a {
-    border-bottom: 3px solid $primary;
+    border-bottom: 3px solid var(--color-brand);
     color: #1f2d48;
   }
 }
@@ -45,16 +45,16 @@
   font-size: 15px;
   line-height: 140%;
   padding-bottom: 10px;
-  color: #8e9aa3 !important;
+  color: var(--color-notice) !important;
 }
 
 .dark {
   .historyHeading {
-    color: $d-color;
+    color: var(--color);
   }
 
   a {
-    color: $d-color !important;
+    color: var(--color) !important;
   }
 }
 

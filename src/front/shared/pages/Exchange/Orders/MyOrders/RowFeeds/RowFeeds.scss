@@ -1,9 +1,9 @@
 .accept {
-  color: $color-good;
+  color: var(--color-good);
 }
 
 .delete {
-  color: $color-f-error;
+  color: var(--color-f-error);
 }
 
 .delete, .accept {

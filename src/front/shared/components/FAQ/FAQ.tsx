@@ -4,12 +4,10 @@ import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import btcUtils from 'common/utils/coin/btc'
 import ethLikeHelper from 'common/helpers/ethLikeHelper'
 import { FormattedMessage, injectIntl } from 'react-intl'
-import { constants, feedback, adminFee, externalConfig } from 'helpers'
+import { feedback, adminFee, externalConfig } from 'helpers'
 import cssModules from 'react-css-modules'
 import cx from 'classnames'
 import styles from './styles.scss'
-
-const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 const NETWORK = process.env.MAINNET
   ? 'MAINNET'
@@ -153,7 +151,7 @@ const FAQ = (props) => {
   ]
 
   return (
-    <div className={`${styles.faQuestions} ${isDark ? styles.dark : ''}`}>
+    <div className={`${styles.faQuestions}`}>
       <h5 className={styles.faQuestions__header}>
         <FormattedMessage id="MainFAQHeader" defaultMessage="FAQ" />
       </h5>

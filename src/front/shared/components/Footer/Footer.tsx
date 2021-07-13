@@ -2,7 +2,7 @@ import React from 'react'
 import cx from 'classnames'
 import { isMobile } from 'react-device-detect'
 import { FormattedMessage } from 'react-intl'
-import { constants, links } from 'helpers'
+import { links } from 'helpers'
 
 import config from 'helpers/externalConfig'
 
@@ -17,14 +17,12 @@ import version from 'helpers/version'
 
 
 const Footer = () => {
-  const isDark = localStorage.getItem(constants.localStorage.isDark)
   const isFooterDisabled = config.opts.ui.footerDisabled
 
   return (
     <footer
       className={cx({
         [styles.footer]: true,
-        [styles.dark]: isDark,
         [styles.mobile]: isMobile,
       })}
       data-version-name={version.name}

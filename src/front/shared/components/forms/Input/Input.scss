@@ -17,11 +17,11 @@ textarea {
   font-size: 15px;
   padding-left: 15px;
   font-family: 'Roboto Mono', monospace;
-  border: 1px solid rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--color-border);
   outline: none;
 
   &:focus {
-    border: 2px solid $primary;
+    border: 2px solid var(--color-brand);
     outline: none;
     padding: 0 14px;
   }
@@ -75,7 +75,7 @@ textarea {
 }
 
 .inputContainer {
-  background-color: #fff;
+  background-color: var(--color-background-elements);
   border-radius: 6px;
 
   &.withMargin {
@@ -87,10 +87,10 @@ textarea {
   }
 
   &.withError {
-    border-color: $color-f-error;
+    border-color: var(--color-f-error);
 
     .input~.label {
-      color: $color-f-error;
+      color: var(--color-f-error);
     }
   }
 
@@ -106,7 +106,7 @@ input[type='number'] {
 .dollar {
   position: absolute;
   bottom: -30px;
-  background: #fff;
+  background: var(--color-background-elements);
   right: 10px;
   font-size: 13px;
   color: #828795;
@@ -122,8 +122,8 @@ input[type='number'] {
   margin: 0;
   padding: 0 12px;
   font-size: 13px;
-  color: $color-brand;
-  background-color: $l-background-elements;
+  color: var(--color-brand);
+  background-color: var(--color-background-elements);
 }
 
 
@@ -177,7 +177,7 @@ textarea.input {
 
 .error {
   font-size: 14px;
-  color: $color-f-error;
+  color: var(--color-f-error);
 
   [role='errorLink'] {
     display: inline !important;

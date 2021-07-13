@@ -3,8 +3,8 @@
 }
 
 .faqWrapper {
-  background: $l-background-elements;
-  box-shadow: $l-box-shadow;
+  background: var(--color-background-elements);
+  box-shadow: var(--box-shadow);
   border-radius: 4px;
   height: fit-content;
   padding: 25px;
@@ -14,8 +14,8 @@
 
 .wallet.dark {
   .faqWrapper {
-    box-shadow: $d-box-shadow;
-    background: $d-background-elements;
+    box-shadow: var(--box-shadow);
+    background: var(--color-background-elements);
 
     @media screen and (max-width: 480px) {
       box-shadow: none;
@@ -34,14 +34,14 @@
 
 .sweepInfo {
   background: 0% 0% / cover rgb(97, 68, 229);
-  color: #fff;
+  color: var(--color-background-elements);
   padding: 1em;
 
   button {
     float: right;
-    border: 3px solid #fff;
-    color: $primary;
-    background: #fff;
+    border: 3px solid var(--color-background-elements);
+    color: var(--color-brand);
+    background: var(--color-background-elements);
   }
 }
 

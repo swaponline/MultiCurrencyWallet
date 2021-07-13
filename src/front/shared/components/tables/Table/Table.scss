@@ -25,7 +25,7 @@ $walletPaddingTop: 41px;
     border-radius: 0 0 $borderRadius $borderRadius;
 
     tr {
-      border-top: 1px solid $pale-color;
+      border-top: 1px solid var(--color-pale);
     }
   }
 
@@ -95,14 +95,8 @@ $walletPaddingTop: 41px;
   }
 }
 
-.dark {
-  tr {
-    border-top: 1px solid #313131 !important;
-  }
-}
-
 .noticeText {
-  color: $notice-color;
+  color: var(--color-notice);
 }
 
 .wallet {
@@ -149,7 +143,7 @@ $walletPaddingTop: 41px;
       width: 49%;
       border-radius: 4px;
       margin-bottom: 2%;
-      border: 1px solid $inactive-border-color !important;
+      border: 1px solid var(--color-inactive-border) !important;
       box-shadow: 0px 2px 12px rgba(142, 154, 163, 0.08);
     }
 
@@ -209,7 +203,7 @@ $walletPaddingTop: 41px;
       &:first-child {
         position: absolute;
         display: flex;
-        background: $color-f-brightest;
+        background: var(--color-f-brightest);
         align-items: center;
         height: 40px;
         width: 50px;

@@ -6,18 +6,18 @@
   code,
   .swapContainer,
   .swapInfo {
-    color: $d-color;
+    color: var(--color);
   }
   .topUpLink,
   .linkAddress,
   .qr > button {
-    box-shadow: $d-box-shadow;
-    background: $d-background-elements;
-    color: $d-color;
+    box-shadow: var(--box-shadow);
+    background: var(--color-background-elements);
+    color: var(--color);
   }
   .linkAddress:hover,
   .qr > button:hover {
-    background: $indicating-color;
+    background: var(--color-indicating);
   }
   .qrImg  {
     margin: 1rem 0
@@ -29,7 +29,7 @@
 }
 
 .swapContainer {
-  color: $l-color;
+  color: var(--color);
   display: flex;
   justify-content: center;
   position: relative;
@@ -65,7 +65,7 @@
 }
 
 .canceled {
-  color: $color-f-error;
+  color: var(--color-f-error);
   font-size: 24px;
   text-align: center;
   text-transform: uppercase;
@@ -105,10 +105,10 @@
 }
 
 .online {
-  color: #3de25b;
+  color: var(--color-good);
 }
 .offline {
-  color: $color-f-error;
+  color: var(--color-f-error);
 }
 
 @include media-mobile {
@@ -124,8 +124,8 @@
 }
 
 .topUpLink {
-  border: 1px solid $color-border;
-  box-shadow: $l-box-shadow;
+  border: 1px solid var(--color-border);
+  box-shadow: var(--box-shadow);
   font-size: 18px;
   margin-top: 0px;
   position: relative;
@@ -134,7 +134,7 @@
   border-radius: 20px;
   display: inline-block;
   text-align: left;
-  background: $l-background-elements;
+  background: var(--color-background-elements);
   max-width: 600px;
 }
 
@@ -201,7 +201,7 @@
     text-decoration: underline;
     &:hover {
       text-decoration: none;
-      color: #007bff;
+      color: var(--color-link);
     }
   }
 }
@@ -244,7 +244,7 @@
   position: absolute;
   left: 0px;
   bottom: -40px;
-  color: #000;
+  color: var(--color);
 }
 
 .qr {
@@ -262,10 +262,10 @@
     display: flex;
     width: 56px;
     justify-content: center;
-    border: 1px solid $color-border;
-    box-shadow: $l-box-shadow;
-    background: $l-background-elements;
-    color: $l-color;
+    border: 1px solid var(--color-border);
+    box-shadow: var(--box-shadow);
+    background: var(--color-background-elements);
+    color: var(--color);
     align-items: center;
     flex-direction: column;
     &:hover {
@@ -297,15 +297,15 @@
   align-items: center;
   height: 56px;
   display: flex;
-  color: #fff;
+  color: var(--color-background-elements);
   display: flex;
-  border: 1px solid $color-border;
-  box-shadow: $l-box-shadow;
-  background: $l-background-elements;
+  border: 1px solid var(--color-border);
+  box-shadow: var(--box-shadow);
+  background: var(--color-background-elements);
   padding: 10px 15px;
-  color: $l-color;
+  color: var(--color);
   &:hover {
-    color: $l-color;
+    color: var(--color);
     background: #eee;
   }
 }
@@ -316,8 +316,8 @@
 }
 
 .fa-copy-in {
-  background: #000;
-  color: #fff;
+  background: var(--color);
+  color: var(--color-background-elements);
 }
 
 .button {
@@ -356,7 +356,7 @@
     font-weight: 300;
     border-radius: 6px;
     background: #cecece3b;
-    color: #000;
+    color: var(--color);
     padding: 7px 20px;
     width: 100%;
     max-width: 600px;
@@ -400,7 +400,7 @@
     font-weight: 300;
     border-radius: 6px;
     background: #cecece3b;
-    color: #000;
+    color: var(--color);
     padding: 7px 20px;
     width: 100%;
   }

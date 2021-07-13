@@ -29,7 +29,7 @@ const CurrenciesList = (props: CurrenciesListProps) => {
   } = props
 
   return (
-    <div styleName={`yourAssets ${isDark ? 'dark' : ''}`}>
+    <div styleName="yourAssets">
       {(exConfig && exConfig.opts && exConfig.opts.showWalletBanners) || isWidgetBuild ? (
         <Fragment>
           <Slider multisigPendingCount={multisigPendingCount} />
@@ -59,7 +59,7 @@ const CurrenciesList = (props: CurrenciesListProps) => {
         )}
       />
       <div styleName='addCurrencyBtnWrapper'>
-        <Button id="addAssetBtn" onClick={goToСreateWallet} blue transparent fullWidth>
+        <Button id="addAssetBtn" onClick={goToСreateWallet} transparent fullWidth>
           <FormattedMessage id="addAsset" defaultMessage="Add currency" />
         </Button>
       </div>

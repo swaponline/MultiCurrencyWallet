@@ -9,8 +9,8 @@
   &.active {
 
     .header {
-      background-color: $primary-hover;
-      color: #fff !important;
+      background-color: var(--color-brand-hover);
+      color: var(--color-background-elements) !important;
     }
 
     .description {

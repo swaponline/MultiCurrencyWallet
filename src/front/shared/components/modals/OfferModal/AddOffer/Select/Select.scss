@@ -19,7 +19,7 @@
 
   &.--dark {
     .cell {
-      color: #8e9aa3;
+      color: var(--color-notice);
     }
   }
 }
@@ -42,7 +42,7 @@
 }
 
 .cell {
-  color: #000;
+  color: var(--color);
   display: inline-block;
   font-size: 15px;
   cursor: pointer;
