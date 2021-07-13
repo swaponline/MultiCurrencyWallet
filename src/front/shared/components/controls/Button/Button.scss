@@ -1,16 +1,16 @@
 .button {
+  @include inline-block;
+  @include ff-bold;
+  @include no-user-select;
   height: 48px;
   min-height: 48px;
   padding: 0 16px;
-  @include inline-block;
   cursor: pointer;
   line-height: 40px;
   text-align: center;
   font-size: 18px;
   border: none;
   border-radius: 2px;
-  @include ff-bold;
-  @include no-user-select;
   transition: background 0.23s ease, color 0.23s ease;
 
   .pending {
@@ -59,7 +59,7 @@
 
 .brand {
   background-color: var(--color-brand);
-  color: var(--color);
+  color: #fff;
 
   &:hover {
     background-color: var(--color-brand-hover);
@@ -68,8 +68,15 @@
 
 .blue {
   background-color: var(--color-brand);
-  color: var(--color);
+  color: #fff;
   font-size: 15px;
+}
+
+.small {
+  width: 100%;
+  min-height: 39px;
+  height: 39px;
+  font-size: 0.9em;
 }
 
 .empty {
@@ -83,7 +90,6 @@
   text-decoration: underline;
 }
 
-// .small selector after .blue so that the font size is applied
 .small {
   width: 100%;
   min-height: 39px;
@@ -92,20 +98,16 @@
 }
 
 .transparent {
-  background: rgba(255, 255, 255, 0.1);
   font-size: 15px;
-  color: var(--color-background-elements);
+  font-weight: bold;
+  background-color: var(--color-brand-background);
+  color: var(--color-brand);
 }
 
 .white {
   background-color: var(--color-background-elements);
   color: inherit;
   font-size: 15px;
-}
-
-.darkTheme-white {
-  background-color: #cf3fff;
-  color: white;
 }
 
 .gray {
@@ -124,12 +126,6 @@
   &:hover {
     color: black
   }
-}
-
-.transparent.blue {
-  background: var(--color-brand-background);
-  font-weight: bold;
-  color: var(--color-brand);
 }
 
 .disabled {

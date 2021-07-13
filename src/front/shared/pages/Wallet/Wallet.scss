@@ -29,22 +29,7 @@
   margin-top: 20px;
 }
 
-.yourAssets.dark {
-  box-shadow: var(--box-shadow);
-  background: var(--color-background-elements);
-
-  @media screen and (max-width: 480px) {
-    box-shadow: none;
-    background: #222528;
-  }
-
-  .yourAssetsHeading {
-    color: #fbfbfb;
-  }
-}
-
 .yourAssetsHeading {
-  color: #1f2d48;
   font-size: 24px;
   line-height: 33px;
   font-weight: bold;
@@ -69,51 +54,11 @@
     text-align: center;
     font-weight: bold;
     font-size: 12pt;
-    color: #d20404;
+    color: var(--color-f-error);
     cursor: pointer;
     text-decoration: underline;
     padding-left: 10px;
     padding-right: 10px;
-  }
-}
-
-.yourBalance.dark {
-  box-shadow: var(--box-shadow);
-  background: var(--color-background-elements);
-
-  @media screen and (max-width: 480px) {
-    box-shadow: none;
-    background: #222528;
-  }
-
-  .yourBalanceTop {
-    .yourBalanceValue {
-      p {
-        color: #fbfbfb;
-      }
-    }
-  }
-
-  .yourBalanceCurrencies {
-    button {
-      color: #585e63;
-    }
-
-    button.active {
-      color: #fbfbfb;
-      filter: unset;
-    }
-  }
-
-  .yourBalanceBottomWrapper {
-    &:before {
-      background: none;
-    }
-  }
-
-  .yourBalance,
-  .yourBalanceCurrencies {
-    background: unset;
   }
 }
 
@@ -153,7 +98,6 @@
   p {
     font-size: 32px;
     line-height: 44px;
-    color: #1f2d48;
     font-weight: bold;
     margin: 0;
   }
@@ -237,6 +181,12 @@
   width: calc(100% - 28px);
 }
 
+.dark {
+  .yourBalanceBottomWrapper::before {
+    display: none;
+  }
+}
+
 @media all and (min-width: 993px) {
   .walletTable {
     display: inline-table;
@@ -307,11 +257,6 @@
     }
   }
 
-  .yourBalance,
-  .yourBalanceCurrencies {
-    background: rgb(253, 253, 253);
-  }
-
   .yourAssetsHeading,
   .yourAssetsDescr {
     padding: 0 25px;
@@ -323,6 +268,14 @@
 
   .yourBalance {
     display: block;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .yourAssets,
+  .yourBalance {
+    box-shadow: none;
+    background-color: var(--color-page-background);
   }
 }
 

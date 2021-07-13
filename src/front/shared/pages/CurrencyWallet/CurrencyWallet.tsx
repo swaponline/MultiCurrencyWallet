@@ -382,16 +382,6 @@ class CurrencyWallet extends Component<any, any> {
     ))
   }
 
-  handleGoTrade = () => {
-    const { currency } = this.state
-    const {
-      history,
-      intl: { locale },
-    } = this.props
-
-    history.push(localisedUrl(locale, `${links.exchange}/btc-to-${currency.toLowerCase()}`))
-  }
-
   rowRender = (row, rowIndex) => {
     const {
       history,
@@ -510,12 +500,10 @@ class CurrencyWallet extends Component<any, any> {
     }
 
     let currencyFiatBalance
-    let changePercent
 
     if (infoAboutCurrency && infoAboutCurrency.price_fiat) {
       currencyFiatBalance =
         new BigNumber(balance).dp(6, BigNumber.ROUND_FLOOR).toString() as any * infoAboutCurrency.price_fiat as any
-      changePercent = infoAboutCurrency.percent_change_1h
     } else {
       currencyFiatBalance = 0
     }
@@ -540,16 +528,14 @@ class CurrencyWallet extends Component<any, any> {
             txHistory
               ?
               <BalanceForm
-                address={address}
+                type="currencyWallet"
                 activeFiat={activeFiat}
                 currencyBalance={balance}
                 fiatBalance={currencyFiatBalance}
-                changePercent={changePercent}
                 activeCurrency={activeCurrency}
                 isFetching={isBalanceFetching}
                 handleReceive={this.handleReceive}
                 handleWithdraw={this.handleWithdraw}
-                handleExchange={this.handleGoTrade}
                 handleInvoice={this.handleInvoice}
                 showButtons={actions.user.isOwner(
                   address,

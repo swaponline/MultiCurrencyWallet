@@ -1,7 +1,7 @@
 .notifyBlock {
   height: 220px;
   border-radius: 4px;
-  background: #6143e5;
+  background: var(--color-brand);
   display: flex;
   z-index: 111111;
   cursor: pointer;
@@ -45,15 +45,11 @@
 
 .notifyBlockDescr {
   margin: 0 10px;
-  color: var(--color-background-elements);
+  color: #fff;
   position: absolute;
   @include ff-bold;
   bottom: 20px;
   left: 10px;
-}
-
-.dark {
-  color: white;
 }
 
 .bannersHeading {

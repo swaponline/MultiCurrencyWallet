@@ -12,7 +12,6 @@ type ButtonProps = {
   autoHeight?: boolean
   transparent?: boolean
   brand?: boolean
-  white?: boolean
   blue?: boolean
   gray?: boolean
   big?: boolean
@@ -36,7 +35,6 @@ const Button = (props: ButtonProps) => {
     brand,
     transparent,
     blue,
-    white,
     gray,
     disabled,
     pending,
@@ -57,7 +55,6 @@ const Button = (props: ButtonProps) => {
     brand,
     transparent,
     blue,
-    white,
     gray,
     big,
     small,
@@ -65,7 +62,6 @@ const Button = (props: ButtonProps) => {
     link,
     autoHeight,
     disabled,
-    "darkTheme-white": isDark && white,
     "darkTheme-gray": isDark && gray,
   })
 

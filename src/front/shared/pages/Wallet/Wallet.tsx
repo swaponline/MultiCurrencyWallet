@@ -474,7 +474,6 @@ class Wallet extends PureComponent<any, any> {
         page={page}
         BalanceForm={
           <BalanceForm
-            isDark={isDark}
             activeFiat={activeFiat}
             fiatBalance={allFiatBalance}
             currencyBalance={balanceInBtc}
