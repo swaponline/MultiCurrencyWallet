@@ -138,17 +138,17 @@
 }
 
 .yourBalanceCurrencies {
-  color: rgba(0, 0, 0, 0.1);
+  color: var(--color-indicating);
   position: absolute;
   left: 15px;
   top: 25px;
   justify-content: space-between;
   display: flex;
 
-  span {
+  .separator {
     width: 1px;
     height: 16px;
-    background: rgba(0, 0, 0, 0.1);
+    background: var(--color-border);
     display: inline-block;
     margin-top: 1px;
   }
@@ -160,12 +160,10 @@
     text-transform: uppercase;
     margin: 0 10px;
     font-size: 13px;
-    color: rgba(142, 154, 163, 0.5);
   }
 
   button.active {
-    color: #1f2d48;
-    filter: brightness(0);
+    color: var(--color);
   }
 }
 

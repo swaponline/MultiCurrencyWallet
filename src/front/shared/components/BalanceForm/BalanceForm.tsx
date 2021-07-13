@@ -103,17 +103,14 @@ function BalanceForm({
         </div>
         <div styleName="yourBalanceCurrencies">
           <button
-            //@ts-ignore: strictNullChecks
-            styleName={selectedCurrency === active && 'active'}
+            styleName={selectedCurrency === active ? 'active' : undefined}
             onClick={() => handleClickCurrency(active)}
           >
-            {/* // eslint-disable-next-line reactintl/contains-hardcoded-copy */}
             {active}
           </button>
-          <span />
+          <span styleName="separator" />
           <button
-            //@ts-ignore: strictNullChecks
-            styleName={selectedCurrency === currency && 'active'}
+            styleName={selectedCurrency === currency ? 'active' : undefined}
             onClick={() => handleClickCurrency(currency)}
           >
             {currency}

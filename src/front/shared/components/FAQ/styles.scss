@@ -14,15 +14,7 @@
 
   &__tabsContainer {
     margin-top: 10px;
-  }
-}
-
-.dark {
-  h5 {
-    color: white;
-  }
-  div {
-    color: #7f8a91;
+    color: var(--color-indicating);
   }
 }
 
@@ -81,7 +73,7 @@ $chrestStripHeight: 12px;
     display: block;
     content: '';
     position: relative;
-    background: var(--color-notice);
+    background: var(--color-indicating);
     border-radius: 1px;
   }
 
