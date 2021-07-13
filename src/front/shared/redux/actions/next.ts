@@ -466,47 +466,36 @@ const getTransaction = (address: string = ``, ownType: string = ``) =>
 
 //@ts-ignore
 const send = ({ from, to, amount, feeValue, speed } = {}) => {
-  
 
   return new Promise(async (ready) => {
     const networks = bitcore.Networks
     const nextNetwork = {
       name: 'next-mainnet',
       alias: 'next-mainnet',
-      pubkeyhash: 0x4b, //
-      privatekey: 0x80, //
-      scripthash: 0x05, //
-      xpubkey: 0x0488B21E, //
-      xprivkey: 0x0488ADE4, //
+      pubkeyhash: 0x4b,
+      privatekey: 0x80,
+      scripthash: 0x05,
+      xpubkey: 0x0488B21E,
+      xprivkey: 0x0488ADE4,
       networkMagic: 0xcbe4d0a1,
       port: 7078,
       dnsSeeds: [
-        'localhost:7079',
+        config.api.nextExplorer,
       ]
     }
     networks.add(nextNetwork)
-      // {
-    //   name: 'next-mainnet',
-    //   alias: 'next-mainnet',
-    //   pubkeyhash: next.network.pubKeyHash,
-    //   privatekey: next.network.wif,
-    //   scripthash: next.network.scriptHash,
-    //   xpubkey: next.network.bip32.public,
-    //   xprivkey: next.network.bip32.private,
-    //   networkMagic: 0xcbe4d0a1,
-    //   port: 7078, // need check
-    // })
 
-    const bitcoreNetwork = networks.get('next-mainnet', 'name')
+    const bitcoreNextNetwork = networks.get('next-mainnet', 'name')
 
     const bitcoinNetwork = networks.get('livenet', 'name')
-
+    // need remove because of bitcore.PrivateKey() use 'privatekey' key to get network
+    // for validation and bitcoin.livenet.privatekey === nextNetwork.privatekey
     networks.remove(bitcoinNetwork)
 
     const privKeyWIF = getPrivateKeyByAddress(from)
-    const privateKey = new bitcore.PrivateKey(privKeyWIF)
+    const privateKey = new bitcore.PrivateKey(privKeyWIF, bitcoreNextNetwork)
     const publicKey = bitcore.PublicKey.fromPrivateKey(privateKey)
-    const addressFrom = new bitcore.Address(publicKey, bitcoreNetwork)
+    const addressFrom = new bitcore.Address(publicKey, bitcoreNextNetwork)
 
     const unspents: bitcore.Transaction.UnspentOutput[] = await fetchUnspents(from) || []
     const amountSat = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
