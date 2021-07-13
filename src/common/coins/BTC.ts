@@ -86,7 +86,6 @@ export default BTC
 
 
 const libAdapter: ILibAdapter = {
-  // @ts-ignore: strictNullChecks
   accountFromMnemonic(mnemonic, netName) {
     const network = BTC[netName]
     const settings = network.settings
