@@ -486,7 +486,14 @@ class EthLikeAction {
       currency: this.ticker,
     })
 
-    if (haveExternalWallet && !walletData.isMetamask) {
+    console.log('-----------------------------')
+    console.log('params: ', params)
+    console.log('privateKey: ', privateKey)
+    console.log('bufferPrivateKey: ', bufferPrivateKey)
+    console.log('walletData: ', walletData)
+    console.log('-----------------------------')
+
+    if (haveExternalWallet && !walletData?.isMetamask) {
       txData = await this.signTransaction({
         txData,
         privateKey: bufferPrivateKey,
