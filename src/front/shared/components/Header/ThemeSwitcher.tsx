@@ -1,14 +1,8 @@
 import React from "react"
-
 import CSSModules from "react-css-modules"
-import ThemeTooltip from '../ui/Tooltip/ThemeTooltip'
 import { FormattedMessage } from 'react-intl'
-import { constants } from 'helpers'
-
 import styles from "./Header.scss"
-
-
-const isDark = localStorage.getItem(constants.localStorage.isDark)
+import ThemeTooltip from '../ui/Tooltip/ThemeTooltip'
 
 const sun = (fill) => (
   <svg id="Capa_1" viewBox="0 0 512 512" width="20" height="20" xmlns="http://www.w3.org/2000/svg">
@@ -59,17 +53,27 @@ const moon = (fill) => (
   </svg>
 )
 
-const ThemeSwitcher = ({ onClick, themeSwapAnimation }) => (
-  <div
-    styleName={`themeSwitcher ${themeSwapAnimation ? 'themeAnimation' : ''}`}
-    onClick={onClick}
-    data-tip data-for="themeAlt"
-  >
-    {isDark ? sun("white") : moon("#747474")}
-    <ThemeTooltip id="themeAlt" effect="solid" place="bottom">
-      <FormattedMessage id="themeAlt" defaultMessage="{theme} theme" values={{ theme: isDark ? 'Light' : 'Dark' }} />
-    </ThemeTooltip>
-  </div>
-)
+const ThemeSwitcher = ({ onClick, themeSwapAnimation }) => {
+  const isDark = document.body.dataset.scheme === 'dark'
+
+  return (
+    <div
+      styleName={`themeSwitcher ${themeSwapAnimation ? 'themeAnimation' : ''}`}
+      onClick={onClick}
+      data-for="themeAlt"
+      data-tip
+    >
+      {isDark ? sun("white") : moon("#747474")}
+
+      <ThemeTooltip id="themeAlt" effect="solid" place="bottom">
+        <FormattedMessage
+          id="themeAlt"
+          defaultMessage="{theme} theme"
+          values={{ theme: isDark ? 'Light' : 'Dark' }}
+        />
+      </ThemeTooltip>
+    </div>
+  )
+}
 
 export default CSSModules(ThemeSwitcher, styles, { allowMultiple: true })

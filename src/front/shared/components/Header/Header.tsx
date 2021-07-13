@@ -64,7 +64,7 @@ class Header extends Component<any, any> {
       location: { pathname },
     },
   }) {
-    if (pathname === '/ru' || pathname === '/' || pathname === links.wallet) {
+    if (pathname === '/' || pathname === links.wallet) {
       return { path: true }
     }
     return { path: false }
@@ -242,8 +242,8 @@ class Header extends Component<any, any> {
     }))
 
     const path = pathname.toLowerCase()
-    const isWalletPage = path.includes(wallet) || path === `/` || path === '/ru'
-    const isPartialPage = path.includes(exchange) || path === `/ru${exchange}`
+    const isWalletPage = path.includes(wallet) || path === `/`
+    const isPartialPage = path.includes(exchange)
 
     const isMarketPage = path.includes(marketmaker) || path.includes(marketmaker_short)
     const didOpenWalletCreate = localStorage.getItem(isWalletCreate)
@@ -353,6 +353,7 @@ class Header extends Component<any, any> {
 
   handleToggleTheme = () => {
     this.setState(() => ({ themeSwapAnimation: true }))
+
     const wasDark = localStorage.getItem(constants.localStorage.isDark)
     const dataset = document.body.dataset
 
@@ -367,6 +368,10 @@ class Header extends Component<any, any> {
       localStorage.setItem(constants.localStorage.isDark, 'true')
       dataset.scheme = "dark"
     }
+
+    setTimeout(() => {
+      this.setState(() => ({ themeSwapAnimation: false }))
+    }, 500) // animation time for the .themeAnimation class
   }
 
   declineRequest = (orderId, participantPeer) => {

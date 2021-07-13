@@ -1,10 +1,7 @@
 .footer {
   width: 100%;
   margin-top: 30px;
-
-  &.dark {
-    background-color: var(--color-page-background);
-  }
+  background-color: var(--color-page-background);
 
   &.mobile {
     margin-top: 10px;
