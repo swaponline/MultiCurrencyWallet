@@ -103,9 +103,6 @@ class Swap {
       :
       `${sellCoin}2${buyCoin}`
 
-    console.log('flowKey', flowKey)
-    console.log('this.app.flows', this.app.flows)
-
     if (!this.app.flows[flowKey]) {
       throw new Error(`Flow with name "${flowKey}" not found in SwapApp.flows`)
     }
@@ -291,16 +288,16 @@ class Swap {
     } = this
 
     if (!this.flow.isTakerMakerModel) {
-      if (COIN_DATA[sellCoin]
-        && COIN_DATA[sellCoin].model
-        && COIN_DATA[buyCoin]
-        && COIN_DATA[buyCoin].model
+      if (COIN_DATA[sellCoin.toUpperCase()]
+        && COIN_DATA[sellCoin.toUpperCase()].model
+        && COIN_DATA[buyCoin.toUpperCase()]
+        && COIN_DATA[buyCoin.toUpperCase()].model
       ) {
         const _Sell = sellCoin.toLowerCase()
         const _Buy = buyCoin.toLowerCase()
 
-        const sellModel = COIN_DATA[sellCoin].model
-        const buyModel = COIN_DATA[buyCoin].model
+        const sellModel = COIN_DATA[sellCoin.toUpperCase()].model
+        const buyModel = COIN_DATA[buyCoin.toUpperCase()].model
 
         // sell UTXO buy AB 
         if (sellModel === COIN_MODEL.UTXO && buyModel === COIN_MODEL.AB) {
