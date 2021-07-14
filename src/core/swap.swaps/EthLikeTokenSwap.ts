@@ -1,5 +1,5 @@
 import debug from 'debug'
-import SwapApp, { SwapInterface, constants, util } from 'swap.app'
+import { SwapInterface, constants, util } from 'swap.app'
 import BigNumber from 'bignumber.js'
 import InputDataDecoder from 'ethereum-input-data-decoder'
 
@@ -14,6 +14,7 @@ class EthLikeTokenSwap extends SwapInterface {
   tokenAddress: string
   tokenAbi: any[]
   gasLimit: number
+  gasLimitReserve: number
   gasPrice: number
   fetchBalance: any
   estimateGasPrice: any
@@ -97,6 +98,7 @@ class EthLikeTokenSwap extends SwapInterface {
     this.tokenAbi       = options.tokenAbi
 
     this.gasLimit       = options.gasLimit || 5e5
+    this.gasLimitReserve = options.gasLimitReserve || 1.20 // default +20% of the total estimateGas
     this.gasPrice       = options.gasPrice || 2e9
     this.fetchBalance   = options.fetchBalance
     this.estimateGasPrice = options.estimateGasPrice || (() => {})
@@ -160,8 +162,7 @@ class EthLikeTokenSwap extends SwapInterface {
       debug(`EthLikeTokenSwap ${this.blockchainName} -> ${methodName} -> params`, params)
 
       let gasAmount = await this.contract.methods[methodName](...args).estimateGas(params)
-
-      params['gas'] = new BigNumber(gasAmount).multipliedBy(1.05).dp(0, BigNumber.ROUND_UP).toNumber() || this.gasLimit
+      params['gas'] = new BigNumber(gasAmount).multipliedBy(this.gasLimitReserve).dp(0, BigNumber.ROUND_UP).toNumber() || this.gasLimit
       //@ts-ignore
       debug(`EthLikeTokenSwap $[this.blockchainName} -> ${methodName} -> gas`, gasAmount)
       const receipt = await this.contract.methods[methodName](...args).send(params)
@@ -202,8 +203,7 @@ class EthLikeTokenSwap extends SwapInterface {
         }
 
         const gasAmount = await this.ERC20.methods.approve(this.address, newAmount).estimateGas(params)
-
-        params['gas'] = new BigNumber(gasAmount).multipliedBy(1.05).dp(0, BigNumber.ROUND_UP).toNumber() || this.gasLimit
+        params['gas'] = new BigNumber(gasAmount).multipliedBy(this.gasLimitReserve).dp(0, BigNumber.ROUND_UP).toNumber() || this.gasLimit
 
         //@ts-ignore
         debug(`EthLikeTokenSwap ${this.blockchainName} -> approve -> params`, params)
@@ -645,7 +645,7 @@ class EthLikeTokenSwap extends SwapInterface {
 
       try {
         const gasAmount = await this.contract.methods.withdrawOther(_secret, ownerAddress, participantAddress).estimateGas(params)
-        resolve(new BigNumber(gasAmount).multipliedBy(1.05).dp(0, BigNumber.ROUND_UP).toNumber())
+        resolve(new BigNumber(gasAmount).multipliedBy(this.gasLimitReserve).dp(0, BigNumber.ROUND_UP).toNumber())
       }
       catch (err) {
         console.error('calcWithdrawOtherGas', err)

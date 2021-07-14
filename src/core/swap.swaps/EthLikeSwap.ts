@@ -1,5 +1,5 @@
 import _debug from 'debug'
-import SwapApp, { constants, SwapInterface, util } from 'swap.app'
+import { SwapInterface, util } from 'swap.app'
 import BigNumber from 'bignumber.js'
 import InputDataDecoder from 'ethereum-input-data-decoder'
 const debug = _debug('swap.core:swaps')
@@ -11,6 +11,7 @@ class EthLikeSwap extends SwapInterface {
   abi: any[]
   _swapName: string
   gasLimit: number
+  gasLimitReserve: number
   gasPrice: number
   fetchBalance: Function
   estimateGasPrice: Function
@@ -76,6 +77,7 @@ class EthLikeSwap extends SwapInterface {
     this._swapName      = options.coinName //constants.COINS.eth
 
     this.gasLimit       = options.gasLimit || 5e5
+    this.gasLimitReserve = options.gasLimitReserve || 1.10 // default +10% of the total estimateGas
     this.gasPrice       = options.gasPrice || 2e9
     this.fetchBalance   = options.fetchBalance
     this.estimateGasPrice = options.estimateGasPrice || (() => {})
@@ -164,8 +166,7 @@ class EthLikeSwap extends SwapInterface {
       debug(`EthLikeSwap ${this.coinName} -> ${methodName} -> params`, params)
 
       const gasAmount = await this.contract.methods[methodName](...args).estimateGas(params)
-
-      params['gas'] = new BigNumber(gasAmount).multipliedBy(1.05).dp(0, BigNumber.ROUND_UP).toNumber() || this.gasLimit
+      params['gas'] = new BigNumber(gasAmount).multipliedBy(this.gasLimitReserve).dp(0, BigNumber.ROUND_UP).toNumber() || this.gasLimit
 
       debug(`EthLikeSwapSwap ${this.coinName} -> ${methodName} -> gas`, gasAmount)
 
@@ -534,7 +535,7 @@ class EthLikeSwap extends SwapInterface {
 
       try {
         const gasFee = await this.contract.methods.withdrawOther(_secret, ownerAddress, participantAddress).estimateGas(params)
-        resolve(new BigNumber(gasFee).multipliedBy(1.05).dp(0, BigNumber.ROUND_UP).toNumber())
+        resolve(new BigNumber(gasFee).multipliedBy(this.gasLimitReserve).dp(0, BigNumber.ROUND_UP).toNumber())
       }
       catch (err) {
         console.error("calcWithdrawOtherGasError", err)

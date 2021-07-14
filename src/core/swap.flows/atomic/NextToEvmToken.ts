@@ -368,7 +368,7 @@ export default class NextToEvmToken extends AtomicAB2UTXO {
           }, true)
           return true
         } else {
-          console.warn('Btc refund:', error)
+          console.warn('utxoSwap refund:', error)
 
           return false
         }
