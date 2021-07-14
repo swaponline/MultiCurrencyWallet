@@ -144,18 +144,18 @@ $walletPaddingTop: 41px;
       border-radius: 4px;
       margin-bottom: 2%;
       border: 1px solid var(--color-inactive-border) !important;
-      box-shadow: 0px 2px 12px rgba(142, 154, 163, 0.08);
+      box-shadow: 0px 2px 12px var(--color-inactive-border);
     }
 
     td {
       padding: 10px 20px !important;
       display: flex !important;
       justify-content: space-between;
-      border-bottom: 1px solid #edeff0;
+      border-bottom: 1px solid var(--color-inactive-border);
       @include ff-regular;
 
-      >span {
-        color: #8E9AA3;
+      > span {
+        color: var(--color-notice);
         @include ff;
       }
 

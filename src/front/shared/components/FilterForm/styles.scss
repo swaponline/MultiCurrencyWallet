@@ -1,5 +1,5 @@
 .filterForm {
-  border: 1px solid #eceff0;
+  border: 1px solid var(--color-border);
   box-sizing: border-box;
   border-radius: 2px;
   width: 100%;
@@ -8,28 +8,13 @@
   align-items: center;
   justify-content: space-between;
   padding: 8px 9px;
+
   input {
     width: 100%;
   }
+
   input::placeholder {
-    color: #1F2D48;
     opacity: 0.2;
-  }
-}
-
-.dark {
-  border: 1px solid #454b4d;
-  input {
-    color: white;
-  }
-  input::placeholder {
-    color: white;
-  }
-
-  div {
-    button {
-      color: white
-    }
   }
 }
 
@@ -41,7 +26,6 @@
 .show,
 .all {
   width: 55px;
-  color: #1F2D48;
   text-transform: capitalize;
 }
 

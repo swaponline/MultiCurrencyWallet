@@ -23,12 +23,12 @@
     font-weight: bold;
 
     .amount {
-      color: #EE5B51;
+      color: var(--color-bad);
     }
 
     svg {
       path {
-        stroke: #EE5B51;
+        stroke: var(--color-bad);
       }
     }
   }
@@ -86,12 +86,12 @@
 }
 
 .confirm.red {
-  color: #f51f1f;
+  color: var(--color-f-error);
   background: rgba(229, 68, 68, 0.1);
 }
 
 .confirm.green {
-  color: #EE5B51;
+  color: var(--color-bad);
   background: rgba(238, 91, 81, 0.1);
   padding: 3px 7px;
 }
@@ -154,7 +154,7 @@
   margin-top: -37px;
 
   a {
-    color: #212529;
+    color: var(--color);
 
     @media all and (max-width: 480px) {
       font-size: 0.85em;
@@ -217,12 +217,11 @@
   @include ff-bold;
   text-align: center;
 
-  >span {
+  > span {
     font-style: normal;
     font-weight: 600;
     font-size: 14px;
     line-height: 15px;
-    color: #1F2D48;
   }
 
   button {
@@ -234,34 +233,19 @@
   }
 }
 
-tr.historyRow {
+.historyRow {
   display: block;
   margin-bottom: 10px;
   width: 100%;
   min-height: 64px;
   position: relative;
   background: var(--color-background-elements);
-  border: 1px solid var(--color-inactive-border) !important;
-  box-shadow: 0px 2px 12px rgba(142, 154, 163, 0.08);
+  border: 1px solid var(--color-inactive-border);
+  box-shadow: var(--box-shadow);
   border-radius: 4px;
   display: flex;
   align-items: center;
   padding: 15px;
-}
-
-tr.dark {
-  background: var(--color-background-elements);
-  box-shadow: var(--box-shadow);
-
-  .historyInfo {
-    a {
-      color: var(--color);
-    }
-  }
-
-  .invoiceContactWrapper {
-    color: var(--color);
-  }
 }
 
 .smallTooltip span {
@@ -273,7 +257,7 @@ tr.dark {
 }
 
 @media all and (max-width: 570px) {
-  tr.historyRow {
+  .historyRow {
     height: max-content;
     align-items: flex-start;
   }
@@ -305,9 +289,9 @@ tr.dark {
 }
 
 @media all and (max-width: 480px) {
-  tr.dark {
+  .historyRow {
     box-shadow: none;
-    background: #222528;
+    background: var(--color-background);
   }
   
   .amount {

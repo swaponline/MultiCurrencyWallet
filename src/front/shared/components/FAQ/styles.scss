@@ -14,7 +14,6 @@
 
   &__tabsContainer {
     margin-top: 10px;
-    color: var(--color-indicating);
   }
 }
 
@@ -29,6 +28,7 @@
     padding-left: 23px;
     @include ff-semibold;
     cursor: pointer;
+    color: var(--color);
   }
 
   &__content {
@@ -36,6 +36,7 @@
     opacity: 0;
     overflow: hidden;
     visibility: hidden;
+    color: var(--color-indicating);
 
     &_active {
       visibility: visible;

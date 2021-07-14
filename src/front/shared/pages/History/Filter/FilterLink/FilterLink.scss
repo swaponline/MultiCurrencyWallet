@@ -7,12 +7,11 @@
   text-decoration: none;
 
   &:hover {
-    color: var(--color);
     opacity: 1;
   }
 }
 
 .active {
   opacity: 1;
-  border-bottom: 2px solid #500ed8;
+  border-bottom: 2px solid var(--color-brand);
 }

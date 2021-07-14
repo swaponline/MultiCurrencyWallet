@@ -175,33 +175,6 @@
     margin-bottom: 10px;
   }
 
-  .walletNav {
-    padding: 0;
-    margin-bottom: 0px;
-    margin-top: 15px;
-  }
-
-  .walletNavItem {
-    display: inline-block;
-    margin-right: 20px;
-    font-weight: bold;
-  }
-
-  .walletNavItem.active {
-    a {
-      border-bottom: 3px solid var(--color-brand);
-      color: #1f2d48;
-    }
-  }
-
-  .walletNavItemLink {
-    cursor: pointer;
-    font-size: 15px;
-    line-height: 140%;
-    padding-bottom: 10px;
-    color: var(--color-notice) !important;
-  }
-
   .dark {
     box-shadow: var(--box-shadow);
     background: var(--color-background-elements);
