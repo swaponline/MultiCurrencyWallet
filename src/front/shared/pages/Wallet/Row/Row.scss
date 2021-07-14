@@ -63,6 +63,7 @@
   width: max-content;
   display: block;
   white-space: nowrap;
+  color: var(--color);
 
   .icon {
     display: inline-block;
@@ -90,32 +91,13 @@ tr button[disabled]:hover {
   }
 
   &:before {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    border-bottom: 1px solid var(--color-border);
     content: '';
     width: 100%;
     position: absolute;
     width: 92%;
     right: 0;
     bottom: 0px;
-  }
-}
-
-.dark {
-  .errorMessage,
-  .assetsTableCurrencyWrapper,
-  .unconfirmedBalance,
-  .assetsTableValue {
-    background: var(--color-background-elements);
-  }
-
-  .cryptoBalanceBtn {
-    color: white
-  }
-
-  .assetsTableIcon {
-    img {
-      border-color: var(--color);
-    }
   }
 }
 

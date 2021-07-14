@@ -8,22 +8,9 @@
   bottom: 0;
   z-index: 10011111111;
   background: var(--color-background-elements);
-  // padding: 15px 25px;
   width: 100%;
   height: 100%;
 }
-
-.dark {
-  background: var(--color-background-elements);
-
-  .header {
-    background: var(--color-background-elements);
-  }
-
-  .headerContent {
-    color: var(--color);
-  }
-} 
 
 .header {
   height: 88px;

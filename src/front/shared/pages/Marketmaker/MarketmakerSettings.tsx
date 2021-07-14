@@ -30,10 +30,6 @@ import { Button } from 'components/controls'
 import { AddressType, AddressFormat } from 'domain/address'
 import Address from 'components/ui/Address/Address'
 
-
-const isDark = !!localStorage.getItem(constants.localStorage.isDark)
-
-
 @CSSModules(styles, { allowMultiple: true })
 class MarketmakerSettings extends Component<any, any> {
   _mounted = true
@@ -601,7 +597,7 @@ class MarketmakerSettings extends Component<any, any> {
           </p>
         </div>
 
-        <section styleName={`${isDark ? 'dark' : '' }`}>
+        <section>
         {!mnemonicSaved && (
           <>
             <h3 styleName="start-here">
@@ -652,9 +648,9 @@ class MarketmakerSettings extends Component<any, any> {
           </>
         )}
         {!isBalanceFetching && tokenWallet && mnemonicSaved ? (
-          <div styleName={`section-items ${isDark ? '--dark' : '' }`}>
+          <div styleName={`section-items`}>
             <div styleName='section-items__item' style={{ zIndex: 2 }}> {/* zIndex need for Tooltip */}
-              <div styleName={`mm-toggle ${isDark ? '--dark' : '' }`}>
+              <div styleName={`mm-toggle`}>
                 <p styleName='mm-toggle__text'>
                   <FormattedMessage
                     id="MM_ToggleText"
@@ -899,7 +895,7 @@ class MarketmakerSettings extends Component<any, any> {
 
         {/* Swaps history + Active swaps */}
         { mnemonicSaved && (
-          <section styleName={`${isDark ? 'dark' : '' }`}>
+          <section>
             <h2 styleName="section-title">
               <FormattedMessage
                 id="MM_SwapHistory_Title"
@@ -978,9 +974,7 @@ class MarketmakerSettings extends Component<any, any> {
         )}
 
 
-        <FAQ
-          isDark={isDark}
-        />
+        <FAQ />
       </div>
     )
   }

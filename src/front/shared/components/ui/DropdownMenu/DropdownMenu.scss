@@ -11,7 +11,7 @@
   z-index: 111;
   width: 1rem;
   height: 2rem;
-  padding-top: 0.4rem;
+  padding-top: 0.5rem;
   display: flex;
   align-items: flex-start;
   justify-content: center;
@@ -25,8 +25,8 @@
   border-radius: 50%;
   background-color: var(--color-indicating);
   box-shadow:
-    0px 10px 0px var(--color-indicating),
-    0px 20px 0px var(--color-indicating);
+    0px 9px 0px var(--color-indicating),
+    0px 18px 0px var(--color-indicating);
 }
 
 .dropdownMenuItem {

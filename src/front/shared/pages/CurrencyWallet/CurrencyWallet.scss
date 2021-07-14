@@ -34,36 +34,6 @@
   }
 }
 
-.dark {
-  .currencyWalletActivity {
-    box-shadow: var(--box-shadow);
-    background: var(--color-background-elements);
-  
-    @media screen and (max-width: 480px) {
-      box-shadow: none;
-      background: #222528;
-    }
-  }
-
-  h3 {
-    color: white;
-  }
-}
-
-.darkActivity {
-  box-shadow: var(--box-shadow);
-  background: var(--color-background-elements);
-
-  @media screen and (max-width: 480px) {
-    background: #222528;
-  }
-
-  h3 {
-    color: white;
-  }
-}
-
-
 .title {
   padding: 1px 0 1px;
   margin-top: 100px;
@@ -246,5 +216,12 @@
     >div {
       display: block;
     }
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .currencyWalletActivity {
+    box-shadow: none;
+    background: var(--color-page-background);
   }
 }

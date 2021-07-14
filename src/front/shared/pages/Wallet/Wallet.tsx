@@ -26,7 +26,6 @@ import BalanceForm from 'components/BalanceForm/BalanceForm'
 
 
 const isWidgetBuild = config && config.isWidget
-const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 @connect(
   ({
@@ -489,15 +488,14 @@ class Wallet extends PureComponent<any, any> {
       >
         {activeComponentNum === 0 && (
           <CurrenciesList
-            isDark={!!isDark}
             tableRows={userWallets}
             hiddenCoinsList={hiddenCoinsList}
             goToСreateWallet={this.goToСreateWallet}
             multisigPendingCount={multisigPendingCount}
           />
         )}
-        {activeComponentNum === 1 && <History {...this.props} isDark={isDark} />}
-        {activeComponentNum === 2 && <InvoicesList {...this.props} onlyTable={true} isDark={isDark} />}
+        {activeComponentNum === 1 && <History {...this.props} />}
+        {activeComponentNum === 2 && <InvoicesList {...this.props} onlyTable={true} />}
       </DashboardLayout>
     )
   }

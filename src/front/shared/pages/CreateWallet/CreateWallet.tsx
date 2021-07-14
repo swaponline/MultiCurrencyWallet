@@ -23,9 +23,6 @@ import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
 import web3Icons from 'images'
 
 const isWidgetBuild = config && config.isWidget
-const isDark = localStorage.getItem(constants.localStorage.isDark)
-
-
 
 const CreateWallet = (props) => {
   const {
@@ -286,7 +283,7 @@ const CreateWallet = (props) => {
   const web3Icon = (web3Icons[web3Type] && web3Type !== `UNKNOWN` && web3Type !== `NONE`) ? web3Icons[web3Type] : false
 
   return (
-    <div styleName={`wrapper ${isDark ? '--dark' : ''}`}>
+    <div styleName="wrapper">
       {userWallets.length ? (
         <CloseIcon
           styleName="closeButton"

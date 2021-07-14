@@ -7,35 +7,18 @@
   right: 0;
   bottom: 0;
   background: var(--color-background-elements);
+  box-shadow: var(--box-shadow);
   width: 100%;
   height: 100%;
+
   &_dashboardView {
     overflow: auto;
   }
-
-  &.dark {
-    box-shadow: var(--box-shadow);
-    background: var(--color-background-elements);
-    color: var(--color);
-
-    .title {
-      color: var(--color);
-    }
-
-    .header {
-      border-bottom: 1px solid #444;
-    }
-
-    @media screen and(max-width: 480px) {
-      background: #222427;
-    }
-  }
 }
-
 
 .header {
   height: 88px;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid var(--color-border);
 }
 
 .headerContent {
@@ -45,7 +28,7 @@
   align-items: center;
   position: relative;
   @include ff-bold;
-  color: #1f2d48;
+  color: var(--color-indicating);
   font-size: 24px;
   line-height: 33px;
 }

@@ -16,15 +16,8 @@
   background: var(--color-background-elements);
 }
 
-.dark {
-  box-shadow: var(--box-shadow);
-  background: var(--color-background-elements);
-
-  pre {
-    color: var(--color) !important;
-  }
-
-  @media screen and (max-width: 480px) {
+@media screen and (max-width: 480px) {
+  .modalDashboardConductor {
     box-shadow: none;
     background: #222528;
   }

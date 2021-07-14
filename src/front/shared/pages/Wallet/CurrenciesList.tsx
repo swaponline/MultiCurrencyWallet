@@ -13,7 +13,6 @@ import exConfig from 'helpers/externalConfig'
 const isWidgetBuild = config && config.isWidget
 
 type CurrenciesListProps = {
-  isDark: boolean
   multisigPendingCount: number
   goToСreateWallet: () => void
   hiddenCoinsList: string[]
@@ -22,7 +21,6 @@ type CurrenciesListProps = {
 
 const CurrenciesList = (props: CurrenciesListProps) => {
   const {
-    isDark,
     tableRows,
     goToСreateWallet,
     multisigPendingCount,
@@ -52,7 +50,6 @@ const CurrenciesList = (props: CurrenciesListProps) => {
         rowRender={(row, index) => (
           <Row
             key={index}
-            isDark={isDark}
             currency={row}
             itemData={row}
           />

@@ -285,10 +285,7 @@ export default class MarketmakerPromo extends React.Component<{}, ComponentState
           </div>
         </section> */}
 
-        <FAQ
-          isDark={isDark}
-         />
-
+        <FAQ />
       </div>
     )
   }
