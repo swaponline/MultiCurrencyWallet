@@ -649,7 +649,9 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
       return typeforce.isCoinAddress[baseCurrency](address)
     }
 
-    return typeforce.isCoinAddress[getCurrencyKey(currency, false).toUpperCase()](address)
+    const currencyKey = getCurrencyKey(currency, true).toUpperCase()
+
+    return typeforce.isCoinAddress[currencyKey](address)
   }
 
   openScan = () => {
