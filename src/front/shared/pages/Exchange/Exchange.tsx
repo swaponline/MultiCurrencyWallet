@@ -163,25 +163,15 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
   static getDerivedStateFromProps(props, state) {
     const { orders } = props
     const { haveCurrency, getCurrency, isTurbo } = state
-    const {
-      coin: haveCoin,
-      blockchain: haveBlockchain,
-    } = getCoinInfo(haveCurrency)
-    const {
-      coin: getCoin,
-      blockchain: getBlockchain,
-    } = getCoinInfo(getCurrency)
 
     if (!orders.length) {
       return null
     }
 
-    const directionOrders = orders.filter(order => 
+    const directionOrders = orders.filter(order =>
       !order.isMy &&
-      order.sellCurrency.toUpperCase() === getCoin.toUpperCase() &&
-      order.sellBlockchain.toUpperCase() === getBlockchain.toUpperCase() && 
-      order.buyCurrency.toUpperCase() === haveCoin.toUpperCase() &&
-      order.buyBlockchain.toUpperCase() === haveBlockchain.toUpperCase()
+      order.sellCurrency.toUpperCase() === haveCurrency.toUpperCase() &&
+      order.buyCurrency.toUpperCase() === getCurrency.toUpperCase()
     )
 
     const filteredOrders = directionOrders.filter(order =>
@@ -1188,6 +1178,8 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
 
   setOrders = () => {
     const { filteredOrders, haveAmount } = this.state
+
+    console.log('filteredOrders', filteredOrders)
 
     if (!filteredOrders.length) {
       this.setState(() => ({
