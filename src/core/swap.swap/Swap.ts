@@ -103,6 +103,9 @@ class Swap {
       :
       `${sellCoin}2${buyCoin}`
 
+    console.log('flowKey', flowKey)
+    console.log('this.app.flows', this.app.flows)
+
     if (!this.app.flows[flowKey]) {
       throw new Error(`Flow with name "${flowKey}" not found in SwapApp.flows`)
     }

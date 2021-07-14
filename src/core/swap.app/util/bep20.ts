@@ -4,9 +4,10 @@ import typeforce from './typeforce'
 
 
 const register = (code, precision) => {
-  constants.COINS[code] = code.toUpperCase()
-  constants.COIN_DATA[code.toUpperCase()] = {
-    ticker: code.toUpperCase(),
+  const tokenCode = `{${BLOCKCHAIN_TYPE.BNB}}${code}`
+  constants.COINS[tokenCode] = tokenCode.toUpperCase()
+  constants.COIN_DATA[tokenCode.toUpperCase()] = {
+    ticker: tokenCode.toUpperCase(),
     name: code.toUpperCase(),
     blockchain: BLOCKCHAIN_TYPE.BNB,
     standard: TOKEN_STANDARD.BEP20,
@@ -14,15 +15,8 @@ const register = (code, precision) => {
     model: COIN_DATA.BNB.model,
     precision: precision,
   }
-  constants.COIN_DATA[`{${BLOCKCHAIN_TYPE.BNB}}${code.toUpperCase()}`] = constants.COIN_DATA[code.toUpperCase()]
-
-  // @to-do - remove this
-  typeforce.isCoinAddress[code.toUpperCase()] = typeforce.isCoinAddress.BNB
-  typeforce.isCoinAddress[`{${BLOCKCHAIN_TYPE.BNB}}${code.toUpperCase()}`] = typeforce.isCoinAddress.BNB
-
-  // @to-do - remove this too
-  typeforce.isPublicKey[code.toUpperCase()] = typeforce.isPublicKey.BNB
-  typeforce.isPublicKey[`{${BLOCKCHAIN_TYPE.BNB}}${code.toUpperCase()}`] = typeforce.isPublicKey.BNB
+  typeforce.isCoinAddress[tokenCode.toUpperCase()] = typeforce.isCoinAddress.BNB
+  typeforce.isPublicKey[tokenCode.toUpperCase()] = typeforce.isPublicKey.BNB
 }
 
 export default {

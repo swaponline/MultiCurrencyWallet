@@ -9,10 +9,10 @@ export default (tokenName) => {
 
     static blockchainName = `ETH`
     static getName() {
-      return `{${this.blockchainName}}${this.getFromName()}2${this.getToName()}`
+      return `${this.getFromName()}2${this.getToName()}`
     }
     static getFromName() {
-      return tokenName.toUpperCase()
+      return `{${this.blockchainName}}${tokenName.toUpperCase()}`
     }
     static getToName() {
       return constants.COINS.next

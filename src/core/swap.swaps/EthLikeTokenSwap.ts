@@ -51,8 +51,9 @@ class EthLikeTokenSwap extends SwapInterface {
     if (!options.name) {
       throw new Error('EthLikeTokenSwap: "name" required')
     }
-    if (!Object.values(constants.COINS).includes(options.name.toUpperCase())) {
-      throw new Error('EthLikeTokenSwap: "name" should be correct')
+    const ticker = `{${options.blockchainName.toUpperCase()}}${options.name.toUpperCase()}`
+    if (!Object.values(constants.COINS).includes(ticker)) {
+      throw new Error('EthLikeTokenSwap: "ticker" should be correct')
     }
     if (typeof options.address !== 'string') {
       throw new Error('EthLikeTokenSwap: "address" required')

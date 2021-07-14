@@ -220,7 +220,9 @@ class SwapApp extends EventEmitter {
       throw new Error('SwapApp swap should contain "_swapName" property')
     }
 
-    if (!Object.values(constants.COINS).includes(swap._swapName.toUpperCase())) {
+    const swapKey = (swap.blockchainName) ? `{${swap.blockchainName}}${swap._swapName}` : swap._swapName
+
+    if (!Object.values(constants.COINS).includes(swapKey.toUpperCase())) {
       throw new Error(
         `SwapApp swap should contain "_swapName" property should be one of ${Object.values(
           constants.COINS
@@ -228,7 +230,6 @@ class SwapApp extends EventEmitter {
       )
     }
 
-    const swapKey = (swap.blockchainName) ? `{${swap.blockchainName}}${swap._swapName}` : swap._swapName
     this.swaps[swapKey] = swap
 
     if (typeof swap._initSwap === 'function') {
