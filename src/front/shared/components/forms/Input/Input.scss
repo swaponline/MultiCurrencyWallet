@@ -28,18 +28,9 @@ textarea {
 }
 
 @mixin placeholder {
-  ::-webkit-input-placeholder {
-    @content;
-  }
-
-  :-moz-placeholder {
-    @content;
-  }
-
-  ::-moz-placeholder {
-    @content;
-  }
-
+  ::-webkit-input-placeholder,
+  :-moz-placeholder,
+  ::-moz-placeholder,
   :-ms-input-placeholder {
     @content;
   }
@@ -53,25 +44,6 @@ textarea {
 .root {
   display: block;
   width: 100%;
-
-  &.--dark {
-    .inputContainer {
-      background-color: #2b2b2b;
-
-      input {
-        color: white;
-      }
-
-      input:disabled {
-        background-color: #2b2b2b !important;
-        cursor: no-drop;
-      }
-    }
-
-    .qrWrapper {
-      background: #2b2b2b;
-    }
-  }
 }
 
 .inputContainer {
@@ -109,7 +81,7 @@ input[type='number'] {
   background: var(--color-background-elements);
   right: 10px;
   font-size: 13px;
-  color: #828795;
+  color: var(--color-notice);
   padding: 5px 10px;
 }
 
@@ -148,10 +120,10 @@ input[type='number'] {
 }
 
 .inputError {
-  border: 1px solid red;
+  border: 1px solid var(--color-f-error);
 
   &:focus {
-    border: 1px solid red;
+    border: 1px solid var(--color-f-error);
   }
 }
 

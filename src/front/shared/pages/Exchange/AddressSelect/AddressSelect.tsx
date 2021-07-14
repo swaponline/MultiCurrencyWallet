@@ -70,7 +70,6 @@ type AddressSelectProps = {
   placeholder?: string
   balance?: number
   hasError?: boolean
-  isDark: boolean
   onChange: ({}) => void
   history: IUniversalObj
   intl: IUniversalObj
@@ -454,7 +453,6 @@ class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
 
   render() {
     const {
-      isDark,
       label,
       role,
       placeholder = 'Enter address',
@@ -484,12 +482,7 @@ class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
     }
 
     return (
-      <div
-        styleName={
-          `addressSelect ${hasError ? 'addressSelect_error' : ''} 
-          ${isDark ? '--dark' : ''}`
-        }
-      >
+      <div styleName={`addressSelect ${hasError ? 'addressSelect_error' : ''}`}>
         <div styleName="label">{label}</div>
         <DropDown
           styleName="dropDown"

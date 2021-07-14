@@ -41,14 +41,6 @@
   padding: 0 2%;
 }
 
-.dark {
-  color: white;
-  h3 {
-    color: white;
-  }
-}
-
-
 @include media-tablet-landscape-and-lower {
   .HowItWorksList {
     justify-content: center;

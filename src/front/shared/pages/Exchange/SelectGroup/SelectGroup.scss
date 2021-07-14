@@ -14,13 +14,6 @@
   text-transform: capitalize;
 }
 
-.dark {
-  .textUsd {
-    background: none;
-    color: white;
-  }
-}
-
 .balanceTooltip {
   top: -19px;
   z-index: 11;
@@ -28,16 +21,16 @@
   right: 24px;
   position: absolute;
 }
+
 .smallTooltip {
   > span {
     position: absolute;
     display: flex;
     justify-content: center;
-    background: #d6d6d6;
     left: 92%;
     top: 11px;
     align-items: center;
-    --size: 1.3em;
+
     span {
       font-size: 1em;
     }
@@ -45,13 +38,12 @@
 }
 
 .textUsd {
-  color: #828795;
+  color: var(--color-indicating);
   position: absolute;
   left: 10px;
   font-family: 'Roboto Mono', monospace;
   bottom: -14px;
   top: auto;
-  background: var(--color-background-elements);
   right: auto;
   padding: 0 10px;
   font-size: 13px;
@@ -92,12 +84,12 @@
 }
 
 .red {
-  color: red,
+  color: var(--color-f-error),
 }
 
 input:disabled {
   background-color: inherit;
-  color: gray;
+  color: var(--color-indicating);
   cursor: default;
 }
 

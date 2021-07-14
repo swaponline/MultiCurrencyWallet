@@ -9,12 +9,6 @@
   top: -18px;
   left: 10px;
   white-space: nowrap;
-
-  &.--dark {
-    background-color: transparent;
-    z-index: 4;
-    color: var(--color);
-  }
 }
 
 .positionStatic {

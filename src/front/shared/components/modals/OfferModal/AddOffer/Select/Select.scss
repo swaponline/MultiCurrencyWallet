@@ -16,12 +16,6 @@
     border: none;
     width: 20%;
   }
-
-  &.--dark {
-    .cell {
-      color: var(--color-notice);
-    }
-  }
 }
 
 .balance {
@@ -35,7 +29,7 @@
   width: 82%;
   display: flex;
   height: 44px;
-  border: 1px solid rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--color-border);
   border-radius: 3px;
   align-items: center;
   justify-content: space-evenly;
@@ -46,9 +40,6 @@
   display: inline-block;
   font-size: 15px;
   cursor: pointer;
-  // &:hover {
-  //   color: darken(#3b95ff, 1)
-  // }
 }
 
 .switchButton {

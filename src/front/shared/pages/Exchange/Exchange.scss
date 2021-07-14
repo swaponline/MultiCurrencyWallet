@@ -43,30 +43,6 @@
 
 .promoContainer {
   position: relative;
-
-  &.--dark {
-    background: var(--color-background);
-    color: var(--color);
-
-    .formExchange {
-      box-shadow: var(--box-shadow);
-      background: var(--color-background-elements);
-    }
-
-    &:before {
-      background: #694cff !important;
-      color: var(--color-background-elements);
-    }
-
-    .maxAmount {
-      color: var(--color);
-      background: var(--color-background-elements);
-    }
-    
-    .minerFeeUpdateBtn {
-      color: var(--color);
-    }
-  }
 }
 
 .switchButton {
@@ -205,12 +181,8 @@
     font-family: 'Roboto Mono', monospace;
     font-size: 13px;
     font-weight: bold;
-    color: #212529;
-    opacity: 0.7;
-
-    &.--dark {
-      color: var(--color-background-elements);
-    }
+    color: var(--color-indicating);
+    opacity: 0.8;
   }
 
   .fees {
@@ -286,9 +258,9 @@
   width: 460px;
   margin-left: auto;
   margin-right: auto;
-  background: #ffffff;
-  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
+  box-shadow: var(--box-shadow);
+  background: var(--color-background-elements);
 
   @media screen and (min-width: 1025px) {
     width: 100%;
@@ -362,12 +334,13 @@
 .maxAmount {
   position: absolute;
   top: -10px;
-  background: var(--color-background-elements);
   font-size: 13px;
   right: 10px;
   padding: 0 0.5em;
   font-weight: bold;
-  color: rgba(0, 0, 0, 0.3);
+  color: var(--color);
+  background: var(--color-background-elements);
+  border-radius: 4px;
   font-family: 'Roboto Mono', monospace;
   margin-bottom: 0;
   z-index: 2;

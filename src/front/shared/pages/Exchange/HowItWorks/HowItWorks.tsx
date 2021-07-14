@@ -3,13 +3,8 @@ import { FormattedMessage } from 'react-intl'
 import CSSModules from 'react-css-modules'
 import styles from './HowItWorks.scss'
 
-import { constants } from 'helpers'
-
-
-const isDark = localStorage.getItem(constants.localStorage.isDark)
-
 const HowItWorks = () => (
-  <div styleName={`HowItWorksContainer ${isDark ? 'dark' : ''}`}>
+  <div styleName="HowItWorksContainer">
     <h3 styleName="HowItWorksTitle">
       <FormattedMessage id="HowItWorks10" defaultMessage="How Does It Work" />
     </h3>

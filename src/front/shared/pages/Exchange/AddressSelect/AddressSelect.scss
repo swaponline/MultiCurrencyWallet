@@ -1,35 +1,6 @@
 .addressSelect {
   position: relative;
 
-  &.--dark {
-    color: var(--color);
-
-    .dropDown {
-      width: 100%;
-
-      & > div {
-        background: #2b2b2b;
-
-        & > span {
-          display: block;
-          font-size: 12pt;
-          font-weight: bold;
-          width: 100%;
-          text-align: left;
-          margin-left: 1em;
-
-          @media screen and (max-width: 480px) {
-            font-size: 8pt;
-          }
-        }
-      }
-    }
-
-    .selectedInner {
-      background-color: #2b2b2b;
-    }
-  }
-
   .label {
     font-size: 15px;
     @include ff-semibold;
@@ -39,7 +10,7 @@
     position: absolute;
     top: -18px;
     left: 10px;
-    background: var(--color);
+    background: var(--color-background-elements);
     white-space: nowrap;
     @include media-mobile {
       top: -14px;
@@ -68,7 +39,7 @@
 
   & > div {
     padding-left: 0px;
-    border: 1px solid rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--color-border);
     border-radius: 2px;
 
     div > {
@@ -98,7 +69,6 @@
   width: 58%;
   z-index: 1;
   background-color: var(--color-background-elements);
-
 
   &.connectWrapper {
     display: flex;

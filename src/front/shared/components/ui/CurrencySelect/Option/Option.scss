@@ -1,13 +1,15 @@
 .optionrow {
   white-space: nowrap;
 }
+
 .icon {
   &[role="letter"] {
-    color: white;
+    color: var(--color);
     width: 100%;
     text-align: center;
   }
 }
+
 .circle {
   width: 32px;
   height: 32px;
