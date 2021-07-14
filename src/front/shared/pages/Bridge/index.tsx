@@ -1,13 +1,14 @@
 import { useState } from 'react'
 import CSSModules from 'react-css-modules'
 import { FormattedMessage } from 'react-intl'
+import { BigNumber } from 'bignumber.js'
 import styles from './index.scss'
 import Link from 'local_modules/sw-valuelink'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
 import Input from 'components/forms/Input/Input'
 import Button from 'components/controls/Button/Button'
-import CurrencySelect from 'components/ui/CurrencySelect/CurrencySelect'
+import SelectGroup from 'pages/Exchange/SelectGroup/SelectGroup'
 
 function Bridge() {
   const [itezWindowReference, setItezWindowReference] = useState<null | IUniversalObj>(null)
@@ -31,20 +32,22 @@ function Bridge() {
     // - don't start, show an exchange button for user and wait while he clicks on it
     // call a smart contract
 
-    if (itezWindowReference === null || itezWindowReference.closed) {    
+    if (
+      window.buyViaCreditCardLink &&
+      (itezWindowReference === null || itezWindowReference.closed)
+    ) {
       setIsPending(true)
 
-      // TODO: move this url somewhere
       const newWindowProxy = window.open(
-        'https://buy.itez.com/swaponline',
-        'itezExchange',
+        window.buyViaCreditCardLink,
+        'externalFiatExchange',
         'location=yes, height=770, width=620, scrollbars, status, resizable'
       )
 
       setItezWindowReference(newWindowProxy)
       console.log(newWindowProxy)
     } else {
-      itezWindowReference.focus()
+      itezWindowReference?.focus()
     }
 
     // itezWindowReference.open()
@@ -54,7 +57,7 @@ function Bridge() {
   const calculateTokenAmount = () => {
     // take currency amount
     // take an exchange rate (from token object ?)
-    // calc final token amount and save it 
+    // calc final token amount and save it
   }
 
   const calculateCurrencyAmount = () => {
@@ -70,7 +73,7 @@ function Bridge() {
 
       <form styleName="form" action="">
         {/* fiat amount part */}
-        <div styleName="inputWrapper">      
+        <div styleName="inputWrapper">
           <FieldLabel>
             <FormattedMessage id="fiatAmount" defaultMessage="Fiat amount" />{' '}
             <Tooltip id="fiatAmountTooltip">
@@ -88,47 +91,33 @@ function Bridge() {
           />
         </div>
 
-        {/* ethereum amount part */}
-        <div styleName="inputWrapper"> 
-          <FieldLabel>
-            {currentCurrency.name}{' '}
-            <Tooltip id="ethereumAmountTooltip">
-              <FormattedMessage
-                id="ethereumAmountNotice"
-                defaultMessage="Some useful notice for user about ethereum amount"
-              />
-            </Tooltip>
-          </FieldLabel>
-          <input
-            disabled
-            styleName="amountInput"
-            type="number"
-            placeholder={`${currentCurrency.name} you will get`}
-          />
-        </div>
-
-        {/* tokens drop down. Current token amount part */}
-
-        {/* @ts-ignore */}
-        <CurrencySelect
-          selectedItemRender={(item) => item.title}
-          styleName=""
-          placeholder="..."
-          //selectedValue={}
-          //onSelect={}
+        <SelectGroup
+          activeFiat={window.DEFAULT_FIAT}
+          dataTut="get"
+          inputValueLink={} // linked.getAmount
+          selectedValue={} // get token
+          onSelect={this.choseToken}
+          disabled={true}
+          label={<FormattedMessage id="partial255" defaultMessage="You get" />}
+          id="Exchange472"
           currencies={[]}
+          fiat={} // number
         />
 
+        <div>
+          Fiat: {}
+          Eth: {}
+          Token: {}
+        </div>
+
         <Button
-          id='exchangeWithEth'
+          id="exchangeWithEth"
           brand
           pending={isPending}
           disabled={isPending}
           onClick={openFiatExchangeWindow}
         >
           <FormattedMessage id="buy" defaultMessage="Buy" />
-          {' '}
-          {currentToken.name}
         </Button>
       </form>
     </section>
