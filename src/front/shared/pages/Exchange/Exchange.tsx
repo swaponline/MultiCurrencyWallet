@@ -1179,8 +1179,6 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
   setOrders = () => {
     const { filteredOrders, haveAmount } = this.state
 
-    console.log('filteredOrders', filteredOrders)
-
     if (!filteredOrders.length) {
       this.setState(() => ({
         isNonOffers: true,
