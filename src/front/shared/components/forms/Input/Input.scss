@@ -101,22 +101,22 @@ input[type='number'] {
 
 .input::-webkit-input-placeholder {
   /* Chrome/Opera/Safari */
-  color: rgba(31, 45, 72, 0.3);
+  color: var(--color-notice);
 }
 
 .input::-moz-placeholder {
   /* Firefox 19+ */
-  color: rgba(31, 45, 72, 0.3);
+  color: var(--color-notice);
 }
 
 .input:-ms-input-placeholder {
   /* IE 10+ */
-  color: rgba(31, 45, 72, 0.3);
+  color: var(--color-notice);
 }
 
 .input:-moz-placeholder {
   /* Firefox 18- */
-  color: rgba(31, 45, 72, 0.3);
+  color: var(--color-notice);
 }
 
 .inputError {

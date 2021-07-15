@@ -26,7 +26,6 @@ type ButtonProps = {
   onClick?: () => void
 }
 
-const isDark = localStorage.getItem(constants.localStorage.isDark)
 const Button = (props: ButtonProps) => {
   const {
     children,
@@ -62,7 +61,6 @@ const Button = (props: ButtonProps) => {
     link,
     autoHeight,
     disabled,
-    "darkTheme-gray": isDark && gray,
   })
 
   return (

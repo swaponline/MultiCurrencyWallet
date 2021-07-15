@@ -21,12 +21,6 @@ import DeleteSwapAfterEnd from './DeleteSwapAfterEnd'
 
 import feedback from 'shared/helpers/feedback'
 
-import config from 'app-config'
-
-
-const isWidgetBuild = config && config.isWidget
-const isDark = localStorage.getItem(constants.localStorage.isDark)
-
 @connect(({
   user: {
     ethData,
@@ -597,7 +591,7 @@ class SwapComponent extends PureComponent<any, any> {
     return (
       <Fragment>
         {!isSwapCancelled ?
-          <div styleName={`${isMobile ? 'swap swapMobile' : 'swap'} ${isDark ? 'dark' : ''}`}>
+          <div styleName={`${isMobile ? 'swap swapMobile' : 'swap'}`}>
             <ActiveSwap
               tokenItems={tokensData}
               depositWindow={depositWindow}

@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react'
 
 import { isMobile } from 'react-device-detect'
-import { constants } from 'helpers'
 
 import CSSModules from 'react-css-modules'
 import styles from './SwapList.scss'
@@ -38,7 +37,6 @@ const {
 } = SWAP_STEPS
 
 
-const isDark = localStorage.getItem(constants.localStorage.isDark)
 @CSSModules(styles, { allowMultiple: true })
 export default class SwapList extends React.PureComponent<any, any> {
 
@@ -150,7 +148,7 @@ export default class SwapList extends React.PureComponent<any, any> {
     const showDepositWindow = !enoughBalance && stepName === 'sync-balance'
 
     return (
-      <div styleName={`${isMobile ? 'stepList isMobile' : 'stepList'} ${isDark ? 'dark' : ''}`}>
+      <div styleName={`${isMobile ? 'stepList isMobile' : 'stepList'}`}>
         {!isMobile && <FirstStep text={swapTexts} isFirstStepActive={isFirstStepActive} />}
         <SecondStep
           isFirstStepActive={isFirstStepActive}

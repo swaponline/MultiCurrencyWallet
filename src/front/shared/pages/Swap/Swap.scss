@@ -2,28 +2,6 @@
   padding-top: 20px;
 }
 
-.dark {
-  code,
-  .swapContainer,
-  .swapInfo {
-    color: var(--color);
-  }
-  .topUpLink,
-  .linkAddress,
-  .qr > button {
-    box-shadow: var(--box-shadow);
-    background: var(--color-background-elements);
-    color: var(--color);
-  }
-  .linkAddress:hover,
-  .qr > button:hover {
-    background: var(--color-indicating);
-  }
-  .qrImg  {
-    margin: 1rem 0
-  }
-}
-
 .swapMobile {
   padding-top: 0;
 }
@@ -44,7 +22,7 @@
 
 .reloadText {
   text-align: center;
-  color: #acacac;
+  color: var(--color-notice);
   cursor: pointer;
 }
 
@@ -269,7 +247,7 @@
     align-items: center;
     flex-direction: column;
     &:hover {
-      background: #eee;
+      background: var(--color-indicating);
     }
   }
 }
@@ -304,9 +282,10 @@
   background: var(--color-background-elements);
   padding: 10px 15px;
   color: var(--color);
+
   &:hover {
     color: var(--color);
-    background: #eee;
+    background: var(--color-background-elements);
   }
 }
 

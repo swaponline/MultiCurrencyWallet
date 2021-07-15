@@ -105,20 +105,10 @@
 }
 
 .gray {
-  background-color: #f2f2f2;
-  color: #000;
-
-  &:hover {
-    background-color: darken(#f2f2f2, 10%);
-  }
-}
-
-.darkTheme-gray {
   background-color: var(--color-border);
-  color: var(--color);
 
   &:hover {
-    color: black
+    opacity: 0.8;
   }
 }
 

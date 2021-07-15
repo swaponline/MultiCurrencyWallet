@@ -12,12 +12,6 @@
   background: var(--color-background-elements);
   color: var(--color);
   font-size: 16px;
-
-  &.dark {
-    box-shadow: var(--box-shadow);
-    background: var(--color-background-elements);
-    color: var(--color);
-  }
 }
 
 .failHeading {
@@ -27,7 +21,7 @@
 
 .warning {
   font-size: 120px;
-  color: #ff3b3b;
+  color: var(--color-bad);
   margin-bottom: 5px;
 }
 
@@ -35,10 +29,10 @@
   cursor: pointer;
   width: 200px;
   margin-left: 20%;
-  background: #5100e0;
+  background: var(--color-brand);
   margin: 0;
   &:hover {
-    background: #782cff;
+    background: var(--color-brand-hover);
   }
 }
 

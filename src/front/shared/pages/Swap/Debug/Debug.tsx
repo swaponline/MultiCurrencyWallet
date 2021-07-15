@@ -3,9 +3,6 @@ import CSSModules from 'react-css-modules'
 import styles from './Debug.scss'
 import { FormattedMessage } from 'react-intl'
 import ShowBtcScript from './ShowBtcScript'
-import { constants } from 'helpers'
-
-const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 type ComponentProps = {
   flow: IUniversalObj
@@ -24,7 +21,7 @@ export default class Debug extends Component<ComponentProps, any> {
     } = this.props
 
     return (
-      <div styleName={`debug ${isDark ? 'dark' : ''}`}>
+      <div styleName="debug">
         <button styleName='button' onClick={() => document.location.href = '#/localStorage'}>
           <FormattedMessage id="DebugStoredDataLink" defaultMessage="Show stored data" />
         </button>
