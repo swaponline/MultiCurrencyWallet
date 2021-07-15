@@ -5,6 +5,7 @@ import SwapInterface from 'swap.app/SwapInterface'
 import Room from './Room'
 import { Flow as FlowType } from 'swap.swap'
 import { COIN_DATA, COIN_MODEL, COIN_TYPE } from 'swap.app/constants/COINS'
+import getCoinInfo from 'common/coins/getCoinInfo'
 
 
 class Swap {
@@ -91,9 +92,11 @@ class Swap {
       participantPeer: this.participant.peer,
     })
 
-    const buyCoin = ((data.buyBlockchain) ? `{${data.buyBlockchain}}${data.buyCurrency}` : data.buyCurrency).toUpperCase()
-    const sellCoin = ((data.sellBlockchain) ? `{${data.sellBlockchain}}${data.sellCurrency}` : data.sellCurrency).toUpperCase()
+    const buyCurrencyInfo = getCoinInfo(data.buyCurrency)
+    const sellCurrencyInfo = getCoinInfo(data.sellCurrency)
 
+    const buyCoin = ((data.buyBlockchain && !buyCurrencyInfo.blockchain) ? `{${data.buyBlockchain}}${data.buyCurrency}` : data.buyCurrency).toUpperCase()
+    const sellCoin = ((data.sellBlockchain && !sellCurrencyInfo.blockchain) ? `{${data.sellBlockchain}}${data.sellCurrency}` : data.sellCurrency).toUpperCase()
 
     this.ownerSwap        = this.app.swaps[buyCoin]
     this.participantSwap  = this.app.swaps[sellCoin]
