@@ -1,8 +1,8 @@
 .link {
   text-decoration: none !important;
-  color: #2181F7 !important;
+  color: var(--color-link) !important;
 
   &:hover {
-    color: #3b95ff !important;
+    color: var(--color-link-hover) !important;
   }
 }

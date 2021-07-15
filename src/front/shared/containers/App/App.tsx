@@ -433,8 +433,6 @@ class App extends React.Component<RouteComponentProps<any>, any> {
     const { modals, dashboardModalsAllowed } = this.props;
     const isAnyModalCalled = Object.keys(modals).length > 0
 
-    const isDark = localStorage.getItem(constants.localStorage.isDark)
-
     if (typeof document !== 'undefined' && isAnyModalCalled && !dashboardModalsAllowed) {
       document.body.classList.remove('overflowY-default')
       document.body.classList.add('overflowY-hidden')

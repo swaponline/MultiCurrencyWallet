@@ -179,12 +179,6 @@
   width: calc(100% - 28px);
 }
 
-.dark {
-  .yourBalanceBottomWrapper::before {
-    display: none;
-  }
-}
-
 @media all and (min-width: 993px) {
   .walletTable {
     display: inline-table;

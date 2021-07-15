@@ -14,19 +14,6 @@
     transition: margin-top 0.1s linear 0s, margin-bottom 0.1s linear 0s;
     margin-top: 0;
   }
-
-  &.dark {
-    .notification {
-      box-shadow: var(--box-shadow);
-      background-color: var(--color-background-elements);
-      color: var(--color);
-    }
-
-    .errorNotification {
-      background-color: var(--color-background-elements);
-      color: var(--color-f-error);
-    }
-  }
 }
 
 .notification {

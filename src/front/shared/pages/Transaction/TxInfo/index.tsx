@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
 import helpers from "helpers";
 import { getFullOrigin } from 'helpers/links'
-import { constants } from 'helpers'
 
 import cssModules from 'react-css-modules'
 import styles from './styles.scss'
@@ -22,8 +21,6 @@ const labels = defineMessages({
     defaultMessage: 'successfully transferred to'
   },
 })
-
-const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 @cssModules({
   ...styles,
@@ -118,7 +115,7 @@ class TxInfo extends Component<any, any> {
 
     return (
       <div>
-        <div styleName={`blockCenter ${isDark ? 'dark' : ''}`}>
+        <div styleName="blockCenter">
           <div>
             <img styleName="finishImg" src={regularIcons.OK} alt="finish" />
           </div>

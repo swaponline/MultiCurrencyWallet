@@ -1,38 +1,3 @@
-.localStorageDark {
-  width: 75%;
-  margin: 3em auto 0;
-  padding: 2em;
-  overflow: auto;
-  border-radius: 0.3em;
-  box-shadow: var(--box-shadow);
-  background-color: var(--color-background-elements);
-  color: var(--color);
-
-  .localStorage__btn {
-    background-color: var(--color-read-only);
-    color: var(--color);
-  
-    &:hover {
-      background-color:  rgb(73, 73, 73);
-    }
-
-    &.copy::before {
-      background-color:  var(--color-background-elements);
-      color: var(--color);
-    }
-  }
-
-  .localStorage__copy-tip {
-    background-color: var(--color-read-only);
-    color: var(--color);
-  }
-
-  .localStorage__json-output {
-    background-color: var(--color-read-only);
-    color: var(--color);
-  }
-}
-
 .localStorage {
   width: 75%;
   margin: 3em auto 0;
@@ -63,7 +28,7 @@
   transition: .1s;
 
   &:hover {
-    background-color:  rgb(196, 196, 196);
+    background-color: var(--color-border);
   }
 }
 

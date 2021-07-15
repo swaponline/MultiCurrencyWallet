@@ -19,7 +19,7 @@ function ContentLoader({ empty, inner, rideSideContent, leftSideContent, banners
     <Fragment>
       {
         rideSideContent ? (
-          <div styleName={`animationLoading rideSideContent ${empty ? 'stop' : ''} ${inner ? 'inner' : ''} ${isDark ? '--dark' : ''}`}>
+          <div styleName={`animationLoading rideSideContent ${empty ? 'stop' : ''} ${inner ? 'inner' : ''}`}>
             {
               empty ? (
                 <div styleName="textBlock">
@@ -36,14 +36,14 @@ function ContentLoader({ empty, inner, rideSideContent, leftSideContent, banners
       }
       {
         leftSideContent ? (
-          <div styleName={`animationLoading leftSideContent ${isDark ? '--dark' : ''}`}>
+          <div styleName="animationLoading leftSideContent">
             <BalanceSection />
           </div>
         ) : ''
       }
       {
         banners ? (
-          <div styleName={`animationLoading banners ${isDark ? '--dark' : ''}`}>
+          <div styleName="animationLoading banners">
             <BannersSection />
           </div>
         ) : ''

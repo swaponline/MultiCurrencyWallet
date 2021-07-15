@@ -24,14 +24,14 @@
     flex: 1;
     padding: 14px 7px;
     text-align: center;
-    color: var(--color);
+    color: var(--color-f-brightest);
     text-decoration: none;
     display: flex;
     flex-direction: column;
     white-space: nowrap;
 
     &:not(:last-of-type) {
-      border-right: 1px solid var(--color);
+      border-right: 1px solid var(--color-indicating);
     }
 
     &.active {
@@ -48,12 +48,6 @@
       border-right: none;
     }
   }
-}
-
-.active {
-  font-weight: 700;
-  color: var(--color-f-brightest);
-  background: var(--color-brand);
 }
 
 .bold {

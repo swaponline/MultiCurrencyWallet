@@ -11,11 +11,6 @@
   @include ff-regular;
 }
 
-.panel.dark {
-  box-shadow: var(--box-shadow);
-  background: var(--color-background-elements);
-}
-
 .panelHeader {
   display: flex;
   align-items: baseline;

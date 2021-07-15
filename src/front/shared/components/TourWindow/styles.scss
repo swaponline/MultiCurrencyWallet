@@ -18,9 +18,9 @@
 }
 
 .TooltipFooter {
-    background-color: #302272;
-    color: white;
-        display: flex;
+    background-color: var(--color-brand);
+    color: var(--color);
+    display: flex;
     justify-content: flex-end;
     margin-top: 1rem;
     padding: 5px;

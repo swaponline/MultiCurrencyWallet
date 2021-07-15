@@ -2,10 +2,7 @@ import React, { useState, useEffect } from 'react'
 import CopyToClipboard from 'react-copy-to-clipboard'
 import CSSModules from 'react-css-modules'
 import styles from './LocalStorage.scss'
-import { constants } from 'helpers'
 import { FormattedMessage } from 'react-intl'
-
-const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 function LocalStorage() {
   const [isCopied, setCopied] = useState(false)
@@ -32,7 +29,7 @@ function LocalStorage() {
   })
 
   return (
-    <section styleName={`${isDark ? 'localStorageDark' : 'localStorage'}`}>
+    <section styleName="localStorage">
       {!dumpAll && (
         <h3>
           <FormattedMessage
@@ -57,12 +54,6 @@ function LocalStorage() {
             <FormattedMessage id="localStorageBtnCopy" defaultMessage="Copy" />
           </button>
         </CopyToClipboard>
-        {/* <button styleName='localStorage__btn' onClick={() => null}>
-          <FormattedMessage
-            id="localStorageBtnSend"
-            defaultMessage="Send to developers"
-          />
-        </button> */}
       </div>
 
       <pre styleName='localStorage__json-output'>

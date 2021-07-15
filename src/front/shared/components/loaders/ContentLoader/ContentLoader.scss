@@ -1,36 +1,12 @@
 .animationLoading {
   display: block;
-  background: #ffffff;
+  background: var(--color-background-elements);
   border-radius: 4px;
   position: relative;
   right: 0;
   width: 100%;
   top: 20px;
   opacity: 0.6;
-
-  &.--dark {
-    background: #222528;
-    opacity: unset;
-
-    .textBlock {
-      p {
-        color: white;
-      }
-
-      span {
-        color: #79838a;
-      }
-    }
-
-    .one,
-    .two,
-    .three,
-    .four,
-    .five,
-    .six {
-      background: linear-gradient(to right, #353535 8%, #353535 18%, #353535 33%);
-    }
-  }
 }
 
 .animationLoading.rideSideContent {
@@ -161,7 +137,7 @@
 .four,
 .five,
 .six {
-  background-color: #ccc;
+  background-color: var(--color-pale);
   height: 6px;
   animation-name: animate;
   border-radius: 4px;
@@ -169,14 +145,26 @@
   position: absolute;
   animation-iteration-count: infinite;
   animation-timing-function: linear;
-  background: -webkit-gradient(linear,
-      left top,
-      right top,
-      color-stop(8%, #eeeeee),
-      color-stop(18%, #dddddd),
-      color-stop(33%, #eeeeee));
-  background: -webkit-linear-gradient(left, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
-  background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
+  background: -webkit-gradient(
+    linear,
+    left top,
+    right top,
+    color-stop(8%, var(--color-pale)),
+    color-stop(18%, var(--color-border)),
+    color-stop(33%, var(--color-pale))
+  );
+  background: -webkit-linear-gradient(
+    left,
+    var(--color-pale) 8%,
+    var(--color-border) 18%,
+    var(--color-pale) 33%
+  );
+  background: linear-gradient(
+    to right,
+    var(--color-pale) 8%,
+    var(--color-border) 18%,
+    var(--color-pale) 33%
+  );
   -webkit-background-size: 3200px 104px;
 }
 
@@ -210,7 +198,7 @@
     font-size: 18px;
     line-height: 25px;
     text-align: center;
-    color: #1f2d48;
+    color: var(--color-notice);
     margin-bottom: 5px;
   }
 
