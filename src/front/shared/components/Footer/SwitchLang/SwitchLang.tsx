@@ -1,15 +1,10 @@
 import React from 'react'
-
-import { constants } from 'helpers'
-
 import styles from './SwitchLang.scss'
 import CSSModules from 'react-css-modules'
 
 import { setCookie } from 'helpers/utils'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import feedback from 'helpers/feedback'
-
-const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 const SwitchLang = (props) => {
   const { intl: { locale: intlLocale } } = props
@@ -36,7 +31,7 @@ const SwitchLang = (props) => {
     <div styleName="langSwitcher">
       <a
         href={localeIsNotMatched('EN') && '#/'}
-        styleName={`language ${isDark ? '--dark' : ''}`}
+        styleName="language"
         onClick={(e) => {
           switchLang(e, 'EN')
           return false
@@ -47,7 +42,7 @@ const SwitchLang = (props) => {
       |
       <a
         href={localeIsNotMatched('RU') && '#/'}
-        styleName={`language ${isDark ? '--dark' : ''}`}
+        styleName="language"
         onClick={(e) => {
           switchLang(e, 'RU')
           return false
@@ -58,7 +53,7 @@ const SwitchLang = (props) => {
       |
       <a
         href={localeIsNotMatched('NL') && '#/'}
-        styleName={`language ${isDark ? '--dark' : ''}`}
+        styleName="language"
         onClick={(e) => {
           switchLang(e, 'NL')
           return false
@@ -69,7 +64,7 @@ const SwitchLang = (props) => {
       |
       <a
         href={localeIsNotMatched('ES') && '#/'}
-        styleName={`language ${isDark ? '--dark' : ''}`}
+        styleName="language"
         onClick={(e) => {
           switchLang(e, 'ES')
           return false
@@ -80,7 +75,7 @@ const SwitchLang = (props) => {
       |
       <a
         href={localeIsNotMatched('PL') && '#/'}
-        styleName={`language ${isDark ? '--dark' : ''}`}
+        styleName="language"
         onClick={(e) => {
           switchLang(e, 'PL')
           return false

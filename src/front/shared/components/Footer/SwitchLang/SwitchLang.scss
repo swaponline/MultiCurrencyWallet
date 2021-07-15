@@ -11,10 +11,8 @@
   font-weight: bolder;
   padding: 0 3px 0 3px;
 
-  &.--dark {
-    &:not([href]) {
-      color: var(--color-notice);
-    }
+  &:not([href]) {
+    color: var(--color-notice);
   }
 }
 

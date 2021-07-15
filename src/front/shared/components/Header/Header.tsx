@@ -42,7 +42,6 @@ import SwapApp from 'swap.app'
 //window.isUserRegisteredAndLoggedIn = true
 
 const isWidgetBuild = config && config.isWidget
-const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 @withRouter
 @connect({
@@ -454,7 +453,7 @@ class Header extends Component<any, any> {
           )}
 
           {isLogoutPossible && ( // some wordpress plugin cases
-            <div styleName={`logoutWrapper ${isDark ? 'dark' : ''}`} onClick={this.handleLogout}>
+            <div styleName="logoutWrapper" onClick={this.handleLogout}>
               <i className="fas fa-sign-out-alt" />
               <FormattedMessage id="ExitWidget" defaultMessage="Exit" />
             </div>

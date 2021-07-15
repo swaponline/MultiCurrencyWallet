@@ -66,11 +66,7 @@
   display: flex;
   align-items: baseline;
   cursor: pointer;
-  color: #747474;
-
-  &.dark {
-    color: white
-  }
+  color: var(--color-indicating);
 
   span {
     margin-left: 0.15em;

@@ -36,7 +36,8 @@
 
     &.active {
       font-weight: 700;
-      color: #1F2D48;
+      color: var(--color-need-to-rename);
+      background: var(--color-f-brightest);
     }
 
     i {
@@ -47,24 +48,12 @@
       border-right: none;
     }
   }
-
-  &.dark {
-    background-color: #29293b;
-  
-    a.active {
-      background: var(--color-brand);
-      color: var(--color);
-
-      &:not(:last-of-type) {
-        border-right: 1px solid #555;
-      }
-    }
-  }
 }
 
 .active {
   font-weight: 700;
-  background: var(--color-background-elements);
+  color: var(--color-f-brightest);
+  background: var(--color-brand);
 }
 
 .bold {
