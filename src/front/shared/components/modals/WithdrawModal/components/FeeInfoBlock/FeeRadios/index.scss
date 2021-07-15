@@ -5,13 +5,6 @@
   border-radius: 5px;
   letter-spacing: 0.01em;
   width: 100%;
-
-  &.--dark {
-    .fee-radio__label {
-        background-color: var(--box-shadow);
-        color: var(--color);
-    }
-  }
 }
 
 .fee-radio__input {

@@ -68,8 +68,7 @@ function BalanceForm({
   return (
     <div 
       styleName={
-        `${isWidgetBuild && !config.isFullBuild ? 'yourBalance widgetBuild' : 'yourBalance'}
-        ${isDark ? 'dark' : ''}`
+        `${isWidgetBuild && !config.isFullBuild ? 'yourBalance widgetBuild' : 'yourBalance'}`
       }
     >
       <div styleName="yourBalanceTop" className="data-tut-widget-balance">

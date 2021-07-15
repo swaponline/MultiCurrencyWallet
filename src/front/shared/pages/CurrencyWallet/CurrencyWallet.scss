@@ -26,7 +26,7 @@
   position: relative;
 
   h3 {
-    color: #1F2D48;
+    color: var(--color-need-to-rename);
     font-size: 24px;
     line-height: 33px;
     font-weight: bold;
@@ -87,7 +87,7 @@
   @include ff-bold;
 
   p {
-    color: #1F2D48;
+    color: var(--color-need-to-rename);
     display: inline;
     font-size: 16px;
   }
@@ -127,7 +127,7 @@
   font-size: 40px;
   display: inline-block;
   line-height: 120%;
-  color: #1F2D48;
+  color: var(--color-need-to-rename);
   margin-bottom: 30px;
   padding: 0px;
   margin-top: -10px;
@@ -147,7 +147,7 @@
 .widgetNavItem.active {
   a {
     border-bottom: 3px solid var(--color-brand);
-    color: #1F2D48 !important;
+    color: var(--color-need-to-rename) !important;
   }
 }
 

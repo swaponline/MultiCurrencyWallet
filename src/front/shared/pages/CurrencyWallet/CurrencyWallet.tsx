@@ -31,7 +31,6 @@ import getCoinInfo from 'common/coins/getCoinInfo'
 
 
 const isWidgetBuild = config && config.isWidget
-const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 @connect(
   ({
@@ -509,7 +508,7 @@ class CurrencyWallet extends Component<any, any> {
     }
 
     return (
-      <div styleName={`root ${isDark ? 'dark' : ''}`}>
+      <div styleName="root">
         <PageSeo
           location={location}
           defaultTitle={intl.formatMessage(title.metaTitle, {
@@ -553,7 +552,7 @@ class CurrencyWallet extends Component<any, any> {
               </Fragment>
           }
         >
-          <div styleName={`currencyWalletActivity ${isDark ? 'darkActivity' : ''}`}>
+          <div styleName="currencyWalletActivity">
             <FilterForm
               filterValue={filterValue}
               onSubmit={this.handleFilter}

@@ -28,7 +28,7 @@
   align-items: center;
   position: relative;
   @include ff-bold;
-  color: var(--color-indicating);
+  opacity: 0.9;
   font-size: 24px;
   line-height: 33px;
 }
