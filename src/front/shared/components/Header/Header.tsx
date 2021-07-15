@@ -98,6 +98,7 @@ class Header extends Component<any, any> {
       menuItems: getMenuItems(props),
       menuItemsMobile: getMenuItemsMobile(props, lsWalletCreated, dynamicPath),
       createdWalletLoader: isWalletPage && !lsWalletCreated,
+      themeSwapAnimation: false,
     }
     this.lastScrollTop = 0
   }
@@ -368,9 +369,7 @@ class Header extends Component<any, any> {
       dataset.scheme = "dark"
     }
 
-    setTimeout(() => {
-      this.setState(() => ({ themeSwapAnimation: false }))
-    }, 500) // animation time for the .themeAnimation class
+    this.setState(() => ({ themeSwapAnimation: false }))
   }
 
   declineRequest = (orderId, participantPeer) => {
@@ -421,7 +420,6 @@ class Header extends Component<any, any> {
       menuItemsMobile,
       createdWalletLoader,
       isWidgetTourOpen,
-      themeSwapAnimation,
     } = this.state
     const {
       intl: { formatMessage },
@@ -449,7 +447,7 @@ class Header extends Component<any, any> {
         </div>
         <div styleName="rightArea">
           {window.WPSO_selected_theme !== 'only_light' && window.WPSO_selected_theme !== 'only_dark' && (
-            <ThemeSwitcher themeSwapAnimation={themeSwapAnimation} onClick={this.handleToggleTheme} />
+            <ThemeSwitcher onClick={this.handleToggleTheme} />
           )}
 
           {isLogoutPossible && ( // some wordpress plugin cases

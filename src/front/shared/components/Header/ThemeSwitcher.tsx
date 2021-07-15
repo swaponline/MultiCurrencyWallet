@@ -53,12 +53,12 @@ const moon = (fill) => (
   </svg>
 )
 
-const ThemeSwitcher = ({ onClick, themeSwapAnimation }) => {
+const ThemeSwitcher = ({ onClick }) => {
   const isDark = document.body.dataset.scheme === 'dark'
 
   return (
     <div
-      styleName={`themeSwitcher ${themeSwapAnimation ? 'themeAnimation' : ''}`}
+      styleName={`themeSwitcher`}
       onClick={onClick}
       data-for="themeAlt"
       data-tip
