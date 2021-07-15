@@ -170,8 +170,8 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
 
     const directionOrders = orders.filter(order =>
       !order.isMy &&
-      order.sellCurrency.toUpperCase() === haveCurrency.toUpperCase() &&
-      order.buyCurrency.toUpperCase() === getCurrency.toUpperCase()
+      order.sellCurrency.toUpperCase() === getCurrency.toUpperCase() &&
+      order.buyCurrency.toUpperCase() === haveCurrency.toUpperCase()
     )
 
     const filteredOrders = directionOrders.filter(order =>
