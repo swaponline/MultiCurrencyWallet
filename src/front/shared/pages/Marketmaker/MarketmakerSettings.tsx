@@ -803,8 +803,12 @@ class MarketmakerSettings extends Component<any, any> {
                           />
                         </h2>
                         <p>
-                          <img src={btc} alt="btc" />
-                          {' '}
+                          {utxoCoin === 'btc' && (
+                            <>
+                              <img src={btc} alt="btc" />
+                              {' '}
+                            </>
+                          )}
                           <span id='btcBalance' styleName='balanceSecondary'>{utxoBalance}</span>
                         </p>
                         <hr />
@@ -829,8 +833,12 @@ class MarketmakerSettings extends Component<any, any> {
                           />
                         </h2>
                         <p>
-                          <img src={btc} alt="btc" />
-                          {' '}
+                          {utxoCoin === 'btc' && (
+                            <>
+                              <img src={btc} alt="btc" />
+                              {' '}
+                            </>
+                          )}
                           <span id='btcBalance' styleName='balanceSecondary'>{utxoBalance}</span>
                         </p>
                       </>
@@ -848,12 +856,16 @@ class MarketmakerSettings extends Component<any, any> {
                     />
                   </h2>
                   <div>
-                    {config.binance ? (
-                      <img src={btc} alt="btcb" />
-                    ): (
-                      <img styleName='iconPosition' src={wbtc} alt="wbtc" />
+                    {utxoCoin === 'btc' && (
+                      <>
+                        {config.binance ? (
+                          <img src={btc} alt="btcb" />
+                        ): (
+                          <img styleName='iconPosition' src={wbtc} alt="wbtc" />
+                        )}
+                        {' '}
+                      </>
                     )}
-                    {' '}
                     <span id='tokenBalance' styleName='balanceSecondary'>{tokenBalance}</span>
                     {' '}
                     {tokenWallet && (
