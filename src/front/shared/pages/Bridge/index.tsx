@@ -1,6 +1,7 @@
 import { PureComponent } from 'react'
 import CSSModules from 'react-css-modules'
 import { FormattedMessage } from 'react-intl'
+import { connect } from 'redaction'
 import { BigNumber } from 'bignumber.js'
 import styles from './index.scss'
 import { inputReplaceCommaWithDot } from 'helpers/domUtils'
@@ -23,9 +24,21 @@ type ComponentState = {
   tokenAmount: number
 }
 
+@connect(
+  ({
+    currencies,
+    user: { tokensData, activeFiat },
+  }) => ({
+    currencies,
+    tokensData,
+    activeFiat,
+  })
+)
 class Bridge extends PureComponent<unknown, ComponentState> {
   constructor(props) {
     super(props)
+
+    const { currencies, tokensData, activeFiat } = props
 
     this.state = {
       itezWindowReference: null,
