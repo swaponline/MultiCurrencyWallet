@@ -60,8 +60,6 @@ class MarketmakerSettings extends Component<any, any> {
     this._handleSwapAttachedHandle = this.onSwapAttachedHandle.bind(this)
     this._handleSwapEnterStep = this.onSwapEnterStep.bind(this)
 
-    console.log('marketToken', marketToken)
-    console.log('utxoCoin', utxoCoin)
 
     this.state = {
       swapsIds: [],
@@ -341,9 +339,16 @@ class MarketmakerSettings extends Component<any, any> {
   }
 
   handleCreateWallet = () => {
-    const { history } = this.props
+    const {
+      history,
+      match: {
+        params: {
+          utxoCoin = 'btc'
+        }
+      }
+    } = this.props
 
-    history.push(`${links.createWallet}/BTC`)
+    history.push(`${links.createWallet}/${utxoCoin.toUpperCase()}`)
   }
 
   handleSaveMnemonic = () => {
@@ -375,6 +380,7 @@ class MarketmakerSettings extends Component<any, any> {
       tokenBalance,
       evmCoinWallet,
       tokenWallet,
+      utxoCoin,
     } = this.state
 
     const isEthBalanceOk = new BigNumber(ethBalance).isGreaterThanOrEqualTo(0.02)
@@ -425,19 +431,20 @@ class MarketmakerSettings extends Component<any, any> {
     }
     if (!isTokenBalanceOk && !isUtxoBalanceOk) {
       hasError = true
-      const token = tokenWallet.currency.toUpperCase()
+      const token = tokenWallet.tokenKey.toUpperCase()
       actions.modals.open(constants.modals.AlertModal, {
         message: (
           <FormattedMessage
             id="MM_NotEnoughCoins"
-            defaultMessage="Insufficient funds. You need to top up your BTC or {token}"
+            defaultMessage="Insufficient funds. You need to top up your {utxoCoin} or {token}"
             values={{
               token,
+              utxoCoin: utxoCoin.toUpperCase()
             }}
           />
         ),
       })
-      feedback.marketmaking.prevented(`Not enough BTC or ${token}`)
+      feedback.marketmaking.prevented(`Not enough ${utxoCoin} or ${token}`)
     }
     if (!hasError) {
       this.setState({
@@ -581,8 +588,9 @@ class MarketmakerSettings extends Component<any, any> {
       swapsIds,
       swapsByIds,
       utxoWallet,
-      evmCoinWallet,
+      utxoCoin,
       utxoBalance,
+      evmCoinWallet,
       tokenWallet,
       tokenBalance,
       ethBalance,
@@ -591,6 +599,7 @@ class MarketmakerSettings extends Component<any, any> {
       isWalletCreated,
       mnemonicSaved,
     } = this.state
+    console.log('utxoWallet',utxoWallet)
 
     const totalBalance = new BigNumber(utxoBalance).plus(tokenBalance).toNumber()
 
@@ -603,15 +612,19 @@ class MarketmakerSettings extends Component<any, any> {
           <h2>
             <FormattedMessage
               id="MM_Promo_Title"
-              defaultMessage="Earn interest on Bitcoin"
+              defaultMessage="Earn interest on {utxoTitle}"
+              values={{
+                utxoTitle: utxoWallet?.fullName || 'Bitcoin'
+              }}
             />
           </h2>
           <p>
             {tokenWallet && evmCoinWallet && (
               <FormattedMessage
                 id="MM_Promo_TitleBody"
-                defaultMessage="On swap.io users exchange BTC for {token} (a token that costs like BTC, but works on {Ab_Title}), and vice versa. You get min. 10% APY (annual percentage yield) as a commission from exchanges with low impermanent loss {link}."
+                defaultMessage="On swap.io users exchange {utxoCoin} for {token} (a token that costs like {utxoCoin}, but works on {Ab_Title}), and vice versa. You get min. 10% APY (annual percentage yield) as a commission from exchanges with low impermanent loss {link}."
                 values={{
+                  utxoCoin: utxoCoin.toUpperCase(),
                   token: tokenWallet.tokenKey.toUpperCase(),
                   Ab_Title: evmCoinWallet.fullName,
                   link: <a href={links.impermanentLoss} target="_blank">(?)</a>,
@@ -633,8 +646,9 @@ class MarketmakerSettings extends Component<any, any> {
             <p styleName="wallet-required">
               <FormattedMessage
                 id="MM_Wallet_Required"
-                defaultMessage="A hot wallet is required to launch marketmaking (BTC, {AB_Coin}, {token})."
+                defaultMessage="A hot wallet is required to launch marketmaking ({utxoCoin}, {AB_Coin}, {token})."
                 values={{
+                  utxoCoin: utxoCoin.toUpperCase(),
                   token: tokenWallet?.currency?.toUpperCase(),
                   AB_Coin: evmCoinWallet?.currency?.toUpperCase(),
                 }}
@@ -678,8 +692,9 @@ class MarketmakerSettings extends Component<any, any> {
                 <p styleName='mm-toggle__text'>
                   <FormattedMessage
                     id="MM_ToggleText"
-                    defaultMessage="Marketmaking BTC/{token}"
+                    defaultMessage="Marketmaking {utxoCoin}/{token}"
                     values={{
+                      utxoCoin: utxoCoin.toUpperCase(),
                       token: tokenWallet.tokenKey.toUpperCase(),
                     }}
                   />
@@ -711,9 +726,10 @@ class MarketmakerSettings extends Component<any, any> {
                   <span styleName="tooltipText">
                     <FormattedMessage
                       id="MM_Promo_TitleBody"
-                      defaultMessage="On swap.io users exchange BTC for {token} (a token that costs like BTC, but works on {Ab_Title}), and vice versa. You get min. 10% APY (annual percentage yield) as a commission from exchanges with low impermanent loss {link}."
+                      defaultMessage="On swap.io users exchange {utxoCoin} for {token} (a token that costs like {utxoCoin}, but works on {Ab_Title}), and vice versa. You get min. 10% APY (annual percentage yield) as a commission from exchanges with low impermanent loss {link}."
                       values={{
-                        token: tokenWallet.currency.toUpperCase(),
+                        utxoCoin: utxoCoin.toUpperCase(),
+                        token: tokenWallet.tokenKey.toUpperCase(),
                         Ab_Title: evmCoinWallet.fullName,
                         link: <a href={links.impermanentLoss} target="_blank">(?)</a>,
                       }}
@@ -737,9 +753,10 @@ class MarketmakerSettings extends Component<any, any> {
                 <span styleName='item-text__secondary'>
                   <FormattedMessage
                     id="MM_MarketmakingSimbols"
-                    defaultMessage="{token} + BTC"
+                    defaultMessage="{token} + {utxoCoin}"
                     values={{
-                      token: tokenWallet.currency.toUpperCase(),
+                      utxoCoin: utxoCoin.toUpperCase(),
+                      token: tokenWallet.tokenKey.toUpperCase(),
                     }}
                   />
                 </span>
@@ -763,9 +780,10 @@ class MarketmakerSettings extends Component<any, any> {
                 <span styleName='item-text__secondary'>
                   <FormattedMessage
                     id="MM_MarketmakingSimbols"
-                    defaultMessage="{token} + BTC"
+                    defaultMessage="{token} + {utxoCoin}"
                     values={{
-                      token: tokenWallet.currency.toUpperCase(),
+                      utxoCoin: utxoCoin.toUpperCase(),
+                      token: tokenWallet.tokenKey.toUpperCase(),
                     }}
                   />
                 </span>
@@ -779,7 +797,10 @@ class MarketmakerSettings extends Component<any, any> {
                         <h2 styleName='item-text__secondary-title'>
                           <FormattedMessage
                             id="MM_BTCBalance"
-                            defaultMessage="Balance BTC:"
+                            defaultMessage="Balance {utxoCoin}:"
+                            values={{
+                              utxoCoin: utxoCoin.toUpperCase(),
+                            }}
                           />
                         </h2>
                         <p>
@@ -802,7 +823,10 @@ class MarketmakerSettings extends Component<any, any> {
                         <h2 styleName='item-text__secondary-title'>
                           <FormattedMessage
                             id="MM_BTCBalance"
-                            defaultMessage="Balance BTC:"
+                            defaultMessage="Balance {utxoCoin}:"
+                            values={{
+                              utxoCoin: utxoCoin.toUpperCase()
+                            }}
                           />
                         </h2>
                         <p>
@@ -820,7 +844,7 @@ class MarketmakerSettings extends Component<any, any> {
                       id="MM_TokenBalance"
                       defaultMessage="Balance {token}:"
                       values={{
-                        token: tokenWallet.currency.toUpperCase(),
+                        token: tokenWallet.tokenKey.toUpperCase(),
                       }}
                     />
                   </h2>
@@ -838,8 +862,10 @@ class MarketmakerSettings extends Component<any, any> {
                         <span styleName="tooltipText">
                           <FormattedMessage
                             id="MM_whatIsWBTCTooltip1"
-                            defaultMessage="{tokenFullName} ({token}) is an {tokenStandart} token that represents Bitcoin (BTC) on the {blockchainName} blockchain."
+                            defaultMessage="{tokenFullName} ({token}) is an {tokenStandart} token that represents {utxoTitle} ({utxoCoin}) on the {blockchainName} blockchain."
                             values={{
+                              utxoTitle: utxoWallet?.fullName || 'Bitcoin',
+                              utxoCoin: utxoCoin.toUpperCase(),
                               tokenFullName: tokenWallet.fullName,
                               tokenStandart: tokenWallet.standard.toUpperCase(),
                               token: tokenWallet.currency.toUpperCase(),
@@ -849,8 +875,9 @@ class MarketmakerSettings extends Component<any, any> {
                           <br />
                           <FormattedMessage
                             id="MM_whatIsWBTCTooltip2"
-                            defaultMessage="{token} was created to allow Bitcoin holders to participate in decentralized finance (“DeFi”) apps that are popular on {blockchainName}."
+                            defaultMessage="{token} was created to allow {utxoTitle} holders to participate in decentralized finance (“DeFi”) apps that are popular on {blockchainName}."
                             values={{
+                              utxoTitle: utxoWallet?.fullName || 'Bitcoin',
                               token: tokenWallet.currency.toUpperCase(),
                               blockchainName: evmCoinWallet.fullName,
                             }}
