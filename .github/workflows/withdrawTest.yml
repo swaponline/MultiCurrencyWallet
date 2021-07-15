@@ -1,4 +1,4 @@
-name: Sending tests
+name: Test withdraw forms
 
 on:
   pull_request:
@@ -6,7 +6,7 @@ on:
 
 jobs:
   build:
-    if: ${{ github.event.label.name == 'sending tests' }}
+    if: ${{ github.event.label.name == 'withdraw tests' }}
     runs-on: ubuntu-latest
 
     strategy:

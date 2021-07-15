@@ -17,7 +17,7 @@
 Please start auto tests as follows:
 
 - add a label <ins>swap test</ins> to start swap tests
-- add a label <ins>sending test</ins> to start sending tests
+- add a label <ins>withdraw test</ins> to start withdraw tests
 
 You can skip these tests if you completely sure that your changes aren't related to this functional
 
