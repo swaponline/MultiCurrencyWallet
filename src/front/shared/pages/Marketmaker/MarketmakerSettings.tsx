@@ -599,7 +599,6 @@ class MarketmakerSettings extends Component<any, any> {
       isWalletCreated,
       mnemonicSaved,
     } = this.state
-    console.log('utxoWallet',utxoWallet)
 
     const totalBalance = new BigNumber(utxoBalance).plus(tokenBalance).toNumber()
 
