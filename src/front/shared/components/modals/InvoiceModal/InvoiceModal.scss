@@ -1,11 +1,5 @@
 .invoiceModalHolder {
   min-width: 400px;
-  
-  &.dark {
-    .amountTooltip {
-      background-color: var(--color-background-elements);
-    }
-  }
 }
 
 .amountTooltip {

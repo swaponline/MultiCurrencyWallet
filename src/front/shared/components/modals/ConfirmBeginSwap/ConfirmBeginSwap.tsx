@@ -3,8 +3,6 @@ import PropTypes from 'prop-types'
 
 import { connect } from 'redaction'
 import actions from 'redux/actions'
-import { constants } from 'helpers'
-
 import Link from 'local_modules/sw-valuelink'
 
 import CSSModules from 'react-css-modules'
@@ -17,9 +15,6 @@ import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 import typeforce from 'swap.app/util/typeforce'
 
 import config from 'app-config'
-
-
-const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 const defaultLanguage = defineMessages({
   title: {
@@ -223,7 +218,7 @@ class ConfirmBeginSwap extends React.Component<any, any> {
 
 
     return (
-      <div styleName={`modal-overlay ${isDark ? '--dark' : ''}`}>
+      <div styleName="modal-overlay">
         <div styleName="modal">
           <div styleName="header">
             {/*

@@ -1,9 +1,6 @@
 import React from 'react'
 import CSSModules from 'react-css-modules'
 import styles from './index.scss'
-import { constants } from 'helpers'
-
-const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 type RemoveButtonProps = {
   onClick: () => void
@@ -15,7 +12,7 @@ const RemoveButton = (props: RemoveButtonProps) => {
 
   return (
     <button
-      styleName={`removeButton ${isDark ? 'dark' : ''} ${brand ? 'brand' : ''}`}
+      styleName={`removeButton ${brand ? 'brand' : ''}`}
       onClick={onClick}
     />
   )

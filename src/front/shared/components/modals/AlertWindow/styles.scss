@@ -37,13 +37,6 @@
   justify-content: center;
   background-color: rgba(0, 0, 0, .3);
   opacity: 1;
-
-  &.--dark {
-    .modal {
-      background: #1e1f20;
-      color: white;
-    }
-  }
 }
 
 .modal {
@@ -56,7 +49,7 @@
   max-width: 640px;
   height: auto;
   border-radius: 10px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, .4);
+  box-shadow: var(--box-shadow);
 }
 
 .button {

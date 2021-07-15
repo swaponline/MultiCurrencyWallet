@@ -14,10 +14,6 @@ import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 
 import styles from './styles.scss'
 
-
-
-const isDark = localStorage.getItem(constants.localStorage.isDark)
-
 const defaultLanguage = defineMessages({
   createWallet: {
     id: 'AlertModalcreateWallet',
@@ -86,7 +82,7 @@ class AlertWindow extends Component<any, any> {
     }
 
     return (
-      <div styleName={`modal-overlay ${isDark ? '--dark' : ''}`}>
+      <div styleName="modal-overlay">
         <div styleName="modal">
           <div styleName="header">
             {/*

@@ -22,10 +22,6 @@
   animation-iteration-count: 1;
   animation-timing-function: ease;
   opacity: 0;
-
-  &.dark {
-    background-color: #212529;
-  }
 }
 
 @keyframes show-and-hide {

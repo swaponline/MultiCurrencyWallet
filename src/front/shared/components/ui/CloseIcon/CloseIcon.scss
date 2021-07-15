@@ -12,15 +12,6 @@
     opacity: 1;
     transition: none;
   }
-
-  &.dark {
-    .icon {
-      &::before,
-      &::after {
-        background-color: white;
-      }
-    }
-  }
 }
 
 .icon {

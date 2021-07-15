@@ -22,12 +22,6 @@
   .readyTitle {
     text-align: center;
   }
-
-  &.dark {
-    .fakeInput {
-      color: var(--color);
-    }
-  }
 }
 
 @include media-mobile {

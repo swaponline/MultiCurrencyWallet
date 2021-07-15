@@ -13,8 +13,6 @@ import { ModalConductorProvider } from 'components/modal'
 
 import styles from './styles.scss'
 
-const isDark = localStorage.getItem(constants.localStorage.isDark)
-
 type ComponentProps = {
   page: 'history' | 'invoices'
   children?: ReactNode
@@ -45,7 +43,7 @@ const DashboardLayout = (props: ComponentProps) => {
     <article className="data-tut-start-widget-tour">
       {window.CUSTOM_LOGO && <img className="cutomLogo" src={window.CUSTOM_LOGO} alt="logo" />}
       <section
-        styleName={`wallet ${window.CUSTOM_LOGO ? 'hasCusomLogo' : ''} ${isDark ? 'dark' : ''}`}
+        styleName={`wallet ${window.CUSTOM_LOGO ? 'hasCusomLogo' : ''}`}
       >
         <div className="data-tut-store" styleName="walletContent" ref={balanceRef}>
           <div styleName="walletBalance">

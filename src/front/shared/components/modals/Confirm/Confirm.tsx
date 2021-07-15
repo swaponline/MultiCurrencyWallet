@@ -2,10 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import actions from 'redux/actions'
-import { constants } from 'helpers'
-
-import Link from 'local_modules/sw-valuelink'
-
 import cssModules from 'react-css-modules'
 import styles from './Confirm.scss'
 
@@ -34,7 +30,6 @@ const defaultLanguage = defineMessages({
     defaultMessage: 'No',
   },
 })
-const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 @cssModules(styles, { allowMultiple: true })
 class Confirm extends React.Component<any, any> {
@@ -98,7 +93,7 @@ class Confirm extends React.Component<any, any> {
     }
 
     return (
-      <div styleName={`modal-overlay ${isDark ? 'dark' : ''}`} onClick={this.handleClose}>
+      <div styleName="modal-overlay" onClick={this.handleClose}>
         <div styleName="modal">
           <div styleName="header">
             {/*

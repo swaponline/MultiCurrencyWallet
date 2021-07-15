@@ -10,10 +10,7 @@ import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
 import Input from 'components/forms/Input/Input'
 import Button from 'components/controls/Button/Button'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
-import { constants } from 'helpers'
 import typeforce from 'swap.app/util/typeforce'
-
-const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 type CustomTokenProps = {
   name: string
@@ -160,7 +157,7 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
         name={name}
         title={`${intl.formatMessage(localeLabel.title)}`}
       >
-        <div styleName={`stepsWrapper ${isDark ? 'dark' : ''}`}>
+        <div styleName="stepsWrapper">
           {step === 'enterAddress' && (
             <Fragment>
               <div styleName="highLevel">

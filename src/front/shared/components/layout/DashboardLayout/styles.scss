@@ -12,18 +12,6 @@
   @include ff-bold;
 }
 
-.wallet.dark {
-  .faqWrapper {
-    box-shadow: var(--box-shadow);
-    background: var(--color-background-elements);
-
-    @media screen and (max-width: 480px) {
-      box-shadow: none;
-      background: #222528;
-    }
-  }
-}
-
 .hasCusomLogo {
   margin: 30px 0;
 
@@ -154,5 +142,12 @@
 
   .desktopEnabledViewForFaq {
     display: none;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .faqWrapper {
+    box-shadow: none;
+    background: var(--color-background);
   }
 }
