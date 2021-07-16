@@ -249,20 +249,6 @@
     ]
   },
   {
-    "id": "Row148",
-    "message": "SOLICITANDO",
-    "files": [
-      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
-    ]
-  },
-  {
-    "id": "Row151",
-    "message": "Ir al intercambio",
-    "files": [
-      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
-    ]
-  },
-  {
     "id": "Row157",
     "message": "Este pedido  esta siendo ejecutado",
     "files": [
@@ -285,7 +271,7 @@
   },
   {
     "id": "RowM139",
-    "message": "Ir al intercambio",
+    "message": "Intercambio",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
     ]
@@ -1220,7 +1206,7 @@
   },
   {
     "id": "CurrencyWalletTitle",
-    "message": "{fullName} ({currency}) Billetera web con Atomic Swap.",
+    "message": "Swap.Online - {fullName} ({currency}) Billetera web con Atomic Swap.",
     "files": [
       "src/front/shared/pages/CurrencyWallet/CurrencyWallet.tsx"
     ]
@@ -5591,7 +5577,7 @@
   },
   {
     "id": "MM_Promo_Title",
-    "message": "Gana intereses en Bitcoin",
+    "message": "Gana intereses en {utxoTitle}",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx",
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
@@ -5599,7 +5585,7 @@
   },
   {
     "id": "MM_Promo_TitleBody",
-    "message": "Los usuarios de nuestro intercambiador swap.io intercambian BTC por {token} (un token que cuesta como BTC, pero funciona en {Ab_Title}) y viceversa. Tienes a min. 10% APY (porcentaje de rendimiento anual) como comisión de intercambios con baja impermanent loss {link}.",
+    "message": "Los usuarios de nuestro intercambiador swap.io intercambian {utxoCoin} por {token} (un token que cuesta como {utxoCoin}, pero funciona en {Ab_Title}) y viceversa. Tienes a min. 10% APY (porcentaje de rendimiento anual) como comisión de intercambios con baja impermanent loss {link}.",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx",
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
@@ -5614,7 +5600,7 @@
   },
   {
     "id": "MM_BTCBalance",
-    "message": "Equilibrio BTC:",
+    "message": "Equilibrio {utxoCoin}:",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
@@ -5656,7 +5642,7 @@
   },
   {
     "id": "MM_Wallet_Required",
-    "message": "Se requiere una billetera caliente para lanzar la creación de mercado (BTC, {AB_Coin}, {token}).",
+    "message": "Se requiere una billetera caliente para lanzar la creación de mercado ({utxoCoin}, {AB_Coin}, {token}).",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
@@ -5670,7 +5656,7 @@
   },
   {
     "id": "MM_NotEnoughCoins",
-    "message": "Fondos insuficientes. Necesita recargar su BTC o {token}",
+    "message": "Fondos insuficientes. Necesita recargar su {utxoCoin} o {token}",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
@@ -5733,7 +5719,7 @@
   },
   {
     "id": "MM_ToggleText",
-    "message": "Creación de mercado BTC/{token}",
+    "message": "Creación de mercado {utxoCoin}/{token}",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
@@ -5772,7 +5758,7 @@
   },
   {
     "id": "MM_MarketmakingSimbols",
-    "message": "{token} + BTC",
+    "message": "{token} + {utxoCoin}",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
@@ -5786,14 +5772,14 @@
   },
   {
     "id": "MM_whatIsWBTCTooltip1",
-    "message": "{tokenFullName} ({token}) es un token {tokenStandart} que representa Bitcoin (BTC) en la cadena de bloques {blockchainName}.",
+    "message": "{tokenFullName} ({token}) es un token {tokenStandart} que representa {utxoTitle} ({utxoCoin}) en la cadena de bloques {blockchainName}.",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
   },
   {
     "id": "MM_whatIsWBTCTooltip2",
-    "message": "{token} se creó para permitir que los titulares de Bitcoin participen en aplicaciones de finanzas descentralizadas (\"DeFi\") que son populares en {blockchainName}.",
+    "message": "{token} se creó para permitir que los titulares de {utxoTitle} participen en aplicaciones de finanzas descentralizadas (\"DeFi\") que son populares en {blockchainName}.",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]

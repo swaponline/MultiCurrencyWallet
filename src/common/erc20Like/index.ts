@@ -4,6 +4,7 @@ import TokenApi from 'human-standard-token-abi'
 import { BigNumber } from 'bignumber.js'
 import DEFAULT_CURRENCY_PARAMETERS from 'common/helpers/constants/DEFAULT_CURRENCY_PARAMETERS'
 import TOKEN_STANDARDS from 'helpers/constants/TOKEN_STANDARDS'
+import { COIN_DATA, COIN_MODEL } from 'swap.app/constants/COINS'
 import ethLikeHelper from 'common/helpers/ethLikeHelper'
 import { feedback, metamask } from 'helpers'
 
@@ -108,6 +109,9 @@ class erc20LikeHelper {
 
 const isToken = (params) => {
   const { name } = params
+
+  const isUTXOModel = COIN_DATA[name.toUpperCase()] && COIN_DATA[name.toUpperCase()].model === COIN_MODEL.UTXO
+  if (isUTXOModel) return false
 
   for (const prop in TOKEN_STANDARDS) {
     const standard = TOKEN_STANDARDS[prop].standard

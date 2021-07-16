@@ -1,22 +1,23 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-
 import CSSModules from 'react-css-modules'
 import styles from './FaqExpandableItem.scss'
-
 import Href from 'components/Href/Href'
 
-const FaqExpandableItem = ({ link, question }) => (
-  <div styleName="container">
-    <Href tab={link} styleName="header" rel="noreferrer noopener">
-      {question}
-    </Href>
-  </div>
-)
+type ComponentProps = {
+  question: string
+  link: string
+}
 
-FaqExpandableItem.propTypes = {
-  question: PropTypes.string.isRequired,
-  link: PropTypes.string.isRequired,
+const FaqExpandableItem = (props: ComponentProps) => {
+  const { link, question } = props
+
+  return (
+    <div styleName="container">
+      <Href tab={link} styleName="header" rel="noreferrer noopener">
+        {question}
+      </Href>
+    </div>
+  )
 }
 
 export default CSSModules(FaqExpandableItem, styles)

@@ -1,5 +1,4 @@
 import React, { Fragment } from 'react'
-import PropTypes from 'prop-types'
 import config from 'helpers/externalConfig'
 
 import { toSvg } from 'jdenticon'
@@ -21,8 +20,17 @@ const hasGravatar = (ethAddress) => {
   return false
 }
 
-const Avatar = ({ value, className, size, ownerEthAddress }) => {
+type ComponentProps = {
+  value: string
+  size?: number
+  className?: string
+  ownerEthAddress?: string
+}
+
+const Avatar = (props: ComponentProps) => {
+  const { value, className, size = 35, ownerEthAddress } = props
   let avatarUrl = `data:image/svg+xml,${encodeURIComponent(toSvg(value, size))}`
+
   if (ownerEthAddress) {
     const gravatar = hasGravatar(ownerEthAddress)
     if (gravatar) {
@@ -40,17 +48,6 @@ const Avatar = ({ value, className, size, ownerEthAddress }) => {
       />
     </Fragment>
   )
-}
-
-Avatar.defaultProps = {
-  size: 35,
-}
-
-Avatar.propTypes = {
-  value: PropTypes.string.isRequired,
-  size: PropTypes.number,
-  className: PropTypes.string,
-  ownerEthAddress: PropTypes.string,
 }
 
 export default CSSModules(Avatar, styles)

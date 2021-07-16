@@ -77,8 +77,8 @@ const routes = (
 
       <Route exact path={`${links.marketmaker}`} component={MarketmakerPromo} />
       <Route exact path={`${links.marketmaker_short}`} component={MarketmakerPromo} />
-      <Route path={`${links.marketmaker}/:token`} component={MarketmakerSettings} />
-      <Route path={`${links.marketmaker_short}/:token`} component={MarketmakerSettings} />
+      <Route path={`${links.marketmaker}/:token/:utxoCoin?`} component={MarketmakerSettings} />
+      <Route path={`${links.marketmaker_short}/:token/:utxoCoin?`} component={MarketmakerSettings} />
 
       {/* In desktop mode - the history is shown in the wallet design */}
       {!isMobile && (

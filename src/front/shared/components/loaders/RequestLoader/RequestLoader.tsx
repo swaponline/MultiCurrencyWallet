@@ -1,24 +1,22 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-
 import { connect } from 'redaction'
 import Loader from '../Loader/Loader'
 
+type ComponentProps = {
+  isVisible?: boolean
+  data: {
+    txId: string
+  }
+}
 
-const RequestLoader = ({ isVisible, data }) => {
+const RequestLoader = (props: ComponentProps) => {
+  const { isVisible = false, data } = props
+
   if (!isVisible) {
     return null
   }
 
   return <Loader data={data} />
-}
-
-RequestLoader.propTypes = {
-  isVisible: PropTypes.bool.isRequired,
-}
-
-RequestLoader.defaultProps = {
-  isVisible: false,
 }
 
 export default connect({

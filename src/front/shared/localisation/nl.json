@@ -256,20 +256,6 @@
     ]
   },
   {
-    "id": "Row148",
-    "message": "REQUESTING",
-    "files": [
-      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
-    ]
-  },
-  {
-    "id": "Row151",
-    "message": "Go to the swap",
-    "files": [
-      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
-    ]
-  },
-  {
     "id": "Row157",
     "message": "This order is in execution",
     "files": [
@@ -292,7 +278,7 @@
   },
   {
     "id": "RowM139",
-    "message": "Go to the swap",
+    "message": "Swap",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
     ]
@@ -1213,7 +1199,7 @@
   },
   {
     "id": "CurrencyWalletTitle",
-    "message": "{fullName} ({currency}) Web Wallet with Atomic Swap.",
+    "message": "Swap.Online - {fullName} ({currency}) Web Wallet with Atomic Swap.",
     "files": [
       "src/front/shared/pages/CurrencyWallet/CurrencyWallet.tsx"
     ]
@@ -5587,7 +5573,7 @@
   },
   {
     "id": "MM_Promo_Title",
-    "message": "Verdien rente op Bitcoin",
+    "message": "Verdien rente op {utxoTitle}",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx",
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
@@ -5595,7 +5581,7 @@
   },
   {
     "id": "MM_Promo_TitleBody",
-    "message": "Gebruikers in onze swap.io wisselaar wisselen BTC uit voor {token} (een token dat net als BTC kost, maar werkt op {Ab_Title}) en vice versa. Jij krijgt min. 10% APY (jaarlijkse procentuele opbrengst) als provisie op beurzen met een gering impermanent loss {link}.",
+    "message": "Gebruikers in onze swap.io wisselaar wisselen {utxoCoin} uit voor {token} (een token dat net als {utxoCoin} kost, maar werkt op {Ab_Title}) en vice versa. Jij krijgt min. 10% APY (jaarlijkse procentuele opbrengst) als provisie op beurzen met een gering impermanent loss {link}.",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx",
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
@@ -5610,7 +5596,7 @@
   },
   {
     "id": "MM_BTCBalance",
-    "message": "Balans BTC:",
+    "message": "Balans {utxoCoin}:",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
@@ -5652,7 +5638,7 @@
   },
   {
     "id": "MM_Wallet_Required",
-    "message": "Een hot wallet is vereist om marketmaking te lanceren (BTC, {AB_Coin}, {token}).",
+    "message": "Een hot wallet is vereist om marketmaking te lanceren ({utxoCoin}, {AB_Coin}, {token}).",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
@@ -5666,7 +5652,7 @@
   },
   {
     "id": "MM_NotEnoughCoins",
-    "message": "Onvoldoende middelen. U moet uw BTC bijvullen of {token}",
+    "message": "Onvoldoende middelen. U moet uw {utxoCoin} bijvullen of {token}",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
@@ -5729,7 +5715,7 @@
   },
   {
     "id": "MM_ToggleText",
-    "message": "Marketmaking BTC/{token}",
+    "message": "Marketmaking {utxoCoin}/{token}",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
@@ -5768,7 +5754,7 @@
   },
   {
     "id": "MM_MarketmakingSimbols",
-    "message": "{token} + BTC",
+    "message": "{token} + {utxoCoin}",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
@@ -5782,14 +5768,14 @@
   },
   {
     "id": "MM_whatIsWBTCTooltip1",
-    "message": "{tokenFullName} ({token}) is een {tokenStandart}-token dat Bitcoin (BTC) vertegenwoordigt op de {blockchainName}-blockchain.",
+    "message": "{tokenFullName} ({token}) is een {tokenStandart}-token dat {utxoTitle} ({utxoCoin}) vertegenwoordigt op de {blockchainName}-blockchain.",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
   },
   {
     "id": "MM_whatIsWBTCTooltip2",
-    "message": "{token} is gemaakt om Bitcoin-houders in staat te stellen deel te nemen aan apps voor gedecentraliseerde financiën (\"DeFi\") die populair zijn op {blockchainName}.",
+    "message": "{token} is gemaakt om {utxoTitle}-houders in staat te stellen deel te nemen aan apps voor gedecentraliseerde financiën (\"DeFi\") die populair zijn op {blockchainName}.",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]

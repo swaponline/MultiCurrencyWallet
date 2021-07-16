@@ -13,6 +13,7 @@ import erc20Like from 'common/erc20Like'
 import { apiLooper, constants, cacheStorageGet, cacheStorageSet, feedback } from 'helpers'
 import externalConfig from 'helpers/externalConfig'
 import metamask from 'helpers/metamask'
+import getCoinInfo from 'common/coins/getCoinInfo'
 
 const NETWORK = process.env.MAINNET ? 'mainnet' : 'testnet'
 const Decoder = new InputDataDecoder(TokenAbi)
@@ -83,6 +84,31 @@ class Erc20LikeAction {
     this.login(privateKey, contractAddr, symbol, decimals, symbol)
   }
 
+  getInfoAboutToken = async (contractAddress) => {
+    const isContract = await actions[this.currencyKey].isContract(contractAddress)
+
+    try {      
+      if (isContract) {
+        const Web3 = await actions[this.currencyKey].getCurrentWeb3()
+        const contract = new Web3.eth.Contract(TokenAbi, contractAddress)
+
+        const name = await contract.methods.name().call()
+        const symbol = await contract.methods.symbol().call()
+        const decimals = await contract.methods.decimals().call()
+  
+        return {
+          name,
+          symbol,
+          decimals: Number(decimals),
+        }
+      } 
+    } catch (error) {
+      this.reportError(error)
+    }
+
+    return false
+  }
+
   getCustomTokensConfig = () => {
     const customTokens = JSON.parse(localStorage.getItem(constants.localStorage.customToken) || '{}')
     const fillInTokensConfig = (configName) => {
@@ -122,17 +148,15 @@ class Erc20LikeAction {
   getBalance = async (tokenName) => {
     if (tokenName === undefined) return
 
-    const tokenKey = `{${this.currencyKey}}${tokenName.toLowerCase()}`
-
-    if(metamask.isConnected() && !metamask.isAvailableNetworkByCurrency(tokenKey)) return
-
-    const { user: { tokensData } } = getState()
     const {
       address: ownerAddress,
       contractAddress,
       decimals,
       name,
-    } = tokensData[tokenKey]
+      tokenKey
+    } = this.returnTokenInfo(tokenName)
+
+    if(metamask.isConnected() && !metamask.isAvailableNetworkByCurrency(tokenKey)) return
 
     const address = metamask.isConnected() ? metamask.getAddress() : ownerAddress
     const balanceInCache = cacheStorageGet('currencyBalances', `token_${tokenKey}_${address}`)
@@ -533,17 +557,13 @@ class Erc20LikeAction {
 
   setAllowance = async (params) => {
     const { name, to, targetAllowance } = params
-    const { decimals } = this.returnTokenInfo(name)
-    const { user: { tokensData } } = getState()
-
-    const tokenKey = `{${this.currencyKey}}${name.toLowerCase()}`
-    const { address: tokenOwnerAddress, contractAddress: tokenContractAddress } = tokensData[tokenKey]
+    const { decimals, address, contractAddress } = this.returnTokenInfo(name)
 
     try {
       const allowance = await erc20Like[this.standard].checkAllowance({
-        tokenOwnerAddress,
-        tokenContractAddress,
-        decimals: decimals,
+        tokenOwnerAddress: address,
+        tokenContractAddress: contractAddress,
+        decimals,
       })
 
       // if contract has enough allowance then skip
@@ -562,16 +582,20 @@ class Erc20LikeAction {
     const Web3 = this.getCurrentWeb3()
 
     try {
-      const tokenKey = `{${this.currencyKey}}${name.toLowerCase()}`
       const { user: { tokensData } } = getState()
-      const { address: ownerAddress } = tokensData[tokenKey]
-      const { address: contractAddress, decimals } = externalConfig[this.standard][name.toLowerCase()]
+      const tokenInfo = getCoinInfo(name)
+      const tokenKey = !tokenInfo.blockchain ? `{${this.currencyKey}}${name.toLowerCase()}` : name.toLowerCase()
+
+      const { address, contractAddress, decimals, name: tokenName } = tokensData[tokenKey]
 
       const tokenContract = new Web3.eth.Contract(TokenAbi, contractAddress, {
-        from: ownerAddress,
+        from: address,
       })
 
       return {
+        address,
+        name: tokenName,
+        tokenKey,
         contractAddress,
         tokenContract,
         decimals,

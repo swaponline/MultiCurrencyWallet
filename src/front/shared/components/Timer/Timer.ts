@@ -1,25 +1,21 @@
-import React, { Component } from 'react'
+import { Component } from 'react'
 
-import PropTypes from 'prop-types'
+type ComponentProps = {
+  timeLeft?: number // seconds
+  handleClick: () => void
+}
 
+type ComponentState = {
+  timeLeft: number
+}
 
-export default class TimerButton extends Component<any, any> {
-
-  static propTypes = {
-    timeLeft: PropTypes.number, // seconds
-    handleClick: PropTypes.func,
-  }
-
-  static defaultProps = {
-    timeLeft: 10,
-  }
-
+export default class TimerButton extends Component<ComponentProps, ComponentState> {
   timer = null
 
   constructor(props) {
     super(props)
 
-    const { timeLeft } = props
+    const { timeLeft = 10 } = props
 
     this.state = {
       timeLeft,
