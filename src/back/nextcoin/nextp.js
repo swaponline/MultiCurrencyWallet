@@ -95,14 +95,13 @@ const sendRequest = ({ network, rpcMethod, rpcMethodParams = [], onSuccess, onEr
 /*
 Planning proxy interface:
 
-/:network
-/:network/:var(addr|address)/:address'
-/:network/:var(addr|address)/:address/utxo'
-/:network/tx/send
-/:network/tx/:txId
+/:network +
+/:network/:var(addr|address)/:address' +
+/:network/:var(addr|address)/:address/utxo' +
+/:network/sendrawtransaction +
+/:network/tx/:txId +
+/:network/txs/:address +
 /:network/rawtx/:txId
-/:network/txs/:address
-/:network/sendrawtransaction
 */
 
 app.get('/:network', async (req, res) => {

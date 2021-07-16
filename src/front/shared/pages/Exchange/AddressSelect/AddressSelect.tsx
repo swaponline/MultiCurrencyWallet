@@ -352,14 +352,12 @@ class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
     const isInternalOptionDisabled =
       role === AddressRole.Send && (!internalBalance || internalBalance === 0)
 
-    const coinInfo = getCoinInfo(currency)
-
-    const isMetamaskOption = erc20Like.isToken({ name: coinInfo.coin }) || ['ETH', 'BNB', 'MATIC'].includes(coinInfo.coin.toUpperCase()) // ToDo: replace at constant
+    const isMetamaskOption = erc20Like.isToken({ name: currency }) || ['ETH', 'BNB', 'MATIC'].includes(ticker) // ToDo: replace at constant
 
     // Forbid `Custom address` option when using ethereum/tokens
     // because you need to make a request to the contract
-    const isCustomAddressOption = !erc20Like.isToken({ name: coinInfo.coin })
-      && !['ETH', 'BNB', 'MATIC'].includes(coinInfo.coin.toUpperCase()) // ToDo: replace at constant
+    const isCustomAddressOption = !erc20Like.isToken({ name: currency })
+      && !['ETH', 'BNB', 'MATIC'].includes(ticker) // ToDo: replace at constant
 
     const isUTXOModel = COIN_DATA[ticker] && COIN_DATA[ticker].model === COIN_MODEL.UTXO
     const isCustomOptionInputHidden = role === AddressRole.Send && isUTXOModel

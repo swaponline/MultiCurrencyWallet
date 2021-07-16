@@ -1,3 +1,5 @@
+import bitcore from 'bitcore-lib'
+
 export interface ICoin {
   ticker: string
   name: string
@@ -7,9 +9,9 @@ export interface ICoin {
 
 export interface ILibAdapter {
   accountFromMnemonic(mnemonic: string, netName: string): {
-    privateKey: string
-    publicKey: string
-    address: string
+    privateKey: bitcore.PrivateKey
+    publicKey: bitcore.PublicKey
+    address: bitcore.Address
   }
   createTx?({ netName, account, amount, to }): Promise<string> // not sure what the <string>
 }

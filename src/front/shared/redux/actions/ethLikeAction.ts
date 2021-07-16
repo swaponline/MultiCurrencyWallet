@@ -453,7 +453,7 @@ class EthLikeAction {
 
     let sendMethod = Web3.eth.sendTransaction
     let txData: any = {
-      chainId: this.chainId,
+      chainId: this.chainId.replace('0x', ''),
       from: Web3.utils.toChecksumAddress(ownerAddress),
       to: to.trim(),
       gasPrice,

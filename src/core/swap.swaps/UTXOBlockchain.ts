@@ -955,6 +955,7 @@ class UTXOBlockchain extends SwapInterface {
       if (this.fetchTxInputScript !== undefined) {
         this.fetchTxInputScript({
           txId: transactionHash,
+          hash: transactionHash
         }).then((txResult) => {
           if (txResult) {
             const scriptOpts = txResult.split(' ')
