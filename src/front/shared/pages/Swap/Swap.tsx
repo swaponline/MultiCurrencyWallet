@@ -212,8 +212,9 @@ class SwapComponent extends PureComponent<any, any> {
 
     const ActiveSwap = swapComponents[swap.flow._flowName]
     const ethData = items.filter(item => item.currency === 'ETH')
+    const sellCurrency = swap.sellCurrency.toUpperCase()
     const currencyData = items.concat(tokensData)
-      .filter(item => item.currency === swap.sellCurrency.toUpperCase())[0]
+      .filter(item => item.isToken ? item.tokenKey.toUpperCase() === sellCurrency : item.currency === sellCurrency)[0]
     const currencies = [
       {
         currency: swap.sellCurrency,

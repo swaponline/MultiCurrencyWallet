@@ -86,7 +86,6 @@ export default BTC
 
 
 const libAdapter: ILibAdapter = {
-
   accountFromMnemonic(mnemonic, netName) {
     const network = BTC[netName]
     const settings = network.settings
@@ -122,8 +121,8 @@ const libAdapter: ILibAdapter = {
       throw new Error(`Unknown network: ${netName}`)
     }
 
-    const privateKey = new bitcore.PrivateKey.fromWIF(child.toWIF())
-    const publicKey = bitcore.PublicKey(privateKey, libNetwork)
+    const privateKey = new bitcore.PrivateKey(child.toWIF(), libNetwork)
+    const publicKey = bitcore.PublicKey.fromPrivateKey(privateKey)
     const address = new bitcore.Address(publicKey, libNetwork)
 
     const account = {

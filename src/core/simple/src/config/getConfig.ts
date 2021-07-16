@@ -4,8 +4,8 @@ import SwapAuth from 'swap.auth'
 import SwapRoom from 'swap.room'
 import SwapOrders from 'swap.orders'
 
-import { default as nextUtils } from '../../../../common/utils/coin/next'
-import { default as btcUtils } from '../../../../common/utils/coin/btc'
+import { default as nextUtils } from 'common/utils/coin/next'
+import { default as btcUtils } from 'common/utils/coin/btc'
 
 import {
   EthSwap,
@@ -152,13 +152,11 @@ const getConfig = (config) => ({ account, mnemonic, contracts: { ETH, TOKEN }, .
           scriptAddress,
           NETWORK,
         }),
+        fetchTxInputScript: (options) => nextUtils.fetchTxInputScript({
+          ...options,
+          NETWORK,
+        }),
       }),
-      
-      // flows for swap
-      /*
-      nextSwap: () => ({
-        
-      })*/
       new EthTokenSwap(config.swapTokenSwap(TOKEN)),
       ...(
         (config.swaps || [])
@@ -177,8 +175,6 @@ const getConfig = (config) => ({ account, mnemonic, contracts: { ETH, TOKEN }, .
 
       ETH2NEXT, NEXT2ETH,
 
-      ETHTOKEN2BTC(constants.COINS.swap),
-      BTC2ETHTOKEN(constants.COINS.swap),
       ...(config.flows || []),
       ...((
         [].concat.apply([],

@@ -5573,7 +5573,7 @@
   },
   {
     "id": "MM_Promo_Title",
-    "message": "Earn interest on Bitcoin",
+    "message": "Earn interest on {utxoTitle}",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx",
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
@@ -5581,7 +5581,7 @@
   },
   {
     "id": "MM_Promo_TitleBody",
-    "message": "On swap.io users exchange BTC for {token} (a token that costs like BTC, but works on {Ab_Title}), and vice versa. You get min. 10% APY (annual percentage yield) as a commission from exchanges with low impermanent loss {link}.",
+    "message": "On swap.io users exchange {utxoCoin} for {token} (a token that costs like {utxoCoin}, but works on {Ab_Title}), and vice versa. You get min. 10% APY (annual percentage yield) as a commission from exchanges with low impermanent loss {link}.",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx",
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
@@ -5596,7 +5596,7 @@
   },
   {
     "id": "MM_BTCBalance",
-    "message": "Balance BTC:",
+    "message": "Balance {utxoCoin}:",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
@@ -5638,7 +5638,7 @@
   },
   {
     "id": "MM_Wallet_Required",
-    "message": "A hot wallet is required to launch marketmaking (BTC, {AB_Coin}, {token}).",
+    "message": "A hot wallet is required to launch marketmaking ({utxoCoin}, {AB_Coin}, {token}).",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
@@ -5652,7 +5652,7 @@
   },
   {
     "id": "MM_NotEnoughCoins",
-    "message": "Insufficient funds. You need to top up your BTC or {token}",
+    "message": "Insufficient funds. You need to top up your {utxoCoin} or {token}",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
@@ -5715,7 +5715,7 @@
   },
   {
     "id": "MM_ToggleText",
-    "message": "Marketmaking BTC/{token}",
+    "message": "Marketmaking {utxoCoin}/{token}",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
@@ -5754,7 +5754,7 @@
   },
   {
     "id": "MM_MarketmakingSimbols",
-    "message": "{token} + BTC",
+    "message": "{token} + {utxoCoin}",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
@@ -5768,14 +5768,14 @@
   },
   {
     "id": "MM_whatIsWBTCTooltip1",
-    "message": "{tokenFullName} ({token}) is an {tokenStandart} token that represents Bitcoin (BTC) on the {blockchainName} blockchain.",
+    "message": "{tokenFullName} ({token}) is an {tokenStandart} token that represents {utxoTitle} ({utxoCoin}) on the {blockchainName} blockchain.",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
   },
   {
     "id": "MM_whatIsWBTCTooltip2",
-    "message": "{token} was created to allow Bitcoin holders to participate in decentralized finance (“DeFi”) apps that are popular on {blockchainName}.",
+    "message": "{token} was created to allow {utxoTitle} holders to participate in decentralized finance (“DeFi”) apps that are popular on {blockchainName}.",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]

@@ -89,14 +89,18 @@ export default class MarketmakerPromo extends React.Component<{}, ComponentState
           <h2 styleName="section-title">
             <FormattedMessage
               id="MM_Promo_Title"
-              defaultMessage="Earn interest on Bitcoin"
+              defaultMessage="Earn interest on {utxoTitle}"
+              values={{
+                utxoTitle: 'Bitcoin'
+              }}
             />
           </h2>
           <p styleName="promoDescription">
             <FormattedMessage
               id="MM_Promo_TitleBody"
-              defaultMessage="On swap.io users exchange BTC for {token} (a token that costs like BTC, but works on {Ab_Title}), and vice versa. You get min. 10% APY (annual percentage yield) as a commission from exchanges with low impermanent loss {link}."
+              defaultMessage="On swap.io users exchange {utxoCoin} for {token} (a token that costs like {utxoCoin}, but works on {Ab_Title}), and vice versa. You get min. 10% APY (annual percentage yield) as a commission from exchanges with low impermanent loss {link}."
               values={{
+                utxoCoin: 'BTC',
                 token: (config.binance) ? `BTCB` : `WBTC`,
                 Ab_Title: (config.binance) ? `Binance Smart Chain` : `Ethereum`,
                 link: <a href={links.impermanentLoss} target="_blank">(?)</a>,

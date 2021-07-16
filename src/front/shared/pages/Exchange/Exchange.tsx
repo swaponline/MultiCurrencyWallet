@@ -161,25 +161,15 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
   static getDerivedStateFromProps(props, state) {
     const { orders } = props
     const { haveCurrency, getCurrency, isTurbo } = state
-    const {
-      coin: haveCoin,
-      blockchain: haveBlockchain,
-    } = getCoinInfo(haveCurrency)
-    const {
-      coin: getCoin,
-      blockchain: getBlockchain,
-    } = getCoinInfo(getCurrency)
 
     if (!orders.length) {
       return null
     }
 
-    const directionOrders = orders.filter(order => 
+    const directionOrders = orders.filter(order =>
       !order.isMy &&
-      order.sellCurrency.toUpperCase() === getCoin.toUpperCase() &&
-      order.sellBlockchain.toUpperCase() === getBlockchain.toUpperCase() && 
-      order.buyCurrency.toUpperCase() === haveCoin.toUpperCase() &&
-      order.buyBlockchain.toUpperCase() === haveBlockchain.toUpperCase()
+      order.sellCurrency.toUpperCase() === getCurrency.toUpperCase() &&
+      order.buyCurrency.toUpperCase() === haveCurrency.toUpperCase()
     )
 
     const filteredOrders = directionOrders.filter(order =>
@@ -379,11 +369,6 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
   }
 
   getDefaultWalletType(currency) {
-    const {
-      coin: currencyName,
-      blockchain,
-    } = getCoinInfo(currency)
-
     const storageType = this.getLocalStorageWalletType(currency)
 
     if (storageType) {
@@ -392,19 +377,19 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
 
     let resultType = 'Internal'
 
-    if (COIN_DATA[currencyName]) {
-      if (COIN_DATA[currencyName].model === COIN_MODEL.UTXO) {
+    if (COIN_DATA[currency]) {
+      if (COIN_DATA[currency].model === COIN_MODEL.UTXO) {
         resultType = AddressType.Custom
       } else if (
-        COIN_DATA[currencyName].type === COIN_TYPE.ETH_TOKEN ||
-        COIN_DATA[currencyName].type === COIN_TYPE.BNB_TOKEN ||
-        COIN_DATA[currencyName].model === COIN_MODEL.AB
+        COIN_DATA[currency].type === COIN_TYPE.ETH_TOKEN ||
+        COIN_DATA[currency].type === COIN_TYPE.BNB_TOKEN ||
+        COIN_DATA[currency].model === COIN_MODEL.AB
       ) {
         resultType = AddressType.Metamask
       }
     } else {
       console.group('Exchange > %c getDefaultWalletType', 'color: yellow;')
-      console.warn(`Unknown coin ${currencyName}`)
+      console.warn(`Unknown coin ${currency}`)
       console.groupEnd()
     }
 
@@ -997,8 +982,8 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
     const isTokenSell = !!sellBlockchain
     const isTokenBuy = !!buyBlockchain
 
-    const isEvmCoinSell = !isTokenSell && (COIN_DATA[sellCoin].model === COIN_MODEL.AB)
-    const isEvmCoinBuy = !isTokenBuy && (COIN_DATA[buyCoin].model === COIN_MODEL.AB)
+    const isEvmCoinSell = !isTokenSell && (COIN_DATA[haveCurrency.toUpperCase()].model === COIN_MODEL.AB)
+    const isEvmCoinBuy = !isTokenBuy && (COIN_DATA[getCurrency.toUpperCase()].model === COIN_MODEL.AB)
 
     const actionType =
       (isTokenSell && sellWallet.standard) ||

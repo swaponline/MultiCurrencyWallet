@@ -64,7 +64,7 @@ const fetchUnspents = (options) => {
     NETWORK,
   } = options
 
-  return apiLooper.get(API_ENDPOINT || getApiCustom(NETWORK), `/addr/${address}/utxo`, { cacheResponse: 5000 })
+  return apiLooper.get(API_ENDPOINT || getApiCustom(NETWORK), `/address/${address}/utxo`, { cacheResponse: 5000 })
 }
 
 const broadcastTx = (options) => {
@@ -93,7 +93,7 @@ const fetchTx = (options) => {
     cacheResponse,
     checkStatus: (answer) => {
       try {
-        if (answer && answer.txId !== undefined) return true
+        if (answer && answer.txid !== undefined) return true
       } catch (e) { /* */ }
       return false
     },
@@ -119,9 +119,8 @@ const fetchTxInfo = (options) => {
     API_ENDPOINT,
     NETWORK,
   }).then((txInfo_ : any) => {
-    return { ...txInfo_ } /** yes - ^^^^ not working - заглужка **/
     const { vin, vout, ...rest } = txInfo_
-    const senderAddress = vin ? vin[0].addr : null
+    const senderAddress = vin ? vin[0].address : null
     const amount = vout ? new BigNumber(vout[0].value).toNumber() : null
 
     let afterBalance = vout && vout[1] ? new BigNumber(vout[1].value).toNumber() : null
@@ -163,6 +162,10 @@ const fetchTxInfo = (options) => {
         amount: new BigNumber(out.value).toNumber(),
         address: out.scriptPubKey.addresses || null,
       })),
+      inputs: vin.map((input) => ({
+        amount: new BigNumber(input.value).toNumber(),
+        script: input.scriptSig.hex || null,
+      })),
       ...rest,
     }
 
@@ -200,6 +203,35 @@ const checkWithdraw = (options) => {
         txid,
         amount,
       }
+    }
+    return false
+  })
+}
+
+const fetchTxInputScript = (options) => {
+  const {
+    hash,
+    cacheResponse,
+    API_ENDPOINT,
+    NETWORK,
+  } = options
+
+  return fetchTxInfo({
+    hash,
+    cacheResponse,
+    API_ENDPOINT,
+    NETWORK,
+  }).then((inInfo: any) => {
+    if (inInfo
+      && inInfo.inputs
+      && inInfo.inputs.length === 1
+    ) {
+      return next.script.toASM(
+        //@ts-ignore: strictNullChecks
+        next.script.decompile(
+          Buffer.from(inInfo.inputs[0].script, 'hex')
+        )
+      )
     }
     return false
   })
@@ -310,6 +342,7 @@ export default {
   fetchTx,
   fetchTxInfo,
   checkWithdraw,
+  fetchTxInputScript,
 
   estimateFeeValue,
   getCore,
