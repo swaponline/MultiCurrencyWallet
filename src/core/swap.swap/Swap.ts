@@ -5,6 +5,7 @@ import SwapInterface from 'swap.app/SwapInterface'
 import Room from './Room'
 import { Flow as FlowType } from 'swap.swap'
 import { COIN_DATA, COIN_MODEL, COIN_TYPE } from 'swap.app/constants/COINS'
+import getCoinInfo from 'common/coins/getCoinInfo'
 
 
 class Swap {
@@ -91,9 +92,11 @@ class Swap {
       participantPeer: this.participant.peer,
     })
 
-    const buyCoin = ((data.buyBlockchain) ? `{${data.buyBlockchain}}${data.buyCurrency}` : data.buyCurrency).toUpperCase()
-    const sellCoin = ((data.sellBlockchain) ? `{${data.sellBlockchain}}${data.sellCurrency}` : data.sellCurrency).toUpperCase()
+    const buyCurrencyInfo = getCoinInfo(data.buyCurrency)
+    const sellCurrencyInfo = getCoinInfo(data.sellCurrency)
 
+    const buyCoin = ((data.buyBlockchain && !buyCurrencyInfo.blockchain) ? `{${data.buyBlockchain}}${data.buyCurrency}` : data.buyCurrency).toUpperCase()
+    const sellCoin = ((data.sellBlockchain && !sellCurrencyInfo.blockchain) ? `{${data.sellBlockchain}}${data.sellCurrency}` : data.sellCurrency).toUpperCase()
 
     this.ownerSwap        = this.app.swaps[buyCoin]
     this.participantSwap  = this.app.swaps[sellCoin]
@@ -288,16 +291,16 @@ class Swap {
     } = this
 
     if (!this.flow.isTakerMakerModel) {
-      if (COIN_DATA[sellCoin]
-        && COIN_DATA[sellCoin].model
-        && COIN_DATA[buyCoin]
-        && COIN_DATA[buyCoin].model
+      if (COIN_DATA[sellCoin.toUpperCase()]
+        && COIN_DATA[sellCoin.toUpperCase()].model
+        && COIN_DATA[buyCoin.toUpperCase()]
+        && COIN_DATA[buyCoin.toUpperCase()].model
       ) {
         const _Sell = sellCoin.toLowerCase()
         const _Buy = buyCoin.toLowerCase()
 
-        const sellModel = COIN_DATA[sellCoin].model
-        const buyModel = COIN_DATA[buyCoin].model
+        const sellModel = COIN_DATA[sellCoin.toUpperCase()].model
+        const buyModel = COIN_DATA[buyCoin.toUpperCase()].model
 
         // sell UTXO buy AB 
         if (sellModel === COIN_MODEL.UTXO && buyModel === COIN_MODEL.AB) {

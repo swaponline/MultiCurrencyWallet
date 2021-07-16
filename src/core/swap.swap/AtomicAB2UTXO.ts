@@ -251,7 +251,7 @@ class AtomicAB2UTXO extends Flow {
       } = flow.state
 
 
-      const scriptCheckError = await this[`${this.utxoCoin}Swap`].checkScript(utxoScriptValues, {
+      const scriptCheckError = await this.utxoBlockchain.checkScript(utxoScriptValues, {
         value: buyAmount,
         //@ts-ignore: strictNullChecks
         recipientPublicKey: this.app.services.auth.accounts[this.utxoCoin].getPublicKey(),

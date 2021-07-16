@@ -138,8 +138,8 @@ const isAvailableNetwork = () => {
 }
 
 const isAvailableNetworkByCurrency = (currency) => {
-  const { coin, blockchain } = getCoinInfo(currency)
-  const ticker = coin.toUpperCase()
+  const { blockchain } = getCoinInfo(currency)
+  const ticker = currency.toUpperCase()
 
   const isUTXOModel = COIN_DATA[ticker]?.model === COIN_MODEL.UTXO
 

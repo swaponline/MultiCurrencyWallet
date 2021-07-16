@@ -45,10 +45,10 @@ class MarketmakerSettings extends Component<any, any> {
     super(props)
 
     const {
-      items,
       match: {
         params: {
           token: marketToken = "{eth}usdt",
+          utxoCoin = 'btc'
         }
       }
     } = props
@@ -60,12 +60,14 @@ class MarketmakerSettings extends Component<any, any> {
     this._handleSwapAttachedHandle = this.onSwapAttachedHandle.bind(this)
     this._handleSwapEnterStep = this.onSwapEnterStep.bind(this)
 
+
     this.state = {
       swapsIds: [],
       swapsByIds: {},
       marketToken,
-      btcWallet: null,
-      btcBalance: 0,
+      utxoCoin,
+      utxoWallet: null,
+      utxoBalance: 0,
       tokenWallet: null,
       tokenBalance: 0,
       ethBalance: 0,
@@ -74,7 +76,7 @@ class MarketmakerSettings extends Component<any, any> {
       isFirstFetchin: true,
       isMarketEnabled: false,
       isEthBalanceOk: false,
-      isBtcBalanceOk: false,
+      isUtxoBalanceOk: false,
       isTokenBalanceOk: false,
       marketSpread: 0, // 0% spread
       mnemonicSaved,
@@ -114,6 +116,7 @@ class MarketmakerSettings extends Component<any, any> {
   fetchWalletsWithBalances() {
     const {
       marketToken,
+      utxoCoin,
       isBalanceFetching,
       isFirstFetchin,
     } = this.state
@@ -133,7 +136,7 @@ class MarketmakerSettings extends Component<any, any> {
       isBalanceFetching: true,
       isFirstFetchin: false,
     }, () => {
-      const btcWallet = actions.core.getWallet({ currency: `btc` })
+      const utxoWallet = actions.core.getWallet({ currency: utxoCoin })
 
       const tokenWallet = actions.core.getWallet({
         currency: marketToken,
@@ -158,11 +161,11 @@ class MarketmakerSettings extends Component<any, any> {
       })
 
       this.setState({
-        btcWallet,
+        utxoWallet,
         evmCoinWallet,
         tokenWallet,
       }, async () => {
-        const btcBalance = await actions.core.fetchWalletBalance(btcWallet)
+        const utxoBalance = await actions.core.fetchWalletBalance(utxoWallet)
         const ethBalance = await actions.core.fetchWalletBalance(evmCoinWallet)
         const tokenBalance = await actions.core.fetchWalletBalance(tokenWallet)
 
@@ -170,7 +173,7 @@ class MarketmakerSettings extends Component<any, any> {
         // Обновляем стейт только если мы находимся в этом компоненте
         if (this._mounted) {
           this.setState({
-            btcBalance,
+            utxoBalance,
             ethBalance,
             tokenBalance,
             isBalanceFetching: false
@@ -184,7 +187,8 @@ class MarketmakerSettings extends Component<any, any> {
     const {
       match: {
         params: {
-          token: prevMarketToken = "{eth}usdt",
+          token: prevMarketToken = '{eth}usdt',
+          utxoCoin: prevUtxoCoin = 'btc'
         },
       },
     } = prevProps
@@ -192,7 +196,8 @@ class MarketmakerSettings extends Component<any, any> {
     const {
       match: {
         params: {
-          token: marketToken = "{eth}usdt",
+          token: marketToken = '{eth}usdt',
+          utxoCoin = 'btc'
         }
       }
     } = this.props
@@ -200,12 +205,24 @@ class MarketmakerSettings extends Component<any, any> {
 
     if (
       mnemonicSaved &&
-      prevMarketToken.toLowerCase() !== marketToken.toLowerCase()  
+      prevMarketToken.toLowerCase() !== marketToken.toLowerCase()
     ) {
       this.setState({
         marketToken,
         tokenBalance: 0,
         tokenWallet: null,
+      }, () => {
+        this.fetchWalletsWithBalances()
+      })
+    }
+    if (
+      mnemonicSaved &&
+      prevUtxoCoin.toLowerCase() !== utxoCoin.toLowerCase()
+    ) {
+      this.setState({
+        utxoCoin,
+        utxoBalance: 0,
+        utxoWallet: null,
       }, () => {
         this.fetchWalletsWithBalances()
       })
@@ -322,9 +339,16 @@ class MarketmakerSettings extends Component<any, any> {
   }
 
   handleCreateWallet = () => {
-    const { history } = this.props
+    const {
+      history,
+      match: {
+        params: {
+          utxoCoin = 'btc'
+        }
+      }
+    } = this.props
 
-    history.push(`${links.createWallet}/BTC`)
+    history.push(`${links.createWallet}/${utxoCoin.toUpperCase()}`)
   }
 
   handleSaveMnemonic = () => {
@@ -352,15 +376,16 @@ class MarketmakerSettings extends Component<any, any> {
 
     const {
       ethBalance,
-      btcBalance,
+      utxoBalance,
       tokenBalance,
       evmCoinWallet,
       tokenWallet,
+      utxoCoin,
     } = this.state
 
     const isEthBalanceOk = new BigNumber(ethBalance).isGreaterThanOrEqualTo(0.02)
     const isTokenBalanceOk = new BigNumber(tokenBalance).isGreaterThan(0)
-    const isBtcBalanceOk = new BigNumber(btcBalance).isGreaterThan(0)
+    const isUtxoBalanceOk = new BigNumber(utxoBalance).isGreaterThan(0)
 
     let hasError = false
 
@@ -404,26 +429,27 @@ class MarketmakerSettings extends Component<any, any> {
       })
       feedback.marketmaking.prevented(`Not enough ${AB_Coin}`)
     }
-    if (!isTokenBalanceOk && !isBtcBalanceOk) {
+    if (!isTokenBalanceOk && !isUtxoBalanceOk) {
       hasError = true
-      const token = tokenWallet.currency.toUpperCase()
+      const token = tokenWallet.tokenKey.toUpperCase()
       actions.modals.open(constants.modals.AlertModal, {
         message: (
           <FormattedMessage
             id="MM_NotEnoughCoins"
-            defaultMessage="Insufficient funds. You need to top up your BTC or {token}"
+            defaultMessage="Insufficient funds. You need to top up your {utxoCoin} or {token}"
             values={{
               token,
+              utxoCoin: utxoCoin.toUpperCase()
             }}
           />
         ),
       })
-      feedback.marketmaking.prevented(`Not enough BTC or ${token}`)
+      feedback.marketmaking.prevented(`Not enough ${utxoCoin} or ${token}`)
     }
     if (!hasError) {
       this.setState({
         isMarketEnabled: !isMarketEnabled,
-        isBtcBalanceOk,
+        isUtxoBalanceOk,
         isEthBalanceOk,
         isTokenBalanceOk
       }, () => {
@@ -458,10 +484,11 @@ class MarketmakerSettings extends Component<any, any> {
     const {
       tokenBalance,
       tokenWallet,
-      btcBalance,
       ethBalance,
-      isBtcBalanceOk,
       isTokenBalanceOk,
+      utxoCoin,
+      utxoBalance,
+      isUtxoBalanceOk,
       marketSpread,
     } = this.state
 
@@ -492,9 +519,9 @@ class MarketmakerSettings extends Component<any, any> {
         minimalestAmountForBuy: 0.00038906,
         minimalestAmountForSell: 0.00038906,
         sellAmount,
-        buyCurrency: `BTC`,
+        buyCurrency: utxoCoin.toUpperCase(),
         buyBlockchain: ``,
-        sellCurrency: tokenWallet.currency.toUpperCase(),
+        sellCurrency: tokenWallet.tokenKey.toUpperCase(),
         sellBlockchain: tokenWallet.blockchain.toUpperCase(),
       }
       console.log(sellTokenOrderData)
@@ -503,17 +530,17 @@ class MarketmakerSettings extends Component<any, any> {
       console.log('sellOrder', sellOrder)
       actions.core.setupPartialOrder(sellOrder)
     }
-    if (isBtcBalanceOk) {
+    if (isUtxoBalanceOk) {
       const buyTokenExchangeRate =
         new BigNumber(100).plus(
           new BigNumber(100).times(marketSpread)
         ).dividedBy(100).toNumber()
 
-      const buyAmount = new BigNumber(btcBalance).times(buyTokenExchangeRate).toNumber()
+      const buyAmount = new BigNumber(utxoBalance).times(buyTokenExchangeRate).toNumber()
 
       const buyTokenOrderData = {
-        balance: btcBalance,
-        sellAmount: btcBalance,
+        balance: utxoBalance,
+        sellAmount: utxoBalance,
         ethBalance,
         exchangeRate: buyTokenExchangeRate,
         isPartial: true,
@@ -525,9 +552,9 @@ class MarketmakerSettings extends Component<any, any> {
         minimalestAmountForBuy: 0.00038906,
         minimalestAmountForSell: 0.00038906,
         buyAmount,
-        sellCurrency: `BTC`,
+        sellCurrency: utxoCoin,
         sellBlockchain: ``,
-        buyCurrency: tokenWallet.currency.toUpperCase(),
+        buyCurrency: tokenWallet.tokenKey.toUpperCase(),
         buyBlockchain: tokenWallet.blockchain.toUpperCase(),
       }
       console.log(buyTokenOrderData)
@@ -560,9 +587,10 @@ class MarketmakerSettings extends Component<any, any> {
     const {
       swapsIds,
       swapsByIds,
-      btcWallet,
+      utxoWallet,
+      utxoCoin,
+      utxoBalance,
       evmCoinWallet,
-      btcBalance,
       tokenWallet,
       tokenBalance,
       ethBalance,
@@ -572,7 +600,7 @@ class MarketmakerSettings extends Component<any, any> {
       mnemonicSaved,
     } = this.state
 
-    const totalBalance = new BigNumber(btcBalance).plus(tokenBalance).toNumber()
+    const totalBalance = new BigNumber(utxoBalance).plus(tokenBalance).toNumber()
 
     const sortedSwaps = swapsIds.sort((aId, bId) => {
       return swapsByIds[bId].createUnixTimeStamp - swapsByIds[aId].createUnixTimeStamp
@@ -583,15 +611,19 @@ class MarketmakerSettings extends Component<any, any> {
           <h2>
             <FormattedMessage
               id="MM_Promo_Title"
-              defaultMessage="Earn interest on Bitcoin"
+              defaultMessage="Earn interest on {utxoTitle}"
+              values={{
+                utxoTitle: utxoWallet?.fullName || 'Bitcoin'
+              }}
             />
           </h2>
           <p>
             {tokenWallet && evmCoinWallet && (
               <FormattedMessage
                 id="MM_Promo_TitleBody"
-                defaultMessage="On swap.io users exchange BTC for {token} (a token that costs like BTC, but works on {Ab_Title}), and vice versa. You get min. 10% APY (annual percentage yield) as a commission from exchanges with low impermanent loss {link}."
+                defaultMessage="On swap.io users exchange {utxoCoin} for {token} (a token that costs like {utxoCoin}, but works on {Ab_Title}), and vice versa. You get min. 10% APY (annual percentage yield) as a commission from exchanges with low impermanent loss {link}."
                 values={{
+                  utxoCoin: utxoCoin.toUpperCase(),
                   token: tokenWallet.tokenKey.toUpperCase(),
                   Ab_Title: evmCoinWallet.fullName,
                   link: <a href={links.impermanentLoss} target="_blank">(?)</a>,
@@ -613,8 +645,9 @@ class MarketmakerSettings extends Component<any, any> {
             <p styleName="wallet-required">
               <FormattedMessage
                 id="MM_Wallet_Required"
-                defaultMessage="A hot wallet is required to launch marketmaking (BTC, {AB_Coin}, {token})."
+                defaultMessage="A hot wallet is required to launch marketmaking ({utxoCoin}, {AB_Coin}, {token})."
                 values={{
+                  utxoCoin: utxoCoin.toUpperCase(),
                   token: tokenWallet?.currency?.toUpperCase(),
                   AB_Coin: evmCoinWallet?.currency?.toUpperCase(),
                 }}
@@ -658,8 +691,9 @@ class MarketmakerSettings extends Component<any, any> {
                 <p styleName='mm-toggle__text'>
                   <FormattedMessage
                     id="MM_ToggleText"
-                    defaultMessage="Marketmaking BTC/{token}"
+                    defaultMessage="Marketmaking {utxoCoin}/{token}"
                     values={{
+                      utxoCoin: utxoCoin.toUpperCase(),
                       token: tokenWallet.tokenKey.toUpperCase(),
                     }}
                   />
@@ -691,9 +725,10 @@ class MarketmakerSettings extends Component<any, any> {
                   <span styleName="tooltipText">
                     <FormattedMessage
                       id="MM_Promo_TitleBody"
-                      defaultMessage="On swap.io users exchange BTC for {token} (a token that costs like BTC, but works on {Ab_Title}), and vice versa. You get min. 10% APY (annual percentage yield) as a commission from exchanges with low impermanent loss {link}."
+                      defaultMessage="On swap.io users exchange {utxoCoin} for {token} (a token that costs like {utxoCoin}, but works on {Ab_Title}), and vice versa. You get min. 10% APY (annual percentage yield) as a commission from exchanges with low impermanent loss {link}."
                       values={{
-                        token: tokenWallet.currency.toUpperCase(),
+                        utxoCoin: utxoCoin.toUpperCase(),
+                        token: tokenWallet.tokenKey.toUpperCase(),
                         Ab_Title: evmCoinWallet.fullName,
                         link: <a href={links.impermanentLoss} target="_blank">(?)</a>,
                       }}
@@ -717,9 +752,10 @@ class MarketmakerSettings extends Component<any, any> {
                 <span styleName='item-text__secondary'>
                   <FormattedMessage
                     id="MM_MarketmakingSimbols"
-                    defaultMessage="{token} + BTC"
+                    defaultMessage="{token} + {utxoCoin}"
                     values={{
-                      token: tokenWallet.currency.toUpperCase(),
+                      utxoCoin: utxoCoin.toUpperCase(),
+                      token: tokenWallet.tokenKey.toUpperCase(),
                     }}
                   />
                 </span>
@@ -743,9 +779,10 @@ class MarketmakerSettings extends Component<any, any> {
                 <span styleName='item-text__secondary'>
                   <FormattedMessage
                     id="MM_MarketmakingSimbols"
-                    defaultMessage="{token} + BTC"
+                    defaultMessage="{token} + {utxoCoin}"
                     values={{
-                      token: tokenWallet.currency.toUpperCase(),
+                      utxoCoin: utxoCoin.toUpperCase(),
+                      token: tokenWallet.tokenKey.toUpperCase(),
                     }}
                   />
                 </span>
@@ -754,18 +791,25 @@ class MarketmakerSettings extends Component<any, any> {
             {(true) && (
               <>
                 <div styleName='section-items__item'>
-                  {btcWallet ? (
+                  {utxoWallet ? (
                       <>
                         <h2 styleName='item-text__secondary-title'>
                           <FormattedMessage
                             id="MM_BTCBalance"
-                            defaultMessage="Balance BTC:"
+                            defaultMessage="Balance {utxoCoin}:"
+                            values={{
+                              utxoCoin: utxoCoin.toUpperCase(),
+                            }}
                           />
                         </h2>
                         <p>
-                          <img src={btc} alt="btc" />
-                          {' '}
-                          <span id='btcBalance' styleName='balanceSecondary'>{btcBalance}</span>
+                          {utxoCoin === 'btc' && (
+                            <>
+                              <img src={btc} alt="btc" />
+                              {' '}
+                            </>
+                          )}
+                          <span id='btcBalance' styleName='balanceSecondary'>{utxoBalance}</span>
                         </p>
                         <hr />
                         <p styleName='item-text__secondary'>
@@ -774,7 +818,7 @@ class MarketmakerSettings extends Component<any, any> {
                             defaultMessage="to top up, transfer to"
                           />
                           <br />
-                          <Address address={btcWallet.address} format={AddressFormat.Full} />
+                          <Address address={utxoWallet.address} format={AddressFormat.Full} />
                         </p>
                       </>
                     ) : (
@@ -782,13 +826,20 @@ class MarketmakerSettings extends Component<any, any> {
                         <h2 styleName='item-text__secondary-title'>
                           <FormattedMessage
                             id="MM_BTCBalance"
-                            defaultMessage="Balance BTC:"
+                            defaultMessage="Balance {utxoCoin}:"
+                            values={{
+                              utxoCoin: utxoCoin.toUpperCase()
+                            }}
                           />
                         </h2>
                         <p>
-                          <img src={btc} alt="btc" />
-                          {' '}
-                          <span id='btcBalance' styleName='balanceSecondary'>{btcBalance}</span>
+                          {utxoCoin === 'btc' && (
+                            <>
+                              <img src={btc} alt="btc" />
+                              {' '}
+                            </>
+                          )}
+                          <span id='btcBalance' styleName='balanceSecondary'>{utxoBalance}</span>
                         </p>
                       </>
                     )
@@ -800,17 +851,21 @@ class MarketmakerSettings extends Component<any, any> {
                       id="MM_TokenBalance"
                       defaultMessage="Balance {token}:"
                       values={{
-                        token: tokenWallet.currency.toUpperCase(),
+                        token: tokenWallet.tokenKey.toUpperCase(),
                       }}
                     />
                   </h2>
                   <div>
-                    {config.binance ? (
-                      <img src={btc} alt="btcb" />
-                    ): (
-                      <img styleName='iconPosition' src={wbtc} alt="wbtc" />
+                    {utxoCoin === 'btc' && (
+                      <>
+                        {config.binance ? (
+                          <img src={btc} alt="btcb" />
+                        ): (
+                          <img styleName='iconPosition' src={wbtc} alt="wbtc" />
+                        )}
+                        {' '}
+                      </>
                     )}
-                    {' '}
                     <span id='tokenBalance' styleName='balanceSecondary'>{tokenBalance}</span>
                     {' '}
                     {tokenWallet && (
@@ -818,8 +873,10 @@ class MarketmakerSettings extends Component<any, any> {
                         <span styleName="tooltipText">
                           <FormattedMessage
                             id="MM_whatIsWBTCTooltip1"
-                            defaultMessage="{tokenFullName} ({token}) is an {tokenStandart} token that represents Bitcoin (BTC) on the {blockchainName} blockchain."
+                            defaultMessage="{tokenFullName} ({token}) is an {tokenStandart} token that represents {utxoTitle} ({utxoCoin}) on the {blockchainName} blockchain."
                             values={{
+                              utxoTitle: utxoWallet?.fullName || 'Bitcoin',
+                              utxoCoin: utxoCoin.toUpperCase(),
                               tokenFullName: tokenWallet.fullName,
                               tokenStandart: tokenWallet.standard.toUpperCase(),
                               token: tokenWallet.currency.toUpperCase(),
@@ -829,8 +886,9 @@ class MarketmakerSettings extends Component<any, any> {
                           <br />
                           <FormattedMessage
                             id="MM_whatIsWBTCTooltip2"
-                            defaultMessage="{token} was created to allow Bitcoin holders to participate in decentralized finance (“DeFi”) apps that are popular on {blockchainName}."
+                            defaultMessage="{token} was created to allow {utxoTitle} holders to participate in decentralized finance (“DeFi”) apps that are popular on {blockchainName}."
                             values={{
+                              utxoTitle: utxoWallet?.fullName || 'Bitcoin',
                               token: tokenWallet.currency.toUpperCase(),
                               blockchainName: evmCoinWallet.fullName,
                             }}

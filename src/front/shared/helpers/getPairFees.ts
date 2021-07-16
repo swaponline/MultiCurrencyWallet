@@ -36,14 +36,9 @@ const feeCache = {
 }
 
 const fetchCoinFee = (params): Promise<CoinFee> => {
-  const { coinName: coinInfo , action, updateCacheValue } = params
+  const { coinName , action, updateCacheValue } = params
 
   return new Promise(async (feeResolved) => {
-    const {
-      coin: coinName,
-      blockchain,
-    } = getCoinInfo(coinInfo)
-
     const hasFeeInCache = !updateCacheValue && feeCache[action] && feeCache[action][coinName]
     const coinData = COIN_DATA[coinName.toUpperCase()]
 
