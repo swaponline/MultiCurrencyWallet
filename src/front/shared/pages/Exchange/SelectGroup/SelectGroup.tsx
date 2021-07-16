@@ -44,9 +44,6 @@ const SelectGroup = (props) => {
     balanceTooltip,
   } = props
 
-  console.log('%c selected group', 'color: orange; font-size: 20px')
-  console.log('props: ', props)
-
   return (
     <div styleName="selectGroup">
       <FieldLabel inRow>

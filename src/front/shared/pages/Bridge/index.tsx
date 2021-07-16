@@ -7,8 +7,18 @@ import { Token } from 'common/types'
 import Link from 'local_modules/sw-valuelink'
 import ExchangeForm from './ExchangeForm'
 
+type TokenItem = {
+  name: string
+  title: string
+  icon: string
+  value: string
+  fullTitle: string
+  blockchain: string
+  standard: string
+}
+
 type ComponentState = {
-  availableTokens: Token[]
+  tokens: TokenItem[]
   externalExchangeReference: null | IUniversalObj
   isPending: boolean
   fiat: string
@@ -23,28 +33,29 @@ class Bridge extends PureComponent<unknown, ComponentState> {
   constructor(props) {
     super(props)
 
-    console.log('%c Bridge', 'color: orange; font-size: 20px')
-    console.log('props: ', props)
-
     const { tokens, activeFiat } = props
 
     this.state = {
-      availableTokens: tokens,
+      tokens,
       externalExchangeReference: null,
       isPending: false,
       fiat: window.DEFAULT_FIAT || activeFiat,
       fiatAmount: 0,
       currency: 'ETH',
       currencyAmount: 0,
-      token: 'WBTC',
+      token: tokens[0].value,
       tokenAmount: 0,
     }
   }
 
-  setToken = (params) => {
+  selectToken = (params) => {
     const { value } = params
 
     console.log(value)
+
+    this.setState(() => ({
+      token: value,
+    }))
   }
 
   updateCurrencyAmount = () => {
@@ -98,7 +109,7 @@ class Bridge extends PureComponent<unknown, ComponentState> {
 
   render() {
     const {
-      availableTokens,
+      tokens,
       isPending,
       fiat,
       fiatAmount,
@@ -123,28 +134,23 @@ class Bridge extends PureComponent<unknown, ComponentState> {
           currencyAmount={currencyAmount}
           token={token}
           tokenAmount={tokenAmount}
-          setToken={this.setToken}
+          selectToken={this.selectToken}
           openExternalExchange={this.openExternalExchange}
-          availableTokens={availableTokens}
+          tokens={tokens}
         />
       </section>
     )
   }
 }
 
-const filterTokens = (tokensData: { [key: string]: Token }) => {
-  const tokens = []
-
-  for (let key in tokensData) {
-    if (key.startsWith('{eth}')) {
-      //@ts-ignore
-      tokens.push(tokensData[key])
-    }
-  }
-  return tokens
+const filterTokens = (tokens: TokenItem[]) => {
+  return tokens.filter((token) => {
+    return token.blockchain === 'ETH'
+  })
 }
 
-export default connect(({ user: { tokensData, activeFiat } }) => ({
-  tokens: filterTokens(tokensData),
+export default connect(({ currencies, user: { tokensData, activeFiat } }) => ({
+  tokens: filterTokens(currencies.partialItems),
+  tokensData,
   activeFiat,
 }))(CSSModules(Bridge, styles, { allowMultiple: true }))

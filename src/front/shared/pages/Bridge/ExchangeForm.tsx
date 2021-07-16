@@ -1,13 +1,14 @@
 import { FormattedMessage } from 'react-intl'
 import CSSModules from 'react-css-modules'
 import styles from './index.scss'
+import dropDownStyles from 'components/ui/DropDown/index.scss'
 import { inputReplaceCommaWithDot } from 'helpers/domUtils'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
 import Input from 'components/forms/Input/Input'
 import Button from 'components/controls/Button/Button'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
-import SelectGroup from 'pages/Exchange/SelectGroup/SelectGroup'
+import CurrencySelect from 'components/ui/CurrencySelect/CurrencySelect'
 
 function ExchangeForm(props) {
   const {
@@ -19,9 +20,9 @@ function ExchangeForm(props) {
     currencyAmount,
     token,
     tokenAmount,
-    setToken,
+    tokens,
     openExternalExchange,
-    availableTokens,
+    selectToken,
   } = props
 
   return (
@@ -40,22 +41,33 @@ function ExchangeForm(props) {
         />
       </div>
 
-      <SelectGroup
-        activeFiat={window.DEFAULT_FIAT}
-        dataTut="get"
-        inputValueLink={stateReference.tokenAmount}
-        selectedValue={token}
-        onSelect={setToken}
-        disabled={true}
-        label={<FormattedMessage id="partial255" defaultMessage="You get" />}
-        id="FiatTokenBridge"
-        currencies={availableTokens}
-        fiat={fiatAmount}
-      />
+      <div styleName="inputWrapper">
+        <FieldLabel>
+          <span>
+            <FormattedMessage id="get" defaultMessage="Get" /> {token}
+          </span>
+        </FieldLabel>
+        <Input
+          valueLink={stateReference.tokenAmount}
+          disabled
+          // withMargin
+        />
+        <CurrencySelect
+          selectedItemRender={(item) => `${item.title} (${item.blockchain})`}
+          className={dropDownStyles.simpleDropdown}
+          placeholder="Enter the name of token"
+          selectedValue={token}
+          onSelect={selectToken}
+          currencies={tokens}
+        />
+      </div>
 
       <div styleName="calculationsWrapper">
         <b>
-          {fiat} rate: {}
+          {fiat}: {fiatAmount}
+        </b>
+        <b>
+          {currency} rate: 2000 {fiat}
         </b>
         <b>
           {currency}: {currencyAmount}
