@@ -1,20 +1,15 @@
 import { PureComponent } from 'react'
 import CSSModules from 'react-css-modules'
-import { FormattedMessage } from 'react-intl'
+import styles from './index.scss'
 import { connect } from 'redaction'
 import { BigNumber } from 'bignumber.js'
-import styles from './index.scss'
-import { inputReplaceCommaWithDot } from 'helpers/domUtils'
+import { Token } from 'common/types'
 import Link from 'local_modules/sw-valuelink'
-import Tooltip from 'components/ui/Tooltip/Tooltip'
-import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
-import Input from 'components/forms/Input/Input'
-import Button from 'components/controls/Button/Button'
-import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
-import SelectGroup from 'pages/Exchange/SelectGroup/SelectGroup'
+import ExchangeForm from './ExchangeForm'
 
 type ComponentState = {
-  itezWindowReference: null | IUniversalObj
+  availableTokens: Token[]
+  externalExchangeReference: null | IUniversalObj
   isPending: boolean
   fiat: string
   currency: string
@@ -24,26 +19,20 @@ type ComponentState = {
   tokenAmount: number
 }
 
-@connect(
-  ({
-    currencies,
-    user: { tokensData, activeFiat },
-  }) => ({
-    currencies,
-    tokensData,
-    activeFiat,
-  })
-)
 class Bridge extends PureComponent<unknown, ComponentState> {
   constructor(props) {
     super(props)
 
-    const { currencies, tokensData, activeFiat } = props
+    console.log('%c Bridge', 'color: orange; font-size: 20px')
+    console.log('props: ', props)
+
+    const { tokens, activeFiat } = props
 
     this.state = {
-      itezWindowReference: null,
+      availableTokens: tokens,
+      externalExchangeReference: null,
       isPending: false,
-      fiat: window.DEFAULT_FIAT || 'USD',
+      fiat: window.DEFAULT_FIAT || activeFiat,
       fiatAmount: 0,
       currency: 'ETH',
       currencyAmount: 0,
@@ -72,18 +61,18 @@ class Bridge extends PureComponent<unknown, ComponentState> {
   }
 
   openExternalExchange = () => {
-    const { itezWindowReference } = this.state
+    const { externalExchangeReference } = this.state
     // open itez window
     // wait while the user closes this window or when his currency wallet gets some amount
     // did he close ? then do nothing
-    // did he recive currency amount ? so now we can check it and:
+    // did he receive currency amount ? so now we can check it and:
     // - start currency -> token exchange
     // - don't start, show an exchange button for user and wait while he clicks on it
     // call a smart contract
 
     if (
       window.buyViaCreditCardLink &&
-      (itezWindowReference === null || itezWindowReference.closed)
+      (externalExchangeReference === null || externalExchangeReference.closed)
     ) {
       this.setState(() => ({
         isPending: true,
@@ -96,19 +85,20 @@ class Bridge extends PureComponent<unknown, ComponentState> {
       )
 
       this.setState(() => ({
-        itezWindowReference: newWindowProxy,
+        externalExchangeReference: newWindowProxy,
       }))
       console.log(newWindowProxy)
     } else {
-      itezWindowReference?.focus()
+      externalExchangeReference?.focus()
     }
 
-    // itezWindowReference.open()
-    // itezWindowReference.closed
+    // externalExchangeReference.open()
+    // externalExchangeReference.closed
   }
 
   render() {
     const {
+      availableTokens,
       isPending,
       fiat,
       fiatAmount,
@@ -123,59 +113,38 @@ class Bridge extends PureComponent<unknown, ComponentState> {
     return (
       <section styleName="bridgeSection">
         <h2 styleName="title">Fiat to ERC20</h2>
-  
-        <form styleName="form" action="">
-          {/* fiat amount part */}
-          <div styleName="inputWrapper">
-            <FieldLabel>
-              <FormattedMessage id="fiatAmount" defaultMessage="Fiat amount" />{' '}
-              <Tooltip id="fiatAmountTooltip">
-                <FormattedMessage
-                  id="fiatAmountNotice"
-                  defaultMessage="Some useful notice for user"
-                />
-              </Tooltip>
-            </FieldLabel>
-            <Input
-              pattern="0-9\."
-              onKeyDown={inputReplaceCommaWithDot}
-              valueLink={linked.fiatAmount}
-            />
-          </div>
-  
-          <SelectGroup
-            activeFiat={window.DEFAULT_FIAT}
-            dataTut="get"
-            inputValueLink={linked.tokenAmount}
-            selectedValue={token}
-            onSelect={this.setToken}
-            disabled={true}
-            label={<FormattedMessage id="partial255" defaultMessage="You get" />}
-            id="Exchange472"
-            currencies={[]}
-            fiat={fiatAmount}
-          />
-  
-          <div styleName="calculationsWrapper">
-            <b>{fiat} rate: {}</b>
-            <b>{currency}: {currencyAmount}</b>
-            <b>{token}: {tokenAmount}</b>
-          </div>
-  
-          <Button
-            styleName="buyButton"
-            pending={isPending}
-            disabled={isPending}
-            onClick={this.openExternalExchange}
-            empty
-            big
-          >
-            <FormattedMessage id="buy" defaultMessage="Buy" />
-          </Button>
-        </form>
+
+        <ExchangeForm
+          stateReference={linked}
+          isPending={isPending}
+          fiat={fiat}
+          fiatAmount={fiatAmount}
+          currency={currency}
+          currencyAmount={currencyAmount}
+          token={token}
+          tokenAmount={tokenAmount}
+          setToken={this.setToken}
+          openExternalExchange={this.openExternalExchange}
+          availableTokens={availableTokens}
+        />
       </section>
     )
   }
 }
 
-export default CSSModules(Bridge, styles, { allowMultiple: true })
+const filterTokens = (tokensData: { [key: string]: Token }) => {
+  const tokens = []
+
+  for (let key in tokensData) {
+    if (key.startsWith('{eth}')) {
+      //@ts-ignore
+      tokens.push(tokensData[key])
+    }
+  }
+  return tokens
+}
+
+export default connect(({ user: { tokensData, activeFiat } }) => ({
+  tokens: filterTokens(tokensData),
+  activeFiat,
+}))(CSSModules(Bridge, styles, { allowMultiple: true }))

@@ -15,7 +15,7 @@ import { getActivatedCurrencies } from 'helpers/user'
 import getCurrencyKey from 'helpers/getCurrencyKey'
 import metamask from 'helpers/metamask'
 
-import { MnemonicKey } from './types'
+import { MnemonicKey } from 'common/types'
 import { initialState as currenciesInitialState } from 'redux/reducers/currencies'
 
 /*

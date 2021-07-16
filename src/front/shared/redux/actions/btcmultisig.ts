@@ -12,7 +12,7 @@ import actions from 'redux/actions'
 import config from 'helpers/externalConfig'
 import SwapApp from 'swap.app'
 
-import { MnemonicKey } from './types'
+import { MnemonicKey } from 'common/types'
 
 import { default as bitcoinUtils } from 'common/utils/coin/btc'
 

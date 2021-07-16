@@ -1,5 +1,3 @@
-import * as types from './types'
-
 import modals from './modals'
 import loader from './loader'
 import notifications from './notifications'
@@ -32,7 +30,6 @@ import backupManager from './backupManager'
 import multisigTx from './multisigTx'
 
 export default {
-  types,
   filter,
   modals,
   loader,
