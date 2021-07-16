@@ -98,24 +98,14 @@ input[type='number'] {
   background-color: var(--color-background-elements);
 }
 
-
-.input::-webkit-input-placeholder {
-  /* Chrome/Opera/Safari */
-  color: var(--color-notice);
-}
-
-.input::-moz-placeholder {
-  /* Firefox 19+ */
-  color: var(--color-notice);
-}
-
-.input:-ms-input-placeholder {
-  /* IE 10+ */
-  color: var(--color-notice);
-}
-
+/* Chrome/Opera/Safari */
+.input::-webkit-input-placeholder,
+/* Firefox 19+ */
+.input::-moz-placeholder,
+/* IE 10+ */
+.input:-ms-input-placeholder,
+/* Firefox 18- */
 .input:-moz-placeholder {
-  /* Firefox 18- */
   color: var(--color-notice);
 }
 
