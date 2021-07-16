@@ -23,10 +23,4 @@ export default {
     fullName: 'Wrapped Bitcoin',
     canSwap: true,
   },
-  wnext: {
-    address: '0x88f9b139b70a9083c27430ebb64099fdf9e29e78',
-    decimals: 18,
-    fullName: 'Wrapped Next',
-    canSwap: true,
-  }
 }
