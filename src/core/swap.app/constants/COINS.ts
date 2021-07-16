@@ -158,20 +158,20 @@ export const MATIC_TOKENS = {
 }
 
 export const ETH_TOKENS = {
-  usdt: 'USDT',
-  eurs: 'EURS',
-  swap: 'SWAP',
-  pay: 'PAY',
+  usdt: '{ETH}USDT',
+  eurs: '{ETH}EURS',
+  swap: '{ETH}SWAP',
+  pay: '{ETH}PAY',
 
   // needs for the front
-  proxima: 'PROXIMA',
-  snm: 'SNM',
-  noxon: 'NOXON',
-  pbl: 'PBL',
-  xsat: 'XSAT',
-  hdp: 'HDP',
-  scro: 'SCRO',
-  xeur: 'XEUR',
+  proxima: '{ETH}PROXIMA',
+  snm: '{ETH}SNM',
+  noxon: '{ETH}NOXON',
+  pbl: '{ETH}PBL',
+  xsat: '{ETH}XSAT',
+  hdp: '{ETH}HDP',
+  scro: '{ETH}SCRO',
+  xeur: '{ETH}XEUR',
 
 }
 

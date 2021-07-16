@@ -175,8 +175,6 @@ const getConfig = (config) => ({ account, mnemonic, contracts: { ETH, TOKEN }, .
 
       ETH2NEXT, NEXT2ETH,
 
-      ETHTOKEN2BTC(constants.COINS.swap),
-      BTC2ETHTOKEN(constants.COINS.swap),
       ...(config.flows || []),
       ...((
         [].concat.apply([],
