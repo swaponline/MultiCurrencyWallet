@@ -21,7 +21,7 @@ class EthLikeAction {
   readonly explorerName: string
   readonly explorerLink: string
   readonly explorerApiKey: string
-  readonly networkVersion: string
+  readonly networkVersion: number
   readonly adminFeeObj: {
     fee: string // percent of amount
     address: string // where to send
