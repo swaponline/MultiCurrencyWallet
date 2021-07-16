@@ -92,27 +92,17 @@ class OrderBook extends Component<OrderBookProps, OrderBookState> {
     if (orders.length === 0) {
       return null
     }
-    const {
-      coin: sellCoin,
-      blockchain: sellBlockchain,
-    } = getCoinInfo(sellCurrency)
-    const {
-      coin: buyCoin,
-      blockchain: buyBlockchain,
-    } = getCoinInfo(buyCurrency)
 
     const sellOrders = orders.filter(order =>
-      order.buyCurrency.toLowerCase() === buyCoin.toLowerCase() &&
-      
-      order.sellCurrency.toLowerCase() === sellCoin.toLowerCase()
-
+      order.buyCurrency.toLowerCase() === buyCurrency.toLowerCase() &&
+      order.sellCurrency.toLowerCase() === sellCurrency.toLowerCase()
     ).sort((a, b) => Pair.compareOrders(b, a))
 
     const buyOrders = orders.filter(order =>
-      order.buyCurrency.toLowerCase() === sellCoin.toLowerCase() &&
-      order.sellCurrency.toLowerCase() === buyCoin.toLowerCase()
+      order.buyCurrency.toLowerCase() === sellCurrency.toLowerCase() &&
+      order.sellCurrency.toLowerCase() === buyCurrency.toLowerCase()
     ).sort((a, b) => Pair.compareOrders(a, b))
-      
+
     return {
       buyOrders,
       sellOrders,

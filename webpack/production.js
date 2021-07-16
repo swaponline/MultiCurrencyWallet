@@ -4,6 +4,7 @@ import config from 'app-config'
 import webpack from 'webpack'
 
 import externalConfig from './externalConfig'
+import ownBuffer from './ownBuffer'
 
 
 export default (webpackConfig) => {
@@ -65,6 +66,7 @@ export default (webpackConfig) => {
       filename: '[name].[hash:6].css',
     }),
     externalConfig(),
+    ownBuffer(),
   )
 
   return webpackConfig

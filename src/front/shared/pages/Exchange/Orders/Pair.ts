@@ -24,13 +24,11 @@ const filteredDecimals = ({ amount, currency }) =>
 export const parseTicker = (order) => {
   const {
     buyCurrency,
-    buyBlockchain,
     sellCurrency,
-    sellBlockchain,
   } = order
 
-  const buy = (buyBlockchain !== ``) ? `{${buyBlockchain}}${buyCurrency}` : buyCurrency
-  const sell = (sellBlockchain !== ``) ? `{${sellBlockchain}}${sellCurrency}` : sellCurrency
+  const buy = buyCurrency
+  const sell = sellCurrency
   const BS = `${buy}-${sell}`.toUpperCase() // buys ETH, sells BTC, BID
   const SB = `${sell}-${buy}`.toUpperCase() // sells ETH = ASK
 

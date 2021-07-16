@@ -241,25 +241,23 @@ class SwapOrders extends aggregation(ServiceInterface, Collection) {
     const { id, buyAmount, sellAmount, buyCurrency, sellCurrency, ...rest } = data
 
     const {
-      coin: buy,
       blockchain: buyBlockchain,
     } = getCoinInfo(buyCurrency)
     const {
-      coin: sell,
       blockchain: sellBlockchain,
     } = getCoinInfo(sellCurrency)
 
     // Error in the bottom line: Cannot read property 'precision' of undefined
-    const roundedBuyAmount = new BigNumber(buyAmount).dp(constants.COIN_DATA[buy].precision)
-    const roundedSellAmount = new BigNumber(sellAmount).dp(constants.COIN_DATA[sell].precision)
+    const roundedBuyAmount = new BigNumber(buyAmount).dp(constants.COIN_DATA[buyCurrency.toUpperCase()].precision)
+    const roundedSellAmount = new BigNumber(sellAmount).dp(constants.COIN_DATA[sellCurrency.toUpperCase()].precision)
 
     const order = new Order(this.app, this, {
       id:           id || this.getUniqueId(),
       buyAmount:    roundedBuyAmount,
       sellAmount:   roundedSellAmount,
-      buyCurrency:  buy,
+      buyCurrency:  buyCurrency,
       buyBlockchain,
-      sellCurrency: sell,
+      sellCurrency: sellCurrency,
       sellBlockchain,
       ...rest,
     })

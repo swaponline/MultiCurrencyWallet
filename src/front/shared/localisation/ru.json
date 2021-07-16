@@ -5577,7 +5577,7 @@
   },
   {
     "id": "MM_Promo_Title",
-    "message": "Как заработать на моем BTC депозите?",
+    "message": "Как заработать на моем {utxoTitle} депозите?",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx",
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
@@ -5585,7 +5585,7 @@
   },
   {
     "id": "MM_Promo_TitleBody",
-    "message": "Пользователи в нашем обменнике swap.io меняют BTC на {token} (токен который стоит как BTC, но работает на {Ab_Title}), и обратно. Ты получишь мин. 10% годовых в качестве комиссии c обменов с низким impermanent loss {link}.",
+    "message": "Пользователи в нашем обменнике swap.io меняют {utxoCoin} на {token} (токен который стоит как {utxoCoin}, но работает на {Ab_Title}), и обратно. Ты получишь мин. 10% годовых в качестве комиссии c обменов с низким impermanent loss {link}.",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx",
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
@@ -5600,7 +5600,7 @@
   },
   {
     "id": "MM_BTCBalance",
-    "message": "Баланс BTC:",
+    "message": "Баланс {utxoCoin}:",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
@@ -5642,7 +5642,7 @@
   },
   {
     "id": "MM_Wallet_Required",
-    "message": "Для запуска маркетмейкинга необходим горячий кошелёк (BTC, {AB_Coin}, {token}).",
+    "message": "Для запуска маркетмейкинга необходим горячий кошелёк ({utxoCoin}, {AB_Coin}, {token}).",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
@@ -5656,7 +5656,7 @@
   },
   {
     "id": "MM_NotEnoughCoins",
-    "message": "Недостаточно средств. Вам нужно пополнить свой BTC или {token}",
+    "message": "Недостаточно средств. Вам нужно пополнить свой {utxoCoin} или {token}",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
@@ -5719,7 +5719,7 @@
   },
   {
     "id": "MM_ToggleText",
-    "message": "Маркетмейкер BTC/{token}",
+    "message": "Маркетмейкер {utxoCoin}/{token}",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
@@ -5758,7 +5758,7 @@
   },
   {
     "id": "MM_MarketmakingSimbols",
-    "message": "{token} + BTC",
+    "message": "{token} + {utxoCoin}",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
@@ -5772,14 +5772,14 @@
   },
   {
     "id": "MM_whatIsWBTCTooltip1",
-    "message": "{tokenFullName} ({token}) - это токен {tokenStandart}, который представляет Биткойн (BTC) в блокчейне {blockchainName}.",
+    "message": "{tokenFullName} ({token}) - это токен {tokenStandart}, который представляет {utxoTitle} ({utxoCoin}) в блокчейне {blockchainName}.",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
   },
   {
     "id": "MM_whatIsWBTCTooltip2",
-    "message": "{token} был создан, чтобы позволить держателям биткойнов участвовать в приложениях децентрализованных финансов («DeFi»), которые популярны на {blockchainName}.",
+    "message": "{token} был создан, чтобы позволить держателям {utxoTitle} участвовать в приложениях децентрализованных финансов («DeFi»), которые популярны на {blockchainName}.",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]

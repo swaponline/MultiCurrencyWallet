@@ -6,4 +6,5 @@ export default {
   arbitrum: 'https://rinkeby-explorer.arbitrum.io',
   maticscan: 'https://explorer-mumbai.maticvigil.com',
   ghostscan: 'https://testnet.ghostscan.io',
+  nextExplorer: 'https://explore.next.exchange',
 }

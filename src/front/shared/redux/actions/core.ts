@@ -404,13 +404,12 @@ const getWallet = (params: GetWalletParams) => {
   // otherwise it finds the first wallet from all origins, including metamask
   const { address, addressType, connected, currency: currencyData, blockchain: optBlockchain } = params
   const wallets = getWallets({ withInternal: true })
-  
+
   const {
     coin: currency,
     blockchain: coinBlockchain,
   } = getCoinInfo(currencyData)
   const blockchain = coinBlockchain || optBlockchain
-
 
   const founded = wallets.filter((wallet) => {
     if (wallet.isMetamask && !wallet.isConnected) return false
@@ -421,6 +420,7 @@ const getWallet = (params: GetWalletParams) => {
       )
       && currency
       && wallet.currency.toLowerCase() === currency.toLowerCase()
+      && (blockchain ? currencyData?.toLowerCase() === wallet.tokenKey : true)
 
     if (address) {
       if (wallet.address.toLowerCase() === address.toLowerCase()) {

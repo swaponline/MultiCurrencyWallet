@@ -3,6 +3,7 @@ import CopyWebpackPlugin from 'copy-webpack-plugin'
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
 //import SpeedMeasurePlugin from "speed-measure-webpack-plugin"
 import externalConfig from './externalConfig'
+import ownBuffer from './ownBuffer'
 
 /* 
 * verbose output in console about build time
@@ -43,7 +44,10 @@ export default (webpackConfig) => {
     minimize: false,
   }
   
-  webpackConfig.plugins.push(externalConfig())
+  webpackConfig.plugins.push(
+    externalConfig(),
+    ownBuffer(),
+  )
 
   if (config.firebug) {
     webpackConfig.plugins.push(

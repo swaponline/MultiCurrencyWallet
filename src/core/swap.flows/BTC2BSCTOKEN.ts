@@ -8,13 +8,13 @@ export default (tokenName) => {
     _flowName: string
 
     static getName() {
-      return `${this.getFromName()}2{${this.blockchainName}}${this.getToName()}`
+      return `${this.getFromName()}2${this.getToName()}`
     }
     static getFromName() {
       return constants.COINS.btc
     }
     static getToName() {
-      return tokenName.toUpperCase()
+      return `{${this.blockchainName}}${tokenName.toUpperCase()}`
     }
 
     constructor(swap) {
