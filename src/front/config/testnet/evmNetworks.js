@@ -3,9 +3,9 @@ import link from './link'
 
 export default {
   ETH: {
-    chainId: "0x3",
-    networkVersion: 3,
-    chainName: 'Ropsten Test Network',
+    chainId: "0x5",
+    networkVersion: 5,
+    chainName: 'Rinkeby Test Network',
     rpcUrls: [web3.provider],
     blockExplorerUrls: [link.etherscan]
   },
