@@ -1,11 +1,11 @@
 .note {
   position: absolute;
-  background-color: $l-background-elements;
+  background-color: var(--color-background-elements);
   text-align: left;
   font-family: 'Roboto Mono', monospace;
   font-size: 13px;
   z-index: 5;
-  color: $notice-color;
+  color: var(--color-notice);
   bottom: -30px;
 }
 
@@ -13,7 +13,7 @@
   margin-top: 1em;
   font-size: 13px;
   font-family: 'Roboto Mono', monospace;
-  color: $notice-color;
+  color: var(--color-notice);
 
   &.hide {
     opacity: 0;
@@ -27,7 +27,7 @@
 .rednote {
   font-size: 12px;
   height: 0px;
-  color: $color-f-error;
+  color: var(--color-f-error);
   position: absolute;
   bottom: -15px;
 
@@ -45,25 +45,16 @@
   position: relative;
 }
 
-.dark {
-  .note,
-  .balance {
-    background: none;
-    color: $notice-color;
-  }
-}
-
 .balance {
   position: absolute;
   right: 98px;
   top: -8px;
   padding: 0 10px 0 10px;
-  background-color: $l-background-elements;
   text-align: left;
   font-family: 'Roboto Mono', monospace;
   font-size: 13px;
   z-index: 2;
-  color: $notice-color;
+  color: var(--color-notice);
 
   @include media-mobile {
     right: 69px;
@@ -72,7 +63,7 @@
 
 .notice {
   line-height: 140%;
-  color: $notice-color;
+  color: var(--color-notice);
   @include ff-regular;
   width: 78%;
   text-align: center;
@@ -83,7 +74,7 @@
 .rednotes {
   font-size: 16px;
   text-align: center;
-  color: $color-f-error;
+  color: var(--color-f-error);
 }
 
 .buttonFull {
@@ -117,20 +108,6 @@
 
 .lowLevel {
   position: relative;
-
-  &.dark {
-    .additionalСurrencies {
-      background: #2b2b2b;
-    }
-
-    .additionalСurrenciesItemActive {
-      color: $d-color;
-    }
-
-    .delimiter {
-      background: rgba(255,255,255,0.1);
-    }
-  }
 }
 
 .sendBtnsWrapper {
@@ -194,7 +171,7 @@
 .customSelectValue {
   border: 1px solid #ccc;
   height: 68px;
-  background: #fff;
+  background: var(--color-background-elements);
   display: flex;
   align-items: center;
   cursor: pointer;
@@ -204,20 +181,21 @@
     margin-left: 10px;
     a {
       font-size: 13px;
-      color: $primary;
+      color: var(--color-brand);
+
       &:hover {
-        color: $primary;
+        color: var(--color-brand);
       }
     }
     .address {
-      color: $notice-color;
+      color: var(--color-notice);
       font-size: 12px;
       @include media-mobile {
         display: none;
       }
     }
     .mobileAddress {
-      color: $notice-color;
+      color: var(--color-notice);
       font-size: 12px;
       > div {
         margin: 0;
@@ -246,7 +224,7 @@
   z-index: 3;
   width: 100%;
   max-height: 300px;
-  background: #fff;
+  background: var(--color-background-elements);
   overflow-y: auto;
   overflow-x: hidden;
   padding: 5px 0px;
@@ -257,7 +235,7 @@
   position: absolute;
   padding-left: 0.4em;
   right: 100px;
-  background: $l-background-elements;
+  background: var(--color-background-elements);
   z-index: 1;
   display: flex;
   top: 22px;
@@ -272,13 +250,13 @@
 }
 
 .additionalСurrenciesItemActive {
-  color: $l-color;
+  color: var(--color);
 }
 
 .delimiter {
   width: 1px;
   height: 16px;
-  background: rgba(0,0,0,0.1);
+  background: var(--color-border);
   display: inline-block;
   margin: 0 10px;
   margin-top: 1px;
@@ -288,8 +266,9 @@
   margin-top: -1px;
   padding-left: 10px;
   border: none;
+
   &:hover {
-    background: #f3f3f3;
+    background: var(--color-pale);
   }
 }
 
@@ -301,8 +280,8 @@
     width: 9px;
     height: 9px;
     display: block;
-    border-top: 2px solid #828795;
-    border-right: 2px solid #828795;
+    border-top: 2px solid var(--color-notice);
+    border-right: 2px solid var(--color-notice);
     -webkit-transform: rotate(135deg);
     transform: rotate(135deg);
   }
@@ -321,7 +300,8 @@
   &:before {
     position: absolute;
     content: '';
-    background: rgba(255, 255, 255, 0.8);
+    background: var(--color-background-elements);
+    opacity: 0.8;
     width: 100%;
     height: 100%;
     z-index: 1111;
@@ -333,14 +313,13 @@
   text-align: right;
   right: 60px;
   font-size: 13px;
+
   @include media-mobile {
     right: 50px;
   }
-  .currency {
-    color: #1f2d48;
-  }
+
   .usd {
-    color: $notice-color;
+    color: var(--color-notice);
   }
 }
 
@@ -390,7 +369,7 @@
     &:focus-within {
       margin-bottom: 40px;
       border-radius: 2px;
-      border: 2px solid $primary;
+      border: 2px solid var(--color-brand);
     }
   }
 }

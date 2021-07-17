@@ -27,7 +27,7 @@ import Loader from 'components/loaders/Loader/Loader'
 import { localisedUrl } from '../../helpers/locale'
 import { messages, getMenuItems, getMenuItemsMobile } from './config'
 import { user } from 'helpers'
-import { ThemeSwitcher } from './ThemeSwitcher'
+import ThemeSwitcher from './ThemeSwitcher'
 import Button from 'components/controls/Button/Button'
 // Incoming swap requests and tooltips (revert)
 import UserTooltip from 'components/Header/UserTooltip/UserTooltip'
@@ -42,7 +42,6 @@ import SwapApp from 'swap.app'
 //window.isUserRegisteredAndLoggedIn = true
 
 const isWidgetBuild = config && config.isWidget
-const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 @withRouter
 @connect({
@@ -64,7 +63,7 @@ class Header extends Component<any, any> {
       location: { pathname },
     },
   }) {
-    if (pathname === '/ru' || pathname === '/' || pathname === links.wallet) {
+    if (pathname === '/' || pathname === links.wallet) {
       return { path: true }
     }
     return { path: false }
@@ -99,6 +98,7 @@ class Header extends Component<any, any> {
       menuItems: getMenuItems(props),
       menuItemsMobile: getMenuItemsMobile(props, lsWalletCreated, dynamicPath),
       createdWalletLoader: isWalletPage && !lsWalletCreated,
+      themeSwapAnimation: false,
     }
     this.lastScrollTop = 0
   }
@@ -242,8 +242,8 @@ class Header extends Component<any, any> {
     }))
 
     const path = pathname.toLowerCase()
-    const isWalletPage = path.includes(wallet) || path === `/` || path === '/ru'
-    const isPartialPage = path.includes(exchange) || path === `/ru${exchange}`
+    const isWalletPage = path.includes(wallet) || path === `/`
+    const isPartialPage = path.includes(exchange)
 
     const isMarketPage = path.includes(marketmaker) || path.includes(marketmaker_short)
     const didOpenWalletCreate = localStorage.getItem(isWalletCreate)
@@ -351,19 +351,25 @@ class Header extends Component<any, any> {
     localStorage.setItem(wasOnExchange, 'true')
   }
 
-  handleSetDark = () => {
+  handleToggleTheme = () => {
     this.setState(() => ({ themeSwapAnimation: true }))
-    const wasDark = localStorage.getItem(constants.localStorage.isDark)
 
-    feedback.theme.switched(wasDark ? 'bright' : 'dark')
+    const wasDark = localStorage.getItem(constants.localStorage.isDark)
+    const dataset = document.body.dataset
+
+    feedback.theme.switched(wasDark ? 'light' : 'dark')
+
     if (wasDark) {
       localStorage.removeItem(constants.localStorage.isDark)
       localStorage.setItem(constants.localStorage.isLight, 'true')
+      dataset.scheme = "default"
     } else {
-      localStorage.setItem(constants.localStorage.isDark, 'true')
       localStorage.removeItem(constants.localStorage.isLight)
+      localStorage.setItem(constants.localStorage.isDark, 'true')
+      dataset.scheme = "dark"
     }
-    window.location.reload()
+
+    this.setState(() => ({ themeSwapAnimation: false }))
   }
 
   declineRequest = (orderId, participantPeer) => {
@@ -414,7 +420,6 @@ class Header extends Component<any, any> {
       menuItemsMobile,
       createdWalletLoader,
       isWidgetTourOpen,
-      themeSwapAnimation,
     } = this.state
     const {
       intl: { formatMessage },
@@ -442,11 +447,11 @@ class Header extends Component<any, any> {
         </div>
         <div styleName="rightArea">
           {window.WPSO_selected_theme !== 'only_light' && window.WPSO_selected_theme !== 'only_dark' && (
-            <ThemeSwitcher themeSwapAnimation={themeSwapAnimation} onClick={this.handleSetDark} />
+            <ThemeSwitcher onClick={this.handleToggleTheme} />
           )}
 
           {isLogoutPossible && ( // some wordpress plugin cases
-            <div styleName={`logoutWrapper ${isDark ? 'dark' : ''}`} onClick={this.handleLogout}>
+            <div styleName="logoutWrapper" onClick={this.handleLogout}>
               <i className="fas fa-sign-out-alt" />
               <FormattedMessage id="ExitWidget" defaultMessage="Exit" />
             </div>

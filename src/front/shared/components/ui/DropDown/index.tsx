@@ -3,12 +3,9 @@ import cx from 'classnames'
 import cssModules from 'react-css-modules'
 import styles from './index.scss'
 import Link from 'local_modules/sw-valuelink'
-import { constants } from 'helpers'
 import { FormattedMessage } from 'react-intl'
 import Input from 'components/forms/Input/Input'
 import OutsideClick from 'components/OutsideClick'
-
-const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 type DropDownProps = {
   selectedValue: string
@@ -156,7 +153,7 @@ export default class DropDown extends Component<DropDownProps, DropDownState> {
     return (
       //@ts-ignore: strictNullChecks
       <OutsideClick outsideAction={this.handleClickOutside}>
-        <div styleName={`${dropDownStyleName} ${isDark ? 'dark' : ''}`} className={className}>
+        <div styleName={`${dropDownStyleName}`} className={className}>
           <div
             className={dropDownId}
             styleName={`

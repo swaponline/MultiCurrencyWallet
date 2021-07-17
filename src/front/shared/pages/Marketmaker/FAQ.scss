@@ -4,15 +4,10 @@
     max-width: 700px;
     margin: 20px auto;
 
-    box-shadow: $l-box-shadow;
-    background: $l-background-elements;
+    box-shadow: var(--box-shadow);
+    background: var(--color-background-elements);
     border-radius: 4px;
     padding: 25px;
-  }
-
-  section.dark {
-    box-shadow: $d-box-shadow;
-    background: $d-background-elements;
   }
 
   .section-title {

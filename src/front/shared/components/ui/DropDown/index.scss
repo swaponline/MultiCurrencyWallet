@@ -1,17 +1,17 @@
 .dropDown {
   @include inline-block;
-  background: #fff;
+  background: var(--color-background-elements);
   position: relative;
   border-radius: 6px;
-  box-shadow: rgba(#000, 0.08) 0 3px 9px 0;
+  box-shadow: rgba(var(--color), 0.08) 0 3px 9px 0;
   border: 1px solid transparent;
 
   &.active {
     width: 100%;
-    border-color: $indicating-color;
+    border-color: var(--color-indicating);
     z-index: 5;
-    background: #fff;
-    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+    background: var(--color-background-elements);
+    box-shadow: var(--box-shadow);
     height: max-content;
     border-radius: 2px !important;
 
@@ -21,7 +21,7 @@
 
     .closeBtn {
       display: block;
-      color: #000;
+      color: var(--color);
       position: absolute;
       right: 0;
       top: 20px;
@@ -33,7 +33,7 @@
 
       input {
         &:focus {
-          border-bottom: 1px solid #000;
+          border-bottom: 1px solid var(--color);
         }
       }
     }
@@ -42,36 +42,6 @@
       padding: 0 20px;
       height: 250px;
     }
-  }
-}
-
-.dark {
-  background: #2b2b2b;
-  color: white;
-
-  &.active {
-    background: #2b2b2b;
-  }
-
-  .dropDownItem,
-  .select {
-    background: #2b2b2b;
-  }
-
-  .dropDownItem {
-    border-top: 1px solid #545151;
-
-    &:hover {
-      background-color: #3f3f3f;
-    }
-
-    span {
-      color: white;
-    }
-  }
-
-  .selectedItem {
-    background: #2b2b2b;
   }
 }
 
@@ -104,7 +74,7 @@
 
 .smallTooltip,
 .dropDownLabel {
-  color: #000;
+  color: var(--color);
 }
 
 .closeBtn,
@@ -131,7 +101,7 @@
   font-weight: 600;
   font-size: 13px;
   line-height: 17px;
-  color: #000000;
+  color: var(--color);
   opacity: 0.4;
   position: relative;
   text-align: left;
@@ -144,7 +114,7 @@
 .fullTitle {
   font-weight: 500;
   font-size: 18px;
-  color: #000000;
+  color: var(--color);
   margin-right: 9px;
   margin-top: 0px;
 }
@@ -171,7 +141,7 @@
   padding-right: 40px;
   padding-left: 16px;
   min-width: 135px;
-  background: white;
+  background-color: var(--color-background-elements);
   position: relative;
   z-index: 1;
   cursor: pointer;
@@ -179,7 +149,7 @@
   font-size: 18px;
   white-space: nowrap;
   font-weight: 500;
-  border-color: grey;
+  border-color: var(--color-border);
   @include no-user-select;
 
   &.left {
@@ -198,7 +168,7 @@
 }
 
 .arrow {
-  @include arrow('down', 9px, 2px, #828795);
+  @include arrow('down', 9px, 2px, var(--color-notice));
   margin-top: -6px;
   position: absolute;
   top: 50%;
@@ -233,17 +203,17 @@
 .select {
   min-width: 100%;
   max-height: 160px;
-  background-color: #fff;
+  background-color: var(--color-background-elements);
   position: absolute;
   right: -1;
   top: 0;
   overflow-x: hidden;
   overflow-y: auto;
   z-index: 9999;
-  background: #fff;
+  background: var(--color-background-elements);
   border-radius: 6px;
-  border: 1px solid #8888;
-  box-shadow: rgba(#000, 0.15) 0 3px 9px 0;
+  border: 1px solid var(--color-border);
+  box-shadow: rgba(var(--color), 0.15) 0 3px 9px 0;
 }
 
 .dontscroll {
@@ -254,8 +224,8 @@
 .dropDownItem {
   height: 56px;
   line-height: 56px;
-  border-top: 1px solid #ddd;
-  background: #fff;
+  border-top: 1px solid var(--color-border);
+  background: var(--color-background-elements);
   padding: 0 16px;
   cursor: pointer;
   text-align: left;
@@ -267,7 +237,7 @@
   }
 
   &:hover {
-    background-color: #f7f7f7;
+    background-color: var(--color-pale);
   }
 }
 

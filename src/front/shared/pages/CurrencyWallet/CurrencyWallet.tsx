@@ -31,7 +31,6 @@ import getCoinInfo from 'common/coins/getCoinInfo'
 
 
 const isWidgetBuild = config && config.isWidget
-const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 @connect(
   ({
@@ -382,16 +381,6 @@ class CurrencyWallet extends Component<any, any> {
     ))
   }
 
-  handleGoTrade = () => {
-    const { currency } = this.state
-    const {
-      history,
-      intl: { locale },
-    } = this.props
-
-    history.push(localisedUrl(locale, `${links.exchange}/btc-to-${currency.toLowerCase()}`))
-  }
-
   rowRender = (row, rowIndex) => {
     const {
       history,
@@ -510,18 +499,16 @@ class CurrencyWallet extends Component<any, any> {
     }
 
     let currencyFiatBalance
-    let changePercent
 
     if (infoAboutCurrency && infoAboutCurrency.price_fiat) {
       currencyFiatBalance =
         new BigNumber(balance).dp(6, BigNumber.ROUND_FLOOR).toString() as any * infoAboutCurrency.price_fiat as any
-      changePercent = infoAboutCurrency.percent_change_1h
     } else {
       currencyFiatBalance = 0
     }
 
     return (
-      <div styleName={`root ${isDark ? 'dark' : ''}`}>
+      <div styleName="root">
         <PageSeo
           location={location}
           defaultTitle={intl.formatMessage(title.metaTitle, {
@@ -540,16 +527,14 @@ class CurrencyWallet extends Component<any, any> {
             txHistory
               ?
               <BalanceForm
-                address={address}
+                type="currencyWallet"
                 activeFiat={activeFiat}
                 currencyBalance={balance}
                 fiatBalance={currencyFiatBalance}
-                changePercent={changePercent}
                 activeCurrency={activeCurrency}
                 isFetching={isBalanceFetching}
                 handleReceive={this.handleReceive}
                 handleWithdraw={this.handleWithdraw}
-                handleExchange={this.handleGoTrade}
                 handleInvoice={this.handleInvoice}
                 showButtons={actions.user.isOwner(
                   address,
@@ -567,7 +552,7 @@ class CurrencyWallet extends Component<any, any> {
               </Fragment>
           }
         >
-          <div styleName={`currencyWalletActivity ${isDark ? 'darkActivity' : ''}`}>
+          <div styleName="currencyWalletActivity">
             <FilterForm
               filterValue={filterValue}
               onSubmit={this.handleFilter}

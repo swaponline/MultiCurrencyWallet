@@ -3,11 +3,8 @@ import cx from 'classnames'
 import actions from 'redux/actions'
 import cssModules from 'react-css-modules'
 import styles from './Notification.scss'
-import { constants } from 'helpers'
 import Sound from 'helpers/Sound/alert.mp4'
 import { RemoveButton } from 'components/controls'
-
-const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 const Notification = (props) => {
   const {
@@ -68,7 +65,6 @@ const Notification = (props) => {
   const containerStyleName = cx('container', {
     'mounted': isMounted,
     'removed': isRemoved,
-    'dark': isDark,
   })
 
   const notificationStyleName = cx('notification', {

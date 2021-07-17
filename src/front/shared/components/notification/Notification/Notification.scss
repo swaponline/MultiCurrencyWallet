@@ -14,19 +14,6 @@
     transition: margin-top 0.1s linear 0s, margin-bottom 0.1s linear 0s;
     margin-top: 0;
   }
-
-  &.dark {
-    .notification {
-      box-shadow: $d-box-shadow;
-      background-color: $d-background-elements;
-      color: $d-color;
-    }
-
-    .errorNotification {
-      background-color: $d-background-elements;
-      color: $color-f-error;
-    }
-  }
 }
 
 .notification {
@@ -41,9 +28,9 @@
   opacity: 0;
   font-size: 14px;
   border-radius: 6px;
-  box-shadow: $l-box-shadow;
-  background-color: $l-background-elements;
-  color: $l-color;
+  box-shadow: var(--box-shadow);
+  background-color: var(--color-background-elements);
+  color: var(--color);
 
   &.mounted {
     margin-top: 0 !important;
@@ -58,8 +45,8 @@
 }
 
 .errorNotification {
-  background-color: $l-background-elements;
-  color: $color-f-error;
+  background-color: var(--color-background-elements);
+  color: var(--color-f-error);
   position: fixed;
   bottom: 100;
   right: 0;
@@ -73,7 +60,7 @@
 }
 
 .warning {
-  background-color: $color-warning,
+  background-color: var(--color-warning),
 }
 
 .content {

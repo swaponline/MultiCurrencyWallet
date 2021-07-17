@@ -2,15 +2,11 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'redaction'
 import { getPageOffset } from 'helpers'
-import { constants } from 'helpers'
 
 import Modals from 'components/modals'
 
 import cssModules from 'react-css-modules'
 import styles from './ModalConductor.scss'
-
-
-const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 @connect({
   modals: 'modals',
@@ -62,7 +58,7 @@ export default class ModalConductor extends Component<any, any> {
     const areModalsExist = Boolean(modalNames.length)
 
     return areModalsExist && (
-      <div styleName={`${!dashboardView ? 'modalConductor' : 'modalDashboardConductor'} ${isDark ? 'dark' : ''}`}>
+      <div styleName={`${!dashboardView ? 'modalConductor' : 'modalDashboardConductor'}`}>
         {
           modalNames.map((key) => {
             const { name, data = {}, zIndex } = modals[key]

@@ -1,5 +1,5 @@
 .toolTipBody {
-    background-color: #fff;
+    background-color: var(--color-background-elements);
     min-width: 220px;
     max-width: 420px;
     position: relative;
@@ -13,14 +13,14 @@
 }
 
 .TooltipContent {
-    color: #000;
+    color: var(--color);
     padding: 20px;
 }
 
 .TooltipFooter {
-    background-color: #302272;
-    color: white;
-        display: flex;
+    background-color: var(--color-brand);
+    color: var(--color);
+    display: flex;
     justify-content: flex-end;
     margin-top: 1rem;
     padding: 5px;

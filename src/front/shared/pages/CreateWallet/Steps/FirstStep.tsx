@@ -49,10 +49,7 @@ function FirstStep(props) {
                   onClick={() => handleClick(selectedCurrency)}
                 >
                   <div styleName="logo">
-                    <Coin
-                      name={name}
-                      styleName="assetsTableIcon coinColor"
-                    />
+                    <Coin name={name} styleName="assetsTableIcon" />
                   </div>
                   <ul styleName="currencyInfoList">
                     <li><b>{name}</b></li>

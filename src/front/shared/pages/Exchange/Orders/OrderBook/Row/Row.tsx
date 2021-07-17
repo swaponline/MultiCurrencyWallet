@@ -23,9 +23,6 @@ import Pair from './../../Pair'
 import RequestButton from '../RequestButton/RequestButton'
 import SwapApp from 'swap.app'
 
-
-const isDark = localStorage.getItem(constants.localStorage.isDark)
-
 type RowProps = {
   history: IUniversalObj
   balances: { [key: string]: number } | boolean
@@ -365,7 +362,6 @@ class Row extends Component<RowProps, RowState> {
       <tr
         id={id}
         styleName={`
-          ${isDark ? 'rowDark' : ''}
           ${id === linkedOrderId ? 'linkedOrderHighlight' : ''}
         `}
         style={orderId === id ? { background: 'rgba(0, 236, 0, 0.1)' } : {}}
@@ -460,7 +456,6 @@ class Row extends Component<RowProps, RowState> {
         id={id}
         styleName={`
           ${'mobileRow'}
-          ${isDark ? 'rowDark' : ''}
           ${id === linkedOrderId ? 'linkedOrderHighlight' : ''}
         `}
         style={orderId === id ? { background: 'rgba(0, 236, 0, 0.1)' } : {}}

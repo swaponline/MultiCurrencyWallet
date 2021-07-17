@@ -1,47 +1,12 @@
-.localStorageDark {
-  width: 75%;
-  margin: 3em auto 0;
-  padding: 2em;
-  overflow: auto;
-  border-radius: 0.3em;
-  box-shadow: $d-box-shadow;
-  background-color: $d-background-elements;
-  color: $d-color;
-
-  .localStorage__btn {
-    background-color: $d-read-only;
-    color: $d-color;
-  
-    &:hover {
-      background-color:  rgb(73, 73, 73);
-    }
-
-    &.copy::before {
-      background-color:  $d-background-elements;
-      color: $d-color;
-    }
-  }
-
-  .localStorage__copy-tip {
-    background-color: $d-read-only;
-    color: $d-color;
-  }
-
-  .localStorage__json-output {
-    background-color: $d-read-only;
-    color: $d-color;
-  }
-}
-
 .localStorage {
   width: 75%;
   margin: 3em auto 0;
   padding: 2em;
   overflow: auto;
   border-radius: 0.3em;
-  box-shadow: $l-box-shadow;
-  background-color: $l-background-elements;
-  color: $l-color;
+  box-shadow: var(--box-shadow);
+  background-color: var(--color-background-elements);
+  color: var(--color);
 }
 
 .localStorage__buttons-container {
@@ -58,12 +23,12 @@
   height: 55px;
   font-size: 16px;
   line-height: 1em;
-  background-color: $l-read-only;
-  color: $l-color;
+  background-color: var(--color-read-only);
+  color: var(--color);
   transition: .1s;
 
   &:hover {
-    background-color:  rgb(196, 196, 196);
+    background-color: var(--color-border);
   }
 }
 
@@ -74,10 +39,10 @@
   left: 50%;
   transform: translateX(-50%);
   padding: 0.4em 1em;
-  border: .1em solid $color-brand;
+  border: .1em solid var(--color-brand);
   border-radius: 0.3em;
-  background-color: $l-background-elements;
-  color: $l-color;
+  background-color: var(--color-background-elements);
+  color: var(--color);
   animation: show-tip 1s ease both;
 }
 
@@ -103,8 +68,8 @@
   min-height: 25em;
   padding: 0.6em;
   border-radius: 0.3em;
-  background-color: $l-read-only;
-  color: $l-color;
+  background-color: var(--color-read-only);
+  color: var(--color);
 }
 
 

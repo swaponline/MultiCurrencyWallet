@@ -47,8 +47,8 @@
   max-width: 640px;
   height: auto;
   border-radius: 10px;
-  box-shadow: $l-box-shadow;
-  background: $l-background-elements;
+  box-shadow: var(--box-shadow);
+  background: var(--color-background-elements);
 
   &_dashboardView {
     background-color: none;
@@ -56,12 +56,6 @@
     max-width: none;
     width: 100%;
     height: 100%;
-  }
-
-  &.dark {
-    box-shadow: none;
-    background-color: $d-background-elements;
-    color: $d-color;
   }
 }
 

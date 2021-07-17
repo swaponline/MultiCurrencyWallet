@@ -43,30 +43,6 @@
 
 .promoContainer {
   position: relative;
-
-  &.--dark {
-    background: $d-background-color;
-    color: $d-color;
-
-    .formExchange {
-      box-shadow: $d-box-shadow;
-      background: $d-background-elements;
-    }
-
-    &:before {
-      background: #694cff !important;
-      color: $l-background-elements;
-    }
-
-    .maxAmount {
-      color: $d-color;
-      background: $d-background-elements;
-    }
-    
-    .minerFeeUpdateBtn {
-      color: $d-color;
-    }
-  }
 }
 
 .switchButton {
@@ -102,7 +78,7 @@
 }
 
 .link.button-like {
-  color: $color-link;
+  color: var(--color-link);
   font-weight: 600;
   text-decoration: underline;
   padding: 1em 0;
@@ -122,7 +98,7 @@
 }
 
 .button.link-like {
-  color: $color-link;
+  color: var(--color-link);
   text-decoration: underline;
 }
 
@@ -205,12 +181,8 @@
     font-family: 'Roboto Mono', monospace;
     font-size: 13px;
     font-weight: bold;
-    color: #212529;
-    opacity: 0.7;
-
-    &.--dark {
-      color: #fff;
-    }
+    color: var(--color-indicating);
+    opacity: 0.8;
   }
 
   .fees {
@@ -236,7 +208,7 @@
 }
 
 .minerFeeUpdateBtn {
-  color: $l-color;
+  color: var(--color);
 }
 
 .buttons {
@@ -258,7 +230,7 @@
   font-family: 'Roboto Mono', monospace;
   font-size: 13px;
   font-weight: bold;
-  color: $notice-color;
+  color: var(--color-notice);
 
   .swapStartStatusLoader {
     display: inline-block;
@@ -286,9 +258,9 @@
   width: 460px;
   margin-left: auto;
   margin-right: auto;
-  background: #ffffff;
-  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
+  box-shadow: var(--box-shadow);
+  background: var(--color-background-elements);
 
   @media screen and (min-width: 1025px) {
     width: 100%;
@@ -304,10 +276,10 @@
 }
 
 .error {
-  color: #fff;
+  color: var(--color-background-elements);
   padding: 0.4em 1em;
   font-size: 13px;
-  background: $color-bad;
+  background: var(--color-bad);
   border-radius: 3px;
   @include errAppend();
 
@@ -362,12 +334,13 @@
 .maxAmount {
   position: absolute;
   top: -10px;
-  background: #fff;
   font-size: 13px;
   right: 10px;
   padding: 0 0.5em;
   font-weight: bold;
-  color: rgba(0, 0, 0, 0.3);
+  color: var(--color);
+  background: var(--color-background-elements);
+  border-radius: 4px;
   font-family: 'Roboto Mono', monospace;
   margin-bottom: 0;
   z-index: 2;

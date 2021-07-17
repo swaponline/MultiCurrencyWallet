@@ -32,11 +32,11 @@
 .error {
   display: flex;
   align-items: center;
-  color: #fff;
+  color: var(--color-background-elements);
   padding: 0.3em 10px;
   margin-top: -5px;
   font-size: 13px;
-  background: #FD6B65;
+  background: var(--color-f-error);
   border-radius: 3px;
   margin-bottom: 15px;
 }
@@ -62,26 +62,19 @@
   justify-content: center;
   background-color: rgba(0, 0, 0, .3);
   opacity: 1;
-
-  &.--dark {
-    .modal {
-      background: #1e1f20;
-      color: white;
-    }
-  }
 }
 
 .modal {
   position: relative;
   display: flex;
   flex-direction: column;
-  background: #fff;
+  background: var(--color-background-elements);
   padding: 32px;
   width: 100%;
   max-width: 640px;
   height: auto;
   border-radius: 10px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, .4);
+  box-shadow: var(--box-shadow);
 
   @include media-mobile {
     height: 100%;

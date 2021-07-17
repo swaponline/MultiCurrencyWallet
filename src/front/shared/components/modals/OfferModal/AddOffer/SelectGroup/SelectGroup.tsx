@@ -6,7 +6,6 @@ import CSSModules from 'react-css-modules'
 import styles from './SelectGroup.scss'
 
 import Input from 'components/forms/Input/Input'
-import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
 import CurrencySelect from 'components/ui/CurrencySelect/CurrencySelect'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 import { BigNumber } from 'bignumber.js'
@@ -14,15 +13,38 @@ import { BigNumber } from 'bignumber.js'
 import { inputReplaceCommaWithDot } from 'helpers/domUtils'
 
 // TODO to split data and view this component
-const SelectGroup = ({ intl: IntlShape,  dynamicFee, isToken, extendedControls, selectedValue, onSelect, dataTut, isDark,
-  currencies, fiat, placeholder, label, disabled, className, inputValueLink, tooltip, balance, error,
-  id, type, idFee, tooltipAboutFee, haveAmount, dontDisplayError, activeFiat, ...props
-}) => {
+const SelectGroup = (props) => {
+  const {
+    dynamicFee,
+    isToken,
+    extendedControls,
+    selectedValue,
+    onSelect,
+    currencies,
+    fiat,
+    placeholder,
+    label,
+    disabled,
+    className,
+    inputValueLink,
+    tooltip, balance, error,
+    id,
+    idFee,
+    tooltipAboutFee,
+    haveAmount,
+    dontDisplayError,
+    activeFiat,
+    onFocus,
+    onBlur,
+  } = props
+
   const currAllowed = currencies
     .filter((item) => !item.dontCreateOrder)
 
+  const doNothing = () => {}
+
   return (
-    <div styleName={`${isDark ? 'dark' : ''}`}>
+    <div>
       <div styleName="groupField" className={className}>
         <div>
           <div styleName='row'>
@@ -51,10 +73,10 @@ const SelectGroup = ({ intl: IntlShape,  dynamicFee, isToken, extendedControls, 
           placeholder={placeholder}
           pattern="0-9\."
           errorStyle={error}
-          dontDisplayError
+          dontDisplayError={dontDisplayError}
           disabled={disabled}
-          onFocus={props.onFocus ? props.onFocus : () => { }}
-          onBlur={props.onBlur ? props.onBlur : () => { }}
+          onFocus={onFocus ? onFocus : doNothing}
+          onBlur={onBlur ? onBlur : doNothing}
           onKeyDown={inputReplaceCommaWithDot}
         />
         {

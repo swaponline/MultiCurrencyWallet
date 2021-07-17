@@ -13,8 +13,6 @@ import metamask from 'helpers/metamask'
 import { Button } from 'components/controls'
 import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 
-const isDark = localStorage.getItem(constants.localStorage.isDark)
-
 const defaultLanguage = defineMessages({
   title: {
     id: 'ConnectWalletModal_Title',
@@ -125,7 +123,6 @@ class ConnectWalletModal extends React.Component<any, null> {
         <div
           className={cx({
             [styles['modal']]: true,
-            [styles['dark']]: isDark,
             [styles['modal_dashboardView']]: dashboardModalsAllowed,
           })}
         >

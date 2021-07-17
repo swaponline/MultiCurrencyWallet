@@ -3,7 +3,7 @@
   &::before {
     content: '';
     position: absolute;
-    background-color: #ccc;
+    background-color: var(--color-pale);
     top: 0px;
     bottom: 0px;
     left: 0px;
@@ -18,12 +18,22 @@
       linear,
       left top,
       right top,
-      color-stop(8%, #eeeeee),
-      color-stop(18%, #dddddd),
-      color-stop(33%, #eeeeee)
+      color-stop(8%, var(--color-pale)),
+      color-stop(18%, var(--color-border)),
+      color-stop(33%, var(--color-pale))
     );
-    background: -webkit-linear-gradient(left, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
-    background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
+    background: -webkit-linear-gradient(
+      left,
+      var(--color-pale) 8%,
+      var(--color-border) 18%,
+      var(--color-pale) 33%
+    );
+    background: linear-gradient(
+      to right,
+      var(--color-pale) 8%,
+      var(--color-border) 18%,
+      var(--color-pale) 33%
+    );
     -webkit-background-size: 3200px 104px;
   }
 }

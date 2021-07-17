@@ -20,8 +20,6 @@ import lsDataCache from 'helpers/lsDataCache'
 
 
 const isWidgetBuild = config && config.isWidget
-const isDark = localStorage.getItem(constants.localStorage.isDark)
-
 
 @connect(({
   user: {
@@ -206,7 +204,7 @@ class InvoicesList extends PureComponent<any, any> {
     if (isRedirecting) return null
 
     const invoicesTable = (
-      <div styleName={`currencyWalletActivity ${isDark ? 'darkActivity' : ''}`}>
+      <div styleName="currencyWalletActivity">
         <h3>
           <FormattedMessage id="InvoicesList_Title" defaultMessage="Invoices" />
         </h3>
@@ -224,7 +222,7 @@ class InvoicesList extends PureComponent<any, any> {
     }
 
     return (
-      <div styleName={`root ${isDark ? 'dark' : ''}`}>
+      <div styleName="root">
         {isWidgetBuild && !config.isFullBuild && (
           <ul styleName="widgetNav">
             <li styleName="widgetNavItem" onClick={this.handleGoWalletHome}>
@@ -251,7 +249,7 @@ class InvoicesList extends PureComponent<any, any> {
                 <ContentLoader leftSideContent />
               )}
             </div>
-            <div styleName={`currencyWalletActivity ${isDark ? 'darkActivity' : ''}`}>
+            <div styleName="currencyWalletActivity">
               {invoicesTable}
             </div>
           </div>

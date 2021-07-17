@@ -1,5 +1,5 @@
 .rowAmount {
-  color: $l-color;
+  color: var(--color);
   font-family: 'Roboto Mono', monospace;
 }
 
@@ -14,17 +14,7 @@
 // mobile arrow between send and get currency
 .arrowsIcon {
   margin: 0 0.8em;
-  color: $l-color;
-}
-
-.rowDark {
-  .rowAmount {
-    color: $d-color;
-  }
-
-  .arrowsIcon {
-    color: $d-color;
-  }
+  color: var(--color);
 }
 
 .rowCell:nth-of-type(1) {
@@ -43,7 +33,7 @@
 .mobileRow {
   .firstType,
   .secondType {
-    color: $indicating-color;
+    color: var(--color-indicating);
     display: block;
   }
 
@@ -67,5 +57,5 @@
 }
 
 .linkedOrderHighlight {
-  outline: 2px dashed $primary;
+  outline: 2px dashed var(--color-brand);
 }

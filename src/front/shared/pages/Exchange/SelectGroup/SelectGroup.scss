@@ -8,18 +8,10 @@
   height: 68px;
   margin-bottom: 25px;
   vertical-align: center;
-  // box-shadow: rgba(#000, 0.08) 0 3px 9px 0;
   border-radius: 6px;
   text-align: center;
   position: relative;
   text-transform: capitalize;
-}
-
-.dark {
-  .textUsd {
-    background: none;
-    color: white;
-  }
 }
 
 .balanceTooltip {
@@ -29,16 +21,16 @@
   right: 24px;
   position: absolute;
 }
+
 .smallTooltip {
   > span {
     position: absolute;
     display: flex;
     justify-content: center;
-    background: #d6d6d6;
     left: 92%;
     top: 11px;
     align-items: center;
-    --size: 1.3em;
+
     span {
       font-size: 1em;
     }
@@ -46,13 +38,12 @@
 }
 
 .textUsd {
-  color: #828795;
+  color: var(--color-indicating);
   position: absolute;
   left: 10px;
   font-family: 'Roboto Mono', monospace;
   bottom: -14px;
   top: auto;
-  background: #fff;
   right: auto;
   padding: 0 10px;
   font-size: 13px;
@@ -93,12 +84,12 @@
 }
 
 .red {
-  color: red,
+  color: var(--color-f-error),
 }
 
 input:disabled {
   background-color: inherit;
-  color: gray;
+  color: var(--color-indicating);
   cursor: default;
 }
 
@@ -135,7 +126,7 @@ input:disabled {
   input {
     border: none;
     height: 69px;
-    border-bottom: 1px solid #000;
+    border-bottom: 1px solid var(--color);
     font-size: 16px;
     padding-left: 2px;
   }
@@ -143,10 +134,10 @@ input:disabled {
 
 .currencySelect.dropDown {
   width: 100%;
-  border: 1px solid #000;
+  border: 1px solid var(--color);
   top: 0px;
   z-index: 1;
-  background: #fff;
+  background: var(--color-background-elements);
   height: 375px;
   border-radius: 3px;
 }

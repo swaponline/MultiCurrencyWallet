@@ -2,19 +2,13 @@
   font-size: 15px;
   @include ff-semibold;
   display: inline-block;
-  background-color: $l-background-elements;
+  background-color: var(--color-background-elements);
   padding: 7px 7px;
   z-index: 1;
   position: absolute;
   top: -18px;
   left: 10px;
   white-space: nowrap;
-
-  &.--dark {
-    background-color: transparent;
-    z-index: 4;
-    color: $d-color;
-  }
 }
 
 .positionStatic {

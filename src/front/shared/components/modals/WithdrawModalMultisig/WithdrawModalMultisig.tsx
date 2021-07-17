@@ -30,8 +30,6 @@ import QrReader from 'components/QrReader'
 import redirectTo from 'helpers/redirectTo'
 import lsDataCache from 'helpers/lsDataCache'
 
-const isDark = localStorage.getItem(constants.localStorage.isDark)
-
 @connect(
   ({
     currencies,
@@ -695,7 +693,7 @@ class WithdrawModalMultisig extends React.Component<any, any> {
                 </div>
               )}
             </div>
-            <div styleName={`lowLevel ${isDark ? 'dark' : ''}`} style={{ marginBottom: '50px' }}>
+            <div styleName="lowLevel" style={{ marginBottom: '50px' }}>
               <p styleName="balance">
                 {balance} {`BTC`}
               </p>
@@ -776,7 +774,7 @@ class WithdrawModalMultisig extends React.Component<any, any> {
               <Fragment>
                 <hr />
                 <div
-                  styleName={`lowLevel ${isDark ? 'dark' : ''}`}
+                  styleName="lowLevel"
                   style={{ marginBottom: '50px' }}
                 >
                   <div styleName="groupField">

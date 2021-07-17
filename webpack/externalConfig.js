@@ -27,6 +27,11 @@ const externalConfig = () => {
         to: './erc20tokens.js',
         toType: 'file',
       },
+      {
+        from: 'src/front/client/colors.css',
+        to: './colors.css',
+        toType: 'file',
+      },
     ],
   })
 }

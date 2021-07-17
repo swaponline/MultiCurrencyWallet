@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import cssModules from 'react-css-modules'
 import styles from './index.scss'
-import { constants } from 'helpers'
-
 import { FormattedMessage } from 'react-intl'
 
 import Tooltip from 'components/ui/Tooltip/Tooltip'
@@ -90,9 +88,6 @@ const bitcoinFees = [
   },
 ]
 
-
-const isDark = localStorage.getItem(constants.localStorage.isDark)
-
 @cssModules(styles, { allowMultiple: true })
 export default class FeeRadios extends Component<FeeRadiosProps, FeeRadiosState> {
   constructor(props) {
@@ -124,7 +119,7 @@ export default class FeeRadios extends Component<FeeRadiosProps, FeeRadiosState>
     } = this.props
 
     return (
-      <div styleName={`fee-radio ${isDark ? '--dark' : ''}`}>
+      <div styleName="fee-radio">
         {bitcoinFees.map((fee, index) => {
           const feeInByte = fee.slug === "custom"
             ? this.state.customFeeValue

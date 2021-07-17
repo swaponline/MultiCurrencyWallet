@@ -13,7 +13,6 @@ import exConfig from 'helpers/externalConfig'
 const isWidgetBuild = config && config.isWidget
 
 type CurrenciesListProps = {
-  isDark: boolean
   multisigPendingCount: number
   goToСreateWallet: () => void
   hiddenCoinsList: string[]
@@ -22,14 +21,13 @@ type CurrenciesListProps = {
 
 const CurrenciesList = (props: CurrenciesListProps) => {
   const {
-    isDark,
     tableRows,
     goToСreateWallet,
     multisigPendingCount,
   } = props
 
   return (
-    <div styleName={`yourAssets ${isDark ? 'dark' : ''}`}>
+    <div styleName="yourAssets">
       {(exConfig && exConfig.opts && exConfig.opts.showWalletBanners) || isWidgetBuild ? (
         <Fragment>
           <Slider multisigPendingCount={multisigPendingCount} />
@@ -52,14 +50,13 @@ const CurrenciesList = (props: CurrenciesListProps) => {
         rowRender={(row, index) => (
           <Row
             key={index}
-            isDark={isDark}
             currency={row}
             itemData={row}
           />
         )}
       />
       <div styleName='addCurrencyBtnWrapper'>
-        <Button id="addAssetBtn" onClick={goToСreateWallet} blue transparent fullWidth>
+        <Button id="addAssetBtn" onClick={goToСreateWallet} transparent fullWidth>
           <FormattedMessage id="addAsset" defaultMessage="Add currency" />
         </Button>
       </div>

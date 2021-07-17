@@ -2,7 +2,7 @@
   max-width: 600px;
   overflow: hidden;
   position: relative;
-  background: #fff;
+  background: var(--color-background-elements);
   cursor: pointer;
   padding-bottom: 15px;
   span:nth-child(1) {
@@ -23,7 +23,7 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     width: 50%;
-    background: #fff;
+    background: var(--color-background-elements);
   }
 }
 
@@ -40,7 +40,7 @@
 }
 
 .shareLinkTextarea:focus {
-  border: 2px solid $primary;
+  border: 2px solid var(--color-brand);
   outline: none;
   padding: 9px;
 }

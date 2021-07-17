@@ -44,8 +44,6 @@ const NETWORK = process.env.MAINNET
   ? 'MAINNET'
   : 'TESTNET'
 
-const isDark = localStorage.getItem(constants.localStorage.isDark)
-
 type WithdrawModalProps = {
   name: 'WithdrawModal'
   activeFiat: string
@@ -972,7 +970,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
             </div>
           )}
         </div>
-        <div styleName={`lowLevel ${isDark ? 'dark' : ''}`} style={{ marginBottom: '30px' }}>
+        <div styleName="lowLevel" style={{ marginBottom: '30px' }}>
           {/* why style ? see tip for max button */}
           <div style={usedAdminFee ? { right: '20px' } : undefined} styleName="additionalСurrencies">
             {criptoCurrencyHaveInfoPrice && <>
