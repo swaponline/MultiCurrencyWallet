@@ -28,7 +28,7 @@ In our team, I and 3 developers:
 - experience: over 8 years of Web Development
 - previous work examples etc.: ???
 
-2) Michael (NotEternal)
+2) Mikhail Orsoev
 - profile: (https://github.com/NotEternal | https://t.me/Not_Eternal) 
 - experience: 1 year of Web Development
 - previous work examples etc.: ???
