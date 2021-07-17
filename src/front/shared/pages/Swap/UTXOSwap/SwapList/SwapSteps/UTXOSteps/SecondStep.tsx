@@ -107,11 +107,6 @@ const SecondStep = (props) => {
   const showStepNumber = isFirstStepActive || isSecondStepActive
   const isStepActive = isMobile ? showStepNumber : isSecondStepActive
 
-
-  console.log('sellCurrency', sellCurrency)
-  console.log('currencyName', currencyName)
-  console.log('buyCurrency', buyCurrency)
-
   return (
     <div
       styleName={(isStepActive && 'stepItem active') || (isFirstStepActive && 'stepItem') || 'stepItem active checked'}>
