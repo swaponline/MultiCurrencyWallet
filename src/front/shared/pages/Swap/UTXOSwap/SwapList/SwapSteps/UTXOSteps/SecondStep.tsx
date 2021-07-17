@@ -107,6 +107,11 @@ const SecondStep = (props) => {
   const showStepNumber = isFirstStepActive || isSecondStepActive
   const isStepActive = isMobile ? showStepNumber : isSecondStepActive
 
+
+  console.log('sellCurrency', sellCurrency)
+  console.log('currencyName', currencyName)
+  console.log('buyCurrency', buyCurrency)
+
   return (
     <div
       styleName={(isStepActive && 'stepItem active') || (isFirstStepActive && 'stepItem') || 'stepItem active checked'}>
@@ -147,7 +152,7 @@ const SecondStep = (props) => {
             <FormattedMessage
               id="FourthStep52"
               defaultMessage="({otherCurrency} tx)"
-              values={{ otherCurrency: sellCurrency === currencyName ? buyCurrency.toLowerCase() : sellCurrency.toLowerCase() }}
+              values={{ otherCurrency: sellCurrency.toLowerCase() === currencyName.toLowerCase() ? buyCurrency.toLowerCase() : sellCurrency.toLowerCase() }}
             />
             <i className="fas fa-link" />
             {ethSwapHashIsConfirmed ? (
