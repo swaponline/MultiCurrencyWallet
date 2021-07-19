@@ -36,7 +36,7 @@ class Copy extends Component<any, any> {
     return (
       <div styleName="copyWrapper" title="Copy">
         {showTip &&
-        <div styleName="">
+        <div styleName="copyTip">
           <FormattedMessage id="RowFeeds64" defaultMessage="Copied!" />
         </div>
         }
