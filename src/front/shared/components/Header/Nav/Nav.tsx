@@ -3,8 +3,6 @@ import { NavLink, withRouter } from 'react-router-dom'
 import CSSModules from 'react-css-modules'
 import { injectIntl } from 'react-intl'
 import styles from './Nav.scss'
-
-import { constants } from 'helpers'
 import { localisedUrl } from 'helpers/locale'
 
 type NavProps = {
@@ -22,8 +20,6 @@ class Nav extends Component<NavProps, null> {
       intl: { locale },
     } = this.props
 
-    const isDark = localStorage.getItem(constants.localStorage.isDark)
-
     return (
       <div styleName='nav'>
         <Fragment>
@@ -38,7 +34,7 @@ class Nav extends Component<NavProps, null> {
                     <a
                       href={link}
                       target="_blank"
-                      styleName={`link ${isDark ? "dark" : ''}`}
+                      styleName="link"
                     >
                       {title}
                     </a>
@@ -47,7 +43,7 @@ class Nav extends Component<NavProps, null> {
                       key={index}
                       exact={exact}
                       className={`
-                        ${styles.link} ${isDark ? styles.dark : ''}
+                        ${styles.link}
                         ${link && link.includes('exchange') ? 'reactour-exchange data-tut-widget-exchange' : ''}
                       `}
                       to={localisedUrl(locale, link)}

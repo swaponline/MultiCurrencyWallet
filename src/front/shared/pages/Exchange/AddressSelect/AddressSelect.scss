@@ -1,35 +1,6 @@
 .addressSelect {
   position: relative;
 
-  &.--dark {
-    color: $d-color;
-
-    .dropDown {
-      width: 100%;
-
-      & > div {
-        background: #2b2b2b;
-
-        & > span {
-          display: block;
-          font-size: 12pt;
-          font-weight: bold;
-          width: 100%;
-          text-align: left;
-          margin-left: 1em;
-
-          @media screen and (max-width: 480px) {
-            font-size: 8pt;
-          }
-        }
-      }
-    }
-
-    .selectedInner {
-      background-color: #2b2b2b;
-    }
-  }
-
   .label {
     font-size: 15px;
     @include ff-semibold;
@@ -39,16 +10,12 @@
     position: absolute;
     top: -18px;
     left: 10px;
-    background: $d-color;
+    background: var(--color-background-elements);
     white-space: nowrap;
     @include media-mobile {
       top: -14px;
       font-size: 12px;
     }
-  }
-
-  &.--dark .label {
-    background: none;
   }
 
   .dropDown {
@@ -68,7 +35,7 @@
 
   & > div {
     padding-left: 0px;
-    border: 1px solid rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--color-border);
     border-radius: 2px;
 
     div > {
@@ -85,7 +52,7 @@
 
   &_error {
     .dropDown > div > span {
-      color: $color-f-error;
+      color: var(--color-f-error);
     }
   }
 }
@@ -97,8 +64,7 @@
   height: 100%;
   width: 58%;
   z-index: 1;
-  background-color: $l-background-elements;
-
+  background-color: var(--color-background-elements);
 
   &.connectWrapper {
     display: flex;
@@ -131,7 +97,7 @@
   }
 
   &_focus {
-    border: 1px solid $primary !important;
+    border: 1px solid var(--color-brand) !important;
   }
 
   .customAddressInput {

@@ -433,8 +433,6 @@ class App extends React.Component<RouteComponentProps<any>, any> {
     const { modals, dashboardModalsAllowed } = this.props;
     const isAnyModalCalled = Object.keys(modals).length > 0
 
-    const isDark = localStorage.getItem(constants.localStorage.isDark)
-
     if (typeof document !== 'undefined' && isAnyModalCalled && !dashboardModalsAllowed) {
       document.body.classList.remove('overflowY-default')
       document.body.classList.add('overflowY-hidden')
@@ -443,15 +441,11 @@ class App extends React.Component<RouteComponentProps<any>, any> {
       document.body.classList.add('overflowY-default')
     }
     if (typeof document !== 'undefined' && isAnyModalCalled && dashboardModalsAllowed) {
-      document.body.classList.remove('overflowY-dashboardView-default')
+      document.body.classList.remove('overflowY-default')
       document.body.classList.add('overflowY-dashboardView-hidden')
     } else {
       document.body.classList.remove('overflowY-dashboardView-hidden')
-      document.body.classList.add('overflowY-dashboardView-default')
-    }
-
-    if (isDark) {
-      document.body.classList.add('darkTheme')
+      document.body.classList.add('overflowY-default')
     }
   }
 

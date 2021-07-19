@@ -24,7 +24,6 @@ import Copy from 'components/ui/Copy/Copy'
 
 type RowProps = {
   // from component
-  isDark: boolean
   currency: IUniversalObj
   itemData: IUniversalObj
   // from store
@@ -432,7 +431,6 @@ class Row extends Component<RowProps, RowState> {
       itemData,
       intl,
       activeFiat,
-      isDark,
       multisigStatus,
     } = this.props
 
@@ -761,7 +759,7 @@ class Row extends Component<RowProps, RowState> {
     return (
       !ethRowWithoutExternalProvider
       && <tr>
-        <td styleName={`assetsTableRow ${isDark ? 'dark' : ''}`}>
+        <td styleName={`assetsTableRow`}>
           <div styleName="assetsTableCurrency">
             <Coin
               className={styles.assetsTableIcon}
@@ -982,7 +980,6 @@ class Row extends Component<RowProps, RowState> {
           {!metamaskDisconnected && !isNotAvailableMetamaskNetwork &&
             <div onClick={this.handleOpenDropdown} styleName="assetsTableDots">
               <DropdownMenu
-                size="regular"
                 className="walletControls"
                 items={dropDownMenuItems}
               />

@@ -3,9 +3,6 @@ import cssModules from 'react-css-modules'
 import styles from './RequestButton.scss'
 import PAIR_TYPES from 'helpers/constants/PAIR_TYPES'
 import { FormattedMessage } from 'react-intl'
-import { constants } from 'helpers'
-
-const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 const RequestButton = (params) => {
   const {
@@ -19,7 +16,7 @@ const RequestButton = (params) => {
   } = params
 
   return (
-    <button styleName={`button ${disabled ? 'disabled' : ''} ${isDark ? 'dark' : ''}`} onClick={onClick}>
+    <button styleName={`button ${disabled ? 'disabled' : ''}`} onClick={onClick}>
       <div styleName="rows">
         <div styleName="row1">
           <FormattedMessage id="Reqstbttn16" defaultMessage="Buy" />

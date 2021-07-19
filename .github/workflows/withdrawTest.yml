@@ -1,15 +1,12 @@
-name: Tests
+name: Test withdraw forms
 
 on:
-  # Trigger the workflow on push or pull request,
-  # but only for the master branch
-  push:
-    branches:
-      - master
+  pull_request:
+    types: [ labeled ]
 
 jobs:
   build:
-
+    if: ${{ github.event.label.name == 'withdraw tests' }}
     runs-on: ubuntu-latest
 
     strategy:
@@ -18,13 +15,16 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
+
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
+
     - name: npm install, build and deploy 
       run: |
         npm i
+
     - name: TEST
       run: |
         npm run test:unit

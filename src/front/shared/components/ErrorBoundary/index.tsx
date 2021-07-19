@@ -2,9 +2,7 @@ import React from 'react'
 import { FormattedMessage } from 'react-intl'
 import styles from './index.scss'
 import cx from 'classnames'
-import { feedback, constants } from 'helpers'
-
-const isDark = localStorage.getItem(constants.localStorage.isDark)
+import { feedback } from 'helpers'
 
 type ComponentProps = {
   children: JSX.Element | JSX.Element[]
@@ -30,7 +28,7 @@ export default class ErrorBoundary extends React.Component<ComponentProps, Compo
   }
 
   componentDidCatch(error, errorInfo) {
-    // feedback.app.failed(`App Error: ${error.message}`)
+    feedback.app.failed(`App Error: ${error.message}`)
     console.group('%c ERROR INTERCEPTED', 'color: red; font-size: 14px')
     console.error(error)
     console.groupEnd()
@@ -50,7 +48,6 @@ export default class ErrorBoundary extends React.Component<ComponentProps, Compo
         <div
           className={cx({
             [styles.errorWrapper]: true,
-            [styles.dark]: isDark,
           })}
         >
           <h2

@@ -110,7 +110,6 @@ class WalletRow extends Component<any, any> {
           {dropDownMenuItems.length > 0 && (
             <div onClick={this.handleOpenDropdown} styleName="assetsTableDots">
               <DropdownMenu
-                size="regular"
                 className="walletControls"
                 items={dropDownMenuItems}
               />

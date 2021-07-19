@@ -12,6 +12,15 @@
 - [ ] I checked the work in the plugin
 - [ ] I checked the **PR** once again
 
+## Tests
+
+Please start auto tests as follows:
+
+- add a label <ins>swap test</ins> to start swap tests
+- add a label <ins>withdraw test</ins> to start withdraw tests
+
+You can skip these tests if you completely sure that your changes aren't related to this functional
+
 ### Original issue
 <!-- Type number -->
 #

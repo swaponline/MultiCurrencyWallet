@@ -9,13 +9,13 @@
         transform: rotate(180deg);
 
         path {
-          stroke: #0CCF14;
+          stroke: var(--color-success);
         }
       }
     }
 
     .amount {
-      color: #0CCF14;
+      color: var(--color-success);
     }
   }
 
@@ -23,12 +23,12 @@
     font-weight: bold;
 
     .amount {
-      color: #EE5B51;
+      color: var(--color-bad);
     }
 
     svg {
       path {
-        stroke: #EE5B51;
+        stroke: var(--color-bad);
       }
     }
   }
@@ -67,11 +67,11 @@
 .unconfirmed {
   text-align: center;
   height: auto;
-  background: rgba(97, 68, 229, 0.1);
+  background: var(--color-brand-background);
   font-weight: 800;
   font-size: 8px;
   line-height: 10px;
-  color: $primary;
+  color: var(--color-brand);
   width: auto;
   text-transform: uppercase;
   padding: 3px 10px;
@@ -86,19 +86,19 @@
 }
 
 .confirm.red {
-  color: #f51f1f;
+  color: var(--color-f-error);
   background: rgba(229, 68, 68, 0.1);
 }
 
 .confirm.green {
-  color: #EE5B51;
+  color: var(--color-bad);
   background: rgba(238, 91, 81, 0.1);
   padding: 3px 7px;
 }
 
 
 .unconfirmed {
-  color: $notice-color;
+  color: var(--color-notice);
   background: rgba(142, 154, 163, 0.1);
 }
 
@@ -106,7 +106,7 @@
   font-size: 12px;
   font-weight: bold;
   @include ff;
-  color: $notice-color;
+  color: var(--color-notice);
   white-space: pre-wrap;
   cursor: pointer;
   width: 75%;
@@ -134,7 +134,7 @@
 .amountUsd {
   font-weight: 600;
   font-size: 12px;
-  color: $notice-color;
+  color: var(--color-notice);
   line-height: 6px;
   position: absolute;
   right: 15px;
@@ -146,7 +146,7 @@
   display: inline-block;
   margin-left: 0.6em;
   font-size: 0.8em;
-  color: $notice-color;
+  color: var(--color-notice);
 }
 
 .historyInfo {
@@ -154,7 +154,7 @@
   margin-top: -37px;
 
   a {
-    color: #212529;
+    color: var(--color);
 
     @media all and (max-width: 480px) {
       font-size: 0.85em;
@@ -168,7 +168,7 @@
 
 
   .contact {
-    color: $notice-color;
+    color: var(--color-notice);
     word-break:break-all;
     white-space: pre-wrap;
   }
@@ -183,16 +183,16 @@
   .requests {
     margin-left: 0.4em;
     font-size: 0.9em;
-    color: $notice-color;
+    color: var(--color-notice);
   }  
 }
 
 .comment {
-  color: #000;
+  color: var(--color);
 }
 
 .btnWrapper {
-  border-top: 1px solid $pale-color;
+  border-top: 1px solid var(--color-pale);
   text-align: right;
   height: 40px;
   line-height: 48px;
@@ -200,11 +200,11 @@
   @include ff-bold;
 
   button:first-child {
-    color: $primary;
+    color: var(--color-brand);
   }
 
   button:last-child {
-    color: $indicating-color;
+    color: var(--color-indicating);
     margin-left: 10px;
   }
 }
@@ -217,12 +217,11 @@
   @include ff-bold;
   text-align: center;
 
-  >span {
+  > span {
     font-style: normal;
     font-weight: 600;
     font-size: 14px;
     line-height: 15px;
-    color: #1F2D48;
   }
 
   button {
@@ -230,38 +229,23 @@
     font-weight: 800;
     font-size: 14px;
     line-height: 15px;
-    color: $primary;
+    color: var(--color-brand);
   }
 }
 
-tr.historyRow {
+.historyRow {
   display: block;
   margin-bottom: 10px;
   width: 100%;
   min-height: 64px;
   position: relative;
-  background: $l-background-elements;
-  border: 1px solid $inactive-border-color !important;
-  box-shadow: 0px 2px 12px rgba(142, 154, 163, 0.08);
+  background: var(--color-background-elements);
+  border: 1px solid var(--color-inactive-border);
+  box-shadow: var(--box-shadow);
   border-radius: 4px;
   display: flex;
   align-items: center;
   padding: 15px;
-}
-
-tr.dark {
-  background: $d-background-elements;
-  box-shadow: $d-box-shadow;
-
-  .historyInfo {
-    a {
-      color: $d-color;
-    }
-  }
-
-  .invoiceContactWrapper {
-    color: $d-color;
-  }
 }
 
 .smallTooltip span {
@@ -273,7 +257,7 @@ tr.dark {
 }
 
 @media all and (max-width: 570px) {
-  tr.historyRow {
+  .historyRow {
     height: max-content;
     align-items: flex-start;
   }
@@ -305,9 +289,9 @@ tr.dark {
 }
 
 @media all and (max-width: 480px) {
-  tr.dark {
+  .historyRow {
     box-shadow: none;
-    background: #222528;
+    background: var(--color-background);
   }
   
   .amount {

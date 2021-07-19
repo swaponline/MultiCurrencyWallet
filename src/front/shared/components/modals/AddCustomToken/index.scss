@@ -8,11 +8,11 @@
     font-size: 20px;
     font-family: 'Roboto Mono', monospace;
     padding-left: 20px;
-    color: $l-color;
+    color: var(--color);
     -webkit-appearance: textfield;
     -moz-appearance: textfield;
     appearance: textfield;
-    border: 1px solid $indicating-color;
+    border: 1px solid var(--color-indicating);
     outline: none;
     line-height: 68px;
     overflow-x: auto;
@@ -21,12 +21,6 @@
 
   .readyTitle {
     text-align: center;
-  }
-
-  &.dark {
-    .fakeInput {
-      color: $d-color;
-    }
   }
 }
 

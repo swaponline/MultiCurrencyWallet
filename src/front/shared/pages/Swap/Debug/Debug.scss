@@ -1,13 +1,7 @@
 .debug {
   padding: 0.5em;
   border-radius: 0.3em;
-  border: 1px solid $notice-color;
-}
-
-.debug.dark {
-  .information {
-    color: $d-color;
-  }
+  border: 1px solid var(--color-notice);
 }
 
 .title {
@@ -23,5 +17,5 @@
 .information {
   display: block;
   font-size: 13px;
-  color: $l-color;
+  color: var(--color);
 }

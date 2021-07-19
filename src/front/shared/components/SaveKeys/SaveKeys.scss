@@ -20,7 +20,7 @@
 }
 
 .linked {
-  color: $color-link !important;
+  color: var(--color-link) !important;
   cursor: pointer;
   text-align: center;
 }

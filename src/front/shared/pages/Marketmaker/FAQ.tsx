@@ -8,17 +8,15 @@ import Expandable from 'components/ui/Expandable/Expandable'
 import config from 'helpers/externalConfig'
 
 @cssModules(styles, { allowMultiple: true })
-class FAQ extends React.Component<{isDark: boolean}, {}> {
+class FAQ extends React.Component {
   constructor(props) {
     super(props)
   }
 
   render() {
-    const { isDark } = this.props
-
     return (
       <div styleName='mm-faq-page'>
-        <section styleName={`${isDark ? 'dark' : '' }`}>
+        <section>
           <h2 styleName="section-title">
             <FormattedMessage
               id="MainFAQHeader"

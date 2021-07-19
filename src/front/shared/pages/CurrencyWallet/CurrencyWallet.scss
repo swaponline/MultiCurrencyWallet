@@ -16,8 +16,8 @@
 }
 
 .currencyWalletActivity {
-  box-shadow: $l-box-shadow;
-  background: $l-background-elements;
+  box-shadow: var(--box-shadow);
+  background: var(--color-background-elements);
   border-radius: 4px;
   padding: 25px;
   margin-top: 20px;
@@ -26,43 +26,13 @@
   position: relative;
 
   h3 {
-    color: #1F2D48;
+    color: var(--color-need-to-rename);
     font-size: 24px;
     line-height: 33px;
     font-weight: bold;
     margin-bottom: 10px;
   }
 }
-
-.dark {
-  .currencyWalletActivity {
-    box-shadow: $d-box-shadow;
-    background: $d-background-elements;
-  
-    @media screen and (max-width: 480px) {
-      box-shadow: none;
-      background: #222528;
-    }
-  }
-
-  h3 {
-    color: white;
-  }
-}
-
-.darkActivity {
-  box-shadow: $d-box-shadow;
-  background: $d-background-elements;
-
-  @media screen and (max-width: 480px) {
-    background: #222528;
-  }
-
-  h3 {
-    color: white;
-  }
-}
-
 
 .title {
   padding: 1px 0 1px;
@@ -102,7 +72,7 @@
 }
 
 .btc {
-  color: #000;
+  color: var(--color);
 }
 
 .subtitle {
@@ -117,7 +87,7 @@
   @include ff-bold;
 
   p {
-    color: #1F2D48;
+    color: var(--color-need-to-rename);
     display: inline;
     font-size: 16px;
   }
@@ -157,7 +127,7 @@
   font-size: 40px;
   display: inline-block;
   line-height: 120%;
-  color: #1F2D48;
+  color: var(--color-need-to-rename);
   margin-bottom: 30px;
   padding: 0px;
   margin-top: -10px;
@@ -176,8 +146,8 @@
 
 .widgetNavItem.active {
   a {
-    border-bottom: 3px solid $primary;
-    color: #1F2D48 !important;
+    border-bottom: 3px solid var(--color-brand);
+    color: var(--color-need-to-rename) !important;
   }
 }
 
@@ -246,5 +216,12 @@
     >div {
       display: block;
     }
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .currencyWalletActivity {
+    box-shadow: none;
+    background: var(--color-page-background);
   }
 }

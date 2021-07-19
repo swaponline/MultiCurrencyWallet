@@ -4,7 +4,6 @@ import { FormattedMessage, injectIntl } from 'react-intl'
 import CSSModules from 'react-css-modules'
 import styles from './SelectGroup.scss'
 import partialStyles from '../Exchange.scss'
-import { constants } from 'helpers'
 
 import Input from 'components/forms/Input/Input'
 import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
@@ -14,8 +13,6 @@ import { BigNumber } from 'bignumber.js'
 
 import { inputReplaceCommaWithDot } from 'helpers/domUtils'
 import getCoinInfo from 'common/coins/getCoinInfo'
-
-const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 // TODO to split data and view this component
 const SelectGroup = (props) => {
@@ -57,7 +54,7 @@ const SelectGroup = (props) => {
           </span>
         )}
       </FieldLabel>
-      <div styleName={`groupField ${isDark ? 'dark' : ''}`} className={className}>
+      <div styleName="groupField" className={className}>
         <Input
           styleName="inputRoot"
           inputContainerClassName="inputContainer"
@@ -102,9 +99,7 @@ const SelectGroup = (props) => {
           !isToken && (
             <span
               styleName={
-                new BigNumber(haveAmount).isLessThanOrEqualTo(balance) &&
-                new BigNumber(balance).isLessThan(new BigNumber(haveAmount).plus(dynamicFee)) &&
-                new BigNumber(haveAmount).isGreaterThan(0)
+                new BigNumber(balance).isLessThan(new BigNumber(haveAmount).plus(dynamicFee))
                   ? 'red'
                   : 'balance'
               }

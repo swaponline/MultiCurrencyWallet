@@ -5,43 +5,8 @@
   border-radius: 4px;
   padding: 35px 25px 40px;
   margin-top: 5%;
-  box-shadow: $l-box-shadow;
-  background: $l-background-elements;
-
-  &.--dark {
-    box-shadow: $d-box-shadow;
-    background: $d-background-elements;
-
-    @media screen and (max-width: 480px) {
-      background: #222528;
-    }
-
-    .mobileFormBody,
-    .formBody {
-      h2 {
-        color: white;
-      }
-    }
-
-    .subHeader {
-      h5 {
-        color: #cfd1d3;
-      }
-    }
-
-    .card {
-      background: #242425;
-
-      b {
-        color: #cfd1d3;
-      }
-    }
-
-    .continue:disabled {
-      background-color: #3c3c3c;
-      color: #cfd1d3;
-    }
-  }
+  box-shadow: var(--box-shadow);
+  background: var(--color-background-elements);
 }
 
 .closeButton {
@@ -88,9 +53,9 @@
   border-radius: 50%;
   line-height: 2.5;
   text-align: center;
-  background-color: #f0eefd;
-  color: $primary;
-  border: 1px solid #f0eefd;
+  background-color: var(--color-inactive-border);
+  color: var(--color-brand);
+  border: 1px solid var(--color-inactive-border);
   font-weight: bold;
   margin-right: 10px;
 }
@@ -105,17 +70,13 @@
   display: flex;
 }
 
-.coinColor {
-  background: black;
-}
-
 .purple {
-  background-color: $primary;
+  background-color: var(--color-brand);
   color: #f0eefd;
 }
 
 .green {
-  background-color: #0ccf14;
+  background-color: var(--color-success);
 }
 
 .assetsTableIcon {
@@ -132,15 +93,15 @@
   font-weight: 800;
   font-size: 15px;
   line-height: 150%;
-  background: $primary;
+  background: var(--color-brand);
   color: white;
   height: 45px;
   width: 100%;
 }
 
 .continue:disabled {
-  background-color: #f0eefd;
-  color: $primary;
+  background-color: var(--color-inactive);
+  color: var(--color-brand);
 }
 
 .subHeader {
@@ -159,7 +120,7 @@
 .subHeader p {
   font-size: 13px;
   margin-bottom: 7px;
-  color: #8e9aa3;
+  color: var(--color-notice);
   @include ff-bold;
   line-height: 140%;
 }
@@ -177,7 +138,7 @@
 .alertTooltipWrapper {
   font-size: 0.8em;
   padding: 0.3em 0.5em;
-  background: rgba(#fd6b65, 0.6);
+  background: rgba(var(--color-bad), 0.6);
   border-radius: 2px;
 }
 
@@ -188,7 +149,7 @@
   text-align: right;
 
   button {
-    color: $primary;
+    color: var(--color-brand);
     @include ff-bold;
     font-size: 14px;
     text-decoration: underline;
@@ -197,10 +158,11 @@
 }
 
 .card {
-  background: #ffffff;
-  border: 1px solid $inactive-border-color;
+  cursor: pointer;
+  background: var(--color-background-elements);
+  border: 1px solid var(--color-border);
   box-sizing: border-box;
-  box-shadow: 0px 2px 12px rgba(142, 154, 163, 0.08);
+  box-shadow: 0px 2px 12px var(--color-pale);
   border-radius: 4px;
   padding: 10px;
   list-style: none;
@@ -217,18 +179,17 @@
     top: 10px;
     width: 60px;
     font-size: 10px;
-    color: #9b58b6;
+    color: var(--color-brand);
   }
 
   b {
     font-weight: bolder;
     font-size: 13px;
-    color: #1f2d48;
   }
 
   li {
     font-weight: 100;
-    color: #8e9aa3;
+    opacity: 0.8;
     font-size: 10px;
     @include ff-bold;
     line-height: 18px;
@@ -260,7 +221,7 @@
 }
 
 .purpleBorder {
-  border-color: $primary !important;
+  border-color: var(--color-brand) !important;
 }
 
 .cardActivated {
@@ -272,12 +233,12 @@
   }
 
   em {
-    color: #48ca2f !important;
+    color: var(--color-success) !important;
   }
 }
 
 .cardActivated.purpleBorder {
-  border-color: $primary !important;
+  border-color: var(--color-brand) !important;
 
   div,
   img {
@@ -285,7 +246,7 @@
   }
 
   em {
-    color: #9b58b6 !important;
+    color: var(--color-brand) !important;
   }
 }
 
@@ -368,7 +329,7 @@
     font-size: 11px;
     line-height: 14px;
     font-weight: 800;
-    color: #8e9aa3;
+    color: var(--color-notice);
   }
 
   .inLine {
@@ -395,7 +356,7 @@
     align-items: flex-start;
 
     button {
-      color: $primary;
+      color: var(--color-brand);
       @include ff-bold;
       font-size: 14px;
       text-decoration: underline;
@@ -426,12 +387,10 @@
     b {
       font-weight: bolder;
       font-size: 13px;
-      color: #1f2d48;
     }
 
     li {
       font-weight: 100;
-      color: #8e9aa3;
       font-size: 11px;
       @include ff-bold;
       line-height: 18px;
@@ -445,11 +404,11 @@
   }
 
   .securityIcon {
-    background: #f0eefd;
+    background: var(--color-inactive-border);
   }
 
   .error {
-    color: red;
+    color: var(--color-f-error);
     position: relative;
     bottom: 20px;
     font-size: 12px;

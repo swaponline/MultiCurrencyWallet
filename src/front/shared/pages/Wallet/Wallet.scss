@@ -22,29 +22,14 @@
 }
 
 .yourAssets {
-  box-shadow: $l-box-shadow;
-  background: $l-background-elements;
+  box-shadow: var(--box-shadow);
+  background: var(--color-background-elements);
   border-radius: 4px;
   padding: 25px;
   margin-top: 20px;
 }
 
-.yourAssets.dark {
-  box-shadow: $d-box-shadow;
-  background: $d-background-elements;
-
-  @media screen and (max-width: 480px) {
-    box-shadow: none;
-    background: #222528;
-  }
-
-  .yourAssetsHeading {
-    color: #fbfbfb;
-  }
-}
-
 .yourAssetsHeading {
-  color: #1f2d48;
   font-size: 24px;
   line-height: 33px;
   font-weight: bold;
@@ -52,15 +37,15 @@
 }
 
 .yourAssetsDescr {
-  color: #8e9aa3;
+  color: var(--color-notice);
   font-size: 14px;
   @include ff-regular;
   line-height: 150%;
 }
 
 .yourBalance {
-  box-shadow: $l-box-shadow;
-  background: $l-background-elements;
+  box-shadow: var(--box-shadow);
+  background: var(--color-background-elements);
   border-radius: 4px;
   height: fit-content;
   @include ff-regular;
@@ -69,51 +54,11 @@
     text-align: center;
     font-weight: bold;
     font-size: 12pt;
-    color: #d20404;
+    color: var(--color-f-error);
     cursor: pointer;
     text-decoration: underline;
     padding-left: 10px;
     padding-right: 10px;
-  }
-}
-
-.yourBalance.dark {
-  box-shadow: $d-box-shadow;
-  background: $d-background-elements;
-
-  @media screen and (max-width: 480px) {
-    box-shadow: none;
-    background: #222528;
-  }
-
-  .yourBalanceTop {
-    .yourBalanceValue {
-      p {
-        color: #fbfbfb;
-      }
-    }
-  }
-
-  .yourBalanceCurrencies {
-    button {
-      color: #585e63;
-    }
-
-    button.active {
-      color: #fbfbfb;
-      filter: unset;
-    }
-  }
-
-  .yourBalanceBottomWrapper {
-    &:before {
-      background: none;
-    }
-  }
-
-  .yourBalance,
-  .yourBalanceCurrencies {
-    background: unset;
   }
 }
 
@@ -123,7 +68,7 @@
 }
 
 .yourBalanceDescr {
-  color: #8e9aa3;
+  color: var(--color-notice);
   font-size: 13px;
   font-weight: bold;
   position: absolute;
@@ -153,7 +98,6 @@
   p {
     font-size: 32px;
     line-height: 44px;
-    color: #1f2d48;
     font-weight: bold;
     margin: 0;
   }
@@ -172,7 +116,7 @@
     bottom: 0;
     opacity: 0.1;
     content: '';
-    background: linear-gradient(180deg, $primary 0%, rgba(97, 68, 229, 0) 100%);
+    background: linear-gradient(180deg, var(--color-brand) 0%, rgba(97, 68, 229, 0) 100%);
   }
 }
 
@@ -194,17 +138,17 @@
 }
 
 .yourBalanceCurrencies {
-  color: rgba(0, 0, 0, 0.1);
+  color: var(--color-indicating);
   position: absolute;
   left: 15px;
   top: 25px;
   justify-content: space-between;
   display: flex;
 
-  span {
+  .separator {
     width: 1px;
     height: 16px;
-    background: rgba(0, 0, 0, 0.1);
+    background: var(--color-border);
     display: inline-block;
     margin-top: 1px;
   }
@@ -216,12 +160,10 @@
     text-transform: uppercase;
     margin: 0 10px;
     font-size: 13px;
-    color: rgba(142, 154, 163, 0.5);
   }
 
   button.active {
-    color: #1f2d48;
-    filter: brightness(0);
+    color: var(--color);
   }
 }
 
@@ -307,11 +249,6 @@
     }
   }
 
-  .yourBalance,
-  .yourBalanceCurrencies {
-    background: rgb(253, 253, 253);
-  }
-
   .yourAssetsHeading,
   .yourAssetsDescr {
     padding: 0 25px;
@@ -323,6 +260,14 @@
 
   .yourBalance {
     display: block;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .yourAssets,
+  .yourBalance {
+    box-shadow: none;
+    background-color: var(--color-page-background);
   }
 }
 

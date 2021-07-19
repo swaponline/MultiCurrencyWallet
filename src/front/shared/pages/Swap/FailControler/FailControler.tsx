@@ -6,17 +6,13 @@ import cssModules from 'react-css-modules'
 import CopyToClipboard from 'react-copy-to-clipboard'
 import { FormattedMessage } from 'react-intl'
 
-import { constants } from 'helpers'
-
-const isDark = localStorage.getItem(constants.localStorage.isDark)
-
 @cssModules(styles, { allowMultiple: true })
 export default class FailControler extends Component<any, any> {
   render() {
     const { ethAddress, message } = this.props
 
     return (
-      <div styleName={`FailControler ${isDark ? 'dark' : ''}`} >
+      <div styleName="FailControler" >
         <CopyToClipboard text={ethAddress}>
           <div>
             <div styleName="warning">

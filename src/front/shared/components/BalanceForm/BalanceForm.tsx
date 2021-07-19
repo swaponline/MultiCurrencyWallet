@@ -1,21 +1,17 @@
 import * as React from 'react'
 import { Fragment, useState, useEffect } from 'react'
 import CSSModules from 'react-css-modules'
-import { connect } from 'redaction'
 import actions from 'redux/actions'
 import cx from 'classnames'
 
 import styles from 'pages/Wallet/Wallet.scss'
 import Button from 'components/controls/Button/Button'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
-import { links, constants } from 'helpers'
 import { BigNumber } from 'bignumber.js'
 import config from 'app-config'
 import { FormattedMessage } from 'react-intl'
 import dollar from './images/dollar.svg'
 import btc from './images/btcIcon.svg'
-
-const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 function BalanceForm({
   activeFiat,
@@ -25,7 +21,7 @@ function BalanceForm({
   handleReceive,
   handleWithdraw,
   currency,
-  handleInvoice,
+  handleInvoice = () => {},
   isFetching = false,
   showButtons = true,
   type,
@@ -33,7 +29,7 @@ function BalanceForm({
   multisigPendingCount = 10,
 }) {
   const [selectedCurrency, setActiveCurrency] = useState(activeCurrency)
-
+  const isDark = document.body.dataset.scheme === 'dark'
   const isWidgetBuild = config && config.isWidget
 
   useEffect(() => {
@@ -70,7 +66,11 @@ function BalanceForm({
   }
 
   return (
-    <div styleName={`${isWidgetBuild && !config.isFullBuild ? 'yourBalance widgetBuild' : 'yourBalance'} ${isDark ? 'dark' : ''}`}>
+    <div 
+      styleName={
+        `${isWidgetBuild && !config.isFullBuild ? 'yourBalance widgetBuild' : 'yourBalance'}`
+      }
+    >
       <div styleName="yourBalanceTop" className="data-tut-widget-balance">
         <p styleName="yourBalanceDescr">
           {singleWallet
@@ -102,17 +102,14 @@ function BalanceForm({
         </div>
         <div styleName="yourBalanceCurrencies">
           <button
-            //@ts-ignore: strictNullChecks
-            styleName={selectedCurrency === active && 'active'}
+            styleName={selectedCurrency === active ? 'active' : undefined}
             onClick={() => handleClickCurrency(active)}
           >
-            {/* // eslint-disable-next-line reactintl/contains-hardcoded-copy */}
             {active}
           </button>
-          <span />
+          <span styleName="separator" />
           <button
-            //@ts-ignore: strictNullChecks
-            styleName={selectedCurrency === currency && 'active'}
+            styleName={selectedCurrency === currency ? 'active' : undefined}
             onClick={() => handleClickCurrency(currency)}
           >
             {currency}
@@ -148,7 +145,7 @@ function BalanceForm({
               </Button>
             </div>
           ) : (
-            <Button blue disabled={!currencyBalance} styleName="button__invoice" onClick={() => handleInvoice()}>
+            <Button blue disabled={!currencyBalance} styleName="button__invoice" onClick={handleInvoice}>
               <FormattedMessage id="RequestPayment" defaultMessage="Запросить" />
             </Button>
           )}
@@ -158,7 +155,4 @@ function BalanceForm({
   )
 }
 
-export default connect(({ modals, ui: { dashboardModalsAllowed } }) => ({
-  modals,
-  dashboardView: dashboardModalsAllowed,
-}))(CSSModules(BalanceForm, styles, { allowMultiple: true }))
+export default CSSModules(BalanceForm, styles, { allowMultiple: true })

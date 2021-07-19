@@ -15,8 +15,6 @@ import icons from 'components/ui/CurrencyIcon/images'
 import config from 'app-config'
 import actions from 'shared/redux/actions'
 
-const isDark = localStorage.getItem(constants.localStorage.isDark)
-
 @connect(({
   ui: { dashboardModalsAllowed },
 }) => ({
@@ -96,7 +94,6 @@ class CurrencyAction extends React.Component<any, any> {
     return (
       <div styleName={cx({
         "modal-overlay": true,
-        "dark": isDark,
       })}>
         <div styleName={cx({
           "modal": true,

@@ -8,7 +8,7 @@
   display: inline-block;
   margin-left: 0.6em;
   font-size: 0.8em;
-  color: $notice-color;
+  color: var(--color-notice);
 }
 
 .amount {
@@ -19,7 +19,7 @@
 
   .usd {
     min-height: 13px; // top element does not go down if no currency
-    color: $notice-color;
+    color: var(--color-notice);
   }
 
   @media screen and (max-width: 480px) {
@@ -43,8 +43,8 @@
     width: 9px;
     height: 9px;
     display: block;
-    border-top: 2px solid #828795;
-    border-right: 2px solid #828795;
+    border-top: 2px solid var(--color-notice);
+    border-right: 2px solid var(--color-notice);
     -webkit-transform: rotate(135deg);
     transform: rotate(135deg);
   }
@@ -58,26 +58,13 @@
 }
 
 .customSelectValue {
-  border: 1px solid #ccc;
+  border: 1px solid var(--color-border);
   height: 68px;
-  background: $l-background-elements;
+  background: var(--color-background-elements);
   display: flex;
   align-items: center;
   cursor: pointer;
 
-  &.dark {
-    border-color:#222323;
-    background: #2b2b2b;
-
-    .amount {
-      .currency,
-      .usd {
-        color: $d-color;
-        background: #2b2b2b;
-      }
-    }
-  }
-  
   div {
     display: flex;
     flex-direction: column;
@@ -85,9 +72,10 @@
 
     a {
       font-size: 13px;
-      color: $primary;
+      color: var(--color-brand);
+
       &:hover {
-        color: $primary;
+        color: var(--color-brand);
       }
 
       @media screen and (max-width: 480px) {
@@ -95,14 +83,14 @@
       }
     }
     .address {
-      color: $notice-color;
+      color: var(--color-notice);
       font-size: 12px;
       @include media-mobile {
         display: none;
       }
     }
     .mobileAddress {
-      color: $notice-color;
+      color: var(--color-notice);
       font-size: 12px;
       > div {
         margin: 0;
@@ -117,60 +105,25 @@
   z-index: 1111111;
   width: 100%;
   max-height: 300px;
-  background: #fff;
+  background: var(--color-background-elements);
   overflow-y: auto;
   overflow-x: hidden;
   padding: 5px 0px;
-  box-shadow: $l-box-shadow;
+  box-shadow: var(--box-shadow);
 
   .amount {
     right: 10px;
   }
-
-  &.darkList {
-    box-shadow: $d-box-shadow;
-    background:#2b2b2b;
-
-    .customSelectValue {
-      border-color:#222323;
-      background: #2b2b2b;
-      .amount {
-        .currency {
-          color: white;
-          background: none;
-        }
-
-        .usd {
-          background: none;
-        }
-      }
-    }
-
-    .customSelectListItem {
-      &:hover {
-        background: #424242;
-      }
-    }
-
-    .customSelectListItem.disabled {
-      background: rgba(36, 36, 37, 0.8);
-
-      &:before {
-        background: rgba(36, 36, 37, 0.8);
-      }
-    }
-  }
 }
-
 
 .customSelectListItem {
   margin-top: -1px;
   padding-left: 10px;
-  background: rgba(255, 255, 255, 0.8);
+  background: var(--color-background-elements);
   transition: 0.1s;
 
   &:hover {
-    background: #f3f3f3;
+    background-color: var(--color-pale);
   }
 
   &.disabled {
@@ -179,8 +132,10 @@
 
     &:before {
       position: absolute;
+      left: 0;
       content: '';
-      background: rgba(255, 255, 255, 0.8);
+      background: var(--color-background-elements);
+      opacity: 0.7;
       width: 100%;
       height: 100%;
       z-index: 1111;

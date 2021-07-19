@@ -3,7 +3,6 @@ import { connect } from 'redaction'
 
 import actions from 'redux/actions'
 import cx from 'classnames'
-import { constants } from 'helpers'
 import cssModules from 'react-css-modules'
 import styles from './Modal.scss'
 
@@ -11,8 +10,6 @@ import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
 import Overlay from 'components/layout/Overlay/Overlay'
 import Center from 'components/layout/Center/Center'
-
-const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 type ModalProps = {
   title?: JSX.Element | string
@@ -146,7 +143,6 @@ export default class Modal extends Component<ModalProps, null> {
           styleName={cx({
             modal: true,
             modal_dashboardView: dashboardView,
-            dark: isDark
           })} 
           className={className}
         >

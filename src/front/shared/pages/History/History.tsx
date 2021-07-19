@@ -33,8 +33,6 @@ const filterHistory = (items, filter) => {
   return items
 }
 
-const isDark = localStorage.getItem(constants.localStorage.isDark)
-
 @connect(({
   user: { activeFiat },
   history: {
@@ -123,7 +121,6 @@ class History extends Component<any, any> {
     return (
       <Row
         activeFiat={activeFiat}
-        isDark={isDark}
         key={rowIndex}
         hiddenList={commentsList}
         {...row}
@@ -170,7 +167,7 @@ class History extends Component<any, any> {
 
     return (
       <Fragment>
-      <section styleName={`history ${isDark ? 'dark' : ''}`}>
+      <section styleName="history">
         <h3 styleName="historyHeading">
           <FormattedMessage id="History_Activity_Title" defaultMessage="Activity" />
         </h3>

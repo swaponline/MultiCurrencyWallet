@@ -5,7 +5,7 @@
 }
 
 .delete {
-  color: $color-f-error;
+  color: var(--color-f-error);
   cursor: pointer;
 }
 
@@ -23,11 +23,11 @@
 }
 
 .buy {
-  color: $color-good;
+  color: var(--color-good);
 }
 
 .sell {
-  color: $color-f-error;
+  color: var(--color-f-error);
 }
 
 .buttons {
@@ -49,19 +49,19 @@
 }
 
 .statusFinished {
-  color: $color-success;
+  color: var(--color-success);
 }
 
 .statusRefunded {
-  color: $color-good;
+  color: var(--color-good);
 }
 
 .statusStopped {
-  color: $color-f-error;
+  color: var(--color-f-error);
 
   .refundStatus {
     max-width: 10em;
     font-size: 0.88em;
-    color: $indicating-color;
+    color: var(--color-indicating);
   }
 }

@@ -29,9 +29,6 @@ import links from 'helpers/links'
 import QrReader from 'components/QrReader'
 import { getFullOrigin } from 'helpers/links'
 
-
-const isDark = localStorage.getItem(constants.localStorage.isDark)
-
 @connect(
   ({
     user: {
@@ -489,7 +486,7 @@ class WithdrawModalMultisigUser extends React.Component<any, any> {
                 </div>
               )}
             </div>
-            <div styleName={`lowLevel ${isDark ? 'dark' : ''}`} style={{ marginBottom: '50px' }}>
+            <div styleName="lowLevel" style={{ marginBottom: '50px' }}>
               <p styleName="balance">
                 {balance} {currency.toUpperCase()}
               </p>
@@ -570,7 +567,7 @@ class WithdrawModalMultisigUser extends React.Component<any, any> {
               <Fragment>
                 <hr />
                 <div
-                  styleName={`lowLevel ${isDark ? 'dark' : ''}`}
+                  styleName="lowLevel"
                   style={{ marginBottom: '50px' }}
                 >
                   <div styleName="groupField">

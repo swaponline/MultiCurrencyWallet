@@ -125,8 +125,6 @@ type ExchangeState = {
   toAddress: Address
 }
 
-const isDark = localStorage.getItem(constants.localStorage.isDark)
-
 const isWidgetBuild = config && config.isWidget
 const isChromeExtention = config && config.dir === 'chrome-extension/application'
 const bannedPeers = {} // rejected swap peers
@@ -1881,7 +1879,6 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
 
               <AddressSelect
                 label={<FormattedMessage id="Exchange_FromAddress" defaultMessage="From address" />}
-                isDark={isDark}
                 currency={haveCurrency}
                 balance={this.getBalance(sellCoin)}
                 selectedType={haveType}
@@ -1913,7 +1910,6 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
 
               <AddressSelect
                 label={<FormattedMessage id="Exchange_ToAddress" defaultMessage="To address" />}
-                isDark={isDark}
                 role={AddressRole.Receive}
                 currency={getCurrency}
                 balance={this.getBalance(buyCoin)}
@@ -2035,7 +2031,7 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
           </div>
 
           <div styleName="conditions">
-            <div styleName={`price ${isDark ? '--dark' : ''}`}>
+            <div styleName="price">
               <FormattedMessage id="Exchange_BestPrice" defaultMessage="Best price:" />{' '}
               {!isPrice && !isErrorNoOrders && <InlineLoader />}
               {isPrice &&
@@ -2213,7 +2209,7 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
     return (
       <div styleName="exchangeWrap">
         <div
-          styleName={`promoContainer ${isDark ? '--dark' : ''}`}
+          styleName="promoContainer"
           //@ts-ignore: strictNullChecks
           ref={(ref) => (this.promoContainer = ref)}
         >

@@ -1,12 +1,9 @@
 import React from 'react'
-import { constants } from 'helpers'
 import CSSModules from 'react-css-modules'
 import styles from './Coin.scss'
 import web3Icons from 'images'
 import CurrencyIcon, { currencyIcons } from 'components/ui/CurrencyIcon/CurrencyIcon'
 import config from 'app-config'
-
-const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 const defaultCurrencyColors = {
   'btc': 'orange',
@@ -89,11 +86,7 @@ const Coin = (props: CoinProps) => {
 
   return (
     <div 
-      styleName={`
-        coin
-        ${isDark ? 'dark' : ''}
-        ${iconSource ? 'noColors' : ''}
-      `}
+      styleName={`coin ${iconSource ? 'noColors' : ''}`}
       className={className}
       style={style}
     >

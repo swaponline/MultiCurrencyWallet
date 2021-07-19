@@ -11,7 +11,7 @@
 .metamask_attention,
 .attention {
   padding: 0.9rem 0;
-  color: $color-f-error;
+  color: var(--color-f-error);
   font-size: 1em;
 }
 
@@ -65,36 +65,17 @@
 
 .header {
   height: 88px;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid var(--color-border);
 }
 
 .saveSecretKey {
   display: block;
-  color: #d66f6f;
+  color: var(--color-bad);
   em {
     display: block;
     font-size: 0.8rem;
     font-style: normal;
     word-wrap: break-word;
-  }
-}
-
-.link {
-  color: #fff;
-  background: #e91db4;
-  height: 40px;
-  line-height: 40px;
-  padding: 0 20px;
-  display: block;
-  width: max-content;
-  text-transform: uppercase;
-  border-radius: 20px;
-  margin: auto;
-  margin-top: 20px;
-  font-size: 16px;
-  &:hover {
-    background-color: #ff1fc5;
-    color: #fff;
   }
 }
 
@@ -134,13 +115,13 @@
 
 .tryAgain {
   font-size: 12px;
-  color: #d66f6f;
+  color: var(--color-bad);
   margin-top: 10px;
   font-weight: 600;
 }
 
 .timerRefund {
-  color: #000;
+  color: var(--color);
   margin-bottom: 1.25rem;
 
   span {
@@ -161,11 +142,11 @@
 }
 
 .dontLeave {
-  color: #d66f6f;
+  color: var(--color-bad);
 
   span {
     span {
-      color: #000;
+      color: var(--color);
     }
   }
 }
@@ -201,18 +182,15 @@
       font-size: 13px;
     }
   }
-  .link {
-    font-size: 13px;
-  }
   .stepContainer {
     width: 100%;
     border: none;
   }
   .overlay {
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid var(--color-border);
     padding-bottom: 20px;
     margin-bottom: 0px;
-    border-top: 1px solid #eee;
+    border-top: 1px solid var(--color-border);
     padding-top: 20px;
     width: 100%;
   }

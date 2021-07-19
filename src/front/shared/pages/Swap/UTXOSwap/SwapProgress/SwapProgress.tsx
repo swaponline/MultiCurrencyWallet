@@ -15,8 +15,6 @@ import { constants, links, ethToken } from 'helpers'
 import { localisedUrl } from 'helpers/locale'
 import metamask from 'helpers/metamask'
 
-const isDark = localStorage.getItem(constants.localStorage.isDark)
-
 type ComponentProps = {
   flow: IUniversalObj
   swap: IUniversalObj

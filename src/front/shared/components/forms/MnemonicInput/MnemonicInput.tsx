@@ -1,6 +1,4 @@
 import React, { Component, RefObject } from 'react'
-import { constants } from 'helpers'
-
 import cssModules from 'react-css-modules'
 import styles from './MnemonicInput.css'
 
@@ -22,8 +20,6 @@ const langLabels = defineMessages({
     defaultMessage: `Нажмите, чтобы удалить слово`,
   },
 })
-
-const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 type MnemonicInputProps = {
   onChange: (string) => void
@@ -173,7 +169,7 @@ class MnemonicInput extends Component<MnemonicInputProps, MnemonicInputState> {
     } = this
 
     return (
-      <div translate="no" className={`notranslate mnemonicInput ${(isDark) ? '--is-dark' : ''} ${(isMobile) ? '--is-mobile' : ''} ${(fullWidth) ? '--full-width' : ''}`}>
+      <div translate="no" className={`notranslate mnemonicInput ${(isMobile) ? '--is-mobile' : ''} ${(fullWidth) ? '--full-width' : ''}`}>
         <ReactTags
           ref={reactTags}
           tags={tags}

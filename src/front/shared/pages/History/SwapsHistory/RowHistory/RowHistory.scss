@@ -1,19 +1,19 @@
 
 .statusFinished {
-  color: $color-good;
+  color: var(--color-good);
 }
 
 .statusRefunded {
-  color: $color-good;
+  color: var(--color-good);
 }
 
 .statusStopped {
   text-align: right;
-  color: $color-f-error;
+  color: var(--color-f-error);
 
   .refundStatus {
     max-width: 10em;
     font-size: 0.88em;
-    color: $indicating-color;
+    color: var(--color-indicating);
   }
 }

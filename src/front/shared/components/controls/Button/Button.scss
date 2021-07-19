@@ -1,17 +1,17 @@
 .button {
+  @include inline-block;
+  @include ff-bold;
+  @include no-user-select;
   height: 48px;
   min-height: 48px;
   padding: 0 16px;
-  @include inline-block;
   cursor: pointer;
   line-height: 40px;
   text-align: center;
   font-size: 18px;
   border: none;
   border-radius: 2px;
-  @include ff-bold;
-  @include no-user-select;
-  transition: background-color 0.23s ease, color 0.23s ease;
+  transition: background 0.23s ease, color 0.23s ease;
 
   .pending {
     position: relative;
@@ -58,32 +58,38 @@
 }
 
 .brand {
-  background-color: $color-brand;
-  color: $d-color;
+  background-color: var(--color-brand);
+  color: #fff;
 
   &:hover {
-    background-color: lighten($color-brand, 5%);
+    background-color: var(--color-brand-hover);
   }
 }
 
 .blue {
-  background-color: $primary;
-  color: $d-color;
+  background-color: var(--color-brand);
+  color: #fff;
   font-size: 15px;
 }
 
+.small {
+  width: 100%;
+  min-height: 39px;
+  height: 39px;
+  font-size: 0.9em;
+}
+
 .empty {
-  border: 1px solid $color-brand;
+  border: 1px solid var(--color-brand);
   background-color: transparent;
-  color: $color-brand;
+  color: var(--color-brand);
 }
 
 .link {
-  color: $color-link;
+  color: var(--color-link);
   text-decoration: underline;
 }
 
-// .small selector after .blue so that the font size is applied
 .small {
   width: 100%;
   min-height: 39px;
@@ -92,44 +98,18 @@
 }
 
 .transparent {
-  background: rgba(255, 255, 255, 0.1);
   font-size: 15px;
-  color: #fff;
-}
-
-.white {
-  background-color: #fff;
-  color: inherit;
-  font-size: 15px;
-}
-
-.darkTheme-white {
-  background-color: #cf3fff;
-  color: white;
+  font-weight: bold;
+  background-color: var(--color-brand-background);
+  color: var(--color-brand);
 }
 
 .gray {
-  background-color: #f2f2f2;
-  color: #000;
+  background-color: var(--color-border);
 
   &:hover {
-    background-color: darken(#f2f2f2, 10%);
+    opacity: 0.8;
   }
-}
-
-.darkTheme-gray {
-  background-color: $color-border;
-  color: $d-color;
-
-  &:hover {
-    color: black
-  }
-}
-
-.transparent.blue {
-  background: rgba(97, 68, 229, 0.1);
-  font-weight: bold;
-  color: $primary;
 }
 
 .disabled {
