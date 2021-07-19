@@ -67,6 +67,12 @@ class Erc20LikeAction {
 
   getCurrentWeb3 = () => metamask.getWeb3() || this.Web3
 
+  getTokenContract = (contractAddr) => {
+    const web3 = this.getCurrentWeb3()
+
+    return new web3.eth.Contract(TokenAbi, contractAddr)
+  }
+
   addToken = (params) => {
     const { standard, contractAddr, symbol, decimals, baseCurrency } = params
     const customTokens = this.getCustomTokensConfig()

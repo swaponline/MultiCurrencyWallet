@@ -27,9 +27,9 @@ function ExchangeForm(props) {
 
   return (
     <form styleName="exchangeForm" action="">
-      <div styleName="inputWrapper">
+      {/* <div styleName="inputWrapper">
         <FieldLabel>
-          <FormattedMessage id="fiatAmount" defaultMessage="Fiat amount" />{' '}
+          <FormattedMessage id="spend" defaultMessage="Spend" />{' '}
           <Tooltip id="fiatAmountTooltip">
             <FormattedMessage id="fiatAmountNotice" defaultMessage="Some useful notice for user" />
           </Tooltip>
@@ -38,20 +38,31 @@ function ExchangeForm(props) {
           pattern="0-9\."
           onKeyDown={inputReplaceCommaWithDot}
           valueLink={stateReference.fiatAmount}
+          withMargin
+        />
+      </div> */}
+
+      <div styleName="inputWrapper">
+        <FieldLabel>
+          <FormattedMessage id="spend" defaultMessage="Spend" />{' '}
+          <Tooltip id="fiatAmountTooltip">
+            <FormattedMessage id="fiatAmountNotice" defaultMessage="Some useful notice for user" />
+          </Tooltip>
+        </FieldLabel>
+        <Input
+          pattern="0-9\."
+          onKeyDown={inputReplaceCommaWithDot}
+          valueLink={stateReference.currencyAmount}
+          placeholder="ETH"
+          withMargin
         />
       </div>
 
       <div styleName="inputWrapper">
         <FieldLabel>
-          <span>
-            <FormattedMessage id="get" defaultMessage="Get" /> {token}
-          </span>
+          <FormattedMessage id="receive" defaultMessage="Receive" /> {token}
         </FieldLabel>
-        <Input
-          valueLink={stateReference.tokenAmount}
-          disabled
-          // withMargin
-        />
+        <Input valueLink={stateReference.tokenAmount} disabled withMargin />
         <CurrencySelect
           selectedItemRender={(item) => `${item.title} (${item.blockchain})`}
           className={dropDownStyles.simpleDropdown}

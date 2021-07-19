@@ -1,9 +1,11 @@
 import { PureComponent } from 'react'
-import CSSModules from 'react-css-modules'
-import styles from './index.scss'
 import { connect } from 'redaction'
 import { BigNumber } from 'bignumber.js'
+import CSSModules from 'react-css-modules'
+import styles from './index.scss'
 import { Token } from 'common/types'
+import externalConfig from 'helpers/externalConfig'
+import { feedback, apiLooper } from 'helpers'
 import Link from 'local_modules/sw-valuelink'
 import ExchangeForm from './ExchangeForm'
 
@@ -27,6 +29,7 @@ type ComponentState = {
   fiatAmount: number
   currencyAmount: number
   tokenAmount: number
+  error: IError | null
 }
 
 class Bridge extends PureComponent<unknown, ComponentState> {
@@ -45,6 +48,67 @@ class Bridge extends PureComponent<unknown, ComponentState> {
       currencyAmount: 0,
       token: tokens[0].value,
       tokenAmount: 0,
+      error: null,
+    }
+  }
+
+  componentDidMount() {
+    // ? notification if it's not available ?
+    // this.checkAvailabilityOfService()
+
+    // this.swap()
+  }
+
+  checkAvailabilityOfService = async () => {
+    // ! api doesn't work with test chains
+    try {
+      const res: any = await apiLooper.get(
+        'oneinchExchange',
+        `/${externalConfig.evmNetworks.ETH.networkVersion}/healthcheck`
+      )
+
+      if (res.status === 'OK') {
+        // ...
+      } else {
+        this.reportError({
+          message: 'External service problem',
+        })
+      }
+      console.log('response: ', res)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  reportError = (error) => {
+    this.setState(() => ({
+      error,
+    }))
+
+    // feedback.
+  }
+
+  swap = async () => {
+    const fromAddress = ''
+    // ETH
+    const sellAsset = '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE'
+    // WEENUS ropsten
+    const buyAsset = '0x101848D5C5bBca18E6b4431eEdF6B95E9ADF82FA'
+    const sellAmount = 1_000_000_000_000_000_000
+
+    const request = ''.concat(
+      `/${externalConfig.evmNetworks.ETH.networkVersion}/`,
+      `swap?fromTokenAddress=${sellAsset}&`,
+      `toTokenAddress=${buyAsset}&`,
+      `amount=${sellAmount}&`,
+      `fromAddress=${fromAddress}&`,
+      `slippage=1`
+    )
+
+    try {
+      const res = await apiLooper.get('oneinchExchange', request)
+    } catch (error) {
+      console.error(error)
     }
   }
 

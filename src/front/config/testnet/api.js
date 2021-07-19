@@ -8,6 +8,7 @@ export default {
     'https://test-insight.swaponline.io/insight-api',
     'https://invoices.swaponline.site/proxybitpay-testnet',
   ],
+  oneinchExchange: 'https://api.1inch.exchange/v3.0',
   ghostscan: 'https://testnet.ghostscan.io/ghost-insight-api',
   nextscan: 'https://explore.next.exchange/#',
   nextExplorer: 'https://next.swaponline.io/mainnet',
