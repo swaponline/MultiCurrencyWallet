@@ -46,7 +46,7 @@ const metamaskNetworks = defineMessages({
   },
   testnet: {
     id: `MetamaskNetworkAlert_NetworkTestnet`,
-    defaultMessage: `Ethereum (Ropsten) or Binance Smart Chain (Testnet)`,
+    defaultMessage: `Ethereum (Rinkeby) or Binance Smart Chain (Testnet)`,
   },
 })
 

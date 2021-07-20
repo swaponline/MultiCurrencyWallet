@@ -13,7 +13,7 @@ const { ETH2BTC, BTC2ETH, ETHTOKEN2BTC, BTC2ETHTOKEN } = swap.flows
 
 import Web3 from 'web3'
 
-const web3 = new Web3(new Web3.providers.HttpProvider('https://ropsten.infura.io/<YOUR_KEY>'))
+const web3 = new Web3(new Web3.providers.HttpProvider('https://rinkeby.infura.io/<YOUR_KEY>'))
 import bitcoin from 'bitcoinjs-lib'
 
 
