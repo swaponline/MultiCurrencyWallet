@@ -3,10 +3,10 @@ export default {
   blocktrail: 'https://api.blocktrail.com/v1/tBTC',
   bitpay: [
     'https://api.bitcore.io/api/BTC/testnet',
-    'https://test-insight.bitpay.com/api',
+    // 'https://test-insight.bitpay.com/api',
     // 'http://localhost:32250/btc/testnet',
-    'https://test-insight.swaponline.io/insight-api',
-    'https://invoices.swaponline.site/proxybitpay-testnet',
+    // 'https://test-insight.swaponline.io/insight-api',
+    // 'https://invoices.swaponline.site/proxybitpay-testnet',
   ],
   ghostscan: 'https://testnet.ghostscan.io/ghost-insight-api',
   nextscan: 'https://explore.next.exchange/#',
