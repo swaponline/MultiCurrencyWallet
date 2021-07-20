@@ -6,17 +6,11 @@
   width: 600px;
   border-radius: 20px;
   padding: 30px 15px;
-  border: 1px solid $color-border;
-  box-shadow: $l-box-shadow;
-  background: $l-background-elements;
-  color: $l-color;
+  border: 1px solid var(--color-border);
+  box-shadow: var(--box-shadow);
+  background: var(--color-background-elements);
+  color: var(--color);
   font-size: 16px;
-
-  &.dark {
-    box-shadow: $d-box-shadow;
-    background: $d-background-elements;
-    color: $d-color;
-  }
 
   .address {
     font-weight: bold;
@@ -24,7 +18,7 @@
     margin: 30px 0;
     padding: 12px;
     border-radius: 5px;
-    border: 1px solid $color-border;
+    border: 1px solid var(--color-border);
     font-size: 18px;
     overflow: hidden;
     text-overflow: ellipsis;

@@ -7,14 +7,14 @@
   font-size: 12px;
   font-weight: bold;
   font-family: Roboto, sans-serif;
-  color: #8E9AA3;
+  color: var(--color-notice);
   white-space: pre-wrap;
   cursor: pointer;
   width: 75%;
 }
 
 .comment {
-  color: #000;
+  color: var(--color);
 }
 .add-link {
   text-align: center;
@@ -30,8 +30,8 @@
 
 .input {
   font-size: 12px;
-  color: #8e9aa3;
-  border: 1px solid #8e9aa3;
+  color: var(--color-notice);
+  border: 1px solid var(--color-notice);
   width: 75%;
   padding-bottom: 5px;
   position: relative;
@@ -44,7 +44,7 @@
   }
 
   .submit {
-    color: #0CCF14;
+    color: var(--color-success);
     position: absolute;
     font-size: 16px;
     right: 30px;
@@ -52,7 +52,7 @@
   }
 
   .close {
-    color: #EE5B51;
+    color: var(--color-bad);
     margin-right: 5px;
     font-size: 22px;
     position: absolute;
@@ -68,10 +68,10 @@
 
 .commentText {
   margin-top: 0.5em;
-  border: 2px solid #8883;
+  border: 2px solid var(--color-border);
   padding: 4px;
   border-radius: 8px;
   border-top-left-radius: 0px;
-  background: #8881;
+  background: var(--color-pale);
   font-weight: normal;
 }

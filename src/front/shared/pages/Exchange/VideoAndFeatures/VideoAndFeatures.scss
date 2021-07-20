@@ -1,8 +1,4 @@
-$bgColor: #f5f5f5;
-$pinsColor: $primary;
-
 .VidNdFeatures {
-    // background: $bgColor;
     padding-top: 100px;
     padding-bottom: 50px;
 
@@ -15,7 +11,7 @@ $pinsColor: $primary;
         font-family: 'Roboto', sans-serif;
 
         :global(.purple) {
-            color: $pinsColor;
+            color: var(--color-brand);
             font-weight: bolder;
         }
     }
@@ -58,7 +54,7 @@ $pinsColor: $primary;
                     top: 7px;
                     width: 12px;
                     height: 12px;
-                    border: 1px solid $pinsColor;
+                    border: 1px solid var(--color-brand);
                     border-radius: 50%;
                 }
 
@@ -70,7 +66,7 @@ $pinsColor: $primary;
                     top: 10px;
                     width: 6px;
                     height: 6px;
-                    background: $pinsColor;
+                    background: var(--color-brand);
                     border-radius: 50%;
                 }
             }
@@ -78,13 +74,8 @@ $pinsColor: $primary;
     }
 }
 
-.dark {
-    color: white;
-}
-
 @media screen and (max-width: 760px) {
   .VidNdFeatures {
-    // background: $bgColor;
     padding-top: 30px;
   }
 }

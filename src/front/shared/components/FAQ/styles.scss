@@ -17,15 +17,6 @@
   }
 }
 
-.dark {
-  h5 {
-    color: white;
-  }
-  div {
-    color: #7f8a91;
-  }
-}
-
 .tab {
   width: 100%;
   margin-bottom: 5px;
@@ -37,6 +28,7 @@
     padding-left: 23px;
     @include ff-semibold;
     cursor: pointer;
+    color: var(--color);
   }
 
   &__content {
@@ -44,6 +36,7 @@
     opacity: 0;
     overflow: hidden;
     visibility: hidden;
+    color: var(--color-indicating);
 
     &_active {
       visibility: visible;
@@ -81,7 +74,7 @@ $chrestStripHeight: 12px;
     display: block;
     content: '';
     position: relative;
-    background: #8e9aa3;
+    background: var(--color-indicating);
     border-radius: 1px;
   }
 

@@ -17,8 +17,6 @@ interface ITxSide {
   address: string,
 }
 
-//const isDark = localStorage.getItem(constants.localStorage.isDark)
-
 //@injectIntl
 @cssModules(styles, { allowMultiple: true })
 export default class TxSide extends PureComponent<ITxSide, {}> {

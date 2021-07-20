@@ -1,29 +1,12 @@
-.dark {
-  .checked {
-    .stepNumber {
-      background: #9066da;
-      color: $d-color;
-      border: 1px solid #5100dc;
-      min-width: 35px;
-    }
-    .stepText {
-      color: #828f96;
-    }
-  }
-  .stepHeading {
-    color: $d-color;
-  }
-}
-
 .stepList,
 .stepItem,
 .stepNumber,
 .stepText {
-  color: $indicating-color;
+  color: var(--color);
 }
 
 .stepNumber {
-  border: 1px solid #ccc;
+  border: 1px solid var(--color-border);
   width: 35px;
   height: 35px;
   display: flex;
@@ -37,7 +20,7 @@
   position: relative;
   font-size: 17px;
   cursor: pointer;
-  color: #fd6b65;
+  color: var(--color-bad);
   height: 40px;
   line-height: 40px;
   border-radius: 20px;
@@ -74,26 +57,25 @@
 }
 
 .active {
-  color: #000;
+  color: var(--color);
   opacity: 1;
+
   .stepNumber {
-    background: #fff;
-    color: #fff;
-    border: none;
-    border: 1px solid #000;
-    color: #000;
+    background: var(--color-background-elements);
+    border: 1px solid var(--color-notice);
+    color: var(--color);
   }
 }
 
 .checked {
   .stepNumber {
-    background: #5100dc;
-    color: #fff;
-    border: 1px solid #5100dc;
+    background: var(--color-brand);
+    color: var(--color-background-elements);
+    border: 1px solid var(--color-brand);
     min-width: 35px;
   }
   .stepText {
-    color: #5100dc;
+    color: var(--color-brand);
   }
 }
 
@@ -111,7 +93,7 @@
     padding-bottom: 3px;
     &:hover {
       border-bottom: none;
-      color: #007bff;
+      color: var(--color-link);
     }
     .checkedIcon {
       margin-left: 4px;
@@ -119,7 +101,7 @@
   }
   i {
     font-size: 19px;
-    color: #007bff;
+    color: var(--color-link);
     display: none;
     margin-left: 4px;
   }
@@ -194,7 +176,7 @@
     font-size: 12px;
   }
   .stepHeading {
-    color: $l-color;
+    color: var(--color);
     font-size: 18px;
     flex-basis: 70%;
   }

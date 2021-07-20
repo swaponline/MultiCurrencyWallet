@@ -10,8 +10,6 @@ import getCurrencyKey from 'helpers/getCurrencyKey'
 import Coin from 'components/Coin/Coin'
 import OutsideClick from 'components/OutsideClick'
 
-
-const isDark = localStorage.getItem(constants.localStorage.isDark)
 @cssModules(styles, { allowMultiple: true })
 export default class CurrencyList extends Component<any, any> {
   constructor(props) {
@@ -82,7 +80,7 @@ export default class CurrencyList extends Component<any, any> {
       <OutsideClick outsideAction={this.closeList}>
         <div
           id='withdrawCurrencyList'
-          styleName={`customSelectValue ${isDark ? 'dark' : ''}`}
+          styleName="customSelectValue"
           onClick={this.toggleListDisplay}
         >
           <div styleName="coin">
@@ -101,7 +99,7 @@ export default class CurrencyList extends Component<any, any> {
           </div>
 
           <div styleName="amount">
-            <span styleName="currency">
+            <span>
               {currentBalance} {getCurrencyKey(currency, true).toUpperCase()}
             </span>
             <span styleName="usd">
@@ -115,7 +113,7 @@ export default class CurrencyList extends Component<any, any> {
         </div>
 
         {isAssetsOpen && (
-          <div styleName={`customSelectList ${isDark ? 'darkList' : ''}`}>
+          <div styleName="customSelectList">
             {tableRows.map((item, index) => {
               if (!user.isCorrectWalletToShow(item)) return
 
@@ -145,7 +143,7 @@ export default class CurrencyList extends Component<any, any> {
                   </div>
    
                   <div styleName="amount">
-                    <span styleName="currency">
+                    <span>
                       {item.balance} {getCurrencyKey(item.currency, true).toUpperCase()}
                     </span>
                     <span styleName="usd">

@@ -44,8 +44,6 @@ const isNumberStringFormatCorrect = number => {
   return firstDotIndex === lastDotIndex
 }
 
-
-const isDark = localStorage.getItem(constants.localStorage.isDark)
 @connect(
   ({
     currencies,
@@ -580,13 +578,12 @@ export default class AddOffer extends Component<any, any> {
     }
 
     return (
-      <div styleName={`wrapper addOffer ${isDark ? '--dark' : ''} `}>
+      <div styleName={`wrapper addOffer`}>
         <div styleName="offerTitle">
           <FormattedMessage id="offerMessageToUser" defaultMessage="You must be online all the time, otherwise your order will not be visible to other users" />
         </div>
 
         <SelectGroup
-          isDark={isDark}
           label={<FormattedMessage id="addoffer381" defaultMessage="Sell" />}
           tooltip={<FormattedMessage id="partial462" defaultMessage="The amount you have on swap.online or an external wallet that you want to exchange" />}
           inputValueLink={linked.sellAmount.pipe(this.handleSellAmountChange)}
@@ -599,14 +596,12 @@ export default class AddOffer extends Component<any, any> {
           placeholder="0.00000000"
         />
         <Select
-          isDark={isDark}
           changeBalance={this.changeBalance}
           balance={balance}
           switching={this.switching}
         />
 
         <SelectGroup
-          isDark={isDark}
           label={<FormattedMessage id="addoffer396" defaultMessage="Buy" />}
           tooltip={<FormattedMessage id="partial478" defaultMessage="The amount you will receive after the exchange" />}
           inputValueLink={linked.buyAmount.pipe(this.handleBuyAmountChange)}

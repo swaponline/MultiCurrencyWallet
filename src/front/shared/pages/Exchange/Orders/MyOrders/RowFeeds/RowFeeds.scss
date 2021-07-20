@@ -1,9 +1,9 @@
 .accept {
-  color: $color-good;
+  color: var(--color-good);
 }
 
 .delete {
-  color: $color-f-error;
+  color: var(--color-f-error);
 }
 
 .delete, .accept {
@@ -59,19 +59,12 @@ td {
   height: 18px;
 }
 
-.share {
-  color: #212529;
-  &:hover {
-    color: #212529;
-  }
-}
-
 .circle {
   height: 25px;
   width: 25px;
-  border: 1px solid #0004;
+  border: 1px solid var(--color-border);
   border-radius: 50%;
-  background-color: #aaa2;
+  background-color: var(--color-page-background);
   position: relative;
 }
 

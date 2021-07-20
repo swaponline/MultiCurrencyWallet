@@ -1,17 +1,13 @@
 import React from 'react'
 import { FormattedMessage } from 'react-intl'
-import { constants } from 'helpers'
-
 import CSSModules from 'react-css-modules'
 import styles from './styles.scss'
 
-
-const isDark = localStorage.getItem(constants.localStorage.isDark)
 /* eslint-disable */
-const Quote = ({ }) => {
+const Quote = () => {
   const href = "https://blog.qtum.org/atomic-cross-chain-swap-on-qtum-7e756a890ed7"
   return (
-    <div styleName={`container ${isDark ? 'dark' : ''}`}>
+    <div styleName="container">
       <div styleName="header">
         &#34;
       <FormattedMessage
@@ -23,7 +19,7 @@ const Quote = ({ }) => {
       <a href={href} title={href} target="_blank" rel="noopener noreferrer" styleName="href">
         <b>
           — QTUM official Atomic Swap research
-        <span> https://blog.qtum.org/atomic-cross-chain-swap-on-qtum-7e756a890ed7</span>
+          <span> https://blog.qtum.org/atomic-cross-chain-swap-on-qtum-7e756a890ed7</span>
         </b>
       </a>
     </div>

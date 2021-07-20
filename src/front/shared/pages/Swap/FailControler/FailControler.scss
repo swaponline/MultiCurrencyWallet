@@ -7,17 +7,11 @@
   width: 600px;
   border-radius: 20px;
   padding: 0 30px 30px;
-  border: 1px solid $color-border;
-  box-shadow: $l-box-shadow;
-  background: $l-background-elements;
-  color: $l-color;
+  border: 1px solid var(--color-border);
+  box-shadow: var(--box-shadow);
+  background: var(--color-background-elements);
+  color: var(--color);
   font-size: 16px;
-
-  &.dark {
-    box-shadow: $d-box-shadow;
-    background: $d-background-elements;
-    color: $d-color;
-  }
 }
 
 .failHeading {
@@ -27,7 +21,7 @@
 
 .warning {
   font-size: 120px;
-  color: #ff3b3b;
+  color: var(--color-bad);
   margin-bottom: 5px;
 }
 
@@ -35,10 +29,10 @@
   cursor: pointer;
   width: 200px;
   margin-left: 20%;
-  background: #5100e0;
+  background: var(--color-brand);
   margin: 0;
   &:hover {
-    background: #782cff;
+    background: var(--color-brand-hover);
   }
 }
 

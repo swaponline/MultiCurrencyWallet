@@ -10,7 +10,7 @@
   font-size: 16px;
   font-weight: 800;
   line-height: 140%;
-  color: #8E9AA3;
+  color: var(--color-notice);
   @include ff-bold;
 }
 
@@ -30,11 +30,10 @@
 .header {
   padding: 16px 0;
   padding: 0px 0 25px;
-  border-bottom: 1px solid $color-border;
+  border-bottom: 1px solid var(--color-border);
 }
 
 .title {
-  color: #1F2D48;
   @include ff-bold;
   text-align: center;
   font-size: 21px;
@@ -46,10 +45,10 @@
 }
 
 .card {
-  background: $l-background-color;
-  border: 1px solid $inactive-border-color;
+  background: var(--color-background);
+  border: 1px solid var(--color-inactive-border);
   box-sizing: border-box;
-  box-shadow: 0px 2px 12px rgba(142, 154, 163, 0.08);
+  box-shadow: 0px 2px 12px var(--color-pale);
   border-radius: 4px;
   margin-bottom: 8px;
   padding: 10px;
@@ -70,14 +69,14 @@
     margin-bottom: 0.5em;
     padding: .5em;
     border-radius: 50%;
-    background: $l-color;
+    background: var(--color-black);
   }
 
   .info {
     font-weight: 800;
     font-size: 13px;
     line-height: 16px;
-    color: $l-color;
+    color: var(--color);
     @include ff-bold;
   }
 
@@ -87,12 +86,12 @@
     font-size: 11px;
     line-height: 140%;
     text-align: center;
-    color: #8E9AA3;
+    color: var(--color-notice);
     margin-top: -15px;
   }
 
   &:hover {
-    background: rgba(237, 239, 240, 0.40);
+    background: var(--color-pale);
   }
 
   &:last-child {
@@ -135,7 +134,7 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  background: #fff;
+  background: var(--color-background-elements);
   padding: 32px;
   width: 100%;
   min-width: 550px;
@@ -147,30 +146,9 @@
   &_dashboardView {
     box-shadow: none;
   }
-}
 
-.dark {
-  .modal {
-    background: #242425;
-    box-shadow: none;
-
-    @media screen and (max-width: 480px) {
-      background: #222528;
-    }
-  }
-
-  .header {
-    p {
-      color: white;
-    }
-  }
-
-  .card {
-    background: $d-background-color;
-
-    .info {
-      color: $d-color;
-    }
+  @media screen and (max-width: 480px) {
+    background: var(--color-background);
   }
 }
 
@@ -199,7 +177,6 @@
 
   .title {
     font-size: 18px;
-    ;
   }
 }
 

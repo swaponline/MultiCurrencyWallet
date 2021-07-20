@@ -5,10 +5,6 @@ import { injectIntl } from 'react-intl'
 import CSSModules from 'react-css-modules'
 import styles from './NavMobile.scss'
 import { localisedUrl } from 'helpers/locale'
-import actions from 'redux/actions'
-import constants from 'helpers/constants'
-
-const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 type NavProps = {
   menu: IUniversalObj[]
@@ -27,7 +23,7 @@ class NavMobile extends Component<NavProps, null> {
     } = this.props
 
     return (
-      <nav styleName={`navbar ${isDark ? 'dark' : ''} ${isHidden ? 'navbar-hidden' : ''}`}>
+      <nav styleName={`navbar ${isHidden ? 'navbar-hidden' : ''}`}>
         {menu
           .filter(i => i.isMobile !== false)
           .map((item, index) => {

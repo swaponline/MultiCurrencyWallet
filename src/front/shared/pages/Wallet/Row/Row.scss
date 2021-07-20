@@ -1,19 +1,19 @@
 .txWaitConfirm {
   padding-right: 10px;
-  color: $primary;
+  color: var(--color-brand);
   cursor: pointer;
 }
 
 .nameRow {
   display: flex;
   font-size: 13px;
-  color: $primary;
+  color: var(--color-brand);
 
   a.linkToHistory {
     cursor: pointer;
     position: relative;
     font-size: 13px;
-    color: $primary;
+    color: var(--color-brand);
 
     &::before {
       content: "";
@@ -21,7 +21,7 @@
       left: 0;
       bottom: -0.1em;
       height: 1px;
-      background-color: $primary;
+      background-color: var(--color-brand);
       transition: 0.2s;
     }
 
@@ -43,7 +43,7 @@
     display: inline-block;
     margin-left: 0.6em;
     font-size: 0.8em;
-    color: $notice-color;
+    color: var(--color-notice);
   }
 
   div {
@@ -63,6 +63,7 @@
   width: max-content;
   display: block;
   white-space: nowrap;
+  color: var(--color);
 
   .icon {
     display: inline-block;
@@ -90,32 +91,13 @@ tr button[disabled]:hover {
   }
 
   &:before {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    border-bottom: 1px solid var(--color-border);
     content: '';
     width: 100%;
     position: absolute;
     width: 92%;
     right: 0;
     bottom: 0px;
-  }
-}
-
-.dark {
-  .errorMessage,
-  .assetsTableCurrencyWrapper,
-  .unconfirmedBalance,
-  .assetsTableValue {
-    background: $d-background-elements;
-  }
-
-  .cryptoBalanceBtn {
-    color: white
-  }
-
-  .assetsTableIcon {
-    img {
-      border-color: $l-color;
-    }
   }
 }
 
@@ -144,7 +126,6 @@ tr button[disabled]:hover {
   position: absolute;
   right: 49px;
   font-size: 15px;
-  background: #fff;
 }
 
 .assetsTableCurrencyBalance {
@@ -156,7 +137,7 @@ tr button[disabled]:hover {
 .statusStyle {
   font-size: 12px;
   margin-left: 10px;
-  color: $notice-color;
+  color: var(--color-notice);
   margin-top: 1px;
   position: absolute;
   left: 46px;
@@ -173,8 +154,7 @@ tr button[disabled]:hover {
   bottom: -4px;
   font-size: 12px;
   font-weight: 500;
-  color: $notice-color;
-  background: #fff;
+  color: var(--color-notice);
 
   img {
     margin-top: -3px;
@@ -194,13 +174,13 @@ tr button[disabled]:hover {
     line-height: 13px;
     text-align: right;
     font-weight: bold;
-    color: $primary;
+    color: var(--color-brand);
     margin-top: 2px;
   }
 
   strong {
     margin-left: 5px;
-    color: $notice-color;
+    color: var(--color-notice);
   }
 }
 
@@ -209,13 +189,13 @@ tr button[disabled]:hover {
   right: 30px;
   font-size: 13px;
   top: -10px;
-  background: #fff;
+  background: var(--color-background-elements);
   padding: 10px;
   z-index: 11;
 
   a {
     font-size: 13px;
-    color: $color-link;
+    color: var(--color-link);
   }
 }
 
@@ -231,14 +211,14 @@ tr button[disabled]:hover {
   }
 
   p {
-    color: $primary;
+    color: var(--color-brand);
     font-size: 13px;
     margin-bottom: 1px;
   }
 
   span {
     +span {
-      color: $notice-color;
+      color: var(--color-notice);
       font-size: 14px;
       margin-left: 3px;
     }
@@ -247,7 +227,7 @@ tr button[disabled]:hover {
   strong {
     font-size: 15px;
     line-height: 21px;
-    color: $notice-color;
+    color: var(--color-notice);
     text-transform: uppercase;
     font-weight: bold;
     margin-left: 25px;
@@ -266,7 +246,7 @@ tr button[disabled]:hover {
   padding-right: 10px;
   padding-left: 5px;
 
-  background: #fff;
+  background: var(--color-background-elements);
 
   >span {
     font-size: 11px;
@@ -350,7 +330,7 @@ tr button[disabled]:hover {
   .assetsTableInfo {
     .errorMessage {
       position: absolute;
-      background: #fff;
+      background: var(--color-background-elements);
       z-index: 11;
       width: calc(100vw - 95px);
       height: 40px;

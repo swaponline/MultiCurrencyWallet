@@ -22,8 +22,6 @@ import getCurrencyKey from 'helpers/getCurrencyKey'
 import { links } from 'helpers'
 import redirectTo from 'helpers/redirectTo'
 
-const isDark = localStorage.getItem(constants.localStorage.isDark)
-
 const localeLabel = defineMessages({
   title: {
     id: 'invoiceModal_Title',
@@ -327,7 +325,7 @@ class InvoiceModal extends React.Component<InvoiceModalProps, InvoiceModalState>
             handleScan={this.handleScan}
           />
         )}
-        <div styleName={`invoiceModalHolder ${isDark ? 'dark' : ''}`}>
+        <div styleName="invoiceModalHolder">
           {toAddressEnabled && (
             <div styleName="highLevel">
               <FieldLabel>

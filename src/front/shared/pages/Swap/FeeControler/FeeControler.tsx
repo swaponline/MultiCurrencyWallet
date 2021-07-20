@@ -8,10 +8,6 @@ import { FormattedMessage } from 'react-intl'
 
 import Button from 'components/controls/Button/Button'
 
-import { constants } from 'helpers'
-
-const isDark = localStorage.getItem(constants.localStorage.isDark)
-
 @cssModules(styles, { allowMultiple: true })
 export default class FeeControler extends Component<any, any> {
 
@@ -36,7 +32,7 @@ export default class FeeControler extends Component<any, any> {
     const { isAddressCopied } = this.state
 
     return (
-      <div styleName={`FeeController ${isDark ? 'dark' : ''}`}>
+      <div styleName="FeeController">
         <CopyToClipboard text={ethAddress}>
           <div>
             <div styleName="warning">

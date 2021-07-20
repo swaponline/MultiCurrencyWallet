@@ -4,15 +4,11 @@
   align-items: center;
   justify-content: center;
   background-color: #47454a;
-  box-shadow: 0px 0px 5px -1px $indicating-color;
+  box-shadow: 0px 0px 5px -1px var(--color-read-only);
   position: relative;
   border-radius: 50%;
   line-height: 40px;
   text-align: center;
-
-  &.dark {
-    box-shadow: 0px 0px 5px -1px $d-read-only;
-  }
 
   &.noColors {
     background-color: transparent;
@@ -34,5 +30,5 @@
   top: 0;
   left: 0;
   text-align: center;
-  color: $d-color;
+  color: var(--color-f-brightest);
 }

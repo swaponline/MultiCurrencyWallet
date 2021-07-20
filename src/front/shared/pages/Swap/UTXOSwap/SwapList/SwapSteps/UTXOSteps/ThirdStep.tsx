@@ -126,7 +126,7 @@ const ThirdStep = (props) => {
             <FormattedMessage
               id="FourthStep34"
               defaultMessage="({sell} tx)"
-              values={{ sell: sellCurrency === currencyName ? buyCurrency.toLowerCase() : sellCurrency.toLowerCase()  }}
+              values={{ sell: sellCurrency.toLowerCase() === currencyName.toLowerCase() ? buyCurrency.toLowerCase() : sellCurrency.toLowerCase()  }}
             />
             <i className="fas fa-link" />
             {ethSwapWithdrawHashIsConfirmed ? (

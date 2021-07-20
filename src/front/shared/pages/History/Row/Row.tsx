@@ -15,9 +15,6 @@ import Address from 'components/ui/Address/Address'
 import { AddressFormat } from 'domain/address'
 import erc20Like from 'common/erc20Like'
 
-
-const isDark = localStorage.getItem(constants.localStorage.isDark)
-
 @cssModules(styles, { allowMultiple: true })
 export default class Row extends PureComponent<any, any> {
   constructor(props) {
@@ -287,7 +284,7 @@ export default class Row extends PureComponent<any, any> {
 
     return (
       <>
-        <tr styleName={`historyRow ${isDark ? 'dark' : ''}`}>
+        <tr styleName="historyRow">
           <td>
             <div styleName={`${statusStyleAmount} circleIcon`}>
               <div styleName='arrowWrap'>
