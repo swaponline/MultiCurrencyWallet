@@ -12,14 +12,16 @@
   width: 1rem;
   height: 2rem;
   padding-top: 0.5rem;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
+  font-size: 0.32rem;
   cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
 
   .icon {
     display: inline-block;
-    opacity: 0.9;
+    opacity: 0.8;
   }
 }
 
@@ -75,6 +77,11 @@
 }
 
 @media all and (max-width: 480px) {
+  .dotsButton {
+    padding-top: 0.7rem;
+    font-size: 0.3rem;
+  }
+
   .walletControls {
     top: -250px;
   }
