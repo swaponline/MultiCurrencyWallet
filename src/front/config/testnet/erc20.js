@@ -18,7 +18,7 @@ export default {
     canSwap: true
   },
   wbtc: {
-    address: '0xb92eaD9C545Fe04030FD3412a59e42FdB57431f5', // need deploy new wbtc contract to rinkeby network, this is from ropsten
+    address: '0x0ec3461704e9c44741c9e11c7784e71a208388dd',
     decimals: 8,
     fullName: 'Wrapped Bitcoin',
     canSwap: true,

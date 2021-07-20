@@ -27,8 +27,8 @@ use Arbitrum Bridge between Ethereum Rinkeby and Arbitrum
 ## [`WEENUS`](https://github.com/bokkypoobah/WeenusTokenFaucet) (Rinkeby testnet) - test ERC20 token
 - send 0 ETH to contract `0xaff4481d10270f50f203e0763e2597776068cbc5` - it will send back 1000 WEENUS
 
-## `WBTC` (Ropsten testnet)
-- send 0 ETH to contract `0xb92ead9c545fe04030fd3412a59e42fdb57431f5` - it will send back 1000 WBTC
+## `WBTC` (Rinkeby testnet)
+- send 0 ETH to contract `0x0ec3461704e9c44741c9e11c7784e71a208388dd` - it will send back 1 WBTC
 
 ## `BNB` + pegged tokens (Binance Smart Chain testnet)
 - https://testnet.binance.org/faucet-smart (2.5 BNB per 6 hours)
