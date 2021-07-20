@@ -29,19 +29,19 @@ const Tooltip = (props) => {
       <div styleName="TooltipFooter">
         {!isLastStep && (
           <button {...skipProps} onClick={click}>
-            <FormattedMessage id="skip" defaultMessage="Пропустить" />
+            <FormattedMessage id="skip" defaultMessage="Skip" />
           </button>
         )}
         {index > 0 && (
           <button {...backProps}>
-            <FormattedMessage id="back" defaultMessage="Назад" />
+            <FormattedMessage id="back" defaultMessage="Back" />
           </button>
         )}
         <button {...primaryProps} onClick={clickPrimary}>
           {continuous && !isLastStep ?
-            <FormattedMessage id="nextTourWindow" defaultMessage="Далее" />
+            <FormattedMessage id="nextTourWindow" defaultMessage="Next" />
             :
-            <FormattedMessage id="closeTourWindow" defaultMessage="Закрыть" />}
+            <FormattedMessage id="closeTourWindow" defaultMessage="Close" />}
         </button>
       </div>
     </div>

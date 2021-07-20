@@ -106,19 +106,16 @@ const FAQ = (props) => {
       ticker: 'ETH',
       fee: fees.eth,
       unit: 'gwei',
-      sourceLink: externalConfig.feeRates.eth,
     },
     {
       ticker: 'BNB',
       fee: fees.bnb,
       unit: 'gwei',
-      sourceLink: externalConfig.feeRates.bsc,
     },
     {
       ticker: 'MATIC',
       fee: fees.matic,
       unit: 'gwei',
-      sourceLink: externalConfig.feeRates.matic,
     },
     {
       ticker: 'ARBETH',
