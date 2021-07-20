@@ -7,7 +7,7 @@ import * as ethereum from './../instances/ethereum'
 const debug = debugCreate('swap.core:simple:wallet')
 
 const BLOCKCHAININFO = isMain => isMain ? `https://blockchain.info` : `https://testnet.blockchain.info`
-const ETHERSCANIO = isMain => isMain ? `https://etherscan.io` : `https://ropsten.etherscan.io`
+const ETHERSCANIO = isMain => isMain ? `https://etherscan.io` : `https://rinkeby.etherscan.io`
 
 class Wallet {
   id: any

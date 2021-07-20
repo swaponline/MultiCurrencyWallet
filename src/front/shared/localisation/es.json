@@ -4590,7 +4590,7 @@
   },
   {
     "id": "MetamaskNetworkAlert_NetworkTestnet",
-    "message": "Ethereum (Ropsten) o Binance Smart Chain (Testnet)",
+    "message": "Ethereum (Rinkeby) o Binance Smart Chain (Testnet)",
     "files": [
       "src/front/shared/containers/App/App.tsx"
     ]
