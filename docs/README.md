@@ -13,7 +13,7 @@
 - Marketmaker extention https://chrome.google.com/webstore/detail/multicurrencywallet/oldojieloelkkfeacfinhcngmbkepnlm
   
 Live version here: 
-https://swaponline.io (mirror https://swaponline.github.io) . Testnet https://ropsten.swaponline.io/
+https://swaponline.io (mirror https://swaponline.github.io) . Testnet https://rinkeby.swaponline.io/
 <br> Binance  Smart Chin : https://bsc.swap.io/ . Testnet: https://bsc-testnet.swaponline.site/
 
 
