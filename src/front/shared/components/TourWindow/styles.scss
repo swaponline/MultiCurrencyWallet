@@ -1,37 +1,38 @@
 .toolTipBody {
-    background-color: var(--color-background-elements);
-    min-width: 220px;
-    max-width: 420px;
-    position: relative;
-    border-radius: 5px;
+  background-color: var(--color-background-elements);
+  min-width: 220px;
+  max-width: 420px;
+  position: relative;
+  border-radius: 5px;
 }
 
 .TooltipTitle {
-    color: #f04;
-    padding: 20px;
-    margin: 0;
+  color: #f04;
+  padding: 20px;
+  margin: 0;
 }
 
 .TooltipContent {
-    color: var(--color);
-    padding: 20px;
+  color: var(--color);
+  padding: 20px;
 }
 
 .TooltipFooter {
-    background-color: var(--color-brand);
-    color: var(--color);
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 1rem;
-    padding: 5px;
-    border-radius: 0 0 5px 5px;
+  background-color: var(--color-brand);
+  color: var(--color-f-brightest);
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
+  padding: 5px;
+  border-radius: 0 0 5px 5px;
+
   * + * {
     margin-left: 0.5rem;
   }
 
-    button {
-        padding: 0.8rem;
-    }
+  button {
+    padding: 0.8rem;
+  }
 }
 
 @media all and (max-width: 480px) {

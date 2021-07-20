@@ -68,7 +68,9 @@ export default class DropdownMenu extends Component<Props, any> {
 		return (
 			<div styleName={classNames('dropdownMenu')} ref={this.dropdownMenu}>
 				<button styleName="dotsButton" type="button" onClick={this.handleClick} className="data-tut-row-menu">
-					<div styleName="dots"></div>
+					<i className="fas fa-circle" styleName="icon"></i>
+					<i className="fas fa-circle" styleName="icon"></i>
+					<i className="fas fa-circle" styleName="icon"></i>
 				</button>
 
 				<div styleName={`${classNames('menu', className, { open })}`}>
