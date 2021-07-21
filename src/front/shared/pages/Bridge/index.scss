@@ -43,6 +43,16 @@
   border-radius: 5px;
 }
 
-.swapButton {
-  width: 100%;
+.buttonWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.swapBtn {
+  flex: 1;
+
+  &:not(:first-of-type) {
+    margin-left: 0.2rem;
+  }
 }

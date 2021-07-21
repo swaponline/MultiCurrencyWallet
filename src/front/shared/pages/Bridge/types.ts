@@ -24,6 +24,30 @@ export type AdvancedOptions = {
   mainRouteParts: any
 }
 
+type TokenData = {
+  symbol: string
+  name: string
+  decimals: number
+  address: string
+  logoURI: string
+}
+
+type SwapData = {
+  fromToken: TokenData
+  toToken: TokenData
+  fromTokenAmount: string
+  toTokenAmount: string
+  protocols: any // [Array(3)]
+  tx: {
+    data: string
+    from: string
+    gas: number
+    gasPrice: string
+    to: string
+    value: string
+  }
+}
+
 export type ComponentState = {
   externalExchangeReference: null | IUniversalObj
   currencies: CurrencyMenuItem[]
@@ -33,17 +57,15 @@ export type ComponentState = {
   fiatAmount: number
   spendedCurrency: CurrencyMenuItem
   spendedAmount: string
-  fromAddress: string
   fromWallet: IUniversalObj
   receivedCurrency: CurrencyMenuItem
   receivedAmount: number
-  toAddress: string
   toWallet: IUniversalObj
   slippage: number
   slippageMaxRange: number
   chainId: number
   isAdvancedMode: boolean
-
   // TODO
   advancedOptions: AdvancedOptions | any
+  swapData: SwapData | undefined
 }
