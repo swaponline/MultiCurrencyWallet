@@ -18,9 +18,14 @@ class Bridge extends PureComponent<unknown, ComponentState> {
     super(props)
 
     const { currencies, activeFiat } = props
-    const wallets = actions.core.getWallets()
-
-    console.log('props: ', props)
+    const spendedCurrency = currencies[0]
+    const receivedCurrency = currencies[1]
+    const fromWallet = actions.core.getWallet({
+      currency: spendedCurrency.value,
+    })
+    const toWallet = actions.core.getWallet({
+      currency: receivedCurrency.value,
+    })
 
     this.state = {
       error: null,
@@ -28,15 +33,17 @@ class Bridge extends PureComponent<unknown, ComponentState> {
       externalExchangeReference: null,
       fiat: window.DEFAULT_FIAT || activeFiat,
       fiatAmount: 0,
-      wallets,
       currencies,
-      spendedCurrency: currencies[0],
-      spendedAmount: 0,
+      spendedCurrency: spendedCurrency,
+      spendedAmount: '',
       fromAddress: '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
-      receivedCurrency: currencies[1],
+      fromWallet,
+      receivedCurrency: receivedCurrency,
       receivedAmount: 0,
       toAddress: '',
+      toWallet,
       slippage: 1,
+      slippageMaxRange: 50,
       chainId: 137,
       isAdvancedMode: false,
       advancedOptions: {},
@@ -49,16 +56,7 @@ class Bridge extends PureComponent<unknown, ComponentState> {
     try {
       const res: any = await apiLooper.get('oneinch', `/${chaindId}/healthcheck`)
 
-      console.log('%c res', 'color: orange; font-size: 20px')
-      console.log(res)
-
-      if (res.status === 'OK') {
-        return true
-      } else {
-        this.reportError({
-          message: 'External service problem',
-        })
-      }
+      return res?.status === 'OK'
     } catch (error) {
       this.reportError(error)
 
@@ -70,6 +68,9 @@ class Bridge extends PureComponent<unknown, ComponentState> {
     this.setState(() => ({
       error,
     }))
+    actions.notifications.show(constants.notifications.ErrorNotification, {
+      error: error.message,
+    })
 
     // * feedback...
   }
@@ -78,7 +79,6 @@ class Bridge extends PureComponent<unknown, ComponentState> {
     const {
       chainId,
       slippage,
-      wallets,
       spendedCurrency,
       spendedAmount,
       fromAddress,
@@ -116,37 +116,30 @@ class Bridge extends PureComponent<unknown, ComponentState> {
     try {
       const res = await apiLooper.get('oneinchExchange', request)
     } catch (error) {
-      console.error(error)
+      this.reportError(error)
     }
   }
 
   selectCurrency = (params) => {
     const { direction, value } = params
+    const { spendedCurrency, receivedCurrency } = this.state
 
-    if (direction === 'spend') {
+    const updateSpendedSide = direction === 'spend' && spendedCurrency.value !== value.value
+    const updateReceivedSide = direction === 'receive' && receivedCurrency.value !== value.value
+
+    if (updateSpendedSide) {
       this.setState(() => ({
         spendedCurrency: value,
+        fromWallet: actions.core.getWallet({ currency: value.value }),
       }))
     }
 
-    if (direction === 'receive') {
+    if (updateReceivedSide) {
       this.setState(() => ({
         receivedCurrency: value,
+        toWallet: actions.core.getWallet({ currency: value.value }),
       }))
     }
-  }
-
-  updateCurrencyAmount = () => {
-    // take fiat amount
-    // take an exchange rate from the currency object
-    // calc final currency amount and save it
-    // call calculateTokenAmount()
-  }
-
-  calculateTokenAmount = () => {
-    // take currency amount
-    // take an exchange rate (from token object ?)
-    // calc final token amount and save it
   }
 
   openExternalExchange = () => {
@@ -199,15 +192,29 @@ class Bridge extends PureComponent<unknown, ComponentState> {
       fiatAmount,
       spendedCurrency,
       spendedAmount,
+      fromWallet,
       receivedCurrency,
       receivedAmount,
       slippage,
+      slippageMaxRange,
       chainId,
       isAdvancedMode,
       advancedOptions,
     } = this.state
 
     const linked = Link.all(this, 'fiatAmount', 'spendedAmount', 'receivedAmount', 'slippage')
+
+    const wrongSlippage =
+      new BigNumber(slippage).isNaN() ||
+      new BigNumber(slippage).isEqualTo(0) ||
+      new BigNumber(slippage).isGreaterThan(slippageMaxRange)
+
+    const buttonIsDisabled =
+      isPending ||
+      wrongSlippage ||
+      new BigNumber(spendedAmount).isNaN() ||
+      new BigNumber(spendedAmount).isEqualTo(0) ||
+      new BigNumber(spendedAmount).isGreaterThan(fromWallet.balance)
 
     return (
       <section styleName="bridgeSection">
@@ -242,8 +249,7 @@ class Bridge extends PureComponent<unknown, ComponentState> {
           <Button
             styleName="swapButton"
             pending={isPending}
-            // TODO
-            disabled={true}
+            disabled={buttonIsDisabled}
             onClick={this.swap}
             brand
           >

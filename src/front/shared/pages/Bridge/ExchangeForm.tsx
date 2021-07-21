@@ -25,9 +25,6 @@ function ExchangeForm(props) {
     selectCurrency,
   } = props
 
-  console.log('%c ExchangeForm', 'font-size: 20px')
-  console.log(props)
-
   const displayCurrencyName = (item) => {
     return item.blockchain ? `${item.title} (${item.blockchain})` : item.title
   }
@@ -93,7 +90,12 @@ function ExchangeForm(props) {
             <FormattedMessage id="slippageNotice" defaultMessage="Some useful notice for user" />
           </Tooltip>
         </FieldLabel>
-        <Input valueLink={stateReference.slippage} withMargin />
+        <Input
+          pattern="0-9\."
+          onKeyDown={inputReplaceCommaWithDot}
+          valueLink={stateReference.slippage}
+          withMargin
+        />
       </div>
     </form>
   )

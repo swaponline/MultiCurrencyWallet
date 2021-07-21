@@ -4,8 +4,8 @@ export type CurrencyMenuItem = {
   icon: string
   value: string
   fullTitle: string
-  blockchain: string
-  standard: string
+  blockchain?: string
+  standard?: string
 }
 
 export type AdvancedOptions = {
@@ -26,20 +26,24 @@ export type AdvancedOptions = {
 
 export type ComponentState = {
   externalExchangeReference: null | IUniversalObj
-  wallets: IUniversalObj[]
   currencies: CurrencyMenuItem[]
   error: IError | null
   isPending: boolean
   fiat: string
   fiatAmount: number
-  spendedCurrency: string
-  spendedAmount: number
+  spendedCurrency: CurrencyMenuItem
+  spendedAmount: string
   fromAddress: string
-  receivedCurrency: string
+  fromWallet: IUniversalObj
+  receivedCurrency: CurrencyMenuItem
   receivedAmount: number
   toAddress: string
+  toWallet: IUniversalObj
   slippage: number
+  slippageMaxRange: number
   chainId: number
   isAdvancedMode: boolean
-  advancedOptions: AdvancedOptions | any // TODO AdvancedOptions
+
+  // TODO
+  advancedOptions: AdvancedOptions | any
 }
