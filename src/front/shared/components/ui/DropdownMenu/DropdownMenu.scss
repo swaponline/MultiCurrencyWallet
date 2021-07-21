@@ -12,21 +12,17 @@
   width: 1rem;
   height: 2rem;
   padding-top: 0.5rem;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
+  font-size: 0.32rem;
   cursor: pointer;
-}
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
 
-.dots {
-  transform: translate(-50%, -50%);
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background-color: var(--color);
-  box-shadow:
-    0px 7px 0px var(--color),
-    0px 14px 0px var(--color);
+  .icon {
+    display: inline-block;
+    opacity: 0.8;
+  }
 }
 
 .dropdownMenuItem {
@@ -81,6 +77,11 @@
 }
 
 @media all and (max-width: 480px) {
+  .dotsButton {
+    padding-top: 0.7rem;
+    font-size: 0.3rem;
+  }
+
   .walletControls {
     top: -250px;
   }

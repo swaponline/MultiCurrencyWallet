@@ -6,7 +6,7 @@ import request from '../helpers/request'
 
 
 // const MAINNET_PROVIDER = `https://mainnet.infura.io/JCnK5ifEPH9qcQkX0Ahl`
-const TESTNET_PROVIDER = `https://ropsten.infura.io/v3/5ffc47f65c4042ce847ef66a3fa70d4c`
+const TESTNET_PROVIDER = `https://rinkeby.infura.io/v3/5ffc47f65c4042ce847ef66a3fa70d4c`
 
 const MAINNET_PROVIDER = process.env.WEB3_MAINNET_PROVIDER || `https://geth.swaponline.site`
 const LOCAL_PROVIDER = process.env.WEB3_LOCAL_PROVIDER || `http://localhost:7545`
@@ -45,7 +45,7 @@ class Ethereum {
     }
 
     this.etherscan = _network === 'testnet'
-      ? `https://api-ropsten.etherscan.io`
+      ? `https://api-rinkeby.etherscan.io`
       : `https://api.etherscan.io`
   }
 

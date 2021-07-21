@@ -132,7 +132,7 @@ import { EthSwap, EthTokenSwap, BtcSwap } from 'swap.swaps'
 import { ETH2BTC, BTC2ETH, ETHTOKEN2BTC, BTC2ETHTOKEN } from 'swap.flows'
 
 
-const web3 = new Web3(new Web3.providers.HttpProvider('https://ropsten.infura.io/<YOUR_KEY>'))
+const web3 = new Web3(new Web3.providers.HttpProvider('https://rinkeby.infura.io/<YOUR_KEY>'))
 
 SwapApp.setup({
   network: 'testnet',

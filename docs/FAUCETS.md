@@ -7,10 +7,6 @@ The list of faucets that we recommend to use when developing
  - https://bitcoinfaucet.uo1.net/ (0.00093 per hour)
  - https://testnet-faucet.mempool.co/ (0.0099 per hour)
 
-## `ETH` (Ropsten testnet)
-- https://faucet.ropsten.be/ (1 ETH per day)
-- https://faucet.dimensions.network/ (5 ETH per day)
-
 ## `ETH` (Rinkeby testnet)
 - https://faucet.rinkeby.io (social network account required)
 - https://app.mycrypto.com/faucet
@@ -25,14 +21,14 @@ The list of faucets that we recommend to use when developing
 use Arbitrum Bridge between Ethereum Rinkeby and Arbitrum
 - https://bridge.arbitrum.io/
 
-## `USDT` (Ropsten testnet)
+## `USDT` (Rinkeby testnet)
  - contact swaponline developers [here](https://t.me/swaponlinebot)
 
-## [`WEENUS`](https://github.com/bokkypoobah/WeenusTokenFaucet) (Ropsten testnet) - test ERC20 token
-- send 0 ETH to contract `0x101848D5C5bBca18E6b4431eEdF6B95E9ADF82FA` - it will send back 1000 WEENUS
+## [`WEENUS`](https://github.com/bokkypoobah/WeenusTokenFaucet) (Rinkeby testnet) - test ERC20 token
+- send 0 ETH to contract `0xaff4481d10270f50f203e0763e2597776068cbc5` - it will send back 1000 WEENUS
 
-## `WBTC` (Ropsten testnet)
-- send 0 ETH to contract `0xb92ead9c545fe04030fd3412a59e42fdb57431f5` - it will send back 1000 WBTC
+## `WBTC` (Rinkeby testnet)
+- send 0 ETH to contract `0x0ec3461704e9c44741c9e11c7784e71a208388dd` - it will send back 1 WBTC
 
 ## `BNB` + pegged tokens (Binance Smart Chain testnet)
 - https://testnet.binance.org/faucet-smart (2.5 BNB per 6 hours)

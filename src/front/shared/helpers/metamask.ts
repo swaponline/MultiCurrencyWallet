@@ -10,7 +10,7 @@ import { COIN_DATA, COIN_MODEL } from 'swap.app/constants/COINS'
 import getCoinInfo from 'common/coins/getCoinInfo'
 
 const web3connect: IUniversalObj = new Web3Connect({
-  web3ChainId: config.evmNetworks.ETH.networkVersion,
+  web3ChainId: config.evmNetworks.ETH.chainId,
   web3RPC: config.web3.provider,
 })
 
@@ -132,9 +132,9 @@ const isCorrectNetwork = () => web3connect.isCorrectNetwork()
 
 const isAvailableNetwork = () => {
     const hexChainId = web3connect.getChainId()
-    const chainId = Number(Number(hexChainId).toString(10))
+    const networkVersion = Number(Number(hexChainId).toString(10))
 
-    return (config.evmNetworkVersions.includes(chainId))
+    return (config.evmNetworkVersions.includes(networkVersion))
 }
 
 const isAvailableNetworkByCurrency = (currency) => {
@@ -188,12 +188,12 @@ const addMetamaskWallet = () => {
     ])
 
     const hexChainId = web3connect.getChainId()
-    const chainId = Number(Number(hexChainId).toString(10))
+    const networkVersion = Number(Number(hexChainId).toString(10))
 
     if (isAvailableNetwork()){
-      const currencyName = walletMap.get(chainId)?.currencyName
-      const fullWalletName = walletMap.get(chainId)?.fullWalletName
-      const currencyInfo = walletMap.get(chainId)?.currencyInfo
+      const currencyName = walletMap.get(networkVersion)?.currencyName
+      const fullWalletName = walletMap.get(networkVersion)?.fullWalletName
+      const currencyInfo = walletMap.get(networkVersion)?.currencyInfo
 
       reducers.user.addWallet({
         name: 'metamaskData',
@@ -209,7 +209,7 @@ const addMetamaskWallet = () => {
           isBalanceFetched: true,
           isMnemonic: true,
           unconfirmedBalance: 0,
-          networkVersion: chainId,
+          networkVersion,
           unknownNetwork: false,
         },
       })
@@ -228,7 +228,7 @@ const addMetamaskWallet = () => {
           isBalanceFetched: true,
           isMnemonic: true,
           unconfirmedBalance: 0,
-          networkVersion: chainId,
+          networkVersion,
           unknownNetwork: true,
         },
       })
@@ -312,7 +312,7 @@ const addCurrencyNetwork = (currency) => {
   } = COIN_DATA[nativeCurrency]
 
   const params = {
-    chainId, // A 0x-prefixed hexadecimal string
+    chainId: `0x${chainId.toString(16)}`,
     chainName,
     nativeCurrency: {
       name,
