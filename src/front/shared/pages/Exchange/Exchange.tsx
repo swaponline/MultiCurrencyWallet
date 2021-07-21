@@ -322,12 +322,6 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
         : false
 
     switch (type) {
-      case AddressType.Internal:
-        return {
-          type: AddressType.Internal,
-          currency,
-          value: wallet ? wallet.address : '',
-        }
       case AddressType.Metamask:
         return {
           type: AddressType.Metamask,
@@ -340,11 +334,12 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
           currency,
           value: ``,
         }
-    }
-    return {
-      type: AddressType.Internal,
-      currency,
-      value: wallet ? wallet.address : '',
+      default:
+        return {
+          type: AddressType.Internal,
+          currency,
+          value: wallet ? wallet.address : '',
+        }
     }
   }
 
