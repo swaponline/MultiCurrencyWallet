@@ -1,82 +1,67 @@
 import { PureComponent } from 'react'
 import { connect } from 'redaction'
 import { BigNumber } from 'bignumber.js'
+import { FormattedMessage } from 'react-intl'
 import CSSModules from 'react-css-modules'
 import styles from './index.scss'
 import { Token } from 'common/types'
-import externalConfig from 'helpers/externalConfig'
-import { feedback, apiLooper } from 'helpers'
+import { feedback, apiLooper, externalConfig, constants } from 'helpers'
+import actions from 'redux/actions'
 import Link from 'local_modules/sw-valuelink'
+import { CurrencyMenuItem, ExchangedСurrency, AdvancedOptions, ComponentState } from './types'
 import ExchangeForm from './ExchangeForm'
-
-type TokenItem = {
-  name: string
-  title: string
-  icon: string
-  value: string
-  fullTitle: string
-  blockchain: string
-  standard: string
-}
-
-type ComponentState = {
-  tokens: TokenItem[]
-  externalExchangeReference: null | IUniversalObj
-  isPending: boolean
-  fiat: string
-  currency: string
-  token: string
-  fiatAmount: number
-  currencyAmount: number
-  tokenAmount: number
-  error: IError | null
-}
 
 class Bridge extends PureComponent<unknown, ComponentState> {
   constructor(props) {
     super(props)
 
-    const { tokens, activeFiat } = props
+    const { currencies, activeFiat } = props
+    const wallets = actions.core.getWallets()
 
     this.state = {
-      tokens,
-      externalExchangeReference: null,
+      error: null,
       isPending: false,
+      externalExchangeReference: null,
       fiat: window.DEFAULT_FIAT || activeFiat,
       fiatAmount: 0,
-      currency: 'ETH',
-      currencyAmount: 0,
-      token: tokens[0].value,
-      tokenAmount: 0,
-      error: null,
+      wallets,
+      currencies,
+      spendedCurrency: {
+        name: 'MATIC',
+        amount: 0,
+        address: '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
+      },
+      receivedCurrency: {
+        name: 'DAI (MATIC)',
+        amount: 0,
+        address: '0x8f3cf7ad23cd3cadbd9735aff958023239c6a063',
+      },
+      slippage: 1,
+      advancedOptions: {},
+      chainId: 137,
     }
   }
 
-  componentDidMount() {
-    // ? notification if it's not available ?
-    // this.checkAvailabilityOfService()
+  serviceIsAvailable = async (params) => {
+    const { chaindId } = params
 
-    // this.swap()
-  }
-
-  checkAvailabilityOfService = async () => {
-    // ! api doesn't work with test chains
     try {
-      const res: any = await apiLooper.get(
-        'oneinchExchange',
-        `/${externalConfig.evmNetworks.ETH.networkVersion}/healthcheck`
-      )
+      const res: any = await apiLooper.get('oneinch', `/${chaindId}/healthcheck`)
+
+      console.log('%c res', 'color: orange; font-size: 20px')
+      console.log(res)
 
       if (res.status === 'OK') {
-        // ...
+        return true
       } else {
         this.reportError({
           message: 'External service problem',
         })
       }
-      console.log('response: ', res)
     } catch (error) {
-      console.error(error)
+      this.reportError(error)
+
+      return false
     }
   }
 
@@ -85,24 +70,43 @@ class Bridge extends PureComponent<unknown, ComponentState> {
       error,
     }))
 
-    // feedback.
+    // * feedback...
   }
 
   swap = async () => {
-    const fromAddress = ''
-    // ETH
-    const sellAsset = '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE'
-    // WEENUS ropsten
-    const buyAsset = '0x101848D5C5bBca18E6b4431eEdF6B95E9ADF82FA'
-    const sellAmount = 1_000_000_000_000_000_000
+    const {
+      chainId,
+      slippage,
+      wallets,
+      spendedCurrency,
+      receivedCurrency,
+      advancedOptions,
+    } = this.state
+
+    const serviceIsOk = await this.serviceIsAvailable({
+      chainId,
+    })
+
+    if (!serviceIsOk) {
+      actions.notifications.show(constants.notifications.Message, {
+        message: (
+          <FormattedMessage
+            id="serviceIsNotAvailable"
+            defaultMessage="Service is not available. Try to different chain"
+          />
+        ),
+      })
+
+      return
+    }
 
     const request = ''.concat(
-      `/${externalConfig.evmNetworks.ETH.networkVersion}/`,
-      `swap?fromTokenAddress=${sellAsset}&`,
-      `toTokenAddress=${buyAsset}&`,
-      `amount=${sellAmount}&`,
-      `fromAddress=${fromAddress}&`,
-      `slippage=1`
+      `/${chainId}/`,
+      `swap?fromTokenAddress=${spendedCurrency.address}&`,
+      `toTokenAddress=${receivedCurrency.address}&`,
+      `amount=${spendedCurrency.amount}&`,
+      `fromAddress=${0x000}&`,
+      `slippage=${slippage}`
     )
 
     try {
@@ -112,14 +116,26 @@ class Bridge extends PureComponent<unknown, ComponentState> {
     }
   }
 
-  selectToken = (params) => {
-    const { value } = params
+  selectCurrency = (params) => {
+    const { direction, value } = params
 
-    console.log(value)
+    if (direction === 'spend') {
+      this.setState((state) => ({
+        spendedCurrency: {
+          ...state.spendedCurrency,
+          name: value,
+        },
+      }))
+    }
 
-    this.setState(() => ({
-      token: value,
-    }))
+    if (direction === 'receive') {
+      this.setState((state) => ({
+        receivedCurrency: {
+          ...state.receivedCurrency,
+          name: value,
+        },
+      }))
+    }
   }
 
   updateCurrencyAmount = () => {
@@ -173,48 +189,43 @@ class Bridge extends PureComponent<unknown, ComponentState> {
 
   render() {
     const {
-      tokens,
+      currencies,
       isPending,
       fiat,
       fiatAmount,
-      currency,
-      currencyAmount,
-      token,
-      tokenAmount,
+      spendedCurrency,
+      receivedCurrency,
+      slippage,
+      advancedOptions,
+      chainId,
     } = this.state
 
-    const linked = Link.all(this, 'fiatAmount', 'currencyAmount', 'tokenAmount')
+    const linked = Link.all(this, 'fiatAmount', 'spendedCurrency', 'receivedCurrency')
 
     return (
       <section styleName="bridgeSection">
-        <h2 styleName="title">Fiat to ERC20</h2>
+        <h2 styleName="title">Some title</h2>
 
         <ExchangeForm
           stateReference={linked}
           isPending={isPending}
           fiat={fiat}
           fiatAmount={fiatAmount}
-          currency={currency}
-          currencyAmount={currencyAmount}
-          token={token}
-          tokenAmount={tokenAmount}
-          selectToken={this.selectToken}
+          swap={this.swap}
           openExternalExchange={this.openExternalExchange}
-          tokens={tokens}
+          currencies={currencies}
+          spendedCurrency={spendedCurrency}
+          receivedCurrency={receivedCurrency}
+          slippage={slippage}
+          advancedOptions={advancedOptions}
+          chainId={chainId}
         />
       </section>
     )
   }
 }
 
-const filterTokens = (tokens: TokenItem[]) => {
-  return tokens.filter((token) => {
-    return token.blockchain === 'ETH'
-  })
-}
-
-export default connect(({ currencies, user: { tokensData, activeFiat } }) => ({
-  tokens: filterTokens(currencies.partialItems),
-  tokensData,
+export default connect(({ currencies, user: { activeFiat } }) => ({
+  currencies: currencies.partialItems,
   activeFiat,
 }))(CSSModules(Bridge, styles, { allowMultiple: true }))

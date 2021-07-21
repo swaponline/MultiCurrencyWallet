@@ -16,13 +16,13 @@ function ExchangeForm(props) {
     isPending,
     fiat,
     fiatAmount,
-    currency,
-    currencyAmount,
-    token,
-    tokenAmount,
-    tokens,
     openExternalExchange,
-    selectToken,
+    currencies,
+    spendedCurrency,
+    receivedCurrency,
+    slippage,
+    advancedOptions,
+    chainId,
   } = props
 
   return (
@@ -53,50 +53,53 @@ function ExchangeForm(props) {
           pattern="0-9\."
           onKeyDown={inputReplaceCommaWithDot}
           valueLink={stateReference.currencyAmount}
-          placeholder="ETH"
           withMargin
+        />
+        <CurrencySelect
+          selectedItemRender={(item) => `${item.title} (${item.blockchain})`}
+          className={dropDownStyles.simpleDropdown}
+          selectedValue={spendedCurrency.name}
+          onSelect={() => null}
+          currencies={currencies}
+          arrowSide="left"
         />
       </div>
 
       <div styleName="inputWrapper">
         <FieldLabel>
-          <FormattedMessage id="receive" defaultMessage="Receive" /> {token}
+          <FormattedMessage id="receive" defaultMessage="Receive" />
         </FieldLabel>
         <Input valueLink={stateReference.tokenAmount} disabled withMargin />
         <CurrencySelect
           selectedItemRender={(item) => `${item.title} (${item.blockchain})`}
           className={dropDownStyles.simpleDropdown}
-          placeholder="Enter the name of token"
-          selectedValue={token}
-          onSelect={selectToken}
-          currencies={tokens}
+          selectedValue={receivedCurrency.name}
+          onSelect={() => null}
+          currencies={currencies}
+          arrowSide="left"
         />
       </div>
 
-      <div styleName="calculationsWrapper">
-        <b>
-          {fiat}: {fiatAmount}
-        </b>
-        <b>
-          {currency} rate: 2000 {fiat}
-        </b>
-        <b>
-          {currency}: {currencyAmount}
-        </b>
-        <b>
-          {token}: {tokenAmount}
-        </b>
+      {/* **** */}
+
+      <div styleName="inputWrapper">
+        <FieldLabel>
+          <FormattedMessage id="slippage" defaultMessage="Slippage" />
+        </FieldLabel>
+        <Input valueLink={stateReference.tokenAmount} withMargin />
       </div>
 
+      <div styleName="calculationsWrapper">Some final amount</div>
+
       <Button
-        styleName="buyButton"
+        styleName="swapButton"
         pending={isPending}
         disabled={isPending}
         onClick={openExternalExchange}
         empty
         big
       >
-        <FormattedMessage id="buy" defaultMessage="Buy" />
+        <FormattedMessage id="swap" defaultMessage="Swap" />
       </Button>
     </form>
   )

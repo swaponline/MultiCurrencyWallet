@@ -1,4 +1,5 @@
 export default {
+  oneinch: 'https://api.1inch.exchange/v3.0',
   horizon: 'https://horizon.stellar.org',
   blocktrail: 'https://api.blocktrail.com/v1/BTC',
   bitpay: [

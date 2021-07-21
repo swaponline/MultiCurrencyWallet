@@ -1,4 +1,5 @@
 export default {
+  oneinch: 'https://api.1inch.exchange/v3.0',
   horizon: 'https://horizon-testnet.stellar.org',
   blocktrail: 'https://api.blocktrail.com/v1/tBTC',
   bitpay: [
@@ -8,7 +9,6 @@ export default {
     // 'https://test-insight.swaponline.io/insight-api',
     // 'https://invoices.swaponline.site/proxybitpay-testnet',
   ],
-  oneinchExchange: 'https://api.1inch.exchange/v3.0',
   ghostscan: 'https://testnet.ghostscan.io/ghost-insight-api',
   nextscan: 'https://explore.next.exchange/#',
   nextExplorer: 'https://next.swaponline.io/mainnet',
