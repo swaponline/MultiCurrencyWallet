@@ -164,7 +164,7 @@
     "nodemon": "^2.0.7",
     "npm-audit-whitelister": "^1.0.2",
     "path-browserify": "^1.0.1",
-    "peer-id": "^0.15.0",
+    "peer-id": "^0.15.1",
     "pg": "^8.5.1",
     "postcss-loader": "^6.1.0",
     "prettier": "^2.2.1",
