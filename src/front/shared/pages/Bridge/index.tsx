@@ -8,8 +8,10 @@ import { Token } from 'common/types'
 import { feedback, apiLooper, externalConfig, constants } from 'helpers'
 import actions from 'redux/actions'
 import Link from 'local_modules/sw-valuelink'
-import { CurrencyMenuItem, ExchangedСurrency, AdvancedOptions, ComponentState } from './types'
+import { ComponentState } from './types'
+import Button from 'components/controls/Button/Button'
 import ExchangeForm from './ExchangeForm'
+import AdvancedOptions from './AdvancedOptions'
 
 class Bridge extends PureComponent<unknown, ComponentState> {
   constructor(props) {
@@ -17,6 +19,8 @@ class Bridge extends PureComponent<unknown, ComponentState> {
 
     const { currencies, activeFiat } = props
     const wallets = actions.core.getWallets()
+
+    console.log('props: ', props)
 
     this.state = {
       error: null,
@@ -26,19 +30,16 @@ class Bridge extends PureComponent<unknown, ComponentState> {
       fiatAmount: 0,
       wallets,
       currencies,
-      spendedCurrency: {
-        name: 'MATIC',
-        amount: 0,
-        address: '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
-      },
-      receivedCurrency: {
-        name: 'DAI (MATIC)',
-        amount: 0,
-        address: '0x8f3cf7ad23cd3cadbd9735aff958023239c6a063',
-      },
+      spendedCurrency: currencies[0],
+      spendedAmount: 0,
+      fromAddress: '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
+      receivedCurrency: currencies[1],
+      receivedAmount: 0,
+      toAddress: '',
       slippage: 1,
-      advancedOptions: {},
       chainId: 137,
+      isAdvancedMode: false,
+      advancedOptions: {},
     }
   }
 
@@ -79,8 +80,11 @@ class Bridge extends PureComponent<unknown, ComponentState> {
       slippage,
       wallets,
       spendedCurrency,
+      spendedAmount,
+      fromAddress,
       receivedCurrency,
-      advancedOptions,
+      receivedAmount,
+      toAddress,
     } = this.state
 
     const serviceIsOk = await this.serviceIsAvailable({
@@ -102,9 +106,9 @@ class Bridge extends PureComponent<unknown, ComponentState> {
 
     const request = ''.concat(
       `/${chainId}/`,
-      `swap?fromTokenAddress=${spendedCurrency.address}&`,
-      `toTokenAddress=${receivedCurrency.address}&`,
-      `amount=${spendedCurrency.amount}&`,
+      `swap?fromTokenAddress=${fromAddress}&`,
+      `toTokenAddress=${toAddress}&`,
+      `amount=${spendedAmount}&`,
       `fromAddress=${0x000}&`,
       `slippage=${slippage}`
     )
@@ -120,20 +124,14 @@ class Bridge extends PureComponent<unknown, ComponentState> {
     const { direction, value } = params
 
     if (direction === 'spend') {
-      this.setState((state) => ({
-        spendedCurrency: {
-          ...state.spendedCurrency,
-          name: value,
-        },
+      this.setState(() => ({
+        spendedCurrency: value,
       }))
     }
 
     if (direction === 'receive') {
-      this.setState((state) => ({
-        receivedCurrency: {
-          ...state.receivedCurrency,
-          name: value,
-        },
+      this.setState(() => ({
+        receivedCurrency: value,
       }))
     }
   }
@@ -187,6 +185,12 @@ class Bridge extends PureComponent<unknown, ComponentState> {
     // externalExchangeReference.closed
   }
 
+  switchAdvancedMode = () => {
+    this.setState((state) => ({
+      isAdvancedMode: !state.isAdvancedMode,
+    }))
+  }
+
   render() {
     const {
       currencies,
@@ -194,32 +198,58 @@ class Bridge extends PureComponent<unknown, ComponentState> {
       fiat,
       fiatAmount,
       spendedCurrency,
+      spendedAmount,
       receivedCurrency,
+      receivedAmount,
       slippage,
-      advancedOptions,
       chainId,
+      isAdvancedMode,
+      advancedOptions,
     } = this.state
 
-    const linked = Link.all(this, 'fiatAmount', 'spendedCurrency', 'receivedCurrency')
+    const linked = Link.all(this, 'fiatAmount', 'spendedAmount', 'receivedAmount', 'slippage')
 
     return (
       <section styleName="bridgeSection">
         <h2 styleName="title">Some title</h2>
 
-        <ExchangeForm
-          stateReference={linked}
-          isPending={isPending}
-          fiat={fiat}
-          fiatAmount={fiatAmount}
-          swap={this.swap}
-          openExternalExchange={this.openExternalExchange}
-          currencies={currencies}
-          spendedCurrency={spendedCurrency}
-          receivedCurrency={receivedCurrency}
-          slippage={slippage}
-          advancedOptions={advancedOptions}
-          chainId={chainId}
-        />
+        <div styleName="componentsWrapper">
+          <ExchangeForm
+            stateReference={linked}
+            isPending={isPending}
+            fiat={fiat}
+            fiatAmount={fiatAmount}
+            swap={this.swap}
+            selectCurrency={this.selectCurrency}
+            openExternalExchange={this.openExternalExchange}
+            currencies={currencies}
+            spendedCurrency={spendedCurrency}
+            receivedCurrency={receivedCurrency}
+            slippage={slippage}
+            advancedOptions={advancedOptions}
+            chainId={chainId}
+          />
+
+          <button styleName="advancedOptionsToggle" onClick={this.switchAdvancedMode}>
+            <span styleName="arrow" />
+            <FormattedMessage id="advancedOptions" defaultMessage="Advanced options" />
+          </button>
+
+          {isAdvancedMode && <AdvancedOptions />}
+
+          <div styleName="calculationsWrapper">Some final amount</div>
+
+          <Button
+            styleName="swapButton"
+            pending={isPending}
+            // TODO
+            disabled={true}
+            onClick={this.swap}
+            brand
+          >
+            <FormattedMessage id="swap" defaultMessage="Swap" />
+          </Button>
+        </div>
       </section>
     )
   }

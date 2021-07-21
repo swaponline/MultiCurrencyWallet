@@ -8,12 +8,6 @@ export type CurrencyMenuItem = {
   standard: string
 }
 
-export type ExchangedСurrency = {
-  name: string
-  address: string
-  amount: number
-}
-
 export type AdvancedOptions = {
   protocols: any
   destReceiver: any
@@ -38,9 +32,14 @@ export type ComponentState = {
   isPending: boolean
   fiat: string
   fiatAmount: number
-  spendedCurrency: ExchangedСurrency
-  receivedCurrency: ExchangedСurrency
+  spendedCurrency: string
+  spendedAmount: number
+  fromAddress: string
+  receivedCurrency: string
+  receivedAmount: number
+  toAddress: string
   slippage: number
-  advancedOptions: AdvancedOptions | any // TODO AdvancedOptions
   chainId: number
+  isAdvancedMode: boolean
+  advancedOptions: AdvancedOptions | any // TODO AdvancedOptions
 }

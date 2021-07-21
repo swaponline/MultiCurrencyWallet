@@ -21,86 +21,80 @@ function ExchangeForm(props) {
     spendedCurrency,
     receivedCurrency,
     slippage,
-    advancedOptions,
     chainId,
+    selectCurrency,
   } = props
 
+  console.log('%c ExchangeForm', 'font-size: 20px')
+  console.log(props)
+
+  const displayCurrencyName = (item) => {
+    return item.blockchain ? `${item.title} (${item.blockchain})` : item.title
+  }
+
   return (
-    <form styleName="exchangeForm" action="">
-      {/* <div styleName="inputWrapper">
+    <form action="">
+      <div styleName="inputWrapper">
         <FieldLabel>
           <FormattedMessage id="spend" defaultMessage="Spend" />{' '}
-          <Tooltip id="fiatAmountTooltip">
-            <FormattedMessage id="fiatAmountNotice" defaultMessage="Some useful notice for user" />
+          <Tooltip id="spendAmountTooltip">
+            <FormattedMessage id="spendAmountNotice" defaultMessage="Some useful notice for user" />
           </Tooltip>
         </FieldLabel>
         <Input
           pattern="0-9\."
           onKeyDown={inputReplaceCommaWithDot}
-          valueLink={stateReference.fiatAmount}
+          valueLink={stateReference.spendedAmount}
           withMargin
         />
-      </div> */}
+        <CurrencySelect
+          selectedItemRender={displayCurrencyName}
+          className={dropDownStyles.simpleDropdown}
+          selectedValue={spendedCurrency.value}
+          onSelect={(value) =>
+            selectCurrency({
+              direction: 'spend',
+              value,
+            })
+          }
+          currencies={currencies}
+        />
+      </div>
 
       <div styleName="inputWrapper">
         <FieldLabel>
-          <FormattedMessage id="spend" defaultMessage="Spend" />{' '}
-          <Tooltip id="fiatAmountTooltip">
-            <FormattedMessage id="fiatAmountNotice" defaultMessage="Some useful notice for user" />
+          <FormattedMessage id="receive" defaultMessage="Receive" />{' '}
+          <Tooltip id="receiveAmountTooltip">
+            <FormattedMessage
+              id="receiveAmountNotice"
+              defaultMessage="Some useful notice for user"
+            />
           </Tooltip>
         </FieldLabel>
-        <Input
-          pattern="0-9\."
-          onKeyDown={inputReplaceCommaWithDot}
-          valueLink={stateReference.currencyAmount}
-          withMargin
-        />
+        <Input valueLink={stateReference.receivedAmount} disabled withMargin />
         <CurrencySelect
-          selectedItemRender={(item) => `${item.title} (${item.blockchain})`}
+          selectedItemRender={displayCurrencyName}
           className={dropDownStyles.simpleDropdown}
-          selectedValue={spendedCurrency.name}
-          onSelect={() => null}
+          selectedValue={receivedCurrency.value}
+          onSelect={(value) => {
+            selectCurrency({
+              direction: 'receive',
+              value,
+            })
+          }}
           currencies={currencies}
-          arrowSide="left"
         />
       </div>
-
-      <div styleName="inputWrapper">
-        <FieldLabel>
-          <FormattedMessage id="receive" defaultMessage="Receive" />
-        </FieldLabel>
-        <Input valueLink={stateReference.tokenAmount} disabled withMargin />
-        <CurrencySelect
-          selectedItemRender={(item) => `${item.title} (${item.blockchain})`}
-          className={dropDownStyles.simpleDropdown}
-          selectedValue={receivedCurrency.name}
-          onSelect={() => null}
-          currencies={currencies}
-          arrowSide="left"
-        />
-      </div>
-
-      {/* **** */}
 
       <div styleName="inputWrapper">
         <FieldLabel>
           <FormattedMessage id="slippage" defaultMessage="Slippage" />
+          <Tooltip id="slippageTooltip">
+            <FormattedMessage id="slippageNotice" defaultMessage="Some useful notice for user" />
+          </Tooltip>
         </FieldLabel>
-        <Input valueLink={stateReference.tokenAmount} withMargin />
+        <Input valueLink={stateReference.slippage} withMargin />
       </div>
-
-      <div styleName="calculationsWrapper">Some final amount</div>
-
-      <Button
-        styleName="swapButton"
-        pending={isPending}
-        disabled={isPending}
-        onClick={openExternalExchange}
-        empty
-        big
-      >
-        <FormattedMessage id="swap" defaultMessage="Swap" />
-      </Button>
     </form>
   )
 }

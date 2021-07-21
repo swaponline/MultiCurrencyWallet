@@ -6,7 +6,7 @@
   }
 }
 
-.exchangeForm {
+.componentsWrapper {
   max-width: 42em;
   margin: 0 auto 3em;
   padding: 2rem;
@@ -17,6 +17,19 @@
 
 .inputWrapper {
   position: relative;
+}
+
+.advancedOptionsToggle {
+  position: relative;
+  margin-bottom: 1rem;
+  padding-left: 1rem;
+}
+
+.arrow {
+  @include arrow('down', 9px, 2px, var(--color));
+  position: absolute;
+  left: 0;
+  top: 22%;
 }
 
 .calculationsWrapper {
