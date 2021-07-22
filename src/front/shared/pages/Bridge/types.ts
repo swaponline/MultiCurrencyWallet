@@ -8,7 +8,7 @@ export type CurrencyMenuItem = {
   standard?: string
 }
 
-export type AdvancedOptions = {
+export type AdditionalFeatures = {
   protocols: any
   destReceiver: any
   referrerAddress: any
@@ -37,7 +37,7 @@ export type SwapData = {
   toToken: TokenData
   fromTokenAmount: string
   toTokenAmount: string
-  protocols: any // [Array(3)]
+  protocols: any // any[]
   tx: {
     data: string
     from: string
@@ -46,6 +46,14 @@ export type SwapData = {
     to: string
     value: string
   }
+}
+
+export type Network = {
+  chainId: number
+  networkVersion: number
+  chainName: string
+  rpcUrls: string[]
+  blockExplorerUrls: string[]
 }
 
 export type ComponentState = {
@@ -61,13 +69,13 @@ export type ComponentState = {
   spendedAmount: string
   fromWallet: IUniversalObj
   receivedCurrency: CurrencyMenuItem
-  receivedAmount: number
+  receivedAmount: string
   toWallet: IUniversalObj
   slippage: number
   slippageMaxRange: number
-  chainId: number
+  network: Network
   isAdvancedMode: boolean
   // TODO
-  advancedOptions: AdvancedOptions | any
+  additionalFeatures: AdditionalFeatures | any
   swapData: SwapData | undefined
 }

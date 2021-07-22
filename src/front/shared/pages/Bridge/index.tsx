@@ -44,34 +44,34 @@ class Bridge extends PureComponent<unknown, ComponentState> {
       spendedAmount: '',
       fromWallet: fromWallet || {},
       receivedCurrency: receivedCurrency,
-      receivedAmount: 0,
+      receivedAmount: '0',
       toWallet: toWallet || {},
       slippage: 1,
       slippageMaxRange: 50,
-      chainId: 1,
+      network: externalConfig.evmNetworks[spendedCurrency.blockchain],
       isAdvancedMode: false,
-      advancedOptions: {},
+      additionalFeatures: {},
       swapData: undefined,
     }
   }
 
   componentDidMount() {
-    this.updateChainId()
+    this.updateNetwork()
   }
 
-  updateChainId = () => {
+  updateNetwork = () => {
     const { spendedCurrency } = this.state
 
     this.setState(() => ({
-      chainId: externalConfig.evmNetworks[spendedCurrency.blockchain].networkVersion,
+      network: externalConfig.evmNetworks[spendedCurrency.blockchain],
     }))
   }
 
   serviceIsAvailable = async () => {
-    const { chainId } = this.state
+    const { network } = this.state
 
     try {
-      const res: any = await apiLooper.get('oneinch', `/${chainId}/healthcheck`)
+      const res: any = await apiLooper.get('oneinch', `/${network.networkVersion}/healthcheck`)
 
       return res?.status === 'OK'
     } catch (error) {
@@ -93,7 +93,7 @@ class Bridge extends PureComponent<unknown, ComponentState> {
   }
 
   createSwapRequest = () => {
-    const { chainId, slippage, spendedAmount, fromWallet, toWallet } = this.state
+    const { network, slippage, spendedAmount, fromWallet, toWallet } = this.state
 
     const fromAddress = fromWallet.isToken
       ? fromWallet.contractAddress
@@ -102,10 +102,10 @@ class Bridge extends PureComponent<unknown, ComponentState> {
       ? toWallet.contractAddress
       : '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
 
-    const spendedWeiAmount = new BigNumber(spendedAmount).times(10).pow(18).toString()
+    const spendedWeiAmount = this.convertIntoWei(spendedAmount, 18)
 
     return ''.concat(
-      `/${chainId}/swap?`,
+      `/${network.networkVersion}/swap?`,
       `fromTokenAddress=${fromAddress}&`,
       `toTokenAddress=${toAddress}&`,
       `amount=${spendedWeiAmount}&`,
@@ -113,6 +113,16 @@ class Bridge extends PureComponent<unknown, ComponentState> {
       `slippage=${slippage}`
     )
   }
+
+  // TODO: find a better place for this calculations
+  convertIntoWei = (amount, decimals) => {
+    return new BigNumber(amount).times(10).pow(decimals).dp(decimals).toString()
+  }
+
+  convertFromWei = (amount, decimals) => {
+    return new BigNumber(amount).div(10).pow(decimals).dp(decimals).toString()
+  }
+  // TODO ---------------------------
 
   getSwapData = async () => {
     const serviceIsOk = await this.serviceIsAvailable()
@@ -139,6 +149,7 @@ class Bridge extends PureComponent<unknown, ComponentState> {
 
       this.setState(() => ({
         swapData: swap,
+        receivedAmount: this.convertFromWei(swap.toTokenAmount, swap.fromToken.decimals),
       }))
     } catch (error) {
       this.reportError(error)
@@ -185,7 +196,7 @@ class Bridge extends PureComponent<unknown, ComponentState> {
           spendedCurrency: value,
           fromWallet: actions.core.getWallet({ currency: value.value }),
         }),
-        this.updateChainId
+        this.updateNetwork
       )
     }
 
@@ -283,11 +294,11 @@ class Bridge extends PureComponent<unknown, ComponentState> {
       spendedAmount,
       fromWallet,
       receivedCurrency,
-      receivedAmount,
       slippage,
-      chainId,
+      network,
+      swapData,
       isAdvancedMode,
-      advancedOptions,
+      additionalFeatures,
     } = this.state
 
     const linked = Link.all(this, 'fiatAmount', 'spendedAmount', 'receivedAmount', 'slippage')
@@ -302,26 +313,24 @@ class Bridge extends PureComponent<unknown, ComponentState> {
         <div styleName="componentsWrapper">
           <ExchangeForm
             stateReference={linked}
-            fiat={fiat}
-            fiatAmount={fiatAmount}
             selectCurrency={this.selectCurrency}
             openExternalExchange={this.openExternalExchange}
             currencies={currencies}
             spendedCurrency={spendedCurrency}
             receivedCurrency={receivedCurrency}
-            slippage={slippage}
-            advancedOptions={advancedOptions}
-            chainId={chainId}
           />
 
-          <button styleName="advancedOptionsToggle" onClick={this.switchAdvancedMode}>
-            <span styleName="arrow" />
-            <FormattedMessage id="advancedOptions" defaultMessage="Advanced options" />
-          </button>
+          <AdvancedOptions
+            isAdvancedMode={isAdvancedMode}
+            switchAdvancedMode={this.switchAdvancedMode}
+          />
 
-          {isAdvancedMode && <AdvancedOptions />}
-
-          <SwapInfo />
+          <SwapInfo
+            network={network}
+            swapData={swapData}
+            convertFromWei={this.convertFromWei}
+            convertIntoWei={this.convertIntoWei}
+          />
 
           <div styleName="buttonWrapper">
             <Button

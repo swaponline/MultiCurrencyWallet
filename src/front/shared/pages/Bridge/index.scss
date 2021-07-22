@@ -7,7 +7,7 @@
 }
 
 .componentsWrapper {
-  max-width: 42em;
+  max-width: 38em;
   margin: 0 auto 3em;
   padding: 2rem;
   border-radius: 8px;
@@ -19,28 +19,49 @@
   position: relative;
 }
 
-.advancedOptionsToggle {
-  position: relative;
-  margin-bottom: 1rem;
-  padding-left: 1rem;
+.advancedOptions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+
+  form {
+    margin-top: 1.4rem;
+  }
 }
 
-.arrow {
-  @include arrow('down', 9px, 2px, var(--color));
-  position: absolute;
-  left: 0;
-  top: 22%;
+.advancedOptionsToggle {
+  cursor: pointer;
+  position: relative;
+
+  input {
+    display: inline-block;
+    margin-right: 0.4rem;
+  }
 }
 
 .swapInfo {
   margin-bottom: 2rem;
-  padding: 1rem;
+  padding-top: 1rem;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  border: 1px solid var(--color-border);
   border-radius: 5px;
+  color: var(--color-notice);
+}
+
+.indicator {
+  font-weight: 700;
+
+  span {
+    @include ff-mono;
+    display: inline-block;
+    font-weight: 400;
+    margin-left: 0.3rem;
+  }
 }
 
 .buttonWrapper {

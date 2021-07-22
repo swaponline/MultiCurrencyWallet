@@ -6,23 +6,10 @@ import { inputReplaceCommaWithDot } from 'helpers/domUtils'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
 import Input from 'components/forms/Input/Input'
-import Button from 'components/controls/Button/Button'
-import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import CurrencySelect from 'components/ui/CurrencySelect/CurrencySelect'
 
 function ExchangeForm(props) {
-  const {
-    stateReference,
-    fiat,
-    fiatAmount,
-    openExternalExchange,
-    currencies,
-    spendedCurrency,
-    receivedCurrency,
-    slippage,
-    chainId,
-    selectCurrency,
-  } = props
+  const { stateReference, currencies, spendedCurrency, receivedCurrency, selectCurrency } = props
 
   const displayCurrencyName = (item) => {
     return item.blockchain && item.standard ? `${item.title} (${item.blockchain})` : item.title
