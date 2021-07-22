@@ -15,7 +15,7 @@ import ExchangeForm from './ExchangeForm'
 import AdvancedOptions from './AdvancedOptions'
 import SwapInfo from './SwapInfo'
 
-class Bridge extends PureComponent<unknown, ComponentState> {
+class SomeSwap extends PureComponent<unknown, ComponentState> {
   constructor(props) {
     super(props)
 
@@ -367,4 +367,4 @@ class Bridge extends PureComponent<unknown, ComponentState> {
 export default connect(({ currencies, user: { activeFiat } }) => ({
   currencies: currencies.items,
   activeFiat,
-}))(CSSModules(Bridge, styles, { allowMultiple: true }))
+}))(CSSModules(SomeSwap, styles, { allowMultiple: true }))

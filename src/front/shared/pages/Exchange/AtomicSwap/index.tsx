@@ -3,7 +3,7 @@ import Link from 'local_modules/sw-valuelink'
 
 import ThemeTooltip from 'components/ui/Tooltip/ThemeTooltip'
 import CSSModules from 'react-css-modules'
-import styles from './Exchange.scss'
+import styles from './index.scss'
 import Swap from 'swap.swap'
 import { connect } from 'redaction'
 import actions from 'redux/actions'
@@ -12,12 +12,8 @@ import { Redirect } from 'react-router-dom'
 import { getState } from 'redux/core'
 import reducers from 'redux/core/reducers'
 
-import SelectGroup from './SelectGroup/SelectGroup'
+import SelectGroup from '../SelectGroup/SelectGroup'
 import { Button } from 'components/controls'
-import Promo from './Promo/Promo'
-import Quote from './Quote'
-import HowItWorks from './HowItWorks/HowItWorks'
-import VideoAndFeatures from './VideoAndFeatures/VideoAndFeatures'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
@@ -35,11 +31,11 @@ import helpers, {
 } from 'helpers'
 
 import Switching from 'components/controls/Switching/Switching'
-import AddressSelect from './AddressSelect/AddressSelect'
+import AddressSelect from '../AddressSelect/AddressSelect'
 import { AddressType, AddressRole } from 'domain/address'
 import { SwapMode } from 'domain/swap'
 import NetworkStatus from 'components/NetworkStatus/NetworkStatus'
-import Orders from './Orders/Orders'
+import Orders from '../Orders/Orders'
 import erc20Like from 'common/erc20Like'
 import turboSwap from 'common/helpers/turboSwap'
 import Toggle from 'components/controls/Toggle/Toggle'
@@ -146,7 +142,7 @@ const bannedPeers = {} // rejected swap peers
   })
 )
 @CSSModules(styles, { allowMultiple: true })
-class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
+class AtomicSwap extends PureComponent<ExchangeProps, ExchangeState> {
   private _mounted = false
 
   static defaultProps = {
@@ -2251,7 +2247,6 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
         >
           <Fragment>
             <div styleName="container">
-              <Promo />
               {Form}
 
               <Button
@@ -2277,16 +2272,9 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
             </div>
           </Fragment>
         </div>
-        {config && config.showHowItsWork && (
-          <Fragment>
-            <HowItWorks />
-            <VideoAndFeatures />
-            <Quote />
-          </Fragment>
-        )}
       </div>
     )
   }
 }
 
-export default injectIntl(Exchange)
+export default injectIntl(AtomicSwap)

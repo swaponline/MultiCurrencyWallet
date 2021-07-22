@@ -24,11 +24,6 @@ export const messages = defineMessages({
     description: 'Menu item "Exchange"',
     defaultMessage: 'Exchange',
   },
-  bridge: {
-    id: 'bridge',
-    description: 'Menu item "bridge"',
-    defaultMessage: 'Bridge',
-  },
   history: {
     id: 'menu.history',
     description: 'Menu item "History"',
@@ -48,11 +43,10 @@ export const messages = defineMessages({
 
 export const getMenuItems = (props) => {
   const { intl } = props
-  const { exchange, wallet, bridge, createWallet, history } = messages
+  const { exchange, wallet, createWallet, history } = messages
   const { 
     exchange: exchangeLink,
     createWallet: create,
-    bridge: bridgeLink,
     // farm,
     history: historyLink,
     home,
@@ -77,12 +71,6 @@ export const getMenuItems = (props) => {
       exact: false,
       currentPageFlag: true,
     },
-    {
-      title: intl.formatMessage(messages.bridge),
-      link: bridgeLink,
-      exact: true,
-      currentPageFlag: true,
-    },
   ]
 
   const itemsWithoutWallet = [
@@ -95,12 +83,6 @@ export const getMenuItems = (props) => {
     !externalConfig.opts.exchangeDisabled && {
       title: intl.formatMessage(exchange),
       link: exchangeLink,
-      exact: false,
-      currentPageFlag: true,
-    },
-    {
-      title: intl.formatMessage(bridge),
-      link: bridgeLink,
       exact: false,
       currentPageFlag: true,
     },
@@ -143,10 +125,9 @@ export const getMenuItems = (props) => {
 
 export const getMenuItemsMobile = (props, isWalletCreate, dinamicPath) => {
   const { intl } = props
-  const { exchange, wallet, bridge, createWallet, history } = messages
+  const { exchange, wallet, createWallet, history } = messages
   const { 
     exchange: exchangeLink,
-    bridge: bridgeLink,
     // farm,
     history: historyLink,
   } = links
@@ -169,12 +150,6 @@ export const getMenuItemsMobile = (props, isWalletCreate, dinamicPath) => {
       link: exchangeLink,
       exact: false,
       icon: <i className="fas fa-sync-alt" aria-hidden="true" />,
-    },
-    {
-      title: props.intl.formatMessage(bridge),
-      link: bridgeLink,
-      displayNone: !isWalletCreate,
-      icon: <i className="fas fa-wallet"></i>,
     },
   ]
 

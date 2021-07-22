@@ -3,7 +3,7 @@ import { FormattedMessage, injectIntl } from 'react-intl'
 
 import CSSModules from 'react-css-modules'
 import styles from './SelectGroup.scss'
-import partialStyles from '../Exchange.scss'
+import partialStyles from '../AtomicSwap/index.scss'
 
 import Input from 'components/forms/Input/Input'
 import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
