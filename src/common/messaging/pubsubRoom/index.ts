@@ -3,6 +3,8 @@ import EventEmitter from 'events'
 import { cloneDeep as clone } from 'lodash'
 import PeerId from 'peer-id'
 
+//@ts-ignore
+window.PeerId = PeerId
 import debug from 'debug'
 
 import { PROTOCOL } from './protocol'
