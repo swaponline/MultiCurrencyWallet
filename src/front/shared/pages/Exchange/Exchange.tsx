@@ -227,8 +227,12 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
       }
     }
 
-    const haveType = this.getDefaultWalletType(haveCurrency.toUpperCase())
-    const getType = this.getDefaultWalletType(getCurrency.toUpperCase())
+    const {
+      haveType,
+      fromAddress,
+      getType,
+      toAddress,
+    } = this.getAddressesDataByCurrencies({haveCurrency, getCurrency})
 
     this.state = {
       isTokenSell: erc20Like.isToken({ name: haveCurrency }),
@@ -261,10 +265,8 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
       pairFees: false,
       balances: false,
       haveBalance: false,
-      //@ts-ignore: strictNullChecks
-      fromAddress: this.makeAddressObject(haveType, haveCurrency.toUpperCase()),
-      //@ts-ignore: strictNullChecks
-      toAddress: this.makeAddressObject(getType, getCurrency.toUpperCase()),
+      fromAddress,
+      toAddress,
       isTurbo: false,
       redirectToSwap: null,
       isPending: true,
@@ -293,6 +295,23 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
     )
   }
 
+  getAddressesDataByCurrencies(params) {
+    const { haveCurrency, getCurrency } = params
+
+    const haveType = this.getDefaultWalletType(haveCurrency.toUpperCase())
+    const getType = this.getDefaultWalletType(getCurrency.toUpperCase())
+
+    const fromAddress = this.makeAddressObject(haveType, haveCurrency.toUpperCase())
+    const toAddress = this.makeAddressObject(getType, getCurrency.toUpperCase())
+
+    return {
+      haveType,
+      fromAddress,
+      getType,
+      toAddress,
+    }
+  }
+
   makeAddressObject(type, currency) {
     const wallet =
       type !== AddressType.Custom
@@ -303,12 +322,6 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
         : false
 
     switch (type) {
-      case AddressType.Internal:
-        return {
-          type: AddressType.Internal,
-          currency,
-          value: wallet ? wallet.address : '',
-        }
       case AddressType.Metamask:
         return {
           type: AddressType.Metamask,
@@ -321,8 +334,13 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
           currency,
           value: ``,
         }
+      default:
+        return {
+          type: AddressType.Internal,
+          currency,
+          value: wallet ? wallet.address : '',
+        }
     }
-    return null
   }
 
   getExchangeSettingsFromLocalStorage() {
@@ -1302,12 +1320,21 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
     if (value === haveCurrency) {
       this.flipCurrency()
     } else {
+      const {
+        haveType,
+        fromAddress,
+        getType,
+        toAddress,
+      } = this.getAddressesDataByCurrencies({haveCurrency, getCurrency: value})
+
       this.setState(
         {
           getCurrency: value,
-          getType: this.getDefaultWalletType(value.toUpperCase()),
+          getType,
+          toAddress,
           haveCurrency,
-          haveType: this.getDefaultWalletType(haveCurrency.toUpperCase()),
+          haveType,
+          fromAddress,
           pairFees: false,
         },
         () => {
@@ -1331,12 +1358,21 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
     if (value === getCurrency) {
       this.flipCurrency()
     } else {
+      const {
+        haveType,
+        fromAddress,
+        getType,
+        toAddress,
+      } = this.getAddressesDataByCurrencies({haveCurrency: value, getCurrency})
+
       this.setState(
         {
           haveCurrency: value,
-          haveType: this.getDefaultWalletType(value.toUpperCase()),
+          haveType,
+          fromAddress,
           getCurrency,
-          getType: this.getDefaultWalletType(getCurrency.toUpperCase()),
+          getType,
+          toAddress,
           pairFees: false,
         },
         () => {
