@@ -1,5 +1,5 @@
 .restoreModalHolder {
-  width: 400px;
+  max-width: 400px;
   margin: 0 auto;
 }
 .buttonsHolder {
@@ -23,7 +23,7 @@
 .alertTooltipWrapper {
   font-size: 0.8em;
   padding: 0.3em 0.5em;
-  background: rgba(#fd6b65, 0.6);
+  background: rgba(var(--color-bad), 0.6);
   border-radius: 2px;
 }
 
