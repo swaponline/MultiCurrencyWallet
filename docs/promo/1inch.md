@@ -76,6 +76,11 @@ We integrate the 1inch Network in our wallet and all our users will use it to ex
 
 
 # In what ways does your project stand out from the competition? *
+
+One of the main differences is mainly our clients are developers who add our wallet as additional functionality on their platforms,
+one of our clients is GHOST by McAfee, SONM, NEXT.coin etc., you can find more our clients here (https://github.com/swaponline/MultiCurrencyWallet/blob/master/docs/CLIENTS.md).
+
+
 # What level of support do you expect throughout the project completion process? *
 # What is your estimated timeline (with milestones) for completion of the project? *
 # What stage do you expect to be the most challenging?
