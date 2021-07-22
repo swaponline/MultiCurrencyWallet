@@ -13,7 +13,6 @@ import CurrencySelect from 'components/ui/CurrencySelect/CurrencySelect'
 function ExchangeForm(props) {
   const {
     stateReference,
-    isPending,
     fiat,
     fiatAmount,
     openExternalExchange,

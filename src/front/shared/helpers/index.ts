@@ -75,6 +75,7 @@ export {
   links,
   constants,
   localStorage,
+  transactions,
   api,
   migrate,
   // Methods

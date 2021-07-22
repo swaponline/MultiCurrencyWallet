@@ -24,7 +24,7 @@ export type AdvancedOptions = {
   mainRouteParts: any
 }
 
-type TokenData = {
+export type TokenData = {
   symbol: string
   name: string
   decimals: number
@@ -32,7 +32,7 @@ type TokenData = {
   logoURI: string
 }
 
-type SwapData = {
+export type SwapData = {
   fromToken: TokenData
   toToken: TokenData
   fromTokenAmount: string
@@ -53,6 +53,8 @@ export type ComponentState = {
   currencies: CurrencyMenuItem[]
   error: IError | null
   isPending: boolean
+  isDataPending: boolean
+  isSwapPending: boolean
   fiat: string
   fiatAmount: number
   spendedCurrency: CurrencyMenuItem

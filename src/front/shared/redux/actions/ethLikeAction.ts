@@ -553,11 +553,13 @@ class EthLikeAction {
   }
 
   // TODO: decide will we use this method in the send method
-  sendReadyTransaction = async (params) => {
+  sendReadyTransaction = async (params): Promise<string> => {
     const { txData } = params
 
     const Web3 = this.getCurrentWeb3()
-    const owner = metamask.isConnected() ? metamask.getAddress() : getState().user[`${this.tickerKey}Data`].address
+    const owner = metamask.isConnected()
+      ? metamask.getAddress()
+      : getState().user[`${this.tickerKey}Data`].address
     const walletData = actions.core.getWallet({
       address: owner,
       currency: this.ticker,
@@ -575,7 +577,7 @@ class EthLikeAction {
 
     return new Promise((res, rej) => {
       const receipt = sendMethod(sendedData.rawTransaction)
-        .on('transactionHash', (hash) => res({ transactionHash: hash }))
+        .on('transactionHash', (hash) => res(hash))
         .on('error', (error) => rej(error))
     })
   }

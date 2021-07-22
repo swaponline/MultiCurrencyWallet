@@ -6,13 +6,14 @@ import CSSModules from 'react-css-modules'
 import styles from './index.scss'
 import { COIN_TYPE, COIN_MODEL, COIN_DATA } from 'swap.app/constants/COINS'
 import { Token } from 'common/types'
-import { feedback, apiLooper, externalConfig, constants } from 'helpers'
+import { feedback, apiLooper, externalConfig, constants, transactions } from 'helpers'
 import actions from 'redux/actions'
 import Link from 'local_modules/sw-valuelink'
-import { ComponentState } from './types'
+import { ComponentState, SwapData } from './types'
 import Button from 'components/controls/Button/Button'
 import ExchangeForm from './ExchangeForm'
 import AdvancedOptions from './AdvancedOptions'
+import SwapInfo from './SwapInfo'
 
 class Bridge extends PureComponent<unknown, ComponentState> {
   constructor(props) {
@@ -33,6 +34,8 @@ class Bridge extends PureComponent<unknown, ComponentState> {
     this.state = {
       error: null,
       isPending: false,
+      isDataPending: false,
+      isSwapPending: false,
       externalExchangeReference: null,
       fiat: window.DEFAULT_FIAT || activeFiat,
       fiatAmount: 0,
@@ -64,9 +67,11 @@ class Bridge extends PureComponent<unknown, ComponentState> {
     }))
   }
 
-  serviceIsAvailable = async (chaindId) => {
+  serviceIsAvailable = async () => {
+    const { chainId } = this.state
+
     try {
-      const res: any = await apiLooper.get('oneinch', `/${chaindId}/healthcheck`)
+      const res: any = await apiLooper.get('oneinch', `/${chainId}/healthcheck`)
 
       return res?.status === 'OK'
     } catch (error) {
@@ -87,10 +92,30 @@ class Bridge extends PureComponent<unknown, ComponentState> {
     // * feedback...
   }
 
-  getSwapData = async () => {
+  createSwapRequest = () => {
     const { chainId, slippage, spendedAmount, fromWallet, toWallet } = this.state
 
-    const serviceIsOk = await this.serviceIsAvailable(chainId)
+    const fromAddress = fromWallet.isToken
+      ? fromWallet.contractAddress
+      : '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
+    const toAddress = toWallet.isToken
+      ? toWallet.contractAddress
+      : '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
+
+    const spendedWeiAmount = new BigNumber(spendedAmount).times(10).pow(18).toString()
+
+    return ''.concat(
+      `/${chainId}/swap?`,
+      `fromTokenAddress=${fromAddress}&`,
+      `toTokenAddress=${toAddress}&`,
+      `amount=${spendedWeiAmount}&`,
+      `fromAddress=${fromWallet.address}&`,
+      `slippage=${slippage}`
+    )
+  }
+
+  getSwapData = async () => {
+    const serviceIsOk = await this.serviceIsAvailable()
 
     if (!serviceIsOk) {
       actions.notifications.show(constants.notifications.Message, {
@@ -105,51 +130,46 @@ class Bridge extends PureComponent<unknown, ComponentState> {
       return
     }
 
-    const fromAddress = fromWallet.isToken
-      ? fromWallet.contractAddress
-      : '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
-    const toAddress = toWallet.isToken
-      ? toWallet.contractAddress
-      : '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
-
-    const spendedWeiAmount = new BigNumber(spendedAmount).times(10).pow(18).toString()
-
-    const request = ''.concat(
-      `/${chainId}/swap?`,
-      `fromTokenAddress=${fromAddress}&`,
-      `toTokenAddress=${toAddress}&`,
-      `amount=${spendedWeiAmount}&`,
-      `fromAddress=${fromWallet.address}&`,
-      `slippage=${slippage}`
-    )
+    this.setState(() => ({
+      isDataPending: true,
+    }))
 
     try {
-      // TODO: understand what's wrong with - await apiLooper.post('oneinchExchange', request)
-      const swapData = await fetch('https://api.1inch.exchange/v3.0' + request).then((res) =>
-        res.json()
-      )
-
-      console.log('%c swapData', 'color: brown; font-size: 20px')
-      console.log(swapData)
+      const swap: any = await apiLooper.get('oneinch', this.createSwapRequest())
 
       this.setState(() => ({
-        swapData,
+        swapData: swap,
       }))
     } catch (error) {
       this.reportError(error)
     }
+
+    this.setState(() => ({
+      isDataPending: false,
+    }))
   }
 
   swap = async () => {
     const { fromWallet, swapData } = this.state
     const key = fromWallet.standard ? fromWallet.standard : fromWallet.currency
+    const lowerKey = key.toLowerCase()
 
-    const result = await actions[key.toLowerCase()].sendReadyTransaction({
+    this.setState(() => ({
+      isSwapPending: true,
+    }))
+
+    const hash = await actions[lowerKey].sendReadyTransaction({
       txData: swapData?.tx,
     })
 
-    console.log('%c swap hash', 'color: brown; font-size: 20px')
-    console.log(result)
+    actions.notifications.show(constants.notifications.Transaction, {
+      link: transactions.getLink(lowerKey, hash),
+    })
+
+    this.setState(() => ({
+      swapData: undefined,
+      isSwapPending: false,
+    }))
   }
 
   selectCurrency = (params) => {
@@ -220,7 +240,14 @@ class Bridge extends PureComponent<unknown, ComponentState> {
   }
 
   isSwapDataNotAvailable = () => {
-    const { isPending, spendedAmount, fromWallet, slippage, slippageMaxRange } = this.state
+    const {
+      isPending,
+      isDataPending,
+      spendedAmount,
+      fromWallet,
+      slippage,
+      slippageMaxRange,
+    } = this.state
 
     const wrongSlippage =
       new BigNumber(slippage).isNaN() ||
@@ -230,6 +257,7 @@ class Bridge extends PureComponent<unknown, ComponentState> {
     // TODO: worry about the commission
     return (
       isPending ||
+      isDataPending ||
       wrongSlippage ||
       new BigNumber(spendedAmount).isNaN() ||
       new BigNumber(spendedAmount).isEqualTo(0) ||
@@ -238,15 +266,17 @@ class Bridge extends PureComponent<unknown, ComponentState> {
   }
 
   isSwapNotAvailable = () => {
-    const { swapData } = this.state
+    const { swapData, isSwapPending } = this.state
 
-    return !swapData
+    return !swapData || isSwapPending
   }
 
   render() {
     const {
       currencies,
       isPending,
+      isDataPending,
+      isSwapPending,
       fiat,
       fiatAmount,
       spendedCurrency,
@@ -255,7 +285,6 @@ class Bridge extends PureComponent<unknown, ComponentState> {
       receivedCurrency,
       receivedAmount,
       slippage,
-      slippageMaxRange,
       chainId,
       isAdvancedMode,
       advancedOptions,
@@ -273,7 +302,6 @@ class Bridge extends PureComponent<unknown, ComponentState> {
         <div styleName="componentsWrapper">
           <ExchangeForm
             stateReference={linked}
-            isPending={isPending}
             fiat={fiat}
             fiatAmount={fiatAmount}
             selectCurrency={this.selectCurrency}
@@ -293,21 +321,21 @@ class Bridge extends PureComponent<unknown, ComponentState> {
 
           {isAdvancedMode && <AdvancedOptions />}
 
-          <div styleName="calculationsWrapper">Some final amount</div>
+          <SwapInfo />
 
           <div styleName="buttonWrapper">
             <Button
               styleName="swapBtn"
-              pending={isPending}
+              pending={isDataPending}
               disabled={swapDataBtnIsDisabled}
               onClick={this.getSwapData}
               brand
             >
-              <FormattedMessage id="getSwap" defaultMessage="Get swap" />
+              <FormattedMessage id="checkSwap" defaultMessage="Check the swap" />
             </Button>
             <Button
               styleName="swapBtn"
-              pending={isPending}
+              pending={isSwapPending}
               disabled={swapBtnIsDisabled}
               onClick={this.swap}
               brand
