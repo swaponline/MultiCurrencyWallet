@@ -18,7 +18,6 @@ function SwapInfo(props: ComponentProps) {
 
   let swapFee: string | undefined = undefined
   let price: string | undefined = undefined
-  let swapFeeCurrency: string | undefined = undefined
 
   if (swapData) {
     const { tx, fromTokenAmount, toTokenAmount, fromToken, toToken } = swapData
@@ -26,9 +25,10 @@ function SwapInfo(props: ComponentProps) {
     const fromAmount = convertFromWei(fromTokenAmount, fromToken.decimals)
     const toAmount = convertFromWei(toTokenAmount, toToken.decimals)
 
-    price = new BigNumber(fromAmount).div(toAmount).dp(toToken.decimals).toString()
-    swapFee = new BigNumber(tx.gas).times(tx.gasPrice).times(18).toString()
-    swapFeeCurrency = fromToken.symbol
+    price = `${new BigNumber(fromAmount).div(toAmount).dp(toToken.decimals).toString()} ${
+      fromToken.symbol
+    } / ${toToken.symbol}`
+    swapFee = `${new BigNumber(tx.gas).times(tx.gasPrice).times(18).toString()} ${network.currency}`
   }
 
   return (
@@ -41,12 +41,9 @@ function SwapInfo(props: ComponentProps) {
           Price: <span>{price}</span>
         </span>
       )}
-      {swapFee && swapFeeCurrency && (
+      {swapFee && (
         <span styleName="indicator">
-          Fee:{' '}
-          <span>
-            {swapFee} {swapFeeCurrency}
-          </span>
+          Fee: <span>{swapFee}</span>
         </span>
       )}
     </section>

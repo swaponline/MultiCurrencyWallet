@@ -49,6 +49,7 @@ export type SwapData = {
 }
 
 export type Network = {
+  currency: string
   chainId: number
   networkVersion: number
   chainName: string

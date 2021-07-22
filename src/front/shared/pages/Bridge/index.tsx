@@ -116,11 +116,17 @@ class Bridge extends PureComponent<unknown, ComponentState> {
 
   // TODO: find a better place for this calculations
   convertIntoWei = (amount, decimals) => {
-    return new BigNumber(amount).times(10).pow(decimals).dp(decimals).toString()
+    return new BigNumber(amount)
+      .times(10 ** decimals)
+      .dp(decimals)
+      .toString()
   }
 
   convertFromWei = (amount, decimals) => {
-    return new BigNumber(amount).div(10).pow(decimals).dp(decimals).toString()
+    return new BigNumber(amount)
+      .div(10 ** decimals)
+      .dp(decimals)
+      .toString()
   }
   // TODO ---------------------------
 
@@ -149,7 +155,7 @@ class Bridge extends PureComponent<unknown, ComponentState> {
 
       this.setState(() => ({
         swapData: swap,
-        receivedAmount: this.convertFromWei(swap.toTokenAmount, swap.fromToken.decimals),
+        receivedAmount: this.convertFromWei(swap.toTokenAmount, swap.toToken.decimals),
       }))
     } catch (error) {
       this.reportError(error)
