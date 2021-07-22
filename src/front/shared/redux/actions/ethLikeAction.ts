@@ -1,6 +1,6 @@
 import Web3 from 'web3'
 import { BigNumber } from 'bignumber.js'
-import Transaction from 'ethereumjs-tx'
+import { Transaction } from 'ethereumjs-tx'
 import { getState } from 'redux/core'
 import actions from 'redux/actions'
 import reducers from 'redux/core/reducers'
@@ -21,7 +21,7 @@ class EthLikeAction {
   readonly explorerName: string
   readonly explorerLink: string
   readonly explorerApiKey: string
-  readonly chainId: string
+  readonly chainId: number
   readonly adminFeeObj: {
     fee: string // percent of amount
     address: string // where to send
@@ -564,7 +564,7 @@ class EthLikeAction {
 
     const txCount = await Web3.eth.getTransactionCount(txData.from)
     const nonce = Web3.utils.toHex(txCount)
-    const transaction = new Transaction({ ...txData, nonce }, { chainId: this.chainId })
+    const transaction = new Transaction({ ...txData, nonce }, { chain: this.chainId })
 
     transaction.sign(privateKey)
 
@@ -658,7 +658,7 @@ export default {
     ticker: 'ARBETH',
     privateKeyName: 'eth',
     chainId: externalConfig.evmNetworks.ARBETH.chainId,
-    explorerName: 'rinkeby-explorer', 
+    explorerName: 'rinkeby-explorer',
     explorerLink: externalConfig.link.arbitrum,
     explorerApiKey: '',
     adminFeeObj: externalConfig.opts?.fee?.arbeth,
