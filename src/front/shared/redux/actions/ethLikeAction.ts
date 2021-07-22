@@ -558,6 +558,25 @@ class EthLikeAction {
     })
   }
 
+  // TODO: use this method in the send method
+  sendReadyTransaction = async (params) => {
+    const { txData } = params
+    
+    const web3 = this.getCurrentWeb3()
+    const owner = metamask.isConnected() ? metamask.getAddress() : getState().user[`${this.tickerKey}Data`].address
+    const walletData = actions.core.getWallet({
+      address: owner,
+      currency: this.ticker,
+    })
+    
+    if (!walletData.isMetamask) {
+      const signedTx = this.signTransaction({
+        txData,
+        privateKey: ''
+      })
+    }
+  }
+
   signTransaction = async (params) => {
     const { txData, privateKey } = params
     const Web3 = this.getCurrentWeb3()

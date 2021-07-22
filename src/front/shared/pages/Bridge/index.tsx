@@ -141,7 +141,12 @@ class Bridge extends PureComponent<unknown, ComponentState> {
   }
 
   swap = async () => {
-    // actions[]
+    const { fromWallet, swapData } = this.state
+    const key = fromWallet.standard ? fromWallet.standard : fromWallet.currency
+
+    const result = await actions[key].sendReadyTransaction({
+      data: swapData?.tx,
+    })
   }
 
   selectCurrency = (params) => {
