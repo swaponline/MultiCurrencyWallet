@@ -23,17 +23,21 @@ Please, provide participant bios or relevant links, e.g.
 
 In our team 3 developers:
 
-1) Alexander Shestopalov
-- profile: (https://github.com/shendel | https://t.me/eneeseene)
+1) Aleksandr Noxon
+- profile and previous work examples: (https://github.com/noxonsu https://www.linkedin.com/in/noxonsu/ https://codecanyon.net/user/noxonthemes/portfolio)
+- experience: over 16 years of development
+
+2) Alexander Shestopalov
+- profile: (https://github.com/shendel)
 - experience: over 8 years of Web Development
 - previous work examples etc.: ???
 
-2) Mikhail Orsoev
-- profile: (https://github.com/NotEternal | https://t.me/Not_Eternal)
+3) Mikhail Orsoev
+- profile: (https://github.com/NotEternal )
 - experience: 1 year of Web Development
 - previous work examples etc.: ???
 
-3) Vitaliy Shulik
+4) Vitaliy Shulik
 - profile: (https://github.com/VitaliyShulik | https://t.me/vitaliyshulik)
 - experience: 2 years Product Manager and 1 year of Web Development
 - previous work examples etc.: Product manager at Taklimakan Network (social network based on blockchain technology)
@@ -56,7 +60,7 @@ Network development - our case.
 
 # Describe your proposal in one sentence: *
 
-Add 1inch as a backend to eth-erc20 swaps on crypto wordpress wallet installed on 1000+ sites.
+Add 1inch as a backend to eth-erc20 swaps on crypto wordpress wallet installed on 1000+ sites. 
 
 
 # Tell us more about your project *
@@ -82,7 +86,17 @@ one of our clients is GHOST by McAfee, SONM, NEXT.coin etc., you can find more o
 
 
 # What level of support do you expect throughout the project completion process? *
+
+we will use your API, we expect you will fix the bugs and add simple functions (such as callback after success payment)
+
 # What is your estimated timeline (with milestones) for completion of the project? *
+2 month
+
 # What stage do you expect to be the most challenging?
+Long-term sustainability, we can add your api easiely, but we made tons of changes every day after feedback of our clients, we should not only do "simplest" integration but deliever better user experience. For example our clients pay us to provide VISA to ERC20 token bridge, it's more than just add "call api method using web3" but required complex work of designer, developer, manager and client. 
+
 # What is the size of funding you expect for completing each milestone of the project? *
+200 000 $ . To solve HR issues (finding devs, educating and motivation the old developers) for tho years. But we can start with 0$
+
 # How will the project be maintained upon completion of the grant? Will any external sources of funding be available to ensure long-term sustainability? *
+Our clients pay us to get the workable application so we will mainteined this as long as our clients will need this. 
