@@ -117,7 +117,7 @@ class Bridge extends PureComponent<unknown, ComponentState> {
     const request = ''.concat(
       `/${chainId}/swap?`,
       `fromTokenAddress=${fromAddress}&`,
-      `toTokenAddress=0xb9638272ad6998708de56bbc0a290a1de534a578&`,
+      `toTokenAddress=${toAddress}&`,
       `amount=${spendedWeiAmount}&`,
       `fromAddress=${fromWallet.address}&`,
       `slippage=${slippage}`
@@ -144,9 +144,12 @@ class Bridge extends PureComponent<unknown, ComponentState> {
     const { fromWallet, swapData } = this.state
     const key = fromWallet.standard ? fromWallet.standard : fromWallet.currency
 
-    const result = await actions[key].sendReadyTransaction({
-      data: swapData?.tx,
+    const result = await actions[key.toLowerCase()].sendReadyTransaction({
+      txData: swapData?.tx,
     })
+
+    console.log('%c swap hash', 'color: brown; font-size: 20px')
+    console.log(result)
   }
 
   selectCurrency = (params) => {

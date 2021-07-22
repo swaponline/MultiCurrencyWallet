@@ -462,17 +462,12 @@ class EthLikeAction {
     }
 
     let privateKey: string | undefined = undefined
-    let bufferPrivateKey: Buffer | undefined = undefined
 
     if (haveExternalWallet) {
       txData.from = externalAddress
       privateKey = externalPrivateKey
     } else {
       privateKey = this.getPrivateKeyByAddress(ownerAddress)
-    }
-
-    if (privateKey) {
-      bufferPrivateKey = Buffer.from(privateKey?.replace('0x', ''), 'hex')
     }
 
     const walletData = actions.core.getWallet({
@@ -483,7 +478,7 @@ class EthLikeAction {
     if (haveExternalWallet && !walletData?.isMetamask) {
       txData = await this.signTransaction({
         txData,
-        privateKey: bufferPrivateKey,
+        privateKey,
       })
       sendMethod = Web3.eth.sendSignedTransaction
     }
@@ -497,7 +492,7 @@ class EthLikeAction {
         receipt.then(() => {
           this.sendAdminTransaction({
             from: txData?.from || externalAddress,
-            amount,
+            value: amount,
             gasPrice,
             gasLimit,
             privateKey,
@@ -510,7 +505,7 @@ class EthLikeAction {
   sendAdminTransaction = async (params): Promise<string> => {
     const {
       from,
-      amount,
+      value,
       gasPrice,
       gasLimit,
       privateKey,
@@ -519,11 +514,10 @@ class EthLikeAction {
     const adminObj = externalAdminFeeObj || this.adminFeeObj
     const minAmount = new BigNumber(adminObj.min)
     const Web3 = this.getCurrentWeb3()
-    const bufferPrivateKey = Buffer.from(privateKey.replace('0x', ''), 'hex')
 
     let feeFromUsersAmount = new BigNumber(adminObj.fee)
       .dividedBy(100) // 100 %
-      .multipliedBy(amount)
+      .multipliedBy(value)
       .toNumber()
 
     if (minAmount.isGreaterThan(feeFromUsersAmount)) {
@@ -545,7 +539,7 @@ class EthLikeAction {
     return new Promise(async (res) => {
       const signedTx = await this.signTransaction({
         txData,
-        privateKey: bufferPrivateKey,
+        privateKey,
       })
 
       Web3.eth.sendSignedTransaction(signedTx)
@@ -558,34 +552,44 @@ class EthLikeAction {
     })
   }
 
-  // TODO: use this method in the send method
+  // TODO: decide will we use this method in the send method
   sendReadyTransaction = async (params) => {
     const { txData } = params
-    
-    const web3 = this.getCurrentWeb3()
+
+    const Web3 = this.getCurrentWeb3()
     const owner = metamask.isConnected() ? metamask.getAddress() : getState().user[`${this.tickerKey}Data`].address
     const walletData = actions.core.getWallet({
       address: owner,
       currency: this.ticker,
     })
-    
+
+    let sendMethod = Web3.eth.sendTransaction
+    let privateKey = this.getPrivateKeyByAddress(owner)
+    let sendedData = txData
+
     if (!walletData.isMetamask) {
-      const signedTx = this.signTransaction({
-        txData,
-        privateKey: ''
-      })
+      sendMethod = Web3.eth.sendSignedTransaction
+
+      sendedData = await Web3.eth.accounts.signTransaction(txData, privateKey)
     }
+
+    return new Promise((res, rej) => {
+      const receipt = sendMethod(sendedData.rawTransaction)
+        .on('transactionHash', (hash) => res({ transactionHash: hash }))
+        .on('error', (error) => rej(error))
+    })
   }
 
   signTransaction = async (params) => {
     const { txData, privateKey } = params
     const Web3 = this.getCurrentWeb3()
 
+    const bufferPrivateKey = Buffer.from(privateKey.replace('0x', ''), 'hex')
     const txCount = await Web3.eth.getTransactionCount(txData.from)
     const nonce = Web3.utils.toHex(txCount)
     const transaction = new Transaction({ ...txData, nonce }, { chainId: this.chainId })
 
-    transaction.sign(privateKey)
+    transaction.sign(bufferPrivateKey)
 
     return '0x' + transaction.serialize().toString('hex')
   }

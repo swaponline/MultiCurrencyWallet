@@ -156,7 +156,7 @@ describe('Sending EVM Coin', () => {
   type AdminSettings = {
     web3: IUniversalObj
     paramsToSend: {
-      amount: number
+      value: number
       gasLimit: number
       from: string
       privateKey: string
@@ -177,7 +177,7 @@ describe('Sending EVM Coin', () => {
       {
         web3: ethWeb3,
         paramsToSend: {
-          amount: 0.001,
+          value: 0.001,
           gasLimit: DEFAULT_CURRENCY_PARAMETERS.evmLike.limit.send,
           from: testWallets.eth.address.toLowerCase(),
           privateKey: testWallets.eth.privateKey,
@@ -194,7 +194,7 @@ describe('Sending EVM Coin', () => {
       {
         web3: bscWeb3,
         paramsToSend: {
-          amount: 0.001,
+          value: 0.001,
           gasLimit: DEFAULT_CURRENCY_PARAMETERS.evmLike.limit.send,
           from: testWallets.bnb.address.toLowerCase(),
           privateKey: testWallets.bnb.privateKey,
@@ -211,7 +211,7 @@ describe('Sending EVM Coin', () => {
       {
         web3: maticWeb3,
         paramsToSend: {
-          amount: 0.001,
+          value: 0.001,
           gasLimit: DEFAULT_CURRENCY_PARAMETERS.evmLike.limit.send,
           from: testWallets.matic.address.toLowerCase(),
           privateKey: testWallets.matic.privateKey,
@@ -228,7 +228,7 @@ describe('Sending EVM Coin', () => {
       {
         web3: arbitrumWeb3,
         paramsToSend: {
-          amount: 0.0001,
+          value: 0.0001,
           gasLimit: DEFAULT_CURRENCY_PARAMETERS.arbeth.limit.send,
           from: testWallets.arbeth.address.toLowerCase(),
           privateKey: testWallets.arbeth.privateKey,

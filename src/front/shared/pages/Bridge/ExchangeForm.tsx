@@ -26,7 +26,7 @@ function ExchangeForm(props) {
   } = props
 
   const displayCurrencyName = (item) => {
-    return item.blockchain ? `${item.title} (${item.blockchain})` : item.title
+    return item.blockchain && item.standard ? `${item.title} (${item.blockchain})` : item.title
   }
 
   return (
