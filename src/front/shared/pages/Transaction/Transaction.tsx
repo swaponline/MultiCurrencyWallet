@@ -14,6 +14,8 @@ import cssModules from 'react-css-modules'
 import styles from './styles.scss'
 import lsDataCache from 'helpers/lsDataCache'
 
+import { COIN_DATA } from 'swap.app/constants/COINS'
+
 
 const labels = defineMessages({
   Title: {
@@ -100,19 +102,10 @@ class Transaction extends Component<any, any> {
 
 
     try {
-      if (erc20Like.erc20.isToken({ name: currency })) {
-        infoTx = await actions.erc20.fetchTokenTxInfo(ticker, txHash)
-      }
-
-      else if (erc20Like.bep20.isToken({ name: currency })) {
-        infoTx = await actions.bep20.fetchTokenTxInfo(ticker, txHash)
-      }
-
-      else if (erc20Like.erc20matic.isToken({ name: currency })) {
-        infoTx = await actions.erc20matic.fetchTokenTxInfo(ticker, txHash)
-      }
-
-      else {
+      if (erc20Like.isToken({ name: currency })) {
+        const coinStandard = COIN_DATA[currency.toUpperCase()].standard.toLowerCase()
+        infoTx = await actions[coinStandard].fetchTokenTxInfo(ticker, txHash)
+      } else {
         infoTx = await actions[currency].fetchTxInfo(txHash, 5 * 60 * 1000)
       }
     } catch (err) {

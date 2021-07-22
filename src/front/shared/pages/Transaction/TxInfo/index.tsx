@@ -94,6 +94,9 @@ class TxInfo extends Component<any, any> {
       tx,
     } = this.state
 
+    console.log('this.props txinfo', this.props)
+    console.log('this.state txinfo', this.state)
+
     let finalAmount = amount
     let finalAdminFee = adminFee
 
