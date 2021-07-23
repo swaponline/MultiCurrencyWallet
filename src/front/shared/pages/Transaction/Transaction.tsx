@@ -2,17 +2,21 @@ import { withRouter } from 'react-router-dom'
 import React, { Component } from 'react'
 import actions from 'redux/actions'
 import erc20Like from 'common/erc20Like'
-import helpers, { links } from 'helpers'
+import {
+  links,
+  getWalletLink,
+  localStorage,
+  getCurrencyKey,
+  lsDataCache,
+  transactions
+} from 'helpers'
 
-import getCurrencyKey from 'helpers/getCurrencyKey'
 import { defineMessages, injectIntl } from 'react-intl'
-import getWalletLink from 'helpers/getWalletLink'
 
 import TxInfo from './TxInfo'
 import { ModalBox } from 'components/modal'
 import cssModules from 'react-css-modules'
 import styles from './styles.scss'
-import lsDataCache from 'helpers/lsDataCache'
 
 import { COIN_DATA } from 'swap.app/constants/COINS'
 
@@ -100,11 +104,19 @@ class Transaction extends Component<any, any> {
     let infoTx
     let error = null
 
+    const hiddenCoinsList = localStorage.getItem('hiddenCoinsList')
+
+    const userWallets = actions.core
+      .getWallets({})
+      .filter(({ currency }) => !hiddenCoinsList.includes(currency))
+
+    console.log('userWallets', userWallets)
+
 
     try {
       if (erc20Like.isToken({ name: currency })) {
-        const coinStandard = COIN_DATA[currency.toUpperCase()].standard.toLowerCase()
-        infoTx = await actions[coinStandard].fetchTokenTxInfo(ticker, txHash)
+        const tokenStandard = COIN_DATA[currency.toUpperCase()].standard.toLowerCase()
+        infoTx = await actions[tokenStandard].fetchTokenTxInfo(ticker, txHash)
       } else {
         infoTx = await actions[currency].fetchTxInfo(txHash, 5 * 60 * 1000)
       }
@@ -182,7 +194,7 @@ class Transaction extends Component<any, any> {
 
   fetchTxFinalBalances = (currency, txHash) => {
     setTimeout(async () => {
-      const finalBalances = await helpers.transactions.fetchTxBalances(currency, txHash)
+      const finalBalances = await transactions.fetchTxBalances(currency, txHash)
       if (finalBalances && !this.unmounted) {
         this.setState({
           finalBalances,
