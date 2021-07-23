@@ -5733,7 +5733,14 @@
   },
   {
     "id": "MM_ToggleTextEnabled",
-    "message": "You must be online all the time, otherwise your will not earn",
+    "message": "Warning! You must be online all the time...",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_WarningMessage",
+    "message": "Warning! You must stay online all the time, otherwise your will not earn or if the swap is processing (can takes a few hour) you may LOOSE your funds! If you can't guarantee long uptime - turn off marketmakeing.",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]

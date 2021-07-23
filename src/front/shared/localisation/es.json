@@ -5737,7 +5737,14 @@
   },
   {
     "id": "MM_ToggleTextEnabled",
-    "message": "Debes estar en línea todo el tiempo, de lo contrario no ganarás",
+    "message": "¡Advertencia! Debes estar en línea todo el tiempo...",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_WarningMessage",
+    "message": "¡Advertencia! Debe permanecer en línea todo el tiempo; de lo contrario, no obtendrá ganancias o si el intercambio se está procesando (puede demorar algunas horas), ¡puede PERDER sus fondos! Si no puede garantizar un tiempo de actividad prolongado, desactive la creación de mercado.",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]

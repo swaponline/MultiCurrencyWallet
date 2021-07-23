@@ -698,19 +698,30 @@ class MarketmakerSettings extends Component<any, any> {
                   <Toggle checked={isMarketEnabled} onChange={this.handleToggleMarketmaker.bind(this)} />
                 </span>
               </div>
-              <p styleName='item-text__secondary'>
+              <div styleName='item-text__secondary'>
                 {isMarketEnabled ? (
-                  <FormattedMessage
-                    id="MM_ToggleTextEnabled"
-                    defaultMessage="You must be online all the time, otherwise your will not earn"
-                  />
+                  <span styleName='warning'>
+                    <FormattedMessage
+                      id="MM_ToggleTextEnabled"
+                      defaultMessage="Warning! You must be online all the time..."
+                    />
+                    {' '}
+                    <Tooltip id="WarningMessage">
+                      <span styleName="tooltipText">
+                        <FormattedMessage
+                          id="MM_WarningMessage"
+                          defaultMessage="Warning! You must stay online all the time, otherwise your will not earn or if the swap is processing (can takes a few hour) you may LOOSE your funds! If you can't guarantee long uptime - turn off marketmakeing."
+                        />
+                      </span>
+                    </Tooltip>
+                  </span>
                 ) : (
                   <FormattedMessage
                     id="MM_ToggleTextDisabled"
                     defaultMessage="Turn on this toggle to start earn"
                   />
                 )}
-              </p>
+              </div>
               <div styleName='item-text__secondary'>
                 <FormattedMessage
                   id="MMPercentEarn"

@@ -5733,7 +5733,14 @@
   },
   {
     "id": "MM_ToggleTextEnabled",
-    "message": "Je moet altijd online zijn, anders verdien je niets",
+    "message": "Waarschuwing! Je moet altijd online zijn...",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_WarningMessage",
+    "message": "Waarschuwing! U moet de hele tijd online blijven, anders verdient u niets of als de swap wordt verwerkt (kan een paar uur duren), kunt u uw geld VERLIES! Als u geen lange uptime kunt garanderen, schakel dan marketmaking uit.",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]

@@ -5737,7 +5737,14 @@
   },
   {
     "id": "MM_ToggleTextEnabled",
-    "message": "Musisz być cały czas online, w przeciwnym razie nie zarobisz",
+    "message": "Ostrzeżenie! Musisz być cały czas online...",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_WarningMessage",
+    "message": "Ostrzeżenie! Musisz być cały czas online, w przeciwnym razie nie zarobisz lub jeśli swap jest przetwarzany (może to potrwać kilka godzin) możesz STRACIĆ swoje środki! Jeśli nie możesz zagwarantować długiego czasu pracy bez przestojów - wyłącz animowanie rynku.",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
