@@ -210,15 +210,11 @@ class SomeSwap extends PureComponent<unknown, ComponentState> {
     const { owner, contract, decimals, standard } = params
     const { spendedAmount } = this.state
 
-    console.log('this.state: ', this.state)
-
     const allowance = await erc20Like[standard].checkAllowance({
       tokenOwnerAddress: owner,
       tokenContractAddress: contract,
       decimals: decimals,
     })
-
-    console.log('allowance: ', allowance)
 
     return new BigNumber(spendedAmount).isGreaterThan(allowance)
   }
@@ -248,13 +244,6 @@ class SomeSwap extends PureComponent<unknown, ComponentState> {
 
     actions.notifications.show(constants.notifications.Transaction, {
       link: transactions.getLink(fromWallet.standard, receipt.transactionHash),
-    })
-
-    await this.needTokenApprove({
-      standard: fromWallet.standard,
-      owner: fromWallet.address,
-      contract: fromWallet.contractAddress,
-      decimals: fromWallet.decimals,
     })
 
     this.setState(() => ({
@@ -299,8 +288,6 @@ class SomeSwap extends PureComponent<unknown, ComponentState> {
         toWallet: actions.core.getWallet({ currency: value.value }),
       }))
     }
-
-    console.log(this.state)
   }
 
   openExternalExchange = () => {
