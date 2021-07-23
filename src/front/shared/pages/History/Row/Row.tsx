@@ -319,7 +319,7 @@ export default class Row extends PureComponent<any, any> {
                         location,
                         targetPath: txLink,
                         tokenPart: `token/{${tokenBaseCurrency}}${type}/`,
-                        name: type,
+                        name: tokenBaseCurrency ? `{${tokenBaseCurrency}}${type}` : type,
                         hash: hash,
                         tokenBaseCurrency,
                       })}

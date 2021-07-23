@@ -449,14 +449,13 @@ class CurrencyWallet extends Component<any, any> {
       isLoading,
     } = this.state
 
-    let currencyKey = getCurrencyKey(currency, true)
 
     txHistory = txItems || txHistory
 
     if (txHistory) {
       txHistory = txHistory.filter((tx) => {
         if (tx && tx.type) {
-          return tx.type.toLowerCase() === currencyKey.toLowerCase()
+          return tx.type.toLowerCase() === currency.toLowerCase()
         }
         return false
       })
