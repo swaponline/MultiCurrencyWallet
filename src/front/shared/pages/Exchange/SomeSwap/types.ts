@@ -64,6 +64,7 @@ export type ComponentState = {
   isPending: boolean
   isDataPending: boolean
   isSwapPending: boolean
+  needApprove: boolean
   fiat: string
   fiatAmount: number
   spendedCurrency: CurrencyMenuItem

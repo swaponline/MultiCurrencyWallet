@@ -425,7 +425,7 @@ class EthLikeAction {
   }
 
   send = async (params): Promise<{ transactionHash: string }> => {
-    let { externalAddress, externalPrivateKey, to, amount, gasPrice, gasLimit, speed } = params
+    let { externalAddress, externalPrivateKey, data, to, amount, gasPrice, gasLimit, speed } = params
 
     // fake tx - turbo-swaps debug
     // if (false) {
@@ -453,6 +453,7 @@ class EthLikeAction {
 
     let sendMethod = Web3.eth.sendTransaction
     let txData: any = {
+      data: data || undefined,
       chainId: this.chainId,
       from: Web3.utils.toChecksumAddress(ownerAddress),
       to: to.trim(),

@@ -9,7 +9,7 @@ import { Token } from 'common/types'
 import { feedback, apiLooper, externalConfig, constants, transactions } from 'helpers'
 import actions from 'redux/actions'
 import Link from 'local_modules/sw-valuelink'
-import { ComponentState, SwapData } from './types'
+import { ComponentState } from './types'
 import Button from 'components/controls/Button/Button'
 import ExchangeForm from './ExchangeForm'
 import AdvancedOptions from './AdvancedOptions'
@@ -36,6 +36,8 @@ class SomeSwap extends PureComponent<unknown, ComponentState> {
       isPending: false,
       isDataPending: false,
       isSwapPending: false,
+      isAdvancedMode: false,
+      needApprove: fromWallet?.isToken,
       externalExchangeReference: null,
       fiat: window.DEFAULT_FIAT || activeFiat,
       fiatAmount: 0,
@@ -49,7 +51,6 @@ class SomeSwap extends PureComponent<unknown, ComponentState> {
       slippage: 1,
       slippageMaxRange: 50,
       network: externalConfig.evmNetworks[spendedCurrency.blockchain],
-      isAdvancedMode: false,
       additionalFeatures: {},
       swapData: undefined,
     }
@@ -189,6 +190,38 @@ class SomeSwap extends PureComponent<unknown, ComponentState> {
     }))
   }
 
+  approve = async () => {
+    const { network, spendedAmount, fromWallet } = this.state
+    const weiAmount = this.convertIntoWei(spendedAmount, fromWallet.decimals)
+
+    const request = ''.concat(
+      `/${network.networkVersion}/approve/calldata?`,
+      `amount=${weiAmount}&`,
+      `tokenAddress=${fromWallet.contractAddress}&`
+    )
+
+    this.setState(() => ({
+      isDataPending: true,
+    }))
+
+    const approveInfo: any = await apiLooper.get('oneinch', request)
+    const hash = await actions[fromWallet.baseCurrency].send({
+      data: approveInfo.data,
+      to: approveInfo.to,
+      amount: approveInfo.value,
+      gasPrice: approveInfo.gasPrice,
+    })
+
+    actions.notifications.show(constants.notifications.Transaction, {
+      link: transactions.getLink(fromWallet.standard, hash),
+    })
+
+    this.setState(() => ({
+      needApprove: false,
+      isDataPending: false,
+    }))
+  }
+
   selectCurrency = (params) => {
     const { direction, value } = params
     const { spendedCurrency, receivedCurrency } = this.state
@@ -197,10 +230,13 @@ class SomeSwap extends PureComponent<unknown, ComponentState> {
     const updateReceivedSide = direction === 'receive' && receivedCurrency.value !== value.value
 
     if (updateSpendedSide) {
+      const fromWallet = actions.core.getWallet({ currency: value.value })
+
       this.setState(
         () => ({
           spendedCurrency: value,
-          fromWallet: actions.core.getWallet({ currency: value.value }),
+          needApprove: fromWallet.isToken,
+          fromWallet,
         }),
         this.updateNetwork
       )
@@ -212,6 +248,8 @@ class SomeSwap extends PureComponent<unknown, ComponentState> {
         toWallet: actions.core.getWallet({ currency: value.value }),
       }))
     }
+
+    console.log(this.state)
   }
 
   openExternalExchange = () => {
@@ -294,6 +332,7 @@ class SomeSwap extends PureComponent<unknown, ComponentState> {
       isPending,
       isDataPending,
       isSwapPending,
+      needApprove,
       fiat,
       fiatAmount,
       spendedCurrency,
@@ -339,17 +378,34 @@ class SomeSwap extends PureComponent<unknown, ComponentState> {
         />
 
         <div styleName="buttonWrapper">
+          {needApprove ? (
+            <Button
+              styleName="button"
+              pending={isDataPending}
+              disabled={swapDataBtnIsDisabled}
+              onClick={this.approve}
+              brand
+            >
+              <FormattedMessage
+                id="FormattedMessageIdApprove"
+                defaultMessage="Approve {token}"
+                values={{ token: spendedCurrency.name }}
+              />
+            </Button>
+          ) : (
+            <Button
+              styleName="button"
+              pending={isDataPending}
+              disabled={swapDataBtnIsDisabled}
+              onClick={this.getSwapData}
+              brand
+            >
+              <FormattedMessage id="checkSwap" defaultMessage="Check the swap" />
+            </Button>
+          )}
+
           <Button
-            styleName="swapBtn"
-            pending={isDataPending}
-            disabled={swapDataBtnIsDisabled}
-            onClick={this.getSwapData}
-            brand
-          >
-            <FormattedMessage id="checkSwap" defaultMessage="Check the swap" />
-          </Button>
-          <Button
-            styleName="swapBtn"
+            styleName="button"
             pending={isSwapPending}
             disabled={swapBtnIsDisabled}
             onClick={this.swap}
