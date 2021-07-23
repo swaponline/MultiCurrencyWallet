@@ -353,6 +353,24 @@
   font-size: 13px;
 }
 
+.tabsWrapper {
+  padding-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tab {
+  padding: 0.2rem 0.8rem;
+  font-size: 1.2rem;
+  border-radius: 6px;
+  border: 1px solid var(--color-border);
+
+  &:not(:first-of-type) {
+    margin-left: 0.5rem;
+  }
+}
+
 @include media-tablet {
   .block {
     flex-basis: 45%;

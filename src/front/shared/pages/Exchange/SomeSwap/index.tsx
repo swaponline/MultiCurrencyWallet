@@ -313,51 +313,47 @@ class SomeSwap extends PureComponent<unknown, ComponentState> {
     const swapBtnIsDisabled = this.isSwapNotAvailable()
 
     return (
-      <section styleName="bridgeSection">
-        <h2 styleName="title">Some title</h2>
+      <section styleName="someSwap">
+        <ExchangeForm
+          stateReference={linked}
+          selectCurrency={this.selectCurrency}
+          openExternalExchange={this.openExternalExchange}
+          currencies={currencies}
+          spendedCurrency={spendedCurrency}
+          receivedCurrency={receivedCurrency}
+        />
 
-        <div styleName="componentsWrapper">
-          <ExchangeForm
-            stateReference={linked}
-            selectCurrency={this.selectCurrency}
-            openExternalExchange={this.openExternalExchange}
-            currencies={currencies}
-            spendedCurrency={spendedCurrency}
-            receivedCurrency={receivedCurrency}
-          />
+        <AdvancedOptions
+          isAdvancedMode={isAdvancedMode}
+          switchAdvancedMode={this.switchAdvancedMode}
+        />
 
-          <AdvancedOptions
-            isAdvancedMode={isAdvancedMode}
-            switchAdvancedMode={this.switchAdvancedMode}
-          />
+        <SwapInfo
+          network={network}
+          swapData={swapData}
+          convertFromWei={this.convertFromWei}
+          convertIntoWei={this.convertIntoWei}
+        />
 
-          <SwapInfo
-            network={network}
-            swapData={swapData}
-            convertFromWei={this.convertFromWei}
-            convertIntoWei={this.convertIntoWei}
-          />
-
-          <div styleName="buttonWrapper">
-            <Button
-              styleName="swapBtn"
-              pending={isDataPending}
-              disabled={swapDataBtnIsDisabled}
-              onClick={this.getSwapData}
-              brand
-            >
-              <FormattedMessage id="checkSwap" defaultMessage="Check the swap" />
-            </Button>
-            <Button
-              styleName="swapBtn"
-              pending={isSwapPending}
-              disabled={swapBtnIsDisabled}
-              onClick={this.swap}
-              brand
-            >
-              <FormattedMessage id="swap" defaultMessage="Swap" />
-            </Button>
-          </div>
+        <div styleName="buttonWrapper">
+          <Button
+            styleName="swapBtn"
+            pending={isDataPending}
+            disabled={swapDataBtnIsDisabled}
+            onClick={this.getSwapData}
+            brand
+          >
+            <FormattedMessage id="checkSwap" defaultMessage="Check the swap" />
+          </Button>
+          <Button
+            styleName="swapBtn"
+            pending={isSwapPending}
+            disabled={swapBtnIsDisabled}
+            onClick={this.swap}
+            brand
+          >
+            <FormattedMessage id="swap" defaultMessage="Swap" />
+          </Button>
         </div>
       </section>
     )
