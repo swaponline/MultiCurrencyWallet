@@ -75,9 +75,12 @@ class TxInfo extends Component<any, any> {
     const {
       isFetching,
       userAddress,
-      toAddress,
       sender: fromAddress,
       error,
+    } = this.props
+
+    let {
+      toAddress,
     } = this.props
 
     const {
@@ -86,6 +89,8 @@ class TxInfo extends Component<any, any> {
 
     if (isFetching) return <Skeleton count={2} />
     if (error)      return <FormattedMessage id="InfoPay_2_Error" defaultMessage="Error loading data" />
+
+    if (Array.isArray(toAddress)) toAddress = toAddress[0]
 
     const amountText = <strong id='txAmout'> {finalAmount}  {currency.toUpperCase()} </strong>
     const toAddressText = <strong id='txToAddress'>{toAddress}</strong>
@@ -102,7 +107,7 @@ class TxInfo extends Component<any, any> {
         }}
       />
     )
-    else if (userAddress?.toLowerCase() === fromAddress.toLowerCase()) return (
+    else if (userAddress?.toLowerCase() === fromAddress?.toLowerCase()) return (
       <FormattedMessage
         id="InfoPay_2_To"
         defaultMessage="{amount} successfully transferred to {br}{toAddress}"
@@ -113,7 +118,7 @@ class TxInfo extends Component<any, any> {
         }}
       />
     )
-    else if (userAddress?.toLowerCase() === toAddress.toLowerCase()) return (
+    else if (userAddress?.toLowerCase() === toAddress?.toLowerCase()) return (
       <FormattedMessage
         id="InfoPay_2_From"
         defaultMessage="{amount} successfully received from {br}{fromAddress}"
