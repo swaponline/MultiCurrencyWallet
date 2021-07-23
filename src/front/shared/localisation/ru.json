@@ -3775,8 +3775,29 @@
     ]
   },
   {
-    "id": "InfoPay_2_Ready",
-    "message": "были успешно переданы",
+    "id": "InfoPay_2_To",
+    "message": "{amount} были успешно переданы {br}{toAddress}",
+    "files": [
+      "src/front/shared/pages/Transaction/TxInfo/index.tsx"
+    ]
+  },
+  {
+    "id": "InfoPay_2_From",
+    "message": "{amount} успешно получено от {br}{fromAddress}",
+    "files": [
+      "src/front/shared/pages/Transaction/TxInfo/index.tsx"
+    ]
+  },
+  {
+    "id": "InfoPay_2_Self",
+    "message": "{amount} успешный самостоятельный перевод {br}{address}",
+    "files": [
+      "src/front/shared/pages/Transaction/TxInfo/index.tsx"
+    ]
+  },
+  {
+    "id": "InfoPay_2_External",
+    "message": "{amount} успешно передано с {br}{fromAddress} на {toAddress}",
     "files": [
       "src/front/shared/pages/Transaction/TxInfo/index.tsx"
     ]

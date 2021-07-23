@@ -2,14 +2,13 @@ import diff from 'hyperdiff'
 import EventEmitter from 'events'
 import { cloneDeep as clone } from 'lodash'
 import PeerId from 'peer-id'
-
-import debug from 'debug'
-
 import { PROTOCOL } from './protocol'
 import Connection from './connection'
 import encoding from './encoding'
 import directConnection from './direct-connection-handler'
 import namedQueryRun from '../../utils/namedQuery'
+
+if (window) window.PeerId = PeerId
 
 const DEFAULT_OPTIONS = {
   pollInterval: 1000

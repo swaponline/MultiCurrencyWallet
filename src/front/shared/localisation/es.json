@@ -3592,8 +3592,29 @@
     ]
   },
   {
-    "id": "InfoPay_2_Ready",
-    "message": "transferido con éxito a",
+    "id": "InfoPay_2_To",
+    "message": "{amount} transferido con éxito a {br}{toAddress}",
+    "files": [
+      "src/front/shared/pages/Transaction/TxInfo/index.tsx"
+    ]
+  },
+  {
+    "id": "InfoPay_2_From",
+    "message": "{amount} recibida correctamente de{br}{fromAddress}",
+    "files": [
+      "src/front/shared/pages/Transaction/TxInfo/index.tsx"
+    ]
+  },
+  {
+    "id": "InfoPay_2_Self",
+    "message": "{amount} se autotransfiere correctamente con{br}{address}",
+    "files": [
+      "src/front/shared/pages/Transaction/TxInfo/index.tsx"
+    ]
+  },
+  {
+    "id": "InfoPay_2_External",
+    "message": "{amount} transferida correctamente de {br}{fromAddress} a {toAddress}",
     "files": [
       "src/front/shared/pages/Transaction/TxInfo/index.tsx"
     ]
