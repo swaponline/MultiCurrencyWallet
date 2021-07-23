@@ -74,10 +74,10 @@ class TxInfo extends Component<any, any> {
   getShortInfoHolder = (finalAmount) => {
     const {
       isFetching,
+      userAddress,
       toAddress,
       sender: fromAddress,
       error,
-      transactionType,
     } = this.props
 
     const {
@@ -91,59 +91,52 @@ class TxInfo extends Component<any, any> {
     const toAddressText = <strong id='txToAddress'>{toAddress}</strong>
     const fromAddressText = <strong id='txfromAddress'>{fromAddress}</strong>
 
-    switch (transactionType) {
-      case 'to':
-        return (
-          <FormattedMessage
-            id="InfoPay_2_To"
-            defaultMessage="{amount} successfully transferred to {br}{toAddress}"
-            values={{
-              amount: amountText,
-              br: <br />,
-              toAddress: toAddressText
-            }}
-          />
-        )
-      case 'from':
-        return (
-          <FormattedMessage
-            id="InfoPay_2_From"
-            defaultMessage="{amount} successfully received from {br}{fromAddress}"
-            values={{
-              amount: amountText,
-              br: <br />,
-              fromAddress: fromAddressText
-            }}
-          />
-        )
-      case 'self':
-        return (
-          <FormattedMessage
-            id="InfoPay_2_Self"
-            defaultMessage="{amount} successfully self transfer with {br}{address}"
-            values={{
-              amount: amountText,
-              br: <br />,
-              address: toAddressText
-            }}
-          />
-        )
-      case 'external':
-        return (
-          <FormattedMessage
-            id="InfoPay_2_External"
-            defaultMessage="{amount} successfully transferred from {br}{fromAddress} to {toAddress}"
-            values={{
-              amount: amountText,
-              br: <br />,
-              fromAddress: fromAddressText,
-              toAddress: toAddressText
-            }}
-          />
-        )
-      default:
-        return <Skeleton count={2} />
-    }
+    if (fromAddress === toAddress) return (
+      <FormattedMessage
+        id="InfoPay_2_Self"
+        defaultMessage="{amount} successfully self transfer with {br}{address}"
+        values={{
+          amount: amountText,
+          br: <br />,
+          address: toAddressText
+        }}
+      />
+    )
+    else if (userAddress?.toLowerCase() === fromAddress.toLowerCase()) return (
+      <FormattedMessage
+        id="InfoPay_2_To"
+        defaultMessage="{amount} successfully transferred to {br}{toAddress}"
+        values={{
+          amount: amountText,
+          br: <br />,
+          toAddress: toAddressText
+        }}
+      />
+    )
+    else if (userAddress?.toLowerCase() === toAddress.toLowerCase()) return (
+      <FormattedMessage
+        id="InfoPay_2_From"
+        defaultMessage="{amount} successfully received from {br}{fromAddress}"
+        values={{
+          amount: amountText,
+          br: <br />,
+          fromAddress: fromAddressText
+        }}
+      />
+    )
+
+    return (
+      <FormattedMessage
+        id="InfoPay_2_External"
+        defaultMessage="{amount} successfully transferred from {br}{fromAddress} to {toAddress}"
+        values={{
+          amount: amountText,
+          br: <br />,
+          fromAddress: fromAddressText,
+          toAddress: toAddressText
+        }}
+      />
+    )
   }
 
   render() {
@@ -168,9 +161,6 @@ class TxInfo extends Component<any, any> {
       linkShare,
       tx,
     } = this.state
-
-    console.log('this.props txinfo', this.props)
-    console.log('this.state txinfo', this.state)
 
     let finalAmount = amount
     let finalAdminFee = adminFee

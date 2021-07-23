@@ -76,13 +76,22 @@ class Transaction extends Component<any, any> {
       }
     }
 
+    const hiddenCoinsList = localStorage.getItem('hiddenCoinsList')
+
+    const userWallet = actions.core
+      .getWallets({})
+      .filter(({ currency: walletCurrency, tokenKey }) =>
+        !hiddenCoinsList?.includes(walletCurrency) &&
+        (tokenKey?.toLowerCase() || walletCurrency.toLowerCase()) === currency.toLowerCase()
+      )[0]
+
     this.state = {
       currency,
+      userAddress: userWallet?.address,
       ticker,
       txHash,
       isFetching: !(infoTx),
       infoTx,
-      transactionType: '',
       amount: 0,
       balance: 0,
       oldBalance: 0,
@@ -145,27 +154,9 @@ class Transaction extends Component<any, any> {
         adminFee,
       } = infoTx
 
-      const hiddenCoinsList = localStorage.getItem('hiddenCoinsList')
-
-      const userWallet = actions.core
-        .getWallets({})
-        .filter(({ currency: walletCurrency, tokenKey }) =>
-          !hiddenCoinsList?.includes(walletCurrency) &&
-          (tokenKey?.toLowerCase() || walletCurrency.toLowerCase()) === currency.toLowerCase()
-        )[0]
-
-      const userAddress = userWallet?.address
-
-      let transactionType = 'external'
-
-      if (sender === toAddress)           transactionType = 'self'
-      else if (userAddress?.toLowerCase() === sender.toLowerCase())    transactionType = 'to'
-      else if (userAddress?.toLowerCase() === toAddress.toLowerCase()) transactionType = 'from'
-
       this.setState({
         isFetching: false,
         infoTx,
-        transactionType,
         amount,
         balance:0,
         oldBalance,
