@@ -71,6 +71,81 @@ class TxInfo extends Component<any, any> {
     this.setState({ state: this.state });
   }
 
+  getShortInfoHolder = (finalAmount) => {
+    const {
+      isFetching,
+      toAddress,
+      sender: fromAddress,
+      error,
+      transactionType,
+    } = this.props
+
+    const {
+      currency,
+    } = this.state
+
+    if (isFetching) return <Skeleton count={2} />
+    if (error)      return <FormattedMessage id="InfoPay_2_Error" defaultMessage="Error loading data" />
+
+    const amountText = <strong id='txAmout'> {finalAmount}  {currency.toUpperCase()} </strong>
+    const toAddressText = <strong id='txToAddress'>{toAddress}</strong>
+    const fromAddressText = <strong id='txfromAddress'>{fromAddress}</strong>
+
+    switch (transactionType) {
+      case 'to':
+        return (
+          <FormattedMessage
+            id="InfoPay_2_To"
+            defaultMessage="{amount} successfully transferred to {br}{toAddress}"
+            values={{
+              amount: amountText,
+              br: <br />,
+              toAddress: toAddressText
+            }}
+          />
+        )
+      case 'from':
+        return (
+          <FormattedMessage
+            id="InfoPay_2_From"
+            defaultMessage="{amount} successfully received from {br}{fromAddress}"
+            values={{
+              amount: amountText,
+              br: <br />,
+              fromAddress: fromAddressText
+            }}
+          />
+        )
+      case 'self':
+        return (
+          <FormattedMessage
+            id="InfoPay_2_Self"
+            defaultMessage="{amount} successfully self transfer with {br}{address}"
+            values={{
+              amount: amountText,
+              br: <br />,
+              address: toAddressText
+            }}
+          />
+        )
+      case 'external':
+        return (
+          <FormattedMessage
+            id="InfoPay_2_External"
+            defaultMessage="{amount} successfully transferred from {br}{fromAddress} to {toAddress}"
+            values={{
+              amount: amountText,
+              br: <br />,
+              fromAddress: fromAddressText,
+              toAddress: toAddressText
+            }}
+          />
+        )
+      default:
+        return <Skeleton count={2} />
+    }
+  }
+
   render() {
     const {
       intl,
@@ -125,20 +200,7 @@ class TxInfo extends Component<any, any> {
 
           <div className="p-3">
             <div styleName="shortInfoHolder">
-              {
-                isFetching ? (
-                    <Skeleton count={2} />
-                  ) : error ? (
-                    <FormattedMessage id="InfoPay_2_Error" defaultMessage="Error loading data" />
-                  ) : (
-                    <span>
-                      <strong id='txAmout'> {finalAmount}  {currency.toUpperCase()} </strong>
-                      <FormattedMessage id="InfoPay_2_Ready" defaultMessage="были успешно переданы" />
-                      <br />
-                      <strong id='txToAddress'>{toAddress}</strong>
-                    </span>
-                  )
-              }
+              {this.getShortInfoHolder(finalAmount)}
             </div>
           </div>
 
