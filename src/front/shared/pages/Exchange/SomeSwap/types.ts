@@ -60,6 +60,7 @@ export type Network = {
 export type ComponentState = {
   externalExchangeReference: null | IUniversalObj
   currencies: CurrencyMenuItem[]
+  receivedList: CurrencyMenuItem[]
   error: IError | null
   isPending: boolean
   isDataPending: boolean

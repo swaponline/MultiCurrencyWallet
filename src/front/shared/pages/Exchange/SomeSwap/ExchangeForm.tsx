@@ -11,11 +11,13 @@ function ExchangeForm(props) {
   const {
     stateReference,
     currencies,
+    receivedList,
     spendedCurrency,
     receivedCurrency,
     selectCurrency,
     fiat,
     fromWallet,
+    toWallet,
   } = props
 
   return (
@@ -52,8 +54,14 @@ function ExchangeForm(props) {
           selectedValue={receivedCurrency.value}
           label={<FormattedMessage id="partial255" defaultMessage="You get" />}
           id="needToRenameThisIdTwo"
-          currencies={currencies}
+          currencies={receivedList}
           placeholder="0"
+          inputToolTip={
+            <span styleName="balanceTooltip">
+              <FormattedMessage id="partial767" defaultMessage="Balance: " />
+              {toWallet.balance}
+            </span>
+          }
           onSelect={(value) => {
             selectCurrency({
               direction: 'receive',

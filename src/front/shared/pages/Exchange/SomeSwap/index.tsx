@@ -23,7 +23,8 @@ class SomeSwap extends PureComponent<unknown, ComponentState> {
     const { currencies, activeFiat } = props
 
     const spendedCurrency = currencies[0]
-    const receivedCurrency = currencies[1]
+    const receivedList = this.returnReceivedList(currencies, spendedCurrency)
+    const receivedCurrency = receivedList[0]
 
     const fromWallet = actions.core.getWallet({
       currency: spendedCurrency.value,
@@ -43,6 +44,7 @@ class SomeSwap extends PureComponent<unknown, ComponentState> {
       fiat: window.DEFAULT_FIAT || activeFiat,
       fiatAmount: 0,
       currencies,
+      receivedList,
       spendedCurrency: spendedCurrency,
       spendedAmount: '',
       fromWallet: fromWallet || {},
@@ -66,6 +68,23 @@ class SomeSwap extends PureComponent<unknown, ComponentState> {
 
     this.setState(() => ({
       network: externalConfig.evmNetworks[spendedCurrency.blockchain],
+    }))
+  }
+
+  returnReceivedList = (currencies, spendedCurrency) => {
+    return currencies.filter(
+      (item) =>
+        item.blockchain === spendedCurrency.blockchain && item.value !== spendedCurrency.value
+    )
+  }
+
+  filterReceivedList = () => {
+    const { currencies, spendedCurrency } = this.state
+    const receivedList = this.returnReceivedList(currencies, spendedCurrency)
+
+    this.setState(() => ({
+      receivedList: receivedList,
+      receivedCurrency: receivedList[0],
     }))
   }
 
@@ -278,7 +297,10 @@ class SomeSwap extends PureComponent<unknown, ComponentState> {
           needApprove,
           fromWallet,
         }),
-        this.updateNetwork
+        () => {
+          this.updateNetwork()
+          this.filterReceivedList()
+        }
       )
     }
 
@@ -367,6 +389,7 @@ class SomeSwap extends PureComponent<unknown, ComponentState> {
   render() {
     const {
       currencies,
+      receivedList,
       isPending,
       isDataPending,
       isSwapPending,
@@ -397,10 +420,12 @@ class SomeSwap extends PureComponent<unknown, ComponentState> {
           selectCurrency={this.selectCurrency}
           openExternalExchange={this.openExternalExchange}
           currencies={currencies}
+          receivedList={receivedList}
           spendedCurrency={spendedCurrency}
           receivedCurrency={receivedCurrency}
           fiat={fiat}
           fromWallet={fromWallet}
+          toWallet={toWallet}
         />
 
         <AdvancedSettings
@@ -457,7 +482,15 @@ class SomeSwap extends PureComponent<unknown, ComponentState> {
   }
 }
 
+const filterCurrencies = (arr) => {
+  return arr.filter((item) => {
+    const currency = COIN_DATA[item.name]
+
+    return item.standard || currency?.model === COIN_MODEL.AB
+  })
+}
+
 export default connect(({ currencies, user: { activeFiat } }) => ({
-  currencies: currencies.items,
+  currencies: filterCurrencies(currencies.items),
   activeFiat,
 }))(CSSModules(SomeSwap, styles, { allowMultiple: true }))
