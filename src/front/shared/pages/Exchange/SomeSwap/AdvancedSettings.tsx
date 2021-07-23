@@ -1,10 +1,10 @@
 import { FormattedMessage } from 'react-intl'
 import CSSModules from 'react-css-modules'
 import styles from './index.scss'
-import { AdditionalFeatures } from './types'
+import { AdvancedOptions } from './types'
 
 /* 
-  AdditionalFeatures:
+  AdvancedOptions:
 
   protocols: any
   destReceiver: any
@@ -21,7 +21,7 @@ import { AdditionalFeatures } from './types'
   mainRouteParts: any
 */
 
-function AdvancedOptions(props) {
+function AdvancedSettings(props) {
   const { isAdvancedMode, switchAdvancedMode } = props
 
   return (
@@ -38,4 +38,4 @@ function AdvancedOptions(props) {
   )
 }
 
-export default CSSModules(AdvancedOptions, styles, { allowMultiple: true })
+export default CSSModules(AdvancedSettings, styles, { allowMultiple: true })

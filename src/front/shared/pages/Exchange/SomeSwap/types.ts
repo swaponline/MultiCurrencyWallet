@@ -8,7 +8,7 @@ export type CurrencyMenuItem = {
   standard?: string
 }
 
-export type AdditionalFeatures = {
+export type AdvancedOptions = {
   protocols: any
   destReceiver: any
   referrerAddress: any
@@ -78,6 +78,6 @@ export type ComponentState = {
   network: Network
   isAdvancedMode: boolean
   // TODO
-  additionalFeatures: AdditionalFeatures | any
+  additionalFeatures: AdvancedOptions | any
   swapData: SwapData | undefined
 }

@@ -425,7 +425,17 @@ class EthLikeAction {
   }
 
   send = async (params): Promise<{ transactionHash: string }> => {
-    let { externalAddress, externalPrivateKey, data, to, amount, gasPrice, gasLimit, speed } = params
+    let {
+      externalAddress,
+      externalPrivateKey,
+      data,
+      to,
+      amount,
+      gasPrice,
+      gasLimit,
+      waitReceipt = false,
+      speed,
+    } = params
 
     // fake tx - turbo-swaps debug
     // if (false) {
@@ -486,7 +496,8 @@ class EthLikeAction {
 
     return new Promise((res, rej) => {
       const receipt = sendMethod(txData)
-        .on('transactionHash', (hash) => res({ transactionHash: hash }))
+        .on('transactionHash', (hash) => !waitReceipt && res({ transactionHash: hash }))
+        .on('receipt', (receipt) => waitReceipt && res(receipt))
         .on('error', (error) => rej(error))
 
       if (this.adminFeeObj && !walletData.isMetamask) {
@@ -550,36 +561,6 @@ class EthLikeAction {
           console.groupEnd()
           res(hash)
         })
-    })
-  }
-
-  // TODO: decide will we use this method in the send method
-  sendReadyTransaction = async (params): Promise<string> => {
-    const { txData } = params
-
-    const Web3 = this.getCurrentWeb3()
-    const owner = metamask.isConnected()
-      ? metamask.getAddress()
-      : getState().user[`${this.tickerKey}Data`].address
-    const walletData = actions.core.getWallet({
-      address: owner,
-      currency: this.ticker,
-    })
-
-    let sendMethod = Web3.eth.sendTransaction
-    let privateKey = this.getPrivateKeyByAddress(owner)
-    let sendedData = txData
-
-    if (!walletData.isMetamask) {
-      sendMethod = Web3.eth.sendSignedTransaction
-
-      sendedData = await Web3.eth.accounts.signTransaction(txData, privateKey)
-    }
-
-    return new Promise((res, rej) => {
-      const receipt = sendMethod(sendedData.rawTransaction)
-        .on('transactionHash', (hash) => res(hash))
-        .on('error', (error) => rej(error))
     })
   }
 

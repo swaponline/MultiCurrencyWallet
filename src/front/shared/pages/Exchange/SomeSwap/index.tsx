@@ -6,13 +6,14 @@ import CSSModules from 'react-css-modules'
 import styles from './index.scss'
 import { COIN_TYPE, COIN_MODEL, COIN_DATA } from 'swap.app/constants/COINS'
 import { Token } from 'common/types'
+import erc20Like from 'common/erc20Like'
 import { feedback, apiLooper, externalConfig, constants, transactions } from 'helpers'
 import actions from 'redux/actions'
 import Link from 'local_modules/sw-valuelink'
 import { ComponentState } from './types'
 import Button from 'components/controls/Button/Button'
 import ExchangeForm from './ExchangeForm'
-import AdvancedOptions from './AdvancedOptions'
+import AdvancedSettings from './AdvancedSettings'
 import SwapInfo from './SwapInfo'
 
 class SomeSwap extends PureComponent<unknown, ComponentState> {
@@ -86,6 +87,7 @@ class SomeSwap extends PureComponent<unknown, ComponentState> {
     this.setState(() => ({
       error,
     }))
+    console.error(error)
     actions.notifications.show(constants.notifications.ErrorNotification, {
       error: error.message,
     })
@@ -169,25 +171,56 @@ class SomeSwap extends PureComponent<unknown, ComponentState> {
 
   swap = async () => {
     const { fromWallet, swapData } = this.state
-    const key = fromWallet.standard ? fromWallet.standard : fromWallet.currency
+    const key = fromWallet.standard ? fromWallet.baseCurrency : fromWallet.currency
     const lowerKey = key.toLowerCase()
 
     this.setState(() => ({
       isSwapPending: true,
     }))
 
-    const hash = await actions[lowerKey].sendReadyTransaction({
-      txData: swapData?.tx,
+    try {
+      const { tx, fromToken } = swapData!
+
+      const { transactionHash } = await actions[lowerKey].send({
+        data: tx.data,
+        to: tx.to,
+        amount: this.convertFromWei(tx.value, fromToken.decimals),
+        gasPrice: tx.gasPrice,
+        gasLimit: tx.gas,
+      })
+
+      actions.notifications.show(constants.notifications.Transaction, {
+        link: transactions.getLink(lowerKey, transactionHash),
+      })
+
+      this.setState(() => ({
+        // delete last swap data, the swap info may have changed
+        swapData: undefined,
+      }))
+    } catch (error) {
+      this.reportError(error)
+    } finally {
+      this.setState(() => ({
+        isSwapPending: false,
+      }))
+    }
+  }
+
+  needTokenApprove = async (params) => {
+    const { owner, contract, decimals, standard } = params
+    const { spendedAmount } = this.state
+
+    console.log('this.state: ', this.state)
+
+    const allowance = await erc20Like[standard].checkAllowance({
+      tokenOwnerAddress: owner,
+      tokenContractAddress: contract,
+      decimals: decimals,
     })
 
-    actions.notifications.show(constants.notifications.Transaction, {
-      link: transactions.getLink(lowerKey, hash),
-    })
+    console.log('allowance: ', allowance)
 
-    this.setState(() => ({
-      swapData: undefined,
-      isSwapPending: false,
-    }))
+    return new BigNumber(spendedAmount).isGreaterThan(allowance)
   }
 
   approve = async () => {
@@ -205,15 +238,23 @@ class SomeSwap extends PureComponent<unknown, ComponentState> {
     }))
 
     const approveInfo: any = await apiLooper.get('oneinch', request)
-    const hash = await actions[fromWallet.baseCurrency].send({
+    const receipt = await actions[fromWallet.baseCurrency].send({
       data: approveInfo.data,
       to: approveInfo.to,
       amount: approveInfo.value,
       gasPrice: approveInfo.gasPrice,
+      waitReceipt: true,
     })
 
     actions.notifications.show(constants.notifications.Transaction, {
-      link: transactions.getLink(fromWallet.standard, hash),
+      link: transactions.getLink(fromWallet.standard, receipt.transactionHash),
+    })
+
+    await this.needTokenApprove({
+      standard: fromWallet.standard,
+      owner: fromWallet.address,
+      contract: fromWallet.contractAddress,
+      decimals: fromWallet.decimals,
     })
 
     this.setState(() => ({
@@ -222,7 +263,7 @@ class SomeSwap extends PureComponent<unknown, ComponentState> {
     }))
   }
 
-  selectCurrency = (params) => {
+  selectCurrency = async (params) => {
     const { direction, value } = params
     const { spendedCurrency, receivedCurrency } = this.state
 
@@ -231,11 +272,21 @@ class SomeSwap extends PureComponent<unknown, ComponentState> {
 
     if (updateSpendedSide) {
       const fromWallet = actions.core.getWallet({ currency: value.value })
+      let needApprove = false
+
+      if (fromWallet.isToken) {
+        needApprove = await this.needTokenApprove({
+          standard: fromWallet.standard,
+          owner: fromWallet.address,
+          contract: fromWallet.contractAddress,
+          decimals: fromWallet.decimals,
+        })
+      }
 
       this.setState(
         () => ({
           spendedCurrency: value,
-          needApprove: fromWallet.isToken,
+          needApprove,
           fromWallet,
         }),
         this.updateNetwork
@@ -365,7 +416,7 @@ class SomeSwap extends PureComponent<unknown, ComponentState> {
           fromWallet={fromWallet}
         />
 
-        <AdvancedOptions
+        <AdvancedSettings
           isAdvancedMode={isAdvancedMode}
           switchAdvancedMode={this.switchAdvancedMode}
         />
