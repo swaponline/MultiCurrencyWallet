@@ -299,6 +299,7 @@ class SomeSwap extends PureComponent<unknown, ComponentState> {
       spendedCurrency,
       spendedAmount,
       fromWallet,
+      toWallet,
       receivedCurrency,
       slippage,
       network,
@@ -321,6 +322,8 @@ class SomeSwap extends PureComponent<unknown, ComponentState> {
           currencies={currencies}
           spendedCurrency={spendedCurrency}
           receivedCurrency={receivedCurrency}
+          fiat={fiat}
+          fromWallet={fromWallet}
         />
 
         <AdvancedOptions

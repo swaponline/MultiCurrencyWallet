@@ -28,7 +28,10 @@ function SwapInfo(props: ComponentProps) {
     price = `${new BigNumber(fromAmount).div(toAmount).dp(toToken.decimals).toString()} ${
       fromToken.symbol
     } / ${toToken.symbol}`
-    swapFee = `${new BigNumber(tx.gas).times(tx.gasPrice).times(18).toString()} ${network.currency}`
+    swapFee = `${new BigNumber(tx.gas)
+      .times(tx.gasPrice)
+      .div(10 ** 18)
+      .toString()} ${network.currency}`
   }
 
   return (

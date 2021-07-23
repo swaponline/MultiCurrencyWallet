@@ -12,6 +12,20 @@
   position: relative;
 }
 
+.balanceTooltip {
+  @include ff-mono;
+  padding: 0 0.5rem;
+  position: absolute;
+  z-index: 1;
+  top: -0.5rem;
+  right: 0.7rem;
+  font-size: 0.8rem;
+  font-weight: bold;
+  border-radius: 4px;
+  background-color: var(--color-background-elements);
+  color: var(--color-notice);
+}
+
 .advancedOptions {
   display: flex;
   flex-direction: column;
@@ -43,7 +57,7 @@
   align-items: flex-start;
   justify-content: center;
   border-radius: 5px;
-  color: var(--color-notice);
+  color: var(--color-indicating);
 }
 
 .indicator {

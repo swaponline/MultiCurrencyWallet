@@ -1,71 +1,65 @@
 import { FormattedMessage } from 'react-intl'
 import CSSModules from 'react-css-modules'
 import styles from './index.scss'
-import dropDownStyles from 'components/ui/DropDown/index.scss'
 import { inputReplaceCommaWithDot } from 'helpers/domUtils'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
 import Input from 'components/forms/Input/Input'
-import CurrencySelect from 'components/ui/CurrencySelect/CurrencySelect'
+import SelectGroup from '../SelectGroup/SelectGroup'
 
 function ExchangeForm(props) {
-  const { stateReference, currencies, spendedCurrency, receivedCurrency, selectCurrency } = props
-
-  const displayCurrencyName = (item) => {
-    return item.blockchain && item.standard ? `${item.title} (${item.blockchain})` : item.title
-  }
+  const {
+    stateReference,
+    currencies,
+    spendedCurrency,
+    receivedCurrency,
+    selectCurrency,
+    fiat,
+    fromWallet,
+  } = props
 
   return (
     <form action="">
       <div styleName="inputWrapper">
-        <FieldLabel>
-          <FormattedMessage id="spend" defaultMessage="Spend" />{' '}
-          <Tooltip id="spendAmountTooltip">
-            <FormattedMessage id="spendAmountNotice" defaultMessage="Some useful notice for user" />
-          </Tooltip>
-        </FieldLabel>
-        <Input
-          pattern="0-9\."
-          onKeyDown={inputReplaceCommaWithDot}
-          valueLink={stateReference.spendedAmount}
-          withMargin
-        />
-        <CurrencySelect
-          selectedItemRender={displayCurrencyName}
-          className={dropDownStyles.simpleDropdown}
+        <SelectGroup
+          activeFiat={fiat}
+          inputValueLink={stateReference.spendedAmount}
           selectedValue={spendedCurrency.value}
+          label={<FormattedMessage id="partial243" defaultMessage="You send" />}
+          id="needToRenameThisId"
+          placeholder="0.00000"
+          currencies={currencies}
+          inputToolTip={
+            <span styleName="balanceTooltip">
+              <FormattedMessage id="partial767" defaultMessage="Balance: " />
+              {fromWallet.balance}
+            </span>
+          }
           onSelect={(value) =>
             selectCurrency({
               direction: 'spend',
               value,
             })
           }
-          currencies={currencies}
         />
       </div>
 
       <div styleName="inputWrapper">
-        <FieldLabel>
-          <FormattedMessage id="receive" defaultMessage="Receive" />{' '}
-          <Tooltip id="receiveAmountTooltip">
-            <FormattedMessage
-              id="receiveAmountNotice"
-              defaultMessage="Some useful notice for user"
-            />
-          </Tooltip>
-        </FieldLabel>
-        <Input valueLink={stateReference.receivedAmount} disabled withMargin />
-        <CurrencySelect
-          selectedItemRender={displayCurrencyName}
-          className={dropDownStyles.simpleDropdown}
+        <SelectGroup
+          disabled
+          activeFiat={fiat}
+          inputValueLink={stateReference.receivedAmount}
           selectedValue={receivedCurrency.value}
+          label={<FormattedMessage id="partial255" defaultMessage="You get" />}
+          id="needToRenameThisIdTwo"
+          currencies={currencies}
+          placeholder="0"
           onSelect={(value) => {
             selectCurrency({
               direction: 'receive',
               value,
             })
           }}
-          currencies={currencies}
         />
       </div>
 

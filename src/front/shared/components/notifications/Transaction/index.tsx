@@ -9,7 +9,7 @@ function Transaction(props: ComponentProps) {
   const { name, data } = props
 
   return (
-    <Notification soundPlay={true} timeout={150000000} name={name}>
+    <Notification soundPlay={true} timeout={15_000} name={name}>
       <h3>
         <FormattedMessage
           id="transactonIsCompleted"
