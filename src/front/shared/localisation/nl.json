@@ -3639,35 +3639,35 @@
   },
   {
     "id": "InfoPay_2_To",
-    "message": "{amount} successfully transferred to {br}{toAddress}",
+    "message": "{amount} succesvol overgezet naar {br}{toAddress}",
     "files": [
       "src/front/shared/pages/Transaction/TxInfo/index.tsx"
     ]
   },
   {
     "id": "InfoPay_2_From",
-    "message": "{amount} successfully received from {br}{fromAddress}",
+    "message": "{amount} succesvol ontvangen van {br}{fromAddress}",
     "files": [
       "src/front/shared/pages/Transaction/TxInfo/index.tsx"
     ]
   },
   {
     "id": "InfoPay_2_Self",
-    "message": "{amount} successfully self transfer with {br}{address}",
+    "message": "{amount} succesvolle zelfoverdracht met {br}{address}",
     "files": [
       "src/front/shared/pages/Transaction/TxInfo/index.tsx"
     ]
   },
   {
     "id": "InfoPay_2_External",
-    "message": "{amount} successfully transferred from {br}{fromAddress} to {toAddress}",
+    "message": "{amount} succesvol overgezet van {br}{fromAddress} naar {toAddress}",
     "files": [
       "src/front/shared/pages/Transaction/TxInfo/index.tsx"
     ]
   },
   {
     "id": "InfoPay_2_Error",
-    "message": "Error loading data",
+    "message": "Fout bij het laden van gegevens",
     "files": [
       "src/front/shared/pages/Transaction/TxInfo/index.tsx"
     ]

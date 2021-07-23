@@ -3600,21 +3600,21 @@
   },
   {
     "id": "InfoPay_2_From",
-    "message": "{amount} successfully received from {br}{fromAddress}",
+    "message": "{amount} recibida correctamente de{br}{fromAddress}",
     "files": [
       "src/front/shared/pages/Transaction/TxInfo/index.tsx"
     ]
   },
   {
     "id": "InfoPay_2_Self",
-    "message": "{amount} successfully self transfer with {br}{address}",
+    "message": "{amount} se autotransfiere correctamente con{br}{address}",
     "files": [
       "src/front/shared/pages/Transaction/TxInfo/index.tsx"
     ]
   },
   {
     "id": "InfoPay_2_External",
-    "message": "{amount} successfully transferred from {br}{fromAddress} to {toAddress}",
+    "message": "{amount} transferida correctamente de {br}{fromAddress} a {toAddress}",
     "files": [
       "src/front/shared/pages/Transaction/TxInfo/index.tsx"
     ]
