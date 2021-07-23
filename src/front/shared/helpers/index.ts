@@ -26,6 +26,7 @@ import transactions from './transactions'
 import { migrate } from './migrations/'
 
 import { cacheStorageGet, cacheStorageSet } from './cache'
+import lsDataCache from './lsDataCache'
 
 import apiLooper from './apiLooper'
 import wpLogoutModal from './wpLogoutModal'
@@ -73,6 +74,9 @@ export {
   web3,
   utils,
   links,
+  getCurrencyKey,
+  lsDataCache,
+  transactions,
   constants,
   localStorage,
   api,

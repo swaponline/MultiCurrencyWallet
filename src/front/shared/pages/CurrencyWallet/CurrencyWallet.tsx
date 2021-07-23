@@ -140,13 +140,13 @@ class CurrencyWallet extends Component<any, any> {
 
     if (token && itemCurrency.standard) {
       actions[itemCurrency.standard].getBalance(currency.toLowerCase())
+    } else {
+      const actionName = currency.toLowerCase()
+
+      address && actions[getCurrencyKey(actionName, false)]
+        .fetchBalance(address)
+        .then((balance) => this.setState({ balance }))
     }
-
-    const actionName = itemCurrency.standard || currency.toLowerCase()
-
-    address && actions[getCurrencyKey(actionName, false)]
-      .fetchBalance(address)
-      .then((balance) => this.setState({ balance }))
 
     // if address is null, take transactions from current user
     address
@@ -449,14 +449,13 @@ class CurrencyWallet extends Component<any, any> {
       isLoading,
     } = this.state
 
-    let currencyKey = getCurrencyKey(currency, true)
 
     txHistory = txItems || txHistory
 
     if (txHistory) {
       txHistory = txHistory.filter((tx) => {
         if (tx && tx.type) {
-          return tx.type.toLowerCase() === currencyKey.toLowerCase()
+          return tx.type.toLowerCase() === currency.toLowerCase()
         }
         return false
       })

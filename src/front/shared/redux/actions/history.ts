@@ -1,7 +1,8 @@
 import actions from 'redux/actions'
 import reducers from 'redux/core/reducers'
-import getCurrencyKey from 'helpers/getCurrencyKey'
 import erc20Like from 'common/erc20Like'
+
+import { COIN_DATA } from 'swap.app/constants/COINS'
 
 const pullTransactions = (transactions) => {
   let data = [...transactions].sort((a, b) => b.date - a.date)
@@ -10,21 +11,20 @@ const pullTransactions = (transactions) => {
 }
 
 const setTransactions = async (address, type, callback) => {
-  let actionName = getCurrencyKey(type, false)
-  const isErc20Token = erc20Like.erc20.isToken({ name: type })
-  const isBep20Token = erc20Like.bep20.isToken({ name: type })
-  const currencyName = getCurrencyKey(type, true)
-  const isMultisigBtcAddress = actionName === 'btc' && actions.btcmultisig.isBTCMSUserAddress(address)
-  
-  if (isErc20Token) {
-    actionName = 'erc20'
-  } else if (isBep20Token) {
-    actionName = 'bep20'
+  let actionName
+
+  if (erc20Like.isToken({name: type})) {
+    const tokenStandard = COIN_DATA[type.toUpperCase()].standard.toLowerCase()
+    actionName = tokenStandard
+  } else {
+    actionName = type
   }
+
+  const isMultisigBtcAddress = actionName === 'btc' && actions.btcmultisig.isBTCMSUserAddress(address)
 
   try {
     const currencyTxs = await Promise.all([
-      actions[actionName].getTransaction(address, currencyName),
+      actions[actionName].getTransaction(address, type),
       isMultisigBtcAddress ? actions.multisigTx.fetch(address) : new Promise((resolve) => resolve([])),
     ])
     if (typeof callback === 'function') {

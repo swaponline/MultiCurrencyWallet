@@ -2,17 +2,23 @@ import { withRouter } from 'react-router-dom'
 import React, { Component } from 'react'
 import actions from 'redux/actions'
 import erc20Like from 'common/erc20Like'
-import helpers, { links } from 'helpers'
+import {
+  links,
+  getWalletLink,
+  localStorage,
+  getCurrencyKey,
+  lsDataCache,
+  transactions
+} from 'helpers'
 
-import getCurrencyKey from 'helpers/getCurrencyKey'
 import { defineMessages, injectIntl } from 'react-intl'
-import getWalletLink from 'helpers/getWalletLink'
 
 import TxInfo from './TxInfo'
 import { ModalBox } from 'components/modal'
 import cssModules from 'react-css-modules'
 import styles from './styles.scss'
-import lsDataCache from 'helpers/lsDataCache'
+
+import { COIN_DATA } from 'swap.app/constants/COINS'
 
 
 const labels = defineMessages({
@@ -70,8 +76,18 @@ class Transaction extends Component<any, any> {
       }
     }
 
+    const hiddenCoinsList = localStorage.getItem('hiddenCoinsList')
+
+    const userWallet = actions.core
+      .getWallets({})
+      .filter(({ currency: walletCurrency, tokenKey }) =>
+        !hiddenCoinsList?.includes(walletCurrency) &&
+        (tokenKey?.toLowerCase() || walletCurrency.toLowerCase()) === currency.toLowerCase()
+      )[0]
+
     this.state = {
       currency,
+      userAddress: userWallet?.address,
       ticker,
       txHash,
       isFetching: !(infoTx),
@@ -98,21 +114,11 @@ class Transaction extends Component<any, any> {
     let infoTx
     let error = null
 
-
     try {
-      if (erc20Like.erc20.isToken({ name: currency })) {
-        infoTx = await actions.erc20.fetchTokenTxInfo(ticker, txHash)
-      }
-
-      else if (erc20Like.bep20.isToken({ name: currency })) {
-        infoTx = await actions.bep20.fetchTokenTxInfo(ticker, txHash)
-      }
-
-      else if (erc20Like.erc20matic.isToken({ name: currency })) {
-        infoTx = await actions.erc20matic.fetchTokenTxInfo(ticker, txHash)
-      }
-
-      else {
+      if (erc20Like.isToken({ name: currency })) {
+        const tokenStandard = COIN_DATA[currency.toUpperCase()].standard.toLowerCase()
+        infoTx = await actions[tokenStandard].fetchTokenTxInfo(ticker, txHash)
+      } else {
         infoTx = await actions[currency].fetchTxInfo(txHash, 5 * 60 * 1000)
       }
     } catch (err) {
@@ -189,7 +195,7 @@ class Transaction extends Component<any, any> {
 
   fetchTxFinalBalances = (currency, txHash) => {
     setTimeout(async () => {
-      const finalBalances = await helpers.transactions.fetchTxBalances(currency, txHash)
+      const finalBalances = await transactions.fetchTxBalances(currency, txHash)
       if (finalBalances && !this.unmounted) {
         this.setState({
           finalBalances,
