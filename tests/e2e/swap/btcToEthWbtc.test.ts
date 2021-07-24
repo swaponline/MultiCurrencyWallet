@@ -65,11 +65,6 @@ describe('Swap e2e test', () => {
       // taker move to exchange page and try connecting to peers
       await TakerPage.goto(`${TakerPage.url()}exchange/btc-to-{ETH}wbtc`)
 
-      const [sellCurrencySelectorList, buyCurrencySelectorList] = await TakerPage.$$('.dropDownSelectCurrency')
-
-      await buyCurrencySelectorList.click()
-      await TakerPage.click("[id='{ETH}wbtc']")
-
       await TakerPage.evaluate((selector) => document.querySelector(selector).click(), '.dropDownReceive')
       await TakerPage.click(`#Internal`)
 
@@ -192,7 +187,7 @@ describe('Swap e2e test', () => {
       await takeScreenshot(MakerPage, 'MakerPage_BTC/(ETHEREUM)WBTC_SwapWIW_SwapProgress0_firtsStepDoneIcon')
       await takeScreenshot(TakerPage, 'TakerPage_BTC/(ETHEREUM)WBTC_SwapWIW_SwapProgress0_firtsStepDoneIcon')
 
-      await TakerPage.waitForSelector('#utxoDepositHashLink', {timeout: 150 * 1000})
+      await TakerPage.waitForSelector('#utxoDepositHashLink', {timeout: 300 * 1000})
 
       await takeScreenshot(MakerPage, 'MakerPage_BTC/(ETHEREUM)WBTC_SwapWIW_SwapProgress1_utxoDepositHashLink')
       await takeScreenshot(TakerPage, 'TakerPage_BTC/(ETHEREUM)WBTC_SwapWIW_SwapProgress1_utxoDepositHashLink')
@@ -232,7 +227,7 @@ describe('Swap e2e test', () => {
     }
 
     try {
-      console.log('SwapWIW -> Send BTC and (ETHEREUM)WBTC')
+      console.log('SwapWIW -> Send back BTC and (ETHEREUM)WBTC')
       await timeOut(3 * 1000)
 
       await clickOn({

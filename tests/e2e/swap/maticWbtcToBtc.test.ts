@@ -18,6 +18,9 @@ const btcBuyAmount = 500_000e-8
 jest.setTimeout(1500 * 1000)
 
 describe('Swap e2e test', () => {
+  function getExchangeUrl(sourceUrl) {
+    return sourceUrl.replace(/marketmaker.+/, 'exchange/{MATIC}wbtc-to-btc')
+  }
 
   test('(MATIC)WBTC/BTC swap with internal wallets', async () => {
     const { browser: MakerBrowser, page: MakerPage } = await createBrowser()
@@ -35,17 +38,13 @@ describe('Swap e2e test', () => {
       })
 
       await MakerPage.waitForSelector('#btcAddress') // waits for Maker wallet to load
-
-      await addAssetToWallet(TakerPage, 'maticwbtc')
-      await timeOut(3 * 1000)
-
-      await TakerPage.waitForSelector('#maticwbtcAddress') // waits for Taker wallet to load
+      await TakerPage.waitForSelector('#btcAddress') // waits for Taker wallet to load
 
       const recoveredMakerBtcAddress = await MakerPage.$eval('#btcAddress', el => el.textContent)
-      const recoveredTakerWbtcAddress = await TakerPage.$eval('#maticwbtcAddress', el => el.textContent)
+      const recoveredTakerBtcAddress = await TakerPage.$eval('#btcAddress', el => el.textContent)
 
       expect(recoveredMakerBtcAddress).toBe(testWallets.MaticTokenToBtcMMaker.address)
-      expect(recoveredTakerWbtcAddress).toBe(testWallets.MaticTokenToBtcMTaker.ethAddress)
+      expect(recoveredTakerBtcAddress).toBe(testWallets.MaticTokenToBtcMTaker.ethAddress)
 
     } catch (error) {
       await takeScreenshot(MakerPage, 'MakerPage_(MATIC)WBTC/BTC_SwapWIW_RestoreWalletError')
@@ -58,21 +57,13 @@ describe('Swap e2e test', () => {
 
     try {
       console.log('SwapWIW -> Prepare pages for next actions')
-
       await addAssetToWallet(MakerPage, 'maticwbtc')
+      await addAssetToWallet(TakerPage, 'maticwbtc')
 
       await timeOut(3 * 1000)
 
       // taker move to exchange page and try connecting to peers
-      await clickOn({
-        page: TakerPage,
-        selector: 'a[href="#/exchange"]',
-      })
-
-      const [sellCurrencySelectorList, buyCurrencySelectorList] = await TakerPage.$$('.dropDownSelectCurrency')
-
-      await buyCurrencySelectorList.click()
-      await TakerPage.click("[id='btc']")
+      await TakerPage.goto(`${TakerPage.url()}exchange/{MATIC}wbtc-to-btc`)
 
       await TakerPage.evaluate((selector) => document.querySelector(selector).click(), '.dropDownReceive')
       await TakerPage.click(`#Internal`)
@@ -108,21 +99,11 @@ describe('Swap e2e test', () => {
     } = await turnOnMM(MakerPage)
 
     try {
-      await clickOn({
-        page: MakerPage,
-        selector: 'a[href="#/exchange"]',
-      })
+      await MakerPage.goto( getExchangeUrl(MakerPage.url()) )
       await clickOn({
         page: MakerPage,
         selector: '#orderbookBtn',
       })
-
-      const [sellCurrencySelectorList, buyCurrencySelectorList] = await MakerPage.$$('.dropDownSelectCurrency')
-
-      await buyCurrencySelectorList.click()
-      await MakerPage.click("[id='{MATIC}wbtc']")
-
-      await timeOut(25_000)
 
       // find all maker orders
       const sellAmountOrders  = await MakerPage.$$eval('.sellAmountOrders', elements => elements.map(el => el.textContent))
@@ -144,15 +125,6 @@ describe('Swap e2e test', () => {
     try {
       console.log('SwapWIW -> Check messaging')
       await timeOut(3 * 1000)
-
-      const [sellCurrencySelectorList, buyCurrencySelectorList] = await TakerPage.$$('.dropDownSelectCurrency')
-
-      await sellCurrencySelectorList.click()
-      await TakerPage.click("[id='{MATIC}wbtc']")
-      await buyCurrencySelectorList.click()
-      await TakerPage.click("[id='btc']")
-
-      await timeOut(30_000)
 
       // find btc orders
       const btcSellAmountsOfOrders  = await TakerPage.$$eval('.btcSellAmountOfOrder', elements => elements.map(el => el.textContent))
@@ -183,10 +155,11 @@ describe('Swap e2e test', () => {
     try {
       console.log('SwapWIW -> Start swap')
 
-      await timeOut(5_000)
+      // first go to /exchange, second at mm settings
+      await MakerPage.goBack()
+      await MakerPage.goBack()
 
-      await TakerPage.evaluate((selector) => document.querySelector(selector).click(), '.dropDownSend')
-      await TakerPage.click(`#Internal`)
+      await timeOut(5_000)
 
       let textOfExchangeButton = await TakerPage.$eval('#exchangeButton', el => el.textContent)
       console.log('Taker exchange button: ', textOfExchangeButton)
@@ -268,7 +241,7 @@ describe('Swap e2e test', () => {
     }
 
     try {
-      console.log('SwapWIW -> Send (MATIC)WBTC and BTC')
+      console.log('SwapWIW -> Send back (MATIC)WBTC and BTC')
       await timeOut(3 * 1000)
 
       await clickOn({
