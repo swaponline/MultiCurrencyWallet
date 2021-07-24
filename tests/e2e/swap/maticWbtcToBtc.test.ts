@@ -27,11 +27,11 @@ describe('Swap e2e test', () => {
       console.log('SwapWIW -> Restore wallets')
       await importWallet({
         page: MakerPage,
-        seed: testWallets.btcMMaker.seedPhrase.split(' '),
+        seed: testWallets.MaticTokenToBtcMMaker.seedPhrase.split(' '),
       })
       await importWallet({
         page: TakerPage,
-        seed: testWallets.btcMTaker.seedPhrase.split(' '),
+        seed: testWallets.MaticTokenToBtcMTaker.seedPhrase.split(' '),
       })
 
       await MakerPage.waitForSelector('#btcAddress') // waits for Maker wallet to load
@@ -44,8 +44,8 @@ describe('Swap e2e test', () => {
       const recoveredMakerBtcAddress = await MakerPage.$eval('#btcAddress', el => el.textContent)
       const recoveredTakerWbtcAddress = await TakerPage.$eval('#maticwbtcAddress', el => el.textContent)
 
-      expect(recoveredMakerBtcAddress).toBe(testWallets.btcMMaker.address)
-      expect(recoveredTakerWbtcAddress).toBe(testWallets.btcMTaker.ethAddress)
+      expect(recoveredMakerBtcAddress).toBe(testWallets.MaticTokenToBtcMMaker.address)
+      expect(recoveredTakerWbtcAddress).toBe(testWallets.MaticTokenToBtcMTaker.ethAddress)
 
     } catch (error) {
       await takeScreenshot(MakerPage, 'MakerPage_SwapWIW_RestoreWalletError')
@@ -228,12 +228,12 @@ describe('Swap e2e test', () => {
       await takeScreenshot(MakerPage, 'MakerPage_SwapWIW_SwapProgress0_firtsStepDoneIcon')
       await takeScreenshot(TakerPage, 'TakerPage_SwapWIW_SwapProgress0_firtsStepDoneIcon')
 
-      await TakerPage.waitForSelector('#utxoDepositHashLink', {timeout: 150 * 1000})
+      await TakerPage.waitForSelector('#utxoDepositHashLink', {timeout: 300 * 1000})
 
       await takeScreenshot(MakerPage, 'MakerPage_SwapWIW_SwapProgress1_utxoDepositHashLink')
       await takeScreenshot(TakerPage, 'TakerPage_SwapWIW_SwapProgress1_utxoDepositHashLink')
 
-      await TakerPage.waitForSelector('#evmDepositHashLink', {timeout: 150 * 1000})
+      await TakerPage.waitForSelector('#evmDepositHashLink', {timeout: 300 * 1000})
 
       await takeScreenshot(MakerPage, 'MakerPage_SwapWIW_SwapProgress2_evmDepositHashLink')
       await takeScreenshot(TakerPage, 'TakerPage_SwapWIW_SwapProgress2_evmDepositHashLink')
@@ -285,8 +285,8 @@ describe('Swap e2e test', () => {
       await selectSendCurrency({page: MakerPage, currency: 'maticwbtc'})
       await selectSendCurrency({page: TakerPage, currency: 'btc'})
 
-      await MakerPage.type('#toAddressInput', testWallets.btcMTaker.ethAddress)
-      await TakerPage.type('#toAddressInput', testWallets.btcMMaker.address)
+      await MakerPage.type('#toAddressInput', testWallets.MaticTokenToBtcMTaker.ethAddress)
+      await TakerPage.type('#toAddressInput', testWallets.MaticTokenToBtcMMaker.address)
 
       await MakerPage.type('#amountInput', wbtcSellAmount.toString())
       await TakerPage.type('#amountInput', btcBuyAmount.toString())

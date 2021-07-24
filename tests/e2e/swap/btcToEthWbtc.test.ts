@@ -30,11 +30,11 @@ describe('Swap e2e test', () => {
       console.log('SwapWIW -> Restore wallets')
       await importWallet({
         page: MakerPage,
-        seed: testWallets.btcMMaker.seedPhrase.split(' '),
+        seed: testWallets.btcToEthTokenMMaker.seedPhrase.split(' '),
       })
       await importWallet({
         page: TakerPage,
-        seed: testWallets.btcMTaker.seedPhrase.split(' '),
+        seed: testWallets.btcToEthTokenMTaker.seedPhrase.split(' '),
       })
 
       await MakerPage.waitForSelector('#btcAddress') // waits for Maker wallet to load
@@ -43,8 +43,8 @@ describe('Swap e2e test', () => {
       const recoveredMakerBtcAddress = await MakerPage.$eval('#btcAddress', el => el.textContent)
       const recoveredTakerBtcAddress = await TakerPage.$eval('#btcAddress', el => el.textContent)
 
-      expect(recoveredMakerBtcAddress).toBe(testWallets.btcMMaker.address)
-      expect(recoveredTakerBtcAddress).toBe(testWallets.btcMTaker.address)
+      expect(recoveredMakerBtcAddress).toBe(testWallets.btcToEthTokenMMaker.address)
+      expect(recoveredTakerBtcAddress).toBe(testWallets.btcToEthTokenMTaker.address)
 
     } catch (error) {
       await takeScreenshot(MakerPage, 'MakerPage_SwapWIW_RestoreWalletError')
@@ -249,8 +249,8 @@ describe('Swap e2e test', () => {
       await selectSendCurrency({page: MakerPage, currency: 'btc'})
       await selectSendCurrency({page: TakerPage, currency: 'ethwbtc'})
 
-      await MakerPage.type('#toAddressInput', testWallets.btcMTaker.address)
-      await TakerPage.type('#toAddressInput', testWallets.btcMMaker.ethAddress)
+      await MakerPage.type('#toAddressInput', testWallets.btcToEthTokenMTaker.address)
+      await TakerPage.type('#toAddressInput', testWallets.btcToEthTokenMMaker.ethAddress)
 
       await MakerPage.type('#amountInput', btcSellAmount.toString())
       await TakerPage.type('#amountInput', wbtcBuyAmount.toString())
