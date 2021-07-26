@@ -28,6 +28,8 @@ function ExchangeForm(props) {
       <div styleName="inputWrapper">
         <SelectGroup
           activeFiat={fiat}
+          // TODO
+          // fiat={}
           inputValueLink={stateReference.spendedAmount}
           selectedValue={spendedCurrency.value}
           label={<FormattedMessage id="partial243" defaultMessage="You send" />}
@@ -89,7 +91,7 @@ function ExchangeForm(props) {
 
       <div styleName="inputWrapper">
         <FieldLabel>
-          <FormattedMessage id="slippage" defaultMessage="Slippage" />
+          <FormattedMessage id="slippageTolerance" defaultMessage="Slippage tolerance" />
           <Tooltip id="slippageTooltip">
             <FormattedMessage id="slippageNotice" defaultMessage="Some useful notice for user" />
           </Tooltip>

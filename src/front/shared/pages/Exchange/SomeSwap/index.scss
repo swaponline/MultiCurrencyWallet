@@ -51,12 +51,14 @@
   }
 
   label {
-    margin: 0.5rem .3rem 0.5rem 0;
+    margin: 0.5rem 0.3rem 0.5rem 0;
   }
 }
 
 .settings {
+  width: 100%;
   padding: 1rem;
+  font-size: 0.9em;
   border: 1px solid var(--color-border);
   border-radius: 6px;
 }

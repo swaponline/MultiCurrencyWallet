@@ -8,22 +8,6 @@ export type CurrencyMenuItem = {
   standard?: string
 }
 
-export type AdvancedOptions = {
-  protocols: any
-  destReceiver: any
-  referrerAddress: any
-  fee: any
-  gasPrice: any
-  burnChi: any
-  complexityLevel: any
-  connectorTokens: any
-  allowPartialFill: any
-  disableEstimate: any
-  gasLimit: any
-  parts: any
-  mainRouteParts: any
-}
-
 export type TokenData = {
   symbol: string
   name: string
@@ -79,7 +63,8 @@ export type ComponentState = {
   slippageMaxRange: number
   network: Network
   isAdvancedMode: boolean
-  // TODO
-  additionalFeatures: AdvancedOptions | any
   swapData: SwapData | undefined
+  gasPrice: string
+  gasLimit: string
+  destReceiver: string
 }

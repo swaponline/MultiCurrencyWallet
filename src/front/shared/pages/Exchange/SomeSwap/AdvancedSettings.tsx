@@ -1,29 +1,14 @@
 import { FormattedMessage } from 'react-intl'
 import CSSModules from 'react-css-modules'
 import styles from './index.scss'
+import { inputReplaceCommaWithDot } from 'helpers/domUtils'
 import Toggle from 'components/controls/Toggle/Toggle'
-import { AdvancedOptions } from './types'
-
-/* 
-  AdvancedOptions:
-
-  protocols: any
-  destReceiver: any
-  referrerAddress: any
-  fee: any
-  gasPrice: any
-  burnChi: any
-  complexityLevel: any
-  connectorTokens: any
-  allowPartialFill: any
-  disableEstimate: any
-  gasLimit: any
-  parts: any
-  mainRouteParts: any
-*/
+import Tooltip from 'components/ui/Tooltip/Tooltip'
+import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
+import Input from 'components/forms/Input/Input'
 
 function AdvancedSettings(props) {
-  const { isAdvancedMode, switchAdvancedMode } = props
+  const { isAdvancedMode, switchAdvancedMode, stateReference } = props
 
   return (
     <section styleName="advancedSettings">
@@ -36,7 +21,58 @@ function AdvancedSettings(props) {
 
       {isAdvancedMode && (
         <form styleName="settings" action="">
-          Extra swap options
+          <div styleName="inputWrapper">
+            <FieldLabel>
+              <FormattedMessage id="gasPrice" defaultMessage="Gas price" />
+              <Tooltip id="slippageTooltip">
+                <FormattedMessage
+                  id="slippageNotice"
+                  defaultMessage="Some useful notice for user"
+                />
+              </Tooltip>
+            </FieldLabel>
+            <Input
+              pattern="0-9\."
+              onKeyDown={inputReplaceCommaWithDot}
+              valueLink={stateReference.gasPrice}
+              withMargin
+            />
+          </div>
+
+          <div styleName="inputWrapper">
+            <FieldLabel>
+              <FormattedMessage id="gasLimit" defaultMessage="Gas limit" />
+              <Tooltip id="slippageTooltip">
+                <FormattedMessage
+                  id="slippageNotice"
+                  defaultMessage="Some useful notice for user"
+                />
+              </Tooltip>
+            </FieldLabel>
+            <Input
+              pattern="0-9\."
+              onKeyDown={inputReplaceCommaWithDot}
+              valueLink={stateReference.gasLimit}
+              withMargin
+            />
+          </div>
+
+          <div styleName="inputWrapper">
+            <FieldLabel>
+              <FormattedMessage id="destinationRecipient" defaultMessage="Destination recipient" />
+              <Tooltip id="slippageTooltip">
+                <FormattedMessage
+                  id="slippageNotice"
+                  defaultMessage="Some useful notice for user"
+                />
+              </Tooltip>
+            </FieldLabel>
+            <Input
+              pattern="0-9a-zA-Z:"
+              onKeyDown={inputReplaceCommaWithDot}
+              valueLink={stateReference.destReceiver}
+            />
+          </div>
         </form>
       )}
     </section>

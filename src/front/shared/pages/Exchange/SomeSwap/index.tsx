@@ -4,6 +4,7 @@ import { BigNumber } from 'bignumber.js'
 import { FormattedMessage } from 'react-intl'
 import CSSModules from 'react-css-modules'
 import styles from './index.scss'
+import typeforce from 'swap.app/util/typeforce'
 import { COIN_TYPE, COIN_MODEL, COIN_DATA } from 'swap.app/constants/COINS'
 import { Token } from 'common/types'
 import erc20Like from 'common/erc20Like'
@@ -55,8 +56,10 @@ class SomeSwap extends PureComponent<unknown, ComponentState> {
       slippage: 1,
       slippageMaxRange: 50,
       network: externalConfig.evmNetworks[spendedCurrency.blockchain],
-      additionalFeatures: {},
       swapData: undefined,
+      gasPrice: '',
+      gasLimit: '',
+      destReceiver: '',
     }
   }
 
@@ -125,7 +128,17 @@ class SomeSwap extends PureComponent<unknown, ComponentState> {
   }
 
   createSwapRequest = () => {
-    const { network, slippage, spendedAmount, fromWallet, toWallet } = this.state
+    const {
+      network,
+      slippage,
+      spendedAmount,
+      fromWallet,
+      toWallet,
+      isAdvancedMode,
+      gasPrice,
+      gasLimit,
+      destReceiver,
+    } = this.state
 
     const fromAddress = fromWallet.isToken
       ? fromWallet.contractAddress
@@ -136,14 +149,22 @@ class SomeSwap extends PureComponent<unknown, ComponentState> {
 
     const spendedWeiAmount = this.convertIntoWei(spendedAmount, 18)
 
-    return ''.concat(
+    const request = [
       `/${network.networkVersion}/swap?`,
       `fromTokenAddress=${fromAddress}&`,
       `toTokenAddress=${toAddress}&`,
       `amount=${spendedWeiAmount}&`,
       `fromAddress=${fromWallet.address}&`,
-      `slippage=${slippage}`
-    )
+      `slippage=${slippage}`,
+    ]
+
+    if (isAdvancedMode) {
+      if (gasLimit) request.push(`&gasLimit=${gasLimit}`)
+      if (gasPrice) request.push(`&gasPrice=${this.convertIntoWei(gasPrice, 9)}`)
+      if (destReceiver) request.push(`&destReceiver=${destReceiver}`)
+    }
+
+    return request.join('')
   }
 
   // TODO: find a better place for this calculations
@@ -411,8 +432,11 @@ class SomeSwap extends PureComponent<unknown, ComponentState> {
       isDataPending,
       spendedAmount,
       fromWallet,
+      toWallet,
       slippage,
       slippageMaxRange,
+      isAdvancedMode,
+      destReceiver,
     } = this.state
 
     const wrongSlippage =
@@ -420,11 +444,16 @@ class SomeSwap extends PureComponent<unknown, ComponentState> {
       new BigNumber(slippage).isEqualTo(0) ||
       new BigNumber(slippage).isGreaterThan(slippageMaxRange)
 
+    const receivedBaseCurrency = toWallet.baseCurrency.toUpperCase()
+    const wrongAdvancedOptions =
+      isAdvancedMode && !typeforce.isCoinAddress[receivedBaseCurrency](destReceiver)
+
     // TODO: worry about the commission
     return (
       isPending ||
       isDataPending ||
       wrongSlippage ||
+      wrongAdvancedOptions ||
       new BigNumber(spendedAmount).isNaN() ||
       new BigNumber(spendedAmount).isEqualTo(0) ||
       new BigNumber(spendedAmount).isGreaterThan(fromWallet.balance)
@@ -456,10 +485,18 @@ class SomeSwap extends PureComponent<unknown, ComponentState> {
       network,
       swapData,
       isAdvancedMode,
-      additionalFeatures,
     } = this.state
 
-    const linked = Link.all(this, 'fiatAmount', 'spendedAmount', 'receivedAmount', 'slippage')
+    const linked = Link.all(
+      this,
+      'fiatAmount',
+      'spendedAmount',
+      'receivedAmount',
+      'slippage',
+      'gasPrice',
+      'gasLimit',
+      'destReceiver'
+    )
 
     const swapDataBtnIsDisabled = this.isSwapDataNotAvailable()
     const swapBtnIsDisabled = this.isSwapNotAvailable()
@@ -483,6 +520,7 @@ class SomeSwap extends PureComponent<unknown, ComponentState> {
         <AdvancedSettings
           isAdvancedMode={isAdvancedMode}
           switchAdvancedMode={this.switchAdvancedMode}
+          stateReference={linked}
         />
 
         <SwapInfo
