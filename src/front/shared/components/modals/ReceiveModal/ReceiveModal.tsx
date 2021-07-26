@@ -1,6 +1,7 @@
 import React, { Fragment }  from 'react'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'redaction'
+import actions from 'redux/actions'
 import { constants } from 'helpers'
 import erc20Like from 'common/erc20Like'
 import cssModules from 'react-css-modules'
@@ -82,7 +83,6 @@ class ReceiveModal extends React.Component<any, any> {
   }
 
   handleBeginSaveMnemonic = async () => {
-    //@ts-ignore
     actions.modals.open(constants.modals.SaveMnemonicModal, {
       onClose: () => {
         const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
@@ -103,7 +103,7 @@ class ReceiveModal extends React.Component<any, any> {
     if (pathname.includes('receive')) {
       goBack()
     }
-    //@ts-ignore
+
     actions.modals.close(name)
   }
 
@@ -153,7 +153,8 @@ class ReceiveModal extends React.Component<any, any> {
               <Copy text={address}>
                 <div styleName="qr">
                   <QR address={address} />
-                  <p>{address}</p>
+
+                  <p styleName="address">{address}</p>
 
                   <div styleName="sendBtnsWrapper">
                     <div styleName="actionBtn">

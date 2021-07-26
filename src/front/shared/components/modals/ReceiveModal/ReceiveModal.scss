@@ -36,12 +36,10 @@
   }
 }
 
-@include media-mobile {
-  .qr {
-    text-align: center;
-  }
-}
-
 .qr {
   text-align: center;
+
+  .address {
+    margin-top: 1rem;
+  }
 }
