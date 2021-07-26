@@ -5,6 +5,7 @@ import { inputReplaceCommaWithDot } from 'helpers/domUtils'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
 import Input from 'components/forms/Input/Input'
+import Button from 'components/controls/Button/Button'
 import SelectGroup from '../SelectGroup/SelectGroup'
 
 function ExchangeForm(props) {
@@ -18,6 +19,8 @@ function ExchangeForm(props) {
     fiat,
     fromWallet,
     toWallet,
+    isPending,
+    openExternalExchange,
   } = props
 
   return (
@@ -45,6 +48,19 @@ function ExchangeForm(props) {
           }
         />
       </div>
+
+      {spendedCurrency.value === 'eth' && (
+        <Button
+          styleName="bankCardButton"
+          pending={isPending}
+          disabled={isPending}
+          onClick={openExternalExchange}
+          empty
+          small
+        >
+          <FormattedMessage id="buyViaBankCard" defaultMessage="Buy via bank card" />
+        </Button>
+      )}
 
       <div styleName="inputWrapper">
         <SelectGroup

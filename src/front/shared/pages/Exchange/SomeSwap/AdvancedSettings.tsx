@@ -1,6 +1,7 @@
 import { FormattedMessage } from 'react-intl'
 import CSSModules from 'react-css-modules'
 import styles from './index.scss'
+import Toggle from 'components/controls/Toggle/Toggle'
 import { AdvancedOptions } from './types'
 
 /* 
@@ -25,15 +26,19 @@ function AdvancedSettings(props) {
   const { isAdvancedMode, switchAdvancedMode } = props
 
   return (
-    <section styleName="advancedOptions">
-      <div styleName="advancedOptionsToggle">
-        <input id="advancedModeCheckbox" type="checkbox" onChange={switchAdvancedMode} />
-        <label htmlFor="advancedModeCheckbox">
-          <FormattedMessage id="advancedOptions" defaultMessage="Advanced options" />
-        </label>
+    <section styleName="advancedSettings">
+      <div styleName="toggleWrapper">
+        <Toggle checked={isAdvancedMode} onChange={switchAdvancedMode} />
+        <p styleName="name">
+          <FormattedMessage id="advancedSettings" defaultMessage="Advanced settings" />
+        </p>
       </div>
 
-      {isAdvancedMode && <form action="">Extra swap options</form>}
+      {isAdvancedMode && (
+        <form styleName="settings" action="">
+          Extra swap options
+        </form>
+      )}
     </section>
   )
 }

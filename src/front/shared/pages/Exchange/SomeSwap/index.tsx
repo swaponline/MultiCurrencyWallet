@@ -107,6 +107,11 @@ class SomeSwap extends PureComponent<unknown, ComponentState> {
       error,
     }))
     console.error(error)
+
+    // TODO: show more informative messages
+    // one of assets is not available. Server returns:
+    // - error: cannot find path for <asset contract addr>
+
     actions.notifications.show(constants.notifications.ErrorNotification, {
       error: error.message,
     })
@@ -426,6 +431,7 @@ class SomeSwap extends PureComponent<unknown, ComponentState> {
           fiat={fiat}
           fromWallet={fromWallet}
           toWallet={toWallet}
+          isPending={isPending}
         />
 
         <AdvancedSettings
