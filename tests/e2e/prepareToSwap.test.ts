@@ -87,12 +87,12 @@ describe('Prepare to swap e2e tests', () => {
 
     try {
       await importWallet({
-        page: MakerPage, 
-        seed: testWallets.btcMMaker.seedPhrase.split(' '),
+        page: MakerPage,
+        seed: testWallets.btcToEthTokenMMaker.seedPhrase.split(' '),
       })
       await importWallet({
         page: TakerPage,
-        seed: testWallets.btcMTaker.seedPhrase.split(' '),
+        seed: testWallets.btcToEthTokenMTaker.seedPhrase.split(' '),
       })
 
       await MakerPage.waitForSelector('#btcAddress') // waits for Maker wallet to load
@@ -101,8 +101,8 @@ describe('Prepare to swap e2e tests', () => {
       const recoveredMakerBtcAddress = await MakerPage.$eval('#btcAddress', el => el.textContent)
       const recoveredTakerBtcAddress = await TakerPage.$eval('#btcAddress', el => el.textContent)
 
-      expect(recoveredMakerBtcAddress).toBe(testWallets.btcMMaker.address)
-      expect(recoveredTakerBtcAddress).toBe(testWallets.btcMTaker.address)
+      expect(recoveredMakerBtcAddress).toBe(testWallets.btcToEthTokenMMaker.address)
+      expect(recoveredTakerBtcAddress).toBe(testWallets.btcToEthTokenMTaker.address)
 
     } catch (error) {
       await takeScreenshot(MakerPage, 'MakerPage_CheckMessaging_RestoreWalletError')
