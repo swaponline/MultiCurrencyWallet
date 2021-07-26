@@ -59,6 +59,7 @@ export type Network = {
 
 export type ComponentState = {
   externalExchangeReference: null | IUniversalObj
+  externalWindowTimer: null | NodeJS.Timeout
   currencies: CurrencyMenuItem[]
   receivedList: CurrencyMenuItem[]
   error: IError | null

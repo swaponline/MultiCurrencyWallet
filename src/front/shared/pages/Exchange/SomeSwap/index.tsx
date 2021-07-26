@@ -41,6 +41,7 @@ class SomeSwap extends PureComponent<unknown, ComponentState> {
       isAdvancedMode: false,
       needApprove: fromWallet?.isToken,
       externalExchangeReference: null,
+      externalWindowTimer: null,
       fiat: window.DEFAULT_FIAT || activeFiat,
       fiatAmount: 0,
       currencies,
@@ -61,6 +62,10 @@ class SomeSwap extends PureComponent<unknown, ComponentState> {
 
   componentDidMount() {
     this.updateNetwork()
+  }
+
+  componentWillUnmount() {
+    this.clearWindowTimer()
   }
 
   updateNetwork = () => {
@@ -319,13 +324,6 @@ class SomeSwap extends PureComponent<unknown, ComponentState> {
 
   openExternalExchange = () => {
     const { externalExchangeReference } = this.state
-    // open itez window
-    // wait while the user closes this window or when his currency wallet gets some amount
-    // did he close ? then do nothing
-    // did he receive currency amount ? so now we can check it and:
-    // - start currency -> token exchange
-    // - don't start, show an exchange button for user and wait while he clicks on it
-    // call a smart contract
 
     if (
       window.buyViaCreditCardLink &&
@@ -341,16 +339,64 @@ class SomeSwap extends PureComponent<unknown, ComponentState> {
         'location=yes, height=770, width=620, scrollbars, status, resizable'
       )
 
-      this.setState(() => ({
-        externalExchangeReference: newWindowProxy,
-      }))
-      console.log(newWindowProxy)
+      this.setState(
+        () => ({
+          externalExchangeReference: newWindowProxy,
+        }),
+        this.startCheckingExternalWindow
+      )
     } else {
+      // in this case window reference must exist and the window is not closed
       externalExchangeReference?.focus()
     }
+  }
 
-    // externalExchangeReference.open()
-    // externalExchangeReference.closed
+  startCheckingExternalWindow = () => {
+    const { externalExchangeReference } = this.state
+
+    const timer = setInterval(() => {
+      if (externalExchangeReference?.closed) {
+        this.closeExternalExchange()
+      }
+    }, 1000)
+
+    this.setState(() => ({
+      externalWindowTimer: timer,
+    }))
+  }
+
+  closeExternalExchange = () => {
+    const { externalExchangeReference, externalWindowTimer } = this.state
+
+    if (externalExchangeReference) {
+      externalExchangeReference.close()
+
+      this.setState(() => ({
+        externalExchangeReference: null,
+      }))
+    }
+
+    if (externalWindowTimer) {
+      clearInterval(externalWindowTimer)
+
+      this.setState(() => ({
+        externalWindowTimer: null,
+      }))
+    }
+
+    alert('closed')
+
+    this.setState(() => ({
+      isPending: false,
+    }))
+  }
+
+  clearWindowTimer = () => {
+    const { externalWindowTimer } = this.state
+
+    if (externalWindowTimer) {
+      clearInterval(externalWindowTimer)
+    }
   }
 
   switchAdvancedMode = () => {
