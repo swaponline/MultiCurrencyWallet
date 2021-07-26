@@ -710,7 +710,7 @@ class MarketmakerSettings extends Component<any, any> {
                       <span styleName="tooltipText">
                         <FormattedMessage
                           id="MM_WarningMessage"
-                          defaultMessage="Warning! You must stay online all the time, otherwise your will not earn or if the swap is processing (can takes a few hour) you may LOOSE your funds! If you can't guarantee long uptime - turn off marketmakeing."
+                          defaultMessage="Warning! You must stay online all the time, otherwise you will not earn or if the swap is processing (can takes a few hour) you may LOOSE your funds! If you can't guarantee long uptime - turn off marketmakeing."
                         />
                       </span>
                     </Tooltip>
