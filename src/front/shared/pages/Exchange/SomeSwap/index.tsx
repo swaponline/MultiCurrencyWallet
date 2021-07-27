@@ -213,9 +213,6 @@ class SomeSwap extends PureComponent<unknown, ComponentState> {
     }))
 
     try {
-      // TODO: avoid spam
-      // cache result just for a while or
-      // set some timeout before the next request
       const swap: any = await apiLooper.get('oneinch', this.createSwapRequest())
 
       this.setState(() => ({
@@ -339,6 +336,7 @@ class SomeSwap extends PureComponent<unknown, ComponentState> {
           spendedCurrency: value,
           needApprove,
           fromWallet,
+          swapData: undefined,
         }),
         () => {
           this.updateNetwork()
@@ -351,6 +349,8 @@ class SomeSwap extends PureComponent<unknown, ComponentState> {
       this.setState(() => ({
         receivedCurrency: value,
         toWallet: actions.core.getWallet({ currency: value.value }),
+        swapData: undefined,
+        receivedAmount: '0',
       }))
     }
   }
