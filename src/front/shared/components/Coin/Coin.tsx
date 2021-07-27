@@ -24,7 +24,7 @@ type CoinProps = {
 const Coin = (props: CoinProps) => {
   const {
     size = 40,
-    className, 
+    className,
     name,
   } = props
 
@@ -43,10 +43,10 @@ const Coin = (props: CoinProps) => {
   // Coin styles *************************
 
   const style: {
-    [ k: string]: string | null
+    [ k: string]: string
   } = {
-    width: size ? `${size}px` : null,
-    height: size ? `${size}px` : null,
+    width: `${size}px`,
+    height: `${size}px`,
   }
 
   if (defaultCurrencyColors[name.toLowerCase()]) {
@@ -67,6 +67,15 @@ const Coin = (props: CoinProps) => {
 
   // *************************************
 
+  if (config?.isWidget && window?.widgetEvmLikeTokens?.length) {
+    window.widgetEvmLikeTokens.forEach((token) =>  {
+      if (token.name.toLowerCase() === name.toLowerCase()) {
+        token.icon && (isIconConfigExist = true)
+        token.iconBgColor && (style.backgroundColor = token.iconBgColor)
+      }
+    })
+  }
+
   let currencyIconProps = {
     name: name.toLowerCase(),
     styleName: '',
@@ -85,7 +94,7 @@ const Coin = (props: CoinProps) => {
   }
 
   return (
-    <div 
+    <div
       styleName={`coin ${iconSource ? 'noColors' : ''}`}
       className={className}
       style={style}

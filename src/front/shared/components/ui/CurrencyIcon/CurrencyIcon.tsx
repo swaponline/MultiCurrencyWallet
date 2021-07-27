@@ -60,6 +60,7 @@ const CurrencyIcon = (props: CurrencyIconProps) => {
     return (
       <img
         styleName="sizeLimit"
+        className={className}
         src={tokenIcon}
         alt={`${name} icon`}
         role="image"
