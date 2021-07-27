@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import CSSModules from 'react-css-modules'
-import cx from 'classnames'
 import animateFetching from 'components/loaders/ContentLoader/ElementLoading.scss'
 
 import styles from './QR.scss'
@@ -10,7 +9,7 @@ type ComponentProps = {
 }
 
 type ComponentState = {
-  renderQr: boolean
+  qrIsLoaded: boolean
 }
 
 @CSSModules({ ...styles, ...animateFetching }, { allowMultiple: true })
@@ -20,35 +19,39 @@ export default class QR extends Component<ComponentProps, ComponentState> {
     super(props)
 
     this.state = {
-      renderQr: false,
+      qrIsLoaded: false,
     }
   }
 
-  componentDidMount() {
-    setTimeout(() => {
-      this.setState({ renderQr: true })
-    }, 3000)
+  setSuccessLoading = () => {
+    const { qrIsLoaded } = this.state
+
+    if (!qrIsLoaded) {
+      this.setState(() => ({
+        qrIsLoaded: true
+      }))
+    }
   }
 
   render() {
     const { address } = this.props
+    const { qrIsLoaded } = this.state
     const size = 270
+
     return (
-      <React.Fragment>
+      <>
         <div className={styles.relativeWrapper}>
           <div className={styles.imageWrapper}>
             <img
+              styleName={`${qrIsLoaded ? '' : 'hiddenEl'}`}
               src={`https://chart.googleapis.com/chart?chs=${size}x${size}&cht=qr&chl=${address}`}
+              onLoad={this.setSuccessLoading}
               alt={address}
             />
-            <span className={cx({
-              [styles.imageLoader]: true,
-              [animateFetching['animate-fetching']]: !this.state.renderQr,
-              [styles.hiddenEl]: this.state.renderQr,
-            })} />
+            <span styleName={`imageLoader ${qrIsLoaded ? 'hiddenEl' : 'animate-fetching'}`} />
           </div>
         </div>
-      </React.Fragment>
+      </>
     )
   }
 }

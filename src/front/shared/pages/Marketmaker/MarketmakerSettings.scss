@@ -65,6 +65,10 @@
           color: var(--color-notice);
         }
 
+        .warning{
+          color: var(--color-warning)
+        }
+
         .tooltipText {
           display: inline-block;
           max-width: 30em;

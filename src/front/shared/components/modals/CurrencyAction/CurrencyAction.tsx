@@ -48,7 +48,7 @@ class CurrencyAction extends React.Component<any, any> {
 
     if (context === 'Deposit') {
       this.handleClose()
-      //@ts-ignore
+
       actions.modals.open(constants.modals.ReceiveModal, {
         currency,
         address,

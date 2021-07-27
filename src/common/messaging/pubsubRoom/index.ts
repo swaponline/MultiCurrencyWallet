@@ -8,7 +8,11 @@ import encoding from './encoding'
 import directConnection from './direct-connection-handler'
 import namedQueryRun from '../../utils/namedQuery'
 
-if (window) window.PeerId = PeerId
+
+if (typeof window !== "undefined") {
+  window.PeerId = PeerId
+}
+
 
 const DEFAULT_OPTIONS = {
   pollInterval: 1000
