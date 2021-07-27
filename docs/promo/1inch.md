@@ -60,7 +60,20 @@ Network development - our case.
 
 # Describe your proposal in one sentence: *
 
-Integrate 1inch protocol into the crypto wordpress wallet installed on 1000+ sites.
+Integrate 1inch Pathfinder and Limit Orders Protocol into the crypto wordpress wallet installed on 1000+ sites.
+
+### More details
+
+Not for everyone need such a type of technology as atomic swap (secure, but slow) or exchanges between
+different blockchains. For now we can offer only this type of service. Some of our
+clients need fast exchange only on the one blockchain network. We believe 1inch 
+provides some of the best and most available services in this area. Examples for
+different types of users:
+
+- usual user who wants to exchange his assets. He will open our or any other application from our customers and can make fast exchange on the available chains through 1inch Network. Also if he wants to create an order with special price it also will be available with Limit Orders Protocol.
+
+- plugin client who wants to make own brand/product. He will install our plugin on his domain
+and customize plugin as he wants. The main difference in this case is that he will have its own users. It significantly increases the number of users our product. Afterwards it will subsequently increase the number of users of 1inch Network.
 
 
 # Tell us more about your project *
@@ -68,14 +81,14 @@ What problem does it solve? How will it succeed? In what ways will it help stren
 
 SwapOnline is top 1 simplest multi-currency wallet for wordpress platform with decentralized exchange based on atomic swap.
 
-"What problem does it solve?"
+### "What problem does it solve?"
 Anyone can create a popular blockchain wallets and exchange their own assets between blockchains using smart contracts,
 without using intermediaries in the form of centralized exchanges.
 
-"How will it succeed?"
+### "How will it succeed?"
 It succeed out when we connect even more blockchains for swaps and more users know about our wallet.
 
-"In what ways will it help strengthen and grow out the 1inch Network?"
+### "In what ways will it help strengthen and grow out the 1inch Network?"
 We integrate the 1inch Network in our wallet and all our users will use it to exchange any ERC20 tokens to ETH and vice versa.
 
 
