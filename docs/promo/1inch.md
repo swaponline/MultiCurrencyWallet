@@ -60,7 +60,7 @@ Network development - our case.
 
 # Describe your proposal in one sentence: *
 
-Add 1inch as a backend to eth-erc20 swaps on crypto wordpress wallet installed on 1000+ sites. 
+Integrate 1inch protocol into the crypto wordpress wallet installed on 1000+ sites.
 
 
 # Tell us more about your project *
@@ -93,7 +93,7 @@ we will use your API, we expect you will fix the bugs and add simple functions (
 2 month
 
 # What stage do you expect to be the most challenging?
-Long-term sustainability, we can add your api easiely, but we made tons of changes every day after feedback of our clients, we should not only do "simplest" integration but deliever better user experience. For example our clients pay us to provide VISA to ERC20 token bridge, it's more than just add "call api method using web3" but required complex work of designer, developer, manager and client. 
+Long-term sustainability, we can add your api easily, but we made tons of changes every day after feedback of our clients, we should not only do "simplest" integration but deliver better user experience. For example our clients pay us to provide VISA to ERC20 token bridge, it's more than just add "call api method using web3" but required complex work of designer, developer, manager and client.
 
 # What is the size of funding you expect for completing each milestone of the project? *
 200 000 $ . To solve HR issues (finding devs, educating and motivation the old developers) for tho years. But we can start with 0$
