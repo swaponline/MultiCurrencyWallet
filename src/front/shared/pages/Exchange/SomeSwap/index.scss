@@ -40,26 +40,6 @@
   }
 }
 
-.toggleWrapper {
-  position: relative;
-  display: flex;
-  align-items: center;
-
-  .name {
-    margin: 0;
-    margin-left: 0.6rem;
-  }
-
-  label {
-    margin: 0.5rem 0.3rem 0.5rem 0;
-  }
-}
-
-// FIXME:
-.toggleWrapper.ownExchange {
-  margin-bottom: 2em;
-}
-
 .settings {
   width: 100%;
   padding: 1rem;

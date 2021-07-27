@@ -13,12 +13,9 @@ import actions from 'redux/actions'
 import Link from 'local_modules/sw-valuelink'
 import { ComponentState } from './types'
 import Button from 'components/controls/Button/Button'
-import Toggle from 'components/controls/Toggle/Toggle'
 import ExchangeForm from './ExchangeForm'
 import AdvancedSettings from './AdvancedSettings'
 import SwapInfo from './SwapInfo'
-
-import OwnExchange from './OwnExchange'
 
 class SomeSwap extends PureComponent<unknown, ComponentState> {
   constructor(props) {
@@ -63,7 +60,6 @@ class SomeSwap extends PureComponent<unknown, ComponentState> {
       gasPrice: '',
       gasLimit: '',
       destReceiver: '',
-      ownExchange: false,
     }
   }
 
@@ -473,12 +469,6 @@ class SomeSwap extends PureComponent<unknown, ComponentState> {
     return !swapData || isSwapPending
   }
 
-  toggleOwnSwap = () => {
-    this.setState((state) => ({
-      ownExchange: !state.ownExchange,
-    }))
-  }
-
   render() {
     const {
       currencies,
@@ -498,7 +488,6 @@ class SomeSwap extends PureComponent<unknown, ComponentState> {
       network,
       swapData,
       isAdvancedMode,
-      ownExchange,
     } = this.state
 
     const linked = Link.all(
@@ -517,83 +506,70 @@ class SomeSwap extends PureComponent<unknown, ComponentState> {
 
     return (
       <section styleName="someSwap">
-        <div styleName="toggleWrapper ownExchange">
-          <Toggle checked={ownExchange} onChange={this.toggleOwnSwap} />
-          <p styleName="name">
-            <FormattedMessage id="ownExchange" defaultMessage="Own exchange" />
-          </p>
+        <ExchangeForm
+          stateReference={linked}
+          selectCurrency={this.selectCurrency}
+          openExternalExchange={this.openExternalExchange}
+          currencies={currencies}
+          receivedList={receivedList}
+          spendedCurrency={spendedCurrency}
+          receivedCurrency={receivedCurrency}
+          fiat={fiat}
+          fromWallet={fromWallet}
+          toWallet={toWallet}
+          isPending={isPending}
+        />
+
+        <AdvancedSettings
+          isAdvancedMode={isAdvancedMode}
+          switchAdvancedMode={this.switchAdvancedMode}
+          stateReference={linked}
+        />
+
+        <SwapInfo
+          network={network}
+          swapData={swapData}
+          convertFromWei={this.convertFromWei}
+          convertIntoWei={this.convertIntoWei}
+        />
+
+        <div styleName="buttonWrapper">
+          {needApprove ? (
+            <Button
+              styleName="button"
+              pending={isDataPending}
+              disabled={swapDataBtnIsDisabled}
+              onClick={this.approve}
+              brand
+            >
+              <FormattedMessage
+                id="FormattedMessageIdApprove"
+                defaultMessage="Approve {token}"
+                values={{ token: spendedCurrency.name }}
+              />
+            </Button>
+          ) : (
+            <Button
+              styleName="button"
+              pending={isDataPending}
+              disabled={swapDataBtnIsDisabled}
+              onClick={this.getSwapData}
+              brand
+            >
+              <FormattedMessage id="checkSwap" defaultMessage="Check the swap" />
+            </Button>
+          )}
+
+          <Button
+            styleName="button"
+            pending={isSwapPending}
+            disabled={swapBtnIsDisabled}
+            onClick={this.swap}
+            brand
+          >
+            <FormattedMessage id="swap" defaultMessage="Swap" />
+          </Button>
         </div>
-
-        {ownExchange ? (
-          <OwnExchange />
-        ) : (
-          <>
-            <ExchangeForm
-              stateReference={linked}
-              selectCurrency={this.selectCurrency}
-              openExternalExchange={this.openExternalExchange}
-              currencies={currencies}
-              receivedList={receivedList}
-              spendedCurrency={spendedCurrency}
-              receivedCurrency={receivedCurrency}
-              fiat={fiat}
-              fromWallet={fromWallet}
-              toWallet={toWallet}
-              isPending={isPending}
-            />
-
-            <AdvancedSettings
-              isAdvancedMode={isAdvancedMode}
-              switchAdvancedMode={this.switchAdvancedMode}
-              stateReference={linked}
-            />
-
-            <SwapInfo
-              network={network}
-              swapData={swapData}
-              convertFromWei={this.convertFromWei}
-              convertIntoWei={this.convertIntoWei}
-            />
-
-            <div styleName="buttonWrapper">
-              {needApprove ? (
-                <Button
-                  styleName="button"
-                  pending={isDataPending}
-                  disabled={swapDataBtnIsDisabled}
-                  onClick={this.approve}
-                  brand
-                >
-                  <FormattedMessage
-                    id="FormattedMessageIdApprove"
-                    defaultMessage="Approve {token}"
-                    values={{ token: spendedCurrency.name }}
-                  />
-                </Button>
-              ) : (
-                <Button
-                  styleName="button"
-                  pending={isDataPending}
-                  disabled={swapDataBtnIsDisabled}
-                  onClick={this.getSwapData}
-                  brand
-                >
-                  <FormattedMessage id="checkSwap" defaultMessage="Check the swap" />
-                </Button>
-              )}
-
-              <Button
-                styleName="button"
-                pending={isSwapPending}
-                disabled={swapBtnIsDisabled}
-                onClick={this.swap}
-                brand
-              >
-                <FormattedMessage id="swap" defaultMessage="Swap" />
-              </Button>
-            </div>
-          </>
-        )}
       </section>
     )
   }

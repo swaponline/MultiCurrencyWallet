@@ -67,5 +67,4 @@ export type ComponentState = {
   gasPrice: string
   gasLimit: string
   destReceiver: string
-  ownExchange: boolean
 }
