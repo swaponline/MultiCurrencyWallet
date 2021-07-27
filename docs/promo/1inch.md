@@ -79,7 +79,7 @@ and customize plugin as he wants. The main difference in this case is that he wi
 # Tell us more about your project *
 What problem does it solve? How will it succeed? In what ways will it help strengthen and grow out the 1inch Network?
 
-SwapOnline is top 1 simplest multi-currency wallet for wordpress platform with decentralized exchange based on atomic swap.
+SwapOnline is top 1 simplest multi-currency wallet for wordpress platform with decentralized exchange based on atomic swap. Our mission is to simplify the introduction of new users and developers in the blockchain ecosystems without developer skills.
 
 ### "What problem does it solve?"
 Anyone can create a popular blockchain wallets and exchange their own assets between blockchains using smart contracts,
