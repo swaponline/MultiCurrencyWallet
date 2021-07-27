@@ -9,14 +9,29 @@ import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 type ComponentProps = {
   network: Network
   swapData?: SwapData
+  baseChainWallet: IUniversalObj
+  fiat: string
+  isDataPending: boolean
+  isSwapPending: boolean
   convertFromWei: (string, number) => string
   convertIntoWei: (string, number) => string
 }
 
 function SwapInfo(props: ComponentProps) {
-  const { network, swapData, convertFromWei, convertIntoWei } = props
+  const {
+    network,
+    swapData,
+    baseChainWallet,
+    fiat,
+    isDataPending,
+    isSwapPending,
+    convertFromWei,
+    convertIntoWei,
+  } = props
 
-  let swapFee: string | undefined = undefined
+  const isPending = isDataPending || isSwapPending
+  let fee: string | undefined = undefined
+  let fiatFee: string | undefined = undefined
   let price: string | undefined = undefined
 
   if (swapData) {
@@ -28,10 +43,14 @@ function SwapInfo(props: ComponentProps) {
     price = `${new BigNumber(fromAmount).div(toAmount).dp(toToken.decimals).toString()} ${
       fromToken.symbol
     } / ${toToken.symbol}`
-    swapFee = `${new BigNumber(tx.gas)
-      .times(tx.gasPrice)
-      .div(10 ** 18)
-      .toString()} ${network.currency}`
+
+    const swapFee = new BigNumber(tx.gas).times(tx.gasPrice).div(10 ** 18)
+
+    fee = `${swapFee.toString()} ${network.currency}`
+
+    if (baseChainWallet.infoAboutCurrency?.price) {
+      fiatFee = `(${swapFee.times(baseChainWallet.infoAboutCurrency.price).toString()} ${fiat})`
+    }
   }
 
   return (
@@ -39,15 +58,24 @@ function SwapInfo(props: ComponentProps) {
       <span styleName="indicator">
         Network: <span>{network.chainName}</span>
       </span>
-      {price && (
-        <span styleName="indicator">
-          Price: <span>{price}</span>
-        </span>
-      )}
-      {swapFee && (
-        <span styleName="indicator">
-          Fee: <span>{swapFee}</span>
-        </span>
+      {isPending ? (
+        <div styleName="loaderWrapper">
+          <InlineLoader />
+        </div>
+      ) : (
+        <>
+          {price && (
+            <span styleName="indicator">
+              Price: <span>{price}</span>
+            </span>
+          )}
+          {fee && (
+            <span styleName="indicator">
+              Fee: <span>{fee}</span>
+              {fiatFee && <span>{fiatFee}</span>}
+            </span>
+          )}
+        </>
       )}
     </section>
   )

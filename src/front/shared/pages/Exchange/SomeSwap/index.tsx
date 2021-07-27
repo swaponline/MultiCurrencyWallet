@@ -27,6 +27,9 @@ class SomeSwap extends PureComponent<unknown, ComponentState> {
     const receivedList = this.returnReceivedList(currencies, spendedCurrency)
     const receivedCurrency = receivedList[0]
 
+    const baseChainWallet = actions.core.getWallet({
+      currency: spendedCurrency.blockchain,
+    })
     const fromWallet = actions.core.getWallet({
       currency: spendedCurrency.value,
     })
@@ -47,6 +50,7 @@ class SomeSwap extends PureComponent<unknown, ComponentState> {
       fiatAmount: 0,
       currencies,
       receivedList,
+      baseChainWallet,
       spendedCurrency: spendedCurrency,
       spendedAmount: '',
       fromWallet: fromWallet || {},
@@ -74,8 +78,13 @@ class SomeSwap extends PureComponent<unknown, ComponentState> {
   updateNetwork = () => {
     const { spendedCurrency } = this.state
 
+    const baseChainWallet = actions.core.getWallet({
+      currency: spendedCurrency.blockchain,
+    })
+
     this.setState(() => ({
       network: externalConfig.evmNetworks[spendedCurrency.blockchain],
+      baseChainWallet,
     }))
   }
 
@@ -473,6 +482,7 @@ class SomeSwap extends PureComponent<unknown, ComponentState> {
     const {
       currencies,
       receivedList,
+      baseChainWallet,
       isPending,
       isDataPending,
       isSwapPending,
@@ -529,6 +539,10 @@ class SomeSwap extends PureComponent<unknown, ComponentState> {
         <SwapInfo
           network={network}
           swapData={swapData}
+          baseChainWallet={baseChainWallet}
+          fiat={fiat}
+          isDataPending={isDataPending}
+          isSwapPending={isSwapPending}
           convertFromWei={this.convertFromWei}
           convertIntoWei={this.convertIntoWei}
         />

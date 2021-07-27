@@ -46,6 +46,7 @@ export type ComponentState = {
   externalWindowTimer: null | NodeJS.Timeout
   currencies: CurrencyMenuItem[]
   receivedList: CurrencyMenuItem[]
+  baseChainWallet: IUniversalObj
   error: IError | null
   isPending: boolean
   isDataPending: boolean
