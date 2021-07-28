@@ -58,31 +58,25 @@ Network development - our case.
 
 We will deliver 1inch functionality (Pathfinder and Limit Orders Protocol) into our network of blockchain wallets counted 1000+ sites, then expand the network by adding our tool to other developer's marketplaces (such as Cloudflare apps, amazon marketplace, and so on). Provide long-time support and improvements.
 
-### More details
 
-By default, our wallet provides atomic swap exchange between different blockchains. We have partnership agreements with litecoin, bitcoin cash, ghost by McAfee, Next chain. For now, we can offer only cross-chain exchanges. But most of our payable clients need fast exchange only in a single network - ETH or BSC. We believe 1inch provides some of the best and most available services in this area. 
+# Tell us more about your project *
+SwapOnline is an open-source non-custodial multi-currency wallet with decentralized exchange based on the atomic swap. We distribute our code using Github and WordPress platforms (more platforms such as Cloudflare Apps are soon). Now we sell our wallet as a plugin for the WordPress platform and at this moment it is the top 1 simplest cryptocurrency wallet widget on codecanyon.com and pugins.woprdpress.org. Our mission is to simplify the introduction of new users and developers in the blockchain ecosystems without developer skills. By default, our wallet provides atomic swap exchange between different blockchains. We have partnership agreements with litecoin, bitcoin cash, ghost by McAfee, Next chain. For now, we can offer only cross-chain exchanges. But most of our payable clients need fast exchange only in a single network - ETH or BSC. We believe 1inch provides some of the best and most available services in this area.
 
 Usecases for different types of users:
 
-- Native JS Developers. we are open source project and anyone can fork our project on github for their own needs. Like the client plugin, they have their own users.
-- WordPress plugin users (no-code developers).  who wants to make their own crypto brand/product. He will install our plugin on his domain
-and will customize the wallet with his own logo, colors, landing page, etc. 
-- usual user who wants to exchange his assets. He will open our or any other application from our customers and can make fast exchange on the available chains through 1inch Network. Also if he wants to create an order with special price it also will be available with Limit Orders Protocol. At this time we know about 40000 wallets who generated adresses using our network. 
+- Native JS Developers. we are an open source project and anyone can fork our project on github for their own needs. Like the client plugin, they have their own users.
+- WordPress plugin users (no-code developers). who wants to make their own crypto brand/product. He will install our plugin on his domain and will customize the wallet with his own logo, colors, landing page, etc.
+- Usual user who wants to exchange his assets. He will open our or any other application from our customers and can make a fast exchange on the available chains through 1inch Network. Also if he wants to create an order with the special price it also will be available with the Limit Orders Protocol. At this time we know about 40000 wallets who generated addresses using our network.
 
-All of this significantly increases the number of users our product. Afterwards it will subsequently increase the number of users of 1inch Network.
+All of this significantly increases the number of users our product. Afterward it will subsequently increase the number of users of 1inch Network.
 
-# Tell us more about your project *
-What problem does it solve? How will it succeed? In what ways will it help strengthen and grow out the 1inch Network?
+"What problem does it solve?"
+10 times developers (our clients) asked us about eth-erc20 exchange, 4 of them asked visa to erc20 (literally sell tokens to his users using credit card), 1 paid 1000$ to get visa-to-erc20 bridge (and another onу want to pay also but waiting for demo).
 
-SwapOnline is an open-source non-custodial multi-currency wallet with decentralized exchange based on the atomic swap. We distribute our code using Github and WordPress platforms (more platforms such as Cloudflare Apps are soon). Now we sell our wallet as a plugin for the WordPress platform and at this moment it is the top 1 simplest cryptocurrency wallet widget on codecanyon.com and pugins.woprdpress.org. Our mission is to simplify the introduction of new users and developers in the blockchain ecosystems without developer skills.
+"How will it succeed?"
+A lot of new developers will use or tool not only to build their own wallet but also deliver new "crypto" exchange, DeFi, and other crypto stuff to their communities under their own brand.
 
-### "What problem does it solve?"
-10 times developers (our clients) asked us about eth-erc20 exchange, 4 of them asked visa to erc20 (literally sell tokens to his users using credit card), 1 paid 1000$ to get visa-to-erc20 bridge (and another onу want to pay also but waiting for demo). 
-
-### "How will it succeed?"
-A lot of new developers will use or tool not only to build their own wallet but also deliver new "crypto" exchange, DeFi, and other crypto stuff to their communities under their own brand.  
-
-### "In what ways will it help strengthen and grow out the 1inch Network?"
+"In what ways will it help strengthen and grow out the 1inch Network?"
 More and more developers are using our tools we planned to port the code to other platforms, marketplaces such as Cloudflare apps, amazon marketplace, etc. In more ways, more developers in our network and more final users will use the exchange.
 
 # In what ways does your project stand out from the competition? *
