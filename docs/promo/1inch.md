@@ -1,4 +1,5 @@
 https://airtable.com/shr899d3K9Bw963CP (отправлено 28.07.2021 by @noxonsu)
+presentation: https://drive.google.com/file/d/1e5v7sVt8Au24yDb1TWfZOrPjhnLgOuDe/view
 
 # Your name / Project name *
 
