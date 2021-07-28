@@ -4,7 +4,7 @@ import actions from 'redux/actions'
 import erc20Like from 'common/erc20Like'
 import {
   links,
-  getWalletLink,
+  routing,
   localStorage,
   getCurrencyKey,
   lsDataCache,
@@ -229,7 +229,7 @@ class Transaction extends Component<any, any> {
       wallets.push(walletTwo)
     }
 
-    const walletLink = getWalletLink(ticker, wallets)
+    const walletLink = routing.getWalletLink(ticker, wallets)
     history.push((walletLink) || '/')
   }
 

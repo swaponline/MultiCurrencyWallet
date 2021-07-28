@@ -31,10 +31,7 @@ import lsDataCache from './lsDataCache'
 import apiLooper from './apiLooper'
 import wpLogoutModal from './wpLogoutModal'
 
-
 import metamask from './metamask'
-
-import getWalletLink from './getWalletLink'
 
 import * as routing from './routing'
 
@@ -96,8 +93,6 @@ export {
   apiLooper,
 
   metamask,
-
-  getWalletLink,
 
   routing,
 
