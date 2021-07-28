@@ -61,6 +61,7 @@ class SomeSwap extends PureComponent<unknown, ComponentState> {
       slippageMaxRange: 50,
       network: externalConfig.evmNetworks[spendedCurrency.blockchain],
       swapData: undefined,
+      swapFee: '',
       gasPrice: '',
       gasLimit: '',
       destReceiver: '',
@@ -214,10 +215,13 @@ class SomeSwap extends PureComponent<unknown, ComponentState> {
 
     try {
       const swap: any = await apiLooper.get('oneinch', this.createSwapRequest())
+      const weiFee = new BigNumber(swap.tx.gas).times(swap.tx.gasPrice)
+      const swapFee = this.convertFromWei(weiFee, 18)
 
       this.setState(() => ({
-        swapData: swap,
         receivedAmount: this.convertFromWei(swap.toTokenAmount, swap.toToken.decimals),
+        swapData: swap,
+        swapFee,
       }))
     } catch (error) {
       this.reportError(error)
@@ -417,8 +421,6 @@ class SomeSwap extends PureComponent<unknown, ComponentState> {
       }))
     }
 
-    alert('closed')
-
     this.setState(() => ({
       isPending: false,
     }))
@@ -460,7 +462,6 @@ class SomeSwap extends PureComponent<unknown, ComponentState> {
     const wrongAdvancedOptions =
       isAdvancedMode && !typeforce.isCoinAddress[receivedBaseCurrency](destReceiver)
 
-    // TODO: worry about the commission
     return (
       isPending ||
       isDataPending ||
@@ -473,9 +474,13 @@ class SomeSwap extends PureComponent<unknown, ComponentState> {
   }
 
   isSwapNotAvailable = () => {
-    const { swapData, isSwapPending } = this.state
+    const { swapData, isSwapPending, fromWallet, spendedAmount, swapFee } = this.state
 
-    return !swapData || isSwapPending
+    const insufficientBalance = new BigNumber(spendedAmount)
+      .plus(swapFee)
+      .isGreaterThan(fromWallet.balance)
+
+    return !swapData || isSwapPending || insufficientBalance
   }
 
   render() {
@@ -488,15 +493,13 @@ class SomeSwap extends PureComponent<unknown, ComponentState> {
       isSwapPending,
       needApprove,
       fiat,
-      fiatAmount,
       spendedCurrency,
-      spendedAmount,
       fromWallet,
       toWallet,
       receivedCurrency,
-      slippage,
       network,
       swapData,
+      swapFee,
       isAdvancedMode,
     } = this.state
 
@@ -539,6 +542,7 @@ class SomeSwap extends PureComponent<unknown, ComponentState> {
         <SwapInfo
           network={network}
           swapData={swapData}
+          swapFee={swapFee}
           baseChainWallet={baseChainWallet}
           fiat={fiat}
           isDataPending={isDataPending}

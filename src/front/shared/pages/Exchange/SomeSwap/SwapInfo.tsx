@@ -9,6 +9,7 @@ import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 type ComponentProps = {
   network: Network
   swapData?: SwapData
+  swapFee?: string
   baseChainWallet: IUniversalObj
   fiat: string
   isDataPending: boolean
@@ -21,12 +22,12 @@ function SwapInfo(props: ComponentProps) {
   const {
     network,
     swapData,
+    swapFee,
     baseChainWallet,
     fiat,
     isDataPending,
     isSwapPending,
     convertFromWei,
-    convertIntoWei,
   } = props
 
   const isPending = isDataPending || isSwapPending
@@ -44,13 +45,11 @@ function SwapInfo(props: ComponentProps) {
       fromToken.symbol
     } / ${toToken.symbol}`
 
-    const swapFee = new BigNumber(tx.gas).times(tx.gasPrice).div(10 ** 18)
+    fee = `${swapFee} ${network.currency}`
 
-    fee = `${swapFee.toString()} ${network.currency}`
-
-    if (baseChainWallet.infoAboutCurrency?.price) {
+    /* if (baseChainWallet.infoAboutCurrency?.price) {
       fiatFee = `(${swapFee.times(baseChainWallet.infoAboutCurrency.price).toString()} ${fiat})`
-    }
+    } */
   }
 
   return (

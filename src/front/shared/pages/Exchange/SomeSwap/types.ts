@@ -65,6 +65,7 @@ export type ComponentState = {
   network: Network
   isAdvancedMode: boolean
   swapData: SwapData | undefined
+  swapFee: string
   gasPrice: string
   gasLimit: string
   destReceiver: string
