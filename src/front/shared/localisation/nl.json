@@ -2685,35 +2685,35 @@
   },
   {
     "id": "multiSignConfirmTxModal_ConfirmTx",
-    "message": "Подтвердить",
+    "message": "Bevestigen",
     "files": [
       "src/front/shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.tsx"
     ]
   },
   {
     "id": "multiSignConfirmTxModal_DismatchTx",
-    "message": "Отклонить",
+    "message": "Afwijzen",
     "files": [
       "src/front/shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.tsx"
     ]
   },
   {
     "id": "multiSignConfirmTxModal_NoticeFetching",
-    "message": "Загрузка...",
+    "message": "Bezig met laden...",
     "files": [
       "src/front/shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.tsx"
     ]
   },
   {
     "id": "multiSignConfirmTxModal_Title",
-    "message": "Подтверждение BTC Multisign транзакции",
+    "message": "Bevestiging van BTC Multisig-transactie",
     "files": [
       "src/front/shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.tsx"
     ]
   },
   {
     "id": "multiSignConfirmTxModal_UpNotice",
-    "message": "Ознакомьтесь с транзакцией и подтвердите её. Если вы против списания, отмените тразакцию",
+    "message": "Controleer de transactie en bevestig deze. Als u tegen de annulering bent, weiger dan de transactie",
     "files": [
       "src/front/shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.tsx"
     ]
@@ -2983,14 +2983,14 @@
   },
   {
     "id": "multiSignConfirmTxModal_GoToWalletPage",
-    "message": "Open wallet",
+    "message": "Portemonnee openen",
     "files": [
       "src/front/shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.tsx"
     ]
   },
   {
     "id": "multiSignConfirmTxModal_YouCantSignThisTx",
-    "message": "You do not have permission to sign this transaction (check that you have created a multisig)",
+    "message": "U heeft geen toestemming om deze transactie te ondertekenen (controleer of u een multisig heeft aangemaakt)",
     "files": [
       "src/front/shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.tsx"
     ]
@@ -3569,7 +3569,7 @@
   },
   {
     "id": "multiSignConfirmTxModal_ButtonClose",
-    "message": "Close",
+    "message": "Dichtbij",
     "files": [
       "src/front/shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.tsx"
     ]

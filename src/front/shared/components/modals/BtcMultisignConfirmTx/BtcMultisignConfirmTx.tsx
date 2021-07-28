@@ -26,35 +26,35 @@ const langPrefix = `multiSignConfirmTxModal`
 const langLabels = defineMessages({
   title: {
     id: `${langPrefix}_Title`,
-    defaultMessage: `Подтверждение BTC Multisign транзакции`,
+    defaultMessage: `Confirmation of BTC Multisig transaction`,
   },
   noticeUp: {
     id: `${langPrefix}_UpNotice`,
-    defaultMessage: `Ознакомьтесь с транзакцией и подтвердите её. Если вы против списания, отмените тразакцию`,
+    defaultMessage: `Review the transaction and confirm it. If you are against the cancellation, reject the transaction`,
   },
   noticeFetching: {
     id: `${langPrefix}_NoticeFetching`,
-    defaultMessage: `Загрузка...`,
+    defaultMessage: `Loading...`,
   },
   confirmTx: {
     id: `${langPrefix}_ConfirmTx`,
-    defaultMessage: `Подтвердить`,
+    defaultMessage: `Confirm`,
   },
   dismatchTx: {
     id: `${langPrefix}_DismatchTx`,
-    defaultMessage: `Отклонить`,
+    defaultMessage: `Reject`,
   },
   youCantSignThis: {
     id: `${langPrefix}_YouCantSignThisTx`,
-    defaultMessage: `У вас нет прав для подписи этой транзакции (проверьте, что у вас создан мультисиг)`,
+    defaultMessage: `You do not have permission to sign this transaction (check that you have created a multisig)`,
   },
   goToWallet: {
     id: `${langPrefix}_GoToWalletPage`,
-    defaultMessage: `Открыть кошелек`,
+    defaultMessage: `Open wallet`,
   },
   buttonClose: {
     id: `${langPrefix}_ButtonClose`,
-    defaultMessage: `Закрыть`,
+    defaultMessage: `Close`,
   },
 })
 
