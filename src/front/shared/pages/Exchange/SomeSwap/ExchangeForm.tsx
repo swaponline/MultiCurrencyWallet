@@ -1,6 +1,7 @@
 import { FormattedMessage } from 'react-intl'
 import CSSModules from 'react-css-modules'
 import styles from './index.scss'
+import { utils } from 'helpers'
 import { inputReplaceCommaWithDot } from 'helpers/domUtils'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
@@ -13,6 +14,7 @@ function ExchangeForm(props) {
     stateReference,
     currencies,
     receivedList,
+    spendedAmount,
     spendedCurrency,
     receivedCurrency,
     selectCurrency,
@@ -21,20 +23,28 @@ function ExchangeForm(props) {
     toWallet,
     isPending,
     openExternalExchange,
+    checkSwapData,
   } = props
+
+  const hasFiatAmount = spendedAmount && fromWallet.infoAboutCurrency?.price
+  const fiatValue =
+    hasFiatAmount &&
+    utils.toMeaningfulFiatValue({
+      value: spendedAmount,
+      rate: fromWallet.infoAboutCurrency.price,
+    })
 
   return (
     <form action="">
       <div styleName="inputWrapper">
         <SelectGroup
           activeFiat={fiat}
-          // TODO
-          // fiat={}
+          fiat={fiatValue && fiatValue}
           inputValueLink={stateReference.spendedAmount}
           selectedValue={spendedCurrency.value}
           label={<FormattedMessage id="partial243" defaultMessage="You send" />}
           id="needToRenameThisId"
-          placeholder="0.00000"
+          placeholder="0.0"
           currencies={currencies}
           inputToolTip={
             <span styleName="balanceTooltip">
@@ -42,6 +52,7 @@ function ExchangeForm(props) {
               {fromWallet.balance}
             </span>
           }
+          onKeyUp={checkSwapData}
           onSelect={(value) =>
             selectCurrency({
               direction: 'spend',

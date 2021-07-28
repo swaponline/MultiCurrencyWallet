@@ -17,6 +17,20 @@ import ExchangeForm from './ExchangeForm'
 import AdvancedSettings from './AdvancedSettings'
 import SwapInfo from './SwapInfo'
 
+// TODO: rename all elements (components, links, etc.)
+
+// TODO: add feedback events
+
+// TODO: for production save only ETH chain as available
+
+// TODO: better currency filter. How to know right away about available currency for API ?
+
+// TODO: add swap data auto updating
+
+// TODO: show more informative messages
+// one of assets is not available. Server returns:
+// - error: cannot find path for <asset contract addr>
+
 class SomeSwap extends PureComponent<unknown, ComponentState> {
   constructor(props) {
     super(props)
@@ -126,10 +140,6 @@ class SomeSwap extends PureComponent<unknown, ComponentState> {
     }))
     console.error(error)
 
-    // TODO: show more informative messages
-    // one of assets is not available. Server returns:
-    // - error: cannot find path for <asset contract addr>
-
     actions.notifications.show(constants.notifications.ErrorNotification, {
       error: error.message,
     })
@@ -193,7 +203,17 @@ class SomeSwap extends PureComponent<unknown, ComponentState> {
   }
   // ---------------------------
 
-  getSwapData = async () => {
+  checkSwapData = async () => {
+    const { spendedAmount } = this.state
+
+    const blockUpdating = this.isSwapDataNotAvailable() || !spendedAmount
+
+    if (!blockUpdating) {
+      this.fetchSwapData()
+    }
+  }
+
+  fetchSwapData = async () => {
     const serviceIsOk = await this.serviceIsAvailable()
 
     if (!serviceIsOk) {
@@ -345,17 +365,23 @@ class SomeSwap extends PureComponent<unknown, ComponentState> {
         () => {
           this.updateNetwork()
           this.filterReceivedList()
+          this.checkSwapData()
         }
       )
     }
 
     if (updateReceivedSide) {
-      this.setState(() => ({
-        receivedCurrency: value,
-        toWallet: actions.core.getWallet({ currency: value.value }),
-        swapData: undefined,
-        receivedAmount: '0',
-      }))
+      this.setState(
+        () => ({
+          receivedCurrency: value,
+          toWallet: actions.core.getWallet({ currency: value.value }),
+          swapData: undefined,
+          receivedAmount: '0',
+        }),
+        () => {
+          this.checkSwapData()
+        }
+      )
     }
   }
 
@@ -493,6 +519,7 @@ class SomeSwap extends PureComponent<unknown, ComponentState> {
       isSwapPending,
       needApprove,
       fiat,
+      spendedAmount,
       spendedCurrency,
       fromWallet,
       toWallet,
@@ -514,7 +541,7 @@ class SomeSwap extends PureComponent<unknown, ComponentState> {
       'destReceiver'
     )
 
-    const swapDataBtnIsDisabled = this.isSwapDataNotAvailable()
+    const swapDataIsDisabled = this.isSwapDataNotAvailable()
     const swapBtnIsDisabled = this.isSwapNotAvailable()
 
     return (
@@ -523,8 +550,10 @@ class SomeSwap extends PureComponent<unknown, ComponentState> {
           stateReference={linked}
           selectCurrency={this.selectCurrency}
           openExternalExchange={this.openExternalExchange}
+          checkSwapData={this.checkSwapData}
           currencies={currencies}
           receivedList={receivedList}
+          spendedAmount={spendedAmount}
           spendedCurrency={spendedCurrency}
           receivedCurrency={receivedCurrency}
           fiat={fiat}
@@ -556,7 +585,7 @@ class SomeSwap extends PureComponent<unknown, ComponentState> {
             <Button
               styleName="button"
               pending={isDataPending}
-              disabled={swapDataBtnIsDisabled}
+              disabled={swapDataIsDisabled}
               onClick={this.approve}
               brand
             >
@@ -569,24 +598,14 @@ class SomeSwap extends PureComponent<unknown, ComponentState> {
           ) : (
             <Button
               styleName="button"
-              pending={isDataPending}
-              disabled={swapDataBtnIsDisabled}
-              onClick={this.getSwapData}
+              pending={isSwapPending}
+              disabled={swapBtnIsDisabled}
+              onClick={this.swap}
               brand
             >
-              <FormattedMessage id="checkSwap" defaultMessage="Check the swap" />
+              <FormattedMessage id="swap" defaultMessage="Swap" />
             </Button>
           )}
-
-          <Button
-            styleName="button"
-            pending={isSwapPending}
-            disabled={swapBtnIsDisabled}
-            onClick={this.swap}
-            brand
-          >
-            <FormattedMessage id="swap" defaultMessage="Swap" />
-          </Button>
         </div>
       </section>
     )

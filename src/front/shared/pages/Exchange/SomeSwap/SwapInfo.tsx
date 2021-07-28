@@ -2,14 +2,14 @@ import { BigNumber } from 'bignumber.js'
 import { FormattedMessage } from 'react-intl'
 import CSSModules from 'react-css-modules'
 import styles from './index.scss'
-import { externalConfig } from 'helpers'
+import { utils } from 'helpers'
 import { Network, SwapData } from './types'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 
 type ComponentProps = {
   network: Network
   swapData?: SwapData
-  swapFee?: string
+  swapFee: string
   baseChainWallet: IUniversalObj
   fiat: string
   isDataPending: boolean
@@ -36,7 +36,7 @@ function SwapInfo(props: ComponentProps) {
   let price: string | undefined = undefined
 
   if (swapData) {
-    const { tx, fromTokenAmount, toTokenAmount, fromToken, toToken } = swapData
+    const { fromTokenAmount, toTokenAmount, fromToken, toToken } = swapData
 
     const fromAmount = convertFromWei(fromTokenAmount, fromToken.decimals)
     const toAmount = convertFromWei(toTokenAmount, toToken.decimals)
@@ -47,16 +47,22 @@ function SwapInfo(props: ComponentProps) {
 
     fee = `${swapFee} ${network.currency}`
 
-    /* if (baseChainWallet.infoAboutCurrency?.price) {
-      fiatFee = `(${swapFee.times(baseChainWallet.infoAboutCurrency.price).toString()} ${fiat})`
-    } */
+    if (baseChainWallet.infoAboutCurrency?.price) {
+      const amount = utils.toMeaningfulFiatValue({
+        value: swapFee,
+        rate: baseChainWallet.infoAboutCurrency.price,
+      })
+
+      fiatFee = `(${amount} ${fiat})`
+    }
   }
 
   return (
     <section styleName="swapInfo">
       <span styleName="indicator">
-        Network: <span>{network.chainName}</span>
+        <FormattedMessage id="network" defaultMessage="Network" />: <span>{network.chainName}</span>
       </span>
+
       {isPending ? (
         <div styleName="loaderWrapper">
           <InlineLoader />
@@ -65,12 +71,12 @@ function SwapInfo(props: ComponentProps) {
         <>
           {price && (
             <span styleName="indicator">
-              Price: <span>{price}</span>
+              <FormattedMessage id="orders105" defaultMessage="Price" />: <span>{price}</span>
             </span>
           )}
           {fee && (
             <span styleName="indicator">
-              Fee: <span>{fee}</span>
+              <FormattedMessage id="fee" defaultMessage="Fee" />: <span>{fee}</span>
               {fiatFee && <span>{fiatFee}</span>}
             </span>
           )}

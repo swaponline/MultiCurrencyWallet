@@ -1,4 +1,3 @@
-import React from 'react'
 import { FormattedMessage, injectIntl } from 'react-intl'
 
 import CSSModules from 'react-css-modules'
@@ -39,6 +38,7 @@ const SelectGroup = (props) => {
     inputToolTip,
     activeFiat,
     balanceTooltip,
+    onKeyUp,
   } = props
 
   return (
@@ -68,6 +68,7 @@ const SelectGroup = (props) => {
           onFocus={props.onFocus ? props.onFocus : () => {}}
           onBlur={props.onBlur ? props.onBlur : () => {}}
           onKeyDown={inputReplaceCommaWithDot}
+          onKeyUp={onKeyUp && onKeyUp}
         />
         {fiat > 0 && (
           <p styleName="textUsd">
