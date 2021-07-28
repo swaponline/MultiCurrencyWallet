@@ -16,7 +16,7 @@ import Button from 'components/controls/Button/Button'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import InvoiceInfoBlock from 'components/InvoiceInfoBlock/InvoiceInfoBlock'
 import * as mnemonicUtils from 'common/utils/mnemonic'
-import redirectTo from 'helpers/redirectTo'
+import { routing } from 'helpers'
 import lsDataCache from 'helpers/lsDataCache'
 import MnemonicInput from 'components/forms/MnemonicInput/MnemonicInput'
 
@@ -133,7 +133,7 @@ class WithdrawModalMultisig extends React.Component<any, any> {
     }
 
     const txInfoUrl = helpers.transactions.getTxRouter('btc', txId)
-    redirectTo(txInfoUrl)
+    routing.redirectTo(txInfoUrl)
 
     actions.modals.close(name)
   }

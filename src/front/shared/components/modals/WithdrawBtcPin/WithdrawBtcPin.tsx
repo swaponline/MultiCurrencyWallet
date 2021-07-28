@@ -15,7 +15,7 @@ import Input from 'components/forms/Input/Input'
 import Button from 'components/controls/Button/Button'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import * as mnemonicUtils from 'common/utils/mnemonic'
-import redirectTo from 'helpers/redirectTo'
+import { routing } from 'helpers'
 import lsDataCache from 'helpers/lsDataCache'
 import MnemonicInput from 'components/forms/MnemonicInput/MnemonicInput'
 
@@ -260,7 +260,7 @@ class WithdrawBtcPin extends React.Component<any, any> {
       }
 
       const txInfoUrl = helpers.transactions.getTxRouter('btc', txId)
-      redirectTo(txInfoUrl)
+      routing.redirectTo(txInfoUrl)
     } else {
       this.setState({
         isShipped: false,

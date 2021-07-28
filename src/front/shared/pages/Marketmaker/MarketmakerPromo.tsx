@@ -10,7 +10,7 @@ import actions from 'redux/actions'
 import Button from 'components/controls/Button/Button'
 import Expandable from 'components/ui/Expandable/Expandable'
 import FAQ from './FAQ'
-import redirectTo from 'helpers/redirectTo'
+import { routing } from 'helpers'
 
 import extensionPromoLight from './images/extensionPromoLight.png'
 import extensionPromoDark from './images/extensionPromoDark.png'
@@ -54,9 +54,9 @@ export default class MarketmakerPromo extends React.Component<{}, ComponentState
   // onSelectBrowser() {
   //   feedback.marketmaking.selected('browser')
   //   if (config.binance) {
-  //     redirectTo(`${links.marketmaker}/BTCB`)
+  //     routing.redirectTo(`${links.marketmaker}/BTCB`)
   //   } else {
-  //     redirectTo(`${links.marketmaker}/WBTC`)
+  //     routing.redirectTo(`${links.marketmaker}/WBTC`)
   //   }
   // }
 
@@ -72,7 +72,7 @@ export default class MarketmakerPromo extends React.Component<{}, ComponentState
 
   // onSelectFarm() {
   //   feedback.marketmaking.selected('farm')
-  //   redirectTo(`${links.farm}`)
+  //   routing.redirectTo(`${links.farm}`)
   // }
 
   openChromeStore() {

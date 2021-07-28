@@ -2,7 +2,22 @@ import getCurrencyKey from './getCurrencyKey'
 import transaction from './transactions'
 import actions from 'redux/actions'
 
-const getWalletLink = (currency, checkAddresses) => {
+export const redirectTo = (url) => {
+  if (url) {
+    if (url.substr(0, 1) !== `#`) url = `#${url}`
+    window.location.hash = url
+  }
+}
+
+export const getTopLocation = (): IUniversalObj => {
+  try {
+    return window.top.location
+  } catch (e) {
+    return window.location
+  }
+}
+
+export const getWalletLink = (currency, checkAddresses) => {
   const prefix = getCurrencyKey(currency, false)
   const tokenBaseCurrency = transaction.getTokenBaseCurrency(currency)
   let ourWallets: string[] = []
@@ -33,6 +48,3 @@ const getWalletLink = (currency, checkAddresses) => {
 
   return false
 }
-
-
-export default getWalletLink

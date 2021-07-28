@@ -4,14 +4,12 @@ import helpers, { constants } from 'helpers'
 import actions from 'redux/actions'
 import Link from 'local_modules/sw-valuelink'
 import { connect } from 'redaction'
-import config from 'app-config'
 
 import cssModules from 'react-css-modules'
 
 import defaultStyles from '../Styles/default.scss'
 import styles from './BtcMultisignConfirmTx.scss'
 
-import { BigNumber } from 'bignumber.js'
 import Modal from 'components/modal/Modal/Modal'
 import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
 import Input from 'components/forms/Input/Input'
@@ -19,12 +17,8 @@ import Button from 'components/controls/Button/Button'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
-import ReactTooltip from 'react-tooltip'
-import { isMobile } from 'react-device-detect'
 
-import links from 'helpers/links'
-
-import redirectTo from 'helpers/redirectTo'
+import { routing } from 'helpers'
 import lsDataCache from 'helpers/lsDataCache'
 
 
@@ -32,35 +26,35 @@ const langPrefix = `multiSignConfirmTxModal`
 const langLabels = defineMessages({
   title: {
     id: `${langPrefix}_Title`,
-    defaultMessage: `Подтверждение BTC Multisign транзакции`,
+    defaultMessage: `Confirmation of BTC Multisig transaction`,
   },
   noticeUp: {
     id: `${langPrefix}_UpNotice`,
-    defaultMessage: `Ознакомьтесь с транзакцией и подтвердите её. Если вы против списания, отмените тразакцию`,
+    defaultMessage: `Review the transaction and confirm it. If you are against the cancellation, reject the transaction`,
   },
   noticeFetching: {
     id: `${langPrefix}_NoticeFetching`,
-    defaultMessage: `Загрузка...`,
+    defaultMessage: `Loading...`,
   },
   confirmTx: {
     id: `${langPrefix}_ConfirmTx`,
-    defaultMessage: `Подтвердить`,
+    defaultMessage: `Confirm`,
   },
   dismatchTx: {
     id: `${langPrefix}_DismatchTx`,
-    defaultMessage: `Отклонить`,
+    defaultMessage: `Reject`,
   },
   youCantSignThis: {
     id: `${langPrefix}_YouCantSignThisTx`,
-    defaultMessage: `У вас нет прав для подписи этой транзакции (проверьте, что у вас создан мультисиг)`,
+    defaultMessage: `You do not have permission to sign this transaction (check that you have created a multisig)`,
   },
   goToWallet: {
     id: `${langPrefix}_GoToWalletPage`,
-    defaultMessage: `Открыть кошелек`,
+    defaultMessage: `Open wallet`,
   },
   buttonClose: {
     id: `${langPrefix}_ButtonClose`,
-    defaultMessage: `Закрыть`,
+    defaultMessage: `Close`,
   },
 })
 
@@ -203,7 +197,7 @@ class BtcMultisignConfirmTx extends React.Component<any, any> {
       this.handleClose()
 
       const txInfoUrl = helpers.transactions.getTxRouter('btc', txId)
-      redirectTo(txInfoUrl)
+      routing.redirectTo(txInfoUrl)
     } else {
       this.setState({
         isError: true,

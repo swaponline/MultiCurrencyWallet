@@ -1,16 +1,14 @@
 import axios from 'axios'
-import getTopLocation from 'helpers/getTopLocation'
-
+import { routing } from 'helpers'
 
 const isFeedbackEnabled = !window?.STATISTIC_DISABLED
-
 
 const sendMessage = ({ appPart, eventName, details }) => {
   if (!isFeedbackEnabled) {
     return
   }
 
-  const host = getTopLocation().host || window.location.hostname || document.location.host
+  const host = routing.getTopLocation().host || window.location.hostname || document.location.host
 
   let prefixMark = ''
   

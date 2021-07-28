@@ -6,7 +6,7 @@ import { FormattedMessage } from 'react-intl'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import FeeRadios  from "./FeeRadios";
-import { links } from 'helpers'
+import { links, utils } from 'helpers'
 import { COIN_DATA, COIN_MODEL } from 'swap.app/constants/COINS'
 
 type FeeInfoBlockProps = {
@@ -75,24 +75,6 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
       break
   }
 
-  const convertToFiat = (value, exchangeRate) => {
-    // check after converting
-    // if  0.<two-digit number more 0> then cut result to two numbers
-    // else cut result to currency decimals
-    let bigNumResult = new BigNumber(value).multipliedBy(exchangeRate)
-    const strResult = bigNumResult.toString()
-    const haveTwoZeroAfterDot =
-      strResult.match(/\./)
-      && strResult.split('.')[1][0] === '0' // 12.34 -> ['12', '34'] -> '3' === '0'
-      && strResult.split('.')[1][1] === '0' // 12.34 -> ['12', '34'] -> '4' === '0'
-
-    bigNumResult = haveTwoZeroAfterDot
-      ? bigNumResult.dp(currentDecimals, BigNumber.ROUND_CEIL)
-      : bigNumResult.dp(2, BigNumber.ROUND_CEIL)
-
-    return bigNumResult.toNumber()
-  }
-
   let minerFee = initialMinerFee
 
   // double miner fee for user and admin transactions
@@ -104,20 +86,20 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
 
   const fiatMinerFee = isToken
     ? exchangeRateForTokens > 0 // eth rate for tokens
-      ? convertToFiat(minerFee, exchangeRateForTokens)
+      ? utils.toMeaningfulFiatValue({ value: minerFee, rate:exchangeRateForTokens })
       : 0
     : exCurrencyRate > 0 // own currency rate for another
-      ? convertToFiat(minerFee, exCurrencyRate)
+      ? utils.toMeaningfulFiatValue({ value: minerFee, rate:exCurrencyRate })
       : 0
 
   const fiatServiceFee = usedAdminFee
     ? exCurrencyRate > 0
-      ? convertToFiat(serviceFee, exCurrencyRate)
+      ? utils.toMeaningfulFiatValue({ value: serviceFee, rate:exCurrencyRate })
       : 0
     : 0
 
   const fiatTotalFee = exCurrencyRate > 0 && !isToken
-    ? convertToFiat(totalFee, exCurrencyRate)
+    ? utils.toMeaningfulFiatValue({ value: totalFee, rate:exCurrencyRate })
     : 0
 
   const transactionSize = (
