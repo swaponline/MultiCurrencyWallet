@@ -9,6 +9,14 @@ export const redirectTo = (url) => {
   }
 }
 
+export const getTopLocation = (): IUniversalObj => {
+  try {
+    return window.top.location
+  } catch (e) {
+    return window.location
+  }
+}
+
 export const getWalletLink = (currency, checkAddresses) => {
   const prefix = getCurrencyKey(currency, false)
   const tokenBaseCurrency = transaction.getTokenBaseCurrency(currency)

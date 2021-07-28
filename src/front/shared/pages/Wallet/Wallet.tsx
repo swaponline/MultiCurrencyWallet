@@ -10,9 +10,8 @@ import moment from 'moment'
 import appConfig from 'app-config'
 import actions from 'redux/actions'
 import styles from './Wallet.scss'
-import { links, constants, stats, user } from 'helpers'
+import { links, constants, stats, user, routing } from 'helpers'
 import { localisedUrl } from 'helpers/locale'
-import getTopLocation from 'helpers/getTopLocation'
 import config from 'helpers/externalConfig'
 import metamask from 'helpers/metamask'
 import wpLogoutModal from 'helpers/wpLogoutModal'
@@ -413,7 +412,7 @@ class Wallet extends PureComponent<any, any> {
 
           let widgetUrl
           if (appConfig.isWidget) {
-            widgetUrl = getTopLocation().origin
+            widgetUrl = routing.getTopLocation().origin
 
             registrationData.widget_url = widgetUrl
           }
@@ -431,7 +430,7 @@ class Wallet extends PureComponent<any, any> {
 
           registrationData.wallets = wallets
 
-          await stats.updateUser(ethData.address, getTopLocation().host, registrationData)
+          await stats.updateUser(ethData.address, routing.getTopLocation().host, registrationData)
         } catch (error) {
           console.group('wallet >%c syncData', 'color: red;')
           console.error(`Sync error in wallet: ${error}`)
