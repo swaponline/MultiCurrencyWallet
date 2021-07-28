@@ -121,11 +121,11 @@ export function setCookie(name, value, options) {
  * Converts into fiat value and save meaningful nums for float values
  * Returned string prevents from scientific notation: ex. 10e17
  */
-export function toMeaningfulFiatValue(params: {
+export const toMeaningfulFiatValue = (params: {
   value: BigNumber | number | string
   rate: BigNumber | number | string
   meaningfulDecimals?: number | false
-}): string {
+}): string => {
   const { value, rate, meaningfulDecimals = false } = params
 
   let result = new BigNumber(value).multipliedBy(rate)

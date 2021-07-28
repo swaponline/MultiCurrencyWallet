@@ -24,7 +24,7 @@ import helpers, {
   links,
   adminFee,
   feedback,
-  redirectTo,
+  routing,
 } from 'helpers'
 import btcUtils from 'common/utils/coin/btc'
 import erc20Like from 'common/erc20Like'
@@ -596,7 +596,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
         const { tokenKey, currency: selectedCurrency } = selectedItem
         const txInfoUrl = helpers.transactions.getTxRouter(tokenKey || selectedCurrency, txId)
 
-        redirectTo(txInfoUrl)
+        routing.redirectTo(txInfoUrl)
       })
       .then(() => {
         actions.modals.close(name)

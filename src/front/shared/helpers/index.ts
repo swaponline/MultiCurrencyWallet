@@ -36,7 +36,7 @@ import metamask from './metamask'
 
 import getWalletLink from './getWalletLink'
 
-import redirectTo from './redirectTo'
+import * as routing from './routing'
 
 import adminFee from './adminFee'
 
@@ -99,7 +99,7 @@ export {
 
   getWalletLink,
 
-  redirectTo,
+  routing,
 
   adminFee,
 
