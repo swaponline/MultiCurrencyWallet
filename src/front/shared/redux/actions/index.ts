@@ -8,7 +8,7 @@ import feed from './feed'
 import core from './core'
 import ui from './ui'
 import filter from './filter'
-
+import oneinch from './oneinch'
 import btc from './btc'
 import ghost from './ghost'
 import next from './next'
@@ -38,7 +38,7 @@ export default {
   history,
   core,
   ui,
-
+  oneinch,
   btc,
   btcmultisig,
   eth: EthLikeAction.ETH,

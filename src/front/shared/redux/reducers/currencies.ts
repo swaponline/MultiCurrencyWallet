@@ -1,7 +1,7 @@
 import config from 'app-config'
 import TOKEN_STANDARDS from 'helpers/constants/TOKEN_STANDARDS'
 import { BLOCKCHAIN as BLOCKCHAIN_TYPE } from 'swap.app/constants/COINS'
-
+import { apiLooper } from 'helpers'
 
 const NETWORK = process.env.MAINNET ? 'mainnet' : 'testnet'
 
@@ -258,6 +258,7 @@ const initialState = {
   ],
   addSelectedItems: [],
   addPartialItems: [],
+  oneinch: {},
 }
 
 
@@ -468,6 +469,17 @@ const deletedPartialCurrency = (state, payload) => ({
   partialItems: state.partialItems.filter(item => item.name !== payload),
 })
 
+const add1inchTokens = (state, payload) => {
+  const { chainId, tokens } = payload
+
+  return {
+    ...state,
+    oneinch: {
+      ...state.oneinch,
+      [chainId]: tokens,
+    }
+  }
+}
 
 export {
   initialState,
@@ -475,4 +487,5 @@ export {
   addPartialItems,
   updatePartialItems,
   deletedPartialCurrency,
+  add1inchTokens,
 }

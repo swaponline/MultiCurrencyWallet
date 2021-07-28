@@ -7,6 +7,7 @@ import styles from './index.scss'
 import typeforce from 'swap.app/util/typeforce'
 import { COIN_TYPE, COIN_MODEL, COIN_DATA } from 'swap.app/constants/COINS'
 import { Token } from 'common/types'
+import getCoinInfo from 'common/coins/getCoinInfo'
 import erc20Like from 'common/erc20Like'
 import { feedback, apiLooper, externalConfig, constants, transactions } from 'helpers'
 import actions from 'redux/actions'
@@ -23,13 +24,15 @@ import SwapInfo from './SwapInfo'
 
 // TODO: for production save only ETH chain as available
 
-// TODO: better currency filter. How to know right away about available currency for API ?
+// TODO: be careful with this component render
+// we don't want to filter all currencies on each excess render
+// double check in what kind of cases it can happen
 
 class SomeSwap extends PureComponent<unknown, ComponentState> {
   constructor(props) {
     super(props)
 
-    const { currencies, activeFiat } = props
+    const { currencies, oneinchTokens, activeFiat } = props
 
     const spendedCurrency = currencies[0]
     const receivedList = this.returnReceivedList(currencies, spendedCurrency)
@@ -104,13 +107,16 @@ class SomeSwap extends PureComponent<unknown, ComponentState> {
     )
   }
 
-  filterReceivedList = () => {
+  resetReceivedList = () => {
     const { currencies, spendedCurrency } = this.state
     const receivedList = this.returnReceivedList(currencies, spendedCurrency)
 
     this.setState(() => ({
       receivedList: receivedList,
       receivedCurrency: receivedList[0],
+      toWallet: actions.core.getWallet({ currency: receivedList[0].value }),
+      swapData: undefined,
+      receivedAmount: '0',
     }))
   }
 
@@ -379,7 +385,7 @@ class SomeSwap extends PureComponent<unknown, ComponentState> {
       }),
       () => {
         this.updateNetwork()
-        this.updateReceivedSide()
+        this.resetReceivedList()
         this.checkSwapData()
       }
     )
@@ -387,8 +393,6 @@ class SomeSwap extends PureComponent<unknown, ComponentState> {
 
   updateReceivedSide = () => {
     const { receivedCurrency } = this.state
-
-    this.filterReceivedList()
 
     this.setState(
       () => ({
@@ -627,15 +631,54 @@ class SomeSwap extends PureComponent<unknown, ComponentState> {
   }
 }
 
-const filterCurrencies = (arr) => {
-  return arr.filter((item) => {
-    const currency = COIN_DATA[item.name]
+// TODO: decide to load this data from different component
+// like on App.tsx loading or fetch it from this component
+// (only when it renders)
+const fetch1inchTokens = async () => {
+  const availableChains = [1, 56, 137]
 
-    return item.standard || currency?.model === COIN_MODEL.AB
+  Object.keys(externalConfig.evmNetworks).forEach(async (nativeCurrency) => {
+    const chainInfo = externalConfig.evmNetworks[nativeCurrency]
+
+    if (availableChains.includes(chainInfo.networkVersion)) {
+      const data: any = await apiLooper.get('oneinch', `/${chainInfo.networkVersion}/tokens`)
+
+      actions.oneinch.addTokens({
+        chainId: chainInfo.networkVersion,
+        tokens: data?.tokens,
+      })
+    }
   })
 }
 
-export default connect(({ currencies, user: { activeFiat } }) => ({
-  currencies: filterCurrencies(currencies.items),
-  activeFiat,
+fetch1inchTokens()
+
+const filterCurrencies = (params) => {
+  const { currencies, tokensWallets, oneinchTokens } = params
+
+  return currencies.filter((item) => {
+    const currency = COIN_DATA[item.name]
+
+    if (item.standard) {
+      const { blockchain } = getCoinInfo(item.value)
+
+      const networkVersion = externalConfig.evmNetworks[blockchain].networkVersion
+      const walletKey = item.value.toLowerCase()
+      const tokensByChain = oneinchTokens[networkVersion]
+
+      // if token is in the object then it's true
+      return tokensByChain[tokensWallets[walletKey].contractAddress]
+    }
+
+    return currency?.model === COIN_MODEL.AB
+  })
+}
+
+export default connect(({ currencies, user }) => ({
+  currencies: filterCurrencies({
+    currencies: currencies.items,
+    tokensWallets: user.tokensData,
+    oneinchTokens: currencies.oneinch,
+  }),
+  activeFiat: user.activeFiat,
 }))(CSSModules(SomeSwap, styles, { allowMultiple: true }))
