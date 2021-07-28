@@ -72,9 +72,12 @@ different types of users:
 
 - usual user who wants to exchange his assets. He will open our or any other application from our customers and can make fast exchange on the available chains through 1inch Network. Also if he wants to create an order with special price it also will be available with Limit Orders Protocol.
 
-- plugin client who wants to make own brand/product. He will install our plugin on his domain
-and customize plugin as he wants. The main difference in this case is that he will have its own users. It significantly increases the number of users our product. Afterwards it will subsequently increase the number of users of 1inch Network.
+- also we have plugin client who wants to make own brand/product. He will install our plugin on his domain
+and customize plugin as he wants. The main difference in this case is that he will have its own users.
 
+- we are open source project and anyone developers can fork our project on github for their own needs. Like the client plugin, they have their own users. 
+
+All of this significantly increases the number of users our product. Afterwards it will subsequently increase the number of users of 1inch Network.
 
 # Tell us more about your project *
 What problem does it solve? How will it succeed? In what ways will it help strengthen and grow out the 1inch Network?
