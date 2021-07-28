@@ -1,4 +1,4 @@
-https://airtable.com/shr899d3K9Bw963CP
+https://airtable.com/shr899d3K9Bw963CP (отправлено 28.07.2021 by @noxonsu)
 
 # Your name / Project name *
 
@@ -94,13 +94,14 @@ There is no deadline, we will add eth-to-erc exchange ASAP, we planned to delive
 Long-term sustainability. By default, we can add your API easily, but we made tons of changes every day based on feedback from our clients, we should not only do "simplest" integration but deliver a better user experience. The biggest problem in crypto: core developers can get tired, move to another project, die, burn out. We have built a recruitment, onboarding, and training process with a focus on strong specialists (we require knowledge of bitcoin scripts) for long project life.
 
 # What is the size of funding you expect for completing each milestone of the project? *
-Milestones (all milestones include 2 year support and improvements): 
-1. simple API connection (beta), work with a real customers who really wants it to finalize beta version. (70 000)
+Milestones (all milestones include 2-year support and improvements):
+
+1. simple API connection (beta), work with real customers who really want it to finalize beta version. (70 000)
 2. improve UX (provide visa-to-erc bridge), develop dashboards, metrics, and so on (70 000)
-3. expand the network to new platforms such Cloudflare apps, amazon marketplace, Heroku etc.. (100 000)
+3. Expand the network to new platforms such Cloudflare apps, amazon marketplace, Heroku, etc.. (100 000)
 4. integrate other stuff 1inch team will develop (70 000)
 
-These funds are required to 100% solve HR issues (finding devs, educating and motivating the old developers) for two years. 
+These funds are required to 100% solve HR issues (finding devs, educating, and motivating the old developers) for two years.
 
 # How will the project be maintained upon completion of the grant? Will any external sources of funding be available to ensure long-term sustainability? *
 We propose to create a multi-sig fund which will use only with reporting by human-hours (we use monitask.com to track) and specific GitHub issues related to 1inch, exchange UI, and so on.  Also, our clients pay us to get the workable application so we will maintain this as long as our clients will need this.
