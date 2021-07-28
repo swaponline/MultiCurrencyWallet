@@ -66,23 +66,23 @@ Integrate 1inch Pathfinder and Limit Orders Protocol into the crypto wordpress w
 
 Not for everyone need such a type of technology as atomic swap (secure, but slow) or exchanges between
 different blockchains. For now we can offer only this type of service. Some of our
-clients need fast exchange only on the one blockchain network. We believe 1inch 
+clients need fast exchange only on the one blockchain network. We believe 1inch
 provides some of the best and most available services in this area. Examples for
 different types of users:
 
 - usual user who wants to exchange his assets. He will open our or any other application from our customers and can make fast exchange on the available chains through 1inch Network. Also if he wants to create an order with special price it also will be available with Limit Orders Protocol.
 
-- also we have plugin client who wants to make own brand/product. He will install our plugin on his domain
+- plugin client who wants to make own brand/product. He will install our plugin on his domain
 and customize plugin as he wants. The main difference in this case is that he will have its own users.
 
-- we are open source project and anyone developers can fork our project on github for their own needs. Like the client plugin, they have their own users. 
+- developers, we are open source project and anyone can fork our project on github for their own needs. Like the client plugin, they have their own users.
 
 All of this significantly increases the number of users our product. Afterwards it will subsequently increase the number of users of 1inch Network.
 
 # Tell us more about your project *
 What problem does it solve? How will it succeed? In what ways will it help strengthen and grow out the 1inch Network?
 
-SwapOnline is top 1 simplest multi-currency wallet for wordpress platform with decentralized exchange based on atomic swap. Our mission is to simplify the introduction of new users and developers in the blockchain ecosystems without developer skills.
+SwapOnline is open sourse non-custodial multi-currency wallet with decentralized exchange based on atomic swap, also we provide our wallet as plugin for wordpress platform and at this moment it is top 1 simplest cryptocurrency wallet widget on codecanyon. Our mission is to simplify the introduction of new users and developers in the blockchain ecosystems without developer skills.
 
 ### "What problem does it solve?"
 Anyone can create a popular blockchain wallets and exchange their own assets between blockchains using smart contracts,
@@ -115,4 +115,4 @@ Long-term sustainability, we can add your api easily, but we made tons of change
 200 000 $ . To solve HR issues (finding devs, educating and motivation the old developers) for tho years. But we can start with 0$
 
 # How will the project be maintained upon completion of the grant? Will any external sources of funding be available to ensure long-term sustainability? *
-Our clients pay us to get the workable application so we will mainteined this as long as our clients will need this. 
+Our clients pay us to get the workable application so we will mainteined this as long as our clients will need this.
