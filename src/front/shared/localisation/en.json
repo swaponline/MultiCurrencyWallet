@@ -2811,35 +2811,35 @@
   },
   {
     "id": "multiSignConfirmTxModal_ConfirmTx",
-    "message": "Подтвердить",
+    "message": "Confirm",
     "files": [
       "src/front/shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.tsx"
     ]
   },
   {
     "id": "multiSignConfirmTxModal_DismatchTx",
-    "message": "Отклонить",
+    "message": "Reject",
     "files": [
       "src/front/shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.tsx"
     ]
   },
   {
     "id": "multiSignConfirmTxModal_NoticeFetching",
-    "message": "Загрузка...",
+    "message": "Loading...",
     "files": [
       "src/front/shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.tsx"
     ]
   },
   {
     "id": "multiSignConfirmTxModal_Title",
-    "message": "Подтверждение BTC Multisign транзакции",
+    "message": "Confirmation of BTC Multisig transaction",
     "files": [
       "src/front/shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.tsx"
     ]
   },
   {
     "id": "multiSignConfirmTxModal_UpNotice",
-    "message": "Ознакомьтесь с транзакцией и подтвердите её. Если вы против списания, отмените тразакцию",
+    "message": "Review the transaction and confirm it. If you are against the cancellation, reject the transaction",
     "files": [
       "src/front/shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.tsx"
     ]

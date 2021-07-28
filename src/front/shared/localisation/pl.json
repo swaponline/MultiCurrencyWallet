@@ -2696,35 +2696,35 @@
   },
   {
     "id": "multiSignConfirmTxModal_ConfirmTx",
-    "message": "Подтвердить",
+    "message": "Potwierdzać",
     "files": [
       "src/front/shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.tsx"
     ]
   },
   {
     "id": "multiSignConfirmTxModal_DismatchTx",
-    "message": "Отклонить",
+    "message": "Odrzucić",
     "files": [
       "src/front/shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.tsx"
     ]
   },
   {
     "id": "multiSignConfirmTxModal_NoticeFetching",
-    "message": "Загрузка...",
+    "message": "Ładowanie...",
     "files": [
       "src/front/shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.tsx"
     ]
   },
   {
     "id": "multiSignConfirmTxModal_Title",
-    "message": "Подтверждение BTC Multisign транзакции",
+    "message": "Potwierdzenie transakcji BTC Multisig",
     "files": [
       "src/front/shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.tsx"
     ]
   },
   {
     "id": "multiSignConfirmTxModal_UpNotice",
-    "message": "Ознакомьтесь с транзакцией и подтвердите её. Если вы против списания, отмените тразакцию",
+    "message": "Przejrzyj transakcję i potwierdź ją. Jeśli jesteś przeciwny anulowaniu, odrzuć transakcję",
     "files": [
       "src/front/shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.tsx"
     ]
@@ -3001,7 +3001,7 @@
   },
   {
     "id": "multiSignConfirmTxModal_YouCantSignThisTx",
-    "message": "You do not have permission to sign this transaction (check that you have created a multisig)",
+    "message": "Nie masz uprawnień do podpisania tej transakcji (sprawdź, czy utworzyłeś multisig)",
     "files": [
       "src/front/shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.tsx"
     ]
@@ -3580,7 +3580,7 @@
   },
   {
     "id": "multiSignConfirmTxModal_ButtonClose",
-    "message": "Close",
+    "message": "Blisko",
     "files": [
       "src/front/shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.tsx"
     ]
