@@ -1,4 +1,3 @@
-.
 ├── back
 │   └── nextcoin
 │       ├── nextd-install.sh
@@ -181,9 +180,9 @@
 │   ├── helpers
 │   │   ├── bip44.ts
 │   │   ├── constants
-│   │   │   ├── AVAILABLE_EVM_NETWORKS.ts
 │   │   │   ├── COINS_WITH_DYNAMIC_FEE.ts
 │   │   │   ├── DEFAULT_CURRENCY_PARAMETERS.ts
+│   │   │   ├── EVM_CONTRACTS_ABI.ts
 │   │   │   ├── index.ts
 │   │   │   ├── MIN_AMOUNT_OFFER.ts
 │   │   │   ├── MIN_AMOUNT.ts
@@ -292,6 +291,7 @@
 │   │       ├── pullProps.ts
 │   │       └── typeforce.ts
 │   ├── swap.auth
+│   │   ├── arbeth.ts
 │   │   ├── bnb.ts
 │   │   ├── btc.ts
 │   │   ├── eth.ts
@@ -301,13 +301,19 @@
 │   │   ├── next.ts
 │   │   └── SwapAuth.ts
 │   ├── swap.flows
+│   │   ├── ARBITRUM2BTC.ts
 │   │   ├── atomic
 │   │   │   ├── BtcToEthLikeToken.ts
 │   │   │   ├── BtcToEthLike.ts
 │   │   │   ├── EthLikeToBtc.ts
-│   │   │   └── EthLikeTokenToBtc.ts
+│   │   │   ├── EthLikeTokenToBtc.ts
+│   │   │   ├── EvmTokenToNext.ts
+│   │   │   ├── EvmToNext.ts
+│   │   │   ├── NextToEvmToken.ts
+│   │   │   └── NextToEvm.ts
 │   │   ├── BNB2BTC.ts
 │   │   ├── BSCTOKEN2BTC.ts
+│   │   ├── BTC2ARBITRUM.ts
 │   │   ├── BTC2BNB.ts
 │   │   ├── BTC2BSCTOKEN.ts
 │   │   ├── BTC2ETHTOKEN.ts
@@ -350,6 +356,7 @@
 │   │   ├── Steps.ts
 │   │   └── Swap.ts
 │   ├── swap.swaps
+│   │   ├── ArbitrumSwap.ts
 │   │   ├── BnbSwap.ts
 │   │   ├── BscTokenSwap.ts
 │   │   ├── BtcSwap.ts
@@ -391,6 +398,7 @@
 │   │   │   └── icon-32.png
 │   │   └── manifest_eth.json
 │   ├── client
+│   │   ├── colors.css
 │   │   ├── favicon.png
 │   │   ├── fonts
 │   │   │   └── Manrope
@@ -418,6 +426,7 @@
 │   │   │       └── manrope-thin.woff2
 │   │   ├── index.html
 │   │   ├── index.tsx
+│   │   ├── ownBuffer.js
 │   │   └── scss
 │   │       ├── app.scss
 │   │       ├── config
@@ -431,7 +440,6 @@
 │   │       │   │   └── _mediaWidget.scss
 │   │       │   ├── vars
 │   │       │   │   ├── _animations.scss
-│   │       │   │   ├── _colors.scss
 │   │       │   │   ├── index.scss
 │   │       │   │   └── _media.scss
 │   │       │   └── widget.scss
@@ -448,6 +456,8 @@
 │   │   │   ├── bep20.js
 │   │   │   ├── erc20.js
 │   │   │   ├── erc20matic.js
+│   │   │   ├── evmNetworks.js
+│   │   │   ├── evmNetworkVersions.js
 │   │   │   ├── feeRates.js
 │   │   │   ├── hiddenCoins.js
 │   │   │   ├── index.js
@@ -469,6 +479,8 @@
 │   │   │   ├── bep20.js
 │   │   │   ├── erc20.js
 │   │   │   ├── erc20matic.js
+│   │   │   ├── evmNetworks.js
+│   │   │   ├── evmNetworkVersions.js
 │   │   │   ├── feeRates.js
 │   │   │   ├── hiddenCoins.js
 │   │   │   ├── index.js
@@ -566,6 +578,9 @@
 │   │   │   ├── CurrencyDirectionChooser
 │   │   │   │   ├── CurrencyDirectionChooser.scss
 │   │   │   │   └── CurrencyDirectionChooser.tsx
+│   │   │   ├── ErrorBoundary
+│   │   │   │   ├── index.scss
+│   │   │   │   └── index.tsx
 │   │   │   ├── ErrorPageNoSSL
 │   │   │   │   ├── ErrorPageNoSSL.scss
 │   │   │   │   └── ErrorPageNoSSL.tsx
@@ -920,6 +935,7 @@
 │   │   │       │   ├── CurrencyIcon.scss
 │   │   │       │   ├── CurrencyIcon.tsx
 │   │   │       │   └── images
+│   │   │       │       ├── arbeth.svg
 │   │   │       │       ├── arn.svg
 │   │   │       │       ├── bnb.svg
 │   │   │       │       ├── btc.svg
@@ -950,7 +966,6 @@
 │   │   │       │       ├── xrp.svg
 │   │   │       │       └── yup.svg
 │   │   │       ├── CurrencySelect
-│   │   │       │   ├── CurrencySelect.scss
 │   │   │       │   ├── CurrencySelect.tsx
 │   │   │       │   └── Option
 │   │   │       │       ├── Option.scss
@@ -960,10 +975,7 @@
 │   │   │       │   └── index.tsx
 │   │   │       ├── DropdownMenu
 │   │   │       │   ├── DropdownMenu.scss
-│   │   │       │   ├── DropdownMenu.tsx
-│   │   │       │   └── images
-│   │   │       │       ├── dots.svg
-│   │   │       │       └── greyDots.svg
+│   │   │       │   └── DropdownMenu.tsx
 │   │   │       ├── Expandable
 │   │   │       │   ├── Expandable.scss
 │   │   │       │   └── Expandable.tsx
@@ -992,7 +1004,7 @@
 │   │   │   ├── adminFee.ts
 │   │   │   ├── apiLooper.ts
 │   │   │   ├── api.ts
-│   │   │   ├── bepToken.ts
+│   │   │   ├── arbeth.ts
 │   │   │   ├── bnb.ts
 │   │   │   ├── btc.ts
 │   │   │   ├── cache.ts
@@ -1016,9 +1028,6 @@
 │   │   │   ├── getPageOffset.ts
 │   │   │   ├── getPairFees.ts
 │   │   │   ├── getReduxState.ts
-│   │   │   ├── getTopLocation.ts
-│   │   │   ├── getUnixTimeStamp.ts
-│   │   │   ├── getWalletLink.ts
 │   │   │   ├── ghost.ts
 │   │   │   ├── handleGoTrade.ts
 │   │   │   ├── ignoreProps.ts
@@ -1031,9 +1040,10 @@
 │   │   │   ├── metamask.ts
 │   │   │   ├── migrations
 │   │   │   │   ├── 001_initMigration.ts
+│   │   │   │   ├── 002_updateHiddenCoinsList.ts
 │   │   │   │   └── index.ts
 │   │   │   ├── next.ts
-│   │   │   ├── redirectTo.ts
+│   │   │   ├── routing.ts
 │   │   │   ├── seo.ts
 │   │   │   ├── Sound
 │   │   │   │   └── alert.mp4
@@ -1047,6 +1057,7 @@
 │   │   │   ├── web3.ts
 │   │   │   └── wpLogoutModal.ts
 │   │   ├── images
+│   │   │   ├── checked.svg
 │   │   │   ├── close.svg
 │   │   │   ├── custom.svg
 │   │   │   ├── index.ts
@@ -1073,8 +1084,6 @@
 │   │   │   ├── pl.json
 │   │   │   └── ru.json
 │   │   ├── pages
-│   │   │   ├── About
-│   │   │   │   └── About.tsx
 │   │   │   ├── CreateWallet
 │   │   │   │   ├── chooseColor.ts
 │   │   │   │   ├── CreateWallet.scss
@@ -1095,12 +1104,6 @@
 │   │   │   │       ├── startPacks.ts
 │   │   │   │       ├── StepsWrapper.tsx
 │   │   │   │       └── texts.tsx
-│   │   │   ├── Currency
-│   │   │   │   ├── Currency.scss
-│   │   │   │   ├── Currency.tsx
-│   │   │   │   └── Row
-│   │   │   │       ├── Row.scss
-│   │   │   │       └── Row.tsx
 │   │   │   ├── CurrencyWallet
 │   │   │   │   ├── CurrencyWallet.scss
 │   │   │   │   └── CurrencyWallet.tsx
@@ -1111,6 +1114,7 @@
 │   │   │   │   │   └── Option
 │   │   │   │   │       ├── Option.scss
 │   │   │   │   │       └── Option.tsx
+│   │   │   │   ├── AtomicSwap
 │   │   │   │   ├── Exchange.scss
 │   │   │   │   ├── Exchange.tsx
 │   │   │   │   ├── HowItWorks
@@ -1218,8 +1222,6 @@
 │   │   │   │   ├── FeeControler
 │   │   │   │   │   ├── FeeControler.scss
 │   │   │   │   │   └── FeeControler.tsx
-│   │   │   │   ├── images
-│   │   │   │   │   └── checked.svg
 │   │   │   │   ├── SwapController.tsx
 │   │   │   │   ├── swaps
 │   │   │   │   │   ├── build.ts
@@ -1359,4 +1361,4 @@
 │       └── run.js
 └── README.md
 
-342 directories, 1017 files
+339 directories, 1023 files

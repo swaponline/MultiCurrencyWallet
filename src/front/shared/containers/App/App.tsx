@@ -28,7 +28,7 @@ import NotificationConductor from "components/notification/NotificationConductor
 import Seo from "components/Seo/Seo";
 
 import config from "helpers/externalConfig"
-import { redirectTo, links, utils } from 'helpers'
+import { routing, links, utils } from 'helpers'
 import backupUserData from 'plugins/backupUserData'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 
@@ -238,10 +238,10 @@ class App extends React.Component<RouteComponentProps<any>, any> {
           console.log('is restored', isRestored, constants.localStorage.isWalletCreate)
           if (isRestored) {
             if (localStorage.getItem(constants.localStorage.isWalletCreate)) {
-              redirectTo(links.home)
+              routing.redirectTo(links.home)
               window.location.reload()
             } else {
-              redirectTo(window.location.host === 'bsc.swap.io' ? links.exchange : links.createWallet)
+              routing.redirectTo(window.location.host === 'bsc.swap.io' ? links.exchange : links.createWallet)
               if (wpLoader) wpLoader.style.display = 'none'
             }
           }
@@ -257,7 +257,7 @@ class App extends React.Component<RouteComponentProps<any>, any> {
           })
 
           if (window.location.host === 'bsc.swap.io') {
-            redirectTo('#/exchange/btc-to-btcb')
+            routing.redirectTo('#/exchange/btc-to-btcb')
           }
         } else {
           if (wpLoader) wpLoader.style.display = 'none'

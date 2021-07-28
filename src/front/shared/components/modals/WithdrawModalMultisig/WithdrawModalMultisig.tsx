@@ -27,7 +27,7 @@ import MIN_AMOUNT from 'common/helpers/constants/MIN_AMOUNT'
 import { inputReplaceCommaWithDot } from 'helpers/domUtils'
 import QrReader from 'components/QrReader'
 
-import redirectTo from 'helpers/redirectTo'
+import { routing } from 'helpers'
 import lsDataCache from 'helpers/lsDataCache'
 
 @connect(
@@ -226,7 +226,7 @@ class WithdrawModalMultisig extends React.Component<any, any> {
     }
 
     const txInfoUrl = helpers.transactions.getTxRouter('btc', txId)
-    redirectTo(txInfoUrl)
+    routing.redirectTo(txInfoUrl)
 
     actions.modals.close(name)
   }

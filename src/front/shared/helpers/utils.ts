@@ -1,6 +1,7 @@
 /* eslint-disable */
 import path from 'path'
 import fs from 'fs'
+import { BigNumber } from 'bignumber.js'
 
 export const removeRepo = (pathToRepo) => {
   /**
@@ -114,4 +115,40 @@ export function setCookie(name, value, options) {
   }
 
   document.cookie = updatedCookie;
+}
+
+/**
+ * Converts into fiat value and save meaningful nums for float values
+ * Returned string prevents from scientific notation: ex. 10e17
+ */
+export const toMeaningfulFiatValue = (params: {
+  value: BigNumber | number | string
+  rate: BigNumber | number | string
+  meaningfulDecimals?: number | false
+}): string => {
+  const { value, rate, meaningfulDecimals = false } = params
+
+  let result = new BigNumber(value).multipliedBy(rate)
+  const strResult = result.toString()
+  const floatCoincidence = strResult.match(/\..+/)
+
+  if (floatCoincidence) {
+    if (meaningfulDecimals) {
+      result = result.dp(meaningfulDecimals, BigNumber.ROUND_CEIL)
+    } else {
+      // exclude the decimal point
+      const floatNums = floatCoincidence[0].slice(1)
+
+      // find the first meaningful number in the float num
+      const meaningfulNum = floatNums.match(/[1-9]/)
+
+      if (meaningfulNum) {
+        const numOfZeros = floatNums.indexOf(meaningfulNum[0])
+        // save two meaningful nums by default
+        result = result.dp(numOfZeros + 2, BigNumber.ROUND_CEIL)
+      }
+    }
+  }
+
+  return result.toString()
 }

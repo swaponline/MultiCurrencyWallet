@@ -19,8 +19,7 @@ import erc20Like from 'common/erc20Like'
 import typeforce from 'swap.app/util/typeforce'
 import { inputReplaceCommaWithDot } from 'helpers/domUtils'
 import getCurrencyKey from 'helpers/getCurrencyKey'
-import { links } from 'helpers'
-import redirectTo from 'helpers/redirectTo'
+import { links, routing } from 'helpers'
 
 const localeLabel = defineMessages({
   title: {
@@ -175,7 +174,7 @@ class InvoiceModal extends React.Component<InvoiceModalProps, InvoiceModalState>
   }
 
   handleGoToInvoice = (invoiceId) => {
-    redirectTo(`${links.invoice}/${invoiceId}/share`)
+    routing.redirectTo(`${links.invoice}/${invoiceId}/share`)
   }
 
   addressIsCorrect(otherAddress = null) {
