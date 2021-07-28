@@ -68,7 +68,7 @@ function ExchangeForm(props) {
           pending={isPending}
           disabled={isPending}
           onClick={openExternalExchange}
-          empty
+          transparent
           small
         >
           <FormattedMessage id="buyViaBankCard" defaultMessage="Buy via bank card" />

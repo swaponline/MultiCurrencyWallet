@@ -88,7 +88,7 @@ type ExchangeState = {
   haveFiat: number
   exHaveRate?: number
   exGetRate?: number
-  maxBuyAmount: BigNumber
+  maxBuyAmount: number
   
   getFiat: string
   haveCurrency: string
@@ -252,7 +252,7 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
       getFiat: '',
       isLowAmount: false,
       maxAmount: 0,
-      maxBuyAmount: new BigNumber(0),
+      maxBuyAmount: 0,
       peer: '',
       wayToDeclinedOrder: '',
       goodRate: 0,
@@ -1064,7 +1064,7 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
     }
 
     const newValues = {
-      sellAmount: maxBuyAmount.isEqualTo(haveAmount) ? maxAmount : getAmount,
+      sellAmount: new BigNumber(maxBuyAmount).isEqualTo(haveAmount) ? maxAmount : getAmount,
     }
 
     const destination = {
@@ -1204,7 +1204,7 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
         isNoAnyOrders: true,
         maxAmount: 0,
         getAmount: 0,
-        maxBuyAmount: new BigNumber(0),
+        maxBuyAmount: 0,
       }))
       return
     }
@@ -1486,7 +1486,7 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
       haveAmount: 0,
       getAmount: 0,
       maxAmount: 0,
-      maxBuyAmount: new BigNumber(0),
+      maxBuyAmount: 0,
       peer: '',
       isNonOffers: false,
       isWaitForPeerAnswer: false,
@@ -1604,9 +1604,11 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
         return isFinished || isRefunded || isStoppedSwap || lifeTimeout
       })
 
-    this.setState({
-      desclineOrders,
-    })
+    if (desclineOrders.length) {
+      this.setState(() => ({
+        desclineOrders,
+      }))
+    }
   }
 
   toggleOrdersVisibility = () => {
@@ -1768,7 +1770,7 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
             .toNumber()
         : 0
 
-    const oneCryptoCost = maxBuyAmount.isLessThanOrEqualTo(0)
+    const oneCryptoCost = new BigNumber(maxBuyAmount).isLessThanOrEqualTo(0)
       ? new BigNumber(0)
       : new BigNumber(goodRate)
 
@@ -2027,7 +2029,7 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
                     defaultMessage="This trade amount is too high for present market liquidity. Please reduce amount to {maxForSell}."
                     values={{
                       maxForBuy: `${maxAmount} ${this.renderCoinName(getCurrency)}`,
-                      maxForSell: `${maxBuyAmount.toFixed(8)} ${this.renderCoinName(haveCurrency)}`,
+                      maxForSell: `${new BigNumber(maxBuyAmount).toFixed(8)} ${this.renderCoinName(haveCurrency)}`,
                     }}
                   />
                 </p>

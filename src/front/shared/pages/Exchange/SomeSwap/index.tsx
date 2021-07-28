@@ -25,12 +25,6 @@ import SwapInfo from './SwapInfo'
 
 // TODO: better currency filter. How to know right away about available currency for API ?
 
-// TODO: add swap data auto updating
-
-// TODO: show more informative messages
-// one of assets is not available. Server returns:
-// - error: cannot find path for <asset contract addr>
-
 class SomeSwap extends PureComponent<unknown, ComponentState> {
   constructor(props) {
     super(props)
@@ -138,7 +132,9 @@ class SomeSwap extends PureComponent<unknown, ComponentState> {
     this.setState(() => ({
       error,
     }))
+    console.group('%c Swap', 'color: red;')
     console.error(error)
+    console.groupEnd()
 
     actions.notifications.show(constants.notifications.ErrorNotification, {
       error: error.message,
@@ -206,10 +202,10 @@ class SomeSwap extends PureComponent<unknown, ComponentState> {
   checkSwapData = async () => {
     const { spendedAmount } = this.state
 
-    const blockUpdating = this.isSwapDataNotAvailable() || !spendedAmount
+    const doNotUpdate = this.isSwapDataNotAvailable() || !spendedAmount
 
-    if (!blockUpdating) {
-      this.fetchSwapData()
+    if (!doNotUpdate) {
+      await this.fetchSwapData()
     }
   }
 
@@ -219,10 +215,7 @@ class SomeSwap extends PureComponent<unknown, ComponentState> {
     if (!serviceIsOk) {
       actions.notifications.show(constants.notifications.Message, {
         message: (
-          <FormattedMessage
-            id="serviceIsNotAvailable"
-            defaultMessage="Service is not available. Try to different chain"
-          />
+          <FormattedMessage id="serviceIsNotAvailable" defaultMessage="Service is not available" />
         ),
       })
 
@@ -234,7 +227,9 @@ class SomeSwap extends PureComponent<unknown, ComponentState> {
     }))
 
     try {
-      const swap: any = await apiLooper.get('oneinch', this.createSwapRequest())
+      const swap: any = await apiLooper.get('oneinch', this.createSwapRequest(), {
+        reportErrors: this.reportError,
+      })
       const weiFee = new BigNumber(swap.tx.gas).times(swap.tx.gasPrice)
       const swapFee = this.convertFromWei(weiFee, 18)
 
@@ -335,54 +330,74 @@ class SomeSwap extends PureComponent<unknown, ComponentState> {
     }))
   }
 
-  selectCurrency = async (params) => {
+  selectCurrency = (params) => {
     const { direction, value } = params
     const { spendedCurrency, receivedCurrency } = this.state
 
-    const updateSpendedSide = direction === 'spend' && spendedCurrency.value !== value.value
-    const updateReceivedSide = direction === 'receive' && receivedCurrency.value !== value.value
+    const changeSpendedSide = direction === 'spend' && spendedCurrency.value !== value.value
+    const changeReceivedSide = direction === 'receive' && receivedCurrency.value !== value.value
 
-    if (updateSpendedSide) {
-      const fromWallet = actions.core.getWallet({ currency: value.value })
-      let needApprove = false
-
-      if (fromWallet.isToken) {
-        needApprove = await this.needTokenApprove({
-          standard: fromWallet.standard,
-          owner: fromWallet.address,
-          contract: fromWallet.contractAddress,
-          decimals: fromWallet.decimals,
-        })
-      }
-
+    if (changeSpendedSide) {
       this.setState(
         () => ({
           spendedCurrency: value,
-          needApprove,
-          fromWallet,
-          swapData: undefined,
         }),
-        () => {
-          this.updateNetwork()
-          this.filterReceivedList()
-          this.checkSwapData()
-        }
+        this.updateSpendedSide
       )
     }
 
-    if (updateReceivedSide) {
+    if (changeReceivedSide) {
       this.setState(
         () => ({
           receivedCurrency: value,
-          toWallet: actions.core.getWallet({ currency: value.value }),
-          swapData: undefined,
-          receivedAmount: '0',
         }),
-        () => {
-          this.checkSwapData()
-        }
+        this.updateReceivedSide
       )
     }
+  }
+
+  updateSpendedSide = async () => {
+    const { spendedCurrency } = this.state
+
+    const fromWallet = actions.core.getWallet({ currency: spendedCurrency.value })
+    let needApprove = false
+
+    if (fromWallet.isToken) {
+      needApprove = await this.needTokenApprove({
+        standard: fromWallet.standard,
+        owner: fromWallet.address,
+        contract: fromWallet.contractAddress,
+        decimals: fromWallet.decimals,
+      })
+    }
+
+    this.setState(
+      () => ({
+        needApprove,
+        fromWallet,
+        swapData: undefined,
+      }),
+      () => {
+        this.updateNetwork()
+        this.updateReceivedSide()
+        this.checkSwapData()
+      }
+    )
+  }
+
+  updateReceivedSide = () => {
+    const { receivedCurrency } = this.state
+
+    this.filterReceivedList()
+
+    this.setState(
+      () => ({
+        toWallet: actions.core.getWallet({ currency: receivedCurrency.value }),
+        swapData: undefined,
+        receivedAmount: '0',
+      }),
+      this.checkSwapData
+    )
   }
 
   openExternalExchange = () => {
