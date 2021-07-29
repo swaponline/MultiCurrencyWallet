@@ -78,6 +78,8 @@
 }
 
 .indicator {
+  display: flex;
+  flex-wrap: wrap;
   font-weight: 700;
 
   span {

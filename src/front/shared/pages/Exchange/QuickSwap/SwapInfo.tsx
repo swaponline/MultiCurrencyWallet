@@ -40,12 +40,13 @@ function SwapInfo(props: ComponentProps) {
 
     const fromAmount = convertFromWei(fromTokenAmount, fromToken.decimals)
     const toAmount = convertFromWei(toTokenAmount, toToken.decimals)
+    const customDecimals = 7
 
-    price = `${new BigNumber(fromAmount).div(toAmount).dp(toToken.decimals).toString()} ${
+    price = `${new BigNumber(fromAmount).div(toAmount).dp(customDecimals).toString()} ${
       fromToken.symbol
     } / ${toToken.symbol}`
 
-    fee = `${swapFee} ${network.currency}`
+    fee = `${new BigNumber(swapFee).dp(customDecimals)} ${network.currency}`
 
     if (baseChainWallet.infoAboutCurrency?.price) {
       const amount = utils.toMeaningfulFiatValue({

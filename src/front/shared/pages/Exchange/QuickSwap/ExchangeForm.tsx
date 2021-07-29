@@ -104,7 +104,10 @@ function ExchangeForm(props) {
         <FieldLabel>
           <FormattedMessage id="slippageTolerance" defaultMessage="Slippage tolerance" />
           <Tooltip id="slippageTooltip">
-            <FormattedMessage id="slippageNotice" defaultMessage="Some useful notice for user" />
+            <FormattedMessage
+              id="slippageNotice"
+              defaultMessage="If the price changes between the time your order is placed and confirmed it’s called “slippage”. Your swap will automatically cancel if slippage exceeds your “max slippage” setting"
+            />
           </Tooltip>
         </FieldLabel>
         <Input

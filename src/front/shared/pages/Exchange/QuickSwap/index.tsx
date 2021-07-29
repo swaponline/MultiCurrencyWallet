@@ -5,9 +5,9 @@ import { FormattedMessage } from 'react-intl'
 import CSSModules from 'react-css-modules'
 import styles from './index.scss'
 import typeforce from 'swap.app/util/typeforce'
-import { COIN_TYPE, COIN_MODEL, COIN_DATA } from 'swap.app/constants/COINS'
+import { COIN_MODEL, COIN_DATA } from 'swap.app/constants/COINS'
 import getCoinInfo from 'common/coins/getCoinInfo'
-import { feedback, apiLooper, externalConfig, constants, transactions } from 'helpers'
+import { feedback, apiLooper, externalConfig, constants, transactions, metamask } from 'helpers'
 import actions from 'redux/actions'
 import Link from 'local_modules/sw-valuelink'
 import { ComponentState } from './types'
@@ -24,11 +24,13 @@ import SwapInfo from './SwapInfo'
 // we don't want to filter all currencies on each excess render
 // double check in what kind of cases it can happen
 
+// TODO: UI: adapt for mobile resolution
+
 class QuickSwap extends PureComponent<unknown, ComponentState> {
   constructor(props) {
     super(props)
 
-    const { currencies, oneinchTokens, activeFiat } = props
+    const { currencies, activeFiat } = props
 
     const spendedCurrency = currencies[0]
     const receivedList = this.returnReceivedList(currencies, spendedCurrency)
@@ -77,6 +79,7 @@ class QuickSwap extends PureComponent<unknown, ComponentState> {
 
   componentDidMount() {
     this.updateNetwork()
+    actions.user.getBalances()
   }
 
   componentWillUnmount() {
@@ -250,16 +253,17 @@ class QuickSwap extends PureComponent<unknown, ComponentState> {
     try {
       const { tx, fromToken } = swapData!
 
-      const { transactionHash } = await actions[lowerKey].send({
+      const receipt = await actions[lowerKey].send({
         data: tx.data,
         to: tx.to,
         amount: this.convertFromWei(tx.value, fromToken.decimals),
         gasPrice: tx.gasPrice,
         gasLimit: tx.gas,
+        waitReceipt: true,
       })
 
       actions.notifications.show(constants.notifications.Transaction, {
-        link: transactions.getLink(lowerKey, transactionHash),
+        link: transactions.getLink(lowerKey, receipt.transactionHash),
       })
 
       this.setState(() => ({
@@ -644,7 +648,9 @@ const filterCurrencies = (params) => {
 
   return currencies.filter((item) => {
     const currency = COIN_DATA[item.name]
+    let isCurrencySuitable = false
 
+    // it's token. Check it in the 1inch matched token list
     if (item.standard) {
       const { blockchain } = getCoinInfo(item.value)
 
@@ -653,10 +659,16 @@ const filterCurrencies = (params) => {
       const tokensByChain = oneinchTokens[networkVersion]
 
       // if token is in the object then it's true
-      return tokensByChain[tokensWallets[walletKey].contractAddress]
+      isCurrencySuitable = !!tokensByChain[tokensWallets[walletKey].contractAddress]
+    } else {
+      isCurrencySuitable = currency?.model === COIN_MODEL.AB
     }
+    // connected metamask allows only one chain
+    const suitableForNetwork = metamask.isConnected()
+      ? metamask.isAvailableNetworkByCurrency(item.value)
+      : true
 
-    return currency?.model === COIN_MODEL.AB
+    return isCurrencySuitable && suitableForNetwork
   })
 }
 
