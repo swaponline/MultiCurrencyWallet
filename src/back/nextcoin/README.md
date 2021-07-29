@@ -26,19 +26,16 @@ nextcoin_blockchain <-> | nextd <-> nextp | (public API) <-> front
 - `node`
 - `pm2`
 
-## Installation 
+## Installation
 
 ### Install `nextd`
 
 <!-- can't sync precompiled nextd binaries, use manual install -->
 
-<!-- 
 ```sh
 sudo sh nextd-install.sh
 ```
-or install it manually (download `nextd` from https://chain.next.exchange/#downloads)
-
-or -->build it from sources (by request)
+or download from https://github.com/NextExchange/next-wallet-desktop-app/releases/
 
 ### Install `nextp` dependencies
 
