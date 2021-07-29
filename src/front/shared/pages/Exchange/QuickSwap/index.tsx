@@ -6,9 +6,7 @@ import CSSModules from 'react-css-modules'
 import styles from './index.scss'
 import typeforce from 'swap.app/util/typeforce'
 import { COIN_TYPE, COIN_MODEL, COIN_DATA } from 'swap.app/constants/COINS'
-import { Token } from 'common/types'
 import getCoinInfo from 'common/coins/getCoinInfo'
-import erc20Like from 'common/erc20Like'
 import { feedback, apiLooper, externalConfig, constants, transactions } from 'helpers'
 import actions from 'redux/actions'
 import Link from 'local_modules/sw-valuelink'
@@ -278,17 +276,21 @@ class QuickSwap extends PureComponent<unknown, ComponentState> {
   }
 
   checkTokenApprove = async () => {
-    const { spendedAmount, fromWallet } = this.state
+    const { spendedAmount, fromWallet, network } = this.state
 
     if (!fromWallet.isToken) {
       this.setState(() => ({
         needApprove: false,
       }))
     } else {
-      const allowance = await erc20Like[fromWallet.standard].checkAllowance({
-        tokenOwnerAddress: fromWallet.address,
-        tokenContractAddress: fromWallet.contract,
-        decimals: fromWallet.decimals,
+      const { standard, address, contractAddress, decimals } = fromWallet
+
+      const allowance = await actions.oneinch.fetchTokenAllowance({
+        chainId: network.networkVersion,
+        contract: contractAddress,
+        owner: address,
+        standard,
+        decimals,
       })
 
       this.setState(() => ({
