@@ -118,20 +118,6 @@ class QuickSwap extends PureComponent<unknown, ComponentState> {
     }))
   }
 
-  serviceIsAvailable = async () => {
-    const { network } = this.state
-
-    try {
-      const res: any = await apiLooper.get('oneinch', `/${network.networkVersion}/healthcheck`)
-
-      return res?.status === 'OK'
-    } catch (error) {
-      this.reportError(error)
-
-      return false
-    }
-  }
-
   reportError = (error) => {
     this.setState(() => ({
       error,
@@ -204,9 +190,10 @@ class QuickSwap extends PureComponent<unknown, ComponentState> {
   // ---------------------------
 
   checkSwapData = async () => {
-    const { spendedAmount } = this.state
+    await this.checkTokenApprove()
 
-    const doNotUpdate = this.isSwapDataNotAvailable() || !spendedAmount
+    const { spendedAmount, needApprove } = this.state
+    const doNotUpdate = this.isSwapDataNotAvailable() || !spendedAmount || needApprove
 
     if (!doNotUpdate) {
       await this.fetchSwapData()
@@ -214,16 +201,18 @@ class QuickSwap extends PureComponent<unknown, ComponentState> {
   }
 
   fetchSwapData = async () => {
-    const serviceIsOk = await this.serviceIsAvailable()
+    const { network } = this.state
+
+    const serviceIsOk = await actions.oneinch.serviceIsAvailable({
+      chainId: network.networkVersion,
+    })
 
     if (!serviceIsOk) {
-      actions.notifications.show(constants.notifications.Message, {
+      return actions.notifications.show(constants.notifications.Message, {
         message: (
           <FormattedMessage id="serviceIsNotAvailable" defaultMessage="Service is not available" />
         ),
       })
-
-      return
     }
 
     this.setState(() => ({
@@ -288,34 +277,41 @@ class QuickSwap extends PureComponent<unknown, ComponentState> {
     }
   }
 
-  needTokenApprove = async (params) => {
-    const { owner, contract, decimals, standard } = params
-    const { spendedAmount } = this.state
+  checkTokenApprove = async () => {
+    const { spendedAmount, fromWallet } = this.state
 
-    const allowance = await erc20Like[standard].checkAllowance({
-      tokenOwnerAddress: owner,
-      tokenContractAddress: contract,
-      decimals: decimals,
-    })
+    if (!fromWallet.isToken) {
+      this.setState(() => ({
+        needApprove: false,
+      }))
+    } else {
+      const allowance = await erc20Like[fromWallet.standard].checkAllowance({
+        tokenOwnerAddress: fromWallet.address,
+        tokenContractAddress: fromWallet.contract,
+        decimals: fromWallet.decimals,
+      })
 
-    return new BigNumber(spendedAmount).isGreaterThan(allowance)
+      this.setState(() => ({
+        needApprove: new BigNumber(spendedAmount).isGreaterThan(allowance),
+      }))
+    }
   }
 
   approve = async () => {
     const { network, spendedAmount, fromWallet } = this.state
-    const weiAmount = this.convertIntoWei(spendedAmount, fromWallet.decimals)
-
-    const request = ''.concat(
-      `/${network.networkVersion}/approve/calldata?`,
-      `amount=${weiAmount}&`,
-      `tokenAddress=${fromWallet.contractAddress}&`
-    )
 
     this.setState(() => ({
       isDataPending: true,
     }))
 
-    const approveInfo: any = await apiLooper.get('oneinch', request)
+    const approveInfo: any = await actions.oneinch.approveToken({
+      chainId: network.networkVersion,
+      amount: this.convertIntoWei(spendedAmount, fromWallet.decimals),
+      contract: fromWallet.contractAddress,
+    })
+
+    if (!approveInfo) return
+
     const receipt = await actions[fromWallet.baseCurrency].send({
       data: approveInfo.data,
       to: approveInfo.to,
@@ -328,10 +324,13 @@ class QuickSwap extends PureComponent<unknown, ComponentState> {
       link: transactions.getLink(fromWallet.standard, receipt.transactionHash),
     })
 
-    this.setState(() => ({
-      needApprove: false,
-      isDataPending: false,
-    }))
+    this.setState(
+      () => ({
+        needApprove: false,
+        isDataPending: false,
+      }),
+      this.fetchSwapData
+    )
   }
 
   selectCurrency = (params) => {
@@ -364,25 +363,15 @@ class QuickSwap extends PureComponent<unknown, ComponentState> {
     const { spendedCurrency } = this.state
 
     const fromWallet = actions.core.getWallet({ currency: spendedCurrency.value })
-    let needApprove = false
-
-    if (fromWallet.isToken) {
-      needApprove = await this.needTokenApprove({
-        standard: fromWallet.standard,
-        owner: fromWallet.address,
-        contract: fromWallet.contractAddress,
-        decimals: fromWallet.decimals,
-      })
-    }
 
     this.setState(
       () => ({
-        needApprove,
         fromWallet,
         swapData: undefined,
       }),
       () => {
         this.updateNetwork()
+        this.checkTokenApprove()
         this.resetReceivedList()
         this.checkSwapData()
       }
@@ -501,7 +490,7 @@ class QuickSwap extends PureComponent<unknown, ComponentState> {
       new BigNumber(slippage).isEqualTo(0) ||
       new BigNumber(slippage).isGreaterThan(slippageMaxRange)
 
-    const receivedBaseCurrency = toWallet.baseCurrency.toUpperCase()
+    const receivedBaseCurrency = toWallet.baseCurrency?.toUpperCase()
     const wrongAdvancedOptions =
       isAdvancedMode && !typeforce.isCoinAddress[receivedBaseCurrency](destReceiver)
 
@@ -629,9 +618,6 @@ class QuickSwap extends PureComponent<unknown, ComponentState> {
   }
 }
 
-// TODO: decide to load this data from different component
-// like on App.tsx loading or fetch it from this component
-// (only when it renders)
 const fetch1inchTokens = async () => {
   const availableChains = [1, 56, 137]
 
@@ -639,11 +625,11 @@ const fetch1inchTokens = async () => {
     const chainInfo = externalConfig.evmNetworks[nativeCurrency]
 
     if (availableChains.includes(chainInfo.networkVersion)) {
-      const data: any = await apiLooper.get('oneinch', `/${chainInfo.networkVersion}/tokens`)
+      const tokens: any = await actions.oneinch.fetchTokens({ chainId: chainInfo.networkVersion })
 
       actions.oneinch.addTokens({
         chainId: chainInfo.networkVersion,
-        tokens: data?.tokens,
+        tokens: tokens,
       })
     }
   })
