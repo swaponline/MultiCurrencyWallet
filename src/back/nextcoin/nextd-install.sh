@@ -1,4 +1,4 @@
-# wget https://chain.next.exchange/download/nextcoind-3.2.0-x64_32.zip
-# unzip -j nextcoind-3.2.0-x64_32.zip -p bin/nextd -d /usr/local/bin
-# rm nextcoind-3.2.0-x64_32.zip
-# echo 'nextd installed!'
+wget https://github.com/NextExchange/next-wallet-desktop-app/releases/download/3.5.0/nextcoind-3.5.0-linux.zip
+unzip -j nextcoind-3.5.0-linux.zip -d /usr/local/bin
+rm nextcoind-3.5.0-linux.zip
+echo 'nextd installed!'
