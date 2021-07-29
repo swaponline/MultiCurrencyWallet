@@ -1,5 +1,5 @@
+import './wdyr'
 import React from "react";
-
 import { RouteComponentProps, withRouter, HashRouter } from "react-router-dom";
 import actions from "redux/actions";
 import { connect } from "redaction";
