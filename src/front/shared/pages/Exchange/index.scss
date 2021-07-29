@@ -369,6 +369,11 @@
   &:not(:first-of-type) {
     margin-left: 0.5rem;
   }
+
+  &.active {
+    background-color: var(--color-inactive-border);
+    border-color: var(--color-inactive-border);
+  }
 }
 
 @include media-tablet {

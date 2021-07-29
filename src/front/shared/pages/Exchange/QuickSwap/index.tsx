@@ -18,8 +18,6 @@ import ExchangeForm from './ExchangeForm'
 import AdvancedSettings from './AdvancedSettings'
 import SwapInfo from './SwapInfo'
 
-// TODO: rename all elements (components, links, etc.)
-
 // TODO: add feedback events
 
 // TODO: for production save only ETH chain as available
@@ -28,7 +26,7 @@ import SwapInfo from './SwapInfo'
 // we don't want to filter all currencies on each excess render
 // double check in what kind of cases it can happen
 
-class SomeSwap extends PureComponent<unknown, ComponentState> {
+class QuickSwap extends PureComponent<unknown, ComponentState> {
   constructor(props) {
     super(props)
 
@@ -681,4 +679,4 @@ export default connect(({ currencies, user }) => ({
     oneinchTokens: currencies.oneinch,
   }),
   activeFiat: user.activeFiat,
-}))(CSSModules(SomeSwap, styles, { allowMultiple: true }))
+}))(CSSModules(QuickSwap, styles, { allowMultiple: true }))

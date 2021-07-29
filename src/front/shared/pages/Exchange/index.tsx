@@ -40,7 +40,7 @@ import erc20Like from 'common/erc20Like'
 import turboSwap from 'common/helpers/turboSwap'
 import Toggle from 'components/controls/Toggle/Toggle'
 import TurboIcon from 'shared/components/ui/TurboIcon/TurboIcon'
-import SomeSwap from './SomeSwap'
+import QuickSwap from './QuickSwap'
 import Promo from './Promo/Promo'
 import Quote from './Quote'
 import HowItWorks from './HowItWorks/HowItWorks'
@@ -1658,9 +1658,9 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
     }))
   }
 
-  showSomeSwap = () => {
+  showQuickSwap = () => {
     this.setState(() => ({
-      swapType: 'some',
+      swapType: 'quick',
     }))
   }  
 
@@ -2268,19 +2268,19 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
           ref={(ref) => (this.promoContainer = ref)}
         >
           <div styleName="container">
-            <Promo />
-
             <div styleName="tabsWrapper">
-              <button styleName="tab" onClick={this.showAtomicSwap}>
+              <button styleName={`tab ${swapType === 'atomic' ? 'active' : ''}`} onClick={this.showAtomicSwap}>
                 <FormattedMessage id="atomicSwap" defaultMessage="Atomic swap" />
               </button>
-              <button styleName="tab" onClick={this.showSomeSwap}>
-                <FormattedMessage id="someSwap" defaultMessage="Some swap" />
+              <button styleName={`tab ${swapType === 'quick' ? 'active' : ''}`} onClick={this.showQuickSwap}>
+                <FormattedMessage id="quickSwap" defaultMessage="Quick swap" />
               </button>
             </div>
 
             {swapType === 'atomic' && (
               <>
+                <Promo />
+
                 {Form}
 
                 <Button
@@ -2314,7 +2314,7 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
               </>
             )}
 
-            {swapType === 'some' && <SomeSwap />}
+            {swapType === 'quick' && <QuickSwap />}
           </div>
         </div>
       </div>
