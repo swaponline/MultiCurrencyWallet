@@ -25,6 +25,7 @@ function ExchangeForm(props) {
     fiat,
     fromWallet,
     toWallet,
+    updateWallets,
     isPending,
     openExternalExchange,
     checkSwapData,
@@ -48,6 +49,8 @@ function ExchangeForm(props) {
     if (direction === Direction.Receive) setToBalancePending(true)
 
     await actions[key.toLowerCase()].getBalance(wallet.tokenKey)
+
+    updateWallets()
 
     setTimeout(() => {
       if (direction === Direction.Spend) setFromBalancePending(false)
@@ -159,6 +162,7 @@ function ExchangeForm(props) {
         <Input
           pattern="0-9\."
           onKeyDown={inputReplaceCommaWithDot}
+          onKeyUp={checkSwapData}
           valueLink={stateReference.slippage}
           withMargin
         />

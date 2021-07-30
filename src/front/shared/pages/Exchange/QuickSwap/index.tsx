@@ -95,6 +95,22 @@ class QuickSwap extends PureComponent<unknown, ComponentState> {
     }))
   }
 
+  updateWallets = () => {
+    const { spendedCurrency, receivedCurrency } = this.state
+
+    const fromWallet = actions.core.getWallet({
+      currency: spendedCurrency.value,
+    })
+    const toWallet = actions.core.getWallet({
+      currency: receivedCurrency.value,
+    })
+
+    this.setState(() => ({
+      fromWallet,
+      toWallet,
+    }))
+  }
+
   returnReceivedList = (currencies, spendedCurrency) => {
     return currencies.filter(
       (item) =>
@@ -162,8 +178,10 @@ class QuickSwap extends PureComponent<unknown, ComponentState> {
     ]
 
     if (isAdvancedMode) {
+      const gweiDecimals = 9
+
       if (gasLimit) request.push(`&gasLimit=${gasLimit}`)
-      if (gasPrice) request.push(`&gasPrice=${this.convertIntoWei(gasPrice, 9)}`)
+      if (gasPrice) request.push(`&gasPrice=${this.convertIntoWei(gasPrice, gweiDecimals)}`)
       if (destReceiver) request.push(`&destReceiver=${destReceiver}`)
     }
 
@@ -269,6 +287,10 @@ class QuickSwap extends PureComponent<unknown, ComponentState> {
       })
 
       // delete last swap data, the swap info may have changed
+      this.setState(() => ({
+        spendedAmount: '',
+        receivedAmount: '',
+      }))
       this.resetSwapData()
     } catch (error) {
       this.reportError(error)
@@ -581,6 +603,7 @@ class QuickSwap extends PureComponent<unknown, ComponentState> {
           fiat={fiat}
           fromWallet={fromWallet}
           toWallet={toWallet}
+          updateWallets={this.updateWallets}
           isPending={isPending}
         />
 
@@ -589,6 +612,7 @@ class QuickSwap extends PureComponent<unknown, ComponentState> {
           switchAdvancedMode={this.switchAdvancedMode}
           stateReference={linked}
           swapData={swapData}
+          checkSwapData={this.checkSwapData}
           resetSwapData={this.resetSwapData}
         />
 
@@ -599,7 +623,6 @@ class QuickSwap extends PureComponent<unknown, ComponentState> {
           baseChainWallet={baseChainWallet}
           fiat={fiat}
           isDataPending={isDataPending}
-          isSwapPending={isSwapPending}
           convertFromWei={this.convertFromWei}
           convertIntoWei={this.convertIntoWei}
         />

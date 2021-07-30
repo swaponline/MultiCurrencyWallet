@@ -13,7 +13,6 @@ type ComponentProps = {
   baseChainWallet: IUniversalObj
   fiat: string
   isDataPending: boolean
-  isSwapPending: boolean
   convertFromWei: (string, number) => string
   convertIntoWei: (string, number) => string
 }
@@ -26,11 +25,9 @@ function SwapInfo(props: ComponentProps) {
     baseChainWallet,
     fiat,
     isDataPending,
-    isSwapPending,
     convertFromWei,
   } = props
 
-  const isPending = isDataPending || isSwapPending
   let fee: string | undefined = undefined
   let fiatFee: string | undefined = undefined
   let price: string | undefined = undefined
@@ -64,7 +61,7 @@ function SwapInfo(props: ComponentProps) {
         <FormattedMessage id="network" defaultMessage="Network" />: <span>{network.chainName}</span>
       </span>
 
-      {isPending ? (
+      {isDataPending ? (
         <div styleName="loaderWrapper">
           <InlineLoader />
         </div>

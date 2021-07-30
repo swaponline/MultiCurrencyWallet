@@ -44,13 +44,14 @@
   user-select: none;
   width: max-content;
   display: block;
-  margin-left: .4rem;
+  margin-left: 0.4rem;
   white-space: nowrap;
   color: var(--color-notice);
 
   .icon {
     display: inline-block;
     margin-left: 0.5rem;
+    font-size: 0.9em;
   }
 }
 

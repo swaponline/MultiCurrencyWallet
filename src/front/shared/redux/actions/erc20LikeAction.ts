@@ -184,7 +184,7 @@ class Erc20LikeAction {
         name,
         amount,
       })
-      cacheStorageSet('currencyBalances', `token_${tokenKey}_${address}`, amount, 60)
+      cacheStorageSet('currencyBalances', `token_${tokenKey}_${address}`, amount, 30)
 
       return amount
     } catch (error) {

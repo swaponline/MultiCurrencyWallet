@@ -13,6 +13,7 @@ function AdvancedSettings(props) {
     isAdvancedMode,
     switchAdvancedMode,
     stateReference,
+    checkSwapData,
     resetSwapData,
   } = props
 
@@ -53,6 +54,7 @@ function AdvancedSettings(props) {
             <Input
               pattern="0-9\."
               onKeyDown={keyDownHandler}
+              onKeyUp={checkSwapData}
               valueLink={stateReference.gasPrice}
               withMargin
             />
@@ -71,6 +73,7 @@ function AdvancedSettings(props) {
             <Input
               pattern="0-9\."
               onKeyDown={keyDownHandler}
+              onKeyUp={checkSwapData}
               valueLink={stateReference.gasLimit}
               withMargin
             />
@@ -89,6 +92,7 @@ function AdvancedSettings(props) {
             <Input
               pattern="0-9a-zA-Z:"
               onKeyDown={keyDownHandler}
+              onKeyUp={checkSwapData}
               valueLink={stateReference.destReceiver}
             />
           </div>
