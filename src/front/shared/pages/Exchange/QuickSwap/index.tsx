@@ -20,10 +20,6 @@ import SwapInfo from './SwapInfo'
 
 // TODO: for production save only ETH chain as available
 
-// TODO: be careful with this component render
-// we don't want to filter all currencies on each excess render
-// double check in what kind of cases it can happen
-
 // TODO: UI: adapt for mobile resolution
 
 class QuickSwap extends PureComponent<unknown, ComponentState> {
@@ -114,9 +110,9 @@ class QuickSwap extends PureComponent<unknown, ComponentState> {
       receivedList: receivedList,
       receivedCurrency: receivedList[0],
       toWallet: actions.core.getWallet({ currency: receivedList[0].value }),
-      swapData: undefined,
       receivedAmount: '0',
     }))
+    this.resetSwapData()
   }
 
   reportError = (error) => {
@@ -241,6 +237,12 @@ class QuickSwap extends PureComponent<unknown, ComponentState> {
     }))
   }
 
+  resetSwapData = () => {
+    this.setState(() => ({
+      swapData: undefined,
+    }))
+  }
+
   swap = async () => {
     const { fromWallet, swapData } = this.state
     const key = fromWallet.standard ? fromWallet.baseCurrency : fromWallet.currency
@@ -266,10 +268,8 @@ class QuickSwap extends PureComponent<unknown, ComponentState> {
         link: transactions.getLink(lowerKey, receipt.transactionHash),
       })
 
-      this.setState(() => ({
-        // delete last swap data, the swap info may have changed
-        swapData: undefined,
-      }))
+      // delete last swap data, the swap info may have changed
+      this.resetSwapData()
     } catch (error) {
       this.reportError(error)
     } finally {
@@ -373,9 +373,9 @@ class QuickSwap extends PureComponent<unknown, ComponentState> {
     this.setState(
       () => ({
         fromWallet,
-        swapData: undefined,
       }),
       () => {
+        this.resetSwapData()
         this.updateNetwork()
         this.checkTokenApprove()
         this.resetReceivedList()
@@ -390,10 +390,12 @@ class QuickSwap extends PureComponent<unknown, ComponentState> {
     this.setState(
       () => ({
         toWallet: actions.core.getWallet({ currency: receivedCurrency.value }),
-        swapData: undefined,
         receivedAmount: '0',
       }),
-      this.checkSwapData
+      () => {
+        this.resetSwapData()
+        this.checkSwapData()
+      }
     )
   }
 
@@ -473,9 +475,16 @@ class QuickSwap extends PureComponent<unknown, ComponentState> {
   }
 
   switchAdvancedMode = () => {
-    this.setState((state) => ({
-      isAdvancedMode: !state.isAdvancedMode,
-    }))
+    this.setState(
+      (state) => ({
+        isAdvancedMode: !state.isAdvancedMode,
+      }),
+      () => {
+        const { isAdvancedMode } = this.state
+        // update swap data without advanced options
+        if (!isAdvancedMode) this.checkSwapData()
+      }
+    )
   }
 
   isSwapDataNotAvailable = () => {
@@ -578,6 +587,8 @@ class QuickSwap extends PureComponent<unknown, ComponentState> {
           isAdvancedMode={isAdvancedMode}
           switchAdvancedMode={this.switchAdvancedMode}
           stateReference={linked}
+          swapData={swapData}
+          resetSwapData={this.resetSwapData}
         />
 
         <SwapInfo
@@ -625,7 +636,7 @@ class QuickSwap extends PureComponent<unknown, ComponentState> {
 }
 
 const fetch1inchTokens = async () => {
-  const availableChains = [1, 56, 137]
+  const availableChains = [1, 56, 137] // [ETH, BSC, Polygon] (Mainnet ID)
 
   Object.keys(externalConfig.evmNetworks).forEach(async (nativeCurrency) => {
     const chainInfo = externalConfig.evmNetworks[nativeCurrency]
@@ -659,7 +670,8 @@ const filterCurrencies = (params) => {
       const tokensByChain = oneinchTokens[networkVersion]
 
       // if token is in the object then it's true
-      isCurrencySuitable = !!tokensByChain[tokensWallets[walletKey].contractAddress]
+      isCurrencySuitable =
+        tokensByChain && !!tokensByChain[tokensWallets[walletKey].contractAddress]
     } else {
       isCurrencySuitable = currency?.model === COIN_MODEL.AB
     }

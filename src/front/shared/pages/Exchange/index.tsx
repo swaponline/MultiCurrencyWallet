@@ -2272,7 +2272,13 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
               <button styleName={`tab ${swapType === 'atomic' ? 'active' : ''}`} onClick={this.showAtomicSwap}>
                 <FormattedMessage id="atomicSwap" defaultMessage="Atomic swap" />
               </button>
-              <button styleName={`tab ${swapType === 'quick' ? 'active' : ''}`} onClick={this.showQuickSwap}>
+              <button
+                styleName={`tab 
+                  ${swapType === 'quick' ? 'active' : ''}
+                  ${config.entry === 'testnet' ? 'disabled' : ''}
+                `} 
+                onClick={config.entry === 'mainnet' ? this.showQuickSwap : undefined}
+              >
                 <FormattedMessage id="quickSwap" defaultMessage="Quick swap" />
               </button>
             </div>
@@ -2313,8 +2319,8 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
                 )}
               </>
             )}
-
-            {swapType === 'quick' && <QuickSwap />}
+            {/* this swap type is available only on mainnet networks */}
+            {swapType === 'quick' && config.entry === 'mainnet' && <QuickSwap />}
           </div>
         </div>
       </div>

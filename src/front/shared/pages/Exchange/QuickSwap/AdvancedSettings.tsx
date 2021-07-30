@@ -8,7 +8,26 @@ import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
 import Input from 'components/forms/Input/Input'
 
 function AdvancedSettings(props) {
-  const { isAdvancedMode, switchAdvancedMode, stateReference } = props
+  const {
+    swapData,
+    isAdvancedMode,
+    switchAdvancedMode,
+    stateReference,
+    resetSwapData,
+  } = props
+
+  const keyDownHandler = (event) => {
+    inputReplaceCommaWithDot(event)
+
+    const emptyOptions =
+      !stateReference.gasPrice.value &&
+      !stateReference.gasLimit.value &&
+      !stateReference.destReceiver.value
+
+    if (swapData && emptyOptions) {
+      resetSwapData()
+    }
+  }
 
   return (
     <section styleName="advancedSettings">
@@ -33,7 +52,7 @@ function AdvancedSettings(props) {
             </FieldLabel>
             <Input
               pattern="0-9\."
-              onKeyDown={inputReplaceCommaWithDot}
+              onKeyDown={keyDownHandler}
               valueLink={stateReference.gasPrice}
               withMargin
             />
@@ -51,7 +70,7 @@ function AdvancedSettings(props) {
             </FieldLabel>
             <Input
               pattern="0-9\."
-              onKeyDown={inputReplaceCommaWithDot}
+              onKeyDown={keyDownHandler}
               valueLink={stateReference.gasLimit}
               withMargin
             />
@@ -69,7 +88,7 @@ function AdvancedSettings(props) {
             </FieldLabel>
             <Input
               pattern="0-9a-zA-Z:"
-              onKeyDown={inputReplaceCommaWithDot}
+              onKeyDown={keyDownHandler}
               valueLink={stateReference.destReceiver}
             />
           </div>
