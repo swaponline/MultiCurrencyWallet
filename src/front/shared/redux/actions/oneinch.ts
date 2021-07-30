@@ -110,6 +110,12 @@ const approveToken = async (params) => {
   }
 }
 
+const createLimitOrder = () => {}
+
+const fetchLimitOrder = () => {}
+
+const fetchAllLimitOrders = () => {}
+
 export default {
   serviceIsAvailable,
   fetchTokens,

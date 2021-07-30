@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl'
 import CSSModules from 'react-css-modules'
 import styles from './index.scss'
 import typeforce from 'swap.app/util/typeforce'
-import { COIN_MODEL, COIN_DATA } from 'swap.app/constants/COINS'
+import { COIN_MODEL, COIN_DATA, BLOCKCHAIN } from 'swap.app/constants/COINS'
 import getCoinInfo from 'common/coins/getCoinInfo'
 import { feedback, apiLooper, externalConfig, constants, transactions, metamask } from 'helpers'
 import actions from 'redux/actions'
@@ -15,6 +15,7 @@ import Button from 'components/controls/Button/Button'
 import ExchangeForm from './ExchangeForm'
 import AdvancedSettings from './AdvancedSettings'
 import SwapInfo from './SwapInfo'
+import LimitOrders from './LimitOrders'
 
 // TODO: add feedback events
 
@@ -589,72 +590,76 @@ class QuickSwap extends PureComponent<unknown, ComponentState> {
     const swapBtnIsDisabled = this.isSwapNotAvailable()
 
     return (
-      <section styleName="someSwap">
-        <ExchangeForm
-          stateReference={linked}
-          selectCurrency={this.selectCurrency}
-          openExternalExchange={this.openExternalExchange}
-          checkSwapData={this.checkSwapData}
-          currencies={currencies}
-          receivedList={receivedList}
-          spendedAmount={spendedAmount}
-          spendedCurrency={spendedCurrency}
-          receivedCurrency={receivedCurrency}
-          fiat={fiat}
-          fromWallet={fromWallet}
-          toWallet={toWallet}
-          updateWallets={this.updateWallets}
-          isPending={isPending}
-        />
+      <>
+        <section styleName="someSwap">
+          <ExchangeForm
+            stateReference={linked}
+            selectCurrency={this.selectCurrency}
+            openExternalExchange={this.openExternalExchange}
+            checkSwapData={this.checkSwapData}
+            currencies={currencies}
+            receivedList={receivedList}
+            spendedAmount={spendedAmount}
+            spendedCurrency={spendedCurrency}
+            receivedCurrency={receivedCurrency}
+            fiat={fiat}
+            fromWallet={fromWallet}
+            toWallet={toWallet}
+            updateWallets={this.updateWallets}
+            isPending={isPending}
+          />
 
-        <AdvancedSettings
-          isAdvancedMode={isAdvancedMode}
-          switchAdvancedMode={this.switchAdvancedMode}
-          stateReference={linked}
-          swapData={swapData}
-          checkSwapData={this.checkSwapData}
-          resetSwapData={this.resetSwapData}
-        />
+          <AdvancedSettings
+            isAdvancedMode={isAdvancedMode}
+            switchAdvancedMode={this.switchAdvancedMode}
+            stateReference={linked}
+            swapData={swapData}
+            checkSwapData={this.checkSwapData}
+            resetSwapData={this.resetSwapData}
+          />
 
-        <SwapInfo
-          network={network}
-          swapData={swapData}
-          swapFee={swapFee}
-          baseChainWallet={baseChainWallet}
-          fiat={fiat}
-          isDataPending={isDataPending}
-          convertFromWei={this.convertFromWei}
-          convertIntoWei={this.convertIntoWei}
-        />
+          <SwapInfo
+            network={network}
+            swapData={swapData}
+            swapFee={swapFee}
+            baseChainWallet={baseChainWallet}
+            fiat={fiat}
+            isDataPending={isDataPending}
+            convertFromWei={this.convertFromWei}
+            convertIntoWei={this.convertIntoWei}
+          />
 
-        <div styleName="buttonWrapper">
-          {needApprove ? (
-            <Button
-              styleName="button"
-              pending={isDataPending}
-              disabled={swapDataIsDisabled}
-              onClick={this.approve}
-              brand
-            >
-              <FormattedMessage
-                id="FormattedMessageIdApprove"
-                defaultMessage="Approve {token}"
-                values={{ token: spendedCurrency.name }}
-              />
-            </Button>
-          ) : (
-            <Button
-              styleName="button"
-              pending={isSwapPending}
-              disabled={swapBtnIsDisabled}
-              onClick={this.swap}
-              brand
-            >
-              <FormattedMessage id="swap" defaultMessage="Swap" />
-            </Button>
-          )}
-        </div>
-      </section>
+          <div styleName="buttonWrapper">
+            {needApprove ? (
+              <Button
+                styleName="button"
+                pending={isDataPending}
+                disabled={swapDataIsDisabled}
+                onClick={this.approve}
+                brand
+              >
+                <FormattedMessage
+                  id="FormattedMessageIdApprove"
+                  defaultMessage="Approve {token}"
+                  values={{ token: spendedCurrency.name }}
+                />
+              </Button>
+            ) : (
+              <Button
+                styleName="button"
+                pending={isSwapPending}
+                disabled={swapBtnIsDisabled}
+                onClick={this.swap}
+                brand
+              >
+                <FormattedMessage id="swap" defaultMessage="Swap" />
+              </Button>
+            )}
+          </div>
+        </section>
+
+        <LimitOrders />
+      </>
     )
   }
 }
@@ -693,10 +698,15 @@ const filterCurrencies = (params) => {
       const walletKey = item.value.toLowerCase()
       const tokensByChain = oneinchTokens[networkVersion]
 
-      // if token is in the object then it's true
       isCurrencySuitable =
+        // temporary allow allow only Ethereum chain tokens
+        // networkVersion === 1 &&
+        // -----------------------------------
+        // if token is in the object then it's true
         tokensByChain && !!tokensByChain[tokensWallets[walletKey].contractAddress]
     } else {
+      // While available only Ethereum chain coins
+      //isCurrencySuitable = currency?.blockchain === BLOCKCHAIN.ETH
       isCurrencySuitable = currency?.model === COIN_MODEL.AB
     }
     // connected metamask allows only one chain

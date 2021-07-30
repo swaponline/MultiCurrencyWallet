@@ -1,5 +1,6 @@
 export default {
   oneinch: 'https://api.1inch.exchange/v3.0',
+  limitOrders: 'https://limit-orders.1inch.exchange/v1.0',
   horizon: 'https://horizon-testnet.stellar.org',
   blocktrail: 'https://api.blocktrail.com/v1/tBTC',
   bitpay: [
