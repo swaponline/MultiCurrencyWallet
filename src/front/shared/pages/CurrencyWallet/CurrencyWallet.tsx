@@ -454,8 +454,17 @@ class CurrencyWallet extends Component<any, any> {
 
     if (txHistory) {
       txHistory = txHistory.filter((tx) => {
-        if (tx && tx.type) {
-          return tx.type.toLowerCase() === currency.toLowerCase()
+        let currencyName = currency.toLowerCase()
+
+        switch (currencyName) {
+          case 'btc (multisig)':
+          case 'btc (sms-protected)':
+          case 'btc (pin-protected)':
+            currencyName = 'btc'
+        }
+
+        if (tx?.type) {
+          return tx.type.toLowerCase() === currencyName
         }
         return false
       })
