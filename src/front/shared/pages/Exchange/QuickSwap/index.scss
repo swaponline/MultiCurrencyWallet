@@ -16,18 +16,42 @@
   margin-bottom: 2rem;
 }
 
-.balanceTooltip {
-  @include ff-mono;
-  padding: 0 0.5rem;
+@mixin tooltip {
   position: absolute;
   z-index: 1;
-  top: -0.5rem;
+  top: -0.6rem;
   right: 0.7rem;
+  padding: 0 0.5rem;
   font-size: 0.8rem;
-  font-weight: bold;
   border-radius: 4px;
   background-color: var(--color-background-elements);
   color: var(--color-notice);
+}
+
+.balanceTooltip {
+  @include ff-mono;
+  @include tooltip;
+  display: flex;
+  font-weight: bold;
+}
+
+.balanceLoader {
+  @include tooltip;
+}
+
+.balanceUpdateBtn {
+  padding: 0.1rem 0;
+  user-select: none;
+  width: max-content;
+  display: block;
+  margin-left: .4rem;
+  white-space: nowrap;
+  color: var(--color-notice);
+
+  .icon {
+    display: inline-block;
+    margin-left: 0.5rem;
+  }
 }
 
 .advancedSettings {

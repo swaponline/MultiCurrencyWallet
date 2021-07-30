@@ -10,7 +10,7 @@ import getCoinInfo from 'common/coins/getCoinInfo'
 import { feedback, apiLooper, externalConfig, constants, transactions, metamask } from 'helpers'
 import actions from 'redux/actions'
 import Link from 'local_modules/sw-valuelink'
-import { ComponentState } from './types'
+import { ComponentState, Direction } from './types'
 import Button from 'components/controls/Button/Button'
 import ExchangeForm from './ExchangeForm'
 import AdvancedSettings from './AdvancedSettings'
@@ -343,8 +343,9 @@ class QuickSwap extends PureComponent<unknown, ComponentState> {
     const { direction, value } = params
     const { spendedCurrency, receivedCurrency } = this.state
 
-    const changeSpendedSide = direction === 'spend' && spendedCurrency.value !== value.value
-    const changeReceivedSide = direction === 'receive' && receivedCurrency.value !== value.value
+    const changeSpendedSide = direction === Direction.Spend && spendedCurrency.value !== value.value
+    const changeReceivedSide =
+      direction === Direction.Receive && receivedCurrency.value !== value.value
 
     if (changeSpendedSide) {
       this.setState(

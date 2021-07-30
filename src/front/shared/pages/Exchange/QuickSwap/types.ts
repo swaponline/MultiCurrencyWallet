@@ -70,3 +70,8 @@ export type ComponentState = {
   gasLimit: string
   destReceiver: string
 }
+
+export enum Direction {
+  Spend,
+  Receive,
+}

@@ -1,13 +1,17 @@
+import { useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 import CSSModules from 'react-css-modules'
 import styles from './index.scss'
 import { utils } from 'helpers'
 import { inputReplaceCommaWithDot } from 'helpers/domUtils'
+import actions from 'redux/actions'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
 import Input from 'components/forms/Input/Input'
 import Button from 'components/controls/Button/Button'
+import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import SelectGroup from '../SelectGroup/SelectGroup'
+import { Direction } from './types'
 
 function ExchangeForm(props) {
   const {
@@ -26,6 +30,9 @@ function ExchangeForm(props) {
     checkSwapData,
   } = props
 
+  const [fromBalancePending, setFromBalancePending] = useState(false)
+  const [toBalancePending, setToBalancePending] = useState(false)
+
   const hasFiatAmount = spendedAmount && fromWallet.infoAboutCurrency?.price
   const fiatValue =
     hasFiatAmount &&
@@ -33,6 +40,39 @@ function ExchangeForm(props) {
       value: spendedAmount,
       rate: fromWallet.infoAboutCurrency.price,
     })
+
+  const updateBalance = async (direction, wallet) => {
+    const key = wallet.standard || wallet.currency
+
+    if (direction === Direction.Spend) setFromBalancePending(true)
+    if (direction === Direction.Receive) setToBalancePending(true)
+
+    await actions[key.toLowerCase()].getBalance(wallet.tokenKey)
+
+    setTimeout(() => {
+      if (direction === Direction.Spend) setFromBalancePending(false)
+      if (direction === Direction.Receive) setToBalancePending(false)
+    }, 300)
+  }
+
+  const balanceTooltip = (direction, wallet) => {
+    const wrongTooltip = wallet.balanceError || Number.isNaN(wallet.balance)
+
+    if (!wrongTooltip) {
+      return wrongTooltip ? null : (
+        <span styleName="balanceTooltip">
+          <FormattedMessage id="partial767" defaultMessage="Balance: " />
+
+          <button styleName="balanceUpdateBtn" onClick={() => updateBalance(direction, wallet)}>
+            {wallet.balance}
+            <i className="fas fa-sync-alt" styleName="icon" />
+          </button>
+        </span>
+      )
+    }
+
+    return null
+  }
 
   return (
     <form action="">
@@ -47,15 +87,18 @@ function ExchangeForm(props) {
           placeholder="0.0"
           currencies={currencies}
           inputToolTip={
-            <span styleName="balanceTooltip">
-              <FormattedMessage id="partial767" defaultMessage="Balance: " />
-              {fromWallet.balance}
-            </span>
+            fromBalancePending ? (
+              <div styleName="balanceLoader">
+                <InlineLoader />
+              </div>
+            ) : (
+              balanceTooltip(Direction.Spend, fromWallet)
+            )
           }
           onKeyUp={checkSwapData}
           onSelect={(value) =>
             selectCurrency({
-              direction: 'spend',
+              direction: Direction.Spend,
               value,
             })
           }
@@ -86,14 +129,17 @@ function ExchangeForm(props) {
           currencies={receivedList}
           placeholder="0"
           inputToolTip={
-            <span styleName="balanceTooltip">
-              <FormattedMessage id="partial767" defaultMessage="Balance: " />
-              {toWallet.balance}
-            </span>
+            toBalancePending ? (
+              <div styleName="balanceLoader">
+                <InlineLoader />
+              </div>
+            ) : (
+              balanceTooltip(Direction.Receive, toWallet)
+            )
           }
           onSelect={(value) => {
             selectCurrency({
-              direction: 'receive',
+              direction: Direction.Receive,
               value,
             })
           }}
