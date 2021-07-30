@@ -449,13 +449,21 @@ class CurrencyWallet extends Component<any, any> {
       isLoading,
     } = this.state
 
+    let currencyName = currency.toLowerCase()
+
+    switch (currencyName) {
+      case 'btc (multisig)':
+      case 'btc (sms-protected)':
+      case 'btc (pin-protected)':
+        currencyName = 'btc'
+    }
 
     txHistory = txItems || txHistory
 
     if (txHistory) {
       txHistory = txHistory.filter((tx) => {
-        if (tx && tx.type) {
-          return tx.type.toLowerCase() === currency.toLowerCase()
+        if (tx?.type) {
+          return tx.type.toLowerCase() === currencyName
         }
         return false
       })
@@ -537,7 +545,7 @@ class CurrencyWallet extends Component<any, any> {
                 handleInvoice={this.handleInvoice}
                 showButtons={actions.user.isOwner(
                   address,
-                  itemCurrency.tokenKey || currency
+                  itemCurrency.tokenKey || currencyName
                 )}
                 currency={currency.toLowerCase()}
                 singleWallet={true}
