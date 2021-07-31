@@ -5,20 +5,14 @@ import backupUserData from 'plugins/backupUserData'
 
 
 const backupFields = [
-  constants.privateKeyNames.btcMnemonic,
-  constants.privateKeyNames.ethMnemonic,
-  constants.privateKeyNames.bnbMnemonic,
-  constants.privateKeyNames.maticMnemonic,
   constants.privateKeyNames.eth,
   constants.privateKeyNames.bnb,
   constants.privateKeyNames.matic,
   constants.privateKeyNames.btc,
   constants.privateKeyNames.btcMultisig,
   constants.privateKeyNames.btcMultisigOtherOwnerKey,
-  constants.privateKeyNames.btcMultisigOtherOwnerKeyMnemonic,
   constants.privateKeyNames.btcSmsMnemonicKey,
   constants.privateKeyNames.btcSmsMnemonicKeyGenerated,
-  constants.privateKeyNames.btcSmsMnemonicKeyMnemonic,
   constants.privateKeyNames.btcPinMnemonicKey,
 ]
 

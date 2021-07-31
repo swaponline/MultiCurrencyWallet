@@ -3326,13 +3326,6 @@
     ]
   },
   {
-    "id": "SweepBannerDescription",
-    "message": "Please, move your funds to \"new\" addresses (USDT and other ERC20 send to New Ethereum (new) address). And click this button: \"DONE\". Old addresses will be hidden.",
-    "files": [
-      "src/front/shared/components/layout/DashboardLayout/DashboardLayout.tsx"
-    ]
-  },
-  {
     "id": "HowToWithdrawModal_Title",
     "message": "How to withdraw",
     "files": [

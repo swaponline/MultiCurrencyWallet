@@ -3340,13 +3340,6 @@
     ]
   },
   {
-    "id": "SweepBannerDescription",
-    "message": "Por favor, mueva sus fondos a \"new\" direcciones (USDT y otros ERC20 se envían a la nueva dirección de Ethereum ). Haz clic en este botón: \"DONE\". Se ocultarán las direcciones antiguas.",
-    "files": [
-      "src/front/shared/components/layout/DashboardLayout/DashboardLayout.tsx"
-    ]
-  },
-  {
     "id": "HowToWithdrawModal_Title",
     "message": "Cómo retirar",
     "files": [
