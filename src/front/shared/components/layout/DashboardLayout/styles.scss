@@ -20,19 +20,6 @@
   }
 }
 
-.sweepInfo {
-  background: 0% 0% / cover rgb(97, 68, 229);
-  color: var(--color-background-elements);
-  padding: 1em;
-
-  button {
-    float: right;
-    border: 3px solid var(--color-background-elements);
-    color: var(--color-brand);
-    background: var(--color-background-elements);
-  }
-}
-
 .walletBalance {
   margin-top: 20px;
   width: 31%;

@@ -3445,13 +3445,6 @@
     ]
   },
   {
-    "id": "SweepBannerDescription",
-    "message": "Пожалуйста, переместите все средства на кошельки помеченные \"new\" \n                      (USDT и остальные токены переведите на Ethereum (new) адрес). \n                      Затем нажмите кнопку \"DONE\". Старые адреса будут скрыты.",
-    "files": [
-      "src/front/shared/components/layout/DashboardLayout/DashboardLayout.tsx"
-    ]
-  },
-  {
     "id": "HowToWithdrawModal_Title",
     "message": "How to withdraw",
     "files": [

@@ -73,15 +73,8 @@ class EthLikeAction {
   getPrivateKeyByAddress = (address) => {
     const { user } = getState()
     const currencyData = user[`${this.tickerKey}Data`]
-    const currencyMnemonicData = user[`${this.tickerKey}MnemonicData`]
 
-    if (currencyData.address === address) {
-      return currencyData.privateKey
-    }
-
-    if (currencyMnemonicData?.address === address) {
-      return currencyMnemonicData?.privateKey
-    }
+    if (currencyData.address === address) return currencyData.privateKey
   }
 
   getInvoices = () => {
@@ -156,16 +149,7 @@ class EthLikeAction {
     })
   }
 
-  login = (privateKey, mnemonic = '', mnemonicKeys = {}) => {
-    let sweepToMnemonicReady = false
-
-    if (privateKey && mnemonic && mnemonicKeys && mnemonicKeys[this.tickerKey] === privateKey) {
-      sweepToMnemonicReady = true
-    }
-
-    if (!privateKey && mnemonic) {
-      sweepToMnemonicReady = true
-    }
+  login = (privateKey, mnemonic = '') => {
 
     const Web3 = this.getCurrentWeb3()
     let data
@@ -188,56 +172,8 @@ class EthLikeAction {
     localStorage.setItem(constants.privateKeyNames[this.privateKeyName], data.privateKey)
 
     Web3.eth.accounts.wallet.add(data.privateKey)
-    data.isMnemonic = sweepToMnemonicReady
 
     reducers.user.setAuthData({ name: `${this.tickerKey}Data`, data })
-
-    if (!sweepToMnemonicReady) {
-      if (mnemonic === `-`) {
-        this.reportError({
-          message: 'Sweep. Can not auth. Need new mnemonic or enter own for re-login',
-        })
-        return
-      }
-
-      if (!mnemonicKeys || !mnemonicKeys[this.tickerKey]) {
-        this.reportError({
-          message: 'Sweep. Can not auth. Login key is undefined',
-        })
-        return
-      }
-
-      const mnemonicData = Web3.eth.accounts.privateKeyToAccount(mnemonicKeys[this.tickerKey])
-
-      Web3.eth.accounts.wallet.add(mnemonicKeys[this.tickerKey])
-      mnemonicData.isMnemonic = sweepToMnemonicReady
-
-      reducers.user.addWallet({
-        name: `${this.tickerKey}MnemonicData`,
-        data: {
-          currency: this.ticker,
-          fullName: `${this.coinName} (New)`,
-          balance: 0,
-          isBalanceFetched: false,
-          balanceError: null,
-          infoAboutCurrency: null,
-          ...mnemonicData,
-        },
-      })
-
-      new Promise(async (resolve) => {
-        const balance = await this.fetchBalance(mnemonicData.address)
-
-        reducers.user.setAuthData({
-          name: `${this.tickerKey}MnemonicData`,
-          data: {
-            balance,
-            isBalanceFetched: true,
-          },
-        })
-        resolve(true)
-      })
-    }
 
     return data.privateKey
   }
@@ -277,17 +213,12 @@ class EthLikeAction {
   getAllMyAddresses = () => {
     const { user } = getState()
     const arrOfAddresses: string[] = []
-    const mnemonicDataAddress = user[`${this.tickerKey}MnemonicData`]?.address || ''
     const dataAddress = user[`${this.tickerKey}Data`]?.address || ''
     const metamaskAddress: string =
       (metamask && metamask.isEnabled() && metamask.isConnected() && metamask.getAddress()) || ''
 
     if (dataAddress) {
       arrOfAddresses.push(dataAddress.toLowerCase())
-    }
-
-    if (mnemonicDataAddress.toLowerCase() !== dataAddress.toLowerCase()) {
-      arrOfAddresses.push(mnemonicDataAddress?.toLowerCase())
     }
 
     if (metamaskAddress && !arrOfAddresses.includes(metamaskAddress.toLowerCase())) {
@@ -401,16 +332,6 @@ class EthLikeAction {
 
   getWalletByWords = (mnemonic: string, walletNumber: number = 0, path: string = '') => {
     return mnemonicUtils.getEthLikeWallet({ mnemonic, walletNumber, path })
-  }
-
-  getSweepAddress = () => {
-    const { user } = getState()
-
-    if (user[`${this.tickerKey}MnemonicData`]?.address) {
-      return user[`${this.tickerKey}MnemonicData`].address
-    }
-
-    return false
   }
 
   checkSwapExists = async (params) => {
@@ -569,31 +490,6 @@ class EthLikeAction {
     transaction.sign(privateKey)
 
     return '0x' + transaction.serialize().toString('hex')
-  }
-
-  sweepToMnemonic = (mnemonic, path?) => {
-    // ? what's that, how does it work ? Wrong arguments order. Check this.getWalletByWords method
-    const wallet = this.getWalletByWords(mnemonic, path)
-
-    window.localStorage.setItem(
-      constants.privateKeyNames[`${this.tickerKey}Mnemonic`],
-      wallet.privateKey
-    )
-
-    return wallet.privateKey
-  }
-
-  isSweeped = () => {
-    const { user } = getState()
-
-    if (
-      user[`${this.tickerKey}Data`]?.address?.toLowerCase() !==
-      user[`${this.tickerKey}MnemonicData`]?.address?.toLowerCase()
-    ) {
-      return false
-    }
-
-    return true
   }
 
   isContract = async (address: string): Promise<boolean> => {

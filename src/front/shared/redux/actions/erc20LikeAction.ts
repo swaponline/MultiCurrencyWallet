@@ -404,8 +404,6 @@ class Erc20LikeAction {
       throw new Error('web3 does not have given address')
     }
 
-    const isSweeped = actions[this.currencyKey].isSweeped()
-
     let data = {
       address: ethAddress,
       balance: 0,
@@ -414,7 +412,6 @@ class Erc20LikeAction {
       currency: nameContract.toUpperCase(),
       contractAddress,
       decimals,
-      isMnemonic: isSweeped,
       isMetamask: false,
       isConnected: false,
       // TODO: use a standard key and delete this key

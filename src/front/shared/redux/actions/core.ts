@@ -470,12 +470,6 @@ const getWallets = (options: IUniversalObj = {}) => {
       arbethData,
       tokensData,
       metamaskData,
-      // Sweep
-      btcMnemonicData,
-      ethMnemonicData,
-      bnbMnemonicData,
-      maticMnemonicData,
-      arbethMnemonicData,
     },
   } = getState()
 
@@ -508,37 +502,6 @@ const getWallets = (options: IUniversalObj = {}) => {
           : []
         : []
     ),
-    // Sweep ===============================
-    ...(!enabledCurrencies || enabledCurrencies.btc
-      ? btcMnemonicData && !btcData.isMnemonic
-        ? [btcMnemonicData]
-        : []
-      : []), 
-    // Sweep ===============================
-    ...(!enabledCurrencies || enabledCurrencies.eth
-      ? ethMnemonicData && !ethData.isMnemonic
-        ? [ethMnemonicData]
-        : []
-      : []),
-    // Sweep ===============================
-    ...(!enabledCurrencies || enabledCurrencies.bnb
-      ? bnbMnemonicData && !bnbData.isMnemonic
-        ? [bnbMnemonicData]
-        : []
-      : []),
-    // Sweep ===============================
-    ...(!enabledCurrencies || enabledCurrencies.matic
-      ? maticMnemonicData && !maticData.isMnemonic
-        ? [maticMnemonicData]
-        : []
-      : []),
-    // Sweep ===============================
-    ...(!enabledCurrencies || enabledCurrencies.arbeth
-      ? arbethMnemonicData && !arbethData.isMnemonic
-        ? [maticMnemonicData]
-        : []
-      : []),
-    // =====================================
     ...(!enabledCurrencies || enabledCurrencies.btc
       ? [btcData, btcMultisigSMSData, btcMultisigUserData]
       : []

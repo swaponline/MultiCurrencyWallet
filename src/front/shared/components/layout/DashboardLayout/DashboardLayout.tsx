@@ -31,14 +31,6 @@ const DashboardLayout = (props: ComponentProps) => {
   }
   if (page === 'invoices') activeView = 2
 
-  const isSweepReady = localStorage.getItem(constants.localStorage.isSweepReady)
-  const isBtcSweeped = actions.btc.isSweeped()
-  const isEthSweeped = actions.eth.isSweeped()
-
-  let showSweepBanner = !isSweepReady
-
-  if (isBtcSweeped || isEthSweeped) showSweepBanner = false
-
   return (
     <article className="data-tut-start-widget-tour">
       {window.CUSTOM_LOGO && <img className="cutomLogo" src={window.CUSTOM_LOGO} alt="logo" />}
@@ -65,20 +57,6 @@ const DashboardLayout = (props: ComponentProps) => {
               active: true,
             })}
           >
-            {showSweepBanner && (
-              <p styleName="sweepInfo">
-                <Button blue>
-                  <FormattedMessage id="SweepBannerButton" defaultMessage="Done" />
-                </Button>
-                <FormattedMessage
-                  id="SweepBannerDescription"
-                  defaultMessage={`Пожалуйста, переместите все средства на кошельки помеченные "new" 
-                      (USDT и остальные токены переведите на Ethereum (new) адрес). 
-                      Затем нажмите кнопку "DONE". Старые адреса будут скрыты.`}
-                />
-              </p>
-            )}
-
             <ModalConductorProvider>{children}</ModalConductorProvider>
           </div>
           <div

@@ -28,11 +28,6 @@ const hasAdminFee = (config
   && config.opts.fee.btc.min
 ) ? config.opts.fee.btc : false
 
-const sweepToMnemonic = (mnemonic, path) => {
-  const wallet = getWalletByWords(mnemonic, path)
-  localStorage.setItem(constants.privateKeyNames.btcMnemonic, wallet.WIF)
-  return wallet.WIF
-}
 
 const getMainPublicKey = () => {
   const {
@@ -42,35 +37,6 @@ const getMainPublicKey = () => {
   } = getState()
 
   return btcData.publicKey.toString('Hex')
-}
-
-const isSweeped = () => {
-  const {
-    user: {
-      btcData,
-      btcMnemonicData,
-    },
-  } = getState()
-
-  if (btcMnemonicData
-    && btcMnemonicData.address
-    && btcData
-    && btcData.address
-    && btcData.address.toLowerCase() !== btcMnemonicData.address.toLowerCase()
-  ) return false
-
-  return true
-}
-
-const getSweepAddress = () => {
-  const {
-    user: {
-      btcMnemonicData,
-    },
-  } = getState()
-
-  if (btcMnemonicData && btcMnemonicData.address) return btcMnemonicData.address
-  return false
 }
 
 const getWalletByWords = (mnemonic: string, walletNumber: number = 0, path: string = '') => {
@@ -102,40 +68,19 @@ const getPrivateKeyByAddress = (address) => {
   const {
     user: {
       btcData: {
-        address: oldAddress,
+        address: dataAddress,
         privateKey,
-      },
-      btcMnemonicData: {
-        address: mnemonicAddress,
-        privateKey: mnemonicKey,
-      } = {
-        address: undefined,
-        privateKey: undefined,
       },
     },
   } = getState()
 
-  if (oldAddress === address) return privateKey
-  if (mnemonicAddress === address) return mnemonicKey
+  if (dataAddress === address) return privateKey
 }
 
 const login = (
   privateKey,
   mnemonic: string | null = null,
-  mnemonicKeys: null | {
-    [key: string]: string | null
-  } = null,
 ) => {
-  let sweepToMnemonicReady = false
-
-  if (privateKey
-    && mnemonic
-    && mnemonicKeys
-    //@ts-ignore: strictNullChecks
-    && mnemonicKeys.btc === privateKey
-  ) sweepToMnemonicReady = true
-
-  if (!privateKey && mnemonic) sweepToMnemonicReady = true
 
   if (privateKey) {
     const hash = bitcoin.crypto.sha256(privateKey)
@@ -155,14 +100,12 @@ const login = (
     const accData = getWalletByWords(mnemonic)
 
     privateKey = accData.WIF
-    localStorage.setItem(constants.privateKeyNames.btcMnemonic, privateKey)
   }
 
   localStorage.setItem(constants.privateKeyNames.btc, privateKey)
 
   const data = {
     ...auth(privateKey),
-    isMnemonic: sweepToMnemonicReady,
     isBTC: true,
   }
 
@@ -170,56 +113,6 @@ const login = (
   window.getBtcData = () => data
 
   reducers.user.setAuthData({ name: 'btcData', data })
-  if (!sweepToMnemonicReady) {
-    // Auth with our mnemonic account
-    if (mnemonic === `-`) {
-      console.error('Sweep. Cant auth. Need new mnemonic or enter own for re-login')
-      return
-    }
-
-    if (!mnemonicKeys
-      //@ts-ignore: strictNullChecks
-      || !mnemonicKeys.btc
-    ) {
-      console.error('Sweep. Cant auth. Login key undefined')
-      return
-    }
-
-    const mnemonicData = {
-      //@ts-ignore: strictNullChecks
-      ...auth(mnemonicKeys.btc),
-      isMnemonic: true,
-    }
-
-    reducers.user.addWallet({
-      name: 'btcMnemonicData',
-      data: {
-        currency: 'BTC',
-        fullName: 'Bitcoin (New)',
-        balance: 0,
-        isBalanceFetched: false,
-        balanceError: null,
-        infoAboutCurrency: null,
-        ...mnemonicData,
-      },
-    })
-    new Promise(async (resolve) => {
-      const balanceData = await fetchBalanceStatus(mnemonicData.address)
-      if (balanceData) {
-        reducers.user.setAuthData({
-          name: 'btcMnemonicData',
-          data: {
-            //@ts-ignore
-            ...balanceData,
-            isBalanceFetched: true,
-          },
-        })
-      } else {
-        reducers.user.setBalanceError({ name: 'btcMnemonicData' })
-      }
-      resolve(true)
-    })
-  }
 
   return privateKey
 }
@@ -342,36 +235,24 @@ const getAllMyAddresses = () => {
   const {
     user: {
       btcData,
-      btcMnemonicData,
       btcMultisigSMSData,
       btcMultisigUserData,
-      btcMultisigG2FAData,
       btcMultisigPinData,
     },
   } = getState()
 
   const retData = []
-  // Проверяем, был ли sweep
-  if (btcMnemonicData
-    && btcMnemonicData.address
-    && btcData
-    && btcData.address
-    && btcMnemonicData.address !== btcData.address
-  ) {
-    //@ts-ignore: strictNullChecks
-    retData.push(btcMnemonicData.address.toLowerCase())
-  }
 
   //@ts-ignore: strictNullChecks
   retData.push(btcData.address.toLowerCase())
 
   //@ts-ignore: strictNullChecks
-  if (btcMultisigSMSData && btcMultisigSMSData.address) retData.push(btcMultisigSMSData.address.toLowerCase())
+  if (btcMultisigSMSData?.address) retData.push(btcMultisigSMSData.address.toLowerCase())
   // @ToDo - SMS MultiWallet
 
   //@ts-ignore: strictNullChecks
-  if (btcMultisigUserData && btcMultisigUserData.address) retData.push(btcMultisigUserData.address.toLowerCase())
-  if (btcMultisigUserData && btcMultisigUserData.wallets && btcMultisigUserData.wallets.length) {
+  if (btcMultisigUserData?.address) retData.push(btcMultisigUserData.address.toLowerCase())
+  if (btcMultisigUserData?.wallets?.length) {
     btcMultisigUserData.wallets.map((wallet) => {
       //@ts-ignore: strictNullChecks
       retData.push(wallet.address.toLowerCase())
@@ -379,7 +260,7 @@ const getAllMyAddresses = () => {
   }
 
   //@ts-ignore: strictNullChecks
-  if (btcMultisigPinData && btcMultisigPinData.address) retData.push(btcMultisigPinData.address.toLowerCase())
+  if (btcMultisigPinData?.address) retData.push(btcMultisigPinData.address.toLowerCase())
 
   return retData
 }
@@ -388,7 +269,6 @@ const getDataByAddress = (address) => {
   const {
     user: {
       btcData,
-      btcMnemonicData,
       btcMultisigSMSData,
       btcMultisigUserData,
       btcMultisigG2FAData,
@@ -397,7 +277,6 @@ const getDataByAddress = (address) => {
 
   const founded = [
     btcData,
-    btcMnemonicData,
     btcMultisigSMSData,
     btcMultisigUserData,
     ...(
@@ -588,9 +467,6 @@ export default {
   getLinkToInfo,
   getInvoices,
   getWalletByWords,
-  sweepToMnemonic,
-  isSweeped,
-  getSweepAddress,
   getAllMyAddresses,
   getDataByAddress,
   getMainPublicKey,
