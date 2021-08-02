@@ -207,7 +207,6 @@ const addMetamaskWallet = () => {
           fullName: fullWalletName,
           infoAboutCurrency: currencyInfo,
           isBalanceFetched: true,
-          isMnemonic: true,
           unconfirmedBalance: 0,
           networkVersion,
           unknownNetwork: false,
@@ -226,7 +225,6 @@ const addMetamaskWallet = () => {
           fullName: `Unknown network (${web3connect.getProviderTitle()})`,
           infoAboutCurrency: undefined,
           isBalanceFetched: true,
-          isMnemonic: true,
           unconfirmedBalance: 0,
           networkVersion,
           unknownNetwork: true,
@@ -246,7 +244,6 @@ const addMetamaskWallet = () => {
         fullName: 'External wallet',
         infoAboutCurrency: undefined,
         isBalanceFetched: true,
-        isMnemonic: true,
         unconfirmedBalance: 0,
       },
     })

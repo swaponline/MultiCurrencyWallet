@@ -24,7 +24,6 @@ export default {
   walletTitle: 'walletTitle',
   customToken: 'customToken',
   balanceActiveCurrency: 'balanceActiveCurrency',
-  isSweepReady: 'isSweepReady',
   signedUpWithPush: 'signedUpWithPush',
   backups: `${process.env.ENTRY}:backups`,
   backups_prefix: `${process.env.ENTRY}:backup:`,

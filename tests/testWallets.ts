@@ -14,12 +14,12 @@ export default {
     address: 'mqkkCoeUaUsaBpTDygoL1zqbhd9f5mn41D',
     ethAddress: '0xAdc6d16e73E59556758Ec291BD14270F74D378f2',
   },
-  MaticTokenToBtcMTaker: {
+  MaticTokenToBtcMMaker: {
     seedPhrase: 'sting dry impose frequent kit solution more smile beyond stadium present viable',
     address: 'mjQ588m5BF6f7T8Cb8U2X7DVbb4dkkWoeM',
     ethAddress: '0x8b9Ae79b7e550dd602288F0F661D7Fc14F1bA3f6',
   },
-  MaticTokenToBtcMMaker: {
+  MaticTokenToBtcMTaker: {
     seedPhrase: 'mixture goat region luggage february state wrist remain hybrid knee say since',
     address: 'mtAriZ1dnXYe9g4EpHmLmmzCJqQqfFiKNS',
     ethAddress: '0x4fa9AE36DEF823eA846b135a648fEaD65E327248',

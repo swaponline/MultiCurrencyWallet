@@ -66,11 +66,6 @@ const backupUserData = {
         const get = (key) => localStorage.getItem(constants.privateKeyNames[key])
 
         const backup = {
-          btcMnemonic:                      get(`btcMnemonic`),
-          ethMnemonic:                      get(`ethMnemonic`),
-          bnbMnemonic:                      get(`bnbMnemonic`),
-          maticMnemonic:                    get(`maticMnemonic`),
-          arbethMnemonic:                   get(`arbethMnemonic`),
           eth:                              get(`eth`),
           bnb:                              get(`bnb`),
           matic:                            get(`matic`),
@@ -78,17 +73,11 @@ const backupUserData = {
           btc:                              get(`btc`),
           ghost:                            get(`ghost`),
           next:                             get(`next`),
-          ethOld:                           get(`ethOld`),
-          btcOld:                           get(`btcOld`),
           twentywords:                      get(`twentywords`),
           btcMultisig:                      get(`btcMultisig`),
           btcMultisigOtherOwnerKey:         get(`btcMultisigOtherOwnerKey`),
-          btcMultisigOtherOwnerKeyMnemonic: get(`btcMultisigOtherOwnerKeyMnemonic`),
-          btcMultisigOtherOwnerKeyOld:      get(`btcMultisigOtherOwnerKeyOld`),
           btcSmsMnemonicKey:                get(`btcSmsMnemonicKey`),
           btcSmsMnemonicKeyGenerated:       get(`btcSmsMnemonicKeyGenerated`),
-          btcSmsMnemonicKeyMnemonic:        get(`btcSmsMnemonicKeyMnemonic`),
-          btcSmsMnemonicKeyOld:             get(`btcSmsMnemonicKeyOld`),
           btcPinMnemonicKey:                get(`btcPinMnemonicKey`),
           hiddenCoinsList:                  localStorage.getItem(constants.localStorage.hiddenCoinsList),
           isWalletCreate:                   localStorage.getItem(constants.localStorage.isWalletCreate),
@@ -186,26 +175,15 @@ const backupUserData = {
             set(`btc`, data.btc)
             set(`ghost`, data.ghost)
             set(`next`, data.next)
-            set(`btcMnemonic`, data.btcMnemonic)
             set(`btcMultisig`, data.btcMultisig)
             set(`btcMultisigOtherOwnerKey`, data.btcMultisigOtherOwnerKey)
-            set(`btcMultisigOtherOwnerKeyMnemonic`, data.btcMultisigOtherOwnerKeyMnemonic)
-            set(`btcMultisigOtherOwnerKeyOld`, data.btcMultisigOtherOwnerKeyOld)
-            set(`btcOld`, data.btcOld)
             set(`btcPinMnemonicKey`, data.btcPinMnemonicKey)
             set(`btcSmsMnemonicKey`, data.btcSmsMnemonicKey)
             set(`btcSmsMnemonicKeyGenerated`, data.btcSmsMnemonicKeyGenerated)
-            set(`btcSmsMnemonicKeyMnemonic`, data.btcSmsMnemonicKeyMnemonic)
-            set(`btcSmsMnemonicKeyOld`, data.btcSmsMnemonicKeyOld)
             set(`eth`, data.eth)
-            set(`ethMnemonic`, data.ethMnemonic)
-            set(`ethOld`, data.ethOld)
             set(`bnb`, data.bnb)
-            set(`bnbMnemonic`, data.bnbMnemonic)
             set(`matic`, data.matic)
-            set(`maticMnemonic`, data.maticMnemonic)
             set(`arbeth`, data.arbeth)
-            set(`arbethMnemonic`, data.arbethMnemonic)
             set(`twentywords`, data.twentywords)
 
             // set other params to true (user has on tour and other pages)

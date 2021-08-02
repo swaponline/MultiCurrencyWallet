@@ -27,11 +27,6 @@ const hasAdminFee = (config
   && config.opts.fee.ghost.min
 ) ? config.opts.fee.ghost : false
 
-const sweepToMnemonic = (mnemonic, path) => {
-  const wallet = getWalletByWords(mnemonic, path)
-  localStorage.setItem(constants.privateKeyNames.ghostMnemonic, wallet.WIF)
-  return wallet.WIF
-}
 
 const getMainPublicKey = () => {
   const {
@@ -41,35 +36,6 @@ const getMainPublicKey = () => {
   } = getState()
 
   return ghostData.publicKey.toString('Hex')
-}
-
-const isSweeped = () => {
-  const {
-    user: {
-      ghostData,
-      ghostMnemonicData,
-    },
-  } = getState()
-
-  if (ghostMnemonicData
-    && ghostMnemonicData.address
-    && ghostData
-    && ghostData.address
-    && ghostData.address.toLowerCase() !== ghostMnemonicData.address.toLowerCase()
-  ) return false
-
-  return true
-}
-
-const getSweepAddress = () => {
-  const {
-    user: {
-      ghostMnemonicData,
-    },
-  } = getState()
-
-  if (ghostMnemonicData && ghostMnemonicData.address) return ghostMnemonicData.address
-  return false
 }
 
 const getWalletByWords = (mnemonic: string, walletNumber: number = 0, path: string = '') => {
@@ -102,42 +68,19 @@ const getPrivateKeyByAddress = (address) => {
   const {
     user: {
       ghostData: {
-        address: oldAddress,
+        address: dataAddress,
         privateKey,
       }
     },
   } = getState()
-  /*
-  const ghostMnemonicData
-      ghostMnemonicData: {
-        address: mnemonicAddress,
-        privateKey: mnemonicKey,
-      },
-    },
-  } = getState()
-  */
-  if (oldAddress === address) return privateKey
-    //@ts-ignore
-  if (mnemonicAddress === address) return mnemonicKey
+
+  if (dataAddress === address) return privateKey
 }
 
 const login = (
   privateKey,
   mnemonic: string | null = null,
-  mnemonicKeys: null | {
-    [key: string]: string | null
-  } = null,
 ) => {
-  let sweepToMnemonicReady = false
-
-  if (privateKey
-    && mnemonic
-    && mnemonicKeys
-    //@ts-ignore: strictNullChecks
-    && mnemonicKeys.ghost === privateKey
-  ) sweepToMnemonicReady = true
-
-  if (!privateKey && mnemonic) sweepToMnemonicReady = true
 
   if (privateKey) {
     const hash = bitcoin.crypto.sha256(privateKey)
@@ -157,14 +100,12 @@ const login = (
     const accData = getWalletByWords(mnemonic)
 
     privateKey = accData.WIF
-    localStorage.setItem(constants.privateKeyNames.ghostMnemonic, privateKey)
   }
 
   localStorage.setItem(constants.privateKeyNames.ghost, privateKey)
 
   const data = {
     ...auth(privateKey),
-    isMnemonic: sweepToMnemonicReady,
     currency: 'GHOST',
     fullName: 'ghost',
   }
@@ -173,56 +114,6 @@ const login = (
   window.getGhostData = () => data
 
   reducers.user.setAuthData({ name: 'ghostData', data })
-  if (!sweepToMnemonicReady) {
-    // Auth with our mnemonic account
-    if (mnemonic === `-`) {
-      console.error('Sweep. Cant auth. Need new mnemonic or enter own for re-login')
-      return
-    }
-
-    if (!mnemonicKeys
-      //@ts-ignore: strictNullChecks
-      || !mnemonicKeys.ghost
-    ) {
-      console.error('Sweep. Cant auth. Login key undefined')
-      return
-    }
-
-    const mnemonicData = {
-      //@ts-ignore: strictNullChecks
-      ...auth(mnemonicKeys.ghost),
-      isMnemonic: true,
-    }
-
-    reducers.user.addWallet({
-      name: 'ghostMnemonicData',
-      data: {
-        currency: 'GHOST',
-        fullName: 'Ghost (New)',
-        balance: 0,
-        isBalanceFetched: false,
-        balanceError: null,
-        infoAboutCurrency: null,
-        ...mnemonicData,
-      },
-    })
-    new Promise(async (resolve) => {
-      const balanceData = await fetchBalanceStatus(mnemonicData.address)
-      if (balanceData) {
-        reducers.user.setAuthData({
-          name: 'ghostMnemonicData',
-          data: {
-            //@ts-ignore
-            ...balanceData,
-            isBalanceFetched: true,
-          },
-        })
-      } else {
-        reducers.user.setBalanceError({ name: 'ghostMnemonicData' })
-      }
-      resolve(true)
-    })
-  }
 
   return privateKey
 }
@@ -394,36 +285,24 @@ const getAllMyAddresses = () => {
   const {
     user: {
       ghostData,
-      ghostMnemonicData,
       ghostMultisigSMSData,
       ghostMultisigUserData,
-      ghostMultisigG2FAData,
       ghostMultisigPinData,
     },
   } = getState()
 
   const retData = []
-  // Проверяем, был ли sweep
-  if (ghostMnemonicData
-    && ghostMnemonicData.address
-    && ghostData
-    && ghostData.address
-    && ghostMnemonicData.address !== ghostData.address
-  ) {
-    //@ts-ignore: strictNullChecks
-    retData.push(ghostMnemonicData.address.toLowerCase())
-  }
 
   //@ts-ignore: strictNullChecks
   retData.push(ghostData.address.toLowerCase())
 
   //@ts-ignore: strictNullChecks
-  if (ghostMultisigSMSData && ghostMultisigSMSData.address) retData.push(ghostMultisigSMSData.address.toLowerCase())
+  if (ghostMultisigSMSData?.address) retData.push(ghostMultisigSMSData.address.toLowerCase())
   // @ToDo - SMS MultiWallet
 
   //@ts-ignore: strictNullChecks
-  if (ghostMultisigUserData && ghostMultisigUserData.address) retData.push(ghostMultisigUserData.address.toLowerCase())
-  if (ghostMultisigUserData && ghostMultisigUserData.wallets && ghostMultisigUserData.wallets.length) {
+  if (ghostMultisigUserData?.address) retData.push(ghostMultisigUserData.address.toLowerCase())
+  if (ghostMultisigUserData?.wallets?.length) {
     ghostMultisigUserData.wallets.map((wallet) => {
       //@ts-ignore: strictNullChecks
       retData.push(wallet.address.toLowerCase())
@@ -431,7 +310,7 @@ const getAllMyAddresses = () => {
   }
 
   //@ts-ignore: strictNullChecks
-  if (ghostMultisigPinData && ghostMultisigPinData.address) retData.push(ghostMultisigPinData.address.toLowerCase())
+  if (ghostMultisigPinData?.address) retData.push(ghostMultisigPinData.address.toLowerCase())
 
   return retData
 }
@@ -440,7 +319,6 @@ const getDataByAddress = (address) => {
   const {
     user: {
       ghostData,
-      ghostMnemonicData,
       ghostMultisigSMSData,
       ghostMultisigUserData,
       ghostMultisigG2FAData,
@@ -449,7 +327,6 @@ const getDataByAddress = (address) => {
 
   const founded = [
     ghostData,
-    ghostMnemonicData,
     ghostMultisigSMSData,
     ghostMultisigUserData,
     ...(
@@ -630,9 +507,6 @@ export default {
   getLinkToInfo,
   getInvoices,
   getWalletByWords,
-  sweepToMnemonic,
-  isSweeped,
-  getSweepAddress,
   getAllMyAddresses,
   getDataByAddress,
   getMainPublicKey,
