@@ -1,7 +1,12 @@
 import { BigNumber } from 'bignumber.js'
 import TokenApi from 'human-standard-token-abi'
-import { LimitOrderBuilder, LimitOrderProtocolFacade } from '@1inch/limit-order-protocol'
-import { apiLooper, externalConfig } from 'helpers'
+import {
+  LimitOrderBuilder,
+  LimitOrderProtocolFacade,
+  Web3ProviderConnector,
+  PrivateKeyProviderConnector,
+} from '@1inch/limit-order-protocol'
+import { apiLooper, externalConfig, metamask } from 'helpers'
 import actions from 'redux/actions'
 import reducers from 'redux/core/reducers'
 
@@ -128,6 +133,26 @@ const approveToken = async (params) => {
   }
 }
 
+const getWeb3Connector = (baseCurrency, owner) => {
+  let web3 = metamask.getWeb3()
+  let connector
+
+  if (!web3) {
+    const privateKey = actions[baseCurrency].getPrivateKeyByAddress(owner)
+    const bufferKey = Buffer.from(privateKey.replace('0x', ''), 'hex')
+
+    web3 = actions[baseCurrency].getCurrentWeb3()
+    // FIXME:
+    // with string key => Error: Expected private key to be an Uint8Array with length 32
+    // with buffer key => Error:
+    connector = new PrivateKeyProviderConnector(privateKey, web3)
+  } else {
+    connector = new Web3ProviderConnector(web3)
+  }
+
+  return connector
+}
+
 const createLimitOrder = async (params) => {
   const {
     chainId,
@@ -139,13 +164,13 @@ const createLimitOrder = async (params) => {
     takerAmount,
   } = params
 
-  const contractAddress = '0x5fa31604fc5dcebfcac2481f9fa59d174126e5e6'
+  const contractAddress = '0xb707d89D29c189421163515c59E42147371D6857'
   const web3 = actions[baseCurrency].getCurrentWeb3()
+  const connector = getWeb3Connector(baseCurrency, makerAddress)
+  const builder = new LimitOrderBuilder(contractAddress, chainId, connector)
+  const protocolFacade = new LimitOrderProtocolFacade(contractAddress, connector)
 
-  const limitOrderBuilder = new LimitOrderBuilder(contractAddress, chainId, web3)
-  const limitOrderProtocolFacade = new LimitOrderProtocolFacade(contractAddress, web3)
-
-  const order = limitOrderBuilder.buildLimitOrder({
+  const order = builder.buildLimitOrder({
     makerAddress,
     makerAssetAddress,
     takerAssetAddress,
@@ -155,21 +180,20 @@ const createLimitOrder = async (params) => {
     // permit: '0x0',
     // interaction: '0x0',
   })
-  const limitOrderTypedData = limitOrderBuilder.buildLimitOrderTypedData(order)
-  const signature = await limitOrderBuilder.buildOrderSignature(makerAddress, limitOrderTypedData)
-
-  // Create a call data for fill the limit order
-  const callData = limitOrderProtocolFacade.fillLimitOrder(
+  const limitOrderTypedData = builder.buildLimitOrderTypedData(order)
+  const signature: any = await builder.buildOrderSignature(makerAddress, limitOrderTypedData)
+  const callData = protocolFacade.fillLimitOrder(
     order,
-    signature,
+    signature.result,
     makerAmount,
     '0',
-    new BigNumber(makerAmount).div(2).dp(0, BigNumber.ROUND_HALF_EVEN).toString()
+    takerAmount // it's name as thresholdAmount
   )
 
   return await actions[baseCurrency].send({
     to: contractAddress,
     data: callData,
+    amount: 0,
   })
 }
 
