@@ -1,4 +1,5 @@
 import OfferModal from './OfferModal/OfferModal'
+import LimitOrder from './LimitOrder'
 import WithdrawModal from './WithdrawModal/WithdrawModal'
 import WithdrawModalMultisig from './WithdrawModalMultisig/WithdrawModalMultisig'
 import WithdrawModalMultisigUser from './WithdrawModalMultisig/WithdrawModalMultisigUser'
@@ -42,6 +43,7 @@ export default {
   DeclineOrdersModal,
   ShareModal,
   OfferModal,
+  LimitOrder,
   WithdrawModal,
   WithdrawModalMultisigUser, // Deprecated
   PrivateKeysModal,

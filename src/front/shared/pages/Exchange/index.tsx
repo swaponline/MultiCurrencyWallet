@@ -2204,9 +2204,10 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
             <>
               <Button
                 id="createOrderReactTooltipMessageForUser"
-                styleName={`button link-like ${haveBalance ? '' : 'noMany'}`}
+                styleName={`button ${haveBalance ? '' : 'noMany'}`}
                 //@ts-ignore: strictNullChecks
                 onClick={haveBalance ? this.createOffer : null}
+                link
               >
                 <FormattedMessage id="orders128" defaultMessage="Create offer" />
               </Button>

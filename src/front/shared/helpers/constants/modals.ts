@@ -2,6 +2,7 @@ export default {
   Withdraw: 'WithdrawModal',
   WithdrawMultisig: 'WithdrawModalMultisig',
   Offer: 'OfferModal',
+  LimitOrder: 'LimitOrder',
   PrivateKeys: 'PrivateKeysModal',
   ReceiveModal: 'ReceiveModal',
   DownloadModal: 'DownloadModal',

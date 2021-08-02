@@ -20,9 +20,7 @@ function LimitOrders() {
 
       {showOrders && (
         <div>
-          <h2>Limit orders here</h2>
-          <button>All all</button>
-          <button>Your order</button>
+          <h2>Your limit orders here</h2>
         </div>
       )}
     </section>

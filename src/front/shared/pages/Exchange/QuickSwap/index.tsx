@@ -17,10 +17,6 @@ import AdvancedSettings from './AdvancedSettings'
 import SwapInfo from './SwapInfo'
 import LimitOrders from './LimitOrders'
 
-// TODO: add feedback events
-
-// TODO: for production save only ETH chain as available
-
 // TODO: UI: adapt for mobile resolution
 
 class QuickSwap extends PureComponent<unknown, ComponentState> {
@@ -144,7 +140,7 @@ class QuickSwap extends PureComponent<unknown, ComponentState> {
       error: error.message,
     })
 
-    // * feedback...
+    feedback.oneinch.failed(error.message)
   }
 
   createSwapRequest = () => {
@@ -263,9 +259,11 @@ class QuickSwap extends PureComponent<unknown, ComponentState> {
   }
 
   swap = async () => {
-    const { fromWallet, swapData } = this.state
+    const { fromWallet, toWallet, swapData } = this.state
     const key = fromWallet.standard ? fromWallet.baseCurrency : fromWallet.currency
     const lowerKey = key.toLowerCase()
+
+    feedback.oneinch.startedSwap(`${fromWallet.currency} -> ${toWallet.currency}`)
 
     this.setState(() => ({
       isSwapPending: true,
@@ -555,12 +553,7 @@ class QuickSwap extends PureComponent<unknown, ComponentState> {
   }
 
   createLimitOrder = () => {
-    const { fromWallet, toWallet } = this.state
-
-    actions.modals.open(constants.modals.Offer, {
-      sellCurrency: fromWallet.currency,
-      buyCurrency: toWallet.currency,
-    })
+    actions.modals.open(constants.modals.LimitOrder)
   }
 
   render() {
@@ -664,16 +657,11 @@ class QuickSwap extends PureComponent<unknown, ComponentState> {
                 <FormattedMessage id="swap" defaultMessage="Swap" />
               </Button>
             )}
-
-            <Button
-              styleName="button"
-              disabled={swapBtnIsDisabled}
-              onClick={this.createLimitOrder}
-              brand
-            >
-              <FormattedMessage id="createLimitOrder" defaultMessage="Create limit order" />
-            </Button>
           </div>
+
+          <Button styleName="button" onClick={this.createLimitOrder} link small>
+            <FormattedMessage id="createLimitOrder" defaultMessage="Create limit order" />
+          </Button>
         </section>
 
         <LimitOrders />

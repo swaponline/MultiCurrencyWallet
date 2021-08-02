@@ -132,6 +132,7 @@ const createLimitOrder = async (params) => {
   const {
     chainId,
     baseCurrency,
+    makerAddress,
     makerAssetAddress,
     takerAssetAddress,
     makerAmount,
@@ -139,14 +140,13 @@ const createLimitOrder = async (params) => {
   } = params
 
   const contractAddress = '0x5fa31604fc5dcebfcac2481f9fa59d174126e5e6'
-  const walletAddress = '0x4758822de63992df27cacf1ba11417bbacace033'
   const web3 = actions[baseCurrency].getCurrentWeb3()
 
   const limitOrderBuilder = new LimitOrderBuilder(contractAddress, chainId, web3)
   const limitOrderProtocolFacade = new LimitOrderProtocolFacade(contractAddress, web3)
 
-  const limitOrder = limitOrderBuilder.buildLimitOrder({
-    makerAddress: walletAddress,
+  const order = limitOrderBuilder.buildLimitOrder({
+    makerAddress,
     makerAssetAddress,
     takerAssetAddress,
     makerAmount, // FIXME: at first need to convert with token decimals
@@ -155,19 +155,16 @@ const createLimitOrder = async (params) => {
     // permit: '0x0',
     // interaction: '0x0',
   })
-  const limitOrderTypedData = limitOrderBuilder.buildLimitOrderTypedData(limitOrder)
-  const limitOrderSignature = await limitOrderBuilder.buildOrderSignature(
-    walletAddress,
-    limitOrderTypedData
-  )
+  const limitOrderTypedData = limitOrderBuilder.buildLimitOrderTypedData(order)
+  const signature = await limitOrderBuilder.buildOrderSignature(makerAddress, limitOrderTypedData)
 
   // Create a call data for fill the limit order
   const callData = limitOrderProtocolFacade.fillLimitOrder(
-    limitOrder,
-    limitOrderSignature,
-    '100',
+    order,
+    signature,
+    makerAmount,
     '0',
-    '50'
+    new BigNumber(makerAmount).div(2).dp(0, BigNumber.ROUND_HALF_EVEN).toString()
   )
 
   return await actions[baseCurrency].send({

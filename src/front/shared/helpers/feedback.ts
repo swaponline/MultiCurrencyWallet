@@ -95,6 +95,10 @@ const events = {
     stopped: 'stopped',
     finished: 'finished',
   },
+  oneinch: {
+    startedSwap: 'started swap',
+    failed: 'failed',
+  },
   marketmaking: {
     enteredPromo: 'enteredPromo',
     selected: 'selected',

@@ -350,7 +350,7 @@ class App extends React.Component<RouteComponentProps<any>, any> {
       await createSwapApp()
     }
 
-    //await actions.oneinch.fetchAllTokens()
+    await actions.oneinch.fetchAllTokens()
 
     this.setState(() => ({
       initialFetching: false,
