@@ -738,7 +738,6 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
 
     const { haveCurrency, getCurrency } = this.state
 
-    //@ts-ignore: strictNullChecks
     actions.modals.open(constants.modals.Offer, {
       sellCurrency: haveCurrency,
       buyCurrency: getCurrency,

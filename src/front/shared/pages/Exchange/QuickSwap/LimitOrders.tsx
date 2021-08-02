@@ -15,7 +15,7 @@ function LimitOrders() {
   return (
     <section styleName="">
       <Button id="orderbookBtn" onClick={toggleOrdersViability} styleName="button orderbook" link>
-        <FormattedMessage id="Orderbook" defaultMessage="Orderbook" />
+        <FormattedMessage id="limitOrders" defaultMessage="Limit orders" />
       </Button>
 
       {showOrders && (

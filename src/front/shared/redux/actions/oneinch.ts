@@ -1,6 +1,7 @@
 import { BigNumber } from 'bignumber.js'
 import TokenApi from 'human-standard-token-abi'
-import { apiLooper } from 'helpers'
+import { LimitOrderBuilder, LimitOrderProtocolFacade } from '@1inch/limit-order-protocol'
+import { apiLooper, externalConfig } from 'helpers'
 import actions from 'redux/actions'
 import reducers from 'redux/core/reducers'
 
@@ -20,7 +21,7 @@ const serviceIsAvailable = async (params) => {
   }
 }
 
-const fetchTokens = async (params) => {
+const fetchTokensByChain = async (params) => {
   const { chainId } = params
 
   try {
@@ -42,6 +43,23 @@ const addTokens = (params) => {
   reducers.currencies.add1inchTokens({
     chainId,
     tokens,
+  })
+}
+
+const fetchAllTokens = () => {
+  const availableChains = [1, 56, 137] // [ETH, BSC, Polygon] (Mainnet ID)
+
+  Object.keys(externalConfig.evmNetworks).forEach(async (nativeCurrency) => {
+    const chainInfo = externalConfig.evmNetworks[nativeCurrency]
+
+    if (availableChains.includes(chainInfo.networkVersion)) {
+      const tokens: any = await fetchTokensByChain({ chainId: chainInfo.networkVersion })
+
+      addTokens({
+        chainId: chainInfo.networkVersion,
+        tokens: tokens,
+      })
+    }
   })
 }
 
@@ -110,17 +128,91 @@ const approveToken = async (params) => {
   }
 }
 
-const createLimitOrder = () => {}
+const createLimitOrder = async (params) => {
+  const {
+    chainId,
+    baseCurrency,
+    makerAssetAddress,
+    takerAssetAddress,
+    makerAmount,
+    takerAmount,
+  } = params
 
-const fetchLimitOrder = () => {}
+  const contractAddress = '0x5fa31604fc5dcebfcac2481f9fa59d174126e5e6'
+  const walletAddress = '0x4758822de63992df27cacf1ba11417bbacace033'
+  const web3 = actions[baseCurrency].getCurrentWeb3()
 
-const fetchAllLimitOrders = () => {}
+  const limitOrderBuilder = new LimitOrderBuilder(contractAddress, chainId, web3)
+  const limitOrderProtocolFacade = new LimitOrderProtocolFacade(contractAddress, web3)
+
+  const limitOrder = limitOrderBuilder.buildLimitOrder({
+    makerAddress: walletAddress,
+    makerAssetAddress,
+    takerAssetAddress,
+    makerAmount, // FIXME: at first need to convert with token decimals
+    takerAmount, // FIXME: at first need to convert with token decimals
+    // predicate: '0x0',
+    // permit: '0x0',
+    // interaction: '0x0',
+  })
+  const limitOrderTypedData = limitOrderBuilder.buildLimitOrderTypedData(limitOrder)
+  const limitOrderSignature = await limitOrderBuilder.buildOrderSignature(
+    walletAddress,
+    limitOrderTypedData
+  )
+
+  // Create a call data for fill the limit order
+  const callData = limitOrderProtocolFacade.fillLimitOrder(
+    limitOrder,
+    limitOrderSignature,
+    '100',
+    '0',
+    '50'
+  )
+
+  return await actions[baseCurrency].send({
+    to: contractAddress,
+    data: callData,
+  })
+}
+
+const fetchLimitOrder = async (params) => {
+  const { chainId, owner } = params
+
+  try {
+    return await apiLooper.get('limitOrders', `/${chainId}/limit-order/address/${owner}`)
+  } catch (error) {
+    console.group('%c 1inch fetch limit order', 'color: red')
+    console.log(error)
+    console.groupEnd()
+
+    return []
+  }
+}
+
+const fetchAllLimitOrders = async (params) => {
+  const { chainId } = params
+
+  try {
+    return await apiLooper.get('limitOrders', `/${chainId}/limit-order/all`)
+  } catch (error) {
+    console.group('%c 1inch fetch limit order', 'color: red')
+    console.log(error)
+    console.groupEnd()
+
+    return []
+  }
+}
 
 export default {
   serviceIsAvailable,
-  fetchTokens,
+  fetchTokensByChain,
+  fetchAllTokens,
   addTokens,
   fetchSpenderContractAddress,
   fetchTokenAllowance,
   approveToken,
+  createLimitOrder,
+  fetchLimitOrder,
+  fetchAllLimitOrders,
 }

@@ -554,6 +554,15 @@ class QuickSwap extends PureComponent<unknown, ComponentState> {
     return !swapData || isSwapPending || insufficientBalance
   }
 
+  createLimitOrder = () => {
+    const { fromWallet, toWallet } = this.state
+
+    actions.modals.open(constants.modals.Offer, {
+      sellCurrency: fromWallet.currency,
+      buyCurrency: toWallet.currency,
+    })
+  }
+
   render() {
     const {
       currencies,
@@ -655,6 +664,15 @@ class QuickSwap extends PureComponent<unknown, ComponentState> {
                 <FormattedMessage id="swap" defaultMessage="Swap" />
               </Button>
             )}
+
+            <Button
+              styleName="button"
+              disabled={swapBtnIsDisabled}
+              onClick={this.createLimitOrder}
+              brand
+            >
+              <FormattedMessage id="createLimitOrder" defaultMessage="Create limit order" />
+            </Button>
           </div>
         </section>
 
@@ -663,25 +681,6 @@ class QuickSwap extends PureComponent<unknown, ComponentState> {
     )
   }
 }
-
-const fetch1inchTokens = async () => {
-  const availableChains = [1, 56, 137] // [ETH, BSC, Polygon] (Mainnet ID)
-
-  Object.keys(externalConfig.evmNetworks).forEach(async (nativeCurrency) => {
-    const chainInfo = externalConfig.evmNetworks[nativeCurrency]
-
-    if (availableChains.includes(chainInfo.networkVersion)) {
-      const tokens: any = await actions.oneinch.fetchTokens({ chainId: chainInfo.networkVersion })
-
-      actions.oneinch.addTokens({
-        chainId: chainInfo.networkVersion,
-        tokens: tokens,
-      })
-    }
-  })
-}
-
-fetch1inchTokens()
 
 const filterCurrencies = (params) => {
   const { currencies, tokensWallets, oneinchTokens } = params
@@ -699,14 +698,9 @@ const filterCurrencies = (params) => {
       const tokensByChain = oneinchTokens[networkVersion]
 
       isCurrencySuitable =
-        // temporary allow allow only Ethereum chain tokens
-        // networkVersion === 1 &&
-        // -----------------------------------
         // if token is in the object then it's true
         tokensByChain && !!tokensByChain[tokensWallets[walletKey].contractAddress]
     } else {
-      // While available only Ethereum chain coins
-      //isCurrencySuitable = currency?.blockchain === BLOCKCHAIN.ETH
       isCurrencySuitable = currency?.model === COIN_MODEL.AB
     }
     // connected metamask allows only one chain
