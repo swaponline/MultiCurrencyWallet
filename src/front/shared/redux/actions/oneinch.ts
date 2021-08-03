@@ -139,13 +139,12 @@ const getWeb3Connector = (baseCurrency, owner) => {
 
   if (!web3) {
     const privateKey = actions[baseCurrency].getPrivateKeyByAddress(owner)
-    const bufferKey = Buffer.from(privateKey.replace('0x', ''), 'hex')
 
     web3 = actions[baseCurrency].getCurrentWeb3()
     // FIXME:
-    // with string key => Error: Expected private key to be an Uint8Array with length 32
-    // with buffer key => Error:
-    connector = new PrivateKeyProviderConnector(privateKey, web3)
+    // with buffer key => TypeError: Cannot read property 'length' of undefined
+
+    connector = new PrivateKeyProviderConnector(privateKey.replace('0x', ''), web3)
   } else {
     connector = new Web3ProviderConnector(web3)
   }
@@ -165,7 +164,6 @@ const createLimitOrder = async (params) => {
   } = params
 
   const contractAddress = '0xb707d89D29c189421163515c59E42147371D6857'
-  const web3 = actions[baseCurrency].getCurrentWeb3()
   const connector = getWeb3Connector(baseCurrency, makerAddress)
   const builder = new LimitOrderBuilder(contractAddress, chainId, connector)
   const protocolFacade = new LimitOrderProtocolFacade(contractAddress, connector)
