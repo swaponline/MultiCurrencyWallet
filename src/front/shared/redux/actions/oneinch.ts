@@ -8,7 +8,7 @@ import {
 } from '@1inch/limit-order-protocol'
 import { COIN_MODEL, COIN_DATA } from 'swap.app/constants/COINS'
 import getCoinInfo from 'common/coins/getCoinInfo'
-import amount from 'common/utils/amount'
+import utils from 'common/utils'
 import { apiLooper, externalConfig, metamask } from 'helpers'
 import actions from 'redux/actions'
 import reducers from 'redux/core/reducers'
@@ -198,17 +198,29 @@ const createLimitOrder = async (params) => {
     takerAmount,
   } = params
 
+  /* 
+    TODO: new 1inch contracts config
+    limit orders' contracts
+    
+    eth: 0x3ef51736315f52d568d6d2cf289419b9cfffe782
+    bsc: 0xe3456f4ee65e745a44ec3bcb83d0f2529d1b84eb
+    polygon: 0xb707d89d29c189421163515c59e42147371d6857
+    */
+
   const contractAddress = '0xb707d89D29c189421163515c59E42147371D6857'
   const connector = getWeb3Connector(baseCurrency, makerAddress)
   const builder = new LimitOrderBuilder(contractAddress, chainId, connector)
   const protocolFacade = new LimitOrderProtocolFacade(contractAddress, connector)
 
+  const makerUnitAmount = utils.amount.formatWithDecimals(makerAmount, makerAssetDecimals)
+  const takerUnitAmount = utils.amount.formatWithDecimals(takerAmount, takerAssetDecimals)
+
   const order = builder.buildLimitOrder({
     makerAddress,
     makerAssetAddress,
     takerAssetAddress,
-    makerAmount: amount.formatWithDecimals(makerAmount, makerAssetDecimals),
-    takerAmount: amount.formatWithDecimals(takerAmount, takerAssetDecimals),
+    makerAmount: makerUnitAmount,
+    takerAmount: takerUnitAmount,
     // predicate: '0x0',
     // permit: '0x0',
     // interaction: '0x0',
@@ -218,15 +230,16 @@ const createLimitOrder = async (params) => {
   const callData = protocolFacade.fillLimitOrder(
     order,
     signature,
-    makerAmount,
+    makerUnitAmount,
     '0',
-    takerAmount // it's name as thresholdAmount
+    takerUnitAmount // it's name as thresholdAmount
   )
 
   return await actions[baseCurrency].send({
     to: contractAddress,
     data: callData,
     amount: 0,
+    waitReceipt: true,
   })
 }
 

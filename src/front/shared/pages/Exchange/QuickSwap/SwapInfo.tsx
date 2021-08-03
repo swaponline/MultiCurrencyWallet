@@ -2,6 +2,7 @@ import { BigNumber } from 'bignumber.js'
 import { FormattedMessage } from 'react-intl'
 import CSSModules from 'react-css-modules'
 import styles from './index.scss'
+import commonUtils from 'common/utils'
 import { utils } from 'helpers'
 import { Network, SwapData } from './types'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
@@ -13,20 +14,10 @@ type ComponentProps = {
   baseChainWallet: IUniversalObj
   fiat: string
   isDataPending: boolean
-  convertFromWei: (string, number) => string
-  convertIntoWei: (string, number) => string
 }
 
 function SwapInfo(props: ComponentProps) {
-  const {
-    network,
-    swapData,
-    swapFee,
-    baseChainWallet,
-    fiat,
-    isDataPending,
-    convertFromWei,
-  } = props
+  const { network, swapData, swapFee, baseChainWallet, fiat, isDataPending } = props
 
   let fee: string | undefined = undefined
   let fiatFee: string | undefined = undefined
@@ -35,8 +26,8 @@ function SwapInfo(props: ComponentProps) {
   if (swapData) {
     const { fromTokenAmount, toTokenAmount, fromToken, toToken } = swapData
 
-    const fromAmount = convertFromWei(fromTokenAmount, fromToken.decimals)
-    const toAmount = convertFromWei(toTokenAmount, toToken.decimals)
+    const fromAmount = commonUtils.amount.formatWithoutDecimals(fromTokenAmount, fromToken.decimals)
+    const toAmount = commonUtils.amount.formatWithoutDecimals(toTokenAmount, toToken.decimals)
     const customDecimals = 7
 
     price = `${new BigNumber(fromAmount).div(toAmount).dp(customDecimals).toString()} ${

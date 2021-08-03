@@ -4,6 +4,7 @@ import { BigNumber } from 'bignumber.js'
 import { FormattedMessage } from 'react-intl'
 import CSSModules from 'react-css-modules'
 import styles from './index.scss'
+import utils from 'common/utils'
 import typeforce from 'swap.app/util/typeforce'
 import { feedback, apiLooper, externalConfig, constants, transactions, metamask } from 'helpers'
 import actions from 'redux/actions'
@@ -118,7 +119,7 @@ class QuickSwap extends PureComponent<unknown, ComponentState> {
     const receivedList = this.returnReceivedList(currencies, spendedCurrency)
 
     this.setState(() => ({
-      receivedList: receivedList,
+      receivedList,
       receivedCurrency: receivedList[0],
       toWallet: actions.core.getWallet({ currency: receivedList[0].value }),
       receivedAmount: '0',
@@ -161,7 +162,7 @@ class QuickSwap extends PureComponent<unknown, ComponentState> {
       ? toWallet.contractAddress
       : '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
 
-    const spendedWeiAmount = this.convertIntoWei(spendedAmount, 18)
+    const spendedWeiAmount = utils.amount.formatWithDecimals(spendedAmount, 18)
 
     const request = [
       `/${network.networkVersion}/swap?`,
@@ -176,28 +177,13 @@ class QuickSwap extends PureComponent<unknown, ComponentState> {
       const gweiDecimals = 9
 
       if (gasLimit) request.push(`&gasLimit=${gasLimit}`)
-      if (gasPrice) request.push(`&gasPrice=${this.convertIntoWei(gasPrice, gweiDecimals)}`)
+      if (gasPrice)
+        request.push(`&gasPrice=${utils.amount.formatWithDecimals(gasPrice, gweiDecimals)}`)
       if (destReceiver) request.push(`&destReceiver=${destReceiver}`)
     }
 
     return request.join('')
   }
-
-  // TODO: find a better place for this calculations
-  convertIntoWei = (amount, decimals) => {
-    return new BigNumber(amount)
-      .times(10 ** decimals)
-      .dp(decimals)
-      .toString()
-  }
-
-  convertFromWei = (amount, decimals) => {
-    return new BigNumber(amount)
-      .div(10 ** decimals)
-      .dp(decimals)
-      .toString()
-  }
-  // ---------------------------
 
   checkSwapData = async () => {
     await this.checkTokenApprove()
@@ -234,10 +220,13 @@ class QuickSwap extends PureComponent<unknown, ComponentState> {
         reportErrors: this.reportError,
       })
       const weiFee = new BigNumber(swap.tx.gas).times(swap.tx.gasPrice)
-      const swapFee = this.convertFromWei(weiFee, 18)
+      const swapFee = utils.amount.formatWithoutDecimals(weiFee, 18)
 
       this.setState(() => ({
-        receivedAmount: this.convertFromWei(swap.toTokenAmount, swap.toToken.decimals),
+        receivedAmount: utils.amount.formatWithoutDecimals(
+          swap.toTokenAmount,
+          swap.toToken.decimals
+        ),
         swapData: swap,
         swapFee,
       }))
@@ -273,7 +262,7 @@ class QuickSwap extends PureComponent<unknown, ComponentState> {
       const receipt = await actions[lowerKey].send({
         data: tx.data,
         to: tx.to,
-        amount: this.convertFromWei(tx.value, fromToken.decimals),
+        amount: utils.amount.formatWithoutDecimals(tx.value, fromToken.decimals),
         gasPrice: tx.gasPrice,
         gasLimit: tx.gas,
         waitReceipt: true,
@@ -331,7 +320,7 @@ class QuickSwap extends PureComponent<unknown, ComponentState> {
 
     const approveInfo: any = await actions.oneinch.approveToken({
       chainId: network.networkVersion,
-      amount: this.convertIntoWei(spendedAmount, fromWallet.decimals),
+      amount: utils.amount.formatWithDecimals(spendedAmount, fromWallet.decimals),
       contract: fromWallet.contractAddress,
     })
 
@@ -625,8 +614,6 @@ class QuickSwap extends PureComponent<unknown, ComponentState> {
             baseChainWallet={baseChainWallet}
             fiat={fiat}
             isDataPending={isDataPending}
-            convertFromWei={this.convertFromWei}
-            convertIntoWei={this.convertIntoWei}
           />
 
           <div styleName="buttonWrapper">

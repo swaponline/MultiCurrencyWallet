@@ -3,7 +3,7 @@ import { connect } from 'redaction'
 import { FormattedMessage } from 'react-intl'
 import CSSModules from 'react-css-modules'
 import styles from './index.scss'
-import { feedback, externalConfig } from 'helpers'
+import { feedback, externalConfig, constants, transactions } from 'helpers'
 import actions from 'redux/actions'
 import Link from 'local_modules/sw-valuelink'
 import Modal from 'components/modal/Modal/Modal'
@@ -17,13 +17,14 @@ type ComponentProps = {
 
 type ComponentState = {
   network: IUniversalObj
-  receivedList: IUniversalObj[]
+  takerList: IUniversalObj[]
   makerWallet: IUniversalObj
   takerWallet: IUniversalObj
   makerAsset: IUniversalObj
   takerAsset: IUniversalObj
   makerAmount: string
   takerAmount: string
+  isPending: boolean
 }
 
 class LimitOrder extends Component<ComponentProps, ComponentState> {
@@ -35,18 +36,19 @@ class LimitOrder extends Component<ComponentProps, ComponentState> {
     const makerAsset = currencies[0]
     const network = externalConfig.evmNetworks[makerAsset.blockchain]
 
-    const receivedList = this.returnTakerList(currencies, makerAsset)
-    const takerAsset = receivedList[0]
+    const takerList = this.returnTakerList(currencies, makerAsset)
+    const takerAsset = takerList[0]
 
     this.state = {
       network,
-      receivedList,
+      takerList,
       makerWallet: {},
       takerWallet: {},
       makerAsset,
       takerAsset,
       makerAmount: '',
       takerAmount: '',
+      isPending: false,
     }
   }
 
@@ -64,46 +66,99 @@ class LimitOrder extends Component<ComponentProps, ComponentState> {
     )
   }
 
-  createOrder = () => {
+  updateTakerList = () => {
+    const { currencies } = this.props
+    const { makerAsset } = this.state
+
+    const takerList = this.returnTakerList(currencies, makerAsset)
+
+    this.setState(() => ({
+      takerList,
+      takerAsset: takerList[0],
+      takerAmount: '0',
+      takerWallet: actions.core.getWallet({ currency: takerList[0].value }),
+    }))
+  }
+
+  createOrder = async () => {
+    const { name } = this.props
     const { network, makerWallet, takerWallet, makerAmount, takerAmount } = this.state
-    /* 
-    TODO: new 1inch contracts config
-    limit orders' contracts
-    
-    eth: 0x3ef51736315f52d568d6d2cf289419b9cfffe782
-    bsc: 0xe3456f4ee65e745a44ec3bcb83d0f2529d1b84eb
-    polygon: 0xb707d89d29c189421163515c59e42147371d6857
-    */
-    actions.oneinch.createLimitOrder({
+    const baseCurrency = makerWallet.baseCurrency || makerWallet.currency
+
+    console.log('state: ', this.state)
+
+    const makerAssetAddress = makerWallet.isToken
+      ? makerWallet.contractAddress
+      : '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
+    const takerAssetAddress = takerWallet.isToken
+      ? takerWallet.contractAddress
+      : '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
+
+    this.setState(() => ({
+      isPending: true,
+    }))
+
+    const receipt = await actions.oneinch.createLimitOrder({
       chainId: network.networkVersion,
-      baseCurrency: 'matic',
-      makerAddress: '0xDA873Ff72bd4eA9c122C51a837DA3f88307D1DB5',
-      makerAssetAddress: '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee', // matic
-      makerAssetDecimals: 18,
-      takerAssetAddress: '0x53e0bca35ec356bd5dddfebbd1fc0fd03fabad39', // chainlink token
-      takerAssetDecimals: 18,
+      baseCurrency: baseCurrency.toLowerCase(),
+      makerAddress: makerWallet.address,
+      makerAssetAddress,
+      makerAssetDecimals: makerWallet.decimals || 18,
+      takerAssetAddress,
+      takerAssetDecimals: takerWallet.decimals || 18,
       makerAmount,
       takerAmount,
+    })
+
+    this.setState(() => ({
+      isPending: false,
+    }))
+
+    actions.modals.close(name)
+
+    const key = makerWallet.standard ? makerWallet.baseCurrency : makerWallet.currency
+    const lowerKey = key.toLowerCase()
+
+    actions.notifications.show(constants.notifications.Transaction, {
+      link: transactions.getLink(lowerKey, receipt.transactionHash),
+      completed: true,
     })
   }
 
   selectMakerAsset = (value) => {
-    this.setState(() => ({
-      makerAsset: value,
-    }))
+    const makerWallet = actions.core.getWallet({ currency: value.value })
+
+    this.setState(
+      () => ({
+        makerAsset: value,
+        makerWallet,
+      }),
+      () => {
+        this.updateNetwork()
+        this.updateTakerList()
+      }
+    )
   }
 
   selectTakerAsset = (value) => {
     this.setState(() => ({
       takerAsset: value,
+      takerWallet: actions.core.getWallet({ currency: value.value }),
     }))
+  }
+
+  areWrongOrderParams = () => {
+    const { makerAmount, takerAmount } = this.state
+
+    return !makerAmount || !takerAmount
   }
 
   render() {
     const { name, currencies } = this.props
-    const { receivedList, makerAsset, takerAsset, makerWallet, takerWallet } = this.state
+    const { takerList, makerAsset, takerAsset, makerWallet, takerWallet, isPending } = this.state
 
     const linked = Link.all(this, 'makerAmount', 'takerAmount')
+    const blockCreation = this.areWrongOrderParams() || isPending
 
     return (
       //@ts-ignore: strictNullChecks
@@ -126,11 +181,17 @@ class LimitOrder extends Component<ComponentProps, ComponentState> {
           onSelect={this.selectTakerAsset}
           id="takerAmount"
           balance={takerWallet.balance}
-          currencies={receivedList}
+          currencies={takerList}
           placeholder="0.00"
         />
 
-        <Button fullWidth brand disabled={false} onClick={this.createOrder}>
+        <Button
+          disabled={blockCreation}
+          onClick={this.createOrder}
+          pending={isPending}
+          fullWidth
+          brand
+        >
           <FormattedMessage id="create" defaultMessage="Create" />
         </Button>
       </Modal>
