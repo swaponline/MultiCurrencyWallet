@@ -60,8 +60,6 @@ class Erc20LikeAction {
     )
     console.group(`Actions >%c ${this.standard}`, 'color: red;')
     console.error('error: ', error)
-    console.log('%c Stack trace', 'color: orange;')
-    console.trace()
     console.groupEnd()
   }
 
@@ -541,6 +539,7 @@ class Erc20LikeAction {
         .catch((error) => {
           this.reportError(error)
           rej(error)
+          return
         })
 
       res(receipt.transactionHash)

@@ -64,6 +64,18 @@ class LimitOrder extends Component<ComponentProps, ComponentState> {
     }
   }
 
+  reportError = (error) => {
+    console.group('%c Create limit order', 'color: red;')
+    console.error(error)
+    console.groupEnd()
+
+    actions.notifications.show(constants.notifications.ErrorNotification, {
+      error: error.message,
+    })
+
+    feedback.oneinch.failed(error.message)
+  }
+
   updateNetwork = () => {
     const { makerAsset } = this.state
 
@@ -99,21 +111,28 @@ class LimitOrder extends Component<ComponentProps, ComponentState> {
       isPending: true,
     }))
 
-    const receipt = await actions[makerWallet.standard].approve({
-      name: makerWallet.tokenKey,
-      amount: makerAmount,
-      to: externalConfig.limitOrder[makerWallet.baseCurrency.toLowerCase()],
-    })
+    try {
+      const receipt = await actions[makerWallet.standard].approve({
+        name: makerWallet.tokenKey,
+        amount: makerAmount,
+        to: externalConfig.limitOrder[makerWallet.baseCurrency.toLowerCase()],
+      })
 
-    actions.notifications.show(constants.notifications.Transaction, {
-      link: transactions.getLink(makerWallet.baseCurrency.toLowerCase(), receipt.transactionHash),
-      completed: true,
-    })
+      actions.notifications.show(constants.notifications.Transaction, {
+        link: transactions.getLink(makerWallet.baseCurrency.toLowerCase(), receipt.transactionHash),
+        completed: true,
+      })
 
-    this.setState(() => ({
-      isPending: false,
-      needApprove: false,
-    }))
+      this.setState(() => ({
+        needApprove: false,
+      }))
+    } catch (error) {
+      this.reportError(error)
+    } finally {
+      this.setState(() => ({
+        isPending: false,
+      }))
+    }
   }
 
   createRFQOrder = async () => {
@@ -131,31 +150,37 @@ class LimitOrder extends Component<ComponentProps, ComponentState> {
       isPending: true,
     }))
 
-    const receipt = await actions.oneinch.createRFQOrder({
-      chainId: network.networkVersion,
-      baseCurrency: makerWallet.baseCurrency.toLowerCase(),
-      makerAddress: makerWallet.address,
-      makerAssetAddress: makerWallet.contractAddress,
-      makerAssetDecimals: makerWallet.decimals,
-      takerAssetAddress: takerWallet.contractAddress,
-      takerAssetDecimals: takerWallet.decimals,
-      makerAmount,
-      takerAmount,
-      expirationTimeInMinutes: expiresInMinutes,
-    })
+    feedback.oneinch.createOrder(`${makerWallet.tokenKey} -> ${takerWallet.tokenKey}`)
 
-    console.log('receipt: ', receipt)
+    try {
+      const receipt = await actions.oneinch.createRFQOrder({
+        chainId: network.networkVersion,
+        baseCurrency: makerWallet.baseCurrency.toLowerCase(),
+        makerAddress: makerWallet.address,
+        makerAssetAddress: makerWallet.contractAddress,
+        makerAssetDecimals: makerWallet.decimals,
+        takerAssetAddress: takerWallet.contractAddress,
+        takerAssetDecimals: takerWallet.decimals,
+        makerAmount,
+        takerAmount,
+        expirationTimeInMinutes: expiresInMinutes,
+      })
 
-    this.setState(() => ({
-      isPending: false,
-    }))
+      console.log('receipt: ', receipt)
 
-    actions.modals.close(name)
+      actions.modals.close(name)
 
-    actions.notifications.show(constants.notifications.Transaction, {
-      link: transactions.getLink(makerWallet.baseCurrency.toLowerCase(), receipt.transactionHash),
-      completed: true,
-    })
+      actions.notifications.show(constants.notifications.Transaction, {
+        link: transactions.getLink(makerWallet.baseCurrency.toLowerCase(), receipt.transactionHash),
+        completed: true,
+      })
+    } catch (error) {
+      this.reportError(error)
+    } finally {
+      this.setState(() => ({
+        isPending: false,
+      }))
+    }
   }
 
   selectMakerAsset = async (value) => {
@@ -198,7 +223,7 @@ class LimitOrder extends Component<ComponentProps, ComponentState> {
   }
 
   areWrongOrderParams = () => {
-    const { makerAmount, takerAmount, needApprove } = this.state
+    const { makerAmount, takerAmount } = this.state
 
     const isWrongAmount = (amount) => {
       return new BigNumber(amount).isNaN() || new BigNumber(amount).isEqualTo(0)
@@ -221,7 +246,10 @@ class LimitOrder extends Component<ComponentProps, ComponentState> {
 
     const linked = Link.all(this, 'makerAmount', 'takerAmount', 'expiresInMinutes')
     const blockCreation = this.areWrongOrderParams() || isPending
-    const blockApprove = blockCreation // TODO: || new BigNumber(makerWallet.balance).isLessThan(0)
+
+    // TODO: how to calculate the tx cost for token approvement ?
+    // FIXME: don't let an user to start approvement without balance
+    const blockApprove = blockCreation // || new BigNumber(makerWallet.balance).isLessThan(0)
 
     return (
       //@ts-ignore: strictNullChecks

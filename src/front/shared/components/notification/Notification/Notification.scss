@@ -2,6 +2,7 @@
   margin-left: 5px;
   margin-right: 5px;
   position: relative;
+  z-index: 306; // one more then Modals index
   transition: margin-top 0.1s linear 0.4s, margin-bottom 0.1s linear 0.4s;
   margin-top: 0;
 

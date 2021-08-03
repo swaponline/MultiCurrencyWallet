@@ -96,7 +96,8 @@ const events = {
     finished: 'finished',
   },
   oneinch: {
-    startedSwap: 'started swap',
+    startedSwap: 'start the swap',
+    createOrder: 'create the order',
     failed: 'failed',
   },
   marketmaking: {
