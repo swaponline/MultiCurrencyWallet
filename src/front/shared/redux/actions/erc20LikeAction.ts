@@ -520,7 +520,7 @@ class Erc20LikeAction {
     })
   }
 
-  approve = async (params) => {
+  approve = async (params): Promise<string> => {
     const { name, to, amount } = params
     const { tokenContract, decimals } = this.returnTokenInfo(name)
     const feeResult = await this.fetchFees({ speed: 'fast' })
@@ -564,8 +564,9 @@ class Erc20LikeAction {
 
     try {
       const allowance = await erc20Like[this.standard].checkAllowance({
-        tokenOwnerAddress: address,
-        tokenContractAddress: contractAddress,
+        owner: address,
+        spender: externalConfig.swapContract[this.standard],
+        contract: contractAddress,
         decimals,
       })
 

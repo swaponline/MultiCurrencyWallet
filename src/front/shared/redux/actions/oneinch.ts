@@ -72,7 +72,7 @@ const fetchAllTokens = () => {
 }
 
 const filterCurrencies = (params) => {
-  const { currencies, tokensWallets, oneinchTokens } = params
+  const { currencies, tokensWallets, oneinchTokens, onlyTokens = false } = params
 
   return currencies.filter((item) => {
     const currency = COIN_DATA[item.name]
@@ -90,7 +90,7 @@ const filterCurrencies = (params) => {
         // if token is in the object then it's true
         tokensByChain && !!tokensByChain[tokensWallets[walletKey].contractAddress]
     } else {
-      isCurrencySuitable = currency?.model === COIN_MODEL.AB
+      isCurrencySuitable = currency?.model === COIN_MODEL.AB && !onlyTokens
     }
     // connected metamask allows only one chain
     const suitableForNetwork = metamask.isConnected()
@@ -174,9 +174,6 @@ const getWeb3Connector = (baseCurrency, owner) => {
     const privateKey = actions[baseCurrency].getPrivateKeyByAddress(owner)
 
     web3 = actions[baseCurrency].getCurrentWeb3()
-    // FIXME:
-    // with buffer key => TypeError: Cannot read property 'length' of undefined
-
     connector = new PrivateKeyProviderConnector(privateKey.replace('0x', ''), web3)
   } else {
     connector = new Web3ProviderConnector(web3)
@@ -185,7 +182,7 @@ const getWeb3Connector = (baseCurrency, owner) => {
   return connector
 }
 
-const createLimitOrder = async (params) => {
+const createRFQOrder = async (params) => {
   const {
     chainId,
     baseCurrency,
@@ -196,18 +193,10 @@ const createLimitOrder = async (params) => {
     takerAssetDecimals,
     makerAmount,
     takerAmount,
+    expirationTimeInMinutes,
   } = params
 
-  /* 
-    TODO: new 1inch contracts config
-    limit orders' contracts
-    
-    eth: 0x3ef51736315f52d568d6d2cf289419b9cfffe782
-    bsc: 0xe3456f4ee65e745a44ec3bcb83d0f2529d1b84eb
-    polygon: 0xb707d89d29c189421163515c59e42147371d6857
-    */
-
-  const contractAddress = '0xb707d89D29c189421163515c59E42147371D6857'
+  const contractAddress = externalConfig.limitOrder[baseCurrency]
   const connector = getWeb3Connector(baseCurrency, makerAddress)
   const builder = new LimitOrderBuilder(contractAddress, chainId, connector)
   const protocolFacade = new LimitOrderProtocolFacade(contractAddress, connector)
@@ -215,24 +204,24 @@ const createLimitOrder = async (params) => {
   const makerUnitAmount = utils.amount.formatWithDecimals(makerAmount, makerAssetDecimals)
   const takerUnitAmount = utils.amount.formatWithDecimals(takerAmount, takerAssetDecimals)
 
-  const order = builder.buildLimitOrder({
-    makerAddress,
+  const RFQorder = builder.buildRFQOrder({
+    id: 1,
+    expiresInTimestamp: 2623166102, // TODO: convert into timestamp time expirationTimeInMinutes
     makerAssetAddress,
     takerAssetAddress,
+    makerAddress,
     makerAmount: makerUnitAmount,
     takerAmount: takerUnitAmount,
-    // predicate: '0x0',
-    // permit: '0x0',
-    // interaction: '0x0',
   })
-  const limitOrderTypedData = builder.buildLimitOrderTypedData(order)
-  const signature = await builder.buildOrderSignature(makerAddress, limitOrderTypedData)
-  const callData = protocolFacade.fillLimitOrder(
-    order,
+  const orderTypedData = builder.buildRFQOrderTypedData(RFQorder)
+  const signature = await builder.buildOrderSignature(makerAddress, orderTypedData)
+  const callData = protocolFacade.fillRFQOrder(
+    RFQorder,
     signature,
     makerUnitAmount,
-    '0',
-    takerUnitAmount // it's name as thresholdAmount
+    // one of the assets (it doesn't matter which one) must be zero
+    // why? who knows
+    '0'
   )
 
   return await actions[baseCurrency].send({
@@ -280,7 +269,7 @@ export default {
   fetchSpenderContractAddress,
   fetchTokenAllowance,
   approveToken,
-  createLimitOrder,
+  createRFQOrder,
   fetchLimitOrder,
   fetchAllLimitOrders,
 }

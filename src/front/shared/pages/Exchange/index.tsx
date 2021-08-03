@@ -499,8 +499,9 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
 
     if (tokenObj) {
       const allowance = await erc20Like[tokenObj.standard].checkAllowance({
-        tokenOwnerAddress: tokenObj.address,
-        tokenContractAddress: tokenObj.contractAddress,
+        owner: tokenObj.address,
+        spender: config.swapContract[tokenObj.standard],
+        contract: tokenObj.contractAddress,
         decimals: tokenObj.decimals,
       })
 
