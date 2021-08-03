@@ -5,8 +5,6 @@ import { FormattedMessage } from 'react-intl'
 import CSSModules from 'react-css-modules'
 import styles from './index.scss'
 import typeforce from 'swap.app/util/typeforce'
-import { COIN_MODEL, COIN_DATA, BLOCKCHAIN } from 'swap.app/constants/COINS'
-import getCoinInfo from 'common/coins/getCoinInfo'
 import { feedback, apiLooper, externalConfig, constants, transactions, metamask } from 'helpers'
 import actions from 'redux/actions'
 import Link from 'local_modules/sw-valuelink'
@@ -670,38 +668,8 @@ class QuickSwap extends PureComponent<unknown, ComponentState> {
   }
 }
 
-const filterCurrencies = (params) => {
-  const { currencies, tokensWallets, oneinchTokens } = params
-
-  return currencies.filter((item) => {
-    const currency = COIN_DATA[item.name]
-    let isCurrencySuitable = false
-
-    // it's token. Check it in the 1inch matched token list
-    if (item.standard) {
-      const { blockchain } = getCoinInfo(item.value)
-
-      const networkVersion = externalConfig.evmNetworks[blockchain].networkVersion
-      const walletKey = item.value.toLowerCase()
-      const tokensByChain = oneinchTokens[networkVersion]
-
-      isCurrencySuitable =
-        // if token is in the object then it's true
-        tokensByChain && !!tokensByChain[tokensWallets[walletKey].contractAddress]
-    } else {
-      isCurrencySuitable = currency?.model === COIN_MODEL.AB
-    }
-    // connected metamask allows only one chain
-    const suitableForNetwork = metamask.isConnected()
-      ? metamask.isAvailableNetworkByCurrency(item.value)
-      : true
-
-    return isCurrencySuitable && suitableForNetwork
-  })
-}
-
 export default connect(({ currencies, user }) => ({
-  currencies: filterCurrencies({
+  currencies: actions.oneinch.filterCurrencies({
     currencies: currencies.items,
     tokensWallets: user.tokensData,
     oneinchTokens: currencies.oneinch,

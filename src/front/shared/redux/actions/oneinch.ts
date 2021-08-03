@@ -6,6 +6,9 @@ import {
   Web3ProviderConnector,
   PrivateKeyProviderConnector,
 } from '@1inch/limit-order-protocol'
+import { COIN_MODEL, COIN_DATA } from 'swap.app/constants/COINS'
+import getCoinInfo from 'common/coins/getCoinInfo'
+import amount from 'common/utils/amount'
 import { apiLooper, externalConfig, metamask } from 'helpers'
 import actions from 'redux/actions'
 import reducers from 'redux/core/reducers'
@@ -65,6 +68,36 @@ const fetchAllTokens = () => {
         tokens: tokens,
       })
     }
+  })
+}
+
+const filterCurrencies = (params) => {
+  const { currencies, tokensWallets, oneinchTokens } = params
+
+  return currencies.filter((item) => {
+    const currency = COIN_DATA[item.name]
+    let isCurrencySuitable = false
+
+    // it's token. Check it in the 1inch matched token list
+    if (item.standard) {
+      const { blockchain } = getCoinInfo(item.value)
+
+      const networkVersion = externalConfig.evmNetworks[blockchain].networkVersion
+      const walletKey = item.value.toLowerCase()
+      const tokensByChain = oneinchTokens[networkVersion]
+
+      isCurrencySuitable =
+        // if token is in the object then it's true
+        tokensByChain && !!tokensByChain[tokensWallets[walletKey].contractAddress]
+    } else {
+      isCurrencySuitable = currency?.model === COIN_MODEL.AB
+    }
+    // connected metamask allows only one chain
+    const suitableForNetwork = metamask.isConnected()
+      ? metamask.isAvailableNetworkByCurrency(item.value)
+      : true
+
+    return isCurrencySuitable && suitableForNetwork
   })
 }
 
@@ -158,7 +191,9 @@ const createLimitOrder = async (params) => {
     baseCurrency,
     makerAddress,
     makerAssetAddress,
+    makerAssetDecimals,
     takerAssetAddress,
+    takerAssetDecimals,
     makerAmount,
     takerAmount,
   } = params
@@ -172,17 +207,17 @@ const createLimitOrder = async (params) => {
     makerAddress,
     makerAssetAddress,
     takerAssetAddress,
-    makerAmount, // FIXME: at first need to convert with token decimals
-    takerAmount, // FIXME: at first need to convert with token decimals
+    makerAmount: amount.formatWithDecimals(makerAmount, makerAssetDecimals),
+    takerAmount: amount.formatWithDecimals(takerAmount, takerAssetDecimals),
     // predicate: '0x0',
     // permit: '0x0',
     // interaction: '0x0',
   })
   const limitOrderTypedData = builder.buildLimitOrderTypedData(order)
-  const signature: any = await builder.buildOrderSignature(makerAddress, limitOrderTypedData)
+  const signature = await builder.buildOrderSignature(makerAddress, limitOrderTypedData)
   const callData = protocolFacade.fillLimitOrder(
     order,
-    signature.result,
+    signature,
     makerAmount,
     '0',
     takerAmount // it's name as thresholdAmount
@@ -227,6 +262,7 @@ export default {
   serviceIsAvailable,
   fetchTokensByChain,
   fetchAllTokens,
+  filterCurrencies,
   addTokens,
   fetchSpenderContractAddress,
   fetchTokenAllowance,
