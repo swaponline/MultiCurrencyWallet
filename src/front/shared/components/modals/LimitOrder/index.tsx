@@ -166,8 +166,6 @@ class LimitOrder extends Component<ComponentProps, ComponentState> {
         expirationTimeInMinutes: expiresInMinutes,
       })
 
-      console.log('receipt: ', receipt)
-
       actions.modals.close(name)
 
       actions.notifications.show(constants.notifications.Transaction, {
@@ -223,13 +221,17 @@ class LimitOrder extends Component<ComponentProps, ComponentState> {
   }
 
   areWrongOrderParams = () => {
-    const { makerAmount, takerAmount } = this.state
+    const { makerAmount, takerAmount, makerWallet } = this.state
 
     const isWrongAmount = (amount) => {
       return new BigNumber(amount).isNaN() || new BigNumber(amount).isEqualTo(0)
     }
 
-    return isWrongAmount(makerAmount) || isWrongAmount(takerAmount)
+    return (
+      isWrongAmount(makerAmount) ||
+      new BigNumber(makerWallet.balance).isLessThan(makerAmount) ||
+      isWrongAmount(takerAmount)
+    )
   }
 
   render() {
@@ -256,6 +258,12 @@ class LimitOrder extends Component<ComponentProps, ComponentState> {
       <Modal name={name} title={<FormattedMessage id="limitOrder" defaultMessage="Limit order" />}>
         <SelectGroup
           label={<FormattedMessage id="addoffer381" defaultMessage="Sell" />}
+          tooltip={
+            <FormattedMessage
+              id="partial462"
+              defaultMessage="The amount you have on swap.online or an external wallet that you want to exchange"
+            />
+          }
           inputValueLink={linked.makerAmount}
           selectedValue={makerAsset.value}
           onSelect={this.selectMakerAsset}
@@ -268,6 +276,12 @@ class LimitOrder extends Component<ComponentProps, ComponentState> {
 
         <SelectGroup
           label={<FormattedMessage id="addoffer396" defaultMessage="Buy" />}
+          tooltip={
+            <FormattedMessage
+              id="partial478"
+              defaultMessage="The amount you will receive after the exchange"
+            />
+          }
           inputValueLink={linked.takerAmount}
           selectedValue={takerAsset.value}
           onSelect={this.selectTakerAsset}

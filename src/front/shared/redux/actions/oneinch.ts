@@ -204,21 +204,27 @@ const createRFQOrder = async (params) => {
   const makerUnitAmount = utils.amount.formatWithDecimals(makerAmount, makerAssetDecimals)
   const takerUnitAmount = utils.amount.formatWithDecimals(takerAmount, takerAssetDecimals)
 
-  const RFQorder = builder.buildRFQOrder({
+  const timeStamp = new BigNumber(utils.getUnixTimeStamp())
+  const SEC_IN_MIN = 60
+  const expiresInTimestamp = timeStamp
+    .plus(new BigNumber(expirationTimeInMinutes).times(SEC_IN_MIN))
+    .toNumber()
+
+  const RFQOrder = builder.buildRFQOrder({
     id: 1,
-    expiresInTimestamp: 2623166102, // TODO: convert into timestamp time expirationTimeInMinutes
+    expiresInTimestamp,
     makerAssetAddress,
     takerAssetAddress,
     makerAddress,
     makerAmount: makerUnitAmount,
     takerAmount: takerUnitAmount,
   })
-  const orderTypedData = builder.buildRFQOrderTypedData(RFQorder)
+  const orderTypedData = builder.buildRFQOrderTypedData(RFQOrder)
   const signature = await builder.buildOrderSignature(makerAddress, orderTypedData)
   const callData = protocolFacade.fillRFQOrder(
-    RFQorder,
+    RFQOrder,
     signature,
-    makerUnitAmount,
+    takerUnitAmount,
     // one of the assets (it doesn't matter which one) must be zero
     // why? who knows
     '0'
