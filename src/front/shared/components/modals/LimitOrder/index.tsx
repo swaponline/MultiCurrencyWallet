@@ -135,6 +135,47 @@ class LimitOrder extends Component<ComponentProps, ComponentState> {
     }
   }
 
+  createLimitOrder = async () => {
+    const { name } = this.props
+    const { network, makerWallet, takerWallet, makerAmount, takerAmount } = this.state
+
+    this.setState(() => ({
+      isPending: true,
+    }))
+
+    try {
+      const receipt = await actions.oneinch.createLimitOrder({
+        chainId: network.networkVersion,
+        baseCurrency: makerWallet.baseCurrency.toLowerCase(),
+        makerAddress: makerWallet.address,
+        makerAssetAddress: makerWallet.contractAddress,
+        makerAssetDecimals: makerWallet.decimals,
+        takerAssetAddress: takerWallet.contractAddress,
+        takerAssetDecimals: takerWallet.decimals,
+        makerAmount,
+        takerAmount,
+      })
+
+      console.log('receipt: ', JSON.stringify(receipt))
+
+      this.decreaseAllowance(makerWallet, makerAmount)
+      this.decreaseAllowance(takerWallet, takerAmount)
+
+      actions.modals.close(name)
+
+      /* actions.notifications.show(constants.notifications.Transaction, {
+        link: transactions.getLink(makerWallet.baseCurrency.toLowerCase(), receipt.transactionHash),
+        completed: true,
+      }) */
+    } catch (error) {
+      this.reportError(error)
+    } finally {
+      this.setState(() => ({
+        isPending: false,
+      }))
+    }
+  }
+
   createRFQOrder = async () => {
     const { name } = this.props
     const {
@@ -263,16 +304,20 @@ class LimitOrder extends Component<ComponentProps, ComponentState> {
   }
 
   areWrongOrderParams = () => {
-    const { makerAmount, takerAmount, makerWallet } = this.state
+    const { makerAmount, takerAmount, makerWallet, takerWallet } = this.state
 
-    const isWrongAmount = (amount) => {
-      return new BigNumber(amount).isNaN() || new BigNumber(amount).isEqualTo(0)
+    const isWrongAmount = (wallet, amount) => {
+      return (
+        new BigNumber(amount).isNaN() ||
+        new BigNumber(amount).isEqualTo(0) ||
+        new BigNumber(amount).isGreaterThan(wallet.balance)
+      )
     }
 
     return (
-      isWrongAmount(makerAmount) ||
-      new BigNumber(makerWallet.balance).isLessThan(makerAmount) ||
-      isWrongAmount(takerAmount)
+      isWrongAmount(makerWallet, makerAmount) ||
+      isWrongAmount(takerWallet, takerAmount) ||
+      new BigNumber(makerWallet.balance).isLessThan(makerAmount)
     )
   }
 
@@ -316,7 +361,7 @@ class LimitOrder extends Component<ComponentProps, ComponentState> {
         needTakerApprove={needTakerApprove}
         selectTakerAsset={this.selectTakerAsset}
         approve={this.approve}
-        createOrder={this.createRFQOrder}
+        createOrder={this.createLimitOrder}
       />
     )
   }

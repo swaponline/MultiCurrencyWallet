@@ -5,6 +5,8 @@ import {
   LimitOrderProtocolFacade,
   Web3ProviderConnector,
   PrivateKeyProviderConnector,
+  LimitOrderPredicateBuilder,
+  LimitOrderPredicateCallData,
 } from '@1inch/limit-order-protocol'
 import { COIN_MODEL, COIN_DATA } from 'swap.app/constants/COINS'
 import getCoinInfo from 'common/coins/getCoinInfo'
@@ -182,6 +184,158 @@ const getWeb3Connector = (baseCurrency, owner) => {
   return connector
 }
 
+const createLimitOrder = async (params) => {
+  const {
+    chainId,
+    baseCurrency,
+    makerAddress,
+    makerAssetAddress,
+    makerAssetDecimals,
+    takerAssetAddress,
+    takerAssetDecimals,
+    makerAmount,
+    takerAmount,
+  } = params
+
+  const contractAddress = externalConfig.limitOrder[baseCurrency]
+  const connector = getWeb3Connector(baseCurrency, makerAddress)
+  const builder = new LimitOrderBuilder(contractAddress, chainId, connector)
+  const protocolFacade = new LimitOrderProtocolFacade(contractAddress, connector)
+  const predicateBuilder = new LimitOrderPredicateBuilder(protocolFacade)
+
+  const { or, and, timestampBelow, nonceEquals, gt, lt, eq } = predicateBuilder
+
+  const orderPredicate: LimitOrderPredicateCallData = and(
+    // a limit order is valid only for 1 minute
+    timestampBelow(Math.round(Date.now() / 1000) + 60_000),
+    // a limit order is valid until the nonce of makerAddress is equal to 4
+    nonceEquals(makerAddress, 4)
+  )
+  const makerUnitAmount = utils.amount.formatWithDecimals(makerAmount, makerAssetDecimals)
+  const takerUnitAmount = utils.amount.formatWithDecimals(takerAmount, takerAssetDecimals)
+
+  const order = builder.buildLimitOrder({
+    makerAssetAddress,
+    takerAssetAddress,
+    makerAddress,
+    makerAmount: makerUnitAmount,
+    takerAmount: takerUnitAmount,
+    predicate: orderPredicate,
+    //permit: '0x', // optional
+    //interaction: '0x', // optional
+  })
+  const orderTypedData = builder.buildLimitOrderTypedData(order)
+  const orderHash = builder.buildLimitOrderHash(orderTypedData)
+  const signature = await builder.buildOrderSignature(makerAddress, orderTypedData)
+  /*  const callData = protocolFacade.fillLimitOrder(
+    order,
+    signature,
+    makerUnitAmount,
+    '0', // one of the assets (it doesn't matter which one) must be zero
+    takerUnitAmount
+  ) */
+
+  const validOrder = await orderIsValid({
+    facade: protocolFacade,
+    contract: externalConfig.limitOrder[baseCurrency],
+    predicate: order.predicate,
+  })
+
+  console.log('validOrder: ', validOrder)
+
+  return sendLimitOrder({
+    chainId,
+    order,
+    orderHash,
+    makerAmount: makerUnitAmount,
+    takerAmount: takerUnitAmount,
+    makerAddress,
+    signature,
+  })
+
+  /* return await actions[baseCurrency].send({
+    to: contractAddress,
+    data: callData,
+    amount: 0,
+    waitReceipt: true,
+  }) */
+}
+
+const orderIsValid = async ({ facade, contract, predicate }) => {
+  const addresses = [contract]
+  const callDatas = [predicate]
+
+  try {
+    const result: boolean = await facade.simulateCalls(addresses, callDatas)
+
+    return result
+  } catch (error) {
+    console.error(error)
+
+    return false
+  }
+}
+
+const sendLimitOrder = async (params) => {
+  const { chainId, order, orderHash, makerAmount, takerAmount, makerAddress, signature } = params
+  const milliseconds = utils.getUnixTimeStamp() * 1000
+  const createDateTime = new Date(milliseconds).toLocaleString()
+
+  return {
+    // isActive: true,
+    //chainId,
+    createDateTime: '2021-08-04T15:26:23.247Z',
+    data: {
+      getMakerAmount: order.getMakerAmount,
+      getTakerAmount: order.getTakerAmount,
+      interaction: order.interaction,
+      makerAsset: order.makerAsset,
+      makerAssetData: order.makerAssetData,
+      permit: order.permit,
+      predicate: order.predicate,
+      salt: order.salt,
+      takerAsset: order.takerAsset,
+      takerAssetData: order.takerAssetData,
+    },
+    orderHash,
+    makerAmount,
+    takerAmount,
+    orderMaker: makerAddress,
+    remainingMakerAmount: makerAmount,
+    signature,
+  }
+
+  return await apiLooper.post('limitOrders', `/${chainId}/limit-order`, {
+    body: {
+      // isActive: true,
+      createDateTime: '2021-08-04T15:13:57.227Z',
+      //chainId,
+      data: {
+        getMakerAmount: order.getMakerAmount,
+        getTakerAmount: order.getTakerAmount,
+        interaction: order.interaction,
+        makerAsset: order.makerAsset,
+        makerAssetData: order.makerAssetData,
+        permit: order.permit,
+        predicate: order.predicate,
+        salt: order.salt,
+        takerAsset: order.takerAsset,
+        takerAssetData: order.takerAssetData,
+      },
+      orderHash,
+      makerAmount,
+      takerAmount,
+      orderMaker: makerAddress,
+      remainingMakerAmount: makerAmount,
+      signature,
+    },
+    reportErrors: (error) => {
+      console.error('1inch limit order', error)
+      return true
+    },
+  })
+}
+
 const createRFQOrder = async (params) => {
   const {
     chainId,
@@ -275,6 +429,7 @@ export default {
   fetchSpenderContractAddress,
   fetchTokenAllowance,
   approveToken,
+  createLimitOrder,
   createRFQOrder,
   fetchLimitOrder,
   fetchAllLimitOrders,
