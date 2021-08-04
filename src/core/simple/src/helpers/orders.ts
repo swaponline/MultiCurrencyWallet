@@ -10,8 +10,7 @@ export const request = order =>
         resolve(order)
       }
     })
-  ).then(order => {
-    //@ts-ignore
+  ).then((order: { id: number | null }) => {
     debug('swap.core:simple:orders')('order accepted', order.id)
     //@ts-ignore
     return new Swap(order.id)
