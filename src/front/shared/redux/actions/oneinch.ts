@@ -211,7 +211,7 @@ const createRFQOrder = async (params) => {
     .toNumber()
 
   const RFQOrder = builder.buildRFQOrder({
-    id: 1,
+    id: 4, // TODO: fetch all user's orders and pass their quantity plus 1 as an ID
     expiresInTimestamp,
     makerAssetAddress,
     takerAssetAddress,
@@ -224,7 +224,7 @@ const createRFQOrder = async (params) => {
   const callData = protocolFacade.fillRFQOrder(
     RFQOrder,
     signature,
-    takerUnitAmount,
+    makerUnitAmount,
     // one of the assets (it doesn't matter which one) must be zero
     // why? who knows
     '0'

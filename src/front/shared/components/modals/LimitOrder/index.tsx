@@ -1,20 +1,19 @@
 import { Component } from 'react'
 import { connect } from 'redaction'
 import { BigNumber } from 'bignumber.js'
-import { FormattedMessage } from 'react-intl'
-import CSSModules from 'react-css-modules'
-import styles from './index.scss'
 import erc20Like from 'common/erc20Like'
-import { inputReplaceCommaWithDot } from 'helpers/domUtils'
-import { feedback, externalConfig, constants, transactions } from 'helpers'
+import {
+  feedback,
+  externalConfig,
+  constants,
+  transactions,
+  cacheStorageGet,
+  cacheStorageSet,
+  cacheStorageClear,
+} from 'helpers'
 import actions from 'redux/actions'
 import Link from 'local_modules/sw-valuelink'
-import Tooltip from 'components/ui/Tooltip/Tooltip'
-import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
-import Input from 'components/forms/Input/Input'
-import Modal from 'components/modal/Modal/Modal'
-import Button from 'components/controls/Button/Button'
-import SelectGroup from '../OfferModal/AddOffer/SelectGroup/SelectGroup'
+import ModalForm from './ModalForm'
 
 type ComponentProps = {
   name: string
@@ -32,7 +31,8 @@ type ComponentState = {
   takerAmount: string
   expiresInMinutes: number
   isPending: boolean
-  needApprove: boolean
+  needMakerApprove: boolean
+  needTakerApprove: boolean
 }
 
 class LimitOrder extends Component<ComponentProps, ComponentState> {
@@ -57,10 +57,11 @@ class LimitOrder extends Component<ComponentProps, ComponentState> {
       makerAsset,
       takerAsset,
       makerAmount: '',
+      needMakerApprove: false,
       takerAmount: '',
+      needTakerApprove: false,
       expiresInMinutes: 30,
       isPending: false,
-      needApprove: true,
     }
   }
 
@@ -104,28 +105,27 @@ class LimitOrder extends Component<ComponentProps, ComponentState> {
     }))
   }
 
-  approve = async () => {
-    const { makerWallet, makerAmount } = this.state
-
+  approve = async (wallet, amount) => {
     this.setState(() => ({
       isPending: true,
     }))
 
     try {
-      const receipt = await actions[makerWallet.standard].approve({
-        name: makerWallet.tokenKey,
-        amount: makerAmount,
-        to: externalConfig.limitOrder[makerWallet.baseCurrency.toLowerCase()],
+      const receipt = await actions[wallet.standard].approve({
+        to: externalConfig.limitOrder[wallet.baseCurrency.toLowerCase()],
+        name: wallet.tokenKey,
+        amount,
       })
 
       actions.notifications.show(constants.notifications.Transaction, {
-        link: transactions.getLink(makerWallet.baseCurrency.toLowerCase(), receipt.transactionHash),
+        link: transactions.getLink(wallet.baseCurrency.toLowerCase(), receipt.transactionHash),
         completed: true,
       })
 
-      this.setState(() => ({
-        needApprove: false,
-      }))
+      cacheStorageSet('limitOrderAllowance', wallet.tokenKey, amount, Infinity)
+
+      this.checkMakerAllowance()
+      this.checkTakerAllowance()
     } catch (error) {
       this.reportError(error)
     } finally {
@@ -190,7 +190,7 @@ class LimitOrder extends Component<ComponentProps, ComponentState> {
         makerWallet,
       }),
       () => {
-        this.checkTokenAllowance()
+        this.checkMakerAllowance()
         this.updateNetwork()
         this.updateTakerList()
       }
@@ -198,26 +198,68 @@ class LimitOrder extends Component<ComponentProps, ComponentState> {
   }
 
   selectTakerAsset = (value) => {
+    const takerWallet = actions.core.getWallet({ currency: value.value })
+
+    this.setState(
+      () => ({
+        takerAsset: value,
+        takerWallet,
+      }),
+      () => {
+        this.checkTakerAllowance()
+      }
+    )
+  }
+
+  decreaseAllowance = (wallet, amount) => {
+    const oldAllowance: any = cacheStorageSet(
+      'limitOrderAllowance',
+      wallet.tokenKey,
+      amount,
+      Infinity
+    )
+
+    cacheStorageSet(
+      'limitOrderAllowance',
+      wallet.tokenKey,
+      new BigNumber(oldAllowance).minus(amount),
+      Infinity
+    )
+  }
+
+  checkMakerAllowance = async () => {
+    const { makerWallet, makerAmount } = this.state
+    let allowance = cacheStorageGet('limitOrderAllowance', makerWallet.tokenKey)
+
+    if (!allowance) {
+      allowance = await this.fetchTokenAllowance(makerWallet)
+    }
+
     this.setState(() => ({
-      takerAsset: value,
-      takerWallet: actions.core.getWallet({ currency: value.value }),
+      needMakerApprove: new BigNumber(allowance).isLessThan(makerAmount),
     }))
   }
 
-  checkTokenAllowance = async () => {
-    const { makerAsset, makerAmount } = this.state
-    const makerWallet = actions.core.getWallet({ currency: makerAsset.value })
+  checkTakerAllowance = async () => {
+    const { takerWallet, takerAmount } = this.state
+    let allowance = cacheStorageGet('limitOrderAllowance', takerWallet.tokenKey)
 
-    const allowance = await erc20Like[makerWallet.standard].checkAllowance({
-      owner: makerWallet.address,
-      spender: externalConfig.limitOrder[makerWallet.baseCurrency.toLowerCase()],
-      contract: makerWallet.contractAddress,
-      decimals: makerWallet.decimals,
-    })
+    if (!allowance) {
+      allowance = await this.fetchTokenAllowance(takerWallet)
+    }
 
     this.setState(() => ({
-      needApprove: new BigNumber(allowance).isLessThan(makerAmount),
+      needTakerApprove: new BigNumber(allowance).isLessThan(takerAmount),
     }))
+  }
+
+  fetchTokenAllowance = async (wallet) => {
+    return await erc20Like[wallet.standard].checkAllowance({
+      owner: wallet.address,
+      spender: externalConfig.limitOrder[wallet.baseCurrency.toLowerCase()],
+      contract: wallet.contractAddress,
+      decimals: wallet.decimals,
+    })
   }
 
   areWrongOrderParams = () => {
@@ -243,7 +285,8 @@ class LimitOrder extends Component<ComponentProps, ComponentState> {
       makerWallet,
       takerWallet,
       isPending,
-      needApprove,
+      needMakerApprove,
+      needTakerApprove,
     } = this.state
 
     const linked = Link.all(this, 'makerAmount', 'takerAmount', 'expiresInMinutes')
@@ -254,84 +297,27 @@ class LimitOrder extends Component<ComponentProps, ComponentState> {
     const blockApprove = blockCreation // || new BigNumber(makerWallet.balance).isLessThan(0)
 
     return (
-      //@ts-ignore: strictNullChecks
-      <Modal name={name} title={<FormattedMessage id="limitOrder" defaultMessage="Limit order" />}>
-        <SelectGroup
-          label={<FormattedMessage id="addoffer381" defaultMessage="Sell" />}
-          tooltip={
-            <FormattedMessage
-              id="partial462"
-              defaultMessage="The amount you have on swap.online or an external wallet that you want to exchange"
-            />
-          }
-          inputValueLink={linked.makerAmount}
-          selectedValue={makerAsset.value}
-          onSelect={this.selectMakerAsset}
-          id="makerAmount"
-          balance={makerWallet.balance}
-          currencies={currencies}
-          placeholder="0.00"
-          onKeyUp={this.checkTokenAllowance}
-        />
-
-        <SelectGroup
-          label={<FormattedMessage id="addoffer396" defaultMessage="Buy" />}
-          tooltip={
-            <FormattedMessage
-              id="partial478"
-              defaultMessage="The amount you will receive after the exchange"
-            />
-          }
-          inputValueLink={linked.takerAmount}
-          selectedValue={takerAsset.value}
-          onSelect={this.selectTakerAsset}
-          id="takerAmount"
-          balance={takerWallet.balance}
-          currencies={takerList}
-          placeholder="0.00"
-        />
-
-        <div styleName="inputWrapper">
-          <FieldLabel>
-            <FormattedMessage id="expiresTime" defaultMessage="Expires time" />
-            <Tooltip id="expiresTimeTooltip">
-              <FormattedMessage id="expiresTimeNotice" defaultMessage="Good explanation" />
-            </Tooltip>
-          </FieldLabel>
-          <Input
-            pattern="0-9\."
-            onKeyDown={inputReplaceCommaWithDot}
-            valueLink={linked.expiresInMinutes}
-            withMargin
-          />
-        </div>
-
-        {needApprove ? (
-          <Button
-            disabled={blockApprove}
-            onClick={this.approve}
-            pending={isPending}
-            fullWidth
-            brand
-          >
-            <FormattedMessage
-              id="FormattedMessageIdApprove"
-              defaultMessage="Approve {token}"
-              values={{ token: makerAsset.name }}
-            />
-          </Button>
-        ) : (
-          <Button
-            disabled={blockCreation}
-            onClick={this.createRFQOrder}
-            pending={isPending}
-            fullWidth
-            brand
-          >
-            <FormattedMessage id="create" defaultMessage="Create" />
-          </Button>
-        )}
-      </Modal>
+      <ModalForm
+        modalName={name}
+        stateReference={linked}
+        availableCurrencies={currencies}
+        takerList={takerList}
+        makerAsset={makerAsset}
+        makerWallet={makerWallet}
+        takerAsset={takerAsset}
+        takerWallet={takerWallet}
+        blockApprove={blockApprove}
+        blockCreation={blockCreation}
+        isPending={isPending}
+        selectMakerAsset={this.selectMakerAsset}
+        checkMakerAllowance={this.checkMakerAllowance}
+        checkTakerAllowance={this.checkTakerAllowance}
+        needMakerApprove={needMakerApprove}
+        needTakerApprove={needTakerApprove}
+        selectTakerAsset={this.selectTakerAsset}
+        approve={this.approve}
+        createOrder={this.createRFQOrder}
+      />
     )
   }
 }
@@ -344,4 +330,4 @@ export default connect(({ currencies, user }) => ({
     onlyTokens: true,
   }),
   activeFiat: user.activeFiat,
-}))(CSSModules(LimitOrder, styles, { allowMultiple: true }))
+}))(LimitOrder)

@@ -25,7 +25,12 @@ import transactions from './transactions'
 
 import { migrate } from './migrations/'
 
-import { cacheStorageGet, cacheStorageSet } from './cache'
+import {
+  cacheStorageGet,
+  cacheStorageSet,
+  cacheStorageClear,
+  cacheStorageClearPart,
+} from './cache'
 import lsDataCache from './lsDataCache'
 
 import apiLooper from './apiLooper'
@@ -89,6 +94,8 @@ export {
   feedback,
   cacheStorageGet,
   cacheStorageSet,
+  cacheStorageClear,
+  cacheStorageClearPart,
 
   apiLooper,
 
