@@ -3,6 +3,7 @@ import { FormattedMessage } from 'react-intl'
 import CSSModules from 'react-css-modules'
 import styles from './index.scss'
 import exchangeStyles from '../index.scss'
+import actions from 'redux/actions'
 import { Button } from 'components/controls'
 
 function LimitOrders() {
@@ -20,7 +21,9 @@ function LimitOrders() {
 
       {showOrders && (
         <div>
-          <h2>Your limit orders here</h2>
+          <h3>
+            <FormattedMessage id="yourOrders" defaultMessage="Your orders" />
+          </h3>
         </div>
       )}
     </section>

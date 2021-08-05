@@ -1,4 +1,5 @@
 import { Component } from 'react'
+import { FormattedMessage } from 'react-intl'
 import { connect } from 'redaction'
 import { BigNumber } from 'bignumber.js'
 import erc20Like from 'common/erc20Like'
@@ -144,7 +145,7 @@ class LimitOrder extends Component<ComponentProps, ComponentState> {
     }))
 
     try {
-      const receipt = await actions.oneinch.createLimitOrder({
+      const response: any = await actions.oneinch.createLimitOrder({
         chainId: network.networkVersion,
         baseCurrency: makerWallet.baseCurrency.toLowerCase(),
         makerAddress: makerWallet.address,
@@ -155,64 +156,20 @@ class LimitOrder extends Component<ComponentProps, ComponentState> {
         makerAmount,
         takerAmount,
       })
-
-      console.log('receipt: ', JSON.stringify(receipt))
 
       this.decreaseAllowance(makerWallet, makerAmount)
       this.decreaseAllowance(takerWallet, takerAmount)
 
-      actions.modals.close(name)
-
-      /* actions.notifications.show(constants.notifications.Transaction, {
-        link: transactions.getLink(makerWallet.baseCurrency.toLowerCase(), receipt.transactionHash),
-        completed: true,
-      }) */
-    } catch (error) {
-      this.reportError(error)
-    } finally {
-      this.setState(() => ({
-        isPending: false,
-      }))
-    }
-  }
-
-  createRFQOrder = async () => {
-    const { name } = this.props
-    const {
-      network,
-      makerWallet,
-      takerWallet,
-      makerAmount,
-      takerAmount,
-      expiresInMinutes,
-    } = this.state
-
-    this.setState(() => ({
-      isPending: true,
-    }))
-
-    feedback.oneinch.createOrder(`${makerWallet.tokenKey} -> ${takerWallet.tokenKey}`)
-
-    try {
-      const receipt = await actions.oneinch.createRFQOrder({
-        chainId: network.networkVersion,
-        baseCurrency: makerWallet.baseCurrency.toLowerCase(),
-        makerAddress: makerWallet.address,
-        makerAssetAddress: makerWallet.contractAddress,
-        makerAssetDecimals: makerWallet.decimals,
-        takerAssetAddress: takerWallet.contractAddress,
-        takerAssetDecimals: takerWallet.decimals,
-        makerAmount,
-        takerAmount,
-        expirationTimeInMinutes: expiresInMinutes,
-      })
-
-      actions.modals.close(name)
-
-      actions.notifications.show(constants.notifications.Transaction, {
-        link: transactions.getLink(makerWallet.baseCurrency.toLowerCase(), receipt.transactionHash),
-        completed: true,
-      })
+      if (response && response.success) {
+        actions.modals.close(name)
+        actions.notifications.show(constants.notifications.Message, {
+          message: <FormattedMessage defaultMessage="You have successfully created the order" />,
+        })
+      } else {
+        actions.notifications.show(constants.notifications.Message, {
+          message: <FormattedMessage defaultMessage="Something went wrong. Try again later" />,
+        })
+      }
     } catch (error) {
       this.reportError(error)
     } finally {
@@ -304,19 +261,15 @@ class LimitOrder extends Component<ComponentProps, ComponentState> {
   }
 
   areWrongOrderParams = () => {
-    const { makerAmount, takerAmount, makerWallet, takerWallet } = this.state
+    const { makerAmount, takerAmount, makerWallet } = this.state
 
-    const isWrongAmount = (wallet, amount) => {
-      return (
-        new BigNumber(amount).isNaN() ||
-        new BigNumber(amount).isEqualTo(0) ||
-        new BigNumber(amount).isGreaterThan(wallet.balance)
-      )
+    const isWrongAmount = (amount) => {
+      return new BigNumber(amount).isNaN() || new BigNumber(amount).isEqualTo(0)
     }
 
     return (
-      isWrongAmount(makerWallet, makerAmount) ||
-      isWrongAmount(takerWallet, takerAmount) ||
+      isWrongAmount(makerAmount) ||
+      isWrongAmount(takerAmount) ||
       new BigNumber(makerWallet.balance).isLessThan(makerAmount)
     )
   }

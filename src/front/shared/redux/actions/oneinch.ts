@@ -1,5 +1,6 @@
 import { BigNumber } from 'bignumber.js'
 import TokenApi from 'human-standard-token-abi'
+import moment from 'moment'
 import {
   LimitOrderBuilder,
   LimitOrderProtocolFacade,
@@ -203,14 +204,16 @@ const createLimitOrder = async (params) => {
   const protocolFacade = new LimitOrderProtocolFacade(contractAddress, connector)
   const predicateBuilder = new LimitOrderPredicateBuilder(protocolFacade)
 
-  const { or, and, timestampBelow, nonceEquals, gt, lt, eq } = predicateBuilder
+  const { and, timestampBelow, nonceEquals } = predicateBuilder
+  
+  const makerNonce = await protocolFacade.nonce(contractAddress)
 
   const orderPredicate: LimitOrderPredicateCallData = and(
     // a limit order is valid only for 1 minute
-    timestampBelow(Math.round(Date.now() / 1000) + 60_000),
-    // a limit order is valid until the nonce of makerAddress is equal to 4
-    nonceEquals(makerAddress, 4)
+    timestampBelow(utils.getUnixTimeStamp() + 60_000),
+    nonceEquals(makerAddress, makerNonce)
   )
+
   const makerUnitAmount = utils.amount.formatWithDecimals(makerAmount, makerAssetDecimals)
   const takerUnitAmount = utils.amount.formatWithDecimals(takerAmount, takerAssetDecimals)
 
@@ -221,27 +224,11 @@ const createLimitOrder = async (params) => {
     makerAmount: makerUnitAmount,
     takerAmount: takerUnitAmount,
     predicate: orderPredicate,
-    //permit: '0x', // optional
-    //interaction: '0x', // optional
   })
+
   const orderTypedData = builder.buildLimitOrderTypedData(order)
   const orderHash = builder.buildLimitOrderHash(orderTypedData)
   const signature = await builder.buildOrderSignature(makerAddress, orderTypedData)
-  /*  const callData = protocolFacade.fillLimitOrder(
-    order,
-    signature,
-    makerUnitAmount,
-    '0', // one of the assets (it doesn't matter which one) must be zero
-    takerUnitAmount
-  ) */
-
-  const validOrder = await orderIsValid({
-    facade: protocolFacade,
-    contract: externalConfig.limitOrder[baseCurrency],
-    predicate: order.predicate,
-  })
-
-  console.log('validOrder: ', validOrder)
 
   return sendLimitOrder({
     chainId,
@@ -252,64 +239,15 @@ const createLimitOrder = async (params) => {
     makerAddress,
     signature,
   })
-
-  /* return await actions[baseCurrency].send({
-    to: contractAddress,
-    data: callData,
-    amount: 0,
-    waitReceipt: true,
-  }) */
-}
-
-const orderIsValid = async ({ facade, contract, predicate }) => {
-  const addresses = [contract]
-  const callDatas = [predicate]
-
-  try {
-    const result: boolean = await facade.simulateCalls(addresses, callDatas)
-
-    return result
-  } catch (error) {
-    console.error(error)
-
-    return false
-  }
 }
 
 const sendLimitOrder = async (params) => {
   const { chainId, order, orderHash, makerAmount, takerAmount, makerAddress, signature } = params
-  const milliseconds = utils.getUnixTimeStamp() * 1000
-  const createDateTime = new Date(milliseconds).toLocaleString()
-
-  return {
-    // isActive: true,
-    //chainId,
-    createDateTime: '2021-08-04T15:26:23.247Z',
-    data: {
-      getMakerAmount: order.getMakerAmount,
-      getTakerAmount: order.getTakerAmount,
-      interaction: order.interaction,
-      makerAsset: order.makerAsset,
-      makerAssetData: order.makerAssetData,
-      permit: order.permit,
-      predicate: order.predicate,
-      salt: order.salt,
-      takerAsset: order.takerAsset,
-      takerAssetData: order.takerAssetData,
-    },
-    orderHash,
-    makerAmount,
-    takerAmount,
-    orderMaker: makerAddress,
-    remainingMakerAmount: makerAmount,
-    signature,
-  }
+  const createDateTime = moment().toISOString()
 
   return await apiLooper.post('limitOrders', `/${chainId}/limit-order`, {
     body: {
-      // isActive: true,
-      createDateTime: '2021-08-04T15:13:57.227Z',
-      //chainId,
+      createDateTime,
       data: {
         getMakerAmount: order.getMakerAmount,
         getTakerAmount: order.getTakerAmount,
@@ -330,7 +268,9 @@ const sendLimitOrder = async (params) => {
       signature,
     },
     reportErrors: (error) => {
-      console.error('1inch limit order', error)
+      console.group('%c 1inch send limit order', 'color: red')
+      console.log(error)
+      console.groupEnd()
       return true
     },
   })
@@ -392,7 +332,7 @@ const createRFQOrder = async (params) => {
   })
 }
 
-const fetchLimitOrder = async (params) => {
+const fetchLimitOrders = async (params) => {
   const { chainId, owner } = params
 
   try {
@@ -431,6 +371,6 @@ export default {
   approveToken,
   createLimitOrder,
   createRFQOrder,
-  fetchLimitOrder,
+  fetchLimitOrders,
   fetchAllLimitOrders,
 }
