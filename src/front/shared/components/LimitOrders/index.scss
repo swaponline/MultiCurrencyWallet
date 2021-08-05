@@ -1,18 +1,18 @@
 .orderBookTable {
   @include ff-regular;
-  max-width: 48rem;
   width: 100%;
-  margin: 1em auto;
-  box-shadow: var(--box-shadow);
-  background: var(--color-background-elements);
-  border-radius: 6px;
 }
 
 .row {
+  @include ff-mono;
   color: var(--color-indicating);
 
   .number {
-    @include ff-mono;
     color: var(--color);
   }
+}
+
+.noOrdersMessage {
+  padding: 0.7rem 0;
+  color: var(--color-notice);
 }

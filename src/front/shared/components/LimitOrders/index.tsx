@@ -6,8 +6,10 @@ import styles from './index.scss'
 import { constants, transactions } from 'helpers'
 import actions from 'redux/actions'
 import { Button } from 'components/controls'
+import Panel from 'components/ui/Panel/Panel'
 import Table from 'components/tables/Table/Table'
 import tableStyles from 'components/tables/Table/Table.scss'
+import PanelHeader from './PanelHeader'
 import Row from './Row'
 
 const tableTitles = [
@@ -22,8 +24,8 @@ function LimitOrders(props) {
   const { orders, blockchains } = props
   const [showOrders, setShowOrders] = useState(false)
   const [displayedChainId, setDisplayedChainId] = useState(137)
-
-  //const makerWallet = actions.core.getWallet({currency: })
+  const baseCurrency = blockchains[displayedChainId].baseCurrency
+  // const makerWallet = actions.core.getWallet({currency: })
 
   const toggleOrdersViability = () => {
     setShowOrders(!showOrders)
@@ -31,7 +33,7 @@ function LimitOrders(props) {
 
   const cancelOrder = async (orderData) => {
     const receipt = await actions.oneinch.cancelLimitOrder({
-      baseCurrency: 'matic',
+      baseCurrency,
       orderData,
     })
 
@@ -48,8 +50,16 @@ function LimitOrders(props) {
         <FormattedMessage id="limitOrders" defaultMessage="Limit orders" />
       </Button>
 
-      {hasChainOrders ? (
-        <>
+      <Panel
+        header={
+          <PanelHeader
+            orders={orders}
+            chainId={displayedChainId}
+            changeChain={setDisplayedChainId}
+          />
+        }
+      >
+        {hasChainOrders ? (
           <Table
             id="limitOrdersTable"
             className={tableStyles.exchange}
@@ -61,14 +71,16 @@ function LimitOrders(props) {
                 order={order}
                 cancelOrder={cancelOrder}
                 chainId={displayedChainId}
-                baseCurrency={blockchains[displayedChainId].baseCurrency}
+                baseCurrency={baseCurrency}
               />
             )}
           />
-        </>
-      ) : (
-        <FormattedMessage id="noActiveOrders" defaultMessage="No active orders" />
-      )}
+        ) : (
+          <p styleName="noOrdersMessage">
+            <FormattedMessage id="noActiveOrders" defaultMessage="No active orders" />
+          </p>
+        )}
+      </Panel>
     </section>
   )
 }
