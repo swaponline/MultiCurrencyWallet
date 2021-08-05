@@ -24,28 +24,29 @@ function LimitOrders(props) {
   const { orders, blockchains } = props
   const [showOrders, setShowOrders] = useState(false)
   const [displayedChainId, setDisplayedChainId] = useState(137)
-  const baseCurrency = blockchains[displayedChainId].baseCurrency
-  // const makerWallet = actions.core.getWallet({currency: })
+  const baseCurrency = blockchains[displayedChainId].currency
 
   const toggleOrdersViability = () => {
     setShowOrders(!showOrders)
   }
 
-  const cancelOrder = async (orderData) => {
+  const cancelOrder = async (orderIndex, orderData, wallet) => {
     const receipt = await actions.oneinch.cancelLimitOrder({
-      baseCurrency,
+      baseCurrency: baseCurrency.toLowerCase(),
+      chainId: displayedChainId,
+      orderIndex,
       orderData,
     })
 
-    /* actions.notifications.show(constants.notifications.Transaction, {
-      link: transactions.getLink(fromWallet.standard, receipt.transactionHash),
-    }) */
+    actions.notifications.show(constants.notifications.Transaction, {
+      link: transactions.getLink(wallet.standard, receipt.transactionHash),
+    })
   }
 
   const hasChainOrders = orders[displayedChainId]?.length
 
   return (
-    <section styleName="">
+    <section>
       <Button id="orderbookBtn" onClick={toggleOrdersViability} link>
         <FormattedMessage id="limitOrders" defaultMessage="Limit orders" />
       </Button>
@@ -66,9 +67,10 @@ function LimitOrders(props) {
             styleName="orderBookTable"
             titles={tableTitles}
             rows={orders[displayedChainId]}
-            rowRender={(order) => (
+            rowRender={(order, index) => (
               <Row
                 order={order}
+                orderIndex={index}
                 cancelOrder={cancelOrder}
                 chainId={displayedChainId}
                 baseCurrency={baseCurrency}

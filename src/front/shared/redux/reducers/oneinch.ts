@@ -1,3 +1,5 @@
+import config from 'app-config'
+
 export type OrderData = {
   makerAsset: string
   takerAsset: string
@@ -51,11 +53,16 @@ interface State {
   }
 }
 
-const blockchains = {
-  '1': { baseCurrency: 'ETH' },
-  '56': { baseCurrency: 'BNB' },
-  '137': { baseCurrency: 'MATIC' },
-}
+const blockchains = {}
+const allowedCurrency = ['ETH', 'BNB', 'MATIC']
+
+Object.keys(config.evmNetworks)
+  .filter((currency) => allowedCurrency.includes(currency))
+  .forEach((currency) => {
+    const chainId = config.evmNetworks[currency].networkVersion
+
+    blockchains[chainId] = config.evmNetworks[currency]
+  })
 
 export const initialState: State = {
   blockchains,
@@ -95,6 +102,24 @@ export const addOrders = (state, { chainId, orders }) => {
   }
 
   ordersByChain.push(...orders)
+
+  return {
+    ...state,
+    orders: {
+      ...state.orders,
+      [chainId]: ordersByChain,
+    },
+  }
+}
+
+export const removeOrder = (state, { chainId, index }) => {
+  const ordersByChain: Order[] = []
+
+  if (state.orders[chainId]) {
+    ordersByChain.push(...state.orders[chainId])
+  }
+
+  ordersByChain.splice(index, 1)
 
   return {
     ...state,

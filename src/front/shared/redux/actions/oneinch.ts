@@ -334,19 +334,32 @@ const sendLimitOrder = async (params) => {
 } */
 
 const cancelLimitOrder = async (params) => {
-  const { baseCurrency, orderData } = params
+  const { chainId, baseCurrency, orderData, orderIndex } = params
   const { user } = getState()
+
   const owner = metamask.isConnected() ? metamask.getAddress() : user[`${baseCurrency}Data`].address
+
   const contractAddress = externalConfig.limitOrder[baseCurrency]
   const connector = getWeb3Connector(baseCurrency, owner)
   const protocolFacade = new LimitOrderProtocolFacade(contractAddress, connector)
   const callData = protocolFacade.cancelLimitOrder(orderData)
 
-  return await actions[baseCurrency].send({
+  const receipt = await actions[baseCurrency].send({
+    waitReceipt: true,
     to: contractAddress,
     data: callData,
     amount: 0,
   })
+
+  removeLimitOrderFromState({ chainId, orderIndex })
+
+  return receipt
+}
+
+const removeLimitOrderFromState = (params) => {
+  const { chainId, orderIndex } = params
+
+  reducers.oneinch.removeOrder({ chainId, index: orderIndex })
 }
 
 const fetchLatestLimitOrder = async (params) => {
@@ -394,7 +407,7 @@ const fetchUserOrders = async () => {
   const { user, oneinch } = getState()
 
   Object.keys(oneinch.blockchains).forEach(async (chainId) => {
-    const currency = oneinch.blockchains[chainId].baseCurrency.toLowerCase()
+    const currency = oneinch.blockchains[chainId].currency.toLowerCase()
     const owner = metamask.isConnected() ? metamask.getAddress() : user[`${currency}Data`].address
 
     await fetchLimitOrders({ chainId, owner })
@@ -427,6 +440,7 @@ export default {
   createLimitOrder,
   //createRFQOrder,
   cancelLimitOrder,
+  removeLimitOrderFromState,
   fetchLatestLimitOrder,
   fetchLimitOrders,
   fetchUserOrders,

@@ -3,16 +3,14 @@ import BigNumber from 'bignumber.js'
 import CSSModules from 'react-css-modules'
 import styles from './index.scss'
 import utils from 'common/utils'
+import actions from 'redux/actions'
 import Coins from 'components/Coins/Coins'
 import { RemoveButton } from 'components/controls'
 
-window.BigNumber = BigNumber
-
 function Row(props) {
-  const { tokens, order, cancelOrder, chainId, baseCurrency } = props
+  const { tokens, order, orderIndex, cancelOrder, chainId, baseCurrency } = props
   const { data, makerRate, makerAmount: makerUnitAmount, takerAmount: takerUnitAmount } = order
 
-  const cancel = () => cancelOrder(data)
   const getAsset = (contract) => tokens[chainId][contract]
   const getAssetName = (asset) => `{${baseCurrency}}${asset.symbol}`.toUpperCase()
 
@@ -20,8 +18,12 @@ function Row(props) {
   const takerAsset = getAsset(data.takerAsset)
 
   const makerAssetName = getAssetName(makerAsset)
+  const makerWallet = actions.core.getWallet({ currency: makerAssetName })
   const takerAssetName = getAssetName(takerAsset)
+
   const coinNames = [makerAssetName, takerAssetName]
+
+  const cancel = () => cancelOrder(orderIndex, data, makerWallet)
 
   // formatting via BigNumber remove not important decimals
   const makerAmount = new BigNumber(
