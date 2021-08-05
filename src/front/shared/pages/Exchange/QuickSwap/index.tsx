@@ -14,7 +14,7 @@ import Button from 'components/controls/Button/Button'
 import ExchangeForm from './ExchangeForm'
 import AdvancedSettings from './AdvancedSettings'
 import SwapInfo from './SwapInfo'
-import LimitOrders from './LimitOrders'
+import LimitOrders from 'components/LimitOrders'
 
 // TODO: UI: adapt for mobile resolution
 

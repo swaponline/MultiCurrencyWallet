@@ -277,7 +277,7 @@ const sendLimitOrder = async (params) => {
   })
 }
 
-const createRFQOrder = async (params) => {
+/* const createRFQOrder = async (params) => {
   const {
     chainId,
     baseCurrency,
@@ -331,6 +331,22 @@ const createRFQOrder = async (params) => {
     amount: 0,
     waitReceipt: true,
   })
+} */
+
+const cancelLimitOrder = async (params) => {
+  const { baseCurrency, orderData } = params
+  const { user } = getState()
+  const owner = metamask.isConnected() ? metamask.getAddress() : user[`${baseCurrency}Data`].address
+  const contractAddress = externalConfig.limitOrder[baseCurrency]
+  const connector = getWeb3Connector(baseCurrency, owner)
+  const protocolFacade = new LimitOrderProtocolFacade(contractAddress, connector)
+  const callData = protocolFacade.cancelLimitOrder(orderData)
+
+  return await actions[baseCurrency].send({
+    to: contractAddress,
+    data: callData,
+    amount: 0,
+  })
 }
 
 const fetchLimitOrders = async (params) => {
@@ -348,18 +364,19 @@ const fetchLimitOrders = async (params) => {
 }
 
 const fetchUserOrders = async () => {
+  // FIXME: find the better way to save available 1inch chains (save in the state ?)
   const availableCurrencies = ['eth', 'bnb', 'matic']
 
-  availableCurrencies.forEach(async (currencies) => {
+  availableCurrencies.forEach(async (currency) => {
     const { user } = getState()
-    const owner = metamask.isConnected() ? metamask.getAddress() : user[`${currencies}Data`].address
-    const chainId = externalConfig.evmNetworks[currencies.toUpperCase()].networkVersion
+    const owner = metamask.isConnected() ? metamask.getAddress() : user[`${currency}Data`].address
+    const chainId = externalConfig.evmNetworks[currency.toUpperCase()].networkVersion
 
     await fetchLimitOrders({ chainId, owner })
   })
 }
 
-const fetchAllLimitOrders = async (params) => {
+/* const fetchAllLimitOrders = async (params) => {
   const { chainId } = params
 
   try {
@@ -371,7 +388,7 @@ const fetchAllLimitOrders = async (params) => {
 
     return []
   }
-}
+} */
 
 export default {
   serviceIsAvailable,
@@ -383,8 +400,9 @@ export default {
   fetchTokenAllowance,
   approveToken,
   createLimitOrder,
-  createRFQOrder,
+  //createRFQOrder,
+  cancelLimitOrder,
   fetchLimitOrders,
   fetchUserOrders,
-  fetchAllLimitOrders,
+  //fetchAllLimitOrders,
 }
