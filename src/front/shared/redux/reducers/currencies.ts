@@ -258,7 +258,6 @@ const initialState = {
   ],
   addSelectedItems: [],
   addPartialItems: [],
-  oneinch: {},
 }
 
 
@@ -469,23 +468,10 @@ const deletedPartialCurrency = (state, payload) => ({
   partialItems: state.partialItems.filter(item => item.name !== payload),
 })
 
-const add1inchTokens = (state, payload) => {
-  const { chainId, tokens } = payload
-
-  return {
-    ...state,
-    oneinch: {
-      ...state.oneinch,
-      [chainId]: tokens,
-    }
-  }
-}
-
 export {
   initialState,
   addSelectedItems,
   addPartialItems,
   updatePartialItems,
   deletedPartialCurrency,
-  add1inchTokens,
 }

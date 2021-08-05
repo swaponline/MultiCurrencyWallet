@@ -3,6 +3,7 @@ import { FormattedMessage } from 'react-intl'
 import CSSModules from 'react-css-modules'
 import styles from './index.scss'
 import exchangeStyles from '../index.scss'
+import { constants } from 'helpers'
 import actions from 'redux/actions'
 import { Button } from 'components/controls'
 

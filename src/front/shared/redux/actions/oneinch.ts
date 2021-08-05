@@ -13,6 +13,7 @@ import { COIN_MODEL, COIN_DATA } from 'swap.app/constants/COINS'
 import getCoinInfo from 'common/coins/getCoinInfo'
 import utils from 'common/utils'
 import { apiLooper, externalConfig, metamask } from 'helpers'
+import { getState } from 'redux/core'
 import actions from 'redux/actions'
 import reducers from 'redux/core/reducers'
 
@@ -51,7 +52,7 @@ const fetchTokensByChain = async (params) => {
 const addTokens = (params) => {
   const { chainId, tokens } = params
 
-  reducers.currencies.add1inchTokens({
+  reducers.oneinch.addTokens({
     chainId,
     tokens,
   })
@@ -205,7 +206,7 @@ const createLimitOrder = async (params) => {
   const predicateBuilder = new LimitOrderPredicateBuilder(protocolFacade)
 
   const { and, timestampBelow, nonceEquals } = predicateBuilder
-  
+
   const makerNonce = await protocolFacade.nonce(contractAddress)
 
   const orderPredicate: LimitOrderPredicateCallData = and(
@@ -336,14 +337,26 @@ const fetchLimitOrders = async (params) => {
   const { chainId, owner } = params
 
   try {
-    return await apiLooper.get('limitOrders', `/${chainId}/limit-order/address/${owner}`)
+    const orders = await apiLooper.get('limitOrders', `/${chainId}/limit-order/address/${owner}`)
+
+    reducers.oneinch.addOrders({ chainId, orders })
   } catch (error) {
     console.group('%c 1inch fetch limit order', 'color: red')
     console.log(error)
     console.groupEnd()
-
-    return []
   }
+}
+
+const fetchUserOrders = async () => {
+  const availableCurrencies = ['eth', 'bnb', 'matic']
+
+  availableCurrencies.forEach(async (currencies) => {
+    const { user } = getState()
+    const owner = metamask.isConnected() ? metamask.getAddress() : user[`${currencies}Data`].address
+    const chainId = externalConfig.evmNetworks[currencies.toUpperCase()].networkVersion
+
+    await fetchLimitOrders({ chainId, owner })
+  })
 }
 
 const fetchAllLimitOrders = async (params) => {
@@ -372,5 +385,6 @@ export default {
   createLimitOrder,
   createRFQOrder,
   fetchLimitOrders,
+  fetchUserOrders,
   fetchAllLimitOrders,
 }

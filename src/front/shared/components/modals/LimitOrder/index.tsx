@@ -163,11 +163,21 @@ class LimitOrder extends Component<ComponentProps, ComponentState> {
       if (response && response.success) {
         actions.modals.close(name)
         actions.notifications.show(constants.notifications.Message, {
-          message: <FormattedMessage defaultMessage="You have successfully created the order" />,
+          message: (
+            <FormattedMessage
+              id="limitOrderCreated"
+              defaultMessage="You have successfully created the order"
+            />
+          ),
         })
       } else {
         actions.notifications.show(constants.notifications.Message, {
-          message: <FormattedMessage defaultMessage="Something went wrong. Try again later" />,
+          message: (
+            <FormattedMessage
+              id="limitOrderIsNotCreated"
+              defaultMessage="Something went wrong. Try again later"
+            />
+          ),
         })
       }
     } catch (error) {
@@ -320,11 +330,11 @@ class LimitOrder extends Component<ComponentProps, ComponentState> {
   }
 }
 
-export default connect(({ currencies, user }) => ({
+export default connect(({ currencies, oneinch, user }) => ({
   currencies: actions.oneinch.filterCurrencies({
     currencies: currencies.items,
     tokensWallets: user.tokensData,
-    oneinchTokens: currencies.oneinch,
+    oneinchTokens: oneinch.tokens,
     onlyTokens: true,
   }),
   activeFiat: user.activeFiat,
