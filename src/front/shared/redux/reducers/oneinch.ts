@@ -27,6 +27,12 @@ export type Order = {
 }
 
 interface State {
+  blockchains: {
+    // chain id
+    [k: string]: {
+      baseCurrency: string
+    }
+  }
   tokens: {
     // chain id
     [k: string]: {
@@ -45,7 +51,14 @@ interface State {
   }
 }
 
+const blockchains = {
+  '1': { baseCurrency: 'ETH' },
+  '56': { baseCurrency: 'BNB' },
+  '137': { baseCurrency: 'MATIC' },
+}
+
 export const initialState: State = {
+  blockchains,
   tokens: {},
   orders: {},
 }
@@ -62,7 +75,7 @@ export const addTokens = (state, payload) => {
   }
 }
 
-/* export const addOrder = (state, { chainId, order }) => {
+export const addOrder = (state, { chainId, order }) => {
   const orders = {
     ...state.orders,
     [chainId]: [...state.orders[chainId], order],
@@ -72,7 +85,7 @@ export const addTokens = (state, payload) => {
     ...state,
     orders,
   }
-} */
+}
 
 export const addOrders = (state, { chainId, orders }) => {
   const ordersByChain: Order[] = []

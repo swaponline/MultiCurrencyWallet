@@ -19,7 +19,7 @@ const tableTitles = [
 ]
 
 function LimitOrders(props) {
-  const { orders } = props
+  const { orders, blockchains } = props
   const [showOrders, setShowOrders] = useState(false)
   const [displayedChainId, setDisplayedChainId] = useState(137)
 
@@ -57,7 +57,12 @@ function LimitOrders(props) {
             titles={tableTitles}
             rows={orders[displayedChainId]}
             rowRender={(order) => (
-              <Row order={order} cancelOrder={cancelOrder} chainId={displayedChainId} />
+              <Row
+                order={order}
+                cancelOrder={cancelOrder}
+                chainId={displayedChainId}
+                baseCurrency={blockchains[displayedChainId].baseCurrency}
+              />
             )}
           />
         </>
@@ -70,4 +75,5 @@ function LimitOrders(props) {
 
 export default connect(({ oneinch }) => ({
   orders: oneinch.orders,
+  blockchains: oneinch.blockchains,
 }))(CSSModules(LimitOrders, styles, { allowMultiple: true }))

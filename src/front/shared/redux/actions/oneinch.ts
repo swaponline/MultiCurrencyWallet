@@ -349,11 +349,38 @@ const cancelLimitOrder = async (params) => {
   })
 }
 
+const fetchLatestLimitOrder = async (params) => {
+  const { chainId, owner } = params
+  const { oneinch } = getState()
+
+  try {
+    const orders: any = await apiLooper.get(
+      'limitOrders',
+      `/${chainId}/limit-order/address/${owner}?limit=1&sortBy=createDateTime`
+    )
+
+    const penultimateOrder = oneinch.orders[chainId][0]
+
+    // let's compare the last known order with new one
+    // to be sure that we fetched a really new order
+    if (penultimateOrder.signature.toLowerCase() !== orders[0].signature.toLowerCase()) {
+      reducers.oneinch.addOrder({ chainId, order: orders[0] })
+    }
+  } catch (error) {
+    console.group('%c 1inch fetch latest order', 'color: red')
+    console.log(error)
+    console.groupEnd()
+  }
+}
+
 const fetchLimitOrders = async (params) => {
   const { chainId, owner } = params
 
   try {
-    const orders = await apiLooper.get('limitOrders', `/${chainId}/limit-order/address/${owner}`)
+    const orders = await apiLooper.get(
+      'limitOrders',
+      `/${chainId}/limit-order/address/${owner}?sortBy=createDateTime`
+    )
 
     reducers.oneinch.addOrders({ chainId, orders })
   } catch (error) {
@@ -364,13 +391,11 @@ const fetchLimitOrders = async (params) => {
 }
 
 const fetchUserOrders = async () => {
-  // FIXME: find the better way to save available 1inch chains (save in the state ?)
-  const availableCurrencies = ['eth', 'bnb', 'matic']
+  const { user, oneinch } = getState()
 
-  availableCurrencies.forEach(async (currency) => {
-    const { user } = getState()
+  Object.keys(oneinch.blockchains).forEach(async (chainId) => {
+    const currency = oneinch.blockchains[chainId].baseCurrency.toLowerCase()
     const owner = metamask.isConnected() ? metamask.getAddress() : user[`${currency}Data`].address
-    const chainId = externalConfig.evmNetworks[currency.toUpperCase()].networkVersion
 
     await fetchLimitOrders({ chainId, owner })
   })
@@ -402,6 +427,7 @@ export default {
   createLimitOrder,
   //createRFQOrder,
   cancelLimitOrder,
+  fetchLatestLimitOrder,
   fetchLimitOrders,
   fetchUserOrders,
   //fetchAllLimitOrders,

@@ -10,7 +10,6 @@ import {
   transactions,
   cacheStorageGet,
   cacheStorageSet,
-  cacheStorageClear,
 } from 'helpers'
 import actions from 'redux/actions'
 import Link from 'local_modules/sw-valuelink'
@@ -112,14 +111,14 @@ class LimitOrder extends Component<ComponentProps, ComponentState> {
     }))
 
     try {
-      const receipt = await actions[wallet.standard].approve({
+      const hash = await actions[wallet.standard].approve({
         to: externalConfig.limitOrder[wallet.baseCurrency.toLowerCase()],
         name: wallet.tokenKey,
         amount,
       })
 
       actions.notifications.show(constants.notifications.Transaction, {
-        link: transactions.getLink(wallet.baseCurrency.toLowerCase(), receipt.transactionHash),
+        link: transactions.getLink(wallet.baseCurrency.toLowerCase(), hash),
         completed: true,
       })
 
@@ -161,6 +160,11 @@ class LimitOrder extends Component<ComponentProps, ComponentState> {
       this.decreaseAllowance(takerWallet, takerAmount)
 
       if (response && response.success) {
+        await actions.oneinch.fetchLatestLimitOrder({
+          chainId: network.networkVersion,
+          owner: makerWallet.address,
+        })
+
         actions.modals.close(name)
         actions.notifications.show(constants.notifications.Message, {
           message: (

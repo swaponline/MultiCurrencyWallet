@@ -6,10 +6,8 @@ import Coins from 'components/Coins/Coins'
 import { RemoveButton } from 'components/controls'
 
 function Row(props) {
-  const { tokens, order, cancelOrder, chainId } = props
+  const { tokens, order, cancelOrder, chainId, baseCurrency } = props
   const { data, makerAmount: makerUnitAmount, takerAmount: takerUnitAmount } = order
-
-  const baseCurrency = 'matic'
 
   const cancel = () => cancelOrder(data)
   const getAsset = (contract) => tokens[chainId][contract]
