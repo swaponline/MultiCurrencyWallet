@@ -10,6 +10,14 @@
   .number {
     color: var(--color);
   }
+
+  &.mobile {
+    font-size: 0.9em;
+
+    .rate {
+      display: none;
+    }
+  }
 }
 
 .noOrdersMessage {

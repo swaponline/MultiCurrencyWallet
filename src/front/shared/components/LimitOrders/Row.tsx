@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import { connect } from 'redaction'
 import BigNumber from 'bignumber.js'
 import CSSModules from 'react-css-modules'
@@ -7,9 +8,40 @@ import actions from 'redux/actions'
 import Coins from 'components/Coins/Coins'
 import { RemoveButton } from 'components/controls'
 
+function debounce(callback, ms) {
+  let timer
+
+  return () => {
+    clearTimeout(timer)
+
+    timer = setTimeout(() => {
+      timer = null
+      callback.apply(this, arguments)
+    }, ms)
+  }
+}
+
 function Row(props) {
   const { tokens, order, orderIndex, cancelOrder, chainId, baseCurrency } = props
   const { data, makerRate, makerAmount: makerUnitAmount, takerAmount: takerUnitAmount } = order
+
+  const [dimensions, setDimensions] = useState({
+    width: window.innerWidth,
+  })
+
+  useEffect(() => {
+    const debouncedHandleResize = debounce(() => {
+      setDimensions({
+        width: window.innerWidth,
+      })
+    }, 500)
+
+    window.addEventListener('resize', debouncedHandleResize)
+
+    return () => {
+      window.removeEventListener('resize', debouncedHandleResize)
+    }
+  })
 
   const getAsset = (contract) => tokens[chainId][contract]
   const getAssetName = (asset) => `{${baseCurrency}}${asset.symbol}`.toUpperCase()
@@ -44,10 +76,13 @@ function Row(props) {
 
   const formatedMakerRate = new BigNumber(makerRate).dp(8).toString()
 
+  const mobileRangeWidth = 650 // px
+  const mobileResolution = dimensions.width < mobileRangeWidth
+
   return (
-    <tr styleName="row">
+    <tr styleName={`row ${mobileResolution ? 'mobile' : ''}`}>
       <td>
-        <Coins names={coinNames} size={25} />
+        <Coins names={coinNames} size={mobileResolution ? 20 : 25} />
       </td>
       <td>
         <span styleName="number">{makerAmount}</span> {makerAsset.symbol}
@@ -55,7 +90,7 @@ function Row(props) {
       <td>
         <span styleName="number">{takerAmount}</span> {takerAsset.symbol}
       </td>
-      <td>
+      <td styleName="rate">
         <span styleName="number">{formatedMakerRate}</span> {makerAsset.symbol}/{takerAsset.symbol}
       </td>
       <td>
