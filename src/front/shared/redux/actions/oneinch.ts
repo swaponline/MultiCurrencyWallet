@@ -367,7 +367,7 @@ const fetchLatestLimitOrder = async (params) => {
   const { oneinch } = getState()
 
   try {
-    const orders: any = await apiLooper.get(
+    const fetchedOrders: any = await apiLooper.get(
       'limitOrders',
       `/${chainId}/limit-order/address/${owner}?limit=1&sortBy=createDateTime`
     )
@@ -376,8 +376,11 @@ const fetchLatestLimitOrder = async (params) => {
 
     // let's compare the last known order with new one
     // to be sure that we fetched a really new order
-    if (penultimateOrder.signature.toLowerCase() !== orders[0].signature.toLowerCase()) {
-      reducers.oneinch.addOrder({ chainId, order: orders[0] })
+    const newOrderFetched =
+      penultimateOrder?.signature?.toLowerCase() !== fetchedOrders[0].signature.toLowerCase()
+
+    if (newOrderFetched) {
+      reducers.oneinch.addOrder({ chainId, order: fetchedOrders[0] })
     }
   } catch (error) {
     console.group('%c 1inch fetch latest order', 'color: red')

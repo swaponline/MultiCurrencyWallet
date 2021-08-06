@@ -23,7 +23,15 @@ function Row(props) {
 
   const coinNames = [makerAssetName, takerAssetName]
 
-  const cancel = () => cancelOrder(orderIndex, data, makerWallet)
+  const cancel = () => {
+    cancelOrder({
+      makerAsset,
+      takerAsset,
+      orderIndex,
+      order,
+      makerWallet,
+    })
+  }
 
   // formatting via BigNumber remove not important decimals
   const makerAmount = new BigNumber(

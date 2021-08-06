@@ -29,7 +29,6 @@ type ComponentState = {
   takerAsset: IUniversalObj
   makerAmount: string
   takerAmount: string
-  expiresInMinutes: number
   isPending: boolean
   needMakerApprove: boolean
   needTakerApprove: boolean
@@ -60,7 +59,6 @@ class LimitOrder extends Component<ComponentProps, ComponentState> {
       needMakerApprove: false,
       takerAmount: '',
       needTakerApprove: false,
-      expiresInMinutes: 30,
       isPending: false,
     }
   }
@@ -301,7 +299,7 @@ class LimitOrder extends Component<ComponentProps, ComponentState> {
       needTakerApprove,
     } = this.state
 
-    const linked = Link.all(this, 'makerAmount', 'takerAmount', 'expiresInMinutes')
+    const linked = Link.all(this, 'makerAmount', 'takerAmount')
     const blockCreation = this.areWrongOrderParams() || isPending
 
     // TODO: how to calculate the tx cost for token approvement ?

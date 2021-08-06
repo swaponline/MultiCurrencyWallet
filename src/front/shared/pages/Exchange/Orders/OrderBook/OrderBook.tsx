@@ -143,7 +143,6 @@ class OrderBook extends Component<OrderBookProps, OrderBookState> {
   }
 
   removeOrder = (orderId) => {
-    //@ts-ignore: strictNullChecks
     actions.modals.open(constants.modals.Confirm, {
       onAccept: () => {
         feedback.offers.deleted()

@@ -66,6 +66,7 @@ class QuickSwap extends PureComponent<unknown, ComponentState> {
       gasPrice: '',
       gasLimit: '',
       destReceiver: '',
+      showOrders: false,
     }
   }
 
@@ -543,6 +544,12 @@ class QuickSwap extends PureComponent<unknown, ComponentState> {
     actions.modals.open(constants.modals.LimitOrder)
   }
 
+  toggleOrdersViability = () => {
+    this.setState((state) => ({
+      showOrders: !state.showOrders,
+    }))
+  }
+
   render() {
     const {
       currencies,
@@ -562,6 +569,7 @@ class QuickSwap extends PureComponent<unknown, ComponentState> {
       swapData,
       swapFee,
       isAdvancedMode,
+      showOrders,
     } = this.state
 
     const linked = Link.all(
@@ -649,7 +657,11 @@ class QuickSwap extends PureComponent<unknown, ComponentState> {
           </Button>
         </section>
 
-        <LimitOrders />
+        <Button id="orderbookBtn" onClick={this.toggleOrdersViability} link>
+          <FormattedMessage id="limitOrders" defaultMessage="Limit orders" />
+        </Button>
+
+        {showOrders && <LimitOrders />}
       </>
     )
   }

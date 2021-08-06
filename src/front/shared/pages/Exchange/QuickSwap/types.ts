@@ -69,6 +69,7 @@ export type ComponentState = {
   gasPrice: string
   gasLimit: string
   destReceiver: string
+  showOrders: boolean
 }
 
 export enum Direction {

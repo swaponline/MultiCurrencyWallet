@@ -3,9 +3,8 @@ import { FormattedMessage } from 'react-intl'
 import { connect } from 'redaction'
 import CSSModules from 'react-css-modules'
 import styles from './index.scss'
-import { constants, transactions } from 'helpers'
+import { constants, transactions, feedback } from 'helpers'
 import actions from 'redux/actions'
-import { Button } from 'components/controls'
 import Panel from 'components/ui/Panel/Panel'
 import Table from 'components/tables/Table/Table'
 import tableStyles from 'components/tables/Table/Table.scss'
@@ -22,68 +21,68 @@ const tableTitles = [
 
 function LimitOrders(props) {
   const { orders, blockchains } = props
-  const [showOrders, setShowOrders] = useState(false)
-  const [displayedChainId, setDisplayedChainId] = useState(137)
+  const chainsArr: IUniversalObj[] = Object.values(blockchains)
+
+  const [displayedChainId, setDisplayedChainId] = useState(chainsArr[0]?.networkVersion)
   const baseCurrency = blockchains[displayedChainId].currency
 
-  const toggleOrdersViability = () => {
-    setShowOrders(!showOrders)
-  }
+  const cancelOrder = async (params) => {
+    const { orderIndex, order, makerWallet, makerAsset, takerAsset } = params
 
-  const cancelOrder = async (orderIndex, orderData, wallet) => {
-    const receipt = await actions.oneinch.cancelLimitOrder({
-      baseCurrency: baseCurrency.toLowerCase(),
-      chainId: displayedChainId,
-      orderIndex,
-      orderData,
-    })
+    actions.modals.open(constants.modals.Confirm, {
+      onAccept: async () => {
+        const receipt = await actions.oneinch.cancelLimitOrder({
+          baseCurrency: baseCurrency.toLowerCase(),
+          chainId: displayedChainId,
+          orderIndex,
+          orderData: order.data,
+        })
 
-    actions.notifications.show(constants.notifications.Transaction, {
-      link: transactions.getLink(wallet.standard, receipt.transactionHash),
+        feedback.oneinch.cancelOrder(`${makerAsset.name} -> ${takerAsset.name}`)
+        actions.notifications.show(constants.notifications.Transaction, {
+          link: transactions.getLink(makerWallet.standard, receipt.transactionHash),
+        })
+      },
+      message: (
+        <FormattedMessage
+          id="orders94s"
+          defaultMessage="Are you sure you want to delete the order?"
+        />
+      ),
     })
   }
 
   const hasChainOrders = orders[displayedChainId]?.length
 
   return (
-    <section>
-      <Button id="orderbookBtn" onClick={toggleOrdersViability} link>
-        <FormattedMessage id="limitOrders" defaultMessage="Limit orders" />
-      </Button>
-
-      <Panel
-        header={
-          <PanelHeader
-            orders={orders}
-            chainId={displayedChainId}
-            changeChain={setDisplayedChainId}
-          />
-        }
-      >
-        {hasChainOrders ? (
-          <Table
-            id="limitOrdersTable"
-            className={tableStyles.exchange}
-            styleName="orderBookTable"
-            titles={tableTitles}
-            rows={orders[displayedChainId]}
-            rowRender={(order, index) => (
-              <Row
-                order={order}
-                orderIndex={index}
-                cancelOrder={cancelOrder}
-                chainId={displayedChainId}
-                baseCurrency={baseCurrency}
-              />
-            )}
-          />
-        ) : (
-          <p styleName="noOrdersMessage">
-            <FormattedMessage id="noActiveOrders" defaultMessage="No active orders" />
-          </p>
-        )}
-      </Panel>
-    </section>
+    <Panel
+      header={
+        <PanelHeader orders={orders} chainId={displayedChainId} changeChain={setDisplayedChainId} />
+      }
+    >
+      {hasChainOrders ? (
+        <Table
+          id="limitOrdersTable"
+          className={tableStyles.exchange}
+          styleName="orderBookTable"
+          titles={tableTitles}
+          rows={orders[displayedChainId]}
+          rowRender={(order, index) => (
+            <Row
+              order={order}
+              orderIndex={index}
+              cancelOrder={cancelOrder}
+              chainId={displayedChainId}
+              baseCurrency={baseCurrency}
+            />
+          )}
+        />
+      ) : (
+        <p styleName="noOrdersMessage">
+          <FormattedMessage id="noActiveOrders" defaultMessage="No active orders" />
+        </p>
+      )}
+    </Panel>
   )
 }
 

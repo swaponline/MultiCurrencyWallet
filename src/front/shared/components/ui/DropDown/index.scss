@@ -68,6 +68,22 @@
   }
 }
 
+.simplestDropdown {
+  display: flex;
+
+  .select {
+    box-shadow: var(--box-shadow);
+  }
+
+  &.active {
+    border: none;
+
+    .selectedItem {
+      height: auto;
+    }
+  }
+}
+
 .smallTooltip,
 .dropDownLabel {
   color: var(--color);

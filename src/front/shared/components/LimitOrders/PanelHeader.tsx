@@ -4,22 +4,29 @@ import { connect } from 'redaction'
 import CSSModules from 'react-css-modules'
 import styles from './index.scss'
 import dropDownStyles from 'components/ui/DropDown/index.scss'
-import DropDown from 'shared/components/ui/DropDown'
+import DropDown from 'components/ui/DropDown'
+
+const renderChainName = (item) => {
+  const lastIndex = item.chainName.lastIndexOf(' ')
+
+  return item.chainName.substring(0, lastIndex)
+}
 
 function PanelHeader(props) {
   const { orders, chainId, changeChain, blockchains } = props
-  const dropDownItems: IUniversalObj[] = Object.values(blockchains)
+  const dropDownItems: IUniversalObj[] = Object.values(blockchains).map((item: any) => {
+    // in the DropDown we compare the "value" key for correct selected item rendering
+    // let's add this key
+    item.value = renderChainName(item)
+
+    return item
+  })
+
   const [chainItem, setChainItem] = useState(blockchains[chainId])
 
   const onSelect = (item) => {
     changeChain(item.chainId)
     setChainItem(item)
-  }
-
-  const renderChainName = (item) => {
-    const lastIndex = item.chainName.lastIndexOf(' ')
-
-    return item.chainName.substring(0, lastIndex)
   }
 
   return (
@@ -28,15 +35,14 @@ function PanelHeader(props) {
         <FormattedMessage id="yourOrders" defaultMessage="Your orders" />{' '}
         <span>{`(${orders[chainId] ? orders[chainId].length : 0})`}</span>
       </h3>
-      <div styleName="dropDownWrapper">
-        <DropDown
-          className={dropDownStyles.simpleDropdown}
-          items={dropDownItems}
-          selectedValue={chainItem.chainName}
-          itemRender={renderChainName}
-          onSelect={onSelect}
-        />
-      </div>
+      <DropDown
+        className={dropDownStyles.simplestDropdown}
+        items={dropDownItems}
+        selectedValue={renderChainName(chainItem)}
+        itemRender={renderChainName}
+        selectedItemRender={renderChainName}
+        onSelect={onSelect}
+      />
     </>
   )
 }
