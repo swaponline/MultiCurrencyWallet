@@ -75,11 +75,21 @@
     box-shadow: var(--box-shadow);
   }
 
+  .dropDownItem {
+    height: 2.5em;
+    padding-left: 2em;
+    line-height: 2.5em;
+  }
+
+  .selectedItem {
+    height: 57px;
+  }
+
   &.active {
-    border: none;
+    border-color: transparent;
 
     .selectedItem {
-      height: auto;
+      height: 57px;
     }
   }
 }
@@ -217,7 +227,7 @@
   max-height: 160px;
   background-color: var(--color-background-elements);
   position: absolute;
-  right: -1;
+  right: -1px;
   top: 0;
   overflow-x: hidden;
   overflow-y: auto;
