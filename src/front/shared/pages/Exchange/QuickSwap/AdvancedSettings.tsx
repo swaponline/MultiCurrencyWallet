@@ -43,11 +43,11 @@ function AdvancedSettings(props) {
         <form styleName="settings" action="">
           <div styleName="inputWrapper">
             <FieldLabel>
-              <FormattedMessage id="gasPrice" defaultMessage="Gas price" />
-              <Tooltip id="slippageTooltip">
+              <FormattedMessage id="gasPrice" defaultMessage="Gas price" /> (GWEI)
+              <Tooltip id="gasPriceTooltip">
                 <FormattedMessage
-                  id="slippageNotice"
-                  defaultMessage="Some useful notice for user"
+                  id="gasPriceNotice"
+                  defaultMessage="Gas price specifies the amount of Ether you are willing to pay for each unit of gas"
                 />
               </Tooltip>
             </FieldLabel>
@@ -63,10 +63,10 @@ function AdvancedSettings(props) {
           <div styleName="inputWrapper">
             <FieldLabel>
               <FormattedMessage id="gasLimit" defaultMessage="Gas limit" />
-              <Tooltip id="slippageTooltip">
+              <Tooltip id="gasLimitTooltip">
                 <FormattedMessage
-                  id="slippageNotice"
-                  defaultMessage="Some useful notice for user"
+                  id="gasLimitNotice"
+                  defaultMessage="Gas limit is the maximum amount of units of gas you are willing to spend"
                 />
               </Tooltip>
             </FieldLabel>
@@ -82,10 +82,10 @@ function AdvancedSettings(props) {
           <div styleName="inputWrapper">
             <FieldLabel>
               <FormattedMessage id="destinationRecipient" defaultMessage="Destination recipient" />
-              <Tooltip id="slippageTooltip">
+              <Tooltip id="recipientAddressTooltip">
                 <FormattedMessage
-                  id="slippageNotice"
-                  defaultMessage="Some useful notice for user"
+                  id="recipientAddressNotice"
+                  defaultMessage="Recipient address of a purchased token"
                 />
               </Tooltip>
             </FieldLabel>

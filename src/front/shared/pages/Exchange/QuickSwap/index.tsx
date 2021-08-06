@@ -507,6 +507,8 @@ class QuickSwap extends PureComponent<unknown, ComponentState> {
       slippage,
       slippageMaxRange,
       isAdvancedMode,
+      gasPrice,
+      gasLimit,
       destReceiver,
     } = this.state
 
@@ -516,8 +518,17 @@ class QuickSwap extends PureComponent<unknown, ComponentState> {
       new BigNumber(slippage).isGreaterThan(slippageMaxRange)
 
     const receivedBaseCurrency = toWallet.baseCurrency?.toUpperCase()
+    const maxGweiGasPrice = 30_000
+    const minGasLimit = 100_000
+    const maxGasLimit = 11_500_000
+
     const wrongAdvancedOptions =
-      isAdvancedMode && !typeforce.isCoinAddress[receivedBaseCurrency](destReceiver)
+      isAdvancedMode &&
+      (new BigNumber(gasPrice).isEqualTo(0) ||
+        new BigNumber(gasPrice).isGreaterThan(maxGweiGasPrice) ||
+        new BigNumber(gasLimit).isLessThan(minGasLimit) ||
+        new BigNumber(gasLimit).isGreaterThan(maxGasLimit) ||
+        !typeforce.isCoinAddress[receivedBaseCurrency](destReceiver))
 
     return (
       isPending ||
