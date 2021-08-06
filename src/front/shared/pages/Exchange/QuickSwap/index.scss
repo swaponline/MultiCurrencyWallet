@@ -12,6 +12,12 @@
   position: relative;
 }
 
+.advancedInput {
+  input {
+    height: 3.35em;
+  }
+}
+
 .bankCardButton {
   margin-bottom: 2rem;
 }
@@ -86,7 +92,7 @@
 }
 
 .swapInfo {
-  margin-bottom: 2rem;
+  margin-bottom: 1.4rem;
   padding-top: 1rem;
   display: flex;
   flex-direction: column;

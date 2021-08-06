@@ -17,6 +17,10 @@ function AdvancedSettings(props) {
     resetSwapData,
   } = props
 
+  const keyUpHandler = () => {
+    setTimeout(checkSwapData, 300)
+  }
+
   const keyDownHandler = (event) => {
     inputReplaceCommaWithDot(event)
 
@@ -52,9 +56,10 @@ function AdvancedSettings(props) {
               </Tooltip>
             </FieldLabel>
             <Input
+              styleName="advancedInput"
               pattern="0-9\."
               onKeyDown={keyDownHandler}
-              onKeyUp={checkSwapData}
+              onKeyUp={keyUpHandler}
               valueLink={stateReference.gasPrice}
               withMargin
             />
@@ -71,9 +76,10 @@ function AdvancedSettings(props) {
               </Tooltip>
             </FieldLabel>
             <Input
+              styleName="advancedInput"
               pattern="0-9\."
               onKeyDown={keyDownHandler}
-              onKeyUp={checkSwapData}
+              onKeyUp={keyUpHandler}
               valueLink={stateReference.gasLimit}
               withMargin
             />
@@ -90,9 +96,10 @@ function AdvancedSettings(props) {
               </Tooltip>
             </FieldLabel>
             <Input
+              styleName="advancedInput"
               pattern="0-9a-zA-Z:"
               onKeyDown={keyDownHandler}
-              onKeyUp={checkSwapData}
+              onKeyUp={keyUpHandler}
               valueLink={stateReference.destReceiver}
             />
           </div>

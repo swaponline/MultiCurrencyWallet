@@ -16,8 +16,6 @@ import AdvancedSettings from './AdvancedSettings'
 import SwapInfo from './SwapInfo'
 import LimitOrders from 'components/LimitOrders'
 
-// TODO: UI: adapt for mobile resolution
-
 class QuickSwap extends PureComponent<unknown, ComponentState> {
   constructor(props) {
     super(props)
@@ -522,13 +520,19 @@ class QuickSwap extends PureComponent<unknown, ComponentState> {
     const minGasLimit = 100_000
     const maxGasLimit = 11_500_000
 
+    const wrongGasPrice =
+      new BigNumber(gasPrice).isPositive() && new BigNumber(gasPrice).isGreaterThan(maxGweiGasPrice)
+
+    const wrongGasLimit =
+      new BigNumber(gasLimit).isPositive() &&
+      (new BigNumber(gasLimit).isLessThan(minGasLimit) ||
+        new BigNumber(gasLimit).isGreaterThan(maxGasLimit))
+
+    const wrongReceiverAddress =
+      destReceiver && !typeforce.isCoinAddress[receivedBaseCurrency](destReceiver)
+
     const wrongAdvancedOptions =
-      isAdvancedMode &&
-      (new BigNumber(gasPrice).isEqualTo(0) ||
-        new BigNumber(gasPrice).isGreaterThan(maxGweiGasPrice) ||
-        new BigNumber(gasLimit).isLessThan(minGasLimit) ||
-        new BigNumber(gasLimit).isGreaterThan(maxGasLimit) ||
-        !typeforce.isCoinAddress[receivedBaseCurrency](destReceiver))
+      isAdvancedMode && (wrongGasPrice || wrongGasLimit || wrongReceiverAddress)
 
     return (
       isPending ||
@@ -595,7 +599,7 @@ class QuickSwap extends PureComponent<unknown, ComponentState> {
     )
 
     const swapDataIsDisabled = this.isSwapDataNotAvailable()
-    const swapBtnIsDisabled = this.isSwapNotAvailable()
+    const swapBtnIsDisabled = this.isSwapNotAvailable() || swapDataIsDisabled
 
     return (
       <>

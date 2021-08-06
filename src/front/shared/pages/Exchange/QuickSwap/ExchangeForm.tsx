@@ -77,6 +77,10 @@ function ExchangeForm(props) {
     return null
   }
 
+  const keyUpHandler = () => {
+    setTimeout(checkSwapData, 300)
+  }
+
   return (
     <form action="">
       <div styleName="inputWrapper">
@@ -98,7 +102,7 @@ function ExchangeForm(props) {
               balanceTooltip(Direction.Spend, fromWallet)
             )
           }
-          onKeyUp={checkSwapData}
+          onKeyUp={keyUpHandler}
           onSelect={(value) =>
             selectCurrency({
               direction: Direction.Spend,
@@ -162,7 +166,7 @@ function ExchangeForm(props) {
         <Input
           pattern="0-9\."
           onKeyDown={inputReplaceCommaWithDot}
-          onKeyUp={checkSwapData}
+          onKeyUp={keyUpHandler}
           valueLink={stateReference.slippage}
           withMargin
         />
