@@ -58,21 +58,17 @@ const addTokens = (params) => {
   })
 }
 
-const fetchAllTokens = () => {
+const fetchAllTokens = async () => {
   const availableChains = [1, 56, 137] // [ETH, BSC, Polygon] (Mainnet ID)
 
-  Object.keys(externalConfig.evmNetworks).forEach(async (nativeCurrency) => {
-    const chainInfo = externalConfig.evmNetworks[nativeCurrency]
+  for (const chainId of availableChains) {
+    const tokens: any = await fetchTokensByChain({ chainId })
 
-    if (availableChains.includes(chainInfo.networkVersion)) {
-      const tokens: any = await fetchTokensByChain({ chainId: chainInfo.networkVersion })
-
-      addTokens({
-        chainId: chainInfo.networkVersion,
-        tokens: tokens,
-      })
-    }
-  })
+    addTokens({
+      chainId,
+      tokens: tokens,
+    })
+  }
 }
 
 const filterCurrencies = (params) => {

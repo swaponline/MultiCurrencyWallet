@@ -1,9 +1,8 @@
 import { useState } from 'react'
+import { FormattedMessage } from 'react-intl'
 import CSSModules from 'react-css-modules'
 import styles from './index.scss'
-import { FormattedMessage } from 'react-intl'
 import { externalConfig, localStorage, constants } from 'helpers'
-
 import QuickSwap from './QuickSwap'
 import AtomicSwap from './AtomicSwap'
 

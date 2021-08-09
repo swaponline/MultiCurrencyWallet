@@ -269,6 +269,7 @@ class QuickSwap extends PureComponent<unknown, ComponentState> {
 
       actions.notifications.show(constants.notifications.Transaction, {
         link: transactions.getLink(lowerKey, receipt.transactionHash),
+        completed: true,
       })
 
       // delete last swap data, the swap info may have changed

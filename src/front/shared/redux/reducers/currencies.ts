@@ -1,7 +1,6 @@
 import config from 'app-config'
 import TOKEN_STANDARDS from 'helpers/constants/TOKEN_STANDARDS'
 import { BLOCKCHAIN as BLOCKCHAIN_TYPE } from 'swap.app/constants/COINS'
-import { apiLooper } from 'helpers'
 
 const NETWORK = process.env.MAINNET ? 'mainnet' : 'testnet'
 
