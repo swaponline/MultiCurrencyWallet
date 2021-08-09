@@ -123,6 +123,7 @@ function ExchangeForm(props) {
 
       {spendedCurrency.value === 'eth' && (
         <Button
+          id="buyViaBankCardButtonId"
           className="buyViaBankCardButton"
           styleName="bankCardButton"
           pending={isPending}

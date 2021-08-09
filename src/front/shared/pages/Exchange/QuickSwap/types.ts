@@ -71,6 +71,7 @@ export type ComponentState = {
   gasLimit: string
   destReceiver: string
   showOrders: boolean
+  mnemonicSaved: boolean
 }
 
 export enum Direction {
