@@ -17,11 +17,13 @@ import ModalForm from './ModalForm'
 
 type ComponentProps = {
   name: string
-  currencies: IUniversalObj[]
+  allCurrencies: IUniversalObj[]
+  tokensWallets: IUniversalObj[]
 }
 
 type ComponentState = {
   network: IUniversalObj
+  currencies: IUniversalObj[]
   takerList: IUniversalObj[]
   makerWallet: IUniversalObj
   takerWallet: IUniversalObj
@@ -32,24 +34,39 @@ type ComponentState = {
   isPending: boolean
   needMakerApprove: boolean
   needTakerApprove: boolean
+  enoughSwapCurrencies: boolean
 }
 
 class LimitOrder extends Component<ComponentProps, ComponentState> {
   constructor(props) {
     super(props)
 
-    const { currencies } = props
+    const { allCurrencies, tokensWallets } = props
+    const { currencies } = actions.oneinch.filterCurrencies({
+      currencies: allCurrencies,
+      tokensWallets,
+      onlyTokens: true,
+    })
+
+    let enoughSwapCurrencies = true
 
     const makerAsset = currencies[0]
     const makerWallet = actions.core.getWallet({ currency: makerAsset.value })
     const network = externalConfig.evmNetworks[makerAsset.blockchain]
 
-    const takerList = this.returnTakerList(currencies, makerAsset)
+    let takerList = this.returnTakerList(currencies, makerAsset)
+
+    if (!takerList.length) {
+      takerList = allCurrencies
+      enoughSwapCurrencies = false
+    }
+
     const takerAsset = takerList[0]
     const takerWallet = actions.core.getWallet({ currency: takerAsset.value })
 
     this.state = {
       network,
+      currencies,
       takerList,
       makerWallet,
       takerWallet,
@@ -60,6 +77,7 @@ class LimitOrder extends Component<ComponentProps, ComponentState> {
       takerAmount: '',
       needTakerApprove: false,
       isPending: false,
+      enoughSwapCurrencies,
     }
   }
 
@@ -90,17 +108,25 @@ class LimitOrder extends Component<ComponentProps, ComponentState> {
   }
 
   updateTakerList = () => {
-    const { currencies } = this.props
-    const { makerAsset } = this.state
+    const { allCurrencies } = this.props
+    const { makerAsset, currencies } = this.state
 
     const takerList = this.returnTakerList(currencies, makerAsset)
 
-    this.setState(() => ({
-      takerList,
-      takerAsset: takerList[0],
-      takerAmount: '0',
-      takerWallet: actions.core.getWallet({ currency: takerList[0].value }),
-    }))
+    if (!takerList.length) {
+      this.setState(() => ({
+        takerList: allCurrencies,
+        currencies: allCurrencies,
+        enoughSwapCurrencies: false,
+      }))
+    } else {
+      this.setState(() => ({
+        takerList,
+        takerAsset: takerList[0],
+        takerAmount: '0',
+        takerWallet: actions.core.getWallet({ currency: takerList[0].value }),
+      }))
+    }
   }
 
   approve = async (wallet, amount) => {
@@ -287,8 +313,9 @@ class LimitOrder extends Component<ComponentProps, ComponentState> {
   }
 
   render() {
-    const { name, currencies } = this.props
+    const { name } = this.props
     const {
+      currencies,
       takerList,
       makerAsset,
       takerAsset,
@@ -297,6 +324,7 @@ class LimitOrder extends Component<ComponentProps, ComponentState> {
       isPending,
       needMakerApprove,
       needTakerApprove,
+      enoughSwapCurrencies,
     } = this.state
 
     const linked = Link.all(this, 'makerAmount', 'takerAmount')
@@ -308,6 +336,7 @@ class LimitOrder extends Component<ComponentProps, ComponentState> {
 
     return (
       <ModalForm
+        enoughSwapCurrencies={enoughSwapCurrencies}
         modalName={name}
         stateReference={linked}
         availableCurrencies={currencies}
@@ -332,12 +361,8 @@ class LimitOrder extends Component<ComponentProps, ComponentState> {
   }
 }
 
-export default connect(({ currencies, oneinch, user }) => ({
-  currencies: actions.oneinch.filterCurrencies({
-    currencies: currencies.items,
-    tokensWallets: user.tokensData,
-    oneinchTokens: oneinch.tokens,
-    onlyTokens: true,
-  }),
+export default connect(({ currencies, user }) => ({
+  allCurrencies: currencies.items,
+  tokensWallets: user.tokensData,
   activeFiat: user.activeFiat,
 }))(LimitOrder)

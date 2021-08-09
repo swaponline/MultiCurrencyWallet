@@ -26,6 +26,7 @@ function ModalForm(props) {
     needTakerApprove,
     approve,
     createOrder,
+    enoughSwapCurrencies,
   } = props
 
   const needApprove = needMakerApprove || needTakerApprove
@@ -44,76 +45,92 @@ function ModalForm(props) {
       name={modalName}
       title={<FormattedMessage id="limitOrder" defaultMessage="Limit order" />}
     >
-      <SelectGroup
-        label={<FormattedMessage id="addoffer381" defaultMessage="Sell" />}
-        tooltip={
+      {!enoughSwapCurrencies && (
+        <p styleName="currenciesWarning">
           <FormattedMessage
-            id="partial462"
-            defaultMessage="The amount you have on swap.online or an external wallet that you want to exchange"
+            id="notEnoughTokensForSwap"
+            defaultMessage="Not all currencies are available for swap. It looks like you don't have enough tokens. Try adding more of them."
           />
-        }
-        inputValueLink={stateReference.makerAmount}
-        selectedValue={makerAsset.value}
-        onSelect={selectMakerAsset}
-        id="makerAmount"
-        balance={makerWallet.balance}
-        currencies={availableCurrencies}
-        placeholder="0.00"
-        onKeyUp={checkMakerAllowance}
-      />
-      <SelectGroup
-        label={<FormattedMessage id="addoffer396" defaultMessage="Buy" />}
-        tooltip={
-          <FormattedMessage
-            id="partial478"
-            defaultMessage="The amount you will receive after the exchange"
-          />
-        }
-        inputValueLink={stateReference.takerAmount}
-        selectedValue={takerAsset.value}
-        onSelect={selectTakerAsset}
-        id="takerAmount"
-        balance={takerWallet.balance}
-        currencies={takerList}
-        placeholder="0.00"
-        onKeyUp={checkTakerAllowance}
-      />
-
-      {needApprove ? (
-        needMakerApprove ? (
-          <Button
-            disabled={blockApprove}
-            onClick={makerApprove}
-            pending={isPending}
-            fullWidth
-            brand
-          >
+        </p>
+      )}
+      <div styleName={`formWrapper ${enoughSwapCurrencies ? '' : 'disabled'}`}>
+        <SelectGroup
+          label={<FormattedMessage id="addoffer381" defaultMessage="Sell" />}
+          tooltip={
             <FormattedMessage
-              id="FormattedMessageIdApprove"
-              defaultMessage="Approve {token}"
-              values={{ token: makerAsset.name }}
+              id="partial462"
+              defaultMessage="The amount you have on swap.online or an external wallet that you want to exchange"
             />
-          </Button>
+          }
+          inputValueLink={stateReference.makerAmount}
+          selectedValue={makerAsset.value}
+          onSelect={selectMakerAsset}
+          id="makerAmount"
+          balance={makerWallet.balance}
+          currencies={availableCurrencies}
+          placeholder="0.00"
+          onKeyUp={checkMakerAllowance}
+        />
+        <SelectGroup
+          label={<FormattedMessage id="addoffer396" defaultMessage="Buy" />}
+          tooltip={
+            <FormattedMessage
+              id="partial478"
+              defaultMessage="The amount you will receive after the exchange"
+            />
+          }
+          inputValueLink={stateReference.takerAmount}
+          selectedValue={takerAsset.value}
+          onSelect={selectTakerAsset}
+          id="takerAmount"
+          balance={takerWallet.balance}
+          currencies={takerList}
+          placeholder="0.00"
+          onKeyUp={checkTakerAllowance}
+        />
+
+        {needApprove ? (
+          needMakerApprove ? (
+            <Button
+              disabled={blockApprove}
+              onClick={makerApprove}
+              pending={isPending}
+              fullWidth
+              brand
+            >
+              <FormattedMessage
+                id="FormattedMessageIdApprove"
+                defaultMessage="Approve {token}"
+                values={{ token: makerAsset.name }}
+              />
+            </Button>
+          ) : (
+            <Button
+              disabled={blockApprove}
+              onClick={takerApprove}
+              pending={isPending}
+              fullWidth
+              brand
+            >
+              <FormattedMessage
+                id="FormattedMessageIdApprove"
+                defaultMessage="Approve {token}"
+                values={{ token: takerAsset.name }}
+              />
+            </Button>
+          )
         ) : (
           <Button
-            disabled={blockApprove}
-            onClick={takerApprove}
+            disabled={blockCreation}
+            onClick={createOrder}
             pending={isPending}
             fullWidth
             brand
           >
-            <FormattedMessage
-              id="FormattedMessageIdApprove"
-              defaultMessage="Approve {token}"
-              values={{ token: takerAsset.name }}
-            />
+            <FormattedMessage id="create" defaultMessage="Create" />
           </Button>
-        )
-      ) : (
-        <Button disabled={blockCreation} onClick={createOrder} pending={isPending} fullWidth brand>
-          <FormattedMessage id="create" defaultMessage="Create" />
-        </Button>
-      )}
+        )}
+      </div>
     </Modal>
   )
 }

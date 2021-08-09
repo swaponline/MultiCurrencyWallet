@@ -1,3 +1,20 @@
+.currenciesWarning {
+  max-width: 30em;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  text-align: center;
+  border-radius: 6px;
+  background-color: var(--color-pale);
+  color: var(--color-f-error);
+}
+
+.formWrapper {
+  &.disabled {
+    pointer-events: none;
+    opacity: 0.6;
+  }
+}
+
 .inputWrapper {
   position: relative;
 }
