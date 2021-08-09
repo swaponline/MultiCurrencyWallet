@@ -6,7 +6,15 @@ import CSSModules from 'react-css-modules'
 import styles from './index.scss'
 import utils from 'common/utils'
 import typeforce from 'swap.app/util/typeforce'
-import { feedback, apiLooper, externalConfig, constants, transactions, localStorage } from 'helpers'
+import {
+  feedback,
+  apiLooper,
+  externalConfig,
+  constants,
+  transactions,
+  localStorage,
+  metamask,
+} from 'helpers'
 import actions from 'redux/actions'
 import Link from 'local_modules/sw-valuelink'
 import { ComponentState, Direction } from './types'
@@ -20,24 +28,33 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   constructor(props) {
     super(props)
 
-    const { match, currencies, activeFiat } = props
-    const { params } = match
+    const { match, activeFiat, allCurrencies, tokensWallets } = props
+    const { params, path } = match
+    const { currencies, wrongNetwork } = actions.oneinch.filterCurrencies({
+      currencies: allCurrencies,
+      tokensWallets,
+    })
 
     let spendedCurrency = currencies[0]
     let receivedList = this.returnReceivedList(currencies, spendedCurrency)
     let receivedCurrency = receivedList[0]
 
     // if we have url parameters then show it as default values
-    if (params.sell && params.buy) {
-      spendedCurrency = currencies.find(
+    if (path.match(/\/quick/) && params.sell && params.buy) {
+      const urlSpendedCurrency = currencies.find(
         (item) => item.value.toLowerCase() === params.sell.toLowerCase()
       )
-
-      receivedList = this.returnReceivedList(currencies, spendedCurrency)
-
-      receivedCurrency = receivedList.find(
+      const urlReceivedList = this.returnReceivedList(currencies, urlSpendedCurrency)
+      const urlReceivedCurrency = urlReceivedList.find(
         (item) => item.value.toLowerCase() === params.buy.toLowerCase()
       )
+
+      // reassigning these variables only if url is correct
+      if (urlSpendedCurrency && urlReceivedList && urlReceivedCurrency) {
+        spendedCurrency = urlSpendedCurrency
+        receivedList = urlReceivedList
+        receivedCurrency = urlReceivedCurrency
+      }
     }
 
     const baseChainWallet = actions.core.getWallet({
@@ -72,6 +89,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       toWallet: toWallet || {},
       slippage: 1,
       slippageMaxRange: 50,
+      wrongNetwork,
       network: externalConfig.evmNetworks[spendedCurrency.blockchain],
       swapData: undefined,
       swapFee: '',
@@ -85,6 +103,34 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   componentDidMount() {
     this.updateNetwork()
     actions.user.getBalances()
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const { wrongNetwork: prevWrongNetwork } = prevState
+    const { allCurrencies, tokensWallets } = this.props
+    const { spendedCurrency } = this.state
+
+    const availableNetwork = metamask.isAvailableNetworkByCurrency(spendedCurrency.value)
+
+    const needUpdate = (!availableNetwork && !prevWrongNetwork) || (prevWrongNetwork && availableNetwork)
+
+    if (metamask.isConnected() && needUpdate) {
+      const { currencies, wrongNetwork } = actions.oneinch.filterCurrencies({
+        currencies: allCurrencies,
+        tokensWallets,
+      })
+      let spendedCurrency = currencies[0]
+      let receivedList = this.returnReceivedList(currencies, spendedCurrency)
+      let receivedCurrency = receivedList[0]
+
+      this.setState(() => ({
+        wrongNetwork,
+        currencies,
+        spendedCurrency,
+        receivedList,
+        receivedCurrency,
+      }))
+    }
   }
 
   componentWillUnmount() {
@@ -127,9 +173,12 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     const exchangeSettings = localStorage.getItem(constants.localStorage.exchangeSettings)
 
     if (exchangeSettings) {
+      const sell = fromWallet.tokenKey || fromWallet.currency || ''
+      const buy = toWallet.tokenKey || toWallet.currency || ''
+
       exchangeSettings.quickCurrency = {
-        sell: fromWallet.tokenKey || fromWallet.currency,
-        buy: toWallet.tokenKey || toWallet.currency,
+        sell,
+        buy,
       }
       localStorage.setItem(constants.localStorage.exchangeSettings, exchangeSettings)
     }
@@ -610,6 +659,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       fromWallet,
       toWallet,
       receivedCurrency,
+      wrongNetwork,
       network,
       swapData,
       swapFee,
@@ -634,31 +684,33 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     return (
       <>
         <section styleName="someSwap">
-          <ExchangeForm
-            stateReference={linked}
-            selectCurrency={this.selectCurrency}
-            openExternalExchange={this.openExternalExchange}
-            checkSwapData={this.checkSwapData}
-            currencies={currencies}
-            receivedList={receivedList}
-            spendedAmount={spendedAmount}
-            spendedCurrency={spendedCurrency}
-            receivedCurrency={receivedCurrency}
-            fiat={fiat}
-            fromWallet={fromWallet}
-            toWallet={toWallet}
-            updateWallets={this.updateWallets}
-            isPending={isPending}
-          />
+          <div styleName={`optionsWrapper ${wrongNetwork ? 'disabled' : ''}`}>
+            <ExchangeForm
+              stateReference={linked}
+              selectCurrency={this.selectCurrency}
+              openExternalExchange={this.openExternalExchange}
+              checkSwapData={this.checkSwapData}
+              currencies={currencies}
+              receivedList={receivedList}
+              spendedAmount={spendedAmount}
+              spendedCurrency={spendedCurrency}
+              receivedCurrency={receivedCurrency}
+              fiat={fiat}
+              fromWallet={fromWallet}
+              toWallet={toWallet}
+              updateWallets={this.updateWallets}
+              isPending={isPending}
+            />
 
-          <AdvancedSettings
-            isAdvancedMode={isAdvancedMode}
-            switchAdvancedMode={this.switchAdvancedMode}
-            stateReference={linked}
-            swapData={swapData}
-            checkSwapData={this.checkSwapData}
-            resetSwapData={this.resetSwapData}
-          />
+            <AdvancedSettings
+              isAdvancedMode={isAdvancedMode}
+              switchAdvancedMode={this.switchAdvancedMode}
+              stateReference={linked}
+              swapData={swapData}
+              checkSwapData={this.checkSwapData}
+              resetSwapData={this.resetSwapData}
+            />
+          </div>
 
           <SwapInfo
             network={network}
@@ -668,6 +720,15 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
             fiat={fiat}
             isDataPending={isDataPending}
           />
+
+          {wrongNetwork && (
+            <p styleName="wrongNetworkMessage">
+              <FormattedMessage
+                id="WalletRow_MetamaskNotAvailableNetwork"
+                defaultMessage="Please choose another network"
+              />
+            </p>
+          )}
 
           <div styleName="buttonWrapper">
             {needApprove ? (
@@ -697,9 +758,11 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
             )}
           </div>
 
-          <Button styleName="button" onClick={this.createLimitOrder} link small>
-            <FormattedMessage id="createLimitOrder" defaultMessage="Create limit order" />
-          </Button>
+          {!wrongNetwork && (
+            <Button styleName="button" onClick={this.createLimitOrder} link small>
+              <FormattedMessage id="createLimitOrder" defaultMessage="Create limit order" />
+            </Button>
+          )}
         </section>
 
         <Button id="orderbookBtn" onClick={this.toggleOrdersViability} link>
@@ -713,9 +776,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
 }
 
 export default connect(({ currencies, user }) => ({
-  currencies: actions.oneinch.filterCurrencies({
-    currencies: currencies.items,
-    tokensWallets: user.tokensData,
-  }),
+  allCurrencies: currencies.items,
+  tokensWallets: user.tokensData,
   activeFiat: user.activeFiat,
 }))(CSSModules(QuickSwap, styles, { allowMultiple: true }))

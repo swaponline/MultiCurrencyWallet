@@ -75,7 +75,7 @@ const filterCurrencies = (params) => {
   const { currencies, tokensWallets, onlyTokens = false } = params
   const { tokens: oneinchTokens, blockchains: oneinchBlockChains } = getState().oneinch
 
-  return currencies.filter((item) => {
+  const filteredArr = currencies.filter((item) => {
     const currency = COIN_DATA[item.name]
     let isCurrencySuitable = false
 
@@ -104,6 +104,13 @@ const filterCurrencies = (params) => {
 
     return isCurrencySuitable && suitableForNetwork
   })
+
+  // metamask with the wrong network
+  if (metamask.isConnected() && !filteredArr.length) {
+    return { currencies, wrongNetwork: true }
+  }
+
+  return { currencies: filteredArr, wrongNetwork: false }
 }
 
 const fetchSpenderContractAddress = async (params): Promise<string | false> => {

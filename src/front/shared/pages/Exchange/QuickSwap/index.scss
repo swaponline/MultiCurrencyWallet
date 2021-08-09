@@ -8,6 +8,13 @@
   background: var(--color-background-elements);
 }
 
+.optionsWrapper {
+  &.disabled {
+    pointer-events: none;
+    opacity: 0.6;
+  }
+}
+
 .inputWrapper {
   position: relative;
 }
@@ -123,6 +130,13 @@
       margin-left: 0.5rem;
     }
   }
+}
+
+.wrongNetworkMessage {
+  padding: 0.6rem;
+  border-radius: 6px;
+  background-color: var(--color-pale);
+  color: var(--color-f-error);
 }
 
 .buttonWrapper {

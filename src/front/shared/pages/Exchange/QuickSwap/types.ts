@@ -62,6 +62,7 @@ export type ComponentState = {
   toWallet: IUniversalObj
   slippage: number
   slippageMaxRange: number
+  wrongNetwork: boolean
   network: Network
   isAdvancedMode: boolean
   swapData: SwapData | undefined
