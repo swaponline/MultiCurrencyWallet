@@ -215,12 +215,11 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
     let haveCurrency = sell || config.opts.defaultExchangePair.sell
     let getCurrency = buy || (!isWidgetBuild ? config.opts.defaultExchangePair.buy : config.erc20token)
 
-    const exchangeDataStr = localStorage.getItem(constants.localStorage.exchangeSettings)
-    const exchangeSettings = exchangeDataStr && JSON.parse(exchangeDataStr)
-    // to get data from last session
+    const exchangeSettings = localStorage.getItem(constants.localStorage.exchangeSettings)
+
     if (exchangeSettings) {
-      haveCurrency = exchangeSettings.currency?.sell || haveCurrency
-      getCurrency = exchangeSettings.currency?.buy || getCurrency
+      haveCurrency = exchangeSettings.atomicCurrency?.sell || haveCurrency
+      getCurrency = exchangeSettings.atomicCurrency?.buy || getCurrency
     }
 
     if (!(buy && sell) && !props.location.hash.includes('#widget') && !isRootPage) {
@@ -348,7 +347,7 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
   getExchangeSettingsFromLocalStorage() {
     const exchangeSettings = localStorage.getItem(constants.localStorage.exchangeSettings)
 
-    return JSON.parse(exchangeSettings || '{}')
+    return exchangeSettings
   }
 
   setDefaultCurrencyType(currency, type) {
@@ -358,13 +357,13 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
     userWalletTypes[currency] = type
 
     const newExchangeData = {
-      currency: exchangeSettings.currency,
+      atomicCurrency: exchangeSettings.atomicCurrency,
       userWalletTypes,
     }
 
     localStorage.setItem(
       constants.localStorage.exchangeSettings,
-      JSON.stringify(newExchangeData)
+      newExchangeData
     )
   }
 
@@ -636,7 +635,7 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
         [haveCurrency.toUpperCase()]: haveType,
         [getCurrency.toUpperCase()]: getType,
       },
-      currency: {
+      atomicCurrency: {
         sell: haveCurrency,
         buy: getCurrency,
       },
@@ -644,7 +643,7 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
 
     localStorage.setItem(
       constants.localStorage.exchangeSettings,
-      JSON.stringify(newExchangeSettings)
+      newExchangeSettings
     )
   }
 

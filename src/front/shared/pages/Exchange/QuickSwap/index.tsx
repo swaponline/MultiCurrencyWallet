@@ -6,7 +6,7 @@ import CSSModules from 'react-css-modules'
 import styles from './index.scss'
 import utils from 'common/utils'
 import typeforce from 'swap.app/util/typeforce'
-import { feedback, apiLooper, externalConfig, constants, transactions, metamask } from 'helpers'
+import { feedback, apiLooper, externalConfig, constants, transactions, localStorage } from 'helpers'
 import actions from 'redux/actions'
 import Link from 'local_modules/sw-valuelink'
 import { ComponentState, Direction } from './types'
@@ -16,15 +16,29 @@ import AdvancedSettings from './AdvancedSettings'
 import SwapInfo from './SwapInfo'
 import LimitOrders from 'components/LimitOrders'
 
-class QuickSwap extends PureComponent<unknown, ComponentState> {
+class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   constructor(props) {
     super(props)
 
-    const { currencies, activeFiat } = props
+    const { match, currencies, activeFiat } = props
+    const { params } = match
 
-    const spendedCurrency = currencies[0]
-    const receivedList = this.returnReceivedList(currencies, spendedCurrency)
-    const receivedCurrency = receivedList[0]
+    let spendedCurrency = currencies[0]
+    let receivedList = this.returnReceivedList(currencies, spendedCurrency)
+    let receivedCurrency = receivedList[0]
+
+    // if we have url parameters then show it as default values
+    if (params.sell && params.buy) {
+      spendedCurrency = currencies.find(
+        (item) => item.value.toLowerCase() === params.sell.toLowerCase()
+      )
+
+      receivedList = this.returnReceivedList(currencies, spendedCurrency)
+
+      receivedCurrency = receivedList.find(
+        (item) => item.value.toLowerCase() === params.buy.toLowerCase()
+      )
+    }
 
     const baseChainWallet = actions.core.getWallet({
       currency: spendedCurrency.blockchain,
@@ -75,6 +89,7 @@ class QuickSwap extends PureComponent<unknown, ComponentState> {
 
   componentWillUnmount() {
     this.clearWindowTimer()
+    this.saveOptionsInStorage()
   }
 
   updateNetwork = () => {
@@ -104,6 +119,20 @@ class QuickSwap extends PureComponent<unknown, ComponentState> {
       fromWallet,
       toWallet,
     }))
+  }
+
+  saveOptionsInStorage = () => {
+    const { fromWallet, toWallet } = this.state
+
+    const exchangeSettings = localStorage.getItem(constants.localStorage.exchangeSettings)
+
+    if (exchangeSettings) {
+      exchangeSettings.quickCurrency = {
+        sell: fromWallet.tokenKey || fromWallet.currency,
+        buy: toWallet.tokenKey || toWallet.currency,
+      }
+      localStorage.setItem(constants.localStorage.exchangeSettings, exchangeSettings)
+    }
   }
 
   returnReceivedList = (currencies, spendedCurrency) => {

@@ -48,10 +48,11 @@ const routes = (
       <Route path={`/:token(token)/:ticker/:address/withdraw`} component={CurrencyWallet} />
       <Route path={`/:fullName-wallet/:address?`} component={CurrencyWallet} />
 
+      <Route path={`${links.exchange}/quick/:sell-to-:buy`} component={Exchange} />
+      <Route path={`${links.exchange}/quick`} component={Exchange} />
       <Route path={`${links.exchange}/:sell-to-:buy/:linkedOrderId`} component={Exchange} />
       <Route path={`${links.exchange}/:sell-to-:buy`} component={Exchange} />
       <Route path={`${links.exchange}`} component={Exchange} />
-      <Route path={`${links.exchange}/quick`} component={Exchange} />
 
       <Route path={`${links.localStorage}`} component={LocalStorage} />
 

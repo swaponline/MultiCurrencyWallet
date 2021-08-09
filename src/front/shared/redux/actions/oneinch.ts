@@ -278,62 +278,6 @@ const sendLimitOrder = async (params) => {
   })
 }
 
-/* const createRFQOrder = async (params) => {
-  const {
-    chainId,
-    baseCurrency,
-    makerAddress,
-    makerAssetAddress,
-    makerAssetDecimals,
-    takerAssetAddress,
-    takerAssetDecimals,
-    makerAmount,
-    takerAmount,
-    expirationTimeInMinutes,
-  } = params
-
-  const contractAddress = externalConfig.limitOrder[baseCurrency]
-  const connector = getWeb3Connector(baseCurrency, makerAddress)
-  const builder = new LimitOrderBuilder(contractAddress, chainId, connector)
-  const protocolFacade = new LimitOrderProtocolFacade(contractAddress, connector)
-
-  const makerUnitAmount = utils.amount.formatWithDecimals(makerAmount, makerAssetDecimals)
-  const takerUnitAmount = utils.amount.formatWithDecimals(takerAmount, takerAssetDecimals)
-
-  const timeStamp = new BigNumber(utils.getUnixTimeStamp())
-  const SEC_IN_MIN = 60
-  const expiresInTimestamp = timeStamp
-    .plus(new BigNumber(expirationTimeInMinutes).times(SEC_IN_MIN))
-    .toNumber()
-
-  const RFQOrder = builder.buildRFQOrder({
-    id: 4, // TODO: fetch all user's orders and pass their quantity plus 1 as an ID
-    expiresInTimestamp,
-    makerAssetAddress,
-    takerAssetAddress,
-    makerAddress,
-    makerAmount: makerUnitAmount,
-    takerAmount: takerUnitAmount,
-  })
-  const orderTypedData = builder.buildRFQOrderTypedData(RFQOrder)
-  const signature = await builder.buildOrderSignature(makerAddress, orderTypedData)
-  const callData = protocolFacade.fillRFQOrder(
-    RFQOrder,
-    signature,
-    makerUnitAmount,
-    // one of the assets (it doesn't matter which one) must be zero
-    // why? who knows
-    '0'
-  )
-
-  return await actions[baseCurrency].send({
-    to: contractAddress,
-    data: callData,
-    amount: 0,
-    waitReceipt: true,
-  })
-} */
-
 const cancelLimitOrder = async (params) => {
   const { chainId, baseCurrency, orderData, orderIndex } = params
   const { user } = getState()
@@ -418,20 +362,6 @@ const fetchUserOrders = async () => {
   })
 }
 
-/* const fetchAllLimitOrders = async (params) => {
-  const { chainId } = params
-
-  try {
-    return await apiLooper.get('limitOrders', `/${chainId}/limit-order/all`)
-  } catch (error) {
-    console.group('%c 1inch fetch limit order', 'color: red')
-    console.log(error)
-    console.groupEnd()
-
-    return []
-  }
-} */
-
 export default {
   serviceIsAvailable,
   fetchTokensByChain,
@@ -442,11 +372,9 @@ export default {
   fetchTokenAllowance,
   approveToken,
   createLimitOrder,
-  //createRFQOrder,
   cancelLimitOrder,
   removeLimitOrderFromState,
   fetchLatestLimitOrder,
   fetchLimitOrders,
   fetchUserOrders,
-  //fetchAllLimitOrders,
 }
