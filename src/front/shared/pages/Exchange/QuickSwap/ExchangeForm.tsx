@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 import CSSModules from 'react-css-modules'
 import styles from './index.scss'
-import { utils } from 'helpers'
+import { utils, localStorage } from 'helpers'
 import { inputReplaceCommaWithDot } from 'helpers/domUtils'
 import actions from 'redux/actions'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
@@ -11,6 +11,7 @@ import Input from 'components/forms/Input/Input'
 import Button from 'components/controls/Button/Button'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import SelectGroup from '../SelectGroup/SelectGroup'
+import { QuickSwapFormTour } from 'components/Header/WidgetTours'
 import { Direction } from './types'
 
 function ExchangeForm(props) {
@@ -33,6 +34,14 @@ function ExchangeForm(props) {
 
   const [fromBalancePending, setFromBalancePending] = useState(false)
   const [toBalancePending, setToBalancePending] = useState(false)
+
+  const sawBankCardMessage = localStorage.getItem('sawBankCardMessage')
+  const [isTourOpen, setIsTourOpen] = useState(!sawBankCardMessage)
+
+  const closeTour = () => {
+    setIsTourOpen(false)
+    localStorage.setItem('sawBankCardMessage', true)
+  }
 
   const hasFiatAmount = spendedAmount && fromWallet.infoAboutCurrency?.price
   const fiatValue =
@@ -114,6 +123,7 @@ function ExchangeForm(props) {
 
       {spendedCurrency.value === 'eth' && (
         <Button
+          className="buyViaBankCardButton"
           styleName="bankCardButton"
           pending={isPending}
           disabled={isPending}
@@ -171,6 +181,8 @@ function ExchangeForm(props) {
           withMargin
         />
       </div>
+
+      <QuickSwapFormTour isTourOpen={isTourOpen} closeTour={closeTour} />
     </form>
   )
 }

@@ -683,11 +683,10 @@ class QuickSwap extends PureComponent<unknown, ComponentState> {
   }
 }
 
-export default connect(({ currencies, oneinch, user }) => ({
+export default connect(({ currencies, user }) => ({
   currencies: actions.oneinch.filterCurrencies({
     currencies: currencies.items,
     tokensWallets: user.tokensData,
-    oneinchTokens: oneinch.tokens,
   }),
   activeFiat: user.activeFiat,
 }))(CSSModules(QuickSwap, styles, { allowMultiple: true }))

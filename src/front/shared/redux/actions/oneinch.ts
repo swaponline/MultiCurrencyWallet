@@ -72,7 +72,8 @@ const fetchAllTokens = async () => {
 }
 
 const filterCurrencies = (params) => {
-  const { currencies, tokensWallets, oneinchTokens, onlyTokens = false } = params
+  const { currencies, tokensWallets, onlyTokens = false } = params
+  const { tokens: oneinchTokens, blockchains: oneinchBlockChains } = getState().oneinch
 
   return currencies.filter((item) => {
     const currency = COIN_DATA[item.name]
@@ -90,7 +91,11 @@ const filterCurrencies = (params) => {
         // if token is in the object then it's true
         tokensByChain && !!tokensByChain[tokensWallets[walletKey].contractAddress]
     } else {
-      isCurrencySuitable = currency?.model === COIN_MODEL.AB && !onlyTokens
+      const coinChain =
+        currency?.model === COIN_MODEL.AB &&
+        externalConfig.evmNetworks[currency.ticker].networkVersion
+
+      isCurrencySuitable = oneinchBlockChains[coinChain] && !onlyTokens
     }
     // connected metamask allows only one chain
     const suitableForNetwork = metamask.isConnected()
