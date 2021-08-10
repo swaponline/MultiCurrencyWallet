@@ -1834,7 +1834,6 @@
     "id": "BTCMS_WalletAddress",
     "message": "Dirección de billetera:",
     "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/index.tsx",
       "src/front/shared/pages/Multisign/Btc/Btc.tsx"
     ]
   },
@@ -5902,7 +5901,7 @@
   },
   {
     "id": "bankCardButtonDescription",
-    "message": "En la ventana modal tienes que ir a través de unos pocos pasos para intercambiar fondos fiat con crypto. Copie la dirección de su billetera a continuación y pásela en la entrada del formulario. Los fondos serán enviados a esta dirección. ETH será acreditado a esta dirección y usted será capaz de seguir comprando tokens utilizando ellos.",
+    "message": "En la ventana modal, usted tiene que ir a través de varios pasos para intercambiar fondos fiduciarios para EL. Seleccione ETH en la ventana y especifique la dirección de su billetera (puede copiarla a continuación). Espere hasta que los fondos se acrediten en su dirección. Entonces usted puede comprar fichas con él.",
     "files": [
       "src/front/shared/components/Header/WidgetTours/QuickSwapFormTour.tsx",
       "src/front/shared/pages/Exchange/QuickSwap/ExchangeForm.tsx"
@@ -6116,6 +6115,13 @@
     "message": "Tolerancia de deslizamiento",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/ExchangeForm.tsx"
+    ]
+  },
+  {
+    "id": "addressOfYourWallet",
+    "message": "Dirección de su monedero:",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
     ]
   }
 ]

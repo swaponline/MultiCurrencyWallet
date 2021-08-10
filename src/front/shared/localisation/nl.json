@@ -1827,7 +1827,6 @@
     "id": "BTCMS_WalletAddress",
     "message": "Wallet adres:",
     "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/index.tsx",
       "src/front/shared/pages/Multisign/Btc/Btc.tsx"
     ]
   },
@@ -5898,7 +5897,7 @@
   },
   {
     "id": "bankCardButtonDescription",
-    "message": "In het modale venster moet je gaan door middel van een paar stappen voor exchange fiat fonds met crypto. Kopieer uw portemonnee adres hieronder en geef het door in het formulier invoer. Geld wordt naar dit adres gestuurd. ETH zal worden bijgeschreven op dit adres en u in staat om te blijven kopen tokens met behulp van hen zal zijn.",
+    "message": "In het modale venster, je moet gaan door middel van verschillende stappen om fiat fondsen in te wisselen voor de. Selecteer ETH in het venster en geef het adres van uw portemonnee (u kunt het hieronder kopiëren). Wacht tot het geld op uw adres is bijgeschreven. Dan kunt u tekenen kopen met behulp van het.",
     "files": [
       "src/front/shared/components/Header/WidgetTours/QuickSwapFormTour.tsx",
       "src/front/shared/pages/Exchange/QuickSwap/ExchangeForm.tsx"
@@ -6112,6 +6111,13 @@
     "message": "Tolerantie voor slippen",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/ExchangeForm.tsx"
+    ]
+  },
+  {
+    "id": "addressOfYourWallet",
+    "message": "Adres van uw portemonnee:",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
     ]
   }
 ]

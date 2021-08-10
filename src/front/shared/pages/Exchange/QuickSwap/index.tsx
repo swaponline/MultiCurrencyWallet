@@ -747,8 +747,8 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
                 </Button>
               ) : (
                 <>
-                  <span styleName="message">
-                    <FormattedMessage id="BTCMS_WalletAddress" defaultMessage="Wallet address:" />
+                  <span>
+                    <FormattedMessage id="addressOfYourWallet" defaultMessage="Address of your wallet:" />
                   </span>
                   <Copy text={fromWallet.address}>
                     <span styleName="address">

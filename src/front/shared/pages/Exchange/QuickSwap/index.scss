@@ -21,13 +21,10 @@
 
 .walletAddress {
   display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   margin: 0 0 1.6rem;
   color: var(--color-indicating);
-
-  .message {
-    display: inline-block;
-    margin-right: 0.3rem;
-  }
 
   .address {
     font-size: 0.87em;

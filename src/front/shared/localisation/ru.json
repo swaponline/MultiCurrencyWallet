@@ -1949,7 +1949,6 @@
     "id": "BTCMS_WalletAddress",
     "message": "Адрес кошелька:",
     "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/index.tsx",
       "src/front/shared/pages/Multisign/Btc/Btc.tsx"
     ]
   },
@@ -5902,7 +5901,7 @@
   },
   {
     "id": "bankCardButtonDescription",
-    "message": "В модальном окне вы должны пройти несколько шагов для обмена фиатной валюты на ETH. Скопируйте адрес вашего кошелька ниже и введите его в форму ввода. Средства будут отправлены на этот адрес. ETH будет зачислен и вы сможете купить токены.",
+    "message": "В модальном окне вам нужно выполнить несколько шагов, чтобы обменять фиатные средства на ETH. Выберите ETH в выпадающем списке и укажите адрес своего кошелька (вы можете скопировать его ниже). Подождите, пока средства не будут зачислены на ваш адрес. Затем вы можете купить токены, используя его.",
     "files": [
       "src/front/shared/components/Header/WidgetTours/QuickSwapFormTour.tsx",
       "src/front/shared/pages/Exchange/QuickSwap/ExchangeForm.tsx"
@@ -6116,6 +6115,13 @@
     "message": "Проскальзывание",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/ExchangeForm.tsx"
+    ]
+  },
+  {
+    "id": "addressOfYourWallet",
+    "message": "Адрес вашего кошелька:",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
     ]
   }
 ]

@@ -14,7 +14,7 @@ export class QuickSwapFormTour extends Component<any, any> {
           content: (
             <FormattedMessage
               id="bankCardButtonDescription"
-              defaultMessage="In the modal window you have go through a few steps for exchange fiat fund with crypto. Copy your wallet address below and pass it in the form input. Funds will be sent to this address. ETH will be credited to this address and you will be able to continue buying tokens using them."
+              defaultMessage="In the modal window, you have to go through several steps to exchange fiat funds for ETH. Select ETH in the window and specify the address of your wallet (you can copy it below). Wait until the funds are credited to your address. Then you can buy tokens using it."
             />
           ),
           spotlightPadding: 0,

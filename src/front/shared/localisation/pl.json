@@ -1827,7 +1827,6 @@
     "id": "BTCMS_WalletAddress",
     "message": "Wallet address:",
     "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/index.tsx",
       "src/front/shared/pages/Multisign/Btc/Btc.tsx"
     ]
   },
@@ -5902,7 +5901,7 @@
   },
   {
     "id": "bankCardButtonDescription",
-    "message": "W oknie modalnym musisz przejść przez kilka kroków, aby wymienić fundusz fiat z krypto. Skopiuj adres portfela poniżej i przekaż go w formularzu. Środki zostaną wysłane na ten adres. ETH zostanie przelany na ten adres i będziesz mógł kontynuować kupowanie tokenów za ich pomocą.",
+    "message": "W oknie modalnym musisz przejść przez kilka kroków, aby wymienić fundusze fiat NA. Wybierz ETH w oknie i podaj adres swojego portfela (możesz skopiować go poniżej). Poczekaj, aż środki zostaną przelane na twój adres. Następnie możesz kupić tokeny używając go.",
     "files": [
       "src/front/shared/components/Header/WidgetTours/QuickSwapFormTour.tsx",
       "src/front/shared/pages/Exchange/QuickSwap/ExchangeForm.tsx"
@@ -6116,6 +6115,13 @@
     "message": "Tolerancja poślizgu",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/ExchangeForm.tsx"
+    ]
+  },
+  {
+    "id": "addressOfYourWallet",
+    "message": "Adres Twojego portfela:",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
     ]
   }
 ]
