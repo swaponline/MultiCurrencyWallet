@@ -14,7 +14,7 @@ import Row from './Row'
 const tableTitles = [
   ' ',
   <FormattedMessage id="youPay" defaultMessage="You Pay" />,
-  <FormattedMessage id="youGet" defaultMessage="You Get" />,
+  <FormattedMessage id="partial255" defaultMessage="You Get" />,
   <FormattedMessage id="rate" defaultMessage="Rate" />,
   ' ',
 ]

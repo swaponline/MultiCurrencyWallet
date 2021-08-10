@@ -1906,7 +1906,7 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
                 inputValueLink={linked.haveAmount.pipe(this.setAmount)}
                 selectedValue={haveCurrency}
                 onSelect={this.handleSetHaveValue}
-                label={<FormattedMessage id="partial243" defaultMessage="You send" />}
+                label={<FormattedMessage id="MyOrdersYouSend" defaultMessage="You send" />}
                 id="Exchange456"
                 placeholder="0.00000000"
                 fiat={maxAmount > 0 && isNonOffers ? 0 : haveFiat}

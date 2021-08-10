@@ -71,7 +71,7 @@ function ExchangeForm(props) {
     const wrongTooltip = wallet.balanceError || Number.isNaN(wallet.balance)
 
     if (!wrongTooltip) {
-      return wrongTooltip ? null : (
+      return (
         <span styleName="balanceTooltip">
           <FormattedMessage id="partial767" defaultMessage="Balance: " />
 
@@ -98,7 +98,7 @@ function ExchangeForm(props) {
           fiat={fiatValue && fiatValue}
           inputValueLink={stateReference.spendedAmount}
           selectedValue={spendedCurrency.value}
-          label={<FormattedMessage id="partial243" defaultMessage="You send" />}
+          label={<FormattedMessage id="MyOrdersYouSend" defaultMessage="You send" />}
           id="needToRenameThisId"
           placeholder="0.0"
           currencies={currencies}
