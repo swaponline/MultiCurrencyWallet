@@ -1,11 +1,12 @@
 import { constants, localStorage } from 'helpers'
 import initMigration from './001_initMigration'
 import addBaseCurrencyToTokensInHiddenCoinsList from './002_updateHiddenCoinsList'
-
+import updateExchangeStorageSettings from './003_updateExchangeStorageSettings'
 
 const migrations = [
   initMigration,
   addBaseCurrencyToTokensInHiddenCoinsList,
+  updateExchangeStorageSettings,
   // don't break an order of migrations, add only to end of array
 ]
 
