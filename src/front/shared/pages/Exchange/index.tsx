@@ -6,15 +6,36 @@ import { externalConfig, localStorage, constants, links } from 'helpers'
 import QuickSwap from './QuickSwap'
 import AtomicSwap from './AtomicSwap'
 
+// option from the WP panel
+const globalMode = window.exchangeMode
+
+const GlobalModes = {
+  atomic: 'atomic',
+  quick: 'quick',
+  only_atomic: 'only_atomic',
+  only_quick: 'only_quick',
+}
+
 function Exchange(props) {
   const { location, history } = props
+
+  const validMode = globalMode && GlobalModes[globalMode]
+  const showOnlyOneType =
+    validMode === GlobalModes.only_atomic || validMode === GlobalModes.only_quick
 
   const exchangeSettings = localStorage.getItem(constants.localStorage.exchangeSettings) || {}
   let initialState = location.pathname === '/exchange/quick' ? 'quick' : 'atomic'
 
-  if (exchangeSettings.swapMode) {
+  if (showOnlyOneType) {
+    // and hide tabs next
+    initialState = globalMode.replace(/only_/, '')
+  } else if (validMode && location.pathname === '/exchange') {
+    // show the default WP mode if url isn't specified
+    initialState = validMode
+  } else if (exchangeSettings.swapMode) {
     initialState = exchangeSettings.swapMode
   } else {
+    // mode isn't saved for new users. Save it
     exchangeSettings.swapMode = initialState
     localStorage.setItem(constants.localStorage.exchangeSettings, exchangeSettings)
   }
@@ -53,19 +74,24 @@ function Exchange(props) {
 
   return (
     <div>
-      <div styleName="tabsWrapper">
-        <button styleName={`tab ${swapMode === 'atomic' ? 'active' : ''}`} onClick={openAtomicMode}>
-          <FormattedMessage id="atomicSwap" defaultMessage="Atomic swap" />
-        </button>
-        <button
-          styleName={`tab  ${swapMode === 'quick' ? 'active' : ''} ${
-            externalConfig.entry === 'testnet' ? 'disabled' : ''
-          }`}
-          onClick={externalConfig.entry === 'mainnet' ? openQuickMode : undefined}
-        >
-          <FormattedMessage id="quickSwap" defaultMessage="Quick swap" />
-        </button>
-      </div>
+      {!showOnlyOneType && (
+        <div styleName="tabsWrapper">
+          <button
+            styleName={`tab ${swapMode === 'atomic' ? 'active' : ''}`}
+            onClick={openAtomicMode}
+          >
+            <FormattedMessage id="atomicSwap" defaultMessage="Atomic swap" />
+          </button>
+          <button
+            styleName={`tab  ${swapMode === 'quick' ? 'active' : ''} ${
+              externalConfig.entry === 'testnet' ? 'disabled' : ''
+            }`}
+            onClick={externalConfig.entry === 'mainnet' ? openQuickMode : undefined}
+          >
+            <FormattedMessage id="quickSwap" defaultMessage="Quick swap" />
+          </button>
+        </div>
+      )}
 
       {/*
       pass props from this component into the components
