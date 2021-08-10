@@ -122,18 +122,27 @@ function ExchangeForm(props) {
       </div>
 
       {spendedCurrency.value === 'eth' && (
-        <Button
-          id="buyViaBankCardButtonId"
-          className="buyViaBankCardButton"
-          styleName="bankCardButton"
-          pending={isPending}
-          disabled={isPending}
-          onClick={openExternalExchange}
-          empty
-          small
-        >
-          <FormattedMessage id="buyViaBankCard" defaultMessage="Buy via bank card" />
-        </Button>
+        <>
+          <Button
+            id="buyViaBankCardButton"
+            className="buyViaBankCardButton"
+            styleName="bankCardButton"
+            pending={isPending}
+            disabled={isPending}
+            onClick={openExternalExchange}
+            empty
+            small
+          >
+            <FormattedMessage id="buyViaBankCard" defaultMessage="Buy via bank card" />
+          </Button>
+
+          <Tooltip id="buyViaBankCardButton" place="top" mark={false}>
+            <FormattedMessage
+              id="bankCardButtonDescription"
+              defaultMessage="In the modal window you have go through a few steps for exchange fiat fund with crypto. Copy your wallet address below and pass it in the form input. Funds will be sent to this address. ETH will be credited to this address and you will be able to continue buying tokens using them."
+            />
+          </Tooltip>
+        </>
       )}
 
       <div styleName="inputWrapper">

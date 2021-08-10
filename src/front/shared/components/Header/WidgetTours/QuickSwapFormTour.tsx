@@ -12,7 +12,10 @@ export class QuickSwapFormTour extends Component<any, any> {
       steps: [
         {
           content: (
-            <FormattedMessage id="bankCardButtonDescription" defaultMessage="Some description" />
+            <FormattedMessage
+              id="bankCardButtonDescription"
+              defaultMessage="In the modal window you have go through a few steps for exchange fiat fund with crypto. Copy your wallet address below and pass it in the form input. Funds will be sent to this address. ETH will be credited to this address and you will be able to continue buying tokens using them."
+            />
           ),
           spotlightPadding: 0,
           target: '.buyViaBankCardButton',
