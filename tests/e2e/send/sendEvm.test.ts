@@ -73,6 +73,17 @@ describe('Send EVM coins from the withdraw form', () => {
     }
   })
 
+  afterEach(async () => {
+    if (page) {
+      // after each test we are in the history
+      // go back on the home page
+      const homeUrl = page.url().replace(/\/#\/.+/, '/#/')
+
+      await page.goto(homeUrl)
+      await timeOut(3_000)
+    }
+  })
+
   it.each(dataForTx)(
     'Sending %s transaction',
     async (coinName: string, txData: TxData) => {
@@ -124,12 +135,6 @@ describe('Send EVM coins from the withdraw form', () => {
           page,
           selector: '#modalCloseButton',
         })
-
-        // after each transfer we are in the history
-        // go back on the home page
-        const homeUrl = page.url().replace(/\/#\/.+/, '/#/')
-
-        await page.goto(homeUrl)
       } else {
         throw new Error('No the browser or the page')
       }
