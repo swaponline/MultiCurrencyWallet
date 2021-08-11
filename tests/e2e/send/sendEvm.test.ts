@@ -15,8 +15,8 @@ type TxData = {
 }
 
 describe('Send EVM coins from the withdraw form', () => {
-  const waitingForStartup = 180_000
-  const waitingForTheTest = 30_000
+  const waitingForStartup = 160_000
+  const waitingForTheTest = 60_000
   const dataForTx: [string, TxData][] = [
     [
       'ETH',
