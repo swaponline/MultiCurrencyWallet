@@ -189,7 +189,6 @@ tr button[disabled]:hover {
   right: 30px;
   font-size: 13px;
   top: -10px;
-  background: var(--color-background-elements);
   padding: 10px;
   z-index: 11;
 
@@ -330,7 +329,6 @@ tr button[disabled]:hover {
   .assetsTableInfo {
     .errorMessage {
       position: absolute;
-      background: var(--color-background-elements);
       z-index: 11;
       width: calc(100vw - 95px);
       height: 40px;
