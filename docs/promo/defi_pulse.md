@@ -28,11 +28,15 @@
 
 # Please list all smart contract address used by project. Please list each smart contract address with commas in between
 
-- ?
+> ERC20, BEP20, ERC20 (polygon), ETH, BNB
+
+- 0x2015835367EAb64729494CcDB9D3FcbFBf7339a6, 0xd152CD6F9cf76921759d3f51f743651e549f6925,
+  0x0F400c0cE80D20E65CB66E5c7a814F5fEfa711cC, 0x61eEaC8B9Db0dF4e5E3cCC651F16ffFc6c1d4456,
+  0x2f87d23cd8d788bc9a32e540cdd8253f9b1f54cf
 
 # Please provide technical leads email
 
-- ?
+- team@swaponline.io
 
 # Please provide the technical leads or relevant team member Discord username (including the #)
 
