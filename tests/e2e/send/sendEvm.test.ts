@@ -1,5 +1,12 @@
 import puppeteer from 'puppeteer'
-import { createBrowser, importWallet, selectSendCurrency, takeScreenshot, timeOut } from '../utils'
+import {
+  createBrowser,
+  importWallet,
+  selectSendCurrency,
+  takeScreenshot,
+  timeOut,
+  clickOn,
+} from '../utils'
 import testWallets from '../../testWallets'
 
 type TxData = {
@@ -7,7 +14,8 @@ type TxData = {
   amount: number
 }
 
-describe('Send', () => {
+describe('Send EVM coins from the withdraw form', () => {
+  const waitingForStartup = 180_000
   const waitingForTheTest = 30_000
   const dataForTx: [string, TxData][] = [
     [
@@ -53,7 +61,7 @@ describe('Send', () => {
       page: page,
       seed: testWallets.eth.seedPhrase.split(' '),
     })
-  })
+  }, waitingForStartup)
 
   afterAll(async () => {
     if (browser) {
@@ -91,19 +99,14 @@ describe('Send', () => {
           // daley for fee fetching
           await timeOut(5_000)
 
-          await page.$('#sendButton').then((sendButton) => {
-            if (sendButton) {
-              sendButton.click()
-            } else {
-              throw new Error('Send button is not found')
-            }
+          await clickOn({
+            page,
+            selector: '#sendButton',
           })
 
-          await page.waitForSelector('#txAmout', { timeout: 60_000 })
+          await page.waitForSelector('#txAmout', { timeout: 30_000 })
 
           const txAmount = await page.$eval('#txAmout', (el) => el.textContent)
-
-          await takeScreenshot(page, `Send${coinName}_TxInfo`)
 
           expect(txAmount).toContain(String(amount))
         } catch (error) {
@@ -113,15 +116,16 @@ describe('Send', () => {
           expect(false).toBe(true)
         }
 
-        await page.$('#modalCloseButton').then((closeBtn) => {
-          if (closeBtn) {
-            closeBtn.click()
-          } else {
-            throw new Error('Close button is not found')
-          }
+        await clickOn({
+          page,
+          selector: '#modalCloseButton',
         })
 
-        await page.goto(`${page.url()}/`)
+        // after each transfer we are in the history
+        // go back on the home page
+        const homeUrl = page.url().replace(/\/#\/.+/, '/#/')
+
+        await page.goto(homeUrl)
       } else {
         throw new Error('No the browser or the page')
       }

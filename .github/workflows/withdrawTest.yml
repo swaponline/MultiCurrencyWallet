@@ -28,6 +28,7 @@ jobs:
     - name: TEST
       run: |
         npm run test:unit
+        npm run test:e2e_send_evm
       env:
         CI: true
         super_secret: ${{ secrets.buildbot }}
