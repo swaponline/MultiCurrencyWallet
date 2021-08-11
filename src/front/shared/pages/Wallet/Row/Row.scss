@@ -330,7 +330,6 @@ tr button[disabled]:hover {
   .assetsTableInfo {
     .errorMessage {
       position: absolute;
-      background: var(--color-background-elements);
       z-index: 11;
       width: calc(100vw - 95px);
       height: 40px;
@@ -359,6 +358,10 @@ tr button[disabled]:hover {
 @media all and (max-width: 480px) {
   .cryptoBalanceBtn {
     font-size: 1em;
+  }
+
+  .errorMessage {
+    background: var(--color-background);
   }
 
   .assetsTableValue {
