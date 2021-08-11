@@ -25,13 +25,9 @@ jobs:
       run: |
         npm i
 
-    - name: BTC tests
+    - name: E2E tests
       run: |
-        npm run test:btc_send
-
-    - name: EVM tests
-      run: |
-        npm run test:e2e_send_evm
+        npm run test:e2e_send:actions
 
       env:
         CI: true
