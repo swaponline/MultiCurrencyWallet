@@ -64,6 +64,10 @@ describe('Send EVM coins from the withdraw form', () => {
   }, waitingForStartup)
 
   afterAll(async () => {
+    if (page) {
+      await page.close()
+    }
+
     if (browser) {
       await browser.close()
     }
