@@ -10,6 +10,7 @@ import {
 
 const locales = {
   nl: 'Dutch',
+  de: 'German',
   en: 'English',
   ru: 'Russian',
   es: 'Spanish',

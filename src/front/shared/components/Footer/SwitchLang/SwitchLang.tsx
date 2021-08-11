@@ -63,6 +63,17 @@ const SwitchLang = (props) => {
       </a>
       |
       <a
+        href={localeIsNotMatched('DE') && '#/'}
+        styleName="language"
+        onClick={(e) => {
+          switchLang(e, 'DE')
+          return false
+        }}
+      >
+        <FormattedMessage id="SwitchLangDE" defaultMessage="DE" />
+      </a>
+      |
+      <a
         href={localeIsNotMatched('ES') && '#/'}
         styleName="language"
         onClick={(e) => {

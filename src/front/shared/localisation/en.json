@@ -4633,6 +4633,13 @@
     ]
   },
   {
+    "id": "SwitchLangDE",
+    "message": "DE",
+    "files": [
+      "src/front/shared/components/Footer/SwitchLang/SwitchLang.tsx"
+    ]
+  },
+  {
     "id": "SwitchLangES",
     "message": "ES",
     "files": [
