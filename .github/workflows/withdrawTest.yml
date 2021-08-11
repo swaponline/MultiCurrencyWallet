@@ -24,11 +24,26 @@ jobs:
     - name: npm install, build and deploy 
       run: |
         npm i
+        npm run build:testnet-tests
 
     - name: E2E tests
       run: |
+        mkdir ./tests/e2e/screenshots
         npm run test:e2e_send:actions
+
+    - name: Upload failure screenshots
+      uses: actions/upload-artifact@v2
+      if: failure()
+      with:
+        name: failure-screenshots
+        path: ./tests/e2e/screenshots
+        if-no-files-found: ignore
+    - name: Upload screenshots
+      uses: actions/upload-artifact@v2
+      with:
+        name: screenshots
+        path: ./tests/e2e/screenshots
+        if-no-files-found: ignore
 
       env:
         CI: true
-        super_secret: ${{ secrets.buildbot }}
