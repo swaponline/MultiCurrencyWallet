@@ -54,7 +54,7 @@ describe('Sending EVM Coin', () => {
   type UsualTxItem = [Coin, UsualSettings]
   
   const usualTxCases: UsualTxItem[] = [
-    [
+/*     [
       'ETH',
       {
         web3: ethWeb3,
@@ -81,12 +81,14 @@ describe('Sending EVM Coin', () => {
           gasLimit: DEFAULT_CURRENCY_PARAMETERS.evmLike.limit.send,
         },
       },
-    ],
+    ], */
     [
       'MATIC',
       {
         web3: maticWeb3,
         paramsToSend: {
+          //@ts-ignore
+          web3: maticWeb3,
           externalAddress: testWallets.matic.address.toLowerCase(),
           externalPrivateKey: testWallets.matic.privateKey,
           to: testWallets.matic.address.toLowerCase(),
@@ -101,6 +103,8 @@ describe('Sending EVM Coin', () => {
       {
         web3: arbitrumWeb3,
         paramsToSend: {
+          //@ts-ignore
+          web3: arbitrumWeb3,
           externalAddress: testWallets.arbeth.address.toLowerCase(),
           externalPrivateKey: testWallets.arbeth.privateKey,
           to: testWallets.arbeth.address.toLowerCase(),
@@ -172,7 +176,7 @@ describe('Sending EVM Coin', () => {
   type AdminTxItem = [Coin, AdminSettings]
 
   const adminTxCases: AdminTxItem[] = [
-    [
+/*     [
       'ETH',
       {
         web3: ethWeb3,
@@ -205,7 +209,7 @@ describe('Sending EVM Coin', () => {
           },
         },
       },
-    ],
+    ], */
     [
       'MATIC',
       {
