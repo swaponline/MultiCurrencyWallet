@@ -25,10 +25,14 @@ jobs:
       run: |
         npm i
 
-    - name: TEST
+    - name: BTC tests
       run: |
-        npm run test:unit
+        npm run test:btc_send
+
+    - name: EVM tests
+      run: |
         npm run test:e2e_send_evm
+
       env:
         CI: true
         super_secret: ${{ secrets.buildbot }}
