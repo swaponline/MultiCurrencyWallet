@@ -4,7 +4,7 @@
 
 - SwapOnline
 
-# Please provide a link to your website.
+# Please provide a link to your website
 
 - https://swaponline.io
 
@@ -15,14 +15,17 @@
 # Please provide link to project's github repo or whitepaper. Feel free to give links to all resources associated with project
 
 - https://github.com/swaponline/MultiCurrencyWallet
+- https://t.me/swaponline
 
 # Describe your company in 1-2 sentence
 
-- ?
+- SwapOnline is an open-source non-custodial multi-currency wallet with decentralized exchange based
+  on the atomic swap.
 
 # How would you categorize your project? (We may adjust these categories for the list)
 
 - Wallets
+- Trading
 
 # Does project use smart contracts?
 
@@ -66,9 +69,10 @@ https://docs.google.com/document/d/1q06oa9QeAEPz1RE6eLjOw191v_M0fAAImCSz3rLzSzE/
 
 - https://medium.com/swaponline/technical-audit-of-swap-core-is-finished-successfully-65a67bc5f58a
 
-# Please list the chain(s) your project is built on. (We are in the process of considering which chains we will support.
+# Please list the chain(s) your project is built on
 
-If your chain is not yet supported, we appreciate your patience)
+(We are in the process of considering which chains we will support. If your chain is not yet
+supported, we appreciate your patience)
 
 - Ethereum
 - Binance smart chain
