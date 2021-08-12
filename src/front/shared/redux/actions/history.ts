@@ -5,12 +5,19 @@ import erc20Like from 'common/erc20Like'
 import { COIN_DATA } from 'swap.app/constants/COINS'
 
 const pullTransactions = (transactions) => {
-  let data = [...transactions].sort((a, b) => b.date - a.date)
+  const sortedTxs = transactions.sort((a, b) => b.date - a.date)
+  const filteredTxs: IUniversalObj[] = []
 
-  reducers.history.setTransactions(data)
+  for (let i = 0; i < sortedTxs.length - 1; i += 1) {
+    if (sortedTxs[i].hash !== sortedTxs[i + 1].hash) {
+      filteredTxs.push(sortedTxs[i])
+    }
+  }
+
+  reducers.history.setTransactions(filteredTxs)
 }
 
-const setTransactions = async (address, type, callback) => {
+const setTransactions = async (address, type) => {
   let actionName
 
   if (erc20Like.isToken({name: type})) {
@@ -23,15 +30,13 @@ const setTransactions = async (address, type, callback) => {
   const isMultisigBtcAddress = actionName === 'btc' && actions.btcmultisig.isBTCMSUserAddress(address)
 
   try {
-    const currencyTxs = await Promise.all([
+    const result: [][] = await Promise.all([
       actions[actionName].getTransaction(address, type),
       isMultisigBtcAddress ? actions.multisigTx.fetch(address) : new Promise((resolve) => resolve([])),
     ])
-    if (typeof callback === 'function') {
-      callback([...currencyTxs])
-    } else {
-      pullTransactions([...currencyTxs])
-    }
+    const transactions = [].concat(...result)
+
+    pullTransactions([...transactions])
   } catch (error) {
     console.group('Actions >%c history', 'color: red;')
     console.error('setTransactions: ', error)
@@ -40,5 +45,6 @@ const setTransactions = async (address, type, callback) => {
 }
 
 export default {
+  pullTransactions,
   setTransactions,
 }

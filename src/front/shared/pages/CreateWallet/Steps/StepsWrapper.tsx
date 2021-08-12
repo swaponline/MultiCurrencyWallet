@@ -8,6 +8,8 @@ import config from 'helpers/externalConfig'
 import { defaultPack, widgetPack } from './startPacks'
 import FirstStep from './FirstStep'
 import SecondStep from './SecondStep'
+import getCoinInfo from 'common/coins/getCoinInfo'
+
 
 const isWidgetBuild = config && config.isWidget
 const curEnabled = config.opts.curEnabled
@@ -48,14 +50,23 @@ export default class StepsWrapper extends Component<any, any> {
         this.defaultStartPack.push({ name: "NEXT", capture: "NEXT.coin" })
       }
 
+      // Multi token build
       config.opts.ownTokens.forEach((token) => {
-        config[token.standard][token.name.toLowerCase()] = token
+        const name = token.name.toLowerCase()
+        const standard = token.standard.toLowerCase()
 
         this.defaultStartPack.push({
-          name: token.name.toUpperCase(),
+          name: name.toUpperCase(),
           capture: token.fullName,
+          baseCurrency: TOKEN_STANDARDS[standard].currency.toUpperCase(),
         })
       })
+
+      if (config.opts.addCustomTokens) {
+        if (config.erc20) this.defaultStartPack.push({ name: 'ERC20', capture: 'Token', baseCurrency: 'ETH' })
+        if (config.bep20) this.defaultStartPack.push({ name: 'BEP20', capture: 'Token', baseCurrency: 'BNB' })
+        if (config.erc20matic) this.defaultStartPack.push({ name: 'ERC20MATIC', capture: 'Token', baseCurrency: 'MATIC' })
+      }
     }
 
     const enabledCurrencies = getActivatedCurrencies()
@@ -113,6 +124,56 @@ export default class StepsWrapper extends Component<any, any> {
       }
     }
 
+    // Порядок коинов в списке
+    if (config.opts.createWalletCoinsOrder && config.opts.createWalletCoinsOrder.length) {
+      const sortPacks = (packList) => {
+        const setCoinOrder = (coinInfo, order) => {
+          const {
+            coin,
+            blockchain,
+          } = getCoinInfo(coinInfo)
+          let isCustomToken = false
+          let customTokenType = ``
+          if (coinInfo === `CUSTOM_ERC20` || coinInfo === `CUSTOM_BEP20` || coinInfo === `CUSTOM_ERC20MATIC`) {
+            customTokenType = coinInfo.split(`_`)[1]
+            isCustomToken = true
+          }
+          Object.keys(packList).forEach((coinIndex) => {
+            if (isCustomToken) {
+              if (packList[coinIndex].name === customTokenType
+                && packList[coinIndex].capture === `Token`
+              ) {
+                packList[coinIndex].order = order
+                return false
+              }
+            } else {
+              if (blockchain) {
+                if (packList[coinIndex].name === coin
+                  && packList[coinIndex].baseCurrency === blockchain.toUpperCase()
+                ) {
+                  packList[coinIndex].order = order
+                  return false
+                }
+              } else {
+                if (packList[coinIndex].name === coin) {
+                  packList[coinIndex].order = order
+                  return false
+                }
+              }
+            }
+          })
+        }
+        Object.keys(packList).forEach((coinIndex, index) => {
+          packList[coinIndex].order = packList.length + index
+        })
+        config.opts.createWalletCoinsOrder.forEach((coin, order) => {
+          setCoinOrder(coin, order)
+        })
+        packList.sort((pack1, pack2) => pack1.order - pack2.order)
+      }
+      sortPacks((isWidgetBuild) ? this.widgetStartPack : this.defaultStartPack)
+    }
+    
     this.state = {
       curState,
       coins,

@@ -1,6 +1,6 @@
 {
   "manifest_version": 2,
-  "version": "1.3.81",
+  "version": "1.3.8",
   "name": "Wallet with marketmaking",
   "short_name": "MultiCurrencyWallet",
   "description": "Hot wallet with marketmaking for earning interest on bitcoin and other cryptocurrencies",
@@ -10,14 +10,14 @@
     "32": "./icons/icon-32.png",
     "192": "./icons/icon-196.png"
   },
-  "options_page": "application/index.html#/marketmaker/WBTC",
+  "options_page": "application/index.html#/marketmaker/{MATIC}WBTC",
   "browser_action": {
     "default_icon": "./icons/icon-32.png",
     "default_title": "MultiCurrencyWallet"
   },
   "background": {
-    "page": "application/index.html#/marketmaker/WBTC",
+    "page": "application/index.html#/marketmaker/{MATIC}WBTC",
     "persistent": true
   },
-  "content_security_policy": "script-src 'self' 'unsafe-eval' https://unpkg.com/ 'sha256-WdwCuhP9J8yS4GlpSRCmB0CJC+Vg3Xo4yT8NjNW0d/Y='; object-src 'self'"
+  "content_security_policy": "script-src 'self' 'unsafe-eval' https://unpkg.com/ 'sha256-PGPZTVF5wEwDUBlS4T4U148axx3F5TFrn4wulbUYuuw='; object-src 'self'"
 }

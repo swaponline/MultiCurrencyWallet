@@ -23,39 +23,23 @@ export default class Row extends PureComponent<any, any> {
     const { hash, type, hiddenList, invoiceData, viewType } = props
     const dataInd = invoiceData && invoiceData.id
     const ind = `${dataInd || hash}-${type}`
-    const userWallets = actions.core.getWallets()
 
     this.state = {
-      userWallets,
       viewType: (viewType || 'transaction'),
       exCurrencyRate: 0,
       comment: actions.comments.returnDefaultComment(hiddenList, ind),
       cancelled: false,
       payed: false,
-      showFiat: true,
+      showFiat: false,
     }
   }
 
   componentDidMount() {
-    const { type } = this.props
-    const { userWallets } = this.state
-
-    // request fiat balance if wallet has fiat price
-    userWallets.forEach((wallet) => {
-      if (wallet.currency.toLowerCase() === type.toLowerCase()) {
-        if (wallet.infoAboutCurrency) {
-          this.getFiatBalance(type)
-        } else {
-          this.setState(() => ({
-            showFiat: false
-          }))
-        }
-      }
-    })
+    this.fetchFiatBalance()
   }
 
-  getFiatBalance = async (type) => {
-    const { activeFiat } = this.props
+  fetchFiatBalance = async () => {
+    const { activeFiat, type } = this.props
 
     if (activeFiat) {
       actions.user.getExchangeRate(type, activeFiat.toLowerCase()).then((exCurrencyRate) => {

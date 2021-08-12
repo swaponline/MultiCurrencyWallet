@@ -1,6 +1,5 @@
 import Web3 from 'web3'
 import { BigNumber } from 'bignumber.js'
-import Transaction from 'ethereumjs-tx'
 import { getState } from 'redux/core'
 import actions from 'redux/actions'
 import reducers from 'redux/core/reducers'
@@ -248,9 +247,6 @@ class EthLikeAction {
         resolve([])
       }
 
-      const Web3 = this.getCurrentWeb3()
-
-      const type = ownType || this.tickerKey
       const internalUrl = `?module=account&action=txlistinternal&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=${this.explorerApiKey}`
       const url = `?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=${this.explorerApiKey}`
 
@@ -273,43 +269,12 @@ class EthLikeAction {
               .get(this.explorerName, url)
               .then((response: any) => {
                 if (Array.isArray(response.result)) {
-                  const transactions = response.result
-                    .filter((item: ResponseItem) => {
-                      return (
-                        item.value > 0 || (internals[item.hash] && internals[item.hash].value > 0)
-                      )
-                    })
-                    .map((item) => ({
-                      type,
-                      confirmations: item.confirmations,
-                      hash: item.hash,
-                      status: item.blockHash !== null ? 1 : 0,
-                      value: Web3.utils.fromWei(
-                        internals[item.hash] && internals[item.hash].value > 0
-                          ? internals[item.hash].value
-                          : item.value
-                      ),
-                      address: item.to,
-                      canEdit: address === ownerAddress,
-                      date: item.timeStamp * 1000,
-                      direction:
-                        internals[item.hash] &&
-                        internals[item.hash].to.toLowerCase() === address.toLowerCase()
-                          ? 'in'
-                          : address.toLowerCase() === item.to.toLowerCase()
-                          ? 'in'
-                          : 'out',
-                    }))
-                    .filter((item) => {
-                      if (item.direction === 'in') return true
-                      if (!this.adminFeeObj) return true
-                      if (address.toLowerCase() === this.adminFeeObj.address.toLowerCase())
-                        return true
-                      if (item.address.toLowerCase() === this.adminFeeObj.address.toLowerCase())
-                        return false
-  
-                      return true
-                    })
+                  const transactions = this.formatTransactions({
+                    address,
+                    txs: response.result,
+                    internalTxs: internals,
+                    currencyName: ownType || this.tickerKey,
+                  })
   
                   resolve(transactions)
                 } else {
@@ -330,6 +295,48 @@ class EthLikeAction {
     })
   }
 
+  formatTransactions = (params) => {
+    const { address, txs, internalTxs, currencyName } = params
+
+    const Web3 = this.getCurrentWeb3()
+    const ownerAddress = getState().user[`${this.tickerKey}Data`].address
+
+    return txs
+      .filter((item) => {
+        return item.value > 0 || (internalTxs[item.hash] && internalTxs[item.hash].value > 0)
+      })
+      .map((item) => ({
+        type: currencyName,
+        confirmations: item.confirmations,
+        hash: item.hash,
+        status: item.blockHash ? 1 : 0,
+        value: Web3.utils.fromWei(
+          internalTxs[item.hash] && internalTxs[item.hash].value > 0
+            ? internalTxs[item.hash].value
+            : item.value
+        ),
+        address: item.to,
+        canEdit: address === ownerAddress,
+        date: item.timeStamp * 1000,
+        direction:
+          (internalTxs[item.hash] &&
+            address.toLowerCase() === internalTxs[item.hash].to.toLowerCase()) ||
+          address.toLowerCase() === item.to.toLowerCase()
+            ? 'in'
+            : 'out',
+      }))
+      .filter((item) => {
+        if (
+          item.direction === 'out' &&
+          item.address.toLowerCase() === this.adminFeeObj?.address?.toLowerCase()
+        ) {
+          return false
+        }
+
+        return true
+      })
+  }
+
   getWalletByWords = (mnemonic: string, walletNumber: number = 0, path: string = '') => {
     return mnemonicUtils.getEthLikeWallet({ mnemonic, walletNumber, path })
   }
@@ -346,28 +353,9 @@ class EthLikeAction {
   }
 
   send = async (params): Promise<{ transactionHash: string }> => {
-    let {
-      externalAddress,
-      externalPrivateKey,
-      data,
-      to,
-      amount,
-      gasPrice,
-      gasLimit,
-      waitReceipt = false,
-      speed,
-    } = params
-
-    // fake tx - turbo-swaps debug
-    // if (false) {
-    //   return new Promise(res => res({
-    //     transactionHash: '0x58facdbf5023a401f39998179995f0af1e54a64455145df6ed507abdecc1b0a4'
-    //   }))
-    // }
+    let { to, amount, gasPrice, gasLimit, speed, data, waitReceipt = false } = params
 
     const Web3 = this.getCurrentWeb3()
-
-    const haveExternalWallet = externalAddress && !!externalPrivateKey
     const ownerAddress = metamask.isConnected() ? metamask.getAddress() : getState().user[`${this.tickerKey}Data`].address
     const recipientIsContract = await this.isContract(to)
 
@@ -393,25 +381,16 @@ class EthLikeAction {
       value: Web3.utils.toHex(Web3.utils.toWei(String(amount), 'ether')),
     }
 
-    let privateKey: string | undefined = undefined
-
-    if (haveExternalWallet) {
-      txData.from = externalAddress
-      privateKey = externalPrivateKey
-    } else {
-      privateKey = this.getPrivateKeyByAddress(ownerAddress)
-    }
-
+    const privateKey = this.getPrivateKeyByAddress(ownerAddress)
     const walletData = actions.core.getWallet({
       address: ownerAddress,
       currency: this.ticker,
     })
 
-    if (haveExternalWallet && !walletData?.isMetamask) {
-      txData = await this.signTransaction({
-        txData,
-        privateKey,
-      })
+    if (!walletData?.isMetamask) {
+      const signedData = await Web3.eth.accounts.signTransaction(txData, privateKey)
+
+      txData = signedData.rawTransaction
       sendMethod = Web3.eth.sendSignedTransaction
     }
 
@@ -424,8 +403,8 @@ class EthLikeAction {
       if (this.adminFeeObj && !walletData.isMetamask) {
         receipt.then(() => {
           this.sendAdminTransaction({
-            from: txData?.from || externalAddress,
-            value: amount,
+            from: txData.from,
+            amount,
             gasPrice,
             gasLimit,
             privateKey,
@@ -470,12 +449,9 @@ class EthLikeAction {
     }
 
     return new Promise(async (res) => {
-      const signedTx = await this.signTransaction({
-        txData,
-        privateKey,
-      })
+      const signedData = await Web3.eth.accounts.signTransaction(txData, privateKey)
 
-      Web3.eth.sendSignedTransaction(signedTx)
+      Web3.eth.sendSignedTransaction(signedData.rawTransaction)
         .on('transactionHash', (hash) => {
           console.group('%c Admin commission is sended', 'color: green;')
           console.log('tx hash', hash)
@@ -483,20 +459,6 @@ class EthLikeAction {
           res(hash)
         })
     })
-  }
-
-  signTransaction = async (params) => {
-    const { txData, privateKey } = params
-    const Web3 = this.getCurrentWeb3()
-
-    const bufferPrivateKey = Buffer.from(privateKey.replace('0x', ''), 'hex')
-    const txCount = await Web3.eth.getTransactionCount(txData.from)
-    const nonce = Web3.utils.toHex(txCount)
-    const transaction = new Transaction({ ...txData, nonce }, { chainId: this.chainId })
-
-    transaction.sign(bufferPrivateKey)
-
-    return '0x' + transaction.serialize().toString('hex')
   }
 
   isContract = async (address: string): Promise<boolean> => {

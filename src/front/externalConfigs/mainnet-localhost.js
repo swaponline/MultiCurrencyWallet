@@ -1,42 +1,42 @@
 window.widgetEvmLikeTokens = [
-  // {
-  //   standard: '',
-  //   address: '',
-  //   decimals: ,
-  //   name: '',
-  //   fullName: '',
-  //   icon: '',
-  //   customExchangeRate: '',
-  //   iconBgColor: '',
-  //   howToDeposit: '',
-  //   howToWithdraw: '',
-  // },
-  /* {
+/*   {
+    name: 'usdt',
+    symbol: 'usdt',
     standard: 'erc20',
     address: '0xdac17f958d2ee523a2206206994597c13d831ec7',
     decimals: 6,
-    name: 'USDT',
-    fullName: 'Usdt',
-    canSwap: true,
+    fullName: 'Tether'
   },
   {
+    name: 'share',
+    symbol: 'share',
     standard: 'erc20',
-    address: '0x1fe72034da777ef22533eaa6dd7cbe1d80be50fa',
-    decimals: 18,
-    name: 'PAY',
-    fullName: 'PayAccept',
-    canSwap: true,
+    // Address of ERC20 contract
+    address: '0xc787a019ea4e0700e997c8e7d26ba2efa2e6862a',
+    // Count of decimals after dot
+    decimals: 0,
+    // Display name in wallet (By default - its symbol of ERC20, but can be other userfriendy text)
+    fullName: 'Mining.Taxi',
+    // Icon of currency (image)
+    icon: 'https://wallet.miningtaxi.com/images/1_4.svg',
+    // Background color of icon
+    iconBgColor: '#7158e8',
   },
   {
+    name: 'uni',
+    symbol: 'uni',
     standard: 'erc20',
-    address: '0xc060b26e60698e91a6acc84051a26b32e38dd1a4',
+    // Address of ERC20 contract
+    address: '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984',
+    // Count of decimals after dot
     decimals: 18,
-    name: 'PROXIMA',
-    fullName: 'Proxima',
-    icon: 'https://growup.wpmix.net/wp-content/uploads/2016/10/favicon.png',
-    iconBgColor: '#ccc',
-    canSwap: true,
-  }, */
+    // Display name in wallet (By default - its symbol of ERC20, but can be other userfriendy text)
+    fullName: 'Uniswap',
+    // Icon of currency (image)
+    icon: 'https://wallet.miningtaxi.com/images/uniswap.svg',
+    // Background color of icon
+    iconBgColor: '#ff007a',
+  } */
 ]
 
 window.buildOptions = {
@@ -64,5 +64,24 @@ window.buildOptions = {
     buy: '{eth}wbtc',
     sell: 'btc',
   },
-  invoiceEnabled: false, // Allow create invoices
+  /*
+    Порядок валют на странице создания кошелька
+    CUSTOM_ERC20, CUSTOM_BEP20, CUSTOM_ERC20MATIC - Добавление пользовательского токена (при условии addCustomERC20 = true)
+    {ERC20}UNI - Токен в сети Эфира
+    {BEP20}TOKENSYMBOL - Токен в сети бинанс
+    {ERC20MATIC}TOKENSYMBOL - Токен в сети матик
+    Все остальные коины, которые не указаны, будут помещены в конец списка в произвольном порядке
+  */
+  createWalletCoinsOrder: [
+    '{ETH}UNI',
+    'CUSTOM_ERC20',
+    '{ETH}SHARE',
+    'BTC',
+    'CUSTOM_ERC20MATIC',
+    'MATIC',
+    'BNB',
+    'CUSTOM_BEP20'
+  ],
+  invoiceEnabled: true, // Allow create invoices
+  showWalletBanners: true,
 }

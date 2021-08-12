@@ -20,20 +20,40 @@ const externalConfig = () => {
   console.log(`TargetHost (${targetHost})`)
   console.log(`Config: used external (${from})`)
 
-  return new CopyWebpackPlugin({
-    patterns: [
-      {
-        from,
-        to: './erc20tokens.js',
-        toType: 'file',
-      },
-      {
-        from: 'src/front/client/colors.css',
-        to: './colors.css',
-        toType: 'file',
-      },
-    ],
-  })
+  return [
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from,
+          to: './erc20tokens.js',
+          toType: 'file',
+        },
+      ],
+    }),
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: './src/front/client/customStyles.css',
+          to: './customStyles.css',
+          toType: 'file',
+        },
+      ],
+    }),
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from,
+          to: './erc20tokens.js',
+          toType: 'file',
+        },
+        {
+          from: 'src/front/client/colors.css',
+          to: './colors.css',
+          toType: 'file',
+        },
+      ],
+    })
+  ]
 }
 
 export default externalConfig
