@@ -17,7 +17,7 @@ const pullTransactions = (transactions) => {
   reducers.history.setTransactions(filteredTxs)
 }
 
-const setTransactions = async (address, type, callback: Function | undefined = undefined) => {
+const setTransactions = async (address, type) => {
   let actionName
 
   if (erc20Like.isToken({name: type})) {
@@ -36,11 +36,7 @@ const setTransactions = async (address, type, callback: Function | undefined = u
     ])
     const transactions = [].concat(...result)
 
-    if (typeof callback === 'function') {
-      callback([...transactions])
-    } else {
-      pullTransactions([...transactions])
-    }
+    pullTransactions([...transactions])
   } catch (error) {
     console.group('Actions >%c history', 'color: red;')
     console.error('setTransactions: ', error)
