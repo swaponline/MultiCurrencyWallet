@@ -43,9 +43,9 @@ export default (webpackConfig) => {
   webpackConfig.optimization = {
     minimize: false,
   }
-  
+
   webpackConfig.plugins.push(
-    externalConfig(),
+    ...externalConfig(),
     ownBuffer(),
   )
 
