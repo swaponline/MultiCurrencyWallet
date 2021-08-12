@@ -1,6 +1,4 @@
 import React, { Component } from 'react'
-
-import actions from 'redux/actions'
 import PropTypes from 'prop-types'
 
 import cssModules from 'react-css-modules'
@@ -39,7 +37,7 @@ export default class ModalBox extends Component<any, any> {
           <WidthContainer styleName="headerContent">
             <div styleName="title">{title}</div>
 
-            <CloseIcon styleName="closeButton" onClick={onClose} />
+            <CloseIcon id="modalCloseButton" styleName="closeButton" onClick={onClose} />
           </WidthContainer>
         </div>
         <div styleName="contentContainer">
