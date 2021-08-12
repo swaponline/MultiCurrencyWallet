@@ -247,9 +247,6 @@ class EthLikeAction {
         resolve([])
       }
 
-      const Web3 = this.getCurrentWeb3()
-
-      const type = ownType || this.tickerKey
       const internalUrl = `?module=account&action=txlistinternal&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=${this.explorerApiKey}`
       const url = `?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=${this.explorerApiKey}`
 
@@ -272,43 +269,12 @@ class EthLikeAction {
               .get(this.explorerName, url)
               .then((response: any) => {
                 if (Array.isArray(response.result)) {
-                  const transactions = response.result
-                    .filter((item: ResponseItem) => {
-                      return (
-                        item.value > 0 || (internals[item.hash] && internals[item.hash].value > 0)
-                      )
-                    })
-                    .map((item) => ({
-                      type,
-                      confirmations: item.confirmations,
-                      hash: item.hash,
-                      status: item.blockHash !== null ? 1 : 0,
-                      value: Web3.utils.fromWei(
-                        internals[item.hash] && internals[item.hash].value > 0
-                          ? internals[item.hash].value
-                          : item.value
-                      ),
-                      address: item.to,
-                      canEdit: address === ownerAddress,
-                      date: item.timeStamp * 1000,
-                      direction:
-                        internals[item.hash] &&
-                        internals[item.hash].to.toLowerCase() === address.toLowerCase()
-                          ? 'in'
-                          : address.toLowerCase() === item.to.toLowerCase()
-                          ? 'in'
-                          : 'out',
-                    }))
-                    .filter((item) => {
-                      if (item.direction === 'in') return true
-                      if (!this.adminFeeObj) return true
-                      if (address.toLowerCase() === this.adminFeeObj.address.toLowerCase())
-                        return true
-                      if (item.address.toLowerCase() === this.adminFeeObj.address.toLowerCase())
-                        return false
-  
-                      return true
-                    })
+                  const transactions = this.formatTransactions({
+                    address,
+                    txs: response.result,
+                    internalTxs: internals,
+                    currencyName: ownType || this.tickerKey,
+                  })
   
                   resolve(transactions)
                 } else {
@@ -327,6 +293,48 @@ class EthLikeAction {
           resolve([])
         })
     })
+  }
+
+  formatTransactions = (params) => {
+    const { address, txs, internalTxs, currencyName } = params
+
+    const Web3 = this.getCurrentWeb3()
+    const ownerAddress = getState().user[`${this.tickerKey}Data`].address
+
+    return txs
+      .filter((item) => {
+        return item.value > 0 || (internalTxs[item.hash] && internalTxs[item.hash].value > 0)
+      })
+      .map((item) => ({
+        type: currencyName,
+        confirmations: item.confirmations,
+        hash: item.hash,
+        status: item.blockHash ? 1 : 0,
+        value: Web3.utils.fromWei(
+          internalTxs[item.hash] && internalTxs[item.hash].value > 0
+            ? internalTxs[item.hash].value
+            : item.value
+        ),
+        address: item.to,
+        canEdit: address === ownerAddress,
+        date: item.timeStamp * 1000,
+        direction:
+          (internalTxs[item.hash] &&
+            address.toLowerCase() === internalTxs[item.hash].to.toLowerCase()) ||
+          address.toLowerCase() === item.to.toLowerCase()
+            ? 'in'
+            : 'out',
+      }))
+      .filter((item) => {
+        if (
+          item.direction === 'out' &&
+          item.address.toLowerCase() === this.adminFeeObj?.address?.toLowerCase()
+        ) {
+          return false
+        }
+
+        return true
+      })
   }
 
   getWalletByWords = (mnemonic: string, walletNumber: number = 0, path: string = '') => {

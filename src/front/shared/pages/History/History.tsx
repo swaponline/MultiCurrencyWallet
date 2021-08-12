@@ -1,18 +1,14 @@
 import React, { Component, Fragment } from 'react'
 import CSSModules from 'react-css-modules'
-
 import { connect } from 'redaction'
 import actions from 'redux/actions'
-import { constants } from 'helpers'
-
 import Row from './Row/Row'
-
 import styles from 'components/tables/Table/Table.scss'
 import stylesHere from './History.scss'
 
 import InfiniteScrollTable from 'components/tables/InfiniteScrollTable/InfiniteScrollTable'
 import { FormattedMessage, injectIntl } from 'react-intl'
-import ContentLoader from '../../components/loaders/ContentLoader/ContentLoader'
+import ContentLoader from 'components/loaders/ContentLoader/ContentLoader'
 import FilterForm from 'components/FilterForm/FilterForm'
 
 import InvoicesList from 'pages/Invoices/InvoicesList'
@@ -73,18 +69,8 @@ class History extends Component<any, any> {
   }
 
   componentDidMount() {
-    const user = this.props.user
-    const objCurrency = {}
+    actions.user.setTransactions()
 
-    for (let prop in user) {
-      if (typeof user[prop] === 'object' && !!user[prop] && user[prop].currency) {
-        objCurrency[user[prop].currency] = {
-          isBalanceFetched: user[prop].isBalanceFetched,
-        }
-      }
-    }
-
-    actions.user.setTransactions(objCurrency)
     onSwapCoreInited(() => {
       actions.core.getSwapHistory()
     })

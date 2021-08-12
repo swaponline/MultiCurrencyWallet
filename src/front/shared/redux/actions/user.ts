@@ -11,7 +11,7 @@ import { getState } from 'redux/core'
 
 import reducers from 'redux/core/reducers'
 
-import { getActivatedCurrencies } from 'helpers/user'
+import { user } from 'helpers'
 import getCurrencyKey from 'helpers/getCurrencyKey'
 import metamask from 'helpers/metamask'
 
@@ -402,17 +402,14 @@ const mergeTransactions = (mergeTxs: IUniversalObj[]) => {
 
   const allTransactions = transactions
     .concat(mergeTxs)
-    .sort((a, b) => b.date - a.date)
     .filter((item) => item)
 
-  reducers.history.setTransactions(allTransactions)
+  actions.history.pullTransactions(allTransactions)
 }
 
 const pullActiveCurrency = (currency) => {
   reducers.user.setActiveCurrency({ activeCurrency: currency })
 }
-
-const delay = (ms) => new Promise(resolve => setTimeout(() => resolve(true), ms))
 
 const fetchMultisigStatus = async () => {
   const {
@@ -433,18 +430,10 @@ const fetchMultisigStatus = async () => {
   }
 }
 
-type ObjCurrencyType = {
-  currency: {
-    isBalanceFetched: boolean
-  }
-}
-
-//@ts-ignore: strictNullChecks
-const setTransactions = async (objCurrency: ObjCurrencyType | {} = null) => {
+const setTransactions = async () => {
+  clearTransactions()
 
   try {
-    clearTransactions()
-
     const fetchTxsPromises = [
       actions.btc.getTransaction(),
       actions.btcmultisig.getTransactionSMS(),
@@ -454,12 +443,10 @@ const setTransactions = async (objCurrency: ObjCurrencyType | {} = null) => {
       actions.bnb.getTransaction(),
       actions.matic.getTransaction(),
       actions.arbeth.getTransaction(),
-      //@ts-ignore: strictNullChecks
+      actions.ghost.getTransaction(),
+      actions.next.getTransaction(),
       ...(metamask.isEnabled() && metamask.isConnected()) ? [actions.eth.getTransaction(metamask.getAddress())] : [],
-      //@ts-ignore: strictNullChecks
       ...(metamask.isEnabled() && metamask.isConnected()) ? [actions.bnb.getTransaction(metamask.getAddress())] : [],
-      ...objCurrency && objCurrency['GHOST'] ? [actions.ghost.getTransaction()] : [],
-      ...objCurrency && objCurrency['NEXT'] ? [actions.next.getTransaction()] : [],
     ]
 
     fetchTxsPromises.forEach((txPromise: Promise<any[]>) => {
@@ -477,30 +464,27 @@ const setTransactions = async (objCurrency: ObjCurrencyType | {} = null) => {
 }
 
 const setTokensTransaction = async () => {
-  const { core: { hiddenCoinsList } } = getState()
-  const enabledCurrencies = getActivatedCurrencies()
   const tokens: { [key: string]: string[] } = {}
 
   Object.keys(TOKEN_STANDARDS).forEach((key) => {
     const standard = TOKEN_STANDARDS[key].standard
+    const baseCurrency = TOKEN_STANDARDS[standard].currency.toUpperCase()
+
     const standardTokens = Object.keys(config[standard]).filter((name) => {
-      return (
-        !hiddenCoinsList.includes(name.toUpperCase()) &&
-        enabledCurrencies.includes(name.toUpperCase())
-      )
+      const tokenKey = `{${baseCurrency}}${name}`.toUpperCase()
+
+      return user.isAllowedCurrency(tokenKey)
     })
 
     tokens[standard] = standardTokens
   })
 
   Object.keys(tokens).forEach((standard) => {
-    tokens[standard].forEach((tokenName, index) => {
-      const customMs = 650
+    standard = standard.toLowerCase()
 
-      delay(customMs * index).then(() => {
-        actions[standard].getTransaction(null, tokenName).then((tokenTxs) => {
-          mergeTransactions(tokenTxs)
-        })
+    tokens[standard].forEach((tokenName) => {
+      actions[standard].getTransaction(null, tokenName).then((tokenTxs) => {
+        mergeTransactions(tokenTxs)
       })
     })
   })
