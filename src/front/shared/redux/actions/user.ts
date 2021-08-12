@@ -11,7 +11,7 @@ import { getState } from 'redux/core'
 
 import reducers from 'redux/core/reducers'
 
-import { getActivatedCurrencies, isAllowedCurrency } from 'helpers/user'
+import { user } from 'helpers'
 import getCurrencyKey from 'helpers/getCurrencyKey'
 import metamask from 'helpers/metamask'
 
@@ -402,10 +402,9 @@ const mergeTransactions = (mergeTxs: IUniversalObj[]) => {
 
   const allTransactions = transactions
     .concat(mergeTxs)
-    .sort((a, b) => b.date - a.date)
     .filter((item) => item)
 
-  reducers.history.setTransactions(allTransactions)
+  actions.history.pullTransactions(allTransactions)
 }
 
 const pullActiveCurrency = (currency) => {
@@ -474,7 +473,7 @@ const setTokensTransaction = async () => {
     const standardTokens = Object.keys(config[standard]).filter((name) => {
       const tokenKey = `{${baseCurrency}}${name}`.toUpperCase()
 
-      return isAllowedCurrency(tokenKey)
+      return user.isAllowedCurrency(tokenKey)
     })
 
     tokens[standard] = standardTokens

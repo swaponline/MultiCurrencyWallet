@@ -321,10 +321,6 @@ class CurrencyWallet extends Component<any, any> {
     })
   }
 
-  getRows = (txHistory) => {
-    this.setState(() => ({ rows: txHistory }))
-  }
-
   pullTransactions = (transactions) => {
     if (!this._mounted) return
     //@ts-ignore: strictNullChecks
@@ -348,7 +344,6 @@ class CurrencyWallet extends Component<any, any> {
   handleReceive = () => {
     const { currency, address } = this.state
 
-    //@ts-ignore: strictNullChecks
     actions.modals.open(constants.modals.ReceiveModal, {
       currency,
       address,
@@ -358,7 +353,6 @@ class CurrencyWallet extends Component<any, any> {
   handleInvoice = () => {
     const { currency, address } = this.state
 
-    //@ts-ignore: strictNullChecks
     actions.modals.open(constants.modals.InvoiceModal, {
       currency: currency.toUpperCase(),
       toAddress: address,
