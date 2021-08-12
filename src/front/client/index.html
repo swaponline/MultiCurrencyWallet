@@ -34,7 +34,7 @@
 
     <!-- ERC20 Tokens hot plug for widget-build (Dont remove this) -->
     <script src="erc20tokens.js"></script>
-
+    <link rel="stylesheet" href="customStyles.css" />
     <!-- Use OwnBuffer for bn.js package in bitcore-lib -->
     <script type="text/javascript" src="ownBuffer.js"></script>
 
@@ -895,9 +895,9 @@
         });
       }
 
-      window.logoUrl = '#';
-      window.darkLogoUrl = '';
-      window.loaderLogoUrl = '';
+      window.logoUrl = window.logoUrl || '#';
+      window.darkLogoUrl = window.darkLogoUrl || '';
+      window.loaderLogoUrl = window.loaderLogoUrl || '';
 
       if (window.localStorage.getItem('isDark')) {
         window.logoUrl = window.darkLogoUrl || window.logoUrl;

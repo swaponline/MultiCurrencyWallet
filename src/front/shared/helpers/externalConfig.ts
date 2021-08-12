@@ -56,6 +56,7 @@ const externalConfig = () => {
       ghost: true,
       next: true,
     },
+    createWalletCoinsOrder: false,
     defaultExchangePair: {
       buy: '{eth}wbtc',
       sell: 'btc',
@@ -81,7 +82,15 @@ const externalConfig = () => {
     exchangeDisabled: false,
     ui: {
       footerDisabled: false,
+      bannersSource: 'https://noxon.wpmix.net/swapBanners/banners.php',
     },
+  }
+
+  if (window
+    && window.SO_createWalletCoinsOrder
+    && window.SO_createWalletCoinsOrder.length
+  ) {
+    config.opts.createWalletCoinsOrder = window.SO_createWalletCoinsOrder
   }
 
   if (window
