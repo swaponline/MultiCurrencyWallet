@@ -148,10 +148,7 @@ class CurrencyWallet extends Component<any, any> {
         .then((balance) => this.setState({ balance }))
     }
 
-    // if address is null, take transactions from current user
-    address
-      ? actions.history.setTransactions(address, ticker.toLowerCase(), this.pullTransactions)
-      : actions.user.setTransactions()
+    actions.history.setTransactions(address, ticker.toLowerCase())
 
     if (!address) {
       actions.core.getSwapHistory()
@@ -187,25 +184,30 @@ class CurrencyWallet extends Component<any, any> {
   }
 
   componentDidUpdate(prevProps) {
-    const { currency } = this.state
-    const { activeFiat } = this.props
-
     let {
-      match: {
-        params: { address = null, ticker = null, action = null },
-      },
-      activeCurrency
-    } = this.props
-
-    let {
+      txHistory: prevTransactions,
       match: {
         params: { address: prevAddress = null },
       },
     } = prevProps
-    if (prevAddress !== address) {
-      address
-        ? actions.history.setTransactions(address, currency.toLowerCase(), this.pullTransactions)
-        : actions.user.setTransactions()
+
+    let {
+      txHistory,
+      match: {
+        params: { address = null, ticker = null, action = null },
+      },
+      activeCurrency,
+      activeFiat,
+    } = this.props
+
+    const { currency } = this.state
+
+    if (JSON.stringify(txHistory) !== JSON.stringify(prevTransactions)) {
+      this.updateTransactions()
+    }
+
+    if (address && prevAddress !== address) {
+      actions.history.setTransactions(address, currency.toLowerCase())
     }
 
     if (
@@ -321,22 +323,19 @@ class CurrencyWallet extends Component<any, any> {
     })
   }
 
-  pullTransactions = (transactions) => {
+  updateTransactions = () => {
     if (!this._mounted) return
-    //@ts-ignore: strictNullChecks
-    let data = [].concat([], ...transactions).sort((a, b) => b.date - a.date)
-    this.setState({
-      txItems: data,
-    })
 
-    const {
-      currency,
-      address,
-    } = this.state
+    const { txHistory } = this.props
+    const { currency, address } = this.state
+
+    this.setState(() => ({
+      txItems: txHistory,
+    }))
 
     lsDataCache.push({
       key: `TxHistory_${getCurrencyKey(currency, true).toLowerCase()}_${address}`,
-      data,
+      data: txHistory,
       time: 3600,
     })
   }
@@ -414,7 +413,7 @@ class CurrencyWallet extends Component<any, any> {
     this.loading()
     const { address, currency } = this.state
     this.setState(() => ({ filterValue: address }))
-    actions.history.setTransactions(address, currency.toLowerCase(), this.pullTransactions)
+    actions.history.setTransactions(address, currency.toLowerCase())
   }
 
   render() {

@@ -17,7 +17,7 @@ const pullTransactions = (transactions) => {
   reducers.history.setTransactions(filteredTxs)
 }
 
-const setTransactions = async (address, type, callback) => {
+const setTransactions = async (address, type, callback: Function | undefined = undefined) => {
   let actionName
 
   if (erc20Like.isToken({name: type})) {
@@ -30,14 +30,16 @@ const setTransactions = async (address, type, callback) => {
   const isMultisigBtcAddress = actionName === 'btc' && actions.btcmultisig.isBTCMSUserAddress(address)
 
   try {
-    const currencyTxs = await Promise.all([
+    const result: [][] = await Promise.all([
       actions[actionName].getTransaction(address, type),
       isMultisigBtcAddress ? actions.multisigTx.fetch(address) : new Promise((resolve) => resolve([])),
     ])
+    const transactions = [].concat(...result)
+
     if (typeof callback === 'function') {
-      callback([...currencyTxs])
+      callback([...transactions])
     } else {
-      pullTransactions([...currencyTxs])
+      pullTransactions([...transactions])
     }
   } catch (error) {
     console.group('Actions >%c history', 'color: red;')
