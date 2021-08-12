@@ -1,6 +1,5 @@
 import Web3 from 'web3'
 import { BigNumber } from 'bignumber.js'
-import Transaction from 'ethereumjs-tx'
 import { getState } from 'redux/core'
 import actions from 'redux/actions'
 import reducers from 'redux/core/reducers'
@@ -354,18 +353,9 @@ class EthLikeAction {
   }
 
   send = async (params): Promise<{ transactionHash: string }> => {
-    let { externalAddress, externalPrivateKey, to, amount, gasPrice, gasLimit, speed } = params
-
-    // fake tx - turbo-swaps debug
-    // if (false) {
-    //   return new Promise(res => res({
-    //     transactionHash: '0x58facdbf5023a401f39998179995f0af1e54a64455145df6ed507abdecc1b0a4'
-    //   }))
-    // }
+    let { to, amount, gasPrice, gasLimit, speed } = params
 
     const Web3 = this.getCurrentWeb3()
-
-    const haveExternalWallet = externalAddress && !!externalPrivateKey
     const ownerAddress = metamask.isConnected() ? metamask.getAddress() : getState().user[`${this.tickerKey}Data`].address
     const recipientIsContract = await this.isContract(to)
 
@@ -390,30 +380,16 @@ class EthLikeAction {
       value: Web3.utils.toHex(Web3.utils.toWei(String(amount), 'ether')),
     }
 
-    let privateKey: string | undefined = undefined
-    let bufferPrivateKey: Buffer | undefined = undefined
-
-    if (haveExternalWallet) {
-      txData.from = externalAddress
-      privateKey = externalPrivateKey
-    } else {
-      privateKey = this.getPrivateKeyByAddress(ownerAddress)
-    }
-
-    if (privateKey) {
-      bufferPrivateKey = Buffer.from(privateKey?.replace('0x', ''), 'hex')
-    }
-
+    const privateKey = this.getPrivateKeyByAddress(ownerAddress)
     const walletData = actions.core.getWallet({
       address: ownerAddress,
       currency: this.ticker,
     })
 
-    if (haveExternalWallet && !walletData?.isMetamask) {
-      txData = await this.signTransaction({
-        txData,
-        privateKey: bufferPrivateKey,
-      })
+    if (!walletData?.isMetamask) {
+      const signedData = await Web3.eth.accounts.signTransaction(txData, privateKey)
+
+      txData = signedData.rawTransaction
       sendMethod = Web3.eth.sendSignedTransaction
     }
 
@@ -425,7 +401,7 @@ class EthLikeAction {
       if (this.adminFeeObj && !walletData.isMetamask) {
         receipt.then(() => {
           this.sendAdminTransaction({
-            from: txData?.from || externalAddress,
+            from: txData.from,
             amount,
             gasPrice,
             gasLimit,
@@ -448,7 +424,6 @@ class EthLikeAction {
     const adminObj = externalAdminFeeObj || this.adminFeeObj
     const minAmount = new BigNumber(adminObj.min)
     const Web3 = this.getCurrentWeb3()
-    const bufferPrivateKey = Buffer.from(privateKey.replace('0x', ''), 'hex')
 
     let feeFromUsersAmount = new BigNumber(adminObj.fee)
       .dividedBy(100) // 100 %
@@ -472,12 +447,9 @@ class EthLikeAction {
     }
 
     return new Promise(async (res) => {
-      const signedTx = await this.signTransaction({
-        txData,
-        privateKey: bufferPrivateKey,
-      })
+      const signedData = await Web3.eth.accounts.signTransaction(txData, privateKey)
 
-      Web3.eth.sendSignedTransaction(signedTx)
+      Web3.eth.sendSignedTransaction(signedData.rawTransaction)
         .on('transactionHash', (hash) => {
           console.group('%c Admin commission is sended', 'color: green;')
           console.log('tx hash', hash)
@@ -485,19 +457,6 @@ class EthLikeAction {
           res(hash)
         })
     })
-  }
-
-  signTransaction = async (params) => {
-    const { txData, privateKey } = params
-    const Web3 = this.getCurrentWeb3()
-
-    const txCount = await Web3.eth.getTransactionCount(txData.from)
-    const nonce = Web3.utils.toHex(txCount)
-    const transaction = new Transaction({ ...txData, nonce }, { chainId: this.chainId })
-
-    transaction.sign(privateKey)
-
-    return '0x' + transaction.serialize().toString('hex')
   }
 
   isContract = async (address: string): Promise<boolean> => {
