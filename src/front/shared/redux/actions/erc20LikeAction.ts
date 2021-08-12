@@ -470,9 +470,6 @@ class Erc20LikeAction {
           rej(error)
         })
 
-      console.log('%c token sended', 'color: brown; font-size: 15px')
-      console.log('receipt: ', receipt)
-
       // Admin fee transaction
       if (this.adminFeeObj && !walletData.isMetamask) {
         receipt.then(() => {
