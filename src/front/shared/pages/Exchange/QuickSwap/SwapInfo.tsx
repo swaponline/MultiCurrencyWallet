@@ -74,13 +74,13 @@ function SwapInfo(props: ComponentProps) {
               <FormattedMessage id="orders105" defaultMessage="Price" />: <span>{price}</span>
             </span>
           )}
-          {fee && (
+          {swapFee && (
             <span styleName="indicator">
               <FormattedMessage id="fee" defaultMessage="Fee" />: <span>{fee}</span>
               {fiatFee && <span>{fiatFee}</span>}
             </span>
           )}
-          {total && (
+          {spendedAmount && swapFee && (
             <span styleName="indicator">
               <FormattedMessage id="total" defaultMessage="Total" />: <span>{total}</span>
               {totalFiat && <span>{totalFiat}</span>}

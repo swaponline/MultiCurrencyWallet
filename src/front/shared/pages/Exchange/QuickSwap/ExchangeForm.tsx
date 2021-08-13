@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { FormattedMessage } from 'react-intl'
 import CSSModules from 'react-css-modules'
 import styles from './index.scss'
@@ -86,9 +86,26 @@ function ExchangeForm(props) {
     return null
   }
 
+  const [flagForRequest, setFlagForRequest] = useState(false)
+
   const keyUpHandler = () => {
-    setTimeout(checkSwapData, 300)
+    setFlagForRequest(true)
   }
+
+  useEffect(() => {
+    let timeoutId: ReturnType<typeof setTimeout> | undefined = undefined
+
+    if (flagForRequest) {
+      timeoutId = setTimeout(() => {
+        checkSwapData()
+        setFlagForRequest(false)
+      }, 400)
+    }
+
+    return () => {
+      if (timeoutId) clearTimeout(timeoutId)
+    }
+  })
 
   return (
     <form action="">
@@ -188,7 +205,6 @@ function ExchangeForm(props) {
           onKeyDown={inputReplaceCommaWithDot}
           onKeyUp={keyUpHandler}
           valueLink={stateReference.slippage}
-          withMargin
         />
       </div>
 

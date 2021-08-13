@@ -235,6 +235,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
 
   reportError = (error) => {
     this.setState(() => ({
+      isDataPending: false,
       error,
     }))
     console.group('%c Swap', 'color: red;')
