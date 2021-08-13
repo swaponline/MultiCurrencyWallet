@@ -348,8 +348,8 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       }
     } catch (error) {
       this.reportError(error)
-    } finally {
     }
+
     this.setState(() => ({
       isDataPending: false,
     }))
@@ -790,6 +790,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
             network={network}
             swapData={swapData}
             swapFee={swapFee}
+            spendedAmount={spendedAmount}
             baseChainWallet={baseChainWallet}
             fiat={fiat}
             isDataPending={isDataPending}

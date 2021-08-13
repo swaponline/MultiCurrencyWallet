@@ -33,9 +33,6 @@ const responseCacheAdd = (req, opts, resData, res) => {
 const createResponseHandler = (req, opts) => {
   const debug = `${opts.method.toUpperCase()} ${opts.endpoint}`
 
-  console.log('opts: ', opts)
-  console.log('req: ', req)
-
   // cached answer
   const cachedAnswer = responseCacheGet(req, opts)
 
