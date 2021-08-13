@@ -6134,5 +6134,12 @@
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/SwapInfo.tsx"
     ]
+  },
+  {
+    "id": "total",
+    "message": "Insgesamt",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/SwapInfo.tsx"
+    ]
   }
 ]

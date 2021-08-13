@@ -6130,5 +6130,12 @@
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
     ]
+  },
+  {
+    "id": "total",
+    "message": "Общая сумма",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/SwapInfo.tsx"
+    ]
   }
 ]
