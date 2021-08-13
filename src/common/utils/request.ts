@@ -33,6 +33,9 @@ const responseCacheAdd = (req, opts, resData, res) => {
 const createResponseHandler = (req, opts) => {
   const debug = `${opts.method.toUpperCase()} ${opts.endpoint}`
 
+  console.log('opts: ', opts)
+  console.log('req: ', req)
+
   // cached answer
   const cachedAnswer = responseCacheGet(req, opts)
 
@@ -40,7 +43,6 @@ const createResponseHandler = (req, opts) => {
     return new Promise((fulfill, reject) => {
       //@ts-ignore
       fulfill(cachedAnswer.resData, cachedAnswer.res)
-      opts.onComplete()
     })
   }
 
@@ -48,8 +50,11 @@ const createResponseHandler = (req, opts) => {
   return new Promise((fulfill, reject) => req.end((err, res) => {
     let serverError
 
-    // Errors
+    if (opts.sourceError && err) {
+      return reject(err)
+    }
 
+    // Errors
     if (!res && !err) {
       serverError = `Connection failed: ${debug}`
     }
@@ -62,8 +67,6 @@ const createResponseHandler = (req, opts) => {
     }
 
     if (err) {
-      // TODO write Error notifier
-      opts.onComplete()
       return reject({ resData: err, res })
     }
 
@@ -89,7 +92,6 @@ const createResponseHandler = (req, opts) => {
     // Resolve
     //@ts-ignore
     fulfill(resData, res)
-    opts.onComplete()
   }))
 }
 
@@ -97,7 +99,6 @@ const createResponseHandler = (req, opts) => {
 const defaultOptions = {
   sameOrigin: false,
   modifyResult: (resData) => resData,
-  onComplete: () => {},
 }
 
 /**

@@ -241,11 +241,14 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     console.error(error)
     console.groupEnd()
 
-    actions.notifications.show(constants.notifications.ErrorNotification, {
-      error: error.message,
-    })
+    const notEnoughBalance = error.match(/(N|n)ot enough .* balance/)
 
-    feedback.oneinch.failed(error.message)
+    if (!notEnoughBalance) {
+      actions.notifications.show(constants.notifications.ErrorNotification, {
+        error: error.message,
+      })
+      feedback.oneinch.failed(error.message)
+    }
   }
 
   createSwapRequest = () => {
@@ -324,22 +327,29 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     try {
       const swap: any = await apiLooper.get('oneinch', this.createSwapRequest(), {
         reportErrors: this.reportError,
+        sourceError: true,
       })
-      const weiFee = new BigNumber(swap.tx.gas).times(swap.tx.gasPrice)
-      const swapFee = utils.amount.formatWithoutDecimals(weiFee, 18)
 
-      this.setState(() => ({
-        receivedAmount: utils.amount.formatWithoutDecimals(
-          swap.toTokenAmount,
-          swap.toToken.decimals
-        ),
-        swapData: swap,
-        swapFee,
-      }))
+      if (!(swap instanceof Error)) {
+        // https://docs.1inch.io/api/quote-swap#swap
+        // 1inch docs tells that we have to increase it by 25%
+        const txGas = new BigNumber(swap.tx.gas).plus((swap.tx.gas / 100) * 25)
+        const weiFee = txGas.times(swap.tx.gasPrice)
+        const swapFee = utils.amount.formatWithoutDecimals(weiFee, 18)
+
+        this.setState(() => ({
+          receivedAmount: utils.amount.formatWithoutDecimals(
+            swap.toTokenAmount,
+            swap.toToken.decimals
+          ),
+          swapData: swap,
+          swapFee,
+        }))
+      }
     } catch (error) {
       this.reportError(error)
+    } finally {
     }
-
     this.setState(() => ({
       isDataPending: false,
     }))
@@ -748,7 +758,10 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
               ) : (
                 <>
                   <span>
-                    <FormattedMessage id="addressOfYourWallet" defaultMessage="Address of your wallet:" />
+                    <FormattedMessage
+                      id="addressOfYourWallet"
+                      defaultMessage="Address of your wallet:"
+                    />
                   </span>
                   <Copy text={fromWallet.address}>
                     <span styleName="address">

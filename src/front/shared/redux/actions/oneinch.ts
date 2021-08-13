@@ -162,7 +162,7 @@ const approveToken = async (params) => {
   const request = ''.concat(
     `/${chainId}/approve/calldata?`,
     `amount=${amount}&`,
-    `tokenAddress=${contract}&`
+    `tokenAddress=${contract}`
   )
 
   try {
