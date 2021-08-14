@@ -1,4 +1,5 @@
 > Form link: https://concourseopen.typeform.com/to/fLufMQ?defipulse=xxxxx
+> Process flow: https://defipulse.com/blog/how-to-join-the-defi-pulse-leaderboard/
 
 # What's the name of your project?
 
