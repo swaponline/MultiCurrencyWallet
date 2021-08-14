@@ -34,7 +34,7 @@
 
     <!-- ERC20 Tokens hot plug for widget-build (Dont remove this) -->
     <script src="erc20tokens.js"></script>
-
+    <link rel="stylesheet" href="customStyles.css" />
     <!-- Use OwnBuffer for bn.js package in bitcore-lib -->
     <script type="text/javascript" src="ownBuffer.js"></script>
 
@@ -572,9 +572,8 @@
 
     <div id="portal"></div>
 
-    <script type="text/javascript" src="https://unpkg.com/react@16.10.2/umd/react.production.min.js"></script>
-    <script type="text/javascript" src="https://unpkg.com/react-dom@16.10.2/umd/react-dom.production.min.js"></script>
-
+    <script crossorigin type="text/javascript" src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+    <script crossorigin type="text/javascript" src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
 
     <!--
       * Please use only one inline script in this file (each additional script requires an additional hash in the extension manifest).
@@ -896,9 +895,9 @@
         });
       }
 
-      window.logoUrl = '#';
-      window.darkLogoUrl = '';
-      window.loaderLogoUrl = '';
+      window.logoUrl = window.logoUrl || '#';
+      window.darkLogoUrl = window.darkLogoUrl || '';
+      window.loaderLogoUrl = window.loaderLogoUrl || '';
 
       if (window.localStorage.getItem('isDark')) {
         window.logoUrl = window.darkLogoUrl || window.logoUrl;
