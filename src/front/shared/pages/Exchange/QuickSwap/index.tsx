@@ -24,6 +24,7 @@ import { ComponentState, Direction } from './types'
 import Button from 'components/controls/Button/Button'
 import Address from 'components/ui/Address/Address'
 import Copy from 'components/ui/Copy/Copy'
+import NewTokenInstruction from './NewTokenInstruction'
 import ExchangeForm from './ExchangeForm'
 import AdvancedSettings from './AdvancedSettings'
 import SwapInfo from './SwapInfo'
@@ -725,6 +726,8 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
 
     return (
       <>
+        <NewTokenInstruction />
+
         <section styleName="someSwap">
           <div styleName={`optionsWrapper ${wrongNetwork ? 'disabled' : ''}`}>
             <ExchangeForm
@@ -757,7 +760,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
                   />
                 </Button>
               ) : (
-                <>
+                <div>
                   <span>
                     <FormattedMessage
                       id="addressOfYourWallet"
@@ -773,7 +776,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
                       />
                     </span>
                   </Copy>
-                </>
+                </div>
               )}
             </div>
 

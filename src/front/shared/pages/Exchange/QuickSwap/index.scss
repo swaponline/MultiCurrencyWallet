@@ -1,3 +1,35 @@
+.newTokenInstruction {
+  max-width: 38em;
+  margin: 0 auto 0.7rem;
+  border-radius: 8px;
+  text-align: left;
+  background-color: var(--color-read-only);
+
+  .tab {
+    width: 100%;
+    padding: 0.5rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: inherit;
+    border: 1px solid var(--color-border);
+  }
+
+  .arrow {
+    @include arrow('down', 9px, 2px, var(--color-notice));
+  }
+
+  .content {
+    padding: 0.5rem 1rem;
+
+    ol {
+      margin: 0;
+      padding: 0;
+      padding-left: 1rem;
+    }
+  }
+}
+
 .someSwap {
   max-width: 38em;
   margin: 0.6rem auto 1rem;
