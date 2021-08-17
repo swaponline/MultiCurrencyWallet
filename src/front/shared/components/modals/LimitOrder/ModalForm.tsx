@@ -53,7 +53,7 @@ function ModalForm(props) {
           />
         </p>
       )}
-      <div styleName={`formWrapper ${enoughSwapCurrencies ? '' : 'disabled'}`}>
+      <div>
         <SelectGroup
           label={<FormattedMessage id="addoffer381" defaultMessage="Sell" />}
           tooltip={
@@ -71,65 +71,68 @@ function ModalForm(props) {
           placeholder="0.00"
           onKeyUp={checkMakerAllowance}
         />
-        <SelectGroup
-          label={<FormattedMessage id="addoffer396" defaultMessage="Buy" />}
-          tooltip={
-            <FormattedMessage
-              id="partial478"
-              defaultMessage="The amount you will receive after the exchange"
-            />
-          }
-          inputValueLink={stateReference.takerAmount}
-          selectedValue={takerAsset.value}
-          onSelect={selectTakerAsset}
-          id="takerAmount"
-          balance={takerWallet.balance}
-          currencies={takerList}
-          placeholder="0.00"
-          onKeyUp={checkTakerAllowance}
-        />
 
-        {needApprove ? (
-          needMakerApprove ? (
-            <Button
-              disabled={blockApprove}
-              onClick={makerApprove}
-              pending={isPending}
-              fullWidth
-              brand
-            >
+        <div styleName={`footer ${enoughSwapCurrencies ? '' : 'disabled'}`}>
+          <SelectGroup
+            label={<FormattedMessage id="addoffer396" defaultMessage="Buy" />}
+            tooltip={
               <FormattedMessage
-                id="FormattedMessageIdApprove"
-                defaultMessage="Approve {token}"
-                values={{ token: makerAsset.name }}
+                id="partial478"
+                defaultMessage="The amount you will receive after the exchange"
               />
-            </Button>
+            }
+            inputValueLink={stateReference.takerAmount}
+            selectedValue={takerAsset.value}
+            onSelect={selectTakerAsset}
+            id="takerAmount"
+            balance={takerWallet.balance}
+            currencies={takerList}
+            placeholder="0.00"
+            onKeyUp={checkTakerAllowance}
+          />
+
+          {needApprove ? (
+            needMakerApprove ? (
+              <Button
+                disabled={blockApprove}
+                onClick={makerApprove}
+                pending={isPending}
+                fullWidth
+                brand
+              >
+                <FormattedMessage
+                  id="FormattedMessageIdApprove"
+                  defaultMessage="Approve {token}"
+                  values={{ token: makerAsset.name }}
+                />
+              </Button>
+            ) : (
+              <Button
+                disabled={blockApprove}
+                onClick={takerApprove}
+                pending={isPending}
+                fullWidth
+                brand
+              >
+                <FormattedMessage
+                  id="FormattedMessageIdApprove"
+                  defaultMessage="Approve {token}"
+                  values={{ token: takerAsset.name }}
+                />
+              </Button>
+            )
           ) : (
             <Button
-              disabled={blockApprove}
-              onClick={takerApprove}
+              disabled={blockCreation}
+              onClick={createOrder}
               pending={isPending}
               fullWidth
               brand
             >
-              <FormattedMessage
-                id="FormattedMessageIdApprove"
-                defaultMessage="Approve {token}"
-                values={{ token: takerAsset.name }}
-              />
+              <FormattedMessage id="create" defaultMessage="Create" />
             </Button>
-          )
-        ) : (
-          <Button
-            disabled={blockCreation}
-            onClick={createOrder}
-            pending={isPending}
-            fullWidth
-            brand
-          >
-            <FormattedMessage id="create" defaultMessage="Create" />
-          </Button>
-        )}
+          )}
+        </div>
       </div>
     </Modal>
   )

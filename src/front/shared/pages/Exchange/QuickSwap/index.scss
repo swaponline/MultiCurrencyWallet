@@ -3,7 +3,8 @@
   margin: 0 auto 0.7rem;
   border-radius: 8px;
   text-align: left;
-  background-color: var(--color-read-only);
+  border: 1px solid var(--color-border);
+  background-color: var(--color-pale);
 
   .tab {
     width: 100%;
@@ -12,15 +13,25 @@
     align-items: center;
     justify-content: space-between;
     border-radius: inherit;
-    border: 1px solid var(--color-border);
   }
 
   .arrow {
     @include arrow('down', 9px, 2px, var(--color-notice));
+
+    &.open {
+      @include arrow('up', 9px, 2px, var(--color-notice));
+    }
   }
 
   .content {
-    padding: 0.5rem 1rem;
+    padding: 1rem;
+    font-size: 0.94em;
+
+    p {
+      @include ff-semibold;
+      margin: 1rem 0;
+      font-size: 1em;
+    }
 
     ol {
       margin: 0;

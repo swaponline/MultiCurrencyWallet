@@ -760,7 +760,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
                   />
                 </Button>
               ) : (
-                <div>
+                <>
                   <span>
                     <FormattedMessage
                       id="addressOfYourWallet"
@@ -776,7 +776,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
                       />
                     </span>
                   </Copy>
-                </div>
+                </>
               )}
             </div>
 

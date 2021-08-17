@@ -105,12 +105,9 @@ const filterCurrencies = (params) => {
     return isCurrencySuitable && suitableForNetwork
   })
 
-  // metamask with the wrong network
-  if (metamask.isConnected() && !filteredArr.length) {
-    return { currencies, wrongNetwork: true }
-  }
+  const wrongNetwork = metamask.isConnected() && !filteredArr.length
 
-  return { currencies: filteredArr, wrongNetwork: false }
+  return { currencies: filteredArr, wrongNetwork }
 }
 
 const fetchSpenderContractAddress = async (params): Promise<string | false> => {

@@ -116,7 +116,6 @@ class LimitOrder extends Component<ComponentProps, ComponentState> {
     if (!takerList.length) {
       this.setState(() => ({
         takerList: allCurrencies,
-        currencies: allCurrencies,
         enoughSwapCurrencies: false,
       }))
     } else {
@@ -125,6 +124,7 @@ class LimitOrder extends Component<ComponentProps, ComponentState> {
         takerAsset: takerList[0],
         takerAmount: '0',
         takerWallet: actions.core.getWallet({ currency: takerList[0].value }),
+        enoughSwapCurrencies: true,
       }))
     }
   }
@@ -328,7 +328,7 @@ class LimitOrder extends Component<ComponentProps, ComponentState> {
     } = this.state
 
     const linked = Link.all(this, 'makerAmount', 'takerAmount')
-    const blockCreation = this.areWrongOrderParams() || isPending
+    const blockCreation = this.areWrongOrderParams() || !enoughSwapCurrencies || isPending
 
     // TODO: how to calculate the tx cost for token approvement ?
     // FIXME: don't let an user to start approvement without balance

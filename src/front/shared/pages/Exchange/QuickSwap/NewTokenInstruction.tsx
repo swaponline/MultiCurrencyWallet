@@ -13,9 +13,10 @@ function NewTokenInstruction() {
   return (
     <section styleName="newTokenInstruction">
       <button styleName="tab" onClick={toggleVisibility}>
+        
         <FormattedMessage id="howToAddToken" defaultMessage="How to add a token" />
 
-        <span styleName="arrow"></span>
+        <span styleName={`arrow ${visible ? 'open' : ''}`}></span>
       </button>
 
       {visible && (
@@ -23,28 +24,31 @@ function NewTokenInstruction() {
           <ol>
             <li>
               <FormattedMessage
-                id="fooosdfoooooo"
+                id="addNewCurrencyMessage"
                 defaultMessage="On the wallet page, click the add currency button."
               />
             </li>
             <li>
               <FormattedMessage
-                id="foosdfooooooo"
+                id="choseTokenStandard"
                 defaultMessage="Chose a token standard and click the continue button."
               />
             </li>
             <li>
               <FormattedMessage
-                id="fo34ffooooooo"
+                id="enterTokenContractAddress"
                 defaultMessage="Enter a token contract address."
               />
             </li>
             <li>
-              <FormattedMessage id="fo3osdfoooooo" defaultMessage="Confirm token addition." />
+              <FormattedMessage
+                id="confirmTokenAddition"
+                defaultMessage="Check the information and confirm token addition."
+              />
             </li>
             <li>
               <FormattedMessage
-                id="fo3osdf546ooo"
+                id="checkTokenInTheSwapList"
                 defaultMessage="Now you can see you token in the list."
               />
             </li>
@@ -52,21 +56,21 @@ function NewTokenInstruction() {
 
           <p>
             <FormattedMessage
-              id="adsfasdfasdff"
-              defaultMessage="If you do not see it, possible there is not available pair with your token and you have to create a new pair."
+              id="ifYouDoNotSeeNewToken"
+              defaultMessage="If you do not see it, possible there is not available pair with your token and you have to create a new pair (liquidity pool)."
             />
           </p>
 
           <ol>
             <li>
               <FormattedMessage
-                id="fo3osdsfsdf546ooo"
+                id="createNewPoolInAggregates"
                 defaultMessage="Chose one of available aggregates and create there a new pair with your token (new liquidity pool). This pool has to have liquidity more then 10$ in one of the assets."
               />
             </li>
             <li>
               <FormattedMessage
-                id="asdfasdfasdf"
+                id="youWillSeeYourToken"
                 defaultMessage="After some time you will be able to see your token in the list."
               />
             </li>
