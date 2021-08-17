@@ -359,7 +359,7 @@ class InfoInvoice extends React.Component<any, any> {
                       <div>
                         <span>
                           <FormattedMessage { ... langLabels.destination } values={{
-                            destination: invoiceData.destAddress,
+                            destination: <b>{invoiceData.destAddress}</b>,
                           }} />
                         </span>
                       </div>

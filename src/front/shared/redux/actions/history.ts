@@ -14,6 +14,10 @@ const pullTransactions = (transactions) => {
     }
   }
 
+  if (sortedTxs.length) {
+    filteredTxs.push(sortedTxs[sortedTxs.length - 1])
+  }
+
   reducers.history.setTransactions(filteredTxs)
 }
 
