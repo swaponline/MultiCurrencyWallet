@@ -1,22 +1,29 @@
 import { useState } from 'react'
 import { FormattedMessage } from 'react-intl'
+import { connect } from 'redaction'
 import CSSModules from 'react-css-modules'
 import styles from './index.scss'
+import Toggle from 'components/controls/Toggle/Toggle'
 
-function NewTokenInstruction() {
+function NewTokenInstruction(props) {
+  const { protocols, blockchains } = props
   const [visible, setVisibility] = useState(false)
+  const [displayProtocols, setDisplayProtocols] = useState(false)
 
   const toggleVisibility = () => {
     setVisibility(!visible)
   }
 
+  const toggleProtocolsVisibility = () => {
+    setDisplayProtocols(!displayProtocols)
+  }
+
   return (
     <section styleName="newTokenInstruction">
-      <button styleName="tab" onClick={toggleVisibility}>
-        
+      <button styleName={`tab ${visible ? 'open' : ''}`} onClick={toggleVisibility}>
         <FormattedMessage id="howToAddToken" defaultMessage="How to add a token" />
 
-        <span styleName={`arrow ${visible ? 'open' : ''}`}></span>
+        <span styleName="arrow"></span>
       </button>
 
       {visible && (
@@ -54,7 +61,7 @@ function NewTokenInstruction() {
             </li>
           </ol>
 
-          <p>
+          <p styleName="paragraph">
             <FormattedMessage
               id="ifYouDoNotSeeNewToken"
               defaultMessage="If you do not see it, possible there is not available pair with your token and you have to create a new pair (liquidity pool)."
@@ -65,7 +72,7 @@ function NewTokenInstruction() {
             <li>
               <FormattedMessage
                 id="createNewPoolInAggregates"
-                defaultMessage="Chose one of available aggregates and create there a new pair with your token (new liquidity pool). This pool has to have liquidity more then 10$ in one of the assets."
+                defaultMessage="Chose one of available protocols and create there a new pair with your token (new liquidity pool). This pool has to have liquidity more then 10$ in one of the assets."
               />
             </li>
             <li>
@@ -75,10 +82,43 @@ function NewTokenInstruction() {
               />
             </li>
           </ol>
+
+          <div styleName="protocolsToggle">
+            <Toggle checked={displayProtocols} onChange={toggleProtocolsVisibility} />
+            <FormattedMessage
+              id="showAvailableProtocols"
+              defaultMessage="Show available protocols"
+            />
+          </div>
+
+          {displayProtocols &&
+            Object.keys(protocols).map((chainId, index) => {
+              const { chainName } = blockchains[chainId]
+
+              return (
+                <>
+                  <p styleName="protocolsChain">
+                    <b>{chainName?.replace(/mainnet/i, '')}</b>
+                  </p>
+                  <ul styleName="protocolsList" key={index}>
+                    {protocols[chainId].map((protocol, index) => {
+                      return (
+                        <li key={index}>
+                          <img src={protocol.img} alt={protocol.title} title={protocol.title} />
+                        </li>
+                      )
+                    })}
+                  </ul>
+                </>
+              )
+            })}
         </div>
       )}
     </section>
   )
 }
 
-export default CSSModules(NewTokenInstruction, styles, { allowMultiple: true })
+export default connect(({ oneinch }) => ({
+  protocols: oneinch.protocols,
+  blockchains: oneinch.blockchains,
+}))(CSSModules(NewTokenInstruction, styles, { allowMultiple: true }))

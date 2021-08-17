@@ -59,14 +59,54 @@ const addTokens = (params) => {
 }
 
 const fetchAllTokens = async () => {
-  const availableChains = [1, 56, 137] // [ETH, BSC, Polygon] (Mainnet ID)
+  const { blockchains } = getState().oneinch
 
-  for (const chainId of availableChains) {
+  for (const prop in blockchains) {
+    const { chainId } = blockchains[prop]
     const tokens: any = await fetchTokensByChain({ chainId })
 
     addTokens({
       chainId,
-      tokens: tokens,
+      tokens,
+    })
+  }
+}
+
+const fetchProtocolsByChain = async (params) => {
+  const { chainId } = params
+
+  try {
+    const data: any = await apiLooper.get('oneinch', `/${chainId}/protocols/images`)
+
+    return data.protocols
+  } catch (error) {
+    console.group('%c 1inch fetch protocols', 'color: red')
+    console.log(error)
+    console.groupEnd()
+
+    return []
+  }
+}
+
+const addProtocols = (params) => {
+  const { chainId, protocols } = params
+
+  reducers.oneinch.addProtocols({
+    chainId,
+    protocols,
+  })
+}
+
+const fetchAllProtocols = async () => {
+  const { blockchains } = getState().oneinch
+
+  for (const prop in blockchains) {
+    const { chainId } = blockchains[prop]
+    const protocols: any = await fetchProtocolsByChain({ chainId })
+
+    addProtocols({
+      chainId,
+      protocols,
     })
   }
 }
@@ -370,6 +410,7 @@ export default {
   serviceIsAvailable,
   fetchTokensByChain,
   fetchAllTokens,
+  fetchAllProtocols,
   filterCurrencies,
   addTokens,
   fetchSpenderContractAddress,
