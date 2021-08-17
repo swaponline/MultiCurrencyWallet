@@ -126,10 +126,10 @@ const filterCurrencies = (params) => {
       const networkVersion = externalConfig.evmNetworks[blockchain].networkVersion
       const walletKey = item.value.toLowerCase()
       const tokensByChain = oneinchTokens[networkVersion]
+      const tokenContract = tokensWallets[walletKey].contractAddress.toLowerCase()
 
-      isCurrencySuitable =
-        // if token is in the object then it's true
-        tokensByChain && !!tokensByChain[tokensWallets[walletKey].contractAddress]
+      // token has to be among allowed tokens
+      isCurrencySuitable = tokensByChain && !!tokensByChain[tokenContract]
     } else {
       const coinChain =
         currency?.model === COIN_MODEL.AB &&
