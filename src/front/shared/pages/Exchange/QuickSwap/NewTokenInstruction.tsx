@@ -91,7 +91,7 @@ function NewTokenInstruction(props) {
             />
           </div>
 
-          {displayProtocols &&
+          {/* {displayProtocols &&
             Object.keys(protocols).map((chainId, index) => {
               const { chainName } = blockchains[chainId]
 
@@ -111,7 +111,7 @@ function NewTokenInstruction(props) {
                   </ul>
                 </>
               )
-            })}
+            })} */}
         </div>
       )}
     </section>
