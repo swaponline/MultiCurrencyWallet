@@ -36,10 +36,13 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
 
     const { match, activeFiat, allCurrencies, tokensWallets } = props
     const { params, path } = match
-    const { currencies, wrongNetwork } = actions.oneinch.filterCurrencies({
+    /* const { currencies, wrongNetwork } = actions.oneinch.filterCurrencies({
       currencies: allCurrencies,
       tokensWallets,
-    })
+    }) */
+
+    const currencies = allCurrencies
+    const wrongNetwork = false
 
     const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
 
@@ -243,7 +246,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     console.error(error)
     console.groupEnd()
 
-    const notEnoughBalance = error.match(/(N|n)ot enough .* balance/)
+    const notEnoughBalance = error?.match(/(N|n)ot enough .* balance/)
 
     if (!notEnoughBalance) {
       actions.notifications.show(constants.notifications.ErrorNotification, {
@@ -266,7 +269,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       destReceiver,
     } = this.state
 
-    const fromAddress = fromWallet.isToken
+    /*     const fromAddress = fromWallet.isToken
       ? fromWallet.contractAddress
       : '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
     const toAddress = toWallet.isToken
@@ -282,16 +285,32 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       `amount=${spendedWeiAmount}&`,
       `fromAddress=${fromWallet.address}&`,
       `slippage=${slippage}`,
-    ]
+    ] */
 
-    if (isAdvancedMode) {
+    /*     if (isAdvancedMode) {
       const gweiDecimals = 9
 
       if (gasLimit) request.push(`&gasLimit=${gasLimit}`)
       if (gasPrice)
         request.push(`&gasPrice=${utils.amount.formatWithDecimals(gasPrice, gweiDecimals)}`)
       if (destReceiver) request.push(`&destReceiver=${destReceiver}`)
-    }
+    } */
+
+    const sellToken = fromWallet.isToken
+      ? fromWallet.contractAddress
+      : '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
+    const buyToken = toWallet.isToken
+      ? toWallet.contractAddress
+      : '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
+
+    const sellAmount = utils.amount.formatWithDecimals(spendedAmount, 18)
+
+    const request = [
+      `/swap/v1/quote?`,
+      `buyToken=${buyToken}&`,
+      `sellToken=${sellToken}&`,
+      `sellAmount=${sellAmount}`,
+    ]
 
     return request.join('')
   }
@@ -308,9 +327,9 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   }
 
   fetchSwapData = async () => {
-    const { network } = this.state
+    const { network, toWallet } = this.state
 
-    const serviceIsOk = await actions.oneinch.serviceIsAvailable({
+    /*     const serviceIsOk = await actions.oneinch.serviceIsAvailable({
       chainId: network.networkVersion,
     })
 
@@ -320,32 +339,40 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
           <FormattedMessage id="serviceIsNotAvailable" defaultMessage="Service is not available" />
         ),
       })
-    }
+    } */
 
     this.setState(() => ({
       isDataPending: true,
     }))
 
     try {
-      const swap: any = await apiLooper.get('oneinch', this.createSwapRequest(), {
+      const swap: any = await apiLooper.get('zeroxPolygon', this.createSwapRequest(), {
         reportErrors: this.reportError,
         sourceError: true,
       })
 
+      console.log('%c swap', 'color: orange; font-size: 20px')
+      console.log('swap tx: ', swap)
+
       if (!(swap instanceof Error)) {
         // https://docs.1inch.io/api/quote-swap#swap
         // 1inch docs tells that we have to increase it by 25%
-        const txGas = new BigNumber(swap.tx.gas).plus((swap.tx.gas / 100) * 25)
+        /* const txGas = new BigNumber(swap.tx.gas).plus((swap.tx.gas / 100) * 25)
         const weiFee = txGas.times(swap.tx.gasPrice)
-        const swapFee = utils.amount.formatWithoutDecimals(weiFee, 18)
+        const swapFee = utils.amount.formatWithoutDecimals(weiFee, 18) */
 
         this.setState(() => ({
-          receivedAmount: utils.amount.formatWithoutDecimals(
+          /* receivedAmount: utils.amount.formatWithoutDecimals(
             swap.toTokenAmount,
             swap.toToken.decimals
+          ), */
+          receivedAmount: utils.amount.formatWithoutDecimals(
+            swap.buyAmount,
+            // if it's not a token then usual coin with 18 decimals
+            toWallet?.decimals || 18
           ),
           swapData: swap,
-          swapFee,
+          //swapFee,
         }))
       }
     } catch (error) {
@@ -375,7 +402,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     }))
 
     try {
-      const { tx, fromToken } = swapData!
+      /* const { tx, fromToken } = swapData!
 
       const receipt = await actions[lowerKey].send({
         data: tx.data,
@@ -384,10 +411,15 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
         gasPrice: tx.gasPrice,
         gasLimit: tx.gas,
         waitReceipt: true,
+      }) */
+
+      const transactionHash = await actions[lowerKey].sendReadyTransaction({
+        data: swapData,
+        waitReceipt: false,
       })
 
       actions.notifications.show(constants.notifications.Transaction, {
-        link: transactions.getLink(lowerKey, receipt.transactionHash),
+        link: transactions.getLink(lowerKey, transactionHash),
         completed: true,
       })
 

@@ -461,6 +461,28 @@ class EthLikeAction {
     })
   }
 
+  sendReadyTransaction = async (params) => {
+    const { data, waitReceipt } = params
+    const Web3 = this.getCurrentWeb3()
+    const ownerAddress = metamask.isConnected()
+      ? metamask.getAddress()
+      : getState().user[`${this.tickerKey}Data`].address
+    const privateKey = this.getPrivateKeyByAddress(ownerAddress)
+
+    // TODO: 0x problem? why I have to increase gas limit by myself
+    data.gas = new BigNumber(data.gas).plus(100_000).toString()
+
+    const signedData = await Web3.eth.accounts.signTransaction(data, privateKey)
+
+    Web3.eth.sendSignedTransaction(signedData.rawTransaction)
+      .on('transactionHash', (hash) => {
+        if (!waitReceipt) return hash
+      } )
+      .on('receipt', (receipt) => {
+        if (waitReceipt) return receipt
+      })
+  }
+
   isContract = async (address: string): Promise<boolean> => {
     const lowerAddress = address.toLowerCase()
     const contractsList = this.cache.get('addressIsContract') || {}
