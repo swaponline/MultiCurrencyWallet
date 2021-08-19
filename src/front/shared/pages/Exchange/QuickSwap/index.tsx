@@ -36,13 +36,10 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
 
     const { match, activeFiat, allCurrencies, tokensWallets } = props
     const { params, path } = match
-    /* const { currencies, wrongNetwork } = actions.oneinch.filterCurrencies({
+    const { currencies, wrongNetwork } = actions.oneinch.filterCurrencies({
       currencies: allCurrencies,
       tokensWallets,
-    }) */
-
-    const currencies = allCurrencies
-    const wrongNetwork = false
+    })
 
     const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
 
@@ -346,7 +343,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     }))
 
     try {
-      const swap: any = await apiLooper.get('zeroxPolygon', this.createSwapRequest(), {
+      const swap: any = await apiLooper.get('zeroxRopsten', this.createSwapRequest(), {
         reportErrors: this.reportError,
         sourceError: true,
       })
@@ -864,6 +861,8 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
                 onClick={this.swap}
                 brand
               >
+                {/* Insufficient liquidity */}
+                {/* Insufficient balance */}
                 <FormattedMessage id="swap" defaultMessage="Swap" />
               </Button>
             )}

@@ -1,4 +1,5 @@
 export default {
+  zeroxRopsten: 'https://ropsten.api.0x.org',
   oneinch: 'https://api.1inch.exchange/v3.0',
   limitOrders: 'https://limit-orders.1inch.exchange/v1.0',
   horizon: 'https://horizon-testnet.stellar.org',
@@ -15,7 +16,11 @@ export default {
   nextExplorer: 'https://next.swaponline.io/mainnet',
   nextExplorerCustom: 'https://next.swaponline.io/mainnet',
   blockcypher: 'https://api.blockcypher.com/v1/btc/test3',
-  etherscan: 'https://api-rinkeby.etherscan.io/api',
+  
+  // FIXME: temporary for quick swap integration
+  etherscan: 'https://api-ropsten.etherscan.io/api',
+  //etherscan: 'https://api-rinkeby.etherscan.io/api',
+
   etherscanInvoices: 'https://invoices.swaponline.site/proxyetherscan-testnet',
   etherscan_ApiKey: 'RHHFPNMAZMD6I4ZWBZBF6FA11CMW9AXZNM',
   bscscan: 'https://api-testnet.bscscan.com/api',

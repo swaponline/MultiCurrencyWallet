@@ -58,7 +58,7 @@ const addTokens = (params) => {
   })
 }
 
-const fetchAllTokens = async () => {
+/* const fetchAllTokens = async () => {
   const { blockchains } = getState().oneinch
 
   for (const prop in blockchains) {
@@ -70,7 +70,7 @@ const fetchAllTokens = async () => {
       tokens,
     })
   }
-}
+} */
 
 const fetchProtocolsByChain = async (params) => {
   const { chainId } = params
@@ -97,7 +97,7 @@ const addProtocols = (params) => {
   })
 }
 
-const fetchAllProtocols = async () => {
+/* const fetchAllProtocols = async () => {
   const { blockchains } = getState().oneinch
 
   for (const prop in blockchains) {
@@ -109,11 +109,11 @@ const fetchAllProtocols = async () => {
       protocols,
     })
   }
-}
+} */
 
 const filterCurrencies = (params) => {
   const { currencies, tokensWallets, onlyTokens = false } = params
-  const { tokens: oneinchTokens, blockchains: oneinchBlockChains } = getState().oneinch
+  //const { tokens: oneinchTokens, blockchains: oneinchBlockChains } = getState().oneinch
 
   const filteredArr = currencies.filter((item) => {
     const currency = COIN_DATA[item.name]
@@ -121,21 +121,20 @@ const filterCurrencies = (params) => {
 
     // it's token. Check it in the 1inch matched token list
     if (item.standard) {
-      const { blockchain } = getCoinInfo(item.value)
+      //const { blockchain } = getCoinInfo(item.value)
 
-      const networkVersion = externalConfig.evmNetworks[blockchain].networkVersion
+      //const networkVersion = externalConfig.evmNetworks[blockchain].networkVersion
       const walletKey = item.value.toLowerCase()
-      const tokensByChain = oneinchTokens[networkVersion]
+      //const tokensByChain = oneinchTokens[networkVersion]
       const tokenContract = tokensWallets[walletKey].contractAddress.toLowerCase()
 
-      // token has to be among allowed tokens
-      isCurrencySuitable = tokensByChain && !!tokensByChain[tokenContract]
+      isCurrencySuitable = true //tokensByChain && !!tokensByChain[tokenContract]
     } else {
       const coinChain =
         currency?.model === COIN_MODEL.AB &&
         externalConfig.evmNetworks[currency.ticker].networkVersion
 
-      isCurrencySuitable = oneinchBlockChains[coinChain] && !onlyTokens
+      isCurrencySuitable = coinChain && !onlyTokens
     }
     // connected metamask allows only one chain
     const suitableForNetwork = metamask.isConnected()
@@ -409,8 +408,8 @@ const fetchUserOrders = async () => {
 export default {
   serviceIsAvailable,
   fetchTokensByChain,
-  fetchAllTokens,
-  fetchAllProtocols,
+  //fetchAllTokens,
+  //fetchAllProtocols,
   filterCurrencies,
   addTokens,
   fetchSpenderContractAddress,

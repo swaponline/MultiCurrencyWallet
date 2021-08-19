@@ -351,9 +351,9 @@ class App extends React.Component<RouteComponentProps<any>, any> {
       await createSwapApp()
     }
 
-    await actions.oneinch.fetchAllTokens()
+    //await actions.oneinch.fetchAllTokens()
     await actions.oneinch.fetchUserOrders()
-    await actions.oneinch.fetchAllProtocols()
+    //await actions.oneinch.fetchAllProtocols()
 
     console.groupEnd()
   }
