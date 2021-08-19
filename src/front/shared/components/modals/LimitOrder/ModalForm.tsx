@@ -1,8 +1,12 @@
 import { FormattedMessage } from 'react-intl'
 import CSSModules from 'react-css-modules'
 import styles from './index.scss'
+import { inputReplaceCommaWithDot } from 'helpers/domUtils'
 import Modal from 'components/modal/Modal/Modal'
 import Button from 'components/controls/Button/Button'
+import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
+import Tooltip from 'components/ui/Tooltip/Tooltip'
+import Input from 'components/forms/Input/Input'
 import SelectGroup from '../OfferModal/AddOffer/SelectGroup/SelectGroup'
 
 function ModalForm(props) {
@@ -90,6 +94,24 @@ function ModalForm(props) {
             placeholder="0.00"
             onKeyUp={checkTakerAllowance}
           />
+
+          <div styleName="inputWrapper">
+            <FieldLabel>
+              <FormattedMessage id="expirationTime" defaultMessage="Expiration time (minutes)" />
+              <Tooltip id="expirationTimeTooltip">
+                <FormattedMessage
+                  id="expirationTimeNotice"
+                  defaultMessage="The time after which the order will not be valid"
+                />
+              </Tooltip>
+            </FieldLabel>
+            <Input
+              pattern="0-9\."
+              onKeyDown={inputReplaceCommaWithDot}
+              valueLink={stateReference.expiresInMinutes}
+              withMargin
+            />
+          </div>
 
           {needApprove ? (
             needMakerApprove ? (

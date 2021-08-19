@@ -29,6 +29,7 @@ type ComponentState = {
   takerWallet: IUniversalObj
   makerAsset: IUniversalObj
   takerAsset: IUniversalObj
+  expiresInMinutes: number
   makerAmount: string
   takerAmount: string
   isPending: boolean
@@ -72,6 +73,7 @@ class LimitOrder extends Component<ComponentProps, ComponentState> {
       takerWallet,
       makerAsset,
       takerAsset,
+      expiresInMinutes: 30,
       makerAmount: '',
       needMakerApprove: false,
       takerAmount: '',
@@ -161,7 +163,14 @@ class LimitOrder extends Component<ComponentProps, ComponentState> {
 
   createLimitOrder = async () => {
     const { name } = this.props
-    const { network, makerWallet, takerWallet, makerAmount, takerAmount } = this.state
+    const {
+      network,
+      makerWallet,
+      takerWallet,
+      makerAmount,
+      takerAmount,
+      expiresInMinutes,
+    } = this.state
 
     this.setState(() => ({
       isPending: true,
@@ -176,6 +185,7 @@ class LimitOrder extends Component<ComponentProps, ComponentState> {
         makerAssetDecimals: makerWallet.decimals,
         takerAssetAddress: takerWallet.contractAddress,
         takerAssetDecimals: takerWallet.decimals,
+        expiresInSec: new BigNumber(expiresInMinutes).multipliedBy(60).dp(),
         makerAmount,
         takerAmount,
       })
@@ -327,7 +337,7 @@ class LimitOrder extends Component<ComponentProps, ComponentState> {
       enoughSwapCurrencies,
     } = this.state
 
-    const linked = Link.all(this, 'makerAmount', 'takerAmount')
+    const linked = Link.all(this, 'makerAmount', 'takerAmount', 'expiresInMinutes')
     const blockCreation = this.areWrongOrderParams() || !enoughSwapCurrencies || isPending
 
     // TODO: how to calculate the tx cost for token approvement ?

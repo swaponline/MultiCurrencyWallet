@@ -1,6 +1,7 @@
 import { BigNumber } from 'bignumber.js'
 import TokenApi from 'human-standard-token-abi'
 import moment from 'moment'
+
 import {
   LimitOrderBuilder,
   LimitOrderProtocolFacade,
@@ -9,6 +10,8 @@ import {
   LimitOrderPredicateBuilder,
   LimitOrderPredicateCallData,
 } from '@1inch/limit-order-protocol'
+import { LimitOrder, Signature } from '@0x/protocol-utils'
+
 import { COIN_MODEL, COIN_DATA } from 'swap.app/constants/COINS'
 import getCoinInfo from 'common/coins/getCoinInfo'
 import EVM_CONTRACTS_ABI from 'common/helpers/constants/EVM_CONTRACTS_ABI'
@@ -244,11 +247,12 @@ const createLimitOrder = async (params) => {
     makerAssetDecimals,
     takerAssetAddress,
     takerAssetDecimals,
+    expiresInSec,
     makerAmount,
     takerAmount,
   } = params
 
-  const contractAddress = externalConfig.limitOrder[baseCurrency]
+  /* const contractAddress = externalConfig.limitOrder[baseCurrency]
   const connector = getWeb3Connector(baseCurrency, makerAddress)
   const builder = new LimitOrderBuilder(contractAddress, chainId, connector)
   const protocolFacade = new LimitOrderProtocolFacade(contractAddress, connector)
@@ -262,41 +266,77 @@ const createLimitOrder = async (params) => {
     // a limit order is valid only for 1 minute
     timestampBelow(utils.getUnixTimeStamp() + 60_000),
     nonceEquals(makerAddress, makerNonce)
-  )
+  ) */
 
   const makerUnitAmount = utils.amount.formatWithDecimals(makerAmount, makerAssetDecimals)
   const takerUnitAmount = utils.amount.formatWithDecimals(takerAmount, takerAssetDecimals)
+  const now = Date.now()
 
-  const order = builder.buildLimitOrder({
+  const order = new LimitOrder({
+    chainId,
+    makerToken: makerAssetAddress,
+    takerToken: takerAssetAddress,
+    makerAmount: new BigNumber(makerUnitAmount),
+    takerAmount: new BigNumber(takerUnitAmount),
+    maker: makerAddress,
+    taker: '0x0000000000000000000000000000000000000000',
+    sender: '0x0000000000000000000000000000000000000000',
+    expiry: new BigNumber(now).plus(expiresInSec),
+    salt: new BigNumber(now),
+    // feeRecipient: '0x0000000000000000000000000000000000000000',
+    // pool: '0x0000000000000000000000000000000000000000',
+    // verifyingContract: "0xdef1c0ded9bec7f1a1670819833240f027b25eff",
+  })
+  const web3 = actions[baseCurrency].getCurrentWeb3()
+  //@ts-ignore
+  order.signature = await order.getSignatureWithProviderAsync(web3.currentProvider)
+
+  /*   const order = builder.buildLimitOrder({
     makerAssetAddress,
     takerAssetAddress,
     makerAddress,
     makerAmount: makerUnitAmount,
     takerAmount: takerUnitAmount,
     predicate: orderPredicate,
-  })
+  }) */
 
-  const orderTypedData = builder.buildLimitOrderTypedData(order)
+  /*   const orderTypedData = builder.buildLimitOrderTypedData(order)
   const orderHash = builder.buildLimitOrderHash(orderTypedData)
-  const signature = await builder.buildOrderSignature(makerAddress, orderTypedData)
+  const signature = await builder.buildOrderSignature(makerAddress, orderTypedData) */
 
-  return sendLimitOrder({
-    chainId,
-    order,
-    orderHash,
-    makerAmount: makerUnitAmount,
-    takerAmount: takerUnitAmount,
-    makerAddress,
-    signature,
-  })
+  return sendLimitOrder({ chainId, order })
 }
 
-const sendLimitOrder = async (params) => {
-  const { chainId, order, orderHash, makerAmount, takerAmount, makerAddress, signature } = params
-  const createDateTime = moment().toISOString()
-
-  return await apiLooper.post('limitOrders', `/${chainId}/limit-order`, {
-    body: {
+const sendLimitOrder = async ({ chainId, order }) => {
+  // const { chainId, order, orderHash, makerAmount, takerAmount, makerAddress, signature } = params
+  //const createDateTime = moment().toISOString()
+  /* 
+  {
+  "makerToken": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+  "takerToken": "0xe41d2489571d322189246dafa5ebde1f4699f498",
+  "makerAmount": "100000000000000",
+  "takerAmount": "2000000000000000000000",
+  "maker": "0x56EB0aD2dC746540Fab5C02478B31e2AA9DdC38C",
+  "taker": "0x0000000000000000000000000000000000000000",
+  "pool": "0x0000000000000000000000000000000000000000000000000000000000000000",
+  "expiry": "1614956256",
+  "salt": "2752094376750492926844965905320507011598275560670346196138937898764349624882",
+  "chainId": 1,
+  "verifyingContract": "0xdef1c0ded9bec7f1a1670819833240f027b25eff",
+  "takerTokenFeeAmount": "0",
+  "sender": "0x0000000000000000000000000000000000000000",
+  "feeRecipient": "0x0000000000000000000000000000000000000000",
+  "signature": {
+    "v": 27,
+    "r": "0x983a8a8dad663124a52609fe9aa82737f7f02d12ed951785f36b50906041794d",
+    "s": "0x5f18ae837be4732bcb3dd019104cf775f92b8740b275be510462a7aa62cdf252",
+    "signatureType": 3
+  }
+}
+  */
+  return await apiLooper.post('zeroxRopsten', `/sra/v4/order`, {
+    body: order,
+    /* {
       createDateTime,
       data: {
         getMakerAmount: order.getMakerAmount,
@@ -316,7 +356,7 @@ const sendLimitOrder = async (params) => {
       orderMaker: makerAddress,
       remainingMakerAmount: makerAmount,
       signature,
-    },
+    }, */
     reportErrors: (error) => {
       console.group('%c 1inch send limit order', 'color: red')
       console.log(error)
