@@ -312,6 +312,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
 
     const request = [
       `/swap/v1/quote?`,
+      `takerAddress=${fromWallet.address}&`,
       `buyToken=${buyToken}&`,
       `sellToken=${sellToken}&`,
       `sellAmount=${sellAmount}`,
@@ -321,8 +322,6 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   }
 
   checkSwapData = async () => {
-    await this.checkTokenApprove()
-
     const { spendedAmount, needApprove } = this.state
     const doNotUpdate = this.isSwapDataNotAvailable() || !spendedAmount || needApprove
 
@@ -348,6 +347,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
 
     this.setState(() => ({
       isDataPending: true,
+      blockReason: undefined,
     }))
 
     try {
@@ -366,19 +366,22 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
         const weiFee = txGas.times(swap.tx.gasPrice)
         const swapFee = utils.amount.formatWithoutDecimals(weiFee, 18) */
 
-        this.setState(() => ({
-          /* receivedAmount: utils.amount.formatWithoutDecimals(
+        this.setState(
+          () => ({
+            /* receivedAmount: utils.amount.formatWithoutDecimals(
             swap.toTokenAmount,
             swap.toToken.decimals
           ), */
-          receivedAmount: utils.amount.formatWithoutDecimals(
-            swap.buyAmount,
-            // if it's not a token then usual coin with 18 decimals
-            toWallet?.decimals || 18
-          ),
-          swapData: swap,
-          //swapFee,
-        }))
+            receivedAmount: utils.amount.formatWithoutDecimals(
+              swap.buyAmount,
+              // if it's not a token then usual coin with 18 decimals
+              toWallet?.decimals || 18
+            ),
+            swapData: swap,
+            //swapFee,
+          }),
+          this.checkTokenApprove
+        )
       }
     } catch (error) {
       this.reportError(error)
@@ -418,9 +421,13 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
         waitReceipt: true,
       }) */
 
+      // TODO: 0x problem? why I have to increase gas limit by myself
+      // it was needed just once. Remove it if everything is fine
+      // swapData.gas = new BigNumber(swapData.gas).plus(50_000).toString()
+
       const transactionHash = await actions[lowerKey].sendReadyTransaction({
         data: swapData,
-        waitReceipt: false,
+        waitReceipt: true,
       })
 
       actions.notifications.show(constants.notifications.Transaction, {
@@ -444,7 +451,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   }
 
   checkTokenApprove = async () => {
-    const { spendedAmount, fromWallet, network } = this.state
+    const { spendedAmount, fromWallet, network, swapData } = this.state
 
     if (!fromWallet.isToken) {
       this.setState(() => ({
@@ -459,6 +466,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
         owner: address,
         standard,
         decimals,
+        spender: swapData.allowanceTarget,
       })
 
       this.setState(() => ({
@@ -468,13 +476,20 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   }
 
   approve = async () => {
-    const { network, spendedAmount, fromWallet } = this.state
+    const { network, spendedAmount, fromWallet, swapData } = this.state
 
     this.setState(() => ({
       isDataPending: true,
     }))
 
-    const approveInfo: any = await actions.oneinch.approveToken({
+    const receipt = await actions.oneinch.approveToken({
+      amount: spendedAmount,
+      name: fromWallet.tokenKey,
+      standard: fromWallet.standard,
+      target: swapData.allowanceTarget,
+    })
+
+    /* const approveInfo: any = await actions.oneinch.approveToken({
       chainId: network.networkVersion,
       amount: utils.amount.formatWithDecimals(spendedAmount, fromWallet.decimals),
       contract: fromWallet.contractAddress,
@@ -488,7 +503,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       amount: approveInfo.value,
       gasPrice: approveInfo.gasPrice,
       waitReceipt: true,
-    })
+    }) */
 
     actions.notifications.show(constants.notifications.Transaction, {
       link: transactions.getLink(fromWallet.standard, receipt.transactionHash),
@@ -540,7 +555,6 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
         fromWallet,
       }),
       () => {
-        this.resetSwapData()
         this.updateNetwork()
         this.checkTokenApprove()
         this.resetReceivedList()
@@ -870,14 +884,19 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
                 onClick={this.swap}
                 brand
               >
-                {/* Insufficient balance */}
-                {blockReason === SwapBlockReason.NoLiquidity && (
+                {blockReason === SwapBlockReason.NoLiquidity ? (
                   <FormattedMessage
                     id="insufficientLiquidity"
                     defaultMessage="Insufficient liquidity"
                   />
+                ) : blockReason === SwapBlockReason.NoBalance ? (
+                  <FormattedMessage
+                    id="insufficientBalance"
+                    defaultMessage="Insufficient balance"
+                  />
+                ) : (
+                  <FormattedMessage id="swap" defaultMessage="Swap" />
                 )}
-                {!blockReason && <FormattedMessage id="swap" defaultMessage="Swap" />}
               </Button>
             )}
           </div>

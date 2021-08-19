@@ -15,8 +15,8 @@ export type TokenData = {
   address: string
   logoURI: string
 }
-
-export type SwapData = {
+// FIXME: any
+export type SwapData = any | {
   fromToken: TokenData
   toToken: TokenData
   fromTokenAmount: string
@@ -82,4 +82,5 @@ export enum Direction {
 
 export enum SwapBlockReason {
   NoLiquidity,
+  NoBalance,
 }

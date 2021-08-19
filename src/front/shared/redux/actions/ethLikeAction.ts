@@ -455,12 +455,8 @@ class EthLikeAction {
     const ownerAddress = metamask.isConnected()
       ? metamask.getAddress()
       : getState().user[`${this.tickerKey}Data`].address
+
     const privateKey = this.getPrivateKeyByAddress(ownerAddress)
-
-    // TODO: 0x problem? why I have to increase gas limit by myself
-    // it was needed just once. Remove it if everything is fine
-    // data.gas = new BigNumber(data.gas).plus(100_000).toString()
-
     const signedData = await Web3.eth.accounts.signTransaction(data, privateKey)
 
     return new Promise((res, rej) => {

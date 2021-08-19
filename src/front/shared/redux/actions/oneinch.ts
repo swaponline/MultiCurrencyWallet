@@ -11,6 +11,7 @@ import {
 } from '@1inch/limit-order-protocol'
 import { COIN_MODEL, COIN_DATA } from 'swap.app/constants/COINS'
 import getCoinInfo from 'common/coins/getCoinInfo'
+import EVM_CONTRACTS_ABI from 'common/helpers/constants/EVM_CONTRACTS_ABI'
 import utils from 'common/utils'
 import { apiLooper, externalConfig, metamask } from 'helpers'
 import { getState } from 'redux/core'
@@ -166,7 +167,7 @@ const fetchSpenderContractAddress = async (params): Promise<string | false> => {
 }
 
 const fetchTokenAllowance = async (params): Promise<number> => {
-  const { chainId, standard, owner, contract, decimals } = params
+  const { chainId, standard, owner, contract, spender, decimals } = params
   const Web3 = actions[standard].getCurrentWeb3()
   const tokenContract = new Web3.eth.Contract(TokenApi, contract, {
     from: owner,
@@ -174,9 +175,9 @@ const fetchTokenAllowance = async (params): Promise<number> => {
   let allowance = 0
 
   try {
-    const spenderContract = await fetchSpenderContractAddress({ chainId })
+    //const spenderContract = await fetchSpenderContractAddress({ chainId })
 
-    allowance = await tokenContract.methods.allowance(owner, spenderContract).call({ from: owner })
+    allowance = await tokenContract.methods.allowance(owner, spender).call({ from: owner })
 
     // formatting without token decimals
     allowance = new BigNumber(allowance)
@@ -193,18 +194,22 @@ const fetchTokenAllowance = async (params): Promise<number> => {
 }
 
 const approveToken = async (params) => {
-  const { chainId, amount, contract } = params
+  const { amount, name, target, standard } = params
 
-  const request = ''.concat(
+  /*   const request = ''.concat(
     `/${chainId}/approve/calldata?`,
     `amount=${amount}&`,
     `tokenAddress=${contract}`
-  )
-
+  ) */
   try {
-    const approveData = await apiLooper.get('oneinch', request)
+    //const approveData = await apiLooper.get('oneinch', request)
+    //return approveData
 
-    return approveData
+    return actions[standard].approve({
+      name,
+      to: target,
+      amount,
+    })
   } catch (error) {
     console.group('%c 1inch token approve', 'color: red')
     console.log(error)
