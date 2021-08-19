@@ -407,20 +407,18 @@ class EthLikeAction {
             amount,
             gasPrice,
             gasLimit,
-            privateKey,
           })
         })
       }
     })
   }
 
-  sendAdminTransaction = async (params): Promise<string> => {
+  sendAdminTransaction = async (params) => {
     const {
       from,
       value,
       gasPrice,
       gasLimit,
-      privateKey,
       externalAdminFeeObj,
     } = params
     const adminObj = externalAdminFeeObj || this.adminFeeObj
@@ -448,21 +446,11 @@ class EthLikeAction {
       )),
     }
 
-    return new Promise(async (res) => {
-      const signedData = await Web3.eth.accounts.signTransaction(txData, privateKey)
-
-      Web3.eth.sendSignedTransaction(signedData.rawTransaction)
-        .on('transactionHash', (hash) => {
-          console.group('%c Admin commission is sended', 'color: green;')
-          console.log('tx hash', hash)
-          console.groupEnd()
-          res(hash)
-        })
-    })
+    return this.sendReadyTransaction({ data: txData })
   }
 
   sendReadyTransaction = async (params) => {
-    const { data, waitReceipt } = params
+    const { data, waitReceipt = false } = params
     const Web3 = this.getCurrentWeb3()
     const ownerAddress = metamask.isConnected()
       ? metamask.getAddress()
@@ -470,17 +458,23 @@ class EthLikeAction {
     const privateKey = this.getPrivateKeyByAddress(ownerAddress)
 
     // TODO: 0x problem? why I have to increase gas limit by myself
-    data.gas = new BigNumber(data.gas).plus(100_000).toString()
+    // it was needed just once. Remove it if everything is fine
+    // data.gas = new BigNumber(data.gas).plus(100_000).toString()
 
     const signedData = await Web3.eth.accounts.signTransaction(data, privateKey)
 
-    Web3.eth.sendSignedTransaction(signedData.rawTransaction)
-      .on('transactionHash', (hash) => {
-        if (!waitReceipt) return hash
-      } )
-      .on('receipt', (receipt) => {
-        if (waitReceipt) return receipt
-      })
+    return new Promise((res, rej) => {
+      Web3.eth
+        .sendSignedTransaction(signedData.rawTransaction)
+        .on('receipt', (receipt) => waitReceipt && res(receipt))
+        .on('transactionHash', (hash) => {
+          console.group('%c tx hash', 'color: green;')
+          console.log(hash)
+          console.groupEnd()
+  
+          if (!waitReceipt) res(hash)
+        })
+    })
   }
 
   isContract = async (address: string): Promise<boolean> => {

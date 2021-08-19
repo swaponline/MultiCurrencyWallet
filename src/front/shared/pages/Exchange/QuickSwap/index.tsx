@@ -20,7 +20,7 @@ import {
 } from 'helpers'
 import actions from 'redux/actions'
 import Link from 'local_modules/sw-valuelink'
-import { ComponentState, Direction } from './types'
+import { ComponentState, Direction, SwapBlockReason } from './types'
 import Button from 'components/controls/Button/Button'
 import Address from 'components/ui/Address/Address'
 import Copy from 'components/ui/Copy/Copy'
@@ -106,6 +106,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       destReceiver: '',
       showOrders: false,
       mnemonicSaved: mnemonic === '-',
+      blockReason: undefined,
     }
   }
 
@@ -235,22 +236,29 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   }
 
   reportError = (error) => {
-    this.setState(() => ({
-      isDataPending: false,
-      error,
-    }))
-    console.group('%c Swap', 'color: red;')
-    console.error(error)
-    console.groupEnd()
+    const possibleNoLiquidity = JSON.stringify(error)?.match(/INSUFFICIENT_ASSET_LIQUIDITY/)
 
-    const notEnoughBalance = error?.match(/(N|n)ot enough .* balance/)
+    if (possibleNoLiquidity) {
+      this.setState(() => ({ blockReason: SwapBlockReason.NoLiquidity }))
+    } else {
+      console.group('%c Swap', 'color: red;')
+      console.error(error)
+      console.groupEnd()
+    }
 
-    if (!notEnoughBalance) {
+    //const notEnoughBalance = error?.match(/(N|n)ot enough .* balance/)
+
+    /* if (!notEnoughBalance) {
       actions.notifications.show(constants.notifications.ErrorNotification, {
         error: error.message,
       })
       feedback.oneinch.failed(error.message)
-    }
+    } */
+
+    this.setState(() => ({
+      isDataPending: false,
+      error,
+    }))
   }
 
   createSwapRequest = () => {
@@ -736,6 +744,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       isAdvancedMode,
       showOrders,
       mnemonicSaved,
+      blockReason,
     } = this.state
 
     const linked = Link.all(
@@ -861,9 +870,14 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
                 onClick={this.swap}
                 brand
               >
-                {/* Insufficient liquidity */}
                 {/* Insufficient balance */}
-                <FormattedMessage id="swap" defaultMessage="Swap" />
+                {blockReason === SwapBlockReason.NoLiquidity && (
+                  <FormattedMessage
+                    id="insufficientLiquidity"
+                    defaultMessage="Insufficient liquidity"
+                  />
+                )}
+                {!blockReason && <FormattedMessage id="swap" defaultMessage="Swap" />}
               </Button>
             )}
           </div>

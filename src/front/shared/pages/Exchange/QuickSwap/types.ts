@@ -72,9 +72,14 @@ export type ComponentState = {
   destReceiver: string
   showOrders: boolean
   mnemonicSaved: boolean
+  blockReason: SwapBlockReason | undefined
 }
 
 export enum Direction {
   Spend,
   Receive,
+}
+
+export enum SwapBlockReason {
+  NoLiquidity,
 }
