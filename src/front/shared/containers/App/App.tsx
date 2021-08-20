@@ -353,7 +353,6 @@ class App extends React.Component<RouteComponentProps<any>, any> {
 
     //await actions.oneinch.fetchAllTokens()
     await actions.oneinch.fetchUserOrders()
-    //await actions.oneinch.fetchAllProtocols()
 
     console.groupEnd()
   }

@@ -72,7 +72,7 @@ describe('Send EVM coins from the withdraw form', () => {
       await browser.close()
     }
   })
-
+  //@ts-ignore
   it.each(dataForTx)(
     'Sending %s transaction',
     async (coinName: string, txData: TxData) => {

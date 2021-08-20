@@ -1,7 +1,7 @@
 import { BigNumber } from 'bignumber.js'
 import TokenApi from 'human-standard-token-abi'
 import moment from 'moment'
-
+import Web3 from 'web3'
 import {
   LimitOrderBuilder,
   LimitOrderProtocolFacade,
@@ -11,6 +11,7 @@ import {
   LimitOrderPredicateCallData,
 } from '@1inch/limit-order-protocol'
 import { LimitOrder, Signature } from '@0x/protocol-utils'
+import { MetamaskSubprovider, PrivateKeyWalletSubprovider } from '@0x/subproviders'
 
 import { COIN_MODEL, COIN_DATA } from 'swap.app/constants/COINS'
 import getCoinInfo from 'common/coins/getCoinInfo'
@@ -91,29 +92,6 @@ const fetchProtocolsByChain = async (params) => {
     return []
   }
 }
-
-const addProtocols = (params) => {
-  const { chainId, protocols } = params
-
-  reducers.oneinch.addProtocols({
-    chainId,
-    protocols,
-  })
-}
-
-/* const fetchAllProtocols = async () => {
-  const { blockchains } = getState().oneinch
-
-  for (const prop in blockchains) {
-    const { chainId } = blockchains[prop]
-    const protocols: any = await fetchProtocolsByChain({ chainId })
-
-    addProtocols({
-      chainId,
-      protocols,
-    })
-  }
-} */
 
 const filterCurrencies = (params) => {
   const { currencies, tokensWallets, onlyTokens = false } = params
@@ -274,22 +252,38 @@ const createLimitOrder = async (params) => {
 
   const order = new LimitOrder({
     chainId,
-    makerToken: makerAssetAddress,
-    takerToken: takerAssetAddress,
+    makerToken: makerAssetAddress.toLowerCase(),
+    takerToken: takerAssetAddress.toLowerCase(),
     makerAmount: new BigNumber(makerUnitAmount),
     takerAmount: new BigNumber(takerUnitAmount),
-    maker: makerAddress,
+    maker: makerAddress.toLowerCase(),
     taker: '0x0000000000000000000000000000000000000000',
     sender: '0x0000000000000000000000000000000000000000',
     expiry: new BigNumber(now).plus(expiresInSec),
     salt: new BigNumber(now),
-    // feeRecipient: '0x0000000000000000000000000000000000000000',
-    // pool: '0x0000000000000000000000000000000000000000',
-    // verifyingContract: "0xdef1c0ded9bec7f1a1670819833240f027b25eff",
+    pool: '0x0000000000000000000000000000000000000000',
+    verifyingContract: '0xdef1c0ded9bec7f1a1670819833240f027b25eff'.toLowerCase(),
+    //sender: "0x0000000000000000000000000000000000000000",
+    //feeRecipient: '0x0000000000000000000000000000000000000000',
   })
-  const web3 = actions[baseCurrency].getCurrentWeb3()
+  //const web3 = actions[baseCurrency].getCurrentWeb3()
+  const web3 = new Web3(
+    new Web3.providers.HttpProvider('https://rpc-mainnet.maticvigil.com')
+  )
+  // https://rpc-mainnet.maticvigil.com
+  // https://ropsten.infura.io/v3/2b2b0468916d4f898d20458552400b9b
+  console.log('params: ', params)
+  console.log('web3: ', web3)
+  console.log('web3.currentProvider: ', web3.currentProvider)
+  console.log('web3.givenProvider: ', web3.givenProvider)
   //@ts-ignore
   order.signature = await order.getSignatureWithProviderAsync(web3.currentProvider)
+
+  //const privateKey = actions[baseCurrency].getPrivateKeyByAddress(makerAddress)
+  //@ts-ignore
+  //order.signature = await order.getSignatureWithKey(privateKey.toLowerCase())
+
+  console.log('order: ', order)
 
   /*   const order = builder.buildLimitOrder({
     makerAssetAddress,
@@ -310,30 +304,7 @@ const createLimitOrder = async (params) => {
 const sendLimitOrder = async ({ chainId, order }) => {
   // const { chainId, order, orderHash, makerAmount, takerAmount, makerAddress, signature } = params
   //const createDateTime = moment().toISOString()
-  /* 
-  {
-  "makerToken": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
-  "takerToken": "0xe41d2489571d322189246dafa5ebde1f4699f498",
-  "makerAmount": "100000000000000",
-  "takerAmount": "2000000000000000000000",
-  "maker": "0x56EB0aD2dC746540Fab5C02478B31e2AA9DdC38C",
-  "taker": "0x0000000000000000000000000000000000000000",
-  "pool": "0x0000000000000000000000000000000000000000000000000000000000000000",
-  "expiry": "1614956256",
-  "salt": "2752094376750492926844965905320507011598275560670346196138937898764349624882",
-  "chainId": 1,
-  "verifyingContract": "0xdef1c0ded9bec7f1a1670819833240f027b25eff",
-  "takerTokenFeeAmount": "0",
-  "sender": "0x0000000000000000000000000000000000000000",
-  "feeRecipient": "0x0000000000000000000000000000000000000000",
-  "signature": {
-    "v": 27,
-    "r": "0x983a8a8dad663124a52609fe9aa82737f7f02d12ed951785f36b50906041794d",
-    "s": "0x5f18ae837be4732bcb3dd019104cf775f92b8740b275be510462a7aa62cdf252",
-    "signatureType": 3
-  }
-}
-  */
+
   return await apiLooper.post('zeroxRopsten', `/sra/v4/order`, {
     body: order,
     /* {

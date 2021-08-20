@@ -13,12 +13,24 @@ type ComponentProps = {
   swapFee: string
   spendedAmount: string
   baseChainWallet: IUniversalObj
+  fromWallet: IUniversalObj
+  toWallet: IUniversalObj
   fiat: string
   isDataPending: boolean
 }
 
 function SwapInfo(props: ComponentProps) {
-  const { network, swapData, swapFee, spendedAmount, baseChainWallet, fiat, isDataPending } = props
+  const {
+    network,
+    swapData,
+    swapFee,
+    fromWallet,
+    toWallet,
+    spendedAmount,
+    baseChainWallet,
+    fiat,
+    isDataPending,
+  } = props
 
   let fee: string | undefined = undefined
   let total: string | undefined = undefined
@@ -27,15 +39,19 @@ function SwapInfo(props: ComponentProps) {
   let price: string | undefined = undefined
 
   if (swapData) {
-    const { fromTokenAmount, toTokenAmount, fromToken, toToken } = swapData
+    //const { fromTokenAmount, toTokenAmount, fromToken, toToken } = swapData
+    const { sellAmount, buyAmount, fromToken, toToken } = swapData
 
-    //const fromAmount = commonUtils.amount.formatWithoutDecimals(fromTokenAmount, fromToken.decimals)
-    //const toAmount = commonUtils.amount.formatWithoutDecimals(toTokenAmount, toToken.decimals)
+    const fromAmount = commonUtils.amount.formatWithoutDecimals(
+      sellAmount,
+      fromWallet.decimals || 18
+    )
+    const toAmount = commonUtils.amount.formatWithoutDecimals(buyAmount, toWallet.decimals || 18)
     const customDecimals = 7
 
-    //price = `${new BigNumber(fromAmount).div(toAmount).dp(customDecimals).toString()} ${
-    //  fromToken.symbol
-    //} / ${toToken.symbol}`
+    price = `${new BigNumber(fromAmount).div(toAmount).dp(customDecimals).toString()} ${
+      fromWallet.currency
+    } / ${toWallet.currency}`
 
     const totalAmount = new BigNumber(spendedAmount).plus(swapFee).dp(customDecimals)
 

@@ -8,14 +8,9 @@ import Toggle from 'components/controls/Toggle/Toggle'
 function NewTokenInstruction(props) {
   const { protocols, blockchains } = props
   const [visible, setVisibility] = useState(false)
-  const [displayProtocols, setDisplayProtocols] = useState(false)
 
   const toggleVisibility = () => {
     setVisibility(!visible)
-  }
-
-  const toggleProtocolsVisibility = () => {
-    setDisplayProtocols(!displayProtocols)
   }
 
   return (
@@ -64,7 +59,7 @@ function NewTokenInstruction(props) {
           <p styleName="paragraph">
             <FormattedMessage
               id="ifYouDoNotSeeNewToken"
-              defaultMessage="If you do not see it, possible there is not available pair with your token and you have to create a new pair (liquidity pool)."
+              defaultMessage="You will not be able to exchange some tokens, because there may not be an available liquidity pool with your token. You have to create a new one if you want to exchange it."
             />
           </p>
 
@@ -72,7 +67,7 @@ function NewTokenInstruction(props) {
             <li>
               <FormattedMessage
                 id="createNewPoolInAggregates"
-                defaultMessage="Chose one of available protocols and create there a new pair with your token (new liquidity pool). This pool has to have liquidity more then 10$ in one of the assets."
+                defaultMessage="Chose one of supported sources and create there a new pool with your token."
               />
             </li>
             <li>
@@ -82,36 +77,6 @@ function NewTokenInstruction(props) {
               />
             </li>
           </ol>
-
-          <div styleName="protocolsToggle">
-            <Toggle checked={displayProtocols} onChange={toggleProtocolsVisibility} />
-            <FormattedMessage
-              id="showAvailableProtocols"
-              defaultMessage="Show available protocols"
-            />
-          </div>
-
-          {/* {displayProtocols &&
-            Object.keys(protocols).map((chainId, index) => {
-              const { chainName } = blockchains[chainId]
-
-              return (
-                <>
-                  <p styleName="protocolsChain">
-                    <b>{chainName?.replace(/mainnet/i, '')}</b>
-                  </p>
-                  <ul styleName="protocolsList" key={index}>
-                    {protocols[chainId].map((protocol, index) => {
-                      return (
-                        <li key={index}>
-                          <img src={protocol.img} alt={protocol.title} title={protocol.title} />
-                        </li>
-                      )
-                    })}
-                  </ul>
-                </>
-              )
-            })} */}
         </div>
       )}
     </section>

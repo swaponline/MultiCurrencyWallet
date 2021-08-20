@@ -48,14 +48,6 @@ interface State {
       }
     }
   } */
-/*   protocols: {
-    // chain id
-    [k: string]: {
-      id: string
-      img: string
-      title: string
-    }[]
-  } */
   orders: {
     [k: string]: Order[]
   }
@@ -75,7 +67,6 @@ Object.keys(config.evmNetworks)
 export const initialState: State = {
   blockchains,
   //tokens: {},
-  //protocols: {},
   orders: {},
 }
 
@@ -87,18 +78,6 @@ export const initialState: State = {
     tokens: {
       ...state.tokens,
       [chainId]: tokens,
-    },
-  }
-} */
-
-/* export const addProtocols = (state, payload) => {
-  const { chainId, protocols } = payload
-
-  return {
-    ...state,
-    protocols: {
-      ...state.protocols,
-      [chainId]: protocols,
     },
   }
 } */

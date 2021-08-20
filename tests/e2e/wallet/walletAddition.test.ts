@@ -81,7 +81,7 @@ describe('Adding coins', () => {
       throw new Error('page is not found')
     }
   })
-
+  //@ts-ignore
   it.each(wallets)('adding %s wallet', async (walletName, walletTitle) => {
     if (testPage) {
       try {

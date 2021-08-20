@@ -95,7 +95,7 @@ describe('Adding custom tokens', () => {
       throw new Error('page is not found')
     }
   })
-
+  //@ts-ignore
   it.each(cases)('adding %s', async (name, typeId, options) => {
     if (testPage) {
       try {

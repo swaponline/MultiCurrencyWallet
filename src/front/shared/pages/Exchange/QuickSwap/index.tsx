@@ -351,7 +351,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     }))
 
     try {
-      const swap: any = await apiLooper.get('zeroxRopsten', this.createSwapRequest(), {
+      const swap: any = await apiLooper.get('zeroxPolygon', this.createSwapRequest(), {
         reportErrors: this.reportError,
         sourceError: true,
       })
@@ -366,6 +366,9 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
         const weiFee = txGas.times(swap.tx.gasPrice)
         const swapFee = utils.amount.formatWithoutDecimals(weiFee, 18) */
 
+        const weiFee = new BigNumber(swap.gas).times(swap.gasPrice)
+        const swapFee = utils.amount.formatWithoutDecimals(weiFee, 18)
+
         this.setState(
           () => ({
             /* receivedAmount: utils.amount.formatWithoutDecimals(
@@ -378,7 +381,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
               toWallet?.decimals || 18
             ),
             swapData: swap,
-            //swapFee,
+            swapFee,
           }),
           this.checkTokenApprove
         )
@@ -775,6 +778,9 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     const swapDataIsDisabled = this.isSwapDataNotAvailable()
     const swapBtnIsDisabled = this.isSwapNotAvailable() || swapDataIsDisabled
     const isWalletCreated = localStorage.getItem(constants.localStorage.isWalletCreate)
+    const insufficientBalance = new BigNumber(spendedAmount)
+      .plus(swapFee || 0)
+      .isGreaterThan(fromWallet.balance)
 
     return (
       <>
@@ -848,6 +854,8 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
             swapFee={swapFee}
             spendedAmount={spendedAmount}
             baseChainWallet={baseChainWallet}
+            fromWallet={fromWallet}
+            toWallet={toWallet}
             fiat={fiat}
             isDataPending={isDataPending}
           />
@@ -889,7 +897,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
                     id="insufficientLiquidity"
                     defaultMessage="Insufficient liquidity"
                   />
-                ) : blockReason === SwapBlockReason.NoBalance ? (
+                ) : insufficientBalance ? (
                   <FormattedMessage
                     id="insufficientBalance"
                     defaultMessage="Insufficient balance"

@@ -32,7 +32,6 @@
     font-size: 0.94em;
 
     .paragraph {
-      @include ff-semibold;
       margin: 1rem 0;
       font-size: 1em;
     }
@@ -42,17 +41,6 @@
       padding: 0;
       padding-left: 1rem;
     }
-  }
-}
-
-.protocolsToggle {
-  @include ff-semibold;
-  display: flex;
-  align-items: center;
-  margin-top: 0.6rem;
-
-  label {
-    margin: 0.5rem 1rem 0.5rem 0;
   }
 }
 
