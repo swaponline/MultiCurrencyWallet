@@ -10,8 +10,8 @@ import {
   LimitOrderPredicateBuilder,
   LimitOrderPredicateCallData,
 } from '@1inch/limit-order-protocol'
-import { LimitOrder, Signature } from '@0x/protocol-utils'
-import { MetamaskSubprovider, PrivateKeyWalletSubprovider } from '@0x/subproviders'
+/* import { LimitOrder, Signature } from '@0x/protocol-utils'
+import { MetamaskSubprovider, PrivateKeyWalletSubprovider } from '@0x/subproviders' */
 
 import { COIN_MODEL, COIN_DATA } from 'swap.app/constants/COINS'
 import getCoinInfo from 'common/coins/getCoinInfo'
@@ -38,22 +38,6 @@ const serviceIsAvailable = async (params) => {
   }
 }
 
-const fetchTokensByChain = async (params) => {
-  const { chainId } = params
-
-  try {
-    const data: any = await apiLooper.get('oneinch', `/${chainId}/tokens`)
-
-    return data.tokens
-  } catch (error) {
-    console.group('%c 1inch tokens', 'color: red')
-    console.log(error)
-    console.groupEnd()
-
-    return {}
-  }
-}
-
 const addTokens = (params) => {
   const { chainId, tokens } = params
 
@@ -62,20 +46,6 @@ const addTokens = (params) => {
     tokens,
   })
 }
-
-/* const fetchAllTokens = async () => {
-  const { blockchains } = getState().oneinch
-
-  for (const prop in blockchains) {
-    const { chainId } = blockchains[prop]
-    const tokens: any = await fetchTokensByChain({ chainId })
-
-    addTokens({
-      chainId,
-      tokens,
-    })
-  }
-} */
 
 const fetchProtocolsByChain = async (params) => {
   const { chainId } = params
@@ -230,7 +200,7 @@ const createLimitOrder = async (params) => {
     takerAmount,
   } = params
 
-  /* const contractAddress = externalConfig.limitOrder[baseCurrency]
+  const contractAddress = externalConfig.limitOrder[baseCurrency]
   const connector = getWeb3Connector(baseCurrency, makerAddress)
   const builder = new LimitOrderBuilder(contractAddress, chainId, connector)
   const protocolFacade = new LimitOrderProtocolFacade(contractAddress, connector)
@@ -244,11 +214,11 @@ const createLimitOrder = async (params) => {
     // a limit order is valid only for 1 minute
     timestampBelow(utils.getUnixTimeStamp() + 60_000),
     nonceEquals(makerAddress, makerNonce)
-  ) */
+  )
 
   const makerUnitAmount = utils.amount.formatWithDecimals(makerAmount, makerAssetDecimals)
   const takerUnitAmount = utils.amount.formatWithDecimals(takerAmount, takerAssetDecimals)
-  const now = Date.now()
+  /*   const now = Date.now()
 
   const order = new LimitOrder({
     chainId,
@@ -267,9 +237,7 @@ const createLimitOrder = async (params) => {
     //feeRecipient: '0x0000000000000000000000000000000000000000',
   })
   //const web3 = actions[baseCurrency].getCurrentWeb3()
-  const web3 = new Web3(
-    new Web3.providers.HttpProvider('https://rpc-mainnet.maticvigil.com')
-  )
+  const web3 = new Web3(new Web3.providers.HttpProvider('https://rpc-mainnet.maticvigil.com'))
   // https://rpc-mainnet.maticvigil.com
   // https://ropsten.infura.io/v3/2b2b0468916d4f898d20458552400b9b
   console.log('params: ', params)
@@ -278,36 +246,43 @@ const createLimitOrder = async (params) => {
   console.log('web3.givenProvider: ', web3.givenProvider)
   //@ts-ignore
   order.signature = await order.getSignatureWithProviderAsync(web3.currentProvider)
-
+ */
   //const privateKey = actions[baseCurrency].getPrivateKeyByAddress(makerAddress)
   //@ts-ignore
   //order.signature = await order.getSignatureWithKey(privateKey.toLowerCase())
 
-  console.log('order: ', order)
-
-  /*   const order = builder.buildLimitOrder({
+  const order = builder.buildLimitOrder({
     makerAssetAddress,
     takerAssetAddress,
     makerAddress,
     makerAmount: makerUnitAmount,
     takerAmount: takerUnitAmount,
     predicate: orderPredicate,
-  }) */
+  })
 
-  /*   const orderTypedData = builder.buildLimitOrderTypedData(order)
+  console.log('order: ', order)
+
+  const orderTypedData = builder.buildLimitOrderTypedData(order)
   const orderHash = builder.buildLimitOrderHash(orderTypedData)
-  const signature = await builder.buildOrderSignature(makerAddress, orderTypedData) */
+  const signature = await builder.buildOrderSignature(makerAddress, orderTypedData)
 
-  return sendLimitOrder({ chainId, order })
+  return sendLimitOrder({
+    chainId,
+    order,
+    orderHash,
+    makerAmount: makerUnitAmount,
+    takerAmount: takerUnitAmount,
+    makerAddress,
+    signature,
+  })
 }
 
-const sendLimitOrder = async ({ chainId, order }) => {
-  // const { chainId, order, orderHash, makerAmount, takerAmount, makerAddress, signature } = params
-  //const createDateTime = moment().toISOString()
+const sendLimitOrder = async (params) => {
+  const { chainId, order, orderHash, makerAmount, takerAmount, makerAddress, signature } = params
+  const createDateTime = moment().toISOString()
 
-  return await apiLooper.post('zeroxRopsten', `/sra/v4/order`, {
-    body: order,
-    /* {
+  return await apiLooper.post('limitOrders', `/${chainId}/limit-order`, {
+    body: {
       createDateTime,
       data: {
         getMakerAmount: order.getMakerAmount,
@@ -327,7 +302,7 @@ const sendLimitOrder = async ({ chainId, order }) => {
       orderMaker: makerAddress,
       remainingMakerAmount: makerAmount,
       signature,
-    }, */
+    },
     reportErrors: (error) => {
       console.group('%c 1inch send limit order', 'color: red')
       console.log(error)
@@ -335,6 +310,51 @@ const sendLimitOrder = async ({ chainId, order }) => {
       return true
     },
   })
+}
+
+const fillLimitOrder = async (params) => {
+  const { order, name, baseCurrency, standard, amountToBeFilled } = params
+  const { user } = getState()
+
+  console.log('params: ', params)
+
+  const protocolContract = externalConfig.limitOrder[baseCurrency]
+
+  const approveResult = await approveToken({
+    amount: amountToBeFilled,
+    name,
+    target: protocolContract,
+    standard,
+  })
+
+  console.log('token approved hash: ', approveResult)
+
+  const owner = metamask.isConnected() ? metamask.getAddress() : user[`${baseCurrency}Data`].address
+  const connector = getWeb3Connector(baseCurrency, owner)
+  const limitOrderProtocolFacade = new LimitOrderProtocolFacade(protocolContract, connector)
+  const weiTakerAmount = utils.amount.formatWithDecimals(amountToBeFilled, 18)
+
+  const callData = limitOrderProtocolFacade.fillLimitOrder(
+    order.data,
+    order.signature,
+    order.makerAmount,
+    '0', //weiTakerAmount,
+    order.makerAmount //weiTakerAmount // threshold amount
+  )
+
+  const receipt = await actions[baseCurrency].send({
+    to: protocolContract,
+    data: callData,
+    amount: 0,
+    gasLimit: 150_000, // remove magic number
+    waitReceipt: true,
+  })
+
+  if (receipt) {
+    // TODO: remove an order from the redux state on success
+
+    return receipt
+  }
 }
 
 const cancelLimitOrder = async (params) => {
@@ -423,15 +443,13 @@ const fetchUserOrders = async () => {
 
 export default {
   serviceIsAvailable,
-  fetchTokensByChain,
-  //fetchAllTokens,
-  //fetchAllProtocols,
   filterCurrencies,
   addTokens,
   fetchSpenderContractAddress,
   fetchTokenAllowance,
   approveToken,
   createLimitOrder,
+  fillLimitOrder,
   cancelLimitOrder,
   removeLimitOrderFromState,
   fetchLatestLimitOrder,

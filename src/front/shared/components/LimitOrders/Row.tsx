@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react'
-import { connect } from 'redaction'
+import { FormattedMessage } from 'react-intl'
 import BigNumber from 'bignumber.js'
 import CSSModules from 'react-css-modules'
 import styles from './index.scss'
 import utils from 'common/utils'
+import { constants, transactions } from 'helpers'
 import actions from 'redux/actions'
 import Coins from 'components/Coins/Coins'
+import Button from 'components/controls/Button/Button'
 import { RemoveButton } from 'components/controls'
 
 function debounce(callback, ms) {
@@ -22,7 +24,7 @@ function debounce(callback, ms) {
 }
 
 function Row(props) {
-  const { tokens, order, orderIndex, cancelOrder, chainId, baseCurrency } = props
+  const { order, orderIndex, cancelOrder, chainId, baseCurrency, isMy = false } = props
   const { data, makerRate, makerAmount: makerUnitAmount, takerAmount: takerUnitAmount } = order
 
   const [dimensions, setDimensions] = useState({
@@ -43,17 +45,53 @@ function Row(props) {
     }
   })
 
-  const getAsset = (contract) => tokens[chainId][contract]
-  const getAssetName = (asset) => `{${baseCurrency}}${asset.symbol}`.toUpperCase()
+  // TODO: reverse all data if it's now owner's order
+  // for the taker it will be:
+  // makerAsset = takerAsset
+  // takerAsset = makerAsset
+  // ...
+
+  // TODO: move it into the parent
+  // don't get all wallets and don't create this function inside every Row
+  const wallets = actions.core.getWallets()
+  const getAsset = (contract) => {
+    return wallets.find(
+      (wallet) => wallet?.contractAddress?.toLowerCase() === contract.toLowerCase()
+    )
+  }
 
   const makerAsset = getAsset(data.makerAsset)
   const takerAsset = getAsset(data.takerAsset)
 
-  const makerAssetName = getAssetName(makerAsset)
+  const makerAssetName = makerAsset.tokenKey.toUpperCase()
   const makerWallet = actions.core.getWallet({ currency: makerAssetName })
-  const takerAssetName = getAssetName(takerAsset)
+  const takerAssetName = takerAsset.tokenKey.toUpperCase()
 
   const coinNames = [makerAssetName, takerAssetName]
+
+  const fillOrder = async () => {
+    const receipt = await actions.oneinch.fillLimitOrder({
+      name: takerAsset.tokenKey,
+      standard: takerAsset.standard,
+      order,
+      baseCurrency: baseCurrency.toLowerCase(),
+      amountToBeFilled: utils.amount.formatWithoutDecimals(takerUnitAmount, takerAsset.decimals),
+    })
+
+    console.log('%c fill order result', 'color: orange; font-size: 20px')
+    console.log('result: ', receipt)
+
+    if (receipt) {
+      actions.notifications.show(constants.notifications.Transaction, {
+        link: transactions.getLink(takerAsset.baseCurrency.toLowerCase(), receipt.transactionHash),
+        completed: true,
+      })
+    } else {
+      actions.notifications.show(constants.notifications.ErrorNotification, {
+        error:
+      })
+    }
+  }
 
   const cancel = () => {
     cancelOrder({
@@ -85,21 +123,26 @@ function Row(props) {
         <Coins names={coinNames} size={mobileResolution ? 20 : 25} />
       </td>
       <td>
-        <span styleName="number">{makerAmount}</span> {makerAsset.symbol}
+        <span styleName="number">{makerAmount}</span> {makerAsset.currency}
       </td>
       <td>
-        <span styleName="number">{takerAmount}</span> {takerAsset.symbol}
+        <span styleName="number">{takerAmount}</span> {takerAsset.currency}
       </td>
       <td styleName="rate">
-        <span styleName="number">{formatedMakerRate}</span> {makerAsset.symbol}/{takerAsset.symbol}
+        <span styleName="number">{formatedMakerRate}</span> {makerAsset.currency}/
+        {takerAsset.currency}
       </td>
       <td>
-        <RemoveButton onClick={cancel} brand />
+        {isMy ? (
+          <RemoveButton onClick={cancel} brand />
+        ) : (
+          <Button id="createWalletBtn" brand fullWidth onClick={fillOrder}>
+            <FormattedMessage id="buyToken" defaultMessage="Buy" />
+          </Button>
+        )}
       </td>
     </tr>
   )
 }
 
-export default connect(({ oneinch }) => ({
-  tokens: oneinch.tokens,
-}))(CSSModules(Row, styles, { allowMultiple: true }))
+export default CSSModules(Row, styles, { allowMultiple: true })
