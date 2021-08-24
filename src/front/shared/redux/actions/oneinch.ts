@@ -200,6 +200,9 @@ const createLimitOrder = async (params) => {
     takerAmount,
   } = params
 
+  console.log('create order ======================')
+  console.log('params: ', params)
+
   const contractAddress = externalConfig.limitOrder[baseCurrency]
   const connector = getWeb3Connector(baseCurrency, makerAddress)
   const builder = new LimitOrderBuilder(contractAddress, chainId, connector)
@@ -313,10 +316,8 @@ const sendLimitOrder = async (params) => {
 }
 
 const fillLimitOrder = async (params) => {
-  const { order, name, baseCurrency, standard, amountToBeFilled } = params
+  const { order, name, baseCurrency, standard, takerDecimals, amountToBeFilled } = params
   const { user } = getState()
-
-  console.log('params: ', params)
 
   const protocolContract = externalConfig.limitOrder[baseCurrency]
 
@@ -327,12 +328,10 @@ const fillLimitOrder = async (params) => {
     standard,
   })
 
-  console.log('token approved hash: ', approveResult)
-
   const owner = metamask.isConnected() ? metamask.getAddress() : user[`${baseCurrency}Data`].address
   const connector = getWeb3Connector(baseCurrency, owner)
   const limitOrderProtocolFacade = new LimitOrderProtocolFacade(protocolContract, connector)
-  const weiTakerAmount = utils.amount.formatWithDecimals(amountToBeFilled, 18)
+  const weiTakerAmount = utils.amount.formatWithDecimals(amountToBeFilled, takerDecimals)
 
   const callData = limitOrderProtocolFacade.fillLimitOrder(
     order.data,
@@ -413,13 +412,13 @@ const fetchLatestLimitOrder = async (params) => {
   }
 }
 
-const fetchLimitOrders = async (params) => {
-  const { chainId, owner } = params
+const fetchOwnerOrders = async (params) => {
+  const { chainId, owner, page = 1, pageItems = 20 } = params
 
   try {
     const orders = await apiLooper.get(
       'limitOrders',
-      `/${chainId}/limit-order/address/${owner}?sortBy=createDateTime`
+      `/${chainId}/limit-order/address/${owner}?page=${page}&limit=${pageItems}&statuses=%5B1%5D&sortBy=createDateTime`
     )
 
     reducers.oneinch.addOrders({ chainId, orders })
@@ -437,8 +436,25 @@ const fetchUserOrders = async () => {
     const currency = oneinch.blockchains[chainId].currency.toLowerCase()
     const owner = metamask.isConnected() ? metamask.getAddress() : user[`${currency}Data`].address
 
-    await fetchLimitOrders({ chainId, owner })
+    await fetchOwnerOrders({ chainId, owner })
   })
+}
+
+const fetchAllOrders = async (params) => {
+  const { chainId, page = 1, pageItems = 30 } = params
+
+  try {
+    const orders = await apiLooper.get(
+      'limitOrders',
+      `/${chainId}/limit-order/all?page=${page}&limit=${pageItems}&statuses=%5B1%5D&sortBy=createDateTime`
+    )
+
+    return orders
+  } catch (error) {
+    console.group('%c 1inch fetch all limit orders', 'color: red')
+    console.log(error)
+    console.groupEnd()
+  }
 }
 
 export default {
@@ -453,6 +469,7 @@ export default {
   cancelLimitOrder,
   removeLimitOrderFromState,
   fetchLatestLimitOrder,
-  fetchLimitOrders,
+  fetchOwnerOrders,
   fetchUserOrders,
+  fetchAllOrders,
 }

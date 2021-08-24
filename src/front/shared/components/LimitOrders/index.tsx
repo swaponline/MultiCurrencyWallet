@@ -11,16 +11,6 @@ import tableStyles from 'components/tables/Table/Table.scss'
 import PanelHeader from './PanelHeader'
 import Row from './Row'
 
-/* 
-
-maker 0xDA873Ff72bd4eA9c122C51a837DA3f88307D1DB5
-maker token WMATIC 0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270
-
-taker 0x57d49704F453CdD2b995280d9D7F557E42847d82
-taker token WBTC 0x1bfd67037b42cf73acf2047067bd4f2c47d9bfd6
-
-*/
-
 const tableTitles = [
   ' ',
   <FormattedMessage id="youPay" defaultMessage="You Pay" />,
@@ -66,16 +56,26 @@ function LimitOrders(props) {
 
   const hasChainOrders = orders[displayedChainId]?.length
 
-  const [makerOrders, setMakerOrders] = useState<any>([])
+  const [allOrders, setAllOrders] = useState<any>([])
 
-  //@ts-ignore
-  useEffect(async () => {
-    const orders = await apiLooper.get(
-      'limitOrders',
-      '/137/limit-order/address/0xDA873Ff72bd4eA9c122C51a837DA3f88307D1DB5?page=1&limit=100&statuses=%5B1%5D&sortBy=createDateTime'
-    )
+  useEffect(() => {
+    let _mounted = true
 
-    setMakerOrders(orders)
+    const updateOrders = async () => {
+      const orders = await actions.oneinch.fetchAllOrders({
+        chainId: displayedChainId,
+        page: 1,
+        pageItems: 50,
+      })
+
+      if (_mounted) setAllOrders(orders)
+    }
+
+    updateOrders()
+
+    return () => {
+      _mounted = false
+    }
   }, [])
 
   return (
@@ -110,13 +110,13 @@ function LimitOrders(props) {
 
       <h3>All other orders</h3>
 
-      {makerOrders ? (
+      {allOrders ? (
         <Table
           id="limitOrdersTable"
           className={tableStyles.exchange}
           styleName="orderBookTable"
           titles={tableTitles}
-          rows={makerOrders}
+          rows={allOrders}
           rowRender={(order, index) => (
             <Row
               order={order}

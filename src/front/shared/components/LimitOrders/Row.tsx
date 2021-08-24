@@ -75,11 +75,9 @@ function Row(props) {
       standard: takerAsset.standard,
       order,
       baseCurrency: baseCurrency.toLowerCase(),
+      takerDecimals: takerAsset.decimals,
       amountToBeFilled: utils.amount.formatWithoutDecimals(takerUnitAmount, takerAsset.decimals),
     })
-
-    console.log('%c fill order result', 'color: orange; font-size: 20px')
-    console.log('result: ', receipt)
 
     if (receipt) {
       actions.notifications.show(constants.notifications.Transaction, {
@@ -88,7 +86,12 @@ function Row(props) {
       })
     } else {
       actions.notifications.show(constants.notifications.ErrorNotification, {
-        error:
+        error: (
+          <FormattedMessage
+            id="ErrorNotification12"
+            defaultMessage="Oops, looks like something went wrong!"
+          />
+        ),
       })
     }
   }
