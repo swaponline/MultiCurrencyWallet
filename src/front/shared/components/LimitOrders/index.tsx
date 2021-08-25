@@ -8,7 +8,8 @@ import actions from 'redux/actions'
 import Panel from 'components/ui/Panel/Panel'
 import Table from 'components/tables/Table/Table'
 import tableStyles from 'components/tables/Table/Table.scss'
-import PanelHeader from './PanelHeader'
+import UserPanelHeader from './UserPanelHeader'
+import AllOrdersHeader from './AllOrdersHeader'
 import Row from './Row'
 
 const tableTitles = [
@@ -20,7 +21,7 @@ const tableTitles = [
 ]
 
 function LimitOrders(props) {
-  const { orders, blockchains } = props
+  const { userOrders, blockchains } = props
   const chainsArr: IUniversalObj[] = Object.values(blockchains)
 
   const [displayedChainId, setDisplayedChainId] = useState(chainsArr[0]?.networkVersion)
@@ -54,7 +55,7 @@ function LimitOrders(props) {
     })
   }
 
-  const hasChainOrders = orders[displayedChainId]?.length
+  const hasChainOrders = userOrders[displayedChainId]?.length
 
   const [allOrders, setAllOrders] = useState<any>([])
 
@@ -65,10 +66,10 @@ function LimitOrders(props) {
       const orders = await actions.oneinch.fetchAllOrders({
         chainId: displayedChainId,
         page: 1,
-        pageItems: 50,
+        pageItems: 30,
       })
 
-      if (_mounted) setAllOrders(orders)
+      //if (_mounted) setAllOrders(orders)
     }
 
     updateOrders()
@@ -79,64 +80,70 @@ function LimitOrders(props) {
   }, [])
 
   return (
-    <Panel
-      header={
-        <PanelHeader orders={orders} chainId={displayedChainId} changeChain={setDisplayedChainId} />
-      }
-    >
-      {hasChainOrders ? (
-        <Table
-          id="limitOrdersTable"
-          className={tableStyles.exchange}
-          styleName="orderBookTable"
-          titles={tableTitles}
-          rows={orders[displayedChainId]}
-          rowRender={(order, index) => (
-            <Row
-              order={order}
-              orderIndex={index}
-              cancelOrder={cancelOrder}
-              chainId={displayedChainId}
-              baseCurrency={baseCurrency}
-              isMy
-            />
-          )}
-        />
-      ) : (
-        <p styleName="noOrdersMessage">
-          <FormattedMessage id="noActiveOrders" defaultMessage="No active orders" />
-        </p>
-      )}
+    <>
+      <Panel
+        header={
+          <UserPanelHeader
+            userOrders={userOrders}
+            chainId={displayedChainId}
+            changeChain={setDisplayedChainId}
+          />
+        }
+      >
+        {hasChainOrders ? (
+          <Table
+            id="limitOrdersTable"
+            className={tableStyles.exchange}
+            styleName="orderBookTable"
+            titles={tableTitles}
+            rows={userOrders[displayedChainId]}
+            rowRender={(order, index) => (
+              <Row
+                isMy
+                order={order}
+                orderIndex={index}
+                cancelOrder={cancelOrder}
+                chainId={displayedChainId}
+                baseCurrency={baseCurrency}
+              />
+            )}
+          />
+        ) : (
+          <p styleName="noOrdersMessage">
+            <FormattedMessage id="noActiveOrders" defaultMessage="No active orders" />
+          </p>
+        )}
+      </Panel>
 
-      <h3>All other orders</h3>
-
-      {allOrders ? (
-        <Table
-          id="limitOrdersTable"
-          className={tableStyles.exchange}
-          styleName="orderBookTable"
-          titles={tableTitles}
-          rows={allOrders}
-          rowRender={(order, index) => (
-            <Row
-              order={order}
-              orderIndex={index}
-              cancelOrder={cancelOrder}
-              chainId={displayedChainId}
-              baseCurrency={baseCurrency}
-            />
-          )}
-        />
-      ) : (
-        <p styleName="noOrdersMessage">
-          <FormattedMessage id="noActiveOrders" defaultMessage="No active orders" />
-        </p>
-      )}
-    </Panel>
+      <Panel header={<AllOrdersHeader allOrders={allOrders} chainId={displayedChainId} />}>
+        {allOrders.length ? (
+          <Table
+            id="limitOrdersTable"
+            className={tableStyles.exchange}
+            styleName="orderBookTable"
+            titles={tableTitles}
+            rows={allOrders}
+            rowRender={(order, index) => (
+              <Row
+                order={order}
+                orderIndex={index}
+                cancelOrder={cancelOrder}
+                chainId={displayedChainId}
+                baseCurrency={baseCurrency}
+              />
+            )}
+          />
+        ) : (
+          <p styleName="noOrdersMessage">
+            <FormattedMessage id="noActiveOrders" defaultMessage="No active orders" />
+          </p>
+        )}
+      </Panel>
+    </>
   )
 }
 
 export default connect(({ oneinch }) => ({
-  orders: oneinch.orders,
+  userOrders: oneinch.orders,
   blockchains: oneinch.blockchains,
 }))(CSSModules(LimitOrders, styles, { allowMultiple: true }))

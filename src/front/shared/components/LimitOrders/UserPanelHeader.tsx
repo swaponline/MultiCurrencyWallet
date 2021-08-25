@@ -12,8 +12,8 @@ const renderChainName = (item) => {
   return item.chainName.substring(0, lastIndex)
 }
 
-function PanelHeader(props) {
-  const { orders, chainId, changeChain, blockchains } = props
+function UserPanelHeader(props) {
+  const { userOrders, chainId, changeChain, blockchains } = props
   const dropDownItems: IUniversalObj[] = Object.values(blockchains).map((item: any) => {
     // in the DropDown we compare the "value" key for correct selected item rendering
     // let's add this key
@@ -33,7 +33,7 @@ function PanelHeader(props) {
     <>
       <h3>
         <FormattedMessage id="yourOrders" defaultMessage="Your orders" />{' '}
-        <span>{`(${orders[chainId] ? orders[chainId].length : 0})`}</span>
+        <span>{`(${userOrders[chainId] ? userOrders[chainId].length : 0})`}</span>
       </h3>
       <DropDown
         className={dropDownStyles.simplestDropdown}
@@ -49,4 +49,4 @@ function PanelHeader(props) {
 
 export default connect(({ oneinch }) => ({
   blockchains: oneinch.blockchains,
-}))(CSSModules(PanelHeader, styles, { allowMultiple: true }))
+}))(CSSModules(UserPanelHeader, styles, { allowMultiple: true }))
