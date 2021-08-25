@@ -413,19 +413,29 @@ const fetchLatestLimitOrder = async (params) => {
 }
 
 const fetchOwnerOrders = async (params) => {
-  const { chainId, owner, page = 1, pageItems = 20 } = params
+  const { chainId, owner, page = 1, pageItems = 20, makerAsset = '', takerAsset = '' } = params
+
+  const request = [
+    `/${chainId}/limit-order/address/${owner}?`,
+    `page=${page}&`,
+    `limit=${pageItems}&`,
+    `statuses=%5B1%5D&`, // only valid orders
+    `sortBy=createDateTime`,
+  ]
+
+  if (takerAsset) request.push(`&takerAsset=${takerAsset.toLowerCase()}`)
+  if (makerAsset) request.push(`&makerAsset=${makerAsset.toLowerCase()}`)
 
   try {
-    const orders = await apiLooper.get(
-      'limitOrders',
-      `/${chainId}/limit-order/address/${owner}?page=${page}&limit=${pageItems}&statuses=%5B1%5D&sortBy=createDateTime`
-    )
+    const orders = await apiLooper.get('limitOrders', request.join(''))
 
-    reducers.oneinch.addOrders({ chainId, orders })
+    return orders
   } catch (error) {
     console.group('%c 1inch fetch limit order', 'color: red')
     console.log(error)
     console.groupEnd()
+
+    return []
   }
 }
 
@@ -435,8 +445,9 @@ const fetchUserOrders = async () => {
   Object.keys(oneinch.blockchains).forEach(async (chainId) => {
     const currency = oneinch.blockchains[chainId].currency.toLowerCase()
     const owner = metamask.isConnected() ? metamask.getAddress() : user[`${currency}Data`].address
+    const orders = await fetchOwnerOrders({ chainId, owner })
 
-    await fetchOwnerOrders({ chainId, owner })
+    reducers.oneinch.addOrders({ chainId, orders })
   })
 }
 

@@ -7,7 +7,7 @@ import utils from 'common/utils'
 import { constants, transactions } from 'helpers'
 import actions from 'redux/actions'
 import Coins from 'components/Coins/Coins'
-import Button from 'components/controls/Button/Button'
+import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import { RemoveButton } from 'components/controls'
 
 function debounce(callback, ms) {
@@ -24,20 +24,30 @@ function debounce(callback, ms) {
 }
 
 function Row(props) {
+  const { getTokenWallet, order, orderIndex, cancelOrder, baseCurrency } = props
   const {
-    getTokenWallet,
-    order,
-    orderIndex,
-    cancelOrder,
-    chainId,
-    baseCurrency,
-    isMy = false,
-  } = props
-  const { data, makerRate, makerAmount: makerUnitAmount, takerAmount: takerUnitAmount } = order
+    data,
+    makerRate,
+    takerRate,
+    makerAmount: makerUnitAmount,
+    takerAmount: takerUnitAmount,
+    orderMaker,
+  } = order
 
   const [dimensions, setDimensions] = useState({
     width: window.innerWidth,
   })
+  const [pending, setPending] = useState(false)
+
+  let { isMy = false } = props
+  const makerWallet = getTokenWallet(data.makerAsset)
+  const takerWallet = getTokenWallet(data.takerAsset)
+
+  if (!isMy) {
+    isMy =
+      orderMaker === makerWallet.address.toLowerCase() ||
+      orderMaker === takerWallet.address.toLowerCase()
+  }
 
   useEffect(() => {
     const debouncedHandleResize = debounce(() => {
@@ -53,21 +63,9 @@ function Row(props) {
     }
   })
 
-  // TODO: reverse all data if it's not owner's order
-  // for the taker it will be:
-  // makerAsset = takerAsset
-  // takerAsset = makerAsset
-  // ...
-
-  const makerWallet = getTokenWallet(data.makerAsset)
-  const takerWallet = getTokenWallet(data.takerAsset)
-
-  const makerAssetName = makerWallet.tokenKey.toUpperCase()
-  const takerAssetName = takerWallet.tokenKey.toUpperCase()
-
-  const coinNames = [makerAssetName, takerAssetName]
-
   const fillOrder = async () => {
+    setPending(true)
+
     const receipt = await actions.oneinch.fillLimitOrder({
       name: takerWallet.tokenKey,
       standard: takerWallet.standard,
@@ -92,14 +90,19 @@ function Row(props) {
         ),
       })
     }
+
+    setPending(false)
   }
 
   const cancel = () => {
+    setPending(true)
+
     cancelOrder({
       makerWallet,
       takerWallet,
       orderIndex,
       order,
+      onComplete: () => setPending(true),
     })
   }
 
@@ -112,38 +115,63 @@ function Row(props) {
     utils.amount.formatWithoutDecimals(takerUnitAmount, takerWallet.decimals)
   ).toString()
 
-  const formatedMakerRate = new BigNumber(makerRate).dp(8).toString()
-
   const mobileRangeWidth = 650 // px
   const mobileResolution = dimensions.width < mobileRangeWidth
 
-  return (
-    <tr styleName={`row ${mobileResolution ? 'mobile' : ''}`}>
-      <td>
-        <Coins names={coinNames} size={mobileResolution ? 20 : 25} />
-      </td>
-      <td>
-        <span styleName="number">{makerAmount}</span> {makerWallet.currency}
-      </td>
-      <td>
-        <span styleName="number">{takerAmount}</span> {takerWallet.currency}
-      </td>
-      <td styleName="rate">
-        <span styleName="number">{formatedMakerRate}</span> {makerWallet.currency}/
-        {takerWallet.currency}
-      </td>
-      <td>
-        {isMy ? (
-          <RemoveButton onClick={cancel} brand />
+  const renderRowItems = (params) => {
+    const { walletA, amountA, walletB, amountB, rate, actionButton } = params
+
+    return (
+      <tr styleName={`row ${mobileResolution ? 'mobile' : ''}`}>
+        <td>
+          <Coins
+            names={[walletA.tokenKey.toUpperCase(), walletB.tokenKey.toUpperCase()]}
+            size={mobileResolution ? 20 : 25}
+          />
+        </td>
+        <td>
+          <span styleName="number">{amountA}</span> {walletA.currency}
+        </td>
+        <td>
+          <span styleName="number">{amountB}</span> {walletB.currency}
+        </td>
+        <td styleName="rate">
+          <span styleName="number">{rate}</span> {walletA.currency}/{walletB.currency}
+        </td>
+        <td>{actionButton}</td>
+      </tr>
+    )
+  }
+
+  return isMy
+    ? renderRowItems({
+        walletA: makerWallet,
+        amountA: makerAmount,
+        walletB: takerWallet,
+        amountB: takerAmount,
+        rate: new BigNumber(makerRate).dp(8).toString(),
+        actionButton: pending ? <InlineLoader /> : <RemoveButton onClick={cancel} brand />,
+      })
+    : renderRowItems({
+        walletA: takerWallet,
+        amountA: takerAmount,
+        walletB: makerWallet,
+        amountB: makerAmount,
+        rate: new BigNumber(takerRate).dp(8).toString(),
+        actionButton: pending ? (
+          <InlineLoader />
         ) : (
-          // TODO: disable button if user does not have enough balance
-          <Button id="createWalletBtn" brand onClick={fillOrder} disabled={false}>
+          <button
+            id="createWalletBtn"
+            styleName="purchasButton"
+            onClick={fillOrder}
+            // TODO: disable button if user does not have enough balance
+            disabled={false}
+          >
             <FormattedMessage id="buyToken" defaultMessage="Buy" />
-          </Button>
-        )}
-      </td>
-    </tr>
-  )
+          </button>
+        ),
+      })
 }
 
 export default CSSModules(Row, styles, { allowMultiple: true })

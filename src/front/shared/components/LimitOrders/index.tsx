@@ -4,7 +4,7 @@ import { connect } from 'redaction'
 import CSSModules from 'react-css-modules'
 import styles from './index.scss'
 import getCoinInfo from 'common/coins/getCoinInfo'
-import { constants, transactions, feedback, apiLooper } from 'helpers'
+import { constants, transactions, feedback } from 'helpers'
 import actions from 'redux/actions'
 import Panel from 'components/ui/Panel/Panel'
 import Table from 'components/tables/Table/Table'
@@ -22,7 +22,7 @@ const tableTitles = [
 ]
 
 function LimitOrders(props) {
-  const { allCurrencies, userOrders, blockchains, tokensWallets } = props
+  const { allCurrencies, blockchains, tokensWallets } = props
   const chainsArr: IUniversalObj[] = Object.values(blockchains)
 
   const { currencies, wrongNetwork } = actions.oneinch.filterCurrencies({
@@ -42,7 +42,7 @@ function LimitOrders(props) {
   )
 
   const cancelOrder = async (params) => {
-    const { orderIndex, order, makerWallet, takerWallet } = params
+    const { orderIndex, order, makerWallet, takerWallet, onComplete } = params
 
     actions.modals.open(constants.modals.Confirm, {
       onAccept: async () => {
@@ -52,6 +52,8 @@ function LimitOrders(props) {
           orderIndex,
           orderData: order.data,
         })
+
+        onComplete()
 
         feedback.oneinch.cancelOrder(
           `${makerWallet.tokenKey.toUpperCase()} -> ${takerWallet.tokenKey.toUpperCase()}`
@@ -68,8 +70,6 @@ function LimitOrders(props) {
       ),
     })
   }
-
-  const hasChainOrders = userOrders[displayedChainId]?.length
 
   const [sellCurrency, setSellCurrency] = useState<any>(allTokens[0])
   const [buyCurrencies, setBuyCurrencies] = useState<IUniversalObj[]>(
@@ -109,26 +109,56 @@ function LimitOrders(props) {
     const list = allTokens.filter((item) => item.name !== sellCurrency.name)
 
     setBuyCurrencies(list)
+
+    if (sellCurrency.value === buyCurrency.value) {
+      setBuyCurrency(list[0])
+    }
   }, [sellCurrency])
 
   const [allOrders, setAllOrders] = useState<any>([])
+  const [userOrders, setUserOrders] = useState<any>([])
+
+  const getCurrentWallets = () => {
+    return {
+      takerWallet: actions.core.getWallet({ currency: sellCurrency.value }),
+      makerWallet: actions.core.getWallet({ currency: buyCurrency.value }),
+    }
+  }
+
+  const fetchAllOrders = async () => {
+    const { takerWallet, makerWallet } = getCurrentWallets()
+
+    return await actions.oneinch.fetchAllOrders({
+      chainId: displayedChainId,
+      page: 1,
+      pageItems: 20,
+      takerAsset: takerWallet.contractAddress,
+      makerAsset: makerWallet.contractAddress,
+    })
+  }
+
+  const fetchUserOrders = async () => {
+    const { takerWallet, makerWallet } = getCurrentWallets()
+
+    return await actions.oneinch.fetchOwnerOrders({
+      chainId: displayedChainId,
+      owner: makerWallet.address,
+      makerAsset: makerWallet.contractAddress,
+      takerAsset: takerWallet.contractAddress,
+    })
+  }
 
   useEffect(() => {
     let _mounted = true
 
     const updateOrders = async () => {
-      const takerWallet = actions.core.getWallet({ currency: sellCurrency.value })
-      const makerWallet = actions.core.getWallet({ currency: buyCurrency.value })
+      const userOrders = await fetchUserOrders()
+      const orders = await fetchAllOrders()
 
-      const orders = await actions.oneinch.fetchAllOrders({
-        chainId: displayedChainId,
-        page: 1,
-        pageItems: 20,
-        takerAsset: takerWallet.contractAddress,
-        makerAsset: makerWallet.contractAddress,
-      })
-
-      if (_mounted) setAllOrders(orders)
+      if (_mounted) {
+        setAllOrders(orders)
+        setUserOrders(userOrders)
+      }
     }
 
     updateOrders()
@@ -143,6 +173,21 @@ function LimitOrders(props) {
       (wallet: IUniversalObj) => wallet.contractAddress?.toLowerCase() === contract.toLowerCase()
     )
   }
+
+  const fetchMakerOrders = async (address) => {
+    const { takerWallet, makerWallet } = getCurrentWallets()
+
+    const orders = await actions.oneinch.fetchOwnerOrders({
+      chainId: displayedChainId,
+      owner: address,
+      makerAsset: makerWallet.contractAddress,
+      takerAsset: takerWallet.contractAddress,
+    })
+
+    setAllOrders(orders)
+  }
+
+  const hasChainOrders = userOrders[displayedChainId]?.length
 
   return (
     <>
@@ -190,7 +235,7 @@ function LimitOrders(props) {
         )}
       </Panel>
 
-      <Panel header={<AllOrdersHeader allOrders={allOrders} />}>
+      <Panel header={<AllOrdersHeader allOrders={allOrders} fetchMakerOrders={fetchMakerOrders} />}>
         {allOrders.length ? (
           <Table
             id="limitOrdersTable"
@@ -223,7 +268,6 @@ function LimitOrders(props) {
 }
 
 export default connect(({ oneinch, currencies, user }) => ({
-  userOrders: oneinch.orders,
   blockchains: oneinch.blockchains,
   tokensWallets: user.tokensData,
   allCurrencies: currencies.items,

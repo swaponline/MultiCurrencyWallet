@@ -19,6 +19,12 @@
   }
 }
 
+.makerAddressWrapper {
+  padding: 0 0.5rem;
+  border-radius: 0.2rem;
+  background-color: var(--color-pale);
+}
+
 .currencySelect {
   position: relative;
 
@@ -48,6 +54,13 @@
     .rate {
       display: none;
     }
+  }
+
+  .purchasButton {
+    padding: 0.1rem 0.6rem;
+    border-radius: 0.2rem;
+    background-color: var(--color-brand);
+    color: var(--color-f-brightest);
   }
 }
 
