@@ -3,6 +3,7 @@ import { FormattedMessage } from 'react-intl'
 import { connect } from 'redaction'
 import CSSModules from 'react-css-modules'
 import styles from './index.scss'
+import getCoinInfo from 'common/coins/getCoinInfo'
 import { constants, transactions, feedback, apiLooper } from 'helpers'
 import actions from 'redux/actions'
 import Panel from 'components/ui/Panel/Panel'
@@ -21,11 +22,35 @@ const tableTitles = [
 ]
 
 function LimitOrders(props) {
-  const { userOrders, blockchains } = props
+  const { allCurrencies, userOrders, blockchains, tokensWallets } = props
   const chainsArr: IUniversalObj[] = Object.values(blockchains)
 
+  const { currencies, wrongNetwork } = actions.oneinch.filterCurrencies({
+    currencies: allCurrencies,
+    tokensWallets: tokensWallets,
+    onlyTokens: true,
+  })
+
   const [displayedChainId, setDisplayedChainId] = useState(chainsArr[0]?.networkVersion)
-  const baseCurrency = blockchains[displayedChainId].currency
+  const [baseCurrency, setBaseCurrency] = useState(blockchains[displayedChainId].currency)
+  const [allTokens, setAllTokens] = useState(currencies.filter((item) => {
+    const { blockchain: base } = getCoinInfo(item.value)
+
+    return base === baseCurrency
+  }))
+
+  useEffect(() => {
+    const base = blockchains[displayedChainId].currency
+
+    setBaseCurrency(base)
+    setAllTokens(
+      currencies.filter((item) => {
+        const { blockchain: baseCurrency } = getCoinInfo(item.value)
+
+        return baseCurrency === base
+      })
+    )
+  }, [displayedChainId])
 
   const cancelOrder = async (params) => {
     const { orderIndex, order, makerWallet, makerAsset, takerAsset } = params
@@ -56,7 +81,6 @@ function LimitOrders(props) {
   }
 
   const hasChainOrders = userOrders[displayedChainId]?.length
-
   const [allOrders, setAllOrders] = useState<any>([])
 
   useEffect(() => {
@@ -79,6 +103,26 @@ function LimitOrders(props) {
     }
   }, [])
 
+  const [sellCurrency, setSellCurrency] = useState<any>(allTokens[0])
+  const [buyCurrencies, setBuyCurrencies] = useState<IUniversalObj[]>(
+    allTokens.filter((item) => item.name !== sellCurrency.name)
+  )
+  const [buyCurrency, setBuyCurrency] = useState<any>(buyCurrencies[0])
+
+  useEffect(() => {
+    const list = allTokens.filter((item) => item.name !== sellCurrency.name)
+
+    if (list.length) setBuyCurrencies(list)
+  }, [sellCurrency])
+
+  const selectSellCurrency = (currency) => {
+    setSellCurrency(currency.value)
+  }
+
+  const selectBuyCurrency = (currency) => {
+    setBuyCurrency(currency.value)
+  }
+
   return (
     <>
       <Panel
@@ -87,6 +131,12 @@ function LimitOrders(props) {
             userOrders={userOrders}
             chainId={displayedChainId}
             changeChain={setDisplayedChainId}
+            allTokens={allTokens}
+            buyCurrencies={buyCurrencies}
+            selectSellCurrency={selectSellCurrency}
+            selectBuyCurrency={selectBuyCurrency}
+            sellCurrency={sellCurrency}
+            buyCurrency={buyCurrency}
           />
         }
       >
@@ -100,11 +150,14 @@ function LimitOrders(props) {
             rowRender={(order, index) => (
               <Row
                 isMy
+                tokensWallets={tokensWallets}
                 order={order}
                 orderIndex={index}
                 cancelOrder={cancelOrder}
                 chainId={displayedChainId}
                 baseCurrency={baseCurrency}
+                sellCurrency={sellCurrency}
+                buyCurrency={buyCurrency}
               />
             )}
           />
@@ -125,11 +178,14 @@ function LimitOrders(props) {
             rows={allOrders}
             rowRender={(order, index) => (
               <Row
+                tokensWallets={tokensWallets}
                 order={order}
                 orderIndex={index}
                 cancelOrder={cancelOrder}
                 chainId={displayedChainId}
                 baseCurrency={baseCurrency}
+                sellCurrency={sellCurrency}
+                buyCurrency={buyCurrency}
               />
             )}
           />
@@ -143,7 +199,9 @@ function LimitOrders(props) {
   )
 }
 
-export default connect(({ oneinch }) => ({
+export default connect(({ oneinch, currencies, user }) => ({
   userOrders: oneinch.orders,
   blockchains: oneinch.blockchains,
+  tokensWallets: user.tokensData,
+  allCurrencies: currencies.items,
 }))(CSSModules(LimitOrders, styles, { allowMultiple: true }))

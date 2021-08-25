@@ -1,3 +1,34 @@
+.header {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.headerRow {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  &.chain {
+    justify-content: space-between;
+  }
+
+  &:not(:first-child) {
+    padding-top: 1.2rem;
+    border-top: 1px solid var(--color-pale);
+  }
+}
+
+.currencySelect {
+  position: relative;
+
+  .title {
+    position: relative;
+    z-index: 2;
+    color: var(--color-indicating);
+  }
+}
+
 .orderBookTable {
   @include ff-regular;
   width: 100%;

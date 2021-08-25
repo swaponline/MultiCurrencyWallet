@@ -24,7 +24,15 @@ function debounce(callback, ms) {
 }
 
 function Row(props) {
-  const { order, orderIndex, cancelOrder, chainId, baseCurrency, isMy = false } = props
+  const {
+    tokensWallets,
+    order,
+    orderIndex,
+    cancelOrder,
+    chainId,
+    baseCurrency,
+    isMy = false,
+  } = props
   const { data, makerRate, makerAmount: makerUnitAmount, takerAmount: takerUnitAmount } = order
 
   const [dimensions, setDimensions] = useState({
@@ -45,7 +53,7 @@ function Row(props) {
     }
   })
 
-  // TODO: reverse all data if it's now owner's order
+  // TODO: reverse all data if it's not owner's order
   // for the taker it will be:
   // makerAsset = takerAsset
   // takerAsset = makerAsset
@@ -53,9 +61,8 @@ function Row(props) {
 
   // TODO: move it into the parent
   // don't get all wallets and don't create this function inside every Row
-  const wallets = actions.core.getWallets()
   const getAsset = (contract) => {
-    return wallets.find(
+    return tokensWallets.find(
       (wallet) => wallet?.contractAddress?.toLowerCase() === contract.toLowerCase()
     )
   }
