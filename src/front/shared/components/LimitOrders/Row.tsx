@@ -25,7 +25,7 @@ function debounce(callback, ms) {
 
 function Row(props) {
   const {
-    tokensWallets,
+    getTokenWallet,
     order,
     orderIndex,
     cancelOrder,
@@ -59,36 +59,27 @@ function Row(props) {
   // takerAsset = makerAsset
   // ...
 
-  // TODO: move it into the parent
-  // don't get all wallets and don't create this function inside every Row
-  const getAsset = (contract) => {
-    return tokensWallets.find(
-      (wallet) => wallet?.contractAddress?.toLowerCase() === contract.toLowerCase()
-    )
-  }
+  const makerWallet = getTokenWallet(data.makerAsset)
+  const takerWallet = getTokenWallet(data.takerAsset)
 
-  const makerAsset = getAsset(data.makerAsset)
-  const takerAsset = getAsset(data.takerAsset)
-
-  const makerAssetName = makerAsset.tokenKey.toUpperCase()
-  const makerWallet = actions.core.getWallet({ currency: makerAssetName })
-  const takerAssetName = takerAsset.tokenKey.toUpperCase()
+  const makerAssetName = makerWallet.tokenKey.toUpperCase()
+  const takerAssetName = takerWallet.tokenKey.toUpperCase()
 
   const coinNames = [makerAssetName, takerAssetName]
 
   const fillOrder = async () => {
     const receipt = await actions.oneinch.fillLimitOrder({
-      name: takerAsset.tokenKey,
-      standard: takerAsset.standard,
+      name: takerWallet.tokenKey,
+      standard: takerWallet.standard,
       order,
       baseCurrency: baseCurrency.toLowerCase(),
-      takerDecimals: takerAsset.decimals,
-      amountToBeFilled: utils.amount.formatWithoutDecimals(takerUnitAmount, takerAsset.decimals),
+      takerDecimals: takerWallet.decimals,
+      amountToBeFilled: utils.amount.formatWithoutDecimals(takerUnitAmount, takerWallet.decimals),
     })
 
     if (receipt) {
       actions.notifications.show(constants.notifications.Transaction, {
-        link: transactions.getLink(takerAsset.baseCurrency.toLowerCase(), receipt.transactionHash),
+        link: transactions.getLink(takerWallet.baseCurrency.toLowerCase(), receipt.transactionHash),
         completed: true,
       })
     } else {
@@ -105,21 +96,20 @@ function Row(props) {
 
   const cancel = () => {
     cancelOrder({
-      makerAsset,
-      takerAsset,
+      makerWallet,
+      takerWallet,
       orderIndex,
       order,
-      makerWallet,
     })
   }
 
   // formatting via BigNumber remove not important decimals
   const makerAmount = new BigNumber(
-    utils.amount.formatWithoutDecimals(makerUnitAmount, makerAsset.decimals)
+    utils.amount.formatWithoutDecimals(makerUnitAmount, makerWallet.decimals)
   ).toString()
 
   const takerAmount = new BigNumber(
-    utils.amount.formatWithoutDecimals(takerUnitAmount, takerAsset.decimals)
+    utils.amount.formatWithoutDecimals(takerUnitAmount, takerWallet.decimals)
   ).toString()
 
   const formatedMakerRate = new BigNumber(makerRate).dp(8).toString()
@@ -133,20 +123,21 @@ function Row(props) {
         <Coins names={coinNames} size={mobileResolution ? 20 : 25} />
       </td>
       <td>
-        <span styleName="number">{makerAmount}</span> {makerAsset.currency}
+        <span styleName="number">{makerAmount}</span> {makerWallet.currency}
       </td>
       <td>
-        <span styleName="number">{takerAmount}</span> {takerAsset.currency}
+        <span styleName="number">{takerAmount}</span> {takerWallet.currency}
       </td>
       <td styleName="rate">
-        <span styleName="number">{formatedMakerRate}</span> {makerAsset.currency}/
-        {takerAsset.currency}
+        <span styleName="number">{formatedMakerRate}</span> {makerWallet.currency}/
+        {takerWallet.currency}
       </td>
       <td>
         {isMy ? (
           <RemoveButton onClick={cancel} brand />
         ) : (
-          <Button id="createWalletBtn" brand fullWidth onClick={fillOrder}>
+          // TODO: disable button if user does not have enough balance
+          <Button id="createWalletBtn" brand onClick={fillOrder} disabled={false}>
             <FormattedMessage id="buyToken" defaultMessage="Buy" />
           </Button>
         )}

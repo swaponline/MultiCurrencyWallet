@@ -441,19 +441,29 @@ const fetchUserOrders = async () => {
 }
 
 const fetchAllOrders = async (params) => {
-  const { chainId, page = 1, pageItems = 30 } = params
+  const { chainId, page = 1, pageItems = 30, takerAsset = '', makerAsset = '' } = params
+
+  const request = [
+    `/${chainId}/limit-order/all?`,
+    `page=${page}&`,
+    `limit=${pageItems}&`,
+    `statuses=%5B1%5D&`, // only valid orders
+    `sortBy=createDateTime`,
+  ]
+
+  if (takerAsset) request.push(`&takerAsset=${takerAsset}`)
+  if (makerAsset) request.push(`&makerAsset=${makerAsset}`)
 
   try {
-    const orders = await apiLooper.get(
-      'limitOrders',
-      `/${chainId}/limit-order/all?page=${page}&limit=${pageItems}&statuses=%5B1%5D&sortBy=createDateTime`
-    )
+    const orders = await apiLooper.get('limitOrders', request.join(''))
 
     return orders
   } catch (error) {
     console.group('%c 1inch fetch all limit orders', 'color: red')
     console.log(error)
     console.groupEnd()
+
+    return []
   }
 }
 

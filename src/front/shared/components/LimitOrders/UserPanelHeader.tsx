@@ -41,9 +41,7 @@ function UserPanelHeader(props) {
     setChainItem(item)
   }
 
-  console.log('props: ', props)
-
-  const renderCurrencyName = (item) => item.value.toUpperCase() // replace with .name.
+  const renderCurrencyName = (item) => item.name.toUpperCase()
 
   return (
     <div styleName="header">
@@ -72,7 +70,7 @@ function UserPanelHeader(props) {
 
           <DropDown
             className={dropDownStyles.simplestDropdown}
-            selectedValue={sellCurrency}
+            selectedValue={sellCurrency.value}
             onSelect={selectSellCurrency}
             items={allTokens}
             itemRender={renderCurrencyName}
@@ -89,7 +87,7 @@ function UserPanelHeader(props) {
 
           <DropDown
             className={dropDownStyles.simplestDropdown}
-            selectedValue={buyCurrency}
+            selectedValue={buyCurrency.value}
             onSelect={selectBuyCurrency}
             items={buyCurrencies}
             itemRender={renderCurrencyName}
