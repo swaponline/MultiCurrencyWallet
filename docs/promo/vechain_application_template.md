@@ -46,6 +46,8 @@ Are there any other projects similar to yours? If so, how is your project differ
 
 ### Team's experience
 
+Please describe the team's relevant experience. If the project involves development work, then we'd appreciated it if you can single out a few interesting codes commits made by team members on their past projects.
+
 Aleksandr Noxon - ???.
 
 Alexander Shestopalov - ???.
