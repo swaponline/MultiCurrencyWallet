@@ -17,10 +17,18 @@ import { COIN_MODEL, COIN_DATA } from 'swap.app/constants/COINS'
 import getCoinInfo from 'common/coins/getCoinInfo'
 import EVM_CONTRACTS_ABI from 'common/helpers/constants/EVM_CONTRACTS_ABI'
 import utils from 'common/utils'
-import { apiLooper, externalConfig, metamask } from 'helpers'
+import { apiLooper, externalConfig, metamask, feedback } from 'helpers'
 import { getState } from 'redux/core'
 import actions from 'redux/actions'
 import reducers from 'redux/core/reducers'
+
+const reportError = (part, error) => {
+  feedback.actions.failed(`1inch - part: ${part}, error message - ${error.message}`)
+
+  console.group('%c 1inch', 'color: red')
+  console.log(error)
+  console.groupEnd()
+}
 
 const serviceIsAvailable = async (params) => {
   const { chainId } = params
@@ -30,9 +38,7 @@ const serviceIsAvailable = async (params) => {
 
     return res?.status === 'OK'
   } catch (error) {
-    console.group('%c 1inch service', 'color: red')
-    console.log(error)
-    console.groupEnd()
+    reportError('service', error)
 
     return false
   }
@@ -45,22 +51,6 @@ const addTokens = (params) => {
     chainId,
     tokens,
   })
-}
-
-const fetchProtocolsByChain = async (params) => {
-  const { chainId } = params
-
-  try {
-    const data: any = await apiLooper.get('oneinch', `/${chainId}/protocols/images`)
-
-    return data.protocols
-  } catch (error) {
-    console.group('%c 1inch fetch protocols', 'color: red')
-    console.log(error)
-    console.groupEnd()
-
-    return []
-  }
 }
 
 const filterCurrencies = (params) => {
@@ -109,9 +99,7 @@ const fetchSpenderContractAddress = async (params): Promise<string | false> => {
 
     return data.address
   } catch (error) {
-    console.group('%c 1inch spender address', 'color: red')
-    console.log(error)
-    console.groupEnd()
+    reportError('spender contract fetching', error)
 
     return false
   }
@@ -136,9 +124,7 @@ const fetchTokenAllowance = async (params): Promise<number> => {
       .div(10 ** decimals)
       .toNumber()
   } catch (error) {
-    console.group('%c 1inch token allowance', 'color: red')
-    console.log(error)
-    console.groupEnd()
+    reportError('token allowance', error)
   }
 
   return allowance
@@ -162,9 +148,7 @@ const approveToken = async (params) => {
       amount,
     })
   } catch (error) {
-    console.group('%c 1inch token approve', 'color: red')
-    console.log(error)
-    console.groupEnd()
+    reportError('token approve', error)
 
     return false
   }
@@ -307,28 +291,38 @@ const sendLimitOrder = async (params) => {
       signature,
     },
     reportErrors: (error) => {
-      console.group('%c 1inch send limit order', 'color: red')
-      console.log(error)
-      console.groupEnd()
+      reportError('send a limit order', error)
+
       return true
     },
   })
 }
 
 const fillLimitOrder = async (params) => {
-  const { order, name, baseCurrency, standard, takerDecimals, amountToBeFilled } = params
+  const { chainId, order, name, baseCurrency, standard, takerDecimals, amountToBeFilled } = params
   const { user } = getState()
 
+  const owner = metamask.isConnected() ? metamask.getAddress() : user[`${baseCurrency}Data`].address
   const protocolContract = externalConfig.limitOrder[baseCurrency]
 
-  const approveResult = await approveToken({
-    amount: amountToBeFilled,
-    name,
-    target: protocolContract,
+  const allowance = await actions.oneinch.fetchTokenAllowance({
+    chainId,
+    contract: order.data.takerAsset,
+    owner,
     standard,
+    decimals: takerDecimals,
+    spender: protocolContract,
   })
 
-  const owner = metamask.isConnected() ? metamask.getAddress() : user[`${baseCurrency}Data`].address
+  if (new BigNumber(allowance).isLessThan(amountToBeFilled)) {
+    const approveResult = await approveToken({
+      amount: amountToBeFilled,
+      name,
+      target: protocolContract,
+      standard,
+    })
+  }
+
   const connector = getWeb3Connector(baseCurrency, owner)
   const limitOrderProtocolFacade = new LimitOrderProtocolFacade(protocolContract, connector)
   const weiTakerAmount = utils.amount.formatWithDecimals(amountToBeFilled, takerDecimals)
@@ -336,23 +330,28 @@ const fillLimitOrder = async (params) => {
   const callData = limitOrderProtocolFacade.fillLimitOrder(
     order.data,
     order.signature,
-    order.makerAmount,
-    '0', //weiTakerAmount,
-    order.makerAmount //weiTakerAmount // threshold amount
+    //order.makerAmount,
+    //'0',
+    //order.makerAmount, // threshold amount
+    '0',
+    weiTakerAmount,
+    weiTakerAmount
   )
 
-  const receipt = await actions[baseCurrency].send({
-    to: protocolContract,
-    data: callData,
-    amount: 0,
-    gasLimit: 150_000, // remove magic number
-    waitReceipt: true,
-  })
-
-  if (receipt) {
-    // TODO: remove an order from the redux state on success
+  try {
+    const receipt = await actions[baseCurrency].send({
+      to: protocolContract,
+      data: callData,
+      amount: 0,
+      gasLimit: 150_000, // TODO: remove magic number
+      waitReceipt: true,
+    })
 
     return receipt
+  } catch (error) {
+    reportError('fill a limit order', error)
+
+    return false
   }
 }
 
@@ -367,16 +366,22 @@ const cancelLimitOrder = async (params) => {
   const protocolFacade = new LimitOrderProtocolFacade(contractAddress, connector)
   const callData = protocolFacade.cancelLimitOrder(orderData)
 
-  const receipt = await actions[baseCurrency].send({
-    waitReceipt: true,
-    to: contractAddress,
-    data: callData,
-    amount: 0,
-  })
+  try {
+    const receipt = await actions[baseCurrency].send({
+      waitReceipt: true,
+      to: contractAddress,
+      data: callData,
+      amount: 0,
+    })
 
-  removeLimitOrderFromState({ chainId, orderIndex })
+    removeLimitOrderFromState({ chainId, orderIndex })
 
-  return receipt
+    return receipt
+  } catch (error) {
+    reportError('cancel a limit order', error)
+
+    return false
+  }
 }
 
 const removeLimitOrderFromState = (params) => {
@@ -406,9 +411,7 @@ const fetchLatestLimitOrder = async (params) => {
       reducers.oneinch.addOrder({ chainId, order: fetchedOrders[0] })
     }
   } catch (error) {
-    console.group('%c 1inch fetch latest order', 'color: red')
-    console.log(error)
-    console.groupEnd()
+    reportError('fetch a latest owner order', error)
   }
 }
 
@@ -431,9 +434,7 @@ const fetchOwnerOrders = async (params) => {
 
     return orders
   } catch (error) {
-    console.group('%c 1inch fetch limit order', 'color: red')
-    console.log(error)
-    console.groupEnd()
+    reportError('fetch an owner limit order', error)
 
     return []
   }
@@ -470,9 +471,7 @@ const fetchAllOrders = async (params) => {
 
     return orders
   } catch (error) {
-    console.group('%c 1inch fetch all limit orders', 'color: red')
-    console.log(error)
-    console.groupEnd()
+    reportError('fetch all limit orders', error)
 
     return []
   }

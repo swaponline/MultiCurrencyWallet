@@ -428,13 +428,13 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       // it was needed just once. Remove it if everything is fine
       // swapData.gas = new BigNumber(swapData.gas).plus(50_000).toString()
 
-      const transactionHash = await actions[lowerKey].sendReadyTransaction({
+      const receipt = await actions[lowerKey].sendReadyTransaction({
         data: swapData,
         waitReceipt: true,
       })
 
       actions.notifications.show(constants.notifications.Transaction, {
-        link: transactions.getLink(lowerKey, transactionHash),
+        link: transactions.getLink(lowerKey, receipt.transactionHash),
         completed: true,
       })
 

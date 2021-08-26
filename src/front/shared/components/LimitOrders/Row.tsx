@@ -24,7 +24,7 @@ function debounce(callback, ms) {
 }
 
 function Row(props) {
-  const { getTokenWallet, order, orderIndex, cancelOrder, baseCurrency } = props
+  const { chainId, getTokenWallet, order, orderIndex, cancelOrder, baseCurrency } = props
   const {
     data,
     makerRate,
@@ -67,6 +67,7 @@ function Row(props) {
     setPending(true)
 
     const receipt = await actions.oneinch.fillLimitOrder({
+      chainId,
       name: takerWallet.tokenKey,
       standard: takerWallet.standard,
       order,
@@ -118,7 +119,7 @@ function Row(props) {
   const mobileRangeWidth = 650 // px
   const mobileResolution = dimensions.width < mobileRangeWidth
 
-  const renderRowItems = (params) => {
+  const renderRow = (params) => {
     const { walletA, amountA, walletB, amountB, rate, actionButton } = params
 
     return (
@@ -144,10 +145,10 @@ function Row(props) {
   }
 
   const purchaseBtnIsDisabled =
-    takerWallet.balanceError || new BigNumber(takerWallet.balance).isLessThan(takerAmount)
+    takerWallet.balanceError || new BigNumber(takerWallet.balance).isEqualTo(0)
 
   return isMy
-    ? renderRowItems({
+    ? renderRow({
         walletA: makerWallet,
         amountA: makerAmount,
         walletB: takerWallet,
@@ -159,7 +160,7 @@ function Row(props) {
           </div>
         ),
       })
-    : renderRowItems({
+    : renderRow({
         walletA: takerWallet,
         amountA: takerAmount,
         walletB: makerWallet,

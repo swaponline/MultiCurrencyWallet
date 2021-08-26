@@ -31,6 +31,19 @@ function LimitOrders(props) {
     onlyTokens: true,
   })
 
+  const [updateData, setUpdateData] = useState(false)
+  // change the variable above for updating orders from time to time
+  useEffect(() => {
+    const intervalInSec = 5_000
+    const timeoutId = setInterval(() => {
+      setUpdateData(!updateData)
+    }, intervalInSec)
+
+    return () => {
+      clearTimeout(timeoutId)
+    }
+  })
+
   const [displayedChainId, setDisplayedChainId] = useState(chainsArr[0]?.networkVersion)
   const [baseCurrency, setBaseCurrency] = useState(blockchains[displayedChainId].currency)
   const [allTokens, setAllTokens] = useState(
@@ -141,7 +154,7 @@ function LimitOrders(props) {
   }
 
   const fetchUserOrders = async () => {
-    const { takerWallet, makerWallet } = getCurrentWallets()
+    const { takerWallet, makerWallet } = getCurrentWallets(true)
 
     return await actions.oneinch.fetchOwnerOrders({
       chainId: displayedChainId,
@@ -171,7 +184,7 @@ function LimitOrders(props) {
     return () => {
       _mounted = false
     }
-  }, [displayedChainId, sellCurrency, buyCurrency])
+  }, [displayedChainId, sellCurrency, buyCurrency, updateData])
 
   const getTokenWallet = (contract) => {
     return Object.values(tokensWallets).find(
