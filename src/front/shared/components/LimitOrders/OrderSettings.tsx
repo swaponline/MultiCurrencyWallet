@@ -13,10 +13,9 @@ const renderChainName = (item) => {
   return item.chainName.substring(0, lastIndex)
 }
 
-function UserPanelHeader(props) {
+function OrderSettings(props) {
   const {
     allTokens,
-    userOrders,
     chainId,
     changeChain,
     blockchains,
@@ -26,6 +25,7 @@ function UserPanelHeader(props) {
     sellCurrency,
     buyCurrency,
   } = props
+
   const dropDownItems: IUniversalObj[] = Object.values(blockchains).map((item: any) => {
     // in the DropDown we compare the "value" key for correct selected item rendering
     // let's add this key
@@ -44,12 +44,13 @@ function UserPanelHeader(props) {
   const renderCurrencyName = (item) => item.name.toUpperCase()
 
   return (
-    <div styleName="header">
-      <div styleName="headerRow chain">
-        <h3>
-          <FormattedMessage id="yourOrders" defaultMessage="Your orders" />{' '}
-          <span>{`(${userOrders[chainId] ? userOrders[chainId].length : 0})`}</span>
-        </h3>
+    <div styleName="orderSettings">
+      <div styleName="optionWrapper">
+        <div styleName="title">
+          <FieldLabel>
+            <FormattedMessage id="Chain" defaultMessage="Chain" />
+          </FieldLabel>
+        </div>
         <DropDown
           className={dropDownStyles.simplestDropdown}
           items={dropDownItems}
@@ -60,40 +61,48 @@ function UserPanelHeader(props) {
         />
       </div>
 
-      <div styleName="headerRow">
-        <div styleName="currencySelect">
-          <div styleName="title">
-            <FieldLabel>
-              <FormattedMessage id="youPay" defaultMessage="You Pay" />
-            </FieldLabel>
-          </div>
-
+      <div styleName="optionWrapper">
+        <div styleName="title">
+          <FieldLabel>
+            <FormattedMessage id="youPay" defaultMessage="You Pay" />
+          </FieldLabel>
+        </div>
+        {sellCurrency ? (
           <DropDown
             className={dropDownStyles.simplestDropdown}
-            selectedValue={sellCurrency.value}
+            selectedValue={sellCurrency?.value}
             onSelect={selectSellCurrency}
             items={allTokens}
             itemRender={renderCurrencyName}
             selectedItemRender={renderCurrencyName}
           />
+        ) : (
+          <p styleName="noOptions">
+            <FormattedMessage id="noOptions" defaultMessage="No options" />
+          </p>
+        )}
+      </div>
+
+      <div styleName="optionWrapper">
+        <div styleName="title">
+          <FieldLabel>
+            <FormattedMessage id="partial255" defaultMessage="You Get" />
+          </FieldLabel>
         </div>
-
-        <div styleName="currencySelect">
-          <div styleName="title">
-            <FieldLabel>
-              <FormattedMessage id="partial255" defaultMessage="You Get" />
-            </FieldLabel>
-          </div>
-
+        {buyCurrency && buyCurrencies.length ? (
           <DropDown
             className={dropDownStyles.simplestDropdown}
-            selectedValue={buyCurrency.value}
+            selectedValue={buyCurrency?.value}
             onSelect={selectBuyCurrency}
             items={buyCurrencies}
             itemRender={renderCurrencyName}
             selectedItemRender={renderCurrencyName}
           />
-        </div>
+        ) : (
+          <p styleName="noOptions">
+            <FormattedMessage id="noOptions" defaultMessage="No options" />
+          </p>
+        )}
       </div>
     </div>
   )
@@ -101,4 +110,4 @@ function UserPanelHeader(props) {
 
 export default connect(({ oneinch }) => ({
   blockchains: oneinch.blockchains,
-}))(CSSModules(UserPanelHeader, styles, { allowMultiple: true }))
+}))(CSSModules(OrderSettings, styles, { allowMultiple: true }))

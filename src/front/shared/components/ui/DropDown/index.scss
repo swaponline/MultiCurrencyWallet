@@ -71,7 +71,10 @@
 .simplestDropdown {
   display: flex;
 
+  // when drop down is opened
   .select {
+    right: auto;
+    border: none;
     box-shadow: var(--box-shadow);
   }
 
@@ -106,7 +109,7 @@
 }
 
 .smallTooltip {
-  >span {
+  > span {
     display: flex;
     justify-content: center;
     position: absolute;
@@ -264,7 +267,6 @@
 }
 
 @include media-mobile {
-
   .fullTitle {
     font-size: 14px;
   }

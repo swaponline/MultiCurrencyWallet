@@ -1,37 +1,47 @@
-.header {
+.orderSettings {
   width: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-.headerRow {
-  position: relative;
+  padding-top: 0.4rem;
   display: flex;
   align-items: center;
-
-  &.chain {
-    justify-content: space-between;
-  }
-
-  &:not(:first-child) {
-    padding-top: 1.2rem;
-    border-top: 1px solid var(--color-pale);
-  }
 }
 
 .makerAddressWrapper {
   padding: 0 0.5rem;
   border-radius: 0.2rem;
-  background-color: var(--color-pale);
+
+  input {
+    padding: 0.1rem 0.6rem;
+    border-radius: inherit;
+    border: 1px solid var(--color-border);
+    background-color: var(--color-pale);
+  }
+
+  button {
+    margin-left: 0.3rem;
+    border-radius: inherit;
+    background-color: var(--color-notice);
+    color: var(--color-need-to-rename);
+  }
 }
 
-.currencySelect {
+.optionWrapper {
   position: relative;
+  border: 1px solid var(--color-border);
+
+  &:not(:first-child) {
+    margin-left: 2%;
+  }
 
   .title {
     position: relative;
     z-index: 2;
     color: var(--color-indicating);
+  }
+
+  .noOptions {
+    margin-top: 1.2rem;
+    padding: 0 0.7rem;
+    color: var(--color-notice);
   }
 }
 

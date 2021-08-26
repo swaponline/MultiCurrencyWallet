@@ -9,7 +9,7 @@ import actions from 'redux/actions'
 import Panel from 'components/ui/Panel/Panel'
 import Table from 'components/tables/Table/Table'
 import tableStyles from 'components/tables/Table/Table.scss'
-import UserPanelHeader from './UserPanelHeader'
+import OrderSettings from './OrderSettings'
 import AllOrdersHeader from './AllOrdersHeader'
 import Row from './Row'
 
@@ -161,7 +161,9 @@ function LimitOrders(props) {
       }
     }
 
-    updateOrders()
+    if (sellCurrency && buyCurrency) {
+      updateOrders()
+    }
 
     return () => {
       _mounted = false
@@ -191,19 +193,27 @@ function LimitOrders(props) {
 
   return (
     <>
+      <Panel>
+        <OrderSettings
+          chainId={displayedChainId}
+          changeChain={setDisplayedChainId}
+          allTokens={allTokens}
+          buyCurrencies={buyCurrencies}
+          selectSellCurrency={selectSellCurrency}
+          selectBuyCurrency={selectBuyCurrency}
+          sellCurrency={sellCurrency}
+          buyCurrency={buyCurrency}
+        />
+      </Panel>
+
       <Panel
         header={
-          <UserPanelHeader
-            userOrders={userOrders}
-            chainId={displayedChainId}
-            changeChain={setDisplayedChainId}
-            allTokens={allTokens}
-            buyCurrencies={buyCurrencies}
-            selectSellCurrency={selectSellCurrency}
-            selectBuyCurrency={selectBuyCurrency}
-            sellCurrency={sellCurrency}
-            buyCurrency={buyCurrency}
-          />
+          <h3>
+            <FormattedMessage id="yourOrders" defaultMessage="Your orders" />{' '}
+            <span>{`(${
+              userOrders[displayedChainId] ? userOrders[displayedChainId].length : 0
+            })`}</span>
+          </h3>
         }
       >
         {hasChainOrders ? (
