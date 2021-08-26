@@ -97,3 +97,30 @@
   padding: 0.7rem 0;
   color: var(--color-notice);
 }
+
+.modalContent {
+  max-width: 20rem;
+  text-align: center;
+
+  .title {
+    margin-bottom: 2rem;
+  }
+
+  .amountNotice {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    color: var(--color-notice);
+  }
+
+  .buttons {
+    margin-top: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    button:not(:first-child) {
+      margin-left: 0.6rem;
+    }
+  }
+}

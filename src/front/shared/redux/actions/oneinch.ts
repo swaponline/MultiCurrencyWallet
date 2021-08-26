@@ -315,7 +315,8 @@ const fillLimitOrder = async (params) => {
   })
 
   if (new BigNumber(allowance).isLessThan(amountToBeFilled)) {
-    const approveResult = await approveToken({
+    // error appears for a public Polygon rps sometimes
+    await approveToken({
       amount: amountToBeFilled,
       name,
       target: protocolContract,
@@ -327,6 +328,7 @@ const fillLimitOrder = async (params) => {
   const limitOrderProtocolFacade = new LimitOrderProtocolFacade(protocolContract, connector)
   const weiTakerAmount = utils.amount.formatWithDecimals(amountToBeFilled, takerDecimals)
 
+  // fillLimitOrder(order, signature, makerAmount, takerAmount, thresholdAmount)
   const callData = limitOrderProtocolFacade.fillLimitOrder(
     order.data,
     order.signature,

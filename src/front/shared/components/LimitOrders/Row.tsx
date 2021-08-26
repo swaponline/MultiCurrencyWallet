@@ -9,6 +9,7 @@ import actions from 'redux/actions'
 import Coins from 'components/Coins/Coins'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import { RemoveButton } from 'components/controls'
+import OrderPurchaseModal from './OrderPurchaseModal'
 
 function debounce(callback, ms) {
   let timer
@@ -63,7 +64,10 @@ function Row(props) {
     }
   })
 
-  const fillOrder = async () => {
+  const [modalIsOpened, setModalIsOpened] = useState(false)
+
+  const fillOrder = async (amount) => {
+    setModalIsOpened(false)
     setPending(true)
 
     const receipt = await actions.oneinch.fillLimitOrder({
@@ -73,7 +77,7 @@ function Row(props) {
       order,
       baseCurrency: baseCurrency.toLowerCase(),
       takerDecimals: takerWallet.decimals,
-      amountToBeFilled: utils.amount.formatWithoutDecimals(takerUnitAmount, takerWallet.decimals),
+      amountToBeFilled: amount,
     })
 
     if (receipt) {
@@ -123,24 +127,33 @@ function Row(props) {
     const { walletA, amountA, walletB, amountB, rate, actionButton } = params
 
     return (
-      <tr styleName={`row ${mobileResolution ? 'mobile' : ''}`}>
-        <td>
-          <Coins
-            names={[walletA.tokenKey.toUpperCase(), walletB.tokenKey.toUpperCase()]}
-            size={mobileResolution ? 20 : 25}
-          />
-        </td>
-        <td>
-          <span styleName="number">{amountA}</span> {walletA.currency}
-        </td>
-        <td>
-          <span styleName="number">{amountB}</span> {walletB.currency}
-        </td>
-        <td styleName="rate">
-          <span styleName="number">{rate}</span> {walletA.currency}/{walletB.currency}
-        </td>
-        <td>{actionButton}</td>
-      </tr>
+        <tr styleName={`row ${mobileResolution ? 'mobile' : ''}`}>
+          {modalIsOpened && (
+            <OrderPurchaseModal
+              takerWallet={takerWallet}
+              fillOrder={fillOrder}
+              setModalIsOpened={setModalIsOpened}
+              orderTakerAmount={takerAmount}
+            />
+          )}
+
+          <td>
+            <Coins
+              names={[walletA.tokenKey.toUpperCase(), walletB.tokenKey.toUpperCase()]}
+              size={mobileResolution ? 20 : 25}
+            />
+          </td>
+          <td>
+            <span styleName="number">{amountA}</span> {walletA.currency}
+          </td>
+          <td>
+            <span styleName="number">{amountB}</span> {walletB.currency}
+          </td>
+          <td styleName="rate">
+            <span styleName="number">{rate}</span> {walletA.currency}/{walletB.currency}
+          </td>
+          <td>{actionButton}</td>
+        </tr>
     )
   }
 
@@ -174,7 +187,7 @@ function Row(props) {
               <button
                 id="purchaseLimitOrderButton"
                 styleName={`purchaseButton ${purchaseBtnIsDisabled ? 'disabled' : ''}`}
-                onClick={fillOrder}
+                onClick={() => setModalIsOpened(true)}
                 disabled={purchaseBtnIsDisabled}
               >
                 <FormattedMessage id="buyToken" defaultMessage="Buy" />
