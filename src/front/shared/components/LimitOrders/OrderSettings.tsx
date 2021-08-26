@@ -45,7 +45,7 @@ function OrderSettings(props) {
 
   return (
     <div styleName="orderSettings">
-      <div styleName="optionWrapper">
+      <div styleName="optionWrapper chain">
         <div styleName="title">
           <FieldLabel>
             <FormattedMessage id="Chain" defaultMessage="Chain" />

@@ -118,10 +118,13 @@ function LimitOrders(props) {
   const [allOrders, setAllOrders] = useState<any>([])
   const [userOrders, setUserOrders] = useState<any>([])
 
-  const getCurrentWallets = () => {
+  const getCurrentWallets = (isMy = false) => {
+    const makerCurrency = isMy ? sellCurrency.value : buyCurrency.value
+    const takerCurrency = isMy ? buyCurrency.value : sellCurrency.value
+
     return {
-      takerWallet: actions.core.getWallet({ currency: sellCurrency.value }),
-      makerWallet: actions.core.getWallet({ currency: buyCurrency.value }),
+      makerWallet: actions.core.getWallet({ currency: makerCurrency }),
+      takerWallet: actions.core.getWallet({ currency: takerCurrency }),
     }
   }
 
@@ -208,12 +211,14 @@ function LimitOrders(props) {
 
       <Panel
         header={
-          <h3>
-            <FormattedMessage id="yourOrders" defaultMessage="Your orders" />{' '}
-            <span>{`(${
-              userOrders[displayedChainId] ? userOrders[displayedChainId].length : 0
-            })`}</span>
-          </h3>
+          <div styleName="header">
+            <h3>
+              <FormattedMessage id="yourOrders" defaultMessage="Your orders" />{' '}
+              <span>{`(${
+                userOrders[displayedChainId] ? userOrders[displayedChainId].length : 0
+              })`}</span>
+            </h3>
+          </div>
         }
       >
         {hasChainOrders ? (
@@ -245,7 +250,15 @@ function LimitOrders(props) {
         )}
       </Panel>
 
-      <Panel header={<AllOrdersHeader allOrders={allOrders} fetchMakerOrders={fetchMakerOrders} />}>
+      <Panel
+        header={
+          <AllOrdersHeader
+            baseCurrency={baseCurrency}
+            allOrders={allOrders}
+            fetchMakerOrders={fetchMakerOrders}
+          />
+        }
+      >
         {allOrders.length ? (
           <Table
             id="limitOrdersTable"

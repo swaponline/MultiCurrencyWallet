@@ -102,7 +102,7 @@ function Row(props) {
       takerWallet,
       orderIndex,
       order,
-      onComplete: () => setPending(true),
+      onComplete: () => setPending(false),
     })
   }
 
@@ -143,6 +143,9 @@ function Row(props) {
     )
   }
 
+  const purchaseBtnIsDisabled =
+    takerWallet.balanceError || new BigNumber(takerWallet.balance).isLessThan(takerAmount)
+
   return isMy
     ? renderRowItems({
         walletA: makerWallet,
@@ -150,7 +153,11 @@ function Row(props) {
         walletB: takerWallet,
         amountB: takerAmount,
         rate: new BigNumber(makerRate).dp(8).toString(),
-        actionButton: pending ? <InlineLoader /> : <RemoveButton onClick={cancel} brand />,
+        actionButton: (
+          <div styleName="actionBtnWrapper">
+            {pending ? <InlineLoader /> : <RemoveButton onClick={cancel} brand />}
+          </div>
+        ),
       })
     : renderRowItems({
         walletA: takerWallet,
@@ -158,18 +165,21 @@ function Row(props) {
         walletB: makerWallet,
         amountB: makerAmount,
         rate: new BigNumber(takerRate).dp(8).toString(),
-        actionButton: pending ? (
-          <InlineLoader />
-        ) : (
-          <button
-            id="createWalletBtn"
-            styleName="purchasButton"
-            onClick={fillOrder}
-            // TODO: disable button if user does not have enough balance
-            disabled={false}
-          >
-            <FormattedMessage id="buyToken" defaultMessage="Buy" />
-          </button>
+        actionButton: (
+          <div styleName="actionBtnWrapper">
+            {pending ? (
+              <InlineLoader />
+            ) : (
+              <button
+                id="purchaseLimitOrderButton"
+                styleName={`purchaseButton ${purchaseBtnIsDisabled ? 'disabled' : ''}`}
+                onClick={fillOrder}
+                disabled={purchaseBtnIsDisabled}
+              >
+                <FormattedMessage id="buyToken" defaultMessage="Buy" />
+              </button>
+            )}
+          </div>
         ),
       })
 }

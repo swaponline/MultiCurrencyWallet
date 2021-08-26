@@ -462,8 +462,8 @@ const fetchAllOrders = async (params) => {
     `sortBy=createDateTime`,
   ]
 
-  if (takerAsset) request.push(`&takerAsset=${takerAsset}`)
-  if (makerAsset) request.push(`&makerAsset=${makerAsset}`)
+  if (takerAsset) request.push(`&takerAsset=${takerAsset.toLowerCase()}`)
+  if (makerAsset) request.push(`&makerAsset=${makerAsset.toLowerCase()}`)
 
   try {
     const orders = await apiLooper.get('limitOrders', request.join(''))

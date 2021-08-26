@@ -2,22 +2,27 @@ import { useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 import CSSModules from 'react-css-modules'
 import styles from './index.scss'
+import typeforce from 'swap.app/util/typeforce'
 
 function AllOrdersHeader(props) {
-  const { allOrders, fetchMakerOrders } = props
+  const { allOrders, fetchMakerOrders, baseCurrency } = props
 
   const [makerAddress, setMakerAddress] = useState('')
 
   const onChange = (event) => {
-    // TODO: validate input value
-
-    setMakerAddress(event.target.value)
+    if (typeforce.isCoinAddress[baseCurrency](event.target.value)) {
+      setMakerAddress(event.target.value)
+    }
   }
 
-  const fetchOrders = () => fetchMakerOrders(makerAddress)
+  const fetchOrders = () => {
+    if (makerAddress) {
+      fetchMakerOrders(makerAddress)
+    }
+  }
 
   return (
-    <>
+    <div styleName="header">
       <h3>
         <FormattedMessage id="allOrders" defaultMessage="All orders" />{' '}
         <span>{`(${allOrders.length || 0})`}</span>
@@ -27,7 +32,7 @@ function AllOrdersHeader(props) {
         <input type="text" placeholder="Maker address" onChange={onChange} />
         <button onClick={fetchOrders}>Show</button>
       </div>
-    </>
+    </div>
   )
 }
 

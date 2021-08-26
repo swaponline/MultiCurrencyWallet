@@ -5,6 +5,13 @@
   align-items: center;
 }
 
+.header {
+  width: 100%;
+  padding: 0.4rem 0;
+  display: flex;
+  justify-content: space-between;
+}
+
 .makerAddressWrapper {
   padding: 0 0.5rem;
   border-radius: 0.2rem;
@@ -13,20 +20,22 @@
     padding: 0.1rem 0.6rem;
     border-radius: inherit;
     border: 1px solid var(--color-border);
-    background-color: var(--color-pale);
   }
 
   button {
     margin-left: 0.3rem;
     border-radius: inherit;
-    background-color: var(--color-notice);
-    color: var(--color-need-to-rename);
+    background-color: var(--color-border);
   }
 }
 
 .optionWrapper {
   position: relative;
   border: 1px solid var(--color-border);
+
+  &.chain {
+    margin-right: auto;
+  }
 
   &:not(:first-child) {
     margin-left: 2%;
@@ -66,11 +75,21 @@
     }
   }
 
-  .purchasButton {
+  .actionBtnWrapper {
+    padding: 0.12rem 0.2rem;
+  }
+
+  .purchaseButton {
     padding: 0.1rem 0.6rem;
     border-radius: 0.2rem;
     background-color: var(--color-brand);
     color: var(--color-f-brightest);
+
+    &.disabled,
+    &.disabled:hover {
+      background-color: var(--color-inactive-border);
+      color: var(--color-indicating);
+    }
   }
 }
 
