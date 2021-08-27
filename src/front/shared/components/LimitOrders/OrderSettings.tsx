@@ -61,57 +61,57 @@ function OrderSettings(props) {
         />
       </div>
 
-      <div styleName="optionWrapper">
-        <div styleName="title">
-          <FieldLabel>
-            <FormattedMessage id="youPay" defaultMessage="You Pay" />
-          </FieldLabel>
-        </div>
-        {sellCurrency ? (
-          <div styleName="dropdownWrapper">
-            <DropDown
-              className={dropDownStyles.simplestDropdown}
-              selectedValue={sellCurrency.value}
-              onSelect={selectSellCurrency}
-              items={allTokens}
-              itemRender={renderCurrencyName}
-              selectedItemRender={renderCurrencyName}
-            />
+      <div styleName="currencyDropDowns">
+        <div styleName="optionWrapper">
+          <div styleName="title">
+            <FieldLabel>
+              <FormattedMessage id="youPay" defaultMessage="You Pay" />
+            </FieldLabel>
           </div>
-        ) : (
-          <p styleName="noOptions">
-            <FormattedMessage id="noOptions" defaultMessage="No options" />
-          </p>
-        )}
-      </div>
+          {sellCurrency ? (
+            <div styleName="dropdownWrapper">
+              <DropDown
+                className={dropDownStyles.simplestDropdown}
+                selectedValue={sellCurrency.value}
+                onSelect={selectSellCurrency}
+                items={allTokens}
+                itemRender={renderCurrencyName}
+                selectedItemRender={renderCurrencyName}
+              />
+            </div>
+          ) : (
+            <p styleName="noOptions">
+              <FormattedMessage id="noOptions" defaultMessage="No options" />
+            </p>
+          )}
+        </div>
 
-      <div styleName="optionWrapper">
-        <div styleName="title">
-          <FieldLabel>
-            <FormattedMessage id="partial255" defaultMessage="You Get" />
-          </FieldLabel>
-        </div>
-        {buyCurrency && buyCurrencies.length ? (
-          <div styleName="dropdownWrapper">
-            <DropDown
-              className={dropDownStyles.simplestDropdown}
-              selectedValue={buyCurrency.value}
-              onSelect={selectBuyCurrency}
-              items={buyCurrencies}
-              itemRender={renderCurrencyName}
-              selectedItemRender={renderCurrencyName}
-            />
+        <div styleName="optionWrapper">
+          <div styleName="title">
+            <FieldLabel>
+              <FormattedMessage id="partial255" defaultMessage="You Get" />
+            </FieldLabel>
           </div>
-        ) : (
-          <p styleName="noOptions">
-            <FormattedMessage id="noOptions" defaultMessage="No options" />
-          </p>
-        )}
+          {buyCurrency && buyCurrencies.length ? (
+            <div styleName="dropdownWrapper">
+              <DropDown
+                className={dropDownStyles.simplestDropdown}
+                selectedValue={buyCurrency.value}
+                onSelect={selectBuyCurrency}
+                items={buyCurrencies}
+                itemRender={renderCurrencyName}
+                selectedItemRender={renderCurrencyName}
+              />
+            </div>
+          ) : (
+            <p styleName="noOptions">
+              <FormattedMessage id="noOptions" defaultMessage="No options" />
+            </p>
+          )}
+        </div>
       </div>
     </div>
   )
 }
 
-export default connect(({ oneinch }) => ({
-  blockchains: oneinch.blockchains,
-}))(CSSModules(OrderSettings, styles, { allowMultiple: true }))
+export default CSSModules(OrderSettings, styles, { allowMultiple: true })

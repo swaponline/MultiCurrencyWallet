@@ -22,7 +22,7 @@ function AllOrdersHeader(props) {
   }
 
   return (
-    <div styleName="header">
+    <div styleName="header allOrders">
       <h3>
         <FormattedMessage id="allOrders" defaultMessage="All orders" />{' '}
         <span>{`(${allOrders.length || 0})`}</span>

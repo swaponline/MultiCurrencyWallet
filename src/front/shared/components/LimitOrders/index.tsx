@@ -4,7 +4,7 @@ import { connect } from 'redaction'
 import CSSModules from 'react-css-modules'
 import styles from './index.scss'
 import getCoinInfo from 'common/coins/getCoinInfo'
-import { constants, transactions, feedback } from 'helpers'
+import { constants, transactions, feedback, metamask } from 'helpers'
 import actions from 'redux/actions'
 import Panel from 'components/ui/Panel/Panel'
 import Table from 'components/tables/Table/Table'
@@ -22,7 +22,16 @@ const tableTitles = [
 ]
 
 function LimitOrders(props) {
-  const { allCurrencies, blockchains, tokensWallets } = props
+  let { allCurrencies, blockchains, tokensWallets } = props
+
+  const metamaskChainId = metamask.isConnected() && metamask.getChainId()
+
+  if (metamaskChainId && blockchains[metamaskChainId]) {
+    blockchains = {
+      [metamaskChainId]: blockchains[metamaskChainId],
+    }
+  }
+
   const chainsArr: IUniversalObj[] = Object.values(blockchains)
 
   const { currencies, wrongNetwork } = actions.oneinch.filterCurrencies({
@@ -119,12 +128,14 @@ function LimitOrders(props) {
   }
 
   useEffect(() => {
-    const list = allTokens.filter((item) => item.name !== sellCurrency.name)
+    if (sellCurrency) {
+      const list = allTokens.filter((item) => item.name !== sellCurrency.name)
 
-    setBuyCurrencies(list)
+      setBuyCurrencies(list)
 
-    if (sellCurrency.value === buyCurrency.value) {
-      setBuyCurrency(list[0])
+      if (sellCurrency?.value === buyCurrency?.value) {
+        setBuyCurrency(list[0])
+      }
     }
   }, [sellCurrency])
 
@@ -211,6 +222,7 @@ function LimitOrders(props) {
     <>
       <Panel>
         <OrderSettings
+          blockchains={blockchains}
           chainId={displayedChainId}
           changeChain={setDisplayedChainId}
           allTokens={allTokens}

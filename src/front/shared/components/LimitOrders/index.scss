@@ -2,7 +2,12 @@
   width: 100%;
   padding-top: 0.4rem;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
+}
+
+.currencyDropDowns {
+  display: flex;
 }
 
 .header {
@@ -65,6 +70,7 @@
 
 .row {
   @include ff-mono;
+  position: relative;
   color: var(--color-indicating);
 
   .number {
@@ -145,5 +151,36 @@
     button:last-child {
       flex: 50%;
     }
+  }
+}
+
+@media all and (max-width: 700px) {
+  .orderSettings {
+    flex-direction: column;
+    align-items: flex-start;
+
+    .optionWrapper.chain {
+      width: 100%;
+      margin-bottom: 0.8rem;
+
+      .dropDownNoRole {
+        width: 100%;
+      }
+    }
+  }
+}
+
+.arrowsIcon {
+  color: var(--color);
+}
+
+@media all and (max-width: 580px) {
+  .header.allOrders {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .makerAddressWrapper {
+    padding: 0.5rem 0;
   }
 }

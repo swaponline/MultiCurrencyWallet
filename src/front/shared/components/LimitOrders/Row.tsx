@@ -153,6 +153,11 @@ function Row(props) {
         <td>
           <span styleName="number">{amountA}</span> {walletA.currency}
         </td>
+        {mobileResolution && (
+          <td>
+            <i styleName="arrowsIcon" className="fas fa-exchange-alt" />
+          </td>
+        )}
         <td>
           <span styleName="number">{amountB}</span> {walletB.currency}
         </td>
