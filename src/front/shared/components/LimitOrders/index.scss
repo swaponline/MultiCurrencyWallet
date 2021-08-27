@@ -99,8 +99,7 @@
 }
 
 .modalContent {
-  max-width: 20rem;
-  text-align: center;
+  max-width: 22rem;
 
   .title {
     margin-bottom: 2rem;
@@ -111,6 +110,18 @@
     flex-direction: column;
     align-items: flex-start;
     color: var(--color-notice);
+
+    .parameter {
+      display: flex;
+      margin-bottom: 0.3rem;
+      white-space: nowrap;
+    }
+
+    .monostyle {
+      @include ff-mono;
+      display: inline-block;
+      margin-left: 0.5rem;
+    }
   }
 
   .buttons {
@@ -121,6 +132,10 @@
 
     button:not(:first-child) {
       margin-left: 0.6rem;
+    }
+
+    button:last-child {
+      flex: 50%;
     }
   }
 }

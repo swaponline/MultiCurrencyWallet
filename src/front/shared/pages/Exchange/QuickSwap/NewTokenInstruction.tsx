@@ -73,7 +73,7 @@ function NewTokenInstruction(props) {
             <li>
               <FormattedMessage
                 id="youWillSeeYourToken"
-                defaultMessage="After some time you will be able to see your token in the list."
+                defaultMessage="After determining a liquidity pool with your token, it will be available for exchange."
               />
             </li>
           </ol>

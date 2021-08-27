@@ -32,6 +32,7 @@ function Row(props) {
     takerRate,
     makerAmount: makerUnitAmount,
     takerAmount: takerUnitAmount,
+    remainingMakerAmount: remainingMakerUnitAmount,
     orderMaker,
   } = order
 
@@ -119,6 +120,10 @@ function Row(props) {
     utils.amount.formatWithoutDecimals(takerUnitAmount, takerWallet.decimals)
   ).toString()
 
+  const remainingMakerAmount = new BigNumber(
+    utils.amount.formatWithoutDecimals(remainingMakerUnitAmount, makerWallet.decimals)
+  ).toString()
+
   const mobileRangeWidth = 650 // px
   const mobileResolution = dimensions.width < mobileRangeWidth
 
@@ -129,10 +134,13 @@ function Row(props) {
       <tr styleName={`row ${mobileResolution ? 'mobile' : ''}`}>
         {modalIsOpened && (
           <OrderPurchaseModal
+            makerWallet={makerWallet}
             takerWallet={takerWallet}
             fillOrder={fillOrder}
             setModalIsOpened={setModalIsOpened}
+            orderMakerAmount={makerAmount}
             orderTakerAmount={takerAmount}
+            remainingMakerAmount={remainingMakerAmount}
           />
         )}
 
