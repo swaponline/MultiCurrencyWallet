@@ -27,7 +27,6 @@ function LimitOrders(props) {
 
   const { currencies, wrongNetwork } = actions.oneinch.filterCurrencies({
     currencies: allCurrencies,
-    tokensWallets: tokensWallets,
     onlyTokens: true,
   })
 

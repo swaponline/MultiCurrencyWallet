@@ -71,7 +71,6 @@ function Row(props) {
     setPending(true)
 
     const receipt = await actions.oneinch.fillLimitOrder({
-      chainId,
       name: takerWallet.tokenKey,
       standard: takerWallet.standard,
       order,
@@ -127,33 +126,33 @@ function Row(props) {
     const { walletA, amountA, walletB, amountB, rate, actionButton } = params
 
     return (
-        <tr styleName={`row ${mobileResolution ? 'mobile' : ''}`}>
-          {modalIsOpened && (
-            <OrderPurchaseModal
-              takerWallet={takerWallet}
-              fillOrder={fillOrder}
-              setModalIsOpened={setModalIsOpened}
-              orderTakerAmount={takerAmount}
-            />
-          )}
+      <tr styleName={`row ${mobileResolution ? 'mobile' : ''}`}>
+        {modalIsOpened && (
+          <OrderPurchaseModal
+            takerWallet={takerWallet}
+            fillOrder={fillOrder}
+            setModalIsOpened={setModalIsOpened}
+            orderTakerAmount={takerAmount}
+          />
+        )}
 
-          <td>
-            <Coins
-              names={[walletA.tokenKey.toUpperCase(), walletB.tokenKey.toUpperCase()]}
-              size={mobileResolution ? 20 : 25}
-            />
-          </td>
-          <td>
-            <span styleName="number">{amountA}</span> {walletA.currency}
-          </td>
-          <td>
-            <span styleName="number">{amountB}</span> {walletB.currency}
-          </td>
-          <td styleName="rate">
-            <span styleName="number">{rate}</span> {walletA.currency}/{walletB.currency}
-          </td>
-          <td>{actionButton}</td>
-        </tr>
+        <td>
+          <Coins
+            names={[walletA.tokenKey.toUpperCase(), walletB.tokenKey.toUpperCase()]}
+            size={mobileResolution ? 20 : 25}
+          />
+        </td>
+        <td>
+          <span styleName="number">{amountA}</span> {walletA.currency}
+        </td>
+        <td>
+          <span styleName="number">{amountB}</span> {walletB.currency}
+        </td>
+        <td styleName="rate">
+          <span styleName="number">{rate}</span> {walletA.currency}/{walletB.currency}
+        </td>
+        <td>{actionButton}</td>
+      </tr>
     )
   }
 

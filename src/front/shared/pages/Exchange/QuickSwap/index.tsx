@@ -464,7 +464,6 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       const { standard, address, contractAddress, decimals } = fromWallet
 
       const allowance = await actions.oneinch.fetchTokenAllowance({
-        chainId: network.networkVersion,
         contract: contractAddress,
         owner: address,
         standard,

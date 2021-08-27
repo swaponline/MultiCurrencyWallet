@@ -1,7 +1,6 @@
 import { BigNumber } from 'bignumber.js'
 import TokenApi from 'human-standard-token-abi'
 import moment from 'moment'
-import Web3 from 'web3'
 import {
   LimitOrderBuilder,
   LimitOrderProtocolFacade,
@@ -10,12 +9,7 @@ import {
   LimitOrderPredicateBuilder,
   LimitOrderPredicateCallData,
 } from '@1inch/limit-order-protocol'
-/* import { LimitOrder, Signature } from '@0x/protocol-utils'
-import { MetamaskSubprovider, PrivateKeyWalletSubprovider } from '@0x/subproviders' */
-
 import { COIN_MODEL, COIN_DATA } from 'swap.app/constants/COINS'
-import getCoinInfo from 'common/coins/getCoinInfo'
-import EVM_CONTRACTS_ABI from 'common/helpers/constants/EVM_CONTRACTS_ABI'
 import utils from 'common/utils'
 import { apiLooper, externalConfig, metamask, feedback } from 'helpers'
 import { getState } from 'redux/core'
@@ -54,23 +48,14 @@ const addTokens = (params) => {
 }
 
 const filterCurrencies = (params) => {
-  const { currencies, tokensWallets, onlyTokens = false } = params
-  //const { tokens: oneinchTokens, blockchains: oneinchBlockChains } = getState().oneinch
+  const { currencies, onlyTokens = false } = params
 
   const filteredArr = currencies.filter((item) => {
     const currency = COIN_DATA[item.name]
     let isCurrencySuitable = false
 
-    // it's token. Check it in the 1inch matched token list
     if (item.standard) {
-      //const { blockchain } = getCoinInfo(item.value)
-
-      //const networkVersion = externalConfig.evmNetworks[blockchain].networkVersion
-      const walletKey = item.value.toLowerCase()
-      //const tokensByChain = oneinchTokens[networkVersion]
-      const tokenContract = tokensWallets[walletKey].contractAddress.toLowerCase()
-
-      isCurrencySuitable = true //tokensByChain && !!tokensByChain[tokenContract]
+      isCurrencySuitable = true
     } else {
       const coinChain =
         currency?.model === COIN_MODEL.AB &&
@@ -106,7 +91,7 @@ const fetchSpenderContractAddress = async (params): Promise<string | false> => {
 }
 
 const fetchTokenAllowance = async (params): Promise<number> => {
-  const { chainId, standard, owner, contract, spender, decimals } = params
+  const { standard, owner, contract, spender, decimals } = params
   const Web3 = actions[standard].getCurrentWeb3()
   const tokenContract = new Web3.eth.Contract(TokenApi, contract, {
     from: owner,
@@ -114,8 +99,6 @@ const fetchTokenAllowance = async (params): Promise<number> => {
   let allowance = 0
 
   try {
-    //const spenderContract = await fetchSpenderContractAddress({ chainId })
-
     allowance = await tokenContract.methods.allowance(owner, spender).call({ from: owner })
 
     // formatting without token decimals
@@ -133,15 +116,7 @@ const fetchTokenAllowance = async (params): Promise<number> => {
 const approveToken = async (params) => {
   const { amount, name, target, standard } = params
 
-  /*   const request = ''.concat(
-    `/${chainId}/approve/calldata?`,
-    `amount=${amount}&`,
-    `tokenAddress=${contract}`
-  ) */
   try {
-    //const approveData = await apiLooper.get('oneinch', request)
-    //return approveData
-
     return actions[standard].approve({
       name,
       to: target,
@@ -179,7 +154,6 @@ const createLimitOrder = async (params) => {
     makerAssetDecimals,
     takerAssetAddress,
     takerAssetDecimals,
-    expiresInSec,
     makerAmount,
     takerAmount,
   } = params
@@ -205,38 +179,6 @@ const createLimitOrder = async (params) => {
 
   const makerUnitAmount = utils.amount.formatWithDecimals(makerAmount, makerAssetDecimals)
   const takerUnitAmount = utils.amount.formatWithDecimals(takerAmount, takerAssetDecimals)
-  /*   const now = Date.now()
-
-  const order = new LimitOrder({
-    chainId,
-    makerToken: makerAssetAddress.toLowerCase(),
-    takerToken: takerAssetAddress.toLowerCase(),
-    makerAmount: new BigNumber(makerUnitAmount),
-    takerAmount: new BigNumber(takerUnitAmount),
-    maker: makerAddress.toLowerCase(),
-    taker: '0x0000000000000000000000000000000000000000',
-    sender: '0x0000000000000000000000000000000000000000',
-    expiry: new BigNumber(now).plus(expiresInSec),
-    salt: new BigNumber(now),
-    pool: '0x0000000000000000000000000000000000000000',
-    verifyingContract: '0xdef1c0ded9bec7f1a1670819833240f027b25eff'.toLowerCase(),
-    //sender: "0x0000000000000000000000000000000000000000",
-    //feeRecipient: '0x0000000000000000000000000000000000000000',
-  })
-  //const web3 = actions[baseCurrency].getCurrentWeb3()
-  const web3 = new Web3(new Web3.providers.HttpProvider('https://rpc-mainnet.maticvigil.com'))
-  // https://rpc-mainnet.maticvigil.com
-  // https://ropsten.infura.io/v3/2b2b0468916d4f898d20458552400b9b
-  console.log('params: ', params)
-  console.log('web3: ', web3)
-  console.log('web3.currentProvider: ', web3.currentProvider)
-  console.log('web3.givenProvider: ', web3.givenProvider)
-  //@ts-ignore
-  order.signature = await order.getSignatureWithProviderAsync(web3.currentProvider)
- */
-  //const privateKey = actions[baseCurrency].getPrivateKeyByAddress(makerAddress)
-  //@ts-ignore
-  //order.signature = await order.getSignatureWithKey(privateKey.toLowerCase())
 
   const order = builder.buildLimitOrder({
     makerAssetAddress,
@@ -299,14 +241,13 @@ const sendLimitOrder = async (params) => {
 }
 
 const fillLimitOrder = async (params) => {
-  const { chainId, order, name, baseCurrency, standard, takerDecimals, amountToBeFilled } = params
+  const { order, name, baseCurrency, standard, takerDecimals, amountToBeFilled } = params
   const { user } = getState()
 
   const owner = metamask.isConnected() ? metamask.getAddress() : user[`${baseCurrency}Data`].address
   const protocolContract = externalConfig.limitOrder[baseCurrency]
 
   const allowance = await actions.oneinch.fetchTokenAllowance({
-    chainId,
     contract: order.data.takerAsset,
     owner,
     standard,
