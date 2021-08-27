@@ -270,23 +270,23 @@ const fillLimitOrder = async (params) => {
   const weiTakerAmount = utils.amount.formatWithDecimals(amountToBeFilled, takerDecimals)
 
   // fillLimitOrder(order, signature, makerAmount, takerAmount, thresholdAmount)
+  // * one of the amounts has to be 0
   const callData = limitOrderProtocolFacade.fillLimitOrder(
     order.data,
     order.signature,
-    //order.makerAmount,
-    //'0',
-    //order.makerAmount, // threshold amount
     '0',
     weiTakerAmount,
     weiTakerAmount
   )
+  // custom value. Maybe we can find exact gas limit
+  const gasLimit = 150_000
 
   try {
     const receipt = await actions[baseCurrency].send({
       to: protocolContract,
       data: callData,
       amount: 0,
-      gasLimit: 150_000, // TODO: remove magic number
+      gasLimit,
       waitReceipt: true,
     })
 

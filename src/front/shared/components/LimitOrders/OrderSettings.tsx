@@ -68,14 +68,16 @@ function OrderSettings(props) {
           </FieldLabel>
         </div>
         {sellCurrency ? (
-          <DropDown
-            className={dropDownStyles.simplestDropdown}
-            selectedValue={sellCurrency?.value}
-            onSelect={selectSellCurrency}
-            items={allTokens}
-            itemRender={renderCurrencyName}
-            selectedItemRender={renderCurrencyName}
-          />
+          <div styleName="dropdownWrapper">
+            <DropDown
+              className={dropDownStyles.simplestDropdown}
+              selectedValue={sellCurrency.value}
+              onSelect={selectSellCurrency}
+              items={allTokens}
+              itemRender={renderCurrencyName}
+              selectedItemRender={renderCurrencyName}
+            />
+          </div>
         ) : (
           <p styleName="noOptions">
             <FormattedMessage id="noOptions" defaultMessage="No options" />
@@ -90,14 +92,16 @@ function OrderSettings(props) {
           </FieldLabel>
         </div>
         {buyCurrency && buyCurrencies.length ? (
-          <DropDown
-            className={dropDownStyles.simplestDropdown}
-            selectedValue={buyCurrency?.value}
-            onSelect={selectBuyCurrency}
-            items={buyCurrencies}
-            itemRender={renderCurrencyName}
-            selectedItemRender={renderCurrencyName}
-          />
+          <div styleName="dropdownWrapper">
+            <DropDown
+              className={dropDownStyles.simplestDropdown}
+              selectedValue={buyCurrency.value}
+              onSelect={selectBuyCurrency}
+              items={buyCurrencies}
+              itemRender={renderCurrencyName}
+              selectedItemRender={renderCurrencyName}
+            />
+          </div>
         ) : (
           <p styleName="noOptions">
             <FormattedMessage id="noOptions" defaultMessage="No options" />

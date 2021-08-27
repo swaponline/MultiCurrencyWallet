@@ -105,7 +105,7 @@ class OrderPurchaseModal extends React.Component<ComponentProps, ComponentState>
               id="limitOrderFillDescription"
               defaultMessage="You are able to spend not your entire balance. Enter the amount of {sellToken} you want to spend."
               values={{
-                sellToken: <b styleName="monostyle">{takerWallet.fullName}</b>,
+                sellToken: <b>{takerWallet.fullName}</b>,
               }}
             />
           </p>

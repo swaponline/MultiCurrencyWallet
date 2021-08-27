@@ -54,6 +54,10 @@
   }
 }
 
+.dropdownWrapper {
+  width: min-content;
+}
+
 .orderBookTable {
   @include ff-regular;
   width: 100%;
@@ -103,13 +107,17 @@
 
   .title {
     margin-bottom: 2rem;
+
+    b {
+      @include ff-mono;
+    }
   }
 
   .amountNotice {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    color: var(--color-notice);
+    color: var(--color-indicating);
 
     .parameter {
       display: flex;

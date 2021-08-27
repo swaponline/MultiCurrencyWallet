@@ -23,8 +23,16 @@ export default {
     chainId: 0x89,
     networkVersion: 137,
     chainName: 'Matic Mainnet',
-    rpcUrls: [web3.matic_provider],
-    blockExplorerUrls: [link.maticscan]
+    rpcUrls: [
+      web3.matic_provider,
+      // alternative rpc options. Public rpc are often unavailable
+      'https://rpc-mainnet.matic.network',
+      'https://matic-mainnet.chainstacklabs.com',
+      'https://rpc-mainnet.matic.quiknode.pro',
+      'https://matic-mainnet-full-rpc.bwarelabs.com',
+      'https://matic-mainnet-archive-rpc.bwarelabs.com'
+    ],
+    blockExplorerUrls: [link.maticscan],
   },
   ARBETH: {
     currency: 'ETH',
