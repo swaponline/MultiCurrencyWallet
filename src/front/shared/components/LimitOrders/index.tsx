@@ -205,7 +205,7 @@ function LimitOrders(props) {
     setAllOrders(orders)
   }
 
-  const hasChainOrders = userOrders[displayedChainId]?.length
+  const hasChainOrders = userOrders.length
 
   return (
     <>
@@ -227,9 +227,7 @@ function LimitOrders(props) {
           <div styleName="header">
             <h3>
               <FormattedMessage id="yourOrders" defaultMessage="Your orders" />{' '}
-              <span>{`(${
-                userOrders[displayedChainId] ? userOrders[displayedChainId].length : 0
-              })`}</span>
+              <span>{`(${userOrders.length})`}</span>
             </h3>
           </div>
         }
@@ -240,7 +238,7 @@ function LimitOrders(props) {
             className={tableStyles.exchange}
             styleName="orderBookTable"
             titles={tableTitles}
-            rows={userOrders[displayedChainId]}
+            rows={userOrders}
             rowRender={(order, index) => (
               <Row
                 isMy
