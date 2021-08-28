@@ -366,6 +366,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
         const weiFee = txGas.times(swap.tx.gasPrice)
         const swapFee = utils.amount.formatWithoutDecimals(weiFee, 18) */
 
+
         const weiFee = new BigNumber(swap.gas).times(swap.gasPrice)
         const swapFee = utils.amount.formatWithoutDecimals(weiFee, 18)
 
