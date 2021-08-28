@@ -450,24 +450,34 @@ class EthLikeAction {
   }
 
   sendReadyTransaction = async (params) => {
-    const { data, waitReceipt = false } = params
+    let { data, waitReceipt = false } = params
     const Web3 = this.getCurrentWeb3()
     const ownerAddress = metamask.isConnected()
       ? metamask.getAddress()
       : getState().user[`${this.tickerKey}Data`].address
 
-    const privateKey = this.getPrivateKeyByAddress(ownerAddress)
-    const signedData = await Web3.eth.accounts.signTransaction(data, privateKey)
+    let sendMethod = Web3.eth.sendTransaction
+
+    const walletData = actions.core.getWallet({
+      address: ownerAddress,
+      currency: this.ticker,
+    })
+
+    if (!walletData?.isMetamask) {
+      const privateKey = this.getPrivateKeyByAddress(ownerAddress)
+      const signedData = await Web3.eth.accounts.signTransaction(data, privateKey)
+
+      data = signedData.rawTransaction
+      sendMethod = Web3.eth.sendSignedTransaction
+    }
 
     return new Promise((res, rej) => {
-      Web3.eth
-        .sendSignedTransaction(signedData.rawTransaction)
+      sendMethod(data)
         .on('receipt', (receipt) => waitReceipt && res(receipt))
         .on('transactionHash', (hash) => {
           console.group('%c tx hash', 'color: green;')
           console.log(hash)
           console.groupEnd()
-  
           if (!waitReceipt) res(hash)
         })
     })
