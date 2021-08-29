@@ -2,6 +2,7 @@
 
 #bash script example to autodeploy all pullrequests to separate folders. 
 #replace "Authorization: token " to "Authorization: token {yourgithubtoken}" for automatic comments to PR with links. 
+#add to crontab  "*/2 * * * * run-one sh /root/pr.sh >> /root/pr_log.txt 2>&1" (run-one must be installed)
 
 GIT_CMD=$(which git)
 FIND_CMD=$(which find)
