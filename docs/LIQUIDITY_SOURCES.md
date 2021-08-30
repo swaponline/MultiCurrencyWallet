@@ -18,6 +18,6 @@
 - https://dodoex.io
 - https://dmm.exchange
 - https://exchange.dfyn.network
-- https://quickswap.exchange
+- https://quickswap.exchange - recommended (go to pool -> create pool)  
 - https://app.sushi.com
 <!-- need review https://curve.fi -->
