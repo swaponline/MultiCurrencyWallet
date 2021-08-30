@@ -1,0 +1,175 @@
+#!/bin/sh
+
+#bash script example to autodeploy all pullrequests to separate folders. 
+#replace "Authorization: token " to "Authorization: token {yourgithubtoken}" for automatic comments to PR with links. 
+#add to crontab  "*/2 * * * * run-one sh /root/pr.sh >> /root/pr_log.txt 2>&1" (run-one must be installed)
+
+GIT_CMD=$(which git)
+FIND_CMD=$(which find)
+NPM_CMD=$(which npm)
+CURL_CMD=$(which curl)
+SED_CMD=$(which sed)
+
+SCRIPT_PATH="/var/www"
+
+#remove folders with old pullrequests
+
+for dir in $($FIND_CMD /var/www/*/ -maxdepth 1 -type d -name "MultiCurrencyWallet")
+do
+echo $dir
+cd $dir
+local_commit=$($GIT_CMD rev-parse --short HEAD)
+$GIT_CMD  config --global core.mergeoptions --no-edit
+$GIT_CMD pull 
+$GIT_CMD stash
+$GIT_CMD reset --hard
+
+last_commit=$($GIT_CMD rev-parse --short HEAD)
+
+if [ "$local_commit" != "$last_commit" ]
+then
+
+
+echo $dir
+
+
+cd $dir 
+
+$GIT_CMD pull 
+$GIT_CMD stash
+$GIT_CMD reset --hard
+
+
+#cp -r $SCRIPT_PATH/node_modules node_modules
+
+PR=`echo $dir | tr -d -c 0-9`
+
+	if [ -z "$PR" ] 
+	then
+	echo "$dir empty"
+	continue  
+	fi
+
+$NPM_CMD  install --force
+
+$CURL_CMD "https://noxon.wpmix.net/counter.php?msg=pr $PR $last_commit rebuild started&todevs=1"
+
+$NPM_CMD run build:testnet https://testnet$PR.swaponline.site/ 
+
+
+$NPM_CMD run build:mainnet https://mainnet$PR.swaponline.site/ 
+
+mkdir -p $SCRIPT_PATH/mainnet$PR/MultiCurrencyWallet/
+cp -r build-mainnet $SCRIPT_PATH/mainnet$PR/MultiCurrencyWallet/build-testnet
+
+$CURL_CMD "https://noxon.wpmix.net/counter.php?msg=testnet$PR.swaponline.site mainnet$PR.swaponline.site  $last_commit rebuilded&todevs=1"
+
+
+$CURL_CMD -s -H "Authorization: token " -X POST -d '{"body": "commit '"$last_commit"' rebuilded https://testnet'"$PR"'.swaponline.site https://mainnet'"$PR"'.swaponline.site "}' "https://api.github.com/repos/swaponline/MultiCurrencyWallet/issues/$PR/comments"
+
+# rebuild testnet also
+#cd /var/www/ropsten.swaponline.io/MultiCurrencyWallet && git pull && npm i && npm run build:testnet https://ropsten.swaponline.io/
+
+else
+continue
+fi
+done
+
+
+
+#find PR without folders
+
+$CURL_CMD https://api.github.com/repositories/130675402/pulls > /tmp/pulls.json 
+
+
+
+CheckOld(){
+for NUM_OF_PULLS in $(seq 0 $(cat /tmp/pulls.json | jq length))
+do
+PR=$(cat /tmp/pulls.json | jq ".[$NUM_OF_PULLS].number")
+echo $PR >> /tmp/pr.txt
+done
+}
+
+
+CleanOld() {
+$FIND_CMD /var/www/ -maxdepth 1 -type d -name "testnet*" | grep -vFf /tmp/pr.txt |  xargs rm -rf
+rm /tmp/pr.txt
+}
+
+
+Build() {
+for NUM_OF_PULLS in $(seq 0 $(echo  $(cat /tmp/pulls.json | jq length) -1 | bc))
+do
+cd $SCRIPT_PATH
+PR=$(cat /tmp/pulls.json | jq ".[$NUM_OF_PULLS].number")
+BRANCH=$(cat /tmp/pulls.json | jq ".[$NUM_OF_PULLS].head.ref")
+REPO_URL=$(cat /tmp/pulls.json | jq ".[$NUM_OF_PULLS].head.repo.git_url")
+
+REPO_URL=$(echo $REPO_URL | awk -F '"' '{print$2}')
+BRANCH=$(echo $BRANCH | awk -F '"' '{print$2}')
+
+echo $BRANCH
+
+if [ -d testnet$PR ]
+then
+continue
+
+else
+
+mkdir testnet$PR
+
+
+cd $SCRIPT_PATH/testnet$PR
+
+echo $SCRIPT_PATH/testnet$PR/MultiCurrencyWallet/
+
+$GIT_CMD clone $REPO_URL 
+cd $SCRIPT_PATH/testnet$PR/MultiCurrencyWallet/
+
+$GIT_CMD checkout $BRANCH
+
+
+$GIT_CMD pull 
+$GIT_CMD stash
+$GIT_CMD reset --hard
+
+
+#cp -r $SCRIPT_PATH/node_modules node_modules
+
+$NPM_CMD i --force
+
+$NPM_CMD run build:testnet https://testnet$PR.swaponline.site/ 
+$CURL_CMD "https://noxon.wpmix.net/counter.php?msg=testnet$PR.swaponline.site builded&todevs=1"
+
+
+#$NPM_CMD run build:mainnet https://mainnet$PR.swaponline.site/ 
+#cp -r build-mainnet $SCRIPT_PATH/mainnet$PR/MultiCurrencyWallet/build-testnet
+
+$CURL_CMD "https://noxon.wpmix.net/counter.php?msg=mainnet$PR.swaponline.site builded&todevs=1"
+$CURL_CMD -s -H "Authorization: token " -X POST -d '{"body": "builded https://testnet'"$PR"'.swaponline.site ;"}' "https://api.github.com/repos/swaponline/MultiCurrencyWallet/issues/$PR/comments"
+
+echo "-----------------"  >> /var/log/deploy.log
+echo "Build at $(/bin/date +%H\:%M\:%S\ %d\.%m\.%Y):"  >> /var/log/deploy.log
+echo "Pull request is $PR"  >> /var/log/deploy.log
+echo "Repo URL $REPO_URL"  >> /var/log/deploy.log
+echo "Branch is $BRANCH"  >> /var/log/deploy.log
+echo "-----------------"  >> /var/log/deploy.log
+
+echo "-----------------"
+echo "Build at $(/bin/date +%H\:%M\:%S\ %d\.%m\.%Y):"
+echo "Pull request is $PR"
+echo "Repo URL $REPO_URL"
+echo "Branch is $BRANCH"
+echo "-----------------"
+
+
+fi
+
+done
+}
+
+
+CheckOld
+CleanOld
+Build
