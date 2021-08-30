@@ -767,7 +767,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       <>
         <NewTokenInstruction />
 
-        <section styleName="someSwap">
+        <section styleName="quickSwap">
           <div styleName={`optionsWrapper ${wrongNetwork ? 'disabled' : ''}`}>
             <ExchangeForm
               stateReference={linked}

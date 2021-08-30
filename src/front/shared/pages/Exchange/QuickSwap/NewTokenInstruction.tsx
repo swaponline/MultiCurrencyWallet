@@ -12,8 +12,8 @@ function NewTokenInstruction(props) {
   }
 
   return (
-    <section styleName="newTokenInstruction">
-      <button styleName={`tab ${visible ? 'open' : ''}`} onClick={toggleVisibility}>
+    <section styleName={`newTokenInstruction ${visible ? 'open' : ''}`}>
+      <button styleName="tab" onClick={toggleVisibility}>
         <FormattedMessage id="howToAddToken" defaultMessage="How to add a token" />
 
         <span styleName="arrow"></span>

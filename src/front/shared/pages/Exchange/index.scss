@@ -321,7 +321,7 @@
   overflow: visible;
   @include errAppend();
 
-  >div {
+  > div {
     margin: 0;
   }
 }
@@ -349,7 +349,7 @@
 }
 
 .tabsWrapper {
-  padding-bottom: 2rem;
+  padding-bottom: 1.2rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -357,7 +357,7 @@
 
 .tab {
   padding: 0.2rem 0.8rem;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   border-radius: 6px;
   border: 1px solid var(--color-border);
 
@@ -380,7 +380,7 @@
 
   &.disabled {
     pointer-events: none;
-    opacity: .5;
+    opacity: 0.5;
   }
 }
 

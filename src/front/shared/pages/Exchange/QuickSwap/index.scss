@@ -1,26 +1,28 @@
 .newTokenInstruction {
   max-width: 38em;
-  margin: 0 auto 0.7rem;
+  margin: 0 auto 0.2rem;
   border-radius: 8px;
   text-align: left;
-  border: 1px solid var(--color-border);
+  border: 1px solid transparent;
   background-color: var(--color-pale);
 
-  .tab {
-    width: 100%;
-    padding: 0.5rem 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-radius: inherit;
+  &.open {
+    border-color: var(--color-border);
 
-    &.open {
-      border-bottom: 1px solid var(--color-border);
-
+    .tab {
       .arrow {
         @include arrow('up', 9px, 2px, var(--color-notice));
       }
     }
+  }
+
+  .tab {
+    width: 100%;
+    padding: 0.4rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: inherit;
   }
 
   .arrow {
@@ -28,7 +30,7 @@
   }
 
   .content {
-    padding: 1rem;
+    padding: 0.8rem 1rem;
     font-size: 0.94em;
 
     .paragraph {
@@ -77,10 +79,11 @@
   }
 }
 
-.someSwap {
+.quickSwap {
   max-width: 38em;
   margin: 0.6rem auto 1rem;
   padding: 2rem;
+  padding-bottom: 1.6rem;
   border-radius: 8px;
   text-align: center;
   box-shadow: var(--box-shadow);
@@ -102,7 +105,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  margin: 1.4rem 0;
+  margin: 1.2rem 0;
   color: var(--color-indicating);
 
   .address {
@@ -231,7 +234,7 @@
 }
 
 .buttonWrapper {
-  margin-bottom: 1rem;
+  margin-bottom: 0.9rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
