@@ -44,6 +44,11 @@
   }
 }
 
+.liquiditySourcesLink {
+  display: inline-block;
+  margin-top: 0.8rem;
+}
+
 .protocolsChain {
   @include ff-semibold;
   margin: 1rem 0 0;

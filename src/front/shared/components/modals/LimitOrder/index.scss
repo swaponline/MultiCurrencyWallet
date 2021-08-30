@@ -1,9 +1,21 @@
-.currenciesWarning {
-  max-width: 30em;
+@mixin message {
   margin-bottom: 2rem;
   padding: 1rem;
   text-align: center;
   border-radius: 6px;
+}
+
+.limitOrder {
+  max-width: 30em;
+}
+
+.betaVersionWarning {
+  @include message();
+  color: var(--color-indicating);
+}
+
+.currenciesWarning {
+  @include message();
   background-color: var(--color-pale);
   color: var(--color-f-error);
 }

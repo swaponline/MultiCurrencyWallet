@@ -3,10 +3,8 @@ import { FormattedMessage } from 'react-intl'
 import { connect } from 'redaction'
 import CSSModules from 'react-css-modules'
 import styles from './index.scss'
-import Toggle from 'components/controls/Toggle/Toggle'
 
 function NewTokenInstruction(props) {
-  const { protocols, blockchains } = props
   const [visible, setVisibility] = useState(false)
 
   const toggleVisibility = () => {
@@ -77,13 +75,17 @@ function NewTokenInstruction(props) {
               />
             </li>
           </ol>
+
+          <a styleName="liquiditySourcesLink" href="#" target="_blank">
+            <FormattedMessage
+              id="availableLiquiditySources"
+              defaultMessage="More info about supported sources"
+            />
+          </a>
         </div>
       )}
     </section>
   )
 }
 
-export default connect(({ oneinch }) => ({
-  protocols: oneinch.protocols,
-  blockchains: oneinch.blockchains,
-}))(CSSModules(NewTokenInstruction, styles, { allowMultiple: true }))
+export default CSSModules(NewTokenInstruction, styles, { allowMultiple: true })
