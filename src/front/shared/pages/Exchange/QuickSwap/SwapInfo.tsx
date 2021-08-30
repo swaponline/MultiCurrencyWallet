@@ -39,14 +39,17 @@ function SwapInfo(props: ComponentProps) {
   let price: string | undefined = undefined
 
   if (swapData) {
-    //const { fromTokenAmount, toTokenAmount, fromToken, toToken } = swapData
-    const { sellAmount, buyAmount, fromToken, toToken } = swapData
+    const { fromTokenAmount, toTokenAmount, fromToken, toToken } = swapData
+    //const { sellAmount, buyAmount, fromToken, toToken } = swapData
 
     const fromAmount = commonUtils.amount.formatWithoutDecimals(
-      sellAmount,
+      fromTokenAmount,
       fromWallet.decimals || 18
     )
-    const toAmount = commonUtils.amount.formatWithoutDecimals(buyAmount, toWallet.decimals || 18)
+    const toAmount = commonUtils.amount.formatWithoutDecimals(
+      toTokenAmount,
+      toWallet.decimals || 18
+    )
     const customDecimals = 7
 
     price = `${new BigNumber(fromAmount).div(toAmount).dp(customDecimals).toString()} ${

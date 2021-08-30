@@ -76,7 +76,11 @@ function NewTokenInstruction(props) {
             </li>
           </ol>
 
-          <a styleName="liquiditySourcesLink" href="#" target="_blank">
+          <a
+            styleName="liquiditySourcesLink"
+            href="https://github.com/swaponline/MultiCurrencyWallet/blob/master/docs/LIQUIDITY_SOURCES.md"
+            target="_blank"
+          >
             <FormattedMessage
               id="availableLiquiditySources"
               defaultMessage="More info about supported sources"
