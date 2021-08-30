@@ -358,9 +358,6 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
         sourceError: true,
       })
 
-      console.log('%c swap', 'color: orange; font-size: 20px')
-      console.log('swap tx: ', swap)
-
       if (!(swap instanceof Error)) {
         // https://docs.1inch.io/api/quote-swap#swap
         // 1inch docs tells that we have to increase it by 25%
@@ -763,6 +760,8 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       .plus(swapFee || 0)
       .isGreaterThan(fromWallet.balance)
 
+    const saveSecretPhrase = !mnemonicSaved && !metamask.isConnected()
+
     return (
       <>
         <NewTokenInstruction />
@@ -791,7 +790,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
                 <Button id="createWalletBtn" brand fullWidth onClick={this.createWallet}>
                   <FormattedMessage id="menu.CreateWallet" defaultMessage="Create wallet" />
                 </Button>
-              ) : !mnemonicSaved ? (
+              ) : saveSecretPhrase ? (
                 <Button id="saveSecretPhraseBtn" brand fullWidth onClick={this.saveMnemonic}>
                   <FormattedMessage
                     id="BTCMS_SaveMnemonicButton"
@@ -913,7 +912,6 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     )
   }
 }
-
 
 export default connect(({ currencies, user }) => ({
   allCurrencies: currencies.items,
