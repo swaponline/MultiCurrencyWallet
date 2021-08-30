@@ -458,12 +458,15 @@ const login_ = (privateKey, otherOwnerPublicKey, sortKeys) => {
   let _data
 
   if (otherOwnerPublicKey) {
-    let publicKeysRaw = []
+    let publicKeysRaw: string[] = []
+
     if (otherOwnerPublicKey instanceof Array) {
-      //@ts-ignore: strictNullChecks
-      otherOwnerPublicKey.forEach((key) => { publicKeysRaw.push(key) })
+      otherOwnerPublicKey.forEach((key) => {
+        if (key) {
+          publicKeysRaw.push(key)
+        }
+      })
     } else {
-      //@ts-ignore: strictNullChecks
       publicKeysRaw.push(otherOwnerPublicKey)
     }
     //@ts-ignore: strictNullChecks
@@ -810,14 +813,15 @@ const addPinWallet = async (mnemonicOrKey) => {
   } = getState()
 
   let mnemonicKey = mnemonicOrKey
-  if (mnemonicUtils.validateMnemonicWords(mnemonicOrKey)) {
+
+  if (mnemonicOrKey && mnemonicUtils.validateMnemonicWords(mnemonicOrKey)) {
     const mnemonicAccount = actions.btc.getWalletByWords(mnemonicOrKey, 1)
     mnemonicKey = mnemonicAccount.publicKey
   }
 
   //@ts-ignore: strictNullChecks
   let btcPinMnemonicKey: MnemonicKey = localStorage.getItem(constants.privateKeyNames.btcPinMnemonicKey)
-  
+
   try { 
     //@ts-ignore: strictNullChecks
     btcPinMnemonicKey = JSON.parse(btcPinMnemonicKey) 
