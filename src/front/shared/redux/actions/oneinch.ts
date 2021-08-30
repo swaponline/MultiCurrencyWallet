@@ -91,7 +91,7 @@ const fetchSpenderContractAddress = async (params): Promise<string | false> => {
 }
 
 const fetchTokenAllowance = async (params): Promise<number> => {
-  const { standard, owner, contract, spender, decimals } = params
+  const { chainId, standard, owner, contract, decimals } = params
   const Web3 = actions[standard].getCurrentWeb3()
   const tokenContract = new Web3.eth.Contract(TokenApi, contract, {
     from: owner,
@@ -99,6 +99,8 @@ const fetchTokenAllowance = async (params): Promise<number> => {
   let allowance = 0
 
   try {
+    const spender = await fetchSpenderContractAddress({ chainId })
+
     allowance = await tokenContract.methods.allowance(owner, spender).call({ from: owner })
 
     // formatting without token decimals
@@ -114,12 +116,14 @@ const fetchTokenAllowance = async (params): Promise<number> => {
 }
 
 const approveToken = async (params) => {
-  const { amount, name, target, standard } = params
+  const { chainId, amount, name, standard } = params
 
   try {
+    const spender = await fetchSpenderContractAddress({ chainId })
+
     return actions[standard].approve({
       name,
-      to: target,
+      to: spender,
       amount,
     })
   } catch (error) {
@@ -247,7 +251,7 @@ const fillLimitOrder = async (params) => {
   const owner = metamask.isConnected() ? metamask.getAddress() : user[`${baseCurrency}Data`].address
   const protocolContract = externalConfig.limitOrder[baseCurrency]
 
-  const allowance = await actions.oneinch.fetchTokenAllowance({
+  const allowance = await fetchTokenAllowance({
     contract: order.data.takerAsset,
     owner,
     standard,

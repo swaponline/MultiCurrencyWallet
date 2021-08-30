@@ -81,7 +81,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       isDataPending: false,
       isSwapPending: false,
       isAdvancedMode: false,
-      needApprove: fromWallet?.isToken,
+      needApprove: false,
       externalExchangeReference: null,
       externalWindowTimer: null,
       fiat: window.DEFAULT_FIAT || activeFiat,
@@ -222,7 +222,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     )
   }
 
-  resetReceivedList = () => {
+  updateReceivedList = () => {
     const { currencies, spendedCurrency } = this.state
     const receivedList = this.returnReceivedList(currencies, spendedCurrency)
 
@@ -322,6 +322,8 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   }
 
   checkSwapData = async () => {
+    await this.checkTokenApprove()
+
     const { spendedAmount, needApprove } = this.state
     const doNotUpdate = this.isSwapDataNotAvailable() || !spendedAmount || needApprove
 
@@ -369,22 +371,19 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
         /* const weiFee = new BigNumber(swap.gas).times(swap.gasPrice)
         const swapFee = utils.amount.formatWithoutDecimals(weiFee, 18) */
 
-        this.setState(
-          () => ({
-            receivedAmount: utils.amount.formatWithoutDecimals(
-              swap.toTokenAmount,
-              swap.toToken.decimals
-            ),
-            /* receivedAmount: utils.amount.formatWithoutDecimals(
+        this.setState(() => ({
+          receivedAmount: utils.amount.formatWithoutDecimals(
+            swap.toTokenAmount,
+            swap.toToken.decimals
+          ),
+          /* receivedAmount: utils.amount.formatWithoutDecimals(
               swap.buyAmount,
               // if it's not a token then usual coin with 18 decimals
               toWallet?.decimals || 18
             ), */
-            swapData: swap,
-            swapFee,
-          }),
-          this.checkTokenApprove
-        )
+          swapData: swap,
+          swapFee,
+        }))
       }
     } catch (error) {
       this.reportError(error)
@@ -454,7 +453,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   }
 
   checkTokenApprove = async () => {
-    const { spendedAmount, fromWallet, network, swapData } = this.state
+    const { spendedAmount, fromWallet, network } = this.state
 
     if (!fromWallet.isToken) {
       this.setState(() => ({
@@ -468,7 +467,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
         owner: address,
         standard,
         decimals,
-        spender: swapData.allowanceTarget,
+        chainId: network.chainId,
       })
 
       this.setState(() => ({
@@ -478,37 +477,21 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   }
 
   approve = async () => {
-    const { network, spendedAmount, fromWallet, swapData } = this.state
+    const { network, spendedAmount, fromWallet } = this.state
 
     this.setState(() => ({
       isDataPending: true,
     }))
 
-    const receipt = await actions.oneinch.approveToken({
+    const transactionHash = await actions.oneinch.approveToken({
+      chainId: network.networkVersion,
       amount: spendedAmount,
       name: fromWallet.tokenKey,
       standard: fromWallet.standard,
-      target: swapData.allowanceTarget,
     })
-
-    /* const approveInfo: any = await actions.oneinch.approveToken({
-      chainId: network.networkVersion,
-      amount: utils.amount.formatWithDecimals(spendedAmount, fromWallet.decimals),
-      contract: fromWallet.contractAddress,
-    })
-
-    if (!approveInfo) return
-
-    const receipt = await actions[fromWallet.baseCurrency].send({
-      data: approveInfo.data,
-      to: approveInfo.to,
-      amount: approveInfo.value,
-      gasPrice: approveInfo.gasPrice,
-      waitReceipt: true,
-    }) */
 
     actions.notifications.show(constants.notifications.Transaction, {
-      link: transactions.getLink(fromWallet.standard, receipt.transactionHash),
+      link: transactions.getLink(fromWallet.standard, transactionHash),
     })
 
     this.setState(
@@ -558,8 +541,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       }),
       () => {
         this.updateNetwork()
-        this.checkTokenApprove()
-        this.resetReceivedList()
+        this.updateReceivedList()
         this.checkSwapData()
       }
     )
