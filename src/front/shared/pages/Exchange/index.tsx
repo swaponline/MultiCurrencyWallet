@@ -77,12 +77,6 @@ function Exchange(props) {
       {!showOnlyOneType && (
         <div styleName="tabsWrapper">
           <button
-            styleName={`tab ${swapMode === 'atomic' ? 'active' : ''}`}
-            onClick={openAtomicMode}
-          >
-            <FormattedMessage id="atomicSwap" defaultMessage="Atomic swap" />
-          </button>
-          <button
             /* externalConfig.entry === 'testnet' ? 'disabled' : '' */
             styleName={`tab  ${swapMode === 'quick' ? 'active' : ''}`}
             /* externalConfig.entry === 'mainnet' ? openQuickMode : undefined */
@@ -90,6 +84,19 @@ function Exchange(props) {
           >
             <FormattedMessage id="quickSwap" defaultMessage="Quick swap" />
           </button>
+          <button
+            styleName={`tab ${swapMode === 'atomic' ? 'active' : ''}`}
+            onClick={openAtomicMode}
+          >
+            <FormattedMessage id="atomicSwap" defaultMessage="Atomic swap" />
+          </button>
+        </div>
+      )}
+
+      {/* this swap type is available only on mainnet networks */}
+      {swapMode === 'quick' && externalConfig.entry === 'mainnet' && (
+        <div styleName="container">
+          <QuickSwap {...props} />
         </div>
       )}
 
@@ -98,14 +105,6 @@ function Exchange(props) {
       because there has to be "url" props like match, location, etc.
       but this props are only in the Router children */}
       {swapMode === 'atomic' && <AtomicSwap {...props} />}
-
-      {/* this swap type is available only on mainnet networks */}
-      {/* && externalConfig.entry === 'mainnet' */}
-      {swapMode === 'quick' && (
-        <div styleName="container">
-          <QuickSwap {...props} />
-        </div>
-      )}
     </div>
   )
 }

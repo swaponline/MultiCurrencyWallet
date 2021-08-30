@@ -46,6 +46,7 @@ export const getMenuItems = (props) => {
   const { exchange, wallet, createWallet, history } = messages
   const { 
     exchange: exchangeLink,
+    quickSwap,
     createWallet: create,
     // farm,
     history: historyLink,
@@ -67,7 +68,7 @@ export const getMenuItems = (props) => {
     },
     !externalConfig.opts.exchangeDisabled && {
       title: intl.formatMessage(exchange),
-      link: exchangeLink,
+      link: quickSwap,
       exact: false,
       currentPageFlag: true,
     },
@@ -128,6 +129,7 @@ export const getMenuItemsMobile = (props, isWalletCreate, dinamicPath) => {
   const { exchange, wallet, createWallet, history } = messages
   const { 
     exchange: exchangeLink,
+    quickSwap,
     // farm,
     history: historyLink,
   } = links
@@ -147,7 +149,7 @@ export const getMenuItemsMobile = (props, isWalletCreate, dinamicPath) => {
     },
     !externalConfig.opts.exchangeDisabled && {
       title: intl.formatMessage(exchange),
-      link: exchangeLink,
+      link: quickSwap,
       exact: false,
       icon: <i className="fas fa-sync-alt" aria-hidden="true" />,
     },
