@@ -236,24 +236,22 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   }
 
   reportError = (error) => {
-    const possibleNoLiquidity = JSON.stringify(error)?.match(/INSUFFICIENT_ASSET_LIQUIDITY/)
+    const errorObj = JSON.parse(error?.message || '{}')
+
+    const possibleNoLiquidity =
+      errorObj.statusCode === 500 && errorObj.message === 'cannot estimate'
+
+    const notEnoughBalance = error.message?.match(/(N|n)ot enough .* balance/)
 
     if (possibleNoLiquidity) {
       this.setState(() => ({ blockReason: SwapBlockReason.NoLiquidity }))
+    } else if (notEnoughBalance) {
+      this.setState(() => ({ blockReason: SwapBlockReason.NoBalance }))
     } else {
       console.group('%c Swap', 'color: red;')
       console.error(error)
       console.groupEnd()
     }
-
-    //const notEnoughBalance = error?.match(/(N|n)ot enough .* balance/)
-
-    /* if (!notEnoughBalance) {
-      actions.notifications.show(constants.notifications.ErrorNotification, {
-        error: error.message,
-      })
-      feedback.oneinch.failed(error.message)
-    } */
 
     this.setState(() => ({
       isDataPending: false,
@@ -756,9 +754,9 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     const swapDataIsDisabled = this.isSwapDataNotAvailable()
     const swapBtnIsDisabled = this.isSwapNotAvailable() || swapDataIsDisabled
     const isWalletCreated = localStorage.getItem(constants.localStorage.isWalletCreate)
-    const insufficientBalance = new BigNumber(spendedAmount)
-      .plus(swapFee || 0)
-      .isGreaterThan(fromWallet.balance)
+    const insufficientBalance =
+      blockReason === SwapBlockReason.NoBalance ||
+      new BigNumber(spendedAmount).plus(swapFee || 0).isGreaterThan(fromWallet.balance)
 
     const saveSecretPhrase = !mnemonicSaved && !metamask.isConnected()
 
