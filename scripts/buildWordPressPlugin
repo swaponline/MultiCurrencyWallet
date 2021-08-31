@@ -70,6 +70,7 @@ cd ../
 #####
 cd ../../
 
+
 perl -pi -e "s/'MCWALLET_BUILD_VER', '.*?'/'MCWALLET_BUILD_VER', '${buildId}'/g" multi-currency-wallet-pro.php
 perl -i -pe 's/\b(\d+)(?=\D*$)/$1+1/e' multi-currency-wallet-pro.php
 
