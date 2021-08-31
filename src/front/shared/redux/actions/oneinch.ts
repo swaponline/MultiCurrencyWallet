@@ -192,8 +192,6 @@ const createLimitOrder = async (params) => {
     predicate: orderPredicate,
   })
 
-  console.log('order: ', order)
-
   const orderTypedData = builder.buildLimitOrderTypedData(order)
   const orderHash = builder.buildLimitOrderHash(orderTypedData)
   const signature = await builder.buildOrderSignature(makerAddress, orderTypedData)
