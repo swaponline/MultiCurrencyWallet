@@ -27,18 +27,20 @@ rm -rf testnet
 rm -rf mainnet
 rm -rf *.css
 rm -rf *.js
+rm -rf *.txt
 rm -rf *.map # remove source maps
 
 # update files in repo
 # make mainnet
 cp -rf ../../../build-mainnet-widget/* ./
-buildId=$(find -iname "app.*?.js" | sed "s/^\.\/app\.\(.*\)\.js$/\1/")
+buildId=$(find -iname "app.*?.css" | sed "s/^\.\/app\.\(.*\)\.css$/\1/")
 
 echo $buildId
 
-mv app.${buildId}.js app.js
+mv mainnet-app.${buildId}.js app.js
+mv mainnet-app.${buildId}.js.map app.js.map
 mv app.${buildId}.css app.css
-mv vendor.${buildId}.js vendor.js
+mv mainnet-vendor.${buildId}.js vendor.js
 rm index.html
 rm erc20tokens.js
 # https://screenshots.wpmix.net/Telegram_9DNCH0DXYKUiL0Mo1BvVvR7WvDiea0ON.png
@@ -50,17 +52,20 @@ mkdir ./testnet/
 cd ./testnet/
 
 cp -rf ../../../../build-testnet-widget/* ./.
-buildIdtestnet=$(find -iname "app.*?.js" | sed "s/^\.\/app\.\(.*\)\.js$/\1/")
+buildIdtestnet=$(find -iname "app.*?.css" | sed "s/^\.\/app\.\(.*\)\.css$/\1/")
 
 echo $buildIdtestnet
 
-mv app.${buildIdtestnet}.js app.js
+mv testnet-app.${buildIdtestnet}.js app.js
+mv testnet-app.${buildIdtestnet}.js.map app.js.map
 mv app.${buildIdtestnet}.css app.css
-mv vendor.${buildIdtestnet}.js vendor.js
+mv testnet-vendor.${buildIdtestnet}.js vendor.js
 rm index.html
 rm erc20tokens.js
 rm -rf assets
+mv testnet-*.js ../
 cd ../
+
 
 #####
 cd ../../
