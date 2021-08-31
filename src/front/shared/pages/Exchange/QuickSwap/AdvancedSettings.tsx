@@ -85,7 +85,7 @@ function AdvancedSettings(props) {
             />
           </div>
 
-          <div styleName="inputWrapper">
+          {/* <div styleName="inputWrapper">
             <FieldLabel>
               <FormattedMessage id="destinationRecipient" defaultMessage="Destination recipient" />
               <Tooltip id="recipientAddressTooltip">
@@ -102,7 +102,7 @@ function AdvancedSettings(props) {
               onKeyUp={keyUpHandler}
               valueLink={stateReference.destReceiver}
             />
-          </div>
+          </div> */}
         </form>
       )}
     </section>

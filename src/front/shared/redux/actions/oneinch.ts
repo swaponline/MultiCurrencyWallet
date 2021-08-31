@@ -91,7 +91,7 @@ const fetchSpenderContractAddress = async (params): Promise<string | false> => {
 }
 
 const fetchTokenAllowance = async (params): Promise<number> => {
-  const { chainId, standard, owner, contract, decimals } = params
+  const { chainId, standard, owner, contract, decimals, spender } = params
   const Web3 = actions[standard].getCurrentWeb3()
   const tokenContract = new Web3.eth.Contract(TokenApi, contract, {
     from: owner,
@@ -99,7 +99,8 @@ const fetchTokenAllowance = async (params): Promise<number> => {
   let allowance = 0
 
   try {
-    const spender = await fetchSpenderContractAddress({ chainId })
+    // commented code for the 1inch api
+    //const spender = await fetchSpenderContractAddress({ chainId })
 
     allowance = await tokenContract.methods.allowance(owner, spender).call({ from: owner })
 
@@ -116,10 +117,11 @@ const fetchTokenAllowance = async (params): Promise<number> => {
 }
 
 const approveToken = async (params) => {
-  const { chainId, amount, name, standard } = params
+  const { chainId, amount, name, standard, spender } = params
 
   try {
-    const spender = await fetchSpenderContractAddress({ chainId })
+    // commented code for the 1inch api
+    //const spender = await fetchSpenderContractAddress({ chainId })
 
     return actions[standard].approve({
       name,
