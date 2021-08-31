@@ -23,13 +23,12 @@ function ModalForm(props) {
     checkMakerAllowance,
     checkTakerAllowance,
     needMakerApprove,
-    needTakerApprove,
     approve,
     createOrder,
     enoughSwapCurrencies,
   } = props
 
-  const needApprove = needMakerApprove || needTakerApprove
+  const needApprove = needMakerApprove
 
   const makerApprove = () => {
     approve(makerWallet, stateReference.makerAmount.value)

@@ -33,7 +33,6 @@ type ComponentState = {
   takerAmount: string
   isPending: boolean
   needMakerApprove: boolean
-  needTakerApprove: boolean
   enoughSwapCurrencies: boolean
 }
 
@@ -74,7 +73,6 @@ class LimitOrder extends Component<ComponentProps, ComponentState> {
       makerAmount: '',
       needMakerApprove: false,
       takerAmount: '',
-      needTakerApprove: false,
       isPending: false,
       enoughSwapCurrencies,
     }
@@ -282,10 +280,6 @@ class LimitOrder extends Component<ComponentProps, ComponentState> {
     if (!allowance) {
       allowance = await this.fetchTokenAllowance(takerWallet)
     }
-
-    this.setState(() => ({
-      needTakerApprove: new BigNumber(allowance).isLessThan(takerAmount),
-    }))
   }
 
   fetchTokenAllowance = async (wallet) => {
@@ -322,7 +316,6 @@ class LimitOrder extends Component<ComponentProps, ComponentState> {
       takerWallet,
       isPending,
       needMakerApprove,
-      needTakerApprove,
       enoughSwapCurrencies,
     } = this.state
 
@@ -351,7 +344,6 @@ class LimitOrder extends Component<ComponentProps, ComponentState> {
         checkMakerAllowance={this.checkMakerAllowance}
         checkTakerAllowance={this.checkTakerAllowance}
         needMakerApprove={needMakerApprove}
-        needTakerApprove={needTakerApprove}
         selectTakerAsset={this.selectTakerAsset}
         approve={this.approve}
         createOrder={this.createLimitOrder}

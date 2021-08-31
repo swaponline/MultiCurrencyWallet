@@ -941,7 +941,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
         <p styleName="betaVersionWarning">
           <FormattedMessage
             id="disclaimerAboutBetaVersion"
-            defaultMessage="* Disclaimer: the exchange uses a 3rd 1inch Liquidity Protocol and should be considered in beta. Be carefully and use at your own risk."
+            defaultMessage="* Disclaimer: the exchange uses a 3rd 0x Liquidity Protocol. Be carefully and use at your own risk."
           />
         </p>
 
