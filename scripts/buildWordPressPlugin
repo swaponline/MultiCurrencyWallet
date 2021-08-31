@@ -27,6 +27,7 @@ rm -rf testnet
 rm -rf mainnet
 rm -rf *.css
 rm -rf *.js
+rm -rf *.txt
 rm -rf *.map # remove source maps
 
 # update files in repo
@@ -36,7 +37,8 @@ buildId=$(find -iname "app.*?.js" | sed "s/^\.\/app\.\(.*\)\.js$/\1/")
 
 echo $buildId
 
-mv app.${buildId}.js app.js
+mv mainnet-app.${buildId}.js app.js
+mv mainnet-app.${buildId}.js.map app.js.map
 mv app.${buildId}.css app.css
 mv vendor.${buildId}.js vendor.js
 rm index.html
@@ -54,13 +56,16 @@ buildIdtestnet=$(find -iname "app.*?.js" | sed "s/^\.\/app\.\(.*\)\.js$/\1/")
 
 echo $buildIdtestnet
 
-mv app.${buildIdtestnet}.js app.js
+mv testnet-app.${buildIdtestnet}.js app.js
+mv testnet-app.${buildId}.js.map app.js.map
 mv app.${buildIdtestnet}.css app.css
-mv vendor.${buildIdtestnet}.js vendor.js
+mv testnet-vendor.${buildIdtestnet}.js vendor.js
 rm index.html
 rm erc20tokens.js
 rm -rf assets
+mv testnet-*.js ../
 cd ../
+
 
 #####
 cd ../../
