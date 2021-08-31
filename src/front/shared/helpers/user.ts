@@ -92,16 +92,16 @@ export const getWidgetCurrencies = () => {
 
 export const filterUserCurrencyData = (currencyData) =>
   currencyData.filter((wallet) =>
-    isAllowedCurrency(wallet.isToken ? wallet.tokenKey.toUpperCase() : wallet.currency, wallet.address)
+    isAllowedCurrency(wallet.isToken ? wallet.tokenKey.toUpperCase() : wallet.currency, wallet.address, wallet.isMetamask)
   )
 
-export const isAllowedCurrency = (currency = '', address = '') => {
+export const isAllowedCurrency = (currency = '', address = '', isMetamask = false) => {
   const { core: { hiddenCoinsList } } = store.getState()
   const enabledCurrencies = getActivatedCurrencies()
 
   return (
-    !hiddenCoinsList.includes(currency) &&
-    !hiddenCoinsList.includes(`${currency}:${address}`) &&
+    ((!hiddenCoinsList.includes(currency) && !hiddenCoinsList.includes(`${currency}:${address}`))
+      || isMetamask) &&
     enabledCurrencies.includes(currency)
   )
 }
