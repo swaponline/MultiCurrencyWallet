@@ -523,12 +523,13 @@ class Erc20LikeAction {
     const { tokenContract, decimals } = this.returnTokenInfo(name)
     const feeResult = await this.fetchFees({ speed: 'fast' })
 
-    const exp = new BigNumber(10).pow(decimals)
-    const weiAmount = new BigNumber(amount).times(exp).toString()
+    const hexWeiAmount = new BigNumber(amount)
+      .multipliedBy(10 ** decimals)
+      .toString(16)
 
     return new Promise(async (res, rej) => {
       const receipt = await tokenContract.methods
-        .approve(to, weiAmount)
+        .approve(to, '0x' + hexWeiAmount)
         .send(feeResult)
         .on('transactionHash', (hash) => {
           console.group('Actions >%c approve the token', 'color: green')

@@ -164,9 +164,6 @@ const createLimitOrder = async (params) => {
     takerAmount,
   } = params
 
-  console.log('create order ======================')
-  console.log('params: ', params)
-
   const contractAddress = externalConfig.limitOrder[baseCurrency]
   const connector = getWeb3Connector(baseCurrency, makerAddress)
   const builder = new LimitOrderBuilder(contractAddress, chainId, connector)
