@@ -933,8 +933,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
               </Button>
             )}
           </div>
-
-          {!wrongNetwork && mnemonicSaved && (
+          {!wrongNetwork && (mnemonicSaved || metamask.isConnected()) && (
             <Button styleName="button" onClick={this.createLimitOrder} link small>
               <FormattedMessage id="createLimitOrder" defaultMessage="Create limit order" />
             </Button>
