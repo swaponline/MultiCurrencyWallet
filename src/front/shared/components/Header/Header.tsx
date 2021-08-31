@@ -273,9 +273,7 @@ class Header extends Component<any, any> {
       userCurrencies = userCurrencies.filter(({ currency }) => widgetCurrencies.includes(currency))
     }
 
-    userCurrencies = userCurrencies.filter(({ currency }) =>
-      user.getActivatedCurrencies().includes(currency)
-    )
+    userCurrencies = user.filterUserCurrencyData(userCurrencies)
 
     switch (true) {
       case isWalletPage && !wasOnWalletLs:
