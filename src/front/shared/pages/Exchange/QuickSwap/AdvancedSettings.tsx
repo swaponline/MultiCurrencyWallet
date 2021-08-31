@@ -47,6 +47,26 @@ function AdvancedSettings(props) {
         <form styleName="settings" action="">
           <div styleName="inputWrapper">
             <FieldLabel>
+              <FormattedMessage id="slippageTolerance" defaultMessage="Slippage tolerance (%)" />
+              <Tooltip id="slippageTooltip">
+                <FormattedMessage
+                  id="slippageNotice"
+                  defaultMessage="If the price changes between the time your order is placed and confirmed it’s called “slippage”. Your swap will automatically cancel if slippage exceeds your “max slippage” setting"
+                />
+              </Tooltip>
+            </FieldLabel>
+            <Input
+              styleName="advancedInput"
+              pattern="0-9\."
+              onKeyDown={inputReplaceCommaWithDot}
+              onKeyUp={keyUpHandler}
+              valueLink={stateReference.slippage}
+              withMargin
+            />
+          </div>
+
+          <div styleName="inputWrapper">
+            <FieldLabel>
               <FormattedMessage id="gasPrice" defaultMessage="Gas price" /> (GWEI)
               <Tooltip id="gasPriceTooltip">
                 <FormattedMessage

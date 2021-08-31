@@ -95,8 +95,8 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       receivedCurrency: receivedCurrency,
       receivedAmount: '0',
       toWallet: toWallet || {},
-      slippage: 1,
-      slippageMaxRange: 50,
+      slippage: undefined,
+      slippageMaxRange: 1,
       wrongNetwork,
       network: externalConfig.evmNetworks[spendedCurrency.blockchain],
       swapData: undefined,
@@ -332,6 +332,10 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       `sellToken=${sellToken}&`,
       `sellAmount=${sellAmount}`,
     ]
+
+    if (isAdvancedMode) {
+      if (slippage) request.push(`&slippagePercentage=${slippage}`)
+    }
 
     return request.join('')
   }
@@ -708,11 +712,10 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     } = this.state
 
     const wrongSlippage =
-      new BigNumber(slippage).isNaN() ||
+      !slippage ||
       new BigNumber(slippage).isEqualTo(0) ||
       new BigNumber(slippage).isGreaterThan(slippageMaxRange)
 
-    const receivedBaseCurrency = toWallet.baseCurrency?.toUpperCase()
     const maxGweiGasPrice = 30_000
     const minGasLimit = 100_000
     const maxGasLimit = 11_500_000
@@ -725,16 +728,11 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       (new BigNumber(gasLimit).isLessThan(minGasLimit) ||
         new BigNumber(gasLimit).isGreaterThan(maxGasLimit))
 
-    const wrongReceiverAddress =
-      destReceiver && !typeforce.isCoinAddress[receivedBaseCurrency](destReceiver)
-
-    const wrongAdvancedOptions =
-      isAdvancedMode && (wrongGasPrice || wrongGasLimit || wrongReceiverAddress)
+    const wrongAdvancedOptions = isAdvancedMode && (wrongGasPrice || wrongGasLimit || wrongSlippage)
 
     return (
       isPending ||
       isDataPending ||
-      wrongSlippage ||
       wrongAdvancedOptions ||
       new BigNumber(spendedAmount).isNaN() ||
       new BigNumber(spendedAmount).isEqualTo(0) ||

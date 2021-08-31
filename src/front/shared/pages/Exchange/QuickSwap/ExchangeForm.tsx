@@ -3,11 +3,8 @@ import { FormattedMessage } from 'react-intl'
 import CSSModules from 'react-css-modules'
 import styles from './index.scss'
 import { utils, localStorage } from 'helpers'
-import { inputReplaceCommaWithDot } from 'helpers/domUtils'
 import actions from 'redux/actions'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
-import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
-import Input from 'components/forms/Input/Input'
 import Button from 'components/controls/Button/Button'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import SelectGroup from '../SelectGroup/SelectGroup'
@@ -189,25 +186,6 @@ function ExchangeForm(props) {
           }}
         />
       </div>
-
-      <div styleName="inputWrapper">
-        <FieldLabel>
-          <FormattedMessage id="slippageTolerance" defaultMessage="Slippage tolerance" />
-          <Tooltip id="slippageTooltip">
-            <FormattedMessage
-              id="slippageNotice"
-              defaultMessage="If the price changes between the time your order is placed and confirmed it’s called “slippage”. Your swap will automatically cancel if slippage exceeds your “max slippage” setting"
-            />
-          </Tooltip>
-        </FieldLabel>
-        <Input
-          pattern="0-9\."
-          onKeyDown={inputReplaceCommaWithDot}
-          onKeyUp={keyUpHandler}
-          valueLink={stateReference.slippage}
-        />
-      </div>
-
       <QuickSwapFormTour isTourOpen={isTourOpen} closeTour={closeTour} />
     </form>
   )
