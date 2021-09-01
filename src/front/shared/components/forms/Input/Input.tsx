@@ -96,6 +96,7 @@ export default class Input extends Component<any, any> {
       fiat,
       srollingForm,
       activeFiat,
+      id,
       ...rest
     } = this.props;
 
@@ -127,6 +128,7 @@ export default class Input extends Component<any, any> {
             style: inputCustomStyle,
             valueLink,
             type,
+            id,
             disabled: disabled || readOnly,
             autoFocus: !!focusOnInit,
             dir: "auto",

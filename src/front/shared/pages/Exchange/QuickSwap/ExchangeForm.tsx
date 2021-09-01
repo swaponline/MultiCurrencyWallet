@@ -113,7 +113,7 @@ function ExchangeForm(props) {
           inputValueLink={stateReference.spendedAmount}
           selectedValue={spendedCurrency.value}
           label={<FormattedMessage id="MyOrdersYouSend" defaultMessage="You send" />}
-          id="quickSwapSpendCurrencyList"
+          inputId="quickSwapSpendCurrencyInput"
           placeholder="0.0"
           currencies={currencies}
           inputToolTip={
@@ -166,7 +166,7 @@ function ExchangeForm(props) {
           inputValueLink={stateReference.receivedAmount}
           selectedValue={receivedCurrency.value}
           label={<FormattedMessage id="partial255" defaultMessage="You get" />}
-          id="quickSwapReceiveCurrencyList"
+          inputId="quickSwapReceiveCurrencyInput"
           currencies={receivedList}
           placeholder="0"
           inputToolTip={

@@ -32,6 +32,7 @@ const SelectGroup = (props) => {
     balance,
     error,
     id,
+    inputId,
     idFee,
     tooltipAboutFee,
     haveAmount,
@@ -59,6 +60,7 @@ const SelectGroup = (props) => {
           styleName="inputRoot"
           inputContainerClassName="inputContainer"
           inputClassName="selectGroupInput"
+          id={inputId}
           valueLink={inputValueLink}
           type="number"
           placeholder={placeholder}

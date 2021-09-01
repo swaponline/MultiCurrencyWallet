@@ -76,16 +76,45 @@ describe('Quick swap interface tests', () => {
           contract: '0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270',
         })
 
-        await page.goto(`${page.url()}exchange/quick/MATIC-to-{matic}wmatic`)
+        await timeOut(10_000)
 
-        // chose maker input and enter some amount
-        // ...
+        await clickOn({
+          page,
+          selector: '[href="#/exchange/quick"]',
+        })
+
+        const [sellCurrencySelectorList, buyCurrencySelectorList] = await page.$$(
+          '.dropDownSelectCurrency'
+        )
+
+        await sellCurrencySelectorList.click()
+        await clickOn({
+          page,
+          selector: '[id="matic"]',
+        })
+
+        await buyCurrencySelectorList.click()
+        await clickOn({
+          page,
+          selector: '[id="{MATIC}WMATIC"]',
+        })
+
+        const spendAmountInput = await page.$('#quickSwapSpendCurrencyInput')
+
+        if (spendAmountInput) {
+          await spendAmountInput.type('0.00001')
+        }
 
         await timeOut(10_000)
 
-        // chose taker input and check the amount there
-        // ...
-        expect(0).toBe(0)
+        const receivedAmountInput = await page.$('#quickSwapReceiveCurrencyInput')
+
+        if (receivedAmountInput) {
+          //@ts-ignore
+          const receivedAmount = await (await receivedAmountInput.getProperty('value')).jsonValue()
+
+          expect(receivedAmount).toBe('0.00001')
+        }
       } catch (error) {
         console.error('API response error: ', error)
         await takeScreenshot(page, 'APIResponseError')
