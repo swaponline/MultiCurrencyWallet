@@ -180,8 +180,9 @@ const createLimitOrder = async (params) => {
     nonceEquals(makerAddress, makerNonce)
   )
 
-  const makerUnitAmount = utils.amount.formatWithDecimals(makerAmount, makerAssetDecimals)
-  const takerUnitAmount = utils.amount.formatWithDecimals(takerAmount, takerAssetDecimals)
+  // manipulate strings to prevent numbers from scientific notation
+  const makerUnitAmount = String(makerAmount) + '0'.repeat(makerAssetDecimals)
+  const takerUnitAmount = String(takerAmount) + '0'.repeat(takerAssetDecimals)
 
   const order = builder.buildLimitOrder({
     makerAssetAddress,

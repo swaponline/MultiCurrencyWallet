@@ -3,14 +3,14 @@ import { createBrowser, importWallet, timeOut, takeScreenshot } from '../utils'
 
 // TODO: use encrypted secrets
 const mainnetEvmWallet = {
-  seed: [],
+  seed: '',
   address: '0xb7d9F97Fe2c396906957634CA5bcE87Ff4a8a119',
 }
 
 jest.setTimeout(80_000) // ms
 
 describe('Quick swap interface tests', () => {
-  const waitingForStartup = 150_000
+  const waitingForStartup = 120_000
   let browser: undefined | puppeteer.Browser = undefined
   let page: undefined | puppeteer.Page = undefined
 
@@ -22,7 +22,8 @@ describe('Quick swap interface tests', () => {
 
     await importWallet({
       page,
-      seed: mainnetEvmWallet.seed,
+      seed: mainnetEvmWallet.seed.split(' '),
+      timeout: 40_000,
     })
   }, waitingForStartup)
 
@@ -41,9 +42,13 @@ describe('Quick swap interface tests', () => {
       try {
         await page.waitForSelector('#ethAddress')
 
-        const recoveredEthAddress = await page.$eval('#ethAddress', (el) => el.textContent)
+        const ethAddress = await page.$eval('#ethAddress', (el) => el.textContent)
+        const bnbAddress = await page.$eval('#ethAddress', (el) => el.textContent)
+        const maticAddress = await page.$eval('#ethAddress', (el) => el.textContent)
 
-        expect(recoveredEthAddress).toBe(mainnetEvmWallet.address)
+        expect(ethAddress).toBe(mainnetEvmWallet.address)
+        expect(bnbAddress).toBe(mainnetEvmWallet.address)
+        expect(maticAddress).toBe(mainnetEvmWallet.address)
       } catch (error) {
         await takeScreenshot(page, 'RestoreWalletTestError')
         await browser.close()
