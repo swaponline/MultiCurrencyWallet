@@ -1,5 +1,5 @@
 @mixin message {
-  padding: 1rem;
+  padding: 0.4rem 0.8rem;
   text-align: center;
   border-radius: 6px;
 }
@@ -8,16 +8,23 @@
   max-width: 30em;
 }
 
-.betaVersionWarning {
+.betaVersionDisclaimer {
   @include message();
   color: var(--color-indicating);
 }
 
-.currenciesWarning {
+.warning {
   @include message();
   margin-bottom: 2rem;
-  background-color: var(--color-pale);
+  border: 1px solid var(--color-f-error);
   color: var(--color-f-error);
+}
+
+.formWrapper {
+  &.disabled {
+    pointer-events: none;
+    opacity: 0.4;
+  }
 }
 
 .footer {

@@ -53,7 +53,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     let receivedCurrency = receivedList[0]
 
     // if we have url parameters then show it as default values
-    if (path.match(/\/quick/) && params.sell && params.buy) {
+    if (!wrongNetwork && path.match(/\/quick/) && params.sell && params.buy) {
       const urlSpendedCurrency = currencies.find(
         (item) => item.value.toLowerCase() === params.sell.toLowerCase()
       )
@@ -121,8 +121,8 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { wrongNetwork: prevWrongNetwork, currencies: prevCurrencies } = prevState
     const { allCurrencies, tokensWallets } = this.props
+    const { wrongNetwork: prevWrongNetwork, currencies: prevCurrencies } = prevState
     const { spendedCurrency } = this.state
 
     const availableNetwork = metamask.isAvailableNetworkByCurrency(spendedCurrency.value)
@@ -181,7 +181,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   }
 
   connectWallet = () => {
-    metamask.connect({ dontRedirect: true})
+    metamask.connect({ dontRedirect: true })
   }
 
   updateNetwork = () => {
@@ -846,8 +846,11 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
             <div styleName="walletAddress">
               {!metamask.isConnected() && (
                 <Button id="connectWalletBtn" brand fullWidth onClick={this.connectWallet}>
-                <FormattedMessage id="Exchange_ConnectAddressOption" defaultMessage="Connect Wallet" />
-              </Button>
+                  <FormattedMessage
+                    id="Exchange_ConnectAddressOption"
+                    defaultMessage="Connect Wallet"
+                  />
+                </Button>
               )}
               {!isWalletCreated ? (
                 <Button id="createWalletBtn" center onClick={this.createWallet}>

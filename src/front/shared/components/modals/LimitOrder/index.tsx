@@ -10,6 +10,7 @@ import {
   transactions,
   cacheStorageGet,
   cacheStorageSet,
+  metamask,
 } from 'helpers'
 import actions from 'redux/actions'
 import Link from 'local_modules/sw-valuelink'
@@ -31,6 +32,7 @@ type ComponentState = {
   takerAsset: IUniversalObj
   makerAmount: string
   takerAmount: string
+  wrongNetwork: boolean
   isPending: boolean
   needMakerApprove: boolean
   enoughSwapCurrencies: boolean
@@ -41,10 +43,14 @@ class LimitOrder extends Component<ComponentProps, ComponentState> {
     super(props)
 
     const { allCurrencies } = props
-    const { currencies } = actions.oneinch.filterCurrencies({
+    let { currencies, wrongNetwork } = actions.oneinch.filterCurrencies({
       currencies: allCurrencies,
       onlyTokens: true,
     })
+
+    if (wrongNetwork) {
+      currencies = allCurrencies
+    }
 
     let enoughSwapCurrencies = true
 
@@ -64,6 +70,7 @@ class LimitOrder extends Component<ComponentProps, ComponentState> {
 
     this.state = {
       network,
+      wrongNetwork,
       currencies,
       takerList,
       makerWallet,
@@ -75,6 +82,41 @@ class LimitOrder extends Component<ComponentProps, ComponentState> {
       takerAmount: '',
       isPending: false,
       enoughSwapCurrencies,
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const { allCurrencies, tokensWallets } = this.props
+    const { wrongNetwork: prevWrongNetwork, currencies: prevCurrencies } = prevState
+    const { makerAsset } = this.state
+
+    const availableNetwork = metamask.isAvailableNetworkByCurrency(makerAsset.value)
+
+    const needUpdate =
+      metamask.isConnected() &&
+      ((prevWrongNetwork && availableNetwork) || (!prevWrongNetwork && !availableNetwork))
+
+    if (needUpdate) {
+      let { currencies, wrongNetwork } = actions.oneinch.filterCurrencies({
+        currencies: allCurrencies,
+        tokensWallets,
+      })
+
+      if (wrongNetwork) {
+        currencies = prevCurrencies
+      }
+
+      let makerAsset = currencies[0]
+      let takerList = this.returnTakerList(currencies, makerAsset)
+      let takerAsset = takerList[0]
+
+      this.setState(() => ({
+        wrongNetwork,
+        currencies,
+        makerAsset,
+        takerList,
+        takerAsset,
+      }))
     }
   }
 
@@ -317,6 +359,7 @@ class LimitOrder extends Component<ComponentProps, ComponentState> {
       isPending,
       needMakerApprove,
       enoughSwapCurrencies,
+      wrongNetwork,
     } = this.state
 
     const linked = Link.all(this, 'makerAmount', 'takerAmount')
@@ -328,6 +371,7 @@ class LimitOrder extends Component<ComponentProps, ComponentState> {
 
     return (
       <ModalForm
+        wrongNetwork={wrongNetwork}
         enoughSwapCurrencies={enoughSwapCurrencies}
         modalName={name}
         stateReference={linked}

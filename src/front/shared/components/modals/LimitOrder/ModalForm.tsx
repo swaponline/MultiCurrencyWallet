@@ -7,6 +7,7 @@ import SelectGroup from '../OfferModal/AddOffer/SelectGroup/SelectGroup'
 
 function ModalForm(props) {
   const {
+    wrongNetwork,
     modalName,
     availableCurrencies,
     takerList,
@@ -45,7 +46,7 @@ function ModalForm(props) {
       title={<FormattedMessage id="limitOrder" defaultMessage="Limit order" />}
     >
       <section styleName="limitOrder">
-        <p styleName="betaVersionWarning">
+        <p styleName="betaVersionDisclaimer">
           <FormattedMessage
             id="disclaimerAboutBetaVersion"
             defaultMessage="* Disclaimer: Limit Orders are provided by a 3rd 1inch Limit Order Protocol and should be considered in beta. Be carefully and use at your own risk."
@@ -53,14 +54,24 @@ function ModalForm(props) {
         </p>
 
         {!enoughSwapCurrencies && (
-          <p styleName="currenciesWarning">
+          <p styleName="warning">
             <FormattedMessage
               id="notEnoughTokensForSwap"
               defaultMessage="Not all currencies are available for swap. It looks like you don't have enough tokens. Try adding more of them."
             />
           </p>
         )}
-        <div>
+
+        {wrongNetwork && (
+          <p styleName="warning">
+            <FormattedMessage
+              id="WalletRow_MetamaskNotAvailableNetwork"
+              defaultMessage="Please choose another network"
+            />
+          </p>
+        )}
+
+        <div styleName={`formWrapper ${wrongNetwork ? 'disabled' : ''}`}>
           <SelectGroup
             label={<FormattedMessage id="addoffer381" defaultMessage="Sell" />}
             tooltip={
