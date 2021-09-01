@@ -36,10 +36,15 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
 
     const { match, activeFiat, allCurrencies, tokensWallets } = props
     const { params, path } = match
-    const { currencies, wrongNetwork } = actions.oneinch.filterCurrencies({
+    let { currencies, wrongNetwork } = actions.oneinch.filterCurrencies({
       currencies: allCurrencies,
       tokensWallets,
     })
+
+    // reset assets' list and then block interface while the user on a wrong network
+    if (wrongNetwork) {
+      currencies = allCurrencies
+    }
 
     const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
 
@@ -116,20 +121,26 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { wrongNetwork: prevWrongNetwork } = prevState
+    const { wrongNetwork: prevWrongNetwork, currencies: prevCurrencies } = prevState
     const { allCurrencies, tokensWallets } = this.props
     const { spendedCurrency } = this.state
 
     const availableNetwork = metamask.isAvailableNetworkByCurrency(spendedCurrency.value)
 
     const needUpdate =
-      (!availableNetwork && !prevWrongNetwork) || (prevWrongNetwork && availableNetwork)
+      metamask.isConnected() &&
+      ((prevWrongNetwork && availableNetwork) || (!prevWrongNetwork && !availableNetwork))
 
-    if (metamask.isConnected() && needUpdate) {
-      const { currencies, wrongNetwork } = actions.oneinch.filterCurrencies({
+    if (needUpdate) {
+      let { currencies, wrongNetwork } = actions.oneinch.filterCurrencies({
         currencies: allCurrencies,
         tokensWallets,
       })
+
+      if (wrongNetwork) {
+        currencies = prevCurrencies
+      }
+
       let spendedCurrency = currencies[0]
       let receivedList = this.returnReceivedList(currencies, spendedCurrency)
       let receivedCurrency = receivedList[0]

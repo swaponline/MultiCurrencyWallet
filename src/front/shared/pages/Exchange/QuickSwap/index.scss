@@ -93,7 +93,7 @@
 .optionsWrapper {
   &.disabled {
     pointer-events: none;
-    opacity: 0.6;
+    opacity: 0.4;
   }
 }
 
@@ -230,7 +230,7 @@
 .wrongNetworkMessage {
   padding: 0.6rem;
   border-radius: 6px;
-  background-color: var(--color-pale);
+  border: 1px solid var(--color-f-error);
   color: var(--color-f-error);
 }
 

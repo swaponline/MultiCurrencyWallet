@@ -1,5 +1,4 @@
 @mixin message {
-  margin-bottom: 2rem;
   padding: 1rem;
   text-align: center;
   border-radius: 6px;
@@ -16,6 +15,7 @@
 
 .currenciesWarning {
   @include message();
+  margin-bottom: 2rem;
   background-color: var(--color-pale);
   color: var(--color-f-error);
 }

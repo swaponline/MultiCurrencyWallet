@@ -58,7 +58,7 @@ describe('Quick swap interface tests', () => {
   it('the correct API response with the swap data', async () => {
     if (browser && page) {
       try {
-        //
+        await page.goto(`${page.url()}exchange/quick`)
       } catch (error) {
         console.error('API response error: ', error)
         await takeScreenshot(page, 'APIResponseError')
