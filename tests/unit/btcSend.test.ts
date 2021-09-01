@@ -78,7 +78,6 @@ describe('BTC Send Tests', () => {
 
     const txSize = await btcUtils.calculateTxSize(params);
     expect(txSize).toBe(230);
-  //@ts-ignore
   }, 2000);
 
   it('send and check transaction via regular wallet with 1000 satoshis', async () => {
@@ -124,7 +123,6 @@ describe('BTC Send Tests', () => {
     expect(amount).toBe(options.amount);
     expect(minerFee).toBeWithinRange(toFloorValue(options.feeValue), toCeilingValue(options.feeValue));
     expect(size).toBeWithinRange(toFloorValue(new BigNumber(txSize)), toCeilingValue(new BigNumber(txSize)));
-  //@ts-ignore
   }, 145000)
 
   it('send and check transaction via regular wallet with 1000 satoshis with adminFee', async () => {
@@ -178,7 +176,6 @@ describe('BTC Send Tests', () => {
     expect(adminFee).toBe(feeFromAmount.toNumber());
     expect(minerFee).toBeWithinRange(toFloorValue(options.feeValue), toCeilingValue(options.feeValue));
     expect(size).toBeWithinRange(toFloorValue(new BigNumber(txSize)), toCeilingValue(new BigNumber(txSize)));
-  //@ts-ignore
   }, 145000)
 
   it('send and check transaction via pin-protected wallet sign with mnemonic with 1000 satoshis', async () => {
@@ -223,7 +220,6 @@ describe('BTC Send Tests', () => {
     expect(amount).toBe(options.amount);
     expect(minerFee).toBeWithinRange(toFloorValue(options.feeValue), toCeilingValue(options.feeValue));
     expect(size).toBeWithinRange(toFloorValue(new BigNumber(txSize)), toCeilingValue(new BigNumber(txSize)));
-  //@ts-ignore
   }, 145000)
 
   it('send and check transaction via pin-protected wallet sign with password with 1000 satoshis with adminFee', async () => {
@@ -284,6 +280,5 @@ describe('BTC Send Tests', () => {
     expect(adminFee).toBe(feeFromAmount.toNumber());
     expect(minerFee).toBeWithinRange(toFloorValue(options.feeValue), toCeilingValue(options.feeValue));
     expect(size).toBeWithinRange(toFloorValue(new BigNumber(txSize)), toCeilingValue(new BigNumber(txSize)));
-  //@ts-ignore
   }, 145000)
 })

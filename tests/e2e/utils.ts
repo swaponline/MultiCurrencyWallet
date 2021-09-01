@@ -107,6 +107,34 @@ export const addAssetToWallet = async (page: puppeteer.Page, currency: string = 
   }
 }
 
+export const addTokenToWallet = async (params) => {
+  const { page, standardId, contract } = params
+  try {
+    await addAssetToWallet(page, standardId)
+
+    const addressInput = await page.$('#customTokenInput')
+    await addressInput.type(contract)
+
+    await clickOn({
+      page: page,
+      selector: '#customTokenNextButton',
+    })
+
+    await page.waitForSelector('#customTokenAddButton')
+
+    await clickOn({
+      page: page,
+      selector: '#customTokenAddButton',
+    })
+    await clickOn({
+      page: page,
+      selector: '#customTokenDoneButton',
+    })
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
 export const turnOnMM = async (page: puppeteer.Page) => {
   try {
     await page.waitForSelector('#btcBalance') // waits for settings of mm to load
@@ -174,6 +202,7 @@ export default {
   importWallet,
   selectSendCurrency,
   addAssetToWallet,
+  addTokenToWallet,
   turnOnMM,
   takeScreenshot,
   timeOut,

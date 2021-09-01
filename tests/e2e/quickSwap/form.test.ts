@@ -1,5 +1,12 @@
 import puppeteer from 'puppeteer'
-import { createBrowser, importWallet, timeOut, takeScreenshot } from '../utils'
+import {
+  createBrowser,
+  importWallet,
+  timeOut,
+  takeScreenshot,
+  clickOn,
+  addTokenToWallet,
+} from '../utils'
 
 // TODO: use encrypted secrets
 const mainnetEvmWallet = {
@@ -63,7 +70,22 @@ describe('Quick swap interface tests', () => {
   it('the correct API response with the swap data', async () => {
     if (browser && page) {
       try {
-        await page.goto(`${page.url()}exchange/quick`)
+        await await addTokenToWallet({
+          page: page,
+          standardId: 'maticerc20matic',
+          contract: '0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270',
+        })
+
+        await page.goto(`${page.url()}exchange/quick/MATIC-to-{matic}wmatic`)
+
+        // chose maker input and enter some amount
+        // ...
+
+        await timeOut(10_000)
+
+        // chose taker input and check the amount there
+        // ...
+        expect(0).toBe(0)
       } catch (error) {
         console.error('API response error: ', error)
         await takeScreenshot(page, 'APIResponseError')

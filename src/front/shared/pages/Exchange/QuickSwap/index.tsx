@@ -127,6 +127,10 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
 
     const availableNetwork = metamask.isAvailableNetworkByCurrency(spendedCurrency.value)
 
+    // TODO: split this condition
+    // TODO: unlock the form in this case:
+    // A correct network -> B wrong network -> C correct network
+
     const needUpdate =
       metamask.isConnected() &&
       ((prevWrongNetwork && availableNetwork) || (!prevWrongNetwork && !availableNetwork))
@@ -844,8 +848,14 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
             />
 
             <div styleName="walletAddress">
-              {!metamask.isConnected() && (
-                <Button id="connectWalletBtn" brand fullWidth onClick={this.connectWallet}>
+              {!metamask.isConnected() && !isWalletCreated && (
+                <Button
+                  id="connectWalletBtn"
+                  brand
+                  fullWidth
+                  styleName="connectWalletBtn"
+                  onClick={this.connectWallet}
+                >
                   <FormattedMessage
                     id="Exchange_ConnectAddressOption"
                     defaultMessage="Connect Wallet"
