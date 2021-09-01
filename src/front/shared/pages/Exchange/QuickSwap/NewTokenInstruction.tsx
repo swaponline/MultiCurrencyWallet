@@ -81,10 +81,7 @@ function NewTokenInstruction(props) {
             href="https://github.com/swaponline/MultiCurrencyWallet/blob/master/docs/LIQUIDITY_SOURCES.md"
             target="_blank"
           >
-            <FormattedMessage
-              id="availableLiquiditySources"
-              defaultMessage="More info about supported sources"
-            />
+            <FormattedMessage id="detailedInformation" defaultMessage="Detailed information" />
           </a>
         </div>
       )}
