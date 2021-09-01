@@ -180,6 +180,10 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     history.push(`${links.createWallet}/${walletName.toUpperCase()}`)
   }
 
+  connectWallet = () => {
+    metamask.connect({ dontRedirect: true})
+  }
+
   updateNetwork = () => {
     const { spendedCurrency } = this.state
 
@@ -840,12 +844,17 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
             />
 
             <div styleName="walletAddress">
+              {!metamask.isConnected() && (
+                <Button id="connectWalletBtn" brand fullWidth onClick={this.connectWallet}>
+                <FormattedMessage id="Exchange_ConnectAddressOption" defaultMessage="Connect Wallet" />
+              </Button>
+              )}
               {!isWalletCreated ? (
-                <Button id="createWalletBtn" brand fullWidth onClick={this.createWallet}>
+                <Button id="createWalletBtn" center onClick={this.createWallet}>
                   <FormattedMessage id="menu.CreateWallet" defaultMessage="Create wallet" />
                 </Button>
               ) : saveSecretPhrase ? (
-                <Button id="saveSecretPhraseBtn" brand fullWidth onClick={this.saveMnemonic}>
+                <Button id="saveSecretPhraseBtn" center onClick={this.saveMnemonic}>
                   <FormattedMessage
                     id="BTCMS_SaveMnemonicButton"
                     defaultMessage="Save secret phrase"
