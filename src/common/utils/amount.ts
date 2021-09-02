@@ -1,5 +1,8 @@
 import { BigNumber } from 'bignumber.js'
 
+// prevent numbers from scientific notation
+BigNumber.config({ EXPONENTIAL_AT: 1e9 })
+
 const formatWithDecimals = (amount, decimals): string => {
   return new BigNumber(amount)
     .times(10 ** decimals)

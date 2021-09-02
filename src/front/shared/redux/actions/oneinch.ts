@@ -100,7 +100,7 @@ const fetchTokenAllowance = async (params): Promise<number> => {
 }
 
 const approveToken = async (params) => {
-  const { chainId, amount, name, standard, spender } = params
+  const { amount, name, standard, spender } = params
 
   try {
     return actions[standard].approve({
@@ -155,14 +155,13 @@ const createLimitOrder = async (params) => {
   const makerNonce = await protocolFacade.nonce(contractAddress)
 
   const orderPredicate: LimitOrderPredicateCallData = and(
-    // a limit order is valid only for 1 minute
+    // a created, but not approved limit order is valid only for 1 minute
     timestampBelow(utils.getUnixTimeStamp() + 60_000),
     nonceEquals(makerAddress, makerNonce)
   )
 
-  // manipulate strings to prevent numbers from scientific notation
-  const makerUnitAmount = String(makerAmount) + '0'.repeat(makerAssetDecimals)
-  const takerUnitAmount = String(takerAmount) + '0'.repeat(takerAssetDecimals)
+  const makerUnitAmount = utils.amount.formatWithDecimals(makerAmount, makerAssetDecimals)
+  const takerUnitAmount = utils.amount.formatWithDecimals(takerAmount, takerAssetDecimals)
 
   const order = builder.buildLimitOrder({
     makerAssetAddress,
@@ -242,7 +241,7 @@ const fillLimitOrder = async (params) => {
     await approveToken({
       amount: amountToBeFilled,
       name,
-      target: protocolContract,
+      spender: protocolContract,
       standard,
     })
   }
