@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { FormattedMessage } from 'react-intl'
-import { connect } from 'redaction'
 import CSSModules from 'react-css-modules'
 import styles from './index.scss'
 import dropDownStyles from 'components/ui/DropDown/index.scss'

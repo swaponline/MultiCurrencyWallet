@@ -8,15 +8,12 @@ import {
   addTokenToWallet,
 } from '../utils'
 
-// TODO: use encrypted secrets
-const mainnetEvmWallet = {
-  seed: '',
-  address: '0xb7d9F97Fe2c396906957634CA5bcE87Ff4a8a119',
-}
-
 jest.setTimeout(80_000) // ms
 
-describe('Quick swap interface tests', () => {
+const EVM_MNEMONIC = process.env.evmMnemonicPhrase
+const EVM_ADDRESS = process.env.evmAddress
+
+describe('Quick swap tests', () => {
   const waitingForStartup = 120_000
   let browser: undefined | puppeteer.Browser = undefined
   let page: undefined | puppeteer.Page = undefined
@@ -29,7 +26,7 @@ describe('Quick swap interface tests', () => {
 
     await importWallet({
       page,
-      seed: mainnetEvmWallet.seed.split(' '),
+      seed: EVM_MNEMONIC!.split(' '),
       timeout: 40_000,
     })
   }, waitingForStartup)
@@ -44,18 +41,18 @@ describe('Quick swap interface tests', () => {
     }
   })
 
-  it('Restored wallet is fine', async () => {
+  it('restored wallet is fine', async () => {
     if (browser && page) {
       try {
         await page.waitForSelector('#ethAddress')
 
         const ethAddress = await page.$eval('#ethAddress', (el) => el.textContent)
-        const bnbAddress = await page.$eval('#ethAddress', (el) => el.textContent)
-        const maticAddress = await page.$eval('#ethAddress', (el) => el.textContent)
+        const bnbAddress = await page.$eval('#bnbAddress', (el) => el.textContent)
+        const maticAddress = await page.$eval('#maticAddress', (el) => el.textContent)
 
-        expect(ethAddress).toBe(mainnetEvmWallet.address)
-        expect(bnbAddress).toBe(mainnetEvmWallet.address)
-        expect(maticAddress).toBe(mainnetEvmWallet.address)
+        expect(ethAddress).toBe(EVM_ADDRESS)
+        expect(bnbAddress).toBe(EVM_ADDRESS)
+        expect(maticAddress).toBe(EVM_ADDRESS)
       } catch (error) {
         await takeScreenshot(page, 'RestoreWalletTestError')
         await browser.close()
@@ -69,11 +66,15 @@ describe('Quick swap interface tests', () => {
 
   it('the correct API response with the swap data', async () => {
     if (browser && page) {
+      const tokenStandardId = 'maticerc20matic'
+      const wmaticContract = '0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270'
+      const amount = '0.00001'
+
       try {
         await await addTokenToWallet({
           page: page,
-          standardId: 'maticerc20matic',
-          contract: '0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270',
+          standardId: tokenStandardId,
+          contract: wmaticContract,
         })
 
         await timeOut(10_000)
@@ -102,7 +103,7 @@ describe('Quick swap interface tests', () => {
         const spendAmountInput = await page.$('#quickSwapSpendCurrencyInput')
 
         if (spendAmountInput) {
-          await spendAmountInput.type('0.00001')
+          await spendAmountInput.type(amount)
         }
 
         await timeOut(10_000)
@@ -113,7 +114,7 @@ describe('Quick swap interface tests', () => {
           //@ts-ignore
           const receivedAmount = await (await receivedAmountInput.getProperty('value')).jsonValue()
 
-          expect(receivedAmount).toBe('0.00001')
+          expect(receivedAmount).toBe(amount)
         }
       } catch (error) {
         console.error('API response error: ', error)

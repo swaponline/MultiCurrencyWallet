@@ -111,6 +111,7 @@ export const addTokenToWallet = async (params) => {
   const { page, standardId, contract } = params
   try {
     await addAssetToWallet(page, standardId)
+    await timeOut(10_000)
 
     const addressInput = await page.$('#customTokenInput')
     await addressInput.type(contract)
