@@ -52,7 +52,7 @@ class OrderPurchaseModal extends React.Component<ComponentProps, ComponentState>
     const makersAmountInOnePercent = new BigNumber(orderMakerAmount).dividedBy(100)
 
     // how much interest has already been spent for makers amount
-    const makersPercentAmountSpent = makersAmountInOnePercent.multipliedBy(makersAmountSpent)
+    const makersPercentAmountSpent = makersAmountSpent.dividedBy(makersAmountInOnePercent)
 
     const takersAmountSpent = new BigNumber(orderTakerAmount)
       .dividedBy(100)

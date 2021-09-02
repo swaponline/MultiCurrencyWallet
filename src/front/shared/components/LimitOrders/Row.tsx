@@ -132,19 +132,19 @@ function Row(props) {
 
     return (
       <tr styleName={`row ${mobileResolution ? 'mobile' : ''}`}>
-        {modalIsOpened && (
-          <OrderPurchaseModal
-            makerWallet={makerWallet}
-            takerWallet={takerWallet}
-            fillOrder={fillOrder}
-            setModalIsOpened={setModalIsOpened}
-            orderMakerAmount={makerAmount}
-            orderTakerAmount={takerAmount}
-            remainingMakerAmount={remainingMakerAmount}
-          />
-        )}
-
         <td>
+          {modalIsOpened && (
+            <OrderPurchaseModal
+              makerWallet={makerWallet}
+              takerWallet={takerWallet}
+              fillOrder={fillOrder}
+              setModalIsOpened={setModalIsOpened}
+              orderMakerAmount={makerAmount}
+              orderTakerAmount={takerAmount}
+              remainingMakerAmount={remainingMakerAmount}
+            />
+          )}
+
           <Coins
             names={[walletA.tokenKey.toUpperCase(), walletB.tokenKey.toUpperCase()]}
             size={mobileResolution ? 20 : 25}
