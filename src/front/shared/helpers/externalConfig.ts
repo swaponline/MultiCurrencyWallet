@@ -219,17 +219,18 @@ const externalConfig = () => {
   }
 
   if (config?.isWidget || config?.opts.ownTokens?.length) {
-    if (config?.opts.ownTokens?.length) {
-      config.opts.ownTokens.forEach((token) => {
-        config[token.standard][token.name.toLowerCase()] = token
+    // THIS IS CODE FOR SHOW ALL WIDGET TOKENS IN WALLET BY DEFAULT
+    // if (config?.opts.ownTokens?.length) {
+    //   config.opts.ownTokens.forEach((token) => {
+    //     config[token.standard][token.name.toLowerCase()] = token
 
-        const baseCurrency = TOKEN_STANDARDS[token.standard].currency.toUpperCase()
-        const tokenName = token.name.toUpperCase()
-        const tokenValue = `{${baseCurrency}}${tokenName}`
+    //     const baseCurrency = TOKEN_STANDARDS[token.standard].currency.toUpperCase()
+    //     const tokenName = token.name.toUpperCase()
+    //     const tokenValue = `{${baseCurrency}}${tokenName}`
 
-        reducers.core.markCoinAsVisible(tokenValue)
-      })
-    }
+    //     reducers.core.markCoinAsVisible(tokenValue)
+    //   })
+    // }
 
     // Clean not uninitialized single-token
     // ? we can't use here as whole string {#WIDGETTOKENCODE#} ?
