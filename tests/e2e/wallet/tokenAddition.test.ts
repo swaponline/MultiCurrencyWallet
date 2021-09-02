@@ -101,9 +101,9 @@ describe('Adding custom tokens', () => {
       try {
         const { contract, titleId, walletTitle } = options
 
-        await await addTokenToWallet({
+        await addTokenToWallet({
           page: testPage,
-          token: typeId,
+          standardId: typeId,
           contract,
         })
 

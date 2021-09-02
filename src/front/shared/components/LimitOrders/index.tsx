@@ -83,7 +83,7 @@ function LimitOrders(props) {
           link: transactions.getLink(makerWallet.standard, receipt.transactionHash),
         })
       },
-      onClose: onComplete,
+      onCancel: onComplete,
       message: (
         <FormattedMessage
           id="orders94s"
