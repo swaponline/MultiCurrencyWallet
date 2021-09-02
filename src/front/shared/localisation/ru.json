@@ -117,6 +117,7 @@
     "id": "ErrorNotification12",
     "message": "Упс!, Что то пошло не так! ",
     "files": [
+      "src/front/shared/components/LimitOrders/Row.tsx",
       "src/front/shared/components/notifications/ErrorNotification/ErrorNotification.tsx"
     ]
   },
@@ -700,6 +701,7 @@
     "id": "partial255",
     "message": "Получаете",
     "files": [
+      "src/front/shared/components/LimitOrders/OrderSettings.tsx",
       "src/front/shared/components/LimitOrders/index.tsx",
       "src/front/shared/pages/Exchange/AtomicSwap.tsx",
       "src/front/shared/pages/Exchange/QuickSwap/ExchangeForm.tsx"
@@ -5903,6 +5905,7 @@
     "id": "WalletRow_MetamaskNotAvailableNetwork",
     "message": "Пожалуйста, выберите другую",
     "files": [
+      "src/front/shared/components/modals/LimitOrder/ModalForm.tsx",
       "src/front/shared/pages/Exchange/QuickSwap/index.tsx",
       "src/front/shared/pages/Wallet/Row/Row.tsx"
     ]
@@ -5933,6 +5936,7 @@
     "id": "youPay",
     "message": "Вы Платите",
     "files": [
+      "src/front/shared/components/LimitOrders/OrderSettings.tsx",
       "src/front/shared/components/LimitOrders/index.tsx"
     ]
   },
@@ -5940,7 +5944,7 @@
     "id": "yourOrders",
     "message": "Ваши ордера",
     "files": [
-      "src/front/shared/components/LimitOrders/PanelHeader.tsx"
+      "src/front/shared/components/LimitOrders/index.tsx"
     ]
   },
   {
@@ -6094,14 +6098,14 @@
     "id": "slippageNotice",
     "message": "Если цена меняется в период между размещением и подтверждением вашего ордера, это называется \"проскальзывание\". Ваш обмен автоматически отменится, если проскальзывание превысит ваш параметр \"Проскальзывание\".",
     "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/ExchangeForm.tsx"
+      "src/front/shared/pages/Exchange/QuickSwap/AdvancedSettings.tsx"
     ]
   },
   {
     "id": "slippageTolerance",
     "message": "Проскальзывание",
     "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/ExchangeForm.tsx"
+      "src/front/shared/pages/Exchange/QuickSwap/AdvancedSettings.tsx"
     ]
   },
   {
@@ -6116,6 +6120,126 @@
     "message": "Общая сумма",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/SwapInfo.tsx"
+    ]
+  },
+  {
+    "id": "allOrders",
+    "message": "Все ордера",
+    "files": [
+      "src/front/shared/components/LimitOrders/AllOrdersHeader.tsx"
+    ]
+  },
+  {
+    "id": "buyToken",
+    "message": "Купить",
+    "files": [
+      "src/front/shared/components/LimitOrders/Row.tsx"
+    ]
+  },
+  {
+    "id": "Chain",
+    "message": "Цепочка",
+    "files": [
+      "src/front/shared/components/LimitOrders/OrderSettings.tsx"
+    ]
+  },
+  {
+    "id": "noOptions",
+    "message": "Нет вариантов",
+    "files": [
+      "src/front/shared/components/LimitOrders/OrderSettings.tsx"
+    ]
+  },
+  {
+    "id": "disclaimerAboutBetaVersion",
+    "message": "* Отказ от ответственности: в обмене используется протокол ликвидности 0x. Будьте осторожны и используйте на свой страх и риск.",
+    "files": [
+      "src/front/shared/components/modals/LimitOrder/ModalForm.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
+    ]
+  },
+  {
+    "id": "insufficientBalance",
+    "message": "Недостаточный баланс",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
+    ]
+  },
+  {
+    "id": "insufficientLiquidity",
+    "message": "Недостаточная ликвидность",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
+    ]
+  },
+  {
+    "id": "addNewCurrencyMessage",
+    "message": "На странице кошелька нажмите кнопку добавить валюту.",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/NewTokenInstruction.tsx"
+    ]
+  },
+  {
+    "id": "checkTokenInTheSwapList",
+    "message": "Теперь вы можете видеть свой токен в списке.",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/NewTokenInstruction.tsx"
+    ]
+  },
+  {
+    "id": "choseTokenStandard",
+    "message": "Выберите стандарт токена и нажмите кнопку продолжить.",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/NewTokenInstruction.tsx"
+    ]
+  },
+  {
+    "id": "confirmTokenAddition",
+    "message": "Проверьте информацию и подтвердите добавление токена.",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/NewTokenInstruction.tsx"
+    ]
+  },
+  {
+    "id": "createNewPoolInAggregates",
+    "message": "Выберите один из поддерживаемых источников ликвидности и создайте там новый пул с вашим токеном.",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/NewTokenInstruction.tsx"
+    ]
+  },
+  {
+    "id": "detailedInformation",
+    "message": "Подробная информация",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/NewTokenInstruction.tsx"
+    ]
+  },
+  {
+    "id": "enterTokenContractAddress",
+    "message": "Введите адрес контракта токена.",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/NewTokenInstruction.tsx"
+    ]
+  },
+  {
+    "id": "howToAddToken",
+    "message": "Как добавить токен",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/NewTokenInstruction.tsx"
+    ]
+  },
+  {
+    "id": "ifYouDoNotSeeNewToken",
+    "message": "Вы не сможете обменять некоторые токены, потому что с вашим токеном может не быть доступного пула ликвидности. Вы должны создать новый, если хотите обменять его.",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/NewTokenInstruction.tsx"
+    ]
+  },
+  {
+    "id": "youWillSeeYourToken",
+    "message": "После определения пула ликвидности с вашим токеном он будет доступен для обмена.",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/NewTokenInstruction.tsx"
     ]
   }
 ]

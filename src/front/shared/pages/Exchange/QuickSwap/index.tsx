@@ -269,14 +269,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   }
 
   reportError = (error) => {
-    const errorObj = JSON.parse(error?.message || '{}')
-
-    const possibleNoLiquidity =
-      // 1inch response
-      //(errorObj.statusCode === 500 && errorObj.message === 'cannot estimate') ||
-      // 0x response
-      JSON.stringify(error)?.match(/INSUFFICIENT_ASSET_LIQUIDITY/)
-
+    const possibleNoLiquidity = JSON.stringify(error)?.match(/INSUFFICIENT_ASSET_LIQUIDITY/)
     const notEnoughBalance = error.message?.match(/(N|n)ot enough .* balance/)
 
     if (possibleNoLiquidity) {

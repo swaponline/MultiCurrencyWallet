@@ -117,6 +117,7 @@
     "id": "ErrorNotification12",
     "message": "Oojj, coś poszło nie tak! ",
     "files": [
+      "src/front/shared/components/LimitOrders/Row.tsx",
       "src/front/shared/components/notifications/ErrorNotification/ErrorNotification.tsx"
     ]
   },
@@ -536,6 +537,7 @@
     "id": "partial255",
     "message": "Dostajesz",
     "files": [
+      "src/front/shared/components/LimitOrders/OrderSettings.tsx",
       "src/front/shared/components/LimitOrders/index.tsx",
       "src/front/shared/pages/Exchange/AtomicSwap.tsx",
       "src/front/shared/pages/Exchange/QuickSwap/ExchangeForm.tsx"
@@ -5903,6 +5905,7 @@
     "id": "WalletRow_MetamaskNotAvailableNetwork",
     "message": "Proszę wybrać inny",
     "files": [
+      "src/front/shared/components/modals/LimitOrder/ModalForm.tsx",
       "src/front/shared/pages/Exchange/QuickSwap/index.tsx",
       "src/front/shared/pages/Wallet/Row/Row.tsx"
     ]
@@ -5933,6 +5936,7 @@
     "id": "youPay",
     "message": "Płacisz",
     "files": [
+      "src/front/shared/components/LimitOrders/OrderSettings.tsx",
       "src/front/shared/components/LimitOrders/index.tsx"
     ]
   },
@@ -5940,7 +5944,7 @@
     "id": "yourOrders",
     "message": "Twoje zamówienia",
     "files": [
-      "src/front/shared/components/LimitOrders/PanelHeader.tsx"
+      "src/front/shared/components/LimitOrders/index.tsx"
     ]
   },
   {
@@ -6094,14 +6098,14 @@
     "id": "slippageNotice",
     "message": "Jeśli cena zmieni się między momentem złożenia zamówienia i potwierdzenia, nazywa się to \"poślizgiem\". Wymiana zostanie automatycznie anulowana, jeśli poślizg przekroczy ustawienie \"maksymalny poślizg\"",
     "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/ExchangeForm.tsx"
+      "src/front/shared/pages/Exchange/QuickSwap/AdvancedSettings.tsx"
     ]
   },
   {
     "id": "slippageTolerance",
     "message": "Tolerancja poślizgu",
     "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/ExchangeForm.tsx"
+      "src/front/shared/pages/Exchange/QuickSwap/AdvancedSettings.tsx"
     ]
   },
   {
@@ -6116,6 +6120,126 @@
     "message": "Ogółem",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/SwapInfo.tsx"
+    ]
+  },
+  {
+    "id": "allOrders",
+    "message": "Wszystkie zamówienia",
+    "files": [
+      "src/front/shared/components/LimitOrders/AllOrdersHeader.tsx"
+    ]
+  },
+  {
+    "id": "buyToken",
+    "message": "Kup",
+    "files": [
+      "src/front/shared/components/LimitOrders/Row.tsx"
+    ]
+  },
+  {
+    "id": "Chain",
+    "message": "Łańcuch",
+    "files": [
+      "src/front/shared/components/LimitOrders/OrderSettings.tsx"
+    ]
+  },
+  {
+    "id": "noOptions",
+    "message": "No options",
+    "files": [
+      "src/front/shared/components/LimitOrders/OrderSettings.tsx"
+    ]
+  },
+  {
+    "id": "disclaimerAboutBetaVersion",
+    "message": "* Uwaga: Giełda korzysta z protokołu 3rd 0x Liquidity. Bądź ostrożny i używaj na własne ryzyko.",
+    "files": [
+      "src/front/shared/components/modals/LimitOrder/ModalForm.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
+    ]
+  },
+  {
+    "id": "insufficientBalance",
+    "message": "Niewystarczająca równowaga",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
+    ]
+  },
+  {
+    "id": "insufficientLiquidity",
+    "message": "Niewystarczająca płynność",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
+    ]
+  },
+  {
+    "id": "addNewCurrencyMessage",
+    "message": "Na stronie portfel kliknij przycisk Dodaj walutę.",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/NewTokenInstruction.tsx"
+    ]
+  },
+  {
+    "id": "checkTokenInTheSwapList",
+    "message": "Teraz możesz zobaczyć token na liście.",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/NewTokenInstruction.tsx"
+    ]
+  },
+  {
+    "id": "choseTokenStandard",
+    "message": "Wybierz Standard tokenu i kliknij przycisk Kontynuuj.",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/NewTokenInstruction.tsx"
+    ]
+  },
+  {
+    "id": "confirmTokenAddition",
+    "message": "Sprawdź informacje i potwierdź dodanie tokena.",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/NewTokenInstruction.tsx"
+    ]
+  },
+  {
+    "id": "createNewPoolInAggregates",
+    "message": "Wybierz jedno z obsługiwanych źródeł i utwórz tam nową pulę z tokenem.",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/NewTokenInstruction.tsx"
+    ]
+  },
+  {
+    "id": "detailedInformation",
+    "message": "Szczegółowe informacje",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/NewTokenInstruction.tsx"
+    ]
+  },
+  {
+    "id": "enterTokenContractAddress",
+    "message": "Wprowadź tokenowy adres umowy.",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/NewTokenInstruction.tsx"
+    ]
+  },
+  {
+    "id": "howToAddToken",
+    "message": "Jak dodać token",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/NewTokenInstruction.tsx"
+    ]
+  },
+  {
+    "id": "ifYouDoNotSeeNewToken",
+    "message": "Nie będziesz mógł wymienić niektórych Tokenów, ponieważ może nie być dostępnej puli płynności z Twoim tokenem. Musisz utworzyć nowy, jeśli chcesz go wymienić.",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/NewTokenInstruction.tsx"
+    ]
+  },
+  {
+    "id": "youWillSeeYourToken",
+    "message": "Po ustaleniu puli płynności za pomocą tokenu będzie ona dostępna do wymiany.",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/NewTokenInstruction.tsx"
     ]
   }
 ]
