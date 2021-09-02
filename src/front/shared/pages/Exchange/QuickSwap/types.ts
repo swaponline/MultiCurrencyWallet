@@ -69,7 +69,6 @@ export type ComponentState = {
   swapFee: string
   gasPrice: string
   gasLimit: string
-  destReceiver: string
   showOrders: boolean
   mnemonicSaved: boolean
   blockReason: SwapBlockReason | undefined

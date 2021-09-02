@@ -6039,13 +6039,6 @@
     ]
   },
   {
-    "id": "serviceIsNotAvailable",
-    "message": "Dienst nicht verfügbar",
-    "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
-    ]
-  },
-  {
     "id": "swap",
     "message": "Swap",
     "files": [
@@ -6055,13 +6048,6 @@
   {
     "id": "advancedSettings",
     "message": "Erweiterte Einstellungen",
-    "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/AdvancedSettings.tsx"
-    ]
-  },
-  {
-    "id": "destinationRecipient",
-    "message": "Zielempfänger",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/AdvancedSettings.tsx"
     ]
@@ -6090,13 +6076,6 @@
   {
     "id": "gasPriceNotice",
     "message": "Gaspreis gibt die Menge an Äther an, die Sie für jede Gaseinheit bezahlen möchten",
-    "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/AdvancedSettings.tsx"
-    ]
-  },
-  {
-    "id": "recipientAddressNotice",
-    "message": "Empfängeradresse eines gekauften Tokens",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/AdvancedSettings.tsx"
     ]

@@ -6017,13 +6017,6 @@
     ]
   },
   {
-    "id": "destinationRecipient",
-    "message": "Ontvanger van bestemming",
-    "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/AdvancedSettings.tsx"
-    ]
-  },
-  {
     "id": "gasLimit",
     "message": "Grenswaarde voor Gas",
     "files": [
@@ -6052,13 +6045,6 @@
     ]
   },
   {
-    "id": "recipientAddressNotice",
-    "message": "Adres van de ontvanger van een aangeschaft token",
-    "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/AdvancedSettings.tsx"
-    ]
-  },
-  {
     "id": "createLimitOrder",
     "message": "Limietvolgorde aanmaken",
     "files": [
@@ -6068,13 +6054,6 @@
   {
     "id": "limitOrders",
     "message": "Limietorder",
-    "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
-    ]
-  },
-  {
-    "id": "serviceIsNotAvailable",
-    "message": "Service is niet beschikbaar",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
     ]

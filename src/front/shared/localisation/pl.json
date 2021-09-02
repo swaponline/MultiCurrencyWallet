@@ -6021,13 +6021,6 @@
     ]
   },
   {
-    "id": "destinationRecipient",
-    "message": "Odbiorca docelowy",
-    "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/AdvancedSettings.tsx"
-    ]
-  },
-  {
     "id": "gasLimit",
     "message": "Limit gazu",
     "files": [
@@ -6056,13 +6049,6 @@
     ]
   },
   {
-    "id": "recipientAddressNotice",
-    "message": "Adres odbiorcy zakupionego tokenu",
-    "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/AdvancedSettings.tsx"
-    ]
-  },
-  {
     "id": "createLimitOrder",
     "message": "Utwórz limit order",
     "files": [
@@ -6072,13 +6058,6 @@
   {
     "id": "limitOrders",
     "message": "Zlecenia z limitem",
-    "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
-    ]
-  },
-  {
-    "id": "serviceIsNotAvailable",
-    "message": "Usługa nie jest dostępna",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
     ]

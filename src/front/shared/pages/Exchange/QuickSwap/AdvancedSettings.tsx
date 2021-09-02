@@ -24,10 +24,7 @@ function AdvancedSettings(props) {
   const keyDownHandler = (event) => {
     inputReplaceCommaWithDot(event)
 
-    const emptyOptions =
-      !stateReference.gasPrice.value &&
-      !stateReference.gasLimit.value &&
-      !stateReference.destReceiver.value
+    const emptyOptions = !stateReference.gasPrice.value && !stateReference.gasLimit.value
 
     if (swapData && emptyOptions) {
       resetSwapData()
@@ -104,25 +101,6 @@ function AdvancedSettings(props) {
               withMargin
             />
           </div>
-
-          {/* <div styleName="inputWrapper">
-            <FieldLabel>
-              <FormattedMessage id="destinationRecipient" defaultMessage="Destination recipient" />
-              <Tooltip id="recipientAddressTooltip">
-                <FormattedMessage
-                  id="recipientAddressNotice"
-                  defaultMessage="Recipient address of a purchased token"
-                />
-              </Tooltip>
-            </FieldLabel>
-            <Input
-              styleName="advancedInput"
-              pattern="0-9a-zA-Z:"
-              onKeyDown={keyDownHandler}
-              onKeyUp={keyUpHandler}
-              valueLink={stateReference.destReceiver}
-            />
-          </div> */}
         </form>
       )}
     </section>

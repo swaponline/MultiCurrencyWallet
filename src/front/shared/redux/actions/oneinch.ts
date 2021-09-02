@@ -24,20 +24,6 @@ const reportError = (part, error) => {
   console.groupEnd()
 }
 
-const serviceIsAvailable = async (params) => {
-  const { chainId } = params
-
-  try {
-    const res: any = await apiLooper.get('oneinch', `/${chainId}/healthcheck`)
-
-    return res?.status === 'OK'
-  } catch (error) {
-    reportError('service', error)
-
-    return false
-  }
-}
-
 const addTokens = (params) => {
   const { chainId, tokens } = params
 
@@ -99,9 +85,6 @@ const fetchTokenAllowance = async (params): Promise<number> => {
   let allowance = 0
 
   try {
-    // commented code for the 1inch api
-    //const spender = await fetchSpenderContractAddress({ chainId })
-
     allowance = await tokenContract.methods.allowance(owner, spender).call({ from: owner })
 
     // formatting without token decimals
@@ -120,9 +103,6 @@ const approveToken = async (params) => {
   const { chainId, amount, name, standard, spender } = params
 
   try {
-    // commented code for the 1inch api
-    //const spender = await fetchSpenderContractAddress({ chainId })
-
     return actions[standard].approve({
       name,
       to: spender,
@@ -423,7 +403,6 @@ const fetchAllOrders = async (params) => {
 }
 
 export default {
-  serviceIsAvailable,
   filterCurrencies,
   addTokens,
   fetchSpenderContractAddress,

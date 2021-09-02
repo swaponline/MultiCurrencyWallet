@@ -6021,13 +6021,6 @@
     ]
   },
   {
-    "id": "destinationRecipient",
-    "message": "Конечный получатель",
-    "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/AdvancedSettings.tsx"
-    ]
-  },
-  {
     "id": "gasLimit",
     "message": "Предел газа",
     "files": [
@@ -6056,13 +6049,6 @@
     ]
   },
   {
-    "id": "recipientAddressNotice",
-    "message": "Получатель купленного токена",
-    "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/AdvancedSettings.tsx"
-    ]
-  },
-  {
     "id": "createLimitOrder",
     "message": "Создать лимитный ордер",
     "files": [
@@ -6072,13 +6058,6 @@
   {
     "id": "limitOrders",
     "message": "Лимитные ордера",
-    "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
-    ]
-  },
-  {
-    "id": "serviceIsNotAvailable",
-    "message": "Услуга недоступна",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
     ]
