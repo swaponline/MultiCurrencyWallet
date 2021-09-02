@@ -122,6 +122,7 @@ class LimitOrder extends Component<ComponentProps, ComponentState> {
         makerAsset,
         takerList,
         takerAsset,
+        network: externalConfig.evmNetworks[makerAsset.blockchain]
       }))
     }
   }

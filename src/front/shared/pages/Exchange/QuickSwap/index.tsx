@@ -97,7 +97,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       spendedCurrency: spendedCurrency,
       spendedAmount: '',
       fromWallet: fromWallet || {},
-      receivedCurrency: receivedCurrency,
+      receivedCurrency,
       receivedAmount: '0',
       toWallet: toWallet || {},
       slippage: undefined,
@@ -157,6 +157,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
         spendedCurrency,
         receivedList,
         receivedCurrency,
+        network: externalConfig.evmNetworks[spendedCurrency.blockchain]
       }))
     }
   }
