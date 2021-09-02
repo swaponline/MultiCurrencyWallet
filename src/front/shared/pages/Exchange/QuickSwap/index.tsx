@@ -125,15 +125,17 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     const { wrongNetwork: prevWrongNetwork, currencies: prevCurrencies } = prevState
     const { spendedCurrency } = this.state
 
-    const availableNetwork = metamask.isAvailableNetworkByCurrency(spendedCurrency.value)
+    const isCurrentNetworkAvailable = metamask.isAvailableNetwork()
 
-    // TODO: split this condition
-    // TODO: unlock the form in this case:
-    // A correct network -> B wrong network -> C correct network
+    const isSpendedCurrencyNetworkAvailable = metamask.isAvailableNetworkByCurrency(spendedCurrency.value)
 
     const needUpdate =
       metamask.isConnected() &&
-      ((prevWrongNetwork && availableNetwork) || (!prevWrongNetwork && !availableNetwork))
+      (
+        (prevWrongNetwork && (isSpendedCurrencyNetworkAvailable || isCurrentNetworkAvailable))
+        ||
+        (!prevWrongNetwork && !isSpendedCurrencyNetworkAvailable)
+      )
 
     if (needUpdate) {
       let { currencies, wrongNetwork } = actions.oneinch.filterCurrencies({
@@ -848,7 +850,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
             />
 
             <div styleName="walletAddress">
-              {!metamask.isConnected() && !isWalletCreated && (
+              {!metamask.isConnected() && (!isWalletCreated || !mnemonicSaved) && (
                 <Button
                   id="connectWalletBtn"
                   brand

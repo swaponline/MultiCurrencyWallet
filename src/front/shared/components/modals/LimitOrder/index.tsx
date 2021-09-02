@@ -90,11 +90,17 @@ class LimitOrder extends Component<ComponentProps, ComponentState> {
     const { wrongNetwork: prevWrongNetwork, currencies: prevCurrencies } = prevState
     const { makerAsset } = this.state
 
-    const availableNetwork = metamask.isAvailableNetworkByCurrency(makerAsset.value)
+    const isCurrentNetworkAvailable = metamask.isAvailableNetwork()
+
+    const isMakerAssetNetworkAvailable = metamask.isAvailableNetworkByCurrency(makerAsset.value)
 
     const needUpdate =
       metamask.isConnected() &&
-      ((prevWrongNetwork && availableNetwork) || (!prevWrongNetwork && !availableNetwork))
+      (
+        (prevWrongNetwork && (isMakerAssetNetworkAvailable || isCurrentNetworkAvailable))
+        ||
+        (!prevWrongNetwork && !isMakerAssetNetworkAvailable)
+      )
 
     if (needUpdate) {
       let { currencies, wrongNetwork } = actions.oneinch.filterCurrencies({
