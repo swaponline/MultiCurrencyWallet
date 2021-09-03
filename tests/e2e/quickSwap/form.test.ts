@@ -13,6 +13,7 @@ jest.setTimeout(80_000) // ms
 // const EVM_MNEMONIC = process.env.evmMnemonicPhrase
 const EVM_ADDRESS = process.env.evmAddress
 
+console.log('env: ', process.env)
 console.log('EVM_ADDRESS: ', EVM_ADDRESS)
 
 describe('Quick swap tests', () => {
