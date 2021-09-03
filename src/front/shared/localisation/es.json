@@ -6103,7 +6103,7 @@
   },
   {
     "id": "slippageTolerance",
-    "message": "Tolerancia de deslizamiento",
+    "message": "Tolerancia de deslizamiento (%)",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/AdvancedSettings.tsx"
     ]

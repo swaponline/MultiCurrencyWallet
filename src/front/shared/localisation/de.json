@@ -6100,7 +6100,7 @@
   },
   {
     "id": "slippageTolerance",
-    "message": "Slippage Toleranz",
+    "message": "Slippage Toleranz (%)",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/AdvancedSettings.tsx"
     ]

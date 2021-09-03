@@ -100,7 +100,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       receivedAmount: '0',
       toWallet: toWallet || {},
       slippage: undefined,
-      slippageMaxRange: 1,
+      slippageMaxRange: 100,
       wrongNetwork,
       network: externalConfig.evmNetworks[spendedCurrency.blockchain],
       swapData: undefined,
@@ -274,10 +274,13 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
 
   reportError = (error) => {
     const possibleNoLiquidity = JSON.stringify(error)?.match(/INSUFFICIENT_ASSET_LIQUIDITY/)
+    const insufficientSlippage = JSON.stringify(error)?.match(/IncompleteTransformERC20Error/)
     const notEnoughBalance = error.message?.match(/(N|n)ot enough .* balance/)
 
     if (possibleNoLiquidity) {
       this.setState(() => ({ blockReason: SwapBlockReason.NoLiquidity }))
+    } else if (insufficientSlippage) {
+      this.setState(() => ({ blockReason: SwapBlockReason.InsufficientSlippage }))
     } else if (notEnoughBalance) {
       this.setState(() => ({ blockReason: SwapBlockReason.NoBalance }))
     } else {
@@ -313,7 +316,13 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     ]
 
     if (isAdvancedMode) {
-      if (slippage) request.push(`&slippagePercentage=${slippage}`)
+      if (slippage) {
+        // allow users to enter an amount up to 100, because it's more easy then enter the amount from 0 to 1
+        // and now convert it into the api format
+        const correctValue = new BigNumber(slippage).dividedBy(100)
+
+        request.push(`&slippagePercentage=${correctValue}`)
+      }
     }
 
     return request.join('')
@@ -352,22 +361,24 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
         }
       )
 
-      const weiFee = new BigNumber(swap.gas).times(swap.gasPrice)
-      const swapFee = utils.amount.formatWithoutDecimals(weiFee, 18)
+      if (!(swap instanceof Error)) {
+        const weiFee = new BigNumber(swap.gas).times(swap.gasPrice)
+        const swapFee = utils.amount.formatWithoutDecimals(weiFee, 18)
 
-      this.setState(
-        () => ({
-          receivedAmount: utils.amount.formatWithoutDecimals(
-            swap.buyAmount,
-            // if it's not a token then usual coin with 18 decimals
-            toWallet?.decimals || 18
-          ),
-          swapData: swap,
-          swapFee,
-          isDataPending: false,
-        }),
-        this.checkTokenApprove
-      )
+        this.setState(
+          () => ({
+            receivedAmount: utils.amount.formatWithoutDecimals(
+              swap.buyAmount,
+              // if it's not a token then usual coin with 18 decimals
+              toWallet?.decimals || 18
+            ),
+            swapData: swap,
+            swapFee,
+            isDataPending: false,
+          }),
+          this.checkTokenApprove
+        )
+      }
     } catch (error) {
       this.reportError(error)
     }
@@ -760,6 +771,15 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
               isPending={isPending}
             />
 
+            {blockReason === SwapBlockReason.InsufficientSlippage && (
+              <p styleName="swapNotice">
+                <FormattedMessage
+                  id="customSlippageValueNotice"
+                  defaultMessage="You can set a custom slippage tolerance value in the advanced settings and try again"
+                />
+              </p>
+            )}
+
             <div styleName="walletAddress">
               {!metamask.isConnected() && (!isWalletCreated || !mnemonicSaved) && (
                 <Button
@@ -865,6 +885,11 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
                   <FormattedMessage
                     id="insufficientLiquidity"
                     defaultMessage="Insufficient liquidity"
+                  />
+                ) : blockReason === SwapBlockReason.InsufficientSlippage ? (
+                  <FormattedMessage
+                    id="insufficientSlippage"
+                    defaultMessage="Insufficient slippage"
                   />
                 ) : insufficientBalance ? (
                   <FormattedMessage

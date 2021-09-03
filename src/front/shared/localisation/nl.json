@@ -6099,7 +6099,7 @@
   },
   {
     "id": "slippageTolerance",
-    "message": "Tolerantie voor slippen",
+    "message": "Tolerantie voor slippen (%)",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/AdvancedSettings.tsx"
     ]

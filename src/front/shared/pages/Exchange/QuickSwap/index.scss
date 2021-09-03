@@ -51,34 +51,6 @@
   margin-top: 0.8rem;
 }
 
-.protocolsChain {
-  @include ff-semibold;
-  margin: 1rem 0 0;
-}
-
-.protocolsList {
-  list-style: none;
-  margin: 0;
-  padding: 0.5rem 0;
-  display: flex;
-  flex-wrap: wrap;
-
-  li {
-    margin: 0.2rem;
-    padding: 0.5rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    background-color: var(--color-black);
-  }
-
-  img {
-    max-width: 1.8rem;
-  }
-}
-
 .quickSwap {
   max-width: 38em;
   margin: 0.6rem auto 1rem;
@@ -101,6 +73,15 @@
   position: relative;
 }
 
+.swapNotice {
+  padding: 0.5rem;
+  text-align: left;
+  border-radius: 0.2rem;
+  border: 1px solid var(--color-border);
+  color: var(--color-notice);
+  background-color: var(--color-page-background);
+}
+
 .walletAddress {
   display: flex;
   flex-direction: column;
@@ -119,7 +100,7 @@
 
 .advancedInput {
   input {
-    height: 3.35em;
+    height: 3.5em;
   }
 }
 

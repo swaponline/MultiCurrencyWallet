@@ -6103,7 +6103,7 @@
   },
   {
     "id": "slippageTolerance",
-    "message": "Проскальзывание",
+    "message": "Проскальзывание (%)",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/AdvancedSettings.tsx"
     ]

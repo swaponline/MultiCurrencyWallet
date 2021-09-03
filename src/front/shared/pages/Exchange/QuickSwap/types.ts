@@ -16,21 +16,23 @@ export type TokenData = {
   logoURI: string
 }
 // FIXME: any
-export type SwapData = any | {
-  fromToken: TokenData
-  toToken: TokenData
-  fromTokenAmount: string
-  toTokenAmount: string
-  protocols: any // any[]
-  tx: {
-    data: string
-    from: string
-    gas: number
-    gasPrice: string
-    to: string
-    value: string
-  }
-}
+export type SwapData =
+  | any
+  | {
+      fromToken: TokenData
+      toToken: TokenData
+      fromTokenAmount: string
+      toTokenAmount: string
+      protocols: any // any[]
+      tx: {
+        data: string
+        from: string
+        gas: number
+        gasPrice: string
+        to: string
+        value: string
+      }
+    }
 
 export type Network = {
   currency: string
@@ -80,6 +82,7 @@ export enum Direction {
 }
 
 export enum SwapBlockReason {
+  InsufficientSlippage,
   NoLiquidity,
   NoBalance,
 }

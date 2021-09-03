@@ -6099,7 +6099,7 @@
   },
   {
     "id": "slippageTolerance",
-    "message": "Slippage tolerance",
+    "message": "Slippage tolerance (%)",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/AdvancedSettings.tsx"
     ]
