@@ -19,6 +19,7 @@ type ButtonProps = {
   empty?: boolean
   link?: boolean
   fill?: boolean
+  flex?: boolean
   disabled?: boolean
   pending?: boolean
   className?: string
@@ -45,11 +46,13 @@ const Button = (props: ButtonProps) => {
     onClick,
     id = '',
     fill,
+    flex,
     dataTut,
   } = props
 
   const styleName = cx('button', {
     fill,
+    flex,
     fullWidth,
     brand,
     transparent,

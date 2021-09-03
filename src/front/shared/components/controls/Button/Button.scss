@@ -52,6 +52,12 @@
   margin: inherit;
 }
 
+.flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .big {
   height: 68px;
   min-height: 68px;

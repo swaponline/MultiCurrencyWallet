@@ -1,39 +1,42 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import cx from 'classnames'
+import PropTypes from 'prop-types' // TODO: remove this, use TS
 
 import { withRouter } from 'react-router-dom'
 import { isMobile } from 'react-device-detect'
 import { connect } from 'redaction'
-
-import links from 'helpers/links'
 import actions from 'redux/actions'
-import { constants } from 'helpers'
-import config from 'helpers/externalConfig'
 import { injectIntl, FormattedMessage } from 'react-intl'
 
+import cx from 'classnames'
 import CSSModules from 'react-css-modules'
 import styles from './Header.scss'
 
 import Nav from './Nav/Nav'
 import NavMobile from './NavMobile/NavMobile'
-
 import Logo from './Logo/Logo'
+import ThemeSwitcher from './ThemeSwitcher'
 import TourPartial from './TourPartial/TourPartial'
 import WalletTour from './WalletTour/WalletTour'
 import { WidgetWalletTour } from './WidgetTours'
 
 import Loader from 'components/loaders/Loader/Loader'
-import { localisedUrl } from '../../helpers/locale'
-import { messages, getMenuItems, getMenuItemsMobile } from './config'
-import { user } from 'helpers'
-import ThemeSwitcher from './ThemeSwitcher'
+import CurrencyIcon from 'components/ui/CurrencyIcon/CurrencyIcon'
 import Button from 'components/controls/Button/Button'
 // Incoming swap requests and tooltips (revert)
 import UserTooltip from 'components/Header/UserTooltip/UserTooltip'
-import feedback from 'shared/helpers/feedback'
-import wpLogoutModal from 'helpers/wpLogoutModal'
+import web3Icons from 'images'
 
+import { getMenuItems, getMenuItemsMobile } from './config'
+import { localisedUrl } from 'helpers/locale'
+import {
+  constants,
+  metamask,
+  links,
+  user,
+  feedback,
+  wpLogoutModal,
+  externalConfig as config
+} from 'helpers'
 
 import Swap from 'swap.swap'
 import SwapApp from 'swap.app'
@@ -438,12 +441,32 @@ class Header extends Component<any, any> {
 
     const isLogoutPossible = window.isUserRegisteredAndLoggedIn
 
+    const isMetamaskConnetced = metamask.isConnected()
+    const web3Type = metamask.web3connect.getInjectedType()
+    const isNotAvailableMetamaskNetwork = isMetamaskConnetced && !metamask.isAvailableNetwork()
+    const showWeb3Icon = !isMetamaskConnetced || isNotAvailableMetamaskNetwork
+
     const logoRenderer = (
       <div styleName="flexebleHeader">
         <div>
           <Logo />
         </div>
         <div styleName="rightArea">
+          <div styleName="connectWallet">
+            <Button flex small empty onClick={() => metamask.handleConnectMetamask({ dontRedirect : true} )}>
+              { showWeb3Icon && (
+                <img
+                  styleName="web3Icon"
+                  src={web3Icons[web3Type]}
+                  alt={web3Type}
+                  role="image"
+                />
+              )}
+              <span styleName="connectWalletText">
+                <FormattedMessage id="ConnectWeb3Wallet" defaultMessage="Connect Wallet" />
+              </span>
+            </Button>
+          </div>
           {window.WPSO_selected_theme !== 'only_light' && window.WPSO_selected_theme !== 'only_dark' && (
             <ThemeSwitcher onClick={this.handleToggleTheme} />
           )}
