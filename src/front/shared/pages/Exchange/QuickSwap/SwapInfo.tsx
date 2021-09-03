@@ -39,7 +39,6 @@ function SwapInfo(props: ComponentProps) {
   let price: string | undefined = undefined
 
   if (swapData) {
-    //const { fromTokenAmount, toTokenAmount, fromToken, toToken } = swapData
     const { sellAmount, buyAmount, fromToken, toToken } = swapData
 
     const fromAmount = commonUtils.amount.formatWithoutDecimals(
@@ -59,7 +58,11 @@ function SwapInfo(props: ComponentProps) {
     const totalAmount = new BigNumber(spendedAmount).plus(swapFee).dp(customDecimals)
 
     fee = `${new BigNumber(swapFee).dp(customDecimals)} ${network.currency}`
-    total = `${totalAmount} ${network.currency}`
+
+    // don't show total amount for tokens. Show only transaction fee
+    if (!fromWallet.isToken) {
+      total = `${totalAmount} ${network.currency}`
+    }
 
     if (baseChainWallet.infoAboutCurrency?.price) {
       const fixedAmount = utils.toMeaningfulFiatValue({
@@ -99,7 +102,7 @@ function SwapInfo(props: ComponentProps) {
               {fiatFee && <span>{fiatFee}</span>}
             </span>
           )}
-          {spendedAmount && swapFee && (
+          {total && spendedAmount && swapFee && (
             <span styleName="indicator">
               <FormattedMessage id="total" defaultMessage="Total" />: <span>{total}</span>
               {totalFiat && <span>{totalFiat}</span>}
