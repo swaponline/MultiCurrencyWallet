@@ -15,22 +15,21 @@ import Nav from './Nav/Nav'
 import NavMobile from './NavMobile/NavMobile'
 import Logo from './Logo/Logo'
 import ThemeSwitcher from './ThemeSwitcher'
+import WalletConnect from './WalletConnect'
 import TourPartial from './TourPartial/TourPartial'
 import WalletTour from './WalletTour/WalletTour'
 import { WidgetWalletTour } from './WidgetTours'
 
 import Loader from 'components/loaders/Loader/Loader'
-import CurrencyIcon from 'components/ui/CurrencyIcon/CurrencyIcon'
 import Button from 'components/controls/Button/Button'
 // Incoming swap requests and tooltips (revert)
 import UserTooltip from 'components/Header/UserTooltip/UserTooltip'
-import web3Icons from 'images'
+
 
 import { getMenuItems, getMenuItemsMobile } from './config'
 import { localisedUrl } from 'helpers/locale'
 import {
   constants,
-  metamask,
   links,
   user,
   feedback,
@@ -441,32 +440,13 @@ class Header extends Component<any, any> {
 
     const isLogoutPossible = window.isUserRegisteredAndLoggedIn
 
-    const isMetamaskConnetced = metamask.isConnected()
-    const web3Type = metamask.web3connect.getInjectedType()
-    const isNotAvailableMetamaskNetwork = isMetamaskConnetced && !metamask.isAvailableNetwork()
-    const showWeb3Icon = !isMetamaskConnetced || isNotAvailableMetamaskNetwork
-
     const logoRenderer = (
       <div styleName="flexebleHeader">
         <div>
           <Logo />
         </div>
         <div styleName="rightArea">
-          <div styleName="connectWallet">
-            <Button flex small empty onClick={() => metamask.handleConnectMetamask({ dontRedirect : true} )}>
-              { showWeb3Icon && (
-                <img
-                  styleName="web3Icon"
-                  src={web3Icons[web3Type]}
-                  alt={web3Type}
-                  role="image"
-                />
-              )}
-              <span styleName="connectWalletText">
-                <FormattedMessage id="ConnectWeb3Wallet" defaultMessage="Connect Wallet" />
-              </span>
-            </Button>
-          </div>
+          <WalletConnect />
           {window.WPSO_selected_theme !== 'only_light' && window.WPSO_selected_theme !== 'only_dark' && (
             <ThemeSwitcher onClick={this.handleToggleTheme} />
           )}
