@@ -10,11 +10,8 @@ import {
 
 jest.setTimeout(80_000) // ms
 
-// const EVM_MNEMONIC = process.env.evmMnemonicPhrase
+const EVM_MNEMONIC = process.env.evmMnemonicPhrase
 const EVM_ADDRESS = process.env.evmAddress
-
-console.log('EVM_ADDRESS: ', EVM_ADDRESS)
-console.log('process.env.evmAddress: ', process.env.evmAddress)
 
 describe('Quick swap tests', () => {
   const waitingForStartup = 120_000
@@ -23,7 +20,7 @@ describe('Quick swap tests', () => {
 
   it('ok', () => expect(0).toBe(0))
 
-  /*   beforeAll(async () => {
+  beforeAll(async () => {
     const { browser: newBrowserInstance, page: newPageInstance } = await createBrowser()
 
     browser = newBrowserInstance
@@ -129,5 +126,5 @@ describe('Quick swap tests', () => {
     } else {
       throw new Error('No the browser or the page')
     }
-  }) */
+  })
 })
