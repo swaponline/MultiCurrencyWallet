@@ -47,6 +47,5 @@ jobs:
           if-no-files-found: ignore
 
         env:
-          CI: true
           evmMnemonicPhrase: ${{ secrets.ETERNAL_SEED_PHRASE }}
           evmAddress: '0xb7d9F97Fe2c396906957634CA5bcE87Ff4a8a119'
