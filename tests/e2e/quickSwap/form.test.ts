@@ -13,12 +13,14 @@ jest.setTimeout(80_000) // ms
 const EVM_MNEMONIC = process.env.evmMnemonicPhrase
 const EVM_ADDRESS = process.env.evmAddress
 
+const spaces = EVM_MNEMONIC?.match(/ /g)
+
+console.log('length of seed spaces: ', spaces?.length)
+
 describe('Quick swap tests', () => {
   const waitingForStartup = 120_000
   let browser: undefined | puppeteer.Browser = undefined
   let page: undefined | puppeteer.Page = undefined
-
-  it('ok', () => expect(0).toBe(0))
 
   beforeAll(async () => {
     const { browser: newBrowserInstance, page: newPageInstance } = await createBrowser()
