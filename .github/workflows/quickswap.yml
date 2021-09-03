@@ -28,6 +28,9 @@ jobs:
           npm run build:mainnet
 
       - name: run e2e quickswap tests
+        env:
+          evmMnemonicPhrase: ${{ secrets.ETERNAL_SEED_PHRASE }}
+          evmAddress: '0xb7d9F97Fe2c396906957634CA5bcE87Ff4a8a119'
         run: |
           mkdir ./tests/e2e/screenshots
           npm run test:e2e_quick_swap:actions
@@ -45,8 +48,3 @@ jobs:
           name: screenshots
           path: ./tests/e2e/screenshots
           if-no-files-found: ignore
-
-        env:
-          CAT_KEY: '------'
-          evmMnemonicPhrase: ${{ secrets.ETERNAL_SEED_PHRASE }}
-          evmAddress: '0xb7d9F97Fe2c396906957634CA5bcE87Ff4a8a119'
