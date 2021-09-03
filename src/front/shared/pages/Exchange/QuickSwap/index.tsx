@@ -123,17 +123,21 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     const { wrongNetwork: prevWrongNetwork, currencies: prevCurrencies } = prevState
     const { spendedCurrency } = this.state
 
-    const isCurrentNetworkAvailable = metamask.isAvailableNetwork()
+    if (this.isSwapNotAvailable()) {
+      this.setState(() => ({
+        receivedAmount: '0',
+      }))
+    }
 
-    const isSpendedCurrencyNetworkAvailable = metamask.isAvailableNetworkByCurrency(spendedCurrency.value)
+    const isCurrentNetworkAvailable = metamask.isAvailableNetwork()
+    const isSpendedCurrencyNetworkAvailable = metamask.isAvailableNetworkByCurrency(
+      spendedCurrency.value
+    )
 
     const needUpdate =
       metamask.isConnected() &&
-      (
-        (prevWrongNetwork && (isSpendedCurrencyNetworkAvailable || isCurrentNetworkAvailable))
-        ||
-        (!prevWrongNetwork && !isSpendedCurrencyNetworkAvailable)
-      )
+      ((prevWrongNetwork && (isSpendedCurrencyNetworkAvailable || isCurrentNetworkAvailable)) ||
+        (!prevWrongNetwork && !isSpendedCurrencyNetworkAvailable))
 
     if (needUpdate) {
       let { currencies, wrongNetwork } = actions.oneinch.filterCurrencies({
@@ -155,7 +159,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
         spendedCurrency,
         receivedList,
         receivedCurrency,
-        network: externalConfig.evmNetworks[spendedCurrency.blockchain]
+        network: externalConfig.evmNetworks[spendedCurrency.blockchain],
       }))
     }
   }
@@ -289,13 +293,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   }
 
   createSwapRequest = () => {
-    const {
-      slippage,
-      spendedAmount,
-      fromWallet,
-      toWallet,
-      isAdvancedMode,
-    } = this.state
+    const { slippage, spendedAmount, fromWallet, toWallet, isAdvancedMode } = this.state
 
     const sellToken = fromWallet.isToken
       ? fromWallet.contractAddress
@@ -322,8 +320,10 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   }
 
   checkSwapData = async () => {
-    const { spendedAmount } = this.state
-    const doNotUpdate = this.isSwapDataNotAvailable() || !spendedAmount
+    await this.checkTokenApprove()
+
+    const { spendedAmount, needApprove } = this.state
+    const doNotUpdate = this.isSwapDataNotAvailable() || !spendedAmount || needApprove
 
     this.setState(() => ({
       error: null,
@@ -364,16 +364,13 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
           ),
           swapData: swap,
           swapFee,
+          isDataPending: false,
         }),
         this.checkTokenApprove
       )
     } catch (error) {
       this.reportError(error)
     }
-
-    this.setState(() => ({
-      isDataPending: false,
-    }))
   }
 
   resetSwapData = () => {
@@ -446,7 +443,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
         standard,
         decimals,
         chainId: network.chainId,
-        spender: swapData.allowanceTarget,
+        spender: externalConfig.swapContract.zerox,
       })
 
       this.setState(() => ({
@@ -456,31 +453,35 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   }
 
   approve = async () => {
-    const { network, spendedAmount, fromWallet, swapData } = this.state
+    const { network, spendedAmount, fromWallet } = this.state
 
     this.setState(() => ({
       isDataPending: true,
     }))
 
-    const transactionHash = await actions.oneinch.approveToken({
-      chainId: network.networkVersion,
-      amount: spendedAmount,
-      name: fromWallet.tokenKey,
-      standard: fromWallet.standard,
-      spender: swapData?.allowanceTarget,
-    })
+    try {
+      const transactionHash = await actions.oneinch.approveToken({
+        chainId: network.networkVersion,
+        amount: spendedAmount,
+        name: fromWallet.tokenKey,
+        standard: fromWallet.standard,
+        spender: externalConfig.swapContract.zerox,
+      })
 
-    actions.notifications.show(constants.notifications.Transaction, {
-      link: transactions.getLink(fromWallet.standard, transactionHash),
-    })
+      actions.notifications.show(constants.notifications.Transaction, {
+        link: transactions.getLink(fromWallet.standard, transactionHash),
+      })
 
-    this.setState(
-      () => ({
-        needApprove: false,
-        isDataPending: false,
-      }),
-      this.fetchSwapData
-    )
+      this.setState(
+        () => ({
+          needApprove: false,
+          isDataPending: false,
+        }),
+        this.fetchSwapData
+      )
+    } catch (error) {
+      this.reportError(error)
+    }
   }
 
   selectCurrency = (params) => {
@@ -724,7 +725,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       'receivedAmount',
       'slippage',
       'gasPrice',
-      'gasLimit',
+      'gasLimit'
     )
 
     const swapDataIsDisabled = this.isSwapDataNotAvailable()
