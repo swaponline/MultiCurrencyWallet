@@ -360,7 +360,12 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   }
 
   fetchSwapData = async () => {
-    const { network, toWallet } = this.state
+    const {
+      network,
+      toWallet,
+      gasLimit,
+      gasPrice,
+    } = this.state
 
     this.setState(() => ({
       isDataPending: true,
@@ -378,7 +383,8 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       )
 
       if (!(swap instanceof Error)) {
-        const weiFee = new BigNumber(swap.gas).times(swap.gasPrice)
+        const useCustomGasLimit = gasLimit && gasLimit > swap.gas
+        const weiFee = new BigNumber(useCustomGasLimit ? gasLimit : swap.gas).times(gasPrice ? new BigNumber(gasPrice).times(10**9) : swap.gasPrice)
         const swapFee = utils.amount.formatWithoutDecimals(weiFee, 18)
 
         this.setState(
@@ -744,6 +750,8 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       mnemonicSaved,
       blockReason,
     } = this.state
+
+    console.log('baseChainWallet', baseChainWallet)
 
     const linked = Link.all(
       this,
