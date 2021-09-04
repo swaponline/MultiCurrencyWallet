@@ -56,7 +56,7 @@ class LimitOrder extends Component<ComponentProps, ComponentState> {
 
     const makerAsset = currencies[0]
     const makerWallet = actions.core.getWallet({ currency: makerAsset.value })
-    const network = externalConfig.evmNetworks[makerAsset.blockchain]
+    const network = externalConfig.evmNetworks[makerAsset.blockchain || makerAsset.value.toUpperCase()]
 
     let takerList = this.returnTakerList(currencies, makerAsset)
 
@@ -122,7 +122,7 @@ class LimitOrder extends Component<ComponentProps, ComponentState> {
         makerAsset,
         takerList,
         takerAsset,
-        network: externalConfig.evmNetworks[makerAsset.blockchain]
+        network: externalConfig.evmNetworks[makerAsset.blockchain || makerAsset.value.toUpperCase()]
       }))
     }
   }
@@ -143,7 +143,7 @@ class LimitOrder extends Component<ComponentProps, ComponentState> {
     const { makerAsset } = this.state
 
     this.setState(() => ({
-      network: externalConfig.evmNetworks[makerAsset.blockchain],
+      network: externalConfig.evmNetworks[makerAsset.blockchain || makerAsset.value.toUpperCase()],
     }))
   }
 
