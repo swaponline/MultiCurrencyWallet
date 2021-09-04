@@ -335,6 +335,7 @@ class App extends React.Component<RouteComponentProps<any>, any> {
       setTimeout(() => {
         this.completeAppCreation().then(() => {
           this.setState(() => ({
+            completeCreation: false,
             initialFetching: false,
           }))
         })
@@ -350,10 +351,8 @@ class App extends React.Component<RouteComponentProps<any>, any> {
       await createSwapApp()
     }
 
-    this.setState(() => ({
-      initialFetching: false,
-      completeCreation: false,
-    }))
+    //await actions.oneinch.fetchAllTokens()
+    await actions.oneinch.fetchUserOrders()
 
     console.groupEnd()
   }
@@ -470,7 +469,7 @@ class App extends React.Component<RouteComponentProps<any>, any> {
       return <PreventMultiTabs onSwitchTab={this.handleSwitchTab} />
     }
 
-    if (isFetching && localStorage.getItem('isWalletCreate') === null) {
+    if (isFetching) {
       return (
         <Loader 
           showMyOwnTip={

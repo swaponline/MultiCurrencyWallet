@@ -148,7 +148,6 @@ const createResponseHandler = (req, opts) => {
 const defaultOptions = {
   sameOrigin: false,
   modifyResult: (resData) => resData,
-  onComplete: () => {},
 }
 
 /**

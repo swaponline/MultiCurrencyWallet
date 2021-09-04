@@ -3,6 +3,7 @@ const linksManager = {
   hashHome: '#/',
 
   exchange: '/exchange',
+  quickSwap: '/exchange/quick',
 
   // Market maker page - for run parallel swaps in background
   marketmaker: '/marketmaker',

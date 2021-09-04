@@ -130,9 +130,14 @@ const connect = (options) => new Promise(async (resolved, reject) => {
 /* metamask wallet layer */
 const isCorrectNetwork = () => web3connect.isCorrectNetwork()
 
+const getChainId = () => {
+  const hexChainId = web3connect.getChainId()
+
+  return Number(Number(hexChainId).toString(10))
+}
+
 const isAvailableNetwork = () => {
-    const hexChainId = web3connect.getChainId()
-    const networkVersion = Number(Number(hexChainId).toString(10))
+    const networkVersion = getChainId()
 
     return (config.evmNetworkVersions.includes(networkVersion))
 }
@@ -350,6 +355,7 @@ const metamaskApi = {
   addWallet,
   getBalance,
   getWeb3,
+  getChainId,
   disconnect,
   isCorrectNetwork,
   isAvailableNetwork,

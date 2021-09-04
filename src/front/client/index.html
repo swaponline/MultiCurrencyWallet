@@ -794,7 +794,7 @@
       window.DEFAULT_FIAT = 'USD';
       window.DefaultCountryCode = '+1';
       window.widgetName = 'own widget name';
-      window.buyViaCreditCardLink = 'https://buy.itez.com/swaponline';
+      window.buyViaCreditCardLink = 'https://buy.moonpay.com/'; // need replace at 'https://buy.itez.com/swaponline' by default
 
       if (window.brandColor) {
         document.documentElement.style.setProperty("--color-brand", window.brandColor);
@@ -883,7 +883,7 @@
       })
 
       btnSkip.addEventListener('click', function () {
-        redirectionTo('#/exchange')
+        redirectionTo('#/exchange/quick')
       });
 
       function redirectionTo(urlPath) {

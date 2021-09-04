@@ -36,6 +36,7 @@ const SelectGroup = (props) => {
     activeFiat,
     onFocus,
     onBlur,
+    onKeyUp,
   } = props
 
   const currAllowed = currencies
@@ -59,11 +60,6 @@ const SelectGroup = (props) => {
           </div>
 
           <span styleName="balance">{balance && `Balance: ${new BigNumber(balance).dp(8, BigNumber.ROUND_CEIL)}`}</span>
-          {/*<div styleName="smallTooltip">
-            <Tooltip id={id}>
-              {tooltip}
-            </Tooltip>
-          </div>*/}
         </div>
         <Input
           styleName="inputRoot"
@@ -78,6 +74,7 @@ const SelectGroup = (props) => {
           onFocus={onFocus ? onFocus : doNothing}
           onBlur={onBlur ? onBlur : doNothing}
           onKeyDown={inputReplaceCommaWithDot}
+          onKeyUp={onKeyUp}
         />
         {
           (selectedValue === 'eth' || selectedValue === 'btc') && fiat > 0 &&

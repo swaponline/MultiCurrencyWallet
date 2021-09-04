@@ -1,5 +1,5 @@
 window.widgetEvmLikeTokens = [
-  {
+/*   {
     name: 'usdt',
     symbol: 'usdt',
     standard: 'erc20',
@@ -36,7 +36,7 @@ window.widgetEvmLikeTokens = [
     icon: 'https://wallet.miningtaxi.com/images/uniswap.svg',
     // Background color of icon
     iconBgColor: '#ff007a',
-  }
+  } */
 ]
 
 window.buildOptions = {

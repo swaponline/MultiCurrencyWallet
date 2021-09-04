@@ -1,0 +1,241 @@
+.newTokenInstruction {
+  max-width: 38em;
+  margin: 0 auto 0.2rem;
+  border-radius: 8px;
+  text-align: left;
+  border: 1px solid transparent;
+  background-color: var(--color-pale);
+
+  &.open {
+    border-color: var(--color-border);
+
+    .tab {
+      .arrow {
+        @include arrow('up', 9px, 2px, var(--color-notice));
+      }
+    }
+  }
+
+  .tab {
+    width: 100%;
+    padding: 0.4rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: inherit;
+  }
+
+  .arrow {
+    @include arrow('down', 9px, 2px, var(--color-notice));
+  }
+
+  .content {
+    padding: 0.8rem 1rem;
+    font-size: 0.94em;
+
+    .paragraph {
+      margin: 1rem 0;
+      font-size: 1em;
+    }
+
+    ol {
+      margin: 0;
+      padding: 0;
+      padding-left: 1rem;
+    }
+  }
+}
+
+.liquiditySourcesLink {
+  display: inline-block;
+  margin-top: 0.8rem;
+}
+
+.quickSwap {
+  max-width: 38em;
+  margin: 0.6rem auto 1rem;
+  padding: 2rem;
+  padding-bottom: 1.6rem;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: var(--box-shadow);
+  background: var(--color-background-elements);
+}
+
+.optionsWrapper {
+  &.disabled {
+    pointer-events: none;
+    opacity: 0.4;
+  }
+}
+
+.inputWrapper {
+  position: relative;
+}
+
+.swapNotice {
+  padding: 0.5rem;
+  text-align: left;
+  border-radius: 0.2rem;
+  border: 1px solid var(--color-border);
+  color: var(--color-notice);
+  background-color: var(--color-page-background);
+}
+
+.walletAddress {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 1.2rem 0;
+  color: var(--color-indicating);
+
+  .connectWalletBtn {
+    margin-bottom: 0.5rem;
+  }
+
+  .address {
+    font-size: 0.87em;
+  }
+}
+
+.advancedInput {
+  input {
+    height: 3.5em;
+  }
+}
+
+.bankCardButton {
+  margin-bottom: 2rem;
+}
+
+@mixin tooltip {
+  position: absolute;
+  z-index: 1;
+  top: -0.6rem;
+  right: 0.7rem;
+  padding: 0 0.5rem;
+  font-size: 0.8rem;
+  border-radius: 4px;
+  background-color: var(--color-background-elements);
+  color: var(--color-notice);
+}
+
+.balanceTooltip {
+  @include ff-mono;
+  @include tooltip;
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+}
+
+.balanceLoader {
+  @include tooltip;
+}
+
+.balanceUpdateBtn {
+  padding: 0.1rem 0;
+  user-select: none;
+  width: max-content;
+  display: block;
+  margin-left: 0.4rem;
+  white-space: nowrap;
+  color: var(--color-notice);
+
+  .icon {
+    display: inline-block;
+    margin-left: 0.5rem;
+    font-size: 0.9em;
+  }
+}
+
+.advancedSettings {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  form {
+    margin-top: 1.4rem;
+  }
+}
+
+.toggleWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  .name {
+    margin: 0;
+    margin-left: 0.6rem;
+  }
+
+  label {
+    margin: 0.5rem 0.3rem 0.5rem 0;
+  }
+}
+
+.settings {
+  width: 100%;
+  border-radius: 6px;
+}
+
+.swapInfo {
+  margin-bottom: 1.4rem;
+  padding-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  border-radius: 5px;
+  color: var(--color-notice);
+}
+
+.loaderWrapper {
+  display: inline-block;
+  margin: 0.8rem 0;
+  opacity: 0.7;
+}
+
+.indicator {
+  display: flex;
+  flex-wrap: wrap;
+  font-weight: 700;
+
+  span {
+    @include ff-mono;
+    display: inline-block;
+    font-weight: 400;
+    margin-left: 0.3rem;
+
+    &:not(:first-child) {
+      margin-left: 0.5rem;
+    }
+  }
+}
+
+.wrongNetworkMessage {
+  padding: 0.6rem;
+  border-radius: 6px;
+  border: 1px solid var(--color-f-error);
+  color: var(--color-f-error);
+}
+
+.buttonWrapper {
+  margin-bottom: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.button {
+  flex: 1;
+
+  &:not(:first-of-type) {
+    margin-left: 0.5rem;
+  }
+}
+
+.externalServiceWarning {
+  max-width: 28rem;
+  margin: 0 auto 1rem;
+  color: var(--color-indicating);
+}

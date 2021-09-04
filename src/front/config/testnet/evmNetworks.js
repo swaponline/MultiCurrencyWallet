@@ -3,6 +3,7 @@ import link from './link'
 
 export default {
   ETH: {
+    currency: 'ETH',
     chainId: 0x4,
     networkVersion: 4,
     chainName: 'Rinkeby Test Network',
@@ -10,6 +11,7 @@ export default {
     blockExplorerUrls: [link.etherscan]
   },
   BNB: {
+    currency: 'BNB',
     chainId: 0x61,
     networkVersion: 97,
     chainName: 'Binance Smart Chain Testnet',
@@ -17,6 +19,7 @@ export default {
     blockExplorerUrls: [link.bscscan]
   },
   MATIC: {
+    currency: 'MATIC',
     chainId: 0x13881,
     networkVersion: 80001,
     chainName: 'Matic Mumbai Testnet',
@@ -24,6 +27,7 @@ export default {
     blockExplorerUrls: [link.maticscan]
   },
   ARBETH: {
+    currency: 'ETH',
     chainId: 0x66EEB,
     networkVersion: 421611,
     chainName: 'Arbitrum Testnet',

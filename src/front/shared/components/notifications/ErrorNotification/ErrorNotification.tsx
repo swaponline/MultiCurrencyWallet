@@ -1,10 +1,5 @@
-import React from 'react'
-
-import cssModules from 'react-css-modules'
-
 import Notification from 'components/notification/Notification/Notification'
 import { FormattedMessage } from 'react-intl'
-
 
 const ErrorNotification = ({ data, name }) => (
   <Notification soundPlay={false} name={name} type={name}>
@@ -17,4 +12,4 @@ const ErrorNotification = ({ data, name }) => (
   </Notification>
 )
 
-export default cssModules(ErrorNotification, { allowMultiple: true })
+export default ErrorNotification

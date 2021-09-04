@@ -44,13 +44,12 @@ const getItem = (key) => {
     const value = localStorage.getItem(key)
 
     try {
-      //@ts-ignore: strictNullChecks
-      return JSON.parse(value)
-    } catch (err) {
-      console.group('helpers >%c localStorage', 'color: red;')
-      console.error('getItem parse error: ', err)
-      console.groupEnd()
+      if (value) {
+        return JSON.parse(value)
+      }
 
+      return value
+    } catch (err) {
       return value
     }
   }

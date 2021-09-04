@@ -1,5 +1,5 @@
 import puppeteer from 'puppeteer'
-import { createBrowser, addAssetToWallet, takeScreenshot, clickOn, timeOut } from '../utils'
+import { createBrowser, addTokenToWallet, takeScreenshot, clickOn, timeOut } from '../utils'
 
 jest.setTimeout(250 * 1000)
 
@@ -101,29 +101,10 @@ describe('Adding custom tokens', () => {
       try {
         const { contract, titleId, walletTitle } = options
 
-        await addAssetToWallet(testPage, typeId)
-
-        const addressInput: puppeteer.ElementHandle | null = await testPage.$('#customTokenInput')
-
-        if (addressInput) {
-          await addressInput.type(contract)
-        }
-
-        await clickOn({
+        await addTokenToWallet({
           page: testPage,
-          selector: '#customTokenNextButton',
-        })
-
-        await testPage.waitForSelector('#customTokenAddButton')
-
-        await clickOn({
-          page: testPage,
-          selector: '#customTokenAddButton',
-        })
-
-        await clickOn({
-          page: testPage,
-          selector: '#customTokenDoneButton',
+          standardId: typeId,
+          contract,
         })
 
         await testPage.waitForSelector(`#${titleId}WalletTitle`)

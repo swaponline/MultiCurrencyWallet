@@ -8,6 +8,7 @@
   "license": "MIT",
   "main": "./src/front/bin/server",
   "scripts": {
+    "postinstall": "patch-package",
     "audit": "cross-env NPM_AUDIT_IGNORE_DEV=1 NPM_AUDIT_IGNORE_LEVEL=low npm-audit-whitelister .npm-audit-whitelister.json",
     "common:example:send": "node ./src/common/examples/send.js",
     "common:example:unspents": "node ./src/common/examples/unspents.js",
@@ -28,6 +29,8 @@
     "test:e2e_send:actions": "ACTIONS=true jest tests/e2e/send/*.test.ts --detectOpenHandles",
     "test:e2e_swap": "jest tests/e2e/swap/*.test.ts --detectOpenHandles",
     "test:e2e_swap:actions": "ACTIONS=true jest tests/e2e/swap/*.test.ts --detectOpenHandles",
+    "test:e2e_quick_swap": "jest tests/e2e/quickSwap/form.test.ts --detectOpenHandles",
+    "test:e2e_quick_swap:actions": "ACTIONS=true NODE_ENV=production jest tests/e2e/quickSwap/form.test.ts --detectOpenHandles",
     "test:e2e_walletAddition": "jest tests/e2e/wallet/walletAddition.test.ts --detectOpenHandles",
     "test:e2e_tokenAddition": "jest tests/e2e/wallet/tokenAddition.test.ts --detectOpenHandles",
     "test:e2e_balanceDisplay": "jest tests/e2e/wallet/balanceDisplay.test.ts --detectOpenHandles",
@@ -196,6 +199,7 @@
     "wrtc": "^0.4.6"
   },
   "dependencies": {
+    "@1inch/limit-order-protocol": "^1.3.0",
     "@ethersproject/abi": "^5.0.10",
     "@ethersproject/providers": "^5.0.14",
     "@ethersproject/signing-key": "^5.0.8",
@@ -259,6 +263,7 @@
     "moment-with-locales-es6": "^1.0.1",
     "node-fetch": "^2.6.1",
     "node-gyp": "^8.0.0",
+    "patch-package": "^6.4.7",
     "postcss": "^8.2.4",
     "react": "^17.0.1",
     "react-copy-to-clipboard": "^5.0.2",

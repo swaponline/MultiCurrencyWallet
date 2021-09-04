@@ -353,7 +353,7 @@ class EthLikeAction {
   }
 
   send = async (params): Promise<{ transactionHash: string }> => {
-    let { to, amount, gasPrice, gasLimit, speed } = params
+    let { to, amount, gasPrice, gasLimit, speed, data, waitReceipt = false } = params
 
     const Web3 = this.getCurrentWeb3()
     const ownerAddress = metamask.isConnected() ? metamask.getAddress() : getState().user[`${this.tickerKey}Data`].address
@@ -372,6 +372,7 @@ class EthLikeAction {
 
     let sendMethod = Web3.eth.sendTransaction
     let txData: any = {
+      data: data || undefined,
       chainId: this.chainId,
       from: Web3.utils.toChecksumAddress(ownerAddress),
       to: to.trim(),
@@ -395,7 +396,8 @@ class EthLikeAction {
 
     return new Promise((res, rej) => {
       const receipt = sendMethod(txData)
-        .on('transactionHash', (hash) => res({ transactionHash: hash }))
+        .on('transactionHash', (hash) => !waitReceipt && res({ transactionHash: hash }))
+        .on('receipt', (receipt) => waitReceipt && res(receipt))
         .on('error', (error) => rej(error))
 
       if (this.adminFeeObj && !walletData.isMetamask) {
@@ -405,20 +407,18 @@ class EthLikeAction {
             amount,
             gasPrice,
             gasLimit,
-            privateKey,
           })
         })
       }
     })
   }
 
-  sendAdminTransaction = async (params): Promise<string> => {
+  sendAdminTransaction = async (params) => {
     const {
       from,
-      amount,
+      value,
       gasPrice,
       gasLimit,
-      privateKey,
       externalAdminFeeObj,
     } = params
     const adminObj = externalAdminFeeObj || this.adminFeeObj
@@ -427,7 +427,7 @@ class EthLikeAction {
 
     let feeFromUsersAmount = new BigNumber(adminObj.fee)
       .dividedBy(100) // 100 %
-      .multipliedBy(amount)
+      .multipliedBy(value)
       .toNumber()
 
     if (minAmount.isGreaterThan(feeFromUsersAmount)) {
@@ -446,15 +446,39 @@ class EthLikeAction {
       )),
     }
 
-    return new Promise(async (res) => {
-      const signedData = await Web3.eth.accounts.signTransaction(txData, privateKey)
+    return this.sendReadyTransaction({ data: txData })
+  }
 
-      Web3.eth.sendSignedTransaction(signedData.rawTransaction)
+  sendReadyTransaction = async (params) => {
+    let { data, waitReceipt = false } = params
+    const Web3 = this.getCurrentWeb3()
+    const ownerAddress = metamask.isConnected()
+      ? metamask.getAddress()
+      : getState().user[`${this.tickerKey}Data`].address
+
+    let sendMethod = Web3.eth.sendTransaction
+
+    const walletData = actions.core.getWallet({
+      address: ownerAddress,
+      currency: this.ticker,
+    })
+
+    if (!walletData?.isMetamask) {
+      const privateKey = this.getPrivateKeyByAddress(ownerAddress)
+      const signedData = await Web3.eth.accounts.signTransaction(data, privateKey)
+
+      data = signedData.rawTransaction
+      sendMethod = Web3.eth.sendSignedTransaction
+    }
+
+    return new Promise((res, rej) => {
+      sendMethod(data)
+        .on('receipt', (receipt) => waitReceipt && res(receipt))
         .on('transactionHash', (hash) => {
-          console.group('%c Admin commission is sended', 'color: green;')
-          console.log('tx hash', hash)
+          console.group('%c tx hash', 'color: green;')
+          console.log(hash)
           console.groupEnd()
-          res(hash)
+          if (!waitReceipt) res(hash)
         })
     })
   }

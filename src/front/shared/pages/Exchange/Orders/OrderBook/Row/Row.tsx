@@ -465,7 +465,7 @@ class Row extends Component<RowProps, RowState> {
             <div styleName="tdContainer-1">
               <span styleName="firstType">
                 {type === PAIR_TYPES.BID
-                  ? (<FormattedMessage id="RowMobileYouSend" defaultMessage="You send" />)
+                  ? (<FormattedMessage id="MyOrdersYouSend" defaultMessage="You send" />)
                   : (<FormattedMessage id="RowMobileYouGet" defaultMessage="You get" />)}
               </span>
               <span styleName='rowAmount withIcon'>
@@ -482,7 +482,7 @@ class Row extends Component<RowProps, RowState> {
               <span styleName="secondType">
                 {type === PAIR_TYPES.BID
                   ? (<FormattedMessage id="RowMobileYouGet" defaultMessage="You get" />)
-                  : (<FormattedMessage id="RowMobileYouSend" defaultMessage="You send" />)}
+                  : (<FormattedMessage id="MyOrdersYouSend" defaultMessage="You send" />)}
               </span>
               <span styleName='rowAmount'>{`${mobileFormatCrypto(total, base)} ${this.renderCoinName(base)}`}</span>
             </div>

@@ -25,6 +25,7 @@
     "message": "Создать кошелёк",
     "files": [
       "src/front/shared/components/Header/config.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/index.tsx",
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
   },
@@ -116,6 +117,7 @@
     "id": "ErrorNotification12",
     "message": "Упс!, Что то пошло не так! ",
     "files": [
+      "src/front/shared/components/LimitOrders/Row.tsx",
       "src/front/shared/components/notifications/ErrorNotification/ErrorNotification.tsx"
     ]
   },
@@ -411,7 +413,10 @@
     "id": "MyOrdersYouSend",
     "message": "Вы отправите",
     "files": [
-      "src/front/shared/pages/Exchange/Orders/MyOrders/MyOrders.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx",
+      "src/front/shared/pages/Exchange/Orders/MyOrders/MyOrders.tsx",
+      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/ExchangeForm.tsx"
     ]
   },
   {
@@ -439,20 +444,22 @@
     "id": "orders105",
     "message": "Цена",
     "files": [
-      "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
+      "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/SwapInfo.tsx"
     ]
   },
   {
     "id": "orders128",
     "message": "Создать предложение",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
     "id": "addoffer381",
     "message": "Продажа",
     "files": [
+      "src/front/shared/components/modals/LimitOrder/ModalForm.tsx",
       "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
     ]
   },
@@ -460,6 +467,7 @@
     "id": "addoffer396",
     "message": "Покупка",
     "files": [
+      "src/front/shared/components/modals/LimitOrder/ModalForm.tsx",
       "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
     ]
   },
@@ -531,13 +539,6 @@
     ]
   },
   {
-    "id": "RowMobileYouSend",
-    "message": "Вы отправите",
-    "files": [
-      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
-    ]
-  },
-  {
     "id": "RowMobileYouGet",
     "message": "Вы получите",
     "files": [
@@ -567,7 +568,7 @@
     "id": "partial291",
     "message": "Ожидание второго участника (30 сек)",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
@@ -585,129 +586,125 @@
     ]
   },
   {
-    "id": "partial243",
-    "message": "Отдаете",
-    "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
-    ]
-  },
-  {
     "id": "enterYouSend",
     "message": "Заполните поле \"Отдаете\"",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
     "id": "swapDisabled",
     "message": "Обмен отключен",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
     "id": "noOffers",
     "message": "Нет предложений",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
     "id": "selectFromAddress",
     "message": "Выберите \"С адреса\"",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
     "id": "selectToAddress",
     "message": "Выберите \"На адрес\"",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
     "id": "enterToAddress",
     "message": "Введите целевой кошелек",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
     "id": "connectDestinationWallet",
     "message": "Подключите свой целевой кошелек",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
     "id": "setDestination",
     "message": "Выберите тип целевого кошелька",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
     "id": "connectYourWallet",
     "message": "Подключите кошелек в \"С адреса\"",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
     "id": "selectSendType",
     "message": "Выберите тип кошелька \"С адреса\"",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
     "id": "errorWithGetAmount",
     "message": "\"Получаете\" не больше 0",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
     "id": "incorrectNetwork",
     "message": "Пожалуйста, выберите правильную сеть",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
     "id": "lowAmount",
     "message": "Низкая сумма",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
     "id": "waitPeerAnswer",
     "message": "Ожидается ответ участника обмена",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
     "id": "enterLesserAmount",
     "message": "Введите меньшую сумму в \"Отдаете\"",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
     "id": "contactSupport",
     "message": "Обратитесь в службу поддержки",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
     "id": "partial255",
     "message": "Получаете",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/components/LimitOrders/OrderSettings.tsx",
+      "src/front/shared/components/LimitOrders/index.tsx",
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/ExchangeForm.tsx"
     ]
   },
   {
@@ -809,35 +806,35 @@
     "id": "PartialPriceNoOrdersReduce",
     "message": "Предложения не найдены, попробуйте позже или измените валютную пару",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
     "id": "PartialPriceNoOrdersReduceAllInfo",
     "message": "Предложения не найдены, введите сумму меньше {maxForBuy}, {maxForSell}",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
     "id": "PartialOfferCantProceed1",
     "message": "Запрос отклонен. {link}",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
     "id": "PartialOfferCantProceed1_1",
     "message": "Почему?",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
     "id": "ErrorBtcLowAmount",
     "message": "{btcAmount} BTC - Слишком маленькая сумма, не покрывает комиссию за майнинг",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
@@ -851,6 +848,7 @@
     "id": "partial462",
     "message": "Сумма, которую вы хотите обменять используя кошелек swap.online или внешний кошелек",
     "files": [
+      "src/front/shared/components/modals/LimitOrder/ModalForm.tsx",
       "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
     ]
   },
@@ -858,6 +856,7 @@
     "id": "partial478",
     "message": "Сумма, которую вы получите после обмена",
     "files": [
+      "src/front/shared/components/modals/LimitOrder/ModalForm.tsx",
       "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
     ]
   },
@@ -865,14 +864,15 @@
     "id": "partial541",
     "message": "Обменять",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
     "id": "partial767",
     "message": "Баланс: ",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/ExchangeForm.tsx"
     ]
   },
   {
@@ -1499,6 +1499,7 @@
     "id": "orders94s",
     "message": "Вы уверены, что хотите удалить ордер?",
     "files": [
+      "src/front/shared/components/LimitOrders/index.tsx",
       "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
     ]
   },
@@ -2518,21 +2519,21 @@
     "id": "continueDeclined977",
     "message": "Продолжить обмен",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
     "id": "chooseCorrectNetwork",
     "message": "Откройте подключенный кошелек и выберите {br}{chainName}",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
     "id": "switchToCorrectNetwork",
     "message": "Переключить на {br}{chainName}",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
@@ -3348,7 +3349,6 @@
     "id": "SweepBannerButton",
     "message": "Готово",
     "files": [
-      "src/front/shared/components/layout/DashboardLayout/DashboardLayout.tsx",
       "src/front/shared/components/modals/AddCustomToken/index.tsx"
     ]
   },
@@ -3462,14 +3462,14 @@
     "id": "Exchange_FromAddress",
     "message": "С адреса",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
     "id": "Exchange_ToAddress",
     "message": "На адрес",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
@@ -3526,7 +3526,7 @@
     "id": "Exchange_BestPrice",
     "message": "Лучшая цена:",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
@@ -4457,14 +4457,14 @@
     "id": "AlertOrderNonEnoughtBalance",
     "message": "Please top up your balance before you start the swap.",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
     "id": "AlertOrderNonEnoughtBalanceTitle",
     "message": "Not enough balance.",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
@@ -4506,6 +4506,7 @@
     "id": "BTCMS_SaveMnemonicButton",
     "message": "Сохранить секретную фразу",
     "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/index.tsx",
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx",
       "src/front/shared/pages/Multisign/Btc/Btc.tsx"
     ]
@@ -4570,7 +4571,7 @@
     "id": "Exchange_AvialableBalance",
     "message": "Доступно: ",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
@@ -4598,21 +4599,21 @@
     "id": "Swap_NeedMoreAmount",
     "message": "На вашем балансе должно быть не менее {amount} {currency}. {br}Коммисия майнера {sellFee} {sellCoin} и {buyFee} {buyCoin}",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
     "id": "Exchange_MinerFees",
     "message": "Комиссия майнера",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
     "id": "Exchange_ServiceFee",
     "message": "Комиссия сервиса",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
@@ -4683,21 +4684,21 @@
     "id": "createOrderMessageForUser",
     "message": "Вы должны быть онлайн все время, иначе ваше предложение не будет видно другим пользователям",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
     "id": "createOrderNoManyMessageForUser",
     "message": "Пополните свой баланс",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
     "id": "AddLiquidity",
     "message": "Добавить Ликвидность",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
@@ -4872,7 +4873,8 @@
     "id": "Exchange_ConnectAddressOption",
     "message": "Подключить кошелек",
     "files": [
-      "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
+      "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
     ]
   },
   {
@@ -5198,7 +5200,7 @@
     "message": "Атомарный своп",
     "files": [
       "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx",
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
@@ -5206,7 +5208,7 @@
     "message": "Турбо обмен",
     "files": [
       "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx",
-      "src/front/shared/pages/Exchange/Exchange.tsx",
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx",
       "src/front/shared/pages/TurboSwap/TurboSwap.tsx"
     ]
   },
@@ -5284,7 +5286,9 @@
     "id": "FormattedMessageIdApprove",
     "message": "Одобрить {token}",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/components/modals/LimitOrder/ModalForm.tsx",
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
     ]
   },
   {
@@ -5368,14 +5372,14 @@
     "id": "ExchangeTokenWasApproved",
     "message": "Token was approved.{br}Explorer link: {txLink}",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
     "id": "Orderbook",
     "message": "Книга заказов",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
@@ -5894,14 +5898,348 @@
     "id": "NotEnoughForBuy",
     "message": "У вас должна быть комиссия за майнинг как минимум {buyFee} {buyCoin}",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
     "id": "WalletRow_MetamaskNotAvailableNetwork",
     "message": "Пожалуйста, выберите другую",
     "files": [
+      "src/front/shared/components/modals/LimitOrder/ModalForm.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/index.tsx",
       "src/front/shared/pages/Wallet/Row/Row.tsx"
+    ]
+  },
+  {
+    "id": "bankCardButtonDescription",
+    "message": "В модальном окне вам нужно выполнить несколько шагов, чтобы обменять фиатные средства на ETH. Выберите ETH в выпадающем списке и укажите адрес своего кошелька (вы можете скопировать его ниже). Подождите, пока средства не будут зачислены на ваш адрес. Затем вы можете купить токены, используя его.",
+    "files": [
+      "src/front/shared/components/Header/WidgetTours/QuickSwapFormTour.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/ExchangeForm.tsx"
+    ]
+  },
+  {
+    "id": "noActiveOrders",
+    "message": "Нет активных ордеров",
+    "files": [
+      "src/front/shared/components/LimitOrders/index.tsx"
+    ]
+  },
+  {
+    "id": "rate",
+    "message": "Ставка",
+    "files": [
+      "src/front/shared/components/LimitOrders/index.tsx"
+    ]
+  },
+  {
+    "id": "youPay",
+    "message": "Вы Платите",
+    "files": [
+      "src/front/shared/components/LimitOrders/OrderSettings.tsx",
+      "src/front/shared/components/LimitOrders/index.tsx"
+    ]
+  },
+  {
+    "id": "yourOrders",
+    "message": "Ваши ордера",
+    "files": [
+      "src/front/shared/components/LimitOrders/index.tsx"
+    ]
+  },
+  {
+    "id": "limitOrderCreated",
+    "message": "Вы успешно создали ордер",
+    "files": [
+      "src/front/shared/components/modals/LimitOrder/index.tsx"
+    ]
+  },
+  {
+    "id": "limitOrderIsNotCreated",
+    "message": "Что-то пошло не так. Повторите попытку позже",
+    "files": [
+      "src/front/shared/components/modals/LimitOrder/index.tsx"
+    ]
+  },
+  {
+    "id": "create",
+    "message": "Создать",
+    "files": [
+      "src/front/shared/components/modals/LimitOrder/ModalForm.tsx"
+    ]
+  },
+  {
+    "id": "limitOrder",
+    "message": "Лимитный ордер",
+    "files": [
+      "src/front/shared/components/modals/LimitOrder/ModalForm.tsx"
+    ]
+  },
+  {
+    "id": "notEnoughTokensForSwap",
+    "message": "Не все валюты доступны для обмена. Похоже, у вас недостаточно жетонов. Попробуйте добавить их еще.",
+    "files": [
+      "src/front/shared/components/modals/LimitOrder/ModalForm.tsx"
+    ]
+  },
+  {
+    "id": "transacton",
+    "message": "Транзакция",
+    "files": [
+      "src/front/shared/components/notifications/Transaction/index.tsx"
+    ]
+  },
+  {
+    "id": "transactonIsCompleted",
+    "message": "Транзакция завершена",
+    "files": [
+      "src/front/shared/components/notifications/Transaction/index.tsx"
+    ]
+  },
+  {
+    "id": "viewTransaction",
+    "message": "Просмотр транзакции",
+    "files": [
+      "src/front/shared/components/notifications/Transaction/index.tsx"
+    ]
+  },
+  {
+    "id": "atomicSwap",
+    "message": "Атомный обмен",
+    "files": [
+      "src/front/shared/pages/Exchange/index.tsx"
+    ]
+  },
+  {
+    "id": "quickSwap",
+    "message": "Быстрый обмен",
+    "files": [
+      "src/front/shared/pages/Exchange/index.tsx"
+    ]
+  },
+  {
+    "id": "advancedSettings",
+    "message": "Дополнительные настройки",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/AdvancedSettings.tsx"
+    ]
+  },
+  {
+    "id": "gasLimit",
+    "message": "Предел газа",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/AdvancedSettings.tsx"
+    ]
+  },
+  {
+    "id": "gasLimitNotice",
+    "message": "Лимит газа - это максимальное количество единиц газа, которое вы готовы потратить",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/AdvancedSettings.tsx"
+    ]
+  },
+  {
+    "id": "gasPrice",
+    "message": "Цена газа",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/AdvancedSettings.tsx"
+    ]
+  },
+  {
+    "id": "gasPriceNotice",
+    "message": "Цена на газ определяет количество эфира, которое вы готовы заплатить за каждую единицу газа",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/AdvancedSettings.tsx"
+    ]
+  },
+  {
+    "id": "createLimitOrder",
+    "message": "Создать лимитный ордер",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
+    ]
+  },
+  {
+    "id": "limitOrders",
+    "message": "Лимитные ордера",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
+    ]
+  },
+  {
+    "id": "swap",
+    "message": "Обменять",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
+    ]
+  },
+  {
+    "id": "fee",
+    "message": "Комиссия",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/SwapInfo.tsx"
+    ]
+  },
+  {
+    "id": "network",
+    "message": "Сеть",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/SwapInfo.tsx"
+    ]
+  },
+  {
+    "id": "buyViaBankCard",
+    "message": "Купить с помощью банковской карты",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/ExchangeForm.tsx"
+    ]
+  },
+  {
+    "id": "slippageNotice",
+    "message": "Если цена меняется в период между размещением и подтверждением вашего ордера, это называется \"проскальзывание\". Ваш обмен автоматически отменится, если проскальзывание превысит ваш параметр \"Проскальзывание\".",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/AdvancedSettings.tsx"
+    ]
+  },
+  {
+    "id": "slippageTolerance",
+    "message": "Проскальзывание (%)",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/AdvancedSettings.tsx"
+    ]
+  },
+  {
+    "id": "addressOfYourWallet",
+    "message": "Адрес вашего кошелька:",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
+    ]
+  },
+  {
+    "id": "total",
+    "message": "Общая сумма",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/SwapInfo.tsx"
+    ]
+  },
+  {
+    "id": "allOrders",
+    "message": "Все ордера",
+    "files": [
+      "src/front/shared/components/LimitOrders/AllOrdersHeader.tsx"
+    ]
+  },
+  {
+    "id": "buyToken",
+    "message": "Купить",
+    "files": [
+      "src/front/shared/components/LimitOrders/Row.tsx"
+    ]
+  },
+  {
+    "id": "Chain",
+    "message": "Цепочка",
+    "files": [
+      "src/front/shared/components/LimitOrders/OrderSettings.tsx"
+    ]
+  },
+  {
+    "id": "noOptions",
+    "message": "Нет вариантов",
+    "files": [
+      "src/front/shared/components/LimitOrders/OrderSettings.tsx"
+    ]
+  },
+  {
+    "id": "disclaimerAboutBetaVersion",
+    "message": "* Отказ от ответственности: в обмене используется протокол ликвидности 0x. Будьте осторожны и используйте на свой страх и риск.",
+    "files": [
+      "src/front/shared/components/modals/LimitOrder/ModalForm.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
+    ]
+  },
+  {
+    "id": "insufficientBalance",
+    "message": "Недостаточный баланс",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
+    ]
+  },
+  {
+    "id": "insufficientLiquidity",
+    "message": "Недостаточная ликвидность",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
+    ]
+  },
+  {
+    "id": "addNewCurrencyMessage",
+    "message": "На странице кошелька нажмите кнопку добавить валюту.",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/NewTokenInstruction.tsx"
+    ]
+  },
+  {
+    "id": "checkTokenInTheSwapList",
+    "message": "Теперь вы можете видеть свой токен в списке.",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/NewTokenInstruction.tsx"
+    ]
+  },
+  {
+    "id": "choseTokenStandard",
+    "message": "Выберите стандарт токена и нажмите кнопку продолжить.",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/NewTokenInstruction.tsx"
+    ]
+  },
+  {
+    "id": "confirmTokenAddition",
+    "message": "Проверьте информацию и подтвердите добавление токена.",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/NewTokenInstruction.tsx"
+    ]
+  },
+  {
+    "id": "createNewPoolInAggregates",
+    "message": "Выберите один из поддерживаемых источников ликвидности и создайте там новый пул с вашим токеном.",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/NewTokenInstruction.tsx"
+    ]
+  },
+  {
+    "id": "detailedInformation",
+    "message": "Подробная информация",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/NewTokenInstruction.tsx"
+    ]
+  },
+  {
+    "id": "enterTokenContractAddress",
+    "message": "Введите адрес контракта токена.",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/NewTokenInstruction.tsx"
+    ]
+  },
+  {
+    "id": "howToAddToken",
+    "message": "Как добавить токен",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/NewTokenInstruction.tsx"
+    ]
+  },
+  {
+    "id": "ifYouDoNotSeeNewToken",
+    "message": "Вы не сможете обменять некоторые токены, потому что с вашим токеном может не быть доступного пула ликвидности. Вы должны создать новый, если хотите обменять его.",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/NewTokenInstruction.tsx"
+    ]
+  },
+  {
+    "id": "youWillSeeYourToken",
+    "message": "После определения пула ликвидности с вашим токеном он будет доступен для обмена.",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/NewTokenInstruction.tsx"
     ]
   }
 ]

@@ -1,0 +1,187 @@
+.orderSettings {
+  width: 100%;
+  padding-top: 0.4rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.currencyDropDowns {
+  display: flex;
+}
+
+.header {
+  width: 100%;
+  padding: 0.4rem 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.makerAddressWrapper {
+  padding: 0 0.5rem;
+  border-radius: 0.2rem;
+
+  input {
+    padding: 0.1rem 0.6rem;
+    border-radius: inherit;
+    border: 1px solid var(--color-border);
+  }
+
+  button {
+    margin-left: 0.3rem;
+    border-radius: inherit;
+    background-color: var(--color-border);
+  }
+}
+
+.optionWrapper {
+  position: relative;
+  border: 1px solid var(--color-border);
+
+  &.chain {
+    margin-right: auto;
+  }
+
+  &:not(:first-child) {
+    margin-left: 2%;
+  }
+
+  .title {
+    position: relative;
+    z-index: 2;
+    color: var(--color-indicating);
+  }
+
+  .noOptions {
+    margin-top: 1.2rem;
+    padding: 0 0.7rem;
+    white-space: nowrap;
+    color: var(--color-notice);
+  }
+}
+
+.dropdownWrapper {
+  width: min-content;
+}
+
+.orderBookTable {
+  @include ff-regular;
+  width: 100%;
+}
+
+.row {
+  @include ff-mono;
+  position: relative;
+  color: var(--color-indicating);
+
+  .number {
+    color: var(--color);
+  }
+
+  &.mobile {
+    font-size: 0.9em;
+
+    .rate {
+      display: none;
+    }
+  }
+
+  .actionBtnWrapper {
+    padding: 0.12rem 0.2rem;
+  }
+
+  .purchaseButton {
+    padding: 0.1rem 0.6rem;
+    border-radius: 0.2rem;
+    background-color: var(--color-brand);
+    color: var(--color-f-brightest);
+
+    &.disabled,
+    &.disabled:hover {
+      background-color: var(--color-inactive-border);
+      color: var(--color-indicating);
+    }
+  }
+}
+
+.noOrdersMessage {
+  padding: 0.7rem 0;
+  color: var(--color-notice);
+}
+
+.modalContent {
+  max-width: 22rem;
+
+  .title {
+    margin-bottom: 2rem;
+
+    b {
+      @include ff-mono;
+    }
+  }
+
+  .amountNotice {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    color: var(--color-indicating);
+
+    .parameter {
+      display: flex;
+      margin-bottom: 0.3rem;
+      white-space: nowrap;
+    }
+
+    .monostyle {
+      @include ff-mono;
+      display: inline-block;
+      margin-left: 0.5rem;
+    }
+  }
+
+  .buttons {
+    margin-top: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    button:not(:first-child) {
+      margin-left: 0.6rem;
+    }
+
+    button:last-child {
+      flex: 50%;
+    }
+  }
+}
+
+@media all and (max-width: 700px) {
+  .orderSettings {
+    flex-direction: column;
+    align-items: flex-start;
+
+    .optionWrapper.chain {
+      width: 100%;
+      margin-bottom: 0.8rem;
+
+      .dropDownNoRole {
+        width: 100%;
+      }
+    }
+  }
+}
+
+.arrowsIcon {
+  color: var(--color);
+}
+
+@media all and (max-width: 580px) {
+  .header.allOrders {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .makerAddressWrapper {
+    padding: 0.5rem 0;
+  }
+}

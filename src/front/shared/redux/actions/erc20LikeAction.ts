@@ -60,12 +60,16 @@ class Erc20LikeAction {
     )
     console.group(`Actions >%c ${this.standard}`, 'color: red;')
     console.error('error: ', error)
-    console.log('%c Stack trace', 'color: orange;')
-    console.trace()
     console.groupEnd()
   }
 
   getCurrentWeb3 = () => metamask.getWeb3() || this.Web3
+
+  getTokenContract = (contractAddr) => {
+    const web3 = this.getCurrentWeb3()
+
+    return new web3.eth.Contract(TokenAbi, contractAddr)
+  }
 
   addToken = (params) => {
     const { standard, contractAddr, symbol, decimals, baseCurrency } = params
@@ -178,7 +182,7 @@ class Erc20LikeAction {
         name,
         amount,
       })
-      cacheStorageSet('currencyBalances', `token_${tokenKey}_${address}`, amount, 60)
+      cacheStorageSet('currencyBalances', `token_${tokenKey}_${address}`, amount, 30)
 
       return amount
     } catch (error) {
@@ -514,17 +518,18 @@ class Erc20LikeAction {
     })
   }
 
-  approve = async (params) => {
+  approve = async (params): Promise<string> => {
     const { name, to, amount } = params
     const { tokenContract, decimals } = this.returnTokenInfo(name)
     const feeResult = await this.fetchFees({ speed: 'fast' })
 
-    const exp = new BigNumber(10).pow(decimals)
-    const weiAmount = new BigNumber(amount).times(exp).toString()
+    const hexWeiAmount = new BigNumber(amount)
+      .multipliedBy(10 ** decimals)
+      .toString(16)
 
     return new Promise(async (res, rej) => {
       const receipt = await tokenContract.methods
-        .approve(to, weiAmount)
+        .approve(to, '0x' + hexWeiAmount)
         .send(feeResult)
         .on('transactionHash', (hash) => {
           console.group('Actions >%c approve the token', 'color: green')
@@ -535,6 +540,7 @@ class Erc20LikeAction {
         .catch((error) => {
           this.reportError(error)
           rej(error)
+          return
         })
 
       res(receipt.transactionHash)
@@ -558,8 +564,9 @@ class Erc20LikeAction {
 
     try {
       const allowance = await erc20Like[this.standard].checkAllowance({
-        tokenOwnerAddress: address,
-        tokenContractAddress: contractAddress,
+        owner: address,
+        spender: externalConfig.swapContract[this.standard],
+        contract: contractAddress,
         decimals,
       })
 
