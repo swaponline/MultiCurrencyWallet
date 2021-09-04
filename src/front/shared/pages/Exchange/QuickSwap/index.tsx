@@ -102,7 +102,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       slippage: undefined,
       slippageMaxRange: 100,
       wrongNetwork,
-      network: externalConfig.evmNetworks[spendedCurrency.blockchain],
+      network: externalConfig.evmNetworks[spendedCurrency.blockchain || spendedCurrency.value.toUpperCase()],
       swapData: undefined,
       swapFee: '',
       gasPrice: '',
@@ -172,7 +172,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
         spendedCurrency,
         receivedList,
         receivedCurrency,
-        network: externalConfig.evmNetworks[spendedCurrency.blockchain],
+        network: externalConfig.evmNetworks[spendedCurrency.blockchain || spendedCurrency.value.toUpperCase()],
         baseChainWallet,
         fromWallet,
         toWallet
@@ -217,7 +217,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     })
 
     this.setState(() => ({
-      network: externalConfig.evmNetworks[spendedCurrency.blockchain],
+      network: externalConfig.evmNetworks[spendedCurrency.blockchain || spendedCurrency.value.toUpperCase()],
       baseChainWallet,
     }))
   }
