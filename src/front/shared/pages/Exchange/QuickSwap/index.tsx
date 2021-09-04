@@ -751,8 +751,6 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       blockReason,
     } = this.state
 
-    console.log('baseChainWallet', baseChainWallet)
-
     const linked = Link.all(
       this,
       'fiatAmount',
