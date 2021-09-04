@@ -258,7 +258,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   returnReceivedList = (currencies, spendedCurrency) => {
     return currencies.filter(
       (item) =>
-        item.blockchain === spendedCurrency.blockchain && item.value !== spendedCurrency.value
+        (item.blockchain || item.value.toUpperCase()) === (spendedCurrency.blockchain || spendedCurrency.value.toUpperCase())&& item.value !== spendedCurrency.value
     )
   }
 
