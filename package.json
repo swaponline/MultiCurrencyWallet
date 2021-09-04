@@ -261,7 +261,7 @@
     "module-alias": "^2.2.2",
     "moment": "^2.29.1",
     "moment-with-locales-es6": "^1.0.1",
-    "node-fetch": "^2.6.1",
+    "node-fetch": "^3.0.0",
     "node-gyp": "^8.0.0",
     "patch-package": "^6.4.7",
     "postcss": "^8.2.4",
