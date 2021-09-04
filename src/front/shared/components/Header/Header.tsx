@@ -8,7 +8,7 @@ import { connect } from 'redaction'
 
 import links from 'helpers/links'
 import actions from 'redux/actions'
-import { constants } from 'helpers'
+import { constants, metamask } from 'helpers'
 import config from 'helpers/externalConfig'
 import { injectIntl, FormattedMessage } from 'react-intl'
 
@@ -285,7 +285,7 @@ class Header extends Component<any, any> {
       case isWidgetBuild && !wasOnWidgetWalletLs:
         tourEvent = this.openWidgetWalletTour
         break
-      case !userCurrencies.length && isWalletPage && !config.opts.plugins.backupPlugin:
+      case !metamask.isConnected() && !userCurrencies.length && isWalletPage && !config.opts.plugins.backupPlugin:
         this.openCreateWallet({ onClose: tourEvent })
         break
       default:
