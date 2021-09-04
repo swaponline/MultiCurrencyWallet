@@ -93,7 +93,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       currencies,
       receivedList,
       baseChainWallet,
-      spendedCurrency: spendedCurrency,
+      spendedCurrency,
       spendedAmount: '',
       fromWallet: fromWallet || {},
       receivedCurrency,
@@ -119,7 +119,8 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { allCurrencies, tokensWallets } = this.props
+    const { allCurrencies, tokensWallets, metamaskData } = this.props
+    const { metamaskData: prevMetamaskData} = prevProps
     const { wrongNetwork: prevWrongNetwork, currencies: prevCurrencies } = prevState
     const { spendedCurrency } = this.state
 
@@ -135,9 +136,10 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     )
 
     const needUpdate =
-      metamask.isConnected() &&
+      metamaskData.isConnected &&
       ((prevWrongNetwork && (isSpendedCurrencyNetworkAvailable || isCurrentNetworkAvailable)) ||
-        (!prevWrongNetwork && !isSpendedCurrencyNetworkAvailable))
+        (!prevWrongNetwork && !isSpendedCurrencyNetworkAvailable) ||
+        (prevMetamaskData.address !== metamaskData.address))
 
     if (needUpdate) {
       let { currencies, wrongNetwork } = actions.oneinch.filterCurrencies({
@@ -153,6 +155,17 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       let receivedList = this.returnReceivedList(currencies, spendedCurrency)
       let receivedCurrency = receivedList[0]
 
+      const baseChainWallet = actions.core.getWallet({
+        currency: spendedCurrency.blockchain,
+      })
+
+      const fromWallet = actions.core.getWallet({
+        currency: spendedCurrency.value,
+      })
+      const toWallet = actions.core.getWallet({
+        currency: receivedCurrency.value,
+      })
+
       this.setState(() => ({
         wrongNetwork,
         currencies,
@@ -160,6 +173,9 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
         receivedList,
         receivedCurrency,
         network: externalConfig.evmNetworks[spendedCurrency.blockchain],
+        baseChainWallet,
+        fromWallet,
+        toWallet
       }))
     }
   }
@@ -930,4 +946,5 @@ export default connect(({ currencies, user }) => ({
   allCurrencies: currencies.items,
   tokensWallets: user.tokensData,
   activeFiat: user.activeFiat,
+  metamaskData: user.metamaskData,
 }))(CSSModules(QuickSwap, styles, { allowMultiple: true }))
