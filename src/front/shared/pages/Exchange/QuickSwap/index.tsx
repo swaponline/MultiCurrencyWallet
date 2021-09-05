@@ -33,41 +33,25 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   constructor(props) {
     super(props)
 
-    const { match, activeFiat, allCurrencies, tokensWallets } = props
+    const { match, activeFiat, allCurrencies } = props
     const { params, path } = match
-    let { currencies, wrongNetwork } = actions.oneinch.filterCurrencies({
-      currencies: allCurrencies,
-      tokensWallets,
-    })
 
-    // reset assets' list and then block interface while the user on a wrong network
-    if (wrongNetwork) {
-      currencies = allCurrencies
-    }
+    let {
+      currentCurrencies,
+      receivedList,
+      spendedCurrency,
+      receivedCurrency,
+      wrongNetwork,
+    } = this.returnCurrentAssetState(allCurrencies)
 
     const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
 
-    let spendedCurrency = currencies[0]
-    let receivedList = this.returnReceivedList(currencies, spendedCurrency)
-
-    // user doesn't have enough tokens in the wallet. Show a notice about it
-    if (!receivedList.length) {
-      receivedList = [{
-        blockchain: "-",
-        fullTitle: "-",
-        name: "-",
-        notExist: true,
-      }]
-    }
-
-    let receivedCurrency = receivedList[0]
-
     // if we have url parameters then show it as default values
     if (!wrongNetwork && path.match(/\/quick/) && params.sell && params.buy) {
-      const urlSpendedCurrency = currencies.find(
+      const urlSpendedCurrency = currentCurrencies.find(
         (item) => item.value.toLowerCase() === params.sell.toLowerCase()
       )
-      const urlReceivedList = this.returnReceivedList(currencies, urlSpendedCurrency)
+      const urlReceivedList = this.returnReceivedList(currentCurrencies, urlSpendedCurrency)
       const urlReceivedCurrency = urlReceivedList.find(
         (item) => item.value.toLowerCase() === params.buy.toLowerCase()
       )
@@ -101,7 +85,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       externalWindowTimer: null,
       fiat: window.DEFAULT_FIAT || activeFiat,
       fiatAmount: 0,
-      currencies,
+      currencies: currentCurrencies,
       receivedList,
       baseChainWallet,
       spendedCurrency,
@@ -130,10 +114,10 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { allCurrencies, tokensWallets, metamaskData } = this.props
+    const { metamaskData } = this.props
     const { metamaskData: prevMetamaskData} = prevProps
-    const { wrongNetwork: prevWrongNetwork, currencies: prevCurrencies } = prevState
-    const { spendedCurrency } = this.state
+    const { wrongNetwork: prevWrongNetwork } = prevState
+    const { currencies, spendedCurrency } = this.state
 
     if (this.isSwapNotAvailable()) {
       this.setState(() => ({
@@ -153,18 +137,13 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
         (prevMetamaskData.address !== metamaskData.address))
 
     if (needUpdate) {
-      let { currencies, wrongNetwork } = actions.oneinch.filterCurrencies({
-        currencies: allCurrencies,
-        tokensWallets,
-      })
-
-      if (wrongNetwork) {
-        currencies = prevCurrencies
-      }
-
-      let spendedCurrency = currencies[0]
-      let receivedList = this.returnReceivedList(currencies, spendedCurrency)
-      let receivedCurrency = receivedList[0]
+      const {
+        currentCurrencies,
+        receivedList,
+        spendedCurrency,
+        receivedCurrency,
+        wrongNetwork,
+      } = this.returnCurrentAssetState(currencies)
 
       const baseChainWallet = actions.core.getWallet({
         currency: spendedCurrency.blockchain,
@@ -179,7 +158,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
 
       this.setState(() => ({
         wrongNetwork,
-        currencies,
+        currencies: currentCurrencies,
         spendedCurrency,
         receivedList,
         receivedCurrency,
@@ -194,6 +173,44 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   componentWillUnmount() {
     this.clearWindowTimer()
     this.saveOptionsInStorage()
+  }
+
+  returnCurrentAssetState = (currentCurrencies) => {
+    const { allCurrencies, tokensWallets } = this.props
+
+    let { currencies, wrongNetwork } = actions.oneinch.filterCurrencies({
+      currencies: allCurrencies,
+      tokensWallets,
+    })
+
+    if (wrongNetwork) {
+      currencies = currentCurrencies
+    }
+
+    const spendedCurrency = currencies[0]
+    let receivedList = this.returnReceivedList(currencies, spendedCurrency)
+
+    // user doesn't have enough tokens in the wallet. Show a notice about it
+    if (!receivedList.length) {
+      receivedList = [
+        {
+          blockchain: '-',
+          fullTitle: '-',
+          name: '-',
+          notExist: true,
+        },
+      ]
+    }
+
+    const receivedCurrency = receivedList[0]
+
+    return {
+      wrongNetwork,
+      currentCurrencies: currencies,
+      receivedList,
+      spendedCurrency,
+      receivedCurrency,
+    }
   }
 
   saveMnemonic = () => {
@@ -444,13 +461,9 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     }))
 
     try {
-      // TODO: 0x problem? why I have to increase gas limit by myself
-      // it was needed just once. Remove it if everything is fine
-      swapData.gas = new BigNumber(swapData.gas).plus(50_000).toString()
-
-      if (isAdvancedMode) {
+      if (swapData && isAdvancedMode) {
         const gweiDecimals = 9
-
+  
         if (gasLimit) swapData.gas = gasLimit
         if (gasPrice) swapData.gasPrice = utils.amount.formatWithDecimals(gasPrice, gweiDecimals)
       }
