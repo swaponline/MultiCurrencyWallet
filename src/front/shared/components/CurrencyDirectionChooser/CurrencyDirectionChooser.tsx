@@ -120,3 +120,4 @@ export default class CurrencyDirectionChooser extends Component<any, any> {
     )
   }
 }
+
