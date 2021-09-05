@@ -95,8 +95,34 @@
   }
 }
 
-.bankCardButton {
-  margin-bottom: 2rem;
+.formCenter {
+  padding-bottom: 0.6rem;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  &.padding {
+    padding-bottom: 2rem;
+
+    .arrows {
+      position: static;
+      font-size: 1rem;
+    }
+  }
+
+  .fiatExchangeBtn {
+    margin-right: 2rem;
+  }
+
+  .arrows {
+    transform: rotate(90deg);
+    color: var(--color-notice);
+    position: absolute;
+    right: 0;
+    top: -1.04rem;
+    font-size: 0.9em;
+  }
 }
 
 @mixin tooltip {

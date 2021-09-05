@@ -104,6 +104,8 @@ function ExchangeForm(props) {
     }
   })
 
+  const showFiatExchangeBtn = spendedCurrency.value === 'eth'
+
   return (
     <form action="">
       <div styleName="inputWrapper">
@@ -135,29 +137,33 @@ function ExchangeForm(props) {
         />
       </div>
 
-      {spendedCurrency.value === 'eth' && (
-        <>
-          <Button
-            id="buyViaBankCardButton"
-            className="buyViaBankCardButton"
-            styleName="bankCardButton"
-            pending={isPending}
-            disabled={isPending}
-            onClick={openExternalExchange}
-            empty
-            small
-          >
-            <FormattedMessage id="buyViaBankCard" defaultMessage="Buy via bank card" />
-          </Button>
+      <div styleName={`formCenter ${showFiatExchangeBtn ? 'padding' : ''}`}>
+        {showFiatExchangeBtn && (
+          <>
+            <Button
+              id="buyViaBankCardButton"
+              className="buyViaBankCardButton"
+              styleName="fiatExchangeBtn"
+              pending={isPending}
+              disabled={isPending}
+              onClick={openExternalExchange}
+              empty
+              small
+            >
+              <FormattedMessage id="buyViaBankCard" defaultMessage="Buy via bank card" />
+            </Button>
 
-          <Tooltip id="buyViaBankCardButton" place="top" mark={false}>
-            <FormattedMessage
-              id="bankCardButtonDescription"
-              defaultMessage="In the modal window, you have to go through several steps to exchange fiat funds for ETH. Select ETH in the window and specify the address of your wallet (you can copy it below). Wait until the funds are credited to your address. Then you can buy tokens using it."
-            />
-          </Tooltip>
-        </>
-      )}
+            <Tooltip id="buyViaBankCardButton" place="top" mark={false}>
+              <FormattedMessage
+                id="bankCardButtonDescription"
+                defaultMessage="In the modal window, you have to go through several steps to exchange fiat funds for ETH. Select ETH in the window and specify the address of your wallet (you can copy it below). Wait until the funds are credited to your address. Then you can buy tokens using it."
+              />
+            </Tooltip>
+          </>
+        )}
+
+        <span className="fas fa-exchange-alt" styleName="arrows"></span>
+      </div>
 
       <div styleName="inputWrapper">
         <SelectGroup
