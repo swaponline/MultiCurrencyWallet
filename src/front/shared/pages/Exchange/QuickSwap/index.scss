@@ -73,15 +73,6 @@
   position: relative;
 }
 
-.swapNotice {
-  padding: 0.5rem;
-  text-align: left;
-  border-radius: 0.2rem;
-  border: 1px solid var(--color-border);
-  color: var(--color-notice);
-  background-color: var(--color-page-background);
-}
-
 .walletAddress {
   display: flex;
   flex-direction: column;
@@ -212,11 +203,26 @@
   }
 }
 
+@mixin notice($color: var(--color-notice)) {
+  padding: 0.5rem;
+  text-align: left;
+  border-radius: 0.2rem;
+  border: 1px solid $color;
+  color: $color;
+}
+
+.noAssetsNotice {
+  @include notice(var(--color-bad));
+  max-width: 38em;
+  margin: 0.6rem auto;
+}
+
+.swapNotice {
+  @include notice(var(--color-notice));
+}
+
 .wrongNetworkMessage {
-  padding: 0.6rem;
-  border-radius: 6px;
-  border: 1px solid var(--color-f-error);
-  color: var(--color-f-error);
+  @include notice(var(--color-f-error));
 }
 
 .buttonWrapper {

@@ -6,6 +6,7 @@ export type CurrencyMenuItem = {
   fullTitle: string
   blockchain?: string
   standard?: string
+  notExist?: boolean
 }
 
 export type TokenData = {

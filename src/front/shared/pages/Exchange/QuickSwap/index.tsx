@@ -49,6 +49,17 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
 
     let spendedCurrency = currencies[0]
     let receivedList = this.returnReceivedList(currencies, spendedCurrency)
+
+    // user doesn't have enough tokens in the wallet. Show a notice about it
+    if (!receivedList.length) {
+      receivedList = [{
+        blockchain: "-",
+        fullTitle: "-",
+        name: "-",
+        notExist: true,
+      }]
+    }
+
     let receivedCurrency = receivedList[0]
 
     // if we have url parameters then show it as default values
@@ -256,10 +267,16 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   }
 
   returnReceivedList = (currencies, spendedCurrency) => {
-    return currencies.filter(
-      (item) =>
-        (item.blockchain || item.value.toUpperCase()) === (spendedCurrency.blockchain || spendedCurrency.value.toUpperCase())&& item.value !== spendedCurrency.value
-    )
+    const result = currencies.filter((item) => {
+      // except current value from the the spended list
+      const notCurrentSpendedAsset = item.value !== spendedCurrency.value
+      const spendedAsset = item.blockchain || item.value.toUpperCase()
+      const receivedAsset = spendedCurrency.blockchain || spendedCurrency.value.toUpperCase()
+
+      return spendedAsset === receivedAsset && notCurrentSpendedAsset
+    })
+
+    return result
   }
 
   returnZeroxApiName = (chainId) => {
@@ -383,8 +400,11 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       )
 
       if (!(swap instanceof Error)) {
-        const useCustomGasLimit = gasLimit && gasLimit > swap.gas
-        const weiFee = new BigNumber(useCustomGasLimit ? gasLimit : swap.gas).times(gasPrice ? new BigNumber(gasPrice).times(10**9) : swap.gasPrice)
+        const gweiDecimals = 9
+        const customGasLimit = gasLimit && gasLimit > swap.gas ? gasLimit : swap.gas
+        const customGasPrice = gasPrice ? utils.amount.formatWithDecimals(gasPrice, gweiDecimals) : swap.gasPrice
+
+        const weiFee = new BigNumber(customGasLimit).times(customGasPrice)
         const swapFee = utils.amount.formatWithoutDecimals(weiFee, 18)
 
         this.setState(
@@ -774,8 +794,17 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       <>
         <NewTokenInstruction />
 
+        {receivedCurrency.notExist && (
+          <p styleName="noAssetsNotice">
+            <FormattedMessage
+              id="notEnoughAssetsNotice"
+              defaultMessage="You do not have enough assets in the wallet. Please add more of them to be able to swap."
+            />
+          </p>
+        )}
+
         <section styleName="quickSwap">
-          <div styleName={`optionsWrapper ${wrongNetwork ? 'disabled' : ''}`}>
+          <div styleName={`optionsWrapper ${wrongNetwork || receivedCurrency.notExist ? 'disabled' : ''}`}>
             <ExchangeForm
               stateReference={linked}
               selectCurrency={this.selectCurrency}
@@ -874,7 +903,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
           {wrongNetwork && (
             <p styleName="wrongNetworkMessage">
               <FormattedMessage
-                id="WalletRow_MetamaskNotAvailableNetwork"
+                id="pleaseChooseAnotherNetwork"
                 defaultMessage="Please choose another network"
               />
             </p>

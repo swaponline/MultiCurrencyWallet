@@ -65,7 +65,7 @@ function ModalForm(props) {
         {wrongNetwork && (
           <p styleName="warning">
             <FormattedMessage
-              id="WalletRow_MetamaskNotAvailableNetwork"
+              id="pleaseChooseAnotherNetwork"
               defaultMessage="Please choose another network"
             />
           </p>
