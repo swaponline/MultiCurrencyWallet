@@ -468,6 +468,10 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
         if (gasPrice) swapData.gasPrice = utils.amount.formatWithDecimals(gasPrice, gweiDecimals)
       }
 
+      if (!swapData) {
+        throw new Error('No swap data. Can not complete swap')
+      }
+
       const receipt = await actions[lowerKey].sendReadyTransaction({
         data: swapData,
         waitReceipt: true,
@@ -711,9 +715,9 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     } = this.state
 
     const wrongSlippage =
-      !slippage ||
-      new BigNumber(slippage).isEqualTo(0) ||
-      new BigNumber(slippage).isGreaterThan(slippageMaxRange)
+      slippage &&
+      (new BigNumber(slippage).isEqualTo(0) ||
+        new BigNumber(slippage).isGreaterThan(slippageMaxRange))
 
     const maxGweiGasPrice = 30_000
     const minGasLimit = 100_000
@@ -811,7 +815,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
           <p styleName="noAssetsNotice">
             <FormattedMessage
               id="notEnoughAssetsNotice"
-              defaultMessage="You do not have enough assets in the wallet. Please add more of them to be able to swap."
+              defaultMessage="You don't have available assets in this network to exchange. Please change the network or add a custom asset to the wallet."
             />
           </p>
         )}
@@ -975,7 +979,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
 
         <p styleName="externalServiceWarning">
           <FormattedMessage
-            id="disclaimerAboutBetaVersion"
+            id="disclaimerAbout0x"
             defaultMessage="* Disclaimer: the exchange uses a 3rd 0x Liquidity Protocol. Be carefully and use at your own risk."
           />
         </p>

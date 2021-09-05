@@ -134,6 +134,7 @@
     "id": "WithdrawModalCancelBtn",
     "message": "Отмена",
     "files": [
+      "src/front/shared/components/LimitOrders/OrderPurchaseModal.tsx",
       "src/front/shared/components/modals/ReceiveModal/ReceiveModal.tsx",
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
@@ -1483,6 +1484,7 @@
     "id": "confirmDialogDefaultTitle",
     "message": "Подтверждение действия",
     "files": [
+      "src/front/shared/components/LimitOrders/OrderPurchaseModal.tsx",
       "src/front/shared/components/modals/Confirm/Confirm.tsx",
       "src/front/shared/components/modals/ConfirmBeginSwap/ConfirmBeginSwap.tsx"
     ]
@@ -2872,7 +2874,7 @@
   },
   {
     "id": "registerSMSMPlaceHolder",
-    "message": "12 слов",
+    "message": "Cекретная фраза (12 слов)",
     "files": [
       "src/front/shared/components/Header/Header.tsx",
       "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx",
@@ -5905,8 +5907,6 @@
     "id": "WalletRow_MetamaskNotAvailableNetwork",
     "message": "Пожалуйста, выберите другую",
     "files": [
-      "src/front/shared/components/modals/LimitOrder/ModalForm.tsx",
-      "src/front/shared/pages/Exchange/QuickSwap/index.tsx",
       "src/front/shared/pages/Wallet/Row/Row.tsx"
     ]
   },
@@ -6152,11 +6152,7 @@
   },
   {
     "id": "disclaimerAboutBetaVersion",
-    "message": "* Отказ от ответственности: в обмене используется протокол ликвидности 0x. Будьте осторожны и используйте на свой страх и риск.",
-    "files": [
-      "src/front/shared/components/modals/LimitOrder/ModalForm.tsx",
-      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
-    ]
+    "message": "* Отказ от ответственности: в обмене используется протокол ликвидности 0x. Будьте осторожны и используйте на свой страх и риск."
   },
   {
     "id": "insufficientBalance",
@@ -6240,6 +6236,91 @@
     "message": "После определения пула ликвидности с вашим токеном он будет доступен для обмена.",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/NewTokenInstruction.tsx"
+    ]
+  },
+  {
+    "id": "executeOrder",
+    "message": "Выполнить ордер",
+    "files": [
+      "src/front/shared/components/LimitOrders/OrderPurchaseModal.tsx"
+    ]
+  },
+  {
+    "id": "limitOrderFillDescription",
+    "message": "Вы можете потратить не весь свой баланс. Введите сумму {sellToken}, которую вы хотите потратить.",
+    "files": [
+      "src/front/shared/components/LimitOrders/OrderPurchaseModal.tsx"
+    ]
+  },
+  {
+    "id": "remainingMakerAmount",
+    "message": "Оставшаяся сумма мейкера",
+    "files": [
+      "src/front/shared/components/LimitOrders/OrderPurchaseModal.tsx"
+    ]
+  },
+  {
+    "id": "remainingTakerAmount",
+    "message": "Оставшаяся сумма получателя",
+    "files": [
+      "src/front/shared/components/LimitOrders/OrderPurchaseModal.tsx"
+    ]
+  },
+  {
+    "id": "youCanSpend",
+    "message": "Вы можете потратить",
+    "files": [
+      "src/front/shared/components/LimitOrders/OrderPurchaseModal.tsx"
+    ]
+  },
+  {
+    "id": "yourBalance",
+    "message": "Ваш баланс",
+    "files": [
+      "src/front/shared/components/LimitOrders/OrderPurchaseModal.tsx"
+    ]
+  },
+  {
+    "id": "pleaseChooseAnotherNetwork",
+    "message": "Пожалуйста, выберите другую сеть",
+    "files": [
+      "src/front/shared/components/modals/LimitOrder/ModalForm.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
+    ]
+  },
+  {
+    "id": "customSlippageValueNotice",
+    "message": "Вы можете установить пользовательское значение допуска проскальзывания в дополнительных настройках и повторить попытку",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
+    ]
+  },
+  {
+    "id": "insufficientSlippage",
+    "message": "Недостаточное проскальзывание",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
+    ]
+  },
+  {
+    "id": "notEnoughAssetsNotice",
+    "message": "У вас нет доступных активов в этой сети для обмена. Пожалуйста, измените сеть или добавьте пользовательский актив в кошелек.",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
+    ]
+  },
+  {
+    "id": "disclaimerAbout1inch",
+    "message": "* Отказ от ответственности: Лимитные ордера предоставляются 1inch протоколом и должны рассматриваться в бета-версии. Будьте осторожны и используйте на свой страх и риск.",
+    "files": [
+      "src/front/shared/components/modals/LimitOrder/ModalForm.tsx"
+    ]
+  },
+  {
+    "id": "disclaimerAbout0x",
+    "message": "* Отказ от ответственности: биржа использует 0x протокол ликвидности. Будьте осторожны и используйте на свой страх и риск.",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
     ]
   }
 ]

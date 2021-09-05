@@ -429,7 +429,7 @@ class WithdrawModalMultisigUser extends React.Component<any, any> {
       },
       ownTxPlaceholder: {
         id: 'withdrawOwnTxPlaceholder',
-        defaultMessage: 'Если оплатили с другого источника',
+        defaultMessage: 'If paid from another source',
       },
     })
 
@@ -512,7 +512,10 @@ class WithdrawModalMultisigUser extends React.Component<any, any> {
                   <ReactTooltip id="Withdrow134" type="light" effect="solid" styleName="r-tooltip">
                     <FormattedMessage
                       id="WithdrawButton32"
-                      defaultMessage="when you click this button, in the field, an amount equal to your balance minus the miners commission will appear"
+                      defaultMessage="When you click this button, in the field, an amount{br}equal to your balance minus the miners commission will appear"
+                      values={{
+                        br: <br />,
+                      }}
                     />
                   </ReactTooltip>
                 )}

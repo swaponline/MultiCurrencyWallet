@@ -1305,6 +1305,7 @@
     "id": "confirmDialogDefaultTitle",
     "message": "Confirm action",
     "files": [
+      "src/front/shared/components/LimitOrders/OrderPurchaseModal.tsx",
       "src/front/shared/components/modals/Confirm/Confirm.tsx",
       "src/front/shared/components/modals/ConfirmBeginSwap/ConfirmBeginSwap.tsx"
     ]
@@ -2029,6 +2030,7 @@
     "id": "WithdrawModalCancelBtn",
     "message": "Cancel",
     "files": [
+      "src/front/shared/components/LimitOrders/OrderPurchaseModal.tsx",
       "src/front/shared/components/modals/ReceiveModal/ReceiveModal.tsx",
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
@@ -5905,8 +5907,6 @@
     "id": "WalletRow_MetamaskNotAvailableNetwork",
     "message": "Proszę wybrać inny",
     "files": [
-      "src/front/shared/components/modals/LimitOrder/ModalForm.tsx",
-      "src/front/shared/pages/Exchange/QuickSwap/index.tsx",
       "src/front/shared/pages/Wallet/Row/Row.tsx"
     ]
   },
@@ -6152,11 +6152,7 @@
   },
   {
     "id": "disclaimerAboutBetaVersion",
-    "message": "* Uwaga: Giełda korzysta z protokołu 3rd 0x Liquidity. Bądź ostrożny i używaj na własne ryzyko.",
-    "files": [
-      "src/front/shared/components/modals/LimitOrder/ModalForm.tsx",
-      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
-    ]
+    "message": "* Uwaga: Giełda korzysta z protokołu 3rd 0x Liquidity. Bądź ostrożny i używaj na własne ryzyko."
   },
   {
     "id": "insufficientBalance",
@@ -6240,6 +6236,91 @@
     "message": "Po ustaleniu puli płynności za pomocą tokenu będzie ona dostępna do wymiany.",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/NewTokenInstruction.tsx"
+    ]
+  },
+  {
+    "id": "executeOrder",
+    "message": "Wykonaj zlecenie",
+    "files": [
+      "src/front/shared/components/LimitOrders/OrderPurchaseModal.tsx"
+    ]
+  },
+  {
+    "id": "limitOrderFillDescription",
+    "message": "Jesteś w stanie wydać nie całą swoją równowagę. Wprowadź kwotę {sellToken}, którą chcesz wydać.",
+    "files": [
+      "src/front/shared/components/LimitOrders/OrderPurchaseModal.tsx"
+    ]
+  },
+  {
+    "id": "remainingMakerAmount",
+    "message": "Pozostała kwota producenta",
+    "files": [
+      "src/front/shared/components/LimitOrders/OrderPurchaseModal.tsx"
+    ]
+  },
+  {
+    "id": "remainingTakerAmount",
+    "message": "Pozostała kwota odbiorcy",
+    "files": [
+      "src/front/shared/components/LimitOrders/OrderPurchaseModal.tsx"
+    ]
+  },
+  {
+    "id": "youCanSpend",
+    "message": "Możesz wydać",
+    "files": [
+      "src/front/shared/components/LimitOrders/OrderPurchaseModal.tsx"
+    ]
+  },
+  {
+    "id": "yourBalance",
+    "message": "Twoja równowaga",
+    "files": [
+      "src/front/shared/components/LimitOrders/OrderPurchaseModal.tsx"
+    ]
+  },
+  {
+    "id": "pleaseChooseAnotherNetwork",
+    "message": "Proszę wybrać inną sieć",
+    "files": [
+      "src/front/shared/components/modals/LimitOrder/ModalForm.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
+    ]
+  },
+  {
+    "id": "customSlippageValueNotice",
+    "message": "Możesz ustawić niestandardową wartość tolerancji poślizgu w ustawieniach zaawansowanych i spróbować ponownie",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
+    ]
+  },
+  {
+    "id": "insufficientSlippage",
+    "message": "Niedostateczny poślizg",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
+    ]
+  },
+  {
+    "id": "notEnoughAssetsNotice",
+    "message": "Nie masz dostępnych zasobów w tej sieci do wymiany. Zmień sieć lub Dodaj niestandardowy zasób do portfela.",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
+    ]
+  },
+  {
+    "id": "disclaimerAbout1inch",
+    "message": "* Zastrzeżenie: zlecenia z limitem są dostarczane przez protokół 3rd 1inch Limit Order i powinny być rozpatrywane w wersji beta. Bądź ostrożny i używaj na własne ryzyko.",
+    "files": [
+      "src/front/shared/components/modals/LimitOrder/ModalForm.tsx"
+    ]
+  },
+  {
+    "id": "disclaimerAbout0x",
+    "message": "* Uwaga: Giełda korzysta z protokołu 3rd 0x Liquidity. Bądź ostrożny i używaj na własne ryzyko.",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
     ]
   }
 ]

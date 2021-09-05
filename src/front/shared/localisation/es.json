@@ -1305,6 +1305,7 @@
     "id": "confirmDialogDefaultTitle",
     "message": "Confirmar acción",
     "files": [
+      "src/front/shared/components/LimitOrders/OrderPurchaseModal.tsx",
       "src/front/shared/components/modals/Confirm/Confirm.tsx",
       "src/front/shared/components/modals/ConfirmBeginSwap/ConfirmBeginSwap.tsx"
     ]
@@ -2036,6 +2037,7 @@
     "id": "WithdrawModalCancelBtn",
     "message": "Cancelar",
     "files": [
+      "src/front/shared/components/LimitOrders/OrderPurchaseModal.tsx",
       "src/front/shared/components/modals/ReceiveModal/ReceiveModal.tsx",
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
@@ -5905,8 +5907,6 @@
     "id": "WalletRow_MetamaskNotAvailableNetwork",
     "message": "Por favor, elija otro",
     "files": [
-      "src/front/shared/components/modals/LimitOrder/ModalForm.tsx",
-      "src/front/shared/pages/Exchange/QuickSwap/index.tsx",
       "src/front/shared/pages/Wallet/Row/Row.tsx"
     ]
   },
@@ -6152,11 +6152,7 @@
   },
   {
     "id": "disclaimerAboutBetaVersion",
-    "message": "* Descargo de responsabilidad: la bolsa utiliza un Protocolo de Liquidez 3rd 0x. Sea cuidadoso y úselo bajo su propio riesgo.",
-    "files": [
-      "src/front/shared/components/modals/LimitOrder/ModalForm.tsx",
-      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
-    ]
+    "message": "* Descargo de responsabilidad: la bolsa utiliza un Protocolo de Liquidez 3rd 0x. Sea cuidadoso y úselo bajo su propio riesgo."
   },
   {
     "id": "insufficientBalance",
@@ -6240,6 +6236,91 @@
     "message": "Después de determinar un fondo de liquidez con su token, estará disponible para el intercambio.",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/NewTokenInstruction.tsx"
+    ]
+  },
+  {
+    "id": "executeOrder",
+    "message": "Ejecutar la orden",
+    "files": [
+      "src/front/shared/components/LimitOrders/OrderPurchaseModal.tsx"
+    ]
+  },
+  {
+    "id": "limitOrderFillDescription",
+    "message": "Usted es capaz de gastar no todo su saldo. Ingrese la cantidad de {sellToken} que desea gastar.",
+    "files": [
+      "src/front/shared/components/LimitOrders/OrderPurchaseModal.tsx"
+    ]
+  },
+  {
+    "id": "remainingMakerAmount",
+    "message": "Cantidad restante del fabricante",
+    "files": [
+      "src/front/shared/components/LimitOrders/OrderPurchaseModal.tsx"
+    ]
+  },
+  {
+    "id": "remainingTakerAmount",
+    "message": "Cantidad restante del tomador",
+    "files": [
+      "src/front/shared/components/LimitOrders/OrderPurchaseModal.tsx"
+    ]
+  },
+  {
+    "id": "youCanSpend",
+    "message": "Puedes gastar",
+    "files": [
+      "src/front/shared/components/LimitOrders/OrderPurchaseModal.tsx"
+    ]
+  },
+  {
+    "id": "yourBalance",
+    "message": "Su equilibrio",
+    "files": [
+      "src/front/shared/components/LimitOrders/OrderPurchaseModal.tsx"
+    ]
+  },
+  {
+    "id": "pleaseChooseAnotherNetwork",
+    "message": "Por favor, elija otra red",
+    "files": [
+      "src/front/shared/components/modals/LimitOrder/ModalForm.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
+    ]
+  },
+  {
+    "id": "customSlippageValueNotice",
+    "message": "Puede establecer un valor de tolerancia de deslizamiento personalizado en la configuración avanzada e intentarlo de nuevo",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
+    ]
+  },
+  {
+    "id": "insufficientSlippage",
+    "message": "Deslizamiento insuficiente",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
+    ]
+  },
+  {
+    "id": "notEnoughAssetsNotice",
+    "message": "No tiene activos disponibles en esta red para intercambiar. Cambie la red o agregue un activo personalizado a la billetera.",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
+    ]
+  },
+  {
+    "id": "disclaimerAbout1inch",
+    "message": "* Descargo de responsabilidad: Las órdenes de límite son proporcionadas por un Protocolo de Orden de Límite de 3rd 1inch y deben considerarse en beta. Sea cuidadoso y úselo bajo su propio riesgo.",
+    "files": [
+      "src/front/shared/components/modals/LimitOrder/ModalForm.tsx"
+    ]
+  },
+  {
+    "id": "disclaimerAbout0x",
+    "message": "* Descargo de responsabilidad: la bolsa utiliza un Protocolo de Liquidez 3rd 0x. Sea cuidadoso y úselo bajo su propio riesgo.",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
     ]
   }
 ]
