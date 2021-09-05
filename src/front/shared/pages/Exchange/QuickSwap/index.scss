@@ -119,7 +119,7 @@
     transform: rotate(90deg);
     color: var(--color-notice);
     position: absolute;
-    right: 0;
+    right: 1rem;
     top: -1.04rem;
     font-size: 0.9em;
   }
@@ -270,4 +270,26 @@
   max-width: 28rem;
   margin: 0 auto 1rem;
   color: var(--color-indicating);
+}
+
+@media all and (max-width: 500px) {
+  .newTokenInstruction {
+    font-size: 0.95rem;
+  }
+
+  .quickSwap {
+    font-size: 0.85rem;
+  }
+
+  .balanceTooltip {
+    .title {
+      display: none;
+    }
+  }
+
+  .toggleWrapper {
+    .name {
+      margin-left: 1rem;
+    }
+  }
 }

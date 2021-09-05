@@ -70,7 +70,9 @@ function ExchangeForm(props) {
     if (!wrongTooltip) {
       return (
         <span styleName="balanceTooltip">
-          <FormattedMessage id="partial767" defaultMessage="Balance: " />
+          <span styleName="title">
+            <FormattedMessage id="partial767" defaultMessage="Balance: " />
+          </span>
 
           <button styleName="balanceUpdateBtn" onClick={() => updateBalance(direction, wallet)}>
             {wallet.balance}
