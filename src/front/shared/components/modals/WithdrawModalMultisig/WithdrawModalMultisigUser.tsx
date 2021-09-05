@@ -491,7 +491,7 @@ class WithdrawModalMultisigUser extends React.Component<any, any> {
                 {balance} {currency.toUpperCase()}
               </p>
               <FieldLabel>
-                <FormattedMessage id="Withdrow118" defaultMessage="Amount " />
+                <FormattedMessage id="orders102" defaultMessage="Amount" />
               </FieldLabel>
 
               <div styleName="group">
@@ -539,7 +539,7 @@ class WithdrawModalMultisigUser extends React.Component<any, any> {
                     </Fragment>
                   ) : (
                     <Fragment>
-                      <FormattedMessage id="WithdrawModal111" defaultMessage="Send" />
+                      <FormattedMessage id="withdrowTitle271" defaultMessage="Send" />
                     </Fragment>
                   )}
                 </Button>

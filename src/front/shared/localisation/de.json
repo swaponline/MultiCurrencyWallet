@@ -51,13 +51,6 @@
     ]
   },
   {
-    "id": "CDC75",
-    "message": "Du bekommst",
-    "files": [
-      "src/front/shared/components/CurrencyDirectionChooser/CurrencyDirectionChooser.tsx"
-    ]
-  },
-  {
     "id": "CurrencyDirectionChooser54",
     "message": "Wähle die Richtung des Austausches",
     "files": [
@@ -83,13 +76,6 @@
     "message": "Zur Startseite",
     "files": [
       "src/front/shared/components/Header/Logo/Logo.tsx"
-    ]
-  },
-  {
-    "id": "ConfirmOffer69",
-    "message": "Zurück",
-    "files": [
-      "src/front/shared/components/modals/OfferModal/ConfirmOffer/ConfirmOffer.tsx"
     ]
   },
   {
@@ -122,15 +108,6 @@
     ]
   },
   {
-    "id": "WithdrawModal111",
-    "message": "Senden ",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
-    ]
-  },
-  {
     "id": "WithdrawModal11212",
     "message": "In bearbeitung ...",
     "files": [
@@ -148,16 +125,6 @@
     ]
   },
   {
-    "id": "Withdrow118",
-    "message": "Menge",
-    "files": [
-      "src/front/shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.tsx",
-      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
-    ]
-  },
-  {
     "id": "PreventMultiTabs",
     "message": "Zu viele Tabs",
     "files": [
@@ -168,7 +135,8 @@
     "id": "SaveKe33",
     "message": "Herunterladen",
     "files": [
-      "src/front/shared/components/SaveKeys/SaveKeys.tsx"
+      "src/front/shared/components/SaveKeys/SaveKeys.tsx",
+      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
     ]
   },
   {
@@ -371,6 +339,7 @@
     "id": "MyOrdersYouGet",
     "message": "Du erhältst",
     "files": [
+      "src/front/shared/components/CurrencyDirectionChooser/CurrencyDirectionChooser.tsx",
       "src/front/shared/pages/Exchange/Orders/MyOrders/MyOrders.tsx"
     ]
   },
@@ -385,6 +354,10 @@
     "id": "orders102",
     "message": "Menge",
     "files": [
+      "src/front/shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.tsx",
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
+      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
+      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx",
       "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
     ]
   },
@@ -753,10 +726,6 @@
     "files": [
       "src/front/shared/pages/Swap/Timer/Timer.tsx"
     ]
-  },
-  {
-    "id": "question12",
-    "message": "?"
   },
   {
     "id": "PartialPriceNoOrdersReduce",
@@ -2136,7 +2105,8 @@
     "id": "InvoiceLinkCopied",
     "message": "Link kopiert",
     "files": [
-      "src/front/shared/components/modals/InvoiceLinkModal/InvoiceLinkModal.tsx"
+      "src/front/shared/components/modals/InvoiceLinkModal/InvoiceLinkModal.tsx",
+      "src/front/shared/components/modals/Share/Share.tsx"
     ]
   },
   {
@@ -2536,7 +2506,8 @@
     "id": "back",
     "message": "Zurück",
     "files": [
-      "src/front/shared/components/TourWindow/index.tsx"
+      "src/front/shared/components/TourWindow/index.tsx",
+      "src/front/shared/components/modals/OfferModal/ConfirmOffer/ConfirmOffer.tsx"
     ]
   },
   {
@@ -3303,20 +3274,6 @@
     ]
   },
   {
-    "id": "registerSMSModalInstCopy",
-    "message": "Kopieren",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
-    ]
-  },
-  {
-    "id": "registerSMSModalInstDownload",
-    "message": "Herunterladen",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
-    ]
-  },
-  {
     "id": "registerSMSModalInstDownloaded",
     "message": "Herunterladen...",
     "files": [
@@ -3536,13 +3493,6 @@
     ]
   },
   {
-    "id": "registerSMS_ButtonCancel",
-    "message": "Abbrechen",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
-    ]
-  },
-  {
     "id": "registerSMS_ButtonSaveMnemonic",
     "message": "Speichern",
     "files": [
@@ -3561,13 +3511,6 @@
     "message": "Um das SMS-geschützte Wallet zu aktivieren, musst du deine geheime Phrase speichern.",
     "files": [
       "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
-    ]
-  },
-  {
-    "id": "ShareModal_LinkCopied",
-    "message": "Link kopiert",
-    "files": [
-      "src/front/shared/components/modals/Share/Share.tsx"
     ]
   },
   {
@@ -3882,6 +3825,7 @@
     "id": "widgetApproveCancel",
     "message": "Abbrechen",
     "files": [
+      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx",
       "src/front/shared/helpers/wpLogoutModal.ts"
     ]
   },

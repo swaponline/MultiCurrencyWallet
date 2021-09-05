@@ -96,7 +96,7 @@ export default class CurrencyDirectionChooser extends Component<any, any> {
             <Flip onClick={flipCurrency} />
             <div styleName="row rowRight">
               <p styleName="text">
-                <FormattedMessage id="CDC75" defaultMessage="You get" />
+                <FormattedMessage id="MyOrdersYouGet" defaultMessage="You get" />
               </p>
               {/*
               //@ts-ignore */}
