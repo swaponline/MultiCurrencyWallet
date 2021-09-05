@@ -6,6 +6,7 @@ export type CurrencyMenuItem = {
   fullTitle: string
   blockchain?: string
   standard?: string
+  notExist?: boolean
 }
 
 export type TokenData = {
@@ -15,24 +16,15 @@ export type TokenData = {
   address: string
   logoURI: string
 }
-// FIXME: any
-export type SwapData =
-  | any
-  | {
-      fromToken: TokenData
-      toToken: TokenData
-      fromTokenAmount: string
-      toTokenAmount: string
-      protocols: any // any[]
-      tx: {
-        data: string
-        from: string
-        gas: number
-        gasPrice: string
-        to: string
-        value: string
-      }
-    }
+
+export type SwapData = {
+  allowanceTarget: string
+  buyAmount: string
+  data: string
+  gasPrice: string
+  gas: string
+  sellAmount: string
+}
 
 export type Network = {
   currency: string

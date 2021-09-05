@@ -48,7 +48,7 @@ function ModalForm(props) {
       <section styleName="limitOrder">
         <p styleName="betaVersionDisclaimer">
           <FormattedMessage
-            id="disclaimerAboutBetaVersion"
+            id="disclaimerAbout1inch"
             defaultMessage="* Disclaimer: Limit Orders are provided by a 3rd 1inch Limit Order Protocol and should be considered in beta. Be carefully and use at your own risk."
           />
         </p>
@@ -65,7 +65,7 @@ function ModalForm(props) {
         {wrongNetwork && (
           <p styleName="warning">
             <FormattedMessage
-              id="WalletRow_MetamaskNotAvailableNetwork"
+              id="pleaseChooseAnotherNetwork"
               defaultMessage="Please choose another network"
             />
           </p>

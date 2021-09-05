@@ -64,7 +64,7 @@ function OrderSettings(props) {
         <div styleName="optionWrapper">
           <div styleName="title">
             <FieldLabel>
-              <FormattedMessage id="youPay" defaultMessage="You Pay" />
+              <FormattedMessage id="youPay" defaultMessage="You pay" />
             </FieldLabel>
           </div>
           {sellCurrency ? (
@@ -88,7 +88,7 @@ function OrderSettings(props) {
         <div styleName="optionWrapper">
           <div styleName="title">
             <FieldLabel>
-              <FormattedMessage id="partial255" defaultMessage="You Get" />
+              <FormattedMessage id="partial255" defaultMessage="You get" />
             </FieldLabel>
           </div>
           {buyCurrency && buyCurrencies.length ? (

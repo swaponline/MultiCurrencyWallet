@@ -1019,7 +1019,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
           </p>
 
           <FieldLabel>
-            <FormattedMessage id="Withdrow118" defaultMessage="Amount" />
+            <FormattedMessage id="orders102" defaultMessage="Amount" />
           </FieldLabel>
           <div styleName="group">
             <Input
@@ -1140,7 +1140,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
               onClick={this.handleSubmit}
             >
               <Fragment>
-                <FormattedMessage id="WithdrawModal111" defaultMessage="Send" />{' '}
+                <FormattedMessage id="withdrowTitle271" defaultMessage="Send" />{' '}
                 {`${currency.toUpperCase()}`}
               </Fragment>
             </Button>

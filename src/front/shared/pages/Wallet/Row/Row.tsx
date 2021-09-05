@@ -621,7 +621,7 @@ class Row extends Component<RowProps, RowState> {
           title: (
             <FormattedMessage
               id="MetamaskDisconnect"
-              defaultMessage="Отключить кошелек"
+              defaultMessage="Disconnect wallet"
             />
           ),
           action: metamask.handleDisconnectWallet,
@@ -842,7 +842,7 @@ class Row extends Component<RowProps, RowState> {
                       isNotAvailableMetamaskNetwork
                         ? (
                           <Button small empty onClick={metamask.handleDisconnectWallet}>
-                            <FormattedMessage id="MetamaskDisconnect" defaultMessage="Отключить кошелек" />
+                            <FormattedMessage id="MetamaskDisconnect" defaultMessage="Disconnect wallet" />
                           </Button>
                         )
                         : !isBalanceFetched || isBalanceFetching ? (

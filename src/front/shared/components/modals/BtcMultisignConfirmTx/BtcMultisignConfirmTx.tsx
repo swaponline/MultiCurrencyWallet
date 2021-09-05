@@ -310,7 +310,7 @@ class BtcMultisignConfirmTx extends React.Component<any, any> {
                   {txData.wallet.balance} {`BTC`}
                 </p>
                 <FieldLabel>
-                  <FormattedMessage id="Withdrow118" defaultMessage="Amount " />
+                  <FormattedMessage id="orders102" defaultMessage="Amount" />
                 </FieldLabel>
 
                 <div styleName="group">

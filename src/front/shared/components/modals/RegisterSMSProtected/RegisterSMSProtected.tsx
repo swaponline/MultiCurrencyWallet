@@ -467,7 +467,7 @@ class RegisterSMSProtected extends React.Component<any, any> {
       },
       mnemonicPlaceholder: {
         id: 'registerSMSMPlaceHolder',
-        defaultMessage: `12 слов`,
+        defaultMessage: `Secret phrase (12 words)`,
       },
       phonePlaceHolder: {
         id: 'registerSMSModalPhonePlaceholder',
@@ -490,7 +490,7 @@ class RegisterSMSProtected extends React.Component<any, any> {
         defaultMessage: `Save`,
       },
       buttonCancel: {
-        id: 'registerSMS_ButtonCancel',
+        id: 'widgetApproveCancel',
         defaultMessage: `Cancel`,
       },
     })
@@ -814,7 +814,7 @@ class RegisterSMSProtected extends React.Component<any, any> {
                           />
                         ) : (
                           <FormattedMessage
-                            id="registerSMSModalInstCopy"
+                            id="registerSMSModalMnemonicCopy"
                             defaultMessage="Скопировать"
                           />
                         )}
@@ -832,8 +832,8 @@ class RegisterSMSProtected extends React.Component<any, any> {
                         />
                       ) : (
                         <FormattedMessage
-                          id="registerSMSModalInstDownload"
-                          defaultMessage="Скачать"
+                          id="SaveKe33"
+                          defaultMessage="Download"
                         />
                       )}
                     </Button>

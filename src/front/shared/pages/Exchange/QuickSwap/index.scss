@@ -73,15 +73,6 @@
   position: relative;
 }
 
-.swapNotice {
-  padding: 0.5rem;
-  text-align: left;
-  border-radius: 0.2rem;
-  border: 1px solid var(--color-border);
-  color: var(--color-notice);
-  background-color: var(--color-page-background);
-}
-
 .walletAddress {
   display: flex;
   flex-direction: column;
@@ -104,8 +95,34 @@
   }
 }
 
-.bankCardButton {
-  margin-bottom: 2rem;
+.formCenter {
+  padding-bottom: 0.6rem;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  &.padding {
+    padding-bottom: 2rem;
+
+    .arrows {
+      position: static;
+      font-size: 1rem;
+    }
+  }
+
+  .fiatExchangeBtn {
+    margin-right: 2rem;
+  }
+
+  .arrows {
+    transform: rotate(90deg);
+    color: var(--color-notice);
+    position: absolute;
+    right: 1rem;
+    top: -1.04rem;
+    font-size: 0.9em;
+  }
 }
 
 @mixin tooltip {
@@ -212,11 +229,26 @@
   }
 }
 
+@mixin notice($color: var(--color-notice)) {
+  padding: 0.5rem;
+  text-align: left;
+  border-radius: 0.2rem;
+  border: 1px solid $color;
+  color: $color;
+}
+
+.noAssetsNotice {
+  @include notice(var(--color-bad));
+  max-width: 38em;
+  margin: 0.6rem auto;
+}
+
+.swapNotice {
+  @include notice(var(--color-notice));
+}
+
 .wrongNetworkMessage {
-  padding: 0.6rem;
-  border-radius: 6px;
-  border: 1px solid var(--color-f-error);
-  color: var(--color-f-error);
+  @include notice(var(--color-f-error));
 }
 
 .buttonWrapper {
@@ -238,4 +270,26 @@
   max-width: 28rem;
   margin: 0 auto 1rem;
   color: var(--color-indicating);
+}
+
+@media all and (max-width: 500px) {
+  .newTokenInstruction {
+    font-size: 0.95rem;
+  }
+
+  .quickSwap {
+    font-size: 0.85rem;
+  }
+
+  .balanceTooltip {
+    .title {
+      display: none;
+    }
+  }
+
+  .toggleWrapper {
+    .name {
+      margin-left: 1rem;
+    }
+  }
 }

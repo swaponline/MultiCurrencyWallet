@@ -33,30 +33,25 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   constructor(props) {
     super(props)
 
-    const { match, activeFiat, allCurrencies, tokensWallets } = props
+    const { match, activeFiat, allCurrencies } = props
     const { params, path } = match
-    let { currencies, wrongNetwork } = actions.oneinch.filterCurrencies({
-      currencies: allCurrencies,
-      tokensWallets,
-    })
 
-    // reset assets' list and then block interface while the user on a wrong network
-    if (wrongNetwork) {
-      currencies = allCurrencies
-    }
+    let {
+      currentCurrencies,
+      receivedList,
+      spendedCurrency,
+      receivedCurrency,
+      wrongNetwork,
+    } = this.returnCurrentAssetState(allCurrencies)
 
     const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
 
-    let spendedCurrency = currencies[0]
-    let receivedList = this.returnReceivedList(currencies, spendedCurrency)
-    let receivedCurrency = receivedList[0]
-
     // if we have url parameters then show it as default values
     if (!wrongNetwork && path.match(/\/quick/) && params.sell && params.buy) {
-      const urlSpendedCurrency = currencies.find(
+      const urlSpendedCurrency = currentCurrencies.find(
         (item) => item.value.toLowerCase() === params.sell.toLowerCase()
       )
-      const urlReceivedList = this.returnReceivedList(currencies, urlSpendedCurrency)
+      const urlReceivedList = this.returnReceivedList(currentCurrencies, urlSpendedCurrency)
       const urlReceivedCurrency = urlReceivedList.find(
         (item) => item.value.toLowerCase() === params.buy.toLowerCase()
       )
@@ -90,7 +85,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       externalWindowTimer: null,
       fiat: window.DEFAULT_FIAT || activeFiat,
       fiatAmount: 0,
-      currencies,
+      currencies: currentCurrencies,
       receivedList,
       baseChainWallet,
       spendedCurrency,
@@ -119,10 +114,10 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { allCurrencies, tokensWallets, metamaskData } = this.props
+    const { metamaskData } = this.props
     const { metamaskData: prevMetamaskData} = prevProps
-    const { wrongNetwork: prevWrongNetwork, currencies: prevCurrencies } = prevState
-    const { spendedCurrency } = this.state
+    const { wrongNetwork: prevWrongNetwork } = prevState
+    const { currencies, spendedCurrency } = this.state
 
     if (this.isSwapNotAvailable()) {
       this.setState(() => ({
@@ -142,18 +137,13 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
         (prevMetamaskData.address !== metamaskData.address))
 
     if (needUpdate) {
-      let { currencies, wrongNetwork } = actions.oneinch.filterCurrencies({
-        currencies: allCurrencies,
-        tokensWallets,
-      })
-
-      if (wrongNetwork) {
-        currencies = prevCurrencies
-      }
-
-      let spendedCurrency = currencies[0]
-      let receivedList = this.returnReceivedList(currencies, spendedCurrency)
-      let receivedCurrency = receivedList[0]
+      const {
+        currentCurrencies,
+        receivedList,
+        spendedCurrency,
+        receivedCurrency,
+        wrongNetwork,
+      } = this.returnCurrentAssetState(currencies)
 
       const baseChainWallet = actions.core.getWallet({
         currency: spendedCurrency.blockchain,
@@ -168,7 +158,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
 
       this.setState(() => ({
         wrongNetwork,
-        currencies,
+        currencies: currentCurrencies,
         spendedCurrency,
         receivedList,
         receivedCurrency,
@@ -183,6 +173,44 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   componentWillUnmount() {
     this.clearWindowTimer()
     this.saveOptionsInStorage()
+  }
+
+  returnCurrentAssetState = (currentCurrencies) => {
+    const { allCurrencies, tokensWallets } = this.props
+
+    let { currencies, wrongNetwork } = actions.oneinch.filterCurrencies({
+      currencies: allCurrencies,
+      tokensWallets,
+    })
+
+    if (wrongNetwork) {
+      currencies = currentCurrencies
+    }
+
+    const spendedCurrency = currencies[0]
+    let receivedList = this.returnReceivedList(currencies, spendedCurrency)
+
+    // user doesn't have enough tokens in the wallet. Show a notice about it
+    if (!receivedList.length) {
+      receivedList = [
+        {
+          blockchain: '-',
+          fullTitle: '-',
+          name: '-',
+          notExist: true,
+        },
+      ]
+    }
+
+    const receivedCurrency = receivedList[0]
+
+    return {
+      wrongNetwork,
+      currentCurrencies: currencies,
+      receivedList,
+      spendedCurrency,
+      receivedCurrency,
+    }
   }
 
   saveMnemonic = () => {
@@ -256,10 +284,16 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   }
 
   returnReceivedList = (currencies, spendedCurrency) => {
-    return currencies.filter(
-      (item) =>
-        (item.blockchain || item.value.toUpperCase()) === (spendedCurrency.blockchain || spendedCurrency.value.toUpperCase())&& item.value !== spendedCurrency.value
-    )
+    const result = currencies.filter((item) => {
+      // except current value from the the spended list
+      const notCurrentSpendedAsset = item.value !== spendedCurrency.value
+      const spendedAsset = item.blockchain || item.value.toUpperCase()
+      const receivedAsset = spendedCurrency.blockchain || spendedCurrency.value.toUpperCase()
+
+      return spendedAsset === receivedAsset && notCurrentSpendedAsset
+    })
+
+    return result
   }
 
   returnZeroxApiName = (chainId) => {
@@ -383,8 +417,11 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       )
 
       if (!(swap instanceof Error)) {
-        const useCustomGasLimit = gasLimit && gasLimit > swap.gas
-        const weiFee = new BigNumber(useCustomGasLimit ? gasLimit : swap.gas).times(gasPrice ? new BigNumber(gasPrice).times(10**9) : swap.gasPrice)
+        const gweiDecimals = 9
+        const customGasLimit = gasLimit && gasLimit > swap.gas ? gasLimit : swap.gas
+        const customGasPrice = gasPrice ? utils.amount.formatWithDecimals(gasPrice, gweiDecimals) : swap.gasPrice
+
+        const weiFee = new BigNumber(customGasLimit).times(customGasPrice)
         const swapFee = utils.amount.formatWithoutDecimals(weiFee, 18)
 
         this.setState(
@@ -424,15 +461,15 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     }))
 
     try {
-      // TODO: 0x problem? why I have to increase gas limit by myself
-      // it was needed just once. Remove it if everything is fine
-      swapData.gas = new BigNumber(swapData.gas).plus(50_000).toString()
-
-      if (isAdvancedMode) {
+      if (swapData && isAdvancedMode) {
         const gweiDecimals = 9
-
+  
         if (gasLimit) swapData.gas = gasLimit
         if (gasPrice) swapData.gasPrice = utils.amount.formatWithDecimals(gasPrice, gweiDecimals)
+      }
+
+      if (!swapData) {
+        throw new Error('No swap data. Can not complete swap')
       }
 
       const receipt = await actions[lowerKey].sendReadyTransaction({
@@ -678,9 +715,9 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     } = this.state
 
     const wrongSlippage =
-      !slippage ||
-      new BigNumber(slippage).isEqualTo(0) ||
-      new BigNumber(slippage).isGreaterThan(slippageMaxRange)
+      slippage &&
+      (new BigNumber(slippage).isEqualTo(0) ||
+        new BigNumber(slippage).isGreaterThan(slippageMaxRange))
 
     const maxGweiGasPrice = 30_000
     const minGasLimit = 100_000
@@ -774,8 +811,17 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       <>
         <NewTokenInstruction />
 
+        {receivedCurrency.notExist && (
+          <p styleName="noAssetsNotice">
+            <FormattedMessage
+              id="notEnoughAssetsNotice"
+              defaultMessage="You don't have available assets in this network to exchange. Please change the network or add a custom asset to the wallet."
+            />
+          </p>
+        )}
+
         <section styleName="quickSwap">
-          <div styleName={`optionsWrapper ${wrongNetwork ? 'disabled' : ''}`}>
+          <div styleName={`optionsWrapper ${wrongNetwork || receivedCurrency.notExist ? 'disabled' : ''}`}>
             <ExchangeForm
               stateReference={linked}
               selectCurrency={this.selectCurrency}
@@ -874,7 +920,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
           {wrongNetwork && (
             <p styleName="wrongNetworkMessage">
               <FormattedMessage
-                id="WalletRow_MetamaskNotAvailableNetwork"
+                id="pleaseChooseAnotherNetwork"
                 defaultMessage="Please choose another network"
               />
             </p>
@@ -933,7 +979,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
 
         <p styleName="externalServiceWarning">
           <FormattedMessage
-            id="disclaimerAboutBetaVersion"
+            id="disclaimerAbout0x"
             defaultMessage="* Disclaimer: the exchange uses a 3rd 0x Liquidity Protocol. Be carefully and use at your own risk."
           />
         </p>

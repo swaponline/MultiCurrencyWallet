@@ -140,7 +140,7 @@ class OrderPurchaseModal extends React.Component<ComponentProps, ComponentState>
             })}
 
             {this.renderAmountParameter({
-              message: <FormattedMessage id="yourBalance" defaultMessage="You can spend" />,
+              message: <FormattedMessage id="youCanSpend" defaultMessage="You can spend" />,
               amount: amountCanBeSpend,
               currency: takerWallet.currency,
             })}

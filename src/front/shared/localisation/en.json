@@ -51,13 +51,6 @@
     ]
   },
   {
-    "id": "CDC75",
-    "message": "You get",
-    "files": [
-      "src/front/shared/components/CurrencyDirectionChooser/CurrencyDirectionChooser.tsx"
-    ]
-  },
-  {
     "id": "CurrencyDirectionChooser54",
     "message": "Choose the direction of exchange",
     "files": [
@@ -83,13 +76,6 @@
     "message": "Go Home",
     "files": [
       "src/front/shared/components/Header/Logo/Logo.tsx"
-    ]
-  },
-  {
-    "id": "ConfirmOffer69",
-    "message": "Back",
-    "files": [
-      "src/front/shared/components/modals/OfferModal/ConfirmOffer/ConfirmOffer.tsx"
     ]
   },
   {
@@ -122,15 +108,6 @@
     ]
   },
   {
-    "id": "WithdrawModal111",
-    "message": "Send ",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
-    ]
-  },
-  {
     "id": "WithdrawModal11212",
     "message": "Processing ...",
     "files": [
@@ -148,16 +125,6 @@
     ]
   },
   {
-    "id": "Withdrow118",
-    "message": "Amount",
-    "files": [
-      "src/front/shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.tsx",
-      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
-    ]
-  },
-  {
     "id": "PreventMultiTabs",
     "message": "Such error, many tabs",
     "files": [
@@ -168,7 +135,8 @@
     "id": "SaveKe33",
     "message": "Download",
     "files": [
-      "src/front/shared/components/SaveKeys/SaveKeys.tsx"
+      "src/front/shared/components/SaveKeys/SaveKeys.tsx",
+      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
     ]
   },
   {
@@ -371,6 +339,7 @@
     "id": "MyOrdersYouGet",
     "message": "You get",
     "files": [
+      "src/front/shared/components/CurrencyDirectionChooser/CurrencyDirectionChooser.tsx",
       "src/front/shared/pages/Exchange/Orders/MyOrders/MyOrders.tsx"
     ]
   },
@@ -385,6 +354,10 @@
     "id": "orders102",
     "message": "Amount",
     "files": [
+      "src/front/shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.tsx",
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
+      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
+      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx",
       "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
     ]
   },
@@ -745,10 +718,6 @@
     "files": [
       "src/front/shared/pages/Swap/Timer/Timer.tsx"
     ]
-  },
-  {
-    "id": "question12",
-    "message": "?"
   },
   {
     "id": "PartialPriceNoOrdersReduce",
@@ -1417,6 +1386,7 @@
     "id": "confirmDialogDefaultTitle",
     "message": "Confirm action",
     "files": [
+      "src/front/shared/components/LimitOrders/OrderPurchaseModal.tsx",
       "src/front/shared/components/modals/Confirm/Confirm.tsx",
       "src/front/shared/components/modals/ConfirmBeginSwap/ConfirmBeginSwap.tsx"
     ]
@@ -2127,7 +2097,8 @@
     "id": "InvoiceLinkCopied",
     "message": "Link copied",
     "files": [
-      "src/front/shared/components/modals/InvoiceLinkModal/InvoiceLinkModal.tsx"
+      "src/front/shared/components/modals/InvoiceLinkModal/InvoiceLinkModal.tsx",
+      "src/front/shared/components/modals/Share/Share.tsx"
     ]
   },
   {
@@ -2148,6 +2119,7 @@
     "id": "WithdrawModalCancelBtn",
     "message": "Cancel",
     "files": [
+      "src/front/shared/components/LimitOrders/OrderPurchaseModal.tsx",
       "src/front/shared/components/modals/ReceiveModal/ReceiveModal.tsx",
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
@@ -2526,7 +2498,8 @@
     "id": "back",
     "message": "Back",
     "files": [
-      "src/front/shared/components/TourWindow/index.tsx"
+      "src/front/shared/components/TourWindow/index.tsx",
+      "src/front/shared/components/modals/OfferModal/ConfirmOffer/ConfirmOffer.tsx"
     ]
   },
   {
@@ -3293,20 +3266,6 @@
     ]
   },
   {
-    "id": "registerSMSModalInstCopy",
-    "message": "Copy",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
-    ]
-  },
-  {
-    "id": "registerSMSModalInstDownload",
-    "message": "Download",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
-    ]
-  },
-  {
     "id": "registerSMSModalInstDownloaded",
     "message": "Downloading",
     "files": [
@@ -3526,13 +3485,6 @@
     ]
   },
   {
-    "id": "registerSMS_ButtonCancel",
-    "message": "Cancel",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
-    ]
-  },
-  {
     "id": "registerSMS_ButtonSaveMnemonic",
     "message": "Save",
     "files": [
@@ -3551,13 +3503,6 @@
     "message": "To activate SMS-protected wallet you must save your secret phrase.",
     "files": [
       "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
-    ]
-  },
-  {
-    "id": "ShareModal_LinkCopied",
-    "message": "Link copied",
-    "files": [
-      "src/front/shared/components/modals/Share/Share.tsx"
     ]
   },
   {
@@ -3872,6 +3817,7 @@
     "id": "widgetApproveCancel",
     "message": "Cancel",
     "files": [
+      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx",
       "src/front/shared/helpers/wpLogoutModal.ts"
     ]
   },
@@ -5901,8 +5847,6 @@
     "id": "WalletRow_MetamaskNotAvailableNetwork",
     "message": "Please choose another",
     "files": [
-      "src/front/shared/components/modals/LimitOrder/ModalForm.tsx",
-      "src/front/shared/pages/Exchange/QuickSwap/index.tsx",
       "src/front/shared/pages/Wallet/Row/Row.tsx"
     ]
   },
@@ -6148,11 +6092,7 @@
   },
   {
     "id": "disclaimerAboutBetaVersion",
-    "message": "* Disclaimer: the exchange uses a 3rd 0x Liquidity Protocol. Be carefully and use at your own risk.",
-    "files": [
-      "src/front/shared/components/modals/LimitOrder/ModalForm.tsx",
-      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
-    ]
+    "message": "* Disclaimer: the exchange uses a 3rd 0x Liquidity Protocol. Be carefully and use at your own risk."
   },
   {
     "id": "insufficientBalance",
@@ -6236,6 +6176,91 @@
     "message": "After determining a liquidity pool with your token, it will be available for exchange.",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/NewTokenInstruction.tsx"
+    ]
+  },
+  {
+    "id": "executeOrder",
+    "message": "Execute the order",
+    "files": [
+      "src/front/shared/components/LimitOrders/OrderPurchaseModal.tsx"
+    ]
+  },
+  {
+    "id": "limitOrderFillDescription",
+    "message": "You are able to spend not your entire balance. Enter the amount of {sellToken} you want to spend.",
+    "files": [
+      "src/front/shared/components/LimitOrders/OrderPurchaseModal.tsx"
+    ]
+  },
+  {
+    "id": "remainingMakerAmount",
+    "message": "Remaining maker amount",
+    "files": [
+      "src/front/shared/components/LimitOrders/OrderPurchaseModal.tsx"
+    ]
+  },
+  {
+    "id": "remainingTakerAmount",
+    "message": "Remaining taker amount",
+    "files": [
+      "src/front/shared/components/LimitOrders/OrderPurchaseModal.tsx"
+    ]
+  },
+  {
+    "id": "youCanSpend",
+    "message": "You can spend",
+    "files": [
+      "src/front/shared/components/LimitOrders/OrderPurchaseModal.tsx"
+    ]
+  },
+  {
+    "id": "yourBalance",
+    "message": "Your balance",
+    "files": [
+      "src/front/shared/components/LimitOrders/OrderPurchaseModal.tsx"
+    ]
+  },
+  {
+    "id": "pleaseChooseAnotherNetwork",
+    "message": "Please choose another network",
+    "files": [
+      "src/front/shared/components/modals/LimitOrder/ModalForm.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
+    ]
+  },
+  {
+    "id": "customSlippageValueNotice",
+    "message": "You can set a custom slippage tolerance value in the advanced settings and try again",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
+    ]
+  },
+  {
+    "id": "insufficientSlippage",
+    "message": "Insufficient slippage",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
+    ]
+  },
+  {
+    "id": "notEnoughAssetsNotice",
+    "message": "You don't have available assets in this network to exchange. Please change the network or add a custom asset to the wallet.",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
+    ]
+  },
+  {
+    "id": "disclaimerAbout1inch",
+    "message": "* Disclaimer: Limit Orders are provided by a 3rd 1inch Limit Order Protocol and should be considered in beta. Be carefully and use at your own risk.",
+    "files": [
+      "src/front/shared/components/modals/LimitOrder/ModalForm.tsx"
+    ]
+  },
+  {
+    "id": "disclaimerAbout0x",
+    "message": "* Disclaimer: the exchange uses a 3rd 0x Liquidity Protocol. Be carefully and use at your own risk.",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
     ]
   }
 ]
