@@ -624,6 +624,34 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     )
   }
 
+  flipCurrency = () => {
+    const {
+      currencies,
+      fromWallet,
+      spendedCurrency,
+      receivedCurrency,
+      toWallet,
+      wrongNetwork,
+    } = this.state
+
+    if (wrongNetwork || receivedCurrency.notExist) return
+
+    const receivedList = this.returnReceivedList(currencies, receivedCurrency)
+
+    this.setState(
+      () => ({
+        fromWallet: toWallet,
+        spendedCurrency: receivedCurrency,
+        //
+        receivedList,
+        toWallet: fromWallet,
+        receivedCurrency: spendedCurrency,
+        receivedAmount: '0',
+      }),
+      this.checkSwapData
+    )
+  }
+
   openExternalExchange = () => {
     const { externalExchangeReference } = this.state
 
@@ -835,6 +863,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
           <ExchangeForm
             stateReference={linked}
             selectCurrency={this.selectCurrency}
+            flipCurrency={this.flipCurrency}
             openExternalExchange={this.openExternalExchange}
             checkSwapData={this.checkSwapData}
             currencies={currencies}

@@ -7,6 +7,7 @@ import actions from 'redux/actions'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 import Button from 'components/controls/Button/Button'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
+import Switching from 'components/controls/Switching/Switching'
 import SelectGroup from '../SelectGroup/SelectGroup'
 import { QuickSwapFormTour } from 'components/Header/WidgetTours'
 import { Direction } from './types'
@@ -25,6 +26,7 @@ function ExchangeForm(props) {
     toWallet,
     updateWallets,
     isPending,
+    flipCurrency,
     openExternalExchange,
     checkSwapData,
   } = props
@@ -164,7 +166,9 @@ function ExchangeForm(props) {
           </>
         )}
 
-        <span className="fas fa-exchange-alt" styleName="arrows"></span>
+        <div styleName="arrows">
+          <Switching noneBorder onClick={flipCurrency} />
+        </div>
       </div>
 
       <div styleName={`inputWrapper ${receivedCurrency.notExist ? 'disabled' : ''}`}>

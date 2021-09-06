@@ -8,8 +8,10 @@ type SwitchingProps = {
   noneBorder?: boolean
 }
 
+const doNothing = () => {}
+
 const Switching = (props: SwitchingProps) => {
-  const { onClick, noneBorder = false } = props
+  const { onClick = doNothing, noneBorder = false } = props
 
   const styleName = cx('switching', {
     'noneBorder': noneBorder,

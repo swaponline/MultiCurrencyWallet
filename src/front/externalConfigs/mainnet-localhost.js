@@ -1,5 +1,5 @@
 window.widgetEvmLikeTokens = [
-  {
+ /*  {
     name: 'usdt',
     symbol: 'usdt',
     standard: 'erc20',
@@ -36,7 +36,23 @@ window.widgetEvmLikeTokens = [
     icon: 'https://wallet.miningtaxi.com/images/uniswap.svg',
     // Background color of icon
     iconBgColor: '#ff007a',
-  }
+  } */
+  {
+    name: 'WETH',
+    symbol: 'WETH',
+    standard: 'erc20matic',
+    address: '0x7ceb23fd6bc0add59e62ac25578270cff1b9f619',
+    decimals: 18,
+    fullName: 'Wrapped Ether'
+  },
+  {
+    name: 'WMATIC',
+    symbol: 'WMATIC',
+    standard: 'erc20matic',
+    address: '0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270',
+    decimals: 18,
+    fullName: 'Wrapped Matic'
+  },
 ]
 
 window.buildOptions = {
