@@ -26,7 +26,9 @@ function Exchange(props) {
   const exchangeSettings = localStorage.getItem(constants.localStorage.exchangeSettings) || {}
   let initialState = location.pathname === '/exchange/quick' ? 'quick' : 'atomic'
 
-  if (showOnlyOneType) {
+  if (externalConfig.entry === 'testnet') {
+    initialState = 'atomic'
+  } else if (showOnlyOneType) {
     // and hide tabs next
     initialState = globalMode.replace(/only_/, '')
   } else if (validMode && location.pathname === '/exchange') {
@@ -78,7 +80,10 @@ function Exchange(props) {
         <div styleName="tabsWrapper">
           <button
             /* externalConfig.entry === 'testnet' ? 'disabled' : '' */
-            styleName={`tab  ${swapMode === 'quick' ? 'active' : ''}`}
+            styleName={`tab
+              ${swapMode === 'quick' ? 'active' : ''}
+              ${externalConfig.entry !== 'mainnet' ? 'disabled' : ''}
+            `}
             /* externalConfig.entry === 'mainnet' ? openQuickMode : undefined */
             onClick={openQuickMode}
           >
