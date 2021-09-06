@@ -62,11 +62,9 @@
   background: var(--color-background-elements);
 }
 
-.optionsWrapper {
-  &.disabled {
-    pointer-events: none;
-    opacity: 0.4;
-  }
+.disabled {
+  pointer-events: none;
+  opacity: 0.4;
 }
 
 .inputWrapper {

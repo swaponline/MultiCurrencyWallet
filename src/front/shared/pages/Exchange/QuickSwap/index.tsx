@@ -311,7 +311,18 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
 
   updateReceivedList = () => {
     const { currencies, spendedCurrency } = this.state
-    const receivedList = this.returnReceivedList(currencies, spendedCurrency)
+    let receivedList = this.returnReceivedList(currencies, spendedCurrency)
+
+    if (!receivedList.length) {
+      receivedList = [
+        {
+          blockchain: '-',
+          fullTitle: '-',
+          name: '-',
+          notExist: true,
+        },
+      ]
+    }
 
     this.setState(() => ({
       receivedList,
@@ -821,80 +832,80 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
         )}
 
         <section styleName="quickSwap">
-          <div styleName={`optionsWrapper ${wrongNetwork || receivedCurrency.notExist ? 'disabled' : ''}`}>
-            <ExchangeForm
-              stateReference={linked}
-              selectCurrency={this.selectCurrency}
-              openExternalExchange={this.openExternalExchange}
-              checkSwapData={this.checkSwapData}
-              currencies={currencies}
-              receivedList={receivedList}
-              spendedAmount={spendedAmount}
-              spendedCurrency={spendedCurrency}
-              receivedCurrency={receivedCurrency}
-              fiat={fiat}
-              fromWallet={fromWallet}
-              toWallet={toWallet}
-              updateWallets={this.updateWallets}
-              isPending={isPending}
-            />
+          <ExchangeForm
+            stateReference={linked}
+            selectCurrency={this.selectCurrency}
+            openExternalExchange={this.openExternalExchange}
+            checkSwapData={this.checkSwapData}
+            currencies={currencies}
+            receivedList={receivedList}
+            spendedAmount={spendedAmount}
+            spendedCurrency={spendedCurrency}
+            receivedCurrency={receivedCurrency}
+            fiat={fiat}
+            fromWallet={fromWallet}
+            toWallet={toWallet}
+            updateWallets={this.updateWallets}
+            isPending={isPending}
+          />
 
-            {blockReason === SwapBlockReason.InsufficientSlippage && (
-              <p styleName="swapNotice">
+          {blockReason === SwapBlockReason.InsufficientSlippage && (
+            <p styleName="swapNotice">
+              <FormattedMessage
+                id="customSlippageValueNotice"
+                defaultMessage="You can set a custom slippage tolerance value in the advanced settings and try again"
+              />
+            </p>
+          )}
+
+          <div styleName="walletAddress">
+            {!metamask.isConnected() && (!isWalletCreated || !mnemonicSaved) && (
+              <Button
+                id="connectWalletBtn"
+                brand
+                fullWidth
+                styleName="connectWalletBtn"
+                onClick={this.connectWallet}
+              >
                 <FormattedMessage
-                  id="customSlippageValueNotice"
-                  defaultMessage="You can set a custom slippage tolerance value in the advanced settings and try again"
+                  id="Exchange_ConnectAddressOption"
+                  defaultMessage="Connect Wallet"
                 />
-              </p>
+              </Button>
             )}
-
-            <div styleName="walletAddress">
-              {!metamask.isConnected() && (!isWalletCreated || !mnemonicSaved) && (
-                <Button
-                  id="connectWalletBtn"
-                  brand
-                  fullWidth
-                  styleName="connectWalletBtn"
-                  onClick={this.connectWallet}
-                >
+            {!isWalletCreated ? (
+              <Button id="createWalletBtn" center onClick={this.createWallet}>
+                <FormattedMessage id="menu.CreateWallet" defaultMessage="Create wallet" />
+              </Button>
+            ) : saveSecretPhrase ? (
+              <Button id="saveSecretPhraseBtn" center onClick={this.saveMnemonic}>
+                <FormattedMessage
+                  id="BTCMS_SaveMnemonicButton"
+                  defaultMessage="Save secret phrase"
+                />
+              </Button>
+            ) : (
+              <>
+                <span>
                   <FormattedMessage
-                    id="Exchange_ConnectAddressOption"
-                    defaultMessage="Connect Wallet"
+                    id="addressOfYourWallet"
+                    defaultMessage="Address of your wallet:"
                   />
-                </Button>
-              )}
-              {!isWalletCreated ? (
-                <Button id="createWalletBtn" center onClick={this.createWallet}>
-                  <FormattedMessage id="menu.CreateWallet" defaultMessage="Create wallet" />
-                </Button>
-              ) : saveSecretPhrase ? (
-                <Button id="saveSecretPhraseBtn" center onClick={this.saveMnemonic}>
-                  <FormattedMessage
-                    id="BTCMS_SaveMnemonicButton"
-                    defaultMessage="Save secret phrase"
-                  />
-                </Button>
-              ) : (
-                <>
-                  <span>
-                    <FormattedMessage
-                      id="addressOfYourWallet"
-                      defaultMessage="Address of your wallet:"
+                </span>
+                <Copy text={fromWallet.address}>
+                  <span styleName="address">
+                    <Address
+                      address={fromWallet.address}
+                      format={isMobile ? AddressFormat.Short : AddressFormat.Full}
+                      type={metamask.isConnected() ? AddressType.Metamask : AddressType.Internal}
                     />
                   </span>
-                  <Copy text={fromWallet.address}>
-                    <span styleName="address">
-                      <Address
-                        address={fromWallet.address}
-                        format={isMobile ? AddressFormat.Short : AddressFormat.Full}
-                        type={metamask.isConnected() ? AddressType.Metamask : AddressType.Internal}
-                      />
-                    </span>
-                  </Copy>
-                </>
-              )}
-            </div>
+                </Copy>
+              </>
+            )}
+          </div>
 
+          <div styleName={`${wrongNetwork || receivedCurrency.notExist ? 'disabled' : ''}`}>
             <AdvancedSettings
               isAdvancedMode={isAdvancedMode}
               switchAdvancedMode={this.switchAdvancedMode}
@@ -904,7 +915,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
               resetSwapData={this.resetSwapData}
             />
           </div>
-
+            
           <SwapInfo
             network={network}
             swapData={swapData}
@@ -970,6 +981,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
               </Button>
             )}
           </div>
+
           {!wrongNetwork && (mnemonicSaved || metamask.isConnected()) && (
             <Button styleName="button" onClick={this.createLimitOrder} link small>
               <FormattedMessage id="createLimitOrder" defaultMessage="Create limit order" />

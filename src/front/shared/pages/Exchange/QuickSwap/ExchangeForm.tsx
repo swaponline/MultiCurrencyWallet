@@ -167,7 +167,7 @@ function ExchangeForm(props) {
         <span className="fas fa-exchange-alt" styleName="arrows"></span>
       </div>
 
-      <div styleName="inputWrapper">
+      <div styleName={`inputWrapper ${receivedCurrency.notExist ? 'disabled' : ''}`}>
         <SelectGroup
           disabled
           activeFiat={fiat}
