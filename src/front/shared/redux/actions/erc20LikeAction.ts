@@ -447,13 +447,23 @@ class Erc20LikeAction {
 
   send = async (params) => {
     const { name, from, to, amount, ...feeConfig } = params
-    const { tokenContract, decimals } = this.returnTokenInfo(name)
+    const { contractAddress, tokenContract, decimals } = this.returnTokenInfo(name)
     const feeResult = await this.fetchFees({ ...feeConfig })
     const txArguments = {
       gas: feeResult.gas,
       gasPrice: feeResult.gasPrice,
       from,
     }
+
+    // Temporarily increase the gas limit for this token
+    // TODO: Calculate the gas limit for all tokens. Check a JSON-RPC method: eth_estimateGas
+    // Binance Dog Token
+    const BNG = '0x6010e1a66934C4D053E8866Acac720c4a093d956'
+
+    if (contractAddress.toLowerCase() === BNG.toLowerCase()) {
+      txArguments.gas = 160_000
+    }
+    // ======================================================
 
     const hexAmountWithDecimals = new BigNumber(amount)
       .multipliedBy(10 ** decimals)
