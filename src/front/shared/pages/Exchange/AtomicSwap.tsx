@@ -346,7 +346,7 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
   getExchangeSettingsFromLocalStorage() {
     const exchangeSettings = localStorage.getItem(constants.localStorage.exchangeSettings)
 
-    return exchangeSettings
+    return exchangeSettings || {}
   }
 
   setDefaultCurrencyType(currency, type) {
