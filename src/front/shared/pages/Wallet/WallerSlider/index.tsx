@@ -3,7 +3,7 @@ import * as React from 'react'
 import { connect } from 'redaction'
 
 import Swiper from 'swiper'
-import 'swiper/swiper-bundle.css'
+import 'swiper/css/bundle'
 import config from 'helpers/externalConfig'
 
 import { constants, getItezUrl } from 'helpers'
@@ -202,7 +202,7 @@ class WallerSlider extends React.Component<WallerSliderProps, WallerSliderState>
         ) : (
           <div
             id="swiper_banners"
-            className={`swiper-container ${styles.swiperContainer}`}
+            className={`swiper ${styles.swiperContainer}`}
             style={{ marginTop: '20px', marginBottom: '30px' }}
           >
             <div className="swiper-wrapper">
