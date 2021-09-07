@@ -642,13 +642,15 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       () => ({
         fromWallet: toWallet,
         spendedCurrency: receivedCurrency,
-        //
         receivedList,
         toWallet: fromWallet,
         receivedCurrency: spendedCurrency,
         receivedAmount: '0',
       }),
-      this.checkSwapData
+      () => {
+        this.resetSwapData()
+        this.checkSwapData()
+      }
     )
   }
 
@@ -1025,7 +1027,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
           />
         </p>
 
-        <Button id="orderbookBtn" onClick={this.toggleOrdersViability} link>
+        <Button id="limitOrdersOrderbookBtn" onClick={this.toggleOrdersViability} link>
           <FormattedMessage id="limitOrders" defaultMessage="Limit orders" />
         </Button>
 

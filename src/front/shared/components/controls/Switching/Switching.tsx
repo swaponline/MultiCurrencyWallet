@@ -1,4 +1,3 @@
-import React from 'react'
 import CSSModules from 'react-css-modules'
 import styles from './Switching.scss'
 import cx from 'classnames'
@@ -18,7 +17,7 @@ const Switching = (props: SwitchingProps) => {
   })
 
   return (
-    <button onClick={onClick} styleName={styleName} className="fas fa-exchange-alt" />
+    <button type="button" onClick={onClick} styleName={styleName} className="fas fa-exchange-alt" />
   )
 }
 
