@@ -12,7 +12,7 @@ import {
 } from './utils'
 
 
-jest.setTimeout(230 * 1000)
+jest.setTimeout(270_000)
 
 describe('Prepare to swap e2e tests', () => {
   function getExchangeUrl(sourceUrl) {
@@ -155,7 +155,7 @@ describe('Prepare to swap e2e tests', () => {
         selector: '#orderbookBtn',
       })
 
-      await timeOut(20_000)
+      await timeOut(30_000)
 
       // find all maker orders
       const sellAmountOrders  = await MakerPage.$$eval('.sellAmountOrders', elements => elements.map(el => el.textContent))
@@ -175,7 +175,7 @@ describe('Prepare to swap e2e tests', () => {
     }
 
     try {
-      await timeOut(3 * 1000)
+      await timeOut(10_000)
 
       // find btc maker orders
       const btcSellAmountsOfOrders  = await TakerPage.$$eval('.btcSellAmountOfOrder', elements => elements.map(el => el.textContent))

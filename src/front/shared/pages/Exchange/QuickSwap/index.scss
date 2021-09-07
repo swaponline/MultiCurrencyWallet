@@ -62,11 +62,9 @@
   background: var(--color-background-elements);
 }
 
-.optionsWrapper {
-  &.disabled {
-    pointer-events: none;
-    opacity: 0.4;
-  }
+.disabled {
+  pointer-events: none;
+  opacity: 0.4;
 }
 
 .inputWrapper {
@@ -96,7 +94,7 @@
 }
 
 .formCenter {
-  padding-bottom: 0.6rem;
+  padding-bottom: 1.2rem;
   position: relative;
   display: flex;
   align-items: center;
@@ -119,9 +117,14 @@
     transform: rotate(90deg);
     color: var(--color-notice);
     position: absolute;
-    right: 1rem;
-    top: -1.04rem;
+    right: 0.7rem;
+    top: -0.9rem;
     font-size: 0.9em;
+
+    button {
+      width: auto;
+      height: auto;
+    }
   }
 }
 
