@@ -10,11 +10,11 @@ export const redirectTo = (url) => {
 }
 
 export const getTopLocation = (): IUniversalObj => {
-  try {
+  if (window.top) {
     return window.top.location
-  } catch (e) {
-    return window.location
   }
+
+  return window.location
 }
 
 export const getWalletLink = (currency, checkAddresses) => {

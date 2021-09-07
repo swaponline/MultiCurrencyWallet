@@ -82,13 +82,13 @@ $chrestStripHeight: 12px;
     height: $chrestStripWidth;
     width: $chrestStripHeight;
     left: 0;
-    top: ($chrestStripHeight / 2) + ($chrestStripWidth / 2);
+    top: ($chrestStripHeight * 0.5) + ($chrestStripWidth * 0.5);
   }
 
   &::after {
     width: $chrestStripWidth;
     height: $chrestStripHeight;
-    left: ($chrestStripHeight / 2) - ($chrestStripWidth / 2);
+    left: ($chrestStripHeight * 0.5) - ($chrestStripWidth * 0.5);
     top: 0px;
   }
 }
