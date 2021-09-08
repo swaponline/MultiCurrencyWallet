@@ -1,5 +1,3 @@
-import React from "react";
-import { constants } from 'helpers'
 import cx from "classnames";
 import { FormattedMessage } from 'react-intl'
 import cssModules from 'react-css-modules'

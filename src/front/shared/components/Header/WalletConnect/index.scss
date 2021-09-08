@@ -1,21 +1,14 @@
 
 .connectWallet {
   display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
   max-width: 250px;
+  color: var(--color-brand);
 
   @media (max-width: 767px) {
     max-width: 150px;
-  }
-}
-
-.web3Icon {
-  position: absolute;
-  max-width: 30px;
-  max-height: 30px;
-  border-radius: 50%;
-
-  @media (max-width: 767px) {
-    display: none;
   }
 }
 
@@ -23,9 +16,4 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  margin-left: 35px;
-
-  @media (max-width: 767px) {
-    margin-left: 0px;
-  }
 }

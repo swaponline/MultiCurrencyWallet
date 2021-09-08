@@ -5,7 +5,7 @@ import cssModules from 'react-css-modules'
 import styles from './index.scss'
 
 import Button from 'components/controls/Button/Button'
-import web3Icons from 'images'
+import Coin from 'components/Coin/Coin'
 
 import { metamask } from 'helpers'
 
@@ -31,49 +31,37 @@ const WalletConnect = (props) => {
     await metamask.disconnect()
   }
 
+  const currencyName = metamaskData.currency.toLowerCase()
+
   return (
-    <div styleName="connectWallet">
-      <Button
-        flex small empty
-        onClick={
+    <div
+      styleName="connectWallet"
+      onClick={
+        isMetamaskConnetced ?
+          (isNotAvailableMetamaskNetwork ?
+            disconnectWallet :
+            () => {}) :
+          connectWallet
+      }
+    >
+      {disconectedOrNetworkNowAvailable ?
+        <Coin
+          size={40}
+          name={web3Type}
+        /> :
+        <Coin
+          size={30}
+          name={currencyName}
+        />
+      }
+      <span styleName="connectWalletText">
+        {isNotAvailableMetamaskNetwork ?
+          <FormattedMessage id="UnknownWeb3Wallet" defaultMessage="Unknown Network" /> :
           isMetamaskConnetced ?
-            (isNotAvailableMetamaskNetwork ?
-              disconnectWallet :
-              () => {}) :
-            connectWallet
+            metamask.getShortAddress() :
+            <FormattedMessage id="ConnectWeb3Wallet" defaultMessage="Сonnect Wallet" />
         }
-      >
-        {
-          (
-            disconectedOrNetworkNowAvailable && (
-              <img
-                styleName="web3Icon"
-                src={web3Icons[web3Type]}
-                alt={web3Type}
-                role="image"
-              />
-            )
-          ) ||
-          (
-            isMetamaskConnetced && (
-              <img
-                styleName="web3Icon"
-                src={web3Icons[web3Type]}
-                alt={web3Type}
-                role="image"
-              />
-            )
-          )
-        }
-        <span styleName="connectWalletText">
-          {isNotAvailableMetamaskNetwork ?
-            <FormattedMessage id="UnknownWeb3Wallet" defaultMessage="Unknown Network" /> :
-            isMetamaskConnetced ?
-              metamask.getShortAddress() :
-              <FormattedMessage id="ConnectWeb3Wallet" defaultMessage="Сonnect Wallet" />
-          }
-        </span>
-        </Button>
+      </span>
     </div>
   )
 }
