@@ -18,7 +18,10 @@ const estimateGasPrice = async (): Promise<number> => {
   return ethLikeHelper.eth.estimateGasPrice()
 }
 
+const getShortAddress = (address: string): string => address ? `${address.slice(0, 6)}...${address.slice(-4)}` : ``
+
 export default {
   estimateFeeValue,
   estimateGasPrice,
+  getShortAddress,
 }
