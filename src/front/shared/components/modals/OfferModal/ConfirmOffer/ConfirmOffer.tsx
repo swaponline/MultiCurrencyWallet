@@ -42,7 +42,7 @@ class ConfirmOffer extends Component<any, any> {
 
         <Row styleName="buttonsInRow">
           <Button styleName="button" brand onClick={onBack}>
-            <FormattedMessage id="ConfirmOffer69" defaultMessage="Back" />
+            <FormattedMessage id="back" defaultMessage="Back" />
           </Button>
           <Button styleName="button" id="confirm" brand onClick={this.handleConfirm}>
             <FormattedMessage id="ConfirmOffer73" defaultMessage="Add" />

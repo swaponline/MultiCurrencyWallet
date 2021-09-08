@@ -1,4 +1,3 @@
-import React from 'react'
 import CSSModules from 'react-css-modules'
 import styles from './Switching.scss'
 import cx from 'classnames'
@@ -8,15 +7,17 @@ type SwitchingProps = {
   noneBorder?: boolean
 }
 
+const doNothing = () => {}
+
 const Switching = (props: SwitchingProps) => {
-  const { onClick, noneBorder = false } = props
+  const { onClick = doNothing, noneBorder = false } = props
 
   const styleName = cx('switching', {
     'noneBorder': noneBorder,
   })
 
   return (
-    <button onClick={onClick} styleName={styleName} className="fas fa-exchange-alt" />
+    <button type="button" onClick={onClick} styleName={styleName} className="fas fa-exchange-alt" />
   )
 }
 

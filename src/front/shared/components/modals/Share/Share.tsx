@@ -15,7 +15,7 @@ const langLabels = defineMessages({
     defaultMessage: 'Copy Link',
   },
   linkCopied: {
-    id: 'ShareModal_LinkCopied',
+    id: 'InvoiceLinkCopied',
     defaultMessage: 'Link copied',
   },
 })

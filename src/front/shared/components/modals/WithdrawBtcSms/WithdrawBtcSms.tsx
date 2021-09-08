@@ -358,7 +358,7 @@ class WithdrawModalMultisig extends React.Component<any, any> {
       },
       mnemonicPlaceholder: {
         id: 'registerSMSMPlaceHolder',
-        defaultMessage: `12 слов`,
+        defaultMessage: `Secret phrase (12 words)`,
       },
     })
 

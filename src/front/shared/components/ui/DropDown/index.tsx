@@ -14,7 +14,7 @@ type DropDownProps = {
   itemRender: (item) => ReactNode
   onSelect?: (item) => void
   className?: string
-  name?: string
+  name?: string | JSX.Element
   placeholder?: string
   arrowSide?: string
   disableSearch?: boolean

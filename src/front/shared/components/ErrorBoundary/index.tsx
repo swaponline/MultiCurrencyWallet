@@ -68,9 +68,6 @@ export default class ErrorBoundary extends React.Component<ComponentProps, Compo
               })}
             >
               Error: {error.message}
-              <br />
-              <br />
-              {error.stack && error.stack}
             </pre>
           ) : null}
         </div>

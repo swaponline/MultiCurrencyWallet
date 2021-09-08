@@ -15,7 +15,7 @@ import { user } from 'helpers'
 import getCurrencyKey from 'helpers/getCurrencyKey'
 import metamask from 'helpers/metamask'
 
-import { MnemonicKey } from './types'
+import { MnemonicKey } from 'common/types'
 
 /*
   Когда добавляем reducers, для старых пользователей они не инициализированы

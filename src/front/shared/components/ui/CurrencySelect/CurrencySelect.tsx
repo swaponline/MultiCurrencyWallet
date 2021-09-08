@@ -22,7 +22,7 @@ const CurrencySelect = (props) => {
       items={currencies}
       selectedValue={selectedValue}
       selectedItemRender={usedSelectedItemRender}
-      itemRender={item => <Option {...item} />}
+      itemRender={defaultRenderSelected}
       onSelect={onSelect}
       name={name}
       role="SelectCurrency"

@@ -14,6 +14,7 @@
   transition: background 0.23s ease, color 0.23s ease;
 
   .pending {
+    cursor: wait;
     position: relative;
   }
   
@@ -42,6 +43,10 @@
   width: 100%;
   display: block;
   padding: 0;
+}
+
+.center {
+  margin: auto;
 }
 
 .fill {

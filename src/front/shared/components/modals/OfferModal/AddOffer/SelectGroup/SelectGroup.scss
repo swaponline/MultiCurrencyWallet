@@ -19,19 +19,6 @@
   left: 1em;
 }
 
-.smallTooltip {
-  > span {
-    position: absolute;
-    right: 5px;
-    top: 5px;
-    display: flex;
-    justify-content: center;
-    span {
-      font-size: 10px;
-    }
-  }
-}
-
 .balance {
   position: absolute;
   z-index: 1;

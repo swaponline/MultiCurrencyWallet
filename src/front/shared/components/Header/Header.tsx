@@ -29,6 +29,7 @@ import UserTooltip from 'components/Header/UserTooltip/UserTooltip'
 import { getMenuItems, getMenuItemsMobile } from './config'
 import { localisedUrl } from 'helpers/locale'
 import {
+  metamask,
   constants,
   links,
   user,
@@ -287,7 +288,7 @@ class Header extends Component<any, any> {
       case isWidgetBuild && !wasOnWidgetWalletLs:
         tourEvent = this.openWidgetWalletTour
         break
-      case !userCurrencies.length && isWalletPage && !config.opts.plugins.backupPlugin:
+      case !metamask.isConnected() && !userCurrencies.length && isWalletPage && !config.opts.plugins.backupPlugin:
         this.openCreateWallet({ onClose: tourEvent })
         break
       default:

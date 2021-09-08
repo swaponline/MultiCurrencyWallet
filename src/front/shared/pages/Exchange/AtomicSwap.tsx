@@ -3,7 +3,7 @@ import Link from 'local_modules/sw-valuelink'
 
 import ThemeTooltip from 'components/ui/Tooltip/ThemeTooltip'
 import CSSModules from 'react-css-modules'
-import styles from './Exchange.scss'
+import styles from './index.scss'
 import Swap from 'swap.swap'
 import { connect } from 'redaction'
 import actions from 'redux/actions'
@@ -14,10 +14,6 @@ import reducers from 'redux/core/reducers'
 
 import SelectGroup from './SelectGroup/SelectGroup'
 import { Button } from 'components/controls'
-import Promo from './Promo/Promo'
-import Quote from './Quote'
-import HowItWorks from './HowItWorks/HowItWorks'
-import VideoAndFeatures from './VideoAndFeatures/VideoAndFeatures'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
@@ -44,6 +40,10 @@ import erc20Like from 'common/erc20Like'
 import turboSwap from 'common/helpers/turboSwap'
 import Toggle from 'components/controls/Toggle/Toggle'
 import TurboIcon from 'shared/components/ui/TurboIcon/TurboIcon'
+import Promo from './Promo/Promo'
+import Quote from './Quote'
+import HowItWorks from './HowItWorks/HowItWorks'
+import VideoAndFeatures from './VideoAndFeatures/VideoAndFeatures'
 
 import { COIN_DATA, COIN_MODEL, COIN_TYPE } from 'swap.app/constants/COINS'
 import getCoinInfo from 'common/coins/getCoinInfo'
@@ -189,6 +189,7 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
       allCurrencies,
       intl: { locale },
       history,
+      location,
       match,
     } = props
 
@@ -213,12 +214,11 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
     let haveCurrency = sell || config.opts.defaultExchangePair.sell
     let getCurrency = buy || (!isWidgetBuild ? config.opts.defaultExchangePair.buy : config.erc20token)
 
-    const exchangeDataStr = localStorage.getItem(constants.localStorage.exchangeSettings)
-    const exchangeSettings = exchangeDataStr && JSON.parse(exchangeDataStr)
-    // to get data from last session
+    const exchangeSettings = localStorage.getItem(constants.localStorage.exchangeSettings)
+
     if (exchangeSettings) {
-      haveCurrency = exchangeSettings.currency?.sell || haveCurrency
-      getCurrency = exchangeSettings.currency?.buy || getCurrency
+      haveCurrency = exchangeSettings.atomicCurrency?.sell || haveCurrency
+      getCurrency = exchangeSettings.atomicCurrency?.buy || getCurrency
     }
 
     if (!(buy && sell) && !props.location.hash.includes('#widget') && !isRootPage) {
@@ -346,7 +346,7 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
   getExchangeSettingsFromLocalStorage() {
     const exchangeSettings = localStorage.getItem(constants.localStorage.exchangeSettings)
 
-    return JSON.parse(exchangeSettings || '{}')
+    return exchangeSettings || {}
   }
 
   setDefaultCurrencyType(currency, type) {
@@ -356,13 +356,13 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
     userWalletTypes[currency] = type
 
     const newExchangeData = {
-      currency: exchangeSettings.currency,
+      atomicCurrency: exchangeSettings.atomicCurrency,
       userWalletTypes,
     }
 
     localStorage.setItem(
       constants.localStorage.exchangeSettings,
-      JSON.stringify(newExchangeData)
+      newExchangeData
     )
   }
 
@@ -496,8 +496,9 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
 
     if (tokenObj) {
       const allowance = await erc20Like[tokenObj.standard].checkAllowance({
-        tokenOwnerAddress: tokenObj.address,
-        tokenContractAddress: tokenObj.contractAddress,
+        owner: tokenObj.address,
+        spender: config.swapContract[tokenObj.standard],
+        contract: tokenObj.contractAddress,
         decimals: tokenObj.decimals,
       })
 
@@ -633,7 +634,7 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
         [haveCurrency.toUpperCase()]: haveType,
         [getCurrency.toUpperCase()]: getType,
       },
-      currency: {
+      atomicCurrency: {
         sell: haveCurrency,
         buy: getCurrency,
       },
@@ -641,7 +642,7 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
 
     localStorage.setItem(
       constants.localStorage.exchangeSettings,
-      JSON.stringify(newExchangeSettings)
+      newExchangeSettings
     )
   }
 
@@ -735,7 +736,6 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
 
     const { haveCurrency, getCurrency } = this.state
 
-    //@ts-ignore: strictNullChecks
     actions.modals.open(constants.modals.Offer, {
       sellCurrency: haveCurrency,
       buyCurrency: getCurrency,
@@ -1905,7 +1905,7 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
                 inputValueLink={linked.haveAmount.pipe(this.setAmount)}
                 selectedValue={haveCurrency}
                 onSelect={this.handleSetHaveValue}
-                label={<FormattedMessage id="partial243" defaultMessage="You send" />}
+                label={<FormattedMessage id="MyOrdersYouSend" defaultMessage="You send" />}
                 id="Exchange456"
                 placeholder="0.00000000"
                 fiat={maxAmount > 0 && isNonOffers ? 0 : haveFiat}
@@ -2189,9 +2189,10 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
             <>
               <Button
                 id="createOrderReactTooltipMessageForUser"
-                styleName={`button link-like ${haveBalance ? '' : 'noMany'}`}
+                styleName={`button ${haveBalance ? '' : 'noMany'}`}
                 //@ts-ignore: strictNullChecks
                 onClick={haveBalance ? this.createOffer : null}
+                link
               >
                 <FormattedMessage id="orders128" defaultMessage="Create offer" />
               </Button>
@@ -2251,9 +2252,10 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
           //@ts-ignore: strictNullChecks
           ref={(ref) => (this.promoContainer = ref)}
         >
-          <Fragment>
-            <div styleName="container">
+          <div styleName="container">
+            <>
               <Promo />
+
               {Form}
 
               <Button
@@ -2262,7 +2264,7 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
                 styleName="button orderbook"
                 link
               >
-                <FormattedMessage id="Orderbook" defaultMessage='Orderbook' />
+                <FormattedMessage id="Orderbook" defaultMessage="Orderbook" />
               </Button>
 
               {ordersIsOpen ? (
@@ -2276,16 +2278,17 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
                   checkSwapExists={this.checkSwapExists}
                 />
               ) : null}
-            </div>
-          </Fragment>
+
+              {config?.showHowItsWork && (
+                <>
+                  <HowItWorks />
+                  <VideoAndFeatures />
+                  <Quote />
+                </>
+              )}
+            </>
+          </div>
         </div>
-        {config && config.showHowItsWork && (
-          <Fragment>
-            <HowItWorks />
-            <VideoAndFeatures />
-            <Quote />
-          </Fragment>
-        )}
       </div>
     )
   }

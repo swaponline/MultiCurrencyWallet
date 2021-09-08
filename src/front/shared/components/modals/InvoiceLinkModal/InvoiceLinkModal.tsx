@@ -76,9 +76,9 @@ class InvoiceLinkModal extends React.Component<any, any> {
                 fullWidth
               >
                 { isLinkCopied ?
-                  <FormattedMessage id="InvoiceLinkCopied" defaultMessage="Ссылка скопирована" />
+                  <FormattedMessage id="InvoiceLinkCopied" defaultMessage="Link copied" />
                   :
-                  <FormattedMessage id="InvoiceLinkCopy" defaultMessage="Скопировать ссылку" />
+                  <FormattedMessage id="InvoiceLinkCopy" defaultMessage="Copy this link" />
                 }
               </Button>
             </div>

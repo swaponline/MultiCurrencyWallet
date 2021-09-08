@@ -3,4 +3,5 @@ export default {
   Message: 'Message',
   ErrorNotification: 'ErrorNotification',
   BTCMultisignRequest: 'BTCMultisignRequest',
+  Transaction: 'Transaction',
 }

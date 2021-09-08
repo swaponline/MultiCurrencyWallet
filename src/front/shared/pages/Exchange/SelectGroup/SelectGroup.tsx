@@ -1,9 +1,8 @@
-import React from 'react'
 import { FormattedMessage, injectIntl } from 'react-intl'
 
 import CSSModules from 'react-css-modules'
 import styles from './SelectGroup.scss'
-import partialStyles from '../Exchange.scss'
+import partialStyles from '../index.scss'
 
 import Input from 'components/forms/Input/Input'
 import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
@@ -33,13 +32,16 @@ const SelectGroup = (props) => {
     balance,
     error,
     id,
+    inputId,
     idFee,
     tooltipAboutFee,
     haveAmount,
     inputToolTip,
     activeFiat,
     balanceTooltip,
+    onKeyUp,
   } = props
+
   return (
     <div styleName="selectGroup">
       <FieldLabel inRow>
@@ -58,6 +60,7 @@ const SelectGroup = (props) => {
           styleName="inputRoot"
           inputContainerClassName="inputContainer"
           inputClassName="selectGroupInput"
+          id={inputId}
           valueLink={inputValueLink}
           type="number"
           placeholder={placeholder}
@@ -67,6 +70,7 @@ const SelectGroup = (props) => {
           onFocus={props.onFocus ? props.onFocus : () => {}}
           onBlur={props.onBlur ? props.onBlur : () => {}}
           onKeyDown={inputReplaceCommaWithDot}
+          onKeyUp={onKeyUp && onKeyUp}
         />
         {fiat > 0 && (
           <p styleName="textUsd">

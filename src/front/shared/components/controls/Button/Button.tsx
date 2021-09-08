@@ -9,6 +9,7 @@ type ButtonProps = {
   dataTut?: any
   children?: any
   fullWidth?: boolean
+  center?: boolean
   autoHeight?: boolean
   transparent?: boolean
   brand?: boolean
@@ -32,6 +33,7 @@ const Button = (props: ButtonProps) => {
     children,
     className,
     fullWidth,
+    center,
     brand,
     transparent,
     blue,
@@ -54,6 +56,7 @@ const Button = (props: ButtonProps) => {
     fill,
     flex,
     fullWidth,
+    center,
     brand,
     transparent,
     blue,

@@ -47,16 +47,7 @@
 .errorNotification {
   background-color: var(--color-background-elements);
   color: var(--color-f-error);
-  position: fixed;
-  bottom: 100;
-  right: 0;
-  padding: 20px 15px 10px 15px;
   z-index: 5;
-  border-radius: 4px;
-
-  p {
-    margin-bottom: 20px;
-  }
 }
 
 .warning {

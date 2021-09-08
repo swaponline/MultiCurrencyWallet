@@ -1,0 +1,50 @@
+name: Quick swap tests
+
+on:
+  pull_request:
+    types: [labeled]
+
+jobs:
+  build:
+    if: ${{ github.event.label.name == 'quickswap test' }}
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [14.x]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: npm install and build mainnet for tests
+        run: |
+          npm i
+          npm run build:mainnet
+
+      - name: run e2e quickswap tests
+        env:
+          evmMnemonicPhrase: ${{ secrets.ETERNAL_SEED_PHRASE }}
+          evmAddress: '0xb7d9F97Fe2c396906957634CA5bcE87Ff4a8a119'
+        run: |
+          mkdir ./tests/e2e/screenshots
+          npm run test:e2e_quick_swap:actions
+
+      - name: Upload failure screenshots
+        uses: actions/upload-artifact@v2
+        if: failure()
+        with:
+          name: failure-screenshots
+          path: ./tests/e2e/screenshots
+          if-no-files-found: ignore
+      - name: Upload screenshots
+        uses: actions/upload-artifact@v2
+        with:
+          name: screenshots
+          path: ./tests/e2e/screenshots
+          if-no-files-found: ignore

@@ -2,11 +2,16 @@ import puppeteer from 'puppeteer'
 import BigNumber from 'bignumber.js'
 import fs from 'fs'
 
-const link = process.env.ACTIONS
-  ? 'file:///home/runner/work/MultiCurrencyWallet/MultiCurrencyWallet/build-testnet/index.html'
-  : 'http://localhost:9001/'
+let link = 'http://localhost:9001/'
+
+if (process.env.ACTIONS) {
+  link = `file:///home/runner/work/MultiCurrencyWallet/MultiCurrencyWallet/build-${
+    process.env.NODE_ENV === 'production' ? 'mainnet' : 'testnet'
+  }/index.html`
+}
 
 // if it's true then you will be able to see puppeteer's browser
+// don't enable this mode in Github test flows. They don't work with that
 const isDebug = false
 
 export const createBrowser = async (): Promise<{
@@ -106,6 +111,34 @@ export const addAssetToWallet = async (page: puppeteer.Page, currency: string = 
   }
 }
 
+export const addTokenToWallet = async (params) => {
+  const { page, standardId, contract } = params
+  try {
+    await addAssetToWallet(page, standardId)
+
+    const addressInput = await page.$('#customTokenInput')
+    await addressInput.type(contract)
+
+    await clickOn({
+      page: page,
+      selector: '#customTokenNextButton',
+    })
+
+    await page.waitForSelector('#customTokenAddButton')
+
+    await clickOn({
+      page: page,
+      selector: '#customTokenAddButton',
+    })
+    await clickOn({
+      page: page,
+      selector: '#customTokenDoneButton',
+    })
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
 export const turnOnMM = async (page: puppeteer.Page) => {
   try {
     await page.waitForSelector('#btcBalance') // waits for settings of mm to load
@@ -173,6 +206,7 @@ export default {
   importWallet,
   selectSendCurrency,
   addAssetToWallet,
+  addTokenToWallet,
   turnOnMM,
   takeScreenshot,
   timeOut,

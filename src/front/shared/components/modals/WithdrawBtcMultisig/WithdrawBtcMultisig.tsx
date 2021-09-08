@@ -159,7 +159,7 @@ class WithdrawBtcMultisig extends React.Component<any, any> {
       },
       ownTxPlaceholder: {
         id: 'withdrawOwnTxPlaceholder',
-        defaultMessage: 'Если оплатили с другого источника'
+        defaultMessage: 'If paid from another source'
       },
     })
 

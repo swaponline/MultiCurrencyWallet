@@ -7,6 +7,13 @@ const storageKey = constants.localStorage.hiddenCoinsList
 
 const name = 'Update hiddenCoinsList - add baseCurrency to tokens'
 const run = () => {
+  const isWalletCreated = localStorage.getItem(constants.localStorage.isWalletCreate)
+
+  // if it's a new user, then do nothing (he already has a new token list)
+  if (!isWalletCreated) {
+    return Promise.resolve()
+  }
+
   const hiddenCoinsList = localStorage.getItem(storageKey) || '[]'
 
   const similarTokens: {
