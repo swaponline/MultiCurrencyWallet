@@ -446,7 +446,7 @@ class Header extends Component<any, any> {
         <div>
           <Logo />
         </div>
-        <Nav menu={menuItems} />
+        {!isMobile && <Nav menu={menuItems} />}
         <WalletConnect />
         <div styleName="rightArea">
           {window.WPSO_selected_theme !== 'only_light' && window.WPSO_selected_theme !== 'only_dark' && (
