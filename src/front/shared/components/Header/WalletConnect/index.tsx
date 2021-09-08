@@ -7,7 +7,7 @@ import styles from './index.scss'
 import Button from 'components/controls/Button/Button'
 import web3Icons from 'images'
 
-import { metamask, eth } from 'helpers'
+import { metamask } from 'helpers'
 
 
 const WalletConnect = (props) => {
@@ -69,7 +69,7 @@ const WalletConnect = (props) => {
           {isNotAvailableMetamaskNetwork ?
             <FormattedMessage id="UnknownWeb3Wallet" defaultMessage="Unknown Network" /> :
             isMetamaskConnetced ?
-              eth.getShortAddress(metamaskData.address) :
+              metamask.getShortAddress() :
               <FormattedMessage id="ConnectWeb3Wallet" defaultMessage="Сonnect Wallet" />
           }
         </span>

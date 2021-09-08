@@ -48,6 +48,12 @@ const isConnected = () => web3connect.isConnected()
 
 const getAddress = () => (isConnected()) ? web3connect.getAddress() : ``
 
+const getShortAddress = (): string => {
+  const address = getAddress()
+
+  return address ? `${address.slice(0, 6)}...${address.slice(-4)}` : ``
+}
+
 const getWeb3 = () => (isConnected()) ? web3connect.getWeb3() : false
 
 const _init = async () => {
@@ -351,6 +357,7 @@ const metamaskApi = {
   isEnabled,
   isConnected,
   getAddress,
+  getShortAddress,
   web3connect,
   addWallet,
   getBalance,
