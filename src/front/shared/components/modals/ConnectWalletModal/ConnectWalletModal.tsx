@@ -5,10 +5,9 @@ import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import cssModules from 'react-css-modules'
 import cx from 'classnames'
 import styles from './ConnectWalletModal.scss'
-
-import { constants, links } from 'helpers'
+import SUPPORTED_PROVIDERS from 'common/web3connect/providers/supported'
+import { constants, links, metamask } from 'helpers'
 import { localisedUrl } from 'helpers/locale'
-import metamask from 'helpers/metamask'
 
 import { Button } from 'components/controls'
 import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
@@ -84,7 +83,7 @@ class ConnectWalletModal extends React.Component<any, null> {
   }
 
   handleInjected = () => {
-    metamask.web3connect.connectTo('INJECTED').then((connected) => {
+    metamask.web3connect.connectTo(SUPPORTED_PROVIDERS.INJECTED).then((connected) => {
       if (!connected && metamask.web3connect.isLocked()) {
         //@ts-ignore: strictNullChecks
         actions.modals.open(constants.modals.AlertModal, {
@@ -101,7 +100,7 @@ class ConnectWalletModal extends React.Component<any, null> {
   }
 
   handleWalletConnect = () => {
-    metamask.web3connect.connectTo('WALLETCONNECT').then((connected) => {
+    metamask.web3connect.connectTo(SUPPORTED_PROVIDERS.WALLETCONNECT).then((connected) => {
       this.onConnectLogic(connected)
     })
   }

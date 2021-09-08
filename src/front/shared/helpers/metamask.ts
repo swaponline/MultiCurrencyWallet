@@ -9,9 +9,22 @@ import Web3Connect from 'common/web3connect'
 import { COIN_DATA, COIN_MODEL } from 'swap.app/constants/COINS'
 import getCoinInfo from 'common/coins/getCoinInfo'
 
+const supportedRpc = {}
+
+Object.values(config.evmNetworks).forEach((value: {
+  currency: string
+  chainId: number
+  networkVersion: number
+  chainName: string
+  rpcUrls: string[]
+  blockExplorerUrls: string[]
+}) => {
+  supportedRpc[value.networkVersion] = value.rpcUrls[0]
+})
+
 const web3connect: IUniversalObj = new Web3Connect({
   web3ChainId: config.evmNetworks.ETH.chainId,
-  web3RPC: config.web3.provider,
+  web3RPC: supportedRpc,
 })
 
 const _onWeb3Changed = (newWeb3) => {
