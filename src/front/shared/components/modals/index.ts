@@ -36,6 +36,7 @@ import WalletAddressModal from './WalletAddressModal/WalletAddressModal'
 import AlertWindow from "./AlertWindow"
 
 import ConnectWalletModal from './ConnectWalletModal/ConnectWalletModal'
+import WalletConnectAccount from './WalletConnectAccount/WalletConnectAccount'
 
 
 
@@ -79,4 +80,5 @@ export default {
   AlertWindow,
 
   ConnectWalletModal,
+  WalletConnectAccount,
 }

@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from "react";
 import { connect } from 'redaction'
 import { FormattedMessage } from 'react-intl'
 import cssModules from 'react-css-modules'
 import styles from './index.scss'
 
-import Button from 'components/controls/Button/Button'
 import Coin from 'components/Coin/Coin'
 
-import { metamask } from 'helpers'
+import { metamask, constants } from 'helpers'
+import actions from 'redux/actions'
 
 
 const WalletConnect = (props) => {
@@ -31,6 +30,10 @@ const WalletConnect = (props) => {
     await metamask.disconnect()
   }
 
+  const openWalletConnectAccountModal = () => {
+    actions.modals.open(constants.modals.WalletConnectAccount)
+  }
+
   const currencyName = metamaskData.currency.toLowerCase()
 
   return (
@@ -40,7 +43,7 @@ const WalletConnect = (props) => {
         isMetamaskConnetced ?
           (isNotAvailableMetamaskNetwork ?
             disconnectWallet :
-            () => {}) :
+            openWalletConnectAccountModal) :
           connectWallet
       }
     >
