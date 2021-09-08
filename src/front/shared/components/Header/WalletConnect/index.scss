@@ -1,19 +1,18 @@
 
 .connectWallet {
+  @include ff-bold;
   display: flex;
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
-  max-width: 250px;
   color: var(--color-brand);
-
-  @media (max-width: 767px) {
-    max-width: 150px;
-  }
+  font-size: smaller;
 }
 
 .connectWalletText {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  @include ellipsis;
+
+  &.hasCoinIcon {
+    margin-left: 5px;
+  }
 }

@@ -54,7 +54,7 @@ const WalletConnect = (props) => {
           name={currencyName}
         />
       }
-      <span styleName="connectWalletText">
+      <span styleName={`connectWalletText ${disconectedOrNetworkNowAvailable ? '' : 'hasCoinIcon'}`}>
         {isNotAvailableMetamaskNetwork ?
           <FormattedMessage id="UnknownWeb3Wallet" defaultMessage="Unknown Network" /> :
           isMetamaskConnetced ?
