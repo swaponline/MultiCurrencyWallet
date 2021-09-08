@@ -6,30 +6,46 @@ import cssModules from 'react-css-modules'
 import cx from 'classnames'
 import styles from './WalletConnectAccount.scss'
 
-import metamask from 'helpers/metamask'
+import {
+  metamask,
+  externalConfig as config
+} from 'helpers'
 
 import { Button } from 'components/controls'
 import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 
 
-@connect(({ ui: { dashboardModalsAllowed } }) => ({
+@connect(({
+  ui: { dashboardModalsAllowed },
+  user: { metamaskData }
+}) => ({
   dashboardModalsAllowed,
+  metamaskData,
 }))
 @cssModules(styles)
 class WalletConnectAccount extends React.Component<any, null> {
 
   handleClose = () => {
-    const {
-      name,
-    } = this.props
+  const {
+    name,
+  } = this.props
 
-    actions.modals.close(name)
+  actions.modals.close(name)
+  }
+
+  handleDisconnect = () => {
+  metamask.handleDisconnectWallet()
+  this.handleClose()
   }
 
   render() {
-    const { dashboardModalsAllowed } = this.props
+    const {
+        dashboardModalsAllowed,
+        metamaskData
+    } = this.props
 
     const web3Type = metamask.web3connect.getInjectedType()
+    console.log('config.evmNetworks', config.evmNetworks)
 
     return (
       <div
@@ -45,8 +61,7 @@ class WalletConnectAccount extends React.Component<any, null> {
           })}
         >
           <div styleName="header">
-            {/*
-            //@ts-ignore */}
+            {/*//@ts-ignore */}
             <WidthContainer styleName="headerContent">
               <div styleName="title">
                 <FormattedMessage
@@ -58,9 +73,15 @@ class WalletConnectAccount extends React.Component<any, null> {
           </div>
           <div styleName="content">
             <div>
-                
+              <p>Address: {metamaskData.address} </p>
+              <p>Balance: {`${metamaskData.balance} ${metamaskData.currency}`} </p>
+              <p>Network: {config.evmNetworks[metamaskData.currency].chainName}</p>
+              <p>Wallet: {web3Type}</p>
             </div>
             <div styleName="button-overlay">
+              <Button blue onClick={this.handleDisconnect}>
+                <FormattedMessage id="MetamaskDisconnect" defaultMessage="Disconnect wallet" />
+              </Button>
               <Button blue onClick={this.handleClose}>
                 Cancel
               </Button>
