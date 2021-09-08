@@ -43,15 +43,29 @@ const WalletConnect = (props) => {
             connectWallet
         }
       >
-        { disconectedOrNetworkNowAvailable && (
-          <img
-            styleName="web3Icon"
-            src={web3Icons[web3Type]}
-            alt={web3Type}
-            role="image"
-          />
-        )}
-        <span styleName={`connectWalletText ${disconectedOrNetworkNowAvailable ? 'connectWalletText_hasIcon' : ''}`}>
+        {
+          (
+            disconectedOrNetworkNowAvailable && (
+              <img
+                styleName="web3Icon"
+                src={web3Icons[web3Type]}
+                alt={web3Type}
+                role="image"
+              />
+            )
+          ) ||
+          (
+            isMetamaskConnetced && (
+              <img
+                styleName="web3Icon"
+                src={web3Icons[web3Type]}
+                alt={web3Type}
+                role="image"
+              />
+            )
+          )
+        }
+        <span styleName="connectWalletText">
         {isNotAvailableMetamaskNetwork ?
           <FormattedMessage id="UnknownWeb3Wallet" defaultMessage="Unknown Network" /> :
           isMetamaskConnetced ?

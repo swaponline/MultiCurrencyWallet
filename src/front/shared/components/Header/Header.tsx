@@ -441,13 +441,14 @@ class Header extends Component<any, any> {
 
     const isLogoutPossible = window.isUserRegisteredAndLoggedIn
 
-    const logoRenderer = (
+    const flexebleHeaderRender = (
       <div styleName="flexebleHeader">
         <div>
           <Logo />
         </div>
+        <Nav menu={menuItems} />
+        <WalletConnect />
         <div styleName="rightArea">
-          <WalletConnect />
           {window.WPSO_selected_theme !== 'only_light' && window.WPSO_selected_theme !== 'only_dark' && (
             <ThemeSwitcher onClick={this.handleToggleTheme} />
           )}
@@ -478,7 +479,7 @@ class Header extends Component<any, any> {
     if (isMobile) {
       return (
         <header id="header-mobile" styleName="header-mobile" className="data-tut-widget-tourFinish">
-          {logoRenderer}
+          {flexebleHeaderRender}
           {createdWalletLoader && (
             <div styleName="loaderCreateWallet">
               <Loader
@@ -518,8 +519,7 @@ class Header extends Component<any, any> {
             />
           </div>
         )}
-        {logoRenderer}
-        <Nav menu={menuItems} />
+        {flexebleHeaderRender}
         {isPartialTourOpen && isExchange && (
           <div styleName="walletTour">
             <TourPartial isTourOpen={isPartialTourOpen} closeTour={this.closePartialTour} />
