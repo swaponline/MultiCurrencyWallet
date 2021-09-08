@@ -66,12 +66,12 @@ const WalletConnect = (props) => {
           )
         }
         <span styleName="connectWalletText">
-        {isNotAvailableMetamaskNetwork ?
-          <FormattedMessage id="UnknownWeb3Wallet" defaultMessage="Unknown Network" /> :
-          isMetamaskConnetced ?
-            metamask.getAddress() :
-            <FormattedMessage id="ConnectWeb3Wallet" defaultMessage="Сonnect Wallet" />
-        }
+          {isNotAvailableMetamaskNetwork ?
+            <FormattedMessage id="UnknownWeb3Wallet" defaultMessage="Unknown Network" /> :
+            isMetamaskConnetced ?
+              metamask.getAddress() :
+              <FormattedMessage id="ConnectWeb3Wallet" defaultMessage="Сonnect Wallet" />
+          }
         </span>
         </Button>
     </div>
