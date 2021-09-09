@@ -17,7 +17,8 @@
     "id": "menu.wallet",
     "message": "Wallet",
     "files": [
-      "src/front/shared/components/Header/config.tsx"
+      "src/front/shared/components/Header/config.tsx",
+      "src/front/shared/components/modals/WalletConnectAccount/WalletConnectAccount.tsx"
     ]
   },
   {
@@ -2131,7 +2132,8 @@
       "src/front/shared/components/modals/ReceiveModal/ReceiveModal.tsx",
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
+      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx",
+      "src/front/shared/components/modals/WalletConnectAccount/WalletConnectAccount.tsx"
     ]
   },
   {
@@ -4372,7 +4374,8 @@
     "id": "YourWalletbalance",
     "message": "Guthaben",
     "files": [
-      "src/front/shared/components/BalanceForm/BalanceForm.tsx"
+      "src/front/shared/components/BalanceForm/BalanceForm.tsx",
+      "src/front/shared/components/modals/WalletConnectAccount/WalletConnectAccount.tsx"
     ]
   },
   {
@@ -4567,11 +4570,27 @@
     ]
   },
   {
+    "id": "WalletConnectAccountTitle",
+    "message": "VERBUNDENES KONTO",
+    "files": [
+      "src/front/shared/components/modals/WalletConnectAccount/WalletConnectAccount.tsx"
+    ]
+  },
+  {
+    "id": "UnknownNetworkConnectedWallet",
+    "message": "Unbekanntes Netzwerk",
+    "files": [
+      "src/front/shared/components/modals/WalletConnectAccount/WalletConnectAccount.tsx",
+      "src/front/shared/components/Header/WalletConnect/index.tsx"
+    ]
+  },
+  {
     "id": "MetamaskDisconnect",
     "message": "Verbindung trennen",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx",
-      "src/front/shared/pages/Wallet/Row/Row.tsx"
+      "src/front/shared/pages/Wallet/Row/Row.tsx",
+      "src/front/shared/components/modals/WalletConnectAccount/WalletConnectAccount.tsx"
     ]
   },
   {
@@ -4817,7 +4836,9 @@
     "message": "Connect Wallet",
     "files": [
       "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx",
-      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
+      "src/front/shared/pages/Exchange/QuickSwap/index.tsx",
+      "src/front/shared/components/modals/WalletConnectAccount/WalletConnectAccount.tsx",
+      "src/front/shared/components/Header/WalletConnect/index.tsx"
     ]
   },
   {
@@ -6060,7 +6081,8 @@
     "id": "network",
     "message": "Netzwerk",
     "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/SwapInfo.tsx"
+      "src/front/shared/pages/Exchange/QuickSwap/SwapInfo.tsx",
+      "src/front/shared/components/modals/WalletConnectAccount/WalletConnectAccount.tsx"
     ]
   },
   {
@@ -6233,7 +6255,8 @@
     "message": "Bitte wählen Sie ein anderes Netzwerk",
     "files": [
       "src/front/shared/components/modals/LimitOrder/ModalForm.tsx",
-      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
+      "src/front/shared/pages/Exchange/QuickSwap/index.tsx",
+      "src/front/shared/components/modals/WalletConnectAccount/WalletConnectAccount.tsx"
     ]
   },
   {

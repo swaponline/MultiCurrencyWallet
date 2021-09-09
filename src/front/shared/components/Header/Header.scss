@@ -5,13 +5,15 @@
   height: 20px;
   cursor: pointer;
   color: var(--color);
+  margin-left: 1rem;
 
   svg {
     display: block;
   }
 }
 
-.rightArea {
+.rightArea,
+.leftArea {
   display: flex;
   justify-content: space-between;
   align-items: center;

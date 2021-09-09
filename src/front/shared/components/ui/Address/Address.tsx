@@ -27,7 +27,7 @@ export default class Address extends Component<IAddress, {}> {
       style,
     } = this.props
 
-    const addressStart = address.substring(0, 4)
+    const addressStart = address.substring(0, 6)
     const addressEnd = address.substring(address.length - 4, address.length)
 
     let colorizing = {

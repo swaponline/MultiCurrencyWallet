@@ -34,4 +34,5 @@ export default {
   WithdrawBtcSms: 'WithdrawBtcSms',
   WithdrawBtcMultisig: 'WithdrawBtcMultisig',
   ConnectWalletModal: 'ConnectWalletModal',
+  WalletConnectAccount: 'WalletConnectAccount',
 }

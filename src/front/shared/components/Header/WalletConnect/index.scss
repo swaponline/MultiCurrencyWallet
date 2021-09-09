@@ -1,0 +1,18 @@
+
+.connectWallet {
+  @include ff-bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  color: var(--color-brand);
+  font-size: smaller;
+}
+
+.connectWalletText {
+  @include ellipsis;
+
+  &.hasCoinIcon {
+    margin-left: 5px;
+  }
+}
