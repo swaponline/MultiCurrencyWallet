@@ -443,10 +443,10 @@ class Header extends Component<any, any> {
 
     const flexebleHeaderRender = (
       <div styleName="flexebleHeader">
-        <div>
+        <div styleName="leftArea">
           <Logo />
+          {!isMobile && <Nav menu={menuItems} />}
         </div>
-        {!isMobile && <Nav menu={menuItems} />}
         <div styleName="rightArea">
           <WalletConnect />
           {window.WPSO_selected_theme !== 'only_light' && window.WPSO_selected_theme !== 'only_dark' && (
