@@ -1,5 +1,7 @@
 # How to add your own token
 
+See video: https://www.youtube.com/watch?v=cb0ZFal_y3Y How to create ERC20 token and start exchange it on your own domain using MCW plugin
+
 The main steps you need to follow so that other people can exchange your own token:
 
 1. use https://supertoken.xyz/ to create a token if you don't have it yet. 
