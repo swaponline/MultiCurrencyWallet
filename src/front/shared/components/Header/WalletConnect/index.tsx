@@ -16,11 +16,11 @@ const WalletConnect = (props) => {
     metamaskData
   } = props
 
-  const isMetamaskConnetced = metamaskData.isConnected
+  const isMetamaskConnected = metamaskData.isConnected
 
   const web3Type = metamask.web3connect.getInjectedType()
-  const isNotAvailableMetamaskNetwork = isMetamaskConnetced && !metamask.isAvailableNetwork()
-  const disconectedOrNetworkNowAvailable = !isMetamaskConnetced || isNotAvailableMetamaskNetwork
+  const isNotAvailableMetamaskNetwork = isMetamaskConnected && !metamask.isAvailableNetwork()
+  const disconnectedOrNetworkNotAvailable = !isMetamaskConnected || isNotAvailableMetamaskNetwork
 
   const connectWallet = () => {
     metamask.handleConnectMetamask({
@@ -42,14 +42,14 @@ const WalletConnect = (props) => {
     <div
       styleName="connectWallet"
       onClick={
-        isMetamaskConnetced ?
+        isMetamaskConnected ?
           (isNotAvailableMetamaskNetwork ?
             disconnectWallet :
             openWalletConnectAccountModal) :
           connectWallet
       }
     >
-      {disconectedOrNetworkNowAvailable ?
+      {disconnectedOrNetworkNotAvailable ?
         <Coin
           size={40}
           name={web3Type}
@@ -59,10 +59,10 @@ const WalletConnect = (props) => {
           name={currencyName}
         />
       }
-      <span styleName={`connectWalletText ${disconectedOrNetworkNowAvailable ? '' : 'hasCoinIcon'}`}>
+      <span styleName={`connectWalletText ${disconnectedOrNetworkNotAvailable ? '' : 'hasCoinIcon'}`}>
         {isNotAvailableMetamaskNetwork ?
           <FormattedMessage id="UnknownNetworkConnectedWallet" defaultMessage="Unknown Network" /> :
-          isMetamaskConnetced ?
+          isMetamaskConnected ?
             <Address
               address={metamaskData.address}
               format={AddressFormat.Short}

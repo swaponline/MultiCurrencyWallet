@@ -1,3 +1,8 @@
+.disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
 .header {
   padding: 16px 0;
 }
@@ -30,7 +35,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgba(0, 0, 0, .3);
+  background-color: rgba(0, 0, 0, 0.3);
   opacity: 1;
 
   &_dashboardView {
@@ -74,12 +79,42 @@
 }
 
 .providers {
-  display: block;
   width: 100%;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: center;
 }
 
 .provider_row {
   margin-bottom: 10px;
+
+  button:not(:first-child) {
+    margin-left: 0.4rem;
+  }
+}
+
+.blockchains {
+  padding: 1rem;
+}
+
+.optionsWrapper {
+  display: flex;
+  flex-wrap: wrap;
+
+  .option {
+    margin: 0.3rem;
+    padding: 0.6rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 0.4rem;
+    border: 1px solid var(--color-border);
+  }
+
+  .chainName {
+    display: inline-block;
+    margin-top: 0.5rem;
+  }
 }
 
 .content {
@@ -88,9 +123,10 @@
   flex-direction: column;
 }
 
-
 .notification-overlay {
   display: flex;
+  flex-direction: column;
+  justify-content: center;
   flex-grow: 1;
   align-items: center;
   padding: 32px 0;
@@ -119,11 +155,9 @@
 
   .title {
     font-size: 18px;
-    ;
   }
 
   .notification-overlay {
     height: 100%;
   }
-
 }

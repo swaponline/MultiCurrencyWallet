@@ -5,12 +5,14 @@ import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import cssModules from 'react-css-modules'
 import cx from 'classnames'
 import styles from './ConnectWalletModal.scss'
+import { externalConfig } from 'helpers'
 import SUPPORTED_PROVIDERS from 'common/web3connect/providers/supported'
 import { constants, links, metamask } from 'helpers'
 import { localisedUrl } from 'helpers/locale'
 
 import { Button } from 'components/controls'
 import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
+import Coin from 'components/Coin/Coin'
 
 const defaultLanguage = defineMessages({
   title: {
@@ -34,11 +36,20 @@ const providerTitles = defineMessages({
   },
 })
 
-@connect(({ ui: { dashboardModalsAllowed } }) => ({
+@connect(({ ui: { dashboardModalsAllowed }, user }) => ({
   dashboardModalsAllowed,
+  metamaskData: user.metamaskData,
 }))
-@cssModules(styles)
-class ConnectWalletModal extends React.Component<any, null> {
+@cssModules(styles, { allowMultiple: true })
+class ConnectWalletModal extends React.Component<any, any> {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      showBlockchainStep: false,
+    }
+  }
+
   goToPage(link) {
     const {
       name,
@@ -92,21 +103,28 @@ class ConnectWalletModal extends React.Component<any, null> {
               id="ConnectWalletModal_WalletLocked"
               defaultMessage="Wallet is locked. Unlock the wallet first."
             />
-          )
+          ),
         })
       }
       this.onConnectLogic(connected)
     })
   }
 
-  handleWalletConnect = () => {
+  handleWalletConnect = (chainId) => {
     metamask.web3connect.connectTo(SUPPORTED_PROVIDERS.WALLETCONNECT).then((connected) => {
       this.onConnectLogic(connected)
     })
   }
 
+  choseBlockchain = () => {
+    this.setState(() => ({
+      showBlockchainStep: true,
+    }))
+  }
+
   render() {
-    const { intl, dashboardModalsAllowed } = this.props
+    const { intl, dashboardModalsAllowed, metamaskData } = this.props
+    const { showBlockchainStep } = this.state
 
     const labels = {
       title: intl.formatMessage(defaultLanguage.title),
@@ -138,15 +156,53 @@ class ConnectWalletModal extends React.Component<any, null> {
               <div styleName="providers">
                 {metamask.web3connect.isInjectedEnabled() && (
                   <div styleName="provider_row">
-                    <Button styleName="button_provider" blue onClick={this.handleInjected}>
+                    <Button styleName="button_provider" brand onClick={this.handleInjected}>
                       {metamask.web3connect.getInjectedTitle()}
                     </Button>
                   </div>
                 )}
                 <div styleName="provider_row">
-                  <Button styleName="button_provider" blue onClick={this.handleWalletConnect}>
+                  <Button styleName="button_provider" brand onClick={this.choseBlockchain}>
                     <FormattedMessage {...providerTitles.WALLETCONNECT} />
                   </Button>
+                </div>
+              </div>
+
+              <div styleName={`blockchains ${showBlockchainStep ? '' : 'disabled'}`}>
+                <h3>
+                  <FormattedMessage
+                    id="availableBlockchains"
+                    defaultMessage="Available blockchains"
+                  />
+                  {':'}
+                </h3>
+
+                <div styleName="optionsWrapper">
+                  {Object.values(externalConfig.evmNetworks).map(
+                    (
+                      item: {
+                        currency: string
+                        chainId: number
+                        networkVersion: number
+                        chainName: string
+                        rpcUrls: string[]
+                        blockExplorerUrls: string[]
+                      },
+                      index
+                    ) => {
+                      return (
+                        <button
+                          key={index}
+                          styleName="option"
+                          onClick={() => this.handleWalletConnect(item.chainId)}
+                        >
+                          <Coin size={30} name={metamaskData.currency.toLowerCase()} />
+
+                          <span styleName="chainName">{item.chainName}</span>
+                        </button>
+                      )
+                    }
+                  )}
                 </div>
               </div>
             </div>
