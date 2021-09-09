@@ -170,8 +170,6 @@ const getBalance = () => {
       return false
     },
   }).then(({ balance, unconfirmedBalance }) => {
-    console.log('GHOST Balance: ', balance)
-    console.log('GHOST unconfirmedBalance Balance: ', unconfirmedBalance)
     reducers.user.setBalance({ name: 'ghostData', amount: balance, unconfirmedBalance })
     return balance
   })

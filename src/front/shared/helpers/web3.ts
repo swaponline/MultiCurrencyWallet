@@ -23,7 +23,6 @@ const setDefaultProvider = () => {
 }
 
 const getWeb3 = () => {
-  console.log('get web3 - is metamask', web3.isMetamask)
   return web3
 }
 

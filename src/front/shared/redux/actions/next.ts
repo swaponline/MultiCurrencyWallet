@@ -176,8 +176,7 @@ const getBalance = () => {
   }).then((answer: any) => {
     const balance = (typeof answer.balance === 'undefined') ? 0 : answer.balance
     const unconfirmedBalance = (typeof answer.unconfirmedBalance === 'undefined') ? 0 : answer.unconfirmedBalance
-    console.log('NEXT Balance: ', balance)
-    console.log('NEXT unconfirmedBalance Balance: ', unconfirmedBalance)
+
     reducers.user.setBalance({
       name: 'nextData',
       amount: balance,

@@ -23,7 +23,7 @@ Object.values(config.evmNetworks).forEach((value: {
 })
 
 const web3connect: IUniversalObj = new Web3Connect({
-  web3ChainId: config.evmNetworks.ETH.chainId,
+  web3ChainId: config.evmNetworks.BNB.chainId,
   web3RPC: supportedRpc,
 })
 
@@ -91,7 +91,6 @@ const addWallet = () => {
 }
 
 const getBalance = () => {
-  console.log('metamask getBalance')
   const { user: { metamaskData } } = getState()
   if (metamaskData) {
     const { address, currency } = metamaskData
