@@ -2,8 +2,8 @@
 
 The main steps you need to follow so that other people can exchange your own token:
 
-1. use https://vittominacori.github.io/erc20-generator/ to create erc20 token if you don't have it yet. We recomend to select BSC network there. 
-2. add pool to one of this DEXes or create "limit order" 
+1. use https://supertoken.xyz/polygon-generator to create a token if you don't have it yet. 
+2. add pool to one of this DEXes
 
 ## Supported liquidity sources
 
