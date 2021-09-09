@@ -4,6 +4,7 @@ import { connect } from 'redaction'
 import { FormattedMessage } from 'react-intl'
 import cssModules from 'react-css-modules'
 import styles from './WalletConnectAccount.scss'
+import { AddressFormat, AddressType } from 'domain/address'
 
 import {
   metamask,
@@ -11,6 +12,8 @@ import {
 } from 'helpers'
 
 import { Button } from 'components/controls'
+import Address from 'components/ui/Address/Address'
+import Copy from 'components/ui/Copy/Copy'
 import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 
 
@@ -58,7 +61,15 @@ class WalletConnectAccount extends React.Component<any, null> {
     const isAvailableNetwork = metamask.isAvailableNetwork()
 
     const walletAddress = isAvailableNetwork ?
-      address :
+      (
+        <Copy text={address}>
+          <Address
+            address={address}
+            format={AddressFormat.Full}
+            type={AddressType.Metamask}
+          />
+        </Copy>
+      ) :
       <FormattedMessage id="pleaseChooseAnotherNetwork" defaultMessage="Please choose another network" />
 
     const walletBalance = isAvailableNetwork ?
@@ -86,14 +97,12 @@ class WalletConnectAccount extends React.Component<any, null> {
           <div styleName="content">
             <div>
               <p>
-                <FormattedMessage id="Withdrow1194" defaultMessage="Address" />: {walletAddress}
-              </p>
-              <p>
                 <FormattedMessage id="YourWalletbalance" defaultMessage="Balance" />: {walletBalance}
               </p>
               <p><FormattedMessage id="network" defaultMessage="Network" />: {chainName}</p>
               <p><FormattedMessage id="menu.wallet" defaultMessage="Wallet" />: {web3Type}</p>
             </div>
+            {walletAddress}
             <div styleName="button-overlay">
               {
                 isConnected ? (
