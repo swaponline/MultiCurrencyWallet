@@ -203,7 +203,7 @@ class WallerSlider extends React.Component<WallerSliderProps, WallerSliderState>
           <div
             id="swiper_banners"
             className={`swiper ${styles.swiperContainer}`}
-            style={{ marginTop: '20px', marginBottom: '30px' }}
+            style={{ marginTop: '20px', marginBottom: '30px', overflow: 'hidden' }}
           >
             <div className="swiper-wrapper">
               {multisigPendingCount > 0 && (
