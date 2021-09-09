@@ -447,8 +447,8 @@ class Header extends Component<any, any> {
           <Logo />
         </div>
         {!isMobile && <Nav menu={menuItems} />}
-        <WalletConnect />
         <div styleName="rightArea">
+          <WalletConnect />
           {window.WPSO_selected_theme !== 'only_light' && window.WPSO_selected_theme !== 'only_dark' && (
             <ThemeSwitcher onClick={this.handleToggleTheme} />
           )}
