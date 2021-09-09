@@ -2,7 +2,7 @@
 
 The main steps you need to follow so that other people can exchange your own token:
 
-1. use https://supertoken.xyz/polygon-generator to create a token if you don't have it yet. 
+1. use https://supertoken.xyz/ to create a token if you don't have it yet. 
 2. add pool to one of this DEXes
 
 ## Supported liquidity sources
