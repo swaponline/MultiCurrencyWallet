@@ -55,7 +55,19 @@ class WalletConnectAccount extends React.Component<any, null> {
     } = this.props
 
     const web3Type = metamask.web3connect.getInjectedType()
-    console.log('config.evmNetworks', config.evmNetworks)
+    const isAvailableNetwork = metamask.isAvailableNetwork()
+
+    const walletAddress = isAvailableNetwork ?
+      address :
+      <FormattedMessage id="pleaseChooseAnotherNetwork" defaultMessage="Please choose another network" />
+
+    const walletBalance = isAvailableNetwork ?
+      `${balance} ${currency}` :
+      '0'
+
+    const chainName = isAvailableNetwork ?
+      config.evmNetworks[currency].chainName :
+      <FormattedMessage id="UnknownNetworkConnectedWallet" defaultMessage="Unknown Network" />
 
     return (
       <div styleName={`modal-overlay ${dashboardModalsAllowed ? "modal-overlay_dashboardView" : ""}`}>
@@ -73,10 +85,14 @@ class WalletConnectAccount extends React.Component<any, null> {
           </div>
           <div styleName="content">
             <div>
-              <p>Address: {address} </p>
-              <p>Balance: {`${balance} ${currency}`} </p>
-              <p>Network: {config.evmNetworks[currency].chainName}</p>
-              <p>Wallet: {web3Type}</p>
+              <p>
+                <FormattedMessage id="Withdrow1194" defaultMessage="Address" />: {walletAddress}
+              </p>
+              <p>
+                <FormattedMessage id="YourWalletbalance" defaultMessage="Balance" />: {walletBalance}
+              </p>
+              <p><FormattedMessage id="network" defaultMessage="Network" />: {chainName}</p>
+              <p><FormattedMessage id="menu.wallet" defaultMessage="Wallet" />: {web3Type}</p>
             </div>
             <div styleName="button-overlay">
               {
@@ -86,12 +102,12 @@ class WalletConnectAccount extends React.Component<any, null> {
                   </Button>
                 ) : (
                   <Button blue onClick={this.handleConnect}>
-                    <FormattedMessage id="ConnectWeb3Wallet" defaultMessage="Сonnect Wallet" />
+                    <FormattedMessage id="Exchange_ConnectAddressOption" defaultMessage="Connect Wallet" />
                   </Button>
                 )
               }
               <Button blue onClick={this.handleClose}>
-                Cancel
+                <FormattedMessage id="WithdrawModalCancelBtn" defaultMessage="Cancel" />
               </Button>
             </div>
           </div>

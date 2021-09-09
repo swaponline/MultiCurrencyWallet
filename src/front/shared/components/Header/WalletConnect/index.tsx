@@ -59,10 +59,10 @@ const WalletConnect = (props) => {
       }
       <span styleName={`connectWalletText ${disconectedOrNetworkNowAvailable ? '' : 'hasCoinIcon'}`}>
         {isNotAvailableMetamaskNetwork ?
-          <FormattedMessage id="UnknownWeb3Wallet" defaultMessage="Unknown Network" /> :
+          <FormattedMessage id="UnknownNetworkConnectedWallet" defaultMessage="Unknown Network" /> :
           isMetamaskConnetced ?
             metamask.getShortAddress() :
-            <FormattedMessage id="ConnectWeb3Wallet" defaultMessage="Сonnect Wallet" />
+            <FormattedMessage id="Exchange_ConnectAddressOption" defaultMessage="Connect Wallet" />
         }
       </span>
     </div>
