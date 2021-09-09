@@ -57,7 +57,7 @@ const filterCurrencies = (params) => {
     return isCurrencySuitable && suitableForNetwork
   })
 
-  const wrongNetwork = metamask.isConnected() && !filteredArr.length
+  const wrongNetwork = metamask.isConnected() && !metamask.isAvailableNetwork()
 
   return { currencies: filteredArr, wrongNetwork }
 }

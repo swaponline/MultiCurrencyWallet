@@ -38,6 +38,13 @@ type ComponentState = {
   enoughSwapCurrencies: boolean
 }
 
+const noCurrenciesTemplate = [{
+  blockchain: '-',
+  fullTitle: '-',
+  name: '-',
+  notExist: true,
+}]
+
 class LimitOrder extends Component<ComponentProps, ComponentState> {
   constructor(props) {
     super(props)
@@ -48,11 +55,13 @@ class LimitOrder extends Component<ComponentProps, ComponentState> {
       onlyTokens: true,
     })
 
-    if (wrongNetwork) {
-      currencies = allCurrencies
-    }
-
     let enoughSwapCurrencies = true
+
+    if (wrongNetwork || !currencies.length) {
+      currencies = noCurrenciesTemplate
+
+      if (!currencies.length) enoughSwapCurrencies = false
+    }
 
     const makerAsset = currencies[0]
     const makerWallet = actions.core.getWallet({ currency: makerAsset.value })
@@ -61,7 +70,7 @@ class LimitOrder extends Component<ComponentProps, ComponentState> {
     let takerList = this.returnTakerList(currencies, makerAsset)
 
     if (!takerList.length) {
-      takerList = allCurrencies
+      takerList = noCurrenciesTemplate
       enoughSwapCurrencies = false
     }
 

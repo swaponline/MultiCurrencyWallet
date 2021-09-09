@@ -9,7 +9,6 @@ import config from 'app-config'
 
 const isWidgetBuild = config && config.isWidget
 
-console.log('TOKEN_DECIMALS', TOKEN_DECIMALS)
 console.log('TRADE_TICKERS', TRADE_TICKERS)
 
 const PAIR_BID = PAIR_TYPES.BID

@@ -60,9 +60,13 @@ class EthLikeAction {
     return this.getCurrentWeb3()
   }
 
-  reportError = (error) => {
+  reportError = (error, details = '') => {
     feedback.actions.failed(
-      ''.concat(`details - ticker: ${this.ticker}, `, `error message - ${error.message} `)
+      ''.concat(
+        `Details => ticker: ${this.ticker}`,
+        details ? `, ${details}` : '',
+        ` | Error - ${error} `
+      )
     )
     console.group(`Actions >%c ${this.ticker}`, 'color: red;')
     console.error('error: ', error)
@@ -282,7 +286,7 @@ class EthLikeAction {
                 }
               })
               .catch((error) => {
-                this.reportError(error)
+                this.reportError(error, 'part: getTransaction')
                 resolve([])
               })
           } else {

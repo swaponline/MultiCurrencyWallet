@@ -54,9 +54,13 @@ class Erc20LikeAction {
     this.Web3 = web3
   }
 
-  reportError = (error) => {
+  reportError = (error, details = '') => {
     feedback.actions.failed(
-      ''.concat(`details - standard: ${this.standard}, `, `error message - ${error.message} `)
+      ''.concat(
+        `Details => standard: ${this.standard}`,
+        details ? `, ${details}` : '',
+        ` | Error message - ${error.message} `
+      )
     )
     console.group(`Actions >%c ${this.standard}`, 'color: red;')
     console.error('error: ', error)
@@ -615,7 +619,7 @@ class Erc20LikeAction {
         decimals,
       }
     } catch (error) {
-      this.reportError(error)
+      this.reportError(error, `${name}, part: returnTokenInfo`)
       throw new Error(error)
     }
   }
