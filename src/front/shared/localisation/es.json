@@ -17,7 +17,8 @@
     "id": "menu.wallet",
     "message": "Billetera",
     "files": [
-      "src/front/shared/components/Header/config.tsx"
+      "src/front/shared/components/Header/config.tsx",
+      "src/front/shared/components/modals/WalletConnectAccount/WalletConnectAccount.tsx"
     ]
   },
   {
@@ -2011,7 +2012,8 @@
       "src/front/shared/components/modals/ReceiveModal/ReceiveModal.tsx",
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
+      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx",
+      "src/front/shared/components/modals/WalletConnectAccount/WalletConnectAccount.tsx"
     ]
   },
   {
@@ -4192,7 +4194,8 @@
     "id": "YourWalletbalance",
     "message": "Saldo",
     "files": [
-      "src/front/shared/components/BalanceForm/BalanceForm.tsx"
+      "src/front/shared/components/BalanceForm/BalanceForm.tsx",
+      "src/front/shared/components/modals/WalletConnectAccount/WalletConnectAccount.tsx"
     ]
   },
   {
@@ -4387,11 +4390,27 @@
     ]
   },
   {
+    "id": "WalletConnectAccountTitle",
+    "message": "CUENTA CONECTADA",
+    "files": [
+      "src/front/shared/components/modals/WalletConnectAccount/WalletConnectAccount.tsx"
+    ]
+  },
+  {
+    "id": "UnknownNetworkConnectedWallet",
+    "message": "Red Desconocida",
+    "files": [
+      "src/front/shared/components/modals/WalletConnectAccount/WalletConnectAccount.tsx",
+      "src/front/shared/components/Header/WalletConnect/index.tsx"
+    ]
+  },
+  {
     "id": "MetamaskDisconnect",
     "message": "Desconectar Billetera",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx",
-      "src/front/shared/pages/Wallet/Row/Row.tsx"
+      "src/front/shared/pages/Wallet/Row/Row.tsx",
+      "src/front/shared/components/modals/WalletConnectAccount/WalletConnectAccount.tsx"
     ]
   },
   {
@@ -4708,7 +4727,9 @@
     "message": "Conectar billetera",
     "files": [
       "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx",
-      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
+      "src/front/shared/pages/Exchange/QuickSwap/index.tsx",
+      "src/front/shared/components/modals/WalletConnectAccount/WalletConnectAccount.tsx",
+      "src/front/shared/components/Header/WalletConnect/index.tsx"
     ]
   },
   {
@@ -6028,7 +6049,8 @@
     "id": "network",
     "message": "Red",
     "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/SwapInfo.tsx"
+      "src/front/shared/pages/Exchange/QuickSwap/SwapInfo.tsx",
+      "src/front/shared/components/modals/WalletConnectAccount/WalletConnectAccount.tsx"
     ]
   },
   {
@@ -6229,7 +6251,8 @@
     "message": "Por favor, elija otra red",
     "files": [
       "src/front/shared/components/modals/LimitOrder/ModalForm.tsx",
-      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
+      "src/front/shared/pages/Exchange/QuickSwap/index.tsx",
+      "src/front/shared/components/modals/WalletConnectAccount/WalletConnectAccount.tsx"
     ]
   },
   {
