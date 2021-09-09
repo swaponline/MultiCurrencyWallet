@@ -7,26 +7,8 @@ The main steps you need to follow so that other people can exchange your own tok
 
 ## Supported liquidity sources
 
-### Ethereum
 
-- https://app.uniswap.org (recommend)
-- https://app.sushi.com
-- https://mooniswap.exchange
-- https://dmm.exchange
-- https://dodoex.io
-- https://curve.fi
-
-### Binance Smart Chain
-
-We recommend using this network due to the low gas price ($0.01 - 0.5 instead of $20-200 on eth mainnet). If your token is on Ethereum, you may use the bridge to move part of the total supply of tokens using  https://omni.xdaichain.com/bridge (select ETH - BSC bridge)
-
-- https://pancakeswap.finance (recommend).
-- https://jetswap.finance
-- https://julswap.com
-- https://cheeseswap.app
-- https://mooniswap.exchange
-
-### Polygon
+### Polygon (cheapest network. 0.01 - 0.1$ gas cost for every swap)
 
 - https://swap.cometh.io
 - https://curve.fi
@@ -47,7 +29,20 @@ We recommend using this network due to the low gas price ($0.01 - 0.5 instead of
 6. Press the button "Create pair" (wait until the transaction is confirmed)
 7. After some time you will be able to see token price in the exchange form
 
-# Create Limit order 
+### Ethereum (expencive network)
 
-TODO ..
+- https://app.uniswap.org (recommend)
+- https://app.sushi.com
+- https://mooniswap.exchange
+- https://dmm.exchange
+- https://dodoex.io
+- https://curve.fi
+
+### Binance Smart Chain
+
+- https://pancakeswap.finance (recommend).
+- https://jetswap.finance
+- https://julswap.com
+- https://cheeseswap.app
+- https://mooniswap.exchange
 
