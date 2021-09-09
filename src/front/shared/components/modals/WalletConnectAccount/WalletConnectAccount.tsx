@@ -63,11 +63,13 @@ class WalletConnectAccount extends React.Component<any, null> {
     const walletAddress = isAvailableNetwork ?
       (
         <Copy text={address}>
-          <Address
-            address={address}
-            format={AddressFormat.Full}
-            type={AddressType.Metamask}
-          />
+          <span>
+            <Address
+              address={address}
+              format={AddressFormat.Full}
+              type={AddressType.Metamask}
+            />
+          </span>
         </Copy>
       ) :
       <FormattedMessage id="pleaseChooseAnotherNetwork" defaultMessage="Please choose another network" />
@@ -102,7 +104,7 @@ class WalletConnectAccount extends React.Component<any, null> {
               <p><FormattedMessage id="network" defaultMessage="Network" />: {chainName}</p>
               <p><FormattedMessage id="menu.wallet" defaultMessage="Wallet" />: {web3Type}</p>
             </div>
-            {walletAddress}
+            <span styleName="walletAddress">{walletAddress}</span>
             <div styleName="button-overlay">
               {
                 isConnected ? (

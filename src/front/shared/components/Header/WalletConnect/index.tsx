@@ -4,6 +4,8 @@ import cssModules from 'react-css-modules'
 import styles from './index.scss'
 
 import Coin from 'components/Coin/Coin'
+import Address from 'components/ui/Address/Address'
+import { AddressFormat } from 'domain/address'
 
 import { metamask, constants } from 'helpers'
 import actions from 'redux/actions'
@@ -61,7 +63,10 @@ const WalletConnect = (props) => {
         {isNotAvailableMetamaskNetwork ?
           <FormattedMessage id="UnknownNetworkConnectedWallet" defaultMessage="Unknown Network" /> :
           isMetamaskConnetced ?
-            metamask.getShortAddress() :
+            <Address
+              address={metamaskData.address}
+              format={AddressFormat.Short}
+            /> :
             <FormattedMessage id="Exchange_ConnectAddressOption" defaultMessage="Connect Wallet" />
         }
       </span>

@@ -61,9 +61,14 @@
 
 .content {
   height: 100%;
+  max-height: 400px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+}
+
+.walletAddress {
+  align-self: auto;
 }
 
 .button-overlay {
@@ -82,7 +87,6 @@
 
   .title {
     font-size: 18px;
-    ;
   }
 
   .notification-overlay {
