@@ -3,7 +3,7 @@
 The main steps you need to follow so that other people can exchange your own token:
 
 1. use https://supertoken.xyz/ to create a token if you don't have it yet. 
-2. add pool to one of this DEXes
+2. add a pool to one of these DEXes
 
 ## Supported liquidity sources
 
@@ -29,7 +29,7 @@ The main steps you need to follow so that other people can exchange your own tok
 6. Press the button "Create pair" (wait until the transaction is confirmed)
 7. After some time you will be able to see token price in the exchange form
 
-### Ethereum (expencive network)
+### Ethereum (expensive network)
 
 - https://app.uniswap.org (recommend)
 - https://app.sushi.com
