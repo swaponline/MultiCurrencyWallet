@@ -488,7 +488,7 @@ class Erc20LikeAction {
 
       const gasAmounWithPercentForSuccess = new BigNumber(
         new BigNumber(gasAmountCalculated)
-          .multipliedBy(1) // + 0% -  множитель добавочного газа, если будет фейл транзакции - увеличит (1.05 +5%, 1.1 +10%)
+          .multipliedBy(1.05) // + 5% -  множитель добавочного газа, если будет фейл транзакции - увеличит (1.05 +5%, 1.1 +10%)
           .toFixed(0)
       ).toString(16)
 
@@ -534,6 +534,18 @@ class Erc20LikeAction {
       .toString(16)
 
     return new Promise(async (res) => {
+      const gasAmountCalculated = await tokenContract.methods
+        .transfer(this.adminFeeObj.address, '0x' + hexFeeWithDecimals)
+        .estimateGas(txArguments)
+
+      const gasAmounWithPercentForSuccess = new BigNumber(
+        new BigNumber(gasAmountCalculated)
+          .multipliedBy(1.05) // + 5% -  множитель добавочного газа, если будет фейл транзакции - увеличит (1.05 +5%, 1.1 +10%)
+          .toFixed(0)
+      ).toString(16)
+
+      txArguments.gas = '0x' + gasAmounWithPercentForSuccess
+
       await tokenContract.methods
         // hex amount fixes a BigNumber error
         .transfer(this.adminFeeObj.address, '0x' + hexFeeWithDecimals)
