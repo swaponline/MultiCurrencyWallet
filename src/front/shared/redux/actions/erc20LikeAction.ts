@@ -459,16 +459,6 @@ class Erc20LikeAction {
       from,
     }
 
-    // Temporarily increase the gas limit for this token
-    // TODO: Calculate the gas limit for all tokens. Check a JSON-RPC method: eth_estimateGas
-    // Binance Dog Token
-    const BNG = '0x6010e1a66934C4D053E8866Acac720c4a093d956'
-
-    if (contractAddress.toLowerCase() === BNG.toLowerCase()) {
-      txArguments.gas = 160_000
-    }
-    // ======================================================
-
     const hexAmountWithDecimals = new BigNumber(amount)
       .multipliedBy(10 ** decimals)
       .toString(16)
@@ -478,6 +468,19 @@ class Erc20LikeAction {
     })
 
     return new Promise(async (res, rej) => {
+      txArguments.gas = 200_000
+      const gasAmountCalculated = await tokenContract.methods
+        .transfer(to, '0x' + hexAmountWithDecimals)
+        .estimateGas(txArguments)
+
+      const gasAmounWithPercentForSuccess = new BigNumber(
+        new BigNumber(gasAmountCalculated)
+          .multipliedBy(1.05) // + 5% -  множитель добавочного газа, если будет фейл транзакции - увеличит (1.05 +5%, 1.1 +10%)
+          .toFixed(0)
+      ).toString(16)
+
+      txArguments.gas = '0x' + gasAmounWithPercentForSuccess
+
       const receipt = tokenContract.methods
         // hex amount fixes a BigNumber error
         .transfer(to, '0x' + hexAmountWithDecimals)
@@ -518,6 +521,19 @@ class Erc20LikeAction {
       .toString(16)
 
     return new Promise(async (res) => {
+      txArguments.gas = 200_000
+      const gasAmountCalculated = await tokenContract.methods
+        .transfer(this.adminFeeObj.address, '0x' + hexFeeWithDecimals)
+        .estimateGas(txArguments)
+
+      const gasAmounWithPercentForSuccess = new BigNumber(
+        new BigNumber(gasAmountCalculated)
+          .multipliedBy(1.05) // + 5% -  множитель добавочного газа, если будет фейл транзакции - увеличит (1.05 +5%, 1.1 +10%)
+          .toFixed(0)
+      ).toString(16)
+
+      txArguments.gas = '0x' + gasAmounWithPercentForSuccess
+
       await tokenContract.methods
         // hex amount fixes a BigNumber error
         .transfer(this.adminFeeObj.address, '0x' + hexFeeWithDecimals)
