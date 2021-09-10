@@ -459,19 +459,6 @@ class Erc20LikeAction {
       from,
     }
 
-    // TODO: Remove after successfull tests or un-comment if fail
-    // Temporarily increase the gas limit for this token
-    // TODO: Calculate the gas limit for all tokens. Check a JSON-RPC method: eth_estimateGas
-    // Binance Dog Token
-    /*
-    const BNG = '0x6010e1a66934C4D053E8866Acac720c4a093d956'
-
-    if (contractAddress.toLowerCase() === BNG.toLowerCase() || contractAddress.toLowerCase() === `0xd7f90a10d02eb5784744d94297ce0f09838ecd75`.toLowerCase()) {
-      txArguments.gas = 160_000
-    }
-    */
-    // ======================================================
-
     const hexAmountWithDecimals = new BigNumber(amount)
       .multipliedBy(10 ** decimals)
       .toString(16)
@@ -493,6 +480,18 @@ class Erc20LikeAction {
       ).toString(16)
 
       txArguments.gas = '0x' + gasAmounWithPercentForSuccess
+      // TODO: Remove after successfull tests or un-comment if fail
+      // Temporarily increase the gas limit for this token
+      // TODO: Calculate the gas limit for all tokens. Check a JSON-RPC method: eth_estimateGas
+      // Binance Dog Token
+      
+      const BNG = '0x6010e1a66934C4D053E8866Acac720c4a093d956'
+
+      if (contractAddress.toLowerCase() === BNG.toLowerCase() || contractAddress.toLowerCase() === `0xd7f90a10d02eb5784744d94297ce0f09838ecd75`.toLowerCase()) {
+        txArguments.gas = 160_000
+      }
+
+      // ======================================================
 
       const receipt = tokenContract.methods
         // hex amount fixes a BigNumber error
