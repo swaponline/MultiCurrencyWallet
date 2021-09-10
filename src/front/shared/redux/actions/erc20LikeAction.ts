@@ -454,7 +454,7 @@ class Erc20LikeAction {
     const { contractAddress, tokenContract, decimals } = this.returnTokenInfo(name)
     const feeResult = await this.fetchFees({ ...feeConfig })
     const txArguments = {
-      gas: feeResult.gas,
+      gas: "0x00",
       gasPrice: feeResult.gasPrice,
       from,
     }
@@ -468,7 +468,6 @@ class Erc20LikeAction {
     })
 
     return new Promise(async (res, rej) => {
-      txArguments.gas = 200_000
       const gasAmountCalculated = await tokenContract.methods
         .transfer(to, '0x' + hexAmountWithDecimals)
         .estimateGas(txArguments)
@@ -521,7 +520,6 @@ class Erc20LikeAction {
       .toString(16)
 
     return new Promise(async (res) => {
-      txArguments.gas = 200_000
       const gasAmountCalculated = await tokenContract.methods
         .transfer(this.adminFeeObj.address, '0x' + hexFeeWithDecimals)
         .estimateGas(txArguments)
@@ -663,7 +661,7 @@ export default {
   erc20matic: new Erc20LikeAction({
     currency: 'MATIC',
     standard: 'erc20matic',
-    explorerName: 'explorer-mumbai',
+    explorerName: 'maticscan',
     explorerLink: externalConfig.link.maticscan,
     explorerApiKey: externalConfig.api.polygon_ApiKey,
     adminFeeObj: externalConfig.opts?.fee?.erc20matic,
