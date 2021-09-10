@@ -10,8 +10,6 @@
   "scripts": {
     "postinstall": "patch-package",
     "audit": "cross-env NPM_AUDIT_IGNORE_DEV=1 NPM_AUDIT_IGNORE_LEVEL=low npm-audit-whitelister .npm-audit-whitelister.json",
-    "common:example:send": "node ./src/common/examples/send.js",
-    "common:example:unspents": "node ./src/common/examples/unspents.js",
     "core:test": "DEBUG=swap.core* jest src/core/tests/*.test.js",
     "core:dev": "babel -w ./src/core --out-dir ./src/core/lib",
     "core:clean": "rimraf ./src/core/lib",
@@ -261,7 +259,6 @@
     "module-alias": "^2.2.2",
     "moment": "^2.29.1",
     "moment-with-locales-es6": "^1.0.1",
-    "node-fetch": "^2.6.1",
     "node-gyp": "^8.0.0",
     "patch-package": "^6.4.7",
     "postcss": "^8.2.4",
