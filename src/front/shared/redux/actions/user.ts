@@ -198,13 +198,15 @@ const getBalances = () => {
       { func: actions.btcmultisig.fetchMultisigBalances, name: 'btc-ms' }
     ]
 
-    balances.forEach(async (obj) => {
-      try {
-        await obj.func()
-      } catch (e) {
-        console.error('Fail fetch balance for ', obj.name)
-      }
-    })
+    await Promise.all(
+      balances.map(async (obj) => {
+        try {
+          await obj.func()
+        } catch (e) {
+          console.error('Fail fetch balance for ', obj.name)
+        }
+      })
+    )
 
     if (isTokenSigned) {
       await getTokensBalances()
@@ -216,20 +218,24 @@ const getBalances = () => {
 }
 
 const getTokensBalances = async () => {
-  Object.keys(TOKEN_STANDARDS).forEach((key) => {
-    const standardObj = TOKEN_STANDARDS[key]
-    const standardName = standardObj.standard
+  await Promise.all(
+    Object.keys(TOKEN_STANDARDS).map(async (key) => {
+      const standardObj = TOKEN_STANDARDS[key]
+      const standardName = standardObj.standard
 
-    Object.keys(config[standardName]).forEach(async (tokenName) => {
-      try {
-        await actions[standardName].getBalance(tokenName)
-      } catch (error) {
-        console.group('Actions >%c user > getTokensBalances', 'color: red;')
-        console.error(`Fail fetch balance for ${tokenName.toUpperCase()} token`, error)
-        console.groupEnd()
-      }
+      await Promise.all(
+        Object.keys(config[standardName]).map(async (tokenName) => {
+          try {
+            await actions[standardName].getBalance(tokenName)
+          } catch (error) {
+            console.group('Actions >%c user > getTokensBalances', 'color: red;')
+            console.error(`Fail fetch balance for ${tokenName.toUpperCase()} token`, error)
+            console.groupEnd()
+          }
+        })
+      )
     })
-  })
+  )
 }
 
 const customRate = (cur) => {
