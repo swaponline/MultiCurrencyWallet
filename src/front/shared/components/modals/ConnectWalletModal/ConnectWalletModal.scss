@@ -3,29 +3,12 @@
   opacity: 0.5;
 }
 
-.header {
-  padding: 16px 0;
-}
-
-.headerContent {
-  height: 100%;
+.title {
   display: flex;
   justify-content: space-between;
   align-items: center;
   position: relative;
-}
-
-.title {
-  width: 100%;
-  padding: 0 64px;
-  line-height: 18px;
-  font-size: 20px;
-  font-weight: 700;
   text-align: center;
-
-  &.uppercase {
-    text-transform: uppercase;
-  }
 }
 
 .modal-overlay {
@@ -70,43 +53,41 @@
   max-width: 240px;
 }
 
-.button_provider {
-  display: block;
-  width: auto;
-  max-width: none;
-  min-width: 240px;
-  margin: 0 auto;
-}
-
-.providers {
-  width: 100%;
-  margin-bottom: 1rem;
+.notification-overlay {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  flex-grow: 1;
+  align-items: center;
+  padding: 32px 0;
 }
 
-.provider_row {
-  margin-bottom: 10px;
+.stepWrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--color-pale);
+  border-radius: .6rem;
+  padding: .3rem;
 
-  button:not(:first-child) {
-    margin-left: 0.4rem;
+  &:not(:first-child) {
+    margin-top: .5rem;
   }
 }
 
-.blockchains {
+.options {
+  width: 100%;
   padding: 1rem;
-}
-
-.optionsWrapper {
   display: flex;
   flex-wrap: wrap;
 
   .option {
-    margin: 0.3rem;
-    padding: 0.6rem;
+    margin: 0.4rem;
+    padding: 0.9rem;
     display: flex;
     flex-direction: column;
     align-items: center;
+    font-size: 0.9rem;
     border-radius: 0.4rem;
     border: 1px solid var(--color-border);
   }
@@ -117,19 +98,20 @@
   }
 }
 
-.content {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
+.provider_row {
+  margin-bottom: 10px;
+
+  &:not(:first-child) {
+    margin-left: 0.5rem;
+  }
 }
 
-.notification-overlay {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  flex-grow: 1;
-  align-items: center;
-  padding: 32px 0;
+.button_provider {
+  display: block;
+  width: auto;
+  max-width: none;
+  min-width: 240px;
+  margin: 0 auto;
 }
 
 .notification {
@@ -151,10 +133,6 @@
     padding: 16px;
     border-radius: 0;
     box-shadow: none;
-  }
-
-  .title {
-    font-size: 18px;
   }
 
   .notification-overlay {

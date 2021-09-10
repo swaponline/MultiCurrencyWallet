@@ -9,13 +9,24 @@ import Web3Connect from 'common/web3connect'
 import { COIN_DATA, COIN_MODEL } from 'swap.app/constants/COINS'
 import getCoinInfo from 'common/coins/getCoinInfo'
 
-const web3connect: IUniversalObj = new Web3Connect({
+let web3connect: IUniversalObj = new Web3Connect({
   web3ChainId: config.evmNetworks.ETH.chainId,
   web3RPC: {
     // for now we can use only one chain at time for the external wallets
     [config.evmNetworks.ETH.networkVersion]: config.evmNetworks.ETH.rpcUrls[0],
   },
 })
+
+const setWeb3connect = (coinName) => {
+  const newNetworkData = config.evmNetworks[coinName.toUpperCase()]
+
+  web3connect = new Web3Connect({
+    web3ChainId: newNetworkData.chainId,
+    web3RPC: {
+      [newNetworkData.networkVersion]: newNetworkData.rpcUrls[0],
+    },
+  })
+}
 
 const _onWeb3Changed = (newWeb3) => {
   setProvider(newWeb3)
@@ -354,6 +365,7 @@ const metamaskApi = {
   isConnected,
   getAddress,
   web3connect,
+  setWeb3connect,
   addWallet,
   getBalance,
   getWeb3,
