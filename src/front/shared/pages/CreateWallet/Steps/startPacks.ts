@@ -42,7 +42,7 @@ export const widgetPack = [
   ...(!curEnabled || curEnabled.bnb ? [{ name: 'BNB', capture: 'Binance Coin' }] : []),
   ...(config.bep20 ? [{ name: 'BEP20', capture: 'Token', baseCurrency: 'BNB' }] : []),
   ...(!curEnabled || curEnabled.matic ? [{ name: 'MATIC', capture: 'MATIC Token' }] : []),
-  ...(config.erc20matic ? [{ name: 'ERC20', capture: 'Token', baseCurrency: 'MATIC' }] : []),
+  ...(config.erc20matic ? [{ name: 'ERC20MATIC', capture: 'Token', baseCurrency: 'MATIC' }] : []),
   ...(!curEnabled || curEnabled.arbeth ? [{ name: 'ARBETH', capture: 'Arbitrum ETH' }] : []),
   ...(!curEnabled || curEnabled.ghost ? [{ name: 'GHOST', capture: 'Ghost' }] : []),
   ...(!curEnabled || curEnabled.next ? [{ name: 'NEXT', capture: 'NEXT.coin' }] : []),
