@@ -48,10 +48,12 @@
 .header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 
   .title {
-    font-size: 1.4rem;
     margin: 0;
+    padding: 0;
+    font-size: 1.5rem;
   }
 
   .closeButton {
@@ -71,10 +73,10 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-
   background-color: var(--color-pale);
   border-radius: .6rem;
   padding: .3rem;
+  transition: 0.2s;
 
   &:not(:first-child) {
     margin-top: .5rem;
@@ -89,7 +91,6 @@
 }
 
 .options {
-  width: 100%;
   padding: 1rem;
   display: flex;
   justify-content: center;
@@ -104,6 +105,12 @@
     font-size: 0.9rem;
     border-radius: 0.4rem;
     border: 1px solid var(--color-border);
+    transition: 0.2s;
+
+    &:hover,
+    &.selected {
+      background-color: var(--color-border);
+    }
   }
 
   .chainName {
@@ -112,20 +119,18 @@
   }
 }
 
-.provider_row {
-  margin-bottom: 10px;
-
+.provider{
   &:not(:first-child) {
     margin-left: 0.5rem;
   }
-}
 
-.button_provider {
-  display: block;
-  width: auto;
-  max-width: none;
-  min-width: 240px;
-  margin: 0 auto;
+  button {
+    display: block;
+    width: auto;
+    max-width: none;
+    min-width: 180px;
+    margin: 0 auto;
+  }
 }
 
 .notification {

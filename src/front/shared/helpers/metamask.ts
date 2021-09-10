@@ -17,7 +17,7 @@ let web3connect: IUniversalObj = new Web3Connect({
   },
 })
 
-const setWeb3connect = (coinName) => {
+const setWeb3connect = async (coinName) => {
   const newNetworkData = config.evmNetworks[coinName.toUpperCase()]
 
   web3connect = new Web3Connect({
@@ -26,6 +26,10 @@ const setWeb3connect = (coinName) => {
       [newNetworkData.networkVersion]: newNetworkData.rpcUrls[0],
     },
   })
+}
+
+const getWeb3connect = () => {
+  return web3connect
 }
 
 const _onWeb3Changed = (newWeb3) => {
@@ -64,20 +68,24 @@ const getAddress = () => (isConnected()) ? web3connect.getAddress() : ``
 
 const getWeb3 = () => (isConnected()) ? web3connect.getWeb3() : false
 
-const _init = async () => {
-  await web3connect.onInit(() => {
+const web3connectInit = async () => {
+  await web3connect.onInit(async () => {
     if (web3connect.hasCachedProvider()) {
-      let _web3 = false
+      let _web3: IEtheriumProvider | false = false
+
       try {
-        //@ts-ignore: strictNullChecks
         _web3 = web3connect.getWeb3()
       } catch (err) {
         web3connect.clearCache()
         addMetamaskWallet()
         return
       }
+
       setMetamask(_web3)
       addMetamaskWallet()
+
+      await actions.user.sign()
+      await actions.user.getBalances()
     } else {
       addMetamaskWallet()
     }
@@ -126,6 +134,9 @@ const getBalance = () => {
 const disconnect = () => new Promise(async (resolved, reject) => {
   if (isConnected()) {
     await web3connect.Disconnect()
+    await actions.user.sign()
+    await actions.user.getBalances()
+
     resolved(true)
   } else {
     resolved(true)
@@ -269,7 +280,7 @@ const addMetamaskWallet = () => {
 }
 
 if (web3connect.hasCachedProvider()) {
-  _init()
+  web3connectInit()
 } else {
   addMetamaskWallet()
 }
@@ -366,6 +377,8 @@ const metamaskApi = {
   getAddress,
   web3connect,
   setWeb3connect,
+  getWeb3connect,
+  web3connectInit,
   addWallet,
   getBalance,
   getWeb3,

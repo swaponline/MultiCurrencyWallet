@@ -23,6 +23,7 @@ class ConnectWalletModal extends React.Component<any, any> {
 
     this.state = {
       choseNetwork: false,
+      currentBaseCurrency: -1,
     }
   }
 
@@ -87,22 +88,34 @@ class ConnectWalletModal extends React.Component<any, any> {
   }
 
   handleWalletConnect = () => {
-    metamask.web3connect.connectTo(SUPPORTED_PROVIDERS.WALLETCONNECT).then((connected) => {
+    const web3connect = metamask.getWeb3connect()
+
+    web3connect.connectTo(SUPPORTED_PROVIDERS.WALLETCONNECT).then(async (connected) => {
+      await metamask.web3connectInit()
+
       this.onConnectLogic(connected)
     })
   }
 
-  setNetwork = (coinName) => {
-    metamask.setWeb3connect(coinName)
+  setNetwork = async (coinName) => {
+    const { currentBaseCurrency } = this.state
 
     this.setState(() => ({
       choseNetwork: true,
     }))
+
+    if (currentBaseCurrency !== coinName) {
+      await metamask.setWeb3connect(coinName)
+
+      this.setState(() => ({
+        currentBaseCurrency: coinName,
+      }))
+    }
   }
 
   render() {
     const { intl, dashboardModalsAllowed } = this.props
-    const { choseNetwork } = this.state
+    const { choseNetwork, currentBaseCurrency } = this.state
 
     return (
       <div
@@ -143,11 +156,10 @@ class ConnectWalletModal extends React.Component<any, any> {
                     return (
                       <button
                         key={index}
-                        styleName="option"
+                        styleName={`option ${currentBaseCurrency === item.currency ? 'selected' : ''}`}
                         onClick={() => this.setNetwork(item.currency)}
                       >
                         <Coin size={50} name={item.currency.toLowerCase()} />
-
                         <span styleName="chainName">{item.chainName.split(' ')[0]}</span>
                       </button>
                     )
@@ -162,14 +174,14 @@ class ConnectWalletModal extends React.Component<any, any> {
               </h3>
               <div styleName="options">
                 {metamask.web3connect.isInjectedEnabled() && (
-                  <div styleName="provider_row">
-                    <Button styleName="button_provider" brand onClick={this.handleInjected}>
+                  <div styleName="provider">
+                    <Button brand onClick={this.handleInjected}>
                       {metamask.web3connect.getInjectedTitle()}
                     </Button>
                   </div>
                 )}
-                <div styleName="provider_row">
-                  <Button styleName="button_provider" brand onClick={this.handleWalletConnect}>
+                <div styleName="provider">
+                  <Button brand onClick={this.handleWalletConnect}>
                     <FormattedMessage id="ConnectWalletModal_WalletConnect" defaultMessage="WalletConnect" />
                   </Button>
                 </div>
