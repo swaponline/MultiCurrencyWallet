@@ -3,14 +3,6 @@
   opacity: 0.5;
 }
 
-.title {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: relative;
-  text-align: center;
-}
-
 .modal-overlay {
   position: sticky;
   width: 100%;
@@ -53,6 +45,20 @@
   max-width: 240px;
 }
 
+.header {
+  display: flex;
+  justify-content: space-between;
+
+  .title {
+    font-size: 1.4rem;
+    margin: 0;
+  }
+
+  .closeButton {
+    position: relative;
+  }
+}
+
 .notification-overlay {
   display: flex;
   flex-direction: column;
@@ -65,7 +71,7 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
+
   background-color: var(--color-pale);
   border-radius: .6rem;
   padding: .3rem;
@@ -75,10 +81,18 @@
   }
 }
 
+.title {
+  padding-top: .8rem;
+  display: flex;
+  justify-content: center;
+  font-size: 1.2em;
+}
+
 .options {
   width: 100%;
   padding: 1rem;
   display: flex;
+  justify-content: center;
   flex-wrap: wrap;
 
   .option {

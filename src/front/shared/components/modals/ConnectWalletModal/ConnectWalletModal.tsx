@@ -11,6 +11,7 @@ import { constants, links, metamask } from 'helpers'
 import { localisedUrl } from 'helpers/locale'
 import { Button } from 'components/controls'
 import Coin from 'components/Coin/Coin'
+import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
 
 @connect(({ ui: { dashboardModalsAllowed } }) => ({
   dashboardModalsAllowed,
@@ -116,8 +117,9 @@ class ConnectWalletModal extends React.Component<any, any> {
             [styles['modal_dashboardView']]: dashboardModalsAllowed,
           })}
         >
-          <div>
-            {/*this.handleClose*/}
+          <div styleName="header">
+            <h3 styleName="title"><FormattedMessage id="Connect" defaultMessage="Connect" /></h3>
+            <CloseIcon styleName="closeButton" onClick={this.handleClose} />
           </div>
 
           <div styleName="notification-overlay">
