@@ -538,7 +538,7 @@ export default {
     ticker: 'MATIC',
     privateKeyName: 'eth',
     chainId: externalConfig.evmNetworks.MATIC.chainId,
-    explorerName: 'explorer-mumbai',
+    explorerName: 'maticscan',
     explorerLink: externalConfig.link.maticscan,
     explorerApiKey: externalConfig.api.polygon_ApiKey,
     adminFeeObj: externalConfig.opts?.fee?.matic,
