@@ -137,7 +137,7 @@ class App extends React.Component<RouteComponentProps<any>, any> {
 
         if (appID !== switchId) {
           //@ts-ignore
-          if (chrome && chrome.extension) {
+          if (window?.chrome?.extension) {
             //@ts-ignore
             const extViews = chrome.extension.getViews()
             //@ts-ignore

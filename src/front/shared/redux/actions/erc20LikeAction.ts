@@ -328,11 +328,7 @@ class Erc20LikeAction {
           }
 
           const txData = Decoder.decodeData(tx.input)
-
-          if (
-            (txData && txData.inputs?.length === 2 && txData.name === `transfer`) ||
-            txData.method === `transfer`
-          ) {
+          if (txData && txData.inputs?.length === 2 && txData.method === `transfer`) {
             receiverAddress = `0x${txData.inputs[0]}`
             amount = new BigNumber(txData.inputs[1])
               .div(new BigNumber(10).pow(tokenDecimal))

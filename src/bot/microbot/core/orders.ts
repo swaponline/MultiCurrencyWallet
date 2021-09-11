@@ -1,5 +1,6 @@
 export const createOrder = orders => order => {
   const created = orders.create(order)
+  if (!created) return
   return created
 }
 
