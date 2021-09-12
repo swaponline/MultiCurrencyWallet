@@ -76,7 +76,7 @@
   background-color: var(--color-pale);
   border-radius: .6rem;
   padding: 0.4rem;
-  transition: 0.2s;
+  transition: 0.1s;
 
   &:not(:first-child) {
     margin-top: .5rem;
@@ -141,15 +141,54 @@
   text-align: center;
 }
 
+@media all and (max-width: 720px) {
+  .modal {
+    max-width: 520px;
+  }
+}
+
 @include media-mobile {
   .modal {
     height: 100%;
-    padding: 16px;
+    max-width: 100%;
+    font-size: 1.2rem;
     border-radius: 0;
     box-shadow: none;
   }
 
   .notification-overlay {
     height: 100%;
+  }
+
+  .options {
+    .option {
+      width: 40%;
+      font-size: 1.1rem;
+    }
+  }
+
+  .provider{
+    width: 100%;
+
+    &:not(:first-child) {
+      margin-left: 0;
+      margin-top: 0.7rem;
+    }
+
+    button {
+      width: 80%;
+    }
+  }
+}
+
+@media all and (max-width: 380px) {
+  .modal {
+    font-size: 1rem;
+  }
+
+  .options {
+    .option {
+      font-size: 0.9rem;
+    }
   }
 }
