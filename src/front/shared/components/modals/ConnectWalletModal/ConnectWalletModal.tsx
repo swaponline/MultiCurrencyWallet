@@ -188,13 +188,7 @@ class ConnectWalletModal extends React.Component<any, any> {
               </div>
             </div>
           </div>
-
-          {/*<div styleName="button-overlay">
-            <Button styleName="button" gray onClick={this.handleClose}>
-              <FormattedMessage id="ConnectWalletModal_Cancel" defaultMessage="Cancel" />
-            </Button>
-          </div>
-*/}        </div>
+        </div>
       </div>
     )
   }

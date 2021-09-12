@@ -134,9 +134,8 @@ const getBalance = () => {
 const disconnect = () => new Promise(async (resolved, reject) => {
   if (isConnected()) {
     await web3connect.Disconnect()
-    await actions.user.sign()
-    await actions.user.getBalances()
 
+    resetWalletState()
     resolved(true)
   } else {
     resolved(true)
@@ -261,22 +260,26 @@ const addMetamaskWallet = () => {
       })
     }
   } else {
-    reducers.user.addWallet({
-      name: 'metamaskData',
-      data: {
-        address: 'Not connected',
-        balance: 0,
-        balanceError: false,
-        isConnected: false,
-        isMetamask: true,
-        currency: 'ETH',
-        fullName: 'External wallet',
-        infoAboutCurrency: undefined,
-        isBalanceFetched: true,
-        unconfirmedBalance: 0,
-      },
-    })
+    resetWalletState()
   }
+}
+
+const resetWalletState = () => {
+  reducers.user.addWallet({
+    name: 'metamaskData',
+    data: {
+      address: 'Not connected',
+      balance: 0,
+      balanceError: false,
+      isConnected: false,
+      isMetamask: true,
+      currency: 'ETH',
+      fullName: 'External wallet',
+      infoAboutCurrency: undefined,
+      isBalanceFetched: true,
+      unconfirmedBalance: 0,
+    },
+  })
 }
 
 if (web3connect.hasCachedProvider()) {
@@ -285,13 +288,13 @@ if (web3connect.hasCachedProvider()) {
   addMetamaskWallet()
 }
 
-
-const handleDisconnectWallet = (cbDisconnected?) => {
-  if (isEnabled()) {
+const handleDisconnectWallet = (callback?) => {
+  if (isConnected()) {
     disconnect().then(async () => {
       await actions.user.sign()
       await actions.user.getBalances()
-      if (cbDisconnected) cbDisconnected()
+
+      if (callback) callback()
     })
   }
 }
