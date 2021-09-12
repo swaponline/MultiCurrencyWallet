@@ -17,6 +17,7 @@ import {
   metamask,
   links,
 } from 'helpers'
+import { localisedUrl } from 'helpers/locale'
 import actions from 'redux/actions'
 import Link from 'local_modules/sw-valuelink'
 import { ComponentState, Direction, SwapBlockReason } from './types'
@@ -33,7 +34,12 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   constructor(props) {
     super(props)
 
-    const { match, activeFiat, allCurrencies } = props
+    const {
+      match,
+      activeFiat,
+      allCurrencies,
+      history,
+    } = props
     const { params, path } = match
 
     let {
@@ -46,15 +52,23 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
 
     const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
 
+    if (path.match(/\/quick\/createOrder/)) {
+      this.createLimitOrder()
+    }
+
     // if we have url parameters then show it as default values
     if (!wrongNetwork && path.match(/\/quick/) && params.sell && params.buy) {
       const urlSpendedCurrency = currentCurrencies.find(
         (item) => item.value.toLowerCase() === params.sell.toLowerCase()
       )
+      if (!urlSpendedCurrency) history.push(localisedUrl('', `${links.quickSwap}`))
+
       const urlReceivedList = this.returnReceivedList(currentCurrencies, urlSpendedCurrency)
       const urlReceivedCurrency = urlReceivedList.find(
         (item) => item.value.toLowerCase() === params.buy.toLowerCase()
       )
+
+      if (!urlReceivedCurrency) history.push(localisedUrl('', `${links.quickSwap}`))
 
       // reassigning these variables only if url is correct
       if (urlSpendedCurrency && urlReceivedList && urlReceivedCurrency) {

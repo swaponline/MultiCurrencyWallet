@@ -248,6 +248,13 @@ class SwapOrders extends aggregation(ServiceInterface, Collection) {
     } = getCoinInfo(sellCurrency)
 
     // Error in the bottom line: Cannot read property 'precision' of undefined
+    if (
+      !constants.COIN_DATA[buyCurrency.toUpperCase()]?.precision ||
+      !constants.COIN_DATA[sellCurrency.toUpperCase()]?.precision
+    ) {
+      return
+    }
+
     const roundedBuyAmount = new BigNumber(buyAmount).dp(constants.COIN_DATA[buyCurrency.toUpperCase()].precision)
     const roundedSellAmount = new BigNumber(sellAmount).dp(constants.COIN_DATA[sellCurrency.toUpperCase()].precision)
 
@@ -283,7 +290,7 @@ class SwapOrders extends aggregation(ServiceInterface, Collection) {
         const order = this._create(data)
 
         //@ts-ignore: strictNullChecks
-        newOrders.push(order)
+        order && newOrders.push(order)
       }
     })
 
@@ -363,6 +370,8 @@ class SwapOrders extends aggregation(ServiceInterface, Collection) {
       ...data,
       owner: this.app.services.auth.getPublicData(),
     })
+
+    if (!order) return
 
     this._saveMyOrders()
 
