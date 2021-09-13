@@ -864,7 +864,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
       !!ownTx ||
       !this.addressIsCorrect() ||
       selectedItem.isToken && notEnoughForTokenMinerFee ||
-      new BigNumber(amount).isGreaterThan(balances.balance) ||
+      new BigNumber(amount).plus(fees.total).isGreaterThan(balances.balance) ||
       new BigNumber(amount).dp() > currentDecimals
 
 
