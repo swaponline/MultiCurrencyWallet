@@ -107,8 +107,9 @@ class ConnectWalletModal extends React.Component<any, any> {
 
   newWeb3connect = () => {
     const { currentBaseCurrency } = this.state
+    const networkInfo = externalConfig.evmNetworks[currentBaseCurrency.toUpperCase()]
 
-    metamask.setWeb3connect(currentBaseCurrency)
+    metamask.setWeb3connect(networkInfo.networkVersion)
 
     return metamask.getWeb3connect()
   }

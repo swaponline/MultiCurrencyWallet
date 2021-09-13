@@ -11,31 +11,57 @@ import getCoinInfo from 'common/coins/getCoinInfo'
 
 let web3connect: any = undefined
 
-setWeb3connect('eth')
+setWeb3connect(config.evmNetworks.ETH.networkVersion)
 
-function setWeb3connect(coinName) {
-  const newNetworkData = config.evmNetworks[coinName.toUpperCase()]
+function handleConnected () {
+  localStorage.setItem(constants.localStorage.isWalletCreate, 'true')
+  _onWeb3Changed(web3connect.getWeb3())
+}
 
-  web3connect = new Web3Connect({
-    web3ChainId: newNetworkData.chainId,
-    web3RPC: {
-      [newNetworkData.networkVersion]: newNetworkData.rpcUrls[0],
-    },
-  })
+function handleDisconnected () {
+  setDefaultProvider()
+  _onWeb3Changed(getDefaultWeb3())
+}
 
-  web3connect.on('connected', async () => {
-    localStorage.setItem(constants.localStorage.isWalletCreate, 'true')
+function handleAccountChanged () {
+  _onWeb3Changed(web3connect.getWeb3())
+}
+
+function handleChainChanged() {
+  if (web3connect.isCorrectNetwork()) {
     _onWeb3Changed(web3connect.getWeb3())
+  }
+}
+
+function cleanWeb3connectListeners() {
+  web3connect.removeListener('connected', handleConnected)
+  web3connect.removeListener('disconnect', handleDisconnected)
+  web3connect.removeListener('accountChange', handleAccountChanged)
+  web3connect.removeListener('chainChanged', handleChainChanged)
+}
+
+function setWeb3connect(networkId) {
+  const newNetworkData: any = Object.values(config.evmNetworks).find((networkInfo: IUniversalObj) => {
+    return networkInfo.networkVersion === networkId
   })
 
-  web3connect.on('disconnect', async () => {
-    setDefaultProvider()
-    _onWeb3Changed(getDefaultWeb3())
-  })
+  if (newNetworkData) {
+    if (web3connect) {
+      cleanWeb3connectListeners()
+    }
 
-  web3connect.on('accountChange', async () => {
-    _onWeb3Changed(web3connect.getWeb3())
-  })
+    web3connect = new Web3Connect({
+      web3ChainId: newNetworkData.chainId,
+      web3RPC: {
+        [newNetworkData.networkVersion]: newNetworkData.rpcUrls[0],
+      },
+    })
+
+    web3connect.on('connected', handleConnected)
+    web3connect.on('disconnect', handleDisconnected)
+    web3connect.on('accountChange', handleAccountChanged)
+    web3connect.on('chainChanged', handleChainChanged)
+  }
 }
 
 const getWeb3connect = () => web3connect
@@ -147,9 +173,9 @@ const getChainId = () => {
 }
 
 const isAvailableNetwork = () => {
-    const networkVersion = getChainId()
+  const networkVersion = getChainId()
 
-    return (config.evmNetworkVersions.includes(networkVersion))
+  return (config.evmNetworkVersions.includes(networkVersion))
 }
 
 const isAvailableNetworkByCurrency = (currency) => {
@@ -165,8 +191,7 @@ const isAvailableNetworkByCurrency = (currency) => {
     ? config.evmNetworks[blockchain]?.networkVersion
     : config.evmNetworks[ticker]?.networkVersion
 
-  const hexChainId = web3connect.getChainId()
-  const currentNetworkVersion = Number(Number(hexChainId).toString(10))
+  const currentNetworkVersion = getChainId()
 
   return currencyNetworkVersion === currentNetworkVersion
 }
@@ -202,8 +227,7 @@ const addMetamaskWallet = () => {
       [config.evmNetworks.ARBETH.networkVersion, arbitrumWalletInfo],
     ])
 
-    const hexChainId = web3connect.getChainId()
-    const networkVersion = Number(Number(hexChainId).toString(10))
+    const networkVersion = getChainId()
 
     if (isAvailableNetwork()){
       const currencyName = walletMap.get(networkVersion)?.currencyName
@@ -281,7 +305,9 @@ const handleDisconnectWallet = (callback?) => {
       await actions.user.sign()
       await actions.user.getBalances()
 
-      if (callback) callback()
+      if (typeof callback === 'function') {
+        callback()
+      }
     })
   }
 }
@@ -298,9 +324,14 @@ const handleConnectMetamask = (params: MetamaskConnectParams = {}) => {
     if (connected) {
       await actions.user.sign()
       await actions.user.getBalances()
-      if (callback) callback(true)
+
+      if (typeof callback === 'function') {
+        callback(true)
+      }
     } else {
-      if (callback) callback(false)
+      if (typeof callback === 'function') {
+        callback(false)
+      }
     }
   })
 }
@@ -328,7 +359,8 @@ const switchNetwork = async (nativeCurrency) => {
         console.log(addError)
         console.groupEnd()
       }
-    } else {
+      // show the error if it's not a rejected request
+    } else if (switchError.code !== 4001) {
       console.group('%c switch the Metamask network', 'color: red;')
       console.log(switchError)
       console.groupEnd()
