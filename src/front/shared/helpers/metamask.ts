@@ -62,7 +62,11 @@ web3connect.on('chainChanged', async () => {
 
 const isEnabled = () => true
 
-const isConnected = () => web3connect.isConnected()
+const isConnected = () => {
+  const web3connect = getWeb3connect()
+
+  return web3connect.isConnected()
+}
 
 const getAddress = () => (isConnected()) ? web3connect.getAddress() : ``
 
@@ -318,10 +322,40 @@ const handleConnectMetamask = (params: MetamaskConnectParams = {}) => {
   })
 }
 
-// when add EIP-3326: wallet_switchEthereumChain use this method
-const addCurrencyNetwork = (currency) => {
+const switchNetwork = async (nativeCurrency) => {
+  const { chainId, chainName, rpcUrls, blockExplorerUrls } = config.evmNetworks[nativeCurrency]
+
+  if (!window.ethereum) return false
+
+  try {
+    const result = await window.ethereum.request({
+      method: 'wallet_switchEthereumChain',
+      params: [{ chainId }],
+    })
+
+    // null is a successful result
+    return result === null
+  } catch (switchError) {
+    // network hasn't been added to MetaMask
+    if (switchError.code === 4902) {
+      try {
+        return await addCurrencyNetwork(nativeCurrency)
+      } catch (addError) {
+        console.group('%c add a new Metamask network', 'color: red;')
+        console.log(addError)
+        console.groupEnd()
+      }
+    } else {
+      console.group('%c switch the Metamask network', 'color: red;')
+      console.log(switchError)
+      console.groupEnd()
+    }
+  }
+}
+
+const addCurrencyNetwork = async (currency) => {
   if(!(isConnected())) {
-    return
+    return false
   }
 
   const { coin, blockchain } = getCoinInfo(currency)
@@ -356,16 +390,19 @@ const addCurrencyNetwork = (currency) => {
   const ethereum = window.ethereum
 
   if (web3.eth  && ethereum) {
-    web3.eth.getAccounts((error, accounts) => {
-      ethereum.request({
-        method: 'wallet_addEthereumChain',
-        params: [params, accounts[0]],
-      })
-      .then((result) => {
-        console.log('Success add and switch to network')
-      })
-      .catch((error) => {
-        throw new Error(`Metamask > addCurrencyNetwork error: ${error.message}`)
+    return new Promise((res, rej) => {
+      web3.eth.getAccounts((error, accounts) => {
+        ethereum.request({
+          method: 'wallet_addEthereumChain',
+          params: [params, accounts[0]],
+        })
+        .then((result) => {
+          console.log('Success add and switch to network')
+          res(true)
+        })
+        .catch((error) => {
+          rej(new Error(`Metamask > addCurrencyNetwork error: ${error.message}`))
+        })
       })
     })
   } else {
@@ -392,7 +429,8 @@ const metamaskApi = {
   isAvailableNetworkByCurrency,
   handleDisconnectWallet,
   handleConnectMetamask,
-  addCurrencyNetwork
+  switchNetwork,
+  addCurrencyNetwork,
 }
 
 window.metamaskApi = metamaskApi

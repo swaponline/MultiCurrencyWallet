@@ -4,7 +4,7 @@ import link from './link'
 export default {
   ETH: {
     currency: 'ETH',
-    chainId: 0x1,
+    chainId: '0x1',
     networkVersion: 1,
     chainName: 'Ethereum',
     rpcUrls: [web3.provider],
@@ -12,7 +12,7 @@ export default {
   },
   BNB: {
     currency: 'BNB',
-    chainId: 0x38,
+    chainId: '0x38',
     networkVersion: 56,
     chainName: 'Binance Smart Chain',
     rpcUrls: [web3.binance_provider],
@@ -20,7 +20,7 @@ export default {
   },
   MATIC: {
     currency: 'MATIC',
-    chainId: 0x89,
+    chainId: '0x89',
     networkVersion: 137,
     chainName: 'Matic',
     rpcUrls: [web3.matic_provider],
@@ -28,7 +28,7 @@ export default {
   },
   ARBETH: {
     currency: 'ARBETH',
-    chainId: 0xA4B1,
+    chainId: '0xA4B1',
     networkVersion: 42161,
     chainName: 'Arbitrum',
     rpcUrls: [web3.arbitrum_provider],

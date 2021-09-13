@@ -71,7 +71,9 @@ class ConnectWalletModal extends React.Component<any, any> {
   }
 
   handleInjected = () => {
-    metamask.web3connect.connectTo(SUPPORTED_PROVIDERS.INJECTED).then((connected) => {
+    const { currentBaseCurrency } = this.state
+
+    metamask.web3connect.connectTo(SUPPORTED_PROVIDERS.INJECTED).then(async (connected) => {
       if (!connected && metamask.web3connect.isLocked()) {
         actions.modals.open(constants.modals.AlertModal, {
           message: (
@@ -81,9 +83,11 @@ class ConnectWalletModal extends React.Component<any, any> {
             />
           ),
         })
-      }
+      } else {
+        await metamask.switchNetwork(currentBaseCurrency)
 
-      this.onConnectLogic(connected)
+        this.onConnectLogic(connected)
+      }
     })
   }
 

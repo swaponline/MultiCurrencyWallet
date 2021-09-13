@@ -1642,7 +1642,6 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
       !metamask.isAvailableNetworkByCurrency(buyCoin)
 
     metamask.addCurrencyNetwork(isSellCoinNeedAddCorrectNetwork && sellCoin || isBuyCoinNeedAddCorrectNetwork && buyCoin)
-
   }
 
   renderCoinName = (coin) => {
