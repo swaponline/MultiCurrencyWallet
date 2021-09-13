@@ -4664,21 +4664,7 @@
   },
   {
     "id": "MetamaskNetworkAlert_Message",
-    "message": "Wrong network, please select \"{network}\" in {walletTitle} (or disconnect wallet)",
-    "files": [
-      "src/front/shared/containers/App/App.tsx"
-    ]
-  },
-  {
-    "id": "MetamaskNetworkAlert_NetworkMainnet",
-    "message": "Ethereum (Mainnet) or Binance Smart Chain (Mainnet)",
-    "files": [
-      "src/front/shared/containers/App/App.tsx"
-    ]
-  },
-  {
-    "id": "MetamaskNetworkAlert_NetworkTestnet",
-    "message": "Ethereum (Rinkeby) or Binance Smart Chain (Testnet)",
+    "message": "Wrong network, please switch to another network in {walletTitle} (or disconnect wallet).",
     "files": [
       "src/front/shared/containers/App/App.tsx"
     ]
