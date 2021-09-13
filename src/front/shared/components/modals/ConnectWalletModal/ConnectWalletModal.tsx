@@ -70,11 +70,17 @@ class ConnectWalletModal extends React.Component<any, any> {
     actions.modals.close(name)
   }
 
-  handleInjected = () => {
+  handleInjected = async () => {
     const { currentBaseCurrency } = this.state
 
-    metamask.web3connect.connectTo(SUPPORTED_PROVIDERS.INJECTED).then(async (connected) => {
-      if (!connected && metamask.web3connect.isLocked()) {
+    if (!metamask.isAvailableNetworkByCurrency(currentBaseCurrency)) {
+      await metamask.switchNetwork(currentBaseCurrency)
+    }
+
+    const web3connect = this.newWeb3connect()
+
+    web3connect.connectTo(SUPPORTED_PROVIDERS.INJECTED).then(async (connected) => {
+      if (!connected && web3connect.isLocked()) {
         actions.modals.open(constants.modals.AlertModal, {
           message: (
             <FormattedMessage
@@ -84,21 +90,27 @@ class ConnectWalletModal extends React.Component<any, any> {
           ),
         })
       } else {
-        await metamask.switchNetwork(currentBaseCurrency)
-
         this.onConnectLogic(connected)
       }
     })
   }
 
   handleWalletConnect = () => {
-    const web3connect = metamask.getWeb3connect()
+    const web3connect = this.newWeb3connect()
 
     web3connect.connectTo(SUPPORTED_PROVIDERS.WALLETCONNECT).then(async (connected) => {
       await metamask.web3connectInit()
 
       this.onConnectLogic(connected)
     })
+  }
+
+  newWeb3connect = () => {
+    const { currentBaseCurrency } = this.state
+
+    metamask.setWeb3connect(currentBaseCurrency)
+
+    return metamask.getWeb3connect()
   }
 
   setNetwork = async (coinName) => {
@@ -109,8 +121,6 @@ class ConnectWalletModal extends React.Component<any, any> {
     }))
 
     if (currentBaseCurrency !== coinName) {
-      await metamask.setWeb3connect(coinName)
-
       this.setState(() => ({
         currentBaseCurrency: coinName,
       }))
@@ -118,7 +128,7 @@ class ConnectWalletModal extends React.Component<any, any> {
   }
 
   render() {
-    const { intl, dashboardModalsAllowed } = this.props
+    const { dashboardModalsAllowed } = this.props
     const { choseNetwork, currentBaseCurrency } = this.state
 
     return (

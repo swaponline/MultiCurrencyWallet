@@ -1,5 +1,6 @@
 import { EventEmitter } from 'events'
 import { ConnectorEvent } from '@web3-react/types'
+import { BigNumber } from 'bignumber.js'
 import Web3 from 'web3'
 import SUPPORTED_PROVIDERS from './providers/supported'
 import INJECTED_TYPE from './providers/InjectedType'
@@ -258,9 +259,22 @@ export default class Web3Connect extends EventEmitter {
     return (this._cachedProvider) ? true : false
   }
 
+  getNetworksId = () => {
+    const decimalCurrrentId = this._web3ChainId ? Number(new BigNumber(this._web3ChainId).toString(10)) : undefined
+    const dicimalCachedId = this._cachedChainId ? Number(new BigNumber(this._cachedChainId).toString(10)) : undefined
+
+    return {
+      decimalCurrrentId,
+      dicimalCachedId,
+    }
+  }
+
   isCorrectNetwork() {
-    // @ToDo - test Metamask dAppBrowser
-    const nonExistent = -42 // random (fix ts error)
+    const { decimalCurrrentId, dicimalCachedId } = this.getNetworksId()
+
+    const supportedNetwork =
+      config.evmNetworkVersions.includes(decimalCurrrentId) ||
+      config.evmNetworkVersions.includes(dicimalCachedId)
 
     return (
       `${this._web3ChainId}` === `${this._cachedChainId}`
@@ -268,7 +282,8 @@ export default class Web3Connect extends EventEmitter {
       || this._web3ChainId === Number.parseInt(this._cachedChainId)
       || `0x0${this._web3ChainId}` === `${this._cachedChainId}`
       || `0x${this._web3ChainId}` === `${this._cachedChainId}` // Opera Mobile
-      || config.evmNetworkVersions.includes(this._web3ChainId || nonExistent)
+      || supportedNetwork
+      || false
     )
   }
 

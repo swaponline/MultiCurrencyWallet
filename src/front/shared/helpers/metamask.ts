@@ -9,15 +9,11 @@ import Web3Connect from 'common/web3connect'
 import { COIN_DATA, COIN_MODEL } from 'swap.app/constants/COINS'
 import getCoinInfo from 'common/coins/getCoinInfo'
 
-let web3connect: IUniversalObj = new Web3Connect({
-  web3ChainId: config.evmNetworks.ETH.chainId,
-  web3RPC: {
-    // for now we can use only one chain at time for the external wallets
-    [config.evmNetworks.ETH.networkVersion]: config.evmNetworks.ETH.rpcUrls[0],
-  },
-})
+let web3connect: any = undefined
 
-const setWeb3connect = async (coinName) => {
+setWeb3connect('eth')
+
+function setWeb3connect(coinName) {
   const newNetworkData = config.evmNetworks[coinName.toUpperCase()]
 
   web3connect = new Web3Connect({
@@ -26,11 +22,23 @@ const setWeb3connect = async (coinName) => {
       [newNetworkData.networkVersion]: newNetworkData.rpcUrls[0],
     },
   })
+
+  web3connect.on('connected', async () => {
+    localStorage.setItem(constants.localStorage.isWalletCreate, 'true')
+    _onWeb3Changed(web3connect.getWeb3())
+  })
+
+  web3connect.on('disconnect', async () => {
+    setDefaultProvider()
+    _onWeb3Changed(getDefaultWeb3())
+  })
+
+  web3connect.on('accountChange', async () => {
+    _onWeb3Changed(web3connect.getWeb3())
+  })
 }
 
-const getWeb3connect = () => {
-  return web3connect
-}
+const getWeb3connect = () => web3connect
 
 const _onWeb3Changed = (newWeb3) => {
   setProvider(newWeb3)
@@ -41,32 +49,9 @@ const _onWeb3Changed = (newWeb3) => {
   actions.user.getBalances()
 }
 
-web3connect.on('connected', async () => {
-  localStorage.setItem(constants.localStorage.isWalletCreate, 'true')
-
-  _onWeb3Changed(web3connect.getWeb3())
-})
-
-web3connect.on('disconnect', async () => {
-  setDefaultProvider()
-  _onWeb3Changed(getDefaultWeb3())
-})
-
-web3connect.on('accountChange', async () => {
-  _onWeb3Changed(web3connect.getWeb3())
-})
-
-web3connect.on('chainChanged', async () => {
-  _onWeb3Changed(web3connect.getWeb3())
-})
-
 const isEnabled = () => true
 
-const isConnected = () => {
-  const web3connect = getWeb3connect()
-
-  return web3connect.isConnected()
-}
+const isConnected = () => web3connect.isConnected()
 
 const getAddress = () => (isConnected()) ? web3connect.getAddress() : ``
 
@@ -117,10 +102,8 @@ const getBalance = () => {
       return balanceInCache
     }
 
-    //@ts-ignore: strictNullChecks
     return web3connect.getWeb3().eth.getBalance(address)
       .then(result => {
-        //@ts-ignore: strictNullChecks
         const amount = web3connect.getWeb3().utils.fromWei(result)
 
         cacheStorageSet('currencyBalances', `${currency}_${address}`, amount, 30)
@@ -323,7 +306,7 @@ const handleConnectMetamask = (params: MetamaskConnectParams = {}) => {
 }
 
 const switchNetwork = async (nativeCurrency) => {
-  const { chainId, chainName, rpcUrls, blockExplorerUrls } = config.evmNetworks[nativeCurrency]
+  const { chainId } = config.evmNetworks[nativeCurrency]
 
   if (!window.ethereum) return false
 
