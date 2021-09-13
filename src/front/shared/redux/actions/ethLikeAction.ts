@@ -367,7 +367,8 @@ class EthLikeAction {
 
       return '0x' + hexLimitWithPercentForSuccess
     } catch (error) {
-      console.error(error)
+      this.reportError(error, 'estimateGas')
+
       return undefined
     }
   }
@@ -429,7 +430,7 @@ class EthLikeAction {
       if (this.adminFeeObj && !walletData.isMetamask) {
         receipt.then(() => {
           this.sendAdminTransaction({
-            from: txData.from,
+            from: Web3.utils.toChecksumAddress(ownerAddress),
             amount,
             gasPrice,
             defaultgasLimit,
