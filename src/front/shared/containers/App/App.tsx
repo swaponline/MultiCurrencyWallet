@@ -30,25 +30,13 @@ import Seo from "components/Seo/Seo";
 import config from "helpers/externalConfig"
 import { routing, links, utils } from 'helpers'
 import backupUserData from 'plugins/backupUserData'
-import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
+import { FormattedMessage, injectIntl } from 'react-intl'
 
 import metamask from 'helpers/metamask'
 
 
 const userLanguage = (navigator.userLanguage || navigator.language || "en-gb").split("-")[0];
 moment.locale(userLanguage)
-
-
-const metamaskNetworks = defineMessages({
-  mainnet: {
-    id: `MetamaskNetworkAlert_NetworkMainnet`,
-    defaultMessage: `Ethereum (Mainnet) or Binance Smart Chain (Mainnet)`,
-  },
-  testnet: {
-    id: `MetamaskNetworkAlert_NetworkTestnet`,
-    defaultMessage: `Ethereum (Rinkeby) or Binance Smart Chain (Testnet)`,
-  },
-})
 
 @withRouter
 @connect(({ currencies: { items: currencies }, modals, ui: { dashboardModalsAllowed } }) => ({
@@ -166,23 +154,18 @@ class App extends React.Component<RouteComponentProps<any>, any> {
   }
 
   popupIncorrectNetwork() {
-    //@ts-ignore
-    const { intl } = this.props
-
-    //@ts-ignore: strictNullChecks
     actions.modals.open(constants.modals.AlertModal, {
       title: (
         <FormattedMessage 
           id="MetamaskNetworkAlert_Title"
-          defaultMessage="Внимание"
+          defaultMessage="Warning"
         />
       ),
       message: (
         <FormattedMessage
           id="MetamaskNetworkAlert_Message"
-          defaultMessage="Для продолжения выберите в кошельке {walletTitle} &quot;{network}&quot; или отключите кошелек"
+          defaultMessage='Wrong network, please switch to another network in {walletTitle} (or disconnect wallet).'
           values={{
-            network: intl.formatMessage(metamaskNetworks[config.entry]),
             walletTitle: metamask.web3connect.getProviderTitle(),
           }}
         />
@@ -190,7 +173,7 @@ class App extends React.Component<RouteComponentProps<any>, any> {
       labelOk: (
         <FormattedMessage
           id="MetamaskNetworkAlert_OkDisconnectWallet"
-          defaultMessage="Отключить внешний кошелек"
+          defaultMessage="Disconnect external wallet"
         />
       ),
       dontClose: true,
@@ -205,19 +188,19 @@ class App extends React.Component<RouteComponentProps<any>, any> {
   async processMetamask () {
     await metamask.web3connect.onInit(() => {
       const _checkChain = () => {
-        if (metamask.isCorrectNetwork()) {
-          actions.modals.close(constants.modals.AlertModal)
-        } else {
+        const wrongNetwork = metamask.isConnected() && !metamask.isCorrectNetwork()
+
+        if (wrongNetwork) {
           this.popupIncorrectNetwork()
+        } else {
+          actions.modals.close(constants.modals.AlertModal)
         }
       }
 
       metamask.web3connect.on('chainChanged', _checkChain)
       metamask.web3connect.on('connected', _checkChain)
 
-      if (metamask.isConnected()
-        && !metamask.isCorrectNetwork()
-      ) {
+      if (metamask.isConnected() && !metamask.isCorrectNetwork()) {
         this.popupIncorrectNetwork()
       }
     })

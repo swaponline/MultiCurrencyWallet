@@ -4549,21 +4549,7 @@
   },
   {
     "id": "MetamaskNetworkAlert_Message",
-    "message": "Wrong network, please select \"{network}\" in Metamask (or wallet connect)",
-    "files": [
-      "src/front/shared/containers/App/App.tsx"
-    ]
-  },
-  {
-    "id": "MetamaskNetworkAlert_NetworkMainnet",
-    "message": "Ethereum (Mainnet) lub Binance Smart Chain (Mainnet)",
-    "files": [
-      "src/front/shared/containers/App/App.tsx"
-    ]
-  },
-  {
-    "id": "MetamaskNetworkAlert_NetworkTestnet",
-    "message": "Ethereum (Rinkeby) lub Binance Smart Chain (Testnet)",
+    "message": "Zła sieć, przełącz się na inną sieć w {walletTitle} (lub odłącz portfel).",
     "files": [
       "src/front/shared/containers/App/App.tsx"
     ]

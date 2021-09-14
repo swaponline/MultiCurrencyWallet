@@ -4559,21 +4559,7 @@
   },
   {
     "id": "MetamaskNetworkAlert_Message",
-    "message": "Om door te gaan, selecteer Metamask \"{netwerk}\" in de portefeuille of schakel de portefeuille uit",
-    "files": [
-      "src/front/shared/containers/App/App.tsx"
-    ]
-  },
-  {
-    "id": "MetamaskNetworkAlert_NetworkMainnet",
-    "message": "Ethereum (Mainnet) of Binance Smart Chain (Mainnet)",
-    "files": [
-      "src/front/shared/containers/App/App.tsx"
-    ]
-  },
-  {
-    "id": "MetamaskNetworkAlert_NetworkTestnet",
-    "message": "Ethereum (Rinkeby) of Binance Smart Chain (Testnet)",
+    "message": "Verkeerd netwerk, Schakel naar een ander netwerk in {walletTitle} (of verbreek de verbinding met wallet).",
     "files": [
       "src/front/shared/containers/App/App.tsx"
     ]

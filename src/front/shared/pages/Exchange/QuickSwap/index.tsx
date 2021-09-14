@@ -139,21 +139,20 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     const { wrongNetwork: prevWrongNetwork } = prevState
     const { currencies, spendedCurrency } = this.state
 
-    if (this.isSwapNotAvailable()) {
-      this.setState(() => ({
-        receivedAmount: '0',
-      }))
-    }
-
     const isCurrentNetworkAvailable = metamask.isAvailableNetwork()
     const isSpendedCurrencyNetworkAvailable = metamask.isAvailableNetworkByCurrency(
       spendedCurrency.value
     )
 
+    const switchToCorrectNetwork = prevWrongNetwork && (isSpendedCurrencyNetworkAvailable || isCurrentNetworkAvailable)
+    const switchToWrongNetwork = !prevWrongNetwork && !isSpendedCurrencyNetworkAvailable
+    const disconnect = prevMetamaskData.isConnected && !metamaskData.isConnected
+
     const needUpdate =
+      disconnect ||
       metamaskData.isConnected &&
-      ((prevWrongNetwork && (isSpendedCurrencyNetworkAvailable || isCurrentNetworkAvailable)) ||
-        (!prevWrongNetwork && !isSpendedCurrencyNetworkAvailable) ||
+      (switchToCorrectNetwork ||
+        switchToWrongNetwork ||
         (prevMetamaskData.address !== metamaskData.address))
 
     if (needUpdate) {
