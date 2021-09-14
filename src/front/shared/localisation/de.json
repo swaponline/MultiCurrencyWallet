@@ -4672,21 +4672,7 @@
   },
   {
     "id": "MetamaskNetworkAlert_Message",
-    "message": "Falsches Netzwerk, bitte wähle \"{network}\" in {walletTitle} (oder trenne das Wallet)",
-    "files": [
-      "src/front/shared/containers/App/App.tsx"
-    ]
-  },
-  {
-    "id": "MetamaskNetworkAlert_NetworkMainnet",
-    "message": "Ethereum (Mainnet) oder Binance Smart Chain (Mainnet)",
-    "files": [
-      "src/front/shared/containers/App/App.tsx"
-    ]
-  },
-  {
-    "id": "MetamaskNetworkAlert_NetworkTestnet",
-    "message": "Ethereum (Rinkeby) oder Binance Smart Chain (Testnet)",
+    "message": "Falsches Netzwerk, bitte wechseln Sie in {walletTitle} zu einem anderen Netzwerk (oder trennen Sie Wallet).",
     "files": [
       "src/front/shared/containers/App/App.tsx"
     ]

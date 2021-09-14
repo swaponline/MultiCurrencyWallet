@@ -39,11 +39,13 @@ export default class CurrencyList extends Component<any, any> {
           currency = 'btc'
       }
 
-      const firstUrlPart = tokenKey ? `/token/${tokenKey}` : `/${currency}`
+      const newPathName = `${tokenKey ? `/token/${tokenKey}` : `/${currency}`}/${address}/send`
 
-      history.push(
-        localisedUrl(locale, `${firstUrlPart}/${address}/send`)
-      )
+      if (history.location.pathname !== newPathName) {
+        history.push(
+          localisedUrl(locale, newPathName)
+        )
+      }
     })
   }
 
