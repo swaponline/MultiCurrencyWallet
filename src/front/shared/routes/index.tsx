@@ -1,4 +1,3 @@
-import React from 'react'
 import { isMobile } from 'react-device-detect'
 
 import { Switch, Route } from 'react-router-dom'
@@ -85,16 +84,16 @@ const routes = (
 
       {/* In desktop mode - the history is shown in the wallet design */}
       {!isMobile && (
-        <>
+        <Switch>
           <Route exact path={`/:page(invoices)/:type?/:address?`} component={Wallet} />
           <Route exact path={`/:page(history)`} component={Wallet} />
-        </>
+        </Switch>
       )}
       {isMobile && (
-        <>
+        <Switch>
           <Route exact path={`${links.history}/(btc)?/:address?`} component={History} />
           <Route exact path={`/:page(invoices)/:type?/:address?`} component={History} />
-        </>
+        </Switch>
       )}
       <Route path={`${links.currencyWallet}`} component={Wallet} />
 
