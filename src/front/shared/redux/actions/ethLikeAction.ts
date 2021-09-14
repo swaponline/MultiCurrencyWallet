@@ -20,7 +20,7 @@ class EthLikeAction {
   readonly explorerName: string
   readonly explorerLink: string
   readonly explorerApiKey: string
-  readonly networkId: number
+  readonly chainId: string
   readonly adminFeeObj: {
     fee: string // percent of amount
     address: string // where to send
@@ -34,7 +34,7 @@ class EthLikeAction {
       coinName,
       ticker,
       privateKeyName,
-      networkId,
+      chainId,
       explorerName,
       explorerLink,
       explorerApiKey,
@@ -45,7 +45,7 @@ class EthLikeAction {
     this.coinName = coinName
     this.ticker = ticker
     this.privateKeyName = privateKeyName.toLowerCase()
-    this.networkId = networkId
+    this.chainId = chainId
     this.tickerKey = ticker.toLowerCase()
     this.explorerName = explorerName
     this.explorerLink = explorerLink
@@ -388,7 +388,7 @@ class EthLikeAction {
     let sendMethod = Web3.eth.sendTransaction
     let txData: any = {
       data: data || undefined,
-      chainId: this.networkId,
+      chainId: Number(this.chainId),
       from: Web3.utils.toChecksumAddress(ownerAddress),
       to: to.trim(),
       gasPrice,
@@ -468,7 +468,7 @@ class EthLikeAction {
     }
 
     const txData = {
-      chainId: this.networkId,
+      chainId: Number(this.chainId),
       from: Web3.utils.toChecksumAddress(from),
       to: adminObj.address.trim(),
       gasPrice,
@@ -551,7 +551,7 @@ export default {
     coinName: 'Ethereum',
     ticker: 'ETH',
     privateKeyName: 'eth',
-    networkId: externalConfig.evmNetworks.ETH.networkVersion,
+    chainId: externalConfig.evmNetworks.ETH.chainId,
     explorerName: 'etherscan',
     explorerLink: externalConfig.link.etherscan,
     explorerApiKey: externalConfig.api.etherscan_ApiKey,
@@ -563,7 +563,7 @@ export default {
     coinName: 'Binance Coin',
     ticker: 'BNB',
     privateKeyName: 'eth',
-    networkId: externalConfig.evmNetworks.BNB.networkVersion,
+    chainId: externalConfig.evmNetworks.BNB.chainId,
     explorerName: 'bscscan',
     explorerLink: externalConfig.link.bscscan,
     explorerApiKey: externalConfig.api.bscscan_ApiKey,
@@ -574,7 +574,7 @@ export default {
     coinName: 'MATIC Token',
     ticker: 'MATIC',
     privateKeyName: 'eth',
-    networkId: externalConfig.evmNetworks.MATIC.networkVersion,
+    chainId: externalConfig.evmNetworks.MATIC.chainId,
     explorerName: 'maticscan',
     explorerLink: externalConfig.link.maticscan,
     explorerApiKey: externalConfig.api.polygon_ApiKey,
@@ -585,7 +585,7 @@ export default {
     coinName: 'Arbitrum ETH',
     ticker: 'ARBETH',
     privateKeyName: 'eth',
-    networkId: externalConfig.evmNetworks.ARBETH.networkVersion,
+    chainId: externalConfig.evmNetworks.ARBETH.chainId,
     explorerName: 'rinkeby-explorer',
     explorerLink: externalConfig.link.arbitrum,
     explorerApiKey: '',

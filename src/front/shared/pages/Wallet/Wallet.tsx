@@ -275,6 +275,18 @@ class Wallet extends PureComponent<any, any> {
     })
   }
 
+  showNoWalletsNotification = () => {
+    actions.notifications.show(
+      constants.notifications.Message,
+      {message: (
+        <FormattedMessage
+          id="WalletEmptyBalance"
+          defaultMessage="No wallets available"
+        />
+      )}
+    )
+  }
+
   handleWithdrawFirstAsset = () => {
     const {
       history,
@@ -287,22 +299,24 @@ class Wallet extends PureComponent<any, any> {
       !Object.keys(availableWallets).length ||
       (Object.keys(availableWallets).length === 1 && !user.isCorrectWalletToShow(availableWallets[0]))
     ) {
-      actions.notifications.show(
-        constants.notifications.Message,
-        {message: (
-          <FormattedMessage
-            id="WalletEmptyBalance"
-            defaultMessage="No wallets available"
-          />
-        )}
-      )
-
+      this.showNoWalletsNotification()
       return
     }
 
-    const firstWallet = user.isCorrectWalletToShow(availableWallets[0]) ? availableWallets[0] : availableWallets[1]
+    const firstAvailableWallet = availableWallets.find((wallet) => {
+      return (
+        user.isCorrectWalletToShow(wallet) &&
+        !wallet.balanceError &&
+        new BigNumber(wallet.balance).isPositive()
+      )
+    })
 
-    const { currency, address, tokenKey } = firstWallet
+    if (!firstAvailableWallet) {
+      this.showNoWalletsNotification()
+      return
+    }
+
+    const { currency, address, tokenKey } = firstAvailableWallet
     let targetCurrency = currency
 
     switch (currency.toLowerCase()) {
