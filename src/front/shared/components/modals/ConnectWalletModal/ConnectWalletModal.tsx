@@ -72,11 +72,6 @@ class ConnectWalletModal extends React.Component<any, any> {
 
   handleInjected = async () => {
     const { currentBaseCurrency } = this.state
-
-    if (!metamask.isAvailableNetworkByCurrency(currentBaseCurrency)) {
-      await metamask.switchNetwork(currentBaseCurrency)
-    }
-
     const web3connect = this.newWeb3connect()
 
     web3connect.connectTo(SUPPORTED_PROVIDERS.INJECTED).then(async (connected) => {
@@ -90,6 +85,10 @@ class ConnectWalletModal extends React.Component<any, any> {
           ),
         })
       } else {
+        if (!metamask.isAvailableNetworkByCurrency(currentBaseCurrency)) {
+          await metamask.switchNetwork(currentBaseCurrency)
+        }
+
         this.onConnectLogic(connected)
       }
     })

@@ -27,7 +27,7 @@ export default {
     blockExplorerUrls: [link.maticscan]
   },
   ARBETH: {
-    currency: 'ETH',
+    currency: 'ARBETH',
     chainId: '0x66EEB',
     networkVersion: 421611,
     chainName: 'Arbitrum Testnet',

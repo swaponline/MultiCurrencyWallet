@@ -350,8 +350,9 @@ const switchNetwork = async (nativeCurrency) => {
     // null is a successful result
     return result === null
   } catch (switchError) {
-    // network hasn't been added to MetaMask
-    if (switchError.code === 4902) {
+    const tipAddNetwork = JSON.stringify(switchError).match(/(T|t)ry adding the chain/)
+
+    if (switchError.code === 4902 || tipAddNetwork) {
       try {
         return await addCurrencyNetwork(nativeCurrency)
       } catch (addError) {
@@ -385,12 +386,12 @@ const addCurrencyNetwork = async (currency) => {
 
   const {
     name,
-    symbol,
+    ticker: symbol,
     precision: decimals
   } = COIN_DATA[nativeCurrency]
 
   const params = {
-    chainId: `0x${chainId.toString(16)}`,
+    chainId,
     chainName,
     nativeCurrency: {
       name,
