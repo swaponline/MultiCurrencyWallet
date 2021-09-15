@@ -4563,21 +4563,7 @@
   },
   {
     "id": "MetamaskNetworkAlert_Message",
-    "message": "Para continuar, seleccione Metamask \"{network}\" en la billetera o deshabilite la billetera",
-    "files": [
-      "src/front/shared/containers/App/App.tsx"
-    ]
-  },
-  {
-    "id": "MetamaskNetworkAlert_NetworkMainnet",
-    "message": "Ethereum (Mainnet) o Binance Smart Chain (Mainnet)",
-    "files": [
-      "src/front/shared/containers/App/App.tsx"
-    ]
-  },
-  {
-    "id": "MetamaskNetworkAlert_NetworkTestnet",
-    "message": "Ethereum (Rinkeby) o Binance Smart Chain (Testnet)",
+    "message": "Red incorrecta, cambie a otra red en {walletTitle} (o desconecte wallet).",
     "files": [
       "src/front/shared/containers/App/App.tsx"
     ]

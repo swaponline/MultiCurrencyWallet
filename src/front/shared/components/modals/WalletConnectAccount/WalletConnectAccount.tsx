@@ -42,8 +42,7 @@ class WalletConnectAccount extends React.Component<any, null> {
   }
 
   handleDisconnect = () => {
-  metamask.handleDisconnectWallet()
-  this.handleClose()
+    metamask.handleDisconnectWallet(this.handleClose)
   }
 
   render() {

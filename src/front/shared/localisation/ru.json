@@ -4675,21 +4675,7 @@
   },
   {
     "id": "MetamaskNetworkAlert_Message",
-    "message": "Для продолжения выберите в кошельке Метамаск \"{network}\" или отключите кошелек",
-    "files": [
-      "src/front/shared/containers/App/App.tsx"
-    ]
-  },
-  {
-    "id": "MetamaskNetworkAlert_NetworkMainnet",
-    "message": "Ethereum (Mainnet) или Binance Smart Chain (Mainnet)",
-    "files": [
-      "src/front/shared/containers/App/App.tsx"
-    ]
-  },
-  {
-    "id": "MetamaskNetworkAlert_NetworkTestnet",
-    "message": "Ethereum (Rinkeby) или Binance Smart Chain (Testnet)",
+    "message": "Неправильная сеть, пожалуйста, переключитесь на другую сеть в {walletTitle} (или отключите кошелек).",
     "files": [
       "src/front/shared/containers/App/App.tsx"
     ]

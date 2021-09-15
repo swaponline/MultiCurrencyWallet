@@ -1,5 +1,7 @@
-import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
-import { UserRejectedRequestError as UserRejectedRequestErrorWalletConnect } from '@web3-react/walletconnect-connector'
+import {
+  WalletConnectConnector,
+  UserRejectedRequestError as UserRejectedRequestErrorWalletConnect,
+} from '@web3-react/walletconnect-connector'
 
 
 export default class WalletConnectProvider extends WalletConnectConnector {
@@ -13,7 +15,8 @@ export default class WalletConnectProvider extends WalletConnectConnector {
   async isConnected() {
     try {
       const address = await super.getAccount()
-      return (address) ? true : false
+
+      return !!address
     } catch (err) {
       // try restore connection
       let connectionInfo: any = localStorage.getItem(`walletconnect`)
@@ -42,7 +45,8 @@ export default class WalletConnectProvider extends WalletConnectConnector {
   async Connect() {
     try {
       const connection = await super.activate()
-      return (connection) ? true : false
+
+      return !!connection
     } catch (err) {
       if (err instanceof UserRejectedRequestErrorWalletConnect) {
         console.warn('User reject connect to Injected provider')

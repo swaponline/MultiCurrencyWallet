@@ -8,7 +8,7 @@ export const isInjectedEnabled = () => {
 
 const _cachedProviders = {}
 
-const getProviderByName = (web3connect, providerName, newInstance) => {
+const getProviderByName = (web3connect, providerName, newInstance = false) => {
   if (!_cachedProviders[providerName] || newInstance) {
     switch (providerName) {
       case SUPPORTED_PROVIDERS.INJECTED:
