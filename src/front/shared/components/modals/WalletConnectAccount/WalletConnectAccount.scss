@@ -1,26 +1,15 @@
 .header {
-  padding: 16px 0;
+  padding-bottom: 1.4rem;
 }
 
 .headerContent {
-  height: 100%;
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  position: relative;
 }
 
 .title {
-  width: 100%;
-  padding: 0 64px;
+  @include ff-regular;
   line-height: 18px;
-  font-size: 20px;
-  font-weight: 700;
-  text-align: center;
-
-  &.uppercase {
-    text-transform: uppercase;
-  }
 }
 
 .modal-overlay {
@@ -67,20 +56,36 @@
   justify-content: space-around;
 }
 
-.walletAddress {
-  align-self: auto;
+.infoWrapper {
+  padding: 0.7rem;
+  border-radius: .6rem;
+  background-color: var(--color-pale);
+
+  .parameter {
+    @include ff-semibold;
+    margin: 0;
+    font-size: 1.1rem;
+  }
+
+  .parameter:not(:last-child) {
+    margin-bottom: 0.7rem;
+  }
+
+  .value {
+    @include ff-mono;
+    margin-left: .3rem;
+    font-size: 1rem;
+  }
 }
 
-.button-overlay {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 1rem;
-  }
+.walletAddress {
+  padding: 1rem 0;
+  align-self: auto;
+}
 
 @include media-mobile {
   .modal {
     height: 100%;
-    padding: 16px;
     border-radius: 0;
     box-shadow: none;
   }
@@ -92,5 +97,4 @@
   .notification-overlay {
     height: 100%;
   }
-
 }

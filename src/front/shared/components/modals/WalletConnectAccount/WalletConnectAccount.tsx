@@ -14,8 +14,11 @@ import {
 import { Button } from 'components/controls'
 import Address from 'components/ui/Address/Address'
 import Copy from 'components/ui/Copy/Copy'
-import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
+import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
 
+type ComponentState = {
+  isPending: boolean
+}
 
 @connect(({
   ui: { dashboardModalsAllowed },
@@ -25,7 +28,14 @@ import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
   metamaskData,
 }))
 @cssModules(styles, { allowMultiple: true })
-class WalletConnectAccount extends React.Component<any, null> {
+class WalletConnectAccount extends React.Component<any, ComponentState> {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      isPending: false,
+    }
+  }
 
   handleClose = () => {
     const {
@@ -36,25 +46,39 @@ class WalletConnectAccount extends React.Component<any, null> {
   }
 
   handleConnect = () => {
+    this.setState(() => ({
+      isPending: true,
+    }))
+
     metamask.handleConnectMetamask({
-      dontRedirect: true,
+      callback: () => {
+        this.setState(() => ({
+          isPending: true,
+        }))
+      },
     })
   }
 
   handleDisconnect = () => {
+    this.setState(() => ({
+      isPending: true,
+    }))
+
     metamask.handleDisconnectWallet(this.handleClose)
   }
 
   render() {
     const {
-        dashboardModalsAllowed,
-        metamaskData: {
-          isConnected,
-          address,
-          balance,
-          currency,
-        },
+      dashboardModalsAllowed,
+      metamaskData: {
+        isConnected,
+        address,
+        balance,
+        currency,
+      },
     } = this.props
+
+    const { isPending } = this.state
 
     const web3Type = metamask.web3connect.getInjectedType()
     const isAvailableNetwork = metamask.isAvailableNetwork()
@@ -85,26 +109,33 @@ class WalletConnectAccount extends React.Component<any, null> {
       <div styleName={`modal-overlay ${dashboardModalsAllowed ? "modal-overlay_dashboardView" : ""}`}>
         <div styleName={`modal ${dashboardModalsAllowed ? "modal_dashboardView" : ""}`}>
           <div styleName="header">
-            {/*//@ts-ignore */}
-            <WidthContainer styleName="headerContent">
-              <div styleName="title">
+            <div styleName="headerContent">
+              <h3 styleName="title">
                 <FormattedMessage
                   id="WalletConnectAccountTitle"
                   defaultMessage="CONNECTED ACCOUNT"
                 />
-              </div>
-            </WidthContainer>
+              </h3>
+              <CloseIcon onClick={this.handleClose} />
+            </div>
           </div>
           <div styleName="content">
-            <div>
-              <p>
-                <FormattedMessage id="YourWalletbalance" defaultMessage="Balance" />: {walletBalance}
+            <div styleName="infoWrapper">
+              <p styleName="parameter">
+                <FormattedMessage id="YourWalletbalance" defaultMessage="Balance" />:{' '}
+                <span styleName="value">{walletBalance}</span>
               </p>
-              <p><FormattedMessage id="network" defaultMessage="Network" />: {chainName}</p>
-              <p><FormattedMessage id="menu.wallet" defaultMessage="Wallet" />: {web3Type}</p>
+              <p styleName="parameter">
+                <FormattedMessage id="network" defaultMessage="Network" />:{' '}
+                <span styleName="value">{chainName}</span>
+              </p>
+              <p styleName="parameter">
+                <FormattedMessage id="menu.wallet" defaultMessage="Wallet" />:{' '}
+                <span styleName="value">{web3Type}</span>
+              </p>
             </div>
             <span styleName="walletAddress">{walletAddress}</span>
-            <div styleName="button-overlay">
+            <div>
               {
                 isConnected ? (
                   <Button blue onClick={this.handleDisconnect}>
@@ -116,9 +147,6 @@ class WalletConnectAccount extends React.Component<any, null> {
                   </Button>
                 )
               }
-              <Button blue onClick={this.handleClose}>
-                <FormattedMessage id="WithdrawModalCancelBtn" defaultMessage="Cancel" />
-              </Button>
             </div>
           </div>
         </div>
