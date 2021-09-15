@@ -1067,4 +1067,5 @@ export default connect(({ currencies, user }) => ({
   tokensWallets: user.tokensData,
   activeFiat: user.activeFiat,
   metamaskData: user.metamaskData,
+  balance: user.metamaskData.balance,
 }))(CSSModules(QuickSwap, styles, { allowMultiple: true }))
