@@ -35,19 +35,6 @@ interface State {
       baseCurrency: string
     }
   }
-/*   tokens: {
-    // chain id
-    [k: string]: {
-      // token contract address
-      [k: string]: {
-        symbol: string
-        name: string
-        address: string
-        decimals: number
-        logoURI: string
-      }
-    }
-  } */
   orders: {
     [k: string]: Order[]
   }
@@ -66,21 +53,8 @@ Object.keys(config.evmNetworks)
 
 export const initialState: State = {
   blockchains,
-  //tokens: {},
   orders: {},
 }
-
-/* export const addTokens = (state, payload) => {
-  const { chainId, tokens } = payload
-
-  return {
-    ...state,
-    tokens: {
-      ...state.tokens,
-      [chainId]: tokens,
-    },
-  }
-} */
 
 export const addOrder = (state, { chainId, order }) => {
   const orders = {
