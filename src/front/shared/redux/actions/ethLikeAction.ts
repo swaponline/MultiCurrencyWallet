@@ -20,7 +20,7 @@ class EthLikeAction {
   readonly explorerName: string
   readonly explorerLink: string
   readonly explorerApiKey: string
-  readonly networkId: number
+  readonly chainId: string
   readonly adminFeeObj: {
     fee: string // percent of amount
     address: string // where to send
@@ -34,7 +34,7 @@ class EthLikeAction {
       coinName,
       ticker,
       privateKeyName,
-      networkId,
+      chainId,
       explorerName,
       explorerLink,
       explorerApiKey,
@@ -45,7 +45,7 @@ class EthLikeAction {
     this.coinName = coinName
     this.ticker = ticker
     this.privateKeyName = privateKeyName.toLowerCase()
-    this.networkId = networkId
+    this.chainId = chainId
     this.tickerKey = ticker.toLowerCase()
     this.explorerName = explorerName
     this.explorerLink = explorerLink
@@ -356,33 +356,56 @@ class EthLikeAction {
     return balance > 0
   }
 
+  estimateGas = async (txData): Promise<string | undefined> => {
+    const web3 = this.getCurrentWeb3()
+
+    try {
+      const limit = await web3.eth.estimateGas(txData)
+      const hexLimitWithPercentForSuccess = new BigNumber(
+        new BigNumber(limit).multipliedBy(1.05).toFixed(0)
+      ).toString(16)
+
+      return '0x' + hexLimitWithPercentForSuccess
+    } catch (error) {
+      this.reportError(error, 'estimateGas')
+
+      return undefined
+    }
+  }
+
   send = async (params): Promise<{ transactionHash: string }> => {
-    let { to, amount, gasPrice, gasLimit, speed, data, waitReceipt = false } = params
+    let { to, amount, gasPrice, gasLimit: customGasLimit, speed, data, waitReceipt = false } = params
 
     const Web3 = this.getCurrentWeb3()
     const ownerAddress = metamask.isConnected() ? metamask.getAddress() : getState().user[`${this.tickerKey}Data`].address
     const recipientIsContract = await this.isContract(to)
 
     gasPrice = gasPrice || (await ethLikeHelper[this.tickerKey].estimateGasPrice({ speed }))
-    gasLimit =
-      gasLimit ||
-      (recipientIsContract
-        ? DEFAULT_CURRENCY_PARAMETERS.evmLike.limit.contractInteract
-        : DEFAULT_CURRENCY_PARAMETERS.evmLike.limit.send)
-
-    if (this.ticker === 'ARBETH') {
-      gasLimit = DEFAULT_CURRENCY_PARAMETERS.arbeth.limit.send
-    }
+    const defaultgasLimit = recipientIsContract
+      ? DEFAULT_CURRENCY_PARAMETERS.evmLike.limit.contractInteract
+      : DEFAULT_CURRENCY_PARAMETERS.evmLike.limit.send
 
     let sendMethod = Web3.eth.sendTransaction
     let txData: any = {
       data: data || undefined,
-      chainId: this.networkId,
+      chainId: Number(this.chainId),
       from: Web3.utils.toChecksumAddress(ownerAddress),
       to: to.trim(),
       gasPrice,
-      gas: gasLimit,
+      gas: '0x00',
       value: Web3.utils.toHex(Web3.utils.toWei(String(amount), 'ether')),
+    }
+
+    if (customGasLimit) {
+      txData.gas = customGasLimit
+    } else {
+      const limit = await this.estimateGas(txData)
+
+      if (limit) {
+        txData.gas = limit
+      } else {
+        txData.gas = defaultgasLimit
+      }
     }
 
     const privateKey = this.getPrivateKeyByAddress(ownerAddress)
@@ -407,10 +430,10 @@ class EthLikeAction {
       if (this.adminFeeObj && !walletData.isMetamask) {
         receipt.then(() => {
           this.sendAdminTransaction({
-            from: txData.from,
+            from: Web3.utils.toChecksumAddress(ownerAddress),
             amount,
             gasPrice,
-            gasLimit,
+            defaultgasLimit,
           })
         })
       }
@@ -420,9 +443,9 @@ class EthLikeAction {
   sendAdminTransaction = async (params) => {
     const {
       from,
-      value,
+      amount,
       gasPrice,
-      gasLimit,
+      defaultgasLimit,
       externalAdminFeeObj,
     } = params
     const adminObj = externalAdminFeeObj || this.adminFeeObj
@@ -431,23 +454,37 @@ class EthLikeAction {
 
     let feeFromUsersAmount = new BigNumber(adminObj.fee)
       .dividedBy(100) // 100 %
-      .multipliedBy(value)
+      .multipliedBy(amount)
       .toNumber()
 
     if (minAmount.isGreaterThan(feeFromUsersAmount)) {
       feeFromUsersAmount = minAmount.toNumber()
     }
 
+    const remainingBalance = await this.fetchBalance(from)
+
+    if (new BigNumber(remainingBalance).isLessThan(feeFromUsersAmount)) {
+      return
+    }
+
     const txData = {
-      chainId: this.networkId,
+      chainId: Number(this.chainId),
       from: Web3.utils.toChecksumAddress(from),
       to: adminObj.address.trim(),
       gasPrice,
-      gas: gasLimit,
+      gas: '0x00',
       value: Web3.utils.toHex(
         Web3.utils.toWei(String(feeFromUsersAmount),
         'ether'
       )),
+    }
+
+    const limit = await this.estimateGas(txData)
+
+    if (limit) {
+      txData.gas = limit
+    } else {
+      txData.gas = defaultgasLimit
     }
 
     return this.sendReadyTransaction({ data: txData })
@@ -514,7 +551,7 @@ export default {
     coinName: 'Ethereum',
     ticker: 'ETH',
     privateKeyName: 'eth',
-    networkId: externalConfig.evmNetworks.ETH.networkVersion,
+    chainId: externalConfig.evmNetworks.ETH.chainId,
     explorerName: 'etherscan',
     explorerLink: externalConfig.link.etherscan,
     explorerApiKey: externalConfig.api.etherscan_ApiKey,
@@ -526,7 +563,7 @@ export default {
     coinName: 'Binance Coin',
     ticker: 'BNB',
     privateKeyName: 'eth',
-    networkId: externalConfig.evmNetworks.BNB.networkVersion,
+    chainId: externalConfig.evmNetworks.BNB.chainId,
     explorerName: 'bscscan',
     explorerLink: externalConfig.link.bscscan,
     explorerApiKey: externalConfig.api.bscscan_ApiKey,
@@ -537,7 +574,7 @@ export default {
     coinName: 'MATIC Token',
     ticker: 'MATIC',
     privateKeyName: 'eth',
-    networkId: externalConfig.evmNetworks.MATIC.networkVersion,
+    chainId: externalConfig.evmNetworks.MATIC.chainId,
     explorerName: 'maticscan',
     explorerLink: externalConfig.link.maticscan,
     explorerApiKey: externalConfig.api.polygon_ApiKey,
@@ -548,7 +585,7 @@ export default {
     coinName: 'Arbitrum ETH',
     ticker: 'ARBETH',
     privateKeyName: 'eth',
-    networkId: externalConfig.evmNetworks.ARBETH.networkVersion,
+    chainId: externalConfig.evmNetworks.ARBETH.chainId,
     explorerName: 'rinkeby-explorer',
     explorerLink: externalConfig.link.arbitrum,
     explorerApiKey: '',

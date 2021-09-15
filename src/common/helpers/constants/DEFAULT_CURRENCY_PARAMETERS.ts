@@ -1,7 +1,7 @@
 export default {
   arbeth: {
     limit: {
-      send: 630 * 1e3,
+      send: 700 * 1e3,
       // ? heed to check how much for swaps ?
       swap: 4000 * 1e3,
     },

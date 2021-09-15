@@ -359,7 +359,7 @@
     position: relative;
     margin-bottom: 42px;
     // below rules solve a problem with qr button display
-    border: 1px solid rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--color-border);
   
     input,
     input:focus {
