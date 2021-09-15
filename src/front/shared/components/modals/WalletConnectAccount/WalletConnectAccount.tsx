@@ -56,7 +56,7 @@ class WalletConnectAccount extends React.Component<any, ComponentState> {
     metamask.handleConnectMetamask({
       callback: () => {
         this.setState(() => ({
-          isPending: true,
+          isPending: false,
         }))
       },
     })
