@@ -15,9 +15,11 @@ import { Button } from 'components/controls'
 import Address from 'components/ui/Address/Address'
 import Copy from 'components/ui/Copy/Copy'
 import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
+import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 
 type ComponentState = {
   isPending: boolean
+  balanceUpdating: boolean
 }
 
 @connect(({
@@ -34,6 +36,7 @@ class WalletConnectAccount extends React.Component<any, ComponentState> {
 
     this.state = {
       isPending: false,
+      balanceUpdating: false,
     }
   }
 
@@ -67,6 +70,22 @@ class WalletConnectAccount extends React.Component<any, ComponentState> {
     metamask.handleDisconnectWallet(this.handleClose)
   }
 
+  updateBalance = async () => {
+    const { metamaskData } = this.props
+
+    this.setState(() => ({
+      balanceUpdating: true,
+    }))
+
+    await actions[metamaskData.currency.toLowerCase()].getBalance()
+
+    setTimeout(() => {
+      this.setState(() => ({
+        balanceUpdating: false,
+      }))
+    }, 300)
+  }
+
   render() {
     const {
       dashboardModalsAllowed,
@@ -78,7 +97,7 @@ class WalletConnectAccount extends React.Component<any, ComponentState> {
       },
     } = this.props
 
-    const { isPending } = this.state
+    const { isPending, balanceUpdating } = this.state
 
     const web3Type = metamask.web3connect.getInjectedType()
     const isAvailableNetwork = metamask.isAvailableNetwork()
@@ -106,7 +125,7 @@ class WalletConnectAccount extends React.Component<any, ComponentState> {
       <FormattedMessage id="UnknownNetworkConnectedWallet" defaultMessage="Unknown Network" />
 
     return (
-      <div styleName={`modal-overlay ${dashboardModalsAllowed ? "modal-overlay_dashboardView" : ""}`}>
+      <div styleName={`modalOverlay ${dashboardModalsAllowed ? "modalOverlay_dashboardView" : ""}`}>
         <div styleName={`modal ${dashboardModalsAllowed ? "modal_dashboardView" : ""}`}>
           <div styleName="header">
             <div styleName="headerContent">
@@ -121,20 +140,35 @@ class WalletConnectAccount extends React.Component<any, ComponentState> {
           </div>
           <div styleName="content">
             <div styleName="infoWrapper">
-              <p styleName="parameter">
+              <div styleName="parameter">
                 <FormattedMessage id="YourWalletbalance" defaultMessage="Balance" />:{' '}
-                <span styleName="value">{walletBalance}</span>
-              </p>
+                {isPending ? (
+                  '-'
+                ) : (
+                  <>
+                    <button styleName="updateBalanceButton" onClick={this.updateBalance}>
+                      <i className="fas fa-sync-alt" />
+                    </button>
+                    {balanceUpdating ? (
+                      <span styleName="balanceLoader"><InlineLoader /></span>
+                    ) : (
+                      <span styleName="value">{walletBalance}</span>
+                    )}
+                  </>
+                )}
+              </div>
               <p styleName="parameter">
                 <FormattedMessage id="network" defaultMessage="Network" />:{' '}
-                <span styleName="value">{chainName}</span>
+                {isPending ? '-' : <span styleName="value">{chainName}</span>}
               </p>
               <p styleName="parameter">
                 <FormattedMessage id="menu.wallet" defaultMessage="Wallet" />:{' '}
-                <span styleName="value">{web3Type}</span>
+                {isPending ? '-' : <span styleName="value">{web3Type}</span>}
               </p>
             </div>
-            <span styleName="walletAddress">{walletAddress}</span>
+            <span styleName="walletAddress">
+              {isPending ? <InlineLoader /> : walletAddress}
+            </span>
             <div>
               {
                 isConnected ? (

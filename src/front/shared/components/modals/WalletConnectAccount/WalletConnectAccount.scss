@@ -9,10 +9,9 @@
 
 .title {
   @include ff-regular;
-  line-height: 18px;
 }
 
-.modal-overlay {
+.modalOverlay {
   position: sticky;
   width: 100%;
   height: 100%;
@@ -73,9 +72,18 @@
 
   .value {
     @include ff-mono;
-    margin-left: .3rem;
+    margin-left: 0.3rem;
     font-size: 1rem;
   }
+}
+
+.updateBalanceButton {
+  font-size: 0.9rem;
+  user-select: none;
+}
+
+.balanceLoader {
+  color: var(--color-notice);
 }
 
 .walletAddress {
@@ -83,18 +91,21 @@
   align-self: auto;
 }
 
-@include media-mobile {
+@media all and (max-width: 720px) {
   .modal {
-    height: 100%;
-    border-radius: 0;
-    box-shadow: none;
+    max-width: 85%;
+  }
+}
+
+@media all and (max-width: 500px) {
+  .infoWrapper {
+    .parameter,
+    .parameter > * {
+      font-size: 0.9rem;
+    }
   }
 
-  .title {
-    font-size: 18px;
-  }
-
-  .notification-overlay {
-    height: 100%;
+  .walletAddress {
+    font-size: 0.8rem;
   }
 }
