@@ -37,7 +37,9 @@ const filterCurrencies = (params) => {
     if (item.standard) {
       const { blockchain } = getCoinInfo(item.value)
 
-      itemChain = externalConfig.evmNetworks[blockchain.toUpperCase()].networkVersion
+      if (blockchain) {
+        itemChain = externalConfig.evmNetworks[blockchain.toUpperCase()].networkVersion
+      }
     } else {
       itemChain =
         currency?.model === COIN_MODEL.AB &&
