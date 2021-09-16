@@ -7,6 +7,9 @@ import { ConnectedRouter } from 'connected-react-router'
 import App from 'containers/App/App'
 import IntlProviderContainer from './IntlProviderContainer'
 
+import reducers from 'redux/core/reducers'
+
+
 type RootProps = {
   history: typeof history
   store: typeof store
@@ -16,6 +19,9 @@ type RootProps = {
 export default class Root extends React.Component<RootProps, null> {
   constructor(props) {
     super(props)
+
+    // reset dinamic reducers data
+    reducers.user.setIsBalanceFetching({ isBalanceFetching: false })
   }
 
   render() {
