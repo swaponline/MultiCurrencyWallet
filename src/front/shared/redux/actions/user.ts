@@ -145,8 +145,11 @@ const getBalances = () => {
   const {
     user: {
       isTokenSigned,
+      isBalanceFetching,
     },
   } = getState()
+
+  if (isBalanceFetching) return true
 
   reducers.user.setIsBalanceFetching({ isBalanceFetching: true })
 
