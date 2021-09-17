@@ -349,7 +349,7 @@ class InvoiceModal extends React.Component<InvoiceModalProps, InvoiceModalState>
                 <div styleName="rednote">
                   <FormattedMessage
                     id="invoiceModal_IncorrectAddress"
-                    defaultMessage="Вы ввели не коректный адрес"
+                    defaultMessage="Incorrect address"
                   />
                 </div>
               )}
@@ -378,8 +378,8 @@ class InvoiceModal extends React.Component<InvoiceModalProps, InvoiceModalState>
             {destination && !this.addressIsCorrect(destination) && (
               <div styleName="rednote">
                 <FormattedMessage
-                  id="invoiceModal_IncorrectDestiAddress"
-                  defaultMessage="Вы ввели не коректный адрес"
+                  id="invoiceModal_IncorrectAddress"
+                  defaultMessage="Incorrect address"
                 />
               </div>
             )}
@@ -387,7 +387,7 @@ class InvoiceModal extends React.Component<InvoiceModalProps, InvoiceModalState>
           <div styleName="highLevel">
             <FieldLabel>
               <span>
-                <FormattedMessage id="invoiceModal_Amount" defaultMessage="Сумма" />
+                <FormattedMessage id="orders102" defaultMessage="Amount" />
               </span>
             </FieldLabel>
             <span styleName="amountTooltip">{

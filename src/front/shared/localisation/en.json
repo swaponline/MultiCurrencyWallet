@@ -199,13 +199,6 @@
     ]
   },
   {
-    "id": "RowFeeds77",
-    "message": "Decline",
-    "files": [
-      "src/front/shared/pages/Exchange/Orders/MyOrders/RowFeeds/RowFeeds.tsx"
-    ]
-  },
-  {
     "id": "RowFeeds81",
     "message": "Accept",
     "files": [
@@ -2186,13 +2179,6 @@
     ]
   },
   {
-    "id": "invoiceModal_Amount",
-    "message": "Amount",
-    "files": [
-      "src/front/shared/components/modals/InvoiceModal/InvoiceModal.tsx"
-    ]
-  },
-  {
     "id": "invoiceModal_Error",
     "message": "{errorName} {currency}:{br}{errorMessage}",
     "files": [
@@ -2201,13 +2187,6 @@
   },
   {
     "id": "invoiceModal_IncorrectAddress",
-    "message": "Incorrect address",
-    "files": [
-      "src/front/shared/components/modals/InvoiceModal/InvoiceModal.tsx"
-    ]
-  },
-  {
-    "id": "invoiceModal_IncorrectDestiAddress",
     "message": "Incorrect address",
     "files": [
       "src/front/shared/components/modals/InvoiceModal/InvoiceModal.tsx"
@@ -3535,13 +3514,6 @@
   {
     "id": "InvoiceInfoModal_CloseButton",
     "message": "Close",
-    "files": [
-      "src/front/shared/components/modals/InfoInvoice/InfoInvoice.tsx"
-    ]
-  },
-  {
-    "id": "InvoiceInfoModal_Comment",
-    "message": "Comments",
     "files": [
       "src/front/shared/components/modals/InfoInvoice/InfoInvoice.tsx"
     ]
@@ -6262,7 +6234,7 @@
   },
   {
     "id": "chooseNetwork",
-    "message": "Choose Network",
+    "message": "Choose network",
     "files": [
       "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.tsx"
     ]

@@ -199,13 +199,6 @@
     ]
   },
   {
-    "id": "RowFeeds77",
-    "message": "Rechazar",
-    "files": [
-      "src/front/shared/pages/Exchange/Orders/MyOrders/RowFeeds/RowFeeds.tsx"
-    ]
-  },
-  {
     "id": "RowFeeds81",
     "message": "Aceptar",
     "files": [
@@ -2070,13 +2063,6 @@
     ]
   },
   {
-    "id": "invoiceModal_Amount",
-    "message": "Cantidad",
-    "files": [
-      "src/front/shared/components/modals/InvoiceModal/InvoiceModal.tsx"
-    ]
-  },
-  {
     "id": "invoiceModal_Error",
     "message": "{errorName} {currency}:{br}{errorMessage}",
     "files": [
@@ -2085,13 +2071,6 @@
   },
   {
     "id": "invoiceModal_IncorrectAddress",
-    "message": "Dirección incorrecta",
-    "files": [
-      "src/front/shared/components/modals/InvoiceModal/InvoiceModal.tsx"
-    ]
-  },
-  {
-    "id": "invoiceModal_IncorrectDestiAddress",
     "message": "Dirección incorrecta",
     "files": [
       "src/front/shared/components/modals/InvoiceModal/InvoiceModal.tsx"
@@ -3359,13 +3338,6 @@
   {
     "id": "InvoiceInfoModal_CloseButton",
     "message": "Cerrar",
-    "files": [
-      "src/front/shared/components/modals/InfoInvoice/InfoInvoice.tsx"
-    ]
-  },
-  {
-    "id": "InvoiceInfoModal_Comment",
-    "message": "Comentarios",
     "files": [
       "src/front/shared/components/modals/InfoInvoice/InfoInvoice.tsx"
     ]
