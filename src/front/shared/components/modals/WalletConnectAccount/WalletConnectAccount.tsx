@@ -14,8 +14,13 @@ import {
 import { Button } from 'components/controls'
 import Address from 'components/ui/Address/Address'
 import Copy from 'components/ui/Copy/Copy'
-import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
+import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
+import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 
+type ComponentState = {
+  isPending: boolean
+  balanceUpdating: boolean
+}
 
 @connect(({
   ui: { dashboardModalsAllowed },
@@ -25,7 +30,15 @@ import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
   metamaskData,
 }))
 @cssModules(styles, { allowMultiple: true })
-class WalletConnectAccount extends React.Component<any, null> {
+class WalletConnectAccount extends React.Component<any, ComponentState> {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      isPending: false,
+      balanceUpdating: false,
+    }
+  }
 
   handleClose = () => {
     const {
@@ -36,25 +49,55 @@ class WalletConnectAccount extends React.Component<any, null> {
   }
 
   handleConnect = () => {
+    this.setState(() => ({
+      isPending: true,
+    }))
+
     metamask.handleConnectMetamask({
-      dontRedirect: true,
+      callback: () => {
+        this.setState(() => ({
+          isPending: false,
+        }))
+      },
     })
   }
 
   handleDisconnect = () => {
+    this.setState(() => ({
+      isPending: true,
+    }))
+
     metamask.handleDisconnectWallet(this.handleClose)
+  }
+
+  updateBalance = async () => {
+    const { metamaskData } = this.props
+
+    this.setState(() => ({
+      balanceUpdating: true,
+    }))
+
+    await actions[metamaskData.currency.toLowerCase()].getBalance()
+
+    setTimeout(() => {
+      this.setState(() => ({
+        balanceUpdating: false,
+      }))
+    }, 300)
   }
 
   render() {
     const {
-        dashboardModalsAllowed,
-        metamaskData: {
-          isConnected,
-          address,
-          balance,
-          currency,
-        },
+      dashboardModalsAllowed,
+      metamaskData: {
+        isConnected,
+        address,
+        balance,
+        currency,
+      },
     } = this.props
+
+    const { isPending, balanceUpdating } = this.state
 
     const web3Type = metamask.web3connect.getInjectedType()
     const isAvailableNetwork = metamask.isAvailableNetwork()
@@ -82,29 +125,51 @@ class WalletConnectAccount extends React.Component<any, null> {
       <FormattedMessage id="UnknownNetworkConnectedWallet" defaultMessage="Unknown Network" />
 
     return (
-      <div styleName={`modal-overlay ${dashboardModalsAllowed ? "modal-overlay_dashboardView" : ""}`}>
+      <div styleName={`modalOverlay ${dashboardModalsAllowed ? "modalOverlay_dashboardView" : ""}`}>
         <div styleName={`modal ${dashboardModalsAllowed ? "modal_dashboardView" : ""}`}>
           <div styleName="header">
-            {/*//@ts-ignore */}
-            <WidthContainer styleName="headerContent">
-              <div styleName="title">
+            <div styleName="headerContent">
+              <h3 styleName="title">
                 <FormattedMessage
                   id="WalletConnectAccountTitle"
                   defaultMessage="CONNECTED ACCOUNT"
                 />
-              </div>
-            </WidthContainer>
+              </h3>
+              <CloseIcon onClick={this.handleClose} />
+            </div>
           </div>
           <div styleName="content">
-            <div>
-              <p>
-                <FormattedMessage id="YourWalletbalance" defaultMessage="Balance" />: {walletBalance}
+            <div styleName="infoWrapper">
+              <div styleName="parameter">
+                <FormattedMessage id="YourWalletbalance" defaultMessage="Balance" />:{' '}
+                {isPending ? (
+                  '-'
+                ) : (
+                  <>
+                    <button styleName="updateBalanceButton" onClick={this.updateBalance}>
+                      <i className="fas fa-sync-alt" />
+                    </button>
+                    {balanceUpdating ? (
+                      <span styleName="balanceLoader"><InlineLoader /></span>
+                    ) : (
+                      <span styleName="value">{walletBalance}</span>
+                    )}
+                  </>
+                )}
+              </div>
+              <p styleName="parameter">
+                <FormattedMessage id="network" defaultMessage="Network" />:{' '}
+                {isPending ? '-' : <span styleName="value">{chainName}</span>}
               </p>
-              <p><FormattedMessage id="network" defaultMessage="Network" />: {chainName}</p>
-              <p><FormattedMessage id="menu.wallet" defaultMessage="Wallet" />: {web3Type}</p>
+              <p styleName="parameter">
+                <FormattedMessage id="menu.wallet" defaultMessage="Wallet" />:{' '}
+                {isPending ? '-' : <span styleName="value">{web3Type}</span>}
+              </p>
             </div>
-            <span styleName="walletAddress">{walletAddress}</span>
-            <div styleName="button-overlay">
+            <span styleName="walletAddress">
+              {isPending ? <InlineLoader /> : walletAddress}
+            </span>
+            <div>
               {
                 isConnected ? (
                   <Button blue onClick={this.handleDisconnect}>
@@ -116,9 +181,6 @@ class WalletConnectAccount extends React.Component<any, null> {
                   </Button>
                 )
               }
-              <Button blue onClick={this.handleClose}>
-                <FormattedMessage id="WithdrawModalCancelBtn" defaultMessage="Cancel" />
-              </Button>
             </div>
           </div>
         </div>

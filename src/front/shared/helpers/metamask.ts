@@ -197,42 +197,25 @@ const isAvailableNetworkByCurrency = (currency) => {
 }
 
 const addMetamaskWallet = () => {
-  const { user } = getState()
-
   if (isConnected()) {
-    const ethWalletInfo = {
-      currencyName: 'ETH',
-      fullWalletName: `Ethereum (${web3connect.getProviderTitle()})`,
-      currencyInfo: user.ethData?.infoAboutCurrency,
-    }
-    const bscWalletInfo = {
-      currencyName: 'BNB',
-      fullWalletName: `BSC (${web3connect.getProviderTitle()})`,
-      currencyInfo: user.bnbData?.infoAboutCurrency,
-    }
-    const maticWalletInfo = {
-      currencyName: 'MATIC',
-      fullWalletName: `MATIC (${web3connect.getProviderTitle()})`,
-      currencyInfo: user.maticData?.infoAboutCurrency,
-    }
-    const arbitrumWalletInfo = {
-      currencyName: 'ARBETH',
-      fullWalletName: `ARBITRUM ETH (${web3connect.getProviderTitle()})`,
-      currencyInfo: user.arbethData?.infoAboutCurrency,
-    }
-    const walletMap = new Map([
-      [config.evmNetworks.ETH.networkVersion, ethWalletInfo],
-      [config.evmNetworks.BNB.networkVersion, bscWalletInfo],
-      [config.evmNetworks.MATIC.networkVersion, maticWalletInfo],
-      [config.evmNetworks.ARBETH.networkVersion, arbitrumWalletInfo],
-    ])
-
     const networkVersion = getChainId()
 
-    if (isAvailableNetwork()){
-      const currencyName = walletMap.get(networkVersion)?.currencyName
-      const fullWalletName = walletMap.get(networkVersion)?.fullWalletName
-      const currencyInfo = walletMap.get(networkVersion)?.currencyInfo
+    if (isAvailableNetwork()) {
+      const { user } = getState()
+      const currentNetworkData: any = Object.values(config.evmNetworks).find((networkInfo: {
+        currency: string
+        chainId: string
+        networkVersion: number
+        chainName: string
+        rpcUrls: string[]
+        blockExplorerUrls: string[]
+      }) => {
+        return networkInfo.networkVersion === networkVersion
+      })
+
+      const currency = currentNetworkData.currency
+      const fullName = `${currency} (${web3connect.getProviderTitle()})`
+      const infoAboutCurrency = user[`${currency.toLowerCase()}Data`]?.infoAboutCurrency
 
       reducers.user.addWallet({
         name: 'metamaskData',
@@ -242,9 +225,9 @@ const addMetamaskWallet = () => {
           balanceError: false,
           isConnected: true,
           isMetamask: true,
-          currency: currencyName,
-          fullName: fullWalletName,
-          infoAboutCurrency: currencyInfo,
+          currency,
+          fullName,
+          infoAboutCurrency,
           isBalanceFetched: true,
           unconfirmedBalance: 0,
           networkVersion,

@@ -146,7 +146,7 @@ class ConnectWalletModal extends React.Component<any, any> {
         >
           <div styleName="header">
             <h3 styleName="title"><FormattedMessage id="Connect" defaultMessage="Connect" /></h3>
-            <CloseIcon styleName="closeButton" onClick={this.handleClose} />
+            <CloseIcon onClick={this.handleClose} />
           </div>
 
           <div styleName="notification-overlay">

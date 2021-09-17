@@ -424,8 +424,6 @@ const signMessage = (message, encodedPrivateKey) => {
   return signature.toString('base64')
 }
 
-const getReputation = () => Promise.resolve(0)
-
 const checkWithdraw = (scriptAddress) => nextUtils.checkWithdraw({
   scriptAddress,
   NETWORK,
@@ -443,7 +441,6 @@ export default {
   fetchTxInfo,
   fetchBalance,
   signMessage,
-  getReputation,
   getTx,
   getLinkToInfo,
   getInvoices,

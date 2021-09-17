@@ -541,9 +541,6 @@ class EthLikeAction {
 
     return !codeIsEmpty
   }
-
-  // ! Delete from project. Temporary
-  getReputation = () => Promise.resolve(0)
 }
 
 export default {

@@ -733,14 +733,27 @@
 
       let lang = getCookie('mylang');
 
-      if (!lang) {
-        const browserLang = getNavigatorLanguage();
-        lang = browserLang.includes('ru') ? 'ru' : 'en'
+      const availableLangs = [
+        'en',
+        'ru',
+        'nl',
+        'de',
+        'es',
+        'pl',
+      ]
+
+      const isLangAvailable = availableLangs.includes(lang)
+
+      if (!lang || !isLangAvailable) {
+        const browserLang = getNavigatorLanguage().split("-")[0];
+        lang = availableLangs.includes(browserLang) ? browserLang : (function () {
+          console.log('Set English by default')
+          return 'en';
+        })()
         setCookie('mylang', lang);
       }
 
       const locale = lang.toLowerCase();
-      const locationName = lang.toUpperCase();
 
       (function () {
         // set tip
@@ -749,45 +762,52 @@
             {
               en: 'Loading...',
               ru: 'Загрузка...',
+              nl: 'Bezig met laden...',
+              de: 'Wird geladen...',
+              es: 'Cargando...',
+              pl: 'Ładowanie...',
             },
           ],
           afterBackup: [
             {
               en: 'Keep your recovery phrase in&nbsp;a&nbsp;safe place',
               ru: 'Держите вашу фразу восстановления в&nbsp;безопасном месте',
+              nl: 'Bewaar uw herstelzin op een &nbsp;&nbsp;veilige plaats',
+              de: 'Bewahren Sie Ihren Wiederherstellungssatz an einem&nbsp;&nbsp;sicheren Ort auf',
+              es: 'Mantenga su frase de recuperación en&nbsp;&nbsp;lugar seguro',
+              pl: 'Przechowuj frazę odzyskiwania w&nbsp;&nbsp;bezpiecznym miejscu',
             },
             {
               en: "Don't forget where your recovery phrase is&nbsp;saved",
               ru: 'Не забудьте, где&nbsp;хранится ваша фраза восстановления',
+              nl: 'Vergeet niet waar uw herstelzin is&nbsp;opgeslagen',
+              de: 'Vergessen Sie nicht, wo Ihre&nbsp;Wiederherstellungsphrase gespeichert ist',
+              es: 'No olvide dónde está guardada&nbsp;su frase de recuperación',
+              pl: 'Nie zapomnij, gdzie&nbsp;jest zapisana fraza odzyskiwania',
             },
           ],
         };
         // Determine if the passphrase is saved
-        if (locale === 'en' || locale === 'ru') {
-          const mnemonic = window.localStorage.getItem('testnet:twentywords') || window.localStorage.getItem('mainnet:twentywords');
-          const isBackup = mnemonic === `-`;
-          const relevantTips = tips[!isBackup ? 'beforeBackup' : 'afterBackup'];
-          const currentTip = relevantTips[Math.floor(Math.random() * relevantTips.length)][locale];
-          const tipNode = document.getElementById('beforeJSTip');
-          tipNode.innerHTML = currentTip;
-        } else {
-          console.error('Unknown locale', locale);
-        }
+        const mnemonic = window.localStorage.getItem('testnet:twentywords') || window.localStorage.getItem('mainnet:twentywords');
+        const isBackup = mnemonic === `-`;
+        const relevantTips = tips[!isBackup ? 'beforeBackup' : 'afterBackup'];
+        const currentTip = relevantTips[Math.floor(Math.random() * relevantTips.length)][locale];
+        const tipNode = document.getElementById('beforeJSTip');
+        tipNode.innerHTML = currentTip;
       })();
 
-      const information = document.getElementById('usersInform');
-
-      if ((locationName === 'ru' || (locale === 'ru' && locationName !== 'en')) && localStorage.length === 0) {
-        information.innerText = 'Генерация приватных ключей для вашего мультивалютного кошелька прямо сейчас, \n это может занять одну минуту'
-      }
-
       if (localStorage.length === 0) {
-        information.innerText =
-          locationName !== 'ru' || locale !== 'ru'
-            ? 'Please wait while the application is loading,\n it may take one minute...'
-            : 'Пожалуйста подождите пока приложение запускается,\n это не займет больше минуты...';
+        const informationTexts = {
+          nl: 'Even geduld a.u.b. terwijl de applicatie wordt geladen,\n het kan een minuut duren...',
+          de: 'Bitte warten Sie, während die Anwendung geladen wird,\n es kann eine Minute dauern...',
+          en: 'Please wait while the application is loading,\n it may take one minute...',
+          ru: 'Пожалуйста подождите пока приложение запускается,\n это не займет больше минуты...',
+          es: 'Espere mientras se carga la aplicación,\n puede tardar un minuto...',
+          pl: 'Poczekaj na wczytywanie aplikacji,\n może to potrwać minutę...',
+        }
+        const information = document.getElementById('usersInform');
+        information.innerText = informationTexts[locale]
       }
-
 
       window.prerenderReady = false;
       window.isUserRegisteredAndLoggedIn = false;
@@ -828,7 +848,7 @@
         }
         return false;
       }
-     
+
       function swapIsWalletCreate() {
         const swapLocalStorageWallet = localStorage.getItem('isWalletCreate');
         return swapLocalStorageWallet !== null

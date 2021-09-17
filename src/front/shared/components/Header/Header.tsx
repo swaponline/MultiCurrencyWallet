@@ -1,6 +1,4 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types' // TODO: remove this, use TS
-
+import { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import { isMobile } from 'react-device-detect'
 import { connect } from 'redaction'
@@ -51,16 +49,11 @@ const isWidgetBuild = config && config.isWidget
   feeds: 'feeds.items',
   peer: 'pubsubRoom.peer',
   isInputActive: 'inputActive.isInputActive',
-  reputation: 'pubsubRoom.reputation',
   modals: 'modals',
   hiddenCoinsList: 'core.hiddenCoinsList',
 })
 @CSSModules(styles, { allowMultiple: true })
 class Header extends Component<any, any> {
-  static propTypes = {
-    history: PropTypes.object.isRequired,
-  }
-
   static getDerivedStateFromProps({
     history: {
       location: { pathname },

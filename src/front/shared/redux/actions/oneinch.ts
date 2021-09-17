@@ -11,6 +11,7 @@ import {
 } from '@1inch/limit-order-protocol'
 import { COIN_MODEL, COIN_DATA } from 'swap.app/constants/COINS'
 import utils from 'common/utils'
+import getCoinInfo from 'common/coins/getCoinInfo'
 import { apiLooper, externalConfig, metamask, feedback } from 'helpers'
 import { getState } from 'redux/core'
 import actions from 'redux/actions'
@@ -24,31 +25,29 @@ const reportError = (part, error) => {
   console.groupEnd()
 }
 
-const addTokens = (params) => {
-  const { chainId, tokens } = params
-
-  reducers.oneinch.addTokens({
-    chainId,
-    tokens,
-  })
-}
-
 const filterCurrencies = (params) => {
   const { currencies, onlyTokens = false } = params
+  const { oneinch } = getState()
 
   const filteredArr = currencies.filter((item) => {
     const currency = COIN_DATA[item.name]
     let isCurrencySuitable = false
+    let itemChain = undefined
 
     if (item.standard) {
-      isCurrencySuitable = true
+      const { blockchain } = getCoinInfo(item.value)
+
+      if (blockchain) {
+        itemChain = externalConfig.evmNetworks[blockchain.toUpperCase()].networkVersion
+      }
     } else {
-      const coinChain =
+      itemChain =
         currency?.model === COIN_MODEL.AB &&
         externalConfig.evmNetworks[currency.ticker].networkVersion
-
-      isCurrencySuitable = coinChain && !onlyTokens
     }
+
+    isCurrencySuitable = !!oneinch.blockchains[itemChain] && (item.standard || !onlyTokens)
+
     // connected metamask allows only one chain
     const suitableForNetwork = metamask.isConnected()
       ? metamask.isAvailableNetworkByCurrency(item.value)
@@ -57,7 +56,13 @@ const filterCurrencies = (params) => {
     return isCurrencySuitable && suitableForNetwork
   })
 
-  const wrongNetwork = metamask.isConnected() && !metamask.isAvailableNetwork()
+  let wrongNetwork = false
+
+  if (metamask.isConnected()) {
+    const chainId = metamask.getChainId()
+
+    wrongNetwork = !oneinch.blockchains[chainId]
+  }
 
   return { currencies: filteredArr, wrongNetwork }
 }
@@ -403,7 +408,6 @@ const fetchAllOrders = async (params) => {
 
 export default {
   filterCurrencies,
-  addTokens,
   fetchSpenderContractAddress,
   fetchTokenAllowance,
   approveToken,

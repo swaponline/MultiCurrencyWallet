@@ -135,16 +135,16 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { metamaskData } = this.props
+    const { metamaskData, availableBlockchains } = this.props
     const { metamaskData: prevMetamaskData} = prevProps
     const { wrongNetwork: prevWrongNetwork } = prevState
     const { currencies, spendedCurrency } = this.state
 
-    const isCurrentNetworkAvailable = metamask.isAvailableNetwork()
+    const chainId = metamask.getChainId()
+    const isCurrentNetworkAvailable = !!availableBlockchains[chainId]
     const isSpendedCurrencyNetworkAvailable = metamask.isAvailableNetworkByCurrency(
       spendedCurrency.value
     )
-
     const switchToCorrectNetwork = prevWrongNetwork && (isSpendedCurrencyNetworkAvailable || isCurrentNetworkAvailable)
     const switchToWrongNetwork = !prevWrongNetwork && !isSpendedCurrencyNetworkAvailable
     const disconnect = prevMetamaskData.isConnected && !metamaskData.isConnected
@@ -884,23 +884,25 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
         )}
 
         <section styleName="quickSwap">
-          <ExchangeForm
-            stateReference={linked}
-            selectCurrency={this.selectCurrency}
-            flipCurrency={this.flipCurrency}
-            openExternalExchange={this.openExternalExchange}
-            checkSwapData={this.checkSwapData}
-            currencies={currencies}
-            receivedList={receivedList}
-            spendedAmount={spendedAmount}
-            spendedCurrency={spendedCurrency}
-            receivedCurrency={receivedCurrency}
-            fiat={fiat}
-            fromWallet={fromWallet}
-            toWallet={toWallet}
-            updateWallets={this.updateWallets}
-            isPending={isPending}
-          />
+          <div styleName={`${wrongNetwork || receivedCurrency.notExist ? 'disabled' : ''}`}>
+            <ExchangeForm
+              stateReference={linked}
+              selectCurrency={this.selectCurrency}
+              flipCurrency={this.flipCurrency}
+              openExternalExchange={this.openExternalExchange}
+              checkSwapData={this.checkSwapData}
+              currencies={currencies}
+              receivedList={receivedList}
+              spendedAmount={spendedAmount}
+              spendedCurrency={spendedCurrency}
+              receivedCurrency={receivedCurrency}
+              fiat={fiat}
+              fromWallet={fromWallet}
+              toWallet={toWallet}
+              updateWallets={this.updateWallets}
+              isPending={isPending}
+            />
+          </div>
 
           <div styleName="walletAddress">
             {!metamask.isConnected() && (!isWalletCreated || !mnemonicSaved) && (
@@ -1034,9 +1036,10 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   }
 }
 
-export default connect(({ currencies, user }) => ({
+export default connect(({ currencies, user, oneinch }) => ({
   allCurrencies: currencies.items,
   tokensWallets: user.tokensData,
   activeFiat: user.activeFiat,
   metamaskData: user.metamaskData,
+  availableBlockchains: oneinch.blockchains,
 }))(CSSModules(QuickSwap, styles, { allowMultiple: true }))
