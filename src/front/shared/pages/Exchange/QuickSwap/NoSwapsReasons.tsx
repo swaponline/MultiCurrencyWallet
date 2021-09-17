@@ -5,7 +5,15 @@ import styles from './index.scss'
 import { SwapBlockReason } from './types'
 
 function SwapInfo(props) {
-  const { blockReason, fromWallet, spendedAmount, swapFee, wrongNetwork } = props
+  const {
+    blockReason,
+    fromWallet,
+    spendedAmount,
+    swapFee,
+    wrongNetwork,
+    needApprove,
+    spendedCurrency,
+  } = props
 
   const insufficientBalance =
     new BigNumber(fromWallet.balance).isEqualTo(0) ||
@@ -26,6 +34,14 @@ function SwapInfo(props) {
           <FormattedMessage
             id="AlertOrderNonEnoughtBalance"
             defaultMessage="Please top up your balance before you start the swap"
+          />
+        </p>
+      ) : needApprove ? (
+        <p styleName="neutral">
+          <FormattedMessage
+            id="approveTokenFirst"
+            defaultMessage="Please approve {token} first"
+            values={{ token: spendedCurrency.name }}
           />
         </p>
       ) : blockReason === SwapBlockReason.InsufficientSlippage ? (

@@ -978,6 +978,8 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
             fromWallet={fromWallet}
             spendedAmount={spendedAmount}
             swapFee={swapFee}
+            needApprove={needApprove}
+            spendedCurrency={spendedCurrency}
           />
 
           <div styleName="buttonWrapper">

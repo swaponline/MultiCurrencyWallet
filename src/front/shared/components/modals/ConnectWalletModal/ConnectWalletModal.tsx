@@ -152,7 +152,7 @@ class ConnectWalletModal extends React.Component<any, any> {
           <div styleName="notification-overlay">
             <div styleName="stepWrapper">
               <h3 styleName="title">
-                <FormattedMessage id="chooseNetwork" defaultMessage="Choose Network" />
+                <FormattedMessage id="chooseNetwork" defaultMessage="Choose network" />
               </h3>
               <div styleName="options">
                 {Object.values(externalConfig.evmNetworks).map(

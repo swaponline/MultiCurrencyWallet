@@ -74,7 +74,7 @@ function BalanceForm({
       <div styleName="yourBalanceTop" className="data-tut-widget-balance">
         <p styleName="yourBalanceDescr">
           {singleWallet
-            ? <FormattedMessage id="YourWalletbalance" defaultMessage="Баланс" />
+            ? <FormattedMessage id="YourWalletbalance" defaultMessage="Balance" />
             : <FormattedMessage id="Yourtotalbalance" defaultMessage="Ваш общий баланс" />
           }
         </p>
