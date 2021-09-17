@@ -57,8 +57,7 @@ type InvoiceModalProps = {
 type InvoiceModalState = {
   toAddressEnabled: boolean
   openScanCam: boolean
-  isErc20: boolean
-  isBep20: boolean
+  isToken: boolean
   isShipped: boolean
   selectedValue: string
   payerAddress: string
@@ -89,8 +88,7 @@ class InvoiceModal extends React.Component<InvoiceModalProps, InvoiceModalState>
       payerAddress = false,
     } = props
 
-    const isErc20 = erc20Like.erc20.isToken({ name: currency })
-    const isBep20 = erc20Like.bep20.isToken({ name: currency })
+    const isToken = erc20Like.isToken({ name: currency })
     const currentDecimals = constants.tokenDecimals[getCurrencyKey(currency, true).toLowerCase()]
     const walletData = actions.core.getWallet({ currency })
     const { infoAboutCurrency } = walletData
@@ -99,8 +97,7 @@ class InvoiceModal extends React.Component<InvoiceModalProps, InvoiceModalState>
       : 1
 
     this.state = {
-      isErc20,
-      isBep20,
+      isToken,
       isShipped: false,
       openScanCam: false,
       toAddressEnabled: !!toAddress,
@@ -179,8 +176,7 @@ class InvoiceModal extends React.Component<InvoiceModalProps, InvoiceModalState>
 
   addressIsCorrect(otherAddress = null) {
     const {
-      isErc20,
-      isBep20,
+      isToken,
       address,
       walletData: {
         currency,
@@ -188,10 +184,8 @@ class InvoiceModal extends React.Component<InvoiceModalProps, InvoiceModalState>
     } = this.state
     const checkAddress = otherAddress ? otherAddress : address
 
-    if (isErc20) {
+    if (isToken) {
       return typeforce.isCoinAddress.ETH(checkAddress)
-    } else if (isBep20) {
-      return typeforce.isCoinAddress.BNB(checkAddress)
     }
 
     let checkCurrency = getCurrencyKey(currency, true).toUpperCase()
@@ -349,7 +343,7 @@ class InvoiceModal extends React.Component<InvoiceModalProps, InvoiceModalState>
                 <div styleName="rednote">
                   <FormattedMessage
                     id="invoiceModal_IncorrectAddress"
-                    defaultMessage="Вы ввели не коректный адрес"
+                    defaultMessage="Incorrect address"
                   />
                 </div>
               )}
@@ -378,8 +372,8 @@ class InvoiceModal extends React.Component<InvoiceModalProps, InvoiceModalState>
             {destination && !this.addressIsCorrect(destination) && (
               <div styleName="rednote">
                 <FormattedMessage
-                  id="invoiceModal_IncorrectDestiAddress"
-                  defaultMessage="Вы ввели не коректный адрес"
+                  id="invoiceModal_IncorrectAddress"
+                  defaultMessage="Incorrect address"
                 />
               </div>
             )}
@@ -387,7 +381,7 @@ class InvoiceModal extends React.Component<InvoiceModalProps, InvoiceModalState>
           <div styleName="highLevel">
             <FieldLabel>
               <span>
-                <FormattedMessage id="invoiceModal_Amount" defaultMessage="Сумма" />
+                <FormattedMessage id="orders102" defaultMessage="Amount" />
               </span>
             </FieldLabel>
             <span styleName="amountTooltip">{

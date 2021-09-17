@@ -95,7 +95,7 @@ To prevent any conflicts in future (when you will update your source from our br
 
 ## 9. Set custom exchange rate
 
-0. add `customEcxchangeRate` to `window.widgetEvmLikeTokens`
+0. add `customExchangeRate` to `window.widgetEvmLikeTokens`
 1. add usd price for `window.widgetEvmLikeTokens`
 
 

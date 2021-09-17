@@ -96,7 +96,7 @@ function SwapInfo(props: ComponentProps) {
               <FormattedMessage id="orders105" defaultMessage="Price" />: <span>{price}</span>
             </span>
           )}
-          {swapFee && (
+          {swapFee && fee && (
             <span styleName="indicator">
               <FormattedMessage id="fee" defaultMessage="Fee" />: <span>{fee}</span>
               {fiatFee && <span>{fiatFee}</span>}

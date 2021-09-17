@@ -199,13 +199,6 @@
     ]
   },
   {
-    "id": "RowFeeds77",
-    "message": "Ablehnen",
-    "files": [
-      "src/front/shared/pages/Exchange/Orders/MyOrders/RowFeeds/RowFeeds.tsx"
-    ]
-  },
-  {
     "id": "RowFeeds81",
     "message": "Aktzeptieren",
     "files": [
@@ -519,7 +512,8 @@
     "id": "enterYouSend",
     "message": "Enter \"You send\" amount",
     "files": [
-      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/NoSwapsReasons.tsx"
     ]
   },
   {
@@ -596,7 +590,10 @@
     "id": "incorrectNetwork",
     "message": "Bitte wähle ein Netzwerk",
     "files": [
-      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+      "src/front/shared/components/modals/LimitOrder/ModalForm.tsx",
+      "src/front/shared/components/modals/WalletConnectAccount/WalletConnectAccount.tsx",
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/NoSwapsReasons.tsx"
     ]
   },
   {
@@ -2130,10 +2127,10 @@
     "files": [
       "src/front/shared/components/LimitOrders/OrderPurchaseModal.tsx",
       "src/front/shared/components/modals/ReceiveModal/ReceiveModal.tsx",
+      "src/front/shared/components/modals/WalletConnectAccount/WalletConnectAccount.tsx",
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx",
-      "src/front/shared/components/modals/WalletConnectAccount/WalletConnectAccount.tsx"
+      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
     ]
   },
   {
@@ -2190,13 +2187,6 @@
     ]
   },
   {
-    "id": "invoiceModal_Amount",
-    "message": "Betrag",
-    "files": [
-      "src/front/shared/components/modals/InvoiceModal/InvoiceModal.tsx"
-    ]
-  },
-  {
     "id": "invoiceModal_Error",
     "message": "{errorName} {currency}:{br}{errorMessage}",
     "files": [
@@ -2205,13 +2195,6 @@
   },
   {
     "id": "invoiceModal_IncorrectAddress",
-    "message": "Falsche Adresse",
-    "files": [
-      "src/front/shared/components/modals/InvoiceModal/InvoiceModal.tsx"
-    ]
-  },
-  {
-    "id": "invoiceModal_IncorrectDestiAddress",
     "message": "Falsche Adresse",
     "files": [
       "src/front/shared/components/modals/InvoiceModal/InvoiceModal.tsx"
@@ -3544,13 +3527,6 @@
     ]
   },
   {
-    "id": "InvoiceInfoModal_Comment",
-    "message": "Kommentare",
-    "files": [
-      "src/front/shared/components/modals/InfoInvoice/InfoInvoice.tsx"
-    ]
-  },
-  {
     "id": "InvoiceInfoModal_DeclimeInvoiceButton",
     "message": "Ablehnen",
     "files": [
@@ -4403,7 +4379,8 @@
     "id": "AlertOrderNonEnoughtBalance",
     "message": "Bitte lade dein Guthaben auf, bevor du mit dem Tausch beginnst.",
     "files": [
-      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/NoSwapsReasons.tsx"
     ]
   },
   {
@@ -4580,17 +4557,17 @@
     "id": "UnknownNetworkConnectedWallet",
     "message": "Unbekanntes Netzwerk",
     "files": [
-      "src/front/shared/components/modals/WalletConnectAccount/WalletConnectAccount.tsx",
-      "src/front/shared/components/Header/WalletConnect/index.tsx"
+      "src/front/shared/components/Header/WalletConnect/index.tsx",
+      "src/front/shared/components/modals/WalletConnectAccount/WalletConnectAccount.tsx"
     ]
   },
   {
     "id": "MetamaskDisconnect",
     "message": "Verbindung trennen",
     "files": [
+      "src/front/shared/components/modals/WalletConnectAccount/WalletConnectAccount.tsx",
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx",
-      "src/front/shared/pages/Wallet/Row/Row.tsx",
-      "src/front/shared/components/modals/WalletConnectAccount/WalletConnectAccount.tsx"
+      "src/front/shared/pages/Wallet/Row/Row.tsx"
     ]
   },
   {
@@ -4693,24 +4670,15 @@
   },
   {
     "id": "ConnectWalletModal_Cancel",
-    "message": "Abbrechen",
-    "files": [
-      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.tsx"
-    ]
+    "message": "Abbrechen"
   },
   {
     "id": "ConnectWalletModal_Injected",
-    "message": "Metamask",
-    "files": [
-      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.tsx"
-    ]
+    "message": "Metamask"
   },
   {
     "id": "ConnectWalletModal_Title",
-    "message": "Verbinde mit externem Wallet",
-    "files": [
-      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.tsx"
-    ]
+    "message": "Verbinde mit externem Wallet"
   },
   {
     "id": "ConnectWalletModal_WalletConnect",
@@ -4821,10 +4789,10 @@
     "id": "Exchange_ConnectAddressOption",
     "message": "Connect Wallet",
     "files": [
-      "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx",
-      "src/front/shared/pages/Exchange/QuickSwap/index.tsx",
+      "src/front/shared/components/Header/WalletConnect/index.tsx",
       "src/front/shared/components/modals/WalletConnectAccount/WalletConnectAccount.tsx",
-      "src/front/shared/components/Header/WalletConnect/index.tsx"
+      "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
     ]
   },
   {
@@ -6067,8 +6035,8 @@
     "id": "network",
     "message": "Netzwerk",
     "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/SwapInfo.tsx",
-      "src/front/shared/components/modals/WalletConnectAccount/WalletConnectAccount.tsx"
+      "src/front/shared/components/modals/WalletConnectAccount/WalletConnectAccount.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/SwapInfo.tsx"
     ]
   },
   {
@@ -6112,16 +6080,13 @@
   },
   {
     "id": "insufficientBalance",
-    "message": "Unzureichendes Gleichgewicht",
-    "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
-    ]
+    "message": "Unzureichendes Gleichgewicht"
   },
   {
     "id": "insufficientLiquidity",
-    "message": "Unzureichende Liquidität",
+    "message": "Unzureichende pool Liquidität",
     "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
+      "src/front/shared/pages/Exchange/QuickSwap/NoSwapsReasons.tsx"
     ]
   },
   {
@@ -6237,26 +6202,14 @@
     ]
   },
   {
-    "id": "pleaseChooseAnotherNetwork",
-    "message": "Bitte wählen Sie ein anderes Netzwerk",
-    "files": [
-      "src/front/shared/components/modals/LimitOrder/ModalForm.tsx",
-      "src/front/shared/pages/Exchange/QuickSwap/index.tsx",
-      "src/front/shared/components/modals/WalletConnectAccount/WalletConnectAccount.tsx"
-    ]
-  },
-  {
     "id": "customSlippageValueNotice",
-    "message": "Sie können einen benutzerdefinierten Schlupftoleranzwert in den erweiterten Einstellungen festlegen und es erneut versuchen",
-    "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
-    ]
+    "message": "Sie können einen benutzerdefinierten Schlupftoleranzwert in den erweiterten Einstellungen festlegen und es erneut versuchen"
   },
   {
     "id": "insufficientSlippage",
-    "message": "Unzureichender Schlupf",
+    "message": "Unzureichender Schlupf. Versuchen Sie es in den erweiterten Einstellungen zu erhöhen",
     "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
+      "src/front/shared/pages/Exchange/QuickSwap/NoSwapsReasons.tsx"
     ]
   },
   {
@@ -6278,6 +6231,34 @@
     "message": "* Haftungsausschluss: Die Börse verwendet ein 3rd 0x Liquiditätsprotokoll. Seien Sie vorsichtig und verwenden Sie auf eigene Gefahr.",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
+    ]
+  },
+  {
+    "id": "Connect",
+    "message": "Verbinden",
+    "files": [
+      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.tsx"
+    ]
+  },
+  {
+    "id": "chooseNetwork",
+    "message": "Wählen Sie Netzwerk",
+    "files": [
+      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.tsx"
+    ]
+  },
+  {
+    "id": "chooseWallet",
+    "message": "Brieftasche wählen",
+    "files": [
+      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.tsx"
+    ]
+  },
+  {
+    "id": "approveTokenFirst",
+    "message": "Bitte genehmigen Sie zuerst {token}",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/NoSwapsReasons.tsx"
     ]
   }
 ]

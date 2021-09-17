@@ -114,7 +114,7 @@ class WalletConnectAccount extends React.Component<any, ComponentState> {
           </span>
         </Copy>
       ) :
-      <FormattedMessage id="pleaseChooseAnotherNetwork" defaultMessage="Please choose another network" />
+      <FormattedMessage id="incorrectNetwork" defaultMessage='Please choose correct network' />
 
     const walletBalance = isAvailableNetwork ?
       `${balance} ${currency}` :

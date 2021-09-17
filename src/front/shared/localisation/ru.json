@@ -114,10 +114,10 @@
     "files": [
       "src/front/shared/components/LimitOrders/OrderPurchaseModal.tsx",
       "src/front/shared/components/modals/ReceiveModal/ReceiveModal.tsx",
+      "src/front/shared/components/modals/WalletConnectAccount/WalletConnectAccount.tsx",
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx",
-      "src/front/shared/components/modals/WalletConnectAccount/WalletConnectAccount.tsx"
+      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
     ]
   },
   {
@@ -208,13 +208,6 @@
     "message": "Скопировано!",
     "files": [
       "src/front/shared/components/ui/Copy/Copy.tsx"
-    ]
-  },
-  {
-    "id": "RowFeeds77",
-    "message": "Снизить",
-    "files": [
-      "src/front/shared/pages/Exchange/Orders/MyOrders/RowFeeds/RowFeeds.tsx"
     ]
   },
   {
@@ -565,7 +558,8 @@
     "id": "enterYouSend",
     "message": "Заполните поле \"Отдаете\"",
     "files": [
-      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/NoSwapsReasons.tsx"
     ]
   },
   {
@@ -642,7 +636,10 @@
     "id": "incorrectNetwork",
     "message": "Пожалуйста, выберите правильную сеть",
     "files": [
-      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+      "src/front/shared/components/modals/LimitOrder/ModalForm.tsx",
+      "src/front/shared/components/modals/WalletConnectAccount/WalletConnectAccount.tsx",
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/NoSwapsReasons.tsx"
     ]
   },
   {
@@ -2147,13 +2144,6 @@
     ]
   },
   {
-    "id": "invoiceModal_Amount",
-    "message": "Сумма",
-    "files": [
-      "src/front/shared/components/modals/InvoiceModal/InvoiceModal.tsx"
-    ]
-  },
-  {
     "id": "invoiceModal_Error",
     "message": "{errorName} {currency}:{br}{errorMessage}",
     "files": [
@@ -2162,13 +2152,6 @@
   },
   {
     "id": "invoiceModal_IncorrectAddress",
-    "message": "Вы ввели не коректный адрес",
-    "files": [
-      "src/front/shared/components/modals/InvoiceModal/InvoiceModal.tsx"
-    ]
-  },
-  {
-    "id": "invoiceModal_IncorrectDestiAddress",
     "message": "Вы ввели не коректный адрес",
     "files": [
       "src/front/shared/components/modals/InvoiceModal/InvoiceModal.tsx"
@@ -3547,13 +3530,6 @@
     ]
   },
   {
-    "id": "InvoiceInfoModal_Comment",
-    "message": "Комментарий",
-    "files": [
-      "src/front/shared/components/modals/InfoInvoice/InfoInvoice.tsx"
-    ]
-  },
-  {
     "id": "InvoiceInfoModal_DeclimeInvoiceButton",
     "message": "Отклонить",
     "files": [
@@ -4406,7 +4382,8 @@
     "id": "AlertOrderNonEnoughtBalance",
     "message": "Please top up your balance before you start the swap.",
     "files": [
-      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/NoSwapsReasons.tsx"
     ]
   },
   {
@@ -4583,17 +4560,17 @@
     "id": "UnknownNetworkConnectedWallet",
     "message": "Неизвестная Сеть",
     "files": [
-      "src/front/shared/components/modals/WalletConnectAccount/WalletConnectAccount.tsx",
-      "src/front/shared/components/Header/WalletConnect/index.tsx"
+      "src/front/shared/components/Header/WalletConnect/index.tsx",
+      "src/front/shared/components/modals/WalletConnectAccount/WalletConnectAccount.tsx"
     ]
   },
   {
     "id": "MetamaskDisconnect",
     "message": "Отключить кошелек",
     "files": [
+      "src/front/shared/components/modals/WalletConnectAccount/WalletConnectAccount.tsx",
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx",
-      "src/front/shared/pages/Wallet/Row/Row.tsx",
-      "src/front/shared/components/modals/WalletConnectAccount/WalletConnectAccount.tsx"
+      "src/front/shared/pages/Wallet/Row/Row.tsx"
     ]
   },
   {
@@ -4696,24 +4673,15 @@
   },
   {
     "id": "ConnectWalletModal_Cancel",
-    "message": "Отмена",
-    "files": [
-      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.tsx"
-    ]
+    "message": "Отмена"
   },
   {
     "id": "ConnectWalletModal_Injected",
-    "message": "Metamask",
-    "files": [
-      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.tsx"
-    ]
+    "message": "Metamask"
   },
   {
     "id": "ConnectWalletModal_Title",
-    "message": "Подключение внешего кошелька",
-    "files": [
-      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.tsx"
-    ]
+    "message": "Подключение внешего кошелька"
   },
   {
     "id": "ConnectWalletModal_WalletConnect",
@@ -4824,10 +4792,10 @@
     "id": "Exchange_ConnectAddressOption",
     "message": "Подключить кошелек",
     "files": [
-      "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx",
-      "src/front/shared/pages/Exchange/QuickSwap/index.tsx",
+      "src/front/shared/components/Header/WalletConnect/index.tsx",
       "src/front/shared/components/modals/WalletConnectAccount/WalletConnectAccount.tsx",
-      "src/front/shared/components/Header/WalletConnect/index.tsx"
+      "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
     ]
   },
   {
@@ -6035,8 +6003,8 @@
     "id": "network",
     "message": "Сеть",
     "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/SwapInfo.tsx",
-      "src/front/shared/components/modals/WalletConnectAccount/WalletConnectAccount.tsx"
+      "src/front/shared/components/modals/WalletConnectAccount/WalletConnectAccount.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/SwapInfo.tsx"
     ]
   },
   {
@@ -6108,16 +6076,13 @@
   },
   {
     "id": "insufficientBalance",
-    "message": "Недостаточный баланс",
-    "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
-    ]
+    "message": "Недостаточный баланс"
   },
   {
     "id": "insufficientLiquidity",
-    "message": "Недостаточная ликвидность",
+    "message": "Недостаточная ликвидность пула",
     "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
+      "src/front/shared/pages/Exchange/QuickSwap/NoSwapsReasons.tsx"
     ]
   },
   {
@@ -6233,26 +6198,14 @@
     ]
   },
   {
-    "id": "pleaseChooseAnotherNetwork",
-    "message": "Пожалуйста, выберите другую сеть",
-    "files": [
-      "src/front/shared/components/modals/LimitOrder/ModalForm.tsx",
-      "src/front/shared/pages/Exchange/QuickSwap/index.tsx",
-      "src/front/shared/components/modals/WalletConnectAccount/WalletConnectAccount.tsx"
-    ]
-  },
-  {
     "id": "customSlippageValueNotice",
-    "message": "Вы можете установить пользовательское значение допуска проскальзывания в дополнительных настройках и повторить попытку",
-    "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
-    ]
+    "message": "Вы можете установить пользовательское значение допуска проскальзывания в дополнительных настройках и повторить попытку"
   },
   {
     "id": "insufficientSlippage",
-    "message": "Недостаточное проскальзывание",
+    "message": "Недостаточное проскальзывание. Попробуйте увеличить его в дополнительных настройках",
     "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
+      "src/front/shared/pages/Exchange/QuickSwap/NoSwapsReasons.tsx"
     ]
   },
   {
@@ -6274,6 +6227,34 @@
     "message": "* Отказ от ответственности: биржа использует 0x протокол ликвидности. Будьте осторожны и используйте на свой страх и риск.",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
+    ]
+  },
+  {
+    "id": "Connect",
+    "message": "Подключить",
+    "files": [
+      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.tsx"
+    ]
+  },
+  {
+    "id": "chooseNetwork",
+    "message": "Выберите сеть",
+    "files": [
+      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.tsx"
+    ]
+  },
+  {
+    "id": "chooseWallet",
+    "message": "Выберите кошелек",
+    "files": [
+      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.tsx"
+    ]
+  },
+  {
+    "id": "approveTokenFirst",
+    "message": "Пожалуйста, сначала утвердите {токен}",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/NoSwapsReasons.tsx"
     ]
   }
 ]

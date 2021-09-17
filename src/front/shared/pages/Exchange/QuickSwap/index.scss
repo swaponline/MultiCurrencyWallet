@@ -232,26 +232,30 @@
   }
 }
 
-@mixin notice($color: var(--color-notice)) {
+@mixin notice($color: var(--color-indicating), $borderColor: var(--color-border)) {
+  @include ff-semibold;
   padding: 0.5rem;
   text-align: left;
   border-radius: 0.2rem;
-  border: 1px solid $color;
+  border: 1px solid $borderColor;
+  background-color: var(--color-background);
   color: $color;
 }
 
 .noAssetsNotice {
-  @include notice(var(--color-bad));
+  @include notice(var(--color-bad), var(--color-bad));
   max-width: 38em;
   margin: 0.6rem auto;
 }
 
-.swapNotice {
-  @include notice(var(--color-notice));
-}
+.reasons {
+  .wrong {
+    @include notice(var(--color-f-error), var(--color-f-error));
+  }
 
-.wrongNetworkMessage {
-  @include notice(var(--color-f-error));
+  .neutral {
+    @include notice();
+  }
 }
 
 .buttonWrapper {
