@@ -818,9 +818,9 @@ const isPinRegistered = async (mnemonic) => {
 
   const serverKey = config.swapContract.btcPinKey
   //@ts-ignore
-  const storageKey = JSON.parse(localStorage.getItem('mainnet:btcPinMnemonicKey'))[0]
+  // const storageKey = JSON.parse(localStorage.getItem('mainnet:btcPinMnemonicKey'))[0]
   //@ts-ignore
-  const publicKeys = [serverKey, storageKey, mnemonicKey.toString('Hex')]
+  const publicKeys = [serverKey, mnemonicKey.toString('Hex'), publicKey.toString('Hex')]
 
   try {
     const result = await apiLooper.post('btcPin', `/login/`, {
