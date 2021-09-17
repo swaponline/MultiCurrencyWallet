@@ -12,29 +12,28 @@ function SwapInfo(props) {
     new BigNumber(spendedAmount).plus(swapFee || 0).isGreaterThan(fromWallet.balance)
 
   return (
-    <section>
+    <section styleName="reasons">
       {wrongNetwork ? (
-        <p styleName="wrongNetworkMessage">
-          <FormattedMessage
-            id="pleaseChooseAnotherNetwork"
-            defaultMessage="Please choose another network"
-          />
+        <p styleName="wrong">
+          <FormattedMessage id="incorrectNetwork" defaultMessage='Please choose correct network' />
         </p>
       ) : blockReason === SwapBlockReason.NoLiquidity ? (
-        <p>
+        <p styleName="neutral">
           <FormattedMessage id="insufficientLiquidity" defaultMessage="Insufficient liquidity" />
         </p>
       ) : blockReason === SwapBlockReason.InsufficientSlippage ? (
-        <p>
+        <p styleName="neutral">
           <FormattedMessage id="insufficientSlippage" defaultMessage="Insufficient slippage" />
         </p>
       ) : insufficientBalance ? (
-        <p>
+        <p styleName="neutral">
           <FormattedMessage id="insufficientBalance" defaultMessage="Insufficient balance" />
         </p>
-      ) : (
-        '-'
-      )}
+      ) : !spendedAmount ? (
+        <p styleName="neutral">
+          <FormattedMessage id="enterYouSend" defaultMessage='Enter "You send" amount' />
+        </p>
+      ) : null}
     </section>
   )
 }

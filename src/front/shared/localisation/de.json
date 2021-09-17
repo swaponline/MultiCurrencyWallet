@@ -6237,15 +6237,6 @@
     ]
   },
   {
-    "id": "pleaseChooseAnotherNetwork",
-    "message": "Bitte wählen Sie ein anderes Netzwerk",
-    "files": [
-      "src/front/shared/components/modals/LimitOrder/ModalForm.tsx",
-      "src/front/shared/pages/Exchange/QuickSwap/index.tsx",
-      "src/front/shared/components/modals/WalletConnectAccount/WalletConnectAccount.tsx"
-    ]
-  },
-  {
     "id": "customSlippageValueNotice",
     "message": "Sie können einen benutzerdefinierten Schlupftoleranzwert in den erweiterten Einstellungen festlegen und es erneut versuchen",
     "files": [

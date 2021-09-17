@@ -6229,15 +6229,6 @@
     ]
   },
   {
-    "id": "pleaseChooseAnotherNetwork",
-    "message": "Kies een ander netwerk",
-    "files": [
-      "src/front/shared/components/modals/LimitOrder/ModalForm.tsx",
-      "src/front/shared/pages/Exchange/QuickSwap/index.tsx",
-      "src/front/shared/components/modals/WalletConnectAccount/WalletConnectAccount.tsx"
-    ]
-  },
-  {
     "id": "customSlippageValueNotice",
     "message": "U kunt een aangepaste slippage tolerantie waarde in te stellen in de geavanceerde instellingen en probeer het opnieuw",
     "files": [

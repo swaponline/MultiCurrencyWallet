@@ -246,12 +246,14 @@
   margin: 0.6rem auto;
 }
 
-.swapNotice {
-  @include notice(var(--color-notice));
-}
+.reasons {
+  .wrong {
+    @include notice(var(--color-f-error));
+  }
 
-.wrongNetworkMessage {
-  @include notice(var(--color-f-error));
+  .neutral {
+    @include notice();
+  }
 }
 
 .buttonWrapper {

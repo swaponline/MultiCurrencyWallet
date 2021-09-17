@@ -64,10 +64,7 @@ function ModalForm(props) {
 
         {wrongNetwork && (
           <p styleName="warning">
-            <FormattedMessage
-              id="pleaseChooseAnotherNetwork"
-              defaultMessage="Please choose another network"
-            />
+            <FormattedMessage id="incorrectNetwork" defaultMessage='Please choose correct network' />
           </p>
         )}
 

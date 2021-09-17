@@ -6229,15 +6229,6 @@
     ]
   },
   {
-    "id": "pleaseChooseAnotherNetwork",
-    "message": "Please choose another network",
-    "files": [
-      "src/front/shared/components/modals/LimitOrder/ModalForm.tsx",
-      "src/front/shared/pages/Exchange/QuickSwap/index.tsx",
-      "src/front/shared/components/modals/WalletConnectAccount/WalletConnectAccount.tsx"
-    ]
-  },
-  {
     "id": "customSlippageValueNotice",
     "message": "You can set a custom slippage tolerance value in the advanced settings and try again",
     "files": [

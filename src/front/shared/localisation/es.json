@@ -6233,15 +6233,6 @@
     ]
   },
   {
-    "id": "pleaseChooseAnotherNetwork",
-    "message": "Por favor, elija otra red",
-    "files": [
-      "src/front/shared/components/modals/LimitOrder/ModalForm.tsx",
-      "src/front/shared/pages/Exchange/QuickSwap/index.tsx",
-      "src/front/shared/components/modals/WalletConnectAccount/WalletConnectAccount.tsx"
-    ]
-  },
-  {
     "id": "customSlippageValueNotice",
     "message": "Puede establecer un valor de tolerancia de deslizamiento personalizado en la configuración avanzada e intentarlo de nuevo",
     "files": [
