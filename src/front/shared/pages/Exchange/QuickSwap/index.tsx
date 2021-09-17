@@ -28,6 +28,7 @@ import NewTokenInstruction from './NewTokenInstruction'
 import ExchangeForm from './ExchangeForm'
 import AdvancedSettings from './AdvancedSettings'
 import SwapInfo from './SwapInfo'
+import NoSwapsReasons from './NoSwapsReasons'
 import LimitOrders from 'components/LimitOrders'
 
 class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
@@ -867,10 +868,6 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     const swapDataIsDisabled = this.isSwapDataNotAvailable()
     const swapBtnIsDisabled = this.isSwapNotAvailable() || swapDataIsDisabled
     const isWalletCreated = localStorage.getItem(constants.localStorage.isWalletCreate)
-    const insufficientBalance =
-      blockReason === SwapBlockReason.NoBalance ||
-      new BigNumber(spendedAmount).plus(swapFee || 0).isGreaterThan(fromWallet.balance)
-
     const saveSecretPhrase = !mnemonicSaved && !metamask.isConnected()
 
     return (
@@ -904,15 +901,6 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
             updateWallets={this.updateWallets}
             isPending={isPending}
           />
-
-          {blockReason === SwapBlockReason.InsufficientSlippage && (
-            <p styleName="swapNotice">
-              <FormattedMessage
-                id="customSlippageValueNotice"
-                defaultMessage="You can set a custom slippage tolerance value in the advanced settings and try again"
-              />
-            </p>
-          )}
 
           <div styleName="walletAddress">
             {!metamask.isConnected() && (!isWalletCreated || !mnemonicSaved) && (
@@ -984,14 +972,13 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
             isDataPending={isDataPending}
           />
 
-          {wrongNetwork && (
-            <p styleName="wrongNetworkMessage">
-              <FormattedMessage
-                id="pleaseChooseAnotherNetwork"
-                defaultMessage="Please choose another network"
-              />
-            </p>
-          )}
+          <NoSwapsReasons
+            wrongNetwork={wrongNetwork}
+            blockReason={blockReason}
+            fromWallet={fromWallet}
+            spendedAmount={spendedAmount}
+            swapFee={swapFee}
+          />
 
           <div styleName="buttonWrapper">
             {needApprove ? (
@@ -1016,24 +1003,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
                 onClick={this.swap}
                 brand
               >
-                {blockReason === SwapBlockReason.NoLiquidity ? (
-                  <FormattedMessage
-                    id="insufficientLiquidity"
-                    defaultMessage="Insufficient liquidity"
-                  />
-                ) : blockReason === SwapBlockReason.InsufficientSlippage ? (
-                  <FormattedMessage
-                    id="insufficientSlippage"
-                    defaultMessage="Insufficient slippage"
-                  />
-                ) : insufficientBalance ? (
-                  <FormattedMessage
-                    id="insufficientBalance"
-                    defaultMessage="Insufficient balance"
-                  />
-                ) : (
-                  <FormattedMessage id="swap" defaultMessage="Swap" />
-                )}
+                <FormattedMessage id="swap" defaultMessage="Swap" />
               </Button>
             )}
           </div>
