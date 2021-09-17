@@ -35,7 +35,7 @@ import { FormattedMessage, injectIntl } from 'react-intl'
 import metamask from 'helpers/metamask'
 
 
-const userLanguage = (navigator.userLanguage || navigator.language || "en-gb").split("-")[0];
+const userLanguage = utils.getCookie('mylang') || "en"
 moment.locale(userLanguage)
 
 @withRouter
