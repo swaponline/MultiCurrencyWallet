@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react'
+import { BigNumber } from 'bignumber.js'
 import { constants } from 'helpers'
 import actions from 'redux/actions'
 import config from 'app-config'
@@ -173,10 +174,6 @@ class RestoryMnemonicWallet extends React.Component<ComponentProps, ComponentSta
       await actions.user.sign_btc_2fa(btcPrivKey)
       await actions.user.sign_btc_multisig(btcPrivKey)
 
-      //actions.core.markCoinAsVisible('ETH', true)
-      // actions.core.markCoinAsVisible('BNB', true)
-      // actions.core.markCoinAsVisible('MATIC', true)
-      // actions.core.markCoinAsVisible('ARBETH', true)
       actions.core.markCoinAsVisible('BTC', true)
 
       const result: any = await actions.btcmultisig.isPinRegistered(mnemonic)
@@ -184,6 +181,18 @@ class RestoryMnemonicWallet extends React.Component<ComponentProps, ComponentSta
       if (result?.exist) {
         actions.core.markCoinAsVisible('BTC (PIN-Protected)', true)
       }
+
+      await actions.user.getBalances()
+      const allWallets = actions.core.getWallets({ withInternal: true })
+
+      allWallets.forEach((wallet) => {
+        if (new BigNumber(wallet.balance).isGreaterThan(0)) {
+          actions.core.markCoinAsVisible(
+            wallet.isToken ? wallet.tokenKey.toUpperCase() : wallet.currency,
+            true
+          )
+        }
+      })
 
       this.setState(() => ({
         isFetching: false,
