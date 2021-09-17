@@ -29,7 +29,7 @@ import ExchangeForm from './ExchangeForm'
 import AdvancedSettings from './AdvancedSettings'
 import SwapInfo from './SwapInfo'
 import LimitOrders from 'components/LimitOrders'
-
+ 
 class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   constructor(props) {
     super(props)
