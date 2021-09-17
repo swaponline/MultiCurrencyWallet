@@ -6203,7 +6203,7 @@
   },
   {
     "id": "insufficientSlippage",
-    "message": "Deslizamiento insuficiente",
+    "message": "Deslizamiento insuficiente. Trate de aumentarlo en la configuración avanzada",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/NoSwapsReasons.tsx"
     ]

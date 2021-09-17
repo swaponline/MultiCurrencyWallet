@@ -6207,7 +6207,7 @@
   },
   {
     "id": "insufficientSlippage",
-    "message": "Unzureichender Schlupf",
+    "message": "Unzureichender Schlupf. Versuchen Sie es in den erweiterten Einstellungen zu erhöhen",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/NoSwapsReasons.tsx"
     ]

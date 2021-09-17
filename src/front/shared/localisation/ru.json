@@ -6203,7 +6203,7 @@
   },
   {
     "id": "insufficientSlippage",
-    "message": "Недостаточное проскальзывание",
+    "message": "Недостаточное проскальзывание. Попробуйте увеличить его в дополнительных настройках",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/NoSwapsReasons.tsx"
     ]

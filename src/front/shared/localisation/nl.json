@@ -6199,7 +6199,7 @@
   },
   {
     "id": "insufficientSlippage",
-    "message": "Onvoldoende slippen",
+    "message": "Onvoldoende slippen. Probeer het te verhogen in de geavanceerde instellingen",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/NoSwapsReasons.tsx"
     ]

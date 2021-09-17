@@ -6199,7 +6199,7 @@
   },
   {
     "id": "insufficientSlippage",
-    "message": "Insufficient slippage",
+    "message": "Insufficient slippage. Try to increase it in the advanced settings",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/NoSwapsReasons.tsx"
     ]

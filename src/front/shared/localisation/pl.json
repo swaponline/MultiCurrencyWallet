@@ -6203,7 +6203,7 @@
   },
   {
     "id": "insufficientSlippage",
-    "message": "Niedostateczny poślizg",
+    "message": "Niewystarczający poślizg. Spróbuj go zwiększyć w ustawieniach zaawansowanych",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/NoSwapsReasons.tsx"
     ]
