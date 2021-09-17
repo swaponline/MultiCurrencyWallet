@@ -803,6 +803,41 @@ const register_PIN = async (password, mnemonic, ownPublicKey) => {
   }
 }
 
+const isPinRegistered = async (mnemonic) => {
+  const {
+    user: {
+      btcData: {
+        address,
+        publicKey,
+      },
+    },
+  } = getState()
+
+  const mnemonicAccount = actions.btc.getWalletByWords(mnemonic, 1)
+  const mnemonicKey = mnemonicAccount.publicKey
+
+  const serverKey = config.swapContract.btcPinKey
+  //@ts-ignore
+  const storageKey = JSON.parse(localStorage.getItem('mainnet:btcPinMnemonicKey'))[0]
+  //@ts-ignore
+  const publicKeys = [serverKey, storageKey, mnemonicKey.toString('Hex')]
+
+  try {
+    const result = await apiLooper.post('btcPin', `/login/`, {
+      body: {
+        address,
+        publicKey: JSON.stringify(publicKeys),
+        mainnet: true,
+      },
+    })
+
+    return result
+  } catch (error) {
+    console.error(error)
+    return false
+  }
+}
+
 const addPinWallet = async (mnemonicOrKey) => {
   const {
     user: {
@@ -1714,6 +1749,9 @@ export default {
   addSMSWallet,
   isBTCSMSAddress,
   getSmsKeyFromMnemonic,
+
+
+  isPinRegistered,
 
   // Pin protected
   login_PIN,
