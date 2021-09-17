@@ -65,19 +65,12 @@ const sign_btc_2fa = async (btcPrivateKey) => {
 
 const sign_btc_pin = async (btcPrivateKey) => {
   const btcPinServerKey = config.swapContract.btcPinKey
-  let btcPinPublicKeys = [btcPinServerKey]
+  const btcPinPublicKeys = [btcPinServerKey]
   //@ts-ignore: strictNullChecks
-  let btcPinMnemonicKey: MnemonicKey = localStorage.getItem(constants.privateKeyNames.btcPinMnemonicKey)
+  const btcPinMnemonicKey: MnemonicKey = localStorage.getItem(constants.privateKeyNames.btcPinMnemonicKey)
 
-  try {
-    //@ts-ignore: strictNullChecks
-    btcPinMnemonicKey = JSON.parse(btcPinMnemonicKey)
-  } catch (e) {
-    console.error(e)
-  }
-
-  if (btcPinMnemonicKey instanceof Array && btcPinMnemonicKey.length > 0) {
-    btcPinPublicKeys.push(btcPinMnemonicKey[0])
+  if (btcPinMnemonicKey) {
+    btcPinPublicKeys.push(btcPinMnemonicKey)
   }
 
   actions.btcmultisig.login_PIN(btcPrivateKey, btcPinPublicKeys)

@@ -815,25 +815,33 @@ const isPinRegistered = async (mnemonic) => {
 
   const mnemonicAccount = actions.btc.getWalletByWords(mnemonic, 1)
   const mnemonicKey = mnemonicAccount.publicKey
-
+  const privateKey = mnemonicAccount.WIF
   const serverKey = config.swapContract.btcPinKey
-  //@ts-ignore
-  // const storageKey = JSON.parse(localStorage.getItem('mainnet:btcPinMnemonicKey'))[0]
   //@ts-ignore
   const publicKeys = [serverKey, mnemonicKey.toString('Hex'), publicKey.toString('Hex')]
 
   try {
-    const result = await apiLooper.post('btcPin', `/login/`, {
+    const result: any = await apiLooper.post('btcPin', `/login/`, {
       body: {
         address,
         publicKey: JSON.stringify(publicKeys),
-        mainnet: true,
+        mainnet: config.entry === 'mainnet',
       },
     })
 
-    return result
+    if (result?.answer === 'Exist') {
+      return {
+        exist: true,
+        publicKeys,
+        privateKey,
+      }
+    } else {
+      return false
+    }
   } catch (error) {
+    console.group('%c isPinRegistered', 'color: red;')
     console.error(error)
+    console.groupEnd()
     return false
   }
 }

@@ -162,13 +162,6 @@ class RestoryMnemonicWallet extends React.Component<ComponentProps, ComponentSta
       const btcPinKey = btcSmsKey
       //@ts-ignore: strictNullChecks
       localStorage.setItem(constants.privateKeyNames.btcPinMnemonicKey, btcPinKey)
-
-      const result = await actions.btcmultisig.isPinRegistered(mnemonic)
-
-      console.log('%c result','color:orange;font-size:20px')
-      console.log(result)
-
-      
       localStorage.setItem(constants.localStorage.isWalletCreate, 'true')
 
       await actions.bnb.login(false, mnemonic)
@@ -180,16 +173,22 @@ class RestoryMnemonicWallet extends React.Component<ComponentProps, ComponentSta
       await actions.user.sign_btc_2fa(btcPrivKey)
       await actions.user.sign_btc_multisig(btcPrivKey)
 
-      actions.core.markCoinAsVisible('ETH', true)
+      //actions.core.markCoinAsVisible('ETH', true)
       // actions.core.markCoinAsVisible('BNB', true)
       // actions.core.markCoinAsVisible('MATIC', true)
       // actions.core.markCoinAsVisible('ARBETH', true)
       actions.core.markCoinAsVisible('BTC', true)
 
-      this.setState({
+      const result: any = await actions.btcmultisig.isPinRegistered(mnemonic)
+
+      if (result?.exist) {
+        actions.core.markCoinAsVisible('BTC (PIN-Protected)', true)
+      }
+
+      this.setState(() => ({
         isFetching: false,
         step: `ready`,
-      })
+      }))
 
       feedback.restore.finished()
     })
