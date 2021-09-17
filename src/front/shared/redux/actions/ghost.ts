@@ -448,8 +448,6 @@ const signMessage = (message, encodedPrivateKey) => {
   return signature.toString('base64')
 }
 
-const getReputation = () => Promise.resolve(0)
-
 window.getMainPublicKey = getMainPublicKey
 
 /*
@@ -500,7 +498,6 @@ export default {
   fetchTxInfo,
   fetchBalance,
   signMessage,
-  getReputation,
   getTx,
   getLinkToInfo,
   getInvoices,

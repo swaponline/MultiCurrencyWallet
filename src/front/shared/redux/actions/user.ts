@@ -118,8 +118,6 @@ const sign = async () => {
     await sign_btc_pin(_btcPrivateKey)
 
     loginWithTokens()
-
-    await getReputation()
   })
 }
 
@@ -142,34 +140,6 @@ const loginWithTokens = () => {
 
   reducers.user.setTokenSigned(true)
 }
-
-const getReputation = async () => {
-
-  const btcReputationPromise = actions.btc.getReputation()
-  const ethReputationPromise = actions.eth.getReputation()
-  const ghostReputationPromise = actions.ghost.getReputation()
-  const nextReputationPromise = actions.next.getReputation()
-
-  Promise.all([
-    btcReputationPromise,
-    ethReputationPromise,
-    ghostReputationPromise,
-    nextReputationPromise,
-  ])
-    .then(([btcReputation, ethReputation, ghostReputation, nextReputation]) => {
-      const totalReputation = Number(btcReputation) + Number(ethReputation) + Number(ghostReputation) + Number(nextReputation)
-
-      if (Number.isInteger(totalReputation)) {
-        reducers.pubsubRoom.set({ reputation: totalReputation })
-      } else {
-        reducers.pubsubRoom.set({ reputation: null })
-      }
-    })
-    .catch((error) => {
-      console.error(`unknown reputation`, error)
-    })
-}
-
 
 const getBalances = () => {
   const {
@@ -664,7 +634,6 @@ export default {
   getText,
   isOwner,
   getExchangeRate,
-  getReputation,
   getInfoAboutCurrency,
   getAuthData,
   getWithdrawWallet,

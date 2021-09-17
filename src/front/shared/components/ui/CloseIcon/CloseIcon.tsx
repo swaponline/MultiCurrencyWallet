@@ -1,15 +1,14 @@
-import React from 'react'
 import cssModules from 'react-css-modules'
 import styles from './CloseIcon.scss'
 
 type ComponentProps = {
   onClick: (...args: any) => void
-  styleName: string
+  styleName?: string
   id?: string
 }
 
 const CloseIcon = (props: ComponentProps) => {
-  const { onClick, styleName: externalName, id = '', ...rest } = props
+  const { onClick, styleName = '', id = '', ...rest } = props
 
   return (
     <div id={id} styleName="button" {...rest} role="closeButton" onClick={onClick}>

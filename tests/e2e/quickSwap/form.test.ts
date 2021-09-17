@@ -13,10 +13,6 @@ jest.setTimeout(80_000) // ms
 const EVM_MNEMONIC = process.env.evmMnemonicPhrase
 const EVM_ADDRESS = process.env.evmAddress
 
-const spaces = EVM_MNEMONIC?.match(/ /g)
-
-console.log('length of seed spaces: ', spaces?.length)
-
 describe('Quick swap tests', () => {
   const waitingForStartup = 120_000
   let browser: undefined | puppeteer.Browser = undefined
@@ -75,7 +71,7 @@ describe('Quick swap tests', () => {
       const amount = '0.00001'
 
       try {
-        await await addTokenToWallet({
+        await addTokenToWallet({
           page: page,
           standardId: tokenStandardId,
           contract: wmaticContract,
@@ -98,11 +94,15 @@ describe('Quick swap tests', () => {
           selector: '[id="matic"]',
         })
 
-        await buyCurrencySelectorList.click()
-        await clickOn({
-          page,
-          selector: '[id="{MATIC}WMATIC"]',
-        })
+        const buyCurrency = await page.evaluate((element) => element.textContent, buyCurrencySelectorList);
+
+        if (buyCurrency !== 'WMATIC (MATIC)') {
+          await buyCurrencySelectorList.click()
+          await clickOn({
+            page,
+            selector: '[id="{MATIC}WMATIC"]',
+          })
+        }
 
         const spendAmountInput = await page.$('#quickSwapSpendCurrencyInput')
 

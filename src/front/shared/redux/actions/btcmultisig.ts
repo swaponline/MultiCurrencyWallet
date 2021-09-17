@@ -1694,9 +1694,6 @@ const signMessage = (message, encodedPrivateKey) => {
   return signature.toString('base64')
 }
 
-const getReputation = () => Promise.resolve(0)
-
-
 export default {
   // SMS Protected
   beginRegisterSMS,
@@ -1745,7 +1742,6 @@ export default {
   fetchTxInfo,
   fetchBalance,
   signMessage,
-  getReputation,
   enableWalletUSER,
 
   parseRawTX,

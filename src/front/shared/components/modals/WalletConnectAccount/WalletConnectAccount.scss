@@ -1,29 +1,17 @@
 .header {
-  padding: 16px 0;
+  padding-bottom: 1.4rem;
 }
 
 .headerContent {
-  height: 100%;
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  position: relative;
 }
 
 .title {
-  width: 100%;
-  padding: 0 64px;
-  line-height: 18px;
-  font-size: 20px;
-  font-weight: 700;
-  text-align: center;
-
-  &.uppercase {
-    text-transform: uppercase;
-  }
+  @include ff-regular;
 }
 
-.modal-overlay {
+.modalOverlay {
   position: sticky;
   width: 100%;
   height: 100%;
@@ -67,30 +55,57 @@
   justify-content: space-around;
 }
 
+.infoWrapper {
+  padding: 0.7rem;
+  border-radius: .6rem;
+  background-color: var(--color-pale);
+
+  .parameter {
+    @include ff-semibold;
+    margin: 0;
+    font-size: 1.1rem;
+  }
+
+  .parameter:not(:last-child) {
+    margin-bottom: 0.7rem;
+  }
+
+  .value {
+    @include ff-mono;
+    margin-left: 0.3rem;
+    font-size: 1rem;
+  }
+}
+
+.updateBalanceButton {
+  font-size: 0.9rem;
+  user-select: none;
+}
+
+.balanceLoader {
+  color: var(--color-notice);
+}
+
 .walletAddress {
+  padding: 1rem 0;
   align-self: auto;
 }
 
-.button-overlay {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 1rem;
-  }
-
-@include media-mobile {
+@media all and (max-width: 720px) {
   .modal {
-    height: 100%;
-    padding: 16px;
-    border-radius: 0;
-    box-shadow: none;
+    max-width: 85%;
+  }
+}
+
+@media all and (max-width: 500px) {
+  .infoWrapper {
+    .parameter,
+    .parameter > * {
+      font-size: 0.9rem;
+    }
   }
 
-  .title {
-    font-size: 18px;
+  .walletAddress {
+    font-size: 0.8rem;
   }
-
-  .notification-overlay {
-    height: 100%;
-  }
-
 }
