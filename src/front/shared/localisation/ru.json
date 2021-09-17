@@ -6115,7 +6115,7 @@
   },
   {
     "id": "insufficientLiquidity",
-    "message": "Недостаточная ликвидность",
+    "message": "Недостаточная ликвидность пула",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
     ]

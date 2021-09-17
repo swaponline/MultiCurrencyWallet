@@ -15,23 +15,32 @@ function SwapInfo(props) {
     <section styleName="reasons">
       {wrongNetwork ? (
         <p styleName="wrong">
-          <FormattedMessage id="incorrectNetwork" defaultMessage='Please choose correct network' />
-        </p>
-      ) : blockReason === SwapBlockReason.NoLiquidity ? (
-        <p styleName="neutral">
-          <FormattedMessage id="insufficientLiquidity" defaultMessage="Insufficient liquidity" />
-        </p>
-      ) : blockReason === SwapBlockReason.InsufficientSlippage ? (
-        <p styleName="neutral">
-          <FormattedMessage id="insufficientSlippage" defaultMessage="Insufficient slippage" />
-        </p>
-      ) : insufficientBalance ? (
-        <p styleName="neutral">
-          <FormattedMessage id="insufficientBalance" defaultMessage="Insufficient balance" />
+          <FormattedMessage id="incorrectNetwork" defaultMessage="Please choose correct network" />
         </p>
       ) : !spendedAmount ? (
         <p styleName="neutral">
           <FormattedMessage id="enterYouSend" defaultMessage='Enter "You send" amount' />
+        </p>
+      ) : insufficientBalance ? (
+        <p styleName="neutral">
+          <FormattedMessage
+            id="AlertOrderNonEnoughtBalance"
+            defaultMessage="Please top up your balance before you start the swap"
+          />
+        </p>
+      ) : blockReason === SwapBlockReason.InsufficientSlippage ? (
+        <p styleName="neutral">
+          <FormattedMessage
+            id="insufficientSlippage"
+            defaultMessage="Insufficient slippage. Try to increase it in the advanced settings"
+          />
+        </p>
+      ) : blockReason === SwapBlockReason.NoLiquidity ? (
+        <p styleName="neutral">
+          <FormattedMessage
+            id="insufficientLiquidity"
+            defaultMessage="Insufficient pool liquidity"
+          />
         </p>
       ) : null}
     </section>

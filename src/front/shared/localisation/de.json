@@ -6119,7 +6119,7 @@
   },
   {
     "id": "insufficientLiquidity",
-    "message": "Unzureichende Liquidität",
+    "message": "Unzureichende pool Liquidität",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
     ]

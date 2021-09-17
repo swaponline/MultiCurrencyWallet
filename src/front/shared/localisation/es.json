@@ -6115,7 +6115,7 @@
   },
   {
     "id": "insufficientLiquidity",
-    "message": "Liquidez insuficiente",
+    "message": "Liquidez insuficiente del fondo común",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
     ]

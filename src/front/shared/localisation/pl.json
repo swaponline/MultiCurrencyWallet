@@ -6115,7 +6115,7 @@
   },
   {
     "id": "insufficientLiquidity",
-    "message": "Niewystarczająca płynność",
+    "message": "Niewystarczająca płynność puli",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
     ]

@@ -6111,7 +6111,7 @@
   },
   {
     "id": "insufficientLiquidity",
-    "message": "Onvoldoende liquiditeit",
+    "message": "Onvoldoende liquiditeit in de pool",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
     ]
