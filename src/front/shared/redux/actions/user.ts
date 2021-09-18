@@ -3,6 +3,7 @@ import config from 'app-config'
 import moment from 'moment/moment'
 import { constants } from 'helpers'
 import request from 'common/utils/request'
+import getCoinInfo from 'common/coins/getCoinInfo'
 import * as mnemonicUtils from 'common/utils/mnemonic'
 import transactions from 'helpers/transactions'
 import TOKEN_STANDARDS from 'helpers/constants/TOKEN_STANDARDS'
@@ -243,14 +244,9 @@ const getExchangeRate = (sellCurrency, buyCurrency): Promise<number> => {
         break
     }
 
-    if ((user[`${dataKey}Data`]
-      && user[`${dataKey}Data`].infoAboutCurrency
-      && user[`${dataKey}Data`].infoAboutCurrency.price_fiat
-    ) || (
-        user.tokensData[dataKey]
-        && user.tokensData[dataKey].infoAboutCurrency
-        && user.tokensData[dataKey].infoAboutCurrency.price_fiat
-      )
+    if (
+      (user[`${dataKey}Data`]?.infoAboutCurrency?.price_fiat) ||
+      (user.tokensData[dataKey]?.infoAboutCurrency?.price_fiat)
     ) {
       const currencyData = (user.tokensData[dataKey] && user.tokensData[dataKey].infoAboutCurrency)
         ? user.tokensData[dataKey]
@@ -264,7 +260,7 @@ const getExchangeRate = (sellCurrency, buyCurrency): Promise<number> => {
 }
 
 const customTokenExchangeRate = (name) => {
-  let customRate = false
+  let customRate = ''
 
   outsideLabel: {
     for (const key in TOKEN_STANDARDS) {
@@ -295,7 +291,10 @@ const getInfoAboutCurrency = (currencyNames) => {
       cacheResponse: 60 * 60 * 1000, // cache for 1 hour
       query: {
         fiat,
-        tokens: currencyNames.join(`,`),
+        tokens: currencyNames.map(currencyNames => {
+          const { coin } = getCoinInfo(currencyNames)
+          return coin
+        }).join(`,`),
       }
     }).then((answer: any) => {
       let infoAboutBTC = answer.data.filter(currencyInfo => {
@@ -304,42 +303,72 @@ const getInfoAboutCurrency = (currencyNames) => {
 
       const btcPrice = infoAboutBTC?.length && infoAboutBTC[0]?.quote[fiat]?.price
 
-      answer.data.map(currencyInfoItem => {
-        if (currencyNames.includes(currencyInfoItem.symbol)) {
-          if (currencyInfoItem.quote && currencyInfoItem.quote[fiat]) {
-            const priceInBtc = btcPrice && currencyInfoItem.quote[fiat].price / btcPrice
-            const ownPrice = customTokenExchangeRate(currencyInfoItem.symbol)
+      const { user } = getState()
 
-            const currencyInfo = {
-              ...currencyInfoItem.quote[fiat],
-              price_fiat: (ownPrice) ? ownPrice : currencyInfoItem.quote[fiat].price,
-              price_btc: priceInBtc,
+      currencyNames.map(name => {
+        const {
+          coin,
+          blockchain,
+        } = getCoinInfo(name)
+
+        const currencyName = coin.toLowerCase()
+
+        const currencyInfoItem = answer.data.filter(currencyInfo => {
+          return currencyInfo.symbol.toLowerCase() === currencyName
+        })[0]
+
+        const customFiatPrice = customTokenExchangeRate(currencyName)
+
+        const isToken = erc20Like.isToken({ name: currencyName })
+
+        if (currencyInfoItem?.quote && currencyInfoItem.quote[fiat]) {
+          const priceInFiat =  customFiatPrice || currencyInfoItem.quote[fiat].price
+          const priceInBtc = btcPrice && priceInFiat / btcPrice
+
+          const currencyInfo = {
+            ...currencyInfoItem.quote[fiat],
+            price_fiat: priceInFiat,
+            price_btc: priceInBtc,
+          }
+
+          const targetDataKey = `${currencyName}Data`
+
+          if (user[targetDataKey]) {
+            reducers.user.setInfoAboutCurrency({ name: targetDataKey, infoAboutCurrency: currencyInfo })
+
+            if (currencyInfoItem.symbol === 'BTC') {
+              reducers.user.setInfoAboutCurrency({ name: 'btcMultisigSMSData', infoAboutCurrency: currencyInfo })
+              reducers.user.setInfoAboutCurrency({ name: 'btcMultisigUserData', infoAboutCurrency: currencyInfo })
+              reducers.user.setInfoAboutCurrency({ name: 'btcMultisigG2FAData', infoAboutCurrency: currencyInfo })
+              reducers.user.setInfoAboutCurrency({ name: 'btcMultisigPinData', infoAboutCurrency: currencyInfo })
             }
+          } else if (isToken) {
+            const baseCurrency = tokenCurrencyByPlatform(currencyInfoItem.platform?.name)
 
-            const { user } = getState()
-            const targetDataKey = `${currencyInfoItem.symbol.toLowerCase()}Data`
-
-            if (user[targetDataKey]) {
-              reducers.user.setInfoAboutCurrency({ name: targetDataKey, infoAboutCurrency: currencyInfo })
-
-              if (currencyInfoItem.symbol === 'BTC') {
-                reducers.user.setInfoAboutCurrency({ name: 'btcMultisigSMSData', infoAboutCurrency: currencyInfo })
-                reducers.user.setInfoAboutCurrency({ name: 'btcMultisigUserData', infoAboutCurrency: currencyInfo })
-                reducers.user.setInfoAboutCurrency({ name: 'btcMultisigG2FAData', infoAboutCurrency: currencyInfo })
-                reducers.user.setInfoAboutCurrency({ name: 'btcMultisigPinData', infoAboutCurrency: currencyInfo })
-              }
-            } else if (erc20Like.isToken({ name: currencyInfoItem.symbol })) {
-              const baseCurrency = tokenCurrencyByPlatform(currencyInfoItem.platform?.name)
-
-              if (baseCurrency) {
-                reducers.user.setInfoAboutToken({
-                  baseCurrency,
-                  name: currencyInfoItem.symbol.toLowerCase(),
-                  infoAboutCurrency: currencyInfo,
-                })
-              }
+            if (baseCurrency) {
+              reducers.user.setInfoAboutToken({
+                baseCurrency,
+                name: currencyName,
+                infoAboutCurrency: currencyInfo,
+              })
             }
           }
+        }
+
+        if (!currencyInfoItem && customFiatPrice && isToken && blockchain) {
+          const priceInFiat = +customFiatPrice
+          const priceInBtc = btcPrice && priceInFiat / btcPrice
+
+          const currencyInfo = {
+            price_fiat: priceInFiat,
+            price_btc: priceInBtc,
+          }
+
+          reducers.user.setInfoAboutToken({
+            baseCurrency: blockchain.toLowerCase(),
+            name: currencyName,
+            infoAboutCurrency: currencyInfo,
+          })
         }
       })
       resolve(true)
