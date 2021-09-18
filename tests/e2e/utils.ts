@@ -51,6 +51,8 @@ export const importWallet = async (params: ImportWalletParams) => {
     page,
     selector: '#preloaderRestoreBtn',
   })
+  // app creation
+  await timeOut(30_000)
 
   await page.waitForSelector('.react-tags__search-input', {
     timeout,
