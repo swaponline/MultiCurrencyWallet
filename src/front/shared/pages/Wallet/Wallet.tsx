@@ -226,7 +226,7 @@ class Wallet extends PureComponent<any, any> {
 
   getInfoAboutCurrency = async () => {
     const { currencies } = this.props
-    const currencyNames = currencies.map(({ name }) => name)
+    const currencyNames = currencies.map(({ value }) => value)
 
     await actions.user.getInfoAboutCurrency(currencyNames)
   }
