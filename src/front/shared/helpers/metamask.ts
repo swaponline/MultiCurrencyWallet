@@ -11,7 +11,9 @@ import getCoinInfo from 'common/coins/getCoinInfo'
 
 let web3connect: any = undefined
 
-setWeb3connect(config.evmNetworks.ETH.networkVersion)
+const { user: { metamaskData } } = getState()
+
+setWeb3connect((metamaskData?.networkVersion) ? metamaskData.networkVersion : config.evmNetworks.ETH.networkVersion)
 
 function handleConnected () {
   localStorage.setItem(constants.localStorage.isWalletCreate, 'true')
