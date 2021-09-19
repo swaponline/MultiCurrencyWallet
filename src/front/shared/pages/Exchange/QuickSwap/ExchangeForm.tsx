@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { FormattedMessage } from 'react-intl'
 import { connect } from 'redaction'
 import CSSModules from 'react-css-modules'
@@ -12,6 +12,16 @@ import Switching from 'components/controls/Switching/Switching'
 import SelectGroup from '../SelectGroup/SelectGroup'
 import { QuickSwapFormTour } from 'components/Header/WidgetTours'
 import { Direction } from './types'
+
+const usePrevious = (value) => {
+  const ref = useRef()
+
+  useEffect(() => {
+    ref.current = value
+  }, [value])
+
+  return ref.current
+}
 
 function ExchangeForm(props) {
   const {
@@ -53,6 +63,8 @@ function ExchangeForm(props) {
     })
 
   const updateBalance = async (direction, wallet) => {
+    if (!Object.keys(wallet).length) return
+
     const key = wallet.standard || wallet.currency
 
     if (direction === Direction.Spend) setFromBalancePending(true)
@@ -112,8 +124,14 @@ function ExchangeForm(props) {
     updateBalance(Direction.Receive, toWallet)
   }, [toWalletData?.balance])
 
+  const [isBalanceFetching, setIsBalanceFetching] = useState(user.isBalanceFetching)
+  const prevIsBalanceFetching = usePrevious(isBalanceFetching)
+
   useEffect(() => {
-    if (user.isBalanceFetching === false) {
+    setIsBalanceFetching(user.isBalanceFetching)
+
+    // update in the end of balance fetching
+    if (prevIsBalanceFetching && !user.isBalanceFetching) {
       updateBalance(Direction.Spend, fromWallet)
       updateBalance(Direction.Receive, toWallet)
     }

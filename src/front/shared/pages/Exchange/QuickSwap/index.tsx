@@ -124,14 +124,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   }
 
   componentDidMount() {
-    const { fromWallet } = this.state
-
     this.updateNetwork()
-    actions.user.getBalances()
-
-    if (fromWallet.balance === 0) {
-      setTimeout(this.updateBalances, 1000)
-    }
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -284,12 +277,6 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       fromWallet,
       toWallet,
     }))
-  }
-
-  updateBalances = async () => {
-    await actions.user.getBalances()
-
-    this.updateWallets()
   }
 
   saveOptionsInStorage = () => {
