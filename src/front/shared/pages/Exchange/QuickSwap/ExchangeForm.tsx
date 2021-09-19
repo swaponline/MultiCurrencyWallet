@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { FormattedMessage } from 'react-intl'
+import { connect } from 'redaction'
 import CSSModules from 'react-css-modules'
 import styles from './index.scss'
 import { utils, localStorage } from 'helpers'
@@ -29,6 +30,7 @@ function ExchangeForm(props) {
     flipCurrency,
     openExternalExchange,
     checkSwapData,
+    user,
   } = props
 
   const [fromBalancePending, setFromBalancePending] = useState(false)
@@ -87,6 +89,36 @@ function ExchangeForm(props) {
     return null
   }
 
+  const getWalletStoreData = (wallet): IUniversalObj | undefined => {
+    let data = undefined
+
+    if (Object.keys(wallet).length) {
+      data = wallet.isToken
+        ? user.tokensData[wallet.tokenKey.toLowerCase()]
+        : user[`${wallet.currency.toLowerCase()}Data`]
+    }
+
+    return data
+  }
+
+  const fromWalletData = getWalletStoreData(fromWallet)
+  const toWalletData = getWalletStoreData(toWallet)
+
+  useEffect(() => {
+    updateBalance(Direction.Spend, fromWallet)
+  }, [fromWalletData?.balance])
+
+  useEffect(() => {
+    updateBalance(Direction.Receive, toWallet)
+  }, [toWalletData?.balance])
+
+  useEffect(() => {
+    if (user.isBalanceFetching === false) {
+      updateBalance(Direction.Spend, fromWallet)
+      updateBalance(Direction.Receive, toWallet)
+    }
+  }, [user.isBalanceFetching])
+
   const [flagForRequest, setFlagForRequest] = useState(false)
 
   const keyUpHandler = () => {
@@ -108,7 +140,7 @@ function ExchangeForm(props) {
     }
   })
 
-  const supportedCurrencies = ['eth', 'matic']  
+  const supportedCurrencies = ['eth', 'matic']
   const showFiatExchangeBtn = supportedCurrencies.includes(spendedCurrency.value)
 
   return (
@@ -204,4 +236,6 @@ function ExchangeForm(props) {
   )
 }
 
-export default CSSModules(ExchangeForm, styles, { allowMultiple: true })
+export default connect(({ user }) => ({
+  user,
+}))(CSSModules(ExchangeForm, styles, { allowMultiple: true }))
