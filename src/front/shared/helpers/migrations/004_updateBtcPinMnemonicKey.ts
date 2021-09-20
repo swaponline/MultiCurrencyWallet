@@ -8,15 +8,8 @@ const run = () => {
   )
 
   if (btcPinMnemonicKey) {
-    try {
-      // try to parse the old format when a key in the array
-      const keyArray = JSON.parse(btcPinMnemonicKey)
-
-      if (Array.isArray(keyArray) && keyArray.length) {
-        localStorage.setItem(constants.privateKeyNames.btcPinMnemonicKey, keyArray[0])
-      }
-    } catch {
-      // can't parse a string key. Let's leave it as it is
+    if (Array.isArray(btcPinMnemonicKey) && btcPinMnemonicKey.length) {
+      localStorage.setItem(constants.privateKeyNames.btcPinMnemonicKey, btcPinMnemonicKey[0], false)
     }
   }
 
