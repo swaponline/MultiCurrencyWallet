@@ -16,11 +16,7 @@ export default {
   nextExplorer: 'https://next.swaponline.io/mainnet',
   nextExplorerCustom: 'https://next.swaponline.io/mainnet',
   blockcypher: 'https://api.blockcypher.com/v1/btc/test3',
-
-  // FIXME: temporary for quick swap integration
-  etherscan: 'https://api-ropsten.etherscan.io/api',
-  //etherscan: 'https://api-rinkeby.etherscan.io/api',
-
+  etherscan: 'https://api-rinkeby.etherscan.io/api',
   etherscanInvoices: 'https://invoices.swaponline.site/proxyetherscan-testnet',
   etherscan_ApiKey: 'RHHFPNMAZMD6I4ZWBZBF6FA11CMW9AXZNM',
   bscscan: 'https://api-testnet.bscscan.com/api',
