@@ -67,8 +67,7 @@ const sign_btc_2fa = async (btcPrivateKey) => {
 const sign_btc_pin = async (btcPrivateKey) => {
   const btcPinServerKey = config.swapContract.btcPinKey
   const btcPinPublicKeys = [btcPinServerKey]
-  //@ts-ignore: strictNullChecks
-  const btcPinMnemonicKey: MnemonicKey = localStorage.getItem(constants.privateKeyNames.btcPinMnemonicKey)
+  const btcPinMnemonicKey: MnemonicKey | null = localStorage.getItem(constants.privateKeyNames.btcPinMnemonicKey)
 
   if (btcPinMnemonicKey) {
     btcPinPublicKeys.push(btcPinMnemonicKey)
