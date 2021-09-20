@@ -618,10 +618,10 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       () => ({
         fromWallet,
       }),
-      () => {
+      async () => {
         this.updateNetwork()
         this.updateReceivedList()
-        this.checkSwapData()
+        await this.checkSwapData()
       }
     )
   }
@@ -633,8 +633,8 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       () => ({
         toWallet: actions.core.getWallet({ currency: receivedCurrency.value }),
       }),
-      () => {
-        this.checkSwapData()
+      async () => {
+        await this.checkSwapData()
       }
     )
   }
@@ -661,8 +661,8 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
         toWallet: fromWallet,
         receivedCurrency: spendedCurrency,
       }),
-      () => {
-        this.checkSwapData()
+      async () => {
+        await this.checkSwapData()
       }
     )
   }
@@ -747,10 +747,10 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       (state) => ({
         isAdvancedMode: !state.isAdvancedMode,
       }),
-      () => {
+      async () => {
         const { isAdvancedMode } = this.state
         // update swap data without advanced options
-        if (!isAdvancedMode) this.checkSwapData()
+        if (!isAdvancedMode) await this.checkSwapData()
       }
     )
   }
@@ -798,13 +798,9 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   }
 
   isSwapNotAvailable = () => {
-    const { swapData, isSwapPending, fromWallet, spendedAmount, swapFee, error } = this.state
+    const { swapData, isSwapPending, error } = this.state
 
-    const insufficientBalance = new BigNumber(spendedAmount)
-      .plus(swapFee)
-      .isGreaterThan(fromWallet.balance)
-
-    return !swapData || isSwapPending || insufficientBalance || !!error
+    return !swapData || isSwapPending || !!error
   }
 
   createLimitOrder = () => {
@@ -852,8 +848,12 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       'gasLimit'
     )
 
+    const insufficientBalance = new BigNumber(spendedAmount)
+      .plus(swapFee || 0)
+      .isGreaterThan(fromWallet.balance)
+
     const swapDataIsDisabled = this.isSwapDataNotAvailable()
-    const swapBtnIsDisabled = this.isSwapNotAvailable() || swapDataIsDisabled
+    const swapBtnIsDisabled = this.isSwapNotAvailable() || insufficientBalance || swapDataIsDisabled
     const isWalletCreated = localStorage.getItem(constants.localStorage.isWalletCreate)
     const saveSecretPhrase = !mnemonicSaved && !metamask.isConnected()
 
@@ -889,6 +889,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
               toWallet={toWallet}
               updateWallets={this.updateWallets}
               isPending={isPending}
+              insufficientBalance={insufficientBalance}
             />
           </div>
 

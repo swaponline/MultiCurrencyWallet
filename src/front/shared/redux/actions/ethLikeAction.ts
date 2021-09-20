@@ -514,7 +514,9 @@ class EthLikeAction {
 
     return new Promise((res, rej) => {
       sendMethod(data)
-        .on('receipt', (receipt) => waitReceipt && res(receipt))
+        .on('receipt', (receipt) => {
+          if (waitReceipt) res(receipt)
+        })
         .on('transactionHash', (hash) => {
           console.group('%c tx hash', 'color: green;')
           console.log(hash)

@@ -42,6 +42,7 @@ function ExchangeForm(props) {
     openExternalExchange,
     checkSwapData,
     user,
+    insufficientBalance,
   } = props
 
   const [fromBalancePending, setFromBalancePending] = useState(false)
@@ -144,8 +145,8 @@ function ExchangeForm(props) {
     let timeoutId: ReturnType<typeof setTimeout> | undefined = undefined
 
     if (flagForRequest) {
-      timeoutId = setTimeout(() => {
-        checkSwapData()
+      timeoutId = setTimeout(async () => {
+        await checkSwapData()
         setFlagForRequest(false)
       }, 400)
     }
@@ -171,6 +172,7 @@ function ExchangeForm(props) {
       <div styleName="inputWrapper">
         <SelectGroup
           activeFiat={fiat}
+          error={insufficientBalance}
           fiat={fiatValue && fiatValue}
           inputValueLink={stateReference.spendedAmount.pipe(handleSpendAmountInput)}
           selectedValue={spendedCurrency.value}
