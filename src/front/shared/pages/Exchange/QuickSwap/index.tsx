@@ -107,7 +107,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       spendedAmount: '',
       fromWallet: fromWallet || {},
       receivedCurrency,
-      receivedAmount: '0',
+      receivedAmount: '',
       toWallet: toWallet || {},
       slippage: undefined,
       slippageMaxRange: 100,
@@ -341,7 +341,6 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       receivedList,
       receivedCurrency: receivedList[0],
       toWallet: actions.core.getWallet({ currency: receivedList[0].value }),
-      receivedAmount: '0',
     }))
     this.resetSwapData()
   }
@@ -408,6 +407,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     const { spendedAmount, needApprove } = this.state
     const doNotUpdate = this.isSwapDataNotAvailable() || !spendedAmount || needApprove
 
+    this.resetSwapData()
     this.setState(() => ({
       error: null,
     }))
@@ -447,28 +447,33 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
 
         const weiFee = new BigNumber(customGasLimit).times(customGasPrice)
         const swapFee = utils.amount.formatWithoutDecimals(weiFee, 18)
-
-        this.setState(
-          () => ({
-            receivedAmount: utils.amount.formatWithoutDecimals(
-              swap.buyAmount,
-              // if it's not a token then usual coin with 18 decimals
-              toWallet?.decimals || 18
-            ),
-            swapData: swap,
-            swapFee,
-            isDataPending: false,
-          }),
-          this.checkTokenApprove
+        const receivedAmount = utils.amount.formatWithoutDecimals(
+          swap.buyAmount,
+          // if it's not a token then usual coin with 18 decimals
+          toWallet?.decimals || 18
         )
+
+        this.setState(() => ({
+          receivedAmount,
+          swapData: swap,
+          swapFee,
+          isDataPending: false,
+        }))
       }
     } catch (error) {
       this.reportError(error)
     }
   }
 
+  setSpendedAmount = (value) => {
+    this.setState(() => ({
+      spendedAmount: value,
+    }))
+  }
+
   resetSwapData = () => {
     this.setState(() => ({
+      receivedAmount: '',
       swapData: undefined,
     }))
   }
@@ -509,7 +514,6 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       // delete last swap data, the swap info may have changed
       this.setState(() => ({
         spendedAmount: '',
-        receivedAmount: '',
       }))
       this.resetSwapData()
     } catch (error) {
@@ -522,7 +526,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   }
 
   checkTokenApprove = async () => {
-    const { spendedAmount, fromWallet, network, swapData } = this.state
+    const { spendedAmount, fromWallet, network } = this.state
 
     if (!fromWallet.isToken) {
       this.setState(() => ({
@@ -628,10 +632,8 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     this.setState(
       () => ({
         toWallet: actions.core.getWallet({ currency: receivedCurrency.value }),
-        receivedAmount: '0',
       }),
       () => {
-        this.resetSwapData()
         this.checkSwapData()
       }
     )
@@ -658,10 +660,8 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
         receivedList,
         toWallet: fromWallet,
         receivedCurrency: spendedCurrency,
-        receivedAmount: '0',
       }),
       () => {
-        this.resetSwapData()
         this.checkSwapData()
       }
     )
@@ -883,6 +883,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
               spendedAmount={spendedAmount}
               spendedCurrency={spendedCurrency}
               receivedCurrency={receivedCurrency}
+              setSpendedAmount={this.setSpendedAmount}
               fiat={fiat}
               fromWallet={fromWallet}
               toWallet={toWallet}

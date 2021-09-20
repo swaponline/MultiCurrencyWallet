@@ -30,6 +30,7 @@ function ExchangeForm(props) {
     receivedList,
     spendedAmount,
     spendedCurrency,
+    setSpendedAmount,
     receivedCurrency,
     selectCurrency,
     fiat,
@@ -139,10 +140,6 @@ function ExchangeForm(props) {
 
   const [flagForRequest, setFlagForRequest] = useState(false)
 
-  const keyUpHandler = () => {
-    setFlagForRequest(true)
-  }
-
   useEffect(() => {
     let timeoutId: ReturnType<typeof setTimeout> | undefined = undefined
 
@@ -158,6 +155,14 @@ function ExchangeForm(props) {
     }
   })
 
+  const handleSpendAmountInput = (value) => {
+    setSpendedAmount(value)
+
+    if (value !== spendedAmount) {
+      setFlagForRequest(true)
+    }
+  }
+
   const supportedCurrencies = ['eth', 'matic']
   const showFiatExchangeBtn = supportedCurrencies.includes(spendedCurrency.value)
 
@@ -167,7 +172,7 @@ function ExchangeForm(props) {
         <SelectGroup
           activeFiat={fiat}
           fiat={fiatValue && fiatValue}
-          inputValueLink={stateReference.spendedAmount}
+          inputValueLink={stateReference.spendedAmount.pipe(handleSpendAmountInput)}
           selectedValue={spendedCurrency.value}
           label={<FormattedMessage id="MyOrdersYouSend" defaultMessage="You send" />}
           inputId="quickSwapSpendCurrencyInput"
@@ -182,7 +187,6 @@ function ExchangeForm(props) {
               balanceTooltip(Direction.Spend, fromWallet)
             )
           }
-          onKeyUp={keyUpHandler}
           onSelect={(value) =>
             selectCurrency({
               direction: Direction.Spend,
