@@ -521,6 +521,12 @@ class EthLikeAction {
           console.group('%c tx hash', 'color: green;')
           console.log(hash)
           console.groupEnd()
+
+          reducers.transactions.addHashToQueue({
+            networkCoin: this.ticker,
+            hash,
+          })
+
           if (!waitReceipt) res(hash)
         })
     })

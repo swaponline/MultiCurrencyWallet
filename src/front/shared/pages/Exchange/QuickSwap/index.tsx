@@ -501,21 +501,15 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
         throw new Error('No swap data. Can not complete swap')
       }
 
-      const receipt = await actions[lowerKey].sendReadyTransaction({
+      await actions[lowerKey].sendReadyTransaction({
         data: swapData,
-        waitReceipt: true,
-      })
-
-      actions.notifications.show(constants.notifications.Transaction, {
-        link: transactions.getLink(lowerKey, receipt.transactionHash),
-        completed: true,
       })
 
       // delete last swap data, the swap info may have changed
+      this.resetSwapData()
       this.setState(() => ({
         spendedAmount: '',
       }))
-      this.resetSwapData()
     } catch (error) {
       this.reportError(error)
     } finally {
