@@ -1168,20 +1168,21 @@ const prepareFees = async ({
   }
 }
 
-const prepareRawTx = async ({
-  from,
-  to,
-  fundValue,
-  skipValue,
-  serviceFee,
-  feeFromAmount,
-  method = 'send',
-  unspents,
-  privateKey,
-  publicKeys = [Buffer.from('')],
-  network,
-  NETWORK
-}) => {
+const prepareRawTx = async (params) => {
+  const {
+    from,
+    to,
+    fundValue,
+    skipValue,
+    serviceFee,
+    feeFromAmount,
+    method = 'send',
+    unspents,
+    privateKey,
+    publicKeys = [Buffer.from('')],
+    network,
+    NETWORK
+  } = params
   const psbt = new bitcoin.Psbt({network})
 
   psbt.addOutput({
@@ -1234,7 +1235,7 @@ const prepareRawTx = async ({
   const p2ms = bitcoin.payments.p2ms({
     m: 2,
     n: publicKeys.length,
-    pubkeys: publicKeys,
+    pubkeys: publicKeys.map((key) => Buffer.from(key)),
     network,
   })
 

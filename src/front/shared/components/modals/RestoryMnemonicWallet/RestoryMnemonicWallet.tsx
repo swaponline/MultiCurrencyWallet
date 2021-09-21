@@ -156,13 +156,12 @@ class RestoryMnemonicWallet extends React.Component<ComponentProps, ComponentSta
       }
 
       const btcPrivKey = await actions.btc.login(false, mnemonic)
-      const btcSmsKey = actions.btcmultisig.getSmsKeyFromMnemonic(mnemonic)
-      //@ts-ignore: strictNullChecks
-      localStorage.setItem(constants.privateKeyNames.btcSmsMnemonicKeyGenerated, btcSmsKey)
+      const btcPubKey = actions.btcmultisig.getSmsKeyFromMnemonic(mnemonic)
 
-      const btcPinKey = btcSmsKey
       //@ts-ignore: strictNullChecks
-      localStorage.setItem(constants.privateKeyNames.btcPinMnemonicKey, btcPinKey)
+      localStorage.setItem(constants.privateKeyNames.btcSmsMnemonicKeyGenerated, btcPubKey)
+      //@ts-ignore: strictNullChecks
+      localStorage.setItem(constants.privateKeyNames.btcPinMnemonicKey, btcPubKey)
       localStorage.setItem(constants.localStorage.isWalletCreate, 'true')
 
       await actions.bnb.login(false, mnemonic)
