@@ -15,7 +15,7 @@ import "scss/app.scss";
 
 import { createSwapApp } from "instances/newSwap";
 import Core from "containers/Core/Core";
-import Transaction from 'containers/Transaction'
+import Transactions from 'containers/Transactions'
 import ErrorBoundary from 'components/ErrorBoundary'
 import Header from "components/Header/Header";
 import Footer from "components/Footer/Footer";
@@ -470,7 +470,7 @@ class App extends React.Component<RouteComponentProps<any>, any> {
           <Seo location={history.location} />
         }
         <ErrorBoundary>
-          <Transaction>
+          <Transactions>
             {/* @ts-ignore */}
             <WidthContainer id="swapComponentWrapper" styleName="headerAndMain">
               <Header />
@@ -483,7 +483,7 @@ class App extends React.Component<RouteComponentProps<any>, any> {
               <ModalConductor history={history}
             />}
             <NotificationConductor history={history} />
-          </Transaction>
+          </Transactions>
         </ErrorBoundary>
       </div>
     </HashRouter>;
