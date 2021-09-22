@@ -5,11 +5,9 @@ import actions from 'redux/actions'
 import erc20Like from 'common/erc20Like'
 import {
   links,
-  routing,
   localStorage,
   getCurrencyKey,
   lsDataCache,
-  transactions,
 } from 'helpers'
 
 import TxInfo from './TxInfo'
@@ -183,32 +181,7 @@ class Transaction extends Component<any, any> {
   }
 
   handleClose = () => {
-    const { history } = this.props
-
-    let {
-      infoTx: {
-        senderAddress: walletOne,
-        receiverAddress: walletTwo,
-      },
-      ticker,
-    } = this.state
-
-    const wallets: IUniversalObj[] = []
-
-    if (walletOne instanceof Array) {
-      walletOne.forEach((wallet) => wallets.push(wallet))
-    } else {
-      wallets.push(walletOne)
-    }
-
-    if (walletTwo instanceof Array) {
-      walletTwo.forEach((wallet) => wallets.push(wallet))
-    } else {
-      wallets.push(walletTwo)
-    }
-
-    const walletLink = routing.getWalletLink(ticker, wallets)
-    history.push((walletLink) || '/')
+    window.history.back()
   }
 
   componentWillUnmount() {

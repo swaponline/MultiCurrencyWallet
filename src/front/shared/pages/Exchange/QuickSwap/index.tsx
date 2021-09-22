@@ -126,10 +126,6 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
 
   componentDidMount() {
     this.updateNetwork()
-
-/*     const txInfoUrl = transactions.getTxRouter('matic', '0xb0045cc6b19e61c83e9991df32469ca700227dca469b52a81294b8e13bdfa971')
-
-    routing.redirectTo(txInfoUrl) */
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -509,15 +505,17 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       const txHash = await actions[baseCurrency.toLowerCase()].sendReadyTransaction({
         data: swapData,
       })
-      const txInfoUrl = transactions.getTxRouter(assetName.toLowerCase(), txHash)
 
-      // delete last swap data, the swap info may have changed
+      if (txHash) {
+        const txInfoUrl = transactions.getTxRouter(assetName.toLowerCase(), txHash)
+
+        routing.redirectTo(txInfoUrl)
+      }
+
       this.resetSwapData()
       this.setState(() => ({
         spendedAmount: '',
       }))
-
-      routing.redirectTo(txInfoUrl)
     } catch (error) {
       this.reportError(error)
     } finally {

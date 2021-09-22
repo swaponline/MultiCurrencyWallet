@@ -159,10 +159,6 @@ class TxInfo extends Component<any, any> {
       tx,
     } = this.state
 
-    console.log('%c txinfo render', 'color:orange;font-size:20px')
-    console.log('this.props: ', this.props)
-    console.log('this.state: ', this.state)
-
     let finalAmount = amount
     let finalAdminFee = adminFee
 
