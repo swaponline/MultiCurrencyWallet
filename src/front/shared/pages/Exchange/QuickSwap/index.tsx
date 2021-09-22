@@ -126,6 +126,10 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
 
   componentDidMount() {
     this.updateNetwork()
+
+/*     const txInfoUrl = transactions.getTxRouter('matic', '0xb0045cc6b19e61c83e9991df32469ca700227dca469b52a81294b8e13bdfa971')
+
+    routing.redirectTo(txInfoUrl) */
   }
 
   componentDidUpdate(prevProps, prevState) {

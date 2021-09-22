@@ -1,5 +1,6 @@
 import { withRouter } from 'react-router-dom'
-import React, { Component } from 'react'
+import { Component } from 'react'
+import { FormattedMessage } from 'react-intl'
 import actions from 'redux/actions'
 import erc20Like from 'common/erc20Like'
 import {
@@ -8,10 +9,8 @@ import {
   localStorage,
   getCurrencyKey,
   lsDataCache,
-  transactions
+  transactions,
 } from 'helpers'
-
-import { defineMessages, injectIntl } from 'react-intl'
 
 import TxInfo from './TxInfo'
 import { ModalBox } from 'components/modal'
@@ -19,14 +18,6 @@ import cssModules from 'react-css-modules'
 import styles from './styles.scss'
 
 import { COIN_DATA } from 'swap.app/constants/COINS'
-
-
-const labels = defineMessages({
-  Title: {
-    id: 'InfoPay_1',
-    defaultMessage: 'Transaction is completed',
-  },
-})
 
 @cssModules({
   ...styles,
@@ -101,7 +92,6 @@ class Transaction extends Component<any, any> {
       confirmations: 0,
       minerFee: 0,
       error: null,
-      finalBalances: false,
       ...rest,
     }
   }
@@ -186,22 +176,10 @@ class Transaction extends Component<any, any> {
     const currency = getCurrencyKey(ticker, true)
 
     this.fetchTxInfo(currency, txHash, ticker)
-    this.fetchTxFinalBalances(getCurrencyKey(ticker, true), txHash)
 
     if (typeof document !== 'undefined') {
       document.body.classList.add('overflowY-hidden-force')
     }
-  }
-
-  fetchTxFinalBalances = (currency, txHash) => {
-    setTimeout(async () => {
-      const finalBalances = await transactions.fetchTxBalances(currency, txHash)
-      if (finalBalances && !this.unmounted) {
-        this.setState({
-          finalBalances,
-        })
-      }
-    })
   }
 
   handleClose = () => {
@@ -242,12 +220,11 @@ class Transaction extends Component<any, any> {
   }
 
   render() {
-    const {
-      intl,
-    } = this.props
-
     return (
-      <ModalBox title={intl.formatMessage(labels.Title)} onClose={this.handleClose} >
+      <ModalBox
+        title={<FormattedMessage id="transacton" defaultMessage="Transaction" />}
+        onClose={this.handleClose}
+      >
         <div styleName="holder">
           <TxInfo {...this.state} />
         </div>
@@ -256,4 +233,4 @@ class Transaction extends Component<any, any> {
   }
 }
 
-export default withRouter(injectIntl(Transaction))
+export default withRouter(Transaction)

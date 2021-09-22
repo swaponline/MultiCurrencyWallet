@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
+import { FormattedMessage, injectIntl } from 'react-intl'
 import helpers from "helpers";
 import { getFullOrigin } from 'helpers/links'
 
@@ -13,14 +13,6 @@ import Skeleton from 'react-loading-skeleton'
 import CommentRow from 'components/Comment/Comment'
 
 import animateFetching from 'components/loaders/ContentLoader/ElementLoading.scss'
-
-
-const labels = defineMessages({
-  Text: {
-    id: 'InfoPay_2',
-    defaultMessage: 'successfully transferred to'
-  },
-})
 
 @cssModules({
   ...styles,
@@ -166,6 +158,10 @@ class TxInfo extends Component<any, any> {
       linkShare,
       tx,
     } = this.state
+
+    console.log('%c txinfo render', 'color:orange;font-size:20px')
+    console.log('this.props: ', this.props)
+    console.log('this.state: ', this.state)
 
     let finalAmount = amount
     let finalAdminFee = adminFee
@@ -358,8 +354,16 @@ class TxInfo extends Component<any, any> {
             halfWidth={true}
             minWidth="200px"
             link={`${getFullOrigin()}${linkShare}`}
-            title={amount.toString() + ' ' + currency.toString() + ' ' + intl.formatMessage(labels.Text) + ' ' + toAddress} />
-
+            title={
+              amount.toString() +
+              ' ' +
+              currency.toString() +
+              ' ' +
+              <FormattedMessage id="InfoPay_2" defaultMessage="transferred to" /> +
+              ' ' +
+              toAddress
+            }
+          />
             <CommentRow
               label={''}
               canEdit={true}

@@ -2149,7 +2149,7 @@
   },
   {
     "id": "InfoPay_2",
-    "message": "erfolgreich übertragen an",
+    "message": "übertragen auf",
     "files": [
       "src/front/shared/pages/Transaction/TxInfo/index.tsx"
     ]

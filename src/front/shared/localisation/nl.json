@@ -2018,7 +2018,7 @@
   },
   {
     "id": "InfoPay_2",
-    "message": "successfully transferred to",
+    "message": "overgedragen aan",
     "files": [
       "src/front/shared/pages/Transaction/TxInfo/index.tsx"
     ]
