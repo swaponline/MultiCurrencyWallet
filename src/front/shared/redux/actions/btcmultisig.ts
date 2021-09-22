@@ -740,14 +740,9 @@ const confirmRegisterSMS = async (phone, smsCode, mnemonic, ownPublicKey) => {
   }
 }
 
-const register_PIN = async (password, mnemonic, ownPublicKey) => {
+const registerPinWallet = async (password, mnemonic, ownPublicKey) => {
   const {
     user: {
-      btcMultisigPinData: {
-        account,
-        keyPair,
-        publicKey,
-      },
       btcData: {
         address,
         publicKey: mainKey,
@@ -1223,8 +1218,8 @@ const sendSMSProtected = async ({ from, to, amount, feeValue, speed, serviceFee 
   }
 }
 
-//@ts-ignore
-const sendPinProtected = async ({ from, to, amount, feeValue, speed, password, mnemonic, serviceFee = hasAdminFee } = {}) => {
+const sendPinProtected = async (params) => {
+  const { from, to, amount, feeValue, speed, password, mnemonic, serviceFee = hasAdminFee } = params
   const {
     user: {
       btcMultisigPinData: {
@@ -1303,8 +1298,8 @@ const sendPinProtected = async ({ from, to, amount, feeValue, speed, password, m
     }
   }
 
-  let authKeys = publicKeys//.slice(1)
-  authKeys = JSON.stringify(authKeys.map((key) => key.toString('Hex')))
+  let authKeys = publicKeys
+  authKeys = JSON.stringify(authKeys.map((key) => Buffer.from(key).toString('hex')))
 
   try {
     const result: any = await apiLooper.post('btcPin', `/sign/`, {
@@ -1763,7 +1758,7 @@ export default {
 
   // Pin protected
   login_PIN,
-  register_PIN,
+  registerPinWallet,
   checkPINActivated,
   addPinWallet,
   getBalancePin,

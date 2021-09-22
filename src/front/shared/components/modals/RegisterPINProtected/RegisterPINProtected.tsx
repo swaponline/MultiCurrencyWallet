@@ -1,5 +1,4 @@
 import React, { Fragment } from 'react'
-import PropTypes from 'prop-types'
 import { constants } from 'helpers'
 import actions from 'redux/actions'
 import Link from 'local_modules/sw-valuelink'
@@ -174,11 +173,6 @@ const langs = defineMessages({
 }))
 @cssModules({ ...styles, ...ownStyle }, { allowMultiple: true })
 class RegisterPINProtected extends React.Component<any, any> {
-  static propTypes = {
-    name: PropTypes.string,
-    data: PropTypes.object,
-  }
-
   constructor(props) {
     super(props)
 
@@ -214,7 +208,6 @@ class RegisterPINProtected extends React.Component<any, any> {
       mnemonicSaved,
       mnemonic: ``,
       mnemonicWallet: false,
-      isMnemonicCopied: false,
       isMnemonicGenerated: false,
       isMnemonicValid: true,
       isWalletLockedOtherPin: false,
@@ -260,21 +253,6 @@ class RegisterPINProtected extends React.Component<any, any> {
           isShipped: false,
           step: 'ready',
         })
-      }
-    )
-  }
-
-  handleCopyMnemonic = async () => {
-    this.setState(
-      {
-        isMnemonicCopied: true,
-      },
-      () => {
-        setTimeout(() => {
-          this.setState({
-            isMnemonicCopied: false,
-          })
-        }, 1000)
       }
     )
   }
@@ -347,23 +325,6 @@ class RegisterPINProtected extends React.Component<any, any> {
     })
   }
 
-  handleGenerateMnemonic = async () => {
-    this.setState(
-      {
-        isMnemonicGenerated: true,
-        isMnemonicValid: true,
-        mnemonic: mnemonicUtils.getRandomMnemonicWords(),
-      },
-      () => {
-        setTimeout(() => {
-          this.setState({
-            isMnemonicGenerated: false,
-          })
-        }, 1000)
-      }
-    )
-  }
-
   handleFinish = async () => {
     const { name } = this.props
 
@@ -377,7 +338,6 @@ class RegisterPINProtected extends React.Component<any, any> {
   handleShareInstruction = async () => {
     const { restoreInstruction } = this.state
 
-    //@ts-ignore: strictNullChecks
     actions.modals.open(constants.modals.Share, {
       title: `BTC Sms-protected wallet restory instruction`,
       link: restoreInstruction,
@@ -385,7 +345,6 @@ class RegisterPINProtected extends React.Component<any, any> {
   }
 
   handleBeginSaveMnemonic = async () => {
-    //@ts-ignore: strictNullChecks
     actions.modals.open(constants.modals.SaveMnemonicModal, {
       onClose: () => {
         const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
@@ -493,7 +452,7 @@ class RegisterPINProtected extends React.Component<any, any> {
           })
           return
         }
-        const result = await actions.btcmultisig.register_PIN(
+        const result = await actions.btcmultisig.registerPinWallet(
           pinCode,
           mnemonic ? mnemonic.trim() : false,
           useGeneratedKey && useGeneratedKeyEnabled ? generatedKey : false
@@ -548,7 +507,6 @@ class RegisterPINProtected extends React.Component<any, any> {
       useGeneratedKeyEnabled,
       mnemonic,
       mnemonicWallet,
-      isMnemonicCopied,
       isMnemonicGenerated,
       isMnemonicValid,
       pinServerOffline,

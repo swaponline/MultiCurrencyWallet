@@ -61,6 +61,7 @@ export default {
   getCurrencyKey,
   handleGoTrade,
   transactions,
+  localStorage,
 }
 
 export {
