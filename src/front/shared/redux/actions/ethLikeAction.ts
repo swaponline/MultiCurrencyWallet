@@ -530,7 +530,7 @@ class EthLikeAction {
           if (!waitReceipt) res(hash)
         })
         .on('error', (error) => {
-          const isRejected = JSON.stringify(error).match(/(denied transaction)|(cancelled)/)
+          const isRejected = JSON.stringify(error).match(/([Dd]enied transaction|[Cc]ance(ll|l)ed)/)
 
           if (!isRejected) {
             this.reportError(error, 'part: sendReadyTransaction')

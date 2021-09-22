@@ -7,10 +7,19 @@ import actions from 'redux/actions'
 function Transactions(props) {
   const { pendingQueue, children } = props
   const [currentHash, setCurrentHash] = useState('')
-  const customCheckInterval = 2_000
+  const customCheckInterval = 3_000
+  const transactionResetInterval = 25_000
+  let changingInterval = customCheckInterval
 
   useEffect(() => {
     let intervalId: ReturnType<typeof setTimeout> | undefined = undefined
+
+    const resetState = () => {
+      reducers.transactions.removeLastTransactionFromQueue()
+      changingInterval = customCheckInterval
+
+      if (intervalId) clearInterval(intervalId)
+    }
 
     if (pendingQueue.length) {
       if (currentHash !== pendingQueue[0].hash) {
@@ -23,6 +32,10 @@ function Transactions(props) {
           try {
             const receipt = await web3.eth.getTransactionReceipt(hash)
 
+            if (transactionResetInterval === changingInterval) {
+              resetState()
+            }
+
             if (receipt !== null) {
               const link = transactions.getLink(
                 networkData.currency.toLowerCase(),
@@ -34,16 +47,16 @@ function Transactions(props) {
                 link,
               })
 
-              reducers.transactions.removeLastTransactionFromQueue()
-
-              if (intervalId) clearInterval(intervalId)
+              resetState()
             }
           } catch (error) {
+            changingInterval += 500
+
             console.group('%c fail on check receipt', 'color: red;')
             console.log(error)
             console.groupEnd()
           }
-        }, customCheckInterval)
+        }, changingInterval)
       }
     }
 

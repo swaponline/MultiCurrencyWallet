@@ -99,7 +99,7 @@ class WalletConnectAccount extends React.Component<any, ComponentState> {
 
     const { isPending, balanceUpdating } = this.state
 
-    const web3Type = metamask.web3connect.getInjectedType()
+    const web3Type = metamask.web3connect.getProviderType()
     const isAvailableNetwork = metamask.isAvailableNetwork()
 
     const walletAddress = isAvailableNetwork ?
