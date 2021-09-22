@@ -522,7 +522,7 @@ class EthLikeAction {
           console.log(hash)
           console.groupEnd()
 
-          reducers.transactions.addHashToQueue({
+          reducers.transactions.addTransactionToQueue({
             networkCoin: this.ticker,
             hash,
           })

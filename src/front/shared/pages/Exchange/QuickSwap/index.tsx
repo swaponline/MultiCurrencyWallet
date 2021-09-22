@@ -16,6 +16,7 @@ import {
   localStorage,
   metamask,
   links,
+  routing,
 } from 'helpers'
 import { localisedUrl } from 'helpers/locale'
 import actions from 'redux/actions'
@@ -480,8 +481,8 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
 
   swap = async () => {
     const { fromWallet, toWallet, swapData, isAdvancedMode, gasLimit, gasPrice } = this.state
-    const key = fromWallet.standard ? fromWallet.baseCurrency : fromWallet.currency
-    const lowerKey = key.toLowerCase()
+    const baseCurrency = fromWallet.standard ? fromWallet.baseCurrency : fromWallet.currency
+    const assetName = fromWallet.standard ? fromWallet.tokenKey : fromWallet.currency
 
     feedback.zerox.startedSwap(`${fromWallet.currency} -> ${toWallet.currency}`)
 
@@ -490,26 +491,29 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     }))
 
     try {
-      if (swapData && isAdvancedMode) {
+      if (!swapData) {
+        throw new Error('No swap data. Can not complete swap')
+      }
+
+      if (isAdvancedMode) {
         const gweiDecimals = 9
   
         if (gasLimit) swapData.gas = gasLimit
         if (gasPrice) swapData.gasPrice = utils.amount.formatWithDecimals(gasPrice, gweiDecimals)
       }
 
-      if (!swapData) {
-        throw new Error('No swap data. Can not complete swap')
-      }
-
-      await actions[lowerKey].sendReadyTransaction({
+      const txHash = await actions[baseCurrency.toLowerCase()].sendReadyTransaction({
         data: swapData,
       })
+      const txInfoUrl = transactions.getTxRouter(assetName.toLowerCase(), txHash)
 
       // delete last swap data, the swap info may have changed
       this.resetSwapData()
       this.setState(() => ({
         spendedAmount: '',
       }))
+
+      routing.redirectTo(txInfoUrl)
     } catch (error) {
       this.reportError(error)
     } finally {

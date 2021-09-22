@@ -34,7 +34,7 @@ function Transactions(props) {
                 link,
               })
 
-              reducers.transactions.removeHashFromQueue()
+              reducers.transactions.removeLastTransactionFromQueue()
 
               if (intervalId) clearInterval(intervalId)
             }

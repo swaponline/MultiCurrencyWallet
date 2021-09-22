@@ -4,7 +4,7 @@ export const initialState = {
   pendingQueue: [],
 }
 
-export const addHashToQueue = (state, { networkCoin, hash }) => {
+export const addTransactionToQueue = (state, { networkCoin, hash }) => {
   const networkData = config.evmNetworks[networkCoin.toUpperCase()]
 
   return {
@@ -19,7 +19,7 @@ export const addHashToQueue = (state, { networkCoin, hash }) => {
   }
 }
 
-export const removeHashFromQueue = (state) => {
+export const removeLastTransactionFromQueue = (state) => {
   const newQueue = state.pendingQueue.slice(1)
 
   return {
