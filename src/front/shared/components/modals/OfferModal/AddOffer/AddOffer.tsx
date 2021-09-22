@@ -16,7 +16,7 @@ import cssModules from 'react-css-modules'
 
 import Select from './Select/Select'
 import ExchangeRateGroup from './ExchangeRateGroup/ExchangeRateGroup'
-import SelectGroup from './SelectGroup/SelectGroup'
+import SelectGroup from 'components/SelectGroup'
 
 import Button from 'components/controls/Button/Button'
 import Toggle from 'components/controls/Toggle/Toggle'
