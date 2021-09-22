@@ -1,30 +1,22 @@
-
-.row {
-  display: flex;
-  display: flex;
-  align-items: baseline;
-  position: absolute;
-  top: -0.8em;
-  left: 1em;
+.selectGroup {
+  position: relative;
 }
 
-.tooltip {
+.row {
+  position: absolute;
   z-index: 1;
+  top: -0.8em;
+  left: 0.7em;
+  display: flex;
+  align-items: baseline;
+  padding: 0 0.4rem;
+  background-color: var(--color-background-elements);
 }
 
 .label {
-  z-index: 1;
-  font-weight: bold;
-
-  background: var(--color-background-elements);
   @include ff-semibold;
   z-index: 1;
-}
-
-// addOffer selectGroup ^ ================
-
-.selectGroup {
-  position: relative;
+  background-color: var(--color-background-elements);
 }
 
 .groupField {
@@ -48,18 +40,7 @@
 }
 
 .smallTooltip {
-  > span {
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    left: 92%;
-    top: 11px;
-    align-items: center;
-
-    span {
-      font-size: 1em;
-    }
-  }
+  margin-left: 0.3rem;
 }
 
 .textUsd {
@@ -100,28 +81,8 @@
   width: 350px;
 }
 
-.balance {
-  position: absolute;
-  z-index: 1;
-  top: -9px;
-  font-weight: bold;
-  background: var(--color-background-elements);
-  font-size: 13px;
-  right: 20px;
-  font-family: "Roboto Mono", monospace;
-  padding: 0 10px;
-  color: var(--color-indicating);
-  // ======================
-
-  position: absolute;
-  left: -1px;
-  margin-top: 70px;
-  text-align: left;
-  font-size: 14px;
-}
-
 .red {
-  color: var(--color-f-error),
+  color: var(--color-f-error);
 }
 
 input:disabled {
@@ -136,9 +97,9 @@ input:disabled {
 
 .currencySelect {
   border-radius: 0 6px 6px 0 !important;
-  background: none!important;
-  box-shadow: none!important;
-  position: absolute!important;
+  background: none !important;
+  box-shadow: none !important;
+  position: absolute !important;
   @include ff-bold;
   right: 1px;
   top: 6px;
