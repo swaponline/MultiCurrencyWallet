@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { FormattedMessage } from 'react-intl'
+import { connect } from 'redaction'
 import CSSModules from 'react-css-modules'
 import styles from './index.scss'
 import { utils, localStorage } from 'helpers'
@@ -12,6 +13,16 @@ import SelectGroup from '../SelectGroup/SelectGroup'
 import { QuickSwapFormTour } from 'components/Header/WidgetTours'
 import { Direction } from './types'
 
+const usePrevious = (value) => {
+  const ref = useRef()
+
+  useEffect(() => {
+    ref.current = value
+  }, [value])
+
+  return ref.current
+}
+
 function ExchangeForm(props) {
   const {
     stateReference,
@@ -19,6 +30,7 @@ function ExchangeForm(props) {
     receivedList,
     spendedAmount,
     spendedCurrency,
+    setSpendedAmount,
     receivedCurrency,
     selectCurrency,
     fiat,
@@ -29,6 +41,8 @@ function ExchangeForm(props) {
     flipCurrency,
     openExternalExchange,
     checkSwapData,
+    user,
+    insufficientBalance,
   } = props
 
   const [fromBalancePending, setFromBalancePending] = useState(false)
@@ -51,6 +65,8 @@ function ExchangeForm(props) {
     })
 
   const updateBalance = async (direction, wallet) => {
+    if (!Object.keys(wallet).length) return
+
     const key = wallet.standard || wallet.currency
 
     if (direction === Direction.Spend) setFromBalancePending(true)
@@ -87,18 +103,50 @@ function ExchangeForm(props) {
     return null
   }
 
-  const [flagForRequest, setFlagForRequest] = useState(false)
+  const getWalletStoreData = (wallet): IUniversalObj | undefined => {
+    let data = undefined
 
-  const keyUpHandler = () => {
-    setFlagForRequest(true)
+    if (Object.keys(wallet).length) {
+      data = wallet.isToken
+        ? user.tokensData[wallet.tokenKey.toLowerCase()]
+        : user[`${wallet.currency.toLowerCase()}Data`]
+    }
+
+    return data
   }
+
+  const fromWalletData = getWalletStoreData(fromWallet)
+  const toWalletData = getWalletStoreData(toWallet)
+
+  useEffect(() => {
+    updateBalance(Direction.Spend, fromWallet)
+  }, [fromWalletData?.balance])
+
+  useEffect(() => {
+    updateBalance(Direction.Receive, toWallet)
+  }, [toWalletData?.balance])
+
+  const [isBalanceFetching, setIsBalanceFetching] = useState(user.isBalanceFetching)
+  const prevIsBalanceFetching = usePrevious(isBalanceFetching)
+
+  useEffect(() => {
+    setIsBalanceFetching(user.isBalanceFetching)
+
+    // update in the end of balance fetching
+    if (prevIsBalanceFetching && !user.isBalanceFetching) {
+      updateBalance(Direction.Spend, fromWallet)
+      updateBalance(Direction.Receive, toWallet)
+    }
+  }, [user.isBalanceFetching])
+
+  const [flagForRequest, setFlagForRequest] = useState(false)
 
   useEffect(() => {
     let timeoutId: ReturnType<typeof setTimeout> | undefined = undefined
 
     if (flagForRequest) {
-      timeoutId = setTimeout(() => {
-        checkSwapData()
+      timeoutId = setTimeout(async () => {
+        await checkSwapData()
         setFlagForRequest(false)
       }, 400)
     }
@@ -108,7 +156,15 @@ function ExchangeForm(props) {
     }
   })
 
-  const supportedCurrencies = ['eth', 'matic']  
+  const handleSpendAmountInput = (value) => {
+    setSpendedAmount(value)
+
+    if (value !== spendedAmount) {
+      setFlagForRequest(true)
+    }
+  }
+
+  const supportedCurrencies = ['eth', 'matic']
   const showFiatExchangeBtn = supportedCurrencies.includes(spendedCurrency.value)
 
   return (
@@ -116,8 +172,9 @@ function ExchangeForm(props) {
       <div styleName="inputWrapper">
         <SelectGroup
           activeFiat={fiat}
+          error={insufficientBalance}
           fiat={fiatValue && fiatValue}
-          inputValueLink={stateReference.spendedAmount}
+          inputValueLink={stateReference.spendedAmount.pipe(handleSpendAmountInput)}
           selectedValue={spendedCurrency.value}
           label={<FormattedMessage id="MyOrdersYouSend" defaultMessage="You send" />}
           inputId="quickSwapSpendCurrencyInput"
@@ -132,7 +189,6 @@ function ExchangeForm(props) {
               balanceTooltip(Direction.Spend, fromWallet)
             )
           }
-          onKeyUp={keyUpHandler}
           onSelect={(value) =>
             selectCurrency({
               direction: Direction.Spend,
@@ -204,4 +260,7 @@ function ExchangeForm(props) {
   )
 }
 
-export default CSSModules(ExchangeForm, styles, { allowMultiple: true })
+export default connect(({ user }) => ({
+  user,
+}))(CSSModules(ExchangeForm, styles, { allowMultiple: true }))
+

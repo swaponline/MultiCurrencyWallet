@@ -15,7 +15,7 @@ import "scss/app.scss";
 
 import { createSwapApp } from "instances/newSwap";
 import Core from "containers/Core/Core";
-
+import Transactions from 'containers/Transactions'
 import ErrorBoundary from 'components/ErrorBoundary'
 import Header from "components/Header/Header";
 import Footer from "components/Footer/Footer";
@@ -31,7 +31,6 @@ import config from "helpers/externalConfig"
 import { routing, links, utils } from 'helpers'
 import backupUserData from 'plugins/backupUserData'
 import { FormattedMessage, injectIntl } from 'react-intl'
-
 import metamask from 'helpers/metamask'
 
 
@@ -470,20 +469,21 @@ class App extends React.Component<RouteComponentProps<any>, any> {
         {!isSeoDisabled &&
           <Seo location={history.location} />
         }
-        {/* @ts-ignore */}
         <ErrorBoundary>
-          {/* @ts-ignore */}
-          <WidthContainer id="swapComponentWrapper" styleName="headerAndMain">
-            <Header />
-            <main>{children}</main>
-          </WidthContainer>
-          <Core />
-          <Footer />
-          <RequestLoader />
-          {!dashboardModalsAllowed &&
-            <ModalConductor history={history}
-          />}
-          <NotificationConductor history={history} />
+          <Transactions>
+            {/* @ts-ignore */}
+            <WidthContainer id="swapComponentWrapper" styleName="headerAndMain">
+              <Header />
+              <main>{children}</main>
+            </WidthContainer>
+            <Core />
+            <Footer />
+            <RequestLoader />
+            {!dashboardModalsAllowed &&
+              <ModalConductor history={history}
+            />}
+            <NotificationConductor history={history} />
+          </Transactions>
         </ErrorBoundary>
       </div>
     </HashRouter>;

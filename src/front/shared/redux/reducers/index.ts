@@ -13,6 +13,7 @@ import * as rememberedOrders from './rememberedOrders'
 import * as createWallet from './createWallet'
 import * as ui from './ui'
 import * as oneinch from './oneinch'
+import * as transactions from './transactions'
 
 export default {
   notifications,
@@ -30,4 +31,5 @@ export default {
   createWallet,
   ui,
   oneinch,
+  transactions,
 }

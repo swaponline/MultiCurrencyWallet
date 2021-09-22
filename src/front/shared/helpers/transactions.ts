@@ -63,37 +63,37 @@ const pullTxBalances = (txId, amount, balances, adminFee) => apiLooper.post('txi
   },
 }).then(({ answer }) => answer).catch((e) => false)
 
-const getTxRouter = (currency, txId) => {
+const getTxRouter = (currency, txHash) => {
   if (erc20Like.isToken({ name: currency })) {
-    return `/token/${currency}/tx/${txId}`
+    return `/token/${currency}/tx/${txHash}`
   }
 
   const prefix = helpers.getCurrencyKey(currency, false)
 
   if (actions[prefix]?.getTxRouter) {
-    return actions[prefix].getTxRouter(txId, currency.toLowerCase())
+    return actions[prefix].getTxRouter(txHash, currency.toLowerCase())
   }
 
   console.warn(`Function getTxRouter for ${prefix} not defined (currency: ${currency})`)
 }
 
-const getLink = (currency, txId) => {
+const getLink = (currency, txHash) => {
   if (erc20Like.erc20.isToken({ name: currency })) {
-    return actions.erc20.getLinkToInfo(txId)
+    return actions.erc20.getLinkToInfo(txHash)
   }
 
   if (erc20Like.bep20.isToken({ name: currency })) {
-    return actions.bep20.getLinkToInfo(txId)
+    return actions.bep20.getLinkToInfo(txHash)
   }
 
   if (erc20Like.erc20matic.isToken({ name: currency })) {
-    return actions.erc20matic.getLinkToInfo(txId)
+    return actions.erc20matic.getLinkToInfo(txHash)
   }
 
   const prefix = helpers.getCurrencyKey(currency, false)
 
   if (actions[prefix]?.getLinkToInfo) {
-    return actions[prefix].getLinkToInfo(txId)
+    return actions[prefix].getLinkToInfo(txHash)
   }
 
   console.warn(`Function getLinkToInfo for ${prefix} not defined`)

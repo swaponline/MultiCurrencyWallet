@@ -514,12 +514,29 @@ class EthLikeAction {
 
     return new Promise((res, rej) => {
       sendMethod(data)
-        .on('receipt', (receipt) => waitReceipt && res(receipt))
+        .on('receipt', (receipt) => {
+          if (waitReceipt) res(receipt)
+        })
         .on('transactionHash', (hash) => {
           console.group('%c tx hash', 'color: green;')
           console.log(hash)
           console.groupEnd()
+
+          reducers.transactions.addTransactionToQueue({
+            networkCoin: this.ticker,
+            hash,
+          })
+
           if (!waitReceipt) res(hash)
+        })
+        .on('error', (error) => {
+          const isRejected = JSON.stringify(error).match(/([Dd]enied transaction|[Cc]ance(ll|l)ed)/)
+
+          if (!isRejected) {
+            this.reportError(error, 'part: sendReadyTransaction')
+          }
+
+          res(false)
         })
     })
   }

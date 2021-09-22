@@ -2703,7 +2703,7 @@
   },
   {
     "id": "InfoPay_2",
-    "message": "успешно отправлены",
+    "message": "отправлены на",
     "files": [
       "src/front/shared/pages/Transaction/TxInfo/index.tsx"
     ]

@@ -2025,7 +2025,7 @@
   },
   {
     "id": "InfoPay_2",
-    "message": "transferido con éxito a",
+    "message": "transferred to",
     "files": [
       "src/front/shared/pages/Transaction/TxInfo/index.tsx"
     ]
