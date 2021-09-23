@@ -142,13 +142,13 @@
   color: var(--color);
 
   td.header {
+    @include ff-semibold;
     text-align: left;
-    font-weight: bold;
     font-size: 1.1em;
   }
 
-  td.data {
-    text-align: justify;
+  td.responsiveBlock {
+    @include ff-mono;
   }
 }
 

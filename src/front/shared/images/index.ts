@@ -7,11 +7,15 @@ import iconTrustWallet from './trust.svg'
 import iconClose from './close.svg'
 import iconOk from './ok.svg'
 import iconChecked from './checked.svg'
+import iconCancelled from './cancelled.svg'
+import iconPending from './pending.svg'
 
 export const regularIcons = {
   CLOSE: iconClose,
   OK: iconOk,
   CHECKED: iconChecked,
+  CANCELLED: iconCancelled,
+  PENDING: iconPending,
 }
 
 const web3Icons = {

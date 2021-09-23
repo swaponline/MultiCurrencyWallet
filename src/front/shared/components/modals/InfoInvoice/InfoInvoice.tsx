@@ -18,11 +18,7 @@ import ShareButton from 'components/controls/ShareButton/ShareButton'
 import Button from 'components/controls/Button/Button'
 
 import { isMobile } from "react-device-detect"
-
-import imgReady from './images/ready.svg'
-import imgPending from './images/pending.svg'
-import imgCanceled from './images/cancel.svg'
-
+import { regularIcons } from 'images'
 
 const langPrefix = 'InvoiceInfoModal'
 const langLabels = defineMessages({
@@ -44,7 +40,7 @@ const langLabels = defineMessages({
   },
   invoiceComment: {
     id: `${langPrefix}_Comment`,
-    defaultMessage: `Комментарий`,
+    defaultMessage: `Comment`,
   },
   fromAddress: {
     id: `${langPrefix}_FromAddress`,
@@ -292,15 +288,15 @@ class InfoInvoice extends React.Component<any, any> {
     switch (status) {
       case 'ready':
         infoIconTitle = intl.formatMessage(langLabels.infoStatusReady)
-        infoIconUrl = imgReady
+        infoIconUrl = regularIcons.OK
         break;
       case 'cancelled':
         infoIconTitle = intl.formatMessage(langLabels.infoStatusDeclimed)
-        infoIconUrl = imgCanceled
+        infoIconUrl = regularIcons.CANCELLED
         break;
       default:
         infoIconTitle = intl.formatMessage(langLabels.infoStatusPending)
-        infoIconUrl = imgPending
+        infoIconUrl = regularIcons.PENDING
     }
 
     return (
@@ -384,7 +380,6 @@ class InfoInvoice extends React.Component<any, any> {
                       <tr>
                         <td styleName="responsiveBlock">{invoiceData.contact}</td>
                       </tr>
-
                       <tr>
                         <td styleName="header" colSpan={2}>
                           <FormattedMessage { ...langLabels.fromAddress } />
@@ -392,18 +387,18 @@ class InfoInvoice extends React.Component<any, any> {
                       </tr>
                       <tr>
                         <td styleName="responsiveBlock" colSpan={2}>
-                          <span>{invoiceData.fromAddress}({invoiceData.invoiceNumber})</span>
+                          <span>{invoiceData.fromAddress}{' '}({invoiceData.invoiceNumber})</span>
                         </td>
                       </tr>
-                      {invoiceData.toAddress && (
+                      {invoiceData.destAddress && (
                         <>
                           <tr>
                             <td styleName="header" colSpan={2}>
-                              <FormattedMessage { ...langLabels.toAddress } />
+                              <FormattedMessage id="InvoiceInfoModal_ToAddress" defaultMessage="Payer address" />
                             </td>
                           </tr>
-                          <tr styleName="responsiveBlock">
-                            <td colSpan={2}>{invoiceData.toAddress}</td>
+                          <tr>
+                            <td styleName="responsiveBlock" colSpan={2}>{invoiceData.destAddress}</td>
                           </tr>
                         </>
                       )}

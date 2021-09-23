@@ -165,7 +165,7 @@
 .invoiceContactWrapper {
   font-size: 0.9em;
   margin-top: 0.2em;
-
+  color: var(--color);
 
   .contact {
     color: var(--color-notice);
@@ -179,6 +179,7 @@
   align-items: center;
   justify-content: space-between;
   margin-top: 4px;
+  color: var(--color);
 
   .requests {
     margin-left: 0.4em;
