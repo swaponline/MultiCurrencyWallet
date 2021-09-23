@@ -39,6 +39,14 @@
   position: absolute;
 }
 
+.balance {
+  position: absolute;
+  left: 0;
+  bottom: 4%;
+  font-size: 0.8rem;
+  color: var(--color-indicating);
+}
+
 .smallTooltip {
   margin-left: 0.3rem;
 }

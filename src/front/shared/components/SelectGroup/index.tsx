@@ -39,8 +39,9 @@ const SelectGroup = (props) => {
     onBlur,
   } = props
 
-  const currAllowed = currencies.filter((item) => !item.dontCreateOrder)
   const doNothing = () => {}
+  const currAllowed = currencies.filter((item) => !item.dontCreateOrder)
+  const canСalculate = balance && dynamicFee
 
   return (
     <div styleName="selectGroup">
@@ -96,45 +97,12 @@ const SelectGroup = (props) => {
           currencies={currAllowed}
         />
       </div>
-      {/*       {label.props.defaultMessage === 'You sell' &&
+      {label.props.defaultMessage === 'You sell' &&
         !extendedControls &&
-        (balance > 0 ? (
+        (canСalculate ? (
           !isToken && (
             <span
               styleName={
-                new BigNumber(balance).isLessThan(new BigNumber(haveAmount).plus(dynamicFee))
-                  ? 'red'
-                  : 'balance'
-              }
-            >
-              <FormattedMessage
-                id="select75"
-                defaultMessage="Available for exchange: {availableBalance} {tooltip}"
-                values={{
-                  availableBalance: `${new BigNumber(balance).minus(
-                    dynamicFee
-                  )} ${selectedValue.toUpperCase()}`,
-                  tooltip: <Tooltip id={idFee}> {tooltipAboutFee}</Tooltip>,
-                }}
-              />
-            </span>
-          )
-        ) : (
-          <span styleName="textForNull">
-            <FormattedMessage
-              id="selected53"
-              defaultMessage="You can use an external wallet to perform a swap"
-            />
-          </span>
-        ))} */}
-
-      {/*       {label.props.defaultMessage === 'You sell' &&
-        !extendedControls &&
-        (balance > 0 ? (
-          !isToken && (
-            <span
-              styleName={
-                new BigNumber(haveAmount).isLessThanOrEqualTo(balance) &&
                 new BigNumber(balance).isLessThan(new BigNumber(haveAmount).plus(dynamicFee)) &&
                 new BigNumber(haveAmount).isGreaterThan(0)
                   ? 'red'
@@ -160,7 +128,7 @@ const SelectGroup = (props) => {
               defaultMessage="You can use an external wallet to perform a swap"
             />
           </span>
-        ))} */}
+        ))}
     </div>
   )
 }

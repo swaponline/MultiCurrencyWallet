@@ -17,15 +17,6 @@
   flex-flow: row wrap;
 }
 
-a {
-  //font-size: 16px;
-}
-// p {
-//   font-size: 14px;
-//   color: #8E9AA3;
-//   margin-top: -5px;
-// }
-
 @include media-mobile {
   .subTitle {
     text-align: center;
@@ -38,8 +29,4 @@ a {
     padding: 0;
     margin: 7px auto;
   }
-
-  // p {
-  //   font-size: 12px;
-  // }
 }
