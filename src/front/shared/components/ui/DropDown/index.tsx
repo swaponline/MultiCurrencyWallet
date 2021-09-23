@@ -56,12 +56,6 @@ export default class DropDown extends Component<DropDownProps, DropDownState> {
     }))
   }
 
-  toggle = () => {
-    this.setState((state) => ({
-      optionToggleIsOpen: !state.optionToggleIsOpen,
-    }))
-  }
-
   handleOptionClick = (item) => {
     const { onSelect } = this.props
     

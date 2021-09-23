@@ -236,8 +236,8 @@ class WallerSlider extends React.Component<WallerSliderProps, WallerSliderState>
               )}
               {banners &&
                 banners.length > 0 &&
-                banners.map((banner) => (
-                  <div key={banner[0]} className="swiper-slide">
+                banners.map((banner, index) => (
+                  <div key={index} className="swiper-slide">
                     <NotifyBlock
                       background={`${banner[3]}`}
                       icon={banner[5]}
