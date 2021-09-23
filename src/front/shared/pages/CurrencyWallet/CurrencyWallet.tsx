@@ -57,7 +57,7 @@ const isWidgetBuild = config && config.isWidget
 @withRouter
 @CSSModules({ ...styles, ...stylesHere }, { allowMultiple: true })
 class CurrencyWallet extends Component<any, any> {
-  _mounted = false
+  mounted = false
 
   constructor(props) {
     super(props)
@@ -116,7 +116,7 @@ class CurrencyWallet extends Component<any, any> {
   }
 
   componentDidMount() {
-    this._mounted = true
+    this.mounted = true
     
     const {
       currency,
@@ -241,6 +241,8 @@ class CurrencyWallet extends Component<any, any> {
 
         const hasCachedData = lsDataCache.get(`TxHistory_${getCurrencyKey(currency, true).toLowerCase()}_${address}`)
 
+        if (!this.mounted) return
+
         this.setState(
           {
             itemCurrency,
@@ -290,7 +292,7 @@ class CurrencyWallet extends Component<any, any> {
   }
 
   componentWillUnmount() {
-    this._mounted = false
+    this.mounted = false
   }
 
   filterCurrencies = (params) => {
@@ -324,7 +326,7 @@ class CurrencyWallet extends Component<any, any> {
   }
 
   updateTransactions = () => {
-    if (!this._mounted) return
+    if (!this.mounted) return
 
     const { txHistory } = this.props
     const { currency, address } = this.state
