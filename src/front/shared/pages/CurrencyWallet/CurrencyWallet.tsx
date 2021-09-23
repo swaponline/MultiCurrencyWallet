@@ -132,7 +132,10 @@ class CurrencyWallet extends Component<any, any> {
 
     let {
       match: {
-        params: { address = null },
+        params: {
+          address = null,
+          action,
+        },
       },
       activeCurrency,
       activeFiat
@@ -148,7 +151,9 @@ class CurrencyWallet extends Component<any, any> {
         .then((balance) => this.setState({ balance }))
     }
 
-    actions.history.setTransactions(address, ticker.toLowerCase())
+    if (action !== 'send') {
+      actions.history.setTransactions(address, ticker.toLowerCase())
+    }
 
     if (!address) {
       actions.core.getSwapHistory()
@@ -206,7 +211,7 @@ class CurrencyWallet extends Component<any, any> {
       this.updateTransactions()
     }
 
-    if (address && prevAddress !== address) {
+    if (action !== 'send' && address && prevAddress !== address) {
       actions.history.setTransactions(address, currency.toLowerCase())
     }
 
