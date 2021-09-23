@@ -1,19 +1,13 @@
+import { BigNumber } from 'bignumber.js'
 import { FormattedMessage, injectIntl } from 'react-intl'
-
 import CSSModules from 'react-css-modules'
-import styles from './SelectGroup.scss'
-import partialStyles from '../index.scss'
-
+import styles from './index.scss'
+import getCoinInfo from 'common/coins/getCoinInfo'
+import { inputReplaceCommaWithDot } from 'helpers/domUtils'
 import Input from 'components/forms/Input/Input'
-import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
 import CurrencySelect from 'components/ui/CurrencySelect/CurrencySelect'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
-import { BigNumber } from 'bignumber.js'
 
-import { inputReplaceCommaWithDot } from 'helpers/domUtils'
-import getCoinInfo from 'common/coins/getCoinInfo'
-
-// TODO to split data and view this component
 const SelectGroup = (props) => {
   const {
     dynamicFee,
@@ -40,21 +34,27 @@ const SelectGroup = (props) => {
     activeFiat,
     balanceTooltip,
     onKeyUp,
+    dontDisplayError,
+    onFocus,
+    onBlur,
   } = props
+
+  const doNothing = () => {}
+  const currAllowed = currencies.filter((item) => !item.dontCreateOrder)
+  const canСalculate = balance && dynamicFee
 
   return (
     <div styleName="selectGroup">
-      <FieldLabel inRow>
-        <strong>{label}</strong>
+      <div styleName="row">
+        <strong styleName="label">{label}</strong>
+
         {tooltip && (
-          <span>
-            <span>&nbsp;</span>
-            <div styleName="smallTooltip">
-              <Tooltip id={id}>{tooltip}</Tooltip>
-            </div>
-          </span>
+          <div styleName="smallTooltip">
+            <Tooltip id={id}>{tooltip}</Tooltip>
+          </div>
         )}
-      </FieldLabel>
+      </div>
+
       <div styleName="groupField" className={className}>
         <Input
           styleName="inputRoot"
@@ -67,10 +67,11 @@ const SelectGroup = (props) => {
           pattern="0-9\."
           errorStyle={error}
           disabled={disabled}
-          onFocus={props.onFocus ? props.onFocus : () => {}}
-          onBlur={props.onBlur ? props.onBlur : () => {}}
+          onFocus={onFocus ? onFocus : doNothing}
+          onBlur={onBlur ? onBlur : doNothing}
+          onKeyUp={onKeyUp ? onKeyUp : doNothing}
           onKeyDown={inputReplaceCommaWithDot}
-          onKeyUp={onKeyUp && onKeyUp}
+          dontDisplayError={dontDisplayError}
         />
         {fiat > 0 && (
           <p styleName="textUsd">
@@ -84,8 +85,8 @@ const SelectGroup = (props) => {
           </div>
         )}
         <CurrencySelect
-          selectedItemRender={(item) =>  {
-            const {blockchain} = getCoinInfo(item.value)
+          selectedItemRender={(item) => {
+            const { blockchain } = getCoinInfo(item.value)
 
             return blockchain ? `${item.title} (${blockchain})` : item.fullTitle
           }}
@@ -93,16 +94,17 @@ const SelectGroup = (props) => {
           placeholder="Enter the name of coin"
           selectedValue={selectedValue}
           onSelect={onSelect}
-          currencies={currencies}
+          currencies={currAllowed}
         />
       </div>
       {label.props.defaultMessage === 'You sell' &&
         !extendedControls &&
-        (balance > 0 ? (
+        (canСalculate ? (
           !isToken && (
             <span
               styleName={
-                new BigNumber(balance).isLessThan(new BigNumber(haveAmount).plus(dynamicFee))
+                new BigNumber(balance).isLessThan(new BigNumber(haveAmount).plus(dynamicFee)) &&
+                new BigNumber(haveAmount).isGreaterThan(0)
                   ? 'red'
                   : 'balance'
               }
@@ -131,6 +133,4 @@ const SelectGroup = (props) => {
   )
 }
 
-export default injectIntl(
-  CSSModules(SelectGroup, { ...styles, ...partialStyles }, { allowMultiple: true })
-)
+export default injectIntl(CSSModules(SelectGroup, styles, { allowMultiple: true }))

@@ -3,7 +3,7 @@ import CSSModules from 'react-css-modules'
 import styles from './index.scss'
 import Modal from 'components/modal/Modal/Modal'
 import Button from 'components/controls/Button/Button'
-import SelectGroup from '../OfferModal/AddOffer/SelectGroup/SelectGroup'
+import SelectGroup from 'components/SelectGroup'
 
 function ModalForm(props) {
   const {

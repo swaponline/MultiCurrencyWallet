@@ -12,7 +12,7 @@ import { Redirect } from 'react-router-dom'
 import { getState } from 'redux/core'
 import reducers from 'redux/core/reducers'
 
-import SelectGroup from './SelectGroup/SelectGroup'
+import SelectGroup from 'components/SelectGroup'
 import { Button } from 'components/controls'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import { FormattedMessage, injectIntl } from 'react-intl'
