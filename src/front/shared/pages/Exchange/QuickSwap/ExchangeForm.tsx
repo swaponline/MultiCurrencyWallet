@@ -9,7 +9,7 @@ import Tooltip from 'components/ui/Tooltip/Tooltip'
 import Button from 'components/controls/Button/Button'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import Switching from 'components/controls/Switching/Switching'
-import SelectGroup from '../SelectGroup/SelectGroup'
+import SelectGroup from 'components/SelectGroup'
 import { QuickSwapFormTour } from 'components/Header/WidgetTours'
 import { Direction } from './types'
 

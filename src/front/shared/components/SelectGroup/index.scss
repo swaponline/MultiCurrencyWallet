@@ -1,8 +1,29 @@
+.selectGroup {
+  position: relative;
+}
+
+.row {
+  position: absolute;
+  z-index: 1;
+  top: -0.8em;
+  left: 0.7em;
+  display: flex;
+  align-items: baseline;
+  padding: 0 0.4rem;
+  background-color: var(--color-background-elements);
+}
+
+.label {
+  @include ff-semibold;
+  z-index: 1;
+  background-color: var(--color-background-elements);
+}
+
 .groupField {
   width: 100%;
   display: inline-flex;
   height: 68px;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
   vertical-align: center;
   border-radius: 6px;
   text-align: center;
@@ -10,36 +31,33 @@
   text-transform: capitalize;
 }
 
-.row {
-  display: flex;
-  display: flex;
-  align-items: baseline;
+.balanceTooltip {
+  top: -19px;
+  z-index: 11;
+  left: auto;
+  right: 24px;
   position: absolute;
-  top: -0.8em;
-  left: 1em;
 }
 
 .balance {
   position: absolute;
-  z-index: 1;
-  top: -9px;
-  font-weight: bold;
-  background: var(--color-background-elements);
-  font-size: 13px;
-  right: 20px;
-  font-family: "Roboto Mono", monospace;
-  padding: 0 10px;
+  left: 0;
+  bottom: 4%;
+  font-size: 0.8rem;
   color: var(--color-indicating);
 }
 
+.smallTooltip {
+  margin-left: 0.3rem;
+}
+
 .textUsd {
-  color: var(--color-notice);
+  @include ff-mono;
+  color: var(--color-indicating);
   position: absolute;
   left: 10px;
-  font-family: "Roboto Mono", monospace;
   bottom: -14px;
   top: auto;
-  background: var(--color-background-elements);
   right: auto;
   padding: 0 10px;
   font-size: 13px;
@@ -49,7 +67,7 @@
   min-width: 0;
   flex: auto 1 1;
   input {
-    padding-right: 75px;
+    height: 68px;
     font-size: 24px;
   }
 }
@@ -71,25 +89,14 @@
   width: 350px;
 }
 
-.tooltip {
-  z-index: 1;
-}
-
-.label {
-  z-index: 1;
-  font-weight: bold;
-
-  background: var(--color-background-elements);
-  @include ff-semibold;
-  z-index: 1;
-}
-
 .red {
   color: var(--color-f-error);
 }
 
 input:disabled {
-  background-color: #eee;
+  background-color: inherit;
+  color: var(--color-indicating);
+  cursor: default;
 }
 
 .selectGroupContainer {
@@ -98,12 +105,12 @@ input:disabled {
 
 .currencySelect {
   border-radius: 0 6px 6px 0 !important;
-  background: none!important;
-  box-shadow: none!important;
+  background: none !important;
+  box-shadow: none !important;
+  position: absolute !important;
   @include ff-bold;
-  position: absolute!important;
-  right: 5px;
-  top: 5px;
+  right: 1px;
+  top: 6px;
 
   > div:nth-child(2) {
     margin-top: 10px;
@@ -111,7 +118,6 @@ input:disabled {
     position: absolute;
     top: 75px;
     border: none;
-    left: 0;
     width: auto;
     z-index: 1111112;
     border-radius: 0;
@@ -123,11 +129,11 @@ input:disabled {
       border: none;
     }
   }
-  
   input {
     border: none;
     height: 69px;
     border-bottom: 1px solid var(--color);
+    font-size: 16px;
     padding-left: 2px;
   }
 }
@@ -144,20 +150,26 @@ input:disabled {
 
 @include media-mobile {
   .currencySelect {
-    width: 130px;
+    width: unset;
+    height: 48px;
+    input {
+      font-size: 13px;
+    }
   }
   .textUsd {
     font-size: 14px;
   }
   .inputRoot {
     input {
-      padding-left: 8px;
-      padding-right: 8px;
+      padding-left: 10px;
+      padding-right: 120px;
     }
   }
   .textUsd {
-    top: 0px;
-    font-size: 12px;
-    right: 135px;
+    font-size: 9px;
+    left: 10px;
+    padding: 0;
+    bottom: -0.5em;
+    margin: 0;
   }
 }
