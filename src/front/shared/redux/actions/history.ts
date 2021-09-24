@@ -24,6 +24,13 @@ const pullTransactions = (transactions) => {
 const setTransactions = async (address, type) => {
   let actionName
 
+  switch (type) {
+    case 'btc (sms-protected)':
+    case 'btc (multisig)':
+    case 'btc (pin-protected)':
+      type = 'btc'
+  }
+
   if (erc20Like.isToken({name: type})) {
     const tokenStandard = COIN_DATA[type.toUpperCase()].standard.toLowerCase()
     actionName = tokenStandard

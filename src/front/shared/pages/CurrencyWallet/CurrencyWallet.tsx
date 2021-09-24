@@ -57,7 +57,7 @@ const isWidgetBuild = config && config.isWidget
 @withRouter
 @CSSModules({ ...styles, ...stylesHere }, { allowMultiple: true })
 class CurrencyWallet extends Component<any, any> {
-  _mounted = false
+  mounted = false
 
   constructor(props) {
     super(props)
@@ -116,7 +116,7 @@ class CurrencyWallet extends Component<any, any> {
   }
 
   componentDidMount() {
-    this._mounted = true
+    this.mounted = true
     
     const {
       currency,
@@ -132,7 +132,10 @@ class CurrencyWallet extends Component<any, any> {
 
     let {
       match: {
-        params: { address = null },
+        params: {
+          address = null,
+          action,
+        },
       },
       activeCurrency,
       activeFiat
@@ -148,7 +151,9 @@ class CurrencyWallet extends Component<any, any> {
         .then((balance) => this.setState({ balance }))
     }
 
-    actions.history.setTransactions(address, ticker.toLowerCase())
+    if (action !== 'send') {
+      actions.history.setTransactions(address, ticker.toLowerCase())
+    }
 
     if (!address) {
       actions.core.getSwapHistory()
@@ -206,7 +211,7 @@ class CurrencyWallet extends Component<any, any> {
       this.updateTransactions()
     }
 
-    if (address && prevAddress !== address) {
+    if (action !== 'send' && address && prevAddress !== address) {
       actions.history.setTransactions(address, currency.toLowerCase())
     }
 
@@ -240,6 +245,8 @@ class CurrencyWallet extends Component<any, any> {
         } = this.state
 
         const hasCachedData = lsDataCache.get(`TxHistory_${getCurrencyKey(currency, true).toLowerCase()}_${address}`)
+
+        if (!this.mounted) return
 
         this.setState(
           {
@@ -290,7 +297,7 @@ class CurrencyWallet extends Component<any, any> {
   }
 
   componentWillUnmount() {
-    this._mounted = false
+    this.mounted = false
   }
 
   filterCurrencies = (params) => {
@@ -324,7 +331,7 @@ class CurrencyWallet extends Component<any, any> {
   }
 
   updateTransactions = () => {
-    if (!this._mounted) return
+    if (!this.mounted) return
 
     const { txHistory } = this.props
     const { currency, address } = this.state
@@ -524,32 +531,24 @@ class CurrencyWallet extends Component<any, any> {
         <DashboardLayout
           page="history"
           BalanceForm={
-            txHistory
-              ?
-              <BalanceForm
-                type="currencyWallet"
-                activeFiat={activeFiat}
-                currencyBalance={balance}
-                fiatBalance={currencyFiatBalance}
-                activeCurrency={activeCurrency}
-                isFetching={isBalanceFetching}
-                handleReceive={this.handleReceive}
-                handleWithdraw={this.handleWithdraw}
-                handleInvoice={this.handleInvoice}
-                showButtons={actions.user.isOwner(
-                  address,
-                  itemCurrency.tokenKey || currencyName
-                )}
-                currency={currency.toLowerCase()}
-                singleWallet={true}
-                multisigPendingCount={multisigPendingCount}
-              />
-              :
-              <Fragment>
-                {/*
-                //@ts-ignore */}
-                <ContentLoader leftSideContent />
-              </Fragment>
+            <BalanceForm
+              type="currencyWallet"
+              activeFiat={activeFiat}
+              currencyBalance={balance}
+              fiatBalance={currencyFiatBalance}
+              activeCurrency={activeCurrency}
+              isFetching={isBalanceFetching}
+              handleReceive={this.handleReceive}
+              handleWithdraw={this.handleWithdraw}
+              handleInvoice={this.handleInvoice}
+              showButtons={actions.user.isOwner(
+                address,
+                itemCurrency.tokenKey || currencyName
+              )}
+              currency={currency.toLowerCase()}
+              singleWallet={true}
+              multisigPendingCount={multisigPendingCount}
+            />
           }
         >
           <div styleName="currencyWalletActivity">
@@ -568,15 +567,11 @@ class CurrencyWallet extends Component<any, any> {
                 <Table rows={txHistory} styleName="currencyHistory" rowRender={this.rowRender} />
               ) : (
                   <div styleName="historyContent">
-                    {/*
-                    //@ts-ignore */}
                     <ContentLoader rideSideContent empty nonHeader inner />
                   </div>
                 ))}
             {(!txHistory || isLoading) && (
               <div styleName="historyContent">
-                {/*
-                //@ts-ignore */}
                 <ContentLoader rideSideContent nonHeader />
               </div>
             )}

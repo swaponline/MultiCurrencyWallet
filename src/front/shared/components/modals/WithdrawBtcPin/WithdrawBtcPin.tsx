@@ -260,8 +260,6 @@ class WithdrawBtcPin extends React.Component<ComponentProps, ComponentState> {
         data: txInfoCache,
       })
 
-      helpers.transactions.pullTxBalances(txId, amount, beforeBalances, adminFee)
-
       actions.loader.hide()
       actions.btcmultisig.getBalancePin()
       if (invoice) {

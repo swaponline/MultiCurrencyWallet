@@ -178,16 +178,15 @@ export default class Row extends PureComponent<any, any> {
       tokenPart,
       name,
       hash,
-      tokenBaseCurrency,
     } = params
 
-    if (erc20Like.isToken({ name }) && tokenBaseCurrency) {
+    if (erc20Like.isToken({ name })) {
       // react router doesn't rewrite url
       // it fix problem with token transaction info url
       if (location.pathname.includes(tokenPart)) {
         targetPath = `tx/${hash}`
       } else {
-        targetPath = `token/{${tokenBaseCurrency}}${name}/tx/${hash}`
+        targetPath = `token/${name}/tx/${hash}`
       }
     }
 
@@ -305,7 +304,6 @@ export default class Row extends PureComponent<any, any> {
                         tokenPart: `token/{${tokenBaseCurrency}}${type}/`,
                         name: tokenBaseCurrency ? `{${tokenBaseCurrency}}${type}` : type,
                         hash: hash,
-                        tokenBaseCurrency,
                       })}
                     >
                       {(txType === 'CONFIRM') ? (

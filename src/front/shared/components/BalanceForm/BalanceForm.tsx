@@ -29,7 +29,6 @@ function BalanceForm({
   multisigPendingCount = 10,
 }) {
   const [selectedCurrency, setActiveCurrency] = useState(activeCurrency)
-  const isDark = document.body.dataset.scheme === 'dark'
   const isWidgetBuild = config && config.isWidget
 
   useEffect(() => {

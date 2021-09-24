@@ -6,7 +6,7 @@ const seo = {
     telegram: 'https://t.me/swaponline',
     email: 'info@swaponline.io',
     mainUrl: 'https://swaponline.io',
-    logo: 'https://screenshots.wpmix.net/chrome_2019-03-28_18-55-506746c4c5-44e6-4bb5-89cb-52ce8fabcedf.png',
+    logo: 'https://wiki.swaponline.io/assets/swaponline_io.svg',
   },
   pages: [
     {

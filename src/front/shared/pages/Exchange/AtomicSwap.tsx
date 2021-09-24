@@ -1708,11 +1708,11 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
       return <Redirect to={swapUri} push />
     }
 
-    let balanceTooltip = null
+    let balanceTooltip: JSX.Element | null = null
 
     if (pairFees && pairFees.byCoins) {
       const sellCoinFee = pairFees.byCoins[sellCoin] || false
-      //@ts-ignore: strictNullChecks
+
       balanceTooltip = (
         <p styleName="maxAmount">
           {new BigNumber(balance).toNumber() === 0 ||
@@ -2038,7 +2038,6 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
               <div styleName="smallError">
                 <p styleName="error errorLink" onClick={this.goDeclimeFaq}>
                   {' '}
-                  {/* eslint-disable-line */}
                   <FormattedMessage
                     id="PartialOfferCantProceed1"
                     defaultMessage="Request rejected, possibly you have not complete another swap {br}{link}"
@@ -2046,7 +2045,6 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
                       link: (
                         <a className="errorLink" role="button" onClick={this.goDeclimeFaq}>
                           {' '}
-                          {/* eslint-disable-line */}
                           <FormattedMessage
                             id="PartialOfferCantProceed1_1"
                             defaultMessage="Check here"

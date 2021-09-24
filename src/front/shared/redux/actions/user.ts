@@ -259,24 +259,15 @@ const getExchangeRate = (sellCurrency, buyCurrency): Promise<number> => {
 }
 
 const customTokenExchangeRate = (name) => {
-  let customRate = ''
+  for (const key in TOKEN_STANDARDS) {
+    const standard = TOKEN_STANDARDS[key].standard
 
-  outsideLabel: {
-    for (const key in TOKEN_STANDARDS) {
-      const standard = TOKEN_STANDARDS[key].standard
-
-      for (const tokenName in config[standard]) {
-        const exRate = config[standard][tokenName].customExchangeRate
-
-        if (tokenName === name && exRate) {
-          customRate = exRate
-          break outsideLabel
-        }
-      }
+    if (config[standard][name.toLowerCase()]) {
+      return config[standard][name.toLowerCase()].customExchangeRate || ''
     }
   }
 
-  return customRate
+  return ''
 }
 
 const getInfoAboutCurrency = (currencyNames) => {
