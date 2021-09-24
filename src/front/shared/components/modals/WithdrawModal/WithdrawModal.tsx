@@ -536,7 +536,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
       if (selectedItem.isUserProtected) nextStepModal = constants.modals.WithdrawBtcMultisig
 
       actions.modals.close(name)
-      //@ts-ignore: strictNullChecks
+
       actions.modals.open(nextStepModal, {
         wallet: selectedItem,
         invoice,
@@ -569,11 +569,6 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
         // Redirect to tx
         const txInfo = helpers.transactions.getInfo(reduxActionName, txRaw)
         const { tx: txId } = txInfo
-
-        // Не используем await. Сбрасываем статистику по транзакции (final balance)
-        // Без блокировки клиента
-        // Результат и успешность запроса критического значения не имеют
-        helpers.transactions.pullTxBalances(txId, amount, false, adminFee)
 
         // Сохраняем транзакцию в кеш
         const txInfoCache = {

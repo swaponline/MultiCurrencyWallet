@@ -423,7 +423,16 @@ class EthLikeAction {
 
     return new Promise((res, rej) => {
       const receipt = sendMethod(txData)
-        .on('transactionHash', (hash) => !waitReceipt && res({ transactionHash: hash }))
+        .on('transactionHash', (hash) => {
+          reducers.transactions.addTransactionToQueue({
+            networkCoin: this.ticker,
+            hash,
+          })
+
+          if (!waitReceipt) {
+            res({ transactionHash: hash })
+          }
+        })
         .on('receipt', (receipt) => waitReceipt && res(receipt))
         .on('error', (error) => rej(error))
 

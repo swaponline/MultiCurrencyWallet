@@ -2,7 +2,6 @@ import { BASE_TOKEN_CURRENCY } from 'swap.app/constants/COINS'
 import erc20Like from 'common/erc20Like'
 import helpers from 'helpers'
 import actions from 'redux/actions'
-import apiLooper from 'helpers/apiLooper'
 
 const getTokenBaseCurrency = (tokenKey) => {
   const baseCurrencyRegExp = /^\{[a-z]+\}/
@@ -19,49 +18,6 @@ const getTokenBaseCurrency = (tokenKey) => {
 
   return false
 }
-
-/**
- * Запрашивает информацию о tx (final balances)
- */
-const fetchTxBalances = (currency, txId) => {
-  const curName = helpers.getCurrencyKey(currency, true)
-  return apiLooper.get('txinfo', `/tx/${curName}/${txId}`, {
-    checkStatus: (res) => {
-      try {
-        if (res && res.answer !== undefined) return true
-      } catch (e) { /* */ }
-      return false
-    },
-  }).then((res: any) => {
-    if (res
-      && res.answer
-      && res.answer === 'ok'
-      && res.data
-    ) {
-      return res.data
-    }
-    return false
-
-  }).catch((e) => false)
-}
-
-/**
- * Сохраняет информацию о балансах на момент выполнения транзакции на backend
- */
-const pullTxBalances = (txId, amount, balances, adminFee) => apiLooper.post('txinfo', `/pull`, {
-  body: {
-    txId,
-    amount,
-    adminFee,
-    ...balances,
-  },
-  checkStatus: (res) => {
-    try {
-      if (res && res.answer !== undefined) return true
-    } catch (e) { /* */ }
-    return false
-  },
-}).then(({ answer }) => answer).catch((e) => false)
 
 const getTxRouter = (currency, txHash) => {
   if (erc20Like.isToken({ name: currency })) {
@@ -128,7 +84,5 @@ export default {
   getInfo,
   getLink,
   getTxRouter,
-  pullTxBalances,
-  fetchTxBalances,
   getTokenBaseCurrency,
 }
