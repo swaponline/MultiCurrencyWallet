@@ -531,32 +531,24 @@ class CurrencyWallet extends Component<any, any> {
         <DashboardLayout
           page="history"
           BalanceForm={
-            txHistory
-              ?
-              <BalanceForm
-                type="currencyWallet"
-                activeFiat={activeFiat}
-                currencyBalance={balance}
-                fiatBalance={currencyFiatBalance}
-                activeCurrency={activeCurrency}
-                isFetching={isBalanceFetching}
-                handleReceive={this.handleReceive}
-                handleWithdraw={this.handleWithdraw}
-                handleInvoice={this.handleInvoice}
-                showButtons={actions.user.isOwner(
-                  address,
-                  itemCurrency.tokenKey || currencyName
-                )}
-                currency={currency.toLowerCase()}
-                singleWallet={true}
-                multisigPendingCount={multisigPendingCount}
-              />
-              :
-              <Fragment>
-                {/*
-                //@ts-ignore */}
-                <ContentLoader leftSideContent />
-              </Fragment>
+            <BalanceForm
+              type="currencyWallet"
+              activeFiat={activeFiat}
+              currencyBalance={balance}
+              fiatBalance={currencyFiatBalance}
+              activeCurrency={activeCurrency}
+              isFetching={isBalanceFetching}
+              handleReceive={this.handleReceive}
+              handleWithdraw={this.handleWithdraw}
+              handleInvoice={this.handleInvoice}
+              showButtons={actions.user.isOwner(
+                address,
+                itemCurrency.tokenKey || currencyName
+              )}
+              currency={currency.toLowerCase()}
+              singleWallet={true}
+              multisigPendingCount={multisigPendingCount}
+            />
           }
         >
           <div styleName="currencyWalletActivity">
@@ -575,15 +567,11 @@ class CurrencyWallet extends Component<any, any> {
                 <Table rows={txHistory} styleName="currencyHistory" rowRender={this.rowRender} />
               ) : (
                   <div styleName="historyContent">
-                    {/*
-                    //@ts-ignore */}
                     <ContentLoader rideSideContent empty nonHeader inner />
                   </div>
                 ))}
             {(!txHistory || isLoading) && (
               <div styleName="historyContent">
-                {/*
-                //@ts-ignore */}
                 <ContentLoader rideSideContent nonHeader />
               </div>
             )}

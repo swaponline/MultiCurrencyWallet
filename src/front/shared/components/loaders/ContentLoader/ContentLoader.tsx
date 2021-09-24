@@ -7,7 +7,8 @@ import DescrSection from './components/DescrSection/DescrSection'
 import BalanceSection from './components/BalanceSection/BalanceSection'
 import BannersSection from './components/BannersSection/BannersSection'
 
-function ContentLoader({ empty, inner, rideSideContent, leftSideContent, banners, nonHeader }) {
+function ContentLoader(props) {
+  const { empty, inner, rideSideContent, leftSideContent, banners, nonHeader } = props
 
   return (
     <Fragment>
