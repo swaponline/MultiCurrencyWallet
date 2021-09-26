@@ -1,18 +1,36 @@
 .langSwitcher {
-  a {
-    font-size: 14px;
-  }
+  display: flex;
+  align-items: center;
 }
 
 .language {
-  font-size: 20px;
+  position: relative;
+  font-size: 14px;
   cursor: pointer;
   color: var(--color-brand-hover);
   font-weight: bolder;
-  padding: 0 3px 0 3px;
+  padding: 0 5px;
+
+  &:hover {
+    color: var(--color-brand);
+  }
 
   &:not([href]) {
     color: var(--color-notice);
+
+    &:hover {
+      color: var(--color-notice);
+    }
+  }
+
+  &:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 0;
+    height: 65%;
+    width: 1px;
+    transform: translateY(-50%);
+    background-color: var( --color-notice);
   }
 }
-
