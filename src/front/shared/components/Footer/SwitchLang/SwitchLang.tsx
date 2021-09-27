@@ -5,8 +5,6 @@ import { setCookie } from 'helpers/utils'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import feedback from 'helpers/feedback'
 
-const DEFAULT_LANGUAGE = window.DEFAULT_LANGUAGE
-
 const SwitchLang = (props) => {
   const {
     intl: { locale: intlLocale },

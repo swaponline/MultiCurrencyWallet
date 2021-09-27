@@ -718,6 +718,8 @@
         return '';
       }
 
+      const defaultLanguage = window.defaultLanguage
+
       // detect browser's lang
       const getNavigatorLanguage = () => {
         if (navigator.languages && navigator.languages.length) {
