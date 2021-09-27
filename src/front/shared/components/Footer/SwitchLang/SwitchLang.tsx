@@ -15,7 +15,7 @@ const SwitchLang = (props) => {
 
     feedback.i18n.switched(locale)
 
-    setCookie('mylang', locale.toUpperCase(), new Date(new Date().getFullYear() + 1, 1))
+    setCookie('mylang', locale.toLowerCase(), new Date(new Date().getFullYear() + 1, 1))
 
     window.setTimeout(() => {
       window.location.reload()

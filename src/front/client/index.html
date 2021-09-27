@@ -718,8 +718,6 @@
         return '';
       }
 
-      const defaultLanguage = window.defaultLanguage
-
       // detect browser's lang
       const getNavigatorLanguage = () => {
         if (navigator.languages && navigator.languages.length) {
@@ -745,14 +743,21 @@
         'pl',
       ]
 
-      const isLangAvailable = availableLangs.includes(lang)
+      const isLangAvailable = lang ? availableLangs.includes(lang.toLowerCase()) : false
+      const defaultLanguage = window.defaultLanguage
 
       if (!lang || !isLangAvailable) {
-        const browserLang = getNavigatorLanguage().split("-")[0];
-        lang = availableLangs.includes(browserLang) ? browserLang : (function () {
-          console.log('Set English by default')
-          return 'en';
-        })()
+        if (defaultLanguage) {
+          lang = defaultLanguage
+        } else {
+          const browserLang = getNavigatorLanguage().split("-")[0];
+
+          lang = availableLangs.includes(browserLang) ? browserLang : (function () {
+            console.log('Set English by default')
+            return 'en';
+          })()
+        }
+
         setCookie('mylang', lang);
       }
 
