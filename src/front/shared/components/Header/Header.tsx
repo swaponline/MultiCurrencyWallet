@@ -33,7 +33,7 @@ import {
   user,
   feedback,
   wpLogoutModal,
-  externalConfig as config
+  externalConfig,
 } from 'helpers'
 
 import Swap from 'swap.swap'
@@ -42,7 +42,7 @@ import SwapApp from 'swap.app'
 /* uncomment to debug */
 //window.isUserRegisteredAndLoggedIn = true
 
-const isWidgetBuild = config && config.isWidget
+const isWidgetBuild = externalConfig && externalConfig.isWidget
 
 @withRouter
 @connect({
@@ -65,8 +65,6 @@ class Header extends Component<any, any> {
     return { path: false }
   }
 
-  lastScrollTop: any
-
   constructor(props) {
     super(props)
 
@@ -80,23 +78,28 @@ class Header extends Component<any, any> {
     const dynamicPath = pathname.includes(exchange) ? `${pathname}` : `${home}`
     //@ts-ignore: strictNullChecks
     let lsWalletCreated: string | boolean = localStorage.getItem(isWalletCreate)
-    if (config && config.isWidget) {
+    if (externalConfig && externalConfig.isWidget) {
       lsWalletCreated = true
     }
 
     const isWalletPage = pathname === wallet || pathname === `/ru${wallet}`
 
+    const availableNetworks = Object.values(externalConfig.evmNetworks).filter(
+      (info: { currency: string }) => {
+        return externalConfig.opts.curEnabled[info.currency.toLowerCase()]
+      }
+    )
+
     this.state = {
       isPartialTourOpen: false,
       path: false,
       isTourOpen: false,
-      isWallet: false,
       menuItems: getMenuItems(props),
       menuItemsMobile: getMenuItemsMobile(props, lsWalletCreated, dynamicPath),
       createdWalletLoader: isWalletPage && !lsWalletCreated,
       themeSwapAnimation: false,
+      canUseExternalWallet: !!availableNetworks.length,
     }
-    this.lastScrollTop = 0
   }
 
   clearLocalStorage = () => {
@@ -180,7 +183,7 @@ class Header extends Component<any, any> {
 
       let isWalletCreate = localStorage.getItem(constants.localStorage.isWalletCreate)
 
-      if (config && config.isWidget) {
+      if (externalConfig && externalConfig.isWidget) {
         //@ts-ignore
         isWalletCreate = true
       }
@@ -281,14 +284,14 @@ class Header extends Component<any, any> {
       case isWidgetBuild && !wasOnWidgetWalletLs:
         tourEvent = this.openWidgetWalletTour
         break
-      case !metamask.isConnected() && !userCurrencies.length && isWalletPage && !config.opts.plugins.backupPlugin:
+      case !metamask.isConnected() && !userCurrencies.length && isWalletPage && !externalConfig.opts.plugins.backupPlugin:
         this.openCreateWallet({ onClose: tourEvent })
         break
       default:
         return
     }
 
-    if (!didOpenWalletCreate && isWalletPage && !config.opts.plugins.backupPlugin) {
+    if (!didOpenWalletCreate && isWalletPage && !externalConfig.opts.plugins.backupPlugin) {
       this.openCreateWallet({ onClose: tourEvent })
       return
     }
@@ -414,6 +417,7 @@ class Header extends Component<any, any> {
       menuItemsMobile,
       createdWalletLoader,
       isWidgetTourOpen,
+      canUseExternalWallet,
     } = this.state
     const {
       intl: { formatMessage },
@@ -441,7 +445,8 @@ class Header extends Component<any, any> {
           {!isMobile && <Nav menu={menuItems} />}
         </div>
         <div styleName="rightArea">
-          <WalletConnect />
+          {canUseExternalWallet && <WalletConnect />}
+
           {window.WPSO_selected_theme !== 'only_light' && window.WPSO_selected_theme !== 'only_dark' && (
             <ThemeSwitcher onClick={this.handleToggleTheme} />
           )}
