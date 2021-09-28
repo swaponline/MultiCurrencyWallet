@@ -19,5 +19,5 @@
     "page": "application/index.html#/marketmaker/{MATIC}WBTC",
     "persistent": true
   },
-  "content_security_policy": "script-src 'self' 'unsafe-eval' https://unpkg.com/ 'sha256-PGPZTVF5wEwDUBlS4T4U148axx3F5TFrn4wulbUYuuw='; object-src 'self'"
+  "content_security_policy": "script-src 'self' 'unsafe-eval' https://unpkg.com/ 'sha256-yXg/I1lV62QWt2u+G8Cq8HcSiMXwVDkTfQ8IXci5i+U='; object-src 'self'"
 }
