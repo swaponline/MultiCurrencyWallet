@@ -1,7 +1,7 @@
 import React from 'react'
 import actions from 'redux/actions'
 import { connect } from 'redaction'
-import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
+import { FormattedMessage, injectIntl } from 'react-intl'
 import cssModules from 'react-css-modules'
 import cx from 'classnames'
 import styles from './ConnectWalletModal.scss'
@@ -21,9 +21,16 @@ class ConnectWalletModal extends React.Component<any, any> {
   constructor(props) {
     super(props)
 
+    const availableNetworks = Object.values(externalConfig.evmNetworks).filter(
+      (info: { currency: string }) => {
+        return externalConfig.opts.curEnabled[info.currency.toLowerCase()]
+      }
+    )
+
     this.state = {
       choseNetwork: false,
       currentBaseCurrency: -1,
+      availableNetworks,
     }
   }
 
@@ -105,8 +112,10 @@ class ConnectWalletModal extends React.Component<any, any> {
   }
 
   newWeb3connect = () => {
-    const { currentBaseCurrency } = this.state
-    const networkInfo = externalConfig.evmNetworks[currentBaseCurrency.toUpperCase()]
+    const { currentBaseCurrency, availableNetworks } = this.state
+    const networkInfo = availableNetworks.find((info) => {
+      return info.currency === currentBaseCurrency.toUpperCase()
+    })
 
     metamask.setWeb3connect(networkInfo.networkVersion)
 
@@ -129,7 +138,7 @@ class ConnectWalletModal extends React.Component<any, any> {
 
   render() {
     const { dashboardModalsAllowed } = this.props
-    const { choseNetwork, currentBaseCurrency } = this.state
+    const { choseNetwork, currentBaseCurrency, availableNetworks } = this.state
 
     return (
       <div
@@ -145,7 +154,9 @@ class ConnectWalletModal extends React.Component<any, any> {
           })}
         >
           <div styleName="header">
-            <h3 styleName="title"><FormattedMessage id="Connect" defaultMessage="Connect" /></h3>
+            <h3 styleName="title">
+              <FormattedMessage id="Connect" defaultMessage="Connect" />
+            </h3>
             <CloseIcon onClick={this.handleClose} />
           </div>
 
@@ -155,22 +166,20 @@ class ConnectWalletModal extends React.Component<any, any> {
                 <FormattedMessage id="chooseNetwork" defaultMessage="Choose network" />
               </h3>
               <div styleName="options">
-                {Object.values(externalConfig.evmNetworks).map(
+                {availableNetworks.map(
                   (
                     item: {
                       currency: string
-                      chainId: number
-                      networkVersion: number
                       chainName: string
-                      rpcUrls: string[]
-                      blockExplorerUrls: string[]
                     },
                     index
                   ) => {
                     return (
                       <button
                         key={index}
-                        styleName={`option ${currentBaseCurrency === item.currency ? 'selected' : ''}`}
+                        styleName={`option ${
+                          currentBaseCurrency === item.currency ? 'selected' : ''
+                        }`}
                         onClick={() => this.setNetwork(item.currency)}
                       >
                         <Coin size={50} name={item.currency.toLowerCase()} />
@@ -196,7 +205,10 @@ class ConnectWalletModal extends React.Component<any, any> {
                 )}
                 <div styleName="provider">
                   <Button brand onClick={this.handleWalletConnect}>
-                    <FormattedMessage id="ConnectWalletModal_WalletConnect" defaultMessage="WalletConnect" />
+                    <FormattedMessage
+                      id="ConnectWalletModal_WalletConnect"
+                      defaultMessage="WalletConnect"
+                    />
                   </Button>
                 </div>
               </div>
