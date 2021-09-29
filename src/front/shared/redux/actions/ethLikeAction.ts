@@ -13,7 +13,6 @@ import metamask from 'helpers/metamask'
 import { feedback, constants, cacheStorageGet, cacheStorageSet, apiLooper } from 'helpers'
 
 class EthLikeAction {
-  readonly coinName: string
   readonly ticker: string // upper case (ex. ETH)
   readonly tickerKey: string // lower case (ex. eth)
   readonly privateKeyName: string
@@ -31,7 +30,6 @@ class EthLikeAction {
 
   constructor(options) {
     const {
-      coinName,
       ticker,
       privateKeyName,
       chainId,
@@ -42,7 +40,6 @@ class EthLikeAction {
       web3,
     } = options
 
-    this.coinName = coinName
     this.ticker = ticker
     this.privateKeyName = privateKeyName.toLowerCase()
     this.chainId = chainId
@@ -571,50 +568,33 @@ class EthLikeAction {
   }
 }
 
-export default {
-  ETH: new EthLikeAction({
-    coinName: 'Ethereum',
-    ticker: 'ETH',
-    privateKeyName: 'eth',
-    chainId: externalConfig.evmNetworks.ETH.chainId,
-    explorerName: 'etherscan',
-    explorerLink: externalConfig.link.etherscan,
-    explorerApiKey: externalConfig.api.etherscan_ApiKey,
-    adminFeeObj: externalConfig.opts?.fee?.eth,
-    web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.provider)),
-  }),
-  // use an ethereum private key for EVM compatible blockchains
-  BNB: new EthLikeAction({
-    coinName: 'Binance Coin',
-    ticker: 'BNB',
-    privateKeyName: 'eth',
-    chainId: externalConfig.evmNetworks.BNB.chainId,
-    explorerName: 'bscscan',
-    explorerLink: externalConfig.link.bscscan,
-    explorerApiKey: externalConfig.api.bscscan_ApiKey,
-    adminFeeObj: externalConfig.opts?.fee?.bnb,
-    web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.binance_provider)),
-  }),
-  MATIC: new EthLikeAction({
-    coinName: 'MATIC Token',
-    ticker: 'MATIC',
-    privateKeyName: 'eth',
-    chainId: externalConfig.evmNetworks.MATIC.chainId,
-    explorerName: 'maticscan',
-    explorerLink: externalConfig.link.maticscan,
-    explorerApiKey: externalConfig.api.polygon_ApiKey,
-    adminFeeObj: externalConfig.opts?.fee?.matic,
-    web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.matic_provider)),
-  }),
-  ARBETH: new EthLikeAction({
-    coinName: 'Arbitrum ETH',
-    ticker: 'ARBETH',
-    privateKeyName: 'eth',
-    chainId: externalConfig.evmNetworks.ARBETH.chainId,
-    explorerName: 'rinkeby-explorer',
-    explorerLink: externalConfig.link.arbitrum,
-    explorerApiKey: '',
-    adminFeeObj: externalConfig.opts?.fee?.arbeth,
-    web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.arbitrum_provider)),
-  }),
-}
+const instances = {}
+
+Object.values(externalConfig.evmNetworks).forEach(
+  (networkInfo: {
+    currency: string
+    chainId: string
+    blockExplorerUrls: string[]
+    rpcUrls: string[]
+  }) => {
+    const { currency, chainId, blockExplorerUrls, rpcUrls } = networkInfo
+    const adminFeeObj = externalConfig.opts?.fee[currency.toLowerCase()]
+
+    instances[currency] = new EthLikeAction({
+      ticker: currency,
+      privateKeyName: 'eth',
+      chainId,
+
+      // ! replace
+      explorerName: 'rinkeby-explorer',
+      explorerApiKey: '',
+      // ! ^
+
+      explorerLink: blockExplorerUrls[0],
+      adminFeeObj,
+      web3: new Web3(rpcUrls[0]),
+    })
+  }
+)
+
+export default instances

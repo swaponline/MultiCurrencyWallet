@@ -7,7 +7,7 @@ import INJECTED_TYPE from './providers/InjectedType'
 import getProviderByName from './providers'
 import { isInjectedEnabled } from './providers'
 import { isMobile } from 'react-device-detect'
-import config from 'app-config'
+import { externalConfig } from 'helpers'
 
 export default class Web3Connect extends EventEmitter {
   _cachedProvider: IEtheriumProvider | null = null
@@ -273,8 +273,8 @@ export default class Web3Connect extends EventEmitter {
     const { decimalCurrrentId, dicimalCachedId } = this.getNetworksId()
 
     const supportedNetwork =
-      config.evmNetworkVersions.includes(decimalCurrrentId) ||
-      config.evmNetworkVersions.includes(dicimalCachedId)
+      externalConfig.evmNetworkVersions.includes(decimalCurrrentId) ||
+      externalConfig.evmNetworkVersions.includes(dicimalCachedId)
 
     return (
       `${this._web3ChainId}` === `${this._cachedChainId}`

@@ -177,6 +177,18 @@ const externalConfig = () => {
     config.opts.blockchainSwapEnabled.arbeth = false
   }
 
+  // filter disabled networks
+  config.evmNetworks = Object.keys(config.evmNetworks)
+    .filter((key) => config.opts.curEnabled[key.toLowerCase()])
+    .reduce((acc, key) => {
+      acc[key] = config.evmNetworks[key]
+
+      return acc
+    }, {})
+
+  config.evmNetworkVersions = Object.values(config.evmNetworks).map(
+    (info: { networkVersion: number }) => info.networkVersion
+  )
 
   // Plugins
   if (window

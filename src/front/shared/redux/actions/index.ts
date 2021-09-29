@@ -29,7 +29,7 @@ import backupManager from './backupManager'
 
 import multisigTx from './multisigTx'
 
-export default {
+const config = {
   filter,
   modals,
   loader,
@@ -41,10 +41,6 @@ export default {
   oneinch,
   btc,
   btcmultisig,
-  eth: EthLikeAction.ETH,
-  bnb: EthLikeAction.BNB,
-  matic: EthLikeAction.MATIC,
-  arbeth: EthLikeAction.ARBETH,
   erc20: Erc20LikeAction.erc20,
   bep20: Erc20LikeAction.bep20,
   erc20matic: Erc20LikeAction.erc20matic,
@@ -64,3 +60,9 @@ export default {
 
   multisigTx,
 }
+
+Object.values(EthLikeAction).forEach((evmInstance: { ticker: string }) => {
+  config[evmInstance.ticker.toLowerCase()] = evmInstance
+})
+
+export default config

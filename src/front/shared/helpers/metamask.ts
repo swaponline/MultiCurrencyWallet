@@ -2,7 +2,7 @@ import reducers from 'redux/core/reducers'
 import getState from './getReduxState'
 import actions from 'redux/actions'
 import { cacheStorageGet, cacheStorageSet, constants } from 'helpers'
-import config from 'app-config'
+import externalConfig from './externalConfig'
 import { setMetamask, setProvider, setDefaultProvider, getWeb3 as getDefaultWeb3 } from 'helpers/web3'
 import SwapApp from 'swap.app'
 import Web3Connect from 'helpers/web3connect'
@@ -13,7 +13,15 @@ let web3connect: any = undefined
 
 const { user: { metamaskData } } = getState()
 
-setWeb3connect((metamaskData?.networkVersion) ? metamaskData.networkVersion : config.evmNetworks.ETH.networkVersion)
+if (metamaskData?.networkVersion) {
+  setWeb3connect(metamaskData.networkVersion)
+} else if (Object.keys(externalConfig.evmNetworks).length) {
+  const firstKey = Object.keys(externalConfig.evmNetworks)[0]
+
+  setWeb3connect(externalConfig.evmNetworks[firstKey].networkVersion)
+} else {
+  setWeb3connect(-1)
+}
 
 function handleConnected () {
   localStorage.setItem(constants.localStorage.isWalletCreate, 'true')
@@ -43,9 +51,11 @@ function cleanWeb3connectListeners() {
 }
 
 function setWeb3connect(networkId) {
-  const newNetworkData: any = Object.values(config.evmNetworks).find((networkInfo: IUniversalObj) => {
-    return networkInfo.networkVersion === networkId
-  })
+  const newNetworkData: any = Object.values(externalConfig.evmNetworks).find(
+    (networkInfo: { networkVersion: number }) => {
+      return networkInfo.networkVersion === networkId
+    }
+  )
 
   if (newNetworkData) {
     if (web3connect) {
@@ -177,7 +187,7 @@ const getChainId = () => {
 const isAvailableNetwork = () => {
   const networkVersion = getChainId()
 
-  return (config.evmNetworkVersions.includes(networkVersion))
+  return (externalConfig.evmNetworkVersions.includes(networkVersion))
 }
 
 const isAvailableNetworkByCurrency = (currency) => {
@@ -190,8 +200,8 @@ const isAvailableNetworkByCurrency = (currency) => {
 
   const currencyNetworkVersion =
     (blockchain)
-    ? config.evmNetworks[blockchain]?.networkVersion
-    : config.evmNetworks[ticker]?.networkVersion
+    ? externalConfig.evmNetworks[blockchain]?.networkVersion
+    : externalConfig.evmNetworks[ticker]?.networkVersion
 
   const currentNetworkVersion = getChainId()
 
@@ -204,7 +214,7 @@ const addMetamaskWallet = () => {
 
     if (isAvailableNetwork()) {
       const { user } = getState()
-      const currentNetworkData: any = Object.values(config.evmNetworks).find((networkInfo: {
+      const currentNetworkData: any = Object.values(externalConfig.evmNetworks).find((networkInfo: {
         currency: string
         chainId: string
         networkVersion: number
@@ -322,7 +332,7 @@ const handleConnectMetamask = (params: MetamaskConnectParams = {}) => {
 }
 
 const switchNetwork = async (nativeCurrency) => {
-  const { chainId } = config.evmNetworks[nativeCurrency]
+  const { chainId } = externalConfig.evmNetworks[nativeCurrency]
 
   if (!window.ethereum) return false
 
@@ -367,7 +377,7 @@ const addCurrencyNetwork = async (currency) => {
     chainName,
     rpcUrls,
     blockExplorerUrls
-  } = config.evmNetworks[nativeCurrency]
+  } = externalConfig.evmNetworks[nativeCurrency]
 
   const {
     name,
