@@ -5,7 +5,7 @@ import { cacheStorageGet, cacheStorageSet, constants } from 'helpers'
 import config from 'app-config'
 import { setMetamask, setProvider, setDefaultProvider, getWeb3 as getDefaultWeb3 } from 'helpers/web3'
 import SwapApp from 'swap.app'
-import Web3Connect from 'common/web3connect'
+import Web3Connect from 'helpers/web3connect'
 import { COIN_DATA, COIN_MODEL } from 'swap.app/constants/COINS'
 import getCoinInfo from 'common/coins/getCoinInfo'
 
