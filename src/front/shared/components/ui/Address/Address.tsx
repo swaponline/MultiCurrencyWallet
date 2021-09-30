@@ -25,6 +25,8 @@ export default class Address extends Component<IAddress, object> {
       style,
     } = this.props
 
+    if (!address) return null
+
     const addressStart = address.substring(0, 6)
     const addressEnd = address.substring(address.length - 4, address.length)
     const color = type === AddressType.Metamask ? '#e4761b' : ''
