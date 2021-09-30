@@ -300,7 +300,6 @@ class InfoInvoice extends React.Component<any, any> {
     }
 
     return (
-      //@ts-ignore: strictNullChecks
       <Modal 
         name="InfoInvoice" title={modalTitle} 
         onClose={this.handleClose} 

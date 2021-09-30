@@ -78,7 +78,6 @@ class BtcMultisignSwitch extends React.Component<any, any> {
     })
 
     return (
-      //@ts-ignore: strictNullChecks
       <Modal name={name} title={`${intl.formatMessage(langLabels.title)}`}>
         <Fragment>
           <Table

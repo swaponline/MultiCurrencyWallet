@@ -892,7 +892,6 @@ class WithdrawModalMultisig extends React.Component<any, any> {
     )
 
     return (
-      //@ts-ignore: strictNullChecks
       <Modal
         name={name}
         title={`${intl.formatMessage(labels.withdrawModal)}${' '}${currency.toUpperCase()}`}

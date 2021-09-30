@@ -93,7 +93,6 @@ class OrderPurchaseModal extends React.Component<ComponentProps, ComponentState>
       : remainingTakerAmount
 
     return (
-      //@ts-ignore: strictNullChecks
       <Modal
         name="orderPurchaseModal"
         title={<FormattedMessage id="executeOrder" defaultMessage="Execute the order" />}

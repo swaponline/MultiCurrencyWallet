@@ -219,7 +219,6 @@ class RestoryMnemonicWallet extends React.Component<ComponentProps, ComponentSta
     } = this.state
 
     return (
-      //@ts-ignore: strictNullChecks
       <Modal
         name={name}
         title={`${intl.formatMessage(langLabels.title)}`}

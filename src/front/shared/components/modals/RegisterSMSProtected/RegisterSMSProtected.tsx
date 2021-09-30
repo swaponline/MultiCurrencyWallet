@@ -497,7 +497,6 @@ class RegisterSMSProtected extends React.Component<any, any> {
 
     const sentBtnDisabled = isShipped || !phone || (phone && !isValidPhoneNumber(phone))
     return (
-      //@ts-ignore: strictNullChecks
       <Modal name={name} title={`${intl.formatMessage(langs.registerSMSModal)}`}>
         <div styleName="registerSMSModalHolder">
           <style

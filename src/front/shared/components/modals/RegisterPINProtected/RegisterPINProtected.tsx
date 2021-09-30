@@ -522,7 +522,6 @@ class RegisterPINProtected extends React.Component<any, any> {
     const linked = Link.all(this, 'pinCode', 'pinCodeConfirm', 'mnemonic')
 
     return (
-      //@ts-ignore: strictNullChecks
       <Modal name={name} title={`${intl.formatMessage(langs.registerPinModal)}`}>
         <div styleName="registerPINModalHolder">
           {step === 'saveMnemonicWords' && (
