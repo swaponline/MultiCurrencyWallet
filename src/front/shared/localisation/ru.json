@@ -5531,7 +5531,7 @@
   },
   {
     "id": "MM_Promo_TitleBody",
-    "message": "Пользователи в нашем обменнике swap.io меняют {utxoCoin} на {token} (токен который стоит как {utxoCoin}, но работает на {Ab_Title}), и обратно. Ты получишь мин. 10% годовых в качестве комиссии c обменов с низким impermanent loss {link}.",
+    "message": "Пользователи в нашем обменнике swap.io меняют {utxoCoin} на {token} (токен который стоит как {utxoCoin}, но работает на {Ab_Title}), и обратно.",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx",
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"

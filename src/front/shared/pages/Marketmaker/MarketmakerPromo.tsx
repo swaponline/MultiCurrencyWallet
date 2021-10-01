@@ -77,7 +77,7 @@ export default class MarketmakerPromo extends React.Component<{}, ComponentState
 
   openChromeStore() {
     feedback.marketmaking.selected('installExtension')
-    window.open('https://chrome.google.com/webstore/detail/multicurrencywallet/oldojieloelkkfeacfinhcngmbkepnlm')
+    window.open(links.extension)
   }
 
   render() {
@@ -98,7 +98,7 @@ export default class MarketmakerPromo extends React.Component<{}, ComponentState
           <p styleName="promoDescription">
             <FormattedMessage
               id="MM_Promo_TitleBody"
-              defaultMessage="On swap.io users exchange {utxoCoin} for {token} (a token that costs like {utxoCoin}, but works on {Ab_Title}), and vice versa. You get min. 10% APY (annual percentage yield) as a commission from exchanges with low impermanent loss {link}."
+              defaultMessage="On swap.io users exchange {utxoCoin} for {token} (a token that costs like {utxoCoin}, but works on {Ab_Title}), and vice versa."
               values={{
                 utxoCoin: 'BTC',
                 token: (config.binance) ? `BTCB` : `WBTC`,
