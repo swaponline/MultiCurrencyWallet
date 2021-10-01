@@ -43,7 +43,6 @@ import SwapApp from 'swap.app'
 //window.isUserRegisteredAndLoggedIn = true
 
 const isWidgetBuild = config && config.isWidget
-const isBrowserExtension = config.dir === 'chrome-extension/application'
 
 @withRouter
 @connect({
@@ -442,7 +441,7 @@ class Header extends Component<any, any> {
           {!isMobile && <Nav menu={menuItems} />}
         </div>
         <div styleName="rightArea">
-          {!isBrowserExtension && <WalletConnect />}
+          {!config.isExtension && <WalletConnect />}
 
           {window.WPSO_selected_theme !== 'only_light' && window.WPSO_selected_theme !== 'only_dark' && (
             <ThemeSwitcher onClick={this.handleToggleTheme} />
