@@ -115,6 +115,8 @@ export const getTransakLink = (params) => {
   const { currency = '', walletAddress = '' } = params
   const { user } = store.getState()
 
+  const isLocalHost = location.hostname === 'localhost' || location.hostname === '127.0.0.1'
+  const hostURL = window.location.origin // isLocalHost ? false : window.location.origin
   let environment = 'STAGING'
   let exchangeUrl = links.transakDev
 
@@ -126,11 +128,11 @@ export const getTransakLink = (params) => {
   const parameters = [
     // required parameters
     `?apiKey=${window.transakApiKey}`,
-    `&hostURL=${window.location.origin}`,
+    `&hostURL=${hostURL}`,
     `&environment=${environment}`,
 
     // not necessary
-    `&redirectURL=${window.location.origin}`,
+    `&redirectURL=${hostURL}`,
     `&fiatCurrency=${user.activeFiat}`,
   ]
 
