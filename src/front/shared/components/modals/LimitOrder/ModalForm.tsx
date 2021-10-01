@@ -40,7 +40,6 @@ function ModalForm(props) {
   }
 
   return (
-    //@ts-ignore: strictNullChecks
     <Modal
       name={modalName}
       title={<FormattedMessage id="limitOrder" defaultMessage="Limit order" />}

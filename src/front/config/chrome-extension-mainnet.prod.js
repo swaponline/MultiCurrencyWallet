@@ -7,6 +7,7 @@ export default {
   entry: 'mainnet',
   local: 'local',
   dir: 'chrome-extension/application',
+  isExtension: true,
 
   base: './',
   publicPath: `.${baseConfig.publicPath}`,
