@@ -8,6 +8,7 @@ export default {
   entry: 'testnet',
   local: 'local',
   dir: 'chrome-extension/application',
+  isExtension: true,
 
   base: './',
   publicPath: `.${baseConfig.publicPath}`,
