@@ -46,6 +46,8 @@ describe('Withdraw form tests', () => {
     const balance = await page.$eval(`#${ticker}CryptoBalance`, (el) => el.textContent)
 
     if (isNaN(Number(balance)) || balance === '0') {
+      // close an opened list
+      await page.click('#withdrawCurrencyList')
       throw new Error(`no balance for the asset: ${ticker.toUpperCase()}`)
     }
 
