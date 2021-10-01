@@ -1,16 +1,55 @@
+import puppeteer from 'puppeteer'
 import testWallets from '../testWallets'
-import { createBrowser, importWallet, selectSendCurrency, takeScreenshot } from './utils'
+import { createBrowser, importWallet, selectSendCurrency, takeScreenshot, timeOut } from './utils'
 
 jest.setTimeout(200_000) // ms
 
 describe('Withdraw form tests', () => {
+  let testBrowser: puppeteer.Browser | undefined = undefined
+  let testPage: puppeteer.Page | undefined = undefined
+
+  beforeAll(async () => {
+    const { browser, page } = await createBrowser()
+
+    testBrowser = browser
+    testPage = page
+
+    const arrOfWords = testWallets.eth.seedPhrase.split(' ')
+
+    await importWallet({
+      page: testPage,
+      seed: arrOfWords,
+    })
+
+    await page.waitForSelector('#sendBtn')
+    await page.click('#sendBtn')
+
+    await timeOut(60_000)
+  })
+
+  afterAll(async () => {
+    await testBrowser?.close()
+  })
+
   const checkSelectedCurrency = async (params) => {
     const { page, ticker } = params
 
     // a suitable example: 0.005166 ETH ($18.23)
     const feeRegExp = /[\d(\.)?\d]+ [A-Z]{3,} \(.{1}[\d(\.)?\d]+\)/
 
-    await selectSendCurrency({ page, currency: ticker })
+    // await selectSendCurrency({ page, currency: ticker })
+
+    await page.waitForSelector('#withdrawCurrencyList')
+    await page.click('#withdrawCurrencyList')
+
+    await page.waitForSelector(`#${ticker}CryptoBalance`)
+    const balance = await page.$eval(`#${ticker}CryptoBalance`, (el) => el.textContent)
+
+    if (isNaN(Number(balance)) || balance === '0') {
+      throw new Error(`no balance for the asset: ${ticker.toUpperCase()}`)
+    }
+
+    await page.click(`#${ticker}Send`)
 
     await page.waitForSelector('#feeInfoBlockMinerFee')
     await page.waitForSelector('#feeInfoBlockTotalFee')
@@ -31,28 +70,21 @@ describe('Withdraw form tests', () => {
     // expect(minerAmount).toBeCloseTo(totalAmount)
   }
 
-  it('the form should displayed correctly with all currencies. Correct display of commissions', async () => {
-    const { browser, page } = await createBrowser()
-    const arrOfWords = testWallets.eth.seedPhrase.split(' ')
+  const cases = [['btc'], ['eth'], ['bnb'], ['matic']]
 
-    try {
-      await importWallet({
-        page,
-        seed: arrOfWords,
-      })
-      await page.waitForTimeout(5_000)
+  it.each(cases)('correct display balances and commissions. Asset: %s', async (name) => {
+    if (testPage && testBrowser) {
+      try {
+        await testPage.waitForTimeout(5_000)
 
-      await checkSelectedCurrency({ page, ticker: 'btc' })
-      await checkSelectedCurrency({ page, ticker: 'eth' })
-      await checkSelectedCurrency({ page, ticker: 'bnb' })
-      await checkSelectedCurrency({ page, ticker: 'matic' })
-    } catch (error) {
-      console.error('Withdraw form tests error', error)
-      await takeScreenshot(page, 'WithdrawFormTestsError')
-      expect(false).toBe(true)
-    } finally {
-      await browser.close()
+        await checkSelectedCurrency({ page: testPage, ticker: name })
+      } catch (error) {
+        console.error('Withdraw form tests error', error)
+        await takeScreenshot(testPage, 'WithdrawFormTestsError')
+        expect(false).toBe(true)
+      }
+    } else {
+      throw new Error('Browser or page is not found')
     }
   })
-
 })

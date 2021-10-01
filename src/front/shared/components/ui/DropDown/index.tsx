@@ -145,7 +145,6 @@ export default class DropDown extends Component<DropDownProps, DropDownState> {
     const dropDownId = role ? `dropDown${role}` : 'dropDownNoRole'
 
     return (
-      //@ts-ignore: strictNullChecks
       <OutsideClick outsideAction={this.handleClickOutside}>
         <div styleName={`${dropDownStyleName}`} className={className}>
           <div
