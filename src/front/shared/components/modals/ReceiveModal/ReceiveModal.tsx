@@ -1,8 +1,7 @@
 import React, { Fragment }  from 'react'
 import { withRouter } from 'react-router-dom'
-import { connect } from 'redaction'
 import actions from 'redux/actions'
-import { constants } from 'helpers'
+import { constants, externalConfig, getCurrencyKey, user } from 'helpers'
 import erc20Like from 'common/erc20Like'
 import cssModules from 'react-css-modules'
 import styles from '../Styles/default.scss'
@@ -13,11 +12,6 @@ import { Modal } from 'components/modal'
 import { Button } from 'components/controls'
 import Copy from 'components/ui/Copy/Copy'
 import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
-
-import config from 'helpers/externalConfig'
-import getCurrencyKey from 'helpers/getCurrencyKey'
-import { getItezUrl } from 'helpers'
-
 
 const langPrefix = `ReceiveModal`
 const langs = defineMessages({
@@ -43,9 +37,6 @@ const langs = defineMessages({
   },
 })
 
-@connect(
-  ({ user }) => ({ user })
-)
 @withRouter
 @cssModules({ ...styles, ...ownStyles }, { allowMultiple: true })
 class ReceiveModal extends React.Component<any, any> {
@@ -59,11 +50,11 @@ class ReceiveModal extends React.Component<any, any> {
     } = props
 
     let howToDeposit = ''
-    if (config
-      && config.erc20
-      && config.erc20[currency.toLowerCase()]
-      && config.erc20[currency.toLowerCase()].howToDeposit
-    ) howToDeposit = config.erc20[currency.toLowerCase()].howToDeposit
+    if (externalConfig
+      && externalConfig.erc20
+      && externalConfig.erc20[currency.toLowerCase()]
+      && externalConfig.erc20[currency.toLowerCase()].howToDeposit
+    ) howToDeposit = externalConfig.erc20[currency.toLowerCase()].howToDeposit
 
     const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
     const mnemonicSaved = (mnemonic === `-`)
@@ -77,7 +68,7 @@ class ReceiveModal extends React.Component<any, any> {
     props.history.push(recieveUrl)
 
     this.state = {
-      step: (mnemonicSaved) ? 'reveive' : 'saveMnemonic',
+      step: (mnemonicSaved) ? 'receive' : 'saveMnemonic',
       howToDeposit,
     }
   }
@@ -87,7 +78,7 @@ class ReceiveModal extends React.Component<any, any> {
       onClose: () => {
         const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
         const mnemonicSaved = (mnemonic === `-`)
-        const step = (mnemonicSaved) ? 'reveive' : 'saveMnemonicWords'
+        const step = (mnemonicSaved) ? 'receive' : 'saveMnemonicWords'
 
         this.setState({
           mnemonicSaved,
@@ -110,7 +101,6 @@ class ReceiveModal extends React.Component<any, any> {
   render() {
     const {
       props: {
-        user,
         intl: { locale },
         name,
         intl,
@@ -126,11 +116,7 @@ class ReceiveModal extends React.Component<any, any> {
       },
     } = this
 
-    const buyViaCreditCardLink = (
-      config
-      && config.opts
-      && config.opts.buyViaCreditCardLink
-    ) ? config.opts.buyViaCreditCardLink : false
+    const externalExchangeLink = user.getExternalExchangeLink({ address, currency, locale })
 
     if (howToDeposit) {
       return (
@@ -145,7 +131,7 @@ class ReceiveModal extends React.Component<any, any> {
       //@ts-ignore: strictNullChecks
       <Modal name={name} title={intl.formatMessage(langs.title)}>
         <div styleName="content">
-          {step === 'reveive' && (
+          {step === 'receive' && (
             <Fragment>
               <p style={{ fontSize: 25 }}>
                 <FormattedMessage id="ReceiveModal50" defaultMessage="This is your {currency} address" values={{ currency: `${currency}` }} />
@@ -170,9 +156,10 @@ class ReceiveModal extends React.Component<any, any> {
                   </div>
                 </div>
               </Copy>
-              {currency.includes("BTC") && buyViaCreditCardLink && (
+
+              {externalExchangeLink && (
                 <div styleName="fiatDepositRow">
-                  <a href={getItezUrl({ user, locale, url: buyViaCreditCardLink })} target="_blank" rel="noopener noreferrer">
+                  <a href={externalExchangeLink} target="_blank" rel="noopener noreferrer">
                     <FormattedMessage
                       id="buyByCreditCard"
                       defaultMessage="buy using credit card"

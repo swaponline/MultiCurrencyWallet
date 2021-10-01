@@ -17,6 +17,7 @@ import {
   metamask,
   links,
   routing,
+  user,
 } from 'helpers'
 import { localisedUrl } from 'helpers/locale'
 import actions from 'redux/actions'
@@ -668,18 +669,20 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   }
 
   openExternalExchange = () => {
-    const { externalExchangeReference } = this.state
+    const { externalExchangeReference, fromWallet } = this.state
 
-    if (
-      window.buyViaCreditCardLink &&
-      (externalExchangeReference === null || externalExchangeReference.closed)
-    ) {
+    const link = user.getExternalExchangeLink({
+      address: fromWallet.address,
+      currency: fromWallet.currency,
+    })
+
+    if (link && (externalExchangeReference === null || externalExchangeReference.closed)) {
       this.setState(() => ({
         isPending: true,
       }))
 
       const newWindowProxy = window.open(
-        window.buyViaCreditCardLink,
+        link,
         'externalFiatExchange',
         'location=yes, height=770, width=620, scrollbars, status, resizable'
       )
