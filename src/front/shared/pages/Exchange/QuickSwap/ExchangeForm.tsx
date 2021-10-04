@@ -240,7 +240,6 @@ function ExchangeForm(props) {
           label={<FormattedMessage id="partial255" defaultMessage="You get" />}
           inputId="quickSwapReceiveCurrencyInput"
           currencies={receivedList}
-          placeholder="0"
           inputToolTip={
             toBalancePending ? (
               <div styleName="balanceLoader">
