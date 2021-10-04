@@ -165,7 +165,7 @@ function ExchangeForm(props) {
   }
 
   const supportedCurrencies = ['eth', 'matic']
-  const showFiatExchangeBtn = supportedCurrencies.includes(spendedCurrency.value)
+  const showFiatExchangeBtn = window.transakApiKey || supportedCurrencies.includes(spendedCurrency.value)
 
   return (
     <form action="">

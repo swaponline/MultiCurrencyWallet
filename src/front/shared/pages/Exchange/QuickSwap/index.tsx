@@ -681,11 +681,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
         isPending: true,
       }))
 
-      const newWindowProxy = window.open(
-        link,
-        'externalFiatExchange',
-        'location=yes, height=770, width=620, scrollbars, status, resizable'
-      )
+      const newWindowProxy = window.open(link)
 
       this.setState(
         () => ({

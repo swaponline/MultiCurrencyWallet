@@ -133,7 +133,12 @@ export const getTransakLink = (params) => {
 
     // not necessary
     `&redirectURL=${hostURL}`,
-    `&fiatCurrency=${user.activeFiat}`,
+    // if we have the crypto in the parameters, sometimes
+    // we don't have the ability to buy this crypto with
+    // an user active fiat. In this case after redirection
+    // Transak will drop his crypto field to the default value
+    // which is available for the fiat value that we've passed.
+    // `&fiatCurrency=${user.activeFiat}`,
   ]
 
   if (walletAddress) {
