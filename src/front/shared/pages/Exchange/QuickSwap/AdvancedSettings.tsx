@@ -23,12 +23,7 @@ function AdvancedSettings(props) {
 
   const keyDownHandler = (event) => {
     inputReplaceCommaWithDot(event)
-
-    const emptyOptions = !stateReference.gasPrice.value && !stateReference.gasLimit.value
-
-    if (swapData && emptyOptions) {
-      resetSwapData()
-    }
+    resetSwapData()
   }
 
   return (

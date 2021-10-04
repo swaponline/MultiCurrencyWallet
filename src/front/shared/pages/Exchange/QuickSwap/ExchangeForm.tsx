@@ -43,6 +43,7 @@ function ExchangeForm(props) {
     checkSwapData,
     user,
     insufficientBalance,
+    resetSwapData,
   } = props
 
   const [fromBalancePending, setFromBalancePending] = useState(false)
@@ -158,6 +159,7 @@ function ExchangeForm(props) {
 
   const handleSpendAmountInput = (value) => {
     setSpendedAmount(value)
+    resetSwapData()
 
     if (value !== spendedAmount) {
       setFlagForRequest(true)
@@ -165,7 +167,8 @@ function ExchangeForm(props) {
   }
 
   const supportedCurrencies = ['eth', 'matic']
-  const showFiatExchangeBtn = window.transakApiKey || supportedCurrencies.includes(spendedCurrency.value)
+  const showFiatExchangeBtn =
+    window.transakApiKey || supportedCurrencies.includes(spendedCurrency.value)
 
   return (
     <form action="">
@@ -263,4 +266,3 @@ function ExchangeForm(props) {
 export default connect(({ user }) => ({
   user,
 }))(CSSModules(ExchangeForm, styles, { allowMultiple: true }))
-
