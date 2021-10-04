@@ -17,6 +17,7 @@ import {
   metamask,
   links,
   routing,
+  user,
 } from 'helpers'
 import { localisedUrl } from 'helpers/locale'
 import actions from 'redux/actions'
@@ -110,7 +111,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       receivedCurrency,
       receivedAmount: '',
       toWallet: toWallet || {},
-      slippage: undefined,
+      slippage: 0.5,
       slippageMaxRange: 100,
       wrongNetwork,
       network: externalConfig.evmNetworks[spendedCurrency.blockchain || spendedCurrency.value.toUpperCase()],
@@ -389,14 +390,12 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       `sellAmount=${sellAmount}`,
     ]
 
-    if (isAdvancedMode) {
-      if (slippage) {
-        // allow users to enter an amount up to 100, because it's more easy then enter the amount from 0 to 1
-        // and now convert it into the api format
-        const correctValue = new BigNumber(slippage).dividedBy(100)
+    if (slippage) {
+      // allow users to enter an amount up to 100, because it's more easy then enter the amount from 0 to 1
+      // and now convert it into the api format
+      const correctValue = new BigNumber(slippage).dividedBy(100)
 
-        request.push(`&slippagePercentage=${correctValue}`)
-      }
+      request.push(`&slippagePercentage=${correctValue}`)
     }
 
     return request.join('')
@@ -668,21 +667,19 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   }
 
   openExternalExchange = () => {
-    const { externalExchangeReference } = this.state
+    const { externalExchangeReference, fromWallet } = this.state
 
-    if (
-      window.buyViaCreditCardLink &&
-      (externalExchangeReference === null || externalExchangeReference.closed)
-    ) {
+    const link = user.getExternalExchangeLink({
+      address: fromWallet.address,
+      currency: fromWallet.currency,
+    })
+
+    if (link && (externalExchangeReference === null || externalExchangeReference.closed)) {
       this.setState(() => ({
         isPending: true,
       }))
 
-      const newWindowProxy = window.open(
-        window.buyViaCreditCardLink,
-        'externalFiatExchange',
-        'location=yes, height=770, width=620, scrollbars, status, resizable'
-      )
+      const newWindowProxy = window.open(link)
 
       this.setState(
         () => ({
@@ -748,6 +745,8 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
         isAdvancedMode: !state.isAdvancedMode,
       }),
       async () => {
+        this.resetSwapData()
+
         const { isAdvancedMode } = this.state
         // update swap data without advanced options
         if (!isAdvancedMode) await this.checkSwapData()
@@ -890,6 +889,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
               updateWallets={this.updateWallets}
               isPending={isPending}
               insufficientBalance={insufficientBalance}
+              resetSwapData={this.resetSwapData}
             />
           </div>
 
