@@ -2,7 +2,6 @@ import React, { Fragment }  from 'react'
 import { withRouter } from 'react-router-dom'
 import actions from 'redux/actions'
 import { constants, externalConfig, getCurrencyKey, user } from 'helpers'
-import erc20Like from 'common/erc20Like'
 import cssModules from 'react-css-modules'
 import styles from '../Styles/default.scss'
 import ownStyles from './ReceiveModal.scss'
@@ -46,15 +45,20 @@ class ReceiveModal extends React.Component<any, any> {
       data: {
         address,
         currency,
+        standard,
       },
     } = props
 
     let howToDeposit = ''
-    if (externalConfig
-      && externalConfig.erc20
-      && externalConfig.erc20[currency.toLowerCase()]
-      && externalConfig.erc20[currency.toLowerCase()].howToDeposit
-    ) howToDeposit = externalConfig.erc20[currency.toLowerCase()].howToDeposit
+
+    if (
+      standard
+      && externalConfig[standard]
+      && externalConfig[standard][currency.toLowerCase()]
+      && externalConfig[standard][currency.toLowerCase()].howToDeposit
+    ) {
+      howToDeposit = externalConfig[standard][currency.toLowerCase()].howToDeposit
+    }
 
     const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
     const mnemonicSaved = (mnemonic === `-`)
@@ -62,9 +66,8 @@ class ReceiveModal extends React.Component<any, any> {
     howToDeposit = howToDeposit.replace(/{userAddress}/g, address);
 
     const targetCurrency = getCurrencyKey(currency.toLowerCase(), true)
-    const isToken = erc20Like.isToken({ name: currency })
-    const recieveUrl = (isToken ? '/token' : '') + `/${targetCurrency}/${address}/receive`
-    
+    const recieveUrl = (standard ? '/token' : '') + `/${targetCurrency}/${address}/receive`
+
     props.history.push(recieveUrl)
 
     this.state = {

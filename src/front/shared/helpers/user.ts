@@ -116,7 +116,7 @@ export const getTransakLink = (params) => {
   const { user } = store.getState()
 
   const isLocalHost = location.hostname === 'localhost' || location.hostname === '127.0.0.1'
-  const hostURL = window.location.origin // isLocalHost ? false : window.location.origin
+  const hostURL = window.location.origin
   let environment = 'STAGING'
   let exchangeUrl = links.transakDev
 
@@ -130,9 +130,6 @@ export const getTransakLink = (params) => {
     `?apiKey=${window.transakApiKey}`,
     `&hostURL=${hostURL}`,
     `&environment=${environment}`,
-
-    // not necessary
-    `&redirectURL=${hostURL}`,
     // if we have the crypto in the parameters, sometimes
     // we don't have the ability to buy this crypto with
     // an user active fiat. In this case after redirection
@@ -140,7 +137,10 @@ export const getTransakLink = (params) => {
     // which is available for the fiat value that we've passed.
     // `&fiatCurrency=${user.activeFiat}`,
   ]
-
+  
+  if (!isLocalHost) {
+    parameters.push(`&redirectURL=${hostURL}`)
+  }
   if (walletAddress) {
     parameters.push(`&walletAddress=${walletAddress}`)
   }
