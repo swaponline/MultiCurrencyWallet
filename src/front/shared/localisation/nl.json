@@ -5527,7 +5527,7 @@
   },
   {
     "id": "MM_Promo_TitleBody",
-    "message": "Gebruikers in onze swap.io wisselaar wisselen {utxoCoin} uit voor {token} (een token dat net als {utxoCoin} kost, maar werkt op {Ab_Title}) en vice versa. Jij krijgt min. 10% APY (jaarlijkse procentuele opbrengst) als provisie op beurzen met een gering impermanent loss {link}.",
+    "message": "Gebruikers in onze swap.io wisselaar wisselen {utxoCoin} uit voor {token} (een token dat net als {utxoCoin} kost, maar werkt op {Ab_Title}) en vice versa.",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx",
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"

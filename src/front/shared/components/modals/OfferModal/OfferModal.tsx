@@ -69,7 +69,6 @@ export default class Offer extends React.Component<OfferProps, OfferState> {
       )
 
     return (
-      //@ts-ignore: strictNullChecks
       <Modal name={name} title={title}>
         <div styleName="content">
           {view === 'editOffer' ? (

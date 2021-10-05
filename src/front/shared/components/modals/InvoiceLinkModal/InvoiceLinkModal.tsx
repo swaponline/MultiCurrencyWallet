@@ -54,7 +54,6 @@ class InvoiceLinkModal extends React.Component<any, any> {
     const invoiceLink = `${getFullOrigin()}${links.createInvoice}/${type}/${address}`
 
     return (
-      //@ts-ignore: strictNullChecks
       <Modal name={name} title={intl.formatMessage(labels.Title)}>
         <div styleName="content">
           <p style={{ fontSize: 25 }}>

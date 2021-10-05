@@ -5531,7 +5531,7 @@
   },
   {
     "id": "MM_Promo_TitleBody",
-    "message": "Użytkownicy w naszym wymienniku swap.io wymieniają {utxoCoin} na {token} (token, który kosztuje jak {utxoCoin}, ale działa na {Ab_Title}) i odwrotnie. Dostajesz min. 10% APY (rocznie) jako prowizja od giełd z niską impermanent loss {link}.",
+    "message": "Użytkownicy w naszym wymienniku swap.io wymieniają {utxoCoin} na {token} (token, który kosztuje jak {utxoCoin}, ale działa na {Ab_Title}) i odwrotnie.",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx",
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"

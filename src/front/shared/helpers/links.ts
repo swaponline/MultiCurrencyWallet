@@ -44,6 +44,8 @@ const linksManager = {
   reddit: '#',
   youtube: '#',
 
+  transak: 'https://global.transak.com/',
+  transakDev: 'https://staging-global.transak.com/',
   transactionRate: 'https://en.bitcoin.it/wiki/Maximum_transaction_rate#:~:text=Each%20transaction%20input%20requires%20at,the%20minimum-sized%20Bitcoin%20transaction',
   impermanentLoss: 'https://academy.binance.com/en/articles/impermanent-loss-explained',
   swapAudit: 'https://medium.com/swaponline/technical-audit-of-swap-core-is-finished-successfully-65a67bc5f58a',

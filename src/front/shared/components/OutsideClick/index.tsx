@@ -5,7 +5,7 @@ type OutsideClickProps = {
   outsideAction: () => void
 }
 
-export default class OutsideClick extends Component<OutsideClickProps, null> {
+export default class OutsideClick extends Component<OutsideClickProps, object> {
   wrapperRef: Node
 
   componentDidMount() {

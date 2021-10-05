@@ -1220,7 +1220,6 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
     )
 
     return (
-      //@ts-ignore: strictNullChecks
       <Modal
         name={name}
         onClose={this.handleClose}
