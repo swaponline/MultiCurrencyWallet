@@ -37,6 +37,9 @@ function Transactions(props) {
             }
 
             if (receipt !== null) {
+              console.log('%c success','color:orange;font-size:20px')
+              console.log('receipt: ', receipt)
+
               const link = transactions.getLink(
                 networkData.currency.toLowerCase(),
                 receipt.transactionHash

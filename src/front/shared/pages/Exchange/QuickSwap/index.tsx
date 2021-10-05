@@ -370,8 +370,8 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     }))
   }
 
-  createSwapRequest = () => {
-    const { slippage, spendedAmount, fromWallet, toWallet, isAdvancedMode } = this.state
+  createSwapRequest = (skipValidation = false) => {
+    const { slippage, spendedAmount, fromWallet, toWallet } = this.state
 
     const sellToken = fromWallet.isToken
       ? fromWallet.contractAddress
@@ -389,6 +389,10 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       `sellToken=${sellToken}&`,
       `sellAmount=${sellAmount}`,
     ]
+
+    if (skipValidation) {
+      request.push(`&skipValidation=true`)
+    }
 
     if (slippage) {
       // allow users to enter an amount up to 100, because it's more easy then enter the amount from 0 to 1
@@ -417,51 +421,85 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     }
   }
 
+  tryToSkipValidation = (error): boolean => {
+    const { code, reason } = JSON.parse(error.message)
+
+    return code === 105 && reason === 'Error'
+  }
+
+  calculateDataFromSwap = (params) => {
+    const { toWallet, gasLimit, gasPrice } = this.state
+    const { swap, increaseGas } = params
+
+    if (increaseGas) {
+      swap.gas = new BigNumber(swap.gas).plus(50_000)
+    }
+
+    const gweiDecimals = 9
+    const customGasLimit = gasLimit && gasLimit > swap.gas ? gasLimit : swap.gas
+    const customGasPrice = gasPrice
+      ? utils.amount.formatWithDecimals(gasPrice, gweiDecimals)
+      : swap.gasPrice
+
+    const weiFee = new BigNumber(customGasLimit).times(customGasPrice)
+    const swapFee = utils.amount.formatWithoutDecimals(weiFee, 18)
+    const receivedAmount = utils.amount.formatWithoutDecimals(
+      swap.buyAmount,
+      // if it's not a token then usual coin with 18 decimals
+      toWallet?.decimals || 18
+    )
+
+    this.setState(() => ({
+      receivedAmount,
+      swapData: swap,
+      swapFee,
+      isDataPending: false,
+    }))
+  }
+
   fetchSwapData = async () => {
-    const {
-      network,
-      toWallet,
-      gasLimit,
-      gasPrice,
-    } = this.state
+    const { network } = this.state
 
     this.setState(() => ({
       isDataPending: true,
       blockReason: undefined,
     }))
 
-    try {
+    let skipValidation = true
+    let swapRequest = this.createSwapRequest()
+
+    while (skipValidation) {
       const swap: any = await apiLooper.get(
         this.returnZeroxApiName(network.networkVersion),
-        this.createSwapRequest(),
+        swapRequest,
         {
-          reportErrors: this.reportError,
+          reportErrors: (error) => {
+            if (!skipValidation) {
+              this.reportError(error)
+            }
+          },
           sourceError: true,
         }
       )
 
       if (!(swap instanceof Error)) {
-        const gweiDecimals = 9
-        const customGasLimit = gasLimit && gasLimit > swap.gas ? gasLimit : swap.gas
-        const customGasPrice = gasPrice ? utils.amount.formatWithDecimals(gasPrice, gweiDecimals) : swap.gasPrice
+        skipValidation = false
 
-        const weiFee = new BigNumber(customGasLimit).times(customGasPrice)
-        const swapFee = utils.amount.formatWithoutDecimals(weiFee, 18)
-        const receivedAmount = utils.amount.formatWithoutDecimals(
-          swap.buyAmount,
-          // if it's not a token then usual coin with 18 decimals
-          toWallet?.decimals || 18
-        )
-
-        this.setState(() => ({
-          receivedAmount,
-          swapData: swap,
-          swapFee,
-          isDataPending: false,
-        }))
+        this.calculateDataFromSwap({
+          swap,
+          // we've had a special error in the previous request. It means there is
+          // some problem and we add a "skip validation" parameter to bypass it.
+          // All time the swap tx with this parameter fails in the blockchain,
+          // because it's not enough gas limit. Increase it manually with the custom value
+          increaseGas: swapRequest.match(/skipValidation/),
+        })
+      } else if (this.tryToSkipValidation(swap)) {
+        // it's a special error. Will be a new auto request
+        swapRequest = this.createSwapRequest(true)
+      } else {
+        // another type of error. Don't do a new request
+        skipValidation = false
       }
-    } catch (error) {
-      this.reportError(error)
     }
   }
 
@@ -639,14 +677,8 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   }
 
   flipCurrency = () => {
-    const {
-      currencies,
-      fromWallet,
-      spendedCurrency,
-      receivedCurrency,
-      toWallet,
-      wrongNetwork,
-    } = this.state
+    const { currencies, fromWallet, spendedCurrency, receivedCurrency, toWallet, wrongNetwork } =
+      this.state
 
     if (wrongNetwork || receivedCurrency.notExist) return
 
@@ -950,7 +982,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
               resetSwapData={this.resetSwapData}
             />
           </div>
-            
+
           <SwapInfo
             network={network}
             swapData={swapData}
