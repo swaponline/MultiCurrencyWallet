@@ -349,6 +349,7 @@
     "message": "Menge",
     "files": [
       "src/front/shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.tsx",
+      "src/front/shared/components/modals/InvoiceModal/InvoiceModal.tsx",
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx",
@@ -1522,16 +1523,14 @@
     "id": "select75",
     "message": "Zum Swap verfügbar: {availableBalance} {tooltip}",
     "files": [
-      "src/front/shared/components/modals/OfferModal/AddOffer/SelectGroup/SelectGroup.tsx",
-      "src/front/shared/pages/Exchange/SelectGroup/SelectGroup.tsx"
+      "src/front/shared/components/SelectGroup/index.tsx"
     ]
   },
   {
     "id": "selected53",
     "message": "Sie können ein externes Wallet verwenden, um einen Swap durchzuführen",
     "files": [
-      "src/front/shared/components/modals/OfferModal/AddOffer/SelectGroup/SelectGroup.tsx",
-      "src/front/shared/pages/Exchange/SelectGroup/SelectGroup.tsx"
+      "src/front/shared/components/SelectGroup/index.tsx"
     ]
   },
   {
@@ -2113,7 +2112,6 @@
     "files": [
       "src/front/shared/components/LimitOrders/OrderPurchaseModal.tsx",
       "src/front/shared/components/modals/ReceiveModal/ReceiveModal.tsx",
-      "src/front/shared/components/modals/WalletConnectAccount/WalletConnectAccount.tsx",
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
@@ -2128,10 +2126,7 @@
   },
   {
     "id": "InfoPay_1",
-    "message": "Transaktion ist abgeschlossen",
-    "files": [
-      "src/front/shared/pages/Transaction/Transaction.tsx"
-    ]
+    "message": "Transaktion ist abgeschlossen"
   },
   {
     "id": "InfoPay_2",
@@ -2281,6 +2276,7 @@
     "id": "RowHistoryCancelInvoice",
     "message": "Ablehnen",
     "files": [
+      "src/front/shared/pages/Exchange/Orders/MyOrders/RowFeeds/RowFeeds.tsx",
       "src/front/shared/pages/History/Row/Row.tsx"
     ]
   },
@@ -3382,7 +3378,8 @@
     "id": "HowToWithdrawModal_Title",
     "message": "Wie kann ich abheben?",
     "files": [
-      "src/front/shared/components/modals/HowToWithdrawModal/HowToWithdrawModal.tsx"
+      "src/front/shared/components/modals/HowToWithdrawModal/HowToWithdrawModal.tsx",
+      "src/front/shared/pages/Wallet/Row/Row.tsx"
     ]
   },
   {
@@ -5860,7 +5857,8 @@
     "id": "transacton",
     "message": "Transaktion",
     "files": [
-      "src/front/shared/components/notifications/Transaction/index.tsx"
+      "src/front/shared/components/notifications/Transaction/index.tsx",
+      "src/front/shared/pages/Transaction/Transaction.tsx"
     ]
   },
   {
@@ -6208,6 +6206,34 @@
   {
     "id": "approveTokenFirst",
     "message": "Bitte genehmigen Sie zuerst {token}",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/NoSwapsReasons.tsx"
+    ]
+  },
+  {
+    "id": "InvoiceInfoModal_Comment",
+    "message": "Kommentar",
+    "files": [
+      "src/front/shared/components/modals/InfoInvoice/InfoInvoice.tsx"
+    ]
+  },
+  {
+    "id": "howToDeposit",
+    "message": "Wie einzahlen",
+    "files": [
+      "src/front/shared/components/modals/ReceiveModal/ReceiveModal.tsx"
+    ]
+  },
+  {
+    "id": "tryAnyway",
+    "message": "Versuche es trotzdem",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
+    ]
+  },
+  {
+    "id": "unknownSwapProblemHasOccurred",
+    "message": "Unbekanntes Problem ist aufgetreten. Wahrscheinlich können wir dieses Paar nicht austauschen",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/NoSwapsReasons.tsx"
     ]

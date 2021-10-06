@@ -46,10 +46,6 @@ const langLabels = defineMessages({
     id: `${langPrefix}_FromAddress`,
     defaultMessage: `Адресс отправителя`,
   },
-  toAddress: {
-    id: `${langPrefix}_ToAddress`,
-    defaultMessage: `Адресс плательщика`,
-  },
   buttonClose: {
     id: `${langPrefix}_CloseButton`,
     defaultMessage: `Закрыть`,

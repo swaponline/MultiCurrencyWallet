@@ -114,7 +114,6 @@
     "files": [
       "src/front/shared/components/LimitOrders/OrderPurchaseModal.tsx",
       "src/front/shared/components/modals/ReceiveModal/ReceiveModal.tsx",
-      "src/front/shared/components/modals/WalletConnectAccount/WalletConnectAccount.tsx",
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
@@ -403,6 +402,7 @@
     "message": "Количество",
     "files": [
       "src/front/shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.tsx",
+      "src/front/shared/components/modals/InvoiceModal/InvoiceModal.tsx",
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx",
@@ -1582,16 +1582,14 @@
     "id": "select75",
     "message": "Доступный баланс: {availableBalance} {tooltip}",
     "files": [
-      "src/front/shared/components/modals/OfferModal/AddOffer/SelectGroup/SelectGroup.tsx",
-      "src/front/shared/pages/Exchange/SelectGroup/SelectGroup.tsx"
+      "src/front/shared/components/SelectGroup/index.tsx"
     ]
   },
   {
     "id": "selected53",
     "message": "Вы можете использовать внешний кошелек для проведения обмена",
     "files": [
-      "src/front/shared/components/modals/OfferModal/AddOffer/SelectGroup/SelectGroup.tsx",
-      "src/front/shared/pages/Exchange/SelectGroup/SelectGroup.tsx"
+      "src/front/shared/components/SelectGroup/index.tsx"
     ]
   },
   {
@@ -2238,6 +2236,7 @@
     "id": "RowHistoryCancelInvoice",
     "message": "Отклонить",
     "files": [
+      "src/front/shared/pages/Exchange/Orders/MyOrders/RowFeeds/RowFeeds.tsx",
       "src/front/shared/pages/History/Row/Row.tsx"
     ]
   },
@@ -2682,10 +2681,7 @@
   },
   {
     "id": "InfoPay_1",
-    "message": "Транзакция завершена",
-    "files": [
-      "src/front/shared/pages/Transaction/Transaction.tsx"
-    ]
+    "message": "Транзакция завершена"
   },
   {
     "id": "InfoPay_2",
@@ -3378,7 +3374,8 @@
     "id": "HowToWithdrawModal_Title",
     "message": "How to withdraw",
     "files": [
-      "src/front/shared/components/modals/HowToWithdrawModal/HowToWithdrawModal.tsx"
+      "src/front/shared/components/modals/HowToWithdrawModal/HowToWithdrawModal.tsx",
+      "src/front/shared/pages/Wallet/Row/Row.tsx"
     ]
   },
   {
@@ -5856,7 +5853,8 @@
     "id": "transacton",
     "message": "Транзакция",
     "files": [
-      "src/front/shared/components/notifications/Transaction/index.tsx"
+      "src/front/shared/components/notifications/Transaction/index.tsx",
+      "src/front/shared/pages/Transaction/Transaction.tsx"
     ]
   },
   {
@@ -6204,6 +6202,34 @@
   {
     "id": "approveTokenFirst",
     "message": "Пожалуйста, сначала утвердите {токен}",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/NoSwapsReasons.tsx"
+    ]
+  },
+  {
+    "id": "InvoiceInfoModal_Comment",
+    "message": "Комментарий",
+    "files": [
+      "src/front/shared/components/modals/InfoInvoice/InfoInvoice.tsx"
+    ]
+  },
+  {
+    "id": "howToDeposit",
+    "message": "Как внести депозит",
+    "files": [
+      "src/front/shared/components/modals/ReceiveModal/ReceiveModal.tsx"
+    ]
+  },
+  {
+    "id": "tryAnyway",
+    "message": "Все равно попытаться",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
+    ]
+  },
+  {
+    "id": "unknownSwapProblemHasOccurred",
+    "message": "Произошла неизвестная проблема. Вероятно, мы не сможем обменять эту пару",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/NoSwapsReasons.tsx"
     ]
