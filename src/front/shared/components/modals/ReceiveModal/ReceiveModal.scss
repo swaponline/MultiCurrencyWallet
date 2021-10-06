@@ -4,6 +4,21 @@
   text-align: center;
 }
 
+.depositInstruction {
+  border-radius: 0.3rem;
+  padding: 0.8rem;
+  margin-bottom: 1.1rem;
+  background-color: var(--color-inactive-border);
+
+  .title {
+    margin-bottom: 0.9rem;
+  }
+
+  .description {
+    margin: 0 auto;
+  }
+}
+
 .sendBtnsWrapper {
   display: flex;
   justify-content: space-between;

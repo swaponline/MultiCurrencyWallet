@@ -3287,13 +3287,6 @@
     ]
   },
   {
-    "id": "WalletRow_Menu_HowToWithdraw",
-    "message": "Cómo retirar",
-    "files": [
-      "src/front/shared/pages/Wallet/Row/Row.tsx"
-    ]
-  },
-  {
     "id": "registerSMS_ButtonSaveMnemonic",
     "message": "Guardar",
     "files": [

@@ -3400,13 +3400,6 @@
     ]
   },
   {
-    "id": "WalletRow_Menu_HowToWithdraw",
-    "message": "Wie kann ich abheben",
-    "files": [
-      "src/front/shared/pages/Wallet/Row/Row.tsx"
-    ]
-  },
-  {
     "id": "Exchange_FromAddress",
     "message": "Von Adresse",
     "files": [

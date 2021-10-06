@@ -3392,13 +3392,6 @@
     ]
   },
   {
-    "id": "WalletRow_Menu_HowToWithdraw",
-    "message": "How to withdraw",
-    "files": [
-      "src/front/shared/pages/Wallet/Row/Row.tsx"
-    ]
-  },
-  {
     "id": "Exchange_FromAddress",
     "message": "From address",
     "files": [
