@@ -44,7 +44,6 @@ export class QuickSwapFormTour extends Component<any, any> {
             callback={this.handleJoyrideCallback}
             continuous
             run={run}
-            scrollToFirstStep
             tooltipComponent={(props) => <Tooltip closeTour={closeTour} {...props} />}
             showProgress
             showSkipButton

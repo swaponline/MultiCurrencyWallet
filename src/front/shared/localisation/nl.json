@@ -356,6 +356,7 @@
     "message": "Beløp",
     "files": [
       "src/front/shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.tsx",
+      "src/front/shared/components/modals/InvoiceModal/InvoiceModal.tsx",
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx",
@@ -1002,20 +1003,6 @@
     ]
   },
   {
-    "id": "SwitchLang20",
-    "message": "EN",
-    "files": [
-      "src/front/shared/components/Footer/SwitchLang/SwitchLang.tsx"
-    ]
-  },
-  {
-    "id": "SwitchLang24",
-    "message": "RU",
-    "files": [
-      "src/front/shared/components/Footer/SwitchLang/SwitchLang.tsx"
-    ]
-  },
-  {
     "id": "FeeControler48",
     "message": "Gekopieerd",
     "files": [
@@ -1405,16 +1392,14 @@
     "id": "select75",
     "message": "Available for exchange: {availableBalance} {tooltip}",
     "files": [
-      "src/front/shared/components/modals/OfferModal/AddOffer/SelectGroup/SelectGroup.tsx",
-      "src/front/shared/pages/Exchange/SelectGroup/SelectGroup.tsx"
+      "src/front/shared/components/SelectGroup/index.tsx"
     ]
   },
   {
     "id": "selected53",
     "message": "You can use an external wallet to perform a swap",
     "files": [
-      "src/front/shared/components/modals/OfferModal/AddOffer/SelectGroup/SelectGroup.tsx",
-      "src/front/shared/pages/Exchange/SelectGroup/SelectGroup.tsx"
+      "src/front/shared/components/SelectGroup/index.tsx"
     ]
   },
   {
@@ -1996,7 +1981,6 @@
     "files": [
       "src/front/shared/components/LimitOrders/OrderPurchaseModal.tsx",
       "src/front/shared/components/modals/ReceiveModal/ReceiveModal.tsx",
-      "src/front/shared/components/modals/WalletConnectAccount/WalletConnectAccount.tsx",
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
@@ -2011,10 +1995,7 @@
   },
   {
     "id": "InfoPay_1",
-    "message": "Transaction is completed",
-    "files": [
-      "src/front/shared/pages/Transaction/Transaction.tsx"
-    ]
+    "message": "Transaction is completed"
   },
   {
     "id": "InfoPay_2",
@@ -2164,6 +2145,7 @@
     "id": "RowHistoryCancelInvoice",
     "message": "Decline",
     "files": [
+      "src/front/shared/pages/Exchange/Orders/MyOrders/RowFeeds/RowFeeds.tsx",
       "src/front/shared/pages/History/Row/Row.tsx"
     ]
   },
@@ -3257,13 +3239,7 @@
     "id": "HowToWithdrawModal_Title",
     "message": "How to withdraw",
     "files": [
-      "src/front/shared/components/modals/HowToWithdrawModal/HowToWithdrawModal.tsx"
-    ]
-  },
-  {
-    "id": "WalletRow_Menu_HowToWithdraw",
-    "message": "How to withdraw",
-    "files": [
+      "src/front/shared/components/modals/HowToWithdrawModal/HowToWithdrawModal.tsx",
       "src/front/shared/pages/Wallet/Row/Row.tsx"
     ]
   },
@@ -4395,13 +4371,6 @@
     ]
   },
   {
-    "id": "SwitchLangNL",
-    "message": "NL",
-    "files": [
-      "src/front/shared/components/Footer/SwitchLang/SwitchLang.tsx"
-    ]
-  },
-  {
     "id": "Swap_NeedMoreAmount",
     "message": "Je saldo moet minimaal {amount} {currency} hebben. {br} Mijnwerkerscommissie {sellFee} {sellCoin} en {buyFee} {buyCoin}",
     "files": [
@@ -4465,27 +4434,6 @@
     "message": "Marketmaking uitgeschakeld omdat uw externe portemonnee is verbonden",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
-    ]
-  },
-  {
-    "id": "SwitchLangDE",
-    "message": "DE",
-    "files": [
-      "src/front/shared/components/Footer/SwitchLang/SwitchLang.tsx"
-    ]
-  },
-  {
-    "id": "SwitchLangES",
-    "message": "ES",
-    "files": [
-      "src/front/shared/components/Footer/SwitchLang/SwitchLang.tsx"
-    ]
-  },
-  {
-    "id": "SwitchLangPL",
-    "message": "PL",
-    "files": [
-      "src/front/shared/components/Footer/SwitchLang/SwitchLang.tsx"
     ]
   },
   {
@@ -5901,7 +5849,8 @@
     "id": "transacton",
     "message": "Transactie",
     "files": [
-      "src/front/shared/components/notifications/Transaction/index.tsx"
+      "src/front/shared/components/notifications/Transaction/index.tsx",
+      "src/front/shared/pages/Transaction/Transaction.tsx"
     ]
   },
   {
@@ -6249,6 +6198,34 @@
   {
     "id": "approveTokenFirst",
     "message": "Keur {token} eerst goed",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/NoSwapsReasons.tsx"
+    ]
+  },
+  {
+    "id": "InvoiceInfoModal_Comment",
+    "message": "Reactie",
+    "files": [
+      "src/front/shared/components/modals/InfoInvoice/InfoInvoice.tsx"
+    ]
+  },
+  {
+    "id": "howToDeposit",
+    "message": "Hoe te storten",
+    "files": [
+      "src/front/shared/components/modals/ReceiveModal/ReceiveModal.tsx"
+    ]
+  },
+  {
+    "id": "tryAnyway",
+    "message": "Toch proberen",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
+    ]
+  },
+  {
+    "id": "unknownSwapProblemHasOccurred",
+    "message": "Onbekend probleem is opgetreden. Waarschijnlijk kunnen we dit paar niet ruilen.",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/NoSwapsReasons.tsx"
     ]

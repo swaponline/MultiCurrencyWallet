@@ -114,7 +114,6 @@
     "files": [
       "src/front/shared/components/LimitOrders/OrderPurchaseModal.tsx",
       "src/front/shared/components/modals/ReceiveModal/ReceiveModal.tsx",
-      "src/front/shared/components/modals/WalletConnectAccount/WalletConnectAccount.tsx",
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
@@ -403,6 +402,7 @@
     "message": "Количество",
     "files": [
       "src/front/shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.tsx",
+      "src/front/shared/components/modals/InvoiceModal/InvoiceModal.tsx",
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx",
@@ -556,7 +556,7 @@
   },
   {
     "id": "enterYouSend",
-    "message": "Заполните поле \"Отдаете\"",
+    "message": "Заполните поле \"Вы отправите\"",
     "files": [
       "src/front/shared/pages/Exchange/AtomicSwap.tsx",
       "src/front/shared/pages/Exchange/QuickSwap/NoSwapsReasons.tsx"
@@ -1179,20 +1179,6 @@
     ]
   },
   {
-    "id": "SwitchLang20",
-    "message": "EN",
-    "files": [
-      "src/front/shared/components/Footer/SwitchLang/SwitchLang.tsx"
-    ]
-  },
-  {
-    "id": "SwitchLang24",
-    "message": "RU",
-    "files": [
-      "src/front/shared/components/Footer/SwitchLang/SwitchLang.tsx"
-    ]
-  },
-  {
     "id": "FeeControler48",
     "message": "Скопировано",
     "files": [
@@ -1596,16 +1582,14 @@
     "id": "select75",
     "message": "Доступный баланс: {availableBalance} {tooltip}",
     "files": [
-      "src/front/shared/components/modals/OfferModal/AddOffer/SelectGroup/SelectGroup.tsx",
-      "src/front/shared/pages/Exchange/SelectGroup/SelectGroup.tsx"
+      "src/front/shared/components/SelectGroup/index.tsx"
     ]
   },
   {
     "id": "selected53",
     "message": "Вы можете использовать внешний кошелек для проведения обмена",
     "files": [
-      "src/front/shared/components/modals/OfferModal/AddOffer/SelectGroup/SelectGroup.tsx",
-      "src/front/shared/pages/Exchange/SelectGroup/SelectGroup.tsx"
+      "src/front/shared/components/SelectGroup/index.tsx"
     ]
   },
   {
@@ -2252,6 +2236,7 @@
     "id": "RowHistoryCancelInvoice",
     "message": "Отклонить",
     "files": [
+      "src/front/shared/pages/Exchange/Orders/MyOrders/RowFeeds/RowFeeds.tsx",
       "src/front/shared/pages/History/Row/Row.tsx"
     ]
   },
@@ -2696,10 +2681,7 @@
   },
   {
     "id": "InfoPay_1",
-    "message": "Транзакция завершена",
-    "files": [
-      "src/front/shared/pages/Transaction/Transaction.tsx"
-    ]
+    "message": "Транзакция завершена"
   },
   {
     "id": "InfoPay_2",
@@ -3392,13 +3374,7 @@
     "id": "HowToWithdrawModal_Title",
     "message": "How to withdraw",
     "files": [
-      "src/front/shared/components/modals/HowToWithdrawModal/HowToWithdrawModal.tsx"
-    ]
-  },
-  {
-    "id": "WalletRow_Menu_HowToWithdraw",
-    "message": "How to withdraw",
-    "files": [
+      "src/front/shared/components/modals/HowToWithdrawModal/HowToWithdrawModal.tsx",
       "src/front/shared/pages/Wallet/Row/Row.tsx"
     ]
   },
@@ -4515,13 +4491,6 @@
     ]
   },
   {
-    "id": "SwitchLangNL",
-    "message": "NL",
-    "files": [
-      "src/front/shared/components/Footer/SwitchLang/SwitchLang.tsx"
-    ]
-  },
-  {
     "id": "Swap_NeedMoreAmount",
     "message": "На вашем балансе должно быть не менее {amount} {currency}. {br}Коммисия майнера {sellFee} {sellCoin} и {buyFee} {buyCoin}",
     "files": [
@@ -4585,27 +4554,6 @@
     "message": "Маркетмейкинг отключен, так как подключен внешний кошелек",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
-    ]
-  },
-  {
-    "id": "SwitchLangDE",
-    "message": "DE",
-    "files": [
-      "src/front/shared/components/Footer/SwitchLang/SwitchLang.tsx"
-    ]
-  },
-  {
-    "id": "SwitchLangES",
-    "message": "ES",
-    "files": [
-      "src/front/shared/components/Footer/SwitchLang/SwitchLang.tsx"
-    ]
-  },
-  {
-    "id": "SwitchLangPL",
-    "message": "PL",
-    "files": [
-      "src/front/shared/components/Footer/SwitchLang/SwitchLang.tsx"
     ]
   },
   {
@@ -5905,7 +5853,8 @@
     "id": "transacton",
     "message": "Транзакция",
     "files": [
-      "src/front/shared/components/notifications/Transaction/index.tsx"
+      "src/front/shared/components/notifications/Transaction/index.tsx",
+      "src/front/shared/pages/Transaction/Transaction.tsx"
     ]
   },
   {
@@ -6253,6 +6202,34 @@
   {
     "id": "approveTokenFirst",
     "message": "Пожалуйста, сначала утвердите {токен}",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/NoSwapsReasons.tsx"
+    ]
+  },
+  {
+    "id": "InvoiceInfoModal_Comment",
+    "message": "Комментарий",
+    "files": [
+      "src/front/shared/components/modals/InfoInvoice/InfoInvoice.tsx"
+    ]
+  },
+  {
+    "id": "howToDeposit",
+    "message": "Как внести депозит",
+    "files": [
+      "src/front/shared/components/modals/ReceiveModal/ReceiveModal.tsx"
+    ]
+  },
+  {
+    "id": "tryAnyway",
+    "message": "Все равно попытаться",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
+    ]
+  },
+  {
+    "id": "unknownSwapProblemHasOccurred",
+    "message": "Произошла неизвестная проблема. Вероятно, мы не сможем обменять эту пару",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/NoSwapsReasons.tsx"
     ]

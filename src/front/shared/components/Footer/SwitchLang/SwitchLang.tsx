@@ -26,47 +26,22 @@ const SwitchLang = (props) => {
     return intlLocale.toUpperCase() !== locale ? true : undefined // if url is undefined then we don't define styles
   }
 
-  const itemInfo = [
-    {
-      name: 'EN',
-      messageId: 'SwitchLang20',
-    },
-    {
-      name: 'RU',
-      messageId: 'SwitchLang24',
-    },
-    {
-      name: 'NL',
-      messageId: 'SwitchLangNL',
-    },
-    {
-      name: 'ES',
-      messageId: 'SwitchLangES',
-    },
-    {
-      name: 'DE',
-      messageId: 'SwitchLangDE',
-    },
-    {
-      name: 'PL',
-      messageId: 'SwitchLangPL',
-    },
-  ]
+  const languages = ['EN', 'RU', 'NL', 'ES', 'DE', 'PL']
 
   return (
     <div styleName="langSwitcher">
-      {itemInfo.map((info, index) => {
+      {languages.map((name, index) => {
         return (
           <a
             key={index}
-            href={localeIsNotMatched(info.name) && '#/'}
+            href={localeIsNotMatched(name) && '#/'}
             styleName="language"
             onClick={(e) => {
-              switchLang(e, info.name)
+              switchLang(e, name)
               return false
             }}
           >
-            <FormattedMessage id={info.messageId} defaultMessage={info.name} />
+            {name}
           </a>
         )
       })}

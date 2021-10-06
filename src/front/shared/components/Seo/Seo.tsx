@@ -1,26 +1,27 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import { Component } from 'react'
 import DocumentMeta from 'react-document-meta'
-
 import JsonLd from './JsonLd'
 import seo, { getSeoPage, getUrl } from 'helpers/seo'
 
-
 export default class Seo extends Component<any, any> {
-  static propTypes = {
-    location: PropTypes.object.isRequired,
-  }
-
-  seoPage: any
-
   constructor(props) {
     super(props)
-    this.seoPage = getSeoPage(props.location.pathname)
+
+    this.state = {
+      seoPage: getSeoPage(props.location.pathname)
+    }
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.location.pathname !== this.props.location.pathname) {
-      this.seoPage = getSeoPage(nextProps.location.pathname)
+  componentDidUpdate(prevProps) {
+    const { location: prevLocation } = prevProps
+    const { location } = this.props
+
+    if (location.pathname !== prevLocation.pathname) {
+      const seoPage = getSeoPage(location.pathname)
+
+      this.setState(() => ({
+        seoPage,
+      }))
     }
   }
 
@@ -29,12 +30,15 @@ export default class Seo extends Component<any, any> {
   }
 
   render() {
-    if (!this.seoPage) {
+    const { seoPage } = this.state
+
+    if (!seoPage) {
       return null
     }
-    const { uri, title, description } = this.seoPage
 
+    const { uri, title, description } = seoPage
     const url = getUrl(uri)
+
     return (
       <DocumentMeta
         title={title}

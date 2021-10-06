@@ -1,4 +1,3 @@
-import React from 'react'
 import PropTypes from 'prop-types'
 import DocumentMeta from 'react-document-meta'
 
@@ -15,10 +14,10 @@ export default class PageSeo extends Seo {
   }
 
   getValues = () => {
-    if (!!this.seoPage) {
+    if (!!this.state.seoPage) {
       return {
-        ...this.seoPage,
-        url: getUrl(this.seoPage.uri),
+        ...this.state.seoPage,
+        url: getUrl(this.state.seoPage.uri),
       }
     }
 

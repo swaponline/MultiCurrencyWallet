@@ -369,7 +369,7 @@ class EthLikeAction {
     } catch (error) {
       this.reportError(error, 'estimateGas')
 
-      return undefined
+      return error
     }
   }
 
@@ -381,7 +381,7 @@ class EthLikeAction {
     const recipientIsContract = await this.isContract(to)
 
     gasPrice = gasPrice || (await ethLikeHelper[this.tickerKey].estimateGasPrice({ speed }))
-    const defaultgasLimit = recipientIsContract
+    const defaultGasLimit = recipientIsContract
       ? DEFAULT_CURRENCY_PARAMETERS.evmLike.limit.contractInteract
       : DEFAULT_CURRENCY_PARAMETERS.evmLike.limit.send
 
@@ -401,10 +401,10 @@ class EthLikeAction {
     } else {
       const limit = await this.estimateGas(txData)
 
-      if (limit) {
+      if (typeof limit === 'number') {
         txData.gas = limit
       } else {
-        txData.gas = defaultgasLimit
+        txData.gas = defaultGasLimit
       }
     }
 
@@ -442,7 +442,7 @@ class EthLikeAction {
             from: Web3.utils.toChecksumAddress(ownerAddress),
             amount,
             gasPrice,
-            defaultgasLimit,
+            defaultGasLimit,
           })
         })
       }
@@ -454,7 +454,7 @@ class EthLikeAction {
       from,
       amount,
       gasPrice,
-      defaultgasLimit,
+      defaultGasLimit,
       externalAdminFeeObj,
     } = params
     const adminObj = externalAdminFeeObj || this.adminFeeObj
@@ -490,10 +490,10 @@ class EthLikeAction {
 
     const limit = await this.estimateGas(txData)
 
-    if (limit) {
+    if (typeof limit === 'number') {
       txData.gas = limit
     } else {
-      txData.gas = defaultgasLimit
+      txData.gas = defaultGasLimit
     }
 
     return this.sendReadyTransaction({ data: txData, toAdmin: true })

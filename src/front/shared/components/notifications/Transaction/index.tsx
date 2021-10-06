@@ -3,13 +3,25 @@ import CSSModules from 'react-css-modules'
 import styles from './index.scss'
 import Notification from 'components/notification/Notification/Notification'
 
-type ComponentProps = { data: { link: string; completed: boolean }; name: string }
+type ComponentProps = {
+  data: {
+    link: string
+    completed?: boolean
+    failed?: boolean
+  }
+  name: string
+}
 
 function Transaction(props: ComponentProps) {
   const { name, data } = props
 
   return (
-    <Notification soundPlay={true} timeout={15_000} name={name}>
+    <Notification
+      soundPlay={true}
+      timeout={15_000}
+      name={name}
+      type={data.failed ? 'ErrorNotification' : ''}
+    >
       <h3>
         {data.completed ? (
           <FormattedMessage

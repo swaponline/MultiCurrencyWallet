@@ -1,7 +1,4 @@
-import React from 'react'
-
 import seo, { getUrl } from 'helpers/seo'
-
 
 const JsonLd = ({ uri, title, description }) => (
   <script

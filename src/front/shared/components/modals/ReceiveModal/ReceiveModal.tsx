@@ -1,16 +1,16 @@
+import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
 import React, { Fragment }  from 'react'
 import { withRouter } from 'react-router-dom'
 import actions from 'redux/actions'
-import { constants, externalConfig, getCurrencyKey, user } from 'helpers'
 import cssModules from 'react-css-modules'
+import { constants, externalConfig, getCurrencyKey, user } from 'helpers'
+import erc20Like from 'common/erc20Like'
 import styles from '../Styles/default.scss'
 import ownStyles from './ReceiveModal.scss'
-
 import QR from 'components/QR/QR'
 import { Modal } from 'components/modal'
 import { Button } from 'components/controls'
 import Copy from 'components/ui/Copy/Copy'
-import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
 
 const langPrefix = `ReceiveModal`
 const langs = defineMessages({
@@ -66,7 +66,8 @@ class ReceiveModal extends React.Component<any, any> {
     howToDeposit = howToDeposit.replace(/{userAddress}/g, address);
 
     const targetCurrency = getCurrencyKey(currency.toLowerCase(), true)
-    const recieveUrl = (standard ? '/token' : '') + `/${targetCurrency}/${address}/receive`
+    const isToken = erc20Like.isToken({ name: currency })
+    const recieveUrl = (isToken ? '/token' : '') + `/${targetCurrency}/${address}/receive`
 
     props.history.push(recieveUrl)
 
@@ -103,39 +104,36 @@ class ReceiveModal extends React.Component<any, any> {
 
   render() {
     const {
-      props: {
-        intl: { locale },
-        name,
-        intl,
-        data: {
-          currency,
-          address,
-        },
-      },
-      state: {
-        howToDeposit,
-        step,
-        mnemonicSaved,
-      },
-    } = this
+      intl: { locale },
+      name,
+      intl,
+      data: { currency, address },
+    } = this.props
+
+    const { howToDeposit, step } = this.state
 
     const externalExchangeLink = user.getExternalExchangeLink({ address, currency, locale })
-
-    if (howToDeposit) {
-      return (
-        <Modal name={name} title={intl.formatMessage(langs.title)}>
-          <div dangerouslySetInnerHTML={{ __html: howToDeposit }} />
-        </Modal>
-      )
-    }
 
     return (
       <Modal name={name} title={intl.formatMessage(langs.title)}>
         <div styleName="content">
           {step === 'receive' && (
             <Fragment>
+              {howToDeposit && (
+                <div styleName="depositInstruction">
+                  <h5 styleName="title">
+                    <FormattedMessage id="howToDeposit" defaultMessage="How to deposit" />:
+                  </h5>
+                  <p styleName="description" dangerouslySetInnerHTML={{ __html: howToDeposit }} />
+                </div>
+              )}
+
               <p style={{ fontSize: 25 }}>
-                <FormattedMessage id="ReceiveModal50" defaultMessage="This is your {currency} address" values={{ currency: `${currency}` }} />
+                <FormattedMessage
+                  id="ReceiveModal50"
+                  defaultMessage="This is your {currency} address"
+                  values={{ currency: `${currency}` }}
+                />
               </p>
               <Copy text={address}>
                 <div styleName="qr">
@@ -161,10 +159,7 @@ class ReceiveModal extends React.Component<any, any> {
               {externalExchangeLink && (
                 <div styleName="fiatDepositRow">
                   <a href={externalExchangeLink} target="_blank" rel="noopener noreferrer">
-                    <FormattedMessage
-                      id="buyByCreditCard"
-                      defaultMessage="buy using credit card"
-                    />
+                    <FormattedMessage id="buyByCreditCard" defaultMessage="buy using credit card" />
                   </a>
                 </div>
               )}

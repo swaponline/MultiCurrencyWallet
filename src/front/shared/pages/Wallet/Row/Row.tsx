@@ -499,7 +499,7 @@ class Row extends Component<RowProps, RowState> {
             id: 10021,
             title: (
               <FormattedMessage
-                id="WalletRow_Menu_HowToWithdraw"
+                id="HowToWithdrawModal_Title"
                 defaultMessage="How to withdraw"
               />
             ),
