@@ -37,16 +37,14 @@ function Transactions(props) {
             }
 
             if (receipt !== null) {
-              console.log('%c success','color:orange;font-size:20px')
-              console.log('receipt: ', receipt)
-
               const link = transactions.getLink(
                 networkData.currency.toLowerCase(),
-                receipt.transactionHash
+                receipt.transactionHash,
               )
 
               actions.notifications.show(constants.notifications.Transaction, {
                 completed: true,
+                failed: !receipt.status,
                 link,
               })
 

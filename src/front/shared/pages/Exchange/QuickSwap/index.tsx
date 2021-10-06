@@ -359,6 +359,8 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     } else if (notEnoughBalance) {
       this.setState(() => ({ blockReason: SwapBlockReason.NoBalance }))
     } else {
+      this.setState(() => ({ blockReason: SwapBlockReason.Unknown }))
+
       console.group('%c Swap', 'color: red;')
       console.error(error)
       console.groupEnd()
@@ -427,12 +429,23 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     return code === 105 && reason === 'Error'
   }
 
-  calculateDataFromSwap = (params) => {
-    const { toWallet, gasLimit, gasPrice } = this.state
-    const { swap, increaseGas } = params
+  calculateDataFromSwap = async (params) => {
+    const { fromWallet, toWallet, gasLimit, gasPrice } = this.state
+    const { swap, withoutValidation } = params
 
-    if (increaseGas) {
-      swap.gas = new BigNumber(swap.gas).plus(50_000)
+    // we've had a special error in the previous request. It means there is
+    // some problem and we add a "skip validation" parameter to bypass it.
+    // Usually the swap tx with this parameter fails in the blockchain,
+    // because it's not enough gas limit. Estimate it by yourself
+    if (withoutValidation) {
+      const baseCurrency = fromWallet.standard ? fromWallet.baseCurrency : fromWallet.currency
+      const estimatedGas = await actions[baseCurrency.toLowerCase()]?.estimateGas(swap)
+
+      if (typeof estimatedGas === 'number') {
+        swap.gas = estimatedGas
+      } else if (estimatedGas instanceof Error) {
+        this.reportError(estimatedGas)
+      }
     }
 
     const gweiDecimals = 9
@@ -465,16 +478,16 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       blockReason: undefined,
     }))
 
-    let skipValidation = true
+    let repeatRequest = true
     let swapRequest = this.createSwapRequest()
 
-    while (skipValidation) {
+    while (repeatRequest) {
       const swap: any = await apiLooper.get(
         this.returnZeroxApiName(network.networkVersion),
         swapRequest,
         {
           reportErrors: (error) => {
-            if (!skipValidation) {
+            if (!repeatRequest) {
               this.reportError(error)
             }
           },
@@ -483,22 +496,17 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       )
 
       if (!(swap instanceof Error)) {
-        skipValidation = false
+        repeatRequest = false
 
-        this.calculateDataFromSwap({
+        await this.calculateDataFromSwap({
           swap,
-          // we've had a special error in the previous request. It means there is
-          // some problem and we add a "skip validation" parameter to bypass it.
-          // All time the swap tx with this parameter fails in the blockchain,
-          // because it's not enough gas limit. Increase it manually with the custom value
-          increaseGas: swapRequest.match(/skipValidation/),
+          withoutValidation: swapRequest.match(/skipValidation/),
         })
       } else if (this.tryToSkipValidation(swap)) {
-        // it's a special error. Will be a new auto request
+        // it's a special error. Will be a new request
         swapRequest = this.createSwapRequest(true)
       } else {
-        // another type of error. Don't do a new request
-        skipValidation = false
+        repeatRequest = false
       }
     }
   }
