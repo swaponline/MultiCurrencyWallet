@@ -83,13 +83,6 @@
   font-size: 15px;
 }
 
-.small {
-  width: 100%;
-  min-height: 39px;
-  height: 39px;
-  font-size: 0.9em;
-}
-
 .empty {
   border: 1px solid var(--color-brand);
   background-color: transparent;
@@ -132,6 +125,10 @@
 .autoHeight {
   height: auto;
   padding: 0.5em 1em;
+}
+
+.dangerous {
+  background: var(--color-f-error);
 }
 
 @include media-mobile {

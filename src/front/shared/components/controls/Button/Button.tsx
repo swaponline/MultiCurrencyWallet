@@ -20,6 +20,7 @@ type ButtonProps = {
   fill?: boolean
   flex?: boolean
   disabled?: boolean
+  dangerous?: boolean
   pending?: boolean
   className?: string
   id?: string
@@ -37,6 +38,7 @@ const Button = (props: ButtonProps) => {
     blue,
     gray,
     disabled,
+    dangerous,
     pending,
     big,
     small,
@@ -65,6 +67,7 @@ const Button = (props: ButtonProps) => {
     link,
     autoHeight,
     disabled,
+    dangerous,
   })
 
   return (

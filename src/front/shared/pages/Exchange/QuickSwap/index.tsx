@@ -842,6 +842,12 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     return !swapData || isSwapPending || !!error
   }
 
+  unlockDangerousSwap = () => {
+    this.setState(() => ({
+      error: null,
+    }))
+  }
+
   createLimitOrder = () => {
     actions.modals.open(constants.modals.LimitOrder)
   }
@@ -875,6 +881,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       showOrders,
       mnemonicSaved,
       blockReason,
+      error,
     } = this.state
 
     const linked = Link.all(
@@ -893,8 +900,11 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
 
     const swapDataIsDisabled = this.isSwapDataNotAvailable()
     const swapBtnIsDisabled = this.isSwapNotAvailable() || insufficientBalance || swapDataIsDisabled
+
     const isWalletCreated = localStorage.getItem(constants.localStorage.isWalletCreate)
     const saveSecretPhrase = !mnemonicSaved && !metamask.isConnected()
+
+    const isDangerousSwap = blockReason === SwapBlockReason.Unknown && swapData
 
     return (
       <>
@@ -1014,9 +1024,14 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
           />
 
           <div styleName="buttonWrapper">
+            {isDangerousSwap && (
+              <Button disabled={!error} onClick={this.unlockDangerousSwap} dangerous>
+                <FormattedMessage id="tryAnyway" defaultMessage="Try anyway" />
+              </Button>
+            )}
+
             {needApprove ? (
               <Button
-                styleName="button"
                 pending={isDataPending}
                 disabled={swapDataIsDisabled}
                 onClick={this.approve}
@@ -1030,7 +1045,6 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
               </Button>
             ) : (
               <Button
-                styleName="button"
                 pending={isSwapPending}
                 disabled={swapBtnIsDisabled}
                 onClick={this.swap}
@@ -1042,7 +1056,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
           </div>
 
           {!wrongNetwork && (mnemonicSaved || metamask.isConnected()) && (
-            <Button styleName="button" onClick={this.createLimitOrder} link small>
+            <Button onClick={this.createLimitOrder} link small>
               <FormattedMessage id="createLimitOrder" defaultMessage="Create limit order" />
             </Button>
           )}
