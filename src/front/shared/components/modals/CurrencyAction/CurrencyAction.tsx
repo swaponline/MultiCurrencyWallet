@@ -54,10 +54,10 @@ class CurrencyAction extends React.Component<any, any> {
         standard,
       })
     } else {
-      const { Withdraw, WithdrawMultisigSMS, WithdrawMultisigUser } = constants.modals
+      const { Withdraw, WithdrawMultisigUser } = constants.modals
 
       let withdrawModalType = Withdraw
-      if (item.currency === 'BTC (SMS-Protected)') withdrawModalType = WithdrawMultisigSMS
+
       if (item.currency === 'BTC (Multisig)') withdrawModalType = WithdrawMultisigUser
 
       let targetCurrency = currency
