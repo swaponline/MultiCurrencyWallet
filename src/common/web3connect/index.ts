@@ -10,8 +10,8 @@ import { isMobile } from 'react-device-detect'
 import config from 'app-config'
 
 export default class Web3Connect extends EventEmitter {
-  _cachedProvider: IEtheriumProvider | null = null
-  _cachedWeb3: IEtheriumProvider | null = null
+  _cachedProvider: EthereumProvider | null = null
+  _cachedWeb3: EthereumProvider | null = null
   _cachedProviderName: string | null = null
   _cachedChainId: number | null = null
   _cachedAddress = null
