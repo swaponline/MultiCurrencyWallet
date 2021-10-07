@@ -346,7 +346,6 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
       selectedItem: {
         address,
         isUserProtected,
-        isSmsProtected,
         isPinProtected,
       },
       currentDecimals,
@@ -355,7 +354,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
 
     let method = `send`
     if (isUserProtected) method = `send_multisig`
-    if (isSmsProtected || isPinProtected) method = `send_2fa`
+    if (isPinProtected) method = `send_2fa`
 
     const numAmount = Number(amount) || 0
 
@@ -448,7 +447,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
       else if (COINS_WITH_DYNAMIC_FEE.includes(currentCoin)) {
         let method = 'send'
         if (selectedItem.isUserProtected) method = 'send_multisig'
-        if (selectedItem.isPinProtected || selectedItem.isSmsProtected) method = 'send_2fa'
+        if (selectedItem.isPinProtected) method = 'send_2fa'
 
         newMinerFee = new BigNumber(await helpers[currentCoin].estimateFeeValue({
           method,
@@ -530,9 +529,9 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
       return
     }
 
-    if (selectedItem.isPinProtected || selectedItem.isSmsProtected || selectedItem.isUserProtected) {
+    if (selectedItem.isPinProtected || selectedItem.isUserProtected) {
       let nextStepModal = constants.modals.WithdrawBtcPin
-      if (selectedItem.isSmsProtected) nextStepModal = constants.modals.WithdrawBtcSms
+
       if (selectedItem.isUserProtected) nextStepModal = constants.modals.WithdrawBtcMultisig
 
       actions.modals.close(name)
