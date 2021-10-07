@@ -144,14 +144,6 @@
     ]
   },
   {
-    "id": "SaveKe33",
-    "message": "Скачать",
-    "files": [
-      "src/front/shared/components/SaveKeys/SaveKeys.tsx",
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
-    ]
-  },
-  {
     "id": "SaveKe37",
     "message": "Скачать текстовый документ, с приватными ключами и адресами кошелька",
     "files": [
@@ -2374,62 +2366,6 @@
     ]
   },
   {
-    "id": "registerSMSModalCode",
-    "message": "Code from SMS",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
-    ]
-  },
-  {
-    "id": "registerSMSModalFinish",
-    "message": "Finish",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
-    ]
-  },
-  {
-    "id": "registerSMSModalPhone",
-    "message": "Ваш телефон",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
-    ]
-  },
-  {
-    "id": "registerSMSModalProcess",
-    "message": "Processing ...",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
-    ]
-  },
-  {
-    "id": "registerSMSModalReady",
-    "message": "Your protected wallet activated",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
-    ]
-  },
-  {
-    "id": "registerSMSModalSendSMS",
-    "message": "Отправить SMS",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
-    ]
-  },
-  {
-    "id": "registerSMSModalSendSMS165",
-    "message": "Confirm",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
-    ]
-  },
-  {
-    "id": "registerSMSProtectedTitle",
-    "message": "Активация SMS Protected Кошелька",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
-    ]
-  },
-  {
     "id": "back",
     "message": "Назад",
     "files": [
@@ -2769,20 +2705,6 @@
     ]
   },
   {
-    "id": "RegisterSMSProtected_SmsCodeRequery",
-    "message": "Введите смс-код",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
-    ]
-  },
-  {
-    "id": "registerSMSAddOffline",
-    "message": "Восстановить кошелек",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
-    ]
-  },
-  {
     "id": "registerSMSMPlaceHolder",
     "message": "Cекретная фраза (12 слов)",
     "files": [
@@ -2793,103 +2715,12 @@
     ]
   },
   {
-    "id": "registerSMSMnemonicError",
-    "message": "Вы указали не валидный набор слов",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
-    ]
-  },
-  {
-    "id": "registerSMSMnemonicNotice",
-    "message": "Она поможет разблокировать средства на кошельке, если сервер 2fa будет не доступен",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
-    ]
-  },
-  {
-    "id": "registerSMSModalPhonePlaceholder",
-    "message": "Enter your phone",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
-    ]
-  },
-  {
-    "id": "registerSMSModalSmsCodePlaceholder",
-    "message": "Enter code from SMS",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
-    ]
-  },
-  {
     "id": "registerSMSModalWords",
     "message": "Секретная фраза (12 слов):",
     "files": [
       "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx",
       "src/front/shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
-    ]
-  },
-  {
-    "id": "registerSMSRestoryMnemonic",
-    "message": "Восстановить кошелек используя секретную фразу",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
-    ]
-  },
-  {
-    "id": "registerSMSWordsInfoBlock",
-    "message": "Сгенерируйте секретную фразу или укажите ранее сохраненную для восстановления старого кошелька",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
-    ]
-  },
-  {
-    "id": "registerSMS_ConfigServerOffline",
-    "message": "Сервер авторизации не доступен. Попробуйте позже или используйте секретную фраза для разблокировки счета",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
-    ]
-  },
-  {
-    "id": "registerSMS_LinkToManualRestore",
-    "message": "How to withdraw money manually",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
-    ]
-  },
-  {
-    "id": "registerSMS_MnemonicRestoreNotes",
-    "message": "Если не приходит код подтверждения или у вас нет доступа к указаному номеру телефона, вы можете восстановить кошелек используя секретную фразу",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
-    ]
-  },
-  {
-    "id": "registerSMS_MnemonicUseNotes",
-    "message": "Используя секретную фразу, вы сможете разблокировать средства на счете",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
-    ]
-  },
-  {
-    "id": "registerSMS_NotValidPhone",
-    "message": "Укажите номер телефона",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
-    ]
-  },
-  {
-    "id": "registerSMS_ShareInstruction",
-    "message": "Share",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
-    ]
-  },
-  {
-    "id": "registerSMS_WalletLocked",
-    "message": "Этот счет привязан к другому номеру телефона",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
     ]
   },
   {
@@ -3015,13 +2846,6 @@
     "message": "У вас нет прав для подписи этой транзакции (проверьте, что у вас создан мультисиг)",
     "files": [
       "src/front/shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.tsx"
-    ]
-  },
-  {
-    "id": "registerSMSModalFinishSaveThisInfo",
-    "message": "Информация на случай недоступности нашего сервиса",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
     ]
   },
   {
@@ -3192,48 +3016,6 @@
     "message": "Запросить",
     "files": [
       "src/front/shared/components/BalanceForm/BalanceForm.tsx"
-    ]
-  },
-  {
-    "id": "registerSMSModalInstCopied",
-    "message": "Скопировано",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
-    ]
-  },
-  {
-    "id": "registerSMSModalInstDownloaded",
-    "message": "Загружается",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
-    ]
-  },
-  {
-    "id": "registerSMSModalMnemonicCopied",
-    "message": "Фраза скопирована",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
-    ]
-  },
-  {
-    "id": "registerSMSModalMnemonicCopy",
-    "message": "Скопировать",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
-    ]
-  },
-  {
-    "id": "registerSMSModalMnemonicGenerateNew",
-    "message": "Создать новую",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
-    ]
-  },
-  {
-    "id": "registerSMSModalMnemonicGenerateNewGenerated",
-    "message": "Создана",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
     ]
   },
   {
@@ -3419,27 +3201,6 @@
     "message": "Лучшая цена:",
     "files": [
       "src/front/shared/pages/Exchange/AtomicSwap.tsx"
-    ]
-  },
-  {
-    "id": "registerSMS_ButtonSaveMnemonic",
-    "message": "Save",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
-    ]
-  },
-  {
-    "id": "registerSMS_SaveYourMnemonic",
-    "message": "Пожалуйста, не забудьте сохранить свою секретную фразу перед активацией 2fa. Такая мера необходима для сохранения ваших средств в случае возникновения чрезвычайной ситуации.",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
-    ]
-  },
-  {
-    "id": "registerSMS_YouNeedSaveMnemonic",
-    "message": "Для активации SMS-защиты вы должны сохранить свою секретную фразу.",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
     ]
   },
   {
@@ -3747,14 +3508,6 @@
     "id": "widgetApproveApprove",
     "message": "Yes",
     "files": [
-      "src/front/shared/helpers/wpLogoutModal.ts"
-    ]
-  },
-  {
-    "id": "widgetApproveCancel",
-    "message": "Cancel",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx",
       "src/front/shared/helpers/wpLogoutModal.ts"
     ]
   },
