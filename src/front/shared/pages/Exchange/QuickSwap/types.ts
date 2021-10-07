@@ -66,6 +66,7 @@ export type ComponentState = {
   showOrders: boolean
   mnemonicSaved: boolean
   blockReason: SwapBlockReason | undefined
+  coinDecimals: 18
 }
 
 export enum Direction {
