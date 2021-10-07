@@ -122,6 +122,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       showOrders: false,
       mnemonicSaved: mnemonic === '-',
       blockReason: undefined,
+      coinDecimals: 18,
     }
   }
 
@@ -373,7 +374,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   }
 
   createSwapRequest = (skipValidation = false) => {
-    const { slippage, spendedAmount, fromWallet, toWallet } = this.state
+    const { slippage, spendedAmount, fromWallet, toWallet, coinDecimals } = this.state
 
     const sellToken = fromWallet.isToken
       ? fromWallet.contractAddress
@@ -382,7 +383,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       ? toWallet.contractAddress
       : '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
 
-    const sellAmount = utils.amount.formatWithDecimals(spendedAmount, 18)
+    const sellAmount = utils.amount.formatWithDecimals(spendedAmount, fromWallet.decimals || coinDecimals)
 
     const request = [
       `/swap/v1/quote?`,
@@ -430,7 +431,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   }
 
   calculateDataFromSwap = async (params) => {
-    const { fromWallet, toWallet, gasLimit, gasPrice } = this.state
+    const { fromWallet, toWallet, gasLimit, gasPrice, coinDecimals } = this.state
     const { swap, withoutValidation } = params
 
     // we've had a special error in the previous request. It means there is
@@ -455,11 +456,10 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       : swap.gasPrice
 
     const weiFee = new BigNumber(customGasLimit).times(customGasPrice)
-    const swapFee = utils.amount.formatWithoutDecimals(weiFee, 18)
+    const swapFee = utils.amount.formatWithoutDecimals(weiFee, coinDecimals)
     const receivedAmount = utils.amount.formatWithoutDecimals(
       swap.buyAmount,
-      // if it's not a token then usual coin with 18 decimals
-      toWallet?.decimals || 18
+      toWallet?.decimals || coinDecimals
     )
 
     this.setState(() => ({
