@@ -2655,34 +2655,6 @@
     ]
   },
   {
-    "id": "ConfirmActivateSMS_Message",
-    "message": "You have already activated this type of wallet. Want to overwrite your old wallet (you may loose the funds)",
-    "files": [
-      "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
-    ]
-  },
-  {
-    "id": "ConfirmActivateSMS_No",
-    "message": "Nee",
-    "files": [
-      "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
-    ]
-  },
-  {
-    "id": "ConfirmActivateSMS_Title",
-    "message": "Add BTC (SMS-Protected) wallet",
-    "files": [
-      "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
-    ]
-  },
-  {
-    "id": "ConfirmActivateSMS_Yes",
-    "message": "Ja:",
-    "files": [
-      "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
-    ]
-  },
-  {
     "id": "RegisterSMSProtected_SmsCodeRequery",
     "message": "Enter SMS-code",
     "files": [
@@ -4293,22 +4265,8 @@
     ]
   },
   {
-    "id": "WithdrawSMS_NotValidSmsCode",
-    "message": "Invalid code number",
-    "files": [
-      "src/front/shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.tsx"
-    ]
-  },
-  {
     "id": "WithdrawSMS_SmsConfirming",
     "message": "Confirming transaction",
-    "files": [
-      "src/front/shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.tsx"
-    ]
-  },
-  {
-    "id": "WithdrawSMS_UnknownError",
-    "message": "Unknown error. Try again or use a passphrase",
     "files": [
       "src/front/shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.tsx"
     ]

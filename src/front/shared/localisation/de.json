@@ -2794,34 +2794,6 @@
     ]
   },
   {
-    "id": "ConfirmActivateSMS_Message",
-    "message": "Du hast diese Art von Wallet bereits aktiviert. Möchtest du dein altes Wallet überschreiben? (Du kannst dein Geld verlieren!)",
-    "files": [
-      "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
-    ]
-  },
-  {
-    "id": "ConfirmActivateSMS_No",
-    "message": "Nein",
-    "files": [
-      "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
-    ]
-  },
-  {
-    "id": "ConfirmActivateSMS_Title",
-    "message": "BTC-Wallet (SMS-geschützt) hinzufügen",
-    "files": [
-      "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
-    ]
-  },
-  {
-    "id": "ConfirmActivateSMS_Yes",
-    "message": "Ja",
-    "files": [
-      "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
-    ]
-  },
-  {
     "id": "RegisterSMSProtected_SmsCodeRequery",
     "message": "SMS-code eingeben",
     "files": [
@@ -2920,13 +2892,6 @@
   {
     "id": "registerSMS_MnemonicUseNotes",
     "message": "Durch die Verwendung einer geheimen Phrase kannst du Vermögenswerte auf deinem Konto freischalten",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
-    ]
-  },
-  {
-    "id": "registerSMS_NotValidPhone",
-    "message": "Handynummer eingeben",
     "files": [
       "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
     ]
@@ -4432,22 +4397,8 @@
     ]
   },
   {
-    "id": "WithdrawSMS_NotValidSmsCode",
-    "message": "Ungültige Codenummer",
-    "files": [
-      "src/front/shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.tsx"
-    ]
-  },
-  {
     "id": "WithdrawSMS_SmsConfirming",
     "message": "Transaktion bestätigen",
-    "files": [
-      "src/front/shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.tsx"
-    ]
-  },
-  {
-    "id": "WithdrawSMS_UnknownError",
-    "message": "Unbekannter Fehler. Versuche es erneut oder verwende eine Passphrase",
     "files": [
       "src/front/shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.tsx"
     ]

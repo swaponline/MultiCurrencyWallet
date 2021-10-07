@@ -9,12 +9,10 @@ import cssModules from 'react-css-modules'
 import styles from '../Styles/default.scss'
 import ownStyle from './RegisterSMSProtected.scss'
 import * as mnemonicUtils from 'common/utils/mnemonic'
-import { isValidPhoneNumber } from 'react-phone-number-input'
 
 import Modal from 'components/modal/Modal/Modal'
 import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
 import Input from 'components/forms/Input/Input'
-import { PhoneInput } from 'components/forms/PhoneInput'
 import Button from 'components/controls/Button/Button'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 
