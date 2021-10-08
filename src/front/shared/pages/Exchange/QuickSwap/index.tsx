@@ -17,6 +17,7 @@ import {
   metamask,
   links,
   routing,
+  user,
 } from 'helpers'
 import { localisedUrl } from 'helpers/locale'
 import actions from 'redux/actions'
@@ -110,7 +111,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       receivedCurrency,
       receivedAmount: '',
       toWallet: toWallet || {},
-      slippage: undefined,
+      slippage: 0.5,
       slippageMaxRange: 100,
       wrongNetwork,
       network: externalConfig.evmNetworks[spendedCurrency.blockchain || spendedCurrency.value.toUpperCase()],
@@ -121,6 +122,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       showOrders: false,
       mnemonicSaved: mnemonic === '-',
       blockReason: undefined,
+      coinDecimals: 18,
     }
   }
 
@@ -358,6 +360,8 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     } else if (notEnoughBalance) {
       this.setState(() => ({ blockReason: SwapBlockReason.NoBalance }))
     } else {
+      this.setState(() => ({ blockReason: SwapBlockReason.Unknown }))
+
       console.group('%c Swap', 'color: red;')
       console.error(error)
       console.groupEnd()
@@ -369,8 +373,8 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     }))
   }
 
-  createSwapRequest = () => {
-    const { slippage, spendedAmount, fromWallet, toWallet, isAdvancedMode } = this.state
+  createSwapRequest = (skipValidation = false) => {
+    const { slippage, spendedAmount, fromWallet, toWallet, coinDecimals } = this.state
 
     const sellToken = fromWallet.isToken
       ? fromWallet.contractAddress
@@ -379,7 +383,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       ? toWallet.contractAddress
       : '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
 
-    const sellAmount = utils.amount.formatWithDecimals(spendedAmount, 18)
+    const sellAmount = utils.amount.formatWithDecimals(spendedAmount, fromWallet.decimals || coinDecimals)
 
     const request = [
       `/swap/v1/quote?`,
@@ -389,14 +393,16 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       `sellAmount=${sellAmount}`,
     ]
 
-    if (isAdvancedMode) {
-      if (slippage) {
-        // allow users to enter an amount up to 100, because it's more easy then enter the amount from 0 to 1
-        // and now convert it into the api format
-        const correctValue = new BigNumber(slippage).dividedBy(100)
+    if (skipValidation) {
+      request.push(`&skipValidation=true`)
+    }
 
-        request.push(`&slippagePercentage=${correctValue}`)
-      }
+    if (slippage) {
+      // allow users to enter an amount up to 100, because it's more easy then enter the amount from 0 to 1
+      // and now convert it into the api format
+      const correctValue = new BigNumber(slippage).dividedBy(100)
+
+      request.push(`&slippagePercentage=${correctValue}`)
     }
 
     return request.join('')
@@ -418,51 +424,90 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     }
   }
 
+  tryToSkipValidation = (error): boolean => {
+    const { code, reason } = JSON.parse(error.message)
+
+    return code === 105 && reason === 'Error'
+  }
+
+  calculateDataFromSwap = async (params) => {
+    const { fromWallet, toWallet, gasLimit, gasPrice, coinDecimals } = this.state
+    const { swap, withoutValidation } = params
+
+    // we've had a special error in the previous request. It means there is
+    // some problem and we add a "skip validation" parameter to bypass it.
+    // Usually the swap tx with this parameter fails in the blockchain,
+    // because it's not enough gas limit. Estimate it by yourself
+    if (withoutValidation) {
+      const baseCurrency = fromWallet.standard ? fromWallet.baseCurrency : fromWallet.currency
+      const estimatedGas = await actions[baseCurrency.toLowerCase()]?.estimateGas(swap)
+
+      if (typeof estimatedGas === 'number') {
+        swap.gas = estimatedGas
+      } else if (estimatedGas instanceof Error) {
+        this.reportError(estimatedGas)
+      }
+    }
+
+    const gweiDecimals = 9
+    const customGasLimit = gasLimit && gasLimit > swap.gas ? gasLimit : swap.gas
+    const customGasPrice = gasPrice
+      ? utils.amount.formatWithDecimals(gasPrice, gweiDecimals)
+      : swap.gasPrice
+
+    const weiFee = new BigNumber(customGasLimit).times(customGasPrice)
+    const swapFee = utils.amount.formatWithoutDecimals(weiFee, coinDecimals)
+    const receivedAmount = utils.amount.formatWithoutDecimals(
+      swap.buyAmount,
+      toWallet?.decimals || coinDecimals
+    )
+
+    this.setState(() => ({
+      receivedAmount,
+      swapData: swap,
+      swapFee,
+      isDataPending: false,
+    }))
+  }
+
   fetchSwapData = async () => {
-    const {
-      network,
-      toWallet,
-      gasLimit,
-      gasPrice,
-    } = this.state
+    const { network } = this.state
 
     this.setState(() => ({
       isDataPending: true,
       blockReason: undefined,
     }))
 
-    try {
+    let repeatRequest = true
+    let swapRequest = this.createSwapRequest()
+
+    while (repeatRequest) {
       const swap: any = await apiLooper.get(
         this.returnZeroxApiName(network.networkVersion),
-        this.createSwapRequest(),
+        swapRequest,
         {
-          reportErrors: this.reportError,
+          reportErrors: (error) => {
+            if (!repeatRequest) {
+              this.reportError(error)
+            }
+          },
           sourceError: true,
         }
       )
 
       if (!(swap instanceof Error)) {
-        const gweiDecimals = 9
-        const customGasLimit = gasLimit && gasLimit > swap.gas ? gasLimit : swap.gas
-        const customGasPrice = gasPrice ? utils.amount.formatWithDecimals(gasPrice, gweiDecimals) : swap.gasPrice
+        repeatRequest = false
 
-        const weiFee = new BigNumber(customGasLimit).times(customGasPrice)
-        const swapFee = utils.amount.formatWithoutDecimals(weiFee, 18)
-        const receivedAmount = utils.amount.formatWithoutDecimals(
-          swap.buyAmount,
-          // if it's not a token then usual coin with 18 decimals
-          toWallet?.decimals || 18
-        )
-
-        this.setState(() => ({
-          receivedAmount,
-          swapData: swap,
-          swapFee,
-          isDataPending: false,
-        }))
+        await this.calculateDataFromSwap({
+          swap,
+          withoutValidation: swapRequest.match(/skipValidation/),
+        })
+      } else if (this.tryToSkipValidation(swap)) {
+        // it's a special error. Will be a new request
+        swapRequest = this.createSwapRequest(true)
+      } else {
+        repeatRequest = false
       }
-    } catch (error) {
-      this.reportError(error)
     }
   }
 
@@ -640,14 +685,8 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   }
 
   flipCurrency = () => {
-    const {
-      currencies,
-      fromWallet,
-      spendedCurrency,
-      receivedCurrency,
-      toWallet,
-      wrongNetwork,
-    } = this.state
+    const { currencies, fromWallet, spendedCurrency, receivedCurrency, toWallet, wrongNetwork } =
+      this.state
 
     if (wrongNetwork || receivedCurrency.notExist) return
 
@@ -668,21 +707,19 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   }
 
   openExternalExchange = () => {
-    const { externalExchangeReference } = this.state
+    const { externalExchangeReference, fromWallet } = this.state
 
-    if (
-      window.buyViaCreditCardLink &&
-      (externalExchangeReference === null || externalExchangeReference.closed)
-    ) {
+    const link = user.getExternalExchangeLink({
+      address: fromWallet.address,
+      currency: fromWallet.currency,
+    })
+
+    if (link && (externalExchangeReference === null || externalExchangeReference.closed)) {
       this.setState(() => ({
         isPending: true,
       }))
 
-      const newWindowProxy = window.open(
-        window.buyViaCreditCardLink,
-        'externalFiatExchange',
-        'location=yes, height=770, width=620, scrollbars, status, resizable'
-      )
+      const newWindowProxy = window.open(link)
 
       this.setState(
         () => ({
@@ -748,6 +785,8 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
         isAdvancedMode: !state.isAdvancedMode,
       }),
       async () => {
+        this.resetSwapData()
+
         const { isAdvancedMode } = this.state
         // update swap data without advanced options
         if (!isAdvancedMode) await this.checkSwapData()
@@ -803,6 +842,12 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     return !swapData || isSwapPending || !!error
   }
 
+  unlockDangerousSwap = () => {
+    this.setState(() => ({
+      error: null,
+    }))
+  }
+
   createLimitOrder = () => {
     actions.modals.open(constants.modals.LimitOrder)
   }
@@ -836,6 +881,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       showOrders,
       mnemonicSaved,
       blockReason,
+      error,
     } = this.state
 
     const linked = Link.all(
@@ -854,8 +900,11 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
 
     const swapDataIsDisabled = this.isSwapDataNotAvailable()
     const swapBtnIsDisabled = this.isSwapNotAvailable() || insufficientBalance || swapDataIsDisabled
+
     const isWalletCreated = localStorage.getItem(constants.localStorage.isWalletCreate)
     const saveSecretPhrase = !mnemonicSaved && !metamask.isConnected()
+
+    const isDangerousSwap = blockReason === SwapBlockReason.Unknown && swapData
 
     return (
       <>
@@ -890,6 +939,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
               updateWallets={this.updateWallets}
               isPending={isPending}
               insufficientBalance={insufficientBalance}
+              resetSwapData={this.resetSwapData}
             />
           </div>
 
@@ -950,7 +1000,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
               resetSwapData={this.resetSwapData}
             />
           </div>
-            
+
           <SwapInfo
             network={network}
             swapData={swapData}
@@ -974,9 +1024,14 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
           />
 
           <div styleName="buttonWrapper">
+            {isDangerousSwap && (
+              <Button disabled={!error} onClick={this.unlockDangerousSwap} dangerous>
+                <FormattedMessage id="tryAnyway" defaultMessage="Try anyway" />
+              </Button>
+            )}
+
             {needApprove ? (
               <Button
-                styleName="button"
                 pending={isDataPending}
                 disabled={swapDataIsDisabled}
                 onClick={this.approve}
@@ -990,7 +1045,6 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
               </Button>
             ) : (
               <Button
-                styleName="button"
                 pending={isSwapPending}
                 disabled={swapBtnIsDisabled}
                 onClick={this.swap}
@@ -1002,7 +1056,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
           </div>
 
           {!wrongNetwork && (mnemonicSaved || metamask.isConnected()) && (
-            <Button styleName="button" onClick={this.createLimitOrder} link small>
+            <Button onClick={this.createLimitOrder} link small>
               <FormattedMessage id="createLimitOrder" defaultMessage="Create limit order" />
             </Button>
           )}

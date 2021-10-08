@@ -261,15 +261,13 @@
 .buttonWrapper {
   margin-bottom: 0.9rem;
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: space-between;
-}
 
-.button {
-  flex: 1;
-
-  &:not(:first-of-type) {
-    margin-left: 0.5rem;
+  & > * {
+    &:not(:first-child) {
+      margin-top: 0.5rem;
+    }
   }
 }
 

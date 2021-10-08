@@ -2,6 +2,10 @@ import axios from 'axios'
 import config from 'helpers/externalConfig'
 import { constants } from 'helpers'
 
+type BackupUserResponse = {
+  backupReady: boolean
+  hasBackupPlugin: boolean
+}
 
 const localStorage = window.localStorage
 const lsCurrentUser = `${process.env.ENTRY}:wp_currentUserId`
@@ -21,19 +25,19 @@ const backupUserData = {
       if (
         plugins?.backupPlugin
         && plugins?.restorePluginUrl
-        && window
-        && window.WPuserUid
+        && window?.WPuserUid
         && config.opts.WPuserHash
       ) {
-        axios.post(config.opts.plugins.restorePluginUrl, {
-          WPuserUid: window.WPuserUid,
-          WPuserHash: config.opts.WPuserHash,
-        }).then((req) => {
-          if (req
-            && req.data
-            && req.data.answer
-            && req.data.answer === `ok`
-            && req.data.data
+        axios.post(
+          plugins.restorePluginUrl,
+          {
+            WPuserUid: window.WPuserUid,
+            WPuserHash: config.opts.WPuserHash,
+          } as any
+        ).then((res) => {
+          if (res?.data?.answer
+            && res.data.answer === `ok`
+            && res.data.data
           ) {
             resolve(true)
           } else {
@@ -53,16 +57,21 @@ const backupUserData = {
     return (currentUser !== `${window.WPuserUid}` && window.WPuserUid) ? true : false
   },
   backupUser: () => {
-    return new Promise((resolve) => {
+    return new Promise<BackupUserResponse>((resolve) => {
       const plugins = config?.opts?.plugins
+
+      const backupStateResponse = {
+        backupReady: false,
+        hasBackupPlugin: false
+      }
 
       if (
         plugins?.backupPlugin
         && plugins?.backupPluginUrl
-        && window
-        && window.WPuserUid
+        && window?.WPuserUid
         && config.opts.WPuserHash
       ) {
+        backupStateResponse.hasBackupPlugin = true
         const get = (key) => localStorage.getItem(constants.privateKeyNames[key])
 
         const backup = {
@@ -85,30 +94,28 @@ const backupUserData = {
           didPinBtcCreated:                 localStorage.getItem(constants.localStorage.didPinBtcCreated),
         }
 
-        axios.post(config.opts.plugins.backupPluginUrl, {
-          ...backup,
-          WPuserUid: window.WPuserUid,
-          WPuserHash: config.opts.WPuserHash,
-        }).then((answer) => {
-          const data = answer.data
-          if (data
-            && data.answer
-            && data.answer === `ok`
+        axios.post(
+          plugins.backupPluginUrl,
+          {
+            ...backup,
+            WPuserUid: window.WPuserUid,
+            WPuserHash: config.opts.WPuserHash
+          } as any
+        ).then((res) => {
+          if (res?.data?.answer
+            && res.data.answer === `ok`
           ) {
             localStorage.setItem(lsCurrentUser, window.WPuserUid)
-            //@ts-ignore
-            resolve(true, true)
+            backupStateResponse.backupReady = true
+            resolve(backupStateResponse)
           } else {
-            //@ts-ignore
-            resolve(false, true)
+            resolve(backupStateResponse)
           }
         }).catch((e) => {
-          //@ts-ignore
-          resolve(false, true)
+          resolve(backupStateResponse)
         })
       } else {
-        //@ts-ignore
-        resolve(false, false)
+        resolve(backupStateResponse)
       }
     })
   },
@@ -119,19 +126,20 @@ const backupUserData = {
       if (
         plugins?.backupPlugin
         && plugins?.backupPluginUrl
-        && window
-        && window.WPuserUid
+        && window?.WPuserUid
         && config.opts.WPuserHash
       ) {
-        axios.post(plugins.backupPluginUrl, {
-          WPuserUid: window.WPuserUid,
-          WPuserHash: config.opts.WPuserHash,
-          action: 'cleanup',
-        }).then((req) => {
-          if (req
-            && req.data
-            && req.data.answer
-            && req.data.answer === `ok`
+        axios.post(
+          plugins.backupPluginUrl,
+          {
+            WPuserUid: window.WPuserUid,
+            WPuserHash: config.opts.WPuserHash,
+            action: 'cleanup',
+          } as any
+        ).then((res) => {
+          if (
+            res?.data?.answer
+            && res.data.answer === `ok`
           ) {
             resolve(true)
           } else {
@@ -152,21 +160,21 @@ const backupUserData = {
       if (
         plugins?.backupPlugin
         && plugins?.restorePluginUrl
-        && window
-        && window.WPuserUid
+        && window?.WPuserUid
         && config.opts.WPuserHash
       ) {
         const set = (key, value) => {
           if (value) localStorage.setItem(constants.privateKeyNames[key], value)
         }
 
-        axios.post(plugins.restorePluginUrl, {
-          WPuserUid: window.WPuserUid,
-          WPuserHash: config.opts.WPuserHash,
-        }).then((req) => {
-          if (req
-            && req.data
-            && req.data.answer
+        axios.post(
+          plugins.restorePluginUrl,
+          {
+            WPuserUid: window.WPuserUid,
+            WPuserHash: config.opts.WPuserHash,
+          } as any
+        ).then((req) => {
+          if (req?.data?.answer
             && req.data.answer === `ok`
             && req.data.data
           ) {

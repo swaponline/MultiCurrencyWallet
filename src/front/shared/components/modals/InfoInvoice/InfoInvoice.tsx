@@ -46,10 +46,6 @@ const langLabels = defineMessages({
     id: `${langPrefix}_FromAddress`,
     defaultMessage: `Адресс отправителя`,
   },
-  toAddress: {
-    id: `${langPrefix}_ToAddress`,
-    defaultMessage: `Адресс плательщика`,
-  },
   buttonClose: {
     id: `${langPrefix}_CloseButton`,
     defaultMessage: `Закрыть`,
@@ -176,7 +172,6 @@ class InfoInvoice extends React.Component<any, any> {
         let withdrawType = constants.modals.Withdraw
 
         if (payWallet.isUserProtected) withdrawType = constants.modals.WithdrawMultisigUser
-        if (payWallet.isSmsProtected) withdrawType = constants.modals.WithdrawMultisigSMS
 
         const {
           currency,
@@ -300,7 +295,6 @@ class InfoInvoice extends React.Component<any, any> {
     }
 
     return (
-      //@ts-ignore: strictNullChecks
       <Modal 
         name="InfoInvoice" title={modalTitle} 
         onClose={this.handleClose} 

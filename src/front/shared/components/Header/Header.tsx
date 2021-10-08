@@ -445,7 +445,7 @@ class Header extends Component<any, any> {
           {!isMobile && <Nav menu={menuItems} />}
         </div>
         <div styleName="rightArea">
-          {canUseExternalWallet && <WalletConnect />}
+          {!externalConfig.isExtension && <WalletConnect />}
 
           {window.WPSO_selected_theme !== 'only_light' && window.WPSO_selected_theme !== 'only_dark' && (
             <ThemeSwitcher onClick={this.handleToggleTheme} />

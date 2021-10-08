@@ -43,8 +43,7 @@ class CurrencyAction extends React.Component<any, any> {
       intl: { locale },
     } = this.props
 
-    const { currency, address } = item
-    const isToken = erc20Like.isToken({ name: currency })
+    const { currency, address, standard } = item
 
     if (context === 'Deposit') {
       this.handleClose()
@@ -52,12 +51,13 @@ class CurrencyAction extends React.Component<any, any> {
       actions.modals.open(constants.modals.ReceiveModal, {
         currency,
         address,
+        standard,
       })
     } else {
-      const { Withdraw, WithdrawMultisigSMS, WithdrawMultisigUser } = constants.modals
+      const { Withdraw, WithdrawMultisigUser } = constants.modals
 
       let withdrawModalType = Withdraw
-      if (item.currency === 'BTC (SMS-Protected)') withdrawModalType = WithdrawMultisigSMS
+
       if (item.currency === 'BTC (Multisig)') withdrawModalType = WithdrawMultisigUser
 
       let targetCurrency = currency
@@ -72,7 +72,7 @@ class CurrencyAction extends React.Component<any, any> {
       this.handleClose()
 
       history.push(
-        localisedUrl(locale, (isToken ? '/token' : '') + `/${targetCurrency}/${address}/send`)
+        localisedUrl(locale, (standard ? '/token' : '') + `/${targetCurrency}/${address}/send`)
       )
     }
 

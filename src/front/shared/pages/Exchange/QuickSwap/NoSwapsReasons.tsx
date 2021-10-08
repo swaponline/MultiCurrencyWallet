@@ -58,6 +58,13 @@ function SwapInfo(props) {
             defaultMessage="Insufficient pool liquidity"
           />
         </p>
+      ) : blockReason === SwapBlockReason.Unknown ? (
+        <p styleName="neutral">
+          <FormattedMessage
+            id="unknownSwapProblemHasOccurred"
+            defaultMessage="Unknown problem has occurred. Probably we can't exchange this pair"
+          />
+        </p>
       ) : null}
     </section>
   )

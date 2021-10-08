@@ -1,46 +1,45 @@
-import config from 'app-config'
-import externalConfig from './externalConfig'
 import store from 'redux/store'
+import { externalConfig, links, getItezUrl } from 'helpers'
 import TOKEN_STANDARDS from 'helpers/constants/TOKEN_STANDARDS'
 
 export const getActivatedCurrencies = () => {
   const currencies: string[] = []
 
-  if (!config.opts.curEnabled || config.opts.curEnabled.btc) {
+  if (!externalConfig.opts.curEnabled || externalConfig.opts.curEnabled.btc) {
     currencies.push('BTC')
     currencies.push('BTC (SMS-Protected)')
     currencies.push('BTC (PIN-Protected)')
     currencies.push('BTC (Multisig)')
   }
 
-  if (!config.opts.curEnabled || config.opts.curEnabled.eth) {
+  if (!externalConfig.opts.curEnabled || externalConfig.opts.curEnabled.eth) {
     currencies.push('ETH')
   }
 
-  if (!config.opts.curEnabled || config.opts.curEnabled.bnb) {
+  if (!externalConfig.opts.curEnabled || externalConfig.opts.curEnabled.bnb) {
     currencies.push('BNB')
   }
 
-  if (!config.opts.curEnabled || config.opts.curEnabled.matic) {
+  if (!externalConfig.opts.curEnabled || externalConfig.opts.curEnabled.matic) {
     currencies.push('MATIC')
   }
 
-  if (!config.opts.curEnabled || config.opts.curEnabled.arbeth) {
+  if (!externalConfig.opts.curEnabled || externalConfig.opts.curEnabled.arbeth) {
     currencies.push('ARBETH')
   }
 
-  if (!config.opts.curEnabled || config.opts.curEnabled.ghost) {
+  if (!externalConfig.opts.curEnabled || externalConfig.opts.curEnabled.ghost) {
     currencies.push('GHOST')
   }
 
-  if (!config.opts.curEnabled || config.opts.curEnabled.next) {
+  if (!externalConfig.opts.curEnabled || externalConfig.opts.curEnabled.next) {
     currencies.push('NEXT')
   }
 
   Object.keys(TOKEN_STANDARDS).forEach((key) => {
     const standard = TOKEN_STANDARDS[key].standard
 
-    Object.keys(config[standard]).forEach((token) => {
+    Object.keys(externalConfig[standard]).forEach((token) => {
 
       const baseCurrency = TOKEN_STANDARDS[standard].currency.toUpperCase()
       const tokenName = token.toUpperCase()
@@ -83,7 +82,7 @@ export const getWidgetCurrencies = () => {
         widgetCurrencies.push(tokenValue)
       })
     } else {
-      widgetCurrencies.push(config.erc20token.toUpperCase())
+      widgetCurrencies.push(externalConfig.erc20token.toUpperCase())
     }
   }
 
@@ -108,4 +107,75 @@ export const isAllowedCurrency = (currency = '', address = '', isMetamask = fals
 
 export const isCorrectWalletToShow = (wallet) => {
   return !wallet.isMetamask || (wallet.isConnected && !wallet.unknownNetwork)
+}
+
+export const getTransakLink = (params) => {
+  if (!window.transakApiKey) return ''
+
+  const { currency = '', walletAddress = '' } = params
+  const { user } = store.getState()
+
+  const isLocalHost = location.hostname === 'localhost' || location.hostname === '127.0.0.1'
+  const hostURL = window.location.origin
+  let environment = 'STAGING'
+  let exchangeUrl = links.transakDev
+
+  if (externalConfig.entry === 'mainnet') {
+    environment = 'PRODUCTION'
+    exchangeUrl = links.transak
+  }
+
+  const parameters = [
+    // required parameters
+    `?apiKey=${window.transakApiKey}`,
+    `&hostURL=${hostURL}`,
+    `&environment=${environment}`,
+    // if we have the crypto in the parameters, sometimes
+    // we don't have the ability to buy this crypto with
+    // an user active fiat. In this case after redirection
+    // Transak will drop his crypto field to the default value
+    // which is available for the fiat value that we've passed.
+    // `&fiatCurrency=${user.activeFiat}`,
+  ]
+  
+  if (!isLocalHost) {
+    parameters.push(`&redirectURL=${hostURL}`)
+  }
+  if (walletAddress) {
+    parameters.push(`&walletAddress=${walletAddress}`)
+  }
+  if (currency) {
+    parameters.push(`&defaultCryptoCurrency=${currency.toUpperCase()}`)
+  }
+
+  return exchangeUrl + parameters.join('')
+}
+
+export const getExternalExchangeLink = (params) => {
+  const { address = '', currency = '', locale = 'en' } = params
+  const { user } = store.getState()
+  let link = ''
+
+  if (window.transakApiKey) {
+    link = getTransakLink({
+      walletAddress: address,
+      currency,
+    })
+  } else if (externalConfig?.opts?.buyViaCreditCardLink) {
+    link = externalConfig.opts.buyViaCreditCardLink
+
+    // checking whether the currency is available in ITEZ
+    if (link.match(/itez\.com/g) && currency) {
+      const itezCrypto = ['BTC', 'ETH', 'MATIC']
+      const match = itezCrypto.find((itezAsset) => currency.toUpperCase().includes(itezAsset))
+
+      if (match) {
+        link = getItezUrl({ user, locale, url: externalConfig.opts.buyViaCreditCardLink })
+      } else {
+        link = ''
+      }
+    }
+  }
+
+  return link
 }

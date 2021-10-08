@@ -319,7 +319,6 @@ class WithdrawBtcPin extends React.Component<ComponentProps, ComponentState> {
     const linked = Link.all(this, 'pinCode')
 
     return (
-      //@ts-ignore: strictNullChecks
       <Modal name={name} title={`${intl.formatMessage(langs.title)}`}>
         <div styleName="confirmPINModalHolder">
           {!useMnemonic && (

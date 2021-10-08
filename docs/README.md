@@ -10,8 +10,9 @@
 - 💡 Open-source, client-side
 - 📦 Embeddable into your site!
 - Marketmaker extention https://chrome.google.com/webstore/detail/multicurrencywallet/oldojieloelkkfeacfinhcngmbkepnlm
-  
-Live version here: 
+- One-click WhiteLablel deply to AWS https://aws.amazon.com/marketplace/pp/prodview-jyrrj4txg5u3a
+
+Live demo here: 
 https://swaponline.io (mirror https://swaponline.github.io) . Testnet https://ropsten.swaponline.io/
 <br> Binance  Smart Chin : https://bsc.swap.io/ . Testnet: https://bsc-testnet.swaponline.site/
 

@@ -11,7 +11,6 @@ import IncompletedSwaps from './IncompletedSwaps/IncompletedSwaps'
 import CurrencyAction from './CurrencyAction/CurrencyAction'
 import Confirm from './Confirm/Confirm'
 import ConfirmBeginSwap from './ConfirmBeginSwap/ConfirmBeginSwap'
-import RegisterSMSProtected from './RegisterSMSProtected/RegisterSMSProtected'
 import MultisignJoinLink from './MultisignJoinLink/MultisignJoinLink'
 import InvoiceModal from './InvoiceModal/InvoiceModal'
 import InvoiceLinkModal from './InvoiceLinkModal/InvoiceLinkModal'
@@ -28,7 +27,6 @@ import InfoInvoice from './InfoInvoice/InfoInvoice'
 import RegisterPINProtected from './RegisterPINProtected/RegisterPINProtected'
 
 import WithdrawBtcPin from './WithdrawBtcPin/WithdrawBtcPin'
-import WithdrawBtcSms from './WithdrawBtcSms/WithdrawBtcSms'
 import WithdrawBtcMultisig from './WithdrawBtcMultisig/WithdrawBtcMultisig'
 
 import WalletAddressModal from './WalletAddressModal/WalletAddressModal'
@@ -72,8 +70,6 @@ export default {
 
   WalletAddressModal,
 
-  RegisterSMSProtected,
-  WithdrawBtcSms,
   WithdrawModalMultisig,  // Deprecated
   WithdrawBtcMultisig, 
 
