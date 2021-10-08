@@ -99,7 +99,7 @@ const createSwapApp = async () => {
     const NETWORK = process.env.MAINNET ? `MAINNET` : `TESTNET`
 
     SwapApp.setup({
-      network: process.env.MAINNET ? 'mainnet' : 'testnet',
+      network: NETWORK.toLowerCase(),
 
       env: {
         web3,

@@ -1,21 +1,15 @@
 import erc20Like from 'common/erc20Like';
 import config from 'app-config'
 import moment from 'moment/moment'
-import { constants } from 'helpers'
+import { constants, user, getCurrencyKey, metamask, transactions, externalConfig } from 'helpers'
 import request from 'common/utils/request'
 import getCoinInfo from 'common/coins/getCoinInfo'
 import * as mnemonicUtils from 'common/utils/mnemonic'
-import transactions from 'helpers/transactions'
 import TOKEN_STANDARDS from 'helpers/constants/TOKEN_STANDARDS'
 import actions from 'redux/actions'
 import { getState } from 'redux/core'
 
 import reducers from 'redux/core/reducers'
-
-import { user } from 'helpers'
-import getCurrencyKey from 'helpers/getCurrencyKey'
-import metamask from 'helpers/metamask'
-
 import { MnemonicKey } from 'common/types'
 
 /*
@@ -32,7 +26,37 @@ const initReducerState = () => {
 
   if (!activeCurrency) reducers.user.setActiveCurrency({ activeCurrency: 'BTC' })
   if (!activeFiat) reducers.user.setActiveFiat({ activeFiat: window.DEFAULT_FIAT || 'USD' })
+}
 
+const getActiveEvmActions = (): any[] | [] => {
+  const evmActions = []
+
+  // find available network by a connected wallet
+  if (metamask.isConnected()) {
+    const chainId = metamask.getChainId()
+    const connectedNetwork: any = Object.values(externalConfig.evmNetworks).find(
+      (network: { networkVersion: number }) => {
+        return network.networkVersion === chainId
+      }
+    )
+
+    if (connectedNetwork) {
+      //@ts-ignore
+      evmActions.push(actions[connectedNetwork.currency.toLowerCase()])
+    }
+  // no external wallets. Add all available evm actions
+  } else if (Object.values(externalConfig.evmNetworks).length) {
+    Object.values(externalConfig.evmNetworks).forEach((network: { currency: string }) => {
+      const { currency } = network
+
+      if (actions[currency.toLowerCase()]) {
+        //@ts-ignore
+        evmActions.push(actions[currency.toLowerCase()])
+      }
+    })
+  }
+
+  return evmActions
 }
 
 const sign_btc_multisig = async (btcPrivateKey) => {
@@ -87,20 +111,14 @@ const sign = async () => {
       localStorage.setItem(constants.privateKeyNames.twentywords, mnemonic)
     }
 
-    const btcPrivateKey = localStorage.getItem(constants.privateKeyNames.btc)
     const ghostPrivateKey = localStorage.getItem(constants.privateKeyNames.ghost)
     const nextPrivateKey = localStorage.getItem(constants.privateKeyNames.next)
-    // using ETH key for all EVM compatible chains
-    const ethPrivateKey = localStorage.getItem(constants.privateKeyNames.eth)
 
-    actions.eth.login(ethPrivateKey, mnemonic)
-    actions.bnb.login(ethPrivateKey, mnemonic)
-    actions.matic.login(ethPrivateKey, mnemonic)
-    actions.arbeth.login(ethPrivateKey, mnemonic)
-    const _btcPrivateKey = actions.btc.login(btcPrivateKey, mnemonic)
     actions.ghost.login(ghostPrivateKey, mnemonic)
     actions.next.login(nextPrivateKey, mnemonic)
 
+    const btcPrivateKey = localStorage.getItem(constants.privateKeyNames.btc)
+    const _btcPrivateKey = actions.btc.login(btcPrivateKey, mnemonic)
     // btc multisig with 2fa (2of3)
     await sign_btc_2fa(_btcPrivateKey)
 
@@ -109,6 +127,16 @@ const sign = async () => {
 
     // btc multisig with pin protect (2of3)
     await sign_btc_pin(_btcPrivateKey)
+
+    // using ETH key for all EVM compatible chains
+    const ethPrivateKey = localStorage.getItem(constants.privateKeyNames.eth)
+    const evmActions = getActiveEvmActions()
+
+    if (evmActions.length) {
+      evmActions.forEach((action) => {
+        action.login(ethPrivateKey, mnemonic)
+      })      
+    }
 
     loginWithTokens()
   })
@@ -152,10 +180,6 @@ const getBalances = () => {
         ? [ { func: metamask.getBalance, name: 'metamask' } ]
         : [],
       { func: actions.btc.getBalance, name: 'btc' },
-      { func: actions.eth.getBalance, name: 'eth' },
-      { func: actions.bnb.getBalance, name: 'bnb' },
-      { func: actions.matic.getBalance, name: 'matic' },
-      { func: actions.arbeth.getBalance, name: 'arbeth' },
       { func: actions.ghost.getBalance, name: 'ghost' },
       { func: actions.next.getBalance, name: 'next' },
       { func: actions.btcmultisig.getBalance, name: 'btc-sms' },
@@ -163,6 +187,17 @@ const getBalances = () => {
       { func: actions.btcmultisig.getBalancePin, name: 'btc-pin' },
       { func: actions.btcmultisig.fetchMultisigBalances, name: 'btc-ms' }
     ]
+
+    const evmActions = getActiveEvmActions()
+
+    if (evmActions.length) {
+      evmActions.forEach((action) => {
+        balances.push({
+          func: action.getBalance,
+          name: action.tickerKey,
+        })
+      })
+    }
 
     await Promise.all(
       balances.map(async (obj) => {
@@ -430,15 +465,19 @@ const setTransactions = async () => {
       actions.btcmultisig.getTransactionSMS(),
       actions.btcmultisig.getTransactionPIN(),
       actions.btcmultisig.getTransactionUser(),
-      actions.eth.getTransaction(),
-      actions.bnb.getTransaction(),
-      actions.matic.getTransaction(),
-      actions.arbeth.getTransaction(),
       actions.ghost.getTransaction(),
       actions.next.getTransaction(),
-      ...(metamask.isEnabled() && metamask.isConnected()) ? [actions.eth.getTransaction(metamask.getAddress())] : [],
-      ...(metamask.isEnabled() && metamask.isConnected()) ? [actions.bnb.getTransaction(metamask.getAddress())] : [],
     ]
+
+    const evmActions = getActiveEvmActions()
+
+    if (evmActions.length) {
+      evmActions.forEach((action) => {
+        fetchTxsPromises.push(
+          action.getTransaction(metamask.isConnected() ? metamask.getAddress() : '')
+        )
+      })
+    }
 
     fetchTxsPromises.forEach((txPromise: Promise<any[]>) => {
       txPromise.then((txList: any[]) => {
