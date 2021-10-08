@@ -1648,6 +1648,42 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
     return coin.toUpperCase()
   }
 
+  returnBalanceTooltip = () => {
+    const { haveCurrency, pairFees } = this.state
+    const balance = this.getBalance(haveCurrency)
+
+    if (pairFees && pairFees.byCoins) {
+      const sellCoinFee = pairFees.byCoins[haveCurrency] || false
+
+      return (
+        // as you can see it's a tooltip for the first Selected group element
+        // I can't figure out why React tells that it has to have a key prop
+        // there isn't any loops! Maybe I missing something...
+        <p key="I dont know why I am here" styleName="maxAmount">
+          {new BigNumber(balance).toNumber() === 0 ||
+          (sellCoinFee &&
+            new BigNumber(balance).minus(sellCoinFee.fee).isLessThanOrEqualTo(0)) ? null : (
+            <>
+              {sellCoinFee ? (
+                <FormattedMessage id="Exchange_AvialableBalance" defaultMessage="Available: " />
+              ) : (
+                <FormattedMessage id="partial767" defaultMessage="Balance: " />
+              )}
+              {sellCoinFee && sellCoinFee.fee
+                ? new BigNumber(balance)
+                    .minus(sellCoinFee.fee)
+                    .dp(5, BigNumber.ROUND_FLOOR)
+                    .toString()
+                : new BigNumber(balance).dp(5, BigNumber.ROUND_FLOOR).toString()}
+              {'  '}
+              {this.renderCoinName(haveCurrency)}
+            </>
+          )}
+        </p>
+      )
+    }
+  }
+
   render() {
     const {
       currencies,
@@ -1708,35 +1744,7 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
       return <Redirect to={swapUri} push />
     }
 
-    let balanceTooltip: JSX.Element | null = null
-
-    if (pairFees && pairFees.byCoins) {
-      const sellCoinFee = pairFees.byCoins[sellCoin] || false
-
-      balanceTooltip = (
-        <p styleName="maxAmount">
-          {new BigNumber(balance).toNumber() === 0 ||
-          (sellCoinFee &&
-            new BigNumber(balance).minus(sellCoinFee.fee).isLessThanOrEqualTo(0)) ? null : (
-            <>
-              {sellCoinFee ? (
-                <FormattedMessage id="Exchange_AvialableBalance" defaultMessage="Available: " />
-              ) : (
-                <FormattedMessage id="partial767" defaultMessage="Balance: " />
-              )}
-              {sellCoinFee && sellCoinFee.fee
-                ? new BigNumber(balance)
-                    .minus(sellCoinFee.fee)
-                    .dp(5, BigNumber.ROUND_FLOOR)
-                    .toString()
-                : new BigNumber(balance).dp(5, BigNumber.ROUND_FLOOR).toString()}
-              {'  '}
-              {this.renderCoinName(sellCoin)}
-            </>
-          )}
-        </p>
-      )
-    }
+    const balanceTooltip: JSX.Element | undefined = this.returnBalanceTooltip()
 
     //@ts-ignore: strictNullChecks
     const haveFiat = new BigNumber(exHaveRate).times(haveAmount).dp(2, BigNumber.ROUND_CEIL)

@@ -102,7 +102,7 @@ window.buildOptions = {
     eth: true,
     bnb: true,
     matic: true,
-    arbeth: false,
+    arbeth: true,
     ghost: false,
     next: true,
   },
