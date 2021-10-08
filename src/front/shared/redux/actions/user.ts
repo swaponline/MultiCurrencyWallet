@@ -1,12 +1,13 @@
 import erc20Like from 'common/erc20Like';
 import config from 'app-config'
 import moment from 'moment/moment'
-import { constants, user, getCurrencyKey, metamask, transactions, externalConfig } from 'helpers'
+import { constants, user, getCurrencyKey, metamask, transactions } from 'helpers'
 import request from 'common/utils/request'
 import getCoinInfo from 'common/coins/getCoinInfo'
 import * as mnemonicUtils from 'common/utils/mnemonic'
 import TOKEN_STANDARDS from 'helpers/constants/TOKEN_STANDARDS'
 import actions from 'redux/actions'
+import { getActiveEvmActions } from 'redux/actions'
 import { getState } from 'redux/core'
 
 import reducers from 'redux/core/reducers'
@@ -26,37 +27,6 @@ const initReducerState = () => {
 
   if (!activeCurrency) reducers.user.setActiveCurrency({ activeCurrency: 'BTC' })
   if (!activeFiat) reducers.user.setActiveFiat({ activeFiat: window.DEFAULT_FIAT || 'USD' })
-}
-
-const getActiveEvmActions = (): any[] | [] => {
-  const evmActions = []
-
-  // find available network by a connected wallet
-  if (metamask.isConnected()) {
-    const chainId = metamask.getChainId()
-    const connectedNetwork: any = Object.values(externalConfig.evmNetworks).find(
-      (network: { networkVersion: number }) => {
-        return network.networkVersion === chainId
-      }
-    )
-
-    if (connectedNetwork) {
-      //@ts-ignore
-      evmActions.push(actions[connectedNetwork.currency.toLowerCase()])
-    }
-  // no external wallets. Add all available evm actions
-  } else if (Object.values(externalConfig.evmNetworks).length) {
-    Object.values(externalConfig.evmNetworks).forEach((network: { currency: string }) => {
-      const { currency } = network
-
-      if (actions[currency.toLowerCase()]) {
-        //@ts-ignore
-        evmActions.push(actions[currency.toLowerCase()])
-      }
-    })
-  }
-
-  return evmActions
 }
 
 const sign_btc_multisig = async (btcPrivateKey) => {

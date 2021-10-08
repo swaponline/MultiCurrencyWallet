@@ -4,11 +4,8 @@ import { RouteComponentProps, withRouter, HashRouter } from "react-router-dom";
 import actions from "redux/actions";
 import { connect } from "redaction";
 import moment from "moment-with-locales-es6";
-import {
-  constants,
-  localStorage,
-} from "helpers";
-
+import { constants, localStorage, externalConfig, routing, links, utils, metamask } from 'helpers'
+import { initExternalConfig } from 'helpers/externalConfig'
 import CSSModules from "react-css-modules";
 import styles from "./App.scss";
 import "scss/app.scss";
@@ -27,12 +24,8 @@ import WidthContainer from "components/layout/WidthContainer/WidthContainer";
 import NotificationConductor from "components/notification/NotificationConductor/NotificationConductor";
 import Seo from "components/Seo/Seo";
 
-import config from "helpers/externalConfig"
-import { routing, links, utils } from 'helpers'
 import backupUserData from 'plugins/backupUserData'
 import { FormattedMessage, injectIntl } from 'react-intl'
-import metamask from 'helpers/metamask'
-
 
 const userLanguage = utils.getCookie('mylang') || "en"
 moment.locale(userLanguage)
@@ -250,7 +243,6 @@ class App extends React.Component<RouteComponentProps<any>, any> {
   }
 
   async componentDidMount() {
-
     const shouldUpdatePageAfterMigration = localStorage.getItem('shouldUpdatePageAfterMigration')
 
     if (shouldUpdatePageAfterMigration) {
@@ -275,6 +267,8 @@ class App extends React.Component<RouteComponentProps<any>, any> {
 
     this.processUserBackup()
     await this.processMetamask()
+
+    initExternalConfig()
 
     this.checkIfDashboardModalsAllowed()
     window.actions = actions;
@@ -333,7 +327,7 @@ class App extends React.Component<RouteComponentProps<any>, any> {
       await createSwapApp()
     }
 
-    if (config.entry === 'mainnet') { 
+    if (externalConfig.entry === 'mainnet') { 
       await actions.oneinch.fetchUserOrders()
     }
 
@@ -346,7 +340,7 @@ class App extends React.Component<RouteComponentProps<any>, any> {
 
     if (
       !startPage ||
-      config.isWidget ||
+      externalConfig.isWidget ||
       utils.getCookie('startedSplashScreenIsDisabled') ||
       isWalletCreated ||
       window.location.hash !== '#/'
@@ -438,11 +432,11 @@ class App extends React.Component<RouteComponentProps<any>, any> {
 
     this.overflowHandler()
 
-    const isFetching = !ethAddress || !btcAddress || !ghostAddress || !nextAddress || (!tokenAddress && config && !config.isWidget) || initialFetching;
+    const isFetching = !ethAddress || !btcAddress || !ghostAddress || !nextAddress || (!tokenAddress && externalConfig && !externalConfig.isWidget) || initialFetching;
 
     const isWidget = history.location.pathname.includes("/exchange") && history.location.hash === "#widget";
     const isCalledFromIframe = window.location !== window.parent.location;
-    const isWidgetBuild = config && config.isWidget;
+    const isWidgetBuild = externalConfig && externalConfig.isWidget;
 
     if (isWidgetBuild && localStorage.getItem(constants.localStorage.didWidgetsDataSend) !== "true") {
       localStorage.setItem(constants.localStorage.didWidgetsDataSend, true);

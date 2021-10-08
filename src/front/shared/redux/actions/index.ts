@@ -1,3 +1,5 @@
+import { metamask, externalConfig } from 'helpers'
+
 import modals from './modals'
 import loader from './loader'
 import notifications from './notifications'
@@ -61,8 +63,39 @@ const config = {
   multisigTx,
 }
 
-Object.values(EthLikeAction).forEach((evmInstance: { ticker: string }) => {
-  config[evmInstance.ticker.toLowerCase()] = evmInstance
+Object.values(EthLikeAction).forEach((evmInstance: { tickerKey: string }) => {
+  config[evmInstance.tickerKey] = evmInstance
 })
+
+export const getActiveEvmActions = (): any[] | [] => {
+  const evmActions = []
+
+  // find available network by a connected wallet
+  if (metamask.isConnected()) {
+    const chainId = metamask.getChainId()
+    const connectedNetwork: any = Object.values(externalConfig.evmNetworks).find(
+      (network: { networkVersion: number }) => {
+        return network.networkVersion === chainId
+      }
+    )
+
+    if (connectedNetwork) {
+      //@ts-ignore
+      evmActions.push(config[connectedNetwork.currency.toLowerCase()])
+    }
+  // no external wallets. Add all available evm actions
+  } else if (Object.values(externalConfig.evmNetworks).length) {
+    Object.values(externalConfig.evmNetworks).forEach((network: { currency: string }) => {
+      const { currency } = network
+
+      if (config[currency.toLowerCase()]) {
+        //@ts-ignore
+        evmActions.push(config[currency.toLowerCase()])
+      }
+    })
+  }
+
+  return evmActions
+}
 
 export default config

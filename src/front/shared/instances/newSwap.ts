@@ -75,7 +75,7 @@ import { default as bitcoinUtils } from '../../../common/utils/coin/btc'
 import { default as nextUtils } from '../../../common/utils/coin/next'
 
 
-initExternalConfig()
+// initExternalConfig()
 
 const repo = utils.createRepo()
 utils.exitListener()

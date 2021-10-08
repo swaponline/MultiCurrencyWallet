@@ -85,22 +85,14 @@ class WithdrawModalMultisig extends React.Component<any, any> {
       code: '',
       minus: '',
       balance: selectedItem.balance || 0,
-      ethBalance: null,
       currentDecimals,
       getFiat: 0,
       error: false,
-      smsConfirmed: false,
       ownTx: '',
       mnemonic: '',
       broadcastError: false,
-      sendSmsTimeout: 0,
-      sendSmsTimeoutTimer: false,
       min,
     }
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.state.sendSmsTimeoutTimer)
   }
 
   gotoSms = () => {
@@ -165,11 +157,9 @@ class WithdrawModalMultisig extends React.Component<any, any> {
       unconfirmedBalance !== undefined && unconfirmedBalance < 0
         ? new BigNumber(balance).plus(unconfirmedBalance).toString()
         : balance
-    const ethBalance = await actions.eth.getBalance()
 
     this.setState(() => ({
       balance: finalBalance,
-      ethBalance,
     }))
   }
 
@@ -498,7 +488,6 @@ class WithdrawModalMultisig extends React.Component<any, any> {
       balance,
       isShipped,
       minus,
-      ethBalance,
       exCurrencyRate,
       currentDecimals,
       error,
@@ -506,7 +495,6 @@ class WithdrawModalMultisig extends React.Component<any, any> {
       openScanCam,
       step,
       ownTx,
-      sendSmsTimeout,
       sendSmsStatus,
       usedAdminFee,
     } = this.state

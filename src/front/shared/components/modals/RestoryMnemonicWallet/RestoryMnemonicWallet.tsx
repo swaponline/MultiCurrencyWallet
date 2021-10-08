@@ -1,7 +1,8 @@
 import React, { Fragment } from 'react'
 import { BigNumber } from 'bignumber.js'
-import { constants } from 'helpers'
+import { constants, links, feedback } from 'helpers'
 import actions from 'redux/actions'
+import { getActiveEvmActions } from 'redux/actions'
 import config from 'app-config'
 
 import cssModules from 'react-css-modules'
@@ -16,10 +17,7 @@ import Button from 'components/controls/Button/Button'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 
-import links from 'helpers/links'
-
 import MnemonicInput from 'components/forms/MnemonicInput/MnemonicInput'
-import feedback from 'shared/helpers/feedback'
 
 const langPrefix = `RestoryMnemonicWallet`
 const langLabels = defineMessages({
@@ -164,10 +162,14 @@ class RestoryMnemonicWallet extends React.Component<ComponentProps, ComponentSta
       localStorage.setItem(constants.privateKeyNames.btcPinMnemonicKey, btcPubKey)
       localStorage.setItem(constants.localStorage.isWalletCreate, 'true')
 
-      await actions.bnb.login(false, mnemonic)
-      await actions.eth.login(false, mnemonic)
-      await actions.matic.login(false, mnemonic)
-      await actions.arbeth.login(false, mnemonic)
+      const evmActions = getActiveEvmActions()
+
+      if (evmActions.length) {
+        evmActions.forEach((action) => {
+          action.login(false, mnemonic)
+        })
+      }
+
       await actions.ghost.login(false, mnemonic)
       await actions.next.login(false, mnemonic)
       await actions.user.sign_btc_2fa(btcPrivKey)
