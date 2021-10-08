@@ -15,13 +15,13 @@ const login = (_privateKey, app) => {
   let account
 
   if (privateKey) {
-    account = app.env.web3Arbitrum.eth.accounts.privateKeyToAccount(privateKey)
+    account = app.env.web3Arbeth.eth.accounts.privateKeyToAccount(privateKey)
   }
   else {
-    account = app.env.web3Arbitrum.eth.accounts.create()
+    account = app.env.web3Arbeth.eth.accounts.create()
   }
 
-  app.env.web3Arbitrum.eth.accounts.wallet.add(account.privateKey)
+  app.env.web3Arbeth.eth.accounts.wallet.add(account.privateKey)
 
   if (!_privateKey) {
     app.env.storage.setItem(storageKey, account.privateKey)

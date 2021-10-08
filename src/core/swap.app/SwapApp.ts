@@ -331,11 +331,11 @@ class SwapApp extends EventEmitter {
     if (this.env.metamask && this.env.metamask.isEnabled() && this.env.metamask.isConnected()) {
       return this.env.getWeb3().eth
     }
-    return this.env.getWeb3Arbitrum().eth
+    return this.env.getWeb3Arbeth().eth
   }
 
   getArbitrumWeb3Utils() {
-    return this.env.getWeb3Arbitrum().utils
+    return this.env.getWeb3Arbeth().utils
   }
 
   getParticipantEvmLikeAddress(coinType, swap) {

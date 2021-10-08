@@ -8,12 +8,13 @@ import ethLikeHelper from 'common/helpers/ethLikeHelper'
 import EVM_CONTRACTS_ABI from 'common/helpers/constants/EVM_CONTRACTS_ABI'
 import erc20Like from 'common/erc20Like'
 
-import config, { initExternalConfig } from 'helpers/externalConfig'
+import config from 'helpers/externalConfig'
 
 import helpers, { constants as privateKeys, utils } from 'helpers'
 import actions from 'redux/actions'
+import { getActiveEvmActions } from 'redux/actions'
 
-import SwapApp, { constants } from 'swap.app'
+import SwapApp from 'swap.app'
 import SwapAuth from 'swap.auth'
 import SwapRoom from 'swap.room'
 import SwapOrders from 'swap.orders'
@@ -71,11 +72,8 @@ import {
 
 import metamask from 'helpers/metamask'
 
-import { default as bitcoinUtils } from '../../../common/utils/coin/btc'
-import { default as nextUtils } from '../../../common/utils/coin/next'
-
-
-// initExternalConfig()
+import { default as bitcoinUtils } from 'common/utils/coin/btc'
+import { default as nextUtils } from 'common/utils/coin/next'
 
 const repo = utils.createRepo()
 utils.exitListener()
@@ -93,23 +91,59 @@ const onInit = (cb) => {
   _wait()
 }
 
+const returnSwapClassByName = (name) => {
+  switch (name) {
+    case 'eth':
+      return EthSwap
+    case 'bnb':
+      return BnbSwap
+    case 'matic':
+      return MaticSwap
+    case 'arbeth':
+      return ArbitrumSwap
+  }
+}
+
 const createSwapApp = async () => {
   await metamask.web3connect.onInit(async () => {
-    const web3 = actions.eth.getWeb3()
     const NETWORK = process.env.MAINNET ? `MAINNET` : `TESTNET`
+
+    const evmEnv = {}
+    const evmSwaps: any[] = []
+    const evmActions = getActiveEvmActions()
+
+    if (evmActions.length) {
+      evmActions.forEach((action) => {
+        const capitalizedName = action.tickerKey.charAt(0).toUpperCase() + action.tickerKey.slice(1)
+
+        if (action.tickerKey === 'eth') {
+          evmEnv['web3'] = action.getWeb3()
+          evmEnv['getWeb3'] = action.getWeb3
+        } else {
+          evmEnv[`web3${capitalizedName}`] = action.getWeb3()
+          evmEnv[`getWeb3${capitalizedName}`] = action.getWeb3
+        }
+
+        if (config?.opts?.blockchainSwapEnabled[action.tickerKey]) {
+          const Swap = returnSwapClassByName(action.tickerKey)
+
+          if (Swap) {
+            evmSwaps.push(new Swap({
+              address: config.swapContract[action.tickerKey],
+              abi: EVM_CONTRACTS_ABI.NATIVE_COIN_SWAP,
+              fetchBalance: (address) => action.fetchBalance(address),
+              estimateGasPrice: () => ethLikeHelper[action.tickerKey].estimateGasPrice(),
+              sendTransaction: ({ to, amount }) => action.send({ to, amount }),
+            }))
+          }
+        }
+      })
+    }
 
     SwapApp.setup({
       network: NETWORK.toLowerCase(),
-
       env: {
-        web3,
-        getWeb3: actions.eth.getWeb3,
-        web3bnb: actions.bnb.getWeb3(),
-        getWeb3Bnb: actions.bnb.getWeb3,
-        web3Matic: actions.matic.getWeb3(),
-        getWeb3Matic: actions.matic.getWeb3,
-        web3Arbitrum: actions.arbeth.getWeb3(),
-        getWeb3Arbitrum: actions.arbeth.getWeb3,
+        ...evmEnv,
         bitcoin,
         ghost,
         next,
@@ -158,38 +192,8 @@ const createSwapApp = async () => {
         new SwapOrders(),
       ],
       swaps: [
-        new EthSwap({
-          address: config.swapContract.eth,
-          abi: EVM_CONTRACTS_ABI.NATIVE_COIN_SWAP,
-          fetchBalance: (address) => actions.eth.fetchBalance(address),
-          estimateGasPrice: () => ethLikeHelper.eth.estimateGasPrice(),
-          sendTransaction: ({ to, amount }) => actions.eth.send({ to, amount }),
-        }),
-        new BnbSwap({
-          address: config.swapContract.bnb,
-          abi: EVM_CONTRACTS_ABI.NATIVE_COIN_SWAP,
-          fetchBalance: (address) => actions.bnb.fetchBalance(address),
-          estimateGasPrice: () => ethLikeHelper.bnb.estimateGasPrice(),
-          sendTransaction: ({ to, amount }) => actions.bnb.send({ to, amount }),
-        }),
-        ...((config?.opts?.blockchainSwapEnabled?.matic) ? [
-          new MaticSwap({
-            address: config.swapContract.matic,
-            abi: EVM_CONTRACTS_ABI.NATIVE_COIN_SWAP,
-            fetchBalance: (address) => actions.matic.fetchBalance(address),
-            estimateGasPrice: () => ethLikeHelper.matic.estimateGasPrice(),
-            sendTransaction: ({ to, amount }) => actions.matic.send({ to, amount }),
-          })
-        ] : []),
-        ...((config?.opts?.blockchainSwapEnabled?.arbeth) ? [
-          new ArbitrumSwap({
-            address: config.swapContract.arbitrum,
-            abi: EVM_CONTRACTS_ABI.NATIVE_COIN_SWAP,
-            fetchBalance: (address) => actions.arbeth.fetchBalance(address),
-            estimateGasPrice: () => ethLikeHelper.arbeth.estimateGasPrice(),
-            sendTransaction: ({ to, amount }) => actions.arbeth.send({ to, amount }),
-          })
-        ] : []),
+        ...evmSwaps,
+
         new BtcSwap({
           fetchBalance: (address) => bitcoinUtils.fetchBalance({
             address,

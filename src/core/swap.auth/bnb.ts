@@ -15,13 +15,13 @@ const login = (_privateKey, app) => {
   let account
 
   if (privateKey) {
-    account = app.env.web3bnb.eth.accounts.privateKeyToAccount(privateKey)
+    account = app.env.web3Bnb.eth.accounts.privateKeyToAccount(privateKey)
   }
   else {
-    account = app.env.web3bnb.eth.accounts.create()
+    account = app.env.web3Bnb.eth.accounts.create()
   }
 
-  app.env.web3bnb.eth.accounts.wallet.add(account.privateKey)
+  app.env.web3Bnb.eth.accounts.wallet.add(account.privateKey)
 
   if (!_privateKey) {
     app.env.storage.setItem(storageKey, account.privateKey)
