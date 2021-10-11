@@ -109,22 +109,26 @@ const createSwapApp = async () => {
     const NETWORK = process.env.MAINNET ? `MAINNET` : `TESTNET`
 
     const evmEnv = {}
+    const swapAuthEvmPrivateKeys = {}
     const evmSwaps: any[] = []
     const evmActions = getActiveEvmActions()
 
     if (evmActions.length) {
       evmActions.forEach((action) => {
-        const capitalizedName = action.tickerKey.charAt(0).toUpperCase() + action.tickerKey.slice(1)
-
-        if (action.tickerKey === 'eth') {
-          evmEnv['web3'] = action.getWeb3()
-          evmEnv['getWeb3'] = action.getWeb3
-        } else {
-          evmEnv[`web3${capitalizedName}`] = action.getWeb3()
-          evmEnv[`getWeb3${capitalizedName}`] = action.getWeb3
-        }
-
         if (config?.opts?.blockchainSwapEnabled[action.tickerKey]) {
+          const capitalizedName = action.tickerKey.charAt(0).toUpperCase() + action.tickerKey.slice(1)
+
+          if (action.tickerKey === 'eth') {
+            evmEnv['web3'] = action.getWeb3()
+            evmEnv['getWeb3'] = action.getWeb3
+          } else {
+            evmEnv[`web3${capitalizedName}`] = action.getWeb3()
+            evmEnv[`getWeb3${capitalizedName}`] = action.getWeb3
+          }
+
+          // use eth private key for all EVM compatible networks
+          swapAuthEvmPrivateKeys[action.tickerKey] = localStorage.getItem(privateKeys.privateKeyNames.eth)
+
           const Swap = returnSwapClassByName(action.tickerKey)
 
           if (Swap) {
@@ -170,11 +174,7 @@ const createSwapApp = async () => {
       services: [
         new SwapAuth({
           // TODO need init swapApp only after private keys created!!!!!!!!!!!!!!!!!!!
-          eth: localStorage.getItem(privateKeys.privateKeyNames.eth),
-          // for evm compatible blockchains use eth private key
-          bnb: localStorage.getItem(privateKeys.privateKeyNames.eth),
-          matic: localStorage.getItem(privateKeys.privateKeyNames.eth),
-          arbeth: localStorage.getItem(privateKeys.privateKeyNames.eth),
+          ...swapAuthEvmPrivateKeys,
           btc: localStorage.getItem(privateKeys.privateKeyNames.btc),
           ghost: localStorage.getItem(privateKeys.privateKeyNames.ghost),
           next: localStorage.getItem(privateKeys.privateKeyNames.next),
