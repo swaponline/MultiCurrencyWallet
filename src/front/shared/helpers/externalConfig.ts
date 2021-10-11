@@ -159,7 +159,7 @@ const externalConfig = () => {
 
   if (window && window.CUR_ETH_DISABLED === true) {
     config.opts.curEnabled.eth = false
-    config.opts.blockchainSwapEnabled.next = false
+    config.opts.blockchainSwapEnabled.eth = false
   }
 
   if (window && window.CUR_BNB_DISABLED === true) {
