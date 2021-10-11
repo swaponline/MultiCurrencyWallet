@@ -274,7 +274,9 @@ class App extends React.Component<RouteComponentProps<any>, any> {
     window.actions = actions;
 
     window.onerror = (error) => {
+      console.group('%c App error', 'color: red;')
       console.error('App error: ', error)
+      console.groupEnd()
     };
 
     try {

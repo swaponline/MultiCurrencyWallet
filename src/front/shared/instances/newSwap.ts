@@ -10,7 +10,7 @@ import erc20Like from 'common/erc20Like'
 
 import config from 'helpers/externalConfig'
 
-import helpers, { constants as privateKeys, utils } from 'helpers'
+import helpers, { constants, utils } from 'helpers'
 import actions from 'redux/actions'
 import { getActiveEvmActions } from 'redux/actions'
 
@@ -91,7 +91,7 @@ const onInit = (cb) => {
   _wait()
 }
 
-const returnSwapClassByName = (name) => {
+const returnSwapClassByName = (name: string) => {
   switch (name) {
     case 'eth':
       return EthSwap
@@ -102,6 +102,50 @@ const returnSwapClassByName = (name) => {
     case 'arbeth':
       return ArbitrumSwap
   }
+}
+
+const returnSwapInstance = (Swap, currencyAction) => {
+  return new Swap({
+    address: config.swapContract[currencyAction.tickerKey],
+    abi: EVM_CONTRACTS_ABI.NATIVE_COIN_SWAP,
+    fetchBalance: (address) => currencyAction.fetchBalance(address),
+    estimateGasPrice: () => ethLikeHelper[currencyAction.tickerKey].estimateGasPrice(),
+    sendTransaction: ({ to, amount }) => currencyAction.send({ to, amount }),
+  })
+}
+
+const returnTokenSwapClassByStandard = (standard: string) => {
+  switch (standard) {
+    case 'erc20':
+      return EthTokenSwap
+    case 'bep20':
+      return BscTokenSwap
+    case 'erc20matic':
+      return MaticTokenSwap
+  }
+}
+
+const returnTokenSwapInstances = (Swap, standard) => {
+  if (!config[standard]) return []
+
+  return Object.keys(config[standard]).map(
+    (key) =>
+      new Swap({
+        name: key,
+        tokenAbi: abi,
+        address: config.swapContract[standard],
+        decimals: config[standard][key].decimals,
+        tokenAddress: config[standard][key].address,
+        fetchBalance: (address) =>
+          actions[standard].fetchBalance(
+            address,
+            config[standard][key].address,
+            config[standard][key].decimals
+          ),
+        estimateGasPrice: () => erc20Like[standard].estimateGasPrice(),
+        abi: EVM_CONTRACTS_ABI.TOKEN_SWAP,
+      })
+  )
 }
 
 const createSwapApp = async () => {
@@ -116,7 +160,8 @@ const createSwapApp = async () => {
     if (evmActions.length) {
       evmActions.forEach((action) => {
         if (config?.opts?.blockchainSwapEnabled[action.tickerKey]) {
-          const capitalizedName = action.tickerKey.charAt(0).toUpperCase() + action.tickerKey.slice(1)
+          const capitalizedName =
+            action.tickerKey.charAt(0).toUpperCase() + action.tickerKey.slice(1)
 
           if (action.tickerKey === 'eth') {
             evmEnv['web3'] = action.getWeb3()
@@ -127,18 +172,26 @@ const createSwapApp = async () => {
           }
 
           // use eth private key for all EVM compatible networks
-          swapAuthEvmPrivateKeys[action.tickerKey] = localStorage.getItem(privateKeys.privateKeyNames.eth)
+          swapAuthEvmPrivateKeys[action.tickerKey] = localStorage.getItem(
+            constants.privateKeyNames.eth
+          )
 
           const Swap = returnSwapClassByName(action.tickerKey)
+          const standardData = Object.values(constants.tokenStandards).find((standardData) => {
+            return action.tickerKey === standardData.currency
+          })
 
           if (Swap) {
-            evmSwaps.push(new Swap({
-              address: config.swapContract[action.tickerKey],
-              abi: EVM_CONTRACTS_ABI.NATIVE_COIN_SWAP,
-              fetchBalance: (address) => action.fetchBalance(address),
-              estimateGasPrice: () => ethLikeHelper[action.tickerKey].estimateGasPrice(),
-              sendTransaction: ({ to, amount }) => action.send({ to, amount }),
-            }))
+            evmSwaps.push(returnSwapInstance(Swap, action))
+          }
+
+          if (standardData) {
+            const { standard } = standardData
+            const TokenSwap = returnTokenSwapClassByStandard(standard)
+
+            if (TokenSwap) {
+              evmSwaps.push(...returnTokenSwapInstances(TokenSwap, standard))
+            }
           }
         }
       })
@@ -175,9 +228,9 @@ const createSwapApp = async () => {
         new SwapAuth({
           // TODO need init swapApp only after private keys created!!!!!!!!!!!!!!!!!!!
           ...swapAuthEvmPrivateKeys,
-          btc: localStorage.getItem(privateKeys.privateKeyNames.btc),
-          ghost: localStorage.getItem(privateKeys.privateKeyNames.ghost),
-          next: localStorage.getItem(privateKeys.privateKeyNames.next),
+          btc: localStorage.getItem(constants.privateKeyNames.btc),
+          ghost: localStorage.getItem(constants.privateKeyNames.ghost),
+          next: localStorage.getItem(constants.privateKeyNames.next),
         }),
         new SwapRoom({
           repo,
@@ -263,54 +316,6 @@ const createSwapApp = async () => {
             NETWORK,
           }),
         }),
-        // Ether
-        ...(Object.keys(config.erc20)
-          .map(key =>
-            new EthTokenSwap({
-              name: key,
-              tokenAbi: abi,
-              address: config.swapContract.erc20,
-              //@ts-ignore
-              decimals: config.erc20[key].decimals,
-              tokenAddress: config.erc20[key].address,
-              fetchBalance: (address) => actions.erc20.fetchBalance(address, config.erc20[key].address, config.erc20[key].decimals),
-              //@ts-ignore
-              estimateGasPrice: ({ speed } = {}) => erc20Like.erc20.estimateGasPrice({ speed }),
-              abi: EVM_CONTRACTS_ABI.TOKEN_SWAP,
-            })
-          )),
-        // Binance
-        ...(Object.keys(config.bep20)
-          .map(key =>
-            new BscTokenSwap({
-              name: key,
-              tokenAbi: abi,
-              address: config.swapContract.bep20,
-              //@ts-ignore
-              decimals: config.bep20[key].decimals,
-              tokenAddress: config.bep20[key].address,
-              fetchBalance: (address) => actions.bep20.fetchBalance(address, config.bep20[key].address, config.bep20[key].decimals),
-              //@ts-ignore
-              estimateGasPrice: ({ speed } = {}) => erc20Like.bep20.estimateGasPrice({ speed }),
-              abi: EVM_CONTRACTS_ABI.TOKEN_SWAP,
-            })
-          )),
-        // Matic
-        ...(Object.keys(config.erc20matic)
-        .map(key =>
-          new MaticTokenSwap({
-            name: key,
-            tokenAbi: abi,
-            address: config.swapContract.erc20matic,
-            //@ts-ignore
-            decimals: config.erc20matic[key].decimals,
-            tokenAddress: config.erc20matic[key].address,
-            fetchBalance: (address) => actions.erc20matic.fetchBalance(address, config.erc20matic[key].address, config.erc20matic[key].decimals),
-            //@ts-ignore
-            estimateGasPrice: ({ speed } = {}) => erc20Like.erc20matic.estimateGasPrice({ speed }),
-            abi: EVM_CONTRACTS_ABI.TOKEN_SWAP,
-          })
-        )),
       ],
       flows: [
         TurboMaker,
