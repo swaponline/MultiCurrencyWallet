@@ -1,77 +1,112 @@
 import { abi as RouterV2ABI } from '@uniswap/v2-periphery/build/IUniswapV2Router02.json'
+import constants from 'common/helpers/constants'
 import externalConfig from 'helpers/externalConfig'
 
 enum SwapMethods {
-  swapExactETHForTokens,
-  swapExactTokensForETH,
-  swapExactTokensForTokens,
-  swapTokensForExactTokens,
+  swapExactETHForTokens = 'swapExactETHForTokens',
+  swapExactTokensForETH = 'swapExactTokensForETH',
+  swapExactTokensForTokens = 'swapExactTokensForTokens',
+  swapTokensForExactTokens = 'swapTokensForExactTokens',
+  swapExactETHForTokensSupportingFeeOnTransferTokens = 'swapExactETHForTokensSupportingFeeOnTransferTokens',
+  swapExactTokensForETHSupportingFeeOnTransferTokens = 'swapExactTokensForETHSupportingFeeOnTransferTokens',
+  swapExactTokensForTokensSupportingFeeOnTransferTokens = 'swapExactTokensForTokensSupportingFeeOnTransferTokens',
 }
 
 const getContract = (params) => {
-  const { address, abi, provider, ownerAddress } = params
+  const { address, abi, provider } = params
 
   return new provider.eth.Contract(address, abi)
 }
 
-const getRouterContract = (params: {
-  routerAddress: string
-  provider: EthereumProvider
-  ownerAddress: string
-}) => {
-  const { routerAddress, provider, ownerAddress } = params
+const getRouterContract = (params: { routerAddress: string; provider: EthereumProvider }) => {
+  const { routerAddress, provider } = params
 
-  return getContract({ address: routerAddress, abi: RouterV2ABI, provider, ownerAddress })
+  return getContract({ address: routerAddress, abi: RouterV2ABI, provider })
 }
 
-const createSwapArgsByMethod = (params): any[] => {
-  const { method, fromToken, toToken, owner } = params
+const returnSwapDataByMethod = (
+  params
+): {
+  args: any[]
+  value?: number
+} => {
+  const { method, fromContract, toContract, swap, owner } = params
 
   if (!SwapMethods[method]) throw new Error('Wrong method')
 
-  const path = [fromToken, toToken]
+  const { sellAmount } = swap
+  const path = [fromContract, toContract]
   const deadline = 0
   let amountOutMin = 0
-  let amountIn = 0
-  let amountOut = 0
-  let amountInMax = 0
+  let amountIn = sellAmount
 
   switch (method) {
     case SwapMethods.swapExactETHForTokens:
-      return [amountOutMin, path, owner, deadline]
+      return {
+        args: [amountOutMin, path, owner, deadline],
+        value: amountIn,
+      }
 
     case SwapMethods.swapExactTokensForETH:
-      return [amountIn, amountOutMin, path, owner, deadline]
-
     case SwapMethods.swapExactTokensForTokens:
-      return [amountIn, amountOutMin, path, owner, deadline]
-
-    case SwapMethods.swapTokensForExactTokens:
-      return [amountOut, amountInMax, path, owner, deadline]
+      return {
+        args: [amountIn, amountOutMin, path, owner, deadline],
+      }
   }
 
-  return []
+  return { args: [] }
 }
 
-// don't forget about approve the sended tokens if it's necessary
+const returnSwapMethod = (params) => {
+  const { fromContract, toContract } = params
+
+  if (
+    fromContract.toLowerCase() === constants.EVM_COIN_ADDRESS &&
+    toContract.toLowerCase() === constants.EVM_COIN_ADDRESS
+  ) {
+    throw new Error('Swap between two native coins')
+  }
+
+  if (fromContract.toLowerCase() === constants.EVM_COIN_ADDRESS) {
+    return SwapMethods.swapExactETHForTokens
+  } else if (toContract.toLowerCase() === constants.EVM_COIN_ADDRESS) {
+    return SwapMethods.swapExactTokensForETH
+  } else {
+    return SwapMethods.swapExactTokensForTokens
+  }
+}
+
 const swapCallback = async (params) => {
-  const { routerAddress, provider, ownerAddress, swapData, fromToken, toToken } = params
+  const { routerAddress, provider, ownerAddress, swap, fromContract, toContract } = params
+  const router = getRouterContract({ routerAddress, provider })
 
-  const router = getRouterContract({ routerAddress, provider, ownerAddress })
+  // check token approved amount for the Router contract
+  // approve if it's necessary
 
-  const method = ''
-  const args = createSwapArgsByMethod({ method, fromToken, toToken })
+  const method = returnSwapMethod({ fromContract, toContract })
+  const swapData = returnSwapDataByMethod({
+    method,
+    fromContract,
+    toContract,
+    swap,
+    owner: ownerAddress,
+  })
 
   if (!router) {
     throw new Error('No router contract found')
   } else if (router[method]) {
     throw new Error('No such method in the router contract')
-  } else if (!args.length) {
+  } else if (!swapData.args.length) {
     throw new Error('No arguments')
   }
 
-  return router[method](args)
+  return router[method](...swapData.args, {
+    ...(swapData.value ? { value: swapData.value, from: ownerAddress } : { from: ownerAddress }),
+  })
     .then((response: any) => {
+      console.log('%c router response', 'color:brown;font-size:20px')
+      console.log('response: ', response)
+
       return response.hash
     })
     .catch((error: any) => {
