@@ -1080,7 +1080,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
 }
 
 export default connect(({ currencies, user, oneinch }) => ({
-  allCurrencies: currencies.partialItems,
+  allCurrencies: currencies.items,
   tokensWallets: user.tokensData,
   activeFiat: user.activeFiat,
   metamaskData: user.metamaskData,

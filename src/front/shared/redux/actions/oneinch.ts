@@ -32,21 +32,20 @@ const filterCurrencies = (params) => {
   const filteredArr = currencies.filter((item) => {
     const currency = COIN_DATA[item.name]
     let isCurrencySuitable = false
-    let itemChain = undefined
+    let chainId = undefined
 
     if (item.standard) {
       const { blockchain } = getCoinInfo(item.value)
+      const network = blockchain && externalConfig.evmNetworks[blockchain.toUpperCase()]
 
-      if (blockchain) {
-        itemChain = externalConfig.evmNetworks[blockchain.toUpperCase()].networkVersion
-      }
+      chainId = network ? network.networkVersion : undefined
     } else {
-      itemChain =
-        currency?.model === COIN_MODEL.AB &&
-        externalConfig.evmNetworks[currency.ticker].networkVersion
+      const network = currency?.model === COIN_MODEL.AB && externalConfig.evmNetworks[currency.ticker]
+
+      chainId = network ? network.networkVersion : undefined
     }
 
-    isCurrencySuitable = !!oneinch.blockchains[itemChain] && (item.standard || !onlyTokens)
+    isCurrencySuitable = !!oneinch.blockchains[chainId] && (item.standard || !onlyTokens)
 
     // connected metamask allows only one chain
     const suitableForNetwork = metamask.isConnected()
