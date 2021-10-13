@@ -17,7 +17,7 @@ enum SwapMethods {
 const getContract = (params) => {
   const { address, abi, provider } = params
 
-  return new provider.eth.Contract(address, abi)
+  return new provider.eth.Contract(abi, address)
 }
 
 const getRouterContract = (params: { routerAddress: string; provider: EthereumProvider }) => {
@@ -30,7 +30,7 @@ const returnSwapDataByMethod = async (
   params
 ): Promise<{
   args: any[]
-  value?: number
+  value?: string
 }> => {
   const { provider, method, fromContract, toContract, swap, owner, deadlinePeriod } = params
   const { sellAmount } = swap
@@ -41,9 +41,13 @@ const returnSwapDataByMethod = async (
   const timestamp = latestBlock.timestamp
 
   const path = [fromContract, toContract]
-  const deadline = new BigNumber(timestamp).plus(deadlinePeriod).toNumber()
-  let amountOutMin = 0
-  let amountIn = sellAmount
+  const deadline = `0x${new BigNumber(timestamp).plus(deadlinePeriod).toString(16)}`
+  
+  // TODO:
+  let amountOutMin = `0x0`
+  // TODO:
+
+  let amountIn = `0x${new BigNumber(sellAmount).toString(16)}`
 
   switch (method) {
     case SwapMethods.swapExactETHForTokens:
@@ -82,14 +86,21 @@ const returnSwapMethod = (params) => {
 }
 
 const swapCallback = async (params) => {
-  const { routerAddress, baseCurrency, ownerAddress, swap, fromContract, toContract, deadlinePeriod } =
-    params
+  const {
+    routerAddress,
+    baseCurrency,
+    ownerAddress,
+    swap,
+    fromContract,
+    toContract,
+    deadlinePeriod,
+  } = params
 
   if (!deadlinePeriod) {
     throw new Error('No deadline period')
   }
 
-  const provider = actions[baseCurrency.toLowerCase].getWeb3()
+  const provider = actions[baseCurrency.toLowerCase()].getWeb3()
   const router = getRouterContract({ routerAddress, provider })
   const method = returnSwapMethod({ fromContract, toContract })
   const swapData = await returnSwapDataByMethod({
