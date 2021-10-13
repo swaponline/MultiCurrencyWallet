@@ -79,12 +79,10 @@ function Exchange(props) {
       {!showOnlyOneType && (
         <div styleName="tabsWrapper">
           <button
-            /* externalConfig.entry === 'testnet' ? 'disabled' : '' */
             styleName={`tab
               ${swapMode === 'quick' ? 'active' : ''}
-              ${externalConfig.entry !== 'mainnet' ? 'disabled' : ''}
-            `}
-            /* externalConfig.entry === 'mainnet' ? openQuickMode : undefined */
+              `}
+              // ${externalConfig.entry !== 'mainnet' ? 'disabled' : ''}
             onClick={openQuickMode}
           >
             <FormattedMessage id="quickSwap" defaultMessage="Quick swap" />
@@ -99,7 +97,9 @@ function Exchange(props) {
       )}
 
       {/* this swap type is available only on mainnet networks */}
-      {swapMode === 'quick' && externalConfig.entry === 'mainnet' && (
+      {swapMode === 'quick' && 
+      // externalConfig.entry === 'mainnet' &&
+       (
         <div styleName="container">
           <QuickSwap {...props} />
         </div>

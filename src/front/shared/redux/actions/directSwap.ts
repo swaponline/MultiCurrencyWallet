@@ -1,6 +1,8 @@
+import BigNumber from 'bignumber.js'
 import { abi as RouterV2ABI } from '@uniswap/v2-periphery/build/IUniswapV2Router02.json'
 import constants from 'common/helpers/constants'
 import externalConfig from 'helpers/externalConfig'
+import actions from 'redux/actions'
 
 enum SwapMethods {
   swapExactETHForTokens = 'swapExactETHForTokens',
@@ -24,19 +26,22 @@ const getRouterContract = (params: { routerAddress: string; provider: EthereumPr
   return getContract({ address: routerAddress, abi: RouterV2ABI, provider })
 }
 
-const returnSwapDataByMethod = (
+const returnSwapDataByMethod = async (
   params
-): {
+): Promise<{
   args: any[]
   value?: number
-} => {
-  const { method, fromContract, toContract, swap, owner } = params
+}> => {
+  const { provider, method, fromContract, toContract, swap, owner, deadlinePeriod } = params
+  const { sellAmount } = swap
 
   if (!SwapMethods[method]) throw new Error('Wrong method')
 
-  const { sellAmount } = swap
+  const latestBlock = await provider.eth.getBlock(await provider.eth.getBlockNumber())
+  const timestamp = latestBlock.timestamp
+
   const path = [fromContract, toContract]
-  const deadline = 0
+  const deadline = new BigNumber(timestamp).plus(deadlinePeriod).toNumber()
   let amountOutMin = 0
   let amountIn = sellAmount
 
@@ -77,19 +82,24 @@ const returnSwapMethod = (params) => {
 }
 
 const swapCallback = async (params) => {
-  const { routerAddress, provider, ownerAddress, swap, fromContract, toContract } = params
+  const { routerAddress, baseCurrency, ownerAddress, swap, fromContract, toContract, deadlinePeriod } =
+    params
+
+  if (!deadlinePeriod) {
+    throw new Error('No deadline period')
+  }
+
+  const provider = actions[baseCurrency.toLowerCase].getWeb3()
   const router = getRouterContract({ routerAddress, provider })
-
-  // check token approved amount for the Router contract
-  // approve if it's necessary
-
   const method = returnSwapMethod({ fromContract, toContract })
-  const swapData = returnSwapDataByMethod({
+  const swapData = await returnSwapDataByMethod({
+    provider,
     method,
     fromContract,
     toContract,
     swap,
     owner: ownerAddress,
+    deadlinePeriod,
   })
 
   if (!router) {
