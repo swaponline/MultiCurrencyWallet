@@ -45,21 +45,20 @@ const getWalletByWords = (mnemonic: string, walletNumber: number = 0, path: stri
 
 const auth = (privateKey) => {
   if (privateKey) {
-    const hash = bitcoin.crypto.sha256(privateKey)
-    const d = BigInteger.fromBuffer(hash)
+    try {
+      const account = bitcoin.ECPair.fromWIF(privateKey, btc.network)
+      const { address } = bitcoin.payments.p2pkh({ pubkey: account.publicKey, network: btc.network })
+      const { publicKey } = account
 
-    const keyPair = bitcoin.ECPair.fromWIF(privateKey, btc.network)
-
-    const account = bitcoin.ECPair.fromWIF(privateKey, btc.network) // eslint-disable-line
-    const { address } = bitcoin.payments.p2pkh({ pubkey: account.publicKey, network: btc.network })
-    const { publicKey } = account
-
-    return {
-      account,
-      keyPair,
-      address,
-      privateKey,
-      publicKey,
+      return {
+        account,
+        keyPair: account,
+        address,
+        privateKey,
+        publicKey,
+      }
+    } catch (error) {
+      console.log('btc auth', error, btc.network)
     }
   }
 }
