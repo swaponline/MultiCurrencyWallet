@@ -181,15 +181,15 @@ class SwapRoom extends ServiceInterface {
   }
 
   _recoverMessage(message, sign) {
-    const hash      = this.app.env.web3.utils.soliditySha3(JSON.stringify(message))
-    const recover   = this.app.env.web3.eth.accounts.recover(hash, sign.signature)
+    const hash = this.app.env.web3.utils.soliditySha3(JSON.stringify(message))
+    const recover = this.app.env.web3.eth.accounts.recover(hash, sign.signature)
 
     return recover
   }
 
   _signMessage(message) {
-    const hash  = this.app.env.web3.utils.soliditySha3(JSON.stringify(message))
-    const sign  = this.app.env.web3.eth.accounts.sign(hash, this.app.services.auth.accounts.eth.privateKey)
+    const hash = this.app.env.web3.utils.soliditySha3(JSON.stringify(message))
+    const sign = this.app.env.web3.eth.accounts.sign(hash, this.app.services.auth.accounts.eth.privateKey)
 
     return sign
   }

@@ -139,7 +139,7 @@ const bannedPeers = {} // rejected swap peers
     currencies: swapsHelper.isExchangeAllowed(currencies.partialItems),
     allCurrencies: currencies.items,
     addSelectedItems: swapsHelper.isExchangeAllowed(currencies.addPartialItems),
-    orders: swapsHelper.filterIsPartial(orders),
+    orders: swapsHelper.filterOrders(orders),
     tokensData: [...Object.keys(tokensData).map((k) => tokensData[k])],
     decline: rememberedOrders.savedOrders,
     activeFiat,
