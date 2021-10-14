@@ -1,6 +1,10 @@
+/* eslint-disable no-await-in-loop */
 import puppeteer from 'puppeteer'
 import BigNumber from 'bignumber.js'
 import fs from 'fs'
+import TestWallets from '../testWallets.json'
+
+export const testWallets = TestWallets
 
 let link = 'http://localhost:9001/'
 
@@ -94,7 +98,7 @@ export const selectSendCurrency = async (params) => {
   await page.click(`#${currency}Send`)
 }
 
-export const addAssetToWallet = async (page: puppeteer.Page, currency: string = 'ethwbtc') => {
+export const addAssetToWallet = async (page: puppeteer.Page, currency = 'ethwbtc') => {
   try {
     await clickOn({
       page,
@@ -122,18 +126,18 @@ export const addTokenToWallet = async (params) => {
     await addressInput.type(contract)
 
     await clickOn({
-      page: page,
+      page,
       selector: '#customTokenNextButton',
     })
 
     await page.waitForSelector('#customTokenAddButton')
 
     await clickOn({
-      page: page,
+      page,
       selector: '#customTokenAddButton',
     })
     await clickOn({
-      page: page,
+      page,
       selector: '#customTokenDoneButton',
     })
   } catch (error) {
@@ -204,6 +208,7 @@ export const takeScreenshot = async (page: puppeteer.Page, fileName: string) => 
 export const timeOut = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
 export default {
+  testWallets,
   createBrowser,
   importWallet,
   selectSendCurrency,

@@ -1,6 +1,11 @@
-import testWallets from '../../testWallets'
-
-import { createBrowser, importWallet, selectSendCurrency, takeScreenshot, timeOut } from '../utils'
+import {
+  createBrowser,
+  importWallet,
+  selectSendCurrency,
+  takeScreenshot,
+  timeOut,
+  testWallets,
+} from '../utils'
 
 const amount = 50_000e-8
 
@@ -13,7 +18,7 @@ describe('Send', () => {
 
     try {
       await importWallet({
-        page: page,
+        page,
         seed: testWallets.btcToEthTokenMTaker.seedPhrase.split(' '),
       })
 
@@ -34,7 +39,7 @@ describe('Send', () => {
     try {
       await timeOut(3 * 1000)
 
-      await selectSendCurrency({page: page, currency: 'btc'})
+      await selectSendCurrency({ page, currency: 'btc' })
 
       await page.type('#toAddressInput', testWallets.btcToEthTokenMMaker.address)
 
@@ -55,7 +60,7 @@ describe('Send', () => {
         }
       })
 
-      await page.waitForSelector('#txAmout', {timeout: 60 * 1000})
+      await page.waitForSelector('#txAmout', { timeout: 60 * 1000 })
       const btcTxAmout  = await page.$eval('#txAmout', el => el.textContent)
 
       await takeScreenshot(page, 'SendBTC_TxInfo')

@@ -1,5 +1,4 @@
-import testWallets from '../testWallets'
-import { createBrowser, importWallet, timeOut, takeScreenshot } from './utils'
+import { createBrowser, importWallet, timeOut, takeScreenshot, testWallets } from './utils'
 
 jest.setTimeout(100_000) // ms
 
@@ -23,7 +22,7 @@ describe('History tests', () => {
       const txAmountInfo = await page.$eval('#historyRowAmountInfo', (el) => el.textContent)
 
       // a suitable example: + 1.2 LTC BEP20
-      expect(txAmountInfo).toMatch(/^(\-|\+) (0\.)?[\d]+ [A-Z]{3,}( [A-Z]{3}[\d]{1,3})?$/)
+      expect(txAmountInfo).toMatch(/^(-|\+) (0\.)?[\d]+ [A-Z]{3,}( [A-Z]{3}[\d]{1,3})?$/)
     } catch (error) {
       console.error('History test error', error)
       await takeScreenshot(page, 'HistoryTestError')
