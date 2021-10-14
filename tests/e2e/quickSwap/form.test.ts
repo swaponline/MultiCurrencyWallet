@@ -15,8 +15,8 @@ const EVM_ADDRESS = process.env.evmAddress
 
 describe('Quick swap tests', () => {
   const waitingForStartup = 120_000
-  let browser: undefined | puppeteer.Browser = undefined
-  let page: undefined | puppeteer.Page = undefined
+  let browser: undefined | puppeteer.Browser
+  let page: undefined | puppeteer.Page
 
   beforeAll(async () => {
     const { browser: newBrowserInstance, page: newPageInstance } = await createBrowser()
@@ -72,7 +72,7 @@ describe('Quick swap tests', () => {
 
       try {
         await addTokenToWallet({
-          page: page,
+          page,
           standardId: tokenStandardId,
           contract: wmaticContract,
         })
@@ -85,7 +85,7 @@ describe('Quick swap tests', () => {
         })
 
         const [sellCurrencySelectorList, buyCurrencySelectorList] = await page.$$(
-          '.dropDownSelectCurrency'
+          '.dropDownSelectCurrency',
         )
 
         await sellCurrencySelectorList.click()
@@ -94,7 +94,7 @@ describe('Quick swap tests', () => {
           selector: '[id="matic"]',
         })
 
-        const buyCurrency = await page.evaluate((element) => element.textContent, buyCurrencySelectorList);
+        const buyCurrency = await page.evaluate((element) => element.textContent, buyCurrencySelectorList)
 
         if (buyCurrency !== 'WMATIC (MATIC)') {
           await buyCurrencySelectorList.click()
@@ -115,8 +115,7 @@ describe('Quick swap tests', () => {
         const receivedAmountInput = await page.$('#quickSwapReceiveCurrencyInput')
 
         if (receivedAmountInput) {
-          //@ts-ignore
-          const receivedAmount = await (await receivedAmountInput.getProperty('value')).jsonValue()
+          const receivedAmount = await (await receivedAmountInput.getProperty('value'))?.jsonValue()
 
           expect(receivedAmount).toBe(amount)
         }

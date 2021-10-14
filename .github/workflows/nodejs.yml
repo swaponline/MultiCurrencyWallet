@@ -13,7 +13,7 @@ jobs:
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v1
+    - uses: actions/checkout@v2
 
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
@@ -23,6 +23,12 @@ jobs:
       uses: bahmutov/npm-install@v1
       with:
        useLockFile: false
+    - name: Decrypt testWallets
+      run: ./.github/scripts/decrypt_secret.sh
+      env:
+        SECRET_PASSPHRASE: ${{ secrets.SECRET_PASSPHRASE_FOR_TESTS }}
+    - name: Test printing your secret (Remove this step in production)
+      run: cat $HOME/tests/testWallets.json
     - name: build testnet for tests
       run: |
         npm run build:testnet-tests
