@@ -584,7 +584,6 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
         owner: address,
         standard,
         decimals,
-        chainId: network.chainId,
         spender: externalConfig.swapContract.zerox,
       })
 

@@ -36,10 +36,10 @@ const returnSwapDataByMethod = async (
   const {
     provider,
     method,
-    fromContract,
-    fromContractDecimals,
-    toContract,
-    toContractDecimals,
+    fromToken,
+    fromTokenDecimals,
+    toToken,
+    toTokenDecimals,
     owner,
     deadlinePeriod,
     slippage,
@@ -53,12 +53,12 @@ const returnSwapDataByMethod = async (
   const latestBlock = await provider.eth.getBlock(latestBlockNumber)
   const timestamp = latestBlock.timestamp
 
-  const path = [fromContract, toContract]
+  const path = [fromToken, toToken]
   // after this time, the transaction will be canceled
   const deadline = `0x${new BigNumber(timestamp).plus(deadlinePeriod).toString(16)}`
 
-  const weiSellAmount = utils.amount.formatWithDecimals(sellAmount, fromContractDecimals)
-  const weiBuyAmount = utils.amount.formatWithDecimals(buyAmount, toContractDecimals)
+  const weiSellAmount = utils.amount.formatWithDecimals(sellAmount, fromTokenDecimals)
+  const weiBuyAmount = utils.amount.formatWithDecimals(buyAmount, toTokenDecimals)
 
   const availableSlippageRange = new BigNumber(weiBuyAmount).div(100).times(slippage)
   // the minimum amount of the purchased asset to be received
@@ -66,12 +66,15 @@ const returnSwapDataByMethod = async (
   const amountIn = `0x${new BigNumber(weiSellAmount).toString(16)}`
 
   switch (method) {
+    // case SwapMethods.swapExactETHForTokensSupportingFeeOnTransferTokens:
     case SwapMethods.swapExactETHForTokens:
       return {
         args: [amountOutMin, path, owner, deadline],
         value: amountIn,
       }
 
+    // case SwapMethods.swapExactTokensForTokensSupportingFeeOnTransferTokens:
+    // case SwapMethods.swapExactTokensForETHSupportingFeeOnTransferTokens:
     case SwapMethods.swapExactTokensForETH:
     case SwapMethods.swapExactTokensForTokens:
       return {
@@ -83,22 +86,53 @@ const returnSwapDataByMethod = async (
 }
 
 const returnSwapMethod = (params) => {
-  const { fromContract, toContract } = params
+  const { fromToken, toToken } = params
 
   if (
-    fromContract.toLowerCase() === constants.EVM_COIN_ADDRESS &&
-    toContract.toLowerCase() === constants.EVM_COIN_ADDRESS
+    fromToken.toLowerCase() === constants.EVM_COIN_ADDRESS &&
+    toToken.toLowerCase() === constants.EVM_COIN_ADDRESS
   ) {
     throw new Error('Swap between two native coins')
   }
 
-  if (fromContract.toLowerCase() === constants.EVM_COIN_ADDRESS) {
+  if (fromToken.toLowerCase() === constants.EVM_COIN_ADDRESS) {
     return SwapMethods.swapExactETHForTokens
-  } else if (toContract.toLowerCase() === constants.EVM_COIN_ADDRESS) {
+    // return SwapMethods.swapExactETHForTokensSupportingFeeOnTransferTokens
+  } else if (toToken.toLowerCase() === constants.EVM_COIN_ADDRESS) {
     return SwapMethods.swapExactTokensForETH
+    // return SwapMethods.swapExactTokensForETHSupportingFeeOnTransferTokens
   } else {
     return SwapMethods.swapExactTokensForTokens
+    // return SwapMethods.swapExactTokensForTokensSupportingFeeOnTransferTokens
   }
+}
+
+const checkAndApproveToken = async (params) => {
+  const { standard, token, owner, decimals, spender, sellAmount, tokenName } = params
+
+  const allowance = await actions.oneinch.fetchTokenAllowance({
+    contract: token,
+    standard,
+    owner,
+    decimals,
+    spender,
+  })
+
+  return new Promise(async (res, rej) => {
+    if (new BigNumber(sellAmount).isGreaterThan(allowance)) {
+    const result = await actions[standard].approve({
+      name: tokenName,
+      to: spender,
+      amount: sellAmount,
+    })
+
+    console.log('result: ', result)
+
+    return typeof result === 'string' ? res(result) : rej(result)
+    }
+
+    res(true)
+  })
 }
 
 const swapCallback = async (params) => {
@@ -106,14 +140,16 @@ const swapCallback = async (params) => {
     routerAddress,
     baseCurrency,
     ownerAddress,
-    fromContract,
-    fromContractDecimals,
-    toContract,
-    toContractDecimals,
+    fromToken,
+    fromTokenDecimals,
+    toToken,
+    toTokenDecimals,
     deadlinePeriod,
     slippage,
     sellAmount,
     buyAmount,
+    fromTokenStandard,
+    fromTokenName,
   } = params
 
   if (!deadlinePeriod) {
@@ -122,15 +158,15 @@ const swapCallback = async (params) => {
 
   const provider = actions[baseCurrency.toLowerCase()].getWeb3()
   const router = getRouterContract({ routerAddress, provider })
-  const method = returnSwapMethod({ fromContract, toContract })
+  const method = returnSwapMethod({ fromToken, toToken })
   const swapData = await returnSwapDataByMethod({
     slippage,
     provider,
     method,
-    fromContract,
-    fromContractDecimals,
-    toContract,
-    toContractDecimals,
+    fromToken,
+    fromTokenDecimals,
+    toToken,
+    toTokenDecimals,
     owner: ownerAddress,
     deadlinePeriod,
     sellAmount,
@@ -149,25 +185,54 @@ const swapCallback = async (params) => {
   console.log('params: ', params)
   console.log('method: ', method)
   console.log('swapData: ', swapData)
+  console.log('router: ', router)
 
-  return router[method](...swapData.args, {
-    ...(swapData.value ? { value: swapData.value, from: ownerAddress } : { from: ownerAddress }),
-  })
-    .then((response: any) => {
-      console.log('%c router response', 'color:brown;font-size:20px')
-      console.log('response: ', response)
+  try {
+    if (fromTokenStandard && fromToken.toLowerCase() !== constants.EVM_COIN_ADDRESS) {
+      const result = await checkAndApproveToken({
+        tokenName: fromTokenName,
+        sellAmount,
+        standard: fromTokenStandard,
+        token: fromToken,
+        owner: ownerAddress,
+        decimals: fromTokenDecimals,
+        spender: routerAddress,
+      })
 
-      return response.hash
+      if (!result) return result
+    }
+
+    /* 
+    {
+      ...(swapData.value ? { value: swapData.value, from: ownerAddress } : { from: ownerAddress }),
+    }
+    */
+    return router.methods[method](...swapData.args).call((error, response) => {
+      if (error) return error
+
+      return response
     })
-    .catch((error: any) => {
-      const REJECT_CODE = 4001
+    // .then((response: any) => {
+    //   console.log('%c router response', 'color:brown;font-size:20px')
+    //   console.log('response: ', response)
 
-      if (error?.code === REJECT_CODE) {
-        return console.log('Rejected')
-      }
+    //   return response.hash
+    // })
+    // .catch((error: any) => {
+    //   console.log('error from the router')
 
-      throw new Error(`Swap failed: ${error.message}`)
-    })
+    //   const REJECT_CODE = 4001
+
+    //   if (error?.code === REJECT_CODE) {
+    //     return console.log('Rejected')
+    //   }
+
+    //   throw new Error(`Swap failed: ${error.message}`)
+    // })
+  } catch (error) {
+    console.log('error outside the router code')
+    console.log('error: ', error)
+  }
 }
 
 export default {

@@ -43,20 +43,24 @@ function DirectSwap(props) {
         routerAddress,
         baseCurrency,
         ownerAddress: fromWallet.address,
-        fromContract: BUSD, //fromWallet.isToken ? fromWallet.contractAddress : EVM_COIN_ADDRESS,
+        fromTokenStandard: 'bep20', //fromWallet.standard || '',
+        fromTokenName: '{bnb}busd',// fromWallet.tokenKey || '',
+        fromToken: BUSD, //fromWallet.isToken ? fromWallet.contractAddress : EVM_COIN_ADDRESS,
         sellAmount: 1,
-        fromContractDecimals: 18,
-        toContract: WEENUS, // EVM_COIN_ADDRESS, //toWallet.isToken ? toWallet.contractAddress : EVM_COIN_ADDRESS,
+        fromTokenDecimals: 18,
+        toToken: WEENUS, // EVM_COIN_ADDRESS, //toWallet.isToken ? toWallet.contractAddress : EVM_COIN_ADDRESS,
         buyAmount: 19.3564,
-        toContractDecimals: 18,
+        toTokenDecimals: 18,
         deadlinePeriod: userDeadline * 60,
       })
 
-      if (hash) {
-        actions.notifications.show(constants.notifications.Transaction, {
-          link: transactions.getLink(fromWallet.standard, hash),
-        })
-      }
+      console.log('hash: ', hash)
+
+      // if (hash) {
+      //   actions.notifications.show(constants.notifications.Transaction, {
+      //     link: transactions.getLink(fromWallet.standard, hash),
+      //   })
+      // }
     }
   }
 
