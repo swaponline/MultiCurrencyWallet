@@ -4,7 +4,7 @@
 
 cat ./tests/testWallets.json
 
-echo "$SECRET_PASSPHRASE_FOR_TESTS"
+echo "$SECRET_PASSPHRASE"
 
-gpg --quiet --batch --yes --decrypt --passphrase="$SECRET_PASSPHRASE_FOR_TESTS" \
+gpg --quiet --batch --yes --decrypt --passphrase="$SECRET_PASSPHRASE" \
 --output ./tests/testWallets.json ./tests/testWallets.json.gpg
