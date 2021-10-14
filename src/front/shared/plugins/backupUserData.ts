@@ -33,8 +33,8 @@ const backupUserData = {
           {
             WPuserUid: window.WPuserUid,
             WPuserHash: config.opts.WPuserHash,
-          } as any
-        ).then((res) => {
+          }
+        ).then((res: any) => {
           if (res?.data?.answer
             && res.data.answer === `ok`
             && res.data.data
@@ -100,8 +100,8 @@ const backupUserData = {
             ...backup,
             WPuserUid: window.WPuserUid,
             WPuserHash: config.opts.WPuserHash
-          } as any
-        ).then((res) => {
+          }
+        ).then((res: any) => {
           if (res?.data?.answer
             && res.data.answer === `ok`
           ) {
@@ -135,8 +135,8 @@ const backupUserData = {
             WPuserUid: window.WPuserUid,
             WPuserHash: config.opts.WPuserHash,
             action: 'cleanup',
-          } as any
-        ).then((res) => {
+          }
+        ).then((res: any) => {
           if (
             res?.data?.answer
             && res.data.answer === `ok`
@@ -172,13 +172,13 @@ const backupUserData = {
           {
             WPuserUid: window.WPuserUid,
             WPuserHash: config.opts.WPuserHash,
-          } as any
-        ).then((req) => {
-          if (req?.data?.answer
-            && req.data.answer === `ok`
-            && req.data.data
+          }
+        ).then((res: any) => {
+          if (res?.data?.answer
+            && res.data.answer === `ok`
+            && res.data.data
           ) {
-            const data = req.data.data
+            const data = res.data.data
 
             set(`btc`, data.btc)
             set(`ghost`, data.ghost)
