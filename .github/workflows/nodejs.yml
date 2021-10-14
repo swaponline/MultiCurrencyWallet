@@ -18,10 +18,11 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - name: Decrypt testWallets
-      run: ./.github/scripts/decrypt_secret.sh
+    - shell: bash
       env:
         SECRET_PASSPHRASE: ${{ secrets.SECRET_PASSPHRASE_FOR_TESTS }}
+      run: >
+        ./.github/scripts/decrypt_secret.sh
     - name: Test printing your secret (Remove this step in production)
       run: cat ./tests/testWallets.json
     - name: npm install
