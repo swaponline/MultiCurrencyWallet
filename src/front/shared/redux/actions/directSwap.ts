@@ -1,6 +1,7 @@
 import BigNumber from 'bignumber.js'
 import { abi as RouterV2ABI } from '@uniswap/v2-periphery/build/IUniswapV2Router02.json'
 import constants from 'common/helpers/constants'
+import utils from 'common/utils'
 import externalConfig from 'helpers/externalConfig'
 import actions from 'redux/actions'
 
@@ -32,22 +33,37 @@ const returnSwapDataByMethod = async (
   args: any[]
   value?: string
 }> => {
-  const { provider, method, fromContract, toContract, swap, owner, deadlinePeriod } = params
-  const { sellAmount } = swap
+  const {
+    provider,
+    method,
+    fromContract,
+    fromContractDecimals,
+    toContract,
+    toContractDecimals,
+    owner,
+    deadlinePeriod,
+    slippage,
+    sellAmount,
+    buyAmount,
+  } = params
 
   if (!SwapMethods[method]) throw new Error('Wrong method')
 
-  const latestBlock = await provider.eth.getBlock(await provider.eth.getBlockNumber())
+  const latestBlockNumber = await provider.eth.getBlockNumber()
+  const latestBlock = await provider.eth.getBlock(latestBlockNumber)
   const timestamp = latestBlock.timestamp
 
   const path = [fromContract, toContract]
+  // after this time, the transaction will be canceled
   const deadline = `0x${new BigNumber(timestamp).plus(deadlinePeriod).toString(16)}`
-  
-  // TODO:
-  let amountOutMin = `0x0`
-  // TODO:
 
-  let amountIn = `0x${new BigNumber(sellAmount).toString(16)}`
+  const weiSellAmount = utils.amount.formatWithDecimals(sellAmount, fromContractDecimals)
+  const weiBuyAmount = utils.amount.formatWithDecimals(buyAmount, toContractDecimals)
+
+  const availableSlippageRange = new BigNumber(weiBuyAmount).div(100).times(slippage)
+  // the minimum amount of the purchased asset to be received
+  const amountOutMin = `0x${new BigNumber(weiBuyAmount).minus(availableSlippageRange).toString(16)}`
+  const amountIn = `0x${new BigNumber(weiSellAmount).toString(16)}`
 
   switch (method) {
     case SwapMethods.swapExactETHForTokens:
@@ -90,10 +106,14 @@ const swapCallback = async (params) => {
     routerAddress,
     baseCurrency,
     ownerAddress,
-    swap,
     fromContract,
+    fromContractDecimals,
     toContract,
+    toContractDecimals,
     deadlinePeriod,
+    slippage,
+    sellAmount,
+    buyAmount,
   } = params
 
   if (!deadlinePeriod) {
@@ -104,13 +124,17 @@ const swapCallback = async (params) => {
   const router = getRouterContract({ routerAddress, provider })
   const method = returnSwapMethod({ fromContract, toContract })
   const swapData = await returnSwapDataByMethod({
+    slippage,
     provider,
     method,
     fromContract,
+    fromContractDecimals,
     toContract,
-    swap,
+    toContractDecimals,
     owner: ownerAddress,
     deadlinePeriod,
+    sellAmount,
+    buyAmount,
   })
 
   if (!router) {
@@ -120,6 +144,11 @@ const swapCallback = async (params) => {
   } else if (!swapData.args.length) {
     throw new Error('No arguments')
   }
+
+  console.log('%c swap callback', 'color:orange;font-size:20px')
+  console.log('params: ', params)
+  console.log('method: ', method)
+  console.log('swapData: ', swapData)
 
   return router[method](...swapData.args, {
     ...(swapData.value ? { value: swapData.value, from: ownerAddress } : { from: ownerAddress }),

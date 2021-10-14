@@ -14,42 +14,41 @@ const returnRouter = (name) => {
   }
 }
 
-function DirectEvmSwap(props) {
-  const {
-    closeDirectSwap,
-    // swapData,
-    fromWallet,
-    toWallet,
-  } = props
+function DirectSwap(props) {
+  const { closeDirectSwap, swapData, fromWallet, toWallet, slippage } = props
 
-  const swapData = {
-    sellAmount: 100,
-  }
-  const [userDeadline, setUserDeadline] = useState(20)
+  const [userDeadline, setUserDeadline] = useState(20) // minutes
+  const [userSlippage, setUserSlippage] = useState(slippage)
 
   const changeDeadline = (event) => {
     setUserDeadline(event.target.value)
   }
 
+  const changeSlippage = (event) => {
+    setUserSlippage(event.target.value)
+  }
+
   const startSwap = async () => {
     const routerAddress = returnRouter('Pancakeswap')
 
-    // testnet
-    // WBNB 0xae13d989dac2f0debff460ac112a837c89baa7cd
-    // BNG 0x04ad4Ce6015141F6f582A7451Cb7CD6866609298
-    // BUSD 0x0755ba6D3e0B799AC7Cd6707AddE7B72208DE08e
-    // BNG -> BUSD pair 0x43b7A1514A0456BDF4cF7cDC0c25C613BCbADC2a
-
     if (routerAddress) {
+      // const { sellAmount, buyAmount } = swapData
       const baseCurrency = 'BNB' //fromWallet.standard ? fromWallet.baseCurrency : fromWallet.currency
 
+      const BUSD = '0x0755ba6D3e0B799AC7Cd6707AddE7B72208DE08e'
+      const WEENUS = '0x703f112Bda4Cc6cb9c5FB4B2e6140f6D8374F10b'
+
       const hash = await actions.directSwap.swapCallback({
+        slippage,
         routerAddress,
         baseCurrency,
         ownerAddress: fromWallet.address,
-        swap: swapData,
-        fromContract: '0x04ad4Ce6015141F6f582A7451Cb7CD6866609298', //fromWallet.isToken ? fromWallet.contractAddress : EVM_COIN_ADDRESS,
-        toContract: '0x0755ba6D3e0B799AC7Cd6707AddE7B72208DE08e', // EVM_COIN_ADDRESS, //toWallet.isToken ? toWallet.contractAddress : EVM_COIN_ADDRESS,
+        fromContract: BUSD, //fromWallet.isToken ? fromWallet.contractAddress : EVM_COIN_ADDRESS,
+        sellAmount: 1,
+        fromContractDecimals: 18,
+        toContract: WEENUS, // EVM_COIN_ADDRESS, //toWallet.isToken ? toWallet.contractAddress : EVM_COIN_ADDRESS,
+        buyAmount: 19.3564,
+        toContractDecimals: 18,
         deadlinePeriod: userDeadline * 60,
       })
 
@@ -72,8 +71,16 @@ function DirectEvmSwap(props) {
 
       <div styleName="content">
         <label styleName="inputLabel">
-          <FormattedMessage id="transactionDeadline" defaultMessage="Transaction deadline" />
-          <input type="number" defaultValue={20} onChange={changeDeadline} />
+          <FormattedMessage
+            id="transactionDeadline"
+            defaultMessage="Transaction deadline (minutes)"
+          />
+          <input type="number" defaultValue={userDeadline} onChange={changeDeadline} />
+        </label>
+
+        <label styleName="inputLabel">
+          <FormattedMessage id="slippageTolerance" defaultMessage="Slippage tolerance (%)" />
+          <input type="number" defaultValue={userSlippage} onChange={changeSlippage} />
         </label>
 
         <Button brand fullWidth onClick={startSwap}>
@@ -84,4 +91,4 @@ function DirectEvmSwap(props) {
   )
 }
 
-export default CSSModules(DirectEvmSwap, styles, { allowMultiple: true })
+export default CSSModules(DirectSwap, styles, { allowMultiple: true })

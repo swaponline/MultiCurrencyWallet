@@ -894,6 +894,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       mnemonicSaved,
       blockReason,
       error,
+      slippage,
     } = this.state
 
     const linked = Link.all(
@@ -938,6 +939,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
               swapData={swapData}
               fromWallet={fromWallet}
               toWallet={toWallet}
+              slippage={slippage}
             />
           ) : (
             <>  
