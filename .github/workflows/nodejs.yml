@@ -23,7 +23,7 @@ jobs:
       env:
         SECRET_PASSPHRASE: ${{ secrets.SECRET_PASSPHRASE_FOR_TESTS }}
     - name: Test printing your secret (Remove this step in production)
-      run: cat $HOME/tests/testWallets.json
+      run: cat ./tests/testWallets.json
     - name: npm install
       uses: bahmutov/npm-install@v1
       with:
