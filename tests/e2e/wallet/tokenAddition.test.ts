@@ -4,8 +4,8 @@ import { createBrowser, addTokenToWallet, takeScreenshot, clickOn, timeOut } fro
 jest.setTimeout(250 * 1000)
 
 describe('Adding custom tokens', () => {
-  let testBrowser: puppeteer.Browser | undefined = undefined
-  let testPage: puppeteer.Page | undefined = undefined
+  let testBrowser: puppeteer.Browser | undefined
+  let testPage: puppeteer.Page | undefined
 
   type TestCase = [
     string,

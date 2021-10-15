@@ -10,8 +10,8 @@ import {
 jest.setTimeout(250 * 1000)
 
 describe('Adding coins', () => {
-  let testBrowser: puppeteer.Browser | undefined = undefined
-  let testPage: puppeteer.Page | undefined = undefined
+  let testBrowser: puppeteer.Browser | undefined
+  let testPage: puppeteer.Page | undefined
   const wallets = [
     ['eth', 'Ethereum'],
     ['bnb', 'Binance Coin'],
@@ -66,11 +66,11 @@ describe('Adding coins', () => {
           page: testPage,
           selector: '#createWalletBtn',
         })
-        
+
         await checkWalletDisplay({
           page: testPage,
           name: 'btc',
-          expectedTitle: 'Bitcoin'
+          expectedTitle: 'Bitcoin',
         })
       } catch (error) {
         console.error('Adding btc wallet: ', error)
@@ -86,7 +86,7 @@ describe('Adding coins', () => {
     if (testPage) {
       try {
         await addAssetToWallet(testPage, walletName)
-        
+
         await checkWalletDisplay({
           page: testPage,
           name: walletName,
