@@ -305,9 +305,9 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   returnReceivedList = (currencies, spendedCurrency) => {
     const result = currencies.filter((item) => {
       // except current value from the the spended list
-      const notCurrentSpendedAsset = item.value !== spendedCurrency.value
+      const notCurrentSpendedAsset = item.value !== spendedCurrency?.value
       const spendedAsset = item.blockchain || item.value.toUpperCase()
-      const receivedAsset = spendedCurrency.blockchain || spendedCurrency.value.toUpperCase()
+      const receivedAsset = spendedCurrency?.blockchain || spendedCurrency?.value.toUpperCase()
 
       return spendedAsset === receivedAsset && notCurrentSpendedAsset
     })

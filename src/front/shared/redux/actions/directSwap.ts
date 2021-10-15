@@ -120,15 +120,13 @@ const checkAndApproveToken = async (params) => {
 
   return new Promise(async (res, rej) => {
     if (new BigNumber(sellAmount).isGreaterThan(allowance)) {
-    const result = await actions[standard].approve({
-      name: tokenName,
-      to: spender,
-      amount: sellAmount,
-    })
+      const result = await actions[standard].approve({
+        name: tokenName,
+        to: spender,
+        amount: sellAmount,
+      })
 
-    console.log('result: ', result)
-
-    return typeof result === 'string' ? res(result) : rej(result)
+      return typeof result === 'string' ? res(result) : rej(result)
     }
 
     res(true)
@@ -202,33 +200,35 @@ const swapCallback = async (params) => {
       if (!result) return result
     }
 
-    /* 
-    {
-      ...(swapData.value ? { value: swapData.value, from: ownerAddress } : { from: ownerAddress }),
-    }
-    */
-    return router.methods[method](...swapData.args).call((error, response) => {
-      if (error) return error
+    // const options = swapData.value
+    //   ? { value: swapData.value, from: ownerAddress }
+    //   : { from: ownerAddress }
 
-      return response
+    return new Promise(async (res, rej) => {
+      router.methods[method](...swapData.args)
+        .call()
+        .then((response) => {
+          console.group('%c Router', 'color: green;')
+          console.log('response: ', response)
+          console.groupEnd()
+
+          res(response.hash)
+        })
+        .catch((error) => {
+          const REJECT_CODE = 4001
+
+          if (error?.code === REJECT_CODE) {
+            res(false)
+            return console.log('Rejected')
+          }
+
+          console.group('%c Router', 'color: red;')
+          console.error('error: ', error)
+          console.groupEnd()
+
+          rej(error)
+        })
     })
-    // .then((response: any) => {
-    //   console.log('%c router response', 'color:brown;font-size:20px')
-    //   console.log('response: ', response)
-
-    //   return response.hash
-    // })
-    // .catch((error: any) => {
-    //   console.log('error from the router')
-
-    //   const REJECT_CODE = 4001
-
-    //   if (error?.code === REJECT_CODE) {
-    //     return console.log('Rejected')
-    //   }
-
-    //   throw new Error(`Swap failed: ${error.message}`)
-    // })
   } catch (error) {
     console.log('error outside the router code')
     console.log('error: ', error)

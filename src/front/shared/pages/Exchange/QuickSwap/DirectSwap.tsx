@@ -39,17 +39,17 @@ function DirectSwap(props) {
       const WEENUS = '0x703f112Bda4Cc6cb9c5FB4B2e6140f6D8374F10b'
 
       const hash = await actions.directSwap.swapCallback({
-        slippage,
+        slippage: 2,
         routerAddress,
         baseCurrency,
         ownerAddress: fromWallet.address,
         fromTokenStandard: 'bep20', //fromWallet.standard || '',
-        fromTokenName: '{bnb}busd',// fromWallet.tokenKey || '',
-        fromToken: BUSD, //fromWallet.isToken ? fromWallet.contractAddress : EVM_COIN_ADDRESS,
-        sellAmount: 1,
+        fromTokenName: '{bnb}weenus', // fromWallet.tokenKey || '',
+        fromToken: WEENUS, //fromWallet.isToken ? fromWallet.contractAddress : EVM_COIN_ADDRESS,
+        sellAmount: 10,
         fromTokenDecimals: 18,
-        toToken: WEENUS, // EVM_COIN_ADDRESS, //toWallet.isToken ? toWallet.contractAddress : EVM_COIN_ADDRESS,
-        buyAmount: 19.3564,
+        toToken: BUSD, // EVM_COIN_ADDRESS, //toWallet.isToken ? toWallet.contractAddress : EVM_COIN_ADDRESS,
+        buyAmount: 0.505491,
         toTokenDecimals: 18,
         deadlinePeriod: userDeadline * 60,
       })
