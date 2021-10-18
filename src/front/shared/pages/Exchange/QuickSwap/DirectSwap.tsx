@@ -41,10 +41,7 @@ function DirectSwap(props) {
       const WBNB = '0xae13d989dac2f0debff460ac112a837c89baa7cd'
       const LTK = '0x1272aa564b9fde598c0c71bc20e84703ce56b38d'
 
-      // rinkeby
-      const WETH = '0xc778417e063141139fce010982780140aa0cd5ab'
-      const ETH_FACTORY = '0x4E629F691C4AdeD5376e7573A8AEA8c8a5ef8831'
-      const ETH_ROUTER = '0x90357d4291D65e61f0b0a3FD50048126D10a7DbD'
+      const BNG = '0x04ad4ce6015141f6f582a7451cb7cd6866609298'
 
       const hash = await actions.directSwap.swapCallback({
         slippage: 2,
@@ -57,7 +54,7 @@ function DirectSwap(props) {
         sellAmount: 0.0001,
         fromTokenDecimals: 18,
         toToken: LTK, //toWallet.isToken ? toWallet.contractAddress : EVM_COIN_ADDRESS,
-        buyAmount: 9.87158,
+        buyAmount: 9.5,
         toTokenDecimals: 18,
         deadlinePeriod: userDeadline * 60,
       })

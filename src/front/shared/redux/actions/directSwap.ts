@@ -200,97 +200,13 @@ const swapCallback = async (params) => {
       if (!result) return result
     }
 
-    // const options = swapData.value
-    //   ? { value: swapData.value, from: ownerAddress }
-    //   : { from: ownerAddress }
-
-    const txData: string[] = []
-
-    // as an argument pass the string with method name and his argument types
-    // without spaces!
-    // ex: swapExactTokensForTokens(uint256,uint256,address[],address,uint256)
-    // hex method = provider.utils.keccak256(^)
-
-    txData.push('38ed1739')
-    const arrArgs: string[] = []
-
-    swapData.args.forEach((arg) => {
-      let tempArg = arg
-      const MIN_ARG_LENGHT = 64 // hex chars
-
-
-      if (typeof tempArg === 'string') {
-        if (tempArg.match(/^0x/)) {
-          tempArg = tempArg.replace(/0x/, '')
-        }
-
-        if (tempArg.length < MIN_ARG_LENGHT) {
-          tempArg = tempArg.padStart(MIN_ARG_LENGHT, '0')
-        }
-
-        txData.push(tempArg)
-      } else if (Array.isArray(tempArg)) {
-        txData.push('00000000000000000000000000000000000000000000000000000000000000a0')
-
-        let arrLength = tempArg.length.toString(16)
-
-        if (arrLength.length < MIN_ARG_LENGHT) {
-          arrLength = arrLength.padStart(MIN_ARG_LENGHT, '0')
-        }
-
-        arrArgs.push(arrLength)
-
-        tempArg.forEach((arg) => {
-          if (arg.match(/^0x/)) {
-            arg = arg.replace(/0x/, '')
-          }
-
-          if (arg.length < MIN_ARG_LENGHT) {
-            arrArgs.push( arg.padStart(MIN_ARG_LENGHT, '0') )
-          }
-        })
-      }
-    })
-
-    if (arrArgs.length) {
-      arrArgs.forEach((arg) => {
-        txData.push(arg)
-      })
-    }
-
-    console.log('tx data: ', txData)
-    console.log('tx data join: ', txData.join(''))
+    const txData = router.methods[method](...swapData.args).encodeABI()
 
     return actions.bnb.send({
       to: routerAddress,
-      data: txData.join(''),
-      waitReceipt: true,
-    })
-
-    return new Promise(async (res, rej) => {
-      router.methods[method](...swapData.args)
-        .call()
-        .then((response) => {
-          console.group('%c Router', 'color: green;')
-          console.log('response: ', response)
-          console.groupEnd()
-
-          res(response.hash)
-        })
-        .catch((error) => {
-          const REJECT_CODE = 4001
-
-          if (error?.code === REJECT_CODE) {
-            res(false)
-            return console.log('Rejected')
-          }
-
-          console.group('%c Router', 'color: red;')
-          console.error('error: ', error)
-          console.groupEnd()
-
-          rej(error)
-        })
+      data: txData,
+      waitReceipt: false,
+      amount: swapData.value ?? 0,
     })
   } catch (error) {
     console.log('error outside the router code')
