@@ -374,7 +374,7 @@ class EthLikeAction {
   }
 
   send = async (params): Promise<{ transactionHash: string }> => {
-    let { to, amount, gasPrice, gasLimit: customGasLimit, speed, data, waitReceipt = false } = params
+    let { to, amount = 0, gasPrice, gasLimit: customGasLimit, speed, data, waitReceipt = false } = params
 
     const Web3 = this.getCurrentWeb3()
     const ownerAddress = metamask.isConnected() ? metamask.getAddress() : getState().user[`${this.tickerKey}Data`].address
