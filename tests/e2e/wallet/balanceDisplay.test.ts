@@ -1,5 +1,4 @@
-import testWallets from '../../testWallets'
-import { createBrowser, importWallet, timeOut, takeScreenshot } from '../utils'
+import { createBrowser, importWallet, timeOut, takeScreenshot, testWallets } from '../utils'
 
 jest.setTimeout(80_000) // ms
 
@@ -47,9 +46,10 @@ describe('Wallet tests', () => {
       await page.waitForSelector('#walletRowUpdateBalanceBtn')
       await page.waitForSelector('#walletRowCryptoBalance')
 
-      const balances = await page.$$eval('#walletRowCryptoBalance', (balanceTags) => {
-        return balanceTags.map((tag) => tag.textContent)
-      })
+      const balances = await page.$$eval(
+        '#walletRowCryptoBalance',
+        (balanceTags) => balanceTags.map((tag) => tag.textContent),
+      )
 
       expect(balances).toBeDefined()
 

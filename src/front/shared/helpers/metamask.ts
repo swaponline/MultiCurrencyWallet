@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+/* eslint-disable no-async-promise-executor */
 import reducers from 'redux/core/reducers'
-import getState from './getReduxState'
 import actions from 'redux/actions'
 import { cacheStorageGet, cacheStorageSet, constants } from 'helpers'
 import config from 'app-config'
@@ -8,24 +9,34 @@ import SwapApp from 'swap.app'
 import Web3Connect from 'common/web3connect'
 import { COIN_DATA, COIN_MODEL } from 'swap.app/constants/COINS'
 import getCoinInfo from 'common/coins/getCoinInfo'
+import getState from './getReduxState'
 
-let web3connect: any = undefined
+type EvmNetworkInfo = {
+  currency: string
+  chainId: string
+  networkVersion: number
+  chainName: string
+  rpcUrls: string[]
+  blockExplorerUrls: string[]
+}
+
+let web3connect: any
 
 const { user: { metamaskData } } = getState()
 
 setWeb3connect((metamaskData?.networkVersion) ? metamaskData.networkVersion : config.evmNetworks.ETH.networkVersion)
 
-function handleConnected () {
+function handleConnected() {
   localStorage.setItem(constants.localStorage.isWalletCreate, 'true')
   _onWeb3Changed(web3connect.getWeb3())
 }
 
-function handleDisconnected () {
+function handleDisconnected() {
   setDefaultProvider()
   _onWeb3Changed(getDefaultWeb3())
 }
 
-function handleAccountChanged () {
+function handleAccountChanged() {
   _onWeb3Changed(web3connect.getWeb3())
 }
 
@@ -43,9 +54,8 @@ function cleanWeb3connectListeners() {
 }
 
 function setWeb3connect(networkId) {
-  const newNetworkData: any = Object.values(config.evmNetworks).find((networkInfo: IUniversalObj) => {
-    return networkInfo.networkVersion === networkId
-  })
+  const newNetworkData = Object.values(config.evmNetworks)
+    .find((networkInfo: IUniversalObj) => networkInfo.networkVersion === networkId) as EvmNetworkInfo
 
   if (newNetworkData) {
     if (web3connect) {
@@ -70,7 +80,7 @@ const getWeb3connect = () => web3connect
 
 const _onWeb3Changed = (newWeb3) => {
   setProvider(newWeb3)
-  //@ts-ignore: strictNullChecks
+  // @ts-ignore: strictNullChecks
   SwapApp.shared().setWeb3Provider(newWeb3)
   addMetamaskWallet()
   actions.user.loginWithTokens()
@@ -79,7 +89,7 @@ const _onWeb3Changed = (newWeb3) => {
 
 const isEnabled = () => true
 
-const isConnected = () => web3connect.isConnected()
+const isConnected = () => web3connect?.isConnected()
 
 const getAddress = () => (isConnected()) ? web3connect.getAddress() : ``
 
@@ -146,7 +156,7 @@ const getBalance = () => {
   }
 }
 
-const disconnect = () => new Promise(async (resolved, reject) => {
+const disconnect = () => new Promise(async (resolved) => {
   if (isConnected()) {
     await web3connect.Disconnect()
 
@@ -188,8 +198,7 @@ const isAvailableNetworkByCurrency = (currency) => {
 
   if (isUTXOModel) return false
 
-  const currencyNetworkVersion =
-    (blockchain)
+  const currencyNetworkVersion = (blockchain)
     ? config.evmNetworks[blockchain]?.networkVersion
     : config.evmNetworks[ticker]?.networkVersion
 
@@ -204,18 +213,10 @@ const addMetamaskWallet = () => {
 
     if (isAvailableNetwork()) {
       const { user } = getState()
-      const currentNetworkData: any = Object.values(config.evmNetworks).find((networkInfo: {
-        currency: string
-        chainId: string
-        networkVersion: number
-        chainName: string
-        rpcUrls: string[]
-        blockExplorerUrls: string[]
-      }) => {
-        return networkInfo.networkVersion === networkVersion
-      })
+      const currentNetworkData = Object.values(config.evmNetworks)
+        .find((networkInfo: EvmNetworkInfo) => networkInfo.networkVersion === networkVersion) as EvmNetworkInfo
 
-      const currency = currentNetworkData.currency
+      const { currency } = currentNetworkData
       const fullName = `${currency} (${web3connect.getProviderTitle()})`
       const infoAboutCurrency = user[`${currency.toLowerCase()}Data`]?.infoAboutCurrency
 
@@ -278,7 +279,7 @@ const resetWalletState = () => {
   })
 }
 
-if (web3connect.hasCachedProvider()) {
+if (web3connect?.hasCachedProvider && web3connect.hasCachedProvider()) {
   web3connectInit()
 } else {
   addMetamaskWallet()
@@ -355,24 +356,24 @@ const switchNetwork = async (nativeCurrency) => {
 }
 
 const addCurrencyNetwork = async (currency) => {
-  if(!(isConnected())) {
+  if (!(isConnected())) {
     return false
   }
 
   const { coin, blockchain } = getCoinInfo(currency)
-  const nativeCurrency = blockchain ? blockchain : coin.toUpperCase()
+  const nativeCurrency = blockchain || coin.toUpperCase()
 
   const {
     chainId,
     chainName,
     rpcUrls,
-    blockExplorerUrls
+    blockExplorerUrls,
   } = config.evmNetworks[nativeCurrency]
 
   const {
     name,
     ticker: symbol,
-    precision: decimals
+    precision: decimals,
   } = COIN_DATA[nativeCurrency]
 
   const params = {
@@ -384,11 +385,11 @@ const addCurrencyNetwork = async (currency) => {
       decimals,
     },
     rpcUrls,
-    blockExplorerUrls
+    blockExplorerUrls,
   }
 
   const web3 = web3connect.getWeb3()
-  const ethereum = window.ethereum
+  const { ethereum } = window
 
   if (web3.eth  && ethereum) {
     return new Promise((res, rej) => {
@@ -397,18 +398,18 @@ const addCurrencyNetwork = async (currency) => {
           method: 'wallet_addEthereumChain',
           params: [params, accounts[0]],
         })
-        .then((result) => {
-          console.log('Success add and switch to network')
-          res(true)
-        })
-        .catch((error) => {
-          rej(new Error(`Metamask > addCurrencyNetwork error: ${error.message}`))
-        })
+          .then(() => {
+            console.log('Success add and switch to network')
+            res(true)
+          })
+          .catch((error) => {
+            rej(new Error(`Metamask > addCurrencyNetwork error: ${error.message}`))
+          })
       })
     })
-  } else {
-    throw new Error('Can not access to web3 or ethereum')
   }
+  throw new Error('Can not access to web3 or ethereum')
+
 }
 
 const metamaskApi = {

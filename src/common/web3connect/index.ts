@@ -1,28 +1,35 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { EventEmitter } from 'events'
 import { ConnectorEvent } from '@web3-react/types'
 import { BigNumber } from 'bignumber.js'
 import Web3 from 'web3'
-import SUPPORTED_PROVIDERS from './providers/supported'
-import INJECTED_TYPE from './providers/InjectedType'
-import getProviderByName from './providers'
-import { isInjectedEnabled } from './providers'
 import { isMobile } from 'react-device-detect'
 import config from 'app-config'
+import SUPPORTED_PROVIDERS from './providers/supported'
+import INJECTED_TYPE from './providers/InjectedType'
+import getProviderByName, { isInjectedEnabled } from './providers'
 
 export default class Web3Connect extends EventEmitter {
-  _cachedProvider: EthereumProvider | null = null
-  _cachedWeb3: EthereumProvider | null = null
+  _cachedProvider: IEtheriumProvider | null = null
+
+  _cachedWeb3: IEtheriumProvider | null = null
+
   _cachedProviderName: string | null = null
+
   _cachedChainId: number | null = null
+
   _cachedAddress = null
+
   _isConnected = false
 
   _isDAppBrowser = false
 
   _web3RPC = null
+
   _web3ChainId = null
 
   _inited = false
+
   _walletLocked = false
 
   constructor(options) {
@@ -91,11 +98,12 @@ export default class Web3Connect extends EventEmitter {
       case INJECTED_TYPE.METAMASK: return 'MetaMask'
       case INJECTED_TYPE.TRUST: return 'Trust Wallet'
       case INJECTED_TYPE.LIQUALITY: return 'Liquality Wallet'
+      default: return 'Not installed'
     }
   }
 
   getProviderType() {
-     switch (this._cachedProviderName) {
+    switch (this._cachedProviderName) {
       case SUPPORTED_PROVIDERS.WALLETCONNECT:
         return SUPPORTED_PROVIDERS.WALLETCONNECT
       case SUPPORTED_PROVIDERS.INJECTED:
@@ -113,9 +121,9 @@ export default class Web3Connect extends EventEmitter {
       if ((!!window.opr && !!window.opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0) return INJECTED_TYPE.OPERA
 
       return INJECTED_TYPE.UNKNOWN
-    } else {
-      return INJECTED_TYPE.NONE
     }
+    return INJECTED_TYPE.NONE
+
   }
 
   _checkIsDAppBrowser() {
@@ -138,10 +146,10 @@ export default class Web3Connect extends EventEmitter {
       if (this._inited) {
         cb()
       } else {
-        await setTimeout( waitInit, 100 )
+        await setTimeout(waitInit, 100)
       }
     }
-     await waitInit()
+    await waitInit()
   }
 
   hasCachedProvider() {
@@ -169,7 +177,7 @@ export default class Web3Connect extends EventEmitter {
       this._cachedProvider.on(ConnectorEvent.Update, (data) => {
         if (data
           && data.account
-          && data.account != this._cachedAddress
+          && data.account !== this._cachedAddress
         ) {
           this._cachedAddress = data.account
           this.emit('accountChange')
@@ -203,9 +211,7 @@ export default class Web3Connect extends EventEmitter {
       // @ToDo - Hard fix walletconnect
       // https://github.com/WalletConnect/walletconnect-monorepo/issues/384
       if (window) {
-        window.send = (e,t) => {
-          return _web3provider.send(e,t)
-        }
+        window.send = (e, t) => _web3provider.send(e, t)
       }
 
       this._cachedWeb3 = new Web3(_web3provider)
@@ -232,16 +238,16 @@ export default class Web3Connect extends EventEmitter {
           this.emit('connected')
           this.emit('updated')
           return true
-        } else {
-          if (_connector.isLocked()) {
-            this._walletLocked = true
-          }
         }
+        if (_connector.isLocked()) {
+          this._walletLocked = true
+        }
+
       }
       return false
-    } else {
-      throw new Error(`Not supported provider ${provider}`)
     }
+    throw new Error(`Not supported provider ${provider}`)
+
   }
 
   getProviders = () => {
@@ -251,12 +257,10 @@ export default class Web3Connect extends EventEmitter {
       : providers.filter((name) => name !== SUPPORTED_PROVIDERS.INJECTED)
   }
 
-  getChainId = () => {
-    return this._cachedChainId
-  }
+  getChainId = () => this._cachedChainId
 
   isConnected() {
-    return (this._cachedProvider) ? true : false
+    return !!(this._cachedProvider)
   }
 
   getNetworksId = () => {
@@ -272,14 +276,13 @@ export default class Web3Connect extends EventEmitter {
   isCorrectNetwork() {
     const { decimalCurrrentId, dicimalCachedId } = this.getNetworksId()
 
-    const supportedNetwork =
-      config.evmNetworkVersions.includes(decimalCurrrentId) ||
-      config.evmNetworkVersions.includes(dicimalCachedId)
+    const supportedNetwork = config.evmNetworkVersions.includes(decimalCurrrentId)
+      || config.evmNetworkVersions.includes(dicimalCachedId)
 
     return (
       `${this._web3ChainId}` === `${this._cachedChainId}`
-      //@ts-ignore: strictNullChecks
-      || this._web3ChainId === Number.parseInt(this._cachedChainId)
+      // @ts-ignore: strictNullChecks
+      || this._web3ChainId === Number.parseInt(this._cachedChainId, 10)
       || `0x0${this._web3ChainId}` === `${this._cachedChainId}`
       || `0x${this._web3ChainId}` === `${this._cachedChainId}` // Opera Mobile
       || supportedNetwork
