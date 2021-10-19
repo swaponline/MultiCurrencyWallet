@@ -356,13 +356,14 @@ class EthLikeAction {
     return balance > 0
   }
 
-  estimateGas = async (txData): Promise<string | undefined> => {
+  estimateGas = async (txData): Promise<string> => {
     const web3 = this.getCurrentWeb3()
+    const multiplierForGasReserve = 1.05
 
     try {
       const limit = await web3.eth.estimateGas(txData)
       const hexLimitWithPercentForSuccess = new BigNumber(
-        new BigNumber(limit).multipliedBy(1.05).toFixed(0)
+        new BigNumber(limit).multipliedBy(multiplierForGasReserve).toFixed(0)
       ).toString(16)
 
       return '0x' + hexLimitWithPercentForSuccess
@@ -371,6 +372,10 @@ class EthLikeAction {
 
       return error
     }
+  }
+
+  isValidGasLimit = (limit) => {
+    return typeof limit === 'number' || (typeof limit === 'string' && limit.match(/^0x[0-9a-f]+$/i))
   }
 
   send = async (params): Promise<{ transactionHash: string }> => {
@@ -401,7 +406,7 @@ class EthLikeAction {
     } else {
       const limit = await this.estimateGas(txData)
 
-      if (typeof limit === 'number') {
+      if (this.isValidGasLimit(limit)) {
         txData.gas = limit
       } else {
         txData.gas = defaultGasLimit
@@ -490,7 +495,7 @@ class EthLikeAction {
 
     const limit = await this.estimateGas(txData)
 
-    if (typeof limit === 'number') {
+    if (this.isValidGasLimit(limit)) {
       txData.gas = limit
     } else {
       txData.gas = defaultGasLimit
@@ -531,7 +536,7 @@ class EthLikeAction {
           console.log(hash)
           console.groupEnd()
 
-          if (!toAdmin) {
+          if (!toAdmin && !waitReceipt) {
             reducers.transactions.addTransactionToQueue({
               networkCoin: this.ticker,
               hash,

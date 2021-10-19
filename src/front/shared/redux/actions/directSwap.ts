@@ -60,21 +60,30 @@ const returnSwapDataByMethod = async (
   const weiSellAmount = utils.amount.formatWithDecimals(sellAmount, fromTokenDecimals)
   const weiBuyAmount = utils.amount.formatWithDecimals(buyAmount, toTokenDecimals)
 
-  const availableSlippageRange = new BigNumber(weiBuyAmount).div(100).times(slippage)
+  const MAX_PERCENT = 100
+  const availableSlippageRange = new BigNumber(weiBuyAmount)
+    .div(MAX_PERCENT)
+    .times(slippage)
+    .toNumber()
+
   // the minimum amount of the purchased asset to be received
-  const amountOutMin = `0x${new BigNumber(weiBuyAmount).minus(availableSlippageRange).toString(16)}`
+  const intOutMin = new BigNumber(weiBuyAmount)
+    .minus(availableSlippageRange)
+    .integerValue(BigNumber.ROUND_CEIL)
+
+  const amountOutMin = `0x${intOutMin.toString(16)}`
   const amountIn = `0x${new BigNumber(weiSellAmount).toString(16)}`
 
   switch (method) {
-    // case SwapMethods.swapExactETHForTokensSupportingFeeOnTransferTokens:
+    case SwapMethods.swapExactETHForTokensSupportingFeeOnTransferTokens:
     case SwapMethods.swapExactETHForTokens:
       return {
         args: [amountOutMin, path, owner, deadline],
         value: amountIn,
       }
 
-    // case SwapMethods.swapExactTokensForTokensSupportingFeeOnTransferTokens:
-    // case SwapMethods.swapExactTokensForETHSupportingFeeOnTransferTokens:
+    case SwapMethods.swapExactTokensForTokensSupportingFeeOnTransferTokens:
+    case SwapMethods.swapExactTokensForETHSupportingFeeOnTransferTokens:
     case SwapMethods.swapExactTokensForETH:
     case SwapMethods.swapExactTokensForTokens:
       return {
@@ -148,6 +157,7 @@ const swapCallback = async (params) => {
     buyAmount,
     fromTokenStandard,
     fromTokenName,
+    waitReceipt = false,
   } = params
 
   if (!deadlinePeriod) {
@@ -198,19 +208,22 @@ const swapCallback = async (params) => {
       })
 
       if (!result) return result
+    } else {
+      // need to make a "wrap" swap
     }
 
     const txData = router.methods[method](...swapData.args).encodeABI()
 
-    return actions.bnb.send({
+    return actions[baseCurrency.toLowerCase()].send({
       to: routerAddress,
       data: txData,
-      waitReceipt: false,
+      waitReceipt,
       amount: swapData.value ?? 0,
     })
   } catch (error) {
-    console.log('error outside the router code')
-    console.log('error: ', error)
+    console.group('%c swapCallback', 'color: red;')
+    console.error(error)
+    console.groupEnd()
   }
 }
 

@@ -883,6 +883,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       fromWallet,
       toWallet,
       receivedCurrency,
+      receivedAmount,
       wrongNetwork,
       network,
       swapData,
@@ -894,6 +895,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       blockReason,
       error,
       slippage,
+      coinDecimals,
     } = this.state
 
     const linked = Link.all(
@@ -932,13 +934,15 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
         )}
 
         <section styleName="quickSwap">
-          {true ? ( // isDirectSwap && swapData
+          {isDirectSwap && swapData ? ( // isDirectSwap && swapData
             <DirectSwap
+              spendedAmount={spendedAmount}
+              receivedAmount={receivedAmount}
               closeDirectSwap={this.closeDirectSwap}
-              swapData={swapData}
               fromWallet={fromWallet}
               toWallet={toWallet}
               slippage={slippage}
+              coinDecimals={coinDecimals}
             />
           ) : (
             <>  
