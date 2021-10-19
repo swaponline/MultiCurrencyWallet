@@ -33,7 +33,8 @@ const returnSwapDataByMethod = async (
   args: any[]
   value?: string
 }> => {
-  const {
+  let {
+    chainId,
     provider,
     method,
     fromToken,
@@ -52,6 +53,18 @@ const returnSwapDataByMethod = async (
   const latestBlockNumber = await provider.eth.getBlockNumber()
   const latestBlock = await provider.eth.getBlock(latestBlockNumber)
   const timestamp = latestBlock.timestamp
+
+  const chainNumber = Number(chainId)
+  const { WrapperCurrency } = constants.ADDRESSES
+
+  // Swaps available only for tokens. Replace native currency with a wrapped one
+  switch (constants.ADDRESSES.EVM_COIN_ADDRESS) {
+    case fromToken.toLowerCase():
+      fromToken = WrapperCurrency[chainNumber]
+      break
+    case toToken.toLowerCase():
+      toToken = WrapperCurrency[chainNumber]
+  }
 
   const path = [fromToken, toToken]
   // after this time, the transaction will be canceled
@@ -72,14 +85,15 @@ const returnSwapDataByMethod = async (
     .integerValue(BigNumber.ROUND_CEIL)
 
   const amountOutMin = `0x${intOutMin.toString(16)}`
-  const amountIn = `0x${new BigNumber(weiSellAmount).toString(16)}`
+  const amountIn = weiSellAmount
 
   switch (method) {
     case SwapMethods.swapExactETHForTokensSupportingFeeOnTransferTokens:
     case SwapMethods.swapExactETHForTokens:
       return {
         args: [amountOutMin, path, owner, deadline],
-        value: amountIn,
+        // without decimals and not in hex format, because we do it in the actions
+        value: sellAmount,
       }
 
     case SwapMethods.swapExactTokensForTokensSupportingFeeOnTransferTokens:
@@ -98,16 +112,16 @@ const returnSwapMethod = (params) => {
   const { fromToken, toToken } = params
 
   if (
-    fromToken.toLowerCase() === constants.EVM_COIN_ADDRESS &&
-    toToken.toLowerCase() === constants.EVM_COIN_ADDRESS
+    fromToken.toLowerCase() === constants.ADDRESSES.EVM_COIN_ADDRESS &&
+    toToken.toLowerCase() === constants.ADDRESSES.EVM_COIN_ADDRESS
   ) {
     throw new Error('Swap between two native coins')
   }
 
-  if (fromToken.toLowerCase() === constants.EVM_COIN_ADDRESS) {
+  if (fromToken.toLowerCase() === constants.ADDRESSES.EVM_COIN_ADDRESS) {
     return SwapMethods.swapExactETHForTokens
     // return SwapMethods.swapExactETHForTokensSupportingFeeOnTransferTokens
-  } else if (toToken.toLowerCase() === constants.EVM_COIN_ADDRESS) {
+  } else if (toToken.toLowerCase() === constants.ADDRESSES.EVM_COIN_ADDRESS) {
     return SwapMethods.swapExactTokensForETH
     // return SwapMethods.swapExactTokensForETHSupportingFeeOnTransferTokens
   } else {
@@ -168,6 +182,7 @@ const swapCallback = async (params) => {
   const router = getRouterContract({ routerAddress, provider })
   const method = returnSwapMethod({ fromToken, toToken })
   const swapData = await returnSwapDataByMethod({
+    chainId: actions[baseCurrency.toLowerCase()].chainId,
     slippage,
     provider,
     method,
@@ -196,7 +211,7 @@ const swapCallback = async (params) => {
   console.log('router: ', router)
 
   try {
-    if (fromTokenStandard && fromToken.toLowerCase() !== constants.EVM_COIN_ADDRESS) {
+    if (fromTokenStandard && fromToken.toLowerCase() !== constants.ADDRESSES.EVM_COIN_ADDRESS) {
       const result = await checkAndApproveToken({
         tokenName: fromTokenName,
         sellAmount,
@@ -208,8 +223,6 @@ const swapCallback = async (params) => {
       })
 
       if (!result) return result
-    } else {
-      // need to make a "wrap" swap
     }
 
     const txData = router.methods[method](...swapData.args).encodeABI()

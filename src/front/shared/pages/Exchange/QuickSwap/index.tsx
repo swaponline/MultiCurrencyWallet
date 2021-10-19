@@ -6,7 +6,7 @@ import { isMobile } from 'react-device-detect'
 import CSSModules from 'react-css-modules'
 import styles from './index.scss'
 import utils from 'common/utils'
-import { EVM_COIN_ADDRESS } from 'common/helpers/constants'
+import ADDRESSES from 'common/helpers/constants/ADDRESSES'
 import { AddressFormat, AddressType } from 'domain/address'
 import {
   feedback,
@@ -379,8 +379,8 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   createSwapRequest = (skipValidation = false) => {
     const { slippage, spendedAmount, fromWallet, toWallet, coinDecimals } = this.state
 
-    const sellToken = fromWallet.isToken ? fromWallet.contractAddress : EVM_COIN_ADDRESS
-    const buyToken = toWallet.isToken ? toWallet.contractAddress : EVM_COIN_ADDRESS
+    const sellToken = fromWallet.isToken ? fromWallet.contractAddress : ADDRESSES.EVM_COIN_ADDRESS
+    const buyToken = toWallet.isToken ? toWallet.contractAddress : ADDRESSES.EVM_COIN_ADDRESS
 
     const sellAmount = utils.amount.formatWithDecimals(spendedAmount, fromWallet.decimals || coinDecimals)
 
@@ -934,7 +934,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
         )}
 
         <section styleName="quickSwap">
-          {isDirectSwap && swapData ? ( // isDirectSwap && swapData
+          {true ? ( // isDirectSwap && swapData
             <DirectSwap
               spendedAmount={spendedAmount}
               receivedAmount={receivedAmount}
