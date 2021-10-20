@@ -54,7 +54,7 @@ export type ComponentState = {
   receivedCurrency: CurrencyMenuItem
   receivedAmount: string
   toWallet: IUniversalObj
-  slippage: number | undefined
+  slippage: number
   slippageMaxRange: number
   wrongNetwork: boolean
   network: Network

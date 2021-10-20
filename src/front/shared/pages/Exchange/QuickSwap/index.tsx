@@ -95,6 +95,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
 
     this.state = {
       error: null,
+      liquidityErrorMessage: '',
       isPending: false,
       isDataPending: false,
       isSwapPending: false,
@@ -126,7 +127,6 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       mnemonicSaved: mnemonic === '-',
       blockReason: undefined,
       coinDecimals: 18,
-      liquidityErrorMessage: '',
     }
   }
 
@@ -1032,7 +1032,6 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
                   isAdvancedMode={isAdvancedMode}
                   switchAdvancedMode={this.switchAdvancedMode}
                   stateReference={linked}
-                  swapData={swapData}
                   checkSwapData={this.checkSwapData}
                   resetSwapData={this.resetSwapData}
                 />

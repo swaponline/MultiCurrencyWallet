@@ -1,12 +1,36 @@
-import { useState } from 'react'
+import { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
 import CSSModules from 'react-css-modules'
-import styles from './DirectSwap.scss'
+import styles from './index.scss'
+import componentStyles from './DirectSwap.scss'
 import constants from 'common/helpers/constants'
+import Link from 'local_modules/sw-valuelink'
+import { inputReplaceCommaWithDot } from 'helpers/domUtils'
 import { externalConfig, transactions, routing } from 'helpers'
 import actions from 'redux/actions'
+import Tooltip from 'components/ui/Tooltip/Tooltip'
 import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
 import { Button } from 'components/controls'
+import InputRow from './InputRow'
+
+type ComponentProps = {
+  spendedAmount: string
+  receivedAmount: string
+  closeDirectSwap: () => void
+  fromWallet: IUniversalObj
+  toWallet: IUniversalObj
+  slippage: number
+  coinDecimals: number
+  liquidityErrorMessage: string
+}
+
+type ComponentState = {
+  spendedAmount: string
+  receivedAmount: string
+  userDeadline: number
+  userSlippage: number
+  routerAddress: string | undefined
+}
 
 const returnRouter = (name) => {
   if (name.match(/pancake/gim)) {
@@ -14,96 +38,139 @@ const returnRouter = (name) => {
   }
 }
 
-function DirectSwap(props) {
-  const {
-    closeDirectSwap,
-    fromWallet,
-    toWallet,
-    slippage,
-    coinDecimals,
-    spendedAmount,
-    receivedAmount,
-  } = props
+class DirectSwap extends Component<ComponentProps, ComponentState> {
+  constructor(props) {
+    super(props)
 
-  const [userDeadline, setUserDeadline] = useState(20) // minutes
-  const [userSlippage, setUserSlippage] = useState(slippage)
+    const { slippage, spendedAmount, receivedAmount, liquidityErrorMessage } = props
 
-  const changeDeadline = (event) => {
-    setUserDeadline(event.target.value)
-  }
+    const routerAddress = returnRouter(liquidityErrorMessage)
 
-  const changeSlippage = (event) => {
-    setUserSlippage(event.target.value)
-  }
-
-  const startSwap = async () => {
-    const routerAddress = returnRouter('Pancakeswap')
-
-    if (routerAddress) {
-      const baseCurrency = fromWallet.standard ? fromWallet.baseCurrency : fromWallet.currency
-      const SEC_PER_MINUTE = 60
-
-      const result = await actions.directSwap.swapCallback({
-        slippage: userSlippage,
-        routerAddress,
-        baseCurrency,
-        ownerAddress: fromWallet.address,
-        fromTokenStandard: fromWallet.standard || '',
-        fromTokenName: fromWallet.tokenKey || '',
-        fromToken: fromWallet.isToken
-          ? fromWallet.contractAddress
-          : constants.ADDRESSES.EVM_COIN_ADDRESS,
-        sellAmount: spendedAmount,
-        fromTokenDecimals: fromWallet.decimals || coinDecimals,
-        toToken: toWallet.isToken ? toWallet.contractAddress : constants.ADDRESSES.EVM_COIN_ADDRESS,
-        buyAmount: receivedAmount,
-        toTokenDecimals: toWallet.decimals || coinDecimals,
-        deadlinePeriod: userDeadline * SEC_PER_MINUTE,
-        // while there are no other reasons to use direct swaps without any API errors,
-        // but with errors we have successful swaps only in the case if this parameter in TRUE value
-        useFeeOnTransfer: true,
-      })
-
-      if (result.transactionHash) {
-        const txInfoUrl = transactions.getTxRouter(
-          fromWallet.standard ? fromWallet.tokenKey : fromWallet.currency,
-          result.transactionHash
-        )
-
-        routing.redirectTo(txInfoUrl)
-      }
+    this.state = {
+      spendedAmount,
+      receivedAmount,
+      userDeadline: 20,
+      userSlippage: slippage,
+      routerAddress,
     }
   }
 
-  return (
-    <section styleName="">
-      <div styleName="header">
-        <h3>
-          <FormattedMessage id="directSwap" defaultMessage="Direct swap" />
-        </h3>
-        <CloseIcon onClick={closeDirectSwap} />
-      </div>
+  updateInputValue = (event, name) => {
+    //@ts-ignore
+    this.setState(() => ({
+      [name]: event.target.value,
+    }))
+  }
 
-      <div styleName="content">
-        <label styleName="inputLabel">
-          <FormattedMessage
-            id="transactionDeadline"
-            defaultMessage="Transaction deadline (minutes)"
+  startSwap = async () => {
+    const { closeDirectSwap, fromWallet, toWallet, coinDecimals } = this.props
+    const { routerAddress, userDeadline, userSlippage, spendedAmount, receivedAmount } = this.state
+
+    const baseCurrency = fromWallet.standard ? fromWallet.baseCurrency : fromWallet.currency
+    const SEC_PER_MINUTE = 60
+
+    const result = await actions.directSwap.swapCallback({
+      slippage: userSlippage,
+      routerAddress,
+      baseCurrency,
+      ownerAddress: fromWallet.address,
+      fromTokenStandard: fromWallet.standard || '',
+      fromTokenName: fromWallet.tokenKey || '',
+      fromToken: fromWallet.isToken
+        ? fromWallet.contractAddress
+        : constants.ADDRESSES.EVM_COIN_ADDRESS,
+      sellAmount: spendedAmount,
+      fromTokenDecimals: fromWallet.decimals || coinDecimals,
+      toToken: toWallet.isToken ? toWallet.contractAddress : constants.ADDRESSES.EVM_COIN_ADDRESS,
+      buyAmount: receivedAmount,
+      toTokenDecimals: toWallet.decimals || coinDecimals,
+      deadlinePeriod: userDeadline * SEC_PER_MINUTE,
+      // while there are no other reasons to use direct swaps without any API errors,
+      // but with errors we have successful swaps only in the case if this parameter in TRUE value
+      useFeeOnTransfer: true,
+    })
+
+    if (result.transactionHash) {
+      const txInfoUrl = transactions.getTxRouter(
+        fromWallet.standard ? fromWallet.tokenKey : fromWallet.currency,
+        result.transactionHash
+      )
+
+      routing.redirectTo(txInfoUrl)
+      closeDirectSwap()
+    }
+  }
+
+  render() {
+    const { closeDirectSwap } = this.props
+    const { routerAddress } = this.state
+
+    console.log('%c direct render', 'color:orange;font-size:20px')
+    console.log('this.props: ', this.props)
+    console.log('this.state: ', this.state)
+
+    const linked = Link.all(this, 'spendedAmount', 'receivedAmount', 'userDeadline', 'userSlippage')
+
+    return (
+      <section>
+        <div styleName="header">
+          <h3>
+            <FormattedMessage id="directSwap" defaultMessage="Direct swap" />
+          </h3>
+          <CloseIcon onClick={closeDirectSwap} />
+        </div>
+
+        <div styleName={`content ${routerAddress ? '' : 'disabled'}`}>
+          <InputRow
+            onKeyUp={(event) => this.updateInputValue(event, 'spendedAmount')}
+            onKeyDown={inputReplaceCommaWithDot}
+            valueLink={linked.spendedAmount}
+            labelMessage={<FormattedMessage id="MyOrdersYouSend" defaultMessage="You send" />}
           />
-          <input type="number" defaultValue={userDeadline} onChange={changeDeadline} />
-        </label>
 
-        <label styleName="inputLabel">
-          <FormattedMessage id="slippageTolerance" defaultMessage="Slippage tolerance (%)" />
-          <input type="number" defaultValue={userSlippage} onChange={changeSlippage} />
-        </label>
+          <InputRow
+            onKeyUp={(event) => this.updateInputValue(event, 'receivedAmount')}
+            onKeyDown={inputReplaceCommaWithDot}
+            valueLink={linked.receivedAmount}
+            labelMessage={<FormattedMessage id="partial255" defaultMessage="You get" />}
+          />
 
-        <Button brand fullWidth onClick={startSwap}>
-          <FormattedMessage id="swap" defaultMessage="Swap" />
-        </Button>
-      </div>
-    </section>
-  )
+          <InputRow
+            onKeyUp={(event) => this.updateInputValue(event, 'userDeadline')}
+            onKeyDown={inputReplaceCommaWithDot}
+            valueLink={linked.userDeadline}
+            labelMessage={
+              <FormattedMessage
+                id="transactionDeadline"
+                defaultMessage="Transaction deadline (minutes)"
+              />
+            }
+          />
+
+          <InputRow
+            onKeyUp={(event) => this.updateInputValue(event, 'userSlippage')}
+            onKeyDown={inputReplaceCommaWithDot}
+            valueLink={linked.userSlippage}
+            labelMessage={
+              <FormattedMessage id="slippageTolerance" defaultMessage="Slippage tolerance (%)" />
+            }
+            labelTooltip={
+              <Tooltip id="slippageTooltip">
+                <FormattedMessage
+                  id="slippageNotice"
+                  defaultMessage="If the price changes between the time your order is placed and confirmed it’s called “slippage”. Your swap will automatically cancel if slippage exceeds your “max slippage” setting"
+                />
+              </Tooltip>
+            }
+          />
+
+          <Button brand fullWidth onClick={this.startSwap}>
+            <FormattedMessage id="swap" defaultMessage="Swap" />
+          </Button>
+        </div>
+      </section>
+    )
+  }
 }
 
-export default CSSModules(DirectSwap, styles, { allowMultiple: true })
+export default CSSModules(DirectSwap, { ...styles, ...componentStyles }, { allowMultiple: true })
