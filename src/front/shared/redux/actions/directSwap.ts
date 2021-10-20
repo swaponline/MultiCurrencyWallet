@@ -234,6 +234,8 @@ const swapCallback = async (params) => {
     console.group('%c swapCallback', 'color: red;')
     console.error(error)
     console.groupEnd()
+
+    return error
   }
 }
 

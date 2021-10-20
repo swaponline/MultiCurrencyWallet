@@ -378,7 +378,7 @@ class EthLikeAction {
     return typeof limit === 'number' || (typeof limit === 'string' && limit.match(/^0x[0-9a-f]+$/i))
   }
 
-  send = async (params): Promise<{ transactionHash: string }> => {
+  send = async (params): Promise<{ transactionHash: string } | Error> => {
     let { to, amount = 0, gasPrice, gasLimit: customGasLimit, speed, data, waitReceipt = false } = params
 
     const Web3 = this.getCurrentWeb3()
@@ -404,10 +404,14 @@ class EthLikeAction {
     if (customGasLimit) {
       txData.gas = customGasLimit
     } else {
-      const limit = await this.estimateGas(txData)
+      const result: any = await this.estimateGas(txData)
 
-      if (this.isValidGasLimit(limit)) {
-        txData.gas = limit
+      // the calculation failed which means this transaction
+      // will be failed in the blockchain
+      if (result instanceof Error) return result
+
+      if (this.isValidGasLimit(result)) {
+        txData.gas = result
       } else {
         txData.gas = defaultGasLimit
       }

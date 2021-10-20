@@ -34,6 +34,8 @@ type ComponentState = {
   routerAddress: string | undefined
   possibleLiquiditySourceName: string
   pending: boolean
+  insufficientSlippage: boolean
+  errorMessage: string
 }
 
 const returnRouter = (name) => {
@@ -58,6 +60,8 @@ class DirectSwap extends Component<ComponentProps, ComponentState> {
       slippageFailRange: 0.5,
       slippageFrontrunRange: 10,
       pending: false,
+      insufficientSlippage: false,
+      errorMessage: '',
       possibleLiquiditySourceName: sourceNameMatch ? sourceNameMatch[0] : '',
     }
   }
@@ -73,7 +77,7 @@ class DirectSwap extends Component<ComponentProps, ComponentState> {
     if (value < slippageMaxRange) {
       //@ts-ignore
       this.setState(() => ({
-        [name]: event.target.value,
+        [name]: value,
       }))
     }
   }
@@ -87,6 +91,8 @@ class DirectSwap extends Component<ComponentProps, ComponentState> {
     const SEC_PER_MINUTE = 60
 
     this.setState(() => ({
+      insufficientSlippage: false,
+      errorMessage: '',
       pending: true,
     }))
 
@@ -116,7 +122,17 @@ class DirectSwap extends Component<ComponentProps, ComponentState> {
         pending: false,
       }))
 
-      if (result?.transactionHash) {
+      if (result instanceof Error) {
+        // the error INSUFFICIENT_OUTPUT_AMOUNT means we can increase slippage to get less output
+        // token's amount, but our transaction will probably be successful with this.
+        // Let user know about it
+        const insufficientSlippage = result.message.match(/INSUFFICIENT_OUTPUT_AMOUNT/)
+
+        this.setState(() => ({
+          insufficientSlippage: !!insufficientSlippage,
+          errorMessage: result.message,
+        }))
+      } else if (result?.transactionHash) {
         const txInfoUrl = transactions.getTxRouter(
           fromWallet.standard ? fromWallet.tokenKey : fromWallet.currency,
           result.transactionHash
@@ -125,9 +141,10 @@ class DirectSwap extends Component<ComponentProps, ComponentState> {
         routing.redirectTo(txInfoUrl)
         closeDirectSwap()
       }
-    } catch {
+    } catch (error) {
       this.setState(() => ({
         pending: false,
+        errorMessage: error.message,
       }))
     }
   }
@@ -142,6 +159,8 @@ class DirectSwap extends Component<ComponentProps, ComponentState> {
       slippageFrontrunRange,
       possibleLiquiditySourceName,
       pending,
+      insufficientSlippage,
+      errorMessage,
     } = this.state
 
     const linked = Link.all(this, 'userDeadline', 'userSlippage')
@@ -228,6 +247,17 @@ class DirectSwap extends Component<ComponentProps, ComponentState> {
           />
 
           <div styleName="reasons">
+            {insufficientSlippage ? (
+              <p styleName="warning">
+                <FormattedMessage
+                  id="insufficientSlippage"
+                  defaultMessage="Insufficient slippage. Try to increase it"
+                />
+              </p>
+            ) : errorMessage ? (
+              <pre styleName="wrong">{errorMessage}</pre>
+            ) : null}
+
             {txMayFail ? (
               <p styleName="neutral">
                 <FormattedMessage id="transactionMayFail" defaultMessage="Transaction may fail" />

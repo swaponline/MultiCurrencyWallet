@@ -48,7 +48,7 @@ function SwapInfo(props) {
         <p styleName="neutral">
           <FormattedMessage
             id="insufficientSlippage"
-            defaultMessage="Insufficient slippage. Try to increase it in the advanced settings"
+            defaultMessage="Insufficient slippage. Try to increase it"
           />
         </p>
       ) : blockReason === SwapBlockReason.NoLiquidity ? (
