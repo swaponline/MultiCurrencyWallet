@@ -353,6 +353,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   }
 
   reportError = (error) => {
+    const { liquidityErrorMessage } = this.state
     const possibleNoLiquidity = JSON.stringify(error)?.match(/INSUFFICIENT_ASSET_LIQUIDITY/)
     const insufficientSlippage = JSON.stringify(error)?.match(/IncompleteTransformERC20Error/)
     const notEnoughBalance = error.message?.match(/(N|n)ot enough .* balance/)
@@ -363,9 +364,11 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       this.setState(() => ({ blockReason: SwapBlockReason.InsufficientSlippage }))
     } else if (notEnoughBalance) {
       this.setState(() => ({ blockReason: SwapBlockReason.NoBalance }))
+    } else if (liquidityErrorMessage) {
+      this.setState(() => ({ blockReason: SwapBlockReason.Liquidity }))
     } else {
       this.setState(() => ({ blockReason: SwapBlockReason.Unknown }))
-
+      
       console.group('%c Swap', 'color: red;')
       console.error(error)
       console.groupEnd()
@@ -928,7 +931,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     const isWalletCreated = localStorage.getItem(constants.localStorage.isWalletCreate)
     const saveSecretPhrase = !mnemonicSaved && !metamask.isConnected()
 
-    const canMakeDirectSwap = blockReason === SwapBlockReason.Unknown && swapData && liquidityErrorMessage
+    const canMakeDirectSwap = blockReason === SwapBlockReason.Liquidity && swapData && liquidityErrorMessage
 
     return (
       <>
@@ -1086,13 +1089,12 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
 
                 {canMakeDirectSwap && (
                   <Button onClick={this.switchToDirectSwap} brand>
-                    <FormattedMessage id="tryDirectSwap" defaultMessage="Try direct swap" />
+                    <FormattedMessage id="directSwap" defaultMessage="Direct swap" />
                   </Button>
                 )}
               </div>
             </>
           )}
-
 
           {!wrongNetwork && (mnemonicSaved || metamask.isConnected()) && (
             <Button onClick={this.createLimitOrder} link small>

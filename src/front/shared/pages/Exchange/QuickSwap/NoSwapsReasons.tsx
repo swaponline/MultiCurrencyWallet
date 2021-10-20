@@ -58,6 +58,13 @@ function SwapInfo(props) {
             defaultMessage="Insufficient pool liquidity"
           />
         </p>
+      ) : blockReason === SwapBlockReason.Liquidity ? (
+        <p styleName="neutral">
+          <FormattedMessage
+            id="liquidityPoolProblem"
+            defaultMessage="There is some problem with liquidity pool. Try direct swap"
+          />
+        </p>
       ) : blockReason === SwapBlockReason.Unknown ? (
         <p styleName="wrong">
           <FormattedMessage

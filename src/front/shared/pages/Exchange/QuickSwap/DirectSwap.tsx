@@ -1,5 +1,6 @@
 import { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
+import BigNumber from 'bignumber.js'
 import CSSModules from 'react-css-modules'
 import styles from './index.scss'
 import componentStyles from './DirectSwap.scss'
@@ -25,11 +26,14 @@ type ComponentProps = {
 }
 
 type ComponentState = {
-  spendedAmount: string
-  receivedAmount: string
   userDeadline: number
   userSlippage: number
+  slippageMaxRange: number
+  slippageFailRange: number
+  slippageFrontrunRange: number
   routerAddress: string | undefined
+  possibleLiquiditySourceName: string
+  pending: boolean
 }
 
 const returnRouter = (name) => {
@@ -42,74 +46,117 @@ class DirectSwap extends Component<ComponentProps, ComponentState> {
   constructor(props) {
     super(props)
 
-    const { slippage, spendedAmount, receivedAmount, liquidityErrorMessage } = props
-
+    const { slippage, liquidityErrorMessage } = props
     const routerAddress = returnRouter(liquidityErrorMessage)
+    const sourceNameMatch = liquidityErrorMessage.match(/^[0-9a-zA-Z]+/)
 
     this.state = {
-      spendedAmount,
-      receivedAmount,
       userDeadline: 20,
       userSlippage: slippage,
       routerAddress,
+      slippageMaxRange: 50,
+      slippageFailRange: 0.5,
+      slippageFrontrunRange: 10,
+      pending: false,
+      possibleLiquiditySourceName: sourceNameMatch ? sourceNameMatch[0] : '',
     }
   }
 
   updateInputValue = (event, name) => {
-    //@ts-ignore
-    this.setState(() => ({
-      [name]: event.target.value,
-    }))
+    const { slippageMaxRange } = this.state
+    let value = event.target.value
+
+    if (name === 'userSlippage' && value === '') {
+      value = 0
+    }
+
+    if (value < slippageMaxRange) {
+      //@ts-ignore
+      this.setState(() => ({
+        [name]: event.target.value,
+      }))
+    }
   }
 
   startSwap = async () => {
-    const { closeDirectSwap, fromWallet, toWallet, coinDecimals } = this.props
-    const { routerAddress, userDeadline, userSlippage, spendedAmount, receivedAmount } = this.state
+    const { closeDirectSwap, fromWallet, toWallet, coinDecimals, spendedAmount, receivedAmount } =
+      this.props
+    const { routerAddress, userDeadline, userSlippage } = this.state
 
     const baseCurrency = fromWallet.standard ? fromWallet.baseCurrency : fromWallet.currency
     const SEC_PER_MINUTE = 60
 
-    const result = await actions.directSwap.swapCallback({
-      slippage: userSlippage,
-      routerAddress,
-      baseCurrency,
-      ownerAddress: fromWallet.address,
-      fromTokenStandard: fromWallet.standard || '',
-      fromTokenName: fromWallet.tokenKey || '',
-      fromToken: fromWallet.isToken
-        ? fromWallet.contractAddress
-        : constants.ADDRESSES.EVM_COIN_ADDRESS,
-      sellAmount: spendedAmount,
-      fromTokenDecimals: fromWallet.decimals || coinDecimals,
-      toToken: toWallet.isToken ? toWallet.contractAddress : constants.ADDRESSES.EVM_COIN_ADDRESS,
-      buyAmount: receivedAmount,
-      toTokenDecimals: toWallet.decimals || coinDecimals,
-      deadlinePeriod: userDeadline * SEC_PER_MINUTE,
-      // while there are no other reasons to use direct swaps without any API errors,
-      // but with errors we have successful swaps only in the case if this parameter in TRUE value
-      useFeeOnTransfer: true,
-    })
+    this.setState(() => ({
+      pending: true,
+    }))
 
-    if (result.transactionHash) {
-      const txInfoUrl = transactions.getTxRouter(
-        fromWallet.standard ? fromWallet.tokenKey : fromWallet.currency,
-        result.transactionHash
-      )
+    try {
+      const result = await actions.directSwap.swapCallback({
+        slippage: userSlippage,
+        routerAddress,
+        baseCurrency,
+        ownerAddress: fromWallet.address,
+        fromTokenStandard: fromWallet.standard || '',
+        fromTokenName: fromWallet.tokenKey || '',
+        fromToken: fromWallet.isToken
+          ? fromWallet.contractAddress
+          : constants.ADDRESSES.EVM_COIN_ADDRESS,
+        sellAmount: spendedAmount,
+        fromTokenDecimals: fromWallet.decimals || coinDecimals,
+        toToken: toWallet.isToken ? toWallet.contractAddress : constants.ADDRESSES.EVM_COIN_ADDRESS,
+        buyAmount: receivedAmount,
+        toTokenDecimals: toWallet.decimals || coinDecimals,
+        deadlinePeriod: userDeadline * SEC_PER_MINUTE,
+        // while there are no other reasons to use direct swaps without any API errors,
+        // but with errors we have successful swaps only in the case if this parameter in TRUE value
+        useFeeOnTransfer: true,
+      })
 
-      routing.redirectTo(txInfoUrl)
-      closeDirectSwap()
+      this.setState(() => ({
+        pending: false,
+      }))
+
+      if (result?.transactionHash) {
+        const txInfoUrl = transactions.getTxRouter(
+          fromWallet.standard ? fromWallet.tokenKey : fromWallet.currency,
+          result.transactionHash
+        )
+
+        routing.redirectTo(txInfoUrl)
+        closeDirectSwap()
+      }
+    } catch {
+      this.setState(() => ({
+        pending: false,
+      }))
     }
   }
 
   render() {
-    const { closeDirectSwap } = this.props
-    const { routerAddress } = this.state
+    const { closeDirectSwap, spendedAmount, receivedAmount, fromWallet, toWallet } = this.props
+    const {
+      routerAddress,
+      userSlippage,
+      slippageMaxRange,
+      slippageFailRange,
+      slippageFrontrunRange,
+      possibleLiquiditySourceName,
+      pending,
+    } = this.state
 
-    console.log('%c direct render', 'color:orange;font-size:20px')
-    console.log('this.props: ', this.props)
-    console.log('this.state: ', this.state)
+    const linked = Link.all(this, 'userDeadline', 'userSlippage')
 
-    const linked = Link.all(this, 'spendedAmount', 'receivedAmount', 'userDeadline', 'userSlippage')
+    const MAX_PERCENT = 100
+    const slippageRange = new BigNumber(receivedAmount)
+      .div(MAX_PERCENT)
+      .times(userSlippage)
+      .toNumber()
+
+    const guaranteedPrice = new BigNumber(receivedAmount).minus(slippageRange).toNumber()
+
+    const txMayFail = userSlippage < slippageFailRange
+    const txMayBeFrontrun = userSlippage > slippageFrontrunRange && userSlippage < slippageMaxRange
+    const invalidSlippage = userSlippage >= slippageMaxRange
 
     return (
       <section>
@@ -121,19 +168,35 @@ class DirectSwap extends Component<ComponentProps, ComponentState> {
         </div>
 
         <div styleName={`content ${routerAddress ? '' : 'disabled'}`}>
-          <InputRow
-            onKeyUp={(event) => this.updateInputValue(event, 'spendedAmount')}
-            onKeyDown={inputReplaceCommaWithDot}
-            valueLink={linked.spendedAmount}
-            labelMessage={<FormattedMessage id="MyOrdersYouSend" defaultMessage="You send" />}
-          />
+          <div styleName="lockedInfo">
+            {possibleLiquiditySourceName && (
+              <span styleName="indicator">
+                <FormattedMessage id="source" defaultMessage="Source" />:{' '}
+                <span>{possibleLiquiditySourceName}</span>
+              </span>
+            )}
 
-          <InputRow
-            onKeyUp={(event) => this.updateInputValue(event, 'receivedAmount')}
-            onKeyDown={inputReplaceCommaWithDot}
-            valueLink={linked.receivedAmount}
-            labelMessage={<FormattedMessage id="partial255" defaultMessage="You get" />}
-          />
+            <span styleName="indicator">
+              <FormattedMessage id="MyOrdersYouSend" defaultMessage="You send" />:{' '}
+              <span>
+                {spendedAmount} {fromWallet.currency}
+              </span>
+            </span>
+
+            <span styleName="indicator">
+              <FormattedMessage id="partial255" defaultMessage="You get" />:{' '}
+              <span>
+                {receivedAmount} {toWallet.currency}
+              </span>
+            </span>
+
+            <span styleName="indicator">
+              <FormattedMessage id="guaranteedPrice" defaultMessage="Guaranteed price" />:{' '}
+              <span>
+                {guaranteedPrice} {toWallet.currency}
+              </span>
+            </span>
+          </div>
 
           <InputRow
             onKeyUp={(event) => this.updateInputValue(event, 'userDeadline')}
@@ -164,7 +227,35 @@ class DirectSwap extends Component<ComponentProps, ComponentState> {
             }
           />
 
-          <Button brand fullWidth onClick={this.startSwap}>
+          <div styleName="reasons">
+            {txMayFail ? (
+              <p styleName="neutral">
+                <FormattedMessage id="transactionMayFail" defaultMessage="Transaction may fail" />
+              </p>
+            ) : txMayBeFrontrun ? (
+              <p styleName="neutral">
+                <FormattedMessage
+                  id="transactionMayBeFrontrun"
+                  defaultMessage="Transaction may be frontrun"
+                />
+              </p>
+            ) : invalidSlippage ? (
+              <p styleName="wrong">
+                <FormattedMessage
+                  id="invalidSlippagePercent"
+                  defaultMessage="Invalid slippage percent"
+                />
+              </p>
+            ) : null}
+          </div>
+
+          <Button
+            brand
+            fullWidth
+            onClick={this.startSwap}
+            disabled={invalidSlippage || pending}
+            pending={pending}
+          >
             <FormattedMessage id="swap" defaultMessage="Swap" />
           </Button>
         </div>

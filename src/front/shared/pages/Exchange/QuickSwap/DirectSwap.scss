@@ -5,8 +5,12 @@
 }
 
 .content {
-  margin: 1.6rem 0;
-  padding: 1.4rem;
-  border-radius: 0.4rem;
-  border: 1px solid var(--color-border);
+  margin: 1.6rem 0 1rem;
+}
+
+.lockedInfo {
+  padding: 1rem;
+  margin-bottom: 2rem;
+  border-radius: 0.3rem;
+  background-color: var(--color-pale);
 }
