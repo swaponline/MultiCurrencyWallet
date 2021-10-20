@@ -59,10 +59,10 @@ function SwapInfo(props) {
           />
         </p>
       ) : blockReason === SwapBlockReason.Unknown ? (
-        <p styleName="neutral">
+        <p styleName="wrong">
           <FormattedMessage
             id="unknownSwapProblemHasOccurred"
-            defaultMessage="Unknown problem has occurred. Probably we can't exchange this pair"
+            defaultMessage="Unknown problem has occurred"
           />
         </p>
       ) : null}

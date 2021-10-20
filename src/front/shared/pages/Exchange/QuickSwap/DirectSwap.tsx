@@ -43,36 +43,31 @@ function DirectSwap(props) {
       const baseCurrency = fromWallet.standard ? fromWallet.baseCurrency : fromWallet.currency
       const SEC_PER_MINUTE = 60
 
-      // bsc testnet
-      const BNG = '0x04ad4Ce6015141F6f582A7451Cb7CD6866609298'
-      const LOUD = ''
-      const BUSD = ''
-
-      // bsc mainnet
-      const BNG_MAINNET = '0x6010e1a66934c4d053e8866acac720c4a093d956'
-      const LOUD_MAINNET = '0x3d0e22387ddfe75d1aea9d7108a4392922740b96'
-
-      const hash = await actions.directSwap.swapCallback({
+      const result = await actions.directSwap.swapCallback({
         slippage: userSlippage,
         routerAddress,
-        baseCurrency: 'BNB',
+        baseCurrency,
         ownerAddress: fromWallet.address,
-        fromTokenStandard: 'bep20', //fromWallet.standard || '',
-        fromTokenName: '', //fromWallet.tokenKey || '',
-        fromToken: constants.ADDRESSES.EVM_COIN_ADDRESS, //fromWallet.isToken ? fromWallet.contractAddress : EVM_COIN_ADDRESS,
-        sellAmount: 0, //spendedAmount,
-        fromTokenDecimals: 18,// fromWallet.decimals || coinDecimals,
-        toToken: LOUD, //toWallet.isToken ? toWallet.contractAddress : EVM_COIN_ADDRESS,
-        buyAmount: 0, //receivedAmount,
-        toTokenDecimals: 18, //toWallet.decimals || coinDecimals,
+        fromTokenStandard: fromWallet.standard || '',
+        fromTokenName: fromWallet.tokenKey || '',
+        fromToken: fromWallet.isToken
+          ? fromWallet.contractAddress
+          : constants.ADDRESSES.EVM_COIN_ADDRESS,
+        sellAmount: spendedAmount,
+        fromTokenDecimals: fromWallet.decimals || coinDecimals,
+        toToken: toWallet.isToken ? toWallet.contractAddress : constants.ADDRESSES.EVM_COIN_ADDRESS,
+        buyAmount: receivedAmount,
+        toTokenDecimals: toWallet.decimals || coinDecimals,
         deadlinePeriod: userDeadline * SEC_PER_MINUTE,
+        // while there are no other reasons to use direct swaps without any API errors,
+        // but with errors we have successful swaps only in the case if this parameter in TRUE value
+        useFeeOnTransfer: true,
       })
 
-
-      if (hash) {
+      if (result.transactionHash) {
         const txInfoUrl = transactions.getTxRouter(
           fromWallet.standard ? fromWallet.tokenKey : fromWallet.currency,
-          hash
+          result.transactionHash
         )
 
         routing.redirectTo(txInfoUrl)

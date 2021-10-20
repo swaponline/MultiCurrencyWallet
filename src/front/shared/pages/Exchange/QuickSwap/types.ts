@@ -68,6 +68,7 @@ export type ComponentState = {
   mnemonicSaved: boolean
   blockReason: SwapBlockReason | undefined
   coinDecimals: 18
+  liquidityErrorMessage: string
 }
 
 export enum Direction {

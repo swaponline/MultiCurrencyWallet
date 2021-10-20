@@ -2,7 +2,6 @@ import BigNumber from 'bignumber.js'
 import { abi as RouterV2ABI } from '@uniswap/v2-periphery/build/IUniswapV2Router02.json'
 import constants from 'common/helpers/constants'
 import utils from 'common/utils'
-import externalConfig from 'helpers/externalConfig'
 import actions from 'redux/actions'
 
 enum SwapMethods {
@@ -109,7 +108,7 @@ const returnSwapDataByMethod = async (
 }
 
 const returnSwapMethod = (params) => {
-  const { fromToken, toToken } = params
+  const { fromToken, toToken, useFeeOnTransfer } = params
 
   if (
     fromToken.toLowerCase() === constants.ADDRESSES.EVM_COIN_ADDRESS &&
@@ -119,14 +118,17 @@ const returnSwapMethod = (params) => {
   }
 
   if (fromToken.toLowerCase() === constants.ADDRESSES.EVM_COIN_ADDRESS) {
-    return SwapMethods.swapExactETHForTokens
-    // return SwapMethods.swapExactETHForTokensSupportingFeeOnTransferTokens
+    return useFeeOnTransfer
+      ? SwapMethods.swapExactETHForTokensSupportingFeeOnTransferTokens
+      : SwapMethods.swapExactETHForTokens
   } else if (toToken.toLowerCase() === constants.ADDRESSES.EVM_COIN_ADDRESS) {
-    return SwapMethods.swapExactTokensForETH
-    // return SwapMethods.swapExactTokensForETHSupportingFeeOnTransferTokens
+    return useFeeOnTransfer
+      ? SwapMethods.swapExactTokensForETHSupportingFeeOnTransferTokens
+      : SwapMethods.swapExactTokensForETH
   } else {
-    return SwapMethods.swapExactTokensForTokens
-    // return SwapMethods.swapExactTokensForTokensSupportingFeeOnTransferTokens
+    return useFeeOnTransfer
+      ? SwapMethods.swapExactTokensForTokensSupportingFeeOnTransferTokens
+      : SwapMethods.swapExactTokensForTokens
   }
 }
 
@@ -146,10 +148,10 @@ const checkAndApproveToken = async (params) => {
       const result = await actions[standard].approve({
         name: tokenName,
         to: spender,
-        amount: new BigNumber(sellAmount).multipliedBy(1000).toNumber(),
+        amount: sellAmount,
       })
 
-      return typeof result === 'string' ? res(result) : rej(result)
+      return result instanceof Error ? rej(result) : res(result)
     }
 
     res(true)
@@ -172,6 +174,7 @@ const swapCallback = async (params) => {
     fromTokenStandard,
     fromTokenName,
     waitReceipt = false,
+    useFeeOnTransfer,
   } = params
 
   if (!deadlinePeriod) {
@@ -180,7 +183,7 @@ const swapCallback = async (params) => {
 
   const provider = actions[baseCurrency.toLowerCase()].getWeb3()
   const router = getRouterContract({ routerAddress, provider })
-  const method = returnSwapMethod({ fromToken, toToken })
+  const method = returnSwapMethod({ fromToken, toToken, useFeeOnTransfer })
   const swapData = await returnSwapDataByMethod({
     chainId: actions[baseCurrency.toLowerCase()].chainId,
     slippage,
@@ -203,12 +206,6 @@ const swapCallback = async (params) => {
   } else if (!swapData.args.length) {
     throw new Error('No arguments')
   }
-
-  console.log('%c swap callback', 'color:orange;font-size:20px')
-  console.log('params: ', params)
-  console.log('method: ', method)
-  console.log('swapData: ', swapData)
-  console.log('router: ', router)
 
   try {
     if (fromTokenStandard && fromToken.toLowerCase() !== constants.ADDRESSES.EVM_COIN_ADDRESS) {

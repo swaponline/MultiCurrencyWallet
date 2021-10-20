@@ -126,6 +126,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       mnemonicSaved: mnemonic === '-',
       blockReason: undefined,
       coinDecimals: 18,
+      liquidityErrorMessage: '',
     }
   }
 
@@ -424,9 +425,23 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   }
 
   tryToSkipValidation = (error): boolean => {
-    const { code, reason } = JSON.parse(error.message)
+    const { code, reason, values } = JSON.parse(error.message)
+    const INVALID_TX_CODE = 105
+    const transactionError = code === INVALID_TX_CODE && reason === 'Error'
 
-    return code === 105 && reason === 'Error'
+    if (transactionError) {
+      const liquidityError = values.message.match(/^[0-9a-zA-Z]+: K$/m)
+
+      if (liquidityError) {
+        this.setState(() => ({
+          liquidityErrorMessage: liquidityError[0],
+        }))
+      }
+
+      return true
+    }
+
+    return false
   }
 
   calculateDataFromSwap = async (params) => {
@@ -840,12 +855,6 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     return !swapData || isSwapPending || !!error
   }
 
-  unlockDangerousSwap = () => {
-    this.setState(() => ({
-      error: null,
-    }))
-  }
-
   switchToDirectSwap = () => {
     this.setState(() => ({
       isDirectSwap: true,
@@ -894,6 +903,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       mnemonicSaved,
       blockReason,
       error,
+      liquidityErrorMessage,
       slippage,
       coinDecimals,
     } = this.state
@@ -918,7 +928,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     const isWalletCreated = localStorage.getItem(constants.localStorage.isWalletCreate)
     const saveSecretPhrase = !mnemonicSaved && !metamask.isConnected()
 
-    const isDangerousSwap = blockReason === SwapBlockReason.Unknown && swapData
+    const canMakeDirectSwap = blockReason === SwapBlockReason.Unknown && swapData && liquidityErrorMessage
 
     return (
       <>
@@ -934,7 +944,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
         )}
 
         <section styleName="quickSwap">
-          {true ? ( // isDirectSwap && swapData
+          {isDirectSwap && swapData ? (
             <DirectSwap
               spendedAmount={spendedAmount}
               receivedAmount={receivedAmount}
@@ -943,6 +953,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
               toWallet={toWallet}
               slippage={slippage}
               coinDecimals={coinDecimals}
+              liquidityErrorMessage={liquidityErrorMessage}
             />
           ) : (
             <>  
@@ -1050,12 +1061,6 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
               />
 
               <div styleName="buttonWrapper">
-                {isDangerousSwap && (
-                  <Button disabled={!error} onClick={this.unlockDangerousSwap} dangerous>
-                    <FormattedMessage id="tryAnyway" defaultMessage="Try anyway" />
-                  </Button>
-                )}
-
                 {needApprove ? (
                   <Button
                     pending={isDataPending}
@@ -1080,7 +1085,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
                   </Button>
                 )}
 
-                {isDangerousSwap && (
+                {canMakeDirectSwap && (
                   <Button onClick={this.switchToDirectSwap} brand>
                     <FormattedMessage id="tryDirectSwap" defaultMessage="Try direct swap" />
                   </Button>
