@@ -122,6 +122,9 @@ class DirectSwap extends Component<ComponentProps, ComponentState> {
         pending: false,
       }))
 
+      console.log('%c swap', 'color:orange;font-size: 20px')
+      console.log('result: ', result)
+
       if (result instanceof Error) {
         // the error INSUFFICIENT_OUTPUT_AMOUNT means we can increase slippage to get less output
         // token's amount, but our transaction will probably be successful with this.
@@ -218,6 +221,7 @@ class DirectSwap extends Component<ComponentProps, ComponentState> {
           </div>
 
           <InputRow
+            margin
             onKeyUp={(event) => this.updateInputValue(event, 'userDeadline')}
             onKeyDown={inputReplaceCommaWithDot}
             valueLink={linked.userDeadline}
@@ -234,7 +238,10 @@ class DirectSwap extends Component<ComponentProps, ComponentState> {
             onKeyDown={inputReplaceCommaWithDot}
             valueLink={linked.userSlippage}
             labelMessage={
-              <FormattedMessage id="slippageTolerance" defaultMessage="Slippage tolerance (%)" />
+              <>
+                <FormattedMessage id="slippageTolerance" defaultMessage="Slippage tolerance" />
+                {' (%)'}
+              </>
             }
             labelTooltip={
               <Tooltip id="slippageTooltip">

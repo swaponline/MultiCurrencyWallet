@@ -5658,7 +5658,7 @@
   },
   {
     "id": "slippageTolerance",
-    "message": "Проскальзывание (%)",
+    "message": "Проскальзывание",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/AdvancedSettings.tsx",
       "src/front/shared/pages/Exchange/QuickSwap/DirectSwap.tsx"
@@ -5839,7 +5839,7 @@
   },
   {
     "id": "insufficientSlippage",
-    "message": "Недостаточное проскальзывание. Попробуйте увеличить его в дополнительных настройках",
+    "message": "Недостаточное проскальзывание. Попробуйте увеличить его",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/DirectSwap.tsx",
       "src/front/shared/pages/Exchange/QuickSwap/NoSwapsReasons.tsx"

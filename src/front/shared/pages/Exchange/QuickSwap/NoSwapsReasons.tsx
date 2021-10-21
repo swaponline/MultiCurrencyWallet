@@ -37,7 +37,7 @@ function SwapInfo(props) {
           />
         </p>
       ) : needApprove ? (
-        <p styleName="neutral">
+        <p styleName="warning">
           <FormattedMessage
             id="approveTokenFirst"
             defaultMessage="Please approve {token} first"
@@ -45,7 +45,7 @@ function SwapInfo(props) {
           />
         </p>
       ) : blockReason === SwapBlockReason.InsufficientSlippage ? (
-        <p styleName="neutral">
+        <p styleName="warning">
           <FormattedMessage
             id="insufficientSlippage"
             defaultMessage="Insufficient slippage. Try to increase it"

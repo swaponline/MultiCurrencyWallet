@@ -5665,7 +5665,7 @@
   },
   {
     "id": "slippageTolerance",
-    "message": "Tolerancja poślizgu (%)",
+    "message": "Tolerancja poślizgu",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/AdvancedSettings.tsx",
       "src/front/shared/pages/Exchange/QuickSwap/DirectSwap.tsx"
@@ -5846,7 +5846,7 @@
   },
   {
     "id": "insufficientSlippage",
-    "message": "Niewystarczający poślizg. Spróbuj go zwiększyć w ustawieniach zaawansowanych",
+    "message": "Niewystarczający poślizg. Spróbuj go zwiększyć",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/DirectSwap.tsx",
       "src/front/shared/pages/Exchange/QuickSwap/NoSwapsReasons.tsx"

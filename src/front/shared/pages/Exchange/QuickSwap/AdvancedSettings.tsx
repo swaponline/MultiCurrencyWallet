@@ -7,13 +7,7 @@ import Tooltip from 'components/ui/Tooltip/Tooltip'
 import InputRow from './InputRow'
 
 function AdvancedSettings(props) {
-  const {
-    isAdvancedMode,
-    switchAdvancedMode,
-    stateReference,
-    checkSwapData,
-    resetSwapData,
-  } = props
+  const { isAdvancedMode, switchAdvancedMode, stateReference, checkSwapData, resetSwapData } = props
 
   const keyUpHandler = () => {
     setTimeout(checkSwapData, 300)
@@ -36,12 +30,16 @@ function AdvancedSettings(props) {
       {isAdvancedMode && (
         <form styleName="settings" action="">
           <InputRow
+            margin
             onKeyUp={keyUpHandler}
             onKeyDown={inputReplaceCommaWithDot}
             valueLink={stateReference.slippage}
             styleName="advancedInput"
             labelMessage={
-              <FormattedMessage id="slippageTolerance" defaultMessage="Slippage tolerance (%)" />
+              <>
+                <FormattedMessage id="slippageTolerance" defaultMessage="Slippage tolerance" />
+                {' (%)'}
+              </>
             }
             labelTooltip={
               <Tooltip id="slippageTooltip">
@@ -54,6 +52,7 @@ function AdvancedSettings(props) {
           />
 
           <InputRow
+            margin
             onKeyUp={keyUpHandler}
             onKeyDown={keyDownHandler}
             valueLink={stateReference.gasPrice}

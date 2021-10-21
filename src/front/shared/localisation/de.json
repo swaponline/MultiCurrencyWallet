@@ -5668,7 +5668,7 @@
   },
   {
     "id": "slippageTolerance",
-    "message": "Slippage Toleranz (%)",
+    "message": "Slippage Toleranz",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/AdvancedSettings.tsx",
       "src/front/shared/pages/Exchange/QuickSwap/DirectSwap.tsx"
@@ -5857,7 +5857,7 @@
   },
   {
     "id": "insufficientSlippage",
-    "message": "Unzureichender Schlupf. Versuchen Sie es in den erweiterten Einstellungen zu erhöhen",
+    "message": "Unzureichender Schlupf. Versuche es zu erhöhen",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/DirectSwap.tsx",
       "src/front/shared/pages/Exchange/QuickSwap/NoSwapsReasons.tsx"

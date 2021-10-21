@@ -168,6 +168,14 @@
   }
 }
 
+.slippageIndicator {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  color: var(--color-indicating);
+}
+
 .advancedSettings {
   display: flex;
   flex-direction: column;

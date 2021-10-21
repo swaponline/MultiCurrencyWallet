@@ -431,8 +431,9 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     const { code, reason, values } = JSON.parse(error.message)
     const INVALID_TX_CODE = 105
     const transactionError = code === INVALID_TX_CODE && reason === 'Error'
+    const insufficientSlippage = reason === 'IncompleteTransformERC20Error'
 
-    if (transactionError) {
+    if (transactionError && !insufficientSlippage) {
       const liquidityError = values.message.match(/^[0-9a-zA-Z]+: K$/m)
 
       if (liquidityError) {
@@ -523,6 +524,8 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
         // it's a special error. Will be a new request
         swapRequest = this.createSwapRequest(true)
       } else {
+        this.reportError(swap)
+
         repeatRequest = false
       }
     }
@@ -905,7 +908,6 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       showOrders,
       mnemonicSaved,
       blockReason,
-      error,
       liquidityErrorMessage,
       slippage,
       coinDecimals,
@@ -980,6 +982,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
                   isPending={isPending}
                   insufficientBalance={insufficientBalance}
                   resetSwapData={this.resetSwapData}
+                  slippage={slippage}
                 />
               </div>
 

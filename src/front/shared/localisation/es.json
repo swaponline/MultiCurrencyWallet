@@ -5665,7 +5665,7 @@
   },
   {
     "id": "slippageTolerance",
-    "message": "Tolerancia de deslizamiento (%)",
+    "message": "Tolerancia de deslizamiento",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/AdvancedSettings.tsx",
       "src/front/shared/pages/Exchange/QuickSwap/DirectSwap.tsx"
@@ -5846,7 +5846,7 @@
   },
   {
     "id": "insufficientSlippage",
-    "message": "Deslizamiento insuficiente. Trate de aumentarlo en la configuración avanzada",
+    "message": "Deslizamiento insuficiente. Trata de aumentarlo",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/DirectSwap.tsx",
       "src/front/shared/pages/Exchange/QuickSwap/NoSwapsReasons.tsx"

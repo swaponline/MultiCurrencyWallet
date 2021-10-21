@@ -13,6 +13,7 @@ function InputRow(props) {
     onKeyDown = doNothing,
     valueLink,
     styleName = '',
+    margin = false,
   } = props
 
   return (
@@ -27,7 +28,7 @@ function InputRow(props) {
         onKeyDown={onKeyDown}
         onKeyUp={onKeyUp}
         valueLink={valueLink}
-        withMargin
+        withMargin={margin}
       />
     </div>
   )
