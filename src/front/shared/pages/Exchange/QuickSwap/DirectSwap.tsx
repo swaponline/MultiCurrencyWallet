@@ -122,9 +122,6 @@ class DirectSwap extends Component<ComponentProps, ComponentState> {
         pending: false,
       }))
 
-      console.log('%c swap', 'color:orange;font-size: 20px')
-      console.log('result: ', result)
-
       if (result instanceof Error) {
         // the error INSUFFICIENT_OUTPUT_AMOUNT means we can increase slippage to get less output
         // token's amount, but our transaction will probably be successful with this.
