@@ -150,7 +150,7 @@ function ExchangeForm(props) {
       timeoutId = setTimeout(async () => {
         await checkSwapData()
         setFlagForRequest(false)
-      }, 400)
+      }, 600)
     }
 
     return () => {

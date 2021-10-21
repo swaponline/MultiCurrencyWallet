@@ -234,6 +234,7 @@ class DirectSwap extends Component<ComponentProps, ComponentState> {
           />
 
           <InputRow
+            margin
             onKeyUp={(event) => this.updateInputValue(event, 'userSlippage')}
             onKeyDown={inputReplaceCommaWithDot}
             valueLink={linked.userSlippage}
