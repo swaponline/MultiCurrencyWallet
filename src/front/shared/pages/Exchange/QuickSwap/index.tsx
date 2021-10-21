@@ -6,6 +6,7 @@ import { isMobile } from 'react-device-detect'
 import CSSModules from 'react-css-modules'
 import styles from './index.scss'
 import utils from 'common/utils'
+import ADDRESSES from 'common/helpers/constants/ADDRESSES'
 import { AddressFormat, AddressType } from 'domain/address'
 import {
   feedback,
@@ -32,7 +33,8 @@ import AdvancedSettings from './AdvancedSettings'
 import SwapInfo from './SwapInfo'
 import NoSwapsReasons from './NoSwapsReasons'
 import LimitOrders from 'components/LimitOrders'
- 
+import DirectSwap from './DirectSwap' 
+
 class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   constructor(props) {
     super(props)
@@ -93,10 +95,12 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
 
     this.state = {
       error: null,
+      liquidityErrorMessage: '',
       isPending: false,
       isDataPending: false,
       isSwapPending: false,
       isAdvancedMode: false,
+      isDirectSwap: false,
       needApprove: false,
       externalExchangeReference: null,
       externalWindowTimer: null,
@@ -302,9 +306,9 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   returnReceivedList = (currencies, spendedCurrency) => {
     const result = currencies.filter((item) => {
       // except current value from the the spended list
-      const notCurrentSpendedAsset = item.value !== spendedCurrency.value
+      const notCurrentSpendedAsset = item.value !== spendedCurrency?.value
       const spendedAsset = item.blockchain || item.value.toUpperCase()
-      const receivedAsset = spendedCurrency.blockchain || spendedCurrency.value.toUpperCase()
+      const receivedAsset = spendedCurrency?.blockchain || spendedCurrency?.value?.toUpperCase()
 
       return spendedAsset === receivedAsset && notCurrentSpendedAsset
     })
@@ -349,6 +353,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   }
 
   reportError = (error) => {
+    const { liquidityErrorMessage } = this.state
     const possibleNoLiquidity = JSON.stringify(error)?.match(/INSUFFICIENT_ASSET_LIQUIDITY/)
     const insufficientSlippage = JSON.stringify(error)?.match(/IncompleteTransformERC20Error/)
     const notEnoughBalance = error.message?.match(/(N|n)ot enough .* balance/)
@@ -359,9 +364,11 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       this.setState(() => ({ blockReason: SwapBlockReason.InsufficientSlippage }))
     } else if (notEnoughBalance) {
       this.setState(() => ({ blockReason: SwapBlockReason.NoBalance }))
+    } else if (liquidityErrorMessage) {
+      this.setState(() => ({ blockReason: SwapBlockReason.Liquidity }))
     } else {
       this.setState(() => ({ blockReason: SwapBlockReason.Unknown }))
-
+      
       console.group('%c Swap', 'color: red;')
       console.error(error)
       console.groupEnd()
@@ -376,12 +383,8 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   createSwapRequest = (skipValidation = false) => {
     const { slippage, spendedAmount, fromWallet, toWallet, coinDecimals } = this.state
 
-    const sellToken = fromWallet.isToken
-      ? fromWallet.contractAddress
-      : '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
-    const buyToken = toWallet.isToken
-      ? toWallet.contractAddress
-      : '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
+    const sellToken = fromWallet.isToken ? fromWallet.contractAddress : ADDRESSES.EVM_COIN_ADDRESS
+    const buyToken = toWallet.isToken ? toWallet.contractAddress : ADDRESSES.EVM_COIN_ADDRESS
 
     const sellAmount = utils.amount.formatWithDecimals(spendedAmount, fromWallet.decimals || coinDecimals)
 
@@ -425,9 +428,24 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   }
 
   tryToSkipValidation = (error): boolean => {
-    const { code, reason } = JSON.parse(error.message)
+    const { code, reason, values } = JSON.parse(error.message)
+    const INVALID_TX_CODE = 105
+    const transactionError = code === INVALID_TX_CODE && reason === 'Error'
+    const insufficientSlippage = reason === 'IncompleteTransformERC20Error'
 
-    return code === 105 && reason === 'Error'
+    if (transactionError && !insufficientSlippage) {
+      const liquidityError = values.message.match(/^[0-9a-zA-Z]+: K$/m)
+
+      if (liquidityError) {
+        this.setState(() => ({
+          liquidityErrorMessage: liquidityError[0],
+        }))
+      }
+
+      return true
+    }
+
+    return false
   }
 
   calculateDataFromSwap = async (params) => {
@@ -506,6 +524,8 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
         // it's a special error. Will be a new request
         swapRequest = this.createSwapRequest(true)
       } else {
+        this.reportError(swap)
+
         repeatRequest = false
       }
     }
@@ -585,7 +605,6 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
         owner: address,
         standard,
         decimals,
-        chainId: network.chainId,
         spender: externalConfig.swapContract.zerox,
       })
 
@@ -842,9 +861,15 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     return !swapData || isSwapPending || !!error
   }
 
-  unlockDangerousSwap = () => {
+  switchToDirectSwap = () => {
     this.setState(() => ({
-      error: null,
+      isDirectSwap: true,
+    }))
+  }
+
+  closeDirectSwap = () => {
+    this.setState(() => ({
+      isDirectSwap: false,
     }))
   }
 
@@ -873,15 +898,19 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       fromWallet,
       toWallet,
       receivedCurrency,
+      receivedAmount,
       wrongNetwork,
       network,
       swapData,
       swapFee,
       isAdvancedMode,
+      isDirectSwap,
       showOrders,
       mnemonicSaved,
       blockReason,
-      error,
+      liquidityErrorMessage,
+      slippage,
+      coinDecimals,
     } = this.state
 
     const linked = Link.all(
@@ -904,7 +933,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     const isWalletCreated = localStorage.getItem(constants.localStorage.isWalletCreate)
     const saveSecretPhrase = !mnemonicSaved && !metamask.isConnected()
 
-    const isDangerousSwap = blockReason === SwapBlockReason.Unknown && swapData
+    const canMakeDirectSwap = blockReason === SwapBlockReason.Liquidity && swapData && liquidityErrorMessage
 
     return (
       <>
@@ -920,140 +949,155 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
         )}
 
         <section styleName="quickSwap">
-          <div styleName={`${wrongNetwork || receivedCurrency.notExist ? 'disabled' : ''}`}>
-            <ExchangeForm
-              stateReference={linked}
-              selectCurrency={this.selectCurrency}
-              flipCurrency={this.flipCurrency}
-              openExternalExchange={this.openExternalExchange}
-              checkSwapData={this.checkSwapData}
-              currencies={currencies}
-              receivedList={receivedList}
+          {isDirectSwap && swapData ? (
+            <DirectSwap
               spendedAmount={spendedAmount}
-              spendedCurrency={spendedCurrency}
-              receivedCurrency={receivedCurrency}
-              setSpendedAmount={this.setSpendedAmount}
-              fiat={fiat}
+              receivedAmount={receivedAmount}
+              closeDirectSwap={this.closeDirectSwap}
               fromWallet={fromWallet}
               toWallet={toWallet}
-              updateWallets={this.updateWallets}
-              isPending={isPending}
-              insufficientBalance={insufficientBalance}
-              resetSwapData={this.resetSwapData}
+              slippage={slippage}
+              coinDecimals={coinDecimals}
+              liquidityErrorMessage={liquidityErrorMessage}
             />
-          </div>
+          ) : (
+            <>  
+              <div styleName={`${wrongNetwork || receivedCurrency.notExist ? 'disabled' : ''}`}>
+                <ExchangeForm
+                  stateReference={linked}
+                  selectCurrency={this.selectCurrency}
+                  flipCurrency={this.flipCurrency}
+                  openExternalExchange={this.openExternalExchange}
+                  checkSwapData={this.checkSwapData}
+                  currencies={currencies}
+                  receivedList={receivedList}
+                  spendedAmount={spendedAmount}
+                  spendedCurrency={spendedCurrency}
+                  receivedCurrency={receivedCurrency}
+                  setSpendedAmount={this.setSpendedAmount}
+                  fiat={fiat}
+                  fromWallet={fromWallet}
+                  toWallet={toWallet}
+                  updateWallets={this.updateWallets}
+                  isPending={isPending}
+                  insufficientBalance={insufficientBalance}
+                  resetSwapData={this.resetSwapData}
+                  slippage={slippage}
+                />
+              </div>
 
-          <div styleName="walletAddress">
-            {!metamask.isConnected() && (!isWalletCreated || !mnemonicSaved) && (
-              <Button
-                id="connectWalletBtn"
-                brand
-                fullWidth
-                styleName="connectWalletBtn"
-                onClick={this.connectWallet}
-              >
-                <FormattedMessage
-                  id="Exchange_ConnectAddressOption"
-                  defaultMessage="Connect Wallet"
-                />
-              </Button>
-            )}
-            {!isWalletCreated ? (
-              <Button id="createWalletBtn" center onClick={this.createWallet}>
-                <FormattedMessage id="menu.CreateWallet" defaultMessage="Create wallet" />
-              </Button>
-            ) : saveSecretPhrase ? (
-              <Button id="saveSecretPhraseBtn" center onClick={this.saveMnemonic}>
-                <FormattedMessage
-                  id="BTCMS_SaveMnemonicButton"
-                  defaultMessage="Save secret phrase"
-                />
-              </Button>
-            ) : (
-              <>
-                <span>
-                  <FormattedMessage
-                    id="addressOfYourWallet"
-                    defaultMessage="Address of your wallet:"
-                  />
-                </span>
-                <Copy text={fromWallet.address}>
-                  <span styleName="address">
-                    <Address
-                      address={fromWallet.address}
-                      format={isMobile ? AddressFormat.Short : AddressFormat.Full}
-                      type={metamask.isConnected() ? AddressType.Metamask : AddressType.Internal}
+              <div styleName="walletAddress">
+                {!metamask.isConnected() && (!isWalletCreated || !mnemonicSaved) && (
+                  <Button
+                    id="connectWalletBtn"
+                    brand
+                    fullWidth
+                    styleName="connectWalletBtn"
+                    onClick={this.connectWallet}
+                  >
+                    <FormattedMessage
+                      id="Exchange_ConnectAddressOption"
+                      defaultMessage="Connect Wallet"
                     />
-                  </span>
-                </Copy>
-              </>
-            )}
-          </div>
+                  </Button>
+                )}
+                {!isWalletCreated ? (
+                  <Button id="createWalletBtn" center onClick={this.createWallet}>
+                    <FormattedMessage id="menu.CreateWallet" defaultMessage="Create wallet" />
+                  </Button>
+                ) : saveSecretPhrase ? (
+                  <Button id="saveSecretPhraseBtn" center onClick={this.saveMnemonic}>
+                    <FormattedMessage
+                      id="BTCMS_SaveMnemonicButton"
+                      defaultMessage="Save secret phrase"
+                    />
+                  </Button>
+                ) : (
+                  <>
+                    <span>
+                      <FormattedMessage
+                        id="addressOfYourWallet"
+                        defaultMessage="Address of your wallet:"
+                      />
+                    </span>
+                    <Copy text={fromWallet.address}>
+                      <span styleName="address">
+                        <Address
+                          address={fromWallet.address}
+                          format={isMobile ? AddressFormat.Short : AddressFormat.Full}
+                          type={metamask.isConnected() ? AddressType.Metamask : AddressType.Internal}
+                        />
+                      </span>
+                    </Copy>
+                  </>
+                )}
+              </div>
 
-          <div styleName={`${wrongNetwork || receivedCurrency.notExist ? 'disabled' : ''}`}>
-            <AdvancedSettings
-              isAdvancedMode={isAdvancedMode}
-              switchAdvancedMode={this.switchAdvancedMode}
-              stateReference={linked}
-              swapData={swapData}
-              checkSwapData={this.checkSwapData}
-              resetSwapData={this.resetSwapData}
-            />
-          </div>
-
-          <SwapInfo
-            network={network}
-            swapData={swapData}
-            swapFee={swapFee}
-            spendedAmount={spendedAmount}
-            baseChainWallet={baseChainWallet}
-            fromWallet={fromWallet}
-            toWallet={toWallet}
-            fiat={fiat}
-            isDataPending={isDataPending}
-          />
-
-          <NoSwapsReasons
-            wrongNetwork={wrongNetwork}
-            blockReason={blockReason}
-            fromWallet={fromWallet}
-            spendedAmount={spendedAmount}
-            swapFee={swapFee}
-            needApprove={needApprove}
-            spendedCurrency={spendedCurrency}
-          />
-
-          <div styleName="buttonWrapper">
-            {isDangerousSwap && (
-              <Button disabled={!error} onClick={this.unlockDangerousSwap} dangerous>
-                <FormattedMessage id="tryAnyway" defaultMessage="Try anyway" />
-              </Button>
-            )}
-
-            {needApprove ? (
-              <Button
-                pending={isDataPending}
-                disabled={swapDataIsDisabled}
-                onClick={this.approve}
-                brand
-              >
-                <FormattedMessage
-                  id="FormattedMessageIdApprove"
-                  defaultMessage="Approve {token}"
-                  values={{ token: spendedCurrency.name }}
+              <div styleName={`${wrongNetwork || receivedCurrency.notExist ? 'disabled' : ''}`}>
+                <AdvancedSettings
+                  isAdvancedMode={isAdvancedMode}
+                  switchAdvancedMode={this.switchAdvancedMode}
+                  stateReference={linked}
+                  checkSwapData={this.checkSwapData}
+                  resetSwapData={this.resetSwapData}
                 />
-              </Button>
-            ) : (
-              <Button
-                pending={isSwapPending}
-                disabled={swapBtnIsDisabled}
-                onClick={this.swap}
-                brand
-              >
-                <FormattedMessage id="swap" defaultMessage="Swap" />
-              </Button>
-            )}
-          </div>
+              </div>
+
+              <SwapInfo
+                network={network}
+                swapData={swapData}
+                swapFee={swapFee}
+                spendedAmount={spendedAmount}
+                baseChainWallet={baseChainWallet}
+                fromWallet={fromWallet}
+                toWallet={toWallet}
+                fiat={fiat}
+                isDataPending={isDataPending}
+              />
+
+              <NoSwapsReasons
+                wrongNetwork={wrongNetwork}
+                blockReason={blockReason}
+                fromWallet={fromWallet}
+                spendedAmount={spendedAmount}
+                swapFee={swapFee}
+                needApprove={needApprove}
+                spendedCurrency={spendedCurrency}
+              />
+
+              <div styleName="buttonWrapper">
+                {needApprove ? (
+                  <Button
+                    pending={isDataPending}
+                    disabled={swapDataIsDisabled}
+                    onClick={this.approve}
+                    brand
+                  >
+                    <FormattedMessage
+                      id="FormattedMessageIdApprove"
+                      defaultMessage="Approve {token}"
+                      values={{ token: spendedCurrency.name }}
+                    />
+                  </Button>
+                ) : (
+                  <Button
+                    pending={isSwapPending}
+                    disabled={swapBtnIsDisabled}
+                    onClick={this.swap}
+                    brand
+                  >
+                    <FormattedMessage id="swap" defaultMessage="Swap" />
+                  </Button>
+                )}
+
+                {canMakeDirectSwap && (
+                  <Button onClick={this.switchToDirectSwap} brand>
+                    <FormattedMessage id="directSwap" defaultMessage="Direct swap" />
+                  </Button>
+                )}
+              </div>
+            </>
+          )}
 
           {!wrongNetwork && (mnemonicSaved || metamask.isConnected()) && (
             <Button onClick={this.createLimitOrder} link small>

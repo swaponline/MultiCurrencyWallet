@@ -54,11 +54,12 @@ export type ComponentState = {
   receivedCurrency: CurrencyMenuItem
   receivedAmount: string
   toWallet: IUniversalObj
-  slippage: number | undefined
+  slippage: number
   slippageMaxRange: number
   wrongNetwork: boolean
   network: Network
   isAdvancedMode: boolean
+  isDirectSwap: boolean
   swapData: SwapData | undefined
   swapFee: string
   gasPrice: string
@@ -67,6 +68,7 @@ export type ComponentState = {
   mnemonicSaved: boolean
   blockReason: SwapBlockReason | undefined
   coinDecimals: 18
+  liquidityErrorMessage: string
 }
 
 export enum Direction {
@@ -78,5 +80,6 @@ export enum SwapBlockReason {
   InsufficientSlippage,
   NoLiquidity,
   NoBalance,
+  Liquidity,
   Unknown,
 }

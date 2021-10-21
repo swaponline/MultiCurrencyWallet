@@ -816,7 +816,7 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
         <Fragment>
           <FormattedMessage
             id="AlertOrderNonEnoughtBalance"
-            defaultMessage="Please top up your balance before you start the swap."
+            defaultMessage="Please top up your balance before you start the swap"
           />
           <br />
 

@@ -98,7 +98,7 @@ const getWeb3 = () => (isConnected()) ? web3connect.getWeb3() : false
 const web3connectInit = async () => {
   await web3connect.onInit(async () => {
     if (web3connect.hasCachedProvider()) {
-      let _web3: IEtheriumProvider | false = false
+      let _web3: EthereumProvider | false = false
 
       try {
         _web3 = web3connect.getWeb3()
