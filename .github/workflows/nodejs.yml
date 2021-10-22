@@ -21,10 +21,9 @@ jobs:
     - name: Decrypt testWallets.json.gpg file
       shell: bash
       env:
-        SECRET_PASSPHRASE_FOR_TESTS: ${{ secrets.SECRET_PASSPHRASE_FOR_TESTS }}
-      run: |
-        gpg --quiet --batch --yes --decrypt --passphrase="$SECRET_PASSPHRASE_FOR_TESTS" \
-        --output ./tests/testWallets.json ./tests/testWallets.json.gpg
+        SECRET_PASSPHRASE: ${{ secrets.SECRET_PASSPHRASE_FOR_TESTS }}
+      run: >
+        ./.github/scripts/decrypt_secret.sh
     - name: npm install
       uses: bahmutov/npm-install@v1
       with:
