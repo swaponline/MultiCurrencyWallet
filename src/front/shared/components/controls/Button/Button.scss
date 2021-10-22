@@ -129,6 +129,7 @@
 
 .dangerous {
   background: var(--color-f-error);
+  color: var(--color-f-brightest);
 }
 
 @include media-mobile {

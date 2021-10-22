@@ -168,6 +168,14 @@
   }
 }
 
+.slippageIndicator {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  color: var(--color-indicating);
+}
+
 .advancedSettings {
   display: flex;
   flex-direction: column;
@@ -232,13 +240,17 @@
   }
 }
 
-@mixin notice($color: var(--color-indicating), $borderColor: var(--color-border)) {
+@mixin notice(
+  $color: var(--color),
+  $borderColor: var(--color-border),
+  $bg-color: var(--color-background)
+) {
   @include ff-semibold;
   padding: 0.5rem;
   text-align: left;
   border-radius: 0.2rem;
   border: 1px solid $borderColor;
-  background-color: var(--color-background);
+  background-color: $bg-color;
   color: $color;
 }
 
@@ -251,6 +263,10 @@
 .reasons {
   .wrong {
     @include notice(var(--color-f-error), var(--color-f-error));
+  }
+
+  .warning {
+    @include notice($bg-color: var(--color-warning));
   }
 
   .neutral {

@@ -6,8 +6,8 @@ import {
   takeScreenshot,
   timeOut,
   clickOn,
+  testWallets,
 } from '../utils'
-import testWallets from '../../testWallets'
 
 type TxData = {
   to: string
@@ -48,8 +48,8 @@ describe('Send EVM coins from the withdraw form', () => {
     ],
   ]
 
-  let browser: undefined | puppeteer.Browser = undefined
-  let page: undefined | puppeteer.Page = undefined
+  let browser: undefined | puppeteer.Browser
+  let page: undefined | puppeteer.Page
 
   beforeAll(async () => {
     const { browser: newBrowserInstance, page: newPageInstance } = await createBrowser()
@@ -58,7 +58,7 @@ describe('Send EVM coins from the withdraw form', () => {
     page = newPageInstance
 
     await importWallet({
-      page: page,
+      page,
       seed: testWallets.eth.seedPhrase.split(' '),
     })
   }, waitingForStartup)
@@ -132,6 +132,6 @@ describe('Send EVM coins from the withdraw form', () => {
         throw new Error('No the browser or the page')
       }
     },
-    waitingForTheTest
+    waitingForTheTest,
   )
 })

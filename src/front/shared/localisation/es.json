@@ -112,7 +112,6 @@
     "id": "WithdrawModal11212",
     "message": "Procesando ...",
     "files": [
-      "src/front/shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.tsx",
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
@@ -318,6 +317,7 @@
       "src/front/shared/pages/Exchange/AtomicSwap.tsx",
       "src/front/shared/pages/Exchange/Orders/MyOrders/MyOrders.tsx",
       "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/DirectSwap.tsx",
       "src/front/shared/pages/Exchange/QuickSwap/ExchangeForm.tsx"
     ]
   },
@@ -500,6 +500,7 @@
       "src/front/shared/components/LimitOrders/OrderSettings.tsx",
       "src/front/shared/components/LimitOrders/index.tsx",
       "src/front/shared/pages/Exchange/AtomicSwap.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/DirectSwap.tsx",
       "src/front/shared/pages/Exchange/QuickSwap/ExchangeForm.tsx"
     ]
   },
@@ -1133,7 +1134,6 @@
     "message": "Enviar",
     "files": [
       "src/front/shared/components/modals/WithdrawBtcMultisig/WithdrawBtcMultisig.tsx",
-      "src/front/shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.tsx",
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
@@ -1820,7 +1820,6 @@
     "id": "WithdrawModal2225",
     "message": "Algo salió mal, ingrese su código actual por favor",
     "files": [
-      "src/front/shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
     ]
   },
@@ -1828,7 +1827,6 @@
     "id": "Withdrow2223",
     "message": "Código SMS",
     "files": [
-      "src/front/shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
     ]
   },
@@ -1836,7 +1834,6 @@
     "id": "Withdrow2224",
     "message": "Confirmar",
     "files": [
-      "src/front/shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
     ]
   },
@@ -2199,10 +2196,7 @@
   },
   {
     "id": "WalletRow_Menu_ActivateSMSProtected",
-    "message": "Activar",
-    "files": [
-      "src/front/shared/pages/Wallet/Row/Row.tsx"
-    ]
+    "message": "Activar"
   },
   {
     "id": "WalletRow_Menu_BTCMS_GenerateJoinLink",
@@ -2542,7 +2536,6 @@
     "id": "withdrawSMSCodePlaceholder",
     "message": "Ingrese el código SMS",
     "files": [
-      "src/front/shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
     ]
   },
@@ -2614,8 +2607,6 @@
     "message": "Frase secreta(12 palabras)",
     "files": [
       "src/front/shared/components/Header/Header.tsx",
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx",
-      "src/front/shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
     ]
   },
@@ -2623,8 +2614,6 @@
     "id": "registerSMSModalWords",
     "message": "Frase secreta(12 palabras):",
     "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx",
-      "src/front/shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
     ]
   },
@@ -2632,7 +2621,6 @@
     "id": "WithdrawSMS_BroadcastError",
     "message": "Error de transacción de transmisión ({errorText})",
     "files": [
-      "src/front/shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
     ]
   },
@@ -2640,7 +2628,6 @@
     "id": "WithdrawSMS_FailSignByMnemonic",
     "message": "Transacción fallida",
     "files": [
-      "src/front/shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
     ]
   },
@@ -2648,7 +2635,6 @@
     "id": "WithdrawSMS_MnemonicNote",
     "message": "Si no recibió su código SMS o no tiene acceso a este número, puede usar una frase secreta para restaurar su billetera",
     "files": [
-      "src/front/shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
     ]
   },
@@ -2656,7 +2642,6 @@
     "id": "WithdrawSMS_MnemonicSignCaption",
     "message": "Confirmar transacción con frase secreta (12 palabras)",
     "files": [
-      "src/front/shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
     ]
   },
@@ -2664,7 +2649,6 @@
     "id": "WithdrawSMS_NotValidMnemonic",
     "message": "Frase secreta no válida",
     "files": [
-      "src/front/shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
     ]
   },
@@ -2672,7 +2656,6 @@
     "id": "WithdrawSMS_ServerOffline",
     "message": "Servidor de autorización está desconectado",
     "files": [
-      "src/front/shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
     ]
   },
@@ -2680,7 +2663,6 @@
     "id": "WithdrawSMS_SmsSended",
     "message": "SMS con código enviado",
     "files": [
-      "src/front/shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
     ]
   },
@@ -2688,7 +2670,6 @@
     "id": "WithdrawSMS_SmsSending",
     "message": "Enviando sms con código de confirmación",
     "files": [
-      "src/front/shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
     ]
   },
@@ -2696,7 +2677,6 @@
     "id": "WithdrawSMS_UseMnemonic",
     "message": "Usar frase secreta (12 palabras)",
     "files": [
-      "src/front/shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
     ]
   },
@@ -2704,7 +2684,6 @@
     "id": "WithdrawSMS_UseSMS",
     "message": "Usar código SMS",
     "files": [
-      "src/front/shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
     ]
   },
@@ -2712,7 +2691,6 @@
     "id": "WithdrawSMS_UseSMSNote",
     "message": "También puede utilizar el código SMS enviado al número de teléfono adjunto.",
     "files": [
-      "src/front/shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
     ]
   },
@@ -2720,7 +2698,6 @@
     "id": "WithdrawSMS_WrongMnemonic",
     "message": "Frase secreta no válida",
     "files": [
-      "src/front/shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
     ]
   },
@@ -2728,7 +2705,6 @@
     "id": "btcSMSProtectedSignByMnemonic",
     "message": "Usar frase de contraseña",
     "files": [
-      "src/front/shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
     ]
   },
@@ -3328,7 +3304,6 @@
     "id": "widgetApproveCancel",
     "message": "Cancelar",
     "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx",
       "src/front/shared/helpers/wpLogoutModal.ts"
     ]
   },
@@ -3982,10 +3957,7 @@
   },
   {
     "id": "WithdrawSMS_SmsConfirming",
-    "message": "Confirmando transacción",
-    "files": [
-      "src/front/shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.tsx"
-    ]
+    "message": "Confirmando transacción"
   },
   {
     "id": "MnemonicInputComponent_DeleteText",
@@ -5657,6 +5629,7 @@
     "id": "swap",
     "message": "Intercambio",
     "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/DirectSwap.tsx",
       "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
     ]
   },
@@ -5686,14 +5659,16 @@
     "id": "slippageNotice",
     "message": "Si el precio cambia entre el momento en que se realiza su pedido y se confirma, se llama \"deslizamiento\". Su swap se cancelará automáticamente si el deslizamiento excede su ajuste de \"deslizamiento máximo\"",
     "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/AdvancedSettings.tsx"
+      "src/front/shared/pages/Exchange/QuickSwap/AdvancedSettings.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/DirectSwap.tsx"
     ]
   },
   {
     "id": "slippageTolerance",
-    "message": "Tolerancia de deslizamiento (%)",
+    "message": "Tolerancia de deslizamiento",
     "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/AdvancedSettings.tsx"
+      "src/front/shared/pages/Exchange/QuickSwap/AdvancedSettings.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/DirectSwap.tsx"
     ]
   },
   {
@@ -5871,8 +5846,9 @@
   },
   {
     "id": "insufficientSlippage",
-    "message": "Deslizamiento insuficiente. Trate de aumentarlo en la configuración avanzada",
+    "message": "Deslizamiento insuficiente. Trata de aumentarlo",
     "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/DirectSwap.tsx",
       "src/front/shared/pages/Exchange/QuickSwap/NoSwapsReasons.tsx"
     ]
   },
@@ -5941,14 +5917,75 @@
   },
   {
     "id": "tryAnyway",
-    "message": "Inténtalo de todos modos",
-    "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
-    ]
+    "message": "Inténtalo de todos modos"
   },
   {
     "id": "unknownSwapProblemHasOccurred",
     "message": "Se ha producido un problema desconocido. Probablemente no podamos intercambiar este par",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/NoSwapsReasons.tsx"
+    ]
+  },
+  {
+    "id": "SaveKe33",
+    "message": "Descargar",
+    "files": [
+      "src/front/shared/components/SaveKeys/SaveKeys.tsx"
+    ]
+  },
+  {
+    "id": "directSwap",
+    "message": "Intercambio directo",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/DirectSwap.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
+    ]
+  },
+  {
+    "id": "guaranteedPrice",
+    "message": "Precio garantizado",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/DirectSwap.tsx"
+    ]
+  },
+  {
+    "id": "invalidSlippagePercent",
+    "message": "Porcentaje de deslizamiento inválido",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/DirectSwap.tsx"
+    ]
+  },
+  {
+    "id": "source",
+    "message": "Fuente",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/DirectSwap.tsx"
+    ]
+  },
+  {
+    "id": "transactionDeadline",
+    "message": "Fecha límite de transacción (minutos)",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/DirectSwap.tsx"
+    ]
+  },
+  {
+    "id": "transactionMayBeFrontrun",
+    "message": "La transacción puede ser pionera",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/DirectSwap.tsx"
+    ]
+  },
+  {
+    "id": "transactionMayFail",
+    "message": "La transacción puede fallar",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/DirectSwap.tsx"
+    ]
+  },
+  {
+    "id": "liquidityPoolProblem",
+    "message": "Hay algún problema con el fondo de liquidez. Prueba el intercambio directo",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/NoSwapsReasons.tsx"
     ]

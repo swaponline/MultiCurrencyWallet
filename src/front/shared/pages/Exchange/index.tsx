@@ -79,12 +79,10 @@ function Exchange(props) {
       {!showOnlyOneType && (
         <div styleName="tabsWrapper">
           <button
-            /* externalConfig.entry === 'testnet' ? 'disabled' : '' */
             styleName={`tab
               ${swapMode === 'quick' ? 'active' : ''}
               ${externalConfig.entry !== 'mainnet' ? 'disabled' : ''}
             `}
-            /* externalConfig.entry === 'mainnet' ? openQuickMode : undefined */
             onClick={openQuickMode}
           >
             <FormattedMessage id="quickSwap" defaultMessage="Quick swap" />

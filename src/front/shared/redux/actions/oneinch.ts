@@ -1,5 +1,5 @@
 import { BigNumber } from 'bignumber.js'
-import TokenApi from 'human-standard-token-abi'
+import TokenAbi from 'human-standard-token-abi'
 import moment from 'moment'
 import {
   LimitOrderBuilder,
@@ -81,9 +81,9 @@ const fetchSpenderContractAddress = async (params): Promise<string | false> => {
 }
 
 const fetchTokenAllowance = async (params): Promise<number> => {
-  const { chainId, standard, owner, contract, decimals, spender } = params
+  const { standard, owner, contract, decimals, spender } = params
   const Web3 = actions[standard].getCurrentWeb3()
-  const tokenContract = new Web3.eth.Contract(TokenApi, contract, {
+  const tokenContract = new Web3.eth.Contract(TokenAbi, contract, {
     from: owner,
   })
   let allowance = 0

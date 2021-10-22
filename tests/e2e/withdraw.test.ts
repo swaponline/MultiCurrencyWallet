@@ -1,12 +1,18 @@
 import puppeteer from 'puppeteer'
-import testWallets from '../testWallets'
-import { createBrowser, importWallet, selectSendCurrency, takeScreenshot, timeOut } from './utils'
+import {
+  createBrowser,
+  importWallet,
+  selectSendCurrency,
+  takeScreenshot,
+  timeOut,
+  testWallets,
+} from './utils'
 
 jest.setTimeout(200_000) // ms
 
 describe('Withdraw form tests', () => {
-  let testBrowser: puppeteer.Browser | undefined = undefined
-  let testPage: puppeteer.Page | undefined = undefined
+  let testBrowser: puppeteer.Browser | undefined
+  let testPage: puppeteer.Page | undefined
 
   beforeAll(async () => {
     const { browser, page } = await createBrowser()
@@ -35,7 +41,7 @@ describe('Withdraw form tests', () => {
     const { page, ticker } = params
 
     // a suitable example: 0.005166 ETH ($18.23)
-    const feeRegExp = /[\d(\.)?\d]+ [A-Z]{3,} \(.{1}[\d(\.)?\d]+\)/
+    const feeRegExp = /[\d(.)?\d]+ [A-Z]{3,} \(.{1}[\d(.)?\d]+\)/
 
     // await selectSendCurrency({ page, currency: ticker })
 
@@ -45,6 +51,7 @@ describe('Withdraw form tests', () => {
     await page.waitForSelector(`#${ticker}CryptoBalance`)
     const balance = await page.$eval(`#${ticker}CryptoBalance`, (el) => el.textContent)
 
+    // eslint-disable-next-line no-restricted-globals
     if (isNaN(Number(balance)) || balance === '0') {
       // close an opened list
       await page.click('#withdrawCurrencyList')

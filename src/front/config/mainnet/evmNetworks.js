@@ -8,7 +8,7 @@ export default {
     networkVersion: 1,
     chainName: 'Ethereum',
     rpcUrls: [web3.provider],
-    blockExplorerUrls: [link.etherscan]
+    blockExplorerUrls: [link.etherscan],
   },
   BNB: {
     currency: 'BNB',
@@ -16,7 +16,7 @@ export default {
     networkVersion: 56,
     chainName: 'Binance Smart Chain',
     rpcUrls: [web3.binance_provider],
-    blockExplorerUrls: [link.bscscan]
+    blockExplorerUrls: [link.bscscan],
   },
   MATIC: {
     currency: 'MATIC',
@@ -32,6 +32,6 @@ export default {
     networkVersion: 42161,
     chainName: 'Arbitrum',
     rpcUrls: [web3.arbitrum_provider],
-    blockExplorerUrls: [link.arbitrum]
+    blockExplorerUrls: [link.arbitrum],
   },
 }

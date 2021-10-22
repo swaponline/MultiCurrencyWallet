@@ -1,0 +1,16 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.content {
+  margin: 1rem 0;
+}
+
+.lockedInfo {
+  padding: 1rem;
+  margin-bottom: 2rem;
+  border-radius: 0.3rem;
+  background-color: var(--color-pale);
+}

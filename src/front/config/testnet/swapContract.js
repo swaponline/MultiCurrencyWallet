@@ -1,5 +1,5 @@
 export default {
-  erc20: '0xc5febf8C2E11f6fC85897b0134A79175b8410b4f',  // rinkeby
+  erc20: '0xc5febf8C2E11f6fC85897b0134A79175b8410b4f', // rinkeby
   bep20: '0x8fa85c2bC2A12997893bB024284E7116D6Fb1bF3',
   erc20matic: '0xDb317405A1F1cA955c07834b1b43241d651A5875',
   eth: '0x6F54CDAE7c98b0306fB3aB4daED4cAEe25b92Bc6',
@@ -9,4 +9,6 @@ export default {
   reputationOracle: '0x6260B5ef52d72732674fF4BDE3B37a4222dB1785',
   protectedBtcKey: '023d894571a253b87868db7d54a8b583e0c8ce53b484af8a0b0390b7722975cfaa',
   btcPinKey: '02094916ddab5abf215a49422a71be54ceb92c3d8114909048fc45ee90acdb5b32',
+  pancakeFactory: '0xB7926C0430Afb07AA7DEfDE6DA862aE0Bde767bc',
+  pancakeRouter: '0x9Ac64Cc6e4415144C455BD8E4837Fea55603e5c3',
 }

@@ -37,7 +37,7 @@ function SwapInfo(props) {
           />
         </p>
       ) : needApprove ? (
-        <p styleName="neutral">
+        <p styleName="warning">
           <FormattedMessage
             id="approveTokenFirst"
             defaultMessage="Please approve {token} first"
@@ -45,10 +45,10 @@ function SwapInfo(props) {
           />
         </p>
       ) : blockReason === SwapBlockReason.InsufficientSlippage ? (
-        <p styleName="neutral">
+        <p styleName="warning">
           <FormattedMessage
             id="insufficientSlippage"
-            defaultMessage="Insufficient slippage. Try to increase it in the advanced settings"
+            defaultMessage="Insufficient slippage. Try to increase it"
           />
         </p>
       ) : blockReason === SwapBlockReason.NoLiquidity ? (
@@ -58,11 +58,18 @@ function SwapInfo(props) {
             defaultMessage="Insufficient pool liquidity"
           />
         </p>
-      ) : blockReason === SwapBlockReason.Unknown ? (
+      ) : blockReason === SwapBlockReason.Liquidity ? (
         <p styleName="neutral">
           <FormattedMessage
+            id="liquidityPoolProblem"
+            defaultMessage="There is some problem with liquidity pool. Try direct swap"
+          />
+        </p>
+      ) : blockReason === SwapBlockReason.Unknown ? (
+        <p styleName="wrong">
+          <FormattedMessage
             id="unknownSwapProblemHasOccurred"
-            defaultMessage="Unknown problem has occurred. Probably we can't exchange this pair"
+            defaultMessage="Unknown problem has occurred"
           />
         </p>
       ) : null}
