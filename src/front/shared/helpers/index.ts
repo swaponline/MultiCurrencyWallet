@@ -23,7 +23,7 @@ import feedback from './feedback'
 import getPageOffset from './getPageOffset'
 import transactions from './transactions'
 
-import { migrate } from './migrations/'
+import { migrate } from './migrations'
 
 import {
   cacheStorageGet,
@@ -47,7 +47,6 @@ import swaps from './swaps'
 import stats from './stats.swaponline'
 
 import { getPairFees } from './getPairFees'
-
 
 export default {
   btc,
