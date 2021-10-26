@@ -1,12 +1,11 @@
-import React, { Fragment } from 'react'
-import { constants, feedback } from 'helpers'
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import React from 'react'
+import { constants, feedback, links, routing } from 'helpers'
 import actions from 'redux/actions'
 import Link from 'local_modules/sw-valuelink'
 import BigNumber from 'bignumber.js'
 import cssModules from 'react-css-modules'
-import styles from '../Styles/default.scss'
 import dropDownStyles from 'components/ui/DropDown/index.scss'
-import ownStyle from './InvoiceModal.scss'
 import Modal from 'components/modal/Modal/Modal'
 import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
 import Input from 'components/forms/Input/Input'
@@ -19,7 +18,8 @@ import erc20Like from 'common/erc20Like'
 import typeforce from 'swap.app/util/typeforce'
 import { inputReplaceCommaWithDot } from 'helpers/domUtils'
 import getCurrencyKey from 'helpers/getCurrencyKey'
-import { links, routing } from 'helpers'
+import ownStyle from './InvoiceModal.scss'
+import styles from '../Styles/default.scss'
 
 const localeLabel = defineMessages({
   title: {
@@ -92,7 +92,7 @@ class InvoiceModal extends React.Component<InvoiceModalProps, InvoiceModalState>
     const currentDecimals = constants.tokenDecimals[getCurrencyKey(currency, true).toLowerCase()]
     const walletData = actions.core.getWallet({ currency })
     const { infoAboutCurrency } = walletData
-    const multiplier = infoAboutCurrency && infoAboutCurrency.price_fiat 
+    const multiplier = infoAboutCurrency && infoAboutCurrency.price_fiat
       ? infoAboutCurrency.price_fiat
       : 1
 
@@ -102,7 +102,7 @@ class InvoiceModal extends React.Component<InvoiceModalProps, InvoiceModalState>
       openScanCam: false,
       toAddressEnabled: !!toAddress,
       address: toAddress || '',
-      destination: address,
+      destination: address || '',
       payerAddress,
       contact: '',
       label: '',
@@ -174,7 +174,7 @@ class InvoiceModal extends React.Component<InvoiceModalProps, InvoiceModalState>
     routing.redirectTo(`${links.invoice}/${invoiceId}/share`)
   }
 
-  addressIsCorrect(otherAddress = null) {
+  addressIsCorrect(otherAddress = '') {
     const {
       isToken,
       address,
@@ -182,13 +182,13 @@ class InvoiceModal extends React.Component<InvoiceModalProps, InvoiceModalState>
         currency,
       },
     } = this.state
-    const checkAddress = otherAddress ? otherAddress : address
+    const checkAddress = otherAddress || address
 
     if (isToken) {
       return typeforce.isCoinAddress.ETH(checkAddress)
     }
 
-    let checkCurrency = getCurrencyKey(currency, true).toUpperCase()
+    const checkCurrency = getCurrencyKey(currency, true).toUpperCase()
 
     return typeforce.isCoinAddress[checkCurrency](checkAddress)
   }
@@ -271,6 +271,9 @@ class InvoiceModal extends React.Component<InvoiceModalProps, InvoiceModalState>
 
     const {
       name,
+      data: {
+        disableClose,
+      },
       intl,
     } = this.props
 
@@ -281,10 +284,10 @@ class InvoiceModal extends React.Component<InvoiceModalProps, InvoiceModalState>
       'fiatAmount',
       'amount',
       'contact',
-      'label'
+      'label',
     )
 
-    let curList = [
+    const curList = [
       {
         fullTitle: walletData.fullName,
         icon: currency.toLowerCase(),
@@ -301,45 +304,73 @@ class InvoiceModal extends React.Component<InvoiceModalProps, InvoiceModalState>
       },
     ]
 
-    const isDisabled =
-      !amount || isShipped || !destination || !contact || (address && !this.addressIsCorrect())
+    const isDisabled = !amount || isShipped || !destination || !contact || (!!address && !this.addressIsCorrect())
 
     return (
-      //@ts-ignore: strictNullChecks
       <Modal
         name={name}
         title={`${intl.formatMessage(localeLabel.title)}${' '}${currency.toUpperCase()}`}
-        disableClose={this.props.data.disableClose}
+        disableClose={disableClose}
       >
-        {openScanCam && (
-          <QrReader
-            openScan={this.openScan}
-            handleError={this.reportError}
-            handleScan={this.handleScan}
-          />
-        )}
-        <div styleName="invoiceModalHolder">
-          {toAddressEnabled && (
+        <>
+          {openScanCam && (
+            <QrReader
+              openScan={this.openScan}
+              handleError={this.reportError}
+              handleScan={this.handleScan}
+            />
+          )}
+          <div styleName="invoiceModalHolder">
+            {toAddressEnabled && (
+              <div styleName="highLevel">
+                <FieldLabel>
+                  <FormattedMessage
+                    id="invoiceModal_Address"
+                    defaultMessage="Адрес, на который выставляем счет"
+                  />
+                </FieldLabel>
+                <Input
+                  smallFontSize
+                  withMargin
+                  valueLink={linked.address}
+                  focusOnInit
+                  pattern="0-9a-zA-Z:"
+                  placeholder={intl.formatMessage(localeLabel.addressPlaceholder, {
+                    currency: currency.toUpperCase(),
+                  })}
+                  qr={isMobile}
+                  openScan={this.openScan}
+                />
+                {address && !this.addressIsCorrect() && (
+                  <div styleName="rednote">
+                    <FormattedMessage
+                      id="invoiceModal_IncorrectAddress"
+                      defaultMessage="Incorrect address"
+                    />
+                  </div>
+                )}
+              </div>
+            )}
             <div styleName="highLevel">
               <FieldLabel>
                 <FormattedMessage
-                  id="invoiceModal_Address"
-                  defaultMessage="Адрес, на который выставляем счет"
+                  id="invoiceModal_destiAddress"
+                  defaultMessage="Адрес, куда будет произведена оплата"
                 />
               </FieldLabel>
               <Input
+                valueLink={linked.destination}
+                focusOnInit
                 smallFontSize
                 withMargin
-                valueLink={linked.address}
-                focusOnInit
                 pattern="0-9a-zA-Z:"
-                placeholder={intl.formatMessage(localeLabel.addressPlaceholder, {
+                placeholder={intl.formatMessage(localeLabel.destiAddressPlaceholder, {
                   currency: currency.toUpperCase(),
                 })}
                 qr={isMobile}
                 openScan={this.openScan}
               />
-              {address && !this.addressIsCorrect() && (
+              {destination && !this.addressIsCorrect(destination) && (
                 <div styleName="rednote">
                   <FormattedMessage
                     id="invoiceModal_IncorrectAddress"
@@ -348,126 +379,96 @@ class InvoiceModal extends React.Component<InvoiceModalProps, InvoiceModalState>
                 </div>
               )}
             </div>
-          )}
-          <div styleName="highLevel">
-            <FieldLabel>
-              <FormattedMessage
-                id="invoiceModal_destiAddress"
-                defaultMessage="Адрес, куда будет произведена оплата"
+            <div styleName="highLevel">
+              <FieldLabel>
+                <span>
+                  <FormattedMessage id="orders102" defaultMessage="Amount" />
+                </span>
+              </FieldLabel>
+              <span styleName="amountTooltip">
+                {
+                  new BigNumber(amount).isGreaterThan(0)
+                    ? selectedValue === currency
+                      ? `~ ${fiatAmount} USD`
+                      : `~ ${amount} ${currency}`
+                    : ''
+                }
+              </span>
+              <Input
+                className={ownStyle.input}
+                placeholder={intl.formatMessage(localeLabel.amountPlaceholder)}
+                onKeyDown={inputReplaceCommaWithDot}
+                pattern="0-9\."
+                withMargin
+                valueLink={selectedValue === currency
+                  ? linked.amount.pipe(this.handleAmount)
+                  : linked.fiatAmount.pipe(this.handleAmount)}
               />
-            </FieldLabel>
-            <Input
-              valueLink={linked.destination}
-              focusOnInit
-              smallFontSize
-              withMargin
-              pattern="0-9a-zA-Z:"
-              placeholder={intl.formatMessage(localeLabel.destiAddressPlaceholder, {
-                currency: currency.toUpperCase(),
-              })}
-              qr={isMobile}
-              openScan={this.openScan}
-            />
-            {/* @ts-ignore: strictNullChecks */}
-            {destination && !this.addressIsCorrect(destination) && (
+              <CurrencySelect
+                className={dropDownStyles.simpleDropdown}
+                selectedValue={selectedValue}
+                onSelect={this.handleBuyCurrencySelect}
+                selectedItemRender={(item) => item.fullTitle}
+                currencies={curList}
+              />
+            </div>
+            <div styleName="highLevel">
+              <FieldLabel>
+                <span>
+                  <FormattedMessage
+                    id="invoiceModal_Contact"
+                    defaultMessage="Ваш контакт (емейл или @никнейм)"
+                  />
+                </span>
+              </FieldLabel>
+              <Input
+                valueLink={linked.contact}
+                withMargin
+                placeholder={intl.formatMessage(localeLabel.contactPlaceholder)}
+              />
+            </div>
+            <div styleName="lowLevel">
+              <FieldLabel>
+                <span>
+                  <FormattedMessage id="invoiceModal_Label" defaultMessage="Комментарий" />
+                </span>
+              </FieldLabel>
+              <div styleName="group" style={{ marginBottom: '25px' }}>
+                <Input
+                  srollingForm
+                  valueLink={linked.label}
+                  multiline
+                  placeholder={intl.formatMessage(localeLabel.labelPlaceholder)}
+                />
+              </div>
+            </div>
+            <Button fullWidth blue big disabled={isDisabled} onClick={this.handleSubmit}>
+              {isShipped ? (
+                <>
+                  <FormattedMessage id="invoiceModal_Processing" defaultMessage="Обработка ..." />
+                </>
+              ) : (
+                <>
+                  <FormattedMessage id="invoiceModal_Submit" defaultMessage="Выставить счет" />
+                </>
+              )}
+            </Button>
+            {error && (
               <div styleName="rednote">
                 <FormattedMessage
-                  id="invoiceModal_IncorrectAddress"
-                  defaultMessage="Incorrect address"
+                  id="invoiceModal_Error"
+                  defaultMessage="{errorName} {currency}:{br}{errorMessage}"
+                  values={{
+                    errorName: intl.formatMessage(error.name),
+                    errorMessage: intl.formatMessage(error.message),
+                    br: <br />,
+                    currency: `${currency}`,
+                  }}
                 />
               </div>
             )}
           </div>
-          <div styleName="highLevel">
-            <FieldLabel>
-              <span>
-                <FormattedMessage id="orders102" defaultMessage="Amount" />
-              </span>
-            </FieldLabel>
-            <span styleName="amountTooltip">{
-              new BigNumber(amount).isGreaterThan(0) 
-                ? selectedValue === currency
-                  ? `~ ${fiatAmount} USD`
-                  : `~ ${amount} ${currency}`
-                : ''
-              }
-            </span>
-            <Input
-              className={ownStyle.input}
-              placeholder={intl.formatMessage(localeLabel.amountPlaceholder)}
-              onKeyDown={inputReplaceCommaWithDot}
-              pattern="0-9\."
-              withMargin
-              valueLink={selectedValue === currency
-                ? linked.amount.pipe(this.handleAmount)
-                : linked.fiatAmount.pipe(this.handleAmount)
-              }
-            />
-            <CurrencySelect
-              className={dropDownStyles.simpleDropdown}
-              selectedValue={selectedValue}
-              onSelect={this.handleBuyCurrencySelect}
-              selectedItemRender={(item) => item.fullTitle}
-              currencies={curList}
-            />
-          </div>
-          <div styleName="highLevel">
-            <FieldLabel>
-              <span>
-                <FormattedMessage
-                  id="invoiceModal_Contact"
-                  defaultMessage="Ваш контакт (емейл или @никнейм)"
-                />
-              </span>
-            </FieldLabel>
-            <Input
-              valueLink={linked.contact}
-              withMargin
-              placeholder={intl.formatMessage(localeLabel.contactPlaceholder)}
-            />
-          </div>
-          <div styleName="lowLevel">
-            <FieldLabel>
-              <span>
-                <FormattedMessage id="invoiceModal_Label" defaultMessage="Комментарий" />
-              </span>
-            </FieldLabel>
-            <div styleName="group" style={{ marginBottom: '25px' }}>
-              <Input
-                srollingForm={true}
-                valueLink={linked.label}
-                multiline={true}
-                placeholder={intl.formatMessage(localeLabel.labelPlaceholder)}
-              />
-            </div>
-          </div>
-          {/* @ts-ignore: strictNullChecks */}
-          <Button fullWidth blue big disabled={isDisabled} onClick={this.handleSubmit}>
-            {isShipped ? (
-              <Fragment>
-                <FormattedMessage id="invoiceModal_Processing" defaultMessage="Обработка ..." />
-              </Fragment>
-            ) : (
-              <Fragment>
-                <FormattedMessage id="invoiceModal_Submit" defaultMessage="Выставить счет" />
-              </Fragment>
-            )}
-          </Button>
-          {error && (
-            <div styleName="rednote">
-              <FormattedMessage
-                id="invoiceModal_Error"
-                defaultMessage="{errorName} {currency}:{br}{errorMessage}"
-                values={{
-                  errorName: intl.formatMessage(error.name),
-                  errorMessage: intl.formatMessage(error.message),
-                  br: <br />,
-                  currency: `${currency}`,
-                }}
-              />
-            </div>
-          )}
-        </div>
+        </>
       </Modal>
     )
   }
