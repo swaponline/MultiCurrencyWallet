@@ -1,14 +1,12 @@
-import React, { Fragment } from 'react'
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import React from 'react'
 import PropTypes from 'prop-types'
-import helpers, { constants } from 'helpers'
+import helpers, { routing } from 'helpers'
 import actions from 'redux/actions'
 import Link from 'local_modules/sw-valuelink'
 import { connect } from 'redaction'
 
 import cssModules from 'react-css-modules'
-
-import defaultStyles from '../Styles/default.scss'
-import styles from './BtcMultisignConfirmTx.scss'
 
 import Modal from 'components/modal/Modal/Modal'
 import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
@@ -16,47 +14,11 @@ import Input from 'components/forms/Input/Input'
 import Button from 'components/controls/Button/Button'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
-import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
+import { FormattedMessage } from 'react-intl'
 
-import { routing } from 'helpers'
 import lsDataCache from 'helpers/lsDataCache'
-
-
-const langPrefix = `multiSignConfirmTxModal`
-const langLabels = defineMessages({
-  title: {
-    id: `${langPrefix}_Title`,
-    defaultMessage: `Confirmation of BTC Multisig transaction`,
-  },
-  noticeUp: {
-    id: `${langPrefix}_UpNotice`,
-    defaultMessage: `Review the transaction and confirm it. If you are against the cancellation, reject the transaction`,
-  },
-  noticeFetching: {
-    id: `${langPrefix}_NoticeFetching`,
-    defaultMessage: `Loading...`,
-  },
-  confirmTx: {
-    id: `${langPrefix}_ConfirmTx`,
-    defaultMessage: `Confirm`,
-  },
-  dismatchTx: {
-    id: `${langPrefix}_DismatchTx`,
-    defaultMessage: `Reject`,
-  },
-  youCantSignThis: {
-    id: `${langPrefix}_YouCantSignThisTx`,
-    defaultMessage: `You do not have permission to sign this transaction (check that you have created a multisig)`,
-  },
-  goToWallet: {
-    id: `${langPrefix}_GoToWalletPage`,
-    defaultMessage: `Open wallet`,
-  },
-  buttonClose: {
-    id: `${langPrefix}_ButtonClose`,
-    defaultMessage: `Close`,
-  },
-})
+import styles from './BtcMultisignConfirmTx.scss'
+import defaultStyles from '../Styles/default.scss'
 
 @connect(({ user: { btcMultisigUserData } }) => ({
   btcData: btcMultisigUserData,
@@ -115,7 +77,8 @@ class BtcMultisignConfirmTx extends React.Component<any, any> {
           },
           () => {
             // Fetching full tx info (rawTX)
-            //@ts-ignore: strictNullChecks
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore: strictNullChecks
             actions.multisigTx.fetchRawTx(from, txId).then((txAuthedData: any) => {
               if (txAuthedData) {
                 actions.btcmultisig.parseRawTX(txAuthedData.rawTx).then((txDataParsed) => {
@@ -132,7 +95,7 @@ class BtcMultisignConfirmTx extends React.Component<any, any> {
                 })
               }
             })
-          }
+          },
         )
       } else {
         const txDataParsed = await actions.btcmultisig.parseRawTX(txData)
@@ -163,8 +126,6 @@ class BtcMultisignConfirmTx extends React.Component<any, any> {
   handleConfirm = async () => {
     const { txId: useBackendId, txRaw, txData, from, address: to, amount } = this.state
 
-    const { name } = this.props
-
     this.setState({
       isConfirming: true,
     })
@@ -176,7 +137,7 @@ class BtcMultisignConfirmTx extends React.Component<any, any> {
     if (btcTxId && btcTxId.txid) txId = btcTxId.txid
 
     if (useBackendId) {
-      const backendId = await actions.multisigTx.confirmTx(from, useBackendId, signedTX, txId)
+      await actions.multisigTx.confirmTx(from, useBackendId, signedTX, txId)
     }
 
     if (txId) {
@@ -207,9 +168,9 @@ class BtcMultisignConfirmTx extends React.Component<any, any> {
   }
 
   handleReject = async () => {
-    const { txId: useBackendId, txData, from } = this.state
+    const { txId: useBackendId, from } = this.state
     if (useBackendId) {
-      const backendId = await actions.multisigTx.rejectTx(from, useBackendId)
+      await actions.multisigTx.rejectTx(from, useBackendId)
       this.handleClose()
     }
   }
@@ -231,7 +192,6 @@ class BtcMultisignConfirmTx extends React.Component<any, any> {
   render() {
     const {
       name,
-      intl,
       data: { showCloseButton },
     } = this.props
 
@@ -239,120 +199,152 @@ class BtcMultisignConfirmTx extends React.Component<any, any> {
       step,
       txData,
       isConfirming,
-      address,
-      amount,
-      from,
       isControlFetching,
       isTxHolder,
     } = this.state
 
-    const { debugShowTXB, debugShowInput, debugShowOutput } = this.state
-
     const linked = Link.all(this, 'address', 'amount', 'from')
 
+    const title = (
+      <FormattedMessage
+        id="multiSignConfirmTxModal_Title"
+        defaultMessage="Confirmation of BTC Multisig transaction"
+      />
+    )
+
     return (
-      //@ts-ignore: strictNullChecks
       <Modal
         name={name}
-        title={`${intl.formatMessage(langLabels.title)}`}
+        title={title}
         onClose={this.handleClose}
         showCloseButton={showCloseButton}
       >
-        {step !== `dinned` && (
-          <p styleName="notice">
-            <FormattedMessage {...langLabels.noticeUp} />
-          </p>
-        )}
-        <div styleName="confirmTxModal">
-          {step === `fetchgin` && (
+        <>
+          {step !== `dinned` && (
             <p styleName="notice">
-              <FormattedMessage {...langLabels.noticeFetching} />
+              <FormattedMessage
+                id="multiSignConfirmTxModal_UpNotice"
+                defaultMessage="Review the transaction and confirm it. If you are against the cancellation, reject the transaction"
+              />
             </p>
           )}
-          {step === `dinned` && (
-            <Fragment>
-              <p styleName="rednotes">
-                <FormattedMessage {...langLabels.youCantSignThis} />
+          <div styleName="confirmTxModal">
+            {step === `fetchgin` && (
+              <p styleName="notice">
+                <FormattedMessage
+                  id="multiSignConfirmTxModal_NoticeFetching"
+                  defaultMessage="Loading..."
+                />
               </p>
-              <Button styleName="buttonCenter" blue onClick={this.handleGoToWallet}>
-                <FormattedMessage {...langLabels.goToWallet} />
-              </Button>
-            </Fragment>
-          )}
-          {step === `txInfo` && (
-            <Fragment>
-              <div styleName="highLevel" style={{ marginBottom: '20px' }}>
-                <FieldLabel>
+            )}
+            {step === `dinned` && (
+              <>
+                <p styleName="rednotes">
                   <FormattedMessage
-                    id="BtcMultisignConfirmTx_FromAddress"
-                    defaultMessage="Оплата с кошелька"
-                  />{' '}
-                </FieldLabel>
-                <Input valueLink={linked.from} disabled styleName="input fakeInput" withMargin />
-              </div>
-              <div styleName="highLevel" style={{ marginBottom: '20px' }}>
-                <FieldLabel>
-                  <FormattedMessage id="Withdrow1194" defaultMessage="Address " />{' '}
-                  <Tooltip id="WtH203">
-                    <div style={{ textAlign: 'center' }}>
-                      <FormattedMessage
-                        id="WTH275"
-                        defaultMessage="Make sure the wallet you{br}are sending the funds to supports {currency}"
-                        values={{ br: <br />, currency: `BTC` }}
-                      />
-                    </div>
-                  </Tooltip>
-                </FieldLabel>
-                <Input valueLink={linked.address} disabled styleName="input fakeInput" withMargin />
-              </div>
-              <div styleName="lowLevel" style={{ marginBottom: '30px' }}>
-                <p styleName="balance walletBalance">
-                  {txData.wallet.balance} {`BTC`}
+                    id="multiSignConfirmTxModal_YouCantSignThisTx"
+                    defaultMessage="You do not have permission to sign this transaction (check that you have created a multisig)"
+                  />
                 </p>
-                <FieldLabel>
-                  <FormattedMessage id="orders102" defaultMessage="Amount" />
-                </FieldLabel>
+                <Button styleName="buttonCenter" blue onClick={this.handleGoToWallet}>
+                  <FormattedMessage
+                    id="multiSignConfirmTxModal_GoToWalletPage"
+                    defaultMessage="Open wallet"
+                  />
+                </Button>
+              </>
+            )}
+            {step === `txInfo` && (
+              <>
+                <div styleName="highLevel" style={{ marginBottom: '20px' }}>
+                  <FieldLabel>
+                    <FormattedMessage
+                      id="BtcMultisignConfirmTx_FromAddress"
+                      defaultMessage="Оплата с кошелька"
+                    />
+                    {' '}
+                  </FieldLabel>
+                  <Input valueLink={linked.from} disabled styleName="input fakeInput" withMargin />
+                </div>
+                <div styleName="highLevel" style={{ marginBottom: '20px' }}>
+                  <FieldLabel>
+                    <FormattedMessage id="Withdrow1194" defaultMessage="Address " />
+                    {' '}
+                    <Tooltip id="WtH203">
+                      <div style={{ textAlign: 'center' }}>
+                        <FormattedMessage
+                          id="WTH275"
+                          defaultMessage="Make sure the wallet you{br}are sending the funds to supports {currency}"
+                          values={{ br: <br />, currency: `BTC` }}
+                        />
+                      </div>
+                    </Tooltip>
+                  </FieldLabel>
+                  <Input valueLink={linked.address} disabled styleName="input fakeInput" withMargin />
+                </div>
+                <div styleName="lowLevel" style={{ marginBottom: '30px' }}>
+                  <p styleName="balance walletBalance">
+                    {txData.wallet.balance}
+                    {' '}
+                    BTC
+                  </p>
+                  <FieldLabel>
+                    <FormattedMessage id="orders102" defaultMessage="Amount" />
+                  </FieldLabel>
 
-                <div styleName="group">
-                  <Input styleName="input fakeInput" valueLink={linked.amount} disabled />
+                  <div styleName="group">
+                    <Input styleName="input fakeInput" valueLink={linked.amount} disabled />
+                  </div>
                 </div>
-              </div>
-              {isControlFetching ? (
-                <div styleName="buttonsHolder_fetching">
-                  <InlineLoader />
-                </div>
-              ) : (
-                <div styleName="buttonsHolder">
-                  {!isTxHolder && (
+                {isControlFetching ? (
+                  <div styleName="buttonsHolder_fetching">
+                    <InlineLoader />
+                  </div>
+                ) : (
+                  <div styleName="buttonsHolder">
+                    {!isTxHolder && (
+                      <Button
+                        styleName="buttonFull"
+                        blue
+                        disabled={isConfirming || isTxHolder}
+                        onClick={this.handleConfirm}
+                        fullWidth
+                      >
+                        <FormattedMessage
+                          id="multiSignConfirmTxModal_ConfirmTx"
+                          defaultMessage="Confirm"
+                        />
+                      </Button>
+                    )}
                     <Button
                       styleName="buttonFull"
                       blue
-                      disabled={isConfirming || isTxHolder}
-                      onClick={this.handleConfirm}
+                      disabled={isConfirming}
+                      onClick={isTxHolder ? this.handleClose : this.handleReject}
                       fullWidth
                     >
-                      <FormattedMessage {...langLabels.confirmTx} />
+                      {isTxHolder ? (
+                        <FormattedMessage
+                          id="multiSignConfirmTxModal_ButtonClose"
+                          defaultMessage="Close"
+                        />
+                      ) : (
+                        <FormattedMessage
+                          id="multiSignConfirmTxModal_DismatchTx"
+                          defaultMessage="Reject"
+                        />
+                      )}
                     </Button>
-                  )}
-                  <Button
-                    styleName="buttonFull"
-                    blue
-                    disabled={isConfirming}
-                    onClick={isTxHolder ? this.handleClose : this.handleReject}
-                    fullWidth
-                  >
-                    <FormattedMessage
-                      {...(isTxHolder ? langLabels.buttonClose : langLabels.dismatchTx)}
-                    />
-                  </Button>
-                </div>
-              )}
-            </Fragment>
-          )}
-        </div>
+                  </div>
+                )}
+              </>
+            )}
+          </div>
+
+        </>
+
       </Modal>
     )
   }
 }
 
-export default injectIntl(BtcMultisignConfirmTx)
+export default BtcMultisignConfirmTx

@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import { FormattedMessage, injectIntl } from 'react-intl'
-import helpers from "helpers";
+import helpers from 'helpers'
 import { getFullOrigin } from 'helpers/links'
 
 import cssModules from 'react-css-modules'
-import styles from './styles.scss'
 import ShareButton from 'components/controls/ShareButton/ShareButton'
 import { regularIcons } from 'images'
 import actions from 'redux/actions'
@@ -13,6 +12,7 @@ import Skeleton from 'react-loading-skeleton'
 import CommentRow from 'components/Comment/Comment'
 
 import animateFetching from 'components/loaders/ContentLoader/ElementLoading.scss'
+import styles from './styles.scss'
 
 @cssModules({
   ...styles,
