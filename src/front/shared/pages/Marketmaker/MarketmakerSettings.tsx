@@ -617,7 +617,7 @@ class MarketmakerSettings extends Component<any, any> {
             {tokenWallet && evmCoinWallet && (
               <FormattedMessage
                 id="MM_Promo_TitleBody"
-                defaultMessage="On swap.io users exchange {utxoCoin} for {token} (a token that costs like {utxoCoin}, but works on {Ab_Title}), and vice versa. You get min. 10% APY (annual percentage yield) as a commission from exchanges with low impermanent loss {link}."
+                defaultMessage="On swap.io users exchange {utxoCoin} for {token} (a token that costs like {utxoCoin}, but works on {Ab_Title}), and vice versa."
                 values={{
                   utxoCoin: utxoCoin.toUpperCase(),
                   token: tokenWallet.tokenKey.toUpperCase(),
@@ -732,7 +732,7 @@ class MarketmakerSettings extends Component<any, any> {
                   <span styleName="tooltipText">
                     <FormattedMessage
                       id="MM_Promo_TitleBody"
-                      defaultMessage="On swap.io users exchange {utxoCoin} for {token} (a token that costs like {utxoCoin}, but works on {Ab_Title}), and vice versa. You get min. 10% APY (annual percentage yield) as a commission from exchanges with low impermanent loss {link}."
+                      defaultMessage="On swap.io users exchange {utxoCoin} for {token} (a token that costs like {utxoCoin}, but works on {Ab_Title}), and vice versa."
                       values={{
                         utxoCoin: utxoCoin.toUpperCase(),
                         token: tokenWallet.tokenKey.toUpperCase(),

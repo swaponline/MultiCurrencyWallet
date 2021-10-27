@@ -39,11 +39,13 @@ export default class CurrencyList extends Component<any, any> {
           currency = 'btc'
       }
 
-      const firstUrlPart = tokenKey ? `/token/${tokenKey}` : `/${currency}`
+      const newPathName = `${tokenKey ? `/token/${tokenKey}` : `/${currency}`}/${address}/send`
 
-      history.push(
-        localisedUrl(locale, `${firstUrlPart}/${address}/send`)
-      )
+      if (history.location.pathname !== newPathName) {
+        history.push(
+          localisedUrl(locale, newPathName)
+        )
+      }
     })
   }
 
@@ -76,7 +78,6 @@ export default class CurrencyList extends Component<any, any> {
     const standard = selectedCurrency.itemCurrency?.standard
 
     return (
-      //@ts-ignore: strictNullChecks
       <OutsideClick outsideAction={this.closeList}>
         <div
           id='withdrawCurrencyList'
@@ -120,10 +121,10 @@ export default class CurrencyList extends Component<any, any> {
               const baseCurrency = item.baseCurrency
               const itemId = `${
                 baseCurrency ? baseCurrency.toLowerCase() : ''
-              }${item.currency.toLowerCase()}Send`
+              }${item.currency.toLowerCase()}`
 
               return (
-                <div id={itemId} key={index}
+                <div id={`${itemId}Send`} key={index}
                   styleName={cx('customSelectListItem customSelectValue', {
                     disabled: !item.balance || item.balanceError,
                   })}
@@ -144,7 +145,8 @@ export default class CurrencyList extends Component<any, any> {
    
                   <div styleName="amount">
                     <span>
-                      {item.balance} {getCurrencyKey(item.currency, true).toUpperCase()}
+                      <span id={`${itemId}CryptoBalance`}>{item.balance}</span>
+                      {getCurrencyKey(item.currency, true).toUpperCase()}
                     </span>
                     <span styleName="usd">
                       {item.infoAboutCurrency && item.infoAboutCurrency.price_fiat

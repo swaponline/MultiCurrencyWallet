@@ -1,39 +1,40 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import cx from 'classnames'
-
+import { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import { isMobile } from 'react-device-detect'
 import { connect } from 'redaction'
-
-import links from 'helpers/links'
 import actions from 'redux/actions'
-import { constants } from 'helpers'
-import config from 'helpers/externalConfig'
 import { injectIntl, FormattedMessage } from 'react-intl'
 
+import cx from 'classnames'
 import CSSModules from 'react-css-modules'
 import styles from './Header.scss'
 
 import Nav from './Nav/Nav'
 import NavMobile from './NavMobile/NavMobile'
-
 import Logo from './Logo/Logo'
+import ThemeSwitcher from './ThemeSwitcher'
+import WalletConnect from './WalletConnect'
 import TourPartial from './TourPartial/TourPartial'
 import WalletTour from './WalletTour/WalletTour'
 import { WidgetWalletTour } from './WidgetTours'
 
 import Loader from 'components/loaders/Loader/Loader'
-import { localisedUrl } from '../../helpers/locale'
-import { messages, getMenuItems, getMenuItemsMobile } from './config'
-import { user } from 'helpers'
-import ThemeSwitcher from './ThemeSwitcher'
 import Button from 'components/controls/Button/Button'
 // Incoming swap requests and tooltips (revert)
 import UserTooltip from 'components/Header/UserTooltip/UserTooltip'
-import feedback from 'shared/helpers/feedback'
-import wpLogoutModal from 'helpers/wpLogoutModal'
 
+
+import { getMenuItems, getMenuItemsMobile } from './config'
+import { localisedUrl } from 'helpers/locale'
+import {
+  metamask,
+  constants,
+  links,
+  user,
+  feedback,
+  wpLogoutModal,
+  externalConfig as config
+} from 'helpers'
 
 import Swap from 'swap.swap'
 import SwapApp from 'swap.app'
@@ -48,16 +49,11 @@ const isWidgetBuild = config && config.isWidget
   feeds: 'feeds.items',
   peer: 'pubsubRoom.peer',
   isInputActive: 'inputActive.isInputActive',
-  reputation: 'pubsubRoom.reputation',
   modals: 'modals',
   hiddenCoinsList: 'core.hiddenCoinsList',
 })
 @CSSModules(styles, { allowMultiple: true })
 class Header extends Component<any, any> {
-  static propTypes = {
-    history: PropTypes.object.isRequired,
-  }
-
   static getDerivedStateFromProps({
     history: {
       location: { pathname },
@@ -273,9 +269,7 @@ class Header extends Component<any, any> {
       userCurrencies = userCurrencies.filter(({ currency }) => widgetCurrencies.includes(currency))
     }
 
-    userCurrencies = userCurrencies.filter(({ currency }) =>
-      user.getActivatedCurrencies().includes(currency)
-    )
+    userCurrencies = user.filterUserCurrencyData(userCurrencies)
 
     switch (true) {
       case isWalletPage && !wasOnWalletLs:
@@ -287,7 +281,7 @@ class Header extends Component<any, any> {
       case isWidgetBuild && !wasOnWidgetWalletLs:
         tourEvent = this.openWidgetWalletTour
         break
-      case !userCurrencies.length && isWalletPage && !config.opts.plugins.backupPlugin:
+      case !metamask.isConnected() && !userCurrencies.length && isWalletPage && !config.opts.plugins.backupPlugin:
         this.openCreateWallet({ onClose: tourEvent })
         break
       default:
@@ -440,12 +434,15 @@ class Header extends Component<any, any> {
 
     const isLogoutPossible = window.isUserRegisteredAndLoggedIn
 
-    const logoRenderer = (
+    const flexebleHeaderRender = (
       <div styleName="flexebleHeader">
-        <div>
+        <div styleName="leftArea">
           <Logo />
+          {!isMobile && <Nav menu={menuItems} />}
         </div>
         <div styleName="rightArea">
+          {!config.isExtension && <WalletConnect />}
+
           {window.WPSO_selected_theme !== 'only_light' && window.WPSO_selected_theme !== 'only_dark' && (
             <ThemeSwitcher onClick={this.handleToggleTheme} />
           )}
@@ -476,7 +473,7 @@ class Header extends Component<any, any> {
     if (isMobile) {
       return (
         <header id="header-mobile" styleName="header-mobile" className="data-tut-widget-tourFinish">
-          {logoRenderer}
+          {flexebleHeaderRender}
           {createdWalletLoader && (
             <div styleName="loaderCreateWallet">
               <Loader
@@ -516,8 +513,7 @@ class Header extends Component<any, any> {
             />
           </div>
         )}
-        {logoRenderer}
-        <Nav menu={menuItems} />
+        {flexebleHeaderRender}
         {isPartialTourOpen && isExchange && (
           <div styleName="walletTour">
             <TourPartial isTourOpen={isPartialTourOpen} closeTour={this.closePartialTour} />

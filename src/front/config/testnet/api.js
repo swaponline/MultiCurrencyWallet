@@ -1,4 +1,7 @@
 export default {
+  zeroxRopsten: 'https://ropsten.api.0x.org',
+  oneinch: 'https://api.1inch.exchange/v3.0',
+  limitOrders: 'https://limit-orders.1inch.exchange/v1.0',
   horizon: 'https://horizon-testnet.stellar.org',
   blocktrail: 'https://api.blocktrail.com/v1/tBTC',
   bitpay: [
@@ -20,10 +23,8 @@ export default {
   // TODO: replace proxy link
   bscscanInvoices: 'https://invoices.swaponline.site/proxyetherscan-testnet',
   bscscan_ApiKey: 'WI4QEJSV19U3TF2H1DPQ2HR6712HW4MYKJ',
-  // not yet for testnet
-  maticscan: '',
-  polygon_ApiKey: '',
-  // ------------------
+  maticscan: 'https://api-testnet.polygonscan.com/api',
+  polygon_ApiKey: '8S2R45ZWG94HI7YK9RCXSK4VCASJ4XVA15',
   faucet: 'https://faucet.swaponline.site/testnet/',
   btc2FAProtected: 'https://2fa.swaponline.site',
   btcPin: 'https://2fapin.swaponline.site',

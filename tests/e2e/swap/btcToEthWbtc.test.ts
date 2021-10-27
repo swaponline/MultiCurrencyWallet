@@ -1,5 +1,4 @@
 import BigNumber from 'bignumber.js'
-import testWallets from '../../testWallets'
 
 import {
   createBrowser,
@@ -10,6 +9,7 @@ import {
   clickOn,
   takeScreenshot,
   timeOut,
+  testWallets,
 } from '../utils'
 
 const btcSellAmount = 0.005
@@ -87,15 +87,20 @@ describe('Swap e2e test', () => {
       expect(false).toBe(true)
     }
 
+    let makerBtcBalance = '0'
+    let makerTokenBalance = '0'
+
     try {
       console.log('SwapWIW -> Setup MM')
       await MakerPage.goto(`${MakerPage.url()}marketmaker/{ETH}WBTC`)
 
       await timeOut(3 * 1000)
 
-      var { btcBalance: makerBtcBalance, tokenBalance: makerTokenBalance } = await turnOnMM(MakerPage)
+      const { btcBalance, tokenBalance } = await turnOnMM(MakerPage)
+      makerBtcBalance = btcBalance
+      makerTokenBalance = tokenBalance
 
-      await MakerPage.goto( getExchangeUrl(MakerPage.url()) )
+      await MakerPage.goto(getExchangeUrl(MakerPage.url()))
       await clickOn({
         page: MakerPage,
         selector: '#orderbookBtn',
@@ -104,10 +109,13 @@ describe('Swap e2e test', () => {
       // find all maker orders
       const sellAmountOrders  = await MakerPage.$$eval('.sellAmountOrders', elements => elements.map(el => el.textContent))
       const buyAmountOrders   = await MakerPage.$$eval('.buyAmountOrders', elements => elements.map(el => el.textContent))
-      const mmOrders = [...sellAmountOrders, ...buyAmountOrders];
+      const mmOrders = [...sellAmountOrders, ...buyAmountOrders]
 
-      +makerBtcBalance ? expect(mmOrders).toContain(makerBtcBalance) : console.log('maker have not btc balance')
-      +makerTokenBalance ? expect(mmOrders).toContain(makerTokenBalance) : console.log('maker have not token balance')
+      if (+makerBtcBalance) expect(mmOrders).toContain(makerBtcBalance)
+      else console.log('maker have not btc balance')
+
+      if (+makerTokenBalance) expect(mmOrders).toContain(makerTokenBalance)
+      else console.log('maker have not token balance')
 
     } catch (error) {
       await takeScreenshot(MakerPage, 'MakerPage_BTC2(ETHEREUM)WBTC_SwapWIW_SetupMMError')
@@ -134,11 +142,15 @@ describe('Swap e2e test', () => {
 
       const allOrders = [
         ...btcOrders.map((amount) => amount && new BigNumber(amount).toFixed(5)),
-        ...wbtcOrders.map((amount) => amount && new BigNumber(amount).toFixed(5))
-      ];
+        ...wbtcOrders.map((amount) => amount && new BigNumber(amount).toFixed(5)),
+      ]
 
-      +makerBtcBalance ? expect(allOrders).toContain(makerBtcBalance) : console.log('maker have not btc balance')
-      +makerTokenBalance ? expect(allOrders).toContain(makerTokenBalance) : console.log('maker have not token balance')
+      if (+makerBtcBalance) expect(allOrders).toContain(makerBtcBalance)
+      else console.log('maker have not btc balance')
+
+      if (+makerTokenBalance) expect(allOrders).toContain(makerTokenBalance)
+      else console.log('maker have not token balance')
+
     } catch (error) {
       await takeScreenshot(MakerPage, 'MakerPage_BTC2(ETHEREUM)WBTC_SwapWIW_MessagingError')
       await takeScreenshot(TakerPage, 'TakerPage_BTC2(ETHEREUM)WBTC_SwapWIW_MessagingError')
@@ -185,22 +197,22 @@ describe('Swap e2e test', () => {
       await takeScreenshot(MakerPage, 'MakerPage_BTC2(ETHEREUM)WBTC_SwapWIW_SwapProgress0_firtsStepDoneIcon')
       await takeScreenshot(TakerPage, 'TakerPage_BTC2(ETHEREUM)WBTC_SwapWIW_SwapProgress0_firtsStepDoneIcon')
 
-      await TakerPage.waitForSelector('#utxoDepositHashLink', {timeout: 300 * 1000})
+      await TakerPage.waitForSelector('#utxoDepositHashLink', { timeout: 300 * 1000 })
 
       await takeScreenshot(MakerPage, 'MakerPage_BTC2(ETHEREUM)WBTC_SwapWIW_SwapProgress1_utxoDepositHashLink')
       await takeScreenshot(TakerPage, 'TakerPage_BTC2(ETHEREUM)WBTC_SwapWIW_SwapProgress1_utxoDepositHashLink')
 
-      await TakerPage.waitForSelector('#evmDepositHashLink', {timeout: 300 * 1000})
+      await TakerPage.waitForSelector('#evmDepositHashLink', { timeout: 300 * 1000 })
 
       await takeScreenshot(MakerPage, 'MakerPage_BTC2(ETHEREUM)WBTC_SwapWIW_SwapProgress2_evmDepositHashLink')
       await takeScreenshot(TakerPage, 'TakerPage_BTC2(ETHEREUM)WBTC_SwapWIW_SwapProgress2_evmDepositHashLink')
 
-      await TakerPage.waitForSelector('#evmWithdrawalHashLink', {timeout: 300 * 1000})
+      await TakerPage.waitForSelector('#evmWithdrawalHashLink', { timeout: 300 * 1000 })
 
       await takeScreenshot(MakerPage, 'MakerPage_BTC2(ETHEREUM)WBTC_SwapWIW_SwapProgress3_evmWithdrawalHashLink')
       await takeScreenshot(TakerPage, 'TakerPage_BTC2(ETHEREUM)WBTC_SwapWIW_SwapProgress3_evmWithdrawalHashLink')
 
-      await TakerPage.waitForSelector('#utxoWithdrawalHashLink', {timeout: 300 * 1000})
+      await TakerPage.waitForSelector('#utxoWithdrawalHashLink', { timeout: 300 * 1000 })
 
       await takeScreenshot(MakerPage, 'MakerPage_BTC2(ETHEREUM)WBTC_SwapWIW_SwapProgress4_utxoWithdrawalHashLink')
       await takeScreenshot(TakerPage, 'TakerPage_BTC2(ETHEREUM)WBTC_SwapWIW_SwapProgress4_utxoWithdrawalHashLink')
@@ -239,8 +251,8 @@ describe('Swap e2e test', () => {
 
       await timeOut(3 * 1000)
 
-      await selectSendCurrency({page: MakerPage, currency: 'btc'})
-      await selectSendCurrency({page: TakerPage, currency: 'ethwbtc'})
+      await selectSendCurrency({ page: MakerPage, currency: 'btc' })
+      await selectSendCurrency({ page: TakerPage, currency: 'ethwbtc' })
 
       await MakerPage.type('#toAddressInput', testWallets.btcToEthTokenMTaker.address)
       await TakerPage.type('#toAddressInput', testWallets.btcToEthTokenMMaker.ethAddress)
@@ -264,8 +276,8 @@ describe('Swap e2e test', () => {
         selector: '#sendButton',
       })
 
-      await MakerPage.waitForSelector('#txAmout', {timeout: 60 * 1000})
-      await TakerPage.waitForSelector('#txAmout', {timeout: 60 * 1000})
+      await MakerPage.waitForSelector('#txAmout', { timeout: 60 * 1000 })
+      await TakerPage.waitForSelector('#txAmout', { timeout: 60 * 1000 })
       const btcTxAmout  = await MakerPage.$eval('#txAmout', el => el.textContent)
       const wbtcTxAmout  = await TakerPage.$eval('#txAmout', el => el.textContent)
 

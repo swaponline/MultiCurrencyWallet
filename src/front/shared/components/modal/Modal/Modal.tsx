@@ -39,7 +39,7 @@ type ModalProps = {
   dashboardView: dashboardModalsAllowed,
 }))
 @cssModules(styles, { allowMultiple: true })
-export default class Modal extends Component<ModalProps, null> {
+export default class Modal extends Component<ModalProps, object> {
   static defaultProps = {
     data: {},
     whiteLogo: false,

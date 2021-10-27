@@ -262,10 +262,6 @@ class Row extends Component<RowProps, RowState> {
     })
   }
 
-  handleActivateProtected = async () => {
-    actions.modals.open(constants.modals.RegisterSMSProtected, {})
-  }
-
   handleActivatePinProtected = async () => {
     actions.modals.open(constants.modals.RegisterPINProtected, {})
   }
@@ -499,7 +495,7 @@ class Row extends Component<RowProps, RowState> {
             id: 10021,
             title: (
               <FormattedMessage
-                id="WalletRow_Menu_HowToWithdraw"
+                id="HowToWithdrawModal_Title"
                 defaultMessage="How to withdraw"
               />
             ),
@@ -621,7 +617,7 @@ class Row extends Component<RowProps, RowState> {
           title: (
             <FormattedMessage
               id="MetamaskDisconnect"
-              defaultMessage="Отключить кошелек"
+              defaultMessage="Disconnect wallet"
             />
           ),
           action: metamask.handleDisconnectWallet,
@@ -673,36 +669,6 @@ class Row extends Component<RowProps, RowState> {
       && multisigStatus[itemData.address]
       && multisigStatus[itemData.address].count
     ) ? multisigStatus[itemData.address].count : false
-
-    if (
-      itemData.isSmsProtected &&
-      !itemData.isRegistered
-    ) {
-      statusInfo = 'Not activated'
-      showBalance = false
-      nodeDownErrorShow = false
-      dropDownMenuItems = [
-        {
-          id: 1,
-          title: (
-            <FormattedMessage
-              id="WalletRow_Menu_ActivateSMSProtected"
-              defaultMessage="Activate"
-            />
-          ),
-          action: this.handleActivateProtected,
-          disabled: false,
-        },
-        {
-          id: 1011,
-          title: (
-            <FormattedMessage id="WalletRow_Menu_Hide" defaultMessage="Hide" />
-          ),
-          action: this.hideCurrency,
-          disabled: false,
-        },
-      ]
-    }
 
     if (itemData.isUserProtected) {
       if (!itemData.active) {
@@ -842,7 +808,7 @@ class Row extends Component<RowProps, RowState> {
                       isNotAvailableMetamaskNetwork
                         ? (
                           <Button small empty onClick={metamask.handleDisconnectWallet}>
-                            <FormattedMessage id="MetamaskDisconnect" defaultMessage="Отключить кошелек" />
+                            <FormattedMessage id="MetamaskDisconnect" defaultMessage="Disconnect wallet" />
                           </Button>
                         )
                         : !isBalanceFetched || isBalanceFetching ? (

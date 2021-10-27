@@ -66,9 +66,34 @@
   .selectedItem {
     @include ff-bold;
   }
+}
 
+.simplestDropdown {
+  display: flex;
+
+  // when drop down is opened
   .select {
-    overflow: hidden;
+    right: auto;
+    border: none;
+    box-shadow: var(--box-shadow);
+  }
+
+  .dropDownItem {
+    height: 2.5em;
+    padding-left: 2em;
+    line-height: 2.5em;
+  }
+
+  .selectedItem {
+    height: 57px;
+  }
+
+  &.active {
+    border-color: transparent;
+
+    .selectedItem {
+      height: 57px;
+    }
   }
 }
 
@@ -84,7 +109,7 @@
 }
 
 .smallTooltip {
-  >span {
+  > span {
     display: flex;
     justify-content: center;
     position: absolute;
@@ -205,7 +230,6 @@
   max-height: 160px;
   background-color: var(--color-background-elements);
   position: absolute;
-  right: -1;
   top: 0;
   overflow-x: hidden;
   overflow-y: auto;
@@ -242,7 +266,6 @@
 }
 
 @include media-mobile {
-
   .fullTitle {
     font-size: 14px;
   }

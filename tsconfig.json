@@ -15,7 +15,7 @@
     "noImplicitAny": false,
     "strictNullChecks": true,
     "experimentalDecorators": true,
-    "jsx": "react",
+    "jsx": "react-jsx",
     "types": ["jest", "node"],
     "lib": ["dom", "esnext"],
     "paths": {
@@ -66,5 +66,6 @@
     }
   },
   "include": ["src/**/*", "tests"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
+  "typeRoots": ["node_modules/@0x/typescript-typings/types", "node_modules/@types"]
 }

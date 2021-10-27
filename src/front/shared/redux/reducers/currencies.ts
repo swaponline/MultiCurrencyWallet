@@ -2,7 +2,6 @@ import config from 'app-config'
 import TOKEN_STANDARDS from 'helpers/constants/TOKEN_STANDARDS'
 import { BLOCKCHAIN as BLOCKCHAIN_TYPE } from 'swap.app/constants/COINS'
 
-
 const NETWORK = process.env.MAINNET ? 'mainnet' : 'testnet'
 
 const getCustomTokenConfig = () => {
@@ -467,7 +466,6 @@ const deletedPartialCurrency = (state, payload) => ({
   ...state,
   partialItems: state.partialItems.filter(item => item.name !== payload),
 })
-
 
 export {
   initialState,

@@ -15,7 +15,7 @@ import "scss/app.scss";
 
 import { createSwapApp } from "instances/newSwap";
 import Core from "containers/Core/Core";
-
+import Transactions from 'containers/Transactions'
 import ErrorBoundary from 'components/ErrorBoundary'
 import Header from "components/Header/Header";
 import Footer from "components/Footer/Footer";
@@ -30,25 +30,12 @@ import Seo from "components/Seo/Seo";
 import config from "helpers/externalConfig"
 import { routing, links, utils } from 'helpers'
 import backupUserData from 'plugins/backupUserData'
-import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
-
+import { FormattedMessage, injectIntl } from 'react-intl'
 import metamask from 'helpers/metamask'
 
 
-const userLanguage = (navigator.userLanguage || navigator.language || "en-gb").split("-")[0];
+const userLanguage = utils.getCookie('mylang') || "en"
 moment.locale(userLanguage)
-
-
-const metamaskNetworks = defineMessages({
-  mainnet: {
-    id: `MetamaskNetworkAlert_NetworkMainnet`,
-    defaultMessage: `Ethereum (Mainnet) or Binance Smart Chain (Mainnet)`,
-  },
-  testnet: {
-    id: `MetamaskNetworkAlert_NetworkTestnet`,
-    defaultMessage: `Ethereum (Rinkeby) or Binance Smart Chain (Testnet)`,
-  },
-})
 
 @withRouter
 @connect(({ currencies: { items: currencies }, modals, ui: { dashboardModalsAllowed } }) => ({
@@ -137,7 +124,7 @@ class App extends React.Component<RouteComponentProps<any>, any> {
 
         if (appID !== switchId) {
           //@ts-ignore
-          if (chrome && chrome.extension) {
+          if (window?.chrome?.extension) {
             //@ts-ignore
             const extViews = chrome.extension.getViews()
             //@ts-ignore
@@ -166,23 +153,18 @@ class App extends React.Component<RouteComponentProps<any>, any> {
   }
 
   popupIncorrectNetwork() {
-    //@ts-ignore
-    const { intl } = this.props
-
-    //@ts-ignore: strictNullChecks
     actions.modals.open(constants.modals.AlertModal, {
       title: (
         <FormattedMessage 
           id="MetamaskNetworkAlert_Title"
-          defaultMessage="Внимание"
+          defaultMessage="Warning"
         />
       ),
       message: (
         <FormattedMessage
           id="MetamaskNetworkAlert_Message"
-          defaultMessage="Для продолжения выберите в кошельке {walletTitle} &quot;{network}&quot; или отключите кошелек"
+          defaultMessage='Wrong network, please switch to another network in {walletTitle} (or disconnect wallet).'
           values={{
-            network: intl.formatMessage(metamaskNetworks[config.entry]),
             walletTitle: metamask.web3connect.getProviderTitle(),
           }}
         />
@@ -190,7 +172,7 @@ class App extends React.Component<RouteComponentProps<any>, any> {
       labelOk: (
         <FormattedMessage
           id="MetamaskNetworkAlert_OkDisconnectWallet"
-          defaultMessage="Отключить внешний кошелек"
+          defaultMessage="Disconnect external wallet"
         />
       ),
       dontClose: true,
@@ -205,19 +187,19 @@ class App extends React.Component<RouteComponentProps<any>, any> {
   async processMetamask () {
     await metamask.web3connect.onInit(() => {
       const _checkChain = () => {
-        if (metamask.isCorrectNetwork()) {
-          actions.modals.close(constants.modals.AlertModal)
-        } else {
+        const wrongNetwork = metamask.isConnected() && !metamask.isCorrectNetwork()
+
+        if (wrongNetwork) {
           this.popupIncorrectNetwork()
+        } else {
+          actions.modals.close(constants.modals.AlertModal)
         }
       }
 
       metamask.web3connect.on('chainChanged', _checkChain)
       metamask.web3connect.on('connected', _checkChain)
 
-      if (metamask.isConnected()
-        && !metamask.isCorrectNetwork()
-      ) {
+      if (metamask.isConnected() && !metamask.isCorrectNetwork()) {
         this.popupIncorrectNetwork()
       }
     })
@@ -335,6 +317,7 @@ class App extends React.Component<RouteComponentProps<any>, any> {
       setTimeout(() => {
         this.completeAppCreation().then(() => {
           this.setState(() => ({
+            completeCreation: false,
             initialFetching: false,
           }))
         })
@@ -350,10 +333,9 @@ class App extends React.Component<RouteComponentProps<any>, any> {
       await createSwapApp()
     }
 
-    this.setState(() => ({
-      initialFetching: false,
-      completeCreation: false,
-    }))
+    if (config.entry === 'mainnet') { 
+      await actions.oneinch.fetchUserOrders()
+    }
 
     console.groupEnd()
   }
@@ -470,7 +452,7 @@ class App extends React.Component<RouteComponentProps<any>, any> {
       return <PreventMultiTabs onSwitchTab={this.handleSwitchTab} />
     }
 
-    if (isFetching && localStorage.getItem('isWalletCreate') === null) {
+    if (isFetching) {
       return (
         <Loader 
           showMyOwnTip={
@@ -487,20 +469,21 @@ class App extends React.Component<RouteComponentProps<any>, any> {
         {!isSeoDisabled &&
           <Seo location={history.location} />
         }
-        {/* @ts-ignore */}
         <ErrorBoundary>
-          {/* @ts-ignore */}
-          <WidthContainer id="swapComponentWrapper" styleName="headerAndMain">
-            <Header />
-            <main>{children}</main>
-          </WidthContainer>
-          <Core />
-          <Footer />
-          <RequestLoader />
-          {!dashboardModalsAllowed &&
-            <ModalConductor history={history}
-          />}
-          <NotificationConductor history={history} />
+          <Transactions>
+            {/* @ts-ignore */}
+            <WidthContainer id="swapComponentWrapper" styleName="headerAndMain">
+              <Header />
+              <main>{children}</main>
+            </WidthContainer>
+            <Core />
+            <Footer />
+            <RequestLoader />
+            {!dashboardModalsAllowed &&
+              <ModalConductor history={history}
+            />}
+            <NotificationConductor history={history} />
+          </Transactions>
         </ErrorBoundary>
       </div>
     </HashRouter>;

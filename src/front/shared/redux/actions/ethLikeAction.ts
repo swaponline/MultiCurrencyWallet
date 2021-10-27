@@ -20,7 +20,7 @@ class EthLikeAction {
   readonly explorerName: string
   readonly explorerLink: string
   readonly explorerApiKey: string
-  readonly chainId: number
+  readonly chainId: string
   readonly adminFeeObj: {
     fee: string // percent of amount
     address: string // where to send
@@ -60,9 +60,13 @@ class EthLikeAction {
     return this.getCurrentWeb3()
   }
 
-  reportError = (error) => {
+  reportError = (error, details = '') => {
     feedback.actions.failed(
-      ''.concat(`details - ticker: ${this.ticker}, `, `error message - ${error.message} `)
+      ''.concat(
+        `Details => ticker: ${this.ticker}`,
+        details ? `, ${details}` : '',
+        ` | Error - ${error} `
+      )
     )
     console.group(`Actions >%c ${this.ticker}`, 'color: red;')
     console.error('error: ', error)
@@ -282,7 +286,7 @@ class EthLikeAction {
                 }
               })
               .catch((error) => {
-                this.reportError(error)
+                this.reportError(error, 'part: getTransaction')
                 resolve([])
               })
           } else {
@@ -352,32 +356,65 @@ class EthLikeAction {
     return balance > 0
   }
 
-  send = async (params): Promise<{ transactionHash: string }> => {
-    let { to, amount, gasPrice, gasLimit, speed } = params
+  estimateGas = async (txData): Promise<string> => {
+    const web3 = this.getCurrentWeb3()
+    const multiplierForGasReserve = 1.05
+
+    try {
+      const limit = await web3.eth.estimateGas(txData)
+      const hexLimitWithPercentForSuccess = new BigNumber(
+        new BigNumber(limit).multipliedBy(multiplierForGasReserve).toFixed(0)
+      ).toString(16)
+
+      return '0x' + hexLimitWithPercentForSuccess
+    } catch (error) {
+      this.reportError(error, 'estimateGas')
+
+      return error
+    }
+  }
+
+  isValidGasLimit = (limit) => {
+    return typeof limit === 'number' || (typeof limit === 'string' && limit.match(/^0x[0-9a-f]+$/i))
+  }
+
+  send = async (params): Promise<{ transactionHash: string } | Error> => {
+    let { to, amount = 0, gasPrice, gasLimit: customGasLimit, speed, data, waitReceipt = false } = params
 
     const Web3 = this.getCurrentWeb3()
     const ownerAddress = metamask.isConnected() ? metamask.getAddress() : getState().user[`${this.tickerKey}Data`].address
     const recipientIsContract = await this.isContract(to)
 
     gasPrice = gasPrice || (await ethLikeHelper[this.tickerKey].estimateGasPrice({ speed }))
-    gasLimit =
-      gasLimit ||
-      (recipientIsContract
-        ? DEFAULT_CURRENCY_PARAMETERS.evmLike.limit.contractInteract
-        : DEFAULT_CURRENCY_PARAMETERS.evmLike.limit.send)
-
-    if (this.ticker === 'ARBETH') {
-      gasLimit = DEFAULT_CURRENCY_PARAMETERS.arbeth.limit.send
-    }
+    const defaultGasLimit = recipientIsContract
+      ? DEFAULT_CURRENCY_PARAMETERS.evmLike.limit.contractInteract
+      : DEFAULT_CURRENCY_PARAMETERS.evmLike.limit.send
 
     let sendMethod = Web3.eth.sendTransaction
     let txData: any = {
-      chainId: this.chainId,
+      data: data || undefined,
+      chainId: Number(this.chainId),
       from: Web3.utils.toChecksumAddress(ownerAddress),
       to: to.trim(),
       gasPrice,
-      gas: gasLimit,
+      gas: '0x00',
       value: Web3.utils.toHex(Web3.utils.toWei(String(amount), 'ether')),
+    }
+
+    if (customGasLimit) {
+      txData.gas = customGasLimit
+    } else {
+      const result: any = await this.estimateGas(txData)
+
+      // the calculation failed which means this transaction
+      // will be failed in the blockchain
+      if (result instanceof Error) return result
+
+      if (this.isValidGasLimit(result)) {
+        txData.gas = result
+      } else {
+        txData.gas = defaultGasLimit
+      }
     }
 
     const privateKey = this.getPrivateKeyByAddress(ownerAddress)
@@ -395,30 +432,38 @@ class EthLikeAction {
 
     return new Promise((res, rej) => {
       const receipt = sendMethod(txData)
-        .on('transactionHash', (hash) => res({ transactionHash: hash }))
+        .on('transactionHash', (hash) => {
+          reducers.transactions.addTransactionToQueue({
+            networkCoin: this.ticker,
+            hash,
+          })
+
+          if (!waitReceipt) {
+            res({ transactionHash: hash })
+          }
+        })
+        .on('receipt', (receipt) => waitReceipt && res(receipt))
         .on('error', (error) => rej(error))
 
       if (this.adminFeeObj && !walletData.isMetamask) {
         receipt.then(() => {
           this.sendAdminTransaction({
-            from: txData.from,
+            from: Web3.utils.toChecksumAddress(ownerAddress),
             amount,
             gasPrice,
-            gasLimit,
-            privateKey,
+            defaultGasLimit,
           })
         })
       }
     })
   }
 
-  sendAdminTransaction = async (params): Promise<string> => {
+  sendAdminTransaction = async (params) => {
     const {
       from,
       amount,
       gasPrice,
-      gasLimit,
-      privateKey,
+      defaultGasLimit,
       externalAdminFeeObj,
     } = params
     const adminObj = externalAdminFeeObj || this.adminFeeObj
@@ -434,27 +479,84 @@ class EthLikeAction {
       feeFromUsersAmount = minAmount.toNumber()
     }
 
+    const remainingBalance = await this.fetchBalance(from)
+
+    if (new BigNumber(remainingBalance).isLessThan(feeFromUsersAmount)) {
+      return
+    }
+
     const txData = {
-      chainId: this.chainId,
+      chainId: Number(this.chainId),
       from: Web3.utils.toChecksumAddress(from),
       to: adminObj.address.trim(),
       gasPrice,
-      gas: gasLimit,
+      gas: '0x00',
       value: Web3.utils.toHex(
         Web3.utils.toWei(String(feeFromUsersAmount),
         'ether'
       )),
     }
 
-    return new Promise(async (res) => {
-      const signedData = await Web3.eth.accounts.signTransaction(txData, privateKey)
+    const limit = await this.estimateGas(txData)
 
-      Web3.eth.sendSignedTransaction(signedData.rawTransaction)
+    if (this.isValidGasLimit(limit)) {
+      txData.gas = limit
+    } else {
+      txData.gas = defaultGasLimit
+    }
+
+    return this.sendReadyTransaction({ data: txData, toAdmin: true })
+  }
+
+  sendReadyTransaction = async (params) => {
+    let { data, waitReceipt = false, toAdmin = false } = params
+    const Web3 = this.getCurrentWeb3()
+    const ownerAddress = metamask.isConnected()
+      ? metamask.getAddress()
+      : getState().user[`${this.tickerKey}Data`].address
+
+    let sendMethod = Web3.eth.sendTransaction
+
+    const walletData = actions.core.getWallet({
+      address: ownerAddress,
+      currency: this.ticker,
+    })
+
+    if (!walletData?.isMetamask) {
+      const privateKey = this.getPrivateKeyByAddress(ownerAddress)
+      const signedData = await Web3.eth.accounts.signTransaction(data, privateKey)
+
+      data = signedData.rawTransaction
+      sendMethod = Web3.eth.sendSignedTransaction
+    }
+
+    return new Promise((res, rej) => {
+      sendMethod(data)
+        .on('receipt', (receipt) => {
+          if (waitReceipt) res(receipt)
+        })
         .on('transactionHash', (hash) => {
-          console.group('%c Admin commission is sended', 'color: green;')
-          console.log('tx hash', hash)
+          console.group('%c tx hash', 'color: green;')
+          console.log(hash)
           console.groupEnd()
-          res(hash)
+
+          if (!toAdmin && !waitReceipt) {
+            reducers.transactions.addTransactionToQueue({
+              networkCoin: this.ticker,
+              hash,
+            })
+          }
+
+          if (!waitReceipt) res(hash)
+        })
+        .on('error', (error) => {
+          const isRejected = JSON.stringify(error).match(/([Dd]enied transaction|[Cc]ance(ll|l)ed)/)
+
+          if (!isRejected) {
+            this.reportError(error, 'part: sendReadyTransaction')
+          }
+
+          res(false)
         })
     })
   }
@@ -476,9 +578,6 @@ class EthLikeAction {
 
     return !codeIsEmpty
   }
-
-  // ! Delete from project. Temporary
-  getReputation = () => Promise.resolve(0)
 }
 
 export default {
@@ -510,7 +609,7 @@ export default {
     ticker: 'MATIC',
     privateKeyName: 'eth',
     chainId: externalConfig.evmNetworks.MATIC.chainId,
-    explorerName: 'explorer-mumbai',
+    explorerName: 'maticscan',
     explorerLink: externalConfig.link.maticscan,
     explorerApiKey: externalConfig.api.polygon_ApiKey,
     adminFeeObj: externalConfig.opts?.fee?.matic,

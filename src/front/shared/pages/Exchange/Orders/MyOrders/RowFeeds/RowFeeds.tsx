@@ -91,7 +91,7 @@ class RowFeeds extends Component<any, any> {
             {Boolean(requests && requests.length) ?
               <div>
                 <div styleName="delete" onClick={() => declineRequest(id, requests[0].participant.peer)} >
-                  <FormattedMessage id="RowFeeds77" defaultMessage="Decline" />
+                  <FormattedMessage id="RowHistoryCancelInvoice" defaultMessage="Decline" />
                 </div>
                 <Link to={swapUri}>
                   <div styleName="accept" onClick={() => acceptRequest(id, requests[0].participant.peer)} >

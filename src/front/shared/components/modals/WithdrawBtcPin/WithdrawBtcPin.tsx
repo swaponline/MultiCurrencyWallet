@@ -1,5 +1,4 @@
 import React, { Fragment } from 'react'
-import PropTypes from 'prop-types'
 import helpers from 'helpers'
 import actions from 'redux/actions'
 import Link from 'local_modules/sw-valuelink'
@@ -100,21 +99,31 @@ const langs = defineMessages({
   },
 })
 
+type ComponentProps = {
+  name: string
+  data: IUniversalObj
+  intl: IUniversalObj
+  onClose?: () => void
+}
+
+type ComponentState = {
+  pinCode: string
+  mnemonic: string
+  isShipped: boolean
+  isMnemonicValid: boolean
+  serverOffline: boolean
+  useMnemonic: boolean
+  error: false | JSX.Element
+}
+
 @connect(({ user: { btcData, btcMultisigPinData } }) => ({
   btcData,
   btcMultisigPinData,
 }))
 @cssModules({ ...styles, ...ownStyle }, { allowMultiple: true })
-class WithdrawBtcPin extends React.Component<any, any> {
-  static propTypes = {
-    name: PropTypes.string,
-    data: PropTypes.object,
-  }
-
+class WithdrawBtcPin extends React.Component<ComponentProps, ComponentState> {
   constructor(props) {
     super(props)
-
-    const { wallet, invoice, sendOptions, beforeBalances } = props.data
 
     this.state = {
       pinCode: '',
@@ -149,6 +158,10 @@ class WithdrawBtcPin extends React.Component<any, any> {
     }
 
     actions.modals.close(name)
+  }
+
+  handleCancel = () => {
+    window.history.back()
   }
 
   handleSendMnemonic = async () => {
@@ -247,8 +260,6 @@ class WithdrawBtcPin extends React.Component<any, any> {
         data: txInfoCache,
       })
 
-      helpers.transactions.pullTxBalances(txId, amount, beforeBalances, adminFee)
-
       actions.loader.hide()
       actions.btcmultisig.getBalancePin()
       if (invoice) {
@@ -298,22 +309,16 @@ class WithdrawBtcPin extends React.Component<any, any> {
 
   render() {
     const {
-      pinCode,
       error,
       isShipped,
-      mnemonic,
-      isMnemonicValid,
       serverOffline,
       useMnemonic,
     } = this.state
-
-    const step = ''
 
     const { name, intl } = this.props
     const linked = Link.all(this, 'pinCode')
 
     return (
-      //@ts-ignore: strictNullChecks
       <Modal name={name} title={`${intl.formatMessage(langs.title)}`}>
         <div styleName="confirmPINModalHolder">
           {!useMnemonic && (
@@ -349,8 +354,6 @@ class WithdrawBtcPin extends React.Component<any, any> {
                     </Fragment>
                   )}
                 </Button>
-                {/*
-                //@ts-ignore */}
                 <Button blue disabled={isShipped} onClick={this.handleCancel}>
                   <FormattedMessage {...langs.cancelButton} />
                 </Button>
@@ -397,8 +400,6 @@ class WithdrawBtcPin extends React.Component<any, any> {
                     </Fragment>
                   )}
                 </Button>
-                {/*
-                //@ts-ignore */}
                 <Button blue disabled={isShipped} onClick={this.handleCancel}>
                   <FormattedMessage {...langs.cancelButton} />
                 </Button>

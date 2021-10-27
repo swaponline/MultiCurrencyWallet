@@ -27,11 +27,11 @@ export default class NotificationConductor extends Component<any, any> {
     return areNotificationsExist && (
       <div styleName="notificationConductor">
         {
-          notificationNames.map((key) => {
+          notificationNames.map((key, index) => {
             const { name, data = {} } = notifications[key]
 
             return React.createElement(Notifications[name], {
-              key: name,
+              key: index,
               name,
               data,
               history,

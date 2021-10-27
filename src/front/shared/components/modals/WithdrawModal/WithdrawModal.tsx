@@ -224,8 +224,10 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
 
   componentWillUnmount() {
     this.mounted = false
-    //@ts-ignore: strictNullChecks
-    clearTimeout(this.btcFeeTimer)
+
+    if (this.btcFeeTimer) {
+      clearTimeout(this.btcFeeTimer)
+    }
   }
 
   componentDidMount() {
@@ -344,7 +346,6 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
       selectedItem: {
         address,
         isUserProtected,
-        isSmsProtected,
         isPinProtected,
       },
       currentDecimals,
@@ -353,7 +354,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
 
     let method = `send`
     if (isUserProtected) method = `send_multisig`
-    if (isSmsProtected || isPinProtected) method = `send_2fa`
+    if (isPinProtected) method = `send_2fa`
 
     const numAmount = Number(amount) || 0
 
@@ -387,27 +388,27 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
     }
   }
 
-  setBtcUserFee = (speedType: string, customValue?: number) => {
+  setBtcUserFee = (speedType: string, customValue: number) => {
     const { bitcoinFees, txSize, currentDecimals } = this.state
     const feeInByte = speedType === 'custom' ?
-      //@ts-ignore: strictNullChecks
       new BigNumber(customValue) :
-      //@ts-ignore: strictNullChecks
       new BigNumber(bitcoinFees[speedType]).div(1024).dp(0, BigNumber.ROUND_HALF_EVEN);
 
     //@ts-ignore: strictNullChecks
     const fee = feeInByte.multipliedBy(txSize).multipliedBy(1e-8);
 
-    this.setState((state) => ({
-      bitcoinFeeSpeedType: speedType,
-      btcFeeRate: feeInByte.toNumber(),
-      fees: {
-        ...state.fees,
-        miner: fee,
-        total: state.fees.service.plus(fee).dp(currentDecimals, BigNumber.ROUND_CEIL),
-      }
-    }))
-    this.setAlowedBalances()
+    if (this.mounted) {
+      this.setState((state) => ({
+        bitcoinFeeSpeedType: speedType,
+        btcFeeRate: feeInByte.toNumber(),
+        fees: {
+          ...state.fees,
+          miner: fee,
+          total: state.fees.service.plus(fee).dp(currentDecimals, BigNumber.ROUND_CEIL),
+        }
+      }))
+      this.setAllowedBalances()
+    }
   }
 
   setCommissions = async () => {
@@ -425,7 +426,6 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
     const adminFeeSize = usedAdminFee ? adminFee.calc(currency, amount) : 0
     let newMinerFee = new BigNumber(0)
 
-    if (!this.mounted) return
     this.setState({ fetchFee: true })
 
     try {
@@ -447,7 +447,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
       else if (COINS_WITH_DYNAMIC_FEE.includes(currentCoin)) {
         let method = 'send'
         if (selectedItem.isUserProtected) method = 'send_multisig'
-        if (selectedItem.isPinProtected || selectedItem.isSmsProtected) method = 'send_2fa'
+        if (selectedItem.isPinProtected) method = 'send_2fa'
 
         newMinerFee = new BigNumber(await helpers[currentCoin].estimateFeeValue({
           method,
@@ -463,16 +463,18 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
         }
       }
 
-      this.setState((state) => ({
-        fees: {
-          ...state.fees,
-          miner: newMinerFee,
-          service: new BigNumber(adminFeeSize).dp(currentDecimals, BigNumber.ROUND_CEIL),
-          total: newMinerFee.plus(adminFeeSize).dp(currentDecimals, BigNumber.ROUND_CEIL),
-          adminFeeSize: new BigNumber(adminFeeSize),
-        },
-      }))
-      this.setAlowedBalances()
+      if (this.mounted) {
+        this.setState((state) => ({
+          fees: {
+            ...state.fees,
+            miner: newMinerFee,
+            service: new BigNumber(adminFeeSize).dp(currentDecimals, BigNumber.ROUND_CEIL),
+            total: newMinerFee.plus(adminFeeSize).dp(currentDecimals, BigNumber.ROUND_CEIL),
+            adminFeeSize: new BigNumber(adminFeeSize),
+          },
+        }))
+        this.setAllowedBalances()
+      }
     } catch (error) {
       this.reportError(error)
     } finally {
@@ -527,13 +529,13 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
       return
     }
 
-    if (selectedItem.isPinProtected || selectedItem.isSmsProtected || selectedItem.isUserProtected) {
+    if (selectedItem.isPinProtected || selectedItem.isUserProtected) {
       let nextStepModal = constants.modals.WithdrawBtcPin
-      if (selectedItem.isSmsProtected) nextStepModal = constants.modals.WithdrawBtcSms
+
       if (selectedItem.isUserProtected) nextStepModal = constants.modals.WithdrawBtcMultisig
 
       actions.modals.close(name)
-      //@ts-ignore: strictNullChecks
+
       actions.modals.open(nextStepModal, {
         wallet: selectedItem,
         invoice,
@@ -553,9 +555,11 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
           await actions.invoices.markInvoice(invoice.id, 'ready', txRaw, address)
         }
 
-        this.setState({
-          isShipped: false
-        })
+        if (this.mounted) {
+          this.setState(() => ({
+            isShipped: false
+          }))
+        }
 
         if (onReady instanceof Function) {
           onReady()
@@ -564,11 +568,6 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
         // Redirect to tx
         const txInfo = helpers.transactions.getInfo(reduxActionName, txRaw)
         const { tx: txId } = txInfo
-
-        // Не используем await. Сбрасываем статистику по транзакции (final balance)
-        // Без блокировки клиента
-        // Результат и успешность запроса критического значения не имеют
-        helpers.transactions.pullTxBalances(txId, amount, false, adminFee)
 
         // Сохраняем транзакцию в кеш
         const txInfoCache = {
@@ -623,9 +622,12 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
         }
 
         this.reportError(error, `selected item: ${selectedItem.fullName} | custom message: ${customError.message.defaultMessage}`)
-        this.setState(() => ({
-          isShipped: false,
-        }))
+        
+        if (this.mounted) {
+          this.setState(() => ({
+            isShipped: false
+          }))
+        }
       })
   }
 
@@ -653,10 +655,8 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
   }
 
   openScan = () => {
-    const { openScanCam } = this.state
-
-    this.setState(() => ({
-      openScanCam: !openScanCam,
+    this.setState((state) => ({
+      openScanCam: !state.openScanCam,
     }))
   }
 
@@ -669,7 +669,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
       this.openScan()
     }
   }
-  // (value: any) => void' is not assignable to parameter of type Transform<string>
+
   handleAmount = (value): any => {
     const {
       selectedCurrency,
@@ -682,8 +682,10 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
     } = this.state
 
     if (isBTC) {
-      //@ts-ignore: strictNullChecks
-      clearTimeout(this.btcFeeTimer)
+      if (this.btcFeeTimer) {
+        clearTimeout(this.btcFeeTimer)
+      }
+
       this.btcFeeTimer = setTimeout(() => {
         this.fetchBtcFee()
       }, 2000)
@@ -725,7 +727,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
     })
   }
 
-  setAlowedBalances = () => {
+  setAllowedBalances = () => {
     const {
       selectedItem,
       usedAdminFee,
@@ -851,7 +853,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
     const tableRows = user.filterUserCurrencyData(actions.core.getWallets())
     const activeCryptoCurrency = getCurrencyKey(selectedCurrency.currency, true).toUpperCase()
     const selectedValueView = getCurrencyKey(selectedValue, true).toUpperCase()
-    const criptoCurrencyHaveInfoPrice = this.returnHaveInfoPrice({
+    const cryptoCurrencyHaveInfoPrice = this.returnHaveInfoPrice({
       arrOfCurrencies: tableRows,
     })
     const notEnoughForTokenMinerFee = new BigNumber(walletForTokenFee?.balance).isLessThan(fees.miner)
@@ -864,7 +866,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
       !!ownTx ||
       !this.addressIsCorrect() ||
       selectedItem.isToken && notEnoughForTokenMinerFee ||
-      new BigNumber(amount).isGreaterThan(balances.balance) ||
+      new BigNumber(amount).plus(fees.total).isGreaterThan(balances.balance) ||
       new BigNumber(amount).dp() > currentDecimals
 
 
@@ -973,7 +975,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
         <div styleName="lowLevel" style={{ marginBottom: '30px' }}>
           {/* why style ? see tip for max button */}
           <div style={usedAdminFee ? { right: '20px' } : undefined} styleName="additionalСurrencies">
-            {criptoCurrencyHaveInfoPrice && <>
+            {cryptoCurrencyHaveInfoPrice && <>
                 <span
                   styleName={cx('additionalСurrenciesItem', {
                     additionalСurrenciesItemActive: selectedValue.toUpperCase() === activeFiat,
@@ -997,7 +999,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
           </div>
           {/* why style ? see tip for max button */}
           <p style={usedAdminFee ? { right: '10px' } : undefined} styleName='balance'>
-            {new BigNumber(amount).isGreaterThan(0) && criptoCurrencyHaveInfoPrice && (
+            {new BigNumber(amount).isGreaterThan(0) && cryptoCurrencyHaveInfoPrice && (
               <FormattedMessage
                 {...labels[
                   selectedValue !== activeFiat
@@ -1019,7 +1021,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
           </p>
 
           <FieldLabel>
-            <FormattedMessage id="Withdrow118" defaultMessage="Amount" />
+            <FormattedMessage id="orders102" defaultMessage="Amount" />
           </FieldLabel>
           <div styleName="group">
             <Input
@@ -1043,7 +1045,6 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
                   </Button>
                 </div>
                 {!isMobile && (
-                  //@ts-ignore: strictNullChecks
                   <Tooltip id="Withdrow134" place="top" mark={false}>
                     <FormattedMessage
                       id="WithdrawButton32"
@@ -1140,7 +1141,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
               onClick={this.handleSubmit}
             >
               <Fragment>
-                <FormattedMessage id="WithdrawModal111" defaultMessage="Send" />{' '}
+                <FormattedMessage id="withdrowTitle271" defaultMessage="Send" />{' '}
                 {`${currency.toUpperCase()}`}
               </Fragment>
             </Button>
@@ -1192,35 +1193,32 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
           </Fragment>
         )}
         {dashboardView && (
-          <>
-            <div style={{ paddingTop: '2em' }}>
-              <FeeInfoBlock
-                isToken={selectedItem.isToken}
-                currency={currency}
-                currentDecimals={currentDecimals}
-                activeFiat={activeFiat}
-                dataCurrency={commissionCurrency}
-                exchangeRateForTokens={exchangeRateForTokens}
-                exCurrencyRate={exCurrencyRate}
-                feeCurrentCurrency={btcFeeRate}
-                isLoading={fetchFee}
-                usedAdminFee={usedAdminFee}
-                hasTxSize={isBTCWallet}
-                txSize={txSize}
-                bitcoinFees={bitcoinFees}
-                bitcoinFeeSpeedType={bitcoinFeeSpeedType}
-                setBitcoinFee={this.setBtcUserFee}
-                minerFee={fees.miner}
-                serviceFee={fees.service}
-              />
-            </div>
-          </>
+          <div style={{ paddingTop: '2em' }}>
+            <FeeInfoBlock
+              isToken={selectedItem.isToken}
+              currency={currency}
+              currentDecimals={currentDecimals}
+              activeFiat={activeFiat}
+              dataCurrency={commissionCurrency}
+              exchangeRateForTokens={exchangeRateForTokens}
+              exCurrencyRate={exCurrencyRate}
+              feeCurrentCurrency={btcFeeRate}
+              isLoading={fetchFee}
+              usedAdminFee={usedAdminFee}
+              hasTxSize={isBTCWallet}
+              txSize={txSize}
+              bitcoinFees={bitcoinFees}
+              bitcoinFeeSpeedType={bitcoinFeeSpeedType}
+              setBitcoinFee={this.setBtcUserFee}
+              minerFee={fees.miner}
+              serviceFee={fees.service}
+            />
+          </div>
         )}
       </Fragment>
     )
 
     return (
-      //@ts-ignore: strictNullChecks
       <Modal
         name={name}
         onClose={this.handleClose}

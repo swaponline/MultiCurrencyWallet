@@ -1,7 +1,7 @@
 export default {
   arbeth: {
     limit: {
-      send: 630 * 1e3,
+      send: 700 * 1e3,
       // ? heed to check how much for swaps ?
       swap: 4000 * 1e3,
     },
@@ -14,7 +14,7 @@ export default {
   evmLike: {
     limit: {
       send: 21 * 1e3,
-      contractInteract: 100 * 1e3,
+      contractInteract: 200 * 1e3,
       swap: 70 * 1e3,
     },
     price: {

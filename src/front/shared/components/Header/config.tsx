@@ -43,12 +43,13 @@ export const messages = defineMessages({
 
 export const getMenuItems = (props) => {
   const { intl } = props
-  const { exchange, wallet, createWallet } = messages
+  const { exchange, wallet, createWallet, history } = messages
   const { 
-    exchange: linksExchange,
+    exchange: exchangeLink,
+    quickSwap,
     createWallet: create,
     // farm,
-    history,
+    history: historyLink,
     home,
   } = links
 
@@ -60,14 +61,14 @@ export const getMenuItems = (props) => {
       currentPageFlag: true,
     },
     {
-      title: intl.formatMessage(messages.history),
-      link: history,
+      title: intl.formatMessage(history),
+      link: historyLink,
       exact: true,
       currentPageFlag: true,
     },
     !externalConfig.opts.exchangeDisabled && {
       title: intl.formatMessage(exchange),
-      link: linksExchange,
+      link: quickSwap,
       exact: false,
       currentPageFlag: true,
     },
@@ -82,7 +83,7 @@ export const getMenuItems = (props) => {
     },
     !externalConfig.opts.exchangeDisabled && {
       title: intl.formatMessage(exchange),
-      link: linksExchange,
+      link: exchangeLink,
       exact: false,
       currentPageFlag: true,
     },
@@ -125,11 +126,12 @@ export const getMenuItems = (props) => {
 
 export const getMenuItemsMobile = (props, isWalletCreate, dinamicPath) => {
   const { intl } = props
-  const { exchange, wallet, createWallet } = messages
+  const { exchange, wallet, createWallet, history } = messages
   const { 
-    exchange: linksExchange,
+    exchange: exchangeLink,
+    quickSwap,
     // farm,
-    history,
+    history: historyLink,
   } = links
 
   const mobileItemsWithWallet = [
@@ -140,14 +142,14 @@ export const getMenuItemsMobile = (props, isWalletCreate, dinamicPath) => {
       icon: <i className="fa fa-home" aria-hidden="true" />,
     },
     {
-      title: props.intl.formatMessage(messages.history),
-      link: history,
+      title: props.intl.formatMessage(history),
+      link: historyLink,
       displayNone: !isWalletCreate,
       icon: <i className="fas fa-exchange-alt" aria-hidden="true" />,
     },
     !externalConfig.opts.exchangeDisabled && {
       title: intl.formatMessage(exchange),
-      link: linksExchange,
+      link: quickSwap,
       exact: false,
       icon: <i className="fas fa-sync-alt" aria-hidden="true" />,
     },
@@ -162,7 +164,7 @@ export const getMenuItemsMobile = (props, isWalletCreate, dinamicPath) => {
     },
     !externalConfig.opts.exchangeDisabled && {
       title: intl.formatMessage(exchange),
-      link: linksExchange,
+      link: exchangeLink,
       exact: false,
       icon: <i className="fas fa-sync-alt" aria-hidden="true" />,
     },

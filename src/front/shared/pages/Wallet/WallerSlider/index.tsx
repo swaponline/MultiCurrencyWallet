@@ -3,7 +3,7 @@ import * as React from 'react'
 import { connect } from 'redaction'
 
 import Swiper from 'swiper'
-import 'swiper/swiper-bundle.css'
+import 'swiper/css/bundle'
 import config from 'helpers/externalConfig'
 
 import { constants, getItezUrl } from 'helpers'
@@ -202,8 +202,8 @@ class WallerSlider extends React.Component<WallerSliderProps, WallerSliderState>
         ) : (
           <div
             id="swiper_banners"
-            className={`swiper-container ${styles.swiperContainer}`}
-            style={{ marginTop: '20px', marginBottom: '30px' }}
+            className={`swiper ${styles.swiperContainer}`}
+            style={{ marginTop: '20px', marginBottom: '30px', overflow: 'hidden' }}
           >
             <div className="swiper-wrapper">
               {multisigPendingCount > 0 && (
@@ -236,8 +236,8 @@ class WallerSlider extends React.Component<WallerSliderProps, WallerSliderState>
               )}
               {banners &&
                 banners.length > 0 &&
-                banners.map((banner) => (
-                  <div key={banner[0]} className="swiper-slide">
+                banners.map((banner, index) => (
+                  <div key={index} className="swiper-slide">
                     <NotifyBlock
                       background={`${banner[3]}`}
                       icon={banner[5]}

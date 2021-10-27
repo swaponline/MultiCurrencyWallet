@@ -60,12 +60,12 @@ export default class ModalConductor extends Component<any, any> {
     return areModalsExist && (
       <div styleName={`${!dashboardView ? 'modalConductor' : 'modalDashboardConductor'}`}>
         {
-          modalNames.map((key) => {
+          modalNames.map((key, index) => {
             const { name, data = {}, zIndex } = modals[key]
 
             if (zIndex === highestZIndex) {
               return React.createElement(Modals[name], {
-                key: name,
+                key: index,
                 name,
                 data,
                 history,

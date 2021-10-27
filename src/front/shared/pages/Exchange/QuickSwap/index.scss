@@ -1,0 +1,316 @@
+.newTokenInstruction {
+  max-width: 38em;
+  margin: 0 auto 0.2rem;
+  border-radius: 8px;
+  text-align: left;
+  border: 1px solid transparent;
+  background-color: var(--color-pale);
+
+  &.open {
+    border-color: var(--color-border);
+
+    .tab {
+      .arrow {
+        @include arrow('up', 9px, 2px, var(--color-notice));
+      }
+    }
+  }
+
+  .tab {
+    width: 100%;
+    padding: 0.4rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: inherit;
+  }
+
+  .arrow {
+    @include arrow('down', 9px, 2px, var(--color-notice));
+  }
+
+  .content {
+    padding: 0.8rem 1rem;
+    font-size: 0.94em;
+
+    .paragraph {
+      margin: 1rem 0;
+      font-size: 1em;
+    }
+
+    ol {
+      margin: 0;
+      padding: 0;
+      padding-left: 1rem;
+    }
+  }
+}
+
+.liquiditySourcesLink {
+  display: inline-block;
+  margin-top: 0.8rem;
+}
+
+.quickSwap {
+  max-width: 38em;
+  margin: 0.6rem auto 1rem;
+  padding: 2rem;
+  padding-bottom: 1.6rem;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: var(--box-shadow);
+  background: var(--color-background-elements);
+}
+
+.disabled {
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+.inputWrapper {
+  position: relative;
+}
+
+.walletAddress {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 1.2rem 0;
+  color: var(--color-indicating);
+
+  .connectWalletBtn {
+    margin-bottom: 0.5rem;
+  }
+
+  .address {
+    font-size: 0.87em;
+  }
+}
+
+.advancedInput {
+  input {
+    height: 3.5em;
+  }
+}
+
+.formCenter {
+  padding-bottom: 1.2rem;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  &.padding {
+    padding-bottom: 2rem;
+
+    .arrows {
+      position: static;
+      font-size: 1rem;
+    }
+  }
+
+  .fiatExchangeBtn {
+    margin-right: 2rem;
+  }
+
+  .arrows {
+    transform: rotate(90deg);
+    color: var(--color-notice);
+    position: absolute;
+    right: 0.7rem;
+    top: -0.9rem;
+    font-size: 0.9em;
+
+    button {
+      width: auto;
+      height: auto;
+    }
+  }
+}
+
+@mixin tooltip {
+  position: absolute;
+  z-index: 1;
+  top: -0.6rem;
+  right: 0.7rem;
+  padding: 0 0.5rem;
+  font-size: 0.8rem;
+  border-radius: 4px;
+  background-color: var(--color-background-elements);
+  color: var(--color-notice);
+}
+
+.balanceTooltip {
+  @include ff-mono;
+  @include tooltip;
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+}
+
+.balanceLoader {
+  @include tooltip;
+}
+
+.balanceUpdateBtn {
+  padding: 0.1rem 0;
+  user-select: none;
+  width: max-content;
+  display: block;
+  margin-left: 0.4rem;
+  white-space: nowrap;
+  color: var(--color-notice);
+
+  .icon {
+    display: inline-block;
+    margin-left: 0.5rem;
+    font-size: 0.9em;
+  }
+}
+
+.slippageIndicator {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  color: var(--color-indicating);
+}
+
+.advancedSettings {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  form {
+    margin-top: 1.4rem;
+  }
+}
+
+.toggleWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  .name {
+    margin: 0;
+    margin-left: 0.6rem;
+  }
+
+  label {
+    margin: 0.5rem 0.3rem 0.5rem 0;
+  }
+}
+
+.settings {
+  width: 100%;
+  border-radius: 6px;
+}
+
+.swapInfo {
+  margin-bottom: 1.4rem;
+  padding-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  border-radius: 5px;
+  color: var(--color-notice);
+}
+
+.loaderWrapper {
+  display: inline-block;
+  margin: 0.8rem 0;
+  opacity: 0.7;
+}
+
+.indicator {
+  display: flex;
+  flex-wrap: wrap;
+  font-weight: 700;
+
+  span {
+    @include ff-mono;
+    display: inline-block;
+    font-weight: 400;
+    margin-left: 0.3rem;
+
+    &:not(:first-child) {
+      margin-left: 0.5rem;
+    }
+  }
+}
+
+@mixin notice(
+  $color: var(--color),
+  $borderColor: var(--color-border),
+  $bg-color: var(--color-background)
+) {
+  @include ff-semibold;
+  padding: 0.5rem;
+  text-align: left;
+  border-radius: 0.2rem;
+  border: 1px solid $borderColor;
+  background-color: $bg-color;
+  color: $color;
+}
+
+.noAssetsNotice {
+  @include notice(var(--color-bad), var(--color-bad));
+  max-width: 38em;
+  margin: 0.6rem auto;
+}
+
+.reasons {
+  .wrong {
+    @include notice(var(--color-f-error), var(--color-f-error));
+  }
+
+  .warning {
+    @include notice($bg-color: var(--color-warning));
+  }
+
+  .neutral {
+    @include notice();
+  }
+}
+
+.buttonWrapper {
+  margin-bottom: 0.9rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  & > * {
+    &:not(:first-child) {
+      margin-top: 0.5rem;
+    }
+  }
+}
+
+.externalServiceWarning {
+  max-width: 28rem;
+  margin: 0 auto 1rem;
+  color: var(--color-indicating);
+}
+
+@media all and (max-width: 500px) {
+  .newTokenInstruction {
+    font-size: 0.95rem;
+  }
+
+  .quickSwap {
+    font-size: 0.85rem;
+  }
+
+  .balanceTooltip {
+    .title {
+      display: none;
+    }
+  }
+
+  .toggleWrapper {
+    .name {
+      margin-left: 1rem;
+    }
+  }
+}

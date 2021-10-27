@@ -14,7 +14,7 @@ type DropDownProps = {
   itemRender: (item) => ReactNode
   onSelect?: (item) => void
   className?: string
-  name?: string
+  name?: string | JSX.Element
   placeholder?: string
   arrowSide?: string
   disableSearch?: boolean
@@ -53,12 +53,6 @@ export default class DropDown extends Component<DropDownProps, DropDownState> {
   toggleOpen = () => {
     this.setState(() => ({
       optionToggleIsOpen: true,
-    }))
-  }
-
-  toggle = () => {
-    this.setState((state) => ({
-      optionToggleIsOpen: !state.optionToggleIsOpen,
     }))
   }
 
@@ -151,7 +145,6 @@ export default class DropDown extends Component<DropDownProps, DropDownState> {
     const dropDownId = role ? `dropDown${role}` : 'dropDownNoRole'
 
     return (
-      //@ts-ignore: strictNullChecks
       <OutsideClick outsideAction={this.handleClickOutside}>
         <div styleName={`${dropDownStyleName}`} className={className}>
           <div

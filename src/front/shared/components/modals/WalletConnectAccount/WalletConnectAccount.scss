@@ -1,0 +1,111 @@
+.header {
+  padding-bottom: 1.4rem;
+}
+
+.headerContent {
+  display: flex;
+  justify-content: space-between;
+}
+
+.title {
+  @include ff-regular;
+}
+
+.modalOverlay {
+  position: sticky;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, .3);
+  opacity: 1;
+
+  &_dashboardView {
+    background-color: transparent;
+  }
+}
+
+.modal {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 32px;
+  width: 100%;
+  max-width: 640px;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: var(--box-shadow);
+  background: var(--color-background-elements);
+
+  &_dashboardView {
+    background-color: none;
+    box-shadow: none;
+    max-width: none;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.content {
+  height: 100%;
+  max-height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.infoWrapper {
+  padding: 0.7rem;
+  border-radius: .6rem;
+  background-color: var(--color-pale);
+
+  .parameter {
+    @include ff-semibold;
+    margin: 0;
+    font-size: 1.1rem;
+  }
+
+  .parameter:not(:last-child) {
+    margin-bottom: 0.7rem;
+  }
+
+  .value {
+    @include ff-mono;
+    margin-left: 0.3rem;
+    font-size: 1rem;
+  }
+}
+
+.updateBalanceButton {
+  font-size: 0.9rem;
+  user-select: none;
+}
+
+.balanceLoader {
+  color: var(--color-notice);
+}
+
+.walletAddress {
+  padding: 1rem 0;
+  align-self: auto;
+}
+
+@media all and (max-width: 720px) {
+  .modal {
+    max-width: 85%;
+  }
+}
+
+@media all and (max-width: 500px) {
+  .infoWrapper {
+    .parameter,
+    .parameter > * {
+      font-size: 0.9rem;
+    }
+  }
+
+  .walletAddress {
+    font-size: 0.8rem;
+  }
+}

@@ -75,6 +75,7 @@ export default class Input extends Component<any, any> {
 
   render() {
     const {
+      styleName,
       className,
       inputContainerClassName,
       inputClassName,
@@ -95,6 +96,7 @@ export default class Input extends Component<any, any> {
       fiat,
       srollingForm,
       activeFiat,
+      id,
       ...rest
     } = this.props;
 
@@ -112,10 +114,9 @@ export default class Input extends Component<any, any> {
         onBlur: this.handleBlur
       };
 
-    let style = errorStyle ? "input inputError" : "input ";
-    if (srollingForm) {
-      style = style + "srollingForm";
-    }
+    const style = `input ${errorStyle ? 'inputError' : ''} ${srollingForm ? 'srollingForm' : ''} ${
+      styleName ? styleName : ''
+    }`
 
     return (
       <div styleName="root" className={className}>
@@ -127,6 +128,7 @@ export default class Input extends Component<any, any> {
             style: inputCustomStyle,
             valueLink,
             type,
+            id,
             disabled: disabled || readOnly,
             autoFocus: !!focusOnInit,
             dir: "auto",

@@ -17,7 +17,8 @@
     "id": "menu.wallet",
     "message": "Wallet",
     "files": [
-      "src/front/shared/components/Header/config.tsx"
+      "src/front/shared/components/Header/config.tsx",
+      "src/front/shared/components/modals/WalletConnectAccount/WalletConnectAccount.tsx"
     ]
   },
   {
@@ -25,6 +26,7 @@
     "message": "Wallet erstellen",
     "files": [
       "src/front/shared/components/Header/config.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/index.tsx",
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
   },
@@ -45,13 +47,6 @@
   {
     "id": "CDC63",
     "message": "Du hast",
-    "files": [
-      "src/front/shared/components/CurrencyDirectionChooser/CurrencyDirectionChooser.tsx"
-    ]
-  },
-  {
-    "id": "CDC75",
-    "message": "Du bekommst",
     "files": [
       "src/front/shared/components/CurrencyDirectionChooser/CurrencyDirectionChooser.tsx"
     ]
@@ -85,13 +80,6 @@
     ]
   },
   {
-    "id": "ConfirmOffer69",
-    "message": "Zurück",
-    "files": [
-      "src/front/shared/components/modals/OfferModal/ConfirmOffer/ConfirmOffer.tsx"
-    ]
-  },
-  {
     "id": "ConfirmOffer73",
     "message": "Hinzufügen",
     "files": [
@@ -116,23 +104,14 @@
     "id": "ErrorNotification12",
     "message": "Oops, etwas ist schief gelaufen! ",
     "files": [
+      "src/front/shared/components/LimitOrders/Row.tsx",
       "src/front/shared/components/notifications/ErrorNotification/ErrorNotification.tsx"
-    ]
-  },
-  {
-    "id": "WithdrawModal111",
-    "message": "Senden ",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
     ]
   },
   {
     "id": "WithdrawModal11212",
     "message": "In bearbeitung ...",
     "files": [
-      "src/front/shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.tsx",
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
@@ -143,16 +122,6 @@
     "message": "Transfer von",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
-    ]
-  },
-  {
-    "id": "Withdrow118",
-    "message": "Menge",
-    "files": [
-      "src/front/shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.tsx",
-      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
     ]
   },
   {
@@ -225,13 +194,6 @@
     "message": "Kopiert!",
     "files": [
       "src/front/shared/components/ui/Copy/Copy.tsx"
-    ]
-  },
-  {
-    "id": "RowFeeds77",
-    "message": "Ablehnen",
-    "files": [
-      "src/front/shared/pages/Exchange/Orders/MyOrders/RowFeeds/RowFeeds.tsx"
     ]
   },
   {
@@ -359,13 +321,18 @@
     "id": "MyOrdersYouSend",
     "message": "Du sendest",
     "files": [
-      "src/front/shared/pages/Exchange/Orders/MyOrders/MyOrders.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx",
+      "src/front/shared/pages/Exchange/Orders/MyOrders/MyOrders.tsx",
+      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/DirectSwap.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/ExchangeForm.tsx"
     ]
   },
   {
     "id": "MyOrdersYouGet",
     "message": "Du erhältst",
     "files": [
+      "src/front/shared/components/CurrencyDirectionChooser/CurrencyDirectionChooser.tsx",
       "src/front/shared/pages/Exchange/Orders/MyOrders/MyOrders.tsx"
     ]
   },
@@ -380,6 +347,11 @@
     "id": "orders102",
     "message": "Menge",
     "files": [
+      "src/front/shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.tsx",
+      "src/front/shared/components/modals/InvoiceModal/InvoiceModal.tsx",
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
+      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
+      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx",
       "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
     ]
   },
@@ -387,20 +359,22 @@
     "id": "orders105",
     "message": "Preis",
     "files": [
-      "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
+      "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/SwapInfo.tsx"
     ]
   },
   {
     "id": "orders128",
     "message": "Angbot erstellen",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
     "id": "addoffer381",
     "message": "Verkaufen",
     "files": [
+      "src/front/shared/components/modals/LimitOrder/ModalForm.tsx",
       "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
     ]
   },
@@ -408,6 +382,7 @@
     "id": "addoffer396",
     "message": "Kaufen",
     "files": [
+      "src/front/shared/components/modals/LimitOrder/ModalForm.tsx",
       "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
     ]
   },
@@ -480,10 +455,7 @@
   },
   {
     "id": "RowMobileYouSend",
-    "message": "Du sendest",
-    "files": [
-      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
-    ]
+    "message": "Du sendest"
   },
   {
     "id": "RowMobileYouGet",
@@ -515,7 +487,7 @@
     "id": "partial291",
     "message": "Warte auf Teilnehmer (30 sek)",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
@@ -534,128 +506,133 @@
   },
   {
     "id": "partial243",
-    "message": "Du sendest",
-    "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
-    ]
+    "message": "Du sendest"
   },
   {
     "id": "enterYouSend",
     "message": "Enter \"You send\" amount",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/NoSwapsReasons.tsx"
     ]
   },
   {
     "id": "swapDisabled",
     "message": "Swap deaktiviert",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
     "id": "noOffers",
     "message": "Keine Angebote",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
     "id": "selectFromAddress",
     "message": "Wähle \"Von Adresse\"",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
     "id": "selectToAddress",
     "message": "Wähle \"Zu Adresse\"",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
     "id": "enterToAddress",
     "message": "Adresse des Empfängers",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
     "id": "connectDestinationWallet",
     "message": "Verbinde dein Wallet",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
     "id": "setDestination",
     "message": "Wähle ein Ziel",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
     "id": "connectYourWallet",
     "message": "Verbinde dein Wallet \"Von Adresse\"",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
     "id": "selectSendType",
     "message": "Wähle einen Typen \"Von Adresse\"",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
     "id": "errorWithGetAmount",
     "message": "\"Du erhältst\" nicht mehr als 0",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
     "id": "incorrectNetwork",
     "message": "Bitte wähle ein Netzwerk",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/components/modals/LimitOrder/ModalForm.tsx",
+      "src/front/shared/components/modals/WalletConnectAccount/WalletConnectAccount.tsx",
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/NoSwapsReasons.tsx"
     ]
   },
   {
     "id": "lowAmount",
     "message": "Niedrige Menge",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
     "id": "waitPeerAnswer",
     "message": "Warte auf Antwort von einem Peer",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
     "id": "enterLesserAmount",
     "message": "Weniger eingeben als du sendest",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
     "id": "contactSupport",
     "message": "Bitte kontaktiere den Support",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
     "id": "partial255",
     "message": "Du erhältst",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/components/LimitOrders/OrderSettings.tsx",
+      "src/front/shared/components/LimitOrders/index.tsx",
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/DirectSwap.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/ExchangeForm.tsx"
     ]
   },
   {
@@ -750,42 +727,38 @@
     ]
   },
   {
-    "id": "question12",
-    "message": "?"
-  },
-  {
     "id": "PartialPriceNoOrdersReduce",
     "message": "Keine Angebote verfügbar, versuche es später noch einmal",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
     "id": "PartialPriceNoOrdersReduceAllInfo",
     "message": "Dieser Handel ist zu hoch für die zur verfügung stehende Liquidität. Max. verfügbar {maxForSell}. ",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
     "id": "PartialOfferCantProceed1",
     "message": "Anfrage abgelehnt. {link}",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
     "id": "PartialOfferCantProceed1_1",
     "message": "Warum?",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
     "id": "ErrorBtcLowAmount",
     "message": "{btcAmount} BTC - Dieser Betrag ist zu niedrig und kann die Netzwerkgebühr nicht bezahlen.",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
@@ -799,6 +772,7 @@
     "id": "partial462",
     "message": "Der Betrag den du in deinem Wallet hast, den du eintauschen möchtest. The amount you have in your swap.online wallet or external wallet that you want to exchange",
     "files": [
+      "src/front/shared/components/modals/LimitOrder/ModalForm.tsx",
       "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
     ]
   },
@@ -806,6 +780,7 @@
     "id": "partial478",
     "message": "Der Betrag den du erhalten wirst.",
     "files": [
+      "src/front/shared/components/modals/LimitOrder/ModalForm.tsx",
       "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
     ]
   },
@@ -813,14 +788,15 @@
     "id": "partial541",
     "message": "Jetzt umtauschen",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
     "id": "partial767",
     "message": "Guthaben: ",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/ExchangeForm.tsx"
     ]
   },
   {
@@ -1158,20 +1134,6 @@
     ]
   },
   {
-    "id": "SwitchLang20",
-    "message": "EN",
-    "files": [
-      "src/front/shared/components/Footer/SwitchLang/SwitchLang.tsx"
-    ]
-  },
-  {
-    "id": "SwitchLang24",
-    "message": "RU",
-    "files": [
-      "src/front/shared/components/Footer/SwitchLang/SwitchLang.tsx"
-    ]
-  },
-  {
     "id": "FeeControler48",
     "message": "Kopiert",
     "files": [
@@ -1303,7 +1265,6 @@
     "message": "Senden",
     "files": [
       "src/front/shared/components/modals/WithdrawBtcMultisig/WithdrawBtcMultisig.tsx",
-      "src/front/shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.tsx",
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
@@ -1417,6 +1378,7 @@
     "id": "confirmDialogDefaultTitle",
     "message": "Bestätigen",
     "files": [
+      "src/front/shared/components/LimitOrders/OrderPurchaseModal.tsx",
       "src/front/shared/components/modals/Confirm/Confirm.tsx",
       "src/front/shared/components/modals/ConfirmBeginSwap/ConfirmBeginSwap.tsx"
     ]
@@ -1433,6 +1395,7 @@
     "id": "orders94s",
     "message": "Möchtest du die Bestellung wirklich löschen?",
     "files": [
+      "src/front/shared/components/LimitOrders/index.tsx",
       "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
     ]
   },
@@ -1559,16 +1522,14 @@
     "id": "select75",
     "message": "Zum Swap verfügbar: {availableBalance} {tooltip}",
     "files": [
-      "src/front/shared/components/modals/OfferModal/AddOffer/SelectGroup/SelectGroup.tsx",
-      "src/front/shared/pages/Exchange/SelectGroup/SelectGroup.tsx"
+      "src/front/shared/components/SelectGroup/index.tsx"
     ]
   },
   {
     "id": "selected53",
     "message": "Sie können ein externes Wallet verwenden, um einen Swap durchzuführen",
     "files": [
-      "src/front/shared/components/modals/OfferModal/AddOffer/SelectGroup/SelectGroup.tsx",
-      "src/front/shared/pages/Exchange/SelectGroup/SelectGroup.tsx"
+      "src/front/shared/components/SelectGroup/index.tsx"
     ]
   },
   {
@@ -1990,7 +1951,6 @@
     "id": "WithdrawModal2225",
     "message": "Etwas ist schief gelaufen, gib bitte deinen aktuellen Code ein",
     "files": [
-      "src/front/shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
     ]
   },
@@ -1998,7 +1958,6 @@
     "id": "Withdrow2223",
     "message": "SMS Code",
     "files": [
-      "src/front/shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
     ]
   },
@@ -2006,7 +1965,6 @@
     "id": "Withdrow2224",
     "message": "Bestätigen",
     "files": [
-      "src/front/shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
     ]
   },
@@ -2126,7 +2084,8 @@
     "id": "InvoiceLinkCopied",
     "message": "Link kopiert",
     "files": [
-      "src/front/shared/components/modals/InvoiceLinkModal/InvoiceLinkModal.tsx"
+      "src/front/shared/components/modals/InvoiceLinkModal/InvoiceLinkModal.tsx",
+      "src/front/shared/components/modals/Share/Share.tsx"
     ]
   },
   {
@@ -2147,6 +2106,7 @@
     "id": "WithdrawModalCancelBtn",
     "message": "Abbrechen",
     "files": [
+      "src/front/shared/components/LimitOrders/OrderPurchaseModal.tsx",
       "src/front/shared/components/modals/ReceiveModal/ReceiveModal.tsx",
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
@@ -2162,14 +2122,11 @@
   },
   {
     "id": "InfoPay_1",
-    "message": "Transaktion ist abgeschlossen",
-    "files": [
-      "src/front/shared/pages/Transaction/Transaction.tsx"
-    ]
+    "message": "Transaktion ist abgeschlossen"
   },
   {
     "id": "InfoPay_2",
-    "message": "erfolgreich übertragen an",
+    "message": "übertragen auf",
     "files": [
       "src/front/shared/pages/Transaction/TxInfo/index.tsx"
     ]
@@ -2207,13 +2164,6 @@
     ]
   },
   {
-    "id": "invoiceModal_Amount",
-    "message": "Betrag",
-    "files": [
-      "src/front/shared/components/modals/InvoiceModal/InvoiceModal.tsx"
-    ]
-  },
-  {
     "id": "invoiceModal_Error",
     "message": "{errorName} {currency}:{br}{errorMessage}",
     "files": [
@@ -2222,13 +2172,6 @@
   },
   {
     "id": "invoiceModal_IncorrectAddress",
-    "message": "Falsche Adresse",
-    "files": [
-      "src/front/shared/components/modals/InvoiceModal/InvoiceModal.tsx"
-    ]
-  },
-  {
-    "id": "invoiceModal_IncorrectDestiAddress",
     "message": "Falsche Adresse",
     "files": [
       "src/front/shared/components/modals/InvoiceModal/InvoiceModal.tsx"
@@ -2329,6 +2272,7 @@
     "id": "RowHistoryCancelInvoice",
     "message": "Ablehnen",
     "files": [
+      "src/front/shared/pages/Exchange/Orders/MyOrders/RowFeeds/RowFeeds.tsx",
       "src/front/shared/pages/History/Row/Row.tsx"
     ]
   },
@@ -2383,10 +2327,7 @@
   },
   {
     "id": "WalletRow_Menu_ActivateSMSProtected",
-    "message": "Aktivieren",
-    "files": [
-      "src/front/shared/pages/Wallet/Row/Row.tsx"
-    ]
+    "message": "Aktivieren"
   },
   {
     "id": "WalletRow_Menu_BTCMS_GenerateJoinLink",
@@ -2466,66 +2407,11 @@
     ]
   },
   {
-    "id": "registerSMSModalCode",
-    "message": "SMS Code",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
-    ]
-  },
-  {
-    "id": "registerSMSModalFinish",
-    "message": "Fertig",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
-    ]
-  },
-  {
-    "id": "registerSMSModalPhone",
-    "message": "Deine Handynummer",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
-    ]
-  },
-  {
-    "id": "registerSMSModalProcess",
-    "message": "In bearbeitung ...",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
-    ]
-  },
-  {
-    "id": "registerSMSModalReady",
-    "message": "Dein gesichertes Wallet ist aktiviert",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
-    ]
-  },
-  {
-    "id": "registerSMSModalSendSMS",
-    "message": "SMS senden",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
-    ]
-  },
-  {
-    "id": "registerSMSModalSendSMS165",
-    "message": "Bestätigen",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
-    ]
-  },
-  {
-    "id": "registerSMSProtectedTitle",
-    "message": "SMS-geschützte Wallet aktivieren",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
-    ]
-  },
-  {
     "id": "back",
     "message": "Zurück",
     "files": [
-      "src/front/shared/components/TourWindow/index.tsx"
+      "src/front/shared/components/TourWindow/index.tsx",
+      "src/front/shared/components/modals/OfferModal/ConfirmOffer/ConfirmOffer.tsx"
     ]
   },
   {
@@ -2553,21 +2439,21 @@
     "id": "continueDeclined977",
     "message": "Setze deinen Tausch fort",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
     "id": "chooseCorrectNetwork",
     "message": "Bitte öffne die verbundene Wallet und wähle {br}{chainName}",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
     "id": "switchToCorrectNetwork",
     "message": "Wechsel zu {br}{chainName}",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
@@ -2777,7 +2663,6 @@
     "id": "withdrawSMSCodePlaceholder",
     "message": "SMS-code eingeben",
     "files": [
-      "src/front/shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
     ]
   },
@@ -2845,162 +2730,24 @@
     ]
   },
   {
-    "id": "ConfirmActivateSMS_Message",
-    "message": "Du hast diese Art von Wallet bereits aktiviert. Möchtest du dein altes Wallet überschreiben? (Du kannst dein Geld verlieren!)",
-    "files": [
-      "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
-    ]
-  },
-  {
-    "id": "ConfirmActivateSMS_No",
-    "message": "Nein",
-    "files": [
-      "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
-    ]
-  },
-  {
-    "id": "ConfirmActivateSMS_Title",
-    "message": "BTC-Wallet (SMS-geschützt) hinzufügen",
-    "files": [
-      "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
-    ]
-  },
-  {
-    "id": "ConfirmActivateSMS_Yes",
-    "message": "Ja",
-    "files": [
-      "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
-    ]
-  },
-  {
-    "id": "RegisterSMSProtected_SmsCodeRequery",
-    "message": "SMS-code eingeben",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
-    ]
-  },
-  {
-    "id": "registerSMSAddOffline",
-    "message": "Wiederherstellen",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
-    ]
-  },
-  {
     "id": "registerSMSMPlaceHolder",
     "message": "Passphrase (12 Wörter)",
     "files": [
       "src/front/shared/components/Header/Header.tsx",
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx",
-      "src/front/shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
-    ]
-  },
-  {
-    "id": "registerSMSMnemonicError",
-    "message": "Ungültiger mnemonic",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
-    ]
-  },
-  {
-    "id": "registerSMSMnemonicNotice",
-    "message": "Dieser Satz hilft dir, deine Assets freizuschalten, falls der 2fa-Server nicht verfügbar ist",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
-    ]
-  },
-  {
-    "id": "registerSMSModalPhonePlaceholder",
-    "message": "Handynummer eingeben",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
-    ]
-  },
-  {
-    "id": "registerSMSModalSmsCodePlaceholder",
-    "message": "Code von SMS eingeben",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
     ]
   },
   {
     "id": "registerSMSModalWords",
     "message": "Passphrase (12 Wörter):",
     "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx",
-      "src/front/shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
-    ]
-  },
-  {
-    "id": "registerSMSRestoryMnemonic",
-    "message": "Stelle deine Wallet mit einem geheimen Satz wieder her",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
-    ]
-  },
-  {
-    "id": "registerSMSWordsInfoBlock",
-    "message": "Generiere eine neue Phrase, um ein Wallet zu erstellen, oder gib deine zuvor gespeicherte Phrase ein, um deine Wallet wiederherzustellen",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
-    ]
-  },
-  {
-    "id": "registerSMS_ConfigServerOffline",
-    "message": "Der Autorisierungsserver ist nicht verfügbar. Versuche es später noch einmal oder verwende den geheimen Satz, um deine Wallet zu entsperren",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
-    ]
-  },
-  {
-    "id": "registerSMS_LinkToManualRestore",
-    "message": "Wie man Geld manuell abhebt?",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
-    ]
-  },
-  {
-    "id": "registerSMS_MnemonicRestoreNotes",
-    "message": "Wenn du deinen SMS-Code nicht erhalten hast oder keinen Zugriff auf diese Nummer hast, kannst du deine Wallet mit einer geheimen Phrase wiederherstellen",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
-    ]
-  },
-  {
-    "id": "registerSMS_MnemonicUseNotes",
-    "message": "Durch die Verwendung einer geheimen Phrase kannst du Vermögenswerte auf deinem Konto freischalten",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
-    ]
-  },
-  {
-    "id": "registerSMS_NotValidPhone",
-    "message": "Handynummer eingeben",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
-    ]
-  },
-  {
-    "id": "registerSMS_ShareInstruction",
-    "message": "Teilen",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
-    ]
-  },
-  {
-    "id": "registerSMS_WalletLocked",
-    "message": "Dieses Wallet ist an eine andere Telefonnummer gebunden",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
     ]
   },
   {
     "id": "WithdrawSMS_BroadcastError",
     "message": "Transaktionsübertragung fehlschlagen ({errorText})",
     "files": [
-      "src/front/shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
     ]
   },
@@ -3008,7 +2755,6 @@
     "id": "WithdrawSMS_FailSignByMnemonic",
     "message": "Transaktionssignatur fehlschlagen",
     "files": [
-      "src/front/shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
     ]
   },
@@ -3016,7 +2762,6 @@
     "id": "WithdrawSMS_MnemonicNote",
     "message": "Wenn du deinen SMS-Code nicht erhalten hast oder keinen Zugriff auf diese Nummer hast, kannst du deine Wallet mit einer geheimen Phrase wiederherstellen",
     "files": [
-      "src/front/shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
     ]
   },
@@ -3024,7 +2769,6 @@
     "id": "WithdrawSMS_MnemonicSignCaption",
     "message": "Bestätige die Transaktion durch einen geheimen Satz (12 Wörter)",
     "files": [
-      "src/front/shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
     ]
   },
@@ -3032,7 +2776,6 @@
     "id": "WithdrawSMS_NotValidMnemonic",
     "message": "Geheimsatz ungültig",
     "files": [
-      "src/front/shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
     ]
   },
@@ -3040,7 +2783,6 @@
     "id": "WithdrawSMS_ServerOffline",
     "message": "Autorisierungsserver ist offline",
     "files": [
-      "src/front/shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
     ]
   },
@@ -3048,7 +2790,6 @@
     "id": "WithdrawSMS_SmsSended",
     "message": "SMS mit Code gesendet",
     "files": [
-      "src/front/shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
     ]
   },
@@ -3056,7 +2797,6 @@
     "id": "WithdrawSMS_SmsSending",
     "message": "SMS mit Bestätigungscode senden",
     "files": [
-      "src/front/shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
     ]
   },
@@ -3064,7 +2804,6 @@
     "id": "WithdrawSMS_UseMnemonic",
     "message": "Verwende einen geheimen Satz (12 Wörter)",
     "files": [
-      "src/front/shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
     ]
   },
@@ -3072,7 +2811,6 @@
     "id": "WithdrawSMS_UseSMS",
     "message": "SMS-code benutzen",
     "files": [
-      "src/front/shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
     ]
   },
@@ -3080,7 +2818,6 @@
     "id": "WithdrawSMS_UseSMSNote",
     "message": "Du kannst auch den an die angehängte Telefonnummer gesendeten SMS-Code verwenden.",
     "files": [
-      "src/front/shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
     ]
   },
@@ -3088,7 +2825,6 @@
     "id": "WithdrawSMS_WrongMnemonic",
     "message": "Geheimsatz ungültig",
     "files": [
-      "src/front/shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
     ]
   },
@@ -3096,7 +2832,6 @@
     "id": "btcSMSProtectedSignByMnemonic",
     "message": "Passphrase benutzen",
     "files": [
-      "src/front/shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
     ]
   },
@@ -3119,13 +2854,6 @@
     "message": "Du bist nicht berechtigt, diese Transaktion zu signieren (überprüfe, ob du ein Multisig erstellt hast)",
     "files": [
       "src/front/shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.tsx"
-    ]
-  },
-  {
-    "id": "registerSMSModalFinishSaveThisInfo",
-    "message": "Speichere die unten stehenden Informationen. Es wird dir helfen, deine Wallet in Zukunft wiederherzustellen",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
     ]
   },
   {
@@ -3285,66 +3013,9 @@
     ]
   },
   {
-    "id": "registerSMSModalInstCopied",
-    "message": "Kopiert",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
-    ]
-  },
-  {
-    "id": "registerSMSModalInstCopy",
-    "message": "Kopieren",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
-    ]
-  },
-  {
-    "id": "registerSMSModalInstDownload",
-    "message": "Herunterladen",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
-    ]
-  },
-  {
-    "id": "registerSMSModalInstDownloaded",
-    "message": "Herunterladen...",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
-    ]
-  },
-  {
-    "id": "registerSMSModalMnemonicCopied",
-    "message": "Phrase kopiert",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
-    ]
-  },
-  {
-    "id": "registerSMSModalMnemonicCopy",
-    "message": "Kopieren",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
-    ]
-  },
-  {
-    "id": "registerSMSModalMnemonicGenerateNew",
-    "message": "Neue Phrase generieren",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
-    ]
-  },
-  {
-    "id": "registerSMSModalMnemonicGenerateNewGenerated",
-    "message": "Generiert",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
-    ]
-  },
-  {
     "id": "SweepBannerButton",
     "message": "Fertig",
     "files": [
-      "src/front/shared/components/layout/DashboardLayout/DashboardLayout.tsx",
       "src/front/shared/components/modals/AddCustomToken/index.tsx"
     ]
   },
@@ -3444,13 +3115,7 @@
     "id": "HowToWithdrawModal_Title",
     "message": "Wie kann ich abheben?",
     "files": [
-      "src/front/shared/components/modals/HowToWithdrawModal/HowToWithdrawModal.tsx"
-    ]
-  },
-  {
-    "id": "WalletRow_Menu_HowToWithdraw",
-    "message": "Wie kann ich abheben",
-    "files": [
+      "src/front/shared/components/modals/HowToWithdrawModal/HowToWithdrawModal.tsx",
       "src/front/shared/pages/Wallet/Row/Row.tsx"
     ]
   },
@@ -3458,14 +3123,14 @@
     "id": "Exchange_FromAddress",
     "message": "Von Adresse",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
     "id": "Exchange_ToAddress",
     "message": "Zu Adresse",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
@@ -3522,42 +3187,7 @@
     "id": "Exchange_BestPrice",
     "message": "Bester Preis:",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
-    ]
-  },
-  {
-    "id": "registerSMS_ButtonCancel",
-    "message": "Abbrechen",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
-    ]
-  },
-  {
-    "id": "registerSMS_ButtonSaveMnemonic",
-    "message": "Speichern",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
-    ]
-  },
-  {
-    "id": "registerSMS_SaveYourMnemonic",
-    "message": "Bitte vergiss nicht, deine Seed-Phrase zu speichern, bevor du dein Wallet verwendest. Eine solche Maßnahme ist erforderlich, um dein Geld im Notfall zu retten.",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
-    ]
-  },
-  {
-    "id": "registerSMS_YouNeedSaveMnemonic",
-    "message": "Um das SMS-geschützte Wallet zu aktivieren, musst du deine geheime Phrase speichern.",
-    "files": [
-      "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
-    ]
-  },
-  {
-    "id": "ShareModal_LinkCopied",
-    "message": "Link kopiert",
-    "files": [
-      "src/front/shared/components/modals/Share/Share.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
@@ -3584,13 +3214,6 @@
   {
     "id": "InvoiceInfoModal_CloseButton",
     "message": "Schließen",
-    "files": [
-      "src/front/shared/components/modals/InfoInvoice/InfoInvoice.tsx"
-    ]
-  },
-  {
-    "id": "InvoiceInfoModal_Comment",
-    "message": "Kommentare",
     "files": [
       "src/front/shared/components/modals/InfoInvoice/InfoInvoice.tsx"
     ]
@@ -4418,7 +4041,8 @@
     "id": "YourWalletbalance",
     "message": "Guthaben",
     "files": [
-      "src/front/shared/components/BalanceForm/BalanceForm.tsx"
+      "src/front/shared/components/BalanceForm/BalanceForm.tsx",
+      "src/front/shared/components/modals/WalletConnectAccount/WalletConnectAccount.tsx"
     ]
   },
   {
@@ -4446,14 +4070,15 @@
     "id": "AlertOrderNonEnoughtBalance",
     "message": "Bitte lade dein Guthaben auf, bevor du mit dem Tausch beginnst.",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/NoSwapsReasons.tsx"
     ]
   },
   {
     "id": "AlertOrderNonEnoughtBalanceTitle",
     "message": "Nicht genügend Guthaben.",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
@@ -4495,6 +4120,7 @@
     "id": "BTCMS_SaveMnemonicButton",
     "message": "Geheime Phrase speichern",
     "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/index.tsx",
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx",
       "src/front/shared/pages/Multisign/Btc/Btc.tsx"
     ]
@@ -4521,25 +4147,8 @@
     ]
   },
   {
-    "id": "WithdrawSMS_NotValidSmsCode",
-    "message": "Ungültige Codenummer",
-    "files": [
-      "src/front/shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.tsx"
-    ]
-  },
-  {
     "id": "WithdrawSMS_SmsConfirming",
-    "message": "Transaktion bestätigen",
-    "files": [
-      "src/front/shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.tsx"
-    ]
-  },
-  {
-    "id": "WithdrawSMS_UnknownError",
-    "message": "Unbekannter Fehler. Versuche es erneut oder verwende eine Passphrase",
-    "files": [
-      "src/front/shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.tsx"
-    ]
+    "message": "Transaktion bestätigen"
   },
   {
     "id": "MnemonicInputComponent_DeleteText",
@@ -4559,7 +4168,7 @@
     "id": "Exchange_AvialableBalance",
     "message": "Verfügbar: ",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
@@ -4577,31 +4186,24 @@
     ]
   },
   {
-    "id": "SwitchLangNL",
-    "message": "NL",
-    "files": [
-      "src/front/shared/components/Footer/SwitchLang/SwitchLang.tsx"
-    ]
-  },
-  {
     "id": "Swap_NeedMoreAmount",
     "message": "Dein Guthaben muss mindestens {amount} {currency} aufweisen. {br} Miner-Provision {sellFee} {sellCoin} und {buyFee} {buyCoin}",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
     "id": "Exchange_MinerFees",
     "message": "Mining-Gebühr",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
     "id": "Exchange_ServiceFee",
     "message": "Netzwerkgebühr",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
@@ -4612,9 +4214,25 @@
     ]
   },
   {
+    "id": "WalletConnectAccountTitle",
+    "message": "VERBUNDENES KONTO",
+    "files": [
+      "src/front/shared/components/modals/WalletConnectAccount/WalletConnectAccount.tsx"
+    ]
+  },
+  {
+    "id": "UnknownNetworkConnectedWallet",
+    "message": "Unbekanntes Netzwerk",
+    "files": [
+      "src/front/shared/components/Header/WalletConnect/index.tsx",
+      "src/front/shared/components/modals/WalletConnectAccount/WalletConnectAccount.tsx"
+    ]
+  },
+  {
     "id": "MetamaskDisconnect",
     "message": "Verbindung trennen",
     "files": [
+      "src/front/shared/components/modals/WalletConnectAccount/WalletConnectAccount.tsx",
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx",
       "src/front/shared/pages/Wallet/Row/Row.tsx"
     ]
@@ -4631,27 +4249,6 @@
     "message": "Marketmaking deaktiviert, weil dein externes Wallet verbunden ist",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
-    ]
-  },
-  {
-    "id": "SwitchLangDE",
-    "message": "DE",
-    "files": [
-      "src/front/shared/components/Footer/SwitchLang/SwitchLang.tsx"
-    ]
-  },
-  {
-    "id": "SwitchLangES",
-    "message": "ES",
-    "files": [
-      "src/front/shared/components/Footer/SwitchLang/SwitchLang.tsx"
-    ]
-  },
-  {
-    "id": "SwitchLangPL",
-    "message": "PL",
-    "files": [
-      "src/front/shared/components/Footer/SwitchLang/SwitchLang.tsx"
     ]
   },
   {
@@ -4672,21 +4269,21 @@
     "id": "createOrderMessageForUser",
     "message": "Du musst die ganze Zeit online sein, sonst ist deine Bestellung für andere Benutzer nicht sichtbar",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
     "id": "createOrderNoManyMessageForUser",
     "message": "Guthaben aufladen",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
     "id": "AddLiquidity",
     "message": "Liquidität hinzufügen",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
@@ -4698,21 +4295,7 @@
   },
   {
     "id": "MetamaskNetworkAlert_Message",
-    "message": "Falsches Netzwerk, bitte wähle \"{network}\" in {walletTitle} (oder trenne das Wallet)",
-    "files": [
-      "src/front/shared/containers/App/App.tsx"
-    ]
-  },
-  {
-    "id": "MetamaskNetworkAlert_NetworkMainnet",
-    "message": "Ethereum (Mainnet) oder Binance Smart Chain (Mainnet)",
-    "files": [
-      "src/front/shared/containers/App/App.tsx"
-    ]
-  },
-  {
-    "id": "MetamaskNetworkAlert_NetworkTestnet",
-    "message": "Ethereum (Rinkeby) oder Binance Smart Chain (Testnet)",
+    "message": "Falsches Netzwerk, bitte wechseln Sie in {walletTitle} zu einem anderen Netzwerk (oder trennen Sie Wallet).",
     "files": [
       "src/front/shared/containers/App/App.tsx"
     ]
@@ -4733,24 +4316,15 @@
   },
   {
     "id": "ConnectWalletModal_Cancel",
-    "message": "Abbrechen",
-    "files": [
-      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.tsx"
-    ]
+    "message": "Abbrechen"
   },
   {
     "id": "ConnectWalletModal_Injected",
-    "message": "Metamask",
-    "files": [
-      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.tsx"
-    ]
+    "message": "Metamask"
   },
   {
     "id": "ConnectWalletModal_Title",
-    "message": "Verbinde mit externem Wallet",
-    "files": [
-      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.tsx"
-    ]
+    "message": "Verbinde mit externem Wallet"
   },
   {
     "id": "ConnectWalletModal_WalletConnect",
@@ -4861,7 +4435,10 @@
     "id": "Exchange_ConnectAddressOption",
     "message": "Connect Wallet",
     "files": [
-      "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
+      "src/front/shared/components/Header/WalletConnect/index.tsx",
+      "src/front/shared/components/modals/WalletConnectAccount/WalletConnectAccount.tsx",
+      "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
     ]
   },
   {
@@ -5194,7 +4771,7 @@
     "message": "Atomic Swap",
     "files": [
       "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx",
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
@@ -5202,7 +4779,7 @@
     "message": "Turbo Swap",
     "files": [
       "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx",
-      "src/front/shared/pages/Exchange/Exchange.tsx",
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx",
       "src/front/shared/pages/TurboSwap/TurboSwap.tsx"
     ]
   },
@@ -5280,7 +4857,9 @@
     "id": "FormattedMessageIdApprove",
     "message": "Akzeptieren {token}",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/components/modals/LimitOrder/ModalForm.tsx",
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
     ]
   },
   {
@@ -5364,14 +4943,14 @@
     "id": "ExchangeTokenWasApproved",
     "message": "Token wurde akzeptiert.{br}Explorer link: {txLink}",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
     "id": "Orderbook",
     "message": "Auftragsbuch",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
@@ -5602,7 +5181,7 @@
   },
   {
     "id": "MM_Promo_TitleBody",
-    "message": "On swap.io users exchange {utxoCoin} for {token} (a token that costs like {utxoCoin}, but works on {Ab_Title}), and vice versa. You get min. 10% APY (annual percentage yield) as a commission from exchanges with low impermanent loss {link}.",
+    "message": "On swap.io users exchange {utxoCoin} for {token} (a token that costs like {utxoCoin}, but works on {Ab_Title}), and vice versa.",
     "files": [
       "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx",
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
@@ -5890,7 +5469,7 @@
     "id": "NotEnoughForBuy",
     "message": "Du musst mindestens die Miner-Provision {buyFee} {buyCoin} haben",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
@@ -5898,6 +5477,521 @@
     "message": "Bitte wählen Sie ein anderes",
     "files": [
       "src/front/shared/pages/Wallet/Row/Row.tsx"
+    ]
+  },
+  {
+    "id": "bankCardButtonDescription",
+    "message": "Im modalen Fenster müssen Sie mehrere Schritte ausführen, um Fiat-Gelder gegen DAS einzutauschen. Wählen Sie ETH im Fenster aus und geben Sie die Adresse Ihrer Brieftasche an (Sie können sie unten kopieren). Warten Sie, bis das Geld Ihrer Adresse gutgeschrieben wurde. Dann können Sie Token damit kaufen.",
+    "files": [
+      "src/front/shared/components/Header/WidgetTours/QuickSwapFormTour.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/ExchangeForm.tsx"
+    ]
+  },
+  {
+    "id": "noActiveOrders",
+    "message": "Keine aktiven Bestellungen",
+    "files": [
+      "src/front/shared/components/LimitOrders/index.tsx"
+    ]
+  },
+  {
+    "id": "rate",
+    "message": "Preis",
+    "files": [
+      "src/front/shared/components/LimitOrders/index.tsx"
+    ]
+  },
+  {
+    "id": "youPay",
+    "message": "Sie zahlen",
+    "files": [
+      "src/front/shared/components/LimitOrders/OrderSettings.tsx",
+      "src/front/shared/components/LimitOrders/index.tsx"
+    ]
+  },
+  {
+    "id": "yourOrders",
+    "message": "Ihre Bestellungen",
+    "files": [
+      "src/front/shared/components/LimitOrders/index.tsx"
+    ]
+  },
+  {
+    "id": "create",
+    "message": "Erstellen",
+    "files": [
+      "src/front/shared/components/modals/LimitOrder/ModalForm.tsx"
+    ]
+  },
+  {
+    "id": "limitOrder",
+    "message": "Limit order",
+    "files": [
+      "src/front/shared/components/modals/LimitOrder/ModalForm.tsx"
+    ]
+  },
+  {
+    "id": "notEnoughTokensForSwap",
+    "message": "Nicht alle Währungen sind für Swap verfügbar. Es sieht so aus, als hättest du nicht genug Token. Versuchen Sie, mehr von ihnen hinzuzufügen.",
+    "files": [
+      "src/front/shared/components/modals/LimitOrder/ModalForm.tsx"
+    ]
+  },
+  {
+    "id": "limitOrderCreated",
+    "message": "Sie haben die Bestellung erfolgreich erstellt",
+    "files": [
+      "src/front/shared/components/modals/LimitOrder/index.tsx"
+    ]
+  },
+  {
+    "id": "limitOrderIsNotCreated",
+    "message": "Etwas ist schief gelaufen. Versuchen Sie es später erneut",
+    "files": [
+      "src/front/shared/components/modals/LimitOrder/index.tsx"
+    ]
+  },
+  {
+    "id": "transacton",
+    "message": "Transaktion",
+    "files": [
+      "src/front/shared/components/notifications/Transaction/index.tsx",
+      "src/front/shared/pages/Transaction/Transaction.tsx"
+    ]
+  },
+  {
+    "id": "transactonIsCompleted",
+    "message": "Die Transaktion ist abgeschlossen",
+    "files": [
+      "src/front/shared/components/notifications/Transaction/index.tsx"
+    ]
+  },
+  {
+    "id": "viewTransaction",
+    "message": "Die Transaktion anzeigen",
+    "files": [
+      "src/front/shared/components/notifications/Transaction/index.tsx"
+    ]
+  },
+  {
+    "id": "atomicSwap",
+    "message": "Atomic swap",
+    "files": [
+      "src/front/shared/pages/Exchange/index.tsx"
+    ]
+  },
+  {
+    "id": "quickSwap",
+    "message": "Schnell swap",
+    "files": [
+      "src/front/shared/pages/Exchange/index.tsx"
+    ]
+  },
+  {
+    "id": "addressOfYourWallet",
+    "message": "Adresse Ihrer Brieftasche:",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
+    ]
+  },
+  {
+    "id": "createLimitOrder",
+    "message": "Limit order erstellen",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
+    ]
+  },
+  {
+    "id": "limitOrders",
+    "message": "Limit orders",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
+    ]
+  },
+  {
+    "id": "swap",
+    "message": "Swap",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/DirectSwap.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
+    ]
+  },
+  {
+    "id": "advancedSettings",
+    "message": "Erweiterte Einstellungen",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/AdvancedSettings.tsx"
+    ]
+  },
+  {
+    "id": "gasLimit",
+    "message": "Gas-Grenze",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/AdvancedSettings.tsx"
+    ]
+  },
+  {
+    "id": "gasLimitNotice",
+    "message": "Gaslimit ist die maximale Menge an Gaseinheiten, die Sie ausgeben möchten",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/AdvancedSettings.tsx"
+    ]
+  },
+  {
+    "id": "gasPrice",
+    "message": "Gaspreis",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/AdvancedSettings.tsx"
+    ]
+  },
+  {
+    "id": "gasPriceNotice",
+    "message": "Gaspreis gibt die Menge an Äther an, die Sie für jede Gaseinheit bezahlen möchten",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/AdvancedSettings.tsx"
+    ]
+  },
+  {
+    "id": "buyViaBankCard",
+    "message": "Kaufen Sie per Bankkarte",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/ExchangeForm.tsx"
+    ]
+  },
+  {
+    "id": "slippageNotice",
+    "message": "Wenn sich der Preis zwischen der Bestellung und der Bestätigung ändert, spricht man von\"Schlupf\". Ihr Swap wird automatisch abgebrochen, wenn der Schlupf Ihre Einstellung \"Maximaler Schlupf\" überschreitet",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/AdvancedSettings.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/DirectSwap.tsx"
+    ]
+  },
+  {
+    "id": "slippageTolerance",
+    "message": "Slippage Toleranz",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/AdvancedSettings.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/DirectSwap.tsx"
+    ]
+  },
+  {
+    "id": "fee",
+    "message": "Gebühr",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/SwapInfo.tsx"
+    ]
+  },
+  {
+    "id": "network",
+    "message": "Netzwerk",
+    "files": [
+      "src/front/shared/components/modals/WalletConnectAccount/WalletConnectAccount.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/SwapInfo.tsx"
+    ]
+  },
+  {
+    "id": "total",
+    "message": "Insgesamt",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/SwapInfo.tsx"
+    ]
+  },
+  {
+    "id": "allOrders",
+    "message": "Alle Bestellungen",
+    "files": [
+      "src/front/shared/components/LimitOrders/AllOrdersHeader.tsx"
+    ]
+  },
+  {
+    "id": "buyToken",
+    "message": "Kaufen",
+    "files": [
+      "src/front/shared/components/LimitOrders/Row.tsx"
+    ]
+  },
+  {
+    "id": "Chain",
+    "message": "Kette",
+    "files": [
+      "src/front/shared/components/LimitOrders/OrderSettings.tsx"
+    ]
+  },
+  {
+    "id": "noOptions",
+    "message": "Keine Optionen",
+    "files": [
+      "src/front/shared/components/LimitOrders/OrderSettings.tsx"
+    ]
+  },
+  {
+    "id": "disclaimerAboutBetaVersion",
+    "message": "* Haftungsausschluss: Die Börse verwendet ein 3rd 0x Liquiditätsprotokoll. Seien Sie vorsichtig und verwenden Sie auf eigene Gefahr."
+  },
+  {
+    "id": "insufficientBalance",
+    "message": "Unzureichendes Gleichgewicht"
+  },
+  {
+    "id": "insufficientLiquidity",
+    "message": "Unzureichende pool Liquidität",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/NoSwapsReasons.tsx"
+    ]
+  },
+  {
+    "id": "addNewCurrencyMessage",
+    "message": "Klicken Sie auf der Seite Wallet auf die Schaltfläche Währung hinzufügen.",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/NewTokenInstruction.tsx"
+    ]
+  },
+  {
+    "id": "checkTokenInTheSwapList",
+    "message": "Jetzt können Sie Ihr Token in der Liste sehen.",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/NewTokenInstruction.tsx"
+    ]
+  },
+  {
+    "id": "choseTokenStandard",
+    "message": "Wählte einen token-standard und klicken Sie auf die Schaltfläche weiter.",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/NewTokenInstruction.tsx"
+    ]
+  },
+  {
+    "id": "confirmTokenAddition",
+    "message": "Überprüfen Sie die Informationen und bestätigen Sie den Token-Zusatz.",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/NewTokenInstruction.tsx"
+    ]
+  },
+  {
+    "id": "createNewPoolInAggregates",
+    "message": "Wählen Sie eine der unterstützten Quellen aus und erstellen Sie dort einen neuen Pool mit Ihrem Token.",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/NewTokenInstruction.tsx"
+    ]
+  },
+  {
+    "id": "detailedInformation",
+    "message": "Informationen",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/NewTokenInstruction.tsx"
+    ]
+  },
+  {
+    "id": "enterTokenContractAddress",
+    "message": "Geben Sie eine Token-Vertragsadresse ein.",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/NewTokenInstruction.tsx"
+    ]
+  },
+  {
+    "id": "howToAddToken",
+    "message": "So fügen Sie ein Token hinzu",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/NewTokenInstruction.tsx"
+    ]
+  },
+  {
+    "id": "ifYouDoNotSeeNewToken",
+    "message": "Sie können einige Token nicht umtauschen, da möglicherweise kein Liquiditätspool mit Ihrem Token verfügbar ist. Sie müssen ein neues erstellen, wenn Sie es austauschen möchten.",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/NewTokenInstruction.tsx"
+    ]
+  },
+  {
+    "id": "youWillSeeYourToken",
+    "message": "Nachdem Sie mit Ihrem Token einen Liquiditätspool ermittelt haben, steht dieser zum Umtausch zur Verfügung.",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/NewTokenInstruction.tsx"
+    ]
+  },
+  {
+    "id": "executeOrder",
+    "message": "Den Auftrag ausführen",
+    "files": [
+      "src/front/shared/components/LimitOrders/OrderPurchaseModal.tsx"
+    ]
+  },
+  {
+    "id": "limitOrderFillDescription",
+    "message": "Sie können nicht Ihr gesamtes Guthaben ausgeben. Geben Sie den Betrag von {sellToken} ein, den Sie ausgeben möchten.",
+    "files": [
+      "src/front/shared/components/LimitOrders/OrderPurchaseModal.tsx"
+    ]
+  },
+  {
+    "id": "remainingMakerAmount",
+    "message": "Die Verbleibende Menge maker",
+    "files": [
+      "src/front/shared/components/LimitOrders/OrderPurchaseModal.tsx"
+    ]
+  },
+  {
+    "id": "remainingTakerAmount",
+    "message": "Verbleibender Taker-Betrag",
+    "files": [
+      "src/front/shared/components/LimitOrders/OrderPurchaseModal.tsx"
+    ]
+  },
+  {
+    "id": "youCanSpend",
+    "message": "Sie können ausgeben",
+    "files": [
+      "src/front/shared/components/LimitOrders/OrderPurchaseModal.tsx"
+    ]
+  },
+  {
+    "id": "yourBalance",
+    "message": "Ihr Guthaben",
+    "files": [
+      "src/front/shared/components/LimitOrders/OrderPurchaseModal.tsx"
+    ]
+  },
+  {
+    "id": "customSlippageValueNotice",
+    "message": "Sie können einen benutzerdefinierten Schlupftoleranzwert in den erweiterten Einstellungen festlegen und es erneut versuchen"
+  },
+  {
+    "id": "insufficientSlippage",
+    "message": "Unzureichender Schlupf. Versuche es zu erhöhen",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/DirectSwap.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/NoSwapsReasons.tsx"
+    ]
+  },
+  {
+    "id": "notEnoughAssetsNotice",
+    "message": "Sie haben keine verfügbaren Assets in diesem Netzwerk zum Austauschen. Bitte ändern Sie das Netzwerk oder fügen Sie der Brieftasche ein benutzerdefiniertes Asset hinzu.",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
+    ]
+  },
+  {
+    "id": "disclaimerAbout1inch",
+    "message": "* Haftungsausschluss: Limit Orders werden durch ein 3rd 1inch Limit Order Protokoll bereitgestellt und sollten in der Beta berücksichtigt werden. Seien Sie vorsichtig und verwenden Sie auf eigene Gefahr.",
+    "files": [
+      "src/front/shared/components/modals/LimitOrder/ModalForm.tsx"
+    ]
+  },
+  {
+    "id": "disclaimerAbout0x",
+    "message": "* Haftungsausschluss: Die Börse verwendet ein 3rd 0x Liquiditätsprotokoll. Seien Sie vorsichtig und verwenden Sie auf eigene Gefahr.",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
+    ]
+  },
+  {
+    "id": "Connect",
+    "message": "Verbinden",
+    "files": [
+      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.tsx"
+    ]
+  },
+  {
+    "id": "chooseNetwork",
+    "message": "Wählen Sie Netzwerk",
+    "files": [
+      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.tsx"
+    ]
+  },
+  {
+    "id": "chooseWallet",
+    "message": "Brieftasche wählen",
+    "files": [
+      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.tsx"
+    ]
+  },
+  {
+    "id": "approveTokenFirst",
+    "message": "Bitte genehmigen Sie zuerst {token}",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/NoSwapsReasons.tsx"
+    ]
+  },
+  {
+    "id": "InvoiceInfoModal_Comment",
+    "message": "Kommentar",
+    "files": [
+      "src/front/shared/components/modals/InfoInvoice/InfoInvoice.tsx"
+    ]
+  },
+  {
+    "id": "howToDeposit",
+    "message": "Wie einzahlen",
+    "files": [
+      "src/front/shared/components/modals/ReceiveModal/ReceiveModal.tsx"
+    ]
+  },
+  {
+    "id": "tryAnyway",
+    "message": "Versuche es trotzdem"
+  },
+  {
+    "id": "unknownSwapProblemHasOccurred",
+    "message": "Unbekanntes Problem ist aufgetreten. Wahrscheinlich können wir dieses Paar nicht austauschen",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/NoSwapsReasons.tsx"
+    ]
+  },
+  {
+    "id": "directSwap",
+    "message": "Direkte swap",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/DirectSwap.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
+    ]
+  },
+  {
+    "id": "guaranteedPrice",
+    "message": "Garantierter Preis",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/DirectSwap.tsx"
+    ]
+  },
+  {
+    "id": "invalidSlippagePercent",
+    "message": "Ungültige Schlupf Prozent",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/DirectSwap.tsx"
+    ]
+  },
+  {
+    "id": "source",
+    "message": "Quelle",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/DirectSwap.tsx"
+    ]
+  },
+  {
+    "id": "transactionDeadline",
+    "message": "Transaktionsfrist (Minuten)",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/DirectSwap.tsx"
+    ]
+  },
+  {
+    "id": "transactionMayBeFrontrun",
+    "message": "Transaktion kann sein frontrun",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/DirectSwap.tsx"
+    ]
+  },
+  {
+    "id": "transactionMayFail",
+    "message": "Transaktion kann fehlschlagen",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/DirectSwap.tsx"
+    ]
+  },
+  {
+    "id": "liquidityPoolProblem",
+    "message": "Es gibt ein Problem mit Liquiditätspool. Versuchen Sie direkten Swap",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/NoSwapsReasons.tsx"
     ]
   }
 ]

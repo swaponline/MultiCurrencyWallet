@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { routing } from 'helpers'
+import { routing, links } from 'helpers'
 
 const isFeedbackEnabled = !window?.STATISTIC_DISABLED
 
@@ -8,10 +8,15 @@ const sendMessage = ({ appPart, eventName, details }) => {
     return
   }
 
-  const host = routing.getTopLocation().host || window.location.hostname || document.location.host
+  let host = routing.getTopLocation().host || window.location.hostname || document.location.host
+  const regexp = new RegExp(host)
 
-  let prefixMark = ''
+  if (links.extension.match(regexp)) {
+    host = 'browser extension'
+  }
   
+  let prefixMark = ''
+
   if (eventName === 'failed') prefixMark = '🛑'
   if (eventName === 'warning') prefixMark = '🔥'
 
@@ -94,6 +99,15 @@ const events = {
     started: 'started',
     stopped: 'stopped',
     finished: 'finished',
+  },
+  oneinch: {
+    createOrder: 'create the order',
+    cancelOrder: 'cancel the order',
+    failed: 'failed',
+  },
+  zerox: {
+    startedSwap: 'start the swap',
+    failed: 'failed',
   },
   marketmaking: {
     enteredPromo: 'enteredPromo',

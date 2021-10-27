@@ -1,5 +1,3 @@
-import * as types from './types'
-
 import modals from './modals'
 import loader from './loader'
 import notifications from './notifications'
@@ -10,7 +8,8 @@ import feed from './feed'
 import core from './core'
 import ui from './ui'
 import filter from './filter'
-
+import oneinch from './oneinch'
+import directSwap from './directSwap'
 import btc from './btc'
 import ghost from './ghost'
 import next from './next'
@@ -32,7 +31,6 @@ import backupManager from './backupManager'
 import multisigTx from './multisigTx'
 
 export default {
-  types,
   filter,
   modals,
   loader,
@@ -41,7 +39,8 @@ export default {
   history,
   core,
   ui,
-
+  oneinch,
+  directSwap,
   btc,
   btcmultisig,
   eth: EthLikeAction.ETH,

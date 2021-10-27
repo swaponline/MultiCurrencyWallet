@@ -12,6 +12,8 @@ import * as inputActive from './inputActive'
 import * as rememberedOrders from './rememberedOrders'
 import * as createWallet from './createWallet'
 import * as ui from './ui'
+import * as oneinch from './oneinch'
+import * as transactions from './transactions'
 
 export default {
   notifications,
@@ -28,4 +30,6 @@ export default {
   rememberedOrders,
   createWallet,
   ui,
+  oneinch,
+  transactions,
 }

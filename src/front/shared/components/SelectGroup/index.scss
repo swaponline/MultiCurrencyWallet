@@ -1,0 +1,175 @@
+.selectGroup {
+  position: relative;
+}
+
+.row {
+  position: absolute;
+  z-index: 1;
+  top: -0.8em;
+  left: 0.7em;
+  display: flex;
+  align-items: baseline;
+  padding: 0 0.4rem;
+  background-color: var(--color-background-elements);
+}
+
+.label {
+  @include ff-semibold;
+  z-index: 1;
+  background-color: var(--color-background-elements);
+}
+
+.groupField {
+  width: 100%;
+  display: inline-flex;
+  height: 68px;
+  margin-bottom: 25px;
+  vertical-align: center;
+  border-radius: 6px;
+  text-align: center;
+  position: relative;
+  text-transform: capitalize;
+}
+
+.balanceTooltip {
+  top: -19px;
+  z-index: 11;
+  left: auto;
+  right: 24px;
+  position: absolute;
+}
+
+.balance {
+  position: absolute;
+  left: 0;
+  bottom: 4%;
+  font-size: 0.8rem;
+  color: var(--color-indicating);
+}
+
+.smallTooltip {
+  margin-left: 0.3rem;
+}
+
+.textUsd {
+  @include ff-mono;
+  color: var(--color-indicating);
+  position: absolute;
+  left: 10px;
+  bottom: -14px;
+  top: auto;
+  right: auto;
+  padding: 0 10px;
+  font-size: 13px;
+}
+
+.inputRoot {
+  min-width: 0;
+  flex: auto 1 1;
+  input {
+    height: 68px;
+    font-size: 24px;
+  }
+}
+
+.textForNull {
+  display: none;
+}
+
+.inputContainer {
+  border-radius: 6px 0 0 6px !important;
+  box-shadow: none !important;
+}
+
+.textForNull {
+  font-size: 10px;
+  position: absolute;
+  left: -1px;
+  margin-top: 70px;
+  width: 350px;
+}
+
+.red {
+  color: var(--color-f-error);
+}
+
+input:disabled {
+  background-color: inherit;
+  color: var(--color-indicating);
+  cursor: default;
+}
+
+.selectGroupContainer {
+  position: relative;
+}
+
+.currencySelect {
+  border-radius: 0 6px 6px 0 !important;
+  background: none !important;
+  box-shadow: none !important;
+  position: absolute !important;
+  @include ff-bold;
+  right: 1px;
+  top: 6px;
+
+  > div:nth-child(2) {
+    margin-top: 10px;
+    display: block;
+    position: absolute;
+    top: 75px;
+    border: none;
+    width: auto;
+    z-index: 1111112;
+    border-radius: 0;
+    box-shadow: none;
+    div {
+      display: flex;
+      flex-direction: row-reverse;
+      justify-content: flex-end;
+      border: none;
+    }
+  }
+  input {
+    border: none;
+    height: 69px;
+    border-bottom: 1px solid var(--color);
+    font-size: 16px;
+    padding-left: 2px;
+  }
+}
+
+.currencySelect.dropDown {
+  width: 100%;
+  border: 1px solid var(--color);
+  top: 0px;
+  z-index: 1;
+  background: var(--color-background-elements);
+  height: 375px;
+  border-radius: 3px;
+}
+
+@include media-mobile {
+  .currencySelect {
+    width: unset;
+    height: 48px;
+    input {
+      font-size: 13px;
+    }
+  }
+  .textUsd {
+    font-size: 14px;
+  }
+  .inputRoot {
+    input {
+      padding-left: 10px;
+      padding-right: 120px;
+    }
+  }
+  .textUsd {
+    font-size: 9px;
+    left: 10px;
+    padding: 0;
+    bottom: -0.5em;
+    margin: 0;
+  }
+}

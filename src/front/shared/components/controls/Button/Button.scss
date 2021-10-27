@@ -14,6 +14,7 @@
   transition: background 0.23s ease, color 0.23s ease;
 
   .pending {
+    cursor: wait;
     position: relative;
   }
   
@@ -44,12 +45,22 @@
   padding: 0;
 }
 
+.center {
+  margin: auto;
+}
+
 .fill {
   display: block;
   padding: inherit;
   width: 100%;
   height: 100%;
   margin: inherit;
+}
+
+.flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .big {
@@ -70,13 +81,6 @@
   background-color: var(--color-brand);
   color: #fff;
   font-size: 15px;
-}
-
-.small {
-  width: 100%;
-  min-height: 39px;
-  height: 39px;
-  font-size: 0.9em;
 }
 
 .empty {
@@ -121,6 +125,11 @@
 .autoHeight {
   height: auto;
   padding: 0.5em 1em;
+}
+
+.dangerous {
+  background: var(--color-f-error);
+  color: var(--color-f-brightest);
 }
 
 @include media-mobile {

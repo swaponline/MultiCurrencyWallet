@@ -20,14 +20,18 @@ const getPluginMethod = (name, data) => {
   throw new Error(`plugin code error or plugin function is not exist, check ${name} function in plugins derectory`)
 }
 
-const setItem = (key, value) => {
+const setItem = (key, value, stringify = true) => {
   if (isLocalStorageEnabled) {
     const setItemPlugin = config?.opts?.plugins?.setItemPlugin || false
 
     if (setItemPlugin) {
       getPluginMethod(setItemPlugin, { key, value })
     } else {
-      window.localStorage.setItem(key, JSON.stringify(value))
+      if (stringify) {
+        window.localStorage.setItem(key, JSON.stringify(value))
+      } else {
+        window.localStorage.setItem(key, value)
+      }
     }
   }
 }
@@ -44,13 +48,12 @@ const getItem = (key) => {
     const value = localStorage.getItem(key)
 
     try {
-      //@ts-ignore: strictNullChecks
-      return JSON.parse(value)
-    } catch (err) {
-      console.group('helpers >%c localStorage', 'color: red;')
-      console.error('getItem parse error: ', err)
-      console.groupEnd()
+      if (value) {
+        return JSON.parse(value)
+      }
 
+      return value
+    } catch (err) {
       return value
     }
   }

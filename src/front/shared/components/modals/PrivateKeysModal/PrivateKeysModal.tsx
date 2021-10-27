@@ -38,7 +38,6 @@ class PrivateKeysModal extends React.PureComponent<any, any> {
     const { fullName, key } = data
 
     return (
-      //@ts-ignore: strictNullChecks
       <Modal
         name={name}
         onClose={this.handleCloseModal}

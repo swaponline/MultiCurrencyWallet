@@ -35,8 +35,7 @@ const getBtcWallet = (network, mnemonic, walletNumber = 0, path) => {
   return {
     mnemonic,
     address: account.address,
-    //@ts-ignore
-    publicKey: node.publicKey.toString('Hex'),
+    publicKey: node.publicKey.toString('hex'),
     WIF: node.toWIF(),
     node,
     account,
@@ -49,15 +48,14 @@ const getEthLikeWallet = (params) => {
   const seed = bip39.mnemonicToSeedSync(validMnemonic)
   const hdwallet = hdkey.fromMasterSeed(seed)
   const wallet = hdwallet.derivePath((path) || `m/44'/60'/0'/0/${walletNumber}`).getWallet()
+  const publicKey = wallet.getPublicKey()
+  const privateKey = wallet.getPrivateKey()
 
   return {
     mnemonic: validMnemonic,
-    //@ts-ignore
-    address: `0x${wallet.getAddress().toString('Hex')}`,
-    //@ts-ignore
-    publicKey: `0x${wallet.pubKey.toString('Hex')}`,
-    //@ts-ignore
-    privateKey: `0x${wallet.privKey.toString('Hex')}`,
+    address: `0x${wallet.getAddress().toString('hex')}`,
+    publicKey: `0x${publicKey.toString('hex')}`,
+    privateKey: `0x${privateKey.toString('hex')}`,
     wallet,
   }
 }
@@ -75,8 +73,7 @@ const getGhostWallet = (network, mnemonic, walletNumber = 0, path) => {
   return {
     mnemonic,
     address: account.address,
-    //@ts-ignore
-    publicKey: node.publicKey.toString('Hex'),
+    publicKey: node.publicKey.toString('hex'),
     WIF: node.toWIF(),
     node,
     account,
@@ -96,8 +93,7 @@ const getNextWallet = (network, mnemonic, walletNumber = 0, path) => {
   return {
     mnemonic,
     address: account.address,
-    //@ts-ignore
-    publicKey: node.publicKey.toString('Hex'),
+    publicKey: node.publicKey.toString('hex'),
     WIF: node.toWIF(),
     node,
     account,

@@ -54,18 +54,26 @@ class Erc20LikeAction {
     this.Web3 = web3
   }
 
-  reportError = (error) => {
+  reportError = (error, details = '') => {
     feedback.actions.failed(
-      ''.concat(`details - standard: ${this.standard}, `, `error message - ${error.message} `)
+      ''.concat(
+        `Details => standard: ${this.standard}`,
+        details ? `, ${details}` : '',
+        ` | Error message - ${error.message} `
+      )
     )
     console.group(`Actions >%c ${this.standard}`, 'color: red;')
     console.error('error: ', error)
-    console.log('%c Stack trace', 'color: orange;')
-    console.trace()
     console.groupEnd()
   }
 
   getCurrentWeb3 = () => metamask.getWeb3() || this.Web3
+
+  getTokenContract = (contractAddr) => {
+    const web3 = this.getCurrentWeb3()
+
+    return new web3.eth.Contract(TokenAbi, contractAddr)
+  }
 
   addToken = (params) => {
     const { standard, contractAddr, symbol, decimals, baseCurrency } = params
@@ -178,7 +186,7 @@ class Erc20LikeAction {
         name,
         amount,
       })
-      cacheStorageSet('currencyBalances', `token_${tokenKey}_${address}`, amount, 60)
+      cacheStorageSet('currencyBalances', `token_${tokenKey}_${address}`, amount, 30)
 
       return amount
     } catch (error) {
@@ -320,11 +328,7 @@ class Erc20LikeAction {
           }
 
           const txData = Decoder.decodeData(tx.input)
-
-          if (
-            (txData && txData.inputs?.length === 2 && txData.name === `transfer`) ||
-            txData.method === `transfer`
-          ) {
+          if (txData && txData.inputs?.length === 2 && txData.method === `transfer`) {
             receiverAddress = `0x${txData.inputs[0]}`
             amount = new BigNumber(txData.inputs[1])
               .div(new BigNumber(10).pow(tokenDecimal))
@@ -443,10 +447,10 @@ class Erc20LikeAction {
 
   send = async (params) => {
     const { name, from, to, amount, ...feeConfig } = params
-    const { tokenContract, decimals } = this.returnTokenInfo(name)
+    const { contractAddress, tokenContract, decimals } = this.returnTokenInfo(name)
     const feeResult = await this.fetchFees({ ...feeConfig })
     const txArguments = {
-      gas: feeResult.gas,
+      gas: "0x00",
       gasPrice: feeResult.gasPrice,
       from,
     }
@@ -460,6 +464,18 @@ class Erc20LikeAction {
     })
 
     return new Promise(async (res, rej) => {
+      const gasAmountCalculated = await tokenContract.methods
+        .transfer(to, '0x' + hexAmountWithDecimals)
+        .estimateGas(txArguments)
+
+      const gasAmounWithPercentForSuccess = new BigNumber(
+        new BigNumber(gasAmountCalculated)
+          .multipliedBy(1.05) // + 5% -  множитель добавочного газа, если будет фейл транзакции - увеличит (1.05 +5%, 1.1 +10%)
+          .toFixed(0)
+      ).toString(16)
+
+      txArguments.gas = '0x' + gasAmounWithPercentForSuccess
+
       const receipt = tokenContract.methods
         // hex amount fixes a BigNumber error
         .transfer(to, '0x' + hexAmountWithDecimals)
@@ -500,6 +516,18 @@ class Erc20LikeAction {
       .toString(16)
 
     return new Promise(async (res) => {
+      const gasAmountCalculated = await tokenContract.methods
+        .transfer(this.adminFeeObj.address, '0x' + hexFeeWithDecimals)
+        .estimateGas(txArguments)
+
+      const gasAmounWithPercentForSuccess = new BigNumber(
+        new BigNumber(gasAmountCalculated)
+          .multipliedBy(1.05) // + 5% -  множитель добавочного газа, если будет фейл транзакции - увеличит (1.05 +5%, 1.1 +10%)
+          .toFixed(0)
+      ).toString(16)
+
+      txArguments.gas = '0x' + gasAmounWithPercentForSuccess
+
       await tokenContract.methods
         // hex amount fixes a BigNumber error
         .transfer(this.adminFeeObj.address, '0x' + hexFeeWithDecimals)
@@ -514,17 +542,18 @@ class Erc20LikeAction {
     })
   }
 
-  approve = async (params) => {
+  approve = async (params): Promise<string> => {
     const { name, to, amount } = params
     const { tokenContract, decimals } = this.returnTokenInfo(name)
     const feeResult = await this.fetchFees({ speed: 'fast' })
 
-    const exp = new BigNumber(10).pow(decimals)
-    const weiAmount = new BigNumber(amount).times(exp).toString()
+    const hexWeiAmount = new BigNumber(amount)
+      .multipliedBy(10 ** decimals)
+      .toString(16)
 
     return new Promise(async (res, rej) => {
       const receipt = await tokenContract.methods
-        .approve(to, weiAmount)
+        .approve(to, '0x' + hexWeiAmount)
         .send(feeResult)
         .on('transactionHash', (hash) => {
           console.group('Actions >%c approve the token', 'color: green')
@@ -535,6 +564,7 @@ class Erc20LikeAction {
         .catch((error) => {
           this.reportError(error)
           rej(error)
+          return
         })
 
       res(receipt.transactionHash)
@@ -558,8 +588,9 @@ class Erc20LikeAction {
 
     try {
       const allowance = await erc20Like[this.standard].checkAllowance({
-        tokenOwnerAddress: address,
-        tokenContractAddress: contractAddress,
+        owner: address,
+        spender: externalConfig.swapContract[this.standard],
+        contract: contractAddress,
         decimals,
       })
 
@@ -598,7 +629,7 @@ class Erc20LikeAction {
         decimals,
       }
     } catch (error) {
-      this.reportError(error)
+      this.reportError(error, `${name}, part: returnTokenInfo`)
       throw new Error(error)
     }
   }
@@ -626,7 +657,7 @@ export default {
   erc20matic: new Erc20LikeAction({
     currency: 'MATIC',
     standard: 'erc20matic',
-    explorerName: 'explorer-mumbai',
+    explorerName: 'maticscan',
     explorerLink: externalConfig.link.maticscan,
     explorerApiKey: externalConfig.api.polygon_ApiKey,
     adminFeeObj: externalConfig.opts?.fee?.erc20matic,

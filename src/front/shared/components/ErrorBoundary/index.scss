@@ -6,17 +6,17 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  font-size: 0.9em;
 }
 
 .errorTitle {
-  max-width: 20em;
+  max-width: 18em;
   margin-bottom: 2em;
   text-align: center;
-  color: var(--color-f-error);
+  color: var(--color-notice);
 }
 
 .errorCode {
-  min-height: 10em;
   max-width: 50em;
   padding: 1em;
   border-radius: 1rem;

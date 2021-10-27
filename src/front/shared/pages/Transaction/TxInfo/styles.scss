@@ -1,9 +1,5 @@
 .blockCenter {
   text-align: center;
-
-  strong {
-    word-wrap: break-word;
-  }
 }
 
 .finishImg {
@@ -45,6 +41,12 @@
 }
 
 @include media-mobile {
+  .blockCenter {
+    strong {
+      word-wrap: break-word;
+    }
+  }
+
   .finishImg {
     margin-bottom: 0px;
   }

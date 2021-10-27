@@ -1,13 +1,5 @@
-import BTC from './BTC'
-import LTC from './LTC'
-import GHOST from './GHOST'
-import NEXT from './NEXT'
+import getCoinInfo from './getCoinInfo'
 
-const coins = {
-  [BTC.ticker]: BTC,
-  [LTC.ticker]: LTC,
-  [GHOST.ticker]: GHOST,
-  [NEXT.ticker]: NEXT
+export default {
+  getCoinInfo
 }
-
-export default coins

@@ -11,7 +11,7 @@ import actions from 'redux/actions'
 import typeforce from 'swap.app/util/typeforce'
 import config from 'app-config'
 
-import * as mnemonicUtils from '../../../../common/utils/mnemonic'
+import * as mnemonicUtils from 'common/utils/mnemonic'
 
 import { default as bitcoinUtils } from 'common/utils/coin/btc'
 
@@ -45,21 +45,20 @@ const getWalletByWords = (mnemonic: string, walletNumber: number = 0, path: stri
 
 const auth = (privateKey) => {
   if (privateKey) {
-    const hash = bitcoin.crypto.sha256(privateKey)
-    const d = BigInteger.fromBuffer(hash)
+    try {
+      const account = bitcoin.ECPair.fromWIF(privateKey, btc.network)
+      const { address } = bitcoin.payments.p2pkh({ pubkey: account.publicKey, network: btc.network })
+      const { publicKey } = account
 
-    const keyPair = bitcoin.ECPair.fromWIF(privateKey, btc.network)
-
-    const account = bitcoin.ECPair.fromWIF(privateKey, btc.network) // eslint-disable-line
-    const { address } = bitcoin.payments.p2pkh({ pubkey: account.publicKey, network: btc.network })
-    const { publicKey } = account
-
-    return {
-      account,
-      keyPair,
-      address,
-      privateKey,
-      publicKey,
+      return {
+        account,
+        keyPair: account,
+        address,
+        privateKey,
+        publicKey,
+      }
+    } catch (error) {
+      console.log('btc auth', error, btc.network)
     }
   }
 }
@@ -441,8 +440,6 @@ const signMessage = (message, encodedPrivateKey) => {
   return signature.toString('base64')
 }
 
-const getReputation = () => Promise.resolve(0)
-
 const checkWithdraw = (scriptAddress) => bitcoinUtils.checkWithdraw({
   scriptAddress,
   NETWORK,
@@ -462,7 +459,6 @@ export default {
   fetchTxInfo,
   fetchBalance,
   signMessage,
-  getReputation,
   getTx,
   getLinkToInfo,
   getInvoices,

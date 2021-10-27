@@ -170,8 +170,6 @@ const getBalance = () => {
       return false
     },
   }).then(({ balance, unconfirmedBalance }) => {
-    console.log('GHOST Balance: ', balance)
-    console.log('GHOST unconfirmedBalance Balance: ', unconfirmedBalance)
     reducers.user.setBalance({ name: 'ghostData', amount: balance, unconfirmedBalance })
     return balance
   })
@@ -450,8 +448,6 @@ const signMessage = (message, encodedPrivateKey) => {
   return signature.toString('base64')
 }
 
-const getReputation = () => Promise.resolve(0)
-
 window.getMainPublicKey = getMainPublicKey
 
 /*
@@ -502,7 +498,6 @@ export default {
   fetchTxInfo,
   fetchBalance,
   signMessage,
-  getReputation,
   getTx,
   getLinkToInfo,
   getInvoices,

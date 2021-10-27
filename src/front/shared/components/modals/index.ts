@@ -1,4 +1,5 @@
 import OfferModal from './OfferModal/OfferModal'
+import LimitOrder from './LimitOrder'
 import WithdrawModal from './WithdrawModal/WithdrawModal'
 import WithdrawModalMultisig from './WithdrawModalMultisig/WithdrawModalMultisig'
 import WithdrawModalMultisigUser from './WithdrawModalMultisig/WithdrawModalMultisigUser'
@@ -10,7 +11,6 @@ import IncompletedSwaps from './IncompletedSwaps/IncompletedSwaps'
 import CurrencyAction from './CurrencyAction/CurrencyAction'
 import Confirm from './Confirm/Confirm'
 import ConfirmBeginSwap from './ConfirmBeginSwap/ConfirmBeginSwap'
-import RegisterSMSProtected from './RegisterSMSProtected/RegisterSMSProtected'
 import MultisignJoinLink from './MultisignJoinLink/MultisignJoinLink'
 import InvoiceModal from './InvoiceModal/InvoiceModal'
 import InvoiceLinkModal from './InvoiceLinkModal/InvoiceLinkModal'
@@ -27,7 +27,6 @@ import InfoInvoice from './InfoInvoice/InfoInvoice'
 import RegisterPINProtected from './RegisterPINProtected/RegisterPINProtected'
 
 import WithdrawBtcPin from './WithdrawBtcPin/WithdrawBtcPin'
-import WithdrawBtcSms from './WithdrawBtcSms/WithdrawBtcSms'
 import WithdrawBtcMultisig from './WithdrawBtcMultisig/WithdrawBtcMultisig'
 
 import WalletAddressModal from './WalletAddressModal/WalletAddressModal'
@@ -35,6 +34,7 @@ import WalletAddressModal from './WalletAddressModal/WalletAddressModal'
 import AlertWindow from "./AlertWindow"
 
 import ConnectWalletModal from './ConnectWalletModal/ConnectWalletModal'
+import WalletConnectAccount from './WalletConnectAccount/WalletConnectAccount'
 
 
 
@@ -42,6 +42,7 @@ export default {
   DeclineOrdersModal,
   ShareModal,
   OfferModal,
+  LimitOrder,
   WithdrawModal,
   WithdrawModalMultisigUser, // Deprecated
   PrivateKeysModal,
@@ -69,12 +70,11 @@ export default {
 
   WalletAddressModal,
 
-  RegisterSMSProtected,
-  WithdrawBtcSms,
   WithdrawModalMultisig,  // Deprecated
   WithdrawBtcMultisig, 
 
   AlertWindow,
 
   ConnectWalletModal,
+  WalletConnectAccount,
 }

@@ -1,7 +1,7 @@
 import { BASE_TOKEN_CURRENCY } from 'swap.app/constants/COINS'
 
 const getCoinInfo = (coin) => {
-  coin = coin.toUpperCase()
+  coin = `${coin}`.toUpperCase()
 
   if (coin.indexOf(`}`) !== -1 && coin.indexOf(`{`) === 0) {
     let coinData = coin.split(`}`)

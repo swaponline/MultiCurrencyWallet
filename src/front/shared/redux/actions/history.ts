@@ -14,24 +14,35 @@ const pullTransactions = (transactions) => {
     }
   }
 
+  if (sortedTxs.length) {
+    filteredTxs.push(sortedTxs[sortedTxs.length - 1])
+  }
+
   reducers.history.setTransactions(filteredTxs)
 }
 
-const setTransactions = async (address, type) => {
+const setTransactions = async (address, name) => {
   let actionName
 
-  if (erc20Like.isToken({name: type})) {
-    const tokenStandard = COIN_DATA[type.toUpperCase()].standard.toLowerCase()
+  switch (name) {
+    case 'btc (sms-protected)':
+    case 'btc (multisig)':
+    case 'btc (pin-protected)':
+      name = 'btc'
+  }
+
+  if (erc20Like.isToken({ name })) {
+    const tokenStandard = COIN_DATA[name.toUpperCase()].standard.toLowerCase()
     actionName = tokenStandard
   } else {
-    actionName = type
+    actionName = name
   }
 
   const isMultisigBtcAddress = actionName === 'btc' && actions.btcmultisig.isBTCMSUserAddress(address)
 
   try {
     const result: [][] = await Promise.all([
-      actions[actionName].getTransaction(address, type),
+      actions[actionName].getTransaction(address, name),
       isMultisigBtcAddress ? actions.multisigTx.fetch(address) : new Promise((resolve) => resolve([])),
     ])
     const transactions = [].concat(...result)

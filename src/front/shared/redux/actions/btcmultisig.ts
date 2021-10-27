@@ -12,7 +12,7 @@ import actions from 'redux/actions'
 import config from 'helpers/externalConfig'
 import SwapApp from 'swap.app'
 
-import { MnemonicKey } from './types'
+import { MnemonicKey } from 'common/types'
 
 import { default as bitcoinUtils } from 'common/utils/coin/btc'
 
@@ -458,12 +458,15 @@ const login_ = (privateKey, otherOwnerPublicKey, sortKeys) => {
   let _data
 
   if (otherOwnerPublicKey) {
-    let publicKeysRaw = []
+    let publicKeysRaw: string[] = []
+
     if (otherOwnerPublicKey instanceof Array) {
-      //@ts-ignore: strictNullChecks
-      otherOwnerPublicKey.forEach((key) => { publicKeysRaw.push(key) })
+      otherOwnerPublicKey.forEach((key) => {
+        if (key) {
+          publicKeysRaw.push(key)
+        }
+      })
     } else {
-      //@ts-ignore: strictNullChecks
       publicKeysRaw.push(otherOwnerPublicKey)
     }
     //@ts-ignore: strictNullChecks
@@ -737,14 +740,9 @@ const confirmRegisterSMS = async (phone, smsCode, mnemonic, ownPublicKey) => {
   }
 }
 
-const register_PIN = async (password, mnemonic, ownPublicKey) => {
+const registerPinWallet = async (password, mnemonic, ownPublicKey) => {
   const {
     user: {
-      btcMultisigPinData: {
-        account,
-        keyPair,
-        publicKey,
-      },
       btcData: {
         address,
         publicKey: mainKey,
@@ -800,6 +798,49 @@ const register_PIN = async (password, mnemonic, ownPublicKey) => {
   }
 }
 
+const isPinRegistered = async (mnemonic) => {
+  const {
+    user: {
+      btcData: {
+        address,
+        publicKey,
+      },
+    },
+  } = getState()
+
+  const mnemonicAccount = actions.btc.getWalletByWords(mnemonic, 1)
+  const mnemonicKey = mnemonicAccount.publicKey
+  const privateKey = mnemonicAccount.WIF
+  const serverKey = config.swapContract.btcPinKey
+  //@ts-ignore
+  const publicKeys = [serverKey, mnemonicKey.toString('Hex'), publicKey.toString('Hex')]
+
+  try {
+    const result: any = await apiLooper.post('btcPin', `/login/`, {
+      body: {
+        address,
+        publicKey: JSON.stringify(publicKeys),
+        mainnet: config.entry === 'mainnet',
+      },
+    })
+
+    if (result?.answer === 'Exist') {
+      return {
+        exist: true,
+        publicKeys,
+        privateKey,
+      }
+    } else {
+      return false
+    }
+  } catch (error) {
+    console.group('%c isPinRegistered', 'color: red;')
+    console.error(error)
+    console.groupEnd()
+    return false
+  }
+}
+
 const addPinWallet = async (mnemonicOrKey) => {
   const {
     user: {
@@ -810,14 +851,15 @@ const addPinWallet = async (mnemonicOrKey) => {
   } = getState()
 
   let mnemonicKey = mnemonicOrKey
-  if (mnemonicUtils.validateMnemonicWords(mnemonicOrKey)) {
+
+  if (mnemonicOrKey && mnemonicUtils.validateMnemonicWords(mnemonicOrKey)) {
     const mnemonicAccount = actions.btc.getWalletByWords(mnemonicOrKey, 1)
     mnemonicKey = mnemonicAccount.publicKey
   }
 
   //@ts-ignore: strictNullChecks
   let btcPinMnemonicKey: MnemonicKey = localStorage.getItem(constants.privateKeyNames.btcPinMnemonicKey)
-  
+
   try { 
     //@ts-ignore: strictNullChecks
     btcPinMnemonicKey = JSON.parse(btcPinMnemonicKey) 
@@ -1176,8 +1218,8 @@ const sendSMSProtected = async ({ from, to, amount, feeValue, speed, serviceFee 
   }
 }
 
-//@ts-ignore
-const sendPinProtected = async ({ from, to, amount, feeValue, speed, password, mnemonic, serviceFee = hasAdminFee } = {}) => {
+const sendPinProtected = async (params) => {
+  const { from, to, amount, feeValue, speed, password, mnemonic, serviceFee = hasAdminFee } = params
   const {
     user: {
       btcMultisigPinData: {
@@ -1256,8 +1298,8 @@ const sendPinProtected = async ({ from, to, amount, feeValue, speed, password, m
     }
   }
 
-  let authKeys = publicKeys//.slice(1)
-  authKeys = JSON.stringify(authKeys.map((key) => key.toString('Hex')))
+  let authKeys = publicKeys
+  authKeys = JSON.stringify(authKeys.map((key) => Buffer.from(key).toString('hex')))
 
   try {
     const result: any = await apiLooper.post('btcPin', `/sign/`, {
@@ -1690,9 +1732,6 @@ const signMessage = (message, encodedPrivateKey) => {
   return signature.toString('base64')
 }
 
-const getReputation = () => Promise.resolve(0)
-
-
 export default {
   // SMS Protected
   beginRegisterSMS,
@@ -1714,9 +1753,12 @@ export default {
   isBTCSMSAddress,
   getSmsKeyFromMnemonic,
 
+
+  isPinRegistered,
+
   // Pin protected
   login_PIN,
-  register_PIN,
+  registerPinWallet,
   checkPINActivated,
   addPinWallet,
   getBalancePin,
@@ -1741,7 +1783,6 @@ export default {
   fetchTxInfo,
   fetchBalance,
   signMessage,
-  getReputation,
   enableWalletUSER,
 
   parseRawTX,

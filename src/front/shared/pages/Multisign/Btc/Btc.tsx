@@ -393,7 +393,7 @@ class Btc extends PureComponent<any, any> {
                 <Button brand onClick={this.handleSaveMnemonic}>
                   <FormattedMessage
                     id="BTCMS_SaveMnemonicButton"
-                    defaultMessage="Сохранить секретную фразу"
+                    defaultMessage="Save secret phrase"
                   />
                 </Button>
               </>

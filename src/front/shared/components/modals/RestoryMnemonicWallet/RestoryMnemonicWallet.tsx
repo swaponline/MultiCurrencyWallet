@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react'
+import { BigNumber } from 'bignumber.js'
 import { constants } from 'helpers'
 import actions from 'redux/actions'
 import config from 'app-config'
@@ -155,10 +156,12 @@ class RestoryMnemonicWallet extends React.Component<ComponentProps, ComponentSta
       }
 
       const btcPrivKey = await actions.btc.login(false, mnemonic)
-      const btcSmsKey = actions.btcmultisig.getSmsKeyFromMnemonic(mnemonic)
+      const btcPubKey = actions.btcmultisig.getSmsKeyFromMnemonic(mnemonic)
 
       //@ts-ignore: strictNullChecks
-      localStorage.setItem(constants.privateKeyNames.btcSmsMnemonicKeyGenerated, btcSmsKey)
+      localStorage.setItem(constants.privateKeyNames.btcSmsMnemonicKeyGenerated, btcPubKey)
+      //@ts-ignore: strictNullChecks
+      localStorage.setItem(constants.privateKeyNames.btcPinMnemonicKey, btcPubKey)
       localStorage.setItem(constants.localStorage.isWalletCreate, 'true')
 
       await actions.bnb.login(false, mnemonic)
@@ -170,16 +173,30 @@ class RestoryMnemonicWallet extends React.Component<ComponentProps, ComponentSta
       await actions.user.sign_btc_2fa(btcPrivKey)
       await actions.user.sign_btc_multisig(btcPrivKey)
 
-      actions.core.markCoinAsVisible('BNB', true)
-      actions.core.markCoinAsVisible('ETH', true)
-      actions.core.markCoinAsVisible('MATIC', true)
-      actions.core.markCoinAsVisible('ARBETH', true)
       actions.core.markCoinAsVisible('BTC', true)
 
-      this.setState({
+      const result: any = await actions.btcmultisig.isPinRegistered(mnemonic)
+
+      if (result?.exist) {
+        actions.core.markCoinAsVisible('BTC (PIN-Protected)', true)
+      }
+
+      await actions.user.getBalances()
+      const allWallets = actions.core.getWallets({ withInternal: true })
+
+      allWallets.forEach((wallet) => {
+        if (new BigNumber(wallet.balance).isGreaterThan(0)) {
+          actions.core.markCoinAsVisible(
+            wallet.isToken ? wallet.tokenKey.toUpperCase() : wallet.currency,
+            true
+          )
+        }
+      })
+
+      this.setState(() => ({
         isFetching: false,
         step: `ready`,
-      })
+      }))
 
       feedback.restore.finished()
     })
@@ -202,7 +219,6 @@ class RestoryMnemonicWallet extends React.Component<ComponentProps, ComponentSta
     } = this.state
 
     return (
-      //@ts-ignore: strictNullChecks
       <Modal
         name={name}
         title={`${intl.formatMessage(langLabels.title)}`}

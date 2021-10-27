@@ -23,9 +23,14 @@ import feedback from './feedback'
 import getPageOffset from './getPageOffset'
 import transactions from './transactions'
 
-import { migrate } from './migrations/'
+import { migrate } from './migrations'
 
-import { cacheStorageGet, cacheStorageSet } from './cache'
+import {
+  cacheStorageGet,
+  cacheStorageSet,
+  cacheStorageClear,
+  cacheStorageClearPart,
+} from './cache'
 import lsDataCache from './lsDataCache'
 
 import apiLooper from './apiLooper'
@@ -43,7 +48,6 @@ import stats from './stats.swaponline'
 
 import { getPairFees } from './getPairFees'
 
-
 export default {
   btc,
   eth,
@@ -56,6 +60,7 @@ export default {
   getCurrencyKey,
   handleGoTrade,
   transactions,
+  localStorage,
 }
 
 export {
@@ -89,6 +94,8 @@ export {
   feedback,
   cacheStorageGet,
   cacheStorageSet,
+  cacheStorageClear,
+  cacheStorageClearPart,
 
   apiLooper,
 

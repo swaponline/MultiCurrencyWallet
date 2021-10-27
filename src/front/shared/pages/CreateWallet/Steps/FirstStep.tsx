@@ -61,7 +61,7 @@ function FirstStep(props) {
           </div>
         </div>
         <button id='continueBtn' styleName="continue" onClick={onClick} disabled={error}>
-          <FormattedMessage id="createWalletButton1" defaultMessage="Продолжить" />
+          <FormattedMessage id="createWalletButton1" defaultMessage="Continue" />
         </button>
       </div>
       {

@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
-import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
-import helpers from "helpers";
+import { FormattedMessage } from 'react-intl'
+import helpers from 'helpers'
 import { getFullOrigin } from 'helpers/links'
 
 import cssModules from 'react-css-modules'
-import styles from './styles.scss'
 import ShareButton from 'components/controls/ShareButton/ShareButton'
 import { regularIcons } from 'images'
 import actions from 'redux/actions'
@@ -13,19 +12,14 @@ import Skeleton from 'react-loading-skeleton'
 import CommentRow from 'components/Comment/Comment'
 
 import animateFetching from 'components/loaders/ContentLoader/ElementLoading.scss'
-
-
-const labels = defineMessages({
-  Text: {
-    id: 'InfoPay_2',
-    defaultMessage: 'successfully transferred to'
-  },
-})
+import styles from './styles.scss'
+import 'react-loading-skeleton/dist/skeleton.css'
 
 @cssModules({
   ...styles,
   ...animateFetching,
 }, { allowMultiple: true })
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 class TxInfo extends Component<any, any> {
   constructor(props) {
     super(props)
@@ -68,7 +62,8 @@ class TxInfo extends Component<any, any> {
   }
 
   updateComment = (value) => {
-    this.setState({ state: this.state });
+    // eslint-disable-next-line react/no-access-state-in-setstate
+    this.setState({ state: this.state })
   }
 
   getShortInfoHolder = (finalAmount) => {
@@ -90,45 +85,62 @@ class TxInfo extends Component<any, any> {
     if (isFetching) return <Skeleton count={2} />
     if (error)      return <FormattedMessage id="InfoPay_2_Error" defaultMessage="Error loading data" />
 
+    // eslint-disable-next-line prefer-destructuring
     if (Array.isArray(toAddress)) toAddress = toAddress[0]
 
-    const amountText = <strong id='txAmout'> {finalAmount}  {currency.toUpperCase()} </strong>
-    const toAddressText = <strong id='txToAddress'>{toAddress}</strong>
-    const fromAddressText = <strong id='txfromAddress'>{fromAddress}</strong>
+    const amountText = (
+      <strong id="txAmout">
+        {' '}
+        {finalAmount}
+        {'  '}
+        {currency.toUpperCase()}
+        {' '}
+      </strong>
+    )
+    const toAddressText = <strong id="txToAddress">{toAddress}</strong>
+    const fromAddressText = <strong id="txfromAddress">{fromAddress}</strong>
 
-    if (fromAddress === toAddress) return (
-      <FormattedMessage
-        id="InfoPay_2_Self"
-        defaultMessage="{amount} successfully self transfer with {br}{address}"
-        values={{
-          amount: amountText,
-          br: <br />,
-          address: toAddressText
-        }}
-      />
-    )
-    else if (userAddress?.toLowerCase() === fromAddress?.toLowerCase()) return (
-      <FormattedMessage
-        id="InfoPay_2_To"
-        defaultMessage="{amount} successfully transferred to {br}{toAddress}"
-        values={{
-          amount: amountText,
-          br: <br />,
-          toAddress: toAddressText
-        }}
-      />
-    )
-    else if (userAddress?.toLowerCase() === toAddress?.toLowerCase()) return (
-      <FormattedMessage
-        id="InfoPay_2_From"
-        defaultMessage="{amount} successfully received from {br}{fromAddress}"
-        values={{
-          amount: amountText,
-          br: <br />,
-          fromAddress: fromAddressText
-        }}
-      />
-    )
+    if (fromAddress === toAddress) {
+      return (
+        <FormattedMessage
+          id="InfoPay_2_Self"
+          defaultMessage="{amount} successfully self transfer with {br}{address}"
+          values={{
+            amount: amountText,
+            br: <br />,
+            address: toAddressText,
+          }}
+        />
+      )
+    }
+
+    if (userAddress?.toLowerCase() === fromAddress?.toLowerCase()) {
+      return (
+        <FormattedMessage
+          id="InfoPay_2_To"
+          defaultMessage="{amount} successfully transferred to {br}{toAddress}"
+          values={{
+            amount: amountText,
+            br: <br />,
+            toAddress: toAddressText,
+          }}
+        />
+      )
+    }
+
+    if (userAddress?.toLowerCase() === toAddress?.toLowerCase()) {
+      return (
+        <FormattedMessage
+          id="InfoPay_2_From"
+          defaultMessage="{amount} successfully received from {br}{fromAddress}"
+          values={{
+            amount: amountText,
+            br: <br />,
+            fromAddress: fromAddressText,
+          }}
+        />
+      )
+    }
 
     return (
       <FormattedMessage
@@ -138,7 +150,7 @@ class TxInfo extends Component<any, any> {
           amount: amountText,
           br: <br />,
           fromAddress: fromAddressText,
-          toAddress: toAddressText
+          toAddress: toAddressText,
         }}
       />
     )
@@ -146,7 +158,6 @@ class TxInfo extends Component<any, any> {
 
   render() {
     const {
-      intl,
       txId,
       isFetching,
       amount,
@@ -201,144 +212,158 @@ class TxInfo extends Component<any, any> {
 
           <table styleName="blockCenter__table" className="table table-borderless">
             <tbody>
-            <tr>
-              <td styleName="header">
-                <FormattedMessage id="InfoPay_3" defaultMessage="Transaction ID" />
-              </td>
-              <td>
-                <a href={linkBlockChain} target="_blank" styleName="txLink">
-                  {`${tx.slice(0, 6)}...${tx.slice(-6)}`}
-                </a>
-              </td>
-            </tr>
-            {isFetching ? (
-              <>
-                <tr>
-                  <td colSpan={2}>
-                    <Skeleton />
-                  </td>
-                </tr>
-                <tr>
-                  <td colSpan={2}>
-                    <Skeleton />
-                  </td>
-                </tr>
-                <tr>
-                  <td colSpan={2}>
-                    <Skeleton />
-                  </td>
-                </tr>
-              </>
-            ) : error
-              ? null
-              : (
+              <tr>
+                <td styleName="header">
+                  <FormattedMessage id="InfoPay_3" defaultMessage="Transaction ID" />
+                </td>
+                <td>
+                  <a href={linkBlockChain} target="_blank" styleName="txLink" rel="noreferrer">
+                    {`${tx.slice(0, 6)}...${tx.slice(-6)}`}
+                  </a>
+                </td>
+              </tr>
+              {isFetching ? (
                 <>
-                  {(confirmed) ? (
-                    <tr>
-                      <td styleName="header">
-                        <FormattedMessage id="InfoPay_StatusReadyHeader" defaultMessage="Status" />
-                      </td>
-                      <td>
-                        <strong>
-                          <FormattedMessage id="InfoPay_Confirmed" defaultMessage="Confirmed" />
-                        </strong>
-                      </td>
-                    </tr>
-                  ) : (
-                    <tr>
-                      <td styleName="header">
-                        <FormattedMessage id="InfoPay_4" defaultMessage="Est. time to confirmation" />
-                      </td>
-                      <td>
-                        <FormattedMessage id="InfoPay_NotConfirmed" defaultMessage="~10 mins" />
-                      </td>
-                    </tr>
-                  )}
-                  {(minerFee > 0) && (
-                    <tr>
-                      <td styleName="header">
-                        <FormattedMessage id="InfoPay_MinerFee" defaultMessage="Miner fee" />
-                      </td>
-                      <td>
-                        <strong>
-                          {minerFee} {minerFeeCurrency}
-                        </strong>
-                      </td>
-                    </tr>
-                  )}
-                  {(finalAdminFee > 0) && (
-                    <tr>
-                      <td styleName="header">
-                        <FormattedMessage id="InfoPay_AdminFee" defaultMessage="Service fee" />
-                      </td>
-                      <td>
-                        <strong>
-                          {finalAdminFee} {currency.toUpperCase()}
-                        </strong>
-                      </td>
-                    </tr>
-                  )}
-                  {(finalBalances) ? (
-                    <>
+                  <tr>
+                    <td colSpan={2}>
+                      <Skeleton />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colSpan={2}>
+                      <Skeleton />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colSpan={2}>
+                      <Skeleton />
+                    </td>
+                  </tr>
+                </>
+              ) : error
+                ? null
+                : (
+                  <>
+                    {(confirmed) ? (
                       <tr>
-                        <td styleName="header" colSpan={2}>
-                          <FormattedMessage id="InfoPay_FinalBalances" defaultMessage="Final balances" />
+                        <td styleName="header">
+                          <FormattedMessage id="InfoPay_StatusReadyHeader" defaultMessage="Status" />
                         </td>
-                      </tr>
-                      <tr>
-                        <td styleName="header" colSpan={2}>
-                          {finalBalances.from}
-                          {(fromIsOur) && (
-                            <>
-                              {` `}
-                              <FormattedMessage id="InfoPay_IsOurAddress" defaultMessage="(Your)" />
-                            </>
-                          )}
-                        </td>
-                      </tr>
-                      <tr>
-                        <td></td>
                         <td>
-                          <strong>{fromFinal} {currency.toUpperCase()}</strong>
+                          <strong>
+                            <FormattedMessage id="InfoPay_Confirmed" defaultMessage="Confirmed" />
+                          </strong>
                         </td>
                       </tr>
+                    ) : (
                       <tr>
-                        <td styleName="header" colSpan={2}>
-                          {finalBalances.to}
-                          {(toIsOur) && (
-                            <>
-                              {` `}
-                              <FormattedMessage id="InfoPay_IsOurAddress" defaultMessage="(Your)" />
-                            </>
-                          )}
+                        <td styleName="header">
+                          <FormattedMessage id="InfoPay_4" defaultMessage="Est. time to confirmation" />
                         </td>
-                      </tr>
-                      <tr>
-                        <td></td>
                         <td>
-                          <strong>{toFinal} {currency.toUpperCase()}</strong>
+                          <FormattedMessage id="InfoPay_NotConfirmed" defaultMessage="~10 mins" />
                         </td>
                       </tr>
-                    </>
-                  ) : (
-                    <>
-                      {(oldBalance > 0) && (
+                    )}
+                    {(minerFee > 0) && (
+                      <tr>
+                        <td styleName="header">
+                          <FormattedMessage id="InfoPay_MinerFee" defaultMessage="Miner fee" />
+                        </td>
+                        <td>
+                          <strong>
+                            {minerFee}
+                            {' '}
+                            {minerFeeCurrency}
+                          </strong>
+                        </td>
+                      </tr>
+                    )}
+                    {(finalAdminFee > 0) && (
+                      <tr>
+                        <td styleName="header">
+                          <FormattedMessage id="InfoPay_AdminFee" defaultMessage="Service fee" />
+                        </td>
+                        <td>
+                          <strong>
+                            {finalAdminFee}
+                            {' '}
+                            {currency.toUpperCase()}
+                          </strong>
+                        </td>
+                      </tr>
+                    )}
+                    {(finalBalances) ? (
+                      <>
                         <tr>
-                          <td styleName="header">
-                            <FormattedMessage id="InfoPay_FinalBalance" defaultMessage="Final balance" />
+                          <td styleName="header" colSpan={2}>
+                            <FormattedMessage id="InfoPay_FinalBalances" defaultMessage="Final balances" />
                           </td>
+                        </tr>
+                        <tr>
+                          <td styleName="header" colSpan={2}>
+                            {finalBalances.from}
+                            {(fromIsOur) && (
+                              <>
+                                {` `}
+                                <FormattedMessage id="InfoPay_IsOurAddress" defaultMessage="(Your)" />
+                              </>
+                            )}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td />
                           <td>
                             <strong>
-                              {oldBalance} {currency.toUpperCase()}
+                              {fromFinal}
+                              {' '}
+                              {currency.toUpperCase()}
                             </strong>
                           </td>
                         </tr>
-                      )}
-                    </>
-                  )}
-                </>
-              )}
-            {comment && (
+                        <tr>
+                          <td styleName="header" colSpan={2}>
+                            {finalBalances.to}
+                            {(toIsOur) && (
+                              <>
+                                {` `}
+                                <FormattedMessage id="InfoPay_IsOurAddress" defaultMessage="(Your)" />
+                              </>
+                            )}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td />
+                          <td>
+                            <strong>
+                              {toFinal}
+                              {' '}
+                              {currency.toUpperCase()}
+                            </strong>
+                          </td>
+                        </tr>
+                      </>
+                    ) : (
+                      <>
+                        {(oldBalance > 0) && (
+                          <tr>
+                            <td styleName="header">
+                              <FormattedMessage id="InfoPay_FinalBalance" defaultMessage="Final balance" />
+                            </td>
+                            <td>
+                              <strong>
+                                {oldBalance}
+                                {' '}
+                                {currency.toUpperCase()}
+                              </strong>
+                            </td>
+                          </tr>
+                        )}
+                      </>
+                    )}
+                  </>
+                )}
+              {comment && (
                 <tr>
                   <td styleName="header">
                     <FormattedMessage id="InfoPay_Comment" defaultMessage="Comment" />
@@ -355,21 +380,21 @@ class TxInfo extends Component<any, any> {
         </div>
         <div styleName="blockCenter buttonHolder">
           <ShareButton
-            halfWidth={true}
+            halfWidth
             minWidth="200px"
             link={`${getFullOrigin()}${linkShare}`}
-            title={amount.toString() + ' ' + currency.toString() + ' ' + intl.formatMessage(labels.Text) + ' ' + toAddress} />
-
-            <CommentRow
-              label={''}
-              canEdit={true}
-              updateComment={(v) => this.updateComment(v)}
-              commentKey={txId}
-            />
+            title={`${amount.toString()} ${currency.toString()} ${<FormattedMessage id="InfoPay_2" defaultMessage="transferred to" />} ${toAddress}`}
+          />
+          <CommentRow
+            label=""
+            canEdit
+            updateComment={(v) => this.updateComment(v)}
+            commentKey={txId}
+          />
         </div>
       </div>
     )
   }
 }
 
-export default injectIntl(TxInfo)
+export default TxInfo

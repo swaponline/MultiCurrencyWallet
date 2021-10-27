@@ -1,4 +1,3 @@
-import React from 'react'
 import { isMobile } from 'react-device-detect'
 
 import { Switch, Route } from 'react-router-dom'
@@ -11,7 +10,7 @@ import History from 'pages/History/History'
 import CreateWallet from 'pages/CreateWallet/CreateWallet'
 import NotFound from 'pages/NotFound/NotFound'
 import Wallet from 'pages/Wallet/Wallet'
-import Exchange from 'pages/Exchange/Exchange'
+import Exchange from 'shared/pages/Exchange'
 import CurrencyWallet from 'pages/CurrencyWallet/CurrencyWallet'
 import Transaction from 'pages/Transaction/Transaction'
 import BtcMultisignProcessor from 'pages/Multisign/Btc/Btc'
@@ -48,6 +47,9 @@ const routes = (
       <Route path={`/:token(token)/:ticker/:address/withdraw`} component={CurrencyWallet} />
       <Route path={`/:fullName-wallet/:address?`} component={CurrencyWallet} />
 
+      <Route path={`${links.exchange}/quick/createOrder`} component={Exchange} />
+      <Route path={`${links.exchange}/quick/:sell-to-:buy`} component={Exchange} />
+      <Route path={`${links.exchange}/quick`} component={Exchange} />
       <Route path={`${links.exchange}/:sell-to-:buy/:linkedOrderId`} component={Exchange} />
       <Route path={`${links.exchange}/:sell-to-:buy`} component={Exchange} />
       <Route path={`${links.exchange}`} component={Exchange} />
@@ -82,16 +84,16 @@ const routes = (
 
       {/* In desktop mode - the history is shown in the wallet design */}
       {!isMobile && (
-        <>
+        <Switch>
           <Route exact path={`/:page(invoices)/:type?/:address?`} component={Wallet} />
           <Route exact path={`/:page(history)`} component={Wallet} />
-        </>
+        </Switch>
       )}
       {isMobile && (
-        <>
+        <Switch>
           <Route exact path={`${links.history}/(btc)?/:address?`} component={History} />
           <Route exact path={`/:page(invoices)/:type?/:address?`} component={History} />
-        </>
+        </Switch>
       )}
       <Route path={`${links.currencyWallet}`} component={Wallet} />
 

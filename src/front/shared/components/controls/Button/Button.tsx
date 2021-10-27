@@ -1,5 +1,3 @@
-import React from "react";
-import { constants } from 'helpers'
 import cx from "classnames";
 import { FormattedMessage } from 'react-intl'
 import cssModules from 'react-css-modules'
@@ -9,6 +7,7 @@ type ButtonProps = {
   dataTut?: any
   children?: any
   fullWidth?: boolean
+  center?: boolean
   autoHeight?: boolean
   transparent?: boolean
   brand?: boolean
@@ -19,7 +18,9 @@ type ButtonProps = {
   empty?: boolean
   link?: boolean
   fill?: boolean
+  flex?: boolean
   disabled?: boolean
+  dangerous?: boolean
   pending?: boolean
   className?: string
   id?: string
@@ -31,11 +32,13 @@ const Button = (props: ButtonProps) => {
     children,
     className,
     fullWidth,
+    center,
     brand,
     transparent,
     blue,
     gray,
     disabled,
+    dangerous,
     pending,
     big,
     small,
@@ -45,12 +48,15 @@ const Button = (props: ButtonProps) => {
     onClick,
     id = '',
     fill,
+    flex,
     dataTut,
   } = props
 
   const styleName = cx('button', {
     fill,
+    flex,
     fullWidth,
+    center,
     brand,
     transparent,
     blue,
@@ -61,6 +67,7 @@ const Button = (props: ButtonProps) => {
     link,
     autoHeight,
     disabled,
+    dangerous,
   })
 
   return (

@@ -1,7 +1,7 @@
 import Web3 from 'web3'
 import config from 'app-config'
 
-let web3: IEtheriumProvider = new Web3(
+let web3: EthereumProvider = new Web3(
   new Web3.providers.HttpProvider(config.web3.provider)
 )
 
@@ -23,7 +23,6 @@ const setDefaultProvider = () => {
 }
 
 const getWeb3 = () => {
-  console.log('get web3 - is metamask', web3.isMetamask)
   return web3
 }
 

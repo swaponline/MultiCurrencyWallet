@@ -10,10 +10,13 @@ import ownBuffer from './ownBuffer'
 export default (webpackConfig) => {
   webpackConfig.mode = 'production'
 
+  // `default` - через BUILD_TYPE Не указано, локальные, полные и билды теста
+  const hashPrefix = (process && process.env && process.env.BUILD_TYPE) ? process.env.BUILD_TYPE : `default`
+
   webpackConfig.output = {
     path: config.paths.base(`build-${config.dir}`),
-    filename: '[name].[hash:6].js',
-    chunkFilename: '[name].[hash:6].js',
+    filename: `${hashPrefix}-[name].[hash:6].js`,
+    chunkFilename: `${hashPrefix}-[name].[hash:6].js`,
     publicPath: config.publicPath,
   }
 
@@ -54,7 +57,7 @@ export default (webpackConfig) => {
   webpackConfig.plugins.push(
     new webpack.SourceMapDevToolPlugin({
       publicPath: config.publicPath,
-      filename: '[name].[hash:6].js.map',
+      filename: `${hashPrefix}-[name].[hash:6].js.map`,
       fileContext: 'public',
       exclude: /(vendor.*)|(.*\.css)/,
     }),

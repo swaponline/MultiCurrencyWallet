@@ -7,7 +7,7 @@ export const initialState = {
   onlineUsers: 0,
   serverAddress: config.pubsubRoom.server,
   peer: '',
-  reputation: null,
+  reputation: 0,
 }
 
 export const set = (state, payload) => ({

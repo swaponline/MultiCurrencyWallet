@@ -2,7 +2,7 @@ import { apiLooper } from 'helpers'
 import actions from 'redux/actions'
 import { getState } from 'redux/core'
 import reducers from 'redux/core/reducers'
-import { ITransactionStatus } from './types'
+import { TransactionStatus } from 'common/types'
 
 
 const broadcast = ({ sender, destination, amount, fee, rawTx, invoice }) => {
@@ -98,7 +98,7 @@ const fetch = (address) => {
       const pendingTransactions: any[]
         = res.items
              .filter(
-                ({status}) => status === ITransactionStatus.pending
+                ({status}) => status === TransactionStatus.Pending
              )
 
       // @ToDo - (draft) use api request for fetch status of address list
@@ -111,13 +111,13 @@ const fetch = (address) => {
         let { status } = item
 
         switch (status) {
-          case ITransactionStatus.pending: status = 'pending'
+          case TransactionStatus.Pending: status = 'pending'
             break
-          case ITransactionStatus.ready:   status = 'ready'
+          case TransactionStatus.Ready:   status = 'ready'
             break
-          case ITransactionStatus.reject:  status = 'reject'
+          case TransactionStatus.Reject:  status = 'reject'
             break
-          case ITransactionStatus.cancel:  status = 'cancel'
+          case TransactionStatus.Cancel:  status = 'cancel'
             break
         }
 

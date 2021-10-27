@@ -23,7 +23,7 @@
   --color-success: #0ccf14;
   --color-good: #3de25b;
   --color-bad: #f56e85;
-  --color-warning: #ffba00;
+  --color-warning: #ff9c0833;
   --color-link: #007bff;
   --color-link-hover: #3b95ff;
 
@@ -33,7 +33,7 @@
 [data-scheme="dark"] {
   --color-brand:#6144e5;
   --color-brand-hover: #7371ff;
-  --color-brand-background: rgba(97, 68, 229, 0.1);
+  --color-brand-background: #6144e51a;
   --color-page-background: #222427;
   --color: #fff;
   --color-background: #222427;

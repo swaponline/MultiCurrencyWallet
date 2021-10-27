@@ -1,12 +1,21 @@
+/* eslint-disable no-await-in-loop */
 import puppeteer from 'puppeteer'
 import BigNumber from 'bignumber.js'
 import fs from 'fs'
+import TestWallets from '../testWallets.json'
 
-const link = process.env.ACTIONS
-  ? 'file:///home/runner/work/MultiCurrencyWallet/MultiCurrencyWallet/build-testnet/index.html'
-  : 'http://localhost:9001/'
+export const testWallets = TestWallets
+
+let link = 'http://localhost:9001/'
+
+if (process.env.ACTIONS) {
+  link = `file:///home/runner/work/MultiCurrencyWallet/MultiCurrencyWallet/build-${
+    process.env.NODE_ENV === 'production' ? 'mainnet' : 'testnet'
+  }/index.html`
+}
 
 // if it's true then you will be able to see puppeteer's browser
+// don't enable this mode in Github test flows. They don't work with that
 const isDebug = false
 
 export const createBrowser = async (): Promise<{
@@ -47,7 +56,7 @@ export const importWallet = async (params: ImportWalletParams) => {
     selector: '#preloaderRestoreBtn',
   })
   // app creation
-  await timeOut(60_000)
+  await timeOut(30_000)
 
   await page.waitForSelector('.react-tags__search-input', {
     timeout,
@@ -72,6 +81,8 @@ export const importWallet = async (params: ImportWalletParams) => {
 
   await page.click('#walletRecoveryButton')
 
+  await page.waitForSelector('#finishWalletRecoveryButton')
+
   await page.click('#finishWalletRecoveryButton')
 }
 
@@ -87,7 +98,7 @@ export const selectSendCurrency = async (params) => {
   await page.click(`#${currency}Send`)
 }
 
-export const addAssetToWallet = async (page: puppeteer.Page, currency: string = 'ethwbtc') => {
+export const addAssetToWallet = async (page: puppeteer.Page, currency = 'ethwbtc') => {
   try {
     await clickOn({
       page,
@@ -100,6 +111,34 @@ export const addAssetToWallet = async (page: puppeteer.Page, currency: string = 
     await clickOn({
       page,
       selector: '#continueBtn',
+    })
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
+export const addTokenToWallet = async (params) => {
+  const { page, standardId, contract } = params
+  try {
+    await addAssetToWallet(page, standardId)
+
+    const addressInput = await page.$('#customTokenInput')
+    await addressInput.type(contract)
+
+    await clickOn({
+      page,
+      selector: '#customTokenNextButton',
+    })
+
+    await page.waitForSelector('#customTokenAddButton')
+
+    await clickOn({
+      page,
+      selector: '#customTokenAddButton',
+    })
+    await clickOn({
+      page,
+      selector: '#customTokenDoneButton',
     })
   } catch (error) {
     throw new Error(error)
@@ -169,10 +208,12 @@ export const takeScreenshot = async (page: puppeteer.Page, fileName: string) => 
 export const timeOut = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
 export default {
+  testWallets,
   createBrowser,
   importWallet,
   selectSendCurrency,
   addAssetToWallet,
+  addTokenToWallet,
   turnOnMM,
   takeScreenshot,
   timeOut,

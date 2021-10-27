@@ -12,7 +12,7 @@ import noExchangeCoins from './noExchangeCoins'
 import swapConfig from './swapConfig'
 import evmNetworks from './evmNetworks'
 import evmNetworkVersions from './evmNetworkVersions'
-
+import limitOrder from './limitOrder'
 
 export default {
   web3,
@@ -29,4 +29,5 @@ export default {
   swapConfig,
   evmNetworks,
   evmNetworkVersions,
+  limitOrder,
 }

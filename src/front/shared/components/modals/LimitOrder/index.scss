@@ -1,0 +1,41 @@
+@mixin message {
+  padding: 0.4rem 0.8rem;
+  text-align: center;
+  border-radius: 6px;
+}
+
+.limitOrder {
+  max-width: 30em;
+}
+
+.betaVersionDisclaimer {
+  @include message();
+  color: var(--color-indicating);
+}
+
+.warning {
+  @include message();
+  margin-bottom: 2rem;
+  border: 1px solid var(--color-f-error);
+  color: var(--color-f-error);
+}
+
+.formWrapper {
+  &.disabled {
+    pointer-events: none;
+    opacity: 0.4;
+  }
+}
+
+.footer {
+  margin-top: 0.8rem;
+
+  &.disabled {
+    pointer-events: none;
+    opacity: 0.6;
+  }
+}
+
+.inputWrapper {
+  position: relative;
+}
