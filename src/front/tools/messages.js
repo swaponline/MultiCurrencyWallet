@@ -15,6 +15,7 @@ const locales = {
   ru: 'Russian',
   es: 'Spanish',
   pl: 'Polish',
+  pt: 'Portuguese', // Brasil
 }
 
 const GLOB_PATTERN = 'src/front/shared/**/*.{js,ts,tsx}'
