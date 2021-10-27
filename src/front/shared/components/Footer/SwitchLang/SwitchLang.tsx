@@ -13,6 +13,8 @@ const SwitchLang = (props) => {
   const switchLang = (event, locale) => {
     event.preventDefault()
 
+    console.log('locale: ', locale)
+
     feedback.i18n.switched(locale)
 
     setCookie('mylang', locale.toLowerCase(), new Date(new Date().getFullYear() + 1, 1))
@@ -26,7 +28,7 @@ const SwitchLang = (props) => {
     return intlLocale.toUpperCase() !== locale ? true : undefined // if url is undefined then we don't define styles
   }
 
-  const languages = ['EN', 'RU', 'NL', 'ES', 'DE', 'PL']
+  const languages = ['EN', 'RU', 'NL', 'ES', 'DE', 'PL', 'PT']
 
   return (
     <div styleName="langSwitcher">
