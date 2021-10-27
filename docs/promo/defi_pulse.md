@@ -46,7 +46,7 @@
 
 # Please provide the technical leads or relevant team member Discord username (including the #)
 
-- https://discord.com/channels/510130582001418250/510130582001418252
+- https://discord.gg/U26baahb
 
 # Have you read the DeFi List overview and guidelines document? Do you agree to add the DeFi List by DeFi Pulse badge to your website?
 
