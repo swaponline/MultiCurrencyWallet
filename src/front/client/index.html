@@ -741,6 +741,7 @@
         'de',
         'es',
         'pl',
+        'pt',
       ]
 
       const isLangAvailable = lang ? availableLangs.includes(lang.toLowerCase()) : false
@@ -774,6 +775,7 @@
               de: 'Wird geladen...',
               es: 'Cargando...',
               pl: 'Ładowanie...',
+              pt: 'Carregamento...',
             },
           ],
           afterBackup: [
@@ -784,6 +786,7 @@
               de: 'Bewahren Sie Ihren Wiederherstellungssatz an einem&nbsp;&nbsp;sicheren Ort auf',
               es: 'Mantenga su frase de recuperación en&nbsp;&nbsp;lugar seguro',
               pl: 'Przechowuj frazę odzyskiwania w&nbsp;&nbsp;bezpiecznym miejscu',
+              pt: 'Mantenha a sua frase de recuperação dentro&nbsp;seguro',
             },
             {
               en: "Don't forget where your recovery phrase is&nbsp;saved",
@@ -792,6 +795,7 @@
               de: 'Vergessen Sie nicht, wo Ihre&nbsp;Wiederherstellungsphrase gespeichert ist',
               es: 'No olvide dónde está guardada&nbsp;su frase de recuperación',
               pl: 'Nie zapomnij, gdzie&nbsp;jest zapisana fraza odzyskiwania',
+              pt: 'Não te esqueças onde está a tua frase de recuperação&nbsp;salva',
             },
           ],
         };
@@ -812,6 +816,7 @@
           ru: 'Пожалуйста подождите пока приложение запускается,\n это не займет больше минуты...',
           es: 'Espere mientras se carga la aplicación,\n puede tardar un minuto...',
           pl: 'Poczekaj na wczytywanie aplikacji,\n może to potrwać minutę...',
+          pt: 'Espere por favor enquanto a aplicação está a carregar,\npode demorar um minuto...',
         }
         const information = document.getElementById('usersInform');
         information.innerText = informationTexts[locale]

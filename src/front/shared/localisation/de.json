@@ -5671,7 +5671,8 @@
     "message": "Slippage Toleranz",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/AdvancedSettings.tsx",
-      "src/front/shared/pages/Exchange/QuickSwap/DirectSwap.tsx"
+      "src/front/shared/pages/Exchange/QuickSwap/DirectSwap.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/ExchangeForm.tsx"
     ]
   },
   {
