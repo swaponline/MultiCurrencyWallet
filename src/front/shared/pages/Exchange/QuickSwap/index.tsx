@@ -819,6 +819,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       isDataPending,
       spendedAmount,
       fromWallet,
+      baseChainWallet,
       slippage,
       slippageMaxRange,
       isAdvancedMode,
@@ -844,8 +845,10 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
         new BigNumber(gasLimit).isGreaterThan(maxGasLimit))
 
     const wrongAdvancedOptions = isAdvancedMode && (wrongGasPrice || wrongGasLimit || wrongSlippage)
+    const noBalance = baseChainWallet.balanceError || new BigNumber(baseChainWallet.balance).isEqualTo(0)
 
     return (
+      noBalance ||
       isPending ||
       isDataPending ||
       wrongAdvancedOptions ||
@@ -1058,6 +1061,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
               <NoSwapsReasons
                 wrongNetwork={wrongNetwork}
                 blockReason={blockReason}
+                baseChainWallet={baseChainWallet}
                 fromWallet={fromWallet}
                 spendedAmount={spendedAmount}
                 swapFee={swapFee}
