@@ -242,7 +242,7 @@
     "ethereumjs-abi": "^0.6.8",
     "favicons": "^6.2.1",
     "ghost-bitcore-lib": "git+https://github.com/swaponline/ghost-bitcore-lib.git",
-    "graphql": "^15.3.0",
+    "graphql": "^16.0.0",
     "graphql-request": "^3.4.0",
     "history": "^4.9.0",
     "human-standard-token-abi": "^2.0.0",
