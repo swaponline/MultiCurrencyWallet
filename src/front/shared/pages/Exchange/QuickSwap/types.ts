@@ -65,7 +65,6 @@ export type ComponentState = {
   gasPrice: string
   gasLimit: string
   showOrders: boolean
-  mnemonicSaved: boolean
   blockReason: SwapBlockReason | undefined
   coinDecimals: 18
   liquidityErrorMessage: string

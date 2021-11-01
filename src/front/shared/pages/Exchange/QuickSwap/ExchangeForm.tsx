@@ -44,7 +44,6 @@ function ExchangeForm(props) {
     user,
     insufficientBalance,
     resetSwapData,
-    slippage,
   } = props
 
   const [fromBalancePending, setFromBalancePending] = useState(false)
@@ -258,11 +257,6 @@ function ExchangeForm(props) {
           }}
         />
       </div>
-
-      <p styleName="slippageIndicator">
-        <FormattedMessage id="slippageTolerance" defaultMessage="Slippage tolerance" />
-        <span>{`${slippage} %`}</span>
-      </p>
 
       <QuickSwapFormTour isTourOpen={isTourOpen} closeTour={closeTour} />
     </form>

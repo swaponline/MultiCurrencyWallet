@@ -2,12 +2,10 @@ import { PureComponent } from 'react'
 import { connect } from 'redaction'
 import { BigNumber } from 'bignumber.js'
 import { FormattedMessage } from 'react-intl'
-import { isMobile } from 'react-device-detect'
 import CSSModules from 'react-css-modules'
 import styles from './index.scss'
 import utils from 'common/utils'
 import ADDRESSES from 'common/helpers/constants/ADDRESSES'
-import { AddressFormat, AddressType } from 'domain/address'
 import {
   feedback,
   apiLooper,
@@ -25,10 +23,9 @@ import actions from 'redux/actions'
 import Link from 'local_modules/sw-valuelink'
 import { ComponentState, Direction, SwapBlockReason } from './types'
 import Button from 'components/controls/Button/Button'
-import Address from 'components/ui/Address/Address'
-import Copy from 'components/ui/Copy/Copy'
 import NewTokenInstruction from './NewTokenInstruction'
 import ExchangeForm from './ExchangeForm'
+import UserInfo from './UserInfo'
 import AdvancedSettings from './AdvancedSettings'
 import SwapInfo from './SwapInfo'
 import NoSwapsReasons from './NoSwapsReasons'
@@ -54,8 +51,6 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       receivedCurrency,
       wrongNetwork,
     } = this.returnCurrentAssetState(allCurrencies)
-
-    const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
 
     if (path.match(/\/quick\/createOrder/)) {
       this.createLimitOrder()
@@ -124,7 +119,6 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       gasPrice: '',
       gasLimit: '',
       showOrders: false,
-      mnemonicSaved: mnemonic === '-',
       blockReason: undefined,
       coinDecimals: 18,
     }
@@ -231,30 +225,6 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       spendedCurrency,
       receivedCurrency,
     }
-  }
-
-  saveMnemonic = () => {
-    actions.modals.open(constants.modals.SaveMnemonicModal, {
-      onClose: () => {
-        const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
-
-        this.setState(() => ({
-          mnemonicSaved: mnemonic === '-',
-        }))
-      },
-    })
-  }
-
-  createWallet = () => {
-    const { history } = this.props
-    const { fromWallet } = this.state
-    const walletName = fromWallet.tokenKey || fromWallet.currency
-
-    history.push(`${links.createWallet}/${walletName.toUpperCase()}`)
-  }
-
-  connectWallet = () => {
-    metamask.connect({ dontRedirect: true })
   }
 
   updateNetwork = () => {
@@ -813,6 +783,12 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     )
   }
 
+  mnemonicIsSaved = () => {
+    const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
+
+    return mnemonic === '-'
+  }
+
   isSwapDataNotAvailable = () => {
     const {
       isPending,
@@ -909,7 +885,6 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       isAdvancedMode,
       isDirectSwap,
       showOrders,
-      mnemonicSaved,
       blockReason,
       liquidityErrorMessage,
       slippage,
@@ -932,10 +907,6 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
 
     const swapDataIsDisabled = this.isSwapDataNotAvailable()
     const swapBtnIsDisabled = this.isSwapNotAvailable() || insufficientBalance || swapDataIsDisabled
-
-    const isWalletCreated = localStorage.getItem(constants.localStorage.isWalletCreate)
-    const saveSecretPhrase = !mnemonicSaved && !metamask.isConnected()
-
     const canMakeDirectSwap = blockReason === SwapBlockReason.Liquidity && swapData && liquidityErrorMessage
 
     return (
@@ -985,56 +956,13 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
                   isPending={isPending}
                   insufficientBalance={insufficientBalance}
                   resetSwapData={this.resetSwapData}
-                  slippage={slippage}
                 />
               </div>
 
-              <div styleName="walletAddress">
-                {!metamask.isConnected() && (!isWalletCreated || !mnemonicSaved) && (
-                  <Button
-                    id="connectWalletBtn"
-                    brand
-                    fullWidth
-                    styleName="connectWalletBtn"
-                    onClick={this.connectWallet}
-                  >
-                    <FormattedMessage
-                      id="Exchange_ConnectAddressOption"
-                      defaultMessage="Connect Wallet"
-                    />
-                  </Button>
-                )}
-                {!isWalletCreated ? (
-                  <Button id="createWalletBtn" center onClick={this.createWallet}>
-                    <FormattedMessage id="menu.CreateWallet" defaultMessage="Create wallet" />
-                  </Button>
-                ) : saveSecretPhrase ? (
-                  <Button id="saveSecretPhraseBtn" center onClick={this.saveMnemonic}>
-                    <FormattedMessage
-                      id="BTCMS_SaveMnemonicButton"
-                      defaultMessage="Save secret phrase"
-                    />
-                  </Button>
-                ) : (
-                  <>
-                    <span>
-                      <FormattedMessage
-                        id="addressOfYourWallet"
-                        defaultMessage="Address of your wallet:"
-                      />
-                    </span>
-                    <Copy text={fromWallet.address}>
-                      <span styleName="address">
-                        <Address
-                          address={fromWallet.address}
-                          format={isMobile ? AddressFormat.Short : AddressFormat.Full}
-                          type={metamask.isConnected() ? AddressType.Metamask : AddressType.Internal}
-                        />
-                      </span>
-                    </Copy>
-                  </>
-                )}
-              </div>
+              <UserInfo
+                slippage={slippage}
+                fromWallet={fromWallet}
+              />
 
               <div styleName={`${wrongNetwork || receivedCurrency.notExist ? 'disabled' : ''}`}>
                 <AdvancedSettings
@@ -1103,7 +1031,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
             </>
           )}
 
-          {!wrongNetwork && (mnemonicSaved || metamask.isConnected()) && (
+          {!wrongNetwork && (this.mnemonicIsSaved() || metamask.isConnected()) && (
             <Button onClick={this.createLimitOrder} link small>
               <FormattedMessage id="createLimitOrder" defaultMessage="Create limit order" />
             </Button>

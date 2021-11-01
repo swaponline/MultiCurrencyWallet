@@ -332,10 +332,33 @@ const returnAddLiquidityData = async (params) => {
   }
 }
 
-const addLiquidity = async (params) => {
-  const { routerAddress, provider, baseCurrency, waitReceipt = false } = params
+const addLiquidityCallback = async (params) => {
+  const {
+    routerAddress,
+    provider,
+    baseCurrency,
+    waitReceipt = false,
+    tokenA,
+    amountADesired,
+    amountAMin,
+    tokenB,
+    amountBDesired,
+    amountBMin,
+    owner,
+    deadlinePeriod,
+  } = params
 
-  const { method, args, value } = await returnAddLiquidityData({})
+  const { method, args, value } = await returnAddLiquidityData({
+    provider,
+    tokenA,
+    amountADesired,
+    amountAMin,
+    tokenB,
+    amountBDesired,
+    amountBMin,
+    owner,
+    deadlinePeriod,
+  })
   const router = getRouterContract({ routerAddress, provider })
   const txData = router.methods[method](...args).encodeABI()
 
@@ -355,4 +378,5 @@ export default {
   getContract,
   getRouterContract,
   swapCallback,
+  addLiquidityCallback,
 }

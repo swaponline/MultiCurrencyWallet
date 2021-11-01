@@ -1,5 +1,7 @@
+$maxWidth: 38em;
+
 .newTokenInstruction {
-  max-width: 38em;
+  max-width: $maxWidth;
   margin: 0 auto 0.2rem;
   border-radius: 8px;
   text-align: left;
@@ -52,10 +54,10 @@
 }
 
 .quickSwap {
-  max-width: 38em;
+  max-width: $maxWidth;
   margin: 0.6rem auto 1rem;
-  padding: 2rem;
-  padding-bottom: 1.6rem;
+  padding: 1.7rem;
+  padding-bottom: 1.4rem;
   border-radius: 8px;
   text-align: center;
   box-shadow: var(--box-shadow);
@@ -71,12 +73,15 @@
   position: relative;
 }
 
-.walletAddress {
+.userInfo {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  margin: 1.2rem 0;
-  color: var(--color-indicating);
+  margin: 0 0 0.7rem;
+  padding: 0.4rem 0.6rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--color-border);
+  color: var(--color-notice);
 
   .connectWalletBtn {
     margin-bottom: 0.5rem;
@@ -85,6 +90,13 @@
   .address {
     font-size: 0.87em;
   }
+}
+
+.slippageIndicator {
+  width: 100%;
+  margin: 0 0 0.5rem;
+  display: flex;
+  justify-content: space-between;
 }
 
 .advancedInput {
@@ -168,14 +180,6 @@
   }
 }
 
-.slippageIndicator {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.9rem;
-  color: var(--color-indicating);
-}
-
 .advancedSettings {
   display: flex;
   flex-direction: column;
@@ -256,7 +260,7 @@
 
 .noAssetsNotice {
   @include notice(var(--color-bad), var(--color-bad));
-  max-width: 38em;
+  max-width: $maxWidth;
   margin: 0.6rem auto;
 }
 
