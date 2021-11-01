@@ -3,10 +3,9 @@
   section {
     max-width: 700px;
     margin: 20px auto;
-
     box-shadow: var(--box-shadow);
     background: var(--color-background-elements);
-    border-radius: 4px;
+    border-radius: var(--main-component-border-radius);
     padding: 25px;
   }
 

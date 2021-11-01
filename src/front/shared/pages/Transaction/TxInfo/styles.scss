@@ -25,7 +25,7 @@
   border: 1px solid var(--color-inactive-border);
   box-sizing: border-box;
   box-shadow: 0px 2px 12px var(--color-pale);
-  border-radius: 4px;
+  border-radius: var(--main-component-border-radius);
   font-size: 15px;
   color: var(--color);
 

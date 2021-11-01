@@ -1,17 +1,10 @@
 import React, { ReactNode } from 'react'
 import cssModules from 'react-css-modules'
-import { constants } from 'helpers'
-import actions from 'redux/actions'
-import { FormattedMessage } from 'react-intl'
 import { isMobile } from 'react-device-detect'
-
 import cx from 'classnames'
-
-import Button from 'components/controls/Button/Button'
+import styles from './styles.scss'
 import FAQ from 'components/FAQ/FAQ'
 import { ModalConductorProvider } from 'components/modal'
-
-import styles from './styles.scss'
 
 type ComponentProps = {
   page: 'history' | 'invoices'

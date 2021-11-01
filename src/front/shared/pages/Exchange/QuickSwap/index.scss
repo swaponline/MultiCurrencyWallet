@@ -1,7 +1,7 @@
 .newTokenInstruction {
   max-width: 38em;
   margin: 0 auto 0.2rem;
-  border-radius: 8px;
+  border-radius: var(--main-component-border-radius);
   text-align: left;
   border: 1px solid transparent;
   background-color: var(--color-pale);
@@ -56,7 +56,7 @@
   margin: 0.6rem auto 1rem;
   padding: 2rem;
   padding-bottom: 1.6rem;
-  border-radius: 8px;
+  border-radius: var(--main-component-border-radius);
   text-align: center;
   box-shadow: var(--box-shadow);
   background: var(--color-background-elements);

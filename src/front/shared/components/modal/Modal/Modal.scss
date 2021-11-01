@@ -6,6 +6,7 @@
   left: 0;
   right: 0;
   bottom: 0;
+  border-radius: var(--main-component-border-radius);
   background: var(--color-background-elements);
   color: var(--color);
   box-shadow: var(--box-shadow);
@@ -97,6 +98,10 @@
 }
 
 @include media-mobile {
+  .modal {
+    border-radius: none;
+  }
+
   .header {
     &__logo {
       display: none;
