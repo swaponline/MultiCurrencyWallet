@@ -85,21 +85,18 @@
   border-radius: 50%;
 }
 
-.continue {
+.stepButton {
   position: relative;
   margin: 0 auto;
-  border-radius: 2px;
-  text-align: center;
-  font-weight: 800;
   font-size: 15px;
   line-height: 150%;
   background: var(--color-brand);
-  color: white;
+  color: var(--color-f-brightest);
   height: 45px;
   width: 100%;
 }
 
-.continue:disabled {
+.stepButton:disabled {
   background-color: var(--color-inactive);
   color: var(--color-brand);
 }
@@ -273,7 +270,7 @@
     text-align: right;
   }
 
-  .continue {
+  .stepButton {
     width: 100%;
     left: 0;
     position: fixed;

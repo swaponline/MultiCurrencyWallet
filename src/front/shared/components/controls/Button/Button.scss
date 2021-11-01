@@ -10,7 +10,7 @@
   text-align: center;
   font-size: 18px;
   border: none;
-  border-radius: 2px;
+  border-radius: var(--button-border-radius);
   transition: background 0.23s ease, color 0.23s ease;
 
   .pending {

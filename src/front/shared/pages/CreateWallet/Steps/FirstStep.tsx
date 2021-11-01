@@ -1,15 +1,11 @@
-import React from 'react'
-
 import CSSModules from 'react-css-modules'
 import styles from '../CreateWallet.scss'
-
 import { isMobile } from 'react-device-detect'
-
 import { FormattedMessage } from 'react-intl'
-import Coin from 'components/Coin/Coin'
-
-import Explanation from '../Explanation'
 import config from 'helpers/externalConfig'
+import Coin from 'components/Coin/Coin'
+import Button from 'components/controls/Button/Button'
+import Explanation from '../Explanation'
 
 import Cupture, {
   subHeaderText1,
@@ -24,9 +20,9 @@ function FirstStep(props) {
   const { onClick, error, curState, startPack, handleClick } = props
 
   return (
-    <div>
-      <div>
-        <div>
+    <>
+      <>
+        <>
           <Explanation step={1} subHeaderText={subHeaderText1()}>
             {!isWidgetBuild && (
               <Cupture />
@@ -59,11 +55,11 @@ function FirstStep(props) {
               )
             })}
           </div>
-        </div>
-        <button id='continueBtn' styleName="continue" onClick={onClick} disabled={error}>
+        </>
+        <Button id="continueBtn" styleName="stepButton" disabled={error} onClick={onClick}>
           <FormattedMessage id="createWalletButton1" defaultMessage="Continue" />
-        </button>
-      </div>
+        </Button>
+      </>
       {
         !isMobile &&
         <div>
@@ -72,7 +68,7 @@ function FirstStep(props) {
           </Explanation>
         </div>
       }
-    </div>
+    </>
   )
 }
 

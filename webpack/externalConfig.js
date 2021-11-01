@@ -28,10 +28,11 @@ const externalConfig = () => {
           to: './erc20tokens.js',
           toType: 'file',
         },
-      ],
-    }),
-    new CopyWebpackPlugin({
-      patterns: [
+        {
+          from: 'src/front/client/variables.css',
+          to: './variables.css',
+          toType: 'file',
+        },
         {
           from: './src/front/client/customStyles.css',
           to: './customStyles.css',
@@ -39,20 +40,6 @@ const externalConfig = () => {
         },
       ],
     }),
-    new CopyWebpackPlugin({
-      patterns: [
-        {
-          from,
-          to: './erc20tokens.js',
-          toType: 'file',
-        },
-        {
-          from: 'src/front/client/colors.css',
-          to: './colors.css',
-          toType: 'file',
-        },
-      ],
-    })
   ]
 }
 

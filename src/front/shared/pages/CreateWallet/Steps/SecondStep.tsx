@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import CSSModules from 'react-css-modules'
 import styles from '../CreateWallet.scss'
 import reducers from 'redux/core/reducers'
@@ -17,6 +17,7 @@ import Cupture, {
   cupture2,
 } from './texts'
 
+import Button from 'components/controls/Button/Button'
 
 const SecondStep = (props) => {
   const { 
@@ -361,14 +362,14 @@ const SecondStep = (props) => {
             })}
           </div>
         </div>
-        <button
+        <Button
           id="createWalletBtn"
-          styleName="continue"
-          onClick={handleFinish}
+          styleName="stepButton"
           disabled={error || border.selected === '' || border.selected === 'fingerprint'}
+          onClick={handleFinish}
         >
           <FormattedMessage id="createWalletButton3" defaultMessage="Create Wallet" />
-        </button>
+        </Button>
       </div>
     </div>
   )
