@@ -14,6 +14,11 @@ enum SwapMethods {
   swapExactTokensForTokensSupportingFeeOnTransferTokens = 'swapExactTokensForTokensSupportingFeeOnTransferTokens',
 }
 
+enum AddLiquidityMethods {
+  addLiquidity = 'addLiquidity',
+  addLiquidityETH = 'addLiquidityETH',
+}
+
 const getContract = (params) => {
   const { address, abi, provider } = params
 
@@ -24,6 +29,14 @@ const getRouterContract = (params: { routerAddress: string; provider: EthereumPr
   const { routerAddress, provider } = params
 
   return getContract({ address: routerAddress, abi: RouterV2ABI, provider })
+}
+
+const getDeadline = async (provider, deadlinePeriod): Promise<string> => {
+  const latestBlockNumber = await provider.eth.getBlockNumber()
+  const latestBlock = await provider.eth.getBlock(latestBlockNumber)
+  const timestamp = latestBlock.timestamp
+
+  return `0x${new BigNumber(timestamp).plus(deadlinePeriod).toString(16)}`
 }
 
 const returnSwapDataByMethod = async (
@@ -49,10 +62,6 @@ const returnSwapDataByMethod = async (
 
   if (!SwapMethods[method]) throw new Error('Wrong method')
 
-  const latestBlockNumber = await provider.eth.getBlockNumber()
-  const latestBlock = await provider.eth.getBlock(latestBlockNumber)
-  const timestamp = latestBlock.timestamp
-
   const chainNumber = Number(chainId)
   const { WrapperCurrency } = constants.ADDRESSES
 
@@ -66,8 +75,7 @@ const returnSwapDataByMethod = async (
   }
 
   const path = [fromToken, toToken]
-  // after this time, the transaction will be canceled
-  const deadline = `0x${new BigNumber(timestamp).plus(deadlinePeriod).toString(16)}`
+  const deadline = await getDeadline(provider, deadlinePeriod)
 
   const weiSellAmount = utils.amount.formatWithDecimals(sellAmount, fromTokenDecimals)
   const weiBuyAmount = utils.amount.formatWithDecimals(buyAmount, toTokenDecimals)
@@ -207,6 +215,8 @@ const swapCallback = async (params) => {
     throw new Error('No arguments')
   }
 
+  // TODO: we need to approve both tokens
+
   try {
     if (fromTokenStandard && fromToken.toLowerCase() !== constants.ADDRESSES.EVM_COIN_ADDRESS) {
       const result = await checkAndApproveToken({
@@ -231,10 +241,112 @@ const swapCallback = async (params) => {
       amount: swapData.value ?? 0,
     })
   } catch (error) {
-    console.group('%c swapCallback', 'color: red;')
-    console.error(error)
-    console.groupEnd()
+    return error
+  }
+}
 
+const returnAddLiquidityData = async (params) => {
+  const {
+    provider,
+    tokenA,
+    amountADesired,
+    amountAMin,
+    tokenB,
+    amountBDesired,
+    amountBMin,
+    owner,
+    deadlinePeriod,
+  } = params
+  const lowerTokenA = tokenA.toLowerCase()
+  const lowerTokenB = tokenB.toLowerCase()
+  let method: string
+  let args: (string | number)[]
+  let value: number | null
+
+  if (
+    lowerTokenA === constants.ADDRESSES.EVM_COIN_ADDRESS &&
+    lowerTokenB === constants.ADDRESSES.EVM_COIN_ADDRESS
+  ) {
+    throw new Error('Two native coins')
+  }
+
+  // TODO: add tokens approve
+  /*
+  ! If a pool for the passed token and WETH does not exists,
+  ! one is created automatically, and exactly amountTokenDesired/msg.value
+  ! tokens are added.
+  */
+
+  const deadline = await getDeadline(provider, deadlinePeriod)
+
+  if (
+    lowerTokenA === constants.ADDRESSES.EVM_COIN_ADDRESS ||
+    lowerTokenB === constants.ADDRESSES.EVM_COIN_ADDRESS
+  ) {
+    const tokenAIsNative = lowerTokenA === constants.ADDRESSES.EVM_COIN_ADDRESS
+
+    method = AddLiquidityMethods.addLiquidityETH
+    value = tokenAIsNative ? amountADesired : amountBDesired
+
+    /**
+     * address token
+     * uint amountTokenDesired
+     * uint amountTokenMin
+     * uint amountETHMin
+     * address to
+     * uint deadline
+     *
+     * return (amountToken, amountETH, liquidity)
+     */
+    args = [
+      tokenAIsNative ? tokenB : tokenA,
+      tokenAIsNative ? amountBDesired : amountADesired,
+      tokenAIsNative ? amountBMin : amountAMin,
+      tokenAIsNative ? amountAMin : amountBMin,
+      owner,
+      deadline,
+    ]
+  } else {
+    method = AddLiquidityMethods.addLiquidity
+    value = null
+
+    /**
+     * address tokenA
+     * address tokenB
+     * uint amountADesired
+     * uint amountBDesired
+     * uint amountAMin
+     * uint amountBMin
+     * address to
+     * uint deadline
+     *
+     * return (amountA, amountB, liquidity)
+     */
+    args = [tokenA, tokenB, amountADesired, amountBDesired, amountAMin, amountBMin, owner, deadline]
+  }
+
+  return {
+    method,
+    args,
+    value,
+  }
+}
+
+const addLiquidity = async (params) => {
+  const { routerAddress, provider, baseCurrency, waitReceipt = false } = params
+
+  const { method, args, value } = await returnAddLiquidityData({})
+  const router = getRouterContract({ routerAddress, provider })
+  const txData = router.methods[method](...args).encodeABI()
+
+  try {
+    return actions[baseCurrency.toLowerCase()].send({
+      to: routerAddress,
+      data: txData,
+      waitReceipt,
+      amount: value ?? 0,
+    })
+  } catch (error) {
     return error
   }
 }
