@@ -4,9 +4,10 @@ import CSSModules from 'react-css-modules'
 import styles from './index.scss'
 import { SwapBlockReason } from './types'
 
-function SwapInfo(props) {
+function NoSwapsReasons(props) {
   const {
     blockReason,
+    baseChainWallet,
     fromWallet,
     spendedAmount,
     swapFee,
@@ -29,8 +30,15 @@ function SwapInfo(props) {
         <p styleName="neutral">
           <FormattedMessage id="enterYouSend" defaultMessage='Enter "You send" amount' />
         </p>
+      ) : new BigNumber(baseChainWallet?.balance).isEqualTo(0) ? (
+        <p styleName="warning">
+          <FormattedMessage
+            id="doNotHaveNativeCurrencyBalance"
+            defaultMessage="You do not have native currency balance to pay the transaction fee"
+          />
+        </p>
       ) : insufficientBalance ? (
-        <p styleName="neutral">
+        <p styleName="warning">
           <FormattedMessage
             id="AlertOrderNonEnoughtBalance"
             defaultMessage="Please top up your balance before you start the swap"
@@ -77,4 +85,4 @@ function SwapInfo(props) {
   )
 }
 
-export default CSSModules(SwapInfo, styles, { allowMultiple: true })
+export default CSSModules(NoSwapsReasons, styles, { allowMultiple: true })

@@ -5986,5 +5986,12 @@
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/NoSwapsReasons.tsx"
     ]
+  },
+  {
+    "id": "doNotHaveNativeCurrencyBalance",
+    "message": "U hebt geen native currency saldo om de transactiekosten te betalen",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/NoSwapsReasons.tsx"
+    ]
   }
 ]

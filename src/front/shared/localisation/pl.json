@@ -5990,5 +5990,12 @@
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/NoSwapsReasons.tsx"
     ]
+  },
+  {
+    "id": "doNotHaveNativeCurrencyBalance",
+    "message": "Nie masz natywnego salda walutowego, aby zapłacić opłatę transakcyjną",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/NoSwapsReasons.tsx"
+    ]
   }
 ]

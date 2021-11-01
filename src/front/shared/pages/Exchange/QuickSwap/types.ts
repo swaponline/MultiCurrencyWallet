@@ -80,6 +80,7 @@ export enum SwapBlockReason {
   InsufficientSlippage,
   NoLiquidity,
   NoBalance,
+  NoBaseCurrencyBalance,
   Liquidity,
   Unknown,
 }

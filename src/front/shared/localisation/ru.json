@@ -5990,5 +5990,12 @@
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/NoSwapsReasons.tsx"
     ]
+  },
+  {
+    "id": "doNotHaveNativeCurrencyBalance",
+    "message": "У вас нет баланса в базовой валюте для оплаты комиссии за транзакцию",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/NoSwapsReasons.tsx"
+    ]
   }
 ]

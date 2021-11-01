@@ -5994,5 +5994,12 @@
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/NoSwapsReasons.tsx"
     ]
+  },
+  {
+    "id": "doNotHaveNativeCurrencyBalance",
+    "message": "Sie haben kein Guthaben in der Landeswährung, um die Transaktionsgebühr zu zahlen",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/NoSwapsReasons.tsx"
+    ]
   }
 ]
