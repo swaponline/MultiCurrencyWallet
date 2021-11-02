@@ -35,7 +35,7 @@
   text-transform: capitalize;
   text-decoration: none;
   white-space: nowrap;
-  border-radius: 4px;
+  border-radius: var(--main-component-border-radius);
   border: 1px solid var(--color-border);
   cursor: pointer;
 }
@@ -45,7 +45,7 @@
   justify-content: center;
   align-items: center;
   padding: 10px;
-  border-radius: 4px;
+  border-radius: var(--main-component-border-radius);
   background-color: var(--color-pale);
   max-width: 500px;
   word-break: break-all;
