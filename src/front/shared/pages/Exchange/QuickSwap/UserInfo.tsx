@@ -67,7 +67,7 @@ function UserInfo(props) {
           <FormattedMessage id="BTCMS_SaveMnemonicButton" defaultMessage="Save secret phrase" />
         </Button>
       ) : (
-        <>
+        <div styleName="addressWrapper">
           <span>
             <FormattedMessage id="addressOfYourWallet" defaultMessage="Address of your wallet:" />
           </span>
@@ -80,7 +80,7 @@ function UserInfo(props) {
               />
             </span>
           </Copy>
-        </>
+        </div>
       )}
     </section>
   )

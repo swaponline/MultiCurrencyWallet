@@ -181,7 +181,7 @@ function ExchangeForm(props) {
           selectedValue={spendedCurrency.value}
           label={<FormattedMessage id="MyOrdersYouSend" defaultMessage="You send" />}
           inputId="quickSwapSpendCurrencyInput"
-          placeholder="0.0"
+          placeholder="0.00"
           currencies={currencies}
           inputToolTip={
             fromBalancePending ? (

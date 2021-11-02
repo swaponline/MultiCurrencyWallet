@@ -23,34 +23,24 @@ import actions from 'redux/actions'
 import Link from 'local_modules/sw-valuelink'
 import { ComponentState, Direction, SwapBlockReason } from './types'
 import Button from 'components/controls/Button/Button'
-import NewTokenInstruction from './NewTokenInstruction'
+import TokenInstruction from './TokenInstruction'
 import ExchangeForm from './ExchangeForm'
 import UserInfo from './UserInfo'
 import AdvancedSettings from './AdvancedSettings'
 import SwapInfo from './SwapInfo'
 import NoSwapsReasons from './NoSwapsReasons'
 import LimitOrders from 'components/LimitOrders'
-import DirectSwap from './DirectSwap' 
+import DirectSwap from './DirectSwap'
 
 class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   constructor(props) {
     super(props)
 
-    const {
-      match,
-      activeFiat,
-      allCurrencies,
-      history,
-    } = props
+    const { match, activeFiat, allCurrencies, history } = props
     const { params, path } = match
 
-    let {
-      currentCurrencies,
-      receivedList,
-      spendedCurrency,
-      receivedCurrency,
-      wrongNetwork,
-    } = this.returnCurrentAssetState(allCurrencies)
+    let { currentCurrencies, receivedList, spendedCurrency, receivedCurrency, wrongNetwork } =
+      this.returnCurrentAssetState(allCurrencies)
 
     if (path.match(/\/quick\/createOrder/)) {
       this.createLimitOrder()
@@ -95,7 +85,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       isDataPending: false,
       isSwapPending: false,
       isAdvancedMode: false,
-      isDirectSwap: false,
+      isSourceMode: false,
       needApprove: false,
       externalExchangeReference: null,
       externalWindowTimer: null,
@@ -113,7 +103,10 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       slippage: 0.5,
       slippageMaxRange: 100,
       wrongNetwork,
-      network: externalConfig.evmNetworks[spendedCurrency.blockchain || spendedCurrency.value.toUpperCase()],
+      network:
+        externalConfig.evmNetworks[
+          spendedCurrency.blockchain || spendedCurrency.value.toUpperCase()
+        ],
       swapData: undefined,
       swapFee: '',
       gasPrice: '',
@@ -130,7 +123,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
 
   componentDidUpdate(prevProps, prevState) {
     const { metamaskData, availableBlockchains } = this.props
-    const { metamaskData: prevMetamaskData} = prevProps
+    const { metamaskData: prevMetamaskData } = prevProps
     const { wrongNetwork: prevWrongNetwork } = prevState
     const { currencies, spendedCurrency } = this.state
 
@@ -139,25 +132,21 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     const isSpendedCurrencyNetworkAvailable = metamask.isAvailableNetworkByCurrency(
       spendedCurrency.value
     )
-    const switchToCorrectNetwork = prevWrongNetwork && (isSpendedCurrencyNetworkAvailable || isCurrentNetworkAvailable)
+    const switchToCorrectNetwork =
+      prevWrongNetwork && (isSpendedCurrencyNetworkAvailable || isCurrentNetworkAvailable)
     const switchToWrongNetwork = !prevWrongNetwork && !isSpendedCurrencyNetworkAvailable
     const disconnect = prevMetamaskData.isConnected && !metamaskData.isConnected
 
     const needUpdate =
       disconnect ||
-      metamaskData.isConnected &&
-      (switchToCorrectNetwork ||
-        switchToWrongNetwork ||
-        (prevMetamaskData.address !== metamaskData.address))
+      (metamaskData.isConnected &&
+        (switchToCorrectNetwork ||
+          switchToWrongNetwork ||
+          prevMetamaskData.address !== metamaskData.address))
 
     if (needUpdate) {
-      const {
-        currentCurrencies,
-        receivedList,
-        spendedCurrency,
-        receivedCurrency,
-        wrongNetwork,
-      } = this.returnCurrentAssetState(currencies)
+      const { currentCurrencies, receivedList, spendedCurrency, receivedCurrency, wrongNetwork } =
+        this.returnCurrentAssetState(currencies)
 
       const baseChainWallet = actions.core.getWallet({
         currency: spendedCurrency.blockchain,
@@ -176,10 +165,13 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
         spendedCurrency,
         receivedList,
         receivedCurrency,
-        network: externalConfig.evmNetworks[spendedCurrency.blockchain || spendedCurrency.value.toUpperCase()],
+        network:
+          externalConfig.evmNetworks[
+            spendedCurrency.blockchain || spendedCurrency.value.toUpperCase()
+          ],
         baseChainWallet,
         fromWallet,
-        toWallet
+        toWallet,
       }))
     }
   }
@@ -235,7 +227,10 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     })
 
     this.setState(() => ({
-      network: externalConfig.evmNetworks[spendedCurrency.blockchain || spendedCurrency.value.toUpperCase()],
+      network:
+        externalConfig.evmNetworks[
+          spendedCurrency.blockchain || spendedCurrency.value.toUpperCase()
+        ],
       baseChainWallet,
     }))
   }
@@ -338,7 +333,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       this.setState(() => ({ blockReason: SwapBlockReason.Liquidity }))
     } else {
       this.setState(() => ({ blockReason: SwapBlockReason.Unknown }))
-      
+
       console.group('%c Swap', 'color: red;')
       console.error(error)
       console.groupEnd()
@@ -356,7 +351,10 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     const sellToken = fromWallet.isToken ? fromWallet.contractAddress : ADDRESSES.EVM_COIN_ADDRESS
     const buyToken = toWallet.isToken ? toWallet.contractAddress : ADDRESSES.EVM_COIN_ADDRESS
 
-    const sellAmount = utils.amount.formatWithDecimals(spendedAmount, fromWallet.decimals || coinDecimals)
+    const sellAmount = utils.amount.formatWithDecimals(
+      spendedAmount,
+      fromWallet.decimals || coinDecimals
+    )
 
     const request = [
       `/swap/v1/quote?`,
@@ -532,7 +530,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
 
       if (isAdvancedMode) {
         const gweiDecimals = 9
-  
+
         if (gasLimit) swapData.gas = gasLimit
         if (gasPrice) swapData.gasPrice = utils.amount.formatWithDecimals(gasPrice, gweiDecimals)
       }
@@ -821,7 +819,8 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
         new BigNumber(gasLimit).isGreaterThan(maxGasLimit))
 
     const wrongAdvancedOptions = isAdvancedMode && (wrongGasPrice || wrongGasLimit || wrongSlippage)
-    const noBalance = baseChainWallet.balanceError || new BigNumber(baseChainWallet.balance).isEqualTo(0)
+    const noBalance =
+      baseChainWallet.balanceError || new BigNumber(baseChainWallet.balance).isEqualTo(0)
 
     return (
       noBalance ||
@@ -840,15 +839,15 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     return !swapData || isSwapPending || !!error
   }
 
-  switchToDirectSwap = () => {
+  openSourceMode = () => {
     this.setState(() => ({
-      isDirectSwap: true,
+      isSourceMode: true,
     }))
   }
 
-  closeDirectSwap = () => {
+  closeSourceMode = () => {
     this.setState(() => ({
-      isDirectSwap: false,
+      isSourceMode: false,
     }))
   }
 
@@ -883,7 +882,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       swapData,
       swapFee,
       isAdvancedMode,
-      isDirectSwap,
+      isSourceMode,
       showOrders,
       blockReason,
       liquidityErrorMessage,
@@ -907,11 +906,12 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
 
     const swapDataIsDisabled = this.isSwapDataNotAvailable()
     const swapBtnIsDisabled = this.isSwapNotAvailable() || insufficientBalance || swapDataIsDisabled
-    const canMakeDirectSwap = blockReason === SwapBlockReason.Liquidity && swapData && liquidityErrorMessage
+    const canMakeDirectSwap =
+      blockReason === SwapBlockReason.Liquidity && swapData && liquidityErrorMessage
 
     return (
       <>
-        <NewTokenInstruction />
+        <TokenInstruction />
 
         {receivedCurrency.notExist && (
           <p styleName="noAssetsNotice">
@@ -923,11 +923,23 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
         )}
 
         <section styleName="quickSwap">
-          {isDirectSwap && swapData ? (
+          <div styleName="tabsWrapper">
+            {/* TODO: make more flexible class switching */}
+            <button
+              styleName={`tab ${isSourceMode ? '' : 'active'}`}
+              onClick={this.closeSourceMode}
+            >
+              Aggregator
+            </button>
+            <button styleName={`tab ${isSourceMode ? 'active' : ''}`} onClick={this.openSourceMode}>
+              Source
+            </button>
+          </div>
+
+          {isSourceMode ? (
             <DirectSwap
               spendedAmount={spendedAmount}
               receivedAmount={receivedAmount}
-              closeDirectSwap={this.closeDirectSwap}
               fromWallet={fromWallet}
               toWallet={toWallet}
               slippage={slippage}
@@ -935,7 +947,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
               liquidityErrorMessage={liquidityErrorMessage}
             />
           ) : (
-            <>  
+            <>
               <div styleName={`${wrongNetwork || receivedCurrency.notExist ? 'disabled' : ''}`}>
                 <ExchangeForm
                   stateReference={linked}
@@ -959,10 +971,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
                 />
               </div>
 
-              <UserInfo
-                slippage={slippage}
-                fromWallet={fromWallet}
-              />
+              <UserInfo slippage={slippage} fromWallet={fromWallet} />
 
               <div styleName={`${wrongNetwork || receivedCurrency.notExist ? 'disabled' : ''}`}>
                 <AdvancedSettings
@@ -1022,11 +1031,12 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
                   </Button>
                 )}
 
-                {canMakeDirectSwap && (
-                  <Button onClick={this.switchToDirectSwap} brand>
-                    <FormattedMessage id="directSwap" defaultMessage="Direct swap" />
+                {/* Change the name */}
+                {/* {canMakeDirectSwap && (
+                  <Button onClick={this.openSourceMode} brand>
+                    <FormattedMessage id="" defaultMessage="try this swap with a source" />
                   </Button>
-                )}
+                )} */}
               </div>
             </>
           )}

@@ -10,14 +10,12 @@ import { inputReplaceCommaWithDot } from 'helpers/domUtils'
 import { externalConfig, transactions, routing } from 'helpers'
 import actions from 'redux/actions'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
-import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
 import { Button } from 'components/controls'
 import InputRow from './InputRow'
 
 type ComponentProps = {
   spendedAmount: string
   receivedAmount: string
-  closeDirectSwap: () => void
   fromWallet: IUniversalObj
   toWallet: IUniversalObj
   slippage: number
@@ -83,7 +81,7 @@ class DirectSwap extends Component<ComponentProps, ComponentState> {
   }
 
   startSwap = async () => {
-    const { closeDirectSwap, fromWallet, toWallet, coinDecimals, spendedAmount, receivedAmount } =
+    const { fromWallet, toWallet, coinDecimals, spendedAmount, receivedAmount } =
       this.props
     const { routerAddress, userDeadline, userSlippage } = this.state
 
@@ -139,7 +137,6 @@ class DirectSwap extends Component<ComponentProps, ComponentState> {
         )
 
         routing.redirectTo(txInfoUrl)
-        closeDirectSwap()
       }
     } catch (error) {
       this.setState(() => ({
@@ -150,7 +147,7 @@ class DirectSwap extends Component<ComponentProps, ComponentState> {
   }
 
   render() {
-    const { closeDirectSwap, spendedAmount, receivedAmount, fromWallet, toWallet } = this.props
+    const { spendedAmount, receivedAmount, fromWallet, toWallet } = this.props
     const {
       routerAddress,
       userSlippage,
@@ -177,17 +174,18 @@ class DirectSwap extends Component<ComponentProps, ComponentState> {
     const txMayBeFrontrun = userSlippage > slippageFrontrunRange && userSlippage < slippageMaxRange
     const invalidSlippage = userSlippage >= slippageMaxRange
 
+
+    /*
+    * two inputs
+    * + ability to choose an action type (swap or add/remove liquidity)
+    * + extra components for the feedback (the first liquidity, etc.)
+    */
+
     return (
       <section>
-        <div styleName="header">
-          <h3>
-            <FormattedMessage id="directSwap" defaultMessage="Direct swap" />
-          </h3>
-          <CloseIcon onClick={closeDirectSwap} />
-        </div>
-
         <div styleName={`content ${routerAddress ? '' : 'disabled'}`}>
-          <div styleName="lockedInfo">
+          
+          {/* <div styleName="lockedInfo">
             {possibleLiquiditySourceName && (
               <span styleName="indicator">
                 <FormattedMessage id="source" defaultMessage="Source" />:{' '}
@@ -215,7 +213,7 @@ class DirectSwap extends Component<ComponentProps, ComponentState> {
                 {guaranteedPrice} {toWallet.currency}
               </span>
             </span>
-          </div>
+          </div> */}
 
           <InputRow
             margin

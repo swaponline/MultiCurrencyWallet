@@ -45,6 +45,7 @@ export type ComponentState = {
   isPending: boolean
   isDataPending: boolean
   isSwapPending: boolean
+  isSourceMode: boolean
   needApprove: boolean
   fiat: string
   fiatAmount: number
@@ -59,7 +60,6 @@ export type ComponentState = {
   wrongNetwork: boolean
   network: Network
   isAdvancedMode: boolean
-  isDirectSwap: boolean
   swapData: SwapData | undefined
   swapFee: string
   gasPrice: string

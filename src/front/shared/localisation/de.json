@@ -5939,14 +5939,6 @@
     ]
   },
   {
-    "id": "directSwap",
-    "message": "Direkte swap",
-    "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/DirectSwap.tsx",
-      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
-    ]
-  },
-  {
     "id": "guaranteedPrice",
     "message": "Garantierter Preis",
     "files": [
