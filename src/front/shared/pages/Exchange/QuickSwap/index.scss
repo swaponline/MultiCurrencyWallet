@@ -66,25 +66,6 @@ $maxWidth: 38em;
   }
 }
 
-.addressWrapper {
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-
-  .address {
-    font-size: 0.87em;
-  }
-}
-
-.slippageIndicator {
-  width: 100%;
-  margin: 0 0 0.5rem;
-  display: flex;
-  justify-content: space-between;
-}
-
 .formCenter {
   padding-bottom: 1.2rem;
   position: relative;
@@ -183,19 +164,27 @@ $maxWidth: 38em;
 }
 
 .indicator {
+  @include ff-semibold;
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
-  font-weight: 700;
+  justify-content: space-between;
+
+  &:not(:last-child) {
+    margin-bottom: 0.3rem;
+  }
 
   span {
     @include ff-mono;
     display: inline-block;
-    font-weight: 400;
-    margin-left: 0.3rem;
 
     &:not(:first-child) {
       margin-left: 0.5rem;
     }
+  }
+
+  .address {
+    font-size: 0.87em;
   }
 }
 

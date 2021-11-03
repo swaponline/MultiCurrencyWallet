@@ -3,8 +3,6 @@ import { connect } from 'redaction'
 import { BigNumber } from 'bignumber.js'
 import { FormattedMessage } from 'react-intl'
 import CSSModules from 'react-css-modules'
-import { isMobile } from 'react-device-detect'
-import { GoSettings } from 'react-icons/go'
 import styles from './index.scss'
 import utils from 'common/utils'
 import ADDRESSES from 'common/helpers/constants/ADDRESSES'
@@ -26,10 +24,10 @@ import Link from 'local_modules/sw-valuelink'
 import { ComponentState, Direction, SwapBlockReason, Sections } from './types'
 import Button from 'components/controls/Button/Button'
 import TokenInstruction from './TokenInstruction'
+import Header from './Header'
 import ExchangeForm from './ExchangeForm'
 import UserInfo from './UserInfo'
 import Settings from './Settings'
-import SwapInfo from './SwapInfo'
 import NoSwapsReasons from './NoSwapsReasons'
 import LimitOrders from 'components/LimitOrders'
 
@@ -856,6 +854,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   }
 
   render() {
+    const { history } = this.props
     const {
       currencies,
       receivedList,
@@ -881,7 +880,6 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       blockReason,
       liquidityErrorMessage,
       slippage,
-      coinDecimals,
     } = this.state
 
     const linked = Link.all(
@@ -891,7 +889,8 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       'receivedAmount',
       'slippage',
       'gasPrice',
-      'gasLimit'
+      'gasLimit',
+      'userDeadline'
     )
 
     const insufficientBalance = new BigNumber(spendedAmount)
@@ -900,8 +899,6 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
 
     const swapDataIsDisabled = this.isSwapDataNotAvailable()
     const swapBtnIsDisabled = this.isSwapNotAvailable() || insufficientBalance || swapDataIsDisabled
-    const canMakeDirectSwap =
-      blockReason === SwapBlockReason.Liquidity && swapData && liquidityErrorMessage
 
     return (
       <>
@@ -917,29 +914,14 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
         )}
 
         <section styleName="quickSwap">
-          <div styleName="header">
-            <button
-              styleName={`tab ${section === Sections.Aggregator ? 'active' : ''}`}
-              onClick={this.openAggregatorSection}
-            >
-              Aggregator
-            </button>
-            <button
-              styleName={`tab ${section === Sections.Source ? 'active' : ''}`}
-              onClick={this.openSourceSection}
-            >
-              Source
-            </button>
-
-            <button
-              styleName={`tab ${section === Sections.Settings ? 'active' : ''} ${
-                wrongNetwork || receivedCurrency.notExist ? 'disabled' : ''
-              }`}
-              onClick={this.openSettingsSection}
-            >
-              {isMobile ? <GoSettings alt="swap settings" /> : 'Settings'}
-            </button>
-          </div>
+          <Header
+            section={section}
+            wrongNetwork={wrongNetwork}
+            receivedCurrency={receivedCurrency}
+            openAggregatorSection={this.openAggregatorSection}
+            openSourceSection={this.openSourceSection}
+            openSettingsSection={this.openSettingsSection}
+          />
 
           {section === Sections.Settings ? (
             <Settings
@@ -973,9 +955,9 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
                 />
               </div>
 
-              <UserInfo slippage={slippage} fromWallet={fromWallet} />
-
-              <SwapInfo
+              <UserInfo
+                history={history}
+                slippage={slippage}
                 network={network}
                 swapData={swapData}
                 swapFee={swapFee}
@@ -1022,13 +1004,6 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
                     <FormattedMessage id="swap" defaultMessage="Swap" />
                   </Button>
                 )}
-
-                {/* Change the name */}
-                {/* {canMakeDirectSwap && (
-                  <Button onClick={this.openSourceMode} brand>
-                    <FormattedMessage id="" defaultMessage="try this swap with a source" />
-                  </Button>
-                )} */}
               </div>
             </>
           )}
