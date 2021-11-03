@@ -179,7 +179,7 @@ function ExchangeForm(props) {
           fiat={fiatValue && fiatValue}
           inputValueLink={stateReference.spendedAmount.pipe(handleSpendAmountInput)}
           selectedValue={spendedCurrency.value}
-          label={<FormattedMessage id="MyOrdersYouSend" defaultMessage="You send" />}
+          // label={<FormattedMessage id="MyOrdersYouSend" defaultMessage="You send" />}
           inputId="quickSwapSpendCurrencyInput"
           placeholder="0.00"
           currencies={currencies}
@@ -237,7 +237,7 @@ function ExchangeForm(props) {
           activeFiat={fiat}
           inputValueLink={stateReference.receivedAmount}
           selectedValue={receivedCurrency.value}
-          label={<FormattedMessage id="partial255" defaultMessage="You get" />}
+          // label={<FormattedMessage id="partial255" defaultMessage="You get" />}
           inputId="quickSwapReceiveCurrencyInput"
           currencies={receivedList}
           inputToolTip={

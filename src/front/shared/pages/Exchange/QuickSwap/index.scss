@@ -1,9 +1,10 @@
 $maxWidth: 38em;
 
 .quickSwap {
+  position: relative;
   max-width: $maxWidth;
   margin: 0.6rem auto 1rem;
-  padding: 1rem 1.4rem; //1.7rem;
+  padding: 1rem 1.4rem;
   padding-bottom: 1.4rem;
   border-radius: var(--main-component-border-radius);
   text-align: center;
@@ -11,7 +12,7 @@ $maxWidth: 38em;
   background: var(--color-background-elements);
 }
 
-.tabsWrapper {
+.header {
   margin-bottom: 1.6rem;
   display: flex;
   font-size: 0.9rem;
@@ -82,12 +83,6 @@ $maxWidth: 38em;
   margin: 0 0 0.5rem;
   display: flex;
   justify-content: space-between;
-}
-
-.advancedInput {
-  input {
-    height: 3.5em;
-  }
 }
 
 .formCenter {
@@ -162,31 +157,6 @@ $maxWidth: 38em;
     display: inline-block;
     margin-left: 0.5rem;
     font-size: 0.9em;
-  }
-}
-
-.advancedSettings {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-
-  form {
-    margin-top: 1.4rem;
-  }
-}
-
-.toggleWrapper {
-  position: relative;
-  display: flex;
-  align-items: center;
-
-  .name {
-    margin: 0;
-    margin-left: 0.6rem;
-  }
-
-  label {
-    margin: 0.5rem 0.3rem 0.5rem 0;
   }
 }
 
@@ -294,12 +264,6 @@ $maxWidth: 38em;
   .balanceTooltip {
     .title {
       display: none;
-    }
-  }
-
-  .toggleWrapper {
-    .name {
-      margin-left: 1rem;
     }
   }
 }

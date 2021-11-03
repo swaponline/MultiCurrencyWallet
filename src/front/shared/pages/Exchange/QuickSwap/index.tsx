@@ -3,6 +3,8 @@ import { connect } from 'redaction'
 import { BigNumber } from 'bignumber.js'
 import { FormattedMessage } from 'react-intl'
 import CSSModules from 'react-css-modules'
+import { isMobile } from 'react-device-detect'
+import { GoSettings } from 'react-icons/go'
 import styles from './index.scss'
 import utils from 'common/utils'
 import ADDRESSES from 'common/helpers/constants/ADDRESSES'
@@ -21,16 +23,15 @@ import {
 import { localisedUrl } from 'helpers/locale'
 import actions from 'redux/actions'
 import Link from 'local_modules/sw-valuelink'
-import { ComponentState, Direction, SwapBlockReason } from './types'
+import { ComponentState, Direction, SwapBlockReason, Sections } from './types'
 import Button from 'components/controls/Button/Button'
 import TokenInstruction from './TokenInstruction'
 import ExchangeForm from './ExchangeForm'
 import UserInfo from './UserInfo'
-import AdvancedSettings from './AdvancedSettings'
+import Settings from './Settings'
 import SwapInfo from './SwapInfo'
 import NoSwapsReasons from './NoSwapsReasons'
 import LimitOrders from 'components/LimitOrders'
-import DirectSwap from './DirectSwap'
 
 class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   constructor(props) {
@@ -84,8 +85,8 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       isPending: false,
       isDataPending: false,
       isSwapPending: false,
-      isAdvancedMode: false,
       isSourceMode: false,
+      section: Sections.Aggregator,
       needApprove: false,
       externalExchangeReference: null,
       externalWindowTimer: null,
@@ -101,6 +102,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       receivedAmount: '',
       toWallet: toWallet || {},
       slippage: 0.5,
+      userDeadline: 20,
       slippageMaxRange: 100,
       wrongNetwork,
       network:
@@ -513,7 +515,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   }
 
   swap = async () => {
-    const { fromWallet, toWallet, swapData, isAdvancedMode, gasLimit, gasPrice } = this.state
+    const { fromWallet, toWallet, swapData, gasLimit, gasPrice } = this.state
     const baseCurrency = fromWallet.standard ? fromWallet.baseCurrency : fromWallet.currency
     const assetName = fromWallet.standard ? fromWallet.tokenKey : fromWallet.currency
 
@@ -528,12 +530,11 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
         throw new Error('No swap data. Can not complete swap')
       }
 
-      if (isAdvancedMode) {
-        const gweiDecimals = 9
+      // TODO: move into constants
+      const gweiDecimals = 9
 
-        if (gasLimit) swapData.gas = gasLimit
-        if (gasPrice) swapData.gasPrice = utils.amount.formatWithDecimals(gasPrice, gweiDecimals)
-      }
+      if (gasLimit) swapData.gas = gasLimit
+      if (gasPrice) swapData.gasPrice = utils.amount.formatWithDecimals(gasPrice, gweiDecimals)
 
       const txHash = await actions[baseCurrency.toLowerCase()].sendReadyTransaction({
         data: swapData,
@@ -766,19 +767,24 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     }
   }
 
-  switchAdvancedMode = () => {
-    this.setState(
-      (state) => ({
-        isAdvancedMode: !state.isAdvancedMode,
-      }),
-      async () => {
-        this.resetSwapData()
+  openAggregatorSection = () => {
+    this.setState(() => ({
+      section: Sections.Aggregator,
+      isSourceMode: false,
+    }))
+  }
 
-        const { isAdvancedMode } = this.state
-        // update swap data without advanced options
-        if (!isAdvancedMode) await this.checkSwapData()
-      }
-    )
+  openSourceSection = () => {
+    this.setState(() => ({
+      section: Sections.Source,
+      isSourceMode: true,
+    }))
+  }
+
+  openSettingsSection = () => {
+    this.setState(() => ({
+      section: Sections.Settings,
+    }))
   }
 
   mnemonicIsSaved = () => {
@@ -796,7 +802,6 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       baseChainWallet,
       slippage,
       slippageMaxRange,
-      isAdvancedMode,
       gasPrice,
       gasLimit,
     } = this.state
@@ -806,6 +811,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       (new BigNumber(slippage).isEqualTo(0) ||
         new BigNumber(slippage).isGreaterThan(slippageMaxRange))
 
+    // TODO: move it into constants
     const maxGweiGasPrice = 30_000
     const minGasLimit = 100_000
     const maxGasLimit = 11_500_000
@@ -818,7 +824,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       (new BigNumber(gasLimit).isLessThan(minGasLimit) ||
         new BigNumber(gasLimit).isGreaterThan(maxGasLimit))
 
-    const wrongAdvancedOptions = isAdvancedMode && (wrongGasPrice || wrongGasLimit || wrongSlippage)
+    const wrongSettings = wrongGasPrice || wrongGasLimit || wrongSlippage
     const noBalance =
       baseChainWallet.balanceError || new BigNumber(baseChainWallet.balance).isEqualTo(0)
 
@@ -826,7 +832,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       noBalance ||
       isPending ||
       isDataPending ||
-      wrongAdvancedOptions ||
+      wrongSettings ||
       new BigNumber(spendedAmount).isNaN() ||
       new BigNumber(spendedAmount).isEqualTo(0) ||
       new BigNumber(spendedAmount).isGreaterThan(fromWallet.balance)
@@ -837,18 +843,6 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     const { swapData, isSwapPending, error } = this.state
 
     return !swapData || isSwapPending || !!error
-  }
-
-  openSourceMode = () => {
-    this.setState(() => ({
-      isSourceMode: true,
-    }))
-  }
-
-  closeSourceMode = () => {
-    this.setState(() => ({
-      isSourceMode: false,
-    }))
   }
 
   createLimitOrder = () => {
@@ -869,6 +863,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       isPending,
       isDataPending,
       isSwapPending,
+      isSourceMode,
       needApprove,
       fiat,
       spendedAmount,
@@ -881,8 +876,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       network,
       swapData,
       swapFee,
-      isAdvancedMode,
-      isSourceMode,
+      section,
       showOrders,
       blockReason,
       liquidityErrorMessage,
@@ -923,28 +917,36 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
         )}
 
         <section styleName="quickSwap">
-          <div styleName="tabsWrapper">
-            {/* TODO: make more flexible class switching */}
+          <div styleName="header">
             <button
-              styleName={`tab ${isSourceMode ? '' : 'active'}`}
-              onClick={this.closeSourceMode}
+              styleName={`tab ${section === Sections.Aggregator ? 'active' : ''}`}
+              onClick={this.openAggregatorSection}
             >
               Aggregator
             </button>
-            <button styleName={`tab ${isSourceMode ? 'active' : ''}`} onClick={this.openSourceMode}>
+            <button
+              styleName={`tab ${section === Sections.Source ? 'active' : ''}`}
+              onClick={this.openSourceSection}
+            >
               Source
+            </button>
+
+            <button
+              styleName={`tab ${section === Sections.Settings ? 'active' : ''} ${
+                wrongNetwork || receivedCurrency.notExist ? 'disabled' : ''
+              }`}
+              onClick={this.openSettingsSection}
+            >
+              {isMobile ? <GoSettings alt="swap settings" /> : 'Settings'}
             </button>
           </div>
 
-          {isSourceMode ? (
-            <DirectSwap
-              spendedAmount={spendedAmount}
-              receivedAmount={receivedAmount}
-              fromWallet={fromWallet}
-              toWallet={toWallet}
-              slippage={slippage}
-              coinDecimals={coinDecimals}
-              liquidityErrorMessage={liquidityErrorMessage}
+          {section === Sections.Settings ? (
+            <Settings
+              isSourceMode={isSourceMode}
+              stateReference={linked}
+              checkSwapData={this.checkSwapData}
+              resetSwapData={this.resetSwapData}
             />
           ) : (
             <>
@@ -972,16 +974,6 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
               </div>
 
               <UserInfo slippage={slippage} fromWallet={fromWallet} />
-
-              <div styleName={`${wrongNetwork || receivedCurrency.notExist ? 'disabled' : ''}`}>
-                <AdvancedSettings
-                  isAdvancedMode={isAdvancedMode}
-                  switchAdvancedMode={this.switchAdvancedMode}
-                  stateReference={linked}
-                  checkSwapData={this.checkSwapData}
-                  resetSwapData={this.resetSwapData}
-                />
-              </div>
 
               <SwapInfo
                 network={network}
