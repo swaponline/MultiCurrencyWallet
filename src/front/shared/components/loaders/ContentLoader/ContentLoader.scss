@@ -1,7 +1,7 @@
 .animationLoading {
   display: block;
   background: var(--color-background-elements);
-  border-radius: 4px;
+  border-radius: var(--main-component-border-radius);
   position: relative;
   right: 0;
   width: 100%;
@@ -140,7 +140,7 @@
   background-color: var(--color-pale);
   height: 6px;
   animation-name: animate;
-  border-radius: 4px;
+  border-radius: var(--main-component-border-radius);
   animation-duration: 2s;
   position: absolute;
   animation-iteration-count: infinite;

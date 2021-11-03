@@ -24,7 +24,7 @@
 .yourAssets {
   box-shadow: var(--box-shadow);
   background: var(--color-background-elements);
-  border-radius: 4px;
+  border-radius: var(--main-component-border-radius);
   padding: 25px;
   margin-top: 20px;
 }
@@ -46,7 +46,7 @@
 .yourBalance {
   box-shadow: var(--box-shadow);
   background: var(--color-background-elements);
-  border-radius: 4px;
+  border-radius: var(--main-component-border-radius);
   height: fit-content;
   @include ff-regular;
 

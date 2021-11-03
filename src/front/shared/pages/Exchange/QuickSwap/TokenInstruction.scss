@@ -3,7 +3,7 @@ $maxWidth: 38em;
 .newTokenInstruction {
   max-width: $maxWidth;
   margin: 0 auto 0.2rem;
-  border-radius: 8px;
+  border-radius: var(--main-component-border-radius);
   text-align: left;
   border: 1px solid transparent;
   background-color: var(--color-pale);
