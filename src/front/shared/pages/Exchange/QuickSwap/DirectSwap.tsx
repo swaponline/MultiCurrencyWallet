@@ -38,7 +38,7 @@ type ComponentState = {
 
 const returnRouter = (name) => {
   if (name.match(/pancake/gim)) {
-    return externalConfig.swapContract.pancakeRouter
+    return externalConfig.swapContract.pancakeswapRouter
   }
 }
 

@@ -23,9 +23,10 @@ const usePrevious = (value) => {
   return ref.current
 }
 
-function ExchangeForm(props) {
+function InputForm(props) {
   const {
     stateReference,
+    isSourceMode,
     currencies,
     receivedList,
     spendedAmount,
@@ -40,7 +41,7 @@ function ExchangeForm(props) {
     isPending,
     flipCurrency,
     openExternalExchange,
-    checkSwapData,
+    onInputDataChange,
     user,
     insufficientBalance,
     resetSwapData,
@@ -145,9 +146,9 @@ function ExchangeForm(props) {
   useEffect(() => {
     let timeoutId: ReturnType<typeof setTimeout> | undefined = undefined
 
-    if (flagForRequest) {
+    if (flagForRequest && !isSourceMode) {
       timeoutId = setTimeout(async () => {
-        await checkSwapData()
+        await onInputDataChange()
         setFlagForRequest(false)
       }, 600)
     }
@@ -265,4 +266,4 @@ function ExchangeForm(props) {
 
 export default connect(({ user }) => ({
   user,
-}))(CSSModules(ExchangeForm, styles, { allowMultiple: true }))
+}))(CSSModules(InputForm, styles, { allowMultiple: true }))

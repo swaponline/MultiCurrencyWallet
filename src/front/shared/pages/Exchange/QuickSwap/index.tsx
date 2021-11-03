@@ -21,11 +21,13 @@ import {
 import { localisedUrl } from 'helpers/locale'
 import actions from 'redux/actions'
 import Link from 'local_modules/sw-valuelink'
-import { ComponentState, Direction, SwapBlockReason, Sections } from './types'
+import { ComponentState, Direction, SwapBlockReason, Sections, Actions } from './types'
+import { API_NAME, GWEI_DECIMALS, API_GAS_LIMITS } from './constants'
 import Button from 'components/controls/Button/Button'
 import TokenInstruction from './TokenInstruction'
 import Header from './Header'
-import ExchangeForm from './ExchangeForm'
+import InputForm from './InputForm'
+import SourceActions from './SourceActions'
 import UserInfo from './UserInfo'
 import Settings from './Settings'
 import NoSwapsReasons from './NoSwapsReasons'
@@ -77,14 +79,16 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       currency: receivedCurrency.value,
     })
 
+    const activeSection = externalConfig.entry === 'mainnet' ? Sections.Aggregator : Sections.Source
+
     this.state = {
       error: null,
       liquidityErrorMessage: '',
       isPending: false,
       isDataPending: false,
       isSwapPending: false,
-      isSourceMode: false,
-      section: Sections.Aggregator,
+      isSourceMode: activeSection === Sections.Source,
+      activeSection,
       needApprove: false,
       externalExchangeReference: null,
       externalWindowTimer: null,
@@ -99,6 +103,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       receivedCurrency,
       receivedAmount: '',
       toWallet: toWallet || {},
+      sourceAction: Actions.Swap,
       slippage: 0.5,
       userDeadline: 20,
       slippageMaxRange: 100,
@@ -281,19 +286,6 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     return result
   }
 
-  returnZeroxApiName = (chainId) => {
-    switch (chainId) {
-      case 1:
-        return 'zeroxEthereum'
-      case 56:
-        return 'zeroxBsc'
-      case 137:
-        return 'zeroxPolygon'
-      default:
-        return ''
-    }
-  }
-
   updateReceivedList = () => {
     const { currencies, spendedCurrency } = this.state
     let receivedList = this.returnReceivedList(currencies, spendedCurrency)
@@ -379,10 +371,8 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     return request.join('')
   }
 
-  checkSwapData = async () => {
-    await this.checkTokenApprove()
-
-    const { spendedAmount, needApprove } = this.state
+  onInputDataChange = async () => {
+    const { activeSection, spendedAmount, needApprove } = this.state
     const doNotUpdate = this.isSwapDataNotAvailable() || !spendedAmount || needApprove
 
     this.resetSwapData()
@@ -390,8 +380,16 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       error: null,
     }))
 
-    if (!doNotUpdate) {
+    if (activeSection === Sections.Aggregator) {
+      await this.checkTokenApprove()
+    }
+
+    if (doNotUpdate) return
+
+    if (activeSection === Sections.Aggregator) {
       await this.fetchSwapData()
+    } else if (activeSection === Sections.Source) {
+      // ...
     }
   }
 
@@ -435,10 +433,9 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       }
     }
 
-    const gweiDecimals = 9
     const customGasLimit = gasLimit && gasLimit > swap.gas ? gasLimit : swap.gas
     const customGasPrice = gasPrice
-      ? utils.amount.formatWithDecimals(gasPrice, gweiDecimals)
+      ? utils.amount.formatWithDecimals(gasPrice, GWEI_DECIMALS)
       : swap.gasPrice
 
     const weiFee = new BigNumber(customGasLimit).times(customGasPrice)
@@ -468,18 +465,14 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     let swapRequest = this.createSwapRequest()
 
     while (repeatRequest) {
-      const swap: any = await apiLooper.get(
-        this.returnZeroxApiName(network.networkVersion),
-        swapRequest,
-        {
-          reportErrors: (error) => {
-            if (!repeatRequest) {
-              this.reportError(error)
-            }
-          },
-          sourceError: true,
-        }
-      )
+      const swap: any = await apiLooper.get(API_NAME[network.networkVersion], swapRequest, {
+        reportErrors: (error) => {
+          if (!repeatRequest) {
+            this.reportError(error)
+          }
+        },
+        sourceError: true,
+      })
 
       if (!(swap instanceof Error)) {
         repeatRequest = false
@@ -528,11 +521,8 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
         throw new Error('No swap data. Can not complete swap')
       }
 
-      // TODO: move into constants
-      const gweiDecimals = 9
-
       if (gasLimit) swapData.gas = gasLimit
-      if (gasPrice) swapData.gasPrice = utils.amount.formatWithDecimals(gasPrice, gweiDecimals)
+      if (gasPrice) swapData.gasPrice = utils.amount.formatWithDecimals(gasPrice, GWEI_DECIMALS)
 
       const txHash = await actions[baseCurrency.toLowerCase()].sendReadyTransaction({
         data: swapData,
@@ -558,7 +548,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   }
 
   checkTokenApprove = async () => {
-    const { spendedAmount, fromWallet, network } = this.state
+    const { spendedAmount, fromWallet } = this.state
 
     if (!fromWallet.isToken) {
       this.setState(() => ({
@@ -652,7 +642,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       async () => {
         this.updateNetwork()
         this.updateReceivedList()
-        await this.checkSwapData()
+        await this.onInputDataChange()
       }
     )
   }
@@ -665,7 +655,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
         toWallet: actions.core.getWallet({ currency: receivedCurrency.value }),
       }),
       async () => {
-        await this.checkSwapData()
+        await this.onInputDataChange()
       }
     )
   }
@@ -687,7 +677,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
         receivedCurrency: spendedCurrency,
       }),
       async () => {
-        await this.checkSwapData()
+        await this.onInputDataChange()
       }
     )
   }
@@ -767,21 +757,27 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
 
   openAggregatorSection = () => {
     this.setState(() => ({
-      section: Sections.Aggregator,
+      activeSection: Sections.Aggregator,
       isSourceMode: false,
     }))
   }
 
   openSourceSection = () => {
     this.setState(() => ({
-      section: Sections.Source,
+      activeSection: Sections.Source,
       isSourceMode: true,
     }))
   }
 
   openSettingsSection = () => {
     this.setState(() => ({
-      section: Sections.Settings,
+      activeSection: Sections.Settings,
+    }))
+  }
+
+  setAction = (type) => {
+    this.setState(() => ({
+      sourceAction: type,
     }))
   }
 
@@ -809,18 +805,14 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       (new BigNumber(slippage).isEqualTo(0) ||
         new BigNumber(slippage).isGreaterThan(slippageMaxRange))
 
-    // TODO: move it into constants
-    const maxGweiGasPrice = 30_000
-    const minGasLimit = 100_000
-    const maxGasLimit = 11_500_000
-
     const wrongGasPrice =
-      new BigNumber(gasPrice).isPositive() && new BigNumber(gasPrice).isGreaterThan(maxGweiGasPrice)
+      new BigNumber(gasPrice).isPositive() &&
+      new BigNumber(gasPrice).isGreaterThan(API_GAS_LIMITS.MAX_PRICE)
 
     const wrongGasLimit =
       new BigNumber(gasLimit).isPositive() &&
-      (new BigNumber(gasLimit).isLessThan(minGasLimit) ||
-        new BigNumber(gasLimit).isGreaterThan(maxGasLimit))
+      (new BigNumber(gasLimit).isLessThan(API_GAS_LIMITS.MIN_LIMIT) ||
+        new BigNumber(gasLimit).isGreaterThan(API_GAS_LIMITS.MAX_LIMIT))
 
     const wrongSettings = wrongGasPrice || wrongGasLimit || wrongSlippage
     const noBalance =
@@ -871,11 +863,12 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       toWallet,
       receivedCurrency,
       receivedAmount,
+      sourceAction,
       wrongNetwork,
       network,
       swapData,
       swapFee,
-      section,
+      activeSection,
       showOrders,
       blockReason,
       liquidityErrorMessage,
@@ -893,9 +886,11 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       'userDeadline'
     )
 
-    const insufficientBalance = new BigNumber(spendedAmount)
-      .plus(swapFee || 0)
-      .isGreaterThan(fromWallet.balance)
+    const insufficientBalance =
+      new BigNumber(fromWallet.balance).isEqualTo(0) ||
+      new BigNumber(spendedAmount)
+        .plus(fromWallet?.standard ? 0 : swapFee)
+        .isGreaterThan(fromWallet.balance)
 
     const swapDataIsDisabled = this.isSwapDataNotAvailable()
     const swapBtnIsDisabled = this.isSwapNotAvailable() || insufficientBalance || swapDataIsDisabled
@@ -915,7 +910,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
 
         <section styleName="quickSwap">
           <Header
-            section={section}
+            activeSection={activeSection}
             wrongNetwork={wrongNetwork}
             receivedCurrency={receivedCurrency}
             openAggregatorSection={this.openAggregatorSection}
@@ -923,22 +918,23 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
             openSettingsSection={this.openSettingsSection}
           />
 
-          {section === Sections.Settings ? (
+          {activeSection === Sections.Settings ? (
             <Settings
               isSourceMode={isSourceMode}
               stateReference={linked}
-              checkSwapData={this.checkSwapData}
+              onInputDataChange={this.onInputDataChange}
               resetSwapData={this.resetSwapData}
             />
           ) : (
             <>
               <div styleName={`${wrongNetwork || receivedCurrency.notExist ? 'disabled' : ''}`}>
-                <ExchangeForm
+                <InputForm
                   stateReference={linked}
+                  isSourceMode={isSourceMode}
                   selectCurrency={this.selectCurrency}
                   flipCurrency={this.flipCurrency}
                   openExternalExchange={this.openExternalExchange}
-                  checkSwapData={this.checkSwapData}
+                  onInputDataChange={this.onInputDataChange}
                   currencies={currencies}
                   receivedList={receivedList}
                   spendedAmount={spendedAmount}
@@ -954,6 +950,12 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
                   resetSwapData={this.resetSwapData}
                 />
               </div>
+
+              {/* bsc pancake 0x9Ac64Cc6e4415144C455BD8E4837Fea55603e5c3 */}
+
+              {activeSection === Sections.Source && (
+                <SourceActions sourceAction={sourceAction} setAction={this.setAction} />
+              )}
 
               <UserInfo
                 history={history}
@@ -971,11 +973,10 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
 
               <NoSwapsReasons
                 wrongNetwork={wrongNetwork}
+                insufficientBalance={insufficientBalance}
                 blockReason={blockReason}
                 baseChainWallet={baseChainWallet}
-                fromWallet={fromWallet}
                 spendedAmount={spendedAmount}
-                swapFee={swapFee}
                 needApprove={needApprove}
                 spendedCurrency={spendedCurrency}
               />

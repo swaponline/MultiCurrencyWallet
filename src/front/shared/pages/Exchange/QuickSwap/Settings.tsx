@@ -6,10 +6,10 @@ import Tooltip from 'components/ui/Tooltip/Tooltip'
 import InputRow from './InputRow'
 
 function Settings(props) {
-  const { isSourceMode, stateReference, checkSwapData, resetSwapData } = props
+  const { isSourceMode, stateReference, onInputDataChange, resetSwapData } = props
 
   const keyUpHandler = () => {
-    setTimeout(checkSwapData, 300)
+    setTimeout(onInputDataChange, 300)
   }
 
   const keyDownHandler = (event) => {

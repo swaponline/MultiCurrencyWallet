@@ -3,12 +3,13 @@ import { isMobile } from 'react-device-detect'
 import { GoSettings } from 'react-icons/go'
 import CSSModules from 'react-css-modules'
 import styles from './index.scss'
+import { externalConfig } from 'helpers'
 import { Sections } from './types'
 import ThemeTooltip from 'components/ui/Tooltip/ThemeTooltip'
 
 function Header(props) {
   const {
-    section,
+    activeSection,
     wrongNetwork,
     receivedCurrency,
     openAggregatorSection,
@@ -21,7 +22,9 @@ function Header(props) {
       <>
         <button
           id="aggregatorSectionDescription"
-          styleName={`tab ${section === Sections.Aggregator ? 'active' : ''}`}
+          styleName={`tab ${activeSection === Sections.Aggregator ? 'active' : ''} ${
+            externalConfig.entry === 'testnet' ? 'disabled' : ''
+          }`}
           onClick={openAggregatorSection}
         >
           <FormattedMessage id="aggregator" defaultMessage="Aggregator" />
@@ -38,7 +41,7 @@ function Header(props) {
       <>
         <button
           id="sourceSectionDescription"
-          styleName={`tab ${section === Sections.Source ? 'active' : ''}`}
+          styleName={`tab ${activeSection === Sections.Source ? 'active' : ''}`}
           onClick={openSourceSection}
         >
           <FormattedMessage id="source" defaultMessage="Source" />
@@ -50,7 +53,7 @@ function Header(props) {
       </>
 
       <button
-        styleName={`tab ${section === Sections.Settings ? 'active' : ''} ${
+        styleName={`tab ${activeSection === Sections.Settings ? 'active' : ''} ${
           wrongNetwork || receivedCurrency.notExist ? 'disabled' : ''
         }`}
         onClick={openSettingsSection}

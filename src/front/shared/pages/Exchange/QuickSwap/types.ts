@@ -35,6 +35,18 @@ export type Network = {
   blockExplorerUrls: string[]
 }
 
+export enum Sections {
+  Aggregator,
+  Source,
+  Settings,
+}
+
+export enum Actions {
+  Swap,
+  AddLiquidity,
+  RemoveLiquidity,
+}
+
 export enum Direction {
   Spend,
   Receive,
@@ -49,12 +61,6 @@ export enum SwapBlockReason {
   Unknown,
 }
 
-export enum Sections {
-  Aggregator,
-  Source,
-  Settings,
-}
-
 export type ComponentState = {
   externalExchangeReference: null | IUniversalObj
   externalWindowTimer: null | NodeJS.Timeout
@@ -62,7 +68,7 @@ export type ComponentState = {
   receivedList: CurrencyMenuItem[]
   baseChainWallet: IUniversalObj
   error: IError | null
-  section: Sections
+  activeSection: Sections
   isPending: boolean
   isDataPending: boolean
   isSwapPending: boolean
@@ -76,6 +82,7 @@ export type ComponentState = {
   receivedCurrency: CurrencyMenuItem
   receivedAmount: string
   toWallet: IUniversalObj
+  sourceAction: Actions
   slippage: number
   userDeadline: number
   slippageMaxRange: number

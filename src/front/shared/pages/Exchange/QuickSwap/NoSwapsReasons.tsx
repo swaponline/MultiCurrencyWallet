@@ -8,17 +8,12 @@ function NoSwapsReasons(props) {
   const {
     blockReason,
     baseChainWallet,
-    fromWallet,
     spendedAmount,
-    swapFee,
+    insufficientBalance,
     wrongNetwork,
     needApprove,
     spendedCurrency,
   } = props
-
-  const insufficientBalance =
-    new BigNumber(fromWallet.balance).isEqualTo(0) ||
-    new BigNumber(spendedAmount).plus(swapFee || 0).isGreaterThan(fromWallet.balance)
 
   return (
     <section styleName="reasons">

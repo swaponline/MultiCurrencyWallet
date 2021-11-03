@@ -172,14 +172,18 @@ function UserInfo(props: ComponentProps) {
           )}
           {swapFee && fee && (
             <span styleName="indicator">
-              <FormattedMessage id="fee" defaultMessage="Fee" />: <span>{fee}</span>
-              {fiatFee && <span>{fiatFee}</span>}
+              <FormattedMessage id="fee" defaultMessage="Fee" />:{' '}
+              <span>
+                {fee} {fiatFee && fiatFee}
+              </span>
             </span>
           )}
           {total && spendedAmount && swapFee && (
             <span styleName="indicator">
-              <FormattedMessage id="total" defaultMessage="Total" />: <span>{total}</span>
-              {totalFiat && <span>{totalFiat}</span>}
+              <FormattedMessage id="total" defaultMessage="Total" />:{' '}
+              <span>
+                {total} {totalFiat && totalFiat}
+              </span>
             </span>
           )}
         </>
