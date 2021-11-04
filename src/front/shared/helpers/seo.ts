@@ -8,6 +8,8 @@ const seo = {
     mainUrl: 'https://swaponline.io',
     logo: 'https://wiki.swaponline.io/assets/swaponline_io.svg',
   },
+  defaultTitle: 'Hot Wallet with Atomic Swap Exchange',
+  defaultDescription: 'Our online wallet with Atomic swap algorithms will help you store and exchange cryptocurrency instantly and more secure without third-parties. Decentralized exchange.',
   pages: [
     {
       uri: '/',

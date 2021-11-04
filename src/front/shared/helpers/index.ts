@@ -14,6 +14,7 @@ import constants from './constants'
 import localStorage from './localStorage'
 import api from './api'
 import * as utils from './utils'
+import seo from './seo'
 // Methods
 import ignoreProps from './ignoreProps'
 import handleGoTrade from './handleGoTrade'
@@ -64,6 +65,7 @@ export default {
 }
 
 export {
+  seo,
   btc,
   eth,
   bnb,

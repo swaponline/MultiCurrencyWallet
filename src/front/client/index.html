@@ -41,6 +41,14 @@
 
     <%= htmlWebpackPlugin.options.firebugScript %>
 
+    <script>
+      const isWidgetBuild = '<%= htmlWebpackPlugin.options.isWidget %>'
+
+      if (window.defaultWindowTitle && isWidgetBuild) {
+        document.title = window.defaultWindowTitle;
+      }
+    </script>
+
     <style>
       .overflowY-default {
         overflow: visible;
@@ -869,8 +877,6 @@
 
       // Swap Modal
       const startedSplashScreenIsDisabled = getCookie('startedSplashScreenIsDisabled');
-
-      const isWidgetBuild = '<%= htmlWebpackPlugin.options.isWidget %>';
       const isBinanceBuild = ('<%= htmlWebpackPlugin.options.isBinanceBuild %>' === 'true') ? true : false;
 
       // Open modal if cookie false
