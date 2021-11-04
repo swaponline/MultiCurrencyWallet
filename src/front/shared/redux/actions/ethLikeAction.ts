@@ -341,9 +341,9 @@ class EthLikeAction {
       })
   }
 
-  getWalletByWords = (mnemonic: string, walletNumber: number = 0, path: string = '') => {
-    return mnemonicUtils.getEthLikeWallet({ mnemonic, walletNumber, path })
-  }
+  getWalletByWords = (mnemonic: string, walletNumber = 0, path = '') => (
+    mnemonicUtils.getEthLikeWallet({ mnemonic, walletNumber, path })
+  )
 
   checkSwapExists = async (params) => {
     const { ownerAddress, participantAddress } = params
@@ -351,7 +351,7 @@ class EthLikeAction {
     const swapContract = new Web3.eth.Contract(EVM_CONTRACTS_ABI.NATIVE_COIN_SWAP, externalConfig.swapContract[this.tickerKey])
 
     const swap = await swapContract.methods.swaps(ownerAddress, participantAddress).call()
-    const balance = swap && swap.balance ? parseInt(swap.balance) : 0
+    const balance = swap && swap.balance ? parseInt(swap.balance, 10) : 0
 
     return balance > 0
   }
@@ -363,10 +363,10 @@ class EthLikeAction {
     try {
       const limit = await web3.eth.estimateGas(txData)
       const hexLimitWithPercentForSuccess = new BigNumber(
-        new BigNumber(limit).multipliedBy(multiplierForGasReserve).toFixed(0)
+        new BigNumber(limit).multipliedBy(multiplierForGasReserve).toFixed(0),
       ).toString(16)
 
-      return '0x' + hexLimitWithPercentForSuccess
+      return `0x${hexLimitWithPercentForSuccess}`
     } catch (error) {
       this.reportError(error, 'estimateGas')
 
@@ -374,12 +374,14 @@ class EthLikeAction {
     }
   }
 
-  isValidGasLimit = (limit) => {
-    return typeof limit === 'number' || (typeof limit === 'string' && limit.match(/^0x[0-9a-f]+$/i))
-  }
+  isValidGasLimit = (limit) => (
+    typeof limit === 'number'
+    || (typeof limit === 'string' && limit.match(/^0x[0-9a-f]+$/i))
+  )
 
   send = async (params): Promise<{ transactionHash: string } | Error> => {
-    let { to, amount = 0, gasPrice, gasLimit: customGasLimit, speed, data, waitReceipt = false } = params
+    const { to, amount = 0, gasLimit: customGasLimit, speed, data, waitReceipt = false } = params
+    let { gasPrice } = params
 
     const Web3 = this.getCurrentWeb3()
     const ownerAddress = metamask.isConnected() ? metamask.getAddress() : getState().user[`${this.tickerKey}Data`].address
@@ -393,7 +395,6 @@ class EthLikeAction {
     let sendMethod = Web3.eth.sendTransaction
     let txData: any = {
       data: data || undefined,
-      chainId: Number(this.chainId),
       from: Web3.utils.toChecksumAddress(ownerAddress),
       to: to.trim(),
       gasPrice,
@@ -486,15 +487,14 @@ class EthLikeAction {
     }
 
     const txData = {
-      chainId: Number(this.chainId),
       from: Web3.utils.toChecksumAddress(from),
       to: adminObj.address.trim(),
       gasPrice,
       gas: '0x00',
       value: Web3.utils.toHex(
         Web3.utils.toWei(String(feeFromUsersAmount),
-        'ether'
-      )),
+          'ether',
+        )),
     }
 
     const limit = await this.estimateGas(txData)
