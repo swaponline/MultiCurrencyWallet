@@ -1,12 +1,14 @@
 import './wdyr'
 import React from "react";
 import { RouteComponentProps, withRouter, HashRouter } from "react-router-dom";
+import DocumentMeta from 'react-document-meta'
 import actions from "redux/actions";
 import { connect } from "redaction";
 import moment from "moment-with-locales-es6";
 import {
   constants,
   localStorage,
+  seo,
 } from "helpers";
 
 import CSSModules from "react-css-modules";
@@ -463,12 +465,30 @@ class App extends React.Component<RouteComponentProps<any>, any> {
     }
 
     const isSeoDisabled = isWidget || isWidgetBuild || isCalledFromIframe
+    const widgetTitle = window.defaultWindowTitle || seo.defaultTitle
+    const widgetUrl = window.location.origin + window.location.pathname
 
     return <HashRouter>
       <div styleName="compressor">
         {!isSeoDisabled &&
           <Seo location={history.location} />
         }
+        {isWidgetBuild && (
+          <DocumentMeta
+            title={widgetTitle}
+            description={seo.defaultDescription}
+            canonical={widgetUrl}
+            meta={{
+              property: {
+                'og:title': widgetTitle,
+                'og:description': seo.defaultDescription,
+                'og:url': widgetUrl,
+                'og:image': window.logoUrl,
+              },
+            }}
+          />
+        )}
+
         <ErrorBoundary>
           <Transactions>
             {/* @ts-ignore */}
