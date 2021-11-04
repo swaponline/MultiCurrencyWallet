@@ -9,7 +9,7 @@ export default {
   reputationOracle: '0x6260B5ef52d72732674fF4BDE3B37a4222dB1785',
   protectedBtcKey: '023d894571a253b87868db7d54a8b583e0c8ce53b484af8a0b0390b7722975cfaa',
   btcPinKey: '02094916ddab5abf215a49422a71be54ceb92c3d8114909048fc45ee90acdb5b32',
-  uniswapRouter: '', // 
+  uniswapRouter: '0x1b02dA8Cb0d097eB8D57A175b88c7D8b47997506', // Rinkeby
   pancakeswapRouter: '0x9Ac64Cc6e4415144C455BD8E4837Fea55603e5c3', // BSC testnet
-  sushiswapRouter: '0x1b02dA8Cb0d097eB8D57A175b88c7D8b47997506', // Rinkeby, Polygon testnet
+  sushiswapRouter: '0x1b02dA8Cb0d097eB8D57A175b88c7D8b47997506', // Polygon testnet
 }

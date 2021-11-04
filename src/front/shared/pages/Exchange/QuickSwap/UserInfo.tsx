@@ -25,7 +25,7 @@ type ComponentProps = {
   fromWallet: IUniversalObj
   toWallet: IUniversalObj
   fiat: string
-  isDataPending: boolean
+  isPending: boolean
 }
 
 function UserInfo(props: ComponentProps) {
@@ -40,7 +40,7 @@ function UserInfo(props: ComponentProps) {
     spendedAmount,
     baseChainWallet,
     fiat,
-    isDataPending,
+    isPending,
   } = props
 
   const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
@@ -159,7 +159,7 @@ function UserInfo(props: ComponentProps) {
         <span>{`${slippage} %`}</span>
       </span>
 
-      {isDataPending ? (
+      {isPending ? (
         <div styleName="loaderWrapper">
           <InlineLoader />
         </div>

@@ -3,7 +3,7 @@ import { FormattedMessage } from 'react-intl'
 import { connect } from 'redaction'
 import CSSModules from 'react-css-modules'
 import styles from './index.scss'
-import { utils, localStorage } from 'helpers'
+import { utils, localStorage, externalConfig } from 'helpers'
 import actions from 'redux/actions'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 import Button from 'components/controls/Button/Button'
@@ -169,7 +169,8 @@ function InputForm(props) {
 
   const supportedCurrencies = ['eth', 'matic']
   const showFiatExchangeBtn =
-    window.transakApiKey || supportedCurrencies.includes(spendedCurrency.value)
+    externalConfig.entry === 'mainnet' &&
+    (window.transakApiKey || supportedCurrencies.includes(spendedCurrency.value))
 
   return (
     <form action="">

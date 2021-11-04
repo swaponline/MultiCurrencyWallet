@@ -1,3 +1,5 @@
+import config from 'app-config'
+
 export const SOURCE_MODE_SLIPPAGE = {
   MAX: 50,
   FAIL: 0.5,
@@ -20,3 +22,8 @@ export const API_GAS_LIMITS = {
   MAX_LIMIT: '11_500_000',
 }
 
+export const ROUTERS = {
+  [config.ETH.networkVersion]: config.swapContract.uniswapRouter,
+  [config.BNB.networkVersion]: config.swapContract.pancakeswapRouter,
+  [config.MATIC.networkVersion]: config.swapContract.sushiswapRouter,
+}

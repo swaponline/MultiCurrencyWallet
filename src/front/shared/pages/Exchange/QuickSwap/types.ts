@@ -52,7 +52,7 @@ export enum Direction {
   Receive,
 }
 
-export enum SwapBlockReason {
+export enum BlockReasons {
   InsufficientSlippage,
   NoLiquidity,
   NoBalance,
@@ -70,8 +70,6 @@ export type ComponentState = {
   error: IError | null
   activeSection: Sections
   isPending: boolean
-  isDataPending: boolean
-  isSwapPending: boolean
   isSourceMode: boolean
   needApprove: boolean
   fiat: string
@@ -93,7 +91,7 @@ export type ComponentState = {
   gasPrice: string
   gasLimit: string
   showOrders: boolean
-  blockReason: SwapBlockReason | undefined
+  blockReason: BlockReasons | undefined
   coinDecimals: 18
   liquidityErrorMessage: string
 }

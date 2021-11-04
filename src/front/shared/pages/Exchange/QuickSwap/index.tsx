@@ -21,7 +21,7 @@ import {
 import { localisedUrl } from 'helpers/locale'
 import actions from 'redux/actions'
 import Link from 'local_modules/sw-valuelink'
-import { ComponentState, Direction, SwapBlockReason, Sections, Actions } from './types'
+import { ComponentState, Direction, BlockReasons, Sections, Actions } from './types'
 import { API_NAME, GWEI_DECIMALS, API_GAS_LIMITS, MAX_PERCENT } from './constants'
 import Button from 'components/controls/Button/Button'
 import TokenInstruction from './TokenInstruction'
@@ -31,6 +31,7 @@ import SourceActions from './SourceActions'
 import UserInfo from './UserInfo'
 import Settings from './Settings'
 import NoSwapsReasons from './NoSwapsReasons'
+import Footer from './Footer'
 import LimitOrders from 'components/LimitOrders'
 
 class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
@@ -85,8 +86,6 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       error: null,
       liquidityErrorMessage: '',
       isPending: false,
-      isDataPending: false,
-      isSwapPending: false,
       isSourceMode: activeSection === Sections.Source,
       activeSection,
       needApprove: false,
@@ -309,22 +308,22 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     this.resetSwapData()
   }
 
-  reportError = (error) => {
+  reportError = (error: IError) => {
     const { liquidityErrorMessage } = this.state
     const possibleNoLiquidity = JSON.stringify(error)?.match(/INSUFFICIENT_ASSET_LIQUIDITY/)
     const insufficientSlippage = JSON.stringify(error)?.match(/IncompleteTransformERC20Error/)
     const notEnoughBalance = error.message?.match(/(N|n)ot enough .* balance/)
 
     if (possibleNoLiquidity) {
-      this.setState(() => ({ blockReason: SwapBlockReason.NoLiquidity }))
+      this.setState(() => ({ blockReason: BlockReasons.NoLiquidity }))
     } else if (insufficientSlippage) {
-      this.setState(() => ({ blockReason: SwapBlockReason.InsufficientSlippage }))
+      this.setState(() => ({ blockReason: BlockReasons.InsufficientSlippage }))
     } else if (notEnoughBalance) {
-      this.setState(() => ({ blockReason: SwapBlockReason.NoBalance }))
+      this.setState(() => ({ blockReason: BlockReasons.NoBalance }))
     } else if (liquidityErrorMessage) {
-      this.setState(() => ({ blockReason: SwapBlockReason.Liquidity }))
+      this.setState(() => ({ blockReason: BlockReasons.Liquidity }))
     } else {
-      this.setState(() => ({ blockReason: SwapBlockReason.Unknown }))
+      this.setState(() => ({ blockReason: BlockReasons.Unknown }))
 
       console.group('%c Swap', 'color: red;')
       console.error(error)
@@ -332,7 +331,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     }
 
     this.setState(() => ({
-      isDataPending: false,
+      isPending: false,
       error,
     }))
   }
@@ -373,7 +372,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
 
   onInputDataChange = async () => {
     const { activeSection, spendedAmount, needApprove } = this.state
-    const doNotUpdate = this.isSwapDataNotAvailable() || !spendedAmount || needApprove
+    const doNotUpdate = this.isProcessBlocking() || !spendedAmount || needApprove
 
     this.resetSwapData()
     this.setState(() => ({
@@ -449,7 +448,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       receivedAmount,
       swapData: swap,
       swapFee,
-      isDataPending: false,
+      isPending: false,
     }))
   }
 
@@ -457,7 +456,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     const { network } = this.state
 
     this.setState(() => ({
-      isDataPending: true,
+      isPending: true,
       blockReason: undefined,
     }))
 
@@ -505,48 +504,6 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     }))
   }
 
-  swap = async () => {
-    const { fromWallet, toWallet, swapData, gasLimit, gasPrice } = this.state
-    const baseCurrency = fromWallet.standard ? fromWallet.baseCurrency : fromWallet.currency
-    const assetName = fromWallet.standard ? fromWallet.tokenKey : fromWallet.currency
-
-    feedback.zerox.startedSwap(`${fromWallet.currency} -> ${toWallet.currency}`)
-
-    this.setState(() => ({
-      isSwapPending: true,
-    }))
-
-    try {
-      if (!swapData) {
-        throw new Error('No swap data. Can not complete swap')
-      }
-
-      if (gasLimit) swapData.gas = gasLimit
-      if (gasPrice) swapData.gasPrice = utils.amount.formatWithDecimals(gasPrice, GWEI_DECIMALS)
-
-      const txHash = await actions[baseCurrency.toLowerCase()].sendReadyTransaction({
-        data: swapData,
-      })
-
-      if (txHash) {
-        const txInfoUrl = transactions.getTxRouter(assetName.toLowerCase(), txHash)
-
-        routing.redirectTo(txInfoUrl)
-      }
-
-      this.resetSwapData()
-      this.setState(() => ({
-        spendedAmount: '',
-      }))
-    } catch (error) {
-      this.reportError(error)
-    } finally {
-      this.setState(() => ({
-        isSwapPending: false,
-      }))
-    }
-  }
-
   checkTokenApprove = async () => {
     const { spendedAmount, fromWallet } = this.state
 
@@ -568,38 +525,6 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       this.setState(() => ({
         needApprove: new BigNumber(spendedAmount).isGreaterThan(allowance),
       }))
-    }
-  }
-
-  approve = async () => {
-    const { network, spendedAmount, fromWallet } = this.state
-
-    this.setState(() => ({
-      isDataPending: true,
-    }))
-
-    try {
-      const transactionHash = await actions.oneinch.approveToken({
-        chainId: network.networkVersion,
-        amount: spendedAmount,
-        name: fromWallet.tokenKey,
-        standard: fromWallet.standard,
-        spender: externalConfig.swapContract.zerox,
-      })
-
-      actions.notifications.show(constants.notifications.Transaction, {
-        link: transactions.getLink(fromWallet.standard, transactionHash),
-      })
-
-      this.setState(
-        () => ({
-          needApprove: false,
-          isDataPending: false,
-        }),
-        this.fetchSwapData
-      )
-    } catch (error) {
-      this.reportError(error)
     }
   }
 
@@ -787,10 +712,33 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     return mnemonic === '-'
   }
 
-  isSwapDataNotAvailable = () => {
+  setPending = (value: boolean) => {
+    this.setState(() => ({
+      isPending: value,
+    }))
+  }
+
+  setNeedApprove = (value) => {
+    this.setState(() => ({
+      needApprove: value,
+    }))
+  }
+
+  setBlockReason = (value: BlockReasons) => {
+    this.setState(() => ({
+      blockReason: value,
+    }))
+  }
+
+  resetSpendedAmount = () => {
+    this.setState(() => ({
+      spendedAmount: '',
+    }))
+  }
+
+  isProcessBlocking = () => {
     const {
       isPending,
-      isDataPending,
       spendedAmount,
       fromWallet,
       baseChainWallet,
@@ -821,18 +769,11 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     return (
       noBalance ||
       isPending ||
-      isDataPending ||
       wrongSettings ||
       new BigNumber(spendedAmount).isNaN() ||
       new BigNumber(spendedAmount).isEqualTo(0) ||
       new BigNumber(spendedAmount).isGreaterThan(fromWallet.balance)
     )
-  }
-
-  isSwapNotAvailable = () => {
-    const { swapData, isSwapPending, error } = this.state
-
-    return !swapData || isSwapPending || !!error
   }
 
   createLimitOrder = () => {
@@ -852,8 +793,6 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       receivedList,
       baseChainWallet,
       isPending,
-      isDataPending,
-      isSwapPending,
       isSourceMode,
       needApprove,
       fiat,
@@ -871,6 +810,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       showOrders,
       blockReason,
       slippage,
+      liquidityErrorMessage,
     } = this.state
 
     const linked = Link.all(
@@ -889,9 +829,6 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       new BigNumber(spendedAmount)
         .plus(fromWallet?.standard ? 0 : swapFee || 0)
         .isGreaterThan(fromWallet.balance)
-
-    const swapDataIsDisabled = this.isSwapDataNotAvailable()
-    const swapBtnIsDisabled = this.isSwapNotAvailable() || insufficientBalance || swapDataIsDisabled
 
     return (
       <>
@@ -949,8 +886,6 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
                 />
               </div>
 
-              {/* bsc pancake 0x9Ac64Cc6e4415144C455BD8E4837Fea55603e5c3 */}
-
               {activeSection === Sections.Source && (
                 <SourceActions sourceAction={sourceAction} setAction={this.setAction} />
               )}
@@ -966,7 +901,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
                 fromWallet={fromWallet}
                 toWallet={toWallet}
                 fiat={fiat}
-                isDataPending={isDataPending}
+                isPending={isPending}
               />
 
               <NoSwapsReasons
@@ -979,31 +914,18 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
                 spendedCurrency={spendedCurrency}
               />
 
-              <div styleName="buttonWrapper">
-                {needApprove ? (
-                  <Button
-                    pending={isDataPending}
-                    disabled={swapDataIsDisabled}
-                    onClick={this.approve}
-                    brand
-                  >
-                    <FormattedMessage
-                      id="FormattedMessageIdApprove"
-                      defaultMessage="Approve {token}"
-                      values={{ token: spendedCurrency.name }}
-                    />
-                  </Button>
-                ) : (
-                  <Button
-                    pending={isSwapPending}
-                    disabled={swapBtnIsDisabled}
-                    onClick={this.swap}
-                    brand
-                  >
-                    <FormattedMessage id="swap" defaultMessage="Swap" />
-                  </Button>
-                )}
-              </div>
+              <Footer
+                parentState={this.state}
+                reportError={this.reportError}
+                setBlockReason={this.setBlockReason}
+                resetSwapData={this.resetSwapData}
+                resetSpendedAmount={this.resetSpendedAmount}
+                isProcessBlocking={this.isProcessBlocking}
+                insufficientBalance={insufficientBalance}
+                fetchSwapData={this.fetchSwapData}
+                setPending={this.setPending}
+                setNeedApprove={this.setNeedApprove}
+              />
             </>
           )}
 
