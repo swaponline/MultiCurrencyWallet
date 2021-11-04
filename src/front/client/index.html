@@ -641,11 +641,13 @@
         console.log("warning: caching backend is down")
       }
 
-      let localStorageIsOk = true;
+      let hasCriticalProblems = false
+
       try {
         const testLocalStorage = window.localStorage;
       } catch (e) {
-        localStorageIsOk = false;
+        hasCriticalProblems = true
+
         document.getElementById('onFailLocalStorageLink').href = window.location.href;
         document.getElementById('onFailLocalStorageMessage').classList.remove('d-none');
 
@@ -682,6 +684,15 @@
         } else {
           sendErrorFeedback();
         }
+      }
+
+      // if it's iframe show a message about new window
+      if (
+        !isWidgetBuild &&
+        (window.location !== window.parent.location || window.self !== window.top)
+      ) {
+        document.getElementById('onFailLocalStorageLink').href = window.location.href
+        document.getElementById('onFailLocalStorageMessage').classList.remove('d-none')
       }
 
       function setCookie(name, value, options = {}) {
@@ -886,7 +897,7 @@
         !isWidgetBuild &&
         !swapIsWalletCreate() &&
         !isBinanceBuild &&
-        localStorageIsOk
+        !hasCriticalProblems
       ) {
         document.getElementById('starter-modal').classList.remove('d-none');
       }
