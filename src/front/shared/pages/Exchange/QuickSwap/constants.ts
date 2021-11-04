@@ -6,6 +6,7 @@ export const SOURCE_MODE_SLIPPAGE = {
 
 export const GWEI_DECIMALS = 9
 export const MAX_PERCENT = 100
+export const SEC_PER_MINUTE = 60
 
 export const API_NAME = {
   1: 'zeroxEthereum',

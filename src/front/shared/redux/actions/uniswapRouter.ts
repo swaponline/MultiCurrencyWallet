@@ -1,5 +1,6 @@
 import BigNumber from 'bignumber.js'
 import { abi as RouterV2ABI } from '@uniswap/v2-periphery/build/IUniswapV2Router02.json'
+import ethLikeHelper from 'common/helpers/ethLikeHelper'
 import constants from 'common/helpers/constants'
 import utils from 'common/utils'
 import actions from 'redux/actions'
@@ -19,16 +20,13 @@ enum AddLiquidityMethods {
   addLiquidityETH = 'addLiquidityETH',
 }
 
-const getContract = (params) => {
-  const { address, abi, provider } = params
+const getRouterContract = (params: { routerAddress: string; baseCurrency: string }) => {
+  const { routerAddress, baseCurrency } = params
 
-  return new provider.eth.Contract(abi, address)
-}
-
-const getRouterContract = (params: { routerAddress: string; provider: EthereumProvider }) => {
-  const { routerAddress, provider } = params
-
-  return getContract({ address: routerAddress, abi: RouterV2ABI, provider })
+  return ethLikeHelper[baseCurrency.toLowerCase()]?.getContract({
+    address: routerAddress,
+    abi: RouterV2ABI,
+  })
 }
 
 const getDeadline = async (provider, deadlinePeriod): Promise<string> => {
@@ -190,7 +188,7 @@ const swapCallback = async (params) => {
   }
 
   const provider = actions[baseCurrency.toLowerCase()].getWeb3()
-  const router = getRouterContract({ routerAddress, provider })
+  const router = getRouterContract({ routerAddress, baseCurrency })
   const method = returnSwapMethod({ fromToken, toToken, useFeeOnTransfer })
   const swapData = await returnSwapDataByMethod({
     chainId: actions[baseCurrency.toLowerCase()].chainId,
@@ -359,7 +357,7 @@ const addLiquidityCallback = async (params) => {
     owner,
     deadlinePeriod,
   })
-  const router = getRouterContract({ routerAddress, provider })
+  const router = getRouterContract({ routerAddress, baseCurrency })
   const txData = router.methods[method](...args).encodeABI()
 
   try {
@@ -375,7 +373,6 @@ const addLiquidityCallback = async (params) => {
 }
 
 export default {
-  getContract,
   getRouterContract,
   swapCallback,
   addLiquidityCallback,

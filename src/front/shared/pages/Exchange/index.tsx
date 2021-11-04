@@ -26,9 +26,7 @@ function Exchange(props) {
   const exchangeSettings = localStorage.getItem(constants.localStorage.exchangeSettings) || {}
   let initialState = location.pathname === '/exchange/quick' ? 'quick' : 'atomic'
 
-  if (externalConfig.entry === 'testnet') {
-    initialState = 'atomic'
-  } else if (showOnlyOneType) {
+  if (showOnlyOneType) {
     // and hide tabs next
     initialState = globalMode.replace(/only_/, '')
   } else if (validMode && location.pathname === '/exchange') {

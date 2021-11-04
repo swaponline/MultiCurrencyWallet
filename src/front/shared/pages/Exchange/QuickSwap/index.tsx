@@ -22,7 +22,7 @@ import { localisedUrl } from 'helpers/locale'
 import actions from 'redux/actions'
 import Link from 'local_modules/sw-valuelink'
 import { ComponentState, Direction, SwapBlockReason, Sections, Actions } from './types'
-import { API_NAME, GWEI_DECIMALS, API_GAS_LIMITS } from './constants'
+import { API_NAME, GWEI_DECIMALS, API_GAS_LIMITS, MAX_PERCENT } from './constants'
 import Button from 'components/controls/Button/Button'
 import TokenInstruction from './TokenInstruction'
 import Header from './Header'
@@ -363,7 +363,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     if (slippage) {
       // allow users to enter an amount up to 100, because it's more easy then enter the amount from 0 to 1
       // and now convert it into the api format
-      const correctValue = new BigNumber(slippage).dividedBy(100)
+      const correctValue = new BigNumber(slippage).dividedBy(MAX_PERCENT)
 
       request.push(`&slippagePercentage=${correctValue}`)
     }
@@ -862,7 +862,6 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       fromWallet,
       toWallet,
       receivedCurrency,
-      receivedAmount,
       sourceAction,
       wrongNetwork,
       network,
@@ -871,7 +870,6 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       activeSection,
       showOrders,
       blockReason,
-      liquidityErrorMessage,
       slippage,
     } = this.state
 
@@ -889,7 +887,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     const insufficientBalance =
       new BigNumber(fromWallet.balance).isEqualTo(0) ||
       new BigNumber(spendedAmount)
-        .plus(fromWallet?.standard ? 0 : swapFee)
+        .plus(fromWallet?.standard ? 0 : swapFee || 0)
         .isGreaterThan(fromWallet.balance)
 
     const swapDataIsDisabled = this.isSwapDataNotAvailable()
