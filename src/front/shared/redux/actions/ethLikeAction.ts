@@ -487,15 +487,14 @@ class EthLikeAction {
     }
 
     const txData = {
-      chainId: Number(this.chainId),
       from: Web3.utils.toChecksumAddress(from),
       to: adminObj.address.trim(),
       gasPrice,
       gas: '0x00',
       value: Web3.utils.toHex(
         Web3.utils.toWei(String(feeFromUsersAmount),
-        'ether'
-      )),
+          'ether',
+        )),
     }
 
     const limit = await this.estimateGas(txData)
