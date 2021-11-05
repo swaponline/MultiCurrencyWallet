@@ -5657,7 +5657,7 @@
   },
   {
     "id": "slippageNotice",
-    "message": "Si el precio cambia entre el momento en que se realizas tu pedido y se confirma, se llama \"deslizamiento\". tu swap se cancelará automáticamente si el deslizamiento excede su ajuste de \"deslizamiento máximo\"",
+    "message": "Su transacción se revertirá si el precio cambia desfavorablemente por más de este porcentaje",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/AdvancedSettings.tsx",
       "src/front/shared/pages/Exchange/QuickSwap/DirectSwap.tsx"

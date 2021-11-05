@@ -5660,7 +5660,7 @@
   },
   {
     "id": "slippageNotice",
-    "message": "Wenn sich der Preis zwischen der Bestellung und der Bestätigung ändert, spricht man von\"Schlupf\". Ihr Swap wird automatisch abgebrochen, wenn der Schlupf Ihre Einstellung \"Maximaler Schlupf\" überschreitet",
+    "message": "Ihre Transaktion wird rückgängig gemacht, wenn sich der Preis um mehr als diesen Prozentsatz ungünstig ändert",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/AdvancedSettings.tsx",
       "src/front/shared/pages/Exchange/QuickSwap/DirectSwap.tsx"

@@ -105,6 +105,12 @@ const events = {
     cancelOrder: 'cancel the order',
     failed: 'failed',
   },
+  liquiditySource: {
+    startedSwap: 'start the swap',
+    addLiquidity: 'add liquidity',
+    removeLiquidity: 'remove liquidity',
+    failed: 'failed',
+  },
   zerox: {
     startedSwap: 'start the swap',
     failed: 'failed',

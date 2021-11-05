@@ -5657,7 +5657,7 @@
   },
   {
     "id": "slippageNotice",
-    "message": "Jeśli cena zmieni się między momentem złożenia zamówienia i potwierdzenia, nazywa się to \"poślizgiem\". Wymiana zostanie automatycznie anulowana, jeśli poślizg przekroczy ustawienie \"maksymalny poślizg\"",
+    "message": "Twoja transakcja zostanie przywrócona, jeśli cena zmieni się niekorzystnie o więcej niż ten procent",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/AdvancedSettings.tsx",
       "src/front/shared/pages/Exchange/QuickSwap/DirectSwap.tsx"

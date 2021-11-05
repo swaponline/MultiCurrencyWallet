@@ -29,8 +29,7 @@ type FooterProps = {
   fetchSwapAPIData: () => void
   setPending: (a: boolean) => void
   setNeedApprove: (a: boolean) => void
-  router: null | IUniversalObj
-  factory: null | IUniversalObj
+  baseChainWallet: IUniversalObj
 }
 
 function Footer(props: FooterProps) {
@@ -47,8 +46,7 @@ function Footer(props: FooterProps) {
     fetchSwapAPIData,
     setPending,
     setNeedApprove,
-    router,
-    factory,
+    baseChainWallet,
   } = props
   const {
     network,
@@ -104,11 +102,12 @@ function Footer(props: FooterProps) {
   }
 
   const apiSwap = async () => {
+    if (isSourceMode) return
+
     const baseCurrency = fromWallet.standard ? fromWallet.baseCurrency : fromWallet.currency
     const assetName = fromWallet.standard ? fromWallet.tokenKey : fromWallet.currency
 
     feedback.zerox.startedSwap(`${fromWallet.currency} -> ${toWallet.currency}`)
-
     setPending(true)
 
     try {
@@ -139,11 +138,15 @@ function Footer(props: FooterProps) {
   }
 
   const directSwap = async () => {
+    if (sourceAction !== Actions.Swap || !isSourceMode) return
+
     const baseCurrency = fromWallet.standard ? fromWallet.baseCurrency : fromWallet.currency
 
-    console.log('%c direct swap', 'color:orange;')
-    console.log('props: ', props)
-
+    feedback.liquiditySource.startedSwap(
+      `Source: ${LIQUIDITY_SOURCE_DATA[network.networkVersion]?.name}. Route: ${
+        fromWallet.currency
+      } -> ${toWallet.currency}`
+    )
     setPending(true)
 
     try {
@@ -151,15 +154,15 @@ function Footer(props: FooterProps) {
         slippage,
         routerAddress,
         baseCurrency,
-        ownerAddress: fromWallet.address,
+        owner: fromWallet.address,
         fromTokenStandard: fromWallet.standard ?? '',
         fromTokenName: fromWallet.tokenKey ?? '',
-        fromToken: fromWallet.isToken ? fromWallet.contractAddress : ADDRESSES.EVM_COIN_ADDRESS,
+        fromToken: fromWallet.contractAddress ?? ADDRESSES.EVM_COIN_ADDRESS,
         sellAmount: spendedAmount,
-        fromTokenDecimals: fromWallet.decimals || COIN_DECIMALS,
-        toToken: toWallet.isToken ? toWallet.contractAddress : ADDRESSES.EVM_COIN_ADDRESS,
+        fromTokenDecimals: fromWallet.decimals ?? COIN_DECIMALS,
+        toToken: toWallet.contractAddress ?? ADDRESSES.EVM_COIN_ADDRESS,
         buyAmount: receivedAmount,
-        toTokenDecimals: toWallet.decimals || COIN_DECIMALS,
+        toTokenDecimals: toWallet.decimals ?? COIN_DECIMALS,
         deadlinePeriod: userDeadline * SEC_PER_MINUTE,
         useFeeOnTransfer: true,
       })
@@ -181,25 +184,65 @@ function Footer(props: FooterProps) {
         routing.redirectTo(txInfoUrl)
       }
     } catch (error) {
-      setPending(false)
       reportError(error)
+    } finally {
+      setPending(false)
     }
   }
 
-  const addLiquidity = () => {
-    if (sourceAction === Actions.AddLiquidity) {
+  const addLiquidity = async () => {
+    if (sourceAction !== Actions.AddLiquidity || !isSourceMode) return
+
+    feedback.liquiditySource.addLiquidity(
+      `Source: ${LIQUIDITY_SOURCE_DATA[network.networkVersion]?.name}. Asset A: ${
+        fromWallet.currency
+      }. Asset B: ${toWallet.currency}`
+    )
+    setPending(true)
+
+    try {
+      const result = await actions.uniswap.addLiquidityCallback({
+        routerAddress: LIQUIDITY_SOURCE_DATA[network.networkVersion]?.router,
+        baseCurrency: baseChainWallet.currency,
+        slippage,
+        tokenA: fromWallet.contractAddress ?? ADDRESSES.EVM_COIN_ADDRESS,
+        tokenADecimals: fromWallet.decimals ?? COIN_DECIMALS,
+        amountADesired: spendedAmount,
+        tokenB: toWallet.contractAddress ?? ADDRESSES.EVM_COIN_ADDRESS,
+        tokenBDecimals: toWallet.decimals ?? COIN_DECIMALS,
+        amountBDesired: receivedAmount,
+        owner: fromWallet.address,
+        deadlinePeriod: userDeadline * SEC_PER_MINUTE,
+      })
+
+      if (result?.transactionHash) {
+        const txInfoUrl = transactions.getTxRouter(
+          fromWallet.standard ? fromWallet.tokenKey : fromWallet.currency,
+          result.transactionHash
+        )
+
+        routing.redirectTo(txInfoUrl)
+      }
+    } catch (error) {
+      reportError(error)
+    } finally {
+      setPending(false)
     }
   }
-  const removeLiquidity = () => {
-    if (sourceAction === Actions.RemoveLiquidity) {
-    }
-  }
+
+  // const removeLiquidity = () => {
+  //   if (sourceAction === Actions.RemoveLiquidity) {
+  //   }
+  // }
 
   const doNotProcess = isProcessBlocking()
 
-  const apiSwapIsAvailable =
-    swapData && !isPending && !error && !doNotProcess && !insufficientBalance
-  const directSwapIsAvailable = sourceAction === Actions.Swap && spendedAmount && receivedAmount
+  const commonBlockReasons =
+    isPending || !!error || insufficientBalance || !spendedAmount || !receivedAmount
+
+  const apiSwapIsAvailable = swapData && !doNotProcess && !commonBlockReasons
+  const directSwapIsAvailable = !commonBlockReasons
+  const addLiquidityIsAvailable = !commonBlockReasons
 
   return (
     <div styleName="footer">
@@ -211,25 +254,28 @@ function Footer(props: FooterProps) {
             values={{ token: spendedCurrency.name }}
           />
         </Button>
-      ) : isSourceMode ? (
-        <Button pending={isPending} disabled={!directSwapIsAvailable} onClick={directSwap} brand>
-          <FormattedMessage id="swap" defaultMessage="Swap" />
-        </Button>
-      ) : (
+      ) : !isSourceMode ? (
         <Button pending={isPending} disabled={!apiSwapIsAvailable} onClick={apiSwap} brand>
           <FormattedMessage id="swap" defaultMessage="Swap" />
         </Button>
-      )}
-
-      {/*
-        <Button pending={isPending} disabled={} onClick={addLiquidity} brand>
+      ) : sourceAction === Actions.Swap ? (
+        <Button pending={isPending} disabled={!directSwapIsAvailable} onClick={directSwap} brand>
+          <FormattedMessage id="swap" defaultMessage="Swap" />
+        </Button>
+      ) : sourceAction === Actions.AddLiquidity ? (
+        <Button
+          pending={isPending}
+          disabled={!addLiquidityIsAvailable}
+          onClick={addLiquidity}
+          brand
+        >
           <FormattedMessage id="addLiquidity" defaultMessage="Add liquidity" />
         </Button>
-
-        <Button pending={isPending} disabled={} onClick={removeLiquidity}>
-          <FormattedMessage id="removeLiquidity" defaultMessage="Remove liquidity" />
-        </Button>
-      */}
+      ) : // ) : sourceAction === Actions.RemoveLiquidity ? (
+      //   <Button pending={isPending} disabled={} onClick={removeLiquidity}>
+      //     <FormattedMessage id="removeLiquidity" defaultMessage="Remove liquidity" />
+      //   </Button>
+      null}
     </div>
   )
 }

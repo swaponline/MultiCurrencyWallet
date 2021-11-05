@@ -5653,7 +5653,7 @@
   },
   {
     "id": "slippageNotice",
-    "message": "Se o preço mudar entre o momento em que seu pedido é feito e confirmado, isso é chamado de “slippage”. Sua troca será cancelada automaticamente se a derrapagem exceder a configuração de “derrapagem máxima”",
+    "message": "A sua transacção irá reverter se o preço mudar desfavoravelmente mais do que esta percentagem",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/AdvancedSettings.tsx",
       "src/front/shared/pages/Exchange/QuickSwap/DirectSwap.tsx"

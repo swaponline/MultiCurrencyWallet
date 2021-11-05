@@ -49,7 +49,17 @@ const getDeadline = async (provider, deadlinePeriod): Promise<string> => {
   const latestBlock = await provider.eth.getBlock(latestBlockNumber)
   const timestamp = latestBlock.timestamp
 
-  return `0x${new BigNumber(timestamp).plus(deadlinePeriod).toString(16)}`
+  return utils.amount.toHexNumber(new BigNumber(timestamp).plus(deadlinePeriod))
+}
+
+const getSlippageRange = (slippagePercent, amount) => {
+  const MAX_PERCENT = 100
+
+  return new BigNumber(amount).div(MAX_PERCENT).times(slippagePercent).toNumber()
+}
+
+const getMinAmount = (amount, range) => {
+  return new BigNumber(amount).minus(range).integerValue(BigNumber.ROUND_CEIL)
 }
 
 const getPairAddress = async (params) => {
@@ -92,7 +102,7 @@ const getAmountOut = async (params) => {
     // use getAmountsOut instead of getAmountOut, because we don't need
     // to request pair reserves manually for the second method arguments
     const amounts = await router?.methods
-      .getAmountsOut(`0x${new BigNumber(unitAmountIn).toString(16)}`, path)
+      .getAmountsOut(utils.amount.toHexNumber(unitAmountIn), path)
       .call()
 
     return utils.amount.formatWithoutDecimals(amounts[1], tokenBDecimals)
@@ -135,19 +145,11 @@ const returnSwapDataByMethod = async (
 
   const weiSellAmount = utils.amount.formatWithDecimals(sellAmount, fromTokenDecimals)
   const weiBuyAmount = utils.amount.formatWithDecimals(buyAmount, toTokenDecimals)
-
-  const MAX_PERCENT = 100
-  const availableSlippageRange = new BigNumber(weiBuyAmount)
-    .div(MAX_PERCENT)
-    .times(slippage)
-    .toNumber()
+  const buySlilppageRange = getSlippageRange(slippage, weiBuyAmount)
 
   // the minimum amount of the purchased asset to be received
-  const intOutMin = new BigNumber(weiBuyAmount)
-    .minus(availableSlippageRange)
-    .integerValue(BigNumber.ROUND_CEIL)
-
-  const amountOutMin = `0x${intOutMin.toString(16)}`
+  const intOutMin = getMinAmount(weiBuyAmount, buySlilppageRange)
+  const amountOutMin = utils.amount.toHexNumber(intOutMin)
   const amountIn = weiSellAmount
 
   switch (method) {
@@ -226,7 +228,7 @@ const swapCallback = async (params) => {
   const {
     routerAddress,
     baseCurrency,
-    ownerAddress,
+    owner,
     fromToken,
     fromTokenDecimals,
     toToken,
@@ -257,7 +259,7 @@ const swapCallback = async (params) => {
     fromTokenDecimals,
     toToken,
     toTokenDecimals,
-    owner: ownerAddress,
+    owner,
     deadlinePeriod,
     sellAmount,
     buyAmount,
@@ -280,7 +282,7 @@ const swapCallback = async (params) => {
         sellAmount,
         standard: fromTokenStandard,
         token: fromToken,
-        owner: ownerAddress,
+        owner,
         decimals: fromTokenDecimals,
         spender: routerAddress,
       })
@@ -304,12 +306,13 @@ const swapCallback = async (params) => {
 const returnAddLiquidityData = async (params) => {
   const {
     provider,
+    slippage,
     tokenA,
+    tokenADecimals,
     amountADesired,
-    amountAMin,
     tokenB,
+    tokenBDecimals,
     amountBDesired,
-    amountBMin,
     owner,
     deadlinePeriod,
   } = params
@@ -333,7 +336,29 @@ const returnAddLiquidityData = async (params) => {
   ! tokens are added.
   */
 
+  const { formatWithDecimals, toHexNumber } = utils.amount
   const deadline = await getDeadline(provider, deadlinePeriod)
+  const unitAmountADesired = formatWithDecimals(amountADesired, tokenADecimals)
+  const unitAmountBDesired = formatWithDecimals(amountBDesired, tokenBDecimals)
+
+  // ! Drop slippage percent if it's first liquidity addition
+  // ? check a pool existence manually in this function ?
+
+  const amountASlippageRange = getSlippageRange(
+    slippage,
+    formatWithDecimals(amountADesired, tokenADecimals)
+  )
+  const amountBSlippageRange = getSlippageRange(
+    slippage,
+    formatWithDecimals(amountBDesired, tokenBDecimals)
+  )
+
+  const amountAMin = getMinAmount(unitAmountADesired, amountASlippageRange)
+  const amountBMin = getMinAmount(unitAmountBDesired, amountBSlippageRange)
+  const hexAmountADesired = toHexNumber(unitAmountADesired)
+  const hexAmountBDesired = toHexNumber(unitAmountBDesired)
+  const hexAmountAMin = toHexNumber(amountAMin)
+  const hexAmountBMin = toHexNumber(amountBMin)
 
   if (
     lowerTokenA === constants.ADDRESSES.EVM_COIN_ADDRESS ||
@@ -343,42 +368,27 @@ const returnAddLiquidityData = async (params) => {
 
     method = LiquidityMethods.addLiquidityETH
     value = tokenAIsNative ? amountADesired : amountBDesired
-
-    /**
-     * address token
-     * uint amountTokenDesired
-     * uint amountTokenMin
-     * uint amountETHMin
-     * address to
-     * uint deadline
-     *
-     * return (amountToken, amountETH, liquidity)
-     */
     args = [
       tokenAIsNative ? tokenB : tokenA,
-      tokenAIsNative ? amountBDesired : amountADesired,
-      tokenAIsNative ? amountBMin : amountAMin,
-      tokenAIsNative ? amountAMin : amountBMin,
+      tokenAIsNative ? hexAmountBDesired : hexAmountADesired,
+      tokenAIsNative ? hexAmountBMin : hexAmountAMin,
+      tokenAIsNative ? hexAmountAMin : hexAmountBMin,
       owner,
       deadline,
     ]
   } else {
     method = LiquidityMethods.addLiquidity
     value = null
-
-    /**
-     * address tokenA
-     * address tokenB
-     * uint amountADesired
-     * uint amountBDesired
-     * uint amountAMin
-     * uint amountBMin
-     * address to
-     * uint deadline
-     *
-     * return (amountA, amountB, liquidity)
-     */
-    args = [tokenA, tokenB, amountADesired, amountBDesired, amountAMin, amountBMin, owner, deadline]
+    args = [
+      tokenA,
+      tokenB,
+      hexAmountADesired,
+      hexAmountBDesired,
+      hexAmountBMin,
+      hexAmountBMin,
+      owner,
+      deadline,
+    ]
   }
 
   return {
@@ -391,27 +401,29 @@ const returnAddLiquidityData = async (params) => {
 const addLiquidityCallback = async (params) => {
   const {
     routerAddress,
-    provider,
     baseCurrency,
+    slippage,
     waitReceipt = false,
     tokenA,
+    tokenADecimals,
     amountADesired,
-    amountAMin,
     tokenB,
+    tokenBDecimals,
     amountBDesired,
-    amountBMin,
     owner,
     deadlinePeriod,
   } = params
 
+  const provider = actions[baseCurrency.toLowerCase()].getWeb3()
   const { method, args, value } = await returnAddLiquidityData({
     provider,
     tokenA,
+    tokenADecimals,
     amountADesired,
-    amountAMin,
+    slippage,
     tokenB,
+    tokenBDecimals,
     amountBDesired,
-    amountBMin,
     owner,
     deadlinePeriod,
   })

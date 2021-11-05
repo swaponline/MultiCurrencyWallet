@@ -17,7 +17,12 @@ const formatWithoutDecimals = (amount, decimals): string => {
     .toString()
 }
 
+const toHexNumber = (amount: number | string | BigNumber): string => {
+  return `0x${new BigNumber(amount).toString(16)}`
+}
+
 export default {
   formatWithDecimals,
   formatWithoutDecimals,
+  toHexNumber,
 }

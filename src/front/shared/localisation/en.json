@@ -5653,7 +5653,7 @@
   },
   {
     "id": "slippageNotice",
-    "message": "If the price changes between the time your order is placed and confirmed it’s called “slippage”. Your swap will automatically cancel if slippage exceeds your “max slippage” setting",
+    "message": "Your transaction will revert if the price changes unfavorably by more than this percentage",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/AdvancedSettings.tsx",
       "src/front/shared/pages/Exchange/QuickSwap/DirectSwap.tsx"

@@ -5653,7 +5653,7 @@
   },
   {
     "id": "slippageNotice",
-    "message": "Als de prijs verandert tussen het moment dat uw bestelling wordt geplaatst en bevestigd het heet \"slippage\". Uw swap zal automatisch annuleren als slippage uw \"max slippage\" instelling overschrijdt",
+    "message": "Uw transactie zal terugkeren als de prijs ongunstig verandert met meer dan dit percentage",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/AdvancedSettings.tsx",
       "src/front/shared/pages/Exchange/QuickSwap/DirectSwap.tsx"

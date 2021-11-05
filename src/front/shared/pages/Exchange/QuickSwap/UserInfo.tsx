@@ -14,6 +14,7 @@ import Address from 'components/ui/Address/Address'
 import Copy from 'components/ui/Copy/Copy'
 import Button from 'components/controls/Button/Button'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
+import Tooltip from 'components/ui/Tooltip/Tooltip'
 
 type ComponentProps = {
   history: any
@@ -142,7 +143,7 @@ function UserInfo(props: ComponentProps) {
           <FormattedMessage id="addressOfYourWallet" defaultMessage="Address of your wallet:" />
 
           <Copy text={fromWallet.address}>
-            <span styleName="address">
+            <span styleName="value address">
               <Address
                 address={fromWallet.address}
                 format={isMobile ? AddressFormat.Short : AddressFormat.Full}
@@ -154,19 +155,29 @@ function UserInfo(props: ComponentProps) {
       )}
 
       <span styleName="indicator">
-        <FormattedMessage id="network" defaultMessage="Network" />: <span>{network.chainName}</span>
+        <FormattedMessage id="network" defaultMessage="Network" />:{' '}
+        <span styleName="value">{network.chainName}</span>
       </span>
 
       {isSourceMode && (
         <span styleName="indicator">
           <FormattedMessage id="source" defaultMessage="Source" />:{' '}
-          <span>{LIQUIDITY_SOURCE_DATA[network.networkVersion]?.name}</span>
+          <span styleName="value">{LIQUIDITY_SOURCE_DATA[network.networkVersion]?.name}</span>
         </span>
       )}
 
       <span styleName="indicator">
-        <FormattedMessage id="slippageTolerance" defaultMessage="Slippage tolerance" />:
-        <span>{`${slippage} %`}</span>
+        <span>
+          <FormattedMessage id="slippageTolerance" defaultMessage="Slippage tolerance" />{' '}
+          <Tooltip id="slippageTolerance">
+            <FormattedMessage
+              id="slippageNotice"
+              defaultMessage="Your transaction will revert if the price changes unfavorably by more than this percentage"
+            />
+          </Tooltip>
+          :
+        </span>
+        <span styleName="value">{`${slippage}%`}</span>
       </span>
 
       {isPending ? (
@@ -177,13 +188,14 @@ function UserInfo(props: ComponentProps) {
         <>
           {price && (
             <span styleName="indicator">
-              <FormattedMessage id="orders105" defaultMessage="Price" />: <span>{price}</span>
+              <FormattedMessage id="orders105" defaultMessage="Price" />:{' '}
+              <span styleName="value">{price}</span>
             </span>
           )}
           {swapFee && fee && (
             <span styleName="indicator">
               <FormattedMessage id="fee" defaultMessage="Fee" />:{' '}
-              <span>
+              <span styleName="value">
                 {fee} {fiatFee && fiatFee}
               </span>
             </span>
@@ -191,7 +203,7 @@ function UserInfo(props: ComponentProps) {
           {total && spendedAmount && swapFee && (
             <span styleName="indicator">
               <FormattedMessage id="total" defaultMessage="Total" />:{' '}
-              <span>
+              <span styleName="value">
                 {total} {totalFiat && totalFiat}
               </span>
             </span>

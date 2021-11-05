@@ -68,8 +68,6 @@ export type ComponentState = {
   currencies: CurrencyMenuItem[]
   receivedList: CurrencyMenuItem[]
   baseChainWallet: IUniversalObj
-  router: null | IUniversalObj
-  factory: null | IUniversalObj
   error: IError | null
   activeSection: Sections
   isPending: boolean

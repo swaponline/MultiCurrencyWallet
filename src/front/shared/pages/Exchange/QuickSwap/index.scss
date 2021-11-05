@@ -169,7 +169,7 @@ $maxWidth: 38em;
     margin-bottom: 0.3rem;
   }
 
-  span {
+  .value {
     @include ff-mono;
     display: inline-block;
 

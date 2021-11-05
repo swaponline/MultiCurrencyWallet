@@ -82,8 +82,6 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       error: null,
       liquidityErrorMessage: '',
       isPending: false,
-      router: null,
-      factory: null,
       isSourceMode: activeSection === Sections.Source,
       activeSection,
       needApprove: false,
@@ -221,7 +219,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   }
 
   updateNetwork = async () => {
-    const { spendedCurrency, fromWallet } = this.state
+    const { spendedCurrency } = this.state
 
     const baseChainWallet = actions.core.getWallet({
       currency: spendedCurrency.blockchain,
@@ -229,20 +227,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     const network =
       externalConfig.evmNetworks[spendedCurrency.blockchain || spendedCurrency.value.toUpperCase()]
 
-    const router = actions.uniswap.getContract({
-      name: 'router',
-      address: LIQUIDITY_SOURCE_DATA[network.networkVersion]?.router,
-      baseCurrency: baseChainWallet.currency,
-    })
-    const factory = actions.uniswap.getContract({
-      name: 'factory',
-      address: LIQUIDITY_SOURCE_DATA[network.networkVersion]?.factory,
-      baseCurrency: baseChainWallet.currency,
-    })
-
     this.setState(() => ({
-      router,
-      factory,
       network,
       baseChainWallet,
     }))
@@ -886,8 +871,6 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       showOrders,
       blockReason,
       slippage,
-      router,
-      factory,
       liquidityErrorMessage,
     } = this.state
 
@@ -1010,8 +993,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
                 fetchSwapAPIData={this.fetchSwapAPIData}
                 setPending={this.setPending}
                 setNeedApprove={this.setNeedApprove}
-                router={router}
-                factory={factory}
+                baseChainWallet={baseChainWallet}
               />
             </>
           )}

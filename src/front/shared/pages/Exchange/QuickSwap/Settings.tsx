@@ -49,7 +49,7 @@ function Settings(props) {
           <Tooltip id="slippageTooltip">
             <FormattedMessage
               id="slippageNotice"
-              defaultMessage="If the price changes between the time your order is placed and confirmed it’s called “slippage”. Your swap will automatically cancel if slippage exceeds your “max slippage” setting"
+              defaultMessage="Your transaction will revert if the price changes unfavorably by more than this percentage"
             />
           </Tooltip>
         }
