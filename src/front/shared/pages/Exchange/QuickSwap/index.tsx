@@ -946,7 +946,10 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
           <p styleName="noAssetsNotice">
             <FormattedMessage
               id="notEnoughAssetsNotice"
-              defaultMessage="You don't have available assets in this network to exchange. Please change the network or add a custom asset to the wallet."
+              defaultMessage="You don't have available assets for {networkName} to exchange. Please change the network or add a custom asset to the wallet."
+              values={{
+                networkName: network.chainName,
+              }}
             />
           </p>
         )}
@@ -965,7 +968,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
             />
           ) : (
             <>  
-              <div styleName={`${wrongNetwork || receivedCurrency.notExist ? 'disabled' : ''}`}>
+              <div styleName={`${wrongNetwork ? 'disabled' : ''}`}>
                 <ExchangeForm
                   stateReference={linked}
                   selectCurrency={this.selectCurrency}
@@ -1058,16 +1061,18 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
                 isDataPending={isDataPending}
               />
 
-              <NoSwapsReasons
-                wrongNetwork={wrongNetwork}
-                blockReason={blockReason}
-                baseChainWallet={baseChainWallet}
-                fromWallet={fromWallet}
-                spendedAmount={spendedAmount}
-                swapFee={swapFee}
-                needApprove={needApprove}
-                spendedCurrency={spendedCurrency}
-              />
+              {!receivedCurrency.notExist && (
+                <NoSwapsReasons
+                  wrongNetwork={wrongNetwork}
+                  blockReason={blockReason}
+                  baseChainWallet={baseChainWallet}
+                  fromWallet={fromWallet}
+                  spendedAmount={spendedAmount}
+                  swapFee={swapFee}
+                  needApprove={needApprove}
+                  spendedCurrency={spendedCurrency}
+                />
+              )}
 
               <div styleName="buttonWrapper">
                 {needApprove ? (

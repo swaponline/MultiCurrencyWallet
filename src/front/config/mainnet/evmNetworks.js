@@ -22,7 +22,7 @@ export default {
     currency: 'MATIC',
     chainId: '0x89',
     networkVersion: 137,
-    chainName: 'Matic',
+    chainName: 'Polygon',
     rpcUrls: [web3.matic_provider],
     blockExplorerUrls: [link.maticscan],
   },

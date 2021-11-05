@@ -578,8 +578,7 @@ class CurrencyWallet extends Component<any, any> {
           </div>
           {showSwapHistory && (
             <>
-              {!actions.btcmultisig.isBTCSMSAddress(`${address}`) &&
-                !actions.btcmultisig.isBTCMSUserAddress(`${address}`) &&
+              {!actions.btcmultisig.isBTCMSUserAddress(`${address}`) &&
                 (swapHistory.filter((item) => item.step >= 1).length > 0 ? (
                     <SwapsHistory orders={swapHistory.filter((item) => item.step >= 4)} />
                   ) : (

@@ -5855,7 +5855,7 @@
   },
   {
     "id": "notEnoughAssetsNotice",
-    "message": "Nie masz dostępnych zasobów w tej sieci do wymiany. Zmień sieć lub Dodaj niestandardowy zasób do portfela.",
+    "message": "Nie masz dostępnych zasobów {networkName} do wymiany. Zmień sieć lub Dodaj niestandardowy zasób do portfela.",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
     ]
