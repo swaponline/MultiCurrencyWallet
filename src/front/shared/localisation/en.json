@@ -5851,7 +5851,7 @@
   },
   {
     "id": "notEnoughAssetsNotice",
-    "message": "You don't have available assets in this network to exchange. Please change the network or add a custom asset to the wallet.",
+    "message": "You don't have available assets for {networkName} to exchange. Please change the network or add a custom asset to the wallet.",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
     ]

@@ -166,7 +166,7 @@ function InputForm(props) {
     setSpendedAmount(value)
     resetSwapData()
 
-    if (value !== spendedAmount) {
+    if (!receivedCurrency.notExist && value !== spendedAmount) {
       setFlagForRequest(true)
     }
   }

@@ -5851,7 +5851,7 @@
   },
   {
     "id": "notEnoughAssetsNotice",
-    "message": "Você não tem ativos disponíveis nesta rede para trocar. Altere a rede ou adicione um ativo personalizado à carteira.",
+    "message": "Não tem activos disponíveis para o {networkName} trocar. Altere a rede ou adicione um ativo personalizado à carteira.",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
     ]

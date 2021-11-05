@@ -895,7 +895,10 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
           <p styleName="noAssetsNotice">
             <FormattedMessage
               id="notEnoughAssetsNotice"
-              defaultMessage="You don't have available assets in this network to exchange. Please change the network or add a custom asset to the wallet."
+              defaultMessage="You don't have available assets for {networkName} to exchange. Please change the network or add a custom asset to the wallet."
+              values={{
+                networkName: network.chainName,
+              }}
             />
           </p>
         )}
@@ -920,7 +923,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
             />
           ) : (
             <>
-              <div styleName={`${wrongNetwork || receivedCurrency.notExist ? 'disabled' : ''}`}>
+              <div styleName={`${wrongNetwork ? 'disabled' : ''}`}>
                 <InputForm
                   stateReference={linked}
                   isSourceMode={isSourceMode}

@@ -5855,7 +5855,7 @@
   },
   {
     "id": "notEnoughAssetsNotice",
-    "message": "No tienes activos disponibles en esta red para intercambiar. Cambia la red o agregue un activo personalizado a la wallet.",
+    "message": "No tiene activos disponibles para que {networkName} intercambie. Cambia la red o agregue un activo personalizado a la wallet.",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
     ]
