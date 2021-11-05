@@ -58,6 +58,7 @@ export enum BlockReasons {
   NoBalance,
   NoBaseCurrencyBalance,
   Liquidity,
+  PairDoesNotExist,
   Unknown,
 }
 
@@ -67,6 +68,9 @@ export type ComponentState = {
   currencies: CurrencyMenuItem[]
   receivedList: CurrencyMenuItem[]
   baseChainWallet: IUniversalObj
+  baseCurrency: string
+  router: null | IUniversalObj
+  factory: null | IUniversalObj
   error: IError | null
   activeSection: Sections
   isPending: boolean

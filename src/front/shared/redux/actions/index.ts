@@ -9,7 +9,7 @@ import core from './core'
 import ui from './ui'
 import filter from './filter'
 import oneinch from './oneinch'
-import uniswapRouter from './uniswapRouter'
+import uniswap from './uniswap'
 import btc from './btc'
 import ghost from './ghost'
 import next from './next'
@@ -40,7 +40,7 @@ export default {
   core,
   ui,
   oneinch,
-  uniswapRouter,
+  uniswap,
   btc,
   btcmultisig,
   eth: EthLikeAction.ETH,

@@ -27,3 +27,9 @@ export const ROUTERS = {
   [config.evmNetworks.BNB.networkVersion]: config.swapContract.pancakeswapRouter,
   [config.evmNetworks.MATIC.networkVersion]: config.swapContract.sushiswapRouter,
 }
+
+export const FACTORIES = {
+  [config.evmNetworks.ETH.networkVersion]: config.swapContract.uniswapFactory,
+  [config.evmNetworks.BNB.networkVersion]: config.swapContract.pancakeswapFactory,
+  [config.evmNetworks.MATIC.networkVersion]: config.swapContract.sushiswapFactory,
+}

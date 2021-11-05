@@ -158,6 +158,10 @@ function InputForm(props) {
     }
   })
 
+  useEffect(() => {
+    onInputDataChange()
+  }, [spendedCurrency?.value, receivedCurrency?.value, isSourceMode])
+
   const handleSpendAmountInput = (value) => {
     setSpendedAmount(value)
     resetSwapData()

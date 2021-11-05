@@ -95,7 +95,7 @@ class DirectSwap extends Component<ComponentProps, ComponentState> {
     }))
 
     try {
-      const result = await actions.uniswapRouter.swapCallback({
+      const result = await actions.uniswap.swapCallback({
         slippage: userSlippage,
         routerAddress,
         baseCurrency,

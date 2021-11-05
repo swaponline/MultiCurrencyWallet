@@ -69,6 +69,13 @@ function Feedback(props) {
             defaultMessage="There is some problem with liquidity pool. Try direct swap"
           />
         </p>
+      ) : blockReason === BlockReasons.PairDoesNotExist ? (
+        <p styleName="neutral">
+          <FormattedMessage
+            id="liquidityPairDoesNotExist"
+            defaultMessage="This pair does not have liquidity. You can create a new one and be the first liquidity provider"
+          />
+        </p>
       ) : blockReason === BlockReasons.Unknown ? (
         <p styleName="wrong">
           <FormattedMessage

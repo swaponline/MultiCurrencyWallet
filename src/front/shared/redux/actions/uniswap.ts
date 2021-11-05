@@ -1,4 +1,5 @@
 import BigNumber from 'bignumber.js'
+import { abi as FactoryV2ABI } from '@uniswap/v2-periphery/build/IUniswapV2Factory.json'
 import { abi as RouterV2ABI } from '@uniswap/v2-periphery/build/IUniswapV2Router02.json'
 import ethLikeHelper from 'common/helpers/ethLikeHelper'
 import constants from 'common/helpers/constants'
@@ -15,17 +16,25 @@ enum SwapMethods {
   swapExactTokensForTokensSupportingFeeOnTransferTokens = 'swapExactTokensForTokensSupportingFeeOnTransferTokens',
 }
 
-enum AddLiquidityMethods {
+enum LiquidityMethods {
   addLiquidity = 'addLiquidity',
   addLiquidityETH = 'addLiquidityETH',
+  removeLiquidity = 'removeLiquidity',
+  removeLiquidityETH = 'removeLiquidityETH',
 }
 
-const getRouterContract = (params: { routerAddress: string; baseCurrency: string }) => {
-  const { routerAddress, baseCurrency } = params
+type GetContractParams = {
+  name: 'factory' | 'router'
+  address: string
+  baseCurrency: string
+}
+
+const getContract = (params: GetContractParams) => {
+  const { name, address, baseCurrency } = params
 
   return ethLikeHelper[baseCurrency.toLowerCase()]?.getContract({
-    address: routerAddress,
-    abi: RouterV2ABI,
+    abi: name === 'factory' ? FactoryV2ABI : RouterV2ABI,
+    address,
   })
 }
 
@@ -35,6 +44,32 @@ const getDeadline = async (provider, deadlinePeriod): Promise<string> => {
   const timestamp = latestBlock.timestamp
 
   return `0x${new BigNumber(timestamp).plus(deadlinePeriod).toString(16)}`
+}
+
+const getPairAddress = async (params) => {
+  const { factoryAddress, baseCurrency, chainId } = params
+  let { tokenA, tokenB } = params
+
+  const factory = getContract({
+    name: 'factory',
+    address: factoryAddress,
+    baseCurrency,
+  })
+
+  const { WrapperCurrency } = constants.ADDRESSES
+
+  if (tokenA === constants.ADDRESSES.EVM_COIN_ADDRESS) {
+    tokenA = WrapperCurrency[chainId]
+  }
+  if (tokenB === constants.ADDRESSES.EVM_COIN_ADDRESS) {
+    tokenB = WrapperCurrency[chainId]
+  }
+
+  try {
+    return await factory?.methods.getPair(tokenA, tokenB).call()
+  } catch (error) {
+    return error
+  }
 }
 
 const returnSwapDataByMethod = async (
@@ -188,7 +223,7 @@ const swapCallback = async (params) => {
   }
 
   const provider = actions[baseCurrency.toLowerCase()].getWeb3()
-  const router = getRouterContract({ routerAddress, baseCurrency })
+  const router = getContract({ name: 'router', address: routerAddress, baseCurrency })
   const method = returnSwapMethod({ fromToken, toToken, useFeeOnTransfer })
   const swapData = await returnSwapDataByMethod({
     chainId: actions[baseCurrency.toLowerCase()].chainId,
@@ -283,7 +318,7 @@ const returnAddLiquidityData = async (params) => {
   ) {
     const tokenAIsNative = lowerTokenA === constants.ADDRESSES.EVM_COIN_ADDRESS
 
-    method = AddLiquidityMethods.addLiquidityETH
+    method = LiquidityMethods.addLiquidityETH
     value = tokenAIsNative ? amountADesired : amountBDesired
 
     /**
@@ -305,7 +340,7 @@ const returnAddLiquidityData = async (params) => {
       deadline,
     ]
   } else {
-    method = AddLiquidityMethods.addLiquidity
+    method = LiquidityMethods.addLiquidity
     value = null
 
     /**
@@ -357,7 +392,7 @@ const addLiquidityCallback = async (params) => {
     owner,
     deadlinePeriod,
   })
-  const router = getRouterContract({ routerAddress, baseCurrency })
+  const router = getContract({ name: 'router', address: routerAddress, baseCurrency })
   const txData = router.methods[method](...args).encodeABI()
 
   try {
@@ -373,7 +408,8 @@ const addLiquidityCallback = async (params) => {
 }
 
 export default {
-  getRouterContract,
+  getContract,
+  getPairAddress,
   swapCallback,
   addLiquidityCallback,
 }

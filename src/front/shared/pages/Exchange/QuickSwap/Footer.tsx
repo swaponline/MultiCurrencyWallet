@@ -26,7 +26,7 @@ type FooterProps = {
   resetSpendedAmount: () => void
   setBlockReason: (a: BlockReasons) => void
   isProcessBlocking: () => boolean
-  fetchSwapData: () => void
+  fetchSwapAPIData: () => void
   setPending: (a: boolean) => void
   setNeedApprove: (a: boolean) => void
 }
@@ -42,7 +42,7 @@ function Footer(props: FooterProps) {
     resetSpendedAmount,
     isProcessBlocking,
     insufficientBalance,
-    fetchSwapData,
+    fetchSwapAPIData,
     setPending,
     setNeedApprove,
   } = props
@@ -95,7 +95,7 @@ function Footer(props: FooterProps) {
       setPending(false)
       setNeedApprove(false)
 
-      await fetchSwapData()
+      await fetchSwapAPIData()
     } catch (error) {
       reportError(error)
     }
@@ -145,7 +145,7 @@ function Footer(props: FooterProps) {
     setPending(true)
 
     try {
-      const result = await actions.uniswapRouter.swapCallback({
+      const result = await actions.uniswap.swapCallback({
         slippage,
         routerAddress,
         baseCurrency,
