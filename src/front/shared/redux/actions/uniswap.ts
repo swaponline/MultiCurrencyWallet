@@ -1,6 +1,7 @@
 import BigNumber from 'bignumber.js'
 import { abi as FactoryV2ABI } from '@uniswap/v2-periphery/build/IUniswapV2Factory.json'
 import { abi as RouterV2ABI } from '@uniswap/v2-periphery/build/IUniswapV2Router02.json'
+import { abi as PairV2ABI } from '@uniswap/v2-periphery/build/IUniswapV2Pair.json'
 import ethLikeHelper from 'common/helpers/ethLikeHelper'
 import constants from 'common/helpers/constants'
 import utils from 'common/utils'
@@ -24,7 +25,7 @@ enum LiquidityMethods {
 }
 
 type GetContractParams = {
-  name: 'factory' | 'router'
+  name: 'factory' | 'router' | 'pair'
   address: string
   baseCurrency: string
 }
@@ -37,9 +38,21 @@ const wrapCurrency = (chainId: number, currencyAddress: string) => {
 
 const getContract = (params: GetContractParams) => {
   const { name, address, baseCurrency } = params
+  let abi
+
+  switch (name) {
+    case 'factory':
+      abi = FactoryV2ABI
+      break
+    case 'router':
+      abi = RouterV2ABI
+      break
+    case 'pair':
+      abi = PairV2ABI
+  }
 
   return ethLikeHelper[baseCurrency.toLowerCase()]?.getContract({
-    abi: name === 'factory' ? FactoryV2ABI : RouterV2ABI,
+    abi,
     address,
   })
 }
@@ -106,6 +119,28 @@ const getAmountOut = async (params) => {
       .call()
 
     return utils.amount.formatWithoutDecimals(amounts[1], tokenBDecimals)
+  } catch (error) {
+    return error
+  }
+}
+
+const getSecondLiquidityAmount = async (params) => {
+  const { pairAddress, routerAddress, baseCurrency, amountADesired } = params
+
+  const router = getContract({ name: 'router', address: routerAddress, baseCurrency })
+  const pair = getContract({ name: 'pair', address: pairAddress, baseCurrency })
+
+  try {
+    const { reserve0, reserve1 } = await pair.methods.getReserves().call()
+
+    console.log('reserve0: ', reserve0)
+    console.log('reserve1: ', reserve1)
+
+    const amountBOptimal = await router.methods.quote(amountADesired, reserve1, reserve0).call()
+
+    console.log('amountBOptimal: ', amountBOptimal)
+
+    return amountBOptimal
   } catch (error) {
     return error
   }
@@ -446,6 +481,7 @@ export default {
   getContract,
   getPairAddress,
   getAmountOut,
+  getSecondLiquidityAmount,
   swapCallback,
   addLiquidityCallback,
 }

@@ -87,6 +87,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       needApprove: false,
       externalExchangeReference: null,
       externalWindowTimer: null,
+      currentLiquidityPair: null,
       fiat: window.DEFAULT_FIAT || activeFiat,
       fiatAmount: 0,
       currencies: currentCurrencies,
@@ -487,7 +488,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     }
   }
 
-  isPairExist = async () => {
+  updateCurrentPairAddress = async () => {
     const { network, baseChainWallet, fromWallet, toWallet } = this.state
 
     const pairAddress = await actions.uniswap.getPairAddress({
@@ -498,19 +499,17 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       tokenB: toWallet?.contractAddress ?? ADDRESSES.EVM_COIN_ADDRESS,
     })
 
-    console.log('%c isPairExist', 'color:orange;font-size:20px')
-    console.log('this.state: ', this.state)
-    console.log('pairAddress: ', pairAddress)
-
-    return pairAddress !== ZERO_ADDRESS
+    this.setState(() => ({
+      currentLiquidityPair: pairAddress === ZERO_ADDRESS ? null : pairAddress,
+    }))
   }
 
   processingSourceActions = async () => {
-    const { sourceAction } = this.state
-    const isPairExist = await this.isPairExist()
+    await this.updateCurrentPairAddress()
 
-    // can not swap or remove liquidity with a current pair
-    if (!isPairExist && sourceAction !== Actions.AddLiquidity) {
+    const { sourceAction, currentLiquidityPair } = this.state
+
+    if (!currentLiquidityPair && sourceAction !== Actions.AddLiquidity) {
       this.setState(() => ({
         blockReason: BlockReasons.PairDoesNotExist,
       }))
@@ -519,15 +518,16 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
 
     switch (sourceAction) {
       case Actions.Swap:
-        await this.fetchSwapData()
+        await this.fetchAmountOut()
         break
       case Actions.AddLiquidity:
+        await this.fetchLiquidityData()
         break
       case Actions.RemoveLiquidity:
     }
   }
 
-  fetchSwapData = async () => {
+  fetchAmountOut = async () => {
     const { network, baseChainWallet, spendedAmount, fromWallet, toWallet } = this.state
 
     const tokenA = fromWallet.contractAddress ?? EVM_COIN_ADDRESS
@@ -549,16 +549,46 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
 
       this.setState(() => ({
         receivedAmount: amountOut,
-        isPending: false,
       }))
     } catch (error) {
       this.reportError(error)
+    } finally {
+      this.setPending(false)
+    }
+  }
+
+  fetchLiquidityData = async () => {
+    const { network, spendedAmount, baseChainWallet, currentLiquidityPair } = this.state
+
+    this.setPending(true)
+
+    try {
+      const result = await actions.uniswap.getSecondLiquidityAmount({
+        pairAddress: currentLiquidityPair,
+        routerAddress: LIQUIDITY_SOURCE_DATA[network.networkVersion]?.router,
+        baseCurrency: baseChainWallet.currency,
+        amountADesired: spendedAmount,
+      })
+
+      this.setState(() => ({
+        receivedAmount: result,
+      }))
+    } catch (error) {
+      this.reportError(error)
+    } finally {
+      this.setPending(false)
     }
   }
 
   setSpendedAmount = (value) => {
     this.setState(() => ({
       spendedAmount: value,
+    }))
+  }
+
+  setReceivedAmount = (value) => {
+    this.setState(() => ({
+      receivedAmount: value,
     }))
   }
 
@@ -871,6 +901,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       showOrders,
       blockReason,
       slippage,
+      currentLiquidityPair,
       liquidityErrorMessage,
     } = this.state
 
@@ -931,6 +962,8 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
                 <InputForm
                   stateReference={linked}
                   isSourceMode={isSourceMode}
+                  sourceAction={sourceAction}
+                  currentLiquidityPair={currentLiquidityPair}
                   selectCurrency={this.selectCurrency}
                   flipCurrency={this.flipCurrency}
                   openExternalExchange={this.openExternalExchange}

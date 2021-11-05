@@ -11,7 +11,7 @@ import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import Switching from 'components/controls/Switching/Switching'
 import SelectGroup from 'components/SelectGroup'
 import { QuickSwapFormTour } from 'components/Header/WidgetTours'
-import { Direction } from './types'
+import { Direction, Actions } from './types'
 
 const usePrevious = (value) => {
   const ref = useRef()
@@ -27,11 +27,14 @@ function InputForm(props) {
   const {
     stateReference,
     isSourceMode,
+    sourceAction,
     currencies,
     receivedList,
+    currentLiquidityPair,
     spendedAmount,
     spendedCurrency,
     setSpendedAmount,
+    setReceivedAmount,
     receivedCurrency,
     selectCurrency,
     fiat,
@@ -162,13 +165,28 @@ function InputForm(props) {
     onInputDataChange()
   }, [spendedCurrency?.value, receivedCurrency?.value, isSourceMode])
 
-  const handleSpendAmountInput = (value) => {
+  const canNotUseBothInputs =
+    !isSourceMode ||
+    sourceAction === Actions.Swap ||
+    // if we're here, it means we want to add/remove liquidity
+    // and if we have the current pair address we can't set
+    // both amounts of assets, because of the already determined price
+    currentLiquidityPair
+
+  const handleSpendAmount = (value) => {
     setSpendedAmount(value)
-    resetSwapData()
 
     if (!receivedCurrency.notExist && value !== spendedAmount) {
       setFlagForRequest(true)
     }
+
+    // there will be new external data on "every" one of our changes
+    // reset the old ones
+    if (canNotUseBothInputs) resetSwapData()
+  }
+
+  const handleReceiveAmount = (value) => {
+    setReceivedAmount(value)
   }
 
   const supportedCurrencies = ['eth', 'matic']
@@ -177,14 +195,15 @@ function InputForm(props) {
 
   return (
     <form action="">
+      <QuickSwapFormTour isTourOpen={isTourOpen} closeTour={closeTour} />
+
       <div styleName="inputWrapper">
         <SelectGroup
           activeFiat={fiat}
           error={insufficientBalance}
           fiat={fiatValue && fiatValue}
-          inputValueLink={stateReference.spendedAmount.pipe(handleSpendAmountInput)}
+          inputValueLink={stateReference.spendedAmount.pipe(handleSpendAmount)}
           selectedValue={spendedCurrency.value}
-          // label={<FormattedMessage id="MyOrdersYouSend" defaultMessage="You send" />}
           inputId="quickSwapSpendCurrencyInput"
           placeholder="0.00"
           currencies={currencies}
@@ -238,11 +257,10 @@ function InputForm(props) {
 
       <div styleName={`inputWrapper ${receivedCurrency.notExist ? 'disabled' : ''}`}>
         <SelectGroup
-          disabled
+          disabled={canNotUseBothInputs}
           activeFiat={fiat}
-          inputValueLink={stateReference.receivedAmount}
+          inputValueLink={stateReference.receivedAmount.pipe(handleReceiveAmount)}
           selectedValue={receivedCurrency.value}
-          // label={<FormattedMessage id="partial255" defaultMessage="You get" />}
           inputId="quickSwapReceiveCurrencyInput"
           currencies={receivedList}
           inputToolTip={
@@ -262,8 +280,6 @@ function InputForm(props) {
           }}
         />
       </div>
-
-      <QuickSwapFormTour isTourOpen={isTourOpen} closeTour={closeTour} />
     </form>
   )
 }

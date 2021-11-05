@@ -65,6 +65,7 @@ export enum BlockReasons {
 export type ComponentState = {
   externalExchangeReference: null | IUniversalObj
   externalWindowTimer: null | NodeJS.Timeout
+  currentLiquidityPair: null | string
   currencies: CurrencyMenuItem[]
   receivedList: CurrencyMenuItem[]
   baseChainWallet: IUniversalObj
