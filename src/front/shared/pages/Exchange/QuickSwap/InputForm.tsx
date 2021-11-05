@@ -173,8 +173,7 @@ function InputForm(props) {
 
   const supportedCurrencies = ['eth', 'matic']
   const showFiatExchangeBtn =
-    externalConfig.entry === 'mainnet' &&
-    (window.transakApiKey || supportedCurrencies.includes(spendedCurrency.value))
+    window.transakApiKey || supportedCurrencies.includes(spendedCurrency.value)
 
   return (
     <form action="">

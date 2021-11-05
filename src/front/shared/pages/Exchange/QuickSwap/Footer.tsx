@@ -74,9 +74,6 @@ function Footer(props: FooterProps) {
 
   useEffect(() => {
     setRouterAddress(LIQUIDITY_SOURCE_DATA[network.networkVersion]?.router)
-    console.log('%c network update', 'color:green;')
-    console.log('network: ', network)
-    console.log('new routerAddress: ', routerAddress)
   }, [network?.networkVersion])
 
   const [] = useState()
@@ -106,7 +103,7 @@ function Footer(props: FooterProps) {
     }
   }
 
-  const swapWithAPI = async () => {
+  const apiSwap = async () => {
     const baseCurrency = fromWallet.standard ? fromWallet.baseCurrency : fromWallet.currency
     const assetName = fromWallet.standard ? fromWallet.tokenKey : fromWallet.currency
 
@@ -198,20 +195,11 @@ function Footer(props: FooterProps) {
     }
   }
 
-  const isSwapNotAvailable = () => {
-    return !swapData || isPending || !!error
-  }
-
-  const handleSwap = () => {
-    if (isSourceMode && sourceAction === Actions.Swap) {
-      directSwap()
-    } else if (swapData) {
-      swapWithAPI()
-    }
-  }
-
   const doNotProcess = isProcessBlocking()
-  const swapBtnIsDisabled = isSwapNotAvailable() || doNotProcess || insufficientBalance
+
+  const apiSwapIsAvailable =
+    swapData && !isPending && !error && !doNotProcess && !insufficientBalance
+  const directSwapIsAvailable = sourceAction === Actions.Swap && spendedAmount && receivedAmount
 
   return (
     <div styleName="footer">
@@ -223,8 +211,12 @@ function Footer(props: FooterProps) {
             values={{ token: spendedCurrency.name }}
           />
         </Button>
+      ) : isSourceMode ? (
+        <Button pending={isPending} disabled={!directSwapIsAvailable} onClick={directSwap} brand>
+          <FormattedMessage id="swap" defaultMessage="Swap" />
+        </Button>
       ) : (
-        <Button pending={isPending} disabled={swapBtnIsDisabled} onClick={handleSwap} brand>
+        <Button pending={isPending} disabled={!apiSwapIsAvailable} onClick={apiSwap} brand>
           <FormattedMessage id="swap" defaultMessage="Swap" />
         </Button>
       )}

@@ -696,9 +696,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     })
 
     if (link && (externalExchangeReference === null || externalExchangeReference.closed)) {
-      this.setState(() => ({
-        isPending: true,
-      }))
+      this.setPending(true)
 
       const newWindowProxy = window.open(link)
 
@@ -747,9 +745,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       }))
     }
 
-    this.setState(() => ({
-      isPending: false,
-    }))
+    this.setPending(false)
   }
 
   clearWindowTimer = () => {

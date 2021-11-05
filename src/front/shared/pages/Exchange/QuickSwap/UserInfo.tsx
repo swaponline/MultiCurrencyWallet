@@ -160,7 +160,7 @@ function UserInfo(props: ComponentProps) {
       {isSourceMode && (
         <span styleName="indicator">
           <FormattedMessage id="source" defaultMessage="Source" />:{' '}
-          <span>{LIQUIDITY_SOURCE_DATA[network.chainName]?.name}</span>
+          <span>{LIQUIDITY_SOURCE_DATA[network.networkVersion]?.name}</span>
         </span>
       )}
 
