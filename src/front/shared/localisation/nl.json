@@ -5851,7 +5851,7 @@
   },
   {
     "id": "notEnoughAssetsNotice",
-    "message": "Je hebt geen beschikbare activa in dit netwerk om uit te wisselen. Wijzig het netwerk of voeg een aangepast actief toe aan de portemonnee.",
+    "message": "U hebt geen beschikbare assets voor {networkName} om in te wisselen. Wijzig het netwerk of voeg een aangepast actief toe aan de portemonnee.",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
     ]

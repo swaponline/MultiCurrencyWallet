@@ -5866,7 +5866,7 @@
   },
   {
     "id": "notEnoughAssetsNotice",
-    "message": "Sie haben keine verfügbaren Assets in diesem Netzwerk zum Austauschen. Bitte ändern Sie das Netzwerk oder fügen Sie der Brieftasche ein benutzerdefiniertes Asset hinzu.",
+    "message": "Sie haben keine verfügbaren Assets für {networkName} zum Austauschen. Bitte ändern Sie das Netzwerk oder fügen Sie der Brieftasche ein benutzerdefiniertes Asset hinzu.",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
     ]
