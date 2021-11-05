@@ -31,7 +31,6 @@ const SecondStep = (props) => {
   } = props
 
   const _protection = {
-    sms: {},
     pin: {
       btc: true,
     },
@@ -42,7 +41,6 @@ const SecondStep = (props) => {
 
   const _activated = {
     nothing: {},
-    sms: {},
     pin: {},
     g2fa: {},
     multisign: {},
@@ -55,8 +53,6 @@ const SecondStep = (props) => {
 
   if (currencies.BTC) {
     //@ts-ignore
-    _protection.sms.btc = true
-    //@ts-ignore
     _protection.pin.btc = true
     //@ts-ignore
     _protection.g2fa.btc = false
@@ -66,8 +62,6 @@ const SecondStep = (props) => {
     _protection.fingerprint.btc = true
     //@ts-ignore
     _activated.nothing.btc = btcData.balance > 0 || (hiddenCoins.length ? !hiddenCoins.includes('BTC') && !hiddenCoins.includes(`BTC:${btcData.address}`) : false)
-    //@ts-ignore
-    _activated.sms.btc = actions.btcmultisig.checkSMSActivated()
     //@ts-ignore
     _activated.pin.btc = actions.btcmultisig.checkPINActivated()
     //@ts-ignore
@@ -81,7 +75,6 @@ const SecondStep = (props) => {
   const [border, setBorder] = useState({
     color: {
       withoutSecure: false,
-      sms: false,
       pin: false,
       google2FA: false,
       multisignature: false,
@@ -95,7 +88,6 @@ const SecondStep = (props) => {
 
   const [isFingerprintFeatureAsked, setFingerprintFeatureAsked] = useState(false)
   const [isTrivialFeatureAsked, setTrivialFeatureAsked] = useState(false)
-  const [isSmsFeatureAsked, setSmsFeatureAsked] = useState(false)
   const [isPinFeatureAsked, setPinFeatureAsked] = useState(false)
   const [is2FAFeatureAsked, set2FAFeatureAsked] = useState(false)
   const [isMultisigFeatureAsked, setMultisigFeatureAsked] = useState(false)
@@ -191,29 +183,6 @@ const SecondStep = (props) => {
         feedback.createWallet.securitySelected(`${currencyName}-normal`)
       },
     },
-    /*
-    {
-      text: 'SMS',
-      name: 'sms',
-      capture: {
-        en: 'Verify your transactions via SMS code',
-        ru: 'Транзакции подтверждаются кодом по SMS',
-        nl: 'Verifieer uw transacties via SMS code',
-        es: 'Verifique sus transacciones mediante código SMS',
-        pl: 'Zweryfikuj swoje transakcje za pomocą kodu SMS',
-      }[locale],
-      // enabled: _protection.sms[currencyKey],
-      enabled: false, // sms temporarly disabled
-      activated: _activated.sms[currencyKey],
-      onClickHandler: () => {
-        if (isSmsFeatureAsked) {
-          return null
-        }
-        setSmsFeatureAsked(true)
-        feedback.createWallet.securitySelected(`${currencyName}-sms`)
-      },
-    },
-    */
     {
       text: 'PIN',
       name: 'pin',
