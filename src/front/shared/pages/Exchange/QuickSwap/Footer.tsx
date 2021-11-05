@@ -7,7 +7,7 @@ import ADDRESSES from 'common/helpers/constants/ADDRESSES'
 import actions from 'redux/actions'
 import { feedback, externalConfig, constants, transactions, routing } from 'helpers'
 import { ComponentState, BlockReasons, Actions } from './types'
-import { GWEI_DECIMALS, ROUTERS, SEC_PER_MINUTE } from './constants'
+import { GWEI_DECIMALS, COIN_DECIMALS, LIQUIDITY_SOURCE_DATA, SEC_PER_MINUTE } from './constants'
 import Button from 'components/controls/Button/Button'
 
 const returnRouter = (name) => {
@@ -29,6 +29,8 @@ type FooterProps = {
   fetchSwapAPIData: () => void
   setPending: (a: boolean) => void
   setNeedApprove: (a: boolean) => void
+  router: null | IUniversalObj
+  factory: null | IUniversalObj
 }
 
 function Footer(props: FooterProps) {
@@ -45,6 +47,8 @@ function Footer(props: FooterProps) {
     fetchSwapAPIData,
     setPending,
     setNeedApprove,
+    router,
+    factory,
   } = props
   const {
     network,
@@ -57,7 +61,6 @@ function Footer(props: FooterProps) {
     gasPrice,
     needApprove,
     isPending,
-    coinDecimals,
     receivedAmount,
     userDeadline,
     error,
@@ -65,10 +68,12 @@ function Footer(props: FooterProps) {
     liquidityErrorMessage,
   } = parentState
 
-  const [routerAddress, setRouterAddress] = useState<string>(ROUTERS[network.networkVersion])
+  const [routerAddress, setRouterAddress] = useState<string>(
+    LIQUIDITY_SOURCE_DATA[network.networkVersion]?.router
+  )
 
   useEffect(() => {
-    setRouterAddress(ROUTERS[network.networkVersion])
+    setRouterAddress(LIQUIDITY_SOURCE_DATA[network.networkVersion]?.router)
     console.log('%c network update', 'color:green;')
     console.log('network: ', network)
     console.log('new routerAddress: ', routerAddress)
@@ -154,10 +159,10 @@ function Footer(props: FooterProps) {
         fromTokenName: fromWallet.tokenKey ?? '',
         fromToken: fromWallet.isToken ? fromWallet.contractAddress : ADDRESSES.EVM_COIN_ADDRESS,
         sellAmount: spendedAmount,
-        fromTokenDecimals: fromWallet.decimals || coinDecimals,
+        fromTokenDecimals: fromWallet.decimals || COIN_DECIMALS,
         toToken: toWallet.isToken ? toWallet.contractAddress : ADDRESSES.EVM_COIN_ADDRESS,
         buyAmount: receivedAmount,
-        toTokenDecimals: toWallet.decimals || coinDecimals,
+        toTokenDecimals: toWallet.decimals || COIN_DECIMALS,
         deadlinePeriod: userDeadline * SEC_PER_MINUTE,
         useFeeOnTransfer: true,
       })

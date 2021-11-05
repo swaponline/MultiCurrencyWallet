@@ -29,6 +29,12 @@ type GetContractParams = {
   baseCurrency: string
 }
 
+const wrapCurrency = (chainId: number, currencyAddress: string) => {
+  const { WrapperCurrency, EVM_COIN_ADDRESS } = constants.ADDRESSES
+
+  return currencyAddress === EVM_COIN_ADDRESS ? WrapperCurrency[chainId] : currencyAddress
+}
+
 const getContract = (params: GetContractParams) => {
   const { name, address, baseCurrency } = params
 
@@ -56,17 +62,40 @@ const getPairAddress = async (params) => {
     baseCurrency,
   })
 
-  const { WrapperCurrency } = constants.ADDRESSES
-
-  if (tokenA === constants.ADDRESSES.EVM_COIN_ADDRESS) {
-    tokenA = WrapperCurrency[chainId]
-  }
-  if (tokenB === constants.ADDRESSES.EVM_COIN_ADDRESS) {
-    tokenB = WrapperCurrency[chainId]
-  }
+  tokenA = wrapCurrency(chainId, tokenA)
+  tokenB = wrapCurrency(chainId, tokenB)
 
   try {
     return await factory?.methods.getPair(tokenA, tokenB).call()
+  } catch (error) {
+    return error
+  }
+}
+
+const getAmountOut = async (params) => {
+  const {
+    routerAddress,
+    baseCurrency,
+    chainId,
+    tokenA,
+    tokenADecimals,
+    tokenB,
+    tokenBDecimals,
+    amountIn,
+  } = params
+
+  const router = getContract({ name: 'router', address: routerAddress, baseCurrency })
+  const unitAmountIn = utils.amount.formatWithDecimals(amountIn, tokenADecimals)
+  const path = [wrapCurrency(chainId, tokenA), wrapCurrency(chainId, tokenB)]
+
+  try {
+    // use getAmountsOut instead of getAmountOut, because we don't need
+    // to request pair reserves manually for the second method arguments
+    const amounts = await router?.methods
+      .getAmountsOut(`0x${new BigNumber(unitAmountIn).toString(16)}`, path)
+      .call()
+
+    return utils.amount.formatWithoutDecimals(amounts[1], tokenBDecimals)
   } catch (error) {
     return error
   }
@@ -96,16 +125,10 @@ const returnSwapDataByMethod = async (
   if (!SwapMethods[method]) throw new Error('Wrong method')
 
   const chainNumber = Number(chainId)
-  const { WrapperCurrency } = constants.ADDRESSES
 
   // Swaps available only for tokens. Replace native currency with a wrapped one
-  switch (constants.ADDRESSES.EVM_COIN_ADDRESS) {
-    case fromToken.toLowerCase():
-      fromToken = WrapperCurrency[chainNumber]
-      break
-    case toToken.toLowerCase():
-      toToken = WrapperCurrency[chainNumber]
-  }
+  fromToken = wrapCurrency(chainNumber, fromToken)
+  toToken = wrapCurrency(chainNumber, toToken)
 
   const path = [fromToken, toToken]
   const deadline = await getDeadline(provider, deadlinePeriod)
@@ -410,6 +433,7 @@ const addLiquidityCallback = async (params) => {
 export default {
   getContract,
   getPairAddress,
+  getAmountOut,
   swapCallback,
   addLiquidityCallback,
 }

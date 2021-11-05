@@ -8,6 +8,7 @@ import commonUtils from 'common/utils'
 import { AddressFormat, AddressType } from 'domain/address'
 import { metamask, links, constants, localStorage, utils } from 'helpers'
 import actions from 'redux/actions'
+import { LIQUIDITY_SOURCE_DATA } from './constants'
 import { Network, SwapData } from './types'
 import Address from 'components/ui/Address/Address'
 import Copy from 'components/ui/Copy/Copy'
@@ -16,6 +17,7 @@ import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 
 type ComponentProps = {
   history: any
+  isSourceMode: boolean
   slippage: number
   network: Network
   swapData?: SwapData
@@ -31,6 +33,7 @@ type ComponentProps = {
 function UserInfo(props: ComponentProps) {
   const {
     history,
+    isSourceMode,
     slippage,
     network,
     swapData,
@@ -153,6 +156,13 @@ function UserInfo(props: ComponentProps) {
       <span styleName="indicator">
         <FormattedMessage id="network" defaultMessage="Network" />: <span>{network.chainName}</span>
       </span>
+
+      {isSourceMode && (
+        <span styleName="indicator">
+          <FormattedMessage id="source" defaultMessage="Source" />:{' '}
+          <span>{LIQUIDITY_SOURCE_DATA[network.chainName]?.name}</span>
+        </span>
+      )}
 
       <span styleName="indicator">
         <FormattedMessage id="slippageTolerance" defaultMessage="Slippage tolerance" />:

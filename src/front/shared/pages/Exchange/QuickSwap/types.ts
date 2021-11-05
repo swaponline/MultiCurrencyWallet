@@ -68,7 +68,6 @@ export type ComponentState = {
   currencies: CurrencyMenuItem[]
   receivedList: CurrencyMenuItem[]
   baseChainWallet: IUniversalObj
-  baseCurrency: string
   router: null | IUniversalObj
   factory: null | IUniversalObj
   error: IError | null
@@ -96,6 +95,5 @@ export type ComponentState = {
   gasLimit: string
   showOrders: boolean
   blockReason: BlockReasons | undefined
-  coinDecimals: 18
   liquidityErrorMessage: string
 }

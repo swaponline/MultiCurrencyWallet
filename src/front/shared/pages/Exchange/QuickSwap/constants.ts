@@ -6,6 +6,7 @@ export const SOURCE_MODE_SLIPPAGE = {
   FRONTRUN: 10,
 }
 
+export const COIN_DECIMALS = 18
 export const GWEI_DECIMALS = 9
 export const MAX_PERCENT = 100
 export const SEC_PER_MINUTE = 60
@@ -22,14 +23,20 @@ export const API_GAS_LIMITS = {
   MAX_LIMIT: '11_500_000',
 }
 
-export const ROUTERS = {
-  [config.evmNetworks.ETH.networkVersion]: config.swapContract.uniswapRouter,
-  [config.evmNetworks.BNB.networkVersion]: config.swapContract.pancakeswapRouter,
-  [config.evmNetworks.MATIC.networkVersion]: config.swapContract.sushiswapRouter,
-}
-
-export const FACTORIES = {
-  [config.evmNetworks.ETH.networkVersion]: config.swapContract.uniswapFactory,
-  [config.evmNetworks.BNB.networkVersion]: config.swapContract.pancakeswapFactory,
-  [config.evmNetworks.MATIC.networkVersion]: config.swapContract.sushiswapFactory,
+export const LIQUIDITY_SOURCE_DATA = {
+  [config.evmNetworks.ETH.networkVersion]: {
+    name: 'Uniswap V2',
+    router: config.swapContract.uniswapRouter,
+    factory: config.swapContract.uniswapFactory,
+  },
+  [config.evmNetworks.BNB.networkVersion]: {
+    name: 'PancakeSwap',
+    router: config.swapContract.pancakeswapRouter,
+    factory: config.swapContract.pancakeswapFactory,
+  },
+  [config.evmNetworks.MATIC.networkVersion]: {
+    name: 'SushiSwap',
+    router: config.swapContract.sushiswapRouter,
+    factory: config.swapContract.sushiswapFactory,
+  },
 }

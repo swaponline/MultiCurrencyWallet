@@ -146,7 +146,7 @@ function InputForm(props) {
   useEffect(() => {
     let timeoutId: ReturnType<typeof setTimeout> | undefined = undefined
 
-    if (flagForRequest && !isSourceMode) {
+    if (flagForRequest) {
       timeoutId = setTimeout(async () => {
         await onInputDataChange()
         setFlagForRequest(false)

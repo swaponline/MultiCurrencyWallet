@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl'
 import CSSModules from 'react-css-modules'
 import styles from './index.scss'
 import utils from 'common/utils'
-import ADDRESSES, { ZERO_ADDRESS } from 'common/helpers/constants/ADDRESSES'
+import ADDRESSES, { EVM_COIN_ADDRESS, ZERO_ADDRESS } from 'common/helpers/constants/ADDRESSES'
 import { apiLooper, externalConfig, constants, localStorage, metamask, links, user } from 'helpers'
 import { localisedUrl } from 'helpers/locale'
 import actions from 'redux/actions'
@@ -14,10 +14,10 @@ import { ComponentState, Direction, BlockReasons, Sections, Actions } from './ty
 import {
   API_NAME,
   GWEI_DECIMALS,
+  COIN_DECIMALS,
   API_GAS_LIMITS,
   MAX_PERCENT,
-  FACTORIES,
-  ROUTERS,
+  LIQUIDITY_SOURCE_DATA,
 } from './constants'
 import Button from 'components/controls/Button/Button'
 import TokenInstruction from './TokenInstruction'
@@ -94,7 +94,6 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       currencies: currentCurrencies,
       receivedList,
       baseChainWallet,
-      baseCurrency: baseChainWallet.currency,
       spendedCurrency,
       spendedAmount: '',
       fromWallet: fromWallet || {},
@@ -116,7 +115,6 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       gasLimit: '',
       showOrders: false,
       blockReason: undefined,
-      coinDecimals: 18,
     }
   }
 
@@ -222,7 +220,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     }
   }
 
-  updateNetwork = () => {
+  updateNetwork = async () => {
     const { spendedCurrency, fromWallet } = this.state
 
     const baseChainWallet = actions.core.getWallet({
@@ -231,17 +229,15 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     const network =
       externalConfig.evmNetworks[spendedCurrency.blockchain || spendedCurrency.value.toUpperCase()]
 
-    const baseCurrency = fromWallet.standard ? fromWallet.baseCurrency : fromWallet.currency
-
     const router = actions.uniswap.getContract({
       name: 'router',
-      address: ROUTERS[network.networkVersion],
-      baseCurrency,
+      address: LIQUIDITY_SOURCE_DATA[network.networkVersion]?.router,
+      baseCurrency: baseChainWallet.currency,
     })
     const factory = actions.uniswap.getContract({
       name: 'factory',
-      address: FACTORIES[network.networkVersion],
-      baseCurrency,
+      address: LIQUIDITY_SOURCE_DATA[network.networkVersion]?.factory,
+      baseCurrency: baseChainWallet.currency,
     })
 
     this.setState(() => ({
@@ -249,7 +245,6 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       factory,
       network,
       baseChainWallet,
-      baseCurrency,
     }))
   }
 
@@ -351,14 +346,14 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   }
 
   createSwapRequest = (skipValidation = false) => {
-    const { slippage, spendedAmount, fromWallet, toWallet, coinDecimals } = this.state
+    const { slippage, spendedAmount, fromWallet, toWallet } = this.state
 
     const sellToken = fromWallet?.contractAddress ?? ADDRESSES.EVM_COIN_ADDRESS
     const buyToken = toWallet?.contractAddress ?? ADDRESSES.EVM_COIN_ADDRESS
 
     const sellAmount = utils.amount.formatWithDecimals(
       spendedAmount,
-      fromWallet.decimals || coinDecimals
+      fromWallet.decimals || COIN_DECIMALS
     )
 
     const request = [
@@ -397,6 +392,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     this.resetSwapData()
     this.setState(() => ({
       error: null,
+      blockReason: undefined,
     }))
 
     if (doNotUpdate) return
@@ -430,7 +426,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   }
 
   calculateDataFromSwap = async (params) => {
-    const { fromWallet, toWallet, gasLimit, gasPrice, coinDecimals } = this.state
+    const { baseChainWallet, toWallet, gasLimit, gasPrice } = this.state
     const { swap, withoutValidation } = params
 
     // we've had a special error in the previous request. It means there is
@@ -438,8 +434,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     // Usually the swap tx with this parameter fails in the blockchain,
     // because it's not enough gas limit. Estimate it by yourself
     if (withoutValidation) {
-      const baseCurrency = fromWallet.standard ? fromWallet.baseCurrency : fromWallet.currency
-      const estimatedGas = await actions[baseCurrency.toLowerCase()]?.estimateGas(swap)
+      const estimatedGas = await actions[baseChainWallet.currency.toLowerCase()]?.estimateGas(swap)
 
       if (typeof estimatedGas === 'number') {
         swap.gas = estimatedGas
@@ -454,10 +449,10 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       : swap.gasPrice
 
     const weiFee = new BigNumber(customGasLimit).times(customGasPrice)
-    const swapFee = utils.amount.formatWithoutDecimals(weiFee, coinDecimals)
+    const swapFee = utils.amount.formatWithoutDecimals(weiFee, COIN_DECIMALS)
     const receivedAmount = utils.amount.formatWithoutDecimals(
       swap.buyAmount,
-      toWallet?.decimals || coinDecimals
+      toWallet?.decimals || COIN_DECIMALS
     )
 
     this.setState(() => ({
@@ -508,12 +503,12 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   }
 
   isPairExist = async () => {
-    const { network, fromWallet, toWallet, baseCurrency } = this.state
+    const { network, baseChainWallet, fromWallet, toWallet } = this.state
 
     const pairAddress = await actions.uniswap.getPairAddress({
-      baseCurrency,
+      baseCurrency: baseChainWallet.currency,
       chainId: network.networkVersion,
-      factoryAddress: FACTORIES[network.networkVersion],
+      factoryAddress: LIQUIDITY_SOURCE_DATA[network.networkVersion]?.factory,
       tokenA: fromWallet?.contractAddress ?? ADDRESSES.EVM_COIN_ADDRESS,
       tokenB: toWallet?.contractAddress ?? ADDRESSES.EVM_COIN_ADDRESS,
     })
@@ -522,7 +517,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     console.log('this.state: ', this.state)
     console.log('pairAddress: ', pairAddress)
 
-    return pairAddress === ZERO_ADDRESS
+    return pairAddress !== ZERO_ADDRESS
   }
 
   processingSourceActions = async () => {
@@ -539,6 +534,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
 
     switch (sourceAction) {
       case Actions.Swap:
+        await this.fetchSwapData()
         break
       case Actions.AddLiquidity:
         break
@@ -546,7 +542,34 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     }
   }
 
-  fetchSwapData = async () => {}
+  fetchSwapData = async () => {
+    const { network, baseChainWallet, spendedAmount, fromWallet, toWallet } = this.state
+
+    const tokenA = fromWallet.contractAddress ?? EVM_COIN_ADDRESS
+    const tokenB = toWallet.contractAddress ?? EVM_COIN_ADDRESS
+
+    this.setPending(true)
+
+    try {
+      const amountOut = await actions.uniswap.getAmountOut({
+        routerAddress: LIQUIDITY_SOURCE_DATA[network.networkVersion]?.router,
+        baseCurrency: baseChainWallet.currency,
+        chainId: network.networkVersion,
+        tokenA,
+        tokenADecimals: fromWallet.decimals ?? COIN_DECIMALS,
+        amountIn: spendedAmount,
+        tokenB,
+        tokenBDecimals: toWallet.decimals ?? COIN_DECIMALS,
+      })
+
+      this.setState(() => ({
+        receivedAmount: amountOut,
+        isPending: false,
+      }))
+    } catch (error) {
+      this.reportError(error)
+    }
+  }
 
   setSpendedAmount = (value) => {
     this.setState(() => ({
@@ -867,6 +890,8 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       showOrders,
       blockReason,
       slippage,
+      router,
+      factory,
       liquidityErrorMessage,
     } = this.state
 
@@ -953,6 +978,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
 
               <UserInfo
                 history={history}
+                isSourceMode={isSourceMode}
                 slippage={slippage}
                 network={network}
                 swapData={swapData}
@@ -988,6 +1014,8 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
                 fetchSwapAPIData={this.fetchSwapAPIData}
                 setPending={this.setPending}
                 setNeedApprove={this.setNeedApprove}
+                router={router}
+                factory={factory}
               />
             </>
           )}
