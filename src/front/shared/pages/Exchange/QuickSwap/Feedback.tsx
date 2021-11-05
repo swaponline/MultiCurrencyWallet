@@ -2,9 +2,9 @@ import { BigNumber } from 'bignumber.js'
 import { FormattedMessage } from 'react-intl'
 import CSSModules from 'react-css-modules'
 import styles from './index.scss'
-import { SwapBlockReason } from './types'
+import { BlockReasons } from './types'
 
-function NoSwapsReasons(props) {
+function Feedback(props) {
   const {
     blockReason,
     baseChainWallet,
@@ -13,6 +13,7 @@ function NoSwapsReasons(props) {
     wrongNetwork,
     needApprove,
     spendedCurrency,
+    error,
   } = props
 
   return (
@@ -47,28 +48,28 @@ function NoSwapsReasons(props) {
             values={{ token: spendedCurrency.name }}
           />
         </p>
-      ) : blockReason === SwapBlockReason.InsufficientSlippage ? (
+      ) : blockReason === BlockReasons.InsufficientSlippage ? (
         <p styleName="warning">
           <FormattedMessage
             id="insufficientSlippage"
             defaultMessage="Insufficient slippage. Try to increase it"
           />
         </p>
-      ) : blockReason === SwapBlockReason.NoLiquidity ? (
+      ) : blockReason === BlockReasons.NoLiquidity ? (
         <p styleName="neutral">
           <FormattedMessage
             id="insufficientLiquidity"
             defaultMessage="Insufficient pool liquidity"
           />
         </p>
-      ) : blockReason === SwapBlockReason.Liquidity ? (
+      ) : blockReason === BlockReasons.Liquidity ? (
         <p styleName="neutral">
           <FormattedMessage
             id="liquidityPoolProblem"
             defaultMessage="There is some problem with liquidity pool. Try direct swap"
           />
         </p>
-      ) : blockReason === SwapBlockReason.Unknown ? (
+      ) : blockReason === BlockReasons.Unknown ? (
         <p styleName="wrong">
           <FormattedMessage
             id="unknownSwapProblemHasOccurred"
@@ -76,8 +77,10 @@ function NoSwapsReasons(props) {
           />
         </p>
       ) : null}
+
+      {error && <pre styleName="wrong">{error?.message}</pre>}
     </section>
   )
 }
 
-export default CSSModules(NoSwapsReasons, styles, { allowMultiple: true })
+export default CSSModules(Feedback, styles, { allowMultiple: true })

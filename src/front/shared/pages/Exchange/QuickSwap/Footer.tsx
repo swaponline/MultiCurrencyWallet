@@ -6,8 +6,8 @@ import utils from 'common/utils'
 import ADDRESSES from 'common/helpers/constants/ADDRESSES'
 import actions from 'redux/actions'
 import { feedback, externalConfig, constants, transactions, routing } from 'helpers'
-import { ComponentState, BlockReasons } from './types'
-import { GWEI_DECIMALS, ROUTERS } from './constants'
+import { ComponentState, BlockReasons, Actions } from './types'
+import { GWEI_DECIMALS, ROUTERS, SEC_PER_MINUTE } from './constants'
 import Button from 'components/controls/Button/Button'
 
 const returnRouter = (name) => {
@@ -19,6 +19,8 @@ const returnRouter = (name) => {
 type FooterProps = {
   parentState: ComponentState
   insufficientBalance: boolean
+  isSourceMode: boolean
+  sourceAction: Actions
   reportError: (e: IError) => void
   resetSwapData: () => void
   resetSpendedAmount: () => void
@@ -32,6 +34,8 @@ type FooterProps = {
 function Footer(props: FooterProps) {
   const {
     parentState,
+    isSourceMode,
+    sourceAction,
     reportError,
     setBlockReason,
     resetSwapData,
@@ -65,12 +69,11 @@ function Footer(props: FooterProps) {
 
   useEffect(() => {
     setRouterAddress(ROUTERS[network.networkVersion])
+    console.log('%c network update', 'color:green;')
+    console.log('network: ', network)
+    console.log('new routerAddress: ', routerAddress)
   }, [network?.networkVersion])
 
-  const [] = useState()
-  const [] = useState()
-  const [] = useState()
-  const [] = useState()
   const [] = useState()
 
   const approve = async () => {
@@ -135,7 +138,9 @@ function Footer(props: FooterProps) {
 
   const directSwap = async () => {
     const baseCurrency = fromWallet.standard ? fromWallet.baseCurrency : fromWallet.currency
-    const SEC_PER_MINUTE = 60
+
+    console.log('%c direct swap', 'color:orange;')
+    console.log('props: ', props)
 
     setPending(true)
 
@@ -145,8 +150,8 @@ function Footer(props: FooterProps) {
         routerAddress,
         baseCurrency,
         ownerAddress: fromWallet.address,
-        fromTokenStandard: fromWallet.standard || '',
-        fromTokenName: fromWallet.tokenKey || '',
+        fromTokenStandard: fromWallet.standard ?? '',
+        fromTokenName: fromWallet.tokenKey ?? '',
         fromToken: fromWallet.isToken ? fromWallet.contractAddress : ADDRESSES.EVM_COIN_ADDRESS,
         sellAmount: spendedAmount,
         fromTokenDecimals: fromWallet.decimals || coinDecimals,
@@ -154,24 +159,17 @@ function Footer(props: FooterProps) {
         buyAmount: receivedAmount,
         toTokenDecimals: toWallet.decimals || coinDecimals,
         deadlinePeriod: userDeadline * SEC_PER_MINUTE,
-        // while there are no other reasons to use direct swaps without any API errors,
-        // but with errors we have successful swaps only in the case if this parameter in TRUE value
         useFeeOnTransfer: true,
       })
 
       setPending(false)
 
       if (result instanceof Error) {
-        // the error INSUFFICIENT_OUTPUT_AMOUNT means we can increase slippage to get less output
-        // token's amount, but our transaction will probably be successful with this.
-        // Let user know about it
-        const insufficientSlippage = result.message.match(/INSUFFICIENT_OUTPUT_AMOUNT/)
-
-        if (insufficientSlippage) {
+        if (result?.message?.match(/INSUFFICIENT_OUTPUT_AMOUNT/)) {
           setBlockReason(BlockReasons.InsufficientSlippage)
+        } else {
+          reportError(result)
         }
-
-        reportError(result)
       } else if (result?.transactionHash) {
         const txInfoUrl = transactions.getTxRouter(
           fromWallet.standard ? fromWallet.tokenKey : fromWallet.currency,
@@ -186,8 +184,25 @@ function Footer(props: FooterProps) {
     }
   }
 
+  const addLiquidity = () => {
+    if (sourceAction === Actions.AddLiquidity) {
+    }
+  }
+  const removeLiquidity = () => {
+    if (sourceAction === Actions.RemoveLiquidity) {
+    }
+  }
+
   const isSwapNotAvailable = () => {
     return !swapData || isPending || !!error
+  }
+
+  const handleSwap = () => {
+    if (isSourceMode && sourceAction === Actions.Swap) {
+      directSwap()
+    } else if (swapData) {
+      swapWithAPI()
+    }
   }
 
   const doNotProcess = isProcessBlocking()
@@ -204,10 +219,20 @@ function Footer(props: FooterProps) {
           />
         </Button>
       ) : (
-        <Button pending={isPending} disabled={swapBtnIsDisabled} onClick={swapWithAPI} brand>
+        <Button pending={isPending} disabled={swapBtnIsDisabled} onClick={handleSwap} brand>
           <FormattedMessage id="swap" defaultMessage="Swap" />
         </Button>
       )}
+
+      {/*
+        <Button pending={isPending} disabled={} onClick={addLiquidity} brand>
+          <FormattedMessage id="addLiquidity" defaultMessage="Add liquidity" />
+        </Button>
+
+        <Button pending={isPending} disabled={} onClick={removeLiquidity}>
+          <FormattedMessage id="removeLiquidity" defaultMessage="Remove liquidity" />
+        </Button>
+      */}
     </div>
   )
 }

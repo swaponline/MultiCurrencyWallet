@@ -6,18 +6,7 @@ import CSSModules from 'react-css-modules'
 import styles from './index.scss'
 import utils from 'common/utils'
 import ADDRESSES from 'common/helpers/constants/ADDRESSES'
-import {
-  feedback,
-  apiLooper,
-  externalConfig,
-  constants,
-  transactions,
-  localStorage,
-  metamask,
-  links,
-  routing,
-  user,
-} from 'helpers'
+import { apiLooper, externalConfig, constants, localStorage, metamask, links, user } from 'helpers'
 import { localisedUrl } from 'helpers/locale'
 import actions from 'redux/actions'
 import Link from 'local_modules/sw-valuelink'
@@ -30,7 +19,7 @@ import InputForm from './InputForm'
 import SourceActions from './SourceActions'
 import UserInfo from './UserInfo'
 import Settings from './Settings'
-import NoSwapsReasons from './NoSwapsReasons'
+import Feedback from './Feedback'
 import Footer from './Footer'
 import LimitOrders from 'components/LimitOrders'
 
@@ -859,6 +848,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
               stateReference={linked}
               onInputDataChange={this.onInputDataChange}
               resetSwapData={this.resetSwapData}
+              slippage={slippage}
             />
           ) : (
             <>
@@ -904,7 +894,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
                 isPending={isPending}
               />
 
-              <NoSwapsReasons
+              <Feedback
                 wrongNetwork={wrongNetwork}
                 insufficientBalance={insufficientBalance}
                 blockReason={blockReason}
@@ -916,6 +906,8 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
 
               <Footer
                 parentState={this.state}
+                isSourceMode={isSourceMode}
+                sourceAction={sourceAction}
                 reportError={this.reportError}
                 setBlockReason={this.setBlockReason}
                 resetSwapData={this.resetSwapData}

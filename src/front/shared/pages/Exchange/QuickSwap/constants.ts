@@ -23,7 +23,7 @@ export const API_GAS_LIMITS = {
 }
 
 export const ROUTERS = {
-  [config.ETH.networkVersion]: config.swapContract.uniswapRouter,
-  [config.BNB.networkVersion]: config.swapContract.pancakeswapRouter,
-  [config.MATIC.networkVersion]: config.swapContract.sushiswapRouter,
+  [config.evmNetworks.ETH.networkVersion]: config.swapContract.uniswapRouter,
+  [config.evmNetworks.BNB.networkVersion]: config.swapContract.pancakeswapRouter,
+  [config.evmNetworks.MATIC.networkVersion]: config.swapContract.sushiswapRouter,
 }

@@ -1,12 +1,15 @@
+import { useState, useEffect } from 'react'
 import { FormattedMessage } from 'react-intl'
 import CSSModules from 'react-css-modules'
+import commonStyles from './index.scss'
 import styles from './Settings.scss'
 import { inputReplaceCommaWithDot } from 'helpers/domUtils'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
+import { SOURCE_MODE_SLIPPAGE } from './constants'
 import InputRow from './InputRow'
 
 function Settings(props) {
-  const { isSourceMode, stateReference, onInputDataChange, resetSwapData } = props
+  const { isSourceMode, stateReference, onInputDataChange, resetSwapData, slippage } = props
 
   const keyUpHandler = () => {
     setTimeout(onInputDataChange, 300)
@@ -16,6 +19,18 @@ function Settings(props) {
     inputReplaceCommaWithDot(event)
     resetSwapData()
   }
+
+  const [lowSlippage, setLowSlippage] = useState<boolean>(false)
+  const [frontrunSlippageRange, setFrontrunRange] = useState<boolean>(false)
+  const [maxSlippageRange, setMaxSlippageRange] = useState<boolean>(false)
+
+  useEffect(() => {
+    setLowSlippage(slippage < SOURCE_MODE_SLIPPAGE.FAIL)
+    setFrontrunRange(
+      slippage > SOURCE_MODE_SLIPPAGE.FRONTRUN && slippage < SOURCE_MODE_SLIPPAGE.MAX
+    )
+    setMaxSlippageRange(slippage >= SOURCE_MODE_SLIPPAGE.MAX)
+  }, [slippage])
 
   return (
     <section styleName="settings">
@@ -93,8 +108,30 @@ function Settings(props) {
           />
         </>
       )}
+
+      <div styleName="feedbackMessages">
+        {lowSlippage ? (
+          <p styleName="neutral">
+            <FormattedMessage id="transactionMayFail" defaultMessage="Transaction may fail" />
+          </p>
+        ) : frontrunSlippageRange ? (
+          <p styleName="neutral">
+            <FormattedMessage
+              id="transactionMayBeFrontrun"
+              defaultMessage="Transaction may be frontrun"
+            />
+          </p>
+        ) : maxSlippageRange ? (
+          <p styleName="wrong">
+            <FormattedMessage
+              id="invalidSlippagePercent"
+              defaultMessage="Invalid slippage percent"
+            />
+          </p>
+        ) : null}
+      </div>
     </section>
   )
 }
 
-export default CSSModules(Settings, styles, { allowMultiple: true })
+export default CSSModules(Settings, { ...styles, ...commonStyles }, { allowMultiple: true })
