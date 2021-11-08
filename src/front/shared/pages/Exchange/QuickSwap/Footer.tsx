@@ -6,10 +6,11 @@ import utils from 'common/utils'
 import ADDRESSES from 'common/helpers/constants/ADDRESSES'
 import actions from 'redux/actions'
 import { feedback, externalConfig, constants, transactions, routing } from 'helpers'
-import { ComponentState, BlockReasons, Actions } from './types'
+import { ComponentState, BlockReasons, Actions, Direction } from './types'
 import { GWEI_DECIMALS, COIN_DECIMALS, LIQUIDITY_SOURCE_DATA, SEC_PER_MINUTE } from './constants'
 import Button from 'components/controls/Button/Button'
 
+// TODO: for liquidity errors from API
 const returnRouter = (name) => {
   if (name.match(/pancake/gim)) {
     return externalConfig.swapContract.pancakeswapRouter
@@ -26,9 +27,8 @@ type FooterProps = {
   resetSpendedAmount: () => void
   setBlockReason: (a: BlockReasons) => void
   isProcessBlocking: () => boolean
-  fetchSwapAPIData: () => void
   setPending: (a: boolean) => void
-  setNeedApprove: (a: boolean) => void
+  onInputDataChange: () => void
   baseChainWallet: IUniversalObj
 }
 
@@ -43,21 +43,22 @@ function Footer(props: FooterProps) {
     resetSpendedAmount,
     isProcessBlocking,
     insufficientBalance,
-    fetchSwapAPIData,
     setPending,
-    setNeedApprove,
     baseChainWallet,
+    onInputDataChange,
   } = props
   const {
     network,
     spendedAmount,
     fromWallet,
     spendedCurrency,
+    receivedCurrency,
     toWallet,
     swapData,
     gasLimit,
     gasPrice,
-    needApprove,
+    needApproveA,
+    needApproveB,
     isPending,
     receivedAmount,
     userDeadline,
@@ -66,26 +67,28 @@ function Footer(props: FooterProps) {
     liquidityErrorMessage,
   } = parentState
 
-  const [routerAddress, setRouterAddress] = useState<string>(
-    LIQUIDITY_SOURCE_DATA[network.networkVersion]?.router
-  )
+  const approve = async (direction) => {
+    const spender = isSourceMode
+      ? LIQUIDITY_SOURCE_DATA[network.networkVersion]?.router
+      : externalConfig.swapContract.zerox
 
-  useEffect(() => {
-    setRouterAddress(LIQUIDITY_SOURCE_DATA[network.networkVersion]?.router)
-  }, [network?.networkVersion])
+    let standard = fromWallet.standard
+    let name = fromWallet.tokenKey
+    let amount = spendedAmount
 
-  const [] = useState()
+    if (direction === Direction.Receive) {
+      standard = toWallet.standard
+      name = toWallet.tokenKey
+      amount = receivedAmount
+    }
 
-  const approve = async () => {
     setPending(true)
 
     try {
-      const transactionHash = await actions.oneinch.approveToken({
-        chainId: network.networkVersion,
-        amount: spendedAmount,
-        name: fromWallet.tokenKey,
-        standard: fromWallet.standard,
-        spender: externalConfig.swapContract.zerox,
+      const transactionHash = await actions[standard].approve({
+        to: spender,
+        name,
+        amount,
       })
 
       actions.notifications.show(constants.notifications.Transaction, {
@@ -93,9 +96,7 @@ function Footer(props: FooterProps) {
       })
 
       setPending(false)
-      setNeedApprove(false)
-
-      await fetchSwapAPIData()
+      await onInputDataChange()
     } catch (error) {
       reportError(error)
     }
@@ -152,11 +153,9 @@ function Footer(props: FooterProps) {
     try {
       const result = await actions.uniswap.swapCallback({
         slippage,
-        routerAddress,
+        routerAddress: LIQUIDITY_SOURCE_DATA[network.networkVersion]?.router,
         baseCurrency,
         owner: fromWallet.address,
-        fromTokenStandard: fromWallet.standard ?? '',
-        fromTokenName: fromWallet.tokenKey ?? '',
         fromToken: fromWallet.contractAddress ?? ADDRESSES.EVM_COIN_ADDRESS,
         sellAmount: spendedAmount,
         fromTokenDecimals: fromWallet.decimals ?? COIN_DECIMALS,
@@ -206,8 +205,6 @@ function Footer(props: FooterProps) {
         baseCurrency: baseChainWallet.currency,
         slippage,
         tokenA: fromWallet.contractAddress ?? ADDRESSES.EVM_COIN_ADDRESS,
-        tokenAName: fromWallet.tokenKey ?? '',
-        tokenAStandard: fromWallet.standard ?? '',
         tokenADecimals: fromWallet.decimals ?? COIN_DECIMALS,
         amountADesired: spendedAmount,
         tokenB: toWallet.contractAddress ?? ADDRESSES.EVM_COIN_ADDRESS,
@@ -232,10 +229,9 @@ function Footer(props: FooterProps) {
     }
   }
 
-  // const removeLiquidity = () => {
-  //   if (sourceAction === Actions.RemoveLiquidity) {
-  //   }
-  // }
+  const removeLiquidity = () => {
+    if (sourceAction !== Actions.RemoveLiquidity || !isSourceMode) return
+  }
 
   const doNotProcess = isProcessBlocking()
 
@@ -243,20 +239,44 @@ function Footer(props: FooterProps) {
     isPending || !!error || insufficientBalance || !spendedAmount || !receivedAmount
 
   const apiSwapIsAvailable = swapData && !doNotProcess && !commonBlockReasons
-  const directSwapIsAvailable = !commonBlockReasons
-  const addLiquidityIsAvailable = !commonBlockReasons
+  const directSwapIsAvailable = !commonBlockReasons && !needApproveA
+  const addLiquidityIsAvailable = !commonBlockReasons && !needApproveA && !needApproveB
+  const removeLiquidityIsAvailable = !commonBlockReasons
 
   return (
     <div styleName="footer">
-      {needApprove ? (
-        <Button pending={isPending} disabled={doNotProcess} onClick={approve} brand>
+      {needApproveA && (
+        <Button
+          pending={isPending}
+          disabled={doNotProcess}
+          onClick={() => approve(Direction.Spend)}
+          brand
+        >
           <FormattedMessage
             id="FormattedMessageIdApprove"
             defaultMessage="Approve {token}"
             values={{ token: spendedCurrency.name }}
           />
         </Button>
-      ) : !isSourceMode ? (
+      )}
+      {/* we need to approve the second token only for liquidity addition.
+      The router need to pick up both of our assets */}
+      {needApproveB && isSourceMode && sourceAction === Actions.AddLiquidity && (
+        <Button
+          pending={isPending}
+          disabled={doNotProcess}
+          onClick={() => approve(Direction.Receive)}
+          brand
+        >
+          <FormattedMessage
+            id="FormattedMessageIdApprove"
+            defaultMessage="Approve {token}"
+            values={{ token: receivedCurrency.name }}
+          />
+        </Button>
+      )}
+
+      {!isSourceMode ? (
         <Button pending={isPending} disabled={!apiSwapIsAvailable} onClick={apiSwap} brand>
           <FormattedMessage id="swap" defaultMessage="Swap" />
         </Button>
@@ -273,11 +293,16 @@ function Footer(props: FooterProps) {
         >
           <FormattedMessage id="addLiquidity" defaultMessage="Add liquidity" />
         </Button>
-      ) : // ) : sourceAction === Actions.RemoveLiquidity ? (
-      //   <Button pending={isPending} disabled={} onClick={removeLiquidity}>
-      //     <FormattedMessage id="removeLiquidity" defaultMessage="Remove liquidity" />
-      //   </Button>
-      null}
+      ) : sourceAction === Actions.RemoveLiquidity ? (
+        <Button
+          pending={isPending}
+          disabled={!removeLiquidityIsAvailable}
+          onClick={removeLiquidity}
+          brand
+        >
+          <FormattedMessage id="removeLiquidity" defaultMessage="Remove liquidity" />
+        </Button>
+      ) : null}
     </div>
   )
 }

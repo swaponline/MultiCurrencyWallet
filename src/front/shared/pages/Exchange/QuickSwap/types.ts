@@ -73,9 +73,9 @@ export type ComponentState = {
   activeSection: Sections
   isPending: boolean
   isSourceMode: boolean
-  needApprove: boolean
+  needApproveA: boolean
+  needApproveB: boolean
   fiat: string
-  fiatAmount: number
   spendedCurrency: CurrencyMenuItem
   spendedAmount: string
   fromWallet: IUniversalObj

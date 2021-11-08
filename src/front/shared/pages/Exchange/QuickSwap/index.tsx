@@ -5,8 +5,19 @@ import { FormattedMessage } from 'react-intl'
 import CSSModules from 'react-css-modules'
 import styles from './index.scss'
 import utils from 'common/utils'
+import erc20Like from 'common/erc20Like'
 import ADDRESSES, { EVM_COIN_ADDRESS, ZERO_ADDRESS } from 'common/helpers/constants/ADDRESSES'
-import { apiLooper, externalConfig, constants, localStorage, metamask, links, user } from 'helpers'
+import {
+  apiLooper,
+  externalConfig,
+  constants,
+  localStorage,
+  metamask,
+  links,
+  user,
+  cacheStorageGet,
+  cacheStorageSet,
+} from 'helpers'
 import { localisedUrl } from 'helpers/locale'
 import actions from 'redux/actions'
 import Link from 'local_modules/sw-valuelink'
@@ -84,12 +95,12 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       isPending: false,
       isSourceMode: activeSection === Sections.Source,
       activeSection,
-      needApprove: false,
+      needApproveA: false,
+      needApproveB: false,
       externalExchangeReference: null,
       externalWindowTimer: null,
       currentLiquidityPair: null,
       fiat: window.DEFAULT_FIAT || activeFiat,
-      fiatAmount: 0,
       currencies: currentCurrencies,
       receivedList,
       baseChainWallet,
@@ -228,10 +239,15 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     const network =
       externalConfig.evmNetworks[spendedCurrency.blockchain || spendedCurrency.value.toUpperCase()]
 
-    this.setState(() => ({
-      network,
-      baseChainWallet,
-    }))
+    this.setState(
+      () => ({
+        network,
+        baseChainWallet,
+      }),
+      async () => {
+        await this.updateCurrentPairAddress()
+      }
+    )
   }
 
   updateWallets = () => {
@@ -295,12 +311,17 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       ]
     }
 
-    this.setState(() => ({
-      receivedList,
-      receivedCurrency: receivedList[0],
-      toWallet: actions.core.getWallet({ currency: receivedList[0].value }),
-    }))
-    this.resetSwapData()
+    this.setState(
+      () => ({
+        receivedList,
+        receivedCurrency: receivedList[0],
+        toWallet: actions.core.getWallet({ currency: receivedList[0].value }),
+      }),
+      async () => {
+        this.resetSwapData()
+        await this.updateCurrentPairAddress()
+      }
+    )
   }
 
   reportError = (error: IError) => {
@@ -310,15 +331,15 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     const notEnoughBalance = error.message?.match(/(N|n)ot enough .* balance/)
 
     if (possibleNoLiquidity) {
-      this.setState(() => ({ blockReason: BlockReasons.NoLiquidity }))
+      this.setBlockReason(BlockReasons.NoLiquidity)
     } else if (insufficientSlippage) {
-      this.setState(() => ({ blockReason: BlockReasons.InsufficientSlippage }))
+      this.setBlockReason(BlockReasons.InsufficientSlippage)
     } else if (notEnoughBalance) {
-      this.setState(() => ({ blockReason: BlockReasons.NoBalance }))
+      this.setBlockReason(BlockReasons.NoBalance)
     } else if (liquidityErrorMessage) {
-      this.setState(() => ({ blockReason: BlockReasons.Liquidity }))
+      this.setBlockReason(BlockReasons.Liquidity)
     } else {
-      this.setState(() => ({ blockReason: BlockReasons.Unknown }))
+      this.setBlockReason(BlockReasons.Unknown)
 
       console.group('%c Swap', 'color: red;')
       console.error(error)
@@ -366,20 +387,28 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   }
 
   onInputDataChange = async () => {
-    const { activeSection } = this.state
+    const { activeSection, sourceAction, currentLiquidityPair } = this.state
 
-    if (activeSection === Sections.Aggregator) {
-      await this.checkTokenApprove()
+    await this.checkApprove(Direction.Spend)
+
+    if (activeSection === Sections.Source && sourceAction === Actions.AddLiquidity) {
+      await this.checkApprove(Direction.Receive)
     }
 
-    const { needApprove } = this.state
-    const doNotUpdate = this.isProcessBlocking() || needApprove
+    if (
+      activeSection === Sections.Source &&
+      sourceAction !== Actions.AddLiquidity &&
+      currentLiquidityPair
+    ) {
+      this.resetSwapData()
+    }
 
-    this.resetSwapData()
     this.setState(() => ({
       error: null,
-      blockReason: undefined,
     }))
+
+    const { needApproveA } = this.state
+    const doNotUpdate = this.isProcessBlocking() || needApproveA
 
     if (doNotUpdate) return
 
@@ -490,31 +519,45 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
 
   updateCurrentPairAddress = async () => {
     const { network, baseChainWallet, fromWallet, toWallet } = this.state
+    const tokenA = fromWallet?.contractAddress ?? ADDRESSES.EVM_COIN_ADDRESS
+    const tokenB = toWallet?.contractAddress ?? ADDRESSES.EVM_COIN_ADDRESS
 
-    const pairAddress = await actions.uniswap.getPairAddress({
-      baseCurrency: baseChainWallet.currency,
-      chainId: network.networkVersion,
-      factoryAddress: LIQUIDITY_SOURCE_DATA[network.networkVersion]?.factory,
-      tokenA: fromWallet?.contractAddress ?? ADDRESSES.EVM_COIN_ADDRESS,
-      tokenB: toWallet?.contractAddress ?? ADDRESSES.EVM_COIN_ADDRESS,
-    })
+    let pairAddress = cacheStorageGet(
+      'quickswapLiquidityPair',
+      `${externalConfig.entry}_${tokenA}_${tokenB}`
+    )
+
+    if (!pairAddress) {
+      pairAddress = await actions.uniswap.getPairAddress({
+        baseCurrency: baseChainWallet.currency,
+        chainId: network.networkVersion,
+        factoryAddress: LIQUIDITY_SOURCE_DATA[network.networkVersion]?.factory,
+        tokenA,
+        tokenB,
+      })
+
+      const SECONDS = 300
+
+      cacheStorageSet(
+        'quickswapLiquidityPair',
+        `${externalConfig.entry}_${tokenA}_${tokenB}`,
+        pairAddress,
+        SECONDS
+      )
+    }
+
+    const noLiquidityPair = pairAddress === ZERO_ADDRESS
 
     this.setState(() => ({
-      currentLiquidityPair: pairAddress === ZERO_ADDRESS ? null : pairAddress,
+      currentLiquidityPair: noLiquidityPair ? null : pairAddress,
+      blockReason: noLiquidityPair ? BlockReasons.PairDoesNotExist : undefined,
     }))
   }
 
   processingSourceActions = async () => {
-    await this.updateCurrentPairAddress()
-
     const { sourceAction, currentLiquidityPair } = this.state
 
-    if (!currentLiquidityPair && sourceAction !== Actions.AddLiquidity) {
-      this.setState(() => ({
-        blockReason: BlockReasons.PairDoesNotExist,
-      }))
-      return
-    }
+    if (!currentLiquidityPair) return
 
     switch (sourceAction) {
       case Actions.Swap:
@@ -591,12 +634,6 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     }))
   }
 
-  setReceivedAmount = (value) => {
-    this.setState(() => ({
-      receivedAmount: value,
-    }))
-  }
-
   resetSwapData = () => {
     this.setState(() => ({
       receivedAmount: '',
@@ -604,27 +641,41 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     }))
   }
 
-  checkTokenApprove = async () => {
-    const { spendedAmount, fromWallet } = this.state
+  checkApprove = async (direction) => {
+    const { network, isSourceMode, spendedAmount, receivedAmount, fromWallet, toWallet } =
+      this.state
 
-    if (!fromWallet.isToken) {
-      this.setState(() => ({
-        needApprove: false,
-      }))
+    let amount = spendedAmount
+    let wallet = fromWallet
+    const spender = isSourceMode
+      ? LIQUIDITY_SOURCE_DATA[network.networkVersion]?.router
+      : externalConfig.swapContract.zerox
+
+    if (direction === Direction.Receive) {
+      amount = receivedAmount
+      wallet = toWallet
+    }
+
+    if (!wallet.isToken) {
+      this.setNeedApprove(direction, false)
     } else {
-      const { standard, address, contractAddress, decimals } = fromWallet
-
-      const allowance = await actions.oneinch.fetchTokenAllowance({
+      const { standard, address, contractAddress, decimals } = wallet
+      const allowance = await erc20Like[standard].checkAllowance({
         contract: contractAddress,
         owner: address,
-        standard,
         decimals,
-        spender: externalConfig.swapContract.zerox,
+        spender,
       })
 
-      this.setState(() => ({
-        needApprove: new BigNumber(spendedAmount).isGreaterThan(allowance),
-      }))
+      this.setNeedApprove(direction, new BigNumber(amount).isGreaterThan(allowance))
+    }
+  }
+
+  setNeedApprove = (direction, value) => {
+    if (direction === Direction.Spend) {
+      this.setState(() => ({ needApproveA: value }))
+    } else {
+      this.setState(() => ({ needApproveB: value }))
     }
   }
 
@@ -680,6 +731,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
         toWallet: actions.core.getWallet({ currency: receivedCurrency.value }),
       }),
       async () => {
+        await this.updateCurrentPairAddress()
         await this.onInputDataChange()
       }
     )
@@ -806,20 +858,12 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   }
 
   mnemonicIsSaved = () => {
-    const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
-
-    return mnemonic === '-'
+    return localStorage.getItem(constants.privateKeyNames.twentywords) === '-'
   }
 
   setPending = (value: boolean) => {
     this.setState(() => ({
       isPending: value,
-    }))
-  }
-
-  setNeedApprove = (value) => {
-    this.setState(() => ({
-      needApprove: value,
     }))
   }
 
@@ -893,7 +937,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       baseChainWallet,
       isPending,
       isSourceMode,
-      needApprove,
+      needApproveA,
       fiat,
       spendedAmount,
       spendedCurrency,
@@ -915,7 +959,6 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
 
     const linked = Link.all(
       this,
-      'fiatAmount',
       'spendedAmount',
       'receivedAmount',
       'slippage',
@@ -1017,7 +1060,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
                 blockReason={blockReason}
                 baseChainWallet={baseChainWallet}
                 spendedAmount={spendedAmount}
-                needApprove={needApprove}
+                needApproveA={needApproveA}
                 spendedCurrency={spendedCurrency}
               />
 
@@ -1031,9 +1074,8 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
                 resetSpendedAmount={this.resetSpendedAmount}
                 isProcessBlocking={this.isProcessBlocking}
                 insufficientBalance={insufficientBalance}
-                fetchSwapAPIData={this.fetchSwapAPIData}
                 setPending={this.setPending}
-                setNeedApprove={this.setNeedApprove}
+                onInputDataChange={this.onInputDataChange}
                 baseChainWallet={baseChainWallet}
               />
             </>

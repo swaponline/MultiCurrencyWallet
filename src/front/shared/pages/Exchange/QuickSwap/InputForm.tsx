@@ -3,7 +3,7 @@ import { FormattedMessage } from 'react-intl'
 import { connect } from 'redaction'
 import CSSModules from 'react-css-modules'
 import styles from './index.scss'
-import { utils, localStorage, externalConfig } from 'helpers'
+import { utils, localStorage } from 'helpers'
 import actions from 'redux/actions'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 import Button from 'components/controls/Button/Button'
@@ -34,7 +34,6 @@ function InputForm(props) {
     spendedAmount,
     spendedCurrency,
     setSpendedAmount,
-    setReceivedAmount,
     receivedCurrency,
     selectCurrency,
     fiat,
@@ -159,7 +158,7 @@ function InputForm(props) {
     return () => {
       if (timeoutId) clearTimeout(timeoutId)
     }
-  })
+  }, [flagForRequest])
 
   useEffect(() => {
     onInputDataChange()
@@ -167,7 +166,7 @@ function InputForm(props) {
 
   const canNotUseBothInputs =
     !isSourceMode ||
-    sourceAction === Actions.Swap ||
+    sourceAction !== Actions.AddLiquidity ||
     // if we're here, it means we want to add/remove liquidity
     // and if we have the current pair address we can't set
     // both amounts of assets, because of the already determined price
@@ -183,10 +182,6 @@ function InputForm(props) {
     // there will be new external data on "every" one of our changes
     // reset the old ones
     if (canNotUseBothInputs) resetSwapData()
-  }
-
-  const handleReceiveAmount = (value) => {
-    setReceivedAmount(value)
   }
 
   const supportedCurrencies = ['eth', 'matic']
@@ -259,7 +254,7 @@ function InputForm(props) {
         <SelectGroup
           disabled={canNotUseBothInputs}
           activeFiat={fiat}
-          inputValueLink={stateReference.receivedAmount.pipe(handleReceiveAmount)}
+          inputValueLink={stateReference.receivedAmount}
           selectedValue={receivedCurrency.value}
           inputId="quickSwapReceiveCurrencyInput"
           currencies={receivedList}

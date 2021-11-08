@@ -5,6 +5,7 @@ import { abi as PairV2ABI } from '@uniswap/v2-periphery/build/IUniswapV2Pair.jso
 import ethLikeHelper from 'common/helpers/ethLikeHelper'
 import constants from 'common/helpers/constants'
 import utils from 'common/utils'
+import erc20Like from 'common/erc20Like'
 import actions from 'redux/actions'
 
 enum SwapMethods {
@@ -136,20 +137,33 @@ const getLiquidityAmountForAssetB = async (params) => {
   } = params
   let { tokenA } = params
 
+  console.log('%c getLiquidityAmountForAssetB', 'color:orange;font-size:20px')
+
   tokenA = wrapCurrency(chainId, tokenA)
 
   const router = getContract({ name: 'router', address: routerAddress, baseCurrency })
   const pair = getContract({ name: 'pair', address: pairAddress, baseCurrency })
+
+  console.log('tokenA: ', tokenA)
+  console.log('router: ', router)
+  console.log('pair: ', pair)
 
   try {
     const token1 = await pair.methods.token1().call()
     const { reserve0, reserve1 } = await pair.methods.getReserves().call()
     const unitAmountA = utils.amount.formatWithDecimals(amountADesired, tokenADecimals)
 
+    console.log('token1: ', token1)
+    console.log('reserve1: ', reserve1)
+    console.log('reserve0: ', reserve0)
+
     const reservesOrder =
       tokenA.toLowerCase() === token1.toLowerCase() ? [reserve1, reserve0] : [reserve0, reserve1]
 
     const tokenBAmount = await router.methods.quote(unitAmountA, ...reservesOrder).call()
+
+    console.log('reservesOrder: ', reservesOrder)
+    console.log('tokenBAmount: ', tokenBAmount)
 
     return utils.amount.formatWithoutDecimals(tokenBAmount, tokenBDecimals)
   } catch (error) {
@@ -247,12 +261,11 @@ const returnSwapMethod = (params) => {
 const checkAndApproveToken = async (params) => {
   const { standard, token, owner, decimals, spender, amount, tokenName } = params
 
-  const allowance = await actions.oneinch.fetchTokenAllowance({
+  const allowance = await erc20Like[standard].checkAllowance({
     contract: token,
-    standard,
-    owner,
     decimals,
     spender,
+    owner,
   })
 
   return new Promise(async (res, rej) => {
@@ -260,7 +273,7 @@ const checkAndApproveToken = async (params) => {
       const result = await actions[standard].approve({
         name: tokenName,
         to: spender,
-        amount: amount,
+        amount,
       })
 
       return result instanceof Error ? rej(result) : res(result)
@@ -283,58 +296,28 @@ const swapCallback = async (params) => {
     slippage,
     sellAmount,
     buyAmount,
-    fromTokenStandard,
-    fromTokenName,
     waitReceipt = false,
     useFeeOnTransfer,
   } = params
 
-  if (!deadlinePeriod) {
-    throw new Error('No deadline period')
-  }
-
-  const provider = actions[baseCurrency.toLowerCase()].getWeb3()
-  const router = getContract({ name: 'router', address: routerAddress, baseCurrency })
-  const method = returnSwapMethod({ fromToken, toToken, useFeeOnTransfer })
-  const swapData = await returnSwapDataByMethod({
-    chainId: actions[baseCurrency.toLowerCase()].chainId,
-    slippage,
-    provider,
-    method,
-    fromToken,
-    fromTokenDecimals,
-    toToken,
-    toTokenDecimals,
-    owner,
-    deadlinePeriod,
-    sellAmount,
-    buyAmount,
-  })
-
-  if (!router) {
-    throw new Error('No router contract found')
-  } else if (router[method]) {
-    throw new Error('No such method in the router contract')
-  } else if (!swapData.args.length) {
-    throw new Error('No arguments')
-  }
-
-  // TODO: we need to approve both tokens
-
   try {
-    if (fromTokenStandard && fromToken.toLowerCase() !== constants.ADDRESSES.EVM_COIN_ADDRESS) {
-      const result = await checkAndApproveToken({
-        tokenName: fromTokenName,
-        amount: sellAmount,
-        standard: fromTokenStandard,
-        token: fromToken,
-        owner,
-        decimals: fromTokenDecimals,
-        spender: routerAddress,
-      })
-
-      if (!result) return result
-    }
+    const provider = actions[baseCurrency.toLowerCase()].getWeb3()
+    const router = getContract({ name: 'router', address: routerAddress, baseCurrency })
+    const method = returnSwapMethod({ fromToken, toToken, useFeeOnTransfer })
+    const swapData = await returnSwapDataByMethod({
+      chainId: actions[baseCurrency.toLowerCase()].chainId,
+      slippage,
+      provider,
+      method,
+      fromToken,
+      fromTokenDecimals,
+      toToken,
+      toTokenDecimals,
+      owner,
+      deadlinePeriod,
+      sellAmount,
+      buyAmount,
+    })
 
     const txData = router.methods[method](...swapData.args).encodeABI()
 
@@ -375,23 +358,10 @@ const returnAddLiquidityData = async (params) => {
     throw new Error('Two native coins')
   }
 
-  // TODO: add tokens approve
-  // * for both tokens
-  // * or just for one of them if the second one is wrapped currency
-
-  /*
-  ! If a pool for the passed token and WETH does not exists,
-  ! one is created automatically, and exactly amountTokenDesired/msg.value
-  ! tokens are added.
-  */
-
   const { formatWithDecimals, toHexNumber } = utils.amount
   const deadline = await getDeadline(provider, deadlinePeriod)
   const unitAmountADesired = formatWithDecimals(amountADesired, tokenADecimals)
   const unitAmountBDesired = formatWithDecimals(amountBDesired, tokenBDecimals)
-
-  // ! Drop slippage percent if it's first liquidity addition
-  // ? check a pool existence manually in this function ?
 
   const amountASlippageRange = getSlippageRange(
     slippage,
@@ -451,11 +421,8 @@ const addLiquidityCallback = async (params) => {
   const {
     routerAddress,
     baseCurrency,
-    slippage,
     waitReceipt = false,
     tokenA,
-    tokenAName,
-    tokenAStandard,
     tokenADecimals,
     amountADesired,
     tokenB,
@@ -464,6 +431,16 @@ const addLiquidityCallback = async (params) => {
     owner,
     deadlinePeriod,
   } = params
+  let { slippage } = params
+
+  /*
+  ! If a pool for the passed assets does not exists,
+  ! one is created automatically, and exactly amountTokenDesired/msg.value
+  ! tokens are added.
+  */
+
+  // ! Drop slippage percent if it's first liquidity addition
+  // ? check a pool existence manually in this function ?
 
   const provider = actions[baseCurrency.toLowerCase()].getWeb3()
   const { method, args, value } = await returnAddLiquidityData({
@@ -482,20 +459,6 @@ const addLiquidityCallback = async (params) => {
   const txData = router.methods[method](...args).encodeABI()
 
   try {
-    if (tokenAStandard && tokenA.toLowerCase() !== constants.ADDRESSES.EVM_COIN_ADDRESS) {
-      const result = await checkAndApproveToken({
-        tokenName: tokenAName,
-        amount: amountADesired,
-        standard: tokenAStandard,
-        token: tokenA,
-        owner,
-        decimals: tokenADecimals,
-        spender: routerAddress,
-      })
-
-      if (!result) return result
-    }
-
     return actions[baseCurrency.toLowerCase()].send({
       to: routerAddress,
       data: txData,

@@ -58,7 +58,6 @@ function Settings(props) {
       {isSourceMode && (
         <InputRow
           margin
-          onKeyUp={(event) => this.updateInputValue(event, 'userDeadline')}
           onKeyDown={inputReplaceCommaWithDot}
           valueLink={stateReference.userDeadline}
           labelMessage={

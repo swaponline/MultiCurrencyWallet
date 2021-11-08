@@ -11,7 +11,7 @@ function Feedback(props) {
     spendedAmount,
     insufficientBalance,
     wrongNetwork,
-    needApprove,
+    needApproveA,
     spendedCurrency,
     error,
   } = props
@@ -21,6 +21,13 @@ function Feedback(props) {
       {wrongNetwork ? (
         <p styleName="wrong">
           <FormattedMessage id="incorrectNetwork" defaultMessage="Please choose correct network" />
+        </p>
+      ) : blockReason === BlockReasons.PairDoesNotExist ? (
+        <p styleName="neutral">
+          <FormattedMessage
+            id="liquidityPairDoesNotExist"
+            defaultMessage="This pair does not have liquidity. You can create a new one and be the first liquidity provider"
+          />
         </p>
       ) : !spendedAmount ? (
         <p styleName="neutral">
@@ -40,7 +47,7 @@ function Feedback(props) {
             defaultMessage="Please top up your balance before you start the swap"
           />
         </p>
-      ) : needApprove ? (
+      ) : needApproveA ? (
         <p styleName="warning">
           <FormattedMessage
             id="approveTokenFirst"
@@ -67,13 +74,6 @@ function Feedback(props) {
           <FormattedMessage
             id="liquidityPoolProblem"
             defaultMessage="There is some problem with liquidity pool. Try direct swap"
-          />
-        </p>
-      ) : blockReason === BlockReasons.PairDoesNotExist ? (
-        <p styleName="neutral">
-          <FormattedMessage
-            id="liquidityPairDoesNotExist"
-            defaultMessage="This pair does not have liquidity. You can create a new one and be the first liquidity provider"
           />
         </p>
       ) : blockReason === BlockReasons.Unknown ? (
