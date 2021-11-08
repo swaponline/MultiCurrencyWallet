@@ -558,16 +558,21 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   }
 
   fetchLiquidityData = async () => {
-    const { network, spendedAmount, baseChainWallet, currentLiquidityPair } = this.state
+    const { network, spendedAmount, baseChainWallet, currentLiquidityPair, fromWallet, toWallet } =
+      this.state
 
     this.setPending(true)
 
     try {
-      const result = await actions.uniswap.getSecondLiquidityAmount({
+      const result = await actions.uniswap.getLiquidityAmountForAssetB({
+        chainId: network.networkVersion,
         pairAddress: currentLiquidityPair,
         routerAddress: LIQUIDITY_SOURCE_DATA[network.networkVersion]?.router,
         baseCurrency: baseChainWallet.currency,
+        tokenA: fromWallet.contractAddress ?? EVM_COIN_ADDRESS,
         amountADesired: spendedAmount,
+        tokenADecimals: fromWallet.decimals ?? COIN_DECIMALS,
+        tokenBDecimals: toWallet.decimals ?? COIN_DECIMALS,
       })
 
       this.setState(() => ({
@@ -792,7 +797,10 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   }
 
   setAction = (type) => {
+    this.resetSwapData()
+
     this.setState(() => ({
+      spendedAmount: '',
       sourceAction: type,
     }))
   }

@@ -206,6 +206,8 @@ function Footer(props: FooterProps) {
         baseCurrency: baseChainWallet.currency,
         slippage,
         tokenA: fromWallet.contractAddress ?? ADDRESSES.EVM_COIN_ADDRESS,
+        tokenAName: fromWallet.tokenKey ?? '',
+        tokenAStandard: fromWallet.standard ?? '',
         tokenADecimals: fromWallet.decimals ?? COIN_DECIMALS,
         amountADesired: spendedAmount,
         tokenB: toWallet.contractAddress ?? ADDRESSES.EVM_COIN_ADDRESS,

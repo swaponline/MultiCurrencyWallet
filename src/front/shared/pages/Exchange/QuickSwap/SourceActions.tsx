@@ -15,10 +15,10 @@ function SourceActions(props) {
       type: Actions.AddLiquidity,
       message: <FormattedMessage id="addLiquidity" defaultMessage="Add liquidity" />,
     },
-    {
-      type: Actions.RemoveLiquidity,
-      message: <FormattedMessage id="removeLiquidity" defaultMessage="Remove liquidity" />,
-    },
+    // {
+    //   type: Actions.RemoveLiquidity,
+    //   message: <FormattedMessage id="removeLiquidity" defaultMessage="Remove liquidity" />,
+    // },
   ]
 
   return (

@@ -124,23 +124,34 @@ const getAmountOut = async (params) => {
   }
 }
 
-const getSecondLiquidityAmount = async (params) => {
-  const { pairAddress, routerAddress, baseCurrency, amountADesired } = params
+const getLiquidityAmountForAssetB = async (params) => {
+  const {
+    chainId,
+    pairAddress,
+    routerAddress,
+    baseCurrency,
+    amountADesired,
+    tokenADecimals,
+    tokenBDecimals,
+  } = params
+  let { tokenA } = params
+
+  tokenA = wrapCurrency(chainId, tokenA)
 
   const router = getContract({ name: 'router', address: routerAddress, baseCurrency })
   const pair = getContract({ name: 'pair', address: pairAddress, baseCurrency })
 
   try {
+    const token1 = await pair.methods.token1().call()
     const { reserve0, reserve1 } = await pair.methods.getReserves().call()
+    const unitAmountA = utils.amount.formatWithDecimals(amountADesired, tokenADecimals)
 
-    console.log('reserve0: ', reserve0)
-    console.log('reserve1: ', reserve1)
+    const reservesOrder =
+      tokenA.toLowerCase() === token1.toLowerCase() ? [reserve1, reserve0] : [reserve0, reserve1]
 
-    const amountBOptimal = await router.methods.quote(amountADesired, reserve1, reserve0).call()
+    const tokenBAmount = await router.methods.quote(unitAmountA, ...reservesOrder).call()
 
-    console.log('amountBOptimal: ', amountBOptimal)
-
-    return amountBOptimal
+    return utils.amount.formatWithoutDecimals(tokenBAmount, tokenBDecimals)
   } catch (error) {
     return error
   }
@@ -234,7 +245,7 @@ const returnSwapMethod = (params) => {
 }
 
 const checkAndApproveToken = async (params) => {
-  const { standard, token, owner, decimals, spender, sellAmount, tokenName } = params
+  const { standard, token, owner, decimals, spender, amount, tokenName } = params
 
   const allowance = await actions.oneinch.fetchTokenAllowance({
     contract: token,
@@ -245,11 +256,11 @@ const checkAndApproveToken = async (params) => {
   })
 
   return new Promise(async (res, rej) => {
-    if (new BigNumber(sellAmount).isGreaterThan(allowance)) {
+    if (new BigNumber(amount).isGreaterThan(allowance)) {
       const result = await actions[standard].approve({
         name: tokenName,
         to: spender,
-        amount: sellAmount,
+        amount: amount,
       })
 
       return result instanceof Error ? rej(result) : res(result)
@@ -314,7 +325,7 @@ const swapCallback = async (params) => {
     if (fromTokenStandard && fromToken.toLowerCase() !== constants.ADDRESSES.EVM_COIN_ADDRESS) {
       const result = await checkAndApproveToken({
         tokenName: fromTokenName,
-        sellAmount,
+        amount: sellAmount,
         standard: fromTokenStandard,
         token: fromToken,
         owner,
@@ -365,6 +376,9 @@ const returnAddLiquidityData = async (params) => {
   }
 
   // TODO: add tokens approve
+  // * for both tokens
+  // * or just for one of them if the second one is wrapped currency
+
   /*
   ! If a pool for the passed token and WETH does not exists,
   ! one is created automatically, and exactly amountTokenDesired/msg.value
@@ -440,6 +454,8 @@ const addLiquidityCallback = async (params) => {
     slippage,
     waitReceipt = false,
     tokenA,
+    tokenAName,
+    tokenAStandard,
     tokenADecimals,
     amountADesired,
     tokenB,
@@ -466,6 +482,20 @@ const addLiquidityCallback = async (params) => {
   const txData = router.methods[method](...args).encodeABI()
 
   try {
+    if (tokenAStandard && tokenA.toLowerCase() !== constants.ADDRESSES.EVM_COIN_ADDRESS) {
+      const result = await checkAndApproveToken({
+        tokenName: tokenAName,
+        amount: amountADesired,
+        standard: tokenAStandard,
+        token: tokenA,
+        owner,
+        decimals: tokenADecimals,
+        spender: routerAddress,
+      })
+
+      if (!result) return result
+    }
+
     return actions[baseCurrency.toLowerCase()].send({
       to: routerAddress,
       data: txData,
@@ -481,7 +511,7 @@ export default {
   getContract,
   getPairAddress,
   getAmountOut,
-  getSecondLiquidityAmount,
+  getLiquidityAmountForAssetB,
   swapCallback,
   addLiquidityCallback,
 }
