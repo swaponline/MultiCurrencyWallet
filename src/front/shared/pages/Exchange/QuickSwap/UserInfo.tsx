@@ -13,7 +13,6 @@ import { Network, SwapData } from './types'
 import Address from 'components/ui/Address/Address'
 import Copy from 'components/ui/Copy/Copy'
 import Button from 'components/controls/Button/Button'
-import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 
 type ComponentProps = {
@@ -28,7 +27,6 @@ type ComponentProps = {
   fromWallet: IUniversalObj
   toWallet: IUniversalObj
   fiat: string
-  isPending: boolean
 }
 
 function UserInfo(props: ComponentProps) {
@@ -44,7 +42,6 @@ function UserInfo(props: ComponentProps) {
     spendedAmount,
     baseChainWallet,
     fiat,
-    isPending,
   } = props
 
   const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
@@ -180,35 +177,29 @@ function UserInfo(props: ComponentProps) {
         <span styleName="value">{`${slippage}%`}</span>
       </span>
 
-      {isPending ? (
-        <div styleName="loaderWrapper">
-          <InlineLoader />
-        </div>
-      ) : (
-        <>
-          {price && (
-            <span styleName="indicator">
-              <FormattedMessage id="orders105" defaultMessage="Price" />:{' '}
-              <span styleName="value">{price}</span>
-            </span>
-          )}
-          {swapFee && fee && (
-            <span styleName="indicator">
-              <FormattedMessage id="fee" defaultMessage="Fee" />:{' '}
-              <span styleName="value">
-                {fee} {fiatFee && fiatFee}
-              </span>
-            </span>
-          )}
-          {total && spendedAmount && swapFee && (
-            <span styleName="indicator">
-              <FormattedMessage id="total" defaultMessage="Total" />:{' '}
-              <span styleName="value">
-                {total} {totalFiat && totalFiat}
-              </span>
-            </span>
-          )}
-        </>
+      {price && (
+        <span styleName="indicator">
+          <FormattedMessage id="orders105" defaultMessage="Price" />:{' '}
+          <span styleName="value">{price}</span>
+        </span>
+      )}
+
+      {swapFee && fee && (
+        <span styleName="indicator">
+          <FormattedMessage id="fee" defaultMessage="Fee" />:{' '}
+          <span styleName="value">
+            {fee} {fiatFee && fiatFee}
+          </span>
+        </span>
+      )}
+
+      {total && spendedAmount && swapFee && (
+        <span styleName="indicator">
+          <FormattedMessage id="total" defaultMessage="Total" />:{' '}
+          <span styleName="value">
+            {total} {totalFiat && totalFiat}
+          </span>
+        </span>
       )}
     </section>
   )

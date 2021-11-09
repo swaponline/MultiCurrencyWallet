@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react'
 import { FormattedMessage } from 'react-intl'
 import CSSModules from 'react-css-modules'
 import styles from './index.scss'
@@ -19,14 +18,15 @@ const returnRouter = (name) => {
 
 type FooterProps = {
   parentState: ComponentState
-  insufficientBalance: boolean
+  insufficientBalanceA: boolean
+  insufficientBalanceB: boolean
   isSourceMode: boolean
   sourceAction: Actions
   reportError: (e: IError) => void
   resetSwapData: () => void
   resetSpendedAmount: () => void
   setBlockReason: (a: BlockReasons) => void
-  isProcessBlocking: () => boolean
+  isApiRequestBlocking: () => boolean
   setPending: (a: boolean) => void
   onInputDataChange: () => void
   baseChainWallet: IUniversalObj
@@ -41,8 +41,9 @@ function Footer(props: FooterProps) {
     setBlockReason,
     resetSwapData,
     resetSpendedAmount,
-    isProcessBlocking,
-    insufficientBalance,
+    isApiRequestBlocking,
+    insufficientBalanceA,
+    insufficientBalanceB,
     setPending,
     baseChainWallet,
     onInputDataChange,
@@ -64,6 +65,7 @@ function Footer(props: FooterProps) {
     userDeadline,
     error,
     slippage,
+    currentLiquidityPair,
     liquidityErrorMessage,
   } = parentState
 
@@ -233,48 +235,67 @@ function Footer(props: FooterProps) {
     if (sourceAction !== Actions.RemoveLiquidity || !isSourceMode) return
   }
 
-  const doNotProcess = isProcessBlocking()
+  const doNotMakeApiRequest = isApiRequestBlocking()
 
-  const commonBlockReasons =
-    isPending || !!error || insufficientBalance || !spendedAmount || !receivedAmount
+  const commonBlockReasons = isPending || !!error
+  const formFilled = !!spendedAmount && !!receivedAmount
 
-  const apiSwapIsAvailable = swapData && !doNotProcess && !commonBlockReasons
-  const directSwapIsAvailable = !commonBlockReasons && !needApproveA
-  const addLiquidityIsAvailable = !commonBlockReasons && !needApproveA && !needApproveB
-  const removeLiquidityIsAvailable = !commonBlockReasons
+  const approvingDoesNotMakeSense =
+    sourceAction === Actions.AddLiquidity &&
+    !currentLiquidityPair &&
+    (insufficientBalanceA || insufficientBalanceB)
+
+  const approveAIsAvailable =
+    !commonBlockReasons && !insufficientBalanceA && spendedAmount && needApproveA
+  const approveBIsAvailable =
+    !commonBlockReasons && !insufficientBalanceB && receivedAmount && needApproveB
+
+  const apiSwapIsAvailable = swapData && !doNotMakeApiRequest && !commonBlockReasons && formFilled
+
+  const directSwapIsAvailable =
+    !commonBlockReasons && !needApproveA && !insufficientBalanceA && formFilled
+
+  const addLiquidityIsAvailable =
+    !commonBlockReasons && !needApproveA && !needApproveB && !insufficientBalanceB && formFilled
+
+  const removeLiquidityIsAvailable = !commonBlockReasons && formFilled
 
   return (
     <div styleName="footer">
-      {needApproveA && (
-        <Button
-          pending={isPending}
-          disabled={doNotProcess}
-          onClick={() => approve(Direction.Spend)}
-          brand
-        >
-          <FormattedMessage
-            id="FormattedMessageIdApprove"
-            defaultMessage="Approve {token}"
-            values={{ token: spendedCurrency.name }}
-          />
-        </Button>
-      )}
-      {/* we need to approve the second token only for liquidity addition.
-      The router need to pick up both of our assets */}
-      {needApproveB && isSourceMode && sourceAction === Actions.AddLiquidity && (
-        <Button
-          pending={isPending}
-          disabled={doNotProcess}
-          onClick={() => approve(Direction.Receive)}
-          brand
-        >
-          <FormattedMessage
-            id="FormattedMessageIdApprove"
-            defaultMessage="Approve {token}"
-            values={{ token: receivedCurrency.name }}
-          />
-        </Button>
-      )}
+      <div styleName="approveButtons">
+        {needApproveA && (
+          <Button
+            pending={isPending}
+            disabled={!approveAIsAvailable || approvingDoesNotMakeSense}
+            onClick={() => approve(Direction.Spend)}
+            fullWidth
+            brand
+          >
+            <FormattedMessage
+              id="FormattedMessageIdApprove"
+              defaultMessage="Approve {token}"
+              values={{ token: spendedCurrency.name }}
+            />
+          </Button>
+        )}
+        {/* we need to approve the second token only for liquidity addition.
+        The router need to pick up both of our assets */}
+        {needApproveB && isSourceMode && sourceAction === Actions.AddLiquidity && (
+          <Button
+            pending={isPending}
+            disabled={!approveBIsAvailable || approvingDoesNotMakeSense}
+            onClick={() => approve(Direction.Receive)}
+            fullWidth
+            brand
+          >
+            <FormattedMessage
+              id="FormattedMessageIdApprove"
+              defaultMessage="Approve {token}"
+              values={{ token: receivedCurrency.name }}
+            />
+          </Button>
+        )}
+      </div>
 
       {!isSourceMode ? (
         <Button pending={isPending} disabled={!apiSwapIsAvailable} onClick={apiSwap} brand>

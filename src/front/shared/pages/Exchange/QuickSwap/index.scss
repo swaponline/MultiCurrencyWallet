@@ -152,12 +152,6 @@ $maxWidth: 38em;
   }
 }
 
-.loaderWrapper {
-  display: inline-block;
-  margin: 0.8rem 0;
-  opacity: 0.7;
-}
-
 .indicator {
   @include ff-semibold;
   width: 100%;
@@ -227,6 +221,15 @@ $maxWidth: 38em;
     &:not(:first-child) {
       margin-top: 0.5rem;
     }
+  }
+}
+
+.approveButtons {
+  display: flex;
+  justify-content: space-between;
+
+  button:not(:last-child) {
+    margin-right: 0.4rem;
   }
 }
 

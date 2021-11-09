@@ -407,11 +407,6 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       error: null,
     }))
 
-    const { needApproveA } = this.state
-    const doNotUpdate = this.isProcessBlocking() || needApproveA
-
-    if (doNotUpdate) return
-
     if (activeSection === Sections.Aggregator) {
       await this.fetchSwapAPIData()
     } else if (activeSection === Sections.Source) {
@@ -479,7 +474,10 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   }
 
   fetchSwapAPIData = async () => {
-    const { network } = this.state
+    const { network, needApproveA } = this.state
+    const doNotUpdate = this.isApiRequestBlocking() || needApproveA
+
+    if (doNotUpdate) return
 
     this.setState(() => ({
       isPending: true,
@@ -879,7 +877,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     }))
   }
 
-  isProcessBlocking = () => {
+  isApiRequestBlocking = () => {
     const {
       isPending,
       spendedAmount,
@@ -941,6 +939,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       fiat,
       spendedAmount,
       spendedCurrency,
+      receivedAmount,
       fromWallet,
       toWallet,
       receivedCurrency,
@@ -967,11 +966,15 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       'userDeadline'
     )
 
-    const insufficientBalance =
+    const insufficientBalanceA =
       new BigNumber(fromWallet.balance).isEqualTo(0) ||
       new BigNumber(spendedAmount)
         .plus(fromWallet?.standard ? 0 : swapFee || 0)
         .isGreaterThan(fromWallet.balance)
+
+    const insufficientBalanceB =
+      new BigNumber(toWallet.balance).isEqualTo(0) ||
+      new BigNumber(receivedAmount).isGreaterThan(toWallet.balance)
 
     return (
       <>
@@ -1030,7 +1033,8 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
                   toWallet={toWallet}
                   updateWallets={this.updateWallets}
                   isPending={isPending}
-                  insufficientBalance={insufficientBalance}
+                  insufficientBalanceA={insufficientBalanceA}
+                  insufficientBalanceB={insufficientBalanceB}
                   resetSwapData={this.resetSwapData}
                 />
               </div>
@@ -1051,12 +1055,11 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
                 fromWallet={fromWallet}
                 toWallet={toWallet}
                 fiat={fiat}
-                isPending={isPending}
               />
 
               <Feedback
                 wrongNetwork={wrongNetwork}
-                insufficientBalance={insufficientBalance}
+                insufficientBalanceA={insufficientBalanceA}
                 blockReason={blockReason}
                 baseChainWallet={baseChainWallet}
                 spendedAmount={spendedAmount}
@@ -1072,8 +1075,9 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
                 setBlockReason={this.setBlockReason}
                 resetSwapData={this.resetSwapData}
                 resetSpendedAmount={this.resetSpendedAmount}
-                isProcessBlocking={this.isProcessBlocking}
-                insufficientBalance={insufficientBalance}
+                isApiRequestBlocking={this.isApiRequestBlocking}
+                insufficientBalanceA={insufficientBalanceA}
+                insufficientBalanceB={insufficientBalanceB}
                 setPending={this.setPending}
                 onInputDataChange={this.onInputDataChange}
                 baseChainWallet={baseChainWallet}

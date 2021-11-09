@@ -45,7 +45,8 @@ function InputForm(props) {
     openExternalExchange,
     onInputDataChange,
     user,
-    insufficientBalance,
+    insufficientBalanceA,
+    insufficientBalanceB,
     resetSwapData,
   } = props
 
@@ -164,13 +165,8 @@ function InputForm(props) {
     onInputDataChange()
   }, [spendedCurrency?.value, receivedCurrency?.value, isSourceMode])
 
-  const canNotUseBothInputs =
-    !isSourceMode ||
-    sourceAction !== Actions.AddLiquidity ||
-    // if we're here, it means we want to add/remove liquidity
-    // and if we have the current pair address we can't set
-    // both amounts of assets, because of the already determined price
-    currentLiquidityPair
+  const addFirstLiquidity =
+    isSourceMode && sourceAction === Actions.AddLiquidity && !currentLiquidityPair
 
   const handleSpendAmount = (value) => {
     setSpendedAmount(value)
@@ -181,7 +177,7 @@ function InputForm(props) {
 
     // there will be new external data on "every" one of our changes
     // reset the old ones
-    if (canNotUseBothInputs) resetSwapData()
+    if (!addFirstLiquidity) resetSwapData()
   }
 
   const supportedCurrencies = ['eth', 'matic']
@@ -195,7 +191,7 @@ function InputForm(props) {
       <div styleName="inputWrapper">
         <SelectGroup
           activeFiat={fiat}
-          error={insufficientBalance}
+          error={insufficientBalanceA}
           fiat={fiatValue && fiatValue}
           inputValueLink={stateReference.spendedAmount.pipe(handleSpendAmount)}
           selectedValue={spendedCurrency.value}
@@ -252,8 +248,9 @@ function InputForm(props) {
 
       <div styleName={`inputWrapper ${receivedCurrency.notExist ? 'disabled' : ''}`}>
         <SelectGroup
-          disabled={canNotUseBothInputs}
+          disabled={!addFirstLiquidity}
           activeFiat={fiat}
+          error={addFirstLiquidity && insufficientBalanceB}
           inputValueLink={stateReference.receivedAmount}
           selectedValue={receivedCurrency.value}
           inputId="quickSwapReceiveCurrencyInput"

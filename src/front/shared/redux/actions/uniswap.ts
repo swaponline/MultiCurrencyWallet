@@ -8,6 +8,12 @@ import utils from 'common/utils'
 import erc20Like from 'common/erc20Like'
 import actions from 'redux/actions'
 
+const ABIS = {
+  factory: FactoryV2ABI,
+  router: RouterV2ABI,
+  pair: PairV2ABI,
+}
+
 enum SwapMethods {
   swapExactETHForTokens = 'swapExactETHForTokens',
   swapExactTokensForETH = 'swapExactTokensForETH',
@@ -39,21 +45,9 @@ const wrapCurrency = (chainId: number, currencyAddress: string) => {
 
 const getContract = (params: GetContractParams) => {
   const { name, address, baseCurrency } = params
-  let abi
-
-  switch (name) {
-    case 'factory':
-      abi = FactoryV2ABI
-      break
-    case 'router':
-      abi = RouterV2ABI
-      break
-    case 'pair':
-      abi = PairV2ABI
-  }
 
   return ethLikeHelper[baseCurrency.toLowerCase()]?.getContract({
-    abi,
+    abi: ABIS[name],
     address,
   })
 }
@@ -137,33 +131,20 @@ const getLiquidityAmountForAssetB = async (params) => {
   } = params
   let { tokenA } = params
 
-  console.log('%c getLiquidityAmountForAssetB', 'color:orange;font-size:20px')
-
   tokenA = wrapCurrency(chainId, tokenA)
 
   const router = getContract({ name: 'router', address: routerAddress, baseCurrency })
   const pair = getContract({ name: 'pair', address: pairAddress, baseCurrency })
-
-  console.log('tokenA: ', tokenA)
-  console.log('router: ', router)
-  console.log('pair: ', pair)
 
   try {
     const token1 = await pair.methods.token1().call()
     const { reserve0, reserve1 } = await pair.methods.getReserves().call()
     const unitAmountA = utils.amount.formatWithDecimals(amountADesired, tokenADecimals)
 
-    console.log('token1: ', token1)
-    console.log('reserve1: ', reserve1)
-    console.log('reserve0: ', reserve0)
-
     const reservesOrder =
       tokenA.toLowerCase() === token1.toLowerCase() ? [reserve1, reserve0] : [reserve0, reserve1]
 
     const tokenBAmount = await router.methods.quote(unitAmountA, ...reservesOrder).call()
-
-    console.log('reservesOrder: ', reservesOrder)
-    console.log('tokenBAmount: ', tokenBAmount)
 
     return utils.amount.formatWithoutDecimals(tokenBAmount, tokenBDecimals)
   } catch (error) {
