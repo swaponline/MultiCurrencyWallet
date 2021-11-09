@@ -319,7 +319,6 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       }),
       async () => {
         this.resetSwapData()
-        await this.updateCurrentPairAddress()
       }
     )
   }
@@ -389,6 +388,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   onInputDataChange = async () => {
     const { activeSection, sourceAction, currentLiquidityPair } = this.state
 
+    await this.updateCurrentPairAddress()
     await this.checkApprove(Direction.Spend)
 
     if (activeSection === Sections.Source && sourceAction === Actions.AddLiquidity) {
@@ -520,8 +520,6 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     const tokenA = fromWallet?.contractAddress ?? ADDRESSES.EVM_COIN_ADDRESS
     const tokenB = toWallet?.contractAddress ?? ADDRESSES.EVM_COIN_ADDRESS
 
-    // TODO: after first liquidity addition, we have to remove/update a new pair address
-
     let pairAddress = cacheStorageGet(
       'quickswapLiquidityPair',
       `${externalConfig.entry}_${tokenA}_${tokenB}`
@@ -536,7 +534,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
         tokenB,
       })
 
-      const SECONDS = 300
+      const SECONDS = 15
 
       cacheStorageSet(
         'quickswapLiquidityPair',
@@ -739,7 +737,6 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
         toWallet: actions.core.getWallet({ currency: receivedCurrency.value }),
       }),
       async () => {
-        await this.updateCurrentPairAddress()
         await this.onInputDataChange()
       }
     )

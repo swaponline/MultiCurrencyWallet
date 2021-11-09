@@ -5,7 +5,6 @@ import CSSModules from 'react-css-modules'
 import styles from './index.scss'
 import { externalConfig } from 'helpers'
 import { Sections } from './types'
-import ThemeTooltip from 'components/ui/Tooltip/ThemeTooltip'
 
 function Header(props) {
   const {
@@ -19,38 +18,22 @@ function Header(props) {
 
   return (
     <div styleName="header">
-      <>
-        <button
-          id="aggregatorSectionDescription"
-          styleName={`tab ${activeSection === Sections.Aggregator ? 'active' : ''} ${
-            externalConfig.entry === 'testnet' ? 'disabled' : ''
-          }`}
-          onClick={openAggregatorSection}
-        >
-          <FormattedMessage id="aggregator" defaultMessage="Aggregator" />
-        </button>
+      <button
+        styleName={`tab ${activeSection === Sections.Aggregator ? 'active' : ''} ${
+          externalConfig.entry === 'testnet' ? 'disabled' : ''
+        }`}
+        onClick={openAggregatorSection}
+      >
+        <FormattedMessage id="aggregator" defaultMessage="Aggregator" />
+      </button>
 
-        <ThemeTooltip id="aggregatorSectionDescription" effect="solid" place="top">
-          <FormattedMessage
-            id="jkjkg123lg12l323434pj"
-            defaultMessage="aggregator section description"
-          />
-        </ThemeTooltip>
-      </>
-
-      <>
-        <button
-          id="sourceSectionDescription"
-          styleName={`tab ${activeSection === Sections.Source ? 'active' : ''}`}
-          onClick={openSourceSection}
-        >
-          <FormattedMessage id="source" defaultMessage="Source" />
-        </button>
-
-        <ThemeTooltip id="sourceSectionDescription" effect="solid" place="top">
-          <FormattedMessage id="jkjkg123lg12l3" defaultMessage="source section description" />
-        </ThemeTooltip>
-      </>
+      <button
+        id="sourceSectionDescription"
+        styleName={`tab ${activeSection === Sections.Source ? 'active' : ''}`}
+        onClick={openSourceSection}
+      >
+        <FormattedMessage id="source" defaultMessage="Source" />
+      </button>
 
       <button
         styleName={`tab ${activeSection === Sections.Settings ? 'active' : ''} ${

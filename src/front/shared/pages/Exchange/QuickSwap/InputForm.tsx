@@ -190,10 +190,12 @@ function InputForm(props: InputFormProps) {
   const addFirstLiquidity =
     isSourceMode && sourceAction === Actions.AddLiquidity && !currentLiquidityPair
 
+  const isValidNumber = (value) => !isNaN(Number(value)) && Number(value) > 0
+
   const handleSpendAmount = (value) => {
     setSpendedAmount(value)
 
-    if (!receivedCurrency.notExist && value !== spendedAmount) {
+    if (!receivedCurrency.notExist && isValidNumber(value) && value !== spendedAmount) {
       setFlagForLazyChanges(true)
     }
 
@@ -205,7 +207,9 @@ function InputForm(props: InputFormProps) {
   const handleReceiveAmount = (value) => {
     setReceivedAmount(value)
 
-    if (value !== receivedAmount) setFlagForLazyChanges(true)
+    if (isValidNumber(value) && value !== receivedAmount) {
+      setFlagForLazyChanges(true)
+    }
   }
 
   const supportedCurrencies = ['eth', 'matic']

@@ -414,15 +414,6 @@ const addLiquidityCallback = async (params) => {
   } = params
   let { slippage } = params
 
-  /*
-  ! If a pool for the passed assets does not exists,
-  ! one is created automatically, and exactly amountTokenDesired/msg.value
-  ! tokens are added.
-  */
-
-  // ! Drop slippage percent if it's first liquidity addition
-  // ? check a pool existence manually in this function ?
-
   const provider = actions[baseCurrency.toLowerCase()].getWeb3()
   const { method, args, value } = await returnAddLiquidityData({
     provider,
