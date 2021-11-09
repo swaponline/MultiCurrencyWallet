@@ -370,6 +370,10 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       `sellAmount=${sellAmount}`,
     ]
 
+    // TODO: add an admin address for fee
+    // * feeRecipient +
+    // * buyTokenPercentageFee - percent 0-1.0 of the buyAmount
+
     if (skipValidation) {
       request.push(`&skipValidation=true`)
     }

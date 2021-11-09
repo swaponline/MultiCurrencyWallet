@@ -57,7 +57,6 @@ function Settings(props) {
 
       {isSourceMode && (
         <InputRow
-          margin
           onKeyDown={inputReplaceCommaWithDot}
           valueLink={stateReference.userDeadline}
           labelMessage={
@@ -108,20 +107,20 @@ function Settings(props) {
         </>
       )}
 
-      <div styleName="feedbackMessages">
+      <div styleName="messagesWrapper">
         {lowSlippage ? (
-          <p styleName="neutral">
+          <p styleName="warningNotice">
             <FormattedMessage id="transactionMayFail" defaultMessage="Transaction may fail" />
           </p>
         ) : frontrunSlippageRange ? (
-          <p styleName="neutral">
+          <p styleName="warningNotice">
             <FormattedMessage
               id="transactionMayBeFrontrun"
               defaultMessage="Transaction may be frontrun"
             />
           </p>
         ) : maxSlippageRange ? (
-          <p styleName="wrong">
+          <p styleName="dangerousNotice">
             <FormattedMessage
               id="invalidSlippagePercent"
               defaultMessage="Invalid slippage percent"

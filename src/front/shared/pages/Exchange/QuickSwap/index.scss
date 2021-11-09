@@ -141,17 +141,6 @@ $maxWidth: 38em;
   }
 }
 
-.actionsWrapper {
-  display: flex;
-  margin: 0.3rem 0;
-
-  .actionLabel {
-    &:not(:last-child) {
-      margin-right: 0.4rem;
-    }
-  }
-}
-
 .indicator {
   @include ff-semibold;
   width: 100%;
@@ -183,7 +172,7 @@ $maxWidth: 38em;
   $bg-color: var(--color-background)
 ) {
   @include ff-semibold;
-  padding: 0.5rem;
+  padding: 0.4rem 0.6rem;
   text-align: left;
   border-radius: 0.2rem;
   border: 1px solid $borderColor;
@@ -197,18 +186,16 @@ $maxWidth: 38em;
   margin: 0.6rem auto;
 }
 
-.reasons {
-  .wrong {
-    @include notice(var(--color-f-error), var(--color-f-error));
-  }
+.dangerousNotice {
+  @include notice(var(--color-f-error), var(--color-f-error));
+}
 
-  .warning {
-    @include notice($bg-color: var(--color-warning));
-  }
+.warningNotice {
+  @include notice($bg-color: var(--color-warning));
+}
 
-  .neutral {
-    @include notice();
-  }
+.neutralNotice {
+  @include notice();
 }
 
 .footer {

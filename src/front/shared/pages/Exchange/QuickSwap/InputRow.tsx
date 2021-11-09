@@ -19,8 +19,7 @@ function InputRow(props) {
   return (
     <div styleName="inputWrapper">
       <FieldLabel>
-        {labelMessage}
-        {labelTooltip}
+        {labelMessage} {labelTooltip}
       </FieldLabel>
       <Input
         styleName={styleName}

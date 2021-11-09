@@ -18,38 +18,38 @@ function Feedback(props) {
   } = props
 
   return (
-    <section styleName="reasons">
+    <section>
       {wrongNetwork ? (
-        <p styleName="wrong">
+        <p styleName="dangerousNotice">
           <FormattedMessage id="incorrectNetwork" defaultMessage="Please choose correct network" />
         </p>
       ) : blockReason === BlockReasons.PairDoesNotExist && sourceAction !== Actions.AddLiquidity ? (
-        <p styleName="neutral">
+        <p styleName="neutralNotice">
           <FormattedMessage
             id="liquidityPairDoesNotExist"
             defaultMessage="This pair does not have liquidity. You can create a new one and be the first liquidity provider"
           />
         </p>
       ) : !spendedAmount ? (
-        <p styleName="neutral">
+        <p styleName="neutralNotice">
           <FormattedMessage id="enterYouSend" defaultMessage='Enter "You send" amount' />
         </p>
       ) : new BigNumber(baseChainWallet?.balance).isEqualTo(0) ? (
-        <p styleName="warning">
+        <p styleName="warningNotice">
           <FormattedMessage
             id="doNotHaveNativeCurrencyBalance"
             defaultMessage="You do not have native currency balance to pay the transaction fee"
           />
         </p>
       ) : insufficientBalance ? (
-        <p styleName="warning">
+        <p styleName="warningNotice">
           <FormattedMessage
             id="AlertOrderNonEnoughtBalance"
             defaultMessage="Please top up your balance before you start the swap"
           />
         </p>
       ) : needApproveA ? (
-        <p styleName="warning">
+        <p styleName="warningNotice">
           <FormattedMessage
             id="approveTokenFirst"
             defaultMessage="Please approve {token} first"
@@ -57,28 +57,28 @@ function Feedback(props) {
           />
         </p>
       ) : blockReason === BlockReasons.InsufficientSlippage ? (
-        <p styleName="warning">
+        <p styleName="warningNotice">
           <FormattedMessage
             id="insufficientSlippage"
             defaultMessage="Insufficient slippage. Try to increase it"
           />
         </p>
       ) : blockReason === BlockReasons.NoLiquidity ? (
-        <p styleName="neutral">
+        <p styleName="neutralNotice">
           <FormattedMessage
             id="insufficientLiquidity"
             defaultMessage="Insufficient pool liquidity"
           />
         </p>
       ) : blockReason === BlockReasons.Liquidity ? (
-        <p styleName="neutral">
+        <p styleName="neutralNotice">
           <FormattedMessage
             id="liquidityPoolProblem"
             defaultMessage="There is some problem with liquidity pool. Try direct swap"
           />
         </p>
       ) : blockReason === BlockReasons.Unknown ? (
-        <p styleName="wrong">
+        <p styleName="dangerousNotice">
           <FormattedMessage
             id="unknownSwapProblemHasOccurred"
             defaultMessage="Unknown problem has occurred"
@@ -86,7 +86,7 @@ function Feedback(props) {
         </p>
       ) : null}
 
-      {error && <pre styleName="wrong">{error?.message}</pre>}
+      {error && <pre styleName="dangerousNotice">{error?.message}</pre>}
     </section>
   )
 }

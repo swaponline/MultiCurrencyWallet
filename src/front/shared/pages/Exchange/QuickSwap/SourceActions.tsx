@@ -1,6 +1,6 @@
 import { FormattedMessage } from 'react-intl'
 import CSSModules from 'react-css-modules'
-import styles from './index.scss'
+import styles from './SourceActions.scss'
 import { Actions } from './types'
 
 function SourceActions(props) {
