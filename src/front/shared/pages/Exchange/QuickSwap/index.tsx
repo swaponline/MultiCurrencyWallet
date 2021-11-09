@@ -370,9 +370,16 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       `sellAmount=${sellAmount}`,
     ]
 
-    // TODO: add an admin address for fee
-    // * feeRecipient +
-    // * buyTokenPercentageFee - percent 0-1.0 of the buyAmount
+    const feeOptsKey = fromWallet.standard || fromWallet.currency
+    const currentFeeOpts = externalConfig.opts.fee[feeOptsKey.toLowerCase()]
+
+    if (currentFeeOpts?.address && currentFeeOpts?.fee > 0 && currentFeeOpts?.fee < 100) {
+      // 0 >= percent of the buyAmount <= 1
+      const apiPercentFormat = new BigNumber(currentFeeOpts.fee).dividedBy(MAX_PERCENT)
+
+      request.push(`&feeRecipient=${currentFeeOpts.address}`)
+      request.push(`&buyTokenPercentageFee=${apiPercentFormat}`)
+    }
 
     if (skipValidation) {
       request.push(`&skipValidation=true`)
@@ -1054,6 +1061,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
               />
 
               <Feedback
+                isSourceMode={isSourceMode}
                 wrongNetwork={wrongNetwork}
                 insufficientBalanceA={insufficientBalanceA}
                 blockReason={blockReason}

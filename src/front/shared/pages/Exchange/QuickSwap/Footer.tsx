@@ -66,7 +66,6 @@ function Footer(props: FooterProps) {
     error,
     slippage,
     currentLiquidityPair,
-    liquidityErrorMessage,
   } = parentState
 
   const approve = async (direction) => {
@@ -108,7 +107,9 @@ function Footer(props: FooterProps) {
     const baseCurrency = fromWallet.standard ? fromWallet.baseCurrency : fromWallet.currency
     const assetName = fromWallet.standard ? fromWallet.tokenKey : fromWallet.currency
 
-    feedback.zerox.startedSwap(`${fromWallet.currency} -> ${toWallet.currency}`)
+    feedback.zerox.startedSwap(
+      `Network: ${network.chainName}. ${fromWallet.currency} -> ${toWallet.currency}`
+    )
     setPending(true)
 
     try {
@@ -144,9 +145,9 @@ function Footer(props: FooterProps) {
     const baseCurrency = fromWallet.standard ? fromWallet.baseCurrency : fromWallet.currency
 
     feedback.liquiditySource.startedSwap(
-      `Source: ${LIQUIDITY_SOURCE_DATA[network.networkVersion]?.name}. Route: ${
-        fromWallet.currency
-      } -> ${toWallet.currency}`
+      `Network: ${network.chainName}. Source: ${
+        LIQUIDITY_SOURCE_DATA[network.networkVersion]?.name
+      }. Route: ${fromWallet.currency} -> ${toWallet.currency}`
     )
     setPending(true)
 

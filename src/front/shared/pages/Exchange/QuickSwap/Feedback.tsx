@@ -6,6 +6,7 @@ import { BlockReasons, Actions } from './types'
 
 function Feedback(props) {
   const {
+    isSourceMode,
     blockReason,
     baseChainWallet,
     spendedAmount,
@@ -23,7 +24,9 @@ function Feedback(props) {
         <p styleName="dangerousNotice">
           <FormattedMessage id="incorrectNetwork" defaultMessage="Please choose correct network" />
         </p>
-      ) : blockReason === BlockReasons.PairDoesNotExist && sourceAction !== Actions.AddLiquidity ? (
+      ) : blockReason === BlockReasons.PairDoesNotExist &&
+        isSourceMode &&
+        sourceAction !== Actions.AddLiquidity ? (
         <p styleName="neutralNotice">
           <FormattedMessage
             id="liquidityPairDoesNotExist"
