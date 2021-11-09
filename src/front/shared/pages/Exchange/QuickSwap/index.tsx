@@ -520,6 +520,8 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     const tokenA = fromWallet?.contractAddress ?? ADDRESSES.EVM_COIN_ADDRESS
     const tokenB = toWallet?.contractAddress ?? ADDRESSES.EVM_COIN_ADDRESS
 
+    // TODO: after first liquidity addition, we have to remove/update a new pair address
+
     let pairAddress = cacheStorageGet(
       'quickswapLiquidityPair',
       `${externalConfig.entry}_${tokenA}_${tokenB}`
@@ -563,8 +565,6 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
         break
       case Actions.AddLiquidity:
         await this.fetchLiquidityData()
-        break
-      case Actions.RemoveLiquidity:
     }
   }
 
@@ -632,11 +632,21 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     }))
   }
 
-  resetSwapData = () => {
+  setReceivedAmount = (value) => {
+    this.setState(() => ({
+      receivedAmount: value,
+    }))
+  }
+
+  resetReceivedAmount = () => {
     this.setState(() => ({
       receivedAmount: '',
-      swapData: undefined,
     }))
+  }
+
+  resetSwapData = () => {
+    this.setState(() => ({ swapData: undefined }))
+    this.resetReceivedAmount()
   }
 
   checkApprove = async (direction) => {
@@ -930,10 +940,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   render() {
     const { history } = this.props
     const {
-      currencies,
-      receivedList,
       baseChainWallet,
-      isPending,
       isSourceMode,
       needApproveA,
       fiat,
@@ -952,18 +959,16 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       showOrders,
       blockReason,
       slippage,
-      currentLiquidityPair,
-      liquidityErrorMessage,
     } = this.state
 
     const linked = Link.all(
       this,
-      'spendedAmount',
-      'receivedAmount',
       'slippage',
       'gasPrice',
       'gasLimit',
-      'userDeadline'
+      'userDeadline',
+      'spendedAmount',
+      'receivedAmount'
     )
 
     const insufficientBalanceA =
@@ -1014,28 +1019,18 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
             <>
               <div styleName={`${wrongNetwork ? 'disabled' : ''}`}>
                 <InputForm
+                  parentState={this.state}
                   stateReference={linked}
-                  isSourceMode={isSourceMode}
-                  sourceAction={sourceAction}
-                  currentLiquidityPair={currentLiquidityPair}
                   selectCurrency={this.selectCurrency}
                   flipCurrency={this.flipCurrency}
                   openExternalExchange={this.openExternalExchange}
                   onInputDataChange={this.onInputDataChange}
-                  currencies={currencies}
-                  receivedList={receivedList}
-                  spendedAmount={spendedAmount}
-                  spendedCurrency={spendedCurrency}
-                  receivedCurrency={receivedCurrency}
                   setSpendedAmount={this.setSpendedAmount}
-                  fiat={fiat}
-                  fromWallet={fromWallet}
-                  toWallet={toWallet}
                   updateWallets={this.updateWallets}
-                  isPending={isPending}
                   insufficientBalanceA={insufficientBalanceA}
                   insufficientBalanceB={insufficientBalanceB}
-                  resetSwapData={this.resetSwapData}
+                  resetReceivedAmount={this.resetReceivedAmount}
+                  setReceivedAmount={this.setReceivedAmount}
                 />
               </div>
 
@@ -1065,6 +1060,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
                 spendedAmount={spendedAmount}
                 needApproveA={needApproveA}
                 spendedCurrency={spendedCurrency}
+                sourceAction={sourceAction}
               />
 
               <Footer

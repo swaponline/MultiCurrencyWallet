@@ -74,27 +74,25 @@ function Footer(props: FooterProps) {
       ? LIQUIDITY_SOURCE_DATA[network.networkVersion]?.router
       : externalConfig.swapContract.zerox
 
-    let standard = fromWallet.standard
-    let name = fromWallet.tokenKey
+    let wallet = fromWallet
     let amount = spendedAmount
 
     if (direction === Direction.Receive) {
-      standard = toWallet.standard
-      name = toWallet.tokenKey
+      wallet = toWallet
       amount = receivedAmount
     }
 
     setPending(true)
 
     try {
-      const transactionHash = await actions[standard].approve({
+      const transactionHash = await actions[wallet.standard].approve({
         to: spender,
-        name,
+        name: wallet.tokenKey,
         amount,
       })
 
       actions.notifications.show(constants.notifications.Transaction, {
-        link: transactions.getLink(fromWallet.standard, transactionHash),
+        link: transactions.getLink(wallet.standard, transactionHash),
       })
 
       setPending(false)
@@ -205,7 +203,8 @@ function Footer(props: FooterProps) {
       const result = await actions.uniswap.addLiquidityCallback({
         routerAddress: LIQUIDITY_SOURCE_DATA[network.networkVersion]?.router,
         baseCurrency: baseChainWallet.currency,
-        slippage,
+        // don't use slippage for the first pair creation
+        slippage: currentLiquidityPair ? slippage : 0,
         tokenA: fromWallet.contractAddress ?? ADDRESSES.EVM_COIN_ADDRESS,
         tokenADecimals: fromWallet.decimals ?? COIN_DECIMALS,
         amountADesired: spendedAmount,
@@ -231,10 +230,6 @@ function Footer(props: FooterProps) {
     }
   }
 
-  const removeLiquidity = () => {
-    if (sourceAction !== Actions.RemoveLiquidity || !isSourceMode) return
-  }
-
   const doNotMakeApiRequest = isApiRequestBlocking()
 
   const commonBlockReasons = isPending || !!error
@@ -257,8 +252,6 @@ function Footer(props: FooterProps) {
 
   const addLiquidityIsAvailable =
     !commonBlockReasons && !needApproveA && !needApproveB && !insufficientBalanceB && formFilled
-
-  const removeLiquidityIsAvailable = !commonBlockReasons && formFilled
 
   return (
     <div styleName="footer">
@@ -313,15 +306,6 @@ function Footer(props: FooterProps) {
           brand
         >
           <FormattedMessage id="addLiquidity" defaultMessage="Add liquidity" />
-        </Button>
-      ) : sourceAction === Actions.RemoveLiquidity ? (
-        <Button
-          pending={isPending}
-          disabled={!removeLiquidityIsAvailable}
-          onClick={removeLiquidity}
-          brand
-        >
-          <FormattedMessage id="removeLiquidity" defaultMessage="Remove liquidity" />
         </Button>
       ) : null}
     </div>

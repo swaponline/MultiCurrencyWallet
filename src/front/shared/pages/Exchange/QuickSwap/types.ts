@@ -44,7 +44,6 @@ export enum Sections {
 export enum Actions {
   Swap,
   AddLiquidity,
-  RemoveLiquidity,
 }
 
 export enum Direction {

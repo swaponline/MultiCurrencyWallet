@@ -2,7 +2,7 @@ import { BigNumber } from 'bignumber.js'
 import { FormattedMessage } from 'react-intl'
 import CSSModules from 'react-css-modules'
 import styles from './index.scss'
-import { BlockReasons } from './types'
+import { BlockReasons, Actions } from './types'
 
 function Feedback(props) {
   const {
@@ -14,6 +14,7 @@ function Feedback(props) {
     needApproveA,
     spendedCurrency,
     error,
+    sourceAction,
   } = props
 
   return (
@@ -22,7 +23,7 @@ function Feedback(props) {
         <p styleName="wrong">
           <FormattedMessage id="incorrectNetwork" defaultMessage="Please choose correct network" />
         </p>
-      ) : blockReason === BlockReasons.PairDoesNotExist ? (
+      ) : blockReason === BlockReasons.PairDoesNotExist && sourceAction !== Actions.AddLiquidity ? (
         <p styleName="neutral">
           <FormattedMessage
             id="liquidityPairDoesNotExist"

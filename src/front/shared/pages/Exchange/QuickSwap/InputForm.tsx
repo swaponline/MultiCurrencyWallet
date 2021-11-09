@@ -11,7 +11,7 @@ import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import Switching from 'components/controls/Switching/Switching'
 import SelectGroup from 'components/SelectGroup'
 import { QuickSwapFormTour } from 'components/Header/WidgetTours'
-import { Direction, Actions } from './types'
+import { ComponentState, Direction, Actions, CurrencyMenuItem } from './types'
 
 const usePrevious = (value) => {
   const ref = useRef()
@@ -23,9 +23,40 @@ const usePrevious = (value) => {
   return ref.current
 }
 
-function InputForm(props) {
+type InputFormProps = {
+  user: any
+  parentState: ComponentState
+  stateReference: any
+  selectCurrency: ({ direction: Direction, value: CurrencyMenuItem }) => void
+  updateWallets: () => void
+  flipCurrency: () => void
+  openExternalExchange: () => void
+  onInputDataChange: () => void
+  resetReceivedAmount: () => void
+  setSpendedAmount: (v: string) => void
+  setReceivedAmount: (v: string) => void
+  insufficientBalanceA: boolean
+  insufficientBalanceB: boolean
+}
+
+function InputForm(props: InputFormProps) {
   const {
+    user,
+    parentState,
     stateReference,
+    setSpendedAmount,
+    selectCurrency,
+    updateWallets,
+    flipCurrency,
+    openExternalExchange,
+    onInputDataChange,
+    resetReceivedAmount,
+    setReceivedAmount,
+    insufficientBalanceA,
+    insufficientBalanceB,
+  } = props
+
+  const {
     isSourceMode,
     sourceAction,
     currencies,
@@ -33,22 +64,13 @@ function InputForm(props) {
     currentLiquidityPair,
     spendedAmount,
     spendedCurrency,
-    setSpendedAmount,
+    receivedAmount,
     receivedCurrency,
-    selectCurrency,
     fiat,
     fromWallet,
     toWallet,
-    updateWallets,
     isPending,
-    flipCurrency,
-    openExternalExchange,
-    onInputDataChange,
-    user,
-    insufficientBalanceA,
-    insufficientBalanceB,
-    resetSwapData,
-  } = props
+  } = parentState
 
   const [fromBalancePending, setFromBalancePending] = useState(false)
   const [toBalancePending, setToBalancePending] = useState(false)
@@ -144,22 +166,22 @@ function InputForm(props) {
     }
   }, [user.isBalanceFetching])
 
-  const [flagForRequest, setFlagForRequest] = useState(false)
+  const [flagForLazyChanges, setFlagForLazyChanges] = useState(false)
 
   useEffect(() => {
     let timeoutId: ReturnType<typeof setTimeout> | undefined = undefined
 
-    if (flagForRequest) {
+    if (flagForLazyChanges) {
       timeoutId = setTimeout(async () => {
         await onInputDataChange()
-        setFlagForRequest(false)
+        setFlagForLazyChanges(false)
       }, 600)
     }
 
     return () => {
       if (timeoutId) clearTimeout(timeoutId)
     }
-  }, [flagForRequest])
+  }, [flagForLazyChanges])
 
   useEffect(() => {
     onInputDataChange()
@@ -172,12 +194,18 @@ function InputForm(props) {
     setSpendedAmount(value)
 
     if (!receivedCurrency.notExist && value !== spendedAmount) {
-      setFlagForRequest(true)
+      setFlagForLazyChanges(true)
     }
 
     // there will be new external data on "every" one of our changes
     // reset the old ones
-    if (!addFirstLiquidity) resetSwapData()
+    if (!addFirstLiquidity) resetReceivedAmount()
+  }
+
+  const handleReceiveAmount = (value) => {
+    setReceivedAmount(value)
+
+    if (value !== receivedAmount) setFlagForLazyChanges(true)
   }
 
   const supportedCurrencies = ['eth', 'matic']
@@ -250,8 +278,8 @@ function InputForm(props) {
         <SelectGroup
           disabled={!addFirstLiquidity}
           activeFiat={fiat}
-          error={addFirstLiquidity && insufficientBalanceB}
-          inputValueLink={stateReference.receivedAmount}
+          error={isSourceMode && sourceAction === Actions.AddLiquidity && insufficientBalanceB}
+          inputValueLink={stateReference.receivedAmount.pipe(handleReceiveAmount)}
           selectedValue={receivedCurrency.value}
           inputId="quickSwapReceiveCurrencyInput"
           currencies={receivedList}
