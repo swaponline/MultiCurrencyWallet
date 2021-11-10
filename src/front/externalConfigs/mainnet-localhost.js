@@ -40,8 +40,9 @@ window.widgetEvmLikeTokens = [
   }
 ]
 
-window.SO_defaultQuickSell = `BNB`
-window.SO_defaultQuickBuy = `{BNB}SUBX`
+//window.SO_defaultQuickSell = `BNB`
+//window.SO_defaultQuickBuy = `{BNB}SUBX`
+//window.SO_fiatBuySupperted = [`bnb`]
 window.buildOptions = {
   ownTokens: false, // Will be inited from window.widgetEvmLikeTokens
   addCustomTokens: true, // Allow user add custom evm like tokens

@@ -5466,7 +5466,7 @@
   },
   {
     "id": "bankCardButtonDescription",
-    "message": "Na janela modal, você deve seguir várias etapas para trocar fundos fiduciários por ETH. Selecione ETH na janela e especifique o endereço de sua carteira (você pode copiá-lo abaixo). Espere até que os fundos sejam creditados em seu endereço. Então você pode comprar tokens usando-o.",
+    "message": "Na janela modal, você deve seguir várias etapas para trocar fundos fiduciários por {buyCurrency}. Selecione {buyCurrency} na janela e especifique o endereço de sua carteira (você pode copiá-lo abaixo). Espere até que os fundos sejam creditados em seu endereço. Então você pode comprar tokens usando-o.",
     "files": [
       "src/front/shared/components/Header/WidgetTours/QuickSwapFormTour.tsx",
       "src/front/shared/pages/Exchange/QuickSwap/ExchangeForm.tsx"

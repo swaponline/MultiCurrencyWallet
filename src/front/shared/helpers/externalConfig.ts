@@ -57,6 +57,7 @@ const externalConfig = () => {
       next: true,
     },
     createWalletCoinsOrder: false,
+    buyFiatSupported: ['eth', 'matic'],
     defaultExchangePair: {
       buy: '{eth}wbtc',
       sell: 'btc',
@@ -87,6 +88,12 @@ const externalConfig = () => {
     },
   }
 
+  if (window
+    && window.SO_fiatBuySupperted
+    && window.SO_fiatBuySupperted.length
+  ) {
+    config.opts.buyFiatSupported = window.SO_fiatBuySupperted
+  }
   if (window
     && window.SO_defaultQuickSell
   ) {

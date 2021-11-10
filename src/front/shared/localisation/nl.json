@@ -5466,7 +5466,7 @@
   },
   {
     "id": "bankCardButtonDescription",
-    "message": "In het modale venster, je moet gaan door middel van verschillende stappen om fiat fondsen in te wisselen voor de. Selecteer ETH in het venster en geef het adres van uw portemonnee (u kunt het hieronder kopiëren). Wacht tot het geld op uw adres is bijgeschreven. Dan kunt u tekenen kopen met behulp van het.",
+    "message": "In het modale venster, je moet gaan door middel van verschillende stappen om fiat fondsen in te wisselen voor de. Selecteer {buyCurrency} in het venster en geef het adres van uw portemonnee (u kunt het hieronder kopiëren). Wacht tot het geld op uw adres is bijgeschreven. Dan kunt u tekenen kopen met behulp van het.",
     "files": [
       "src/front/shared/components/Header/WidgetTours/QuickSwapFormTour.tsx",
       "src/front/shared/pages/Exchange/QuickSwap/ExchangeForm.tsx"

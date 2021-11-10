@@ -5470,7 +5470,7 @@
   },
   {
     "id": "bankCardButtonDescription",
-    "message": "En el modal tienes que ir a través de varios pasos para intercambiar fondos FIAT. Seleccione ETH en la ventana y especifique la dirección de tu wallet (puedes copiarla a continuación). Espera hasta que los fondos se acrediten en tu dirección.",
+    "message": "En el modal tienes que ir a través de varios pasos para intercambiar fondos FIAT. Seleccione {buyCurrency} en la ventana y especifique la dirección de tu wallet (puedes copiarla a continuación). Espera hasta que los fondos se acrediten en tu dirección.",
     "files": [
       "src/front/shared/components/Header/WidgetTours/QuickSwapFormTour.tsx",
       "src/front/shared/pages/Exchange/QuickSwap/ExchangeForm.tsx"
