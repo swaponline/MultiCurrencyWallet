@@ -55,6 +55,18 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       wrongNetwork,
     } = this.returnCurrentAssetState(allCurrencies)
 
+    if (externalConfig.opts.defaultQuickSell) {
+      const defaultSellCurrency = allCurrencies.filter((curData) => { return curData.value.toUpperCase() === externalConfig.opts.defaultQuickSell.toUpperCase() })
+      if (defaultSellCurrency.length) {
+        spendedCurrency = defaultSellCurrency[0]
+        receivedList = this.returnReceivedList(allCurrencies, spendedCurrency)
+      }
+    }
+    if (externalConfig.opts.defaultQuickBuy) {
+      const defaultBuyCurrency = allCurrencies.filter((curData) => { return curData.value.toUpperCase() === externalConfig.opts.defaultQuickBuy.toUpperCase() })
+      if (defaultBuyCurrency.length) receivedCurrency = defaultBuyCurrency[0]
+    }
+
     const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
 
     if (path.match(/\/quick\/createOrder/)) {

@@ -61,6 +61,7 @@ const externalConfig = () => {
       buy: '{eth}wbtc',
       sell: 'btc',
     },
+    defaultQuickSell: false,
     ownTokens: false,
     addCustomTokens: true,
     invoiceEnabled: !config.isWidget,
@@ -86,6 +87,16 @@ const externalConfig = () => {
     },
   }
 
+  if (window
+    && window.SO_defaultQuickSell
+  ) {
+    config.opts.defaultQuickSell = window.SO_defaultQuickSell
+  }
+  if (window
+    && window.SO_defaultQuickBuy
+  ) {
+    config.opts.defaultQuickBuy = window.SO_defaultQuickBuy
+  }
   if (window
     && window.SO_createWalletCoinsOrder
     && window.SO_createWalletCoinsOrder.length
