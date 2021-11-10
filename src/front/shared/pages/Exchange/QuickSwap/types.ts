@@ -72,6 +72,8 @@ export type ComponentState = {
   activeSection: Sections
   isPending: boolean
   isSourceMode: boolean
+  onlyAggregator: boolean
+  onlySource: boolean
   needApproveA: boolean
   needApproveB: boolean
   fiat: string

@@ -94,7 +94,7 @@ function Feedback(props) {
         <p styleName="neutralNotice">
           <FormattedMessage
             id="liquidityPoolProblem"
-            defaultMessage="There is some problem with liquidity pool. Try direct swap"
+            defaultMessage="There is some problem with liquidity pool. Try to exchange with a Source section"
           />
         </p>
       ) : blockReason === BlockReasons.Unknown ? (

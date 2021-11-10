@@ -49,6 +49,13 @@ import Feedback from './Feedback'
 import Footer from './Footer'
 import LimitOrders from 'components/LimitOrders'
 
+const QuickswapModes = {
+  aggregator: 'aggregator',
+  source: 'source',
+  only_aggregator: 'only_aggregator',
+  only_source: 'only_source',
+}
+
 class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   constructor(props) {
     super(props)
@@ -95,13 +102,40 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       currency: receivedCurrency.value,
     })
 
-    const activeSection = externalConfig.entry === 'mainnet' ? Sections.Aggregator : Sections.Source
+    const mode = QuickswapModes[window.quickswapMode]
+    let onlyAggregator = false
+    let onlySource = false
+    let activeSection = Sections.Aggregator
+
+    switch (mode) {
+      case QuickswapModes.only_aggregator:
+        activeSection = Sections.Aggregator
+        onlyAggregator = true
+        break
+      case QuickswapModes.only_source:
+        activeSection = Sections.Source
+        onlySource = true
+        break
+      case QuickswapModes.aggregator:
+        activeSection = Sections.Aggregator
+        break
+      case QuickswapModes.source:
+        activeSection = Sections.Source
+    }
+
+    // for testnets API isn't available
+    if (externalConfig.entry === 'testnet') {
+      activeSection = Sections.Source
+      onlySource = true
+    }
 
     this.state = {
       error: null,
       liquidityErrorMessage: '',
       isPending: false,
       isSourceMode: activeSection === Sections.Source,
+      onlyAggregator,
+      onlySource,
       activeSection,
       needApproveA: false,
       needApproveB: false,
@@ -700,7 +734,9 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
         spender,
       })
 
-      this.setNeedApprove(direction, new BigNumber(amount).isGreaterThan(allowance))
+      if (amount) {
+        this.setNeedApprove(direction, new BigNumber(amount).isGreaterThan(allowance))
+      }
     }
   }
 
@@ -965,7 +1001,10 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     const { history } = this.props
     const {
       baseChainWallet,
+      activeSection,
       isSourceMode,
+      onlyAggregator,
+      onlySource,
       needApproveA,
       needApproveB,
       fiat,
@@ -980,7 +1019,6 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       network,
       swapData,
       swapFee,
-      activeSection,
       showOrders,
       blockReason,
       slippage,
@@ -1024,6 +1062,8 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
 
         <section styleName="quickSwap">
           <Header
+            onlyAggregator={onlyAggregator}
+            onlySource={onlySource}
             activeSection={activeSection}
             wrongNetwork={wrongNetwork}
             receivedCurrency={receivedCurrency}

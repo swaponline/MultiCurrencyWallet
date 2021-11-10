@@ -9,6 +9,8 @@ import { Sections } from './types'
 function Header(props) {
   const {
     activeSection,
+    onlyAggregator,
+    onlySource,
     wrongNetwork,
     receivedCurrency,
     openAggregatorSection,
@@ -18,22 +20,26 @@ function Header(props) {
 
   return (
     <div styleName="header">
-      <button
-        styleName={`tab ${activeSection === Sections.Aggregator ? 'active' : ''} ${
-          externalConfig.entry === 'testnet' ? 'disabled' : ''
-        }`}
-        onClick={openAggregatorSection}
-      >
-        <FormattedMessage id="aggregator" defaultMessage="Aggregator" />
-      </button>
+      {!onlySource && (
+        <button
+          styleName={`tab ${activeSection === Sections.Aggregator ? 'active' : ''} ${
+            externalConfig.entry === 'testnet' ? 'disabled' : ''
+          }`}
+          onClick={openAggregatorSection}
+        >
+          <FormattedMessage id="aggregator" defaultMessage="Aggregator" />
+        </button>
+      )}
 
-      <button
-        id="sourceSectionDescription"
-        styleName={`tab ${activeSection === Sections.Source ? 'active' : ''}`}
-        onClick={openSourceSection}
-      >
-        <FormattedMessage id="source" defaultMessage="Source" />
-      </button>
+      {!onlyAggregator && (
+        <button
+          id="sourceSectionDescription"
+          styleName={`tab ${activeSection === Sections.Source ? 'active' : ''}`}
+          onClick={openSourceSection}
+        >
+          <FormattedMessage id="source" defaultMessage="Source" />
+        </button>
+      )}
 
       <button
         styleName={`tab ${activeSection === Sections.Settings ? 'active' : ''} ${
