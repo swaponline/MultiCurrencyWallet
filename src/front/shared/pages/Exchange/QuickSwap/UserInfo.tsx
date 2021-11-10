@@ -14,6 +14,7 @@ import Address from 'components/ui/Address/Address'
 import Copy from 'components/ui/Copy/Copy'
 import Button from 'components/controls/Button/Button'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
+import { COIN_DECIMALS } from './constants'
 
 type ComponentProps = {
   history: any
@@ -81,18 +82,21 @@ function UserInfo(props: ComponentProps) {
 
     const fromAmount = commonUtils.amount.formatWithoutDecimals(
       sellAmount,
-      fromWallet.decimals || 18
+      fromWallet.decimals ?? COIN_DECIMALS
     )
-    const toAmount = commonUtils.amount.formatWithoutDecimals(buyAmount, toWallet.decimals || 18)
-    const customDecimals = 7
+    const toAmount = commonUtils.amount.formatWithoutDecimals(
+      buyAmount,
+      toWallet.decimals ?? COIN_DECIMALS
+    )
+    const howMuchToDisplay = 7
 
-    price = `${new BigNumber(fromAmount).div(toAmount).dp(customDecimals).toString()} ${
+    price = `${new BigNumber(fromAmount).div(toAmount).dp(howMuchToDisplay).toString()} ${
       fromWallet.currency
     } / ${toWallet.currency}`
 
-    const totalAmount = new BigNumber(spendedAmount).plus(swapFee).dp(customDecimals)
+    const totalAmount = new BigNumber(spendedAmount).plus(swapFee).dp(howMuchToDisplay)
 
-    fee = `${new BigNumber(swapFee).dp(customDecimals)} ${network.currency}`
+    fee = `${new BigNumber(swapFee).dp(howMuchToDisplay)} ${network.currency}`
 
     // don't show total amount for tokens. Show only transaction fee
     if (!fromWallet.isToken) {

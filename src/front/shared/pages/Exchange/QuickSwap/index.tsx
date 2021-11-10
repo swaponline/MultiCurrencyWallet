@@ -4,6 +4,7 @@ import { BigNumber } from 'bignumber.js'
 import { FormattedMessage } from 'react-intl'
 import CSSModules from 'react-css-modules'
 import styles from './index.scss'
+import getCoinInfo from 'common/coins/getCoinInfo'
 import utils from 'common/utils'
 import erc20Like from 'common/erc20Like'
 import ADDRESSES, { EVM_COIN_ADDRESS, ZERO_ADDRESS } from 'common/helpers/constants/ADDRESSES'
@@ -21,7 +22,14 @@ import {
 import { localisedUrl } from 'helpers/locale'
 import actions from 'redux/actions'
 import Link from 'local_modules/sw-valuelink'
-import { ComponentState, Direction, BlockReasons, Sections, Actions } from './types'
+import {
+  ComponentState,
+  Direction,
+  BlockReasons,
+  Sections,
+  Actions,
+  CurrencyMenuItem,
+} from './types'
 import {
   API_NAME,
   GWEI_DECIMALS,
@@ -159,9 +167,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       const { currentCurrencies, receivedList, spendedCurrency, receivedCurrency, wrongNetwork } =
         this.returnCurrentAssetState(currencies)
 
-      const baseChainWallet = actions.core.getWallet({
-        currency: spendedCurrency.blockchain,
-      })
+      this.updateBaseChainWallet(spendedCurrency)
 
       const fromWallet = actions.core.getWallet({
         currency: spendedCurrency.value,
@@ -180,7 +186,6 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
           externalConfig.evmNetworks[
             spendedCurrency.blockchain || spendedCurrency.value.toUpperCase()
           ],
-        baseChainWallet,
         fromWallet,
         toWallet,
       }))
@@ -230,19 +235,28 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     }
   }
 
+  updateBaseChainWallet = (currencyItem: CurrencyMenuItem) => {
+    const { coin, blockchain } = getCoinInfo(currencyItem.value)
+    const baseChainWallet = actions.core.getWallet({
+      currency: blockchain || coin,
+    })
+
+    this.setState(() => ({
+      baseChainWallet,
+    }))
+  }
+
   updateNetwork = async () => {
     const { spendedCurrency } = this.state
 
-    const baseChainWallet = actions.core.getWallet({
-      currency: spendedCurrency.blockchain,
-    })
     const network =
       externalConfig.evmNetworks[spendedCurrency.blockchain || spendedCurrency.value.toUpperCase()]
+
+    this.updateBaseChainWallet(spendedCurrency)
 
     this.setState(
       () => ({
         network,
-        baseChainWallet,
       }),
       async () => {
         await this.updateCurrentPairAddress()
@@ -252,6 +266,8 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
 
   updateWallets = () => {
     const { spendedCurrency, receivedCurrency } = this.state
+
+    this.updateBaseChainWallet(spendedCurrency)
 
     const fromWallet = actions.core.getWallet({
       currency: spendedCurrency.value,
@@ -951,6 +967,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       baseChainWallet,
       isSourceMode,
       needApproveA,
+      needApproveB,
       fiat,
       spendedAmount,
       spendedCurrency,
@@ -1068,7 +1085,9 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
                 baseChainWallet={baseChainWallet}
                 spendedAmount={spendedAmount}
                 needApproveA={needApproveA}
+                needApproveB={needApproveB}
                 spendedCurrency={spendedCurrency}
+                receivedCurrency={receivedCurrency}
                 sourceAction={sourceAction}
               />
 

@@ -13,7 +13,9 @@ function Feedback(props) {
     insufficientBalance,
     wrongNetwork,
     needApproveA,
+    needApproveB,
     spendedCurrency,
+    receivedCurrency,
     error,
     sourceAction,
   } = props
@@ -51,12 +53,27 @@ function Feedback(props) {
             defaultMessage="Please top up your balance before you start the swap"
           />
         </p>
+      ) : needApproveA && needApproveB && sourceAction === Actions.AddLiquidity ? (
+        <p styleName="warningNotice">
+          <FormattedMessage
+            id="approveBothTokens"
+            defaultMessage="Please approve both tokens first"
+          />
+        </p>
       ) : needApproveA ? (
         <p styleName="warningNotice">
           <FormattedMessage
             id="approveTokenFirst"
             defaultMessage="Please approve {token} first"
             values={{ token: spendedCurrency.name }}
+          />
+        </p>
+      ) : needApproveB && sourceAction === Actions.AddLiquidity ? (
+        <p styleName="warningNotice">
+          <FormattedMessage
+            id="approveTokenFirst"
+            defaultMessage="Please approve {token} first"
+            values={{ token: receivedCurrency.name }}
           />
         </p>
       ) : blockReason === BlockReasons.InsufficientSlippage ? (
