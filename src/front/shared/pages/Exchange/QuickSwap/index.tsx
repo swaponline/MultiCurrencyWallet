@@ -1165,12 +1165,14 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
           )} */}
         </section>
 
-        <p styleName="externalServiceWarning">
-          <FormattedMessage
-            id="disclaimerAbout0x"
-            defaultMessage="* Disclaimer: the exchange uses a 3rd 0x Liquidity Protocol. Be carefully and use at your own risk."
-          />
-        </p>
+        {!isSourceMode && (
+          <p styleName="externalServiceWarning">
+            <FormattedMessage
+              id="disclaimerAbout0x"
+              defaultMessage="* Disclaimer: the exchange uses a 3rd 0x Liquidity Protocol. Be carefully and use at your own risk."
+            />
+          </p>
+        )}
 
         {/* <Button id="limitOrdersOrderbookBtn" onClick={this.toggleOrdersViability} link>
           <FormattedMessage id="limitOrders" defaultMessage="Limit orders" />
