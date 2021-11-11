@@ -1046,7 +1046,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
 
     return (
       <>
-        <TokenInstruction />
+        {onlyAggregator && <TokenInstruction />}
 
         {receivedCurrency.notExist && (
           <p styleName="noAssetsNotice">
@@ -1149,11 +1149,16 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
             </>
           )}
 
-          {!wrongNetwork && (this.mnemonicIsSaved() || metamask.isConnected()) && (
+          {/*
+          Maybe fix some problems with 1inch orders and uncomment all related to orders code
+          or the better way is to complete this issue first and enable orders again:
+          https://github.com/swaponline/MultiCurrencyWallet/issues/4896
+          */}
+          {/* {!wrongNetwork && (this.mnemonicIsSaved() || metamask.isConnected()) && (
             <Button onClick={this.createLimitOrder} link small>
               <FormattedMessage id="createLimitOrder" defaultMessage="Create limit order" />
             </Button>
-          )}
+          )} */}
         </section>
 
         <p styleName="externalServiceWarning">
@@ -1163,11 +1168,11 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
           />
         </p>
 
-        <Button id="limitOrdersOrderbookBtn" onClick={this.toggleOrdersViability} link>
+        {/* <Button id="limitOrdersOrderbookBtn" onClick={this.toggleOrdersViability} link>
           <FormattedMessage id="limitOrders" defaultMessage="Limit orders" />
         </Button>
 
-        {showOrders && <LimitOrders />}
+        {showOrders && <LimitOrders />} */}
       </>
     )
   }

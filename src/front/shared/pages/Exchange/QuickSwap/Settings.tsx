@@ -72,6 +72,7 @@ function Settings(props) {
         <>
           <InputRow
             margin
+            placeholder="auto"
             onKeyUp={keyUpHandler}
             onKeyDown={keyDownHandler}
             valueLink={stateReference.gasPrice}
@@ -91,6 +92,7 @@ function Settings(props) {
           />
 
           <InputRow
+            placeholder="auto"
             onKeyUp={keyUpHandler}
             onKeyDown={keyDownHandler}
             valueLink={stateReference.gasLimit}
