@@ -5,9 +5,11 @@ import CSSModules from 'react-css-modules'
 import styles from './index.scss'
 import { externalConfig } from 'helpers'
 import { Sections } from './types'
+import { LIQUIDITY_SOURCE_DATA } from './constants'
 
 function Header(props) {
   const {
+    network,
     activeSection,
     onlyAggregator,
     onlySource,
@@ -37,7 +39,9 @@ function Header(props) {
           styleName={`tab ${activeSection === Sections.Source ? 'active' : ''}`}
           onClick={openSourceSection}
         >
-          <FormattedMessage id="source" defaultMessage="Source" />
+          {LIQUIDITY_SOURCE_DATA[network.networkVersion]?.name || (
+            <FormattedMessage id="source" defaultMessage="Source" />
+          )}
         </button>
       )}
 

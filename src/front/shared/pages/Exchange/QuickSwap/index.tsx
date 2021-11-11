@@ -900,6 +900,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     this.setState(() => ({
       activeSection: Sections.Aggregator,
       isSourceMode: false,
+      receivedAmount: '',
     }))
   }
 
@@ -907,6 +908,8 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     this.setState(() => ({
       activeSection: Sections.Source,
       isSourceMode: true,
+      receivedAmount: '',
+      swapData: undefined,
     }))
   }
 
@@ -1062,6 +1065,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
 
         <section styleName="quickSwap">
           <Header
+            network={network}
             onlyAggregator={onlyAggregator}
             onlySource={onlySource}
             activeSection={activeSection}
