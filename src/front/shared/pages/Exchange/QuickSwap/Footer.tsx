@@ -246,6 +246,8 @@ function Footer(props: FooterProps) {
   const approveBIsAvailable =
     !commonBlockReasons && !insufficientBalanceB && receivedAmount && needApproveB
 
+  const approveBIsNecessary = isSourceMode && sourceAction === Actions.AddLiquidity
+
   const apiSwapIsAvailable = swapData && !doNotMakeApiRequest && !commonBlockReasons && formFilled
 
   const directSwapIsAvailable =
@@ -256,42 +258,35 @@ function Footer(props: FooterProps) {
 
   return (
     <div styleName="footer">
-      <div styleName="approveButtons">
-        {needApproveA && (
-          <Button
-            pending={isPending}
-            disabled={!approveAIsAvailable || approvingDoesNotMakeSense}
-            onClick={() => approve(Direction.Spend)}
-            fullWidth
-            brand
-          >
-            <FormattedMessage
-              id="FormattedMessageIdApprove"
-              defaultMessage="Approve {token}"
-              values={{ token: spendedCurrency.name }}
-            />
-          </Button>
-        )}
-        {/* we need to approve the second token only for liquidity addition.
-        The router need to pick up both of our assets */}
-        {needApproveB && isSourceMode && sourceAction === Actions.AddLiquidity && (
-          <Button
-            pending={isPending}
-            disabled={!approveBIsAvailable || approvingDoesNotMakeSense}
-            onClick={() => approve(Direction.Receive)}
-            fullWidth
-            brand
-          >
-            <FormattedMessage
-              id="FormattedMessageIdApprove"
-              defaultMessage="Approve {token}"
-              values={{ token: receivedCurrency.name }}
-            />
-          </Button>
-        )}
-      </div>
-
-      {!isSourceMode ? (
+      {needApproveA ? (
+        <Button
+          pending={isPending}
+          disabled={!approveAIsAvailable || approvingDoesNotMakeSense}
+          onClick={() => approve(Direction.Spend)}
+          fullWidth
+          brand
+        >
+          <FormattedMessage
+            id="FormattedMessageIdApprove"
+            defaultMessage="Approve {token}"
+            values={{ token: spendedCurrency.name }}
+          />
+        </Button>
+      ) : needApproveB && approveBIsNecessary ? (
+        <Button
+          pending={isPending}
+          disabled={!approveBIsAvailable || approvingDoesNotMakeSense}
+          onClick={() => approve(Direction.Receive)}
+          fullWidth
+          brand
+        >
+          <FormattedMessage
+            id="FormattedMessageIdApprove"
+            defaultMessage="Approve {token}"
+            values={{ token: receivedCurrency.name }}
+          />
+        </Button>
+      ) : !isSourceMode ? (
         <Button pending={isPending} disabled={!apiSwapIsAvailable} onClick={apiSwap} brand>
           <FormattedMessage id="swap" defaultMessage="Swap" />
         </Button>

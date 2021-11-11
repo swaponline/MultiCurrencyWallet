@@ -57,6 +57,7 @@ function Settings(props) {
 
       {isSourceMode && (
         <InputRow
+          margin
           onKeyDown={inputReplaceCommaWithDot}
           valueLink={stateReference.userDeadline}
           labelMessage={
@@ -68,46 +69,44 @@ function Settings(props) {
         />
       )}
 
-      {!isSourceMode && (
-        <>
-          <InputRow
-            margin
-            placeholder="auto"
-            onKeyUp={keyUpHandler}
-            onKeyDown={keyDownHandler}
-            valueLink={stateReference.gasPrice}
-            labelMessage={
-              <>
-                <FormattedMessage id="gasPrice" defaultMessage="Gas price" /> (GWEI)
-              </>
-            }
-            labelTooltip={
-              <Tooltip id="gasPriceTooltip">
-                <FormattedMessage
-                  id="gasPriceNotice"
-                  defaultMessage="Gas price specifies the amount of Ether you are willing to pay for each unit of gas"
-                />
-              </Tooltip>
-            }
-          />
+      <InputRow
+        margin
+        disabled={isSourceMode}
+        placeholder="auto"
+        onKeyUp={keyUpHandler}
+        onKeyDown={keyDownHandler}
+        valueLink={stateReference.gasPrice}
+        labelMessage={
+          <>
+            <FormattedMessage id="gasPrice" defaultMessage="Gas price" /> (GWEI)
+          </>
+        }
+        labelTooltip={
+          <Tooltip id="gasPriceTooltip">
+            <FormattedMessage
+              id="gasPriceNotice"
+              defaultMessage="Gas price specifies the amount of Ether you are willing to pay for each unit of gas"
+            />
+          </Tooltip>
+        }
+      />
 
-          <InputRow
-            placeholder="auto"
-            onKeyUp={keyUpHandler}
-            onKeyDown={keyDownHandler}
-            valueLink={stateReference.gasLimit}
-            labelMessage={<FormattedMessage id="gasLimit" defaultMessage="Gas limit" />}
-            labelTooltip={
-              <Tooltip id="gasLimitTooltip">
-                <FormattedMessage
-                  id="gasLimitNotice"
-                  defaultMessage="Gas limit is the maximum amount of units of gas you are willing to spend"
-                />
-              </Tooltip>
-            }
-          />
-        </>
-      )}
+      <InputRow
+        disabled={isSourceMode}
+        placeholder="auto"
+        onKeyUp={keyUpHandler}
+        onKeyDown={keyDownHandler}
+        valueLink={stateReference.gasLimit}
+        labelMessage={<FormattedMessage id="gasLimit" defaultMessage="Gas limit" />}
+        labelTooltip={
+          <Tooltip id="gasLimitTooltip">
+            <FormattedMessage
+              id="gasLimitNotice"
+              defaultMessage="Gas limit is the maximum amount of units of gas you are willing to spend"
+            />
+          </Tooltip>
+        }
+      />
 
       <div styleName="messagesWrapper">
         {lowSlippage ? (

@@ -44,7 +44,7 @@ $maxWidth: 38em;
 
 .disabled {
   pointer-events: none;
-  opacity: 0.4;
+  opacity: 0.6;
 }
 
 .inputWrapper {
@@ -208,15 +208,6 @@ $maxWidth: 38em;
     &:not(:first-child) {
       margin-top: 0.5rem;
     }
-  }
-}
-
-.approveButtons {
-  display: flex;
-  justify-content: space-between;
-
-  button:not(:last-child) {
-    margin-right: 0.4rem;
   }
 }
 
