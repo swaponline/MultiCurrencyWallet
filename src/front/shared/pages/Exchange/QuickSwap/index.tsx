@@ -404,8 +404,8 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   createSwapRequest = (skipValidation = false) => {
     const { slippage, spendedAmount, fromWallet, toWallet } = this.state
 
-    const sellToken = fromWallet?.contractAddress ?? ADDRESSES.EVM_COIN_ADDRESS
-    const buyToken = toWallet?.contractAddress ?? ADDRESSES.EVM_COIN_ADDRESS
+    const sellToken = fromWallet?.contractAddress || ADDRESSES.EVM_COIN_ADDRESS
+    const buyToken = toWallet?.contractAddress || ADDRESSES.EVM_COIN_ADDRESS
 
     const sellAmount = utils.amount.formatWithDecimals(
       spendedAmount,
@@ -578,8 +578,8 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
 
   updateCurrentPairAddress = async () => {
     const { network, baseChainWallet, fromWallet, toWallet } = this.state
-    const tokenA = fromWallet?.contractAddress ?? ADDRESSES.EVM_COIN_ADDRESS
-    const tokenB = toWallet?.contractAddress ?? ADDRESSES.EVM_COIN_ADDRESS
+    const tokenA = fromWallet?.contractAddress || ADDRESSES.EVM_COIN_ADDRESS
+    const tokenB = toWallet?.contractAddress || ADDRESSES.EVM_COIN_ADDRESS
 
     let pairAddress = cacheStorageGet(
       'quickswapLiquidityPair',
