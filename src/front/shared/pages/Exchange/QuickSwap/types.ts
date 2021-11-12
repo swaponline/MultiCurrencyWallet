@@ -35,40 +35,15 @@ export type Network = {
   blockExplorerUrls: string[]
 }
 
-export type ComponentState = {
-  externalExchangeReference: null | IUniversalObj
-  externalWindowTimer: null | NodeJS.Timeout
-  currencies: CurrencyMenuItem[]
-  receivedList: CurrencyMenuItem[]
-  baseChainWallet: IUniversalObj
-  error: IError | null
-  isPending: boolean
-  isDataPending: boolean
-  isSwapPending: boolean
-  needApprove: boolean
-  fiat: string
-  fiatAmount: number
-  spendedCurrency: CurrencyMenuItem
-  spendedAmount: string
-  fromWallet: IUniversalObj
-  receivedCurrency: CurrencyMenuItem
-  receivedAmount: string
-  toWallet: IUniversalObj
-  slippage: number
-  slippageMaxRange: number
-  wrongNetwork: boolean
-  network: Network
-  isAdvancedMode: boolean
-  isDirectSwap: boolean
-  swapData: SwapData | undefined
-  swapFee: string
-  gasPrice: string
-  gasLimit: string
-  showOrders: boolean
-  mnemonicSaved: boolean
-  blockReason: SwapBlockReason | undefined
-  coinDecimals: 18
-  liquidityErrorMessage: string
+export enum Sections {
+  Aggregator,
+  Source,
+  Settings,
+}
+
+export enum Actions {
+  Swap,
+  AddLiquidity,
 }
 
 export enum Direction {
@@ -76,11 +51,49 @@ export enum Direction {
   Receive,
 }
 
-export enum SwapBlockReason {
+export enum BlockReasons {
   InsufficientSlippage,
   NoLiquidity,
   NoBalance,
   NoBaseCurrencyBalance,
   Liquidity,
+  PairDoesNotExist,
   Unknown,
+}
+
+export type ComponentState = {
+  externalExchangeReference: null | IUniversalObj
+  externalWindowTimer: null | NodeJS.Timeout
+  currentLiquidityPair: null | string
+  currencies: CurrencyMenuItem[]
+  receivedList: CurrencyMenuItem[]
+  baseChainWallet: IUniversalObj
+  error: IError | null
+  activeSection: Sections
+  isPending: boolean
+  isSourceMode: boolean
+  onlyAggregator: boolean
+  onlySource: boolean
+  needApproveA: boolean
+  needApproveB: boolean
+  fiat: string
+  spendedCurrency: CurrencyMenuItem
+  spendedAmount: string
+  fromWallet: IUniversalObj
+  receivedCurrency: CurrencyMenuItem
+  receivedAmount: string
+  toWallet: IUniversalObj
+  sourceAction: Actions
+  slippage: number
+  userDeadline: number
+  slippageMaxRange: number
+  wrongNetwork: boolean
+  network: Network
+  swapData: SwapData | undefined
+  swapFee: string
+  gasPrice: string
+  gasLimit: string
+  showOrders: boolean
+  blockReason: BlockReasons | undefined
+  liquidityErrorMessage: string
 }

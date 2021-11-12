@@ -321,16 +321,20 @@ const externalConfig = () => {
 
     // add currency commissions for tokens
     if (hasTokenAdminFee) {
-      const feeObj = config.opts.fee
+      const feeOpts = config.opts.fee
 
       Object.keys(TOKEN_STANDARDS).forEach((key) => {
         const standard = TOKEN_STANDARDS[key].standard.toLowerCase()
         const baseCurrency = TOKEN_STANDARDS[key].currency.toLowerCase()
-        const currencyFee = feeObj[baseCurrency]
+        const currencyFee = feeOpts[baseCurrency]
+
+        if (!feeOpts[standard]) {
+          feeOpts[standard] = {}
+        }
 
         if (currencyFee?.min && currencyFee?.fee) {
-          feeObj[standard].min = currencyFee.min
-          feeObj[standard].fee = currencyFee.fee
+          feeOpts[standard].min = currencyFee.min
+          feeOpts[standard].fee = currencyFee.fee
         }
       })
     }

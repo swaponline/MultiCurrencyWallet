@@ -26,7 +26,7 @@
     "message": "Create wallet",
     "files": [
       "src/front/shared/components/Header/config.tsx",
-      "src/front/shared/pages/Exchange/QuickSwap/index.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/UserInfo.tsx",
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
     ]
   },
@@ -316,9 +316,7 @@
     "files": [
       "src/front/shared/pages/Exchange/AtomicSwap.tsx",
       "src/front/shared/pages/Exchange/Orders/MyOrders/MyOrders.tsx",
-      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx",
-      "src/front/shared/pages/Exchange/QuickSwap/DirectSwap.tsx",
-      "src/front/shared/pages/Exchange/QuickSwap/ExchangeForm.tsx"
+      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
     ]
   },
   {
@@ -353,7 +351,7 @@
     "message": "Price",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx",
-      "src/front/shared/pages/Exchange/QuickSwap/SwapInfo.tsx"
+      "src/front/shared/pages/Exchange/QuickSwap/UserInfo.tsx"
     ]
   },
   {
@@ -498,7 +496,7 @@
     "message": "Enter \"You send\" amount",
     "files": [
       "src/front/shared/pages/Exchange/AtomicSwap.tsx",
-      "src/front/shared/pages/Exchange/QuickSwap/NoSwapsReasons.tsx"
+      "src/front/shared/pages/Exchange/QuickSwap/Feedback.tsx"
     ]
   },
   {
@@ -578,7 +576,7 @@
       "src/front/shared/components/modals/LimitOrder/ModalForm.tsx",
       "src/front/shared/components/modals/WalletConnectAccount/WalletConnectAccount.tsx",
       "src/front/shared/pages/Exchange/AtomicSwap.tsx",
-      "src/front/shared/pages/Exchange/QuickSwap/NoSwapsReasons.tsx"
+      "src/front/shared/pages/Exchange/QuickSwap/Feedback.tsx"
     ]
   },
   {
@@ -615,9 +613,7 @@
     "files": [
       "src/front/shared/components/LimitOrders/OrderSettings.tsx",
       "src/front/shared/components/LimitOrders/index.tsx",
-      "src/front/shared/pages/Exchange/AtomicSwap.tsx",
-      "src/front/shared/pages/Exchange/QuickSwap/DirectSwap.tsx",
-      "src/front/shared/pages/Exchange/QuickSwap/ExchangeForm.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
@@ -781,7 +777,7 @@
     "message": "Balance: ",
     "files": [
       "src/front/shared/pages/Exchange/AtomicSwap.tsx",
-      "src/front/shared/pages/Exchange/QuickSwap/ExchangeForm.tsx"
+      "src/front/shared/pages/Exchange/QuickSwap/InputForm.tsx"
     ]
   },
   {
@@ -4056,7 +4052,7 @@
     "message": "Please top up your balance before you start the swap.",
     "files": [
       "src/front/shared/pages/Exchange/AtomicSwap.tsx",
-      "src/front/shared/pages/Exchange/QuickSwap/NoSwapsReasons.tsx"
+      "src/front/shared/pages/Exchange/QuickSwap/Feedback.tsx"
     ]
   },
   {
@@ -4105,7 +4101,7 @@
     "id": "BTCMS_SaveMnemonicButton",
     "message": "Save secret phrase",
     "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/index.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/UserInfo.tsx",
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx",
       "src/front/shared/pages/Multisign/Btc/Btc.tsx"
     ]
@@ -4423,7 +4419,7 @@
       "src/front/shared/components/Header/WalletConnect/index.tsx",
       "src/front/shared/components/modals/WalletConnectAccount/WalletConnectAccount.tsx",
       "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx",
-      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
+      "src/front/shared/pages/Exchange/QuickSwap/UserInfo.tsx"
     ]
   },
   {
@@ -4844,7 +4840,7 @@
     "files": [
       "src/front/shared/components/modals/LimitOrder/ModalForm.tsx",
       "src/front/shared/pages/Exchange/AtomicSwap.tsx",
-      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
+      "src/front/shared/pages/Exchange/QuickSwap/Footer.tsx"
     ]
   },
   {
@@ -5469,7 +5465,7 @@
     "message": "In the modal window, you have to go through several steps to exchange fiat funds for ETH. Select ETH in the window and specify the address of your wallet (you can copy it below). Wait until the funds are credited to your address. Then you can buy tokens using it.",
     "files": [
       "src/front/shared/components/Header/WidgetTours/QuickSwapFormTour.tsx",
-      "src/front/shared/pages/Exchange/QuickSwap/ExchangeForm.tsx"
+      "src/front/shared/pages/Exchange/QuickSwap/InputForm.tsx"
     ]
   },
   {
@@ -5573,38 +5569,31 @@
     ]
   },
   {
-    "id": "advancedSettings",
-    "message": "Advanced settings",
-    "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/AdvancedSettings.tsx"
-    ]
-  },
-  {
     "id": "gasLimit",
     "message": "Gas limit",
     "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/AdvancedSettings.tsx"
+      "src/front/shared/pages/Exchange/QuickSwap/Settings.tsx"
     ]
   },
   {
     "id": "gasLimitNotice",
     "message": "Gas limit is the maximum amount of units of gas you are willing to spend",
     "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/AdvancedSettings.tsx"
+      "src/front/shared/pages/Exchange/QuickSwap/Settings.tsx"
     ]
   },
   {
     "id": "gasPrice",
     "message": "Gas price",
     "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/AdvancedSettings.tsx"
+      "src/front/shared/pages/Exchange/QuickSwap/Settings.tsx"
     ]
   },
   {
     "id": "gasPriceNotice",
     "message": "Gas price specifies the amount of Ether you are willing to pay for each unit of gas",
     "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/AdvancedSettings.tsx"
+      "src/front/shared/pages/Exchange/QuickSwap/Settings.tsx"
     ]
   },
   {
@@ -5625,15 +5614,15 @@
     "id": "swap",
     "message": "Swap",
     "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/DirectSwap.tsx",
-      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
+      "src/front/shared/pages/Exchange/QuickSwap/Footer.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/SourceActions.tsx"
     ]
   },
   {
     "id": "fee",
     "message": "Fee",
     "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/SwapInfo.tsx"
+      "src/front/shared/pages/Exchange/QuickSwap/UserInfo.tsx"
     ]
   },
   {
@@ -5641,45 +5630,44 @@
     "message": "Network",
     "files": [
       "src/front/shared/components/modals/WalletConnectAccount/WalletConnectAccount.tsx",
-      "src/front/shared/pages/Exchange/QuickSwap/SwapInfo.tsx"
+      "src/front/shared/pages/Exchange/QuickSwap/UserInfo.tsx"
     ]
   },
   {
     "id": "buyViaBankCard",
     "message": "Buy via bank card",
     "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/ExchangeForm.tsx"
+      "src/front/shared/pages/Exchange/QuickSwap/InputForm.tsx"
     ]
   },
   {
     "id": "slippageNotice",
-    "message": "If the price changes between the time your order is placed and confirmed it’s called “slippage”. Your swap will automatically cancel if slippage exceeds your “max slippage” setting",
+    "message": "Your transaction will revert if the price changes unfavorably by more than this percentage",
     "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/AdvancedSettings.tsx",
-      "src/front/shared/pages/Exchange/QuickSwap/DirectSwap.tsx"
+      "src/front/shared/pages/Exchange/QuickSwap/Settings.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/UserInfo.tsx"
     ]
   },
   {
     "id": "slippageTolerance",
     "message": "Slippage tolerance",
     "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/AdvancedSettings.tsx",
-      "src/front/shared/pages/Exchange/QuickSwap/DirectSwap.tsx",
-      "src/front/shared/pages/Exchange/QuickSwap/ExchangeForm.tsx"
+      "src/front/shared/pages/Exchange/QuickSwap/Settings.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/UserInfo.tsx"
     ]
   },
   {
     "id": "addressOfYourWallet",
     "message": "Address of your wallet:",
     "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
+      "src/front/shared/pages/Exchange/QuickSwap/UserInfo.tsx"
     ]
   },
   {
     "id": "total",
     "message": "Total",
     "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/SwapInfo.tsx"
+      "src/front/shared/pages/Exchange/QuickSwap/UserInfo.tsx"
     ]
   },
   {
@@ -5722,77 +5710,77 @@
     "id": "insufficientLiquidity",
     "message": "Insufficient pool liquidity",
     "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/NoSwapsReasons.tsx"
+      "src/front/shared/pages/Exchange/QuickSwap/Feedback.tsx"
     ]
   },
   {
     "id": "addNewCurrencyMessage",
     "message": "On the wallet page, click the add currency button.",
     "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/NewTokenInstruction.tsx"
+      "src/front/shared/pages/Exchange/QuickSwap/TokenInstruction.tsx"
     ]
   },
   {
     "id": "checkTokenInTheSwapList",
     "message": "Now you can see you token in the list.",
     "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/NewTokenInstruction.tsx"
+      "src/front/shared/pages/Exchange/QuickSwap/TokenInstruction.tsx"
     ]
   },
   {
     "id": "choseTokenStandard",
     "message": "Chose a token standard and click the continue button.",
     "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/NewTokenInstruction.tsx"
+      "src/front/shared/pages/Exchange/QuickSwap/TokenInstruction.tsx"
     ]
   },
   {
     "id": "confirmTokenAddition",
     "message": "Check the information and confirm token addition.",
     "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/NewTokenInstruction.tsx"
+      "src/front/shared/pages/Exchange/QuickSwap/TokenInstruction.tsx"
     ]
   },
   {
     "id": "createNewPoolInAggregates",
     "message": "Chose one of supported sources and create there a new pool with your token.",
     "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/NewTokenInstruction.tsx"
+      "src/front/shared/pages/Exchange/QuickSwap/TokenInstruction.tsx"
     ]
   },
   {
     "id": "detailedInformation",
     "message": "Detailed information",
     "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/NewTokenInstruction.tsx"
+      "src/front/shared/pages/Exchange/QuickSwap/TokenInstruction.tsx"
     ]
   },
   {
     "id": "enterTokenContractAddress",
     "message": "Enter a token contract address.",
     "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/NewTokenInstruction.tsx"
+      "src/front/shared/pages/Exchange/QuickSwap/TokenInstruction.tsx"
     ]
   },
   {
     "id": "howToAddToken",
     "message": "How to add a token",
     "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/NewTokenInstruction.tsx"
+      "src/front/shared/pages/Exchange/QuickSwap/TokenInstruction.tsx"
     ]
   },
   {
     "id": "ifYouDoNotSeeNewToken",
     "message": "You will not be able to exchange some tokens, because there may not be an available liquidity pool with your token. You have to create a new one if you want to exchange it.",
     "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/NewTokenInstruction.tsx"
+      "src/front/shared/pages/Exchange/QuickSwap/TokenInstruction.tsx"
     ]
   },
   {
     "id": "youWillSeeYourToken",
     "message": "After determining a liquidity pool with your token, it will be available for exchange.",
     "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/NewTokenInstruction.tsx"
+      "src/front/shared/pages/Exchange/QuickSwap/TokenInstruction.tsx"
     ]
   },
   {
@@ -5845,8 +5833,7 @@
     "id": "insufficientSlippage",
     "message": "Insufficient slippage. Try to increase it",
     "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/DirectSwap.tsx",
-      "src/front/shared/pages/Exchange/QuickSwap/NoSwapsReasons.tsx"
+      "src/front/shared/pages/Exchange/QuickSwap/Feedback.tsx"
     ]
   },
   {
@@ -5895,7 +5882,7 @@
     "id": "approveTokenFirst",
     "message": "Please approve {token} first",
     "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/NoSwapsReasons.tsx"
+      "src/front/shared/pages/Exchange/QuickSwap/Feedback.tsx"
     ]
   },
   {
@@ -5920,7 +5907,7 @@
     "id": "unknownSwapProblemHasOccurred",
     "message": "Unknown problem has occurred. Probably we can't exchange this pair",
     "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/NoSwapsReasons.tsx"
+      "src/front/shared/pages/Exchange/QuickSwap/Feedback.tsx"
     ]
   },
   {
@@ -5931,67 +5918,89 @@
     ]
   },
   {
-    "id": "directSwap",
-    "message": "Direct swap",
-    "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/DirectSwap.tsx",
-      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
-    ]
-  },
-  {
-    "id": "guaranteedPrice",
-    "message": "Guaranteed price",
-    "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/DirectSwap.tsx"
-    ]
-  },
-  {
     "id": "invalidSlippagePercent",
     "message": "Invalid slippage percent",
     "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/DirectSwap.tsx"
+      "src/front/shared/pages/Exchange/QuickSwap/Settings.tsx"
     ]
   },
   {
     "id": "source",
     "message": "Source",
     "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/DirectSwap.tsx"
+      "src/front/shared/pages/Exchange/QuickSwap/Header.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/UserInfo.tsx"
     ]
   },
   {
     "id": "transactionDeadline",
     "message": "Transaction deadline (minutes)",
     "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/DirectSwap.tsx"
+      "src/front/shared/pages/Exchange/QuickSwap/Settings.tsx"
     ]
   },
   {
     "id": "transactionMayBeFrontrun",
     "message": "Transaction may be frontrun",
     "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/DirectSwap.tsx"
+      "src/front/shared/pages/Exchange/QuickSwap/Settings.tsx"
     ]
   },
   {
     "id": "transactionMayFail",
     "message": "Transaction may fail",
     "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/DirectSwap.tsx"
+      "src/front/shared/pages/Exchange/QuickSwap/Settings.tsx"
     ]
   },
   {
     "id": "liquidityPoolProblem",
-    "message": "There is some problem with liquidity pool. Try direct swap",
+    "message": "There is some problem with liquidity pool. Try to exchange with a Source section",
     "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/NoSwapsReasons.tsx"
+      "src/front/shared/pages/Exchange/QuickSwap/Feedback.tsx"
     ]
   },
   {
     "id": "doNotHaveNativeCurrencyBalance",
     "message": "You do not have native currency balance to pay the transaction fee",
     "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/NoSwapsReasons.tsx"
+      "src/front/shared/pages/Exchange/QuickSwap/Feedback.tsx"
+    ]
+  },
+  {
+    "id": "addLiquidity",
+    "message": "Add liquidity",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/Footer.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/SourceActions.tsx"
+    ]
+  },
+  {
+    "id": "approveBothTokens",
+    "message": "Please approve both tokens first",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/Feedback.tsx"
+    ]
+  },
+  {
+    "id": "liquidityPairDoesNotExist",
+    "message": "This pair does not have liquidity. You can create a new one and be the first liquidity provider",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/Feedback.tsx"
+    ]
+  },
+  {
+    "id": "aggregator",
+    "message": "Aggregator",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/Header.tsx"
+    ]
+  },
+  {
+    "id": "settings",
+    "message": "Settings",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/Header.tsx"
     ]
   }
 ]

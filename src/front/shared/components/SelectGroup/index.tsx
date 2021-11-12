@@ -46,7 +46,7 @@ const SelectGroup = (props) => {
   return (
     <div styleName="selectGroup">
       <div styleName="row">
-        <strong styleName="label">{label}</strong>
+        {label && <strong styleName="label">{label}</strong>}
 
         {tooltip && (
           <div styleName="smallTooltip">
@@ -97,7 +97,7 @@ const SelectGroup = (props) => {
           currencies={currAllowed}
         />
       </div>
-      {label.props.defaultMessage === 'You sell' &&
+      {label?.props?.defaultMessage === 'You sell' &&
         !extendedControls &&
         (canСalculate ? (
           !isToken && (

@@ -2186,7 +2186,7 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
             <>
               <Button
                 id="createOrderReactTooltipMessageForUser"
-                styleName={`button ${haveBalance ? '' : 'noMany'}`}
+                styleName={`button ${haveBalance ? '' : 'noMoney'}`}
                 //@ts-ignore: strictNullChecks
                 onClick={haveBalance ? this.createOffer : null}
                 link
@@ -2194,29 +2194,23 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
                 <FormattedMessage id="orders128" defaultMessage="Create offer" />
               </Button>
 
-              {haveBalance ? (
-                <ThemeTooltip
-                  id="createOrderReactTooltipMessageForUser"
-                  effect="solid"
-                  place="bottom"
-                >
+              <ThemeTooltip
+                id="createOrderReactTooltipMessageForUser"
+                effect="solid"
+                place="bottom"
+              >
+                {haveBalance ? (
                   <FormattedMessage
                     id="createOrderMessageForUser"
                     defaultMessage="You must be online all the time, otherwise your order will not be visible to other users"
                   />
-                </ThemeTooltip>
-              ) : (
-                <ThemeTooltip
-                  id="createOrderReactTooltipMessageForUser"
-                  effect="solid"
-                  place="bottom"
-                >
+                ) : (
                   <FormattedMessage
                     id="createOrderNoManyMessageForUser"
                     defaultMessage="Top up your balance"
                   />
-                </ThemeTooltip>
-              )}
+                )}
+              </ThemeTooltip>
             </>
             {(!isWidgetBuild || isDevBuild) && (
               <>

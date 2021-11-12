@@ -1,6 +1,6 @@
 import Web3 from 'web3'
 import config from 'app-config'
-import TokenApi from 'human-standard-token-abi'
+import TokenAbi from 'human-standard-token-abi'
 import { BigNumber } from 'bignumber.js'
 import DEFAULT_CURRENCY_PARAMETERS from 'common/helpers/constants/DEFAULT_CURRENCY_PARAMETERS'
 import TOKEN_STANDARDS from 'helpers/constants/TOKEN_STANDARDS'
@@ -85,7 +85,7 @@ class erc20LikeHelper {
   }): Promise<number> => {
     const { owner, spender, contract, decimals } = params
     const Web3 = this.getCurrentWeb3()
-    const tokenContract = new Web3.eth.Contract(TokenApi, contract, {
+    const tokenContract = new Web3.eth.Contract(TokenAbi, contract, {
       from: owner,
     })
 

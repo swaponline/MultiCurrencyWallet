@@ -1,95 +1,68 @@
-.newTokenInstruction {
-  max-width: 38em;
-  margin: 0 auto 0.2rem;
-  border-radius: var(--main-component-border-radius);
-  text-align: left;
-  border: 1px solid transparent;
-  background-color: var(--color-pale);
-
-  &.open {
-    border-color: var(--color-border);
-
-    .tab {
-      .arrow {
-        @include arrow('up', 9px, 2px, var(--color-notice));
-      }
-    }
-  }
-
-  .tab {
-    width: 100%;
-    padding: 0.4rem 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-radius: inherit;
-  }
-
-  .arrow {
-    @include arrow('down', 9px, 2px, var(--color-notice));
-  }
-
-  .content {
-    padding: 0.8rem 1rem;
-    font-size: 0.94em;
-
-    .paragraph {
-      margin: 1rem 0;
-      font-size: 1em;
-    }
-
-    ol {
-      margin: 0;
-      padding: 0;
-      padding-left: 1rem;
-    }
-  }
-}
-
-.liquiditySourcesLink {
-  display: inline-block;
-  margin-top: 0.8rem;
-}
+$maxWidth: 38em;
 
 .quickSwap {
-  max-width: 38em;
+  position: relative;
+  max-width: $maxWidth;
   margin: 0.6rem auto 1rem;
-  padding: 2rem;
-  padding-bottom: 1.6rem;
+  padding: 1rem 1.4rem;
+  padding-bottom: 1.4rem;
   border-radius: var(--main-component-border-radius);
   text-align: center;
   box-shadow: var(--box-shadow);
   background: var(--color-background-elements);
 }
 
+.header {
+  margin-bottom: 1.6rem;
+  display: flex;
+  font-size: 0.9rem;
+
+  .tab {
+    flex: 1;
+    padding: 0.3rem 0.8rem;
+    border-radius: 4px;
+    border: 1px solid var(--color-border);
+
+    &:first-child {
+      border-radius: 6px 0 0 6px;
+    }
+
+    &:last-child {
+      border-radius: 0 6px 6px 0;
+    }
+
+    &:not(:first-of-type) {
+      border-left: none;
+    }
+
+    &.active {
+      background-color: var(--color-inactive-border);
+      border-color: var(--color-inactive-border);
+    }
+  }
+}
+
 .disabled {
   pointer-events: none;
-  opacity: 0.4;
+  opacity: 0.6;
 }
 
 .inputWrapper {
   position: relative;
 }
 
-.walletAddress {
+.userInfo {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  margin: 1.2rem 0;
+  margin: 0 0 0.7rem;
+  padding: 0.4rem 0.6rem;
+  border-radius: 0.4rem;
+  border: 1px solid var(--color-border);
   color: var(--color-indicating);
 
   .connectWalletBtn {
     margin-bottom: 0.5rem;
-  }
-
-  .address {
-    font-size: 0.87em;
-  }
-}
-
-.advancedInput {
-  input {
-    height: 3.5em;
   }
 }
 
@@ -168,75 +141,28 @@
   }
 }
 
-.slippageIndicator {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.9rem;
-  color: var(--color-indicating);
-}
-
-.advancedSettings {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-
-  form {
-    margin-top: 1.4rem;
-  }
-}
-
-.toggleWrapper {
-  position: relative;
-  display: flex;
-  align-items: center;
-
-  .name {
-    margin: 0;
-    margin-left: 0.6rem;
-  }
-
-  label {
-    margin: 0.5rem 0.3rem 0.5rem 0;
-  }
-}
-
-.settings {
-  width: 100%;
-  border-radius: 6px;
-}
-
-.swapInfo {
-  margin-bottom: 1.4rem;
-  padding-top: 1rem;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  border-radius: 5px;
-  color: var(--color-notice);
-}
-
-.loaderWrapper {
-  display: inline-block;
-  margin: 0.8rem 0;
-  opacity: 0.7;
-}
-
 .indicator {
+  @include ff-semibold;
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
-  font-weight: 700;
+  justify-content: space-between;
 
-  span {
+  &:not(:last-child) {
+    margin-bottom: 0.3rem;
+  }
+
+  .value {
     @include ff-mono;
     display: inline-block;
-    font-weight: 400;
-    margin-left: 0.3rem;
 
     &:not(:first-child) {
       margin-left: 0.5rem;
     }
+  }
+
+  .address {
+    font-size: 0.87em;
   }
 }
 
@@ -246,7 +172,7 @@
   $bg-color: var(--color-background)
 ) {
   @include ff-semibold;
-  padding: 0.5rem;
+  padding: 0.4rem 0.6rem;
   text-align: left;
   border-radius: 0.2rem;
   border: 1px solid $borderColor;
@@ -256,25 +182,23 @@
 
 .noAssetsNotice {
   @include notice(var(--color-bad), var(--color-bad));
-  max-width: 38em;
+  max-width: $maxWidth;
   margin: 0.6rem auto;
 }
 
-.reasons {
-  .wrong {
-    @include notice(var(--color-f-error), var(--color-f-error));
-  }
-
-  .warning {
-    @include notice($bg-color: var(--color-warning));
-  }
-
-  .neutral {
-    @include notice();
-  }
+.dangerousNotice {
+  @include notice(var(--color-f-error), var(--color-f-error));
 }
 
-.buttonWrapper {
+.warningNotice {
+  @include notice($bg-color: var(--color-warning));
+}
+
+.neutralNotice {
+  @include notice();
+}
+
+.footer {
   margin-bottom: 0.9rem;
   display: flex;
   flex-direction: column;
@@ -305,12 +229,6 @@
   .balanceTooltip {
     .title {
       display: none;
-    }
-  }
-
-  .toggleWrapper {
-    .name {
-      margin-left: 1rem;
     }
   }
 }

@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 import CSSModules from 'react-css-modules'
 import styles from './index.scss'
-import { externalConfig, localStorage, constants, links } from 'helpers'
+import { localStorage, constants, links } from 'helpers'
 import QuickSwap from './QuickSwap'
 import AtomicSwap from './AtomicSwap'
 
@@ -26,9 +26,7 @@ function Exchange(props) {
   const exchangeSettings = localStorage.getItem(constants.localStorage.exchangeSettings) || {}
   let initialState = location.pathname === '/exchange/quick' ? 'quick' : 'atomic'
 
-  if (externalConfig.entry === 'testnet') {
-    initialState = 'atomic'
-  } else if (showOnlyOneType) {
+  if (showOnlyOneType) {
     // and hide tabs next
     initialState = globalMode.replace(/only_/, '')
   } else if (validMode && location.pathname === '/exchange') {
@@ -78,13 +76,7 @@ function Exchange(props) {
     <div>
       {!showOnlyOneType && (
         <div styleName="tabsWrapper">
-          <button
-            styleName={`tab
-              ${swapMode === 'quick' ? 'active' : ''}
-              ${externalConfig.entry !== 'mainnet' ? 'disabled' : ''}
-            `}
-            onClick={openQuickMode}
-          >
+          <button styleName={`tab ${swapMode === 'quick' ? 'active' : ''}`} onClick={openQuickMode}>
             <FormattedMessage id="quickSwap" defaultMessage="Quick swap" />
           </button>
           <button
@@ -96,17 +88,15 @@ function Exchange(props) {
         </div>
       )}
 
-      {/* this swap type is available only on mainnet networks */}
-      {swapMode === 'quick' && externalConfig.entry === 'mainnet' && (
+      {swapMode === 'quick' && (
         <div styleName="container">
+          {/* pass props from this component into the components
+        because there has to be "url" props like match, location, etc.
+        but this props are only in the Router children */}
           <QuickSwap {...props} />
         </div>
       )}
 
-      {/*
-      pass props from this component into the components
-      because there has to be "url" props like match, location, etc.
-      but this props are only in the Router children */}
       {swapMode === 'atomic' && <AtomicSwap {...props} />}
     </div>
   )
