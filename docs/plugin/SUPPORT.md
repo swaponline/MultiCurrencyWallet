@@ -4,7 +4,7 @@ Clients need to respond as quickly as possible, while their questions are releva
 
 ## Possible sources of support requests
 
-- <https://discord.gg/RDbMjQbu>
+- <https://discord.gg/JGBXKybpEQ>
 - <https://codecanyon.net/item/multicurrency-crypto-wallet-and-exchange-widgets-for-wordpress/23532064/comments>
 - <https://t.me/mcwchat>
 - <https://t.me/swaponlinebot> (support bot)

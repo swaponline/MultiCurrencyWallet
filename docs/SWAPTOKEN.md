@@ -3,7 +3,7 @@
 ## Available on exchanges
 
 - 🦄 [Uniswap](https://app.uniswap.org/#/swap?outputCurrency=0x14a52cf6b4f68431bd5d9524e4fcd6f41ce4ade9)
-- 🥞 [PancakeSwap](https://exchange.pancakeswap.finance/#/swap?inputCurrency=0x92648e4537cdfa1ee743a244465a31aa034b1ce8) 
+- 🥞 [PancakeSwap](https://pancakeswap.finance/swap?inputCurrency=0x92648e4537cdfa1ee743a244465a31aa034b1ce8) recommended
 - ⚛️ [Swaponline](https://swaponline.io/#/exchange/btc-to-swap)
 
 ## Contracts addresses
