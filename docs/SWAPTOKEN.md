@@ -18,7 +18,7 @@
 - Governance
 - Launchpad (holders will finance new bridges, and other projects to get dividends)
 
-Check out our governance portal  https://gov.bsc.io/ 
+https://farm.swaponline.io/ stake SWAP earn BNB here
 
 ## Total limited supply
 
