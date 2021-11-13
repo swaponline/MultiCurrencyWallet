@@ -1,4 +1,3 @@
-
 import config from 'app-config'
 import Web3 from 'web3'
 import { BigNumber } from 'bignumber.js'
@@ -12,11 +11,7 @@ class ethLikeHelper {
   readonly web3: IUniversalObj
 
   constructor(params) {
-    const {
-      currency,
-      defaultParams,
-      web3,
-    } = params
+    const { currency, defaultParams, web3 } = params
 
     this.currency = currency
     this.currencyKey = currency.toLowerCase()
@@ -43,7 +38,7 @@ class ethLikeHelper {
     const gasPrice = await this.estimateGasPrice()
     const defaultGasLimit = this.defaultParams.limit[method]
     const theSmallestPart = 1e-18
-  
+
     return new BigNumber(defaultGasLimit)
       .multipliedBy(gasPrice)
       .multipliedBy(theSmallestPart)
@@ -65,35 +60,33 @@ class ethLikeHelper {
       ? weiGasPrice.toNumber()
       : this.defaultParams.price.fast
   }
+
+  getContract = (params) => {
+    const { address, abi } = params
+
+    return new this.web3.eth.Contract(abi, address)
+  }
 }
 
 export default {
   eth: new ethLikeHelper({
     currency: 'ETH',
     defaultParams: DEFAULT_CURRENCY_PARAMETERS.evmLike,
-    web3: new Web3(
-      new Web3.providers.HttpProvider(config.web3.provider)
-    ),
+    web3: new Web3(config.web3.provider),
   }),
   bnb: new ethLikeHelper({
     currency: 'BNB',
     defaultParams: DEFAULT_CURRENCY_PARAMETERS.evmLike,
-    web3: new Web3(
-      new Web3.providers.HttpProvider(config.web3.binance_provider)
-    ),
+    web3: new Web3(config.web3.binance_provider),
   }),
   matic: new ethLikeHelper({
     currency: 'MATIC',
     defaultParams: DEFAULT_CURRENCY_PARAMETERS.evmLike,
-    web3: new Web3(
-      new Web3.providers.HttpProvider(config.web3.matic_provider)
-    ),
+    web3: new Web3(config.web3.matic_provider),
   }),
   arbeth: new ethLikeHelper({
     currency: 'ARBETH',
     defaultParams: DEFAULT_CURRENCY_PARAMETERS.arbeth,
-    web3: new Web3(
-      new Web3.providers.HttpProvider(config.web3.arbitrum_provider)
-    ),
+    web3: new Web3(config.web3.arbitrum_provider),
   }),
 }

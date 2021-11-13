@@ -556,7 +556,7 @@ class EthLikeAction {
             this.reportError(error, 'part: sendReadyTransaction')
           }
 
-          res(false)
+          rej(error)
         })
     })
   }

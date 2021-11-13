@@ -1,0 +1,54 @@
+$maxWidth: 38em;
+
+.newTokenInstruction {
+  max-width: $maxWidth;
+  margin: 0 auto 0.2rem;
+  border-radius: var(--main-component-border-radius);
+  text-align: left;
+  border: 1px solid transparent;
+  background-color: var(--color-pale);
+
+  &.open {
+    border-color: var(--color-border);
+
+    .tab {
+      .arrow {
+        @include arrow('up', 9px, 2px, var(--color-notice));
+      }
+    }
+  }
+
+  .tab {
+    width: 100%;
+    padding: 0.4rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: inherit;
+  }
+
+  .arrow {
+    @include arrow('down', 9px, 2px, var(--color-notice));
+  }
+
+  .content {
+    padding: 0.8rem 1rem;
+    font-size: 0.94em;
+
+    .paragraph {
+      margin: 1rem 0;
+      font-size: 1em;
+    }
+
+    ol {
+      margin: 0;
+      padding: 0;
+      padding-left: 1rem;
+    }
+  }
+}
+
+.liquiditySourcesLink {
+  display: inline-block;
+  margin-top: 0.8rem;
+}

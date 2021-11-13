@@ -1,0 +1,50 @@
+.actionsWrapper {
+  display: flex;
+  margin: 0.3rem 0;
+  font-size: 1.1rem;
+
+  .actionLabel {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+
+    &:not(:last-child) {
+      margin-right: 0.8rem;
+    }
+
+    input {
+      display: grid;
+      place-content: center;
+      margin: 0;
+      margin-right: 0.3rem;
+      -webkit-appearance: none;
+      appearance: none;
+      width: 0.9em;
+      height: 0.9em;
+      border-radius: 50%;
+      border: 0.15em solid var(--color-brand);
+      color: currentColor;
+      /* For iOS < 15 to remove gradient background */
+      background-color: var(--color-background-elements);
+
+      &::before {
+        content: '';
+        width: 0.6rem;
+        height: 0.6rem;
+        border-radius: inherit;
+        transform: scale(0);
+        transition: 100ms transform ease-in-out;
+        box-shadow: inset 0.9rem 0.9rem var(--color-brand);
+      }
+
+      &:checked::before {
+        transform: scale(1);
+      }
+
+      &:focus {
+        outline: max(2px, 0.1em) solid var(--color-brand);
+        outline-offset: max(2px, 0.1em);
+      }
+    }
+  }
+}

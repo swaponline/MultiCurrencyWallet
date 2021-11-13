@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 import CSSModules from 'react-css-modules'
-import styles from './index.scss'
+import styles from './TokenInstruction.scss'
 
-function NewTokenInstruction(props) {
+function TokenInstruction(props) {
   const [visible, setVisibility] = useState(false)
 
   const toggleVisibility = () => {
@@ -88,4 +88,4 @@ function NewTokenInstruction(props) {
   )
 }
 
-export default CSSModules(NewTokenInstruction, styles, { allowMultiple: true })
+export default CSSModules(TokenInstruction, styles, { allowMultiple: true })

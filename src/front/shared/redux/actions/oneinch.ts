@@ -1,5 +1,4 @@
 import { BigNumber } from 'bignumber.js'
-import TokenAbi from 'human-standard-token-abi'
 import moment from 'moment'
 import {
   LimitOrderBuilder,
@@ -11,6 +10,7 @@ import {
 } from '@1inch/limit-order-protocol'
 import { COIN_MODEL, COIN_DATA } from 'swap.app/constants/COINS'
 import utils from 'common/utils'
+import erc20Like from 'common/erc20Like'
 import getCoinInfo from 'common/coins/getCoinInfo'
 import { apiLooper, externalConfig, metamask, feedback } from 'helpers'
 import { getState } from 'redux/core'
@@ -76,45 +76,6 @@ const fetchSpenderContractAddress = async (params): Promise<string | false> => {
     return data.address
   } catch (error) {
     reportError('spender contract fetching', error)
-
-    return false
-  }
-}
-
-const fetchTokenAllowance = async (params): Promise<number> => {
-  const { standard, owner, contract, decimals, spender } = params
-  const Web3 = actions[standard].getCurrentWeb3()
-  const tokenContract = new Web3.eth.Contract(TokenAbi, contract, {
-    from: owner,
-  })
-  let allowance = 0
-
-  try {
-    allowance = await tokenContract.methods.allowance(owner, spender).call({ from: owner })
-
-    // formatting without token decimals
-    allowance = new BigNumber(allowance)
-      .dp(0, BigNumber.ROUND_UP)
-      .div(10 ** decimals)
-      .toNumber()
-  } catch (error) {
-    reportError('token allowance', error)
-  }
-
-  return allowance
-}
-
-const approveToken = async (params) => {
-  const { amount, name, standard, spender } = params
-
-  try {
-    return actions[standard].approve({
-      name,
-      to: spender,
-      amount,
-    })
-  } catch (error) {
-    reportError('token approve', error)
 
     return false
   }
@@ -233,21 +194,18 @@ const fillLimitOrder = async (params) => {
   const owner = metamask.isConnected() ? metamask.getAddress() : user[`${baseCurrency}Data`].address
   const protocolContract = externalConfig.limitOrder[baseCurrency]
 
-  const allowance = await fetchTokenAllowance({
-    contract: order.data.takerAsset,
-    owner,
-    standard,
-    decimals: takerDecimals,
+  const allowance = await erc20Like[standard].checkAllowance({
     spender: protocolContract,
+    contract: order.data.takerAsset,
+    decimals: takerDecimals,
+    owner,
   })
 
   if (new BigNumber(allowance).isLessThan(amountToBeFilled)) {
-    // error appears for a public Polygon rps sometimes
-    await approveToken({
-      amount: amountToBeFilled,
+    await actions[standard].approve({
       name,
-      spender: protocolContract,
-      standard,
+      to: protocolContract,
+      amount: amountToBeFilled,
     })
   }
 
@@ -409,8 +367,6 @@ const fetchAllOrders = async (params) => {
 export default {
   filterCurrencies,
   fetchSpenderContractAddress,
-  fetchTokenAllowance,
-  approveToken,
   createLimitOrder,
   fillLimitOrder,
   cancelLimitOrder,

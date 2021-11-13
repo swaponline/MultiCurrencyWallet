@@ -11,8 +11,9 @@ import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import Switching from 'components/controls/Switching/Switching'
 import SelectGroup from 'components/SelectGroup'
 import { QuickSwapFormTour } from 'components/Header/WidgetTours'
-import { Direction } from './types'
 import externalConfig from 'helpers/externalConfig'
+import { ComponentState, Direction, Actions, CurrencyMenuItem } from './types'
+
 
 const usePrevious = (value) => {
   const ref = useRef()
@@ -24,29 +25,54 @@ const usePrevious = (value) => {
   return ref.current
 }
 
-function ExchangeForm(props) {
+type InputFormProps = {
+  user: any
+  parentState: ComponentState
+  stateReference: any
+  selectCurrency: ({ direction: Direction, value: CurrencyMenuItem }) => void
+  updateWallets: () => void
+  flipCurrency: () => void
+  openExternalExchange: () => void
+  onInputDataChange: () => void
+  resetReceivedAmount: () => void
+  setSpendedAmount: (v: string) => void
+  setReceivedAmount: (v: string) => void
+  insufficientBalanceA: boolean
+  insufficientBalanceB: boolean
+}
+
+function InputForm(props: InputFormProps) {
   const {
+    user,
+    parentState,
     stateReference,
+    setSpendedAmount,
+    selectCurrency,
+    updateWallets,
+    flipCurrency,
+    openExternalExchange,
+    onInputDataChange,
+    resetReceivedAmount,
+    setReceivedAmount,
+    insufficientBalanceA,
+    insufficientBalanceB,
+  } = props
+
+  const {
+    isSourceMode,
+    sourceAction,
     currencies,
     receivedList,
+    currentLiquidityPair,
     spendedAmount,
     spendedCurrency,
-    setSpendedAmount,
+    receivedAmount,
     receivedCurrency,
-    selectCurrency,
     fiat,
     fromWallet,
     toWallet,
-    updateWallets,
     isPending,
-    flipCurrency,
-    openExternalExchange,
-    checkSwapData,
-    user,
-    insufficientBalance,
-    resetSwapData,
-    slippage,
-  } = props
+  } = parentState
 
   const [fromBalancePending, setFromBalancePending] = useState(false)
   const [toBalancePending, setToBalancePending] = useState(false)
@@ -142,29 +168,49 @@ function ExchangeForm(props) {
     }
   }, [user.isBalanceFetching])
 
-  const [flagForRequest, setFlagForRequest] = useState(false)
+  const [flagForLazyChanges, setFlagForLazyChanges] = useState(false)
 
   useEffect(() => {
     let timeoutId: ReturnType<typeof setTimeout> | undefined = undefined
 
-    if (flagForRequest) {
+    if (flagForLazyChanges) {
       timeoutId = setTimeout(async () => {
-        await checkSwapData()
-        setFlagForRequest(false)
+        await onInputDataChange()
+        setFlagForLazyChanges(false)
       }, 600)
     }
 
     return () => {
       if (timeoutId) clearTimeout(timeoutId)
     }
-  })
+  }, [flagForLazyChanges])
 
-  const handleSpendAmountInput = (value) => {
+  useEffect(() => {
+    onInputDataChange()
+  }, [spendedCurrency?.value, receivedCurrency?.value, isSourceMode])
+
+  const addFirstLiquidity =
+    isSourceMode && sourceAction === Actions.AddLiquidity && !currentLiquidityPair
+
+  const isValidNumber = (value) => !isNaN(Number(value)) && Number(value) > 0
+
+  const handleSpendAmount = (value) => {
     setSpendedAmount(value)
-    resetSwapData()
 
-    if (!receivedCurrency.notExist && value !== spendedAmount) {
-      setFlagForRequest(true)
+    if (!receivedCurrency.notExist && isValidNumber(value) && value !== spendedAmount) {
+      setFlagForLazyChanges(true)
+    }
+
+    // there will be new external data on "every" one of our changes
+    // reset the old ones
+    if (!addFirstLiquidity) resetReceivedAmount()
+  }
+
+  const handleReceiveAmount = (value) => {
+    setReceivedAmount(value)
+
+    if (isValidNumber(value) && value !== receivedAmount) {
+      setFlagForLazyChanges(true)
     }
   }
 
@@ -174,16 +220,17 @@ function ExchangeForm(props) {
 
   return (
     <form action="">
+      <QuickSwapFormTour isTourOpen={isTourOpen} closeTour={closeTour} />
+
       <div styleName="inputWrapper">
         <SelectGroup
           activeFiat={fiat}
-          error={insufficientBalance}
+          error={insufficientBalanceA}
           fiat={fiatValue && fiatValue}
-          inputValueLink={stateReference.spendedAmount.pipe(handleSpendAmountInput)}
+          inputValueLink={stateReference.spendedAmount.pipe(handleSpendAmount)}
           selectedValue={spendedCurrency.value}
-          label={<FormattedMessage id="MyOrdersYouSend" defaultMessage="You send" />}
           inputId="quickSwapSpendCurrencyInput"
-          placeholder="0.0"
+          placeholder="0.00"
           currencies={currencies}
           inputToolTip={
             fromBalancePending ? (
@@ -238,11 +285,11 @@ function ExchangeForm(props) {
 
       <div styleName={`inputWrapper ${receivedCurrency.notExist ? 'disabled' : ''}`}>
         <SelectGroup
-          disabled
+          disabled={!addFirstLiquidity}
           activeFiat={fiat}
-          inputValueLink={stateReference.receivedAmount}
+          error={isSourceMode && sourceAction === Actions.AddLiquidity && insufficientBalanceB}
+          inputValueLink={stateReference.receivedAmount.pipe(handleReceiveAmount)}
           selectedValue={receivedCurrency.value}
-          label={<FormattedMessage id="partial255" defaultMessage="You get" />}
           inputId="quickSwapReceiveCurrencyInput"
           currencies={receivedList}
           inputToolTip={
@@ -262,17 +309,10 @@ function ExchangeForm(props) {
           }}
         />
       </div>
-
-      <p styleName="slippageIndicator">
-        <FormattedMessage id="slippageTolerance" defaultMessage="Slippage tolerance" />
-        <span>{`${slippage} %`}</span>
-      </p>
-
-      <QuickSwapFormTour isTourOpen={isTourOpen} closeTour={closeTour} />
     </form>
   )
 }
 
 export default connect(({ user }) => ({
   user,
-}))(CSSModules(ExchangeForm, styles, { allowMultiple: true }))
+}))(CSSModules(InputForm, styles, { allowMultiple: true }))
