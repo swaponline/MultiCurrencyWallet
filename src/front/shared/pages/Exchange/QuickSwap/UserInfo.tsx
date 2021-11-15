@@ -125,18 +125,24 @@ function UserInfo(props: ComponentProps) {
           id="connectWalletBtn"
           brand
           fullWidth
-          styleName="connectWalletBtn"
+          styleName="walletButton"
           onClick={connectWallet}
         >
           <FormattedMessage id="Exchange_ConnectAddressOption" defaultMessage="Connect Wallet" />
         </Button>
       )}
       {!isWalletCreated ? (
-        <Button id="createWalletBtn" gray fullWidth onClick={createWallet}>
+        <Button id="createWalletBtn" styleName="walletButton" gray fullWidth onClick={createWallet}>
           <FormattedMessage id="menu.CreateWallet" defaultMessage="Create wallet" />
         </Button>
       ) : saveSecretPhrase ? (
-        <Button id="saveSecretPhraseBtn" gray fullWidth onClick={saveMnemonic}>
+        <Button
+          id="saveSecretPhraseBtn"
+          styleName="walletButton"
+          gray
+          fullWidth
+          onClick={saveMnemonic}
+        >
           <FormattedMessage id="BTCMS_SaveMnemonicButton" defaultMessage="Save secret phrase" />
         </Button>
       ) : (
