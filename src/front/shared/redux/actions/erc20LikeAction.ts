@@ -605,8 +605,7 @@ class Erc20LikeAction {
     }
   }
 
-  returnTokenInfo = (name) => {
-    if (!name) throw new Error(`${this.standard} actions; returnTokenInfo(name): name is undefined`)
+  returnTokenInfo = (name: string) => {
     const Web3 = this.getCurrentWeb3()
 
     try {
@@ -629,7 +628,7 @@ class Erc20LikeAction {
         decimals,
       }
     } catch (error) {
-      this.reportError(error, `${name}, part: returnTokenInfo`)
+      this.reportError(error, `Token name: ${name}, part: returnTokenInfo`)
       throw new Error(error)
     }
   }

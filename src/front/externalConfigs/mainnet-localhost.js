@@ -37,7 +37,18 @@ window.widgetEvmLikeTokens = [
     // Background color of icon
     iconBgColor: '#ff007a',
     howToDeposit: 'Just do it!',
-  }
+    howToWithdraw: 'Do not do it!',
+    customExchangeRate: '123454321',
+  },
+  {
+    name: 'weth',
+    symbol: 'weth',
+    standard: 'erc20matic',
+    address: '0x7ceb23fd6bc0add59e62ac25578270cff1b9f619',
+    decimals: 18,
+    fullName: 'Wrapped Ether',
+    customExchangeRate: '2',
+  },
 ]
 
 window.buildOptions = {

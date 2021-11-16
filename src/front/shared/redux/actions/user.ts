@@ -1,22 +1,15 @@
 import erc20Like from 'common/erc20Like';
 import config from 'app-config'
 import moment from 'moment/moment'
-import { constants } from 'helpers'
 import request from 'common/utils/request'
 import getCoinInfo from 'common/coins/getCoinInfo'
 import * as mnemonicUtils from 'common/utils/mnemonic'
-import transactions from 'helpers/transactions'
+import { MnemonicKey } from 'common/types'
+import { constants, links, transactions, user, getCurrencyKey, metamask } from 'helpers'
 import TOKEN_STANDARDS from 'helpers/constants/TOKEN_STANDARDS'
 import actions from 'redux/actions'
 import { getState } from 'redux/core'
-
 import reducers from 'redux/core/reducers'
-
-import { user } from 'helpers'
-import getCurrencyKey from 'helpers/getCurrencyKey'
-import metamask from 'helpers/metamask'
-
-import { MnemonicKey } from 'common/types'
 
 /*
   Когда добавляем reducers, для старых пользователей они не инициализированы
@@ -236,7 +229,6 @@ const getExchangeRate = (sellCurrency, buyCurrency): Promise<number> => {
 
     let dataKey = sellCurrency.toLowerCase()
     switch (sellCurrency.toLowerCase()) {
-      case 'btc (sms-protected)':
       case 'btc (multisig)':
       case 'btc (pin-protected)':
         dataKey = 'btc'
@@ -253,6 +245,8 @@ const getExchangeRate = (sellCurrency, buyCurrency): Promise<number> => {
 
       resolve(currencyData.infoAboutCurrency.price_fiat)
     } else {
+      // TODO: do not resolve 1
+      // return false for example to avoid false crypto/fiat prices
       resolve(1)
     }
   })
@@ -272,12 +266,11 @@ const customTokenExchangeRate = (name) => {
 
 const getInfoAboutCurrency = (currencyNames) => {
   return new Promise((resolve, reject) => {
-    const url = 'https://noxon.wpmix.net/cursAll.php'
     reducers.user.setIsFetching({ isFetching: true })
 
     const fiat = (config && config.opts && config.opts.activeFiat) ? config.opts.activeFiat : `USD`
 
-    request.get(url, {
+    request.get(links.currencyCourses, {
       cacheResponse: 60 * 60 * 1000, // cache for 1 hour
       query: {
         fiat,
@@ -311,7 +304,7 @@ const getInfoAboutCurrency = (currencyNames) => {
 
         const isToken = erc20Like.isToken({ name: currencyName })
 
-        if (currencyInfoItem?.quote && currencyInfoItem.quote[fiat]) {
+        if (currencyInfoItem?.quote[fiat]) {
           const priceInFiat =  customFiatPrice || currencyInfoItem.quote[fiat].price
           const priceInBtc = btcPrice && priceInFiat / btcPrice
 
@@ -327,21 +320,16 @@ const getInfoAboutCurrency = (currencyNames) => {
             reducers.user.setInfoAboutCurrency({ name: targetDataKey, infoAboutCurrency: currencyInfo })
 
             if (currencyInfoItem.symbol === 'BTC') {
-              reducers.user.setInfoAboutCurrency({ name: 'btcMultisigSMSData', infoAboutCurrency: currencyInfo })
               reducers.user.setInfoAboutCurrency({ name: 'btcMultisigUserData', infoAboutCurrency: currencyInfo })
               reducers.user.setInfoAboutCurrency({ name: 'btcMultisigG2FAData', infoAboutCurrency: currencyInfo })
               reducers.user.setInfoAboutCurrency({ name: 'btcMultisigPinData', infoAboutCurrency: currencyInfo })
             }
-          } else if (isToken) {
-            const baseCurrency = tokenCurrencyByPlatform(currencyInfoItem.platform?.name)
-
-            if (baseCurrency) {
-              reducers.user.setInfoAboutToken({
-                baseCurrency,
-                name: currencyName,
-                infoAboutCurrency: currencyInfo,
-              })
-            }
+          } else if (isToken && blockchain) {
+            reducers.user.setInfoAboutToken({
+              baseCurrency: blockchain.toLowerCase(),
+              name: currencyName,
+              infoAboutCurrency: currencyInfo,
+            })
           }
         }
 
@@ -366,18 +354,6 @@ const getInfoAboutCurrency = (currencyNames) => {
       reject(error)
     }).finally(() => reducers.user.setIsFetching({ isFetching: false }))
   })
-}
-
-const tokenCurrencyByPlatform = (platform): string | undefined => {
-  let baseCurrency= undefined
-
-  Object.keys(TOKEN_STANDARDS).forEach((key) => {
-    if (TOKEN_STANDARDS[key].platform === platform?.toLowerCase()) {
-      baseCurrency = TOKEN_STANDARDS[key].currency
-    }
-  })
-
-  return baseCurrency
 }
 
 const clearTransactions = () => {

@@ -1,14 +1,13 @@
-import React, { Component, Fragment } from 'react'
+import { Component, Fragment } from 'react'
 import actions from 'redux/actions'
 import { connect } from 'redaction'
 import erc20Like from 'common/erc20Like'
-import { constants } from 'helpers'
+import { constants, metamask, utils } from 'helpers'
 import config from 'helpers/externalConfig'
 import { isMobile } from 'react-device-detect'
 
 import cssModules from 'react-css-modules'
 import styles from './Row.scss'
-import metamask from 'helpers/metamask'
 import Coin from 'components/Coin/Coin'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import DropdownMenu from 'components/ui/DropdownMenu/DropdownMenu'
@@ -442,7 +441,7 @@ class Row extends Component<RowProps, RowState> {
     } = itemData
 
     let nodeDownErrorShow = true
-    let currencyFiatBalance = 0
+    let currencyFiatBalance
     let currencyView = currency
 
     switch (currencyView) {
@@ -454,7 +453,10 @@ class Row extends Component<RowProps, RowState> {
     }
 
     if (itemData?.infoAboutCurrency?.price_fiat) {
-      currencyFiatBalance = new BigNumber(balance).multipliedBy(itemData.infoAboutCurrency.price_fiat).dp(2, BigNumber.ROUND_FLOOR).toNumber()
+      currencyFiatBalance = utils.toMeaningfulFiatValue({
+        value: balance,
+        rate: itemData.infoAboutCurrency.price_fiat,
+      })
     }
 
     let hasHowToWithdraw = false
@@ -721,6 +723,11 @@ class Row extends Component<RowProps, RowState> {
     const isAvailableMetamaskNetwork = isMetamask && metamask.isAvailableNetwork()
     const isNotAvailableMetamaskNetwork = isMetamask && !metamask.isAvailableNetwork()
     const currencyTitleId = `${standard ? standard.toLowerCase() : ''}${currency.toLowerCase()}`
+    const showFiatBalance =
+      currencyFiatBalance !== undefined &&
+      !Number.isNaN(currencyFiatBalance) &&
+      showBalance &&
+      !balanceError
 
     return (
       !ethRowWithoutExternalProvider
@@ -918,7 +925,7 @@ class Row extends Component<RowProps, RowState> {
             </Fragment>
 
             {/* Fiat amount */}
-            {(currencyFiatBalance && showBalance && !balanceError) || msConfirmCount ? (
+            {showFiatBalance || msConfirmCount ? (
               <div styleName="assetsTableValue">
                 {msConfirmCount && !isMobile && (
                   <p styleName="txWaitConfirm" onClick={this.goToCurrencyHistory}>
@@ -930,16 +937,14 @@ class Row extends Component<RowProps, RowState> {
                     )}
                   </p>
                 )}
-                {currencyFiatBalance && showBalance && !balanceError && (
+                {showFiatBalance && (
                   <>
                     <p>{currencyFiatBalance}</p>
                     <strong>{activeFiat}</strong>
                   </>
                 )}
               </div>
-            ) : (
-                ''
-              )}
+            ) : null}
           </div>
 
           {/* Additional option. Ethereum row with external wallet */}
