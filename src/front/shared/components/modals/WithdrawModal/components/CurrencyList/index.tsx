@@ -1,10 +1,10 @@
-import React, { Component } from 'react'
+import { Component } from 'react'
 import cssModules from 'react-css-modules'
 import styles from './index.scss'
 import cx from 'classnames'
 import PartOfAddress from 'pages/Wallet/PartOfAddress'
 import { isMobile } from 'react-device-detect'
-import { constants, user } from 'helpers'
+import { user, utils } from 'helpers'
 import { localisedUrl } from 'helpers/locale'
 import getCurrencyKey from 'helpers/getCurrencyKey'
 import Coin from 'components/Coin/Coin'
@@ -34,7 +34,6 @@ export default class CurrencyList extends Component<any, any> {
 
       switch (currency.toLowerCase()) {
         case 'btc (multisig)':
-        case 'btc (sms-protected)':
         case 'btc (pin-protected)':
           currency = 'btc'
       }
@@ -61,6 +60,13 @@ export default class CurrencyList extends Component<any, any> {
     }))
   }
 
+  returnFiatBalance = (cryptoBalance, rate) => {
+    return utils.toMeaningfulFiatValue({
+      value: cryptoBalance,
+      rate,
+    })
+  }
+
   render() {
     const {
       selectedCurrency,
@@ -76,6 +82,9 @@ export default class CurrencyList extends Component<any, any> {
     } = this.state
 
     const standard = selectedCurrency.itemCurrency?.standard
+    const fiatBalance = selectedCurrency?.infoAboutCurrency?.price_fiat
+      ? this.returnFiatBalance(currentBalance, selectedCurrency.infoAboutCurrency.price_fiat)
+      : false
 
     return (
       <OutsideClick outsideAction={this.closeList}>
@@ -100,15 +109,14 @@ export default class CurrencyList extends Component<any, any> {
           </div>
 
           <div styleName="amount">
-            <span>
+            <>
               {currentBalance} {getCurrencyKey(currency, true).toUpperCase()}
-            </span>
-            <span styleName="usd">
-              {selectedCurrency.infoAboutCurrency && selectedCurrency.infoAboutCurrency.price_fiat
-                ? <span>{(currentBalance * selectedCurrency.infoAboutCurrency.price_fiat).toFixed(2)} {activeFiat}</span>
-                : null
-              }
-            </span>
+            </>
+            {fiatBalance && (
+              <span styleName="usd">
+                {fiatBalance} {activeFiat}
+              </span>
+            )}
           </div>
           <div styleName={cx('customSelectArrow', { active: isAssetsOpen })}></div>
         </div>
@@ -117,16 +125,30 @@ export default class CurrencyList extends Component<any, any> {
           <div styleName="customSelectList">
             {tableRows.map((item, index) => {
               if (!user.isCorrectWalletToShow(item)) return
+              
+              const {
+                baseCurrency,
+                currency,
+                balance,
+                balanceError,
+                fullName,
+                standard,
+                address,
+                infoAboutCurrency,
+              } = item
 
-              const baseCurrency = item.baseCurrency
+              const itemFiatBalance = infoAboutCurrency?.price_fiat
+                ? this.returnFiatBalance(balance, infoAboutCurrency?.price_fiat)
+                : false
+
               const itemId = `${
                 baseCurrency ? baseCurrency.toLowerCase() : ''
-              }${item.currency.toLowerCase()}`
+              }${currency.toLowerCase()}`
 
               return (
                 <div id={`${itemId}Send`} key={index}
                   styleName={cx('customSelectListItem customSelectValue', {
-                    disabled: !item.balance || item.balanceError,
+                    disabled: !balance || balanceError,
                   })}
                   onClick={() => this.openModal({ target: item })}
                 >
@@ -134,26 +156,25 @@ export default class CurrencyList extends Component<any, any> {
 
                   <div>
                     <a>
-                      {item.fullName}
-                      {item.standard && <span styleName="tokenStandard">{item.standard.toUpperCase()}</span>}
+                      {fullName}
+                      {standard && <span styleName="tokenStandard">{standard.toUpperCase()}</span>}
                     </a>
-                    <span styleName="address">{item.address}</span>
+                    <span styleName="address">{address}</span>
                     <span styleName="mobileAddress">
-                      {isMobile ? <PartOfAddress address={item.address} withoutLink /> : ''}
+                      {isMobile ? <PartOfAddress address={address} withoutLink /> : ''}
                     </span>
                   </div>
    
                   <div styleName="amount">
                     <span>
-                      <span id={`${itemId}CryptoBalance`}>{item.balance}</span>
-                      {getCurrencyKey(item.currency, true).toUpperCase()}
+                      <span id={`${itemId}CryptoBalance`}>{balance}</span>{' '}
+                      {getCurrencyKey(currency, true).toUpperCase()}
                     </span>
-                    <span styleName="usd">
-                      {item.infoAboutCurrency && item.infoAboutCurrency.price_fiat
-                        ? <span>{(item.balance * item.infoAboutCurrency.price_fiat).toFixed(2)} {activeFiat}</span>
-                        : null
-                      }
-                    </span>
+                    {itemFiatBalance && (
+                      <span styleName="usd">
+                        {itemFiatBalance} {activeFiat}
+                      </span>
+                    )}
                   </div>
                 </div>
               )
