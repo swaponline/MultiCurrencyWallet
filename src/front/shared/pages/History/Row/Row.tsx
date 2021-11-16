@@ -1,10 +1,10 @@
-import React, { PureComponent } from 'react'
+import { PureComponent } from 'react'
 import cx from 'classnames'
 import cssModules from 'react-css-modules'
 import styles from './Row.scss'
 import { FormattedMessage } from 'react-intl'
 import actions from 'redux/actions'
-import { constants, links } from 'helpers'
+import { constants, links, utils } from 'helpers'
 import { Link } from 'react-router-dom'
 import { getFullOrigin } from 'helpers/links'
 
@@ -220,7 +220,10 @@ export default class Row extends PureComponent<any, any> {
     const hash = (invoiceData && invoiceData.txInfo) ? invoiceData.txInfo : propsHash
 
     const { exCurrencyRate, cancelled, payed } = this.state
-    const fiatValue = value * exCurrencyRate
+    const fiatValue = exCurrencyRate ? utils.toMeaningfulFiatValue({
+      rate: exCurrencyRate,
+      value,
+    }) : false
 
     const paymentAddress = invoiceData
       ? invoiceData.destAddress
@@ -442,12 +445,16 @@ export default class Row extends PureComponent<any, any> {
 
             {/* Currency amount */}
             <div styleName={statusStyleAmount}>
-              {invoiceData ? this.parseFloat(direction, value, 'out', type) : this.parseFloat(direction, value, 'in', type)}
-              {
-                showFiat
-                  ? <span styleName='amountUsd'>{`~${fiatValue.toFixed(2)}`}{` `}{activeFiat}</span>
-                  : null
-              }
+              {invoiceData
+                ? this.parseFloat(direction, value, 'out', type)
+                : this.parseFloat(direction, value, 'in', type)}
+              {showFiat && fiatValue ? (
+                <span styleName="amountUsd">
+                  ~{fiatValue}
+                  {` `}
+                  {activeFiat}
+                </span>
+              ) : null}
             </div>
           </td>
         </tr>

@@ -1,4 +1,5 @@
-import erc20Like from 'common/erc20Like';
+import { BigNumber } from 'bignumber.js'
+import erc20Like from 'common/erc20Like'
 import config from 'app-config'
 import moment from 'moment/moment'
 import request from 'common/utils/request'
@@ -223,7 +224,7 @@ const getExchangeRate = (sellCurrency, buyCurrency): Promise<number> => {
     }
 
     if (buyDataRate) {
-      resolve(1 / buyDataRate)
+      resolve(new BigNumber(1).div(buyDataRate).toNumber())
       return
     }
 
@@ -245,9 +246,7 @@ const getExchangeRate = (sellCurrency, buyCurrency): Promise<number> => {
 
       resolve(currencyData.infoAboutCurrency.price_fiat)
     } else {
-      // TODO: do not resolve 1
-      // return false for example to avoid false crypto/fiat prices
-      resolve(1)
+      resolve(0)
     }
   })
 }
@@ -431,28 +430,18 @@ const setTransactions = async () => {
 }
 
 const setTokensTransaction = async () => {
-  const tokens: { [key: string]: string[] } = {}
-
   Object.keys(TOKEN_STANDARDS).forEach((key) => {
     const standard = TOKEN_STANDARDS[key].standard
     const baseCurrency = TOKEN_STANDARDS[standard].currency.toUpperCase()
 
-    const standardTokens = Object.keys(config[standard]).filter((name) => {
+    Object.keys(config[standard]).filter((name) => {
       const tokenKey = `{${baseCurrency}}${name}`.toUpperCase()
 
-      return user.isAllowedCurrency(tokenKey)
-    })
-
-    tokens[standard] = standardTokens
-  })
-
-  Object.keys(tokens).forEach((standard) => {
-    standard = standard.toLowerCase()
-
-    tokens[standard].forEach((tokenName) => {
-      actions[standard].getTransaction(null, tokenName).then((tokenTxs) => {
-        mergeTransactions(tokenTxs)
-      })
+      if (user.isAllowedCurrency(tokenKey)) {
+        actions[standard].getTransaction(false, name).then((trx) => {
+          if (trx.length) mergeTransactions(trx)
+        })
+      }
     })
   })
 }
