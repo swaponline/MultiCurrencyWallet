@@ -4488,9 +4488,10 @@
   },
   {
     "id": "FeeInfoBlockServiceFee",
-    "message": "Netzwerkgebühr:",
+    "message": "Netzwerkgebühr",
     "files": [
-      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/index.tsx"
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/index.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/UserInfo.tsx"
     ]
   },
   {
@@ -4826,13 +4827,6 @@
     "message": "In bearbeitung",
     "files": [
       "src/front/shared/components/controls/Button/Button.tsx"
-    ]
-  },
-  {
-    "id": "menu.farm",
-    "message": "Farmt",
-    "files": [
-      "src/front/shared/components/Header/config.tsx"
     ]
   },
   {
@@ -5592,17 +5586,11 @@
   },
   {
     "id": "createLimitOrder",
-    "message": "Limit order erstellen",
-    "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
-    ]
+    "message": "Limit order erstellen"
   },
   {
     "id": "limitOrders",
-    "message": "Limit orders",
-    "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
-    ]
+    "message": "Limit orders"
   },
   {
     "id": "swap",
@@ -6009,6 +5997,13 @@
     "message": "Einstellung",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/Header.tsx"
+    ]
+  },
+  {
+    "id": "aggregatorFeeDescription",
+    "message": "Der Prozentsatz des Kaufbetrags, der als Provision berechnet wurde",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/UserInfo.tsx"
     ]
   }
 ]
