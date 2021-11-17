@@ -4363,7 +4363,8 @@
     "id": "FeeInfoBlockServiceFee",
     "message": "Tarifa de servicio",
     "files": [
-      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/index.tsx"
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/index.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/UserInfo.tsx"
     ]
   },
   {
@@ -4815,13 +4816,6 @@
     "message": "Pendiente",
     "files": [
       "src/front/shared/components/controls/Button/Button.tsx"
-    ]
-  },
-  {
-    "id": "menu.farm",
-    "message": "Farm",
-    "files": [
-      "src/front/shared/components/Header/config.tsx"
     ]
   },
   {
@@ -5602,17 +5596,11 @@
   },
   {
     "id": "createLimitOrder",
-    "message": "Crear orden de límite",
-    "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
-    ]
+    "message": "Crear orden de límite"
   },
   {
     "id": "limitOrders",
-    "message": "Límite de órdenes",
-    "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
-    ]
+    "message": "Límite de órdenes"
   },
   {
     "id": "swap",
@@ -6005,6 +5993,13 @@
     "message": "Configuración",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/Header.tsx"
+    ]
+  },
+  {
+    "id": "aggregatorFeeDescription",
+    "message": "El porcentaje del importe de la compra que se cobra como comisión",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/UserInfo.tsx"
     ]
   }
 ]

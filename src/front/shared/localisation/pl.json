@@ -4356,7 +4356,8 @@
     "id": "FeeInfoBlockServiceFee",
     "message": "Service fee",
     "files": [
-      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/index.tsx"
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/index.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/UserInfo.tsx"
     ]
   },
   {
@@ -4798,13 +4799,6 @@
     "message": "Pending",
     "files": [
       "src/front/shared/components/controls/Button/Button.tsx"
-    ]
-  },
-  {
-    "id": "menu.farm",
-    "message": "Rolnictwo",
-    "files": [
-      "src/front/shared/components/Header/config.tsx"
     ]
   },
   {
@@ -5602,17 +5596,11 @@
   },
   {
     "id": "createLimitOrder",
-    "message": "Utwórz limit order",
-    "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
-    ]
+    "message": "Utwórz limit order"
   },
   {
     "id": "limitOrders",
-    "message": "Zlecenia z limitem",
-    "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
-    ]
+    "message": "Zlecenia z limitem"
   },
   {
     "id": "swap",
@@ -6005,6 +5993,13 @@
     "message": "Ustawienia",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/Header.tsx"
+    ]
+  },
+  {
+    "id": "aggregatorFeeDescription",
+    "message": "Procent kwoty zakupu pobranej jako prowizja",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/UserInfo.tsx"
     ]
   }
 ]

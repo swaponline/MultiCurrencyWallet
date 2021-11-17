@@ -4359,7 +4359,8 @@
     "id": "FeeInfoBlockServiceFee",
     "message": "Servicekosten",
     "files": [
-      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/index.tsx"
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/index.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/UserInfo.tsx"
     ]
   },
   {
@@ -4811,13 +4812,6 @@
     "message": "Pending",
     "files": [
       "src/front/shared/components/controls/Button/Button.tsx"
-    ]
-  },
-  {
-    "id": "menu.farm",
-    "message": "Landbouw",
-    "files": [
-      "src/front/shared/components/Header/config.tsx"
     ]
   },
   {
@@ -5598,17 +5592,11 @@
   },
   {
     "id": "createLimitOrder",
-    "message": "Limietvolgorde aanmaken",
-    "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
-    ]
+    "message": "Limietvolgorde aanmaken"
   },
   {
     "id": "limitOrders",
-    "message": "Limietorder",
-    "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
-    ]
+    "message": "Limietorder"
   },
   {
     "id": "swap",
@@ -6001,6 +5989,13 @@
     "message": "Instelling",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/Header.tsx"
+    ]
+  },
+  {
+    "id": "aggregatorFeeDescription",
+    "message": "Het percentage van het aankoopbedrag dat als commissie in rekening wordt gebracht",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/UserInfo.tsx"
     ]
   }
 ]

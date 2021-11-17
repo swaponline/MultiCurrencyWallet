@@ -190,9 +190,18 @@ function UserInfo(props: ComponentProps) {
         <span styleName="value">{slippage}%</span>
       </span>
 
-      {serviceFee && (
+      {serviceFee && !isSourceMode && (
         <span styleName="indicator">
-          <FormattedMessage id="FeeInfoBlockServiceFee" defaultMessage="Service fee" />:{' '}
+          <span>
+            <FormattedMessage id="FeeInfoBlockServiceFee" defaultMessage="Service fee" />{' '}
+            <Tooltip id="FeeInfoBlockServiceFee">
+              <FormattedMessage
+                id="aggregatorFeeDescription"
+                defaultMessage="The percentage of the purchase amount that charged as a commission"
+              />
+            </Tooltip>
+            :
+          </span>
           <span styleName="value">
             {new BigNumber(serviceFee.percent).multipliedBy(MAX_PERCENT).toNumber()}%
           </span>

@@ -4475,7 +4475,8 @@
     "id": "FeeInfoBlockServiceFee",
     "message": "Service fee",
     "files": [
-      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/index.tsx"
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/index.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/UserInfo.tsx"
     ]
   },
   {
@@ -4811,13 +4812,6 @@
     "message": "Pending",
     "files": [
       "src/front/shared/components/controls/Button/Button.tsx"
-    ]
-  },
-  {
-    "id": "menu.farm",
-    "message": "Farming",
-    "files": [
-      "src/front/shared/components/Header/config.tsx"
     ]
   },
   {
@@ -5598,17 +5592,11 @@
   },
   {
     "id": "createLimitOrder",
-    "message": "Create limit order",
-    "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
-    ]
+    "message": "Create limit order"
   },
   {
     "id": "limitOrders",
-    "message": "Limit orders",
-    "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
-    ]
+    "message": "Limit orders"
   },
   {
     "id": "swap",
@@ -6001,6 +5989,13 @@
     "message": "Settings",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/Header.tsx"
+    ]
+  },
+  {
+    "id": "aggregatorFeeDescription",
+    "message": "The percentage of the purchase amount that charged as a commission",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/UserInfo.tsx"
     ]
   }
 ]

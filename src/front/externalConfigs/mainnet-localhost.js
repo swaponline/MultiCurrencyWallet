@@ -1,21 +1,21 @@
-window.widgetERC20Comisions = {
+/* window.widgetERC20Comisions = {
   bnb: {
     fee: '2',
-    address: '0x4086a2CAe8d3FcCd94D1172006516C7d0794C7Ee',
+    address: '',
     min: '0,0001',
   },
   matic: {
     fee: '5',
-    address: '0x4086a2CAe8d3FcCd94D1172006516C7d0794C7Ee',
+    address: '',
     min: '0,001',
   },
   bep20: {
-    address: '0x4086a2CAe8d3FcCd94D1172006516C7d0794C7Ee',
+    address: '',
   },
   erc20matic: {
-    address: '0x4086a2CAe8d3FcCd94D1172006516C7d0794C7Ee',
+    address: '',
   },
-}
+} */
 
 window.widgetEvmLikeTokens = [
   {

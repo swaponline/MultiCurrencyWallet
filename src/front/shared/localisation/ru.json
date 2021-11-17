@@ -4472,7 +4472,8 @@
     "id": "FeeInfoBlockServiceFee",
     "message": "Комиссия сервиса",
     "files": [
-      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/index.tsx"
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/index.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/UserInfo.tsx"
     ]
   },
   {
@@ -4808,13 +4809,6 @@
     "message": "Ожидание",
     "files": [
       "src/front/shared/components/controls/Button/Button.tsx"
-    ]
-  },
-  {
-    "id": "menu.farm",
-    "message": "Фарминг",
-    "files": [
-      "src/front/shared/components/Header/config.tsx"
     ]
   },
   {
@@ -5595,17 +5589,11 @@
   },
   {
     "id": "createLimitOrder",
-    "message": "Создать лимитный ордер",
-    "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
-    ]
+    "message": "Создать лимитный ордер"
   },
   {
     "id": "limitOrders",
-    "message": "Лимитные ордера",
-    "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
-    ]
+    "message": "Лимитные ордера"
   },
   {
     "id": "swap",
@@ -6005,6 +5993,13 @@
     "message": "Настройки",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/Header.tsx"
+    ]
+  },
+  {
+    "id": "aggregatorFeeDescription",
+    "message": "Процент от суммы покупки, взимаемой в качестве комиссии",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/UserInfo.tsx"
     ]
   }
 ]

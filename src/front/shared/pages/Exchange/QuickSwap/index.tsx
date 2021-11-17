@@ -56,12 +56,6 @@ const QuickswapModes = {
   only_source: 'only_source',
 }
 
-
-
-window.zeroxFeePercent = 3
-
-
-
 class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   constructor(props) {
     super(props)
@@ -455,8 +449,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     ]
 
     if (!window?.STATISTIC_DISABLED) {
-      // request.push(`&affiliateAddress=${externalConfig.swapContract.affiliateAddress}`)
-      request.push(`&affiliateAddress=0xDA873Ff72bd4eA9c122C51a837DA3f88307D1DB5`)
+      request.push(`&affiliateAddress=${externalConfig.swapContract.affiliateAddress}`)
     }
 
     if (serviceFee) {
