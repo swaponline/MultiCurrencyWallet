@@ -4470,7 +4470,7 @@
   },
   {
     "id": "FeeInfoBlockServiceFee",
-    "message": "Комиссия сервиса:",
+    "message": "Комиссия сервиса",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/index.tsx"
     ]

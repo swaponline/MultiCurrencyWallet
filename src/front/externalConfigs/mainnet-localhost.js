@@ -1,3 +1,22 @@
+window.widgetERC20Comisions = {
+  bnb: {
+    fee: '2',
+    address: '0x4086a2CAe8d3FcCd94D1172006516C7d0794C7Ee',
+    min: '0,0001',
+  },
+  matic: {
+    fee: '5',
+    address: '0x4086a2CAe8d3FcCd94D1172006516C7d0794C7Ee',
+    min: '0,001',
+  },
+  bep20: {
+    address: '0x4086a2CAe8d3FcCd94D1172006516C7d0794C7Ee',
+  },
+  erc20matic: {
+    address: '0x4086a2CAe8d3FcCd94D1172006516C7d0794C7Ee',
+  },
+}
+
 window.widgetEvmLikeTokens = [
   {
     name: 'usdt',
@@ -5,7 +24,7 @@ window.widgetEvmLikeTokens = [
     standard: 'erc20',
     address: '0xdac17f958d2ee523a2206206994597c13d831ec7',
     decimals: 6,
-    fullName: 'Tether'
+    fullName: 'Tether',
   },
   {
     name: 'share',
@@ -54,7 +73,8 @@ window.widgetEvmLikeTokens = [
 window.buildOptions = {
   ownTokens: false, // Will be inited from window.widgetEvmLikeTokens
   addCustomTokens: true, // Allow user add custom evm like tokens
-  curEnabled: { // Or 'false' if enabled all
+  // Or 'false' if enabled all
+  curEnabled: {
     btc: true,
     eth: true,
     bnb: true,
@@ -92,7 +112,7 @@ window.buildOptions = {
     'CUSTOM_ERC20MATIC',
     'MATIC',
     'BNB',
-    'CUSTOM_BEP20'
+    'CUSTOM_BEP20',
   ],
   invoiceEnabled: true, // Allow create invoices
   showWalletBanners: true,

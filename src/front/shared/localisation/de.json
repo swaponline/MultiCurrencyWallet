@@ -4488,7 +4488,7 @@
   },
   {
     "id": "FeeInfoBlockServiceFee",
-    "message": "Netzwerkgebühr:",
+    "message": "Netzwerkgebühr",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/index.tsx"
     ]

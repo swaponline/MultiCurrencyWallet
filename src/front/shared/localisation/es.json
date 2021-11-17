@@ -4361,7 +4361,7 @@
   },
   {
     "id": "FeeInfoBlockServiceFee",
-    "message": "Tarifa de servicio:",
+    "message": "Tarifa de servicio",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/index.tsx"
     ]

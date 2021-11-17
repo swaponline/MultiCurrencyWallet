@@ -4473,7 +4473,7 @@
   },
   {
     "id": "FeeInfoBlockServiceFee",
-    "message": "Taxa de serviço:",
+    "message": "Taxa de serviço",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/index.tsx"
     ]
