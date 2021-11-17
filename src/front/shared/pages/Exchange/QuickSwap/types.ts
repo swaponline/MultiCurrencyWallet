@@ -61,6 +61,11 @@ export enum BlockReasons {
   Unknown,
 }
 
+export type ServiceFee = {
+  address: string
+  percent: number
+}
+
 export type ComponentState = {
   externalExchangeReference: null | IUniversalObj
   externalWindowTimer: null | NodeJS.Timeout
@@ -96,4 +101,5 @@ export type ComponentState = {
   showOrders: boolean
   blockReason: BlockReasons | undefined
   liquidityErrorMessage: string
+  serviceFee: ServiceFee | false
 }

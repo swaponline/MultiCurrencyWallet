@@ -158,7 +158,7 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
       {usedAdminFee && (
           <div styleName='feeRow'>
             <span styleName='feeRowTitle'>
-              <FormattedMessage id="FeeInfoBlockServiceFee" defaultMessage="Service fee:" />
+              <FormattedMessage id="FeeInfoBlockServiceFee" defaultMessage="Service fee" />:
             </span>
             <div className="feeRowInfo">
               <div styleName="serviceFeeConditions">

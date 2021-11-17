@@ -14,7 +14,8 @@ import Address from 'components/ui/Address/Address'
 import Copy from 'components/ui/Copy/Copy'
 import Button from 'components/controls/Button/Button'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
-import { COIN_DECIMALS } from './constants'
+import { COIN_DECIMALS, MAX_PERCENT } from './constants'
+import { ServiceFee } from './types'
 
 type ComponentProps = {
   history: any
@@ -28,6 +29,7 @@ type ComponentProps = {
   fromWallet: IUniversalObj
   toWallet: IUniversalObj
   fiat: string
+  serviceFee: ServiceFee | false
 }
 
 function UserInfo(props: ComponentProps) {
@@ -43,6 +45,7 @@ function UserInfo(props: ComponentProps) {
     spendedAmount,
     baseChainWallet,
     fiat,
+    serviceFee,
   } = props
 
   const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
@@ -184,8 +187,26 @@ function UserInfo(props: ComponentProps) {
           </Tooltip>
           :
         </span>
-        <span styleName="value">{`${slippage}%`}</span>
+        <span styleName="value">{slippage}%</span>
       </span>
+
+      {serviceFee && !isSourceMode && (
+        <span styleName="indicator">
+          <span>
+            <FormattedMessage id="FeeInfoBlockServiceFee" defaultMessage="Service fee" />{' '}
+            <Tooltip id="FeeInfoBlockServiceFee">
+              <FormattedMessage
+                id="aggregatorFeeDescription"
+                defaultMessage="The percentage of the purchase amount that charged as a commission"
+              />
+            </Tooltip>
+            :
+          </span>
+          <span styleName="value">
+            {new BigNumber(serviceFee.percent).multipliedBy(MAX_PERCENT).toNumber()}%
+          </span>
+        </span>
+      )}
 
       {price && (
         <span styleName="indicator">
