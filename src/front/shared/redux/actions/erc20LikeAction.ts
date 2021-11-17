@@ -480,7 +480,13 @@ class Erc20LikeAction {
         // hex amount fixes a BigNumber error
         .transfer(to, '0x' + hexAmountWithDecimals)
         .send(txArguments)
-        .on('transactionHash', (hash) => res({ transactionHash: hash }))
+        .on('transactionHash', (hash) => {
+          reducers.transactions.addTransactionToQueue({
+            networkCoin: this.currency,
+            hash,
+          })
+          res({ transactionHash: hash })
+        })
         .on('error', (error) => {
           this.reportError(error)
           rej(error)
@@ -516,17 +522,25 @@ class Erc20LikeAction {
       .toString(16)
 
     return new Promise(async (res) => {
-      const gasAmountCalculated = await tokenContract.methods
-        .transfer(this.adminFeeObj.address, '0x' + hexFeeWithDecimals)
-        .estimateGas(txArguments)
+      let gasLimit
 
-      const gasAmounWithPercentForSuccess = new BigNumber(
-        new BigNumber(gasAmountCalculated)
+      try {
+        gasLimit = await tokenContract.methods
+          .transfer(this.adminFeeObj.address, '0x' + hexFeeWithDecimals)
+          .estimateGas(txArguments)
+      } catch (error) {
+        this.reportError(error, 'Estimate gas in an admin transaction')
+      }
+
+      if (!gasLimit) return
+
+      const gasLimitWithPercentForSuccess = new BigNumber(
+        new BigNumber(gasLimit)
           .multipliedBy(1.05) // + 5% -  множитель добавочного газа, если будет фейл транзакции - увеличит (1.05 +5%, 1.1 +10%)
           .toFixed(0)
       ).toString(16)
 
-      txArguments.gas = '0x' + gasAmounWithPercentForSuccess
+      txArguments.gas = '0x' + gasLimitWithPercentForSuccess
 
       await tokenContract.methods
         // hex amount fixes a BigNumber error

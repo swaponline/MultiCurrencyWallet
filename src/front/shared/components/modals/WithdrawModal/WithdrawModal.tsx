@@ -320,7 +320,6 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
 
     switch (currency.toLowerCase()) {
       case 'btc (multisig)':
-      case 'btc (sms-protected)':
       case 'btc (pin-protected)':
         targetCurrency = 'btc'
     }

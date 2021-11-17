@@ -112,11 +112,14 @@ export default class CurrencyList extends Component<any, any> {
             <>
               {currentBalance} {getCurrencyKey(currency, true).toUpperCase()}
             </>
-            {fiatBalance && (
-              <span styleName="usd">
-                {fiatBalance} {activeFiat}
-              </span>
-            )}
+            {/* save the element anyway for UI paddings */}
+            <span styleName="usd">
+              {fiatBalance && (
+                <>
+                  {fiatBalance} {activeFiat}
+                </>
+              )}
+            </span>
           </div>
           <div styleName={cx('customSelectArrow', { active: isAssetsOpen })}></div>
         </div>
@@ -170,11 +173,14 @@ export default class CurrencyList extends Component<any, any> {
                       <span id={`${itemId}CryptoBalance`}>{balance}</span>{' '}
                       {getCurrencyKey(currency, true).toUpperCase()}
                     </span>
-                    {itemFiatBalance && (
-                      <span styleName="usd">
-                        {itemFiatBalance} {activeFiat}
-                      </span>
-                    )}
+                    {/* save the element anyway for UI paddings */}
+                    <span styleName="usd">
+                      {itemFiatBalance && (
+                        <>
+                          {itemFiatBalance} {activeFiat}
+                        </>
+                      )}
+                    </span>
                   </div>
                 </div>
               )
