@@ -357,7 +357,7 @@
   {
     "id": "orders128",
     "message": "Publicar oferta",
-    "files": [f
+    "files": [
       "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
