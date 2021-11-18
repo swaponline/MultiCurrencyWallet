@@ -54,16 +54,9 @@ class CurrencyAction extends React.Component<any, any> {
         standard,
       })
     } else {
-      const { Withdraw, WithdrawMultisigUser } = constants.modals
-
-      let withdrawModalType = Withdraw
-
-      if (item.currency === 'BTC (Multisig)') withdrawModalType = WithdrawMultisigUser
-
       let targetCurrency = currency
       switch (currency.toLowerCase()) {
         case 'btc (multisig)':
-        case 'btc (sms-protected)':
         case 'btc (pin-protected)':
           targetCurrency = 'btc'
           break

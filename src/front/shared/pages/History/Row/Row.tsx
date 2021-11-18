@@ -220,7 +220,7 @@ export default class Row extends PureComponent<any, any> {
     const hash = (invoiceData && invoiceData.txInfo) ? invoiceData.txInfo : propsHash
 
     const { exCurrencyRate, cancelled, payed } = this.state
-    const fiatValue = exCurrencyRate ? utils.toMeaningfulFiatValue({
+    const fiatValue = exCurrencyRate ? utils.toMeaningfulFloatValue({
       rate: exCurrencyRate,
       value,
     }) : false

@@ -2,7 +2,7 @@ import { Component, Fragment } from 'react'
 import actions from 'redux/actions'
 import { connect } from 'redaction'
 import erc20Like from 'common/erc20Like'
-import { constants, metamask, utils } from 'helpers'
+import { constants, metamask, utils, externalConfig } from 'helpers'
 import config from 'helpers/externalConfig'
 import { isMobile } from 'react-device-detect'
 
@@ -453,7 +453,7 @@ class Row extends Component<RowProps, RowState> {
     }
 
     if (itemData?.infoAboutCurrency?.price_fiat) {
-      currencyFiatBalance = utils.toMeaningfulFiatValue({
+      currencyFiatBalance = utils.toMeaningfulFloatValue({
         value: balance,
         rate: itemData.infoAboutCurrency.price_fiat,
       })
@@ -842,8 +842,10 @@ class Row extends Component<RowProps, RowState> {
                             <span id="walletRowCryptoBalance">
                               {balanceError
                                 ? '?'
-                                : new BigNumber(balance).dp(5, BigNumber.ROUND_FLOOR).toString()
-                              }{' '}
+                                : utils.toMeaningfulFloatValue({
+                                    value: balance,
+                                    meaningfulDecimals: 5,
+                                  })}{' '}
                             </span>
                             <span styleName="assetsTableCurrencyBalance">
                               {currencyView}

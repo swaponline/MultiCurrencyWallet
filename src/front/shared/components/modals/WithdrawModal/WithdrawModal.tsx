@@ -320,7 +320,6 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
 
     switch (currency.toLowerCase()) {
       case 'btc (multisig)':
-      case 'btc (sms-protected)':
       case 'btc (pin-protected)':
         targetCurrency = 'btc'
     }
@@ -637,6 +636,8 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
     } = this.props
     const { address, selectedItem } = this.state
 
+    if (!address) return false
+
     if (getCurrencyKey(currency, false).toLowerCase() === `btc`) {
       if (!typeforce.isCoinAddress.BTC(address)) {
         return actions.btc.addressIsCorrect(address)
@@ -859,16 +860,18 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
     const notEnoughForTokenMinerFee = new BigNumber(walletForTokenFee?.balance).isLessThan(fees.miner)
     const exchangeRateForTokens = new BigNumber(walletForTokenFee?.infoAboutCurrency?.price_fiat || 0)
 
+    const notEnoughForPayment = selectedItem.isToken
+      ? new BigNumber(amount).isGreaterThan(balances.balance)
+      : new BigNumber(amount).plus(fees.total).isGreaterThan(balances.balance)
+
     const isDisabled =
-      !address ||
       !+amount ||
       isShipped ||
       !!ownTx ||
       !this.addressIsCorrect() ||
       selectedItem.isToken && notEnoughForTokenMinerFee ||
-      new BigNumber(amount).plus(fees.total).isGreaterThan(balances.balance) ||
+      notEnoughForPayment ||
       new BigNumber(amount).dp() > currentDecimals
-
 
     const labels = defineMessages({
       withdrawModal: {

@@ -958,9 +958,7 @@
     "id": "Withdrow170",
     "message": "Du kannst maximal {allowedBalance} {currency} senden",
     "files": [
-      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
     ]
   },
   {
@@ -1944,13 +1942,6 @@
     ]
   },
   {
-    "id": "WithdrawModal2225",
-    "message": "Etwas ist schief gelaufen, gib bitte deinen aktuellen Code ein",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
-    ]
-  },
-  {
     "id": "Withdrow2223",
     "message": "SMS Code",
     "files": [
@@ -2115,10 +2106,6 @@
     "files": [
       "src/front/shared/components/modals/InvoiceLinkModal/InvoiceLinkModal.tsx"
     ]
-  },
-  {
-    "id": "InfoPay_1",
-    "message": "Transaktion ist abgeschlossen"
   },
   {
     "id": "InfoPay_2",
@@ -2656,13 +2643,6 @@
     ]
   },
   {
-    "id": "withdrawSMSCodePlaceholder",
-    "message": "SMS-code eingeben",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
-    ]
-  },
-  {
     "id": "WalletRow_Menu_BTCMS_SwitchMenu",
     "message": "Wallet wechseln",
     "files": [
@@ -2734,13 +2714,6 @@
     ]
   },
   {
-    "id": "registerSMSModalWords",
-    "message": "Passphrase (12 Wörter):",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
-    ]
-  },
-  {
     "id": "WithdrawSMS_BroadcastError",
     "message": "Transaktionsübertragung fehlschlagen ({errorText})",
     "files": [
@@ -2755,20 +2728,6 @@
     ]
   },
   {
-    "id": "WithdrawSMS_MnemonicNote",
-    "message": "Wenn du deinen SMS-Code nicht erhalten hast oder keinen Zugriff auf diese Nummer hast, kannst du deine Wallet mit einer geheimen Phrase wiederherstellen",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
-    ]
-  },
-  {
-    "id": "WithdrawSMS_MnemonicSignCaption",
-    "message": "Bestätige die Transaktion durch einen geheimen Satz (12 Wörter)",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
-    ]
-  },
-  {
     "id": "WithdrawSMS_NotValidMnemonic",
     "message": "Geheimsatz ungültig",
     "files": [
@@ -2776,57 +2735,8 @@
     ]
   },
   {
-    "id": "WithdrawSMS_ServerOffline",
-    "message": "Autorisierungsserver ist offline",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
-    ]
-  },
-  {
-    "id": "WithdrawSMS_SmsSended",
-    "message": "SMS mit Code gesendet",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
-    ]
-  },
-  {
-    "id": "WithdrawSMS_SmsSending",
-    "message": "SMS mit Bestätigungscode senden",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
-    ]
-  },
-  {
-    "id": "WithdrawSMS_UseMnemonic",
-    "message": "Verwende einen geheimen Satz (12 Wörter)",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
-    ]
-  },
-  {
-    "id": "WithdrawSMS_UseSMS",
-    "message": "SMS-code benutzen",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
-    ]
-  },
-  {
-    "id": "WithdrawSMS_UseSMSNote",
-    "message": "Du kannst auch den an die angehängte Telefonnummer gesendeten SMS-Code verwenden.",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
-    ]
-  },
-  {
     "id": "WithdrawSMS_WrongMnemonic",
     "message": "Geheimsatz ungültig",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
-    ]
-  },
-  {
-    "id": "btcSMSProtectedSignByMnemonic",
-    "message": "Passphrase benutzen",
     "files": [
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
     ]
@@ -5550,7 +5460,7 @@
     ]
   },
   {
-    "id": "transactonIsCompleted",
+    "id": "transactionIsCompleted",
     "message": "Die Transaktion ist abgeschlossen",
     "files": [
       "src/front/shared/components/notifications/Transaction/index.tsx"
@@ -6004,6 +5914,21 @@
     "message": "Der Prozentsatz des Kaufbetrags, der als Provision berechnet wurde",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/UserInfo.tsx"
+    ]
+  },
+  {
+    "id": "failedTransaction",
+    "message": "Fehlgeschlagene Transaktion",
+    "files": [
+      "src/front/shared/components/notifications/Transaction/index.tsx"
+    ]
+  },
+  {
+    "id": "amountNoMoreThenBalance",
+    "message": "The amount must be no more than your balance",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
+      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
     ]
   }
 ]

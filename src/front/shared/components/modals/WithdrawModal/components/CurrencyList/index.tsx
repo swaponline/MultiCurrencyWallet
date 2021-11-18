@@ -61,7 +61,7 @@ export default class CurrencyList extends Component<any, any> {
   }
 
   returnFiatBalance = (cryptoBalance, rate) => {
-    return utils.toMeaningfulFiatValue({
+    return utils.toMeaningfulFloatValue({
       value: cryptoBalance,
       rate,
     })
@@ -110,13 +110,20 @@ export default class CurrencyList extends Component<any, any> {
 
           <div styleName="amount">
             <>
-              {currentBalance} {getCurrencyKey(currency, true).toUpperCase()}
+              {utils.toMeaningfulFloatValue({
+                value: currentBalance,
+                meaningfulDecimals: 5,
+              })}{' '}
+              {getCurrencyKey(currency, true).toUpperCase()}
             </>
-            {fiatBalance && (
-              <span styleName="usd">
-                {fiatBalance} {activeFiat}
-              </span>
-            )}
+            {/* save the element anyway for UI paddings */}
+            <span styleName="usd">
+              {fiatBalance && (
+                <>
+                  {fiatBalance} {activeFiat}
+                </>
+              )}
+            </span>
           </div>
           <div styleName={cx('customSelectArrow', { active: isAssetsOpen })}></div>
         </div>
@@ -167,14 +174,24 @@ export default class CurrencyList extends Component<any, any> {
    
                   <div styleName="amount">
                     <span>
-                      <span id={`${itemId}CryptoBalance`}>{balance}</span>{' '}
+                      <span id={`${itemId}CryptoBalance`}>
+                        {!balanceError
+                          ? utils.toMeaningfulFloatValue({
+                              value: balance,
+                              meaningfulDecimals: 5,
+                            })
+                          : '-'}
+                      </span>{' '}
                       {getCurrencyKey(currency, true).toUpperCase()}
                     </span>
-                    {itemFiatBalance && (
-                      <span styleName="usd">
-                        {itemFiatBalance} {activeFiat}
-                      </span>
-                    )}
+                    {/* save the element anyway for UI paddings */}
+                    <span styleName="usd">
+                      {itemFiatBalance && (
+                        <>
+                          {itemFiatBalance} {activeFiat}
+                        </>
+                      )}
+                    </span>
                   </div>
                 </div>
               )
