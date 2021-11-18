@@ -827,9 +827,7 @@
     "id": "Withdrow170",
     "message": "La cantidad máxima que puede enviar es {allowedBalance} {currency}",
     "files": [
-      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
     ]
   },
   {
@@ -1813,13 +1811,6 @@
     ]
   },
   {
-    "id": "WithdrawModal2225",
-    "message": "Algo salió mal, ingrese su código actual por favor",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
-    ]
-  },
-  {
     "id": "Withdrow2223",
     "message": "Código SMS",
     "files": [
@@ -1984,10 +1975,6 @@
     "files": [
       "src/front/shared/components/modals/InvoiceLinkModal/InvoiceLinkModal.tsx"
     ]
-  },
-  {
-    "id": "InfoPay_1",
-    "message": "Se completó la transacción"
   },
   {
     "id": "InfoPay_2",
@@ -2529,13 +2516,6 @@
     ]
   },
   {
-    "id": "withdrawSMSCodePlaceholder",
-    "message": "Ingrese el código SMS",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
-    ]
-  },
-  {
     "id": "WalletRow_Menu_BTCMS_SwitchMenu",
     "message": "Cambiar wallet",
     "files": [
@@ -2607,13 +2587,6 @@
     ]
   },
   {
-    "id": "registerSMSModalWords",
-    "message": "Frase secreta(12 palabras):",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
-    ]
-  },
-  {
     "id": "WithdrawSMS_BroadcastError",
     "message": "Error de transacción de transmisión ({errorText})",
     "files": [
@@ -2628,20 +2601,6 @@
     ]
   },
   {
-    "id": "WithdrawSMS_MnemonicNote",
-    "message": "Si no recibiste tu código SMS o no tienes acceso a este número, puede usar una frase secreta para restaurar su wallet",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
-    ]
-  },
-  {
-    "id": "WithdrawSMS_MnemonicSignCaption",
-    "message": "Confirmar transacción con frase secreta (12 palabras)",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
-    ]
-  },
-  {
     "id": "WithdrawSMS_NotValidMnemonic",
     "message": "Frase secreta no válida",
     "files": [
@@ -2649,57 +2608,8 @@
     ]
   },
   {
-    "id": "WithdrawSMS_ServerOffline",
-    "message": "Servidor de autorización está desconectado",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
-    ]
-  },
-  {
-    "id": "WithdrawSMS_SmsSended",
-    "message": "SMS con código enviado",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
-    ]
-  },
-  {
-    "id": "WithdrawSMS_SmsSending",
-    "message": "Enviando sms con código de confirmación",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
-    ]
-  },
-  {
-    "id": "WithdrawSMS_UseMnemonic",
-    "message": "Usar frase secreta (12 palabras)",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
-    ]
-  },
-  {
-    "id": "WithdrawSMS_UseSMS",
-    "message": "Usar código SMS",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
-    ]
-  },
-  {
-    "id": "WithdrawSMS_UseSMSNote",
-    "message": "También puede utilizar el código SMS enviado al número de teléfono adjunto.",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
-    ]
-  },
-  {
     "id": "WithdrawSMS_WrongMnemonic",
     "message": "Frase secreta no válida",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
-    ]
-  },
-  {
-    "id": "btcSMSProtectedSignByMnemonic",
-    "message": "Usar frase de contraseña",
     "files": [
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
     ]
@@ -5539,7 +5449,7 @@
     ]
   },
   {
-    "id": "transactonIsCompleted",
+    "id": "transactionIsCompleted",
     "message": "La transacción se ha completado",
     "files": [
       "src/front/shared/components/notifications/Transaction/index.tsx"
@@ -6000,6 +5910,21 @@
     "message": "El porcentaje del importe de la compra que se cobra como comisión",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/UserInfo.tsx"
+    ]
+  },
+  {
+    "id": "failedTransaction",
+    "message": "Transacción fallida",
+    "files": [
+      "src/front/shared/components/notifications/Transaction/index.tsx"
+    ]
+  },
+  {
+    "id": "amountNoMoreThenBalance",
+    "message": "The amount must be no more than your balance",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
+      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
     ]
   }
 ]

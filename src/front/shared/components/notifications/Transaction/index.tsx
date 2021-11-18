@@ -23,9 +23,14 @@ function Transaction(props: ComponentProps) {
       type={data.failed ? 'ErrorNotification' : ''}
     >
       <h3>
-        {data.completed ? (
+        {data.failed ? (
           <FormattedMessage
-            id="transactonIsCompleted"
+            id="failedTransaction"
+            defaultMessage="Failed transaction"
+          />
+        ) : data.completed ? (
+          <FormattedMessage
+            id="transactionIsCompleted"
             defaultMessage="The transaction is completed"
           />
         ) : (
