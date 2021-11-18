@@ -47,7 +47,6 @@ function BalanceForm({
   // Use flags in currency data (isUserProtected and isSMSProtected)
   // eslint-disable-next-line default-case
   switch (currency) {
-    case 'btc (sms-protected)':
     case 'btc (multisig)':
     case 'btc (pin-protected)':
       currency = 'BTC'

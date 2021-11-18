@@ -86,7 +86,7 @@ function InputForm(props: InputFormProps) {
   const hasFiatAmount = spendedAmount && fromWallet.infoAboutCurrency?.price
   const fiatValue =
     hasFiatAmount &&
-    utils.toMeaningfulFiatValue({
+    utils.toMeaningfulFloatValue({
       value: spendedAmount,
       rate: fromWallet.infoAboutCurrency.price,
     })

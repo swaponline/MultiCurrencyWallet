@@ -61,7 +61,7 @@ export default class CurrencyList extends Component<any, any> {
   }
 
   returnFiatBalance = (cryptoBalance, rate) => {
-    return utils.toMeaningfulFiatValue({
+    return utils.toMeaningfulFloatValue({
       value: cryptoBalance,
       rate,
     })
@@ -110,7 +110,11 @@ export default class CurrencyList extends Component<any, any> {
 
           <div styleName="amount">
             <>
-              {currentBalance} {getCurrencyKey(currency, true).toUpperCase()}
+              {utils.toMeaningfulFloatValue({
+                value: currentBalance,
+                meaningfulDecimals: 5,
+              })}{' '}
+              {getCurrencyKey(currency, true).toUpperCase()}
             </>
             {/* save the element anyway for UI paddings */}
             <span styleName="usd">
@@ -170,7 +174,14 @@ export default class CurrencyList extends Component<any, any> {
    
                   <div styleName="amount">
                     <span>
-                      <span id={`${itemId}CryptoBalance`}>{balance}</span>{' '}
+                      <span id={`${itemId}CryptoBalance`}>
+                        {!balanceError
+                          ? utils.toMeaningfulFloatValue({
+                              value: balance,
+                              meaningfulDecimals: 5,
+                            })
+                          : '-'}
+                      </span>{' '}
                       {getCurrencyKey(currency, true).toUpperCase()}
                     </span>
                     {/* save the element anyway for UI paddings */}

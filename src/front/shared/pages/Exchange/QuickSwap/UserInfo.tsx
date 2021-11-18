@@ -107,11 +107,11 @@ function UserInfo(props: ComponentProps) {
     }
 
     if (baseChainWallet.infoAboutCurrency?.price) {
-      const fixedAmount = utils.toMeaningfulFiatValue({
+      const fixedAmount = utils.toMeaningfulFloatValue({
         value: swapFee,
         rate: baseChainWallet.infoAboutCurrency.price,
       })
-      const fixedTotalAmount = utils.toMeaningfulFiatValue({
+      const fixedTotalAmount = utils.toMeaningfulFloatValue({
         value: totalAmount,
         rate: baseChainWallet.infoAboutCurrency.price,
       })
