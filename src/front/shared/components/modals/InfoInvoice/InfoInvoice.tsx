@@ -180,7 +180,6 @@ class InfoInvoice extends React.Component<any, any> {
           unconfirmedBalance,
         } = payWallet
 
-        //@ts-ignore: strictNullChecks
         actions.modals.open(withdrawType, {
           currency,
           address,

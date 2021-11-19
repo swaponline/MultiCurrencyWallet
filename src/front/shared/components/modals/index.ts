@@ -1,7 +1,6 @@
 import OfferModal from './OfferModal/OfferModal'
 import LimitOrder from './LimitOrder'
 import WithdrawModal from './WithdrawModal/WithdrawModal'
-import WithdrawModalMultisig from './WithdrawModalMultisig/WithdrawModalMultisig'
 import WithdrawModalMultisigUser from './WithdrawModalMultisig/WithdrawModalMultisigUser'
 import PrivateKeysModal from './PrivateKeysModal/PrivateKeysModal'
 import ReceiveModal from './ReceiveModal/ReceiveModal'
@@ -70,7 +69,6 @@ export default {
 
   WalletAddressModal,
 
-  WithdrawModalMultisig,  // Deprecated
   WithdrawBtcMultisig, 
 
   AlertWindow,

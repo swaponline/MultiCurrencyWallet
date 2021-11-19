@@ -1,5 +1,4 @@
-import * as React from 'react'
-import { Fragment, useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import CSSModules from 'react-css-modules'
 import actions from 'redux/actions'
 import cx from 'classnames'
@@ -13,7 +12,7 @@ import { FormattedMessage } from 'react-intl'
 import dollar from './images/dollar.svg'
 import btc from './images/btcIcon.svg'
 
-function BalanceForm({
+const BalanceForm = function ({
   activeFiat,
   activeCurrency,
   fiatBalance,
@@ -47,14 +46,12 @@ function BalanceForm({
   // Use flags in currency data (isUserProtected and isSMSProtected)
   // eslint-disable-next-line default-case
   switch (currency) {
-    case 'btc (sms-protected)':
     case 'btc (multisig)':
     case 'btc (pin-protected)':
       currency = 'BTC'
       break
   }
 
-  
   const handleClickCurrency = (currency) => {
     setActiveCurrency(currency)
     actions.user.pullActiveCurrency(currency)
@@ -65,7 +62,7 @@ function BalanceForm({
   }
 
   return (
-    <div 
+    <div
       styleName={
         `${isWidgetBuild && !config.isFullBuild ? 'yourBalance widgetBuild' : 'yourBalance'}`
       }
@@ -74,8 +71,7 @@ function BalanceForm({
         <p styleName="yourBalanceDescr">
           {singleWallet
             ? <FormattedMessage id="YourWalletbalance" defaultMessage="Balance" />
-            : <FormattedMessage id="Yourtotalbalance" defaultMessage="Ваш общий баланс" />
-          }
+            : <FormattedMessage id="Yourtotalbalance" defaultMessage="Ваш общий баланс" />}
         </p>
         <div styleName="yourBalanceValue">
           {isFetching && (
@@ -101,6 +97,7 @@ function BalanceForm({
         </div>
         <div styleName="yourBalanceCurrencies">
           <button
+            type="button"
             styleName={selectedCurrency === active ? 'active' : undefined}
             onClick={() => handleClickCurrency(active)}
           >
@@ -108,6 +105,7 @@ function BalanceForm({
           </button>
           <span styleName="separator" />
           <button
+            type="button"
             styleName={selectedCurrency === currency ? 'active' : undefined}
             onClick={() => handleClickCurrency(currency)}
           >
@@ -116,8 +114,8 @@ function BalanceForm({
         </div>
       </div>
       {multisigPendingCount > 0 && (
-        <div>
-          <p styleName="multisigWaitCount" onClick={handleGoToMultisig}>
+        <div onClick={handleGoToMultisig}>
+          <p styleName="multisigWaitCount">
             <FormattedMessage
               id="Balance_YouAreHaveNotSignegTx"
               defaultMessage="{count} transaction needs your confirmation"

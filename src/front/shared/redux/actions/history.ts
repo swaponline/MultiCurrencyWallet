@@ -6,19 +6,8 @@ import { COIN_DATA } from 'swap.app/constants/COINS'
 
 const pullTransactions = (transactions) => {
   const sortedTxs = transactions.sort((a, b) => b.date - a.date)
-  const filteredTxs: IUniversalObj[] = []
 
-  for (let i = 0; i < sortedTxs.length - 1; i += 1) {
-    if (sortedTxs[i].hash !== sortedTxs[i + 1].hash) {
-      filteredTxs.push(sortedTxs[i])
-    }
-  }
-
-  if (sortedTxs.length) {
-    filteredTxs.push(sortedTxs[sortedTxs.length - 1])
-  }
-
-  reducers.history.setTransactions(filteredTxs)
+  reducers.history.setTransactions(sortedTxs)
 }
 
 const setTransactions = async (address, name) => {

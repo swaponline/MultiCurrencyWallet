@@ -989,9 +989,7 @@
     "id": "Withdrow170",
     "message": "Максимальная сумма, которую вы можете отправить, составляет {allowedBalance} {currency}",
     "files": [
-      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
     ]
   },
   {
@@ -1933,13 +1931,6 @@
     ]
   },
   {
-    "id": "WithdrawModal2225",
-    "message": "Something went wrong, enter your current code please",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
-    ]
-  },
-  {
     "id": "Withdrow2223",
     "message": "SMS code",
     "files": [
@@ -2606,10 +2597,6 @@
     ]
   },
   {
-    "id": "InfoPay_1",
-    "message": "Транзакция завершена"
-  },
-  {
     "id": "InfoPay_2",
     "message": "отправлены на",
     "files": [
@@ -2628,13 +2615,6 @@
     "message": "Примерное время подтверждения",
     "files": [
       "src/front/shared/pages/Transaction/TxInfo/index.tsx"
-    ]
-  },
-  {
-    "id": "withdrawSMSCodePlaceholder",
-    "message": "Enter SMS-code",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
     ]
   },
   {
@@ -2702,13 +2682,6 @@
     ]
   },
   {
-    "id": "registerSMSModalWords",
-    "message": "Секретная фраза (12 слов):",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
-    ]
-  },
-  {
     "id": "WithdrawSMS_BroadcastError",
     "message": "Не удалось отправить транзакцию в сеть ({errorText})",
     "files": [
@@ -2723,20 +2696,6 @@
     ]
   },
   {
-    "id": "WithdrawSMS_MnemonicNote",
-    "message": "Если у вас нет доступа к телефону или не получается получить код, вы можете воспользовать секретной фразой",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
-    ]
-  },
-  {
-    "id": "WithdrawSMS_MnemonicSignCaption",
-    "message": "Подтверждение транзакции секретной фразой",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
-    ]
-  },
-  {
     "id": "WithdrawSMS_NotValidMnemonic",
     "message": "Секретная фраза не валидна",
     "files": [
@@ -2744,57 +2703,8 @@
     ]
   },
   {
-    "id": "WithdrawSMS_ServerOffline",
-    "message": "Сервер авторизации не доступен",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
-    ]
-  },
-  {
-    "id": "WithdrawSMS_SmsSended",
-    "message": "Код отправлен",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
-    ]
-  },
-  {
-    "id": "WithdrawSMS_SmsSending",
-    "message": "Отправка проверочного кода",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
-    ]
-  },
-  {
-    "id": "WithdrawSMS_UseMnemonic",
-    "message": "Использовать секретную фразу",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
-    ]
-  },
-  {
-    "id": "WithdrawSMS_UseSMS",
-    "message": "Использовать смс-код",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
-    ]
-  },
-  {
-    "id": "WithdrawSMS_UseSMSNote",
-    "message": "Так-же вы можете использовать смс-код, отправленный на привязанный номер телефона",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
-    ]
-  },
-  {
     "id": "WithdrawSMS_WrongMnemonic",
     "message": "Не правильная секретная фраза",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
-    ]
-  },
-  {
-    "id": "btcSMSProtectedSignByMnemonic",
-    "message": "Использовать секретную фразу",
     "files": [
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
     ]
@@ -4470,9 +4380,10 @@
   },
   {
     "id": "FeeInfoBlockServiceFee",
-    "message": "Комиссия сервиса:",
+    "message": "Комиссия сервиса",
     "files": [
-      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/index.tsx"
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/index.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/UserInfo.tsx"
     ]
   },
   {
@@ -4808,13 +4719,6 @@
     "message": "Ожидание",
     "files": [
       "src/front/shared/components/controls/Button/Button.tsx"
-    ]
-  },
-  {
-    "id": "menu.farm",
-    "message": "Фарминг",
-    "files": [
-      "src/front/shared/components/Header/config.tsx"
     ]
   },
   {
@@ -5538,7 +5442,7 @@
     ]
   },
   {
-    "id": "transactonIsCompleted",
+    "id": "transactionIsCompleted",
     "message": "Транзакция завершена",
     "files": [
       "src/front/shared/components/notifications/Transaction/index.tsx"
@@ -5595,17 +5499,11 @@
   },
   {
     "id": "createLimitOrder",
-    "message": "Создать лимитный ордер",
-    "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
-    ]
+    "message": "Создать лимитный ордер"
   },
   {
     "id": "limitOrders",
-    "message": "Лимитные ордера",
-    "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
-    ]
+    "message": "Лимитные ордера"
   },
   {
     "id": "swap",
@@ -6005,6 +5903,28 @@
     "message": "Настройки",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/Header.tsx"
+    ]
+  },
+  {
+    "id": "aggregatorFeeDescription",
+    "message": "Процент от суммы покупки, взимаемой в качестве комиссии",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/UserInfo.tsx"
+    ]
+  },
+  {
+    "id": "failedTransaction",
+    "message": "Неудачная транзакция",
+    "files": [
+      "src/front/shared/components/notifications/Transaction/index.tsx"
+    ]
+  },
+  {
+    "id": "amountNoMoreThenBalance",
+    "message": "The amount must be no more than your balance",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
+      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
     ]
   }
 ]

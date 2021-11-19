@@ -61,7 +61,7 @@ $maxWidth: 38em;
   border: 1px solid var(--color-border);
   color: var(--color-indicating);
 
-  .connectWalletBtn {
+  .walletButton {
     margin-bottom: 0.5rem;
   }
 }
@@ -147,9 +147,10 @@ $maxWidth: 38em;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  padding: 0.14rem 0;
 
   &:not(:last-child) {
-    margin-bottom: 0.3rem;
+    border-bottom: 1px solid var(--color-pale);
   }
 
   .value {

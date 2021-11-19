@@ -178,7 +178,6 @@ class History extends Component<any, any> {
                     rowRender={this.rowRender}
                   />
                 ) : (
-                  //@ts-ignore
                   <ContentLoader rideSideContent empty={!isLoading} nonHeader />
                 )
               }
@@ -186,8 +185,6 @@ class History extends Component<any, any> {
           </div>
           ) : (
             <div styleName="historyLoader">
-              {/*
-              //@ts-ignore */}
               <ContentLoader rideSideContent />
             </div>
           )

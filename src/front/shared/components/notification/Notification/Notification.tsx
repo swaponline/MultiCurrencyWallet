@@ -81,7 +81,7 @@ const Notification = (props) => {
           {children}
         </div>
 
-        <RemoveButton onClick={closeNotification} />
+        <RemoveButton id="notificationCloseButton" onClick={closeNotification} />
       </div>
     </div>
   )

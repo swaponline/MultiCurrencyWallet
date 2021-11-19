@@ -404,12 +404,8 @@ class WithdrawModalMultisigUser extends React.Component<any, any> {
         (value) => new BigNumber(value).isLessThanOrEqualTo(balance),
         <div style={{ width: '340px', fontSize: '12px' }}>
           <FormattedMessage
-            id="Withdrow170"
+            id="amountNoMoreThenBalance"
             defaultMessage="The amount must be no more than your balance"
-            values={{
-              min,
-              currency: `${currency}`,
-            }}
           />
         </div>
       )

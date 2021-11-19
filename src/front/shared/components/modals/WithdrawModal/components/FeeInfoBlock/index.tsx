@@ -86,20 +86,20 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
 
   const fiatMinerFee = isToken
     ? exchangeRateForTokens > 0 // eth rate for tokens
-      ? utils.toMeaningfulFiatValue({ value: minerFee, rate:exchangeRateForTokens })
+      ? utils.toMeaningfulFloatValue({ value: minerFee, rate:exchangeRateForTokens })
       : 0
     : exCurrencyRate > 0 // own currency rate for another
-      ? utils.toMeaningfulFiatValue({ value: minerFee, rate:exCurrencyRate })
+      ? utils.toMeaningfulFloatValue({ value: minerFee, rate:exCurrencyRate })
       : 0
 
   const fiatServiceFee = usedAdminFee
     ? exCurrencyRate > 0
-      ? utils.toMeaningfulFiatValue({ value: serviceFee, rate:exCurrencyRate })
+      ? utils.toMeaningfulFloatValue({ value: serviceFee, rate:exCurrencyRate })
       : 0
     : 0
 
   const fiatTotalFee = exCurrencyRate > 0 && !isToken
-    ? utils.toMeaningfulFiatValue({ value: totalFee, rate:exCurrencyRate })
+    ? utils.toMeaningfulFloatValue({ value: totalFee, rate:exCurrencyRate })
     : 0
 
   const transactionSize = (
@@ -158,7 +158,7 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
       {usedAdminFee && (
           <div styleName='feeRow'>
             <span styleName='feeRowTitle'>
-              <FormattedMessage id="FeeInfoBlockServiceFee" defaultMessage="Service fee:" />
+              <FormattedMessage id="FeeInfoBlockServiceFee" defaultMessage="Service fee" />:
             </span>
             <div className="feeRowInfo">
               <div styleName="serviceFeeConditions">

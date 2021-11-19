@@ -2,6 +2,12 @@ import axios from 'axios'
 import { routing, links } from 'helpers'
 
 const isFeedbackEnabled = !window?.STATISTIC_DISABLED
+const marks = {
+  danger: '🔴',
+  warning: '🔥',
+  attention: '💥',
+  unimportant: '💤',
+}
 
 const sendMessage = ({ appPart, eventName, details }) => {
   if (!isFeedbackEnabled) {
@@ -9,18 +15,25 @@ const sendMessage = ({ appPart, eventName, details }) => {
   }
 
   let host = routing.getTopLocation().host || window.location.hostname || document.location.host
+  let version = window.pluginVersion
+  let remainingLicenseDays = window.licenceInfo
+  let prefixMark = ''
   const regexp = new RegExp(host)
 
   if (links.extension.match(regexp)) {
-    host = 'browser extension'
+    host = 'Chrome extension'
   }
-  
-  let prefixMark = ''
 
-  if (eventName === 'failed') prefixMark = '🛑'
-  if (eventName === 'warning') prefixMark = '🔥'
+  if (eventName === 'failed') prefixMark = marks.danger
+  if (eventName === 'warning') prefixMark = marks.warning
 
-  const textToSend = `${prefixMark} [${host}] ${appPart} - ${eventName}${details ? ` {${details}}` : ``} |`
+  const textToSend = [
+    `${prefixMark ? `${prefixMark} ` : ''}`,
+    `[${host}${remainingLicenseDays ? ` license days left: ${remainingLicenseDays}` : ''}] `,
+    `${version ? `(version: ${version})` : ''}`,
+    `${appPart} - ${eventName}`,
+    `${details ? ` {${details}}` : ``} |`,
+  ].join('')
 
   if (host && host.includes('localhost')) {
     console.log(`📩 (muted) ${textToSend}`)

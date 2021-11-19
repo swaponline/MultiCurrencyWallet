@@ -1,3 +1,22 @@
+/* window.widgetERC20Comisions = {
+  bnb: {
+    fee: '2',
+    address: '',
+    min: '0,0001',
+  },
+  matic: {
+    fee: '5',
+    address: '',
+    min: '0,001',
+  },
+  bep20: {
+    address: '',
+  },
+  erc20matic: {
+    address: '',
+  },
+} */
+
 window.widgetEvmLikeTokens = [
   {
     name: 'usdt',
@@ -5,7 +24,7 @@ window.widgetEvmLikeTokens = [
     standard: 'erc20',
     address: '0xdac17f958d2ee523a2206206994597c13d831ec7',
     decimals: 6,
-    fullName: 'Tether'
+    fullName: 'Tether',
   },
   {
     name: 'share',
@@ -37,7 +56,18 @@ window.widgetEvmLikeTokens = [
     // Background color of icon
     iconBgColor: '#ff007a',
     howToDeposit: 'Just do it!',
-  }
+    howToWithdraw: 'Do not do it!',
+    customExchangeRate: '123454321',
+  },
+  {
+    name: 'weth',
+    symbol: 'weth',
+    standard: 'erc20matic',
+    address: '0x7ceb23fd6bc0add59e62ac25578270cff1b9f619',
+    decimals: 18,
+    fullName: 'Wrapped Ether',
+    customExchangeRate: '2',
+  },
 ]
 
 //window.SO_defaultQuickSell = `BNB`
@@ -46,7 +76,8 @@ window.widgetEvmLikeTokens = [
 window.buildOptions = {
   ownTokens: false, // Will be inited from window.widgetEvmLikeTokens
   addCustomTokens: true, // Allow user add custom evm like tokens
-  curEnabled: { // Or 'false' if enabled all
+  // Or 'false' if enabled all
+  curEnabled: {
     btc: true,
     eth: true,
     bnb: true,
@@ -84,7 +115,7 @@ window.buildOptions = {
     'CUSTOM_ERC20MATIC',
     'MATIC',
     'BNB',
-    'CUSTOM_BEP20'
+    'CUSTOM_BEP20',
   ],
   invoiceEnabled: true, // Allow create invoices
   showWalletBanners: true,

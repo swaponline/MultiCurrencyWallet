@@ -120,6 +120,17 @@ describe('Send EVM coins from the withdraw form', () => {
           expect(false).toBe(true)
         }
 
+        // in the interface we show completed/failed transactions in the notification
+        // and sometimes this notification can block closing of transaction info modal.
+        // Here we try to close this notification and in the error case it's ok,
+        // because we don't need to close it (it's not open)
+        try {
+          await clickOn({
+            page,
+            selector: '#notificationCloseButton',
+          })
+        } catch {}
+
         await clickOn({
           page,
           selector: '#modalCloseButton',
@@ -132,6 +143,6 @@ describe('Send EVM coins from the withdraw form', () => {
         throw new Error('No the browser or the page')
       }
     },
-    waitingForTheTest,
+    waitingForTheTest
   )
 })

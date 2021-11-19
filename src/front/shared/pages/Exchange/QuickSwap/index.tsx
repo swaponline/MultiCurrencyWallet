@@ -186,6 +186,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       gasLimit: '',
       showOrders: false,
       blockReason: undefined,
+      serviceFee: false,
     }
   }
 
@@ -285,6 +286,33 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       receivedList,
       spendedCurrency,
       receivedCurrency,
+    }
+  }
+
+  updateServiceFeeData = () => {
+    const { fromWallet } = this.state
+
+    const feeOptsKey = fromWallet?.standard || fromWallet?.currency
+    const currentFeeOpts = externalConfig.opts.fee[feeOptsKey.toLowerCase()]
+    const correctFeeRepresentation =
+      !Number.isNaN(window?.zeroxFeePercent) &&
+      window.zeroxFeePercent >= 0 &&
+      window.zeroxFeePercent <= 100
+
+    if (currentFeeOpts?.address && correctFeeRepresentation) {
+      // percent of the buyAmount >= 0 && <= 1
+      const apiPercentFormat = new BigNumber(window.zeroxFeePercent).dividedBy(MAX_PERCENT)
+
+      this.setState(() => ({
+        serviceFee: {
+          address: currentFeeOpts.address,
+          percent: Number(apiPercentFormat),
+        },
+      }))
+    } else {
+      this.setState(() => ({
+        serviceFee: false,
+      }))
     }
   }
 
@@ -421,7 +449,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   }
 
   createSwapRequest = (skipValidation = false) => {
-    const { slippage, spendedAmount, fromWallet, toWallet } = this.state
+    const { slippage, spendedAmount, fromWallet, toWallet, serviceFee } = this.state
 
     const sellToken = fromWallet?.contractAddress || ADDRESSES.EVM_COIN_ADDRESS
     const buyToken = toWallet?.contractAddress || ADDRESSES.EVM_COIN_ADDRESS
@@ -439,15 +467,15 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       `sellAmount=${sellAmount}`,
     ]
 
-    const feeOptsKey = fromWallet.standard || fromWallet.currency
-    const currentFeeOpts = externalConfig.opts.fee[feeOptsKey.toLowerCase()]
+    if (!window?.STATISTIC_DISABLED) {
+      request.push(`&affiliateAddress=${externalConfig.swapContract.affiliateAddress}`)
+    }
 
-    if (currentFeeOpts?.address && currentFeeOpts?.fee > 0 && currentFeeOpts?.fee < 100) {
-      // 0 >= percent of the buyAmount <= 1
-      const apiPercentFormat = new BigNumber(currentFeeOpts.fee).dividedBy(MAX_PERCENT)
+    if (serviceFee) {
+      const { address, percent } = serviceFee
 
-      request.push(`&feeRecipient=${currentFeeOpts.address}`)
-      request.push(`&buyTokenPercentageFee=${apiPercentFormat}`)
+      request.push(`&feeRecipient=${address}`)
+      request.push(`&buyTokenPercentageFee=${percent}`)
     }
 
     if (skipValidation) {
@@ -806,6 +834,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       async () => {
         this.updateNetwork()
         this.updateReceivedList()
+        this.updateServiceFeeData()
         await this.onInputDataChange()
       }
     )
@@ -1044,6 +1073,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       showOrders,
       blockReason,
       slippage,
+      serviceFee,
     } = this.state
 
     const linked = Link.all(
@@ -1138,6 +1168,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
                 fromWallet={fromWallet}
                 toWallet={toWallet}
                 fiat={fiat}
+                serviceFee={serviceFee}
               />
 
               <Feedback

@@ -1,4 +1,3 @@
-import React from 'react'
 import { defineMessages } from 'react-intl'
 import links from 'helpers/links'
 import externalConfig from 'helpers/externalConfig'
@@ -34,11 +33,6 @@ export const messages = defineMessages({
     description: 'Menu item "Marketmaker"',
     defaultMessage: 'Earn',
   },
-  farm: {
-    id: 'menu.farm',
-    description: 'Menu item "Staking & Farming"',
-    defaultMessage: 'Farming',
-  },
 })
 
 export const getMenuItems = (props) => {
@@ -48,7 +42,6 @@ export const getMenuItems = (props) => {
     exchange: exchangeLink,
     quickSwap,
     createWallet: create,
-    // farm,
     history: historyLink,
     home,
   } = links
@@ -102,21 +95,6 @@ export const getMenuItems = (props) => {
     itemsWithoutWallet.push(marketmakerItem)
   }
 
-  // temporarily hidden
-  // Farm ************************
-  // if (!isWidgetBuild) {
-  //   const farmItem = {
-  //     title: intl.formatMessage(messages.farm),
-  //     link: farm,
-  //     isExternal: true,
-  //     exact: true,
-  //     currentPageFlag: true,
-  //   }
-
-  //   itemsWithWallet.push(farmItem)
-  //   itemsWithoutWallet.push(farmItem)
-  // }
-
   return localStorage.getItem('isWalletCreate') === 'true'
     || externalConfig && externalConfig.isWidget
       ? itemsWithWallet
@@ -130,7 +108,6 @@ export const getMenuItemsMobile = (props, isWalletCreate, dinamicPath) => {
   const { 
     exchange: exchangeLink,
     quickSwap,
-    // farm,
     history: historyLink,
   } = links
 
@@ -169,21 +146,6 @@ export const getMenuItemsMobile = (props, isWalletCreate, dinamicPath) => {
       icon: <i className="fas fa-sync-alt" aria-hidden="true" />,
     },
   ]
-
-  // temporarily hidden
-  // Farm ************************
-  // if (externalConfig.entry === 'testnet' && !isWidgetBuild) {
-  //   const farmItem = {
-  //     title: props.intl.formatMessage(messages.farm),
-  //     link: farm,
-  //     isExternal: true,
-  //     exact: true,
-  //     icon: <i className="fas fa-coins" aria-hidden="true" />,
-  //   }
-
-  //   mobileItemsWithWallet.push(farmItem)
-  //   mobileItemsWithoutWallet.push(farmItem)
-  // }
 
   return localStorage.getItem('isWalletCreate') === 'true'
       ? mobileItemsWithWallet

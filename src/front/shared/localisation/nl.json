@@ -820,9 +820,7 @@
     "id": "Withdrow170",
     "message": "Det maksimale beløb, du kan sende, er {allowedBalance} {currency}",
     "files": [
-      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
     ]
   },
   {
@@ -1806,13 +1804,6 @@
     ]
   },
   {
-    "id": "WithdrawModal2225",
-    "message": "Something went wrong, enter your current code please",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
-    ]
-  },
-  {
     "id": "Withdrow2223",
     "message": "SMS code",
     "files": [
@@ -1977,10 +1968,6 @@
     "files": [
       "src/front/shared/components/modals/InvoiceLinkModal/InvoiceLinkModal.tsx"
     ]
-  },
-  {
-    "id": "InfoPay_1",
-    "message": "Transaction is completed"
   },
   {
     "id": "InfoPay_2",
@@ -2510,13 +2497,6 @@
     ]
   },
   {
-    "id": "withdrawSMSCodePlaceholder",
-    "message": "Enter SMS-code",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
-    ]
-  },
-  {
     "id": "WalletRow_Menu_BTCMS_SwitchMenu",
     "message": "Switch wallet",
     "files": [
@@ -2588,13 +2568,6 @@
     ]
   },
   {
-    "id": "registerSMSModalWords",
-    "message": "Geheime zin(12 woorden):",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
-    ]
-  },
-  {
     "id": "WithdrawSMS_BroadcastError",
     "message": "Fail broadcast transaction ({errorText})",
     "files": [
@@ -2609,20 +2582,6 @@
     ]
   },
   {
-    "id": "WithdrawSMS_MnemonicNote",
-    "message": "If you didn’t receive your SMS code or you don’t have access to this number, you can use a secret phrase to restore your wallet",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
-    ]
-  },
-  {
-    "id": "WithdrawSMS_MnemonicSignCaption",
-    "message": "Confirm transaction by secret phrase (12 words)",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
-    ]
-  },
-  {
     "id": "WithdrawSMS_NotValidMnemonic",
     "message": "Secret phrase not valid",
     "files": [
@@ -2630,57 +2589,8 @@
     ]
   },
   {
-    "id": "WithdrawSMS_ServerOffline",
-    "message": "Authorization server is offline",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
-    ]
-  },
-  {
-    "id": "WithdrawSMS_SmsSended",
-    "message": "SMS with code sent",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
-    ]
-  },
-  {
-    "id": "WithdrawSMS_SmsSending",
-    "message": "Sending sms with confirm code",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
-    ]
-  },
-  {
-    "id": "WithdrawSMS_UseMnemonic",
-    "message": "Use secret phrase (12 words)",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
-    ]
-  },
-  {
-    "id": "WithdrawSMS_UseSMS",
-    "message": "Use SMS-code",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
-    ]
-  },
-  {
-    "id": "WithdrawSMS_UseSMSNote",
-    "message": "You can also use the SMS code sent to the attached phone number.",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
-    ]
-  },
-  {
     "id": "WithdrawSMS_WrongMnemonic",
     "message": "Secret phrase not valid",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
-    ]
-  },
-  {
-    "id": "btcSMSProtectedSignByMnemonic",
-    "message": "Use Passphrase",
     "files": [
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
     ]
@@ -4357,9 +4267,10 @@
   },
   {
     "id": "FeeInfoBlockServiceFee",
-    "message": "Servicekosten:",
+    "message": "Servicekosten",
     "files": [
-      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/index.tsx"
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/index.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/UserInfo.tsx"
     ]
   },
   {
@@ -4811,13 +4722,6 @@
     "message": "Pending",
     "files": [
       "src/front/shared/components/controls/Button/Button.tsx"
-    ]
-  },
-  {
-    "id": "menu.farm",
-    "message": "Landbouw",
-    "files": [
-      "src/front/shared/components/Header/config.tsx"
     ]
   },
   {
@@ -5541,7 +5445,7 @@
     ]
   },
   {
-    "id": "transactonIsCompleted",
+    "id": "transactionIsCompleted",
     "message": "De transactie is voltooid",
     "files": [
       "src/front/shared/components/notifications/Transaction/index.tsx"
@@ -5598,17 +5502,11 @@
   },
   {
     "id": "createLimitOrder",
-    "message": "Limietvolgorde aanmaken",
-    "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
-    ]
+    "message": "Limietvolgorde aanmaken"
   },
   {
     "id": "limitOrders",
-    "message": "Limietorder",
-    "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
-    ]
+    "message": "Limietorder"
   },
   {
     "id": "swap",
@@ -6001,6 +5899,28 @@
     "message": "Instelling",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/Header.tsx"
+    ]
+  },
+  {
+    "id": "aggregatorFeeDescription",
+    "message": "Het percentage van het aankoopbedrag dat als commissie in rekening wordt gebracht",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/UserInfo.tsx"
+    ]
+  },
+  {
+    "id": "failedTransaction",
+    "message": "Mislukte transactie",
+    "files": [
+      "src/front/shared/components/notifications/Transaction/index.tsx"
+    ]
+  },
+  {
+    "id": "amountNoMoreThenBalance",
+    "message": "The amount must be no more than your balance",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
+      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
     ]
   }
 ]
