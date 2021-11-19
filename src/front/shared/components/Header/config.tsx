@@ -86,9 +86,12 @@ export const getMenuItems = (props) => {
   if (!isWidgetBuild) {
     const marketmakerItem = {
       title: intl.formatMessage(messages.marketmaker),
-      link: !isChromeExtension ? `${links.marketmaker}/` : `${links.marketmaker}/{MATIC}WBTC`,
+      link: (externalConfig.opts.ui.farmLink)
+        ? externalConfig.opts.ui.farmLink
+        : !isChromeExtension ? `${links.marketmaker}/` : `${links.marketmaker}/{MATIC}WBTC`,
       exact: true,
       currentPageFlag: true,
+      isExternal: (externalConfig.opts.ui.farmLink) ? true : false
     }
 
     itemsWithWallet.push(marketmakerItem)

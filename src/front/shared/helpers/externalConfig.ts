@@ -84,6 +84,7 @@ const externalConfig = () => {
     exchangeDisabled: false,
     ui: {
       footerDisabled: false,
+      farmLink: false, // use default link #/marketmaker
       bannersSource: 'https://noxon.wpmix.net/swapBanners/banners.php',
     },
   }
