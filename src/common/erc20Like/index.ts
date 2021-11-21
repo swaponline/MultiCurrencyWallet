@@ -8,6 +8,7 @@ import { COIN_DATA, COIN_MODEL } from 'swap.app/constants/COINS'
 import ethLikeHelper from 'common/helpers/ethLikeHelper'
 import utils from 'common/utils'
 import { feedback, metamask } from 'helpers'
+import getCoinInfo from 'common/coins/getCoinInfo'
 
 
 class erc20LikeHelper {
@@ -70,9 +71,14 @@ class erc20LikeHelper {
 
   isToken = (params): boolean => {
     const { name } = params
+    const {
+      coin,
+      blockchain,
+    } = getCoinInfo(name)
 
+    if (!blockchain) return false
     return (
-      Object.keys(config[this.standard]).includes(name.toLowerCase()) ||
+      Object.keys(config[this.standard]).includes(coin.toLowerCase()) &&
       name.startsWith(`{${this.currencyKey}}`)
     )
   }
@@ -106,6 +112,12 @@ class erc20LikeHelper {
 
 const isToken = (params) => {
   const { name } = params
+  const {
+    coin: coinName,
+    blockchain,
+  } = getCoinInfo(name)
+
+  if (!blockchain) return false
 
   const isUTXOModel = COIN_DATA[name.toUpperCase()] && COIN_DATA[name.toUpperCase()].model === COIN_MODEL.UTXO
   if (isUTXOModel) return false
@@ -113,11 +125,11 @@ const isToken = (params) => {
   for (const prop in TOKEN_STANDARDS) {
     const standard = TOKEN_STANDARDS[prop].standard
     const baseCurrency = TOKEN_STANDARDS[prop].currency
-    const lowerName = name.toLowerCase()
+    const lowerName = coinName.toLowerCase()
 
     if (
-      Object.keys(config[standard])?.includes(lowerName) ||
-      lowerName.startsWith(`{${baseCurrency}}`)
+      Object.keys(config[standard])?.includes(lowerName) &&
+      name.toLowerCase().startsWith(`{${baseCurrency}}`)
     ) {
       return true
     }

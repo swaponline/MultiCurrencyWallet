@@ -3,6 +3,7 @@ import erc20Like from 'common/erc20Like'
 import helpers from 'helpers'
 import actions from 'redux/actions'
 
+
 const getTokenBaseCurrency = (tokenKey) => {
   const baseCurrencyRegExp = /^\{[a-z]+\}/
   const baseTokenCurrencyPrefix = tokenKey.match(baseCurrencyRegExp)
@@ -61,20 +62,32 @@ type GetInfoResult = {
 }
 
 const getInfo = (currency, txRaw): GetInfoResult => {
-  const prefix = helpers.getCurrencyKey(currency, true)
+  let reduxAction = helpers.getCurrencyKey(currency, true)
+  if (erc20Like.erc20.isToken({ name: currency })) {
+    reduxAction = `erc20`
+  }
+
+  if (erc20Like.bep20.isToken({ name: currency })) {
+    reduxAction = `bep20`
+  }
+
+  if (erc20Like.erc20matic.isToken({ name: currency })) {
+    reduxAction = `erc20matic`
+  }
+
   const info = {
     tx: '',
     link: '',
   }
 
-  if (actions[prefix]?.getTx) {
-    const tx = actions[prefix].getTx(txRaw)
-    const link = getLink(prefix, tx)
+  if (actions[reduxAction]?.getTx) {
+    const tx = actions[reduxAction].getTx(txRaw)
+    const link = getLink(currency, tx)
 
     info.tx = tx
     info.link = link
   } else {
-    console.warn(`Function getTx for ${prefix} not defined`)
+    console.warn(`Function getTx for ${reduxAction} not defined`)
   }
 
   return info
