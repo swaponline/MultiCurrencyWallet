@@ -11,7 +11,9 @@ import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import Switching from 'components/controls/Switching/Switching'
 import SelectGroup from 'components/SelectGroup'
 import { QuickSwapFormTour } from 'components/Header/WidgetTours'
+import externalConfig from 'helpers/externalConfig'
 import { ComponentState, Direction, Actions, CurrencyMenuItem } from './types'
+
 
 const usePrevious = (value) => {
   const ref = useRef()
@@ -212,7 +214,7 @@ function InputForm(props: InputFormProps) {
     }
   }
 
-  const supportedCurrencies = ['eth', 'matic']
+  const supportedCurrencies = externalConfig.opts.buyFiatSupported
   const showFiatExchangeBtn =
     window.transakApiKey || supportedCurrencies.includes(spendedCurrency.value)
 
@@ -267,7 +269,10 @@ function InputForm(props: InputFormProps) {
             <Tooltip id="buyViaBankCardButton" place="top" mark={false}>
               <FormattedMessage
                 id="bankCardButtonDescription"
-                defaultMessage="In the modal window, you have to go through several steps to exchange fiat funds for ETH. Select ETH in the window and specify the address of your wallet (you can copy it below). Wait until the funds are credited to your address. Then you can buy tokens using it."
+                defaultMessage="In the modal window, you have to go through several steps to exchange fiat funds for {buyCurrency}. Select {buyCurrency} in the window and specify the address of your wallet (you can copy it below). Wait until the funds are credited to your address. Then you can buy tokens using it."
+                values={{
+                  buyCurrency: spendedCurrency.value.toUpperCase(),
+                }}
               />
             </Tooltip>
           </>

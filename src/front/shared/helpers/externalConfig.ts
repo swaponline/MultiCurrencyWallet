@@ -57,10 +57,12 @@ const externalConfig = () => {
       next: true,
     },
     createWalletCoinsOrder: false,
+    buyFiatSupported: ['eth', 'matic'],
     defaultExchangePair: {
       buy: '{eth}wbtc',
       sell: 'btc',
     },
+    defaultQuickSell: false,
     ownTokens: false,
     addCustomTokens: true,
     invoiceEnabled: !config.isWidget,
@@ -82,10 +84,27 @@ const externalConfig = () => {
     exchangeDisabled: false,
     ui: {
       footerDisabled: false,
+      farmLink: false, // use default link #/marketmaker
       bannersSource: 'https://noxon.wpmix.net/swapBanners/banners.php',
     },
   }
 
+  if (window
+    && window.SO_fiatBuySupperted
+    && window.SO_fiatBuySupperted.length
+  ) {
+    config.opts.buyFiatSupported = window.SO_fiatBuySupperted
+  }
+  if (window
+    && window.SO_defaultQuickSell
+  ) {
+    config.opts.defaultQuickSell = window.SO_defaultQuickSell
+  }
+  if (window
+    && window.SO_defaultQuickBuy
+  ) {
+    config.opts.defaultQuickBuy = window.SO_defaultQuickBuy
+  }
   if (window
     && window.SO_createWalletCoinsOrder
     && window.SO_createWalletCoinsOrder.length

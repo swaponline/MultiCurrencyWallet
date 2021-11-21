@@ -5381,7 +5381,7 @@
   },
   {
     "id": "bankCardButtonDescription",
-    "message": "Im modalen Fenster müssen Sie mehrere Schritte ausführen, um Fiat-Gelder gegen DAS einzutauschen. Wählen Sie ETH im Fenster aus und geben Sie die Adresse Ihrer Brieftasche an (Sie können sie unten kopieren). Warten Sie, bis das Geld Ihrer Adresse gutgeschrieben wurde. Dann können Sie Token damit kaufen.",
+    "message": "Im modalen Fenster müssen Sie mehrere Schritte ausführen, um Fiat-Gelder gegen DAS einzutauschen. Wählen Sie {buyCurrency} im Fenster aus und geben Sie die Adresse Ihrer Brieftasche an (Sie können sie unten kopieren). Warten Sie, bis das Geld Ihrer Adresse gutgeschrieben wurde. Dann können Sie Token damit kaufen.",
     "files": [
       "src/front/shared/components/Header/WidgetTours/QuickSwapFormTour.tsx",
       "src/front/shared/pages/Exchange/QuickSwap/InputForm.tsx"

@@ -5370,7 +5370,7 @@
   },
   {
     "id": "bankCardButtonDescription",
-    "message": "W oknie modalnym musisz przejść przez kilka kroków, aby wymienić fundusze fiat NA. Wybierz ETH w oknie i podaj adres swojego portfela (możesz skopiować go poniżej). Poczekaj, aż środki zostaną przelane na twój adres. Następnie możesz kupić tokeny używając go.",
+    "message": "W oknie modalnym musisz przejść przez kilka kroków, aby wymienić fundusze fiat NA. Wybierz {buyCurrency} w oknie i podaj adres swojego portfela (możesz skopiować go poniżej). Poczekaj, aż środki zostaną przelane na twój adres. Następnie możesz kupić tokeny używając go.",
     "files": [
       "src/front/shared/components/Header/WidgetTours/QuickSwapFormTour.tsx",
       "src/front/shared/pages/Exchange/QuickSwap/InputForm.tsx"
