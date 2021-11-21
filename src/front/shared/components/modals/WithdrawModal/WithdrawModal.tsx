@@ -565,7 +565,12 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
         }
 
         // Redirect to tx
-        const txInfo = helpers.transactions.getInfo(reduxActionName, txRaw)
+        const txInfo = helpers.transactions.getInfo(
+          (selectedItem.tokenKey)
+            ? selectedItem.tokenKey
+            : selectedItem.currency,
+          txRaw
+        )
         const { tx: txId } = txInfo
 
         // Сохраняем транзакцию в кеш

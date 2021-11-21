@@ -318,7 +318,11 @@ class CurrencyWallet extends Component<any, any> {
           currencyName = 'btc'
       }
 
-      const blockchainOk = (blockchain && item.blockchain) ? item.blockchain.toLowerCase() === blockchain.toLowerCase() : true
+      const blockchainOk = (blockchain && item.blockchain)
+        ? item.blockchain.toLowerCase() === blockchain.toLowerCase()
+        : ((blockchain && !item.blockchain) || (!blockchain && item.blockchain))
+          ? false
+          : true
 
       if (
         currencyName.toLowerCase() === coin.toLowerCase() &&
