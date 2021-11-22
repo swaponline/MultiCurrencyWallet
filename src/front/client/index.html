@@ -657,7 +657,7 @@
 
           let url = 'https://noxon.wpmix.net/counter.php?msg=' + encodeURI(msg);
 
-          if (!window?.STATISTIC_DISABLED) {
+          if (!isWidgetBuild || window?.STATISTICS_ENABLED) {
             window.jQuery.ajax({
               type: 'POST',
               url: url,

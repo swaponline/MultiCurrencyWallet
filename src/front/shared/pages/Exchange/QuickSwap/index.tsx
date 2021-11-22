@@ -467,7 +467,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       `sellAmount=${sellAmount}`,
     ]
 
-    if (!window?.STATISTIC_DISABLED) {
+    if (window?.STATISTICS_ENABLED) {
       request.push(`&affiliateAddress=${externalConfig.swapContract.affiliateAddress}`)
     }
 

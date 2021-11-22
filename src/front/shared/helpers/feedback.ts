@@ -1,7 +1,7 @@
 import axios from 'axios'
-import { routing, links } from 'helpers'
+import { routing, links, externalConfig } from 'helpers'
 
-const isFeedbackEnabled = !window?.STATISTIC_DISABLED
+const isFeedbackEnabled = !externalConfig.isWidget || window?.STATISTICS_ENABLED
 const marks = {
   danger: '🔴',
   warning: '🔥',

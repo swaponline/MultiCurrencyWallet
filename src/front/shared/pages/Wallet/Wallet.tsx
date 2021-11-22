@@ -469,7 +469,7 @@ class Wallet extends PureComponent<any, any> {
       },
     } = this.props
 
-    if (!window?.STATISTIC_DISABLED) {
+    if (window?.STATISTICS_ENABLED) {
       this.syncData()
     }
 
