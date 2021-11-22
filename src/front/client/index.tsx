@@ -21,7 +21,7 @@ const __webpack_public_path__ = `${config.publicPath}images/` // It makes webpac
 const rootEl = document.getElementById('root')
 
 if (
-  !window?.STATISTIC_DISABLED &&
+  (!config.isWidget || window?.STATISTICS_ENABLED) &&
   process.env.NODE_ENV !== 'development'
 ) {
   Sentry.init({
