@@ -16,6 +16,10 @@ import Button from 'components/controls/Button/Button'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 import { COIN_DECIMALS, MAX_PERCENT } from './constants'
 import { ServiceFee } from './types'
+import config from 'helpers/externalConfig'
+
+
+const onlyEvmWallets = (config?.opts?.ui?.disableInternalWallet) ? true : false
 
 type ComponentProps = {
   history: any
@@ -121,47 +125,66 @@ function UserInfo(props: ComponentProps) {
     }
   }
 
+  const connectWalletButton = (
+    <Button
+      id="connectWalletBtn"
+      brand
+      fullWidth
+      styleName="walletButton"
+      onClick={connectWallet}
+    >
+      <FormattedMessage id="Exchange_ConnectAddressOption" defaultMessage="Connect Wallet" />
+    </Button>
+  )
+  const walletAddressBlock = (
+    <span styleName="indicator">
+      <FormattedMessage id="addressOfYourWallet" defaultMessage="Address of your wallet:" />
+
+      <Copy text={fromWallet.address}>
+        <span styleName="value address">
+          <Address
+            address={fromWallet.address}
+            format={isMobile ? AddressFormat.Short : AddressFormat.Full}
+            type={metamask.isConnected() ? AddressType.Metamask : AddressType.Internal}
+          />
+        </span>
+      </Copy>
+    </span>
+  )
+
   return (
     <section styleName="userInfo">
-      {!metamask.isConnected() && (!isWalletCreated || !mnemonicSaved) && (
-        <Button
-          id="connectWalletBtn"
-          brand
-          fullWidth
-          styleName="walletButton"
-          onClick={connectWallet}
-        >
-          <FormattedMessage id="Exchange_ConnectAddressOption" defaultMessage="Connect Wallet" />
-        </Button>
-      )}
-      {!isWalletCreated ? (
-        <Button id="createWalletBtn" styleName="walletButton" gray fullWidth onClick={createWallet}>
-          <FormattedMessage id="menu.CreateWallet" defaultMessage="Create wallet" />
-        </Button>
-      ) : saveSecretPhrase ? (
-        <Button
-          id="saveSecretPhraseBtn"
-          styleName="walletButton"
-          gray
-          fullWidth
-          onClick={saveMnemonic}
-        >
-          <FormattedMessage id="BTCMS_SaveMnemonicButton" defaultMessage="Save secret phrase" />
-        </Button>
+      {onlyEvmWallets ? (
+        <>
+          {!metamask.isConnected() ? (
+            <>{connectWalletButton}</>
+          ) : (
+            <>{walletAddressBlock}</>
+          )}
+        </>
       ) : (
-        <span styleName="indicator">
-          <FormattedMessage id="addressOfYourWallet" defaultMessage="Address of your wallet:" />
-
-          <Copy text={fromWallet.address}>
-            <span styleName="value address">
-              <Address
-                address={fromWallet.address}
-                format={isMobile ? AddressFormat.Short : AddressFormat.Full}
-                type={metamask.isConnected() ? AddressType.Metamask : AddressType.Internal}
-              />
-            </span>
-          </Copy>
-        </span>
+        <>
+          {!metamask.isConnected() && (!isWalletCreated || !mnemonicSaved) && (
+            <>{connectWalletButton}</>
+          )}
+          {!isWalletCreated ? (
+            <Button id="createWalletBtn" styleName="walletButton" gray fullWidth onClick={createWallet}>
+              <FormattedMessage id="menu.CreateWallet" defaultMessage="Create wallet" />
+            </Button>
+          ) : saveSecretPhrase ? (
+            <Button
+              id="saveSecretPhraseBtn"
+              styleName="walletButton"
+              gray
+              fullWidth
+              onClick={saveMnemonic}
+            >
+              <FormattedMessage id="BTCMS_SaveMnemonicButton" defaultMessage="Save secret phrase" />
+            </Button>
+          ) : (
+            <>{walletAddressBlock}</>
+          )}
+        </>
       )}
 
       <span styleName="indicator">
