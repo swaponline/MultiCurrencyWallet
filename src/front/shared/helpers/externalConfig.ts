@@ -94,7 +94,7 @@ const externalConfig = () => {
     && window.SO_disableInternalWallet
     && window.SO_disableInternalWallet
   ) {
-    config.opts.disableInternalWallet = window.SO_disableInternalWallet
+    config.opts.ui.disableInternalWallet = window.SO_disableInternalWallet
   }
   if (window
     && window.SO_fiatBuySupperted

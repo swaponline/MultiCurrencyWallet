@@ -128,7 +128,7 @@ class ConnectWalletModal extends React.Component<any, any> {
   }
 
   render() {
-    const { dashboardModalsAllowed } = this.props
+    const { dashboardModalsAllowed, noCloseButton } = this.props
     const { choseNetwork, currentBaseCurrency } = this.state
 
     return (
@@ -146,7 +146,9 @@ class ConnectWalletModal extends React.Component<any, any> {
         >
           <div styleName="header">
             <h3 styleName="title"><FormattedMessage id="Connect" defaultMessage="Connect" /></h3>
-            <CloseIcon onClick={this.handleClose} />
+            {!noCloseButton && (
+              <CloseIcon onClick={this.handleClose} />
+            )}
           </div>
 
           <div styleName="notification-overlay">
