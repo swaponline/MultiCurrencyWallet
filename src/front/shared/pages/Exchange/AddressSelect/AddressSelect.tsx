@@ -24,10 +24,13 @@ import iconInternal from 'images/logo/logo-black.svg'
 import iconCustom from 'images/custom.svg'
 
 import getCoinInfo from 'common/coins/getCoinInfo'
+import config from 'helpers/externalConfig'
+
 
 import { AddressType, AddressRole } from 'domain/address'
 import { COIN_DATA, COIN_MODEL } from 'swap.app/constants/COINS'
 
+const disableInternalWallet = (config?.opts?.ui?.disableInternalWallet) ? true : false
 const langLabels = defineMessages({
   labelSpecifyAddress: {
     id: 'Exchange_SpecifyAddress',
@@ -369,34 +372,36 @@ class AddressSelect extends Component<AddressSelectProps, AddressSelectState> {
 
     const isCurrencyInInternalWallet = this.isCurrencyInInternalWallet()
 
-    if (isCurrencyInInternalWallet) {
-      dropDownOptions.push(
-        {
-          value: AddressType.Internal,
-          icon: iconInternal,
-          title: !isInternalOptionDisabled ? (
-            <Fragment>
-              <FormattedMessage {...langLabels.optionInternal} />
-              <Address
-                address={this.getInternalAddress()}
-                format={AddressFormat.Short}
-                type={AddressType.Internal}
-              />
-            </Fragment>
-          ) : (
-            <FormattedMessage {...langLabels.optionInternalDisabled} />
-          ),
-          disabled: isInternalOptionDisabled,
-        },
-      )
-    } else if (isUTXOModel || !isMetamaskConnected) {
-      dropDownOptions.push(
-        {
-          value: 'InternalAddressCreate',
-          icon: iconInternal,
-          title: <FormattedMessage {...langLabels.optionInternalCreate} />,
-        },
-      )
+    if (!disableInternalWallet) {
+      if (isCurrencyInInternalWallet) {
+        dropDownOptions.push(
+          {
+            value: AddressType.Internal,
+            icon: iconInternal,
+            title: !isInternalOptionDisabled ? (
+              <Fragment>
+                <FormattedMessage {...langLabels.optionInternal} />
+                <Address
+                  address={this.getInternalAddress()}
+                  format={AddressFormat.Short}
+                  type={AddressType.Internal}
+                />
+              </Fragment>
+            ) : (
+              <FormattedMessage {...langLabels.optionInternalDisabled} />
+            ),
+            disabled: isInternalOptionDisabled,
+          },
+        )
+      } else if (isUTXOModel || !isMetamaskConnected) {
+        dropDownOptions.push(
+          {
+            value: 'InternalAddressCreate',
+            icon: iconInternal,
+            title: <FormattedMessage {...langLabels.optionInternalCreate} />,
+          },
+        )
+      }
     }
 
     if (isMetamaskOption) {
