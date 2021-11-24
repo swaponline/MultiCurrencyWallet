@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import config from 'app-config'
+import config from 'helpers/externalConfig'
 
 import CSSModules from 'react-css-modules'
 import styles from './CreateWallet.scss'
@@ -23,6 +23,7 @@ import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
 import web3Icons from 'images'
 
 const isWidgetBuild = config && config.isWidget
+const noInternalWallet = (config?.opts?.ui?.disableInternalWallet) ? true : false
 
 const CreateWallet = (props) => {
   const {
@@ -255,30 +256,32 @@ const CreateWallet = (props) => {
           {forcedCurrency && forcedCurrency.toUpperCase()}
         </h2>
         <div styleName="buttonWrapper">
-          <div>
-            <button onClick={handleRestoreMnemonic}>
-              <FormattedMessage id="ImportKeys_RestoreMnemonic" defaultMessage="Restore from 12-word seed" />
-            </button>
-            &nbsp;
-            <Tooltip id="ImportKeys_RestoreMnemonic_tooltip">
-              <span>
-                <FormattedMessage
-                  id="ImportKeys_RestoreMnemonic_Tooltip"
-                  defaultMessage="12-word backup phrase"
-                />
-                <React.Fragment>
-                  <br />
-                  <br />
-                  <div styleName="alertTooltipWrapper">
-                    <FormattedMessage
-                      id="ImportKeys_RestoreMnemonic_Tooltip_withBalance"
-                      defaultMessage="Please, be causious!"
-                    />
-                  </div>
-                </React.Fragment>
-              </span>
-            </Tooltip>
-          </div>
+          {!noInternalWallet && (
+            <div>
+              <button onClick={handleRestoreMnemonic}>
+                <FormattedMessage id="ImportKeys_RestoreMnemonic" defaultMessage="Restore from 12-word seed" />
+              </button>
+              &nbsp;
+              <Tooltip id="ImportKeys_RestoreMnemonic_tooltip">
+                <span>
+                  <FormattedMessage
+                    id="ImportKeys_RestoreMnemonic_Tooltip"
+                    defaultMessage="12-word backup phrase"
+                  />
+                  <React.Fragment>
+                    <br />
+                    <br />
+                    <div styleName="alertTooltipWrapper">
+                      <FormattedMessage
+                        id="ImportKeys_RestoreMnemonic_Tooltip_withBalance"
+                        defaultMessage="Please, be causious!"
+                      />
+                    </div>
+                  </React.Fragment>
+                </span>
+              </Tooltip>
+            </div>
+          )}
           {!metamask.isConnected() && (
             <div>
               <button onClick={handleConnectWallet}>

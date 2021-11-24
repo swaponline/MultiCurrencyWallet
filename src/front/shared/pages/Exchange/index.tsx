@@ -6,6 +6,7 @@ import { localStorage, constants, links } from 'helpers'
 import QuickSwap from './QuickSwap'
 import AtomicSwap from './AtomicSwap'
 
+
 // option from the WP panel
 const globalMode = window.exchangeMode
 

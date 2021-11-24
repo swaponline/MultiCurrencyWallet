@@ -17,6 +17,8 @@ import { FormattedMessage, injectIntl } from 'react-intl'
 import linksManager from 'helpers/links'
 
 
+const disableInternalWallet = (config?.opts?.ui?.disableInternalWallet) ? true : false
+
 type WallerSliderProps = {
   intl?: { [key: string]: any }
   user?: { [key: string]: any }
@@ -217,7 +219,7 @@ class WallerSlider extends React.Component<WallerSliderProps, WallerSliderState>
                   />
                 </div>
               )}
-              {!isPrivateKeysSaved && !mnemonicDeleted && (
+              {!isPrivateKeysSaved && !mnemonicDeleted && !disableInternalWallet && (
                 <div className="swiper-slide">
                   <NotifyBlock
                     className="notifyBlockSaveKeys"

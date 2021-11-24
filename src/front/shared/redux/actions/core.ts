@@ -459,6 +459,8 @@ const getWallet = (params: GetWalletParams) => {
 const getWallets = (options: IUniversalObj = {}) => {
   const { withInternal } = options
 
+  const onlyEvmWallets = (config?.opts?.ui?.disableInternalWallet) ? true : false
+
   const {
     user: {
       btcData,
@@ -505,17 +507,17 @@ const getWallets = (options: IUniversalObj = {}) => {
           : []
         : []
     ),
-    ...(!enabledCurrencies || enabledCurrencies.btc
+    ...((!enabledCurrencies || enabledCurrencies.btc) && !onlyEvmWallets
       ? [btcData, btcMultisigSMSData, btcMultisigUserData]
       : []
     ),
-    ...(!enabledCurrencies || enabledCurrencies.btc
+    ...((!enabledCurrencies || enabledCurrencies.btc) && !onlyEvmWallets
       ? btcMultisigPinData && btcMultisigPinData.isRegistered
         ? [btcMultisigPinData]
         : []
       : []),
     // =====================================
-    ...(!enabledCurrencies || enabledCurrencies.btc
+    ...((!enabledCurrencies || enabledCurrencies.btc) && !onlyEvmWallets
       ? btcMultisigUserData && btcMultisigUserData.wallets
         ? btcMultisigUserData.wallets
         : []
@@ -553,8 +555,8 @@ const getWallets = (options: IUniversalObj = {}) => {
         : [arbethData]
       : []),
     // =====================================
-    ...(!enabledCurrencies || enabledCurrencies.ghost ? [ghostData] : []),
-    ...(!enabledCurrencies || enabledCurrencies.next ? [nextData] : []),
+    ...((!enabledCurrencies || enabledCurrencies.ghost) && !onlyEvmWallets ? [ghostData] : []),
+    ...((!enabledCurrencies || enabledCurrencies.next) && !onlyEvmWallets ? [nextData] : []),
     ...tokenWallets,
   ].map(({ account, keyPair, ...data }) => ({
     ...data,

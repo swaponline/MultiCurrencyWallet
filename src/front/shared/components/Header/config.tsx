@@ -1,10 +1,12 @@
 import { defineMessages } from 'react-intl'
 import links from 'helpers/links'
 import externalConfig from 'helpers/externalConfig'
+import metamask from 'helpers/metamask'
 
 
 const isWidgetBuild = externalConfig && externalConfig.isWidget
 const isChromeExtension = externalConfig && externalConfig.dir === 'chrome-extension/application'
+const onlyEvmWallets = (externalConfig?.opts?.ui?.disableInternalWallet) ? true : false
 
 
 export const messages = defineMessages({
@@ -68,7 +70,7 @@ export const getMenuItems = (props) => {
   ]
 
   const itemsWithoutWallet = [
-    {
+    !onlyEvmWallets && {
       title: intl.formatMessage(createWallet),
       link: create,
       exact: true,
@@ -97,6 +99,8 @@ export const getMenuItems = (props) => {
     itemsWithWallet.push(marketmakerItem)
     itemsWithoutWallet.push(marketmakerItem)
   }
+
+  if (onlyEvmWallets && metamask.isConnected()) return itemsWithWallet
 
   return localStorage.getItem('isWalletCreate') === 'true'
     || externalConfig && externalConfig.isWidget
