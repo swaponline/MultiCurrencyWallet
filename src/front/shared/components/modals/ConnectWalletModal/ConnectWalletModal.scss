@@ -116,16 +116,22 @@
 }
 
 .provider{
+  width: 45%;
   &:not(:first-child) {
     margin-left: 0.5rem;
   }
 
   button {
     display: block;
-    width: auto;
+    width: 100%;
     max-width: none;
     min-width: 180px;
     margin: 0 auto;
+
+    img {
+      height: 2rem;
+      padding-right: 0.5rem;
+    }
   }
 }
 

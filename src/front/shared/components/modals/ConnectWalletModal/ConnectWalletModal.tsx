@@ -12,6 +12,7 @@ import { localisedUrl } from 'helpers/locale'
 import { Button } from 'components/controls'
 import Coin from 'components/Coin/Coin'
 import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
+import web3Icons from 'images'
 
 @connect(({ ui: { dashboardModalsAllowed } }) => ({
   dashboardModalsAllowed,
@@ -131,6 +132,10 @@ class ConnectWalletModal extends React.Component<any, any> {
     const { dashboardModalsAllowed, noCloseButton } = this.props
     const { choseNetwork, currentBaseCurrency } = this.state
 
+    const web3Type = metamask.web3connect.getInjectedType()
+    const web3Icon = (web3Icons[web3Type] && web3Type !== `UNKNOWN` && web3Type !== `NONE`) ? web3Icons[web3Type] : false
+    const walletConnectIcon = web3Icons[`WALLETCONNECT`]
+
     return (
       <div
         className={cx({
@@ -192,12 +197,16 @@ class ConnectWalletModal extends React.Component<any, any> {
                 {metamask.web3connect.isInjectedEnabled() && (
                   <div styleName="provider">
                     <Button brand onClick={this.handleInjected}>
+                      {web3Icon && (
+                        <img src={web3Icon} />
+                      )}
                       {metamask.web3connect.getInjectedTitle()}
                     </Button>
                   </div>
                 )}
                 <div styleName="provider">
                   <Button brand onClick={this.handleWalletConnect}>
+                    <img src={walletConnectIcon} />
                     <FormattedMessage id="ConnectWalletModal_WalletConnect" defaultMessage="WalletConnect" />
                   </Button>
                 </div>
