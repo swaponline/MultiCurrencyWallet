@@ -7,7 +7,8 @@ import styles from 'pages/Wallet/Wallet.scss'
 import Button from 'components/controls/Button/Button'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import { BigNumber } from 'bignumber.js'
-import config from 'app-config'
+import config from 'helpers/externalConfig'
+import metamask from 'helpers/metamask'
 import { FormattedMessage } from 'react-intl'
 import dollar from './images/dollar.svg'
 import btc from './images/btcIcon.svg'
@@ -61,6 +62,8 @@ const BalanceForm = function ({
     actions.multisigTx.goToLastWallet()
   }
 
+  const buttonsDisabled = (config.opts.ui.disableInternalWallet && !metamask.isConnected()) || !config.opts.ui.disableInternalWallet
+  
   return (
     <div
       styleName={
@@ -134,10 +137,10 @@ const BalanceForm = function ({
         <div styleName="yourBalanceBottom">
           {showButtons ? (
             <div styleName="btns" className="data-tut-withdraw-buttons">
-              <Button blue id="depositBtn" onClick={() => handleReceive('Deposit')}>
+              <Button blue disabled={buttonsDisabled} id="depositBtn" onClick={() => handleReceive('Deposit')}>
                 <FormattedMessage id="YourtotalbalanceDeposit" defaultMessage="Пополнить" />
               </Button>
-              <Button blue disabled={!currencyBalance} id="sendBtn" onClick={() => handleWithdraw('Send')}>
+              <Button blue disabled={!currencyBalance || buttonsDisabled} id="sendBtn" onClick={() => handleWithdraw('Send')}>
                 <FormattedMessage id="YourtotalbalanceSend" defaultMessage="Отправить" />
               </Button>
             </div>
