@@ -154,6 +154,7 @@ export const getMenuItemsMobile = (props, isWalletCreate, dinamicPath) => {
     },
   ]
 
+  if (onlyEvmWallets) return mobileItemsWithWallet
   return localStorage.getItem('isWalletCreate') === 'true'
       ? mobileItemsWithWallet
       : mobileItemsWithoutWallet
