@@ -288,7 +288,7 @@ class Header extends Component<any, any> {
         return
     }
 
-    if (!didOpenWalletCreate && isWalletPage && !config.opts.plugins.backupPlugin) {
+    if (!didOpenWalletCreate && isWalletPage && !config.opts.plugins.backupPlugin && !config.opts.ui.disableInternalWallet) {
       this.openCreateWallet({ onClose: tourEvent })
       return
     }
