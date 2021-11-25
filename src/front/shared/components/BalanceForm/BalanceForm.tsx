@@ -62,7 +62,7 @@ const BalanceForm = function ({
     actions.multisigTx.goToLastWallet()
   }
 
-  const buttonsDisabled = (config.opts.ui.disableInternalWallet && !metamask.isConnected()) || !config.opts.ui.disableInternalWallet
+  const buttonsDisabled = !((config.opts.ui.disableInternalWallet && metamask.isConnected()) || !config.opts.ui.disableInternalWallet)
   
   return (
     <div
