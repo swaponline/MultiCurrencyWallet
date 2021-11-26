@@ -79,7 +79,7 @@ DATE=`date '+%Y-%m-%d %H:%M:%S'`
 git checkout -b build_${buildId}
 git add .
 git commit -m "build $DATE"
-git push --force
+git push --force --set-upstream origin build_${buildId}
 
 
 # return back to root
