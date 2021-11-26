@@ -80,7 +80,7 @@ git checkout -b build_${buildId}
 git add .
 git commit -m "build $DATE"
 git push --force --set-upstream origin build_${buildId}
-
+hub pull-request -m "Build ${buildId}"
 
 # return back to root
 cd ..
