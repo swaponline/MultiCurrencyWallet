@@ -8,6 +8,10 @@ import { feedback, adminFee, externalConfig } from 'helpers'
 import cssModules from 'react-css-modules'
 import cx from 'classnames'
 import styles from './styles.scss'
+import config from 'helpers/externalConfig'
+
+
+const disableInternalWallet = config.opts.ui.disableInternalWallet
 
 const NETWORK = process.env.MAINNET
   ? 'MAINNET'
@@ -153,21 +157,23 @@ const FAQ = (props) => {
         <FormattedMessage id="MainFAQHeader" defaultMessage="FAQ" />
       </h5>
       <div className={styles.faQuestions__tabsContainer}>
-        <article className={styles.tab}>
-          <h6 className={styles.tab__header} onClick={() => handleTabClick('FIRST_TAB')}>
+        {!disableInternalWallet && (
+          <article className={styles.tab}>
+            <h6 className={styles.tab__header} onClick={() => handleTabClick('FIRST_TAB')}>
+              <div className={cx({
+                [styles.chrest]: true,
+                [styles.chrest_active]: tabsVisibility.FIRST_TAB,
+              })} />
+              <FormattedMessage id="MainFAQ1_header" defaultMessage="How are my private keys stored?" />
+            </h6>
             <div className={cx({
-              [styles.chrest]: true,
-              [styles.chrest_active]: tabsVisibility.FIRST_TAB,
-            })} />
-            <FormattedMessage id="MainFAQ1_header" defaultMessage="How are my private keys stored?" />
-          </h6>
-          <div className={cx({
-            [styles.tab__content]: true,
-            [styles.tab__content_active]: tabsVisibility.FIRST_TAB,
-          })}>
-            <FormattedMessage id="MainFAQ1_content" defaultMessage="Your private keys are stored ONLY on your device, in the localStorage of your browser. Please backup your keys, because your browser or device may be crashed." />
-          </div>
-        </article>
+              [styles.tab__content]: true,
+              [styles.tab__content_active]: tabsVisibility.FIRST_TAB,
+            })}>
+              <FormattedMessage id="MainFAQ1_content" defaultMessage="Your private keys are stored ONLY on your device, in the localStorage of your browser. Please backup your keys, because your browser or device may be crashed." />
+            </div>
+          </article>
+        )}
 
         <article className={styles.tab}>
           <h6 className={styles.tab__header} onClick={() => handleTabClick('SECOND_TAB')}>
