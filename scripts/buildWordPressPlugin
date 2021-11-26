@@ -84,9 +84,4 @@ git push --force
 # return back to root
 cd ..
 
-sleep 3
-wget -qO- https://growup.wpmix.net/wp-content/plugins/github_hook.php
-
-
-
 
