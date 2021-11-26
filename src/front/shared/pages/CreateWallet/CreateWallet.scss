@@ -160,7 +160,7 @@
   border: 1px solid var(--color-border);
   box-sizing: border-box;
   box-shadow: 0px 2px 12px var(--color-pale);
-  border-radius: 4px;
+  border-radius: var(--card-border-radius);
   padding: 10px;
   list-style: none;
   display: grid;

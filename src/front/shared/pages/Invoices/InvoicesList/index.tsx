@@ -30,7 +30,6 @@ const isWidgetBuild = config && config.isWidget
     arbethData,
     ghostData,
     nextData,
-    multisigStatus,
     activeFiat,
   },
 }) => {
@@ -44,7 +43,6 @@ const isWidgetBuild = config && config.isWidget
       ghost: ghostData,
       next: nextData,
     },
-    multisigStatus,
     activeFiat,
   }
 })
@@ -211,7 +209,6 @@ class InvoicesList extends PureComponent<any, any> {
         {(items && items.length > 0) ? (
           <Table rows={items} styleName="currencyHistory" rowRender={this.rowRender} />
         ) : (
-          //@ts-ignore
           <ContentLoader rideSideContent empty inner />
         )}
       </div>
@@ -245,7 +242,6 @@ class InvoicesList extends PureComponent<any, any> {
                   {/* Right form holder */}
                 </div>
               ) : (
-                //@ts-ignore
                 <ContentLoader leftSideContent />
               )}
             </div>
