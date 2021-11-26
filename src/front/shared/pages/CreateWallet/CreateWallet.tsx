@@ -9,7 +9,6 @@ import { FormattedMessage, useIntl } from 'react-intl'
 import { withRouter } from 'react-router-dom'
 import { isMobile } from 'react-device-detect'
 import reducers from 'redux/core/reducers'
-import getCoinInfo from 'common/coins/getCoinInfo'
 import TOKEN_STANDARDS from 'helpers/constants/TOKEN_STANDARDS'
 import links from 'helpers/links'
 import metamask from 'helpers/metamask'
@@ -22,7 +21,6 @@ import { constants, localStorage, user } from 'helpers'
 import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
 import web3Icons from 'images'
 
-const isWidgetBuild = config && config.isWidget
 const noInternalWallet = (config?.opts?.ui?.disableInternalWallet) ? true : false
 
 const CreateWallet = (props) => {
