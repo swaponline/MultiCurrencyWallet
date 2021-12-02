@@ -20,6 +20,10 @@ function Header(props) {
     openSettingsSection,
   } = props
 
+  let sourceTitle = LIQUIDITY_SOURCE_DATA[network.networkVersion]?.name || (
+    <FormattedMessage id="source" defaultMessage="Source" />
+  )
+  if (onlySource) sourceTitle = <FormattedMessage id="sourceExchange" defaultMessage="Exchange" />
   return (
     <div styleName="header">
       {!onlySource && (
@@ -39,9 +43,7 @@ function Header(props) {
           styleName={`tab ${activeSection === Sections.Source ? 'active' : ''}`}
           onClick={openSourceSection}
         >
-          {LIQUIDITY_SOURCE_DATA[network.networkVersion]?.name || (
-            <FormattedMessage id="source" defaultMessage="Source" />
-          )}
+          {sourceTitle}
         </button>
       )}
 
