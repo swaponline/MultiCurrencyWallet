@@ -162,7 +162,11 @@ class ConnectWalletModal extends React.Component<any, any> {
                 <FormattedMessage id="chooseNetwork" defaultMessage="Choose network" />
               </h3>
               <div styleName="options">
-                {Object.values(externalConfig.evmNetworks).map(
+                {Object.values(externalConfig.evmNetworks)
+                  .filter( (network: any) => {
+                    return externalConfig.opts.curEnabled[network.currency.toLowerCase()]
+                  })
+                  .map(
                   (
                     item: {
                       currency: string
