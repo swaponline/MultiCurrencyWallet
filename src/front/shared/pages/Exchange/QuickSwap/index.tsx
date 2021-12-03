@@ -1219,7 +1219,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
           <p styleName="externalServiceWarning">
             <FormattedMessage
               id="disclaimerAbout0x"
-              defaultMessage="* Disclaimer: the exchange uses a 3rd 0x Liquidity Protocol. Be carefully and use at your own risk."
+              defaultMessage="* Disclaimer: the exchange uses a 3rd 0x Liquidity Protocol. Be careful and use at your own risk."
             />
           </p>
         )}
