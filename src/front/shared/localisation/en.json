@@ -5598,7 +5598,7 @@
   },
   {
     "id": "disclaimerAboutBetaVersion",
-    "message": "* Disclaimer: the exchange uses a 3rd 0x Liquidity Protocol. Be carefully and use at your own risk."
+    "message": "* Disclaimer: the exchange uses a 3rd 0x Liquidity Protocol. Be careful and use at your own risk."
   },
   {
     "id": "insufficientBalance",
@@ -5750,7 +5750,7 @@
   },
   {
     "id": "disclaimerAbout0x",
-    "message": "* Disclaimer: the exchange uses a 3rd 0x Liquidity Protocol. Be carefully and use at your own risk.",
+    "message": "* Disclaimer: the exchange uses a 3rd 0x Liquidity Protocol. Be careful and use at your own risk.",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
     ]
