@@ -10,6 +10,7 @@ const defaultCurrencyColors = {
   'btc (multisig)': 'orange',
   'btc (sms-protected)': 'orange',
   'btc (pin-protected)': 'orange',
+  'matic': '#8247e5',
   'usdt': '#33a681',
   'ghost': 'black',
   'next': 'white',
