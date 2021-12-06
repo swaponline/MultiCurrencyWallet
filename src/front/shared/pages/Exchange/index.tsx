@@ -6,7 +6,6 @@ import { localStorage, constants, links } from 'helpers'
 import QuickSwap from './QuickSwap'
 import AtomicSwap from './AtomicSwap'
 
-
 // option from the WP panel
 const globalMode = window.exchangeMode
 
@@ -25,7 +24,7 @@ function Exchange(props) {
     validMode === GlobalModes.only_atomic || validMode === GlobalModes.only_quick
 
   const exchangeSettings = localStorage.getItem(constants.localStorage.exchangeSettings) || {}
-  let initialState = location.pathname === '/exchange/quick' ? 'quick' : 'atomic'
+  let initialState = location.pathname.match(/\/exchange\/quick/) ? 'quick' : 'atomic'
 
   if (showOnlyOneType) {
     // and hide tabs next

@@ -42,7 +42,6 @@ moment.locale(userLanguage)
 @withRouter
 @connect(({ currencies: { items: currencies }, modals, ui: { dashboardModalsAllowed } }) => ({
   currencies,
-  isVisible: "loader.isVisible",
   ethAddress: "user.ethData.address",
   btcAddress: "user.btcData.address",
   ghostAddress: "user.ghostData.address",
@@ -55,12 +54,9 @@ moment.locale(userLanguage)
 class App extends React.Component<RouteComponentProps<any>, any> {
 
   prvMultiTab: any
-  localStorageListener: any
 
   constructor(props) {
     super(props);
-
-    this.localStorageListener = null;
 
     this.prvMultiTab = {
       reject: null,
@@ -125,12 +121,9 @@ class App extends React.Component<RouteComponentProps<any>, any> {
         const { appID } = this.state;
 
         if (appID !== switchId) {
-          //@ts-ignore
           if (window?.chrome?.extension) {
-            //@ts-ignore
-            const extViews = chrome.extension.getViews()
-            //@ts-ignore
-            const extBgWindow = chrome.extension.getBackgroundPage()
+            const extViews = window.chrome.extension.getViews()
+            const extBgWindow = window.chrome.extension.getBackgroundPage()
             if (extBgWindow !== window && extViews.length > 2) {
               window.close()
               return

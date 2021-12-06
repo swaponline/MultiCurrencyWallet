@@ -83,8 +83,6 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       if (defaultBuyCurrency.length) receivedCurrency = defaultBuyCurrency[0]
     }
 
-    const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
-
     if (path.match(/\/quick\/createOrder/)) {
       this.createLimitOrder()
     }
