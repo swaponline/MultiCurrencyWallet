@@ -626,4 +626,15 @@ export default {
     adminFeeObj: externalConfig.opts?.fee?.arbeth,
     web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.arbitrum_provider)),
   }),
+  XDAI: new EthLikeAction({
+    coinName: 'xDai',
+    ticker: 'XDAI',
+    privateKeyName: 'eth',
+    chainId: externalConfig.evmNetworks.XDAI.chainId,
+    explorerName: '', // needs for show transactions
+    explorerLink: externalConfig.link.xdai,
+    explorerApiKey: '',
+    adminFeeObj: externalConfig.opts?.fee?.xdai,
+    web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.arbitrum_provider)),
+  }),
 }

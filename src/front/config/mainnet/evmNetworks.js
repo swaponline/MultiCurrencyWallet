@@ -34,4 +34,12 @@ export default {
     rpcUrls: [web3.arbitrum_provider],
     blockExplorerUrls: [link.arbitrum],
   },
+  XDAI: {
+    currency: 'XDAI',
+    chainId: '0x64',
+    networkVersion: 100,
+    chainName: 'Gnosis',
+    rpcUrls: [web3.xdai_provider],
+    blockExplorerUrls: [link.xdai],
+  },
 }

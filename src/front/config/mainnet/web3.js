@@ -3,4 +3,5 @@ export default {
   binance_provider: 'https://bsc-dataseed.binance.org/',
   matic_provider: 'https://rpc-mainnet.maticvigil.com',
   arbitrum_provider: 'https://arb1.arbitrum.io/rpc',
+  xdai_provider: 'https://rpc.xdaichain.com/',
 }
