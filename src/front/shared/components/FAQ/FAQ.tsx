@@ -7,11 +7,10 @@ import { FormattedMessage, injectIntl } from 'react-intl'
 import { feedback, adminFee, externalConfig } from 'helpers'
 import cssModules from 'react-css-modules'
 import cx from 'classnames'
-import styles from './styles.scss'
 import config from 'helpers/externalConfig'
+import styles from './styles.scss'
 
-
-const disableInternalWallet = config.opts.ui.disableInternalWallet
+const { disableInternalWallet } = config.opts.ui
 
 const NETWORK = process.env.MAINNET
   ? 'MAINNET'
@@ -23,7 +22,7 @@ const tabsIdsDictionary = {
   THIRD_TAB: 'MainFAQ3_header',
 }
 
-const FAQ = (props) => {
+const FAQ = function (props) {
   const { intl: { formatMessage } } = props
   const [tabsVisibility, setTabsVisibility] = useState({
     FIRST_TAB: false,
@@ -45,12 +44,10 @@ const FAQ = (props) => {
     }
   }
 
-  const convertToGwei = (value) => {
-    return new BigNumber(value)
-      .dividedBy(1e9)
-      .dp(2, BigNumber.ROUND_HALF_CEIL)
-      .toNumber()
-  }
+  const convertToGwei = (value) => new BigNumber(value)
+    .dividedBy(1e9)
+    .dp(2, BigNumber.ROUND_HALF_CEIL)
+    .toNumber()
 
   const [fees, setFees] = useState({
     btc: 0,
@@ -79,8 +76,8 @@ const FAQ = (props) => {
             ...prevFees,
             // divided by 1 kb to convert it to satoshi / byte
             btc: Math.ceil(btcSatoshiPrice / BYTE_IN_KB),
-            eth: convertToGwei(bnbGasPrice),
-            bnb: convertToGwei(ethGasPrice),
+            eth: convertToGwei(ethGasPrice),
+            bnb: convertToGwei(bnbGasPrice),
             matic: convertToGwei(maticGasPrice),
             arbeth: convertToGwei(arbethGasPrice),
           }))
@@ -159,30 +156,36 @@ const FAQ = (props) => {
       <div className={styles.faQuestions__tabsContainer}>
         {!disableInternalWallet && (
           <article className={styles.tab}>
-            <h6 className={styles.tab__header} onClick={() => handleTabClick('FIRST_TAB')}>
+            <span className={styles.tab__header} onClick={() => handleTabClick('FIRST_TAB')}>
               <div className={cx({
                 [styles.chrest]: true,
                 [styles.chrest_active]: tabsVisibility.FIRST_TAB,
               })} />
               <FormattedMessage id="MainFAQ1_header" defaultMessage="How are my private keys stored?" />
-            </h6>
+            </span>
             <div className={cx({
               [styles.tab__content]: true,
               [styles.tab__content_active]: tabsVisibility.FIRST_TAB,
             })}>
-              <FormattedMessage id="MainFAQ1_content" defaultMessage="Your private keys are stored ONLY on your device, in the localStorage of your browser. Please backup your keys, because your browser or device may be crashed." />
+              <FormattedMessage
+                id="MainFAQ1_content"
+                defaultMessage={`
+                  Your private keys are stored ONLY on your device, in the localStorage of your browser.
+                  Please backup your keys, because your browser or device may be crashed.
+                `}
+              />
             </div>
           </article>
         )}
 
         <article className={styles.tab}>
-          <h6 className={styles.tab__header} onClick={() => handleTabClick('SECOND_TAB')}>
+          <span className={styles.tab__header} onClick={() => handleTabClick('SECOND_TAB')}>
             <div className={cx({
               [styles.chrest]: true,
               [styles.chrest_active]: tabsVisibility.SECOND_TAB,
             })} />
             <FormattedMessage id="MainFAQ2_header" defaultMessage="What are the fees involved?" />
-          </h6>
+          </span>
           <div className={cx({
             [styles.tab__content]: true,
             [styles.tab__content_active]: tabsVisibility.SECOND_TAB,
@@ -193,10 +196,14 @@ const FAQ = (props) => {
             <p>
               <FormattedMessage
                 id="MainFAQ2_content1"
-                defaultMessage="For {tokenType} tokens, it is required that you have at least 0.001 {currency} on your wallets. Remember! when sending {tokenType} tokens, you are required to hold some {currency} as miners fees for transactions. This is also the case for all atomic swaps for {currency} & {tokenType} tokens."
+                defaultMessage={`
+                  For {tokenType} tokens, it is required that you have at least 0.001 {currency} on your wallets.
+                  Remember! when sending {tokenType} tokens, you are required to hold some {currency} as miners fees for transactions.
+                  This is also the case for all atomic swaps for {currency} & {tokenType} tokens.
+                `}
                 values={{
                   currency: 'ETH',
-                  tokenType: 'ERC20'
+                  tokenType: 'ERC20',
                 }}
               />
             </p>
@@ -213,13 +220,19 @@ const FAQ = (props) => {
 
               return (
                 <div className={styles.descriptionFee} key={index}>
-                  <span>{ticker}:</span>{' '}
+                  <span>
+                    {ticker}
+                    :
+                  </span>
+                  {' '}
                   {fee ? (
                     <span>
-                      <b>{fee}</b> {unit}
+                      <b>{fee}</b>
+                      {' '}
+                      {unit}
                       {' '}
                       {sourceLink && (
-                        <a className={styles.link} href={sourceLink} target="_blank">
+                        <a className={styles.link} href={sourceLink} target="_blank" rel="noreferrer">
                           <FormattedMessage id="FAQFeeApiLink" defaultMessage="(source)" />
                         </a>
                       )}
@@ -242,17 +255,23 @@ const FAQ = (props) => {
 
               return (
                 <p className={styles.descriptionFee} key={index}>
-                  <span>{ticker}:</span>{' '}
+                  <span>
+                    {ticker}
+                    :
+                  </span>
+                  {' '}
                   {percentFee
                     ? (
                       <span>
-                        {percentFee.fee + '%, '}
+                        {`${percentFee.fee}%, `}
                         <FormattedMessage id="FAQServiceFeeDescription" defaultMessage="no less than" />
-                        {' '}<b>{adminFee.calc(ticker, null)}</b> {ticker}
+                        {' '}
+                        <b>{adminFee.calc(ticker, null)}</b>
+                        {' '}
+                        {ticker}
                       </span>
                     )
-                    : <span>0%</span>
-                  }
+                    : <span>0%</span>}
                 </p>
               )
             })}
@@ -260,27 +279,47 @@ const FAQ = (props) => {
         </article>
 
         <article className={styles.tab}>
-          <h6 className={styles.tab__header} onClick={() => handleTabClick('THIRD_TAB')}>
+          <span className={styles.tab__header} onClick={() => handleTabClick('THIRD_TAB')}>
             <div className={cx({
               [styles.chrest]: true,
               [styles.chrest_active]: tabsVisibility.THIRD_TAB,
             })} />
             <FormattedMessage id="MainFAQ3_header" defaultMessage="Why mining fee is too high?" />
-          </h6>
+          </span>
           <div className={cx({
             [styles.tab__content]: true,
             [styles.tab__content_active]: tabsVisibility.THIRD_TAB,
           })}>
             <p>
-              <FormattedMessage id="MainFAQ3_content" defaultMessage="Blockchain fees depend on several factors including network congestion and transaction size (affected when converting crypto from multiple inputs such as faucet earnings or other micro-transactions)." />
+              <FormattedMessage
+                id="MainFAQ3_content"
+                defaultMessage={`
+                  Blockchain fees depend on several factors including network congestion and transaction size
+                  (affected when converting crypto from multiple inputs such as faucet earnings or other micro-transactions).
+                `}
+              />
             </p>
             <p>
-              <FormattedMessage id="MainFAQ3_content1" defaultMessage="In other words, you may need to pay higher blockchain fees if:" />
+              <FormattedMessage
+                id="MainFAQ3_content1"
+                defaultMessage="In other words, you may need to pay higher blockchain fees if:"
+              />
             </p>
             <p>
-              <FormattedMessage id="MainFAQ3_content2" defaultMessage="1) The blockchain network is busy or loaded at the moment. Usually, the fee increases during sudden blockchain rate fluctuations and major world events;" />
-              <br/>
-              <FormattedMessage id="MainFAQ3_content3" defaultMessage="2) Your crypto account has a history of microdeposits. If your account has large amounts of small deposits, the size of your transaction will be bigger as it will consist of many inputs. The bigger the transaction size, the higher the blockchain fee." />
+              <FormattedMessage
+                id="MainFAQ3_content2"
+                defaultMessage={`
+                  1) The blockchain network is busy or loaded at the moment. Usually, the fee increases during sudden blockchain rate fluctuations and major world events;
+                `}
+              />
+              <br />
+              <FormattedMessage
+                id="MainFAQ3_content3"
+                defaultMessage={`
+                  2) Your crypto account has a history of microdeposits. If your account has large amounts of small deposits,
+                  the size of your transaction will be bigger as it will consist of many inputs. The bigger the transaction size, the higher the blockchain fee.
+                `}
+              />
             </p>
             <p>
               <FormattedMessage id="MainFAQ3_content4" defaultMessage="There might be other causes of higher blockchain fees, but we've listed the most common ones." />
