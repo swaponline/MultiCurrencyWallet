@@ -4,7 +4,7 @@ import { getState } from 'redux/core'
 import SwapApp from 'swap.app'
 import Swap from 'swap.swap'
 import getCoinInfo from 'common/coins/getCoinInfo'
-import { constants } from 'helpers'
+import { constants, xdai } from 'helpers'
 import Pair from 'pages/Exchange/Orders/Pair'
 import config from 'helpers/externalConfig'
 import { BigNumber } from 'bignumber.js'
@@ -169,6 +169,7 @@ const deletedPartialCurrency = (orderId) => {
     'BNB', 
     'MATIC', 
     'ARBETH', 
+    'XDAI',
     'GHOST', 
     'NEXT', 
     'SWAP',
@@ -473,6 +474,7 @@ const getWallets = (options: IUniversalObj = {}) => {
       bnbData,
       maticData,
       arbethData,
+      xdaiData,
       tokensData,
       metamaskData,
     },
@@ -501,7 +503,8 @@ const getWallets = (options: IUniversalObj = {}) => {
       enabledCurrencies.eth ||
       enabledCurrencies.bnb ||
       enabledCurrencies.matic ||
-      enabledCurrencies.arbeth
+      enabledCurrencies.arbeth ||
+      enabledCurrencies.xdai
         ? metamaskData
           ? [metamaskData]
           : []
@@ -553,6 +556,14 @@ const getWallets = (options: IUniversalObj = {}) => {
           ? [arbethData]
           : []
         : [arbethData]
+      : []),
+    // =====================================
+    ...(!enabledCurrencies || enabledCurrencies.xdai
+      ? metamaskConnected
+        ? withInternal
+          ? [xdaiData]
+          : []
+        : [xdaiData]
       : []),
     // =====================================
     ...((!enabledCurrencies || enabledCurrencies.ghost) && !onlyEvmWallets ? [ghostData] : []),

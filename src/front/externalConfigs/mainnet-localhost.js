@@ -83,6 +83,7 @@ window.buildOptions = {
     bnb: true,
     matic: true,
     arbeth: true,
+    xdai: true,
     ghost: true,
     next: true,
   },
@@ -92,6 +93,7 @@ window.buildOptions = {
     bnb: false,
     matic: false,
     arbeth: false,
+    xdai: false,
     ghost: false,
     next: false,
   },
@@ -116,6 +118,7 @@ window.buildOptions = {
     'MATIC',
     'BNB',
     'CUSTOM_BEP20',
+    'XDAI',
   ],
   invoiceEnabled: true, // Allow create invoices
   showWalletBanners: true,

@@ -55,6 +55,7 @@ const FAQ = function (props) {
     bnb: 0,
     matic: 0,
     arbeth: 0,
+    xdai: 0,
   })
 
   useEffect(() => {
@@ -69,6 +70,7 @@ const FAQ = function (props) {
         const ethGasPrice = await ethLikeHelper.eth.estimateGasPrice()
         const maticGasPrice = await ethLikeHelper.matic.estimateGasPrice()
         const arbethGasPrice = await ethLikeHelper.arbeth.estimateGasPrice()
+        const xdaiGasPrice = await ethLikeHelper.xdai.estimateGasPrice()
 
         // remove memory leak
         if (_mounted) {
@@ -80,6 +82,7 @@ const FAQ = function (props) {
             bnb: convertToGwei(bnbGasPrice),
             matic: convertToGwei(maticGasPrice),
             arbeth: convertToGwei(arbethGasPrice),
+            xdai: convertToGwei(xdaiGasPrice),
           }))
         }
       } catch (error) {
@@ -123,6 +126,11 @@ const FAQ = function (props) {
       fee: fees.arbeth,
       unit: 'gwei',
     },
+    {
+      ticker: 'XDAI',
+      fee: fees.xdai,
+      unit: 'gwei',
+    },
   ]
 
   const adminFeeItems = [
@@ -145,6 +153,10 @@ const FAQ = function (props) {
     {
       ticker: 'ARBETH',
       percentFee: adminFee.isEnabled('ARBETH'),
+    },
+    {
+      ticker: 'XDAI',
+      percentFee: adminFee.isEnabled('XDAI'),
     },
   ]
 

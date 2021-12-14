@@ -43,6 +43,7 @@ const externalConfig = () => {
       bnb: true,
       matic: true,
       arbeth: true,
+      xdai: true,
       btc: true,
       ghost: true,
       next: true,
@@ -53,6 +54,7 @@ const externalConfig = () => {
       bnb: false,
       matic: false,
       arbeth: false,
+      xdai: false,
       ghost: true,
       next: true,
     },
@@ -201,6 +203,11 @@ const externalConfig = () => {
   if (window && window.CUR_ARBITRUM_DISABLED === true) {
     config.opts.curEnabled.arbeth = false
     config.opts.blockchainSwapEnabled.arbeth = false
+  }
+
+  if (window && window.CUR_XDAI_DISABLED === true) {
+    config.opts.curEnabled.xdai = false
+    config.opts.blockchainSwapEnabled.xdai = false
   }
 
 

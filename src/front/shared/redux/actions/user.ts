@@ -91,6 +91,7 @@ const sign = async () => {
     actions.bnb.login(ethPrivateKey, mnemonic)
     actions.matic.login(ethPrivateKey, mnemonic)
     actions.arbeth.login(ethPrivateKey, mnemonic)
+    actions.xdai.login(ethPrivateKey, mnemonic)
     const _btcPrivateKey = actions.btc.login(btcPrivateKey, mnemonic)
     actions.ghost.login(ghostPrivateKey, mnemonic)
     actions.next.login(nextPrivateKey, mnemonic)
@@ -150,6 +151,7 @@ const getBalances = () => {
       { func: actions.bnb.getBalance, name: 'bnb' },
       { func: actions.matic.getBalance, name: 'matic' },
       { func: actions.arbeth.getBalance, name: 'arbeth' },
+      { func: actions.xdai.getBalance, name: 'xdai' },
       { func: actions.ghost.getBalance, name: 'ghost' },
       { func: actions.next.getBalance, name: 'next' },
       { func: actions.btcmultisig.getBalance, name: 'btc-sms' },
@@ -409,6 +411,7 @@ const setTransactions = async () => {
       actions.bnb.getTransaction(),
       actions.matic.getTransaction(),
       actions.arbeth.getTransaction(),
+      actions.xdai.getTransaction(),
       actions.ghost.getTransaction(),
       actions.next.getTransaction(),
       ...(metamask.isEnabled() && metamask.isConnected()) ? [actions.eth.getTransaction(metamask.getAddress())] : [],
@@ -453,6 +456,7 @@ const getText = () => {
       bnbData,
       maticData,
       arbethData,
+      xdaiData,
       btcData,
       ghostData,
       nextData,
@@ -490,6 +494,9 @@ const getText = () => {
     \r\n
     ARBITRUM address: ${arbethData.address}\r\n
     Private key: ${arbethData.privateKey}\r\n
+    \r\n
+    XDAI address: ${xdaiData.address}\r\n
+    Private key: ${xdaiData.privateKey}\r\n
     \r\n
     # BITCOIN
     \r\n

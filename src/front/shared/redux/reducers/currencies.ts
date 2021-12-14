@@ -135,6 +135,16 @@ const initialState = {
       addAssets: true,
     }] : [],
     //@ts-ignore
+    ...(!buildOpts.curEnabled || buildOpts.curEnabled.xdai) ? [{
+      name: 'XDAI',
+      title: 'XDAI',
+      icon: 'xdai',
+      value: 'xdai',
+      fullTitle: 'xdai',
+      blockchain: BLOCKCHAIN_TYPE.XDAI,
+      addAssets: true,
+    }] : [],
+    //@ts-ignore
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.ghost) ? [{
       name: 'GHOST',
       title: 'GHOST',
@@ -230,6 +240,14 @@ const initialState = {
       fullTitle: 'arbitrum eth',
     }] : [],
     //@ts-ignore
+    ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.xdai) ? [{
+      name: 'XDAI',
+      title: 'XDAI',
+      icon: 'xdai',
+      value: 'xdai',
+      fullTitle: 'xdai',
+    }] : [],
+    //@ts-ignore
     ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.ghost) ? [{
       name: 'GHOST',
       title: 'GHOST',
@@ -291,6 +309,13 @@ if (config.isWidget) {
       fullTitle: 'arbitrum eth',
     },
     {
+      name: 'XDAI',
+      title: 'XDAI',
+      icon: 'xdai',
+      value: 'xdai',
+      fullTitle: 'xdai',
+    },
+    {
       name: 'BTC',
       title: 'BTC',
       icon: 'btc',
@@ -341,6 +366,13 @@ if (config.isWidget) {
       icon: 'arbeth',
       value: 'arbeth',
       fullTitle: 'arbitrum eth',
+    },
+    {
+      name: 'XDAI',
+      title: 'XDAI',
+      icon: 'xdai',
+      value: 'xdai',
+      fullTitle: 'xdai',
     },
     {
       name: 'BTC',

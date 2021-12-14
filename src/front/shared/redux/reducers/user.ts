@@ -47,6 +47,14 @@ export const initialState = {
     balanceError: null,
     infoAboutCurrency: null,
   },
+  xdaiData: {
+    balance: 0,
+    isBalanceFetched: false,
+    currency: 'XDAI',
+    fullName: 'xDai',
+    balanceError: null,
+    infoAboutCurrency: null,
+  },
   btcData: {
     balance: 0,
     isBalanceFetched: false,

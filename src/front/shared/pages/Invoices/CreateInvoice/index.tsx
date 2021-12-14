@@ -19,6 +19,7 @@ type CreateInvoiceProps = {
     bnbData,
     maticData,
     arbethData,
+    xdaiData,
     ghostData,
     nextData,
   },
@@ -30,6 +31,7 @@ type CreateInvoiceProps = {
       bnb: bnbData,
       matic: maticData,
       arbeth: arbethData,
+      xdai: xdaiData,
       ghost: ghostData,
       next: nextData,
     }
