@@ -14,22 +14,18 @@ const check = (...args) => {
 
 const isNumeric = (value) => !isNaN(parseFloat(value)) && isFinite(value)
 
-const isCoinName = (value) => {
-  return Object.values(constants.COINS).filter(
-    //@ts-ignore
-    (v) => (v.ticker)
-      //@ts-ignore
-      ? v.ticker.toLowerCase() === value.toLowerCase()
-      //@ts-ignore
-      : v.toLowerCase() === value.toLowerCase()
-  ).length > 0
-}
+const isCoinName = (value) => Object.values(constants.COINS).filter(
+  (v: any) => (v.ticker)
+    ? v.ticker.toLowerCase() === value.toLowerCase()
+    : v.toLowerCase() === value.toLowerCase(),
+).length > 0
 
-const isCoinAddress = {
+const isCoinAddress = { // TODO: move to front helpers
   [constants.COINS.eth]: (value) => typeof value === 'string' && /^0x[A-Fa-f0-9]{40}$/.test(value),
   [constants.COINS.bnb]: (value) => typeof value === 'string' && /^0x[A-Fa-f0-9]{40}$/.test(value),
   [constants.COINS.matic]: (value) => typeof value === 'string' && /^0x[A-Fa-f0-9]{40}$/.test(value),
   [constants.COINS.arbeth]: (value) => typeof value === 'string' && /^0x[A-Fa-f0-9]{40}$/.test(value),
+  [constants.COINS.xdai]: (value) => typeof value === 'string' && /^0x[A-Fa-f0-9]{40}$/.test(value),
   [constants.COINS.btc]: (value) => typeof value === 'string' && /^[A-Za-z0-9]{26,35}$/.test(value),
   [constants.COINS.ghost]: (value) => typeof value === 'string' && /^[A-Za-z0-9]{26,35}$/.test(value),
   [constants.COINS.next]: (value) => typeof value === 'string' && /^[A-Za-z0-9]{26,35}$/.test(value),
@@ -41,6 +37,7 @@ const isPublicKey = {
   [constants.COINS.bnb]: '?String',
   [constants.COINS.matic]: '?String',
   [constants.COINS.arbeth]: '?String',
+  [constants.COINS.xdai]: '?String',
   [constants.COINS.btc]: (value) => typeof value === 'string' && /^[A-Za-z0-9]{66}$/.test(value),
   [constants.COINS.ghost]: (value) => typeof value === 'string' && /^[A-Za-z0-9]{66}$/.test(value),
   [constants.COINS.next]: (value) => typeof value === 'string' && /^[A-Za-z0-9]{66}$/.test(value),

@@ -14,19 +14,29 @@ import { feedback, constants, cacheStorageGet, cacheStorageSet, apiLooper } from
 
 class EthLikeAction {
   readonly coinName: string
+
   readonly ticker: string // upper case (ex. ETH)
+
   readonly tickerKey: string // lower case (ex. eth)
+
   readonly privateKeyName: string
+
   readonly explorerName: string
+
   readonly explorerLink: string
+
   readonly explorerApiKey: string
+
   readonly chainId: string
+
   readonly adminFeeObj: {
     fee: string // percent of amount
     address: string // where to send
     min: string // min amount
   }
+
   readonly Web3: IUniversalObj
+
   private cache = new Map([['addressIsContract', {}]])
 
   constructor(options) {
@@ -56,17 +66,15 @@ class EthLikeAction {
 
   getCurrentWeb3 = () => metamask.getWeb3() || this.Web3
 
-  getWeb3 = () => {
-    return this.getCurrentWeb3()
-  }
+  getWeb3 = () => this.getCurrentWeb3()
 
   reportError = (error, details = '') => {
     feedback.actions.failed(
       ''.concat(
         `Details => ticker: ${this.ticker}`,
         details ? `, ${details}` : '',
-        ` | Error - ${error} `
-      )
+        ` | Error - ${error} `,
+      ),
     )
     console.group(`Actions >%c ${this.ticker}`, 'color: red;')
     console.error('error: ', error)
@@ -81,7 +89,7 @@ class EthLikeAction {
   }
 
   getInvoices = () => {
-    const address = getState().user[`${this.tickerKey}Data`].address
+    const { address } = getState().user[`${this.tickerKey}Data`]
 
     return actions.invoices.getInvoices({
       currency: this.ticker,
@@ -89,13 +97,9 @@ class EthLikeAction {
     })
   }
 
-  getTx = (txRaw) => {
-    return txRaw.transactionHash
-  }
+  getTx = (txRaw) => txRaw.transactionHash
 
-  getTxRouter = (txId) => {
-    return `/${this.tickerKey}/tx/${txId}`
-  }
+  getTxRouter = (txId) => `/${this.tickerKey}/tx/${txId}`
 
   getLinkToInfo = (tx) => {
     if (!tx) return
@@ -182,10 +186,9 @@ class EthLikeAction {
   }
 
   getBalance = (): Promise<number> => {
-    const address =
-      metamask.isEnabled() && metamask.isConnected()
-        ? metamask.getAddress()
-        : getState().user[`${this.tickerKey}Data`].address
+    const address = metamask.isEnabled() && metamask.isConnected()
+      ? metamask.getAddress()
+      : getState().user[`${this.tickerKey}Data`].address
 
     const balanceInCache = cacheStorageGet('currencyBalances', `${this.tickerKey}_${address}`)
 
@@ -217,8 +220,9 @@ class EthLikeAction {
     const { user } = getState()
     const arrOfAddresses: string[] = []
     const dataAddress = user[`${this.tickerKey}Data`]?.address || ''
-    const metamaskAddress: string =
-      (metamask && metamask.isEnabled() && metamask.isConnected() && metamask.getAddress()) || ''
+    const metamaskAddress: string = (
+      metamask && metamask.isEnabled() && metamask.isConnected() && metamask.getAddress()
+    ) || ''
 
     if (dataAddress) {
       arrOfAddresses.push(dataAddress.toLowerCase())
@@ -231,7 +235,7 @@ class EthLikeAction {
     return arrOfAddresses
   }
 
-  getTransaction = (address: string = ``, ownType: string = ``) => {
+  getTransaction = (address = ``, ownType = ``) => {
     const ownerAddress = getState().user[`${this.tickerKey}Data`].address
     address = address || ownerAddress
 
@@ -245,8 +249,8 @@ class EthLikeAction {
       if (
         // some blockchains don't have API
         // don't show console errors in these cases
-        !this.explorerApiKey ||
-        !typeforce.isCoinAddress[this.ticker](address)
+        !this.explorerApiKey
+        || !typeforce.isCoinAddress[this.ticker](address)
       ) {
         resolve([])
       }
@@ -259,16 +263,16 @@ class EthLikeAction {
         .then((response: any) => {
           if (Array.isArray(response?.result)) {
             const internals: ResponseItem[] = []
-  
-            response.result.map((item: ResponseItem) => {
+
+            response.result.forEach((item: ResponseItem) => {
               const { value, to, hash } = item
-  
+
               internals[hash] = {
                 value,
                 to,
               }
             })
-  
+
             apiLooper
               .get(this.explorerName, url)
               .then((response: any) => {
@@ -279,7 +283,7 @@ class EthLikeAction {
                     internalTxs: internals,
                     currencyName: ownType || this.tickerKey,
                   })
-  
+
                   resolve(transactions)
                 } else {
                   resolve([])
@@ -306,10 +310,9 @@ class EthLikeAction {
     const ownerAddress = getState().user[`${this.tickerKey}Data`].address
 
     return txs
-      .filter((item) => {
-        return item.value > 0 || (internalTxs[item.hash] && internalTxs[item.hash].value > 0)
-      })
-      .map((item) => ({
+      .filter(
+        (item) => item.value > 0 || (internalTxs[item.hash] && internalTxs[item.hash].value > 0),
+      ).map((item) => ({
         type: currencyName,
         confirmations: item.confirmations,
         hash: item.hash,
@@ -317,22 +320,22 @@ class EthLikeAction {
         value: Web3.utils.fromWei(
           internalTxs[item.hash] && internalTxs[item.hash].value > 0
             ? internalTxs[item.hash].value
-            : item.value
+            : item.value,
         ),
         address: item.to,
         canEdit: address === ownerAddress,
         date: item.timeStamp * 1000,
         direction:
-          (internalTxs[item.hash] &&
-            address.toLowerCase() === internalTxs[item.hash].to.toLowerCase()) ||
-          address.toLowerCase() === item.to.toLowerCase()
+          (internalTxs[item.hash]
+            && address.toLowerCase() === internalTxs[item.hash].to.toLowerCase())
+          || address.toLowerCase() === item.to.toLowerCase()
             ? 'in'
             : 'out',
       }))
       .filter((item) => {
         if (
-          item.direction === 'out' &&
-          item.address.toLowerCase() === this.adminFeeObj?.address?.toLowerCase()
+          item.direction === 'out'
+          && item.address.toLowerCase() === this.adminFeeObj?.address?.toLowerCase()
         ) {
           return false
         }
@@ -509,7 +512,9 @@ class EthLikeAction {
   }
 
   sendReadyTransaction = async (params) => {
-    let { data, waitReceipt = false, toAdmin = false } = params
+    const { waitReceipt = false, toAdmin = false } = params
+    let { data } = params
+
     const Web3 = this.getCurrentWeb3()
     const ownerAddress = metamask.isConnected()
       ? metamask.getAddress()
@@ -635,6 +640,6 @@ export default {
     explorerLink: externalConfig.link.xdai,
     explorerApiKey: '',
     adminFeeObj: externalConfig.opts?.fee?.xdai,
-    web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.arbitrum_provider)),
+    web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.xdai_provider)),
   }),
 }

@@ -31,22 +31,21 @@ const initReducerState = () => {
 
 const sign_btc_multisig = async (btcPrivateKey) => {
   let btcMultisigOwnerKey = localStorage.getItem(constants.privateKeyNames.btcMultisigOtherOwnerKey)
-  //@ts-ignore: strictNullChecks
+  // @ts-ignore: strictNullChecks
   try { btcMultisigOwnerKey = JSON.parse(btcMultisigOwnerKey) } catch (e) { }
-  //@ts-ignore
+  // @ts-ignore
   actions.btcmultisig.login_USER(btcPrivateKey, btcMultisigOwnerKey)
   await actions.btcmultisig.signToUserMultisig()
 }
 
-
 const sign_btc_2fa = async (btcPrivateKey) => {
   const btcSMSServerKey = config.swapContract.protectedBtcKey
-  let btcSmsPublicKeys = [btcSMSServerKey]
-  //@ts-ignore: strictNullChecks
+  const btcSmsPublicKeys = [btcSMSServerKey]
+  // @ts-ignore: strictNullChecks
   let btcSmsMnemonicKey: MnemonicKey = localStorage.getItem(constants.privateKeyNames.btcSmsMnemonicKey)
 
   try {
-    //@ts-ignore: strictNullChecks
+    // @ts-ignore: strictNullChecks
     btcSmsMnemonicKey = JSON.parse(btcSmsMnemonicKey)
   } catch (e) {
     console.error(e)
@@ -71,7 +70,7 @@ const sign_btc_pin = async (btcPrivateKey) => {
 }
 
 const sign = async () => {
-  await metamask.web3connect.onInit( async () => {
+  await metamask.web3connect.onInit(async () => {
     initReducerState()
 
     let mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
@@ -121,7 +120,7 @@ const loginWithTokens = () => {
         config[standardName][tokenName].address,
         tokenName,
         config[standardName][tokenName].decimals,
-        config[standardName][tokenName].fullName
+        config[standardName][tokenName].fullName,
       )
     })
   })
@@ -157,7 +156,7 @@ const getBalances = () => {
       { func: actions.btcmultisig.getBalance, name: 'btc-sms' },
       { func: actions.btcmultisig.getBalanceUser, name: 'btc-ms-main' },
       { func: actions.btcmultisig.getBalancePin, name: 'btc-pin' },
-      { func: actions.btcmultisig.fetchMultisigBalances, name: 'btc-ms' }
+      { func: actions.btcmultisig.fetchMultisigBalances, name: 'btc-ms' },
     ]
 
     await Promise.all(
@@ -167,7 +166,7 @@ const getBalances = () => {
         } catch (e) {
           console.error('Fail fetch balance for ', obj.name)
         }
-      })
+      }),
     )
 
     if (isTokenSigned) {
@@ -194,18 +193,17 @@ const getTokensBalances = async () => {
             console.error(`Fail fetch balance for ${tokenName.toUpperCase()} token`, error)
             console.groupEnd()
           }
-        })
+        }),
       )
-    })
+    }),
   )
 }
 
 const customRate = (cur) => {
   const widgetTokens = window.widgetEvmLikeTokens
 
-  const targetToken = widgetTokens?.length && widgetTokens.find((token) => {
-    return token.name.toLowerCase() === cur.toLowerCase()
-  })
+  const targetToken = widgetTokens?.length
+    && widgetTokens.find((token) => token.name.toLowerCase() === cur.toLowerCase())
 
   return targetToken ? (targetToken || { customExchangeRate: null }).customExchangeRate : null
 }
@@ -239,8 +237,8 @@ const getExchangeRate = (sellCurrency, buyCurrency): Promise<number> => {
     }
 
     if (
-      (user[`${dataKey}Data`]?.infoAboutCurrency?.price_fiat) ||
-      (user.tokensData[dataKey]?.infoAboutCurrency?.price_fiat)
+      (user[`${dataKey}Data`]?.infoAboutCurrency?.price_fiat)
+      || (user.tokensData[dataKey]?.infoAboutCurrency?.price_fiat)
     ) {
       const currencyData = (user.tokensData[dataKey] && user.tokensData[dataKey].infoAboutCurrency)
         ? user.tokensData[dataKey]
@@ -255,107 +253,108 @@ const getExchangeRate = (sellCurrency, buyCurrency): Promise<number> => {
 
 const customTokenExchangeRate = (name) => {
   for (const key in TOKEN_STANDARDS) {
-    const standard = TOKEN_STANDARDS[key].standard
+    const { standard } = TOKEN_STANDARDS[key]
 
     if (config[standard][name.toLowerCase()]) {
       return config[standard][name.toLowerCase()].customExchangeRate || ''
     }
   }
 
+  if (name === 'xdai') return '1'
+
   return ''
 }
 
-const getInfoAboutCurrency = (currencyNames) => {
-  return new Promise((resolve, reject) => {
-    reducers.user.setIsFetching({ isFetching: true })
+const getInfoAboutCurrency = (currencyNames) => new Promise((resolve, reject) => {
+  reducers.user.setIsFetching({ isFetching: true })
 
-    const fiat = (config && config.opts && config.opts.activeFiat) ? config.opts.activeFiat : `USD`
+  const fiat = (config && config.opts && config.opts.activeFiat) ? config.opts.activeFiat : `USD`
 
-    request.get(links.currencyCourses, {
-      cacheResponse: 60 * 60 * 1000, // cache for 1 hour
-      query: {
-        fiat,
-        tokens: currencyNames.map(currencyNames => {
-          const { coin } = getCoinInfo(currencyNames)
-          return coin
-        }).join(`,`),
-      }
-    }).then((answer: any) => {
-      let infoAboutBTC = answer.data.filter(currencyInfo => {
-        return currencyInfo.symbol.toLowerCase() === 'btc'
-      })
+  request.get(links.currencyCourses, {
+    cacheResponse: 60 * 60 * 1000, // cache for 1 hour
+    query: {
+      fiat,
+      tokens: currencyNames.map(currencyNames => {
+        let { coin } = getCoinInfo(currencyNames)
+        if (coin === 'XDAI') coin = 'DAI'
 
-      const btcPrice = infoAboutBTC?.length && infoAboutBTC[0]?.quote[fiat]?.price
+        return coin
+      }).join(`,`),
+    },
+  }).then((answer: any) => {
+    const infoAboutBTC = answer.data.filter(currencyInfo => currencyInfo.symbol.toLowerCase() === 'btc')
 
-      const { user } = getState()
+    const btcPrice = infoAboutBTC?.length && infoAboutBTC[0]?.quote[fiat]?.price
 
-      currencyNames.map(name => {
-        const {
-          coin,
-          blockchain,
-        } = getCoinInfo(name)
+    const { user } = getState()
 
-        const currencyName = coin.toLowerCase()
+    currencyNames.map(name => {
+      const {
+        coin,
+        blockchain,
+      } = getCoinInfo(name)
 
-        const currencyInfoItem = answer.data.filter(currencyInfo => {
-          return currencyInfo.symbol.toLowerCase() === currencyName
-        })[0]
+      const currencyName = coin.toLowerCase()
 
-        const customFiatPrice = customTokenExchangeRate(currencyName)
+      const currencyInfoItem = answer.data.filter(currencyInfo => (
+        (currencyInfo.symbol.toLowerCase() === currencyName)
+        || (currencyName === 'xdai' && currencyInfo.symbol.toLowerCase() === 'dai')
+      ))[0]
 
-        const isToken = erc20Like.isToken({ name: currencyName })
+      const customFiatPrice = customTokenExchangeRate(currencyName)
 
-        if (currencyInfoItem?.quote[fiat]) {
-          const priceInFiat =  customFiatPrice || currencyInfoItem.quote[fiat].price
-          const priceInBtc = btcPrice && priceInFiat / btcPrice
+      const isToken = erc20Like.isToken({ name: currencyName })
 
-          const currencyInfo = {
-            ...currencyInfoItem.quote[fiat],
-            price_fiat: priceInFiat,
-            price_btc: priceInBtc,
-          }
+      if (currencyInfoItem?.quote[fiat]) {
+        const priceInFiat =  customFiatPrice || currencyInfoItem.quote[fiat].price
+        const priceInBtc = btcPrice && priceInFiat / btcPrice
 
-          const targetDataKey = `${currencyName}Data`
-
-          if (user[targetDataKey]) {
-            reducers.user.setInfoAboutCurrency({ name: targetDataKey, infoAboutCurrency: currencyInfo })
-
-            if (currencyInfoItem.symbol === 'BTC') {
-              reducers.user.setInfoAboutCurrency({ name: 'btcMultisigUserData', infoAboutCurrency: currencyInfo })
-              reducers.user.setInfoAboutCurrency({ name: 'btcMultisigG2FAData', infoAboutCurrency: currencyInfo })
-              reducers.user.setInfoAboutCurrency({ name: 'btcMultisigPinData', infoAboutCurrency: currencyInfo })
-            }
-          } else if (isToken && blockchain) {
-            reducers.user.setInfoAboutToken({
-              baseCurrency: blockchain.toLowerCase(),
-              name: currencyName,
-              infoAboutCurrency: currencyInfo,
-            })
-          }
+        const currencyInfo = {
+          ...currencyInfoItem.quote[fiat],
+          price_fiat: priceInFiat,
+          price_btc: priceInBtc,
         }
 
-        if (!currencyInfoItem && customFiatPrice && isToken && blockchain) {
-          const priceInFiat = +customFiatPrice
-          const priceInBtc = btcPrice && priceInFiat / btcPrice
+        const targetDataKey = `${currencyName}Data`
 
-          const currencyInfo = {
-            price_fiat: priceInFiat,
-            price_btc: priceInBtc,
+        if (user[targetDataKey]) {
+          reducers.user.setInfoAboutCurrency({ name: targetDataKey, infoAboutCurrency: currencyInfo })
+
+          if (currencyInfoItem.symbol === 'BTC') {
+            reducers.user.setInfoAboutCurrency({ name: 'btcMultisigUserData', infoAboutCurrency: currencyInfo })
+            reducers.user.setInfoAboutCurrency({ name: 'btcMultisigG2FAData', infoAboutCurrency: currencyInfo })
+            reducers.user.setInfoAboutCurrency({ name: 'btcMultisigPinData', infoAboutCurrency: currencyInfo })
           }
-
+        } else if (isToken && blockchain) {
           reducers.user.setInfoAboutToken({
             baseCurrency: blockchain.toLowerCase(),
             name: currencyName,
             infoAboutCurrency: currencyInfo,
           })
         }
-      })
-      resolve(true)
-    }).catch((error) => {
-      reject(error)
-    }).finally(() => reducers.user.setIsFetching({ isFetching: false }))
-  })
-}
+      }
+
+      if (!currencyInfoItem && customFiatPrice && isToken && blockchain) {
+        const priceInFiat = +customFiatPrice
+        const priceInBtc = btcPrice && priceInFiat / btcPrice
+
+        const currencyInfo = {
+          price_fiat: priceInFiat,
+          price_btc: priceInBtc,
+        }
+
+        reducers.user.setInfoAboutToken({
+          baseCurrency: blockchain.toLowerCase(),
+          name: currencyName,
+          infoAboutCurrency: currencyInfo,
+        })
+      }
+    })
+    resolve(true)
+  }).catch((error) => {
+    reject(error)
+  }).finally(() => reducers.user.setIsFetching({ isFetching: false }))
+})
 
 const clearTransactions = () => {
   reducers.history.setTransactions([])
@@ -434,7 +433,7 @@ const setTransactions = async () => {
 
 const setTokensTransaction = async () => {
   Object.keys(TOKEN_STANDARDS).forEach((key) => {
-    const standard = TOKEN_STANDARDS[key].standard
+    const { standard } = TOKEN_STANDARDS[key]
     const baseCurrency = TOKEN_STANDARDS[standard].currency.toUpperCase()
 
     Object.keys(config[standard]).filter((name) => {
@@ -460,10 +459,10 @@ const getText = () => {
       btcData,
       ghostData,
       nextData,
-    }
+    },
   } = getState()
 
-  let text = `
+  const text = `
     You will need this instruction only in case of emergency (if you lost your keys)\r\n
     please do NOT waste your time and go back to swap.online
     \r\n
@@ -533,8 +532,8 @@ export const getWithdrawWallet = (currency, addressOwner) => {
     const walletType = getCurrencyKey(walletName, true).toUpperCase()
 
     return (
-      (walletType === needType && addressOwner === wallet.address) ||
-      (!addressOwner && (walletType === needType))
+      (walletType === needType && addressOwner === wallet.address)
+      || (!addressOwner && (walletType === needType))
     )
   })
 
@@ -577,7 +576,6 @@ export const isOwner = (addr, currency) => {
 
   return lowerAddr === addrFromStore.toLowerCase()
 }
-
 
 const downloadPrivateKeys = () => {
   const element = document.createElement('a')
