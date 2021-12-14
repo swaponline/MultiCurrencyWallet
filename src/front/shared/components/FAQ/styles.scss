@@ -29,6 +29,10 @@
     @include ff-semibold;
     cursor: pointer;
     color: var(--color);
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    line-height: 1.2;
   }
 
   &__content {
