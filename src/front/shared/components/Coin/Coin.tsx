@@ -37,6 +37,7 @@ const Coin = function (props: CoinProps) {
     config?.erc20[name.toLowerCase()]?.icon
     || config?.bep20[name.toLowerCase()]?.icon
     || config?.erc20matic[name.toLowerCase()]?.icon
+    || config?.erc20xdai[name.toLowerCase()]?.icon
   ) {
     isIconConfigExist = true
   }
@@ -64,6 +65,10 @@ const Coin = function (props: CoinProps) {
 
   if (config?.erc20matic[name.toLowerCase()]?.iconBgColor) {
     style.backgroundColor = config.erc20matic[name.toLowerCase()].iconBgColor
+  }
+
+  if (config?.erc20xdai[name.toLowerCase()]?.iconBgColor) {
+    style.backgroundColor = config.erc20xdai[name.toLowerCase()].iconBgColor
   }
 
   // *************************************

@@ -48,6 +48,9 @@ window.widgetERC20Comisions = {
   erc20matic: {
     address: '0x276747801B0dbb7ba04685BA27102F1B27Ca0815',
   },
+  erc20xdai: {
+    address: '0x276747801B0dbb7ba04685BA27102F1B27Ca0815',
+  },
 }
 /*
 window.widgetEvmLikeTokens = [

@@ -60,6 +60,7 @@ if (config?.isWidget) {
   if (window?.widgetEvmLikeTokens?.length) {
     window.widgetEvmLikeTokens.forEach((token) => {
       const { name, standard } = token
+      if (standard === 'erc20xdai') return // TODO: remove if add atomic swap
       const baseCurrency = TOKEN_STANDARDS[standard]?.currency
       const tokenKey = `{${baseCurrency.toUpperCase()}}${name.toUpperCase()}`
 
@@ -80,6 +81,7 @@ if (buildOpts.addCustomTokens) {
   const customTokenConfig = getCustomTokenConfig()
 
   Object.keys(customTokenConfig).forEach((standard) => {
+    if (standard === 'erc20xdai') return // TODO: remove if add atomic swap
     Object.keys(customTokenConfig[standard]).forEach((tokenContractAddr) => {
       const tokenObj = customTokenConfig[standard][tokenContractAddr]
       const { symbol, baseCurrency } = tokenObj

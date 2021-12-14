@@ -15,6 +15,9 @@
   erc20matic: {
     address: '',
   },
+  erc20xdai: {
+    address: '',
+  },
 } */
 
 window.widgetEvmLikeTokens = [
@@ -119,6 +122,7 @@ window.buildOptions = {
     'BNB',
     'CUSTOM_BEP20',
     'XDAI',
+    'CUSTOM_ERC20XDAI',
   ],
   invoiceEnabled: true, // Allow create invoices
   showWalletBanners: true,

@@ -158,4 +158,10 @@ export default {
     defaultParams: DEFAULT_CURRENCY_PARAMETERS.evmLikeToken,
     web3: new Web3(new Web3.providers.HttpProvider(config.web3.matic_provider)),
   }),
+  erc20xdai: new erc20LikeHelper({
+    standard: 'erc20xdai',
+    currency: 'XDAI',
+    defaultParams: DEFAULT_CURRENCY_PARAMETERS.evmLikeToken,
+    web3: new Web3(new Web3.providers.HttpProvider(config.web3.xdai_provider)),
+  }),
 }

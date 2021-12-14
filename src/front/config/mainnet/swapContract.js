@@ -15,5 +15,7 @@ export default {
   pancakeswapFactory: '0xcA143Ce32Fe78f1f7019d7d551a6402fC5350c73',
   sushiswapRouter: '0x1b02dA8Cb0d097eB8D57A175b88c7D8b47997506', // Polygon
   sushiswapFactory: '0xc35DADB65012eC5796536bD9864eD8773aBc74C4',
+  honeyswapRouter: '0x1C232F01118CB8B424793ae03F870aa7D0ac7f77', // xDai
+  honeyswapFactory: '0xA818b4F111Ccac7AA31D0BCc0806d64F2E0737D7',
   affiliateAddress: '0x873351e707257C28eC6fAB1ADbc850480f6e0633',
 }

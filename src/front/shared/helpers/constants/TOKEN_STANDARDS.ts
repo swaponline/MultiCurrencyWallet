@@ -22,4 +22,11 @@ export default {
     explorerApi: config.api.maticscan,
     explorerApiKey: config.api.polygon_ApiKey,
   },
+  erc20xdai: {
+    platform: 'ethereum',
+    standard: 'erc20xdai',
+    currency: 'xdai',
+    explorerApi: '',
+    explorerApiKey: '',
+  },
 }
