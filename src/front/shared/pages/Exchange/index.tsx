@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 import CSSModules from 'react-css-modules'
-import styles from './index.scss'
 import { localStorage, constants, links } from 'helpers'
+import styles from './index.scss'
 import QuickSwap from './QuickSwap'
 import AtomicSwap from './AtomicSwap'
 
@@ -16,12 +16,11 @@ const GlobalModes = {
   only_quick: 'only_quick',
 }
 
-function Exchange(props) {
+const Exchange = function (props) {
   const { location, history } = props
 
   const validMode = globalMode && GlobalModes[globalMode]
-  const showOnlyOneType =
-    validMode === GlobalModes.only_atomic || validMode === GlobalModes.only_quick
+  const showOnlyOneType = validMode === GlobalModes.only_atomic || validMode === GlobalModes.only_quick
 
   const exchangeSettings = localStorage.getItem(constants.localStorage.exchangeSettings) || {}
   let initialState = location.pathname.match(/\/exchange\/quick/) ? 'quick' : 'atomic'
@@ -76,10 +75,15 @@ function Exchange(props) {
     <div>
       {!showOnlyOneType && (
         <div styleName="tabsWrapper">
-          <button styleName={`tab ${swapMode === 'quick' ? 'active' : ''}`} onClick={openQuickMode}>
+          <button
+            type="button"
+            styleName={`tab ${swapMode === 'quick' ? 'active' : ''}`}
+            onClick={openQuickMode}
+          >
             <FormattedMessage id="quickSwap" defaultMessage="Quick swap" />
           </button>
           <button
+            type="button"
             styleName={`tab ${swapMode === 'atomic' ? 'active' : ''}`}
             onClick={openAtomicMode}
           >

@@ -41,7 +41,7 @@ interface State {
 }
 
 const blockchains = {}
-const allowedCurrency = ['ETH', 'BNB', 'MATIC']
+const allowedCurrency = ['ETH', 'BNB', 'MATIC', 'XDAI']
 
 Object.keys(config.evmNetworks)
   .filter((currency) => allowedCurrency.includes(currency))
