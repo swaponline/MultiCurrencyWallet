@@ -34,4 +34,12 @@ export default {
     rpcUrls: [web3.arbitrum_provider],
     blockExplorerUrls: [link.arbitrum]
   },
+  XDAI: {
+    currency: 'XDAI',
+    chainId: '0x4d',
+    networkVersion: 77,
+    chainName: 'Sokol testnet',
+    rpcUrls: [web3.xdai_provider],
+    blockExplorerUrls: [link.xdai]
+  },
 }

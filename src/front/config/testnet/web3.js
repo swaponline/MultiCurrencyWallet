@@ -3,4 +3,5 @@ export default {
   binance_provider: 'https://data-seed-prebsc-1-s1.binance.org:8545/',
   matic_provider: 'https://rpc-mumbai.maticvigil.com',
   arbitrum_provider: 'https://rinkeby.arbitrum.io/rpc',
+  xdai_provider: 'https://sokol.poa.network',
 }

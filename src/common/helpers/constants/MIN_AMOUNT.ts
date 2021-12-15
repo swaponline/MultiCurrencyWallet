@@ -3,6 +3,7 @@ export default {
   bnb: 0.001,
   matic: 0.001,
   arbeth: 0.001,
+  xdai:0.001,
   btc: 0.00015,
   ghost: 0.00015,
   next: 0.00015,

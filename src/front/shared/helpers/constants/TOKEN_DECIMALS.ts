@@ -7,6 +7,7 @@ const decimals = {
   eth: 18,
   matic: 18,
   arbeth: 18,
+  xdai: 18,
   ghost: 8,
   next: 8,
 }

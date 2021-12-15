@@ -6,6 +6,7 @@ export default [
   'BNB',
   'MATIC',
   'ARBETH',
+  'XDAI',
   'GHOST',
   'NEXT',
   '{ETH}SWAP',

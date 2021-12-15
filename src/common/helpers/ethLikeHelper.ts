@@ -89,4 +89,9 @@ export default {
     defaultParams: DEFAULT_CURRENCY_PARAMETERS.arbeth,
     web3: new Web3(config.web3.arbitrum_provider),
   }),
+  xdai: new ethLikeHelper({
+    currency: 'XDAI',
+    defaultParams: DEFAULT_CURRENCY_PARAMETERS.evmLike,
+    web3: new Web3(config.web3.xdai_provider),
+  }),
 }

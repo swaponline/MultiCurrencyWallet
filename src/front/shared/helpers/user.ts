@@ -28,6 +28,10 @@ export const getActivatedCurrencies = () => {
     currencies.push('ARBETH')
   }
 
+  if (!externalConfig.opts.curEnabled || externalConfig.opts.curEnabled.xdai) {
+    currencies.push('XDAI')
+  }
+
   if (!externalConfig.opts.curEnabled || externalConfig.opts.curEnabled.ghost) {
     currencies.push('GHOST')
   }
@@ -60,6 +64,7 @@ export const getWidgetCurrencies = () => {
     'BNB',
     'MATIC',
     'ARBETH',
+    'XDAI',
     'GHOST',
     'NEXT',
   ]

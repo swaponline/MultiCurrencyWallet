@@ -43,6 +43,9 @@ export default class StepsWrapper extends Component<any, any> {
       if (!curEnabled || curEnabled.arbeth) {
         this.defaultStartPack.push({ name: "ARBETH", capture: "Arbitrum ETH" })
       }
+      if (!curEnabled || curEnabled.xdai) {
+        this.defaultStartPack.push({ name: "XDAI", capture: "xDai" })
+      }
       if (!curEnabled || curEnabled.ghost) {
         this.defaultStartPack.push({ name: "GHOST", capture: "Ghost" })
       }
@@ -66,6 +69,7 @@ export default class StepsWrapper extends Component<any, any> {
         if (config.erc20) this.defaultStartPack.push({ name: 'ERC20', capture: 'Token', baseCurrency: 'ETH' })
         if (config.bep20) this.defaultStartPack.push({ name: 'BEP20', capture: 'Token', baseCurrency: 'BNB' })
         if (config.erc20matic) this.defaultStartPack.push({ name: 'ERC20MATIC', capture: 'Token', baseCurrency: 'MATIC' })
+        if (config.erc20xdai) this.defaultStartPack.push({ name: 'ERC20XDAI', capture: 'Token', baseCurrency: 'XDAI' })
       }
     }
 
@@ -134,8 +138,13 @@ export default class StepsWrapper extends Component<any, any> {
           } = getCoinInfo(coinInfo)
           let isCustomToken = false
           let customTokenType = ``
-          if (coinInfo === `CUSTOM_ERC20` || coinInfo === `CUSTOM_BEP20` || coinInfo === `CUSTOM_ERC20MATIC`) {
-            customTokenType = coinInfo.split(`_`)[1]
+          if (
+            coinInfo === `CUSTOM_ERC20` 
+            || coinInfo === `CUSTOM_BEP20` 
+            || coinInfo === `CUSTOM_ERC20MATIC`
+            || coinInfo === `CUSTOM_ERC20XDAI`
+          ) {
+            [customTokenType] = coinInfo.split(`_`)
             isCustomToken = true
           }
           Object.keys(packList).forEach((coinIndex) => {

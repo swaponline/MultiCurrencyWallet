@@ -3,6 +3,7 @@ import link from './link'
 import pubsubRoom from './pubsubRoom'
 import erc20 from './erc20'
 import erc20matic from './erc20matic'
+import erc20xdai from './erc20xdai'
 import bep20 from './bep20'
 import api from './api'
 import swapContract from './swapContract'
@@ -22,6 +23,7 @@ export default {
   erc20,
   bep20,
   erc20matic,
+  erc20xdai,
   swapContract,
   feeRates,
   hiddenCoins,

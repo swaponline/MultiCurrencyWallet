@@ -5,6 +5,7 @@ export const initialState = {
     bnb: false,
     matic: false,
     arbeth: false,
+    xdai: false,
     ghost: false,
     next: false,
     '{eth}usdt': false,

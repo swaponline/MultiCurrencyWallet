@@ -32,7 +32,7 @@ const filterCurrencies = (params) => {
   const filteredArr = currencies.filter((item) => {
     const currency = COIN_DATA[item.name]
     let isCurrencySuitable = false
-    let itemChain = undefined
+    let itemChain
 
     if (item.standard) {
       const { blockchain } = getCoinInfo(item.value)

@@ -54,6 +54,7 @@ export default [
   'BNB',
   'MATIC',
   'ARBETH',
+  'XDAI',
   '{ETH}SWAP',
   '{ETH}HDP',
   '{ETH}USDT',

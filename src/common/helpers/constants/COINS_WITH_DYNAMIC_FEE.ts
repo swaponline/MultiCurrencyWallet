@@ -7,6 +7,7 @@ export default [
   'bnb',
   'matic',
   'arbeth',
+  'xdai',
   'btc',
   'ghost',
   'next',

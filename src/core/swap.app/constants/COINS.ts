@@ -3,12 +3,14 @@ export const COIN_TYPE = Object.freeze({
   ETH_TOKEN: 'ETH_TOKEN',
   BNB_TOKEN: 'BNB_TOKEN',
   MATIC_TOKEN: 'MATIC_TOKEN',
+  XDAI_TOKEN: 'XDAI_TOKEN',
 })
 
 export const TOKEN_STANDARD = Object.freeze({
   ERC20: 'ERC20',
   BEP20: 'BEP20',
-  ERC20MATIC: 'ERC20MATIC'
+  ERC20MATIC: 'ERC20MATIC',
+  ERC20XDAI: 'ERC20XDAI',
 })
 
 export const BLOCKCHAIN = Object.freeze({
@@ -19,12 +21,14 @@ export const BLOCKCHAIN = Object.freeze({
   BNB: 'BNB', // TODO: rename with BSC
   MATIC: 'MATIC',
   ARBITRUM: 'ARBITRUM',
+  XDAI: 'XDAI',
 })
 
 export const BASE_TOKEN_CURRENCY = Object.freeze({
   ETH: 'ETH',
   BNB: 'BNB',
-  MATIC: 'MATIC'
+  MATIC: 'MATIC',
+  XDAI: 'XDAI',
 })
 
 export const COIN_MODEL = Object.freeze({
@@ -70,6 +74,14 @@ export const COIN_DATA = {
     name: 'Arbitrum ETH',
     type: COIN_TYPE.NATIVE,
     blockchain: BLOCKCHAIN.ARBITRUM,
+    model: COIN_MODEL.AB,
+    precision: 18,
+  },
+  'XDAI': {
+    ticker: 'XDAI',
+    name: 'xDai',
+    type: COIN_TYPE.NATIVE,
+    blockchain: BLOCKCHAIN.XDAI,
     model: COIN_MODEL.AB,
     precision: 18,
   },
@@ -145,6 +157,7 @@ export const NATIVE = {
   bnb: 'BNB',
   matic: 'MATIC',
   arbeth: 'ARBETH',
+  xdai: 'XDAI',
   ghost: 'GHOST',
   next: 'NEXT',
 }

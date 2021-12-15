@@ -47,9 +47,11 @@ export default {
   bnb: EthLikeAction.BNB,
   matic: EthLikeAction.MATIC,
   arbeth: EthLikeAction.ARBETH,
+  xdai: EthLikeAction.XDAI,
   erc20: Erc20LikeAction.erc20,
   bep20: Erc20LikeAction.bep20,
   erc20matic: Erc20LikeAction.erc20matic,
+  erc20xdai: Erc20LikeAction.erc20xdai,
   ghost,
   next,
 
