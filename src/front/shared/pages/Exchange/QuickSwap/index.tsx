@@ -199,7 +199,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     const { metamaskData, availableBlockchains } = this.props
     const { metamaskData: prevMetamaskData } = prevProps
     const { wrongNetwork: prevWrongNetwork, activeSection: prevActiveSection } = prevState
-    const { currencies, spendedCurrency, activeSection } = this.state
+    const { blockReason, currencies, spendedCurrency, receivedCurrency, activeSection } = this.state
 
     const chainId = metamask.getChainId()
     const isCurrentNetworkAvailable = !!availableBlockchains[chainId]
@@ -221,25 +221,28 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       )
     )
 
-    const changeSectionUpdate = activeSection !== prevActiveSection
+    const changeSection = activeSection !== prevActiveSection
 
-    if (changeSectionUpdate) {
+    if (changeSection) {
       const {
         currentCurrencies,
-        receivedList,
         spendedCurrency: newSpendedCurrency,
-        receivedCurrency,
         wrongNetwork,
       } = this.returnCurrentAssetState(currencies, activeSection)
 
-      if (newSpendedCurrency.value === spendedCurrency.value) {
+      const haveSpendedCurrencyInList = currentCurrencies.filter(currency => currency.value === spendedCurrency.value).length === 1
+
+      const needCurrenciesListsUpdate = (
+        newSpendedCurrency.value === spendedCurrency.value
+        || haveSpendedCurrencyInList && !blockReason
+      )
+
+      if (needCurrenciesListsUpdate) {
         this.setState(() => ({
           wrongNetwork,
           currencies: currentCurrencies,
-          receivedList,
-          receivedCurrency,
-        }))
-      } else {
+        }), this.updateReceivedList)
+      } else if (!haveSpendedCurrencyInList) {
         needFullUpdate = true
       }
     }
