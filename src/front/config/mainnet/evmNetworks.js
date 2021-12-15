@@ -38,7 +38,7 @@ export default {
     currency: 'XDAI',
     chainId: '0x64',
     networkVersion: 100,
-    chainName: 'Gnosis',
+    chainName: 'Gnosis (xDai)',
     rpcUrls: [web3.xdai_provider],
     blockExplorerUrls: [link.xdai],
   },

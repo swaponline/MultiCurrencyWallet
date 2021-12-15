@@ -40,8 +40,8 @@ export const LIQUIDITY_SOURCE_DATA = {
     factory: config.swapContract.sushiswapFactory,
   },
   [config.evmNetworks.XDAI.networkVersion]: {
-    name: 'SushiSwap',
-    router: config.swapContract.sushiswapRouter,
-    factory: config.swapContract.sushiswapFactory,
+    name: 'HoneySwap',
+    router: config.swapContract.honeyswapRouter,
+    factory: config.swapContract.honeyswapFactory,
   },
 }

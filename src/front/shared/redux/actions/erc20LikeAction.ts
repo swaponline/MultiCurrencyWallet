@@ -366,7 +366,7 @@ class Erc20LikeAction {
             adminFee,
             confirmed: blockHash !== null,
             isContractTx:
-              contractAddress.toLowerCase() === externalConfig.swapContract[this.standard].toLowerCase(),
+              contractAddress?.toLowerCase() === externalConfig.swapContract[this.standard]?.toLowerCase(),
           })
         })
         .catch((error) => {

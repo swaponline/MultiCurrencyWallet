@@ -199,7 +199,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     const { metamaskData, availableBlockchains } = this.props
     const { metamaskData: prevMetamaskData } = prevProps
     const { wrongNetwork: prevWrongNetwork, activeSection: prevActiveSection } = prevState
-    const { blockReason, currencies, spendedCurrency, receivedCurrency, activeSection } = this.state
+    const { blockReason, currencies, spendedCurrency, activeSection } = this.state
 
     const chainId = metamask.getChainId()
     const isCurrentNetworkAvailable = !!availableBlockchains[chainId]
@@ -673,7 +673,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
 
     let pairAddress = cacheStorageGet(
       'quickswapLiquidityPair',
-      `${externalConfig.entry}_${tokenA}_${tokenB}`
+      `${externalConfig.entry}_${tokenA}_${tokenB}`,
     )
 
     if (!pairAddress) {
