@@ -190,6 +190,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
 
   componentDidMount() {
     this.updateNetwork()
+    this.updateServiceFeeData()
   }
 
   componentDidUpdate(prevProps, prevState) {
