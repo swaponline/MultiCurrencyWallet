@@ -36,7 +36,7 @@ export default {
   },
   XDAI: {
     currency: 'XDAI',
-    chainId: '0x66EEB',
+    chainId: '0x4d',
     networkVersion: 77,
     chainName: 'Sokol testnet',
     rpcUrls: [web3.xdai_provider],
