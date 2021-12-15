@@ -260,8 +260,6 @@ const customTokenExchangeRate = (name) => {
     }
   }
 
-  if (name === 'xdai') return '1'
-
   return ''
 }
 
