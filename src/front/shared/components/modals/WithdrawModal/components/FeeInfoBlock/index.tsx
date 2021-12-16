@@ -66,8 +66,6 @@ const FeeInfoBlock = function (props: FeeInfoBlockProps) {
     isConnected, // only evm coins and tokens have this property
   } = selectedItem
 
-  console.log('isConnected', isConnected)
-
   const minerFeeTicker = dataCurrency
   const serviceFeeTicker = currency
 
