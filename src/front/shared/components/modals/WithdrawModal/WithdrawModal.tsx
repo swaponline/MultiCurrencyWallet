@@ -164,7 +164,8 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
       walletAddressOwner
     )
 
-    const usedAdminFee = adminFee.isEnabled(currency)
+    const usedAdminFee = adminFee.isEnabled(itemCurrency?.tokenKey || currency)
+
     const reduxActionName = selectedItem.standard || currency.toLowerCase()
     let commissionCurrency = currency.toUpperCase()
 
@@ -186,7 +187,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
       isShipped: false,
       usedAdminFee,
       openScanCam: false,
-      address: toAddress ? toAddress : '',
+      address: toAddress || '',
       fiatAmount: '',
       amount: '',
       selectedItem,
@@ -424,7 +425,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
     } = this.state
 
     const currentCoin = getCurrencyKey(currency, true).toLowerCase()
-    const adminFeeSize = usedAdminFee ? adminFee.calc(currency, amount) : 0
+    const adminFeeSize = usedAdminFee ? adminFee.calc(selectedItem.tokenKey || currency, amount) : 0
     let newMinerFee = new BigNumber(0)
 
     this.setState({ fetchFee: true })
@@ -1205,9 +1206,8 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
         {dashboardView && (
           <div style={{ paddingTop: '2em' }}>
             <FeeInfoBlock
-              isToken={selectedItem.isToken}
+              selectedItem={selectedItem}
               currency={currency}
-              currentDecimals={currentDecimals}
               activeFiat={activeFiat}
               dataCurrency={commissionCurrency}
               exchangeRateForTokens={exchangeRateForTokens}

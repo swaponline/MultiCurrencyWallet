@@ -1,24 +1,42 @@
-/* window.widgetERC20Comisions = {
+window.widgetERC20Comisions = {
+  eth: {
+    fee: '7',
+    address: '0x695aB700B6d98D12d84E691537570318E7646526',
+    min: '0,01',
+  },
   bnb: {
-    fee: '2',
-    address: '',
-    min: '0,0001',
+    fee: '7',
+    address: '0x695aB700B6d98D12d84E691537570318E7646526',
+    min: '0,01',
   },
   matic: {
-    fee: '5',
-    address: '',
+    fee: '7',
+    address: '0x695aB700B6d98D12d84E691537570318E7646526',
+    min: '0,01',
+  },
+  arbeth: {
+    fee: '3',
+    address: '0x695aB700B6d98D12d84E691537570318E7646526',
     min: '0,001',
   },
+  xdai: {
+    fee: '3',
+    address: '0x695aB700B6d98D12d84E691537570318E7646526',
+    min: '0,001',
+  },
+  erc20: {
+    address: '0x01F69aEfdb0AdE89BC8f8dD9712c4CC4899621E2',
+  },
   bep20: {
-    address: '',
+    address: '0x01F69aEfdb0AdE89BC8f8dD9712c4CC4899621E2',
   },
   erc20matic: {
-    address: '',
+    address: '0x01F69aEfdb0AdE89BC8f8dD9712c4CC4899621E2',
   },
   erc20xdai: {
-    address: '',
+    address: '0x01F69aEfdb0AdE89BC8f8dD9712c4CC4899621E2',
   },
-} */
+}
 
 window.widgetEvmLikeTokens = [
   {

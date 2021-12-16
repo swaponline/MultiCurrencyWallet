@@ -1,17 +1,16 @@
-import React from 'react'
 import cssModules from 'react-css-modules'
-import styles from './index.scss'
 import { BigNumber } from 'bignumber.js'
 import { FormattedMessage } from 'react-intl'
-import Tooltip from 'components/ui/Tooltip/Tooltip'
-import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
-import FeeRadios  from "./FeeRadios";
 import { links, utils } from 'helpers'
 import { COIN_DATA, COIN_MODEL } from 'swap.app/constants/COINS'
 
+import Tooltip from 'components/ui/Tooltip/Tooltip'
+import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
+import styles from './index.scss'
+import FeeRadios  from './FeeRadios'
+
 type FeeInfoBlockProps = {
   isLoading: boolean
-  isToken: boolean
   hasTxSize: boolean
 
   currency: string
@@ -19,7 +18,8 @@ type FeeInfoBlockProps = {
   dataCurrency: string
   bitcoinFeeSpeedType: string
 
-  currentDecimals: number
+  selectedItem: IUniversalObj
+
   txSize?: number
   feeCurrentCurrency?: number
   exchangeRateForTokens?: BigNumber
@@ -41,11 +41,10 @@ type FeeInfoBlockProps = {
   setBitcoinFee?: (speedType: string, customValue?: number) => void
 }
 
-function FeeInfoBlock(props: FeeInfoBlockProps) {
+const FeeInfoBlock = function (props: FeeInfoBlockProps) {
   const {
-    isToken,
+    selectedItem,
     currency,
-    currentDecimals,
     activeFiat,
     dataCurrency,
     exchangeRateForTokens = 0,
@@ -62,23 +61,33 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
     setBitcoinFee,
   } = props
 
+  const {
+    isToken,
+    isConnected, // only evm coins and tokens have this property
+  } = selectedItem
+
+  console.log('isConnected', isConnected)
+
   const minerFeeTicker = dataCurrency
   const serviceFeeTicker = currency
-  let activeFiatSymbol = activeFiat
 
-  switch (activeFiatSymbol.toLowerCase()) {
+  let activeFiatSymbol
+
+  switch (activeFiat.toLowerCase()) {
     case 'usd':
       activeFiatSymbol = '$'
       break
     case 'eur':
       activeFiatSymbol = '€'
       break
+    default:
+      activeFiatSymbol = activeFiat
   }
 
   let minerFee = initialMinerFee
 
   // double miner fee for user and admin transactions
-  if (usedAdminFee && (isToken || COIN_DATA[currency]?.model === COIN_MODEL.AB)) {
+  if (usedAdminFee && (isToken || COIN_DATA[currency]?.model === COIN_MODEL.AB) && !isConnected) {
     minerFee = initialMinerFee.multipliedBy(2)
   }
 
@@ -104,45 +113,54 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
 
   const transactionSize = (
     <>
-      {feeCurrentCurrency}&nbsp;sat/byte * {txSize}&nbsp;bytes&nbsp;
-      <a href={links.transactionRate} target="_blank">(?)</a>{' '}
-      ={' '}
+      {feeCurrentCurrency}
+      &nbsp;sat/byte *
+      {' '}
+      {txSize}
+      &nbsp;bytes&nbsp;
+      <a href={links.transactionRate} target="_blank" rel="noreferrer">(?)</a>
+      {' '}
+      =
+      {' '}
     </>
   )
 
   return (
-    <section styleName='feeInfoBlock'>
+    <section styleName="feeInfoBlock">
       {hasTxSize && (
-        <div styleName='feeRow'>
-          <span styleName='feeRowTitle'>
+        <div styleName="feeRow">
+          <span styleName="feeRowTitle">
             <FormattedMessage id="FeeInfoBlockChooseFeeRate" defaultMessage="Choose Fee Rate:" />
           </span>
           <FeeRadios
             speedType={bitcoinFeeSpeedType}
-            //@ts-ignore: strictNullChecks
+            // @ts-ignore: strictNullChecks
             fees={bitcoinFees}
-            //@ts-ignore: strictNullChecks
+            // @ts-ignore: strictNullChecks
             setFee={setBitcoinFee}
             isLoading={isLoading}
           />
-        </div>)
-      }
+        </div>
+      )}
 
-      <div styleName='feeRow'>
-        <span styleName='feeRowTitle'>
+      <div styleName="feeRow">
+        <span styleName="feeRowTitle">
           <FormattedMessage id="FeeInfoBlockMinerFee" defaultMessage="Miner fee:" />
         </span>
         <div className="feeRowInfo">
           {isLoading
-            ? <div styleName='paleLoader'><InlineLoader /></div>
-            : <span styleName='fee' id="feeInfoBlockMinerFee">
+            ? <div styleName="paleLoader"><InlineLoader /></div>
+            : (
+              <span styleName="fee" id="feeInfoBlockMinerFee">
                 {/* @ts-ignore: strictNullChecks */}
                 {hasTxSize && feeCurrentCurrency > 0 ? transactionSize : null}
-                {+minerFee}&nbsp;{minerFeeTicker}
+                {+minerFee}
+                &nbsp;
+                {minerFeeTicker}
                 {' '}
                 {fiatMinerFee > 0 && `(${activeFiatSymbol}${fiatMinerFee})`}
               </span>
-          }
+            )}
           {' '}
           <Tooltip id="FeeInfoBlockMinerFeeTooltip">
             <div style={{ maxWidth: '24em', textAlign: 'center' }}>
@@ -155,52 +173,64 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
         </div>
       </div>
 
-      {usedAdminFee && (
-          <div styleName='feeRow'>
-            <span styleName='feeRowTitle'>
-              <FormattedMessage id="FeeInfoBlockServiceFee" defaultMessage="Service fee" />:
-            </span>
-            <div className="feeRowInfo">
-              <div styleName="serviceFeeConditions">
-                <span>{usedAdminFee.fee}%</span>
-                {' '}
-                <span>
-                  <FormattedMessage id="FeeInfoBlockServiceFeeConditions" defaultMessage="of the transfer amount, but not less than" />
-                </span>
-                {' '}
-                <span>{usedAdminFee.min}&nbsp;{serviceFeeTicker}</span>
-              </div>
-              {isLoading
-                ? <div styleName='paleLoader'><InlineLoader /></div>
-                : <span styleName='fee' id="feeInfoBlockAdminFee">
-                    {+serviceFee}&nbsp;{serviceFeeTicker}
-                    {' '}
-                    {fiatServiceFee > 0 && `(${activeFiatSymbol}${fiatServiceFee})`}
-                  </span>
-              }
+      {usedAdminFee && !isConnected && (
+        <div styleName="feeRow">
+          <span styleName="feeRowTitle">
+            <FormattedMessage id="FeeInfoBlockServiceFee" defaultMessage="Service fee" />
+            :
+          </span>
+          <div className="feeRowInfo">
+            <div styleName="serviceFeeConditions">
+              <span>
+                {usedAdminFee.fee}
+                %
+              </span>
+              {' '}
+              <span>
+                <FormattedMessage id="FeeInfoBlockServiceFeeConditions" defaultMessage="of the transfer amount, but not less than" />
+              </span>
+              {' '}
+              <span>
+                {usedAdminFee.min}
+                &nbsp;
+                {serviceFeeTicker}
+              </span>
             </div>
+            {isLoading
+              ? <div styleName="paleLoader"><InlineLoader /></div>
+              : (
+                <span styleName="fee" id="feeInfoBlockAdminFee">
+                  {+serviceFee}
+                  &nbsp;
+                  {serviceFeeTicker}
+                  {' '}
+                  {fiatServiceFee > 0 && `(${activeFiatSymbol}${fiatServiceFee})`}
+                </span>
+              )}
           </div>
-        )
-      }
+        </div>
+      )}
 
-      {!isToken && (
-        <div styleName='feeRow'>
-          <span styleName='feeRowTitle'>
+      {!isToken && !isConnected && (
+        <div styleName="feeRow">
+          <span styleName="feeRowTitle">
             <FormattedMessage id="FeeInfoBlockTotalFee" defaultMessage="Total fees you pay:" />
           </span>
           <div className="feeRowInfo">
             {isLoading
-              ? <div styleName='paleLoader'><InlineLoader /></div>
-              : <span styleName='fee' id="feeInfoBlockTotalFee">
-                  {+totalFee}&nbsp;{minerFeeTicker}
+              ? <div styleName="paleLoader"><InlineLoader /></div>
+              : (
+                <span styleName="fee" id="feeInfoBlockTotalFee">
+                  {+totalFee}
+                  &nbsp;
+                  {minerFeeTicker}
                   {' '}
                   {fiatTotalFee > 0 && `(${activeFiatSymbol}${fiatTotalFee})`}
                 </span>
-            }
+              )}
           </div>
         </div>
-        )
-      }
+      )}
     </section>
   )
 }

@@ -1,27 +1,45 @@
+import { BigNumber } from 'bignumber.js'
+import getCoinInfo from 'common/coins/getCoinInfo'
 import getCurrencyKey from './getCurrencyKey'
 import config from './externalConfig'
-import { BigNumber } from 'bignumber.js'
-
+import TOKEN_STANDARDS from './constants/TOKEN_STANDARDS'
 
 const isEnabled = (currency) => {
-  currency = getCurrencyKey(currency, false).toLowerCase()
+  const currencyKey = getCurrencyKey(currency, false).toLowerCase()
 
   if (config?.opts?.fee) {
-    if (
-      currency === `token` &&
-      config.opts.fee.erc20?.fee &&
-      config.opts.fee.erc20?.address &&
-      config.opts.fee.erc20?.min
-    ) {
-      return config.opts.fee.erc20
-    } else {
-      if (config.opts.fee[currency]) {
-        return config.opts.fee[currency]
-      }
+    if (currencyKey === `token`) {
+      return getStandardFee(currency)
     }
+    if (config.opts.fee[currencyKey]) {
+      return config.opts.fee[currencyKey]
+    }
+
   }
 
   return false
+}
+
+const getStandardFee = (token: string) => {
+  const { blockchain: tokenBaseCurrency } = getCoinInfo(token)
+
+  let tokenFee = false
+
+  if (!tokenBaseCurrency) return tokenFee
+
+  Object.keys(TOKEN_STANDARDS).forEach((standard) => {
+    const baseCurrency = TOKEN_STANDARDS[standard].currency.toUpperCase()
+    const standardFee = config.opts.fee[standard]
+
+    if (
+      baseCurrency === tokenBaseCurrency
+      && standardFee?.min
+      && standardFee.fee
+      && standardFee.address
+    ) tokenFee =  standardFee
+  })
+
+  return tokenFee
 }
 
 const calc = (currency, amount) => {
