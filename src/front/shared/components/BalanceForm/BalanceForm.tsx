@@ -142,7 +142,7 @@ const BalanceForm = function ({
               <Button blue disabled={buttonsDisabled} id="depositBtn" onClick={() => handleReceive('Deposit')}>
                 <FormattedMessage id="YourtotalbalanceDeposit" defaultMessage="Пополнить" />
               </Button>
-              <Button blue disabled={sendButtonDisabled} id={sendButtonDisabled ? 'sendBtn' : ''} onClick={() => handleWithdraw('Send')}>
+              <Button blue disabled={sendButtonDisabled} id={!sendButtonDisabled ? 'sendBtn' : ''} onClick={() => handleWithdraw('Send')}>
                 <FormattedMessage id="YourtotalbalanceSend" defaultMessage="Отправить" />
               </Button>
             </div>
