@@ -266,7 +266,7 @@ const customTokenExchangeRate = (name) => {
 const getInfoAboutCurrency = (currencyNames) => new Promise((resolve, reject) => {
   reducers.user.setIsFetching({ isFetching: true })
 
-  const fiat = (config && config.opts && config.opts.activeFiat) ? config.opts.activeFiat : `USD`
+  const fiat = config?.opts?.activeFiat || `USD`
 
   request.get(links.currencyCourses, {
     cacheResponse: 60 * 60 * 1000, // cache for 1 hour
@@ -286,7 +286,7 @@ const getInfoAboutCurrency = (currencyNames) => new Promise((resolve, reject) =>
 
     const { user } = getState()
 
-    currencyNames.map(name => {
+    currencyNames.map((name) => {
       const {
         coin,
         blockchain,
@@ -300,8 +300,6 @@ const getInfoAboutCurrency = (currencyNames) => new Promise((resolve, reject) =>
       ))[0]
 
       const customFiatPrice = customTokenExchangeRate(currencyName)
-
-      const isToken = erc20Like.isToken({ name: currencyName })
 
       if (currencyInfoItem?.quote[fiat]) {
         const priceInFiat =  customFiatPrice || currencyInfoItem.quote[fiat].price
@@ -323,7 +321,7 @@ const getInfoAboutCurrency = (currencyNames) => new Promise((resolve, reject) =>
             reducers.user.setInfoAboutCurrency({ name: 'btcMultisigG2FAData', infoAboutCurrency: currencyInfo })
             reducers.user.setInfoAboutCurrency({ name: 'btcMultisigPinData', infoAboutCurrency: currencyInfo })
           }
-        } else if (isToken && blockchain) {
+        } else if (user.tokensData[name.toLowerCase()] && blockchain) {
           reducers.user.setInfoAboutToken({
             baseCurrency: blockchain.toLowerCase(),
             name: currencyName,
@@ -332,7 +330,7 @@ const getInfoAboutCurrency = (currencyNames) => new Promise((resolve, reject) =>
         }
       }
 
-      if (!currencyInfoItem && customFiatPrice && isToken && blockchain) {
+      if (!currencyInfoItem && customFiatPrice && blockchain) {
         const priceInFiat = +customFiatPrice
         const priceInBtc = btcPrice && priceInFiat / btcPrice
 
