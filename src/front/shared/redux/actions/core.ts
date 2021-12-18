@@ -576,7 +576,7 @@ const getWallets = (options: IUniversalObj = {}) => {
 
   const data = allData.filter((item) => item?.address && item?.currency)
 
-  return sortWallets(data)
+  return (config && config.isWidget) ? sortWallets(data) : data
 }
 
 const sortWallets = (wallets) => {
