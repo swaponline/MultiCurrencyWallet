@@ -128,10 +128,11 @@ const getManyInvoices = (data) => {
       if (item && item.type && item.address) {
         const {
           type: rawType,
+          tokenKey,
           address,
         } = item
 
-        const type = getCurrencyKey(rawType, true).toUpperCase()
+        const type = ((tokenKey) ? tokenKey : getCurrencyKey(rawType, true)).toUpperCase()
         walletsHashMap[`${type}:${address.toLowerCase()}`] = {
           type,
           address,
