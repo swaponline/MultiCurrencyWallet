@@ -112,11 +112,13 @@ class InvoicesList extends PureComponent<any, any> {
       const invoicesData = wallets.map((wallet) => {
         const {
           currency: type,
+          tokenKey,
           address,
         } = wallet
 
         return {
           type,
+          tokenKey,
           address,
         }
       }).filter((wallet) => wallet.address !== `Not connected`)

@@ -41,9 +41,9 @@ class InvoiceLinkModal extends React.Component<any, any> {
   }
 
   render() {
-    const { props: { name, intl, data: { currency, address } }, state: { isLinkCopied } } = this
+    const { props: { name, intl, data: { currency, address, tokenKey } }, state: { isLinkCopied } } = this
 
-    let type = currency.toLowerCase()
+    let type = (tokenKey) ? tokenKey.toLowerCase() : currency.toLowerCase()
     switch (currency) {
       case 'BTC (SMS-Protected)':
       case 'BTC (PIN-Protected)':

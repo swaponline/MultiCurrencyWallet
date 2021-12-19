@@ -288,12 +288,13 @@ class Row extends Component<RowProps, RowState> {
 
   handleCreateInvoiceLink = () => {
     const {
-      itemData: { currency, address },
+      itemData: { currency, address, tokenKey },
     } = this.props
 
     actions.modals.open(constants.modals.InvoiceLinkModal, {
       currency,
       address,
+      tokenKey,
     })
   }
 
@@ -309,13 +310,15 @@ class Row extends Component<RowProps, RowState> {
         contractAddress,
         unconfirmedBalance,
         currency,
+        tokenKey,
         address,
         balance,
       },
+      itemData
     } = this.props
 
     actions.modals.open(constants.modals.InvoiceModal, {
-      currency,
+      currency: ((tokenKey) ? tokenKey : currency).toUpperCase(),
       address,
       contractAddress,
       decimals,
