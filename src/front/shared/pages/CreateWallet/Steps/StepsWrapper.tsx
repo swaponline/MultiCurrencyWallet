@@ -105,13 +105,16 @@ export default class StepsWrapper extends Component<any, any> {
           const standard = token.standard.toLowerCase()
           const baseCurrency = TOKEN_STANDARDS[standard].currency.toUpperCase()
           const isTokenAdded = this.widgetStartPack.find((packToken) => {
-            return packToken.name.toLowerCase() === name
+            // @ts-ignore
+            return packToken.name.toLowerCase() === name && packToken.standard.toLowerCase() === standard
           })
 
           if (config[standard][name] && !isTokenAdded) {
             this.widgetStartPack.push({
               name: name.toUpperCase(),
               capture: config[standard][name].fullName,
+              // @ts-ignore
+              standard,
               baseCurrency,
             })
           }

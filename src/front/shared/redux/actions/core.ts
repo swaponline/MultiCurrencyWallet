@@ -13,6 +13,7 @@ import metamask from 'helpers/metamask'
 import { AddressType } from 'domain/address'
 
 import helpers from 'helpers'
+import TOKEN_STANDARDS from 'helpers/constants/TOKEN_STANDARDS'
 
 
 const debug = (...args) => console.log(...args)
@@ -573,7 +574,53 @@ const getWallets = (options: IUniversalObj = {}) => {
     ...data,
   }))
 
-  return allData.filter((item) => item?.address && item?.currency)
+  const data = allData.filter((item) => item?.address && item?.currency)
+
+  return (config && config.isWidget) ? sortWallets(data) : data
+}
+
+const sortWallets = (wallets) => {
+  const sortedWallets: any[] = []
+
+  if (window?.widgetEvmLikeTokens?.length) {
+    const reverseTokens = window.widgetEvmLikeTokens.reverse()
+    let connectExternal = false
+    const connectedExternalWallets: any[] = []
+    wallets.forEach((walletData) => {
+      const {
+        isConnected,
+        isMetamask,
+        isToken,
+      } = walletData
+      let isFounded = false
+      if (!isConnected && isMetamask) {
+        connectExternal = walletData
+      } else {
+        if (isConnected && isMetamask && !isToken) {
+          connectedExternalWallets.push(walletData)
+        } else {
+          reverseTokens.forEach((token) => {
+            const name = token.name.toLowerCase()
+            const standard = token.standard.toLowerCase()
+            const baseCurrency = TOKEN_STANDARDS[standard].currency.toUpperCase()
+            if (walletData.name === name && walletData.standard === standard) {
+              isFounded = true
+            }
+          })
+          if (isFounded) {
+            sortedWallets.unshift(walletData)
+          } else {
+            sortedWallets.push(walletData)
+          }
+        }
+      }
+    })
+    if (connectExternal) sortedWallets.unshift(connectExternal)
+    connectedExternalWallets.reverse().forEach((walletData) => { sortedWallets.unshift(walletData) })
+    return sortedWallets
+  }
+
+  return wallets
 }
 
 window.getWallets = getWallets
