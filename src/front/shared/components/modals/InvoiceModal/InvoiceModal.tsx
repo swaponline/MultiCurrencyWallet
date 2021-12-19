@@ -89,8 +89,8 @@ class InvoiceModal extends React.Component<InvoiceModalProps, InvoiceModalState>
     } = props
 
     const isToken = erc20Like.isToken({ name: currency })
-    const currentDecimals = constants.tokenDecimals[getCurrencyKey(currency, true).toLowerCase()]
     const walletData = actions.core.getWallet({ currency })
+    const currentDecimals = walletData.decimals
     const { infoAboutCurrency } = walletData
     const multiplier = infoAboutCurrency && infoAboutCurrency.price_fiat
       ? infoAboutCurrency.price_fiat
@@ -129,10 +129,12 @@ class InvoiceModal extends React.Component<InvoiceModalProps, InvoiceModalState>
       label,
       isShipped,
       walletData: {
-        currency,
+        currency: currencyOriginal,
+        tokenKey,
       },
     } = this.state
 
+    const currency = ((tokenKey) ? tokenKey : currencyOriginal).toUpperCase()
     if (isShipped) return
 
     this.setState({
@@ -207,9 +209,12 @@ class InvoiceModal extends React.Component<InvoiceModalProps, InvoiceModalState>
       currentDecimals,
       selectedValue,
       walletData: {
-        currency,
+        currency: currencyOriginal,
+        tokenKey,
       },
     } = this.state
+
+    const currency = ((tokenKey) ? tokenKey : currencyOriginal).toUpperCase()
 
     if (!value) {
       this.setState({
@@ -264,10 +269,12 @@ class InvoiceModal extends React.Component<InvoiceModalProps, InvoiceModalState>
       selectedValue,
       toAddressEnabled,
       walletData: {
-        currency,
+        currency: currencyOriginal,
+        tokenKey,
       },
       walletData,
     } = this.state
+    const currency = ((tokenKey) ? tokenKey : currencyOriginal).toUpperCase()
 
     const {
       name,
@@ -290,9 +297,9 @@ class InvoiceModal extends React.Component<InvoiceModalProps, InvoiceModalState>
     const curList = [
       {
         fullTitle: walletData.fullName,
-        icon: currency.toLowerCase(),
-        name: currency,
-        title: currency,
+        icon: currencyOriginal.toLowerCase(),
+        name: currencyOriginal,
+        title: currencyOriginal,
         value: currency,
       },
       {
