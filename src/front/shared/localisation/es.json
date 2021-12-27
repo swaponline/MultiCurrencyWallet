@@ -5753,13 +5753,6 @@
     ]
   },
   {
-    "id": "disclaimerAbout0x",
-    "message": "* Descargo de responsabilidad: la bolsa de liquidez utiliza un Protocolo de 0X API. Se cuidadoso y úsalo bajo tu propio riesgo.",
-    "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
-    ]
-  },
-  {
     "id": "Connect",
     "message": "Conectar",
     "files": [

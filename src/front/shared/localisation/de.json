@@ -5764,13 +5764,6 @@
     ]
   },
   {
-    "id": "disclaimerAbout0x",
-    "message": "* Haftungsausschluss: Die Börse verwendet ein 3rd 0x Liquiditätsprotokoll. Seien Sie vorsichtig und verwenden Sie auf eigene Gefahr.",
-    "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
-    ]
-  },
-  {
     "id": "Connect",
     "message": "Verbinden",
     "files": [

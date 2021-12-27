@@ -5746,13 +5746,6 @@
     ]
   },
   {
-    "id": "disclaimerAbout0x",
-    "message": "* Отказ от ответственности: биржа использует 0x протокол ликвидности. Будьте осторожны и используйте на свой страх и риск.",
-    "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
-    ]
-  },
-  {
     "id": "Connect",
     "message": "Подключить",
     "files": [

@@ -212,12 +212,6 @@ $maxWidth: 38em;
   }
 }
 
-.externalServiceWarning {
-  max-width: 28rem;
-  margin: 0 auto 1rem;
-  color: var(--color-indicating);
-}
-
 @media all and (max-width: 500px) {
   .newTokenInstruction {
     font-size: 0.95rem;

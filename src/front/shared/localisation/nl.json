@@ -5749,13 +5749,6 @@
     ]
   },
   {
-    "id": "disclaimerAbout0x",
-    "message": "* Disclaimer: De Beurs maakt gebruik van een 3rd 0x Liquidity Protocol. Wees voorzichtig en gebruik op eigen risico.",
-    "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
-    ]
-  },
-  {
     "id": "Connect",
     "message": "Verbinding",
     "files": [
