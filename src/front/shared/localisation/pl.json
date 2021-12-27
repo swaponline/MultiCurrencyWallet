@@ -5753,13 +5753,6 @@
     ]
   },
   {
-    "id": "disclaimerAbout0x",
-    "message": "* Uwaga: Giełda korzysta z protokołu 3rd 0x Liquidity. Bądź ostrożny i używaj na własne ryzyko.",
-    "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
-    ]
-  },
-  {
     "id": "Connect",
     "message": "Połącz",
     "files": [

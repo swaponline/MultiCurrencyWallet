@@ -5749,13 +5749,6 @@
     ]
   },
   {
-    "id": "disclaimerAbout0x",
-    "message": "* Isenção de responsabilidade: a bolsa usa um protocolo de liquidez 3rd 0x. Tenha cuidado e use por sua própria conta e risco.",
-    "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
-    ]
-  },
-  {
     "id": "Connect",
     "message": "Conectar",
     "files": [

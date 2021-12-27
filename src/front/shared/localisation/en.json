@@ -5749,13 +5749,6 @@
     ]
   },
   {
-    "id": "disclaimerAbout0x",
-    "message": "* Disclaimer: the exchange uses a 3rd 0x Liquidity Protocol. Be careful and use at your own risk.",
-    "files": [
-      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
-    ]
-  },
-  {
     "id": "Connect",
     "message": "Connect",
     "files": [
