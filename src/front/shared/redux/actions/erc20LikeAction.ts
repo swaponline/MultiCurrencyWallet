@@ -447,10 +447,10 @@ class Erc20LikeAction {
 
   send = async (params) => {
     const { name, from, to, amount, ...feeConfig } = params
-    const { contractAddress, tokenContract, decimals } = this.returnTokenInfo(name)
+    const { tokenContract, decimals } = this.returnTokenInfo(name)
     const feeResult = await this.fetchFees({ ...feeConfig })
     const txArguments = {
-      gas: "0x00",
+      gas: '0x00',
       gasPrice: feeResult.gasPrice,
       from,
     }
@@ -465,7 +465,7 @@ class Erc20LikeAction {
 
     return new Promise(async (res, rej) => {
       const gasAmountCalculated = await tokenContract.methods
-        .transfer(to, '0x' + hexAmountWithDecimals)
+        .transfer(to, `0x${hexAmountWithDecimals}`)
         .estimateGas(txArguments)
 
       const gasAmounWithPercentForSuccess = new BigNumber(
@@ -474,11 +474,11 @@ class Erc20LikeAction {
           .toFixed(0)
       ).toString(16)
 
-      txArguments.gas = '0x' + gasAmounWithPercentForSuccess
+      txArguments.gas = `0x${gasAmounWithPercentForSuccess}`
 
       const receipt = tokenContract.methods
         // hex amount fixes a BigNumber error
-        .transfer(to, '0x' + hexAmountWithDecimals)
+        .transfer(to, `0x${hexAmountWithDecimals}`)
         .send(txArguments)
         .on('transactionHash', (hash) => {
           reducers.transactions.addTransactionToQueue({

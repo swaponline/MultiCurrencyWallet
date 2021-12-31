@@ -29,6 +29,7 @@
   border-radius: 10px;
   box-shadow: var(--box-shadow);
   background: var(--color-background-elements);
+  overflow: auto;
 
   &_dashboardView {
     background-color: none;

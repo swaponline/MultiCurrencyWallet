@@ -3,7 +3,6 @@ import {
   UserRejectedRequestError as UserRejectedRequestErrorWalletConnect,
 } from '@web3-react/walletconnect-connector'
 
-
 export default class WalletConnectProvider extends WalletConnectConnector {
   _web3Connect = null
 
