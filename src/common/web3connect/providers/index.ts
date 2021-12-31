@@ -21,6 +21,7 @@ const getProviderByName = (web3connect, providerName, newInstance = false) => {
       case SUPPORTED_PROVIDERS.WALLETCONNECT:
         _cachedProviders[providerName] = new WalletConnectProvider(web3connect, {
           rpc: web3connect._web3RPC,
+          chainId: Number(web3connect._web3ChainId),
           bridge: `https://bridge.walletconnect.org`,
           qrcode: true,
           pollingInterval: 12000,
