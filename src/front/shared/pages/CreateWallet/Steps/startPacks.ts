@@ -42,14 +42,14 @@ export const defaultPack = [
 export const widgetPack = [
   ...((!curEnabled || curEnabled.btc) && !onlyEvmWallets ? [{ name: 'BTC', capture: 'Bitcoin' }] : []),
   ...(!curEnabled || curEnabled.eth ? [{ name: 'ETH', capture: 'Ethereum' }] : []),
-  ...(config.erc20 ? [{ name: 'ERC20', capture: 'Token', baseCurrency: 'ETH' }] : []),
+  ...((config.erc20 && (!curEnabled || curEnabled.eth)) ? [{ name: 'ERC20', capture: 'Token', baseCurrency: 'ETH' }] : []),
   ...(!curEnabled || curEnabled.bnb ? [{ name: 'BNB', capture: 'Binance Coin' }] : []),
-  ...(config.bep20 ? [{ name: 'BEP20', capture: 'Token', baseCurrency: 'BNB' }] : []),
+  ...((config.bep20 && (!curEnabled || curEnabled.bnb)) ? [{ name: 'BEP20', capture: 'Token', baseCurrency: 'BNB' }] : []),
   ...(!curEnabled || curEnabled.matic ? [{ name: 'MATIC', capture: 'MATIC Token' }] : []),
-  ...(config.erc20matic ? [{ name: 'ERC20MATIC', capture: 'Token', baseCurrency: 'MATIC' }] : []),
+  ...((config.erc20matic && (!curEnabled || curEnabled.matic)) ? [{ name: 'ERC20MATIC', capture: 'Token', baseCurrency: 'MATIC' }] : []),
   ...(!curEnabled || curEnabled.arbeth ? [{ name: 'ARBETH', capture: 'Arbitrum ETH' }] : []),
   ...(!curEnabled || curEnabled.xdai ? [{ name: 'XDAI', capture: 'xDai' }] : []),
-  ...(config.erc20xdai ? [{ name: 'ERC20XDAI', capture: 'Token', baseCurrency: 'XDAI' }] : []),
+  ...((config.erc20xdai && (!curEnabled || curEnabled.xdai)) ? [{ name: 'ERC20XDAI', capture: 'Token', baseCurrency: 'XDAI' }] : []),
   ...((!curEnabled || curEnabled.ghost) && !onlyEvmWallets ? [{ name: 'GHOST', capture: 'Ghost' }] : []),
   ...((!curEnabled || curEnabled.next) && !onlyEvmWallets ? [{ name: 'NEXT', capture: 'NEXT.coin' }] : []),
 ]

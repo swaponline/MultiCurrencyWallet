@@ -482,9 +482,14 @@ const getWallets = (options: IUniversalObj = {}) => {
   } = getState()
 
   const metamaskConnected = metamask.isEnabled() && metamask.isConnected()
+  // if enabledCurrencies equals FALSE then all currencies is enabled
+  const enabledCurrencies = config.opts.curEnabled
 
   const tokenWallets = Object.keys(tokensData).map((k) => {
     const { coin, blockchain } = getCoinInfo(k)
+
+    if (!(coin && blockchain !== ``)) return false
+    if (!(!enabledCurrencies || enabledCurrencies[blockchain.toLowerCase()])) return false
     if (metamaskConnected) {
       return (
         coin && blockchain !== `` &&
@@ -494,9 +499,6 @@ const getWallets = (options: IUniversalObj = {}) => {
     }
     return (coin && blockchain !== ``) ? tokensData[k] : false
   }).filter((d) => d !== false)
-
-  // if enabledCurrencies equals FALSE then all currencies is enabled
-  const enabledCurrencies = config.opts.curEnabled
 
   const allData = [
     ...(

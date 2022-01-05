@@ -280,121 +280,137 @@ const initialState = {
 
 if (config.isWidget) {
   initialState.items = [
-    {
+    //@ts-ignore
+    ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.eth) ? [{
       name: 'ETH',
       title: 'ETH',
       icon: 'eth',
       value: 'eth',
       fullTitle: 'ethereum',
-    },
-    {
+    }] : [],
+    //@ts-ignore
+    ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.bnb) ? [{
       name: 'BNB',
       title: 'BNB',
       icon: 'bnb',
       value: 'bnb',
       fullTitle: 'binance coin',
-    },
-    {
+    }] : [],
+    //@ts-ignore
+    ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.matic) ? [{
       name: 'MATIC',
       title: 'MATIC',
       icon: 'matic',
       value: 'matic',
       fullTitle: 'matic token',
-    },
-    {
+    }] : [],
+    //@ts-ignore
+    ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.arbeth) ? [{
       name: 'ARBETH',
       title: 'ARBETH',
       icon: 'arbeth',
       value: 'arbeth',
       fullTitle: 'arbitrum eth',
-    },
-    {
+    }] : [],
+    //@ts-ignore
+    ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.xdai) ? [{
       name: 'XDAI',
       title: 'XDAI',
       icon: 'xdai',
       value: 'xdai',
       fullTitle: 'xdai',
-    },
-    {
+    }] : [],
+    //@ts-ignore
+    ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.btc) ? [{
       name: 'BTC',
       title: 'BTC',
       icon: 'btc',
       value: 'btc',
       fullTitle: 'bitcoin',
-    },
-    {
+    }] : [],
+    //@ts-ignore
+    ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.ghost) ? [{
       name: 'GHOST',
       title: 'GHOST',
       icon: 'ghost',
       value: 'ghost',
       fullTitle: 'ghost',
-    },
-    {
+    }] : [],
+    //@ts-ignore
+    ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.next) ? [{
       name: 'NEXT',
       title: 'NEXT',
       icon: 'next',
       value: 'next',
       fullTitle: 'next',
-    },
+    }] : [],
   ]
 
   initialState.partialItems = [
-    {
+    //@ts-ignore
+    ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.eth) ? [{
       name: 'ETH',
       title: 'ETH',
       icon: 'eth',
       value: 'eth',
       fullTitle: 'ethereum',
-    },
-    {
+    }] : [],
+    //@ts-ignore
+    ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.bnb) ? [{
       name: 'BNB',
       title: 'BNB',
       icon: 'bnb',
       value: 'bnb',
       fullTitle: 'binance coin',
-    },
-    {
+    }] : [],
+    //@ts-ignore
+    ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.matic) ? [{
       name: 'MATIC',
       title: 'MATIC',
       icon: 'matic',
       value: 'matic',
       fullTitle: 'matic token',
-    },
-    {
+    }] : [],
+    //@ts-ignore
+    ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.arbeth) ? [{
       name: 'ARBETH',
       title: 'ARBETH',
       icon: 'arbeth',
       value: 'arbeth',
       fullTitle: 'arbitrum eth',
-    },
-    {
+    }] : [],
+    //@ts-ignore
+    ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.xdai) ? [{
       name: 'XDAI',
       title: 'XDAI',
       icon: 'xdai',
       value: 'xdai',
       fullTitle: 'xdai',
-    },
-    {
+    }] : [],
+    //@ts-ignore
+    ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.btc) ? [{
       name: 'BTC',
       title: 'BTC',
       icon: 'btc',
       value: 'btc',
       fullTitle: 'bitcoin',
-    },
-    {
+    }] : [],
+    //@ts-ignore
+    ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.ghost) ? [{
       name: 'GHOST',
       title: 'GHOST',
       icon: 'ghost',
       value: 'ghost',
       fullTitle: 'ghost',
-    },
-    {
+    }] : [],
+    //@ts-ignore
+    ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.next) ? [{
       name: 'NEXT',
       title: 'NEXT',
       icon: 'next',
       value: 'next',
       fullTitle: 'next',
-    },
+    }] : [],
   ]
 
   // Мульти валюта с обратной совместимостью одиночного билда
