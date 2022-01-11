@@ -111,7 +111,7 @@ class Erc20LikeAction {
         }
       } 
     } catch (error) {
-      this.reportError(error)
+      this.reportError(error, 'fail on token info')
     }
 
     return false

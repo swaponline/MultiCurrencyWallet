@@ -17,6 +17,7 @@ describe('Adding coins', () => {
     ['bnb', 'Binance Coin'],
     ['matic', 'MATIC Token'],
     ['arbeth', 'Arbitrum ETH'],
+    ['xdai', 'xDai'],
     ['ghost', 'ghost'],
     ['next', 'NEXT.coin'],
   ]

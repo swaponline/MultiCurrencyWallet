@@ -1714,7 +1714,10 @@ class Exchange extends PureComponent<ExchangeProps, ExchangeState> {
       const sellCoinFee = pairFees.byCoins[sellCoin] || false
 
       balanceTooltip = (
-        <p styleName="maxAmount">
+        // React: Warning: Each child in a list should have a unique "key" prop
+        // why React tells that it has to have a key prop?
+        // there isn't any loops. Maybe I'm missing something...
+        <p styleName="maxAmount" key="why I am here">
           {new BigNumber(balance).toNumber() === 0 ||
           (sellCoinFee &&
             new BigNumber(balance).minus(sellCoinFee.fee).isLessThanOrEqualTo(0)) ? null : (

@@ -58,9 +58,7 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
   handleSubmit = async () => {
     const { tokenAddress, tokenStandard } = this.state
 
-    this.setState(() => ({
-      isPending: true,
-    }))
+    this.setState(() => ({ isPending: true }))
 
     const info = await actions[tokenStandard].getInfoAboutToken(tokenAddress)
 
@@ -72,12 +70,10 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
         tokenSymbol: symbol,
         tokenDecimals: decimals,
         step: 'confirm',
-        isPending: false,
       }))
     } else {
       this.setState(() => ({
         notFound: true,
-        isPending: false,
       }))
 
       setTimeout(() => {
@@ -86,6 +82,8 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
         }))
       }, 4000)
     }
+
+    this.setState(() => ({ isPending: false }))
   }
 
   handleConfirm = async () => {

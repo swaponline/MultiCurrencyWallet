@@ -45,6 +45,15 @@ describe('Adding custom tokens', () => {
         walletTitle: 'MONO ERC20MATIC',
       },
     ],
+    [
+      'Custom xDai ERC20',
+      'xdaierc20xdai',
+      {
+        contract: '0xB81AFe27c103bcd42f4026CF719AF6D802928765',
+        titleId: 'erc20xdaiaria',
+        walletTitle: 'ARIA ERC20XDAI',
+      },
+    ],
   ]
 
   async function checkTokenDisplay(params) {
