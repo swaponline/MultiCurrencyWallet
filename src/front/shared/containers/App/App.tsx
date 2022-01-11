@@ -328,9 +328,12 @@ class App extends React.Component<RouteComponentProps<any>, any> {
       await createSwapApp()
     }
 
-    if (config.entry === 'mainnet') { 
-      await actions.oneinch.fetchUserOrders()
-    }
+    /* 
+    Currently not in use. See Exchange/Quickswap/index.tsx comments
+    */
+    // if (config.entry === 'mainnet') { 
+    //   await actions.oneinch.fetchUserOrders()
+    // }
 
     console.groupEnd()
   }

@@ -32,7 +32,6 @@ const SelectGroup = (props) => {
     haveAmount,
     inputToolTip,
     activeFiat,
-    balanceTooltip,
     onKeyUp,
     dontDisplayError,
     onFocus,
@@ -79,11 +78,7 @@ const SelectGroup = (props) => {
           </p>
         )}
         {inputToolTip && inputToolTip}
-        {balanceTooltip && (
-          <div styleName="smallTooltip balanceTooltip">
-            <Tooltip id="SelectGroupTooltipBalance">{balanceTooltip()}</Tooltip>
-          </div>
-        )}
+
         <CurrencySelect
           selectedItemRender={(item) => {
             const { blockchain } = getCoinInfo(item.value)
