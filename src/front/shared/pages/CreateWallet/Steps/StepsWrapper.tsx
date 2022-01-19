@@ -106,9 +106,7 @@ export default class StepsWrapper extends Component<any, any> {
           const baseCurrency = TOKEN_STANDARDS[standard].currency.toUpperCase()
           const isTokenAdded = this.widgetStartPack.find((packToken) => {
             // @ts-ignore
-            if (!packToken.standard) return true
-            // @ts-ignore
-            return packToken.name.toLowerCase() === name && packToken.standard.toLowerCase() === standard
+            return packToken.name?.toLowerCase() === name && packToken.standard?.toLowerCase() === standard
           })
 
           if (config[standard][name] && !isTokenAdded) {
@@ -187,7 +185,7 @@ export default class StepsWrapper extends Component<any, any> {
       }
       sortPacks((isWidgetBuild) ? this.widgetStartPack : this.defaultStartPack)
     }
-    
+
     this.state = {
       curState,
       coins,
@@ -208,7 +206,7 @@ export default class StepsWrapper extends Component<any, any> {
   }
 
   render() {
-    const { 
+    const {
       forcedCurrencyData,
       onClick,
       error,
@@ -222,8 +220,8 @@ export default class StepsWrapper extends Component<any, any> {
     return (
       <div>
         {
-          forcedCurrencyData 
-          ? <SecondStep 
+          forcedCurrencyData
+          ? <SecondStep
               error={error}
               onClick={onClick}
               currencies={currenciesForSecondStep}
@@ -235,9 +233,9 @@ export default class StepsWrapper extends Component<any, any> {
           : (
             <div>
               {
-                step === 1 && 
-                <FirstStep 
-                  error={error} 
+                step === 1 &&
+                <FirstStep
+                  error={error}
                   onClick={onClick}
                   setError={setError}
                   handleClick={this.handleClick}
@@ -246,11 +244,11 @@ export default class StepsWrapper extends Component<any, any> {
                 />
               }
               {
-                step === 2 && 
+                step === 2 &&
                 <SecondStep
                   error={error}
                   btcData={btcData}
-                  onClick={onClick} 
+                  onClick={onClick}
                   currencies={currenciesForSecondStep}
                   setError={setError}
                   handleClick={this.handleClick}
