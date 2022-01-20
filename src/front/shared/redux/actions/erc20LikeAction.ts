@@ -204,9 +204,11 @@ class Erc20LikeAction {
       const { user: { tokensData } } = getState()
       // if we have a base currency prefix then delete it
       tokenName = tokenName.replace(/^\{[a-z]+\}/, '')
-      const tokenKey = `{${this.currencyKey}}${tokenName.toLowerCase()}`
-      const { address = ownAddress, contractAddress } = tokensData[tokenKey]
 
+      const tokenKey = `{${this.currencyKey}}${tokenName.toLowerCase()}`
+      const { address : sysAddress, contractAddress } = tokensData[tokenKey]
+
+      const address = ownAddress || sysAddress
 
       const url = ''.concat(
         `?module=account&action=tokentx`,
