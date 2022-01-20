@@ -24,7 +24,6 @@ export default class StepsWrapper extends Component<any, any> {
   constructor(props) {
     super(props)
     const { currencies } = props
-    
     if (config?.opts.ownTokens?.length) {
       this.defaultStartPack = []
 
@@ -100,7 +99,7 @@ export default class StepsWrapper extends Component<any, any> {
     if (isWidgetBuild && haveTokenConfig) {
       if (window?.widgetEvmLikeTokens?.length) {
         // Multi token build
-        window.widgetEvmLikeTokens.forEach((token) => {
+        window.widgetEvmLikeTokens.reverse().forEach((token) => {
           const name = token.name.toLowerCase()
           const standard = token.standard.toLowerCase()
           const baseCurrency = TOKEN_STANDARDS[standard].currency.toUpperCase()
@@ -110,7 +109,7 @@ export default class StepsWrapper extends Component<any, any> {
           })
 
           if (config[standard][name] && !isTokenAdded) {
-            this.widgetStartPack.push({
+            this.widgetStartPack.unshift({
               name: name.toUpperCase(),
               capture: config[standard][name].fullName,
               // @ts-ignore
