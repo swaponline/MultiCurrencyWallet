@@ -80,12 +80,13 @@ class CurrencyWallet extends Component<any, any> {
 
     if (!itemCurrency.length) {
       itemCurrency = items.filter((item) => {
-        if (item.balance > 0 && item.currency.toLowerCase() === ticker.toLowerCase()) return true
-      })
-    }
-    if (!itemCurrency.length) {
-      itemCurrency = items.filter((item) => {
-        if (item.balance >= 0 && item.currency.toLowerCase() === ticker.toLowerCase()) return true
+        if (
+          (item.balance >= 0)
+          && (
+            (item.currency.toLowerCase() === ticker.toLowerCase())
+            || (item.tokenKey && item.tokenKey.toLowerCase() === ticker.toLowerCase())
+          )
+        ) return true
       })
     }
 
@@ -94,7 +95,7 @@ class CurrencyWallet extends Component<any, any> {
 
       //@ts-ignore
       const { currency, address, contractAddress, decimals, balance, infoAboutCurrency } = itemCurrency
-      const hasCachedData = lsDataCache.get(`TxHistory_${getCurrencyKey(currency, true).toLowerCase()}_${address}`)
+      const hasCachedData = lsDataCache.get(`TxHistory_${getCurrencyKey(currency, true).toLowerCase()}_${walletAddress}`)
 
       this.state = {
         itemCurrency,
@@ -126,9 +127,12 @@ class CurrencyWallet extends Component<any, any> {
       infoAboutCurrency,
       hiddenCoinsList,
       ticker,
+      walletAddress,
     } = this.state
 
-    actions.user.getBalances()
+    if (action == 'send') {
+      actions.user.getBalances()
+    }
 
     let {
       match: {
@@ -142,7 +146,11 @@ class CurrencyWallet extends Component<any, any> {
     } = this.props
 
     if (token && itemCurrency.standard) {
-      actions[itemCurrency.standard].getBalance(currency.toLowerCase())
+      actions[itemCurrency.standard].getBalance(currency.toLowerCase(), walletAddress).then((balance) => {
+        this.setState({
+          balance,
+        })
+      })
     } else {
       const actionName = currency.toLowerCase()
 
@@ -152,7 +160,7 @@ class CurrencyWallet extends Component<any, any> {
     }
 
     if (action !== 'send') {
-      actions.history.setTransactions(address, ticker.toLowerCase())
+      actions.history.setTransactions(walletAddress, ticker.toLowerCase())
     }
 
     if (!address) {
@@ -211,10 +219,6 @@ class CurrencyWallet extends Component<any, any> {
       this.updateTransactions()
     }
 
-    if (action !== 'send' && address && prevAddress !== address) {
-      actions.history.setTransactions(address, currency.toLowerCase())
-    }
-
     if (
       prevProps.location.pathname !== this.props.location.pathname ||
       prevProps.isBalanceFetching !== this.props.isBalanceFetching
@@ -228,12 +232,23 @@ class CurrencyWallet extends Component<any, any> {
         walletAddress,
       })
 
+      if (!itemCurrency.length) {
+        itemCurrency = items.filter((item) => {
+          if (
+            (item.balance >= 0)
+            && (
+              (item.currency.toLowerCase() === ticker.toLowerCase())
+              || (item.tokenKey && item.tokenKey.toLowerCase() === ticker.toLowerCase())
+            )
+          ) return true
+        })
+      }
+
       if (itemCurrency.length) {
         itemCurrency = itemCurrency[0]
 
         const {
           currency,
-          address,
           contractAddress,
           decimals,
           balance,
@@ -247,6 +262,7 @@ class CurrencyWallet extends Component<any, any> {
         const hasCachedData = lsDataCache.get(`TxHistory_${getCurrencyKey(currency, true).toLowerCase()}_${address}`)
 
         if (!this.mounted) return
+        const token = erc20Like.isToken({ name: ticker })
 
         this.setState(
           {
@@ -260,12 +276,33 @@ class CurrencyWallet extends Component<any, any> {
             isLoading: false,
             infoAboutCurrency,
             filterValue: address || '',
-            token: erc20Like.isToken({ name: currency }),
+            token,
           },
           () => {
             if (prevProps.location.pathname !== this.props.location.pathname) {
               if (activeCurrency.toUpperCase() !== activeFiat) {
                 actions.user.pullActiveCurrency(currency.toLowerCase())
+              }
+              if (token && itemCurrency.standard) {
+                actions[itemCurrency.standard].getBalance(currency.toLowerCase(), address).then((balance) => {
+                  this.setState({
+                    balance,
+                  })
+                })
+              } else {
+                const actionName = currency.toLowerCase()
+
+                address && actions[getCurrencyKey(actionName, false)]
+                  .fetchBalance(address)
+                  .then((balance) => this.setState({ balance }))
+              }
+
+              if (action !== 'send') {
+                actions.history.setTransactions(address, ticker.toLowerCase())
+              }
+
+              if (!address) {
+                actions.core.getSwapHistory()
               }
             }
             const targetCurrency = getCurrencyKey(currency.toLowerCase(), true)

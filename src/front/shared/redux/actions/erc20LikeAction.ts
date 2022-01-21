@@ -153,7 +153,7 @@ class Erc20LikeAction {
     return `${this.explorerLink}/tx/${tx}`
   }
 
-  getBalance = async (tokenName) => {
+  getBalance = async (tokenName, ownAddress = null) => {
     if (tokenName === undefined) return
 
     const {
@@ -166,7 +166,7 @@ class Erc20LikeAction {
 
     if(metamask.isConnected() && !metamask.isAvailableNetworkByCurrency(tokenKey)) return
 
-    const address = metamask.isConnected() ? metamask.getAddress() : ownerAddress
+    const address = (ownAddress) ? ownAddress : metamask.isConnected() ? metamask.getAddress() : ownerAddress
     const balanceInCache = cacheStorageGet('currencyBalances', `token_${tokenKey}_${address}`)
 
     if (balanceInCache !== false) {
@@ -180,7 +180,6 @@ class Erc20LikeAction {
 
     try {
       const amount = await this.fetchBalance(address, contractAddress, decimals)
-
       reducers.user.setTokenBalance({
         baseCurrency: this.currencyKey,
         name,
@@ -204,9 +203,11 @@ class Erc20LikeAction {
       const { user: { tokensData } } = getState()
       // if we have a base currency prefix then delete it
       tokenName = tokenName.replace(/^\{[a-z]+\}/, '')
-      const tokenKey = `{${this.currencyKey}}${tokenName.toLowerCase()}`
-      const { address = ownAddress, contractAddress } = tokensData[tokenKey]
 
+      const tokenKey = `{${this.currencyKey}}${tokenName.toLowerCase()}`
+      const { address : sysAddress, contractAddress } = tokensData[tokenKey]
+
+      const address = ownAddress || sysAddress
 
       const url = ''.concat(
         `?module=account&action=tokentx`,
