@@ -130,10 +130,6 @@ class CurrencyWallet extends Component<any, any> {
       walletAddress,
     } = this.state
 
-    if (action == 'send') {
-      actions.user.getBalances()
-    }
-
     let {
       match: {
         params: {
@@ -144,6 +140,10 @@ class CurrencyWallet extends Component<any, any> {
       activeCurrency,
       activeFiat
     } = this.props
+
+    if (action == 'send') {
+      actions.user.getBalances()
+    }
 
     if (token && itemCurrency.standard) {
       actions[itemCurrency.standard].getBalance(currency.toLowerCase(), walletAddress).then((balance) => {
