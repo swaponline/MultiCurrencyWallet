@@ -1,6 +1,6 @@
 import { BigNumber } from 'bignumber.js'
 import erc20Like from 'common/erc20Like'
-import config from 'app-config'
+import config from 'helpers/externalConfig'
 import moment from 'moment/moment'
 import request from 'common/utils/request'
 import getCoinInfo from 'common/coins/getCoinInfo'
@@ -268,7 +268,7 @@ const getInfoAboutCurrency = (currencyNames) => new Promise((resolve, reject) =>
 
   const fiat = config?.opts?.activeFiat || `USD`
 
-  request.get(links.currencyCourses, {
+  request.get(config.opts.currencyCoursesUrl, {
     cacheResponse: 60 * 60 * 1000, // cache for 1 hour
     query: {
       fiat,

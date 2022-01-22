@@ -84,6 +84,7 @@ const externalConfig = () => {
     buyViaCreditCardLink: false,
     activeFiat: 'USD',
     exchangeDisabled: false,
+    currencyCoursesUrl: 'https://noxon.wpmix.net/cursAll.php',
     ui: {
       footerDisabled: false,
       farmLink: false, // use default link #/marketmaker
@@ -93,7 +94,12 @@ const externalConfig = () => {
   }
 
   if (window
-    && window.SO_disableInternalWallet
+    && window.SO_currencyCoursesUrl
+  ) {
+    config.opts.currencyCoursesUrl = window.SO_currencyCoursesUrl
+  }
+
+  if (window
     && window.SO_disableInternalWallet
   ) {
     config.opts.ui.disableInternalWallet = window.SO_disableInternalWallet
