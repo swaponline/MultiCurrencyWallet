@@ -88,7 +88,8 @@ const externalConfig = () => {
       footerDisabled: false,
       farmLink: false, // use default link #/marketmaker
       bannersSource: 'https://noxon.wpmix.net/swapBanners/banners.php',
-      disableInternalWallet: false
+      disableInternalWallet: false,
+      disableBitcoin2FA: true
     },
   }
 

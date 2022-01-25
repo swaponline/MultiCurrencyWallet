@@ -5,6 +5,7 @@ import reducers from 'redux/core/reducers'
 
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { isMobile } from 'react-device-detect'
+import config from 'helpers/externalConfig'
 
 import actions from 'redux/actions'
 import { constants } from 'helpers'
@@ -183,26 +184,28 @@ const SecondStep = (props) => {
         feedback.createWallet.securitySelected(`${currencyName}-normal`)
       },
     },
-    {
-      text: 'PIN',
-      name: 'pin',
-      capture: {
-        en: 'Verify your transactions via PIN code',
-        ru: 'Транзакции подтверждаются PIN-кодом',
-        nl: 'Verifieer uw transacties via PIN code',
-        es: 'Verifique sus transacciones mediante el código PIN',
-        pl: 'Zweryfikuj swoje transakcje za pomocą kodu PIN',
-      }[locale],
-      enabled: _protection.pin[currencyKey],
-      activated: _activated.pin[currencyKey],
-      onClickHandler: () => {
-        if (isPinFeatureAsked) {
-          return null
-        }
-        setPinFeatureAsked(true)
-        feedback.createWallet.securitySelected(`${currencyName}-pin`)
-      },
-    },
+    ...(config.opts.ui.disableBitcoin2FA) ? [] : [
+      {
+        text: 'PIN',
+        name: 'pin',
+        capture: {
+          en: 'Verify your transactions via PIN code',
+          ru: 'Транзакции подтверждаются PIN-кодом',
+          nl: 'Verifieer uw transacties via PIN code',
+          es: 'Verifique sus transacciones mediante el código PIN',
+          pl: 'Zweryfikuj swoje transakcje za pomocą kodu PIN',
+        }[locale],
+        enabled: _protection.pin[currencyKey],
+        activated: _activated.pin[currencyKey],
+        onClickHandler: () => {
+          if (isPinFeatureAsked) {
+            return null
+          }
+          setPinFeatureAsked(true)
+          feedback.createWallet.securitySelected(`${currencyName}-pin`)
+        },
+      }
+    ],
     /*
     {
       text: 'Google 2FA',
