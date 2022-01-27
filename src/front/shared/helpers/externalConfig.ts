@@ -88,8 +88,39 @@ const externalConfig = () => {
       footerDisabled: false,
       farmLink: false, // use default link #/marketmaker
       bannersSource: 'https://noxon.wpmix.net/swapBanners/banners.php',
-      disableInternalWallet: false
+      disableInternalWallet: false,
+      faq: {
+        before: [/*
+          {
+            title: 'Faq title before 1',
+            content: 'Faq 1 content'
+          },
+          {
+            title: 'Faq title before 2',
+            content: 'Faq 2 content'
+          }
+        */],
+        after: [/*
+          {
+            title: 'Faq title after',
+            content: 'Faq content'
+          }
+        */]
+      }
     },
+  }
+
+  if (window
+    && window.SO_FaqBeforeTabs
+    && window.SO_FaqBeforeTabs.length
+  ) {
+    config.opts.ui.faq.before = window.SO_FaqBeforeTabs
+  }
+  if (window
+    && window.SO_FaqAfterTabs
+    && window.SO_FaqAfterTabs.length
+  ) {
+    config.opts.ui.faq.after = window.SO_FaqAfterTabs
   }
 
   if (window

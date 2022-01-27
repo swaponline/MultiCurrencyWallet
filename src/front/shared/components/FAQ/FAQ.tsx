@@ -16,23 +16,52 @@ const NETWORK = process.env.MAINNET
   ? 'MAINNET'
   : 'TESTNET'
 
+const hasOwnBeforeTabs = (config?.opts?.ui?.faq?.before && (config.opts.ui.faq.before.length > 0))
+const hasOwnAfterTabs = (config?.opts?.ui?.faq?.after && (config.opts.ui.faq.after.length > 0))
+
+const beforeTabs = {}
+const beforeTabsIds = {}
+if (hasOwnBeforeTabs) {
+  config.opts.ui.faq.before.map((tabData, tabIndex) => {
+    beforeTabs[`BEFORE_TAB_${tabIndex}`] = false
+    beforeTabsIds[`BEFORE_TAB_${tabIndex}`] = `MainFaq_Before_${tabIndex}_header`
+  })
+}
+
+const afterTabs = {}
+const afterTabsIds = {}
+if (hasOwnAfterTabs) {
+  config.opts.ui.faq.after.map((tabData, tabIndex) => {
+    afterTabs[`AFTER_TAB_${tabIndex}`] = false
+    afterTabsIds[`AFTER_TAB_${tabIndex}`] = `MainFaq_After_${tabIndex}_header`
+  })
+}
+
 const tabsIdsDictionary = {
+  ...beforeTabsIds,
   FIRST_TAB: 'MainFAQ1_header',
   SECOND_TAB: 'MainFAQ2_header',
   THIRD_TAB: 'MainFAQ3_header',
+  ...afterTabsIds,
 }
+
 
 const FAQ = function (props) {
   const { intl: { formatMessage } } = props
   const [tabsVisibility, setTabsVisibility] = useState({
+    ...beforeTabs,
     FIRST_TAB: false,
     SECOND_TAB: false,
     THIRD_TAB: false,
+    ...afterTabs,
   })
+
   const [openedTabs, setOpenedTabs] = useState({
+    ...beforeTabs,
     FIRST_TAB: false,
     SECOND_TAB: false,
     THIRD_TAB: false,
+    ...afterTabs,
   })
 
   const handleTabClick = (tabName) => {
@@ -160,12 +189,39 @@ const FAQ = function (props) {
     },
   ]
 
+  const renderTabs = (tabsData, prefix) => {
+    return tabsData.map((tabData, tabIndex) => {
+      return (
+        <article className={styles.tab}>
+          <span className={styles.tab__header} onClick={() => handleTabClick(`${prefix}_TAB_${tabIndex}`)}>
+            <div className={cx({
+              [styles.chrest]: true,
+              [styles.chrest_active]: tabsVisibility[`${prefix}_TAB_${tabIndex}`],
+            })} />
+            {tabData.title}
+          </span>
+          <div className={cx({
+            [styles.tab__content]: true,
+            [styles.tab__content_active]: tabsVisibility[`${prefix}_TAB_${tabIndex}`],
+          })}>
+            {tabData.content}
+          </div>
+        </article>
+      )
+    })
+  }
+
   return (
     <div className={`${styles.faQuestions}`}>
       <h5 className={styles.faQuestions__header}>
         <FormattedMessage id="MainFAQHeader" defaultMessage="FAQ" />
       </h5>
       <div className={styles.faQuestions__tabsContainer}>
+        {hasOwnBeforeTabs && (
+          <>
+            {renderTabs(config.opts.ui.faq.before, `BEFORE`)}
+          </>
+        )}
         {!disableInternalWallet && (
           <article className={styles.tab}>
             <span className={styles.tab__header} onClick={() => handleTabClick('FIRST_TAB')}>
@@ -338,6 +394,11 @@ const FAQ = function (props) {
             </p>
           </div>
         </article>
+        {hasOwnAfterTabs && (
+          <>
+            {renderTabs(config.opts.ui.faq.after, `AFTER`)}
+          </>
+        )}
       </div>
     </div>
   )
