@@ -95,6 +95,7 @@ export const initialState = {
     balanceError: null,
     infoAboutCurrency: null,
   },
+  /*
   usdtData: {
     address: '0x0', // ? for what
     publicKey: '0x0', // ?
@@ -104,6 +105,7 @@ export const initialState = {
     fullName: 'Tether',
     balanceError: null,
   },
+  */
   tokensData: {},
   isFetching: false,
   isBalanceFetching: false,
