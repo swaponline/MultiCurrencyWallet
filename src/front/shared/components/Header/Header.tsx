@@ -253,7 +253,8 @@ class Header extends Component<any, any> {
     const allData = actions.core.getWallets({})
     const widgetCurrencies = user.getWidgetCurrencies()
 
-    let userCurrencies = allData.filter(({ currency, address, balance }) => {
+    let userCurrencies = allData.filter(({ currency: baseCurrency, isToken, tokenKey, address, balance }) => {
+      const currency = ((isToken) ? tokenKey : baseCurrency).toUpperCase()
       return (
         (!hiddenCoinsList.includes(currency) &&
           !hiddenCoinsList.includes(`${currency}:${address}`)) ||
@@ -263,10 +264,15 @@ class Header extends Component<any, any> {
 
     if (isWidgetBuild) {
       userCurrencies = allData.filter(
-        ({ currency, address }) =>
-          !hiddenCoinsList.includes(currency) && !hiddenCoinsList.includes(`${currency}:${address}`)
+        ({ currency: baseCurrency, isToken, tokenKey, address }) => {
+          const currency = ((isToken) ? tokenKey : baseCurrency).toUpperCase()
+          return !hiddenCoinsList.includes(currency) && !hiddenCoinsList.includes(`${currency}:${address}`)
+        }
       )
-      userCurrencies = userCurrencies.filter(({ currency }) => widgetCurrencies.includes(currency))
+      userCurrencies = userCurrencies.filter(({ currency: baseCurrency, isToken, tokenKey }) => {
+        const currency = ((isToken) ? tokenKey : baseCurrency).toUpperCase()
+        return widgetCurrencies.includes(currency)
+      })
     }
 
     userCurrencies = user.filterUserCurrencyData(userCurrencies)
