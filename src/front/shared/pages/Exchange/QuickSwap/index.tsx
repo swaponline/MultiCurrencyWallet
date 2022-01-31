@@ -307,7 +307,8 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       })
     }
 
-    const spendedCurrency = currencies[0]
+    const availableWallets = actions.core.getWallets({ withInternal: true, withoutExternal: true })
+    const spendedCurrency = currencies.find((item) => item.name === availableWallets[0]?.currency)
     let receivedList = this.returnReceivedList(currencies, spendedCurrency)
 
     // user doesn't have enough tokens in the wallet. Show a notice about it

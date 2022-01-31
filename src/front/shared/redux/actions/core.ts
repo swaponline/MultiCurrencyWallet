@@ -427,10 +427,8 @@ const getWallet = (params: GetWalletParams) => {
       && wallet.currency.toLowerCase() === currency.toLowerCase()
       && (blockchain ? currencyData?.toLowerCase() === wallet.tokenKey : true)
 
-    if (address) {
-      if (wallet.address.toLowerCase() === address.toLowerCase()) {
-        return conditionOk
-      }
+    if (address && wallet.address.toLowerCase() === address.toLowerCase()) {
+      return conditionOk
     }
 
     if (addressType) {
@@ -459,7 +457,7 @@ const getWallet = (params: GetWalletParams) => {
 }
 
 const getWallets = (options: IUniversalObj = {}) => {
-  const { withInternal } = options
+  const { withInternal, withoutExternal } = options
 
   const onlyEvmWallets = (config?.opts?.ui?.disableInternalWallet) ? true : false
 
@@ -576,7 +574,7 @@ const getWallets = (options: IUniversalObj = {}) => {
     ...data,
   }))
 
-  const data = allData.filter((item) => item?.address && item?.currency)
+  const data = allData.filter((item) => item?.address && item?.currency && withoutExternal ? !item.isMetamask : true)
 
   return (config && config.isWidget) ? sortWallets(data) : data
 }
