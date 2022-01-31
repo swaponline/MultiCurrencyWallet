@@ -33,20 +33,28 @@ const filterCurrencies = (params) => {
     const currency = COIN_DATA[item.name]
     let isCurrencySuitable = false
     let itemChain
+    let baseCurrency
 
     if (item.standard) {
       const { blockchain } = getCoinInfo(item.value)
 
       if (blockchain) {
+        // blockchain is a currency symbol. Need to rename 
+        baseCurrency = blockchain
         itemChain = externalConfig.evmNetworks[blockchain.toUpperCase()].networkVersion
       }
     } else {
+      baseCurrency = item.blockchain
       itemChain =
         currency?.model === COIN_MODEL.AB &&
         externalConfig.evmNetworks[currency.ticker].networkVersion
     }
 
-    isCurrencySuitable = !!oneinch.blockchains[itemChain] && (item.standard || !onlyTokens)
+    const enabled = externalConfig.opts.curEnabled[baseCurrency?.toLowerCase()]
+    // we accept only a boolean type. Allow this asset if we don't have it in the config
+    const accepted = enabled === undefined || enabled
+
+    isCurrencySuitable = accepted && !!oneinch.blockchains[itemChain] && (item.standard || !onlyTokens)
 
     // connected metamask allows only one chain
     const suitableForNetwork = metamask.isConnected()
