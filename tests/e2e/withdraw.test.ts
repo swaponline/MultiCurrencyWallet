@@ -8,7 +8,7 @@ import {
   testWallets,
 } from './utils'
 
-jest.setTimeout(200_000) // ms
+jest.setTimeout(260_000) // ms
 
 describe('Withdraw form tests', () => {
   let testBrowser: puppeteer.Browser | undefined
@@ -25,6 +25,7 @@ describe('Withdraw form tests', () => {
     await importWallet({
       page: testPage,
       seed: arrOfWords,
+      timeout: 80_000,
     })
 
     await page.waitForSelector('#sendBtn')
