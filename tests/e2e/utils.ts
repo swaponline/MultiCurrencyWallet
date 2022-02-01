@@ -81,7 +81,9 @@ export const importWallet = async (params: ImportWalletParams) => {
 
   await page.click('#walletRecoveryButton')
 
-  await page.waitForSelector('#finishWalletRecoveryButton')
+  await page.waitForSelector('#finishWalletRecoveryButton', {
+    timeout,
+  })
 
   await page.click('#finishWalletRecoveryButton')
 }

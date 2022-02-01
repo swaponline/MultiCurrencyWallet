@@ -11,7 +11,7 @@ import {
   testWallets,
 } from './utils'
 
-jest.setTimeout(270_000)
+jest.setTimeout(330_000)
 
 describe('Prepare to swap e2e tests', () => {
   function getExchangeUrl(sourceUrl) {
@@ -91,10 +91,12 @@ describe('Prepare to swap e2e tests', () => {
       await importWallet({
         page: MakerPage,
         seed: testWallets.btcToEthTokenMMaker.seedPhrase.split(' '),
+        timeout: 60_000,
       })
       await importWallet({
         page: TakerPage,
         seed: testWallets.btcToEthTokenMTaker.seedPhrase.split(' '),
+        timeout: 60_000,
       })
 
       await MakerPage.waitForSelector('#btcAddress') // waits for Maker wallet to load

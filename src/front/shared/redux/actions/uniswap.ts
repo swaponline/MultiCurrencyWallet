@@ -46,7 +46,7 @@ const wrapCurrency = (chainId: number, currencyAddress: string) => {
 const getContract = (params: GetContractParams) => {
   const { name, address, baseCurrency } = params
 
-  return ethLikeHelper[baseCurrency.toLowerCase()]?.getContract({
+  return ethLikeHelper[baseCurrency?.toLowerCase()]?.getContract({
     abi: ABIS[name],
     address,
   })
