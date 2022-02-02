@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 import CSSModules from 'react-css-modules'
-import { localStorage, constants, links } from 'helpers'
+import { localStorage, constants, links, externalConfig } from 'helpers'
 import styles from './index.scss'
 import QuickSwap from './QuickSwap'
 import AtomicSwap from './AtomicSwap'
@@ -19,13 +19,20 @@ const GlobalModes = {
 const Exchange = function (props) {
   const { location, history } = props
 
+  const noNetworks = !Object.values(externalConfig.enabledEvmNetworks).length
+
   const validMode = globalMode && GlobalModes[globalMode]
-  const showOnlyOneType = validMode === GlobalModes.only_atomic || validMode === GlobalModes.only_quick
+  let showOnlyOneType = validMode === GlobalModes.only_atomic || validMode === GlobalModes.only_quick
 
   const exchangeSettings = localStorage.getItem(constants.localStorage.exchangeSettings) || {}
   let initialState = location.pathname.match(/\/exchange\/quick/) ? 'quick' : 'atomic'
 
-  if (showOnlyOneType) {
+  if (noNetworks) {
+    showOnlyOneType = true
+    initialState = GlobalModes.atomic
+    exchangeSettings.swapMode = initialState
+    localStorage.setItem(constants.localStorage.exchangeSettings, exchangeSettings)
+  } else if (showOnlyOneType) {
     // and hide tabs next
     initialState = globalMode.replace(/only_/, '')
   } else if (validMode && location.pathname === '/exchange') {
@@ -92,7 +99,7 @@ const Exchange = function (props) {
         </div>
       )}
 
-      {swapMode === 'quick' && (
+      {swapMode === 'quick' && !noNetworks && (
         <div styleName="container">
           {/* pass props from this component into the components
         because there has to be "url" props like match, location, etc.

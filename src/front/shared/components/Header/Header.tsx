@@ -447,7 +447,9 @@ class Header extends Component<any, any> {
           {!isMobile && <Nav menu={menuItems} />}
         </div>
         <div styleName="rightArea">
-          {!config.isExtension && <WalletConnect />}
+          {!config.isExtension && Object.values(config.enabledEvmNetworks).length ? (
+            <WalletConnect />
+          ) : null}
 
           {window.WPSO_selected_theme !== 'only_light' && window.WPSO_selected_theme !== 'only_dark' && (
             <ThemeSwitcher onClick={this.handleToggleTheme} />

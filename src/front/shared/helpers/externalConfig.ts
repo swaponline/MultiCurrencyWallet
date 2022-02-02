@@ -241,6 +241,17 @@ const externalConfig = () => {
     config.opts.blockchainSwapEnabled.xdai = false
   }
 
+  config.enabledEvmNetworks = Object.keys(config.evmNetworks)
+    .filter((key) => config.opts.curEnabled[key.toLowerCase()])
+    .reduce((acc, key) => {
+      acc[key] = config.evmNetworks[key]
+
+      return acc
+    }, {})
+
+  config.enabledEvmNetworkVersions = Object.values(config.enabledEvmNetworks).map(
+    (info: { networkVersion: number }) => info.networkVersion
+  )
 
   // Plugins
   if (window
