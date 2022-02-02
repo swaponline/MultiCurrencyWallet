@@ -28,7 +28,7 @@ class Nav extends Component<NavProps, null> {
 
     return (
       <div styleName='nav'>
-        {beforeMenuItems && beforeMenuItems.length && (
+        {beforeMenuItems && beforeMenuItems.length > 0 && (
           <>
           {
             beforeMenuItems.map((item, index) => {
@@ -82,7 +82,7 @@ class Nav extends Component<NavProps, null> {
               );
             })}
         </Fragment>
-        {afterMenuItems && afterMenuItems.length && (
+        {afterMenuItems && afterMenuItems.length > 0 && (
           <>
           {
             afterMenuItems.map((item, index) => {
