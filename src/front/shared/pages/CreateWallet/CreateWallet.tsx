@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react'
+/* eslint-disable no-restricted-syntax */
+import { useState, useEffect } from 'react'
 import config from 'helpers/externalConfig'
 
 import CSSModules from 'react-css-modules'
-import styles from './CreateWallet.scss'
 import { connect } from 'redaction'
 import actions from 'redux/actions'
 import { FormattedMessage, useIntl } from 'react-intl'
@@ -14,20 +14,22 @@ import links from 'helpers/links'
 import metamask from 'helpers/metamask'
 import { localisedUrl } from 'helpers/locale'
 
-import StepsWrapper from './Steps/StepsWrapper'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 
-import { constants, localStorage, user } from 'helpers'
+import { constants, localStorage } from 'helpers'
 import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
 import web3Icons from 'images'
+import StepsWrapper from './Steps/StepsWrapper'
+import styles from './CreateWallet.scss'
 
-const noInternalWallet = (config?.opts?.ui?.disableInternalWallet) ? true : false
+const noInternalWallet = !!(config?.opts?.ui?.disableInternalWallet)
 
-const CreateWallet = (props) => {
+function CreateWallet(props) {
   const {
     history,
+    currencies: { items: allCurrencies },
     createWallet: { currencies, secure },
-    location: { pathname },
+    location: { pathname, hash },
     userData,
     core: { hiddenCoinsList },
   } = props
@@ -35,7 +37,6 @@ const CreateWallet = (props) => {
   const { locale } = useIntl()
 
   const forcedCurrency = pathname.split('/')[2]
-  const allCurrencies = props.currencies.items
 
   const {
     btcData,
@@ -86,7 +87,7 @@ const CreateWallet = (props) => {
   }
 
   const handleClick = () => {
-    //@ts-ignore: strictNullChecks
+    // @ts-ignore: strictNullChecks
     setError(null)
     if (step !== 2 && !forcedCurrencyData) {
       reducers.createWallet.newWalletData({ type: 'step', data: step + 1 })
@@ -101,7 +102,7 @@ const CreateWallet = (props) => {
   }
 
   const validate = () => {
-    //@ts-ignore: strictNullChecks
+    // @ts-ignore: strictNullChecks
     setError(null)
 
     if (!Object.values(currencies).includes(true) && step === 1) {
@@ -109,7 +110,7 @@ const CreateWallet = (props) => {
       return
     }
 
-    const isIgnoreSecondStep = !Object.keys(currencies).includes('BTC')
+    const isIgnoreSecondStep = !Object.keys(currencies).includes('BTC') || (Object.keys(currencies).includes('BTC') && hash !== '#pin')
     const tokenStandards = Object.keys(TOKEN_STANDARDS).map((key) => TOKEN_STANDARDS[key])
 
     for (const standardObj of tokenStandards) {
@@ -225,7 +226,7 @@ const CreateWallet = (props) => {
   let forcedCurrencyData
 
   if (forcedCurrency) {
-    forcedCurrencyData = allCurrencies.find(({ name, standard, value }) => (standard ? value.toUpperCase() : name ) === forcedCurrency.toUpperCase())
+    forcedCurrencyData = allCurrencies.find(({ name, standard, value }) => (standard ? value.toUpperCase() : name) === forcedCurrency.toUpperCase())
     if (forcedCurrencyData) {
       currencies[forcedCurrency.toLowerCase()] = true
     }
@@ -250,7 +251,8 @@ const CreateWallet = (props) => {
 
       <div styleName={isMobile ? 'mobileFormBody' : 'formBody'}>
         <h2>
-          <FormattedMessage id="createWalletHeader1" defaultMessage="Создание кошелька" />{' '}
+          <FormattedMessage id="createWalletHeader1" defaultMessage="Создание кошелька" />
+          {' '}
           {forcedCurrency && forcedCurrency.toUpperCase()}
         </h2>
         <div styleName="buttonWrapper">
@@ -266,16 +268,14 @@ const CreateWallet = (props) => {
                     id="ImportKeys_RestoreMnemonic_Tooltip"
                     defaultMessage="12-word backup phrase"
                   />
-                  <React.Fragment>
-                    <br />
-                    <br />
-                    <div styleName="alertTooltipWrapper">
-                      <FormattedMessage
-                        id="ImportKeys_RestoreMnemonic_Tooltip_withBalance"
-                        defaultMessage="Please, be causious!"
-                      />
-                    </div>
-                  </React.Fragment>
+                  <br />
+                  <br />
+                  <div styleName="alertTooltipWrapper">
+                    <FormattedMessage
+                      id="ImportKeys_RestoreMnemonic_Tooltip_withBalance"
+                      defaultMessage="Please, be causious!"
+                    />
+                  </div>
                 </span>
               </Tooltip>
             </div>
@@ -307,6 +307,7 @@ const CreateWallet = (props) => {
           setError={setError}
           btcData={btcData}
           currenciesForSecondStep={currencies}
+          showPinContent={hash === '#pin'}
         />
       </div>
     </div>

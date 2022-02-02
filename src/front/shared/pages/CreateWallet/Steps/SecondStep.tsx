@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
 import CSSModules from 'react-css-modules'
-import styles from '../CreateWallet.scss'
 import reducers from 'redux/core/reducers'
 
 import { FormattedMessage, injectIntl } from 'react-intl'
@@ -9,6 +8,9 @@ import { isMobile } from 'react-device-detect'
 import actions from 'redux/actions'
 import { constants } from 'helpers'
 import feedback from 'shared/helpers/feedback'
+import Button from 'components/controls/Button/Button'
+
+import styles from '../CreateWallet.scss'
 import Explanation from '../Explanation'
 import icons from '../images'
 import Cupture, {
@@ -17,16 +19,14 @@ import Cupture, {
   cupture2,
 } from './texts'
 
-import Button from 'components/controls/Button/Button'
-
-const SecondStep = (props) => {
-  const { 
-    intl: { locale }, 
-    onClick, 
-    currencies, 
-    error, 
-    setError, 
-    forcedCurrencyData, 
+function SecondStep(props) {
+  const {
+    intl: { locale },
+    onClick,
+    currencies,
+    error,
+    setError,
+    forcedCurrencyData,
     btcData,
   } = props
 
@@ -48,27 +48,27 @@ const SecondStep = (props) => {
   }
 
   const { hiddenCoinsList } = constants.localStorage
-  //@ts-ignore: strictNullChecks
+  // @ts-ignore: strictNullChecks
   const hiddenCoins = JSON.parse(localStorage.getItem(hiddenCoinsList))
 
   if (currencies.BTC) {
-    //@ts-ignore
+    // @ts-ignore
     _protection.pin.btc = true
-    //@ts-ignore
+    // @ts-ignore
     _protection.g2fa.btc = false
-    //@ts-ignore
+    // @ts-ignore
     _protection.multisign.btc = true
-    //@ts-ignore
+    // @ts-ignore
     _protection.fingerprint.btc = true
-    //@ts-ignore
+    // @ts-ignore
     _activated.nothing.btc = btcData.balance > 0 || (hiddenCoins.length ? !hiddenCoins.includes('BTC') && !hiddenCoins.includes(`BTC:${btcData.address}`) : false)
-    //@ts-ignore
+    // @ts-ignore
     _activated.pin.btc = actions.btcmultisig.checkPINActivated()
-    //@ts-ignore
+    // @ts-ignore
     _activated.g2fa.btc = actions.btcmultisig.checkG2FAActivated()
-    //@ts-ignore
+    // @ts-ignore
     _activated.multisign.btc = actions.btcmultisig.checkUserActivated()
-    //@ts-ignore
+    // @ts-ignore
     _activated.fingerprint.btc = false
   }
 
@@ -94,13 +94,13 @@ const SecondStep = (props) => {
 
   useEffect(() => {
     try {
-      //@ts-ignore
+      // @ts-ignore
       if (typeof PublicKeyCredential !== 'undefined') {
         // eslint-disable-next-line no-undef
-        //@ts-ignore
+        // @ts-ignore
         if (thisComponentInitHelper.current && PublicKeyCredential) {
           // eslint-disable-next-line no-undef
-          //@ts-ignore
+          // @ts-ignore
           PublicKeyCredential
             .isUserVerifyingPlatformAuthenticatorAvailable()
             .then(result => {
@@ -269,13 +269,14 @@ const SecondStep = (props) => {
 
   return (
     <div>
-      {!isMobile && !forcedCurrencyData &&
-        <div>
-          <Explanation subHeaderText={subHeaderText1()} step={1} notMain>
-            <Cupture />
-          </Explanation>
-        </div>
-      }
+      {!isMobile && !forcedCurrencyData
+        && (
+          <div>
+            <Explanation subHeaderText={subHeaderText1()} step={1} notMain>
+              <Cupture />
+            </Explanation>
+          </div>
+        )}
       <div>
         <div>
           <Explanation subHeaderText={subHeaderText2()} step={2} isShow={forcedCurrencyData}>
@@ -304,12 +305,13 @@ const SecondStep = (props) => {
                   }}
                 >
                   <div styleName="ind">
-                    {(!enabled || activated) &&
-                      <em>
-                        {!activated && <FormattedMessage id="createWalletSoon" defaultMessage="Soon!" />}
-                        {activated && <FormattedMessage id="createWalletActivated" defaultMessage="Activated!" />}
-                      </em>
-                    }
+                    {(!enabled || activated)
+                      && (
+                        <em>
+                          {!activated && <FormattedMessage id="createWalletSoon" defaultMessage="Soon!" />}
+                          {activated && <FormattedMessage id="createWalletActivated" defaultMessage="Activated!" />}
+                        </em>
+                      )}
                   </div>
                   <div styleName="flex">
                     <div styleName="logo securityIcon">
