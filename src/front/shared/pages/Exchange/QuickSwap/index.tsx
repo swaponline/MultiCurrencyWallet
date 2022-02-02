@@ -337,7 +337,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     const { fromWallet } = this.state
 
     const feeOptsKey = fromWallet?.standard || fromWallet?.currency
-    const currentFeeOpts = externalConfig.opts.fee[feeOptsKey.toLowerCase()]
+    const currentFeeOpts = externalConfig.opts.fee[feeOptsKey?.toLowerCase()]
     const correctFeeRepresentation =
       !Number.isNaN(window?.zeroxFeePercent) &&
       window.zeroxFeePercent >= 0 &&
