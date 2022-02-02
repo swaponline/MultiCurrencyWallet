@@ -106,7 +106,16 @@ const externalConfig = () => {
             content: 'Faq content'
           }
         */]
-      }
+      },
+      menu: {
+        before: [/*
+          {
+            "title": "After",
+            "link": "https:\/\/google.com"
+          }
+        */],
+        after: []
+      },
     },
   }
 
@@ -121,6 +130,19 @@ const externalConfig = () => {
     && window.SO_FaqAfterTabs.length
   ) {
     config.opts.ui.faq.after = window.SO_FaqAfterTabs
+  }
+
+  if (window
+    && window.SO_MenuItemsBefore
+    && window.SO_MenuItemsBefore.length
+  ) {
+    config.opts.ui.menu.before = window.SO_MenuItemsBefore
+  }
+  if (window
+    && window.SO_MenuItemsAfter
+    && window.SO_MenuItemsAfter.length
+  ) {
+    config.opts.ui.menu.after = window.SO_MenuItemsAfter
   }
 
   if (window

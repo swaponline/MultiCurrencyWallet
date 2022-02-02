@@ -4,6 +4,9 @@ import CSSModules from 'react-css-modules'
 import { injectIntl } from 'react-intl'
 import styles from './Nav.scss'
 import { localisedUrl } from 'helpers/locale'
+import config from 'helpers/externalConfig'
+
+
 
 type NavProps = {
   menu: IUniversalObj[]
@@ -20,8 +23,31 @@ class Nav extends Component<NavProps, null> {
       intl: { locale },
     } = this.props
 
+    const beforeMenuItems = config.opts.ui.menu.before
+    const afterMenuItems = config.opts.ui.menu.after
+
     return (
       <div styleName='nav'>
+        {beforeMenuItems && beforeMenuItems.length > 0 && (
+          <>
+          {
+            beforeMenuItems.map((item, index) => {
+              const { title, link } = item
+              return (
+                <div styleName='mainMenu' key={index} className="data-tut-widget-tourFinish">
+                  <a
+                    href={link}
+                    target="_blank"
+                    styleName="link"
+                  >
+                    {title}
+                  </a>
+                </div>
+              )
+            })
+          }
+          </>
+        )}
         <Fragment>
           {menu
             .filter(i => i.isDesktop !== false)
@@ -56,6 +82,26 @@ class Nav extends Component<NavProps, null> {
               );
             })}
         </Fragment>
+        {afterMenuItems && afterMenuItems.length > 0 && (
+          <>
+          {
+            afterMenuItems.map((item, index) => {
+              const { title, link } = item
+              return (
+                <div styleName='mainMenu' key={index} className="data-tut-widget-tourFinish">
+                  <a
+                    href={link}
+                    target="_blank"
+                    styleName="link"
+                  >
+                    {title}
+                  </a>
+                </div>
+              )
+            })
+          }
+          </>
+        )}
       </div>
     );
   }
