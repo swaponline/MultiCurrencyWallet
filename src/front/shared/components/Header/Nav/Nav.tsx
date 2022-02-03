@@ -32,12 +32,12 @@ class Nav extends Component<NavProps, null> {
           <>
           {
             beforeMenuItems.map((item, index) => {
-              const { title, link } = item
+              const { title, link, newwindow } = item
               return (
                 <div styleName='mainMenu' key={index} className="data-tut-widget-tourFinish">
                   <a
                     href={link}
-                    target="_blank"
+                    target={(newwindow) ? `_blank` : `_self`}
                     styleName="link"
                   >
                     {title}
@@ -86,12 +86,12 @@ class Nav extends Component<NavProps, null> {
           <>
           {
             afterMenuItems.map((item, index) => {
-              const { title, link } = item
+              const { title, link, newwindow } = item
               return (
                 <div styleName='mainMenu' key={index} className="data-tut-widget-tourFinish">
                   <a
                     href={link}
-                    target="_blank"
+                    target={(newwindow) ? `_blank` : `_self`}
                     styleName="link"
                   >
                     {title}
