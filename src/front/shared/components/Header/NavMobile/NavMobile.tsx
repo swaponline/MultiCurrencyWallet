@@ -66,13 +66,13 @@ class NavMobile extends Component<NavProps, NavMobileState> {
           <div styleName={`navbar-dropmenu ${ownMenuShowed ? 'active' : ''}`}>
           {
             ownMenuItems.map((item, index) => {
-              const { title, link } = item
+              const { title, link, newwindow } = item
               return (
                 <a
                   onClick={this.hideOwnMenu.bind(this)}
                   href={link}
                   key={index}
-                  target="_blank"
+                  target={(newwindow) ? `_blank` : `_self`}
                 >
                   {title}
                 </a>
