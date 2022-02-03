@@ -1677,7 +1677,7 @@
   },
   {
     "id": "HowItWorks26",
-    "message": "2. "교환"을 클릭합니다.",
+    "message": "2. \"교환\"을 클릭합니다.",
     "files": [
       "src/front/shared/pages/Exchange/HowItWorks/HowItWorks.tsx"
     ]
@@ -2012,8 +2012,7 @@
   },
   {
     "id": "tour-step-3",
-    "message": "우리의 독특한 P2P 교환은 아토믹 스왑 기술을 기반으로 만들어진 지갑에서 사용할 수 있습니다.
-당신은 우리의 지갑에 당신의 암호화폐를 넣을 수 있습니다.",
+    "message": "우리의 독특한 P2P 교환은 아토믹 스왑 기술을 기반으로 만들어진 지갑에서 사용할 수 있습니다. 당신은 우리의 지갑에 당신의 암호화폐를 넣을 수 있습니다.",
     "files": [
       "src/front/shared/components/Header/WalletTour/WalletTour.tsx"
     ]
@@ -4542,9 +4541,7 @@
   },
   {
     "id": "NetworkStatusPeersOnlineMessage",
-    "message": "구매자와 제공자를 매칭하는데 몇분의 시간이 걸립니다. 우리는 고객 정보를 중앙화된 서버에 저장하는 방식이 아닙니다. 대신 
-토렌토 네트워크처럼 P2P 네트워크를 사용합니다. 이것의 의미는 네트워크 안에서 각각의 유저들 자신이 PEER가 됩니다.
-만약 몇분동안, 제공자를 찾지 못한다면 해당 거래는 매칭이 되지 않습니다.",
+    "message": "구매자와 제공자를 매칭하는데 몇분의 시간이 걸립니다. 우리는 고객 정보를 중앙화된 서버에 저장하는 방식이 아닙니다. 대신 토렌토 네트워크처럼 P2P 네트워크를 사용합니다. 이것의 의미는 네트워크 안에서 각각의 유저들 자신이 PEER가 됩니다. 만약 몇분동안, 제공자를 찾지 못한다면 해당 거래는 매칭이 되지 않습니다.",
     "files": [
       "src/front/shared/components/NetworkStatus/NetworkStatus.tsx"
     ]
