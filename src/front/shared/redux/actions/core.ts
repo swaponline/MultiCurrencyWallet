@@ -496,7 +496,7 @@ const getWallets = (options: IUniversalObj = {}) => {
           )
     }
     return (coin && blockchain !== ``) ? tokensData[k] : false
-  }).filter((d) => d !== false)
+  }).filter((d) => d !== false && d.currency !== undefined)
 
   const allData = [
     ...(
