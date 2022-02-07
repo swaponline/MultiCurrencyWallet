@@ -48,9 +48,13 @@ HOST=X.X.X.X npm run dev
 
 6. Build for prod
 
+
+
 ```
 npm run build:mainnet https://yourcoolsite.com/
 ```
+(You don't need execute "npm run dev" before this command). 
+Done, your build is located in "mainnet-build" folder. just uplaod files to your hosting as static files. 
 
 (don't forget to add a slash in the end of url)
 
