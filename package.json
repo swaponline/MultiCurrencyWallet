@@ -130,7 +130,7 @@
     "cache-loader": "^4.1.0",
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
-    "chalk": "^4.1.0",
+    "chalk": "^5.0.0",
     "colors": "^1.4.0",
     "connect-history-api-fallback": "^1.6.0",
     "copy-webpack-plugin": "^10.0.0",
