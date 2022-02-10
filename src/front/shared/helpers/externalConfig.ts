@@ -85,7 +85,8 @@ const externalConfig = () => {
     activeFiat: 'USD',
     exchangeDisabled: false,
     ui: {
-      footerDisabled: false,
+      hideServiceLinks: false,
+      serviceLink: 'https://tools.onout.org/wallet',
       farmLink: false, // use default link #/marketmaker
       bannersSource: 'https://noxon.wpmix.net/swapBanners/banners.php',
       disableInternalWallet: false,
@@ -181,9 +182,9 @@ const externalConfig = () => {
   }
 
   if (window
-    && window._ui_footerDisabled
+    && window.hideServiceLinks
   ) {
-    config.opts.ui.footerDisabled = window._ui_footerDisabled
+    config.opts.ui.hideServiceLinks = window.hideServiceLinks
   }
 
   if (window
