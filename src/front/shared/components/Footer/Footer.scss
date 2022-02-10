@@ -38,12 +38,19 @@
   }
 }
 
-.version {
+.serviceLinks {
+  display: flex;
+  flex-direction: column;
   font-size: 14px;
   line-height: 1em;
+  text-align: center;
 
   > * {
     font-size: 11px;
+  }
+
+  span {
+    color: var(--color-notice);
   }
 
   a {
