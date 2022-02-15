@@ -54,7 +54,7 @@ HOST=X.X.X.X npm run dev
 npm run build:mainnet https://yourcoolsite.com/
 ```
 (You don't need execute "npm run dev" before this command). 
-Done, your build is located in "mainnet-build" folder. just uplaod files to your hosting as static files. 
+Done, your build is located in "mainnet-build" folder. just uplaod files to your hosting as static files. (for VPS - install nginx first, certbot for SSL)
 
 (don't forget to add a slash in the end of url)
 
