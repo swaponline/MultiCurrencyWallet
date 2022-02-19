@@ -10,7 +10,6 @@
 - ⚛️ P2P exchange – atomic swaps
 - 💡 Open-source, client-side
 - 📦 Embeddable into your site!
-- Marketmaker extention https://chrome.google.com/webstore/detail/multicurrencywallet/oldojieloelkkfeacfinhcngmbkepnlm
 - One-click WhiteLablel deply to AWS https://aws.amazon.com/marketplace/pp/prodview-jyrrj4txg5u3a
 
 Live demo here: 
