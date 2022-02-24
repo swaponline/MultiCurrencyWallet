@@ -44,6 +44,7 @@ const externalConfig = () => {
       matic: true,
       arbeth: true,
       xdai: true,
+      ftm: true,
       btc: true,
       ghost: true,
       next: true,
@@ -55,6 +56,7 @@ const externalConfig = () => {
       matic: false,
       arbeth: false,
       xdai: false,
+      ftm: false,
       ghost: true,
       next: true,
     },
@@ -262,6 +264,11 @@ const externalConfig = () => {
   if (window && window.CUR_XDAI_DISABLED === true) {
     config.opts.curEnabled.xdai = false
     config.opts.blockchainSwapEnabled.xdai = false
+  }
+
+  if (window && window.CUR_FTM_DISABLED === true) {
+    config.opts.curEnabled.ftm = false
+    config.opts.blockchainSwapEnabled.ftm = false
   }
 
   config.enabledEvmNetworks = Object.keys(config.evmNetworks)

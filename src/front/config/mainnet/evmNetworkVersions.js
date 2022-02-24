@@ -4,4 +4,5 @@ export default [
     137,    // MATIC Mainnet
     42161,  // ARBITRUM Mainnet
     100,    // XDAO Mainnet
+    250,    // FTM Mainnet
 ]

@@ -145,6 +145,16 @@ const initialState = {
       addAssets: true,
     }] : [],
     //@ts-ignore
+    ...(!buildOpts.curEnabled || buildOpts.curEnabled.ftm) ? [{
+      name: 'FTM',
+      title: 'FTM',
+      icon: 'ftm',
+      value: 'ftm',
+      fullTitle: 'ftm',
+      blockchain: BLOCKCHAIN_TYPE.FTM,
+      addAssets: true,
+    }] : [],
+    //@ts-ignore
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.ghost) ? [{
       name: 'GHOST',
       title: 'GHOST',
@@ -248,6 +258,14 @@ const initialState = {
       fullTitle: 'xdai',
     }] : [],
     //@ts-ignore
+    ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.ftm) ? [{
+      name: 'FTM',
+      title: 'FTM',
+      icon: 'ftm',
+      value: 'ftm',
+      fullTitle: 'fantom',
+    }] : [],
+    //@ts-ignore
     ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.ghost) ? [{
       name: 'GHOST',
       title: 'GHOST',
@@ -321,6 +339,14 @@ if (config.isWidget) {
       fullTitle: 'xdai',
     }] : [],
     //@ts-ignore
+    ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.ftm) ? [{
+      name: 'FTM',
+      title: 'FTM',
+      icon: 'ftm',
+      value: 'ftm',
+      fullTitle: 'fantom',
+    }] : [],
+    //@ts-ignore
     ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.btc) ? [{
       name: 'BTC',
       title: 'BTC',
@@ -386,6 +412,14 @@ if (config.isWidget) {
       icon: 'xdai',
       value: 'xdai',
       fullTitle: 'xdai',
+    }] : [],
+    //@ts-ignore
+    ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.ftm) ? [{
+      name: 'FTM',
+      title: 'FTM',
+      icon: 'ftm',
+      value: 'ftm',
+      fullTitle: 'fantom',
     }] : [],
     //@ts-ignore
     ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.btc) ? [{

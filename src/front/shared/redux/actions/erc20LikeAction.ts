@@ -686,4 +686,13 @@ export default {
     adminFeeObj: externalConfig.opts?.fee?.erc20xdai,
     web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.xdai_provider)),
   }),
+  erc20ftm: new Erc20LikeAction({
+    currency: 'FTM',
+    standard: 'erc20ftm',
+    explorerName: 'ftmscan',
+    explorerLink: externalConfig.link.ftmscan,
+    explorerApiKey: externalConfig.api.ftm_ApiKey,
+    adminFeeObj: externalConfig.opts?.fee?.erc20ftm,
+    web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.ftm_provider)),
+  }),
 }

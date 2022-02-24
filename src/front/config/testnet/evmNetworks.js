@@ -42,4 +42,12 @@ export default {
     rpcUrls: [web3.xdai_provider],
     blockExplorerUrls: [link.xdai]
   },
+  FTM: {
+    currency: 'FTM',
+    chainId: '0xfa2',
+    networkVersion: 4002,
+    chainName: 'Fantom Testnet',
+    rpcUrls: [web3.ftm_provider],
+    blockExplorerUrls: [link.ftm],
+  },
 }

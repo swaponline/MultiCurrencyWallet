@@ -6,6 +6,7 @@ export const initialState = {
     matic: false,
     arbeth: false,
     xdai: false,
+    ftm: false,
     ghost: false,
     next: false,
     '{eth}usdt': false,

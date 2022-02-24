@@ -6,6 +6,7 @@ import bnb from './bnb'
 import matic from './matic'
 import arbeth from './arbeth'
 import xdai from './xdai'
+import ftm from './ftm'
 import ethToken from './ethToken'
 import * as user from './user'
 import web3 from './web3'
@@ -57,6 +58,7 @@ export default {
   matic,
   arbeth,
   xdai,
+  ftm,
   ghost,
   next,
   ethToken,
@@ -74,6 +76,7 @@ export {
   matic,
   arbeth,
   xdai,
+  ftm,
   ghost,
   next,
   ethToken,

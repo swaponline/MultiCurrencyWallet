@@ -4,7 +4,7 @@ import { getState } from 'redux/core'
 import SwapApp from 'swap.app'
 import Swap from 'swap.swap'
 import getCoinInfo from 'common/coins/getCoinInfo'
-import { constants, xdai } from 'helpers'
+import helpers, { constants } from 'helpers'
 import Pair from 'pages/Exchange/Orders/Pair'
 import config from 'helpers/externalConfig'
 import { BigNumber } from 'bignumber.js'
@@ -12,7 +12,6 @@ import { BigNumber } from 'bignumber.js'
 import metamask from 'helpers/metamask'
 import { AddressType } from 'domain/address'
 
-import helpers from 'helpers'
 import TOKEN_STANDARDS from 'helpers/constants/TOKEN_STANDARDS'
 
 
@@ -171,6 +170,7 @@ const deletedPartialCurrency = (orderId) => {
     'MATIC', 
     'ARBETH', 
     'XDAI',
+    'FTM',
     'GHOST', 
     'NEXT', 
     'SWAP',
@@ -474,6 +474,7 @@ const getWallets = (options: IUniversalObj = {}) => {
       maticData,
       arbethData,
       xdaiData,
+      ftmData,
       tokensData,
       metamaskData,
     },
@@ -500,12 +501,13 @@ const getWallets = (options: IUniversalObj = {}) => {
 
   const allData = [
     ...(
-      !enabledCurrencies ||
-      enabledCurrencies.eth ||
-      enabledCurrencies.bnb ||
-      enabledCurrencies.matic ||
-      enabledCurrencies.arbeth ||
-      enabledCurrencies.xdai
+      !enabledCurrencies
+      || enabledCurrencies.eth
+      || enabledCurrencies.bnb
+      || enabledCurrencies.matic
+      || enabledCurrencies.arbeth
+      || enabledCurrencies.xdai
+      || enabledCurrencies.ftm
         ? metamaskData
           ? [metamaskData]
           : []
@@ -565,6 +567,14 @@ const getWallets = (options: IUniversalObj = {}) => {
           ? [xdaiData]
           : []
         : [xdaiData]
+      : []),
+    // =====================================
+    ...(!enabledCurrencies || enabledCurrencies.ftm
+      ? metamaskConnected
+        ? withInternal
+          ? [ftmData]
+          : []
+        : [ftmData]
       : []),
     // =====================================
     ...((!enabledCurrencies || enabledCurrencies.ghost) && !onlyEvmWallets ? [ghostData] : []),

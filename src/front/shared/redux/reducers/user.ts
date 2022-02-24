@@ -55,6 +55,14 @@ export const initialState = {
     balanceError: null,
     infoAboutCurrency: null,
   },
+  ftmData: {
+    balance: 0,
+    isBalanceFetched: false,
+    currency: 'FTM',
+    fullName: 'Fantom',
+    balanceError: null,
+    infoAboutCurrency: null,
+  },
   btcData: {
     balance: 0,
     isBalanceFetched: false,

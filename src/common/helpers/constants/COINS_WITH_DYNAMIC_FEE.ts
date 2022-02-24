@@ -1,4 +1,4 @@
-/* 
+/*
 * Dinamic fee because the price changes globally
 * Transfer amount does not affect it
 */
@@ -8,6 +8,7 @@ export default [
   'matic',
   'arbeth',
   'xdai',
+  'ftm',
   'btc',
   'ghost',
   'next',

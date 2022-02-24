@@ -7,6 +7,7 @@ export default {
     currency: 'eth',
     explorerApi: config.api.etherscan,
     explorerApiKey: config.api.etherscan_ApiKey,
+    hasSupportAtomicSwap: true,
   },
   bep20: {
     platform: 'binance smart chain',
@@ -14,6 +15,7 @@ export default {
     currency: 'bnb',
     explorerApi: config.api.bscscan,
     explorerApiKey: config.api.bscscan_ApiKey,
+    hasSupportAtomicSwap: true,
   },
   erc20matic: {
     platform: 'ethereum',
@@ -21,6 +23,7 @@ export default {
     currency: 'matic',
     explorerApi: config.api.maticscan,
     explorerApiKey: config.api.polygon_ApiKey,
+    hasSupportAtomicSwap: true,
   },
   erc20xdai: {
     platform: 'ethereum',
@@ -28,5 +31,14 @@ export default {
     currency: 'xdai',
     explorerApi: '',
     explorerApiKey: '',
+    hasSupportAtomicSwap: false,
+  },
+  erc20ftm: {
+    platform: 'ethereum',
+    standard: 'erc20ftm',
+    currency: 'ftm',
+    explorerApi: config.api.ftmscan,
+    explorerApiKey: config.api.ftm_ApiKey,
+    hasSupportAtomicSwap: false,
   },
 }
