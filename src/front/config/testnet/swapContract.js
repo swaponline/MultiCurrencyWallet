@@ -18,5 +18,7 @@ export default {
   sushiswapFactory: '0xc35DADB65012eC5796536bD9864eD8773aBc74C4',
   honeyswapRouter: '0x2d26D82ffc081a1fD70f06703276EB578202C235', // xDai sokol testnet
   honeyswapFactory: '0x04ad4Ce6015141F6f582A7451Cb7CD6866609298',
+  spiritSwapRouter: '', // FTM testnet
+  spiritSwapFactory: '',
   affiliateAddress: '0x873351e707257C28eC6fAB1ADbc850480f6e0633',
 }

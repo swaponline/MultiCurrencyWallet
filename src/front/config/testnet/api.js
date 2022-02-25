@@ -25,6 +25,8 @@ export default {
   bscscan_ApiKey: 'WI4QEJSV19U3TF2H1DPQ2HR6712HW4MYKJ',
   maticscan: 'https://api-testnet.polygonscan.com/api',
   polygon_ApiKey: '8S2R45ZWG94HI7YK9RCXSK4VCASJ4XVA15',
+  ftmscan: 'https://api-testnet.ftmscan.com/api',
+  ftm_ApiKey: 'J39MXI2KQ7YWFR3JGYHPVYK1MIH132QSXP',
   faucet: 'https://faucet.swaponline.site/testnet/',
   btc2FAProtected: 'https://2fa.swaponline.site',
   btcPin: 'https://2fapin.swaponline.site',

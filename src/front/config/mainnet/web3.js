@@ -4,4 +4,5 @@ export default {
   matic_provider: 'https://rpc-mainnet.maticvigil.com',
   arbitrum_provider: 'https://arb1.arbitrum.io/rpc',
   xdai_provider: 'https://rpc.xdaichain.com/',
+  ftm_provider: 'https://rpc.ftm.tools',
 }

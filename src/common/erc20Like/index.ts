@@ -164,4 +164,10 @@ export default {
     defaultParams: DEFAULT_CURRENCY_PARAMETERS.evmLikeToken,
     web3: new Web3(new Web3.providers.HttpProvider(config.web3.xdai_provider)),
   }),
+  erc20ftm: new erc20LikeHelper({
+    standard: 'erc20ftm',
+    currency: 'FTM',
+    defaultParams: DEFAULT_CURRENCY_PARAMETERS.evmLikeToken,
+    web3: new Web3(new Web3.providers.HttpProvider(config.web3.ftm_provider)),
+  }),
 }

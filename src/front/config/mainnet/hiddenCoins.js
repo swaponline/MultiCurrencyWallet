@@ -57,6 +57,7 @@ export default [
   'MATIC',
   'ARBETH',
   'XDAI',
+  'FTM',
   '{ETH}SWAP',
   '{ETH}HDP',
   '{ETH}USDT',

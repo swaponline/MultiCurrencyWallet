@@ -3,7 +3,6 @@ import erc20Like from 'common/erc20Like'
 import helpers from 'helpers'
 import actions from 'redux/actions'
 
-
 const getTokenBaseCurrency = (tokenKey) => {
   const baseCurrencyRegExp = /^\{[a-z]+\}/
   const baseTokenCurrencyPrefix = tokenKey.match(baseCurrencyRegExp)
@@ -51,6 +50,10 @@ const getLink = (currency, txHash) => {
     return actions.erc20xdai.getLinkToInfo(txHash)
   }
 
+  if (erc20Like.erc20ftm.isToken({ name: currency })) {
+    return actions.erc20ftm.getLinkToInfo(txHash)
+  }
+
   const prefix = helpers.getCurrencyKey(currency, false)
 
   if (actions[prefix]?.getLinkToInfo) {
@@ -81,6 +84,10 @@ const getInfo = (currency, txRaw): GetInfoResult => {
 
   if (erc20Like.erc20xdai.isToken({ name: currency })) {
     reduxAction = `erc20xdai`
+  }
+
+  if (erc20Like.erc20ftm.isToken({ name: currency })) {
+    reduxAction = `erc20ftm`
   }
 
   const info = {

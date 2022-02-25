@@ -8,4 +8,5 @@ export default {
   ghostscan: 'https://ghostscan.io',
   nextExplorer: 'https://explore.next.exchange',
   xdai: 'https://blockscout.com/xdai/mainnet',
+  ftmscan: 'https://ftmscan.com/',
 }

@@ -42,4 +42,12 @@ export default {
     rpcUrls: [web3.xdai_provider],
     blockExplorerUrls: [link.xdai],
   },
+  FTM: {
+    currency: 'FTM',
+    chainId: '0xfa',
+    networkVersion: 250,
+    chainName: 'Fantom',
+    rpcUrls: [web3.ftm_provider],
+    blockExplorerUrls: [link.ftm],
+  },
 }

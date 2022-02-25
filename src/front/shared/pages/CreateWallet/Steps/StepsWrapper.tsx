@@ -44,6 +44,9 @@ export default class StepsWrapper extends Component<any, any> {
       if (!curEnabled || curEnabled.xdai) {
         this.defaultStartPack.push({ name: 'XDAI', capture: 'xDai' })
       }
+      if (!curEnabled || curEnabled.ftm) {
+        this.defaultStartPack.push({ name: 'FTM', capture: 'Fantom' })
+      }
       if (!curEnabled || curEnabled.ghost) {
         this.defaultStartPack.push({ name: 'GHOST', capture: 'Ghost' })
       }
@@ -68,6 +71,7 @@ export default class StepsWrapper extends Component<any, any> {
         if (config.bep20) this.defaultStartPack.push({ name: 'BEP20', capture: 'Token', baseCurrency: 'BNB' })
         if (config.erc20matic) this.defaultStartPack.push({ name: 'ERC20MATIC', capture: 'Token', baseCurrency: 'MATIC' })
         if (config.erc20xdai) this.defaultStartPack.push({ name: 'ERC20XDAI', capture: 'Token', baseCurrency: 'XDAI' })
+        if (config.erc20ftm) this.defaultStartPack.push({ name: 'ERC20FTM', capture: 'Token', baseCurrency: 'FTM' })
       }
     }
 
@@ -144,6 +148,7 @@ export default class StepsWrapper extends Component<any, any> {
             || coinInfo === `CUSTOM_BEP20`
             || coinInfo === `CUSTOM_ERC20MATIC`
             || coinInfo === `CUSTOM_ERC20XDAI`
+            || coinInfo === `CUSTOM_ERC20FTM`
           ) {
             [customTokenType] = coinInfo.split(`_`)
             isCustomToken = true

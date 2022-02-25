@@ -15,6 +15,7 @@ export const API_NAME = {
   1: 'zeroxEthereum',
   56: 'zeroxBsc',
   137: 'zeroxPolygon',
+  250: 'zeroxFantom',
 }
 
 export const API_GAS_LIMITS = {
@@ -43,5 +44,10 @@ export const LIQUIDITY_SOURCE_DATA = {
     name: 'HoneySwap',
     router: config.swapContract.honeyswapRouter,
     factory: config.swapContract.honeyswapFactory,
+  },
+  [config.evmNetworks.FTM.networkVersion]: {
+    name: 'SpiritSwap',
+    router: config.swapContract.spiritSwapRouter,
+    factory: config.swapContract.spiritSwapFactory,
   },
 }

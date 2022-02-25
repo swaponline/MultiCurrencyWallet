@@ -32,6 +32,10 @@ export const getActivatedCurrencies = () => {
     currencies.push('XDAI')
   }
 
+  if (!externalConfig.opts.curEnabled || externalConfig.opts.curEnabled.ftm) {
+    currencies.push('FTM')
+  }
+
   if (!externalConfig.opts.curEnabled || externalConfig.opts.curEnabled.ghost) {
     currencies.push('GHOST')
   }
@@ -65,6 +69,7 @@ export const getWidgetCurrencies = () => {
     'MATIC',
     'ARBETH',
     'XDAI',
+    'FTM',
     'GHOST',
     'NEXT',
   ]

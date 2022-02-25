@@ -642,4 +642,15 @@ export default {
     adminFeeObj: externalConfig.opts?.fee?.xdai,
     web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.xdai_provider)),
   }),
+  FTM: new EthLikeAction({
+    coinName: 'Fantom',
+    ticker: 'FTM',
+    privateKeyName: 'eth',
+    chainId: externalConfig.evmNetworks.FTM.chainId,
+    explorerName: 'ftmscan',
+    explorerLink: externalConfig.link.ftmscan,
+    explorerApiKey: externalConfig.api.ftm_ApiKey,
+    adminFeeObj: externalConfig.opts?.fee?.ftm,
+    web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.ftm_provider)),
+  }),
 }

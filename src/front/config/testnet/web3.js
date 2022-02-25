@@ -4,4 +4,5 @@ export default {
   matic_provider: 'https://rpc-mumbai.maticvigil.com',
   arbitrum_provider: 'https://rinkeby.arbitrum.io/rpc',
   xdai_provider: 'https://sokol.poa.network',
+  ftm_provider: 'https://rpc.testnet.fantom.network/',
 }

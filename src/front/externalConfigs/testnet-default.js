@@ -39,6 +39,11 @@ window.widgetERC20Comisions = {
     address: '0x57d49704F453CdD2b995280d9D7F557E42847d82',
     min: '0,001',
   },
+  ftm: {
+    fee: '3',
+    address: '0x57d49704F453CdD2b995280d9D7F557E42847d82',
+    min: '0,001',
+  },
   erc20: {
     address: '0x276747801B0dbb7ba04685BA27102F1B27Ca0815',
   },
@@ -49,6 +54,9 @@ window.widgetERC20Comisions = {
     address: '0x276747801B0dbb7ba04685BA27102F1B27Ca0815',
   },
   erc20xdai: {
+    address: '0x276747801B0dbb7ba04685BA27102F1B27Ca0815',
+  },
+  erc20ftm: {
     address: '0x276747801B0dbb7ba04685BA27102F1B27Ca0815',
   },
 }
@@ -103,6 +111,7 @@ window.buildOptions = {
     matic: true,
     arbeth: true,
     xdai: true,
+    ftm: true,
     ghost: true,
     next: true,
   },
@@ -113,6 +122,7 @@ window.buildOptions = {
     matic: true,
     arbeth: false,
     xdai: false,
+    ftm: false,
     ghost: false,
     next: true,
   },
