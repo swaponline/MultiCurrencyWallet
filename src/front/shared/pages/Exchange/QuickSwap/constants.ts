@@ -15,6 +15,7 @@ export const API_NAME = {
   1: 'zeroxEthereum',
   56: 'zeroxBsc',
   137: 'zeroxPolygon',
+  250: 'zeroxFantom',
 }
 
 export const API_GAS_LIMITS = {

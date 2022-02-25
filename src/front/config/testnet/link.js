@@ -8,5 +8,5 @@ export default {
   ghostscan: 'https://testnet.ghostscan.io',
   nextExplorer: 'https://explore.next.exchange',
   xdai: 'https://blockscout.com/poa/sokol',
-  ftm: 'https://testnet.ftmscan.com/',
+  ftmscan: 'https://testnet.ftmscan.com/',
 }
