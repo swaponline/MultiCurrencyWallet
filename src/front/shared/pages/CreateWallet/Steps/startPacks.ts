@@ -1,7 +1,7 @@
 import config from 'helpers/externalConfig'
 
-const curEnabled = config.opts.curEnabled
-const onlyEvmWallets = (config?.opts?.ui?.disableInternalWallet) ? true : false
+const { curEnabled } = config.opts
+const onlyEvmWallets = !!(config?.opts?.ui?.disableInternalWallet)
 
 // TODO: Move it in a better place
 
@@ -26,10 +26,10 @@ export const defaultPack = [
   ...(config.bep20 ? [{ name: 'BTCB', capture: 'BTCB Token', baseCurrency: 'BNB' }] : []),
   ...(config.erc20
     ? [
-        { name: 'WBTC', capture: 'Wrapped Bitcoin', baseCurrency: 'ETH' },
-        { name: 'USDT', capture: 'Tether', baseCurrency: 'ETH' },
-        { name: 'EURS', capture: 'Eurs', baseCurrency: 'ETH' },
-      ]
+      { name: 'WBTC', capture: 'Wrapped Bitcoin', baseCurrency: 'ETH' },
+      { name: 'USDT', capture: 'Tether', baseCurrency: 'ETH' },
+      { name: 'EURS', capture: 'Eurs', baseCurrency: 'ETH' },
+    ]
     : []),
   ...(config.erc20matic ? [{ name: 'WBTC', capture: 'WBTC Token', baseCurrency: 'MATIC' }] : []),
   ...(process.env.MAINNET
