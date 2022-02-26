@@ -8,7 +8,7 @@ type ComponentProps = {
   dashboardView?: boolean
 }
 
-const Overlay = (props: ComponentProps) => {
+function Overlay(props: ComponentProps) {
   const {
     children,
     onClick = () => undefined,
@@ -22,9 +22,9 @@ const Overlay = (props: ComponentProps) => {
       const elWithHeight: HTMLElement | null = document.querySelector('.__modalConductorProvided__ .contentHeightEvaluateHere')
 
       if (elWithHeight) {
-        setEvaluatedHeight(elWithHeight.clientHeight ||
-          elWithHeight.offsetHeight ||
-          400)
+        setEvaluatedHeight(elWithHeight.clientHeight
+          || elWithHeight.offsetHeight
+          || 400)
       }
     }
   })

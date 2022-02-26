@@ -1,9 +1,10 @@
 import { useState, useEffect, useRef } from 'react'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, useIntl } from 'react-intl'
 import { connect } from 'redaction'
 import CSSModules from 'react-css-modules'
-import styles from './index.scss'
-import { utils, localStorage } from 'helpers'
+import { withRouter } from 'react-router-dom'
+import { utils, localStorage, constants, links } from 'helpers'
+import { localisedUrl } from 'helpers/locale'
 import actions from 'redux/actions'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 import Button from 'components/controls/Button/Button'
@@ -12,8 +13,8 @@ import Switching from 'components/controls/Switching/Switching'
 import SelectGroup from 'components/SelectGroup'
 import { QuickSwapFormTour } from 'components/Header/WidgetTours'
 import externalConfig from 'helpers/externalConfig'
+import styles from './index.scss'
 import { ComponentState, Direction, Actions, CurrencyMenuItem } from './types'
-
 
 const usePrevious = (value) => {
   const ref = useRef()
@@ -26,6 +27,7 @@ const usePrevious = (value) => {
 }
 
 type InputFormProps = {
+  history: any
   user: any
   parentState: ComponentState
   stateReference: any
@@ -43,6 +45,7 @@ type InputFormProps = {
 
 function InputForm(props: InputFormProps) {
   const {
+    history,
     user,
     parentState,
     stateReference,
@@ -142,6 +145,13 @@ function InputForm(props: InputFormProps) {
     }
 
     return data
+  }
+
+  const { locale } = useIntl()
+
+  const openAddCustomTokenModal = () => {
+    history.push(localisedUrl(locale, links.home))
+    actions.modals.open(constants.modals.AddCustomToken)
   }
 
   const fromWalletData = getWalletStoreData(fromWallet)
@@ -309,10 +319,17 @@ function InputForm(props: InputFormProps) {
           }}
         />
       </div>
+      {receivedCurrency.notExist && (
+        <div styleName="addCustomTokenBtn">
+          <Button id="addCustomTokenBtn" onClick={openAddCustomTokenModal} empty small>
+            <FormattedMessage id="addCustomToken" defaultMessage="Add custom token" />
+          </Button>
+        </div>
+      )}
     </form>
   )
 }
 
 export default connect(({ user }) => ({
   user,
-}))(CSSModules(InputForm, styles, { allowMultiple: true }))
+}))(withRouter(CSSModules(InputForm, styles, { allowMultiple: true })))

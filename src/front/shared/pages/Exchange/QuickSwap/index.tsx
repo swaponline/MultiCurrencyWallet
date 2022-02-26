@@ -21,6 +21,7 @@ import {
 import { localisedUrl } from 'helpers/locale'
 import actions from 'redux/actions'
 import Link from 'local_modules/sw-valuelink'
+import Button from 'components/controls/Button/Button'
 import {
   ComponentState,
   Direction,
@@ -37,6 +38,7 @@ import {
   MAX_PERCENT,
   LIQUIDITY_SOURCE_DATA,
 } from './constants'
+
 import styles from './index.scss'
 import TokenInstruction from './TokenInstruction'
 import Header from './Header'
@@ -338,10 +340,9 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
 
     const feeOptsKey = fromWallet?.standard || fromWallet?.currency
     const currentFeeOpts = externalConfig.opts.fee[feeOptsKey?.toLowerCase()]
-    const correctFeeRepresentation =
-      !Number.isNaN(window?.zeroxFeePercent) &&
-      window.zeroxFeePercent >= 0 &&
-      window.zeroxFeePercent <= 100
+    const correctFeeRepresentation =      !Number.isNaN(window?.zeroxFeePercent)
+      && window.zeroxFeePercent >= 0
+      && window.zeroxFeePercent <= 100
 
     if (currentFeeOpts?.address && correctFeeRepresentation) {
       // percent of the buyAmount >= 0 && <= 1
@@ -374,8 +375,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   updateNetwork = async () => {
     const { spendedCurrency } = this.state
 
-    const network =
-      externalConfig.evmNetworks[spendedCurrency.blockchain || spendedCurrency.value.toUpperCase()]
+    const network =      externalConfig.evmNetworks[spendedCurrency.blockchain || spendedCurrency.value.toUpperCase()]
 
     this.updateBaseChainWallet(spendedCurrency)
 
@@ -385,7 +385,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       }),
       async () => {
         await this.updateCurrentPairAddress()
-      }
+      },
     )
   }
 
@@ -428,8 +428,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     const result = currencies.filter((item) => {
       const currentSpendedAsset = item.value === spendedCurrency?.value
       const spendedAssetChain = item.blockchain || item.value.toUpperCase()
-      const receivedAssetChain =
-        spendedCurrency?.blockchain || spendedCurrency?.value?.toUpperCase()
+      const receivedAssetChain =        spendedCurrency?.blockchain || spendedCurrency?.value?.toUpperCase()
 
       return spendedAssetChain === receivedAssetChain && !currentSpendedAsset
     })
@@ -460,7 +459,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       }),
       async () => {
         this.resetSwapData()
-      }
+      },
     )
   }
 
@@ -500,7 +499,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
 
     const sellAmount = utils.amount.formatWithDecimals(
       spendedAmount,
-      fromWallet.decimals || COIN_DECIMALS
+      fromWallet.decimals || COIN_DECIMALS,
     )
 
     const request = [
@@ -548,9 +547,9 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     }
 
     if (
-      activeSection === Sections.Source &&
-      sourceAction !== Actions.AddLiquidity &&
-      currentLiquidityPair
+      activeSection === Sections.Source
+      && sourceAction !== Actions.AddLiquidity
+      && currentLiquidityPair
     ) {
       this.resetSwapData()
     }
@@ -614,7 +613,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     const swapFee = utils.amount.formatWithoutDecimals(weiFee, COIN_DECIMALS)
     const receivedAmount = utils.amount.formatWithoutDecimals(
       swap.buyAmount,
-      toWallet?.decimals || COIN_DECIMALS
+      toWallet?.decimals || COIN_DECIMALS,
     )
 
     this.setState(() => ({
@@ -692,7 +691,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
         'quickswapLiquidityPair',
         `${externalConfig.entry}_${tokenA}_${tokenB}`,
         pairAddress,
-        SECONDS
+        SECONDS,
       )
     }
 
@@ -749,8 +748,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   }
 
   fetchLiquidityData = async () => {
-    const { network, spendedAmount, baseChainWallet, currentLiquidityPair, fromWallet, toWallet } =
-      this.state
+    const { network, spendedAmount, baseChainWallet, currentLiquidityPair, fromWallet, toWallet } = this.state
 
     this.setPending(true)
 
@@ -800,8 +798,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   }
 
   checkApprove = async (direction) => {
-    const { network, isSourceMode, spendedAmount, receivedAmount, fromWallet, toWallet } =
-      this.state
+    const { network, isSourceMode, spendedAmount, receivedAmount, fromWallet, toWallet } =      this.state
 
     let amount = spendedAmount
     let wallet = fromWallet
@@ -844,15 +841,14 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     const { spendedCurrency, receivedCurrency } = this.state
 
     const changeSpendedSide = direction === Direction.Spend && spendedCurrency.value !== value.value
-    const changeReceivedSide =
-      direction === Direction.Receive && receivedCurrency.value !== value.value
+    const changeReceivedSide =      direction === Direction.Receive && receivedCurrency.value !== value.value
 
     if (changeSpendedSide) {
       this.setState(
         () => ({
           spendedCurrency: value,
         }),
-        this.updateSpendedSide
+        this.updateSpendedSide,
       )
     }
 
@@ -861,7 +857,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
         () => ({
           receivedCurrency: value,
         }),
-        this.updateReceivedSide
+        this.updateReceivedSide,
       )
     }
   }
@@ -880,7 +876,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
         this.updateReceivedList()
         this.updateServiceFeeData()
         await this.onInputDataChange()
-      }
+      },
     )
   }
 
@@ -893,13 +889,12 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       }),
       async () => {
         await this.onInputDataChange()
-      }
+      },
     )
   }
 
   flipCurrency = () => {
-    const { currencies, fromWallet, spendedCurrency, receivedCurrency, toWallet, wrongNetwork } =
-      this.state
+    const { currencies, fromWallet, spendedCurrency, receivedCurrency, toWallet, wrongNetwork } =      this.state
 
     if (wrongNetwork || receivedCurrency.notExist) return
 
@@ -915,7 +910,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       }),
       async () => {
         await this.onInputDataChange()
-      }
+      },
     )
   }
 
@@ -936,7 +931,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
         () => ({
           externalExchangeReference: newWindowProxy,
         }),
-        this.startCheckingExternalWindow
+        this.startCheckingExternalWindow,
       )
     } else {
       // in this case window reference must exist and the window is not closed
@@ -1020,9 +1015,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     }))
   }
 
-  mnemonicIsSaved = () => {
-    return localStorage.getItem(constants.privateKeyNames.twentywords) === '-'
-  }
+  mnemonicIsSaved = () => localStorage.getItem(constants.privateKeyNames.twentywords) === '-'
 
   setPending = (value: boolean) => {
     this.setState(() => ({
@@ -1054,31 +1047,27 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       gasLimit,
     } = this.state
 
-    const wrongSlippage =
-      slippage &&
-      (new BigNumber(slippage).isEqualTo(0) ||
-        new BigNumber(slippage).isGreaterThan(slippageMaxRange))
+    const wrongSlippage =      slippage
+      && (new BigNumber(slippage).isEqualTo(0)
+        || new BigNumber(slippage).isGreaterThan(slippageMaxRange))
 
-    const wrongGasPrice =
-      new BigNumber(gasPrice).isPositive() &&
-      new BigNumber(gasPrice).isGreaterThan(API_GAS_LIMITS.MAX_PRICE)
+    const wrongGasPrice =      new BigNumber(gasPrice).isPositive()
+      && new BigNumber(gasPrice).isGreaterThan(API_GAS_LIMITS.MAX_PRICE)
 
-    const wrongGasLimit =
-      new BigNumber(gasLimit).isPositive() &&
-      (new BigNumber(gasLimit).isLessThan(API_GAS_LIMITS.MIN_LIMIT) ||
-        new BigNumber(gasLimit).isGreaterThan(API_GAS_LIMITS.MAX_LIMIT))
+    const wrongGasLimit =      new BigNumber(gasLimit).isPositive()
+      && (new BigNumber(gasLimit).isLessThan(API_GAS_LIMITS.MIN_LIMIT)
+        || new BigNumber(gasLimit).isGreaterThan(API_GAS_LIMITS.MAX_LIMIT))
 
     const wrongSettings = wrongGasPrice || wrongGasLimit || wrongSlippage
-    const noBalance =
-      baseChainWallet.balanceError || new BigNumber(baseChainWallet.balance).isEqualTo(0)
+    const noBalance =      baseChainWallet.balanceError || new BigNumber(baseChainWallet.balance).isEqualTo(0)
 
     return (
-      noBalance ||
-      isPending ||
-      wrongSettings ||
-      new BigNumber(spendedAmount).isNaN() ||
-      new BigNumber(spendedAmount).isEqualTo(0) ||
-      new BigNumber(spendedAmount).isGreaterThan(fromWallet.balance)
+      noBalance
+      || isPending
+      || wrongSettings
+      || new BigNumber(spendedAmount).isNaN()
+      || new BigNumber(spendedAmount).isEqualTo(0)
+      || new BigNumber(spendedAmount).isGreaterThan(fromWallet.balance)
     )
   }
 
@@ -1127,18 +1116,16 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       'gasLimit',
       'userDeadline',
       'spendedAmount',
-      'receivedAmount'
+      'receivedAmount',
     )
 
-    const insufficientBalanceA =
-      new BigNumber(fromWallet.balance).isEqualTo(0) ||
-      new BigNumber(spendedAmount)
+    const insufficientBalanceA =      new BigNumber(fromWallet.balance).isEqualTo(0)
+      || new BigNumber(spendedAmount)
         .plus(fromWallet?.standard ? 0 : swapFee || 0)
         .isGreaterThan(fromWallet.balance)
 
-    const insufficientBalanceB =
-      new BigNumber(toWallet.balance).isEqualTo(0) ||
-      new BigNumber(receivedAmount).isGreaterThan(toWallet.balance)
+    const insufficientBalanceB =      new BigNumber(toWallet.balance).isEqualTo(0)
+      || new BigNumber(receivedAmount).isGreaterThan(toWallet.balance)
 
     return (
       <>

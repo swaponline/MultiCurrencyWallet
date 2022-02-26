@@ -212,6 +212,10 @@ $maxWidth: 38em;
   }
 }
 
+.addCustomTokenBtn {
+  margin-bottom: 0.5rem;
+}
+
 @media all and (max-width: 500px) {
   .newTokenInstruction {
     font-size: 0.95rem;
