@@ -31,6 +31,7 @@ type ModalProps = {
   showCloseButton?: boolean
   shouldCenterVertically?: boolean
   shouldCenterHorizontally?: boolean
+  contentWithTabs?: boolean
 }
 
 @connect(({
@@ -94,12 +95,12 @@ export default class Modal extends Component<ModalProps, object> {
     if (!disableClose) {
       actions.modals.close(name)
 
-      if (typeof onClose === 'function') {
+      if (onClose && typeof onClose === 'function') {
         onClose(isLocationChange)
       }
 
       // @ts-ignore: strictNullChecks
-      if (typeof data.onClose === 'function') {
+      if (data?.onClose && typeof data.onClose === 'function') {
         // @ts-ignore: strictNullChecks
         data.onClose(isLocationChange)
       }
@@ -119,6 +120,7 @@ export default class Modal extends Component<ModalProps, object> {
       styleName,
       delayClose,
       dashboardView,
+      contentWithTabs,
     } = this.props
 
     const titleStyleName = cx('title', {
@@ -157,13 +159,13 @@ export default class Modal extends Component<ModalProps, object> {
             {
               dashboardView
                 ? (
-                  <div styleName="content content_dashboardView" className="contentHeightEvaluateHere">
+                  <div styleName={contentWithTabs ? 'content content_dashboardView withTabs' : 'content content_dashboardView'} className="contentHeightEvaluateHere">
                     {children}
                   </div>
                 )
                 : (
                   <Center scrollable centerHorizontally={shouldCenterHorizontally} centerVertically={shouldCenterVertically}>
-                    <div styleName="content">
+                    <div styleName={contentWithTabs ? 'content withTabs' : 'content'}>
                       {children}
                     </div>
                   </Center>

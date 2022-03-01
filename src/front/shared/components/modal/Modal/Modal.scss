@@ -95,6 +95,10 @@
     position: relative;
     padding-bottom: 40px;
   }
+
+  &.withTabs {
+    padding-top: 1rem;
+  }
 }
 
 @include media-mobile {

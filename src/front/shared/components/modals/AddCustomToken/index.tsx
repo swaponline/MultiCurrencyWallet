@@ -56,6 +56,7 @@ type CustomTokenState = {
   baseCurrency: string
   notFound: boolean
   isPending: boolean
+  addTokenMode: 'byAddress' | 'bySearch'
 }
 
 @cssModules({ ...styles, ...ownStyle }, { allowMultiple: true })
@@ -87,6 +88,7 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
       tokenDecimals: 0,
       notFound: false,
       isPending: false,
+      addTokenMode: 'byAddress',
     }
   }
 
@@ -158,6 +160,7 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
       tokenDecimals,
       isPending,
       notFound,
+      addTokenMode,
     } = this.state
 
     const {
@@ -180,65 +183,103 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
       },
     })
 
+    const selectAddByAddress = () => {
+      console.log('openAddByAddress')
+      this.setState({
+        addTokenMode: 'byAddress',
+      })
+    }
+
+    const selectAddBySearch = () => {
+      console.log('openAddBySearch')
+      this.setState({
+        addTokenMode: 'bySearch',
+      })
+    }
+
     return (
       <Modal
         name={name}
         title={`${intl.formatMessage(localeLabel.title)}`}
+        contentWithTabs
+        showCloseButton
       >
         <div styleName="stepsWrapper">
+          <div styleName="tabsWrapper">
+            <button
+              type="button"
+              styleName={`tab ${addTokenMode === 'byAddress' ? 'active' : ''}`}
+              onClick={selectAddByAddress}
+            >
+              <FormattedMessage id="addByAddress" defaultMessage="by Address" />
+            </button>
+            <button
+              type="button"
+              styleName={`tab ${addTokenMode === 'bySearch' ? 'active' : ''}`}
+              onClick={selectAddBySearch}
+            >
+              <FormattedMessage id="addBySearch" defaultMessage="by Search" />
+            </button>
+          </div>
           {step === 'enterAddress' && (
             <>
-              <div styleName="highLevel">
-                <FieldLabel inRow>
-                  <span style={{ fontSize: '16px' }}>
-                    <FormattedMessage
-                      id="customTokenAddress"
-                      defaultMessage="Token address"
-                    />
-                  </span>
-                </FieldLabel>
-                <Input
-                  id="customTokenInput"
-                  valueLink={linked.tokenAddress}
-                  focusOnInit
-                  pattern="0-9a-zA-Z:"
-                  placeholder={intl.formatMessage(localeLabel.addressPlaceholder)}
-                />
-                <DropDown
-                  className={dropDownStyles.simpleDropdown}
-                  items={TOKEN_STANDARDS_ARR}
-                  selectedValue={TOKEN_STANDARDS[tokenStandard].value}
-                  selectedItemRender={(item) => item.value.toUpperCase()}
-                  itemRender={(item) => item.value.toUpperCase()}
-                  onSelect={(item) => {
-                    this.setState({
-                      tokenStandard: item.standard,
-                      baseCurrency: item.currency,
-                    })
-                  }}
-                  name="Select a standard"
-                  role="SelectStandard"
-                />
-                {notFound && (
-                  <div styleName="rednote">
-                    <FormattedMessage
-                      id="customTokenNotFound"
-                      defaultMessage="This is not {standard} address"
-                      values={{
-                        standard: tokenStandard,
-                      }}
-                    />
-                  </div>
-                )}
-                {tokenAddress && !this.addressIsCorrect() && (
-                  <div styleName="rednote">
-                    <FormattedMessage
-                      id="customTokenIncorrectAddress"
-                      defaultMessage="Invalid address"
-                    />
-                  </div>
-                )}
-              </div>
+              {addTokenMode === 'byAddress' ? (
+                <div styleName="highLevel">
+                  <FieldLabel inRow>
+                    <span style={{ fontSize: '16px' }}>
+                      <FormattedMessage
+                        id="customTokenAddress"
+                        defaultMessage="Token address"
+                      />
+                    </span>
+                  </FieldLabel>
+                  <Input
+                    id="customTokenInput"
+                    valueLink={linked.tokenAddress}
+                    focusOnInit
+                    pattern="0-9a-zA-Z:"
+                    placeholder={intl.formatMessage(localeLabel.addressPlaceholder)}
+                  />
+                  <DropDown
+                    className={dropDownStyles.simpleDropdown}
+                    items={TOKEN_STANDARDS_ARR}
+                    selectedValue={TOKEN_STANDARDS[tokenStandard].value}
+                    selectedItemRender={(item) => item.value.toUpperCase()}
+                    itemRender={(item) => item.value.toUpperCase()}
+                    onSelect={(item) => {
+                      this.setState({
+                        tokenStandard: item.standard,
+                        baseCurrency: item.currency,
+                      })
+                    }}
+                    name="Select a standard"
+                    role="SelectStandard"
+                  />
+                  {notFound && (
+                    <div styleName="rednote">
+                      <FormattedMessage
+                        id="customTokenNotFound"
+                        defaultMessage="This is not {standard} address"
+                        values={{
+                          standard: tokenStandard,
+                        }}
+                      />
+                    </div>
+                  )}
+                  {tokenAddress && !this.addressIsCorrect() && (
+                    <div styleName="rednote">
+                      <FormattedMessage
+                        id="customTokenIncorrectAddress"
+                        defaultMessage="Invalid address"
+                      />
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <div styleName="highLevel">
+                  Add custom token by search
+                </div>
+              )}
               <Button
                 id="customTokenNextButton"
                 styleName="buttonFullMargin"
