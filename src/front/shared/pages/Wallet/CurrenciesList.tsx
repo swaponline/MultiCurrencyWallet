@@ -1,17 +1,19 @@
-import React, { Fragment } from 'react'
 import CSSModules from 'react-css-modules'
-import config from 'app-config'
-import metamask from 'helpers/metamask'
-import styles from './Wallet.scss'
-import Button from 'components/controls/Button/Button'
-import Row from './Row/Row'
-import Slider from './WallerSlider'
-import Table from 'components/tables/Table/Table'
-
 import { FormattedMessage } from 'react-intl'
-import exConfig from 'helpers/externalConfig'
-import ConnectWalletModal from 'components/modals/ConnectWalletModal/ConnectWalletModal'
+import config from 'app-config'
+import {
+  constants,
+  metamask,
+  externalConfig as exConfig,
+} from 'helpers'
+import actions from 'redux/actions'
 
+import Button from 'components/controls/Button/Button'
+import Table from 'components/tables/Table/Table'
+import ConnectWalletModal from 'components/modals/ConnectWalletModal/ConnectWalletModal'
+import Slider from './WallerSlider'
+import Row from './Row/Row'
+import styles from './Wallet.scss'
 
 const isWidgetBuild = config && config.isWidget
 
@@ -22,24 +24,26 @@ type CurrenciesListProps = {
   tableRows: IUniversalObj[]
 }
 
-const CurrenciesList = (props: CurrenciesListProps) => {
+function CurrenciesList(props: CurrenciesListProps) {
   const {
     tableRows,
     goToСreateWallet,
     multisigPendingCount,
   } = props
 
+  const openAddCustomTokenModal = () => {
+    actions.modals.open(constants.modals.AddCustomToken)
+  }
+
   const showAssets = !(config?.opts?.ui?.disableInternalWallet)
     ? true
-    : (metamask.isConnected()) ? true : false
+    : !!(metamask.isConnected())
   return (
     <div styleName="yourAssets">
       {showAssets && (
         <>
           {(exConfig && exConfig.opts && exConfig.opts.showWalletBanners) || isWidgetBuild ? (
-            <Fragment>
-              <Slider multisigPendingCount={multisigPendingCount} />
-            </Fragment>
+            <Slider multisigPendingCount={multisigPendingCount} />
           ) : (
             ''
           )}
@@ -63,17 +67,18 @@ const CurrenciesList = (props: CurrenciesListProps) => {
               />
             )}
           />
-          <div styleName='addCurrencyBtnWrapper'>
+          <div styleName="addCurrencyBtnWrapper">
             <Button id="addAssetBtn" onClick={goToСreateWallet} transparent fullWidth>
               <FormattedMessage id="addAsset" defaultMessage="Add currency" />
+            </Button>
+            <Button id="addCustomTokenBtn" onClick={openAddCustomTokenModal} transparent fullWidth>
+              <FormattedMessage id="addCustomToken" defaultMessage="Add custom token" />
             </Button>
           </div>
         </>
       )}
       {!showAssets && !metamask.isConnected() && (
-        <>
-          <ConnectWalletModal noCloseButton={true}></ConnectWalletModal>
-        </>
+        <ConnectWalletModal noCloseButton />
       )}
     </div>
   )

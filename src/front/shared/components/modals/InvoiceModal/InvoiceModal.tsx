@@ -134,7 +134,7 @@ class InvoiceModal extends React.Component<InvoiceModalProps, InvoiceModalState>
       },
     } = this.state
 
-    const currency = ((tokenKey) ? tokenKey : currencyOriginal).toUpperCase()
+    const currency = ((tokenKey) || currencyOriginal).toUpperCase()
     if (isShipped) return
 
     this.setState({
@@ -214,7 +214,7 @@ class InvoiceModal extends React.Component<InvoiceModalProps, InvoiceModalState>
       },
     } = this.state
 
-    const currency = ((tokenKey) ? tokenKey : currencyOriginal).toUpperCase()
+    const currency = ((tokenKey) || currencyOriginal).toUpperCase()
 
     if (!value) {
       this.setState({
@@ -274,7 +274,7 @@ class InvoiceModal extends React.Component<InvoiceModalProps, InvoiceModalState>
       },
       walletData,
     } = this.state
-    const currency = ((tokenKey) ? tokenKey : currencyOriginal).toUpperCase()
+    const currency = ((tokenKey) || currencyOriginal).toUpperCase()
 
     const {
       name,
@@ -451,13 +451,9 @@ class InvoiceModal extends React.Component<InvoiceModalProps, InvoiceModalState>
             </div>
             <Button fullWidth blue big disabled={isDisabled} onClick={this.handleSubmit}>
               {isShipped ? (
-                <>
-                  <FormattedMessage id="invoiceModal_Processing" defaultMessage="Обработка ..." />
-                </>
+                <FormattedMessage id="invoiceModal_Processing" defaultMessage="Обработка ..." />
               ) : (
-                <>
-                  <FormattedMessage id="invoiceModal_Submit" defaultMessage="Выставить счет" />
-                </>
+                <FormattedMessage id="invoiceModal_Submit" defaultMessage="Выставить счет" />
               )}
             </Button>
             {error && (

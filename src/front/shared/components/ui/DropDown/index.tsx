@@ -1,11 +1,11 @@
 import React, { Component, ReactNode } from 'react'
 import cx from 'classnames'
 import cssModules from 'react-css-modules'
-import styles from './index.scss'
 import Link from 'local_modules/sw-valuelink'
 import { FormattedMessage } from 'react-intl'
 import Input from 'components/forms/Input/Input'
 import OutsideClick from 'components/OutsideClick'
+import styles from './index.scss'
 
 type DropDownProps = {
   selectedValue: string
@@ -26,19 +26,19 @@ type DropDownState = {
   error: boolean
   optionToggleIsOpen: boolean
   inputValue: string
-  selectedValue: number
+  selectedValue: string
 }
 
 @cssModules(styles, { allowMultiple: true })
 export default class DropDown extends Component<DropDownProps, DropDownState> {
-  constructor(props) {
+  constructor(props: DropDownProps) {
     super(props)
 
     const { selectedValue } = props
 
     this.state = {
       optionToggleIsOpen: false,
-      selectedValue: selectedValue,
+      selectedValue,
       inputValue: '',
       error: false,
     }
@@ -58,7 +58,7 @@ export default class DropDown extends Component<DropDownProps, DropDownState> {
 
   handleOptionClick = (item) => {
     const { onSelect } = this.props
-    
+
     // for example we'd like to change `selectedValue` manually
     if (typeof onSelect === 'function' && !item.disabled) {
       onSelect(item)
@@ -68,14 +68,17 @@ export default class DropDown extends Component<DropDownProps, DropDownState> {
     this.toggleClose()
   }
 
-  renderItem = (item) => {
-    return this.props.itemRender(item)
-  }
-
   renderSelectedItem = () => {
-    const { items, selectedItemRender } = this.props
+    const {
+      items,
+      selectedItemRender,
+      selectedValue: propsSelectedValue,
+    } = this.props
+    const {
+      selectedValue: stateSelectedValue,
+    } = this.state
 
-    const selectedValue = this.props.selectedValue || this.state.selectedValue
+    const selectedValue = propsSelectedValue || stateSelectedValue
     const selectedItem = items.find(({ value }) => value === selectedValue)
 
     if (selectedItem !== undefined) {
@@ -90,9 +93,9 @@ export default class DropDown extends Component<DropDownProps, DropDownState> {
             {textToShow}
           </div>
         )
-      } else {
-        return selectedItemRender(selectedItem)
       }
+      return selectedItemRender(selectedItem)
+
     }
   }
 
@@ -100,7 +103,7 @@ export default class DropDown extends Component<DropDownProps, DropDownState> {
     const { disableSearch } = this.props
     const { optionToggleIsOpen } = this.state
     const linkedValue = Link.all(this, 'inputValue')
-    
+
     if (optionToggleIsOpen) {
       // cleanup the search field
       if (!disableSearch) {
@@ -122,6 +125,7 @@ export default class DropDown extends Component<DropDownProps, DropDownState> {
       dontScroll, // Show all items, for small lists
       arrowSide,
       role,
+      itemRender,
     } = this.props
 
     const { optionToggleIsOpen, inputValue } = this.state
@@ -129,7 +133,6 @@ export default class DropDown extends Component<DropDownProps, DropDownState> {
     const {
       inputValue: linkedInputValue,
     } = Link.all(this, 'inputValue')
-
 
     let itemsFiltered = items
     // Filtering values for search input
@@ -146,7 +149,10 @@ export default class DropDown extends Component<DropDownProps, DropDownState> {
 
     return (
       <OutsideClick outsideAction={this.handleClickOutside}>
-        <div styleName={`${dropDownStyleName}`} className={className}>
+        <div
+          styleName={`${dropDownStyleName}`}
+          className={className}
+        >
           <div
             className={dropDownId}
             styleName={`
@@ -165,7 +171,6 @@ export default class DropDown extends Component<DropDownProps, DropDownState> {
                 styleName="searchInput"
                 placeholder={placeholder}
                 valueLink={linkedInputValue}
-                ref="searchInput"
                 focusOnInit
               />
             ) : (
@@ -179,39 +184,38 @@ export default class DropDown extends Component<DropDownProps, DropDownState> {
               {name ? <span styleName="listName">{name}</span> : ''}
 
               {noOptions ? (
-                  <FormattedMessage id="DropDownNoOptionsInTheList" defaultMessage="No options" />
-                ) : moreThenOneOption ? (
-                  itemsFiltered.map((item, index) => {
-                    if (!item.hidden) {
-                      return (
-                        <div
-                          id={item.value}
-                          key={index}
-                          styleName="dropDownItem"
-                          onClick={() => {
-                            linkedInputValue.set('')
-                            this.handleOptionClick(item)
-                          }}
-                        >
-                          {this.renderItem(item)}
-                        </div>
-                      )
-                    }
+                <FormattedMessage id="DropDownNoOptionsInTheList" defaultMessage="No options" />
+              ) : moreThenOneOption ? (
+                itemsFiltered.map((item, index) => {
+                  if (!item.hidden) {
+                    return (
+                      <div
+                        id={item.value}
+                        key={index}
+                        styleName="dropDownItem"
+                        onClick={() => {
+                          linkedInputValue.set('')
+                          this.handleOptionClick(item)
+                        }}
+                      >
+                        {itemRender(item)}
+                      </div>
+                    )
+                  }
 
-                    return null
-                  })
-                ) : (
-                  <div
-                    styleName="dropDownItem"
-                    onClick={() => {
-                      linkedInputValue.set('')
-                      this.handleOptionClick(itemsFiltered[0])
-                    }}
-                  >
-                    {this.renderItem(itemsFiltered[0])}
-                  </div>
-                )
-              }
+                  return null
+                })
+              ) : (
+                <div
+                  styleName="dropDownItem"
+                  onClick={() => {
+                    linkedInputValue.set('')
+                    this.handleOptionClick(itemsFiltered[0])
+                  }}
+                >
+                  {itemRender(itemsFiltered[0])}
+                </div>
+              )}
             </div>
           )}
         </div>

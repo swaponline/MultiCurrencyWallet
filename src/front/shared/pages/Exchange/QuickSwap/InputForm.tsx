@@ -1,9 +1,10 @@
 import { useState, useEffect, useRef } from 'react'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, useIntl } from 'react-intl'
 import { connect } from 'redaction'
 import CSSModules from 'react-css-modules'
-import styles from './index.scss'
-import { utils, localStorage } from 'helpers'
+import { withRouter } from 'react-router-dom'
+import { utils, localStorage, constants, links } from 'helpers'
+import { localisedUrl } from 'helpers/locale'
 import actions from 'redux/actions'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 import Button from 'components/controls/Button/Button'
@@ -12,8 +13,8 @@ import Switching from 'components/controls/Switching/Switching'
 import SelectGroup from 'components/SelectGroup'
 import { QuickSwapFormTour } from 'components/Header/WidgetTours'
 import externalConfig from 'helpers/externalConfig'
+import styles from './index.scss'
 import { ComponentState, Direction, Actions, CurrencyMenuItem } from './types'
-
 
 const usePrevious = (value) => {
   const ref = useRef()
@@ -26,6 +27,7 @@ const usePrevious = (value) => {
 }
 
 type InputFormProps = {
+  history: any
   user: any
   parentState: ComponentState
   stateReference: any
@@ -43,6 +45,7 @@ type InputFormProps = {
 
 function InputForm(props: InputFormProps) {
   const {
+    history,
     user,
     parentState,
     stateReference,
@@ -86,9 +89,8 @@ function InputForm(props: InputFormProps) {
   }
 
   const hasFiatAmount = spendedAmount && fromWallet.infoAboutCurrency?.price
-  const fiatValue =
-    hasFiatAmount &&
-    utils.toMeaningfulFloatValue({
+  const fiatValue = hasFiatAmount
+    && utils.toMeaningfulFloatValue({
       value: spendedAmount,
       rate: fromWallet.infoAboutCurrency.price,
     })
@@ -133,7 +135,7 @@ function InputForm(props: InputFormProps) {
   }
 
   const getWalletStoreData = (wallet): IUniversalObj | undefined => {
-    let data = undefined
+    let data
 
     if (Object.keys(wallet).length) {
       data = wallet.isToken
@@ -142,6 +144,18 @@ function InputForm(props: InputFormProps) {
     }
 
     return data
+  }
+
+  const { locale } = useIntl()
+
+  const openAddCustomTokenModal = () => {
+    const { parentState: { baseChainWallet } } = props
+    const baseCurrency = baseChainWallet.currency?.toLowerCase()
+
+    history.push(localisedUrl(locale, links.home))
+    actions.modals.open(constants.modals.AddCustomToken, {
+      baseCurrency,
+    })
   }
 
   const fromWalletData = getWalletStoreData(fromWallet)
@@ -171,7 +185,7 @@ function InputForm(props: InputFormProps) {
   const [flagForLazyChanges, setFlagForLazyChanges] = useState(false)
 
   useEffect(() => {
-    let timeoutId: ReturnType<typeof setTimeout> | undefined = undefined
+    let timeoutId: ReturnType<typeof setTimeout> | undefined
 
     if (flagForLazyChanges) {
       timeoutId = setTimeout(async () => {
@@ -189,8 +203,7 @@ function InputForm(props: InputFormProps) {
     onInputDataChange()
   }, [spendedCurrency?.value, receivedCurrency?.value, isSourceMode])
 
-  const addFirstLiquidity =
-    isSourceMode && sourceAction === Actions.AddLiquidity && !currentLiquidityPair
+  const addFirstLiquidity = isSourceMode && (sourceAction === Actions.AddLiquidity) && !currentLiquidityPair
 
   const isValidNumber = (value) => !isNaN(Number(value)) && Number(value) > 0
 
@@ -215,8 +228,8 @@ function InputForm(props: InputFormProps) {
   }
 
   const supportedCurrencies = externalConfig.opts.buyFiatSupported
-  const showFiatExchangeBtn =
-    window.transakApiKey || supportedCurrencies.includes(spendedCurrency.value)
+  const showFiatExchangeBtn = window.transakApiKey
+    || supportedCurrencies.includes(spendedCurrency.value)
 
   return (
     <form action="">
@@ -241,12 +254,10 @@ function InputForm(props: InputFormProps) {
               balanceTooltip(Direction.Spend, fromWallet)
             )
           }
-          onSelect={(value) =>
-            selectCurrency({
-              direction: Direction.Spend,
-              value,
-            })
-          }
+          onSelect={(value) => selectCurrency({
+            direction: Direction.Spend,
+            value,
+          })}
         />
       </div>
 
@@ -269,7 +280,12 @@ function InputForm(props: InputFormProps) {
             <Tooltip id="buyViaBankCardButton" place="top" mark={false}>
               <FormattedMessage
                 id="bankCardButtonDescription"
-                defaultMessage="In the modal window, you have to go through several steps to exchange fiat funds for {buyCurrency}. Select {buyCurrency} in the window and specify the address of your wallet (you can copy it below). Wait until the funds are credited to your address. Then you can buy tokens using it."
+                defaultMessage={
+                  `In the modal window, you have to go through several steps to exchange fiat funds
+                  for {buyCurrency}. Select {buyCurrency} in the window and specify the address
+                  of your wallet (you can copy it below). Wait until the funds are credited to your address.
+                  Then you can buy tokens using it.`
+                }
                 values={{
                   buyCurrency: spendedCurrency.value.toUpperCase(),
                 }}
@@ -309,10 +325,17 @@ function InputForm(props: InputFormProps) {
           }}
         />
       </div>
+      {receivedCurrency.notExist && (
+        <div styleName="addCustomTokenBtn">
+          <Button id="addCustomTokenBtn" onClick={openAddCustomTokenModal} empty small>
+            <FormattedMessage id="addCustomToken" defaultMessage="Add custom token" />
+          </Button>
+        </div>
+      )}
     </form>
   )
 }
 
 export default connect(({ user }) => ({
   user,
-}))(CSSModules(InputForm, styles, { allowMultiple: true }))
+}))(withRouter(CSSModules(InputForm, styles, { allowMultiple: true })))

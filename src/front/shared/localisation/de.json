@@ -2489,6 +2489,14 @@
     ]
   },
   {
+    "id": "addCustomToken",
+    "message": "Benutzerdefiniertes Token hinzufügen",
+    "files": [
+      "src/front/shared/pages/Wallet/CurrenciesList.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/InputForm.tsx"
+    ]
+  },
+  {
     "id": "MybalanceswalletNav",
     "message": "Mein Wallet",
     "files": [

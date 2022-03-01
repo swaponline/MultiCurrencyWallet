@@ -4,12 +4,12 @@ import { connect } from 'redaction'
 import actions from 'redux/actions'
 import cx from 'classnames'
 import cssModules from 'react-css-modules'
-import styles from './Modal.scss'
 
 import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
 import Overlay from 'components/layout/Overlay/Overlay'
 import Center from 'components/layout/Center/Center'
+import styles from './Modal.scss'
 
 type ModalProps = {
   title?: JSX.Element | string
@@ -40,18 +40,6 @@ type ModalProps = {
 }))
 @cssModules(styles, { allowMultiple: true })
 export default class Modal extends Component<ModalProps, object> {
-  static defaultProps = {
-    data: {},
-    whiteLogo: false,
-    showLogo: true,
-    showCloseButton: true,
-    fullWidth: false,
-    disableClose: false,
-    disableCloseOverlay: false,
-    uppercase: false,
-    shouldCenterVertically: true,
-    shouldCenterHorizontally: true,
-  }
 
   catchLocationChange = null
 
@@ -67,19 +55,19 @@ export default class Modal extends Component<ModalProps, object> {
     if (closeOnLocationChange) {
       let currentLocation = window.location.hash
 
-      //@ts-ignore: strictNullChecks
+      // @ts-ignore: strictNullChecks
       this.catchLocationChange = setInterval(() => {
         if (window.location.hash != currentLocation) {
           if (typeof onLocationChange === 'function') {
             if (onLocationChange(window.location.hash)) {
               currentLocation = window.location.hash
             } else {
-              //@ts-ignore: strictNullChecks
+              // @ts-ignore: strictNullChecks
               clearInterval(this.catchLocationChange)
               this.close(null, true)
             }
           } else {
-            //@ts-ignore: strictNullChecks
+            // @ts-ignore: strictNullChecks
             clearInterval(this.catchLocationChange)
             this.close(null, true)
           }
@@ -92,7 +80,7 @@ export default class Modal extends Component<ModalProps, object> {
     const { name } = this.props
 
     window.removeEventListener('popstate', () => actions.modals.close(name))
-    //@ts-ignore: strictNullChecks
+    // @ts-ignore: strictNullChecks
     clearInterval(this.catchLocationChange)
   }
 
@@ -110,27 +98,27 @@ export default class Modal extends Component<ModalProps, object> {
         onClose(isLocationChange)
       }
 
-      //@ts-ignore: strictNullChecks
+      // @ts-ignore: strictNullChecks
       if (typeof data.onClose === 'function') {
-        //@ts-ignore: strictNullChecks
+        // @ts-ignore: strictNullChecks
         data.onClose(isLocationChange)
       }
     }
   }
 
   render() {
-    const { 
-      className, 
-      title, 
-      showCloseButton, 
-      disableClose, 
+    const {
+      className,
+      title,
+      showCloseButton,
+      disableClose,
       children,
-      titleUppercase, 
-      shouldCenterHorizontally, 
-      shouldCenterVertically, 
-      styleName, 
-      delayClose, 
-      dashboardView 
+      titleUppercase,
+      shouldCenterHorizontally,
+      shouldCenterVertically,
+      styleName,
+      delayClose,
+      dashboardView,
     } = this.props
 
     const titleStyleName = cx('title', {
@@ -139,18 +127,18 @@ export default class Modal extends Component<ModalProps, object> {
 
     return (
       <Overlay dashboardView={dashboardView} styleName={styleName}>
-        <div 
+        <div
           styleName={cx({
             modal: true,
             modal_dashboardView: dashboardView,
-          })} 
+          })}
           className={className}
         >
           {
             Boolean(title || showCloseButton) && (
               <div styleName="header">
                 {/*
-                //@ts-ignore */}
+                  //@ts-ignore */}
                 <WidthContainer styleName="headerContent">
                   <div styleName={titleStyleName} role="title">{title}</div>
                   {

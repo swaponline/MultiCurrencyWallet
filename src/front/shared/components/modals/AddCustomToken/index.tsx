@@ -2,15 +2,37 @@ import React, { Fragment } from 'react'
 import actions from 'redux/actions'
 import Link from 'local_modules/sw-valuelink'
 import cssModules from 'react-css-modules'
-import styles from '../Styles/default.scss'
-import ownStyle from './index.scss'
+import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
+
+import typeforce from 'swap.app/util/typeforce'
+import TOKEN_STANDARDS, { TokenStandard } from 'helpers/constants/TOKEN_STANDARDS'
+import config from 'helpers/externalConfig'
 
 import Modal from 'components/modal/Modal/Modal'
 import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
 import Input from 'components/forms/Input/Input'
 import Button from 'components/controls/Button/Button'
-import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
-import typeforce from 'swap.app/util/typeforce'
+import DropDown from 'components/ui/DropDown'
+import dropDownStyles from 'components/ui/DropDown/index.scss'
+import ownStyle from './index.scss'
+import styles from '../Styles/default.scss'
+
+const { curEnabled } = config.opts
+
+const TOKEN_STANDARDS_ARR: TokenStandard[] = []
+
+Object.keys(TOKEN_STANDARDS).forEach(standard => {
+  const standardConfig: TokenStandard = TOKEN_STANDARDS[standard]
+  const { currency: standardBlockchain } = standardConfig
+
+  const isStandardEnabled = !!config[standard]
+  const isStandardBlockchainEnabled = curEnabled[standardBlockchain]
+
+  if (isStandardEnabled && isStandardBlockchainEnabled) {
+    TOKEN_STANDARDS_ARR.push(standardConfig)
+  }
+
+})
 
 type CustomTokenProps = {
   name: string
@@ -20,6 +42,7 @@ type CustomTokenProps = {
     api: string
     apiKey: string
     standard: string
+    baseCurrency: string
   }
 }
 
@@ -42,10 +65,22 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
 
     const { data } = props
 
+    let tokenStandard = data?.standard?.toLowerCase()
+    let baseCurrency = data?.baseCurrency
+
+    if (baseCurrency && !tokenStandard) {
+      tokenStandard = TOKEN_STANDARDS_ARR.find((standard => standard.currency === baseCurrency))?.standard
+    }
+
+    if (!baseCurrency || !tokenStandard) {
+      tokenStandard = TOKEN_STANDARDS_ARR[0]?.standard
+      baseCurrency = TOKEN_STANDARDS_ARR[0]?.currency
+    }
+
     this.state = {
       step: 'enterAddress',
-      tokenStandard: data.standard.toLowerCase(),
-      baseCurrency: data.baseCurrency,
+      tokenStandard,
+      baseCurrency,
       tokenAddress: '',
       tokenName: '',
       tokenSymbol: '',
@@ -63,7 +98,7 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
     const info = await actions[tokenStandard].getInfoAboutToken(tokenAddress)
 
     if (info) {
-      const { name, symbol, decimals } = info 
+      const { name, symbol, decimals } = info
 
       this.setState(() => ({
         tokenName: name,
@@ -113,10 +148,6 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
     return typeforce.isCoinAddress[baseCurrency.toUpperCase()](tokenAddress)
   }
 
-  handleError = (err) => {
-    console.error(err)
-  }
-
   render() {
     const {
       step,
@@ -156,7 +187,7 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
       >
         <div styleName="stepsWrapper">
           {step === 'enterAddress' && (
-            <Fragment>
+            <>
               <div styleName="highLevel">
                 <FieldLabel inRow>
                   <span style={{ fontSize: '16px' }}>
@@ -173,13 +204,28 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
                   pattern="0-9a-zA-Z:"
                   placeholder={intl.formatMessage(localeLabel.addressPlaceholder)}
                 />
+                <DropDown
+                  className={dropDownStyles.simpleDropdown}
+                  items={TOKEN_STANDARDS_ARR}
+                  selectedValue={TOKEN_STANDARDS[tokenStandard].value}
+                  selectedItemRender={(item) => item.value.toUpperCase()}
+                  itemRender={(item) => item.value.toUpperCase()}
+                  onSelect={(item) => {
+                    this.setState({
+                      tokenStandard: item.standard,
+                      baseCurrency: item.currency,
+                    })
+                  }}
+                  name="Select a standard"
+                  role="SelectStandard"
+                />
                 {notFound && (
                   <div styleName="rednote">
                     <FormattedMessage
                       id="customTokenNotFound"
                       defaultMessage="This is not {standard} address"
                       values={{
-                        standard: tokenStandard
+                        standard: tokenStandard,
                       }}
                     />
                   </div>
@@ -204,10 +250,10 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
               >
                 <FormattedMessage id="NextId" defaultMessage="Nеxt" />
               </Button>
-            </Fragment>
+            </>
           )}
           {step === 'confirm' && (
-            <Fragment>
+            <>
               <div styleName="lowLevel">
                 <FieldLabel inRow>
                   <span styleName="title">
@@ -257,10 +303,10 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
                   defaultMessage="Add this token"
                 />
               </Button>
-            </Fragment>
+            </>
           )}
           {step === 'ready' && (
-            <Fragment>
+            <>
               <h4 styleName="readyTitle">
                 <FormattedMessage
                   id="customTokenAdded"
@@ -275,11 +321,9 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
                 disabled={isDisabled}
                 onClick={this.handleReady}
               >
-                <Fragment>
-                  <FormattedMessage id="SweepBannerButton" defaultMessage="Done" />
-                </Fragment>
+                <FormattedMessage id="SweepBannerButton" defaultMessage="Done" />
               </Button>
-            </Fragment>
+            </>
           )}
         </div>
       </Modal>
