@@ -2440,7 +2440,7 @@
   },
   {
     "id": "addCustomToken",
-    "message": "Add custom token",
+    "message": "Добавить пользовательский токен",
     "files": [
       "src/front/shared/pages/Wallet/CurrenciesList.tsx",
       "src/front/shared/pages/Exchange/QuickSwap/InputForm.tsx"

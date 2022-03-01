@@ -2352,7 +2352,7 @@
   },
   {
     "id": "addCustomToken",
-    "message": "Add custom token",
+    "message": "Dodaj niestandardowy token",
     "files": [
       "src/front/shared/pages/Wallet/CurrenciesList.tsx",
       "src/front/shared/pages/Exchange/QuickSwap/InputForm.tsx"

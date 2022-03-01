@@ -2344,7 +2344,7 @@
   },
   {
     "id": "addCustomToken",
-    "message": "Add custom token",
+    "message": "Aangepaste token toevoegen",
     "files": [
       "src/front/shared/pages/Wallet/CurrenciesList.tsx",
       "src/front/shared/pages/Exchange/QuickSwap/InputForm.tsx"

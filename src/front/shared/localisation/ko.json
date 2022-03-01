@@ -2475,7 +2475,7 @@
   },
   {
     "id": "addCustomToken",
-    "message": "Add custom token",
+    "message": "사용자 정의 토큰 추가",
     "files": [
       "src/front/shared/pages/Wallet/CurrenciesList.tsx",
       "src/front/shared/pages/Exchange/QuickSwap/InputForm.tsx"
