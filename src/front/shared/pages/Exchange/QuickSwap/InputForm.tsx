@@ -89,9 +89,8 @@ function InputForm(props: InputFormProps) {
   }
 
   const hasFiatAmount = spendedAmount && fromWallet.infoAboutCurrency?.price
-  const fiatValue =
-    hasFiatAmount &&
-    utils.toMeaningfulFloatValue({
+  const fiatValue = hasFiatAmount
+    && utils.toMeaningfulFloatValue({
       value: spendedAmount,
       rate: fromWallet.infoAboutCurrency.price,
     })
@@ -136,7 +135,7 @@ function InputForm(props: InputFormProps) {
   }
 
   const getWalletStoreData = (wallet): IUniversalObj | undefined => {
-    let data = undefined
+    let data
 
     if (Object.keys(wallet).length) {
       data = wallet.isToken
@@ -150,8 +149,13 @@ function InputForm(props: InputFormProps) {
   const { locale } = useIntl()
 
   const openAddCustomTokenModal = () => {
+    const { parentState: { baseChainWallet } } = props
+    const baseCurrency = baseChainWallet.currency?.toLowerCase()
+
     history.push(localisedUrl(locale, links.home))
-    actions.modals.open(constants.modals.AddCustomToken)
+    actions.modals.open(constants.modals.AddCustomToken, {
+      baseCurrency,
+    })
   }
 
   const fromWalletData = getWalletStoreData(fromWallet)
@@ -181,7 +185,7 @@ function InputForm(props: InputFormProps) {
   const [flagForLazyChanges, setFlagForLazyChanges] = useState(false)
 
   useEffect(() => {
-    let timeoutId: ReturnType<typeof setTimeout> | undefined = undefined
+    let timeoutId: ReturnType<typeof setTimeout> | undefined
 
     if (flagForLazyChanges) {
       timeoutId = setTimeout(async () => {
@@ -199,8 +203,7 @@ function InputForm(props: InputFormProps) {
     onInputDataChange()
   }, [spendedCurrency?.value, receivedCurrency?.value, isSourceMode])
 
-  const addFirstLiquidity =
-    isSourceMode && sourceAction === Actions.AddLiquidity && !currentLiquidityPair
+  const addFirstLiquidity = isSourceMode && (sourceAction === Actions.AddLiquidity) && !currentLiquidityPair
 
   const isValidNumber = (value) => !isNaN(Number(value)) && Number(value) > 0
 
@@ -225,8 +228,8 @@ function InputForm(props: InputFormProps) {
   }
 
   const supportedCurrencies = externalConfig.opts.buyFiatSupported
-  const showFiatExchangeBtn =
-    window.transakApiKey || supportedCurrencies.includes(spendedCurrency.value)
+  const showFiatExchangeBtn = window.transakApiKey
+    || supportedCurrencies.includes(spendedCurrency.value)
 
   return (
     <form action="">
@@ -251,12 +254,10 @@ function InputForm(props: InputFormProps) {
               balanceTooltip(Direction.Spend, fromWallet)
             )
           }
-          onSelect={(value) =>
-            selectCurrency({
-              direction: Direction.Spend,
-              value,
-            })
-          }
+          onSelect={(value) => selectCurrency({
+            direction: Direction.Spend,
+            value,
+          })}
         />
       </div>
 
@@ -279,7 +280,12 @@ function InputForm(props: InputFormProps) {
             <Tooltip id="buyViaBankCardButton" place="top" mark={false}>
               <FormattedMessage
                 id="bankCardButtonDescription"
-                defaultMessage="In the modal window, you have to go through several steps to exchange fiat funds for {buyCurrency}. Select {buyCurrency} in the window and specify the address of your wallet (you can copy it below). Wait until the funds are credited to your address. Then you can buy tokens using it."
+                defaultMessage={
+                  `In the modal window, you have to go through several steps to exchange fiat funds
+                  for {buyCurrency}. Select {buyCurrency} in the window and specify the address
+                  of your wallet (you can copy it below). Wait until the funds are credited to your address.
+                  Then you can buy tokens using it.`
+                }
                 values={{
                   buyCurrency: spendedCurrency.value.toUpperCase(),
                 }}

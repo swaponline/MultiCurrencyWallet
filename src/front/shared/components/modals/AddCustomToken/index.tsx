@@ -42,6 +42,7 @@ type CustomTokenProps = {
     api: string
     apiKey: string
     standard: string
+    baseCurrency: string
   }
 }
 
@@ -64,8 +65,17 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
 
     const { data } = props
 
-    const tokenStandard = data?.standard?.toLowerCase() || TOKEN_STANDARDS_ARR[0]?.standard
-    const baseCurrency = data?.baseCurrency || TOKEN_STANDARDS_ARR[0]?.currency
+    let tokenStandard = data?.standard?.toLowerCase()
+    let baseCurrency = data?.baseCurrency
+
+    if (baseCurrency && !tokenStandard) {
+      tokenStandard = TOKEN_STANDARDS_ARR.find((standard => standard.currency === baseCurrency))?.standard
+    }
+
+    if (!baseCurrency || !tokenStandard) {
+      tokenStandard = TOKEN_STANDARDS_ARR[0]?.standard
+      baseCurrency = TOKEN_STANDARDS_ARR[0]?.currency
+    }
 
     this.state = {
       step: 'enterAddress',
