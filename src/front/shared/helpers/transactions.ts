@@ -54,6 +54,10 @@ const getLink = (currency, txHash) => {
     return actions.erc20ftm.getLinkToInfo(txHash)
   }
 
+  if (erc20Like.erc20avax.isToken({ name: currency })) {
+    return actions.erc20avax.getLinkToInfo(txHash)
+  }
+
   const prefix = helpers.getCurrencyKey(currency, false)
 
   if (actions[prefix]?.getLinkToInfo) {
@@ -88,6 +92,10 @@ const getInfo = (currency, txRaw): GetInfoResult => {
 
   if (erc20Like.erc20ftm.isToken({ name: currency })) {
     reduxAction = `erc20ftm`
+  }
+
+  if (erc20Like.erc20avax.isToken({ name: currency })) {
+    reduxAction = `erc20avax`
   }
 
   const info = {

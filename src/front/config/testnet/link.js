@@ -9,4 +9,5 @@ export default {
   nextExplorer: 'https://explore.next.exchange',
   xdai: 'https://blockscout.com/poa/sokol',
   ftmscan: 'https://testnet.ftmscan.com/',
+  avascan: 'https://testnet.snowtrace.io/',
 }

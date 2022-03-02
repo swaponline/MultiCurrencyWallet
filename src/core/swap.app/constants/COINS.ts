@@ -5,6 +5,7 @@ export const COIN_TYPE = Object.freeze({
   MATIC_TOKEN: 'MATIC_TOKEN',
   XDAI_TOKEN: 'XDAI_TOKEN',
   FTM_TOKEN: 'FTM_TOKEN',
+  AVAX_TOKEN: 'AVAX_TOKEN',
 })
 
 export const TOKEN_STANDARD = Object.freeze({
@@ -13,6 +14,7 @@ export const TOKEN_STANDARD = Object.freeze({
   ERC20MATIC: 'ERC20MATIC',
   ERC20XDAI: 'ERC20XDAI',
   ERC20FTM: 'ERC20FTM',
+  ERC20AVAX: 'ERC20AVAX',
 })
 
 export const BLOCKCHAIN = Object.freeze({
@@ -25,6 +27,7 @@ export const BLOCKCHAIN = Object.freeze({
   ARBITRUM: 'ARBITRUM',
   XDAI: 'XDAI',
   FTM: 'FTM',
+  AVAX: 'AVAX',
 })
 
 export const BASE_TOKEN_CURRENCY = Object.freeze({
@@ -33,6 +36,7 @@ export const BASE_TOKEN_CURRENCY = Object.freeze({
   MATIC: 'MATIC',
   XDAI: 'XDAI',
   FTM: 'FTM',
+  AVAX: 'AVAX',
 })
 
 export const COIN_MODEL = Object.freeze({
@@ -94,6 +98,14 @@ export const COIN_DATA = {
     name: 'Fantom',
     type: COIN_TYPE.NATIVE,
     blockchain: BLOCKCHAIN.FTM,
+    model: COIN_MODEL.AB,
+    precision: 18,
+  },
+  'AVAX': {
+    ticker: 'AVAX',
+    name: 'Fantom',
+    type: COIN_TYPE.NATIVE,
+    blockchain: BLOCKCHAIN.AVAX,
     model: COIN_MODEL.AB,
     precision: 18,
   },
@@ -171,6 +183,7 @@ export const NATIVE = {
   arbeth: 'ARBETH',
   xdai: 'XDAI',
   ftm: 'FTM',
+  avax: 'AVAX',
   ghost: 'GHOST',
   next: 'NEXT',
 }

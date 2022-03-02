@@ -63,6 +63,14 @@ export const initialState = {
     balanceError: null,
     infoAboutCurrency: null,
   },
+  avaxData: {
+    balance: 0,
+    isBalanceFetched: false,
+    currency: 'AVAX',
+    fullName: 'Avalanche',
+    balanceError: null,
+    infoAboutCurrency: null,
+  },
   btcData: {
     balance: 0,
     isBalanceFetched: false,

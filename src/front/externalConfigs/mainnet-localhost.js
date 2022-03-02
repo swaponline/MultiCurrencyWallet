@@ -21,6 +21,9 @@
   erc20ftm: {
     address: '',
   },
+  erc20avax: {
+    address: '',
+  },
 } */
 
 window.widgetEvmLikeTokens = [
@@ -91,6 +94,7 @@ window.buildOptions = {
     arbeth: true,
     xdai: true,
     ftm: true,
+    avax: true,
     ghost: true,
     next: true,
   },
@@ -102,6 +106,7 @@ window.buildOptions = {
     arbeth: false,
     xdai: false,
     ftm: true,
+    avax: true,
     ghost: false,
     next: false,
   },
@@ -130,6 +135,8 @@ window.buildOptions = {
     'CUSTOM_ERC20XDAI',
     'FTM',
     'CUSTOM_ERC20FTM',
+    'AVAX',
+    'CUSTOM_ERC20AVAX',
   ],
   invoiceEnabled: true, // Allow create invoices
   showWalletBanners: true,

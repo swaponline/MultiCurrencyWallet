@@ -5,6 +5,7 @@ export default {
   arbitrum: `${process.env.ENTRY}:arbitrum:privateKey`,
   xdai: `${process.env.ENTRY}:xdai:privateKey`,
   ftm: `${process.env.ENTRY}:ftm:privateKey`,
+  avax: `${process.env.ENTRY}:avax:privateKey`,
   btc: `${process.env.ENTRY}:btc:privateKey`,
   ghost: `${process.env.ENTRY}:ghost:privateKey`,
   next: `${process.env.ENTRY}:next:privateKey`,

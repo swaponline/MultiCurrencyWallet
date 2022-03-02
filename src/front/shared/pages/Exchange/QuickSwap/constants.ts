@@ -50,4 +50,9 @@ export const LIQUIDITY_SOURCE_DATA = {
     router: config.swapContract.spiritSwapRouter,
     factory: config.swapContract.spiritSwapFactory,
   },
+  [config.evmNetworks.AVAX.networkVersion]: {
+    name: 'SpiritSwap',
+    router: config.swapContract.spiritSwapRouter,
+    factory: config.swapContract.spiritSwapFactory,
+  },
 }
