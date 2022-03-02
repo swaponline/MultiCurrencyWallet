@@ -79,3 +79,29 @@
     opacity: 0.5;
   }
 }
+
+.coinsList{
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  max-height: 160px;
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  div:not(:last-child){
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .coin {
+    padding: 0.5rem;
+
+    &:hover {
+      background-color: var(--color-inactive-border);
+      border-color: var(--color-inactive-border);
+    }
+
+    &:active {
+      background-color: var(--color-border);
+      border-color: var(--color-inactive-border);
+    }
+  }
+}

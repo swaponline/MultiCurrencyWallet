@@ -3,6 +3,7 @@ import actions from 'redux/actions'
 import Link from 'local_modules/sw-valuelink'
 import cssModules from 'react-css-modules'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
+import axios from 'axios'
 
 import typeforce from 'swap.app/util/typeforce'
 import TOKEN_STANDARDS, { TokenStandard } from 'helpers/constants/TOKEN_STANDARDS'
@@ -57,6 +58,9 @@ type CustomTokenState = {
   notFound: boolean
   isPending: boolean
   addTokenMode: 'byAddress' | 'bySearch'
+  searchQuery: string
+  coinsList: IUniversalObj[]
+  isCoinsListLoading: boolean
 }
 
 @cssModules({ ...styles, ...ownStyle }, { allowMultiple: true })
@@ -89,6 +93,9 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
       notFound: false,
       isPending: false,
       addTokenMode: 'byAddress',
+      searchQuery: '',
+      coinsList: [],
+      isCoinsListLoading: false,
     }
   }
 
@@ -150,6 +157,62 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
     return typeforce.isCoinAddress[baseCurrency.toUpperCase()](tokenAddress)
   }
 
+  async getCoinsList(searchQuery: string) {
+    const coinGeckoSearchLink = 'https://api.coingecko.com/api/v3/search'
+    try {
+      this.setState({ isCoinsListLoading: true })
+      const result = await axios.get(`${coinGeckoSearchLink}?query=${searchQuery}`)
+      return result.data?.coins
+    } catch (error) {
+      console.log('error', error)
+      return []
+    } finally {
+      this.setState({ isCoinsListLoading: false })
+    }
+  }
+
+  setCoinsList = (coinsList: IUniversalObj[]) => this.setState(() => ({ coinsList }))
+
+  async getTokenPlatforms(tokenId: string) {
+    const coinGeckoCoinsLink = 'https://api.coingecko.com/api/v3/coins'
+    try {
+      const result = await axios.get(`${coinGeckoCoinsLink}/${tokenId}`)
+      return result.data?.platforms
+    } catch (error) {
+      console.log('error', error)
+      return []
+    }
+  }
+
+  async componentDidUpdate(prevProps, prevState) {
+    const {
+      searchQuery: prevSearchQuery,
+      coinsList: prevCoinsList,
+    } = prevState
+
+    const {
+      searchQuery,
+      isCoinsListLoading,
+    } = this.state
+
+    const hasNotCoinsInSimilarPrevSearchQuery = !(
+      searchQuery.length > 1
+      && searchQuery.match(prevSearchQuery)?.index === 0
+      && prevCoinsList.length === 0
+    )
+
+    if (
+      searchQuery.length > 0
+      && document.activeElement?.id === 'searchQueryInput'
+      && prevSearchQuery !== searchQuery
+      && hasNotCoinsInSimilarPrevSearchQuery
+      && !isCoinsListLoading
+    ) {
+      const coinsList = await this.getCoinsList(searchQuery) as IUniversalObj[]
+      this.setCoinsList(coinsList)
+    }
+  }
+
   render() {
     const {
       step,
@@ -161,6 +224,9 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
       isPending,
       notFound,
       addTokenMode,
+      searchQuery,
+      coinsList,
+      isCoinsListLoading,
     } = this.state
 
     const {
@@ -168,7 +234,7 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
       intl,
     } = this.props
 
-    const linked = Link.all(this, 'tokenAddress')
+    const linked = Link.all(this, 'tokenAddress', 'searchQuery')
 
     const isDisabled = !tokenAddress || isPending || !this.addressIsCorrect()
 
@@ -181,17 +247,19 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
         id: 'customERC20_addressPlaceholder',
         defaultMessage: 'Enter token address',
       },
+      searchPlaceholder: {
+        id: 'customERC20_searchPlaceholder',
+        defaultMessage: 'Enter token name or symbol',
+      },
     })
 
     const selectAddByAddress = () => {
-      console.log('openAddByAddress')
       this.setState({
         addTokenMode: 'byAddress',
       })
     }
 
     const selectAddBySearch = () => {
-      console.log('openAddBySearch')
       this.setState({
         addTokenMode: 'bySearch',
       })
@@ -277,7 +345,47 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
                 </div>
               ) : (
                 <div styleName="highLevel">
-                  Add custom token by search
+                  <div styleName="highLevel">
+                    <FieldLabel inRow>
+                      <span style={{ fontSize: '16px' }}>
+                        <FormattedMessage
+                          id="Search"
+                          defaultMessage="Search"
+                        />
+                      </span>
+                    </FieldLabel>
+                    <Input
+                      id="searchQueryInput"
+                      valueLink={linked.searchQuery}
+                      focusOnInit
+                      pattern="0-9a-zA-Z:"
+                      placeholder={intl.formatMessage(localeLabel.searchPlaceholder)}
+                    />
+                    {
+                      document.activeElement?.id === 'searchQueryInput'
+                      && searchQuery.length > 0
+                      && (
+                        <div style={{ padding: '1rem' }}>
+                          {
+                            isCoinsListLoading
+                              ? 'Loading...'
+                              : coinsList.length > 0
+                                ? (
+                                  <div styleName="coinsList">
+                                    {coinsList.map((coinInfo, i) => (
+                                      <div styleName="coin" key={i}>
+                                        {coinInfo?.thumb && <span><img src={coinInfo.thumb} alt={coinInfo.id} /></span>}
+                                        <span>{` ${coinInfo.name} (${coinInfo.symbol})`}</span>
+                                      </div>
+                                    ))}
+                                  </div>
+                                )
+                                : `No result for ${searchQuery}`
+                          }
+                        </div>
+                      )
+                    }
+                  </div>
                 </div>
               )}
               <Button
