@@ -36,6 +36,13 @@ Object.keys(TOKEN_STANDARDS).forEach(standard => {
 
 })
 
+interface IAvailableAssetPlatform {
+  tokenAddress: string
+  standard: string
+  value: string
+  currency: string
+}
+
 type CustomTokenProps = {
   name: string
   style: IUniversalObj
@@ -63,6 +70,10 @@ type CustomTokenState = {
   assetsList: IUniversalObj[]
   isAssetsListLoading: boolean
   selectedAsset: IUniversalObj | null
+  selectedAssetFullInfo: IUniversalObj | null
+  isAssetFullInfoLoading: boolean
+  selectedAssetPlatforms: IAvailableAssetPlatform[]
+  selectedAssetPlatform: IAvailableAssetPlatform | null
 }
 
 @cssModules({ ...styles, ...ownStyle }, { allowMultiple: true })
@@ -99,15 +110,23 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
       assetsList: [],
       isAssetsListLoading: false,
       selectedAsset: null,
+      selectedAssetFullInfo: null,
+      isAssetFullInfoLoading: false,
+      selectedAssetPlatforms: [],
+      selectedAssetPlatform: null,
     }
   }
 
   handleSubmit = async () => {
-    const { tokenAddress, tokenStandard } = this.state
+    const { tokenAddress, tokenStandard, addTokenMode, selectedAssetPlatform } = this.state
 
     this.setState(() => ({ isPending: true }))
 
-    const info = await actions[tokenStandard].getInfoAboutToken(tokenAddress)
+    const address = addTokenMode === 'byAddress'
+      ? tokenAddress
+      : selectedAssetPlatform?.tokenAddress
+
+    const info = await actions[tokenStandard].getInfoAboutToken(address)
 
     if (info) {
       const { name, symbol, decimals } = info
@@ -134,10 +153,15 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
   }
 
   handleConfirm = async () => {
-    const { tokenStandard, tokenAddress, tokenSymbol, tokenDecimals, baseCurrency } = this.state
+    const { tokenStandard, tokenAddress, tokenSymbol, tokenDecimals, baseCurrency, addTokenMode, selectedAssetPlatform } = this.state
+
+    const address = addTokenMode === 'byAddress'
+      ? tokenAddress
+      : selectedAssetPlatform?.tokenAddress
+
     actions[tokenStandard].addToken({
       standard: tokenStandard,
-      contractAddr: tokenAddress,
+      contractAddr: address,
       symbol: tokenSymbol,
       decimals: tokenDecimals,
       baseCurrency: baseCurrency.toLowerCase(),
@@ -155,9 +179,13 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
   }
 
   addressIsCorrect() {
-    const { tokenAddress, baseCurrency } = this.state
+    const { tokenAddress, baseCurrency, selectedAssetPlatform, addTokenMode } = this.state
 
-    return typeforce.isCoinAddress[baseCurrency.toUpperCase()](tokenAddress)
+    const address = addTokenMode === 'byAddress'
+      ? tokenAddress
+      : selectedAssetPlatform?.tokenAddress
+
+    return typeforce.isCoinAddress[baseCurrency.toUpperCase()](address)
   }
 
   async getAssetsList(searchQuery: string) {
@@ -178,16 +206,51 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
 
   setAsset = (asset: any) => this.setState(() => ({ selectedAsset: asset }))
 
-  resetSearchData = () => this.setState(() => ({ selectedAsset: null, searchQuery: '', assetsList: [] }))
+  resetSearchData = () => this.setState(() => ({
+    selectedAsset: null,
+    selectedAssetFullInfo: null,
+    searchQuery: '',
+    assetsList: [],
+    selectedAssetPlatforms: [],
+    isAssetsListLoading: false,
+    isAssetFullInfoLoading: false,
+    selectedAssetPlatform: null,
+  }))
 
-  async getTokenPlatforms(tokenId: string) {
+  setSelectedAssetFullInfo = (assetFullInfo: IUniversalObj) => {
+    const availableAssetPlatforms: IAvailableAssetPlatform[] = []
+
+    TOKEN_STANDARDS_ARR.forEach(standardConfig => {
+      const standardTokenAddress = assetFullInfo?.platforms[standardConfig.platformKey]
+      if (standardTokenAddress) {
+        availableAssetPlatforms.push({
+          tokenAddress: standardTokenAddress,
+          standard: standardConfig.standard,
+          value: standardConfig.value,
+          currency: standardConfig.currency,
+        })
+      }
+    })
+
+    this.setState(() => ({
+      selectedAssetFullInfo: assetFullInfo,
+      selectedAssetPlatforms: availableAssetPlatforms,
+      selectedAssetPlatform: availableAssetPlatforms[0] || null,
+    }))
+  }
+
+  async getAssetFullInfo(assetId: string) {
     const coinGeckoAssetsLink = 'https://api.coingecko.com/api/v3/coins'
     try {
-      const result = await axios.get(`${coinGeckoAssetsLink}/${tokenId}`)
-      return result.data?.platforms
+      this.setState({ isAssetFullInfoLoading: true })
+      const { data } = await axios.get(`${coinGeckoAssetsLink}/${assetId}`)
+
+      this.setSelectedAssetFullInfo(data)
     } catch (error) {
       console.log('error', error)
       return []
+    } finally {
+      this.setState({ isAssetFullInfoLoading: false })
     }
   }
 
@@ -200,6 +263,9 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
     const {
       searchQuery,
       isAssetsListLoading,
+      selectedAsset,
+      selectedAssetFullInfo,
+      isAssetFullInfoLoading,
     } = this.state
 
     const hasNotAssetsInSimilarPrevSearchQuery = searchQuery?.length === 1 || !(
@@ -218,6 +284,16 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
       const assetsList = await this.getAssetsList(searchQuery) as IUniversalObj[]
       this.setAssetsList(assetsList)
     }
+
+    const shouldFetchSelectedAssetFullInfo = (
+      selectedAsset
+      && !selectedAssetFullInfo
+      && !isAssetFullInfoLoading
+    )
+
+    if (shouldFetchSelectedAssetFullInfo) {
+      await this.getAssetFullInfo(selectedAsset.id)
+    }
   }
 
   render() {
@@ -235,6 +311,9 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
       assetsList,
       isAssetsListLoading,
       selectedAsset,
+      isAssetFullInfoLoading,
+      selectedAssetPlatforms,
+      selectedAssetPlatform,
     } = this.state
 
     const {
@@ -244,7 +323,15 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
 
     const linked = Link.all(this, 'tokenAddress', 'searchQuery')
 
-    const isDisabled = !tokenAddress || isPending || !this.addressIsCorrect()
+    const isDisabled = (
+      (
+        addTokenMode === 'byAddress'
+          ? !tokenAddress
+          : !selectedAssetPlatform?.tokenAddress
+      )
+      || isPending
+      || !this.addressIsCorrect()
+    )
 
     const localeLabel = defineMessages({
       title: {
@@ -354,20 +441,57 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
               ) : (
                 <div styleName="highLevel">
                   {selectedAsset ? (
-                    <div styleName="lowLevel">
-                      <FieldLabel inRow>
-                        <span styleName="title">
-                          <FormattedMessage id="selectedToken" defaultMessage="Token" />
-                        </span>
-                      </FieldLabel>
-                      <div styleName="fakeInput">
-                        {selectedAsset.thumb && <span><img src={selectedAsset.thumb} alt={selectedAsset.id} /></span>}
-                        <span>{` ${selectedAsset.name} (${selectedAsset.symbol})`}</span>
+                    <>
+                      <div styleName="lowLevel">
+                        <FieldLabel inRow>
+                          <span styleName="title">
+                            <FormattedMessage id="selectedToken" defaultMessage="Token" />
+                          </span>
+                        </FieldLabel>
+                        <div styleName="fakeInput">
+                          {selectedAsset.thumb && <span><img src={selectedAsset.thumb} alt={selectedAsset.id} /></span>}
+                          <span>{` ${selectedAsset.name} (${selectedAsset.symbol})`}</span>
+                        </div>
+                        <div styleName="closeIconWrapper">
+                          <CloseIcon onClick={this.resetSearchData} />
+                        </div>
                       </div>
-                      <div styleName="closeIconWrapper">
-                        <CloseIcon onClick={this.resetSearchData} />
-                      </div>
-                    </div>
+                      {
+                        isAssetFullInfoLoading
+                          ? <div style={{ padding: '1rem' }}>Loading...</div>
+                          : (selectedAssetPlatform && selectedAssetPlatforms.length > 0) ? (
+                            <div styleName="lowLevel">
+                              <FieldLabel inRow>
+                                <span styleName="title">
+                                  <FormattedMessage
+                                    id="customTokenAddress"
+                                    defaultMessage="Token address"
+                                  />
+                                </span>
+                              </FieldLabel>
+                              <div styleName="fakeInput">{selectedAssetPlatform.tokenAddress}</div>
+                              <DropDown
+                                className={dropDownStyles.simpleDropdown}
+                                items={selectedAssetPlatforms}
+                                selectedValue={selectedAssetPlatform.value}
+                                selectedItemRender={(item) => item.value.toUpperCase()}
+                                itemRender={(item) => item.value.toUpperCase()}
+                                onSelect={(item) => {
+                                  this.setState({
+                                    tokenStandard: item.standard,
+                                    baseCurrency: item.currency,
+                                    selectedAssetPlatform: item,
+                                  })
+                                }}
+                                name="Select a standard"
+                                role="SelectStandard"
+                              />
+                            </div>
+                          ) : (
+                            <div style={{ padding: '1rem' }}>This asset have not supported chains</div>
+                          )
+                      }
+                    </>
                   ) : (
                     <>
                       <FieldLabel inRow>
@@ -444,7 +568,13 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
                     />
                   </span>
                 </FieldLabel>
-                <div styleName="fakeInput">{tokenAddress}</div>
+                <div styleName="fakeInput">
+                  {
+                    addTokenMode === 'byAddress'
+                      ? tokenAddress
+                      : selectedAssetPlatform?.tokenAddress
+                  }
+                </div>
               </div>
               <div styleName="lowLevel">
                 <FieldLabel inRow>
