@@ -698,7 +698,7 @@ export default {
   erc20avax: new Erc20LikeAction({
     currency: 'AVAX',
     standard: 'erc20avax',
-    explorerName: 'avascan',
+    explorerName: 'avaxscan',
     explorerLink: externalConfig.link.avaxscan,
     explorerApiKey: externalConfig.api.avax_ApiKey,
     adminFeeObj: externalConfig.opts?.fee?.erc20avax,

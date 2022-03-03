@@ -27,7 +27,7 @@ export default {
   polygon_ApiKey: '8S2R45ZWG94HI7YK9RCXSK4VCASJ4XVA15',
   ftmscan: 'https://api-testnet.ftmscan.com/api',
   ftm_ApiKey: 'J39MXI2KQ7YWFR3JGYHPVYK1MIH132QSXP',
-  avascan: 'https://testnet.snowtrace.io/api',
+  avaxscan: 'https://testnet.snowtrace.io/api',
   avax_ApiKey: 'BEDYVGMKPM4HXIVD16B1Z66D5R75D9AHNC',
   faucet: 'https://faucet.swaponline.site/testnet/',
   btc2FAProtected: 'https://2fa.swaponline.site',

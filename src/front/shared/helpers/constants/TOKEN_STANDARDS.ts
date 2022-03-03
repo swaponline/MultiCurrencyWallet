@@ -61,7 +61,7 @@ export default {
     standard: 'erc20avax',
     value: 'erc20avax',
     currency: 'avax',
-    explorerApi: config.api.avascan,
+    explorerApi: config.api.avaxscan,
     explorerApiKey: config.api.avax_ApiKey,
     hasSupportAtomicSwap: false,
   },

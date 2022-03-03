@@ -103,7 +103,7 @@ export const COIN_DATA = {
   },
   'AVAX': {
     ticker: 'AVAX',
-    name: 'Fantom',
+    name: 'Avalanche',
     type: COIN_TYPE.NATIVE,
     blockchain: BLOCKCHAIN.AVAX,
     model: COIN_MODEL.AB,
