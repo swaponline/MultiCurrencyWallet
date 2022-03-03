@@ -14,6 +14,7 @@ import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
 import Input from 'components/forms/Input/Input'
 import Button from 'components/controls/Button/Button'
 import DropDown from 'components/ui/DropDown'
+import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
 import dropDownStyles from 'components/ui/DropDown/index.scss'
 import ownStyle from './index.scss'
 import styles from '../Styles/default.scss'
@@ -59,8 +60,9 @@ type CustomTokenState = {
   isPending: boolean
   addTokenMode: 'byAddress' | 'bySearch'
   searchQuery: string
-  coinsList: IUniversalObj[]
-  isCoinsListLoading: boolean
+  assetsList: IUniversalObj[]
+  isAssetsListLoading: boolean
+  selectedAsset: IUniversalObj | null
 }
 
 @cssModules({ ...styles, ...ownStyle }, { allowMultiple: true })
@@ -94,8 +96,9 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
       isPending: false,
       addTokenMode: 'byAddress',
       searchQuery: '',
-      coinsList: [],
-      isCoinsListLoading: false,
+      assetsList: [],
+      isAssetsListLoading: false,
+      selectedAsset: null,
     }
   }
 
@@ -157,26 +160,30 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
     return typeforce.isCoinAddress[baseCurrency.toUpperCase()](tokenAddress)
   }
 
-  async getCoinsList(searchQuery: string) {
+  async getAssetsList(searchQuery: string) {
     const coinGeckoSearchLink = 'https://api.coingecko.com/api/v3/search'
     try {
-      this.setState({ isCoinsListLoading: true })
+      this.setState({ isAssetsListLoading: true })
       const result = await axios.get(`${coinGeckoSearchLink}?query=${searchQuery}`)
       return result.data?.coins
     } catch (error) {
       console.log('error', error)
       return []
     } finally {
-      this.setState({ isCoinsListLoading: false })
+      this.setState({ isAssetsListLoading: false })
     }
   }
 
-  setCoinsList = (coinsList: IUniversalObj[]) => this.setState(() => ({ coinsList }))
+  setAssetsList = (assetsList: IUniversalObj[]) => this.setState(() => ({ assetsList }))
+
+  setAsset = (asset: any) => this.setState(() => ({ selectedAsset: asset }))
+
+  resetSearchData = () => this.setState(() => ({ selectedAsset: null, searchQuery: '', assetsList: [] }))
 
   async getTokenPlatforms(tokenId: string) {
-    const coinGeckoCoinsLink = 'https://api.coingecko.com/api/v3/coins'
+    const coinGeckoAssetsLink = 'https://api.coingecko.com/api/v3/coins'
     try {
-      const result = await axios.get(`${coinGeckoCoinsLink}/${tokenId}`)
+      const result = await axios.get(`${coinGeckoAssetsLink}/${tokenId}`)
       return result.data?.platforms
     } catch (error) {
       console.log('error', error)
@@ -187,29 +194,29 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
   async componentDidUpdate(prevProps, prevState) {
     const {
       searchQuery: prevSearchQuery,
-      coinsList: prevCoinsList,
+      assetsList: prevAssetsList,
     } = prevState
 
     const {
       searchQuery,
-      isCoinsListLoading,
+      isAssetsListLoading,
     } = this.state
 
-    const hasNotCoinsInSimilarPrevSearchQuery = !(
-      searchQuery.length > 1
+    const hasNotAssetsInSimilarPrevSearchQuery = searchQuery?.length === 1 || !(
+      searchQuery?.length > 1
       && searchQuery.match(prevSearchQuery)?.index === 0
-      && prevCoinsList.length === 0
+      && prevAssetsList?.length === 0
     )
 
     if (
-      searchQuery.length > 0
+      searchQuery?.length > 0
       && document.activeElement?.id === 'searchQueryInput'
       && prevSearchQuery !== searchQuery
-      && hasNotCoinsInSimilarPrevSearchQuery
-      && !isCoinsListLoading
+      && hasNotAssetsInSimilarPrevSearchQuery
+      && !isAssetsListLoading
     ) {
-      const coinsList = await this.getCoinsList(searchQuery) as IUniversalObj[]
-      this.setCoinsList(coinsList)
+      const assetsList = await this.getAssetsList(searchQuery) as IUniversalObj[]
+      this.setAssetsList(assetsList)
     }
   }
 
@@ -225,8 +232,9 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
       notFound,
       addTokenMode,
       searchQuery,
-      coinsList,
-      isCoinsListLoading,
+      assetsList,
+      isAssetsListLoading,
+      selectedAsset,
     } = this.state
 
     const {
@@ -345,47 +353,71 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
                 </div>
               ) : (
                 <div styleName="highLevel">
-                  <div styleName="highLevel">
-                    <FieldLabel inRow>
-                      <span style={{ fontSize: '16px' }}>
-                        <FormattedMessage
-                          id="Search"
-                          defaultMessage="Search"
-                        />
-                      </span>
-                    </FieldLabel>
-                    <Input
-                      id="searchQueryInput"
-                      valueLink={linked.searchQuery}
-                      focusOnInit
-                      pattern="0-9a-zA-Z:"
-                      placeholder={intl.formatMessage(localeLabel.searchPlaceholder)}
-                    />
-                    {
-                      document.activeElement?.id === 'searchQueryInput'
-                      && searchQuery.length > 0
-                      && (
-                        <div style={{ padding: '1rem' }}>
-                          {
-                            isCoinsListLoading
-                              ? 'Loading...'
-                              : coinsList.length > 0
-                                ? (
-                                  <div styleName="coinsList">
-                                    {coinsList.map((coinInfo, i) => (
-                                      <div styleName="coin" key={i}>
-                                        {coinInfo?.thumb && <span><img src={coinInfo.thumb} alt={coinInfo.id} /></span>}
-                                        <span>{` ${coinInfo.name} (${coinInfo.symbol})`}</span>
-                                      </div>
-                                    ))}
-                                  </div>
-                                )
-                                : `No result for ${searchQuery}`
-                          }
-                        </div>
-                      )
-                    }
-                  </div>
+                  {selectedAsset ? (
+                    <div styleName="lowLevel">
+                      <FieldLabel inRow>
+                        <span styleName="title">
+                          <FormattedMessage id="selectedToken" defaultMessage="Token" />
+                        </span>
+                      </FieldLabel>
+                      <div styleName="fakeInput">
+                        {selectedAsset.thumb && <span><img src={selectedAsset.thumb} alt={selectedAsset.id} /></span>}
+                        <span>{` ${selectedAsset.name} (${selectedAsset.symbol})`}</span>
+                      </div>
+                      <div styleName="closeIconWrapper">
+                        <CloseIcon onClick={this.resetSearchData} />
+                      </div>
+                    </div>
+                  ) : (
+                    <>
+                      <FieldLabel inRow>
+                        <span style={{ fontSize: '16px' }}>
+                          <FormattedMessage
+                            id="Search"
+                            defaultMessage="Search"
+                          />
+                        </span>
+                      </FieldLabel>
+                      <Input
+                        id="searchQueryInput"
+                        valueLink={linked.searchQuery}
+                        focusOnInit
+                        placeholder={intl.formatMessage(localeLabel.searchPlaceholder)}
+                      />
+                      {
+                        document.activeElement?.id === 'searchQueryInput'
+                        && searchQuery?.length > 0
+                        && (
+                          <>
+                            <div styleName="closeIconWrapper">
+                              <CloseIcon onClick={this.resetSearchData} />
+                            </div>
+                            <div style={{ padding: '1rem' }}>
+                              {isAssetsListLoading
+                                ? 'Loading...'
+                                : assetsList?.length > 0
+                                  ? (
+                                    <div styleName="assetsList">
+                                      {assetsList.map((assetInfo, i) => (
+                                        <button
+                                          styleName="asset"
+                                          key={i}
+                                          onClick={() => this.setAsset(assetInfo)}
+                                          type="button"
+                                        >
+                                          {assetInfo?.thumb && <span><img src={assetInfo.thumb} alt={assetInfo.id} /></span>}
+                                          <span>{` ${assetInfo.name} (${assetInfo.symbol})`}</span>
+                                        </button>
+                                      ))}
+                                    </div>
+                                  )
+                                  : `No result for ${searchQuery}`}
+                            </div>
+                          </>
+                        )
+                      }
+                    </>
+                  )}
                 </div>
               )}
               <Button
