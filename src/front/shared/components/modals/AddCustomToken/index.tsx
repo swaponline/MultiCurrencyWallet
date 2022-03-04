@@ -188,6 +188,18 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
     return typeforce.isCoinAddress[baseCurrency.toUpperCase()](address)
   }
 
+  selectAddByAddress = () => {
+    this.setState({
+      addTokenMode: 'byAddress',
+    })
+  }
+
+  selectAddBySearch = () => {
+    this.setState({
+      addTokenMode: 'bySearch',
+    })
+  }
+
   async getAssetsList(searchQuery: string) {
     const coinGeckoSearchLink = 'https://api.coingecko.com/api/v3/search'
     try {
@@ -334,10 +346,6 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
     )
 
     const localeLabel = defineMessages({
-      title: {
-        id: 'customERC20_Title',
-        defaultMessage: 'Add a new token',
-      },
       addressPlaceholder: {
         id: 'customERC20_addressPlaceholder',
         defaultMessage: 'Enter token address',
@@ -348,44 +356,32 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
       },
     })
 
-    const selectAddByAddress = () => {
-      this.setState({
-        addTokenMode: 'byAddress',
-      })
-    }
-
-    const selectAddBySearch = () => {
-      this.setState({
-        addTokenMode: 'bySearch',
-      })
-    }
-
     return (
       <Modal
         name={name}
-        title={`${intl.formatMessage(localeLabel.title)}`}
+        title={<FormattedMessage id="customERC20_Title" defaultMessage="Add a new token" />}
         contentWithTabs
         showCloseButton
       >
         <div styleName="stepsWrapper">
-          <div styleName="tabsWrapper">
-            <button
-              type="button"
-              styleName={`tab ${addTokenMode === 'byAddress' ? 'active' : ''}`}
-              onClick={selectAddByAddress}
-            >
-              <FormattedMessage id="addByAddress" defaultMessage="by Address" />
-            </button>
-            <button
-              type="button"
-              styleName={`tab ${addTokenMode === 'bySearch' ? 'active' : ''}`}
-              onClick={selectAddBySearch}
-            >
-              <FormattedMessage id="addBySearch" defaultMessage="by Search" />
-            </button>
-          </div>
           {step === 'enterAddress' && (
             <>
+              <div styleName="tabsWrapper">
+                <button
+                  type="button"
+                  styleName={`tab ${addTokenMode === 'byAddress' ? 'active' : ''}`}
+                  onClick={this.selectAddByAddress}
+                >
+                  <FormattedMessage id="addByAddress" defaultMessage="by Address" />
+                </button>
+                <button
+                  type="button"
+                  styleName={`tab ${addTokenMode === 'bySearch' ? 'active' : ''}`}
+                  onClick={this.selectAddBySearch}
+                >
+                  <FormattedMessage id="addBySearch" defaultMessage="by Search" />
+                </button>
+              </div>
               {addTokenMode === 'byAddress' ? (
                 <div styleName="highLevel">
                   <FieldLabel inRow>
@@ -445,7 +441,7 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
                       <div styleName="lowLevel">
                         <FieldLabel inRow>
                           <span styleName="title">
-                            <FormattedMessage id="selectedToken" defaultMessage="Token" />
+                            <FormattedMessage id="selectedTokenTitle" defaultMessage="Token" />
                           </span>
                         </FieldLabel>
                         <div styleName="fakeInput">
@@ -458,8 +454,11 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
                       </div>
                       {
                         isAssetFullInfoLoading
-                          ? <div style={{ padding: '1rem' }}>Loading...</div>
-                          : (selectedAssetPlatform && selectedAssetPlatforms.length > 0) ? (
+                          ? (
+                            <div style={{ padding: '1rem' }}>
+                              <FormattedMessage id="Table96" defaultMessage="Loading..." />
+                            </div>
+                          ) : (selectedAssetPlatform && selectedAssetPlatforms.length > 0) ? (
                             <div styleName="lowLevel">
                               <FieldLabel inRow>
                                 <span styleName="title">
@@ -488,7 +487,9 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
                               />
                             </div>
                           ) : (
-                            <div style={{ padding: '1rem' }}>This asset have not supported chains</div>
+                            <div style={{ padding: '1rem' }}>
+                              <FormattedMessage id="selectedAssetHaveNotChains" defaultMessage="This asset has no token addresses on supported networks" />
+                            </div>
                           )
                       }
                     </>
@@ -518,7 +519,7 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
                             </div>
                             <div style={{ padding: '1rem' }}>
                               {isAssetsListLoading
-                                ? 'Loading...'
+                                ? <FormattedMessage id="Table96" defaultMessage="Loading..." />
                                 : assetsList?.length > 0
                                   ? (
                                     <div styleName="assetsList">
@@ -535,7 +536,15 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
                                       ))}
                                     </div>
                                   )
-                                  : `No result for ${searchQuery}`}
+                                  : (
+                                    <FormattedMessage
+                                      id="noSearchingResult"
+                                      defaultMessage="No result for {searchQuery}"
+                                      values={{
+                                        searchQuery,
+                                      }}
+                                    />
+                                  )}
                             </div>
                           </>
                         )

@@ -395,6 +395,7 @@
     "id": "Table96",
     "message": "Ładowanie... ",
     "files": [
+      "src/front/shared/components/modals/AddCustomToken/index.tsx",
       "src/front/shared/components/tables/Table/Table.tsx",
       "src/front/shared/containers/App/App.tsx"
     ]
@@ -2455,7 +2456,49 @@
   },
   {
     "id": "customERC20_addressPlaceholder",
-    "message": "Enter token address",
+    "message": "Wpisz adres tokena",
+    "files": [
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
+    ]
+  },
+  {
+    "id": "customERC20_searchPlaceholder",
+    "message": "Wpisz nazwę lub symbol tokena",
+    "files": [
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
+    ]
+  },
+  {
+    "id": "addByAddress",
+    "message": "według Adresu",
+    "files": [
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
+    ]
+  },
+  {
+    "id": "addBySearch",
+    "message": "przez Wyszukiwanie",
+    "files": [
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
+    ]
+  },
+  {
+    "id": "selectedTokenTitle",
+    "message": "Token",
+    "files": [
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
+    ]
+  },
+  {
+    "id": "selectedAssetHaveNotChains",
+    "message": "Ten zasób nie ma adresów tokenów w obsługiwanych sieciach",
+    "files": [
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
+    ]
+  },
+  {
+    "id": "noSearchingResult",
+    "message": "Brak wyników dla {searchQuery}",
     "files": [
       "src/front/shared/components/modals/AddCustomToken/index.tsx"
     ]
@@ -2476,7 +2519,7 @@
   },
   {
     "id": "btcmsSwitchFetchWalletsData",
-    "message": "Fetching...",
+    "message": "Ujmujący...",
     "files": [
       "src/front/shared/components/modals/BtcMultisignSwitch/BtcMultisignSwitch.tsx"
     ]
