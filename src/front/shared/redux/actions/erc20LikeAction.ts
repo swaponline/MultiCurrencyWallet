@@ -80,6 +80,8 @@ class Erc20LikeAction {
     const customTokens = this.getCustomTokensConfig()
     const privateKey = localStorage.getItem(constants.privateKeyNames[baseCurrency])
 
+    if (!customTokens[NETWORK][standard]) customTokens[NETWORK][standard] = {} // TODO: add migration when add some chain and standard
+
     customTokens[NETWORK][standard][contractAddr] = {
       address: contractAddr,
       symbol,

@@ -123,7 +123,7 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
 
   handleConfirm = async () => {
     const { tokenStandard, tokenAddress, tokenSymbol, tokenDecimals, baseCurrency } = this.state
-    actions[tokenStandard].addToken({
+    await actions[tokenStandard].addToken({
       standard: tokenStandard,
       contractAddr: tokenAddress,
       symbol: tokenSymbol,
