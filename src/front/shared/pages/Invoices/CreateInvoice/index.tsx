@@ -21,6 +21,7 @@ type CreateInvoiceProps = {
     arbethData,
     xdaiData,
     ftmData,
+    avaxData,
     ghostData,
     nextData,
   },
@@ -34,6 +35,7 @@ type CreateInvoiceProps = {
       arbeth: arbethData,
       xdai: xdaiData,
       ftm: ftmData,
+      avax: avaxData,
       ghost: ghostData,
       next: nextData,
     }

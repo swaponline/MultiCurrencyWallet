@@ -35,6 +35,9 @@ export const getActivatedCurrencies = () => {
   if (!externalConfig.opts.curEnabled || externalConfig.opts.curEnabled.ftm) {
     currencies.push('FTM')
   }
+  if (!externalConfig.opts.curEnabled || externalConfig.opts.curEnabled.avax) {
+    currencies.push('AVAX')
+  }
 
   if (!externalConfig.opts.curEnabled || externalConfig.opts.curEnabled.ghost) {
     currencies.push('GHOST')
@@ -70,6 +73,7 @@ export const getWidgetCurrencies = () => {
     'ARBETH',
     'XDAI',
     'FTM',
+    'AVAX',
     'GHOST',
     'NEXT',
   ]

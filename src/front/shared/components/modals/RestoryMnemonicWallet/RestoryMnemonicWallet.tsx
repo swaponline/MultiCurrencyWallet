@@ -170,6 +170,7 @@ class RestoryMnemonicWallet extends React.Component<ComponentProps, ComponentSta
       await actions.arbeth.login(false, mnemonic)
       await actions.xdai.login(false, mnemonic)
       await actions.ftm.login(false, mnemonic)
+      await actions.avax.login(false, mnemonic)
       await actions.ghost.login(false, mnemonic)
       await actions.next.login(false, mnemonic)
       await actions.user.sign_btc_2fa(btcPrivKey)

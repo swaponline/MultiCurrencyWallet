@@ -16,6 +16,7 @@ export const API_NAME = {
   56: 'zeroxBsc',
   137: 'zeroxPolygon',
   250: 'zeroxFantom',
+  43114: 'zeroxAvalanche',
 }
 
 export const API_GAS_LIMITS = {
@@ -49,5 +50,10 @@ export const LIQUIDITY_SOURCE_DATA = {
     name: 'SpiritSwap',
     router: config.swapContract.spiritSwapRouter,
     factory: config.swapContract.spiritSwapFactory,
+  },
+  [config.evmNetworks.AVAX.networkVersion]: {
+    name: 'PangolinSwap',
+    router: config.swapContract.pangolinSwapRouter,
+    factory: config.swapContract.pangolinSwapFactory,
   },
 }

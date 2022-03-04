@@ -9,6 +9,7 @@ const decimals = {
   arbeth: 18,
   xdai: 18,
   ftm: 18,
+  avax: 18,
   ghost: 8,
   next: 8,
 }

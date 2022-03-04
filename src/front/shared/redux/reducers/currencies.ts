@@ -155,6 +155,16 @@ const initialState = {
       addAssets: true,
     }] : [],
     //@ts-ignore
+    ...(!buildOpts.curEnabled || buildOpts.curEnabled.avax) ? [{
+      name: 'AVAX',
+      title: 'AVAX',
+      icon: 'avax',
+      value: 'avax',
+      fullTitle: 'avax',
+      blockchain: BLOCKCHAIN_TYPE.AVAX,
+      addAssets: true,
+    }] : [],
+    //@ts-ignore
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.ghost) ? [{
       name: 'GHOST',
       title: 'GHOST',
@@ -266,6 +276,14 @@ const initialState = {
       fullTitle: 'fantom',
     }] : [],
     //@ts-ignore
+    ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.avax) ? [{
+      name: 'AVAX',
+      title: 'AVAX',
+      icon: 'avax',
+      value: 'avax',
+      fullTitle: 'avalanche',
+    }] : [],
+    //@ts-ignore
     ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.ghost) ? [{
       name: 'GHOST',
       title: 'GHOST',
@@ -347,6 +365,14 @@ if (config.isWidget) {
       fullTitle: 'fantom',
     }] : [],
     //@ts-ignore
+    ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.avax) ? [{
+      name: 'AVAX',
+      title: 'AVAX',
+      icon: 'avax',
+      value: 'avax',
+      fullTitle: 'avalanche',
+    }] : [],
+    //@ts-ignore
     ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.btc) ? [{
       name: 'BTC',
       title: 'BTC',
@@ -420,6 +446,14 @@ if (config.isWidget) {
       icon: 'ftm',
       value: 'ftm',
       fullTitle: 'fantom',
+    }] : [],
+    //@ts-ignore
+    ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.avax) ? [{
+      name: 'AVAX',
+      title: 'AVAX',
+      icon: 'avax',
+      value: 'avax',
+      fullTitle: 'avalanche',
     }] : [],
     //@ts-ignore
     ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.btc) ? [{

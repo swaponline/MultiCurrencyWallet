@@ -99,4 +99,9 @@ export default {
     defaultParams: DEFAULT_CURRENCY_PARAMETERS.evmLike,
     web3: new Web3(config.web3.ftm_provider),
   }),
+  avax: new ethLikeHelper({
+    currency: 'AVAX',
+    defaultParams: DEFAULT_CURRENCY_PARAMETERS.evmLike,
+    web3: new Web3(config.web3.avax_provider),
+  }),
 }

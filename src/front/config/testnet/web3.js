@@ -5,4 +5,5 @@ export default {
   arbitrum_provider: 'https://rinkeby.arbitrum.io/rpc',
   xdai_provider: 'https://sokol.poa.network',
   ftm_provider: 'https://rpc.testnet.fantom.network/',
+  avax_provider: 'https://api.avax-test.network/ext/bc/C/rpc',
 }

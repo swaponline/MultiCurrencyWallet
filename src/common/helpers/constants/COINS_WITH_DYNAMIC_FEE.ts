@@ -9,6 +9,7 @@ export default [
   'arbeth',
   'xdai',
   'ftm',
+  'avax',
   'btc',
   'ghost',
   'next',
