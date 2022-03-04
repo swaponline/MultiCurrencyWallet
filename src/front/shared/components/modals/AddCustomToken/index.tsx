@@ -121,9 +121,9 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
     this.setState(() => ({ isPending: false }))
   }
 
-  handleConfirm = async () => {
+  handleConfirm = () => {
     const { tokenStandard, tokenAddress, tokenSymbol, tokenDecimals, baseCurrency } = this.state
-    await actions[tokenStandard].addToken({
+    actions[tokenStandard].addToken({
       standard: tokenStandard,
       contractAddr: tokenAddress,
       symbol: tokenSymbol,
