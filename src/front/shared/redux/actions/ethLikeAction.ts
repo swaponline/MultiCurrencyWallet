@@ -544,7 +544,7 @@ class EthLikeAction {
           console.group('%c tx hash', 'color: green;')
           console.log(hash)
           console.groupEnd()
-
+          
           if (!toAdmin && !waitReceipt) {
             reducers.transactions.addTransactionToQueue({
               networkCoin: this.ticker,
@@ -652,5 +652,16 @@ export default {
     explorerApiKey: externalConfig.api.ftm_ApiKey,
     adminFeeObj: externalConfig.opts?.fee?.ftm,
     web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.ftm_provider)),
+  }),
+  AVAX: new EthLikeAction({
+    coinName: 'Avalanche',
+    ticker: 'AVAX',
+    privateKeyName: 'eth',
+    chainId: externalConfig.evmNetworks.AVAX.chainId,
+    explorerName: 'avaxscan',
+    explorerLink: externalConfig.link.avaxscan,
+    explorerApiKey: externalConfig.api.avax_ApiKey,
+    adminFeeObj: externalConfig.opts?.fee?.avax,
+    web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.avax_provider)),
   }),
 }

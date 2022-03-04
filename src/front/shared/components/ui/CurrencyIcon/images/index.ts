@@ -5,6 +5,7 @@ import matic from './matic.svg'
 import arbeth from './arbeth.svg'
 import xdai from './xdai.svg'
 import ftm from './ftm.svg'
+import avax from './avax.svg'
 import wbtc from './wbtc.svg'
 import icx from './icx.svg'
 import waves from './waves.svg'
@@ -45,6 +46,7 @@ export default {
   arbeth,
   xdai,
   ftm,
+  avax,
   syc2,
   icx,
   usdt,

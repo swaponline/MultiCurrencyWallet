@@ -8,6 +8,7 @@ export default [
   'ARBETH',
   'XDAI',
   'FTM',
+  'AVAX',
   'GHOST',
   'NEXT',
   '{ETH}SWAP',

@@ -58,6 +58,7 @@ export default [
   'ARBETH',
   'XDAI',
   'FTM',
+  'AVAX',
   '{ETH}SWAP',
   '{ETH}HDP',
   '{ETH}USDT',

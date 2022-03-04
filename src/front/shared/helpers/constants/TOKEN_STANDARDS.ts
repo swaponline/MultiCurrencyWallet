@@ -62,4 +62,14 @@ export default {
     explorerApiKey: config.api.ftm_ApiKey,
     hasSupportAtomicSwap: false,
   },
+  erc20avax: {
+    platform: 'ethereum',
+    platformKey: 'avalanche',
+    standard: 'erc20avax',
+    value: 'erc20avax',
+    currency: 'avax',
+    explorerApi: config.api.avaxscan,
+    explorerApiKey: config.api.avax_ApiKey,
+    hasSupportAtomicSwap: false,
+  },
 }

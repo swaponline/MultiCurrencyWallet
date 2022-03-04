@@ -45,6 +45,7 @@ const externalConfig = () => {
       arbeth: true,
       xdai: true,
       ftm: true,
+      avax: true,
       btc: true,
       ghost: true,
       next: true,
@@ -57,6 +58,7 @@ const externalConfig = () => {
       arbeth: false,
       xdai: false,
       ftm: false,
+      avax: false,
       ghost: true,
       next: true,
     },
@@ -269,6 +271,11 @@ const externalConfig = () => {
   if (window && window.CUR_FTM_DISABLED === true) {
     config.opts.curEnabled.ftm = false
     config.opts.blockchainSwapEnabled.ftm = false
+  }
+
+  if (window && window.CUR_AVAX_DISABLED === true) {
+    config.opts.curEnabled.avax = false
+    config.opts.blockchainSwapEnabled.avax = false
   }
 
   config.enabledEvmNetworks = Object.keys(config.evmNetworks)

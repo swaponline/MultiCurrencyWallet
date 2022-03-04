@@ -5,6 +5,7 @@ export default {
   arbeth: 0.001,
   xdai:0.001,
   ftm:0.001,
+  avax:0.001,
   btc: 0.00015,
   ghost: 0.00015,
   next: 0.00015,

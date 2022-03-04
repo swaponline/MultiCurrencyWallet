@@ -5,4 +5,5 @@ export default [
     42161,  // ARBITRUM Mainnet
     100,    // XDAO Mainnet
     250,    // FTM Mainnet
+    43114,    // AVAX Mainnet
 ]

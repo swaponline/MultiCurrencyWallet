@@ -80,6 +80,8 @@ class Erc20LikeAction {
     const customTokens = this.getCustomTokensConfig()
     const privateKey = localStorage.getItem(constants.privateKeyNames[baseCurrency])
 
+    if (!customTokens[NETWORK][standard]) customTokens[NETWORK][standard] = {} // TODO: add migration when add some chain and standard
+
     customTokens[NETWORK][standard][contractAddr] = {
       address: contractAddr,
       symbol,
@@ -694,5 +696,14 @@ export default {
     explorerApiKey: externalConfig.api.ftm_ApiKey,
     adminFeeObj: externalConfig.opts?.fee?.erc20ftm,
     web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.ftm_provider)),
+  }),
+  erc20avax: new Erc20LikeAction({
+    currency: 'AVAX',
+    standard: 'erc20avax',
+    explorerName: 'avaxscan',
+    explorerLink: externalConfig.link.avaxscan,
+    explorerApiKey: externalConfig.api.avax_ApiKey,
+    adminFeeObj: externalConfig.opts?.fee?.erc20avax,
+    web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.avax_provider)),
   }),
 }

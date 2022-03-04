@@ -5,6 +5,7 @@ import erc20 from './erc20'
 import erc20matic from './erc20matic'
 import erc20xdai from './erc20xdai'
 import erc20ftm from './erc20ftm'
+import erc20avax from './erc20avax'
 import bep20 from './bep20'
 import api from './api'
 import swapContract from './swapContract'
@@ -26,6 +27,7 @@ export default {
   erc20matic,
   erc20xdai,
   erc20ftm,
+  erc20avax,
   swapContract,
   feeRates,
   hiddenCoins,

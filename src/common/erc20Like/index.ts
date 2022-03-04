@@ -170,4 +170,10 @@ export default {
     defaultParams: DEFAULT_CURRENCY_PARAMETERS.evmLikeToken,
     web3: new Web3(new Web3.providers.HttpProvider(config.web3.ftm_provider)),
   }),
+  erc20avax: new erc20LikeHelper({
+    standard: 'erc20avax',
+    currency: 'AVAX',
+    defaultParams: DEFAULT_CURRENCY_PARAMETERS.evmLikeToken,
+    web3: new Web3(new Web3.providers.HttpProvider(config.web3.avax_provider)),
+  }),
 }

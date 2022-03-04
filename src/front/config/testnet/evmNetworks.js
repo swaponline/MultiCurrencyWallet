@@ -50,4 +50,12 @@ export default {
     rpcUrls: [web3.ftm_provider],
     blockExplorerUrls: [link.ftm],
   },
+  AVAX: {
+    currency: 'AVAX',
+    chainId: '0xa869',
+    networkVersion: 43113,
+    chainName: 'Avalanche Testnet',
+    rpcUrls: [web3.avax_provider],
+    blockExplorerUrls: [link.avax],
+  },
 }

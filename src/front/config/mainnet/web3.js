@@ -5,4 +5,5 @@ export default {
   arbitrum_provider: 'https://arb1.arbitrum.io/rpc',
   xdai_provider: 'https://rpc.xdaichain.com/',
   ftm_provider: 'https://rpc.ftm.tools',
+  avax_provider: 'https://api.avax.network/ext/bc/C/rpc',
 }

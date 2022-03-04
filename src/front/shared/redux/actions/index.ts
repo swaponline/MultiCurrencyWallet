@@ -49,11 +49,13 @@ export default {
   arbeth: EthLikeAction.ARBETH,
   xdai: EthLikeAction.XDAI,
   ftm: EthLikeAction.FTM,
+  avax: EthLikeAction.AVAX,
   erc20: Erc20LikeAction.erc20,
   bep20: Erc20LikeAction.bep20,
   erc20matic: Erc20LikeAction.erc20matic,
   erc20xdai: Erc20LikeAction.erc20xdai,
   erc20ftm: Erc20LikeAction.erc20ftm,
+  erc20avax: Erc20LikeAction.erc20avax,
   ghost,
   next,
 

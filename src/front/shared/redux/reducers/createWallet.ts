@@ -7,6 +7,7 @@ export const initialState = {
     arbeth: false,
     xdai: false,
     ftm: false,
+    avax: false,
     ghost: false,
     next: false,
     '{eth}usdt': false,

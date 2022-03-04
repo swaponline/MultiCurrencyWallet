@@ -19,6 +19,8 @@ export const defaultPack = [
   ...(!curEnabled || curEnabled.xdai ? [{ name: 'XDAI', capture: 'xDai' }] : []),
 
   ...(!curEnabled || curEnabled.ftm ? [{ name: 'FTM', capture: 'Fantom' }] : []),
+  
+  ...(!curEnabled || curEnabled.ftm ? [{ name: 'AVAX', capture: 'Avalanche' }] : []),
 
   ...((!curEnabled || curEnabled.ghost) && !onlyEvmWallets ? [{ name: 'GHOST', capture: 'Ghost' }] : []),
   ...((!curEnabled || curEnabled.next) && !onlyEvmWallets ? [{ name: 'NEXT', capture: 'NEXT.coin' }] : []),
@@ -40,6 +42,7 @@ export const defaultPack = [
   ...(config.erc20matic ? [{ name: 'ERC20MATIC', capture: 'Token', baseCurrency: 'MATIC' }] : []),
   ...(config.erc20xdai ? [{ name: 'ERC20XDAI', capture: 'Token', baseCurrency: 'XDAI' }] : []),
   ...(config.erc20ftm ? [{ name: 'ERC20FTM', capture: 'Token', baseCurrency: 'FTM' }] : []),
+  ...(config.erc20avax ? [{ name: 'ERC20AVAX', capture: 'Token', baseCurrency: 'AVAX' }] : []),
 ]
 
 export const widgetPack = [
@@ -55,6 +58,8 @@ export const widgetPack = [
   ...((config.erc20xdai && (!curEnabled || curEnabled.xdai)) ? [{ name: 'ERC20XDAI', capture: 'Token', baseCurrency: 'XDAI' }] : []),
   ...(!curEnabled || curEnabled.ftm ? [{ name: 'FTM', capture: 'Fantom' }] : []),
   ...((config.erc20ftm && (!curEnabled || curEnabled.ftm)) ? [{ name: 'ERC20FTM', capture: 'Token', baseCurrency: 'FTM' }] : []),
+  ...(!curEnabled || curEnabled.avax ? [{ name: 'AVAX', capture: 'Avalanche' }] : []),
+  ...((config.erc20avax && (!curEnabled || curEnabled.avax)) ? [{ name: 'ERC20AVAX', capture: 'Token', baseCurrency: 'AVAX' }] : []),
   ...((!curEnabled || curEnabled.ghost) && !onlyEvmWallets ? [{ name: 'GHOST', capture: 'Ghost' }] : []),
   ...((!curEnabled || curEnabled.next) && !onlyEvmWallets ? [{ name: 'NEXT', capture: 'NEXT.coin' }] : []),
 ]

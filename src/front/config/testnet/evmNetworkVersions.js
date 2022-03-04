@@ -5,4 +5,5 @@ export default [
     421611, // ARBITRUM Testnet (Rinkeby)
     77,     // XDAI Testnet (Sokol)
     4002,   // FTM Testnet
+    43113,  // AVAX Testnet
 ]
