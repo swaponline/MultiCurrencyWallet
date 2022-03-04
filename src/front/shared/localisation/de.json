@@ -402,6 +402,7 @@
     "id": "Table96",
     "message": "Lädt... ",
     "files": [
+      "src/front/shared/components/modals/AddCustomToken/index.tsx",
       "src/front/shared/components/tables/Table/Table.tsx",
       "src/front/shared/containers/App/App.tsx"
     ]
@@ -2590,6 +2591,48 @@
   {
     "id": "customERC20_addressPlaceholder",
     "message": "Tokenadresse eingeben",
+    "files": [
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
+    ]
+  },
+  {
+    "id": "customERC20_searchPlaceholder",
+    "message": "Geben Sie den Namen oder das Symbol des Tokens ein",
+    "files": [
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
+    ]
+  },
+  {
+    "id": "addByAddress",
+    "message": "nach Adresse",
+    "files": [
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
+    ]
+  },
+  {
+    "id": "addBySearch",
+    "message": "durch Suche",
+    "files": [
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
+    ]
+  },
+  {
+    "id": "selectedTokenTitle",
+    "message": "Token",
+    "files": [
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
+    ]
+  },
+  {
+    "id": "selectedAssetHaveNotChains",
+    "message": "Dieses Asset hat keine Token-Adressen in unterstützten Netzwerken",
+    "files": [
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
+    ]
+  },
+  {
+    "id": "noSearchingResult",
+    "message": "Kein Ergebnis für {searchQuery}",
     "files": [
       "src/front/shared/components/modals/AddCustomToken/index.tsx"
     ]

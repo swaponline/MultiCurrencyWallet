@@ -402,6 +402,7 @@
     "id": "Table96",
     "message": "Lading... ",
     "files": [
+      "src/front/shared/components/modals/AddCustomToken/index.tsx",
       "src/front/shared/components/tables/Table/Table.tsx",
       "src/front/shared/containers/App/App.tsx"
     ]
@@ -2443,7 +2444,49 @@
   },
   {
     "id": "customERC20_addressPlaceholder",
-    "message": "Введите адрес токена",
+    "message": "Token adres invoeren",
+    "files": [
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
+    ]
+  },
+  {
+    "id": "customERC20_searchPlaceholder",
+    "message": "Tokennaam of symbool invoeren",
+    "files": [
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
+    ]
+  },
+  {
+    "id": "addByAddress",
+    "message": "op Adres",
+    "files": [
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
+    ]
+  },
+  {
+    "id": "addBySearch",
+    "message": "op Zoeken",
+    "files": [
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
+    ]
+  },
+  {
+    "id": "selectedTokenTitle",
+    "message": "Token",
+    "files": [
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
+    ]
+  },
+  {
+    "id": "selectedAssetHaveNotChains",
+    "message": "Dit item heeft geen tokenadressen op ondersteunde netwerken",
+    "files": [
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
+    ]
+  },
+  {
+    "id": "noSearchingResult",
+    "message": "Geen resultaat voor {searchQuery}",
     "files": [
       "src/front/shared/components/modals/AddCustomToken/index.tsx"
     ]

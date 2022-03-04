@@ -2,6 +2,7 @@ import config from 'app-config'
 
 export type TokenStandard = {
   platform: string
+  platformKey: string
   standard: string
   value: string
   currency: string
@@ -13,6 +14,7 @@ export type TokenStandard = {
 export default {
   erc20: {
     platform: 'ethereum',
+    platformKey: 'ethereum',
     standard: 'erc20',
     value: 'erc20',
     currency: 'eth',
@@ -22,6 +24,7 @@ export default {
   },
   bep20: {
     platform: 'binance smart chain',
+    platformKey: 'binance-smart-chain',
     standard: 'bep20',
     value: 'bep20',
     currency: 'bnb',
@@ -31,6 +34,7 @@ export default {
   },
   erc20matic: {
     platform: 'ethereum',
+    platformKey: 'polygon-pos',
     standard: 'erc20matic',
     value: 'erc20matic',
     currency: 'matic',
@@ -40,6 +44,7 @@ export default {
   },
   erc20xdai: {
     platform: 'ethereum',
+    platformKey: 'xdai',
     standard: 'erc20xdai',
     value: 'erc20xdai',
     currency: 'xdai',
@@ -49,6 +54,7 @@ export default {
   },
   erc20ftm: {
     platform: 'ethereum',
+    platformKey: 'fantom',
     standard: 'erc20ftm',
     value: 'erc20ftm',
     currency: 'ftm',
@@ -58,6 +64,7 @@ export default {
   },
   erc20avax: {
     platform: 'ethereum',
+    platformKey: 'avalanche',
     standard: 'erc20avax',
     value: 'erc20avax',
     currency: 'avax',

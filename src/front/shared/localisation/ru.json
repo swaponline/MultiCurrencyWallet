@@ -448,6 +448,7 @@
     "id": "Table96",
     "message": "Загрузка... ",
     "files": [
+      "src/front/shared/components/modals/AddCustomToken/index.tsx",
       "src/front/shared/components/tables/Table/Table.tsx",
       "src/front/shared/containers/App/App.tsx"
     ]
@@ -2544,6 +2545,48 @@
   {
     "id": "customERC20_addressPlaceholder",
     "message": "Введите адрес токена",
+    "files": [
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
+    ]
+  },
+  {
+    "id": "customERC20_searchPlaceholder",
+    "message": "Введите название или символ токена",
+    "files": [
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
+    ]
+  },
+  {
+    "id": "addByAddress",
+    "message": "по Адресу",
+    "files": [
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
+    ]
+  },
+  {
+    "id": "addBySearch",
+    "message": "по Поиску",
+    "files": [
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
+    ]
+  },
+  {
+    "id": "selectedTokenTitle",
+    "message": "Токен",
+    "files": [
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
+    ]
+  },
+  {
+    "id": "selectedAssetHaveNotChains",
+    "message": "У этого актива нет адресов токенов в поддерживаемых сетях",
+    "files": [
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
+    ]
+  },
+  {
+    "id": "noSearchingResult",
+    "message": "Нет результата по {searchQuery}",
     "files": [
       "src/front/shared/components/modals/AddCustomToken/index.tsx"
     ]
