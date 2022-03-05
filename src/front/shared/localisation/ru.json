@@ -4066,6 +4066,7 @@
     "id": "BTCMS_SaveMnemonicButton",
     "message": "Сохранить секретную фразу",
     "files": [
+      "src/front/shared/pages/CreateWallet/CreateWallet.tsx",
       "src/front/shared/pages/Exchange/QuickSwap/UserInfo.tsx",
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx",
       "src/front/shared/pages/Multisign/Btc/Btc.tsx"

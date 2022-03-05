@@ -15,6 +15,7 @@ import metamask from 'helpers/metamask'
 import { localisedUrl } from 'helpers/locale'
 
 import Tooltip from 'components/ui/Tooltip/Tooltip'
+import Button from 'shared/components/controls/Button/Button'
 
 import { constants, localStorage } from 'helpers'
 import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
@@ -23,6 +24,7 @@ import StepsWrapper from './Steps/StepsWrapper'
 import styles from './CreateWallet.scss'
 
 const noInternalWallet = !!(config?.opts?.ui?.disableInternalWallet)
+const addAllEnabledWalletsAfterRestoreOrCreateSeedPhrase = !!(config?.opts?.addAllEnabledWalletsAfterRestoreOrCreateSeedPhrase || true)
 
 function CreateWallet(props) {
   const {
@@ -95,6 +97,10 @@ function CreateWallet(props) {
     }
     localStorage.setItem(constants.localStorage.isWalletCreate, true)
     goHome()
+  }
+
+  const handleShowMnemonic = () => {
+    actions.modals.open(constants.modals.SaveMnemonicModal)
   }
 
   const handleRestoreMnemonic = () => {
@@ -258,7 +264,7 @@ function CreateWallet(props) {
         <div styleName="buttonWrapper">
           {!noInternalWallet && (
             <div>
-              <button onClick={handleRestoreMnemonic}>
+              <button onClick={handleRestoreMnemonic} type="button">
                 <FormattedMessage id="ImportKeys_RestoreMnemonic" defaultMessage="Restore from 12-word seed" />
               </button>
               &nbsp;
@@ -282,7 +288,7 @@ function CreateWallet(props) {
           )}
           {!metamask.isConnected() && (
             <div>
-              <button onClick={handleConnectWallet}>
+              <button onClick={handleConnectWallet} type="button">
                 {web3Icon && (
                   <img styleName="connectWalletIcon" src={web3Icon} />
                 )}
@@ -299,16 +305,31 @@ function CreateWallet(props) {
           )}
         </div>
 
-        <StepsWrapper
-          step={step}
-          forcedCurrencyData={forcedCurrencyData}
-          error={error}
-          onClick={validate}
-          setError={setError}
-          btcData={btcData}
-          currenciesForSecondStep={currencies}
-          showPinContent={hash === '#pin'}
-        />
+        {
+          addAllEnabledWalletsAfterRestoreOrCreateSeedPhrase
+            ? (
+              <div style={{ display: 'flex', justifyContent: 'center', width: '60%', margin: 'auto' }}>
+                <Button blue fullWidth onClick={handleShowMnemonic}>
+                  <FormattedMessage
+                    id="BTCMS_SaveMnemonicButton"
+                    defaultMessage="Save secret phrase"
+                  />
+                </Button>
+              </div>
+            )
+            : (
+              <StepsWrapper
+                step={step}
+                forcedCurrencyData={forcedCurrencyData}
+                error={error}
+                onClick={validate}
+                setError={setError}
+                btcData={btcData}
+                currenciesForSecondStep={currencies}
+                showPinContent={hash === '#pin'}
+              />
+            )
+        }
       </div>
     </div>
   )
