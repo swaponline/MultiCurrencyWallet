@@ -3,11 +3,11 @@ import { constants } from 'helpers'
 import actions from 'redux/actions'
 import { Link } from 'react-router-dom'
 import { connect } from 'redaction'
+import config from 'helpers/externalConfig'
+import { getActivatedCurrencies } from 'helpers/user'
 
 import cssModules from 'react-css-modules'
 
-import defaultStyles from '../Styles/default.scss'
-import styles from './SaveMnemonicModal.scss'
 import okSvg from 'shared/images/ok.svg'
 
 import Modal from 'components/modal/Modal/Modal'
@@ -17,6 +17,8 @@ import Copy from 'components/ui/Copy/Copy'
 
 import links from 'helpers/links'
 import feedback from 'shared/helpers/feedback'
+import styles from './SaveMnemonicModal.scss'
+import defaultStyles from '../Styles/default.scss'
 
 const langPrefix = `SaveMnemonicModal`
 const langLabels = defineMessages({
@@ -51,7 +53,14 @@ const langLabels = defineMessages({
   mnemonicDeleted: {
     id: `${langPrefix}_MnemoniceDeleted`,
     defaultMessage: `You have already saved your 12-words seed. {href}`,
-    values: { href: <Link to={links.savePrivateKeys}> <FormattedMessage id="MnemoniceDeleted_hrefText" defaultMessage="Try export private key" /></Link> }
+    values: { 
+      href: (
+        <Link to={links.savePrivateKeys}>
+          {' '}
+          <FormattedMessage id="MnemoniceDeleted_hrefText" defaultMessage="Try export private key" />
+        </Link>
+      ) 
+    },
   },
   beginNotice: {
     id: `${langPrefix}_BeginNotice`,
@@ -91,7 +100,7 @@ type MnemonicModalState = {
     user: { btcMultisigUserData },
   }) => ({
     btcData: btcMultisigUserData,
-  })
+  }),
 )
 @cssModules({ ...defaultStyles, ...styles }, { allowMultiple: true })
 class SaveMnemonicModal extends React.Component<MnemonicModalProps, MnemonicModalState> {
@@ -100,12 +109,10 @@ class SaveMnemonicModal extends React.Component<MnemonicModalProps, MnemonicModa
 
     const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
 
-    //@ts-ignore: strictNullChecks
-    const randomWords = (mnemonic !== '-') ? mnemonic.split(` `) : []
-    randomWords.sort(() => .5 - Math.random())
+    const randomWords = (mnemonic && mnemonic !== '-') ? mnemonic.split(` `) : []
+    randomWords.sort(() => 0.5 - Math.random())
 
-    //@ts-ignore: strictNullChecks
-    const words = (mnemonic !== '-') ? mnemonic.split(` `) : []
+    const words = (mnemonic && mnemonic !== '-') ? mnemonic.split(` `) : []
 
     this.state = {
       step: (mnemonic === '-') ? `removed` : `begin`,
@@ -116,10 +123,6 @@ class SaveMnemonicModal extends React.Component<MnemonicModalProps, MnemonicModa
       mnemonicInvalid: true,
       incorrectWord: false,
     }
-  }
-
-  handleGoToWallet = () => {
-    this.handleClose()
   }
 
   handleClose = () => {
@@ -133,6 +136,16 @@ class SaveMnemonicModal extends React.Component<MnemonicModalProps, MnemonicModa
       data.onClose()
     } else {
       window.location.assign(links.hashHome)
+    }
+
+    const addAllEnabledWalletsAfterRestoreOrCreateSeedPhrase = config?.opts?.addAllEnabledWalletsAfterRestoreOrCreateSeedPhrase
+
+    if (addAllEnabledWalletsAfterRestoreOrCreateSeedPhrase) {
+      const currencies = getActivatedCurrencies()
+      currencies.forEach((currency) => {
+        actions.core.markCoinAsVisible(currency.toUpperCase(), true)
+      })
+      localStorage.setItem(constants.localStorage.isWalletCreate, 'true')
     }
 
     actions.modals.close(name)
@@ -157,8 +170,6 @@ class SaveMnemonicModal extends React.Component<MnemonicModalProps, MnemonicModa
       mnemonic,
     } = this.state
 
-    let clickedWord
-
     const currentWord = enteredWords.length
 
     if (words[currentWord] !== randomWords[index]) {
@@ -175,9 +186,8 @@ class SaveMnemonicModal extends React.Component<MnemonicModalProps, MnemonicModa
       return
     }
 
-    clickedWord = randomWords.splice(index, 1)
-    enteredWords.push(clickedWord)
-
+    const clickedWord = randomWords.splice(index, 1)
+    enteredWords.push(...clickedWord)
 
     this.setState({
       randomWords,
@@ -199,7 +209,7 @@ class SaveMnemonicModal extends React.Component<MnemonicModalProps, MnemonicModa
   render() {
     const {
       name,
-      intl
+      intl,
     } = this.props
 
     const {
@@ -213,8 +223,13 @@ class SaveMnemonicModal extends React.Component<MnemonicModalProps, MnemonicModa
     } = this.state
 
     return (
-      //@ts-ignore: strictNullChecks
-      <Modal name={name} title={`${intl.formatMessage(langLabels.title)}`} onClose={this.handleClose} showCloseButton={true}>
+      // @ts-ignore: strictNullChecks
+      <Modal
+        name={name}
+        title={`${intl.formatMessage(langLabels.title)}`}
+        onClose={this.handleClose}
+        showCloseButton
+      >
         {step === `confirmMnemonic` && (
           <p styleName="notice mnemonicNotice">
             <FormattedMessage {...langLabels.enterMnemonicNotice} />
@@ -232,27 +247,31 @@ class SaveMnemonicModal extends React.Component<MnemonicModalProps, MnemonicModa
         )}
         <div>
           {step === `begin` && (
-            <Fragment>
+            <>
               <p styleName="notice mnemonicNotice">
-                <FormattedMessage {...langLabels.beginNotice} values={{
-                  br: <br />,
-                }}/>
+                <FormattedMessage
+                  {...langLabels.beginNotice}
+                  values={{
+                    br: <br />,
+                  }} />
               </p>
               <div styleName="buttonsHolder">
-                <Button blue onClick={() => {
-                  feedback.backup.started()
-                  this.setState({ step: `show` })
-                }}>
+                <Button
+                  blue
+                  onClick={() => {
+                    feedback.backup.started()
+                    this.setState({ step: `show` })
+                  }}>
                   <FormattedMessage {...langLabels.beginContinue} />
                 </Button>
                 <Button blue onClick={this.handleClose}>
                   <FormattedMessage {...langLabels.beginLater} />
                 </Button>
               </div>
-            </Fragment>
+            </>
           )}
           {step === `ready` && (
-            <Fragment>
+            <>
               <p styleName="notice mnemonicNotice">
                 <img styleName="finishImg" src={okSvg} alt="finish" />
                 <FormattedMessage {...langLabels.readySaveNotice} />
@@ -263,34 +282,30 @@ class SaveMnemonicModal extends React.Component<MnemonicModalProps, MnemonicModa
                   blue
                   onClick={this.handleFinish}
                 >
-                  <FormattedMessage id="WithdrawMSUserFinish" defaultMessage="Ready"/>
+                  <FormattedMessage id="WithdrawMSUserFinish" defaultMessage="Ready" />
                 </Button>
               </div>
-            </Fragment>
+            </>
           )}
           {step === `confirmMnemonic` && (
-            <Fragment>
+            <>
               <div styleName="highLevel">
                 <div styleName={`mnemonicView mnemonicEnter ${(incorrectWord) ? 'mnemonicError' : ''}`}>
                   {
-                    enteredWords.map((word, index) => {
-                      return (
-                        <button key={index} onClick={() => { }} className="ym-hide-content notranslate" translate="no">
-                          {word}
-                        </button>
-                      )
-                    })
+                    enteredWords.map((word, index) => (
+                      <button key={index} onClick={() => { }} className="ym-hide-content notranslate" translate="no" type="button">
+                        {word}
+                      </button>
+                    ))
                   }
                 </div>
                 <div styleName="mnemonicWords">
                   {
-                    randomWords.map((word, index) => {
-                      return (
-                        <button key={index} onClick={() => this.handleClickWord(index)} className="ym-hide-content notranslate" translate="no">
-                          {word}
-                        </button>
-                      )
-                    })
+                    randomWords.map((word, index) => (
+                      <button key={index} onClick={() => this.handleClickWord(index)} className="ym-hide-content notranslate" translate="no" type="button">
+                        {word}
+                      </button>
+                    ))
                   }
                 </div>
               </div>
@@ -301,30 +316,28 @@ class SaveMnemonicModal extends React.Component<MnemonicModalProps, MnemonicModa
                   disabled={mnemonicInvalid}
                   onClick={this.handleFinish}
                 >
-                  <FormattedMessage id="WithdrawMSUserFinish" defaultMessage="Ready"/>
+                  <FormattedMessage id="WithdrawMSUserFinish" defaultMessage="Ready" />
                 </Button>
               </div>
-            </Fragment>
+            </>
           )}
           {step === `show` && (
-            <Fragment>
+            <>
               <div styleName="highLevel">
                 <div styleName="mnemonicView" className="ym-hide-content notranslate" translate="no">
                   {
-                    words.map((word, index) => {
-                      return (
-                        <div key={index} styleName='mnemonicViewWordWrapper'>
-                          <div>
-                            <span styleName="wordIndex">{(index + 1)}</span>
-                            <span>{word}</span>
-                          </div>
-                          {
-                            /* space for correct copy-paste */
-                            index + 1 !== words.length && ' '
-                          }
+                    words.map((word, index) => (
+                      <div key={index} styleName="mnemonicViewWordWrapper">
+                        <div>
+                          <span styleName="wordIndex">{(index + 1)}</span>
+                          <span>{word}</span>
                         </div>
-                      )
-                    })
+                        {
+                          /* space for correct copy-paste */
+                          index + 1 !== words.length && ' '
+                        }
+                      </div>
+                    ))
                   }
                 </div>
                 <p styleName="notice mnemonicNotice">
@@ -337,16 +350,16 @@ class SaveMnemonicModal extends React.Component<MnemonicModalProps, MnemonicModa
               <div styleName="mnemonicButtonsWrapper">
                 <Copy text={mnemonic}>
                   <Button brand>
-                    <FormattedMessage id="FeeControler49" defaultMessage="Copy"/>
+                    <FormattedMessage id="FeeControler49" defaultMessage="Copy" />
                   </Button>
                 </Copy>
                 <div styleName="continueBtnWrapper">
                   <Button brand onClick={this.handleGoToConfirm}>
-                    <FormattedMessage id="createWalletButton1" defaultMessage="Continue"/>
+                    <FormattedMessage id="createWalletButton1" defaultMessage="Continue" />
                   </Button>
                 </div>
               </div>
-            </Fragment>
+            </>
           )}
         </div>
       </Modal>

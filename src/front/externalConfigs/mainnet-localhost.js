@@ -140,4 +140,5 @@ window.buildOptions = {
   ],
   invoiceEnabled: true, // Allow create invoices
   showWalletBanners: true,
+  addAllEnabledWalletsAfterRestoreOrCreateSeedPhrase: false,
 }

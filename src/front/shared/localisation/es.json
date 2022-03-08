@@ -3886,6 +3886,7 @@
     "id": "BTCMS_SaveMnemonicButton",
     "message": "Guardar frase secreta",
     "files": [
+      "src/front/shared/pages/CreateWallet/CreateWallet.tsx",
       "src/front/shared/pages/Exchange/QuickSwap/UserInfo.tsx",
       "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx",
       "src/front/shared/pages/Multisign/Btc/Btc.tsx"

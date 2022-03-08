@@ -150,12 +150,14 @@ const externalConfig = () => {
     config.opts.ui.menu.after = window.SO_MenuItemsAfter
   }
 
-  if (window
-    && window.SO_disableInternalWallet
-    && window.SO_disableInternalWallet
-  ) {
+  if (window?.SO_disableInternalWallet) {
     config.opts.ui.disableInternalWallet = window.SO_disableInternalWallet
   }
+
+  if (window?.SO_addAllEnabledWalletsAfterRestoreOrCreateSeedPhrase) {
+    config.opts.addAllEnabledWalletsAfterRestoreOrCreateSeedPhrase = window.SO_addAllEnabledWalletsAfterRestoreOrCreateSeedPhrase
+  }
+
   if (window
     && window.SO_fiatBuySupperted
     && window.SO_fiatBuySupperted.length

@@ -47,12 +47,10 @@ export const getActivatedCurrencies = () => {
     currencies.push('NEXT')
   }
 
-  Object.keys(TOKEN_STANDARDS).forEach((key) => {
-    const standard = TOKEN_STANDARDS[key].standard
+  Object.keys(TOKEN_STANDARDS).forEach((standardKey) => {
+    Object.keys(externalConfig[standardKey]).forEach((token) => {
 
-    Object.keys(externalConfig[standard]).forEach((token) => {
-
-      const baseCurrency = TOKEN_STANDARDS[standard].currency.toUpperCase()
+      const baseCurrency = TOKEN_STANDARDS[standardKey].currency.toUpperCase()
       const tokenName = token.toUpperCase()
       const tokenValue = `{${baseCurrency}}${tokenName}`
 
