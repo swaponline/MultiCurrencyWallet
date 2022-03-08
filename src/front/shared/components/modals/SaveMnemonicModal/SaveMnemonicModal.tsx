@@ -138,7 +138,7 @@ class SaveMnemonicModal extends React.Component<MnemonicModalProps, MnemonicModa
       window.location.assign(links.hashHome)
     }
 
-    const addAllEnabledWalletsAfterRestoreOrCreateSeedPhrase = config?.opts?.addAllEnabledWalletsAfterRestoreOrCreateSeedPhrase || true
+    const addAllEnabledWalletsAfterRestoreOrCreateSeedPhrase = config?.opts?.addAllEnabledWalletsAfterRestoreOrCreateSeedPhrase
 
     if (addAllEnabledWalletsAfterRestoreOrCreateSeedPhrase) {
       const currencies = getActivatedCurrencies()

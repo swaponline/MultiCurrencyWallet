@@ -24,7 +24,7 @@ import StepsWrapper from './Steps/StepsWrapper'
 import styles from './CreateWallet.scss'
 
 const noInternalWallet = !!(config?.opts?.ui?.disableInternalWallet)
-const addAllEnabledWalletsAfterRestoreOrCreateSeedPhrase = !!(config?.opts?.addAllEnabledWalletsAfterRestoreOrCreateSeedPhrase || true)
+const addAllEnabledWalletsAfterRestoreOrCreateSeedPhrase = !!config?.opts?.addAllEnabledWalletsAfterRestoreOrCreateSeedPhrase
 
 function CreateWallet(props) {
   const {

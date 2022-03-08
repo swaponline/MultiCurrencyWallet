@@ -3,6 +3,7 @@ import { BigNumber } from 'bignumber.js'
 import { constants } from 'helpers'
 import actions from 'redux/actions'
 import config from 'app-config'
+import { getActivatedCurrencies } from 'helpers/user'
 
 import cssModules from 'react-css-modules'
 
@@ -20,6 +21,8 @@ import links from 'helpers/links'
 
 import MnemonicInput from 'components/forms/MnemonicInput/MnemonicInput'
 import feedback from 'shared/helpers/feedback'
+
+const addAllEnabledWalletsAfterRestoreOrCreateSeedPhrase = config?.opts?.addAllEnabledWalletsAfterRestoreOrCreateSeedPhrase
 
 const langPrefix = `RestoryMnemonicWallet`
 const langLabels = defineMessages({
@@ -155,13 +158,6 @@ class RestoryMnemonicWallet extends React.Component<ComponentProps, ComponentSta
         actions.backupManager.restory(restoryMark)
       }
 
-      const btcPrivKey = await actions.btc.login(false, mnemonic)
-      const btcPubKey = actions.btcmultisig.getSmsKeyFromMnemonic(mnemonic)
-
-      //@ts-ignore: strictNullChecks
-      localStorage.setItem(constants.privateKeyNames.btcSmsMnemonicKeyGenerated, btcPubKey)
-      //@ts-ignore: strictNullChecks
-      localStorage.setItem(constants.privateKeyNames.btcPinMnemonicKey, btcPubKey)
       localStorage.setItem(constants.localStorage.isWalletCreate, 'true')
 
       await actions.bnb.login(false, mnemonic)
@@ -173,8 +169,17 @@ class RestoryMnemonicWallet extends React.Component<ComponentProps, ComponentSta
       await actions.avax.login(false, mnemonic)
       await actions.ghost.login(false, mnemonic)
       await actions.next.login(false, mnemonic)
-      await actions.user.sign_btc_2fa(btcPrivKey)
-      await actions.user.sign_btc_multisig(btcPrivKey)
+
+      if (!addAllEnabledWalletsAfterRestoreOrCreateSeedPhrase) {
+        const btcPrivKey = await actions.btc.login(false, mnemonic)
+        const btcPubKey = actions.btcmultisig.getSmsKeyFromMnemonic(mnemonic)
+        //@ts-ignore: strictNullChecks
+        localStorage.setItem(constants.privateKeyNames.btcSmsMnemonicKeyGenerated, btcPubKey)
+        //@ts-ignore: strictNullChecks
+        localStorage.setItem(constants.privateKeyNames.btcPinMnemonicKey, btcPubKey)
+        await actions.user.sign_btc_2fa(btcPrivKey)
+        await actions.user.sign_btc_multisig(btcPrivKey)
+      }
 
       actions.core.markCoinAsVisible('BTC', true)
 
@@ -184,17 +189,30 @@ class RestoryMnemonicWallet extends React.Component<ComponentProps, ComponentSta
         actions.core.markCoinAsVisible('BTC (PIN-Protected)', true)
       }
 
-      await actions.user.getBalances()
-      const allWallets = actions.core.getWallets({ withInternal: true })
+      if (addAllEnabledWalletsAfterRestoreOrCreateSeedPhrase) {
 
-      allWallets.forEach((wallet) => {
-        if (new BigNumber(wallet.balance).isGreaterThan(0)) {
-          actions.core.markCoinAsVisible(
-            wallet.isToken ? wallet.tokenKey.toUpperCase() : wallet.currency,
-            true
-          )
-        }
-      })
+        const currencies = getActivatedCurrencies()
+        currencies.forEach((currency) => {
+          if (
+            currency !== 'BTC (PIN-Protected)'
+          ) {
+            actions.core.markCoinAsVisible(currency.toUpperCase(), true)
+          }
+        })
+
+      } else {
+
+        await actions.user.getBalances()
+        const allWallets = actions.core.getWallets({ withInternal: true })
+        allWallets.forEach((wallet) => {
+          if (new BigNumber(wallet.balance).isGreaterThan(0)) {
+            actions.core.markCoinAsVisible(
+              wallet.isToken ? wallet.tokenKey.toUpperCase() : wallet.currency,
+              true,
+            )
+          }
+        })
+      }
 
       this.setState(() => ({
         isFetching: false,
