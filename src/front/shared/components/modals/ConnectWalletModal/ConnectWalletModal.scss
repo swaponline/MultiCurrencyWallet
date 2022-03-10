@@ -63,7 +63,7 @@
   flex-direction: column;
   flex-grow: 1;
   align-items: center;
-  padding: 32px 0;
+  padding: 1.2rem 0;
 }
 
 .stepWrapper {
@@ -157,10 +157,6 @@
     font-size: 1.2rem;
     border-radius: 0;
     box-shadow: none;
-  }
-
-  .notification-overlay {
-    height: 100%;
   }
 
   .options {
