@@ -230,6 +230,7 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
   }))
 
   setSelectedAssetFullInfo = (assetFullInfo: IUniversalObj) => {
+    const { tokenStandard, baseCurrency } = this.state
     const availableAssetPlatforms: IAvailableAssetPlatform[] = []
 
     TOKEN_STANDARDS_ARR.forEach(standardConfig => {
@@ -248,6 +249,8 @@ class AddCustomToken extends React.Component<CustomTokenProps, CustomTokenState>
       selectedAssetFullInfo: assetFullInfo,
       selectedAssetPlatforms: availableAssetPlatforms,
       selectedAssetPlatform: availableAssetPlatforms[0] || null,
+      tokenStandard: availableAssetPlatforms[0]?.standard || tokenStandard,
+      baseCurrency: availableAssetPlatforms[0]?.currency || baseCurrency,
     }))
   }
 
