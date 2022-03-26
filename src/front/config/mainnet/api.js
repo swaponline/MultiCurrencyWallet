@@ -20,7 +20,7 @@ export default {
   blockcypher: 'https://api.blockcypher.com/v1/btc/main',
   etherscan: 'https://api.etherscan.io/api',
   etherscanInvoices: 'https://invoices.swaponline.site/proxyetherscan',
-  etherscan_ApiKey: 'RHHFPNMAZMD6I4ZWBZBF6FA11CMW9AXZNM',
+  etherscan_ApiKey: 'GK6YHJ5NMEF67R4FTRNQS2EK3HRBP5VVHW',
   bscscan: 'https://api.bscscan.com/api',
   bscscan_ApiKey: 'WI4QEJSV19U3TF2H1DPQ2HR6712HW4MYKJ',
   maticscan: 'https://api.polygonscan.com/api',

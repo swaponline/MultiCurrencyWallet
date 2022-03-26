@@ -18,7 +18,7 @@ export default {
   blockcypher: 'https://api.blockcypher.com/v1/btc/test3',
   etherscan: 'https://api-rinkeby.etherscan.io/api',
   etherscanInvoices: 'https://invoices.swaponline.site/proxyetherscan-testnet',
-  etherscan_ApiKey: 'RHHFPNMAZMD6I4ZWBZBF6FA11CMW9AXZNM',
+  etherscan_ApiKey: 'GK6YHJ5NMEF67R4FTRNQS2EK3HRBP5VVHW',
   bscscan: 'https://api-testnet.bscscan.com/api',
   // TODO: replace proxy link
   bscscanInvoices: 'https://invoices.swaponline.site/proxyetherscan-testnet',
