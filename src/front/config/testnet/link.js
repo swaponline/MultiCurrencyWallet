@@ -10,4 +10,5 @@ export default {
   xdai: 'https://blockscout.com/poa/sokol',
   ftmscan: 'https://testnet.ftmscan.com/',
   avaxscan: 'https://testnet.snowtrace.io/',
+  movrscan: 'https://moonbase.moonscan.io/',
 }

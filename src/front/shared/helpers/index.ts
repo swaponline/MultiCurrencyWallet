@@ -8,6 +8,7 @@ import arbeth from './arbeth'
 import xdai from './xdai'
 import ftm from './ftm'
 import avax from './avax'
+import movr from './movr'
 import ethToken from './ethToken'
 import * as user from './user'
 import web3 from './web3'
@@ -61,6 +62,7 @@ export default {
   xdai,
   ftm,
   avax,
+  movr,
   ghost,
   next,
   ethToken,
@@ -80,6 +82,7 @@ export {
   xdai,
   ftm,
   avax,
+  movr,
   ghost,
   next,
   ethToken,

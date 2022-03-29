@@ -664,4 +664,15 @@ export default {
     adminFeeObj: externalConfig.opts?.fee?.avax,
     web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.avax_provider)),
   }),
+  MOVR: new EthLikeAction({
+    coinName: 'Moonriver',
+    ticker: 'MOVR',
+    privateKeyName: 'eth',
+    chainId: externalConfig.evmNetworks.MOVR.chainId,
+    explorerName: 'movrscan',
+    explorerLink: externalConfig.link.movrscan,
+    explorerApiKey: externalConfig.api.movr_ApiKey,
+    adminFeeObj: externalConfig.opts?.fee?.movr,
+    web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.movr_provider)),
+  }),
 }

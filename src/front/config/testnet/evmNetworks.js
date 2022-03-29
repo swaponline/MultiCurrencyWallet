@@ -58,4 +58,12 @@ export default {
     rpcUrls: [web3.avax_provider],
     blockExplorerUrls: [link.avax],
   },
+  MOVR: {
+    currency: 'MOVR',
+    chainId: '0x507',
+    networkVersion: 1287,
+    chainName: 'Moonriver Testnet',
+    rpcUrls: [web3.movr_provider],
+    blockExplorerUrls: [link.movr],
+  },
 }

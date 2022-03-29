@@ -13,6 +13,7 @@ const defaultCurrencyColors = {
   'xdai': '#48a9a6',
   'ftm': '#11b4ec',
   'avax': '#e84142',
+  'movr': 'white',
   'usdt': '#33a681',
   'ghost': 'black',
   'next': 'white',
@@ -42,6 +43,7 @@ const Coin = function (props: CoinProps) {
     || config?.erc20xdai[name.toLowerCase()]?.icon
     || config?.erc20ftm[name.toLowerCase()]?.icon
     || config?.erc20avax[name.toLowerCase()]?.icon
+    || config?.erc20movr[name.toLowerCase()]?.icon
   ) {
     isIconConfigExist = true
   }
@@ -81,6 +83,10 @@ const Coin = function (props: CoinProps) {
 
   if (config?.erc20avax[name.toLowerCase()]?.iconBgColor) {
     style.backgroundColor = config.erc20avax[name.toLowerCase()].iconBgColor
+  }
+
+  if (config?.erc20movr[name.toLowerCase()]?.iconBgColor) {
+    style.backgroundColor = config.erc20movr[name.toLowerCase()].iconBgColor
   }
 
   // *************************************

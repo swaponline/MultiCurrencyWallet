@@ -56,4 +56,9 @@ export const LIQUIDITY_SOURCE_DATA = {
     router: config.swapContract.pangolinSwapRouter,
     factory: config.swapContract.pangolinSwapFactory,
   },
+  [config.evmNetworks.MOVR.networkVersion]: {
+    name: 'SolarSwap',
+    router: config.swapContract.solarSwapRouter,
+    factory: config.swapContract.solarSwapFactory,
+  },
 }

@@ -6,4 +6,5 @@ export default {
   xdai_provider: 'https://sokol.poa.network',
   ftm_provider: 'https://rpc.testnet.fantom.network/',
   avax_provider: 'https://api.avax-test.network/ext/bc/C/rpc',
+  movr_provider: 'https://moonbeam-alpha.api.onfinality.io/public',
 }

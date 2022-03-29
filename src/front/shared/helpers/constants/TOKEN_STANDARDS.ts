@@ -72,4 +72,14 @@ export default {
     explorerApiKey: config.api.avax_ApiKey,
     hasSupportAtomicSwap: false,
   },
+  erc20movr: {
+    platform: 'ethereum',
+    platformKey: 'moonriver',
+    standard: 'erc20movr',
+    value: 'erc20movr',
+    currency: 'movr',
+    explorerApi: config.api.movrscan,
+    explorerApiKey: config.api.movr_ApiKey,
+    hasSupportAtomicSwap: false,
+  },
 }

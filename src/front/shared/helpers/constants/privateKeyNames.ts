@@ -6,6 +6,7 @@ export default {
   xdai: `${process.env.ENTRY}:xdai:privateKey`,
   ftm: `${process.env.ENTRY}:ftm:privateKey`,
   avax: `${process.env.ENTRY}:avax:privateKey`,
+  movr: `${process.env.ENTRY}:movr:privateKey`,
   btc: `${process.env.ENTRY}:btc:privateKey`,
   ghost: `${process.env.ENTRY}:ghost:privateKey`,
   next: `${process.env.ENTRY}:next:privateKey`,

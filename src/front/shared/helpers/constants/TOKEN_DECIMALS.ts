@@ -10,6 +10,7 @@ const decimals = {
   xdai: 18,
   ftm: 18,
   avax: 18,
+  movr: 18,
   ghost: 8,
   next: 8,
 }

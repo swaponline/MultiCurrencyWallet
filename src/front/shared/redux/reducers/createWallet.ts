@@ -8,6 +8,7 @@ export const initialState = {
     xdai: false,
     ftm: false,
     avax: false,
+    movr: false,
     ghost: false,
     next: false,
     '{eth}usdt': false,

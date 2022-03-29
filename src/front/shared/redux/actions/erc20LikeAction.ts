@@ -706,4 +706,13 @@ export default {
     adminFeeObj: externalConfig.opts?.fee?.erc20avax,
     web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.avax_provider)),
   }),
+  erc20movr: new Erc20LikeAction({
+    currency: 'MOVR',
+    standard: 'erc20movr',
+    explorerName: 'movrscan',
+    explorerLink: externalConfig.link.movrscan,
+    explorerApiKey: externalConfig.api.movr_ApiKey,
+    adminFeeObj: externalConfig.opts?.fee?.erc20movr,
+    web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.movr_provider)),
+  }),
 }

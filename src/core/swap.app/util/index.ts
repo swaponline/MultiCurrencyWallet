@@ -7,6 +7,7 @@ import erc20matic from './erc20matic'
 import erc20xdai from './erc20xdai'
 import erc20ftm from './erc20ftm'
 import erc20avax from './erc20avax'
+import erc20movr from './erc20movr'
 
 
 export {
@@ -19,4 +20,5 @@ export {
   erc20xdai,
   erc20ftm,
   erc20avax,
+  erc20movr,
 }

@@ -172,6 +172,7 @@ const deletedPartialCurrency = (orderId) => {
     'XDAI',
     'FTM',
     'AVAX',
+    'MOVR',
     'GHOST', 
     'NEXT', 
     'SWAP',
@@ -477,6 +478,7 @@ const getWallets = (options: IUniversalObj = {}) => {
       xdaiData,
       ftmData,
       avaxData,
+      movrData,
       tokensData,
       metamaskData,
     },
@@ -511,6 +513,7 @@ const getWallets = (options: IUniversalObj = {}) => {
       || enabledCurrencies.xdai
       || enabledCurrencies.ftm
       || enabledCurrencies.avax
+      || enabledCurrencies.movr
         ? metamaskData
           ? [metamaskData]
           : []
@@ -586,6 +589,14 @@ const getWallets = (options: IUniversalObj = {}) => {
           ? [avaxData]
           : []
         : [avaxData]
+      : []),
+    // =====================================
+    ...(!enabledCurrencies || enabledCurrencies.movr
+      ? metamaskConnected
+        ? withInternal
+          ? [movrData]
+          : []
+        : [movrData]
       : []),
     // =====================================
     ...((!enabledCurrencies || enabledCurrencies.ghost) && !onlyEvmWallets ? [ghostData] : []),

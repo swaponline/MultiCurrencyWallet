@@ -81,7 +81,8 @@ const backupUserData = {
           arbeth:                           get(`arbeth`),
           xdai:                             get(`xdai`),
           ftm:                              get(`ftm`),
-          avax:                              get(`avax`),
+          avax:                             get(`avax`),
+          movr:                             get(`movr`),
           btc:                              get(`btc`),
           ghost:                            get(`ghost`),
           next:                             get(`next`),
@@ -198,6 +199,7 @@ const backupUserData = {
             set(`xdai`, data.xdai)
             set(`ftm`, data.ftm)
             set(`avax`, data.avax)
+            set(`movr`, data.movr)
             set(`twentywords`, data.twentywords)
 
             // set other params to true (user has on tour and other pages)
