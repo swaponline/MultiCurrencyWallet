@@ -176,4 +176,10 @@ export default {
     defaultParams: DEFAULT_CURRENCY_PARAMETERS.evmLikeToken,
     web3: new Web3(new Web3.providers.HttpProvider(config.web3.avax_provider)),
   }),
+  erc20movr: new erc20LikeHelper({
+    standard: 'erc20movr',
+    currency: 'MOVR',
+    defaultParams: DEFAULT_CURRENCY_PARAMETERS.evmLikeToken,
+    web3: new Web3(new Web3.providers.HttpProvider(config.web3.movr_provider)),
+  }),
 }

@@ -87,6 +87,7 @@ const FAQ = function (props) {
     xdai: 0,
     ftm: 0,
     avax: 0,
+    movr: 0,
   })
 
   useEffect(() => {
@@ -104,6 +105,7 @@ const FAQ = function (props) {
         const xdaiGasPrice = await ethLikeHelper.xdai.estimateGasPrice()
         const ftmGasPrice = await ethLikeHelper.ftm.estimateGasPrice()
         const avaxGasPrice = await ethLikeHelper.avax.estimateGasPrice()
+        const movrGasPrice = await ethLikeHelper.movr.estimateGasPrice()
 
         // remove memory leak
         if (_mounted) {
@@ -118,6 +120,7 @@ const FAQ = function (props) {
             xdai: convertToGwei(xdaiGasPrice),
             ftm: convertToGwei(ftmGasPrice),
             avax: convertToGwei(avaxGasPrice),
+            movr: convertToGwei(movrGasPrice),
           }))
         }
       } catch (error) {
@@ -176,6 +179,11 @@ const FAQ = function (props) {
       fee: fees.avax,
       unit: 'gwei',
     },
+    {
+      ticker: 'MOVR',
+      fee: fees.movr,
+      unit: 'gwei',
+    },
   ]
 
   const adminFeeItems = [
@@ -210,6 +218,10 @@ const FAQ = function (props) {
     {
       ticker: 'AVAX',
       percentFee: adminFee.isEnabled('AVAX'),
+    },
+    {
+      ticker: 'MOVR',
+      percentFee: adminFee.isEnabled('MOVR'),
     },
   ]
 

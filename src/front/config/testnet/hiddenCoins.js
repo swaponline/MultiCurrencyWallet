@@ -9,6 +9,7 @@ export default [
   'XDAI',
   'FTM',
   'AVAX',
+  'MOVR',
   'GHOST',
   'NEXT',
   '{ETH}SWAP',

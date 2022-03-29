@@ -6,4 +6,5 @@ export default [
     77,     // XDAI Testnet (Sokol)
     4002,   // FTM Testnet
     43113,  // AVAX Testnet
+    1287,  // MOVR Testnet
 ]

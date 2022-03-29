@@ -37,6 +37,7 @@ const isWidgetBuild = config && config.isWidget
       arbethData,
       xdaiData,
       ftmData,
+      movrData,
       avaxData,
       btcData,
       ghostData,
@@ -61,6 +62,7 @@ const isWidgetBuild = config && config.isWidget
       xdaiData,
       ftmData,
       avaxData,
+      movrData,
       btcData,
       ghostData,
       nextData,
@@ -84,6 +86,7 @@ const isWidgetBuild = config && config.isWidget
         xdaiData,
         ftmData,
         avaxData,
+        movrData,
         metamaskData: {
           ...metamaskData,
           currency: 'ETH Metamask',

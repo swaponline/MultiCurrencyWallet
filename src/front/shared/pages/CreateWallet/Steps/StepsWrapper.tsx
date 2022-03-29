@@ -50,6 +50,9 @@ export default class StepsWrapper extends Component<any, any> {
       if (!curEnabled || curEnabled.avax) {
         this.defaultStartPack.push({ name: 'AVAX', capture: 'Avalanche' })
       }
+      if (!curEnabled || curEnabled.movr) {
+        this.defaultStartPack.push({ name: 'MOVR', capture: 'Moonriver' })
+      }
       if (!curEnabled || curEnabled.ghost) {
         this.defaultStartPack.push({ name: 'GHOST', capture: 'Ghost' })
       }
@@ -76,6 +79,7 @@ export default class StepsWrapper extends Component<any, any> {
         if (config.erc20xdai) this.defaultStartPack.push({ name: 'ERC20XDAI', capture: 'Token', baseCurrency: 'XDAI' })
         if (config.erc20ftm) this.defaultStartPack.push({ name: 'ERC20FTM', capture: 'Token', baseCurrency: 'FTM' })
         if (config.erc20avax) this.defaultStartPack.push({ name: 'ERC20AVAX', capture: 'Token', baseCurrency: 'AVAX' })
+        if (config.erc20movr) this.defaultStartPack.push({ name: 'ERC20MOVR', capture: 'Token', baseCurrency: 'MOVR' })
       }
     }
 
@@ -154,6 +158,7 @@ export default class StepsWrapper extends Component<any, any> {
             || coinInfo === `CUSTOM_ERC20XDAI`
             || coinInfo === `CUSTOM_ERC20FTM`
             || coinInfo === `CUSTOM_ERC20AVAX`
+            || coinInfo === `CUSTOM_ERC20MOVR`
           ) {
             [customTokenType] = coinInfo.split(`_`)
             isCustomToken = true

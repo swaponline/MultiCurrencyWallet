@@ -10,4 +10,5 @@ export default {
   xdai: 'https://blockscout.com/xdai/mainnet',
   ftmscan: 'https://ftmscan.com/',
   avaxscan: 'https://snowtrace.io/',
+  movrscan: 'https://moonriver.moonscan.io/',
 }

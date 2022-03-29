@@ -6,6 +6,7 @@ export const COIN_TYPE = Object.freeze({
   XDAI_TOKEN: 'XDAI_TOKEN',
   FTM_TOKEN: 'FTM_TOKEN',
   AVAX_TOKEN: 'AVAX_TOKEN',
+  MOVR_TOKEN: 'MOVR_TOKEN',
 })
 
 export const TOKEN_STANDARD = Object.freeze({
@@ -15,6 +16,7 @@ export const TOKEN_STANDARD = Object.freeze({
   ERC20XDAI: 'ERC20XDAI',
   ERC20FTM: 'ERC20FTM',
   ERC20AVAX: 'ERC20AVAX',
+  ERC20MOVR: 'ERC20MOVR',
 })
 
 export const BLOCKCHAIN = Object.freeze({
@@ -28,6 +30,7 @@ export const BLOCKCHAIN = Object.freeze({
   XDAI: 'XDAI',
   FTM: 'FTM',
   AVAX: 'AVAX',
+  MOVR: 'MOVR',
 })
 
 export const BASE_TOKEN_CURRENCY = Object.freeze({
@@ -37,6 +40,7 @@ export const BASE_TOKEN_CURRENCY = Object.freeze({
   XDAI: 'XDAI',
   FTM: 'FTM',
   AVAX: 'AVAX',
+  MOVR: 'MOVR',
 })
 
 export const COIN_MODEL = Object.freeze({
@@ -106,6 +110,14 @@ export const COIN_DATA = {
     name: 'Avalanche',
     type: COIN_TYPE.NATIVE,
     blockchain: BLOCKCHAIN.AVAX,
+    model: COIN_MODEL.AB,
+    precision: 18,
+  },
+  'MOVR': {
+    ticker: 'MOVR',
+    name: 'Moonriver',
+    type: COIN_TYPE.NATIVE,
+    blockchain: BLOCKCHAIN.MOVR,
     model: COIN_MODEL.AB,
     precision: 18,
   },
@@ -184,6 +196,7 @@ export const NATIVE = {
   xdai: 'XDAI',
   ftm: 'FTM',
   avax: 'AVAX',
+  movr: 'MOVR',
   ghost: 'GHOST',
   next: 'NEXT',
 }

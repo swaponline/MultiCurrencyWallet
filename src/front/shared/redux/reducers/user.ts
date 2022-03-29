@@ -71,6 +71,14 @@ export const initialState = {
     balanceError: null,
     infoAboutCurrency: null,
   },
+  movrData: {
+    balance: 0,
+    isBalanceFetched: false,
+    currency: 'MOVR',
+    fullName: 'Moonriver',
+    balanceError: null,
+    infoAboutCurrency: null,
+  },
   btcData: {
     balance: 0,
     isBalanceFetched: false,

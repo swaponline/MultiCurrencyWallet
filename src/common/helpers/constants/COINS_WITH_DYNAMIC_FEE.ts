@@ -10,6 +10,7 @@ export default [
   'xdai',
   'ftm',
   'avax',
+  'movr',
   'btc',
   'ghost',
   'next',

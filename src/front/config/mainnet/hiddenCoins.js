@@ -59,6 +59,7 @@ export default [
   'XDAI',
   'FTM',
   'AVAX',
+  'MOVR',
   '{ETH}SWAP',
   '{ETH}HDP',
   '{ETH}USDT',

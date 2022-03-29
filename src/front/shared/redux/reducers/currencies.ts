@@ -165,6 +165,16 @@ const initialState = {
       addAssets: true,
     }] : [],
     //@ts-ignore
+    ...(!buildOpts.curEnabled || buildOpts.curEnabled.movr) ? [{
+      name: 'MOVR',
+      title: 'MOVR',
+      icon: 'movr',
+      value: 'movr',
+      fullTitle: 'movr',
+      blockchain: BLOCKCHAIN_TYPE.MOVR,
+      addAssets: true,
+    }] : [],
+    //@ts-ignore
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.ghost) ? [{
       name: 'GHOST',
       title: 'GHOST',
@@ -284,6 +294,14 @@ const initialState = {
       fullTitle: 'avalanche',
     }] : [],
     //@ts-ignore
+    ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.movr) ? [{
+      name: 'MOVR',
+      title: 'MOVR',
+      icon: 'movr',
+      value: 'movr',
+      fullTitle: 'moonriver',
+    }] : [],
+    //@ts-ignore
     ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.ghost) ? [{
       name: 'GHOST',
       title: 'GHOST',
@@ -373,6 +391,14 @@ if (config.isWidget) {
       fullTitle: 'avalanche',
     }] : [],
     //@ts-ignore
+    ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.movr) ? [{
+      name: 'MOVR',
+      title: 'MOVR',
+      icon: 'movr',
+      value: 'movr',
+      fullTitle: 'moonriver',
+    }] : [],
+    //@ts-ignore
     ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.btc) ? [{
       name: 'BTC',
       title: 'BTC',
@@ -454,6 +480,14 @@ if (config.isWidget) {
       icon: 'avax',
       value: 'avax',
       fullTitle: 'avalanche',
+    }] : [],
+    //@ts-ignore
+    ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.movr) ? [{
+      name: 'MOVR',
+      title: 'MOVR',
+      icon: 'movr',
+      value: 'movr',
+      fullTitle: 'moonriver',
     }] : [],
     //@ts-ignore
     ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.btc) ? [{

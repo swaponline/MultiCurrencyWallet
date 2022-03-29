@@ -46,6 +46,7 @@ const externalConfig = () => {
       xdai: true,
       ftm: true,
       avax: true,
+      movr: true,
       btc: true,
       ghost: true,
       next: true,
@@ -59,6 +60,7 @@ const externalConfig = () => {
       xdai: false,
       ftm: false,
       avax: false,
+      movr: false,
       ghost: true,
       next: true,
     },
@@ -278,6 +280,11 @@ const externalConfig = () => {
   if (window && window.CUR_AVAX_DISABLED === true) {
     config.opts.curEnabled.avax = false
     config.opts.blockchainSwapEnabled.avax = false
+  }
+
+  if (window && window.CUR_MOVR_DISABLED === true) {
+    config.opts.curEnabled.movr = false
+    config.opts.blockchainSwapEnabled.movr = false
   }
 
   config.enabledEvmNetworks = Object.keys(config.evmNetworks)

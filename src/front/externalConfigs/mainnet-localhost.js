@@ -24,6 +24,9 @@
   erc20avax: {
     address: '',
   },
+  erc20movr: {
+    address: '',
+  },
 } */
 
 window.widgetEvmLikeTokens = [
@@ -95,6 +98,7 @@ window.buildOptions = {
     xdai: true,
     ftm: true,
     avax: true,
+    movr: true,
     ghost: true,
     next: true,
   },
@@ -107,6 +111,7 @@ window.buildOptions = {
     xdai: false,
     ftm: true,
     avax: true,
+    movr: true,
     ghost: false,
     next: false,
   },
@@ -137,6 +142,8 @@ window.buildOptions = {
     'CUSTOM_ERC20FTM',
     'AVAX',
     'CUSTOM_ERC20AVAX',
+    'MOVR',
+    'CUSTOM_ERC20MOVR',
   ],
   invoiceEnabled: true, // Allow create invoices
   showWalletBanners: true,
