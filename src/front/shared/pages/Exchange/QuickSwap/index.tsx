@@ -56,6 +56,13 @@ const QuickswapModes = {
   only_source: 'only_source',
 }
 
+const CURRENCY_PLUG = {
+  blockchain: '-',
+  fullTitle: '-',
+  name: '-',
+  notExist: true,
+}
+
 class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   constructor(props) {
     super(props)
@@ -113,10 +120,6 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     if (externalConfig.opts.defaultQuickBuy) {
       const defaultBuyCurrency = allCurrencies.filter((curData) => curData.value.toUpperCase() === externalConfig.opts.defaultQuickBuy.toUpperCase())
       if (defaultBuyCurrency.length) [receivedCurrency] = defaultBuyCurrency
-    }
-
-    if (path.match(/\/quick\/createOrder/)) {
-      this.createLimitOrder()
     }
 
     // if we have url parameters then show it as default values
@@ -187,7 +190,6 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       swapFee: '',
       gasPrice: '',
       gasLimit: '',
-      showOrders: false,
       blockReason: undefined,
       serviceFee: false,
     }
@@ -292,21 +294,26 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   returnCurrentAssetState = (currentCurrencies, activeSection: Sections) => {
     const { allCurrencies } = this.props
 
-    let { currencies, wrongNetwork } = actions.oneinch.filterCurrencies({
+    let { currencies: filteredCurrencies, wrongNetwork } = actions.oneinch.filterCurrencies({
       currencies: allCurrencies,
     })
+    let currencies: any[] = []
 
     if (wrongNetwork) {
-      currencies = currentCurrencies
+      filteredCurrencies = currentCurrencies
     }
 
     if (activeSection === Sections.Aggregator) {
-      currencies = currencies.filter(currency => {
+      currencies = filteredCurrencies.filter(currency => {
         const { coin, blockchain } = getCoinInfo(currency.value)
         const network = externalConfig.evmNetworks[blockchain || coin]
 
-        return !!API_NAME[network.networkVersion]
+        return !!API_NAME[network?.networkVersion]
       })
+    }
+
+    if (!currencies.length) {
+      currencies = [filteredCurrencies[0] || CURRENCY_PLUG]
     }
 
     const spendedCurrency = currencies[0]
@@ -314,14 +321,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
 
     // user doesn't have enough tokens in the wallet. Show a notice about it
     if (!receivedList.length) {
-      receivedList = [
-        {
-          blockchain: '-',
-          fullTitle: '-',
-          name: '-',
-          notExist: true,
-        },
-      ]
+      receivedList = [CURRENCY_PLUG]
     }
 
     const receivedCurrency = receivedList[0]
@@ -375,7 +375,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   updateNetwork = async () => {
     const { spendedCurrency } = this.state
 
-    const network =      externalConfig.evmNetworks[spendedCurrency.blockchain || spendedCurrency.value.toUpperCase()]
+    const network = externalConfig.evmNetworks[spendedCurrency.blockchain || spendedCurrency.value.toUpperCase()]
 
     this.updateBaseChainWallet(spendedCurrency)
 
@@ -841,7 +841,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     const { spendedCurrency, receivedCurrency } = this.state
 
     const changeSpendedSide = direction === Direction.Spend && spendedCurrency.value !== value.value
-    const changeReceivedSide =      direction === Direction.Receive && receivedCurrency.value !== value.value
+    const changeReceivedSide = direction === Direction.Receive && receivedCurrency.value !== value.value
 
     if (changeSpendedSide) {
       this.setState(
@@ -1075,12 +1075,6 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     actions.modals.open(constants.modals.LimitOrder)
   }
 
-  toggleOrdersViability = () => {
-    this.setState((state) => ({
-      showOrders: !state.showOrders,
-    }))
-  }
-
   render() {
     const { history } = this.props
     const {
@@ -1103,7 +1097,6 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       network,
       swapData,
       swapFee,
-      showOrders,
       blockReason,
       slippage,
       serviceFee,
@@ -1131,13 +1124,13 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       <>
         {onlyAggregator && <TokenInstruction />}
 
-        {receivedCurrency.notExist && (
+        {spendedCurrency.notExist || receivedCurrency.notExist && (
           <p styleName="noAssetsNotice">
             <FormattedMessage
               id="notEnoughAssetsNotice"
               defaultMessage="You don't have available assets for {networkName} to exchange. Please change the network or add a custom asset to the wallet."
               values={{
-                networkName: network.chainName,
+                networkName: network.chainName || 'Unknown network',
               }}
             />
           </p>
@@ -1203,6 +1196,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
               />
 
               <Feedback
+                network={network}
                 isSourceMode={isSourceMode}
                 wrongNetwork={wrongNetwork}
                 insufficientBalanceA={insufficientBalanceA}
@@ -1233,24 +1227,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
               />
             </>
           )}
-
-          {/*
-          Maybe fix some problems with 1inch orders and uncomment all related to orders code
-          or the better way is to complete this issue first and enable orders again:
-          https://github.com/swaponline/MultiCurrencyWallet/issues/4896
-          */}
-          {/* {!wrongNetwork && (this.mnemonicIsSaved() || metamask.isConnected()) && (
-            <Button onClick={this.createLimitOrder} link small>
-              <FormattedMessage id="createLimitOrder" defaultMessage="Create limit order" />
-            </Button>
-          )} */}
         </section>
-
-        {/* <Button id="limitOrdersOrderbookBtn" onClick={this.toggleOrdersViability} link>
-          <FormattedMessage id="limitOrders" defaultMessage="Limit orders" />
-        </Button>
-
-        {showOrders && <LimitOrders />} */}
       </>
     )
   }

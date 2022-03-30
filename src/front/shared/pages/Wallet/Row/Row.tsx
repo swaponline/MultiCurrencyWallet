@@ -520,7 +520,7 @@ class Row extends Component<RowProps, RowState> {
         id: 1004,
         title: (
           <FormattedMessage
-            id="WalletRow_Menu_Exchange"
+            id="menu.exchange"
             defaultMessage="Exchange"
           />
         ),

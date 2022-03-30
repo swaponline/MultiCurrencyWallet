@@ -23,7 +23,8 @@ function Header(props) {
   let sourceTitle = LIQUIDITY_SOURCE_DATA[network.networkVersion]?.name || (
     <FormattedMessage id="source" defaultMessage="Source" />
   )
-  if (onlySource) sourceTitle = <FormattedMessage id="sourceExchange" defaultMessage="Exchange" />
+  if (onlySource) sourceTitle = <FormattedMessage id="menu.exchange" defaultMessage="Exchange" />
+
   return (
     <div styleName="header">
       {!onlySource && (

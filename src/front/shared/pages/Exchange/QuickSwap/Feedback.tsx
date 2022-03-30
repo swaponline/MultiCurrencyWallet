@@ -3,9 +3,11 @@ import { FormattedMessage } from 'react-intl'
 import CSSModules from 'react-css-modules'
 import styles from './index.scss'
 import { BlockReasons, Actions } from './types'
+import { API_NAME } from './constants'
 
 function Feedback(props) {
   const {
+    network,
     isSourceMode,
     blockReason,
     baseChainWallet,
@@ -22,7 +24,14 @@ function Feedback(props) {
 
   return (
     <section>
-      {wrongNetwork ? (
+      {!isSourceMode && !API_NAME[network?.networkVersion] ? (
+        <p styleName="dangerousNotice">
+          <FormattedMessage
+            id="aggregatorCannotUseThisNetwork"
+            defaultMessage="Aggregator cannot use this network. Please choose another"
+          />
+        </p>
+      ) : wrongNetwork ? (
         <p styleName="dangerousNotice">
           <FormattedMessage id="incorrectNetwork" defaultMessage="Please choose correct network" />
         </p>
