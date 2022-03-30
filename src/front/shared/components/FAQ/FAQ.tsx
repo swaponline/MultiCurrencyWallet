@@ -16,6 +16,10 @@ const NETWORK = process.env.MAINNET
   ? 'MAINNET'
   : 'TESTNET'
 
+const enabledCurrencies = config.opts.curEnabled
+// Supported evm blockchains
+const evmBlockchains = [ 'eth', 'bnb', 'matic', 'arbeth', 'xdai', 'ftm', 'avax', 'movr', 'one' ]
+        
 const hasOwnBeforeTabs = (config?.opts?.ui?.faq?.before && (config.opts.ui.faq.before.length > 0))
 const hasOwnAfterTabs = (config?.opts?.ui?.faq?.after && (config.opts.ui.faq.after.length > 0))
 
@@ -94,38 +98,36 @@ const FAQ = function (props) {
   useEffect(() => {
     let _mounted = true
 
+
     async function fetchFees() {
       try {
-        const BYTE_IN_KB = 1024
-
-        const btcSatoshiPrice = await btcUtils.estimateFeeRate({ speed: 'fast', NETWORK })
-        const bnbGasPrice = await ethLikeHelper.bnb.estimateGasPrice()
-        const ethGasPrice = await ethLikeHelper.eth.estimateGasPrice()
-        const maticGasPrice = await ethLikeHelper.matic.estimateGasPrice()
-        const arbethGasPrice = await ethLikeHelper.arbeth.estimateGasPrice()
-        const xdaiGasPrice = await ethLikeHelper.xdai.estimateGasPrice()
-        const ftmGasPrice = await ethLikeHelper.ftm.estimateGasPrice()
-        const avaxGasPrice = await ethLikeHelper.avax.estimateGasPrice()
-        const movrGasPrice = await ethLikeHelper.movr.estimateGasPrice()
-        const oneGasPrice = await ethLikeHelper.one.estimateGasPrice()
-
         // remove memory leak
-        if (_mounted) {
-          setFees((prevFees) => ({
-            ...prevFees,
-            // divided by 1 kb to convert it to satoshi / byte
-            btc: Math.ceil(btcSatoshiPrice / BYTE_IN_KB),
-            eth: convertToGwei(ethGasPrice),
-            bnb: convertToGwei(bnbGasPrice),
-            matic: convertToGwei(maticGasPrice),
-            arbeth: convertToGwei(arbethGasPrice),
-            xdai: convertToGwei(xdaiGasPrice),
-            ftm: convertToGwei(ftmGasPrice),
-            avax: convertToGwei(avaxGasPrice),
-            movr: convertToGwei(movrGasPrice),
-            one: convertToGwei(oneGasPrice),
-          }))
+        if (!enabledCurrencies || enabledCurrencies.btc) {
+          const BYTE_IN_KB = 1024
+          const btcSatoshiPrice = await btcUtils.estimateFeeRate({ speed: 'fast', NETWORK })
+          if (_mounted) {
+            setFees((prevFees) => ({
+              ...prevFees,
+              // divided by 1 kb to convert it to satoshi / byte
+              btc: Math.ceil(btcSatoshiPrice / BYTE_IN_KB),
+            }))
+          }
         }
+
+        // Evm blockchains fee
+        const setEvmBlockchainFee = async (evmType: string) => {
+          const fee = await ethLikeHelper[evmType].estimateGasPrice()
+          if (_mounted) {
+            setFees((prevFees) => ({
+              ...prevFees,
+              [`${evmType}`]: convertToGwei(fee),
+            }))
+          }
+        }
+
+        evmBlockchains.forEach((evmType) => {
+          if (!enabledCurrencies || enabledCurrencies[evmType]) setEvmBlockchainFee(evmType)
+        })
       } catch (error) {
         feedback.faq.failed(`FAQ. Fetch fees error(${error.message})`)
       }
@@ -141,100 +143,100 @@ const FAQ = function (props) {
   }, [tabsVisibility.SECOND_TAB])
 
   const miningFeeItems = [
-    {
+    ...((!enabledCurrencies || enabledCurrencies.btc) ? [{
       ticker: 'BTC',
       fee: fees.btc,
       unit: 'sat/byte',
       sourceLink: externalConfig.api.blockcypher,
-    },
-    {
+    }] : []),
+    ...((!enabledCurrencies || enabledCurrencies.eth) ? [{
       ticker: 'ETH',
       fee: fees.eth,
       unit: 'gwei',
-    },
-    {
+    }] : []),
+    ...((!enabledCurrencies || enabledCurrencies.bnb) ? [{
       ticker: 'BNB',
       fee: fees.bnb,
       unit: 'gwei',
-    },
-    {
+    }] : []),
+    ...((!enabledCurrencies || enabledCurrencies.matic) ? [{
       ticker: 'MATIC',
       fee: fees.matic,
       unit: 'gwei',
-    },
-    {
+    }] : []),
+    ...((!enabledCurrencies || enabledCurrencies.arbeth) ? [{
       ticker: 'ARBETH',
       fee: fees.arbeth,
       unit: 'gwei',
-    },
-    {
+    }] : []),
+    ...((!enabledCurrencies || enabledCurrencies.xdai) ? [{
       ticker: 'XDAI',
       fee: fees.xdai,
       unit: 'gwei',
-    },
-    {
+    }] : []),
+    ...((!enabledCurrencies || enabledCurrencies.ftm) ? [{
       ticker: 'FTM',
       fee: fees.ftm,
       unit: 'gwei',
-    },
-    {
+    }] : []),
+    ...((!enabledCurrencies || enabledCurrencies.avax) ? [{
       ticker: 'AVAX',
       fee: fees.avax,
       unit: 'gwei',
-    },
-    {
+    }] : []),
+    ...((!enabledCurrencies || enabledCurrencies.movr) ? [{
       ticker: 'MOVR',
       fee: fees.movr,
       unit: 'gwei',
-    },
-    {
+    }] : []),
+    ...((!enabledCurrencies || enabledCurrencies.one) ? [{
       ticker: 'ONE',
       fee: fees.one,
       unit: 'gwei',
-    },
+    }] : []),
   ]
 
   const adminFeeItems = [
-    {
+    ...((!enabledCurrencies || enabledCurrencies.btc) ? [{
       ticker: 'BTC',
       percentFee: adminFee.isEnabled('BTC'),
-    },
-    {
+    }] : []),
+    ...((!enabledCurrencies || enabledCurrencies.eth) ? [{
       ticker: 'ETH',
       percentFee: adminFee.isEnabled('ETH'),
-    },
-    {
+    }] : []),
+    ...((!enabledCurrencies || enabledCurrencies.bnb) ? [{
       ticker: 'BNB',
       percentFee: adminFee.isEnabled('BNB'),
-    },
-    {
+    }] : []),
+    ...((!enabledCurrencies || enabledCurrencies.matic) ? [{
       ticker: 'MATIC',
       percentFee: adminFee.isEnabled('MATIC'),
-    },
-    {
+    }] : []),
+    ...((!enabledCurrencies || enabledCurrencies.arbeth) ? [{
       ticker: 'ARBETH',
       percentFee: adminFee.isEnabled('ARBETH'),
-    },
-    {
+    }] : []),
+    ...((!enabledCurrencies || enabledCurrencies.xdai) ? [{
       ticker: 'XDAI',
       percentFee: adminFee.isEnabled('XDAI'),
-    },
-    {
+    }] : []),
+    ...((!enabledCurrencies || enabledCurrencies.ftm) ? [{
       ticker: 'FTM',
       percentFee: adminFee.isEnabled('FTM'),
-    },
-    {
+    }] : []),
+    ...((!enabledCurrencies || enabledCurrencies.avax) ? [{
       ticker: 'AVAX',
       percentFee: adminFee.isEnabled('AVAX'),
-    },
-    {
+    }] : []),
+    ...((!enabledCurrencies || enabledCurrencies.movr) ? [{
       ticker: 'MOVR',
       percentFee: adminFee.isEnabled('MOVR'),
-    },
-    {
+    }] : []),
+    ...((!enabledCurrencies || enabledCurrencies.one) ? [{
       ticker: 'ONE',
       percentFee: adminFee.isEnabled('ONE'),
-    },
+    }] : []),
   ]
 
   const renderTabs = (tabsData, prefix) => {
