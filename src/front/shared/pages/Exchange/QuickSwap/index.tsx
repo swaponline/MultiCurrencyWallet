@@ -1196,6 +1196,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
               />
 
               <Feedback
+                network={network}
                 isSourceMode={isSourceMode}
                 wrongNetwork={wrongNetwork}
                 insufficientBalanceA={insufficientBalanceA}
