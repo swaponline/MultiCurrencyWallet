@@ -11,6 +11,7 @@ export default [
   'ftm',
   'avax',
   'movr',
+  'one',
   'btc',
   'ghost',
   'next',

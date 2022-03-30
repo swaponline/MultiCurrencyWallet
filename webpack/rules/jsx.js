@@ -4,9 +4,6 @@ export default [
     exclude: /(node_modules|bower_components)/,
     use: [
       {
-        loader: 'cache-loader',
-      },
-      {
         loader: 'babel-loader',
         options: {
           presets: ['@babel/preset-env'],

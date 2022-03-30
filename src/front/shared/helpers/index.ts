@@ -9,6 +9,7 @@ import xdai from './xdai'
 import ftm from './ftm'
 import avax from './avax'
 import movr from './movr'
+import one from './one'
 import ethToken from './ethToken'
 import * as user from './user'
 import web3 from './web3'
@@ -63,6 +64,7 @@ export default {
   ftm,
   avax,
   movr,
+  one,
   ghost,
   next,
   ethToken,
@@ -83,6 +85,7 @@ export {
   ftm,
   avax,
   movr,
+  one,
   ghost,
   next,
   ethToken,

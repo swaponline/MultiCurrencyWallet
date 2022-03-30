@@ -7,6 +7,7 @@ export const COIN_TYPE = Object.freeze({
   FTM_TOKEN: 'FTM_TOKEN',
   AVAX_TOKEN: 'AVAX_TOKEN',
   MOVR_TOKEN: 'MOVR_TOKEN',
+  ONE_TOKEN: 'ONE_TOKEN',
 })
 
 export const TOKEN_STANDARD = Object.freeze({
@@ -17,6 +18,7 @@ export const TOKEN_STANDARD = Object.freeze({
   ERC20FTM: 'ERC20FTM',
   ERC20AVAX: 'ERC20AVAX',
   ERC20MOVR: 'ERC20MOVR',
+  ERC20ONE: 'ERC20ONE',
 })
 
 export const BLOCKCHAIN = Object.freeze({
@@ -31,6 +33,7 @@ export const BLOCKCHAIN = Object.freeze({
   FTM: 'FTM',
   AVAX: 'AVAX',
   MOVR: 'MOVR',
+  ONE: 'ONE',
 })
 
 export const BASE_TOKEN_CURRENCY = Object.freeze({
@@ -41,6 +44,7 @@ export const BASE_TOKEN_CURRENCY = Object.freeze({
   FTM: 'FTM',
   AVAX: 'AVAX',
   MOVR: 'MOVR',
+  ONE: 'ONE',
 })
 
 export const COIN_MODEL = Object.freeze({
@@ -121,6 +125,14 @@ export const COIN_DATA = {
     model: COIN_MODEL.AB,
     precision: 18,
   },
+  'ONE': {
+    ticker: 'ONE',
+    name: 'Harmony One',
+    type: COIN_TYPE.NATIVE,
+    blockchain: BLOCKCHAIN.ONE,
+    model: COIN_MODEL.AB,
+    precision: 18,
+  },
   'USDT': {
     ticker: 'USDT',
     name: 'Tether',
@@ -197,6 +209,7 @@ export const NATIVE = {
   ftm: 'FTM',
   avax: 'AVAX',
   movr: 'MOVR',
+  one: 'ONE',
   ghost: 'GHOST',
   next: 'NEXT',
 }

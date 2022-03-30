@@ -16,7 +16,6 @@ export default [
     test: /\.scss$/,
     use: [
       'style-loader',
-      'cache-loader',
       {
         loader: 'css-loader',
         options: {

@@ -48,7 +48,7 @@ export default {
     networkVersion: 250,
     chainName: 'Fantom',
     rpcUrls: [web3.ftm_provider],
-    blockExplorerUrls: [link.ftm],
+    blockExplorerUrls: [link.ftmscan],
   },
   AVAX: {
     currency: 'AVAX',
@@ -56,7 +56,7 @@ export default {
     networkVersion: 43114,
     chainName: 'Avalanche',
     rpcUrls: [web3.avax_provider],
-    blockExplorerUrls: [link.avax],
+    blockExplorerUrls: [link.avaxscan],
   },
   MOVR: {
     currency: 'MOVR',
@@ -64,6 +64,14 @@ export default {
     networkVersion: 1285,
     chainName: 'Moonriver',
     rpcUrls: [web3.movr_provider],
-    blockExplorerUrls: [link.movr],
+    blockExplorerUrls: [link.movrscan],
+  },
+  ONE: {
+    currency: 'ONE',
+    chainId: '0x63564c40',
+    networkVersion: 1666600000,
+    chainName: 'Harmony One',
+    rpcUrls: [web3.one_provider],
+    blockExplorerUrls: [link.oneExplorer],
   },
 }

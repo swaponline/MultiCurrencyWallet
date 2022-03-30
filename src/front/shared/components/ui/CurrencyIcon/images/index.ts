@@ -7,6 +7,7 @@ import xdai from './xdai.svg'
 import ftm from './ftm.svg'
 import avax from './avax.svg'
 import movr from './movr.svg'
+import one from './one.svg'
 import wbtc from './wbtc.svg'
 import icx from './icx.svg'
 import waves from './waves.svg'
@@ -49,6 +50,7 @@ export default {
   ftm,
   avax,
   movr,
+  one,
   syc2,
   icx,
   usdt,

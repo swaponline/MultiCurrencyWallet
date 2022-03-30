@@ -11,6 +11,7 @@ const decimals = {
   ftm: 18,
   avax: 18,
   movr: 18,
+  one: 18,
   ghost: 8,
   next: 8,
 }

@@ -23,6 +23,7 @@ type CreateInvoiceProps = {
     ftmData,
     avaxData,
     movrData,
+    oneData,
     ghostData,
     nextData,
   },
@@ -38,6 +39,7 @@ type CreateInvoiceProps = {
       ftm: ftmData,
       avax: avaxData,
       movr: movrData,
+      one: oneData,
       ghost: ghostData,
       next: nextData,
     }

@@ -8,7 +8,8 @@ export default {
   ghostscan: 'https://testnet.ghostscan.io',
   nextExplorer: 'https://explore.next.exchange',
   xdai: 'https://blockscout.com/poa/sokol',
-  ftmscan: 'https://testnet.ftmscan.com/',
-  avaxscan: 'https://testnet.snowtrace.io/',
-  movrscan: 'https://moonbase.moonscan.io/',
+  ftmscan: 'https://testnet.ftmscan.com',
+  avaxscan: 'https://testnet.snowtrace.io',
+  movrscan: 'https://moonbase.moonscan.io',
+  oneExplorer: 'https://explorer.pops.one',
 }

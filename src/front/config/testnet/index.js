@@ -8,6 +8,7 @@ import erc20xdai from './erc20xdai'
 import erc20ftm from './erc20ftm'
 import erc20avax from './erc20avax'
 import erc20movr from './erc20movr'
+import erc20one from './erc20one'
 import api from './api'
 import swapContract from './swapContract'
 import feeRates from './feeRates'
@@ -30,6 +31,7 @@ export default {
   erc20ftm,
   erc20avax,
   erc20movr,
+  erc20one,
   swapContract,
   feeRates,
   hiddenCoins,

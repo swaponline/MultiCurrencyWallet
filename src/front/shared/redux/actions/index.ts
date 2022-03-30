@@ -51,6 +51,7 @@ export default {
   ftm: EthLikeAction.FTM,
   avax: EthLikeAction.AVAX,
   movr: EthLikeAction.MOVR,
+  one: EthLikeAction.ONE,
   erc20: Erc20LikeAction.erc20,
   bep20: Erc20LikeAction.bep20,
   erc20matic: Erc20LikeAction.erc20matic,
@@ -58,6 +59,7 @@ export default {
   erc20ftm: Erc20LikeAction.erc20ftm,
   erc20avax: Erc20LikeAction.erc20avax,
   erc20movr: Erc20LikeAction.erc20movr,
+  erc20one: Erc20LikeAction.erc20one,
   ghost,
   next,
 

@@ -23,7 +23,7 @@ class Erc20LikeAction {
   readonly currency: string
   readonly currencyKey: string
   readonly standard: string // (ex. erc20, bep20, ...)
-  readonly explorerName: string
+  readonly explorerApiName: string
   readonly explorerLink: string
   readonly explorerApiKey: string
   readonly adminFeeObj: {
@@ -37,7 +37,7 @@ class Erc20LikeAction {
     const {
       currency,
       standard,
-      explorerName,
+      explorerApiName,
       explorerLink,
       explorerApiKey,
       adminFeeObj,
@@ -47,7 +47,7 @@ class Erc20LikeAction {
     this.currency = currency
     this.currencyKey = currency.toLowerCase()
     this.standard = standard
-    this.explorerName = explorerName
+    this.explorerApiName = explorerApiName
     this.explorerLink = explorerLink
     this.explorerApiKey = explorerApiKey
     this.adminFeeObj = adminFeeObj
@@ -220,7 +220,7 @@ class Erc20LikeAction {
       )
 
       return apiLooper
-        .get(this.explorerName, url, {
+        .get(this.explorerApiName, url, {
           cacheResponse: 30 * 1000, // 30 seconds
         })
         .then((response: IUniversalObj) => {
@@ -655,7 +655,7 @@ export default {
   erc20: new Erc20LikeAction({
     currency: 'ETH',
     standard: 'erc20',
-    explorerName: 'etherscan',
+    explorerApiName: 'etherscan',
     explorerLink: externalConfig.link.etherscan,
     explorerApiKey: externalConfig.api.etherscan_ApiKey,
     adminFeeObj: externalConfig.opts?.fee?.erc20,
@@ -664,7 +664,7 @@ export default {
   bep20: new Erc20LikeAction({
     currency: 'BNB',
     standard: 'bep20',
-    explorerName: 'bscscan',
+    explorerApiName: 'bscscan',
     explorerLink: externalConfig.link.bscscan,
     explorerApiKey: externalConfig.api.bscscan_ApiKey,
     adminFeeObj: externalConfig.opts?.fee?.bep20,
@@ -673,7 +673,7 @@ export default {
   erc20matic: new Erc20LikeAction({
     currency: 'MATIC',
     standard: 'erc20matic',
-    explorerName: 'maticscan',
+    explorerApiName: 'maticscan',
     explorerLink: externalConfig.link.maticscan,
     explorerApiKey: externalConfig.api.polygon_ApiKey,
     adminFeeObj: externalConfig.opts?.fee?.erc20matic,
@@ -682,7 +682,7 @@ export default {
   erc20xdai: new Erc20LikeAction({
     currency: 'XDAI',
     standard: 'erc20xdai',
-    explorerName: '',
+    explorerApiName: '',
     explorerLink: externalConfig.link.xdai,
     explorerApiKey: '',
     adminFeeObj: externalConfig.opts?.fee?.erc20xdai,
@@ -691,7 +691,7 @@ export default {
   erc20ftm: new Erc20LikeAction({
     currency: 'FTM',
     standard: 'erc20ftm',
-    explorerName: 'ftmscan',
+    explorerApiName: 'ftmscan',
     explorerLink: externalConfig.link.ftmscan,
     explorerApiKey: externalConfig.api.ftm_ApiKey,
     adminFeeObj: externalConfig.opts?.fee?.erc20ftm,
@@ -700,7 +700,7 @@ export default {
   erc20avax: new Erc20LikeAction({
     currency: 'AVAX',
     standard: 'erc20avax',
-    explorerName: 'avaxscan',
+    explorerApiName: 'avaxscan',
     explorerLink: externalConfig.link.avaxscan,
     explorerApiKey: externalConfig.api.avax_ApiKey,
     adminFeeObj: externalConfig.opts?.fee?.erc20avax,
@@ -709,10 +709,19 @@ export default {
   erc20movr: new Erc20LikeAction({
     currency: 'MOVR',
     standard: 'erc20movr',
-    explorerName: 'movrscan',
+    explorerApiName: 'movrscan',
     explorerLink: externalConfig.link.movrscan,
     explorerApiKey: externalConfig.api.movr_ApiKey,
     adminFeeObj: externalConfig.opts?.fee?.erc20movr,
     web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.movr_provider)),
+  }),
+  erc20one: new Erc20LikeAction({
+    currency: 'ONE',
+    standard: 'erc20one',
+    explorerApiName: 'onescan',
+    explorerLink: externalConfig.link.oneExplorer,
+    explorerApiKey: externalConfig.api.one_ApiKey,
+    adminFeeObj: externalConfig.opts?.fee?.erc20one,
+    web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.one_provider)),
   }),
 }

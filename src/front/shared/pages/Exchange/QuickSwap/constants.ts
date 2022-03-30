@@ -61,4 +61,9 @@ export const LIQUIDITY_SOURCE_DATA = {
     router: config.swapContract.solarSwapRouter,
     factory: config.swapContract.solarSwapFactory,
   },
+  [config.evmNetworks.ONE.networkVersion]: {
+    name: 'ViperSwap',
+    router: config.swapContract.viperSwapRouter,
+    factory: config.swapContract.viperSwapFactory,
+  },
 }

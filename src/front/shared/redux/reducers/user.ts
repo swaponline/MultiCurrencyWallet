@@ -79,6 +79,14 @@ export const initialState = {
     balanceError: null,
     infoAboutCurrency: null,
   },
+  oneData: {
+    balance: 0,
+    isBalanceFetched: false,
+    currency: 'ONE',
+    fullName: 'Harmony One',
+    balanceError: null,
+    infoAboutCurrency: null,
+  },
   btcData: {
     balance: 0,
     isBalanceFetched: false,

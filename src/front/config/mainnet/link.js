@@ -8,7 +8,8 @@ export default {
   ghostscan: 'https://ghostscan.io',
   nextExplorer: 'https://explore.next.exchange',
   xdai: 'https://blockscout.com/xdai/mainnet',
-  ftmscan: 'https://ftmscan.com/',
-  avaxscan: 'https://snowtrace.io/',
-  movrscan: 'https://moonriver.moonscan.io/',
+  ftmscan: 'https://ftmscan.com',
+  avaxscan: 'https://snowtrace.io',
+  movrscan: 'https://moonriver.moonscan.io',
+  oneExplorer: 'https://explorer.harmony.one',
 }

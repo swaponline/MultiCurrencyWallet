@@ -23,5 +23,7 @@ export default {
   pangolinSwapRouter: '0xE54Ca86531e17Ef3616d22Ca28b0D458b6C89106',
   solarSwapFactory: '0x049581aEB6Fe262727f290165C29BDAB065a1B68', // MOVR
   solarSwapRouter: '0xAA30eF758139ae4a7f798112902Bf6d65612045f',
+  viperSwapFactory: '0x7d02c116b98d0965ba7b642ace0183ad8b8d2196', // ONE
+  viperSwapRouter: '0xf012702a5f0e54015362cbca26a26fc90aa832a3',
   affiliateAddress: '0x873351e707257C28eC6fAB1ADbc850480f6e0633',
 }
