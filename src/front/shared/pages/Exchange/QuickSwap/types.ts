@@ -98,7 +98,6 @@ export type ComponentState = {
   swapFee: string
   gasPrice: string
   gasLimit: string
-  showOrders: boolean
   blockReason: BlockReasons | undefined
   liquidityErrorMessage: string
   serviceFee: ServiceFee | false
