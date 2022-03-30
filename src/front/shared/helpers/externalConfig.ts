@@ -290,8 +290,8 @@ const externalConfig = () => {
   }
 
   if (window && window.CUR_ONE_DISABLED === true) {
-    config.opts.curEnabled.movr = false
-    config.opts.blockchainSwapEnabled.movr = false
+    config.opts.curEnabled.one = false
+    config.opts.blockchainSwapEnabled.one = false
   }
 
   config.enabledEvmNetworks = Object.keys(config.evmNetworks)
