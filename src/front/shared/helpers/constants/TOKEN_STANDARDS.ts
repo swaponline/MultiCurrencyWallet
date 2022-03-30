@@ -82,4 +82,14 @@ export default {
     explorerApiKey: config.api.movr_ApiKey,
     hasSupportAtomicSwap: false,
   },
+  erc20one: {
+    platform: 'ethereum',
+    platformKey: 'harmony-shard-0',
+    standard: 'erc20one',
+    value: 'erc20one',
+    currency: 'one',
+    explorerApi: config.api.onescan,
+    explorerApiKey: config.api.one_ApiKey,
+    hasSupportAtomicSwap: false,
+  },
 }

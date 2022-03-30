@@ -47,6 +47,7 @@ const externalConfig = () => {
       ftm: true,
       avax: true,
       movr: true,
+      one: true,
       btc: true,
       ghost: true,
       next: true,
@@ -61,6 +62,7 @@ const externalConfig = () => {
       ftm: false,
       avax: false,
       movr: false,
+      one: false,
       ghost: true,
       next: true,
     },
@@ -283,6 +285,11 @@ const externalConfig = () => {
   }
 
   if (window && window.CUR_MOVR_DISABLED === true) {
+    config.opts.curEnabled.movr = false
+    config.opts.blockchainSwapEnabled.movr = false
+  }
+
+  if (window && window.CUR_ONE_DISABLED === true) {
     config.opts.curEnabled.movr = false
     config.opts.blockchainSwapEnabled.movr = false
   }

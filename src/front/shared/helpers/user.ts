@@ -44,6 +44,10 @@ export const getActivatedCurrencies = () => {
     currencies.push('MOVR')
   }
 
+  if (!externalConfig.opts.curEnabled || externalConfig.opts.curEnabled.one) {
+    currencies.push('ONE')
+  }
+
   if (!externalConfig.opts.curEnabled || externalConfig.opts.curEnabled.ghost) {
     currencies.push('GHOST')
   }
@@ -78,6 +82,7 @@ export const getWidgetCurrencies = () => {
     'FTM',
     'AVAX',
     'MOVR',
+    'ONE',
     'GHOST',
     'NEXT',
   ]
