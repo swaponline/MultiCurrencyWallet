@@ -24,6 +24,8 @@ export const defaultPack = [
 
   ...(!curEnabled || curEnabled.movr ? [{ name: 'MOVR', capture: 'Moonriver' }] : []),
 
+  ...(!curEnabled || curEnabled.one ? [{ name: 'ONE', capture: 'Harmony' }] : []),
+
   ...((!curEnabled || curEnabled.ghost) && !onlyEvmWallets ? [{ name: 'GHOST', capture: 'Ghost' }] : []),
   ...((!curEnabled || curEnabled.next) && !onlyEvmWallets ? [{ name: 'NEXT', capture: 'NEXT.coin' }] : []),
 
@@ -46,6 +48,7 @@ export const defaultPack = [
   ...(config.erc20ftm ? [{ name: 'ERC20FTM', capture: 'Token', baseCurrency: 'FTM' }] : []),
   ...(config.erc20avax ? [{ name: 'ERC20AVAX', capture: 'Token', baseCurrency: 'AVAX' }] : []),
   ...(config.erc20movr ? [{ name: 'ERC20MOVR', capture: 'Token', baseCurrency: 'MOVR' }] : []),
+  ...(config.erc20one ? [{ name: 'ERC20ONE', capture: 'Token', baseCurrency: 'ONE' }] : []),
 ]
 
 export const widgetPack = [
@@ -65,6 +68,8 @@ export const widgetPack = [
   ...((config.erc20avax && (!curEnabled || curEnabled.avax)) ? [{ name: 'ERC20AVAX', capture: 'Token', baseCurrency: 'AVAX' }] : []),
   ...(!curEnabled || curEnabled.movr ? [{ name: 'MOVR', capture: 'Moonriver' }] : []),
   ...((config.erc20movr && (!curEnabled || curEnabled.movr)) ? [{ name: 'ERC20MOVR', capture: 'Token', baseCurrency: 'MOVR' }] : []),
+  ...(!curEnabled || curEnabled.one ? [{ name: 'ONE', capture: 'Harmony One' }] : []),
+  ...((config.erc20one && (!curEnabled || curEnabled.one)) ? [{ name: 'ERC20ONE', capture: 'Token', baseCurrency: 'ONE' }] : []),
   ...((!curEnabled || curEnabled.ghost) && !onlyEvmWallets ? [{ name: 'GHOST', capture: 'Ghost' }] : []),
   ...((!curEnabled || curEnabled.next) && !onlyEvmWallets ? [{ name: 'NEXT', capture: 'NEXT.coin' }] : []),
 ]
