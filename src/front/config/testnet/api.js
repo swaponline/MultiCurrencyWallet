@@ -31,6 +31,8 @@ export default {
   avax_ApiKey: 'BEDYVGMKPM4HXIVD16B1Z66D5R75D9AHNC',
   movrscan: 'https://api-moonbase.moonscan.io/api',
   movr_ApiKey: 'VHG8YAQMA78MAQKU7C73Z4UQ2A83S4IBGW',
+  onescan: '',
+  one_ApiKey: '',
   faucet: 'https://faucet.swaponline.site/testnet/',
   btc2FAProtected: 'https://2fa.swaponline.site',
   btcPin: 'https://2fapin.swaponline.site',

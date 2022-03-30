@@ -7,4 +7,5 @@ export default [
     250,    // FTM Mainnet
     43114,  // AVAX Mainnet
     1285,   // MOVR Mainnet
+    1666600000, // ONE Mainnet
 ]

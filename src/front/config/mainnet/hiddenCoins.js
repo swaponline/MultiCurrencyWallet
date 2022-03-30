@@ -60,6 +60,7 @@ export default [
   'FTM',
   'AVAX',
   'MOVR',
+  'ONE',
   '{ETH}SWAP',
   '{ETH}HDP',
   '{ETH}USDT',

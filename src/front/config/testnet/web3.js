@@ -7,4 +7,5 @@ export default {
   ftm_provider: 'https://rpc.testnet.fantom.network/',
   avax_provider: 'https://api.avax-test.network/ext/bc/C/rpc',
   movr_provider: 'https://moonbeam-alpha.api.onfinality.io/public',
+  one_provider: 'https://api.s0.b.hmny.io',
 }

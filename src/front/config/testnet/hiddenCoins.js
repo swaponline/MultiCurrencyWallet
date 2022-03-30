@@ -10,6 +10,7 @@ export default [
   'FTM',
   'AVAX',
   'MOVR',
+  'ONE',
   'GHOST',
   'NEXT',
   '{ETH}SWAP',

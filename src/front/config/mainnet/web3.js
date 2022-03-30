@@ -7,4 +7,5 @@ export default {
   ftm_provider: 'https://rpc.ftm.tools',
   avax_provider: 'https://api.avax.network/ext/bc/C/rpc',
   movr_provider: 'https://rpc.moonriver.moonbeam.network',
+  one_provider: 'https://api.harmony.one',
 }
