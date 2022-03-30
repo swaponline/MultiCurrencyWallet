@@ -182,4 +182,10 @@ export default {
     defaultParams: DEFAULT_CURRENCY_PARAMETERS.evmLikeToken,
     web3: new Web3(new Web3.providers.HttpProvider(config.web3.movr_provider)),
   }),
+  erc20one: new erc20LikeHelper({
+    standard: 'erc20one',
+    currency: 'ONE',
+    defaultParams: DEFAULT_CURRENCY_PARAMETERS.evmLikeToken,
+    web3: new Web3(new Web3.providers.HttpProvider(config.web3.one_provider)),
+  }),
 }

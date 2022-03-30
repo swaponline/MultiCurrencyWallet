@@ -109,4 +109,9 @@ export default {
     defaultParams: DEFAULT_CURRENCY_PARAMETERS.evmLike,
     web3: new Web3(config.web3.movr_provider),
   }),
+  one: new ethLikeHelper({
+    currency: 'ONE',
+    defaultParams: DEFAULT_CURRENCY_PARAMETERS.evmLike,
+    web3: new Web3(config.web3.one_provider),
+  }),
 }
