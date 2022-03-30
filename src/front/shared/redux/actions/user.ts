@@ -1,6 +1,6 @@
 import { BigNumber } from 'bignumber.js'
 import erc20Like from 'common/erc20Like'
-import config from 'app-config'
+import config from 'helpers/externalConfig'
 import moment from 'moment/moment'
 import request from 'common/utils/request'
 import getCoinInfo from 'common/coins/getCoinInfo'
@@ -11,6 +11,11 @@ import TOKEN_STANDARDS from 'helpers/constants/TOKEN_STANDARDS'
 import actions from 'redux/actions'
 import { getState } from 'redux/core'
 import reducers from 'redux/core/reducers'
+
+
+
+const onlyEvmWallets = (config?.opts?.ui?.disableInternalWallet) ? true : false
+const enabledCurrencies = config.opts.curEnabled
 
 /*
   Когда добавляем reducers, для старых пользователей они не инициализированы
@@ -144,27 +149,31 @@ const getBalances = () => {
 
   reducers.user.setIsBalanceFetching({ isBalanceFetching: true })
 
+  const evmBalancesFuncs: Array<any> = []
+  Object.keys(config.enabledEvmNetworks).forEach((evmType) => {
+    if (!enabledCurrencies || enabledCurrencies[evmType.toLowerCase()]) {
+      evmBalancesFuncs.push({
+        func: actions[evmType.toLowerCase()].getBalance,
+        name: evmType.toLowerCase(),
+      })
+    }
+  })
+
   return new Promise(async (resolve) => {
     const balances = [
       ...(metamask.isEnabled() && metamask.isConnected() && metamask.isAvailableNetwork())
         ? [ { func: metamask.getBalance, name: 'metamask' } ]
         : [],
-      { func: actions.btc.getBalance, name: 'btc' },
-      { func: actions.eth.getBalance, name: 'eth' },
-      { func: actions.bnb.getBalance, name: 'bnb' },
-      { func: actions.matic.getBalance, name: 'matic' },
-      { func: actions.arbeth.getBalance, name: 'arbeth' },
-      { func: actions.xdai.getBalance, name: 'xdai' },
-      { func: actions.ftm.getBalance, name: 'ftm' },
-      { func: actions.avax.getBalance, name: 'avax' },
-      { func: actions.movr.getBalance, name: 'movr' },
-      { func: actions.one.getBalance, name: 'one' },
-      { func: actions.ghost.getBalance, name: 'ghost' },
-      { func: actions.next.getBalance, name: 'next' },
-      { func: actions.btcmultisig.getBalance, name: 'btc-sms' },
-      { func: actions.btcmultisig.getBalanceUser, name: 'btc-ms-main' },
-      { func: actions.btcmultisig.getBalancePin, name: 'btc-pin' },
-      { func: actions.btcmultisig.fetchMultisigBalances, name: 'btc-ms' },
+      ...(((!enabledCurrencies || enabledCurrencies.btc) && !onlyEvmWallets) ? [{ func: actions.btc.getBalance, name: 'btc' }] : []),
+
+      ...evmBalancesFuncs,
+
+      ...(((!enabledCurrencies || enabledCurrencies.ghost) && !onlyEvmWallets) ? [{ func: actions.ghost.getBalance, name: 'ghost' }] : []),
+      ...(((!enabledCurrencies || enabledCurrencies.next) && !onlyEvmWallets) ? [{ func: actions.next.getBalance, name: 'next' }] : []),
+      ...(((!enabledCurrencies || enabledCurrencies.btc) && !onlyEvmWallets) ? [{ func: actions.btcmultisig.getBalance, name: 'btc-sms' }] : []),
+      ...(((!enabledCurrencies || enabledCurrencies.btc) && !onlyEvmWallets) ? [{ func: actions.btcmultisig.getBalanceUser, name: 'btc-ms-main' }] : []),
+      ...(((!enabledCurrencies || enabledCurrencies.btc) && !onlyEvmWallets) ? [{ func: actions.btcmultisig.getBalancePin, name: 'btc-pin' }] : []),
+      ...(((!enabledCurrencies || enabledCurrencies.btc) && !onlyEvmWallets) ? [{ func: actions.btcmultisig.fetchMultisigBalances, name: 'btc-ms' }] : []),
     ]
 
     await Promise.all(
@@ -404,25 +413,35 @@ const fetchMultisigStatus = async () => {
 const setTransactions = async () => {
   clearTransactions()
 
+  const evmTransactions: any = []
+  Object.keys(config.enabledEvmNetworks).forEach((evmType) => {
+    if (!enabledCurrencies || enabledCurrencies[evmType.toLowerCase()]) {
+      if (onlyEvmWallets) {
+        if (metamask.isEnabled() && metamask.isConnected()) {
+          evmTransactions.push( actions[evmType.toLowerCase()].getTransaction(metamask.getAddress()) )
+        }
+      } else {
+        evmTransactions.push( actions[evmType.toLowerCase()].getTransaction() )
+        if (metamask.isEnabled() && metamask.isConnected()) {
+          evmTransactions.push( actions[evmType.toLowerCase()].getTransaction(metamask.getAddress()) )
+        }
+      }
+    }
+  })
   try {
     const fetchTxsPromises = [
-      actions.btc.getTransaction(),
-      actions.btcmultisig.getTransactionSMS(),
-      actions.btcmultisig.getTransactionPIN(),
-      actions.btcmultisig.getTransactionUser(),
-      actions.eth.getTransaction(),
-      actions.bnb.getTransaction(),
-      actions.matic.getTransaction(),
-      actions.arbeth.getTransaction(),
-      actions.xdai.getTransaction(),
-      actions.ftm.getTransaction(),
-      actions.avax.getTransaction(),
-      actions.movr.getTransaction(),
-      actions.one.getTransaction(),
-      actions.ghost.getTransaction(),
-      actions.next.getTransaction(),
+      ...(((!enabledCurrencies || enabledCurrencies.btc) && !onlyEvmWallets) ? [actions.btc.getTransaction()] : []),
+      ...(((!enabledCurrencies || enabledCurrencies.btc) && !onlyEvmWallets) ? [actions.btcmultisig.getTransactionSMS()] : []),
+      ...(((!enabledCurrencies || enabledCurrencies.btc) && !onlyEvmWallets) ? [actions.btcmultisig.getTransactionPIN()] : []),
+      ...(((!enabledCurrencies || enabledCurrencies.btc) && !onlyEvmWallets) ? [actions.btcmultisig.getTransactionUser()] : []),
+      ...evmTransactions,
+      ...(((!enabledCurrencies || enabledCurrencies.ghost) && !onlyEvmWallets) ? [actions.ghost.getTransaction()] : []),
+      ...(((!enabledCurrencies || enabledCurrencies.next) && !onlyEvmWallets) ? [actions.next.getTransaction()] : []),
+      // @to-do - other metamask wallets? need check
+      /*
       ...(metamask.isEnabled() && metamask.isConnected()) ? [actions.eth.getTransaction(metamask.getAddress())] : [],
       ...(metamask.isEnabled() && metamask.isConnected()) ? [actions.bnb.getTransaction(metamask.getAddress())] : [],
+      */
     ]
 
     fetchTxsPromises.forEach((txPromise: Promise<any[]>) => {
