@@ -17,6 +17,7 @@ import reducers from 'redux/core/reducers'
 const onlyEvmWallets = (config?.opts?.ui?.disableInternalWallet) ? true : false
 const enabledCurrencies = config.opts.curEnabled
 
+
 /*
   Когда добавляем reducers, для старых пользователей они не инициализированы
   Нужно проверять значение, и если undefined - инициализировать
@@ -200,18 +201,21 @@ const getTokensBalances = async () => {
     Object.keys(TOKEN_STANDARDS).map(async (key) => {
       const standardObj = TOKEN_STANDARDS[key]
       const standardName = standardObj.standard
+      const baseBlockchain = standardObj.currency.toLowerCase()
 
-      await Promise.all(
-        Object.keys(config[standardName]).map(async (tokenName) => {
-          try {
-            await actions[standardName].getBalance(tokenName)
-          } catch (error) {
-            console.group('Actions >%c user > getTokensBalances', 'color: red;')
-            console.error(`Fail fetch balance for ${tokenName.toUpperCase()} token`, error)
-            console.groupEnd()
-          }
-        }),
-      )
+      if (!enabledCurrencies || enabledCurrencies[baseBlockchain]) {
+        await Promise.all(
+          Object.keys(config[standardName]).map(async (tokenName) => {
+            try {
+              await actions[standardName].getBalance(tokenName)
+            } catch (error) {
+              console.group('Actions >%c user > getTokensBalances', 'color: red;')
+              console.error(`Fail fetch balance for ${tokenName.toUpperCase()} token`, error)
+              console.groupEnd()
+            }
+          }),
+        )
+      }
     }),
   )
 }
