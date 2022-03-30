@@ -490,6 +490,8 @@ const getWallets = (options: IUniversalObj = {}) => {
   // if enabledCurrencies equals FALSE then all currencies is enabled
   const enabledCurrencies = config.opts.curEnabled
 
+  if (onlyEvmWallets && !metamaskConnected) return []
+
   const tokenWallets = Object.keys(tokensData).map((k) => {
     const { coin, blockchain } = getCoinInfo(k)
 

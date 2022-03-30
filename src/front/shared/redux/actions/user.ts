@@ -17,7 +17,6 @@ import reducers from 'redux/core/reducers'
 const onlyEvmWallets = (config?.opts?.ui?.disableInternalWallet) ? true : false
 const enabledCurrencies = config.opts.curEnabled
 
-
 /*
   Когда добавляем reducers, для старых пользователей они не инициализированы
   Нужно проверять значение, и если undefined - инициализировать
@@ -153,10 +152,12 @@ const getBalances = () => {
   const evmBalancesFuncs: Array<any> = []
   Object.keys(config.enabledEvmNetworks).forEach((evmType) => {
     if (!enabledCurrencies || enabledCurrencies[evmType.toLowerCase()]) {
-      evmBalancesFuncs.push({
-        func: actions[evmType.toLowerCase()].getBalance,
-        name: evmType.toLowerCase(),
-      })
+      if ((onlyEvmWallets && metamask.isEnabled() && metamask.isConnected()) || !onlyEvmWallets) {
+        evmBalancesFuncs.push({
+          func: actions[evmType.toLowerCase()].getBalance,
+          name: evmType.toLowerCase(),
+        })
+      }
     }
   })
 
@@ -204,17 +205,19 @@ const getTokensBalances = async () => {
       const baseBlockchain = standardObj.currency.toLowerCase()
 
       if (!enabledCurrencies || enabledCurrencies[baseBlockchain]) {
-        await Promise.all(
-          Object.keys(config[standardName]).map(async (tokenName) => {
-            try {
-              await actions[standardName].getBalance(tokenName)
-            } catch (error) {
-              console.group('Actions >%c user > getTokensBalances', 'color: red;')
-              console.error(`Fail fetch balance for ${tokenName.toUpperCase()} token`, error)
-              console.groupEnd()
-            }
-          }),
-        )
+        if ((onlyEvmWallets && metamask.isEnabled() && metamask.isConnected()) || !onlyEvmWallets) {
+          await Promise.all(
+            Object.keys(config[standardName]).map(async (tokenName) => {
+              try {
+                await actions[standardName].getBalance(tokenName)
+              } catch (error) {
+                console.group('Actions >%c user > getTokensBalances', 'color: red;')
+                console.error(`Fail fetch balance for ${tokenName.toUpperCase()} token`, error)
+                console.groupEnd()
+              }
+            }),
+          )
+        }
       }
     }),
   )
@@ -466,16 +469,19 @@ const setTokensTransaction = async () => {
   Object.keys(TOKEN_STANDARDS).forEach((key) => {
     const { standard } = TOKEN_STANDARDS[key]
     const baseCurrency = TOKEN_STANDARDS[standard].currency.toUpperCase()
+    const baseBlockchain = TOKEN_STANDARDS[standard].currency.toLowerCase()
 
-    Object.keys(config[standard]).filter((name) => {
-      const tokenKey = `{${baseCurrency}}${name}`.toUpperCase()
+    if (!enabledCurrencies || enabledCurrencies[baseBlockchain]) {
+      Object.keys(config[standard]).filter((name) => {
+        const tokenKey = `{${baseCurrency}}${name}`.toUpperCase()
 
-      if (user.isAllowedCurrency(tokenKey)) {
-        actions[standard].getTransaction(false, name).then((trx) => {
-          if (trx.length) mergeTransactions(trx)
-        })
-      }
-    })
+        if (user.isAllowedCurrency(tokenKey)) {
+          actions[standard].getTransaction(false, name).then((trx) => {
+            if (trx.length) mergeTransactions(trx)
+          })
+        }
+      })
+    }
   })
 }
 
