@@ -9,6 +9,7 @@ export const initialState = {
     ftm: false,
     avax: false,
     movr: false,
+    one: false,
     ghost: false,
     next: false,
     '{eth}usdt': false,

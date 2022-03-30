@@ -94,6 +94,7 @@ const sign = async () => {
     actions.ftm.login(ethPrivateKey, mnemonic)
     actions.avax.login(ethPrivateKey, mnemonic)
     actions.movr.login(ethPrivateKey, mnemonic)
+    actions.one.login(ethPrivateKey, mnemonic)
     const _btcPrivateKey = actions.btc.login(btcPrivateKey, mnemonic)
     actions.ghost.login(ghostPrivateKey, mnemonic)
     actions.next.login(nextPrivateKey, mnemonic)
@@ -157,6 +158,7 @@ const getBalances = () => {
       { func: actions.ftm.getBalance, name: 'ftm' },
       { func: actions.avax.getBalance, name: 'avax' },
       { func: actions.movr.getBalance, name: 'movr' },
+      { func: actions.one.getBalance, name: 'one' },
       { func: actions.ghost.getBalance, name: 'ghost' },
       { func: actions.next.getBalance, name: 'next' },
       { func: actions.btcmultisig.getBalance, name: 'btc-sms' },
@@ -416,6 +418,7 @@ const setTransactions = async () => {
       actions.ftm.getTransaction(),
       actions.avax.getTransaction(),
       actions.movr.getTransaction(),
+      actions.one.getTransaction(),
       actions.ghost.getTransaction(),
       actions.next.getTransaction(),
       ...(metamask.isEnabled() && metamask.isConnected()) ? [actions.eth.getTransaction(metamask.getAddress())] : [],
@@ -464,6 +467,7 @@ const getText = () => {
       ftmData,
       avaxData,
       movrData,
+      oneData,
       btcData,
       ghostData,
       nextData,
@@ -521,6 +525,11 @@ const getText = () => {
     \r\n
     MOVR address: ${movrData.address}\r\n
     Private key: ${movrData.privateKey}\r\n
+    \r\n
+    # ONE CHAIN
+    \r\n
+    ONE address: ${oneData.address}\r\n
+    Private key: ${oneData.privateKey}\r\n
     \r\n
     # BITCOIN
     \r\n

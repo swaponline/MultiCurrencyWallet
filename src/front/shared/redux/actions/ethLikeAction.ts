@@ -21,7 +21,7 @@ class EthLikeAction {
 
   readonly privateKeyName: string
 
-  readonly explorerName: string
+  readonly explorerApiName: string
 
   readonly explorerLink: string
 
@@ -45,7 +45,7 @@ class EthLikeAction {
       ticker,
       privateKeyName,
       chainId,
-      explorerName,
+      explorerApiName,
       explorerLink,
       explorerApiKey,
       adminFeeObj,
@@ -57,7 +57,7 @@ class EthLikeAction {
     this.privateKeyName = privateKeyName.toLowerCase()
     this.chainId = chainId
     this.tickerKey = ticker.toLowerCase()
-    this.explorerName = explorerName
+    this.explorerApiName = explorerApiName
     this.explorerLink = explorerLink
     this.explorerApiKey = explorerApiKey
     this.adminFeeObj = adminFeeObj
@@ -259,7 +259,7 @@ class EthLikeAction {
       const url = `?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=${this.explorerApiKey}`
 
       apiLooper
-        .get(this.explorerName, internalUrl)
+        .get(this.explorerApiName, internalUrl)
         .then((response: any) => {
           if (Array.isArray(response?.result)) {
             const internals: ResponseItem[] = []
@@ -274,7 +274,7 @@ class EthLikeAction {
             })
 
             apiLooper
-              .get(this.explorerName, url)
+              .get(this.explorerApiName, url)
               .then((response: any) => {
                 if (Array.isArray(response.result)) {
                   const transactions = this.formatTransactions({
@@ -591,9 +591,9 @@ export default {
     ticker: 'ETH',
     privateKeyName: 'eth',
     chainId: externalConfig.evmNetworks.ETH.chainId,
-    explorerName: 'etherscan',
-    explorerLink: externalConfig.link.etherscan,
+    explorerApiName: 'etherscan',
     explorerApiKey: externalConfig.api.etherscan_ApiKey,
+    explorerLink: externalConfig.link.etherscan,
     adminFeeObj: externalConfig.opts?.fee?.eth,
     web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.provider)),
   }),
@@ -603,9 +603,9 @@ export default {
     ticker: 'BNB',
     privateKeyName: 'eth',
     chainId: externalConfig.evmNetworks.BNB.chainId,
-    explorerName: 'bscscan',
-    explorerLink: externalConfig.link.bscscan,
+    explorerApiName: 'bscscan',
     explorerApiKey: externalConfig.api.bscscan_ApiKey,
+    explorerLink: externalConfig.link.bscscan,
     adminFeeObj: externalConfig.opts?.fee?.bnb,
     web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.binance_provider)),
   }),
@@ -614,9 +614,9 @@ export default {
     ticker: 'MATIC',
     privateKeyName: 'eth',
     chainId: externalConfig.evmNetworks.MATIC.chainId,
-    explorerName: 'maticscan',
-    explorerLink: externalConfig.link.maticscan,
+    explorerApiName: 'maticscan',
     explorerApiKey: externalConfig.api.polygon_ApiKey,
+    explorerLink: externalConfig.link.maticscan,
     adminFeeObj: externalConfig.opts?.fee?.matic,
     web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.matic_provider)),
   }),
@@ -625,9 +625,9 @@ export default {
     ticker: 'ARBETH',
     privateKeyName: 'eth',
     chainId: externalConfig.evmNetworks.ARBETH.chainId,
-    explorerName: 'rinkeby-explorer',
-    explorerLink: externalConfig.link.arbitrum,
+    explorerApiName: 'rinkeby-explorer',
     explorerApiKey: '',
+    explorerLink: externalConfig.link.arbitrum,
     adminFeeObj: externalConfig.opts?.fee?.arbeth,
     web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.arbitrum_provider)),
   }),
@@ -636,9 +636,9 @@ export default {
     ticker: 'XDAI',
     privateKeyName: 'eth',
     chainId: externalConfig.evmNetworks.XDAI.chainId,
-    explorerName: '', // needs for show transactions
-    explorerLink: externalConfig.link.xdai,
+    explorerApiName: '', // needs for show transactions
     explorerApiKey: '',
+    explorerLink: externalConfig.link.xdai,
     adminFeeObj: externalConfig.opts?.fee?.xdai,
     web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.xdai_provider)),
   }),
@@ -647,9 +647,9 @@ export default {
     ticker: 'FTM',
     privateKeyName: 'eth',
     chainId: externalConfig.evmNetworks.FTM.chainId,
-    explorerName: 'ftmscan',
-    explorerLink: externalConfig.link.ftmscan,
+    explorerApiName: 'ftmscan',
     explorerApiKey: externalConfig.api.ftm_ApiKey,
+    explorerLink: externalConfig.link.ftmscan,
     adminFeeObj: externalConfig.opts?.fee?.ftm,
     web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.ftm_provider)),
   }),
@@ -658,9 +658,9 @@ export default {
     ticker: 'AVAX',
     privateKeyName: 'eth',
     chainId: externalConfig.evmNetworks.AVAX.chainId,
-    explorerName: 'avaxscan',
-    explorerLink: externalConfig.link.avaxscan,
+    explorerApiName: 'avaxscan',
     explorerApiKey: externalConfig.api.avax_ApiKey,
+    explorerLink: externalConfig.link.avaxscan,
     adminFeeObj: externalConfig.opts?.fee?.avax,
     web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.avax_provider)),
   }),
@@ -669,10 +669,21 @@ export default {
     ticker: 'MOVR',
     privateKeyName: 'eth',
     chainId: externalConfig.evmNetworks.MOVR.chainId,
-    explorerName: 'movrscan',
-    explorerLink: externalConfig.link.movrscan,
+    explorerApiName: 'movrscan',
     explorerApiKey: externalConfig.api.movr_ApiKey,
+    explorerLink: externalConfig.link.movrscan,
     adminFeeObj: externalConfig.opts?.fee?.movr,
     web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.movr_provider)),
+  }),
+  ONE: new EthLikeAction({
+    coinName: 'Harmony One',
+    ticker: 'ONE',
+    privateKeyName: 'eth',
+    chainId: externalConfig.evmNetworks.ONE.chainId,
+    explorerApiName: 'onescan',
+    explorerApiKey: externalConfig.api.one_ApiKey,
+    explorerLink: externalConfig.link.oneExplorer,
+    adminFeeObj: externalConfig.opts?.fee?.one,
+    web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.one_provider)),
   }),
 }
