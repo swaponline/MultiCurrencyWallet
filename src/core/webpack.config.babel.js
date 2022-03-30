@@ -31,9 +31,6 @@ const webpackConfig = {
   module: {
     rules: [
       {
-        loader: 'cache-loader',
-      },
-      {
         test: /\.js$/,
         exclude: /node_modules/,
         use: {
