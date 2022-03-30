@@ -1035,16 +1035,15 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
           {/* why style ? see tip for max button */}
           <p style={usedAdminFee ? { right: '10px' } : undefined} styleName="balance">
             {new BigNumber(amount).isGreaterThan(0) && cryptoCurrencyHaveInfoPrice && (
-              <FormattedMessage
-                id={balanceLabel.id}
-                defaultMessage={balanceLabel.defaultMessage}
-                values={{
-                  amount: selectedValue !== activeFiat
-                    ? new BigNumber(fiatAmount).dp(2, BigNumber.ROUND_CEIL).toNumber()
-                    : new BigNumber(amount).dp(6, BigNumber.ROUND_CEIL).toNumber(),
-                  currency: selectedValue !== activeFiat ? activeFiat : activeCryptoCurrency.toUpperCase(),
-                }}
-              />
+              intl.formatMessage({
+                id: balanceLabel.id,
+                defaultMessage: balanceLabel.defaultMessage,
+              }, {
+                amount: selectedValue !== activeFiat
+                  ? new BigNumber(fiatAmount).dp(2, BigNumber.ROUND_CEIL).toNumber()
+                  : new BigNumber(amount).dp(6, BigNumber.ROUND_CEIL).toNumber(),
+                currency: selectedValue !== activeFiat ? activeFiat : activeCryptoCurrency.toUpperCase(),
+              })
             )}
           </p>
 

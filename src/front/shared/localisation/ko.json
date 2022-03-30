@@ -2327,13 +2327,6 @@
     ]
   },
   {
-    "id": "WalletRow_Menu_Exchange",
-    "message": "거래소",
-    "files": [
-      "src/front/shared/pages/Wallet/Row/Row.tsx"
-    ]
-  },
-  {
     "id": "WalletRow_Menu_Invoice",
     "message": "청구서",
     "files": [
