@@ -140,7 +140,7 @@ window.buildOptions = {
     movr: true,
     one: true,
     ghost: true,
-    next: true,
+    next: false,
   },
   blockchainSwapEnabled: {
     btc: true,
@@ -154,7 +154,7 @@ window.buildOptions = {
     movr: false,
     one: false,
     ghost: false,
-    next: true,
+    next: false,
   },
   defaultExchangePair: {
     buy: '{eth}usdt',

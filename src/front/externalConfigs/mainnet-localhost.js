@@ -104,7 +104,7 @@ window.buildOptions = {
     movr: true,
     one: true,
     ghost: true,
-    next: true,
+    next: false,
   },
   blockchainSwapEnabled: {
     btc: true,

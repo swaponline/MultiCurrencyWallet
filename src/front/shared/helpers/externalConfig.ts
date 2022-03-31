@@ -50,7 +50,7 @@ const externalConfig = () => {
       one: true,
       btc: true,
       ghost: true,
-      next: true,
+      next: false,
     },
     blockchainSwapEnabled: {
       btc: true,
@@ -64,7 +64,7 @@ const externalConfig = () => {
       movr: false,
       one: false,
       ghost: true,
-      next: true,
+      next: false,
     },
     createWalletCoinsOrder: false,
     buyFiatSupported: ['eth', 'matic'],
@@ -244,9 +244,9 @@ const externalConfig = () => {
     config.opts.blockchainSwapEnabled.ghost = false
   }
 
-  if (window && window.CUR_NEXT_DISABLED === true) {
-    config.opts.curEnabled.next = false
-    config.opts.blockchainSwapEnabled.next = false
+  if (window && window.CUR_NEXT_DISABLED === false) {
+    config.opts.curEnabled.next = true
+    config.opts.blockchainSwapEnabled.next = true
   }
 
   if (window && window.CUR_ETH_DISABLED === true) {
