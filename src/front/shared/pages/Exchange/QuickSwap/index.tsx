@@ -313,7 +313,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     }
 
     if (!currencies.length) {
-      currencies = [filteredCurrencies[0] || CURRENCY_PLUG]
+      currencies = filteredCurrencies.length ? filteredCurrencies : [ CURRENCY_PLUG ]
     }
 
     const spendedCurrency = currencies[0]
