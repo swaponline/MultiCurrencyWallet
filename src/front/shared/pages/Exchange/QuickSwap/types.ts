@@ -26,15 +26,6 @@ export type SwapData = {
   sellAmount: string
 }
 
-export type Network = {
-  currency: string
-  chainId: number
-  networkVersion: number
-  chainName: string
-  rpcUrls: string[]
-  blockExplorerUrls: string[]
-}
-
 export enum Sections {
   Aggregator,
   Source,
