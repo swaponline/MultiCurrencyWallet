@@ -188,4 +188,10 @@ export default {
     defaultParams: DEFAULT_CURRENCY_PARAMETERS.evmLikeToken,
     web3: new Web3(new Web3.providers.HttpProvider(config.web3.one_provider)),
   }),
+  erc20aurora: new erc20LikeHelper({
+    standard: 'erc20aurora',
+    currency: 'AURETH',
+    defaultParams: DEFAULT_CURRENCY_PARAMETERS.evmLikeToken,
+    web3: new Web3(new Web3.providers.HttpProvider(config.web3.aurora_provider)),
+  }),
 }
