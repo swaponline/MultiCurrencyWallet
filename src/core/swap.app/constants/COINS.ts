@@ -8,6 +8,7 @@ export const COIN_TYPE = Object.freeze({
   AVAX_TOKEN: 'AVAX_TOKEN',
   MOVR_TOKEN: 'MOVR_TOKEN',
   ONE_TOKEN: 'ONE_TOKEN',
+  AURORA_TOKEN: 'AURORA_TOKEN',
 })
 
 export const TOKEN_STANDARD = Object.freeze({
@@ -19,6 +20,7 @@ export const TOKEN_STANDARD = Object.freeze({
   ERC20AVAX: 'ERC20AVAX',
   ERC20MOVR: 'ERC20MOVR',
   ERC20ONE: 'ERC20ONE',
+  ERC20AURORA: 'ERC20AURORA',
 })
 
 export const BLOCKCHAIN = Object.freeze({
@@ -34,6 +36,7 @@ export const BLOCKCHAIN = Object.freeze({
   AVAX: 'AVAX',
   MOVR: 'MOVR',
   ONE: 'ONE',
+  AURETH: 'AURETH', // AURORA
 })
 
 export const BASE_TOKEN_CURRENCY = Object.freeze({
@@ -45,6 +48,7 @@ export const BASE_TOKEN_CURRENCY = Object.freeze({
   AVAX: 'AVAX',
   MOVR: 'MOVR',
   ONE: 'ONE',
+  AURETH: 'AURETH',
 })
 
 export const COIN_MODEL = Object.freeze({
@@ -90,6 +94,14 @@ export const COIN_DATA = {
     name: 'Arbitrum ETH',
     type: COIN_TYPE.NATIVE,
     blockchain: BLOCKCHAIN.ARBITRUM,
+    model: COIN_MODEL.AB,
+    precision: 18,
+  },
+  'AURETH': {
+    ticker: 'AURETH',
+    name: 'Aurora ETH',
+    type: COIN_TYPE.NATIVE,
+    blockchain: BLOCKCHAIN.AURETH,
     model: COIN_MODEL.AB,
     precision: 18,
   },
@@ -205,6 +217,7 @@ export const NATIVE = {
   bnb: 'BNB',
   matic: 'MATIC',
   arbeth: 'ARBETH',
+  aureth: 'AURETH',
   xdai: 'XDAI',
   ftm: 'FTM',
   avax: 'AVAX',
