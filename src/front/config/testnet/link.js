@@ -12,4 +12,5 @@ export default {
   avaxscan: 'https://testnet.snowtrace.io',
   movrscan: 'https://moonbase.moonscan.io',
   oneExplorer: 'https://explorer.pops.one',
+  auroraExplorer: 'https://testnet.aurorascan.dev',
 }

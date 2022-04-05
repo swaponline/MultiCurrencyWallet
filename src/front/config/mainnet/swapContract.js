@@ -25,5 +25,7 @@ export default {
   solarSwapRouter: '0xAA30eF758139ae4a7f798112902Bf6d65612045f',
   viperSwapFactory: '0x7d02c116b98d0965ba7b642ace0183ad8b8d2196', // ONE
   viperSwapRouter: '0xf012702a5f0e54015362cbca26a26fc90aa832a3',
+  trisolarisFactory: '0xc66f594268041db60507f00703b152492fb176e7', // AURETH
+  trisolarisRouter: '0x2CB45Edb4517d5947aFdE3BEAbF95A582506858B',
   affiliateAddress: '0x873351e707257C28eC6fAB1ADbc850480f6e0633',
 }

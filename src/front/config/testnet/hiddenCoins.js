@@ -6,6 +6,7 @@ export default [
   'BNB',
   'MATIC',
   'ARBETH',
+  'AURETH',
   'XDAI',
   'FTM',
   'AVAX',

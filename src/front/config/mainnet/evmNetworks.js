@@ -34,6 +34,14 @@ export default {
     rpcUrls: [web3.arbitrum_provider],
     blockExplorerUrls: [link.arbitrum],
   },
+  AURETH: {
+    currency: 'AURETH',
+    chainId: '0x4e454152',
+    networkVersion: 1313161554,
+    chainName: 'Aurora',
+    rpcUrls: [web3.aurora_provider],
+    blockExplorerUrls: [link.auroraExplorer],
+  },
   XDAI: {
     currency: 'XDAI',
     chainId: '0x64',
