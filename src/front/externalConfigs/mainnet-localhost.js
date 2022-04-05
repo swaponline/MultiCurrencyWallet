@@ -30,6 +30,9 @@
   erc20one: {
     address: '',
   },
+  erc20aurora: {
+    address: '',
+  },
 } */
 
 window.widgetEvmLikeTokens = [
@@ -98,6 +101,7 @@ window.buildOptions = {
     bnb: true,
     matic: true,
     arbeth: true,
+    aureth: true,
     xdai: true,
     ftm: true,
     avax: true,
@@ -112,6 +116,7 @@ window.buildOptions = {
     bnb: true,
     matic: false,
     arbeth: false,
+    aureth: false,
     xdai: false,
     ftm: true,
     avax: true,
@@ -151,6 +156,8 @@ window.buildOptions = {
     'CUSTOM_ERC20MOVR',
     'ONE',
     'CUSTOM_ERC20ONE',
+    'AURETH',
+    'CUSTOM_ERC20AURORA',
   ],
   invoiceEnabled: true, // Allow create invoices
   showWalletBanners: true,
