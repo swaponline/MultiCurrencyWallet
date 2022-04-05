@@ -25,7 +25,7 @@ type ComponentProps = {
   history: any
   isSourceMode: boolean
   slippage: number
-  network: Network
+  network: EvmNetworkConfig
   swapData?: SwapData
   swapFee: string
   spendedAmount: string

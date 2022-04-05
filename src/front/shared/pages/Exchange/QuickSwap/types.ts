@@ -93,7 +93,7 @@ export type ComponentState = {
   userDeadline: number
   slippageMaxRange: number
   wrongNetwork: boolean
-  network: Network
+  network: EvmNetworkConfig
   swapData: SwapData | undefined
   swapFee: string
   gasPrice: string

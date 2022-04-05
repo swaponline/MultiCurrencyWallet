@@ -3,6 +3,7 @@ export default {
   bnb: `${process.env.ENTRY}:bnb:privateKey`,
   matic: `${process.env.ENTRY}:matic:privateKey`,
   arbitrum: `${process.env.ENTRY}:arbitrum:privateKey`,
+  aureth: `${process.env.ENTRY}:aureth:privateKey`,
   xdai: `${process.env.ENTRY}:xdai:privateKey`,
   ftm: `${process.env.ENTRY}:ftm:privateKey`,
   avax: `${process.env.ENTRY}:avax:privateKey`,

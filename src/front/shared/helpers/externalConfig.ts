@@ -43,6 +43,7 @@ const externalConfig = () => {
       bnb: true,
       matic: true,
       arbeth: true,
+      aureth: true,
       xdai: true,
       ftm: true,
       avax: true,
@@ -58,6 +59,7 @@ const externalConfig = () => {
       bnb: false,
       matic: false,
       arbeth: false,
+      aureth: false,
       xdai: false,
       ftm: false,
       avax: false,
@@ -292,6 +294,11 @@ const externalConfig = () => {
   if (window && window.CUR_ONE_DISABLED === true) {
     config.opts.curEnabled.one = false
     config.opts.blockchainSwapEnabled.one = false
+  }
+
+  if (window && window.CUR_AURORA_DISABLED === true) {
+    config.opts.curEnabled.aureth = false
+    config.opts.blockchainSwapEnabled.aureth = false
   }
 
   config.enabledEvmNetworks = Object.keys(config.evmNetworks)

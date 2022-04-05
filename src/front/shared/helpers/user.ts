@@ -12,48 +12,19 @@ export const getActivatedCurrencies = () => {
     currencies.push('BTC (Multisig)')
   }
 
-  if (!externalConfig.opts.curEnabled || externalConfig.opts.curEnabled.eth) {
-    currencies.push('ETH')
-  }
-
-  if (!externalConfig.opts.curEnabled || externalConfig.opts.curEnabled.bnb) {
-    currencies.push('BNB')
-  }
-
-  if (!externalConfig.opts.curEnabled || externalConfig.opts.curEnabled.matic) {
-    currencies.push('MATIC')
-  }
-
-  if (!externalConfig.opts.curEnabled || externalConfig.opts.curEnabled.arbeth) {
-    currencies.push('ARBETH')
-  }
-
-  if (!externalConfig.opts.curEnabled || externalConfig.opts.curEnabled.xdai) {
-    currencies.push('XDAI')
-  }
-
-  if (!externalConfig.opts.curEnabled || externalConfig.opts.curEnabled.ftm) {
-    currencies.push('FTM')
-  }
-
-  if (!externalConfig.opts.curEnabled || externalConfig.opts.curEnabled.avax) {
-    currencies.push('AVAX')
-  }
-
-  if (!externalConfig.opts.curEnabled || externalConfig.opts.curEnabled.movr) {
-    currencies.push('MOVR')
-  }
-
-  if (!externalConfig.opts.curEnabled || externalConfig.opts.curEnabled.one) {
-    currencies.push('ONE')
-  }
-
   if (!externalConfig.opts.curEnabled || externalConfig.opts.curEnabled.ghost) {
     currencies.push('GHOST')
   }
 
   if (!externalConfig.opts.curEnabled || externalConfig.opts.curEnabled.next) {
     currencies.push('NEXT')
+  }
+
+  if (externalConfig.enabledEvmNetworks) {
+    Object.values(externalConfig.enabledEvmNetworks).forEach((network: EvmNetworkConfig) => {
+      const { currency } = network
+      if (!externalConfig.opts.curEnabled && currency) currencies.push(currency)
+    })
   }
 
   Object.keys(TOKEN_STANDARDS).forEach((standardKey) => {
@@ -78,6 +49,7 @@ export const getWidgetCurrencies = () => {
     'BNB',
     'MATIC',
     'ARBETH',
+    'AURETH',
     'XDAI',
     'FTM',
     'AVAX',
