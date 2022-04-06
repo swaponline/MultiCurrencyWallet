@@ -15,7 +15,7 @@ import reducers from 'redux/core/reducers'
 const onlyEvmWallets = (config?.opts?.ui?.disableInternalWallet) ? true : false
 const enabledCurrencies = config.opts.curEnabled
 
-const L2_EVM_KEYS = ['aureth', 'arbeth']
+const L2_EVM_KEYS = ['aureth', 'arbeth'] // TODO: move to best place
 
 /*
   Когда добавляем reducers, для старых пользователей они не инициализированы

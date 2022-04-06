@@ -91,7 +91,7 @@ export default {
   }),
   aureth: new ethLikeHelper({
     currency: 'AURETH',
-    defaultParams: DEFAULT_CURRENCY_PARAMETERS.evmLike,
+    defaultParams: DEFAULT_CURRENCY_PARAMETERS.aureth,
     web3: new Web3(config.web3.aurora_provider),
   }),
   xdai: new ethLikeHelper({
