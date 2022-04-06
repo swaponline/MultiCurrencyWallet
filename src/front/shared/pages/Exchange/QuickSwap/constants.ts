@@ -66,4 +66,9 @@ export const LIQUIDITY_SOURCE_DATA = {
     router: config.swapContract.viperSwapRouter,
     factory: config.swapContract.viperSwapFactory,
   },
+  [config.evmNetworks.AURETH.networkVersion]: {
+    name: 'Trisolaris',
+    router: config.swapContract.trisolarisRouter,
+    factory: config.swapContract.trisolarisFactory,
+  },
 }
