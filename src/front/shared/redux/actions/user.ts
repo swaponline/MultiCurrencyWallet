@@ -12,10 +12,10 @@ import actions from 'redux/actions'
 import { getState } from 'redux/core'
 import reducers from 'redux/core/reducers'
 
-
-
 const onlyEvmWallets = (config?.opts?.ui?.disableInternalWallet) ? true : false
 const enabledCurrencies = config.opts.curEnabled
+
+const L2_EVM_KEYS = ['aureth', 'arbeth']
 
 /*
   Когда добавляем reducers, для старых пользователей они не инициализированы
@@ -322,6 +322,7 @@ const getInfoAboutCurrency = (currencyNames) => new Promise((resolve, reject) =>
       const currencyInfoItem = answer.data.filter(currencyInfo => (
         (currencyInfo.symbol.toLowerCase() === currencyName)
         || (currencyName === 'xdai' && currencyInfo.symbol.toLowerCase() === 'dai')
+        || (L2_EVM_KEYS.includes(currencyName) && currencyInfo.symbol.toLowerCase() === 'eth')
       ))[0]
 
       const customFiatPrice = customTokenExchangeRate(currencyName)

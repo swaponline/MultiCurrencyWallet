@@ -37,9 +37,13 @@ export default class StepsWrapper extends Component<any, any> {
       }
 
       if (config.enabledEvmNetworks) {
-        Object.values(config.enabledEvmNetworks).forEach((network: EvmNetworkConfig) => {
-          const { currency, chainName } = network
-          if (currency && chainName) this.defaultStartPack.push({ name: currency, capture: chainName })
+        Object.keys(config.enabledEvmNetworks).forEach((evmNetwork) => {
+          const { currency, chainName } = config.enabledEvmNetworks[evmNetwork] as EvmNetworkConfig
+          if (
+            !curEnabled
+            || curEnabled[evmNetwork?.toLowerCase()]
+            && (currency && chainName)
+          ) this.defaultStartPack.push({ name: currency, capture: chainName })
         })
       }
 

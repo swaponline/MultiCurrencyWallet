@@ -367,11 +367,10 @@ const initialState = {
   addPartialItems: [],
 }
 
-
 if (config.isWidget) {
   initialState.items = [
     //@ts-ignore
-    ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.eth) ? [{
+    ...(!buildOpts.curEnabled || buildOpts.curEnabled.eth) ? [{
       name: 'ETH',
       title: 'ETH',
       icon: 'eth',
@@ -379,7 +378,7 @@ if (config.isWidget) {
       fullTitle: 'ethereum',
     }] : [],
     //@ts-ignore
-    ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.bnb) ? [{
+    ...(!buildOpts.curEnabled || buildOpts.curEnabled.bnb) ? [{
       name: 'BNB',
       title: 'BNB',
       icon: 'bnb',
@@ -387,7 +386,7 @@ if (config.isWidget) {
       fullTitle: 'binance coin',
     }] : [],
     //@ts-ignore
-    ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.matic) ? [{
+    ...(!buildOpts.curEnabled || buildOpts.curEnabled.matic) ? [{
       name: 'MATIC',
       title: 'MATIC',
       icon: 'matic',
@@ -395,7 +394,7 @@ if (config.isWidget) {
       fullTitle: 'matic token',
     }] : [],
     //@ts-ignore
-    ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.arbeth) ? [{
+    ...(!buildOpts.curEnabled || buildOpts.curEnabled.arbeth) ? [{
       name: 'ARBETH',
       title: 'ARBETH',
       icon: 'arbeth',
@@ -403,7 +402,7 @@ if (config.isWidget) {
       fullTitle: 'arbitrum eth',
     }] : [],
     //@ts-ignore
-    ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.aureth) ? [{
+    ...(!buildOpts.curEnabled || buildOpts.curEnabled.aureth) ? [{
       name: 'AURETH',
       title: 'AURETH',
       icon: 'aureth',
@@ -411,7 +410,7 @@ if (config.isWidget) {
       fullTitle: 'aurora eth',
     }] : [],
     //@ts-ignore
-    ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.xdai) ? [{
+    ...(!buildOpts.curEnabled || buildOpts.curEnabled.xdai) ? [{
       name: 'XDAI',
       title: 'XDAI',
       icon: 'xdai',
@@ -419,7 +418,7 @@ if (config.isWidget) {
       fullTitle: 'xdai',
     }] : [],
     //@ts-ignore
-    ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.ftm) ? [{
+    ...(!buildOpts.curEnabled || buildOpts.curEnabled.ftm) ? [{
       name: 'FTM',
       title: 'FTM',
       icon: 'ftm',
@@ -427,7 +426,7 @@ if (config.isWidget) {
       fullTitle: 'fantom',
     }] : [],
     //@ts-ignore
-    ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.avax) ? [{
+    ...(!buildOpts.curEnabled || buildOpts.curEnabled.avax) ? [{
       name: 'AVAX',
       title: 'AVAX',
       icon: 'avax',
@@ -435,7 +434,7 @@ if (config.isWidget) {
       fullTitle: 'avalanche',
     }] : [],
     //@ts-ignore
-    ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.movr) ? [{
+    ...(!buildOpts.curEnabled || buildOpts.curEnabled.movr) ? [{
       name: 'MOVR',
       title: 'MOVR',
       icon: 'movr',
@@ -443,7 +442,7 @@ if (config.isWidget) {
       fullTitle: 'moonriver',
     }] : [],
     //@ts-ignore
-    ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.one) ? [{
+    ...(!buildOpts.curEnabled || buildOpts.curEnabled.one) ? [{
       name: 'ONE',
       title: 'ONE',
       icon: 'one',
@@ -451,7 +450,7 @@ if (config.isWidget) {
       fullTitle: 'harmony one',
     }] : [],
     //@ts-ignore
-    ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.btc) ? [{
+    ...(!buildOpts.curEnabled || buildOpts.curEnabled.btc) ? [{
       name: 'BTC',
       title: 'BTC',
       icon: 'btc',
@@ -459,7 +458,7 @@ if (config.isWidget) {
       fullTitle: 'bitcoin',
     }] : [],
     //@ts-ignore
-    ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.ghost) ? [{
+    ...(!buildOpts.curEnabled || buildOpts.curEnabled.ghost) ? [{
       name: 'GHOST',
       title: 'GHOST',
       icon: 'ghost',
@@ -467,7 +466,7 @@ if (config.isWidget) {
       fullTitle: 'ghost',
     }] : [],
     //@ts-ignore
-    ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.next) ? [{
+    ...(!buildOpts.curEnabled || buildOpts.curEnabled.next) ? [{
       name: 'NEXT',
       title: 'NEXT',
       icon: 'next',

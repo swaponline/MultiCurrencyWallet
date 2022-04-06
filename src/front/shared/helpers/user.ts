@@ -21,9 +21,11 @@ export const getActivatedCurrencies = () => {
   }
 
   if (externalConfig.enabledEvmNetworks) {
-    Object.values(externalConfig.enabledEvmNetworks).forEach((network: EvmNetworkConfig) => {
-      const { currency } = network
-      if (!externalConfig.opts.curEnabled && currency) currencies.push(currency)
+    Object.keys(externalConfig.enabledEvmNetworks).forEach((evmNetwork) => {
+      if (
+        !externalConfig.opts.curEnabled
+        || externalConfig.opts.curEnabled[evmNetwork?.toLowerCase()]
+      ) currencies.push(evmNetwork?.toUpperCase())
     })
   }
 
