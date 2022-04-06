@@ -4,7 +4,7 @@ import { setup, helpers, constants } from '../../core/simple/src'
 import { handleRequest, handleOrder, handleError, fillOrderbook, startSaved } from './actions'
 import { TOKENS, TOKEN_DECIMALS } from '../config/constants'
 import * as configStorage from '../config/storage'
-import { erc20 } from '../../core/swap.app/util'
+import { tokenRegistrar } from '../../core/swap.app/util'
 import { FG_COLORS as COLORS, colorString } from 'common/utils/colorString'
 
 
@@ -20,7 +20,7 @@ const {
 //register unkronw tokens in core
 Object.keys(TOKENS).filter((name) => !Object.keys(constants.COINS).includes(name))
   .map((name) => {
-    erc20.register(name.toLowerCase(), TOKENS[name].decimals)
+    tokenRegistrar.erc20.register(name.toLowerCase(), TOKENS[name].decimals)
   })
 
 if (configStorage.hasTradeConfig()) {
@@ -36,7 +36,7 @@ if (configStorage.hasTradeConfig()) {
 
       TOKEN_DECIMALS[name] = decimals
 
-      erc20.register(name.toLowerCase(), decimals)
+      tokenRegistrar.erc20.register(name.toLowerCase(), decimals)
       TOKENS[name.toLowerCase()] = ercData
       console.log(
         colorString('>>> Add ERC token', COLORS.GREEN),

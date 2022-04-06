@@ -24,7 +24,7 @@ const initExternalConfig = () => {
 
     Object.keys(config[standard]).forEach((tokenSymbol) => {
       if (!constants.COIN_DATA[tokenSymbol]) {
-        util[standard].register(tokenSymbol, config[standard][tokenSymbol].decimals)
+        util.tokenRegistrar[standard].register(tokenSymbol, config[standard][tokenSymbol].decimals)
       }
     })
   })
