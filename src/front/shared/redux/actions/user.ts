@@ -100,6 +100,7 @@ const sign = async () => {
     actions.avax.login(ethPrivateKey, mnemonic)
     actions.movr.login(ethPrivateKey, mnemonic)
     actions.one.login(ethPrivateKey, mnemonic)
+    actions.aureth.login(ethPrivateKey, mnemonic)
     const _btcPrivateKey = actions.btc.login(btcPrivateKey, mnemonic)
     actions.ghost.login(ghostPrivateKey, mnemonic)
     actions.next.login(nextPrivateKey, mnemonic)
@@ -492,6 +493,7 @@ const getText = () => {
       bnbData,
       maticData,
       arbethData,
+      aurethData,
       xdaiData,
       ftmData,
       avaxData,
@@ -534,6 +536,11 @@ const getText = () => {
     \r\n
     ARBITRUM address: ${arbethData.address}\r\n
     Private key: ${arbethData.privateKey}\r\n
+    \r\n
+    # AURORA CHAIN
+    \r\n
+    AURORA address: ${aurethData.address}\r\n
+    Private key: ${aurethData.privateKey}\r\n
     \r\n
     # XDAI CHAIN
     \r\n

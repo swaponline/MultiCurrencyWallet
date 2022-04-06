@@ -135,6 +135,16 @@ const initialState = {
       addAssets: true,
     }] : [],
     //@ts-ignore
+    ...(!buildOpts.curEnabled || buildOpts.curEnabled.aureth) ? [{
+      name: 'AURETH',
+      title: 'AURETH',
+      icon: 'aureth',
+      value: 'aureth',
+      fullTitle: 'aurora eth',
+      blockchain: BLOCKCHAIN_TYPE.AURETH,
+      addAssets: true,
+    }] : [],
+    //@ts-ignore
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.xdai) ? [{
       name: 'XDAI',
       title: 'XDAI',
@@ -280,6 +290,14 @@ const initialState = {
       fullTitle: 'arbitrum eth',
     }] : [],
     //@ts-ignore
+    ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.aureth) ? [{
+      name: 'AURETH',
+      title: 'AURETH',
+      icon: 'aureth',
+      value: 'aureth',
+      fullTitle: 'aurora eth',
+    }] : [],
+    //@ts-ignore
     ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.xdai) ? [{
       name: 'XDAI',
       title: 'XDAI',
@@ -385,6 +403,14 @@ if (config.isWidget) {
       fullTitle: 'arbitrum eth',
     }] : [],
     //@ts-ignore
+    ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.aureth) ? [{
+      name: 'AURETH',
+      title: 'AURETH',
+      icon: 'aureth',
+      value: 'aureth',
+      fullTitle: 'aurora eth',
+    }] : [],
+    //@ts-ignore
     ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.xdai) ? [{
       name: 'XDAI',
       title: 'XDAI',
@@ -482,6 +508,14 @@ if (config.isWidget) {
       icon: 'arbeth',
       value: 'arbeth',
       fullTitle: 'arbitrum eth',
+    }] : [],
+    //@ts-ignore
+    ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.aureth) ? [{
+      name: 'AURETH',
+      title: 'AURETH',
+      icon: 'aureth',
+      value: 'aureth',
+      fullTitle: 'aurora eth',
     }] : [],
     //@ts-ignore
     ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.xdai) ? [{

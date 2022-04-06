@@ -686,4 +686,15 @@ export default {
     adminFeeObj: externalConfig.opts?.fee?.one,
     web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.one_provider)),
   }),
+  AURETH: new EthLikeAction({
+    coinName: 'Aurora ETH',
+    ticker: 'AURETH',
+    privateKeyName: 'eth',
+    chainId: externalConfig.evmNetworks.AURETH.chainId,
+    explorerApiName: 'aurorascan',
+    explorerApiKey: externalConfig.api.aurora_ApiKey,
+    explorerLink: externalConfig.link.auroraExplorer,
+    adminFeeObj: externalConfig.opts?.fee?.aureth,
+    web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.aurora_provider)),
+  }),
 }
