@@ -12,8 +12,6 @@ import externalConfig from 'helpers/externalConfig'
 import metamask from 'helpers/metamask'
 import { feedback, constants, cacheStorageGet, cacheStorageSet, apiLooper } from 'helpers'
 
-const L2_EVM_KEYS = ['aureth', 'arbeth'] // TODO: move to best place
-
 class EthLikeAction {
   readonly coinName: string
 
@@ -394,7 +392,7 @@ class EthLikeAction {
 
     gasPrice = gasPrice || (await ethLikeHelper[this.tickerKey].estimateGasPrice({ speed }))
 
-    const defaultGasLimitKey = L2_EVM_KEYS.includes(this.tickerKey) ? this.tickerKey : 'evmLike'
+    const defaultGasLimitKey = externalConfig?.L2_EVM_KEYS?.includes(this.tickerKey) ? this.tickerKey : 'evmLike'
     const defaultGasLimit = recipientIsContract
       ? DEFAULT_CURRENCY_PARAMETERS[defaultGasLimitKey].limit.contractInteract
       : DEFAULT_CURRENCY_PARAMETERS[defaultGasLimitKey].limit.send

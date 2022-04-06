@@ -68,6 +68,7 @@ const externalConfig = () => {
       ghost: true,
       next: true,
     },
+    L2_EVM_KEYS: ['aureth', 'arbeth'],
     createWalletCoinsOrder: false,
     buyFiatSupported: ['eth', 'matic'],
     defaultExchangePair: {
