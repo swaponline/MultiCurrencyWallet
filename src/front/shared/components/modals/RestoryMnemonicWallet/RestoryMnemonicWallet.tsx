@@ -160,16 +160,11 @@ class RestoryMnemonicWallet extends React.Component<ComponentProps, ComponentSta
 
       localStorage.setItem(constants.localStorage.isWalletCreate, 'true')
 
-      await actions.bnb.login(false, mnemonic)
-      await actions.eth.login(false, mnemonic)
-      await actions.matic.login(false, mnemonic)
-      await actions.arbeth.login(false, mnemonic)
-      await actions.aureth.login(false, mnemonic)
-      await actions.xdai.login(false, mnemonic)
-      await actions.ftm.login(false, mnemonic)
-      await actions.avax.login(false, mnemonic)
-      await actions.movr.login(false, mnemonic)
-      await actions.one.login(false, mnemonic)
+      Object.keys(config.enabledEvmNetworks).forEach(async (evmNetworkKey) => {
+        const actionKey = evmNetworkKey?.toLowerCase()
+        if (actionKey) await actions[actionKey]?.login(false, mnemonic)
+      })
+
       await actions.ghost.login(false, mnemonic)
       await actions.next.login(false, mnemonic)
 

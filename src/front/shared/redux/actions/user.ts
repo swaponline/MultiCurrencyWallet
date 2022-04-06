@@ -91,16 +91,11 @@ const sign = async () => {
     // using ETH key for all EVM compatible chains
     const ethPrivateKey = localStorage.getItem(constants.privateKeyNames.eth)
 
-    actions.eth.login(ethPrivateKey, mnemonic)
-    actions.bnb.login(ethPrivateKey, mnemonic)
-    actions.matic.login(ethPrivateKey, mnemonic)
-    actions.arbeth.login(ethPrivateKey, mnemonic)
-    actions.xdai.login(ethPrivateKey, mnemonic)
-    actions.ftm.login(ethPrivateKey, mnemonic)
-    actions.avax.login(ethPrivateKey, mnemonic)
-    actions.movr.login(ethPrivateKey, mnemonic)
-    actions.one.login(ethPrivateKey, mnemonic)
-    actions.aureth.login(ethPrivateKey, mnemonic)
+    Object.keys(config.enabledEvmNetworks).forEach((evmNetworkKey) => {
+      const actionKey = evmNetworkKey?.toLowerCase()
+      if (actionKey) actions[actionKey]?.login(ethPrivateKey, mnemonic)
+    })
+
     const _btcPrivateKey = actions.btc.login(btcPrivateKey, mnemonic)
     actions.ghost.login(ghostPrivateKey, mnemonic)
     actions.next.login(nextPrivateKey, mnemonic)
