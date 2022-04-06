@@ -391,9 +391,11 @@ class EthLikeAction {
     const recipientIsContract = await this.isContract(to)
 
     gasPrice = gasPrice || (await ethLikeHelper[this.tickerKey].estimateGasPrice({ speed }))
+
+    const defaultGasLimitKey = externalConfig?.L2_EVM_KEYS?.includes(this.tickerKey) ? this.tickerKey : 'evmLike'
     const defaultGasLimit = recipientIsContract
-      ? DEFAULT_CURRENCY_PARAMETERS.evmLike.limit.contractInteract
-      : DEFAULT_CURRENCY_PARAMETERS.evmLike.limit.send
+      ? DEFAULT_CURRENCY_PARAMETERS[defaultGasLimitKey].limit.contractInteract
+      : DEFAULT_CURRENCY_PARAMETERS[defaultGasLimitKey].limit.send
 
     let sendMethod = Web3.eth.sendTransaction
     let txData: any = {
@@ -685,5 +687,16 @@ export default {
     explorerLink: externalConfig.link.oneExplorer,
     adminFeeObj: externalConfig.opts?.fee?.one,
     web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.one_provider)),
+  }),
+  AURETH: new EthLikeAction({
+    coinName: 'Aurora ETH',
+    ticker: 'AURETH',
+    privateKeyName: 'eth',
+    chainId: externalConfig.evmNetworks.AURETH.chainId,
+    explorerApiName: 'aurorascan',
+    explorerApiKey: externalConfig.api.aurora_ApiKey,
+    explorerLink: externalConfig.link.auroraExplorer,
+    adminFeeObj: externalConfig.opts?.fee?.aureth,
+    web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.aurora_provider)),
   }),
 }

@@ -26,15 +26,6 @@ export type SwapData = {
   sellAmount: string
 }
 
-export type Network = {
-  currency: string
-  chainId: number
-  networkVersion: number
-  chainName: string
-  rpcUrls: string[]
-  blockExplorerUrls: string[]
-}
-
 export enum Sections {
   Aggregator,
   Source,
@@ -93,7 +84,7 @@ export type ComponentState = {
   userDeadline: number
   slippageMaxRange: number
   wrongNetwork: boolean
-  network: Network
+  network: EvmNetworkConfig
   swapData: SwapData | undefined
   swapFee: string
   gasPrice: string

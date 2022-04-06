@@ -165,14 +165,7 @@ class ConnectWalletModal extends React.Component<any, { choseNetwork: boolean; c
                   .filter((network: any) => externalConfig.opts.curEnabled[network.currency.toLowerCase()])
                   .map(
                     (
-                      item: {
-                      currency: string
-                      chainId: number
-                      networkVersion: number
-                      chainName: string
-                      rpcUrls: string[]
-                      blockExplorerUrls: string[]
-                    },
+                      item: EvmNetworkConfig,
                       index,
                     ) => (
                       <button

@@ -3,6 +3,7 @@ export default {
   bnb: 0.0006,
   matic: 0.0006,
   arbeth: 0.0006,
+  aureth: 0.0006,
   xdai: 0.0006,
   ftm: 0.0006,
   avax: 0.0006,

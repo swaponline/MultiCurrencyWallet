@@ -26,5 +26,7 @@ export default {
   solarSwapRouter: '',
   viperSwapFactory: '', // ONE
   viperSwapRouter: '',
+  trisolarisFactory: '', // AURETH
+  trisolarisRouter: '',
   affiliateAddress: '0x873351e707257C28eC6fAB1ADbc850480f6e0633',
 }

@@ -164,18 +164,19 @@ const deletedPartialCurrency = (orderId) => {
 
   // currencies which must be all time in the drop
   const premiumCurrencies = [
-    'BTC', 
-    'ETH', 
-    'BNB', 
-    'MATIC', 
-    'ARBETH', 
+    'BTC',
+    'ETH',
+    'BNB',
+    'MATIC',
+    'ARBETH',
+    'AURETH',
     'XDAI',
     'FTM',
     'AVAX',
     'MOVR',
     'ONE',
-    'GHOST', 
-    'NEXT', 
+    'GHOST',
+    'NEXT',
     'SWAP',
   ]
 
@@ -476,6 +477,7 @@ const getWallets = (options: IUniversalObj = {}) => {
       bnbData,
       maticData,
       arbethData,
+      aurethData,
       xdaiData,
       ftmData,
       avaxData,
@@ -610,6 +612,14 @@ const getWallets = (options: IUniversalObj = {}) => {
           ? [oneData]
           : []
         : [oneData]
+      : []),
+    // =====================================
+    ...(!enabledCurrencies || enabledCurrencies.aureth
+      ? metamaskConnected
+        ? withInternal
+          ? [aurethData]
+          : []
+        : [aurethData]
       : []),
     // =====================================
     ...((!enabledCurrencies || enabledCurrencies.ghost) && !onlyEvmWallets ? [ghostData] : []),

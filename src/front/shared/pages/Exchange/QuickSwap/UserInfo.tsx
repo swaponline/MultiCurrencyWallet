@@ -9,7 +9,7 @@ import { AddressFormat, AddressType } from 'domain/address'
 import { metamask, links, constants, localStorage, utils } from 'helpers'
 import actions from 'redux/actions'
 import { LIQUIDITY_SOURCE_DATA } from './constants'
-import { Network, SwapData } from './types'
+import { SwapData } from './types'
 import Address from 'components/ui/Address/Address'
 import Copy from 'components/ui/Copy/Copy'
 import Button from 'components/controls/Button/Button'
@@ -25,7 +25,7 @@ type ComponentProps = {
   history: any
   isSourceMode: boolean
   slippage: number
-  network: Network
+  network: EvmNetworkConfig
   swapData?: SwapData
   swapFee: string
   spendedAmount: string

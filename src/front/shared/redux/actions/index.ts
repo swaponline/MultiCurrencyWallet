@@ -47,6 +47,7 @@ export default {
   bnb: EthLikeAction.BNB,
   matic: EthLikeAction.MATIC,
   arbeth: EthLikeAction.ARBETH,
+  aureth: EthLikeAction.AURETH,
   xdai: EthLikeAction.XDAI,
   ftm: EthLikeAction.FTM,
   avax: EthLikeAction.AVAX,
@@ -60,6 +61,7 @@ export default {
   erc20avax: Erc20LikeAction.erc20avax,
   erc20movr: Erc20LikeAction.erc20movr,
   erc20one: Erc20LikeAction.erc20one,
+  erc20aurora: Erc20LikeAction.erc20aurora,
   ghost,
   next,
 

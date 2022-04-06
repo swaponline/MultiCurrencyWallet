@@ -92,4 +92,14 @@ export default {
     explorerApiKey: config.api.one_ApiKey,
     hasSupportAtomicSwap: false,
   },
+  erc20aurora: {
+    platform: 'ethereum',
+    platformKey: 'aurora',
+    standard: 'erc20aurora',
+    value: 'erc20aurora',
+    currency: 'aureth',
+    explorerApi: config.api.aurorascan,
+    explorerApiKey: config.api.aurora_ApiKey,
+    hasSupportAtomicSwap: false,
+  },
 }

@@ -24,7 +24,7 @@ const initExternalConfig = () => {
 
     Object.keys(config[standard]).forEach((tokenSymbol) => {
       if (!constants.COIN_DATA[tokenSymbol]) {
-        util[standard].register(tokenSymbol, config[standard][tokenSymbol].decimals)
+        util.tokenRegistrar[standard].register(tokenSymbol, config[standard][tokenSymbol].decimals)
       }
     })
   })
@@ -43,6 +43,7 @@ const externalConfig = () => {
       bnb: true,
       matic: true,
       arbeth: true,
+      aureth: true,
       xdai: true,
       ftm: true,
       avax: true,
@@ -58,6 +59,7 @@ const externalConfig = () => {
       bnb: false,
       matic: false,
       arbeth: false,
+      aureth: false,
       xdai: false,
       ftm: false,
       avax: false,
@@ -66,6 +68,7 @@ const externalConfig = () => {
       ghost: true,
       next: true,
     },
+    L2_EVM_KEYS: ['aureth', 'arbeth'],
     createWalletCoinsOrder: false,
     buyFiatSupported: ['eth', 'matic'],
     defaultExchangePair: {
@@ -292,6 +295,11 @@ const externalConfig = () => {
   if (window && window.CUR_ONE_DISABLED === true) {
     config.opts.curEnabled.one = false
     config.opts.blockchainSwapEnabled.one = false
+  }
+
+  if (window && window.CUR_AURORA_DISABLED === true) {
+    config.opts.curEnabled.aureth = false
+    config.opts.blockchainSwapEnabled.aureth = false
   }
 
   config.enabledEvmNetworks = Object.keys(config.evmNetworks)

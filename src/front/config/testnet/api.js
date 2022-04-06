@@ -33,6 +33,8 @@ export default {
   movr_ApiKey: 'VHG8YAQMA78MAQKU7C73Z4UQ2A83S4IBGW',
   onescan: '',
   one_ApiKey: '',
+  aurorascan: 'https://api-testnet.aurorascan.dev/api',
+  aurora_ApiKey: 'J9ZZ9C6FI4YHJVISBI2VYRRJ1MTU3ID45Q',
   faucet: 'https://faucet.swaponline.site/testnet/',
   btc2FAProtected: 'https://2fa.swaponline.site',
   btcPin: 'https://2fapin.swaponline.site',

@@ -29,38 +29,22 @@ export default class StepsWrapper extends Component<any, any> {
       if (!curEnabled || curEnabled.btc) {
         this.defaultStartPack.push({ name: 'BTC', capture: 'Bitcoin' })
       }
-      if (!curEnabled || curEnabled.eth) {
-        this.defaultStartPack.push({ name: 'ETH', capture: 'Ethereum' })
-      }
-      if (!curEnabled || curEnabled.bnb) {
-        this.defaultStartPack.push({ name: 'BNB', capture: 'Binance Coin' })
-      }
-      if (!curEnabled || curEnabled.matic) {
-        this.defaultStartPack.push({ name: 'MATIC', capture: 'Matic token' })
-      }
-      if (!curEnabled || curEnabled.arbeth) {
-        this.defaultStartPack.push({ name: 'ARBETH', capture: 'Arbitrum ETH' })
-      }
-      if (!curEnabled || curEnabled.xdai) {
-        this.defaultStartPack.push({ name: 'XDAI', capture: 'xDai' })
-      }
-      if (!curEnabled || curEnabled.ftm) {
-        this.defaultStartPack.push({ name: 'FTM', capture: 'Fantom' })
-      }
-      if (!curEnabled || curEnabled.avax) {
-        this.defaultStartPack.push({ name: 'AVAX', capture: 'Avalanche' })
-      }
-      if (!curEnabled || curEnabled.movr) {
-        this.defaultStartPack.push({ name: 'MOVR', capture: 'Moonriver' })
-      }
-      if (!curEnabled || curEnabled.one) {
-        this.defaultStartPack.push({ name: 'ONE', capture: 'Harmony One' })
-      }
       if (!curEnabled || curEnabled.ghost) {
         this.defaultStartPack.push({ name: 'GHOST', capture: 'Ghost' })
       }
       if (!curEnabled || curEnabled.next) {
         this.defaultStartPack.push({ name: 'NEXT', capture: 'NEXT.coin' })
+      }
+
+      if (config.enabledEvmNetworks) {
+        Object.keys(config.enabledEvmNetworks).forEach((evmNetwork) => {
+          const { currency, chainName } = config.enabledEvmNetworks[evmNetwork] as EvmNetworkConfig
+          if (
+            !curEnabled
+            || curEnabled[evmNetwork?.toLowerCase()]
+            && (currency && chainName)
+          ) this.defaultStartPack.push({ name: currency, capture: chainName })
+        })
       }
 
       // Multi token build
@@ -84,6 +68,7 @@ export default class StepsWrapper extends Component<any, any> {
         if (config.erc20avax) this.defaultStartPack.push({ name: 'ERC20AVAX', capture: 'Token', baseCurrency: 'AVAX' })
         if (config.erc20movr) this.defaultStartPack.push({ name: 'ERC20MOVR', capture: 'Token', baseCurrency: 'MOVR' })
         if (config.erc20one) this.defaultStartPack.push({ name: 'ERC20ONE', capture: 'Token', baseCurrency: 'ONE' })
+        if (config.erc20aurora) this.defaultStartPack.push({ name: 'ERC20AURORA', capture: 'Token', baseCurrency: 'AURETH' })
       }
     }
 
@@ -164,6 +149,7 @@ export default class StepsWrapper extends Component<any, any> {
             || coinInfo === `CUSTOM_ERC20AVAX`
             || coinInfo === `CUSTOM_ERC20MOVR`
             || coinInfo === `CUSTOM_ERC20ONE`
+            || coinInfo === `CUSTOM_ERC20AURORA`
           ) {
             [customTokenType] = coinInfo.split(`_`)
             isCustomToken = true

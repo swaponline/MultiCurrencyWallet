@@ -3,6 +3,7 @@ import eth from './eth.svg'
 import bnb from './bnb.svg'
 import matic from './matic.svg'
 import arbeth from './arbeth.svg'
+import aureth from './aureth.svg'
 import xdai from './xdai.svg'
 import ftm from './ftm.svg'
 import avax from './avax.svg'
@@ -46,6 +47,7 @@ export default {
   bnb,
   matic,
   arbeth,
+  aureth,
   xdai,
   ftm,
   avax,

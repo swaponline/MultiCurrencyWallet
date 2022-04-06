@@ -8,4 +8,5 @@ export default [
     43113,  // AVAX Testnet
     1287,  // MOVR Testnet
     1666700000, // ONE Testnet
+    1313161556, // AURETH Aurora Betanet
 ]

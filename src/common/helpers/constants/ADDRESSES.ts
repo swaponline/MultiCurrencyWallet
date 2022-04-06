@@ -12,6 +12,7 @@ export const WrapperCurrency = {
   43114: '0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7',
   42161: '',
   1666600000: '0xcf664087a5bb0237a0bad6742852ec6c8d69a27a',
+  1313161554: '0xc9bdeed33cd01541e1eed10f90519d2c06fe3feb',
   // testnet
   4: '0xc778417e063141139fce010982780140aa0cd5ab',
   97: '0xae13d989dac2f0debff460ac112a837c89baa7cd',
@@ -22,6 +23,7 @@ export const WrapperCurrency = {
   43113: '0xD9D01A9F7C810EC035C0e42cB9E80Ef44D7f8692',
   421611: '',
   1666700000: '',
+  1313161556: '',
 }
 
 export default {

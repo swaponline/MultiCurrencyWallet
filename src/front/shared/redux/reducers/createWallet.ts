@@ -5,6 +5,7 @@ export const initialState = {
     bnb: false,
     matic: false,
     arbeth: false,
+    aureth: false,
     xdai: false,
     ftm: false,
     avax: false,

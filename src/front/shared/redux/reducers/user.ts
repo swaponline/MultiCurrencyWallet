@@ -47,6 +47,14 @@ export const initialState = {
     balanceError: null,
     infoAboutCurrency: null,
   },
+  aurethData: {
+    balance: 0,
+    isBalanceFetched: false,
+    currency: 'AURETH',
+    fullName: 'Aurora ETH',
+    balanceError: null,
+    infoAboutCurrency: null,
+  },
   xdaiData: {
     balance: 0,
     isBalanceFetched: false,

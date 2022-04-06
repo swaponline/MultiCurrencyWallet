@@ -8,4 +8,5 @@ export default [
     43114,  // AVAX Mainnet
     1285,   // MOVR Mainnet
     1666600000, // ONE Mainnet
+    1313161554, // AURETH AURORA Mainnet
 ]

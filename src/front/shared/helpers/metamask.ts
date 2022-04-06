@@ -11,15 +11,6 @@ import { COIN_DATA, COIN_MODEL } from 'swap.app/constants/COINS'
 import getCoinInfo from 'common/coins/getCoinInfo'
 import getState from './getReduxState'
 
-type EvmNetworkInfo = {
-  currency: string
-  chainId: string
-  networkVersion: number
-  chainName: string
-  rpcUrls: string[]
-  blockExplorerUrls: string[]
-}
-
 let web3connect: any
 
 const { user: { metamaskData } } = getState()
@@ -55,7 +46,7 @@ function cleanWeb3connectListeners() {
 
 function setWeb3connect(networkId) {
   const newNetworkData = Object.values(config.evmNetworks)
-    .find((networkInfo: IUniversalObj) => networkInfo.networkVersion === networkId) as EvmNetworkInfo
+    .find((networkInfo: IUniversalObj) => networkInfo.networkVersion === networkId) as EvmNetworkConfig
 
   if (newNetworkData) {
     if (web3connect) {
@@ -214,7 +205,7 @@ const addMetamaskWallet = () => {
     if (isAvailableNetwork()) {
       const { user } = getState()
       const currentNetworkData = Object.values(config.evmNetworks)
-        .find((networkInfo: EvmNetworkInfo) => networkInfo.networkVersion === networkVersion) as EvmNetworkInfo
+        .find((networkInfo: EvmNetworkConfig) => networkInfo.networkVersion === networkVersion) as EvmNetworkConfig
 
       const { currency } = currentNetworkData
       const fullName = `${currency} (${web3connect.getProviderTitle()})`

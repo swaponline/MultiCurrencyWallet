@@ -17,9 +17,6 @@ const NETWORK = process.env.MAINNET
   : 'TESTNET'
 
 const enabledCurrencies = config.opts.curEnabled
-// Supported evm blockchains
-const evmBlockchains = [ 'eth', 'bnb', 'matic', 'arbeth', 'xdai', 'ftm', 'avax', 'movr', 'one' ]
-        
 const hasOwnBeforeTabs = (config?.opts?.ui?.faq?.before && (config.opts.ui.faq.before.length > 0))
 const hasOwnAfterTabs = (config?.opts?.ui?.faq?.after && (config.opts.ui.faq.after.length > 0))
 

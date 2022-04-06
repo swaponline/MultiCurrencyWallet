@@ -12,8 +12,6 @@ import actions from 'redux/actions'
 import { getState } from 'redux/core'
 import reducers from 'redux/core/reducers'
 
-
-
 const onlyEvmWallets = (config?.opts?.ui?.disableInternalWallet) ? true : false
 const enabledCurrencies = config.opts.curEnabled
 
@@ -91,15 +89,11 @@ const sign = async () => {
     // using ETH key for all EVM compatible chains
     const ethPrivateKey = localStorage.getItem(constants.privateKeyNames.eth)
 
-    actions.eth.login(ethPrivateKey, mnemonic)
-    actions.bnb.login(ethPrivateKey, mnemonic)
-    actions.matic.login(ethPrivateKey, mnemonic)
-    actions.arbeth.login(ethPrivateKey, mnemonic)
-    actions.xdai.login(ethPrivateKey, mnemonic)
-    actions.ftm.login(ethPrivateKey, mnemonic)
-    actions.avax.login(ethPrivateKey, mnemonic)
-    actions.movr.login(ethPrivateKey, mnemonic)
-    actions.one.login(ethPrivateKey, mnemonic)
+    Object.keys(config.enabledEvmNetworks).forEach((evmNetworkKey) => {
+      const actionKey = evmNetworkKey?.toLowerCase()
+      if (actionKey) actions[actionKey]?.login(ethPrivateKey, mnemonic)
+    })
+
     const _btcPrivateKey = actions.btc.login(btcPrivateKey, mnemonic)
     actions.ghost.login(ghostPrivateKey, mnemonic)
     actions.next.login(nextPrivateKey, mnemonic)
@@ -321,6 +315,7 @@ const getInfoAboutCurrency = (currencyNames) => new Promise((resolve, reject) =>
       const currencyInfoItem = answer.data.filter(currencyInfo => (
         (currencyInfo.symbol.toLowerCase() === currencyName)
         || (currencyName === 'xdai' && currencyInfo.symbol.toLowerCase() === 'dai')
+        || (config?.L2_EVM_KEYS?.includes(currencyName) && currencyInfo.symbol.toLowerCase() === 'eth')
       ))[0]
 
       const customFiatPrice = customTokenExchangeRate(currencyName)
@@ -492,6 +487,7 @@ const getText = () => {
       bnbData,
       maticData,
       arbethData,
+      aurethData,
       xdaiData,
       ftmData,
       avaxData,
@@ -534,6 +530,11 @@ const getText = () => {
     \r\n
     ARBITRUM address: ${arbethData.address}\r\n
     Private key: ${arbethData.privateKey}\r\n
+    \r\n
+    # AURORA CHAIN
+    \r\n
+    AURORA address: ${aurethData.address}\r\n
+    Private key: ${aurethData.privateKey}\r\n
     \r\n
     # XDAI CHAIN
     \r\n

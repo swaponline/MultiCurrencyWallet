@@ -39,4 +39,14 @@ declare global {
     syscall?: string
     stack?: string
   }
+
+  interface EvmNetworkConfig {
+    currency: string
+    chainId: string
+    networkVersion: number
+    chainName: string
+    rpcUrls: string[]
+    blockExplorerUrls: string[]
+  }
+
 }
