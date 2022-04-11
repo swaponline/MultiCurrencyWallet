@@ -1,9 +1,4 @@
-window.widgetERC20Comisions = {
-  btc: {
-    fee: '50',
-    address: '',
-    min: '0.00001',
-  },
+/* window.widgetERC20Comisions = {
   bnb: {
     fee: '2',
     address: '',
@@ -38,7 +33,7 @@ window.widgetERC20Comisions = {
   erc20aurora: {
     address: '',
   },
-}
+} */
 
 window.widgetEvmLikeTokens = [
   {

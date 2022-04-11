@@ -1,6 +1,6 @@
 window.widgetERC20Comisions = {
   btc: {
-    fee: '5',
+    fee: '50',
     address: '2MuXz9BErMbWmoTshGgkjd7aMHeaxV8Bdkk',
     min: '0.00001',
   },
