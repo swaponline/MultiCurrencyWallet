@@ -119,6 +119,8 @@ class EthLikeAction {
     return new Promise((res, rej) => {
       Web3.eth.getTransaction(hash)
         .then((tx) => {
+          if (!tx) return res(null)
+
           const { from, to, value, gas, gasPrice, blockHash } = tx
 
           const amount = Web3.utils.fromWei(value)
@@ -437,7 +439,7 @@ class EthLikeAction {
     }
 
     return new Promise((res, rej) => {
-      const receipt = sendMethod(txData)
+      sendMethod(txData)
         .on('transactionHash', (hash) => {
           reducers.transactions.addTransactionToQueue({
             networkCoin: this.ticker,
@@ -448,19 +450,19 @@ class EthLikeAction {
             res({ transactionHash: hash })
           }
         })
-        .on('receipt', (receipt) => waitReceipt && res(receipt))
-        .on('error', (error) => rej(error))
+        .on('receipt', (receipt) => {
+          if (waitReceipt) res(receipt)
 
-      if (this.adminFeeObj && !walletData.isMetamask) {
-        receipt.then(() => {
-          this.sendAdminTransaction({
-            from: Web3.utils.toChecksumAddress(ownerAddress),
-            amount,
-            gasPrice,
-            defaultGasLimit,
-          })
+          if (this.adminFeeObj && !walletData.isMetamask) {
+            this.sendAdminTransaction({
+              from: Web3.utils.toChecksumAddress(ownerAddress),
+              amount,
+              gasPrice,
+              defaultGasLimit,
+            })
+          }
         })
-      }
+        .on('error', (error) => rej(error))
     })
   }
 

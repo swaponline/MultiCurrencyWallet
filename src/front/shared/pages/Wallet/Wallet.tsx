@@ -23,6 +23,7 @@ import BalanceForm from 'components/BalanceForm/BalanceForm'
 import CurrenciesList from './CurrenciesList'
 import styles from './Wallet.scss'
 
+const host = window.location.hostname || document.location.host
 const isWidgetBuild = config && config.isWidget
 
 @connect(
@@ -421,9 +422,10 @@ class Wallet extends PureComponent<any, any> {
     const { coinsData, coinsData: ethData } = this.props
 
     this.syncTimer = setTimeout(async () => {
-      if (config?.entry !== 'mainnet' || !metamask.isCorrectNetwork()) {
+      if (host === 'localhost' || config?.entry !== 'mainnet' || !metamask.isCorrectNetwork()) {
         return
       }
+
       if (isOneHourAfter || isFirstCheck) {
         localStorage.setItem(constants.localStorage.lastCheckBalance, now)
         try {

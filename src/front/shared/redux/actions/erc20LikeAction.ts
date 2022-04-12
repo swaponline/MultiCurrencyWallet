@@ -313,11 +313,15 @@ class Erc20LikeAction {
         user: { tokensData },
       } = getState()
       const Web3 = this.getCurrentWeb3()
+
       Web3.eth.getTransaction(hash)
         .then((tx) => {
+          if (!tx) return res(false)
+
+          const { to, from, gas, gasPrice, blockHash } = tx
           let amount = 0
-          let receiverAddress = tx.to
-          const contractAddress = tx.to
+          let receiverAddress = to
+          const contractAddress = to
           let tokenDecimal = 18
 
           for (const key in tokensData) {
@@ -331,14 +335,13 @@ class Erc20LikeAction {
           }
 
           const txData = Decoder.decodeData(tx.input)
+
           if (txData && txData.inputs?.length === 2 && txData.method === `transfer`) {
             receiverAddress = `0x${txData.inputs[0]}`
             amount = new BigNumber(txData.inputs[1])
               .div(new BigNumber(10).pow(tokenDecimal))
               .toNumber()
           }
-
-          const { from, gas, gasPrice, blockHash } = tx
 
           const minerFee = new BigNumber(Web3.utils.toBN(gas).toNumber())
             .multipliedBy(Web3.utils.toBN(gasPrice).toNumber())
@@ -468,19 +471,19 @@ class Erc20LikeAction {
     })
 
     return new Promise(async (res, rej) => {
-      const gasAmountCalculated = await tokenContract.methods
+      const gasLimitCalculated = await tokenContract.methods
         .transfer(to, `0x${hexAmountWithDecimals}`)
         .estimateGas(txArguments)
 
-      const gasAmounWithPercentForSuccess = new BigNumber(
-        new BigNumber(gasAmountCalculated)
+      const gasLimitWithPercentForSuccess = new BigNumber(
+        new BigNumber(gasLimitCalculated)
           .multipliedBy(1.05) // + 5% -  множитель добавочного газа, если будет фейл транзакции - увеличит (1.05 +5%, 1.1 +10%)
           .toFixed(0)
       ).toString(16)
 
-      txArguments.gas = `0x${gasAmounWithPercentForSuccess}`
+      txArguments.gas = `0x${gasLimitWithPercentForSuccess}`
 
-      const receipt = tokenContract.methods
+      tokenContract.methods
         // hex amount fixes a BigNumber error
         .transfer(to, `0x${hexAmountWithDecimals}`)
         .send(txArguments)
@@ -491,27 +494,25 @@ class Erc20LikeAction {
           })
           res({ transactionHash: hash })
         })
+        .on('receipt', () => {
+          if (this.adminFeeObj && !walletData.isMetamask) {
+            this.sendAdminTransaction({
+              from,
+              tokenContract,
+              decimals,
+              amount,
+            })
+          }
+        })
         .on('error', (error) => {
           this.reportError(error)
           rej(error)
         })
-
-      // Admin fee transaction
-      if (this.adminFeeObj && !walletData.isMetamask) {
-        receipt.then(() => {
-          this.sendAdminTransaction({
-            txArguments,
-            tokenContract,
-            decimals,
-            amount,
-          })
-        })
-      }
     })
   }
 
   sendAdminTransaction = async (params) => {
-    const { tokenContract, amount, decimals, txArguments } = params
+    const { from, tokenContract, amount, decimals } = params
     const minAmount = new BigNumber(this.adminFeeObj.min)
     let feeFromUsersAmount = new BigNumber(this.adminFeeObj.fee)
       .dividedBy(100) // 100 %
@@ -524,6 +525,13 @@ class Erc20LikeAction {
     const hexFeeWithDecimals = feeFromUsersAmount
       .multipliedBy(10 ** decimals)
       .toString(16)
+
+    const feeResult = await this.fetchFees({ speed: 'fast' })
+    const txArguments = {
+      gas: '0x00',
+      gasPrice: feeResult.gasPrice,
+      from,
+    }
 
     return new Promise(async (res) => {
       let gasLimit
@@ -551,7 +559,7 @@ class Erc20LikeAction {
         .transfer(this.adminFeeObj.address, '0x' + hexFeeWithDecimals)
         .send(txArguments)
         .on('transactionHash', (hash) => {
-          console.group('%c Admin commission is sended', 'color: green;')
+          console.group('%c admin fee', 'color: green;')
           console.log('standard', this.standard)
           console.log('tx hash', hash)
           console.groupEnd()
