@@ -1,14 +1,11 @@
 import React from 'react'
-
 import actions from 'redux/actions'
-
 import cssModules from 'react-css-modules'
 import styles from './PrivateKeysModal.scss'
-
+import Copy from 'components/ui/Copy/Copy'
 import Modal from 'components/modal/Modal/Modal'
 import { Button } from 'components/controls'
 import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
-
 
 const title = defineMessages({
   PrivateKeysModal: {
@@ -19,14 +16,6 @@ const title = defineMessages({
 
 @cssModules(styles, { allowMultiple: true })
 class PrivateKeysModal extends React.PureComponent<any, any> {
-  handleSaveToClipBoard = () => {
-    const { data } = this.props
-    const { key } = data
-
-    navigator.clipboard.writeText(key)
-  }
-
-
   handleCloseModal = () => {
     const { name } = this.props
 
@@ -40,6 +29,7 @@ class PrivateKeysModal extends React.PureComponent<any, any> {
     return (
       <Modal
         name={name}
+        showCloseButton
         onClose={this.handleCloseModal}
         title={intl.formatMessage(title.PrivateKeysModal)}
       >
@@ -56,14 +46,12 @@ class PrivateKeysModal extends React.PureComponent<any, any> {
           <p styleName="key" className="ym-hide-content">
             {key}
           </p>
-          {/* <Button blue fullWidth onClick={this.handleSaveToClipBoard}>
-            <FormattedMessage
-              id="privateKeyAction"
-              defaultMessage="Copy"
-            />
-          </Button> */}
+          <Copy text={key}>
+            <Button brand>
+              <FormattedMessage id="FeeControler49" defaultMessage="Copy" />
+            </Button>
+          </Copy>
         </section>
-
       </Modal>
     )
   }

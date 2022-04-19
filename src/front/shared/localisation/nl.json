@@ -4296,13 +4296,6 @@
     ]
   },
   {
-    "id": "localStorageBtnCopy",
-    "message": "Kopiëren",
-    "files": [
-      "src/front/shared/pages/LocalStorage/LocalStorage.tsx"
-    ]
-  },
-  {
     "id": "localStorageUserNotification",
     "message": "✔️ Deze gegevens bevatten niet uw privésleutels",
     "files": [

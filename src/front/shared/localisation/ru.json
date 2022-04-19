@@ -4409,13 +4409,6 @@
     ]
   },
   {
-    "id": "localStorageBtnCopy",
-    "message": "Копировать",
-    "files": [
-      "src/front/shared/pages/LocalStorage/LocalStorage.tsx"
-    ]
-  },
-  {
     "id": "localStorageUserNotification",
     "message": "✔️ Эти данные не содержат ваших закрытых ключей",
     "files": [

@@ -4293,13 +4293,6 @@
     ]
   },
   {
-    "id": "localStorageBtnCopy",
-    "message": "Kopiuj",
-    "files": [
-      "src/front/shared/pages/LocalStorage/LocalStorage.tsx"
-    ]
-  },
-  {
     "id": "localStorageUserNotification",
     "message": "✔️ This data doesn't contain your private keys",
     "files": [

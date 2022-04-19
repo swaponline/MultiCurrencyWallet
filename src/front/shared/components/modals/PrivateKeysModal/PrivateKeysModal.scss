@@ -14,8 +14,9 @@
 
 .key {
   font-size: 1em;
+  word-break: break-all;
 
   @media all and (max-width: 480px) {
-    font-size: 0.5em;
+    font-size: 0.8em;
   }
 }

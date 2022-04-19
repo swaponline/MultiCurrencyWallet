@@ -51,7 +51,7 @@ function LocalStorage() {
         <CopyToClipboard text={localStorage} >
           <button styleName='localStorage__btn' onClick={timeoutCopied}>
             {isCopied && <span styleName='localStorage__copy-tip'>Copied!</span>}
-            <FormattedMessage id="localStorageBtnCopy" defaultMessage="Copy" />
+            <FormattedMessage id="FeeControler49" defaultMessage="Copy" />
           </button>
         </CopyToClipboard>
       </div>
