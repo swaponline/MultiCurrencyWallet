@@ -4427,13 +4427,6 @@
     ]
   },
   {
-    "id": "localStorageBtnCopy",
-    "message": "Kopieren",
-    "files": [
-      "src/front/shared/pages/LocalStorage/LocalStorage.tsx"
-    ]
-  },
-  {
     "id": "localStorageUserNotification",
     "message": "✔️ Diese Daten enthalten nicht deinen privaten Schlüssel",
     "files": [

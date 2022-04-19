@@ -4300,13 +4300,6 @@
     ]
   },
   {
-    "id": "localStorageBtnCopy",
-    "message": "Copiar",
-    "files": [
-      "src/front/shared/pages/LocalStorage/LocalStorage.tsx"
-    ]
-  },
-  {
     "id": "localStorageUserNotification",
     "message": "✔️ Estos datos no contienen tus claves privadas",
     "files": [

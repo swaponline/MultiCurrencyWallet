@@ -4412,13 +4412,6 @@
     ]
   },
   {
-    "id": "localStorageBtnCopy",
-    "message": "copiar",
-    "files": [
-      "src/front/shared/pages/LocalStorage/LocalStorage.tsx"
-    ]
-  },
-  {
     "id": "localStorageUserNotification",
     "message": "✔️ Esses dados não contêm suas chaves privadas",
     "files": [
