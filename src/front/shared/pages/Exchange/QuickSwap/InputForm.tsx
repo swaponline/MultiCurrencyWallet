@@ -265,7 +265,6 @@ function InputForm(props: InputFormProps) {
         {showFiatExchangeBtn && (
           <>
             <Button
-              id="buyViaBankCardButton"
               className="buyViaBankCardButton"
               styleName="fiatExchangeBtn"
               pending={isPending}
