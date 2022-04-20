@@ -504,6 +504,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
 
     const request = [
       `/swap/v1/quote?`,
+      `takerAddress=${fromWallet.address}&`,
       `buyToken=${buyToken}&`,
       `sellToken=${sellToken}&`,
       `sellAmount=${sellAmount}`,
