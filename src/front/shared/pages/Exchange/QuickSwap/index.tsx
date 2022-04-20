@@ -502,13 +502,17 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       fromWallet.decimals || COIN_DECIMALS,
     )
 
+    const enoughBalanceForSwap = new BigNumber(fromWallet.balance).isGreaterThan(new BigNumber(spendedAmount))
+
     const request = [
       `/swap/v1/quote?`,
-      `takerAddress=${fromWallet.address}&`,
       `buyToken=${buyToken}&`,
       `sellToken=${sellToken}&`,
       `sellAmount=${sellAmount}`,
     ]
+    if (enoughBalanceForSwap) {
+      request.push(`&takerAddress=${fromWallet.address}`)
+    }
 
     if (window?.STATISTICS_ENABLED) {
       request.push(`&affiliateAddress=${externalConfig.swapContract.affiliateAddress}`)
@@ -625,10 +629,15 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   }
 
   fetchSwapAPIData = async () => {
-    const { network, needApproveA } = this.state
-    const doNotUpdate = this.isApiRequestBlocking() || needApproveA
+    const { network, spendedAmount, isPending } = this.state
 
-    if (doNotUpdate) return
+    const dontFetch = (
+      new BigNumber(spendedAmount).isNaN()
+      || new BigNumber(spendedAmount).isEqualTo(0)
+      || isPending
+    )
+
+    if (dontFetch) return
 
     this.setState(() => ({
       isPending: true,
