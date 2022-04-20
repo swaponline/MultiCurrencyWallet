@@ -14,7 +14,11 @@ export class QuickSwapFormTour extends Component<any, any> {
           content: (
             <FormattedMessage
               id="bankCardButtonDescription"
-              defaultMessage="In the modal window, you have to go through several steps to exchange fiat funds for {buyCurrency}. Select {buyCurrency} in the window and specify the address of your wallet (you can copy it below). Wait until the funds are credited to your address. Then you can buy tokens using it."
+              defaultMessage={`
+                In the modal window, you have to go through several steps to exchange fiat funds for {buyCurrency}.
+                Select {buyCurrency} in the window and specify the address of your wallet (you can copy it below).
+                Wait until the funds are credited to your address. Then you can buy tokens using it.
+              `}
               values={{
                 buyCurrency: `ETH`,
               }}

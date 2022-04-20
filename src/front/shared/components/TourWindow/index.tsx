@@ -6,8 +6,7 @@ import CSSModules from 'react-css-modules'
 
 import styles from './styles.scss'
 
-
-const Tooltip = (props) => {
+function Tooltip(props) {
   const { continuous, index, isLastStep, step, backProps, primaryProps, skipProps, tooltipProps, closeTour } = props
 
   const click = e => {
@@ -28,20 +27,19 @@ const Tooltip = (props) => {
       {step.content && <div styleName="TooltipContent">{step.content}</div>}
       <div styleName="TooltipFooter">
         {!isLastStep && (
-          <button {...skipProps} onClick={click}>
+          <button {...skipProps} onClick={click} type="button">
             <FormattedMessage id="skip" defaultMessage="Skip" />
           </button>
         )}
         {index > 0 && (
-          <button {...backProps}>
+          <button {...backProps} type="button">
             <FormattedMessage id="back" defaultMessage="Back" />
           </button>
         )}
-        <button {...primaryProps} onClick={clickPrimary}>
-          {continuous && !isLastStep ?
-            <FormattedMessage id="nextTourWindow" defaultMessage="Next" />
-            :
-            <FormattedMessage id="closeTourWindow" defaultMessage="Close" />}
+        <button {...primaryProps} onClick={clickPrimary} type="button">
+          {continuous && !isLastStep
+            ? <FormattedMessage id="nextTourWindow" defaultMessage="Next" />
+            : <FormattedMessage id="closeTourWindow" defaultMessage="Close" />}
         </button>
       </div>
     </div>
