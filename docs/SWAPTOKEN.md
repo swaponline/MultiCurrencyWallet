@@ -11,6 +11,7 @@
 ### Ethereum: [0x14a52cf6b4f68431bd5d9524e4fcd6f41ce4ade9](https://etherscan.io/token/0x14a52cf6b4f68431bd5d9524e4fcd6f41ce4ade9)
 ### Binance Smart Chain: [0x92648e4537cdfa1ee743a244465a31aa034b1ce8](https://bscscan.com/token/0x92648e4537cdfa1ee743a244465a31aa034b1ce8) ([eth-bsc bridge](https://omni.xdaichain.com/bridge))
 ### Xdai: [0x8C80bE81d971601977Fb91DE35dC1d599680B8F1 ](https://etherscan.io/token/0x8C80bE81d971601977Fb91DE35dC1d599680B8F1 ) ([bsc-xdai bridge](https://omni.xdaichain.com/bridge))
+### Polygon: [0x654496319f438a59fee9557940393cf818753ee9](https://bscscan.com/address/0xb8f669e7cb0d52990670c9af7084cee0fcbe81fe)
 
 ## Tokenomics 
 
