@@ -19,6 +19,7 @@ type DropDownProps = {
   arrowSide?: string
   disableSearch?: boolean
   dontScroll?: boolean
+  disabled?: boolean
   role?: string
 }
 
@@ -51,6 +52,9 @@ export default class DropDown extends Component<DropDownProps, DropDownState> {
   }
 
   toggleOpen = () => {
+    const { disabled } = this.props
+    if (disabled) return
+
     this.setState(() => ({
       optionToggleIsOpen: true,
     }))
@@ -126,6 +130,7 @@ export default class DropDown extends Component<DropDownProps, DropDownState> {
       arrowSide,
       role,
       itemRender,
+      disabled,
     } = this.props
 
     const { optionToggleIsOpen, inputValue } = this.state
@@ -163,7 +168,7 @@ export default class DropDown extends Component<DropDownProps, DropDownState> {
             onClick={moreThenOneOption ? this.toggleOpen : () => null}
           >
             {/* Drop Down arrow */}
-            {moreThenOneOption && <div styleName={`arrow ${arrowSide === 'left' ? 'left' : ''}`} />}
+            {moreThenOneOption && !disabled && <div styleName={`arrow ${arrowSide === 'left' ? 'left' : ''}`} />}
 
             {/* Search input */}
             {optionToggleIsOpen && !disableSearch ? (

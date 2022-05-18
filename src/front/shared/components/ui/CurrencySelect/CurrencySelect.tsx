@@ -11,6 +11,7 @@ const CurrencySelect = (props) => {
     name = '',
     placeholder = '',
     selectedItemRender,
+    disabled = false
   } = props
 
   const defaultRenderSelected = (item) => <Option {...item} />
@@ -24,6 +25,7 @@ const CurrencySelect = (props) => {
       selectedItemRender={usedSelectedItemRender}
       itemRender={defaultRenderSelected}
       onSelect={onSelect}
+      disabled={disabled}
       name={name}
       role="SelectCurrency"
     />
