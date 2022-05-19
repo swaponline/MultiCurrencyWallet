@@ -94,7 +94,7 @@ class InvoiceModal extends React.Component<InvoiceModalProps, InvoiceModalState>
     const { infoAboutCurrency } = walletData
     const multiplier = infoAboutCurrency && infoAboutCurrency.price_fiat
       ? infoAboutCurrency.price_fiat
-      : 1
+      : 0
 
     this.state = {
       isToken,
@@ -273,6 +273,7 @@ class InvoiceModal extends React.Component<InvoiceModalProps, InvoiceModalState>
         tokenKey,
       },
       walletData,
+      multiplier,
     } = this.state
     const currency = ((tokenKey) || currencyOriginal).toUpperCase()
 
@@ -392,15 +393,17 @@ class InvoiceModal extends React.Component<InvoiceModalProps, InvoiceModalState>
                   <FormattedMessage id="orders102" defaultMessage="Amount" />
                 </span>
               </FieldLabel>
-              <span styleName="amountTooltip">
-                {
-                  new BigNumber(amount).isGreaterThan(0)
-                    ? selectedValue === currency
-                      ? `~ ${fiatAmount} USD`
-                      : `~ ${amount} ${currency}`
-                    : ''
-                }
-              </span>
+              {!multiplier.isEqualTo(0) && (
+                <span styleName="amountTooltip">
+                  {
+                    new BigNumber(amount).isGreaterThan(0)
+                      ? selectedValue === currency
+                        ? `~ ${fiatAmount} USD`
+                        : `~ ${amount} ${currency}`
+                      : ''
+                  }
+                </span>
+              )}
               <Input
                 className={ownStyle.input}
                 placeholder={intl.formatMessage(localeLabel.amountPlaceholder)}
@@ -417,6 +420,7 @@ class InvoiceModal extends React.Component<InvoiceModalProps, InvoiceModalState>
                 onSelect={this.handleBuyCurrencySelect}
                 selectedItemRender={(item) => item.fullTitle}
                 currencies={curList}
+                disabled={multiplier.isEqualTo(0)}
               />
             </div>
             <div styleName="highLevel">
