@@ -28,7 +28,7 @@ const SwitchLang = (props) => {
     return intlLocale.toUpperCase() !== locale ? true : undefined // if url is undefined then we don't define styles
   }
 
-  const languages = ['EN', 'RU', 'NL', 'ES', 'DE', 'PL', 'PT', 'KO']
+  const languages = ['EN', 'RU', 'NL', 'ES', 'DE', 'PL', 'PT', 'KO', 'AR']
 
   return (
     <div styleName="langSwitcher">

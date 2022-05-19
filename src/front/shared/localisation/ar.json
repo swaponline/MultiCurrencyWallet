@@ -1,0 +1,5940 @@
+[
+  {
+    "id": "menu.exchange",
+    "message": "تبادل",
+    "files": [
+      "src/front/shared/components/Header/config.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/Header.tsx"
+    ]
+  },
+  {
+    "id": "menu.history",
+    "message": "المعاملات",
+    "files": [
+      "src/front/shared/components/Header/config.tsx"
+    ]
+  },
+  {
+    "id": "menu.wallet",
+    "message": "محفظة",
+    "files": [
+      "src/front/shared/components/Header/config.tsx",
+      "src/front/shared/components/modals/WalletConnectAccount/WalletConnectAccount.tsx"
+    ]
+  },
+  {
+    "id": "menu.CreateWallet",
+    "message": "إنشاء المحفظة",
+    "files": [
+      "src/front/shared/components/Header/config.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/UserInfo.tsx",
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "ConConfirm25firm20",
+    "message": "لا",
+    "files": [
+      "src/front/shared/components/Confirm/Confirm.tsx"
+    ]
+  },
+  {
+    "id": "Confirm20",
+    "message": "نعم",
+    "files": [
+      "src/front/shared/components/Confirm/Confirm.tsx"
+    ]
+  },
+  {
+    "id": "CDC63",
+    "message": "عندك",
+    "files": [
+      "src/front/shared/components/CurrencyDirectionChooser/CurrencyDirectionChooser.tsx"
+    ]
+  },
+  {
+    "id": "CurrencyDirectionChooser54",
+    "message": "اختر اتجاه الصرف",
+    "files": [
+      "src/front/shared/components/CurrencyDirectionChooser/CurrencyDirectionChooser.tsx"
+    ]
+  },
+  {
+    "id": "CurrencyDirectionChooser86",
+    "message": "أوامر العرض",
+    "files": [
+      "src/front/shared/components/CurrencyDirectionChooser/CurrencyDirectionChooser.tsx"
+    ]
+  },
+  {
+    "id": "Loader21",
+    "message": "يرجى الانتظار ، يستغرق الأمر من 3 إلى 5 دقائق لإكمال المعاملة.",
+    "files": [
+      "src/front/shared/components/loaders/Loader/Loader.tsx"
+    ]
+  },
+  {
+    "id": "logo29",
+    "message": "اذهب للمنزل",
+    "files": [
+      "src/front/shared/components/Header/Logo/Logo.tsx"
+    ]
+  },
+  {
+    "id": "ConfirmOffer73",
+    "message": "يضيف",
+    "files": [
+      "src/front/shared/components/modals/OfferModal/ConfirmOffer/ConfirmOffer.tsx"
+    ]
+  },
+  {
+    "id": "ExchangeRate14",
+    "message": "  =  ",
+    "files": [
+      "src/front/shared/components/modals/OfferModal/ConfirmOffer/ExchangeRate/ExchangeRate.tsx"
+    ]
+  },
+  {
+    "id": "SaveKeysModal",
+    "message": "Testnet: لا تسأل مرة أخرى",
+    "files": [
+      "src/front/shared/components/modals/SaveKeysModal/SaveKeysModal.tsx"
+    ]
+  },
+  {
+    "id": "ErrorNotification12",
+    "message": "عفوًا ، يبدو أنه حدث خطأ ما! ",
+    "files": [
+      "src/front/shared/components/LimitOrders/Row.tsx",
+      "src/front/shared/components/notifications/ErrorNotification/ErrorNotification.tsx"
+    ]
+  },
+  {
+    "id": "WithdrawModal11212",
+    "message": "يعالج ...",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
+      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
+    ]
+  },
+  {
+    "id": "Withdrow559",
+    "message": "تحويل من",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+    ]
+  },
+  {
+    "id": "PreventMultiTabs",
+    "message": "مثل هذا الخطأ ، العديد من علامات التبويب",
+    "files": [
+      "src/front/shared/components/PreventMultiTabs/PreventMultiTabs.tsx"
+    ]
+  },
+  {
+    "id": "SaveKe37",
+    "message": "قم بتنزيل مستند نصي بالمفاتيح والحسابات",
+    "files": [
+      "src/front/shared/components/SaveKeys/SaveKeys.tsx"
+    ]
+  },
+  {
+    "id": "SaveKeys26",
+    "message": "احتفظت بالمفاتيح في مكان آمن",
+    "files": [
+      "src/front/shared/components/SaveKeys/SaveKeys.tsx"
+    ]
+  },
+  {
+    "id": "Tooltip11",
+    "message": "? ",
+    "files": [
+      "src/front/shared/components/ui/Tooltip/Tooltip.tsx"
+    ]
+  },
+  {
+    "id": "RowHistory76",
+    "message": "رد الأموال غير متوفر",
+    "files": [
+      "src/front/shared/pages/History/SwapsHistory/RowHistory/RowHistory.tsx",
+      "src/front/shared/pages/Marketmaker/SwapRow.tsx"
+    ]
+  },
+  {
+    "id": "RowHistory91",
+    "message": "وصلة",
+    "files": [
+      "src/front/shared/pages/History/SwapsHistory/RowHistory/RowHistory.tsx",
+      "src/front/shared/pages/Marketmaker/SwapRow.tsx"
+    ]
+  },
+  {
+    "id": "SwapHisrory21",
+    "message": "المقايضات",
+    "files": [
+      "src/front/shared/pages/History/SwapsHistory/SwapsHistory.tsx"
+    ]
+  },
+  {
+    "id": "MyOrders23",
+    "message": "عروضك",
+    "files": [
+      "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
+    ]
+  },
+  {
+    "id": "RowFeeds64",
+    "message": "نسخ!",
+    "files": [
+      "src/front/shared/components/ui/Copy/Copy.tsx"
+    ]
+  },
+  {
+    "id": "RowFeeds81",
+    "message": "قبول",
+    "files": [
+      "src/front/shared/pages/Exchange/Orders/MyOrders/RowFeeds/RowFeeds.tsx"
+    ]
+  },
+  {
+    "id": "Home153",
+    "message": "ما هو المبادلة الذرية؟",
+    "files": [
+      "src/front/shared/pages/Exchange/Orders/Orders.tsx"
+    ]
+  },
+  {
+    "id": "Row157",
+    "message": "هذا الأمر قيد التنفيذ",
+    "files": [
+      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
+    ]
+  },
+  {
+    "id": "Row165",
+    "message": "يرجى الانتظار حتى نؤكد طلبك",
+    "files": [
+      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
+    ]
+  },
+  {
+    "id": "RowM136",
+    "message": "جاري الطلب",
+    "files": [
+      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
+    ]
+  },
+  {
+    "id": "RowM139",
+    "message": "تبديل",
+    "files": [
+      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
+    ]
+  },
+  {
+    "id": "RowM145",
+    "message": "هذا الأمر قيد التنفيذ",
+    "files": [
+      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
+    ]
+  },
+  {
+    "id": "RowM153",
+    "message": "يرجى الانتظار حتى نؤكد طلبك",
+    "files": [
+      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
+    ]
+  },
+  {
+    "id": "NotFound8",
+    "message": "الصفحة غير موجودة! ",
+    "files": [
+      "src/front/shared/pages/NotFound/NotFound.tsx"
+    ]
+  },
+  {
+    "id": "SwapController54",
+    "message": "مشارك آخر متصل بالإنترنت",
+    "files": [
+      "src/front/shared/pages/Swap/SwapController.tsx"
+    ]
+  },
+  {
+    "id": "SwapController60",
+    "message": "مشارك آخر غير متصل",
+    "files": [
+      "src/front/shared/pages/Swap/SwapController.tsx"
+    ]
+  },
+  {
+    "id": "RowWallet181",
+    "message": "رصيد غير مؤكد",
+    "files": [
+      "src/front/shared/pages/Wallet/Row/Row.tsx"
+    ]
+  },
+  {
+    "id": "AddOffer396",
+    "message": "التالي",
+    "files": [
+      "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
+    ]
+  },
+  {
+    "id": "WithdrawButton32",
+    "message": "عند النقر فوق هذا الزر ، في الحقل ، سيظهر مبلغ {br} يساوي رصيدك مطروحًا منه عمولة المعدنين",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
+      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
+    ]
+  },
+  {
+    "id": "HowItWorks10",
+    "message": "كيف يعمل",
+    "files": [
+      "src/front/shared/pages/Exchange/HowItWorks/HowItWorks.tsx"
+    ]
+  },
+  {
+    "id": "AddOffer418",
+    "message": "سعر الصرف المخصص",
+    "files": [
+      "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
+    ]
+  },
+  {
+    "id": "AddOffer423",
+    "message": "تفعيل عمليات التعبئة الجزئية",
+    "files": [
+      "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
+    ]
+  },
+  {
+    "id": "MyOrdersYouSend",
+    "message": "انت ارسل",
+    "files": [
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx",
+      "src/front/shared/pages/Exchange/Orders/MyOrders/MyOrders.tsx",
+      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
+    ]
+  },
+  {
+    "id": "MyOrdersYouGet",
+    "message": "لقد حصلت",
+    "files": [
+      "src/front/shared/components/CurrencyDirectionChooser/CurrencyDirectionChooser.tsx",
+      "src/front/shared/pages/Exchange/Orders/MyOrders/MyOrders.tsx"
+    ]
+  },
+  {
+    "id": "MyOrdersRate",
+    "message": "سعر الصرف",
+    "files": [
+      "src/front/shared/pages/Exchange/Orders/MyOrders/MyOrders.tsx"
+    ]
+  },
+  {
+    "id": "orders102",
+    "message": "مقدار",
+    "files": [
+      "src/front/shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.tsx",
+      "src/front/shared/components/modals/InvoiceModal/InvoiceModal.tsx",
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
+      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx",
+      "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
+    ]
+  },
+  {
+    "id": "orders105",
+    "message": "السعر",
+    "files": [
+      "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/UserInfo.tsx"
+    ]
+  },
+  {
+    "id": "orders128",
+    "message": "إنشاء عرض",
+    "files": [
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+    ]
+  },
+  {
+    "id": "addoffer381",
+    "message": "يبيع",
+    "files": [
+      "src/front/shared/components/modals/LimitOrder/ModalForm.tsx",
+      "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
+    ]
+  },
+  {
+    "id": "addoffer396",
+    "message": "يشتري",
+    "files": [
+      "src/front/shared/components/modals/LimitOrder/ModalForm.tsx",
+      "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
+    ]
+  },
+  {
+    "id": "addoffer406",
+    "message": "سعر الصرف",
+    "files": [
+      "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
+    ]
+  },
+  {
+    "id": "Table95",
+    "message": "الجدول فارغ",
+    "files": [
+      "src/front/shared/components/tables/Table/Table.tsx"
+    ]
+  },
+  {
+    "id": "Table96",
+    "message": "تحميل... ",
+    "files": [
+      "src/front/shared/components/modals/AddCustomToken/index.tsx",
+      "src/front/shared/components/tables/Table/Table.tsx",
+      "src/front/shared/containers/App/App.tsx"
+    ]
+  },
+  {
+    "id": "Reqstbttn16",
+    "message": "يشتري",
+    "files": [
+      "src/front/shared/pages/Exchange/Orders/OrderBook/RequestButton/RequestButton.tsx"
+    ]
+  },
+  {
+    "id": "ExchangeRate12",
+    "message": "سعر الصرف",
+    "files": [
+      "src/front/shared/components/modals/OfferModal/ConfirmOffer/ExchangeRate/ExchangeRate.tsx"
+    ]
+  },
+  {
+    "id": "amount",
+    "message": "تبادل",
+    "files": [
+      "src/front/shared/components/modals/OfferModal/ConfirmOffer/Amounts/Amounts.tsx"
+    ]
+  },
+  {
+    "id": "recieved67",
+    "message": "نسخ إلى الحافظة",
+    "files": [
+      "src/front/shared/components/modals/DownloadModal/DownloadModal.tsx",
+      "src/front/shared/components/modals/ReceiveModal/ReceiveModal.tsx"
+    ]
+  },
+  {
+    "id": "RowHistory94",
+    "message": "تم الانتهاء من",
+    "files": [
+      "src/front/shared/pages/History/SwapsHistory/RowHistory/RowHistory.tsx",
+      "src/front/shared/pages/Marketmaker/SwapRow.tsx"
+    ]
+  },
+  {
+    "id": "RowHistory139",
+    "message": "توقفت",
+    "files": [
+      "src/front/shared/pages/History/SwapsHistory/RowHistory/RowHistory.tsx",
+      "src/front/shared/pages/Marketmaker/SwapRow.tsx"
+    ]
+  },
+  {
+    "id": "RowMobileYouGet",
+    "message": "لقد حصلت",
+    "files": [
+      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
+    ]
+  },
+  {
+    "id": "Select210",
+    "message": "الأعلى",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
+      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
+    ]
+  },
+  {
+    "id": "Withdrow1194",
+    "message": "عنوان",
+    "files": [
+      "src/front/shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.tsx",
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
+      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
+    ]
+  },
+  {
+    "id": "partial291",
+    "message": "في انتظار مشارك آخر (30 ثانية)",
+    "files": [
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+    ]
+  },
+  {
+    "id": "CDC52",
+    "message": "قائمة العروض",
+    "files": [
+      "src/front/shared/components/CurrencyDirectionChooser/CurrencyDirectionChooser.tsx"
+    ]
+  },
+  {
+    "id": "add408",
+    "message": "لتغيير سعر الصرف",
+    "files": [
+      "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
+    ]
+  },
+  {
+    "id": "enterYouSend",
+    "message": "أدخل المبلغ \"أنت ترسل \"",
+    "files": [
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/Feedback.tsx"
+    ]
+  },
+  {
+    "id": "swapDisabled",
+    "message": "المبادلة معطل",
+    "files": [
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+    ]
+  },
+  {
+    "id": "noOffers",
+    "message": "لا عروض",
+    "files": [
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+    ]
+  },
+  {
+    "id": "selectFromAddress",
+    "message": "حدد \"من العنوان \"",
+    "files": [
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+    ]
+  },
+  {
+    "id": "selectToAddress",
+    "message": "حدد \"إلى العنوان \"",
+    "files": [
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+    ]
+  },
+  {
+    "id": "enterToAddress",
+    "message": "أدخل محفظة الوجهة",
+    "files": [
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+    ]
+  },
+  {
+    "id": "connectDestinationWallet",
+    "message": "قم بتوصيل محفظتك الوجهة",
+    "files": [
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+    ]
+  },
+  {
+    "id": "setDestination",
+    "message": "حدد الوجهة",
+    "files": [
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+    ]
+  },
+  {
+    "id": "connectYourWallet",
+    "message": "ربط محفظتك في \"من العنوان \"",
+    "files": [
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+    ]
+  },
+  {
+    "id": "selectSendType",
+    "message": "حدد نوع \"عنوان من \"",
+    "files": [
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+    ]
+  },
+  {
+    "id": "errorWithGetAmount",
+    "message": "\"لا تحصل \" على أكثر من 0",
+    "files": [
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+    ]
+  },
+  {
+    "id": "incorrectNetwork",
+    "message": "الرجاء اختيار الشبكة الصحيحة",
+    "files": [
+      "src/front/shared/components/modals/LimitOrder/ModalForm.tsx",
+      "src/front/shared/components/modals/WalletConnectAccount/WalletConnectAccount.tsx",
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/Feedback.tsx"
+    ]
+  },
+  {
+    "id": "lowAmount",
+    "message": "كمية قليلة",
+    "files": [
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+    ]
+  },
+  {
+    "id": "waitPeerAnswer",
+    "message": "انتظر إجابة الأقران",
+    "files": [
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+    ]
+  },
+  {
+    "id": "enterLesserAmount",
+    "message": "أدخل مبلغًا أقل إلى \"أنت ترسل \"",
+    "files": [
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+    ]
+  },
+  {
+    "id": "contactSupport",
+    "message": "يرجى الاتصال بالدعم",
+    "files": [
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+    ]
+  },
+  {
+    "id": "partial255",
+    "message": "لقد حصلت",
+    "files": [
+      "src/front/shared/components/LimitOrders/OrderSettings.tsx",
+      "src/front/shared/components/LimitOrders/index.tsx",
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+    ]
+  },
+  {
+    "id": "Add52",
+    "message": "ضع عرضا",
+    "files": [
+      "src/front/shared/components/modals/OfferModal/OfferModal.tsx"
+    ]
+  },
+  {
+    "id": "Confirm52",
+    "message": "تأكيد العرض",
+    "files": [
+      "src/front/shared/components/modals/OfferModal/OfferModal.tsx"
+    ]
+  },
+  {
+    "id": "ImCAUTIONport",
+    "message": "الحذر!",
+    "files": [
+      "src/front/shared/components/modals/PrivateKeysModal/PrivateKeysModal.tsx"
+    ]
+  },
+  {
+    "id": "Receive",
+    "message": "تسلم",
+    "files": [
+      "src/front/shared/components/modals/ReceiveModal/ReceiveModal.tsx"
+    ]
+  },
+  {
+    "id": "RowHistory281",
+    "message": "تم استلام {العنوان}",
+    "files": [
+      "src/front/shared/pages/History/Row/Row.tsx"
+    ]
+  },
+  {
+    "id": "RowHistory282",
+    "message": "تم إرسال {العنوان}",
+    "files": [
+      "src/front/shared/pages/History/Row/Row.tsx"
+    ]
+  },
+  {
+    "id": "fromRow",
+    "message": "من عند",
+    "files": [
+      "src/front/shared/pages/History/Row/Row.tsx"
+    ]
+  },
+  {
+    "id": "toRow",
+    "message": "ل",
+    "files": [
+      "src/front/shared/pages/History/Row/Row.tsx"
+    ]
+  },
+  {
+    "id": "RowHistory283",
+    "message": "الذات",
+    "files": [
+      "src/front/shared/pages/History/Row/Row.tsx"
+    ]
+  },
+  {
+    "id": "RowHistory34",
+    "message": "مؤكد",
+    "files": [
+      "src/front/shared/pages/History/Row/Row.tsx"
+    ]
+  },
+  {
+    "id": "RowHistory341",
+    "message": "مؤكد",
+    "files": [
+      "src/front/shared/pages/History/Row/Row.tsx"
+    ]
+  },
+  {
+    "id": "RowHistory342",
+    "message": "غير مؤكد",
+    "files": [
+      "src/front/shared/pages/History/Row/Row.tsx"
+    ]
+  },
+  {
+    "id": "timer68",
+    "message": "استرداد جاهز",
+    "files": [
+      "src/front/shared/pages/Swap/Timer/Timer.tsx"
+    ]
+  },
+  {
+    "id": "PartialPriceNoOrdersReduce",
+    "message": "لم يتم العثور على أوامر ، حاول لاحقًا أو قم بتغيير زوج العملات",
+    "files": [
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+    ]
+  },
+  {
+    "id": "PartialPriceNoOrdersReduceAllInfo",
+    "message": "هذا المبلغ التجاري مرتفع للغاية بالنسبة لسيولة السوق الحالية. الرجاء تقليل المبلغ إلى {maxForSell}. ",
+    "files": [
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+    ]
+  },
+  {
+    "id": "PartialOfferCantProceed1",
+    "message": "تم رفض الطلب. {حلقة الوصل}",
+    "files": [
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+    ]
+  },
+  {
+    "id": "PartialOfferCantProceed1_1",
+    "message": "لماذا ا؟",
+    "files": [
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+    ]
+  },
+  {
+    "id": "ErrorBtcLowAmount",
+    "message": "{btcAmount} BTC - هذا المبلغ منخفض جدًا ولا يغطي رسوم التعدين",
+    "files": [
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+    ]
+  },
+  {
+    "id": "UseAnotherWallet",
+    "message": "حدد عنوان المحفظة المستلم",
+    "files": [
+      "src/front/shared/components/modals/ConfirmBeginSwap/ConfirmBeginSwap.tsx"
+    ]
+  },
+  {
+    "id": "partial462",
+    "message": "المبلغ الموجود في محفظة swap.online أو المحفظة الخارجية التي تريد استبدالها",
+    "files": [
+      "src/front/shared/components/modals/LimitOrder/ModalForm.tsx",
+      "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
+    ]
+  },
+  {
+    "id": "partial478",
+    "message": "المبلغ الذي ستحصل عليه بعد الاستبدال",
+    "files": [
+      "src/front/shared/components/modals/LimitOrder/ModalForm.tsx",
+      "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
+    ]
+  },
+  {
+    "id": "partial541",
+    "message": "صرف الآن",
+    "files": [
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+    ]
+  },
+  {
+    "id": "partial767",
+    "message": "الرصيد: ",
+    "files": [
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/InputForm.tsx"
+    ]
+  },
+  {
+    "id": "partialVideoAndFeatures0",
+    "message": "بناءً على تقنية Atomic Swap",
+    "files": [
+      "src/front/shared/pages/Exchange/VideoAndFeatures/VideoAndFeatures.tsx"
+    ]
+  },
+  {
+    "id": "partialVideoAndFeatures1",
+    "message": "التبادل يستغرق دقيقتين فقط",
+    "files": [
+      "src/front/shared/pages/Exchange/VideoAndFeatures/VideoAndFeatures.tsx"
+    ]
+  },
+  {
+    "id": "partialVideoAndFeatures2",
+    "message": "يدعم عملات BTC و ETH و USDT و ERC-20",
+    "files": [
+      "src/front/shared/pages/Exchange/VideoAndFeatures/VideoAndFeatures.tsx"
+    ]
+  },
+  {
+    "id": "partialVideoAndFeatures3",
+    "message": "يمكن نشرها على أي موقع كخدمة تبادل",
+    "files": [
+      "src/front/shared/pages/Exchange/VideoAndFeatures/VideoAndFeatures.tsx"
+    ]
+  },
+  {
+    "id": "down57",
+    "message": "لحفظ مفاتيحك الخاصة ، ما عليك سوى نسخ هذه المفاتيح ولصقها في منطقة نص المفكرة. يمكنك أيضًا تنزيل المفاتيح كملف txt",
+    "files": [
+      "src/front/shared/components/modals/DownloadModal/DownloadModal.tsx"
+    ]
+  },
+  {
+    "id": "downFile2",
+    "message": "تنزيل ملف txt",
+    "files": [
+      "src/front/shared/components/modals/DownloadModal/DownloadModal.tsx"
+    ]
+  },
+  {
+    "id": "down97",
+    "message": "مفاتيحك الخاصة!",
+    "files": [
+      "src/front/shared/components/modals/DownloadModal/DownloadModal.tsx"
+    ]
+  },
+  {
+    "id": "Reqstbttn22",
+    "message": "ل",
+    "files": [
+      "src/front/shared/pages/Exchange/Orders/OrderBook/RequestButton/RequestButton.tsx"
+    ]
+  },
+  {
+    "id": "downloadModal75",
+    "message": "عنوان:",
+    "files": [
+      "src/front/shared/components/modals/DownloadModal/DownloadModal.tsx"
+    ]
+  },
+  {
+    "id": "downloadModal782",
+    "message": "مفتاح سري",
+    "files": [
+      "src/front/shared/components/modals/DownloadModal/DownloadModal.tsx"
+    ]
+  },
+  {
+    "id": "PreventMultiTabs12",
+    "message": "تدعم خدمتنا علامة تبويب نشطة واحدة فقط. \n الرجاء إعادة تحميل هذه الصفحة لمتابعة استخدام علامة التبويب هذه أو إغلاقها",
+    "files": [
+      "src/front/shared/components/PreventMultiTabs/PreventMultiTabs.tsx"
+    ]
+  },
+  {
+    "id": "addOfferPartialTooltip",
+    "message": "ستتلقى طلبات صرف أو مبلغ {p} أقل من المبلغ الإجمالي الذي تريد بيعه {p}. على سبيل المثال تريد بيع 1 BTC ،\n        يمكن للمستخدمين الآخرين إرسال طلبات التبادل {p} مقابل 0.1 و 0.5 BTC",
+    "files": [
+      "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
+    ]
+  },
+  {
+    "id": "WTH275",
+    "message": "تأكد من أن المحفظة التي {br} ترسل الأموال إليها تدعم {currency}",
+    "files": [
+      "src/front/shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.tsx",
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
+      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
+    ]
+  },
+  {
+    "id": "SaveKeys235",
+    "message": "هذه هي مفاتيحك الخاصة. قم بتنزيل المفاتيح بالنقر فوق الزر أو التقاط لقطة شاشة لهذه الصفحة ، ثم قم بتأكيدها وانقر هنا.",
+    "files": [
+      "src/front/shared/components/SaveKeys/SaveKeys.tsx"
+    ]
+  },
+  {
+    "id": "orders156",
+    "message": "اشترِ {currency} من هنا",
+    "files": [
+      "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
+    ]
+  },
+  {
+    "id": "orders159",
+    "message": "عروض {currency}",
+    "files": [
+      "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
+    ]
+  },
+  {
+    "id": "WithdrawButton322",
+    "message": "لا يمكنك إرسال هذا الأصل ، لأن لديك رصيد صفري.",
+    "files": [
+      "src/front/shared/components/controls/WithdrawButton/BtnTooltip.tsx"
+    ]
+  },
+  {
+    "id": "CurrencyButton41",
+    "message": "قم بإيداع هذه العملة المشفرة في محفظتك",
+    "files": [
+      "src/front/shared/components/controls/CurrencyButton/CurrencyButton.tsx"
+    ]
+  },
+  {
+    "id": "CurrencyButton42",
+    "message": "لا يمكنك إرسال هذا الأصل ، لأن لديك رصيد صفري.",
+    "files": [
+      "src/front/shared/components/controls/CurrencyButton/CurrencyButton.tsx"
+    ]
+  },
+  {
+    "id": "Areyousure",
+    "message": "هل أنت واثق ؟",
+    "files": [
+      "src/front/shared/components/modals/SaveKeysModal/SaveKeysModal.tsx"
+    ]
+  },
+  {
+    "id": "SaveKeysModal_Title",
+    "message": "تصدير المفاتيح الخاصة",
+    "files": [
+      "src/front/shared/components/modals/SaveKeysModal/SaveKeysModal.tsx"
+    ]
+  },
+  {
+    "id": "WithdrawIncorectAddress",
+    "message": "عنوانك غير صحيح",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
+      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
+    ]
+  },
+  {
+    "id": "Withdrow170",
+    "message": "أقصى مبلغ يمكنك إرساله هو {allowBalance} {currency}",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+    ]
+  },
+  {
+    "id": "ExchangeTitleTag1",
+    "message": "أسرع المقايضات عبر السلاسل",
+    "files": [
+      "src/front/shared/pages/Exchange/Promo/Promo.tsx"
+    ]
+  },
+  {
+    "id": "orders104",
+    "message": "المجموع",
+    "files": [
+      "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
+    ]
+  },
+  {
+    "id": "orders1381",
+    "message": "{buyCurrency} 🔁 {sellCurrency}",
+    "files": [
+      "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
+    ]
+  },
+  {
+    "id": "orders1382",
+    "message": "الجميع",
+    "files": [
+      "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
+    ]
+  },
+  {
+    "id": "currencyIcon15",
+    "message": "خطأ",
+    "files": [
+      "src/front/shared/components/ui/CurrencyIcon/CurrencyIcon.tsx"
+    ]
+  },
+  {
+    "id": "Withdrow213",
+    "message": "يرجى ملاحظة: الرسوم {minAmount} {data}. {br} يجب أن يتجاوز رصيدك هذا المبلغ لأداء المعاملة.",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
+      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
+    ]
+  },
+  {
+    "id": "WithdrawModal256",
+    "message": "ما لا يقل عن {minAmount}",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
+    ]
+  },
+  {
+    "id": "WithdrawModalErrorSend",
+    "message": "{errorName} {currency}:{br}{errorMessage}",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
+    ]
+  },
+  {
+    "id": "RowHistory77",
+    "message": "معاد",
+    "files": [
+      "src/front/shared/pages/History/SwapsHistory/RowHistory/RowHistory.tsx",
+      "src/front/shared/pages/Marketmaker/SwapRow.tsx"
+    ]
+  },
+  {
+    "id": "timer671",
+    "message": "{min} دقيقة متبقية لاسترداد",
+    "files": [
+      "src/front/shared/pages/Swap/Timer/Timer.tsx"
+    ]
+  },
+  {
+    "id": "CurrencyWallet154",
+    "message": "تتيح لك Atomic Swap Wallet إدارة $ {fullName} ($ {currency}) واستبدالها بأمان برسوم 0٪. استنادًا إلى تقنيات Multi-Sig و Atomic Swap.",
+    "files": [
+      "src/front/shared/pages/CurrencyWallet/CurrencyWallet.tsx"
+    ]
+  },
+  {
+    "id": "Orders121",
+    "message": "Atomic Swap {buyCurrencyFullName} ({buyCurrency}) إلى {sellCurrencyFullName} ({sellCurrency}) الصرف الفوري",
+    "files": [
+      "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
+    ]
+  },
+  {
+    "id": "Orders127",
+    "message": "أفضل سعر صرف من {buyCurrencyFullName} ({buyCurrency}) إلى {sellCurrencyFullName} ({sellCurrency}). توفر محفظة Swap.Online التبادل الفوري باستخدام بروتوكول المبادلة الذرية.",
+    "files": [
+      "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
+    ]
+  },
+  {
+    "id": "RowWallet276",
+    "message": "العقدة معطلة",
+    "files": [
+      "src/front/shared/pages/Wallet/Row/Row.tsx"
+    ]
+  },
+  {
+    "id": "ErrorNotification151",
+    "message": "خطأ: {error}",
+    "files": [
+      "src/front/shared/components/notifications/ErrorNotification/ErrorNotification.tsx"
+    ]
+  },
+  {
+    "id": "deposit165",
+    "message": "لمتابعة التبادل ، انسخ هذا العنوان وقم بتزويده بـ {missingBalance}",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/DepositWindow/DepositWindow.tsx"
+    ]
+  },
+  {
+    "id": "deposit297",
+    "message": "عرض في المستكشف",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/DepositWindow/DepositWindow.tsx"
+    ]
+  },
+  {
+    "id": "deposit177",
+    "message": "لا تقم بتعبئة العقد بمبلغ أكبر من الموصى به. {br} سيتم إرسال الرصيد المتبقي إلى الطرف المقابل. {br} يمكنك إرسال {tokenName} من محفظة في أي بورصة",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/DepositWindow/DepositWindow.tsx"
+    ]
+  },
+  {
+    "id": "deposit239",
+    "message": "ستستمر المبادلة بعد استلام عقد {tokenName} الأموال. {br} عادة ما تستغرق أقل من 10 دقائق",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/DepositWindow/DepositWindow.tsx"
+    ]
+  },
+  {
+    "id": "deposit198",
+    "message": "في انتظار الدفع ...",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/DepositWindow/DepositWindow.tsx"
+    ]
+  },
+  {
+    "id": "deposit198.1",
+    "message": "إنشاء عقد Ethereum. \n يُرجى الانتظار ، فقد يستغرق الأمر بضع دقائق ...",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/DepositWindow/DepositWindow.tsx"
+    ]
+  },
+  {
+    "id": "ReceiveModal50",
+    "message": "هذا هو عنوان {currency} الخاص بك",
+    "files": [
+      "src/front/shared/components/modals/ReceiveModal/ReceiveModal.tsx"
+    ]
+  },
+  {
+    "id": "userTooltip43",
+    "message": "المستخدم ({سمعة}) يريد المبادلة",
+    "files": [
+      "src/front/shared/components/Header/UserTooltip/UserTooltip.tsx"
+    ]
+  },
+  {
+    "id": "FeeControler48",
+    "message": "نسخ",
+    "files": [
+      "src/front/shared/pages/Swap/FeeControler/FeeControler.tsx"
+    ]
+  },
+  {
+    "id": "FeeControler49",
+    "message": "ينسخ",
+    "files": [
+      "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx",
+      "src/front/shared/pages/Swap/FeeControler/FeeControler.tsx"
+    ]
+  },
+  {
+    "id": "FeeControler68",
+    "message": "ليس هناك ما يكفي من ETH في رصيدك مقابل رسوم عامل التعدين. {br} {br} Deposit {gasAmountNeeded} ETH إلى حسابك",
+    "files": [
+      "src/front/shared/pages/Swap/FeeControler/FeeControler.tsx"
+    ]
+  },
+  {
+    "id": "FailControler68",
+    "message": "خطأ في تنفيذ عقد الرمز المميز! {br} {br} ربما هناك عمولة إضافية على جانب العقد أو حدث الخطأ لسبب آخر",
+    "files": [
+      "src/front/shared/pages/Swap/FailControler/FailControler.tsx"
+    ]
+  },
+  {
+    "id": "BtcToEthToken123",
+    "message": "انتهى المبادلة !!",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapSteps/FourthStep.tsx"
+    ]
+  },
+  {
+    "id": "swapFinishedGoHome289",
+    "message": "أرسل السر",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
+    ]
+  },
+  {
+    "id": "swapFinishedGoHome298",
+    "message": "كل شئ على ما يرام. يكمل",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
+    ]
+  },
+  {
+    "id": "swapprogress254",
+    "message": "معاملة رد الأموال:",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
+    ]
+  },
+  {
+    "id": "swapprogress270",
+    "message": "حاول استرداد",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
+    ]
+  },
+  {
+    "id": "swapprogress271",
+    "message": "جرب مجددا بعد دقائق",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
+    ]
+  },
+  {
+    "id": "swappropgress333",
+    "message": "عملية رد الأموال السداسية:",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
+    ]
+  },
+  {
+    "id": "SwapStuck",
+    "message": "كانت المقايضة عالقة؟ حاول",
+    "files": [
+      "src/front/shared/pages/Swap/Swap.tsx"
+    ]
+  },
+  {
+    "id": "SwapDebug",
+    "message": "التصحيح",
+    "files": [
+      "src/front/shared/pages/Swap/Swap.tsx"
+    ]
+  },
+  {
+    "id": "SwapOr",
+    "message": " أو ",
+    "files": [
+      "src/front/shared/pages/Swap/Swap.tsx"
+    ]
+  },
+  {
+    "id": "SwapReload",
+    "message": "خذ المخاطر. لا شيء يمكن أن يحل محل التجربة",
+    "files": [
+      "src/front/shared/pages/Swap/Swap.tsx"
+    ]
+  },
+  {
+    "id": "swappropgress193",
+    "message": "توقيع معاملة ETH: {transaction}",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
+    ]
+  },
+  {
+    "id": "swappropgress207",
+    "message": "{transaction}",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
+    ]
+  },
+  {
+    "id": "swappropgress218",
+    "message": "{transaction}",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
+    ]
+  },
+  {
+    "id": "withdrowTitle271",
+    "message": "يرسل",
+    "files": [
+      "src/front/shared/components/modals/WithdrawBtcMultisig/WithdrawBtcMultisig.tsx",
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
+      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
+    ]
+  },
+  {
+    "id": "PreventMultiTabsWidgetBuild",
+    "message": "{widgetName} يدعم علامة تبويب نشطة واحدة فقط. الرجاء إغلاق النافذة الأخرى المفتوحة والتحديث للمتابعة.",
+    "files": [
+      "src/front/shared/components/PreventMultiTabs/PreventMultiTabs.tsx"
+    ]
+  },
+  {
+    "id": "CurrencyWalletTitle",
+    "message": "Swap.Online - {fullName} ({currency}) Web Wallet with Atomic Swap.",
+    "files": [
+      "src/front/shared/pages/CurrencyWallet/CurrencyWallet.tsx"
+    ]
+  },
+  {
+    "id": "CurrencyWalletWidgetBuildTitle",
+    "message": "{fullName} ({currency}) Web Wallet with Atomic Swap.",
+    "files": [
+      "src/front/shared/pages/CurrencyWallet/CurrencyWallet.tsx"
+    ]
+  },
+  {
+    "id": "deposit256",
+    "message": "عنوان العقد الذكي {tokenName}",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/DepositWindow/DepositWindow.tsx"
+    ]
+  },
+  {
+    "id": "transaction444",
+    "message": "يجب أن يكون مبلغ البيع أكبر من",
+    "files": [
+      "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
+    ]
+  },
+  {
+    "id": "transaction450",
+    "message": "يجب أن يكون مبلغ الشراء أكبر من",
+    "files": [
+      "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
+    ]
+  },
+  {
+    "id": "deposit300",
+    "message": "تم استلام {Balance} / {need} {tooltip}",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/DepositWindow/DepositWindow.tsx"
+    ]
+  },
+  {
+    "id": "deposit320",
+    "message": "(included {mineerFee} {sellCurrency} miners fee)",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/DepositWindow/DepositWindow.tsx"
+    ]
+  },
+  {
+    "id": "BtcToEthToken24",
+    "message": "إيداع",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapSteps/ABSteps/SecondStep.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapSteps/UTXOSteps/SecondStep.tsx"
+    ]
+  },
+  {
+    "id": "FourthStep52",
+    "message": "({otherCurrency} tx)",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapSteps/ABSteps/SecondStep.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapSteps/UTXOSteps/SecondStep.tsx"
+    ]
+  },
+  {
+    "id": "FourthStep34",
+    "message": "({sell} tx)",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapSteps/ABSteps/ThirdStep.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapSteps/UTXOSteps/ThirdStep.tsx"
+    ]
+  },
+  {
+    "id": "thirdStep24",
+    "message": "انسحب",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapSteps/ABSteps/ThirdStep.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapSteps/UTXOSteps/ThirdStep.tsx"
+    ]
+  },
+  {
+    "id": "confirmDialogDefaultMessage",
+    "message": "تأكيد العمل على هذا الموقع؟",
+    "files": [
+      "src/front/shared/components/modals/Confirm/Confirm.tsx",
+      "src/front/shared/components/modals/ConfirmBeginSwap/ConfirmBeginSwap.tsx"
+    ]
+  },
+  {
+    "id": "confirmDialogDefaultNo",
+    "message": "لا",
+    "files": [
+      "src/front/shared/components/modals/Confirm/Confirm.tsx",
+      "src/front/shared/components/modals/ConfirmBeginSwap/ConfirmBeginSwap.tsx"
+    ]
+  },
+  {
+    "id": "confirmDialogDefaultTitle",
+    "message": "تأكيد العمل",
+    "files": [
+      "src/front/shared/components/LimitOrders/OrderPurchaseModal.tsx",
+      "src/front/shared/components/modals/Confirm/Confirm.tsx",
+      "src/front/shared/components/modals/ConfirmBeginSwap/ConfirmBeginSwap.tsx"
+    ]
+  },
+  {
+    "id": "confirmDialogDefaultYes",
+    "message": "نعم",
+    "files": [
+      "src/front/shared/components/modals/Confirm/Confirm.tsx",
+      "src/front/shared/components/modals/ConfirmBeginSwap/ConfirmBeginSwap.tsx"
+    ]
+  },
+  {
+    "id": "orders94s",
+    "message": "هل أنت متأكد أنك تريد حذف الطلب؟",
+    "files": [
+      "src/front/shared/components/LimitOrders/index.tsx",
+      "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
+    ]
+  },
+  {
+    "id": "ordersRow101",
+    "message": "يشترى",
+    "files": [
+      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
+    ]
+  },
+  {
+    "id": "ordersRow134",
+    "message": "هل تريد {action} {amount} {main} مقابل {total} {base} بسعر {price} {main} / {base}؟",
+    "files": [
+      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
+    ]
+  },
+  {
+    "id": "ordersRow97",
+    "message": "يبيع",
+    "files": [
+      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
+    ]
+  },
+  {
+    "id": "deposit165widget",
+    "message": "انسخ العنوان أدناه وقم بتزويده بالمبلغ الموصى به من {missingBalance}",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/DepositWindow/DepositWindow.tsx"
+    ]
+  },
+  {
+    "id": "userTooltip71",
+    "message": "اذهب إلى صفحة التغذية",
+    "files": [
+      "src/front/shared/components/Header/UserTooltip/UserTooltip.tsx"
+    ]
+  },
+  {
+    "id": "decline21",
+    "message": "الطلبات المرفوضة!",
+    "files": [
+      "src/front/shared/components/modals/DeclineOrdersModal/DeclineOrdersModal.tsx"
+    ]
+  },
+  {
+    "id": "decline43",
+    "message": "عذرًا ، لكن لا يمكنك البدء حتى تكمل المقايضات التي بدأت في وقت سابق",
+    "files": [
+      "src/front/shared/components/modals/DeclineOrdersModal/DeclineOrdersModal.tsx"
+    ]
+  },
+  {
+    "id": "decline49",
+    "message": "انظر المبادلة غير المكتملة",
+    "files": [
+      "src/front/shared/components/modals/DeclineOrdersModal/DeclineOrdersModal.tsx"
+    ]
+  },
+  {
+    "id": "Incompleted21",
+    "message": "المقايضات غير المكتملة",
+    "files": [
+      "src/front/shared/components/modals/IncompletedSwaps/IncompletedSwaps.tsx"
+    ]
+  },
+  {
+    "id": "IncompletedSwaps49",
+    "message": "المقايضات بحاجة إلى الإكمال",
+    "files": [
+      "src/front/shared/components/modals/IncompletedSwaps/IncompletedSwaps.tsx"
+    ]
+  },
+  {
+    "id": "swappropgress327",
+    "message": "تم إلغاء هذا المبادلة",
+    "files": [
+      "src/front/shared/pages/Swap/Swap.tsx"
+    ]
+  },
+  {
+    "id": "swappropgress400",
+    "message": "يتم استرداد الأموال تلقائيًا",
+    "files": [
+      "src/front/shared/pages/Swap/Swap.tsx"
+    ]
+  },
+  {
+    "id": "swapprogressDONTLEAVE",
+    "message": "من فضلك لا تترك هذه الصفحة",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/PleaseDontLeaveWrapper.tsx"
+    ]
+  },
+  {
+    "id": "swapjsdontleave",
+    "message": "يتطلب التبادل التوقيع باستخدام مفاتيح خاصة لا يعرفها سوى متصفحك.",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/PleaseDontLeaveWrapper.tsx"
+    ]
+  },
+  {
+    "id": "Confirmation14",
+    "message": "تأكيد",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapSteps/FirstStep.tsx"
+    ]
+  },
+  {
+    "id": "swappropgress192",
+    "message": "كيف ترد أموالك؟",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
+    ]
+  },
+  {
+    "id": "IncompletedSwaps55",
+    "message": "تمت معالجة البيانات ، حاول إعادة تحميل الصفحة",
+    "files": [
+      "src/front/shared/components/modals/IncompletedSwaps/IncompletedSwaps.tsx"
+    ]
+  },
+  {
+    "id": "select75",
+    "message": "متاح للتبادل: {availableBalance} {tooltip}",
+    "files": [
+      "src/front/shared/components/SelectGroup/index.tsx"
+    ]
+  },
+  {
+    "id": "selected53",
+    "message": "يمكنك استخدام محفظة خارجية لإجراء مبادلة",
+    "files": [
+      "src/front/shared/components/SelectGroup/index.tsx"
+    ]
+  },
+  {
+    "id": "SecondStep",
+    "message": "في هذه الخطوة ، لا ينتقل التشفير إلى محفظتك {br} أو محفظة الطرف المقابل ولكن ينتقل مباشرةً إلى عقد المبادلة",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapSteps/ABSteps/SecondStep.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapSteps/UTXOSteps/SecondStep.tsx"
+    ]
+  },
+  {
+    "id": "thirdStep",
+    "message": "في هذه الخطوة ، يتم نقل التشفير من {br} العقد إلى محفظتك وإلى محفظة {br} الطرف المقابل {br}",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapSteps/ABSteps/ThirdStep.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapSteps/UTXOSteps/ThirdStep.tsx"
+    ]
+  },
+  {
+    "id": "CustomWalletIsNotCorrect",
+    "message": "عنوان المحفظة غير صحيح",
+    "files": [
+      "src/front/shared/components/modals/ConfirmBeginSwap/ConfirmBeginSwap.tsx"
+    ]
+  },
+  {
+    "id": "multiSignJoinLink",
+    "message": "قم بإنشاء محفظة BTC-Multisign",
+    "files": [
+      "src/front/shared/components/modals/MultisignJoinLink/MultisignJoinLink.tsx"
+    ]
+  },
+  {
+    "id": "multiSignJoinLinkMessage",
+    "message": "أرسل هذا الرابط إلى المالك الثاني للمحفظة",
+    "files": [
+      "src/front/shared/components/modals/MultisignJoinLink/MultisignJoinLink.tsx"
+    ]
+  },
+  {
+    "id": "Select23",
+    "message": "25%",
+    "files": [
+      "src/front/shared/components/modals/OfferModal/AddOffer/Select/Select.tsx"
+    ]
+  },
+  {
+    "id": "Select25",
+    "message": "50%",
+    "files": [
+      "src/front/shared/components/modals/OfferModal/AddOffer/Select/Select.tsx"
+    ]
+  },
+  {
+    "id": "Select30",
+    "message": "75%",
+    "files": [
+      "src/front/shared/components/modals/OfferModal/AddOffer/Select/Select.tsx"
+    ]
+  },
+  {
+    "id": "Select40",
+    "message": "100%",
+    "files": [
+      "src/front/shared/components/modals/OfferModal/AddOffer/Select/Select.tsx"
+    ]
+  },
+  {
+    "id": "BTCMS_WithdrawRequest",
+    "message": "طلب سحب من محفظة BTC-multisign",
+    "files": [
+      "src/front/shared/components/notifications/BTCMultisignRequest/BTCMultisignRequest.tsx"
+    ]
+  },
+  {
+    "id": "BTCMS_WithdrawRequestInfo",
+    "message": "أرسل {amount} {currency} إلى المحفظة {address}",
+    "files": [
+      "src/front/shared/components/notifications/BTCMultisignRequest/BTCMultisignRequest.tsx"
+    ]
+  },
+  {
+    "id": "PreventMultiTabsSwitchApp",
+    "message": "أغلق علامات التبويب الأخرى وتابع هنا",
+    "files": [
+      "src/front/shared/components/PreventMultiTabs/PreventMultiTabs.tsx"
+    ]
+  },
+  {
+    "id": "createWalletHeader1",
+    "message": "قم بإنشاء محفظة",
+    "files": [
+      "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
+    ]
+  },
+  {
+    "id": "createWalletButton1",
+    "message": "يكمل",
+    "files": [
+      "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx",
+      "src/front/shared/pages/CreateWallet/Steps/FirstStep.tsx"
+    ]
+  },
+  {
+    "id": "createWalletCapture1",
+    "message": "اختر من بين Bitcoin و Ethereum و Swap و Tokens",
+    "files": [
+      "src/front/shared/pages/CreateWallet/Steps/texts.tsx"
+    ]
+  },
+  {
+    "id": "createWalletCapture2",
+    "message": "No security, sms, google auth, multisig",
+    "files": [
+      "src/front/shared/pages/CreateWallet/Steps/texts.tsx"
+    ]
+  },
+  {
+    "id": "createWalletSubHeader1",
+    "message": "اختر عملة محفظتك",
+    "files": [
+      "src/front/shared/pages/CreateWallet/Steps/texts.tsx"
+    ]
+  },
+  {
+    "id": "createWalletSubHeader2",
+    "message": "اختر مستوى أمان محفظتك",
+    "files": [
+      "src/front/shared/pages/CreateWallet/Steps/texts.tsx"
+    ]
+  },
+  {
+    "id": "createWalletActivated",
+    "message": "مفعل!",
+    "files": [
+      "src/front/shared/pages/CreateWallet/Steps/SecondStep.tsx"
+    ]
+  },
+  {
+    "id": "createWalletButton3",
+    "message": "إنشاء المحفظة",
+    "files": [
+      "src/front/shared/pages/CreateWallet/Steps/SecondStep.tsx"
+    ]
+  },
+  {
+    "id": "createWalletSoon",
+    "message": "هكذا!",
+    "files": [
+      "src/front/shared/pages/CreateWallet/Steps/SecondStep.tsx"
+    ]
+  },
+  {
+    "id": "HowItWorks18",
+    "message": "1. حدد العملة المشفرة والمبلغ.",
+    "files": [
+      "src/front/shared/pages/Exchange/HowItWorks/HowItWorks.tsx"
+    ]
+  },
+  {
+    "id": "HowItWorks21",
+    "message": "اختر عملة مشفرة لديك تحت تصرفك في أي محفظة خارجية أو بورصة أو محفظة Swap Online",
+    "files": [
+      "src/front/shared/pages/Exchange/HowItWorks/HowItWorks.tsx"
+    ]
+  },
+  {
+    "id": "HowItWorks26",
+    "message": "2. انقر فوق \"تبادل \"",
+    "files": [
+      "src/front/shared/pages/Exchange/HowItWorks/HowItWorks.tsx"
+    ]
+  },
+  {
+    "id": "HowItWorks29",
+    "message": "إذا تم العثور على طلب مناسب وأكد البائع التبادل ، فسيتم إعادة توجيهك إلى صفحة التبادل",
+    "files": [
+      "src/front/shared/pages/Exchange/HowItWorks/HowItWorks.tsx"
+    ]
+  },
+  {
+    "id": "HowItWorks34",
+    "message": "3. قم بإيداع عملة معماة.",
+    "files": [
+      "src/front/shared/pages/Exchange/HowItWorks/HowItWorks.tsx"
+    ]
+  },
+  {
+    "id": "HowItWorks37",
+    "message": "في حالة توفر المبلغ المطلوب في محفظتك الداخلية ، سيتم تنفيذ الإيداع تلقائيًا.",
+    "files": [
+      "src/front/shared/pages/Exchange/HowItWorks/HowItWorks.tsx"
+    ]
+  },
+  {
+    "id": "HowItWorks42",
+    "message": "4. تأكيد اكتمال المبادلة.",
+    "files": [
+      "src/front/shared/pages/Exchange/HowItWorks/HowItWorks.tsx"
+    ]
+  },
+  {
+    "id": "HowItWorks45",
+    "message": "يستغرق التبادل عادة حوالي دقيقة. في نهاية المقايضة ، سترى txid وستكون قادرًا على تأكيد اكتمال التحويل من جانبك.",
+    "files": [
+      "src/front/shared/pages/Exchange/HowItWorks/HowItWorks.tsx"
+    ]
+  },
+  {
+    "id": "Quote",
+    "message": "يدرك مشروع swap.online مقايضات بين Bitcoin-like و Ethereum-like ، وصنع منتجًا للمستخدمين لتنفيذ المقايضات",
+    "files": [
+      "src/front/shared/pages/Exchange/Quote/index.tsx"
+    ]
+  },
+  {
+    "id": "swapjsdontleavesavesecret",
+    "message": "إذا كنت تريد مغادرة هذه الصفحة يرجى حفظ السر.",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/PleaseDontLeaveWrapper.tsx"
+    ]
+  },
+  {
+    "id": "swapprogressDONTLEAVEBTC",
+    "message": "أو احفظ هذا السر قبل أن تغادر:",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/PleaseDontLeaveWrapper.tsx"
+    ]
+  },
+  {
+    "id": "timerSwapIsCancelled",
+    "message": "تم إلغاء المبادلة بسبب انتهاء المهلة",
+    "files": [
+      "src/front/shared/pages/Swap/Timer/Timer.tsx"
+    ]
+  },
+  {
+    "id": "timerTimeToCancel",
+    "message": "لديك {min} دقيقة لإجراء دفعة",
+    "files": [
+      "src/front/shared/pages/Swap/Timer/Timer.tsx"
+    ]
+  },
+  {
+    "id": "WithdrawMSUserFinish",
+    "message": "مستعد",
+    "files": [
+      "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx",
+      "src/front/shared/components/modals/WithdrawBtcMultisig/WithdrawBtcMultisig.tsx",
+      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
+    ]
+  },
+  {
+    "id": "WithdrawMSUserMessage",
+    "message": "أرسل هذا الرابط إلى مالك المحفظة الآخر",
+    "files": [
+      "src/front/shared/components/modals/WithdrawBtcMultisig/WithdrawBtcMultisig.tsx",
+      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
+    ]
+  },
+  {
+    "id": "WithdrawMSUserReady",
+    "message": "TX تأكيد الارتباط",
+    "files": [
+      "src/front/shared/components/modals/WithdrawBtcMultisig/WithdrawBtcMultisig.tsx",
+      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
+    ]
+  },
+  {
+    "id": "BTCMS_ConfirmTxGoToWallet",
+    "message": "اذهب إلى محفظتك",
+    "files": [
+      "src/front/shared/pages/Multisign/Btc/Btc.tsx"
+    ]
+  },
+  {
+    "id": "BTCMS_ConfirmTxInputs",
+    "message": "مدخلات المعاملات",
+    "files": [
+      "src/front/shared/pages/Multisign/Btc/Btc.tsx"
+    ]
+  },
+  {
+    "id": "BTCMS_ConfirmTxOutputs",
+    "message": "مخرجات الصفقة",
+    "files": [
+      "src/front/shared/pages/Multisign/Btc/Btc.tsx"
+    ]
+  },
+  {
+    "id": "BTCMS_ConfirmTxReady",
+    "message": "يتم توقيع المعاملة وإرسالها إلى blockchain",
+    "files": [
+      "src/front/shared/pages/Multisign/Btc/Btc.tsx"
+    ]
+  },
+  {
+    "id": "BTCMS_ConfirmTxSign",
+    "message": "وقع الصفقة",
+    "files": [
+      "src/front/shared/pages/Multisign/Btc/Btc.tsx"
+    ]
+  },
+  {
+    "id": "BTCMS_ConfirmTxTitle",
+    "message": "تأكيد المعاملة",
+    "files": [
+      "src/front/shared/pages/Multisign/Btc/Btc.tsx"
+    ]
+  },
+  {
+    "id": "BTCMS_CreateWalletAdd",
+    "message": "أضف هذه المحفظة",
+    "files": [
+      "src/front/shared/pages/Multisign/Btc/Btc.tsx"
+    ]
+  },
+  {
+    "id": "BTCMS_CreateWalletLoading_descroptio",
+    "message": "لا يمكن إنفاق الأموال المرسلة إلى هذه المحفظة دون تأكيدك (يرجى حفظ عبارة المرور الخاصة بك المكونة من 12 كلمة)",
+    "files": [
+      "src/front/shared/pages/Multisign/Btc/Btc.tsx"
+    ]
+  },
+  {
+    "id": "BTCMS_CreateWalletLinkReady",
+    "message": "تم إنشاء المحفظة. أرسل هذا الرابط إلى المالك الثاني للتأكيد.",
+    "files": [
+      "src/front/shared/pages/Multisign/Btc/Btc.tsx"
+    ]
+  },
+  {
+    "id": "BTCMS_CreateWalletLoading",
+    "message": "جاري التحميل انتظر من فضلك",
+    "files": [
+      "src/front/shared/pages/Multisign/Btc/Btc.tsx"
+    ]
+  },
+  {
+    "id": "BTCMS_CreateWalletReady",
+    "message": "المحفظة جاهزة",
+    "files": [
+      "src/front/shared/pages/Multisign/Btc/Btc.tsx"
+    ]
+  },
+  {
+    "id": "BTCMS_CreateWalletReadyButton",
+    "message": "مستعد. افتح المحفظة",
+    "files": [
+      "src/front/shared/components/modals/MultisignJoinLink/MultisignJoinLink.tsx",
+      "src/front/shared/pages/Multisign/Btc/Btc.tsx"
+    ]
+  },
+  {
+    "id": "BTCMS_CreateWalletTitle",
+    "message": "إنشاء محفظة BTC متعددة التوقيعات",
+    "files": [
+      "src/front/shared/pages/Multisign/Btc/Btc.tsx"
+    ]
+  },
+  {
+    "id": "BTCMS_CreateWalletWait",
+    "message": "جاري إنشاء المحفظة ... الرجاء الانتظار",
+    "files": [
+      "src/front/shared/pages/Multisign/Btc/Btc.tsx"
+    ]
+  },
+  {
+    "id": "BTCMS_WaitOtherSide",
+    "message": "في انتظار الطرف الآخر ...",
+    "files": [
+      "src/front/shared/pages/Multisign/Btc/Btc.tsx"
+    ]
+  },
+  {
+    "id": "BTCMS_WalletAddress",
+    "message": "عنوان المحفظة:",
+    "files": [
+      "src/front/shared/pages/Multisign/Btc/Btc.tsx"
+    ]
+  },
+  {
+    "id": "BTCMS_WalletBalance",
+    "message": "رصيد المحفظة",
+    "files": [
+      "src/front/shared/pages/Multisign/Btc/Btc.tsx"
+    ]
+  },
+  {
+    "id": "deposit312",
+    "message": "ينسخ",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/DepositWindow/DepositWindow.tsx"
+    ]
+  },
+  {
+    "id": "swapProgressGoToTxPage",
+    "message": "عرض TX في المستكشف",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
+    ]
+  },
+  {
+    "id": "swapProgressGoToWallet",
+    "message": "تحقق من الرصيد",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx",
+      "src/front/shared/pages/TurboSwap/TurboSwap.tsx"
+    ]
+  },
+  {
+    "id": "walletMultisignNotJoined",
+    "message": "لم ينضم",
+    "files": [
+      "src/front/shared/pages/Wallet/Row/Row.tsx"
+    ]
+  },
+  {
+    "id": "Withdrow2223",
+    "message": "رمز الرسائل القصيرة"
+  },
+  {
+    "id": "Withdrow2224",
+    "message": "يتأكد"
+  },
+  {
+    "id": "partial-tour-2",
+    "message": "في هذا الحقل اختر العملة وأدخل المبلغ الذي تريد بيعه. يمكنك أيضًا بيع العملة من محفظة خارجية.",
+    "files": [
+      "src/front/shared/components/Header/TourPartial/TourPartial.tsx"
+    ]
+  },
+  {
+    "id": "partial-tour-3",
+    "message": "في هذا الحقل اختر العملة وأدخل المبلغ الذي ترغب في شرائه.",
+    "files": [
+      "src/front/shared/components/Header/TourPartial/TourPartial.tsx"
+    ]
+  },
+  {
+    "id": "partial-tour-4",
+    "message": "هنا يمكنك رؤية حالة البحث عن عروض التبادل. عند التحميل سترى \"البحث عن الطلبات ... \". بعد العثور على أمر ، تحقق من سعر الصرف هنا.",
+    "files": [
+      "src/front/shared/components/Header/TourPartial/TourPartial.tsx"
+    ]
+  },
+  {
+    "id": "partial-tour-5",
+    "message": "قم بتبديل هذا الزر لتلقي الأموال بعد الصرف إلى محفظة Swap.online الداخلية الخاصة بك أو إلى أي محفظة أخرى.",
+    "files": [
+      "src/front/shared/components/Header/TourPartial/TourPartial.tsx"
+    ]
+  },
+  {
+    "id": "partial-tour-6",
+    "message": "قم بتبديل هذا الزر لمشاهدة عنوان URL المباشر للمعاملة. يتوفر عندما يكون الزر وردي.",
+    "files": [
+      "src/front/shared/components/Header/TourPartial/TourPartial.tsx"
+    ]
+  },
+  {
+    "id": "partial-tour-7",
+    "message": "اضغط على هذا الزر لرؤية صفحة كتاب الطلب. سيتم عرض الطلبات لعملات معينة. يمكنك أيضًا إنشاء طلبك الخاص في صفحة \"دفتر الطلبات",
+    "files": [
+      "src/front/shared/components/Header/TourPartial/TourPartial.tsx"
+    ]
+  },
+  {
+    "id": "tour-step-1",
+    "message": "يظهر رصيد العملة المختارة في نهاية الحقل ، مقابل العملة. يمكنك إغلاق المتصفح وإعادة تحميل جهاز الكمبيوتر الخاص بك. سيبقى رصيدك كما هو. من فضلك لا تنسى حفظ المفاتيح الخاصة بك",
+    "files": [
+      "src/front/shared/components/Header/WalletTour/WalletTour.tsx"
+    ]
+  },
+  {
+    "id": "tour-step-1.1",
+    "message": "رصيدك الإجمالي",
+    "files": [
+      "src/front/shared/components/Header/WalletTour/WalletTour.tsx"
+    ]
+  },
+  {
+    "id": "tour-step-1.2",
+    "message": "بالضغط على الزر يمكنك زيادة رصيدك",
+    "files": [
+      "src/front/shared/components/Header/WalletTour/WalletTour.tsx"
+    ]
+  },
+  {
+    "id": "tour-step-2",
+    "message": "يمكنك تخزين العملات من سلاسل الكتل المختلفة مثل Bitcoin و Ethereum و Bitcoin Cash و Litecoin وغيرها من الرموز المميزة",
+    "files": [
+      "src/front/shared/components/Header/WalletTour/WalletTour.tsx"
+    ]
+  },
+  {
+    "id": "tour-step-3",
+    "message": "يتوفر التبادل الفريد من نوعه من نظير إلى نظير في محفظتنا المبنية على تقنية Atomic Swap. يمكنك إدراج عملتك المشفرة في محفظتنا.",
+    "files": [
+      "src/front/shared/components/Header/WalletTour/WalletTour.tsx"
+    ]
+  },
+  {
+    "id": "tour-step-4",
+    "message": "ستتلقى إشعارات حول تحديثات حسابك (الطلبات والمعاملات) وأخبار شهرية حول مشروعنا",
+    "files": [
+      "src/front/shared/components/Header/WalletTour/WalletTour.tsx"
+    ]
+  },
+  {
+    "id": "alertDialogDefaultMessage",
+    "message": "نخطرك",
+    "files": [
+      "src/front/shared/components/modals/Alert/AlertModal.tsx"
+    ]
+  },
+  {
+    "id": "alertDialogDefaultOk",
+    "message": "موافق",
+    "files": [
+      "src/front/shared/components/modals/Alert/AlertModal.tsx"
+    ]
+  },
+  {
+    "id": "alertDialogDefaultTitle",
+    "message": "معلومة",
+    "files": [
+      "src/front/shared/components/modals/Alert/AlertModal.tsx"
+    ]
+  },
+  {
+    "id": "FeeInfoBlockChooseFeeRate",
+    "message": "اختر معدل الرسوم:",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/index.tsx"
+    ]
+  },
+  {
+    "id": "InvoiceLinkCopied",
+    "message": "تم نسخ الرابط",
+    "files": [
+      "src/front/shared/components/modals/InvoiceLinkModal/InvoiceLinkModal.tsx",
+      "src/front/shared/components/modals/Share/Share.tsx"
+    ]
+  },
+  {
+    "id": "InvoiceLinkCopy",
+    "message": "انسخ هذا الرابط",
+    "files": [
+      "src/front/shared/components/modals/InvoiceLinkModal/InvoiceLinkModal.tsx"
+    ]
+  },
+  {
+    "id": "InvoiceLinkModalInfo",
+    "message": "هذا هو رابط الفاتورة.",
+    "files": [
+      "src/front/shared/components/modals/InvoiceLinkModal/InvoiceLinkModal.tsx"
+    ]
+  },
+  {
+    "id": "WithdrawModalCancelBtn",
+    "message": "يلغي",
+    "files": [
+      "src/front/shared/components/LimitOrders/OrderPurchaseModal.tsx",
+      "src/front/shared/components/modals/ReceiveModal/ReceiveModal.tsx",
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
+      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
+    ]
+  },
+  {
+    "id": "InvoiceLinkModal_Title",
+    "message": "رابط الفاتورة",
+    "files": [
+      "src/front/shared/components/modals/InvoiceLinkModal/InvoiceLinkModal.tsx"
+    ]
+  },
+  {
+    "id": "InfoPay_2",
+    "message": "نقل إلى",
+    "files": [
+      "src/front/shared/pages/Transaction/TxInfo/index.tsx"
+    ]
+  },
+  {
+    "id": "InfoPay_3",
+    "message": "رقم المعاملة",
+    "files": [
+      "src/front/shared/pages/Transaction/TxInfo/index.tsx"
+    ]
+  },
+  {
+    "id": "InfoPay_4",
+    "message": "EST. وقت التأكيد",
+    "files": [
+      "src/front/shared/pages/Transaction/TxInfo/index.tsx"
+    ]
+  },
+  {
+    "id": "createWalletCaptureOthers",
+    "message": "أو عملات أخرى"
+  },
+  {
+    "id": "invoiceModal_Contact",
+    "message": "جهة الاتصال الخاصة بك (email or @nickname)",
+    "files": [
+      "src/front/shared/components/modals/InvoiceModal/InvoiceModal.tsx"
+    ]
+  },
+  {
+    "id": "invoiceModal_Address",
+    "message": "من يدفع (ليس أنت)",
+    "files": [
+      "src/front/shared/components/modals/InvoiceModal/InvoiceModal.tsx"
+    ]
+  },
+  {
+    "id": "invoiceModal_Error",
+    "message": "{errorName} {currency}:{br}{errorMessage}",
+    "files": [
+      "src/front/shared/components/modals/InvoiceModal/InvoiceModal.tsx"
+    ]
+  },
+  {
+    "id": "invoiceModal_IncorrectAddress",
+    "message": "عنوان غير صحيح",
+    "files": [
+      "src/front/shared/components/modals/InvoiceModal/InvoiceModal.tsx"
+    ]
+  },
+  {
+    "id": "invoiceModal_Label",
+    "message": "تعليقات",
+    "files": [
+      "src/front/shared/components/modals/InvoiceModal/InvoiceModal.tsx"
+    ]
+  },
+  {
+    "id": "invoiceModal_Processing",
+    "message": "يعالج ...",
+    "files": [
+      "src/front/shared/components/modals/InvoiceModal/InvoiceModal.tsx"
+    ]
+  },
+  {
+    "id": "invoiceModal_Submit",
+    "message": "إرسال الفاتورة",
+    "files": [
+      "src/front/shared/components/modals/InvoiceModal/InvoiceModal.tsx"
+    ]
+  },
+  {
+    "id": "invoiceModal_Title",
+    "message": "فاتورة للإيداع",
+    "files": [
+      "src/front/shared/components/modals/InvoiceModal/InvoiceModal.tsx"
+    ]
+  },
+  {
+    "id": "invoiceModal_addressPlaceholder",
+    "message": "أدخل عنوان محفظة {currency}",
+    "files": [
+      "src/front/shared/components/modals/InvoiceModal/InvoiceModal.tsx"
+    ]
+  },
+  {
+    "id": "invoiceModal_amountPlaceholder",
+    "message": "أدخل المبلغ",
+    "files": [
+      "src/front/shared/components/modals/InvoiceModal/InvoiceModal.tsx"
+    ]
+  },
+  {
+    "id": "invoiceModal_destiAddress",
+    "message": "العنوان الذي سيتم إرسال الدفعة إليه",
+    "files": [
+      "src/front/shared/components/modals/InvoiceModal/InvoiceModal.tsx"
+    ]
+  },
+  {
+    "id": "invoiceModal_destiAddressPlaceholder",
+    "message": "أدخل عنوان محفظة {currency}",
+    "files": [
+      "src/front/shared/components/modals/InvoiceModal/InvoiceModal.tsx"
+    ]
+  },
+  {
+    "id": "invoiceModal_labelPlaceholder",
+    "message": "تعليقات على الفاتورة",
+    "files": [
+      "src/front/shared/components/modals/InvoiceModal/InvoiceModal.tsx"
+    ]
+  },
+  {
+    "id": "WithdrawModalInvoiceSaveTx",
+    "message": "وضع علامة كمدفوع",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
+      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
+    ]
+  },
+  {
+    "id": "WithdrowOwnTX",
+    "message": "أو أدخل رابط المعاملة (txid)",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
+      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
+    ]
+  },
+  {
+    "id": "withdrawOwnTxPlaceholder",
+    "message": "إذا دفعت من مصدر آخر",
+    "files": [
+      "src/front/shared/components/modals/WithdrawBtcMultisig/WithdrawBtcMultisig.tsx",
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
+      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
+    ]
+  },
+  {
+    "id": "RowHistoryCancelInvoice",
+    "message": "يتناقص",
+    "files": [
+      "src/front/shared/pages/Exchange/Orders/MyOrders/RowFeeds/RowFeeds.tsx",
+      "src/front/shared/pages/History/Row/Row.tsx"
+    ]
+  },
+  {
+    "id": "RowHistoryInvoce",
+    "message": "الفاتورة رقم {number}",
+    "files": [
+      "src/front/shared/pages/History/Row/Row.tsx"
+    ]
+  },
+  {
+    "id": "RowHistoryInvoiceAddress",
+    "message": "عنوان الدفع:",
+    "files": [
+      "src/front/shared/pages/History/Row/Row.tsx"
+    ]
+  },
+  {
+    "id": "RowHistoryInvoiceCancelled",
+    "message": "رفض",
+    "files": [
+      "src/front/shared/pages/History/Row/Row.tsx"
+    ]
+  },
+  {
+    "id": "RowHistoryInvoicePayed",
+    "message": "دفع",
+    "files": [
+      "src/front/shared/pages/History/Row/Row.tsx"
+    ]
+  },
+  {
+    "id": "RowHistoryPayInvoice",
+    "message": "دفع",
+    "files": [
+      "src/front/shared/pages/History/Row/Row.tsx"
+    ]
+  },
+  {
+    "id": "WalletRow_Action_Hidden",
+    "message": "المحفظة مخفية",
+    "files": [
+      "src/front/shared/pages/Wallet/Row/Row.tsx"
+    ]
+  },
+  {
+    "id": "WalletRow_Action_HideNonZero_Message",
+    "message": "هذه المحفظة لها رصيد إيجابي. لا يمكنك إخفاء ذلك.",
+    "files": [
+      "src/front/shared/pages/Wallet/Row/Row.tsx"
+    ]
+  },
+  {
+    "id": "WalletRow_Menu_ActivateSMSProtected",
+    "message": "تفعيل"
+  },
+  {
+    "id": "WalletRow_Menu_BTCMS_GenerateJoinLink",
+    "message": "توليد ارتباط",
+    "files": [
+      "src/front/shared/pages/Wallet/Row/Row.tsx"
+    ]
+  },
+  {
+    "id": "WalletRow_Menu_Deposit",
+    "message": "إيداع",
+    "files": [
+      "src/front/shared/pages/Wallet/Row/Row.tsx"
+    ]
+  },
+  {
+    "id": "WalletRow_Menu_Hide",
+    "message": "إخفاء",
+    "files": [
+      "src/front/shared/pages/Wallet/Row/Row.tsx"
+    ]
+  },
+  {
+    "id": "WalletRow_Menu_History",
+    "message": "تاريخ",
+    "files": [
+      "src/front/shared/pages/Wallet/Row/Row.tsx"
+    ]
+  },
+  {
+    "id": "WalletRow_Menu_Invoice",
+    "message": "فاتورة",
+    "files": [
+      "src/front/shared/pages/Wallet/Row/Row.tsx"
+    ]
+  },
+  {
+    "id": "WalletRow_Menu_InvoiceLink",
+    "message": "احصل على رابط الفواتير",
+    "files": [
+      "src/front/shared/pages/Wallet/Row/Row.tsx"
+    ]
+  },
+  {
+    "id": "WalletRow_Menu_Send",
+    "message": "يرسل",
+    "files": [
+      "src/front/shared/pages/Wallet/Row/Row.tsx"
+    ]
+  },
+  {
+    "id": "WalletRow_Menu_Сopy",
+    "message": "نسخ العنوان",
+    "files": [
+      "src/front/shared/pages/Wallet/Row/Row.tsx"
+    ]
+  },
+  {
+    "id": "WalletRow_Menu_Сopy_PrivateKey",
+    "message": "نسخ المفتاح الخاص",
+    "files": [
+      "src/front/shared/pages/Wallet/Row/Row.tsx"
+    ]
+  },
+  {
+    "id": "currencyAction81",
+    "message": "الرجاء اختيار العملة التي تريد {سياق}",
+    "files": [
+      "src/front/shared/components/modals/CurrencyAction/CurrencyAction.tsx"
+    ]
+  },
+  {
+    "id": "back",
+    "message": "خلف",
+    "files": [
+      "src/front/shared/components/TourWindow/index.tsx",
+      "src/front/shared/components/modals/OfferModal/ConfirmOffer/ConfirmOffer.tsx"
+    ]
+  },
+  {
+    "id": "closeTourWindow",
+    "message": "يغلق",
+    "files": [
+      "src/front/shared/components/TourWindow/index.tsx"
+    ]
+  },
+  {
+    "id": "nextTourWindow",
+    "message": "التالي",
+    "files": [
+      "src/front/shared/components/TourWindow/index.tsx"
+    ]
+  },
+  {
+    "id": "skip",
+    "message": "يتخطى",
+    "files": [
+      "src/front/shared/components/TourWindow/index.tsx"
+    ]
+  },
+  {
+    "id": "continueDeclined977",
+    "message": "تواصل المبادلات الخاصة بك",
+    "files": [
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+    ]
+  },
+  {
+    "id": "chooseCorrectNetwork",
+    "message": "الرجاء فتح المحفظة المتصلة واختيار {br} {chainName}",
+    "files": [
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+    ]
+  },
+  {
+    "id": "switchToCorrectNetwork",
+    "message": "التبديل إلى {br} {chainName}",
+    "files": [
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+    ]
+  },
+  {
+    "id": "Yourtotalbalance",
+    "message": "رصيدك الإجمالي",
+    "files": [
+      "src/front/shared/components/BalanceForm/BalanceForm.tsx"
+    ]
+  },
+  {
+    "id": "YourtotalbalanceDeposit",
+    "message": "إيداع",
+    "files": [
+      "src/front/shared/components/BalanceForm/BalanceForm.tsx"
+    ]
+  },
+  {
+    "id": "YourtotalbalanceSend",
+    "message": "يرسل",
+    "files": [
+      "src/front/shared/components/BalanceForm/BalanceForm.tsx"
+    ]
+  },
+  {
+    "id": "YourAssets",
+    "message": "أصولك",
+    "files": [
+      "src/front/shared/pages/Wallet/CurrenciesList.tsx"
+    ]
+  },
+  {
+    "id": "ForYou",
+    "message": "لك",
+    "files": [
+      "src/front/shared/pages/Wallet/WallerSlider/index.tsx"
+    ]
+  },
+  {
+    "id": "YourAssetsDescription",
+    "message": "هنا يمكنك تخزين الأصول وإرسالها واستلامها بأمان",
+    "files": [
+      "src/front/shared/pages/Wallet/CurrenciesList.tsx"
+    ]
+  },
+  {
+    "id": "addAsset",
+    "message": "أضف العملة",
+    "files": [
+      "src/front/shared/pages/Wallet/CurrenciesList.tsx"
+    ]
+  },
+  {
+    "id": "addCustomToken",
+    "message": "إضافة رمز مخصص",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/InputForm.tsx",
+      "src/front/shared/pages/Wallet/CurrenciesList.tsx"
+    ]
+  },
+  {
+    "id": "MybalanceswalletNav",
+    "message": "محفظتى",
+    "files": [
+      "src/front/shared/pages/Invoices/InvoicesList/index.tsx"
+    ]
+  },
+  {
+    "id": "InvoiceInfoBlockOpenDesktopApp",
+    "message": "الدفع من محفظة خارجية",
+    "files": [
+      "src/front/shared/components/InvoiceInfoBlock/InvoiceInfoBlock.tsx"
+    ]
+  },
+  {
+    "id": "InvoiceInfoBlockTitle",
+    "message": "دفع الفاتورة رقم {id} - {invoiceNumber}",
+    "files": [
+      "src/front/shared/components/InvoiceInfoBlock/InvoiceInfoBlock.tsx"
+    ]
+  },
+  {
+    "id": "customTokenAddress",
+    "message": "عنوان الرمز",
+    "files": [
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
+    ]
+  },
+  {
+    "id": "customTokenConfirm",
+    "message": "أضف هذا الرمز المميز",
+    "files": [
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
+    ]
+  },
+  {
+    "id": "customTokenIncorrectAddress",
+    "message": "عنوان خاطئ",
+    "files": [
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
+    ]
+  },
+  {
+    "id": "NextId",
+    "message": "التالي",
+    "files": [
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
+    ]
+  },
+  {
+    "id": "customTokenNotFound",
+    "message": "هذا ليس عنوان {standard}",
+    "files": [
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
+    ]
+  },
+  {
+    "id": "customTokenAdded",
+    "message": "تمت إضافة الرمز بنجاح",
+    "files": [
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
+    ]
+  },
+  {
+    "id": "customERC20_Title",
+    "message": "أضف رمزًا جديدًا",
+    "files": [
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
+    ]
+  },
+  {
+    "id": "DecimalsId",
+    "message": "الكسور العشرية",
+    "files": [
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
+    ]
+  },
+  {
+    "id": "SymbolId",
+    "message": "رمز",
+    "files": [
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
+    ]
+  },
+  {
+    "id": "TitleId",
+    "message": "عنوان",
+    "files": [
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
+    ]
+  },
+  {
+    "id": "customERC20_addressPlaceholder",
+    "message": "أدخل عنوان الرمز المميز",
+    "files": [
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
+    ]
+  },
+  {
+    "id": "customERC20_searchPlaceholder",
+    "message": "أدخل اسم الرمز المميز أو الرمز",
+    "files": [
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
+    ]
+  },
+  {
+    "id": "addByAddress",
+    "message": "حسب العنوان",
+    "files": [
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
+    ]
+  },
+  {
+    "id": "addBySearch",
+    "message": "عن طريق البحث",
+    "files": [
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
+    ]
+  },
+  {
+    "id": "selectedTokenTitle",
+    "message": "رمز",
+    "files": [
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
+    ]
+  },
+  {
+    "id": "selectedAssetHaveNotChains",
+    "message": "هذا الأصل ليس له عناوين رمزية على الشبكات المدعومة",
+    "files": [
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
+    ]
+  },
+  {
+    "id": "noSearchingResult",
+    "message": "لا توجد نتائج لـ {searchQuery}",
+    "files": [
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
+    ]
+  },
+  {
+    "id": "invoiceModal_contactPlaceholder",
+    "message": "مطلوب",
+    "files": [
+      "src/front/shared/components/modals/InvoiceModal/InvoiceModal.tsx"
+    ]
+  },
+  {
+    "id": "HistoryRowInvoiceStatusNew",
+    "message": "قيد الانتظار",
+    "files": [
+      "src/front/shared/pages/History/Row/Row.tsx"
+    ]
+  },
+  {
+    "id": "btcmsSwitchFetchWalletsData",
+    "message": "إحضار ...",
+    "files": [
+      "src/front/shared/components/modals/BtcMultisignSwitch/BtcMultisignSwitch.tsx"
+    ]
+  },
+  {
+    "id": "btcmsSwitchFetchWalletsEmpty",
+    "message": "ليس لديك محافظ BTC-Multisign",
+    "files": [
+      "src/front/shared/components/modals/BtcMultisignSwitch/BtcMultisignSwitch.tsx"
+    ]
+  },
+  {
+    "id": "btcmsSwitchTitle",
+    "message": "محافظ BTC-Multisign المتصلة",
+    "files": [
+      "src/front/shared/components/modals/BtcMultisignSwitch/BtcMultisignSwitch.tsx"
+    ]
+  },
+  {
+    "id": "SwitchBtcMultisigMenuRemove",
+    "message": "إزالة",
+    "files": [
+      "src/front/shared/components/modals/BtcMultisignSwitch/WalletRow.tsx"
+    ]
+  },
+  {
+    "id": "SwitchBtcMultisigMenuSwitch",
+    "message": "يُحوّل",
+    "files": [
+      "src/front/shared/components/modals/BtcMultisignSwitch/WalletRow.tsx"
+    ]
+  },
+  {
+    "id": "ShareModal1",
+    "message": "انسخ الرابط",
+    "files": [
+      "src/front/shared/components/modals/Share/Share.tsx"
+    ]
+  },
+  {
+    "id": "WalletRow_Menu_BTCMS_SwitchMenu",
+    "message": "تبديل المحفظة",
+    "files": [
+      "src/front/shared/pages/Wallet/Row/Row.tsx"
+    ]
+  },
+  {
+    "id": "RequestPayment",
+    "message": "طلب دفع",
+    "files": [
+      "src/front/shared/components/BalanceForm/BalanceForm.tsx"
+    ]
+  },
+  {
+    "id": "ControlShareLink_CopyLink",
+    "message": "انسخ الرابط",
+    "files": [
+      "src/front/shared/components/controls/ShareLink/ShareLink.tsx"
+    ]
+  },
+  {
+    "id": "ControlShareLink_LinkCopied",
+    "message": "تم نسخ الرابط",
+    "files": [
+      "src/front/shared/components/controls/ShareLink/ShareLink.tsx"
+    ]
+  },
+  {
+    "id": "multiSignConfirmTxModal_ConfirmTx",
+    "message": "يتأكد",
+    "files": [
+      "src/front/shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.tsx"
+    ]
+  },
+  {
+    "id": "multiSignConfirmTxModal_DismatchTx",
+    "message": "Reject",
+    "files": [
+      "src/front/shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.tsx"
+    ]
+  },
+  {
+    "id": "multiSignConfirmTxModal_NoticeFetching",
+    "message": "Loading...",
+    "files": [
+      "src/front/shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.tsx"
+    ]
+  },
+  {
+    "id": "multiSignConfirmTxModal_Title",
+    "message": "تأكيد معاملة BTC Multisig",
+    "files": [
+      "src/front/shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.tsx"
+    ]
+  },
+  {
+    "id": "multiSignConfirmTxModal_UpNotice",
+    "message": "قم بمراجعة المعاملة وتأكيدها. إذا كنت ضد الإلغاء ، ارفض المعاملة",
+    "files": [
+      "src/front/shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.tsx"
+    ]
+  },
+  {
+    "id": "registerSMSMPlaceHolder",
+    "message": "عبارة سرية (12 كلمة)",
+    "files": [
+      "src/front/shared/components/Header/Header.tsx"
+    ]
+  },
+  {
+    "id": "WithdrawSMS_BroadcastError",
+    "message": "معاملة البث الفاشلة ({errorText})"
+  },
+  {
+    "id": "WithdrawSMS_FailSignByMnemonic",
+    "message": "فشل التوقيع على المعاملة"
+  },
+  {
+    "id": "WithdrawSMS_NotValidMnemonic",
+    "message": "العبارة السرية غير صالحة"
+  },
+  {
+    "id": "WithdrawSMS_WrongMnemonic",
+    "message": "العبارة السرية غير صالحة"
+  },
+  {
+    "id": "BtcMultisignConfirmTx_FromAddress",
+    "message": "الدفع من المحفظة",
+    "files": [
+      "src/front/shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.tsx"
+    ]
+  },
+  {
+    "id": "multiSignConfirmTxModal_GoToWalletPage",
+    "message": "Open wallet",
+    "files": [
+      "src/front/shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.tsx"
+    ]
+  },
+  {
+    "id": "multiSignConfirmTxModal_YouCantSignThisTx",
+    "message": "ليس لديك إذن لتوقيع هذه المعاملة (تأكد من أنك قمت بإنشاء multisig)",
+    "files": [
+      "src/front/shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.tsx"
+    ]
+  },
+  {
+    "id": "SaveMnemonicModal_EnterNotice",
+    "message": "انقر فوق الكلمات لترتيبها الصحيح",
+    "files": [
+      "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx"
+    ]
+  },
+  {
+    "id": "SaveMnemonicModal_MnemoniceDeleted",
+    "message": "لقد قمت بالفعل بحفظ بذرتك المكونة من 12 كلمة. {href}",
+    "files": [
+      "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx"
+    ]
+  },
+  {
+    "id": "SaveMnemonicModal_ReadySaveNotice",
+    "message": "احتفظ بالورق في مكان لن تنساه",
+    "files": [
+      "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx"
+    ]
+  },
+  {
+    "id": "SaveMnemonicModal_SaveMnemonicStep1",
+    "message": "1. اكتب العبارة على الورق",
+    "files": [
+      "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx"
+    ]
+  },
+  {
+    "id": "SaveMnemonicModal_SaveMnemonicStep2",
+    "message": "2. تأكد من التوقيع على أن هذا هو مفتاح النطاق {domain}",
+    "files": [
+      "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx"
+    ]
+  },
+  {
+    "id": "SaveMnemonicModal_ShareMnemonicTitle",
+    "message": "عبارتك السرية",
+    "files": [
+      "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx"
+    ]
+  },
+  {
+    "id": "SaveMnemonicModal_ShowMnemonicNotice",
+    "message": "اكتب هذه الكلمات بالترتيب الصحيح واحتفظ بها في مكان آمن.",
+    "files": [
+      "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx"
+    ]
+  },
+  {
+    "id": "SaveMnemonicModal_Title",
+    "message": "عبارتك السرية",
+    "files": [
+      "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx"
+    ]
+  },
+  {
+    "id": "SaveMnemonicModal_BeginContinue",
+    "message": "أفهم",
+    "files": [
+      "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx"
+    ]
+  },
+  {
+    "id": "SaveMnemonicModal_BeginLater",
+    "message": "لاحقاً",
+    "files": [
+      "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx"
+    ]
+  },
+  {
+    "id": "SaveMnemonicModal_BeginNotice",
+    "message": "سنعرض لك الآن 12 كلمة من عبارتك السرية. {br} إذا فقدتها ، فلن نتمكن من استعادة محفظتك.",
+    "files": [
+      "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx"
+    ]
+  },
+  {
+    "id": "RestoryMnemonicWallet_CancelRestory",
+    "message": "يلغي",
+    "files": [
+      "src/front/shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.tsx"
+    ]
+  },
+  {
+    "id": "RestoryMnemonicWallet_MnemonicField",
+    "message": "عبارة سرية (12 كلمة):",
+    "files": [
+      "src/front/shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.tsx"
+    ]
+  },
+  {
+    "id": "RestoryMnemonicWallet_MnemonicInvalid",
+    "message": "لقد حددت مجموعة غير صالحة من الكلمات",
+    "files": [
+      "src/front/shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.tsx"
+    ]
+  },
+  {
+    "id": "RestoryMnemonicWallet_Ready",
+    "message": "مستعد",
+    "files": [
+      "src/front/shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.tsx"
+    ]
+  },
+  {
+    "id": "RestoryMnemonicWallet_ReadyNotice",
+    "message": "يمكنك الآن إضافة BTC و ETH والعملات الأخرى",
+    "files": [
+      "src/front/shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.tsx"
+    ]
+  },
+  {
+    "id": "RestoryMnemonicWallet_RestoryWallet",
+    "message": "يعيد",
+    "files": [
+      "src/front/shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.tsx"
+    ]
+  },
+  {
+    "id": "RestoryMnemonicWallet_RestroringWallet",
+    "message": "استعادة ...",
+    "files": [
+      "src/front/shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.tsx"
+    ]
+  },
+  {
+    "id": "RestoryMnemonicWallet_Title",
+    "message": "استعادة محفظة من عبارة سرية",
+    "files": [
+      "src/front/shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.tsx"
+    ]
+  },
+  {
+    "id": "ImportKeys_RestoreMnemonic",
+    "message": "استعادة من البذور المكونة من 12 كلمة",
+    "files": [
+      "src/front/shared/pages/CreateWallet/CreateWallet.tsx",
+      "src/front/shared/pages/Wallet/CurrenciesList.tsx"
+    ]
+  },
+  {
+    "id": "ImportKeys_RestoreMnemonic_Tooltip",
+    "message": "عبارة احتياطية مكونة من 12 كلمة - تعرف أيضًا بـ 12 كلمة ، \"نسخ احتياطي \" ، عبارة الاسترداد ، بذرة الذاكرة ، \"البذور\" - هي مجموعة فريدة من الكلمات يتم إنشاؤها عشوائيًا ، يتم تقديمها لك عند إنشاء محفظة يتم استخدام عبارة الاسترداد لاشتقاق أو إنشاء كافة المفاتيح الخاصة المشفرة مباشرة على جهازك.",
+    "files": [
+      "src/front/shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.tsx",
+      "src/front/shared/pages/CreateWallet/CreateWallet.tsx",
+      "src/front/shared/pages/Wallet/CurrenciesList.tsx"
+    ]
+  },
+  {
+    "id": "ImportKeys_RestoreMnemonic_Tooltip_withBalance",
+    "message": "من فضلك ، كن مسببًا! بمجرد استيراد بذرة جديدة ، سيتم إعادة تعيين رصيدك الحالي. احفظ أموالك الحالية في محفظة أخرى.",
+    "files": [
+      "src/front/shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.tsx",
+      "src/front/shared/pages/CreateWallet/CreateWallet.tsx",
+      "src/front/shared/pages/Wallet/CurrenciesList.tsx"
+    ]
+  },
+  {
+    "id": "SweepBannerButton",
+    "message": "منتهي",
+    "files": [
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
+    ]
+  },
+  {
+    "id": "MainFAQHeader",
+    "message": "التعليمات",
+    "files": [
+      "src/front/shared/components/FAQ/FAQ.tsx",
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MainFAQ1_header",
+    "message": "كيف يتم تخزين مفاتيحي الخاصة؟",
+    "files": [
+      "src/front/shared/components/FAQ/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MainFAQ1_content",
+    "message": "يتم تخزين المفاتيح الخاصة بك فقط على جهازك ، في التخزين المحلي لمتصفحك. يرجى الاحتفاظ بنسخة احتياطية من المفاتيح الخاصة بك ، لأن المتصفح أو الجهاز الخاص بك قد يتعطل.",
+    "files": [
+      "src/front/shared/components/FAQ/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MainFAQ2_header",
+    "message": "ما هي الرسوم المتضمنة؟",
+    "files": [
+      "src/front/shared/components/FAQ/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MainFAQ2_content",
+    "message": "أنت تدفع رسوم TX القياسية (رسوم عمال المناجم) لجميع المعاملات التي تجريها على المنصة.",
+    "files": [
+      "src/front/shared/components/FAQ/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MainFAQ2_content1",
+    "message": "بالنسبة إلى رموز {tokenType} ، يلزم أن يكون لديك 0.001 {currency} على الأقل في محافظك. يتذكر! عند إرسال رموز {tokenType} ، يتعين عليك الاحتفاظ ببعض {currency} كرسوم لعمال المناجم للمعاملات. هذا هو الحال أيضًا بالنسبة لجميع المقايضات الذرية لرموز {currency} و {tokenType}.",
+    "files": [
+      "src/front/shared/components/FAQ/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MainFAQ2_content2",
+    "message": "ملاحظة: يمكنك بسهولة التحقق من \"رسوم عمال المناجم \" المطلوبة لكل عملة معيّنة عن طريق البحث في Google عنها بكل بساطة.",
+    "files": [
+      "src/front/shared/components/FAQ/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MainFAQ3_header",
+    "message": "لماذا رسوم التعدين مرتفعة للغاية؟",
+    "files": [
+      "src/front/shared/components/FAQ/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MainFAQ3_content",
+    "message": "تعتمد رسوم Blockchain على عدة عوامل بما في ذلك ازدحام الشبكة وحجم المعاملة (تتأثر عند تحويل التشفير من مدخلات متعددة مثل أرباح الصنابير أو المعاملات الصغيرة الأخرى).",
+    "files": [
+      "src/front/shared/components/FAQ/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MainFAQ3_content1",
+    "message": "بمعنى آخر ، قد تحتاج إلى دفع رسوم أعلى لـ blockchain إذا:",
+    "files": [
+      "src/front/shared/components/FAQ/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MainFAQ3_content2",
+    "message": "1) شبكة blockchain مشغولة أو محملة في الوقت الحالي. عادة ، تزداد الرسوم أثناء التقلبات المفاجئة في أسعار blockchain والأحداث العالمية الكبرى ؛",
+    "files": [
+      "src/front/shared/components/FAQ/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MainFAQ3_content3",
+    "message": "2) حساب التشفير الخاص بك لديه تاريخ من الإيداعات الصغيرة. إذا كان حسابك يحتوي على كميات كبيرة من الودائع الصغيرة ، فسيكون حجم معاملتك أكبر لأنه سيتألف من العديد من المدخلات. كلما زاد حجم المعاملة ، زادت رسوم blockchain.",
+    "files": [
+      "src/front/shared/components/FAQ/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MainFAQ3_content4",
+    "message": "قد تكون هناك أسباب أخرى لارتفاع رسوم blockchain ، لكننا قمنا بإدراج الأسباب الأكثر شيوعًا.",
+    "files": [
+      "src/front/shared/components/FAQ/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "HowToWithdrawModal_Title",
+    "message": "كيفية الانسحاب",
+    "files": [
+      "src/front/shared/components/modals/HowToWithdrawModal/HowToWithdrawModal.tsx",
+      "src/front/shared/pages/Wallet/Row/Row.tsx"
+    ]
+  },
+  {
+    "id": "Exchange_FromAddress",
+    "message": "من العنوان",
+    "files": [
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+    ]
+  },
+  {
+    "id": "Exchange_ToAddress",
+    "message": "إلى عنوان",
+    "files": [
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+    ]
+  },
+  {
+    "id": "CommonTextConnect",
+    "message": "الاتصال",
+    "files": [
+      "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx",
+      "src/front/shared/pages/Wallet/Row/Row.tsx"
+    ]
+  },
+  {
+    "id": "Exchange_CustomAddressOption",
+    "message": "المحفظة الخارجية",
+    "files": [
+      "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
+    ]
+  },
+  {
+    "id": "Exchange_InternalAddressOption",
+    "message": "محفظتى",
+    "files": [
+      "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
+    ]
+  },
+  {
+    "id": "Exchange_InternalAddressOptionDisabled",
+    "message": "محفظتي (رصيد غير كاف)",
+    "files": [
+      "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
+    ]
+  },
+  {
+    "id": "Exchange_InternalCreate",
+    "message": "إنشاء المحفظة",
+    "files": [
+      "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
+    ]
+  },
+  {
+    "id": "Exchange_PlaceholderEnterAddress",
+    "message": "أدخل عنوان المحفظة المستلم",
+    "files": [
+      "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
+    ]
+  },
+  {
+    "id": "Exchange_SpecifyAddress",
+    "message": "يختار...",
+    "files": [
+      "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
+    ]
+  },
+  {
+    "id": "Exchange_BestPrice",
+    "message": "افضل سعر:",
+    "files": [
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+    ]
+  },
+  {
+    "id": "History_Activity_Title",
+    "message": "المعاملات",
+    "files": [
+      "src/front/shared/pages/History/History.tsx"
+    ]
+  },
+  {
+    "id": "InvoicesList_Title",
+    "message": "الفواتير",
+    "files": [
+      "src/front/shared/pages/Invoices/InvoicesList/index.tsx"
+    ]
+  },
+  {
+    "id": "InvoiceInfoModal_ButtonShareReady",
+    "message": "مستعد",
+    "files": [
+      "src/front/shared/components/modals/InfoInvoice/InfoInvoice.tsx"
+    ]
+  },
+  {
+    "id": "InvoiceInfoModal_CloseButton",
+    "message": "يغلق",
+    "files": [
+      "src/front/shared/components/modals/InfoInvoice/InfoInvoice.tsx"
+    ]
+  },
+  {
+    "id": "InvoiceInfoModal_DeclimeInvoiceButton",
+    "message": "يتناقص",
+    "files": [
+      "src/front/shared/components/modals/InfoInvoice/InfoInvoice.tsx"
+    ]
+  },
+  {
+    "id": "InvoiceInfoModal_DestinationAddress",
+    "message": "عنوان الدفع {الوجهة}",
+    "files": [
+      "src/front/shared/components/modals/InfoInvoice/InfoInvoice.tsx"
+    ]
+  },
+  {
+    "id": "InvoiceInfoModal_FromAddress",
+    "message": "عنوان المرسل",
+    "files": [
+      "src/front/shared/components/modals/InfoInvoice/InfoInvoice.tsx"
+    ]
+  },
+  {
+    "id": "InvoiceInfoModal_InfoStatus_Declimed",
+    "message": "رفض",
+    "files": [
+      "src/front/shared/components/modals/InfoInvoice/InfoInvoice.tsx"
+    ]
+  },
+  {
+    "id": "InvoiceInfoModal_InfoStatus_Pending",
+    "message": "قيد الانتظار",
+    "files": [
+      "src/front/shared/components/modals/InfoInvoice/InfoInvoice.tsx"
+    ]
+  },
+  {
+    "id": "InvoiceInfoModal_InfoStatus_Ready",
+    "message": "دفع",
+    "files": [
+      "src/front/shared/components/modals/InfoInvoice/InfoInvoice.tsx"
+    ]
+  },
+  {
+    "id": "InvoiceInfoModal_PayInvoiceButton",
+    "message": "دفع",
+    "files": [
+      "src/front/shared/components/modals/InfoInvoice/InfoInvoice.tsx"
+    ]
+  },
+  {
+    "id": "InvoiceInfoModal_Sender",
+    "message": "المرسل (جهة اتصال)",
+    "files": [
+      "src/front/shared/components/modals/InfoInvoice/InfoInvoice.tsx"
+    ]
+  },
+  {
+    "id": "InvoiceInfoModal_ShareInvoiceText",
+    "message": "الفاتورة رقم {id} - {invoiceNumber} من {contact} إلى {amount} {type}",
+    "files": [
+      "src/front/shared/components/modals/InfoInvoice/InfoInvoice.tsx"
+    ]
+  },
+  {
+    "id": "InvoiceInfoModal_ShareLink_InfoText",
+    "message": "أرسل هذا الرابط إلى الدافع للتأكيد",
+    "files": [
+      "src/front/shared/components/modals/InfoInvoice/InfoInvoice.tsx"
+    ]
+  },
+  {
+    "id": "InvoiceInfoModal_Title",
+    "message": "الفاتورة رقم {number}",
+    "files": [
+      "src/front/shared/components/modals/InfoInvoice/InfoInvoice.tsx"
+    ]
+  },
+  {
+    "id": "InvoiceInfoModal_TitleFetch",
+    "message": "إحضار الفاتورة ...",
+    "files": [
+      "src/front/shared/components/modals/InfoInvoice/InfoInvoice.tsx"
+    ]
+  },
+  {
+    "id": "InvoiceInfoModal_ToAddress",
+    "message": "عنوان الدافع",
+    "files": [
+      "src/front/shared/components/modals/InfoInvoice/InfoInvoice.tsx"
+    ]
+  },
+  {
+    "id": "multiSignConfirmTxModal_ButtonClose",
+    "message": "يغلق",
+    "files": [
+      "src/front/shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.tsx"
+    ]
+  },
+  {
+    "id": "RowHistory_ConfirmTX_NeedConfirm",
+    "message": "تحتاج علامة مالك أخرى",
+    "files": [
+      "src/front/shared/pages/History/Row/Row.tsx"
+    ]
+  },
+  {
+    "id": "RowHistory_ConfirmTX_NeedYourSign",
+    "message": "تحتاج برجك",
+    "files": [
+      "src/front/shared/pages/History/Row/Row.tsx"
+    ]
+  },
+  {
+    "id": "RowHistory_ConfirmTX_SendLink",
+    "message": "أرسل الرابط",
+    "files": [
+      "src/front/shared/pages/History/Row/Row.tsx"
+    ]
+  },
+  {
+    "id": "RowHistory_ConfirmTX_Sign",
+    "message": "يتأكد",
+    "files": [
+      "src/front/shared/pages/History/Row/Row.tsx"
+    ]
+  },
+  {
+    "id": "RowHistory_Confirm_Cancelled",
+    "message": "ألغيت",
+    "files": [
+      "src/front/shared/pages/History/Row/Row.tsx"
+    ]
+  },
+  {
+    "id": "RowHistory_Confirm_InProgress",
+    "message": "في تَقَدم",
+    "files": [
+      "src/front/shared/pages/History/Row/Row.tsx"
+    ]
+  },
+  {
+    "id": "RowHistory_Confirm_Rejected",
+    "message": "مرفوض",
+    "files": [
+      "src/front/shared/pages/History/Row/Row.tsx"
+    ]
+  },
+  {
+    "id": "RowHistory_Confirm_Sending",
+    "message": "إرسال",
+    "files": [
+      "src/front/shared/pages/History/Row/Row.tsx"
+    ]
+  },
+  {
+    "id": "AdminFee_Message",
+    "message": "العمولة {fee}٪ من مبلغ التحويل ، ولكن ليس أقل من {min} {currency}",
+    "files": [
+      "src/front/shared/components/AdminFeeInfoBlock/AdminFeeInfoBlock.tsx"
+    ]
+  },
+  {
+    "id": "InfoPay_2_To",
+    "message": "تم تحويل {amount} بنجاح إلى {br} {toAddress}",
+    "files": [
+      "src/front/shared/pages/Transaction/TxInfo/index.tsx"
+    ]
+  },
+  {
+    "id": "InfoPay_2_From",
+    "message": "تم استلام {amount} بنجاح من {br} {fromAddress}",
+    "files": [
+      "src/front/shared/pages/Transaction/TxInfo/index.tsx"
+    ]
+  },
+  {
+    "id": "InfoPay_2_Self",
+    "message": "{المبلغ} تم التحويل الذاتي بنجاح باستخدام {br} {address}",
+    "files": [
+      "src/front/shared/pages/Transaction/TxInfo/index.tsx"
+    ]
+  },
+  {
+    "id": "InfoPay_2_External",
+    "message": "تم تحويل {amount} بنجاح من {br} {fromAddress} إلى {toAddress}",
+    "files": [
+      "src/front/shared/pages/Transaction/TxInfo/index.tsx"
+    ]
+  },
+  {
+    "id": "InfoPay_2_Error",
+    "message": "خطأ في تحميل البيانات",
+    "files": [
+      "src/front/shared/pages/Transaction/TxInfo/index.tsx"
+    ]
+  },
+  {
+    "id": "InfoPay_AdminFee",
+    "message": "رسوم الخدمة",
+    "files": [
+      "src/front/shared/pages/Transaction/TxInfo/index.tsx"
+    ]
+  },
+  {
+    "id": "InfoPay_Confirmed",
+    "message": "مؤكد",
+    "files": [
+      "src/front/shared/pages/Transaction/TxInfo/index.tsx"
+    ]
+  },
+  {
+    "id": "InfoPay_FinalBalance",
+    "message": "الرصيد النهائي",
+    "files": [
+      "src/front/shared/pages/Transaction/TxInfo/index.tsx"
+    ]
+  },
+  {
+    "id": "InfoPay_MinerFee",
+    "message": "رسوم عامل منجم",
+    "files": [
+      "src/front/shared/pages/Transaction/TxInfo/index.tsx"
+    ]
+  },
+  {
+    "id": "InfoPay_NotConfirmed",
+    "message": "~ 10 دقائق",
+    "files": [
+      "src/front/shared/pages/Transaction/TxInfo/index.tsx"
+    ]
+  },
+  {
+    "id": "InfoPay_StatusReadyHeader",
+    "message": "حالة",
+    "files": [
+      "src/front/shared/pages/Transaction/TxInfo/index.tsx"
+    ]
+  },
+  {
+    "id": "ExitWidget",
+    "message": "مخرج",
+    "files": [
+      "src/front/shared/components/Header/Header.tsx"
+    ]
+  },
+  {
+    "id": "WidgetExitAlertTitle",
+    "message": "خطوة أخرى أيضا",
+    "files": [
+      "src/front/shared/helpers/wpLogoutModal.ts"
+    ]
+  },
+  {
+    "id": "widgetExitAlertMessage",
+    "message": "احفظ العبارة السرية قبل الخروج!",
+    "files": [
+      "src/front/shared/helpers/wpLogoutModal.ts"
+    ]
+  },
+  {
+    "id": "WidgetExitTitle3",
+    "message": "تأكيد الخروج",
+    "files": [
+      "src/front/shared/helpers/wpLogoutModal.ts"
+    ]
+  },
+  {
+    "id": "widgetApproveApprove",
+    "message": "نعم",
+    "files": [
+      "src/front/shared/helpers/wpLogoutModal.ts"
+    ]
+  },
+  {
+    "id": "widgetApproveCancel",
+    "message": "يلغي",
+    "files": [
+      "src/front/shared/helpers/wpLogoutModal.ts"
+    ]
+  },
+  {
+    "id": "widgetApproveMessage",
+    "message": "هل أنت متأكد أنك تريد تسجيل الخروج؟",
+    "files": [
+      "src/front/shared/helpers/wpLogoutModal.ts"
+    ]
+  },
+  {
+    "id": "buyByCreditCard",
+    "message": "شراء باستخدام بطاقة الائتمان",
+    "files": [
+      "src/front/shared/components/modals/ReceiveModal/ReceiveModal.tsx"
+    ]
+  },
+  {
+    "id": "WithdrawPINProtected_ButtonUsePin",
+    "message": "استخدم رمز PIN",
+    "files": [
+      "src/front/shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.tsx"
+    ]
+  },
+  {
+    "id": "WithdrawPINProtected_Cancel",
+    "message": "يلغي",
+    "files": [
+      "src/front/shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.tsx"
+    ]
+  },
+  {
+    "id": "WithdrawPINProtected_Confirm",
+    "message": "تأكيد المعاملة",
+    "files": [
+      "src/front/shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.tsx"
+    ]
+  },
+  {
+    "id": "WithdrawPINProtected_ErrorMnemonicIncorrect",
+    "message": "العبارة السرية المحددة لا تتطابق مع هذه المحفظة",
+    "files": [
+      "src/front/shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.tsx"
+    ]
+  },
+  {
+    "id": "WithdrawPINProtected_ErrorMnemonicInvalid",
+    "message": "لقد أدخلت عبارة سرية غير صالحة (12 كلمة)",
+    "files": [
+      "src/front/shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.tsx"
+    ]
+  },
+  {
+    "id": "WithdrawPINProtected_ErrorNoPinOrSmall",
+    "message": "يجب أن يتكون رمز PIN من 4 أحرف على الأقل",
+    "files": [
+      "src/front/shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.tsx"
+    ]
+  },
+  {
+    "id": "WithdrawPINProtected_LabelYourMnemonic",
+    "message": "عبارتك السرية",
+    "files": [
+      "src/front/shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.tsx"
+    ]
+  },
+  {
+    "id": "WithdrawPINProtected_LabelYourPin",
+    "message": "رمز PIN الخاص بك",
+    "files": [
+      "src/front/shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.tsx"
+    ]
+  },
+  {
+    "id": "WithdrawPINProtected_MnemonicPlaceholder",
+    "message": "أدخل العبارة السرية (12 كلمة)",
+    "files": [
+      "src/front/shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.tsx"
+    ]
+  },
+  {
+    "id": "WithdrawPINProtected_MnemonicUseNote",
+    "message": "إذا كان خادم التفويض غير متصل بالإنترنت ، أو إذا نسيت رمز PIN ، فيمكنك استخدام العبارة السرية (12 كلمة)",
+    "files": [
+      "src/front/shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.tsx"
+    ]
+  },
+  {
+    "id": "WithdrawPINProtected_PinCodeNotValid",
+    "message": "رمز PIN الذي أدخلته غير صحيح",
+    "files": [
+      "src/front/shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.tsx"
+    ]
+  },
+  {
+    "id": "WithdrawPINProtected_PinCodePlaceholder",
+    "message": "أدخل رمز PIN الخاص بك",
+    "files": [
+      "src/front/shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.tsx"
+    ]
+  },
+  {
+    "id": "WithdrawPINProtected_PincodeNote",
+    "message": "يمكنك أيضًا تأكيد المعاملة عن طريق إدخال رمز PIN",
+    "files": [
+      "src/front/shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.tsx"
+    ]
+  },
+  {
+    "id": "WithdrawPINProtected_ServerOffline",
+    "message": "خادم التفويض غير متصل. حاول مرة أخرى لاحقًا أو استخدم عبارة سرية (12 كلمة).",
+    "files": [
+      "src/front/shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.tsx"
+    ]
+  },
+  {
+    "id": "WithdrawPINProtected_ShipButton",
+    "message": "يعالج ...",
+    "files": [
+      "src/front/shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.tsx"
+    ]
+  },
+  {
+    "id": "WithdrawPINProtected_Title",
+    "message": "قم بتأكيد عملية السحب",
+    "files": [
+      "src/front/shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.tsx"
+    ]
+  },
+  {
+    "id": "WithdrawPINProtected_UpMessage",
+    "message": "أدخل رمز PIN لتأكيد المعاملة.",
+    "files": [
+      "src/front/shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.tsx"
+    ]
+  },
+  {
+    "id": "WithdrawPINProtected_UpMessageMnemonic",
+    "message": "لتأكيد المعاملة أدخل العبارة السرية (12 كلمة)",
+    "files": [
+      "src/front/shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.tsx"
+    ]
+  },
+  {
+    "id": "WithdrawPINProtected_UseMnemonicButton",
+    "message": "استخدم عبارة سرية (12 كلمة)",
+    "files": [
+      "src/front/shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.tsx"
+    ]
+  },
+  {
+    "id": "ConfirmActivatePIN_Message",
+    "message": "لقد قمت بالفعل بتنشيط هذا النوع من المحفظة. هل تريد تفعيل محفظة أخرى؟",
+    "files": [
+      "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
+    ]
+  },
+  {
+    "id": "ConfirmActivatePIN_No",
+    "message": "لا",
+    "files": [
+      "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
+    ]
+  },
+  {
+    "id": "ConfirmActivatePIN_Title",
+    "message": "قم بتنشيط محفظة BTC المحمية برمز PIN",
+    "files": [
+      "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
+    ]
+  },
+  {
+    "id": "ConfirmActivatePIN_Yes",
+    "message": "نعم",
+    "files": [
+      "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
+    ]
+  },
+  {
+    "id": "InfoPay_FinalBalances",
+    "message": "أرصدة نهائية",
+    "files": [
+      "src/front/shared/pages/Transaction/TxInfo/index.tsx"
+    ]
+  },
+  {
+    "id": "InfoPay_IsOurAddress",
+    "message": "(لك)",
+    "files": [
+      "src/front/shared/pages/Transaction/TxInfo/index.tsx"
+    ]
+  },
+  {
+    "id": "WalletRow_Menu_ActivatePinProtected",
+    "message": "تفعيل",
+    "files": [
+      "src/front/shared/pages/Wallet/Row/Row.tsx"
+    ]
+  },
+  {
+    "id": "RegisterPINProtectedBTC_ActivateWalletButton",
+    "message": "تفعيل المحفظة",
+    "files": [
+      "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
+    ]
+  },
+  {
+    "id": "RegisterPINProtectedBTC_ButtonCancel",
+    "message": "يلغي",
+    "files": [
+      "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
+    ]
+  },
+  {
+    "id": "RegisterPINProtectedBTC_ButtonFinish",
+    "message": "مستعد",
+    "files": [
+      "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
+    ]
+  },
+  {
+    "id": "RegisterPINProtectedBTC_ButtonSaveMnemonic",
+    "message": "يحفظ",
+    "files": [
+      "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
+    ]
+  },
+  {
+    "id": "RegisterPINProtectedBTC_ConfirmRestory",
+    "message": "استعادة المحفظة",
+    "files": [
+      "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
+    ]
+  },
+  {
+    "id": "RegisterPINProtectedBTC_EnterPinCodeBottomMessage",
+    "message": "اختر رمز PIN",
+    "files": [
+      "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
+    ]
+  },
+  {
+    "id": "RegisterPINProtectedBTC_EnterPinCodeUpMessage",
+    "message": "قم بتنشيط محفظة BTC المحمية برمز PIN",
+    "files": [
+      "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
+    ]
+  },
+  {
+    "id": "RegisterPINProtectedBTC_ErrorMnemonicIncorrect",
+    "message": "العبارة السرية المحددة لا تتطابق مع هذه المحفظة",
+    "files": [
+      "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
+    ]
+  },
+  {
+    "id": "RegisterPINProtectedBTC_ErrorMnemonicInvalid",
+    "message": "لقد أدخلت عبارة سرية غير صالحة (12 كلمة)",
+    "files": [
+      "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
+    ]
+  },
+  {
+    "id": "RegisterPINProtectedBTC_ErrorNoPinOrSmall",
+    "message": "يجب أن يتكون رمز PIN من 4 أحرف على الأقل",
+    "files": [
+      "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
+    ]
+  },
+  {
+    "id": "RegisterPINProtectedBTC_ErrorPinCodesNotEqueals",
+    "message": "رموز PIN لا تساوي",
+    "files": [
+      "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
+    ]
+  },
+  {
+    "id": "RegisterPINProtectedBTC_ErrorWalletLocked",
+    "message": "هذا الحساب مسجل ومحمي بالفعل بواسطة رمز PIN آخر. الرجاء إدخال رمز PIN صالح",
+    "files": [
+      "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
+    ]
+  },
+  {
+    "id": "RegisterPINProtectedBTC_FinishMessage",
+    "message": "تم تفعيل محفظتك المحمية",
+    "files": [
+      "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
+    ]
+  },
+  {
+    "id": "RegisterPINProtectedBTC_HowToWithdraw",
+    "message": "كيفية سحب الأموال يدويًا",
+    "files": [
+      "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
+    ]
+  },
+  {
+    "id": "RegisterPINProtectedBTC_Instruction_Copied",
+    "message": "ينسخ",
+    "files": [
+      "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
+    ]
+  },
+  {
+    "id": "RegisterPINProtectedBTC_Instruction_Copy",
+    "message": "نسخ",
+    "files": [
+      "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
+    ]
+  },
+  {
+    "id": "RegisterPINProtectedBTC_Instruction_Download",
+    "message": "تحميل",
+    "files": [
+      "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
+    ]
+  },
+  {
+    "id": "RegisterPINProtectedBTC_Instruction_Downloading",
+    "message": "جارى التحميل",
+    "files": [
+      "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
+    ]
+  },
+  {
+    "id": "RegisterPINProtectedBTC_Instruction_Message",
+    "message": "المعلومات في حالة عدم توفر خدمتنا",
+    "files": [
+      "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
+    ]
+  },
+  {
+    "id": "RegisterPINProtectedBTC_LabelConfirmYourPin",
+    "message": "قم بتأكيد رمز PIN الخاص بك",
+    "files": [
+      "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
+    ]
+  },
+  {
+    "id": "RegisterPINProtectedBTC_LabelYourMnemonic",
+    "message": "عبارتك السرية",
+    "files": [
+      "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
+    ]
+  },
+  {
+    "id": "RegisterPINProtectedBTC_LabelYourPinCode",
+    "message": "رمز PIN الخاص بك",
+    "files": [
+      "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
+    ]
+  },
+  {
+    "id": "RegisterPINProtectedBTC_MnemonicPlaceholder",
+    "message": "أدخل العبارة السرية (12 كلمة)",
+    "files": [
+      "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
+    ]
+  },
+  {
+    "id": "RegisterPINProtectedBTC_PinCodeConfirmPlaceholder",
+    "message": "قم بتأكيد رمز PIN الخاص بك",
+    "files": [
+      "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
+    ]
+  },
+  {
+    "id": "RegisterPINProtectedBTC_PinCodePlaceholder",
+    "message": "أدخل رمز PIN الخاص بك",
+    "files": [
+      "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
+    ]
+  },
+  {
+    "id": "RegisterPINProtectedBTC_PinServerOffline",
+    "message": "خادم التفويض غير متصل",
+    "files": [
+      "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
+    ]
+  },
+  {
+    "id": "RegisterPINProtectedBTC_RestoryBottomMessage",
+    "message": "أدخل العبارة السرية (12 كلمة)",
+    "files": [
+      "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
+    ]
+  },
+  {
+    "id": "RegisterPINProtectedBTC_RestoryUpMessage",
+    "message": "استعادة محفظة BTC المحمية برقم التعريف الشخصي",
+    "files": [
+      "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
+    ]
+  },
+  {
+    "id": "RegisterPINProtectedBTC_SaveYourMnemonic",
+    "message": "يرجى حفظ العبارة السرية الخاصة بك (12 كلمة).",
+    "files": [
+      "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
+    ]
+  },
+  {
+    "id": "RegisterPINProtectedBTC_Share",
+    "message": "شارك",
+    "files": [
+      "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
+    ]
+  },
+  {
+    "id": "RegisterPINProtectedBTC_ShipButton",
+    "message": "يعالج ...",
+    "files": [
+      "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
+    ]
+  },
+  {
+    "id": "RegisterPINProtectedBTC_Title",
+    "message": "قم بتنشيط المحفظة المحمية برقم التعريف الشخصي",
+    "files": [
+      "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
+    ]
+  },
+  {
+    "id": "RegisterPINProtectedBTC_UseMnemonicButton",
+    "message": "استعادة المحفظة",
+    "files": [
+      "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
+    ]
+  },
+  {
+    "id": "RegisterPINProtectedBTC_UseMnemonicRestoreNote",
+    "message": "يمكنك استعادة المحفظة باستخدام عبارة سرية (12 كلمة).",
+    "files": [
+      "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
+    ]
+  },
+  {
+    "id": "RegisterPINProtectedBTC_UsePinButton",
+    "message": "استخدم رمز PIN",
+    "files": [
+      "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
+    ]
+  },
+  {
+    "id": "RegisterPINProtectedBTC_YouNeedSaveMnemonic",
+    "message": "لتفعيل المصادقة 2fa يجب حفظ العبارة السرية (12 كلمة).",
+    "files": [
+      "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
+    ]
+  },
+  {
+    "id": "privateKeyCurrency",
+    "message": "مفتاحك الخاص {cur}",
+    "files": [
+      "src/front/shared/components/modals/PrivateKeysModal/PrivateKeysModal.tsx"
+    ]
+  },
+  {
+    "id": "ReceiveModal_ButtonCancel",
+    "message": "يلغي",
+    "files": [
+      "src/front/shared/components/modals/ReceiveModal/ReceiveModal.tsx"
+    ]
+  },
+  {
+    "id": "ReceiveModal_ButtonSaveMnemonic",
+    "message": "يحفظ",
+    "files": [
+      "src/front/shared/components/modals/ReceiveModal/ReceiveModal.tsx"
+    ]
+  },
+  {
+    "id": "ReceiveModal_SaveYourMnemonic",
+    "message": "من فضلك ، لا تنسى حفظ عبارة البذور الخاصة بك. هذا الإجراء مطلوب لتوفير أموالك في حالة حدوث أي طارئ.",
+    "files": [
+      "src/front/shared/components/modals/ReceiveModal/ReceiveModal.tsx"
+    ]
+  },
+  {
+    "id": "ReceiveModal_YouNeedSaveMnemonic",
+    "message": "يجب عليك حفظ العبارة السرية الخاصة بك.",
+    "files": [
+      "src/front/shared/components/modals/ReceiveModal/ReceiveModal.tsx"
+    ]
+  },
+  {
+    "id": "WalletAddressModal_Message",
+    "message": "عنوانك {الحالي}",
+    "files": [
+      "src/front/shared/components/modals/WalletAddressModal/WalletAddressModal.tsx"
+    ]
+  },
+  {
+    "id": "WalletAddressModal_Title",
+    "message": "نسخ عنوان المحفظة",
+    "files": [
+      "src/front/shared/components/modals/WalletAddressModal/WalletAddressModal.tsx"
+    ]
+  },
+  {
+    "id": "Withdraw_BalanceDesktop",
+    "message": "سيتم إرسال {amount} {currency}",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+    ]
+  },
+  {
+    "id": "Withdraw_BalanceMobile",
+    "message": "{amount} {currency}",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+    ]
+  },
+  {
+    "id": "Withdraw_FiatBalanceDesktop",
+    "message": "this is ~{amount} {currency}",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+    ]
+  },
+  {
+    "id": "Withdraw_FiatBalanceMobile",
+    "message": "~{amount} {currency}",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+    ]
+  },
+  {
+    "id": "WalletRow_ShowAddress",
+    "message": "إظهار العنوان",
+    "files": [
+      "src/front/shared/pages/Wallet/Row/Row.tsx"
+    ]
+  },
+  {
+    "id": "WalletRow_MetamaskNotConnected",
+    "message": "غير متصل",
+    "files": [
+      "src/front/shared/pages/Wallet/Row/Row.tsx"
+    ]
+  },
+  {
+    "id": "YourWalletbalance",
+    "message": "الرصيد",
+    "files": [
+      "src/front/shared/components/BalanceForm/BalanceForm.tsx",
+      "src/front/shared/components/modals/WalletConnectAccount/WalletConnectAccount.tsx"
+    ]
+  },
+  {
+    "id": "AlertModalcreateWallet",
+    "message": "إنشاء المحفظة",
+    "files": [
+      "src/front/shared/components/modals/AlertWindow/index.tsx"
+    ]
+  },
+  {
+    "id": "AlertModaldeposit",
+    "message": "إيداع",
+    "files": [
+      "src/front/shared/components/modals/AlertWindow/index.tsx"
+    ]
+  },
+  {
+    "id": "alertTitle",
+    "message": "يُحذًِر",
+    "files": [
+      "src/front/shared/components/modals/AlertWindow/index.tsx"
+    ]
+  },
+  {
+    "id": "AlertOrderNonEnoughtBalance",
+    "message": "يرجى تعبئة رصيدك قبل أن تبدأ المبادلة.",
+    "files": [
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/Feedback.tsx"
+    ]
+  },
+  {
+    "id": "AlertOrderNonEnoughtBalanceTitle",
+    "message": "لا يوجد توازن كافٍ.",
+    "files": [
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+    ]
+  },
+  {
+    "id": "Balance_YouAreHaveNotSignegTx",
+    "message": "{count} معاملة تحتاج إلى تأكيد منك",
+    "files": [
+      "src/front/shared/components/BalanceForm/BalanceForm.tsx"
+    ]
+  },
+  {
+    "id": "multiSignJoinLink_ButtonCancel",
+    "message": "يلغي",
+    "files": [
+      "src/front/shared/components/modals/MultisignJoinLink/MultisignJoinLink.tsx"
+    ]
+  },
+  {
+    "id": "multiSignJoinLink_ButtonSaveMnemonic",
+    "message": "يحفظ",
+    "files": [
+      "src/front/shared/components/modals/MultisignJoinLink/MultisignJoinLink.tsx"
+    ]
+  },
+  {
+    "id": "multiSignJoinLink_SaveYourMnemonic",
+    "message": "يرجى حفظ العبارة السرية الخاصة بك (12 كلمة).",
+    "files": [
+      "src/front/shared/components/modals/MultisignJoinLink/MultisignJoinLink.tsx"
+    ]
+  },
+  {
+    "id": "multiSignJoinLink_YouNeedSaveMnemonic",
+    "message": "لتفعيل محفظة BTC-Multisig ، يجب عليك حفظ العبارة السرية الخاصة بك.",
+    "files": [
+      "src/front/shared/components/modals/MultisignJoinLink/MultisignJoinLink.tsx"
+    ]
+  },
+  {
+    "id": "BTCMS_SaveMnemonicButton",
+    "message": "احفظ العبارة السرية",
+    "files": [
+      "src/front/shared/pages/CreateWallet/CreateWallet.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/UserInfo.tsx",
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx",
+      "src/front/shared/pages/Multisign/Btc/Btc.tsx"
+    ]
+  },
+  {
+    "id": "BTCMS_SaveYourMnemonic",
+    "message": "يرجى حفظ العبارة السرية الخاصة بك (12 كلمة).",
+    "files": [
+      "src/front/shared/pages/Multisign/Btc/Btc.tsx"
+    ]
+  },
+  {
+    "id": "BTCMS_YouNeedSaveMnemonic",
+    "message": "لتفعيل محفظة BTC-Multisig ، يجب عليك حفظ العبارة السرية الخاصة بك.",
+    "files": [
+      "src/front/shared/pages/Multisign/Btc/Btc.tsx"
+    ]
+  },
+  {
+    "id": "RowWallet_MsConfirmCountMobile",
+    "message": "{count} tx انتظر التأكيد",
+    "files": [
+      "src/front/shared/pages/Wallet/Row/Row.tsx"
+    ]
+  },
+  {
+    "id": "WithdrawSMS_SmsConfirming",
+    "message": "تأكيد المعاملة"
+  },
+  {
+    "id": "MnemonicInputComponent_DeleteText",
+    "message": "انقر لحذف كلمة",
+    "files": [
+      "src/front/shared/components/forms/MnemonicInput/MnemonicInput.tsx"
+    ]
+  },
+  {
+    "id": "MnemonicInputComponent_Placeholder",
+    "message": "ابدأ بكتابة كلمة ...",
+    "files": [
+      "src/front/shared/components/forms/MnemonicInput/MnemonicInput.tsx"
+    ]
+  },
+  {
+    "id": "Exchange_AvialableBalance",
+    "message": "متوفرة: ",
+    "files": [
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+    ]
+  },
+  {
+    "id": "Banner_YouAreHaveNotSignegTx",
+    "message": "{عدد} معاملة multisig في انتظار تأكيدك",
+    "files": [
+      "src/front/shared/pages/Wallet/WallerSlider/index.tsx"
+    ]
+  },
+  {
+    "id": "ShowMyMnemonic_copy",
+    "message": "يرجى الاحتفاظ بنسخة احتياطية من محفظتك",
+    "files": [
+      "src/front/shared/pages/Wallet/WallerSlider/index.tsx"
+    ]
+  },
+  {
+    "id": "Swap_NeedMoreAmount",
+    "message": "يجب أن يكون لديك على الأقل {amount} {currency} في رصيدك. {br} عمولة التعدين {sellFee} {sellCoin} و {buyFee} {buyCoin}",
+    "files": [
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+    ]
+  },
+  {
+    "id": "Exchange_MinerFees",
+    "message": "رسوم عامل منجم",
+    "files": [
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+    ]
+  },
+  {
+    "id": "Exchange_ServiceFee",
+    "message": "رسوم الخدمة",
+    "files": [
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+    ]
+  },
+  {
+    "id": "WalletRow_MetamaskConnect",
+    "message": "الاتصال",
+    "files": [
+      "src/front/shared/pages/Wallet/Row/Row.tsx"
+    ]
+  },
+  {
+    "id": "WalletConnectAccountTitle",
+    "message": "حساب متصل",
+    "files": [
+      "src/front/shared/components/modals/WalletConnectAccount/WalletConnectAccount.tsx"
+    ]
+  },
+  {
+    "id": "UnknownNetworkConnectedWallet",
+    "message": "شبكة غير معروفة",
+    "files": [
+      "src/front/shared/components/Header/WalletConnect/index.tsx",
+      "src/front/shared/components/modals/WalletConnectAccount/WalletConnectAccount.tsx"
+    ]
+  },
+  {
+    "id": "MetamaskDisconnect",
+    "message": "افصل المحفظة",
+    "files": [
+      "src/front/shared/components/modals/WalletConnectAccount/WalletConnectAccount.tsx",
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx",
+      "src/front/shared/pages/Wallet/Row/Row.tsx"
+    ]
+  },
+  {
+    "id": "MM_DisconnectExternalWallet",
+    "message": "Marketmakig يعمل فقط مع المحفظة الداخلية. يرجى فصل المحفظة الخارجية",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_TurnOffMarketmaking",
+    "message": "تم تعطيل صناعة السوق بسبب اتصال محفظتك الخارجية",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "ConfirmBeginSwapOnlyInternal",
+    "message": "قبول عرض من دليل العروض ممكن مؤقتًا فقط للعناوين الداخلية",
+    "files": [
+      "src/front/shared/components/modals/ConfirmBeginSwap/ConfirmBeginSwap.tsx"
+    ]
+  },
+  {
+    "id": "offerMessageToUser",
+    "message": "يجب أن تكون متصلاً بالإنترنت طوال الوقت ، وإلا فلن يكون طلبك مرئيًا للمستخدمين الآخرين",
+    "files": [
+      "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
+    ]
+  },
+  {
+    "id": "createOrderMessageForUser",
+    "message": "يجب أن تكون متصلاً بالإنترنت طوال الوقت ، وإلا فلن يكون طلبك مرئيًا للمستخدمين الآخرين",
+    "files": [
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+    ]
+  },
+  {
+    "id": "createOrderNoManyMessageForUser",
+    "message": "اشحن رصيدك",
+    "files": [
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+    ]
+  },
+  {
+    "id": "AddLiquidity",
+    "message": "أضف السيولة",
+    "files": [
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+    ]
+  },
+  {
+    "id": "MainFAQ2_content3",
+    "message": "رسوم التعدين الحالية:",
+    "files": [
+      "src/front/shared/components/FAQ/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MetamaskNetworkAlert_Message",
+    "message": "شبكة خاطئة ، يرجى التبديل إلى شبكة أخرى في {walletTitle} (أو فصل المحفظة).",
+    "files": [
+      "src/front/shared/containers/App/App.tsx"
+    ]
+  },
+  {
+    "id": "MetamaskNetworkAlert_OkDisconnectWallet",
+    "message": "افصل المحفظة الخارجية",
+    "files": [
+      "src/front/shared/containers/App/App.tsx"
+    ]
+  },
+  {
+    "id": "MetamaskNetworkAlert_Title",
+    "message": "تحذير",
+    "files": [
+      "src/front/shared/containers/App/App.tsx"
+    ]
+  },
+  {
+    "id": "ConnectWalletModal_Cancel",
+    "message": "يلغي"
+  },
+  {
+    "id": "ConnectWalletModal_Injected",
+    "message": "ميتاماسك"
+  },
+  {
+    "id": "ConnectWalletModal_Title",
+    "message": "توصيل المحفظة الخارجية"
+  },
+  {
+    "id": "ConnectWalletModal_WalletConnect",
+    "message": "WalletConnect",
+    "files": [
+      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.tsx"
+    ]
+  },
+  {
+    "id": "FilterTextAll",
+    "message": "الجميع",
+    "files": [
+      "src/front/shared/components/FilterForm/FilterForm.tsx"
+    ]
+  },
+  {
+    "id": "FilterTextFind",
+    "message": "يجد",
+    "files": [
+      "src/front/shared/components/FilterForm/FilterForm.tsx"
+    ]
+  },
+  {
+    "id": "themeAlt",
+    "message": "{theme} الموضوع",
+    "files": [
+      "src/front/shared/components/Header/ThemeSwitcher.tsx"
+    ]
+  },
+  {
+    "id": "widget-tour-finishStep",
+    "message": "هذا هو! هيا بنا نبدأ.",
+    "files": [
+      "src/front/shared/components/Header/WidgetTours/WidgetWalletTour.tsx"
+    ]
+  },
+  {
+    "id": "widget-tour-step-1",
+    "message": "مرحبًا بك في {widgetName}. خذ الجولة؟",
+    "files": [
+      "src/front/shared/components/Header/WidgetTours/WidgetWalletTour.tsx"
+    ]
+  },
+  {
+    "id": "widget-tour-step-2",
+    "message": "هذا هو رصيد محفظتك.",
+    "files": [
+      "src/front/shared/components/Header/WidgetTours/WidgetWalletTour.tsx"
+    ]
+  },
+  {
+    "id": "widget-tour-step-3",
+    "message": "استخدم هذه الأزرار لنقل العملات المشفرة داخل وخارج محفظتك.",
+    "files": [
+      "src/front/shared/components/Header/WidgetTours/WidgetWalletTour.tsx"
+    ]
+  },
+  {
+    "id": "widget-tour-step-4",
+    "message": "قم بالتمرير خلال هذه القائمة للعثور على المنتجات والخدمات والمعلومات المفيدة.",
+    "files": [
+      "src/front/shared/components/Header/WidgetTours/WidgetWalletTour.tsx"
+    ]
+  },
+  {
+    "id": "widget-tour-step-5",
+    "message": "انقر فوق هذه النقاط الثلاث للعثور على عنوان محفظتك والمفاتيح الخاصة والمزيد.",
+    "files": [
+      "src/front/shared/components/Header/WidgetTours/WidgetWalletTour.tsx"
+    ]
+  },
+  {
+    "id": "widget-tour-step-6",
+    "message": "انقر فوق هذا الزر لمراجعة قائمة المعاملات الأخيرة الخاصة بك.",
+    "files": [
+      "src/front/shared/components/Header/WidgetTours/WidgetWalletTour.tsx"
+    ]
+  },
+  {
+    "id": "widget-tour-step-7",
+    "message": "انقر فوق هذا الزر لتبادل العملات المشفرة.",
+    "files": [
+      "src/front/shared/components/Header/WidgetTours/WidgetWalletTour.tsx"
+    ]
+  },
+  {
+    "id": "WTH276",
+    "message": "يجب ألا يتجاوز المبلغ رصيدك الحالي البالغ {br} مطروحًا منه رسوم التعدين",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+    ]
+  },
+  {
+    "id": "Comment",
+    "message": "تعليق",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+    ]
+  },
+  {
+    "id": "ConnectWalletModal_WalletLocked",
+    "message": "المحفظة مقفلة. افتح المحفظة أولاً.",
+    "files": [
+      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.tsx"
+    ]
+  },
+  {
+    "id": "Exchange_ConnectAddressOption",
+    "message": "ربط المحفظة",
+    "files": [
+      "src/front/shared/components/Header/WalletConnect/index.tsx",
+      "src/front/shared/components/modals/WalletConnectAccount/WalletConnectAccount.tsx",
+      "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/UserInfo.tsx"
+    ]
+  },
+  {
+    "id": "add_notice",
+    "message": "إضافة إشعار",
+    "files": [
+      "src/front/shared/components/Comment/Comment.tsx"
+    ]
+  },
+  {
+    "id": "CreateWallet_ConnectWalletButton",
+    "message": "استخدم هذا إذا كان لديك بالفعل محفظة ethereum",
+    "files": [
+      "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
+    ]
+  },
+  {
+    "id": "ImportKeys_ConnectWallet",
+    "message": "ربط المحفظة",
+    "files": [
+      "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
+    ]
+  },
+  {
+    "id": "InfoPay_Comment",
+    "message": "تعليق",
+    "files": [
+      "src/front/shared/pages/Transaction/TxInfo/index.tsx"
+    ]
+  },
+  {
+    "id": "FeeInfoBlockTotalFee",
+    "message": "إجمالي الرسوم التي تدفعها:",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/index.tsx"
+    ]
+  },
+  {
+    "id": "FeeInfoBlockMinerFee",
+    "message": "رسوم المنجم:",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/index.tsx"
+    ]
+  },
+  {
+    "id": "FeeInfoBlockMinerFeeTooltip",
+    "message": "مبلغ العملة المشفرة المدفوع لتحفيز المعدنين لتأكيد معاملتك",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/index.tsx"
+    ]
+  },
+  {
+    "id": "FeeInfoBlockServiceFee",
+    "message": "رسوم الخدمة",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/index.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/UserInfo.tsx"
+    ]
+  },
+  {
+    "id": "FeeInfoBlockServiceFeeConditions",
+    "message": "من مبلغ التحويل ، ولكن ليس أقل من",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/index.tsx"
+    ]
+  },
+  {
+    "id": "localStorageUserNotification",
+    "message": "✔️ لا تحتوي هذه البيانات على مفاتيحك الخاصة",
+    "files": [
+      "src/front/shared/pages/LocalStorage/LocalStorage.tsx"
+    ]
+  },
+  {
+    "id": "FourthStep37BtcLike",
+    "message": "({currencyName} tx)",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapSteps/ABSteps/SecondStep.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapSteps/UTXOSteps/SecondStep.tsx"
+    ]
+  },
+  {
+    "id": "FourthStep37_BtcLike",
+    "message": "({currencyName} tx)",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapSteps/ABSteps/ThirdStep.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapSteps/UTXOSteps/ThirdStep.tsx"
+    ]
+  },
+  {
+    "id": "SwapProgressText_FirstStep",
+    "message": "ارجوك انتظر",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerAbToUtxo.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerUtxoToAb.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerUtxoToAb.tsx"
+    ]
+  },
+  {
+    "id": "SwapProgressText_CheckingBalance",
+    "message": "التحقق من الرصيد ..",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerAbToUtxo.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerUtxoToAb.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerUtxoToAb.tsx"
+    ]
+  },
+  {
+    "id": "SwapProgressText_WaitPatricipantDeposit",
+    "message": "في انتظار قيام المشارك الآخر بإيداع {buyCurrency}",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerAbToUtxo.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerUtxoToAb.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerUtxoToAb.tsx"
+    ]
+  },
+  {
+    "id": "SwapProgressText_DepositingYourSide",
+    "message": "إيداع {sellCurrency}. {br} قد يستغرق بضع دقائق",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerAbToUtxo.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerUtxoToAb.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerUtxoToAb.tsx"
+    ]
+  },
+  {
+    "id": "SwapProgressText_WithdrawRequest",
+    "message": "طلب الانسحاب من عقد {buyCurrency}",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerAbToUtxo.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerUtxoToAb.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerUtxoToAb.tsx"
+    ]
+  },
+  {
+    "id": "SwapProgressText_Finish",
+    "message": "تم تحويل الرموز المميزة لـ {buyCurrency} إلى محفظتك. تحقق من التوازن",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerAbToUtxo.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerUtxoToAb.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerUtxoToAb.tsx"
+    ]
+  },
+  {
+    "id": "SwapProgressText_End",
+    "message": "شكرًا لك على استخدام Swap.Online!",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerAbToUtxo.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerUtxoToAb.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerAbToUtxo.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerUtxoToAb.tsx"
+    ]
+  },
+  {
+    "id": "SwapProgressText_MakerWaitTakerWithdraw",
+    "message": "في انتظار قيام مالك {buyCurrency} بإضافة مفتاح سري لجهة اتصال {sellCurrency}",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerAbToUtxo.tsx",
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerUtxoToAb.tsx"
+    ]
+  },
+  {
+    "id": "SwapProgressText_CreateSecret",
+    "message": "قم بإنشاء مفتاح سري",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/TakerUtxoToAb.tsx"
+    ]
+  },
+  {
+    "id": "SwapProgressText_VerifyScript",
+    "message": "تم إنشاء البرنامج النصي {buyCurrency} وتحصيل الرسوم",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/SwapProgressTexts/MakerAbToUtxo.tsx"
+    ]
+  },
+  {
+    "id": "localStorageBtnBack",
+    "message": "خلف",
+    "files": [
+      "src/front/shared/pages/LocalStorage/LocalStorage.tsx"
+    ]
+  },
+  {
+    "id": "FAQServiceFee",
+    "message": "رسوم الخدمة (سحب فقط):",
+    "files": [
+      "src/front/shared/components/FAQ/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "FAQServiceFeeDescription",
+    "message": "ما لا يقل عن",
+    "files": [
+      "src/front/shared/components/FAQ/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "NetworkStatusPeersOnlineMessage",
+    "message": "يمكن أن يستغرق البحث عن الأقران والعروض بضع دقائق. لا نقوم بتخزين العروض على خادم مركزي. بدلاً من ذلك ، نستخدم شبكة libp2p بواسطة Protocol Labs التي تعمل مثل شبكة Torrent ، مما يعني أن كل مستخدم مثلك هو نظير في هذه الشبكة. إذا لم يتم العثور على عروض في غضون دقيقتين ، فهذا يعني أنه لا توجد عروض مطابقة أو أن المستخدم الذي قدم العرض غير متصل بالإنترنت.",
+    "files": [
+      "src/front/shared/components/NetworkStatus/NetworkStatus.tsx"
+    ]
+  },
+  {
+    "id": "DebugStoredDataLink",
+    "message": "إظهار البيانات المخزنة",
+    "files": [
+      "src/front/shared/pages/Swap/Debug/Debug.tsx"
+    ]
+  },
+  {
+    "id": "DebugSwapDataTitle",
+    "message": "بيانات المبادلة:",
+    "files": [
+      "src/front/shared/pages/Swap/Debug/Debug.tsx"
+    ]
+  },
+  {
+    "id": "OrderBookOffersNoteOverLoader",
+    "message": "أبحث عن عروض من أقرانهم عبر الإنترنت",
+    "files": [
+      "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
+    ]
+  },
+  {
+    "id": "OrderBookOffersNoteUnderLoader",
+    "message": "قد يستغرق الأمر دقيقة",
+    "files": [
+      "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
+    ]
+  },
+  {
+    "id": "Swap_MetamaskAttention",
+    "message": "يُرجى تأكيد المعاملة في محفظتك \"{walletName} \"",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
+    ]
+  },
+  {
+    "id": "FAQFeeApiLink",
+    "message": "(source)",
+    "files": [
+      "src/front/shared/components/FAQ/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "Swap_OwnerHasLockedUTX",
+    "message": "تم إيقاف المبادلة مؤقتًا نظرًا لوجود معاملة غير مؤكدة في mempool. في انتظار التأكيد",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
+    ]
+  },
+  {
+    "id": "Swap_SellerHasLockedUTX",
+    "message": "تم إيقاف المبادلة مؤقتًا لأن المالك لديه معاملة غير مؤكدة في mempool. في انتظار التأكيد",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
+    ]
+  },
+  {
+    "id": "OrderBookOffersOfflineNote",
+    "message": "إذا لم يتم العثور على عروض ، فهذا يعني أنه لا يوجد مستخدمون نشروا العرض ، وليس عبر الإنترنت.",
+    "files": [
+      "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
+    ]
+  },
+  {
+    "id": "Swap_UtxoBroadcastError",
+    "message": "تم إيقاف التبديل مؤقتًا لأن بث TX انتهى بخطأ \"{error} \"",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
+    ]
+  },
+  {
+    "id": "WalletRowNodeIsDownTooltipMessage",
+    "message": "لا يمكنك إجراء المعاملات",
+    "files": [
+      "src/front/shared/pages/Wallet/Row/Row.tsx"
+    ]
+  },
+  {
+    "id": "WithdrowBalanceNotEnoughtPrompt",
+    "message": "لا يوجد رصيد كاف للإرسال",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+    ]
+  },
+  {
+    "id": "WithdrowTokenCurrencyBalance",
+    "message": "رصيد {tokenCurrency} غير كافٍ لرسوم عامل التعدين",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+    ]
+  },
+  {
+    "id": "CreateOffer_BuyToken_NeedEth",
+    "message": "لشراء {buyCurrency} ، يجب أن يكون لديك {ethAmount} ETH لدفع العمولة",
+    "files": [
+      "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
+    ]
+  },
+  {
+    "id": "CreateOffer_SellToken_NeedEth",
+    "message": "لبيع {sellCurrency} ، يجب أن يكون لديك {ethAmount} ETH لدفع العمولة",
+    "files": [
+      "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
+    ]
+  },
+  {
+    "id": "RowHistoryInvoiceContact",
+    "message": "اتصال:",
+    "files": [
+      "src/front/shared/pages/History/Row/Row.tsx"
+    ]
+  },
+  {
+    "id": "AtomicSwap_Title",
+    "message": "المقايضة الذرية",
+    "files": [
+      "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx",
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+    ]
+  },
+  {
+    "id": "TurboSwap_Title",
+    "message": "مقايضة توربو",
+    "files": [
+      "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx",
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx",
+      "src/front/shared/pages/TurboSwap/TurboSwap.tsx"
+    ]
+  },
+  {
+    "id": "TurboSwap_You",
+    "message": "أنت",
+    "files": [
+      "src/front/shared/pages/TurboSwap/TurboSwap.tsx"
+    ]
+  },
+  {
+    "id": "TurboSwap_Maker",
+    "message": "صانع",
+    "files": [
+      "src/front/shared/pages/TurboSwap/TurboSwap.tsx"
+    ]
+  },
+  {
+    "id": "TurboSwap_Taker",
+    "message": "آخذ",
+    "files": [
+      "src/front/shared/pages/TurboSwap/TurboSwap.tsx"
+    ]
+  },
+  {
+    "id": "TurboSwap_StatusPending",
+    "message": "قيد الانتظار...",
+    "files": [
+      "src/front/shared/pages/TurboSwap/TurboSwap.tsx"
+    ]
+  },
+  {
+    "id": "TurboSwap_StatusFinished",
+    "message": "تم الانتهاء من!",
+    "files": [
+      "src/front/shared/pages/TurboSwap/TurboSwap.tsx"
+    ]
+  },
+  {
+    "id": "TurboIcon_Tip",
+    "message": "مقايضة أسرع وأرخص مع صانع سوق موثوق ، موصى به بكميات صغيرة",
+    "files": [
+      "src/front/shared/components/ui/TurboIcon/TurboIcon.tsx"
+    ]
+  },
+  {
+    "id": "ButtonPendingState",
+    "message": "قيد الانتظار",
+    "files": [
+      "src/front/shared/components/controls/Button/Button.tsx"
+    ]
+  },
+  {
+    "id": "DropDownNoOptionsInTheList",
+    "message": "لا يوجد خيارات",
+    "files": [
+      "src/front/shared/components/ui/DropDown/index.tsx"
+    ]
+  },
+  {
+    "id": "menu.marketmaker",
+    "message": "يكسب",
+    "files": [
+      "src/front/shared/components/Header/config.tsx"
+    ]
+  },
+  {
+    "id": "FormattedMessageIdApprove",
+    "message": "الموافقة على {token}",
+    "files": [
+      "src/front/shared/components/modals/LimitOrder/ModalForm.tsx",
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/Footer.tsx"
+    ]
+  },
+  {
+    "id": "FeeRadiosSpeedTypeCustom",
+    "message": "مخصص",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
+    ]
+  },
+  {
+    "id": "FeeRadiosSpeedTypeDescriptionCustom",
+    "message": "حدد معدل الرسوم المخصص.",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
+    ]
+  },
+  {
+    "id": "FeeRadiosSpeedTypeDescriptionFast",
+    "message": "يتم تأكيد المتوسط ​​المتداول لرسوم المعاملات في حدود كتلة واحدة إلى مجموعتين.",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
+    ]
+  },
+  {
+    "id": "FeeRadiosSpeedTypeDescriptionMedium",
+    "message": "يتم تأكيد المتوسط ​​المتجدد لرسوم المعاملات في غضون 3 إلى 6 كتل.",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
+    ]
+  },
+  {
+    "id": "FeeRadiosSpeedTypeDescriptionSlow",
+    "message": "متوسط ​​متجدد لرسوم المعاملات ليتم تأكيدها في 7 كتل أو أكثر.",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
+    ]
+  },
+  {
+    "id": "FeeRadiosSpeedTypeFast",
+    "message": "سريع",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
+    ]
+  },
+  {
+    "id": "FeeRadiosSpeedTypeMedium",
+    "message": "متوسط",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
+    ]
+  },
+  {
+    "id": "FeeRadiosSpeedTypeSlow",
+    "message": "بطيء",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
+    ]
+  },
+  {
+    "id": "FeeRadiosSpeedTypeTimeFast",
+    "message": "~ 5-20 دقيقة",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
+    ]
+  },
+  {
+    "id": "FeeRadiosSpeedTypeTimeMedium",
+    "message": "~ 25-60 دقيقة",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
+    ]
+  },
+  {
+    "id": "FeeRadiosSpeedTypeTimeSlow",
+    "message": "60+ دقيقة",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/FeeRadios/index.tsx"
+    ]
+  },
+  {
+    "id": "ExchangeTokenWasApproved",
+    "message": "تمت الموافقة على الرمز المميز. {br} رابط المستكشف: {txLink}",
+    "files": [
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+    ]
+  },
+  {
+    "id": "Orderbook",
+    "message": "سجل الطلبيات",
+    "files": [
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_TotalSum",
+    "message": "- في أي وقت ، سيكون مجموع أرصدة BTC و {token} أكبر من ذي قبل.",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_Audit",
+    "message": "- اجتاز التطبيق التدقيق من {link}.",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_NotStore",
+    "message": "- لا تخزن مبالغ كبيرة أو أموال مقترضة.",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_FundAccess",
+    "message": "- مفاتيح أموالك معك فقط ، ولا يمكننا الوصول إلى أموالك",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_ItemBody2-5",
+    "message": "الإخطار بالمخاطر",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_ItemContent1",
+    "message": "يربح صانع السوق من الفرق في أسعار الصرف عند خدمة الشراء والبيع (السبريد)",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_HowMuchEarn",
+    "message": "نعلن من 10٪ في السنة (APY). إذا لم يكن عدد التبادلات كافيًا ، فسنحفز المستخدمين على إجراء عمليات التبادل باستخدام المكافآت.",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_ItemContent4",
+    "message": "(في التنمية)",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_ItemContent5",
+    "message": "لا يوجد حد أدنى للمدة ، يمكنك سحب الأموال في أي وقت.",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_ItemContent6",
+    "message": "أخبر المجتمعات التي أنت عضو فيها عن إمكانية التبادل.",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_ItemTitle7",
+    "message": "لماذا أحتاج إلى {token}؟ أنا مهتم فقط بكسب BTC.",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_ItemContent7-1",
+    "message": "يمكنك تجديد فقط باستخدام Bitcoin. ولكن حتمًا ، في بعض الأوقات ، قد ينخفض ​​رصيد BTC الخاص بك وقد يزيد {token} والعكس صحيح.",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_ItemContent7-2",
+    "message": "في أي وقت ، سيكون مجموع هذه الأرصدة أكبر من ذي قبل.",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_ItemContent7-3",
+    "message": "إذا كنت تريد سحب BTC ، ولكن بعضها في {token} ، فسيتعين عليك تغيير {token} بنفسك ، على سبيل المثال ، من خلال Binance exchange.",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_ItemTitle8",
+    "message": "لماذا لا يتبادل المستخدمون أنفسهم من خلال منصة Binance؟",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_ItemContent8",
+    "message": "عملاؤنا يحبون ويدعمون اللامركزية. تعمل البورصة لدينا من خلال العقود الذكية ولن نتمكن من تجميد أموال العميل لأكثر من 3 ساعات.",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_ItemTitle1",
+    "message": "لماذا تعمل؟",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_Safety",
+    "message": "هل هو آمن؟ هل يمكن أن ينقص الميزان؟",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_ItemTitle3",
+    "message": "كم سأربح؟",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_ItemTitle4",
+    "message": "ما هو الحد الأدنى للرصيد المطلوب للبدء؟",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_ItemTitle5",
+    "message": "ما هي أقل فترة لعمل السوق؟",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_ItemTitle6",
+    "message": "كيف تزيد الارباح؟",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_Choose_Farming_Body1",
+    "message": "Получайте дополнительную награду в SWAP токенах, заморозив LP токены."
+  },
+  {
+    "id": "MM_Choose_Farming_Button",
+    "message": "Начать фарминг"
+  },
+  {
+    "id": "MM_Choose_Farming_Title",
+    "message": "Фарминг"
+  },
+  {
+    "id": "MM_Choose_InBrowser_Body1",
+    "message": "Подходит для того, что бы попробовать."
+  },
+  {
+    "id": "MM_Choose_InBrowser_Body2",
+    "message": "Если вы закроете браузер, вы перестанете зарабатывать."
+  },
+  {
+    "id": "MM_Choose_InBrowser_Button",
+    "message": "Начать в браузере"
+  },
+  {
+    "id": "MM_Choose_InBrowser_Title",
+    "message": "Маркетмейкер в браузере"
+  },
+  {
+    "id": "MM_Choose_Server_Body1",
+    "message": "Подходит для продвинутых пользователей."
+  },
+  {
+    "id": "MM_Choose_Server_Body2",
+    "message": "Требуется сервер для разворачивания образа Docker."
+  },
+  {
+    "id": "MM_Choose_Server_Button",
+    "message": "Читать инструкцию"
+  },
+  {
+    "id": "MM_Choose_Server_Title",
+    "message": "Маркетмейкер-сервер"
+  },
+  {
+    "id": "MM_Choose_Title",
+    "message": "Выберите способ"
+  },
+  {
+    "id": "MM_Choose_Uniswap_Body1",
+    "message": "Подходит для продвинутых пользователей."
+  },
+  {
+    "id": "MM_Choose_Uniswap_Body2",
+    "message": "Зарабатывайте когда другие продают или покупают SWAP токены."
+  },
+  {
+    "id": "MM_Choose_Uniswap_Button",
+    "message": "Создать пул"
+  },
+  {
+    "id": "MM_Choose_Uniswap_Title",
+    "message": "Создайте uniswap-пул SWAP/ETH"
+  },
+  {
+    "id": "MM_Promo_Title",
+    "message": "اكسب فائدة على {utxoTitle}",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx",
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_Promo_TitleBody",
+    "message": "في swap.io ، يتبادل المستخدمون {utxoCoin} مقابل {token} (رمز مميز يكلف مثل {utxoCoin} ، ولكنه يعمل على {Ab_Title}) ، والعكس صحيح.",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx",
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MMPercentEarn",
+    "message": "سوف تكسب 0.5٪ من كل مقايضة",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_BTCBalance",
+    "message": "الرصيد {utxoCoin}:",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_ConnectMetamask",
+    "message": "قم بتوصيل Metamask",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_DepositeWallet",
+    "message": "لتعبئة الرصيد ، والتحويل إلى",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_DisconnectMetamask",
+    "message": "افصل Metamask",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_ETHBalance",
+    "message": "الرصيد {AB_Coin}: {Balance} (لرسوم المنجم)",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_StartHere",
+    "message": "ابدأ صناعة السوق هنا",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_Wallet_Required",
+    "message": "مطلوب محفظة ساخنة لبدء صناعة السوق ({utxoCoin} ، {AB_Coin} ، {token}).",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_Wallet_Restore",
+    "message": "استعادة من البذور المكونة من 12 كلمة",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_NotEnoughCoins",
+    "message": "رصيد غير كاف. تحتاج إلى زيادة رصيدك في {utxoCoin} أو {token}",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_NotEnoughtEth",
+    "message": "لا يكفي {AB_Coin} لدفع عمولة عمال المناجم. يجب أن يكون لديك 0.02 {AB_Coin} على الأقل",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_SwapHistory_Empty",
+    "message": "ليس لديك أي مقايضات ، قم بتشغيل MM وانتظر حتى يقبل شخص ما أوامرك",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_SwapHistory_LockTime",
+    "message": "قفل الوقت",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_SwapHistory_Status",
+    "message": "حالة",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_SwapHistory_Step",
+    "message": "خطوة",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_SwapHistory_Title",
+    "message": "تاريخ المبادلة",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_SwapHistory_YouBuy",
+    "message": "أنت تشتري",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_SwapHistory_YouSell",
+    "message": "أنت تبيع",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_ToggleText",
+    "message": "صناعة السوق {utxoCoin} / {token}",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_TokenBalance",
+    "message": "الرصيد {الرمز}:",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_TotalBalance",
+    "message": "{رمز} ، BTC"
+  },
+  {
+    "id": "MM_ToggleTextEnabled",
+    "message": "تحذير! يجب أن تكون متصلاً طوال الوقت ...",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_WarningMessage",
+    "message": "تحذير! يجب أن تظل متصلاً بالإنترنت طوال الوقت ، وإلا فلن تكسب أو إذا تمت معالجة المقايضة (يمكن أن تستغرق بضع ساعات) ، فقد تفقد أموالك! إذا كنت لا تستطيع ضمان وقت تشغيل طويل - قم بإيقاف تشغيل التسويق.",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_ToggleTextDisabled",
+    "message": "قم بتشغيل هذا التبديل لبدء الكسب",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_TotalEarned",
+    "message": "إجمالي المكتسبة:",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_MarketmakingSimbols",
+    "message": "{token} + {utxoCoin}",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_MarketmakingBalanceTitle",
+    "message": "السيولة الكلية:",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_whatIsWBTCTooltip1",
+    "message": "{tokenFullName} ({token}) هو رمز {tokenStandart} الذي يمثل {utxoTitle} ({utxoCoin}) على blockchain {blockchainName}.",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_whatIsWBTCTooltip2",
+    "message": "تم إنشاء {token} للسماح لمالكي {utxoTitle} بالمشاركة في تطبيقات التمويل اللامركزي (DeFi) الشائعة على {blockchainName}.",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerSettings.tsx"
+    ]
+  },
+  {
+    "id": "MM_InstallExtentionTitle",
+    "message": "ثبّت امتداد Chrome وابدأ في الكسب اليوم",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
+    ]
+  },
+  {
+    "id": "MM_InstallExtentionBtn",
+    "message": "قم بتثبيت ملحق كروم",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_HighRisk",
+    "message": "- أي عملية عملة مشفرة تنطوي على مخاطر عالية.",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_ImpermanentLoss",
+    "message": "ما الخسارة غير الدائمة المتوقعة؟",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_FAQ_ImpermanentLossContent",
+    "message": "في أي وقت ، سيكون مجموع هذه الأرصدة أكبر من ذي قبل. إذا كنت تريد سحب BTC ، ولكن بعضها في {token} ، فسيتعين عليك تغيير {token} بنفسك ، على سبيل المثال ، من خلال Binance exchange.",
+    "files": [
+      "src/front/shared/pages/Marketmaker/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "MM_InstallDevExtention",
+    "message": "تحميل النسخة التطويرية",
+    "files": [
+      "src/front/shared/pages/Marketmaker/MarketmakerPromo.tsx"
+    ]
+  },
+  {
+    "id": "CleanLocalStorage",
+    "message": "عفوًا ، يبدو أن التطبيق يحتاج إلى تنظيف مساحة التخزين المحلية. يرجى حفظ العبارة الأولية المكونة من 12 كلمة (إذا لم تقم بحفظها من قبل) ، ثم امسح التخزين المحلي بالنقر فوق الزر واستيراد 12 كلمة من البذور مرة أخرى. نأسف للإزعاج. {مسافة بادئة} {زر}",
+    "files": [
+      "src/front/shared/components/Header/Header.tsx"
+    ]
+  },
+  {
+    "id": "WalletEmptyBalance",
+    "message": "لا توجد محافظ متاحة",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
+      "src/front/shared/pages/Wallet/Wallet.tsx"
+    ]
+  },
+  {
+    "id": "ClearAndReload",
+    "message": "مسح وإعادة التحميل",
+    "files": [
+      "src/front/shared/components/Header/Header.tsx"
+    ]
+  },
+  {
+    "id": "FooterSwapDescription",
+    "message": "متصل بالإنترنت منذ 2018. اطلع على سجل {twitter} و {github}",
+    "files": [
+      "src/front/shared/components/Footer/Footer.tsx"
+    ]
+  },
+  {
+    "id": "AppErrorMessage",
+    "message": "هل هناك خطب ما. حاول العودة إلى الصفحة الرئيسية أو إعادة تحميل هذه الصفحة.",
+    "files": [
+      "src/front/shared/components/ErrorBoundary/index.tsx"
+    ]
+  },
+  {
+    "id": "NotEnoughForBuy",
+    "message": "يجب أن يكون لديك عمولة منجم على الأقل {buyFee} {buyCoin}",
+    "files": [
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
+    ]
+  },
+  {
+    "id": "WalletRow_MetamaskNotAvailableNetwork",
+    "message": "الرجاء اختيار آخر",
+    "files": [
+      "src/front/shared/pages/Wallet/Row/Row.tsx"
+    ]
+  },
+  {
+    "id": "bankCardButtonDescription",
+    "message": "في النافذة المشروطة ، عليك اتباع عدة خطوات لاستبدال الأموال الورقية بـ {buyCurrency}. حدد {buyCurrency} في النافذة وحدد عنوان محفظتك (يمكنك نسخه أدناه). انتظر حتى يتم تحويل الأموال إلى عنوانك. ثم يمكنك شراء الرموز باستخدامه.",
+    "files": [
+      "src/front/shared/components/Header/WidgetTours/QuickSwapFormTour.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/InputForm.tsx"
+    ]
+  },
+  {
+    "id": "noActiveOrders",
+    "message": "لا توجد أوامر نشطة",
+    "files": [
+      "src/front/shared/components/LimitOrders/index.tsx"
+    ]
+  },
+  {
+    "id": "rate",
+    "message": "معدل",
+    "files": [
+      "src/front/shared/components/LimitOrders/index.tsx"
+    ]
+  },
+  {
+    "id": "youPay",
+    "message": "انت تدفع",
+    "files": [
+      "src/front/shared/components/LimitOrders/OrderSettings.tsx",
+      "src/front/shared/components/LimitOrders/index.tsx"
+    ]
+  },
+  {
+    "id": "yourOrders",
+    "message": "طلباتك",
+    "files": [
+      "src/front/shared/components/LimitOrders/index.tsx"
+    ]
+  },
+  {
+    "id": "limitOrderCreated",
+    "message": "لقد نجحت في إنشاء الطلب",
+    "files": [
+      "src/front/shared/components/modals/LimitOrder/index.tsx"
+    ]
+  },
+  {
+    "id": "limitOrderIsNotCreated",
+    "message": "هناك خطأ ما. حاول مرة أخرى في وقت لاحق",
+    "files": [
+      "src/front/shared/components/modals/LimitOrder/index.tsx"
+    ]
+  },
+  {
+    "id": "create",
+    "message": "خلق",
+    "files": [
+      "src/front/shared/components/modals/LimitOrder/ModalForm.tsx"
+    ]
+  },
+  {
+    "id": "limitOrder",
+    "message": "طلب محدود",
+    "files": [
+      "src/front/shared/components/modals/LimitOrder/ModalForm.tsx"
+    ]
+  },
+  {
+    "id": "notEnoughTokensForSwap",
+    "message": "ليست كل العملات متاحة للمبادلة. يبدو أنه ليس لديك ما يكفي من الرموز المميزة. حاول إضافة المزيد منهم.",
+    "files": [
+      "src/front/shared/components/modals/LimitOrder/ModalForm.tsx"
+    ]
+  },
+  {
+    "id": "transacton",
+    "message": "عملية تجارية",
+    "files": [
+      "src/front/shared/components/notifications/Transaction/index.tsx",
+      "src/front/shared/pages/Transaction/Transaction.tsx"
+    ]
+  },
+  {
+    "id": "transactionIsCompleted",
+    "message": "اكتملت المعاملة",
+    "files": [
+      "src/front/shared/components/notifications/Transaction/index.tsx"
+    ]
+  },
+  {
+    "id": "viewTransaction",
+    "message": "عرض الصفقة",
+    "files": [
+      "src/front/shared/components/notifications/Transaction/index.tsx"
+    ]
+  },
+  {
+    "id": "atomicSwap",
+    "message": "المقايضة الذرية",
+    "files": [
+      "src/front/shared/pages/Exchange/index.tsx"
+    ]
+  },
+  {
+    "id": "quickSwap",
+    "message": "مبادلة سريعة",
+    "files": [
+      "src/front/shared/pages/Exchange/index.tsx"
+    ]
+  },
+  {
+    "id": "gasLimit",
+    "message": "حد الغاز",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/Settings.tsx"
+    ]
+  },
+  {
+    "id": "gasLimitNotice",
+    "message": "حد الغاز هو الحد الأقصى لمقدار وحدات الغاز التي ترغب في إنفاقها",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/Settings.tsx"
+    ]
+  },
+  {
+    "id": "gasPrice",
+    "message": "سعر الغاز",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/Settings.tsx"
+    ]
+  },
+  {
+    "id": "gasPriceNotice",
+    "message": "يحدد سعر الغاز مقدار إيثر الذي ترغب في دفعه مقابل كل وحدة غاز",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/Settings.tsx"
+    ]
+  },
+  {
+    "id": "createLimitOrder",
+    "message": "إنشاء أمر محدد"
+  },
+  {
+    "id": "limitOrders",
+    "message": "أوامر الحد"
+  },
+  {
+    "id": "swap",
+    "message": "تبديل",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/Footer.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/SourceActions.tsx"
+    ]
+  },
+  {
+    "id": "fee",
+    "message": "مصاريف",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/UserInfo.tsx"
+    ]
+  },
+  {
+    "id": "network",
+    "message": "شبكة",
+    "files": [
+      "src/front/shared/components/modals/WalletConnectAccount/WalletConnectAccount.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/UserInfo.tsx"
+    ]
+  },
+  {
+    "id": "buyViaBankCard",
+    "message": "الشراء عن طريق البطاقة المصرفية",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/InputForm.tsx"
+    ]
+  },
+  {
+    "id": "slippageNotice",
+    "message": "ستعود معاملتك إذا تغير السعر بشكل سلبي بأكثر من هذه النسبة المئوية",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/Settings.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/UserInfo.tsx"
+    ]
+  },
+  {
+    "id": "slippageTolerance",
+    "message": "تحمل الانزلاق",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/Settings.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/UserInfo.tsx"
+    ]
+  },
+  {
+    "id": "addressOfYourWallet",
+    "message": "عنوان محفظتك:",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/UserInfo.tsx"
+    ]
+  },
+  {
+    "id": "total",
+    "message": "المجموع",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/UserInfo.tsx"
+    ]
+  },
+  {
+    "id": "allOrders",
+    "message": "جميع الطلبات",
+    "files": [
+      "src/front/shared/components/LimitOrders/AllOrdersHeader.tsx"
+    ]
+  },
+  {
+    "id": "buyToken",
+    "message": "يشتري",
+    "files": [
+      "src/front/shared/components/LimitOrders/Row.tsx"
+    ]
+  },
+  {
+    "id": "Chain",
+    "message": "سلسلة",
+    "files": [
+      "src/front/shared/components/LimitOrders/OrderSettings.tsx"
+    ]
+  },
+  {
+    "id": "noOptions",
+    "message": "لا يوجد خيارات",
+    "files": [
+      "src/front/shared/components/LimitOrders/OrderSettings.tsx"
+    ]
+  },
+  {
+    "id": "disclaimerAboutBetaVersion",
+    "message": "* إخلاء المسؤولية: تستخدم البورصة بروتوكول السيولة الثالث 0x. كن حذرًا واستخدمه على مسؤوليتك الخاصة."
+  },
+  {
+    "id": "insufficientBalance",
+    "message": "رصيد غير كاف"
+  },
+  {
+    "id": "insufficientLiquidity",
+    "message": "سيولة غير كافية للمجمع",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/Feedback.tsx"
+    ]
+  },
+  {
+    "id": "addNewCurrencyMessage",
+    "message": "في صفحة المحفظة ، انقر على زر إضافة العملة.",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/TokenInstruction.tsx"
+    ]
+  },
+  {
+    "id": "checkTokenInTheSwapList",
+    "message": "الآن يمكنك رؤيتك رمز في القائمة.",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/TokenInstruction.tsx"
+    ]
+  },
+  {
+    "id": "choseTokenStandard",
+    "message": "اختر معيارًا مميزًا وانقر فوق الزر متابعة.",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/TokenInstruction.tsx"
+    ]
+  },
+  {
+    "id": "confirmTokenAddition",
+    "message": "تحقق من المعلومات وتأكد من إضافة الرمز المميز.",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/TokenInstruction.tsx"
+    ]
+  },
+  {
+    "id": "createNewPoolInAggregates",
+    "message": "اختر أحد المصادر المدعومة وأنشئ هناك مجموعة جديدة باستخدام الرمز المميز الخاص بك.",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/TokenInstruction.tsx"
+    ]
+  },
+  {
+    "id": "detailedInformation",
+    "message": "معلومات مفصلة",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/TokenInstruction.tsx"
+    ]
+  },
+  {
+    "id": "enterTokenContractAddress",
+    "message": "أدخل عنوان عقد رمزي.",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/TokenInstruction.tsx"
+    ]
+  },
+  {
+    "id": "howToAddToken",
+    "message": "كيفية إضافة رمز مميز",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/TokenInstruction.tsx"
+    ]
+  },
+  {
+    "id": "ifYouDoNotSeeNewToken",
+    "message": "لن تتمكن من استبدال بعض الرموز ، لأنه قد لا يكون هناك مجمع سيولة متاح مع الرمز المميز الخاص بك. يجب عليك إنشاء واحدة جديدة إذا كنت ترغب في استبدالها.",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/TokenInstruction.tsx"
+    ]
+  },
+  {
+    "id": "youWillSeeYourToken",
+    "message": "بعد تحديد مجمع السيولة باستخدام التوكن الخاص بك ، سيكون متاحًا للتبادل.",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/TokenInstruction.tsx"
+    ]
+  },
+  {
+    "id": "executeOrder",
+    "message": "نفّذ الأمر",
+    "files": [
+      "src/front/shared/components/LimitOrders/OrderPurchaseModal.tsx"
+    ]
+  },
+  {
+    "id": "limitOrderFillDescription",
+    "message": "لا يمكنك إنفاق رصيدك بالكامل. أدخل مبلغ {sellToken} الذي تريد إنفاقه.",
+    "files": [
+      "src/front/shared/components/LimitOrders/OrderPurchaseModal.tsx"
+    ]
+  },
+  {
+    "id": "remainingMakerAmount",
+    "message": "المبلغ المتبقي للصانع",
+    "files": [
+      "src/front/shared/components/LimitOrders/OrderPurchaseModal.tsx"
+    ]
+  },
+  {
+    "id": "remainingTakerAmount",
+    "message": "المبلغ المتبقي آخذ",
+    "files": [
+      "src/front/shared/components/LimitOrders/OrderPurchaseModal.tsx"
+    ]
+  },
+  {
+    "id": "youCanSpend",
+    "message": "يمكنك قضاء",
+    "files": [
+      "src/front/shared/components/LimitOrders/OrderPurchaseModal.tsx"
+    ]
+  },
+  {
+    "id": "yourBalance",
+    "message": "رصيدك",
+    "files": [
+      "src/front/shared/components/LimitOrders/OrderPurchaseModal.tsx"
+    ]
+  },
+  {
+    "id": "customSlippageValueNotice",
+    "message": "يمكنك تعيين قيمة مخصصة لتحمل الانزلاق في الإعدادات المتقدمة والمحاولة مرة أخرى"
+  },
+  {
+    "id": "insufficientSlippage",
+    "message": "انزلاق سعري غير كافٍ. حاول زيادته",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/Feedback.tsx"
+    ]
+  },
+  {
+    "id": "notEnoughAssetsNotice",
+    "message": "ليس لديك أصول متاحة لـ {networkName} لتبادلها. يرجى تغيير الشبكة أو إضافة أصل مخصص إلى المحفظة.",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/index.tsx"
+    ]
+  },
+  {
+    "id": "disclaimerAbout1inch",
+    "message": "* إخلاء المسؤولية: يتم توفير أوامر الحد من خلال بروتوكول الطلب المحدد بحجم 1 بوصة ويجب أخذها في الاعتبار في مرحلة تجريبية. كن حذرًا واستخدمه على مسؤوليتك الخاصة.",
+    "files": [
+      "src/front/shared/components/modals/LimitOrder/ModalForm.tsx"
+    ]
+  },
+  {
+    "id": "Connect",
+    "message": "الاتصال",
+    "files": [
+      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.tsx"
+    ]
+  },
+  {
+    "id": "chooseNetwork",
+    "message": "اختر الشبكة",
+    "files": [
+      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.tsx"
+    ]
+  },
+  {
+    "id": "chooseWallet",
+    "message": "اختر المحفظة",
+    "files": [
+      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.tsx"
+    ]
+  },
+  {
+    "id": "approveTokenFirst",
+    "message": "الرجاء الموافقة على {token} أولاً",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/Feedback.tsx"
+    ]
+  },
+  {
+    "id": "InvoiceInfoModal_Comment",
+    "message": "تعليق",
+    "files": [
+      "src/front/shared/components/modals/InfoInvoice/InfoInvoice.tsx"
+    ]
+  },
+  {
+    "id": "howToDeposit",
+    "message": "كيفية الإيداع",
+    "files": [
+      "src/front/shared/components/modals/ReceiveModal/ReceiveModal.tsx"
+    ]
+  },
+  {
+    "id": "tryAnyway",
+    "message": "حاول على أي حال"
+  },
+  {
+    "id": "unknownSwapProblemHasOccurred",
+    "message": "حدثت مشكلة غير معروفة. ربما لا يمكننا استبدال هذا الزوج",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/Feedback.tsx"
+    ]
+  },
+  {
+    "id": "SaveKe33",
+    "message": "تحميل",
+    "files": [
+      "src/front/shared/components/SaveKeys/SaveKeys.tsx"
+    ]
+  },
+  {
+    "id": "invalidSlippagePercent",
+    "message": "النسبة المئوية للانزلاق السعري غير صالح",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/Settings.tsx"
+    ]
+  },
+  {
+    "id": "source",
+    "message": "مصدر",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/Header.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/UserInfo.tsx"
+    ]
+  },
+  {
+    "id": "transactionDeadline",
+    "message": "الموعد النهائي للمعاملة (بالدقائق)",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/Settings.tsx"
+    ]
+  },
+  {
+    "id": "transactionMayBeFrontrun",
+    "message": "قد تكون الصفقة في المقدمة",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/Settings.tsx"
+    ]
+  },
+  {
+    "id": "transactionMayFail",
+    "message": "الصفقة قد تفشل",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/Settings.tsx"
+    ]
+  },
+  {
+    "id": "liquidityPoolProblem",
+    "message": "هناك بعض المشاكل في تجمع السيولة. حاول التبادل مع قسم المصدر",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/Feedback.tsx"
+    ]
+  },
+  {
+    "id": "doNotHaveNativeCurrencyBalance",
+    "message": "ليس لديك رصيد بالعملة المحلية لدفع رسوم المعاملة",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/Feedback.tsx"
+    ]
+  },
+  {
+    "id": "addLiquidity",
+    "message": "أضف السيولة",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/Footer.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/SourceActions.tsx"
+    ]
+  },
+  {
+    "id": "approveBothTokens",
+    "message": "الرجاء الموافقة على كلا الرمزين أولاً",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/Feedback.tsx"
+    ]
+  },
+  {
+    "id": "liquidityPairDoesNotExist",
+    "message": "هذا الزوج لا يملك سيولة. يمكنك إنشاء واحد جديد وأن تكون أول مزود سيولة",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/Feedback.tsx"
+    ]
+  },
+  {
+    "id": "aggregator",
+    "message": "العارض",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/Header.tsx"
+    ]
+  },
+  {
+    "id": "settings",
+    "message": "إعدادات",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/Header.tsx"
+    ]
+  },
+  {
+    "id": "aggregatorFeeDescription",
+    "message": "النسبة المئوية لمبلغ الشراء الذي يتم احتسابه كعمولة",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/UserInfo.tsx"
+    ]
+  },
+  {
+    "id": "failedTransaction",
+    "message": "معاملة فاشلة",
+    "files": [
+      "src/front/shared/components/notifications/Transaction/index.tsx"
+    ]
+  },
+  {
+    "id": "amountNoMoreThenBalance",
+    "message": "يجب ألا يزيد المبلغ عن رصيدك",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
+    ]
+  },
+  {
+    "id": "Search",
+    "message": "بحث",
+    "files": [
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
+    ]
+  },
+  {
+    "id": "aggregatorCannotUseThisNetwork",
+    "message": "العارض لا يمكنه استخدام هذه الشبكة. الرجاء اختيار آخر",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/Feedback.tsx"
+    ]
+  }
+]
