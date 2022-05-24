@@ -769,6 +769,7 @@
         'pl',
         'pt',
         'ko',
+        'ar',
       ]
 
       const isLangAvailable = lang ? availableLangs.includes(lang.toLowerCase()) : false
@@ -804,6 +805,7 @@
               pl: 'Ładowanie...',
               pt: 'Carregamento...',
               ko: '로드 중...',
+              ar: 'تحميل...',
             },
           ],
           afterBackup: [
@@ -816,6 +818,7 @@
               pl: 'Przechowuj frazę odzyskiwania w&nbsp;&nbsp;bezpiecznym miejscu',
               pt: 'Mantenha a sua frase de recuperação dentro&nbsp;seguro',
               ko: '복구 문구를 &nbsp;안전한 장소에 보관하십시오.',
+              ar: 'احتفظ بعبارة الاسترداد في مكان آمن',
             },
             {
               en: "Don't forget where your recovery phrase is&nbsp;saved",
@@ -826,6 +829,7 @@
               pl: 'Nie zapomnij, gdzie&nbsp;jest zapisana fraza odzyskiwania',
               pt: 'Não te esqueças onde está a tua frase de recuperação&nbsp;salva',
               ko: "복구 문구가 저장된 위치를 잊지 마세요.",
+              ar: 'لا تنس مكان حفظ عبارة الاسترداد الخاصة بك',
             },
           ],
         };
@@ -848,6 +852,7 @@
           pl: 'Poczekaj na wczytywanie aplikacji,\n może to potrwać minutę...',
           pt: 'Espere por favor enquanto a aplicação está a carregar,\npode demorar um minuto...',
           ko: '애플리케이션이 로드되는 동안 잠시 기다려 주십시오.\n 1분 정도 걸릴 수 있습니다...',
+          ar: 'الرجاء الانتظار أثناء تحميل التطبيق ، \n قد يستغرق الأمر دقيقة واحدة ...',
         }
         const information = document.getElementById('usersInform');
         information.innerText = informationTexts[locale]

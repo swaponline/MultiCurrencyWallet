@@ -4,7 +4,8 @@
     "message": "Troca",
     "files": [
       "src/front/shared/components/Header/config.tsx",
-      "src/front/shared/pages/Exchange/QuickSwap/Header.tsx"
+      "src/front/shared/pages/Exchange/QuickSwap/Header.tsx",
+      "src/front/shared/pages/Wallet/Row/Row.tsx"
     ]
   },
   {
@@ -1115,7 +1116,9 @@
     "id": "FeeControler49",
     "message": "Copiar",
     "files": [
+      "src/front/shared/components/modals/PrivateKeysModal/PrivateKeysModal.tsx",
       "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx",
+      "src/front/shared/pages/LocalStorage/LocalStorage.tsx",
       "src/front/shared/pages/Swap/FeeControler/FeeControler.tsx"
     ]
   },
