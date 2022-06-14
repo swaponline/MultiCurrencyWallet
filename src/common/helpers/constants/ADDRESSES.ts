@@ -13,6 +13,7 @@ export const WrapperCurrency = {
   42161: '',
   1666600000: '0xcf664087a5bb0237a0bad6742852ec6c8d69a27a',
   1313161554: '0xc9bdeed33cd01541e1eed10f90519d2c06fe3feb',
+  4181: '', // @todo find or deploy a Wrapper token for a PHI network
   // testnet
   4: '0xc778417e063141139fce010982780140aa0cd5ab',
   97: '0xae13d989dac2f0debff460ac112a837c89baa7cd',

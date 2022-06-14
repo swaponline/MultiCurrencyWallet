@@ -13,4 +13,5 @@ export default {
   movrscan: 'https://moonriver.moonscan.io',
   oneExplorer: 'https://explorer.harmony.one',
   auroraExplorer: 'https://aurorascan.dev',
+  phiExplorer: 'https://explorer.phi.network',
 }

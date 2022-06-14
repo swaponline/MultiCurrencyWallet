@@ -9,4 +9,5 @@ export default {
   movr_provider: 'https://moonbeam-alpha.api.onfinality.io/public',
   one_provider: 'https://api.s0.b.hmny.io',
   aurora_provider: 'https://betanet.aurora.dev',
+  phi_provider: '',
 }

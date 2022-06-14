@@ -8,6 +8,7 @@ export default [
   'matic',
   'arbeth',
   'aureth',
+  'ф',
   'xdai',
   'ftm',
   'avax',

@@ -9,6 +9,7 @@ export const COIN_TYPE = Object.freeze({
   MOVR_TOKEN: 'MOVR_TOKEN',
   ONE_TOKEN: 'ONE_TOKEN',
   AURORA_TOKEN: 'AURORA_TOKEN',
+  PHI_TOKEN: 'PHI_TOKEN',
 })
 
 export const TOKEN_STANDARD = Object.freeze({
@@ -21,6 +22,7 @@ export const TOKEN_STANDARD = Object.freeze({
   ERC20MOVR: 'ERC20MOVR',
   ERC20ONE: 'ERC20ONE',
   ERC20AURORA: 'ERC20AURORA',
+  PHI20: 'PHI20',
 })
 
 export const BLOCKCHAIN = Object.freeze({
@@ -37,6 +39,7 @@ export const BLOCKCHAIN = Object.freeze({
   MOVR: 'MOVR',
   ONE: 'ONE',
   AURETH: 'AURETH', // AURORA
+  PHI: 'PHI',
 })
 
 export const BASE_TOKEN_CURRENCY = Object.freeze({
@@ -49,6 +52,7 @@ export const BASE_TOKEN_CURRENCY = Object.freeze({
   MOVR: 'MOVR',
   ONE: 'ONE',
   AURETH: 'AURETH',
+  Ф: 'Ф',
 })
 
 export const COIN_MODEL = Object.freeze({
@@ -57,7 +61,7 @@ export const COIN_MODEL = Object.freeze({
 })
 
 export const COIN_DATA = {
-  'BTC': {
+  BTC: {
     ticker: 'BTC',
     name: 'Bitcoin',
     type: COIN_TYPE.NATIVE,
@@ -65,7 +69,7 @@ export const COIN_DATA = {
     model: COIN_MODEL.UTXO,
     precision: 8,
   },
-  'ETH': {
+  ETH: {
     ticker: 'ETH',
     name: 'Ethereum',
     type: COIN_TYPE.NATIVE,
@@ -73,7 +77,7 @@ export const COIN_DATA = {
     model: COIN_MODEL.AB,
     precision: 18,
   },
-  'BNB': {
+  BNB: {
     ticker: 'BNB',
     name: 'Binance Coin',
     type: COIN_TYPE.NATIVE,
@@ -81,7 +85,7 @@ export const COIN_DATA = {
     model: COIN_MODEL.AB,
     precision: 18,
   },
-  'MATIC': {
+  MATIC: {
     ticker: 'MATIC',
     name: 'MATIC Token',
     type: COIN_TYPE.NATIVE,
@@ -89,7 +93,7 @@ export const COIN_DATA = {
     model: COIN_MODEL.AB,
     precision: 18,
   },
-  'ARBETH': {
+  ARBETH: {
     ticker: 'ARBETH',
     name: 'Arbitrum ETH',
     type: COIN_TYPE.NATIVE,
@@ -97,7 +101,7 @@ export const COIN_DATA = {
     model: COIN_MODEL.AB,
     precision: 18,
   },
-  'AURETH': {
+  AURETH: {
     ticker: 'AURETH',
     name: 'Aurora ETH',
     type: COIN_TYPE.NATIVE,
@@ -105,7 +109,7 @@ export const COIN_DATA = {
     model: COIN_MODEL.AB,
     precision: 18,
   },
-  'XDAI': {
+  XDAI: {
     ticker: 'XDAI',
     name: 'xDai',
     type: COIN_TYPE.NATIVE,
@@ -113,7 +117,7 @@ export const COIN_DATA = {
     model: COIN_MODEL.AB,
     precision: 18,
   },
-  'FTM': {
+  FTM: {
     ticker: 'FTM',
     name: 'Fantom',
     type: COIN_TYPE.NATIVE,
@@ -121,7 +125,7 @@ export const COIN_DATA = {
     model: COIN_MODEL.AB,
     precision: 18,
   },
-  'AVAX': {
+  AVAX: {
     ticker: 'AVAX',
     name: 'Avalanche',
     type: COIN_TYPE.NATIVE,
@@ -129,7 +133,7 @@ export const COIN_DATA = {
     model: COIN_MODEL.AB,
     precision: 18,
   },
-  'MOVR': {
+  MOVR: {
     ticker: 'MOVR',
     name: 'Moonriver',
     type: COIN_TYPE.NATIVE,
@@ -137,7 +141,7 @@ export const COIN_DATA = {
     model: COIN_MODEL.AB,
     precision: 18,
   },
-  'ONE': {
+  ONE: {
     ticker: 'ONE',
     name: 'Harmony One',
     type: COIN_TYPE.NATIVE,
@@ -145,7 +149,16 @@ export const COIN_DATA = {
     model: COIN_MODEL.AB,
     precision: 18,
   },
-  'USDT': {
+  Ф: {
+    ticker: 'Ф',
+    name: 'Ф',
+    type: COIN_TYPE.PHI_TOKEN,
+    blockchain: BLOCKCHAIN.PHI,
+    standard: TOKEN_STANDARD.PHI20,
+    model: COIN_MODEL.AB,
+    precision: 18,
+  },
+  USDT: {
     ticker: 'USDT',
     name: 'Tether',
     type: COIN_TYPE.ETH_TOKEN,
@@ -154,7 +167,7 @@ export const COIN_DATA = {
     model: COIN_MODEL.AB,
     precision: 18,
   },
-  'BTCB': {
+  BTCB: {
     ticker: 'BTCB',
     name: 'BTCB Token',
     type: COIN_TYPE.BNB_TOKEN,
@@ -163,7 +176,7 @@ export const COIN_DATA = {
     model: COIN_MODEL.AB,
     precision: 18,
   },
-  'EURS': {
+  EURS: {
     ticker: 'EURS',
     name: 'STASIS EURO',
     type: COIN_TYPE.ETH_TOKEN,
@@ -172,7 +185,7 @@ export const COIN_DATA = {
     model: COIN_MODEL.AB,
     precision: 18,
   },
-  'GHOST': {
+  GHOST: {
     ticker: 'GHOST',
     name: 'Ghost',
     type: COIN_TYPE.NATIVE,
@@ -180,7 +193,7 @@ export const COIN_DATA = {
     model: COIN_MODEL.UTXO,
     precision: 8,
   },
-  'NEXT': {
+  NEXT: {
     ticker: 'NEXT',
     name: 'NEXT.coin',
     type: COIN_TYPE.NATIVE,
@@ -188,7 +201,7 @@ export const COIN_DATA = {
     model: COIN_MODEL.UTXO,
     precision: 8,
   },
-  'SWAP': {
+  SWAP: {
     ticker: 'SWAP',
     name: 'SWAP',
     type: COIN_TYPE.ETH_TOKEN,
@@ -197,7 +210,7 @@ export const COIN_DATA = {
     model: COIN_MODEL.AB,
     precision: 18,
   },
-  'SNM': {
+  SNM: {
     ticker: 'SONM',
     name: 'SWAP',
     type: COIN_TYPE.ETH_TOKEN,
@@ -223,6 +236,7 @@ export const NATIVE = {
   avax: 'AVAX',
   movr: 'MOVR',
   one: 'ONE',
+  ф: 'Ф',
   ghost: 'GHOST',
   next: 'NEXT',
 }

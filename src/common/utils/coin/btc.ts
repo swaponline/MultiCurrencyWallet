@@ -954,11 +954,6 @@ const calculateTxSize = async (params: CalculateTxSizeParams) => {
     )
   }
 
-  console.group('Common > utils > coin >%c btc > calculateTxSize', 'color: green;')
-  console.log('params: ', params)
-  console.log('txSize: ', txSize)
-  console.groupEnd()
-
   return txSize
 }
 
