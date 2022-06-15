@@ -342,23 +342,8 @@ if (config.isWidget) {
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.ghost) ? [baseCurrencyConfig.GHOST] : [],
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.next) ? [baseCurrencyConfig.NEXT] : [],
   ]
-
-  initialState.partialItems = [
-    ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.eth) ? [baseCurrencyConfig.ETH] : [],
-    ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.bnb) ? [baseCurrencyConfig.BNB] : [],
-    ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.matic) ? [baseCurrencyConfig.MATIC] : [],
-    ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.arbeth) ? [baseCurrencyConfig.ARBETH] : [],
-    ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.aureth) ? [baseCurrencyConfig.AURETH] : [],
-    ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.xdai) ? [baseCurrencyConfig.XDAI] : [],
-    ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.ftm) ? [baseCurrencyConfig.FTM] : [],
-    ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.avax) ? [baseCurrencyConfig.AVAX] : [],
-    ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.movr) ? [baseCurrencyConfig.MOVR] : [],
-    ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.one) ? [baseCurrencyConfig.ONE] : [],
-    ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.phi) ? [baseCurrencyConfig.PHI] : [],
-    ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.btc) ? [baseCurrencyConfig.BTC] : [],
-    ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.ghost) ? [baseCurrencyConfig.GHOST] : [],
-    ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.next) ? [baseCurrencyConfig.NEXT] : [],
-  ]
+  // leave only coins
+  initialState.partialItems = initialState.partialItems.filter((item) => !item.standard)
 
   // Мульти валюта с обратной совместимостью одиночного билда
   const widgetCustomTokens = window?.widgetEvmLikeTokens?.length ? window.widgetEvmLikeTokens : []
