@@ -71,7 +71,6 @@ export const getWidgetCurrencies = () => {
   if (externalConfig.isWidget) {
     if (window?.widgetEvmLikeTokens?.length) {
       window.widgetEvmLikeTokens.forEach((token) => {
-
         const baseCurrency = TOKEN_STANDARDS[token.standard].currency.toUpperCase()
         const tokenName = token.name.toUpperCase()
         const tokenValue = `{${baseCurrency}}${tokenName}`

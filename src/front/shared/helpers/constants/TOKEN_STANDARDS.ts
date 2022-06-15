@@ -102,4 +102,14 @@ export default {
     explorerApiKey: config.api.aurora_ApiKey,
     hasSupportAtomicSwap: false,
   },
+  phi20: {
+    platform: '',
+    platformKey: '',
+    standard: 'phi20',
+    value: 'erc20aurora',
+    currency: 'Φ',
+    explorerApi: config.api?.aurorascan || '',
+    explorerApiKey: config.api?.phi_ApiKey || '',
+    hasSupportAtomicSwap: false,
+  },
 }

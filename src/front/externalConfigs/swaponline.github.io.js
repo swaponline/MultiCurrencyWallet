@@ -61,7 +61,7 @@ window.buildOptions = {
     one: true,
     ghost: true,
     next: false,
-    Ф: true,
+    phi: true,
   },
   blockchainSwapEnabled: {
     btc: true,
@@ -77,7 +77,7 @@ window.buildOptions = {
     one: false,
     ghost: false,
     next: false,
-    Ф: false,
+    phi: false,
   },
   defaultExchangePair: {
     buy: '{eth}wbtc',

@@ -701,4 +701,15 @@ export default {
     adminFeeObj: externalConfig.opts?.fee?.aureth,
     web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.aurora_provider)),
   }),
+  PHI: new EthLikeAction({
+    coinName: 'PHI',
+    ticker: 'PHI',
+    privateKeyName: 'phi',
+    chainId: externalConfig.evmNetworks.PHI.chainId,
+    explorerApiName: 'phiscan',
+    explorerApiKey: externalConfig.api?.phi_ApiKey,
+    explorerLink: externalConfig.link.phiExplorer,
+    adminFeeObj: externalConfig.opts?.fee?.phi,
+    web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.phi_provider)),
+  }),
 }

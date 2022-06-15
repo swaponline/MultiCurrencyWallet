@@ -9,4 +9,5 @@ export default [
     1285,   // MOVR Mainnet
     1666600000, // ONE Mainnet
     1313161554, // AURETH AURORA Mainnet
+    4181, // PHI
 ]

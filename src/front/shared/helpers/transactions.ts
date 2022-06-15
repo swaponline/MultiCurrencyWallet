@@ -9,7 +9,8 @@ const getTokenBaseCurrency = (tokenKey) => {
 
   if (baseTokenCurrencyPrefix) {
     const baseTokenCurrency = baseTokenCurrencyPrefix[0].match(/[a-z]+/)
-    const constantCurrency = baseTokenCurrency && BASE_TOKEN_CURRENCY[baseTokenCurrency[0].toUpperCase()]
+    const constantCurrency =
+      baseTokenCurrency && BASE_TOKEN_CURRENCY[baseTokenCurrency[0].toUpperCase()]
 
     if (constantCurrency) {
       return constantCurrency.toLowerCase()
@@ -33,41 +34,47 @@ const getTxRouter = (currency, txHash) => {
   console.warn(`Function getTxRouter for ${prefix} not defined (currency: ${currency})`)
 }
 
+const isToken = (standardKey, name) => erc20Like[standardKey].isToken({ name })
+
 const getLink = (currency, txHash) => {
-  if (erc20Like.erc20.isToken({ name: currency })) {
+  if (isToken('erc20', currency)) {
     return actions.erc20.getLinkToInfo(txHash)
   }
 
-  if (erc20Like.bep20.isToken({ name: currency })) {
+  if (isToken('bep20', currency)) {
     return actions.bep20.getLinkToInfo(txHash)
   }
 
-  if (erc20Like.erc20matic.isToken({ name: currency })) {
+  if (isToken('erc20matic', currency)) {
     return actions.erc20matic.getLinkToInfo(txHash)
   }
 
-  if (erc20Like.erc20xdai.isToken({ name: currency })) {
+  if (isToken('erc20xdai', currency)) {
     return actions.erc20xdai.getLinkToInfo(txHash)
   }
 
-  if (erc20Like.erc20ftm.isToken({ name: currency })) {
+  if (isToken('erc20ftm', currency)) {
     return actions.erc20ftm.getLinkToInfo(txHash)
   }
 
-  if (erc20Like.erc20avax.isToken({ name: currency })) {
+  if (isToken('erc20avax', currency)) {
     return actions.erc20avax.getLinkToInfo(txHash)
   }
 
-  if (erc20Like.erc20movr.isToken({ name: currency })) {
+  if (isToken('erc20movr', currency)) {
     return actions.erc20movr.getLinkToInfo(txHash)
   }
 
-  if (erc20Like.erc20one.isToken({ name: currency })) {
+  if (isToken('erc20one', currency)) {
     return actions.erc20one.getLinkToInfo(txHash)
   }
 
-  if (erc20Like.erc20aurora.isToken({ name: currency })) {
+  if (isToken('erc20aurora', currency)) {
     return actions.erc20aurora.getLinkToInfo(txHash)
+  }
+
+  if (isToken('phi20', currency)) {
+    return actions.phi20.getLinkToInfo(txHash)
   }
 
   const prefix = helpers.getCurrencyKey(currency, false)
@@ -86,40 +93,45 @@ type GetInfoResult = {
 
 const getInfo = (currency, txRaw): GetInfoResult => {
   let reduxAction = helpers.getCurrencyKey(currency, true)
-  if (erc20Like.erc20.isToken({ name: currency })) {
+
+  if (isToken('erc20', currency)) {
     reduxAction = `erc20`
   }
 
-  if (erc20Like.bep20.isToken({ name: currency })) {
+  if (isToken('bep20', currency)) {
     reduxAction = `bep20`
   }
 
-  if (erc20Like.erc20matic.isToken({ name: currency })) {
+  if (isToken('erc20matic', currency)) {
     reduxAction = `erc20matic`
   }
 
-  if (erc20Like.erc20xdai.isToken({ name: currency })) {
+  if (isToken('erc20xdai', currency)) {
     reduxAction = `erc20xdai`
   }
 
-  if (erc20Like.erc20ftm.isToken({ name: currency })) {
+  if (isToken('erc20ftm', currency)) {
     reduxAction = `erc20ftm`
   }
 
-  if (erc20Like.erc20avax.isToken({ name: currency })) {
+  if (isToken('erc20avax', currency)) {
     reduxAction = `erc20avax`
   }
 
-  if (erc20Like.erc20movr.isToken({ name: currency })) {
+  if (isToken('erc20movr', currency)) {
     reduxAction = `erc20movr`
   }
 
-  if (erc20Like.erc20one.isToken({ name: currency })) {
+  if (isToken('erc20one', currency)) {
     reduxAction = `erc20one`
   }
 
-  if (erc20Like.erc20aurora.isToken({ name: currency })) {
+  if (isToken('erc20aurora', currency)) {
     reduxAction = `erc20aurora`
+  }
+
+  if (isToken('phi20', currency)) {
+    reduxAction = `phi20`
   }
 
   const info = {

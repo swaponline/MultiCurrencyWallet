@@ -13,6 +13,7 @@ const decimals = {
   avax: 18,
   movr: 18,
   one: 18,
+  phi: 18,
   ghost: 8,
   next: 8,
 }

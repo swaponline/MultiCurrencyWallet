@@ -127,8 +127,8 @@ export default {
     blockchainType: BLOCKCHAIN_TYPE.PHI,
     tokenStandard: TOKEN_STANDARD.PHI20,
     coinType: COIN_TYPE.PHI_TOKEN,
-    blockchainModel: COIN_DATA.Ф.model,
-    isCoinAddress: typeforce.isCoinAddress.Ф,
-    isPublicKey: typeforce.isPublicKey.Ф,
+    blockchainModel: COIN_DATA.PHI.model,
+    isCoinAddress: typeforce.isCoinAddress.PHI,
+    isPublicKey: typeforce.isPublicKey.PHI,
   }),
 }

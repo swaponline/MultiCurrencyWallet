@@ -62,7 +62,7 @@ export default [
   'AVAX',
   'MOVR',
   'ONE',
-  'Ф',
+  'PHI',
   '{ETH}SWAP',
   '{ETH}HDP',
   '{ETH}USDT',

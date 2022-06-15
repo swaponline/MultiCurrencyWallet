@@ -52,7 +52,7 @@ export const BASE_TOKEN_CURRENCY = Object.freeze({
   MOVR: 'MOVR',
   ONE: 'ONE',
   AURETH: 'AURETH',
-  Ф: 'Ф',
+  PHI: 'PHI',
 })
 
 export const COIN_MODEL = Object.freeze({
@@ -149,9 +149,9 @@ export const COIN_DATA = {
     model: COIN_MODEL.AB,
     precision: 18,
   },
-  Ф: {
-    ticker: 'Ф',
-    name: 'Ф',
+  PHI: {
+    ticker: 'PHI',
+    name: 'PHI',
     type: COIN_TYPE.PHI_TOKEN,
     blockchain: BLOCKCHAIN.PHI,
     standard: TOKEN_STANDARD.PHI20,
@@ -236,7 +236,7 @@ export const NATIVE = {
   avax: 'AVAX',
   movr: 'MOVR',
   one: 'ONE',
-  ф: 'Ф',
+  phi: 'PHI',
   ghost: 'GHOST',
   next: 'NEXT',
 }

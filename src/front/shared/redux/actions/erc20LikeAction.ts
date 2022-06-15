@@ -742,4 +742,13 @@ export default {
     adminFeeObj: externalConfig.opts?.fee?.erc20aurora,
     web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.aurora_provider)),
   }),
+  phi20: new Erc20LikeAction({
+    currency: 'PHI',
+    standard: 'phi20',
+    explorerApiName: 'phiscan',
+    explorerApiKey: externalConfig.api?.phi_ApiKey,
+    explorerLink: externalConfig.link.phiExplorer,
+    adminFeeObj: externalConfig.opts?.fee?.phi20,
+    web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.phi_provider)),
+  }),
 }
