@@ -493,6 +493,7 @@ const getText = () => {
       avaxData,
       movrData,
       oneData,
+      phiData,
       btcData,
       ghostData,
       nextData,
@@ -560,6 +561,10 @@ const getText = () => {
     \r\n
     ONE address: ${oneData.address}\r\n
     Private key: ${oneData.privateKey}\r\n
+    # PHI CHAIN
+    \r\n
+    PHI address: ${phiData.address}\r\n
+    Private key: ${phiData.privateKey}\r\n
     \r\n
     # BITCOIN
     \r\n
