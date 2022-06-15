@@ -5,13 +5,20 @@ import { BLOCKCHAIN as BLOCKCHAIN_TYPE } from 'swap.app/constants/COINS'
 const NETWORK = process.env.MAINNET ? 'mainnet' : 'testnet'
 
 const getCustomTokenConfig = () => {
-  //@ts-ignore: strictNullChecks
-  let tokensInfo = JSON.parse(localStorage.getItem('customToken'))
+  let tokensInfo = JSON.parse(localStorage.getItem('customToken') || 'false')
   if (!tokensInfo || !tokensInfo[NETWORK]) return {}
   return tokensInfo[NETWORK]
 }
 
-let buildOpts = {
+interface BuildOptions {
+  curEnabled: false | Record<string, boolean>,
+  blockchainSwapEnabled: false | Record<string, boolean>,
+  ownTokens: boolean,
+  addCustomTokens: boolean,
+  invoiceEnabled: boolean,
+}
+
+let buildOpts: BuildOptions = {
   curEnabled: false,
   blockchainSwapEnabled: false,
   ownTokens: false,
@@ -168,7 +175,7 @@ const baseCurrencyConfig = {
     title: 'PHI',
     icon: 'phi',
     value: 'phi',
-    fullTitle: 'phi network',
+    fullTitle: 'phi',
   },
   GHOST: {
     name: 'GHOST',
@@ -195,85 +202,71 @@ const baseCurrencyConfig = {
 
 const initialState = {
   items: [
-    //@ts-ignore
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.eth) ? [{
       ...baseCurrencyConfig.ETH,
       blockchain: BLOCKCHAIN_TYPE.ETH,
       addAssets: true,
     }] : [],
-     //@ts-ignore
      ...(!buildOpts.curEnabled || buildOpts.curEnabled.bnb) ? [{
       ...baseCurrencyConfig.BNB,
       blockchain: BLOCKCHAIN_TYPE.BNB,
       addAssets: true,
     }] : [],
-    //@ts-ignore
       ...(!buildOpts.curEnabled || buildOpts.curEnabled.matic) ? [{
       ...baseCurrencyConfig.MATIC,
       blockchain: BLOCKCHAIN_TYPE.MATIC,
       addAssets: true,
     }] : [],
-    //@ts-ignore
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.arbeth) ? [{
       ...baseCurrencyConfig.ARBETH,
       blockchain: BLOCKCHAIN_TYPE.ARBITRUM,
       addAssets: true,
     }] : [],
-    //@ts-ignore
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.aureth) ? [{
       ...baseCurrencyConfig.AURETH,
       blockchain: BLOCKCHAIN_TYPE.AURETH,
       addAssets: true,
     }] : [],
-    //@ts-ignore
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.xdai) ? [{
       ...baseCurrencyConfig.XDAI,
       blockchain: BLOCKCHAIN_TYPE.XDAI,
       addAssets: true,
     }] : [],
-    //@ts-ignore
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.ftm) ? [{
       ...baseCurrencyConfig.FTM,
       blockchain: BLOCKCHAIN_TYPE.FTM,
       addAssets: true,
     }] : [],
-    //@ts-ignore
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.avax) ? [{
       ...baseCurrencyConfig.AVAX,
       blockchain: BLOCKCHAIN_TYPE.AVAX,
       addAssets: true,
     }] : [],
-    //@ts-ignore
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.movr) ? [{
       ...baseCurrencyConfig.MOVR,
       blockchain: BLOCKCHAIN_TYPE.MOVR,
       addAssets: true,
     }] : [],
-    //@ts-ignore
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.one) ? [{
       ...baseCurrencyConfig.ONE,
       blockchain: BLOCKCHAIN_TYPE.ONE,
       addAssets: true,
     }] : [],
-    //@ts-ignore
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.phi) ? [{
       ...baseCurrencyConfig.PHI,
       blockchain: BLOCKCHAIN_TYPE.PHI,
       addAssets: true,
     }] : [],
-    //@ts-ignore
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.ghost) ? [{
       ...baseCurrencyConfig.GHOST,
       blockchain: BLOCKCHAIN_TYPE.GHOST,
       addAssets: true,
     }] : [],
-    //@ts-ignore
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.next) ? [{
       ...baseCurrencyConfig.NEXT,
       blockchain: BLOCKCHAIN_TYPE.NEXT,
       addAssets: true,
     }] : [],
-    //@ts-ignore
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.btc) ? [{
       ...baseCurrencyConfig.BTC,
       blockchain: BLOCKCHAIN_TYPE.BTC,
@@ -312,33 +305,19 @@ const initialState = {
     ...tokenItems,
   ],
   partialItems: [
-    //@ts-ignore
     ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.eth) ? [baseCurrencyConfig.ETH] : [],
-    //@ts-ignore
     ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.bnb) ? [baseCurrencyConfig.BNB] : [],
-    //@ts-ignore
     ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.matic) ? [baseCurrencyConfig.MATIC] : [],
-    //@ts-ignore
     ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.arbeth) ? [baseCurrencyConfig.ARBETH] : [],
-    //@ts-ignore
     ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.aureth) ? [baseCurrencyConfig.AURETH] : [],
-    //@ts-ignore
     ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.xdai) ? [baseCurrencyConfig.XDAI] : [],
-    //@ts-ignore
     ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.ftm) ? [baseCurrencyConfig.FTM] : [],
-    //@ts-ignore
     ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.avax) ? [baseCurrencyConfig.AVAX] : [],
-    //@ts-ignore
     ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.movr) ? [baseCurrencyConfig.MOVR] : [],
-    //@ts-ignore
     ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.one) ? [baseCurrencyConfig.ONE] : [],
-    //@ts-ignore
     ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.phi) ? [baseCurrencyConfig.PHI] : [],
-    //@ts-ignore
     ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.ghost) ? [baseCurrencyConfig.GHOST] : [],
-    //@ts-ignore
     ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.next) ? [baseCurrencyConfig.NEXT] : [],
-    //@ts-ignore
     ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.btc) ? [baseCurrencyConfig.BTC] : [],
     ...tokenPartialItems,
   ],
@@ -348,64 +327,36 @@ const initialState = {
 
 if (config.isWidget) {
   initialState.items = [
-    //@ts-ignore
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.eth) ? [baseCurrencyConfig.ETH] : [],
-    //@ts-ignore
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.bnb) ? [baseCurrencyConfig.BNB] : [],
-    //@ts-ignore
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.matic) ? [baseCurrencyConfig.MATIC] : [],
-    //@ts-ignore
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.arbeth) ? [baseCurrencyConfig.ARBETH] : [],
-    //@ts-ignore
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.aureth) ? [baseCurrencyConfig.AURETH] : [],
-    //@ts-ignore
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.xdai) ? [baseCurrencyConfig.XDAI] : [],
-    //@ts-ignore
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.ftm) ? [baseCurrencyConfig.FTM] : [],
-    //@ts-ignore
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.avax) ? [baseCurrencyConfig.AVAX] : [],
-    //@ts-ignore
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.movr) ? [baseCurrencyConfig.MOVR] : [],
-    //@ts-ignore
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.one) ? [baseCurrencyConfig.ONE] : [],
-    //@ts-ignore
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.phi) ? [baseCurrencyConfig.PHI] : [],
-    //@ts-ignore
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.btc) ? [baseCurrencyConfig.BTC] : [],
-    //@ts-ignore
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.ghost) ? [baseCurrencyConfig.GHOST] : [],
-    //@ts-ignore
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.next) ? [baseCurrencyConfig.NEXT] : [],
   ]
 
   initialState.partialItems = [
-    //@ts-ignore
     ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.eth) ? [baseCurrencyConfig.ETH] : [],
-    //@ts-ignore
     ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.bnb) ? [baseCurrencyConfig.BNB] : [],
-    //@ts-ignore
     ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.matic) ? [baseCurrencyConfig.MATIC] : [],
-    //@ts-ignore
     ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.arbeth) ? [baseCurrencyConfig.ARBETH] : [],
-    //@ts-ignore
     ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.aureth) ? [baseCurrencyConfig.AURETH] : [],
-    //@ts-ignore
     ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.xdai) ? [baseCurrencyConfig.XDAI] : [],
-    //@ts-ignore
     ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.ftm) ? [baseCurrencyConfig.FTM] : [],
-    //@ts-ignore
     ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.avax) ? [baseCurrencyConfig.AVAX] : [],
-    //@ts-ignore
     ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.movr) ? [baseCurrencyConfig.MOVR] : [],
-    //@ts-ignore
     ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.one) ? [baseCurrencyConfig.ONE] : [],
-    //@ts-ignore
     ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.phi) ? [baseCurrencyConfig.PHI] : [],
-    //@ts-ignore
     ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.btc) ? [baseCurrencyConfig.BTC] : [],
-    //@ts-ignore
     ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.ghost) ? [baseCurrencyConfig.GHOST] : [],
-    //@ts-ignore
     ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.next) ? [baseCurrencyConfig.NEXT] : [],
   ]
 
