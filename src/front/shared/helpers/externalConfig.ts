@@ -310,7 +310,7 @@ const externalConfig = () => {
   }
 
   config.enabledEvmNetworks = Object.keys(config.evmNetworks)
-    .filter((key) => config.opts.curEnabled[key.toLowerCase()])
+    .filter((key) => !config.opts.curEnabled || config.opts.curEnabled[key.toLowerCase()])
     .reduce((acc, key) => {
       acc[key] = config.evmNetworks[key]
 

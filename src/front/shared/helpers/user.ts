@@ -2,8 +2,10 @@ import store from 'redux/store'
 import { externalConfig, links, getItezUrl } from 'helpers'
 import TOKEN_STANDARDS from 'helpers/constants/TOKEN_STANDARDS'
 
+const getEnabledEvmCurrencies = () => Object.keys(externalConfig.enabledEvmNetworks)
+
 export const getActivatedCurrencies = () => {
-  const currencies: string[] = []
+  const currencies: string[] = [...getEnabledEvmCurrencies()]
 
   if (!externalConfig.opts.curEnabled || externalConfig.opts.curEnabled.btc) {
     currencies.push('BTC')
@@ -18,15 +20,6 @@ export const getActivatedCurrencies = () => {
 
   if (!externalConfig.opts.curEnabled || externalConfig.opts.curEnabled.next) {
     currencies.push('NEXT')
-  }
-
-  if (externalConfig.enabledEvmNetworks) {
-    Object.keys(externalConfig.enabledEvmNetworks).forEach((evmNetwork) => {
-      if (
-        !externalConfig.opts.curEnabled
-        || externalConfig.opts.curEnabled[evmNetwork?.toLowerCase()]
-      ) currencies.push(evmNetwork?.toUpperCase())
-    })
   }
 
   Object.keys(TOKEN_STANDARDS).forEach((standardKey) => {
@@ -46,17 +39,8 @@ export const getActivatedCurrencies = () => {
 export const getWidgetCurrencies = () => {
   const { core: { hiddenCoinsList } } = store.getState()
   const widgetCurrencies = [
+    ...getEnabledEvmCurrencies(),
     'BTC',
-    'ETH',
-    'BNB',
-    'MATIC',
-    'ARBETH',
-    'AURETH',
-    'XDAI',
-    'FTM',
-    'AVAX',
-    'MOVR',
-    'ONE',
     'GHOST',
     'NEXT',
   ]

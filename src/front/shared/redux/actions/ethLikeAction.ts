@@ -589,6 +589,8 @@ class EthLikeAction {
   }
 }
 
+const providers = externalConfig.web3
+
 export default {
   ETH: new EthLikeAction({
     coinName: 'Ethereum',
@@ -599,7 +601,7 @@ export default {
     explorerApiKey: externalConfig.api.etherscan_ApiKey,
     explorerLink: externalConfig.link.etherscan,
     adminFeeObj: externalConfig.opts?.fee?.eth,
-    web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.provider)),
+    web3: new Web3(providers.provider),
   }),
   // use an ethereum private key for EVM compatible blockchains
   BNB: new EthLikeAction({
@@ -611,7 +613,7 @@ export default {
     explorerApiKey: externalConfig.api.bscscan_ApiKey,
     explorerLink: externalConfig.link.bscscan,
     adminFeeObj: externalConfig.opts?.fee?.bnb,
-    web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.binance_provider)),
+    web3: new Web3(providers.binance_provider),
   }),
   MATIC: new EthLikeAction({
     coinName: 'MATIC Token',
@@ -622,7 +624,7 @@ export default {
     explorerApiKey: externalConfig.api.polygon_ApiKey,
     explorerLink: externalConfig.link.maticscan,
     adminFeeObj: externalConfig.opts?.fee?.matic,
-    web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.matic_provider)),
+    web3: new Web3(providers.matic_provider),
   }),
   ARBETH: new EthLikeAction({
     coinName: 'Arbitrum ETH',
@@ -633,7 +635,7 @@ export default {
     explorerApiKey: '',
     explorerLink: externalConfig.link.arbitrum,
     adminFeeObj: externalConfig.opts?.fee?.arbeth,
-    web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.arbitrum_provider)),
+    web3: new Web3(providers.arbitrum_provider),
   }),
   XDAI: new EthLikeAction({
     coinName: 'xDai',
@@ -644,7 +646,7 @@ export default {
     explorerApiKey: '',
     explorerLink: externalConfig.link.xdai,
     adminFeeObj: externalConfig.opts?.fee?.xdai,
-    web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.xdai_provider)),
+    web3: new Web3(providers.xdai_provider),
   }),
   FTM: new EthLikeAction({
     coinName: 'Fantom',
@@ -655,7 +657,7 @@ export default {
     explorerApiKey: externalConfig.api.ftm_ApiKey,
     explorerLink: externalConfig.link.ftmscan,
     adminFeeObj: externalConfig.opts?.fee?.ftm,
-    web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.ftm_provider)),
+    web3: new Web3(providers.ftm_provider),
   }),
   AVAX: new EthLikeAction({
     coinName: 'Avalanche',
@@ -666,7 +668,7 @@ export default {
     explorerApiKey: externalConfig.api.avax_ApiKey,
     explorerLink: externalConfig.link.avaxscan,
     adminFeeObj: externalConfig.opts?.fee?.avax,
-    web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.avax_provider)),
+    web3: new Web3(providers.avax_provider),
   }),
   MOVR: new EthLikeAction({
     coinName: 'Moonriver',
@@ -677,7 +679,7 @@ export default {
     explorerApiKey: externalConfig.api.movr_ApiKey,
     explorerLink: externalConfig.link.movrscan,
     adminFeeObj: externalConfig.opts?.fee?.movr,
-    web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.movr_provider)),
+    web3: new Web3(providers.movr_provider),
   }),
   ONE: new EthLikeAction({
     coinName: 'Harmony One',
@@ -688,7 +690,7 @@ export default {
     explorerApiKey: externalConfig.api.one_ApiKey,
     explorerLink: externalConfig.link.oneExplorer,
     adminFeeObj: externalConfig.opts?.fee?.one,
-    web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.one_provider)),
+    web3: new Web3(providers.one_provider),
   }),
   AURETH: new EthLikeAction({
     coinName: 'Aurora ETH',
@@ -699,7 +701,7 @@ export default {
     explorerApiKey: externalConfig.api.aurora_ApiKey,
     explorerLink: externalConfig.link.auroraExplorer,
     adminFeeObj: externalConfig.opts?.fee?.aureth,
-    web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.aurora_provider)),
+    web3: new Web3(providers.aurora_provider),
   }),
   PHI: new EthLikeAction({
     coinName: 'PHI',
@@ -710,6 +712,6 @@ export default {
     explorerApiKey: externalConfig.api?.phi_ApiKey,
     explorerLink: externalConfig.link.phiExplorer,
     adminFeeObj: externalConfig.opts?.fee?.phi,
-    web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.phi_provider)),
+    web3: new Web3(providers.phi_provider),
   }),
 }

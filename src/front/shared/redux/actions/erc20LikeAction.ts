@@ -660,6 +660,8 @@ class Erc20LikeAction {
   }
 }
 
+const providers = externalConfig.web3
+
 export default {
   erc20: new Erc20LikeAction({
     currency: 'ETH',
@@ -668,7 +670,7 @@ export default {
     explorerApiKey: externalConfig.api.etherscan_ApiKey,
     explorerLink: externalConfig.link.etherscan,
     adminFeeObj: externalConfig.opts?.fee?.erc20,
-    web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.provider)),
+    web3: new Web3(providers.provider),
   }),
   bep20: new Erc20LikeAction({
     currency: 'BNB',
@@ -677,7 +679,7 @@ export default {
     explorerApiKey: externalConfig.api.bscscan_ApiKey,
     explorerLink: externalConfig.link.bscscan,
     adminFeeObj: externalConfig.opts?.fee?.bep20,
-    web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.binance_provider)),
+    web3: new Web3(providers.binance_provider),
   }),
   erc20matic: new Erc20LikeAction({
     currency: 'MATIC',
@@ -686,7 +688,7 @@ export default {
     explorerApiKey: externalConfig.api.polygon_ApiKey,
     explorerLink: externalConfig.link.maticscan,
     adminFeeObj: externalConfig.opts?.fee?.erc20matic,
-    web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.matic_provider)),
+    web3: new Web3(providers.matic_provider),
   }),
   erc20xdai: new Erc20LikeAction({
     currency: 'XDAI',
@@ -695,7 +697,7 @@ export default {
     explorerApiKey: '',
     explorerLink: externalConfig.link.xdai,
     adminFeeObj: externalConfig.opts?.fee?.erc20xdai,
-    web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.xdai_provider)),
+    web3: new Web3(providers.xdai_provider),
   }),
   erc20ftm: new Erc20LikeAction({
     currency: 'FTM',
@@ -704,7 +706,7 @@ export default {
     explorerApiKey: externalConfig.api.ftm_ApiKey,
     explorerLink: externalConfig.link.ftmscan,
     adminFeeObj: externalConfig.opts?.fee?.erc20ftm,
-    web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.ftm_provider)),
+    web3: new Web3(providers.ftm_provider),
   }),
   erc20avax: new Erc20LikeAction({
     currency: 'AVAX',
@@ -713,7 +715,7 @@ export default {
     explorerApiKey: externalConfig.api.avax_ApiKey,
     explorerLink: externalConfig.link.avaxscan,
     adminFeeObj: externalConfig.opts?.fee?.erc20avax,
-    web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.avax_provider)),
+    web3: new Web3(providers.avax_provider),
   }),
   erc20movr: new Erc20LikeAction({
     currency: 'MOVR',
@@ -722,7 +724,7 @@ export default {
     explorerApiKey: externalConfig.api.movr_ApiKey,
     explorerLink: externalConfig.link.movrscan,
     adminFeeObj: externalConfig.opts?.fee?.erc20movr,
-    web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.movr_provider)),
+    web3: new Web3(providers.movr_provider),
   }),
   erc20one: new Erc20LikeAction({
     currency: 'ONE',
@@ -731,7 +733,7 @@ export default {
     explorerApiKey: externalConfig.api.one_ApiKey,
     explorerLink: externalConfig.link.oneExplorer,
     adminFeeObj: externalConfig.opts?.fee?.erc20one,
-    web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.one_provider)),
+    web3: new Web3(providers.one_provider),
   }),
   erc20aurora: new Erc20LikeAction({
     currency: 'AURETH',
@@ -740,7 +742,7 @@ export default {
     explorerApiKey: externalConfig.api.aurora_ApiKey,
     explorerLink: externalConfig.link.auroraExplorer,
     adminFeeObj: externalConfig.opts?.fee?.erc20aurora,
-    web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.aurora_provider)),
+    web3: new Web3(providers.aurora_provider),
   }),
   phi20: new Erc20LikeAction({
     currency: 'PHI',
@@ -749,6 +751,6 @@ export default {
     explorerApiKey: externalConfig.api?.phi_ApiKey,
     explorerLink: externalConfig.link.phiExplorer,
     adminFeeObj: externalConfig.opts?.fee?.phi20,
-    web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.phi_provider)),
+    web3: new Web3(providers.phi_provider),
   }),
 }
