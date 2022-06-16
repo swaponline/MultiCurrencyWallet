@@ -9,13 +9,6 @@ import { ComponentState, BlockReasons, Actions, Direction } from './types'
 import { GWEI_DECIMALS, COIN_DECIMALS, LIQUIDITY_SOURCE_DATA, SEC_PER_MINUTE } from './constants'
 import Button from 'components/controls/Button/Button'
 
-// TODO: for liquidity errors from API
-const returnRouter = (name) => {
-  if (name.match(/pancake/gim)) {
-    return externalConfig.swapContract.pancakeswapRouter
-  }
-}
-
 type FooterProps = {
   parentState: ComponentState
   insufficientBalanceA: boolean
@@ -134,9 +127,9 @@ function Footer(props: FooterProps) {
       resetSpendedAmount()
     } catch (error) {
       reportError(error)
-    } finally {
-      setPending(false)
     }
+
+    setPending(false)
   }
 
   const directSwap = async () => {
@@ -185,9 +178,9 @@ function Footer(props: FooterProps) {
       }
     } catch (error) {
       reportError(error)
-    } finally {
-      setPending(false)
     }
+
+    setPending(false)
   }
 
   const addLiquidity = async () => {

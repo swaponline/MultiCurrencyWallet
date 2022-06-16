@@ -546,10 +546,6 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     await this.updateCurrentPairAddress()
     await this.checkApprove(Direction.Spend)
 
-    if (activeSection === Sections.Source && sourceAction === Actions.AddLiquidity) {
-      await this.checkApprove(Direction.Receive)
-    }
-
     if (
       activeSection === Sections.Source
       && sourceAction !== Actions.AddLiquidity
@@ -566,6 +562,10 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       await this.fetchSwapAPIData()
     } else if (activeSection === Sections.Source) {
       await this.processingSourceActions()
+      // start approve check only after the received amount request in processingSourceActions()
+      if (activeSection === Sections.Source && sourceAction === Actions.AddLiquidity) {
+        await this.checkApprove(Direction.Receive)
+      }
     }
   }
 
@@ -807,18 +807,19 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   }
 
   checkApprove = async (direction) => {
-    const { network, isSourceMode, spendedAmount, receivedAmount, fromWallet, toWallet } =      this.state
+    const { network, isSourceMode, spendedAmount, receivedAmount, fromWallet, toWallet } = this.state
 
     let amount = spendedAmount
     let wallet = fromWallet
-    const spender = isSourceMode
-      ? LIQUIDITY_SOURCE_DATA[network.networkVersion]?.router
-      : externalConfig.swapContract.zerox
 
     if (direction === Direction.Receive) {
       amount = receivedAmount
       wallet = toWallet
     }
+
+    const spender = isSourceMode
+      ? LIQUIDITY_SOURCE_DATA[network.networkVersion]?.router
+      : externalConfig.swapContract.zerox
 
     if (!wallet.isToken) {
       this.setNeedApprove(direction, false)
@@ -1056,19 +1057,19 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       gasLimit,
     } = this.state
 
-    const wrongSlippage =      slippage
+    const wrongSlippage = slippage
       && (new BigNumber(slippage).isEqualTo(0)
         || new BigNumber(slippage).isGreaterThan(slippageMaxRange))
 
-    const wrongGasPrice =      new BigNumber(gasPrice).isPositive()
+    const wrongGasPrice = new BigNumber(gasPrice).isPositive()
       && new BigNumber(gasPrice).isGreaterThan(API_GAS_LIMITS.MAX_PRICE)
 
-    const wrongGasLimit =      new BigNumber(gasLimit).isPositive()
+    const wrongGasLimit = new BigNumber(gasLimit).isPositive()
       && (new BigNumber(gasLimit).isLessThan(API_GAS_LIMITS.MIN_LIMIT)
         || new BigNumber(gasLimit).isGreaterThan(API_GAS_LIMITS.MAX_LIMIT))
 
     const wrongSettings = wrongGasPrice || wrongGasLimit || wrongSlippage
-    const noBalance =      baseChainWallet.balanceError || new BigNumber(baseChainWallet.balance).isEqualTo(0)
+    const noBalance = baseChainWallet.balanceError || new BigNumber(baseChainWallet.balance).isEqualTo(0)
 
     return (
       noBalance
@@ -1121,12 +1122,12 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       'receivedAmount',
     )
 
-    const insufficientBalanceA =      new BigNumber(fromWallet.balance).isEqualTo(0)
+    const insufficientBalanceA = new BigNumber(fromWallet.balance).isEqualTo(0)
       || new BigNumber(spendedAmount)
         .plus(fromWallet?.standard ? 0 : swapFee || 0)
         .isGreaterThan(fromWallet.balance)
 
-    const insufficientBalanceB =      new BigNumber(toWallet.balance).isEqualTo(0)
+    const insufficientBalanceB = new BigNumber(toWallet.balance).isEqualTo(0)
       || new BigNumber(receivedAmount).isGreaterThan(toWallet.balance)
 
     return (

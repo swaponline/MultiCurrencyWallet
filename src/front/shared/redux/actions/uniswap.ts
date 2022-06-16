@@ -239,31 +239,6 @@ const returnSwapMethod = (params) => {
   }
 }
 
-const checkAndApproveToken = async (params) => {
-  const { standard, token, owner, decimals, spender, amount, tokenName } = params
-
-  const allowance = await erc20Like[standard].checkAllowance({
-    contract: token,
-    decimals,
-    spender,
-    owner,
-  })
-
-  return new Promise(async (res, rej) => {
-    if (new BigNumber(amount).isGreaterThan(allowance)) {
-      const result = await actions[standard].approve({
-        name: tokenName,
-        to: spender,
-        amount,
-      })
-
-      return result instanceof Error ? rej(result) : res(result)
-    }
-
-    res(true)
-  })
-}
-
 const swapCallback = async (params) => {
   const {
     routerAddress,
