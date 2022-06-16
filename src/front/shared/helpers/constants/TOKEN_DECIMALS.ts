@@ -1,4 +1,4 @@
-import TOKEN_STANDARDS from 'helpers/constants/TOKEN_STANDARDS'
+import TOKEN_STANDARDS, { EXISTING_STANDARDS } from 'helpers/constants/TOKEN_STANDARDS'
 import config from 'helpers/externalConfig'
 
 const decimals = {
@@ -18,9 +18,7 @@ const decimals = {
   next: 8,
 }
 
-Object.keys(TOKEN_STANDARDS).forEach((key) => {
-  const standard = TOKEN_STANDARDS[key].standard
-
+EXISTING_STANDARDS.forEach((standard) => {
   Object.keys(config[standard]).forEach((tokenName) => {
     decimals[tokenName] = config[standard][tokenName].decimals
   })

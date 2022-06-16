@@ -1,5 +1,5 @@
 import config from 'app-config'
-import TOKEN_STANDARDS from 'helpers/constants/TOKEN_STANDARDS'
+import TOKEN_STANDARDS, { EXISTING_STANDARDS } from 'helpers/constants/TOKEN_STANDARDS'
 import { BLOCKCHAIN as BLOCKCHAIN_TYPE } from 'swap.app/constants/COINS'
 
 const NETWORK = process.env.MAINNET ? 'mainnet' : 'testnet'
@@ -44,8 +44,8 @@ if (Array.isArray(buildOpts.ownTokens) && buildOpts.ownTokens.length) {
   const wcP = (`WIDGETTOKENCODE`).toUpperCase()
   const wcPe = `#}`
 
-  Object.keys(TOKEN_STANDARDS).forEach((key) => {
-    config[TOKEN_STANDARDS[key].standard.toLowerCase()] = {}
+  EXISTING_STANDARDS.forEach((standard) => {
+    config[standard] = {}
   })
 
   buildOpts.ownTokens.forEach((token) => {
@@ -59,41 +59,35 @@ if (Array.isArray(buildOpts.ownTokens) && buildOpts.ownTokens.length) {
 }
 
 const tokenItems: IUniversalObj[] = []
+const tokenPartialItems: IUniversalObj[] = []
 
-Object.keys(TOKEN_STANDARDS).forEach((key) => {
-  const standard = TOKEN_STANDARDS[key].standard
-  const blockchain = TOKEN_STANDARDS[key].currency
+EXISTING_STANDARDS.forEach((standard) => {
+  const { currency } = TOKEN_STANDARDS[standard]
+  const tokenNames = Object.keys(config[standard])
 
-  Object.keys(config[standard]).forEach((name) => {
+  tokenNames.forEach((name) => {
     tokenItems.push({
       name: name.toUpperCase(),
       title: name.toUpperCase(),
       icon: name,
-      value: `{${blockchain.toUpperCase()}}${name}`,
+      value: `{${currency.toUpperCase()}}${name}`,
       fullTitle: name,
       addAssets: true,
-      blockchain: BLOCKCHAIN_TYPE[blockchain.toUpperCase()],
+      blockchain: BLOCKCHAIN_TYPE[currency.toUpperCase()],
       standard,
     })
   })
-})
 
-const tokenPartialItems: IUniversalObj[] = []
-
-Object.keys(TOKEN_STANDARDS).forEach((key) => {
-  const standard = TOKEN_STANDARDS[key].standard
-  const blockchain = TOKEN_STANDARDS[key].currency
-
-  Object.keys(config[standard])
+  tokenNames
     .filter((name) => config[standard][name].canSwap)
     .forEach((name) => {
       tokenPartialItems.push({
         name: name.toUpperCase(),
         title: name.toUpperCase(),
         icon: name,
-        value: `{${blockchain.toUpperCase()}}${name}`,
+        value: `{${currency.toUpperCase()}}${name}`,
         fullTitle: config[standard][name].fullName || name,
-        blockchain: BLOCKCHAIN_TYPE[blockchain.toUpperCase()],
+        blockchain: BLOCKCHAIN_TYPE[currency.toUpperCase()],
         standard,
       })
     })

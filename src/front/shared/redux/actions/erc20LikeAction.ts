@@ -7,7 +7,7 @@ import actions from 'redux/actions'
 import reducers from 'redux/core/reducers'
 import DEFAULT_CURRENCY_PARAMETERS from 'common/helpers/constants/DEFAULT_CURRENCY_PARAMETERS'
 import EVM_CONTRACTS_ABI from 'common/helpers/constants/EVM_CONTRACTS_ABI'
-import TOKEN_STANDARDS from 'helpers/constants/TOKEN_STANDARDS'
+import TOKEN_STANDARDS, { EXISTING_STANDARDS } from 'helpers/constants/TOKEN_STANDARDS'
 import ethLikeHelper from 'common/helpers/ethLikeHelper'
 import erc20Like from 'common/erc20Like'
 import { apiLooper, constants, cacheStorageGet, cacheStorageSet, feedback } from 'helpers'
@@ -124,9 +124,7 @@ class Erc20LikeAction {
     const fillInTokensConfig = (configName) => {
       customTokens[configName] = {}
 
-      Object.keys(TOKEN_STANDARDS).forEach((key) => {
-        const standard = TOKEN_STANDARDS[key].standard
-
+      EXISTING_STANDARDS.forEach((standard) => {
         customTokens[configName][standard] = {}
       })
     }

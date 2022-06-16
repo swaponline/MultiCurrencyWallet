@@ -3,7 +3,7 @@ import { util } from 'swap.app'
 import { constants } from 'swap.app'
 import BigNumber from 'bignumber.js'
 import reducers from 'redux/core/reducers'
-import TOKEN_STANDARDS from 'helpers/constants/TOKEN_STANDARDS'
+import TOKEN_STANDARDS, { EXISTING_STANDARDS } from 'helpers/constants/TOKEN_STANDARDS'
 
 const NETWORK = process.env.MAINNET ? 'mainnet' : 'testnet'
 
@@ -19,9 +19,7 @@ const getCustomTokenConfig = () => {
 
 const initExternalConfig = () => {
   // Add to swap.core not exists tokens
-  Object.keys(TOKEN_STANDARDS).forEach((key) => {
-    const standard = TOKEN_STANDARDS[key].standard.toLowerCase()
-
+  EXISTING_STANDARDS.forEach((standard) => {
     Object.keys(config[standard]).forEach((tokenSymbol) => {
       if (!constants.COIN_DATA[tokenSymbol]) {
         util.tokenRegistrar[standard].register(tokenSymbol, config[standard][tokenSymbol].decimals)
@@ -381,8 +379,7 @@ const externalConfig = () => {
     const wcP = `WIDGETTOKENCODE`
     const wcPe = `#}`
 
-    Object.keys(TOKEN_STANDARDS).forEach((key) => {
-      const standard = TOKEN_STANDARDS[key].standard
+    EXISTING_STANDARDS.forEach((standard) => {
       const ownTokens = {}
 
       Object.keys(config[standard]).forEach((tokenSymbol) => {
@@ -464,9 +461,8 @@ const externalConfig = () => {
 
     // add currency commissions for tokens
     if (hasTokenAdminFee) {
-      Object.keys(TOKEN_STANDARDS).forEach((key) => {
-        const standard = TOKEN_STANDARDS[key].standard.toLowerCase()
-        const baseCurrency = TOKEN_STANDARDS[key].currency.toLowerCase()
+      EXISTING_STANDARDS.forEach((standard) => {
+        const baseCurrency = TOKEN_STANDARDS[standard].currency.toLowerCase()
         const baseCurrencyFee = config.opts.fee[baseCurrency]
 
         if (!config.opts.fee[standard]) {

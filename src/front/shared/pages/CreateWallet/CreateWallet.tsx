@@ -9,7 +9,7 @@ import { FormattedMessage, useIntl } from 'react-intl'
 import { withRouter } from 'react-router-dom'
 import { isMobile } from 'react-device-detect'
 import reducers from 'redux/core/reducers'
-import TOKEN_STANDARDS from 'helpers/constants/TOKEN_STANDARDS'
+import TOKEN_STANDARDS, { EXISTING_STANDARDS } from 'helpers/constants/TOKEN_STANDARDS'
 import links from 'helpers/links'
 import metamask from 'helpers/metamask'
 import { localisedUrl } from 'helpers/locale'
@@ -117,9 +117,9 @@ function CreateWallet(props) {
     }
 
     const isIgnoreSecondStep = !Object.keys(currencies).includes('BTC') || (Object.keys(currencies).includes('BTC') && hash !== '#pin')
-    const tokenStandards = Object.keys(TOKEN_STANDARDS).map((key) => TOKEN_STANDARDS[key])
+    const standardConfigs = EXISTING_STANDARDS.map((standard) => TOKEN_STANDARDS[standard])
 
-    for (const standardObj of tokenStandards) {
+    for (const standardObj of standardConfigs) {
       const standardName = standardObj.standard.toUpperCase()
       const baseCurrency = standardObj.currency.toUpperCase()
       const key = `{${baseCurrency}}${standardName}`

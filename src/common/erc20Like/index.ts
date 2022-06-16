@@ -124,6 +124,9 @@ const isToken = (params) => {
 
   for (const prop in TOKEN_STANDARDS) {
     const standard = TOKEN_STANDARDS[prop].standard
+
+    if (!config[standard]) continue
+
     const baseCurrency = TOKEN_STANDARDS[prop].currency
     const lowerName = coinName.toLowerCase()
 

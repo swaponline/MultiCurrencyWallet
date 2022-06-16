@@ -1,6 +1,6 @@
 import store from 'redux/store'
 import { externalConfig, links, getItezUrl } from 'helpers'
-import TOKEN_STANDARDS from 'helpers/constants/TOKEN_STANDARDS'
+import TOKEN_STANDARDS, { EXISTING_STANDARDS } from 'helpers/constants/TOKEN_STANDARDS'
 
 const getEnabledEvmCurrencies = () => Object.keys(externalConfig.enabledEvmNetworks)
 
@@ -22,10 +22,9 @@ export const getActivatedCurrencies = () => {
     currencies.push('NEXT')
   }
 
-  Object.keys(TOKEN_STANDARDS).forEach((standardKey) => {
-    Object.keys(externalConfig[standardKey]).forEach((token) => {
-
-      const baseCurrency = TOKEN_STANDARDS[standardKey].currency.toUpperCase()
+  EXISTING_STANDARDS.forEach((standard) => {
+    Object.keys(externalConfig[standard]).forEach((token) => {
+      const baseCurrency = TOKEN_STANDARDS[standard].currency.toUpperCase()
       const tokenName = token.toUpperCase()
       const tokenValue = `{${baseCurrency}}${tokenName}`
 

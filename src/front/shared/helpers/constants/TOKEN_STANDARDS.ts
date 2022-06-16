@@ -11,7 +11,7 @@ export type TokenStandard = {
   hasSupportAtomicSwap: boolean
 }
 
-export default {
+const STANDARDS = {
   erc20: {
     platform: 'ethereum',
     platformKey: 'ethereum',
@@ -107,9 +107,15 @@ export default {
     platformKey: '',
     standard: 'phi20',
     value: 'erc20aurora',
-    currency: 'Φ',
+    currency: 'phi',
     explorerApi: config.api?.aurorascan || '',
     explorerApiKey: config.api?.phi_ApiKey || '',
     hasSupportAtomicSwap: false,
   },
 }
+
+export const EXISTING_STANDARDS = Object.values(STANDARDS)
+  .filter(({ standard }) => !!config[standard])
+  .map(({ standard }) => standard.toLowerCase())
+
+export default STANDARDS
