@@ -28,5 +28,8 @@ export default {
   viperSwapRouter: '',
   trisolarisFactory: '', // AURETH
   trisolarisRouter: '',
+  phiFactory: '', // PHI network
+  phiRouter: '',
+
   affiliateAddress: '0x873351e707257C28eC6fAB1ADbc850480f6e0633',
 }

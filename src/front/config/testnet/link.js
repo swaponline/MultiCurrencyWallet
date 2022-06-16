@@ -13,4 +13,5 @@ export default {
   movrscan: 'https://moonbase.moonscan.io',
   oneExplorer: 'https://explorer.pops.one',
   auroraExplorer: 'https://testnet.aurorascan.dev',
+  phiExplorer: '',
 }
