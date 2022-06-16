@@ -18,8 +18,14 @@ describe('Adding coins', () => {
     ['matic', 'MATIC Token'],
     ['arbeth', 'Arbitrum ETH'],
     ['xdai', 'xDai'],
+    ['aureth', 'Aurora ETH'],
+    ['ftm', 'Fantom'],
+    ['avax', 'Avalanche'],
+    ['movr', 'Moonriver'],
+    ['one', 'Harmony One'],
     ['ghost', 'ghost'],
-    ['next', 'NEXT.coin'],
+    // temporary disabled
+    // ['next', 'NEXT.coin'],
   ]
 
   async function checkWalletDisplay(params) {
@@ -58,14 +64,6 @@ describe('Adding coins', () => {
         await clickOn({
           page: testPage,
           selector: '#continueBtn',
-        })
-        await clickOn({
-          page: testPage,
-          selector: '#withoutSecure',
-        })
-        await clickOn({
-          page: testPage,
-          selector: '#createWalletBtn',
         })
 
         await checkWalletDisplay({

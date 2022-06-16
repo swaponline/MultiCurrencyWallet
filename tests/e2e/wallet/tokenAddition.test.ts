@@ -54,6 +54,53 @@ describe('Adding custom tokens', () => {
         walletTitle: 'ARIA ERC20XDAI',
       },
     ],
+    [
+      'Custom Fantom ERC20',
+      'ftmerc20ftm',
+      {
+        contract: '0xb4BF6a5695E311c49A8a5CebE7d9198c7454385a',
+        titleId: 'erc20ftmwftm',
+        walletTitle: 'WFTM ERC20FTM',
+      },
+    ],
+    [
+      'Custom Avalanche ERC20',
+      'avaxerc20avax',
+      {
+        contract: '0xd00ae08403B9bbb9124bB305C09058E32C39A48c',
+        titleId: 'erc20avaxwavax',
+        walletTitle: 'WAVAX ERC20AVAX',
+      },
+    ],
+    [
+      'Custom moonbase ERC20',
+      'movrerc20movr',
+      {
+        contract: '0xA5fd1F6e7980Fd5cA9d062a762030D449990BBBf',
+        titleId: 'erc20movrweth',
+        walletTitle: 'WETH ERC20MOVR',
+      },
+    ],
+    // their testnet is not working
+    // [
+    //   'Custom Harmony ERC20',
+    //   'oneerc20one',
+    //   {
+    //     contract: '',
+    //     titleId: '',
+    //     walletTitle: '',
+    //   },
+    // ],
+    // @todo fix token addition for Aurora betanet
+    // [
+    //   'Custom Aurora ERC20',
+    //   'auretherc20aurora',
+    //   {
+    //     contract: '0x9D29f395524B3C817ed86e2987A14c1897aFF849',
+    //     titleId: 'erc20auroraeth',
+    //     walletTitle: 'WETH ERC20AURETH',
+    //   },
+    // ],
   ]
 
   async function checkTokenDisplay(params) {
