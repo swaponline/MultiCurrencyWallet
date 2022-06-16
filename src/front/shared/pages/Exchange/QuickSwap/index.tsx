@@ -713,9 +713,9 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   }
 
   processingSourceActions = async () => {
-    const { sourceAction, currentLiquidityPair } = this.state
+    const { sourceAction, currentLiquidityPair, spendedAmount } = this.state
 
-    if (!currentLiquidityPair) return
+    if (!currentLiquidityPair || !spendedAmount) return
 
     switch (sourceAction) {
       case Actions.Swap:
@@ -778,9 +778,9 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       }))
     } catch (error) {
       this.reportError(error)
-    } finally {
-      this.setPending(false)
     }
+
+    this.setPending(false)
   }
 
   setSpendedAmount = (value) => {
@@ -1210,6 +1210,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
                 isSourceMode={isSourceMode}
                 wrongNetwork={wrongNetwork}
                 insufficientBalanceA={insufficientBalanceA}
+                insufficientBalanceB={insufficientBalanceB}
                 blockReason={blockReason}
                 baseChainWallet={baseChainWallet}
                 spendedAmount={spendedAmount}

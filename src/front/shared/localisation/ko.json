@@ -3978,8 +3978,7 @@
     "id": "AlertOrderNonEnoughtBalance",
     "message": "스왑을 시작하는 동안 잔고를 높이십시오.",
     "files": [
-      "src/front/shared/pages/Exchange/AtomicSwap.tsx",
-      "src/front/shared/pages/Exchange/QuickSwap/Feedback.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
@@ -5907,7 +5906,7 @@
   },
   {
     "id": "aggregatorFeeDescription",
-    "message": "The percentage of the purchase amount that charged as a commission",
+    "message": "수수료로 청구된 구매 금액의 백분율입니다",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/UserInfo.tsx"
     ]
@@ -5928,14 +5927,21 @@
   },
   {
     "id": "Search",
-    "message": "Search",
+    "message": "검색",
     "files": [
       "src/front/shared/components/modals/AddCustomToken/index.tsx"
     ]
   },
   {
     "id": "aggregatorCannotUseThisNetwork",
-    "message": "Aggregator cannot use this network. Please choose another",
+    "message": "애그리 게이터는이 네트워크를 사용할 수 없습니다. 선택 다른",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/Feedback.tsx"
+    ]
+  },
+  {
+    "id": "topUpCurrencyBalance",
+    "message": "{currency}잔액을 위로 올려주세요",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/Feedback.tsx"
     ]

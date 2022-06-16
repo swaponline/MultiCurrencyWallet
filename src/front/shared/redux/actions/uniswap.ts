@@ -5,7 +5,6 @@ import { abi as PairV2ABI } from '@uniswap/v2-periphery/build/IUniswapV2Pair.jso
 import ethLikeHelper from 'common/helpers/ethLikeHelper'
 import constants from 'common/helpers/constants'
 import utils from 'common/utils'
-import erc20Like from 'common/erc20Like'
 import actions from 'redux/actions'
 
 const ABIS = {

@@ -12,7 +12,8 @@ function Feedback(props) {
     blockReason,
     baseChainWallet,
     spendedAmount,
-    insufficientBalance,
+    insufficientBalanceA,
+    insufficientBalanceB,
     wrongNetwork,
     needApproveA,
     needApproveB,
@@ -55,11 +56,20 @@ function Feedback(props) {
             defaultMessage="You do not have native currency balance to pay the transaction fee"
           />
         </p>
-      ) : insufficientBalance ? (
+      ) : insufficientBalanceA ? (
         <p styleName="warningNotice">
           <FormattedMessage
-            id="AlertOrderNonEnoughtBalance"
-            defaultMessage="Please top up your balance before you start the swap"
+            id="topUpCurrencyBalance"
+            defaultMessage="Please top up {currency} balance"
+            values={{ currency: spendedCurrency?.name }}
+          />
+        </p>
+      ) : insufficientBalanceB && sourceAction === Actions.AddLiquidity ? (
+        <p styleName="warningNotice">
+          <FormattedMessage
+            id="topUpCurrencyBalance"
+            defaultMessage="Please top up {currency} balance"
+            values={{ currency: receivedCurrency?.name }}
           />
         </p>
       ) : needApproveA && needApproveB && sourceAction === Actions.AddLiquidity ? (

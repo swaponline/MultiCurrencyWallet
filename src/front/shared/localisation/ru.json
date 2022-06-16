@@ -3982,8 +3982,7 @@
     "id": "AlertOrderNonEnoughtBalance",
     "message": "Please top up your balance before you start the swap.",
     "files": [
-      "src/front/shared/pages/Exchange/AtomicSwap.tsx",
-      "src/front/shared/pages/Exchange/QuickSwap/Feedback.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
@@ -5940,6 +5939,13 @@
   {
     "id": "aggregatorCannotUseThisNetwork",
     "message": "Агрегатор не может использовать эту сеть. Пожалуйста выберете другую",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/Feedback.tsx"
+    ]
+  },
+  {
+    "id": "topUpCurrencyBalance",
+    "message": "Пожалуйста, пополните баланс {currency}",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/Feedback.tsx"
     ]

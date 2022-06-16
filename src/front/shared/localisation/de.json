@@ -3993,8 +3993,7 @@
     "id": "AlertOrderNonEnoughtBalance",
     "message": "Bitte lade dein Guthaben auf, bevor du mit dem Tausch beginnst.",
     "files": [
-      "src/front/shared/pages/Exchange/AtomicSwap.tsx",
-      "src/front/shared/pages/Exchange/QuickSwap/Feedback.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
@@ -5944,6 +5943,13 @@
   {
     "id": "aggregatorCannotUseThisNetwork",
     "message": "Aggregator kann dieses Netz nicht nutzen. Bitte wählen Sie ein anderes",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/Feedback.tsx"
+    ]
+  },
+  {
+    "id": "topUpCurrencyBalance",
+    "message": "Bitte laden Sie {currency} Guthaben auf",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/Feedback.tsx"
     ]
