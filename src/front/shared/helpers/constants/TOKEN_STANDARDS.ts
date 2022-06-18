@@ -106,7 +106,7 @@ const STANDARDS = {
     platform: '',
     platformKey: '',
     standard: 'phi20',
-    value: 'erc20aurora',
+    value: 'phi20',
     currency: 'phi',
     explorerApi: config.api?.aurorascan || '',
     explorerApiKey: config.api?.phi_ApiKey || '',
