@@ -405,14 +405,25 @@ const addLiquidityCallback = async (params) => {
   const txData = router.methods[method](...args).encodeABI()
 
   try {
+    const hexValue = new BigNumber(value || 0).multipliedBy(10 ** 18).toString(16)
+    const gasLimit = await router.methods[method](...args).estimateGas({
+      from: owner,
+      value: `0x${hexValue}`,
+    })
+    const additionGasMultiplier = 1.1
+
     return actions[baseCurrency.toLowerCase()].send({
       to: routerAddress,
       data: txData,
       waitReceipt,
-      amount: value ?? 0,
+      amount: value || 0,
+      gasLimit: new BigNumber(gasLimit).multipliedBy(additionGasMultiplier).toFixed(0) || 0,
     })
   } catch (error) {
-    return error
+    console.group('%c add liquidity', 'color: red')
+    console.error(error)
+    console.groupEnd()
+    return false
   }
 }
 
