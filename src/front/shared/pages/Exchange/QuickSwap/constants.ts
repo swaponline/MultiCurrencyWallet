@@ -71,4 +71,9 @@ export const LIQUIDITY_SOURCE_DATA = {
     router: config.swapContract.trisolarisRouter,
     factory: config.swapContract.trisolarisFactory,
   },
+  [config.evmNetworks.PHI.networkVersion]: {
+    name: 'PHI Swap',
+    router: config.swapContract.phiRouter,
+    factory: config.swapContract.phiFactory,
+  },
 }

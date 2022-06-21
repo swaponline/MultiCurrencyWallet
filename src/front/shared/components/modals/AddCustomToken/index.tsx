@@ -6,7 +6,10 @@ import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import axios from 'axios'
 
 import typeforce from 'swap.app/util/typeforce'
-import TOKEN_STANDARDS, { TokenStandard } from 'helpers/constants/TOKEN_STANDARDS'
+import TOKEN_STANDARDS, {
+  EXISTING_STANDARDS,
+  TokenStandard,
+} from 'helpers/constants/TOKEN_STANDARDS'
 import config from 'helpers/externalConfig'
 
 import Modal from 'components/modal/Modal/Modal'
@@ -23,17 +26,15 @@ const { curEnabled } = config.opts
 
 const TOKEN_STANDARDS_ARR: TokenStandard[] = []
 
-Object.keys(TOKEN_STANDARDS).forEach(standard => {
+EXISTING_STANDARDS.forEach((standard) => {
   const standardConfig: TokenStandard = TOKEN_STANDARDS[standard]
   const { currency: standardBlockchain } = standardConfig
 
-  const isStandardEnabled = !!config[standard]
   const isStandardBlockchainEnabled = curEnabled[standardBlockchain]
 
-  if (isStandardEnabled && isStandardBlockchainEnabled) {
+  if (isStandardBlockchainEnabled) {
     TOKEN_STANDARDS_ARR.push(standardConfig)
   }
-
 })
 
 interface IAvailableAssetPlatform {

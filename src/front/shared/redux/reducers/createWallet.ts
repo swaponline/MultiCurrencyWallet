@@ -11,6 +11,7 @@ export const initialState = {
     avax: false,
     movr: false,
     one: false,
+    phi: false,
     ghost: false,
     next: false,
     '{eth}usdt': false,

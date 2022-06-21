@@ -28,6 +28,7 @@ import pay from './pay.png'
 import eurs from './eurs.svg'
 import ghost from './ghost.svg'
 import next from './next.svg'
+import phi from './phi.png'
 
 
 export default {
@@ -64,4 +65,5 @@ export default {
   eurs,
   ghost,
   next,
+  phi,
 }

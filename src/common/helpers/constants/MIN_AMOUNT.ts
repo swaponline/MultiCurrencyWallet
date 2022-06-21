@@ -9,6 +9,7 @@ export default {
   avax: 0.001,
   movr: 0.001,
   one: 0.001,
+  phi: 0.001,
   btc: 0.00015,
   ghost: 0.00015,
   next: 0.00015,

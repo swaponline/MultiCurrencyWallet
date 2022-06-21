@@ -9,4 +9,5 @@ export default {
   movr_provider: 'https://rpc.moonriver.moonbeam.network',
   one_provider: 'https://api.harmony.one',
   aurora_provider: 'https://mainnet.aurora.dev',
+  phi_provider: 'https://rpc1.phi.network',
 }

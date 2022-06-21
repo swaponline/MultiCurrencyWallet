@@ -82,4 +82,12 @@ export default {
     rpcUrls: [web3.one_provider],
     blockExplorerUrls: [link.oneExplorer],
   },
+  PHI: {
+    currency: 'PHI',
+    chainId: '0x1055',
+    networkVersion: 4181,
+    chainName: 'PHI Network',
+    rpcUrls: [web3.phi_provider],
+    blockExplorerUrls: [link.phiExplorer],
+  },
 }

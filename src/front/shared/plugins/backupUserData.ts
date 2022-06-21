@@ -85,6 +85,7 @@ const backupUserData = {
           avax:                             get(`avax`),
           movr:                             get(`movr`),
           one:                              get(`one`),
+          phi:                              get(`phi`),
           btc:                              get(`btc`),
           ghost:                            get(`ghost`),
           next:                             get(`next`),
@@ -204,6 +205,7 @@ const backupUserData = {
             set(`avax`, data.avax)
             set(`movr`, data.movr)
             set(`one`, data.one)
+            set(`phi`, data.phi)
             set(`twentywords`, data.twentywords)
 
             // set other params to true (user has on tour and other pages)

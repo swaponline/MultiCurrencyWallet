@@ -1,5 +1,4 @@
 import { BigNumber } from 'bignumber.js'
-import erc20Like from 'common/erc20Like'
 import config from 'helpers/externalConfig'
 import moment from 'moment/moment'
 import request from 'common/utils/request'
@@ -7,7 +6,7 @@ import getCoinInfo from 'common/coins/getCoinInfo'
 import * as mnemonicUtils from 'common/utils/mnemonic'
 import { MnemonicKey } from 'common/types'
 import { constants, links, transactions, user, getCurrencyKey, metamask } from 'helpers'
-import TOKEN_STANDARDS from 'helpers/constants/TOKEN_STANDARDS'
+import TOKEN_STANDARDS, { EXISTING_STANDARDS } from 'helpers/constants/TOKEN_STANDARDS'
 import actions from 'redux/actions'
 import { getState } from 'redux/core'
 import reducers from 'redux/core/reducers'
@@ -112,18 +111,17 @@ const sign = async () => {
 }
 
 const loginWithTokens = () => {
-  Object.keys(TOKEN_STANDARDS).forEach((key) => {
-    const standardObj = TOKEN_STANDARDS[key]
-    const privateKey = localStorage.getItem(constants.privateKeyNames.eth) // for eth like blockchain use eth private key
-    const standardName = standardObj.standard
+  EXISTING_STANDARDS.forEach((standard) => {
+    // for eth like blockchain use eth private key
+    const privateKey = localStorage.getItem(constants.privateKeyNames.eth)
 
-    Object.keys(config[standardName]).forEach(tokenName => {
-      actions[standardName].login(
+    Object.keys(config[standard]).forEach(tokenName => {
+      actions[standard].login(
         privateKey,
-        config[standardName][tokenName].address,
+        config[standard][tokenName].address,
         tokenName,
-        config[standardName][tokenName].decimals,
-        config[standardName][tokenName].fullName,
+        config[standard][tokenName].decimals,
+        config[standard][tokenName].fullName,
       )
     })
   })
@@ -193,17 +191,15 @@ const getBalances = () => {
 
 const getTokensBalances = async () => {
   await Promise.all(
-    Object.keys(TOKEN_STANDARDS).map(async (key) => {
-      const standardObj = TOKEN_STANDARDS[key]
-      const standardName = standardObj.standard
-      const baseBlockchain = standardObj.currency.toLowerCase()
+    EXISTING_STANDARDS.map(async (standard) => {
+      const { currency } = TOKEN_STANDARDS[standard]
 
-      if (!enabledCurrencies || enabledCurrencies[baseBlockchain]) {
+      if (!enabledCurrencies || enabledCurrencies[currency.toLowerCase()]) {
         if ((onlyEvmWallets && metamask.isEnabled() && metamask.isConnected()) || !onlyEvmWallets) {
           await Promise.all(
-            Object.keys(config[standardName]).map(async (tokenName) => {
+            Object.keys(config[standard]).map(async (tokenName) => {
               try {
-                await actions[standardName].getBalance(tokenName)
+                await actions[standard].getBalance(tokenName)
               } catch (error) {
                 console.group('Actions >%c user > getTokensBalances', 'color: red;')
                 console.error(`Fail fetch balance for ${tokenName.toUpperCase()} token`, error)
@@ -461,14 +457,12 @@ const setTransactions = async () => {
 }
 
 const setTokensTransaction = async () => {
-  Object.keys(TOKEN_STANDARDS).forEach((key) => {
-    const { standard } = TOKEN_STANDARDS[key]
-    const baseCurrency = TOKEN_STANDARDS[standard].currency.toUpperCase()
-    const baseBlockchain = TOKEN_STANDARDS[standard].currency.toLowerCase()
+  EXISTING_STANDARDS.forEach((standard) => {
+    const { currency } = TOKEN_STANDARDS[standard]
 
-    if (!enabledCurrencies || enabledCurrencies[baseBlockchain]) {
+    if (!enabledCurrencies || enabledCurrencies[currency.toLowerCase()]) {
       Object.keys(config[standard]).filter((name) => {
-        const tokenKey = `{${baseCurrency}}${name}`.toUpperCase()
+        const tokenKey = `{${currency.toUpperCase()}}${name}`.toUpperCase()
 
         if (user.isAllowedCurrency(tokenKey)) {
           actions[standard].getTransaction(false, name).then((trx) => {
@@ -493,6 +487,7 @@ const getText = () => {
       avaxData,
       movrData,
       oneData,
+      phiData,
       btcData,
       ghostData,
       nextData,
@@ -560,6 +555,10 @@ const getText = () => {
     \r\n
     ONE address: ${oneData.address}\r\n
     Private key: ${oneData.privateKey}\r\n
+    # PHI CHAIN
+    \r\n
+    PHI address: ${phiData.address}\r\n
+    Private key: ${phiData.privateKey}\r\n
     \r\n
     # BITCOIN
     \r\n

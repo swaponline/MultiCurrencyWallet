@@ -3,7 +3,7 @@ import { util } from 'swap.app'
 import { constants } from 'swap.app'
 import BigNumber from 'bignumber.js'
 import reducers from 'redux/core/reducers'
-import TOKEN_STANDARDS from 'helpers/constants/TOKEN_STANDARDS'
+import TOKEN_STANDARDS, { EXISTING_STANDARDS } from 'helpers/constants/TOKEN_STANDARDS'
 
 const NETWORK = process.env.MAINNET ? 'mainnet' : 'testnet'
 
@@ -19,9 +19,7 @@ const getCustomTokenConfig = () => {
 
 const initExternalConfig = () => {
   // Add to swap.core not exists tokens
-  Object.keys(TOKEN_STANDARDS).forEach((key) => {
-    const standard = TOKEN_STANDARDS[key].standard.toLowerCase()
-
+  EXISTING_STANDARDS.forEach((standard) => {
     Object.keys(config[standard]).forEach((tokenSymbol) => {
       if (!constants.COIN_DATA[tokenSymbol]) {
         util.tokenRegistrar[standard].register(tokenSymbol, config[standard][tokenSymbol].decimals)
@@ -49,6 +47,7 @@ const externalConfig = () => {
       avax: true,
       movr: true,
       one: true,
+      phi: true,
       btc: true,
       ghost: true,
       next: false,
@@ -65,6 +64,7 @@ const externalConfig = () => {
       avax: false,
       movr: false,
       one: false,
+      phi: false,
       ghost: true,
       next: false,
     },
@@ -302,8 +302,13 @@ const externalConfig = () => {
     config.opts.blockchainSwapEnabled.aureth = false
   }
 
+  if (window && window.CUR_PHI_DISABLED === true) {
+    config.opts.curEnabled.phi = false
+    config.opts.blockchainSwapEnabled.phi = false
+  }
+
   config.enabledEvmNetworks = Object.keys(config.evmNetworks)
-    .filter((key) => config.opts.curEnabled[key.toLowerCase()])
+    .filter((key) => !config.opts.curEnabled || config.opts.curEnabled[key.toLowerCase()])
     .reduce((acc, key) => {
       acc[key] = config.evmNetworks[key]
 
@@ -374,8 +379,7 @@ const externalConfig = () => {
     const wcP = `WIDGETTOKENCODE`
     const wcPe = `#}`
 
-    Object.keys(TOKEN_STANDARDS).forEach((key) => {
-      const standard = TOKEN_STANDARDS[key].standard
+    EXISTING_STANDARDS.forEach((standard) => {
       const ownTokens = {}
 
       Object.keys(config[standard]).forEach((tokenSymbol) => {
@@ -457,9 +461,8 @@ const externalConfig = () => {
 
     // add currency commissions for tokens
     if (hasTokenAdminFee) {
-      Object.keys(TOKEN_STANDARDS).forEach((key) => {
-        const standard = TOKEN_STANDARDS[key].standard.toLowerCase()
-        const baseCurrency = TOKEN_STANDARDS[key].currency.toLowerCase()
+      EXISTING_STANDARDS.forEach((standard) => {
+        const baseCurrency = TOKEN_STANDARDS[standard].currency.toLowerCase()
         const baseCurrencyFee = config.opts.fee[baseCurrency]
 
         if (!config.opts.fee[standard]) {

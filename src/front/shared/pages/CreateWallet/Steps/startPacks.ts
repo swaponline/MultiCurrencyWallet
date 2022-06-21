@@ -3,8 +3,6 @@ import config from 'helpers/externalConfig'
 const { curEnabled } = config.opts
 const onlyEvmWallets = !!(config?.opts?.ui?.disableInternalWallet)
 
-// TODO: Move it in a better place
-
 export const defaultPack = [
   ...((!curEnabled || curEnabled.btc) && !onlyEvmWallets ? [{ name: 'BTC', capture: 'Bitcoin' }] : []),
 
@@ -27,6 +25,8 @@ export const defaultPack = [
   ...(!curEnabled || curEnabled.one ? [{ name: 'ONE', capture: 'Harmony' }] : []),
 
   ...(!curEnabled || curEnabled.aureth ? [{ name: 'AURETH', capture: 'Aurora ETH' }] : []),
+
+  ...(!curEnabled || curEnabled.phi ? [{ name: 'PHI', capture: 'PHI' }] : []),
 
   ...((!curEnabled || curEnabled.ghost) && !onlyEvmWallets ? [{ name: 'GHOST', capture: 'Ghost' }] : []),
   ...((!curEnabled || curEnabled.next) && !onlyEvmWallets ? [{ name: 'NEXT', capture: 'NEXT.coin' }] : []),
@@ -51,7 +51,8 @@ export const defaultPack = [
   ...(config.erc20avax ? [{ name: 'ERC20AVAX', capture: 'Token', baseCurrency: 'AVAX' }] : []),
   ...(config.erc20movr ? [{ name: 'ERC20MOVR', capture: 'Token', baseCurrency: 'MOVR' }] : []),
   ...(config.erc20one ? [{ name: 'ERC20ONE', capture: 'Token', baseCurrency: 'ONE' }] : []),
-  ...(config.erc20aurora ? [{ name: 'ERC2AURORA', capture: 'Token', baseCurrency: 'AURETH' }] : []),
+  ...(config.erc20aurora ? [{ name: 'ERC20AURORA', capture: 'Token', baseCurrency: 'AURETH' }] : []),
+  ...(config.phi20 ? [{ name: 'PHI20', capture: 'Token', baseCurrency: 'PHI' }] : []),
 ]
 
 export const widgetPack = [
@@ -74,7 +75,9 @@ export const widgetPack = [
   ...(!curEnabled || curEnabled.one ? [{ name: 'ONE', capture: 'Harmony One' }] : []),
   ...((config.erc20one && (!curEnabled || curEnabled.one)) ? [{ name: 'ERC20ONE', capture: 'Token', baseCurrency: 'ONE' }] : []),
   ...(!curEnabled || curEnabled.aureth ? [{ name: 'AURETH', capture: 'Aurora ETH' }] : []),
-  ...((config.erc20aurora && (!curEnabled || curEnabled.aureth)) ? [{ name: 'ERC20ONE', capture: 'Token', baseCurrency: 'AURETH' }] : []),
+  ...((config.erc20aurora && (!curEnabled || curEnabled.aureth)) ? [{ name: 'ERC20AURORA', capture: 'Token', baseCurrency: 'AURETH' }] : []),
+  ...(!curEnabled || curEnabled.phi ? [{ name: 'PHI', capture: 'PHI' }] : []),
+  ...((config.phi20 && (!curEnabled || curEnabled.phi)) ? [{ name: 'PHI20', capture: 'Token', baseCurrency: 'PHI' }] : []),
   ...((!curEnabled || curEnabled.ghost) && !onlyEvmWallets ? [{ name: 'GHOST', capture: 'Ghost' }] : []),
   ...((!curEnabled || curEnabled.next) && !onlyEvmWallets ? [{ name: 'NEXT', capture: 'NEXT.coin' }] : []),
 ]

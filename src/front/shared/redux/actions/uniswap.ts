@@ -5,7 +5,6 @@ import { abi as PairV2ABI } from '@uniswap/v2-periphery/build/IUniswapV2Pair.jso
 import ethLikeHelper from 'common/helpers/ethLikeHelper'
 import constants from 'common/helpers/constants'
 import utils from 'common/utils'
-import erc20Like from 'common/erc20Like'
 import actions from 'redux/actions'
 
 const ABIS = {
@@ -237,31 +236,6 @@ const returnSwapMethod = (params) => {
       ? SwapMethods.swapExactTokensForTokensSupportingFeeOnTransferTokens
       : SwapMethods.swapExactTokensForTokens
   }
-}
-
-const checkAndApproveToken = async (params) => {
-  const { standard, token, owner, decimals, spender, amount, tokenName } = params
-
-  const allowance = await erc20Like[standard].checkAllowance({
-    contract: token,
-    decimals,
-    spender,
-    owner,
-  })
-
-  return new Promise(async (res, rej) => {
-    if (new BigNumber(amount).isGreaterThan(allowance)) {
-      const result = await actions[standard].approve({
-        name: tokenName,
-        to: spender,
-        amount,
-      })
-
-      return result instanceof Error ? rej(result) : res(result)
-    }
-
-    res(true)
-  })
 }
 
 const swapCallback = async (params) => {

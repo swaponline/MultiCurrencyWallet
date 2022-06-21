@@ -162,19 +162,10 @@ const deletedPartialCurrency = (orderId) => {
     (item) => item.buyCurrency.toUpperCase() === deletedOrderBuyCurrency
   )
 
-  // currencies which must be all time in the drop
+  // currencies which must be all time in the drop-down
   const premiumCurrencies = [
+    ...Object.keys(config.enabledEvmNetworks),
     'BTC',
-    'ETH',
-    'BNB',
-    'MATIC',
-    'ARBETH',
-    'AURETH',
-    'XDAI',
-    'FTM',
-    'AVAX',
-    'MOVR',
-    'ONE',
     'GHOST',
     'NEXT',
     'SWAP',
@@ -483,6 +474,7 @@ const getWallets = (options: IUniversalObj = {}) => {
       avaxData,
       movrData,
       oneData,
+      phiData,
       tokensData,
       metamaskData,
     },
@@ -521,6 +513,7 @@ const getWallets = (options: IUniversalObj = {}) => {
       || enabledCurrencies.avax
       || enabledCurrencies.movr
       || enabledCurrencies.one
+      || enabledCurrencies.phi
         ? metamaskData
           ? [metamaskData]
           : []
@@ -620,6 +613,14 @@ const getWallets = (options: IUniversalObj = {}) => {
           ? [aurethData]
           : []
         : [aurethData]
+      : []),
+    // =====================================
+    ...(!enabledCurrencies || enabledCurrencies.phi
+      ? metamaskConnected
+        ? withInternal
+          ? [phiData]
+          : []
+        : [phiData]
       : []),
     // =====================================
     ...((!enabledCurrencies || enabledCurrencies.ghost) && !onlyEvmWallets ? [ghostData] : []),

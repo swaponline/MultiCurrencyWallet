@@ -2,7 +2,7 @@ import { BigNumber } from 'bignumber.js'
 import getCoinInfo from 'common/coins/getCoinInfo'
 import getCurrencyKey from './getCurrencyKey'
 import config from './externalConfig'
-import TOKEN_STANDARDS from './constants/TOKEN_STANDARDS'
+import TOKEN_STANDARDS, { EXISTING_STANDARDS } from './constants/TOKEN_STANDARDS'
 
 const isEnabled = (currency) => {
   const currencyKey = getCurrencyKey(currency, false).toLowerCase()
@@ -27,7 +27,7 @@ const getStandardFee = (token: string) => {
 
   if (!tokenBaseCurrency) return tokenFee
 
-  Object.keys(TOKEN_STANDARDS).forEach((standard) => {
+  EXISTING_STANDARDS.forEach((standard) => {
     const baseCurrency = TOKEN_STANDARDS[standard].currency.toUpperCase()
     const standardFee = config.opts.fee[standard]
 

@@ -9,6 +9,7 @@ export default {
   avax: `${process.env.ENTRY}:avax:privateKey`,
   movr: `${process.env.ENTRY}:movr:privateKey`,
   one: `${process.env.ENTRY}:one:privateKey`,
+  phi: `${process.env.ENTRY}:phi:privateKey`,
   btc: `${process.env.ENTRY}:btc:privateKey`,
   ghost: `${process.env.ENTRY}:ghost:privateKey`,
   next: `${process.env.ENTRY}:next:privateKey`,

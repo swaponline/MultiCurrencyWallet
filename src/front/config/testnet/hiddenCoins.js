@@ -12,6 +12,7 @@ export default [
   'AVAX',
   'MOVR',
   'ONE',
+  'PHI',
   'GHOST',
   'NEXT',
   '{ETH}SWAP',

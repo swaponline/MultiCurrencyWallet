@@ -40,9 +40,8 @@ interface State {
   }
 }
 
-// Available only Ethereum, BSC, Polygon, Optimism and Arbitrum (1inch docs for limit orders)
 const blockchains = {}
-const allowedCurrency = ['ETH', 'BNB', 'MATIC', 'XDAI', 'FTM', 'AVAX', 'MOVR', 'ONE', 'AURETH']
+const allowedCurrency = ['ETH', 'BNB', 'MATIC', 'XDAI', 'FTM', 'AVAX', 'MOVR', 'ONE', 'AURETH', 'PHI']
 
 Object.keys(config.evmNetworks)
   .filter((currency) => allowedCurrency.includes(currency))

@@ -10,6 +10,7 @@ import erc20movr from './erc20movr'
 import erc20one from './erc20one'
 import erc20aurora from './erc20aurora'
 import bep20 from './bep20'
+import phi20 from './phi20'
 import api from './api'
 import swapContract from './swapContract'
 import feeRates from './feeRates'
@@ -27,6 +28,7 @@ export default {
   pubsubRoom,
   erc20,
   bep20,
+  phi20,
   erc20matic,
   erc20xdai,
   erc20ftm,

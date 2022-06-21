@@ -123,4 +123,12 @@ export default {
     isCoinAddress: typeforce.isCoinAddress.XDAI,
     isPublicKey: typeforce.isPublicKey.XDAI,
   }),
+  phi20: new TokenRegistrar({
+    blockchainType: BLOCKCHAIN_TYPE.PHI,
+    tokenStandard: TOKEN_STANDARD.PHI20,
+    coinType: COIN_TYPE.PHI_TOKEN,
+    blockchainModel: COIN_DATA.PHI.model,
+    isCoinAddress: typeforce.isCoinAddress.PHI,
+    isPublicKey: typeforce.isPublicKey.PHI,
+  }),
 }

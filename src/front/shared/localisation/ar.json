@@ -3978,8 +3978,7 @@
     "id": "AlertOrderNonEnoughtBalance",
     "message": "يرجى تعبئة رصيدك قبل أن تبدأ المبادلة.",
     "files": [
-      "src/front/shared/pages/Exchange/AtomicSwap.tsx",
-      "src/front/shared/pages/Exchange/QuickSwap/Feedback.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
@@ -5936,6 +5935,13 @@
   {
     "id": "aggregatorCannotUseThisNetwork",
     "message": "العارض لا يمكنه استخدام هذه الشبكة. الرجاء اختيار آخر",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/Feedback.tsx"
+    ]
+  },
+  {
+    "id": "topUpCurrencyBalance",
+    "message": "يرجى تعبئة الرصيد {currency}",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/Feedback.tsx"
     ]

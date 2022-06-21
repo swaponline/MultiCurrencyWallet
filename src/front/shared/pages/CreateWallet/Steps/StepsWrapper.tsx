@@ -36,16 +36,11 @@ export default class StepsWrapper extends Component<any, any> {
         this.defaultStartPack.push({ name: 'NEXT', capture: 'NEXT.coin' })
       }
 
-      if (config.enabledEvmNetworks) {
-        Object.keys(config.enabledEvmNetworks).forEach((evmNetwork) => {
-          const { currency, chainName } = config.enabledEvmNetworks[evmNetwork] as EvmNetworkConfig
-          if (
-            !curEnabled
-            || curEnabled[evmNetwork?.toLowerCase()]
-            && (currency && chainName)
-          ) this.defaultStartPack.push({ name: currency, capture: chainName })
-        })
-      }
+      Object.values(config.enabledEvmNetworks).forEach(({ currency, chainName }: EvmNetworkConfig) => {
+        if (currency && chainName) {
+          this.defaultStartPack.push({ name: currency, capture: chainName })
+        }
+      })
 
       // Multi token build
       config.opts.ownTokens.forEach((token) => {
@@ -69,6 +64,7 @@ export default class StepsWrapper extends Component<any, any> {
         if (config.erc20movr) this.defaultStartPack.push({ name: 'ERC20MOVR', capture: 'Token', baseCurrency: 'MOVR' })
         if (config.erc20one) this.defaultStartPack.push({ name: 'ERC20ONE', capture: 'Token', baseCurrency: 'ONE' })
         if (config.erc20aurora) this.defaultStartPack.push({ name: 'ERC20AURORA', capture: 'Token', baseCurrency: 'AURETH' })
+        if (config.phi20) this.defaultStartPack.push({ name: 'PHI20', capture: 'Token', baseCurrency: 'PHI' })
       }
     }
 
@@ -140,18 +136,19 @@ export default class StepsWrapper extends Component<any, any> {
           } = getCoinInfo(coinInfo)
           let isCustomToken = false
           let customTokenType = ``
+          const tokenStandard = new RegExp(
+            [
+              '^CUSTOM_(',
+              'ERC20|BEP20|PHI20|ERC20MATIC|ERC20XDAI|ERC20FTM|',
+              'ERC20AVAX|ERC20MOVR|ERC20ONE|ERC20AURORA',
+              ')$',
+            ].join('')
+          )
+
           if (
-            coinInfo === `CUSTOM_ERC20`
-            || coinInfo === `CUSTOM_BEP20`
-            || coinInfo === `CUSTOM_ERC20MATIC`
-            || coinInfo === `CUSTOM_ERC20XDAI`
-            || coinInfo === `CUSTOM_ERC20FTM`
-            || coinInfo === `CUSTOM_ERC20AVAX`
-            || coinInfo === `CUSTOM_ERC20MOVR`
-            || coinInfo === `CUSTOM_ERC20ONE`
-            || coinInfo === `CUSTOM_ERC20AURORA`
+            !!coinInfo.match(tokenStandard)
           ) {
-            [customTokenType] = coinInfo.split(`_`)
+            ;[customTokenType] = coinInfo.split(`_`)
             isCustomToken = true
           }
           Object.keys(packList).forEach((coinIndex) => {

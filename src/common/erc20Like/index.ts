@@ -124,6 +124,9 @@ const isToken = (params) => {
 
   for (const prop in TOKEN_STANDARDS) {
     const standard = TOKEN_STANDARDS[prop].standard
+
+    if (!config[standard]) continue
+
     const baseCurrency = TOKEN_STANDARDS[prop].currency
     const lowerName = coinName.toLowerCase()
 
@@ -138,60 +141,68 @@ const isToken = (params) => {
   return false
 }
 
+const providers = config.web3
+
 export default {
   isToken,
   erc20: new erc20LikeHelper({
     standard: 'erc20',
     currency: 'ETH',
     defaultParams: DEFAULT_CURRENCY_PARAMETERS.evmLikeToken,
-    web3: new Web3(new Web3.providers.HttpProvider(config.web3.provider)),
+    web3: new Web3(providers.provider),
   }),
   bep20: new erc20LikeHelper({
     standard: 'bep20',
     currency: 'BNB',
     defaultParams: DEFAULT_CURRENCY_PARAMETERS.evmLikeToken,
-    web3: new Web3(new Web3.providers.HttpProvider(config.web3.binance_provider)),
+    web3: new Web3(providers.binance_provider),
   }),
   erc20matic: new erc20LikeHelper({
     standard: 'erc20matic',
     currency: 'MATIC',
     defaultParams: DEFAULT_CURRENCY_PARAMETERS.evmLikeToken,
-    web3: new Web3(new Web3.providers.HttpProvider(config.web3.matic_provider)),
+    web3: new Web3(providers.matic_provider),
   }),
   erc20xdai: new erc20LikeHelper({
     standard: 'erc20xdai',
     currency: 'XDAI',
     defaultParams: DEFAULT_CURRENCY_PARAMETERS.evmLikeToken,
-    web3: new Web3(new Web3.providers.HttpProvider(config.web3.xdai_provider)),
+    web3: new Web3(providers.xdai_provider),
   }),
   erc20ftm: new erc20LikeHelper({
     standard: 'erc20ftm',
     currency: 'FTM',
     defaultParams: DEFAULT_CURRENCY_PARAMETERS.evmLikeToken,
-    web3: new Web3(new Web3.providers.HttpProvider(config.web3.ftm_provider)),
+    web3: new Web3(providers.ftm_provider),
   }),
   erc20avax: new erc20LikeHelper({
     standard: 'erc20avax',
     currency: 'AVAX',
     defaultParams: DEFAULT_CURRENCY_PARAMETERS.evmLikeToken,
-    web3: new Web3(new Web3.providers.HttpProvider(config.web3.avax_provider)),
+    web3: new Web3(providers.avax_provider),
   }),
   erc20movr: new erc20LikeHelper({
     standard: 'erc20movr',
     currency: 'MOVR',
     defaultParams: DEFAULT_CURRENCY_PARAMETERS.evmLikeToken,
-    web3: new Web3(new Web3.providers.HttpProvider(config.web3.movr_provider)),
+    web3: new Web3(providers.movr_provider),
   }),
   erc20one: new erc20LikeHelper({
     standard: 'erc20one',
     currency: 'ONE',
     defaultParams: DEFAULT_CURRENCY_PARAMETERS.evmLikeToken,
-    web3: new Web3(new Web3.providers.HttpProvider(config.web3.one_provider)),
+    web3: new Web3(providers.one_provider),
   }),
   erc20aurora: new erc20LikeHelper({
     standard: 'erc20aurora',
     currency: 'AURETH',
-    defaultParams: DEFAULT_CURRENCY_PARAMETERS.aurethToken,
-    web3: new Web3(new Web3.providers.HttpProvider(config.web3.aurora_provider)),
+    defaultParams: DEFAULT_CURRENCY_PARAMETERS.evmLikeToken,
+    web3: new Web3(providers.aurora_provider),
+  }),
+  phi20: new erc20LikeHelper({
+    standard: 'phi20',
+    currency: 'phi',
+    defaultParams: DEFAULT_CURRENCY_PARAMETERS.evmLikeToken,
+    web3: new Web3(providers.phi_provider),
   }),
 }

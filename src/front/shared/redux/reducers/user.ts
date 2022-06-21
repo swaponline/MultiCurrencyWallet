@@ -95,6 +95,14 @@ export const initialState = {
     balanceError: null,
     infoAboutCurrency: null,
   },
+  phiData: {
+    balance: 0,
+    isBalanceFetched: false,
+    currency: 'PHI',
+    fullName: 'PHI',
+    balanceError: null,
+    infoAboutCurrency: null,
+  },
   btcData: {
     balance: 0,
     isBalanceFetched: false,
