@@ -91,6 +91,14 @@ export default {
     isCoinAddress: typeforce.isCoinAddress.FTM,
     isPublicKey: typeforce.isPublicKey.FTM,
   }),
+  erc20cndl: new TokenRegistrar({
+    blockchainType: BLOCKCHAIN_TYPE.CNDL,
+    tokenStandard: TOKEN_STANDARD.ERC20CNDL,
+    coinType: COIN_TYPE.CNDL_TOKEN,
+    blockchainModel: COIN_DATA.CNDL.model,
+    isCoinAddress: typeforce.isCoinAddress.CNDL,
+    isPublicKey: typeforce.isPublicKey.CNDL,
+  }),
   erc20matic: new TokenRegistrar({
     blockchainType: BLOCKCHAIN_TYPE.MATIC,
     tokenStandard: TOKEN_STANDARD.ERC20MATIC,

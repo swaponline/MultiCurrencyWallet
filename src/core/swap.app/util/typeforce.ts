@@ -26,6 +26,7 @@ const isEvmAddress = (value) => typeof value === 'string' && EVM_ADDRESS_REGEXP.
 const isCoinAddress = { // TODO: move to front helpers
   [constants.COINS.eth]: isEvmAddress,
   [constants.COINS.bnb]: isEvmAddress,
+  [constants.COINS.cndl]: isEvmAddress,
   [constants.COINS.matic]: isEvmAddress,
   [constants.COINS.arbeth]: isEvmAddress,
   [constants.COINS.aureth]: isEvmAddress,
@@ -44,6 +45,7 @@ const isCoinAddress = { // TODO: move to front helpers
 const isPublicKey = {
   [constants.COINS.eth]: '?String', // TODO we don't have / use eth publicKey
   [constants.COINS.bnb]: '?String',
+  [constants.COINS.cndl]: '?String',
   [constants.COINS.matic]: '?String',
   [constants.COINS.arbeth]: '?String',
   [constants.COINS.aureth]: '?String',

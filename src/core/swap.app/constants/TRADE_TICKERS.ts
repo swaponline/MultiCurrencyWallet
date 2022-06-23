@@ -1,4 +1,4 @@
-import { NATIVE, ETH_TOKENS, BNB_TOKENS, MATIC_TOKENS } from './COINS'
+import { NATIVE, ETH_TOKENS, BNB_TOKENS, MATIC_TOKENS, CNDL_TOKENS } from './COINS'
 
 export default [
   'ETH-BTC',
@@ -9,6 +9,7 @@ export default [
 
   ...Object.values(ETH_TOKENS).map(token => `{ETH}${token}-BTC`),
   ...Object.values(BNB_TOKENS).map(token => `{BNB}${token}-BTC`),
+  ...Object.values(CNDL_TOKENS).map(token => `{CNDL}${token}-BTC`),
   ...Object.values(MATIC_TOKENS).map(token => `{MATIC}${token}-BTC`),
   // ...Object.values(ETH_TOKENS).map(token => `${token}-USDT`),
 ]

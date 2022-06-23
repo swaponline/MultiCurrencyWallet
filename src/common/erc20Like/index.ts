@@ -157,6 +157,12 @@ export default {
     defaultParams: DEFAULT_CURRENCY_PARAMETERS.evmLikeToken,
     web3: new Web3(providers.binance_provider),
   }),
+  erc20cndl: new erc20LikeHelper({
+    standard: 'erc20cndl',
+    currency: 'CNDL',
+    defaultParams: DEFAULT_CURRENCY_PARAMETERS.evmLikeToken,
+    web3: new Web3(providers.cndl_provider),
+  }),
   erc20matic: new erc20LikeHelper({
     standard: 'erc20matic',
     currency: 'MATIC',

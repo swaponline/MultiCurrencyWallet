@@ -41,7 +41,7 @@ class SwapApp extends EventEmitter {
   services: SwapAppServices = {}
   swaps: Array<SwapInterface>
   flows: Array<Flow>
-  
+
 
   static _swapAppInstance = null
 
@@ -292,6 +292,7 @@ class SwapApp extends EventEmitter {
   // @to-do use directy getEvmLikeAddress in EthLikeSwaps
   getMyEthAddress() { return this.getEvmLikeAddress(`eth`) }
   getMyBnbAddress() { return this.getEvmLikeAddress(`bnb`) }
+  getMyCndlAddress() { return this.getEvmLikeAddress(`cndl`) }
   getMyMaticAddress() { return this.getEvmLikeAddress(`matic`) }
   getMyArbitrumAddress() { return this.getEvmLikeAddress(`arbeth`) }
 
@@ -313,6 +314,17 @@ class SwapApp extends EventEmitter {
 
   getBnbWeb3Utils() {
     return this.env.getWeb3Bnb().utils
+  }
+
+  getCndlWeb3Adapter() {
+    if (this.env.metamask && this.env.metamask.isEnabled() && this.env.metamask.isConnected()) {
+      return this.env.getWeb3().eth
+    }
+    return this.env.getWeb3Cndl().eth
+  }
+
+  getCndlWeb3Utils() {
+    return this.env.getWeb3Cndl().utils
   }
 
   getMaticWeb3Adapter() {
@@ -346,6 +358,7 @@ class SwapApp extends EventEmitter {
   // @to-do use directy getParticipantEvmLikeAddress in EthLikeSwaps
   getParticipantEthAddress(swap) { return this.getParticipantEvmLikeAddress(`eth`, swap) }
   getParticipantBnbAddress(swap) { return this.getParticipantEvmLikeAddress(`bnb`, swap) }
+  getParticipantCndlAddress(swap) { return this.getParticipantEvmLikeAddress(`cndl`, swap) }
   getParticipantMaticAddress(swap) { return this.getParticipantEvmLikeAddress(`matic`, swap) }
   getParticipantArbitrumAddress(swap) { return this.getParticipantEvmLikeAddress(`arbeth`, swap) }
 

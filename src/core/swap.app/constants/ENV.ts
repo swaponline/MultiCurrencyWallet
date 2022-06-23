@@ -13,6 +13,8 @@ export default {
   isBinance: 'isBinance',
   web3bnb: 'web3bnb',
   getWeb3Bnb: 'getWeb3Bnb',
+  web3Cndl: 'web3Cndl',
+  getWeb3Cndl: 'getWeb3Cndl',
   web3Matic: 'web3Matic',
   getWeb3Matic: 'getWeb3Matic',
   web3Arbitrum: 'web3Arbitrum',

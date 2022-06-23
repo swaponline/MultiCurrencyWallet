@@ -1,6 +1,7 @@
 export default {
   erc20: '0x2015835367EAb64729494CcDB9D3FcbFBf7339a6',
   bep20: '0xd152CD6F9cf76921759d3f51f743651e549f6925',
+  erc20cndl: '0xeb2C8928c2f62168aeFd13033f957853e42Eeb15',
   erc20matic: '0x0F400c0cE80D20E65CB66E5c7a814F5fEfa711cC',
   eth: '0x61eEaC8B9Db0dF4e5E3cCC651F16ffFc6c1d4456',
   bnb: '0x2f87d23cd8d788bc9a32e540cdd8253f9b1f54cf',
@@ -13,6 +14,8 @@ export default {
   uniswapFactory: '0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f',
   pancakeswapRouter: '0x10ED43C718714eb63d5aA57B78B54704E256024E', // BSC
   pancakeswapFactory: '0xcA143Ce32Fe78f1f7019d7d551a6402fC5350c73',
+  carthageRouter: '0x1a45c9f823F64c9360b0c3df269F824cf404f82b', // Candle
+  carthageFactory: '0x5Bb7BAE25728e9e51c25466D2A15FaE97834FD95',
   sushiswapRouter: '0x1b02dA8Cb0d097eB8D57A175b88c7D8b47997506', // Polygon
   sushiswapFactory: '0xc35DADB65012eC5796536bD9864eD8773aBc74C4',
   honeyswapRouter: '0x1C232F01118CB8B424793ae03F870aa7D0ac7f77', // xDai

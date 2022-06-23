@@ -2,6 +2,7 @@ import web3 from './web3'
 import link from './link'
 import pubsubRoom from './pubsubRoom'
 import erc20 from './erc20'
+import erc20cndl from './erc20cndl'
 import erc20matic from './erc20matic'
 import erc20xdai from './erc20xdai'
 import erc20ftm from './erc20ftm'
@@ -29,6 +30,7 @@ export default {
   erc20,
   bep20,
   phi20,
+  erc20cndl,
   erc20matic,
   erc20xdai,
   erc20ftm,

@@ -2,6 +2,7 @@ export const COIN_TYPE = Object.freeze({
   NATIVE: 'NATIVE',
   ETH_TOKEN: 'ETH_TOKEN',
   BNB_TOKEN: 'BNB_TOKEN',
+  CNDL_TOKEN: 'CNDL_TOKEN',
   MATIC_TOKEN: 'MATIC_TOKEN',
   XDAI_TOKEN: 'XDAI_TOKEN',
   FTM_TOKEN: 'FTM_TOKEN',
@@ -15,6 +16,7 @@ export const COIN_TYPE = Object.freeze({
 export const TOKEN_STANDARD = Object.freeze({
   ERC20: 'ERC20',
   BEP20: 'BEP20',
+  ERC20CNDL: 'ERC20CNDL',
   ERC20MATIC: 'ERC20MATIC',
   ERC20XDAI: 'ERC20XDAI',
   ERC20FTM: 'ERC20FTM',
@@ -31,6 +33,7 @@ export const BLOCKCHAIN = Object.freeze({
   NEXT: 'NEXT',
   ETH: 'ETH',
   BNB: 'BNB', // TODO: rename with BSC
+  CNDL: 'CNDL',
   MATIC: 'MATIC',
   ARBITRUM: 'ARBITRUM',
   XDAI: 'XDAI',
@@ -45,6 +48,7 @@ export const BLOCKCHAIN = Object.freeze({
 export const BASE_TOKEN_CURRENCY = Object.freeze({
   ETH: 'ETH',
   BNB: 'BNB',
+  CNDL: 'CNDL',
   MATIC: 'MATIC',
   XDAI: 'XDAI',
   FTM: 'FTM',
@@ -82,6 +86,14 @@ export const COIN_DATA = {
     name: 'Binance Coin',
     type: COIN_TYPE.NATIVE,
     blockchain: BLOCKCHAIN.BNB,
+    model: COIN_MODEL.AB,
+    precision: 18,
+  },
+  CNDL: {
+    ticker: 'CNDL',
+    name: 'Candle',
+    type: COIN_TYPE.NATIVE,
+    blockchain: BLOCKCHAIN.CNDL,
     model: COIN_MODEL.AB,
     precision: 18,
   },
@@ -228,6 +240,7 @@ export const NATIVE = {
   btc: 'BTC',
   eth: 'ETH',
   bnb: 'BNB',
+  cndl: 'CNDL',
   matic: 'MATIC',
   arbeth: 'ARBETH',
   aureth: 'AURETH',
@@ -245,6 +258,9 @@ export const BNB_TOKENS = {
   btcb: 'BTCB',
 }
 
+export const CNDL_TOKENS = {
+  wbtc: 'WBTC',
+}
 export const MATIC_TOKENS = {
   wbtc: 'WBTC',
 }
@@ -271,6 +287,7 @@ export default {
   ...NATIVE,
   ...ETH_TOKENS,
   ...BNB_TOKENS,
+  ...CNDL_TOKENS,
   ...MATIC_TOKENS,
   ...COIN_DATA,
 }
