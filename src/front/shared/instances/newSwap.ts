@@ -52,12 +52,13 @@ import {
   BTC2MATICTOKEN,
 
   ARBITRUM2BTC,
-  BTC2ARBITRUM,  
+  BTC2ARBITRUM,
 } from 'swap.flows'
 import {
   BtcSwap,
   EthSwap,
   BnbSwap,
+  CndlSwap,
   MaticSwap,
   ArbitrumSwap,
   GhostSwap,
@@ -65,6 +66,7 @@ import {
 
   EthTokenSwap,
   BscTokenSwap,
+  CndlTokenSwap,
   MaticTokenSwap,
 
 } from 'swap.swaps'

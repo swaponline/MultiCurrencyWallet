@@ -36,6 +36,11 @@ export const LIQUIDITY_SOURCE_DATA = {
     router: config.swapContract.pancakeswapRouter,
     factory: config.swapContract.pancakeswapFactory,
   },
+  [config.evmNetworks.CNDL.networkVersion]: {
+    name: 'Carthage',
+    router: config.swapContract.carthageRouter,
+    factory: config.swapContract.carthageFactory,
+  },
   [config.evmNetworks.MATIC.networkVersion]: {
     name: 'SushiSwap',
     router: config.swapContract.sushiswapRouter,
