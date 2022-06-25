@@ -4,6 +4,7 @@ export default [
   'BTC (Multisig)',
   'ETH',
   'BNB',
+  'CNDL',
   'MATIC',
   'ARBETH',
   'AURETH',
