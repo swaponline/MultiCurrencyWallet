@@ -5,6 +5,7 @@ export const WrapperCurrency = {
   // mainnet
   1: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
   56: '0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c',
+  534: '0xb750990F953B36F806d0327678eCFB4eEFd16979',
   137: '0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270',
   100: '0xe91D153E0b41518A2Ce8Dd3D7944Fa863463a97d',
   250: '0x21be370D5312f44cB42ce377BC9b8a0cEF1A4C83',

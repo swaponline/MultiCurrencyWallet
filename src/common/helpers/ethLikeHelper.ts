@@ -79,6 +79,11 @@ export default {
     defaultParams: DEFAULT_CURRENCY_PARAMETERS.evmLike,
     web3: new Web3(config.web3.binance_provider),
   }),
+  cndl: new ethLikeHelper({
+    currency: 'CNDL',
+    defaultParams: DEFAULT_CURRENCY_PARAMETERS.evmLike,
+    web3: new Web3(config.web3.cndl_provider),
+  }),
   matic: new ethLikeHelper({
     currency: 'MATIC',
     defaultParams: DEFAULT_CURRENCY_PARAMETERS.evmLike,

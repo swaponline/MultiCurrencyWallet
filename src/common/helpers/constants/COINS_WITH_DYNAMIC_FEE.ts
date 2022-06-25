@@ -5,6 +5,7 @@
 export default [
   'eth',
   'bnb',
+  'cndl',
   'matic',
   'arbeth',
   'aureth',
