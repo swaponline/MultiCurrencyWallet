@@ -456,6 +456,7 @@
 │   │   │   ├── api.js
 │   │   │   ├── bep20.js
 │   │   │   ├── erc20.js
+│   │   │   ├── erc20cndl.js
 │   │   │   ├── erc20matic.js
 │   │   │   ├── evmNetworks.js
 │   │   │   ├── evmNetworkVersions.js

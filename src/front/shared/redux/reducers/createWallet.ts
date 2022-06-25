@@ -3,6 +3,7 @@ export const initialState = {
     btc: false,
     eth: false,
     bnb: false,
+    cndl: false,
     matic: false,
     arbeth: false,
     aureth: false,

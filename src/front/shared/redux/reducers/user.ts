@@ -31,6 +31,14 @@ export const initialState = {
     balanceError: null,
     infoAboutCurrency: null,
   },
+  cndlData: {
+    balance: 0,
+    isBalanceFetched: false,
+    currency: 'CNDL',
+    fullName: 'Candle',
+    balanceError: null,
+    infoAboutCurrency: null,
+  },
   maticData: {
     balance: 0,
     isBalanceFetched: false,

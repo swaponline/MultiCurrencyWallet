@@ -9,6 +9,7 @@ const defaultCurrencyColors = {
   'btc (multisig)': 'orange',
   'btc (sms-protected)': 'orange',
   'btc (pin-protected)': 'orange',
+  'cndl': '#DE0000',
   'matic': '#8247e5',
   'xdai': '#48a9a6',
   'ftm': '#11b4ec',
@@ -43,6 +44,7 @@ const Coin = function (props: CoinProps) {
   if (
     config?.erc20[lowerName]?.icon
     || config?.bep20[lowerName]?.icon
+    || config?.erc20cndl[lowerName]?.icon
     || config?.erc20matic[lowerName]?.icon
     || config?.erc20xdai[lowerName]?.icon
     || config?.erc20ftm[lowerName]?.icon
@@ -74,6 +76,10 @@ const Coin = function (props: CoinProps) {
 
   if (config?.bep20[lowerName]?.iconBgColor) {
     style.backgroundColor = config.bep20[lowerName].iconBgColor
+  }
+
+  if (config?.erc20cndl[lowerName]?.iconBgColor) {
+    style.backgroundColor = config.erc20cndl[lowerName].iconBgColor
   }
 
   if (config?.erc20matic[lowerName]?.iconBgColor) {

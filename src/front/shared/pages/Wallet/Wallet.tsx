@@ -34,6 +34,7 @@ const isWidgetBuild = config && config.isWidget
       activeFiat,
       ethData,
       bnbData,
+      cndlData,
       maticData,
       arbethData,
       aurethData,
@@ -61,6 +62,7 @@ const isWidgetBuild = config && config.isWidget
     const userCurrencyData = [
       ethData,
       bnbData,
+      cndlData,
       maticData,
       arbethData,
       aurethData,
@@ -88,6 +90,7 @@ const isWidgetBuild = config && config.isWidget
       coinsData: {
         ethData,
         bnbData,
+        cndlData,
         maticData,
         arbethData,
         aurethData,

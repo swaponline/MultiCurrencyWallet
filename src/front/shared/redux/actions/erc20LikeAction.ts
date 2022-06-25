@@ -97,7 +97,7 @@ class Erc20LikeAction {
   getInfoAboutToken = async (contractAddress) => {
     const isContract = await actions[this.currencyKey].isContract(contractAddress)
 
-    try {      
+    try {
       if (isContract) {
         const Web3 = await actions[this.currencyKey].getCurrentWeb3()
         const contract = new Web3.eth.Contract(TokenAbi, contractAddress)
@@ -105,13 +105,13 @@ class Erc20LikeAction {
         const name = await contract.methods.name().call()
         const symbol = await contract.methods.symbol().call()
         const decimals = await contract.methods.decimals().call()
-  
+
         return {
           name,
           symbol,
           decimals: Number(decimals),
         }
-      } 
+      }
     } catch (error) {
       this.reportError(error, 'fail on token info')
     }
@@ -678,6 +678,15 @@ export default {
     explorerLink: externalConfig.link.bscscan,
     adminFeeObj: externalConfig.opts?.fee?.bep20,
     web3: new Web3(providers.binance_provider),
+  }),
+  erc20cndl: new Erc20LikeAction({
+    currency: 'CNDL',
+    standard: 'erc20cndl',
+    explorerApiName: 'candlescan',
+    explorerApiKey: externalConfig.api.candle_ApiKey,
+    explorerLink: externalConfig.link.candlescan,
+    adminFeeObj: externalConfig.opts?.fee?.erc20cndl,
+    web3: new Web3(providers.cndl_provider),
   }),
   erc20matic: new Erc20LikeAction({
     currency: 'MATIC',

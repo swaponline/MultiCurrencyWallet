@@ -548,7 +548,7 @@ class EthLikeAction {
           console.group('%c tx hash', 'color: green;')
           console.log(hash)
           console.groupEnd()
-          
+
           if (!toAdmin && !waitReceipt) {
             reducers.transactions.addTransactionToQueue({
               networkCoin: this.ticker,
@@ -614,6 +614,17 @@ export default {
     explorerLink: externalConfig.link.bscscan,
     adminFeeObj: externalConfig.opts?.fee?.bnb,
     web3: new Web3(providers.binance_provider),
+  }),
+  CNDL: new EthLikeAction({
+    coinName: 'Candle',
+    ticker: 'CNDL',
+    privateKeyName: 'eth',
+    chainId: externalConfig.evmNetworks.CNDL.chainId,
+    explorerApiName: 'candlescan',
+    explorerApiKey: externalConfig.api.candle_ApiKey,
+    explorerLink: externalConfig.link.candlescan,
+    adminFeeObj: externalConfig.opts?.fee?.cndl,
+    web3: new Web3(providers.cndl_provider),
   }),
   MATIC: new EthLikeAction({
     coinName: 'MATIC Token',

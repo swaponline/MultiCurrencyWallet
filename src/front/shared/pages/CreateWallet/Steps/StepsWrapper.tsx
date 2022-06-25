@@ -57,6 +57,7 @@ export default class StepsWrapper extends Component<any, any> {
       if (config.opts.addCustomTokens) {
         if (config.erc20) this.defaultStartPack.push({ name: 'ERC20', capture: 'Token', baseCurrency: 'ETH' })
         if (config.bep20) this.defaultStartPack.push({ name: 'BEP20', capture: 'Token', baseCurrency: 'BNB' })
+        if (config.erc20cndl) this.defaultStartPack.push({ name: 'ERC20CNDL', capture: 'Token', baseCurrency: 'CNDL' })
         if (config.erc20matic) this.defaultStartPack.push({ name: 'ERC20MATIC', capture: 'Token', baseCurrency: 'MATIC' })
         if (config.erc20xdai) this.defaultStartPack.push({ name: 'ERC20XDAI', capture: 'Token', baseCurrency: 'XDAI' })
         if (config.erc20ftm) this.defaultStartPack.push({ name: 'ERC20FTM', capture: 'Token', baseCurrency: 'FTM' })
@@ -139,7 +140,7 @@ export default class StepsWrapper extends Component<any, any> {
           const tokenStandard = new RegExp(
             [
               '^CUSTOM_(',
-              'ERC20|BEP20|PHI20|ERC20MATIC|ERC20XDAI|ERC20FTM|',
+              'ERC20|BEP20|PHI20|ERC20CNDL|ERC20MATIC|ERC20XDAI|ERC20FTM|',
               'ERC20AVAX|ERC20MOVR|ERC20ONE|ERC20AURORA',
               ')$',
             ].join('')

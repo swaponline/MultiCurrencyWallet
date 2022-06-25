@@ -108,6 +108,13 @@ const baseCurrencyConfig = {
     value: 'bnb',
     fullTitle: 'binance coin',
   },
+  CNDL: {
+    name: 'CNDL',
+    title: 'CNDL',
+    icon: 'cndl',
+    value: 'cndl',
+    fullTitle: 'candle',
+  },
   MATIC: {
     name: 'MATIC',
     title: 'MATIC',
@@ -206,6 +213,11 @@ const initialState = {
       blockchain: BLOCKCHAIN_TYPE.BNB,
       addAssets: true,
     }] : [],
+    ...(!buildOpts.curEnabled || buildOpts.curEnabled.cndl) ? [{
+    ...baseCurrencyConfig.CNDL,
+    blockchain: BLOCKCHAIN_TYPE.CNDL,
+    addAssets: true,
+  }] : [],
       ...(!buildOpts.curEnabled || buildOpts.curEnabled.matic) ? [{
       ...baseCurrencyConfig.MATIC,
       blockchain: BLOCKCHAIN_TYPE.MATIC,
@@ -301,6 +313,7 @@ const initialState = {
   partialItems: [
     ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.eth) ? [baseCurrencyConfig.ETH] : [],
     ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.bnb) ? [baseCurrencyConfig.BNB] : [],
+    ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.cndl) ? [baseCurrencyConfig.CNDL] : [],
     ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.matic) ? [baseCurrencyConfig.MATIC] : [],
     ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.arbeth) ? [baseCurrencyConfig.ARBETH] : [],
     ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.aureth) ? [baseCurrencyConfig.AURETH] : [],
@@ -323,6 +336,7 @@ if (config.isWidget) {
   initialState.items = [
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.eth) ? [baseCurrencyConfig.ETH] : [],
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.bnb) ? [baseCurrencyConfig.BNB] : [],
+    ...(!buildOpts.curEnabled || buildOpts.curEnabled.cndl) ? [baseCurrencyConfig.CNDL] : [],
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.matic) ? [baseCurrencyConfig.MATIC] : [],
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.arbeth) ? [baseCurrencyConfig.ARBETH] : [],
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.aureth) ? [baseCurrencyConfig.AURETH] : [],

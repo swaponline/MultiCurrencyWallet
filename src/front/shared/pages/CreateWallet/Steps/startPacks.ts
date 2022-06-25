@@ -6,6 +6,8 @@ const onlyEvmWallets = !!(config?.opts?.ui?.disableInternalWallet)
 export const defaultPack = [
   ...((!curEnabled || curEnabled.btc) && !onlyEvmWallets ? [{ name: 'BTC', capture: 'Bitcoin' }] : []),
 
+  ...(!curEnabled || curEnabled.cndl ? [{ name: 'CNDL', capture: 'Candle' }] : []),
+
   ...(!curEnabled || curEnabled.eth ? [{ name: 'ETH', capture: 'Ethereum' }] : []),
 
   ...(!curEnabled || curEnabled.bnb ? [{ name: 'BNB', capture: 'Binance Coin' }] : []),
@@ -39,12 +41,14 @@ export const defaultPack = [
       { name: 'EURS', capture: 'Eurs', baseCurrency: 'ETH' },
     ]
     : []),
+  ...(config.erc20cndl ? [{ name: 'WBTC', capture: 'WBTC Token', baseCurrency: 'CNDL' }] : []),
   ...(config.erc20matic ? [{ name: 'WBTC', capture: 'WBTC Token', baseCurrency: 'MATIC' }] : []),
   ...(process.env.MAINNET
     ? [{ name: 'SWAP', capture: 'Swap', baseCurrency: 'ETH' }]
     : [{ name: 'WEENUS', capture: 'Weenus', baseCurrency: 'ETH' }]),
   ...(config.erc20 ? [{ name: 'ERC20', capture: 'Token', baseCurrency: 'ETH' }] : []),
   ...(config.bep20 ? [{ name: 'BEP20', capture: 'Token', baseCurrency: 'BNB' }] : []),
+  ...(config.erc20cndl ? [{ name: 'ERC20CNDL', capture: 'Token', baseCurrency: 'CNDL' }] : []),
   ...(config.erc20matic ? [{ name: 'ERC20MATIC', capture: 'Token', baseCurrency: 'MATIC' }] : []),
   ...(config.erc20xdai ? [{ name: 'ERC20XDAI', capture: 'Token', baseCurrency: 'XDAI' }] : []),
   ...(config.erc20ftm ? [{ name: 'ERC20FTM', capture: 'Token', baseCurrency: 'FTM' }] : []),
@@ -61,6 +65,8 @@ export const widgetPack = [
   ...((config.erc20 && (!curEnabled || curEnabled.eth)) ? [{ name: 'ERC20', capture: 'Token', baseCurrency: 'ETH' }] : []),
   ...(!curEnabled || curEnabled.bnb ? [{ name: 'BNB', capture: 'Binance Coin' }] : []),
   ...((config.bep20 && (!curEnabled || curEnabled.bnb)) ? [{ name: 'BEP20', capture: 'Token', baseCurrency: 'BNB' }] : []),
+  ...(!curEnabled || curEnabled.cndl ? [{ name: 'CNDL', capture: 'Candle' }] : []),
+  ...((config.erc20cndl && (!curEnabled || curEnabled.cndls)) ? [{ name: 'ERC20CNDL', capture: 'Token', baseCurrency: 'CNDL' }] : []),
   ...(!curEnabled || curEnabled.matic ? [{ name: 'MATIC', capture: 'MATIC Token' }] : []),
   ...((config.erc20matic && (!curEnabled || curEnabled.matic)) ? [{ name: 'ERC20MATIC', capture: 'Token', baseCurrency: 'MATIC' }] : []),
   ...(!curEnabled || curEnabled.arbeth ? [{ name: 'ARBETH', capture: 'Arbitrum ETH' }] : []),
