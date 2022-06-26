@@ -3,6 +3,7 @@ import ghost from './ghost'
 import next from './next'
 import eth from './eth'
 import bnb from './bnb'
+import cndl from './cndl'
 import matic from './matic'
 import arbeth from './arbeth'
 import aureth from './aureth'
@@ -60,6 +61,7 @@ export default {
   btc,
   eth,
   bnb,
+  cndl,
   matic,
   arbeth,
   aureth,
@@ -83,6 +85,7 @@ export {
   btc,
   eth,
   bnb,
+  cndl,
   matic,
   arbeth,
   aureth,
