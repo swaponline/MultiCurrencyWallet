@@ -11,11 +11,11 @@ type EstimateFeeParams = {
 }
 
 const estimateFeeValue = async (params: EstimateFeeParams) => {
-  return ethLikeHelper.matic.estimateFeeValue(params)
+  return ethLikeHelper.cndl.estimateFeeValue(params)
 }
 
 const estimateGasPrice = async (): Promise<number> => {
-  return ethLikeHelper.matic.estimateGasPrice()
+  return ethLikeHelper.cndl.estimateGasPrice()
 }
 
 export default {

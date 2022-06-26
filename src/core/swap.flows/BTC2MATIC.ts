@@ -10,7 +10,7 @@ class BTC2MATIC extends BtcToEthLike {
     return constants.COINS.btc
   }
   static getToName() {
-    return constants.COINS.matic
+    return constants.COINS.cndl
   }
   constructor(swap) {
     super(swap, {

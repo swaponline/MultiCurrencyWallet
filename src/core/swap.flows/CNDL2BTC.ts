@@ -7,7 +7,7 @@ class CNDL2BTC extends EthLikeToBtc {
     return `${this.getFromName()}2${this.getToName()}`
   }
   static getFromName() {
-    return constants.COINS.matic
+    return constants.COINS.cndl
   }
   static getToName() {
     return constants.COINS.btc
