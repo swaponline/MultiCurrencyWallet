@@ -32,6 +32,16 @@ const STANDARDS = {
     explorerApiKey: config.api.bscscan_ApiKey,
     hasSupportAtomicSwap: true,
   },
+  erc20cndl: {
+    platform: 'ethereum',
+    platformKey: 'candle',
+    standard: 'erc20cndl',
+    value: 'erc20cndl',
+    currency: 'cndl',
+    explorerApi: config.api.candlescan,
+    explorerApiKey: config.api.candle_ApiKey,
+    hasSupportAtomicSwap: true,
+  },
   erc20matic: {
     platform: 'ethereum',
     platformKey: 'polygon-pos',

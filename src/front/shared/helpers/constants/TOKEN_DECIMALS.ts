@@ -4,6 +4,7 @@ import config from 'helpers/externalConfig'
 const decimals = {
   btc: 8,
   bnb: 18,
+  cndl: 18,
   eth: 18,
   matic: 18,
   arbeth: 18,

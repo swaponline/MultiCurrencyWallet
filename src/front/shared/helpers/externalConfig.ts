@@ -39,6 +39,7 @@ const externalConfig = () => {
     curEnabled: {
       eth: true,
       bnb: true,
+      cndl: true,
       matic: true,
       arbeth: true,
       aureth: true,
@@ -56,6 +57,7 @@ const externalConfig = () => {
       btc: true,
       eth: true,
       bnb: false,
+      cndl: false,
       matic: false,
       arbeth: false,
       aureth: false,
@@ -260,6 +262,11 @@ const externalConfig = () => {
   if (window && window.CUR_BNB_DISABLED === true) {
     config.opts.curEnabled.bnb = false
     config.opts.blockchainSwapEnabled.bnb = false
+  }
+
+  if (window && window.CUR_CNDL_DISABLED === true) {
+    config.opts.curEnabled.cndl = false
+    config.opts.blockchainSwapEnabled.cndl = false
   }
 
   if (window && window.CUR_MATIC_DISABLED === true) {
