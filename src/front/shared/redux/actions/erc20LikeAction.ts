@@ -682,9 +682,9 @@ export default {
   erc20cndl: new Erc20LikeAction({
     currency: 'CNDL',
     standard: 'erc20cndl',
-    explorerApiName: 'candlescan',
+    explorerApiName: 'cndlscan',
     explorerApiKey: externalConfig.api.candle_ApiKey,
-    explorerLink: externalConfig.link.candlescan,
+    explorerLink: externalConfig.link.cndlscan,
     adminFeeObj: externalConfig.opts?.fee?.erc20cndl,
     web3: new Web3(providers.cndl_provider),
   }),

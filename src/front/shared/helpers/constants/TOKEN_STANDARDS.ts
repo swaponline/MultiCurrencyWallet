@@ -38,7 +38,7 @@ const STANDARDS = {
     standard: 'erc20cndl',
     value: 'erc20cndl',
     currency: 'cndl',
-    explorerApi: config.api.candlescan,
+    explorerApi: config.api.cndlscan,
     explorerApiKey: config.api.candle_ApiKey,
     hasSupportAtomicSwap: true,
   },

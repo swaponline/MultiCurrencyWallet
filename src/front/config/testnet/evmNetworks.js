@@ -20,8 +20,8 @@ export default {
   },
   CNDL: {
     currency: 'CNDL',
-    chainId: '0x216',
-    networkVersion: 534,
+    chainId: '',
+    networkVersion: 0,
     chainName: 'Candle',
     rpcUrls: [web3.cndl_provider],
     blockExplorerUrls: [link.cndlscan]

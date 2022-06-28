@@ -4,7 +4,7 @@ export default {
   etherscan: 'https://rinkeby.etherscan.io',
   bscscan: 'https://testnet.bscscan.com',
   arbitrum: 'https://rinkeby-explorer.arbitrum.io',
-  candlescan: 'https://candleexplorer.com',
+  //cndlscan: 'https://candleexplorer.com',
   maticscan: 'https://explorer-mumbai.maticvigil.com',
   ghostscan: 'https://testnet.ghostscan.io',
   nextExplorer: 'https://explore.next.exchange',
