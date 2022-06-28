@@ -30,7 +30,7 @@ import externalConfig from './externalConfig'
 import feedback from './feedback'
 import getPageOffset from './getPageOffset'
 import transactions from './transactions'
-
+import quickswap from './quickswap'
 import { migrate } from './migrations'
 
 import {
@@ -134,5 +134,6 @@ export {
   wpLogoutModal,
 
   getPairFees,
+  quickswap,
 }
 export { getItezUrl } from './getItezUrl'
