@@ -285,6 +285,7 @@
 │   │   ├── SwapInterface.ts
 │   │   └── util
 │   │       ├── bep20.ts
+│   │       ├── erc20cndl.ts
 │   │       ├── erc20matic.ts
 │   │       ├── erc20.ts
 │   │       ├── helpers.ts
@@ -298,6 +299,7 @@
 │   │   ├── eth.ts
 │   │   ├── ghost.ts
 │   │   ├── index.ts
+│   │   ├── cndl.ts
 │   │   ├── matic.ts
 │   │   ├── next.ts
 │   │   └── SwapAuth.ts
@@ -319,6 +321,8 @@
 │   │   ├── BTC2BSCTOKEN.ts
 │   │   ├── BTC2ETHTOKEN.ts
 │   │   ├── BTC2ETH.ts
+│   │   ├── BTC2CNDLTOKEN.ts
+│   │   ├── BTC2CNDL.ts
 │   │   ├── BTC2MATICTOKEN.ts
 │   │   ├── BTC2MATIC.ts
 │   │   ├── ETH2BTC.ts
@@ -331,6 +335,8 @@
 │   │   ├── GHOST2ETHTOKEN.ts
 │   │   ├── GHOST2ETH.ts
 │   │   ├── index.ts
+│   │   ├── CNDL2BTC.ts
+│   │   ├── CNDLTOKEN2BTC.ts
 │   │   ├── MATIC2BTC.ts
 │   │   ├── MATICTOKEN2BTC.ts
 │   │   ├── NEXT2BTC.ts
@@ -367,6 +373,8 @@
 │   │   ├── EthTokenSwap.ts
 │   │   ├── GhostSwap.ts
 │   │   ├── index.ts
+│   │   ├── CndlSwap.ts
+│   │   ├── CndlTokenSwap.ts
 │   │   ├── MaticSwap.ts
 │   │   ├── MaticTokenSwap.ts
 │   │   ├── NextSwap.ts
@@ -480,6 +488,7 @@
 │   │   │   ├── api.js
 │   │   │   ├── bep20.js
 │   │   │   ├── erc20.js
+│   │   │   ├── erc20cndl.js
 │   │   │   ├── erc20matic.js
 │   │   │   ├── evmNetworks.js
 │   │   │   ├── evmNetworkVersions.js
