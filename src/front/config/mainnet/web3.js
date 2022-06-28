@@ -4,7 +4,7 @@ export default {
   cndl_provider: 'https://rpc.cndlchain.com',
   matic_provider: 'https://rpc-mainnet.maticvigil.com',
   arbitrum_provider: 'https://arb1.arbitrum.io/rpc',
-  xdai_provider: 'https://rpc.xdaichain.com/',
+  xdai_provider: 'https://rpc.gnosischain.com',
   ftm_provider: 'https://rpc.ftm.tools',
   avax_provider: 'https://api.avax.network/ext/bc/C/rpc',
   movr_provider: 'https://rpc.moonriver.moonbeam.network',
