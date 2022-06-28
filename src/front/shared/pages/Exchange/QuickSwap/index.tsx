@@ -5,7 +5,6 @@ import { FormattedMessage } from 'react-intl'
 import CSSModules from 'react-css-modules'
 import getCoinInfo from 'common/coins/getCoinInfo'
 import utils from 'common/utils'
-import config from 'app-config'
 import erc20Like from 'common/erc20Like'
 import { EVM_COIN_ADDRESS, ZERO_ADDRESS } from 'common/helpers/constants/ADDRESSES'
 import {
