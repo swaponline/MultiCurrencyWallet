@@ -85,7 +85,8 @@ const getPairAddress = async (params) => {
   try {
     return await factory?.methods.getPair(tokenA, tokenB).call()
   } catch (error) {
-    return error
+    console.error(error)
+    return false
   }
 }
 

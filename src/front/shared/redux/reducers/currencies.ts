@@ -2,12 +2,12 @@ import config from 'app-config'
 import TOKEN_STANDARDS, { EXISTING_STANDARDS } from 'helpers/constants/TOKEN_STANDARDS'
 import { BLOCKCHAIN as BLOCKCHAIN_TYPE } from 'swap.app/constants/COINS'
 
-const NETWORK = process.env.MAINNET ? 'mainnet' : 'testnet'
-
 const getCustomTokenConfig = () => {
   let tokensInfo = JSON.parse(localStorage.getItem('customToken') || 'false')
-  if (!tokensInfo || !tokensInfo[NETWORK]) return {}
-  return tokensInfo[NETWORK]
+
+  if (!tokensInfo || !tokensInfo[config.entry]) return {}
+
+  return tokensInfo[config.entry]
 }
 
 interface BuildOptions {
@@ -392,32 +392,31 @@ if (buildOpts.addCustomTokens) {
   const customTokenConfig = getCustomTokenConfig()
 
   Object.keys(customTokenConfig).forEach((standard) => {
-    Object.keys(customTokenConfig[standard]).forEach((tokenContractAddr) => {
-      const tokenObj = customTokenConfig[standard][tokenContractAddr]
-      const { symbol } = tokenObj
+    const tokensAreAvailable =
+      TOKEN_STANDARDS[standard] && Object.keys(customTokenConfig[standard]).length
+
+    if (tokensAreAvailable) {
       const baseCurrency = TOKEN_STANDARDS[standard]?.currency
 
-      //@ts-ignore
-      initialState.items.push({
+      Object.keys(customTokenConfig[standard]).forEach((tokenContractAddr) => {
+        const { symbol } = customTokenConfig[standard][tokenContractAddr]
+        const itemConfig = {
           name: symbol.toUpperCase(),
           title: symbol.toUpperCase(),
           icon: symbol,
           value: `{${baseCurrency.toUpperCase()}}${symbol}`,
           fullTitle: config[standard][symbol]?.fullName || symbol,
-          addAssets: true,
           blockchain: BLOCKCHAIN_TYPE[baseCurrency.toUpperCase()],
           standard,
+        }
+
+        initialState.items.push({
+          ...itemConfig,
+          addAssets: true,
         })
-      initialState.partialItems.push({
-        name: symbol.toUpperCase(),
-        title: symbol.toUpperCase(),
-        icon: symbol,
-        value: `{${baseCurrency.toUpperCase()}}${symbol}`,
-        fullTitle: config[standard][symbol]?.fullName || symbol,
-        blockchain: BLOCKCHAIN_TYPE[baseCurrency.toUpperCase()],
-        standard,
+        initialState.partialItems.push(itemConfig)
       })
-    })
+    }
   })
 }
 

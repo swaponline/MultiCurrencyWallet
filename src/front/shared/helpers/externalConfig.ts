@@ -5,16 +5,14 @@ import BigNumber from 'bignumber.js'
 import reducers from 'redux/core/reducers'
 import TOKEN_STANDARDS, { EXISTING_STANDARDS } from 'helpers/constants/TOKEN_STANDARDS'
 
-const NETWORK = process.env.MAINNET ? 'mainnet' : 'testnet'
-
 const getCustomTokenConfig = () => {
   const tokensInfo = JSON.parse(localStorage.getItem('customToken') || '{}')
 
-  if (!Object.keys(tokensInfo).length || !tokensInfo[NETWORK]) {
+  if (!Object.keys(tokensInfo).length || !tokensInfo[config.entry]) {
     return {}
   }
 
-  return tokensInfo[NETWORK]
+  return tokensInfo[config.entry]
 }
 
 const initExternalConfig = () => {
@@ -396,6 +394,8 @@ const externalConfig = () => {
     const customTokenConfig = getCustomTokenConfig()
 
     Object.keys(customTokenConfig).forEach((standard) => {
+      if (!config[standard]) return
+
       Object.keys(customTokenConfig[standard]).forEach((tokenContractAddr) => {
         const tokenObj = customTokenConfig[standard][tokenContractAddr]
         const { symbol } = tokenObj

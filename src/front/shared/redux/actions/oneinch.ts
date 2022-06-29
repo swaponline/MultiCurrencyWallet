@@ -8,11 +8,9 @@ import {
   LimitOrderPredicateBuilder,
   LimitOrderPredicateCallData,
 } from '@1inch/limit-order-protocol'
-import { COIN_MODEL, COIN_DATA } from 'swap.app/constants/COINS'
 import utils from 'common/utils'
 import erc20Like from 'common/erc20Like'
-import getCoinInfo from 'common/coins/getCoinInfo'
-import { apiLooper, externalConfig, metamask, feedback } from 'helpers'
+import { apiLooper, externalConfig, metamask, feedback, quickswap } from 'helpers'
 import { getState } from 'redux/core'
 import actions from 'redux/actions'
 import reducers from 'redux/core/reducers'
@@ -26,53 +24,18 @@ const reportError = (part, error) => {
 }
 
 const filterCurrencies = (params) => {
-  const { currencies, onlyTokens = false } = params
+  const { currencies: activeCurrencies } = quickswap.filterCurrencies(params)
   const { oneinch } = getState()
+  const oneinchChainIds = Object.keys(oneinch.blockchains).map(Number)
 
-  const filteredArr = currencies.filter((item) => {
-    const currency = COIN_DATA[item.name]
-    let isCurrencySuitable = false
-    let itemChain
-    let baseCurrency
+  return {
+    currencies: activeCurrencies.filter(({ blockchain }) => {
+      const chainId = externalConfig.evmNetworks[blockchain]
 
-    if (item.standard) {
-      const { blockchain } = getCoinInfo(item.value)
-
-      if (blockchain) {
-        // blockchain is a currency symbol. Need to rename 
-        baseCurrency = blockchain
-        itemChain = externalConfig.evmNetworks[blockchain.toUpperCase()].networkVersion
-      }
-    } else {
-      baseCurrency = item.blockchain
-      itemChain =
-        currency?.model === COIN_MODEL.AB &&
-        externalConfig.evmNetworks[currency.ticker].networkVersion
-    }
-
-    const enabled = externalConfig.opts.curEnabled[baseCurrency?.toLowerCase()]
-    // we accept only a boolean type. Allow this asset if we don't have it in the config
-    const accepted = enabled === undefined || enabled
-
-    isCurrencySuitable = accepted && !!oneinch.blockchains[itemChain] && (item.standard || !onlyTokens)
-
-    // connected metamask allows only one chain
-    const suitableForNetwork = metamask.isConnected()
-      ? metamask.isAvailableNetworkByCurrency(item.value)
-      : true
-
-    return isCurrencySuitable && suitableForNetwork
-  })
-
-  let wrongNetwork = false
-
-  if (metamask.isConnected()) {
-    const chainId = metamask.getChainId()
-
-    wrongNetwork = !oneinch.blockchains[chainId]
+      return !!oneinch.blockchains[chainId]
+    }),
+    wrongNetwork: quickswap.isWrongNetwork(oneinchChainIds),
   }
-
-  return { currencies: filteredArr, wrongNetwork }
 }
 
 const fetchSpenderContractAddress = async (params): Promise<string | false> => {
