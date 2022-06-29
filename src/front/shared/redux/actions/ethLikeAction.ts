@@ -12,6 +12,9 @@ import externalConfig from 'helpers/externalConfig'
 import metamask from 'helpers/metamask'
 import { feedback, constants, cacheStorageGet, cacheStorageSet, apiLooper } from 'helpers'
 
+// use an ethereum private key for EVM compatible blockchains
+const EVM_PRIVATE_KEY = 'eth'
+
 class EthLikeAction {
   readonly coinName: string
 
@@ -19,7 +22,7 @@ class EthLikeAction {
 
   readonly tickerKey: string // lower case (ex. eth)
 
-  readonly privateKeyName: string
+  readonly privateKeyName: string = EVM_PRIVATE_KEY
 
   readonly explorerApiName: string
 
@@ -43,7 +46,6 @@ class EthLikeAction {
     const {
       coinName,
       ticker,
-      privateKeyName,
       chainId,
       explorerApiName,
       explorerLink,
@@ -54,7 +56,6 @@ class EthLikeAction {
 
     this.coinName = coinName
     this.ticker = ticker
-    this.privateKeyName = privateKeyName.toLowerCase()
     this.chainId = chainId
     this.tickerKey = ticker.toLowerCase()
     this.explorerApiName = explorerApiName
@@ -595,7 +596,6 @@ export default {
   ETH: new EthLikeAction({
     coinName: 'Ethereum',
     ticker: 'ETH',
-    privateKeyName: 'eth',
     chainId: externalConfig.evmNetworks.ETH.chainId,
     explorerApiName: 'etherscan',
     explorerApiKey: externalConfig.api.etherscan_ApiKey,
@@ -607,7 +607,6 @@ export default {
   BNB: new EthLikeAction({
     coinName: 'Binance Coin',
     ticker: 'BNB',
-    privateKeyName: 'eth',
     chainId: externalConfig.evmNetworks.BNB.chainId,
     explorerApiName: 'bscscan',
     explorerApiKey: externalConfig.api.bscscan_ApiKey,
@@ -618,7 +617,6 @@ export default {
   MATIC: new EthLikeAction({
     coinName: 'MATIC Token',
     ticker: 'MATIC',
-    privateKeyName: 'eth',
     chainId: externalConfig.evmNetworks.MATIC.chainId,
     explorerApiName: 'maticscan',
     explorerApiKey: externalConfig.api.polygon_ApiKey,
@@ -629,7 +627,6 @@ export default {
   ARBETH: new EthLikeAction({
     coinName: 'Arbitrum ETH',
     ticker: 'ARBETH',
-    privateKeyName: 'eth',
     chainId: externalConfig.evmNetworks.ARBETH.chainId,
     explorerApiName: 'rinkeby-explorer',
     explorerApiKey: '',
@@ -640,7 +637,6 @@ export default {
   XDAI: new EthLikeAction({
     coinName: 'xDai',
     ticker: 'XDAI',
-    privateKeyName: 'eth',
     chainId: externalConfig.evmNetworks.XDAI.chainId,
     explorerApiName: '', // needs for show transactions
     explorerApiKey: '',
@@ -651,7 +647,6 @@ export default {
   FTM: new EthLikeAction({
     coinName: 'Fantom',
     ticker: 'FTM',
-    privateKeyName: 'eth',
     chainId: externalConfig.evmNetworks.FTM.chainId,
     explorerApiName: 'ftmscan',
     explorerApiKey: externalConfig.api.ftm_ApiKey,
@@ -662,7 +657,6 @@ export default {
   AVAX: new EthLikeAction({
     coinName: 'Avalanche',
     ticker: 'AVAX',
-    privateKeyName: 'eth',
     chainId: externalConfig.evmNetworks.AVAX.chainId,
     explorerApiName: 'avaxscan',
     explorerApiKey: externalConfig.api.avax_ApiKey,
@@ -673,7 +667,6 @@ export default {
   MOVR: new EthLikeAction({
     coinName: 'Moonriver',
     ticker: 'MOVR',
-    privateKeyName: 'eth',
     chainId: externalConfig.evmNetworks.MOVR.chainId,
     explorerApiName: 'movrscan',
     explorerApiKey: externalConfig.api.movr_ApiKey,
@@ -684,7 +677,6 @@ export default {
   ONE: new EthLikeAction({
     coinName: 'Harmony One',
     ticker: 'ONE',
-    privateKeyName: 'eth',
     chainId: externalConfig.evmNetworks.ONE.chainId,
     explorerApiName: 'onescan',
     explorerApiKey: externalConfig.api.one_ApiKey,
@@ -695,7 +687,6 @@ export default {
   AURETH: new EthLikeAction({
     coinName: 'Aurora ETH',
     ticker: 'AURETH',
-    privateKeyName: 'eth',
     chainId: externalConfig.evmNetworks.AURETH.chainId,
     explorerApiName: 'aurorascan',
     explorerApiKey: externalConfig.api.aurora_ApiKey,
@@ -706,7 +697,6 @@ export default {
   PHI: new EthLikeAction({
     coinName: 'PHI',
     ticker: 'PHI',
-    privateKeyName: 'phi',
     chainId: externalConfig.evmNetworks.PHI.chainId,
     explorerApiName: 'phiscan',
     explorerApiKey: externalConfig.api?.phi_ApiKey,
