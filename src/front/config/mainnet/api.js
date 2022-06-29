@@ -23,6 +23,8 @@ export default {
   etherscan_ApiKey: 'GK6YHJ5NMEF67R4FTRNQS2EK3HRBP5VVHW',
   bscscan: 'https://api.bscscan.com/api',
   bscscan_ApiKey: 'WI4QEJSV19U3TF2H1DPQ2HR6712HW4MYKJ',
+  cndlscan: 'https://candleexplorer.com/api',
+  candle_ApiKey: '',
   maticscan: 'https://api.polygonscan.com/api',
   polygon_ApiKey: '8S2R45ZWG94HI7YK9RCXSK4VCASJ4XVA15',
   ftmscan: 'https://api.ftmscan.com/api',

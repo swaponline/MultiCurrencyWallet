@@ -260,6 +260,7 @@ export const BNB_TOKENS = {
 
 export const CNDL_TOKENS = {
   wbtc: 'WBTC',
+  dai: 'DAI',
 }
 export const MATIC_TOKENS = {
   wbtc: 'WBTC',

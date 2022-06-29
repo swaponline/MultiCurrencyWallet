@@ -1,7 +1,7 @@
 export default {
   eth: 0.0006,
   bnb: 0.0006,
-  cndl: 0.088,
+  cndl: 0.00088,
   matic: 0.0006,
   arbeth: 0.0006,
   aureth: 0.0006,

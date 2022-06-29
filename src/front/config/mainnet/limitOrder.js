@@ -1,5 +1,6 @@
 export default {
   eth: '0x3ef51736315f52d568d6d2cf289419b9cfffe782',
   bnb: '0xe3456f4ee65e745a44ec3bcb83d0f2529d1b84eb',
+  cndl: '0xa43367Dc1FC8B40586f0E5D943C1d124eC62a8ED',
   matic: '0xb707d89d29c189421163515c59e42147371d6857',
 }
