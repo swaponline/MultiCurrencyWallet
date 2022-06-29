@@ -18,14 +18,6 @@ export default {
     rpcUrls: [web3.binance_provider],
     blockExplorerUrls: [link.bscscan]
   },
-  CNDL: {
-    currency: 'CNDL',
-    chainId: '',
-    networkVersion: 0,
-    chainName: 'Candle',
-    rpcUrls: [web3.cndl_provider],
-    blockExplorerUrls: [link.cndlscan]
-  },
   MATIC: {
     currency: 'MATIC',
     chainId: '0x13881',
