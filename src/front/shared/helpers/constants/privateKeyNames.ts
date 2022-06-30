@@ -1,6 +1,7 @@
 export default {
   eth: `${process.env.ENTRY}:eth:privateKey`,
   bnb: `${process.env.ENTRY}:bnb:privateKey`,
+  cndl: `${process.env.ENTRY}:cndl:privateKey`,
   matic: `${process.env.ENTRY}:matic:privateKey`,
   arbitrum: `${process.env.ENTRY}:arbitrum:privateKey`,
   aureth: `${process.env.ENTRY}:aureth:privateKey`,
