@@ -46,6 +46,11 @@ import {
   BSCTOKEN2BTC,
   BTC2BSCTOKEN,
 
+  CNDL2BTC,
+  BTC2CNDL,
+  CNDLTOKEN2BTC,
+  BTC2CNDLTOKEN,
+
   MATIC2BTC,
   BTC2MATIC,
   MATICTOKEN2BTC,
@@ -108,6 +113,8 @@ const createSwapApp = async () => {
         getWeb3: actions.eth.getWeb3,
         web3bnb: actions.bnb.getWeb3(),
         getWeb3Bnb: actions.bnb.getWeb3,
+        web3Cndl: actions.cndl.getWeb3(),
+        getWeb3Cndl: actions.cndl.getWeb3,
         web3Matic: actions.matic.getWeb3(),
         getWeb3Matic: actions.matic.getWeb3,
         web3Arbitrum: actions.arbeth.getWeb3(),
@@ -141,6 +148,7 @@ const createSwapApp = async () => {
           eth: localStorage.getItem(privateKeys.privateKeyNames.eth),
           // for evm compatible blockchains use eth private key
           bnb: localStorage.getItem(privateKeys.privateKeyNames.eth),
+          cndl: localStorage.getItem(privateKeys.privateKeyNames.eth),
           matic: localStorage.getItem(privateKeys.privateKeyNames.eth),
           arbeth: localStorage.getItem(privateKeys.privateKeyNames.eth),
           btc: localStorage.getItem(privateKeys.privateKeyNames.btc),
@@ -181,6 +189,15 @@ const createSwapApp = async () => {
             fetchBalance: (address) => actions.matic.fetchBalance(address),
             estimateGasPrice: () => ethLikeHelper.matic.estimateGasPrice(),
             sendTransaction: ({ to, amount }) => actions.matic.send({ to, amount }),
+          })
+        ] : []),
+        ...((config?.opts?.blockchainSwapEnabled?.cndl) ? [
+          new CndlSwap({
+            address: config.swapContract.cndl,
+            abi: EVM_CONTRACTS_ABI.NATIVE_COIN_SWAP,
+            fetchBalance: (address) => actions.cndl.fetchBalance(address),
+            estimateGasPrice: () => ethLikeHelper.cndl.estimateGasPrice(),
+            sendTransaction: ({ to, amount }) => actions.cndl.send({ to, amount }),
           })
         ] : []),
         ...((config?.opts?.blockchainSwapEnabled?.arbeth) ? [
@@ -293,6 +310,22 @@ const createSwapApp = async () => {
               abi: EVM_CONTRACTS_ABI.TOKEN_SWAP,
             })
           )),
+          // Cndl
+          ...(Object.keys(config.erc20cndl)
+          .map(key =>
+            new CndlTokenSwap({
+              name: key,
+              tokenAbi: abi,
+              address: config.swapContract.erc20cndl,
+              //@ts-ignore
+              decimals: config.erc20cndl[key].decimals,
+              tokenAddress: config.erc20cndl[key].address,
+              fetchBalance: (address) => actions.erc20cndl.fetchBalance(address, config.erc20cndl[key].address, config.erc20cndl[key].decimals),
+              //@ts-ignore
+              estimateGasPrice: ({ speed } = {}) => erc20Like.erc20cndl.estimateGasPrice({ speed }),
+              abi: EVM_CONTRACTS_ABI.TOKEN_SWAP,
+            })
+          )),
         // Matic
         ...(Object.keys(config.erc20matic)
         .map(key =>
@@ -320,6 +353,11 @@ const createSwapApp = async () => {
         BNB2BTC,
         BTC2BNB,
 
+        ...((config?.opts?.blockchainSwapEnabled?.cndl) ? [
+          CNDL2BTC,
+          BTC2CNDL,
+        ] : []),
+
         ...((config?.opts?.blockchainSwapEnabled?.matic) ? [
           MATIC2BTC,
           BTC2MATIC,
@@ -344,6 +382,11 @@ const createSwapApp = async () => {
           .map(key => BSCTOKEN2BTC(key)),
         ...(Object.keys(config.bep20))
           .map(key => BTC2BSCTOKEN(key)),
+
+          ...(Object.keys(config.erc20cndl))
+          .map(key => CNDLTOKEN2BTC(key)),
+        ...(Object.keys(config.erc20cndl))
+          .map(key => BTC2CNDLTOKEN(key)),
 
           ...(Object.keys(config.erc20matic))
           .map(key => MATICTOKEN2BTC(key)),
