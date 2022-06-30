@@ -1,6 +1,7 @@
 export default {
   zeroxEthereum: 'https://api.0x.org',
   zeroxBsc: 'https://bsc.api.0x.org',
+  zeroxCandle: 'https://candle.api.0x.org',
   zeroxPolygon: 'https://polygon.api.0x.org',
   zeroxFantom: 'https://fantom.api.0x.org',
   zeroxAvalanche: 'https://avalanche.api.0x.org',

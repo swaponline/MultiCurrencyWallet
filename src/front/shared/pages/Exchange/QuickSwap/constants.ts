@@ -14,6 +14,7 @@ export const SEC_PER_MINUTE = 60
 export const API_NAME = {
   1: 'zeroxEthereum',
   56: 'zeroxBsc',
+  534: 'zeroxCandle',
   137: 'zeroxPolygon',
   250: 'zeroxFantom',
   43114: 'zeroxAvalanche',
