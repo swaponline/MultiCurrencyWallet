@@ -1,6 +1,7 @@
 import btc from './btc.svg'
 import eth from './eth.svg'
 import bnb from './bnb.svg'
+import cndl from './cndl.svg'
 import matic from './matic.svg'
 import arbeth from './arbeth.svg'
 import aureth from './aureth.svg'
