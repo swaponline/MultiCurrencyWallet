@@ -17,6 +17,7 @@ import {
   UTXO_to_ARBITRUM,
   ETH_to_UTXO,
   BNB_to_UTXO,
+  CNDL_to_UTXO,
   MATIC_to_UTXO,
   ARBITRUM_to_UTXO,
 } from './build'
