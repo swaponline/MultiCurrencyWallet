@@ -54,6 +54,7 @@ export default [
   'NEXT',
   'ETH',
   'BNB',
+  'CNDL',
   'MATIC',
   'ARBETH',
   'AURETH',
