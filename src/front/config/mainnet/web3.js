@@ -8,6 +8,7 @@ export default {
   avax_provider: 'https://api.avax.network/ext/bc/C/rpc',
   movr_provider: 'https://rpc.moonriver.moonbeam.network',
   one_provider: 'https://api.harmony.one',
+  ame_provider: 'https://node1.amechain.io',
   aurora_provider: 'https://mainnet.aurora.dev',
   phi_provider: 'https://rpc1.phi.network',
 }

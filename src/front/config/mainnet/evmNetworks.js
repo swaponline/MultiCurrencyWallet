@@ -82,6 +82,14 @@ export default {
     rpcUrls: [web3.one_provider],
     blockExplorerUrls: [link.oneExplorer],
   },
+  AME: {
+    currency: 'AME',
+    chainId: '0xb4',
+    networkVersion: 180,
+    chainName: 'AME Chain',
+    rpcUrls: [web3.ame_provider],
+    blockExplorerUrls: [link.amescan],
+  },
   PHI: {
     currency: 'PHI',
     chainId: '0x1055',

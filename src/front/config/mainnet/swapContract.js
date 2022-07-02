@@ -27,6 +27,8 @@ export default {
   viperSwapRouter: '0xf012702a5f0e54015362cbca26a26fc90aa832a3',
   trisolarisFactory: '0xc66f594268041db60507f00703b152492fb176e7', // AURETH
   trisolarisRouter: '0x2CB45Edb4517d5947aFdE3BEAbF95A582506858B',
+  ameFactory: '0x1e8B78279BC349EB6014714E3462932D144e365f', // AME
+  ameRouter: '0xcC3fC79dd7eC1a174BFae3bd858CCEB0EF8DBDA1',
   phiFactory: '0x6FAdDBC5d98468250ED1ed86f69B4117EF71b519',
   phiRouter: '0x8ca6dc8a51cc14be70c0f24fcc35848b2d3f00bf',
 

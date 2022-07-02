@@ -30,6 +30,9 @@
   erc20one: {
     address: '',
   },
+  erc20ame: {
+    address: '',
+  },
   erc20aurora: {
     address: '',
   },
@@ -107,6 +110,7 @@ window.buildOptions = {
     avax: true,
     movr: true,
     one: true,
+    ame: true,
     ghost: true,
     next: false,
     phi: true,
@@ -123,6 +127,7 @@ window.buildOptions = {
     avax: true,
     movr: true,
     one: true,
+    ame: true,
     ghost: false,
     next: false,
     phi: false,

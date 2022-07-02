@@ -11,6 +11,7 @@ export default {
   ftmscan: 'https://testnet.ftmscan.com',
   avaxscan: 'https://testnet.snowtrace.io',
   movrscan: 'https://moonbase.moonscan.io',
+  amescan: 'https://testnet.amescan.io',
   oneExplorer: 'https://explorer.pops.one',
   auroraExplorer: 'https://testnet.aurorascan.dev',
   phiExplorer: '',

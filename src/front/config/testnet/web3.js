@@ -8,6 +8,7 @@ export default {
   avax_provider: 'https://api.avax-test.network/ext/bc/C/rpc',
   movr_provider: 'https://moonbeam-alpha.api.onfinality.io/public',
   one_provider: 'https://api.s0.b.hmny.io',
+  ame_provider: 'https://testnet.amechain.io',
   aurora_provider: 'https://betanet.aurora.dev',
   phi_provider: '',
 }
