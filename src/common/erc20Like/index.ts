@@ -199,6 +199,12 @@ export default {
     defaultParams: DEFAULT_CURRENCY_PARAMETERS.evmLikeToken,
     web3: new Web3(providers.aurora_provider),
   }),
+  erc20ame: new erc20LikeHelper({
+    standard: 'erc20ame',
+    currency: 'AME',
+    defaultParams: DEFAULT_CURRENCY_PARAMETERS.evmLikeToken,
+    web3: new Web3(providers.ame_provider),
+  }),
   phi20: new erc20LikeHelper({
     standard: 'phi20',
     currency: 'phi',
