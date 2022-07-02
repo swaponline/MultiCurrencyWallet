@@ -103,6 +103,14 @@ export const initialState = {
     balanceError: null,
     infoAboutCurrency: null,
   },
+  ameData: {
+    balance: 0,
+    isBalanceFetched: false,
+    currency: 'AME',
+    fullName: 'AME',
+    balanceError: null,
+    infoAboutCurrency: null,
+  },
   btcData: {
     balance: 0,
     isBalanceFetched: false,

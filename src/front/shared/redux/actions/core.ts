@@ -475,6 +475,7 @@ const getWallets = (options: IUniversalObj = {}) => {
       movrData,
       oneData,
       phiData,
+      ameData,
       tokensData,
       metamaskData,
     },
@@ -514,6 +515,7 @@ const getWallets = (options: IUniversalObj = {}) => {
       || enabledCurrencies.movr
       || enabledCurrencies.one
       || enabledCurrencies.phi
+      || enabledCurrencies.ame
         ? metamaskData
           ? [metamaskData]
           : []
@@ -621,6 +623,14 @@ const getWallets = (options: IUniversalObj = {}) => {
           ? [phiData]
           : []
         : [phiData]
+      : []),
+    // =====================================
+    ...(!enabledCurrencies || enabledCurrencies.ame
+      ? metamaskConnected
+        ? withInternal
+          ? [ameData]
+          : []
+        : [ameData]
       : []),
     // =====================================
     ...((!enabledCurrencies || enabledCurrencies.ghost) && !onlyEvmWallets ? [ghostData] : []),

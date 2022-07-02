@@ -751,4 +751,13 @@ export default {
     adminFeeObj: externalConfig.opts?.fee?.phi20,
     web3: new Web3(providers.phi_provider),
   }),
+  erc20ame: new Erc20LikeAction({
+    currency: 'AME',
+    standard: 'erc20ame',
+    explorerApiName: 'amescan',
+    explorerApiKey: externalConfig.api.ame_ApiKey,
+    explorerLink: externalConfig.link.amescan,
+    adminFeeObj: externalConfig.opts?.fee?.erc20ame,
+    web3: new Web3(providers.ame_provider),
+  }),
 }
