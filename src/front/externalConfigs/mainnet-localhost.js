@@ -163,6 +163,8 @@ window.buildOptions = {
     'CUSTOM_ERC20MOVR',
     'ONE',
     'CUSTOM_ERC20ONE',
+    'AME',
+    'CUSTOM_ERC20AME',
     'AURETH',
     'CUSTOM_ERC20AURORA',
     'PHI',
