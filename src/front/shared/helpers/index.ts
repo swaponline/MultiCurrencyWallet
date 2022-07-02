@@ -12,6 +12,7 @@ import ftm from './ftm'
 import avax from './avax'
 import movr from './movr'
 import one from './one'
+import ame from './ame'
 import ethToken from './ethToken'
 import * as user from './user'
 import web3 from './web3'
@@ -69,6 +70,7 @@ export default {
   avax,
   movr,
   one,
+  ame,
   ghost,
   next,
   ethToken,
@@ -91,6 +93,7 @@ export {
   avax,
   movr,
   one,
+  ame,
   ghost,
   next,
   ethToken,
