@@ -2,7 +2,7 @@ import config from 'app-config'
 
 export type TokenStandard = {
   platform: string
-  platformKey: string
+  platformKey: string // CoinGecko platform key
   standard: string
   value: string
   currency: string
@@ -90,6 +90,16 @@ const STANDARDS = {
     currency: 'one',
     explorerApi: config.api.onescan,
     explorerApiKey: config.api.one_ApiKey,
+    hasSupportAtomicSwap: false,
+  },
+  erc20ame: {
+    platform: 'ethereum',
+    platformKey: '',
+    standard: 'erc20ame',
+    value: 'erc20ame',
+    currency: 'ame',
+    explorerApi: config.api.amescan,
+    explorerApiKey: config.api.ame_ApiKey,
     hasSupportAtomicSwap: false,
   },
   erc20aurora: {

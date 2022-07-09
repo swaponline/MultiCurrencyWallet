@@ -28,6 +28,8 @@ export default {
   viperSwapRouter: '',
   trisolarisFactory: '', // AURETH
   trisolarisRouter: '',
+  ameFactory: '', // AME testnet
+  ameRouter: '',
   phiFactory: '', // PHI network
   phiRouter: '',
 

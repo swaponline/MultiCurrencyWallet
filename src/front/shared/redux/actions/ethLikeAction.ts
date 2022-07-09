@@ -704,4 +704,14 @@ export default {
     adminFeeObj: externalConfig.opts?.fee?.phi,
     web3: new Web3(providers.phi_provider),
   }),
+  AME: new EthLikeAction({
+    coinName: 'AME',
+    ticker: 'AME',
+    chainId: externalConfig.evmNetworks.AME.chainId,
+    explorerApiName: 'amescan',
+    explorerApiKey: externalConfig.api.ame_ApiKey,
+    explorerLink: externalConfig.link.amescan,
+    adminFeeObj: externalConfig.opts?.fee?.ame,
+    web3: new Web3(providers.ame_provider),
+  }),
 }

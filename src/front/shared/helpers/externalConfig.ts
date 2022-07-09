@@ -45,6 +45,7 @@ const externalConfig = () => {
       avax: true,
       movr: true,
       one: true,
+      ame: true,
       phi: true,
       btc: true,
       ghost: true,
@@ -62,6 +63,7 @@ const externalConfig = () => {
       avax: false,
       movr: false,
       one: false,
+      ame: false,
       phi: false,
       ghost: true,
       next: false,
@@ -293,6 +295,11 @@ const externalConfig = () => {
   if (window && window.CUR_ONE_DISABLED === true) {
     config.opts.curEnabled.one = false
     config.opts.blockchainSwapEnabled.one = false
+  }
+
+  if (window && window.CUR_AME_DISABLED === true) {
+    config.opts.curEnabled.AME = false
+    config.opts.blockchainSwapEnabled.ame = false
   }
 
   if (window && window.CUR_AURORA_DISABLED === true) {

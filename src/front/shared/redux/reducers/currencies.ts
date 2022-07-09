@@ -164,6 +164,13 @@ const baseCurrencyConfig = {
     value: 'one',
     fullTitle: 'harmony one',
   },
+  AME: {
+    name: 'AME',
+    title: 'AME',
+    icon: 'ame',
+    value: 'ame',
+    fullTitle: 'ame',
+  },
   PHI: {
     name: 'PHI',
     title: 'PHI',
@@ -251,6 +258,11 @@ const initialState = {
       blockchain: BLOCKCHAIN_TYPE.PHI,
       addAssets: true,
     }] : [],
+    ...(!buildOpts.curEnabled || buildOpts.curEnabled.ame) ? [{
+      ...baseCurrencyConfig.AME,
+      blockchain: BLOCKCHAIN_TYPE.AME,
+      addAssets: true,
+    }] : [],
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.ghost) ? [{
       ...baseCurrencyConfig.GHOST,
       blockchain: BLOCKCHAIN_TYPE.GHOST,
@@ -310,6 +322,7 @@ const initialState = {
     ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.movr) ? [baseCurrencyConfig.MOVR] : [],
     ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.one) ? [baseCurrencyConfig.ONE] : [],
     ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.phi) ? [baseCurrencyConfig.PHI] : [],
+    ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.ame) ? [baseCurrencyConfig.AME] : [],
     ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.ghost) ? [baseCurrencyConfig.GHOST] : [],
     ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.next) ? [baseCurrencyConfig.NEXT] : [],
     ...(!buildOpts.blockchainSwapEnabled || buildOpts.blockchainSwapEnabled.btc) ? [baseCurrencyConfig.BTC] : [],
@@ -332,6 +345,7 @@ if (config.isWidget) {
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.movr) ? [baseCurrencyConfig.MOVR] : [],
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.one) ? [baseCurrencyConfig.ONE] : [],
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.phi) ? [baseCurrencyConfig.PHI] : [],
+    ...(!buildOpts.curEnabled || buildOpts.curEnabled.ame) ? [baseCurrencyConfig.AME] : [],
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.btc) ? [baseCurrencyConfig.BTC] : [],
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.ghost) ? [baseCurrencyConfig.GHOST] : [],
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.next) ? [baseCurrencyConfig.NEXT] : [],

@@ -8,6 +8,7 @@ export const COIN_TYPE = Object.freeze({
   AVAX_TOKEN: 'AVAX_TOKEN',
   MOVR_TOKEN: 'MOVR_TOKEN',
   ONE_TOKEN: 'ONE_TOKEN',
+  AME_TOKEN: 'AME_TOKEN',
   AURORA_TOKEN: 'AURORA_TOKEN',
   PHI_TOKEN: 'PHI_TOKEN',
 })
@@ -21,6 +22,7 @@ export const TOKEN_STANDARD = Object.freeze({
   ERC20AVAX: 'ERC20AVAX',
   ERC20MOVR: 'ERC20MOVR',
   ERC20ONE: 'ERC20ONE',
+  ERC20AME: 'ERC20AME',
   ERC20AURORA: 'ERC20AURORA',
   PHI20: 'PHI20',
 })
@@ -38,6 +40,7 @@ export const BLOCKCHAIN = Object.freeze({
   AVAX: 'AVAX',
   MOVR: 'MOVR',
   ONE: 'ONE',
+  AME: 'AME',
   AURETH: 'AURETH', // AURORA
   PHI: 'PHI',
 })
@@ -51,6 +54,7 @@ export const BASE_TOKEN_CURRENCY = Object.freeze({
   AVAX: 'AVAX',
   MOVR: 'MOVR',
   ONE: 'ONE',
+  AME: 'AME',
   AURETH: 'AURETH',
   PHI: 'PHI',
 })
@@ -149,6 +153,14 @@ export const COIN_DATA = {
     model: COIN_MODEL.AB,
     precision: 18,
   },
+  AME: {
+    ticker: 'AME',
+    name: 'AME',
+    type: COIN_TYPE.NATIVE,
+    blockchain: BLOCKCHAIN.AME,
+    model: COIN_MODEL.AB,
+    precision: 18,
+  },
   PHI: {
     ticker: 'PHI',
     name: 'PHI',
@@ -236,6 +248,7 @@ export const NATIVE = {
   avax: 'AVAX',
   movr: 'MOVR',
   one: 'ONE',
+  ame: 'AME',
   phi: 'PHI',
   ghost: 'GHOST',
   next: 'NEXT',

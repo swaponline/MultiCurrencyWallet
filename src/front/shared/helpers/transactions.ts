@@ -69,6 +69,10 @@ const getLink = (currency, txHash) => {
     return actions.erc20one.getLinkToInfo(txHash)
   }
 
+  if (isToken('erc20ame', currency)) {
+    return actions.erc20ame.getLinkToInfo(txHash)
+  }
+
   if (isToken('erc20aurora', currency)) {
     return actions.erc20aurora.getLinkToInfo(txHash)
   }
@@ -124,6 +128,10 @@ const getInfo = (currency, txRaw): GetInfoResult => {
 
   if (isToken('erc20one', currency)) {
     reduxAction = `erc20one`
+  }
+
+  if (isToken('erc20ame', currency)) {
+    reduxAction = `erc20ame`
   }
 
   if (isToken('erc20aurora', currency)) {

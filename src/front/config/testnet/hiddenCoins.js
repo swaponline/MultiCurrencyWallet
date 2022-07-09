@@ -12,6 +12,7 @@ export default [
   'AVAX',
   'MOVR',
   'ONE',
+  'AME',
   'PHI',
   'GHOST',
   'NEXT',

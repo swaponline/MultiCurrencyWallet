@@ -41,6 +41,7 @@ const isWidgetBuild = config && config.isWidget
       ftmData,
       movrData,
       oneData,
+      ameData,
       avaxData,
       btcData,
       ghostData,
@@ -69,6 +70,7 @@ const isWidgetBuild = config && config.isWidget
       avaxData,
       movrData,
       oneData,
+      ameData,
       btcData,
       ghostData,
       nextData,
@@ -96,6 +98,7 @@ const isWidgetBuild = config && config.isWidget
         avaxData,
         movrData,
         oneData,
+        ameData,
         phiData,
         metamaskData: {
           ...metamaskData,

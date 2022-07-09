@@ -63,6 +63,7 @@ export default class StepsWrapper extends Component<any, any> {
         if (config.erc20avax) this.defaultStartPack.push({ name: 'ERC20AVAX', capture: 'Token', baseCurrency: 'AVAX' })
         if (config.erc20movr) this.defaultStartPack.push({ name: 'ERC20MOVR', capture: 'Token', baseCurrency: 'MOVR' })
         if (config.erc20one) this.defaultStartPack.push({ name: 'ERC20ONE', capture: 'Token', baseCurrency: 'ONE' })
+        if (config.erc20ame) this.defaultStartPack.push({ name: 'ERC20AME', capture: 'Token', baseCurrency: 'AME' })
         if (config.erc20aurora) this.defaultStartPack.push({ name: 'ERC20AURORA', capture: 'Token', baseCurrency: 'AURETH' })
         if (config.phi20) this.defaultStartPack.push({ name: 'PHI20', capture: 'Token', baseCurrency: 'PHI' })
       }
@@ -140,7 +141,7 @@ export default class StepsWrapper extends Component<any, any> {
             [
               '^CUSTOM_(',
               'ERC20|BEP20|PHI20|ERC20MATIC|ERC20XDAI|ERC20FTM|',
-              'ERC20AVAX|ERC20MOVR|ERC20ONE|ERC20AURORA',
+              'ERC20AVAX|ERC20MOVR|ERC20ONE|ERC20AME|ERC20AURORA',
               ')$',
             ].join('')
           )

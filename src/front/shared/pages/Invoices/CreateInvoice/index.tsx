@@ -28,6 +28,7 @@ type CreateInvoiceProps = {
     ghostData,
     nextData,
     phiData,
+    ameData,
   },
 }) => {
   return {
@@ -46,6 +47,7 @@ type CreateInvoiceProps = {
       ghost: ghostData,
       next: nextData,
       phi: phiData,
+      ame: ameData,
     }
   }
 })

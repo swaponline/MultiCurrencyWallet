@@ -37,6 +37,7 @@ const isWidgetBuild = config && config.isWidget
     ghostData,
     nextData,
     phiData,
+    ameData,
     activeFiat,
   },
 }) => {
@@ -56,6 +57,7 @@ const isWidgetBuild = config && config.isWidget
       ghost: ghostData,
       next: nextData,
       phi: phiData,
+      ame: ameData,
     },
     activeFiat,
   }

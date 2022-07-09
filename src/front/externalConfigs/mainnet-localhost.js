@@ -30,6 +30,9 @@
   erc20one: {
     address: '',
   },
+  erc20ame: {
+    address: '',
+  },
   erc20aurora: {
     address: '',
   },
@@ -107,6 +110,7 @@ window.buildOptions = {
     avax: true,
     movr: true,
     one: true,
+    ame: true,
     ghost: true,
     next: false,
     phi: true,
@@ -123,6 +127,7 @@ window.buildOptions = {
     avax: true,
     movr: true,
     one: true,
+    ame: true,
     ghost: false,
     next: false,
     phi: false,
@@ -158,6 +163,8 @@ window.buildOptions = {
     'CUSTOM_ERC20MOVR',
     'ONE',
     'CUSTOM_ERC20ONE',
+    'AME',
+    'CUSTOM_ERC20AME',
     'AURETH',
     'CUSTOM_ERC20AURORA',
     'PHI',

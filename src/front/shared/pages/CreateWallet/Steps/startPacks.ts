@@ -24,6 +24,8 @@ export const defaultPack = [
 
   ...(!curEnabled || curEnabled.one ? [{ name: 'ONE', capture: 'Harmony' }] : []),
 
+  ...(!curEnabled || curEnabled.ame ? [{ name: 'AME', capture: 'AME Chain' }] : []),
+
   ...(!curEnabled || curEnabled.aureth ? [{ name: 'AURETH', capture: 'Aurora ETH' }] : []),
 
   ...(!curEnabled || curEnabled.phi ? [{ name: 'PHI', capture: 'PHI' }] : []),
@@ -51,6 +53,7 @@ export const defaultPack = [
   ...(config.erc20avax ? [{ name: 'ERC20AVAX', capture: 'Token', baseCurrency: 'AVAX' }] : []),
   ...(config.erc20movr ? [{ name: 'ERC20MOVR', capture: 'Token', baseCurrency: 'MOVR' }] : []),
   ...(config.erc20one ? [{ name: 'ERC20ONE', capture: 'Token', baseCurrency: 'ONE' }] : []),
+  ...(config.erc20ame ? [{ name: 'ERC20AME', capture: 'Token', baseCurrency: 'AME' }] : []),
   ...(config.erc20aurora ? [{ name: 'ERC20AURORA', capture: 'Token', baseCurrency: 'AURETH' }] : []),
   ...(config.phi20 ? [{ name: 'PHI20', capture: 'Token', baseCurrency: 'PHI' }] : []),
 ]
@@ -74,6 +77,8 @@ export const widgetPack = [
   ...((config.erc20movr && (!curEnabled || curEnabled.movr)) ? [{ name: 'ERC20MOVR', capture: 'Token', baseCurrency: 'MOVR' }] : []),
   ...(!curEnabled || curEnabled.one ? [{ name: 'ONE', capture: 'Harmony One' }] : []),
   ...((config.erc20one && (!curEnabled || curEnabled.one)) ? [{ name: 'ERC20ONE', capture: 'Token', baseCurrency: 'ONE' }] : []),
+  ...(!curEnabled || curEnabled.ame ? [{ name: 'AME', capture: 'AME Chain' }] : []),
+  ...((config.erc20ame && (!curEnabled || curEnabled.ame)) ? [{ name: 'ERC20AME', capture: 'Token', baseCurrency: 'AME' }] : []),
   ...(!curEnabled || curEnabled.aureth ? [{ name: 'AURETH', capture: 'Aurora ETH' }] : []),
   ...((config.erc20aurora && (!curEnabled || curEnabled.aureth)) ? [{ name: 'ERC20AURORA', capture: 'Token', baseCurrency: 'AURETH' }] : []),
   ...(!curEnabled || curEnabled.phi ? [{ name: 'PHI', capture: 'PHI' }] : []),

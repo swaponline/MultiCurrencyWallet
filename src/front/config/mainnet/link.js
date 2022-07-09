@@ -12,6 +12,7 @@ export default {
   avaxscan: 'https://snowtrace.io',
   movrscan: 'https://moonriver.moonscan.io',
   oneExplorer: 'https://explorer.harmony.one',
+  amescan: 'https://amescan.io',
   auroraExplorer: 'https://aurorascan.dev',
   phiExplorer: 'https://explorer.phi.network',
 }

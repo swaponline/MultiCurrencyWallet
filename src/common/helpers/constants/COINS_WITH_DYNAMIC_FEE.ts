@@ -14,6 +14,7 @@ export default [
   'avax',
   'movr',
   'one',
+  'ame',
   'btc',
   'ghost',
   'next',

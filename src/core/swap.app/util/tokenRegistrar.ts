@@ -115,6 +115,14 @@ export default {
     isCoinAddress: typeforce.isCoinAddress.ONE,
     isPublicKey: typeforce.isPublicKey.ONE,
   }),
+  erc20ame: new TokenRegistrar({
+    blockchainType: BLOCKCHAIN_TYPE.AME,
+    tokenStandard: TOKEN_STANDARD.ERC20AME,
+    coinType: COIN_TYPE.AME_TOKEN,
+    blockchainModel: COIN_DATA.AME.model,
+    isCoinAddress: typeforce.isCoinAddress.AME,
+    isPublicKey: typeforce.isPublicKey.AME,
+  }),
   erc20xdai: new TokenRegistrar({
     blockchainType: BLOCKCHAIN_TYPE.XDAI,
     tokenStandard: TOKEN_STANDARD.ERC20XDAI,

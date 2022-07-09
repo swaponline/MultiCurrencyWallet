@@ -54,6 +54,7 @@ export default {
   movr: EthLikeAction.MOVR,
   one: EthLikeAction.ONE,
   phi: EthLikeAction.PHI,
+  ame: EthLikeAction.AME,
   erc20: Erc20LikeAction.erc20,
   bep20: Erc20LikeAction.bep20,
   erc20matic: Erc20LikeAction.erc20matic,
@@ -64,6 +65,7 @@ export default {
   erc20one: Erc20LikeAction.erc20one,
   erc20aurora: Erc20LikeAction.erc20aurora,
   phi20: Erc20LikeAction.phi20,
+  erc20ame: Erc20LikeAction.erc20ame,
   ghost,
   next,
 
