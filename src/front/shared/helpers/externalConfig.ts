@@ -298,7 +298,7 @@ const externalConfig = () => {
   }
 
   if (window && window.CUR_AME_DISABLED === true) {
-    config.opts.curEnabled.AME = false
+    config.opts.curEnabled.ame = false
     config.opts.blockchainSwapEnabled.ame = false
   }
 
