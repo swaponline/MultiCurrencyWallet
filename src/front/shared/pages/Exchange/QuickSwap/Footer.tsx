@@ -226,7 +226,7 @@ function Footer(props: FooterProps) {
 
   const doNotMakeApiRequest = isApiRequestBlocking()
 
-  const commonBlockReasons = isPending || (!!error && !error.message?.match('ERC20: transfer amount exceeds allowance'))
+  const commonBlockReasons = isPending || (!!error && !error.message?.match('transfer amount exceeds allowance'))
   const formFilled = !!spendedAmount && !!receivedAmount
 
   const approvingDoesNotMakeSense =
