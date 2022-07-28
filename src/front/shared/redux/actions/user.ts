@@ -345,20 +345,28 @@ const getInfoAboutCurrency = (currencyNames) => new Promise((resolve, reject) =>
         }
       }
 
-      if (!currencyInfoItem && customFiatPrice && blockchain) {
-        const priceInFiat = +customFiatPrice
-        const priceInBtc = btcPrice && priceInFiat / btcPrice
+      if (!currencyInfoItem && blockchain) {
+        if (customFiatPrice) { // set custom rate
+          const priceInFiat = +customFiatPrice
+          const priceInBtc = btcPrice && priceInFiat / btcPrice
 
-        const currencyInfo = {
-          price_fiat: priceInFiat,
-          price_btc: priceInBtc,
+          const currencyInfo = {
+            price_fiat: priceInFiat,
+            price_btc: priceInBtc,
+          }
+
+          reducers.user.setInfoAboutToken({
+            baseCurrency: blockchain.toLowerCase(),
+            name: currencyName,
+            infoAboutCurrency: currencyInfo,
+          })
+        } else { // remove custom rate
+          reducers.user.setInfoAboutToken({
+            baseCurrency: blockchain.toLowerCase(),
+            name: currencyName,
+            infoAboutCurrency: undefined,
+          })
         }
-
-        reducers.user.setInfoAboutToken({
-          baseCurrency: blockchain.toLowerCase(),
-          name: currencyName,
-          infoAboutCurrency: currencyInfo,
-        })
       }
     })
     resolve(true)
