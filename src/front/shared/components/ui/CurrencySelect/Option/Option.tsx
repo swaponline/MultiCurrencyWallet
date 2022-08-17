@@ -15,7 +15,7 @@ const Option = (props) => {
       <span styleName="circle">
         <CurrencyIcon styleName="icon" name={icon} />
       </span>
-      {(blockchain) ? `${title} (${blockchain})` : title}
+      {(blockchain) ? `${title.replaceAll('*','')} (${blockchain})` : title}
     </div>
   )
 }

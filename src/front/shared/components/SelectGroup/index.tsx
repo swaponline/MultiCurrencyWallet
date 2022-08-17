@@ -83,7 +83,7 @@ const SelectGroup = (props) => {
           selectedItemRender={(item) => {
             const { blockchain } = getCoinInfo(item.value)
 
-            return blockchain ? `${item.title} (${blockchain})` : item.fullTitle
+            return blockchain ? `${item.title.replaceAll('*','')} (${blockchain})` : item.fullTitle
           }}
           styleName="currencySelect"
           placeholder="Enter the name of coin"

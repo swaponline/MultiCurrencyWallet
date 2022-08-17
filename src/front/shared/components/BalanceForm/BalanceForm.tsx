@@ -21,6 +21,7 @@ const BalanceForm = function ({
   handleReceive,
   handleWithdraw,
   currency,
+  currencyView = false,
   handleInvoice = () => {},
   isFetching = false,
   showButtons = true,
@@ -114,7 +115,7 @@ const BalanceForm = function ({
             styleName={selectedCurrency === currency ? 'active' : undefined}
             onClick={() => handleClickCurrency(currency)}
           >
-            {currency}
+            {currencyView || currency}
           </button>
         </div>
       </div>

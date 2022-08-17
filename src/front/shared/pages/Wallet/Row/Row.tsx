@@ -441,11 +441,12 @@ class Row extends Component<RowProps, RowState> {
       unconfirmedBalance,
       balanceError,
       standard,
+      isToken,
     } = itemData
 
     let nodeDownErrorShow = true
     let currencyFiatBalance
-    let currencyView = currency
+    let currencyView = (isToken) ? currency.replaceAll(`*`,``) : currency
 
     switch (currencyView) {
       case 'BTC (Multisig)':

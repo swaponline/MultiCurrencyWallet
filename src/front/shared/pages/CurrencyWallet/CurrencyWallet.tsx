@@ -483,6 +483,10 @@ class CurrencyWallet extends Component<any, any> {
     const {
       currency,
       itemCurrency,
+      itemCurrency: {
+        isToken,
+        tokenKey,
+      },
       balance,
       infoAboutCurrency,
       txItems,
@@ -491,6 +495,7 @@ class CurrencyWallet extends Component<any, any> {
     } = this.state
 
     let currencyName = currency.toLowerCase()
+    let currencyViewName = (isToken) ? currency.replaceAll(`*`,``).toLowerCase() : currency.toLowerCase()
 
     switch (currencyName) {
       case 'btc (multisig)':
@@ -502,9 +507,10 @@ class CurrencyWallet extends Component<any, any> {
     txHistory = txItems || txHistory
 
     if (txHistory) {
+      
       txHistory = txHistory.filter((tx) => {
         if (tx?.type) {
-          return tx.type.toLowerCase() === currencyName
+          return (isToken) ? (tx.tokenKey === tokenKey) : (tx.type.toLowerCase() === currencyName)
         }
         return false
       })
@@ -587,6 +593,7 @@ class CurrencyWallet extends Component<any, any> {
                 itemCurrency.tokenKey || currencyName
               )}
               currency={currency.toLowerCase()}
+              currencyView={currencyViewName}
               singleWallet={true}
               multisigPendingCount={multisigPendingCount}
             />
