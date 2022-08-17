@@ -339,7 +339,7 @@ const getInfoAboutCurrency = (currencyNames) => new Promise((resolve, reject) =>
         } else if (user.tokensData[name.toLowerCase()] && blockchain) {
           reducers.user.setInfoAboutToken({
             baseCurrency: blockchain.toLowerCase(),
-            name: currencyName,
+            name: coin.toLowerCase(),
             infoAboutCurrency: currencyInfo,
           })
         }
@@ -357,13 +357,13 @@ const getInfoAboutCurrency = (currencyNames) => new Promise((resolve, reject) =>
 
           reducers.user.setInfoAboutToken({
             baseCurrency: blockchain.toLowerCase(),
-            name: currencyName,
+            name: coin.toLowerCase(),
             infoAboutCurrency: currencyInfo,
           })
         } else { // remove custom rate
           reducers.user.setInfoAboutToken({
             baseCurrency: blockchain.toLowerCase(),
-            name: currencyName,
+            name: coin.toLowerCase(),
             infoAboutCurrency: undefined,
           })
         }

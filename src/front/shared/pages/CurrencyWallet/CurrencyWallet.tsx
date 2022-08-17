@@ -494,7 +494,7 @@ class CurrencyWallet extends Component<any, any> {
       isLoading,
     } = this.state
 
-    let currencyName = (isToken) ? currency.replaceAll(`*`,``).toLowerCase() : currency.toLowerCase()
+    let currencyName = currency.toLowerCase()
     let currencyViewName = (isToken) ? currency.replaceAll(`*`,``).toLowerCase() : currency.toLowerCase()
 
     switch (currencyName) {
