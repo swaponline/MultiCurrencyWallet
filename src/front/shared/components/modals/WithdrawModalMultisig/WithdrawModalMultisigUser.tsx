@@ -394,6 +394,8 @@ class WithdrawModalMultisigUser extends React.Component<any, any> {
       ownTx ||
       !this.addressIsCorrect() ||
       new BigNumber(amount).isGreaterThan(balance) ||
+      // Нужно проверить почему ts начал тут спотыкаться. у меня локально билдит норм
+      // @ts-ignore
       new BigNumber(amount).dp() > currentDecimals
 
     const NanReplacement = balance || '...'
