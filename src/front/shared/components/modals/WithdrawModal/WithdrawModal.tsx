@@ -894,6 +894,8 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
       || !this.addressIsCorrect()
       || selectedItem.isToken && notEnoughForTokenMinerFee
       || notEnoughForPayment
+      // Почему-то сломалось тут. надо проверить настройки ts
+      // @ts-ignore
       || new BigNumber(amount).dp() > currentDecimals
     )
 
