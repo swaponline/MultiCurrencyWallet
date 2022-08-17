@@ -39,6 +39,7 @@ export default class CurrencyList extends Component<any, any> {
       }
 
       const newPathName = `${tokenKey ? `/token/${tokenKey}` : `/${currency}`}/${address}/send`
+      // `
 
       if (history.location.pathname !== newPathName) {
         history.push(
@@ -142,7 +143,9 @@ export default class CurrencyList extends Component<any, any> {
                 standard,
                 address,
                 infoAboutCurrency,
+                isToken,
               } = item
+              const coinView = (isToken) ? getCurrencyKey(currency, true).replaceAll(`*`,``).toUpperCase() : getCurrencyKey(currency, true).toUpperCase()
 
               const itemFiatBalance = infoAboutCurrency?.price_fiat
                 ? this.returnFiatBalance(balance, infoAboutCurrency?.price_fiat)
@@ -182,7 +185,7 @@ export default class CurrencyList extends Component<any, any> {
                             })
                           : '-'}
                       </span>{' '}
-                      {getCurrencyKey(currency, true).toUpperCase()}
+                      {coinView}
                     </span>
                     {/* save the element anyway for UI paddings */}
                     <span styleName="usd">

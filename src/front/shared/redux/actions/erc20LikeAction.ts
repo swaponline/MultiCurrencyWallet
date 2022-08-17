@@ -205,6 +205,7 @@ class Erc20LikeAction {
       tokenName = tokenName.replace(/^\{[a-z]+\}/, '')
 
       const tokenKey = `{${this.currencyKey}}${tokenName.toLowerCase()}`
+      
       const { address : sysAddress, contractAddress } = tokensData[tokenKey]
 
       const address = ownAddress || sysAddress
@@ -228,6 +229,7 @@ class Erc20LikeAction {
               .map((item) => ({
                 confirmations: item.confirmations,
                 type: tokenName.toLowerCase(),
+                tokenKey,
                 standard: this.standard,
                 baseCurrency: this.currencyKey,
                 hash: item.hash,
