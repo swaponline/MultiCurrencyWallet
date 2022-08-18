@@ -143,11 +143,15 @@ class InfoInvoice extends React.Component<any, any> {
     const { history } = this.props
     const { uniqhash } = this.state
 
+    location.hash = `${links.invoice}/${uniqhash}`
+    setTimeout(() => { location.reload() }, 100)
+    /*
     this.setState({
       isShareReady: true,
     }, () => {
-      history.push(`#${links.invoice}/${uniqhash}`)
+      history.push(`${links.invoice}/${uniqhash}`)
     })
+    */
   }
 
   handlePayInvoice = () => {
@@ -203,6 +207,7 @@ class InfoInvoice extends React.Component<any, any> {
   }
 
   handleChangeLocation = (newLocation) => {
+  console.log('>>> handleChangeLocation', newLocation)
     const { uniqhash } = this.state
 
     return newLocation.includes(`#${links.invoice}/${uniqhash}`)
