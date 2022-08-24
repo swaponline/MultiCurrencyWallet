@@ -25,7 +25,7 @@ describe('Prepare to swap e2e tests', () => {
       await importWallet({
         page,
         seed: testWallets.btcTurnOnMM.seedPhrase.split(' '),
-        timeout: 180_000,
+        timeout: 360_000,
       })
 
       await page.waitForSelector('#btcAddress')
