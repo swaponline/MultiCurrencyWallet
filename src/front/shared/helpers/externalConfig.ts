@@ -47,6 +47,7 @@ const externalConfig = () => {
       one: true,
       ame: true,
       phi: true,
+      phi_v2: true,
       btc: true,
       ghost: true,
       next: false,
@@ -65,6 +66,7 @@ const externalConfig = () => {
       one: false,
       ame: false,
       phi: false,
+      phi_v2: false,
       ghost: true,
       next: false,
     },
@@ -310,6 +312,11 @@ const externalConfig = () => {
   if (window && window.CUR_PHI_DISABLED === true) {
     config.opts.curEnabled.phi = false
     config.opts.blockchainSwapEnabled.phi = false
+  }
+
+  if (window && window.CUR_PHI_V2_DISABLED === true) {
+    config.opts.curEnabled.phi_v2 = false
+    config.opts.blockchainSwapEnabled.phi_v2 = false
   }
 
   config.enabledEvmNetworks = Object.keys(config.evmNetworks)

@@ -12,6 +12,7 @@ import erc20one from './erc20one'
 import erc20ame from './erc20ame'
 import erc20aurora from './erc20aurora'
 import phi20 from './phi20'
+import phi20_v2 from './phi20_v2'
 import api from './api'
 import swapContract from './swapContract'
 import feeRates from './feeRates'
@@ -38,6 +39,7 @@ export default {
   erc20ame,
   erc20aurora,
   phi20,
+  phi20_v2,
   swapContract,
   feeRates,
   hiddenCoins,

@@ -103,6 +103,14 @@ export const initialState = {
     balanceError: null,
     infoAboutCurrency: null,
   },
+  phi_v2Data: {
+    balance: 0,
+    isBalanceFetched: false,
+    currency: 'PHI_V2',
+    fullName: 'PHI_V2',
+    balanceError: null,
+    infoAboutCurrency: null,
+  },
   ameData: {
     balance: 0,
     isBalanceFetched: false,
