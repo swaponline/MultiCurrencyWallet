@@ -776,7 +776,7 @@
       const defaultLanguage = window.defaultLanguage
 
       if (!lang || !isLangAvailable) {
-        if (defaultLanguage) {
+        if (defaultLanguage && availableLangs.includes(defaultLanguage.toLowerCase()) {
           lang = defaultLanguage
         } else {
           const browserLang = getNavigatorLanguage().split("-")[0];
