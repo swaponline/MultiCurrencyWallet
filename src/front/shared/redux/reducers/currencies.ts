@@ -178,7 +178,7 @@ const baseCurrencyConfig = {
     value: 'phi',
     fullTitle: 'phi',
   },
-  PHI: {
+  PHI_V2: {
     name: 'PHI_V2',
     title: 'PHI_V2',
     icon: 'phi_v2',
