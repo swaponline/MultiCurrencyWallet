@@ -238,86 +238,38 @@ const externalConfig = () => {
 
 
   // Plugin: enable/disable currencies
-
-  if (window && window.CUR_BTC_DISABLED === true) {
-    config.opts.curEnabled.btc = false
-    config.opts.blockchainSwapEnabled.btc = false
-  }
-
-  if (window && window.CUR_GHOST_DISABLED === true) {
-    config.opts.curEnabled.ghost = false
-    config.opts.blockchainSwapEnabled.ghost = false
-  }
-
   if (window && window.CUR_NEXT_DISABLED === false) {
     config.opts.curEnabled.next = true
     config.opts.blockchainSwapEnabled.next = true
   }
-
-  if (window && window.CUR_ETH_DISABLED === true) {
-    config.opts.curEnabled.eth = false
-    config.opts.blockchainSwapEnabled.next = false
+  
+  const wpCurrencyDisabledFlages = {
+    /* WordPress window flag => option key */
+    CUR_BTC_DISABLED: `btc`,
+    CUR_GHOST_DISABLED: `ghost`,
+    CUR_ETH_DISABLED: `eth`,
+    CUR_BNB_DISABLED: `bnb`,
+    CUR_MATIC_DISABLED: `matic`,
+    CUR_ARBITRUM_DISABLED: `arbeth`,
+    CUR_XDAI_DISABLED: `xdai`,
+    CUR_FTM_DISABLED: `ftm`,
+    CUR_AVAX_DISABLED: `avax`,
+    CUR_MOVR_DISABLED: `movr`,
+    CUR_ONE_DISABLED: `one`,
+    CUR_AME_DISABLED: `ame`,
+    CUR_AURORA_DISABLED: `aureth`,
+    CUR_PHI_DISABLED: `phi`,
+    CUR_PHI_V2_DISABLED: `phi_v2`,
+  }
+  if (window) {
+    Object.keys(wpCurrencyDisabledFlages).forEach((windowFlagKey) => {
+      if (window[windowFlagKey] === true) {
+        config.opts.curEnabled[wpCurrencyDisabledFlages[windowFlagKey]] = false
+        config.opts.blockchainSwapEnabled[wpCurrencyDisabledFlages[windowFlagKey]] = false
+      }
+    })
   }
 
-  if (window && window.CUR_BNB_DISABLED === true) {
-    config.opts.curEnabled.bnb = false
-    config.opts.blockchainSwapEnabled.bnb = false
-  }
-
-  if (window && window.CUR_MATIC_DISABLED === true) {
-    config.opts.curEnabled.matic = false
-    config.opts.blockchainSwapEnabled.matic = false
-  }
-
-  if (window && window.CUR_ARBITRUM_DISABLED === true) {
-    config.opts.curEnabled.arbeth = false
-    config.opts.blockchainSwapEnabled.arbeth = false
-  }
-
-  if (window && window.CUR_XDAI_DISABLED === true) {
-    config.opts.curEnabled.xdai = false
-    config.opts.blockchainSwapEnabled.xdai = false
-  }
-
-  if (window && window.CUR_FTM_DISABLED === true) {
-    config.opts.curEnabled.ftm = false
-    config.opts.blockchainSwapEnabled.ftm = false
-  }
-
-  if (window && window.CUR_AVAX_DISABLED === true) {
-    config.opts.curEnabled.avax = false
-    config.opts.blockchainSwapEnabled.avax = false
-  }
-
-  if (window && window.CUR_MOVR_DISABLED === true) {
-    config.opts.curEnabled.movr = false
-    config.opts.blockchainSwapEnabled.movr = false
-  }
-
-  if (window && window.CUR_ONE_DISABLED === true) {
-    config.opts.curEnabled.one = false
-    config.opts.blockchainSwapEnabled.one = false
-  }
-
-  if (window && window.CUR_AME_DISABLED === true) {
-    config.opts.curEnabled.ame = false
-    config.opts.blockchainSwapEnabled.ame = false
-  }
-
-  if (window && window.CUR_AURORA_DISABLED === true) {
-    config.opts.curEnabled.aureth = false
-    config.opts.blockchainSwapEnabled.aureth = false
-  }
-
-  if (window && window.CUR_PHI_DISABLED === true) {
-    config.opts.curEnabled.phi = false
-    config.opts.blockchainSwapEnabled.phi = false
-  }
-
-  if (window && window.CUR_PHI_V2_DISABLED === true) {
-    config.opts.curEnabled.phi_v2 = false
-    config.opts.blockchainSwapEnabled.phi_v2 = false
-  }
 
   config.enabledEvmNetworks = Object.keys(config.evmNetworks)
     .filter((key) => !config.opts.curEnabled || config.opts.curEnabled[key.toLowerCase()])
