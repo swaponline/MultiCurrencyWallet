@@ -496,6 +496,7 @@ const getText = () => {
       movrData,
       oneData,
       phiData,
+      phi_v2Data,
       ameData,
       btcData,
       ghostData,
@@ -569,6 +570,12 @@ const getText = () => {
     PHI address: ${phiData.address}\r\n
     Private key: ${phiData.privateKey}\r\n
     \r\n
+    # PHIv2 CHAIN
+    \r\n
+    PHIv2 address: ${phi_v2Data.address}\r\n
+    Private key: ${phi_v2Data.privateKey}\r\n
+    \r\n
+    
     # AME CHAIN
     \r\n
     AME address: ${ameData.address}\r\n
