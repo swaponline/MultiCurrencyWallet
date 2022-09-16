@@ -4,7 +4,7 @@ import helpers from 'helpers'
 import actions from 'redux/actions'
 
 const getTokenBaseCurrency = (tokenKey) => {
-  const baseCurrencyRegExp = /^\{[a-z]+\}/
+  const baseCurrencyRegExp = /^\{[a-z1-2_]+\}/
   const baseTokenCurrencyPrefix = tokenKey.match(baseCurrencyRegExp)
 
   if (baseTokenCurrencyPrefix) {

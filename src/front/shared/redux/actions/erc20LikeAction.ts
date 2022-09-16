@@ -202,7 +202,7 @@ class Erc20LikeAction {
     return new Promise((res) => {
       const { user: { tokensData } } = getState()
       // if we have a base currency prefix then delete it
-      tokenName = tokenName.replace(/^\{[a-z]+\}/, '')
+      tokenName = tokenName.replace(/^\{[a-z1-2_]+\}/, '')
 
       const tokenKey = `{${this.currencyKey}}${tokenName.toLowerCase()}`
       
