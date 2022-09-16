@@ -215,7 +215,8 @@ class Erc20LikeAction {
         `&contractaddress=${contractAddress}`,
         `&address=${address}`,
         `&startblock=0&endblock=99999999`,
-        `&sort=asc&apikey=${this.explorerApiKey}`
+        `&sort=asc`,
+        (this.explorerApiKey !== undefined) ? `&apikey=${this.explorerApiKey}` : ``,
       )
 
       return apiLooper
