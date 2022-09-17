@@ -39,3 +39,4 @@ tradeconfig.testnet.json
 
 tests/e2e/screenshots
 src/contracts/artifacts
+src/contracts/Uniswap/artifacts

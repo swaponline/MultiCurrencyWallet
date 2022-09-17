@@ -1,39 +1,63 @@
-/**
- *Submitted for verification at BscScan.com on 2021-04-23
-*/
+// File: contracts/interfaces/IFactory.sol
 
-/**
- *Submitted for verification at BscScan.com on 2021-04-22
-*/
+// SPDX-License-Identifier: MIT
+pragma solidity >=0.5.0;
 
-/**
- *Submitted for verification at BscScan.com on 2021-04-22
-*/
+interface IFactory {
+    struct AllInfo {
+        uint[30] POSSIBLE_PROTOCOL_PERCENT;
+        uint MAX_TOTAL_FEE_PERCENT;
+        uint MAX_PROTOCOL_FEE_PERCENT;
+        uint totalSwaps;
+        uint protocolFee;
+        uint totalFee;
+        uint devFeePercent;
+        address feeTo;
+        address feeToSetter;
+        address devFeeTo;
+        address devFeeSetter;
+        bool allFeeToProtocol;
+        bytes32 INIT_CODE_PAIR_HASH;
+    }
 
-/**
- *Submitted for verification at BscScan.com on 2020-09-19
-*/
-
-pragma solidity =0.5.16;
-
-
-interface IPancakeFactory {
     event PairCreated(address indexed token0, address indexed token1, address pair, uint);
 
+    function MAX_TOTAL_FEE_PERCENT() external view returns(uint);
+    function MAX_PROTOCOL_FEE_PERCENT() external view returns(uint);
+    function totalSwaps() external view returns(uint);
+    function protocolFee() external view returns(uint);
+    function totalFee() external view returns(uint);
+    function devFeePercent() external view returns(uint);
     function feeTo() external view returns (address);
     function feeToSetter() external view returns (address);
+    function devFeeTo() external view returns(address);
+    function devFeeSetter() external view returns(address);
+    function allFeeToProtocol() external view returns(bool);
 
     function getPair(address tokenA, address tokenB) external view returns (address pair);
     function allPairs(uint) external view returns (address pair);
     function allPairsLength() external view returns (uint);
+    function allInfo() external view returns (AllInfo memory);
 
     function createPair(address tokenA, address tokenB) external returns (address pair);
 
+    function setDevFeePercent(uint) external;
     function setFeeTo(address) external;
     function setFeeToSetter(address) external;
+    function setDevFeeTo(address) external;
+    function setDevFeeSetter(address) external;
+    function setAllFeeToProtocol(bool) external;
+    function setMainFees(uint _totalFee, uint _protocolFee) external;
+    function setTotalFee(uint) external;
+    function setProtocolFee(uint) external;
+    function increaseNumberOfSwaps(address token0, address token1) external;
 }
 
-interface IPancakePair {
+// File: contracts/interfaces/IUniswapV2Pair.sol
+
+pragma solidity >=0.5.0;
+
+interface IUniswapV2Pair {
     event Approval(address indexed owner, address indexed spender, uint value);
     event Transfer(address indexed from, address indexed to, uint value);
 
@@ -84,7 +108,11 @@ interface IPancakePair {
     function initialize(address, address) external;
 }
 
-interface IPancakeERC20 {
+// File: contracts/interfaces/IUniswapV2ERC20.sol
+
+pragma solidity >=0.5.0;
+
+interface IUniswapV2ERC20 {
     event Approval(address indexed owner, address indexed spender, uint value);
     event Transfer(address indexed from, address indexed to, uint value);
 
@@ -106,7 +134,12 @@ interface IPancakeERC20 {
     function permit(address owner, address spender, uint value, uint deadline, uint8 v, bytes32 r, bytes32 s) external;
 }
 
+// File: contracts/libraries/SafeMath.sol
+
+pragma solidity ^0.8.0;
+
 // a library for performing overflow-safe math, courtesy of DappHub (https://github.com/dapphub/ds-math)
+
 library SafeMath {
     function add(uint x, uint y) internal pure returns (uint z) {
         require((z = x + y) >= x, 'ds-math-add-overflow');
@@ -121,28 +154,30 @@ library SafeMath {
     }
 }
 
-contract PancakeERC20 is IPancakeERC20 {
+// File: contracts/ERC20.sol
+
+pragma solidity ^0.8.0;
+
+
+contract ERC20 is IUniswapV2ERC20 {
     using SafeMath for uint;
 
-    string public constant name = 'Pancake LPs';
-    string public constant symbol = 'Cake-LP';
-    uint8 public constant decimals = 18;
-    uint  public totalSupply;
-    mapping(address => uint) public balanceOf;
-    mapping(address => mapping(address => uint)) public allowance;
+    string public override constant name = 'Liquidity-Pool-Token';
+    string public override constant symbol = 'LP-TOKEN';
+    uint8 public override constant decimals = 18;
+    uint  public override totalSupply;
+    mapping(address => uint) public override balanceOf;
+    mapping(address => mapping(address => uint)) public override allowance;
 
-    bytes32 public DOMAIN_SEPARATOR;
+    bytes32 public override DOMAIN_SEPARATOR;
     // keccak256("Permit(address owner,address spender,uint256 value,uint256 nonce,uint256 deadline)");
-    bytes32 public constant PERMIT_TYPEHASH = 0x6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9;
-    mapping(address => uint) public nonces;
+    bytes32 public override constant PERMIT_TYPEHASH = 0x6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9;
+    mapping(address => uint) public override nonces;
 
-    event Approval(address indexed owner, address indexed spender, uint value);
-    event Transfer(address indexed from, address indexed to, uint value);
-
-    constructor() public {
+    constructor() {
         uint chainId;
         assembly {
-            chainId := chainid
+            chainId := chainid()
         }
         DOMAIN_SEPARATOR = keccak256(
             abi.encode(
@@ -178,26 +213,26 @@ contract PancakeERC20 is IPancakeERC20 {
         emit Transfer(from, to, value);
     }
 
-    function approve(address spender, uint value) external returns (bool) {
+    function approve(address spender, uint value) external override returns (bool) {
         _approve(msg.sender, spender, value);
         return true;
     }
 
-    function transfer(address to, uint value) external returns (bool) {
+    function transfer(address to, uint value) external override returns (bool) {
         _transfer(msg.sender, to, value);
         return true;
     }
 
-    function transferFrom(address from, address to, uint value) external returns (bool) {
-        if (allowance[from][msg.sender] != uint(-1)) {
+    function transferFrom(address from, address to, uint value) external override returns (bool) {
+        if (allowance[from][msg.sender] != type(uint).max) {
             allowance[from][msg.sender] = allowance[from][msg.sender].sub(value);
         }
         _transfer(from, to, value);
         return true;
     }
 
-    function permit(address owner, address spender, uint value, uint deadline, uint8 v, bytes32 r, bytes32 s) external {
-        require(deadline >= block.timestamp, 'Pancake: EXPIRED');
+    function permit(address owner, address spender, uint value, uint deadline, uint8 v, bytes32 r, bytes32 s) external override {
+        require(deadline >= block.timestamp, 'ERC20: EXPIRED');
         bytes32 digest = keccak256(
             abi.encodePacked(
                 '\x19\x01',
@@ -206,12 +241,17 @@ contract PancakeERC20 is IPancakeERC20 {
             )
         );
         address recoveredAddress = ecrecover(digest, v, r, s);
-        require(recoveredAddress != address(0) && recoveredAddress == owner, 'Pancake: INVALID_SIGNATURE');
+        require(recoveredAddress != address(0) && recoveredAddress == owner, 'ERC20: INVALID_SIGNATURE');
         _approve(owner, spender, value);
     }
 }
 
+// File: contracts/libraries/Math.sol
+
+pragma solidity ^0.8.0;
+
 // a library for performing various math operations
+
 library Math {
     function min(uint x, uint y) internal pure returns (uint z) {
         z = x < y ? x : y;
@@ -232,9 +272,15 @@ library Math {
     }
 }
 
+// File: contracts/libraries/UQ112x112.sol
+
+pragma solidity ^0.8.0;
+
 // a library for handling binary fixed point numbers (https://en.wikipedia.org/wiki/Q_(number_format))
+
 // range: [0, 2**112 - 1]
 // resolution: 1 / 2**112
+
 library UQ112x112 {
     uint224 constant Q112 = 2**112;
 
@@ -248,6 +294,10 @@ library UQ112x112 {
         z = x / uint224(y);
     }
 }
+
+// File: contracts/interfaces/IERC20.sol
+
+pragma solidity >=0.5.0;
 
 interface IERC20 {
     event Approval(address indexed owner, address indexed spender, uint value);
@@ -265,12 +315,26 @@ interface IERC20 {
     function transferFrom(address from, address to, uint value) external returns (bool);
 }
 
-interface IPancakeCallee {
-    function pancakeCall(address sender, uint amount0, uint amount1, bytes calldata data) external;
+// File: contracts/interfaces/IUniswapV2Callee.sol
+
+pragma solidity >=0.5.0;
+
+interface IUniswapV2Callee {
+    function uniswapV2Call(address sender, uint amount0, uint amount1, bytes calldata data) external;
 }
 
-contract PancakePair is IPancakePair, PancakeERC20 {
-    using SafeMath  for uint;
+// File: contracts/Pair.sol
+
+pragma solidity ^0.8.0;
+
+
+
+
+
+
+
+contract Pair is ERC20 {
+    using SafeMath for uint;
     using UQ112x112 for uint224;
 
     uint public constant MINIMUM_LIQUIDITY = 10**3;
@@ -290,7 +354,7 @@ contract PancakePair is IPancakePair, PancakeERC20 {
 
     uint private unlocked = 1;
     modifier lock() {
-        require(unlocked == 1, 'Pancake: LOCKED');
+        require(unlocked == 1, 'Swap: LOCKED');
         unlocked = 0;
         _;
         unlocked = 1;
@@ -304,7 +368,7 @@ contract PancakePair is IPancakePair, PancakeERC20 {
 
     function _safeTransfer(address token, address to, uint value) private {
         (bool success, bytes memory data) = token.call(abi.encodeWithSelector(SELECTOR, to, value));
-        require(success && (data.length == 0 || abi.decode(data, (bool))), 'Pancake: TRANSFER_FAILED');
+        require(success && (data.length == 0 || abi.decode(data, (bool))), 'Pair: TRANSFER_FAILED');
     }
 
     event Mint(address indexed sender, uint amount0, uint amount1);
@@ -318,21 +382,22 @@ contract PancakePair is IPancakePair, PancakeERC20 {
         address indexed to
     );
     event Sync(uint112 reserve0, uint112 reserve1);
+    event ProtocolLiquidity(uint liquidity);
 
-    constructor() public {
+    constructor() {
         factory = msg.sender;
     }
 
     // called once by the factory at time of deployment
     function initialize(address _token0, address _token1) external {
-        require(msg.sender == factory, 'Pancake: FORBIDDEN'); // sufficient check
+        require(msg.sender == factory, 'Pair: FORBIDDEN'); // sufficient check
         token0 = _token0;
         token1 = _token1;
     }
 
     // update reserves and, on the first call per block, price accumulators
     function _update(uint balance0, uint balance1, uint112 _reserve0, uint112 _reserve1) private {
-        require(balance0 <= uint112(-1) && balance1 <= uint112(-1), 'Pancake: OVERFLOW');
+        require(balance0 <= type(uint112).max && balance1 <= type(uint112).max, 'Pair: OVERFLOW');
         uint32 blockTimestamp = uint32(block.timestamp % 2**32);
         uint32 timeElapsed = blockTimestamp - blockTimestampLast; // overflow is desired
         if (timeElapsed > 0 && _reserve0 != 0 && _reserve1 != 0) {
@@ -346,25 +411,51 @@ contract PancakePair is IPancakePair, PancakeERC20 {
         emit Sync(reserve0, reserve1);
     }
 
-    // if fee is on, mint liquidity equivalent to 8/25 of the growth in sqrt(k)
     function _mintFee(uint112 _reserve0, uint112 _reserve1) private returns (bool feeOn) {
-        address feeTo = IPancakeFactory(factory).feeTo();
-        feeOn = feeTo != address(0);
+        address feeTo = IFactory(factory).feeTo();
+        address devFeeTo = IFactory(factory).devFeeTo();
+        uint devFeePercent = IFactory(factory).devFeePercent();
+        uint totalFee = IFactory(factory).totalFee();
+        uint protocolFee = IFactory(factory).protocolFee();
         uint _kLast = kLast; // gas savings
+        feeOn = totalFee > 0 && feeTo != address(0) && protocolFee > 0;
+
         if (feeOn) {
             if (_kLast != 0) {
                 uint rootK = Math.sqrt(uint(_reserve0).mul(_reserve1));
                 uint rootKLast = Math.sqrt(_kLast);
                 if (rootK > rootKLast) {
-                    uint numerator = totalSupply.mul(rootK.sub(rootKLast)).mul(8);
-                    uint denominator = rootK.mul(17).add(rootKLast.mul(8));
-                    uint liquidity = numerator / denominator;
-                    if (liquidity > 0) _mint(feeTo, liquidity);
+                    uint liquidity = _protocolLiquidity(rootK, rootKLast);
+                    emit ProtocolLiquidity(liquidity);
+                    if (liquidity > 0) {
+                        if (devFeePercent == 0 || devFeeTo == address(0)) {
+                            _mint(feeTo, liquidity);
+                        } else {
+                            uint onePercentOfLiquidity = liquidity / 100;
+                            uint devLiquidity = onePercentOfLiquidity.mul(devFeePercent);
+                            uint protocolLiquidity = liquidity.sub(devLiquidity);
+                            require(protocolLiquidity.add(devLiquidity) <= liquidity, 'Pair: INSUFFICIENT_PROTOCOL_LIQUIDITY');
+                            _mint(feeTo, protocolLiquidity);
+                            _mint(devFeeTo, devLiquidity);
+                        }
+                    }
                 }
             }
         } else if (_kLast != 0) {
             kLast = 0;
         }
+    }
+
+    function _protocolLiquidity(uint rootK, uint rootKLast) internal view returns(uint liquidity) {
+        require(rootK > 0 && rootKLast > 0, 'Pair: ROOT_K_ZERO');
+        bool allFeeToProtocol = IFactory(factory).allFeeToProtocol();
+        uint maxProtocolPercent = IFactory(factory).MAX_PROTOCOL_FEE_PERCENT();
+        uint protocolFee = IFactory(factory).protocolFee();
+        require(protocolFee > 0 && protocolFee <= maxProtocolPercent, 'Pair: FORBIDDEN_PROTOCOL_FEE');
+        uint feeMultiplier = maxProtocolPercent / protocolFee - 1;
+        uint numerator = totalSupply.mul(rootK.sub(rootKLast));
+        uint denominator = rootK.mul(allFeeToProtocol ? 0 : feeMultiplier).add(rootKLast);
+        liquidity = numerator / denominator;
     }
 
     // this low-level function should be called from a contract which performs important safety checks
@@ -383,7 +474,7 @@ contract PancakePair is IPancakePair, PancakeERC20 {
         } else {
             liquidity = Math.min(amount0.mul(_totalSupply) / _reserve0, amount1.mul(_totalSupply) / _reserve1);
         }
-        require(liquidity > 0, 'Pancake: INSUFFICIENT_LIQUIDITY_MINTED');
+        require(liquidity > 0, 'Pair: INSUFFICIENT_LIQUIDITY_MINTED');
         _mint(to, liquidity);
 
         _update(balance0, balance1, _reserve0, _reserve1);
@@ -404,7 +495,7 @@ contract PancakePair is IPancakePair, PancakeERC20 {
         uint _totalSupply = totalSupply; // gas savings, must be defined here since totalSupply can update in _mintFee
         amount0 = liquidity.mul(balance0) / _totalSupply; // using balances ensures pro-rata distribution
         amount1 = liquidity.mul(balance1) / _totalSupply; // using balances ensures pro-rata distribution
-        require(amount0 > 0 && amount1 > 0, 'Pancake: INSUFFICIENT_LIQUIDITY_BURNED');
+        require(amount0 > 0 && amount1 > 0, 'Pair: INSUFFICIENT_LIQUIDITY_BURNED');
         _burn(address(this), liquidity);
         _safeTransfer(_token0, to, amount0);
         _safeTransfer(_token1, to, amount1);
@@ -418,32 +509,35 @@ contract PancakePair is IPancakePair, PancakeERC20 {
 
     // this low-level function should be called from a contract which performs important safety checks
     function swap(uint amount0Out, uint amount1Out, address to, bytes calldata data) external lock {
-        require(amount0Out > 0 || amount1Out > 0, 'Pancake: INSUFFICIENT_OUTPUT_AMOUNT');
+        require(amount0Out > 0 || amount1Out > 0, 'Pair: INSUFFICIENT_OUTPUT_AMOUNT');
         (uint112 _reserve0, uint112 _reserve1,) = getReserves(); // gas savings
-        require(amount0Out < _reserve0 && amount1Out < _reserve1, 'Pancake: INSUFFICIENT_LIQUIDITY');
+        require(amount0Out < _reserve0 && amount1Out < _reserve1, 'Pair: INSUFFICIENT_LIQUIDITY');
 
         uint balance0;
         uint balance1;
         { // scope for _token{0,1}, avoids stack too deep errors
         address _token0 = token0;
         address _token1 = token1;
-        require(to != _token0 && to != _token1, 'Pancake: INVALID_TO');
+        require(to != _token0 && to != _token1, 'Pair: INVALID_TO');
         if (amount0Out > 0) _safeTransfer(_token0, to, amount0Out); // optimistically transfer tokens
         if (amount1Out > 0) _safeTransfer(_token1, to, amount1Out); // optimistically transfer tokens
-        if (data.length > 0) IPancakeCallee(to).pancakeCall(msg.sender, amount0Out, amount1Out, data);
+        if (data.length > 0) IUniswapV2Callee(to).uniswapV2Call(msg.sender, amount0Out, amount1Out, data);
         balance0 = IERC20(_token0).balanceOf(address(this));
         balance1 = IERC20(_token1).balanceOf(address(this));
         }
         uint amount0In = balance0 > _reserve0 - amount0Out ? balance0 - (_reserve0 - amount0Out) : 0;
         uint amount1In = balance1 > _reserve1 - amount1Out ? balance1 - (_reserve1 - amount1Out) : 0;
-        require(amount0In > 0 || amount1In > 0, 'Pancake: INSUFFICIENT_INPUT_AMOUNT');
+        require(amount0In > 0 || amount1In > 0, 'Pair: INSUFFICIENT_INPUT_AMOUNT');
         { // scope for reserve{0,1}Adjusted, avoids stack too deep errors
-        uint balance0Adjusted = (balance0.mul(10000).sub(amount0In.mul(25)));
-        uint balance1Adjusted = (balance1.mul(10000).sub(amount1In.mul(25)));
-        require(balance0Adjusted.mul(balance1Adjusted) >= uint(_reserve0).mul(_reserve1).mul(10000**2), 'Pancake: K');
+        uint maxPercent = IFactory(factory).MAX_TOTAL_FEE_PERCENT();
+        uint totalFee = IFactory(factory).totalFee();
+        uint balance0Adjusted = balance0.mul(maxPercent).sub(amount0In.mul(totalFee));
+        uint balance1Adjusted = balance1.mul(maxPercent).sub(amount1In.mul(totalFee));
+        require(balance0Adjusted.mul(balance1Adjusted) >= uint(_reserve0).mul(_reserve1).mul(maxPercent**2), 'Pair: K');
         }
 
         _update(balance0, balance1, _reserve0, _reserve1);
+        if (IFactory(factory).totalSwaps() < type(uint).max) IFactory(factory).increaseNumberOfSwaps(token0, token1);
         emit Swap(msg.sender, amount0In, amount1In, amount0Out, amount1Out, to);
     }
 
@@ -461,49 +555,147 @@ contract PancakePair is IPancakePair, PancakeERC20 {
     }
 }
 
-contract PancakeFactory is IPancakeFactory {
-    bytes32 public constant INIT_CODE_PAIR_HASH = keccak256(abi.encodePacked(type(PancakePair).creationCode));
+// File: contracts/Factory.sol
 
-    address public feeTo;
-    address public feeToSetter;
+pragma solidity ^0.8.0;
 
-    mapping(address => mapping(address => address)) public getPair;
-    address[] public allPairs;
 
-    event PairCreated(address indexed token0, address indexed token1, address pair, uint);
+contract Factory is IFactory {
+    using SafeMath for uint;
 
-    constructor(address _feeToSetter) public {
-        feeToSetter = _feeToSetter;
+    uint[30] public POSSIBLE_PROTOCOL_PERCENT = [10000, 5000, 3300, 2500, 2000, 1600, 1400, 1200, 1100, 1000, 900, 800, 700, 600, 500, 400, 300, 200, 100, 90, 80, 70, 60, 50, 40, 30, 20, 10, 5, 1];
+    uint public override constant MAX_TOTAL_FEE_PERCENT = 1_000;
+    uint public override constant MAX_PROTOCOL_FEE_PERCENT = 10_000;
+    uint public override totalSwaps;
+    uint public override protocolFee;
+    uint public override totalFee;
+    uint public override devFeePercent;
+    address public override feeTo;
+    address public override feeToSetter;
+    address public override devFeeTo;
+    address public override devFeeSetter;
+    bool public override allFeeToProtocol;
+    bytes32 public constant INIT_CODE_PAIR_HASH = keccak256(abi.encodePacked(type(Pair).creationCode));
+
+    mapping(address => mapping(address => address)) public override getPair;
+    address[] public override allPairs;
+
+    modifier onlyOwner() {
+        require(msg.sender == feeToSetter, 'Factory: FORBIDDEN');
+        _;
     }
 
-    function allPairsLength() external view returns (uint) {
+    constructor(address _feeToSetter, address _devFeeSetter) {
+        feeToSetter = _feeToSetter;
+        devFeeSetter = _devFeeSetter;
+        totalFee = 3;
+        protocolFee = 2000;
+        devFeePercent = 20;
+    }
+
+    function allPairsLength() external view override returns (uint) {
         return allPairs.length;
     }
 
-    function createPair(address tokenA, address tokenB) external returns (address pair) {
-        require(tokenA != tokenB, 'Pancake: IDENTICAL_ADDRESSES');
+    function allInfo() external view override returns(AllInfo memory) {
+        return AllInfo({
+            totalSwaps: totalSwaps,
+            protocolFee: protocolFee,
+            totalFee: totalFee,
+            devFeePercent: devFeePercent,
+            feeTo: feeTo,
+            feeToSetter: feeToSetter,
+            devFeeTo: devFeeTo,
+            devFeeSetter: devFeeSetter,
+            allFeeToProtocol: allFeeToProtocol,
+            POSSIBLE_PROTOCOL_PERCENT: POSSIBLE_PROTOCOL_PERCENT,
+            MAX_TOTAL_FEE_PERCENT: MAX_TOTAL_FEE_PERCENT,
+            MAX_PROTOCOL_FEE_PERCENT: MAX_PROTOCOL_FEE_PERCENT,
+            INIT_CODE_PAIR_HASH: INIT_CODE_PAIR_HASH
+        });
+    }
+
+    function createPair(address tokenA, address tokenB) external override returns (address pair) {
+        require(tokenA != tokenB, 'Factory: IDENTICAL_ADDRESSES');
         (address token0, address token1) = tokenA < tokenB ? (tokenA, tokenB) : (tokenB, tokenA);
-        require(token0 != address(0), 'Pancake: ZERO_ADDRESS');
-        require(getPair[token0][token1] == address(0), 'Pancake: PAIR_EXISTS'); // single check is sufficient
-        bytes memory bytecode = type(PancakePair).creationCode;
+        require(token0 != address(0), 'Factory: ZERO_ADDRESS');
+        require(getPair[token0][token1] == address(0), 'Factory: PAIR_EXISTS'); // single check is sufficient
+        bytes memory bytecode = type(Pair).creationCode;
         bytes32 salt = keccak256(abi.encodePacked(token0, token1));
         assembly {
             pair := create2(0, add(bytecode, 32), mload(bytecode), salt)
         }
-        IPancakePair(pair).initialize(token0, token1);
+        IUniswapV2Pair(pair).initialize(token0, token1);
         getPair[token0][token1] = pair;
         getPair[token1][token0] = pair; // populate mapping in the reverse direction
         allPairs.push(pair);
         emit PairCreated(token0, token1, pair, allPairs.length);
     }
 
-    function setFeeTo(address _feeTo) external {
-        require(msg.sender == feeToSetter, 'Pancake: FORBIDDEN');
+    function setDevFeePercent(uint _devFeePercent) external override {
+        require(msg.sender == devFeeSetter, 'Factory: FORBIDDEN');
+        require(_devFeePercent >= 0 && _devFeePercent <= 100, 'Factory: WRONG_PERCENTAGE');
+        devFeePercent = _devFeePercent;
+    }
+
+    function setFeeTo(address _feeTo) external override onlyOwner {
         feeTo = _feeTo;
     }
 
-    function setFeeToSetter(address _feeToSetter) external {
-        require(msg.sender == feeToSetter, 'Pancake: FORBIDDEN');
+    function setFeeToSetter(address _feeToSetter) external override onlyOwner {
         feeToSetter = _feeToSetter;
+    }
+
+    function setDevFeeTo(address _devFeeTo) external override {
+        require(msg.sender == devFeeSetter, 'Factory: FORBIDDEN');
+        devFeeTo = _devFeeTo;
+    }
+
+    function setDevFeeSetter(address _devFeeToSetter) external override {
+        require(msg.sender == devFeeSetter, 'Factory: FORBIDDEN');
+        devFeeSetter = _devFeeToSetter;
+    }
+
+    function setAllFeeToProtocol(bool _allFeeToProtocol) external override onlyOwner {
+        allFeeToProtocol = _allFeeToProtocol;
+    }
+
+    function setMainFees(uint _totalFee, uint _protocolFee) external override onlyOwner {
+        _setTotalFee(_totalFee);
+        _setProtocolFee(_protocolFee);
+        require(totalFee == _totalFee && protocolFee == _protocolFee, 'Factory: CANNOT_CHANGE');
+    }
+
+    function setTotalFee(uint _totalFee) external override onlyOwner {
+        _setTotalFee(_totalFee);
+    }
+
+    function setProtocolFee(uint _protocolFee) external override onlyOwner {
+        _setProtocolFee(_protocolFee);
+    }
+
+    function increaseNumberOfSwaps(address token0, address token1) external override {
+        require(msg.sender == getPair[token0][token1], 'Factory: FORBIDDEN');
+        if (totalSwaps < type(uint).max) totalSwaps += 1;
+    }
+
+    function _setTotalFee(uint _totalFee) private {
+        require(_totalFee >= 0 && _totalFee <= MAX_TOTAL_FEE_PERCENT - 1, 'Factory: FORBIDDEN_FEE');
+        totalFee = _totalFee;
+    }
+
+    function _setProtocolFee(uint _protocolFee) private {
+        require(_protocolFee >= 0 && _protocolFee <= MAX_PROTOCOL_FEE_PERCENT, 'Factory: FORBIDDEN_FEE');
+        if (_protocolFee != 0) {
+            bool allowed;
+            for(uint x; x < POSSIBLE_PROTOCOL_PERCENT.length; x++) {
+                if (_protocolFee == POSSIBLE_PROTOCOL_PERCENT[x]) {
+                    allowed = true;
+                    break;
+                }
+            }
+            if (!allowed) revert('Factory: FORBIDDEN_FEE');
+        }
+        protocolFee = _protocolFee;
     }
 }
