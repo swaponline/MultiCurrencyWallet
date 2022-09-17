@@ -38,3 +38,4 @@ tradeconfig.testnet.json
 # tests files
 
 tests/e2e/screenshots
+src/contracts/artifacts
