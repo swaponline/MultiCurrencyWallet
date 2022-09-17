@@ -686,9 +686,6 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     )
 
     if (!pairAddress) {
-      console.log('>>> LIQUIDITY_SOURCE_DATA', LIQUIDITY_SOURCE_DATA)
-      console.log('>>> networkVersion', network.networkVersion)
-      console.log('>>> LIQUIDITY_SOURCE_DATA[network.networkVersion]', LIQUIDITY_SOURCE_DATA[network.networkVersion])
       pairAddress = await actions.uniswap.getPairAddress({
         baseCurrency: baseChainWallet.currency,
         chainId: network.networkVersion,
