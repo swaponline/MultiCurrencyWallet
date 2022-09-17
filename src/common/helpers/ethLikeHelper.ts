@@ -129,4 +129,9 @@ export default {
     defaultParams: DEFAULT_CURRENCY_PARAMETERS.phi,
     web3: new Web3(config.web3.phi_provider),
   }),
+  phi_v2: new ethLikeHelper({
+    currency: 'PHI_V2',
+    defaultParams: DEFAULT_CURRENCY_PARAMETERS.phi_v2,
+    web3: new Web3(config.web3.phi_v2_provider),
+  }),
 }

@@ -15,4 +15,5 @@ export default {
   amescan: 'https://amescan.io',
   auroraExplorer: 'https://aurorascan.dev',
   phiExplorer: 'https://explorer.phi.network',
+  phi_v2Explorer: 'https://phiscan.com',
 }

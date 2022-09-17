@@ -51,7 +51,7 @@ class TxInfo extends Component<any, any> {
     }
 
     // delete tokens base currency prefix
-    const currency = sourceCurrency.replace(/^\{[a-z]+\}/, '')
+    const currency = sourceCurrency.replace(/^\{[a-z1-2_]+\}/, '')
 
     this.state = {
       currency,

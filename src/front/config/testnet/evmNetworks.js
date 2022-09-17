@@ -98,4 +98,12 @@ export default {
     rpcUrls: [web3.phi_provider],
     blockExplorerUrls: [link.phiExplorer],
   },
+  PHI_V2: {
+    currency: 'PHI_V2',
+    chainId: '',
+    networkVersion: 0,
+    chainName: 'PHI-V2 Network',
+    rpcUrls: [web3.phi_v2_provider],
+    blockExplorerUrls: [link.phi_v2Explorer],
+  },
 }

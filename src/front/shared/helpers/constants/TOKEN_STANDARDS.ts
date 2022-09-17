@@ -118,8 +118,18 @@ const STANDARDS = {
     standard: 'phi20',
     value: 'phi20',
     currency: 'phi',
-    explorerApi: config.api?.aurorascan || '',
-    explorerApiKey: config.api?.phi_ApiKey || '',
+    explorerApi: config.api?.aurorascan || '', // ???
+    explorerApiKey: config.api?.phi_ApiKey || '', // ???
+    hasSupportAtomicSwap: false,
+  },
+  phi20_v2: {
+    platform: '',
+    platformKey: '',
+    standard: 'phi20_v2',
+    value: 'phi20_v2',
+    currency: 'phi_v2',
+    explorerApi: config.api?.aurorascan || '', // ???
+    explorerApiKey: config.api?.phi_ApiKey || '', // ???
     hasSupportAtomicSwap: false,
   },
 }
