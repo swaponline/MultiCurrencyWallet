@@ -102,7 +102,7 @@ export default {
     currency: 'PHI_V2',
     chainId: '0x90',
     networkVersion: 144,
-    chainName: 'PHI V2 Network',
+    chainName: 'PHI-V2 Network',
     rpcUrls: [web3.phi_v2_provider],
     blockExplorerUrls: [link.phi_v2_Explorer],
   },
