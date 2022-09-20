@@ -311,6 +311,7 @@ const getInfoAboutCurrency = (currencyNames) => new Promise((resolve, reject) =>
       const currencyInfoItem = answer.data.filter(currencyInfo => (
         (currencyInfo.symbol.toLowerCase() === currencyName)
         || (currencyName === 'xdai' && currencyInfo.symbol.toLowerCase() === 'dai')
+        || (currencyName === 'phi_v2' && currencyInfo.symbol.toLowerCase() === 'phi')
         || (config?.L2_EVM_KEYS?.includes(currencyName) && currencyInfo.symbol.toLowerCase() === 'eth')
       ))[0]
 
