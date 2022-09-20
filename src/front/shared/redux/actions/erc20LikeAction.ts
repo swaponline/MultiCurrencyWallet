@@ -210,6 +210,11 @@ class Erc20LikeAction {
 
       const address = ownAddress || sysAddress
 
+      if (this.explorerApiName === ``) {
+        res([])
+        return
+      }
+
       const url = ''.concat(
         `?module=account&action=tokentx`,
         `&contractaddress=${contractAddress}`,
@@ -748,7 +753,7 @@ export default {
   phi20: new Erc20LikeAction({
     currency: 'PHI',
     standard: 'phi20',
-    explorerApiName: 'phiscan',
+    explorerApiName: ``, // Нет апи - пуской список транзкций
     explorerApiKey: externalConfig.api?.phi_ApiKey,
     explorerLink: externalConfig.link.phiExplorer,
     adminFeeObj: externalConfig.opts?.fee?.phi20,
