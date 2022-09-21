@@ -318,7 +318,16 @@ const getInfoAboutCurrency = (currencyNames) => new Promise((resolve, reject) =>
       const customFiatPrice = customTokenExchangeRate(currencyName)
 
       if (currencyInfoItem?.quote[fiat]) {
-        const priceInFiat =  customFiatPrice || currencyInfoItem.quote[fiat].price
+        // @To-do, в будущем, если будут просить свои цены, нужно перенести скрипт cursAll в вордпресс и делать правки там
+        let curExchangeRate = 1
+        switch (currencyName) {
+          case 'phi_v2':
+          case 'phi':
+            curExchangeRate = 19486972
+            break
+        }
+        
+        const priceInFiat =  customFiatPrice || currencyInfoItem.quote[fiat].price * curExchangeRate
         const priceInBtc = btcPrice && priceInFiat / btcPrice
 
         const currencyInfo = {
