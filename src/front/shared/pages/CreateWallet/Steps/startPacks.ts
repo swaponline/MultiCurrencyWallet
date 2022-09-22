@@ -84,6 +84,7 @@ export const widgetPack = [
   ...(!curEnabled || curEnabled.aureth ? [{ name: 'AURETH', capture: 'Aurora ETH' }] : []),
   ...((config.erc20aurora && (!curEnabled || curEnabled.aureth)) ? [{ name: 'ERC20AURORA', capture: 'Token', baseCurrency: 'AURETH' }] : []),
   ...(!curEnabled || curEnabled.phi ? [{ name: 'PHI', capture: 'PHI' }] : []),
+  ...(!curEnabled || curEnabled.phi_v2 ? [{ name: 'PHI_V2', capture: 'PHI_V2' }] : []),
   ...((config.phi20 && (!curEnabled || curEnabled.phi)) ? [{ name: 'PHI20', capture: 'Token', baseCurrency: 'PHI' }] : []),
   ...((config.phi20_v2 && (!curEnabled || curEnabled.phi_v2)) ? [{ name: 'PHI20_V2', capture: 'Token', baseCurrency: 'PHI_V2' }] : []),
   ...((!curEnabled || curEnabled.ghost) && !onlyEvmWallets ? [{ name: 'GHOST', capture: 'Ghost' }] : []),
